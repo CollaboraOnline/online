@@ -66,7 +66,7 @@ RUN --mount=type=secret,id=secret_key \
 # Update repos again
     apt-get update && \
 # Install Collabora Online (Collabora Office is a dependency)
-    apt-get -y install coolwsd \
+    apt-get -y install coolwsd coolwsd-deprecated \
 # Install all dictionaries
                        collaboraoffice-dict-* \
 # Install all language packs
