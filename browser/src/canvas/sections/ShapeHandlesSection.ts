@@ -416,14 +416,44 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
+	removeTagFromHTML(data: string, startString: string, endString: string): string {
+		let startIndex = data.indexOf(startString);
+		let endIndex = data.indexOf(endString, startIndex + 1);
+
+		while (startIndex !== -1 && endIndex !== -1) {
+			const toRemove = data.substring(startIndex, endIndex + endString.length);
+			data = data.replace(toRemove, '');
+
+			startIndex = data.indexOf(startString);
+			endIndex = data.indexOf(endString, startIndex + 1);
+		}
+
+		return data;
+	}
+
+	getTagFromHTML(data: string, startString: string, endString: string): string {
+		const startIndex = data.indexOf(startString);
+		const endIndex = data.indexOf(endString, startIndex + 1);
+
+		if (startIndex !== -1 && endIndex !== -1) {
+			const pickedData = data.substring(startIndex, endIndex + endString.length);
+			return pickedData;
+		}
+		else {
+			return '';
+		}
+	}
+
 	setSVG(data: string) {
 		this.removeSVG();
 
+		data = this.removeTagFromHTML(data, ' style="', '"');
+
 		this.sectionProperties.svg = document.createElement('svg');
 		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
-		this.sectionProperties.svg.innerHTML = data; // Sanitize data here before pushing.
-		this.sectionProperties.svg.style.position = 'absolute';
 
+		this.sectionProperties.svg.innerHTML = data;
+		this.sectionProperties.svg.style.position = 'absolute';
 		this.sectionProperties.svg.children[0].style.width = this.sectionProperties.svg.children[0].style.height = 'auto';
 		this.sectionProperties.svg.children[0].style.transformOrigin = 'center';
 		this.sectionProperties.svg.children[0].setAttribute('preserveAspectRatio', 'none');
