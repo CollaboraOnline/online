@@ -509,6 +509,19 @@ class Dispatcher {
 		this.actionsMap['selectbackground'] = function () {
 			L.DomUtil.get('selectbackground').click();
 		};
+
+		this.actionsMap['notesmode'] = function () {
+			const button = document.getElementById('notesmode');
+			if (button) {
+				if (button.classList.contains('selected')) {
+					button.classList.remove('selected');
+					app.map.sendUnoCommand('.uno:NormalMultiPaneGUI');
+				} else {
+					button.classList.add('selected');
+					app.map.sendUnoCommand('.uno:NotesMode');
+				}
+			}
+		};
 	}
 
 	private addZoteroCommands() {
