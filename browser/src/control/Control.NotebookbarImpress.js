@@ -440,18 +440,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true, combination: 'CU', de: null }
 			},
 			{
-				'id': 'view-normal-view',
-				'type': 'bigtoolitem',
-				'text': _('Normal View'),
-				'command': '.uno:NormalMultiPaneGUI',
-				'accessibility': { focusBack: true, combination: 'NV', de: null }
-			},
-			{
-				'id': 'view-notes-view',
-				'type': 'bigtoolitem',
+				'id': 'notesmode',
+				'class': 'notesmode',
+				'type': 'bigcustomtoolitem',
 				'text': _('Notes View'),
-				'command': '.uno:NotesMode',
-				'accessibility': { focusBack: true, combination: 'TV', de: null }
+				'accessibility': { focusBack: false, combination: 'NV' }
 			},
 			{
 				'id': 'view-master-view',
