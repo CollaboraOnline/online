@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-19 10:15+0200\n"
-"PO-Revision-Date: 2022-08-01 11:22+0000\n"
-"Last-Translator: Tor Lillqvist <tml@collabora.com>\n"
+"PO-Revision-Date: 2024-09-01 17:09+0000\n"
+"Last-Translator: Kieli Puoli <kielipuoli@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fi/>\n"
-"Language: \n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -114,7 +114,7 @@ msgstr "Muokattu"
 
 #: admin/admin.strings.js:38
 msgid "Uploaded"
-msgstr ""
+msgstr "Ladattu"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
@@ -246,7 +246,7 @@ msgstr "Versiotiedot"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Lisenssi"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:385
 #: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:677
@@ -334,7 +334,7 @@ msgstr "Istunnon valtuuttaminen protokollan {0} yli epäonnistui"
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
-msgstr ""
+msgstr "Varoitus"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
@@ -394,7 +394,7 @@ msgstr ""
 
 #: js/global.js:1330
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Asiakirjaa siirretään uudelle palvelimelle. Yritetään uudelleen..."
 
 #: js/global.js:1332
 msgid "Failed to get RouteToken from controller"
@@ -418,23 +418,24 @@ msgstr "\"Hidas välityspalvelin\""
 
 #: src/control/Control.AboutDialog.ts:139
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Kopioi kaikki versiotiedot englanniksi"
 
 #: src/control/Control.AlertDialog.js:53
 msgid "External link"
-msgstr ""
+msgstr "Ulkoinen linkki"
 
 #: src/control/Control.AlertDialog.js:54
 msgid "Open link"
 msgstr "Avaa linkki"
 
 #: src/control/Control.AlertDialog.js:66
+#, fuzzy
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Kopioituja ulkoisia lähteitä ei sallita"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Olet ilmeisesti kopioinut valinnan, jossa on ulkoisia kuvia."
 
 #: src/control/Control.AlertDialog.js:68
 msgid ""
@@ -442,24 +443,29 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Ulkoisten resurssien lataaminen on kiellettyä, mutta kuvien liittäminen on "
+"kuitenkin mahdollista. Napsauta kuvaa hiiren kakkospainikkeella, valitse "
+"Kopioi kuva ja liitä kuva asiakirjaan."
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Ulkoista tietolähdettä ei sallita"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Yritit ilmeisesti lisätä ulkoisia tietoja."
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Valittua ulkoista tietolähdettä ei sallita. Ota yhteyttä "
+"järjestelmänvalvojaan."
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
-msgstr ""
+msgstr "Älä näytä tätä uudelleen"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a {0} error while parsing the {1} command."
@@ -479,11 +485,11 @@ msgstr "Liitä määräten"
 
 #: src/control/Control.ContextMenu.js:248
 msgid "Copy Cells"
-msgstr ""
+msgstr "Kopioi solut"
 
 #: src/control/Control.ContextMenu.js:256
 msgid "Fill Series"
-msgstr ""
+msgstr "Täytä sarja"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -505,15 +511,15 @@ msgstr "Laji"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "What?"
-msgstr ""
+msgstr "Mitä?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "Who?"
-msgstr ""
+msgstr "Kuka?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "When?"
-msgstr ""
+msgstr "Milloin?"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "You have not done anything to rollback yet..."
@@ -529,7 +535,7 @@ msgstr "Kumoa"
 
 #: src/control/Control.DownloadProgress.js:42
 msgid "Download Selection"
-msgstr ""
+msgstr "Lataa valinta"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
@@ -542,34 +548,36 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:280
 #: src/control/Control.NotebookbarWriter.js:281
 msgid "Download"
-msgstr ""
+msgstr "Lataa"
 
 #: src/control/Control.DownloadProgress.js:79
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Ladataan leikepöydän sisältöä"
 
 #: src/control/Control.DownloadProgress.js:86
 #: src/control/Control.DownloadProgress.js:111
 #: src/control/Control.PartsPreview.js:269
 msgid "Copy"
-msgstr ""
+msgstr "Kopioi"
 
 #: src/control/Control.DownloadProgress.js:109
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Lataus on valmis ja tiedot voidaan kopioida leikepöydälle."
 
 #: src/control/Control.DownloadProgress.js:110
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"Tästä eteenpäin leikepöydän ilmoitukset näkyvät huomaamattomasti näytön "
+"alaosassa."
 
 #: src/control/Control.DownloadProgress.js:264
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Sisältö on kopioitu leikepöydälle"
 
 #: src/control/Control.DownloadProgress.js:306
 msgid "Download failed"
-msgstr ""
+msgstr "Lataus epäonnistui"
 
 #: src/control/Control.FormulaBarJSDialog.js:101
 #: src/control/Control.FormulaBarJSDialog.js:161
@@ -583,7 +591,7 @@ msgstr "Funktioapuri"
 
 #: src/control/Control.FormulaBarJSDialog.js:123
 msgid "Formula"
-msgstr ""
+msgstr "Kaava"
 
 #: src/control/Control.FormulaBarJSDialog.js:129
 #: src/control/Control.MobileTopBar.ts:42
@@ -702,11 +710,11 @@ msgstr "Ei mitään (Älä tarkista oikeinkirjoitusta)"
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
-msgstr ""
+msgstr "Valitse kieli"
 
 #: src/control/Control.LanguageDialog.js:103
 msgid "Language"
-msgstr ""
+msgstr "Kieli"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
 #: src/control/Control.Menubar.js:980
@@ -854,7 +862,7 @@ msgstr "Nollaa zoomaus"
 #: src/control/Control.NotebookbarImpress.js:407
 #: src/control/Control.NotebookbarWriter.js:1454
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Vaihda käyttöliittymän tilaa"
 
 #: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:444
 #: src/control/Control.NotebookbarDraw.js:404
@@ -879,7 +887,7 @@ msgstr "Näytä tilapalkki"
 #: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:446
 #: src/control/Control.Menubar.js:601 src/control/Control.Menubar.js:736
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Piilota valikkopalkki"
 
 #: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:447
 #: src/control/Control.Menubar.js:596 src/control/Control.Menubar.js:737
@@ -890,7 +898,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:478
 #: src/control/Control.NotebookbarWriter.js:1499
 msgid "Dark Mode"
-msgstr ""
+msgstr "Tumma tila"
 
 #: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:448
 #: src/control/Control.Menubar.js:597 src/control/Control.Menubar.js:738
@@ -900,8 +908,9 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:442
 #: src/control/Control.NotebookbarImpress.js:485
 #: src/control/Control.NotebookbarWriter.js:1506
+#, fuzzy
 msgid "Invert Background"
-msgstr ""
+msgstr "Käännä tausta"
 
 #: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:459
 #: src/control/Control.Menubar.js:604 src/control/Control.Menubar.js:750
@@ -922,7 +931,7 @@ msgstr "Kaikki"
 #: src/control/Control.NotebookbarImpress.js:1245
 #: src/control/Control.NotebookbarWriter.js:1104
 msgid "Smart Picker"
-msgstr ""
+msgstr "Älykäs poiminta"
 
 #: src/control/Control.Menubar.js:230
 msgid "Text orientation"
@@ -937,54 +946,58 @@ msgstr "Viittaukset"
 #: src/control/Control.Menubar.js:297
 #: src/control/Control.NotebookbarWriter.js:1866
 msgid "Update Index"
-msgstr ""
+msgstr "Päivitä hakemisto"
 
 #: src/control/Control.Menubar.js:306
 #: src/control/Control.NotebookbarWriter.js:1962
 msgid "Add Citation"
-msgstr ""
+msgstr "Lisää lainaus"
 
 #: src/control/Control.Menubar.js:307
 #: src/control/Control.NotebookbarWriter.js:1974
+#, fuzzy
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Lisää lainauskommentti"
 
 #: src/control/Control.Menubar.js:308
 #: src/control/Control.NotebookbarWriter.js:1949
+#, fuzzy
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Lisää lähdeluettelo"
 
 #: src/control/Control.Menubar.js:310
 #: src/control/Control.NotebookbarWriter.js:1992
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Päivitä lainaukset"
 
 #: src/control/Control.Menubar.js:311
 #: src/control/Control.NotebookbarWriter.js:2004
 #: src/control/Control.Zotero.js:1444
+#, fuzzy
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Poista lainausten linkit"
 
 #: src/control/Control.Menubar.js:312
 #: src/control/Control.NotebookbarWriter.js:2016
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Lainausasetukset"
 
 #: src/control/Control.Menubar.js:340 src/control/Control.Menubar.js:1266
+#, fuzzy
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Lisää muotoiltua tekstiä"
 
 #: src/control/Control.Menubar.js:341 src/control/Control.Menubar.js:1267
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Lisää valintaruutu"
 
 #: src/control/Control.Menubar.js:342 src/control/Control.Menubar.js:1268
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Lisää avattava valikko"
 
 #: src/control/Control.Menubar.js:343 src/control/Control.Menubar.js:1269
 msgid "Insert Picture"
-msgstr ""
+msgstr "Lisää kuva"
 
 #: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:1270
 #, fuzzy
@@ -998,12 +1011,13 @@ msgstr "Lisää taulukko"
 #: src/control/Control.NotebookbarWriter.js:310
 #: src/control/Control.NotebookbarWriter.js:1376
 msgid "Properties"
-msgstr ""
+msgstr "Ominaisuudet"
 
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:1015
 #: src/control/Control.NotebookbarWriter.js:401
+#, fuzzy
 msgid "Screen Reading"
-msgstr ""
+msgstr "Näytön luku"
 
 #: src/control/Control.Menubar.js:378
 #: src/control/Control.NotebookbarWriter.js:367
@@ -1049,8 +1063,9 @@ msgstr "Lähetä palautetta"
 #: src/control/Control.NotebookbarWriter.js:416
 #: src/control/Control.ServerAuditDialog.ts:174
 #: src/control/Control.ServerAuditDialog.ts:175
+#, fuzzy
 msgid "Server audit"
-msgstr ""
+msgstr "Palvelimen auditointi"
 
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:548
 #: src/control/Control.Menubar.js:679 src/control/Control.Menubar.js:960
@@ -1084,18 +1099,19 @@ msgstr "Tallenna huomautukset"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:601
+#, fuzzy
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Koko sivun diat"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:605
 msgid "Notes Pages"
-msgstr ""
+msgstr "Muistiinpanosivut"
 
 #: src/control/Control.Menubar.js:449
 #: src/control/Control.NotebookbarImpress.js:470
 msgid "Master View"
-msgstr ""
+msgstr "Päänäkymä"
 
 #: src/control/Control.Menubar.js:526 src/control/Control.Menubar.js:1088
 #: src/control/Control.PresentationBar.js:127
@@ -1107,8 +1123,9 @@ msgid "Present current slide"
 msgstr "Esitä nykyinen dia"
 
 #: src/control/Control.Menubar.js:528
+#, fuzzy
 msgid "Present in new window"
-msgstr ""
+msgstr "Esitä uudessa ikkunassa"
 
 #: src/control/Control.Menubar.js:565 src/control/Control.Menubar.js:1048
 #: src/control/Control.Menubar.js:1109
@@ -1145,37 +1162,38 @@ msgstr "CSV-tiedosto (.csv)"
 #: src/control/Control.Menubar.js:705
 #: src/control/jsdialog/Definitions.Menu.ts:111
 msgid "Active sheet"
-msgstr ""
+msgstr "Aktiivinen taulukko"
 
 #: src/control/Control.Menubar.js:706 src/control/Control.TopToolbar.js:110
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "All Sheets"
-msgstr ""
+msgstr "Kaikki taulukot"
 
 #: src/control/Control.Menubar.js:835
 #: src/control/jsdialog/Definitions.Menu.ts:286
+#, fuzzy
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Korosta soluja..."
 
 #: src/control/Control.Menubar.js:836
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr ""
+msgstr "Arvot, jotka ovat suurempia kuin..."
 
 #: src/control/Control.Menubar.js:837
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr ""
+msgstr "Arvot, jotka ovat pienempiä kuin..."
 
 #: src/control/Control.Menubar.js:838
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr ""
+msgstr "Arvot, jotka ovat yhtä suuria kuin..."
 
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "Arvot, jotka ovat välillä..."
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:305
@@ -1246,11 +1264,11 @@ msgstr "Sivuasetukset"
 
 #: src/control/Control.Menubar.js:1161
 msgid "Define print area"
-msgstr ""
+msgstr "Aseta tulostusalue"
 
 #: src/control/Control.Menubar.js:1162
 msgid "Remove print area"
-msgstr ""
+msgstr "Poista tulostusalue"
 
 #: src/control/Control.Menubar.js:1440 src/control/Control.StatusBar.js:473
 msgid "Reset to Default Language"
@@ -1264,15 +1282,15 @@ msgstr "Lisää..."
 
 #: src/control/Control.Menubar.js:1778
 msgid "Use Compact view"
-msgstr ""
+msgstr "Käytä tiivistettyä näkymää"
 
 #: src/control/Control.Menubar.js:1780
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Käytä sarkainnäkymää"
 
 #: src/control/Control.Menubar.js:1848 src/control/Control.Menubar.js:1861
 msgid "Read-only mode"
-msgstr ""
+msgstr "Vain luku -tila"
 
 #: src/control/Control.Menubar.js:1882
 msgid "Insert Shape"
@@ -1307,12 +1325,12 @@ msgstr "Liukuvärin loppu"
 
 #: src/control/Control.NotebookbarBuilder.js:229
 msgid "Tap to expand"
-msgstr ""
+msgstr "Laajenna napauttamalla"
 
 #: src/control/Control.NotebookbarBuilder.js:230
 #: src/control/Control.NotebookbarBuilder.js:274
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Supista napauttamalla"
 
 #: src/control/Control.NotebookbarBuilder.js:436
 msgid "CSV File (.csv)"
@@ -1400,7 +1418,7 @@ msgstr "~Apua"
 #: src/control/Control.NotebookbarWriter.js:169
 #: src/control/Control.NotebookbarWriter.js:281
 msgid "Save As"
-msgstr ""
+msgstr "Tallenna nimellä"
 
 #: src/control/Control.NotebookbarCalc.js:146
 #: src/control/Control.NotebookbarDraw.js:180
@@ -1432,7 +1450,7 @@ msgstr "Näytä historia"
 #: src/control/Control.NotebookbarWriter.js:324
 #: src/control/Control.UIManager.js:196
 msgid "Rename"
-msgstr ""
+msgstr "Nimeä uudelleen"
 
 #: src/control/Control.NotebookbarCalc.js:593
 msgid "General"
@@ -1502,11 +1520,11 @@ msgstr "Huono"
 
 #: src/control/Control.NotebookbarCalc.js:913
 msgid "Row Height"
-msgstr ""
+msgstr "Rivin korkeus"
 
 #: src/control/Control.NotebookbarCalc.js:921
 msgid "Column Width"
-msgstr ""
+msgstr "Sarakkeen leveys"
 
 #: src/control/Control.NotebookbarCalc.js:934
 msgid "Insert Rows Above"
@@ -1537,28 +1555,29 @@ msgstr "Poista sarakkeet"
 #: src/control/Control.NotebookbarImpress.js:336
 #: src/control/Control.NotebookbarWriter.js:1392
 msgid "Read mode"
-msgstr ""
+msgstr "Lukutila"
 
 #: src/control/Control.NotebookbarCalc.js:1207
 #: src/control/Control.NotebookbarDraw.js:389
 #: src/control/Control.NotebookbarImpress.js:406
 #: src/control/Control.NotebookbarWriter.js:1453
 msgid "Compact view"
-msgstr ""
+msgstr "Tiivistetty näkymä"
 
 #: src/control/Control.NotebookbarCalc.js:1221
 #: src/control/Control.NotebookbarDraw.js:429
 #: src/control/Control.NotebookbarImpress.js:446
 #: src/control/Control.NotebookbarWriter.js:1493
+#, fuzzy
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Supista välilehdet"
 
 #: src/control/Control.NotebookbarCalc.js:1233
 #: src/control/Control.NotebookbarDraw.js:416
 #: src/control/Control.NotebookbarImpress.js:433
 #: src/control/Control.NotebookbarWriter.js:1480
 msgid "Status Bar"
-msgstr ""
+msgstr "Tilapalkki"
 
 #: src/control/Control.NotebookbarCalc.js:1327
 msgid "Sparkline"
@@ -1574,7 +1593,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1060
 #: src/control/Control.NotebookbarWriter.js:2838
 msgid "Shapes"
-msgstr ""
+msgstr "Muodot"
 
 #: src/control/Control.NotebookbarDraw.js:99
 #: src/control/Control.NotebookbarImpress.js:114
@@ -1589,13 +1608,13 @@ msgstr "Kuva (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:273
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF-asiakirja (.pdf) – asiantuntija"
 
 #: src/control/Control.NotebookbarDraw.js:403
 #: src/control/Control.NotebookbarImpress.js:420
 #: src/control/Control.NotebookbarWriter.js:1467
 msgid "Ruler"
-msgstr ""
+msgstr "Viivoitin"
 
 #: src/control/Control.NotebookbarDraw.js:1058
 #, fuzzy
@@ -1617,11 +1636,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:455
 msgid "Normal View"
-msgstr ""
+msgstr "Normaalinäkymä"
 
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "Muistiinpanonäkymä"
 
 #: src/control/Control.NotebookbarWriter.js:79
 #, fuzzy
@@ -1630,27 +1649,28 @@ msgstr "Foorumi"
 
 #: src/control/Control.NotebookbarWriter.js:338
 msgid "Go Online"
-msgstr ""
+msgstr "Siirry online-tilaan"
 
 #: src/control/Control.NotebookbarWriter.js:338
 msgid "Go Offline"
-msgstr ""
+msgstr "Siirry offline-tilaan"
 
 #: src/control/Control.NotebookbarWriter.js:1341
+#, fuzzy
 msgid "Rich Text"
-msgstr ""
+msgstr "Muotoiltu teksti"
 
 #: src/control/Control.NotebookbarWriter.js:1348
 msgid "Checkbox"
-msgstr ""
+msgstr "Valintaruutu"
 
 #: src/control/Control.NotebookbarWriter.js:1355
 msgid "Dropdown"
-msgstr ""
+msgstr "Avattava valikko"
 
 #: src/control/Control.NotebookbarWriter.js:1362
 msgid "Picture"
-msgstr ""
+msgstr "Kuva"
 
 #: src/control/Control.PartsPreview.js:176
 msgid "preview of page "
@@ -1658,11 +1678,11 @@ msgstr "Esikatselu sivusta "
 
 #: src/control/Control.PartsPreview.js:235
 msgid "Paste Slide"
-msgstr ""
+msgstr "Liitä dia"
 
 #: src/control/Control.PartsPreview.js:278
 msgid "Paste"
-msgstr ""
+msgstr "Liitä"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -1696,11 +1716,11 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:65
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "WOPI-palvelimesi ei ole turvallinen: SSL-todennus epäonnistui"
 
 #: src/control/Control.ServerAuditDialog.ts:69
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "SSL-todennuksessa ei havaittu ongelmia"
 
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid "PostMessage API is initialized"
@@ -1715,14 +1735,16 @@ msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Palvelinkokoonpanossasi ei ole riittävästi laitteistoresursseja, mikä voi "
+"heikentää suorituskykyä."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Laitteistoresurssit eivät riitä optimaaliseen suorituskykyyn"
 
 #: src/control/Control.ServerAuditDialog.ts:193
 msgid "No issues found"
-msgstr ""
+msgstr "Ongelmia ei havaittu"
 
 #: src/control/Control.ServerAuditDialog.ts:199
 #, fuzzy
@@ -1731,11 +1753,12 @@ msgstr "Tila:"
 
 #: src/control/Control.ServerAuditDialog.ts:247
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Tarkista palvelimen suojausvaroitukset"
 
 #: src/control/Control.ServerAuditDialog.ts:248
+#, fuzzy
 msgid "OPEN"
-msgstr ""
+msgstr "AVAA"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -1806,15 +1829,16 @@ msgstr "Valitsemistila: pois käytöstä"
 
 #: src/control/Control.StatusBar.js:490
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Aseta kaikkien tekstien kieli"
 
 #: src/control/Control.StatusBar.js:493
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Aseta kappaleen kieli"
 
 #: src/control/Control.StatusBar.js:494
+#, fuzzy
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Aseta valitun alueen kieli"
 
 #: src/control/Control.Tabs.js:53
 msgid "Insert sheet before this"
@@ -1842,7 +1866,7 @@ msgstr "Haluatko varmasti poistaa taulukon {sheet}?"
 
 #: src/control/Control.Tabs.js:399
 msgid "Rename sheet"
-msgstr ""
+msgstr "Nimeä taulukko uudelleen"
 
 #: src/control/Control.Tabs.js:399
 msgid "Enter new sheet name"
@@ -1858,7 +1882,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
-msgstr ""
+msgstr "Aktiivinen taulukko"
 
 #: src/control/Control.TopToolbar.js:121
 msgid "Default Style"
@@ -1878,15 +1902,15 @@ msgstr "Lisää liittimet"
 
 #: src/control/Control.TopToolbar.js:200 src/control/Control.UIManager.js:811
 msgid "Hide Menu"
-msgstr ""
+msgstr "Piilota valikko"
 
 #: src/control/Control.UIManager.js:196
 msgid "Enter new name"
-msgstr ""
+msgstr "Anna uusi nimi"
 
 #: src/control/Control.UIManager.js:835
 msgid "Show Menu"
-msgstr ""
+msgstr "Näytä valikko"
 
 #: src/control/Control.UserList.ts:54
 msgid "{user} has joined"
@@ -1898,7 +1922,7 @@ msgstr "{user} on poistunut"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following {user}"
-msgstr ""
+msgstr "Seurataan käyttäjää {user}"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
