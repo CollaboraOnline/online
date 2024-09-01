@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-19 10:15+0200\n"
-"PO-Revision-Date: 2024-04-21 19:07+0000\n"
+"PO-Revision-Date: 2024-08-31 06:09+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "help/de/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.7.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:84-5
 msgid "Keyboard Shortcuts"
@@ -48,16 +48,15 @@ msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-38
 msgid "Copy"
-msgstr ""
+msgstr "Kopieren"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, <kbd>Ctrl</"
 "kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Eingabetaste</kbd>"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, <kbd>Strg</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Einfügen</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-38
 msgid "Paste as unformatted text"
@@ -2055,13 +2054,12 @@ msgstr ""
 "kopiert werden, in dem Sie arbeiten."
 
 #: html/cool-help.html%2Bdiv.div.div.p:516-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
 msgstr ""
 "Wenn Sie Text von außerhalb des Dokuments (eines anderen Browserfensters "
-"oder einer Desktopanwendung) einfügen, wird er als Rich Text eingefügt."
+"oder einer Desktopanwendung) einfügen, wird er als Rich-Text eingefügt."
 
 #: html/cool-help.html%2Bdiv.div.div.p:517-5
 msgid ""
