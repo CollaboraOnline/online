@@ -314,6 +314,11 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.getCustomHandles(halfWidth, halfHeight);
 		this.getPolyHandles(halfWidth, halfHeight);
 		this.getGluePoints();
+
+		if (app.map._docLayer._docType === 'spreadsheet') {
+			for (let i = 0; i < this.sectionProperties.handles.length; i++)
+				app.map._docLayer.sheetGeometry.convertToTileTwips(this.sectionProperties.handles[i].point);
+		}
 	}
 
 	// Update this section's size according to handle coordinates.
