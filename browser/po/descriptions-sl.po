@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-19 11:23+0200\n"
-"PO-Revision-Date: 2024-08-26 13:09+0000\n"
+"PO-Revision-Date: 2024-08-31 06:09+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/app-store-descriptions/sl/>\n"
@@ -70,7 +70,7 @@ msgstr "Microsoft Office 97/2000/XP/2003 (.doc, .ppt, .xls, .dot, .xlt, .pps)"
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:31-1
 msgid "Report issues:"
-msgstr ""
+msgstr "Poročajte o težavah:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:35-1
@@ -83,7 +83,7 @@ msgstr ""
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
 msgid "About the app:"
-msgstr ""
+msgstr "O programu:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:44-1
@@ -101,6 +101,10 @@ msgid ""
 "developing Android support since 2012, with the help of Google Summer of "
 "Code students Andrzej Hunt, Iain Billet and Kaishu Sahu."
 msgstr ""
+"Inženirji Collabore Tor Lillqvist, Tomaž Vajngerl, Michael Meeks, Miklos "
+"Vajna, Jan Holešovský, Mert Tümer, Rashesh Padia in Skyler Grey razvijajo "
+"podporo za Android od leta 2012, pri čemer so jim pomagali študenti Google "
+"Summer of Code Andrzej Hunt, Iain Billet in Kaishu Sahu."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:52-1
