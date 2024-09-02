@@ -865,6 +865,7 @@ class SlideShowHandler {
 			this.theMetaPres.slideWidth,
 			this.theMetaPres.slideHeight,
 		);
+		this.presenter.stopLoader();
 	}
 
 	private createTransitionParameters(
