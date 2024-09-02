@@ -15,6 +15,7 @@
 #include <cerrno>
 #include <chrono>
 #include <cinttypes>
+#include <cstdarg>
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
@@ -541,6 +542,17 @@ namespace Util
         dumpHex(oss, data, legend, prefix, skipDup, width);
         return oss.str();
     }
+
+    /// Returns a string according to `vprintf()` formatting rules
+    /// using `va_list` instead of a variable number of arguments.
+    /// @param format `printf()` compliant format string
+    /// @param ap `va_list` arguments
+    std::string vformatString(const char* format, va_list ap);
+
+    /// Returns a string according to `printf()` formatting rules
+    /// and variable number of arguments following the `format` argument.
+    /// @param format `printf()` compliant format string
+    std::string formatString(const char* format, ...);
 
     size_t findInVector(const std::vector<char>& tokens, const char *cstring, std::size_t offset = 0);
 

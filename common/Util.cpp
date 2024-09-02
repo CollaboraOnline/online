@@ -727,6 +727,44 @@ namespace Util
 #endif
     }
 
+    std::string vformatString(const char* format, va_list ap)
+    {
+        size_t nchars;
+        std::string str;
+        {
+            const size_t bsz = 1024; // including EOS
+            str.reserve(bsz); // incl. EOS
+            str.resize(bsz - 1); // excl. EOS
+
+            nchars = ::vsnprintf(&str[0], bsz, format,
+                                 ap); // NOLINT(clang-analyzer-valist.Uninitialized): clang-tidy bug
+            if (nchars < bsz)
+            {
+                str.resize(nchars);
+                str.shrink_to_fit();
+                return str;
+            }
+        }
+        {
+            const size_t bsz = std::min<size_t>(nchars + 1, str.max_size() + 1); // limit incl. EOS
+            str.reserve(bsz); // incl. EOS
+            str.resize(bsz - 1); // excl. EOS
+            nchars = ::vsnprintf(&str[0], bsz, format,
+                                 ap); // NOLINT(clang-analyzer-valist.Uninitialized): clang-tidy bug
+            str.resize(nchars);
+            return str;
+        }
+    }
+
+    std::string formatString(const char* format, ...)
+    {
+        va_list args;
+        ::va_start(args, format);
+        std::string str = vformatString(format, args);
+        ::va_end(args);
+        return str;
+    }
+
     std::map<std::string, std::string> stringVectorToMap(const std::vector<std::string>& strvector, const char delimiter)
     {
         std::map<std::string, std::string> result;
