@@ -711,7 +711,7 @@ namespace Util
         localtime_r(&t, &tm);
 
         char buffer[128] = { 0 };
-        std::strftime(buffer, 80, "%a %b %d %H:%M", &tm);
+        std::strftime(buffer, 80, "%a %b %d %H:%M:%S", &tm);
         std::stringstream ss;
         ss << buffer << '.' << std::setfill('0') << std::setw(3) << msFraction << ' '
            << tm.tm_year + 1900;
