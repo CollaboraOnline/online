@@ -1238,6 +1238,57 @@ int main(int argc, char**argv)
         }
     };
 
+    /// Simple backtrace capture
+    /// Use case, e.g. streaming up to 20 frames to log: `LOG_TRC( Util::Backtrace::get(20) );`
+    /// Enabled for !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    /// Using
+    /// - <https://www.man7.org/linux/man-pages/man3/backtrace.3.html>
+    /// - <https://gcc.gnu.org/onlinedocs/libstdc++/manual/ext_demangling.html>
+    class Backtrace
+    {
+    public:
+        struct Symbol
+        {
+            std::string blob;
+            std::string mangled;
+            std::string offset;
+            std::string demangled;
+            std::string toString() const;
+            std::string toMangledString() const;
+            bool isDemangled() const { return !demangled.empty(); }
+        };
+
+    private:
+        int skipFrames;
+        /// Stack frames {address, symbol}
+        std::vector<std::pair<void*, Symbol>> _frames;
+
+        static bool separateRawSymbol(const std::string& raw, Symbol& s);
+
+    public:
+        /// Produces a backtrace instance from current stack position
+        Backtrace(const int maxFrames = 50, const int skip = 1);
+
+        /// Produces a backtrace instance from current stack position
+        static Backtrace get(const int maxFrames = 50, const int skip = 2)
+        {
+            Backtrace bt(maxFrames, skip);
+            return bt;
+        }
+
+        /// Sends captured backtrace to given ostream
+        std::ostream& send(std::ostream& os) const;
+
+        /// Produces a string representation, one line per frame
+        std::string toString() const noexcept;
+
+        /* constexpr */ size_t size() const noexcept { return _frames.size(); }
+        /* constexpr */ const Symbol& operator[](size_t idx) const noexcept
+        {
+            return _frames[idx].second;
+        }
+    };
+
     //// Return current time in HTTP format.
     std::string getHttpTimeNow();
 
@@ -1544,5 +1595,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_cloc
     os << Util::getIso8601FracformatTime(ts);
     return os;
 }
+
+inline std::ostream& operator<<(std::ostream& os, const Util::Backtrace& bt) { return bt.send(os); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
