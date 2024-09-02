@@ -97,6 +97,12 @@ class SlideTransition {
 			case TransitionType.WATERFALLWIPE:
 				return new SlideShow.DiagonalTransition(transitionParameters);
 
+			case TransitionType.MISCSHAPEWIPE:
+				return SlideShow.MicsShapeWipeTransition(transitionParameters);
+
+			case TransitionType.ZOOM:
+				return SlideShow.NewsFlashTransition(transitionParameters);
+
 			default:
 				console.log(
 					'Unknown transition type',
