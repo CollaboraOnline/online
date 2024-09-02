@@ -336,10 +336,7 @@ class SlideShowPresenter {
 		pauseTimer.startTimer();
 	}
 
-	// TODO make it works with SlideShowNavigator/SlideShowHandler
 	private startLoader(): void {
-		window.app.console.log('SlideShowPresenter.startLoader');
-
 		try {
 			this._canvasLoader = new CanvasLoaderGl(this._slideRenderer._context);
 		} catch (error) {
@@ -349,7 +346,7 @@ class SlideShowPresenter {
 		this._canvasLoader.startLoader();
 	}
 
-	private stopLoader(): void {
+	public stopLoader(): void {
 		if (!this._canvasLoader) return;
 
 		this._canvasLoader.stopLoader();
@@ -358,7 +355,6 @@ class SlideShowPresenter {
 
 	// TODO _doTransition (don't hack this, no more used)
 	//  port to SlideShowHandler transitionType = 'NONE' (?)
-	//  port to SlideShowNavigator/SlideShowHandler stopLoader()
 	//  to be removed
 	_doTransition(
 		currentTexture: WebGLTexture | ImageBitmap,
