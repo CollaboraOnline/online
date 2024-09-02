@@ -11,6 +11,7 @@
 
 #include <config.h>
 #include <config_version.h>
+#include <NetUtil.hpp>
 
 #include "COOLWSD.hpp"
 #if ENABLE_FEATURE_LOCK
@@ -2073,12 +2074,19 @@ void COOLWSD::innerInitialize(Application& self)
         { "mount_jail_tree", "true" },
         { "mount_namespaces", "true" },
         { "net.connection_timeout_secs", "30" },
-        { "net.listen", "any" },
-        { "net.proto", "all" },
-        { "net.service_root", "" },
-        { "net.proxy_prefix", "false" },
         { "net.content_security_policy", "" },
         { "net.frame_ancestors", "" },
+        { "net.listen", "any" },
+        { "net.proto", "all" },
+        { "net.proxy_prefix", "false" },
+        { "net.service_root", "" },
+        { "net.ws.ping.timeout", "2000000" }, // WebSocketHandler ping timeout in us (2s). Zero disables metric.
+        { "net.ws.ping.period", "3000000" }, // WebSocketHandler ping period in us (3s), i.e. duration until next ping.
+        { "net.http.timeout", "30000000" }, // http::Session timeout in us (30s). Zero disables metric.
+        { "net.maxconnections", "100000" }, // Socket maximum connections (100000). Zero disables metric.
+        { "net.maxduration", "43200" }, // Socket maximum duration in seconds (12h). Zero disables metric.
+        { "net.minbps", "0" }, // Socket minimum bits per seconds throughput (0). Increase for debugging. Zero disables metric.
+        { "net.socketpoll.timeout", "64000000" }, // SocketPoll timeout in us (64s).
         { "num_prespawn_children", "1" },
         { "per_document.always_save_on_exit", "false" },
         { "per_document.autosave_duration_secs", "300" },
@@ -2353,6 +2361,30 @@ void COOLWSD::innerInitialize(Application& self)
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(conf);
 
+    // net::Defaults
+    {
+        typedef int int_t;
+        net::Defaults& def = net::Defaults::get();
+        int_t v = getConfigValue<int_t>(conf, "net.ws.ping.timeout", 2000000);
+        def.WSPingTimeout = std::chrono::microseconds(v);
+        v = getConfigValue<int_t>(conf, "net.ws.ping.period", 3000000);
+        def.WSPingPeriod = std::chrono::microseconds(v);
+        v = getConfigValue<int_t>(conf, "net.http.timeout", 30000000);
+        def.HTTPTimeout = std::chrono::microseconds(v);
+        v = getConfigValue<int_t>(conf, "net.maxconnections", 100000);
+        def.MaxConnectionCount = static_cast<size_t>(v);
+        v = getConfigValue<int_t>(conf, "net.maxduration", 43200);
+        def.MaxDuration = std::chrono::seconds(v);
+        v = getConfigValue<int_t>(conf, "net.minbps", 0);
+        def.MinBytesPerSec = static_cast<double>(v) / 8.0;
+        v = getConfigValue<int_t>(conf, "net.socketpoll.timeout", 64000000);
+        def.SocketPollTimeout = std::chrono::microseconds(v);
+        LOG_DBG("net::Defaults: WSPing[timeout "
+                << def.WSPingTimeout << ", period " << def.WSPingPeriod << "], HTTP[timeout "
+                << def.HTTPTimeout << "], Socket[maxConnections " << def.MaxConnectionCount
+                << ", maxDuration " << def.MaxDuration << ", minBytesPerSec " << def.MinBytesPerSec
+                << "], SocketPoll[timeout " << def.SocketPollTimeout << "]");
+    }
     // Trace Event Logging.
     EnableTraceEventLogging = getConfigValue<bool>(conf, "trace_event[@enable]", false);
 
@@ -4530,10 +4562,12 @@ int COOLWSD::innerMain()
 #endif
 #endif
 
+    const std::chrono::microseconds PollTimeoutMicroS = net::Defaults::get().SocketPollTimeout;
+
     while (!SigUtil::getShutdownRequestFlag())
     {
         // This timeout affects the recovery time of prespawned children.
-        std::chrono::microseconds waitMicroS = SocketPoll::DefaultPollTimeoutMicroS * 4;
+        std::chrono::microseconds waitMicroS = PollTimeoutMicroS * 4;
 
         if (UnitWSD::isUnitTesting() && !SigUtil::getShutdownRequestFlag())
         {

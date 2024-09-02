@@ -20,7 +20,9 @@
 #include <cstring>
 #include <algorithm>
 #include <atomic>
+#include <limits>
 #include <mutex>
+#include <ratio>
 #include <set>
 #include <sstream>
 #include <string>
@@ -146,6 +148,100 @@ namespace Util
         static void readTime(uint64_t &cpu, uint64_t &sys);
         uint64_t _startCPU;
         uint64_t _startSys;
+    };
+
+    // Time-weighted average
+    class TimeAverage
+    {
+    public:
+        typedef std::chrono::steady_clock::time_point time_point;
+
+    private:
+        time_point _t0;
+        time_point _t1;
+        double _v1;
+        double _area;
+
+    public:
+        // default ctor without value initialization
+        constexpr TimeAverage() noexcept
+            : _v1(0)
+            , _area(0)
+        {
+        }
+
+        // ctor with value initialization
+        constexpr TimeAverage(time_point t, double v) noexcept
+            : _t0(t)
+            , _t1(t)
+            , _v1(v)
+            , _area(0.0)
+        {
+        }
+
+        // returns true if initialized via reset() or ctor
+        constexpr bool initialized() const noexcept
+        {
+            return _t0.time_since_epoch() != time_point::duration::zero();
+        }
+
+        // initialize instance with given values
+        void reset(time_point t, double v) noexcept
+        {
+            _t0 = t;
+            _t1 = t;
+            _v1 = v;
+            _area = 0.0;
+        }
+
+        // move startTime() and endTime() to given time-point maintaining duration()
+        void moveTo(time_point t) noexcept
+        {
+            auto dt = t - _t1;
+            _t0 += dt;
+            _t1 += dt;
+        }
+
+        // Adds an arbitrary value at given time-point, returns new average
+        // May reset() instance and returns `vn` if not yet initialized()
+        double add(time_point t, double v) noexcept
+        {
+            if (!initialized())
+            {
+                reset(t, v);
+                return v;
+            }
+            else
+            {
+                // time*value area accumulation in seconds
+                const double dt1 = std::chrono::duration<double>(t - _t1).count();
+                // area(rectangle + triangle)
+                // _area += dt1 * _v1 + (dt1 * (v - _v1) * 0.5);
+                _area += dt1 * 0.5 * (_v1 + v);
+                _t1 = t;
+                _v1 = v;
+                return average();
+            }
+        }
+
+        // Returns average
+        constexpr double average() const noexcept
+        {
+            const double dt = duration();
+            return dt > std::numeric_limits<double>::epsilon() ? _area / dt : _v1;
+        }
+
+        // Returns last value
+        constexpr double last() const noexcept { return _v1; }
+        // Returns last time-point
+        constexpr std::chrono::steady_clock::time_point lastTime() const noexcept { return _t1; }
+        // Returns first time-point
+        constexpr std::chrono::steady_clock::time_point startTime() const noexcept { return _t0; }
+        // Returns duration in seconds
+        constexpr double duration() const noexcept
+        {
+            return std::chrono::duration<double>(_t1 - _t0).count();
+        }
     };
 
     class DirectoryCounter

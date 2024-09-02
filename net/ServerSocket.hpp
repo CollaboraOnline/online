@@ -134,7 +134,7 @@ public:
         ServerSocket(Socket::Type::Unix, clientPoller, std::move(sockFactory))
     {
     }
-    ~LocalServerSocket();
+    ~LocalServerSocket() override;
 
     bool bind(Type, int) override { assert(false); return false; }
     std::shared_ptr<Socket> accept() override;
