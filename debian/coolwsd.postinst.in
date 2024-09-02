@@ -3,6 +3,15 @@
 set -e
 
 case "$1" in
+    install|upgrade|configure)
+        # If abi 4.0 is not present, then remove the apparmor profile config
+        if [ ! -e /etc/apparmor.d/abi/4.0 ]; then
+            rm -f /etc/apparmor.d/usr.bin.coolwsd
+        fi
+        ;;
+esac
+
+case "$1" in
     configure)
 	if [ -f /etc/loolwsd/loolwsd.xml ]; then /usr/bin/coolconfig migrateconfig --write || true; fi
 
