@@ -2321,6 +2321,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'id': 'review-accessibility-check',
+				'class': 'unoAccessibilityCheck',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:AccessibilityCheck', 'text'),
 				'command': '.uno:SidebarDeck.A11yCheckDeck',

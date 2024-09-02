@@ -2176,6 +2176,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'zoteroaddnote': 'addcitationnote',
 			'zoterorefresh': 'updateall',
 			'zoterounlink': 'unlinkcitation',
+			'zoteroaddeditbibliography': 'addeditbibliography',
 			'zoteroeditbibliography': 'addeditbibliography',
 			'zoterosetdocprefs': 'formproperties',
 			'sidebardeck.propertydeck' : 'sidebar',
