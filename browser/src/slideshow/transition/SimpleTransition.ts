@@ -25,11 +25,6 @@ class SimpleTransition extends SlideShow.Transition3d {
 		this.enteringPrimitives = transitionParameters.enteringPrimitives;
 		this.allOperations = transitionParameters.allOperations;
 
-		this.animationTime =
-			transitionParameters.slideInfo?.transitionDuration > 0
-				? this.slideInfo.transitionDuration
-				: 2000;
-
 		this.textures = [transitionParameters.current, transitionParameters.next];
 
 		// Enable alpha blending
@@ -167,8 +162,7 @@ class SimpleTransition extends SlideShow.Transition3d {
 		}
 	}
 
-	public displaySlides_(): void {
-		const t = this.time;
+	public displaySlides_(t: number): void {
 		this.applyAllOperation(t);
 		this.displayPrimitive(
 			t,
@@ -186,12 +180,7 @@ class SimpleTransition extends SlideShow.Transition3d {
 		);
 	}
 
-	public render(): void {
-		if (!this.startTime) this.startTime = performance.now();
-		this.time = (performance.now() - this.startTime) / this.animationTime;
-
-		if (this.time > 1) this.time = 1;
-
+	public render(nT: number): void {
 		this.gl.viewport(
 			0,
 			0,
@@ -204,20 +193,14 @@ class SimpleTransition extends SlideShow.Transition3d {
 		this.gl.useProgram(this.program);
 		this.gl.uniform1f(
 			this.gl.getUniformLocation(this.program, 'time'),
-			this.time,
+			nT,
 		);
 
 		this.gl.bindVertexArray(this.vao);
 
-		this.displaySlides_();
+		this.displaySlides_(nT);
 
 		this.gl.bindVertexArray(null);
-
-		if (this.time < 1) {
-			requestAnimationFrame(this.render.bind(this));
-		} else {
-			this.finishTransition();
-		}
 	}
 
 	public setBufferData(vertices: Vertex[]): void {
