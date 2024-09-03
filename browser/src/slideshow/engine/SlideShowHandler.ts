@@ -209,6 +209,11 @@ class SlideShowHandler {
 		return this.bIsEnabled;
 	}
 
+	disable() {
+		this.bIsEnabled = false;
+		this.dispose();
+	}
+
 	isRunning() {
 		return !this.bIsIdle;
 	}
