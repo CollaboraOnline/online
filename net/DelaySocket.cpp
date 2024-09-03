@@ -29,8 +29,6 @@ class DelaySocket : public Socket {
     State _state;
     std::shared_ptr<DelaySocket> _dest; // our writing twin.
 
-    const size_t WindowSize = 64 * 1024;
-
     /// queued up data - sent to us by our opposite twin.
     struct WriteChunk {
     private:
