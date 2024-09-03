@@ -532,15 +532,16 @@ class SlideShowPresenter {
 		);
 	}
 
+	/// returns true on success
 	_onPrepareScreen(inWindow: boolean) {
 		if (this._checkPresentationDisabled()) {
 			this._notifyPresentationDisabled();
-			return;
+			return false;
 		}
 
 		if (this._checkAlreadyPresenting()) {
 			this._notifyAlreadyPresenting();
-			return;
+			return false;
 		}
 
 		if (
@@ -548,18 +549,18 @@ class SlideShowPresenter {
 			(window as any).ThisIsTheAndroidApp
 		) {
 			window.postMobileMessage('SLIDESHOW');
-			return;
+			return false;
 		}
 
 		if (this._map._docLayer.hiddenSlides() >= this._map.getNumberOfParts()) {
 			this._notifyAllSlidesHidden();
-			return;
+			return false;
 		}
 
 		if (!this._map['wopi'].DownloadAsPostMessage) {
 			if (inWindow) {
 				this._doInWindowPresentation();
-				return;
+				return true;
 			}
 
 			// fullscreen
@@ -577,11 +578,12 @@ class SlideShowPresenter {
 					.catch(() => {
 						this._doFallbackPresentation();
 					});
-				return;
+				return true;
 			}
 		}
 
 		this._doFallbackPresentation();
+		return true;
 	}
 
 	onSlideWindowResize() {
@@ -638,14 +640,20 @@ class SlideShowPresenter {
 
 	/// called when user triggers the presentation using UI
 	_onStart(that: any) {
-		this._onPrepareScreen(false); // opens full screen, has to be on user interaction
+		if (!this._onPrepareScreen(false))
+			// opens full screen, has to be on user interaction
+			return;
+
 		this._startSlide = that?.startSlideNumber ?? 0;
 		app.socket.sendMessage('getpresentationinfo');
 	}
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow(that: any) {
-		this._onPrepareScreen(true); // opens full screen, has to be on user interaction
+		if (!this._onPrepareScreen(true))
+			// opens full screen, has to be on user interaction
+			return;
+
 		this._startSlide = that?.startSlideNumber ?? 0;
 		app.socket.sendMessage('getpresentationinfo');
 	}
