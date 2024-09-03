@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-this-alias */
 /* eslint-disable prefer-const */
 /* eslint-disable prefer-rest-params */
 // @ts-nocheck
@@ -1082,19 +1081,18 @@ function getInitializerClass() {
 		this.protocol = '';
 		this.readyState = 1;
 		this.id = global.fakeWebSocketCounter++;
-		this.onclose = function () {};
-		this.onerror = function () {};
-		this.onmessage = function () {};
-		this.onopen = function () {};
-		this.close = function () {};
+		this.onclose = () => {};
+		this.onerror = () => {};
+		this.onmessage = () => {};
+		this.onopen = () => {};
+		this.close = () => {};
 	};
-	global.FakeWebSocket.prototype.send = function (data) {
+	global.FakeWebSocket.prototype.send = (data) => {
 		global.postMobileMessage(data);
 	};
 
 	global.proxySocketCounter = 0;
 	global.ProxySocket = function (uri) {
-		var that = this;
 		this.uri = uri;
 		this.binaryType = 'arraybuffer';
 		this.bufferedAmount = 0;
@@ -1115,19 +1113,19 @@ function getInitializerClass() {
 		this.minIdlePollsToThrottle = 3; // This many 'no data' responses and we throttle.
 		this.throttleFactor = 1.15; // How rapidly to throttle. 15% takes 4s to go from 25 to 500ms.
 		this.lastDataTimestamp = performance.now(); // The last time we got any data.
-		this.onclose = function () {};
-		this.onerror = function () {};
-		this.onmessage = function () {};
+		this.onclose = () => {};
+		this.onerror = () => {};
+		this.onmessage = () => {};
 
 		this.decoder = new TextDecoder();
-		this.doSlice = function (bytes, start, end) {
+		this.doSlice = (bytes, start, end) => {
 			return bytes.slice(start, end);
 		};
 
-		this.decode = function (bytes, start, end) {
+		this.decode = (bytes, start, end) => {
 			return this.decoder.decode(this.doSlice(bytes, start, end));
 		};
-		this.parseIncomingArray = function (arr) {
+		this.parseIncomingArray = (arr) => {
 			//global.app.console.debug('proxy: parse incoming array of length ' + arr.length);
 			for (var i = 0; i < arr.length; ++i) {
 				var left = arr.length - i;
@@ -1179,25 +1177,25 @@ function getInitializerClass() {
 				if (type == 'T') data = this.decode(arr, i, i + size);
 				else data = this.doSlice(arr, i, i + size);
 
-				if (serial !== that.inSerial + 1) {
+				if (serial !== this.inSerial + 1) {
 					global.app.console.debug(
-						'Error: serial mismatch ' + serial + ' vs. ' + (that.inSerial + 1),
+						'Error: serial mismatch ' + serial + ' vs. ' + (this.inSerial + 1),
 					);
 				}
-				that.inSerial = serial;
+				this.inSerial = serial;
 				this.onmessage({ data: data });
 
 				i += size; // skip trailing '\n' in loop-increment
 			}
 		};
 		this.sendQueue = '';
-		this._signalErrorClose = function () {
+		this._signalErrorClose = () => {
 			clearInterval(this.pollInterval);
 			clearTimeout(this.delaySession);
 			this.pollInterval = undefined;
 			this.delaySession = undefined;
 
-			if (that.readyState < 3) {
+			if (this.readyState < 3) {
 				this.onerror();
 				this.onclose();
 			}
@@ -1212,104 +1210,101 @@ function getInitializerClass() {
 		// better way to wait: you're so right. However, each
 		// consumes a scarce server worker thread while it waits,
 		// so ... back in the real world:
-		(this._setPollInterval = function (intervalMs) {
+		this._setPollInterval = (intervalMs) => {
 			clearInterval(this.pollInterval);
 			if (this.readyState === 1)
 				this.pollInterval = setInterval(this.doSend, intervalMs);
-		}),
-			(this.doSend = function () {
-				if (that.sessionId === 'open') {
-					if (that.readyState === 3)
-						global.app.console.debug('Error: sending on closed socket');
-					return;
-				}
+		};
+		this.doSend = () => {
+			if (this.sessionId === 'open') {
+				if (this.readyState === 3)
+					global.app.console.debug('Error: sending on closed socket');
+				return;
+			}
 
-				if (that.msgInflight >= 4) {
-					// something went badly wrong.
-					// We shouldn't get here because we throttle sending when we
-					// have something in flight, but if the server hangs, we
-					// will do up to 3 retries before we end up here and yield.
-					if (that.curPollMs < that.maxPollMs) {
-						that.curPollMs =
-							Math.min(that.maxPollMs, that.curPollMs * that.throttleFactor) |
+			if (this.msgInflight >= 4) {
+				// something went badly wrong.
+				// We shouldn't get here because we throttle sending when we
+				// have something in flight, but if the server hangs, we
+				// will do up to 3 retries before we end up here and yield.
+				if (this.curPollMs < this.maxPollMs) {
+					this.curPollMs =
+						Math.min(this.maxPollMs, this.curPollMs * this.throttleFactor) | 0;
+					global.app.console.debug(
+						'High latency connection - too much in-flight, throttling to ' +
+							this.curPollMs +
+							' ms.',
+					);
+					this._setPollInterval(this.curPollMs);
+				} else if (performance.now() - this.lastDataTimestamp > 30 * 1000) {
+					global.app.console.debug(
+						'Close connection after no response for 30secs',
+					);
+					this._signalErrorClose();
+				} else
+					global.app.console.debug(
+						'High latency connection - too much in-flight, pausing.',
+					);
+				return;
+			}
+
+			// Maximize the timeout, instead of stopping altogethr,
+			// so we don't hang when the following request takes
+			// too long, hangs, throws, etc. we can recover.
+			this._setPollInterval(this.maxPollMs);
+
+			//global.app.console.debug('send msg - ' + this.msgInflight + ' on session ' +
+			//	      this.sessionId + '  queue: "' + this.sendQueue + '"');
+			var req = new XMLHttpRequest();
+			const url = this.getEndPoint('write');
+			req.open('POST', url);
+			req.responseType = 'arraybuffer';
+			req.addEventListener('load', function () {
+				if (req.status == 200) {
+					var data = new Uint8Array(req.response);
+					if (data.length) {
+						// We have some data back from WSD.
+						// Another user might be editing and we want
+						// to see their changes in real time.
+						this.curPollMs = this.minPollMs; // Drain fast.
+						this._setPollInterval(this.curPollMs);
+						this.lastDataTimestamp = performance.now();
+
+						this.parseIncomingArray(data);
+						return;
+					}
+				} else {
+					global.app.console.debug(
+						'proxy: error on incoming response ' + req.status,
+					);
+					this._signalErrorClose();
+				}
+				if (this.curPollMs < this.maxPollMs) {
+					// If we aren't throttled, see if we should.
+					// Has it been long enough since we got any data?
+					var timeSinceLastDataMs =
+						(performance.now() - this.lastDataTimestamp) | 0;
+					if (
+						timeSinceLastDataMs >=
+						this.minIdlePollsToThrottle * this.curPollMs
+					) {
+						// Throttle.
+						this.curPollMs =
+							Math.min(this.maxPollMs, this.curPollMs * this.throttleFactor) |
 							0;
-						global.app.console.debug(
-							'High latency connection - too much in-flight, throttling to ' +
-								that.curPollMs +
-								' ms.',
-						);
-						that._setPollInterval(that.curPollMs);
-					} else if (performance.now() - that.lastDataTimestamp > 30 * 1000) {
-						global.app.console.debug(
-							'Close connection after no response for 30secs',
-						);
-						that._signalErrorClose();
-					} else
-						global.app.console.debug(
-							'High latency connection - too much in-flight, pausing.',
-						);
-					return;
+						//global.app.console.debug('No data for ' + timeSinceLastDataMs + ' ms -- throttling to ' + this.curPollMs + ' ms.');
+					}
 				}
-
-				// Maximize the timeout, instead of stopping altogethr,
-				// so we don't hang when the following request takes
-				// too long, hangs, throws, etc. we can recover.
-				that._setPollInterval(that.maxPollMs);
-
-				//global.app.console.debug('send msg - ' + that.msgInflight + ' on session ' +
-				//	      that.sessionId + '  queue: "' + that.sendQueue + '"');
-				var req = new XMLHttpRequest();
-				const url = that.getEndPoint('write');
-				req.open('POST', url);
-				req.responseType = 'arraybuffer';
-				req.addEventListener('load', function () {
-					if (this.status == 200) {
-						var data = new Uint8Array(this.response);
-						if (data.length) {
-							// We have some data back from WSD.
-							// Another user might be editing and we want
-							// to see their changes in real time.
-							that.curPollMs = that.minPollMs; // Drain fast.
-							that._setPollInterval(that.curPollMs);
-							that.lastDataTimestamp = performance.now();
-
-							that.parseIncomingArray(data);
-							return;
-						}
-					} else {
-						global.app.console.debug(
-							'proxy: error on incoming response ' + this.status,
-						);
-						that._signalErrorClose();
-					}
-
-					if (that.curPollMs < that.maxPollMs) {
-						// If we aren't throttled, see if we should.
-						// Has it been long enough since we got any data?
-						var timeSinceLastDataMs =
-							(performance.now() - that.lastDataTimestamp) | 0;
-						if (
-							timeSinceLastDataMs >=
-							that.minIdlePollsToThrottle * that.curPollMs
-						) {
-							// Throttle.
-							that.curPollMs =
-								Math.min(that.maxPollMs, that.curPollMs * that.throttleFactor) |
-								0;
-							//global.app.console.debug('No data for ' + timeSinceLastDataMs + ' ms -- throttling to ' + that.curPollMs + ' ms.');
-						}
-					}
-
-					that._setPollInterval(that.curPollMs);
-				});
-				req.addEventListener('loadend', function () {
-					that.msgInflight--;
-				});
-				req.send(that.sendQueue);
-				that.sendQueue = '';
-				that.msgInflight++;
+				this._setPollInterval(this.curPollMs);
 			});
-		this.getSessionId = function () {
+			req.addEventListener('loadend', function () {
+				this.msgInflight--;
+			});
+			req.send(this.sendQueue);
+			this.sendQueue = '';
+			this.msgInflight++;
+		};
+		this.getSessionId = () => {
 			if (this.openInflight > 0) {
 				global.app.console.debug('Waiting for session open');
 				return;
@@ -1326,9 +1321,9 @@ function getInitializerClass() {
 						'Wait to re-try session creation for ' + delay + 'ms',
 					);
 					this.curPollMs = delay; // ms
-					this.delaySession = setTimeout(function () {
-						that.delaySession = undefined;
-						that.getSessionId();
+					this.delaySession = setTimeout(() => {
+						this.delaySession = undefined;
+						this.getSessionId();
 					}, delay);
 					return;
 				}
@@ -1336,38 +1331,38 @@ function getInitializerClass() {
 			global.lastCreatedProxySocket = performance.now();
 
 			var req = new XMLHttpRequest();
-			const endPoint = that.getEndPoint('open');
+			const endPoint = this.getEndPoint('open');
 
 			req.open('POST', endPoint);
 			req.responseType = 'text';
-			req.addEventListener('load', function () {
-				global.app.console.debug('got session: ' + this.responseText);
+			req.addEventListener('load', () => {
+				global.app.console.debug('got session: ' + req.responseText);
 				if (
-					this.status !== 200 ||
-					!this.responseText ||
-					this.responseText.indexOf('\n') >= 0
+					req.status !== 200 ||
+					!req.responseText ||
+					req.responseText.indexOf('\n') >= 0
 				) {
 					// multi-line error
 					global.app.console.debug(
-						'Error: failed to fetch session id! error: ' + this.status,
+						'Error: failed to fetch session id! error: ' + req.status,
 					);
-					that._signalErrorClose();
-				} // we connected - lets get going ...
-				else {
-					that.sessionId = this.responseText;
-					that.readyState = 1;
-					that.onopen();
-					that._setPollInterval(that.curPollMs);
+					this._signalErrorClose();
+				} else {
+					// we connected - lets get going ...
+					this.sessionId = req.responseText;
+					this.readyState = 1;
+					this.onopen();
+					this._setPollInterval(this.curPollMs);
 				}
 			});
-			req.addEventListener('loadend', function () {
-				global.app.console.debug('Open completed state: ' + that.readyState);
-				that.openInflight--;
+			req.addEventListener('loadend', () => {
+				global.app.console.debug('Open completed state: ' + this.readyState);
+				this.openInflight--;
 			});
 			req.send('');
 			this.openInflight++;
 		};
-		this.send = function (msg) {
+		this.send = (msg) => {
 			var hadData = this.sendQueue.length > 0;
 			this.sendQueue = this.sendQueue.concat(
 				'B0x' +
@@ -1382,17 +1377,17 @@ function getInitializerClass() {
 			this.outSerial++;
 
 			// Send ASAP, if we have throttled.
-			if (that.curPollMs > that.minPollMs || !hadData) {
+			if (this.curPollMs > this.minPollMs || !hadData) {
 				// Unless we are backed up.
-				if (that.msgInflight <= 3) {
+				if (this.msgInflight <= 3) {
 					//global.app.console.debug('Have data to send, lowering poll interval.');
-					that.curPollMs = that.minPollMs;
-					that._setPollInterval(that.curPollMs);
+					this.curPollMs = this.minPollMs;
+					this._setPollInterval(this.curPollMs);
 				}
 			}
 		};
-		this.sendCloseMsg = function (beacon) {
-			const url = that.getEndPoint('close');
+		this.sendCloseMsg = (beacon) => {
+			const url = this.getEndPoint('close');
 
 			if (!beacon) {
 				var req = new XMLHttpRequest();
@@ -1400,7 +1395,7 @@ function getInitializerClass() {
 				req.send('');
 			} else navigator.sendBeacon(url, '');
 		};
-		this.close = function () {
+		this.close = () => {
 			var oldState = this.readyState;
 			global.app.console.debug('proxy: close socket');
 			this.readyState = 3;
@@ -1413,10 +1408,10 @@ function getInitializerClass() {
 				this.sendCloseMsg(this.unloading);
 			this.sessionId = 'open';
 		};
-		this.setUnloading = function () {
+		this.setUnloading = () => {
 			this.unloading = true;
 		};
-		this.getEndPoint = function (command) {
+		this.getEndPoint = (command) => {
 			var base = this.uri;
 			return base + '/' + this.sessionId + '/' + command + '/' + this.outSerial;
 		};
@@ -1494,31 +1489,30 @@ function getInitializerClass() {
 
 	// indirect socket to wrap the asyncness around fetching the routetoken from indirection url endpoint
 	global.IndirectSocket = function (uri) {
-		var that = this;
 		this.uri = uri;
 		this.binaryType = '';
 		this.unloading = false;
 		this.readyState = 0; // connecting
 		this.innerSocket = undefined;
 
-		this.onclose = function () {};
+		this.onclose = () => {};
 		this.onerror = function () {};
 		this.onmessage = function () {};
 		this.onopen = function () {};
 
-		this.close = function () {
+		this.close = () => {
 			this.innerSocket.close();
 		};
 
-		this.send = function (msg) {
+		this.send = (msg) => {
 			this.innerSocket.send(msg);
 		};
 
-		this.setUnloading = function () {
+		this.setUnloading = () => {
 			this.unloading = true;
 		};
 
-		this.sendPostMsg = function (errorCode) {
+		this.sendPostMsg = (errorCode) => {
 			var errorMsg;
 			if (errorCode === 0) {
 				errorMsg = _('Cluster is scaling, retrying...');
@@ -1541,38 +1535,37 @@ function getInitializerClass() {
 
 		this.sendRouteTokenRequest = function (requestUri) {
 			var http = new XMLHttpRequest();
-			// let url = global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri);
 			http.open('GET', requestUri, true);
 			http.responseType = 'json';
-			http.addEventListener('load', function () {
-				if (this.status === 200) {
+			http.addEventListener('load', () => {
+				if (http.status === 200) {
 					var uriWithRouteToken = http.response.uri;
 					global.expectedServerId = http.response.serverId;
 					var params = new URL(uriWithRouteToken).searchParams;
 					global.routeToken = params.get('RouteToken');
 					global.app.console.log('updated routeToken: ' + global.routeToken);
-					that.innerSocket = new WebSocket(uriWithRouteToken);
-					that.innerSocket.binaryType = that.binaryType;
-					that.innerSocket.onerror = function () {
-						that.readyState = that.innerSocket.readyState;
-						that.onerror();
+					this.innerSocket = new WebSocket(uriWithRouteToken);
+					this.innerSocket.binaryType = this.binaryType;
+					this.innerSocket.onerror = function () {
+						this.readyState = this.innerSocket.readyState;
+						this.onerror();
 					};
-					that.innerSocket.onclose = function () {
-						that.readyState = 3;
-						that.onclose();
-						that.innerSocket.onerror = function () {};
-						that.innerSocket.onclose = function () {};
-						that.innerSocket.onmessage = function () {};
+					this.innerSocket.onclose = function () {
+						this.readyState = 3;
+						this.onclose();
+						this.innerSocket.onerror = function () {};
+						this.innerSocket.onclose = function () {};
+						this.innerSocket.onmessage = function () {};
 					};
-					that.innerSocket.onopen = function () {
-						that.readyState = 1;
-						that.onopen();
+					this.innerSocket.onopen = function () {
+						this.readyState = 1;
+						this.onopen();
 					};
-					that.innerSocket.onmessage = function (e) {
-						that.readyState = that.innerSocket.readyState;
-						that.onmessage(e);
+					this.innerSocket.onmessage = function (e) {
+						this.readyState = this.innerSocket.readyState;
+						this.onmessage(e);
 					};
-				} else if (this.status === 202) {
+				} else if (http.status === 202) {
 					if (
 						!(
 							window.app &&
@@ -1580,26 +1573,26 @@ function getInitializerClass() {
 							window.app.socket._reconnecting
 						)
 					) {
-						that.sendPostMsg(http.response.errorCode);
+						this.sendPostMsg(http.response.errorCode);
 					}
 					var timeoutFn = function (requestUri) {
 						console.warn('Requesting again for routeToken');
-						this.open('GET', requestUri, true);
-						this.send();
-					}.bind(this);
+						http.open('GET', requestUri, true);
+						http.send();
+					}.bind(http);
 					setTimeout(timeoutFn, 3000, requestUri);
 				} else {
 					global.app.console.error(
-						'Indirection url: error on incoming response ' + this.status,
+						'Indirection url: error on incoming response ' + http.status,
 					);
-					that.sendPostMsg(-1);
+					this.sendPostMsg(-1);
 				}
 			});
 			http.send();
 		};
 
 		let requestUri =
-			global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri);
+			global.indirectionUrl + '?Uri=' + encodeURIComponent(this.uri);
 		if (global.geolocationSetup) {
 			let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 			requestUri += '&TimeZone=' + timeZone;
