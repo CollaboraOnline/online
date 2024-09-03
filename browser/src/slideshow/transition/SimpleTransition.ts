@@ -191,10 +191,7 @@ class SimpleTransition extends SlideShow.Transition3d {
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
 		this.gl.useProgram(this.program);
-		this.gl.uniform1f(
-			this.gl.getUniformLocation(this.program, 'time'),
-			nT,
-		);
+		this.gl.uniform1f(this.gl.getUniformLocation(this.program, 'time'), nT);
 
 		this.gl.bindVertexArray(this.vao);
 

@@ -138,7 +138,8 @@ class MetaPresentation {
 	}
 
 	public getSlideInfoByIndex(slideIndex: number): SlideInfo {
-		return this.metaSlides.get(this.getSlideHash(slideIndex)).info;
+		const slideHash = this.getSlideHash(slideIndex);
+		return slideHash ? this.metaSlides.get(slideHash).info : null;
 	}
 
 	public setCurrentSlide(nSlideIndex: number) {

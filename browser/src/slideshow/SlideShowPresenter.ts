@@ -38,8 +38,6 @@ interface SlideInfo {
 	transitionType: string | undefined;
 	transitionSubtype: string | undefined;
 	transitionFadeColor: string | undefined;
-	isEndless: boolean;
-	loopAndRepeatDuration: number | undefined;
 	background: {
 		isCustom: boolean;
 		fillColor: string;
@@ -53,6 +51,8 @@ interface PresentationInfo {
 	slides: Array<SlideInfo>;
 	docWidth: number;
 	docHeight: number;
+	isEndless: boolean;
+	loopAndRepeatDuration: number | undefined;
 }
 
 class SlideShowPresenter {
@@ -167,8 +167,8 @@ class SlideShowPresenter {
 		window.app.console.log('SlideShowPresenter._nextSlide');
 
 		if (this._currentSlide + 1 >= this._getSlidesCount()) {
-			const currSlideInfo = this.getSlideInfo(this._currentSlide);
-			if (currSlideInfo?.isEndless == undefined || !currSlideInfo.isEndless) {
+			const info = this._presentationInfo;
+			if (info?.isEndless == undefined || !info.isEndless) {
 				if (this._currentSlide + 1 === this._getSlidesCount()) {
 					this._currentSlide++;
 					this.exitSlideshowWithWarning();
@@ -179,7 +179,7 @@ class SlideShowPresenter {
 				return;
 			}
 
-			this.startTimer(currSlideInfo.loopAndRepeatDuration);
+			this.startTimer(info.loopAndRepeatDuration);
 			return;
 		}
 
@@ -279,61 +279,41 @@ class SlideShowPresenter {
 	}
 
 	private exitSlideshowWithWarning() {
-		const transitionParameters = new TransitionParameters();
-		transitionParameters.context = this._slideRenderer._context;
-
-		new SlideShow.StaticTextRenderer(transitionParameters).display(
+		new SlideShow.StaticTextRenderer(this._slideRenderer._context).display(
 			_('Click to exit presentation...'),
 		);
 	}
 
-	// TODO make it works with SlideShowNavigator/SlideShowHandler
-	//  use this.slideShowNavigator.currentSlideIndex in place of this._currentSlide
 	private startTimer(loopAndRepeatDuration: number) {
-		window.app.console.log('SlideShowPresenter.startTimer');
-		let pauseTimer: PauseTimer;
-
-		// reset current slide to first slide
-		this._currentSlide = 0;
-
-		if (this._slideRenderer._context instanceof RenderContextGl) {
-			pauseTimer = new PauseTimerGl(
-				this._slideRenderer._context,
-				loopAndRepeatDuration,
-				() => {
-					const currSlideInfo = this.getSlideInfo(this._currentSlide);
-
-					if (
-						currSlideInfo?.transitionType == undefined ||
-						currSlideInfo.transitionType == 'NONE'
-					) {
-						this._slideCompositor.fetchAndRun(this._currentSlide, () => {
-							this._doPresentation();
-						});
-						return;
-					}
-
-					this._doTransition(
-						this._slideRenderer.getSlideTexture(),
-						this._currentSlide,
-					);
-				},
-			);
-		} else {
-			pauseTimer = new PauseTimer2d(
-				this._slideRenderer._context,
-				loopAndRepeatDuration,
-				() => {
-					this._doTransition(
-						this._slideRenderer.getSlideTexture(),
-						this._currentSlide,
-					);
-					// TODO: May be add alert for user: Repeat slideshow not supported on your device.
-				},
-			);
-		}
+		console.debug('SlideShowPresenter.startTimer');
+		const renderContext = this._slideRenderer._context;
+		const onTimeoutHandler = this._slideShowNavigator.goToFirstSlide.bind(
+			this._slideShowNavigator,
+		);
+		const PauseTimerType =
+			renderContext instanceof RenderContextGl ? PauseTimerGl : PauseTimer2d;
+		const pauseTimer: PauseTimer = new PauseTimerType(
+			renderContext,
+			loopAndRepeatDuration,
+			onTimeoutHandler,
+		);
 
 		pauseTimer.startTimer();
+	}
+
+	endPresentation(force: boolean) {
+		console.debug('SlideShowPresenter.endPresentation');
+		const settings = this._presentationInfo;
+		if (force || !settings.isEndless) {
+			if (!force) {
+				this.exitSlideshowWithWarning();
+				return;
+			}
+			this._closeSlideShowWindow();
+			this._stopFullScreen();
+			return;
+		}
+		this.startTimer(settings.loopAndRepeatDuration);
 	}
 
 	private startLoader(): void {

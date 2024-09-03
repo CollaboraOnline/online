@@ -67,6 +67,7 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 	}
 
 	public animate(): void {
+		if (!this.textCanvas || !this.ctx) return;
 		const currentTime = performance.now();
 		const elapsedTime = (currentTime - this.startTime) / 1000;
 		this.pauseTimeRemaining = Math.max(0, this.pauseDuration - elapsedTime);
