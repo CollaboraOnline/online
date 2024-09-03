@@ -19,9 +19,9 @@ type InteractiveAnimationSequenceMap = Map<
 class SlideShowContext {
 	public aSlideShowHandler: SlideShowHandler;
 	public aTimerEventQueue: TimerEventQueue;
-	public aEventMultiplexer: EventMultiplexer;
-	public aNextEffectEventArray: NextEffectEventArray;
-	public aInteractiveAnimationSequenceMap: InteractiveAnimationSequenceMap;
+	public aEventMultiplexer: EventMultiplexer | null;
+	public aNextEffectEventArray: NextEffectEventArray | null;
+	public aInteractiveAnimationSequenceMap: InteractiveAnimationSequenceMap | null;
 	public aActivityQueue: ActivityQueue;
 	public bIsSkipping: boolean;
 	public nSlideWidth: number;
@@ -30,9 +30,9 @@ class SlideShowContext {
 	constructor(
 		aSlideShowHandler: SlideShowHandler,
 		aTimerEventQueue: TimerEventQueue,
-		aEventMultiplexer: EventMultiplexer,
-		aNextEffectEventArray: NextEffectEventArray,
-		aInteractiveAnimationSequenceMap: InteractiveAnimationSequenceMap,
+		aEventMultiplexer: EventMultiplexer | null,
+		aNextEffectEventArray: NextEffectEventArray | null,
+		aInteractiveAnimationSequenceMap: InteractiveAnimationSequenceMap | null,
 		aActivityQueue: ActivityQueue,
 	) {
 		this.aSlideShowHandler = aSlideShowHandler;
@@ -62,9 +62,9 @@ class SlideShowHandler {
 	private aFrameSynchronization: FrameSynchronization;
 	private aTimerEventQueue: TimerEventQueue;
 	private aActivityQueue: ActivityQueue;
-	private aNextEffectEventArray: NextEffectEventArray;
-	private aInteractiveAnimationSequenceMap: InteractiveAnimationSequenceMap;
-	private aEventMultiplexer: EventMultiplexer;
+	private aNextEffectEventArray: NextEffectEventArray | null;
+	private aInteractiveAnimationSequenceMap: InteractiveAnimationSequenceMap | null;
+	private aEventMultiplexer: EventMultiplexer | null;
 	private aContext: SlideShowContext;
 	private bIsIdle: boolean;
 	private bIsEnabled: boolean;
@@ -78,8 +78,8 @@ class SlideShowHandler {
 	private nTotalInteractivePlayingEffects: number;
 	private aStartedEffectList: Effect[];
 	private aStartedEffectIndexMap: Map<number, number | undefined>;
-	private automaticAdvanceTimeout: number | { rewindedEffect: number };
-	private enteringSlideTexture: WebGLTexture | ImageBitmap;
+	private automaticAdvanceTimeout: number | { rewindedEffect: number } | null;
+	private enteringSlideTexture: WebGLTexture | ImageBitmap | null;
 	public isStarting: boolean;
 
 	constructor() {
@@ -172,14 +172,14 @@ class SlideShowHandler {
 		aSlideTransitionHandler: SlideTransition,
 		transitionParameters: TransitionParameters,
 		aTransitionEndEvent: DelayEvent,
-	): SimpleActivity {
+	): SimpleActivity | null {
 		if (this.bNoSlideTransition) return null;
 
 		const aSlideTransition =
 			aSlideTransitionHandler.createSlideTransition(transitionParameters);
 		if (!aSlideTransition) return null;
 
-		let nDuration = 0.001;
+		let nDuration: number | undefined = 0.001;
 		if (aSlideTransitionHandler.getDuration().isValue()) {
 			nDuration = aSlideTransitionHandler.getDuration().getValue();
 		} else {
@@ -246,7 +246,7 @@ class SlideShowHandler {
 
 		ANIMDBG.print('SlideShowHandler.notifyNextEffectStart invoked.');
 		this.bIsNextEffectRunning = true;
-		this.aEventMultiplexer.registerNextEffectEndHandler(
+		this.aEventMultiplexer!.registerNextEffectEndHandler(
 			this.notifyNextEffectEnd.bind(this),
 		);
 		const aEffect = new Effect();
@@ -256,9 +256,9 @@ class SlideShowHandler {
 
 		const sCurSlideHash = this.theMetaPres.getCurrentSlideHash();
 		const curMetaSlide = this.theMetaPres.getMetaSlide(sCurSlideHash);
-		if (curMetaSlide.animationsHandler) {
+		if (curMetaSlide!.animationsHandler) {
 			const aAnimatedElementMap =
-				curMetaSlide.animationsHandler.getAnimatedElementMap();
+				curMetaSlide!.animationsHandler.getAnimatedElementMap();
 			aAnimatedElementMap.forEach((aAnimatedElement: AnimatedElement) => {
 				aAnimatedElement.notifyNextEffectStart(this.nCurrentEffect);
 			});
@@ -274,7 +274,7 @@ class SlideShowHandler {
 		ANIMDBG.print('SlideShowHandler.notifyNextEffectEnd invoked.');
 		this.bIsNextEffectRunning = false;
 
-		this.aStartedEffectList[this.aStartedEffectIndexMap.get(-1)].end();
+		this.aStartedEffectList[this.aStartedEffectIndexMap.get(-1)!].end();
 		if (this.automaticAdvanceTimeout !== null) {
 			if (this.automaticAdvanceTimeoutRewindedEffect === this.nCurrentEffect) {
 				this.automaticAdvanceTimeout = null;
@@ -311,7 +311,7 @@ class SlideShowHandler {
 		}
 	}
 
-	notifySlideStart(nNewSlideIndex: number, nOldSlideIndex: number) {
+	notifySlideStart(nNewSlideIndex: number, nOldSlideIndex: number | undefined) {
 		this.nCurrentEffect = 0;
 		this.bIsRewinding = false;
 		this.bIsSkipping = false;
@@ -323,9 +323,9 @@ class SlideShowHandler {
 
 		if (nOldSlideIndex !== undefined) {
 			const metaOldSlide = this.theMetaPres.getMetaSlideByIndex(nOldSlideIndex);
-			if (metaOldSlide.animationsHandler) {
+			if (metaOldSlide!.animationsHandler) {
 				const aAnimatedElementMap =
-					metaOldSlide.animationsHandler.getAnimatedElementMap();
+					metaOldSlide!.animationsHandler.getAnimatedElementMap();
 
 				aAnimatedElementMap.forEach((aAnimatedElement: AnimatedElement) => {
 					aAnimatedElement.notifySlideEnd();
@@ -333,9 +333,9 @@ class SlideShowHandler {
 			}
 		}
 		const metaNewSlide = this.theMetaPres.getMetaSlideByIndex(nNewSlideIndex);
-		if (metaNewSlide.animationsHandler) {
+		if (metaNewSlide!.animationsHandler) {
 			const aAnimatedElementMap =
-				metaNewSlide.animationsHandler.getAnimatedElementMap();
+				metaNewSlide!.animationsHandler.getAnimatedElementMap();
 
 			aAnimatedElementMap.forEach((aAnimatedElement: AnimatedElement) => {
 				aAnimatedElement.notifySlideStart(this.aContext);
@@ -354,7 +354,7 @@ class SlideShowHandler {
 		);
 		this.bIsTransitionRunning = false;
 		if (this.bIsRewinding) {
-			this.theMetaPres.getMetaSlideByIndex(nNewSlide).hide();
+			this.theMetaPres.getMetaSlideByIndex(nNewSlide)!.hide();
 			this.slideShowNavigator.displaySlide(nOldSlide, true);
 			this.skipAllEffects();
 			this.bIsRewinding = false;
@@ -378,11 +378,11 @@ class SlideShowHandler {
 			const sCurSlideHash = this.theMetaPres.getCurrentSlideHash();
 			const aCurrentSlide = this.theMetaPres.getMetaSlide(sCurSlideHash);
 			if (
-				aCurrentSlide.animationsHandler &&
-				aCurrentSlide.animationsHandler.elementsParsed()
+				aCurrentSlide!.animationsHandler &&
+				aCurrentSlide!.animationsHandler.elementsParsed()
 			) {
-				aCurrentSlide.animationsHandler.start();
-				this.aEventMultiplexer.registerAnimationsEndHandler(
+				aCurrentSlide!.animationsHandler.start();
+				this.aEventMultiplexer!.registerAnimationsEndHandler(
 					this.notifyAnimationsEnd.bind(this),
 				);
 			} else this.notifyAnimationsEnd();
@@ -405,7 +405,7 @@ class SlideShowHandler {
 			'SlideShow.notifyInteractiveAnimationSequenceEnd: no interactive effect playing.',
 		);
 
-		this.aStartedEffectList[this.aStartedEffectIndexMap.get(nNodeId)].end();
+		this.aStartedEffectList[this.aStartedEffectIndexMap.get(nNodeId)!].end();
 		--this.nTotalInteractivePlayingEffects;
 	}
 
@@ -471,9 +471,9 @@ class SlideShowHandler {
 			const aEffect = this.aStartedEffectList[i];
 			if (aEffect.isPlaying()) {
 				if (aEffect.isMainEffect())
-					this.aEventMultiplexer.notifySkipEffectEvent();
+					this.aEventMultiplexer!.notifySkipEffectEvent();
 				else
-					this.aEventMultiplexer.notifySkipInteractiveEffectEvent(
+					this.aEventMultiplexer!.notifySkipInteractiveEffectEvent(
 						aEffect.getId(),
 					);
 			}
@@ -504,7 +504,7 @@ class SlideShowHandler {
 
 		this.bIsSkipping = true;
 		this.aNextEffectEventArray.at(this.nCurrentEffect).fire();
-		this.aEventMultiplexer.notifySkipEffectEvent();
+		this.aEventMultiplexer!.notifySkipEffectEvent();
 		++this.nCurrentEffect;
 		this.update();
 		this.bIsSkipping = false;
@@ -561,7 +561,7 @@ class SlideShowHandler {
 		// effect has notified to be deactivated to the main sequence time container.
 		// So you should avoid any optimization here because the size of
 		// aNextEffectEventArray will going on increasing after every skip action.
-		while (this.nCurrentEffect < this.aNextEffectEventArray.size()) {
+		while (this.nCurrentEffect < this.aNextEffectEventArray!.size()) {
 			this.skipNextEffect();
 		}
 		this.bIsSkippingAll = false;
@@ -622,19 +622,19 @@ class SlideShowHandler {
 				const aEffect = this.aStartedEffectList[i];
 				if (aEffect.isPlaying()) {
 					if (aEffect.isMainEffect()) {
-						this.aEventMultiplexer.notifyRewindCurrentEffectEvent();
+						this.aEventMultiplexer!.notifyRewindCurrentEffectEvent();
 						if (this.nCurrentEffect > 0) --this.nCurrentEffect;
 					} else {
-						this.aEventMultiplexer.notifyRewindRunningInteractiveEffectEvent(
+						this.aEventMultiplexer!.notifyRewindRunningInteractiveEffectEvent(
 							aEffect.getId(),
 						);
 					}
 				} else if (aEffect.isEnded()) {
 					if (aEffect.isMainEffect()) {
-						this.aEventMultiplexer.notifyRewindLastEffectEvent();
+						this.aEventMultiplexer!.notifyRewindLastEffectEvent();
 						if (this.nCurrentEffect > 0) --this.nCurrentEffect;
 					} else {
-						this.aEventMultiplexer.notifyRewindEndedInteractiveEffectEvent(
+						this.aEventMultiplexer!.notifyRewindEndedInteractiveEffectEvent(
 							aEffect.getId(),
 						);
 					}
@@ -647,22 +647,22 @@ class SlideShowHandler {
 			i = this.aStartedEffectList.length - 1;
 			for (; i >= nFirstPlayingEffectIndex; --i) {
 				const aEffect = this.aStartedEffectList.pop();
-				if (!aEffect.isMainEffect())
-					this.aStartedEffectIndexMap.delete(aEffect.getId());
+				if (!aEffect!.isMainEffect())
+					this.aStartedEffectIndexMap.delete(aEffect!.getId());
 			}
 		} // there is no playing effect
 		else {
 			const aEffect = this.aStartedEffectList.pop();
-			if (!aEffect.isMainEffect())
-				this.aStartedEffectIndexMap.delete(aEffect.getId());
-			if (aEffect.isEnded()) {
+			if (!aEffect!.isMainEffect())
+				this.aStartedEffectIndexMap.delete(aEffect!.getId());
+			if (aEffect!.isEnded()) {
 				// Well that is almost an assertion.
-				if (aEffect.isMainEffect()) {
-					this.aEventMultiplexer.notifyRewindLastEffectEvent();
+				if (aEffect!.isMainEffect()) {
+					this.aEventMultiplexer!.notifyRewindLastEffectEvent();
 					if (this.nCurrentEffect > 0) --this.nCurrentEffect;
 				} else {
-					this.aEventMultiplexer.notifyRewindEndedInteractiveEffectEvent(
-						aEffect.getId(),
+					this.aEventMultiplexer!.notifyRewindEndedInteractiveEffectEvent(
+						aEffect!.getId(),
 					);
 				}
 			}
@@ -724,8 +724,8 @@ class SlideShowHandler {
 			this.skipTransition();
 		}
 
-		if (this.slideRenderer.isAnyVideoPlaying) {
-			this.slideRenderer.pauseVideos();
+		if (this.slideRenderer!.isAnyVideoPlaying) {
+			this.slideRenderer!.pauseVideos();
 		}
 
 		// handle current slide
@@ -733,11 +733,11 @@ class SlideShowHandler {
 			const oldMetaSlide = aMetaDoc.getMetaSlideByIndex(nOldSlide);
 			if (this.isEnabled()) {
 				if (
-					oldMetaSlide.animationsHandler &&
-					oldMetaSlide.animationsHandler.isAnimated()
+					oldMetaSlide!.animationsHandler &&
+					oldMetaSlide!.animationsHandler.isAnimated()
 				) {
 					// force end animations
-					oldMetaSlide.animationsHandler.end(bSkipSlideTransition);
+					oldMetaSlide!.animationsHandler.end(bSkipSlideTransition);
 
 					// clear all queues
 					this.dispose();
@@ -767,7 +767,7 @@ class SlideShowHandler {
 				// }
 				const aNewMetaSlide = aMetaDoc.getMetaSlideByIndex(nNewSlide);
 
-				const aSlideTransitionHandler = aNewMetaSlide.transitionHandler;
+				const aSlideTransitionHandler = aNewMetaSlide!.transitionHandler;
 				if (aSlideTransitionHandler && aSlideTransitionHandler.isValid()) {
 					const aTransitionEndEvent = makeEvent(
 						this.notifyTransitionEnd.bind(this, nNewSlide, nOldSlide),
@@ -854,30 +854,32 @@ class SlideShowHandler {
 		return this.aContext;
 	}
 
-	private get slideRenderer(): SlideRenderer {
+	private get slideRenderer(): SlideRenderer | null {
 		return this.presenter._slideRenderer;
 	}
-	private get slideCompositor(): SlideCompositor {
+	private get slideCompositor(): SlideCompositor | null {
 		return this.presenter._slideCompositor;
 	}
 
-	getSlideInfo(nSlideIndex: number): SlideInfo {
+	getSlideInfo(nSlideIndex: number): SlideInfo | null {
 		return this.theMetaPres.getSlideInfoByIndex(nSlideIndex);
 	}
 
-	private getTexture(nSlideIndex: number): WebGLTexture | ImageBitmap | null {
-		const slideImage = this.slideCompositor.getSlide(nSlideIndex);
+	private getTexture(
+		nSlideIndex: number | undefined,
+	): WebGLTexture | ImageBitmap | null {
+		const slideImage = this.slideCompositor!.getSlide(nSlideIndex);
 		if (!slideImage) {
 			console.error('SlideShowHandler: cannot get texture');
 			return null;
 		}
-		return this.slideRenderer.createTexture(slideImage);
+		return this.slideRenderer!.createTexture(slideImage);
 	}
 
 	private presentSlide(nSlideIndex: number) {
 		let slideTexture = this.enteringSlideTexture;
 		if (!slideTexture) slideTexture = this.getTexture(nSlideIndex);
-		this.slideRenderer.renderSlide(
+		this.slideRenderer!.renderSlide(
 			slideTexture,
 			this.getSlideInfo(nSlideIndex),
 			this.theMetaPres.slideWidth,
@@ -888,21 +890,21 @@ class SlideShowHandler {
 
 	private createTransitionParameters(
 		nNewSlide: number,
-		nOldSlide: number,
+		nOldSlide: number | undefined,
 	): TransitionParameters {
 		let leavingSlideTexture = null;
 		if (this.isStarting) {
-			leavingSlideTexture = this.slideRenderer.createEmptyTexture();
+			leavingSlideTexture = this.slideRenderer!.createEmptyTexture();
 		} else {
 			leavingSlideTexture =
 				nOldSlide !== undefined &&
-				this.slideRenderer.lastRenderedSlideIndex === nOldSlide
-					? this.slideRenderer.getSlideTexture()
+				this.slideRenderer!.lastRenderedSlideIndex === nOldSlide
+					? this.slideRenderer!.getSlideTexture()
 					: this.getTexture(nOldSlide);
 		}
 		const enteringSlideTexture = this.getTexture(nNewSlide);
 		const transitionParameters = new TransitionParameters();
-		transitionParameters.context = this.slideRenderer._context;
+		transitionParameters.context = this.slideRenderer!._context;
 		transitionParameters.current = leavingSlideTexture;
 		transitionParameters.next = enteringSlideTexture;
 		transitionParameters.slideInfo = this.getSlideInfo(nNewSlide);

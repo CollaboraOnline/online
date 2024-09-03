@@ -28,26 +28,26 @@ class SplitTransition extends Transition2d {
 
 	public start(): void {
 		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+			stringToTransitionSubTypeMap[this.slideInfo!.transitionSubtype!];
 
 		if (
 			transitionSubType == TransitionSubType.HORIZONTAL &&
-			this.slideInfo.transitionDirection == false
+			this.slideInfo!.transitionDirection == false
 		) {
 			this.direction = SplitSubType.HORIZONTALIN;
 		} else if (
 			transitionSubType == TransitionSubType.HORIZONTAL &&
-			this.slideInfo.transitionDirection == true
+			this.slideInfo!.transitionDirection == true
 		) {
 			this.direction = SplitSubType.HORIZONTALOUT;
 		} else if (
 			transitionSubType == TransitionSubType.VERTICAL &&
-			this.slideInfo.transitionDirection == false
+			this.slideInfo!.transitionDirection == false
 		) {
 			this.direction = SplitSubType.VERTICALIN;
 		} else if (
 			transitionSubType == TransitionSubType.VERTICAL &&
-			this.slideInfo.transitionDirection == true
+			this.slideInfo!.transitionDirection == true
 		) {
 			this.direction = SplitSubType.VERTICALOUT;
 		}
@@ -57,7 +57,7 @@ class SplitTransition extends Transition2d {
 	// jscpd:ignore-start
 	public renderUniformValue(): void {
 		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
+			this.gl.getUniformLocation(this.program!, 'direction'),
 			this.direction,
 		);
 	}

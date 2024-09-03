@@ -10,9 +10,9 @@
       "moduleResolution": "classic",
       "noImplicitAny": true,
       "removeComments": false,
-      "preserveConstEnums": false,
       "downlevelIteration": true,
-      "watch": false,
+
+      "strictNullChecks": true
     },
     "exclude": [
       "node_modules",

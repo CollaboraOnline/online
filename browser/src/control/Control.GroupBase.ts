@@ -42,7 +42,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 	_getFont: () => string;
 	_levelSpacing: number;
 	_groupHeadSize: number;
-	_groups: Array<Array<GroupEntry>>;
+	_groups: Array<Array<GroupEntry>> | null;
 	isRemoved: boolean = false;
 
 	constructor () { super(); }
@@ -84,7 +84,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 
 	// This returns the required width for the section.
 	_computeSectionWidth(): number {
-		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
+		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups!.length + 1);
 	}
 
 	// This function puts data into a good shape for use of this class.
@@ -98,8 +98,8 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 			// a new group start
 			const groupData = groups[i];
 			level = parseInt(groupData.level) - 1;
-			if (!this._groups[level]) {
-				this._groups[level] = [];
+			if (!this._groups![level]) {
+				this._groups![level] = [];
 			}
 			let startPos = parseInt(groupData.startPos);
 			const endPos = parseInt(groupData.endPos);
@@ -108,7 +108,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 				let moved = false;
 				// if the first child is collapsed the parent head has to be top-aligned with the child
 				if (level < lastLevel && firstChildGroupIndex[lastLevel] !== undefined) {
-					const childGroupEntry = this._groups[lastLevel][firstChildGroupIndex[lastLevel]];
+					const childGroupEntry = this._groups![lastLevel][firstChildGroupIndex[lastLevel]];
 					if (childGroupEntry.hidden) {
 						if (startPos > childGroupEntry.startPos && startPos < childGroupEntry.endPos) {
 							startPos = childGroupEntry.startPos;
@@ -119,7 +119,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 				// if 2 groups belonging to the same level are contiguous and the first group is collapsed,
 				// the second one has to be shifted as much as possible in order to avoid overlapping.
 				if (!moved && lastGroupIndex[level] !== undefined) {
-					const prevGroupEntry = this._groups[level][lastGroupIndex[level]];
+					const prevGroupEntry = this._groups![level][lastGroupIndex[level]];
 					if (prevGroupEntry.hidden) {
 						if (startPos <= prevGroupEntry.endPos) {
 							startPos = prevGroupEntry.endPos + this._groupHeadSize;
@@ -134,7 +134,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 				endPos: endPos,
 				hidden: isHidden
 			};
-			this._groups[level][parseInt(groupData.index)] = groupEntry;
+			this._groups![level][parseInt(groupData.index)] = groupEntry;
 			lastGroupIndex[level] = groupData.index;
 			if (level > lastLevel) {
 				firstChildGroupIndex[level] = groupData.index;
@@ -169,15 +169,15 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 	}
 
 	// If previous group is visible (expanded), current group's plus sign etc. will be drawn. If previous group is not expanded, current group's plus sign etc. won't be drawn.
-	_isPreviousGroupVisible(level: number, startPos: number, endPos: number, hidden: boolean): boolean {
-		for (let i = 0; i < this._groups.length; i++) {
+	_isPreviousGroupVisible(level: number, startPos: number, endPos: number, hidden: boolean): boolean | undefined {
+		for (let i = 0; i < this._groups!.length; i++) {
 			var parentGroup;
 
 			// find the correct parent group level
 			if (i == level - 1) {
-				for (const group in this._groups[i]) {
-					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-						const group_ = this._groups[i][group];
+				for (const group in this._groups![i]) {
+					if (Object.prototype.hasOwnProperty.call(this._groups![i], group)) {
+						const group_ = this._groups![i][group];
 
 						// parent group is expanded
 						if ((startPos != endPos) && (startPos >= group_.startPos && endPos <= group_.endPos)) {
@@ -255,7 +255,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 
 	// This function calls drawing function for related to headers of groups. Headers are drawn on the left of corner header.
 	drawLevelHeaders(): void {
-		for (let i = 0; i < this._groups.length + 1; ++i) {
+		for (let i = 0; i < this._groups!.length + 1; ++i) {
 			this.drawLevelHeader(i);
 		}
 	}
@@ -287,7 +287,7 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 		this.drawLevelHeaders();
 	}
 
-	findClickedGroup (point: number[]): GroupEntry {
+	findClickedGroup (point: number[]): GroupEntry | null {
 		return null;
 	}
 
@@ -332,13 +332,13 @@ export abstract class GroupBase extends app.definitions.canvasSectionObject {
 		return [0, 0, 0, 0];
 	}
 
-	findTailsGroup (point: number[]): GroupEntry {
+	findTailsGroup (point: number[]): GroupEntry | undefined {
 		const mirrorX = this.isCalcRTL();
-		for (let i = 0; i < this._groups.length; i++) {
-			if (this._groups[i]) {
-				for (const group in this._groups[i]) {
-					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-						const group_ = this._groups[i][group];
+		for (let i = 0; i < this._groups!.length; i++) {
+			if (this._groups![i]) {
+				for (const group in this._groups![i]) {
+					if (Object.prototype.hasOwnProperty.call(this._groups![i], group)) {
+						const group_ = this._groups![i][group];
 						const rect = this.getTailsGroupRect(group_);
 						const startX = rect[0];
 						const startY = rect[2];

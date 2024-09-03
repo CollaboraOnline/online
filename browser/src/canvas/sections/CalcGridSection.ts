@@ -96,15 +96,15 @@ class CalcGridSection extends app.definitions.canvasSectionObject {
 			// help our poor CPU renderers - render in horizontal strips.
 			var bandSize = 256;
 			var clearDash = false;
-			for (var miny = area.min.y; miny < area.max.y; miny += bandSize)
+			for (var miny = area!.min.y; miny < area!.max.y; miny += bandSize)
 			{
-				var maxy = Math.min(area.max.y, miny + bandSize);
+				var maxy = Math.min(area!.max.y, miny + bandSize);
 
 				this.context.beginPath();
 
 				// vertical lines
 				this.sectionProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
-					area.min.x, area.max.x,
+					area!.min.x, area!.max.x,
 					function(pos: any, colIndex: any) {
 						var xcoord = xTransform(Math.floor(scale * (pos - paneOffset.x)) - 0.5);
 
@@ -136,10 +136,10 @@ class CalcGridSection extends app.definitions.canvasSectionObject {
 						}
 
 						this.context.moveTo(
-							xTransform(Math.floor(scale * (area.min.x - paneOffset.x)) + 0.5),
+							xTransform(Math.floor(scale * (area!.min.x - paneOffset.x)) + 0.5),
 							Math.floor(scale * (pos - paneOffset.y)) - 0.5);
 						this.context.lineTo(
-							xTransform(Math.floor(scale * (area.max.x - paneOffset.x)) - 0.5),
+							xTransform(Math.floor(scale * (area!.max.x - paneOffset.x)) - 0.5),
 							Math.floor(scale * (pos - paneOffset.y)) - 0.5);
 						this.context.stroke();
 

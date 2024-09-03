@@ -27,10 +27,10 @@ class ShapeHandleGluePointSubSection extends CanvasSectionObject {
 	}
 
     onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
-        this.context.fillStyle = '#EE3E3E';
-        this.context.beginPath();
-        this.context.arc(0, 0, this.size[0] * 0.5, 0, Math.PI * 2);
-        this.context.fill();
+        this.context!.fillStyle = '#EE3E3E';
+        this.context!.beginPath();
+        this.context!.arc(0, 0, this.size[0] * 0.5, 0, Math.PI * 2);
+        this.context!.fill();
     }
 }
 

@@ -28,16 +28,16 @@ class DiagonalTransition extends Transition2d {
 
 	public start(): void {
 		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+			stringToTransitionSubTypeMap[this.slideInfo!.transitionSubtype!];
 
 		if (
 			transitionSubType == TransitionSubType.HORIZONTALRIGHT &&
-			!this.slideInfo.transitionDirection
+			!this.slideInfo!.transitionDirection
 		) {
 			this.direction = DiagonalSubType.BOTTOMLEFT;
 		} else if (
 			transitionSubType == TransitionSubType.HORIZONTALLEFT &&
-			!this.slideInfo.transitionDirection
+			!this.slideInfo!.transitionDirection
 		) {
 			this.direction = DiagonalSubType.BOTTOMRIGHT;
 		} else if (transitionSubType == TransitionSubType.HORIZONTALRIGHT) {
@@ -51,7 +51,7 @@ class DiagonalTransition extends Transition2d {
 	// jscpd:ignore-start
 	public renderUniformValue(): void {
 		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
+			this.gl.getUniformLocation(this.program!, 'direction'),
 			this.direction,
 		);
 	}

@@ -35,13 +35,13 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 	}
 
 	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds): void {
-		this.context.fillStyle = 'yellow';
-		this.context.strokeStyle = 'black';
-		this.context.beginPath();
-		this.context.arc(this.size[0] * 0.5, this.size[1] * 0.5, this.size[0] * 0.5, 0, Math.PI * 2);
-		this.context.closePath();
-		this.context.fill();
-		this.context.stroke();
+		this.context!.fillStyle = 'yellow';
+		this.context!.strokeStyle = 'black';
+		this.context!.beginPath();
+		this.context!.arc(this.size[0] * 0.5, this.size[1] * 0.5, this.size[0] * 0.5, 0, Math.PI * 2);
+		this.context!.closePath();
+		this.context!.fill();
+		this.context!.stroke();
 	}
 
 	onInitialize(): void {
@@ -54,7 +54,7 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.mousePointerType;
 		this.stopPropagating();
 		e.stopPropagation();
-		this.containerObject.requestReDraw();
+		this.containerObject!.requestReDraw();
 	}
 
 	onMouseLeave(point: number[], e: MouseEvent) {
@@ -62,7 +62,7 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.previousCursorStyle;
 		this.stopPropagating();
 		e.stopPropagation();
-		this.containerObject.requestReDraw();
+		this.containerObject!.requestReDraw();
 	}
 
 	onMouseDown(point: Array<number>, e: MouseEvent): void {
@@ -70,7 +70,7 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 	}
 
 	onMouseUp(point: number[], e: MouseEvent): void {
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject!.isDraggingSomething()) {
 			const parameters = {
 				HandleNum: { type: 'long', value: this.sectionProperties.ownInfo.id },
 				NewPosX: { type: 'long', value: Math.round((point[0] + this.position[0]) * app.pixelsToTwips) },
@@ -87,7 +87,7 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 	}
 
 	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject!.isDraggingSomething()) {
 			this.stopPropagating();
 			e.stopPropagation();
 		}

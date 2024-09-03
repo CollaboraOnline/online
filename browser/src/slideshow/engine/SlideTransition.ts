@@ -34,7 +34,7 @@ class SlideTransition {
 
 		// set up min frame count value;
 		this.nMinFrameCount = this.getDuration().isValue()
-			? this.getDuration().getValue() *
+			? this.getDuration().getValue()! *
 				SlideShowHandler.MINIMUM_FRAMES_PER_SECONDS
 			: SlideShowHandler.MINIMUM_FRAMES_PER_SECONDS;
 		if (this.nMinFrameCount < 1.0) this.nMinFrameCount = 1;
@@ -48,7 +48,7 @@ class SlideTransition {
 
 	createSlideTransition(
 		transitionParameters: TransitionParameters,
-	): ISlideChangeBase {
+	): ISlideChangeBase | null {
 		if (!this.isValid()) return null;
 
 		switch (this.getType()) {
@@ -106,18 +106,18 @@ class SlideTransition {
 			default:
 				console.log(
 					'Unknown transition type',
-					transitionParameters.slideInfo.transitionType,
+					transitionParameters.slideInfo!.transitionType,
 				);
 				return new SlideShow.NoTransition(transitionParameters);
 		}
 	}
 
 	public getType() {
-		return stringToTransitionTypeMap[this.slideInfo.transitionType];
+		return stringToTransitionTypeMap[this.slideInfo.transitionType!];
 	}
 
 	public getSubType() {
-		return stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+		return stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype!];
 	}
 
 	public getFadeColor(): string {

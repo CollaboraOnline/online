@@ -44,13 +44,13 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	}
 
 	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds): void {
-		this.context.fillStyle = 'wheat';
-		this.context.strokeStyle = 'black';
-		this.context.beginPath();
-		this.context.arc(this.size[0] * 0.5, this.size[1] * 0.5, this.size[0] * 0.5, 0, Math.PI * 2);
-		this.context.closePath();
-		this.context.fill();
-		this.context.stroke();
+		this.context!.fillStyle = 'wheat';
+		this.context!.strokeStyle = 'black';
+		this.context!.beginPath();
+		this.context!.arc(this.size[0] * 0.5, this.size[1] * 0.5, this.size[0] * 0.5, 0, Math.PI * 2);
+		this.context!.closePath();
+		this.context!.fill();
+		this.context!.stroke();
 	}
 
 	setMousePointerType() {
@@ -78,7 +78,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		this.stopPropagating();
 		this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
 		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.mousePointerType;
-		this.containerObject.requestReDraw();
+		this.containerObject!.requestReDraw();
 	}
 
 	onMouseLeave(point: number[], e: MouseEvent) {
@@ -86,11 +86,11 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		e.stopPropagation();
 		this.stopPropagating();
 		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.previousCursorStyle;
-		this.containerObject.requestReDraw();
+		this.containerObject!.requestReDraw();
 	}
 
 	onMouseUp(point: number[], e: MouseEvent): void {
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject!.isDraggingSomething()) {
 			this.stopPropagating();
 			e.stopPropagation();
 
@@ -183,8 +183,8 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	// While dragging a handle, we want to simulate handles to their final positions.
 	moveHandlesOnDrag(point: number[]) {
 		const shapeRecProps = this.calculateNewShapeRectangleProperties([
-			point[0] + this.myTopLeft[0] + this.documentTopLeft[0] - this.containerObject.getDocumentAnchor()[0],
-			point[1] + this.myTopLeft[1] + this.documentTopLeft[1] - this.containerObject.getDocumentAnchor()[1]
+			point[0] + this.myTopLeft[0]! + this.documentTopLeft[0] - this.containerObject!.getDocumentAnchor()[0]!,
+			point[1] + this.myTopLeft[1]! + this.documentTopLeft[1] - this.containerObject!.getDocumentAnchor()[1]!
 		]);
 
 		this.sectionProperties.parentHandlerSection.calculateInitialAnglesOfShapeHandlers(shapeRecProps);
@@ -208,14 +208,14 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	}
 
 	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject!.isDraggingSomething()) {
 			(window as any).IgnorePanning = true;
 			this.stopPropagating();
 			e.stopPropagation();
 			this.sectionProperties.parentHandlerSection.sectionProperties.svg.style.opacity = 0.5;
 			this.moveHandlesOnDrag(point);
 			this.sectionProperties.parentHandlerSection.checkObjectsBoundaries([this.position[0]], [this.position[1]]);
-			this.containerObject.requestReDraw();
+			this.containerObject!.requestReDraw();
 			this.sectionProperties.parentHandlerSection.showSVG();
 		}
 		else

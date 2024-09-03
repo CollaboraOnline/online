@@ -15,21 +15,21 @@ declare var app: any;
 class PropertyAnimationNode extends AnimationBaseNode3 {
 	constructor(
 		aNodeInfo: AnimationNodeInfo,
-		aParentNode: BaseContainerNode,
+		aParentNode: BaseContainerNode | null,
 		aNodeContext: NodeContext,
 	) {
 		super(aNodeInfo, aParentNode, aNodeContext);
 		this.sClassName = 'PropertyAnimationNode';
 	}
 
-	createActivity(): AnimationActivity {
+	createActivity(): AnimationActivity | null | undefined {
 		const aActivityParamSet = this.fillActivityParams();
 
 		const aAnimation = createPropertyAnimation(
 			this.getAttributeName(),
 			this.getAnimatedElement(),
-			this.aNodeContext.aContext.nSlideWidth,
-			this.aNodeContext.aContext.nSlideHeight,
+			this.aNodeContext.aContext!.nSlideWidth,
+			this.aNodeContext.aContext!.nSlideHeight,
 		);
 
 		if (!aAnimation) {
@@ -39,7 +39,7 @@ class PropertyAnimationNode extends AnimationBaseNode3 {
 			return null;
 		}
 		// TODO Interpolator = null ?
-		const aInterpolator: PropertyInterpolatorType = null; // createActivity will compute it;
+		const aInterpolator: PropertyInterpolatorType | null = null; // createActivity will compute it;
 		return createActivity(aActivityParamSet, this, aAnimation, aInterpolator);
 	}
 }

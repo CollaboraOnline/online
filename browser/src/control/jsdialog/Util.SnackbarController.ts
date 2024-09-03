@@ -19,7 +19,7 @@ type SnackbarData = {
 	label: string;
 	action: string | undefined;
 	callback: () => void | undefined;
-	timeout: number;
+	timeout: number | undefined;
 	hasProgress: boolean | undefined;
 	withDismiss: boolean | undefined;
 };
@@ -82,7 +82,7 @@ class SnackbarController {
 		this.showingSnackbar = true;
 	}
 
-	private showSnackbarImpl(snackbarData: SnackbarData) {
+	private showSnackbarImpl(snackbarData: SnackbarData | undefined) {
 		var buttonId = 'button';
 		var labelId = 'label';
 
@@ -90,42 +90,42 @@ class SnackbarController {
 			id: 'snackbar',
 			jsontype: 'dialog',
 			type: 'snackbar',
-			timeout: this.extractTimeout(snackbarData),
-			init_focus_id: snackbarData.action ? buttonId : undefined,
+			timeout: this.extractTimeout(snackbarData!),
+			init_focus_id: snackbarData!.action ? buttonId : undefined,
 			children: [
 				{
-					id: snackbarData.hasProgress
+					id: snackbarData!.hasProgress
 						? 'snackbar-container-progress'
 						: 'snackbar-container',
 					type: 'container',
 					children: [
-						snackbarData.action
+						snackbarData!.action
 							? {
 									id: labelId,
 									type: 'fixedtext',
-									text: snackbarData.label,
+									text: snackbarData!.label,
 									labelFor: buttonId,
 								}
 							: {
 									id: 'label-no-action',
 									type: 'fixedtext',
-									text: snackbarData.label,
+									text: snackbarData!.label,
 								},
-						snackbarData.withDismiss
+						snackbarData!.withDismiss
 							? {
 									id: 'snackbar-dismiss-button',
 									type: 'pushbutton',
 									text: _('Dismiss'),
 								}
 							: {},
-						snackbarData.hasProgress
+						snackbarData!.hasProgress
 							? { id: 'progress', type: 'progressbar', value: 0, maxValue: 100 }
 							: {},
-						snackbarData.action
+						snackbarData!.action
 							? {
 									id: buttonId,
 									type: 'pushbutton',
-									text: snackbarData.action,
+									text: snackbarData!.action,
 									labelledBy: labelId,
 								}
 							: {},
@@ -158,8 +158,8 @@ class SnackbarController {
 				objectType === 'pushbutton' &&
 				eventType === 'click'
 			) {
-				if (typeof snackbarData.callback === 'function')
-					snackbarData.callback();
+				if (typeof snackbarData!.callback === 'function')
+					snackbarData!.callback();
 
 				this.closeSnackbar();
 			} else if (

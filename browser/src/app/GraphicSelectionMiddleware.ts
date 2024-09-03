@@ -11,10 +11,10 @@
  */
 
 class GraphicSelection {
-	public static rectangle: cool.SimpleRectangle = null;
+	public static rectangle: cool.SimpleRectangle | null = null;
 	public static extraInfo: any = null;
 	public static selectionAngle: number = 0;
-	public static handlesSection: ShapeHandlesSection = null;
+	public static handlesSection: ShapeHandlesSection | null = null;
 
 	public static hasActiveSelection() {
 		return this.rectangle !== null;
@@ -43,8 +43,8 @@ class GraphicSelection {
 		var videoDesc = JSON.parse(textMsg);
 
 		if (this.hasActiveSelection()) {
-			videoDesc.width = this.rectangle.cWidth;
-			videoDesc.height = this.rectangle.cHeight;
+			videoDesc.width = this.rectangle!.cWidth;
+			videoDesc.height = this.rectangle!.cHeight;
 		}
 
 		// proxy cannot identify RouteToken if it is encoded
@@ -82,8 +82,8 @@ class GraphicSelection {
 	}
 
 	static renderDarkOverlay() {
-		var topLeft = new L.Point(this.rectangle.pX1, this.rectangle.pY1);
-		var bottomRight = new L.Point(this.rectangle.pX2, this.rectangle.pY2);
+		var topLeft = new L.Point(this.rectangle!.pX1, this.rectangle!.pY1);
+		var bottomRight = new L.Point(this.rectangle!.pX2, this.rectangle!.pY2);
 
 		if (app.map._docLayer.isCalcRTL()) {
 			// Dark overlays (like any other overlay) need regular document coordinates.
@@ -138,7 +138,7 @@ class GraphicSelection {
 		);
 
 		if (hasGridOffset)
-			this.rectangle.moveBy([
+			this.rectangle!.moveBy([
 				app.map._docLayer._shapeGridOffset.x,
 				app.map._docLayer._shapeGridOffset.y,
 			]);
@@ -177,10 +177,13 @@ class GraphicSelection {
 				app.sectionContainer.addSection(this.handlesSection);
 			}
 
-			this.handlesSection.setPosition(this.rectangle.pX1, this.rectangle.pY1);
+			this.handlesSection!.setPosition(
+				this.rectangle!.pX1,
+				this.rectangle!.pY1,
+			);
 			extraInfo.hasTableSelection = app.map._docLayer.hasTableSelection(); // scaleSouthAndEastOnly
-			this.handlesSection.refreshInfo(this.extraInfo);
-			this.handlesSection.setShowSection(true);
+			this.handlesSection!.refreshInfo(this.extraInfo);
+			this.handlesSection!.setShowSection(true);
 			app.sectionContainer.requestReDraw();
 		} else if (
 			this.handlesSection &&

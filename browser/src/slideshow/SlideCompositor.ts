@@ -17,9 +17,9 @@
 declare var SlideShow: any;
 
 abstract class SlideCompositor {
-	_slideShowPresenter: SlideShowPresenter = null;
+	_slideShowPresenter: SlideShowPresenter | null = null;
 	_initialSlideNumber: number = 0;
-	_onGotSlideCallback: VoidFunction = null;
+	_onGotSlideCallback: VoidFunction | null = null;
 
 	constructor(slideShowPresenter: SlideShowPresenter) {
 		this._slideShowPresenter = slideShowPresenter;
@@ -39,17 +39,19 @@ abstract class SlideCompositor {
 
 	public abstract getCanvasSize(): [number, number]; // [width, height]
 
-	public abstract getSlide(slideNumber: number): ImageBitmap;
+	public abstract getSlide(
+		slideNumber: number | undefined,
+	): ImageBitmap | undefined;
 
 	public abstract getLayerImage(
 		slideHash: string,
 		targetElement: string,
-	): ImageBitmap;
+	): ImageBitmap | null;
 
 	public abstract getLayerBounds(
 		slideHash: string,
 		targetElement: string,
-	): BoundingBoxType;
+	): BoundingBoxType | null;
 }
 
 SlideShow.SlideCompositor = SlideCompositor;

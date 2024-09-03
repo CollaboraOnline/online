@@ -15,7 +15,7 @@ declare var app: any;
 class AnimationSetNode extends AnimationBaseNode2 {
 	constructor(
 		aNodeInfo: AnimationNodeInfo,
-		aParentNode: BaseContainerNode,
+		aParentNode: BaseContainerNode | null,
 		aNodeContext: NodeContext,
 	) {
 		super(aNodeInfo, aParentNode, aNodeContext);
@@ -26,8 +26,8 @@ class AnimationSetNode extends AnimationBaseNode2 {
 		const aAnimation = createPropertyAnimation(
 			this.getAttributeName(),
 			this.getAnimatedElement(),
-			this.aNodeContext.aContext.nSlideWidth,
-			this.aNodeContext.aContext.nSlideHeight,
+			this.aNodeContext.aContext!.nSlideWidth,
+			this.aNodeContext.aContext!.nSlideHeight,
 		);
 
 		const aActivityParamSet = this.fillActivityParams();

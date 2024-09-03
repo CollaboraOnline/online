@@ -13,7 +13,7 @@
 declare var SlideShow: any;
 
 function SlideWipeTransition(transitionParameters: TransitionParameters) {
-	if (transitionParameters.slideInfo.transitionDirection) {
+	if (transitionParameters.slideInfo!.transitionDirection) {
 		return new SlideShow.CoverTransition(transitionParameters);
 	} else {
 		return new SlideShow.UncoverTransition(transitionParameters);

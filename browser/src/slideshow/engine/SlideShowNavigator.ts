@@ -13,13 +13,13 @@
 declare var app: any;
 
 class SlideShowNavigator {
-	private theMetaPres: MetaPresentation = null;
+	private theMetaPres: MetaPresentation | null = null;
 	private slideShowHandler: SlideShowHandler;
 	private presenter: SlideShowPresenter;
 	private keyHandlerMap: Record<string, () => void>;
 	private _canvasClickHandler: MouseClickHandler;
-	private currentSlide: number;
-	private prevSlide: number;
+	private currentSlide: number | undefined;
+	private prevSlide: number | undefined;
 
 	constructor(slideShowHandler: SlideShowHandler) {
 		this.slideShowHandler = slideShowHandler;
@@ -59,7 +59,7 @@ class SlideShowNavigator {
 		this.theMetaPres = metaPres;
 	}
 
-	public get currentSlideIndex(): number {
+	public get currentSlideIndex(): number | undefined {
 		return this.currentSlide;
 	}
 
@@ -125,11 +125,11 @@ class SlideShowNavigator {
 		NAVDBG.print(
 			'SlideShowNavigator.goToLastSlide: current index: ' + this.currentSlide,
 		);
-		this.displaySlide(this.theMetaPres.numberOfSlides - 1, true);
+		this.displaySlide(this.theMetaPres!.numberOfSlides - 1, true);
 	}
 
 	private backToLastSlide(): boolean {
-		if (this.currentSlide >= this.theMetaPres.numberOfSlides) {
+		if (this.currentSlide! >= this.theMetaPres!.numberOfSlides) {
 			this.goToLastSlide();
 			return true;
 		}
@@ -145,10 +145,10 @@ class SlideShowNavigator {
 
 	switchSlide(nOffset: number, bSkipTransition: boolean) {
 		NAVDBG.print('SlideShowNavigator.switchSlide: nOffset: ' + nOffset);
-		this.displaySlide(this.currentSlide + nOffset, bSkipTransition);
+		this.displaySlide(this.currentSlide! + nOffset, bSkipTransition);
 	}
 
-	displaySlide(nNewSlide: number, bSkipTransition: boolean) {
+	displaySlide(nNewSlide: number | undefined, bSkipTransition: boolean) {
 		NAVDBG.print(
 			'SlideShowNavigator.displaySlide: current index: ' +
 				this.currentSlide +
@@ -158,13 +158,13 @@ class SlideShowNavigator {
 				bSkipTransition,
 		);
 		if (nNewSlide === undefined || nNewSlide < 0) return;
-		if (nNewSlide >= this.theMetaPres.numberOfSlides) {
+		if (nNewSlide >= this.theMetaPres!.numberOfSlides) {
 			this.currentSlide = nNewSlide;
-			const force = nNewSlide > this.theMetaPres.numberOfSlides;
+			const force = nNewSlide > this.theMetaPres!.numberOfSlides;
 			this.endPresentation(force);
 			return;
 		}
-		this.slideCompositor.fetchAndRun(nNewSlide, () => {
+		this.slideCompositor!.fetchAndRun(nNewSlide, () => {
 			assert(
 				this instanceof SlideShowNavigator,
 				'SlideShowNavigator.displaySlide: slideCompositor.fetchAndRun: ' +
@@ -172,7 +172,7 @@ class SlideShowNavigator {
 			);
 
 			this.prevSlide = this.currentSlide;
-			if (this.prevSlide >= this.theMetaPres.numberOfSlides)
+			if (this.prevSlide! >= this.theMetaPres!.numberOfSlides)
 				this.prevSlide = undefined;
 			this.currentSlide = nNewSlide;
 			this.slideShowHandler.displaySlide(
@@ -202,7 +202,7 @@ class SlideShowNavigator {
 		aEvent.preventDefault();
 		aEvent.stopPropagation();
 
-		const metaSlide = this.theMetaPres.getMetaSlideByIndex(this.currentSlide);
+		const metaSlide = this.theMetaPres!.getMetaSlideByIndex(this.currentSlide!);
 		if (!metaSlide)
 			window.app.console.log(
 				'SlideShowNavigator.onClick: no meta slide available for index: ' +
@@ -237,7 +237,7 @@ class SlideShowNavigator {
 		this.presenter = presenter;
 	}
 
-	private get slideCompositor(): SlideCompositor {
+	private get slideCompositor(): SlideCompositor | null {
 		return this.presenter._slideCompositor;
 	}
 }

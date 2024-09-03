@@ -37,7 +37,7 @@ class ValidityInputHelpSection extends HTMLObjectSection {
             app.sectionContainer.removeSection(ValidityInputHelpSection.sectionName);
     }
 
-    constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint, extraClass: string = "", showSection: boolean = true) {
+    constructor (sectionName: string, objectWidth: number | null, objectHeight: number | null, documentPosition: cool.SimplePoint, extraClass: string = "", showSection: boolean = true) {
         super(sectionName, objectWidth, objectHeight, documentPosition, extraClass, showSection);
     }
 }

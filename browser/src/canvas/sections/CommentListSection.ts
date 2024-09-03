@@ -76,7 +76,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	disableLayoutAnimation: boolean = false;
 
 	map: any;
-	static autoSavedComment: cool.Comment;
+	static autoSavedComment: cool.Comment | null;
 	static commentWasAutoAdded: boolean = false;
 	static pendingImport: boolean = false;
 
@@ -501,12 +501,12 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		}
 
 		var newAnnotationDialog = document.getElementById('new-annotation-dialog');
-		$(newAnnotationDialog).css('width', '100%');
-		var dialogInput = newAnnotationDialog.children[0];
+		$(newAnnotationDialog!).css('width', '100%');
+		var dialogInput = newAnnotationDialog!.children[0];
 		$(dialogInput).css('height', '30vh');
-		var parent = newAnnotationDialog.parentElement;
-		parent.insertBefore(author, parent.childNodes[0]);
-		document.getElementById('input-modal-input').focus();
+		var parent = newAnnotationDialog!.parentElement;
+		parent!.insertBefore(author, parent!.childNodes[0]);
+		document.getElementById('input-modal-input')!.focus();
 	}
 
 	public highlightComment (comment: any): void {
@@ -733,7 +733,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 
 			const selectedComment = this.sectionProperties.selectedComment;
 			const docType = this.sectionProperties.docLayer._docType;
-			let position: Array<number> = null;
+			let position: Array<number> | null = null;
 
 			switch (docType) {
 				case 'text':
@@ -789,7 +789,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	public getScreenTopBottom(): Array<number> {
 		const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
 		const screenTop = scrollSection.containerObject.getDocumentTopLeft()[1];
-		const screenBottom = screenTop + this.cssToCorePixels($('#map').height());
+		const screenBottom = screenTop + this.cssToCorePixels($('#map').height()!);
 
 		return [screenTop, screenBottom];
 	}
@@ -945,7 +945,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		return (index === undefined) ? -1 : index;
 	}
 
-	public isThreadResolved (annotation: any): boolean {
+	public isThreadResolved (annotation: any): boolean | undefined {
 		// If comment has children.
 		if (annotation.sectionProperties.children.length > 0) {
 			for (var i = 0; i < annotation.sectionProperties.children.length; i++) {
@@ -1439,7 +1439,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				shouldOpenWizard = true;
 
 			if (shouldOpenWizard) {
-				this.sectionProperties.docLayer._openCommentWizard(annotation);
+				this.sectionProperties.docLayer._openCommentWizard(annotation!);
 			}
 		}
 
@@ -1482,7 +1482,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 
 	// This converts the specified number of values into core pixels from twips.
 	// Returns a new array with the length of specified numbers.
-	private numberArrayToCorePixFromTwips (numberArray: Array<number>, startIndex: number = 0, length: number = null): Array<number> {
+	private numberArrayToCorePixFromTwips (numberArray: Array<number>, startIndex: number = 0, length: number | null = null): Array<number> {
 		if (!length)
 			length = numberArray.length;
 
@@ -1605,26 +1605,26 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		return (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') && !app.file.fileBasedView;
 	}
 
-	private getAnimationDuration() :number {
+	private getAnimationDuration(): number | undefined {
 		return this.disableLayoutAnimation ? 0 : undefined; // undefined means it will use default value
 	}
 
-	private layoutUp (subList: any, actualPosition: Array<number>, lastY: number): number {
+	private layoutUp (subList: any, actualPosition: Array<number>, lastY: number | null): number | null {
 		var height: number;
 		for (var i = 0; i < subList.length; i++) {
 			height = subList[i].sectionProperties.container.getBoundingClientRect().height;
-			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY - (height * app.dpiScale);
-			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
+			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY! ? subList[i].sectionProperties.data.anchorPix[1]: lastY! - (height * app.dpiScale);
+			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY! / app.dpiScale)}, this.getAnimationDuration());
 			if (!subList[i].isEdit())
 				subList[i].show();
 		}
 		return lastY;
 	}
 
-	private loopUp (startIndex: number, x: number, startY: number): number {
+	private loopUp (startIndex: number, x: number, startY: number | null): number {
 		var tmpIdx = 0;
 		var checkSelectedPart: boolean = this.mustCheckSelectedPart();
-		startY -= this.sectionProperties.marginY;
+		startY! -= this.sectionProperties.marginY;
 		// Pass over all comments present
 		for (var i = startIndex; i > -1;) {
 			var subList = [];
@@ -1647,31 +1647,31 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			} else {
 				i = tmpIdx;
 			}
-			startY -= this.sectionProperties.marginY;
+			startY! -= this.sectionProperties.marginY;
 		}
-		return startY;
+		return startY!;
 	}
 
-	private layoutDown (subList: any, actualPosition: Array<number>, lastY: number): number {
+	private layoutDown (subList: any, actualPosition: Array<number>, lastY: number | null): number | null {
 		var selectedComment = subList[0] === this.sectionProperties.selectedComment;
 		for (var i = 0; i < subList.length; i++) {
-			lastY = subList[i].sectionProperties.data.anchorPix[1] > lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY;
+			lastY = subList[i].sectionProperties.data.anchorPix[1] > lastY! ? subList[i].sectionProperties.data.anchorPix[1]: lastY;
 
 			var isRTL = document.documentElement.dir === 'rtl';
 
 			if (selectedComment)
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1), y: Math.round(lastY! / app.dpiScale)}, this.getAnimationDuration());
 			else
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY! / app.dpiScale)}, this.getAnimationDuration());
 
-			lastY += (subList[i].sectionProperties.container.getBoundingClientRect().height * app.dpiScale);
+			lastY! += (subList[i].sectionProperties.container.getBoundingClientRect().height * app.dpiScale);
 			if (!subList[i].isEdit())
 				subList[i].show();
 		}
 		return lastY;
 	}
 
-	private loopDown (startIndex: number, x: number, startY: number): number {
+	private loopDown (startIndex: number, x: number, startY: number | null): number | null {
 		var tmpIdx = 0;
 		var checkSelectedPart: boolean = this.mustCheckSelectedPart();
 		// Pass over all comments present
@@ -1696,14 +1696,14 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			} else {
 				i = tmpIdx;
 			}
-			startY += this.sectionProperties.marginY;
+			startY! += this.sectionProperties.marginY;
 		}
 		return startY;
 	}
 
 	public hideArrow (): void {
 		if (this.sectionProperties.arrow) {
-			document.getElementById('document-container').removeChild(this.sectionProperties.arrow);
+			document.getElementById('document-container')!.removeChild(this.sectionProperties.arrow);
 			this.sectionProperties.arrow = null;
 		}
 	}
@@ -1744,7 +1744,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			line.setAttribute('stroke', 'darkblue');
 			line.setAttribute('stroke-width', '1');
 			svg.appendChild(line);
-			document.getElementById('document-container').appendChild(svg);
+			document.getElementById('document-container')!.appendChild(svg);
 			this.sectionProperties.arrow = svg;
 		}
 	}
@@ -1795,7 +1795,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				app.sectionContainer.requestReDraw();
 			}
 
-			var lastY = 0;
+			var lastY: number | null = 0;
 			if (selectedIndex) {
 				this.loopUp(selectedIndex - 1, x, yOrigin);
 				lastY = this.loopDown(selectedIndex, x, yOrigin);
@@ -1806,9 +1806,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		}
 		this.resizeComments();
 
-		lastY += this.containerObject.getDocumentTopLeft()[1];
-		if (lastY > app.file.size.pixels[1]) {
-			app.view.size.pixels[1] = lastY;
+		lastY! += this.containerObject.getDocumentTopLeft()[1];
+		if (lastY! > app.file.size.pixels[1]) {
+			app.view.size.pixels[1] = lastY!;
 			this.containerObject.requestReDraw();
 		}
 		else

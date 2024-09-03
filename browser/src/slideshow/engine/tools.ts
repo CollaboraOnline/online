@@ -29,7 +29,7 @@ function getCurrentSystemTime() {
 }
 
 // Remove any whitespace inside a string
-function removeWhiteSpaces(str: string) {
+function removeWhiteSpaces(str: string | undefined) {
 	if (!str) return '';
 
 	const re = / */;

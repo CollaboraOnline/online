@@ -16,7 +16,7 @@
 // maybe later rename to LayerEventSource
 class SourceEventElement implements MouseClickHandler {
 	private sId: string;
-	private aSlideShow: SlideShowHandler = null;
+	private aSlideShow: SlideShowHandler | null = null;
 	private aElement: any;
 	private aEventMultiplexer: EventMultiplexer;
 	private bClickHandled = false;
@@ -69,7 +69,7 @@ class SourceEventElement implements MouseClickHandler {
 		if (this.bClickHandled) return false;
 
 		this.aEventMultiplexer.notifyEvent(EventTrigger.OnClick, this.getId());
-		this.aSlideShow.update();
+		this.aSlideShow!.update();
 		this.bClickHandled = true;
 		this.setDefaultCursor();
 		return true;

@@ -13,7 +13,7 @@
 declare var app: any;
 
 class SetActivity extends AnimationActivity {
-	private aAnimation: AnimationBase;
+	private aAnimation: AnimationBase | null;
 	private aTargetElement: null;
 	private aEndEvent: DelayEvent;
 	private aTimerEventQueue: TimerEventQueue;
@@ -22,7 +22,7 @@ class SetActivity extends AnimationActivity {
 
 	constructor(
 		aCommonParamSet: ActivityParamSet,
-		aAnimation: AnimationBase,
+		aAnimation: AnimationBase | null,
 		aToAttr: string,
 	) {
 		super();

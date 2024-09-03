@@ -10,7 +10,7 @@
  */
 
 class ElapsedTime {
-	private aTimeBase: ElapsedTime = null;
+	private aTimeBase: ElapsedTime | null | undefined = null;
 	private nLastQueriedTime: number;
 	private nStartTime: number;
 	private nFrozenTime: number;

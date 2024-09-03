@@ -13,16 +13,16 @@
 declare var app: any;
 
 abstract class AnimationBaseNode extends BaseNode {
-	private aTargetHash: string;
-	private bIsTargetTextElement: boolean;
-	private aAnimatedElement: AnimatedElement;
-	private aActivity: AnimationActivity;
+	private aTargetHash: string | undefined;
+	private bIsTargetTextElement: boolean | undefined | ''; // FIXME: can be '' because we use (x && y) which actually returns x if it's falsey, and x is a string. We should convert to a boolean
+	private aAnimatedElement: AnimatedElement | null | undefined;
+	private aActivity: AnimationActivity | null | undefined;
 	private nMinFrameCount: number;
 	private eAdditiveMode: AdditiveMode;
 
 	protected constructor(
 		aNodeInfo: AnimationNodeInfo,
-		aParentNode: BaseContainerNode,
+		aParentNode: BaseContainerNode | null,
 		aNodeContext: NodeContext,
 	) {
 		super(aNodeInfo, aParentNode, aNodeContext);
@@ -70,23 +70,23 @@ abstract class AnimationBaseNode extends BaseNode {
 			this.nMinFrameCount = SlideShowHandler.MINIMUM_FRAMES_PER_SECONDS;
 
 		if (this.aTargetHash) {
-			if (!this.aNodeContext.aAnimatedElementMap.has(this.aTargetHash)) {
-				const slideHash = this.aNodeContext.metaSlide.info.hash;
+			if (!this.aNodeContext.aAnimatedElementMap!.has(this.aTargetHash)) {
+				const slideHash = this.aNodeContext.metaSlide!.info.hash;
 				const aAnimatedElement = this.bIsTargetTextElement
 					? new AnimatedTextElement(this.aTargetHash, slideHash)
 					: new AnimatedElement(this.aTargetHash, slideHash);
 
-				this.aNodeContext.aAnimatedElementMap.set(
+				this.aNodeContext.aAnimatedElementMap!.set(
 					this.aTargetHash,
 					aAnimatedElement,
 				);
 			}
-			this.aAnimatedElement = this.aNodeContext.aAnimatedElementMap.get(
+			this.aAnimatedElement = this.aNodeContext.aAnimatedElementMap!.get(
 				this.aTargetHash,
 			);
 
 			// set additive mode
-			this.aAnimatedElement.setAdditiveMode(this.eAdditiveMode);
+			this.aAnimatedElement!.setAdditiveMode(this.eAdditiveMode);
 		}
 	}
 
@@ -105,10 +105,10 @@ abstract class AnimationBaseNode extends BaseNode {
 		if (this.aActivity) {
 			this.saveStateOfAnimatedElement();
 			this.aActivity.setTargets(this.getAnimatedElement());
-			if (this.getContext().bIsSkipping) {
+			if (this.getContext()!.bIsSkipping) {
 				this.aActivity.end();
 			} else {
-				this.getContext().aActivityQueue.addActivity(this.aActivity);
+				this.getContext()!.aActivityQueue.addActivity(this.aActivity);
 			}
 		} else {
 			super.scheduleDeactivationEvent();
@@ -126,7 +126,7 @@ abstract class AnimationBaseNode extends BaseNode {
 		}
 	}
 
-	public abstract createActivity(): AnimationActivity;
+	public abstract createActivity(): AnimationActivity | null | undefined;
 
 	public fillActivityParams() {
 		// compute duration
@@ -143,16 +143,16 @@ abstract class AnimationBaseNode extends BaseNode {
 		const aActivityParamSet = new ActivityParamSet();
 
 		aActivityParamSet.aEndEvent = makeEvent(this.deactivate.bind(this));
-		aActivityParamSet.aTimerEventQueue = this.aContext.aTimerEventQueue;
-		aActivityParamSet.aActivityQueue = this.aContext.aActivityQueue;
+		aActivityParamSet.aTimerEventQueue = this.aContext!.aTimerEventQueue;
+		aActivityParamSet.aActivityQueue = this.aContext!.aActivityQueue;
 		aActivityParamSet.nMinDuration = nDuration;
 		aActivityParamSet.nMinNumberOfFrames = this.getMinFrameCount();
 		aActivityParamSet.bAutoReverse = this.isAutoReverseEnabled();
 		aActivityParamSet.nRepeatCount = this.getRepeatCount();
 		aActivityParamSet.nAccelerationFraction = this.getAccelerateValue();
 		aActivityParamSet.nDecelerationFraction = this.getDecelerateValue();
-		aActivityParamSet.nSlideWidth = this.aNodeContext.aContext.nSlideWidth;
-		aActivityParamSet.nSlideHeight = this.aNodeContext.aContext.nSlideHeight;
+		aActivityParamSet.nSlideWidth = this.aNodeContext.aContext!.nSlideWidth;
+		aActivityParamSet.nSlideHeight = this.aNodeContext.aContext!.nSlideHeight;
 
 		return aActivityParamSet;
 	}
@@ -162,11 +162,11 @@ abstract class AnimationBaseNode extends BaseNode {
 	}
 
 	public saveStateOfAnimatedElement() {
-		this.getAnimatedElement().saveState(this.getId());
+		this.getAnimatedElement()!.saveState(this.getId());
 	}
 
 	public removeEffect() {
-		this.getAnimatedElement().restoreState(this.getId());
+		this.getAnimatedElement()!.restoreState(this.getId());
 	}
 
 	public getTargetHash() {
@@ -214,12 +214,12 @@ abstract class AnimationBaseNode extends BaseNode {
 }
 
 abstract class AnimationBaseNode2 extends AnimationBaseNode {
-	protected attributeName: string = '';
-	private aToValue: string = null;
+	protected attributeName: string | undefined = '';
+	private aToValue: string | null | undefined = null;
 
 	protected constructor(
 		aNodeInfo: AnimationNodeInfo,
-		aParentNode: BaseContainerNode,
+		aParentNode: BaseContainerNode | null,
 		aNodeContext: NodeContext,
 	) {
 		super(aNodeInfo, aParentNode, aNodeContext);
@@ -242,7 +242,7 @@ abstract class AnimationBaseNode2 extends AnimationBaseNode {
 		this.aToValue = aNodeInfo.to;
 	}
 
-	public getAttributeName(): string {
+	public getAttributeName(): string | undefined {
 		return this.attributeName;
 	}
 
@@ -264,17 +264,17 @@ abstract class AnimationBaseNode2 extends AnimationBaseNode {
 }
 
 abstract class AnimationBaseNode3 extends AnimationBaseNode2 {
-	private eAccumulate: AccumulateMode;
-	private eCalcMode: CalcMode;
-	private aFromValue: string;
-	private aByValue: string;
-	private aKeyTimes: Array<number>;
-	private aValues: Array<string>;
-	private aFormula: string;
+	private eAccumulate: AccumulateMode | undefined;
+	private eCalcMode: CalcMode | undefined;
+	private aFromValue: string | null | undefined;
+	private aByValue: string | null | undefined;
+	private aKeyTimes: Array<number> | null;
+	private aValues: Array<string> | null;
+	private aFormula: string | null | undefined;
 
 	protected constructor(
 		aNodeInfo: AnimationNodeInfo,
-		aParentNode: BaseContainerNode,
+		aParentNode: BaseContainerNode | null,
 		aNodeContext: NodeContext,
 	) {
 		super(aNodeInfo, aParentNode, aNodeContext);
@@ -326,31 +326,31 @@ abstract class AnimationBaseNode3 extends AnimationBaseNode2 {
 		this.aFormula = aNodeInfo.formula;
 	}
 
-	public getAccumulate(): AccumulateMode {
+	public getAccumulate(): AccumulateMode | undefined {
 		return this.eAccumulate;
 	}
 
-	public getCalcMode(): CalcMode {
+	public getCalcMode(): CalcMode | undefined {
 		return this.eCalcMode;
 	}
 
-	public getFromValue(): string {
+	public getFromValue(): string | null | undefined {
 		return this.aFromValue;
 	}
 
-	public getByValue(): string {
+	public getByValue(): string | null | undefined {
 		return this.aByValue;
 	}
 
-	public getKeyTimes(): Array<number> {
+	public getKeyTimes(): Array<number> | null {
 		return this.aKeyTimes;
 	}
 
-	public getValues(): Array<string> {
+	public getValues(): Array<string> | null {
 		return this.aValues;
 	}
 
-	public getFormula(): string {
+	public getFormula(): string | null | undefined {
 		return this.aFormula;
 	}
 
@@ -360,10 +360,10 @@ abstract class AnimationBaseNode3 extends AnimationBaseNode2 {
 		if (verbose) {
 			// accumulate mode
 			if (this.getAccumulate())
-				sInfo += ';  accumulate: ' + AccumulateMode[this.getAccumulate()];
+				sInfo += ';  accumulate: ' + AccumulateMode[this.getAccumulate()!];
 
 			// calcMode
-			sInfo += ';  calcMode: ' + CalcMode[this.getCalcMode()];
+			sInfo += ';  calcMode: ' + CalcMode[this.getCalcMode()!];
 
 			// from
 			if (this.getFromValue()) sInfo += ';  from: ' + this.getFromValue();
@@ -372,12 +372,12 @@ abstract class AnimationBaseNode3 extends AnimationBaseNode2 {
 			if (this.getByValue()) sInfo += ';  by: ' + this.getByValue();
 
 			// keyTimes
-			if (this.getKeyTimes().length)
-				sInfo += ';  keyTimes: ' + this.getKeyTimes().join(',');
+			if (this.getKeyTimes()!.length)
+				sInfo += ';  keyTimes: ' + this.getKeyTimes()!.join(',');
 
 			// values
-			if (this.getValues().length)
-				sInfo += ';  values: ' + this.getValues().join(',');
+			if (this.getValues()!.length)
+				sInfo += ';  values: ' + this.getValues()!.join(',');
 
 			// formula
 			if (this.getFormula()) sInfo += ';  formula: ' + this.getFormula();

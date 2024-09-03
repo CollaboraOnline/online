@@ -18,7 +18,7 @@ export class Bounds {
 	public min: Point;
 	public max: Point;
 
-	constructor(a: PointConvertable[] | PointConvertable, b?: PointConvertable) {
+	constructor(a: PointConvertable[] | PointConvertable | undefined, b?: PointConvertable) {
 		if (!a)
 			return;
 
@@ -29,7 +29,7 @@ export class Bounds {
 		}
 	}
 
-	public static parse(rectString: string): Bounds {
+	public static parse(rectString: string): Bounds | undefined {
 
 		if (typeof rectString !== 'string') {
 			console.error('invalid input type, expected string');
@@ -49,7 +49,7 @@ export class Bounds {
 		return new Bounds(refPoint1, refPoint2);
 	}
 
-	public static parseArray(rectListString: string): Bounds[] {
+	public static parseArray(rectListString: string): Bounds[] | undefined {
 
 		if (typeof rectListString !== 'string') {
 			console.error('invalid input type, expected string');
@@ -136,11 +136,11 @@ export class Bounds {
 			bounds = Bounds.toBounds(obj);
 		}
 
-		if (bounds) {
+		if (bounds!) {
 			min = bounds.min;
 			max = bounds.max;
 		} else {
-			min = max = point;
+			min = max = point!;
 		}
 
 		return (min.x >= this.min.x) &&
@@ -209,7 +209,7 @@ export class Bounds {
 		return Math.max(this.min.y, Math.min(this.max.y, y));
 	}
 
-	public clamp(obj: Point | Bounds): Point | Bounds {
+	public clamp(obj: Point | Bounds): Point | Bounds | undefined {
 		if (obj instanceof L.Point) {
 			return PointConstruct(
 				this.clampX((obj as Point).x),

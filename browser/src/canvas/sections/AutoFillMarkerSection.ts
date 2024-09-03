@@ -98,7 +98,7 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 	}
 
 	private calculatePositionFromPoint (point: Array<number>) {
-		var calcPoint: Array<number>;
+		var calcPoint: Array<number> | null;
 		if (point === null) {
 			calcPoint = null;
 		}
@@ -124,9 +124,9 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 	// This is for enhancing contrast of the marker with the background
 	// similar to what we have for cell cursors.
 	private drawWhiteOuterBorders () {
-		this.context.strokeStyle = 'white';
-		this.context.lineCap = 'square';
-		this.context.lineWidth = 1;
+		this.context!.strokeStyle = 'white';
+		this.context!.lineCap = 'square';
+		this.context!.lineWidth = 1;
 
 		var desktop: boolean = (<any>window).mode.isDesktop();
 		var translation = desktop ?
@@ -138,24 +138,24 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 		};
 
 		// top white line
-		this.context.beginPath();
-		this.context.moveTo(transformX(-0.5), -0.5);
+		this.context!.beginPath();
+		this.context!.moveTo(transformX(-0.5), -0.5);
 		var borderWidth = this.sectionProperties.selectedAreaPoint ? this.selectionBorderWidth : this.cursorBorderWidth;
-		this.context.lineTo(transformX(this.size[0] + 0.5 - (desktop ? borderWidth : 0)), - 0.5);
-		this.context.stroke();
+		this.context!.lineTo(transformX(this.size[0] + 0.5 - (desktop ? borderWidth : 0)), - 0.5);
+		this.context!.stroke();
 
 		if (!desktop) {
-			this.context.beginPath();
-			this.context.moveTo(transformX(this.size[0] - 0.5 - (desktop ? borderWidth : 0)), -0.5);
-			this.context.lineTo(transformX(this.size[0] - 0.5 - (desktop ? borderWidth : 0)), translation[1] - 0.5 - borderWidth);
-			this.context.stroke();
+			this.context!.beginPath();
+			this.context!.moveTo(transformX(this.size[0] - 0.5 - (desktop ? borderWidth : 0)), -0.5);
+			this.context!.lineTo(transformX(this.size[0] - 0.5 - (desktop ? borderWidth : 0)), translation[1] - 0.5 - borderWidth);
+			this.context!.stroke();
 		}
 
 		// bottom white line
-		this.context.beginPath();
-		this.context.moveTo(transformX(-0.5), -0.5);
-		this.context.lineTo(transformX(-0.5), translation[1] + 0.5 - borderWidth);
-		this.context.stroke();
+		this.context!.beginPath();
+		this.context!.moveTo(transformX(-0.5), -0.5);
+		this.context!.lineTo(transformX(-0.5), translation[1] + 0.5 - borderWidth);
+		this.context!.stroke();
 	}
 
 	public onDraw () {
@@ -193,8 +193,8 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 	public onMouseUp (point: Array<number>, e: MouseEvent) {
 		if (this.sectionProperties.draggingStarted) {
 			this.sectionProperties.draggingStarted = false;
-			point[0] += this.myTopLeft[0] + this.size[0] * 0.5;
-			point[1] += this.myTopLeft[1] + this.size[1] * 0.5;
+			point[0] += this.myTopLeft[0]! + this.size[0] * 0.5;
+			point[1] += this.myTopLeft[1]! + this.size[1] * 0.5;
 			var pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
 			this.sectionProperties.docLayer._postMouseEvent('buttonup', pos.x, pos.y, 1, 1, 0);
 		}
@@ -214,9 +214,9 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 
 			// revert coordinates to global and fire event again with position in the center
 			// inverse of convertPositionToCanvasLocale
-			var canvasClientRect = this.containerObject.getCanvasBoundingClientRect();
-			point[0] = (this.myTopLeft[0] + this.size[0] * 0.5 + 1) / app.dpiScale + canvasClientRect.left;
-			point[1] = (this.myTopLeft[1] + this.size[1] * 0.5 + 1) / app.dpiScale + canvasClientRect.top;
+			var canvasClientRect = this.containerObject!.getCanvasBoundingClientRect();
+			point[0] = (this.myTopLeft[0]! + this.size[0] * 0.5 + 1) / app.dpiScale + canvasClientRect.left;
+			point[1] = (this.myTopLeft[1]! + this.size[1] * 0.5 + 1) / app.dpiScale + canvasClientRect.top;
 
 			var newPoint = {
 				clientX: point[0],

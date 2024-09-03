@@ -18,7 +18,7 @@ declare var JSDialog: any;
 function handleKeyboardNavigation(
 	event: KeyboardEvent,
 	currentElement: HTMLElement,
-	parentContainer: HTMLElement,
+	parentContainer: HTMLElement | null,
 	handleSelection?: any,
 	builder?: any,
 	widgetData?: any,
@@ -53,7 +53,7 @@ function handleKeyboardNavigation(
 }
 
 function moveFocus(
-	parentContainer: HTMLElement,
+	parentContainer: HTMLElement | null,
 	currentElement: HTMLElement,
 	direction: 'next' | 'previous',
 	axis: 'horizontal' | 'vertical',
@@ -110,11 +110,11 @@ function moveFocus(
 		const nextElement =
 			direction === 'next'
 				? JSDialog.FindFocusableElement(
-						potentialCurrentElement.nextElementSibling,
+						potentialCurrentElement!.nextElementSibling,
 						'next',
 					)
 				: JSDialog.FindFocusableElement(
-						potentialCurrentElement.previousElementSibling,
+						potentialCurrentElement!.previousElementSibling,
 						'previous',
 					);
 		if (nextElement) {

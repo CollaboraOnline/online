@@ -36,7 +36,7 @@ interface Options {
 	tabs: any[];
 	unit: string | null;
 	DraggableConvertRatio: number | null;
-	timer: ReturnType<typeof setTimeout>;
+	timer: ReturnType<typeof setTimeout> | null;
 	showruler: boolean;
 	position: string;
 	disableMarker: boolean;
@@ -116,13 +116,13 @@ class VRuler {
 	}
 
 	_updatePaintTimer() {
-		clearTimeout(this.options.timer);
+		clearTimeout(this.options.timer!);
 		this.options.timer = setTimeout(L.bind(this._updateBreakPoints, this), 300);
 	}
 
 	_resetTopBottomPageSpacing(e?: any) {
-		this.options.pageTopMargin = undefined;
-		this.options.pageBottomMargin = undefined;
+		this.options.pageTopMargin = null;
+		this.options.pageBottomMargin = null;
 		if (e) this.options.disableMarker = e.disableMarker;
 	}
 
@@ -266,7 +266,7 @@ class VRuler {
 	_updateParagraphIndentations() {
 		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrraper
 		const documentTop: number = document
-			.getElementById('document-container')
+			.getElementById('document-container')!
 			.getBoundingClientRect().top;
 		// rTSContainer is the reference element.
 		const pStartPosition: number =
@@ -300,7 +300,7 @@ class VRuler {
 	_updateBreakPoints() {
 		if (this.options.margin1 == null || this.options.margin2 == null) return;
 
-		const topMargin: number = this.options.leftOffset;
+		const topMargin: number | null = this.options.leftOffset;
 		const docLayer = this._map._docLayer;
 
 		// This is surely bogus. We take pageWidth, which is in mm100, and subtract a value
@@ -310,7 +310,8 @@ class VRuler {
 		// this._bMarginDrag.style.width near the end of this function), so presumably it
 		// doesn't matter that much what bottomMargin is.
 		const bottomMargin: number =
-			this.options.pageWidth - (this.options.leftOffset + this.options.margin2);
+			this.options.pageWidth! -
+			(this.options.leftOffset! + this.options.margin2);
 		this.options.pageBottomMargin = bottomMargin;
 
 		const scale: number = this._map.getZoomScale(this._map.getZoom(), 10);
@@ -320,14 +321,14 @@ class VRuler {
 
 		this._fixOffset();
 
-		this.options.DraggableConvertRatio = wPixel / this.options.pageWidth;
+		this.options.DraggableConvertRatio = wPixel / this.options.pageWidth!;
 		this._rFace.style.width = wPixel + 'px';
 		this._rBPContainer.style.marginLeft =
-			-1 * (this.options.DraggableConvertRatio * (500 - (topMargin % 1000))) +
+			-1 * (this.options.DraggableConvertRatio * (500 - (topMargin! % 1000))) +
 			1 +
 			'px';
 
-		let numCounter: number = -1 * Math.floor(topMargin / 1000);
+		let numCounter: number = -1 * Math.floor(topMargin! / 1000);
 
 		L.DomUtil.removeChildNodes(this._rBPContainer);
 
@@ -337,7 +338,11 @@ class VRuler {
 		// FIXME: Surely this should be locale-specific, we would want to use inches at
 		// least in the US. (The ruler unit to use doesn't seem to be stored in the document
 		// at least for .odt?)
-		for (let num: number = 0; num <= this.options.pageWidth / 1000 + 1; num++) {
+		for (
+			let num: number = 0;
+			num <= this.options.pageWidth! / 1000 + 1;
+			num++
+		) {
 			const marker = L.DomUtil.create(
 				'div',
 				'cool-ruler-maj',
@@ -382,17 +387,17 @@ class VRuler {
 		}
 
 		this._tMarginMarker.style.width =
-			this.options.DraggableConvertRatio * topMargin + 'px';
+			this.options.DraggableConvertRatio * topMargin! + 'px';
 		this._bMarginMarker.style.width =
 			this.options.DraggableConvertRatio * bottomMargin + 'px';
 		this._tMarginDrag.style.width =
-			this.options.DraggableConvertRatio * topMargin + 'px';
+			this.options.DraggableConvertRatio * topMargin! + 'px';
 		this._bMarginDrag.style.width =
 			this.options.DraggableConvertRatio * bottomMargin + 'px';
 
 		// Put the _rTSContainer in the right place
 		this._rTSContainer.style.left =
-			this.options.DraggableConvertRatio * topMargin + 'px';
+			this.options.DraggableConvertRatio * topMargin! + 'px';
 		this._rTSContainer.style.right =
 			this.options.DraggableConvertRatio * bottomMargin + 'px';
 
@@ -429,7 +434,7 @@ class VRuler {
 		// so if cursor moves to other page we will see how many pages before current page are there
 		// and then add totalHeight of all those pages to our final calculation of rulerOffset
 		const currentPage: number = Math.floor(
-			this.options.pageOffset / this.options.pageWidth,
+			this.options.pageOffset! / this.options.pageWidth!,
 		);
 		let pageoffset: number = 0;
 		if (this._map._docLayer._docPixelSize)
@@ -453,26 +458,26 @@ class VRuler {
 			e.clientX = e.center.x;
 		}
 
-		const element: HTMLElement = document.getElementById(
+		const element: HTMLElement | null = document.getElementById(
 			this._indentationElementId,
 		);
 		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrraper
 		const documentTop = document
-			.getElementById('document-container')
+			.getElementById('document-container')!
 			.getBoundingClientRect().top;
 
 		// User is moving the cursor / their finger on the screen and we are moving the marker.
 		const newLeft: number =
-			parseInt(element.style.left.replace('px', '')) +
+			parseInt(element!.style.left.replace('px', '')) +
 			e.clientY -
 			this._lastposition -
 			documentTop;
-		element.style.left = String(newLeft) + 'px';
+		element!.style.left = String(newLeft) + 'px';
 		this._lastposition = e.clientY - documentTop;
 		// halfWidth..
 		const halfWidth: number =
-			(element.getBoundingClientRect().right -
-				element.getBoundingClientRect().left) *
+			(element!.getBoundingClientRect().right -
+				element!.getBoundingClientRect().left) *
 			0.5;
 		this._markerHorizontalLine.style.left = String(newLeft + halfWidth) + 'px';
 	}
@@ -489,14 +494,14 @@ class VRuler {
 		// The new coordinate of element subject to indentation is sent as a percentage of the page width..
 		// We need to calculate the percentage. Left margin (leftOffset) is not being added to the indentation (on the core part)..
 		// We can use TabStopContainer's position as the reference point, as they share the same reference point..
-		const element: HTMLElement = document.getElementById(
+		const element: HTMLElement | null = document.getElementById(
 			this._indentationElementId,
 		);
 
 		// The halfWidth of the shape..
 		const halfWidth: number =
-			(element.getBoundingClientRect().bottom -
-				element.getBoundingClientRect().top) *
+			(element!.getBoundingClientRect().bottom -
+				element!.getBoundingClientRect().top) *
 			0.5;
 
 		const params: Params = {};
@@ -508,24 +513,24 @@ class VRuler {
 		) {
 			// do not change anything if Start marker goes beyond the end marker in that case we hold the last original postions or marker
 			this._fixOffset();
-		} else if (element.id == 'lo-vertical-pstart-marker') {
+		} else if (element!.id == 'lo-vertical-pstart-marker') {
 			const topMarginPX: number =
 				this._pVerticalStartMarker.getBoundingClientRect().top -
 				this._rTSContainer.getBoundingClientRect().top +
 				halfWidth;
 			const top: number =
-				topMarginPX / this.options.DraggableConvertRatio +
-				this.options.pageTopMargin;
+				topMarginPX / this.options.DraggableConvertRatio! +
+				this.options.pageTopMargin!;
 			// margin should not go above page top
 			this.options.pageTopMargin = top < 0 ? this.options.pageTopMargin : top;
-		} else if (element.id == 'lo-vertical-pend-marker') {
+		} else if (element!.id == 'lo-vertical-pend-marker') {
 			const bottomMarginPX: number =
 				this._rTSContainer.getBoundingClientRect().bottom -
 				this._pVerticalEndMarker.getBoundingClientRect().bottom +
 				halfWidth;
 			const bottom: number =
-				bottomMarginPX / this.options.DraggableConvertRatio +
-				this.options.pageBottomMargin;
+				bottomMarginPX / this.options.DraggableConvertRatio! +
+				this.options.pageBottomMargin!;
 			// margin should not go below page bottom
 			this.options.pageBottomMargin =
 				bottom < 0 ? this.options.pageBottomMargin : bottom;
@@ -564,7 +569,7 @@ class VRuler {
 		}
 		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrraper
 		const documentTop: number = document
-			.getElementById('document-container')
+			.getElementById('document-container')!
 			.getBoundingClientRect().top;
 
 		this._initialposition = this._lastposition = e.clientY - documentTop;

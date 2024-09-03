@@ -77,10 +77,10 @@ class WakeupEvent extends EventBase {
 	private aActivity: any = null;
 	private aActivityQueue: any;
 
-	constructor(aTimer: ElapsedTime, aActivityQueue: any) {
+	constructor(aTimer: ElapsedTime | null | undefined, aActivityQueue: any) {
 		super();
 
-		this.aTimer = new ElapsedTime(aTimer);
+		this.aTimer = new ElapsedTime(aTimer!);
 		this.aActivityQueue = aActivityQueue;
 	}
 
@@ -152,16 +152,16 @@ function registerEvent(
 	);
 
 	if (eTimingType == TimingType.Offset) {
-		aSlideShowContext.aTimerEventQueue.addEvent(aEvent);
+		aSlideShowContext!.aTimerEventQueue.addEvent(aEvent);
 	} else if (aNodeContext.bFirstRun) {
-		const aEventMultiplexer = aSlideShowContext.aEventMultiplexer;
+		const aEventMultiplexer = aSlideShowContext!.aEventMultiplexer;
 		if (!aEventMultiplexer) {
 			window.app.console.log(
 				'registerEvent: event multiplexer not initialized',
 			);
 			return;
 		}
-		const aNextEffectEventArray = aSlideShowContext.aNextEffectEventArray;
+		const aNextEffectEventArray = aSlideShowContext!.aNextEffectEventArray;
 		if (!aNextEffectEventArray) {
 			window.app.console.log(
 				'registerEvent: next effect event array not initialized',
@@ -169,7 +169,7 @@ function registerEvent(
 			return;
 		}
 		const aInteractiveAnimationSequenceMap =
-			aSlideShowContext.aInteractiveAnimationSequenceMap;
+			aSlideShowContext!.aInteractiveAnimationSequenceMap;
 		if (!aInteractiveAnimationSequenceMap) {
 			window.app.console.log(
 				'registerEvent: interactive animation sequence map not initialized',
@@ -211,12 +211,12 @@ function registerEvent(
 							case EventTrigger.OnClick:
 								aEventMultiplexer.registerEvent(
 									eEventType,
-									aSourceEventElement.getId(),
+									aSourceEventElement!.getId(),
 									aEvent,
 								);
 								aEventMultiplexer.registerRewindedEffectHandler(
-									aSourceEventElement.getId(),
-									aSourceEventElement.charge.bind(aSourceEventElement),
+									aSourceEventElement!.getId(),
+									aSourceEventElement!.charge.bind(aSourceEventElement),
 								);
 								bEventRegistered = true;
 								break;
@@ -227,14 +227,14 @@ function registerEvent(
 						}
 						if (bEventRegistered) {
 							const aStartEvent = aInteractiveAnimationSequenceMap
-								.get(nNodeId)
+								.get(nNodeId)!
 								.getStartEvent();
 							const aEndEvent = aInteractiveAnimationSequenceMap
-								.get(nNodeId)
+								.get(nNodeId)!
 								.getEndEvent();
 							aEventMultiplexer.registerEvent(
 								eEventType,
-								aSourceEventElement.getId(),
+								aSourceEventElement!.getId(),
 								aStartEvent,
 							);
 							aEventMultiplexer.registerEvent(
@@ -245,7 +245,7 @@ function registerEvent(
 							aEventMultiplexer.registerRewindedEffectHandler(
 								nNodeId,
 								aInteractiveAnimationSequenceMap
-									.get(nNodeId)
+									.get(nNodeId)!
 									.chargeEvents.bind(
 										aInteractiveAnimationSequenceMap.get(nNodeId),
 									),
@@ -271,7 +271,7 @@ function registerEvent(
 					const sEventBaseElemId = aTiming.getEventBaseElementId();
 					if (sEventBaseElemId) {
 						const aAnimationNode =
-							aNodeContext.aAnimationNodeMap.get(sEventBaseElemId);
+							aNodeContext.aAnimationNodeMap!.get(sEventBaseElemId);
 						if (!aAnimationNode) {
 							window.app.console.log(
 								'registerEvent: TimingType.SyncBase: event base element not found: ' +

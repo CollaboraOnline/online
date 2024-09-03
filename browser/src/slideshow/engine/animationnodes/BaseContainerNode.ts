@@ -16,8 +16,8 @@ abstract class BaseContainerNode extends BaseNode {
 	protected aChildrenArray: Array<BaseNode>;
 	protected nFinishedChildren: number;
 	private bDurationIndefinite: boolean;
-	private nLeftIterations: number;
-	private eImpressNodeType: ImpressNodeType;
+	private nLeftIterations: number | undefined;
+	private eImpressNodeType: ImpressNodeType | undefined;
 
 	protected constructor(
 		aNodeInfo: AnimationNodeInfo,
@@ -162,13 +162,13 @@ abstract class BaseContainerNode extends BaseNode {
 		let bFinished = this.nFinishedChildren >= nChildrenCount;
 
 		if (bFinished && this.isDurationIndefinite()) {
-			if (this.nLeftIterations >= 1.0) {
-				this.nLeftIterations -= 1.0;
+			if (this.nLeftIterations! >= 1.0) {
+				this.nLeftIterations! -= 1.0;
 			}
-			if (this.nLeftIterations >= 1.0) {
+			if (this.nLeftIterations! >= 1.0) {
 				bFinished = false;
 				const aRepetitionEvent = makeDelay(this.repeat.bind(this), 0.0);
-				this.aContext.aTimerEventQueue.addEvent(aRepetitionEvent);
+				this.aContext!.aTimerEventQueue.addEvent(aRepetitionEvent);
 			} else {
 				this.deactivate();
 			}
@@ -229,7 +229,7 @@ abstract class BaseContainerNode extends BaseNode {
 		}
 	}
 
-	public getImpressNodeType(): ImpressNodeType {
+	public getImpressNodeType(): ImpressNodeType | undefined {
 		return this.eImpressNodeType;
 	}
 
@@ -247,7 +247,7 @@ abstract class BaseContainerNode extends BaseNode {
 
 		if (verbose) {
 			if (this.getImpressNodeType())
-				sInfo += '; nodeType: ' + ImpressNodeType[this.getImpressNodeType()];
+				sInfo += '; nodeType: ' + ImpressNodeType[this.getImpressNodeType()!];
 		}
 
 		for (const child of this.aChildrenArray) {
@@ -294,9 +294,9 @@ class ParallelTimeContainer extends BaseContainerNode {
 
 class SequentialTimeContainer extends BaseContainerNode {
 	private bIsRewinding: boolean;
-	private aCurrentSkipEvent: DelayEvent;
-	private aRewindCurrentEffectEvent: DelayEvent;
-	private aRewindLastEffectEvent: DelayEvent;
+	private aCurrentSkipEvent: DelayEvent | null;
+	private aRewindCurrentEffectEvent: DelayEvent | null;
+	private aRewindLastEffectEvent: DelayEvent | null;
 
 	constructor(aNodeInfo: any, aParentNode: any, aNodeContext: any) {
 		super(aNodeInfo, aParentNode, aNodeContext);
@@ -368,16 +368,16 @@ class SequentialTimeContainer extends BaseContainerNode {
 	public skipEffect(aChildNode: BaseNode) {
 		if (this.isChildNode(aChildNode)) {
 			// First off we end all queued activities.
-			this.getContext().aActivityQueue.endAll();
+			this.getContext()!.aActivityQueue.endAll();
 			// We signal that we are going to skip all subsequent animations by
 			// setting the bIsSkipping flag to 'true', then all queued events are
 			// fired immediately. In such a way the correct order of the various
 			// events that belong to the animation time-line is preserved.
-			this.getContext().bIsSkipping = true;
-			this.getContext().aTimerEventQueue.forceEmpty();
-			this.getContext().bIsSkipping = false;
+			this.getContext()!.bIsSkipping = true;
+			this.getContext()!.aTimerEventQueue.forceEmpty();
+			this.getContext()!.bIsSkipping = false;
 			const aEvent = makeEvent(aChildNode.deactivate.bind(aChildNode));
-			this.getContext().aTimerEventQueue.addEvent(aEvent);
+			this.getContext()!.aTimerEventQueue.addEvent(aEvent);
 		} else {
 			window.app.console.log(
 				'SequentialTimeContainer.skipEffect: unknown child: ' +
@@ -406,17 +406,17 @@ class SequentialTimeContainer extends BaseContainerNode {
 			// resolve the next child.
 			this.bIsRewinding = true;
 			// First off we end all queued activities.
-			this.getContext().aActivityQueue.endAll();
+			this.getContext()!.aActivityQueue.endAll();
 			// We signal that we are going to skip all subsequent animations by
 			// setting the bIsSkipping flag to 'true', then all queued events are
 			// fired immediately. In such a way the correct order of the various
 			// events that belong to the animation time-line is preserved.
-			this.getContext().bIsSkipping = true;
-			this.getContext().aTimerEventQueue.forceEmpty();
-			this.getContext().bIsSkipping = false;
+			this.getContext()!.bIsSkipping = true;
+			this.getContext()!.aTimerEventQueue.forceEmpty();
+			this.getContext()!.bIsSkipping = false;
 			// We end all new activities appended to the activity queue by
 			// the fired events.
-			this.getContext().aActivityQueue.endAll();
+			this.getContext()!.aActivityQueue.endAll();
 
 			// Now we perform a final 'end' and restore the animated shape to
 			// the state it was before the current effect was applied.
@@ -456,8 +456,8 @@ class SequentialTimeContainer extends BaseContainerNode {
 			// resolve the next child.
 			this.bIsRewinding = true;
 			// We end the current effect.
-			this.getContext().aTimerEventQueue.forceEmpty();
-			this.getContext().aActivityQueue.clear();
+			this.getContext()!.aTimerEventQueue.forceEmpty();
+			this.getContext()!.aActivityQueue.clear();
 			aChildNode.end();
 			// Invoking the end method on the current child node that has not yet
 			// been activated should not lead to any change on the animated shape.
@@ -528,25 +528,25 @@ class SequentialTimeContainer extends BaseContainerNode {
 			);
 
 			if (this.isMainSequenceRootNode()) {
-				this.aContext.aEventMultiplexer.registerSkipEffectEvent(
+				this.aContext!.aEventMultiplexer!.registerSkipEffectEvent(
 					this.aCurrentSkipEvent,
 				);
-				this.aContext.aEventMultiplexer.registerRewindCurrentEffectEvent(
+				this.aContext!.aEventMultiplexer!.registerRewindCurrentEffectEvent(
 					this.aRewindCurrentEffectEvent,
 				);
-				this.aContext.aEventMultiplexer.registerRewindLastEffectEvent(
+				this.aContext!.aEventMultiplexer!.registerRewindLastEffectEvent(
 					this.aRewindLastEffectEvent,
 				);
 			} else if (this.isInteractiveSequenceRootNode()) {
-				this.aContext.aEventMultiplexer.registerSkipInteractiveEffectEvent(
+				this.aContext!.aEventMultiplexer!.registerSkipInteractiveEffectEvent(
 					aChildNode.getId(),
 					this.aCurrentSkipEvent,
 				);
-				this.aContext.aEventMultiplexer.registerRewindRunningInteractiveEffectEvent(
+				this.aContext!.aEventMultiplexer!.registerRewindRunningInteractiveEffectEvent(
 					aChildNode.getId(),
 					this.aRewindCurrentEffectEvent,
 				);
-				this.aContext.aEventMultiplexer.registerRewindEndedInteractiveEffectEvent(
+				this.aContext!.aEventMultiplexer!.registerRewindEndedInteractiveEffectEvent(
 					aChildNode.getId(),
 					this.aRewindLastEffectEvent,
 				);
@@ -557,13 +557,13 @@ class SequentialTimeContainer extends BaseContainerNode {
 
 	public notifyRewindedEvent(aChildNode: BaseNode) {
 		if (this.isInteractiveSequenceRootNode()) {
-			this.aContext.aEventMultiplexer.notifyRewindedEffectEvent(
+			this.aContext!.aEventMultiplexer!.notifyRewindedEffectEvent(
 				aChildNode.getId(),
 			);
 
 			const sId = aChildNode.getBegin().getEventBaseElementId();
 			if (sId) {
-				this.aContext.aEventMultiplexer.notifyRewindedEffectEvent(sId);
+				this.aContext!.aEventMultiplexer!.notifyRewindedEffectEvent(sId);
 			}
 		}
 	}

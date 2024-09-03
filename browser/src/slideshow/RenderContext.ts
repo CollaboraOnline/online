@@ -27,7 +27,7 @@ abstract class RenderContext {
 		return this.gl as CanvasRenderingContext2D;
 	}
 
-	public createEmptySlide(): WebGLTexture | ImageBitmap {
+	public createEmptySlide(): WebGLTexture | ImageBitmap | null {
 		return null;
 	}
 
@@ -41,16 +41,19 @@ abstract class RenderContext {
 
 	public abstract deleteVertexArray(vao: WebGLVertexArrayObject): void;
 
-	public abstract createVertexShader(source: string): WebGLShader;
+	public abstract createVertexShader(source: string): WebGLShader | null;
 
-	public abstract createFragmentShader(source: string): WebGLShader;
+	public abstract createFragmentShader(source: string): WebGLShader | null;
 
-	public abstract createShader(type: number, source: string): WebGLShader;
+	public abstract createShader(
+		type: number,
+		source: string,
+	): WebGLShader | null;
 
 	public abstract createProgram(
 		vertexShader: WebGLShader,
 		fragmentShader: WebGLShader,
-	): WebGLProgram;
+	): WebGLProgram | null;
 }
 
 class RenderContextGl extends RenderContext {
@@ -93,7 +96,7 @@ class RenderContextGl extends RenderContext {
 		gl.deleteTexture(vao);
 	}
 
-	public createEmptySlide(): WebGLTexture | ImageBitmap {
+	public createEmptySlide(): WebGLTexture | ImageBitmap | null {
 		const gl = this.getGl();
 		const texture = gl.createTexture();
 		if (!texture) {
@@ -123,15 +126,15 @@ class RenderContextGl extends RenderContext {
 		return texture;
 	}
 
-	public createVertexShader(source: string): WebGLShader {
+	public createVertexShader(source: string): WebGLShader | null {
 		return this.createShader(this.getGl().VERTEX_SHADER, source);
 	}
 
-	public createFragmentShader(source: string): WebGLShader {
+	public createFragmentShader(source: string): WebGLShader | null {
 		return this.createShader(this.getGl().FRAGMENT_SHADER, source);
 	}
 
-	public createShader(type: number, source: string): WebGLShader {
+	public createShader(type: number, source: string): WebGLShader | null {
 		const gl = this.getGl();
 		const shader = gl.createShader(type);
 		if (!shader) {
@@ -152,16 +155,16 @@ class RenderContextGl extends RenderContext {
 	}
 
 	public createProgram(
-		vertexShader: WebGLShader,
-		fragmentShader: WebGLShader,
-	): WebGLProgram {
+		vertexShader: WebGLShader | null,
+		fragmentShader: WebGLShader | null,
+	): WebGLProgram | null {
 		const gl = this.getGl();
 		const program = gl.createProgram();
 		if (!program) {
 			throw new Error('Failed to create program');
 		}
-		gl.attachShader(program, vertexShader);
-		gl.attachShader(program, fragmentShader);
+		gl.attachShader(program, vertexShader!);
+		gl.attachShader(program, fragmentShader!);
 		gl.linkProgram(program);
 		if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
 			const info = gl.getProgramInfoLog(program);
@@ -192,15 +195,15 @@ class RenderContext2d extends RenderContext {
 		return image;
 	}
 
-	public createVertexShader(source: string): WebGLShader {
+	public createVertexShader(source: string): WebGLShader | null {
 		return null;
 	}
 
-	public createFragmentShader(source: string): WebGLShader {
+	public createFragmentShader(source: string): WebGLShader | null {
 		return null;
 	}
 
-	public createShader(type: number, source: string): WebGLShader {
+	public createShader(type: number, source: string): WebGLShader | null {
 		return null;
 	}
 
@@ -215,7 +218,7 @@ class RenderContext2d extends RenderContext {
 	public createProgram(
 		vertexShader: WebGLShader,
 		fragmentShader: WebGLShader,
-	): WebGLProgram {
+	): WebGLProgram | null {
 		return null;
 	}
 }

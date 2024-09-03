@@ -153,10 +153,10 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 		this.paths.forEach(function (path:CPath) {
 			var pathBounds = path.getBounds();
 
-			if (!pathBounds.isValid())
+			if (!pathBounds!.isValid())
 				return;
 
-			var mouseOverPath = pathBounds.contains(mousePos);
+			var mouseOverPath = pathBounds!.contains(mousePos);
 			if (mouseOverPath && !path.isUnderMouse()) {
 				path.onMouseEnter(mousePos);
 				path.setUnderMouse(true);
@@ -202,7 +202,7 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 		this.redraw(path, oldBounds);
 	}
 
-	updateStyle(path: CPath, oldBounds: cool.Bounds) {
+	updateStyle(path: CPath, oldBounds: cool.Bounds | undefined) {
 		this.redraw(path, oldBounds);
 	}
 
@@ -216,9 +216,9 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 
 	private isPathVisible(path: CPath): boolean {
 		var pathBounds = path.getBounds();
-		if (!pathBounds.isValid())
+		if (!pathBounds!.isValid())
 			return false;
-		return this.intersectsVisible(pathBounds);
+		return this.intersectsVisible(pathBounds!);
 	}
 
 	private intersectsVisible(queryBounds: cool.Bounds): boolean {
@@ -284,13 +284,13 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 		}, this);
 	}
 
-	private redraw(path: CPath, oldBounds: cool.Bounds) {
+	private redraw(path: CPath, oldBounds: cool.Bounds | undefined) {
 		if (this.tsManager && this.tsManager.waitForTiles()) {
 			// don't paint anything till tiles arrive for new zoom.
 			return;
 		}
 
-		if (!this.isPathVisible(path) && (!oldBounds.isValid() || !this.intersectsVisible(oldBounds)))
+		if (!this.isPathVisible(path) && (!oldBounds!.isValid() || !this.intersectsVisible(oldBounds!)))
 			return;
 		// This does not get called via onDraw(ie, tiles aren't painted), so ask tileSection to "erase" by painting over.
 		// Repainting the whole canvas is not necessary but finding the minimum area to paint over
@@ -514,13 +514,13 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 		const bounds = path.getBounds();
 
 		if (isVertSplitter) {
-			this.ctx.fillRect(0, splitPos.y, bounds.max.x, splitPos.y + gradientWidth);
+			this.ctx.fillRect(0, splitPos.y, bounds!.max.x, splitPos.y + gradientWidth);
 		} else {
 			let x: number = splitPos.x; // Assuming x is a number
 			if (this.isCalcRTL()) {
 				x = splitPos.x - gradientWidth;
 			}
-			this.ctx.fillRect(x, 0, gradientWidth, bounds.max.y);
+			this.ctx.fillRect(x, 0, gradientWidth, bounds!.max.y);
 		}
 	}
 

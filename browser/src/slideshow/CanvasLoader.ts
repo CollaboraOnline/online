@@ -39,12 +39,12 @@ class CanvasLoaderGl extends TextureAnimationBase implements CanvasLoader {
 
 	public renderUniformValue(): void {
 		this.gl.uniform2f(
-			this.gl.getUniformLocation(this.program, 'u_resolution'),
-			this.context.canvas.width,
-			this.context.canvas.height,
+			this.gl.getUniformLocation(this.program!, 'u_resolution'),
+			this.context!.canvas.width,
+			this.context!.canvas.height,
 		);
 		this.gl.uniform1f(
-			this.gl.getUniformLocation(this.program, 'u_time'),
+			this.gl.getUniformLocation(this.program!, 'u_time'),
 			this.time,
 		);
 	}
@@ -107,8 +107,8 @@ class CanvasLoaderGl extends TextureAnimationBase implements CanvasLoader {
 		this.gl.viewport(
 			0,
 			0,
-			this.context.canvas.width,
-			this.context.canvas.height,
+			this.context!.canvas.width,
+			this.context!.canvas.height,
 		);
 		this.gl.clearColor(0.0, 0.0, 0.0, 1.0); // Black background
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT);

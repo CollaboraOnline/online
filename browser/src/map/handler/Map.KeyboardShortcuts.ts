@@ -34,15 +34,15 @@ enum ViewType {
 type shortcutCallback = () => void;
 
 class ShortcutDescriptor {
-    docType: string; // if undefined then all apps match
+    docType: string | null; // if null then all apps match
     eventType: string;
     modifier: Mod;
     key: string;
-    unoAction: string;
-    dispatchAction: string;
-    viewType: ViewType;
+    unoAction: string | null | undefined;
+    dispatchAction: string | null | undefined;
+    viewType: ViewType | null;
 
-    constructor(docType: string, eventType: string, modifier: Mod, key: string, unoAction: string, dispatchAction: string, viewType: ViewType = null) {
+    constructor(docType: string | null, eventType: string, modifier: Mod, key: string, unoAction: string | null | undefined, dispatchAction: string | null | undefined, viewType: ViewType | null = null) {
         this.docType = docType;
         this.eventType = eventType;
         this.modifier = modifier;
@@ -167,7 +167,7 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor(null, 'keydown', 0, 'F1', null, 'showhelp', null),
     new ShortcutDescriptor(null, 'keydown', Mod.ALT, 'F1', null, 'focustonotebookbar', null),
 
-    new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL | Mod.SHIFT, 'PageUp', undefined, undefined),
+    new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL | Mod.SHIFT, 'PageUp', undefined, undefined), // FIXME: these undefineds should almost certainly be nulls
     new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL | Mod.SHIFT, 'PageDown', undefined, undefined),
     new ShortcutDescriptor('spreadsheet', 'keydown', 0, 'F5', null, null, null),
 

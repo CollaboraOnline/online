@@ -19,11 +19,11 @@ function _getGridChild(
 	children: Array<WidgetJSON>,
 	row: number,
 	col: number,
-): WidgetJSON {
+): WidgetJSON | null {
 	for (var index in children) {
 		if (
-			parseInt(children[index].top) == row &&
-			parseInt(children[index].left) == col
+			parseInt(children[index].top!) == row &&
+			parseInt(children[index].left!) == col
 		)
 			return children[index];
 	}
@@ -78,7 +78,7 @@ JSDialog.grid = function (
 			const isMergedCell =
 				prevChild &&
 				prevChild.width &&
-				parseInt(prevChild.left) + parseInt(prevChild.width) > col;
+				parseInt(prevChild.left!) + parseInt(prevChild.width) > col;
 
 			if (child) {
 				if (!child.id || child.id === '')

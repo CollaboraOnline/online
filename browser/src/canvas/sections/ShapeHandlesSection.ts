@@ -109,7 +109,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 	public static moveHTMLObjectToMapElement(htmlObjectSection: HTMLObjectSection) {
 		htmlObjectSection.getHTMLObject().remove();
-		document.getElementById('map').appendChild(htmlObjectSection.getHTMLObject());
+		document.getElementById('map')!.appendChild(htmlObjectSection.getHTMLObject());
 	}
 
 	public static mirrorEventsFromSourceToCanvasSectionContainer (sourceElement: HTMLElement): void {
@@ -153,7 +153,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		let topMiddle = this.sectionProperties.info.handles.kinds.rectangle['2'][0];
 		topMiddle = new cool.SimplePoint(parseInt(topMiddle.point.x), parseInt(topMiddle.point.y));
 
-		const center = GraphicSelection.rectangle.center; // number array in twips.
+		const center = GraphicSelection.rectangle!.center; // number array in twips.
 
 		const radians = Math.atan2((center[1] - topMiddle.y), (topMiddle.x - center[0]));
 		return radians - Math.PI * 0.5;
@@ -169,7 +169,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		return {
 			angleRadian: this.getShapeAngleRadians(),
-			center: GraphicSelection.rectangle.pCenter.slice(),
+			center: GraphicSelection.rectangle!.pCenter.slice(),
 			height: this.getShapeHeight() * app.twipsToPixels,
 			width: this.getShapeWidth() * app.twipsToPixels
 		};
@@ -208,7 +208,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		if (!this.sectionProperties.info?.handles?.kinds?.rectangle)
 			return;
 
-		let coreAngle = GraphicSelection.selectionAngle;
+		let coreAngle: number | null = GraphicSelection.selectionAngle;
 		if (this.sectionProperties.svg)
 			coreAngle = this.sectionProperties.svg.innerHTML.includes('class="Group"') ? 0: coreAngle;
 
@@ -326,7 +326,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.size = [0, 0];
 
 		if (GraphicSelection.hasActiveSelection())
-			this.size = [GraphicSelection.rectangle.pWidth, GraphicSelection.rectangle.pHeight];
+			this.size = [GraphicSelection.rectangle!.pWidth, GraphicSelection.rectangle!.pHeight];
 	}
 
 	isSVGVisible() {
@@ -379,7 +379,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.hasVideo = true;
 		this.setSVG(svgString);
 		this.sectionProperties.svg.remove();
-		document.getElementById('map').appendChild(this.sectionProperties.svg);
+		document.getElementById('map')!.appendChild(this.sectionProperties.svg);
 		this.sectionProperties.svg.style.zIndex = 11; // Update z-index or video buttons are unreachable.
 
 		if (!this.sectionProperties.svg.innerHTML.includes('foreignobject')) {
@@ -410,7 +410,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			fixSVGPos();
 			var observer = new MutationObserver(fixSVGPos);
 
-			observer.observe(this.context.canvas, {
+			observer.observe(this.context!
+				.canvas, {
 				attributes: true
 			});
 		}
@@ -450,7 +451,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		data = this.removeTagFromHTML(data, ' style="', '"');
 
 		this.sectionProperties.svg = document.createElement('svg');
-		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
+		document.getElementById('canvas-container')!.appendChild(this.sectionProperties.svg);
 
 		this.sectionProperties.svg.innerHTML = data;
 		this.sectionProperties.svg.style.position = 'absolute';
@@ -618,24 +619,24 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				newSubSection = this.checkGluePointSubSection(this.sectionProperties.handles[i]);
 
 			if (newSubSection) {
-				this.containerObject.addSection(newSubSection as any);
+				this.containerObject!.addSection(newSubSection as any);
 				this.sectionProperties.subSections.push(newSubSection);
 			}
 		}
 	}
 
 	onMouseEnter() {
-		this.sectionProperties.previousCursorStyle = this.context.canvas.style.cursor;
-		this.context.canvas.style.cursor = 'move';
+		this.sectionProperties.previousCursorStyle = this.context!.canvas.style.cursor;
+		this.context!.canvas.style.cursor = 'move';
 		this.sectionProperties.mouseIsInside = true;
 	}
 
 	onMouseLeave() {
-		this.context.canvas.style.cursor = this.sectionProperties.previousCursorStyle;
+		this.context!.canvas.style.cursor = this.sectionProperties.previousCursorStyle;
 		this.sectionProperties.mouseIsInside = false;
 	}
 
-	adjustSnapTransformCoordinate(x: number, y: number) {
+	adjustSnapTransformCoordinate(x: number | null, y: number | null) {
 		// Transform command accepts the difference from top left corner.
 		// If we are snapping to other corners, we need to adjust the coordinate.
 
@@ -676,7 +677,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		(window as any).IgnorePanning = false;
 
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject!.isDraggingSomething()) {
 			if ((window as any).mode.isTablet() || (window as any).mode.isMobile())
 				this.sendTransformCommand(point);
 			else if ((window as any).mode.isDesktop() && (this.sectionProperties.closestX || this.sectionProperties.closestY)) {
@@ -755,16 +756,16 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		if (app.map._docLayer._docType === 'presentation') {
 			this.findClosestX(xListToCheck);
 			this.findClosestY(yListToCheck);
-			this.containerObject.requestReDraw();
+			this.containerObject!.requestReDraw();
 		}
 	}
 
 	onMouseMove(position: number[], dragDistance: number[]) {
-		if (this.containerObject.isDraggingSomething() && this.sectionProperties.svg) {
+		if (this.containerObject!.isDraggingSomething() && this.sectionProperties.svg) {
 			(window as any).IgnorePanning = true;
 
-			this.sectionProperties.svg.style.left = String((this.myTopLeft[0] + dragDistance[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.left = String((this.myTopLeft[0]! + dragDistance[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = String((this.myTopLeft[1]! + dragDistance[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svg.style.opacity = 0.5;
 			this.sectionProperties.lastDragDistance = [dragDistance[0], dragDistance[1]];
 			this.checkObjectsBoundaries(
@@ -831,8 +832,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				}
 			}
 
-			this.sectionProperties.svg.style.left = (left - (this.documentTopLeft[0] - this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = (top - (this.documentTopLeft[1] - this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.left = (left - (this.documentTopLeft[0] - this.containerObject!.getDocumentAnchor()[0]!) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = (top - (this.documentTopLeft[1] - this.containerObject!.getDocumentAnchor()[1]!) / app.dpiScale) + 'px';
 			this.sectionProperties.svgPosition = [left, top];
 		}
 		this.hideSVG();
@@ -840,38 +841,38 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 	onNewDocumentTopLeft(size: number[]): void {
 		if (this.sectionProperties.svgPosition) {
-			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - (this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - (this.documentTopLeft[1] + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - (this.documentTopLeft[0] + this.containerObject!.getDocumentAnchor()[0]!) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - (this.documentTopLeft[1] + this.containerObject!.getDocumentAnchor()[1]!) / app.dpiScale) + 'px';
 		}
 	}
 
 	drawGuides() {
-		this.context.save();
-		this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
+		this.context!.save();
+		this.context!.translate(-this.myTopLeft[0]!, -this.myTopLeft[1]!);
 
-		this.context.setLineDash([12, 3, 3]);
+		this.context!.setLineDash([12, 3, 3]);
 
 		if (this.sectionProperties.closestX !== null) {
-			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - this.documentTopLeft[0];
-			this.context.strokeStyle = 'grey';
-			this.context.beginPath();
-			this.context.moveTo(x, 0);
-			this.context.lineTo(x, this.context.canvas.height);
-			this.context.stroke();
-			this.context.closePath();
+			const x = this.containerObject!.getDocumentAnchor()[0] + this.sectionProperties.closestX - this.documentTopLeft[0];
+			this.context!.strokeStyle = 'grey';
+			this.context!.beginPath();
+			this.context!.moveTo(x, 0);
+			this.context!.lineTo(x, this.context!.canvas.height);
+			this.context!.stroke();
+			this.context!.closePath();
 		}
 
 		if (this.sectionProperties.closestY !== null) {
-			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - this.documentTopLeft[1];
-			this.context.strokeStyle = 'grey';
-			this.context.beginPath();
-			this.context.moveTo(0, y);
-			this.context.lineTo(this.context.canvas.width, y);
-			this.context.stroke();
-			this.context.closePath();
+			const y = this.containerObject!.getDocumentAnchor()[1] + this.sectionProperties.closestY - this.documentTopLeft[1];
+			this.context!.strokeStyle = 'grey';
+			this.context!.beginPath();
+			this.context!.moveTo(0, y);
+			this.context!.lineTo(this.context!.canvas.width, y);
+			this.context!.stroke();
+			this.context!.closePath();
 		}
 
-		this.context.restore();
+		this.context!.restore();
 	}
 
 	public onDraw() {
@@ -885,7 +886,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	removeSubSections(): void {
 		this.removeSVG();
 		for (let i = 0; i < this.sectionProperties.subSections.length; i++) {
-			this.containerObject.removeSection(this.sectionProperties.subSections[i].name);
+			this.containerObject!.removeSection(this.sectionProperties.subSections[i].name);
 		}
 	}
 }

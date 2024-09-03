@@ -43,8 +43,8 @@ interface SlideInfo {
 		fillColor: string;
 	};
 	animations: any;
-	next: string;
-	prev: string;
+	next: string | null;
+	prev: string | null;
 }
 
 interface PresentationInfo {
@@ -57,16 +57,16 @@ interface PresentationInfo {
 
 class SlideShowPresenter {
 	_map: any = null;
-	_presentationInfo: PresentationInfo = null;
-	_slideCompositor: SlideCompositor = null;
-	_fullscreen: Element = null;
-	_presenterContainer: HTMLDivElement = null;
-	_slideShowCanvas: HTMLCanvasElement = null;
+	_presentationInfo: PresentationInfo | null = null;
+	_slideCompositor: SlideCompositor | null = null;
+	_fullscreen: Element | null = null;
+	_presenterContainer: HTMLDivElement | null = null;
+	_slideShowCanvas: HTMLCanvasElement | null = null;
 	_slideShowWindowProxy: ReturnType<typeof window.open> = null;
-	_windowCloseInterval: ReturnType<typeof setInterval> = null;
+	_windowCloseInterval: ReturnType<typeof setInterval> | null = null;
 	_currentSlide: number = 0;
-	_slideRenderer: SlideRenderer = null;
-	_animationsHandler: SlideAnimations = null;
+	_slideRenderer: SlideRenderer | null = null;
+	_animationsHandler: SlideAnimations | null = null;
 	_canvasLoader: CanvasLoader | null = null;
 	_isAnimationPlaying: boolean = false;
 	_isPresentInWindow: boolean = false;
@@ -120,7 +120,7 @@ class SlideShowPresenter {
 		return !!this._fullscreen;
 	}
 
-	public getCanvas(): HTMLCanvasElement {
+	public getCanvas(): HTMLCanvasElement | null {
 		return this._slideShowCanvas;
 	}
 
@@ -141,7 +141,7 @@ class SlideShowPresenter {
 	_stopFullScreen() {
 		if (!this._slideShowCanvas) return;
 
-		this._slideRenderer.deleteResources();
+		this._slideRenderer!.deleteResources();
 
 		// window.removeEventListener('keydown', this._onCanvasKeyDown.bind(this));
 		window.removeEventListener(
@@ -179,14 +179,14 @@ class SlideShowPresenter {
 				return;
 			}
 
-			this.startTimer(info.loopAndRepeatDuration);
+			this.startTimer(info.loopAndRepeatDuration!);
 			return;
 		}
 
-		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
+		this._slideCompositor!.fetchAndRun(this._currentSlide, () => {
 			this._currentSlide++;
 			this._doTransition(
-				this._slideRenderer.getSlideTexture(),
+				this._slideRenderer!.getSlideTexture(),
 				this._currentSlide,
 			);
 		});
@@ -203,13 +203,13 @@ class SlideShowPresenter {
 		// if we are at exit text slide, we have to go back....
 		if (this._currentSlide === this._getSlidesCount()) {
 			this._currentSlide--;
-			this._slideCompositor.fetchAndRun(this._currentSlide, () => {
+			this._slideCompositor!.fetchAndRun(this._currentSlide, () => {
 				this._doPresentation();
 			});
 			return;
 		}
 
-		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
+		this._slideCompositor!.fetchAndRun(this._currentSlide, () => {
 			this._currentSlide--;
 			this._doPresentation();
 		});
@@ -290,27 +290,28 @@ class SlideShowPresenter {
 			this._slideRenderer = new SlideRenderer2d(canvas);
 		}
 
-		if (this._slideRenderer._context.is2dGl()) this._slideShowHandler.disable();
+		if (this._slideRenderer._context!.is2dGl())
+			this._slideShowHandler.disable();
 
 		return canvas;
 	}
 
 	private exitSlideshowWithWarning() {
-		new SlideShow.StaticTextRenderer(this._slideRenderer._context).display(
+		new SlideShow.StaticTextRenderer(this._slideRenderer!._context).display(
 			_('Click to exit presentation...'),
 		);
 	}
 
 	private startTimer(loopAndRepeatDuration: number) {
 		console.debug('SlideShowPresenter.startTimer');
-		const renderContext = this._slideRenderer._context;
+		const renderContext = this._slideRenderer!._context;
 		const onTimeoutHandler = this._slideShowNavigator.goToFirstSlide.bind(
 			this._slideShowNavigator,
 		);
 		const PauseTimerType =
 			renderContext instanceof RenderContextGl ? PauseTimerGl : PauseTimer2d;
 		const pauseTimer: PauseTimer = new PauseTimerType(
-			renderContext,
+			renderContext!,
 			loopAndRepeatDuration,
 			onTimeoutHandler,
 		);
@@ -321,7 +322,7 @@ class SlideShowPresenter {
 	endPresentation(force: boolean) {
 		console.debug('SlideShowPresenter.endPresentation');
 		const settings = this._presentationInfo;
-		if (force || !settings.isEndless) {
+		if (force || !settings!.isEndless) {
 			if (!force) {
 				this.exitSlideshowWithWarning();
 				return;
@@ -330,17 +331,17 @@ class SlideShowPresenter {
 			this._stopFullScreen();
 			return;
 		}
-		this.startTimer(settings.loopAndRepeatDuration);
+		this.startTimer(settings!.loopAndRepeatDuration!);
 	}
 
 	private startLoader(): void {
 		try {
-			this._canvasLoader = new CanvasLoaderGl(this._slideRenderer._context);
+			this._canvasLoader = new CanvasLoaderGl(this._slideRenderer!._context!);
 		} catch (error) {
-			this._canvasLoader = new CanvasLoader2d(this._slideRenderer._context);
+			this._canvasLoader = new CanvasLoader2d(this._slideRenderer!._context!);
 		}
 
-		this._canvasLoader.startLoader();
+		this._canvasLoader!.startLoader();
 	}
 
 	public stopLoader(): void {
@@ -354,34 +355,34 @@ class SlideShowPresenter {
 	//  port to SlideShowHandler transitionType = 'NONE' (?)
 	//  to be removed
 	_doTransition(
-		currentTexture: WebGLTexture | ImageBitmap,
+		currentTexture: WebGLTexture | ImageBitmap | null,
 		nextSlideNumber: number,
 	) {
-		this._slideCompositor.fetchAndRun(nextSlideNumber, () => {
+		this._slideCompositor!.fetchAndRun(nextSlideNumber, () => {
 			const slideInfo = this.getSlideInfo(nextSlideNumber);
 			if (
-				slideInfo.transitionType == undefined ||
-				slideInfo.transitionType.length == 0
+				slideInfo!.transitionType == undefined ||
+				slideInfo!.transitionType.length == 0
 			) {
-				slideInfo.transitionType = 'NONE';
+				slideInfo!.transitionType = 'NONE';
 			}
 
 			this.stopLoader();
 
-			const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
-			const nextTexture = this._slideRenderer.createTexture(nextSlide);
+			const nextSlide = this._slideCompositor!.getSlide(nextSlideNumber);
+			const nextTexture = this._slideRenderer!.createTexture(nextSlide);
 
 			const transitionParameters = new TransitionParameters();
-			transitionParameters.context = this._slideRenderer._context;
+			transitionParameters.context = this._slideRenderer!._context;
 			transitionParameters.current = currentTexture;
 			transitionParameters.next = nextTexture;
 			transitionParameters.slideInfo = slideInfo;
 			transitionParameters.callback = () => {
-				this._slideRenderer.renderSlide(
+				this._slideRenderer!.renderSlide(
 					nextTexture,
-					slideInfo,
-					this._presentationInfo.docWidth,
-					this._presentationInfo.docHeight,
+					slideInfo!,
+					this._presentationInfo!.docWidth,
+					this._presentationInfo!.docHeight,
 				);
 			};
 
@@ -424,7 +425,7 @@ class SlideShowPresenter {
 
 	// TODO _doPresentation (don't hack this, no more used) to be removed
 	_doPresentation(isStarting = false) {
-		this._slideRenderer.pauseVideos();
+		this._slideRenderer!.pauseVideos();
 		const slideInfo = this.getSlideInfo(this._currentSlide);
 		// To speed up the process, if we have transition info, then only render
 		// a black empty slide as the first slide. otherwise, directly render the first slide.
@@ -434,19 +435,19 @@ class SlideShowPresenter {
 			slideInfo.transitionType != 'NONE'
 		) {
 			// generate empty black slide
-			const blankTexture = this._slideRenderer.createEmptyTexture();
+			const blankTexture = this._slideRenderer!.createEmptyTexture();
 
 			this._doTransition(blankTexture, this._currentSlide);
 		} else {
-			this._slideCompositor.fetchAndRun(this._currentSlide, () => {
+			this._slideCompositor!.fetchAndRun(this._currentSlide, () => {
 				const slideInfo = this.getSlideInfo(this._currentSlide);
-				const slideImage = this._slideCompositor.getSlide(this._currentSlide);
-				const currentTexture = this._slideRenderer.createTexture(slideImage);
-				this._slideRenderer.renderSlide(
+				const slideImage = this._slideCompositor!.getSlide(this._currentSlide);
+				const currentTexture = this._slideRenderer!.createTexture(slideImage);
+				this._slideRenderer!.renderSlide(
 					currentTexture,
-					slideInfo,
-					this._presentationInfo.docWidth,
-					this._presentationInfo.docHeight,
+					slideInfo!,
+					this._presentationInfo!.docWidth,
+					this._presentationInfo!.docHeight,
 				);
 				this.stopLoader();
 			});
@@ -493,11 +494,11 @@ class SlideShowPresenter {
 		const body =
 			this._slideShowWindowProxy.document.querySelector('#root-in-window');
 		this._presenterContainer = this._createPresenterHTML(
-			body,
+			body!,
 			window.screen.width,
 			window.screen.height,
 		);
-		this._slideShowCanvas.focus();
+		this._slideShowCanvas!.focus();
 
 		this._slideShowWindowProxy.addEventListener(
 			'resize',
@@ -571,7 +572,7 @@ class SlideShowPresenter {
 				window.screen.width,
 				window.screen.height,
 			);
-			if (this._presenterContainer.requestFullscreen) {
+			if (this._presenterContainer?.requestFullscreen) {
 				this._presenterContainer
 					.requestFullscreen()
 					.then(() => {
@@ -687,10 +688,10 @@ class SlideShowPresenter {
 			);
 		}
 
-		this._slideCompositor.onUpdatePresentationInfo();
-		const canvasSize = this._slideCompositor.getCanvasSize();
-		this._slideShowCanvas.width = canvasSize[0];
-		this._slideShowCanvas.height = canvasSize[1];
+		this._slideCompositor!.onUpdatePresentationInfo();
+		const canvasSize = this._slideCompositor!.getCanvasSize();
+		this._slideShowCanvas!.width = canvasSize[0];
+		this._slideShowCanvas!.height = canvasSize[1];
 		this.centerCanvas();
 
 		this.startLoader();

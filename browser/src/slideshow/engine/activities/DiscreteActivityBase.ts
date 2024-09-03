@@ -14,9 +14,9 @@ declare var app: any;
 
 abstract class DiscreteActivityBase extends ActivityBase {
 	private aOriginalWakeupEvent: WakeupEvent;
-	private aWakeupEvent: WakeupEvent;
-	private aDiscreteTimes: Array<number>;
-	protected nMinSimpleDuration: number;
+	private aWakeupEvent: WakeupEvent | null;
+	private aDiscreteTimes: Array<number> | null;
+	protected nMinSimpleDuration: number | undefined;
 	protected nCurrPerformCalls: number;
 
 	protected constructor(aCommonParamSet: ActivityParamSet) {
@@ -42,7 +42,7 @@ abstract class DiscreteActivityBase extends ActivityBase {
 	}
 
 	public startAnimation() {
-		this.aWakeupEvent.start();
+		this.aWakeupEvent!.start();
 	}
 
 	public calcFrameIndex(nCurrCalls: number, nVectorSize: number) {
@@ -82,7 +82,7 @@ abstract class DiscreteActivityBase extends ActivityBase {
 		// call base class, for start() calls and end handling
 		if (!super.perform()) return false; // done, we're ended
 
-		const nVectorSize = this.aDiscreteTimes.length;
+		const nVectorSize = this.aDiscreteTimes!.length;
 
 		const nFrameIndex = this.calcFrameIndex(
 			this.nCurrPerformCalls,
@@ -108,7 +108,7 @@ abstract class DiscreteActivityBase extends ActivityBase {
 		// schedule next frame, if either repeat is indefinite
 		// (repeat forever), or we've not yet reached the requested
 		// repeat count
-		if (!this.isRepeatCountValid() || nCurrRepeat < this.getRepeatCount()) {
+		if (!this.isRepeatCountValid() || nCurrRepeat < this.getRepeatCount()!) {
 			// add wake-up event to queue (modulo vector size, to cope with repeats).
 
 			// repeat is handled locally, only apply acceleration/deceleration.
@@ -122,17 +122,17 @@ abstract class DiscreteActivityBase extends ActivityBase {
 				this.nCurrPerformCalls,
 				nVectorSize,
 			);
-			const nCurrentRepeatTime = this.aDiscreteTimes[nFrameIndex];
+			const nCurrentRepeatTime = this.aDiscreteTimes![nFrameIndex];
 			const nRepeatCount = this.calcRepeatCount(
 				this.nCurrPerformCalls,
 				nVectorSize,
 			);
 			const nNextTimeout =
-				this.nMinSimpleDuration *
+				this.nMinSimpleDuration! *
 				(nRepeatCount + this.calcAcceleratedTime(nCurrentRepeatTime));
-			this.aWakeupEvent.setNextTimeout(nNextTimeout);
+			this.aWakeupEvent!.setNextTimeout(nNextTimeout);
 
-			this.getEventQueue().addEvent(this.aWakeupEvent);
+			this.getEventQueue().addEvent(this.aWakeupEvent!);
 		} else {
 			// release event reference (relation to wake up event is circular!)
 			this.aWakeupEvent = null;

@@ -802,7 +802,7 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 		return pointerIsSyncWithScrollBar;
 	}
 
-	public onMouseMove (position: Array<number>, dragDistance: Array<number>, e: MouseEvent): void {
+	public onMouseMove (position: Array<number>, dragDistance: Array<number> | null, e: MouseEvent): void {
 		this.clearQuickScrollTimeout();
 
 		if (this.sectionProperties.clickScrollVertical && this.containerObject.isDraggingSomething()) {
@@ -814,13 +814,13 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 
 			var scrollProps: any = this.getVerticalScrollProperties();
 
-			var diffY: number = dragDistance[1] - this.sectionProperties.previousDragDistance[1];
+			var diffY: number = dragDistance![1] - this.sectionProperties.previousDragDistance[1];
 			var actualDistance = scrollProps.ratio * diffY;
 
 			if (this.isMousePointerSyncedWithVerticalScrollBar(scrollProps, position))
 				this.scrollVerticalWithOffset(actualDistance);
 
-			this.sectionProperties.previousDragDistance[1] = dragDistance[1];
+			this.sectionProperties.previousDragDistance[1] = dragDistance![1];
 
 			e.stopPropagation(); // Don't propagate to map.
 			this.stopPropagating(); // Don't propagate to bound sections.
@@ -833,13 +833,13 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 			this.showHorizontalScrollBar();
 
 			var scrollProps: any = this.getHorizontalScrollProperties();
-			var diffX: number = dragDistance[0] - this.sectionProperties.previousDragDistance[0];
+			var diffX: number = dragDistance![0] - this.sectionProperties.previousDragDistance[0];
 			var actualDistance = scrollProps.ratio * diffX;
 
 			if (this.isMousePointerSyncedWithHorizontalScrollBar(scrollProps, position))
 				this.scrollHorizontalWithOffset(actualDistance);
 
-			this.sectionProperties.previousDragDistance[0] = dragDistance[0];
+			this.sectionProperties.previousDragDistance[0] = dragDistance![0];
 			e.stopPropagation(); // Don't propagate to map.
 			this.stopPropagating(); // Don't propagate to bound sections.
 		}

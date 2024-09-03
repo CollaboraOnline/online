@@ -221,7 +221,7 @@ type ValueListActivityCtorType = new (
 	aValueList: any[],
 	aActivityParamSet: ActivityParamSet,
 	aAnimation: AnimationBase,
-	aInterpolator: PropertyInterpolatorType,
-	aOperatorSet: PropertyOperatorSet,
+	aInterpolator: PropertyInterpolatorType | null | undefined,
+	aOperatorSet: PropertyOperatorSet | undefined,
 	bAccumulate: boolean,
 ) => ActivityBase;

@@ -39,7 +39,7 @@ abstract class CEventsHandler {
 		}
 	}
 
-	on(eventName: string, handler: EventHandlerType): boolean {
+	on(eventName: string, handler: EventHandlerType): boolean | undefined {
 		var handlerSet = this.handlers.get(eventName);
 		if (handlerSet === undefined) {
 			console.warn('Unknown event type: ' + eventName + ' used to register a handler');
@@ -65,7 +65,7 @@ abstract class CEventsHandler {
 		return true;
 	}
 
-	fire(eventName: string, eventData: EventData): boolean {
+	fire(eventName: string, eventData: EventData): boolean | undefined {
 		var handlerSet = this.handlers.get(eventName);
 		if (handlerSet === undefined) {
 			console.warn('Unknown event type: ' + eventName);

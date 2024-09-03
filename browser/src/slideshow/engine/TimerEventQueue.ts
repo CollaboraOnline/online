@@ -19,9 +19,9 @@ class TimerEventQueue {
 		this.aEventSet = new PriorityQueue(EventEntry.compare);
 	}
 
-	addEvent(aEvent: EventBase) {
+	addEvent(aEvent: EventBase | undefined) {
 		this.DBG(
-			'TimerEventQueue.addEvent event(' + aEvent.getId() + ') appended.',
+			'TimerEventQueue.addEvent event(' + aEvent!.getId() + ') appended.',
 		);
 		if (!aEvent) {
 			window.app.console.log('TimerEventQueue.addEvent: null event');

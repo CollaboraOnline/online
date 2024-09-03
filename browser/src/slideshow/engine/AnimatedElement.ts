@@ -114,18 +114,18 @@ namespace PropertyInterpolator {
 	aLerpFunctorMap.set(CalcMode.Linear, aLinearLerpFunctor);
 
 	export function getInterpolator(
-		eCalcMode: CalcMode,
+		eCalcMode: CalcMode | undefined,
 		eValueType: PropertyValueType,
-	): PropertyInterpolatorType {
+	): PropertyInterpolatorType | undefined | null {
 		if (
-			aLerpFunctorMap.has(eCalcMode) &&
-			aLerpFunctorMap.get(eCalcMode).has(eValueType)
+			aLerpFunctorMap.has(eCalcMode!) &&
+			aLerpFunctorMap.get(eCalcMode!)!.has(eValueType)
 		) {
-			return aLerpFunctorMap.get(eCalcMode).get(eValueType);
+			return aLerpFunctorMap.get(eCalcMode!)!.get(eValueType);
 		}
 		window.app.console.log(
 			'aInterpolatorHandler.getInterpolator: not found any valid interpolator for calc mode ' +
-				CalcMode[eCalcMode] +
+				CalcMode[eCalcMode!] +
 				' and value type ' +
 				PropertyValueType[eValueType],
 		);
@@ -222,14 +222,14 @@ interface AnimatedElementState {
 class AnimatedElement {
 	private sId: string;
 	private slideHash: string;
-	private aLayer: ImageBitmap = null;
-	private aBaseBBox: BoundingBoxType = null;
+	private aLayer: ImageBitmap | null = null;
+	private aBaseBBox: BoundingBoxType | null = null;
 	private aBaseElement: AnimatedObjectType;
 	private aActiveBBox: BoundingBoxType;
 	private aActiveElement: AnimatedObjectType;
 	private nBaseCenterX: number = 0;
 	private nBaseCenterY: number = 0;
-	private aClipPath: SVGPathElement = null;
+	private aClipPath: SVGPathElement | null = null;
 	private aPreviousElement: AnimatedObjectType = null;
 	private aStateSet = new Map<number, AnimatedElementState>();
 	private eAdditiveMode = AdditiveMode.Replace;
@@ -262,21 +262,21 @@ class AnimatedElement {
 		return null;
 	}
 
-	private setBBox(aBBox: BoundingBoxType) {
+	private setBBox(aBBox: BoundingBoxType | null) {
 		if (!aBBox) aBBox = new DOMRect(0, 0, 0, 0);
 		this.aBaseBBox = this.cloneBBox(aBBox);
 		this.nBaseCenterX = this.aBaseBBox.x + this.aBaseBBox.width / 2;
 		this.nBaseCenterY = this.aBaseBBox.y + this.aBaseBBox.height / 2;
 	}
 
-	private cloneBBox(aBBox: BoundingBoxType): BoundingBoxType {
-		return new DOMRect(aBBox.x, aBBox.y, aBBox.width, aBBox.height);
+	private cloneBBox(aBBox: BoundingBoxType | null): BoundingBoxType {
+		return new DOMRect(aBBox!.x, aBBox!.y, aBBox!.width, aBBox!.height);
 	}
 
 	private initElement() {
 		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
 		if (!presenter) return;
-		const compositor: SlideCompositor = presenter._slideCompositor;
+		const compositor: SlideCompositor | null = presenter._slideCompositor;
 		if (!compositor) return;
 
 		this.aLayer = compositor.getLayerImage(this.slideHash, this.sId);
@@ -439,16 +439,16 @@ class AnimatedElement {
 				')',
 		);
 		const aState = this.aStateSet.get(nAnimationNodeId);
-		const bRet = this.setToElement(aState.aElement);
+		const bRet = this.setToElement(aState!.aElement);
 		if (bRet) {
-			this.nCenterX = aState.nCenterX;
-			this.nCenterY = aState.nCenterY;
-			this.nScaleFactorX = aState.nScaleFactorX;
-			this.nScaleFactorY = aState.nScaleFactorY;
-			this.nRotationAngle = aState.nRotationAngle;
-			this.aTMatrix = aState.aTMatrix;
-			this.nOpacity = aState.nOpacity;
-			this.bVisible = aState.bVisible;
+			this.nCenterX = aState!.nCenterX;
+			this.nCenterY = aState!.nCenterY;
+			this.nScaleFactorX = aState!.nScaleFactorX;
+			this.nScaleFactorY = aState!.nScaleFactorY;
+			this.nRotationAngle = aState!.nRotationAngle;
+			this.aTMatrix = aState!.aTMatrix;
+			this.nOpacity = aState!.nOpacity;
+			this.bVisible = aState!.bVisible;
 		}
 		return bRet;
 	}
@@ -474,7 +474,7 @@ class AnimatedElement {
 			// 	this.aActiveBBox.y);
 			// aClipPath.matrixTransform( aTranslation );
 			const sPathData = aClipPath.getAttribute('d');
-			this.aClipPath.setAttribute('d', sPathData);
+			this.aClipPath.setAttribute('d', sPathData!);
 		}
 	}
 
@@ -491,11 +491,11 @@ class AnimatedElement {
 	}
 
 	getWidth() {
-		return this.nScaleFactorX * this.getBaseBBox().width;
+		return this.nScaleFactorX * this.getBaseBBox()!.width;
 	}
 
 	getHeight() {
-		return this.nScaleFactorY * this.getBaseBBox().height;
+		return this.nScaleFactorY * this.getBaseBBox()!.height;
 	}
 
 	getSize() {
@@ -548,7 +548,7 @@ class AnimatedElement {
 			nNewWidth = 0;
 		}
 
-		const nBaseWidth = this.getBaseBBox().width;
+		const nBaseWidth = this.getBaseBBox()!.width;
 		let nScaleFactorX = nNewWidth / nBaseWidth;
 
 		if (nScaleFactorX < 1e-5) nScaleFactorX = 1e-5;
@@ -574,7 +574,7 @@ class AnimatedElement {
 			nNewHeight = 0;
 		}
 
-		const nBaseHeight = this.getBaseBBox().height;
+		const nBaseHeight = this.getBaseBBox()!.height;
 		let nScaleFactorY = nNewHeight / nBaseHeight;
 
 		if (nScaleFactorY < 1e-5) nScaleFactorY = 1e-5;
@@ -610,11 +610,11 @@ class AnimatedElement {
 			nNewHeight = 0;
 		}
 
-		const nBaseWidth = this.getBaseBBox().width;
+		const nBaseWidth = this.getBaseBBox()!.width;
 		let nScaleFactorX = nNewWidth / nBaseWidth;
 		if (nScaleFactorX < 1e-5) nScaleFactorX = 1e-5;
 
-		const nBaseHeight = this.getBaseBBox().height;
+		const nBaseHeight = this.getBaseBBox()!.height;
 		let nScaleFactorY = nNewHeight / nBaseHeight;
 		if (nScaleFactorY < 1e-5) nScaleFactorY = 1e-5;
 

@@ -17,9 +17,9 @@
 class Mention extends L.Control.AutoCompletePopup {
 	map: ReturnType<typeof L.map>;
 	newPopupData: PopupData;
-	firstChar: string;
+	firstChar: string | null;
 	users: any;
-	itemList: Array<any>;
+	itemList: Array<any> | null;
 	data: MessageEvent<any>;
 
 	constructor(map: ReturnType<typeof L.map>) {
@@ -65,13 +65,13 @@ class Mention extends L.Control.AutoCompletePopup {
 			this.itemList = this.users;
 		}
 
-		if (this.itemList.length !== 0) {
+		if (this.itemList!.length !== 0) {
 			for (var i in this.itemList) {
 				var entry = {
-					text: this.itemList[i].username,
+					text: this.itemList[i as unknown as number].username,
 					columns: [
 						{
-							text: this.itemList[i].username,
+							text: this.itemList[i as unknown as number].username,
 						},
 					],
 					row: i.toString(),
@@ -90,11 +90,11 @@ class Mention extends L.Control.AutoCompletePopup {
 			var command = {
 				'Hyperlink.Text': {
 					type: 'string',
-					value: '@' + this.itemList[index].username,
+					value: '@' + this.itemList![index].username,
 				},
 				'Hyperlink.URL': {
 					type: 'string',
-					value: this.itemList[index].profile,
+					value: this.itemList![index].profile,
 				},
 				'Hyperlink.ReplacementText': {
 					type: 'string',
@@ -104,7 +104,7 @@ class Mention extends L.Control.AutoCompletePopup {
 			this.map.sendUnoCommand('.uno:SetHyperlink', command, true);
 			this.map.fire('postMessage', {
 				msgId: 'UI_Mention',
-				args: { type: 'selected', username: this.itemList[index].username },
+				args: { type: 'selected', username: this.itemList![index].username },
 			});
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'keydown') {

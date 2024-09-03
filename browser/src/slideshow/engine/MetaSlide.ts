@@ -38,18 +38,18 @@ class MetaSlide {
 	}
 
 	public hasTransition(): boolean {
-		return !!stringToTransitionTypeMap[this._info.transitionType];
+		return !!stringToTransitionTypeMap[this._info.transitionType!];
 	}
 
 	public get info(): SlideInfo {
 		return this._info;
 	}
 
-	public get next(): MetaSlide {
+	public get next(): MetaSlide | null | undefined {
 		return this.info.next ? this._metaPres.getMetaSlide(this.info.next) : null;
 	}
 
-	public get prev(): MetaSlide {
+	public get prev(): MetaSlide | null | undefined {
 		return this.info.prev ? this._metaPres.getMetaSlide(this.info.prev) : null;
 	}
 

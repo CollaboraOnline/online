@@ -56,7 +56,7 @@ class CPolygon extends CPolyline {
 		}
 
 		this.simplifyPoints();
-		this.renderer.updatePoly(this, true /* closed? */, paintArea, paneBounds, freezePane);
+		this.renderer!.updatePoly(this, true /* closed? */, paintArea, paneBounds, freezePane);
 	}
 
 	anyRingBoundContains(corePxPoint: cool.Point): boolean {

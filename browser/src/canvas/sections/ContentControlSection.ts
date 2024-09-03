@@ -58,7 +58,7 @@ export class ContentControlSection extends app.definitions.canvasSectionObject {
 		var container = L.DomUtil.createWithId('div', 'datepicker');
 		container.style.zIndex = '12';
 		container.style.position = 'absolute';
-		document.getElementById('document-container').appendChild(container);
+		document.getElementById('document-container')!.appendChild(container);
 		this.sectionProperties.datePicker = false;
 		this.sectionProperties.picturePicker = false;
 	}
@@ -143,7 +143,7 @@ export class ContentControlSection extends app.definitions.canvasSectionObject {
 
 	public drawPolygon(): void {
 		var rectArray = cool.Bounds.parseArray(this.sectionProperties.json.rectangles);
-		var rectangles = rectArray.map(function (rect: cool.Bounds) {
+		var rectangles = rectArray!.map(function (rect: cool.Bounds) {
 			return rect.getPointArray();
 		});
 
@@ -348,8 +348,8 @@ export class ContentControlSection extends app.definitions.canvasSectionObject {
 			$('#datepicker').hide();
 		} else {
 			var datePicker = document.getElementById('datepicker');
-			datePicker.style.left = this.sectionProperties.framePos.x + this.sectionProperties.frameWidth + 'px';
-			datePicker.style.top = this.sectionProperties.framePos.y + this.sectionProperties.frameHeight + 'px';
+			datePicker!.style.left = this.sectionProperties.framePos.x + this.sectionProperties.frameWidth + 'px';
+			datePicker!.style.top = this.sectionProperties.framePos.y + this.sectionProperties.frameHeight + 'px';
 			$('#datepicker').show();
 		}
 	}

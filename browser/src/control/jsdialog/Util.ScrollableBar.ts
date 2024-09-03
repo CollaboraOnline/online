@@ -24,7 +24,7 @@ function createScrollButtons(parent: Element, scrollable: Element) {
 	const right = L.DomUtil.create('div', 'ui-scroll-right', parent);
 
 	JSDialog.AddOnClick(left, () => {
-		const scroll = $(scrollable).scrollLeft() - 300;
+		const scroll = $(scrollable).scrollLeft()! - 300;
 		$(scrollable).animate({ scrollLeft: scroll }, 300);
 		setTimeout(function () {
 			JSDialog.RefreshScrollables();
@@ -32,7 +32,7 @@ function createScrollButtons(parent: Element, scrollable: Element) {
 	});
 
 	JSDialog.AddOnClick(right, () => {
-		const scroll = $(scrollable).scrollLeft() + 300;
+		const scroll = $(scrollable).scrollLeft()! + 300;
 		$(scrollable).animate({ scrollLeft: scroll }, 300);
 		setTimeout(function () {
 			JSDialog.RefreshScrollables();

@@ -34,17 +34,17 @@ export class Header extends app.definitions.canvasSectionObject {
 	_selectionTextColor: string;
 	_selectionBackgroundGradient: string[];
 	_resizeCursor: string;
-	_lastMouseOverIndex: number;
+	_lastMouseOverIndex: number | undefined;
 	_menuData: any;
 	_headerInfo: HeaderInfo;
-	_dragEntry: HeaderEntryData;
-	_mouseOverEntry: HeaderEntryData;
-	_prevMouseOverEntry: HeaderEntryData;
-	_startSelectionEntry: HeaderEntryData;
-	_lastSelectedIndex: number;
+	_dragEntry: HeaderEntryData | null;
+	_mouseOverEntry: HeaderEntryData | null;
+	_prevMouseOverEntry: HeaderEntryData | null;
+	_startSelectionEntry: HeaderEntryData | null;
+	_lastSelectedIndex: number | null;
 	_hitResizeArea: boolean;
 	_menuItem: any;
-	_dragDistance: number[];
+	_dragDistance: number[] | null | undefined;
 	_isColumn: boolean;
 	cursor: string;
 
@@ -430,16 +430,16 @@ export class Header extends app.definitions.canvasSectionObject {
 		this._map.sendUnoCommand('.uno:FreezePanes');
 	}
 
-	_entryAtPoint(point: number[]): PointEntryQueryResult {
+	_entryAtPoint(point: number[]): PointEntryQueryResult | undefined | null {
 		if (!this._headerInfo)
 			return undefined;
 
 		const isColumn = this._headerInfo._isColumn;
 		const position = isColumn ? point[0]: point[1];
 
-		let result:PointEntryQueryResult  = null;
+		let result: PointEntryQueryResult | null = null;
 		const isRTL = isColumn && this.isCalcRTL();
-		this._headerInfo.forEachElement(function(entry: HeaderEntryData): boolean {
+		this._headerInfo.forEachElement(function(entry: HeaderEntryData): boolean | undefined {
 			const end = isRTL ? this.size[0] - entry.pos + entry.size : entry.pos;
 			const start = end - entry.size;
 			if (position >= start && position < end) {
@@ -527,8 +527,8 @@ export class Header extends app.definitions.canvasSectionObject {
 
 		this.containerObject.setPenPosition(this);
 		const isRTL = this.isCalcRTL();
-		const x = this._isColumn ? ((isRTL ? this.size[0] - this._dragEntry.pos: this._dragEntry.pos) + this._dragDistance[0]): (isRTL ? 0 : this.size[0]);
-		const y = this._isColumn ? this.size[1]: (this._dragEntry.pos + this._dragDistance[1]);
+		const x = this._isColumn ? ((isRTL ? this.size[0] - this._dragEntry!.pos: this._dragEntry!.pos) + this._dragDistance![0]): (isRTL ? 0 : this.size[0]);
+		const y = this._isColumn ? this.size[1]: (this._dragEntry!.pos + this._dragDistance![1]);
 
 		this.context.lineWidth = app.dpiScale;
 		this.context.strokeStyle = 'darkblue';
@@ -557,11 +557,11 @@ export class Header extends app.definitions.canvasSectionObject {
 
 			let isMouseOverResizeArea = false;
 
-			this._mouseOverEntry.isOver = true;
-			this._lastMouseOverIndex = this._mouseOverEntry.index; // used by context menu
+			this._mouseOverEntry!.isOver = true;
+			this._lastMouseOverIndex = this._mouseOverEntry!.index; // used by context menu
 			this.containerObject.setPenPosition(this);
-			this.drawHeaderEntry(result.entry);
-			isMouseOverResizeArea = result.hit;
+			this.drawHeaderEntry(result!.entry);
+			isMouseOverResizeArea = result!.hit;
 
 			// cypress mobile emulation sometimes triggers resizing unintentionally.
 			if (L.Browser.cypressTest)
@@ -582,8 +582,8 @@ export class Header extends app.definitions.canvasSectionObject {
 			if (this._dragEntry)
 				return;
 			const modifier = typeof this._lastSelectedIndex === 'number' && this._lastSelectedIndex >= 0 ? UNOModifier.SHIFT : 0;
-			this._lastSelectedIndex = this._mouseOverEntry.index;
-			this.selectIndex(this._mouseOverEntry.index, modifier);
+			this._lastSelectedIndex = this._mouseOverEntry!.index;
+			this.selectIndex(this._mouseOverEntry!.index, modifier);
 		}
 	}
 
@@ -613,10 +613,10 @@ export class Header extends app.definitions.canvasSectionObject {
 			// When code is here, this._mouseOverEntry should never be null.
 
 			this._dragEntry = { // In case dragging takes place, we will remember this entry.
-				index: this._mouseOverEntry.index,
-				origsize: this._mouseOverEntry.origsize,
-				pos: this._mouseOverEntry.pos,
-				size: this._mouseOverEntry.size
+				index: this._mouseOverEntry!.index,
+				origsize: this._mouseOverEntry!.origsize,
+				pos: this._mouseOverEntry!.pos,
+				size: this._mouseOverEntry!.size
 			};
 		}
 		else {
@@ -798,15 +798,15 @@ export class HeaderInfo {
 
 		// first free index
 		const dataFirstFree = this._dimGeom.getElementData(startIdx);
-		const firstFreeEnd = dataFirstFree.startpos + dataFirstFree.size - startPx + splitPos;
+		const firstFreeEnd = dataFirstFree!.startpos + dataFirstFree!.size - startPx + splitPos;
 		const firstFreeStart = splitPos;
 		const firstFreeSize = Math.max(0, firstFreeEnd - firstFreeStart);
 		this._elements[startIdx] = {
 			index: startIdx,
 			pos: firstFreeEnd * scale, // end position on the header canvas
 			size: firstFreeSize * scale,
-			origsize: dataFirstFree.size,
-			isHighlighted: this.isHeaderEntryHighLighted(cellSelections, dataFirstFree.startpos + dataFirstFree.size * 0.5),
+			origsize: dataFirstFree!.size,
+			isHighlighted: this.isHeaderEntryHighLighted(cellSelections, dataFirstFree!.startpos + dataFirstFree!.size * 0.5),
 			isCurrent: startIdx === currentIndex
 		};
 

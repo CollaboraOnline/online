@@ -13,10 +13,10 @@
 class Duration {
 	private bIndefinite: boolean;
 	private bMedia: boolean;
-	private nValue: number;
+	private nValue: number | undefined;
 	private bDefined: boolean;
 
-	constructor(sDuration: string) {
+	constructor(sDuration: string | undefined | null) {
 		this.bIndefinite = false;
 		this.bMedia = false;
 		this.nValue = undefined;
@@ -28,7 +28,7 @@ class Duration {
 		else if (sDuration === 'media') this.bMedia = true;
 		else {
 			this.nValue = Timing.parseClockValue(sDuration);
-			if (this.nValue <= 0.0) this.nValue = 0.001; // duration must be always greater than 0
+			if (this.nValue! <= 0.0) this.nValue = 0.001; // duration must be always greater than 0
 		}
 		this.bDefined = true;
 	}

@@ -39,8 +39,8 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 	private pauseTimeRemaining: number;
 	private pauseDuration: number;
 	private onComplete: () => void;
-	private textCanvas: HTMLCanvasElement;
-	private ctx: CanvasRenderingContext2D;
+	private textCanvas: HTMLCanvasElement | null;
+	private ctx: CanvasRenderingContext2D | null;
 
 	constructor(
 		canvasContext: RenderContextGl,
@@ -53,8 +53,8 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 		this.onComplete = onComplete;
 
 		this.textCanvas = document.createElement('canvas');
-		this.textCanvas.width = this.context.canvas.width;
-		this.textCanvas.height = this.context.canvas.height;
+		this.textCanvas.width = this.context!.canvas.width;
+		this.textCanvas.height = this.context!.canvas.height;
 		this.ctx = this.textCanvas.getContext('2d');
 
 		this.textTexture = this.createTextTexture(this.getPauseTextContent());
@@ -69,7 +69,7 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 	public animate(): void {
 		if (!this.textCanvas || !this.ctx) return;
 		const currentTime = performance.now();
-		const elapsedTime = (currentTime - this.startTime) / 1000;
+		const elapsedTime = (currentTime - this.startTime!) / 1000;
 		this.pauseTimeRemaining = Math.max(0, this.pauseDuration - elapsedTime);
 
 		this.textTexture = this.createTextTexture(this.getPauseTextContent());
@@ -87,25 +87,25 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 	public createTextTexture(displayText: string): WebGLTexture {
 		this.clearCanvas();
 		this.drawText(displayText);
-		return this.load2dCanvasToGlCanvas(this.textCanvas);
+		return this.load2dCanvasToGlCanvas(this.textCanvas!);
 	}
 
 	private clearCanvas(): void {
-		this.ctx.clearRect(0, 0, this.textCanvas.width, this.textCanvas.height);
-		this.ctx.fillStyle = 'black';
-		this.ctx.fillRect(0, 0, this.textCanvas.width, this.textCanvas.height);
+		this.ctx!.clearRect(0, 0, this.textCanvas!.width, this.textCanvas!.height);
+		this.ctx!.fillStyle = 'black';
+		this.ctx!.fillRect(0, 0, this.textCanvas!.width, this.textCanvas!.height);
 	}
 
 	// add text on off screen canvas...
 	private drawText(displayText: string): void {
-		this.ctx.fillStyle = 'white';
-		this.ctx.font = '20px sans-serif';
-		this.ctx.textAlign = 'center';
-		this.ctx.textBaseline = 'middle';
-		this.ctx.fillText(
+		this.ctx!.fillStyle = 'white';
+		this.ctx!.font = '20px sans-serif';
+		this.ctx!.textAlign = 'center';
+		this.ctx!.textBaseline = 'middle';
+		this.ctx!.fillText(
 			displayText,
-			this.textCanvas.width / 2,
-			this.textCanvas.height / 2,
+			this.textCanvas!.width / 2,
+			this.textCanvas!.height / 2,
 		);
 	}
 

@@ -15,7 +15,7 @@ type GetterType = () => any;
 type SetterType = (x: any) => any;
 
 abstract class AnimationBase {
-	public abstract start(aAnimatableElement: AnimatedElement): void;
+	public abstract start(aAnimatableElement: AnimatedElement | null): void;
 
 	public abstract perform(aValue: any, last?: boolean): void;
 
@@ -27,9 +27,9 @@ abstract class AnimationBase {
 class GenericAnimation extends AnimationBase {
 	protected readonly aGetValueFunc: GetterType;
 	protected readonly aSetValueFunc: SetterType;
-	private readonly aGetModifier: SetterType;
-	private readonly aSetModifier: SetterType;
-	private aAnimatableElement: AnimatedElement;
+	private readonly aGetModifier: SetterType | undefined;
+	private readonly aSetModifier: SetterType | undefined;
+	private aAnimatableElement: AnimatedElement | null;
 	private bAnimationStarted: boolean;
 
 	constructor(
@@ -41,7 +41,7 @@ class GenericAnimation extends AnimationBase {
 		super();
 
 		assert(
-			aGetValueFunc && aSetValueFunc,
+			aGetValueFunc! && aSetValueFunc,
 			'GenericAnimation constructor: get value functor and/or set value functor are not valid',
 		);
 
@@ -60,7 +60,7 @@ class GenericAnimation extends AnimationBase {
 		);
 
 		this.aAnimatableElement = aAnimatableElement;
-		this.aAnimatableElement.notifyAnimationStart();
+		this.aAnimatableElement!.notifyAnimationStart();
 
 		if (!this.bAnimationStarted) this.bAnimationStarted = true;
 	}
@@ -68,7 +68,7 @@ class GenericAnimation extends AnimationBase {
 	end(): void {
 		if (this.bAnimationStarted) {
 			this.bAnimationStarted = false;
-			this.aAnimatableElement.notifyAnimationEnd();
+			this.aAnimatableElement!.notifyAnimationEnd();
 		}
 	}
 
@@ -136,11 +136,11 @@ class TupleAnimation extends GenericAnimation {
 }
 
 function createPropertyAnimation(
-	sAttrName: string,
-	aAnimatedElement: AnimatedElement,
+	sAttrName: string | undefined,
+	aAnimatedElement: AnimatedElement | undefined | null,
 	nWidth: number,
 	nHeight: number,
-): AnimationBase {
+): AnimationBase | null {
 	const sPropNameAsKey = sAttrName as PropertyGetterSetterMapKeyType;
 	if (!aPropertyGetterSetterMap[sPropNameAsKey]) {
 		window.app.console.log(
@@ -161,13 +161,23 @@ function createPropertyAnimation(
 	}
 
 	// nWidth, nHeight are used here
-	const aGetModifier = eval(aFunctorSet.getmod);
-	const aSetModifier = eval(aFunctorSet.setmod);
+	const aGetModifier = eval(aFunctorSet.getmod!);
+	const aSetModifier = eval(aFunctorSet.setmod!);
 
 	const aGetValueMethod =
-		aAnimatedElement[sGetValueMethod as keyof typeof aAnimatedElement];
+		aAnimatedElement![
+			sGetValueMethod as keyof Exclude<
+				typeof aAnimatedElement,
+				null | undefined
+			>
+		];
 	const aSetValueMethod =
-		aAnimatedElement[sSetValueMethod as keyof typeof aAnimatedElement];
+		aAnimatedElement![
+			sSetValueMethod as keyof Exclude<
+				typeof aAnimatedElement,
+				null | undefined
+			>
+		];
 	return new GenericAnimation(
 		aGetValueMethod.bind(aAnimatedElement),
 		aSetValueMethod.bind(aAnimatedElement),
@@ -177,11 +187,11 @@ function createPropertyAnimation(
 }
 
 function createPairPropertyAnimation(
-	sTransformType: string,
-	aAnimatedElement: AnimatedElement,
+	sTransformType: string | undefined,
+	aAnimatedElement: AnimatedElement | null | undefined,
 	nWidth: number,
 	nHeight: number,
-): AnimationBase {
+): AnimationBase | null {
 	const sTransformTypeAsKey = sTransformType as PropertyGetterSetterMapKeyType;
 	const aFunctorSet: PropertyGetterSetter =
 		aPropertyGetterSetterMap[sTransformTypeAsKey];
@@ -191,12 +201,13 @@ function createPairPropertyAnimation(
 	const aDefaultValue: any[] = [];
 	const aSizeReference: any[] = [];
 	if (sTransformType === 'scale') {
-		aDefaultValue[0] = aSizeReference[0] = aAnimatedElement.getBaseBBox().width;
+		aDefaultValue[0] = aSizeReference[0] =
+			aAnimatedElement!.getBaseBBox()!.width;
 		aDefaultValue[1] = aSizeReference[1] =
-			aAnimatedElement.getBaseBBox().height;
+			aAnimatedElement!.getBaseBBox()!.height;
 	} else if (sTransformType === 'translate') {
-		aDefaultValue[0] = aAnimatedElement.getBaseCenterX();
-		aDefaultValue[1] = aAnimatedElement.getBaseCenterY();
+		aDefaultValue[0] = aAnimatedElement!.getBaseCenterX();
+		aDefaultValue[1] = aAnimatedElement!.getBaseCenterY();
 		aSizeReference[0] = nWidth;
 		aSizeReference[1] = nHeight;
 	} else {
@@ -207,9 +218,19 @@ function createPairPropertyAnimation(
 	}
 
 	const aGetValueMethod =
-		aAnimatedElement[sGetValueMethod as keyof typeof aAnimatedElement];
+		aAnimatedElement![
+			sGetValueMethod as keyof Exclude<
+				typeof aAnimatedElement,
+				null | undefined
+			>
+		];
 	const aSetValueMethod =
-		aAnimatedElement[sSetValueMethod as keyof typeof aAnimatedElement];
+		aAnimatedElement![
+			sSetValueMethod as keyof Exclude<
+				typeof aAnimatedElement,
+				null | undefined
+			>
+		];
 	return new TupleAnimation(
 		aGetValueMethod.bind(aAnimatedElement),
 		aSetValueMethod.bind(aAnimatedElement),
@@ -225,15 +246,15 @@ enum TransitionClass {
 }
 
 function createClipPolyPolygon(
-	eTransitionType: TransitionType,
-	eTransitionSubType: TransitionSubType,
+	eTransitionType: TransitionType | undefined,
+	eTransitionSubType: TransitionSubType | undefined,
 ): any {
 	// TODO implement createClipPolyPolygon
 	window.app.console.log(
 		'createClipPolyPolygon: Transition Type: ' +
-			TransitionType[eTransitionType] +
+			TransitionType[eTransitionType!] +
 			', Transition SubType: ' +
-			TransitionSubType[eTransitionSubType],
+			TransitionSubType[eTransitionSubType!],
 	);
 	return null;
 }
@@ -311,11 +332,11 @@ aTransitionInfoTable[TransitionType.FADE][TransitionSubType.CROSSFADE] =
 
 function createShapeTransition(
 	aActivityParamSet: ActivityParamSet,
-	aAnimatedElement: AnimatedElement,
+	aAnimatedElement: AnimatedElement | null | undefined,
 	nSlideWidth: number,
 	nSlideHeight: number,
 	aAnimatedTransitionFilterNode: AnimationTransitionFilterNode,
-): AnimationActivity {
+): AnimationActivity | null {
 	if (!aAnimatedTransitionFilterNode) {
 		window.app.console.log(
 			'createShapeTransition: the animated transition filter node is not valid.',
@@ -331,8 +352,9 @@ function createShapeTransition(
 		aAnimatedTransitionFilterNode.getTransitionMode() == TransitionMode.in;
 
 	let aTransitionInfo = null;
-	if (aTransitionInfoTable[eTransitionType])
-		aTransitionInfo = aTransitionInfoTable[eTransitionType][eTransitionSubType];
+	if (aTransitionInfoTable[eTransitionType!])
+		aTransitionInfo =
+			aTransitionInfoTable[eTransitionType!][eTransitionSubType!];
 
 	const eTransitionClass: TransitionClass = aTransitionInfo
 		? aTransitionInfo['class']

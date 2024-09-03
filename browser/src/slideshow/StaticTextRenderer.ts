@@ -43,21 +43,21 @@ class StaticTextRenderer extends TextureAnimationBase {
 	// Create an off-screen 2D canvas with text centered
 	public create2DCanvasWithText(displayText: string): HTMLCanvasElement {
 		const canvas = document.createElement('canvas');
-		canvas.width = this.context.canvas.width;
-		canvas.height = this.context.canvas.height;
+		canvas.width = this.context!.canvas.width;
+		canvas.height = this.context!.canvas.height;
 		const ctx = canvas.getContext('2d');
 
 		// Set background color
-		ctx.fillStyle = 'black';
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
+		ctx!.fillStyle = 'black';
+		ctx!.fillRect(0, 0, canvas.width, canvas.height);
 
 		// Set text attributes
-		ctx.fillStyle = 'white';
-		ctx.font = '20px sans-serif';
-		ctx.textAlign = 'center';
-		ctx.textBaseline = 'middle';
+		ctx!.fillStyle = 'white';
+		ctx!.font = '20px sans-serif';
+		ctx!.textAlign = 'center';
+		ctx!.textBaseline = 'middle';
 
-		ctx.fillText(displayText, canvas.width / 2, canvas.height / 2);
+		ctx!.fillText(displayText, canvas.width / 2, canvas.height / 2);
 
 		return canvas;
 	}
@@ -104,8 +104,8 @@ class StaticTextRenderer extends TextureAnimationBase {
 		this.gl.viewport(
 			0,
 			0,
-			this.context.canvas.width,
-			this.context.canvas.height,
+			this.context!.canvas.width,
+			this.context!.canvas.height,
 		);
 		this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
@@ -116,7 +116,7 @@ class StaticTextRenderer extends TextureAnimationBase {
 		this.gl.bindTexture(this.gl.TEXTURE_2D, this.textTexture);
 
 		const textureLocation = this.gl.getUniformLocation(
-			this.program,
+			this.program!,
 			'u_texture',
 		);
 		this.gl.uniform1i(textureLocation, 0);

@@ -14,14 +14,14 @@ class URLPopUpSection extends HTMLObjectSection {
 
 		const objectDiv = this.getHTMLObject();
 		objectDiv.remove();
-		document.getElementById('document-container').appendChild(objectDiv);
+		document.getElementById('document-container')!.appendChild(objectDiv);
 
 		this.sectionProperties.url = url;
 
 		this.createUIElements(url);
 		this.setUpCallbacks(linkPosition);
 
-		document.getElementById('hyperlink-pop-up').title = url;
+		document.getElementById('hyperlink-pop-up')!.title = url;
 
 		if (app.map['wopi'].EnableRemoteLinkPicker)
 			app.map.fire('postMessage', { msgId: 'Action_GetLinkPreview', args: { url: url } });
@@ -66,7 +66,7 @@ class URLPopUpSection extends HTMLObjectSection {
 	}
 
 	setUpCallbacks(linkPosition?: cool.SimplePoint) {
-		document.getElementById(this.linkId).onclick = () => {
+		document.getElementById(this.linkId)!.onclick = () => {
 			if (!this.sectionProperties.url.startsWith('#'))
 				app.map.fire('warn', {url: this.sectionProperties.url, map: app.map, cmd: 'openlink'});
 			else
@@ -87,15 +87,15 @@ class URLPopUpSection extends HTMLObjectSection {
 			};
 		}
 
-		document.getElementById(this.copyButtonId).onclick = () => {
+		document.getElementById(this.copyButtonId)!.onclick = () => {
 			app.map.sendUnoCommand('.uno:CopyHyperlinkLocation', params);
 		};
 
-		document.getElementById(this.editButtonId).onclick = () => {
+		document.getElementById(this.editButtonId)!.onclick = () => {
 			app.map.sendUnoCommand('.uno:EditHyperlink', params);
 		};
 
-		document.getElementById(this.removeButtonId).onclick = () => {
+		document.getElementById(this.removeButtonId)!.onclick = () => {
 			app.map.sendUnoCommand('.uno:RemoveHyperlink', params);
 		};
 	}

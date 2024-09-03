@@ -156,7 +156,7 @@ export class RowHeader extends cool.Header {
 		this.context.strokeRect(offset, startY - offset, this.size[0], entry.size);
 	}
 
-	getHeaderEntryBoundingClientRect (index: number): Partial<DOMRect> {
+	getHeaderEntryBoundingClientRect (index: number): Partial<DOMRect> | undefined {
 		let entry = this._mouseOverEntry;
 
 		if (index)
@@ -212,10 +212,10 @@ export class RowHeader extends cool.Header {
 		if (dragDistance[1] === 0)
 			return;
 
-		let height = this._dragEntry.size;
-		let row = this._dragEntry.index;
+		let height = this._dragEntry!.size;
+		let row = this._dragEntry!.index;
 
-		const nextRow = this._headerInfo.getNextIndex(this._dragEntry.index);
+		const nextRow = this._headerInfo.getNextIndex(this._dragEntry!.index);
 		if (this._headerInfo.isZeroSize(nextRow)) {
 			row = nextRow;
 			height = 0;

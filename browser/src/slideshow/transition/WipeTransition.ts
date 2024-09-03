@@ -28,20 +28,20 @@ class WipeTransition extends Transition2d {
 
 	public start(): void {
 		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+			stringToTransitionSubTypeMap[this.slideInfo!.transitionSubtype!];
 		if (
 			transitionSubType == TransitionSubType.TOPTOBOTTOM &&
-			this.slideInfo.transitionDirection
+			this.slideInfo!.transitionDirection
 		) {
 			this.direction = WipeSubType.TOPTOBOTTOM;
 		} else if (
 			transitionSubType == TransitionSubType.TOPTOBOTTOM &&
-			!this.slideInfo.transitionDirection
+			!this.slideInfo!.transitionDirection
 		) {
 			this.direction = WipeSubType.BOTTOMTOTOP;
 		} else if (
 			transitionSubType == TransitionSubType.LEFTTORIGHT &&
-			this.slideInfo.transitionDirection
+			this.slideInfo!.transitionDirection
 		) {
 			this.direction = WipeSubType.LEFTTORIGHT;
 		} else {
@@ -53,7 +53,7 @@ class WipeTransition extends Transition2d {
 	// jscpd:ignore-start
 	public renderUniformValue(): void {
 		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
+			this.gl.getUniformLocation(this.program!, 'direction'),
 			this.direction,
 		);
 	}

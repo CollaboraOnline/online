@@ -7,8 +7,8 @@
  */
 
 class CPointSet {
-	private points: Array<cool.Point>;
-	private pointSets: Array<CPointSet>;
+	private points: Array<cool.Point> | undefined;
+	private pointSets: Array<CPointSet> | undefined;
 
 	static fromPointArray(array: Array<cool.Point>) {
 		var ps = new CPointSet();
@@ -39,14 +39,14 @@ class CPointSet {
 	empty(): boolean {
 		return (
 			(this.points === undefined && this.pointSets === undefined) ||
-			(this.pointSets === undefined && this.points.length == 0));
+			(this.pointSets === undefined && this.points!.length == 0));
 	}
 
-	getPointArray(): Array<cool.Point> {
+	getPointArray(): Array<cool.Point> | undefined {
 		return this.points;
 	}
 
-	getSetArray(): Array<CPointSet> {
+	getSetArray(): Array<CPointSet> | undefined {
 		return this.pointSets;
 	}
 
@@ -76,13 +76,13 @@ class CPointSet {
 		if (source.points) {
 			newPointSet.points = [];
 			source.points.forEach(function(point) {
-				newPointSet.points.push(point.clone());
+				newPointSet.points!.push(point.clone());
 			});
 		} else if (source.pointSets) {
 			newPointSet.pointSets = [];
 			source.pointSets.forEach(function (childPointSet) {
 				const clonedChild = CPointSet.cloneImpl(childPointSet);
-				newPointSet.pointSets.push(clonedChild);
+				newPointSet.pointSets!.push(clonedChild);
 			});
 		}
 
@@ -99,31 +99,31 @@ class CPointSet {
 				refPoint.x = 0;
 				refPoint.y = 0;
 				// Compute centroid for this set of points.
-				pointSet.points.forEach(function (point) {
+				pointSet.points!.forEach(function (point) {
 					refPoint._add(point);
 				});
-				refPoint._divideBy(pointSet.points.length);
+				refPoint._divideBy(pointSet.points!.length);
 			}
-			pointSet.points.forEach(function (point, index) {
+			pointSet.points!.forEach(function (point, index) {
 				if (preRound)
-					pointSet.points[index]._round();
+					pointSet.points![index]._round();
 
 				if (point.x < refPoint.x)
-					pointSet.points[index].x -= offset.x;
+					pointSet.points![index].x -= offset.x;
 				else
-					pointSet.points[index].x += offset.x;
+					pointSet.points![index].x += offset.x;
 
 				if (point.y < refPoint.y)
-					pointSet.points[index].y -= offset.y;
+					pointSet.points![index].y -= offset.y;
 				else
-					pointSet.points[index].y += offset.y;
+					pointSet.points![index].y += offset.y;
 			});
 
 			return;
 		}
 
 		// not flat so recurse.
-		pointSet.pointSets.forEach(function(childPointSet) {
+		pointSet.pointSets!.forEach(function(childPointSet) {
 			CPointSet.applyOffsetImpl(childPointSet, offset, centroidSymmetry, preRound);
 		});
 	}

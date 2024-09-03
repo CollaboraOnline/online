@@ -152,7 +152,7 @@ class Dispatcher {
 					}
 				}
 			}
-			if (!elementToFocus)
+			if (!elementToFocus!)
 				elementToFocus = document.getElementById(
 					'Home-tab-label',
 				) as HTMLButtonElement;
@@ -356,7 +356,7 @@ class Dispatcher {
 			app.map.sendUnoCommand('.uno:ToggleRelative');
 		};
 		this.actionsMap['focusonaddressinput'] = function () {
-			document.getElementById('addressInput-input').focus();
+			document.getElementById('addressInput-input')!.focus();
 		};
 
 		// sheets toolbar
@@ -371,12 +371,12 @@ class Dispatcher {
 		this.actionsMap['nextrecord'] = function () {
 			// TODO: We should get visible tab's width instead of 60px
 			$('#spreadsheet-tab-scroll').scrollLeft(
-				$('#spreadsheet-tab-scroll').scrollLeft() + 60,
+				$('#spreadsheet-tab-scroll').scrollLeft()! + 60,
 			);
 		};
 		this.actionsMap['prevrecord'] = function () {
 			$('#spreadsheet-tab-scroll').scrollLeft(
-				$('#spreadsheet-tab-scroll').scrollLeft() - 30,
+				$('#spreadsheet-tab-scroll').scrollLeft()! - 30,
 			);
 		};
 		this.actionsMap['lastrecord'] = function () {

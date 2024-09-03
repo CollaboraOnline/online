@@ -375,7 +375,7 @@ menuDefinitions.set('ConditionalFormatMenu', [
 		text: _UNO('.uno:ConditionalFormatManagerDialog', 'spreadsheet'),
 		uno: '.uno:ConditionalFormatManagerDialog',
 	},
-] as Array<MenuDefinition>);
+] as unknown as Array<MenuDefinition>);
 
 menuDefinitions.set('BorderStyleMenu', [
 	{ type: 'html', htmlId: 'borderstylepopup' },
@@ -405,7 +405,7 @@ menuDefinitions.set('UsersListMenu', [
 menuDefinitions.set('ColorPickerMenu', [
 	{ id: 'colorpickerwidget', type: 'colorpicker' },
 	{ type: 'separator' }, // required to show dropdown arrow
-] as Array<MenuDefinition>);
+] as unknown as Array<MenuDefinition>); // TODO: should menuDefinitions accept Partial<MenuDefinition>?
 
 menuDefinitions.set('LanguageStatusMenu', [
 	{ type: 'separator' },

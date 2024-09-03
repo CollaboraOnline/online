@@ -21,11 +21,11 @@ abstract class ISlideChangeBase {
 function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 	abstract class SlideChangeBase extends BaseType implements ISlideChangeBase {
 		private isFinished: boolean;
-		protected requestAnimationFrameId: number;
+		protected requestAnimationFrameId: number | null;
 		protected transitionParameters: TransitionParameters;
-		protected leavingSlide: WebGLTexture | ImageBitmap;
-		protected enteringSlide: WebGLTexture | ImageBitmap;
-		protected time: number;
+		protected leavingSlide: WebGLTexture | ImageBitmap | null;
+		protected enteringSlide: WebGLTexture | ImageBitmap | null;
+		protected time: number | null;
 		protected isLastFrame: boolean;
 
 		constructor(...args: any[]) {

@@ -28,7 +28,7 @@ class WheelTransition extends Transition2d {
 
 	public start(): void {
 		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+			stringToTransitionSubTypeMap[this.slideInfo!.transitionSubtype!];
 
 		if (transitionSubType == TransitionSubType.TWOBLADEVERTICAL) {
 			this.stocks = WheelSubType.TWOWHEEL;
@@ -47,7 +47,7 @@ class WheelTransition extends Transition2d {
 
 	public renderUniformValue(): void {
 		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'stocks'),
+			this.gl.getUniformLocation(this.program!, 'stocks'),
 			this.stocks,
 		);
 	}
