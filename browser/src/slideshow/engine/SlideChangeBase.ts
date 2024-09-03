@@ -13,7 +13,7 @@
 abstract class ISlideChangeBase {
 	public abstract start(): void;
 	public abstract end(): void;
-	public abstract perform(nT: number): boolean;
+	public abstract perform(nT: number, last: boolean): void;
 	public abstract getUnderlyingValue(): number;
 }
 
@@ -21,10 +21,12 @@ abstract class ISlideChangeBase {
 function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 	abstract class SlideChangeBase extends BaseType implements ISlideChangeBase {
 		private isFinished: boolean;
-		private requestAnimationFrameId: number;
+		protected requestAnimationFrameId: number;
 		protected transitionParameters: TransitionParameters;
 		protected leavingSlide: WebGLTexture | ImageBitmap;
 		protected enteringSlide: WebGLTexture | ImageBitmap;
+		protected time: number;
+		protected isLastFrame: boolean;
 
 		constructor(...args: any[]) {
 			assert(
@@ -39,6 +41,8 @@ function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 			this.enteringSlide = transitionParameters.next;
 			this.isFinished = false;
 			this.requestAnimationFrameId = null;
+			this.time = null;
+			this.isLastFrame = false;
 		}
 
 		public abstract start(): void;
@@ -58,11 +62,18 @@ function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 
 		protected abstract endTransition(): void;
 
-		public perform(nT: number): boolean {
-			if (this.isFinished) return false;
-			this.requestAnimationFrameId = requestAnimationFrame(
-				this.render.bind(this, nT),
-			);
+		public perform(nT: number, last: boolean = false): void {
+			if (this.isFinished) return;
+			this.time = nT;
+			this.isLastFrame = last;
+		}
+
+		protected animate() {
+			if (this.time != null) {
+				this.render(this.time);
+			}
+			if (!this.isLastFrame)
+				this.requestAnimationFrameId = requestAnimationFrame(this.animate.bind(this));
 		}
 
 		protected abstract render(nT: number): void;
