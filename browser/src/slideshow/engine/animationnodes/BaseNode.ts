@@ -105,7 +105,7 @@ function createStateTransitionTable() {
 		[NodeState.Ended, NodeState.Ended], // this state is a sink here (cannot restart)
 	]);
 
-	aSTT.get(RestartMode.Never).set(FillModes.Remove, aTable1);
+	aSTT.get(RestartMode.Never).set(FillModes.Freeze, aTable1);
 	aSTT.get(RestartMode.Never).set(FillModes.Hold, aTable1);
 	aSTT.get(RestartMode.Never).set(FillModes.Transition, aTable1);
 
