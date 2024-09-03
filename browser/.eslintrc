@@ -18,6 +18,7 @@
     "no-debugger": 1,
     "no-unreachable": 1,
     "no-unused-vars": 1,
+    "no-const-assign": 2
   },
   "globals": {
     "L": true,
@@ -44,6 +45,7 @@
         "plugin:@typescript-eslint/recommended"
       ],
       "rules": {
+        "no-const-assign": 2,
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-inferrable-types": "off",
         "no-var": "off",
