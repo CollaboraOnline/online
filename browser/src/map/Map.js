@@ -248,6 +248,10 @@ L.Map = L.Evented.extend({
 
 				// Fire an event to let the client know whether the document needs saving or not.
 				this.fire('postMessage', {msgId: 'Doc_ModifiedStatus', args: { Modified: e.state === 'true' }});
+
+				if (this._everModified) {
+					this.setDocumentStatus(e.state === 'true' ? 'MODIFIED' : 'SAVED');
+				}
 			}
 		}, this);
 
@@ -350,6 +354,31 @@ L.Map = L.Evented.extend({
 
 	// end of A11y
 
+	// can be '', 'SAVING', 'MODIFIED' or 'SAVED'
+	setDocumentStatus: function(status) {
+		if (status === 'SAVING') {
+			this._docStatusSaved.style.display = 'none';
+			this._docStatusLastSaved.textContent = '';
+			this._docStatusText.style.display = 'inline';
+			this._docStatusUI.style.display = 'inline';
+			return;
+		}
+
+		if (status === 'MODIFIED') {
+			this._docStatusUI.style.display = 'none';
+			this._docStatusLastSaved.textContent = '';
+			return;
+		}
+
+		if (status === 'SAVED') {
+			this._docStatusLastSaved.textContent = '';
+			this._docStatusText.style.display = 'none';
+			this._docStatusSaved.style.display = 'inline';
+			this._docStatusUI.style.display = 'inline';
+			return;
+		}
+	},
+
 	loadDocument: function(socket) {
 		app.socket.connect(socket);
 		if (this._clip)
@@ -427,8 +456,37 @@ L.Map = L.Evented.extend({
 	},
 
 	initializeModificationIndicator: function() {
-		// we need dateValue at other places so this function should be called on docload ( do not restrict only for classic view)
-		this.updateModificationIndicator(this._lastmodtime);
+		this._docStatusUI = document.getElementById('documentstatus');
+		if (this._docStatusUI !== null && this._docStatusUI !== undefined) {
+			this._docStatusUI.replaceChildren();
+
+			//
+			const div = document.createElement('div');
+			div.className = 'jsdialog ui-badge';
+			this._docStatusSaved = div;
+			this._docStatusUI.appendChild(div);
+
+			const lastSaved = document.createElement('span');
+			lastSaved.title = _('Your changes have been saved') + '.';
+			lastSaved.textContent = '';
+			div.appendChild(lastSaved);
+			this._docStatusLastSaved = lastSaved;
+
+			const savedStatus = document.createElement('span');
+			savedStatus.id = 'saved-status-label';
+			savedStatus.textContent = _('Document saved');
+			div.appendChild(savedStatus);
+
+			const textDiv = document.createElement('div');
+			textDiv.textContent = _('Saving...');
+			textDiv.className = 'jsdialog ui-badge';
+			this._docStatusText = textDiv;
+			this._docStatusUI.appendChild(textDiv);
+
+			this.updateModificationIndicator(this._lastmodtime);
+		}
+		this._docStatusUI.style.display = 'none';
+
 		var lastModButton = L.DomUtil.get('menu-last-mod');
 		if (lastModButton !== null && lastModButton !== undefined
 			&& lastModButton.firstChild.innerHTML !== null
@@ -461,28 +519,41 @@ L.Map = L.Evented.extend({
 
 		clearTimeout(this._modTimeout);
 
-		// just for safety check sometimes this var may not be intialized then in that case better to return empty
-		if (!this._lastmodtime)
-			return;
+		if ((this.lastModIndicator !== null && this.lastModIndicator !== undefined)
+			|| (this._docStatusLastSaved !== null && this._docStatusLastSaved !== undefined)) {
+			var dateTime = new Date(this._lastmodtime.replace(/,.*/, 'Z'));
+			var dateValue;
 
-		var dateTime = new Date(this._lastmodtime.replace(/,.*/, 'Z'));
-		var dateValue;
+			var elapsed = Date.now() - dateTime;
+			var rtf1 = new Intl.RelativeTimeFormat(String.locale, { style: 'narrow' });
+			if (('minSavedMessageTimeoutSecs' in window) && (elapsed < (window.minSavedMessageTimeoutSecs * 1000))) {
+				timeout = window.minSavedMessageTimeoutSecs * 1000;
+				dateValue = '';
+			} else if (elapsed < 60000) {
+				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 1000), 'second');
+				timeout = 6000;
+			} else if (elapsed < 3600000) {
+				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 60000), 'minute');
+				timeout = 60000;
+			} else if (elapsed < 3600000 * 24) {
+				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 3600000), 'hour');
+				timeout = 60000;
+			} else {
+				dateValue = _('Last saved:') + ' ' + dateTime.toLocaleDateString(String.locale,
+					{ year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+				timeout = 60000;
+			}
 
-		var elapsed = Date.now() - dateTime;
-		var rtf1 = new Intl.RelativeTimeFormat(String.locale, { style: 'narrow' });
-		if (elapsed < 60000) {
-			dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 1000), 'second');
-			timeout = 6000;
-		} else if (elapsed < 3600000) {
-			dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 60000), 'minute');
-			timeout = 60000;
-		} else if (elapsed < 3600000 * 24) {
-			dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 3600000), 'hour');
-			timeout = 60000;
-		} else {
-			dateValue = _('Last saved:') + ' ' + dateTime.toLocaleDateString(String.locale,
-				{ year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-			timeout = 60000;
+			if (this.lastModIndicator !== null && this.lastModIndicator !== undefined) {
+				this.lastModIndicator.innerHTML = dateValue;
+			}
+			if (this._docStatusLastSaved !== null && this._docStatusLastSaved !== undefined) {
+				this._docStatusLastSaved.innerHTML = dateValue;
+			}
+
+			if (timeout) {
+				this._modTimeout = setTimeout(L.bind(this.updateModificationIndicator, this, -1), timeout);
+			}
 		}
 		if (this.lastModIndicator !== null && this.lastModIndicator !== undefined)
 			this.lastModIndicator.innerHTML = dateValue;
