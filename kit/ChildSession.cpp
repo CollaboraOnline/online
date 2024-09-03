@@ -3256,19 +3256,19 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_STATE_CHANGED:
     {
-        if (payload == ".uno:DocumentStatus") // a special pseudo-command
+        if (payload == ".uno:NotesMode=true" || payload == ".uno:NotesMode=false")
         {
             std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
             sendTextFrame("statusupdate: " + status);
-            break;
         }
-
-        bool filter = false;
-        if (payload.find(".uno:ModifiedStatus") != std::string::npos)
-            filter = _docManager->trackDocModifiedState(payload);
-
-        if (!filter)
+        else if (payload.find(".uno:ModifiedStatus") != std::string::npos)
+        {
+            if (!_docManager->trackDocModifiedState(payload))
+                sendTextFrame("statechanged: " + payload);
+        }
+        else
             sendTextFrame("statechanged: " + payload);
+
         break;
     }
     case LOK_CALLBACK_SEARCH_NOT_FOUND:
