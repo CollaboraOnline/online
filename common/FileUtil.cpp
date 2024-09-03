@@ -771,6 +771,26 @@ namespace FileUtil
             lslr(subdir);
         }
     }
+
+    std::vector<std::string> getDirEntries(const std::string dirPath)
+    {
+        std::vector<std::string> names;
+        DIR *dir = opendir(dirPath.c_str());
+        if (!dir)
+        {
+            LOG_DBG("Read from non-existent directory " + dirPath);
+            return names;
+        }
+        struct dirent *i;
+        while ((i = readdir(dir)))
+        {
+            if (i->d_name[0] == '.')
+                continue;
+            names.push_back(i->d_name);
+        }
+        closedir(dir);
+        return names;
+    }
 } // namespace FileUtil
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

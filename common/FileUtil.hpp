@@ -313,6 +313,8 @@ namespace FileUtil
         const int _errno;
     };
 
+    std::vector<std::string> getDirEntries(const std::string dirPath);
+
     void lslr(const std::string& dir);
 
 } // end namespace FileUtil
