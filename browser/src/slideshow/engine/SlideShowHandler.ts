@@ -853,6 +853,7 @@ class SlideShowHandler {
 
 	private getTexture(nSlideIndex: number): WebGLTexture | ImageBitmap {
 		const slideImage = this.slideCompositor.getSlide(nSlideIndex);
+		if (!slideImage) throw 'SlideShowHandler: cannot get texture';
 		return this.slideRenderer.createTexture(slideImage);
 	}
 
