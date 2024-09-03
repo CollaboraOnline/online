@@ -1,4 +1,8 @@
-/* eslint-disable */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-this-alias */
+/* eslint-disable prefer-const */
+/* eslint-disable prefer-rest-params */
 // @ts-nocheck
 /* -*- js-indent-level: 8 -*- */
 
