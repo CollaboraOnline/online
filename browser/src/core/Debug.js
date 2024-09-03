@@ -855,13 +855,13 @@ L.DebugManager = L.Class.extend({
 		var updates = this._tileDataTotalUpdates;
 		var invalidates = this._tileDataTotalInvalidates;
 		this.setOverlayMessage('tileData',
-			'Total tile messages: ' + messages + '<br>' +
+			'Total tile messages: ' + messages + '\n' +
 			'loads: ' + loads + ' ' +
 			'deltas: ' + deltas + ' ' +
-			'updates: ' + updates + '<br>' +
-			'invalidates: ' + invalidates + '<br>' +
-			'<b>Tile update waste: ' + Math.round(100.0 * updates / (updates + deltas)) + '%</b>' + '<br>' +
-			'<b>New Tile ratio: ' + Math.round(100.0 * loads / (loads + updates + deltas)) + '%</b>'
+			'updates: ' + updates + '\n' +
+			'invalidates: ' + invalidates + '\n' +
+			'Tile update waste: ' + Math.round(100.0 * updates / (updates + deltas)) + '%\n' +
+			'New Tile ratio: ' + Math.round(100.0 * loads / (loads + updates + deltas)) + '%'
 			);
 	},
 
@@ -932,7 +932,7 @@ L.DebugManager = L.Class.extend({
 		var messages = '';
 		for (var i = this._tileInvalidationId - 1; i > this._tileInvalidationId - 6; i--) {
 			if (i >= 0 && this._tileInvalidationMessages[i]) {
-				messages += '' + i + ': ' + this._tileInvalidationMessages[i] + ' <br>';
+				messages += '' + i + ': ' + this._tileInvalidationMessages[i] + '\n';
 			}
 		}
 		this.setOverlayMessage('tileInvalidationMessages',messages);
