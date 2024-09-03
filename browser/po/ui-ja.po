@@ -386,15 +386,15 @@ msgstr " 分"
 msgid " s"
 msgstr " 秒"
 
-#: js/global.js:1361
+#: src/global.ts:1361
 msgid "Cluster is scaling, retrying..."
 msgstr "クラスターはスケーリング中再実行中です..."
 
-#: js/global.js:1363
+#: src/global.ts:1363
 msgid "Document is migrating to new server, retrying..."
 msgstr "ドキュメントは新しいサーバーに移行中です再実行中です..."
 
-#: js/global.js:1365
+#: src/global.ts:1365
 msgid "Failed to get RouteToken from controller"
 msgstr "Token取得が失敗しました"
 

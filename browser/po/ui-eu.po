@@ -390,16 +390,16 @@ msgstr " minutu"
 msgid " s"
 msgstr " s"
 
-#: js/global.js:1361
+#: src/global.ts:1361
 msgid "Cluster is scaling, retrying..."
 msgstr "Klusterra eskalatzen ari da, berriro saiatzen..."
 
-#: js/global.js:1363
+#: src/global.ts:1363
 msgid "Document is migrating to new server, retrying..."
 msgstr ""
 "Dokumentua zerbitzari berri batera migratzen ari da, berriro saiatzen..."
 
-#: js/global.js:1365
+#: src/global.ts:1365
 msgid "Failed to get RouteToken from controller"
 msgstr "Huts egin du RouteToken kontrolagailutik lortu"
 

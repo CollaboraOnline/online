@@ -387,15 +387,15 @@ msgstr " 분"
 msgid " s"
 msgstr " 초"
 
-#: js/global.js:1361
+#: src/global.ts:1361
 msgid "Cluster is scaling, retrying..."
 msgstr "클러스터 조정 중, 다시시도 중..."
 
-#: js/global.js:1363
+#: src/global.ts:1363
 msgid "Document is migrating to new server, retrying..."
 msgstr "문서가 새로운 서버로 옮겨지는 중입니다, 다시시도 중..."
 
-#: js/global.js:1365
+#: src/global.ts:1365
 msgid "Failed to get RouteToken from controller"
 msgstr "컨트롤러로부터 RouteToken을 가져오는데 실패했습니다."
 

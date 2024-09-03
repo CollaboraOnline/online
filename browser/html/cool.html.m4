@@ -265,7 +265,7 @@ m4_ifelse(MOBILEAPP, [true],
 m4_dnl This is GLOBAL_JS:
 m4_ifelse(MOBILEAPP, [true],
   [<script type="text/javascript" src="global.js"></script>],
-  [<script type="text/javascript" src="%SERVICE_ROOT%/browser/%VERSION%/global.js"></script>]
+  [<script type="text/javascript" src="%SERVICE_ROOT%/browser/%VERSION%/src/global.js"></script>]
 )
 
 m4_ifelse(MOBILEAPP,[true],

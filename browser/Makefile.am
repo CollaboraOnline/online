@@ -599,13 +599,6 @@ define prereq_all
 		$(NODE_MODULES_JS_SRC) $(COOL_LIBS_JS_SRC))
 endef
 
-define global_file
-	$(if $(IS_SEPARATE),
-		@cp $< $@,
-		@echo "Uglify global.js file..."
-		@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@)
-endef
-
 define run_betterer_check
 	node_modules/@betterer/cli/bin/betterer -c ./.betterer.js $(1)
 endef
@@ -709,7 +702,7 @@ $(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DS
 	@echo "Checking for cool JS errors..."
 	$(call run_betterer_check,ci) || echo "Betterer doesn't have the latest state of the project. To fix it, you can run 'make betterer-write'"
 	$(call run_eslint_check,$(srcdir)/src $(srcdir)/js)
-	$(call run_prettier_check,--debug-check $(srcdir)/src $(srcdir)/js/global.js)
+	$(call run_prettier_check,--debug-check $(srcdir)/src)
 	@echo "Bundling cool..."
 	$(call bundle_cool)
 
@@ -723,10 +716,6 @@ $(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/cool-src.js $(call prereq_all)
 	@mkdir -p $(dir $@)
 	$(call bundle_all)
 
-$(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
-	@mkdir -p $(dir $@)
-	$(call global_file)
-
 $(INTERMEDIATE_DIR)/COOL_JS.m4:
 	@rm -f COOL_JS.m4
 	$(foreach file,$(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4))
@@ -737,7 +726,7 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 	$(COOL_HTML_DST) \
 	$(COOL_WELCOME_DST) \
 	$(DIST_FOLDER)/bundle.css \
-	$(DIST_FOLDER)/global.js \
+	tscompile.done \
 	$(DIST_FOLDER)/bundle.js \
 	$(INTERMEDIATE_DIR)/COOL_JS.m4
 
@@ -751,7 +740,7 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 		-DEMSCRIPTENAPP=$(ENABLE_EMSCRIPTENAPP) \
 		-DMOBILEAPPNAME="$(APP_NAME)" \
 		-DCOOL_CSS="$(subst $(SPACE),$(COMMA),$(COOL_CSS_M4))" \
-		-DGLOBAL_JS="$(DIST_FOLDER)/global.js" \
+		-DGLOBAL_JS="$(DIST_FOLDER)/src/global.js" \
 		-DVENDOR="$(VENDOR)" \
 		$(srcdir)/html/cool.html.m4 > $@
 
@@ -893,7 +882,7 @@ pot:
 		admin/src/AdminSocketOverview.js \
 		admin/src/AdminSocketSettings.js \
 		admin/src/Util.js \
-		js/global.js \
+		src/global.ts \
 		src/control/ColorPicker.ts \
 		src/control/Control.AboutDialog.ts \
 		src/control/Control.AlertDialog.js \
@@ -1119,7 +1108,7 @@ clean-local:
 CLEANFILES = tscompile.done $(INTERMEDIATE_DIR)/cool-src.js $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js $(INTERMEDIATE_DIR)/cool-src.js
 
 ctags:
-	@$(CTAGS) --language-force=JavaScript $(COOL_JS_SRC) $(srcdir)/js/global.js
+	@$(CTAGS) --language-force=JavaScript $(COOL_JS_SRC)
 
 $(abs_srcdir)/jsconfig.json:
 	@printf "{\n \

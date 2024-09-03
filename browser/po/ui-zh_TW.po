@@ -386,15 +386,15 @@ msgstr " 分鐘"
 msgid " s"
 msgstr " 秒"
 
-#: js/global.js:1361
+#: src/global.ts:1361
 msgid "Cluster is scaling, retrying..."
 msgstr "叢集擴大, 正在重試..."
 
-#: js/global.js:1363
+#: src/global.ts:1363
 msgid "Document is migrating to new server, retrying..."
 msgstr "文件正在遷移到新伺服器,重試中..."
 
-#: js/global.js:1365
+#: src/global.ts:1365
 msgid "Failed to get RouteToken from controller"
 msgstr "無法從控制器取得 RouteToken"
 

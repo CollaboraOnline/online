@@ -17,7 +17,7 @@
  * - Help > About > D (Toolbar.js aboutDialogKeyHandler)
  * - Help > About > Triple Click (Toolbar.js aboutDialogClickHandler)
  * - &debug=true URL parameter (Map.js initialize)
- * - &randomUser=true URL parameter (global.js)
+ * - &randomUser=true URL parameter (global.ts)
  */
 
 /* global app L _ InvalidationRectangleSection */
