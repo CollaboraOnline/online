@@ -2141,7 +2141,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		}
 
 		var showResolved = this.map.stateChangeHandler.getItemValue('ShowResolvedAnnotations');
-		app.map.showResolvedComments(showResolved === true || showResolved === 'true');
+		this.setViewResolved(showResolved === true || showResolved === 'true');
 
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 			this.hideAllComments(); // Apply drawing orders.
