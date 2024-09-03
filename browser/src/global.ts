@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable prefer-const */
-/* eslint-disable prefer-rest-params */
 // @ts-nocheck
 /* -*- js-indent-level: 8 -*- */
 
@@ -654,18 +653,16 @@ function getInitializerClass() {
 					continue;
 				}
 				(function (method) {
-					global.app.console[method] = function logWithCool() {
-						var args = Array.prototype.slice.call(arguments);
+					global.app.console[method] = function logWithCool(...args) {
 						if (method === 'error') {
 							var log = 'jserror ';
-							for (var arg = 0; arg < arguments.length; arg++) {
-								if (typeof arguments[arg] === 'string')
-									log += arguments[arg] + '\n';
+							for (var arg = 0; arg < args.length; arg++) {
+								if (typeof args[arg] === 'string') log += args[arg] + '\n';
 							}
 							global.logServer(log);
 						}
 
-						return global.console[method].apply(console, args);
+						return global.console[method].apply(console, ...args);
 					};
 				})(loggingMethods[i]);
 			}
@@ -945,7 +942,7 @@ function getInitializerClass() {
 			var decoratorId = global.memo._getId(decorator);
 			var contextId = global.memo._getId(context);
 
-			return function (f) {
+			return function (f, ...args) {
 				var functionId = global.memo._getId(f);
 
 				if (
@@ -955,7 +952,7 @@ function getInitializerClass() {
 				) {
 					global.memo._decoratorMemo[
 						decoratorId + ' ' + contextId + ' ' + functionId
-					] = decorator.apply(this, arguments);
+					] = decorator.call(this, f, ...args);
 
 					if (context !== null && context !== undefined) {
 						global.memo._decoratorMemo[
@@ -1011,17 +1008,17 @@ function getInitializerClass() {
 
 		/// a decorator that only runs the function if the event is a touch event
 		touchOnly: global.memo.decorator(function (f) {
-			return function (e) {
+			return function (e, ...args) {
 				if (!global.touch.isTouchEvent(e)) return;
-				return f.apply(this, arguments);
+				return f.call(this, f, e, ...args);
 			};
 		}),
 
 		/// a decorator that only runs the function if the event is not a touch event
 		mouseOnly: global.memo.decorator(function (f) {
-			return function (e) {
+			return function (e, ...args) {
 				if (global.touch.isTouchEvent(e)) return;
-				return f.apply(this, arguments);
+				return f.call(this, f, e, ...args);
 			};
 		}),
 
