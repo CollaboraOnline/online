@@ -375,6 +375,17 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 	},
 
+	ignoreContextChange(contextes) {
+		const ignored = [['NotesPage', 'DrawPage'], ['DrawPage', 'NotesPage']];
+
+		for (let i = 0; i < ignored.length; i++) {
+			if (contextes[0] === ignored[i][0] && contextes[1] === ignored[i][1])
+				return true;
+		}
+
+		return false;
+	},
+
 	onContextChange: function(event) {
 		if (event.appId !== event.oldAppId) {
 			var childrenArray = undefined; // Use buttons provided by specific Control.Notebookbar implementation by default
@@ -395,6 +406,9 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 
 		if (event.context === event.oldContext)
+			return;
+
+		if (this.ignoreContextChange([event.context, event.oldContext]))
 			return;
 
 		var tabs = this.getTabs();
