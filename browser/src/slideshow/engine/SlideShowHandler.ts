@@ -357,7 +357,12 @@ class SlideShowHandler {
 		}
 
 		// this.theMetaPres.setCurrentSlide(nNewSlide);
-		this.presentSlide(nNewSlide);
+		try {
+			this.presentSlide(nNewSlide);
+		} catch (message) {
+			console.error('notifyTransitionEnd: ' + message);
+		}
+
 		this.enteringSlideTexture = null;
 		this.isStarting = false;
 
@@ -759,31 +764,30 @@ class SlideShowHandler {
 						this.notifyTransitionEnd.bind(this, nNewSlide, nOldSlide),
 					);
 
-					const transitionParameters: TransitionParameters =
-						this.createTransitionParameters(nNewSlide, nOldSlide);
-					this.enteringSlideTexture = transitionParameters.next;
-					const aTransitionActivity = this.createSlideTransition(
-						aSlideTransitionHandler,
-						transitionParameters,
-						aTransitionEndEvent,
-					);
+					try {
+						const transitionParameters: TransitionParameters =
+							this.createTransitionParameters(nNewSlide, nOldSlide);
+						this.enteringSlideTexture = transitionParameters.next;
+						const aTransitionActivity = this.createSlideTransition(
+							aSlideTransitionHandler,
+							transitionParameters,
+							aTransitionEndEvent,
+						);
 
-					if (aTransitionActivity) {
-						this.bIsTransitionRunning = true;
-						this.aActivityQueue.addActivity(aTransitionActivity);
-						this.update();
-					} else {
-						this.notifyTransitionEnd(nNewSlide, nOldSlide);
+						if (aTransitionActivity) {
+							this.bIsTransitionRunning = true;
+							this.aActivityQueue.addActivity(aTransitionActivity);
+							this.update();
+							return;
+						}
+					} catch (message) {
+						console.error('displaySlide failed: ' + message);
 					}
-				} else {
-					this.notifyTransitionEnd(nNewSlide, nOldSlide);
 				}
-			} else {
-				this.notifyTransitionEnd(nNewSlide, nOldSlide);
 			}
-		} else {
-			this.notifyTransitionEnd(nNewSlide, nOldSlide);
 		}
+
+		this.notifyTransitionEnd(nNewSlide, nOldSlide);
 	}
 
 	exitSlideShow() {
@@ -851,9 +855,12 @@ class SlideShowHandler {
 		return this.theMetaPres.getSlideInfoByIndex(nSlideIndex);
 	}
 
-	private getTexture(nSlideIndex: number): WebGLTexture | ImageBitmap {
+	private getTexture(nSlideIndex: number): WebGLTexture | ImageBitmap | null {
 		const slideImage = this.slideCompositor.getSlide(nSlideIndex);
-		if (!slideImage) throw 'SlideShowHandler: cannot get texture';
+		if (!slideImage) {
+			console.error('SlideShowHandler: cannot get texture');
+			return null;
+		}
 		return this.slideRenderer.createTexture(slideImage);
 	}
 

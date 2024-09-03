@@ -523,7 +523,9 @@ class LayerDrawing {
 
 		const oldCallback = this.onSlideRenderingCompleteCallback;
 		this.onSlideRenderingCompleteCallback = null;
-		oldCallback.call(this.helper);
+		if (oldCallback)
+			// if we already closed presentation it is missing
+			oldCallback.call(this.helper);
 	}
 
 	private checkAndAttachImageData(imageInfo: ImageInfo, img: any): boolean {
