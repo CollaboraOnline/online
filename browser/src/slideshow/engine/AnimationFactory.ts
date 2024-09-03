@@ -17,7 +17,7 @@ type SetterType = (x: any) => any;
 abstract class AnimationBase {
 	public abstract start(aAnimatableElement: AnimatedElement): void;
 
-	public abstract perform(aValue: any): void;
+	public abstract perform(aValue: any, last?: boolean): void;
 
 	public abstract end(): void;
 
