@@ -73,7 +73,7 @@ body {
 }
 
 #wopi-host-id, #proxy-prefix-id {
-	display: none;
+	display: none !important;
 }
 
 .about-dialog-info-div {
