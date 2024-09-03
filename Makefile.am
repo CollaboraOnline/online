@@ -537,10 +537,8 @@ endif
 setup-wsd: all @JAILS_PATH@
 	@echo "Launching coolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
-	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
-	@cp $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/test/data/hello-world.odp
-	@cp $(abs_top_srcdir)/test/data/hello.odg $(abs_top_srcdir)/test/data/hello-world.odg
+	@mkdir -p $(abs_top_builddir)/test/samples
+	@$(abs_top_srcdir)/scripts/build-samples.py $(abs_top_srcdir)/test/samples $(abs_top_srcdir)/test/samples
 	@echo
 
 COMMON_PARAMS = \
