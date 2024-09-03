@@ -567,38 +567,38 @@ function getInitializerClass() {
 	}
 }
 
-(function (global) {
+{
 	const initializer = getInitializerClass();
 	initializer.afterInitialization();
 
-	global.logServer = function (log) {
-		if (global.ThisIsAMobileApp) {
-			global.postMobileError(log);
+	window.logServer = function (log) {
+		if (window.ThisIsAMobileApp) {
+			window.postMobileError(log);
 		} else if (
-			global.socket &&
-			global.socket instanceof WebSocket &&
-			global.socket.readyState === 1
+			window.socket &&
+			window.socket instanceof WebSocket &&
+			window.socket.readyState === 1
 		) {
-			global.socket.send(log);
+			window.socket.send(log);
 		} else if (
-			global.socket &&
-			global.L &&
-			global.app.definitions.Socket &&
-			global.socket instanceof global.app.definitions.Socket &&
-			global.socket.connected()
+			window.socket &&
+			window.L &&
+			window.app.definitions.Socket &&
+			window.socket instanceof window.app.definitions.Socket &&
+			window.socket.connected()
 		) {
-			global.socket.sendMessage(log);
+			window.socket.sendMessage(log);
 		} else {
-			fetch(global.location.pathname.match(/.*\//) + 'logging.html', {
+			fetch(window.location.pathname.match(/.*\//) + 'logging.html', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: global.coolLogging + ' ' + log,
+				body: window.coolLogging + ' ' + log,
 			});
 		}
 	};
 
 	// enable later toggling
-	global.setLogging = function (doLogging) {
+	window.setLogging = function (doLogging) {
 		const loggingMethods = [
 			'error',
 			'warn',
@@ -616,34 +616,34 @@ function getInitializerClass() {
 			const noop = function () {};
 
 			for (let i = 0; i < loggingMethods.length; i++) {
-				global.app.console[loggingMethods[i]] = noop;
+				window.app.console[loggingMethods[i]] = noop;
 			}
 		} else {
 			for (let i = 0; i < loggingMethods.length; i++) {
 				if (
 					!Object.prototype.hasOwnProperty.call(
-						global.console,
+						window.console,
 						loggingMethods[i],
 					)
 				) {
 					continue;
 				}
 				(function (method) {
-					global.app.console[method] = function logWithCool(...args) {
+					window.app.console[method] = function logWithCool(...args) {
 						if (method === 'error') {
 							let log = 'jserror ';
 							for (let arg = 0; arg < args.length; arg++) {
 								if (typeof args[arg] === 'string') log += args[arg] + '\n';
 							}
-							global.logServer(log);
+							window.logServer(log);
 						}
 
-						return global.console[method].apply(console, ...args);
+						return window.console[method].apply(console, ...args);
 					};
 				})(loggingMethods[i]);
 			}
 
-			global.onerror = function (msg, src, row, col, err) {
+			window.onerror = function (msg, src, row, col, err) {
 				const data = {
 					userAgent: navigator.userAgent.toLowerCase(),
 					vendor: navigator.vendor.toLowerCase(),
@@ -662,10 +662,10 @@ function getInitializerClass() {
 					'\n' +
 					stack +
 					'\n';
-				global.logServer(log);
+				window.logServer(log);
 
 				if (L.Browser.cypressTest && window.parent !== window && err !== null) {
-					console.log('Sending global error to Cypress...:', err);
+					console.log('Sending window error to Cypress...:', err);
 					window.parent.postMessage(err);
 				}
 
@@ -674,23 +674,23 @@ function getInitializerClass() {
 		}
 	};
 
-	global.setLogging(global.coolLogging != '');
+	window.setLogging(window.coolLogging != '');
 
-	global.L.Params = {
+	window.L.Params = {
 		/// Shows close button if non-zero value provided
-		closeButtonEnabled: global.coolParams.get('closebutton'),
+		closeButtonEnabled: window.coolParams.get('closebutton'),
 
 		/// Shows revision history file menu option
-		revHistoryEnabled: global.coolParams.get('revisionhistory'),
+		revHistoryEnabled: window.coolParams.get('revisionhistory'),
 	};
 
-	global.prefs = {
+	window.prefs = {
 		_localStorageCache: {}, // TODO: change this to new Map() when JS version allows
 		canPersist: (function () {
 			const str = 'localstorage_test';
 			try {
-				global.localStorage.setItem(str, str);
-				global.localStorage.removeItem(str);
+				window.localStorage.setItem(str, str);
+				window.localStorage.removeItem(str);
 				return true;
 			} catch (e) {
 				return false;
@@ -698,25 +698,25 @@ function getInitializerClass() {
 		})(),
 
 		_renameLocalStoragePref: function (oldName, newName) {
-			if (!global.prefs.canPersist) {
+			if (!window.prefs.canPersist) {
 				return;
 			}
 
-			const oldValue = global.localStorage.getItem(oldName);
-			const newValue = global.localStorage.getItem(newName);
+			const oldValue = window.localStorage.getItem(oldName);
+			const newValue = window.localStorage.getItem(newName);
 
 			if (oldValue === null || newValue !== null) {
 				return;
 			}
 
-			// we do not remove the old value, both for downgrades and incase we split an old global preference to a per-app one
-			global.localStorage.setItem(newName, oldValue);
+			// we do not remove the old value, both for downgrades and incase we split an old window preference to a per-app one
+			window.localStorage.setItem(newName, oldValue);
 		},
 
 		/// Similar to using window.uiDefaults directly, but this can handle dotted keys like "presentation.ShowSidebar" and does not allow partially referencing a value (like just "presentation")
 		_getUIDefault: function (key, defaultValue = undefined) {
 			const parts = key.split('.');
-			let result = global.uiDefaults;
+			let result = window.uiDefaults;
 
 			for (const part of parts) {
 				if (!Object.prototype.hasOwnProperty.call(result, part)) {
@@ -738,51 +738,51 @@ function getInitializerClass() {
 		},
 
 		get: function (key, defaultValue = undefined) {
-			if (key in global.prefs._localStorageCache) {
-				return global.prefs._localStorageCache[key];
+			if (key in window.prefs._localStorageCache) {
+				return window.prefs._localStorageCache[key];
 			}
 
-			const uiDefault = global.prefs._getUIDefault(key);
-			if (!global.savedUIState && uiDefault !== undefined) {
-				global.prefs._localStorageCache[key] = uiDefault;
+			const uiDefault = window.prefs._getUIDefault(key);
+			if (!window.savedUIState && uiDefault !== undefined) {
+				window.prefs._localStorageCache[key] = uiDefault;
 				return uiDefault;
 			}
 
-			if (global.prefs.canPersist) {
-				const localStorageItem = global.localStorage.getItem(key);
+			if (window.prefs.canPersist) {
+				const localStorageItem = window.localStorage.getItem(key);
 
 				if (localStorageItem) {
-					global.prefs._localStorageCache[key] = localStorageItem;
+					window.prefs._localStorageCache[key] = localStorageItem;
 					return localStorageItem;
 				}
 			}
 
 			if (uiDefault !== undefined) {
-				global.prefs._localStorageCache[key] = uiDefault;
+				window.prefs._localStorageCache[key] = uiDefault;
 				return uiDefault;
 			}
 
-			global.prefs._localStorageCache[key] = defaultValue;
+			window.prefs._localStorageCache[key] = defaultValue;
 			return defaultValue;
 		},
 
 		set: function (key, value) {
 			value = String(value); // NOT "new String(...)". We cannot use .toString here because value could be null/undefined
-			if (global.prefs.canPersist) {
-				global.localStorage.setItem(key, value);
+			if (window.prefs.canPersist) {
+				window.localStorage.setItem(key, value);
 			}
-			global.prefs._localStorageCache[key] = value;
+			window.prefs._localStorageCache[key] = value;
 		},
 
 		remove: function (key) {
-			if (global.prefs.canPersist) {
-				global.localStorage.removeItem(key);
+			if (window.prefs.canPersist) {
+				window.localStorage.removeItem(key);
 			}
-			global.prefs._localStorageCache[key] = undefined;
+			window.prefs._localStorageCache[key] = undefined;
 		},
 
 		getBoolean: function (key, defaultValue = false) {
-			const value = global.prefs.get(key, '').toLowerCase();
+			const value = window.prefs.get(key, '').toLowerCase();
 
 			if (value === 'false') {
 				return false;
@@ -796,7 +796,7 @@ function getInitializerClass() {
 		},
 
 		getNumber: function (key, defaultValue = NaN) {
-			const value = global.prefs.get(key, '').toLowerCase();
+			const value = window.prefs.get(key, '').toLowerCase();
 
 			const parsedValue = parseFloat(value);
 
@@ -808,26 +808,26 @@ function getInitializerClass() {
 		},
 	};
 
-	global.getAccessibilityState = function () {
+	window.getAccessibilityState = function () {
 		const isCalcTest =
-			global.docURL.includes('data/desktop/calc/') ||
-			global.docURL.includes('data/mobile/calc/') ||
-			global.docURL.includes('data/idle/calc/') ||
-			global.docURL.includes('data/multiuser/calc/');
+			window.docURL.includes('data/desktop/calc/') ||
+			window.docURL.includes('data/mobile/calc/') ||
+			window.docURL.includes('data/idle/calc/') ||
+			window.docURL.includes('data/multiuser/calc/');
 
 		// FIXME: a11y doesn't work in calc under cypress
-		if (L.Browser.cypressTest && isCalcTest) global.enableAccessibility = false;
+		if (L.Browser.cypressTest && isCalcTest) window.enableAccessibility = false;
 
 		if (L.Browser.cypressTest)
-			global.prefs.set('accessibilityState', global.enableAccessibility);
+			window.prefs.set('accessibilityState', window.enableAccessibility);
 
-		return global.prefs.getBoolean('accessibilityState');
+		return window.prefs.getBoolean('accessibilityState');
 	};
 
 	// Renamed in 24.04.4.1
 	const prefDocTypes = ['text', 'spreadsheet', 'presentation', 'drawing'];
 	for (const docType of prefDocTypes) {
-		global.prefs._renameLocalStoragePref(
+		window.prefs._renameLocalStoragePref(
 			`UIDefaults_${docType}_darkTheme`,
 			'darkTheme',
 		);
@@ -848,7 +848,7 @@ function getInitializerClass() {
 	];
 	for (const pref of oldDocTypePrefs) {
 		for (const docType of prefDocTypes) {
-			global.prefs._renameLocalStoragePref(
+			window.prefs._renameLocalStoragePref(
 				`UIDefaults_${docType}_${pref}`,
 				`${docType}.${pref}`,
 			);
@@ -856,19 +856,19 @@ function getInitializerClass() {
 	}
 	// End 24.04.4.1 renames
 
-	global.keyboard = {
-		onscreenKeyboardHint: global.uiDefaults['onscreenKeyboardHint'],
+	window.keyboard = {
+		onscreenKeyboardHint: window.uiDefaults['onscreenKeyboardHint'],
 		// If there's an onscreen keyboard, we don't want to trigger it with innocuous actions like panning around a spreadsheet
 		// on the other hand, if there is a hardware keyboard we want to do things like focusing contenteditables so that typing is
 		// recognized without tapping again. This is an impossible problem, because browsers do not give us enough information
 		// Instead, let's just guess
 		guessOnscreenKeyboard: function () {
-			if (global.keyboard.onscreenKeyboardHint != undefined)
-				return global.keyboard.onscreenKeyboardHint;
+			if (window.keyboard.onscreenKeyboardHint != undefined)
+				return window.keyboard.onscreenKeyboardHint;
 			return (
-				(global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) ||
-				global.mode.isMobile() ||
-				global.mode.isTablet()
+				(window.ThisIsAMobileApp && !window.ThisIsTheEmscriptenApp) ||
+				window.mode.isMobile() ||
+				window.mode.isTablet()
 			);
 			// It's better to guess that more devices will have an onscreen keyboard than reality,
 			// because calc becomes borderline unusable if you miss a device that pops up an onscreen keyboard which covers
@@ -878,9 +878,9 @@ function getInitializerClass() {
 		// let them override our default
 		hintOnscreenKeyboard: function (hint) {
 			if (
-				global.app &&
-				global.L.Map &&
-				global.L.Map.THIS._docLayer.isCalc() &&
+				window.app &&
+				window.L.Map &&
+				window.L.Map.THIS._docLayer.isCalc() &&
 				hint !== undefined
 			) {
 				const command = {
@@ -889,23 +889,23 @@ function getInitializerClass() {
 						value: hint,
 					},
 				};
-				global.L.Map.THIS.sendUnoCommand('.uno:MoveKeepInsertMode', command);
+				window.L.Map.THIS.sendUnoCommand('.uno:MoveKeepInsertMode', command);
 			}
-			global.keyboard.onscreenKeyboardHint = hint;
+			window.keyboard.onscreenKeyboardHint = hint;
 		},
 	};
 
-	global.memo = {
+	window.memo = {
 		_lastId: 0,
 
-		/// This does pretty much the same as L.stamp. We can't use L.stamp because it's not yet in-scope by the first time we want to call global.memo.decorator
+		/// This does pretty much the same as L.stamp. We can't use L.stamp because it's not yet in-scope by the first time we want to call window.memo.decorator
 		/// If you are able to use L.stamp instead, you probably should
 		_getId: function (obj) {
 			if (obj === null || obj === undefined) {
 				return '' + obj;
 			}
 			if (!('_coolMemoId' in obj)) {
-				obj['_coolMemoId'] = ++global.memo._lastId;
+				obj['_coolMemoId'] = ++window.memo._lastId;
 			}
 			return obj._coolMemoId;
 		},
@@ -915,32 +915,32 @@ function getInitializerClass() {
 		/// A decorator factory, which takes a decorator and prevents it from creating new instances when wrapping the same function
 		/// This is particularly useful for functions that take events, say, as .on and .off won't work properly if you don't provide the same function instance
 		decorator: function (decorator, context) {
-			const decoratorId = global.memo._getId(decorator);
-			const contextId = global.memo._getId(context);
+			const decoratorId = window.memo._getId(decorator);
+			const contextId = window.memo._getId(context);
 
 			return function (f, ...args) {
-				const functionId = global.memo._getId(f);
+				const functionId = window.memo._getId(f);
 
 				if (
-					global.memo._decoratorMemo[
+					window.memo._decoratorMemo[
 						decoratorId + ' ' + contextId + ' ' + functionId
 					] === undefined
 				) {
-					global.memo._decoratorMemo[
+					window.memo._decoratorMemo[
 						decoratorId + ' ' + contextId + ' ' + functionId
 					] = decorator.call(this, f, ...args);
 
 					if (context !== null && context !== undefined) {
-						global.memo._decoratorMemo[
+						window.memo._decoratorMemo[
 							decoratorId + ' ' + contextId + ' ' + functionId
 						] =
-							global.memo._decoratorMemo[
+							window.memo._decoratorMemo[
 								decoratorId + ' ' + contextId + ' ' + functionId
 							].bind(context);
 					}
 				}
 
-				return global.memo._decoratorMemo[
+				return window.memo._decoratorMemo[
 					decoratorId + ' ' + contextId + ' ' + functionId
 				];
 			};
@@ -951,23 +951,23 @@ function getInitializerClass() {
 		/// A decorator, which takes a function and binds it to an object
 		/// Similar to L.bind, but when given the same function and context we will return the previously bound function
 		bind: function (f, context) {
-			const functionId = global.memo._getId(f);
-			const contextId = global.memo._getId(context);
-			if (global.memo._bindMemo[functionId + ' ' + contextId] === undefined) {
-				global.memo._bindMemo[functionId + ' ' + contextId] = f.bind(context);
+			const functionId = window.memo._getId(f);
+			const contextId = window.memo._getId(context);
+			if (window.memo._bindMemo[functionId + ' ' + contextId] === undefined) {
+				window.memo._bindMemo[functionId + ' ' + contextId] = f.bind(context);
 			}
-			return global.memo._bindMemo[functionId + ' ' + contextId];
+			return window.memo._bindMemo[functionId + ' ' + contextId];
 		},
 	};
 
-	global.touch = {
+	window.touch = {
 		/// a touchscreen event handler, supports both DOM and hammer.js events
 		isTouchEvent: function (e) {
 			if (e.originalEvent) {
 				e = e.originalEvent;
 			}
 
-			if (L.Browser.cypressTest && global.L.Browser.mobile) {
+			if (L.Browser.cypressTest && window.L.Browser.mobile) {
 				return true; // As cypress tests on mobile tend to use "click" events instead of touches... we cheat to get them recognized as touch events
 			}
 
@@ -983,17 +983,17 @@ function getInitializerClass() {
 		},
 
 		/// a decorator that only runs the function if the event is a touch event
-		touchOnly: global.memo.decorator(function (f) {
+		touchOnly: window.memo.decorator(function (f) {
 			return function (e, ...args) {
-				if (!global.touch.isTouchEvent(e)) return;
+				if (!window.touch.isTouchEvent(e)) return;
 				return f.call(this, f, e, ...args);
 			};
 		}),
 
 		/// a decorator that only runs the function if the event is not a touch event
-		mouseOnly: global.memo.decorator(function (f) {
+		mouseOnly: window.memo.decorator(function (f) {
 			return function (e, ...args) {
-				if (global.touch.isTouchEvent(e)) return;
+				if (window.touch.isTouchEvent(e)) return;
 				return f.call(this, f, e, ...args);
 			};
 		}),
@@ -1002,26 +1002,26 @@ function getInitializerClass() {
 		/// you shouldn't use this for determining the behavior of an event (use isTouchEvent instead), but this may
 		///   be useful for determining what UI to show (e.g. the draggable teardrops under the cursor)
 		hasPrimaryTouchscreen: function () {
-			return global.matchMedia('(pointer: coarse)').matches;
+			return window.matchMedia('(pointer: coarse)').matches;
 		},
 		/// detect any pointing device is of limited accuracy (generally a touchscreen)
 		/// you shouldn't use this for determining the behavior of an event (use isTouchEvent instead), but this may
 		///   be useful for determining what UI to show (e.g. the draggable teardrops under the cursor)
 		hasAnyTouchscreen: function () {
-			return global.matchMedia('(any-pointer: coarse)').matches;
+			return window.matchMedia('(any-pointer: coarse)').matches;
 		},
 	};
 
-	if (!global.prefs.getBoolean('hasNavigatorClipboardWrite', true)) {
+	if (!window.prefs.getBoolean('hasNavigatorClipboardWrite', true)) {
 		// navigator.clipboard.write failed on us once, don't even try it.
-		global.L.Browser.hasNavigatorClipboardWrite = false;
+		window.L.Browser.hasNavigatorClipboardWrite = false;
 	}
 
-	global.deviceFormFactor = global.mode.getDeviceFormFactor();
+	window.deviceFormFactor = window.mode.getDeviceFormFactor();
 
 	// This function may look unused, but it's needed in WASM and Android to send data through the fake websocket. Please
 	// don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
-	global.Base64ToArrayBuffer = function (base64Str) {
+	window.Base64ToArrayBuffer = function (base64Str) {
 		const binStr = atob(base64Str);
 		const ab = new ArrayBuffer(binStr.length);
 		const bv = new Uint8Array(ab);
@@ -1036,24 +1036,24 @@ function getInitializerClass() {
 	// This function may look unused, but it's needed in WASM and mobile to send data through the fake websocket. Please
 	// don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
 	// eslint-disable-next-line
-	global.b64d = function (base64Str) {
+	window.b64d = function (base64Str) {
 		const binStr = atob(base64Str);
 		const u8Array = Uint8Array.from(binStr, (c) => c.codePointAt(0));
 		return new TextDecoder().decode(u8Array);
 	};
 
-	if (global.ThisIsTheiOSApp) {
-		global.addEventListener('keydown', function (e) {
+	if (window.ThisIsTheiOSApp) {
+		window.addEventListener('keydown', function (e) {
 			if (e.metaKey) {
 				e.preventDefault();
 			}
-			if (global.MagicKeyDownHandler) global.MagicKeyDownHandler(e);
+			if (window.MagicKeyDownHandler) window.MagicKeyDownHandler(e);
 		});
-		global.addEventListener('keyup', function (e) {
+		window.addEventListener('keyup', function (e) {
 			if (e.metaKey) {
 				e.preventDefault();
 			}
-			if (global.MagicKeyUpHandler) global.MagicKeyUpHandler(e);
+			if (window.MagicKeyUpHandler) window.MagicKeyUpHandler(e);
 		});
 	}
 
@@ -1069,26 +1069,26 @@ function getInitializerClass() {
 		false,
 	);
 
-	global.fakeWebSocketCounter = 0;
-	global.FakeWebSocket = function () {
+	window.fakeWebSocketCounter = 0;
+	window.FakeWebSocket = function () {
 		this.binaryType = 'arraybuffer';
 		this.bufferedAmount = 0;
 		this.extensions = '';
 		this.protocol = '';
 		this.readyState = 1;
-		this.id = global.fakeWebSocketCounter++;
+		this.id = window.fakeWebSocketCounter++;
 		this.onclose = () => {};
 		this.onerror = () => {};
 		this.onmessage = () => {};
 		this.onopen = () => {};
 		this.close = () => {};
 	};
-	global.FakeWebSocket.prototype.send = (data) => {
-		global.postMobileMessage(data);
+	window.FakeWebSocket.prototype.send = (data) => {
+		window.postMobileMessage(data);
 	};
 
-	global.proxySocketCounter = 0;
-	global.ProxySocket = function (uri) {
+	window.proxySocketCounter = 0;
+	window.ProxySocket = function (uri) {
 		this.uri = uri;
 		this.binaryType = 'arraybuffer';
 		this.bufferedAmount = 0;
@@ -1098,7 +1098,7 @@ function getInitializerClass() {
 		this.connected = true;
 		this.readyState = 0; // connecting
 		this.sessionId = 'open';
-		this.id = global.proxySocketCounter++;
+		this.id = window.proxySocketCounter++;
 		this.msgInflight = 0;
 		this.openInflight = 0;
 		this.inSerial = 0;
@@ -1122,16 +1122,16 @@ function getInitializerClass() {
 			return this.decoder.decode(this.doSlice(bytes, start, end));
 		};
 		this.parseIncomingArray = (arr) => {
-			//global.app.console.debug('proxy: parse incoming array of length ' + arr.length);
+			//window.app.console.debug('proxy: parse incoming array of length ' + arr.length);
 			for (let i = 0; i < arr.length; ++i) {
 				const left = arr.length - i;
 				if (left < 4) {
-					//global.app.console.debug('no data left');
+					//window.app.console.debug('no data left');
 					break;
 				}
 				const type = String.fromCharCode(arr[i + 0]);
 				if (type != 'T' && type != 'B') {
-					global.app.console.debug('wrong data type: ' + type);
+					window.app.console.debug('wrong data type: ' + type);
 					break;
 				}
 				i++;
@@ -1139,7 +1139,7 @@ function getInitializerClass() {
 				// Serial
 				if (arr[i] !== 48 && arr[i + 1] !== 120) {
 					// '0x'
-					global.app.console.debug('missing hex preamble');
+					window.app.console.debug('missing hex preamble');
 					break;
 				}
 				i += 2;
@@ -1156,7 +1156,7 @@ function getInitializerClass() {
 				// Size:
 				if (arr[i] !== 48 && arr[i + 1] !== 120) {
 					// '0x'
-					global.app.console.debug('missing hex preamble');
+					window.app.console.debug('missing hex preamble');
 					break;
 				}
 				i += 2;
@@ -1174,7 +1174,7 @@ function getInitializerClass() {
 				else data = this.doSlice(arr, i, i + size);
 
 				if (serial !== this.inSerial + 1) {
-					global.app.console.debug(
+					window.app.console.debug(
 						'Error: serial mismatch ' + serial + ' vs. ' + (this.inSerial + 1),
 					);
 				}
@@ -1214,7 +1214,7 @@ function getInitializerClass() {
 		this.doSend = () => {
 			if (this.sessionId === 'open') {
 				if (this.readyState === 3)
-					global.app.console.debug('Error: sending on closed socket');
+					window.app.console.debug('Error: sending on closed socket');
 				return;
 			}
 
@@ -1226,19 +1226,19 @@ function getInitializerClass() {
 				if (this.curPollMs < this.maxPollMs) {
 					this.curPollMs =
 						Math.min(this.maxPollMs, this.curPollMs * this.throttleFactor) | 0;
-					global.app.console.debug(
+					window.app.console.debug(
 						'High latency connection - too much in-flight, throttling to ' +
 							this.curPollMs +
 							' ms.',
 					);
 					this._setPollInterval(this.curPollMs);
 				} else if (performance.now() - this.lastDataTimestamp > 30 * 1000) {
-					global.app.console.debug(
+					window.app.console.debug(
 						'Close connection after no response for 30secs',
 					);
 					this._signalErrorClose();
 				} else
-					global.app.console.debug(
+					window.app.console.debug(
 						'High latency connection - too much in-flight, pausing.',
 					);
 				return;
@@ -1249,7 +1249,7 @@ function getInitializerClass() {
 			// too long, hangs, throws, etc. we can recover.
 			this._setPollInterval(this.maxPollMs);
 
-			//global.app.console.debug('send msg - ' + this.msgInflight + ' on session ' +
+			//window.app.console.debug('send msg - ' + this.msgInflight + ' on session ' +
 			//	      this.sessionId + '  queue: "' + this.sendQueue + '"');
 			const req = new XMLHttpRequest();
 			const url = this.getEndPoint('write');
@@ -1270,7 +1270,7 @@ function getInitializerClass() {
 						return;
 					}
 				} else {
-					global.app.console.debug(
+					window.app.console.debug(
 						'proxy: error on incoming response ' + req.status,
 					);
 					this._signalErrorClose();
@@ -1288,7 +1288,7 @@ function getInitializerClass() {
 						this.curPollMs =
 							Math.min(this.maxPollMs, this.curPollMs * this.throttleFactor) |
 							0;
-						//global.app.console.debug('No data for ' + timeSinceLastDataMs + ' ms -- throttling to ' + this.curPollMs + ' ms.');
+						//window.app.console.debug('No data for ' + timeSinceLastDataMs + ' ms -- throttling to ' + this.curPollMs + ' ms.');
 					}
 				}
 				this._setPollInterval(this.curPollMs);
@@ -1302,18 +1302,18 @@ function getInitializerClass() {
 		};
 		this.getSessionId = () => {
 			if (this.openInflight > 0) {
-				global.app.console.debug('Waiting for session open');
+				window.app.console.debug('Waiting for session open');
 				return;
 			}
 
 			if (this.delaySession) return;
 
 			// avoid attempting to re-connect too quickly
-			if (global.lastCreatedProxySocket) {
-				const msSince = performance.now() - global.lastCreatedProxySocket;
+			if (window.lastCreatedProxySocket) {
+				const msSince = performance.now() - window.lastCreatedProxySocket;
 				if (msSince < 250) {
 					const delay = 250 - msSince;
-					global.app.console.debug(
+					window.app.console.debug(
 						'Wait to re-try session creation for ' + delay + 'ms',
 					);
 					this.curPollMs = delay; // ms
@@ -1324,7 +1324,7 @@ function getInitializerClass() {
 					return;
 				}
 			}
-			global.lastCreatedProxySocket = performance.now();
+			window.lastCreatedProxySocket = performance.now();
 
 			const req = new XMLHttpRequest();
 			const endPoint = this.getEndPoint('open');
@@ -1332,14 +1332,14 @@ function getInitializerClass() {
 			req.open('POST', endPoint);
 			req.responseType = 'text';
 			req.addEventListener('load', () => {
-				global.app.console.debug('got session: ' + req.responseText);
+				window.app.console.debug('got session: ' + req.responseText);
 				if (
 					req.status !== 200 ||
 					!req.responseText ||
 					req.responseText.indexOf('\n') >= 0
 				) {
 					// multi-line error
-					global.app.console.debug(
+					window.app.console.debug(
 						'Error: failed to fetch session id! error: ' + req.status,
 					);
 					this._signalErrorClose();
@@ -1352,7 +1352,7 @@ function getInitializerClass() {
 				}
 			});
 			req.addEventListener('loadend', () => {
-				global.app.console.debug('Open completed state: ' + this.readyState);
+				window.app.console.debug('Open completed state: ' + this.readyState);
 				this.openInflight--;
 			});
 			req.send('');
@@ -1376,7 +1376,7 @@ function getInitializerClass() {
 			if (this.curPollMs > this.minPollMs || !hadData) {
 				// Unless we are backed up.
 				if (this.msgInflight <= 3) {
-					//global.app.console.debug('Have data to send, lowering poll interval.');
+					//window.app.console.debug('Have data to send, lowering poll interval.');
 					this.curPollMs = this.minPollMs;
 					this._setPollInterval(this.curPollMs);
 				}
@@ -1393,7 +1393,7 @@ function getInitializerClass() {
 		};
 		this.close = () => {
 			const oldState = this.readyState;
-			global.app.console.debug('proxy: close socket');
+			window.app.console.debug('proxy: close socket');
 			this.readyState = 3;
 			this.onclose();
 			clearInterval(this.pollInterval);
@@ -1411,13 +1411,13 @@ function getInitializerClass() {
 			const base = this.uri;
 			return base + '/' + this.sessionId + '/' + command + '/' + this.outSerial;
 		};
-		global.app.console.debug('proxy: new socket ' + this.id + ' ' + this.uri);
+		window.app.console.debug('proxy: new socket ' + this.id + ' ' + this.uri);
 
 		// queue fetch of session id.
 		this.getSessionId();
 	};
 
-	global.iterateCSSImages = function (visitor) {
+	window.iterateCSSImages = function (visitor) {
 		const visitUrls = function (rules, visitor, base) {
 			if (!rules) return;
 
@@ -1453,7 +1453,7 @@ function getInitializerClass() {
 			try {
 				relBases = sheets[i].href.split('/');
 			} catch (err) {
-				global.app.console.log('Missing href from CSS number ' + i);
+				window.app.console.log('Missing href from CSS number ' + i);
 				continue;
 			}
 			relBases.pop(); // bin last - css name.
@@ -1463,19 +1463,19 @@ function getInitializerClass() {
 			try {
 				rules = sheets[i].cssRules || sheets[i].rules;
 			} catch (err) {
-				global.app.console.log('Missing CSS from ' + sheets[i].href);
+				window.app.console.log('Missing CSS from ' + sheets[i].href);
 				continue;
 			}
 			visitUrls(rules, visitor, base);
 		}
 	};
 
-	if (global.socketProxy) {
+	if (window.socketProxy) {
 		// re-write relative URLs in CSS - somewhat grim.
-		global.addEventListener(
+		window.addEventListener(
 			'load',
 			function () {
-				global.iterateCSSImages(function (style, img, fullUrl) {
+				window.iterateCSSImages(function (style, img, fullUrl) {
 					style.backgroundImage = fullUrl;
 				});
 			},
@@ -1484,7 +1484,7 @@ function getInitializerClass() {
 	}
 
 	// indirect socket to wrap the asyncness around fetching the routetoken from indirection url endpoint
-	global.IndirectSocket = function (uri) {
+	window.IndirectSocket = function (uri) {
 		this.uri = uri;
 		this.binaryType = '';
 		this.unloading = false;
@@ -1526,7 +1526,7 @@ function getInitializerClass() {
 					errorType: 'clusterscaling',
 				},
 			};
-			global.parent.postMessage(JSON.stringify(msg), '*');
+			window.parent.postMessage(JSON.stringify(msg), '*');
 		};
 
 		this.sendRouteTokenRequest = function (requestUri) {
@@ -1536,10 +1536,10 @@ function getInitializerClass() {
 			http.addEventListener('load', () => {
 				if (http.status === 200) {
 					const uriWithRouteToken = http.response.uri;
-					global.expectedServerId = http.response.serverId;
+					window.expectedServerId = http.response.serverId;
 					const params = new URL(uriWithRouteToken).searchParams;
-					global.routeToken = params.get('RouteToken');
-					global.app.console.log('updated routeToken: ' + global.routeToken);
+					window.routeToken = params.get('RouteToken');
+					window.app.console.log('updated routeToken: ' + window.routeToken);
 					this.innerSocket = new WebSocket(uriWithRouteToken);
 					this.innerSocket.binaryType = this.binaryType;
 					this.innerSocket.onerror = function () {
@@ -1578,7 +1578,7 @@ function getInitializerClass() {
 					}.bind(http);
 					setTimeout(timeoutFn, 3000, requestUri);
 				} else {
-					global.app.console.error(
+					window.app.console.error(
 						'Indirection url: error on incoming response ' + http.status,
 					);
 					this.sendPostMsg(-1);
@@ -1588,45 +1588,45 @@ function getInitializerClass() {
 		};
 
 		let requestUri =
-			global.indirectionUrl + '?Uri=' + encodeURIComponent(this.uri);
-		if (global.geolocationSetup) {
+			window.indirectionUrl + '?Uri=' + encodeURIComponent(this.uri);
+		if (window.geolocationSetup) {
 			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 			requestUri += '&TimeZone=' + timeZone;
 		}
 		this.sendRouteTokenRequest(requestUri);
 	};
 
-	global.createWebSocket = function (uri) {
-		if ('processCoolUrl' in global) {
-			uri = global.processCoolUrl({ url: uri, type: 'ws' });
+	window.createWebSocket = function (uri) {
+		if ('processCoolUrl' in window) {
+			uri = window.processCoolUrl({ url: uri, type: 'ws' });
 		}
 
-		if (global.socketProxy) {
-			return new global.ProxySocket(uri);
-		} else if (global.indirectionUrl != '' && !global.migrating) {
-			global.indirectSocket = true;
-			return new global.IndirectSocket(uri);
+		if (window.socketProxy) {
+			return new window.ProxySocket(uri);
+		} else if (window.indirectionUrl != '' && !window.migrating) {
+			window.indirectSocket = true;
+			return new window.IndirectSocket(uri);
 		} else {
 			return new WebSocket(uri);
 		}
 	};
 
-	global._ = function (string) {
+	window._ = function (string) {
 		// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
-		if (global.ThisIsAMobileApp) {
+		if (window.ThisIsAMobileApp) {
 			// We use another approach just for iOS for now.
 			if (
-				global.LOCALIZATIONS &&
-				Object.prototype.hasOwnProperty.call(global.LOCALIZATIONS, string)
+				window.LOCALIZATIONS &&
+				Object.prototype.hasOwnProperty.call(window.LOCALIZATIONS, string)
 			) {
-				// global.postMobileDebug('_(' + string + '): YES: ' + global.LOCALIZATIONS[string]);
-				let result = global.LOCALIZATIONS[string];
-				if (global.LANG === 'de-CH') {
+				// window.postMobileDebug('_(' + string + '): YES: ' + window.LOCALIZATIONS[string]);
+				let result = window.LOCALIZATIONS[string];
+				if (window.LANG === 'de-CH') {
 					result = result.replace(/ß/g, 'ss');
 				}
 				return result;
 			} else {
-				// global.postMobileDebug('_(' + string + '): NO');
+				// window.postMobileDebug('_(' + string + '): NO');
 				return string;
 			}
 		} else {
@@ -1634,32 +1634,32 @@ function getInitializerClass() {
 		}
 	};
 
-	// Some global variables are defined in cool.html, among them:
-	// global.host: the host URL, with ws(s):// protocol
-	// global.serviceRoot: an optional root path on the server, typically blank.
+	// Some window variables are defined in cool.html, among them:
+	// window.host: the host URL, with ws(s):// protocol
+	// window.serviceRoot: an optional root path on the server, typically blank.
 
-	// Setup global.webserver: the host URL, with http(s):// protocol (used to fetch files).
-	if (global.webserver === undefined) {
+	// Setup window.webserver: the host URL, with http(s):// protocol (used to fetch files).
+	if (window.webserver === undefined) {
 		const protocol =
-			global.location.protocol === 'file:'
+			window.location.protocol === 'file:'
 				? 'https:'
-				: global.location.protocol;
-		global.webserver = global.host.replace(/^(ws|wss):/i, protocol);
-		global.webserver = global.webserver.replace(/\/*$/, ''); // Remove trailing slash.
+				: window.location.protocol;
+		window.webserver = window.host.replace(/^(ws|wss):/i, protocol);
+		window.webserver = window.webserver.replace(/\/*$/, ''); // Remove trailing slash.
 	}
 
 	let docParams, wopiParams;
-	const filePath = global.coolParams.get('file_path');
-	global.wopiSrc = global.coolParams.get('WOPISrc');
-	if (global.wopiSrc != '') {
-		global.docURL = decodeURIComponent(global.wopiSrc);
-		if (global.accessToken !== '') {
+	const filePath = window.coolParams.get('file_path');
+	window.wopiSrc = window.coolParams.get('WOPISrc');
+	if (window.wopiSrc != '') {
+		window.docURL = decodeURIComponent(window.wopiSrc);
+		if (window.accessToken !== '') {
 			wopiParams = {
-				access_token: global.accessToken,
-				access_token_ttl: global.accessTokenTTL,
+				access_token: window.accessToken,
+				access_token_ttl: window.accessTokenTTL,
 			};
-		} else if (global.accessHeader !== '') {
-			wopiParams = { access_header: global.accessHeader };
+		} else if (window.accessHeader !== '') {
+			wopiParams = { access_header: window.accessHeader };
 		}
 
 		if (wopiParams) {
@@ -1671,36 +1671,36 @@ function getInitializerClass() {
 				})
 				.join('&');
 		}
-	} else if (global.ThisIsTheEmscriptenApp) {
+	} else if (window.ThisIsTheEmscriptenApp) {
 		// This is of course just a horrible temporary hack
-		global.docURL = 'file:///sample.docx';
+		window.docURL = 'file:///sample.docx';
 	} else {
-		global.docURL = filePath;
+		window.docURL = filePath;
 	}
 
 	// Form a valid WS URL to the host with the given path.
-	global.makeWsUrl = function (path) {
-		global.app.console.assert(
-			global.host.startsWith('ws'),
-			'host is not ws: ' + global.host,
+	window.makeWsUrl = function (path) {
+		window.app.console.assert(
+			window.host.startsWith('ws'),
+			'host is not ws: ' + window.host,
 		);
-		return global.host + global.serviceRoot + path;
+		return window.host + window.serviceRoot + path;
 	};
 
 	// Form a URI from the docUrl and wopiSrc and encodes.
 	// The docUrlParams, suffix, and wopiSrc are optionally hexified.
-	global.routeToken = '';
-	global.makeDocAndWopiSrcUrl = function (
+	window.routeToken = '';
+	window.makeDocAndWopiSrcUrl = function (
 		root,
 		docUrlParams,
 		suffix,
 		wopiSrcParam,
 	) {
 		let wopiSrc = '';
-		if (global.wopiSrc != '') {
-			wopiSrc = '?WOPISrc=' + encodeURIComponent(global.wopiSrc);
-			if (global.routeToken != '')
-				wopiSrc += '&RouteToken=' + global.routeToken;
+		if (window.wopiSrc != '') {
+			wopiSrc = '?WOPISrc=' + encodeURIComponent(window.wopiSrc);
+			if (window.routeToken != '')
+				wopiSrc += '&RouteToken=' + window.routeToken;
 			wopiSrc += '&compat=';
 			if (wopiSrcParam && wopiSrcParam.length > 0)
 				wopiSrc += '&' + wopiSrcParam;
@@ -1710,20 +1710,20 @@ function getInitializerClass() {
 
 		suffix = suffix || '/ws';
 		let encodedDocUrl = encodeURIComponent(docUrlParams) + suffix + wopiSrc;
-		if (global.hexifyUrl) encodedDocUrl = global.hexEncode(encodedDocUrl);
+		if (window.hexifyUrl) encodedDocUrl = window.hexEncode(encodedDocUrl);
 		return root + encodedDocUrl + '/ws';
 	};
 
 	// Form a valid WS URL to the host with the given path and
 	// encode the document URL and params.
-	global.makeWsUrlWopiSrc = function (
+	window.makeWsUrlWopiSrc = function (
 		path,
 		docUrlParams,
 		suffix,
 		wopiSrcParam,
 	) {
-		const websocketURI = global.makeWsUrl(path);
-		return global.makeDocAndWopiSrcUrl(
+		const websocketURI = window.makeWsUrl(path);
+		return window.makeDocAndWopiSrcUrl(
 			websocketURI,
 			docUrlParams,
 			suffix,
@@ -1732,24 +1732,24 @@ function getInitializerClass() {
 	};
 
 	// Form a valid HTTP URL to the host with the given path.
-	global.makeHttpUrl = function (path) {
-		global.app.console.assert(
-			global.webserver.startsWith('http'),
-			'webserver is not http: ' + global.webserver,
+	window.makeHttpUrl = function (path) {
+		window.app.console.assert(
+			window.webserver.startsWith('http'),
+			'webserver is not http: ' + window.webserver,
 		);
-		return global.webserver + global.serviceRoot + path;
+		return window.webserver + window.serviceRoot + path;
 	};
 
 	// Form a valid HTTP URL to the host with the given path and
 	// encode the document URL and params.
-	global.makeHttpUrlWopiSrc = function (
+	window.makeHttpUrlWopiSrc = function (
 		path,
 		docUrlParams,
 		suffix,
 		wopiSrcParam,
 	) {
-		const httpURI = global.makeHttpUrl(path);
-		return global.makeDocAndWopiSrcUrl(
+		const httpURI = window.makeHttpUrl(path);
+		return window.makeDocAndWopiSrcUrl(
 			httpURI,
 			docUrlParams,
 			suffix,
@@ -1758,7 +1758,7 @@ function getInitializerClass() {
 	};
 
 	// Encode a string to hex.
-	global.hexEncode = function (string) {
+	window.hexEncode = function (string) {
 		const bytes = new TextEncoder().encode(string);
 		let hex = '0x';
 		for (let i = 0; i < bytes.length; ++i) {
@@ -1768,7 +1768,7 @@ function getInitializerClass() {
 	};
 
 	// Decode hexified string back to plain text.
-	global.hexDecode = function (hex) {
+	window.hexDecode = function (hex) {
 		if (hex.startsWith('0x')) hex = hex.substr(2);
 		const bytes = new Uint8Array(hex.length / 2);
 		for (let i = 0; i < bytes.length; i++) {
@@ -1777,26 +1777,26 @@ function getInitializerClass() {
 		return new TextDecoder().decode(bytes);
 	};
 
-	if (global.ThisIsAMobileApp) {
-		global.socket = new global.FakeWebSocket();
-		global.TheFakeWebSocket = global.socket;
+	if (window.ThisIsAMobileApp) {
+		window.socket = new window.FakeWebSocket();
+		window.TheFakeWebSocket = window.socket;
 	} else {
 		// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
 		const docParamsPart = docParams
-			? (global.docURL.includes('?') ? '&' : '?') + docParams
+			? (window.docURL.includes('?') ? '&' : '?') + docParams
 			: '';
-		const websocketURI = global.makeWsUrlWopiSrc(
+		const websocketURI = window.makeWsUrlWopiSrc(
 			'/cool/',
-			global.docURL + docParamsPart,
+			window.docURL + docParamsPart,
 		);
 		try {
-			global.socket = global.createWebSocket(websocketURI);
+			window.socket = window.createWebSocket(websocketURI);
 		} catch (err) {
-			global.app.console.log(err);
+			window.app.console.log(err);
 		}
 	}
 
-	const isRandomUser = global.coolParams.get('randomUser');
+	const isRandomUser = window.coolParams.get('randomUser');
 	if (isRandomUser) {
 		// List of languages supported in core
 		const randomUserLangs = [
@@ -1847,11 +1847,11 @@ function getInitializerClass() {
 			'Randomize Settings: Set language to: ',
 			randomUserLang,
 		);
-		global.coolParams.set('lang', randomUserLang);
-		global.coolParams.set('debug', true);
+		window.coolParams.set('lang', randomUserLang);
+		window.coolParams.set('debug', true);
 	}
 
-	const lang = global.coolParams.get('lang');
+	let lang = window.coolParams.get('lang');
 	if (lang) {
 		// Workaround for broken integrations vs. LOKit language fallback
 		if (lang === 'en-us') lang = 'en-US';
@@ -1859,29 +1859,29 @@ function getInitializerClass() {
 		if (lang === 'pt-br') lang = 'pt-BR';
 		if (lang === 'zh-cn') lang = 'zh-CN';
 		if (lang === 'zh-tw') lang = 'zh-TW';
-		global.langParam = encodeURIComponent(lang);
-	} else global.langParam = 'en-US';
-	global.langParamLocale = new Intl.Locale(global.langParam);
-	global.queueMsg = [];
-	if (global.ThisIsTheEmscriptenApp)
+		window.langParam = encodeURIComponent(lang);
+	} else window.langParam = 'en-US';
+	window.langParamLocale = new Intl.Locale(window.langParam);
+	window.queueMsg = [];
+	if (window.ThisIsTheEmscriptenApp)
 		// Temporary hack
-		global.LANG = 'en-US';
-	else if (global.ThisIsAMobileApp) global.LANG = lang;
-	if (global.socket && global.socket.readyState !== 3) {
-		global.socket.onopen = function () {
+		window.LANG = 'en-US';
+	else if (window.ThisIsAMobileApp) window.LANG = lang;
+	if (window.socket && window.socket.readyState !== 3) {
+		window.socket.onopen = function () {
 			// Note there are two socket "onopen" handlers, this one and the other in browser/src/core/Socket.js.
 			// See the notes there for explanation.
-			if (global.socket.readyState === 1) {
+			if (window.socket.readyState === 1) {
 				const ProtocolVersionNumber = '0.1';
 				const timestamp = encodeURIComponent(
-					global.coolParams.get('timestamp'),
+					window.coolParams.get('timestamp'),
 				);
-				let msg = 'load url=' + encodeURIComponent(global.docURL);
+				let msg = 'load url=' + encodeURIComponent(window.docURL);
 
 				const now0 = Date.now();
 				const now1 = performance.now();
 				const now2 = Date.now();
-				global.socket.send(
+				window.socket.send(
 					'coolclient ' +
 						ProtocolVersionNumber +
 						' ' +
@@ -1890,10 +1890,10 @@ function getInitializerClass() {
 						now1,
 				);
 
-				msg += ' accessibilityState=' + global.getAccessibilityState();
+				msg += ' accessibilityState=' + window.getAccessibilityState();
 
-				if (global.ThisIsAMobileApp) {
-					msg += ' lang=' + global.LANG;
+				if (window.ThisIsAMobileApp) {
+					msg += ' lang=' + window.LANG;
 				} else {
 					if (timestamp) {
 						msg += ' timestamp=' + timestamp;
@@ -1904,8 +1904,8 @@ function getInitializerClass() {
 					// renderingOptions?
 				}
 
-				if (global.deviceFormFactor) {
-					msg += ' deviceFormFactor=' + global.deviceFormFactor;
+				if (window.deviceFormFactor) {
+					msg += ' deviceFormFactor=' + window.deviceFormFactor;
 				}
 				const spellOnline = window.prefs.get('SpellOnline');
 				if (spellOnline) {
@@ -1923,36 +1923,36 @@ function getInitializerClass() {
 
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-				global.socket.send(msg);
+				window.socket.send(msg);
 			}
 		};
 
-		global.socket.onerror = function (event) {
-			global.app.console.log(event);
+		window.socket.onerror = function (event) {
+			window.app.console.log(event);
 		};
 
-		global.socket.onclose = function (event) {
-			global.app.console.log(event);
+		window.socket.onclose = function (event) {
+			window.app.console.log(event);
 		};
 
-		global.socket.onmessage = function (event) {
-			if (typeof global.socket._onMessage === 'function') {
-				global.socket._emptyQueue();
-				global.socket._onMessage(event);
+		window.socket.onmessage = function (event) {
+			if (typeof window.socket._onMessage === 'function') {
+				window.socket._emptyQueue();
+				window.socket._onMessage(event);
 			} else {
-				global.queueMsg.push(event.data);
+				window.queueMsg.push(event.data);
 			}
 		};
 
-		global.socket.binaryType = 'arraybuffer';
+		window.socket.binaryType = 'arraybuffer';
 
-		if (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) {
+		if (window.ThisIsAMobileApp && !window.ThisIsTheEmscriptenApp) {
 			// This corresponds to the initial GET request when creating a WebSocket
 			// connection and tells the app's code that it is OK to start invoking
 			// TheFakeWebSocket's onmessage handler. The app code that handles this
 			// special message knows the document to be edited anyway, and can send it
 			// on as necessary to the Online code.
-			global.postMobileMessage('HULLO');
+			window.postMobileMessage('HULLO');
 			// A FakeWebSocket is immediately open.
 			this.socket.onopen();
 		}
@@ -1969,4 +1969,4 @@ function getInitializerClass() {
 		window.visualViewport.addEventListener('scroll', handleViewportChange);
 		window.visualViewport.addEventListener('resize', handleViewportChange);
 	}
-})(window);
+}
