@@ -3,6 +3,7 @@
 .sidebar * {
 	font-family: var(--jquery-ui-font);
 	text-transform: none !important;
+	color: var(--color-main-text);
 }
 
 img.sidebar.ui-image {
