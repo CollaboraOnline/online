@@ -1,81 +1,3 @@
-<style>
-    h1 { text-align: center; }
-    table.help { border-collapse: collapse; width: 100%; }
-    td.function { padding: 5px; border-bottom: 1px solid var(--color-border-lighter); width: 70%; }
-    td.shortcut { padding: 5px; border-bottom: 1px solid var(--color-border-lighter); font-weight: bold; width: 30%; }
-    .productname { font-weight:bold; font-style:italic; }
-    .ui { font-weight:bold; }
-    .def { font-weight:bold; }
-    /* Style for toc-h2 and toc-h3 */
-    .toc-h2 button,
-    .toc-h3 button {
-        border-radius: 5px; /* Add rounded corners */
-        transition: background-color 0.3s ease; /* Smooth transition effect */
-        font-family: Arial, sans-serif; /* Use a common font family */
-        font-size: 16px; /* Font size */
-        color: var(--color-main-text);
-    }
-
-    /* Hover effect for toc-h2 and toc-h3 button */
-    .toc-h2 button:hover,
-    .toc-h3 button:hover {
-        background-color: #e0e0e0; /* Darker gray background on hover */
-    }
-
-    /* Style for toc-h2 and toc-h3 button text when clicked */
-    .toc-h2 button:active,
-    .toc-h3 button:active {
-        color: #555; /* Darker text color when clicked */
-    }
-
-    /* Style for toc-h2 and toc-h3 button text when focused */
-    .toc-h2 button:focus,
-    .toc-h3 button:focus {
-        outline: none; /* Remove outline when focused */
-    }
-
-    /* Add margin to the paragraph to separate each item */
-    .toc-h2,
-    .toc-h3 {
-        margin-bottom: 2px; /* Adjust margin bottom */
-    }
-
-    .screenshot { text-align:center; margin: 0.1in; }
-    .screenshot > img { max-width: 100%; height: auto; }
-    .blue { color:#63bbee; }
-    button.border-0 { font-family: "Helvetica Neue", sans-serif; background: none!important; border: none; padding: 0!important; color: -webkit-link; cursor: pointer; text-decoration: underline; font-size: 1em; line-height: 1.5em; }
-    button:active { color: -webkit-activelink; }
-    button:focus { outline: -webkit-focus-ring-color auto 1px; }
-
-    .hide {
-      display: none;
-    }
-
-    .show {
-      display: block;
-    }
-
-    tr.show {
-      display: table-row;
-    }
-
-    #online-help-search-input {
-      width: 30%;
-      padding: 5px 10px 5px 15px;
-      border: 1px solid;
-      border-radius: 5px;
-      font-size: 16px;
-      outline: none;
-    }
-    #online-help-search-input:focus {
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
-    #online-help-search-input::placeholder {
-      color: #999;
-    }
-    [data-theme='dark'] span.cool-annotation-menu { filter: invert(1);}
-</style>
-
 <div class="search-container">
   <input size="20" id="online-help-search-input" type="search" spellcheck="false" />
 </div>
@@ -98,7 +20,7 @@
             <tr class="sub-section"> <td class="function">Focus to selected comment's menu</td> <td class="shortcut"><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>C</kbd></td> </tr>
         </table>
     </div>
-    <div id="text-shortcuts" class="text" style="display: none;">
+    <div id="text-shortcuts" class="text hide">
       <div class="section">
         <h2 class="section-header">Text formatting</h2>
         <table class="help">
@@ -205,7 +127,7 @@
         </table>
       </div>
     </div>
-    <div id="spreadsheet-shortcuts" class="spreadsheet" style="display: none;">
+    <div id="spreadsheet-shortcuts" class="spreadsheet hide">
       <div class="section">
         <h2 class="section-header">Navigating in Spreadsheets</h2>
           <table class="help">
@@ -260,7 +182,7 @@
         </table>
         </div>
     </div>
-    <div id="presentation-shortcuts" class="presentation" style="display: none;">
+    <div id="presentation-shortcuts" class="presentation hide">
         <div class="section">
         <h2 class="section-header">Text formatting</h2>
         <table class="help">
@@ -325,7 +247,7 @@
         </table>
         </div>
     </div>
-        <div id="drawing-shortcuts" class="presentation" style="display: none;">
+        <div id="drawing-shortcuts" class="presentation hide">
         <div class="section">
         <h2 class="section-header">Text formatting</h2>
         <table class="help">
@@ -398,7 +320,7 @@
     <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1335).scrollIntoView();'>Opening, closing, saving, printing and downloading documents</button></p>
     <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1337).scrollIntoView();'>Editing documents</button></p>
     <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1338).scrollIntoView();'>Advanced features</button></p>
-    <div class="spreadsheet link-section" style="display: none;">
+    <div class="spreadsheet link-section hide">
         <p class="toc-h2 m-v-0"><button class="border-0" onClick='document.getElementById(1359).scrollIntoView();'><span class="productname">{productname}</span> spreadsheets</button></p>
         <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1361).scrollIntoView();'>Editing spreadsheets</button></p>
         <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1363).scrollIntoView();'>Formulas</button></p>
@@ -406,14 +328,14 @@
         <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1371).scrollIntoView();'>Advanced features</button></p>
         <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1409).scrollIntoView();'>Spreadsheets</button></p>
     </div>
-    <div class="text link-section" style="display: none;">
+    <div class="text link-section hide">
         <p class="toc-h2 m-v-0"><button class="border-0" onClick='document.getElementById(1373).scrollIntoView();'><span class="productname">{productname}</span> text documents</button></p>
         <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1375).scrollIntoView();'>Editing text documents</button></p>
         <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1377).scrollIntoView();'>Context menus</button></p>
         <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1383).scrollIntoView();'>Advanced text document editor features</button></p>
         <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1407).scrollIntoView();'>Text documents</button></p>
     </div>
-    <div class="presentation link-section" style="display: none;">
+    <div class="presentation link-section hide">
         <p class="toc-h2 m-v-0"><button class="border-0" onClick='document.getElementById(1391).scrollIntoView();'><span class="productname">{productname}</span> presentations</button></p>
         <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1393).scrollIntoView();'>Editing presentations</button></p>
         <p class="toc-h3 m-v-0"><button class="border-0" onClick='document.getElementById(1395).scrollIntoView();'>Slide show</button></p>
@@ -446,7 +368,7 @@
     <p><span class="def">The document area:</span> The application area shows the document contents, either spreadsheets, presentations or text documents.</p>
   </div>
   <div class="sub-section">
-    <p><span class="def">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <span style="height:0.6cm;width:0.6cm; margin: 0px;" class="w2ui-icon fold" ></span> icon on the far right. Click on the <span style="height:0.6cm;width:0.6cm; margin: 0px;" class="w2ui-icon unfold" ></span> icon to show the menu.</p>
+    <p><span class="def">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <span class="w2ui-icon fold icon-size" ></span> icon on the far right. Click on the <span class="w2ui-icon unfold icon-size" ></span> icon to show the menu.</p>
   </div>
   <div class="sub-section">
     <p><span class="def">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object.</p>
@@ -547,7 +469,7 @@
     <h4>Comments in documents</h4>
     <p>Insert comments in <span class="productname">{productname}</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer.</p>
     <div class="screenshot"><img alt="comment" src="images/help/en/comment.png"/></div>
-    <p>Click on the submenu (<span class="cool-annotation-menu" style="height:0.6cm;width:0.6cm;" ></span>) icon to reply, move and delete comments.</p>
+    <p>Click on the submenu (<span class="cool-annotation-menu icon-size" ></span>) icon to reply, move and delete comments.</p>
   </div>
   <div class="sub-section">
     <h4>Spellchecking</h4>
@@ -556,7 +478,7 @@
     <p>To systematically spell-check the whole document use the <span class="ui">Tools</span> menu’s <span class="ui">Spelling</span> option.</p>
   </div>
 </div>
-<div class="spreadsheet" style="display: none;">
+<div class="spreadsheet hide">
     <a id="1359"/>
     <h2 class="product-header"><span class="productname">{productname}</span> spreadsheets</h2>
     <a id="1361"/>
@@ -625,7 +547,7 @@
     </div>
     </div>
 </div>
-<div class="text" style="display: none;">
+<div class="text hide">
     <a id="1373"/>
     <h2 class="product-header"><span class="productname">{productname}</span> text documents</h2>
     <a id="1375"/>
@@ -679,7 +601,7 @@
     </div>
     </div>
 </div>
-<div class="presentation" style="display: none;">
+<div class="presentation hide">
     <a id="1391"/>
     <h2 class="product-header"><span class="productname">{productname}</span> presentations</h2>
     <a id="1393"/>
@@ -766,7 +688,7 @@
     <p>The <span class="blue">¶</span> symbol is a formatting mark. It is used to help text alignment and editing and is not printed. To toggle it in the document display, choose menu <span class="ui">View</span> → <span class="ui">Formatting mark</span>.</p>
       </div>
     </div>
-<div class="text" style="display: none;">
+<div class="text hide">
     <a id="1407"/>
     <div class="section">
     <h3 class="section-header">Text documents</h3>
@@ -831,7 +753,7 @@
     <p>Directly:</p>
     <ol>
       <li><p>Select the text with the existing format</p></li>
-      <li><p>Click on the clone formatting icon <img style="height:0.6cm;width:0.6cm;" alt="" src="images/lc_formatpaintbrush.svg">. The mouse pointer turns to a paint bucket.</p></li>
+      <li><p>Click on the clone formatting icon <img class="icon-size" alt="" src="images/lc_formatpaintbrush.svg">. The mouse pointer turns to a paint bucket.</p></li>
       <li><p>Select the text you want to apply the new format.</p></li>
     </ol>
     </div>
@@ -848,7 +770,7 @@
     </div>
     </div>
 </div>
-<div class="spreadsheet" style="display: none;">
+<div class="spreadsheet hide">
     <a id="1409"/>
     <div class="section">
     <h3 class="section-header">Spreadsheets</h3>
@@ -874,7 +796,7 @@
     <p>This is easy to do using the Paintbrush tool in the toolbar.</p>
     <ol>
       <li><p>Format the source cell with the font, color background and more.</p></li>
-      <li><p>Click on the clone formatting icon <img style="height:0.6cm;width:0.6cm;" alt="" src="images/lc_formatpaintbrush.svg">. The mouse pointer turns to a paint bucket.</p></li>
+      <li><p>Click on the clone formatting icon <img class="icon-size" src="images/lc_formatpaintbrush.svg">. The mouse pointer turns to a paint bucket.</p></li>
       <li><p>Select the cells you want to format. Release the mouse button.</p></li>
     </ol>
     </div>
@@ -888,7 +810,7 @@
     </div>
     </div>
 </div>
-<div class="presentation" style="display: none;">
+<div class="presentation hide">
     <a id="1411"/>
     <div class="section">
     <h3 class="section-header">Presentations</h3>
@@ -896,7 +818,7 @@
     <h4>How can I run my slide show?</h4>
     <ol>
       <li><p>Open the presentation in <span class="productname">{productname}</span></p></li>
-      <li><p>Either choose <span class="ui">Slide Show</span> → <span class="ui">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style="height:0.6cm;width:0.6cm;" alt="" src="images/lc_dia.svg"></p></li>
+      <li><p>Either choose <span class="ui">Slide Show</span> → <span class="ui">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img class="icon-size" alt="" src="images/lc_dia.svg"></p></li>
     </ol>
     </div>
     <div class="sub-section">

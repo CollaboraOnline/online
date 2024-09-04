@@ -1,0 +1,154 @@
+
+/* Style for Online help and keyboard shortcut dialog */
+
+#online-help-content-box,
+#keyboard-shortcuts-content-box {
+	h1 {
+		text-align: center;
+	}
+
+	table.help {
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	td.function {
+		padding: 5px;
+		border-bottom: 1px solid var(--color-border-lighter);
+		width: 70%;
+	}
+
+	td.shortcut {
+		padding: 5px;
+		border-bottom: 1px solid var(--color-border-lighter);
+		font-weight: bold;
+		width: 30%;
+	}
+
+	.productname {
+		font-weight: bold;
+		font-style: italic;
+	}
+
+	.ui {
+		font-weight: bold;
+	}
+
+	.def {
+		font-weight: bold;
+	}
+
+	/* Style for toc-h2 and toc-h3 */
+	.toc-h2 button,
+	.toc-h3 button {
+		border-radius: 5px;
+		/* Add rounded corners */
+		transition: background-color 0.3s ease;
+		/* Smooth transition effect */
+		font-family: Arial, sans-serif;
+		/* Use a common font family */
+		font-size: 16px;
+		/* Font size */
+		color: var(--color-main-text);
+	}
+
+	/* Hover effect for toc-h2 and toc-h3 button */
+	.toc-h2 button:hover,
+	.toc-h3 button:hover {
+		background-color: #e0e0e0;
+		/* Darker gray background on hover */
+	}
+
+	/* Style for toc-h2 and toc-h3 button text when clicked */
+	.toc-h2 button:active,
+	.toc-h3 button:active {
+		color: #555;
+		/* Darker text color when clicked */
+	}
+
+	/* Style for toc-h2 and toc-h3 button text when focused */
+	.toc-h2 button:focus,
+	.toc-h3 button:focus {
+		outline: none;
+		/* Remove outline when focused */
+	}
+
+	/* Add margin to the paragraph to separate each item */
+	.toc-h2,
+	.toc-h3 {
+		margin-bottom: 2px;
+		/* Adjust margin bottom */
+	}
+
+	.screenshot {
+		text-align: center;
+		margin: 0.1in;
+	}
+
+	.screenshot > img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	.blue {
+		color: #63bbee;
+	}
+
+	.icon-size {
+		height: 24px;
+		width: 24px;
+		display: inline-block;
+	}
+	button.border-0 {
+		font-family: 'Helvetica Neue', sans-serif;
+		background: none !important;
+		border: none;
+		padding: 0 !important;
+		color: -webkit-link;
+		cursor: pointer;
+		text-decoration: underline;
+		font-size: 1em;
+		line-height: 1.5em;
+	}
+
+	button:active {
+		color: -webkit-activelink;
+	}
+
+	button:focus {
+		outline: -webkit-focus-ring-color auto 1px;
+	}
+
+	.hide {
+		display: none;
+	}
+
+	.show {
+		display: block;
+	}
+
+	tr.show {
+		display: table-row;
+	}
+
+	#online-help-search-input {
+		width: 30%;
+		padding: 5px 10px 5px 15px;
+		border: 1px solid;
+		border-radius: 5px;
+		font-size: 16px;
+		outline: none;
+	}
+
+	#online-help-search-input:focus {
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	}
+
+	#online-help-search-input::placeholder {
+		color: #999;
+	}
+
+	[data-theme='dark'] span.cool-annotation-menu {
+		filter: invert(1);
+	}
+}
