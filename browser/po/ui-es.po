@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-02 11:10+0200\n"
-"PO-Revision-Date: 2024-09-03 11:10+0000\n"
-"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
+"PO-Revision-Date: 2024-09-04 05:53+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -1703,7 +1703,7 @@ msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
-"Tu servidor no tiene recursos de hardware suficientes, lo que puede provocar "
+"Su servidor no tiene recursos de hardware suficientes, lo que puede provocar "
 "un rendimiento bajo."
 
 #: src/control/Control.ServerAuditDialog.ts:100
@@ -2299,7 +2299,7 @@ msgstr "Los títulos y objetos que añada al documento aparecerán aquí"
 
 #: src/slideshow/SlideShowPresenter.ts:279
 msgid "Click to exit presentation..."
-msgstr "Haz clic para salir de la presentación..."
+msgstr "Pulse para salir de la presentación…"
 
 #: src/slideshow/SlideShowPresenter.ts:480
 #: src/map/handler/Map.SlideShow.js:161
@@ -2789,8 +2789,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
-"El documento no puede ser guardado debido a que la sesión ha expirado, por "
-"favor recargue la página para continuar."
+"El documento no puede guardarse debido a que la sesión ha caducado. Recargue "
+"la página para continuar."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -2818,7 +2818,7 @@ msgstr "Funciones"
 
 #: src/layer/tile/CanvasTileLayer.js:2088
 msgid "Named Range"
-msgstr "Rango con nombre"
+msgstr "Intervalo con nombre"
 
 #: src/layer/tile/CanvasTileLayer.js:3797
 msgid "No Comments"
@@ -2952,8 +2952,7 @@ msgstr "No se pudo descargar el portapapeles; vuelva a copiar"
 
 #: src/map/Clipboard.js:1219
 msgid "<p>Please use the paste buttons on your on-screen keyboard.</p>"
-msgstr ""
-"<p>Por favor, utiliza los botones para pegar del teclado en pantalla.</p>"
+msgstr "<p>Utilice los botones para pegar del teclado en pantalla.</p>"
 
 #: src/map/Clipboard.js:1221
 msgid ""
