@@ -1,20 +1,21 @@
 # Sérgio Morais <lalocas@protonmail.com>, 2021.
 # Andras Timar <andras.timar@collabora.com>, 2021.
+# SC <larcansal@users.noreply.hosted.weblate.org>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-02 11:10+0200\n"
-"PO-Revision-Date: 2021-06-09 09:33+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Portuguese <https://hosted.weblate.org/projects/collabora-"
-"online/app-store-descriptions/pt/>\n"
+"PO-Revision-Date: 2024-09-02 20:22+0000\n"
+"Last-Translator: SC <larcansal@users.noreply.hosted.weblate.org>\n"
+"Language-Team: Portuguese <https://hosted.weblate.org/projects/"
+"collabora-online/app-store-descriptions/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -37,36 +38,44 @@ msgid ""
 "and now it's on Android, enhancing your possibilities to work on mobile and "
 "for collaboration."
 msgstr ""
+"O Collabora Office é um editor de texto, folha de cálculo e programa de "
+"apresentação baseado no LibreOffice, o pacote de escritório de código aberto "
+"mais popular do mundo - e agora está no Android, aumentando as suas "
+"possibilidades de trabalhar em dispositivos móveis e para colaboração."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:17-1
 msgid ""
 "This app is in active development, feedback and bug reports are very welcome."
 msgstr ""
+"Esta aplicação está em desenvolvimento ativo, pelo que os comentários e os "
+"relatórios de erros são muito bem-vindos."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:21-1
 msgid "Supported files:"
-msgstr ""
+msgstr "Ficheiros suportados:"
 
 #: descriptions/google-play.html%2Bhtml.body.ul.li:26-5
 msgid "Open Document Format (.odt, .odp, .ods, .ots, .ott, .otp)"
-msgstr ""
+msgstr "Formato de documento aberto (.odt, .odp, .ods, .ots, .ott, .otp)"
 
 #: descriptions/google-play.html%2Bhtml.body.ul.li:27-5
 msgid ""
 "Microsoft Office 2007/2010/2013/2016/2019 (.docx, .pptx, .xlsx, .dotx, ."
 "xltx, .ppsx)"
 msgstr ""
+"Microsoft Office 2007/2010/2013/2016/2019 (.docx, .pptx, .xlsx, .dotx, ."
+"xltx, .ppsx)"
 
 #: descriptions/google-play.html%2Bhtml.body.ul.li:28-5
 msgid "Microsoft Office 97/2000/XP/2003 (.doc, .ppt, .xls, .dot, .xlt, .pps)"
-msgstr ""
+msgstr "Microsoft Office 97/2000/XP/2003 (.doc, .ppt, .xls, .dot, .xlt, .pps)"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:31-1
 msgid "Report issues:"
-msgstr ""
+msgstr "Reportar problemas:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:35-1
@@ -75,11 +84,14 @@ msgid ""
 "href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
 "that anything you enter in the bugtracker will be public."
 msgstr ""
+"Utilize o bugtracker e anexe os ficheiros que causaram problemas em <a href="
+"\"https://col.la/android\"> https://col.la/android</a>. Tenha em atenção que "
+"tudo o que introduzir no bugtracker será público."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
 msgid "About the app:"
-msgstr ""
+msgstr "Sobre a aplicação:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:44-1
@@ -88,6 +100,10 @@ msgid ""
 "Windows, Mac, and Linux. This, combined with a new front-end based on "
 "Collabora Online, reads and saves documents similarly to LibreOffice desktop."
 msgstr ""
+"O Collabora Office para Android usa o mesmo mecanismo do LibreOffice para "
+"Windows, Mac e Linux. Isso, combinado com um novo front-end baseado no "
+"Collabora Online, lê e guarda documentos de forma semelhante ao LibreOffice "
+"desktop."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:48-1
@@ -97,21 +113,25 @@ msgid ""
 "developing Android support since 2012, with the help of Google Summer of "
 "Code students Andrzej Hunt, Iain Billet and Kaishu Sahu."
 msgstr ""
+"Os engenheiros da Collabora Tor Lillqvist, Tomaž Vajngerl, Michael Meeks, "
+"Miklos Vajna, Jan Holešovský, Mert Tümer, Rashesh Padia e Skyler Grey têm "
+"vindo a desenvolver o suporte para Android desde 2012, com a ajuda dos "
+"estudantes do Google Summer of Code Andrzej Hunt, Iain Billet e Kaishu Sahu."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:52-1
 msgid "License:"
-msgstr ""
+msgstr "Licença:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:56-1
 msgid "Open Source - Mozilla Public License v2 and other"
-msgstr ""
+msgstr "Código aberto - Mozilla Public License v2 e outros"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:60-1
 msgid "Credits:"
-msgstr ""
+msgstr "Créditos:"
 
 #~ msgid "Major upgrade to the new 6.4 core."
 #~ msgstr "Grande atualização para o novo núcleo 6.4."
