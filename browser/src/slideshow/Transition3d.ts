@@ -12,18 +12,59 @@
 
 declare var SlideShow: any;
 
-class TransitionParameters3D extends TransitionParameters {
+class TransitionParameters3D {
+	public context: RenderContext = null;
+	public current: WebGLTexture = null;
+	public next: WebGLTexture = null;
+	public slideInfo: SlideInfo = null;
+	public callback: VoidFunction = null;
 	public leavingPrimitives: Primitive[] = [];
 	public enteringPrimitives: Primitive[] = [];
 	public allOperations: Operation[] = [];
 }
 
-class Transition3d extends SlideShow.TransitionBase {
+class Transition3d {
+	public canvas: HTMLCanvasElement;
+	public gl: WebGL2RenderingContext;
+	public vao!: WebGLVertexArrayObject | null;
+	public textures: WebGLTexture[];
+	public program: WebGLProgram;
+	public animationTime: number = 1500;
+	public startTime: number | null;
+	public time: number;
+
+	protected slideInfo: SlideInfo = null;
+
+	private transitionParameters: TransitionParameters;
+	private context: any;
+
+	// TODO - remove code duplication
+	/* jscpd:ignore-start */
 	constructor(transitionParameters: TransitionParameters3D) {
-		super(transitionParameters);
+		this.transitionParameters = transitionParameters;
+		this.context = transitionParameters.context;
+		this.gl = transitionParameters.context.getGl();
 		this.gl.enable(this.gl.BLEND);
 		this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+		this.slideInfo = transitionParameters.slideInfo;
+		this.animationTime =
+			this.slideInfo?.transitionDuration > 0
+				? this.slideInfo.transitionDuration
+				: 2000;
+
+		const vertexShaderSource = this.getVertexShader();
+		const fragmentShaderSource = this.getFragmentShader();
+
+		const vertexShader = this.context.createVertexShader(vertexShaderSource);
+		const fragmentShader =
+			this.context.createFragmentShader(fragmentShaderSource);
+
+		this.program = this.context.createProgram(vertexShader, fragmentShader);
+
+		this.time = 0;
+		this.startTime = null;
 	}
+	/* jscpd:ignore-end */
 
 	public getVertexShader(): string {
 		return `#version 300 es
@@ -120,6 +161,74 @@ class Transition3d extends SlideShow.TransitionBase {
 				}
 				`;
 	}
+
+	public prepareTransition(): void {
+		this.initBuffers();
+		this.initUniforms();
+	}
+
+	public startTransition(): void {
+		this.startTime = performance.now();
+		requestAnimationFrame(this.render.bind(this));
+	}
+
+	public start(): void {
+		this.startTransition();
+	}
+
+	// TODO - remove code duplication
+	/* jscpd:ignore-start */
+	public initBuffers(): void {
+		// prettier-ignore
+		const positions = new Float32Array([
+            -1, -1, 0, 0, 1,
+             1, -1, 0, 1, 1,
+            -1,  1, 0, 0, 0,
+             1,  1, 0, 1, 0,
+        ]);
+
+		const buffer = this.gl.createBuffer();
+		if (!buffer) {
+			throw new Error('Failed to create buffer');
+		}
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
+		this.gl.bufferData(this.gl.ARRAY_BUFFER, positions, this.gl.STATIC_DRAW);
+
+		this.vao = this.gl.createVertexArray() as WebGLVertexArrayObject | null;
+		this.gl.bindVertexArray(this.vao);
+
+		const positionLocation = this.gl.getAttribLocation(
+			this.program,
+			'a_position',
+		);
+		const texCoordLocation = this.gl.getAttribLocation(
+			this.program,
+			'a_texCoord',
+		);
+
+		this.gl.enableVertexAttribArray(positionLocation);
+		this.gl.vertexAttribPointer(
+			positionLocation,
+			3,
+			this.gl.FLOAT,
+			false,
+			5 * 4,
+			0,
+		);
+
+		this.gl.enableVertexAttribArray(texCoordLocation);
+		this.gl.vertexAttribPointer(
+			texCoordLocation,
+			2,
+			this.gl.FLOAT,
+			false,
+			5 * 4,
+			3 * 4,
+		);
+
+		console.log('Buffers initialized');
+	}
+	/* jscpd:ignore-end */
 
 	private calculateModelViewMatrix() {
 		const EyePos = 10.0;
@@ -273,7 +382,8 @@ class Transition3d extends SlideShow.TransitionBase {
 		if (this.time < 1) {
 			requestAnimationFrame(this.render.bind(this));
 		} else {
-			this.finishTransition();
+			this.transitionParameters.callback();
+			console.log('Transition completed');
 		}
 	}
 
