@@ -2372,7 +2372,7 @@ msgstr "Der Präsentationsmodus wurde für dieses Dokument deaktiviert."
 
 #: src/slideshow/PauseTimer.ts:120
 msgid "Pause... ( %SECONDS% )"
-msgstr "Pause... ( %SEKUNDEN% )"
+msgstr "Pause... ( %SECONDS% )"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to {productname}: "
