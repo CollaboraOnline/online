@@ -26,6 +26,7 @@ function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 		protected leavingSlide: WebGLTexture | ImageBitmap;
 		protected enteringSlide: WebGLTexture | ImageBitmap;
 		protected time: number;
+		protected prevTime: number;
 		protected isLastFrame: boolean;
 
 		constructor(...args: any[]) {
@@ -42,6 +43,7 @@ function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 			this.isFinished = false;
 			this.requestAnimationFrameId = null;
 			this.time = null;
+			this.prevTime = null;
 			this.isLastFrame = false;
 		}
 
@@ -64,12 +66,13 @@ function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 
 		public perform(nT: number, last: boolean = false): void {
 			if (this.isFinished) return;
+			this.prevTime = this.time;
 			this.time = nT;
 			this.isLastFrame = last;
 		}
 
 		protected animate() {
-			if (this.time != null) {
+			if (this.time !== null && this.time !== this.prevTime) {
 				this.render(this.time);
 			}
 			if (!this.isLastFrame)
