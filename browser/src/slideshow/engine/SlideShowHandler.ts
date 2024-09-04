@@ -724,6 +724,10 @@ class SlideShowHandler {
 			this.skipTransition();
 		}
 
+		if (this.slideRenderer.isAnyVideoPlaying) {
+			this.slideRenderer.pauseVideos();
+		}
+
 		// handle current slide
 		if (nOldSlide !== undefined) {
 			const oldMetaSlide = aMetaDoc.getMetaSlideByIndex(nOldSlide);
@@ -783,6 +787,7 @@ class SlideShowHandler {
 							this.bIsTransitionRunning = true;
 							this.aActivityQueue.addActivity(aTransitionActivity);
 							this.update();
+							this.presenter.stopLoader();
 							return;
 						}
 					} catch (message) {
