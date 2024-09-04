@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-02 11:10+0200\n"
-"PO-Revision-Date: 2024-04-03 10:12+0000\n"
+"PO-Revision-Date: 2024-09-02 13:58+0000\n"
 "Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
-"Language: \n"
+"Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:15
@@ -54,7 +54,7 @@ msgstr "Tafelwit n usenqed"
 
 #: admin/admin.strings.js:23
 msgid "Users online"
-msgstr ""
+msgstr "Iseqdacen yeqqnen"
 
 #: admin/admin.strings.js:24
 msgid "User Name"
@@ -250,7 +250,7 @@ msgstr ""
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Turagt"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:385
 #: src/control/Control.Menubar.js:547 src/control/Control.Menubar.js:678
@@ -301,11 +301,11 @@ msgstr "Seɣbel"
 
 #: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
-msgstr ""
+msgstr "Tuccḍa deg tuqqna"
 
 #: admin/src/AdminSocketOverview.js:106 admin/src/AdminSocketSettings.js:45
 msgid "Confirmation"
-msgstr ""
+msgstr "Asentem"
 
 #: admin/src/AdminSocketOverview.js:107
 msgid "Are you sure you want to terminate this session?"
@@ -336,7 +336,7 @@ msgstr ""
 
 #: admin/src/AdminSocketOverview.js:429
 msgid "Warning"
-msgstr ""
+msgstr "Ɣur-k"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
@@ -429,7 +429,7 @@ msgstr ""
 
 #: src/control/Control.AlertDialog.js:54
 msgid "Open link"
-msgstr ""
+msgstr "Ldi aseɣwen"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
@@ -470,7 +470,7 @@ msgstr ""
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Kkes aseḍru"
 
 #: src/control/Control.ContextMenu.js:220 src/docdispatcher.ts:430
 msgid "Delete"
@@ -490,7 +490,7 @@ msgstr ""
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
-msgstr ""
+msgstr "Abrid"
 
 #: src/control/Control.DocumentRepair.js:27
 #: src/control/Control.DocumentRepair.js:28
@@ -500,7 +500,7 @@ msgstr ""
 #: src/control/Control.DocumentRepair.js:124
 #: src/control/Control.UserList.ts:385
 msgid "You"
-msgstr ""
+msgstr "Kečč"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "Type"
@@ -508,15 +508,15 @@ msgstr "Ṣṣenf"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "What?"
-msgstr ""
+msgstr "D acu?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "Who?"
-msgstr ""
+msgstr "Anwa?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "When?"
-msgstr ""
+msgstr "Melmi?"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "You have not done anything to rollback yet..."
@@ -528,7 +528,7 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:170
 msgid "Undo"
-msgstr ""
+msgstr "Err-d"
 
 #: src/control/Control.DownloadProgress.js:42
 msgid "Download Selection"
@@ -546,7 +546,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:280
 #: src/control/Control.NotebookbarWriter.js:281
 msgid "Download"
-msgstr ""
+msgstr "Sider"
 
 #: src/control/Control.DownloadProgress.js:79
 msgid "Downloading clipboard content"
@@ -556,7 +556,7 @@ msgstr ""
 #: src/control/Control.DownloadProgress.js:111
 #: src/control/Control.PartsPreview.js:294
 msgid "Copy"
-msgstr ""
+msgstr "Nɣel"
 
 #: src/control/Control.DownloadProgress.js:109
 msgid "Download completed and ready to be copied to clipboard."
@@ -653,7 +653,7 @@ msgstr ""
 #: src/control/Control.JSDialogBuilder.js:1645
 #: src/control/Control.NotebookbarBuilder.js:158
 msgid "Font Name"
-msgstr ""
+msgstr "Isem n tseftit"
 
 #: src/control/Control.JSDialogBuilder.js:1647 src/control/Toolbar.js:132
 msgid "Font Size"
@@ -671,7 +671,7 @@ msgstr "Err"
 
 #: src/control/Control.JSDialogBuilder.js:1916
 msgid "replies"
-msgstr ""
+msgstr "Tiririyin"
 
 #: src/control/Control.JSDialogBuilder.js:1927
 #: src/layer/tile/CanvasTileLayer.js:3769
@@ -712,7 +712,7 @@ msgstr ""
 
 #: src/control/Control.LanguageDialog.js:103
 msgid "Language"
-msgstr ""
+msgstr "Tutlayt"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
 #: src/control/Control.Menubar.js:982
@@ -777,7 +777,7 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:364
 #: src/control/Control.NotebookbarBuilder.js:539
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:203
 msgid "Rename Document"
@@ -988,13 +988,13 @@ msgstr ""
 #: src/control/Control.Menubar.js:378
 #: src/control/Control.NotebookbarWriter.js:366
 msgid "Forum"
-msgstr ""
+msgstr "Anmager"
 
 #: src/control/Control.Menubar.js:379 src/control/Control.Menubar.js:541
 #: src/control/Control.Menubar.js:672 src/control/Control.Menubar.js:954
 #: src/control/Control.NotebookbarWriter.js:378
 msgid "Online Help"
-msgstr ""
+msgstr "Tallelt ɣef uẓeṭṭa"
 
 #: src/control/Control.Menubar.js:380 src/control/Control.Menubar.js:542
 #: src/control/Control.Menubar.js:673 src/control/Control.Menubar.js:955
@@ -1318,14 +1318,14 @@ msgstr ""
 
 #: src/control/Control.NotebookbarBuilder.js:455
 msgid "Image (.png)"
-msgstr ""
+msgstr "Tugna (.png)"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:62
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:36
 msgid "File"
-msgstr ""
+msgstr "Afaylu"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:68
@@ -1347,11 +1347,11 @@ msgstr "Ger tafelwit"
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:55
 msgid "Layout"
-msgstr ""
+msgstr "Aseggem n usebtar"
 
 #: src/control/Control.NotebookbarCalc.js:48
 msgid "Data"
-msgstr ""
+msgstr "Isefka"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
@@ -1372,14 +1372,14 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:106
 #: src/control/Control.NotebookbarWriter.js:92
 msgid "Draw"
-msgstr ""
+msgstr "Suneɣ"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:113
 #: src/control/Control.NotebookbarImpress.js:135
 #: src/control/Control.NotebookbarWriter.js:99
 msgid "View"
-msgstr ""
+msgstr "Tamuɣli"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:119
@@ -1387,7 +1387,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:105
 #: src/control/Control.ServerAuditDialog.ts:211
 msgid "Help"
-msgstr ""
+msgstr "Tallalt"
 
 #: src/control/Control.NotebookbarCalc.js:127
 #: src/control/Control.NotebookbarImpress.js:192
@@ -1409,7 +1409,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:203
 #: src/control/Control.NotebookbarWriter.js:227
 msgid "Share"
-msgstr ""
+msgstr "Bḍu"
 
 #: src/control/Control.NotebookbarCalc.js:171
 #: src/control/Control.NotebookbarDraw.js:206
@@ -1425,15 +1425,15 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:323
 #: src/control/Control.UIManager.js:203
 msgid "Rename"
-msgstr ""
+msgstr "Snifel isem"
 
 #: src/control/Control.NotebookbarCalc.js:592
 msgid "General"
-msgstr ""
+msgstr "Amatu"
 
 #: src/control/Control.NotebookbarCalc.js:593
 msgid "Number"
-msgstr ""
+msgstr "Amḍan"
 
 #: src/control/Control.NotebookbarCalc.js:594
 msgid "Percent"
@@ -1448,15 +1448,15 @@ msgstr "Amiran"
 #: src/control/Control.NotebookbarWriter.js:1367
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1517
 msgid "Date"
-msgstr ""
+msgstr "Azemz"
 
 #: src/control/Control.NotebookbarCalc.js:597
 msgid "Time"
-msgstr ""
+msgstr "Akud"
 
 #: src/control/Control.NotebookbarCalc.js:598
 msgid "Scientific"
-msgstr ""
+msgstr "Ussnan"
 
 #: src/control/Control.NotebookbarCalc.js:599
 msgid "Fraction"
@@ -1472,7 +1472,7 @@ msgstr "Texte"
 
 #: src/control/Control.NotebookbarCalc.js:765
 msgid "Default"
-msgstr ""
+msgstr "Amezwer"
 
 #: src/control/Control.NotebookbarCalc.js:772
 msgid "Heading 1"
@@ -1640,7 +1640,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:1360
 msgid "Picture"
-msgstr ""
+msgstr "Tugna"
 
 #: src/control/Control.PartsPreview.js:195
 msgid "preview of page "
@@ -1652,7 +1652,7 @@ msgstr ""
 
 #: src/control/Control.PartsPreview.js:303
 msgid "Paste"
-msgstr ""
+msgstr "Senṭeḍ"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -1725,7 +1725,7 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:260
 msgid "OPEN"
-msgstr ""
+msgstr "YELDI"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -1904,15 +1904,15 @@ msgstr ""
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
-msgstr ""
+msgstr "%n n yiseqdacen"
 
 #: src/control/Control.UserList.ts:80
 msgid "1 user"
-msgstr ""
+msgstr "1 n useqdac"
 
 #: src/control/Control.UserList.ts:81
 msgid "0 users"
-msgstr ""
+msgstr "0 n yiseqdacen"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
@@ -1950,7 +1950,7 @@ msgstr "Yettali-d"
 
 #: src/control/Control.Zotero.js:262
 msgid "Language:"
-msgstr ""
+msgstr "Tutlayt :"
 
 #: src/control/Control.Zotero.js:277
 msgid "Store as:"
@@ -1962,7 +1962,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:284 src/control/Control.Zotero.js:407
 msgid "Bookmarks"
-msgstr ""
+msgstr "Ticraḍ"
 
 #: src/control/Control.Zotero.js:405
 msgid "Footnotes"
@@ -2011,7 +2011,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1517
 msgid "Title"
-msgstr ""
+msgstr "Azwel"
 
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1517
 msgid "Creator(s)"
@@ -2037,7 +2037,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:1144 src/control/Control.Zotero.js:1446
 msgid "Confirm"
-msgstr ""
+msgstr "Sentem"
 
 #: src/control/Control.Zotero.js:1250
 msgid "Add Note"
@@ -2045,7 +2045,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:1253
 msgid "Notes"
-msgstr ""
+msgstr "Tizmilin"
 
 #: src/control/Control.Zotero.js:1253
 msgid "An error occurred while fetching notes"
@@ -2225,7 +2225,7 @@ msgstr ""
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:173
 msgid "Automatic"
-msgstr ""
+msgstr "Awurman"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:356
 msgid "Recent"
@@ -2951,7 +2951,7 @@ msgstr ""
 
 #: src/map/handler/Map.WOPI.js:604
 msgid "Error"
-msgstr ""
+msgstr "Tuccḍa"
 
 #: src/map/handler/Map.WOPI.js:604
 msgid "File name should contain an extension."
