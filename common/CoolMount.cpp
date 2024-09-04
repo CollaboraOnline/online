@@ -130,7 +130,7 @@ int umount2(const char *target, int flags)
 void usage(const char* program)
 {
     fprintf(stderr, "Usage: %s <-b|-r> <source path> <target path>\n", program);
-    fprintf(stderr, "       %s -u <target>.\n", program);
+    fprintf(stderr, "       %s -u [-s] <target>.\n", program);
 #ifdef __FreeBSD__
     fprintf(stderr, "       %s -d <target>.\n", program);
 #endif
@@ -139,7 +139,7 @@ void usage(const char* program)
 #ifdef __FreeBSD__
     fprintf(stderr, "       -d mount minimal devfs layout (random and urandom) to target.\n");
 #endif
-    fprintf(stderr, "       -u to unmount the target.\n");
+    fprintf(stderr, "       -u to unmount the target. With -s to not report warnings.\n");
 }
 
 int domount(int argc, const char* const* argv)
@@ -152,9 +152,23 @@ int domount(int argc, const char* const* argv)
     }
 
     const char* option = argv[1];
-    if (argc == 3 && strcmp(option, "-u") == 0) // Unmount
+    if ((argc == 3 || argc == 4) && strcmp(option, "-u") == 0) // Unmount
     {
-        const char* target = argv[2];
+        bool silent = false;
+        int argpos = 2;
+
+        if (argc == 4)
+        {
+            if (strcmp(argv[argpos], "-s") != 0)
+            {
+                fprintf(stderr, "%s: only -s allowed [%s].\n", program, argv[argpos]);
+                return EX_USAGE;
+            }
+            silent = true;
+            argpos++;
+        }
+
+        const char* target = argv[argpos];
 
         struct stat sb;
         const bool target_exists = (stat(target, &sb) == 0 && S_ISDIR(sb.st_mode));
@@ -166,7 +180,7 @@ int domount(int argc, const char* const* argv)
             int retval = umount2(target, MNT_DETACH);
             if (retval != 0)
             {
-                if (errno != EINVAL)
+                if (errno != EINVAL && !silent)
                 {
                     // Don't complain where MNT_DETACH is unsupported. Fall back to forcing instead.
                     fprintf(stderr, "%s: unmount failed to detach [%s]: %s.\n", program, target,
@@ -181,7 +195,7 @@ int domount(int argc, const char* const* argv)
                     // As at Linux 4.12, MNT_FORCE is supported only on the following filesystems: 9p (since
                     // Linux 2.6.16), ceph (since Linux 2.6.34), cifs (since Linux 2.6.12),
                     // fuse (since Linux 2.6.16), lustre (since Linux 3.11), and NFS (since Linux 2.1.116).
-                    if (errno != EINVAL)
+                    if (errno != EINVAL && !silent)
                     {
                         // Complain to capture the reason of failure.
                         fprintf(stderr, "%s: forced unmount of [%s] failed: %s.\n", program, target,
