@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-02 11:10+0200\n"
-"PO-Revision-Date: 2024-08-11 13:07+0000\n"
-"Last-Translator: meshari alnaim <malnaim@safedecision.com.sa>\n"
+"PO-Revision-Date: 2024-09-02 16:11+0000\n"
+"Last-Translator: Ali <alimahwer@yahoo.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
-"Language: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1066,7 +1066,7 @@ msgstr "حفظ التعليقات"
 #: src/control/Control.Menubar.js:410
 #: src/control/Control.NotebookbarBuilder.js:433
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "مستند إتش تي إم إل (.html)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:579
@@ -1130,7 +1130,7 @@ msgstr "ملف (.csv) CSV"
 
 #: src/control/Control.Menubar.js:703
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "ملف إتش تي إم إل (.html)"
 
 #: src/control/Control.Menubar.js:707
 #: src/control/jsdialog/Definitions.Menu.ts:111
@@ -1310,7 +1310,7 @@ msgstr "ملف CSV (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:399
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "ملف إتش-تي-إم-إل (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:455
 msgid "Image (.png)"
@@ -2285,7 +2285,7 @@ msgstr "ستظهر هنا العناوين والكائنات التي تضيف�
 
 #: src/slideshow/SlideShowPresenter.ts:279
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "إضغَط للخروج من العرض ..."
 
 #: src/slideshow/SlideShowPresenter.ts:480
 #: src/map/handler/Map.SlideShow.js:161
@@ -2343,7 +2343,7 @@ msgstr "وضعية العرض لهذا المستند تمّ تعطيلها"
 
 #: src/slideshow/PauseTimer.ts:120
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "إيقاف ... ( %SECONDS% )"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -2781,7 +2781,7 @@ msgstr "الدوال"
 
 #: src/layer/tile/CanvasTileLayer.js:2088
 msgid "Named Range"
-msgstr ""
+msgstr "النطاق المُسمّى"
 
 #: src/layer/tile/CanvasTileLayer.js:3797
 msgid "No Comments"
