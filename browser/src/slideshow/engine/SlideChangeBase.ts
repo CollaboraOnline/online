@@ -69,7 +69,7 @@ function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 		}
 
 		protected animate() {
-			if (this.time !== null) {
+			if (this.time !== null && this.time > 0.0) {
 				this.render(this.time);
 			}
 			if (!this.isLastFrame)
