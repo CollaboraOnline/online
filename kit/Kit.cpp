@@ -2875,19 +2875,31 @@ int pollCallback(void* pData, int timeoutUs)
 bool anyInputCallback(void* data)
 {
     auto kitSocketPoll = reinterpret_cast<KitSocketPoll*>(data);
-    int ret = kitSocketPoll->poll(std::chrono::microseconds(0));
     std::shared_ptr<Document> document = kitSocketPoll->getDocument();
-    if (document)
+    if (!document)
     {
-        std::shared_ptr<KitQueue> queue = document->getQueue();
-        if (!document->hasCallbacks() && queue && queue->getTileQueueSize() == 0)
-        {
-            // Have no pending callbacks and the tile queue is also empty, report that we have no
-            // pending input events.
-            ret = 0;
-        }
+        return false;
     }
-    return ret > 0;
+
+    if (document->hasCallbacks())
+    {
+        return true;
+    }
+
+    std::shared_ptr<KitQueue> queue = document->getQueue();
+    if (!queue)
+    {
+        return false;
+    }
+
+    if (queue->getTileQueueSize() > 0)
+    {
+        return true;
+    }
+
+    // Have no pending callbacks and the tile queue is also empty, report that we have no
+    // pending input events.
+    return true;
 }
 
 /// Called by LOK main-loop
