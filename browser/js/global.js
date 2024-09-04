@@ -1606,8 +1606,20 @@ function getInitializerClass() {
 	}
 
 	var lang = global.coolParams.get('lang');
-	if (lang)
+	if (lang) {
+		// Workaround for broken integrations vs. LOKit language fallback
+		if (lang === 'en-us')
+			lang = 'en-US';
+		if (lang === 'en-gb')
+			lang = 'en-GB';
+		if (lang === 'pt-br')
+			lang = 'pt-BR';
+		if (lang === 'zh-cn')
+			lang = 'zh-CN';
+		if (lang === 'zh-tw')
+			lang = 'zh-TW';
 		global.langParam = encodeURIComponent(lang);
+		}
 	else
 		global.langParam = 'en-US';
 	global.langParamLocale = new Intl.Locale(global.langParam);
