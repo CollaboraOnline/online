@@ -174,7 +174,7 @@ class SlideShowPresenter {
 		});
 	}
 
-	_previoustSlide() {
+	_previousSlide() {
 		if (this._isAnimationPlaying) {
 			this._map.fire('skipanimation');
 			return;
@@ -208,7 +208,7 @@ class SlideShowPresenter {
 		if (event.code === 'Space' || event.code === 'ArrowRight')
 			this._nextSlide();
 		else if (event.code === 'Backspace' || event.code === 'ArrowLeft')
-			this._previoustSlide();
+			this._previousSlide();
 	}
 
 	private centerCanvas() {
