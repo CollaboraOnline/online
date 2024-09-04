@@ -51,7 +51,7 @@ L.Control.Notebookbar = L.Control.extend({
 
 		this.loadTab(this.getFullJSON(this.HOME_TAB_ID));
 
-		this.map.on('contextchange', this.onContextChange, this);
+		app.events.on('contextchange', this.onContextChange.bind(this));
 		this.map.on('notebookbar', this.onNotebookbar, this);
 		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
@@ -110,7 +110,6 @@ L.Control.Notebookbar = L.Control.extend({
 		clearTimeout(this.retry);
 		this.resetInCore();
 		this.map.off('commandstatechanged', this.builder.onCommandStateChanged, this.builder);
-		this.map.off('contextchange', this.onContextChange, this);
 		this.map.off('notebookbar');
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 		this.map.off('jsdialogaction', this.onJSAction, this);
@@ -387,6 +386,7 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	onContextChange: function(event) {
+		event = event.detail;
 		if (event.appId !== event.oldAppId) {
 			var childrenArray = undefined; // Use buttons provided by specific Control.Notebookbar implementation by default
 			if (event.appId === 'com.sun.star.formula.FormulaProperties') {

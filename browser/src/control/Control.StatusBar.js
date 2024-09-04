@@ -20,7 +20,7 @@ class StatusBar extends JSDialog.Toolbar {
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('languagesupdated', this.onLanguagesUpdated, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
-		map.on('contextchange', this.onContextChange.bind(this), this);
+		app.events.on('contextchange', this.onContextChange.bind(this));
 		app.events.on('updatepermission', this.onPermissionChanged.bind(this));
 		map.on('updatestatepagenumber', this.onPageChange, this);
 		map.on('search', this.onSearch, this);
@@ -62,7 +62,7 @@ class StatusBar extends JSDialog.Toolbar {
 	}
 
 	onContextChange(event) {
-		this._updateToolbarsVisibility(event.context);
+		this._updateToolbarsVisibility(event.detail.context);
 	}
 
 	callback(objectType, eventType, object, data, builder) {

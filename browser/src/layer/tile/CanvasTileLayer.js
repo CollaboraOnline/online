@@ -1497,7 +1497,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				var newContext = {appId: message[0], context: message[1]};
 				if (old.appId !== newContext.appId || old.context !== newContext.context) {
 					this._map.context = newContext;
-					this._map.fire('contextchange', {
+					app.events.fire('contextchange', {
 						appId: newContext.appId, context: newContext.context,
 						oldAppId: old.appId, oldContext: old.context
 					});
