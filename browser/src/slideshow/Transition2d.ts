@@ -30,7 +30,6 @@ abstract class TransitionBase extends SlideChangeGl {
 	}
 
 	public startTransition(): void {
-		this.prevTime = null;
 		this.time = null;
 		this.isLastFrame = false;
 		this.requestAnimationFrameId = requestAnimationFrame(this.animate.bind(this));
