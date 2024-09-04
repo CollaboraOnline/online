@@ -143,6 +143,7 @@ COOL_CSS_LST =\
 	$(srcdir)/css/menubar.css \
 	$(srcdir)/css/mobilewizard.css \
 	$(srcdir)/css/jsdialogs.css \
+	$(srcdir)/css/helpdialog.css \
 	$(srcdir)/css/btns.css \
 	$(srcdir)/css/notebookbar.css \
 	$(srcdir)/css/jssidebar.css \
