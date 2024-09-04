@@ -444,6 +444,7 @@ L.Control.Menubar = L.Control.extend({
 				   {name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 				   {name: _('Show Ruler'), id: 'showruler', type: 'action'},
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
+				   {name: _('Notes View'), id: 'notesmode', type: 'action'},
 				   {name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
 				   {name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				   {name: _('Invert Background'), id: 'invertbackground', type: 'action'},
@@ -1772,6 +1773,11 @@ L.Control.Menubar = L.Control.extend({
 						} else {
 							$(aItem).removeClass(constChecked);
 						}
+					} else if (id === 'notesmode') {
+						if (app.impress.notesMode)
+							$(aItem).addClass(constChecked);
+						else
+							$(aItem).removeClass(constChecked);
 					} else if (id === 'toggleuimode') {
 						if (self._map.uiManager.shouldUseNotebookbarMode()) {
 							$(aItem).text(_('Use Compact view'));
@@ -1969,6 +1975,8 @@ L.Control.Menubar = L.Control.extend({
 			app.dispatcher.dispatch('toggleuimode');
 		} else if (id === 'showstatusbar') {
 			app.dispatcher.dispatch('showstatusbar');
+		} else if (id === 'notesmode') {
+			app.dispatcher.dispatch('notesmode');
 		} else if (id === 'togglemenubar') {
 			this._map.uiManager.toggleMenubar();
 		} else if (id === 'collapsenotebookbar') {

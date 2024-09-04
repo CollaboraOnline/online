@@ -45,6 +45,22 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 		this._partHeightTwips = 0; // Single part's height.
 		this._partWidthTwips = 0; // Single part's width. These values are equal to _docWidthTwips & _docHeightTwips when app.file.partBasedView is true.
+
+		app.events.on('contextchange', this._onContextChange.bind(this));
+	},
+
+	_onContextChange(e) {
+		app.impress.notesMode = e.detail.context === 'NotesPage';
+
+		if (app.map.uiManager.getCurrentMode() === 'notebookbar') {
+			const targetElement = document.getElementById('notesmode');
+			if (!targetElement) return;
+
+			if (e.detail.context === 'NotesPage')
+				targetElement.classList.add('selected');
+			else
+				targetElement.classList.remove('selected');
+		}
 	},
 
 	_isPCWInsideFlex: function () {

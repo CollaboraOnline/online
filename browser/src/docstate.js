@@ -32,6 +32,7 @@ window.app = {
 	},
 	impress: {
 		partHashes: null, // hashes used to distinguish parts
+		notesMode: false // Contrary to "NormalMultiPaneGUI"
 	},
 	map: null, // Make map object a part of this.
 	dispatcher: null, // A Dispatcher class instance is assigned to this.

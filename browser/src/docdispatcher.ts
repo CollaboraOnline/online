@@ -511,16 +511,9 @@ class Dispatcher {
 		};
 
 		this.actionsMap['notesmode'] = function () {
-			const button = document.getElementById('notesmode');
-			if (button) {
-				if (button.classList.contains('selected')) {
-					button.classList.remove('selected');
-					app.map.sendUnoCommand('.uno:NormalMultiPaneGUI');
-				} else {
-					button.classList.add('selected');
-					app.map.sendUnoCommand('.uno:NotesMode');
-				}
-			}
+			if (app.impress.notesMode)
+				app.map.sendUnoCommand('.uno:NormalMultiPaneGUI');
+			else app.map.sendUnoCommand('.uno:NotesMode');
 		};
 	}
 
