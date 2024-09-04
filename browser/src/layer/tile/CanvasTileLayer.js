@@ -830,10 +830,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		return this._docType === 'presentation';
 	},
 
-	getAttribution: function () {
-		return this.options.attribution;
-	},
-
 	getContainer: function () {
 		return this._container;
 	},
