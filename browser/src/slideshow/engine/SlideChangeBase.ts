@@ -73,7 +73,9 @@ function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 				this.render(this.time);
 			}
 			if (!this.isLastFrame)
-				this.requestAnimationFrameId = requestAnimationFrame(this.animate.bind(this));
+				this.requestAnimationFrameId = requestAnimationFrame(
+					this.animate.bind(this),
+				);
 		}
 
 		protected abstract render(nT: number): void;
