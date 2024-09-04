@@ -71,10 +71,10 @@ abstract class AnimationBaseNode extends BaseNode {
 
 		if (this.aTargetHash) {
 			if (!this.aNodeContext.aAnimatedElementMap.has(this.aTargetHash)) {
-				// TODO: pass correct arguments
+				const slideHash = 'dummy'; // TODO: pass real value
 				const aAnimatedElement = this.bIsTargetTextElement
-					? new AnimatedTextElement(this.aTargetHash, null, null)
-					: new AnimatedElement(this.aTargetHash, null, null);
+					? new AnimatedTextElement(this.aTargetHash, slideHash, null, null)
+					: new AnimatedElement(this.aTargetHash, slideHash, null, null);
 
 				this.aNodeContext.aAnimatedElementMap.set(
 					this.aTargetHash,

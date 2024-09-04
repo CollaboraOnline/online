@@ -112,6 +112,10 @@ class LayersCompositor extends SlideCompositor {
 	public getSlide(slideNumber: number): ImageBitmap {
 		return this.layerDrawing.getSlide(slideNumber);
 	}
+
+	public getLayer(slideHash: string, targetElement: string): ImageBitmap {
+		return this.layerDrawing.getLayerImage(slideHash, targetElement);
+	}
 }
 
 SlideShow.LayersCompositor = LayersCompositor;

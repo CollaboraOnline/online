@@ -136,6 +136,24 @@ class LayerDrawing {
 		return this.slideCache.get(startSlideHash);
 	}
 
+	public getLayerImage(slideHash: string, targetElement: string): ImageBitmap {
+		// TODO: USE REAL HASH !!!
+		slideHash = this.helper.getSlideHash(0);
+		// REMOVE ABOVE
+
+		const layers = this.cachedDrawPages.get(slideHash);
+		for (const i in layers) {
+			const animatedInfo = layers[i].content as AnimatedShapeInfo;
+			if (
+				animatedInfo &&
+				animatedInfo.hash === targetElement &&
+				animatedInfo.content
+			)
+				return (animatedInfo.content as ImageInfo).data;
+		}
+		return null;
+	}
+
 	public invalidateAll(): void {
 		this.slideCache.invalidateAll();
 	}
