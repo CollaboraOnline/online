@@ -269,6 +269,26 @@ void removeAuxFolders(const std::string &root)
     FileUtil::removeFile(Poco::Path(root, "linkable").toString(), true);
 }
 
+/*
+    The tmp dir of a path/<jailid>/tmp is mounted from (or linked to) a
+    path/tmp/cool-<jailid> dir. In a mount namespace case the existence
+    of path/<jailid>/tmp is not visible to the parent process so its
+    contents cannot be removed via the path/<jailid>/tmp view, and
+    in any case the path/<jailid>/tmp should to be removed.
+*/
+void removeAssocTmpOfJail(const std::string &root)
+{
+    Poco::Path jailPath(root);
+    jailPath.makeDirectory();
+    const std::string jailId = jailPath[jailPath.depth() - 1];
+
+    jailPath.popDirectory();
+    jailPath.pushDirectory("tmp");
+    jailPath.pushDirectory(std::string("cool-") + jailId);
+
+    FileUtil::removeFile(jailPath.toString(), true);
+}
+
 bool tryRemoveJail(const std::string& root)
 {
     const bool emptyJail = FileUtil::isEmptyDirectory(root);
@@ -299,6 +319,8 @@ bool tryRemoveJail(const std::string& root)
 
     // Unmount/delete the jail (sysTemplate).
     safeRemoveDir(root);
+
+    removeAssocTmpOfJail(root);
 
     return true;
 }
