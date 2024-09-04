@@ -87,6 +87,7 @@ class RotateAndScaleDepthByWidth extends Operation {
 			matrix,
 			vec3.negate(vec3.create(), translationVector),
 		);
+		console.log('Applying transformation...');
 		return matrix;
 	}
 }

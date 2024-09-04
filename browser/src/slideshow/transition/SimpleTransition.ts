@@ -212,7 +212,8 @@ class SimpleTransition extends SlideShow.Transition3d {
 		if (this.time < 1) {
 			requestAnimationFrame(this.render.bind(this));
 		} else {
-			this.finishTransition();
+			this.transitionParameters.callback();
+			console.debug('Transition completed');
 		}
 	}
 
