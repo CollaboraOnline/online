@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-02 11:10+0200\n"
-"PO-Revision-Date: 2024-08-10 13:23+0000\n"
+"PO-Revision-Date: 2024-09-02 13:58+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1068,7 +1068,7 @@ msgstr "Spara kommentarer"
 #: src/control/Control.Menubar.js:410
 #: src/control/Control.NotebookbarBuilder.js:433
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "HTML-dokument (.html)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:579
@@ -1132,7 +1132,7 @@ msgstr "CSV-fil (.csv)"
 
 #: src/control/Control.Menubar.js:703
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "HTML-fil (.html)"
 
 #: src/control/Control.Menubar.js:707
 #: src/control/jsdialog/Definitions.Menu.ts:111
@@ -1312,7 +1312,7 @@ msgstr "CSV fil (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:399
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "HTML-fil (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:455
 msgid "Image (.png)"
@@ -2293,7 +2293,7 @@ msgstr "Rubriker och objekt som du lägger till i dokumentet visas här"
 
 #: src/slideshow/SlideShowPresenter.ts:279
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Klicka för att avsluta presentationen ..."
 
 #: src/slideshow/SlideShowPresenter.ts:480
 #: src/map/handler/Map.SlideShow.js:161
@@ -2352,7 +2352,7 @@ msgstr "Presentationsläge har inaktiverats för detta dokumentet"
 
 #: src/slideshow/PauseTimer.ts:120
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Paus ... (% SECONDS%)"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -2799,7 +2799,7 @@ msgstr "Funktioner"
 
 #: src/layer/tile/CanvasTileLayer.js:2088
 msgid "Named Range"
-msgstr ""
+msgstr "Namngiven räcka"
 
 #: src/layer/tile/CanvasTileLayer.js:3797
 msgid "No Comments"
