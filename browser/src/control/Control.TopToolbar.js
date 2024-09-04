@@ -22,7 +22,7 @@ class TopToolbar extends JSDialog.Toolbar {
 		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 		map.on('wopiprops', this.onWopiProps, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
-		map.on('contextchange', this.onContextChange, this);
+		app.events.on('contextchange', this.onContextChange.bind(this));
 
 		if (!window.mode.isMobile()) {
 			map.on('updatetoolbarcommandvalues', this.updateCommandValues, this);
@@ -39,7 +39,6 @@ class TopToolbar extends JSDialog.Toolbar {
 		// TODO: app.events.off('updatepermission', this.onUpdatePermission.bind(this));
 		this.map.off('wopiprops', this.onWopiProps, this);
 		this.map.off('commandstatechanged', this.onCommandStateChanged, this);
-		this.map.off('contextchange', this.onContextChange, this);
 
 		if (!window.mode.isMobile()) {
 			this.map.off('updatetoolbarcommandvalues', this.updateCommandValues, this);
@@ -88,7 +87,7 @@ class TopToolbar extends JSDialog.Toolbar {
 	}
 
 	onContextChange(event) {
-		this.updateVisibilityForToolbar(event.context);
+		this.updateVisibilityForToolbar(event.detail.context);
 	}
 
 	// mobile:false means hide it both for normal Online used from a mobile phone browser, and in a mobile app on a mobile phone

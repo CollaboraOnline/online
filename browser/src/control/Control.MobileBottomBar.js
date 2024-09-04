@@ -12,14 +12,14 @@
  * JSDialog.MobileBottomBar - component of bottom bar on mobile
  */
 
-/* global JSDialog _ _UNO */
+/* global app JSDialog _ _UNO */
 class MobileBottomBar extends JSDialog.Toolbar {
 	constructor(map) {
 		super(map, 'toolbar-down')
 
 		map.on('commandstatechanged', window.onCommandStateChanged);
 		map.on('updatetoolbarcommandvalues', window.onCommandStateChanged);
-		map.on('contextchange', this.onContextChange.bind(this), this);
+		app.events.on('contextchange', this.onContextChange.bind(this));
 	}
 
 	getToolItems() {
@@ -274,7 +274,7 @@ class MobileBottomBar extends JSDialog.Toolbar {
 	}
 
 	onContextChange(event) {
-		this.updateVisibilityForToolbar(event.context);
+		this.updateVisibilityForToolbar(event.detail.context);
 	}
 }
 
