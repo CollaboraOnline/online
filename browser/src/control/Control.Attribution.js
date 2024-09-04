@@ -33,7 +33,7 @@ L.Control.Attribution = L.Control.extend({
 	_update: function () {
 		if (!this._map) { return; }
 
-		this._container.innerHTML = this.options.prefix;
+		this._container.innerText = this.options.prefix;
 	}
 });
 
