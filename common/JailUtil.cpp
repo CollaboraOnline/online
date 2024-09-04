@@ -269,27 +269,31 @@ void removeAuxFolders(const std::string &root)
 
 bool tryRemoveJail(const std::string& root)
 {
-    if (!FileUtil::Stat(root + '/' + LO_JAIL_SUBPATH).exists())
+    const bool emptyJail = FileUtil::isEmptyDirectory(root);
+    if (!emptyJail && !FileUtil::Stat(root + '/' + LO_JAIL_SUBPATH).exists())
         return false; // not a jail.
 
     LOG_TRC("Do remove of jail [" << root << ']');
 
-    // Unmount the tmp directory. Don't care if we fail.
-    const std::string tmpPath = Poco::Path(root, "tmp").toString();
+    if (!emptyJail)
+    {
+        // Unmount the tmp directory. Don't care if we fail.
+        const std::string tmpPath = Poco::Path(root, "tmp").toString();
 #ifdef __FreeBSD__
-    unmount(tmpPath + "/dev");
+        unmount(tmpPath + "/dev");
 #endif
-    FileUtil::removeFile(tmpPath, true); // Delete tmp contents with prejudice.
-    unmount(tmpPath);
+        FileUtil::removeFile(tmpPath, true); // Delete tmp contents with prejudice.
+        unmount(tmpPath);
 
-    // Unmount the loTemplate directory.
-    //FIXME: technically, the loTemplate directory may have any name.
-    unmount(Poco::Path(root, "lo").toString());
+        // Unmount the loTemplate directory.
+        //FIXME: technically, the loTemplate directory may have any name.
+        unmount(Poco::Path(root, "lo").toString());
 
-    // Unmount the test-mount directory too.
-    const std::string testMountPath = Poco::Path(root, CoolTestMountpoint).toString();
-    if (FileUtil::Stat(testMountPath).exists())
-        unmount(testMountPath);
+        // Unmount the test-mount directory too.
+        const std::string testMountPath = Poco::Path(root, CoolTestMountpoint).toString();
+        if (FileUtil::Stat(testMountPath).exists())
+            unmount(testMountPath);
+    }
 
     // Unmount/delete the jail (sysTemplate).
     safeRemoveDir(root);
