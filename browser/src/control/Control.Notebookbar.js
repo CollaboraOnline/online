@@ -374,7 +374,7 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 	},
 
-	ignoreContextChange(contextes) {
+	shouldIgnoreContextChange(contextes) {
 		const ignored = [['NotesPage', 'DrawPage'], ['DrawPage', 'NotesPage']];
 
 		for (let i = 0; i < ignored.length; i++) {
@@ -408,7 +408,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (event.context === event.oldContext)
 			return;
 
-		if (this.ignoreContextChange([event.context, event.oldContext]))
+		if (this.shouldIgnoreContextChange([event.context, event.oldContext]))
 			return;
 
 		var tabs = this.getTabs();
