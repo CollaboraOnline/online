@@ -129,6 +129,24 @@ class SlideShowNavigator {
 		this.displaySlide(this.theMetaPres.numberOfSlides - 1, true);
 	}
 
+	goToSlideAtBookmark(bookmark: string) {
+		NAVDBG.print(
+			'SlideShowNavigator.goToSlideAtBookmark: ' +
+				bookmark +
+				' current index: ' +
+				this.currentSlide,
+		);
+		for (let i = 0; i < this.theMetaPres.numberOfSlides; i++) {
+			const slideInfo = this.theMetaPres.getSlideInfo(
+				this.theMetaPres.getSlideHash(i),
+			);
+			if (slideInfo.name == bookmark) {
+				this.displaySlide(i, true);
+				break;
+			}
+		}
+	}
+
 	private backToLastSlide(): boolean {
 		if (this.currentSlide >= this.theMetaPres.numberOfSlides) {
 			this.goToLastSlide();
@@ -244,8 +262,59 @@ class SlideShowNavigator {
 	}
 
 	private clickHandler(aEvent: MouseEvent) {
-		if (aEvent.button === 0) this.dispatchEffect();
-		else if (aEvent.button === 2) this.switchSlide(-1, false);
+		if (aEvent.button === 0) {
+			const slideInfo = this.theMetaPres.getSlideInfoByIndex(this.currentSlide);
+			if (slideInfo.interactions.length == 0) {
+				this.dispatchEffect();
+				return;
+			}
+
+			// Get the coordinates of the click
+			const canvas = this.presenter.getCanvas();
+			const width = canvas.width;
+			const height = canvas.height;
+
+			const x = (aEvent.offsetX / width) * this.theMetaPres.slideWidth;
+			const y = (aEvent.offsetY / height) * this.theMetaPres.slideHeight;
+
+			const shape = slideInfo.interactions.find((shape) =>
+				hitTest(shape.bounds, x, y),
+			);
+			if (shape) {
+				this._onExecuteInteraction(shape.clickAction);
+			} else {
+				this.dispatchEffect();
+			}
+		} else if (aEvent.button === 2) {
+			this.switchSlide(-1, false);
+		}
+	}
+
+	_onExecuteInteraction(action: ClickAction) {
+		if (action) {
+			switch (action.action) {
+				case 'prevpage':
+					this.switchSlide(-1, true);
+					break;
+				case 'nextpage':
+					this.switchSlide(1, true);
+					break;
+				case 'firstpage':
+					this.goToFirstSlide();
+					break;
+				case 'lastpage':
+					this.goToLastSlide();
+					break;
+				case 'bookmark':
+					this.goToSlideAtBookmark(action.bookmark);
+					break;
+				case 'stoppresentation':
+					this.quit();
+					break;
+			}
+		} else {
+			this.dispatchEffect();
+		}
 	}
 
 	onKeyDown(aEvent: KeyboardEvent) {
