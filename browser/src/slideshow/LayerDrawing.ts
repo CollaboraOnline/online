@@ -503,7 +503,7 @@ class LayerDrawing {
 
 		this.cacheAndNotify();
 		// fetch next slide and draw it on offscreen canvas
-		if (!this.slideCache.has(reqSlideInfo.next)) {
+		if (reqSlideInfo.next && !this.slideCache.has(reqSlideInfo.next)) {
 			this.requestSlideImpl(reqSlideInfo.next, true);
 		}
 	}
