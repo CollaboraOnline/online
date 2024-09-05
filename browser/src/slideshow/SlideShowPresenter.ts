@@ -25,14 +25,58 @@ interface VideoInfo {
 	height: number;
 }
 
+interface ClickRect {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+}
+
+function hitTest(bounds: ClickRect, x: number, y: number) {
+	return (
+		x >= bounds.x &&
+		x <= bounds.x + bounds.width &&
+		y >= bounds.y &&
+		y <= bounds.y + bounds.height
+	);
+}
+
+interface ClickAction {
+	action:
+		| 'bookmark'
+		| 'document'
+		| 'prevpage'
+		| 'nextpage'
+		| 'firstpage'
+		| 'lastpage'
+		| 'sound'
+		| 'verb'
+		| 'program'
+		| 'macro'
+		| 'stoppresentation';
+	bookmark?: string;
+	document?: string;
+	sound?: string;
+	verb?: string;
+	program?: string;
+	macro?: string;
+}
+
+interface Interaction {
+	bounds: ClickRect;
+	clickAction?: ClickAction;
+}
+
 interface SlideInfo {
 	hash: string;
 	index: number;
+	name: string;
 	empty: boolean;
 	hidden?: boolean;
 	masterPage: string;
 	masterPageObjectsVisibility: boolean;
 	videos: Array<VideoInfo>;
+	interactions: Array<Interaction>;
 	transitionDuration: number;
 	nextSlideDuration: number;
 	transitionDirection: boolean;
@@ -307,10 +351,9 @@ class SlideShowPresenter {
 		return canvas;
 	}
 
-	private exitSlideshowWithWarning(): boolean {
+	exitSlideshowWithWarning(): boolean {
 		// TODO 2D version for disabled webGL
 		if (this._slideRenderer._context.is2dGl()) return false;
-
 		new SlideShow.StaticTextRenderer(this._slideRenderer._context).display(
 			_('Click to exit presentation...'),
 		);
