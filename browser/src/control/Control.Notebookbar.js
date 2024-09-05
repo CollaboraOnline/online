@@ -386,10 +386,10 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	onContextChange: function(event) {
-		event = event.detail;
-		if (event.appId !== event.oldAppId) {
+		const detail = event.detail;
+		if (detail.appId !== detail.oldAppId) {
 			var childrenArray = undefined; // Use buttons provided by specific Control.Notebookbar implementation by default
-			if (event.appId === 'com.sun.star.formula.FormulaProperties') {
+			if (detail.appId === 'com.sun.star.formula.FormulaProperties') {
 				childrenArray = [
 					{
 						'type': 'toolitem',
@@ -405,26 +405,29 @@ L.Control.Notebookbar = L.Control.extend({
 			this.createOptionsSection(childrenArray);
 		}
 
-		if (event.context === event.oldContext)
+		if (detail.context === detail.oldContext)
 			return;
 
-		if (this.shouldIgnoreContextChange([event.context, event.oldContext]))
+		if (this.shouldIgnoreContextChange([detail.context, detail.oldContext]))
 			return;
 
 		var tabs = this.getTabs();
 		var contextTab = null;
 		var defaultTab = null;
+		let alreadySelected = false;
 		for (var tab in tabs) {
 			if (tabs[tab].context) {
 				var tabElement = $('#' + tabs[tab].name + '-tab-label');
 				tabElement.hide();
 				var contexts = tabs[tab].context.split('|');
 				for (var context in contexts) {
-					if (contexts[context] === event.context) {
+					if (contexts[context] === detail.context) {
 						tabElement.show();
 						tabElement.removeClass('hidden');
 						if (!tabElement.hasClass('selected'))
 							contextTab = tabElement;
+						else
+							alreadySelected = true;
 					} else if (contexts[context] === 'default') {
 						tabElement.show();
 						if (!tabElement.hasClass('selected'))
@@ -436,6 +439,8 @@ L.Control.Notebookbar = L.Control.extend({
 
 		if (contextTab)
 			contextTab.click();
+		else if (alreadySelected)
+			return;
 		else if (defaultTab)
 			defaultTab.click();
 	},
