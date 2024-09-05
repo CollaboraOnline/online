@@ -158,11 +158,8 @@ L.Map.SlideShow = L.Handler.extend({
 		// Windowed Presentation
 		if (this._presentInWindow) {
 
-			var popupTitle = _('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
-			const htmlContent = this._generateSlideWindowHtml(popupTitle, this._slideURL);
-
 			this._slideShowWindowProxy = window.open('', '_blank', 'popup');
-			
+
 			if (!this._slideShowWindowProxy) {
 				this._map.uiManager.showInfoModal('popup-blocked-modal',
 					_('Windowed Presentation Blocked'),
@@ -170,7 +167,21 @@ L.Map.SlideShow = L.Handler.extend({
 					_('OK'), null, false);
 			}
 
-			this._slideShowWindowProxy.document.documentElement.innerHTML = htmlContent;
+			var popupTitle = _('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
+			this._slideShowWindowProxy.document.title = popupTitle;
+
+			this._slideShowWindowProxy.document.body.style.margin = '0';
+			this._slideShowWindowProxy.document.body.style.padding = '0';
+			this._slideShowWindowProxy.document.body.style.height = '100%';
+			this._slideShowWindowProxy.document.body.style.overflow = 'hidden'; // Prevent scrollbars.
+
+			const iFrame = this._slideShowWindowProxy.document.createElement('iframe');
+			iFrame.src = sanitizeUrl(this._slideURL);
+			iFrame.style.width = '100%';
+			iFrame.style.height = '100%';
+			iFrame.style.border = 'none';
+			this._slideShowWindowProxy.document.body.appendChild(iFrame);
+
 			this._slideShowWindowProxy.document.close();
 			this._slideShowWindowProxy.focus();
 
@@ -218,40 +229,6 @@ L.Map.SlideShow = L.Handler.extend({
 			iframe.contentWindow.focus();
 			iframe.contentWindow.addEventListener('keydown', this._onSlideWindowKeyPress.bind(this));
 		}
-	},
-
-	_generateSlideWindowHtml: function(title, slideURL) {
-		var sanitizer = document.createElement('div');
-		sanitizer.innerText = title;
-
-		var sanitizedTitle = sanitizer.innerHTML;
-		var sanitizedUrl = sanitizeUrl(slideURL);
-		return `
-		<!DOCTYPE html>
-		<html lang="en">
-		<head>
-			<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>${sanitizedTitle}</title>
-			<style>
-				body, html {
-					margin: 0;
-					padding: 0;
-					height: 100%;
-					overflow: hidden; /* Prevent scrollbars */
-				}
-				iframe {
-					width: 100%;
-					height: 100%;
-					border: none;
-				}
-			</style>
-		</head>
-		<body>
-			<iframe src="${sanitizedUrl}"></iframe>
-		</body>
-		</html>
-		`;
 	},
 
 	_processSlideshowLinks: function() {
