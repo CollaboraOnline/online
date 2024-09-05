@@ -668,22 +668,26 @@ class SlideShowPresenter {
 		const numberOfSlides = this._getSlidesCount();
 		if (numberOfSlides === 0) return;
 
+		if (!this._metaPresentation) {
+			this._metaPresentation = new MetaPresentation(
+				data,
+				this._slideShowHandler,
+				this._slideShowNavigator,
+			);
+			this._slideShowHandler.setMetaPresentation(this._metaPresentation);
+			this._slideShowNavigator.setMetaPresentation(this._metaPresentation);
+		} else {
+			this._metaPresentation.update(data);
+		}
+
 		if (!this._slideCompositor) {
 			this._slideCompositor = new SlideShow.LayersCompositor(
 				this,
-				this._presentationInfo,
+				this._metaPresentation,
 			);
 		}
 
-		this._metaPresentation = new MetaPresentation(
-			this._presentationInfo,
-			this._slideShowHandler,
-			this._slideShowNavigator,
-		);
-		this._slideShowHandler.setMetaPresentation(this._metaPresentation);
-		this._slideShowNavigator.setMetaPresentation(this._metaPresentation);
-
-		this._slideCompositor.updatePresentationInfo(this._presentationInfo);
+		this._slideCompositor.onUpdatePresentationInfo();
 		const canvasSize = this._slideCompositor.getCanvasSize();
 		this._slideShowCanvas.width = canvasSize[0];
 		this._slideShowCanvas.height = canvasSize[1];
