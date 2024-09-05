@@ -274,7 +274,7 @@ void removeAuxFolders(const std::string &root)
     path/tmp/cool-<jailid> dir. In a mount namespace case the existence
     of path/<jailid>/tmp is not visible to the parent process so its
     contents cannot be removed via the path/<jailid>/tmp view, and
-    in any case the path/<jailid>/tmp should to be removed.
+    in any case the path/<jailid>/tmp should be removed.
 */
 void removeAssocTmpOfJail(const std::string &root)
 {
