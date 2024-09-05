@@ -203,7 +203,7 @@ JSDialog.iconView = function (
 			const image = builder.rendersCache[data.id].images[pos];
 			const hasText = entry.text && data.textWithIconEnabled;
 
-			container.innerHTML = '';
+			container.replaceChildren();
 			if (hasText) {
 				container = L.DomUtil.create(
 					'div',

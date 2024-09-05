@@ -440,7 +440,7 @@ L.Map = L.Evented.extend({
 			this.updateModificationIndicator(this._lastmodtime);
 
 			// Replace menu button body with new content
-			lastModButton.firstChild.innerHTML = '';
+			lastModButton.firstChild.replaceChildren();
 			lastModButton.firstChild.appendChild(mainSpan);
 
 			if (L.Params.revHistoryEnabled) {

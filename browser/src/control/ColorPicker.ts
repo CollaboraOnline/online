@@ -588,13 +588,13 @@ class ColorPicker {
 						L.DomUtil.addClass(this._selectedColorElement, 'no-color-selected');
 						this._selectedColorElement.innerHTML = '\\';
 					} else {
-						noColorElem.innerHTML = '';
+						noColorElem.replaceChildren();
 						// update value for the related menu entry
 						L.DomUtil.removeClass(
 							this._selectedColorElement,
 							'no-color-selected',
 						);
-						this._selectedColorElement.innerHTML = '';
+						this._selectedColorElement.replaceChildren();
 					}
 				}
 			}
@@ -618,13 +618,13 @@ class ColorPicker {
 						);
 						this._selectedColorElement.innerHTML = '\\';
 					} else {
-						autoColorElem.innerHTML = '';
+						autoColorElem.replaceChildren();
 						// update value for the related menu entry
 						L.DomUtil.removeClass(
 							this._selectedColorElement,
 							'auto-color-selected',
 						);
-						this._selectedColorElement.innerHTML = '';
+						this._selectedColorElement.replaceChildren();
 					}
 				}
 			}
