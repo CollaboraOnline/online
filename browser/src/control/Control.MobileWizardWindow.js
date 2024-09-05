@@ -66,7 +66,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		if (!window.mode.isMobile())
 			return;
 
-		this.content.innerHTML = '';
+		this.content.replaceChildren();
 		this._setupBackButton();
 	},
 
@@ -108,7 +108,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		this.tabsContainer.hide();
 		this.titleBar.css('top', '0px');
 		this.titleBar.show();
-		this.titleNode.innerHTML = '';
+		this.titleNode[0].replaceChildren();
 		this._removeSpecialClasses();
 	},
 
@@ -117,7 +117,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		this._softReset();
 		this._currentDepth = 0;
 		this._inMainMenu = true;
-		this.content.innerHTML = '';
+		this.content.replaceChildren();
 		this._isTabMode = false;
 		this._currentPath = [];
 		this.tabs = null;

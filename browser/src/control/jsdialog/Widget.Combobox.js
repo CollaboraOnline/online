@@ -278,7 +278,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 
 		var dropdown = dropdownRoot.querySelectorAll('.ui-combobox-entry');
 		if (dropdown[pos]) {
-			dropdown[pos].innerHTML = '';
+			dropdown[pos].replaceChildren();
 			var img = L.DomUtil.create('img', '', dropdown[pos]);
 			img.src = builder.rendersCache[data.id].images[pos];
 			img.alt = entries[pos].text;

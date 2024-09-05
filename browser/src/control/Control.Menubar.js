@@ -2270,7 +2270,7 @@ L.Control.Menubar = L.Control.extend({
 			} else if (menu[i].uno !== undefined) {
 				aItem.innerHTML = _UNO(menu[i].uno, docType);
 			} else {
-				aItem.innerHTML = '';
+				aItem.replaceChildren();
 			}
 
 			if (menu[i].type === 'menu') {
