@@ -584,6 +584,22 @@ L.Map.include({
 				this.filterResults(searchTerm, isAnyMatchingContent, id);
 			}
 		}.bind(this));
+
+
+		const onlineHelpContent = document.getElementById('online-help-content');
+		const buttons = onlineHelpContent.querySelectorAll('.scroll-button');
+
+		buttons.forEach((button) => {
+			button.addEventListener('click', () => {
+				const targetId = button.dataset.target;
+				if (targetId) {
+					const targetElement = document.getElementById(`${targetId}`);
+					if (targetElement) {
+						targetElement.scrollIntoView();
+					}
+				}
+			});
+		});
 	},
 
 
