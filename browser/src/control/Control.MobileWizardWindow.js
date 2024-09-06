@@ -98,7 +98,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		if (this.isSnackBar)
 			this.mobileWizard.addClass('snackbar');
 		if (this.isBusyPopUp)
-			this.mobileWizard.addClass('busypopup'); 
+			this.mobileWizard.addClass('busypopup');
 	},
 
 	/// resets all classes which can modify the look to the original values
@@ -148,14 +148,27 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		this._applySpecialClasses();
 	},
 
+	_createScrollIndicator() {
+		const container = document.createElement('div');
+		container.className = 'mobile-wizard-scroll-indicator';
+		container.id = 'mobile-wizard-scroll-indicator-' + this.id;
+		container.style.width = '100%';
+		container.style.height = '0px';
+		container.style.position = 'fixed';
+		container.style.zIndex = 2;
+		container.style.bottom = '-7px';
+		container.style.boxShadow = '0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7';
+		return container;
+	},
+
 	_showWizard: function() {
 		if (this.snackBarTimout)
 			clearTimeout(this.snackBarTimout);
 
 		this.isVisible = true;
 
-		this.scrollIndicator = $('<div class="mobile-wizard-scroll-indicator" id="mobile-wizard-scroll-indicator-' + this.id + '" style="width: 100%;height: 0px;position: fixed;z-index: 2;bottom: -7px;box-shadow: 0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7;"></div>');
-		$(this.content).append(this.scrollIndicator);
+		this.scrollIndicator = this._createScrollIndicator();
+		this.content.appendChild(this.scrollIndicator);
 
 		var wizard = $('#mobile-wizard');
 		wizard.show();
@@ -165,8 +178,8 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			var height = wizard.prop('scrollHeight');
 			var contentHeight = wizard.prop('clientHeight');
 			var scrollLeft = height - mWizardContentScroll;
-			if (scrollLeft < contentHeight + 1 || !that.isVisible) { that.scrollIndicator.css('display','none'); }
-			else { that.scrollIndicator.css('display','block'); }
+			if (scrollLeft < contentHeight + 1 || !that.isVisible) { that.scrollIndicator.style.display = 'none'; }
+			else { that.scrollIndicator.style.display = 'block'; }
 		});
 		$('#toolbar-down').hide();
 		if (window.ThisIsTheAndroidApp)
