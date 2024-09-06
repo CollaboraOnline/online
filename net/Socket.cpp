@@ -132,7 +132,7 @@ std::string Socket::getStatsString(std::chrono::steady_clock::time_point now) co
     oss.precision(1);
     oss << "Stats[dur[total "
         << durTotal.count() << "ms, last "
-        << durLast.count() << ",ms], kBps[in "
+        << durLast.count() << " ms], kBps[in "
         << kBpsIn << ", out " << kBpsOut
         << "]]";
     return oss.str();
@@ -1427,16 +1427,29 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now) noexc
     const auto durLast =
         std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
     const double bytesPerSecIn = durTotal.count() > 0 ? (double)getBytesRcvd() / ((double)durTotal.count() / 1000.0) : (double)getBytesRcvd();
+#if 1
+    const bool c1 = now < getCreationTime();
+    const bool c2 = (_maxDuration > std::chrono::microseconds::zero() && durTotal > _maxDuration);
+    const bool c3 = (_pollTimeout > std::chrono::microseconds::zero() && durLast > _pollTimeout);
+    const bool c4 = (bytesPerSecIn > std::numeric_limits<double>::epsilon() &&
+                     _minBytesPerSec > 1.0f && bytesPerSecIn < _minBytesPerSec);
+    const bool c5 = SigUtil::getTerminationFlag();
+    if (c1 || c2 || c3 || c4 || c5)
+#else
     if (now < getCreationTime() ||
         (_maxDuration > std::chrono::microseconds::zero() && durTotal > _maxDuration) ||
         (_pollTimeout > std::chrono::microseconds::zero() && durLast > _pollTimeout) ||
         (bytesPerSecIn > std::numeric_limits<double>::epsilon() && _minBytesPerSec > 1.0f &&
          bytesPerSecIn < _minBytesPerSec) ||
         SigUtil::getTerminationFlag())
+#endif
     {
-        LOG_WRN("CheckRemoval: Timeout(1) after " << durTotal << ", " << getStatsString(now) << ", "
-                                                  << toString());
-
+        LOG_WRN("CheckRemoval: Timeout: {c1 " << c1 << ", c2 " << c2 << ", c3 " << c3 << ", c4 " << c4 << ", c5 " << c5 << "}, "
+            << getStatsString(now) << ", "
+            << toString()
+            << ", maxDur " << _maxDuration
+            << ", pollTO " << _pollTimeout
+            << ", Bps " << bytesPerSecIn << ", minBps " << _minBytesPerSec);
         if (_socketHandler)
         {
             _socketHandler->onDisconnect();
@@ -1460,11 +1473,13 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now) noexc
     {
         assert(isOpen() == false); // should have issued shutdown
         setClosed();
-        LOG_WRN("CheckRemoval: Timeout(2) after " << durTotal << ", " << getStatsString(now) << ", "
-                                                  << toString());
+        LOG_WRN("CheckRemoval: Timeout: {c1 " << c1 << ", c2 " << c2 << ", c3 " << c3 << ", c4 " << c4 << ", c5 " << c5 << "}, "
+            << getStatsString(now) << ", "
+            << toString());
         return true;
     } else {
-        LOG_DBG("CheckRemoval: Test after " << durTotal << " < " << _maxDuration << ", " << getStatsString(now) << ", " << toString());
+        LOG_DBG("CheckRemoval: Test {c1 " << c1 << ", c2 " << c2 << ", c3 " << c3 << ", c4 " << c4 << ", c5 " << c5 << "}, "
+            << getStatsString(now) << ", " << toString());
     }
     return false;
 }
