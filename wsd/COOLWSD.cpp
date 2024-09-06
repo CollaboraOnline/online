@@ -355,6 +355,7 @@ void COOLWSD::alertAllUsersInternal(const std::string& msg)
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
     LOG_INF("Alerting all users: [" << msg << ']');
+    SigUtil::addActivity("alert all users: " + msg);
 
     if (UnitWSD::get().filterAlertAllusers(msg))
         return;
@@ -534,6 +535,10 @@ static bool cleanupChildren()
         }
     }
 
+    if (static_cast<int>(NewChildren.size()) != count)
+        SigUtil::addActivity("removed " + std::to_string(count - NewChildren.size()) +
+                             " children");
+
     return static_cast<int>(NewChildren.size()) != count;
 }
 
@@ -610,6 +615,7 @@ static size_t addNewChild(std::shared_ptr<ChildProcess> child)
 
     LOG_TRC("Adding a new child " << pid << " to NewChildren, have " << OutstandingForks
                                   << " outstanding requests");
+    SigUtil::addActivity("added child " + std::to_string(pid));
     NewChildren.emplace_back(std::move(child));
     const size_t count = NewChildren.size();
     lock.unlock();
@@ -1057,6 +1063,7 @@ void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
         {
             Admin::instance().addSegFaultCount(count);
             LOG_INF(count << " coolkit processes crashed with segmentation fault.");
+            SigUtil::addActivity("coolkit(s) crashed");
             UnitWSD::get().kitSegfault(count);
         }
         else
@@ -3028,7 +3035,10 @@ void COOLWSD::initializeSSL()
     if (!ssl::Manager::isServerContextInitialized())
         LOG_ERR("Failed to initialize Server SSL.");
     else
+    {
         LOG_INF("Initialized Server SSL.");
+        SigUtil::addActivity("initialized SSL");
+    }
 #else
     LOG_INF("SSL is unavailable in this build.");
 #endif
@@ -3503,6 +3513,8 @@ void PrisonPoll::wakeupHook()
 bool COOLWSD::createForKit()
 {
     LOG_INF("Creating new forkit process.");
+
+    SigUtil::addActivity("spawning new forkit");
 
     // Creating a new forkit is always a slow process.
     ChildSpawnTimeoutMs = CHILD_SPAWN_TIMEOUT_MS;
@@ -4326,6 +4338,7 @@ int COOLWSD::innerMain()
     Util::getVersionInfo(version, hash);
     LOG_INF("Coolwsd version details: " << version << " - " << hash << " - id " << Util::getProcessIdentifier() << " - on " << Util::getLinuxVersion());
 #endif
+    SigUtil::addActivity("coolwsd init");
 
     initializeSSL();
 
@@ -4475,6 +4488,8 @@ int COOLWSD::innerMain()
     /// The main-poll does next to nothing:
     SocketPoll mainWait("main");
 
+    SigUtil::addActivity("coolwsd accepting connections");
+
 #if !MOBILEAPP
     std::cerr << "Ready to accept connections on port " << ClientPortNumber <<  ".\n" << std::endl;
     if (SignalParent)
@@ -4530,6 +4545,8 @@ int COOLWSD::innerMain()
 #endif
 #endif
 
+    SigUtil::addActivity("coolwsd running");
+
     while (!SigUtil::getShutdownRequestFlag())
     {
         // This timeout affects the recovery time of prespawned children.
@@ -4583,6 +4600,8 @@ int COOLWSD::innerMain()
 
     COOLWSD::alertAllUsersInternal("close: shuttingdown");
 
+    SigUtil::addActivity("shutting down");
+
     // Lots of polls will stop; stop watching them first.
     SocketPoll::PollWatchdog.reset();
 
@@ -4617,6 +4636,8 @@ int COOLWSD::innerMain()
         SigUtil::requestShutdown();
     }
 #endif
+
+    SigUtil::addActivity("wait save & close");
 
     // Wait until documents are saved and sessions closed.
     // Don't stop the DocBroker, they will exit.
@@ -4666,6 +4687,8 @@ int COOLWSD::innerMain()
         DocBrokers.clear();
     }
 
+    SigUtil::addActivity("save traces");
+
     if (TraceEventFile != NULL)
     {
         // If we have written any objects to it, it ends with a comma and newline. Back over those.
@@ -4693,6 +4716,8 @@ int COOLWSD::innerMain()
 
     Server->stopPrisoners();
 
+    SigUtil::addActivity("prisoners stopped");
+
     if (UnitWSD::isUnitTesting())
     {
         Server->stop();
@@ -4705,6 +4730,8 @@ int COOLWSD::innerMain()
     net::AsyncDNS::stopAsyncDNS();
 #endif
 
+    SigUtil::addActivity("async DNS stopped");
+
     WebServerPoll.reset();
 
     // Terminate child processes
@@ -4715,6 +4742,8 @@ int COOLWSD::innerMain()
     }
 
     NewChildren.clear();
+
+    SigUtil::addActivity("terminated unused children");
 
 #if !MOBILEAPP
     if (!Util::isKitInProcess())
@@ -4733,6 +4762,8 @@ int COOLWSD::innerMain()
     const int returnValue = UnitBase::uninit();
 
     LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
+
+    SigUtil::addActivity("finished with status " + std::to_string(returnValue));
 
     // At least on centos7, Poco deadlocks while
     // cleaning up its SSL context singleton.
