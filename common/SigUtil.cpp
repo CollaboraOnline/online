@@ -69,7 +69,7 @@ static std::atomic<bool> ForwardSigUsr2Flag(false); //< Flags to forward SIG_USR
 
 static size_t ActivityStringIndex = 0;
 static std::string ActivityHeader;
-static std::array<std::string, 16> ActivityStrings;
+static std::array<std::atomic<char *>, 16> ActivityStrings;
 static bool UnattendedRun = false;
 #if !MOBILEAPP
 static int SignalLogFD = STDERR_FILENO; //< The FD where signalLogs are dumped.
@@ -142,7 +142,10 @@ void requestShutdown()
 
     void addActivity(const std::string &message)
     {
-        ActivityStrings[ActivityStringIndex++ % ActivityStrings.size()] = message;
+        char *old = ActivityStrings[ActivityStringIndex++ % ActivityStrings.size()].exchange(
+            strdup(message.c_str()));
+        if (old)
+            free (old);
     }
 
     void addActivity(const std::string &viewId, const std::string &message)
@@ -405,11 +408,12 @@ void requestShutdown()
         for (size_t i = 0; i < ActivityStrings.size(); ++i)
         {
             size_t idx = (ActivityStringIndex + i) % ActivityStrings.size();
-            if (!ActivityStrings[idx].empty())
+            const char *str = ActivityStrings[idx];
+            if (str && str[0] != '\0')
             {
                 // no plausible impl. will heap allocate in c_str.
                 signalLog("\t");
-                signalLog(ActivityStrings[idx].c_str());
+                signalLog(str);
                 signalLog("\n");
             }
         }
