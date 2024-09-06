@@ -48,7 +48,7 @@ class CellSelectionHandle extends app.definitions.canvasSectionObject {
 		newPoint.pX = this.position[0] + point[0];
 		newPoint.pY = this.position[1] + point[1];
 
-		app.map.fire('handleautoscroll', { pos: { x: 0, y: newPoint.cY }, map: app.map });
+		app.map.fire('handleautoscroll', { pos: { x: newPoint.cX, y: newPoint.cY }, map: app.map });
 
 		this.sharedOnDragAndEnd(newPoint);
 	}
