@@ -2377,14 +2377,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						$(div).removeClass('selected');
 					}
 
-					if (disabled) {
-						$(div).addClass('disabled'); // TODO: remove after css rework
+					if (disabled)
 						div.setAttribute('disabled', '');
-					}
-					else {
-						$(div).removeClass('disabled'); // TODO: remove after css rework
+					else
 						div.removeAttribute('disabled');
-					}
 				};
 
 				updateFunction();
@@ -2402,7 +2398,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			if (disabled) {
-				L.DomUtil.addClass(div, 'disabled'); // TODO: remove after css rework
 				div.setAttribute('disabled', '');
 			}
 
