@@ -95,32 +95,27 @@ L.Control.Tabs = L.Control.extend({
 				callback: (this._moveSheetRight).bind(this),
 				visible: areTabsMultiple
 			},
-		};
-
-		if (!window.mode.isMobile()) {
-
-			// no blacklisting available for this context menu so only add when needed
-			this._menuItem['.uno:Move'] = {
+			'.uno:Move': {
 				name: _UNO('.uno:Move', 'spreadsheet', true),
 				callback: (this._moveOrCopySheet).bind(this),
 				visible: areTabsMultiple
-			};
-
-			this._menuItem['.uno:CopyTab'] = {
+			},
+			'.uno:CopyTab': {
 				name: _('Copy Sheet...'),
 				callback: function() {this._map.sendUnoCommand('.uno:Move');}.bind(this),
 				visible: function() {
 					return !areTabsMultiple();
 				}
-			};
-			    if (!this._map.isReadOnlyMode() || window.mode.isTablet()) {
-				L.installContextMenu({
-					selector: '.spreadsheet-tab',
-					className: 'cool-font',
-					items: this._menuItem,
-					zIndex: 1000
-				});
-			}
+			},
+		};
+
+		if ((!window.mode.isMobile() && !this._map.isReadOnlyMode()) || window.mode.isTablet()) {
+			L.installContextMenu({
+				selector: '.spreadsheet-tab',
+				className: 'cool-font',
+				items: this._menuItem,
+				zIndex: 1000
+			});
 		}
 
 		map.on('updateparts', this._updateDisabled, this);
@@ -180,6 +175,13 @@ L.Control.Tabs = L.Control.extend({
 							'Hide': this._menuItem['.uno:Hide'],
 							'movesheetleft': this._menuItem['movesheetleft'],
 							'movesheetright': this._menuItem['movesheetright'],
+							'Move': this._menuItem['.uno:Move'],
+						}
+					);
+				} else {
+					Object.assign(menuItemMobile,
+						{
+							'CopyTab': this._menuItem['.uno:CopyTab'],
 						}
 					);
 				}
