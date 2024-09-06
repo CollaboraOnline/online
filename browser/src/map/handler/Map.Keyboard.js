@@ -436,6 +436,37 @@ L.Map.Keyboard = L.Handler.extend({
 				this._map._docLayer._preview.partsFocused = false;
 			}
 		}
+		else if (this._isCtrlKey(ev) && !ev.shiftKey && !ev.altKey && ev.keyCode === this.keyCodes.F) {
+			if (app.UI.language.fromURL === 'de' && this._map.getDocType() === 'text') {
+				this._map.sendUnoCommand('.uno:Navigator');
+			}
+			else {
+				if (!this._map.uiManager.isStatusBarVisible()) {
+					this._map.uiManager.showStatusBar();
+				}
+				this._map.fire('focussearch');
+			}
+
+			ev.preventDefault();
+		}
+		else if (this._isCtrlKey(ev) && !ev.shiftKey && ev.altKey && ev.keyCode === this.keyCodes.S && app.UI.language.fromURL === 'de' && this._map.getDocType() === 'text') {
+			this._map.fire('focussearch');
+			ev.preventDefault();
+		}
+		else if (this._isCtrlKey(ev) && ev.keyCode === this.keyCodes.S) {
+			// Save only when not read-only and when HideSaveOption is false.
+			if (!this._map.isReadOnlyMode() && !this._map['wopi'].HideSaveOption) {
+				this._map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'keyboard' }});
+				if (!this._map._disableDefaultAction['UI_Save']) {
+					this._map.save(
+						false /* An explicit save should terminate cell edit */,
+						false /* An explicit save should save it again */,
+					);
+				}
+			}
+			ev.preventDefault();
+		}
+		
 	},
 
 	// _handleKeyEvent - checks if the given keyboard event shall trigger
@@ -714,27 +745,6 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
-		if (this._isCtrlKey(e) && !e.shiftKey && !e.altKey && e.keyCode === this.keyCodes.F) {
-			if (app.UI.language.fromURL === 'de' && this._map.getDocType() === 'text') {
-				this._map.sendUnoCommand('.uno:Navigator');
-			}
-			else {
-				if (!this._map.uiManager.isStatusBarVisible()) {
-					this._map.uiManager.showStatusBar();
-				}
-				this._map.fire('focussearch');
-			}
-
-			e.preventDefault();
-			return true;
-		}
-
-		if (this._isCtrlKey(e) && !e.shiftKey && e.altKey && e.keyCode === this.keyCodes.S && app.UI.language.fromURL === 'de' && this._map.getDocType() === 'text') {
-			this._map.fire('focussearch');
-			e.preventDefault();
-			return true;
-		}
-
 		if (e.altKey || e.shiftKey) {
 
 			// need to handle Ctrl + Alt + C separately for Firefox
@@ -837,14 +847,7 @@ L.Map.Keyboard = L.Handler.extend({
 			this._map.print();
 			return true;
 		case this.keyCodes.S: // s
-			// Save only when not read-only and when HideSaveOption is false.
-			if (!this._map.isReadOnlyMode() && !this._map['wopi'].HideSaveOption) {
-				this._map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'keyboard' }});
-				if (!this._map._disableDefaultAction['UI_Save']) {
-					this._map.save(false /* An explicit save should terminate cell edit */,
-					               false /* An explicit save should save it again */);
-				}
-			}
+			// Handle save event in globalEventHandler
 			return true;
 		case this.keyCodes.V[DEFAULT]: // v
 		case this.keyCodes.V[MAC]: // v (Safari) needs a separate mapping in keyCodes
