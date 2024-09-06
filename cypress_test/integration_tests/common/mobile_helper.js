@@ -164,7 +164,7 @@ function openInsertionWizard() {
 	cy.cGet('#toolbar-up #insertion_mobile_wizard')
 		.should('not.have.class', 'disabled');
 
-	cy.cGet('#toolbar-up #insertion_mobile_wizard button')
+	cy.cGet('#toolbar-up #insertion_mobile_wizard')
 		.click();
 
 	cy.cGet('#mobile-wizard-content')
@@ -182,7 +182,7 @@ function openCommentWizard() {
 	cy.cGet('#toolbar-up #comment_wizard')
 		.should('not.have.class', 'disabled')
 
-	cy.cGet('#toolbar-up #comment_wizard button')
+	cy.cGet('#toolbar-up #comment_wizard')
 		.click();
 
 	cy.cGet('#toolbar-up #comment_wizard')

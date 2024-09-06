@@ -38,6 +38,8 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	cy.log('Param - firstClick: ' + firstClick);
 	cy.log('Param - dblClick: ' + dblClick);
 
+	helper.listenProtocol('celladdress:');
+
 	// Use the tile's edge to find the first cell's position
 	cy.cGet('#map')
 		.then(function(items) {
@@ -56,8 +58,13 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 		cy.cGet('.cursor-overlay .blinking-cursor').should('be.visible');
 	}
 
-	if (isA1)
-		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
+	if (isA1) {
+		cy.cGet('input#addressInput-input').then(function(input) {
+			if (input.val() !== 'A1') {
+				cy.cGet('#listener-protocol').should('exist');
+				cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
+			}});
+	}
 
 	cy.log('<< clickOnFirstCell - end');
 }
@@ -142,6 +149,8 @@ function selectEntireSheet() {
 
 	removeTextSelection();
 
+	helper.listenProtocol('celladdress:');
+
 	cy.cGet('[id="test-div-corner header"]')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
@@ -154,6 +163,8 @@ function selectEntireSheet() {
 	helper.doIfOnMobile(function() {
 		cy.cGet('#test-div-cell_selection_handle_start').should('exist');
 	});
+
+	cy.cGet('#listener-protocol').should('exist');
 
 	var regex = /^A1:(AMJ|XFD)1048576$/;
 	cy.cGet('input#addressInput-input')

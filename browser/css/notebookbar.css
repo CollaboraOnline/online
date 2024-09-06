@@ -196,11 +196,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	padding: 0px !important;
 }
 
-.unotoolbutton.notebookbar .unobutton {
+.unotoolbutton.notebookbar.unobutton {
+	cursor: pointer;
 	box-sizing: border-box;
 	padding: 0;
-	width: var(--btn-size);
-	height: var(--btn-size);
 	background-color: transparent;
 	margin: 0;
 	vertical-align: middle;
@@ -209,6 +208,12 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
 	border-radius: var(--border-radius);
+}
+
+.unotoolbutton.notebookbar .unobutton.dropdown {
+	display: flex;
+	width: 100%;
+	alig-items: center;
 }
 
 .jsdialog .ui-tabs-content {
@@ -220,10 +225,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	height: var(--btn-size);
 }
 
-.has-dropdown--color.notebookbar {
-	height: var(--btn-size) !important;
-}
-
 .unotoolbutton.notebookbar .unolabel {
 	font-size: var(--header-font-size);
 	font-family: var(--cool-font);
@@ -231,6 +232,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	padding: 0px 5px !important;
 	line-height: normal;
 	grid-column: 2;
+	margin: auto;
+	vertical-align: bottom;
 }
 
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
@@ -287,12 +290,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	text-align: center;
 }
 
-.unotoolbutton.notebookbar.has-label > *:not(.arrowbackground) { /*so they stay side by side*/
-	display: table-cell;
-	width: 100%;
-	height: 100%;
-}
-
 .unotoolbutton.notebookbar.has-label {
 	text-align: center;
 }
@@ -301,10 +298,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	width: 24px !important;
 	margin: auto !important;
 	display: block;
-}
-.has-label.has-dropdown:not(.inline) .unolabel{
-	display: inline-block;
-	clear: both;
 }
 
 /* adding focus to tab in notebookbar */

@@ -10,7 +10,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.viewport(1400, 600);
 		helper.setupAndLoadDocument('writer/annotation.odt');
 		desktopHelper.switchUIToNotebookbar();
-		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		cy.cGet('#optionscontainer button[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 		selectZoomLevel('50');
 	});
 
@@ -66,7 +66,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		// TODO: skip sidebar detection on reload
-		// cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		// cy.cGet('#optionscontainer button[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 	});
 
 	it('Insert', function() {
@@ -133,7 +133,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('.cool-annotation-info-collapsed').should('be.not.visible');
 
 		helper.reloadDocument(newFilePath);
-		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // show sidebar.
+		cy.cGet('#optionscontainer button[id$="SidebarDeck.PropertyDeck"]').click(); // show sidebar.
 		cy.cGet('.cool-annotation-img').click();
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
@@ -150,7 +150,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		newFilePath = helper.setupAndLoadDocument('writer/annotation.odt');
 		desktopHelper.switchUIToNotebookbar();
 		// TODO: skip sidebar detection on reload
-		//cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		//cy.cGet('#optionscontainer button[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 		selectZoomLevel('50');
 	});
 

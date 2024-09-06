@@ -53,7 +53,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 				cy.stub(win, 'open').as('windowOpen');
 			});
 
-		cy.cGet('#toolbar-up #printoptions .arrowbackground').click();
+		cy.cGet('#toolbar-up #printoptions').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Active Sheet').click();
 
 		cy.get('@windowOpen').should('be.called');
@@ -182,7 +182,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply highlight color.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#backgroundcolor .arrowbackground').click();
+		cy.cGet('#backgroundcolor').click();
 		desktopHelper.selectColorFromPalette('8E7CC3');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -191,7 +191,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply font color.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#fontcolor .arrowbackground').click();
+		cy.cGet('#fontcolor').click();
 		desktopHelper.selectColorFromPalette('FFF2CC');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -256,7 +256,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		// Set right aligment first
-		cy.cGet('#textalign .arrowbackground').click();
+		cy.cGet('#textalign').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Right').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -265,7 +265,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Change alignment back
 		calcHelper.clickOnFirstCell();
 
-		cy.cGet('#textalign .arrowbackground').click();
+		cy.cGet('#textalign').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Left').click({force: true}); // tooltip
 		calcHelper.selectEntireSheet();
 		helper.copy();

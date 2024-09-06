@@ -72,12 +72,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() 
 		mobileHelper.enableEditingMobile();
 		// Click on mobile wizard toolbar item
 		cy.cGet('#toolbar-up #mobile_wizard').should('not.have.attr', 'disabled');
-		cy.cGet('#toolbar-up #mobile_wizard button').click();
+		cy.cGet('#toolbar-up #mobile_wizard').click();
 		// Mobile wizard is opened and it has any content
 		cy.cGet('#mobile-wizard-content').should('not.be.empty');
 		// Toolbar button is checked
 		cy.cGet('#toolbar-up #mobile_wizard').should('have.class', 'selected');
-		cy.cGet('#toolbar-up #mobile_wizard button').click();
+		cy.cGet('#toolbar-up #mobile_wizard').click();
 		// Mobile wizard is closed
 		cy.cGet('#mobile-wizard').should('not.be.visible');
 		cy.cGet('#toolbar-up #mobile_wizard').should('not.have.class', 'selected');
@@ -96,12 +96,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() 
 		mobileHelper.enableEditingMobile();
 		// Click on mobile wizard toolbar item
 		cy.cGet('#toolbar-up #comment_wizard').should('not.have.attr', 'disabled');
-		cy.cGet('#toolbar-up #comment_wizard button').click();
+		cy.cGet('#toolbar-up #comment_wizard').click();
 		// Mobile wizard is opened and it has any content
 		cy.cGet('#mobile-wizard-content').should('not.be.empty');
 		// Toolbar button is checked
 		cy.cGet('#toolbar-up #comment_wizard').should('have.class', 'selected');
-		cy.cGet('#toolbar-up #comment_wizard button').click();
+		cy.cGet('#toolbar-up #comment_wizard').click();
 		// Mobile wizard is closed
 		cy.cGet('#mobile-wizard').should('not.be.visible');
 		cy.cGet('#toolbar-up #comment_wizard').should('not.have.class', 'selected');
