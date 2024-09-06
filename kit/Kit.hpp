@@ -231,7 +231,7 @@ public:
     void alertNotAsync()
     {
         // load unfortunately enables inputprocessing in some cases.
-        if (processInputEnabled() && !_duringLoad)
+        if (processInputEnabled() && !_duringLoad && !isBackgroundSaveProcess())
             notifyAll("error: cmd=notasync kind=failure");
     }
 
