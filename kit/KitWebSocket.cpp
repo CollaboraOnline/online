@@ -266,7 +266,8 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
     // "statusindicator[start|finish|setvalue]"
 
     // Badly don't want modified state coming from the background processx
-    if (tokens[1] == "statechanged:")
+    if (tokens[1] == "statechanged:" ||
+        tokens[1] == "calcfunctionlist:")
     {
         LOG_TRC("Don't send un-wanted message to parent: " << COOLProtocol::getAbbreviatedMessage(data));
         return;
@@ -274,6 +275,18 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
 
     if (tokens[1] == "jsdialog:")
     {
+        Poco::JSON::Object::Ptr object;
+        if (JsonUtil::parseJSON(tokens.cat(' ', 2), object) &&
+            (object->get("jsontype").toString() == "notebookbar" ||
+             object->get("jsontype").toString() == "sidebar" ||
+             object->get("jsontype").toString() == "formulabar"))
+            // white-listing to avoid popup & dialog & other interactive errors
+        {
+            LOG_DBG("Unexpected but benign jsdialog message from bgsave process " +
+                    COOLProtocol::getAbbreviatedMessage(data));
+            return;
+        }
+
         terminateSave("Unexpected jsdialog message: " +
                       COOLProtocol::getAbbreviatedMessage(data));
         return;
