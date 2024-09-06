@@ -667,6 +667,9 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
 
     LOG_DBG("Handling request: " << request.getURI());
+
+    bool served = false;
+
     try
     {
         // We may need to re-write the chunks moving the inBuffer.
@@ -715,8 +718,6 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         else if (requestDetails.equals(RequestDetails::Field::Type, "browser") ||
                  requestDetails.equals(RequestDetails::Field::Type, "wopi"))
         {
-            bool served = false;
-
             // File server
             assert(socket && "Must have a valid socket");
             constexpr auto ProxyRemote = "/remote/";
@@ -862,7 +863,6 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
         else if (requestDetails.isProxy() && requestDetails.equals(2, "ws"))
             handleClientProxyRequest(request, requestDetails, message, disposition);
-
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
             handleClientWsUpgrade(request, requestDetails, disposition, socket);
@@ -925,9 +925,18 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
-    // If we succeeded - remove the complete request message from our input buffer
-    // We expect multiple requests per socket
-    socket->eraseFirstInputBytes(map._messageSize);
+    // If we succeeded - remove the request header from our input buffer
+    socket->eraseFirstInputBytes(map._headerSize);
+    // Some handlers, like handleClientProxyRequest, used in the richdocumentscode
+    // Nextcloud 'Built-in CODE Server' case, launch a task that will consume the
+    // message contents later, while some like the file server, have already handled
+    // the message and we need to discard the message contents (cool.html POST) now
+    // because we expect multiple requests per socket
+    if (served)
+    {
+        //remove the request body from our input buffer
+        socket->eraseFirstInputBytes(map._messageSize - map._headerSize);
+    }
 #else // !MOBILEAPP
     Poco::Net::HTTPRequest request;
 
