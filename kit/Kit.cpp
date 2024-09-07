@@ -3566,8 +3566,6 @@ void lokit_main(
 
     LOG_INF("Kit process for Jail [" << jailId << "] finished.");
     flushTraceEventRecordings();
-    // Wait for the signal handler, if invoked, to prevent exiting until done.
-    SigUtil::waitSigHandlerTrap();
     if (!Util::isKitInProcess())
         Util::forcedExit(EX_OK);
 

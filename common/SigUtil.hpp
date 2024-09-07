@@ -86,10 +86,6 @@ namespace SigUtil
     /// Signal log number
     void signalLogNumber(std::size_t num, int base = 10);
 
-    /// Wait for the signal handler, if any,
-    /// and prevent _Exit while collecting backtrace.
-    void waitSigHandlerTrap();
-
     /// Returns the name of the signal.
     const char* signalName(int signo);
 
