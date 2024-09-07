@@ -1072,10 +1072,10 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
                     << wopiLog << ". Cannot upload file to WOPI storage uri [" << details.uriAnonym
                     << "]: " << responseString);
             result.setResult(StorageBase::UploadResult::Result::FAILED);
+            result.setReason(responseString);
 
             // If we cannot be sure whether we up-loaded successfully eg. we got
-            // a timeout then be tolerant of subsequent timestamp mismatch problems
-            setLastModifiedTimeUnSafe();
+            // a timeout then try to recover in DocBroker.
         }
     }
     catch (const Poco::Exception& pexc)
