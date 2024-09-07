@@ -652,7 +652,7 @@ private:
     bool processPlugins(std::string& localPath);
 
     /// Start an asynchronous CheckFileInfo request.
-    void checkFileInfo(const Poco::URI& uri, int redirectLimit);
+    void checkFileInfo(const std::shared_ptr<ClientSession>& uri, int redirectLimit);
 
 #endif // !MOBILEAPP
 
@@ -1516,6 +1516,7 @@ private:
                    Conflict, //< The document is conflicted in storaged.
                    Save, //< The document is being saved, manually or auto-save.
                    Upload, //< The document is being uploaded to storage.
+                   SyncFileTimestamp, //< Need to CheckFileInfo and get the modified timestamp.
 #if !MOBILEAPP && !WASMAPP
                    SwitchingToOffline, //< The document will switch to Offline mode.
                    SwitchingToOnline, //< The document will switch to Online mode.
@@ -1670,8 +1671,10 @@ private:
     /// For now we can only have one at a time.
     std::unique_ptr<UploadRequest> _uploadRequest;
 
+#if !MOBILEAPP
     /// The current CheckFileInfo request, if any.
     std::unique_ptr<CheckFileInfo> _checkFileInfo;
+#endif
 
     /// Manage uploading to Storage.
     StorageManager _storageManager;

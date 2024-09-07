@@ -487,6 +487,15 @@ void DocumentBroker::pollThread()
         {
             case DocumentState::Activity::None:
             {
+#if !MOBILEAPP
+                if (_checkFileInfo)
+                {
+                    // We are done. Safe to reset.
+                    LOG_TRC("Resetting checkFileInfo instance");
+                    _checkFileInfo.reset();
+                }
+#endif
+
                 // Check if there are queued activities.
                 if (!_renameFilename.empty() && !_renameSessionId.empty())
                 {
@@ -610,6 +619,34 @@ void DocumentBroker::pollThread()
                     _saveManager.setLastSaveResult(/*success=*/false, /*newVersion=*/false);
                     endActivity();
                 }
+            }
+            break;
+
+            case DocumentState::Activity::SyncFileTimestamp:
+            {
+                // Last upload failed, redo CheckFileInfo to reset the modified time.
+                assert(!isAsyncUploading() && "Unexpected async-upload in progress");
+
+#if !MOBILEAPP
+                if (!_checkFileInfo)
+                {
+                    const auto session = getFirstAuthorizedSession();
+                    if (!session)
+                    {
+                        // No session to synchronize the timestamp with.
+                        // Last resort; reset the timestamp and let it be.
+                        // We can't upload without a valid token anyway.
+                        LOG_WRN("No valid session to synchronize the timestamp with. Setting "
+                                "timestamp as unsafe");
+                        _storage->setLastModifiedTimeUnSafe();
+                        endActivity(); // End the SyncFileTimestamp activity.
+                    }
+                    else
+                    {
+                        checkFileInfo(session, HTTP_REDIRECTION_LIMIT);
+                    }
+                }
+#endif
             }
             break;
 
@@ -2141,6 +2178,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
             case StorageBase::AsyncUpload::State::Error:
             default:
                 broadcastSaveResult(false, "Could not upload document to storage");
+                // [[fallthrough]]
         }
 
         LOG_WRN("Failed to upload [" << _docKey << "] asynchronously. "
@@ -2233,6 +2271,7 @@ void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadRe
                 << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
                 << "] and updated timestamps. Document modified timestamp: "
                 << _storageManager.getLastModifiedTime()
+                << ", newFileModifiedTime: " << _uploadRequest->newFileModifiedTime()
                 << ". Current Activity: " << DocumentState::name(_docState.activity()));
 
         // Handle activity-specific logic.
@@ -2492,9 +2531,13 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
     }
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::FAILED)
     {
-        LOG_DBG("Last upload result: FAILED");
+        LOG_DBG("Last upload failed: " << uploadResult.getReason());
 
-        //TODO: Should we notify all clients?
+        // Since we've failed to get a response, we cannot know if the
+        // Storage has been updated. As such, we need to re-sycn the
+        // document's last modified timestamp.
+        startActivity(DocumentState::Activity::SyncFileTimestamp);
+
         const auto session = _uploadRequest->session();
         if (session)
         {
@@ -2510,6 +2553,7 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
                                                 << "]. The client session is closed.");
         }
 
+        // Notify all.
         broadcastSaveResult(false, "Save failed", uploadResult.getReason());
     }
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED
@@ -4368,47 +4412,101 @@ void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)
     }
 }
 
-void DocumentBroker::checkFileInfo(const Poco::URI& uri, int redirectLimit)
+#if !MOBILEAPP
+void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session, int redirectLimit)
 {
-    auto cfiContinuation = [this, uri]([[maybe_unused]] CheckFileInfo& checkFileInfo)
+    if (!session)
     {
-        const std::string uriAnonym = COOLWSD::anonymizeUrl(uri.toString());
+        assert(session && "Expected a valid session to CheckFileInfo");
+        return;
+    }
 
+    if (_checkFileInfo)
+    {
+        LOG_DBG("CheckFileInfo is in progress already");
+        return;
+    }
+
+    std::weak_ptr<ClientSession> weakSession = session;
+    auto cfiContinuation = [this, weakSession]([[maybe_unused]] CheckFileInfo& checkFileInfo)
+    {
+        assert(_docState.activity() == DocumentState::Activity::SyncFileTimestamp &&
+               "Expected to be in SyncFileTimestamp activity");
         assert(&checkFileInfo == _checkFileInfo.get() && "Unknown CheckFileInfo instance");
-        if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Pass &&
-            _checkFileInfo->wopiInfo())
+        assert(checkFileInfo.completed() &&
+               "Expected CheckFileInfo to be completed when calling the continuation");
+
+        if (checkFileInfo.state() == CheckFileInfo::State::Pass && checkFileInfo.wopiInfo())
         {
             Poco::JSON::Object::Ptr object = _checkFileInfo->wopiInfo();
 
-            std::size_t size = 0;
-            std::string filename, ownerId, lastModifiedTime;
-            JsonUtil::findJSONValue(object, "Size", size);
-            JsonUtil::findJSONValue(object, "OwnerId", ownerId);
-            JsonUtil::findJSONValue(object, "BaseFileName", filename);
+            std::string lastModifiedTime;
             JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
+            std::size_t size = 0;
+            JsonUtil::findJSONValue(object, "Size", size);
 
-            LocalStorage::FileInfo fileInfo = LocalStorage::FileInfo(
-                { size, std::move(filename), std::move(ownerId), std::move(lastModifiedTime) });
+            // It's highly unlikely that the document has been clobbered externally,
+            // yet the size matches exactly. Still, if we are paranoid, we can download
+            // and compare the SHA256 with the one we uploaded. For now, this is an improvement.
+            if (_storageManager.getSizeAsUploaded() == size || _storageManager.getSizeOnServer())
+            {
+                LOG_INF("After failing to upload ["
+                        << _docKey << "], the size on WOPI host matches "
+                        << (_storageManager.getSizeAsUploaded() == size ? "our uploaded"
+                                                                        : "the old size before our")
+                        << " last uploaded size: " << size
+                        << " bytes. We will assume this is our last uploaded version and "
+                           "synchronize the timestamp to: "
+                        << lastModifiedTime << "(from: " << _storageManager.getLastModifiedTime()
+                        << ')');
 
-            // if (COOLWSD::AnonymizeUserData)
-            //     Util::mapAnonymized(Uri::getFilenameFromURL(filename),
-            //                         Uri::getFilenameFromURL(getUri().toString()));
+                _storage->setLastModifiedTime(lastModifiedTime);
+                _storageManager.setLastModifiedTime(lastModifiedTime);
+            }
+            else
+            {
+                LOG_WRN("After failing to upload, the document size neither matches the original, "
+                        "nor our last uploaded. The document is in conflict.");
 
-            auto wopiInfo = std::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, object, uri);
-            // if (wopiInfo->getSupportsLocks())
-            //     lockCtx.initSupportsLocks();
+                handleDocumentConflict();
+            }
 
-
+            // End the SyncFileTimestamp activity, but don't reset _checkFileInfo yet.
+            endActivity();
+            return;
         }
 
-        LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
-        // HttpHelper::sendErrorAndShutdown(http::StatusCode::Unauthorized, _socket);
+        // Failed, but don't end the SyncFileTimestamp activity yet.
+        std::shared_ptr<ClientSession> failedSession = weakSession.lock();
+        if (failedSession)
+        {
+            if (checkFileInfo.state() == CheckFileInfo::State::Timedout)
+            {
+                // Timeout means we don't know whether the session is valid or not. Leave it alone.
+                LOG_INF("CheckFileInfo on [" << _docKey << "] for session #"
+                                             << failedSession->getId() << " timed-out");
+            }
+            else
+            {
+                // Got some response, but not positive. This is an expired session.
+                LOG_WRN("Session [" << failedSession->getId() << "] has invalid access_token for ["
+                                    << _docKey << "], resetting the authorization token");
+                failedSession->invalidateAuthorizationToken();
+            }
+        }
+        else
+        {
+            LOG_WRN("CheckFileInfo failed and its session is expired");
+        }
     };
 
     // CheckFileInfo asynchronously.
-    _checkFileInfo = std::make_unique<CheckFileInfo>(_poll, uri, std::move(cfiContinuation));
+    assert(!_checkFileInfo && "Unexpected CheckFileInfo in progress");
+    _checkFileInfo =
+        std::make_unique<CheckFileInfo>(_poll, session->getPublicUri(), std::move(cfiContinuation));
     _checkFileInfo->checkFileInfo(redirectLimit);
 }
+#endif // !MOBILEAPP
 
 std::vector<std::shared_ptr<ClientSession>> DocumentBroker::getSessionsTestOnlyUnsafe()
 {
