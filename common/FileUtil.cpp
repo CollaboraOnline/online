@@ -540,7 +540,10 @@ namespace FileUtil
 #if defined(__linux__) || defined(__FreeBSD__)
         struct statfs sfs;
         if (statfs(path.c_str(), &sfs) == -1)
-            return true;
+        {
+            LOG_SYS("Failed to stat filesystem [" << path << ']');
+            return true; // We assume the worst.
+        }
 
         const int64_t freeBytes = static_cast<int64_t>(sfs.f_bavail) * sfs.f_bsize;
 
