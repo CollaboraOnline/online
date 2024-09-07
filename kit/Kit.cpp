@@ -2350,7 +2350,7 @@ void Document::postForceModifiedCommand(bool modified)
 
 void Document::forceDocUnmodifiedForBgSave(int viewId)
 {
-    LOG_TRC("force document unmodified from state " << toString(_modified));
+    LOG_TRC("force document unmodified from state " << name(_modified));
     if (_modified == ModifiedState::Modified)
     {
         getLOKitDocument()->setView(viewId);
@@ -2418,8 +2418,7 @@ bool Document::trackDocModifiedState(const std::string &stateChanged)
         break;
     }
     if (_modified != newState)
-        LOG_TRC("Transition modified state from " <<
-                toString(_modified) << " to " << toString(newState));
+        LOG_TRC("Transition modified state from " << name(_modified) << " to " << name(newState));
     _modified = newState;
 
     return filter;
@@ -2463,7 +2462,7 @@ void Document::dumpState(std::ostream& oss)
         << "\n\tmobileAppDocId: " << _mobileAppDocId
         << "\n\tinputProcessingEnabled: " << processInputEnabled()
         << "\n\tduringLoad: " << _duringLoad
-        << "\n\tmodified: " << toString(_modified)
+        << "\n\tmodified: " << name(_modified)
         << "\n\tbgSaveProc: " << _isBgSaveProcess
         << "\n\tbgSaveDisabled: "<< _isBgSaveDisabled
         << "\n";
