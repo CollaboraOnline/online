@@ -1498,8 +1498,7 @@ private:
         DocumentState::Status status() const { return _status; }
         void setStatus(Status newStatus)
         {
-            LOG_TRC("Setting DocumentState from " << toString(_status) << " to "
-                                                  << toString(newStatus));
+            LOG_TRC("Setting DocumentState from " << name(_status) << " to " << name(newStatus));
             assert(newStatus >= _status && "The document status cannot regress");
             _status = newStatus;
         }
@@ -1507,8 +1506,8 @@ private:
         DocumentState::Activity activity() const { return _activity; }
         void setActivity(Activity newActivity)
         {
-            LOG_TRC("Setting Document Activity from " << toString(_activity) << " to "
-                                                      << toString(newActivity));
+            LOG_TRC("Setting Document Activity from " << name(_activity) << " to "
+                                                      << name(newActivity));
             _activity = newActivity;
         }
 
@@ -1521,7 +1520,7 @@ private:
         /// Transitions to Status::Live, implying the document has loaded.
         void setLive()
         {
-            LOG_TRC("Setting DocumentState to Status::Live from " << toString(_status));
+            LOG_TRC("Setting DocumentState to Status::Live from " << name(_status));
             // assert(_status == Status::Loading
             //        && "Document wasn't in Loading state to transition to Status::Live");
             _loaded = true;
@@ -1551,13 +1550,13 @@ private:
 
         void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
-            os << indent << "doc state: " << toString(status());
-            os << indent << "doc activity: " << toString(activity());
+            os << indent << "doc state: " << name(status());
+            os << indent << "doc activity: " << name(activity());
             os << indent << "doc loaded: " << _loaded;
             os << indent << "interactive: " << _interactive;
             os << indent << "close requested: " << _closeRequested;
             os << indent << "unload requested: " << _unloadRequested;
-            os << indent << "disconnected from kit: " << toString(_disconnected);
+            os << indent << "disconnected from kit: " << name(_disconnected);
         }
 
     private:
@@ -1583,12 +1582,13 @@ private:
         if (_docState.activity() != DocumentState::Activity::None)
         {
             LOG_DBG("Error: Cannot start new activity ["
-                    << DocumentState::toString(activity) << "] while executing ["
-                    << DocumentState::toString(_docState.activity()) << ']');
+                    << DocumentState::name(activity) << "] while executing ["
+                    << DocumentState::name(_docState.activity()) << ']');
             assert(!"Cannot start new activity while executing another.");
             return false;
         }
 
+        LOG_DBG("Starting [" << DocumentState::name(activity) << "] activity");
         _docState.setActivity(activity);
         return true;
     }
@@ -1596,7 +1596,7 @@ private:
     /// Ends the current activity.
     void endActivity()
     {
-        LOG_DBG("Ending [" << DocumentState::toString(_docState.activity()) << "] activity.");
+        LOG_DBG("Ending [" << DocumentState::name(_docState.activity()) << "] activity");
         _docState.setActivity(DocumentState::Activity::None);
     }
 
