@@ -12,6 +12,7 @@
 #include <config.h>
 
 #include "SigUtil.hpp"
+#include "SigHandlerTrap.hpp"
 
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
 #  include <execinfo.h>
@@ -231,37 +232,6 @@ void requestShutdown()
         signalLog(buf + i + 1);
     }
 
-    /// This traps the signal-handler so we don't _Exit
-    /// while dumping stack trace. It's re-entrant.
-    /// Used to safely increment and decrement the signal-handler trap.
-    class SigHandlerTrap
-    {
-        static std::atomic<int> SigHandling;
-    public:
-        SigHandlerTrap() { ++SigHandlerTrap::SigHandling; }
-        ~SigHandlerTrap() { --SigHandlerTrap::SigHandling; }
-
-        /// Check that we have exclusive access to the trap.
-        /// Otherwise, there is another signal in progress.
-        bool isExclusive() const
-        {
-            // Return true if we are alone.
-            return SigHandlerTrap::SigHandling == 1;
-        }
-
-        /// Wait for the trap to clear.
-        static void wait()
-        {
-            while (SigHandlerTrap::SigHandling)
-                sleep(1);
-        }
-    };
-    std::atomic<int> SigHandlerTrap::SigHandling;
-
-    void waitSigHandlerTrap()
-    {
-        SigHandlerTrap::wait();
-    }
 
     const char *signalName(const int signo)
     {

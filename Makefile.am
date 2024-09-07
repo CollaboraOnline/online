@@ -377,6 +377,7 @@ shared_headers = common/Common.hpp \
                  common/Rectangle.hpp \
                  common/RenderTiles.hpp \
                  common/SigUtil.hpp \
+                 common/SigHandlerTrap.hpp \
                  common/security.h \
                  common/SpookyV2.h \
                  common/CommandControl.hpp \

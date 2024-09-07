@@ -17,6 +17,7 @@
 #endif
 
 #include "Util.hpp"
+#include "SigHandlerTrap.hpp"
 
 #include <poll.h>
 
@@ -828,6 +829,10 @@ namespace Util
         __gcov_dump();
 #endif
 
+        /// Wait for the signal handler, if any,
+        /// and prevent _Exit while collecting backtrace.
+        SigUtil::SigHandlerTrap::wait();
+
         std::_Exit(code);
     }
 
@@ -1115,5 +1120,9 @@ namespace Util
     }
 
 } // namespace Util
+
+namespace SigUtil {
+    std::atomic<int> SigHandlerTrap::SigHandling;
+} // end namespace SigUtil
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
