@@ -49,7 +49,7 @@ public:
 
     /// Append the given URL to a directive.
     /// @value must be space-delimited and cannot have semicolon.
-    void appendDirectiveUrl(std::string directive, std::string url)
+    void appendDirectiveUrl(std::string directive, const std::string& url)
     {
         appendDirective(std::move(directive), Util::trimURI(url));
     }
