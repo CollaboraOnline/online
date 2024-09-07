@@ -431,7 +431,7 @@ void COOLWSD::checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
         const std::string fs = FileUtil::checkDiskSpaceOnRegisteredFileSystems(cacheLastCheck);
         if (!fs.empty())
         {
-            LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
+            LOG_WRN("Filesystem [" << fs << "] is dangerously low on disk space");
             COOLWSD::alertAllUsersInternal("error: cmd=internal kind=diskfull");
         }
     }
