@@ -125,8 +125,7 @@ class ClipboardCache
 
         bool hasExpired(const std::chrono::steady_clock::time_point &now)
         {
-            return std::chrono::duration_cast<std::chrono::minutes>(
-                now - _inserted).count() >= CLIPBOARD_EXPIRY_MINUTES;
+            return (now - _inserted) >= std::chrono::minutes(CLIPBOARD_EXPIRY_MINUTES);
         }
     };
     // clipboard key -> data

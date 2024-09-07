@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <chrono>
 #include <unordered_map>
 #include <queue>
 
@@ -256,7 +257,7 @@ private:
     std::shared_ptr<Watermark> _docWatermark;
 
     std::queue<std::chrono::steady_clock::time_point> _cursorInvalidatedEvent;
-    const unsigned _eventStorageIntervalMs = 15*1000;
+    static constexpr std::chrono::seconds EventStorageInterval{ 15 };
 
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
