@@ -494,7 +494,7 @@ namespace FileUtil
         if (cacheLastCheck)
         {
             // Don't check more often than once a minute
-            if (std::chrono::duration_cast<std::chrono::seconds>(now - lastCheck).count() < 60)
+            if ((now - lastCheck) < std::chrono::minutes(1))
                 return lastResult;
 
             lastCheck = now;
