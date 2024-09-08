@@ -228,7 +228,10 @@ class SlideAnimations {
 
 		// init all nodes
 		this.aContext.bIsInvalid = !this.aRootNode.init();
-		if (this.aContext.bIsInvalid) return false;
+		if (this.aContext.bIsInvalid) {
+			ANIMDBG.print('SlideAnimationsthis.start: aContext.bIsInvalid');
+			return false;
+		}
 
 		// resolve root node
 		return this.aRootNode.resolve();
