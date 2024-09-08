@@ -30,6 +30,7 @@ class MetaSlide {
 		if (slideInfo.animations) {
 			this._animationsHandler = new SlideAnimations(
 				this._slideShowHandler.getContext(),
+				this,
 			);
 			this._animationsHandler.importAnimations(slideInfo.animations.root);
 			this._animationsHandler.parseInfo();

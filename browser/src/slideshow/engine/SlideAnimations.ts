@@ -164,7 +164,7 @@ class SlideAnimations {
 	private aEventMultiplexer: EventMultiplexer;
 	private bElementsParsed: boolean;
 
-	constructor(aSlideShowContext: SlideShowContext) {
+	constructor(aSlideShowContext: SlideShowContext, metaSlide: MetaSlide) {
 		this.aContext = new NodeContext(aSlideShowContext);
 		this.aSlideShowHandler = aSlideShowContext.aSlideShowHandler;
 		this.aAnimationNodeMap = new Map();
@@ -178,6 +178,7 @@ class SlideAnimations {
 		this.aRootNode = null;
 		this.bElementsParsed = false;
 
+		this.aContext.metaSlide = metaSlide;
 		this.aContext.aAnimationNodeMap = this.aAnimationNodeMap;
 		this.aContext.aAnimatedElementMap = this.aAnimatedElementMap;
 		this.aContext.aSourceEventElementMap = this.aSourceEventElementMap;
