@@ -37,15 +37,15 @@ class AnimationTransformNode extends AnimationBaseNode3 {
 
 		const aNodeInfo = this.aNodeInfo as AnimateTransformNodeInfo;
 		if (
-			!AnimationTransformNode.isValidTransformation(aNodeInfo.transformType)
+			!AnimationTransformNode.isValidTransformation(this.getTransformType())
 		) {
 			this.eCurrentState = NodeState.Invalid;
 			window.app.console.log(
 				'AnimationTransformNode.parseElement: transformation type not found: ' +
-					aNodeInfo.transformType,
+					this.getTransformType(),
 			);
 		} else {
-			this.attributeName = aNodeInfo.transformType;
+			this.attributeName = this.getTransformType();
 		}
 	}
 
@@ -84,6 +84,8 @@ class AnimationTransformNode extends AnimationBaseNode3 {
 	}
 
 	public getTransformType(): string {
-		return this.getAttributeName();
+		return (
+			this.aNodeInfo as AnimateTransformNodeInfo
+		).transformType.toLowerCase();
 	}
 }
