@@ -1475,12 +1475,6 @@ int main(int argc, char**argv)
         return iequal(lhs.c_str(), lhs.size(), rhs.c_str(), rhs.size());
     }
 
-    /// Get system_clock now in milliseconds.
-    inline int64_t getNowInMS()
-    {
-        return std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()).time_since_epoch().count();
-    }
-
     /// Convert a vector to a string. Useful for conversion in templates.
     template <typename T> inline std::string toString(const T& x)
     {
