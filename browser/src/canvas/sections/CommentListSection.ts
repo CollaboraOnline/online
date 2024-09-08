@@ -940,6 +940,16 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.map.sendUnoCommand('.uno:ResolveCommentThread', comment);
 	}
 
+	public promote(annotation: any): void {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: annotation.sectionProperties.data.id
+			}
+		};
+		this.map.sendUnoCommand('.uno:PromoteComment', comment);
+	}
+
 	public getIndexOf (id: any): number {
 		const index = this.idIndexMap.get(id);
 		return (index === undefined) ? -1 : index;
@@ -1016,6 +1026,12 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 							name: this.isThreadResolved($trigger[0].annotation) ? _('Unresolve Thread') : _('Resolve Thread'),
 							callback: function (key: any, options: any) {
 								this.resolveThread.call(this, options.$trigger[0].annotation);
+							}.bind(this)
+						},
+						promote: docLayer._docType !== 'text' || $trigger[0].annotation.isRootComment() || blockChangeFromDifferentAuthor ? undefined : {
+							name: _('Promote to top comment'),
+							callback: function (key: any, options: any) {
+								this.promote.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						}
 					},
@@ -1397,8 +1413,18 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 					this.adjustComment(obj.comment);
 					modifiedObj = obj.comment;
 				}
+				const oldParent = modified.getParentCommentId();
 				modified.setData(modifiedObj);
 				modified.update();
+				if (oldParent !== null && modified.isRootComment()) {
+					const parentIdx = this.getIndexOf(oldParent);
+					const parentComment = this.sectionProperties.commentList[parentIdx];
+					if (parentComment) {
+						const index = parentComment.getIndexOfChild(modified);
+						if (index >= 0)
+							parentComment.removeChildByIndex(index);
+					}
+				}
 				this.update();
 
 				if (CommentSection.autoSavedComment) {
