@@ -17,6 +17,7 @@ class NodeContext {
 	public aAnimationNodeMap: AnimationNodeMap = null;
 	public aAnimatedElementMap: Map<string, AnimatedElement> = null;
 	public aSourceEventElementMap: Map<string, SourceEventElement> = null;
+	public metaSlide: MetaSlide = null;
 	public nStartDelay = 0.0;
 	public bFirstRun: boolean | undefined = undefined;
 	public bIsInvalid = false;

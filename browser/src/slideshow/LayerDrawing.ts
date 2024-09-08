@@ -137,10 +137,6 @@ class LayerDrawing {
 	}
 
 	public getLayerImage(slideHash: string, targetElement: string): ImageBitmap {
-		// TODO: USE REAL HASH !!!
-		slideHash = this.helper.getSlideHash(0);
-		// REMOVE ABOVE
-
 		const layers = this.cachedDrawPages.get(slideHash);
 		for (const i in layers) {
 			const animatedInfo = layers[i].content as AnimatedShapeInfo;
