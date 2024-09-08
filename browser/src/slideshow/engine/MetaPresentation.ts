@@ -131,16 +131,17 @@ class MetaPresentation {
 	}
 
 	public getMetaSlideByIndex(slideIndex: number): MetaSlide {
-		return this.metaSlides.get(this.getSlideHash(slideIndex));
+		return this.getMetaSlide(this.getSlideHash(slideIndex));
 	}
 
 	public getSlideInfo(slideHash: string): SlideInfo {
-		return this.metaSlides.get(slideHash).info;
+		const metaSlide = this.getMetaSlide(slideHash);
+		return metaSlide ? metaSlide.info : null;
 	}
 
 	public getSlideInfoByIndex(slideIndex: number): SlideInfo {
 		const slideHash = this.getSlideHash(slideIndex);
-		return slideHash ? this.metaSlides.get(slideHash).info : null;
+		return slideHash ? this.getSlideInfo(slideHash) : null;
 	}
 
 	public setCurrentSlide(nSlideIndex: number) {
