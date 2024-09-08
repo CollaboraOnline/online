@@ -2248,28 +2248,31 @@ bool ChildSession::renderNextSlideLayer(const unsigned width, const unsigned hei
 
 bool ChildSession::renderSlide(const StringVector& tokens)
 {
-    if (tokens.size() <= 3)
+    if (tokens.size() < 5)
     {
         sendTextFrameAndLogError("error: cmd=getslide kind=syntax");
         return false;
     }
 
+    std::string hash;
+    getTokenString(tokens[1], "hash", hash);
+
     int part = -1;
     std::string partString;
-    if (getTokenString(tokens[1], "part", partString))
+    if (getTokenString(tokens[2], "part", partString))
         part = std::stoi(partString);
 
     unsigned suggestedWidth = 0;
     std::string widthString;
-    if (getTokenString(tokens[2], "width", widthString))
+    if (getTokenString(tokens[3], "width", widthString))
         suggestedWidth = std::stoi(widthString);
 
     unsigned suggestedHeight = 0;
     std::string heightString;
-    if (getTokenString(tokens[3], "height", heightString))
+    if (getTokenString(tokens[4], "height", heightString))
         suggestedHeight = std::stoi(heightString);
 
-    if (part < 0 || suggestedWidth == 0 || suggestedHeight == 0)
+    if (hash.empty() || part < 0 || suggestedWidth == 0 || suggestedHeight == 0)
     {
         sendTextFrameAndLogError("error: cmd=getslide kind=syntax");
         return false;
@@ -2277,21 +2280,23 @@ bool ChildSession::renderSlide(const StringVector& tokens)
 
     bool renderBackground = true;
     std::string renderBackgroundString;
-    if (tokens.size() > 4 && getTokenString(tokens[4], "renderBackground", renderBackgroundString))
+    if (tokens.size() > 5 && getTokenString(tokens[5], "renderBackground", renderBackgroundString))
         renderBackground = std::stoi(renderBackgroundString) > 0;
 
     bool renderMasterPage = true;
     std::string renderMasterPageString;
-    if (tokens.size() > 5 && getTokenString(tokens[5], "renderMasterPage", renderMasterPageString))
+    if (tokens.size() > 6 && getTokenString(tokens[6], "renderMasterPage", renderMasterPageString))
         renderMasterPage = std::stoi(renderMasterPageString) > 0;
 
     unsigned bufferWidth = suggestedWidth;
     unsigned bufferHeight = suggestedHeight;
-    bool success = getLOKitDocument()->createSlideRenderer(part,
+    bool success = getLOKitDocument()->createSlideRenderer(hash.c_str(), part,
                                                            &bufferWidth, &bufferHeight,
                                                            renderBackground, renderMasterPage);
-    if (!success)
+    if (!success) {
+        sendTextFrame("sliderenderingcomplete: fail");
         return false;
+    }
 
     assert(bufferWidth <= suggestedWidth);
     assert(bufferHeight <= suggestedHeight);
@@ -2305,7 +2310,10 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     }
 
     getLOKitDocument()->postSlideshowCleanup();
-    sendTextFrame("sliderenderingcomplete");
+
+    std::string msg = "sliderenderingcomplete: ";
+    msg += (success ? "success" : "fail");
+    sendTextFrame(msg);
 
     return success;
 }
@@ -3627,6 +3635,11 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_TOOLTIP:
     {
         sendTextFrame("tooltip: " + payload);
+        break;
+    }
+    case LOK_CALLBACK_PRESENTATION_INFO_CHANGED:
+    {
+        sendTextFrame("presentationinfochanged: " + payload);
         break;
     }
     default:
