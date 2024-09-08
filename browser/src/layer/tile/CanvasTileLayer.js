@@ -1649,14 +1649,21 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._map.slideShowPresenter) {
 				this._map.slideShowPresenter.onSlideShowInfo(content);
 			}
+		} else if (textMsg.startsWith('presentationinfochanged:')) {
+			if (this._map.slideShowPresenter) {
+				this._map.slideShowPresenter.onSlideShowInfoChanged();
+			}
 		} else if (textMsg.startsWith('slidelayer:')) {
 			const content = JSON.parse(textMsg.substring('slidelayer:'.length + 1));
 			this._map.fire('slidelayer', {
 				message: content,
 				image: img
 			});
-		} else if (textMsg.startsWith('sliderenderingcomplete')) {
-			this._map.fire('sliderenderingcomplete');
+		} else if (textMsg.startsWith('sliderenderingcomplete:')) {
+			const status = textMsg.substring('sliderenderingcomplete:'.length + 1);
+			this._map.fire('sliderenderingcomplete', {
+				success: status === 'success'
+			});
 		}
 	},
 

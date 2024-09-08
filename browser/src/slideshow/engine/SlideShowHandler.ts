@@ -705,6 +705,30 @@ class SlideShowHandler {
 		}
 	}
 
+	cleanLeavingSlideStatus(nOldSlide: number, bSkipSlideTransition: boolean) {
+		const aMetaDoc = this.theMetaPres;
+		if (nOldSlide !== undefined) {
+			const oldMetaSlide = aMetaDoc.getMetaSlideByIndex(nOldSlide);
+			if (this.isEnabled()) {
+				if (
+					oldMetaSlide.animationsHandler &&
+					oldMetaSlide.animationsHandler.isAnimated()
+				) {
+					// force end animations
+					oldMetaSlide.animationsHandler.end(bSkipSlideTransition);
+
+					// clear all queues
+					this.dispose();
+				}
+			}
+
+			if (this.automaticAdvanceTimeout !== null) {
+				clearTimeout(this.automaticAdvanceTimeout as number);
+				this.automaticAdvanceTimeout = null;
+			}
+		}
+	}
+
 	displaySlide(
 		nNewSlide: number,
 		nOldSlide: number | undefined,
@@ -737,24 +761,7 @@ class SlideShowHandler {
 
 		// handle current slide
 		if (nOldSlide !== undefined) {
-			const oldMetaSlide = aMetaDoc.getMetaSlideByIndex(nOldSlide);
-			if (this.isEnabled()) {
-				if (
-					oldMetaSlide.animationsHandler &&
-					oldMetaSlide.animationsHandler.isAnimated()
-				) {
-					// force end animations
-					oldMetaSlide.animationsHandler.end(bSkipSlideTransition);
-
-					// clear all queues
-					this.dispose();
-				}
-			}
-
-			if (this.automaticAdvanceTimeout !== null) {
-				clearTimeout(this.automaticAdvanceTimeout as number);
-				this.automaticAdvanceTimeout = null;
-			}
+			this.cleanLeavingSlideStatus(nOldSlide, bSkipSlideTransition);
 		}
 
 		this.notifySlideStart(nNewSlide, nOldSlide);
