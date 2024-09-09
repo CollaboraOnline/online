@@ -52,9 +52,26 @@ static void send2JS(const std::vector<char>& buffer)
     }
     else
     {
-        js = "window.TheFakeWebSocket.onmessage({'data': window.atob('";
-        js = js + macaron::Base64::Encode(std::string(buffer.data(), buffer.size()));
-        js = js + "')});";
+        const unsigned char *ubufp = (const unsigned char *)buffer.data();
+        std::vector<char> data;
+        for (size_t i = 0; i < buffer.size(); i++)
+        {
+            if (ubufp[i] < ' ' || ubufp[i] == '\'' || ubufp[i] == '\\')
+            {
+                data.push_back('\\');
+                data.push_back('x');
+                data.push_back("0123456789abcdef"[(ubufp[i] >> 4) & 0x0F]);
+                data.push_back("0123456789abcdef"[ubufp[i] & 0x0F]);
+            }
+            else
+            {
+                data.push_back(ubufp[i]);
+            }
+        }
+
+        js = "window.TheFakeWebSocket.onmessage({'data': '";
+        js = js + std::string(data.data(), data.size());
+        js = js + "'});";
     }
 
     LOG_TRC_NOFILE("Evaluating JavaScript: " << js.substr(0, std::min(SHOW_JS_MAXLEN, js.size()))

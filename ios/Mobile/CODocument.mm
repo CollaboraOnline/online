@@ -103,6 +103,7 @@ static std::atomic<unsigned> appDocIdCounter(1);
 - (void)send2JS:(const char *)buffer length:(int)length {
     LOG_DBG("To JS: " << COOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
 
+    const unsigned char *ubufp = (const unsigned char *)buffer;
     std::vector<char> data;
     // Reserve the maxiumum possible length after encoding
     // This avoids an excessive number of reallocations. This is overkill
@@ -118,19 +119,35 @@ static std::atomic<unsigned> appDocIdCounter(1);
                           isMessageOfType(buffer, "rendersearchlist:", length) ||
                           isMessageOfType(buffer, "windowpaint:", length));
 
-    const char *pretext = "window.TheFakeWebSocket.onmessage({'data': window.atob('";
+    const char *pretext = "window.TheFakeWebSocket.onmessage({'data': '";
     const int pretextlen = strlen(pretext);
     for (int i = 0; i < pretextlen; i++)
         data.push_back(pretext[i]);
 
-    const NSData * payload = [[NSData alloc] initWithBytes:buffer length:length];
-    const NSString * encodedPayload = [payload base64EncodedStringWithOptions: 0];
-    const std::string utf8EncodedPayload = std::string([encodedPayload UTF8String]);
-    
-    for (const char& character : utf8EncodedPayload)
-        data.push_back(character);
+    for (int i = 0; i < length; i++) {
+        // Another fix for issue #5843 limit non-ASCII escaping to only
+        // certain message types
+        if (binaryMessage && !newlineFound && ubufp[i] == '\n')
+            newlineFound = true;
 
-    const char *posttext = "')});";
+        // Fix issue #5843 escape non-ASCII characters only for image data
+        // Passing non-ASCII, UTF-8 text from native to JavaScript works
+        // fine, but images become corrupted if any non-ASCII bytes are
+        // not escaped.
+        // The Socket._extractTextImg() JavaScript function assumes that,
+        // in the iOS app, the first newline separates text from image data
+        // so assume all bytes after the first new line are image data.
+        if (ubufp[i] < ' ' || ubufp[i] == '\'' || ubufp[i] == '\\' || (newlineFound && ubufp[i] >= 0x80)) {
+            data.push_back('\\');
+            data.push_back('x');
+            data.push_back("0123456789abcdef"[(ubufp[i] >> 4) & 0x0F]);
+            data.push_back("0123456789abcdef"[ubufp[i] & 0x0F]);
+        } else {
+            data.push_back(ubufp[i]);
+        }
+    }
+
+    const char *posttext = "'});";
     const int posttextlen = strlen(posttext);
     for (int i = 0; i < posttextlen; i++)
         data.push_back(posttext[i]);
