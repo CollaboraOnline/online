@@ -17,12 +17,12 @@
 
 #include <chrono>
 #include <cstring>
-#include <ctype.h>
+#include <cctype>
 #include <iomanip>
 #include <memory>
 #include <ratio>
 #include <sstream>
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -80,7 +80,7 @@ int Socket::createSocket([[maybe_unused]] Socket::Type type)
     default: assert(!"Unknown Socket::Type"); break;
     }
 
-    return socket(domain, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
+    return ::socket(domain, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
 #else
     return fakeSocketSocket();
 #endif
@@ -98,10 +98,10 @@ bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
     if (rc != 0)
         return false;
 
-    child = std::shared_ptr<StreamSocket>(new StreamSocket("save-child", pair[0], Socket::Type::Unix, true));
+    child = std::make_shared<StreamSocket>("save-child", pair[0], Socket::Type::Unix, true);
     child->setNoShutdown();
     child->setClientAddress("save-child");
-    parent = std::shared_ptr<StreamSocket>(new StreamSocket("save-kit-parent", pair[1], Socket::Type::Unix, true));
+    parent = std::make_shared<StreamSocket>("save-kit-parent", pair[1], Socket::Type::Unix, true);
     parent->setNoShutdown();
     parent->setClientAddress("save-parent");
 
@@ -234,7 +234,7 @@ SocketPoll::SocketPoll(std::string threadName)
 
     static bool watchDogProfile = !!getenv("COOL_WATCHDOG");
     if (watchDogProfile && !PollWatchdog)
-        PollWatchdog.reset(new Watchdog());
+        PollWatchdog = std::make_unique<Watchdog>();
 
     _wakeup[0] = -1;
     _wakeup[1] = -1;
@@ -412,7 +412,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
     socketErrorCount++;
 #endif
 
-    std::chrono::steady_clock::time_point now =
+    const std::chrono::steady_clock::time_point now =
         std::chrono::steady_clock::now();
 
     // The events to poll on change each spin of the loop.
@@ -528,7 +528,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         assert(!_pollSockets.empty() && "All existing sockets disappeared from the SocketPoll");
 
         // Fire the poll callbacks and remove dead fds.
-        std::chrono::steady_clock::time_point newNow = std::chrono::steady_clock::now();
+        const std::chrono::steady_clock::time_point newNow = std::chrono::steady_clock::now();
 
         // We use the _pollStartIndex to start the polling at a different index each time. Do some
         // sanity check first to handle the case where we removed one or several sockets last time.
@@ -548,7 +548,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             else if (!_pollSockets[i])
             {
                 // removed in a callback
-                itemsErased++;
+                ++itemsErased;
             }
             else if (_pollFds[i].fd == _pollSockets[i]->getFD())
             {
@@ -571,7 +571,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
                 if (!disposition.isContinue())
                 {
-                    itemsErased++;
+                    ++itemsErased;
                     LOGA_TRC(Socket, '#' << _pollFds[i].fd << ": Removing socket (at " << i
                              << " of " << _pollSockets.size() << ") from " << _name);
                     _pollSockets[i] = nullptr;
@@ -625,10 +625,10 @@ void SocketPoll::closeAllSockets()
     checkAndReThread();
 
     removeFromWakeupArray();
-    for (auto &it : _pollSockets)
+    for (std::shared_ptr<Socket> &it : _pollSockets)
     {
         // first close the underlying socket
-        close(it->getFD());
+        ::close(it->getFD());
 
         // avoid the socketHandler' getting an onDisconnect
         auto stream = dynamic_cast<StreamSocket *>(it.get());
@@ -794,7 +794,7 @@ bool SocketPoll::insertNewUnixSocket(
 #else
     addrunix.sun_path[0] = '0';
 #endif
-    memcpy(&addrunix.sun_path[1], location.c_str(), location.length());
+    std::memcpy(&addrunix.sun_path[1], location.c_str(), location.length());
 
     const int res = connect(fd, (const struct sockaddr*)&addrunix, sizeof(addrunix));
     if (res < 0 && errno != EINPROGRESS)
@@ -1087,21 +1087,21 @@ std::shared_ptr<Socket> ServerSocket::accept()
             const void *inAddr;
             if (clientInfo.sin6_family == AF_INET)
             {
-                auto ipv4 = (struct sockaddr_in *)&clientInfo;
+                struct sockaddr_in *ipv4 = (struct sockaddr_in *)&clientInfo;
                 inAddr = &(ipv4->sin_addr);
                 type = Socket::Type::IPv4;
             }
             else
             {
-                auto ipv6 = (struct sockaddr_in6 *)&clientInfo;
+                struct sockaddr_in6 *ipv6 = &clientInfo;
                 inAddr = &(ipv6->sin6_addr);
                 type = Socket::Type::IPv6;
             }
 
             std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, type);
 
-            inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
-            _socket->setClientAddress(addrstr);
+            ::inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
+            _socket->setClientAddress(addrstr); // @ clientInfo.sin6_port
 
             LOG_TRC("Accepted socket #" << _socket->getFD() << " has family "
                                         << clientInfo.sin6_family << " address "
@@ -1255,7 +1255,7 @@ std::string LocalServerSocket::bind()
 #endif
 
         const std::string rand = Util::rng::getFilename(RandomSuffixLength);
-        memcpy(addrunix.sun_path + socketAbstractUnixName.size(), rand.c_str(), RandomSuffixLength);
+        std::memcpy(addrunix.sun_path + socketAbstractUnixName.size(), rand.c_str(), RandomSuffixLength);
         LOG_ASSERT_MSG(addrunix.sun_path[sizeof(addrunix.sun_path) - 1] == '\0',
                        "addrunix.sun_path is not null terminated");
 
@@ -1370,7 +1370,7 @@ bool StreamSocket::parseHeader(const char *clientName,
         if (request.getChunkedTransferEncoding())
         {
             // keep the header
-            map._spans.push_back(std::pair<size_t, size_t>(0, itBody - _inBuffer.begin()));
+            map._spans.emplace_back(0, itBody - _inBuffer.begin());
 
             int chunk = 0;
             while (itBody != _inBuffer.end())
@@ -1420,7 +1420,7 @@ bool StreamSocket::parseHeader(const char *clientName,
                 }
                 itBody += chunkLen;
 
-                map._spans.push_back(std::pair<size_t,size_t>(chunkOffset, chunkLen));
+                map._spans.emplace_back(chunkOffset, chunkLen);
 
                 if (*itBody != '\r' || *(itBody + 1) != '\n')
                 {
