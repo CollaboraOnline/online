@@ -53,9 +53,11 @@ test/data/hello-world.odt
 test/data/hello-world.ods
 test/data/hello-world.odp
 test/data/hello-world.odg
-test/sample/calc-edit.fods
-test/sample/writer-edit.fodt
-test/sample/impress-edit.fodp
+test/samples/calc-edit.fods
+test/samples/writer-edit.fodt
+test/samples/impress-edit.fodp
+test/samples/draw-edit.odg
+test/samples/calc-edit.ods
 test/fakesockettest
 test/unithttplib
 test/*.csv
