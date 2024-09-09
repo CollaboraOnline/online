@@ -103,18 +103,13 @@ static std::atomic<unsigned> appDocIdCounter(1);
 - (void)send2JS:(const char *)buffer length:(int)length {
     LOG_DBG("To JS: " << COOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
 
-    const char *pretext = "window.TheFakeWebSocket.onmessage({'data': window.atob('";
-    const char *posttext = "')});";
-    const int pretextlen = strlen(pretext);
-    const int posttextlen = strlen(posttext);
-
     std::vector<char> data;
     // Reserve the maxiumum possible length after encoding
     // This avoids an excessive number of reallocations. This is overkill
     // for non-binary messages, but most non-binary messages appear to be
     // under 1K bytes in length. In contrast, it appears that binary
     // messags routinely use at least 75% of the maximum possible length.
-    data.reserve(pretextlen + (length * 4) + posttextlen + 1);
+    data.reserve((length * 4) + 1);
     bool newlineFound = false;
     bool binaryMessage = (isMessageOfType(buffer, "tile:", length) ||
                           isMessageOfType(buffer, "tilecombine:", length) ||
@@ -123,18 +118,20 @@ static std::atomic<unsigned> appDocIdCounter(1);
                           isMessageOfType(buffer, "rendersearchlist:", length) ||
                           isMessageOfType(buffer, "windowpaint:", length));
 
+    const char *pretext = "window.TheFakeWebSocket.onmessage({'data': window.atob('";
+    const int pretextlen = strlen(pretext);
     for (int i = 0; i < pretextlen; i++)
         data.push_back(pretext[i]);
 
-    @autoreleasepool {
-        const NSData * payload = [NSData dataWithBytesNoCopy:const_cast<char*>(buffer) length:length freeWhenDone:NO];
-        const NSString * encodedPayload = [payload base64EncodedStringWithOptions: 0];
-        const std::string_view utf8EncodedPayload = [encodedPayload UTF8String];
+    const NSData * payload = [[NSData alloc] initWithBytes:buffer length:length];
+    const NSString * encodedPayload = [payload base64EncodedStringWithOptions: 0];
+    const std::string utf8EncodedPayload = std::string([encodedPayload UTF8String]);
+    
+    for (const char& character : utf8EncodedPayload)
+        data.push_back(character);
 
-        for (const char& character : utf8EncodedPayload)
-            data.push_back(character);
-    }
-
+    const char *posttext = "')});";
+    const int posttextlen = strlen(posttext);
     for (int i = 0; i < posttextlen; i++)
         data.push_back(posttext[i]);
 
