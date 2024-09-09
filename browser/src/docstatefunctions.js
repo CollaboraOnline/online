@@ -144,3 +144,7 @@ app.setServerAuditFromCore = function (entries) {
 	app.serverAudit = entries;
 	app.map.fire('receivedserveraudit');
 };
+
+app.isExperimentalMode = function () {
+	return window.app.socket.WSDServer.Options.indexOf('E') !== -1;
+};

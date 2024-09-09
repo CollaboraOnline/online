@@ -390,14 +390,15 @@ class Dispatcher {
 		this.actionsMap['presentation'] = this.actionsMap[
 			'fullscreen-presentation'
 		] = () => {
-			if (app.map._debug.debugOn) app.map.fire('newfullscreen');
+			if (app.map._debug.debugOn || app.isExperimentalMode())
+				app.map.fire('newfullscreen');
 			else app.map.fire('fullscreen');
 		};
 
 		this.actionsMap['presentation-currentslide'] = this.actionsMap[
 			'presentation-currentslide'
 		] = () => {
-			if (app.map._debug.debugOn)
+			if (app.map._debug.debugOn || app.isExperimentalMode())
 				app.map.fire('newfullscreen', {
 					startSlideNumber: app.map.getCurrentPartNumber(),
 				});
@@ -409,7 +410,8 @@ class Dispatcher {
 
 		this.actionsMap['presentinwindow'] = this.actionsMap['present-in-window'] =
 			() => {
-				if (app.map._debug.debugOn) app.map.fire('newpresentinwindow');
+				if (app.map._debug.debugOn || app.isExperimentalMode())
+					app.map.fire('newpresentinwindow');
 				else app.map.fire('presentinwindow');
 			};
 
