@@ -1268,6 +1268,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		};
 
 		$(radiobuttonLabel).click(() => {
+			if ($(radiobutton).prop('disabled')) return;
+
 			$(radiobutton).prop('checked', true);
 			toggleFunction.bind({checked: true})();
 		});
