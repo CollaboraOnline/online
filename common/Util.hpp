@@ -20,7 +20,9 @@
 #include <cstring>
 #include <algorithm>
 #include <atomic>
+#include <limits>
 #include <mutex>
+#include <ratio>
 #include <set>
 #include <sstream>
 #include <string>
@@ -146,6 +148,106 @@ namespace Util
         static void readTime(uint64_t &cpu, uint64_t &sys);
         uint64_t _startCPU;
         uint64_t _startSys;
+    };
+
+    // Time-weighted average values of arbitrary unit
+    class TimeAverage
+    {
+    public:
+        typedef std::chrono::steady_clock::time_point time_point;
+
+    private:
+        time_point _t0; // first timestamp
+        time_point _t1; // last timestamp
+        double _v1; // last value, arbitrary unit
+        double _area; // complete area value * (_t1-_t0)
+
+    public:
+        // default ctor without value initialization
+        constexpr TimeAverage()
+            : _v1(0)
+            , _area(0)
+        {
+        }
+
+        // ctor with value initialization
+        // @param t initial time-point
+        // @param v initial value in arbitrary unit
+        constexpr TimeAverage(time_point t, double v)
+            : _t0(t)
+            , _t1(t)
+            , _v1(v)
+            , _area(0.0)
+        {
+        }
+
+        // Returns true if initialized via reset() or ctor
+        constexpr bool initialized() const
+        {
+            return _t0.time_since_epoch() != time_point::duration::zero();
+        }
+
+        // initialize instance with given values
+        // @param t initial time-point
+        // @param v initial value in arbitrary unit
+        void reset(time_point t, double v)
+        {
+            _t0 = t;
+            _t1 = t;
+            _v1 = v;
+            _area = 0.0;
+        }
+
+        // Move endTime() to given time-point and adjust startTime() maintaining duration()
+        // @param t new endTime()
+        void moveTo(time_point t)
+        {
+            _t0 += t - _t1;
+            _t1 = t;
+        }
+
+        // Adds a value of arbitrary unit at given time-point, returns new average value of arbitrary unit
+        // May reset() instance and returns `v` if not yet initialized()
+        // @param t new added time-point
+        // @param v new added value in arbitrary unit
+        double add(time_point t, double v)
+        {
+            if (!initialized())
+            {
+                reset(t, v);
+                return v;
+            }
+            else
+            {
+                // time*value area accumulation
+                const std::chrono::duration<double> dt1 = std::chrono::duration<double>(t - _t1);
+                // area(rectangle + triangle)
+                // _area += dt1.count() * _v1 + (dt1.count() * (v - _v1) * 0.5);
+                _area += dt1.count() * 0.5 * (_v1 + v);
+                _t1 = t;
+                _v1 = v;
+                return average();
+            }
+        }
+
+        // Returns average value in arbitrary unit
+        constexpr double average() const
+        {
+            const double dt = duration();
+            return dt > std::numeric_limits<double>::epsilon() ? _area / dt : _v1;
+        }
+
+        // Returns last value in arbitrary unit
+        constexpr double last() const { return _v1; }
+        // Returns last time-point
+        constexpr std::chrono::steady_clock::time_point lastTime() const { return _t1; }
+        // Returns first time-point
+        constexpr std::chrono::steady_clock::time_point startTime() const { return _t0; }
+        // Returns duration in seconds
+        constexpr double duration() const
+        {
+            return std::chrono::duration<double>(_t1 - _t0).count();
+        }
     };
 
     class DirectoryCounter
