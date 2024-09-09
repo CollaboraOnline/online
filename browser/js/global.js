@@ -24,6 +24,17 @@ var Base64ToArrayBuffer = function(base64Str) {
 	return ab;
 };
 
+// Written and named as a sort of analog to plain atob ... except this one supports non-ascii
+// Nothing is perfect so this also mangles binary - don't decode tiles with it
+// This function may look unused, but it's needed in WASM and mobile to send data through the fake websocket. Please
+// don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
+// eslint-disable-next-line
+var b64d = function(base64Str) {
+	var binStr = atob(base64Str);
+	var u8Array = Uint8Array.from(binStr, c => c.codePointAt(0));
+	return new TextDecoder().decode(u8Array);
+}
+
 // Put these into a class to separate them better.
 class BrowserProperties {
 	static initiateBrowserProperties(global) {
