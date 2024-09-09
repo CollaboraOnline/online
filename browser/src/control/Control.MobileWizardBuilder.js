@@ -268,15 +268,15 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		L.DomUtil.addClass(container, 'radiobutton');
 		L.DomUtil.addClass(container, builder.options.cssClass);
 
+		var radiobuttonLabel = L.DomUtil.create('label', '', container);
+		radiobuttonLabel.textContent = builder._cleanText(data.text);
+		radiobuttonLabel.htmlFor = data.id;
+
 		var radiobutton = L.DomUtil.create('input', '', container);
 		radiobutton.type = 'radio';
 
 		if (data.group)
 			radiobutton.name = data.group;
-
-		var radiobuttonLabel = L.DomUtil.create('label', '', container);
-		radiobuttonLabel.textContent = builder._cleanText(data.text);
-		radiobuttonLabel.htmlFor = data.id;
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(radiobutton).attr('disabled', 'disabled');

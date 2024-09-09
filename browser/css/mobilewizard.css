@@ -827,6 +827,10 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 .checkbutton,
 .radiobutton{
 	clear: both;
+	width: 92%;
+	margin: 0 4%;
+	display: flex;
+	align-items: center;
 }
 .checkbutton label {
 	line-height: 44px;
@@ -886,8 +890,7 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	border-radius: 50%;
 	width: var(--btn-size);
 	height: var(--btn-size);
-	margin: 10px 20px 10px 0px !important;
-	float: right;
+	margin: 10px 10px 10px auto !important;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-o-appearance: none;
