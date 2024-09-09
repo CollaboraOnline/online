@@ -101,7 +101,8 @@ public:
         return _docManager->sendFrame(msg.data(), msg.size(), WSOpCode::Binary);
     }
 
-    bool sendProgressFrame(const char* id, const std::string &jsonProps);
+    bool sendProgressFrame(const char* id, const std::string& jsonProps,
+                           const std::string& forcedID = "");
 
     using Session::sendTextFrame;
 
