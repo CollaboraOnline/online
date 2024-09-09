@@ -180,35 +180,37 @@ m4_ifelse(MOBILEAPP,[true],
     </div>
 
     <!-- Remove if you don't want the About dialog -->
-    <div id="about-dialog" tabIndex="0">
-      <div id="about-dialog-header">
-        <fig id="integrator-logo"></fig>
-        <h1 id="product-name">Collabora Online</h1>
-      </div>
-      <hr/>
-      <div id="about-dialog-container">
-        <div id="about-dialog-logos">
-          <fig id="product-logo"></fig>
-          <fig id="lokit-logo"></fig>
+    <dialog>
+      <div id="about-dialog" tabIndex="0">
+        <div id="about-dialog-header">
+          <fig id="integrator-logo"></fig>
+          <h1 id="product-name">Collabora Online</h1>
         </div>
-        <div id="about-dialog-info-container">
-          <div id="about-dialog-info">
-            <div id="coolwsd-version-label"></div>
-            <div class="about-dialog-info-div"><div id="coolwsd-version" dir="ltr"></div></div>
-            <div class="spacer"></div>
-            <div id="lokit-version-label"></div>
-            <div class="about-dialog-info-div"><div id="lokit-version" dir="ltr"></div></div>
-            m4_ifelse(MOBILEAPP,[],[<div id="served-by"><span id="served-by-label"></span>&nbsp;<span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
-            <div id="slow-proxy"></div>
-            m4_ifelse(DEBUG,[true],[<div id="js-dialog">JSDialogs: <a href="#">View widgets</a></div>])
-            <div id="routeToken"></div>
-            <div id="timeZone"></div>
-            m4_ifelse(MOBILEAPP,[],[<div id="wopi-host-id">%WOPI_HOST_ID%</div><div id="proxy-prefix-id">%PROXY_PREFIX_ENABLED%</div>],[<p></p>])
-            <p class="about-dialog-info-div"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
+        <hr/>
+        <div id="about-dialog-container">
+          <div id="about-dialog-logos">
+            <fig id="product-logo"></fig>
+            <fig id="lokit-logo"></fig>
+          </div>
+          <div id="about-dialog-info-container">
+            <div id="about-dialog-info">
+              <div id="coolwsd-version-label"></div>
+              <div class="about-dialog-info-div"><div id="coolwsd-version" dir="ltr"></div></div>
+              <div class="spacer"></div>
+              <div id="lokit-version-label"></div>
+              <div class="about-dialog-info-div"><div id="lokit-version" dir="ltr"></div></div>
+              m4_ifelse(MOBILEAPP,[],[<div id="served-by"><span id="served-by-label"></span>&nbsp;<span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
+              <div id="slow-proxy"></div>
+              m4_ifelse(DEBUG,[true],[<div id="js-dialog">JSDialogs: <a href="#">View widgets</a></div>])
+              <div id="routeToken"></div>
+              <div id="timeZone"></div>
+              m4_ifelse(MOBILEAPP,[],[<div id="wopi-host-id">%WOPI_HOST_ID%</div><div id="proxy-prefix-id">%PROXY_PREFIX_ENABLED%</div>],[<p></p>])
+              <p class="about-dialog-info-div"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </dialog>
 
 m4_ifelse(MOBILEAPP, [true],
      [
