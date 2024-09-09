@@ -548,12 +548,18 @@ void DocumentBroker::pollThread()
                                                  _storageManager.uploadFailureCount() >=
                                                      static_cast<std::size_t>(limStoreFailures)))
                     {
-                        LOG_ERR("Failed to store the document and reached maximum retry count of "
-                                << limStoreFailures
-                                << ". Giving up. The document should be recoverable from the "
-                                   "quarantine. Save failures: "
-                                << _saveManager.saveFailureCount()
-                                << ", Upload failures: " << _storageManager.uploadFailureCount());
+                        LOG_ERR(
+                            "Failed to store the document and reached maximum retry count of "
+                            << limStoreFailures
+                            << "Save failures: " << _saveManager.saveFailureCount()
+                            << ", Upload failures: " << _storageManager.uploadFailureCount()
+#if !MOBILEAPP
+                            << ". Giving up"
+                            << (_storage && _quarantine && _quarantine->isEnabled()
+                                    ? ". The document should be recoverable from the quarantine. "
+                                    : ", but Quarantine is disabled. ")
+#endif // !MOBILEAPP
+                        );
                         stop("storefailed");
                         continue;
                     }
@@ -729,11 +735,12 @@ void DocumentBroker::pollThread()
     {
         // Quarantine the last copy, if different.
         LOG_WRN((dataLoss ? "Data loss " : "Crash ")
-                << "detected, will quarantine last version of [" << getDocKey()
-                << "] if necessary. Quarantine enabled: "
-                << (_quarantine && _quarantine->isEnabled())
-                << ", Storage available: " << bool(_storage));
-        if (_storage && _quarantine)
+                << "detected on [" << getDocKey() << ']'
+                << (_storage && _quarantine && _quarantine->isEnabled()
+                        ? ". Will quarantine the last version. "
+                        : ", but Quarantine is disabled. ")
+                << "Storage available: " << bool(_storage));
+        if (_storage && _quarantine && _quarantine->isEnabled())
         {
             const std::string uploading = _storage->getRootFilePathUploading();
             if (FileUtil::Stat(uploading).exists())
@@ -1865,9 +1872,10 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     const std::string oldName = _storage->getRootFilePathToUpload();
     if (FileUtil::Stat(oldName).exists())
     {
-        if (_quarantine)
+        if (_quarantine && _quarantine->isEnabled())
         {
             // Quarantine the file before renaming, if it exists.
+            LOG_DBG("Quarantining the old file after saving: " << oldName);
             _quarantine->quarantineFile(oldName);
         }
 
@@ -2507,8 +2515,15 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             LOG_WRN("The document ["
                     << _docKey
                     << "] could not be uploaded to storage because there is a newer version there, "
-                       "and no active clients exist to resolve the conflict. The document should "
-                       "be recoverable from the quarantine. Stopping.");
+                       "and no active clients exist to resolve the conflict"
+#if !MOBILEAPP
+                    << (_storage && _quarantine && _quarantine->isEnabled()
+                            ? ". The document should be recoverable from the quarantine. "
+                            : ", but Quarantine is disabled. ")
+#else
+                    << ". "
+#endif // !MOBILEAPP
+                    << "Stopping.");
             stop("conflict");
         }
     }
@@ -4354,7 +4369,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  isViewFileExtension: " << _isViewFileExtension;
 #if !MOBILEAPP
     os << "\n  last quarantined version: "
-       << (_quarantine ? _quarantine->lastQuarantinedFilePath() : "<unavailable>");
+       << (_quarantine && _quarantine->isEnabled() ? _quarantine->lastQuarantinedFilePath()
+                                                   : "<unavailable>");
 #endif
 
     if (_limitLifeSeconds > std::chrono::seconds::zero())
