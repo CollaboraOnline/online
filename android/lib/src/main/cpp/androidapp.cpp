@@ -128,7 +128,7 @@ static void send2JS(const JNIThreadContext &jctx, const std::vector<char>& buffe
     {
         const unsigned char *ubufp = (const unsigned char *)buffer.data();
         std::stringstream ss;
-        ss << "atob('";
+        ss << "b64d('";
 
         Poco::Base64Encoder encoder(ss);
         encoder.rdbuf()->setLineLength(0); // unlimited

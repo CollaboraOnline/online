@@ -103,7 +103,15 @@ static std::atomic<unsigned> appDocIdCounter(1);
 - (void)send2JS:(const char *)buffer length:(int)length {
     LOG_DBG("To JS: " << COOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
 
-    const char *pretext = "window.TheFakeWebSocket.onmessage({'data': window.atob('";
+    bool binaryMessage = (isMessageOfType(buffer, "tile:", length) ||
+                          isMessageOfType(buffer, "tilecombine:", length) ||
+                          isMessageOfType(buffer, "delta:", length) ||
+                          isMessageOfType(buffer, "renderfont:", length) ||
+                          isMessageOfType(buffer, "rendersearchlist:", length) ||
+                          isMessageOfType(buffer, "windowpaint:", length));
+
+    const char *pretext = binaryMessage ? "window.TheFakeWebSocket.onmessage({'data': window.atob('"
+                                        : "window.TheFakeWebSocket.onmessage({'data': window.b64d('";
     const char *posttext = "')});";
     const int pretextlen = strlen(pretext);
     const int posttextlen = strlen(posttext);
@@ -115,13 +123,6 @@ static std::atomic<unsigned> appDocIdCounter(1);
     // under 1K bytes in length. In contrast, it appears that binary
     // messags routinely use at least 75% of the maximum possible length.
     data.reserve(pretextlen + (length * 4) + posttextlen + 1);
-    bool newlineFound = false;
-    bool binaryMessage = (isMessageOfType(buffer, "tile:", length) ||
-                          isMessageOfType(buffer, "tilecombine:", length) ||
-                          isMessageOfType(buffer, "delta:", length) ||
-                          isMessageOfType(buffer, "renderfont:", length) ||
-                          isMessageOfType(buffer, "rendersearchlist:", length) ||
-                          isMessageOfType(buffer, "windowpaint:", length));
 
     for (int i = 0; i < pretextlen; i++)
         data.push_back(pretext[i]);
