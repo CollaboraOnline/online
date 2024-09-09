@@ -52,7 +52,7 @@ static void send2JS(const std::vector<char>& buffer)
     }
     else
     {
-        js = "window.TheFakeWebSocket.onmessage({'data': window.atob('";
+        js = "window.TheFakeWebSocket.onmessage({'data': window.b64d('";
         js = js + macaron::Base64::Encode(std::string(buffer.data(), buffer.size()));
         js = js + "')});";
     }
