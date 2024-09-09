@@ -1460,10 +1460,10 @@ L.Map = L.Evented.extend({
 			switch (e.statusType)
 			{
 			case 'start':
-				if (e.text) {
-					// e.text translated by Core
-					this.showBusy(e.text);
-				}
+				// e.text translated by Core
+				this.showBusy(e.text ? e.text : _('Please wait!'));
+				if (e.forceid)
+					this._progressBar.forceid = e.forceid;
 				break;
 			case 'setvalue':
 				this._progressBar.setBar(true);
@@ -1472,7 +1472,10 @@ L.Map = L.Evented.extend({
 			case 'finish':
 			case 'coolloaded':
 			case 'reconnected':
+				if(this._progressBar.forceid !== e.forceid)
+					return;
 				this.hideBusy();
+				this._progressBar.forceid = undefined;
 				break;
 			}
 		}
