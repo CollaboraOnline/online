@@ -397,6 +397,10 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
+		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev)) {
+			ev.preventDefault();
+			return;
+		}
 		if (this._map.jsdialog
 			&& (this._map.jsdialog.hasDialogOpened() || this._map.jsdialog.hasSnackbarOpened() || this._map.jsdialog.hasDropdownOpened())
 			&& this._map.jsdialog.handleKeyEvent(ev)) {
@@ -436,23 +440,6 @@ L.Map.Keyboard = L.Handler.extend({
 				this._map._docLayer._preview.partsFocused = false;
 			}
 		}
-		else if (this._isCtrlKey(ev) && !ev.shiftKey && !ev.altKey && ev.keyCode === this.keyCodes.F) {
-			if (app.UI.language.fromURL === 'de' && this._map.getDocType() === 'text') {
-				this._map.sendUnoCommand('.uno:Navigator');
-			}
-			else {
-				if (!this._map.uiManager.isStatusBarVisible()) {
-					this._map.uiManager.showStatusBar();
-				}
-				this._map.fire('focussearch');
-			}
-
-			ev.preventDefault();
-		}
-		else if (this._isCtrlKey(ev) && !ev.shiftKey && ev.altKey && ev.keyCode === this.keyCodes.S && app.UI.language.fromURL === 'de' && this._map.getDocType() === 'text') {
-			this._map.fire('focussearch');
-			ev.preventDefault();
-		}
 		else if (this._isCtrlKey(ev) && ev.keyCode === this.keyCodes.S) {
 			// Save only when not read-only and when HideSaveOption is false.
 			if (!this._map.isReadOnlyMode() && !this._map['wopi'].HideSaveOption) {
@@ -490,7 +477,6 @@ L.Map.Keyboard = L.Handler.extend({
 			ev.preventDefault();
 			return;
 		}
-
 		var docLayer = this._map._docLayer;
 		if (!keyEventFn && docLayer && docLayer.postKeyboardEvent) {
 			// default is to post keyboard events on the document

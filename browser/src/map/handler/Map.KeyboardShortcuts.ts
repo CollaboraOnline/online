@@ -166,23 +166,28 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     */
     new ShortcutDescriptor(null, 'keydown', 0, 'F1', null, 'showhelp', null),
     new ShortcutDescriptor(null, 'keydown', Mod.ALT, 'F1', null, 'focustonotebookbar', null),
+    new ShortcutDescriptor(null, 'keydown', Mod.CTRL, 'f', null,'home-search', null),
 
     new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL | Mod.SHIFT, 'PageUp', undefined, undefined),
     new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL | Mod.SHIFT, 'PageDown', undefined, undefined),
     new ShortcutDescriptor('spreadsheet', 'keydown', 0, 'F5', null, null, null),
 
+
     new ShortcutDescriptor('text', 'keydown', 0, 'F2', null, null, null),
     new ShortcutDescriptor('text', 'keydown', 0, 'F5', null, null, null),
+
 
     new ShortcutDescriptor('presentation', 'keydown', 0, 'F5', null, 'presentation', null),
     new ShortcutDescriptor('presentation', 'keydown', 0, 'PageUp', null, 'previouspart', ViewType.ReadOnly),
     new ShortcutDescriptor('presentation', 'keydown', 0, 'PageDown', null, 'nextpart', ViewType.ReadOnly),
+
 
     new ShortcutDescriptor('drawing', 'keydown', 0, 'F5', null, null, null),
     new ShortcutDescriptor('drawing', 'keydown', 0, 'PageUp', null, 'previouspart', ViewType.ReadOnly),
     new ShortcutDescriptor('drawing', 'keydown', 0, 'PageDown', null, 'nextpart', ViewType.ReadOnly),
     new ShortcutDescriptor('drawing', 'keydown', 0, 'End', null, 'lastpart', ViewType.ReadOnly),
     new ShortcutDescriptor('drawing', 'keydown', 0, 'Home', null, 'firstpart', ViewType.ReadOnly),
+
 
     new ShortcutDescriptor(null, 'keydown', Mod.ALT | Mod.CTRL, 'p', null, 'userlist', null),
 ));
@@ -197,6 +202,8 @@ keyboardShortcuts.definitions.set('de', new Array<ShortcutDescriptor>(
 
     new ShortcutDescriptor('text', 'keydown', Mod.SHIFT, 'F3', '.uno:ChangeCaseRotateCase', null),
     new ShortcutDescriptor('text', 'keydown', 0, 'F5', '.uno:GoToPage', null, null),
+    new ShortcutDescriptor('text', 'keydown', Mod.CTRL, 'f', '.uno:Navigator', null),
+    new ShortcutDescriptor('text', 'keydown',  Mod.ALT | Mod.CTRL, 's', null, 'home-search', null),
 
     new ShortcutDescriptor('spreadsheet', 'keydown', Mod.SHIFT, 'F3', '.uno:FunctionDialog', null),
     new ShortcutDescriptor('spreadsheet', 'keydown', Mod.SHIFT, 'F2', null, 'insertcomment', null),
