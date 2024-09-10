@@ -180,6 +180,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	grid-auto-flow: column;
 	grid-gap: 4px;
 	align-items: center;
+	justify-items: center;
+	width: max-content;
 }
 
 /* unobuttons */
@@ -200,9 +202,9 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 .unotoolbutton.notebookbar .unobutton {
 	box-sizing: border-box;
-	padding: 0;
-	width: var(--btn-size);
-	height: var(--btn-size);
+	padding: 3px;
+	min-width: var(--btn-size);
+	min-height: var(--btn-size);
 	background-color: transparent;
 	margin: 0;
 	vertical-align: middle;
@@ -210,7 +212,23 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	line-height: 0em;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
-	border-radius: var(--border-radius);
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.unotoolbutton.notebookbar .unobutton::after {
+	--click-increment: -1px;
+	position: absolute;
+	content: '';
+	top: var(--click-increment);
+	right: var(--click-increment);
+	bottom: var(--click-increment);
+	left: var(--click-increment);
+}
+
+.unotoolbutton.notebookbar.inline:hover {
+	background-color: var(--color-background-darker);
 }
 
 .jsdialog .ui-tabs-content {
@@ -289,7 +307,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 .unotoolbutton.notebookbar {
-	margin-inline-end: 5px !important;
 	text-align: center;
 }
 
@@ -348,7 +365,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 .has-colorpicker.menubutton img {
 	width: var(--btn-size-m) !important;
 	height: var(--btn-size-m) !important;
-	padding-bottom: calc(var(--btn-size) - var(--btn-size-m));
 }
 /* Styles preview */
 
