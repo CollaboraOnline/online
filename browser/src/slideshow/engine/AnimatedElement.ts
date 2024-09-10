@@ -14,7 +14,7 @@ declare var app: any;
 
 type BoundingBoxType = DOMRect;
 
-type AnimatedObjectType = any;
+type AnimatedObjectType = ImageBitmap;
 
 const NSS_SVG = 'http://www.w3.org/2000/svg';
 
@@ -219,9 +219,22 @@ interface AnimatedElementState {
 	bVisible: boolean;
 }
 
+function BBoxToString(aBB: BoundingBoxType) {
+	return `{ x: ${aBB.x}, y: ${aBB.y}, width: ${aBB.width}, height: ${aBB.height} }`;
+}
+
+function getBBoxCenter(aBB: BoundingBoxType) {
+	return {
+		x: aBB.x + aBB.width / 2,
+		y: aBB.y + aBB.height / 2,
+	};
+}
+
 class AnimatedElement {
 	private sId: string;
 	private slideHash: string;
+	private slideWidth: number;
+	private slideHeight: number;
 	private aLayer: ImageBitmap = null;
 	private aBaseBBox: BoundingBoxType = null;
 	private aBaseElement: AnimatedObjectType;
@@ -236,58 +249,188 @@ class AnimatedElement {
 	private bIsUpdated = true;
 	private nCenterX: number;
 	private nCenterY: number;
-	private nScaleFactorX: number;
-	private nScaleFactorY: number;
-	private nRotationAngle: number;
+	private nScaleFactorX: number = 1.0;
+	private nScaleFactorY: number = 1.0;
+	private nRotationAngle: number = 0;
 	private aTMatrix: DOMMatrix;
 	private nOpacity: number; // [0, 1]
 	private bVisible: boolean;
 	private aSlideShowContext: SlideShowContext;
+	private offscreenCanvas: OffscreenCanvas;
+	private canvasContext: OffscreenCanvasRenderingContext2D;
+	private runningAnimations: number = 0;
+	private animatedLayerInfo: AnimatedShapeInfo = null;
+	private slideRenderer: SlideRenderer;
+	private bIsValid: boolean = false;
 
-	constructor(sId: string, slideHash: string) {
+	constructor(
+		sId: string,
+		slideHash: string,
+		slideWidth: number,
+		slideHeight: number,
+	) {
+		ANIMDBG.print(`AnimatedElement(${sId}, ${slideHash})`);
 		this.sId = sId;
 		this.slideHash = slideHash;
+		this.slideWidth = slideWidth;
+		this.slideHeight = slideHeight;
+
+		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
+		this.slideRenderer = presenter._slideRenderer;
+	}
+
+	public isValid() {
+		return this.bIsValid;
+	}
+
+	private init() {
+		this.animatedLayerInfo = this.getAnimatedLayerInfo();
+		if (!this.animatedLayerInfo) {
+			// create a dummy bounding box for not break animation engine
+			this.aBaseBBox = new DOMRect(0, 0, 1920, 1080);
+			window.app.console.log(
+				'AnimatedElement.init: not possible to retrieve animated layer info',
+			);
+			return;
+		}
+
+		this.aLayer = (this.animatedLayerInfo.content as ImageInfo).data;
+		if (!this.aLayer) {
+			window.app.console.log('AnimatedElement.init: layer not valid');
+		}
+
+		this.bIsValid = true;
+
+		const aBB = this.animatedLayerInfo.bounds;
+		this.aBaseBBox = this.cloneBBox(aBB);
+		console.debug(
+			'AnimatedElement.init: bounding box: this.aBaseBBox' +
+				BBoxToString(this.aBaseBBox),
+		);
+
+		this.offscreenCanvas = new OffscreenCanvas(
+			this.aLayer.width,
+			this.aLayer.height,
+		);
+		this.canvasContext = this.offscreenCanvas.getContext('2d');
+
 		this.aBaseElement = this.createBaseElement();
 		this.aActiveElement = this.clone(this.aBaseElement);
 
-		this.initElement();
+		this.nBaseCenterX = this.aBaseBBox.x + this.aBaseBBox.width / 2;
+		this.nBaseCenterY = this.aBaseBBox.y + this.aBaseBBox.height / 2;
+		console.debug(
+			`AnimatedElement.init: base center: x: ${this.nBaseCenterX} y: ${this.nBaseCenterY}`,
+		);
+	}
+
+	private getAnimatedLayerInfo(): AnimatedShapeInfo {
+		ANIMDBG.print('AnimatedElement.getAnimatedLayerInfo');
+		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
+		if (presenter) {
+			const compositor = presenter._slideCompositor;
+			if (compositor) {
+				return compositor.getAnimatedLayerInfo(this.slideHash, this.sId);
+			}
+		}
+		return null;
 	}
 
 	private createBaseElement(): AnimatedObjectType {
-		// TODO maybe crop the layer to the bbox and return it as a bitmap or canvas.
-		return null;
+		this.canvasContext.clearRect(
+			0,
+			0,
+			this.offscreenCanvas.width,
+			this.offscreenCanvas.height,
+		);
+		// TODO evaluate cropping to bounding box
+		// this.canvasContext.drawImage(this.aLayer, this.aBaseBBox.x, this.aBaseBBox.y, this.aBaseBBox.width, this.aBaseBBox.height);
+		this.canvasContext.drawImage(
+			this.aLayer,
+			0,
+			0,
+			this.aLayer.width,
+			this.aLayer.height,
+		);
+		return this.offscreenCanvas.transferToImageBitmap();
 	}
 
 	private clone(aElement: AnimatedObjectType): AnimatedObjectType {
-		return null;
-	}
-
-	private setBBox(aBBox: BoundingBoxType) {
-		if (!aBBox) aBBox = new DOMRect(0, 0, 0, 0);
-		this.aBaseBBox = this.cloneBBox(aBBox);
-		this.nBaseCenterX = this.aBaseBBox.x + this.aBaseBBox.width / 2;
-		this.nBaseCenterY = this.aBaseBBox.y + this.aBaseBBox.height / 2;
+		if (!aElement) return null;
+		this.canvasContext.clearRect(
+			0,
+			0,
+			this.offscreenCanvas.width,
+			this.offscreenCanvas.height,
+		);
+		this.canvasContext.drawImage(
+			aElement,
+			0,
+			0,
+			aElement.width,
+			aElement.height,
+		);
+		return this.offscreenCanvas.transferToImageBitmap();
 	}
 
 	private cloneBBox(aBBox: BoundingBoxType): BoundingBoxType {
+		if (!aBBox) return null;
 		return new DOMRect(aBBox.x, aBBox.y, aBBox.width, aBBox.height);
 	}
 
+	private convertX(x: number) {
+		return Math.round((x * this.offscreenCanvas.width) / this.slideWidth);
+	}
+
+	private convertY(y: number) {
+		return Math.round((y * this.offscreenCanvas.height) / this.slideHeight);
+	}
+
+	private update() {
+		if (!this.bVisible) return;
+
+		const aElement = this.aBaseElement;
+		this.canvasContext.clearRect(
+			0,
+			0,
+			this.offscreenCanvas.width,
+			this.offscreenCanvas.height,
+		);
+		this.canvasContext.globalAlpha = this.nOpacity;
+		const dx = this.convertX(this.nCenterX - this.nBaseCenterX);
+		const dy = this.convertY(this.nCenterY - this.nBaseCenterY);
+
+		console.debug(
+			`AnimatedElement.update:
+				element width: ${aElement.width}
+				element height: ${aElement.height}
+				base center: (${this.nBaseCenterX}, ${this.nBaseCenterY})
+				actual center: (${this.nCenterX}, ${this.nCenterY})
+				dx: ${dx}
+				dy: ${dy}`,
+		);
+		this.canvasContext.drawImage(
+			aElement,
+			0,
+			0,
+			aElement.width,
+			aElement.height,
+			dx,
+			dy,
+			aElement.width,
+			aElement.height,
+		);
+		this.aActiveElement = this.offscreenCanvas.transferToImageBitmap();
+	}
+
+	public getAnimatedLayer() {
+		this.update();
+		return this.bVisible ? this.aActiveElement : null;
+	}
+
 	private initElement() {
-		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
-		if (!presenter) return;
-		const compositor: SlideCompositor = presenter._slideCompositor;
-		if (!compositor) return;
-
-		this.aLayer = compositor.getLayerImage(this.slideHash, this.sId);
-		if (!this.aLayer) {
-			window.app.console.log('AnimatedElement: layer not valid');
-		}
-
-		this.setBBox(compositor.getLayerBounds(this.slideHash, this.sId));
-		if (!this.aBaseBBox) {
-			window.app.console.log('AnimatedElement: bounding box not valid');
-		}
+		// TODO find a better place where to call this ?
+		this.init();
 
 		this.nCenterX = this.nBaseCenterX;
 		this.nCenterY = this.nBaseCenterY;
@@ -296,7 +439,9 @@ class AnimatedElement {
 		this.nRotationAngle = 0.0;
 		this.aTMatrix = new DOMMatrix([1, 0, 0, 1, 0, 0]);
 		this.nOpacity = 1;
-		this.bVisible = true;
+		this.bVisible = this.animatedLayerInfo
+			? this.animatedLayerInfo.initVisible
+			: false;
 		this.aActiveBBox = this.cloneBBox(this.aBaseBBox);
 	}
 
@@ -357,8 +502,9 @@ class AnimatedElement {
 			);
 		}
 		this.aSlideShowContext = aSlideShowContext;
+		this.runningAnimations = 0;
 
-		this.aActiveElement = this.clone(this.aBaseElement);
+		// this.aActiveElement = this.clone(this.aBaseElement);
 
 		this.initElement();
 		this.DBG('.notifySlideStart invoked');
@@ -369,11 +515,27 @@ class AnimatedElement {
 	}
 
 	notifyAnimationStart() {
-		// empty body
+		if (!this.isActive()) {
+			this.slideRenderer.notifyAnimationStarted(this.sId);
+		}
+		++this.runningAnimations;
+	}
+
+	isActive(): boolean {
+		return this.runningAnimations > 0;
 	}
 
 	notifyAnimationEnd() {
-		// empty body
+		if (this.runningAnimations <= 0) {
+			window.app.console.log(
+				'AnimatedElement.notifyAnimationEnd: running animations <= 0',
+			);
+			return;
+		}
+		--this.runningAnimations;
+		if (!this.isActive()) {
+			this.slideRenderer.notifyAnimationEnded(this.sId);
+		}
 	}
 
 	notifyNextEffectStart(nEffectIndex?: number) {
@@ -396,7 +558,7 @@ class AnimatedElement {
 				')',
 		);
 		const aState: AnimatedElementState = {
-			aElement: this.clone(this.aActiveElement),
+			aElement: null, // this.clone(this.aActiveElement),
 			nCenterX: this.nCenterX,
 			nCenterY: this.nCenterY,
 			nScaleFactorX: this.nScaleFactorX,
@@ -438,8 +600,10 @@ class AnimatedElement {
 				nAnimationNodeId +
 				')',
 		);
+
 		const aState = this.aStateSet.get(nAnimationNodeId);
-		const bRet = this.setToElement(aState.aElement);
+		// const bRet = this.setToElement(aState.aElement);
+		const bRet = true;
 		if (bRet) {
 			this.nCenterX = aState.nCenterX;
 			this.nCenterY = aState.nCenterY;
@@ -450,6 +614,11 @@ class AnimatedElement {
 			this.nOpacity = aState.nOpacity;
 			this.bVisible = aState.bVisible;
 		}
+		// we need to trigger at least one request animation frame for SlideRenderer.render method
+		// maybe we could implement a SlideRenderer.oneShot method.
+		this.notifyAnimationStart();
+		this.notifyAnimationEnd();
+
 		return bRet;
 	}
 
@@ -512,6 +681,7 @@ class AnimatedElement {
 		this.aTMatrix.translateSelf(nNewCenterX - this.nCenterX, 0);
 		this.nCenterX = nNewCenterX;
 		window.app.console.log('AnimatedElement.setX(' + nNewCenterX + ')');
+		// this.update();
 	}
 
 	setY(nNewCenterY: number) {
@@ -520,6 +690,7 @@ class AnimatedElement {
 		this.aTMatrix.translateSelf(0, nNewCenterY - this.nCenterY);
 		this.nCenterY = nNewCenterY;
 		window.app.console.log('AnimatedElement.setY(' + nNewCenterY + ')');
+		// this.update();
 	}
 
 	setPos(aNewPos: [number, number]) {
@@ -537,6 +708,7 @@ class AnimatedElement {
 		window.app.console.log(
 			'AnimatedElement.setPos(' + nNewCenterX + ', ' + nNewCenterY + ')',
 		);
+		// this.update();
 	}
 
 	setWidth(nNewWidth: number) {
@@ -645,6 +817,7 @@ class AnimatedElement {
 	setOpacity(nValue: number) {
 		this.nOpacity = clampN(nValue, 0, 1);
 		window.app.console.log('AnimatedElement.setOpacity(' + nValue + ')');
+		// this.update();
 	}
 
 	getRotationAngle() {
@@ -669,9 +842,9 @@ class AnimatedElement {
 		return this.bVisible;
 	}
 
-	setVisibility(bValue: boolean) {
-		this.bVisible = bValue;
-		window.app.console.log('AnimatedElement.setVisibility(' + bValue + ')');
+	setVisibility(sValue: string) {
+		this.bVisible = sValue === 'visible';
+		window.app.console.log('AnimatedElement.setVisibility(' + sValue + ')');
 	}
 
 	getFillColor(): any {

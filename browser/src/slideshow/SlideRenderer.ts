@@ -51,6 +51,7 @@ abstract class SlideRenderer {
 	protected _renderedSlideIndex: number = undefined;
 	protected _requestAnimationFrameId: number = null;
 	protected _isAnyVideoPlaying: boolean = false;
+	private _activeLayers: Set<string> = new Set();
 
 	constructor(canvas: HTMLCanvasElement) {
 		this._canvas = canvas;
@@ -121,7 +122,8 @@ abstract class SlideRenderer {
 		docHeight: number,
 	) {
 		this.deleteCurrentSlideTexture();
-		this._renderedSlideIndex = slideInfo.index;
+		this._activeLayers.clear();
+		this._renderedSlideIndex = slideInfo.indexInSlideShow;
 		this._slideTexture = currentSlideTexture;
 		this.prepareVideos(slideInfo, docWidth, docHeight);
 		requestAnimationFrame(this.render.bind(this));
@@ -164,6 +166,24 @@ abstract class SlideRenderer {
 
 	public createEmptyTexture(): WebGLTexture | ImageBitmap {
 		return null;
+	}
+
+	public notifyAnimationStarted(sId: string) {
+		const isAnyLayerActive = this.isAnyLayerActive();
+		this._activeLayers.add(sId);
+		if (!isAnyLayerActive) {
+			this._requestAnimationFrameId = requestAnimationFrame(
+				this.render.bind(this),
+			);
+		}
+	}
+
+	public notifyAnimationEnded(sId: string) {
+		this._activeLayers.delete(sId);
+	}
+
+	public isAnyLayerActive(): boolean {
+		return this._activeLayers.size > 0;
 	}
 }
 
@@ -284,7 +304,10 @@ class SlideRendererGl extends SlideRenderer {
 				`;
 	}
 
-	private updateTexture(texture: WebGLTexture, video: HTMLVideoElement) {
+	private updateTexture(
+		texture: WebGLTexture,
+		video: HTMLVideoElement | ImageBitmap,
+	) {
 		const gl = this._context.getGl();
 		gl.bindTexture(gl.TEXTURE_2D, texture);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
@@ -329,6 +352,15 @@ class SlideRendererGl extends SlideRenderer {
 		return vao;
 	}
 
+	private getNextTexture(): WebGLTexture {
+		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
+		const slideImage: ImageBitmap = presenter._slideCompositor.getAnimatedSlide(
+			this._renderedSlideIndex,
+		);
+		this.updateTexture(this._slideTexture, slideImage);
+		return this._slideTexture;
+	}
+
 	public createTexture(image: ImageBitmap) {
 		return this._context.loadTexture(<any>image);
 	}
@@ -338,7 +370,7 @@ class SlideRendererGl extends SlideRenderer {
 	}
 
 	public deleteCurrentSlideTexture(): void {
-		this._context.deleteTexture(this.getSlideTexture());
+		this._context.deleteTexture(this._slideTexture);
 		this._slideTexture = null;
 	}
 
@@ -429,6 +461,7 @@ class SlideRendererGl extends SlideRenderer {
 	}
 
 	protected render() {
+		console.debug('SlideRendererGl.render');
 		const gl = this._context.getGl();
 		gl.viewport(0, 0, this._canvas.width, this._canvas.height);
 		gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -437,7 +470,7 @@ class SlideRendererGl extends SlideRenderer {
 		gl.useProgram(this._program);
 
 		gl.activeTexture(gl.TEXTURE0);
-		gl.bindTexture(gl.TEXTURE_2D, this.getSlideTexture());
+		gl.bindTexture(gl.TEXTURE_2D, this.getNextTexture());
 		gl.uniform1i(gl.getUniformLocation(this._program, 'slideTexture'), 0);
 
 		gl.bindVertexArray(this._vao);
@@ -452,7 +485,7 @@ class SlideRendererGl extends SlideRenderer {
 			}
 		}
 
-		if (this._isAnyVideoPlaying)
+		if (this.isAnyLayerActive() || this._isAnyVideoPlaying)
 			this._requestAnimationFrameId = requestAnimationFrame(
 				this.render.bind(this),
 			);
