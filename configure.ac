@@ -429,6 +429,7 @@ AC_MSG_CHECKING([whether to enable debug build])
 if test "$enable_debug" = "yes"; then
    AC_MSG_RESULT([yes])
    AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces])
+   AC_DEFINE([CONFIG_STATIC],,[Static config values are disabled in debug builds to allow for overriding in tests])
    ENABLE_DEBUG=true
    ENABLE_DEBUG_PROTOCOL=true
    COOLWSD_LOGLEVEL="trace"
@@ -463,6 +464,7 @@ if test "$enable_debug" = "yes"; then
 else
     AC_MSG_RESULT([no (Release build)])
     AC_DEFINE([ENABLE_DEBUG],0,[Whether to compile in some extra debugging support code and disable some security pieces])
+    AC_DEFINE([CONFIG_STATIC],static,[Static config values are enabled in release builds for performance])
 fi
 AC_SUBST(ENABLE_DEBUG)
 AC_SUBST(ENABLE_BUNDLE)
@@ -1591,6 +1593,9 @@ AC_SUBST(IOSAPP_FONTS)
 
 AC_CHECK_FUNCS(ppoll)
 
+AC_MSG_CHECKING([for SOMETHING of ANYTHING])
+AC_MSG_RESULT([SOME ANSWER])
+
 ENABLE_CYPRESS=false
 if test "$enable_cypress" = "yes"; then
    cypress_msg="cypress is enabled"
@@ -1862,7 +1867,9 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
        fi
       ],
       [
-       echo "
+      ])
+
+echo "
 Configuration:
     LOKit path                ${lokit_msg}
     LO path                   $LO_PATH
@@ -1879,11 +1886,21 @@ Configuration:
     Code-Coverage             $coverage_msg
 
     \$ make # to compile"
+
+echo "config.h iss:"
+cat ./config.h
+
+if [ test -e ./ios/config.h ]; then
+  echo "ios/config.h is:"
+  cat ios/config.h
+else
+  echo "no ios/config.h"
+fi
+
 if test -n "$with_lo_path"; then
 echo "    \$ make run # to start coolwsd
     \$ make sync-writer|calc|impress # to start browsersync with specified app
 "
 fi
-      ])
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:

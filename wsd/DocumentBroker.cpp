@@ -361,7 +361,7 @@ void DocumentBroker::pollThread()
 
     bool waitingForMigrationMsg = false;
     std::chrono::time_point<std::chrono::steady_clock> migrationMsgStartTime;
-    static const std::chrono::microseconds migrationMsgTimeout = std::chrono::seconds(
+    CONFIG_STATIC const std::chrono::microseconds migrationMsgTimeout = std::chrono::seconds(
         COOLWSD::getConfigValue<int>("indirection_endpoint.migration_timeout_secs", 180));
 
     // Main polling loop goodness.
