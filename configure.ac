@@ -1864,7 +1864,9 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
        fi
       ],
       [
-       echo "
+      ])
+
+echo "
 Configuration:
     LOKit path                ${lokit_msg}
     LO path                   $LO_PATH
@@ -1886,6 +1888,5 @@ echo "    \$ make run # to start coolwsd
     \$ make sync-writer|calc|impress # to start browsersync with specified app
 "
 fi
-      ])
 
 dnl vim:set shiftwidth=4 softtabstop=4 expandtab:
