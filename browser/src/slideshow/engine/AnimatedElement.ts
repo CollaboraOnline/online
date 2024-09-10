@@ -222,13 +222,13 @@ interface AnimatedElementState {
 class AnimatedElement {
 	private sId: string;
 	private slideHash: string;
-	private aLayer: HTMLImageElement;
-	private aBaseBBox: BoundingBoxType;
+	private aLayer: ImageBitmap = null;
+	private aBaseBBox: BoundingBoxType = null;
 	private aBaseElement: AnimatedObjectType;
 	private aActiveBBox: BoundingBoxType;
 	private aActiveElement: AnimatedObjectType;
-	private nBaseCenterX: number;
-	private nBaseCenterY: number;
+	private nBaseCenterX: number = 0;
+	private nBaseCenterY: number = 0;
 	private aClipPath: SVGPathElement = null;
 	private aPreviousElement: AnimatedObjectType = null;
 	private aStateSet = new Map<number, AnimatedElementState>();
@@ -244,35 +244,11 @@ class AnimatedElement {
 	private bVisible: boolean;
 	private aSlideShowContext: SlideShowContext;
 
-	constructor(
-		sId: string,
-		slideHash: string,
-		aLayer: HTMLImageElement,
-		aBBox: BoundingBoxType,
-	) {
-		if (!aLayer) {
-			window.app.console.log(
-				'AnimatedElement constructor: layer argument not valid',
-			);
-		}
-		if (!aBBox) {
-			window.app.console.log(
-				'AnimatedElement constructor: bounding box argument not valid',
-			);
-
-			// TODO: remove this dummy bounding box once core sends a real one
-			aBBox = new DOMRect(0, 0, 1000, 1000);
-		}
-
+	constructor(sId: string, slideHash: string) {
 		this.sId = sId;
 		this.slideHash = slideHash;
-		this.aLayer = aLayer;
-		this.aBaseBBox = this.cloneBBox(aBBox);
 		this.aBaseElement = this.createBaseElement();
 		this.aActiveElement = this.clone(this.aBaseElement);
-
-		this.nBaseCenterX = this.aBaseBBox.x + this.aBaseBBox.width / 2;
-		this.nBaseCenterY = this.aBaseBBox.y + this.aBaseBBox.height / 2;
 
 		this.initElement();
 	}
@@ -286,17 +262,32 @@ class AnimatedElement {
 		return null;
 	}
 
+	private setBBox(aBBox: BoundingBoxType) {
+		if (!aBBox) aBBox = new DOMRect(0, 0, 0, 0);
+		this.aBaseBBox = this.cloneBBox(aBBox);
+		this.nBaseCenterX = this.aBaseBBox.x + this.aBaseBBox.width / 2;
+		this.nBaseCenterY = this.aBaseBBox.y + this.aBaseBBox.height / 2;
+	}
+
 	private cloneBBox(aBBox: BoundingBoxType): BoundingBoxType {
 		return new DOMRect(aBBox.x, aBBox.y, aBBox.width, aBBox.height);
 	}
 
 	private initElement() {
-		const presenter = app.map.slideShowPresenter;
+		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
 		if (!presenter) return;
-		const compositor = presenter._slideCompositor;
+		const compositor: SlideCompositor = presenter._slideCompositor;
 		if (!compositor) return;
 
-		this.aLayer = compositor.getLayer(this.slideHash, this.sId);
+		this.aLayer = compositor.getLayerImage(this.slideHash, this.sId);
+		if (!this.aLayer) {
+			window.app.console.log('AnimatedElement: layer not valid');
+		}
+
+		this.setBBox(compositor.getLayerBounds(this.slideHash, this.sId));
+		if (!this.aBaseBBox) {
+			window.app.console.log('AnimatedElement: bounding box not valid');
+		}
 
 		this.nCenterX = this.nBaseCenterX;
 		this.nCenterY = this.nBaseCenterY;

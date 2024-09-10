@@ -49,6 +49,7 @@ interface AnimatedShapeInfo {
 	initVisible: boolean;
 	type: 'bitmap' | 'svg';
 	content: ImageInfo | SVGElement;
+	bounds: BoundingBoxType;
 }
 
 interface PlaceholderInfo {
@@ -127,13 +128,30 @@ class LayerDrawing {
 		this.map.off('sliderenderingcomplete', this.onSlideRenderingComplete, this);
 	}
 
-	private getSlideInfo(slideHash: string) {
+	private getSlideInfo(slideHash: string): SlideInfo {
 		return this.helper.getSlideInfo(slideHash);
 	}
 
 	public getSlide(slideNumber: number): ImageBitmap {
 		const startSlideHash = this.helper.getSlideHash(slideNumber);
 		return this.slideCache.get(startSlideHash);
+	}
+
+	public getLayerBounds(
+		slideHash: string,
+		targetElement: string,
+	): BoundingBoxType {
+		const layers = this.cachedDrawPages.get(slideHash);
+		for (const i in layers) {
+			const animatedInfo = layers[i].content as AnimatedShapeInfo;
+			if (
+				animatedInfo &&
+				animatedInfo.hash === targetElement &&
+				animatedInfo.content
+			)
+				return animatedInfo.bounds;
+		}
+		return null;
 	}
 
 	public getLayerImage(slideHash: string, targetElement: string): ImageBitmap {
