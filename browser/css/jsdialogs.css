@@ -248,6 +248,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .ui-toolbar .ui-separator.vertical {
 	height: 14px;
 	align-self: center;
+	margin: 0 3px;
 }
 
 .jsdialog.ui-separator.horizontal {
@@ -1319,7 +1320,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	height: 5px;
 	width: 24px;
 	position: relative;
-	top: -5px;
 	grid-column: 1;
 	grid-row: 2;
 	border: 1px solid var(--color-border-dark);
@@ -1347,17 +1347,18 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .arrowbackground {
 	box-sizing: border-box;
 	width: 16px;
-	height: 24px;
+	height: 100%;
 	display: flex;
 	align-items: center;
 	border-left: 1px solid transparent;
 	background-color: transparent;
 	grid-column: 3;
+	position: relative;
 }
 
 .arrowbackground:hover {
 	border-left-color: transparent;
-	background-color: transparent;
+	background-color: var(--color-background-darker);
 }
 
 .unoarrow:not([disabled]):hover, .arrowbackground:not([disabled]):hover .unoarrow {
@@ -1375,10 +1376,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	padding: 8px 10px;
 	margin: 2px 0px;
 	background-color: var(--color-background-dark);
-}
-
-.menubutton span {
-	margin: 0px 5px;
 }
 
 .jsdialog.menubutton img {
@@ -1767,17 +1764,30 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* toolbuttons */
-
-.jsdialog:not(.menubutton) > .ui-content.unobutton {
-	width: var(--btn-size);
-}
-
 .jsdialog .ui-content.unobutton {
-	height: var(--btn-size);
-	padding: 0px;
+	display: flex;
+	flex-direction: column;
+	padding: 3px;
 	vertical-align: middle;
 	background-color: transparent;
 	border: none;
+	position: relative;
+}
+
+.unoarrow::after,
+.jsdialog .ui-content.unobutton::after {
+	--click-increment: -1px;
+	position: absolute;
+	content: '';
+	top: var(--click-increment);
+	right: var(--click-increment);
+	bottom: var(--click-increment);
+	left: var(--click-increment);
+}
+
+.notebookbar .ui-content.unobutton:hover,
+.jsdialog .ui-content.unobutton:hover {
+	background-color: var(--color-background-darker);
 }
 
 .unotoolbutton.has-dropdown {
@@ -1785,10 +1795,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-items: center;
 	grid-auto-flow: column;
 	grid-template-rows: auto 0px;
-}
-
-.unotoolbutton.jsdialog.sidebar.ui-content > .arrowbackground {
-	width: auto;
 }
 
 /* handling show/hide state */

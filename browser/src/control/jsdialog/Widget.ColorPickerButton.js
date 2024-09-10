@@ -186,7 +186,7 @@ JSDialog.colorPickerButton = function (parentContainer, data, builder) {
 			);
 
 			var valueNode = L.DomUtil.create(
-				'div',
+				'span',
 				'selected-color',
 				menubutton.container,
 			);

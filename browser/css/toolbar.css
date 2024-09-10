@@ -46,7 +46,7 @@
 .ui-toolbar > div > div > .ui-pushbutton,
 .ui-toolbar > div > div .ui-badge {
 	margin: auto 2px;
-	padding: 3px;
+	padding: 0;
 	white-space: nowrap;
 	height: inherit;
 }
