@@ -47,7 +47,7 @@ class LayersCompositor extends SlideCompositor {
 		});
 	}
 
-	public getSlideInfo(slideHash: string) {
+	public getSlideInfo(slideHash: string): SlideInfo {
 		return this.metaPresentation.getSlideInfo(slideHash);
 	}
 
@@ -113,8 +113,15 @@ class LayersCompositor extends SlideCompositor {
 		return this.layerDrawing.getSlide(slideNumber);
 	}
 
-	public getLayer(slideHash: string, targetElement: string): ImageBitmap {
+	public getLayerImage(slideHash: string, targetElement: string): ImageBitmap {
 		return this.layerDrawing.getLayerImage(slideHash, targetElement);
+	}
+
+	public getLayerBounds(
+		slideHash: string,
+		targetElement: string,
+	): BoundingBoxType {
+		return this.layerDrawing.getLayerBounds(slideHash, targetElement);
 	}
 }
 
