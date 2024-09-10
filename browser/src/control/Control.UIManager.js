@@ -955,7 +955,7 @@ L.Control.UIManager = L.Control.extend({
 
 	focusSearch: function() {
 		this.showStatusBar();
-		document.getElementById('search-input').focus();
+		this.map.fire('focussearch');
 	},
 
 	isStatusBarVisible: function() {
