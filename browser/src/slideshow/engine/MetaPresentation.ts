@@ -79,6 +79,7 @@ class MetaPresentation {
 		let prevSlideHash = null;
 		for (let i = 0; i < this._numberOfSlides; ++i) {
 			const slide = info.slides[i];
+			slide.indexInSlideShow = i;
 			slide.prev = prevSlideHash;
 			slide.next =
 				i + 1 < this._numberOfSlides ? info.slides[i + 1].hash : null;

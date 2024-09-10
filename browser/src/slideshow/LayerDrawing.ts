@@ -156,6 +156,35 @@ class LayerDrawing {
 		return null;
 	}
 
+	public getAnimatedSlide(slideIndex: number): ImageBitmap {
+		console.debug('LayerDrawing.getAnimatedSlide: slide index: ' + slideIndex);
+		const slideHash = this.helper.getSlideHash(slideIndex);
+		this.composeLayers(slideHash);
+		return this.offscreenCanvas.transferToImageBitmap();
+	}
+
+	public composeLayers(slideHash: string): void {
+		this.drawBackground(slideHash);
+		this.drawMasterPage(slideHash);
+		this.drawDrawPage(slideHash);
+	}
+
+	public getAnimatedLayerInfo(
+		slideHash: string,
+		targetElement: string,
+	): AnimatedShapeInfo {
+		console.debug(
+			`LayerDrawing.getAnimatedLayerInfo(${slideHash}, ${targetElement})`,
+		);
+		const layers = this.cachedDrawPages.get(slideHash);
+		for (const i in layers) {
+			const animatedInfo = layers[i].content as AnimatedShapeInfo;
+			if (animatedInfo && animatedInfo.hash === targetElement)
+				return animatedInfo;
+		}
+		return null;
+	}
+
 	public getLayerImage(slideHash: string, targetElement: string): ImageBitmap {
 		const layers = this.cachedDrawPages.get(slideHash);
 		for (const i in layers) {
@@ -401,7 +430,7 @@ class LayerDrawing {
 		}
 		layers.push(layerEntry);
 
-		this.drawDrawPageLayer(layerEntry);
+		this.drawDrawPageLayer(info.slideHash, layerEntry);
 	}
 
 	private clearCanvas() {
@@ -501,21 +530,36 @@ class LayerDrawing {
 		}
 
 		for (const layer of layers) {
-			this.drawDrawPageLayer(layer);
+			this.drawDrawPageLayer(slideHash, layer);
 		}
 		return true;
 	}
 
-	private drawDrawPageLayer(layer: LayerEntry) {
+	private drawDrawPageLayer(slideHash: string, layer: LayerEntry) {
 		if (layer.type === 'bitmap') {
 			this.drawBitmap(layer.content as ImageInfo);
 		} else if (layer.type === 'animated') {
 			const content = layer.content as AnimatedShapeInfo;
-			if (content.initVisible) {
-				if (content.type === 'bitmap') {
-					const imageInfo = content.content as ImageInfo;
-					this.drawBitmap(imageInfo);
+			if (content.type === 'bitmap') {
+				const animatedElement = this.helper.getAnimatedElement(
+					slideHash,
+					content.hash,
+				);
+				if (animatedElement) {
+					console.debug(
+						'LayerDrawing.drawDrawPageLayer: retrieved animatedElement',
+					);
+					if (animatedElement.isValid()) {
+						const nextFrame = animatedElement.getAnimatedLayer();
+						if (nextFrame) {
+							console.debug('LayerDrawing.drawDrawPageLayer: draw next frame');
+							this.offscreenContext.drawImage(nextFrame, 0, 0);
+							return;
+						}
+						return; // no layer means it is not visible
+					}
 				}
+				this.drawBitmap(content.content as ImageInfo);
 			}
 		}
 	}

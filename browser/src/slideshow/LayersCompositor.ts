@@ -61,6 +61,24 @@ class LayersCompositor extends SlideCompositor {
 		return this.metaPresentation.getSlideHash(slideIndex);
 	}
 
+	public getAnimatedElement(
+		slideHash: string,
+		animatedElementHash: string,
+	): AnimatedElement {
+		const metaSlide = this.metaPresentation.getMetaSlide(slideHash);
+		if (!metaSlide) {
+			window.app.console.log(
+				'LayersCompositor.getAnimatedElement: failed to retrieve meta slide for hash: ' +
+					slideHash,
+			);
+			return;
+		}
+		if (metaSlide.animationsHandler) {
+			const animElemMap = metaSlide.animationsHandler.getAnimatedElementMap();
+			return animElemMap.get(animatedElementHash);
+		}
+	}
+
 	public getSlideSizePixel() {
 		return [
 			app.twipsToPixels * this.metaPresentation.slideWidth,
@@ -111,6 +129,17 @@ class LayersCompositor extends SlideCompositor {
 
 	public getSlide(slideNumber: number): ImageBitmap {
 		return this.layerDrawing.getSlide(slideNumber);
+	}
+
+	public getAnimatedSlide(slideIndex: number): ImageBitmap {
+		return this.layerDrawing.getAnimatedSlide(slideIndex);
+	}
+
+	public getAnimatedLayerInfo(
+		slideHash: string,
+		targetElement: string,
+	): AnimatedShapeInfo {
+		return this.layerDrawing.getAnimatedLayerInfo(slideHash, targetElement);
 	}
 
 	public getLayerImage(slideHash: string, targetElement: string): ImageBitmap {

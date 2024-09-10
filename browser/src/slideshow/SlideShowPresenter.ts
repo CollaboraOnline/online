@@ -46,6 +46,7 @@ interface SlideInfo {
 	animations: any;
 	next: string;
 	prev: string;
+	indexInSlideShow?: number;
 }
 
 interface PresentationInfo {
