@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-02 11:10+0200\n"
-"PO-Revision-Date: 2024-08-14 13:20+0000\n"
+"PO-Revision-Date: 2024-09-10 22:08+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.7-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1070,7 +1070,7 @@ msgstr "Зберегти коментарі"
 #: src/control/Control.Menubar.js:410
 #: src/control/Control.NotebookbarBuilder.js:433
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "Документ HTML (.html)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:579
@@ -1134,7 +1134,7 @@ msgstr "Файл CSV (.csv)"
 
 #: src/control/Control.Menubar.js:703
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "Файл HTML (.html)"
 
 #: src/control/Control.Menubar.js:707
 #: src/control/jsdialog/Definitions.Menu.ts:111
@@ -2926,9 +2926,8 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Не вдалося завантажити буфер обміну, повторіть копіювання"
 
 #: src/map/Clipboard.js:1219
-#, fuzzy
 msgid "<p>Please use the paste buttons on your on-screen keyboard.</p>"
-msgstr "<p>Використовуйте кнопки копіювання/вставки на екранній клавіатурі.</p>"
+msgstr "<p>Використовуйте кнопки вставлення на екранній клавіатурі.</p>"
 
 #: src/map/Clipboard.js:1221
 msgid ""
