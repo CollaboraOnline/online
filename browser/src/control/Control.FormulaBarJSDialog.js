@@ -96,10 +96,40 @@ class FormulaBar {
 		if (!window.mode.isMobile()) {
 			var data = [
 				{
-					id: 'addressInput',
-					type: 'edit',
+					id: 'pos_window',
+					type: 'combobox',
 					text: _('cell address'),
-					changedCallback: this.callbackAddress.bind(this)
+					enabled: true,
+					children: [
+						{
+							id: 'expand',
+							type: 'pushbutton',
+							text: '',
+							symbol: 'SPIN_DOWN',
+						},
+						{
+							id: '',
+							type: 'edit',
+							text: '',
+							enabled: true
+						},
+						{
+							id: '',
+							type: 'borderwindow',
+							text: '',
+							enabled: true,
+							children: [
+								{
+									type: 'edit',
+									id: '',
+									text: '',
+									enabled: true
+								}
+							]
+						}
+					],
+					selectedEntries: [],
+					selectedCount: 0
 				},
 				{
 					id: 'formulabar-buttons-toolbox',
@@ -234,9 +264,6 @@ class FormulaBar {
 				this.toggleMultiLine(input);
 			return;
 		}
-
-		if (object.id === 'addressInput')
-			return;
 
 		// in the core we have DrawingArea not TextView
 		if (object.id.indexOf('sc_input_window') === 0) {
