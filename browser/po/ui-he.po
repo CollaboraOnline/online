@@ -387,15 +387,15 @@ msgstr " דקות"
 msgid " s"
 msgstr " שניות"
 
-#: js/global.js:1361
+#: src/global.ts:1361
 msgid "Cluster is scaling, retrying..."
 msgstr "הקלאסטר עובר שינוי, ננסה שוב…"
 
-#: js/global.js:1363
+#: src/global.ts:1363
 msgid "Document is migrating to new server, retrying..."
 msgstr "המסמך מועבר לשרת חדש, ננסה שוב…"
 
-#: js/global.js:1365
+#: src/global.ts:1365
 msgid "Failed to get RouteToken from controller"
 msgstr "קבלת RouteToken (אסימון נתיב) מהבקר נכשלה"
 

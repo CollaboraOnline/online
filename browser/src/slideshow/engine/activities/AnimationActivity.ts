@@ -15,16 +15,16 @@ class ActivityParamSet {
 	aWakeupEvent: WakeupEvent;
 	aTimerEventQueue: TimerEventQueue;
 	aActivityQueue: ActivityQueue;
-	nMinDuration: number;
+	nMinDuration: number | undefined;
 	nMinNumberOfFrames: number = SlideShowHandler.MINIMUM_FRAMES_PER_SECONDS;
 	bAutoReverse: boolean = false;
-	nRepeatCount: number = 1.0;
+	nRepeatCount: number | undefined = 1.0;
 	nAccelerationFraction: number = 0;
 	nDecelerationFraction: number = 0;
 	nSlideWidth: number;
 	nSlideHeight: number;
 	aFormula: (x: any) => any;
-	aDiscreteTimes: Array<number> = [];
+	aDiscreteTimes: Array<number> | null = [];
 }
 
 abstract class AnimationActivity {
@@ -46,7 +46,7 @@ abstract class AnimationActivity {
 	abstract activate(aEvent: EventBase): void;
 	abstract dispose(): void;
 	abstract calcTimeLag(): number;
-	abstract perform(): boolean;
+	abstract perform(): boolean | undefined;
 	abstract isActive(): void;
 	abstract dequeued(): void;
 	abstract end(): void;

@@ -41,8 +41,8 @@ window.app = {
 	accessibilityState: false, // If accessibility was enabled by user
 	UI: {
 		language: {
-			fromURL: window.langParam, // This is set in global.js.
-			fromBrowser: L.Browser.lang, // Again in global.js.
+			fromURL: window.langParam, // This is set in global.ts.
+			fromBrowser: L.Browser.lang, // Again in global.ts.
 			notebookbarAccessibility: null
 		}
 	},

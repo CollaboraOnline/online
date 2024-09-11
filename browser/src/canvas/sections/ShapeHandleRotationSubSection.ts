@@ -63,13 +63,13 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 	}
 
 	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds): void {
-		this.context.fillStyle = 'white';
-		this.context.strokeStyle = 'black';
-		this.context.beginPath();
-		this.context.arc(this.size[0] * 0.5, this.size[1] * 0.5, this.size[0] * 0.5, 0, Math.PI * 2);
-		this.context.closePath();
-		this.context.fill();
-		this.context.stroke();
+		this.context!.fillStyle = 'white';
+		this.context!.strokeStyle = 'black';
+		this.context!.beginPath();
+		this.context!.arc(this.size[0] * 0.5, this.size[1] * 0.5, this.size[0] * 0.5, 0, Math.PI * 2);
+		this.context!.closePath();
+		this.context!.fill();
+		this.context!.stroke();
 	}
 
 	// This is called after dragging the rotation handler. It re-calculates initial angle with the handler's new position.
@@ -80,7 +80,7 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		draggedToPoint.pX += this.position[0];
 		draggedToPoint.pY += this.position[1];
 
-		const selectionCenter = new app.definitions.simplePoint(GraphicSelection.rectangle.center[0], GraphicSelection.rectangle.center[1]);
+		const selectionCenter = new app.definitions.simplePoint(GraphicSelection.rectangle!.center[0], GraphicSelection.rectangle!.center[1]);
 
 		const initialPoint = this.sectionProperties.ownInfo.initialPosition;
 		const initialAngle = this.calculateAngle(selectionCenter, initialPoint);
@@ -94,9 +94,9 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 	}
 
 	onMouseUp(point: number[], e: MouseEvent): void {
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject!.isDraggingSomething()) {
 			if (this.sectionProperties.lastDraggingDistance) {
-				const center = GraphicSelection.rectangle.center;
+				const center = GraphicSelection.rectangle!.center;
 
 				const commandParameters = {
 					'TransformRotationDeltaAngle': {
@@ -122,14 +122,14 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 	}
 
 	onMouseMove(position: number[], distance: number[]) {
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject!.isDraggingSomething()) {
 			this.sectionProperties.lastDraggingDistance = distance;
 
-			if (this.containerObject.isDraggingSomething() && this.sectionProperties.parentHandlerSection.sectionProperties.svg) {
+			if (this.containerObject!.isDraggingSomething() && this.sectionProperties.parentHandlerSection.sectionProperties.svg) {
 				this.sectionProperties.parentHandlerSection.sectionProperties.svg.style.opacity = 0.5;
 				const angleDifference = (-this.getAngleDifference() / 100) * app.dpiScale;
 				this.sectionProperties.parentHandlerSection.sectionProperties.svg.style.transform = 'rotate(' + angleDifference + 'deg)';
-				this.containerObject.requestReDraw();
+				this.containerObject!.requestReDraw();
 				this.sectionProperties.parentHandlerSection.showSVG();
 			}
 		}

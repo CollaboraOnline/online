@@ -56,7 +56,7 @@ app.definitions.Socket = L.Class.extend({
 		if (socket && (socket.readyState === 1 || socket.readyState === 0)) {
 			this.socket = socket;
 		} else if (window.ThisIsAMobileApp) {
-			// We have already opened the FakeWebSocket over in global.js
+			// We have already opened the FakeWebSocket over in global.ts
 			// But do we then set this.socket at all? Is this case ever reached?
 		} else	{
 			try {
@@ -198,12 +198,12 @@ app.definitions.Socket = L.Class.extend({
 		// TODO: Move the version number somewhere sensible.
 
 		// Note there are two socket "onopen" handlers, this one which ends up as part of
-		// bundle.js and the other in browser/js/global.js. The global.js one attempts to
+		// bundle.js and the other in browser/js/global.ts. The global.ts one attempts to
 		// set up the connection early while bundle.js is still loading. If bundle.js
-		// starts before global.js has connected, then this _onSocketOpen will do the
+		// starts before global.ts has connected, then this _onSocketOpen will do the
 		// connection instead, after taking over the socket in "connect"
 
-		// Typically in a "make run" scenario it is the global.js case that sends the
+		// Typically in a "make run" scenario it is the global.ts case that sends the
 		// 'coolclient' and 'load' messages while currently in the "WASM app" case it is
 		// this code that gets invoked.
 

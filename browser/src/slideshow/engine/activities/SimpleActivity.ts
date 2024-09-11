@@ -18,12 +18,12 @@ enum DirectionType {
 }
 
 class SimpleActivity extends ContinuousActivityBase {
-	private aAnimation: AnimationBase;
+	private aAnimation: AnimationBase | null;
 	private nDirection: number;
 
 	constructor(
 		aCommonParamSet: ActivityParamSet,
-		aNumberAnimation: AnimationBase,
+		aNumberAnimation: AnimationBase | null,
 		eDirection: DirectionType,
 	) {
 		super(aCommonParamSet);

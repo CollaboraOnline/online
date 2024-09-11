@@ -943,7 +943,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 #ifdef IOS
     // The URL of the document is sent over the FakeSocket by the code in
     // -[DocumentViewController userContentController:didReceiveScriptMessage:] when it gets the
-    // HULLO message from the JavaScript in global.js.
+    // HULLO message from the JavaScript in global.ts.
 
     // The "app document id", the numeric id of the document, from the appDocIdCounter in CODocument.mm.
     char* space = strchr(socket->getInBuffer().data(), ' ');

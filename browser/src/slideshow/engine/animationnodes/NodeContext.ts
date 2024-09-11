@@ -13,11 +13,11 @@
 declare var app: any;
 
 class NodeContext {
-	public aContext: SlideShowContext = null;
-	public aAnimationNodeMap: AnimationNodeMap = null;
-	public aAnimatedElementMap: Map<string, AnimatedElement> = null;
-	public aSourceEventElementMap: Map<string, SourceEventElement> = null;
-	public metaSlide: MetaSlide = null;
+	public aContext: SlideShowContext | null = null;
+	public aAnimationNodeMap: AnimationNodeMap | null = null;
+	public aAnimatedElementMap: Map<string, AnimatedElement> | null = null;
+	public aSourceEventElementMap: Map<string, SourceEventElement> | null = null;
+	public metaSlide: MetaSlide | null = null;
 	public nStartDelay = 0.0;
 	public bFirstRun: boolean | undefined = undefined;
 	public bIsInvalid = false;
@@ -38,24 +38,24 @@ class NodeContext {
 			return null;
 		}
 
-		if (!this.aContext.aEventMultiplexer) {
+		if (!this.aContext!.aEventMultiplexer) {
 			window.app.console.log(
 				'NodeContext.makeSourceEventElement: event multiplexer not initialized',
 			);
 			return null;
 		}
 
-		if (!this.aSourceEventElementMap.has(sId)) {
-			this.aSourceEventElementMap.set(
+		if (!this.aSourceEventElementMap!.has(sId)) {
+			this.aSourceEventElementMap!.set(
 				sId,
 				new SourceEventElement(
 					sId,
 					aSlideShow,
 					aEventBaseElem,
-					this.aContext.aEventMultiplexer,
+					this.aContext!.aEventMultiplexer,
 				),
 			);
 		}
-		return this.aSourceEventElementMap.get(sId);
+		return this.aSourceEventElementMap!.get(sId);
 	}
 }

@@ -390,15 +390,15 @@ msgstr " دقائق"
 msgid " s"
 msgstr " س"
 
-#: js/global.js:1361
+#: src/global.ts:1361
 msgid "Cluster is scaling, retrying..."
 msgstr "جارٍ الآن إعادة المحاولة بعد تعديل السِّعَة ..."
 
-#: js/global.js:1363
+#: src/global.ts:1363
 msgid "Document is migrating to new server, retrying..."
 msgstr "المستند يتمّ ترحيله إلى خادوم جديد. جارٍ الآن إعادة المحاولة ..."
 
-#: js/global.js:1365
+#: src/global.ts:1365
 msgid "Failed to get RouteToken from controller"
 msgstr "فشل في الحصول على أَمَارَة المسار RouteToken من الحاكمة controller"
 

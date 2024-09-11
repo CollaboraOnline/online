@@ -15,7 +15,7 @@ declare var app: any;
 class AnimationTransformNode extends AnimationBaseNode3 {
 	constructor(
 		aNodeInfo: AnimationNodeInfo,
-		aParentNode: BaseContainerNode,
+		aParentNode: BaseContainerNode | null,
 		aNodeContext: NodeContext,
 	) {
 		super(aNodeInfo, aParentNode, aNodeContext);
@@ -49,7 +49,7 @@ class AnimationTransformNode extends AnimationBaseNode3 {
 		}
 	}
 
-	public createActivity(): AnimationActivity {
+	public createActivity(): AnimationActivity | null | undefined {
 		const aActivityParamSet = this.fillActivityParams();
 		let aAnimation = null;
 
@@ -60,15 +60,15 @@ class AnimationTransformNode extends AnimationBaseNode3 {
 			aAnimation = createPairPropertyAnimation(
 				this.getAttributeName(),
 				this.getAnimatedElement(),
-				this.aNodeContext.aContext.nSlideWidth,
-				this.aNodeContext.aContext.nSlideHeight,
+				this.aNodeContext.aContext!.nSlideWidth,
+				this.aNodeContext.aContext!.nSlideHeight,
 			);
 		} else {
 			aAnimation = createPropertyAnimation(
 				this.getAttributeName(),
 				this.getAnimatedElement(),
-				this.aNodeContext.aContext.nSlideWidth,
-				this.aNodeContext.aContext.nSlideHeight,
+				this.aNodeContext.aContext!.nSlideWidth,
+				this.aNodeContext.aContext!.nSlideHeight,
 			);
 		}
 
@@ -79,7 +79,7 @@ class AnimationTransformNode extends AnimationBaseNode3 {
 			return null;
 		}
 
-		const aInterpolator: PropertyInterpolatorType = null; // createActivity will compute it;
+		const aInterpolator: PropertyInterpolatorType | null = null; // createActivity will compute it;
 		return createActivity(aActivityParamSet, this, aAnimation, aInterpolator);
 	}
 

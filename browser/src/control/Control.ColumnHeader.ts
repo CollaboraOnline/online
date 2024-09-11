@@ -160,7 +160,7 @@ export class ColumnHeader extends Header {
 		this.context.strokeRect(startX - offset, offset, entry.size, this.size[1]);
 	}
 
-	getHeaderEntryBoundingClientRect (index: number): Partial<DOMRect> {
+	getHeaderEntryBoundingClientRect (index: number): Partial<DOMRect> | undefined {
 		let entry = this._mouseOverEntry;
 		if (index) {
 			entry = this._headerInfo.getColData(index);
@@ -216,14 +216,14 @@ export class ColumnHeader extends Header {
 		}
 	}
 
-	onDragEnd (dragDistance: number[]): number {
+	onDragEnd (dragDistance: number[]): number | undefined {
 		if (dragDistance[0] === 0)
 			return;
 
-		let width = this._dragEntry.size;
-		let column = this._dragEntry.index;
+		let width = this._dragEntry!.size;
+		let column = this._dragEntry!.index;
 
-		const nextCol = this._headerInfo.getNextIndex(this._dragEntry.index);
+		const nextCol = this._headerInfo.getNextIndex(this._dragEntry!.index);
 		if (this._headerInfo.isZeroSize(nextCol)) {
 			column = nextCol;
 			width = 0;

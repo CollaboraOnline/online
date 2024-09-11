@@ -28,15 +28,15 @@ interface SectionInitProperties {
 
 // This class will be used internally by CanvasSectionContainer.
 class CanvasSectionObject {
-	context: CanvasRenderingContext2D;
-	myTopLeft: Array<number> = [0, 0];
+	context: CanvasRenderingContext2D | null;
+	myTopLeft: Array<number | undefined> = [0, 0];
 	documentTopLeft: Array<number> = [0, 0]; // Document top left will be updated by container.
-	containerObject: CanvasSectionContainer = null;
-	name: string = null;
-	backgroundColor: string = null; // Defult is null (container's background color will be used).
+	containerObject: CanvasSectionContainer | null = null;
+	name: string | null = null;
+	backgroundColor: string | null = null; // Defult is null (container's background color will be used).
 	backgroundOpacity: number = 1; // Valid when backgroundColor is valid.
-	borderColor: string = null; // Default is null (no borders).
-	boundToSection: string = null;
+	borderColor: string | null = null; // Default is null (no borders).
+	boundToSection: string | null = null;
 	anchor: Array<string> = [];
 	documentObject: boolean; // If true, the section is a document object.
 	// When section is a document object, its position should be the real position inside the document, in core pixels.
@@ -60,37 +60,37 @@ class CanvasSectionObject {
 	onInitialize(): void { return; }
 	onCursorPositionChanged(newPosition: any): void { return; }
     onCellAddressChanged(): void { return; }
-	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent): void { return; }
-	onMouseDown(point: Array<number>, e: MouseEvent): void { return; }
-	onMouseUp(point: Array<number>, e: MouseEvent): void { return; }
+	onMouseMove(point: Array<number> | null, dragDistance: Array<number> | null, e: MouseEvent): void { return; }
+	onMouseDown(point: Array<number> | null, e: MouseEvent): void { return; }
+	onMouseUp(point: Array<number> | null, e: MouseEvent): void { return; }
 	setShowSection(show: boolean): void { return; }
     onSectionShowStatusChange(): void { return; } /// Called when setShowSection is called.
-    isSectionShown(): boolean { return; }
+    isSectionShown(): boolean | undefined { return; }
 	onDocumentObjectVisibilityChange(): void { return; }
-	onMouseEnter(point: Array<number>, e: MouseEvent): void { return; }
-	onMouseLeave(point: Array<number>, e: MouseEvent): void { return; }
-	onClick(point: Array<number>, e: MouseEvent): void { return; }
-	onDoubleClick(point: Array<number>, e: MouseEvent): void { return; }
+	onMouseEnter(point: Array<number> | null, e: MouseEvent): void { return; }
+	onMouseLeave(point: Array<number> | null, e: MouseEvent): void { return; }
+	onClick(point: Array<number> | null, e: MouseEvent): void { return; }
+	onDoubleClick(point: Array<number> | null, e: MouseEvent): void { return; }
 	onContextMenu(e?: MouseEvent): void { return; }
-	onMouseWheel(point: Array<number>, delta: Array<number>, e: MouseEvent): void { return; }
+	onMouseWheel(point: Array<number> | null, delta: Array<number>, e: MouseEvent): void { return; }
 	onMultiTouchStart(e: TouchEvent): void { return; }
-	onMultiTouchMove(point: Array<number>, dragDistance: number, e: TouchEvent): void { return; }
+	onMultiTouchMove(point: Array<number> | null, dragDistance: number, e: TouchEvent): void { return; }
 	onMultiTouchEnd(e: TouchEvent): void { return; }
 	onResize(): void { return; }
 	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds): void { return; }
 	onDrawArea(area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D): void { return; } // area is the area to be painted using canvasContext.
-	onAnimationEnded(frameCount: number, elapsedTime: number): void { return; } // frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
+	onAnimationEnded(frameCount: number | null, elapsedTime: number | null): void { return; } // frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
 	onNewDocumentTopLeft(size: Array<number>): void { return; }
 	onRemove(): void { return; } // This Function is called right before section is removed.
 	setDrawingOrder(drawingOrder: number): void { return; }
 	setZIndex(zIndex: number): void { return; }
 	bindToSection(sectionName: string): void { return; }
 	stopPropagating(): void { return; }
-	startAnimating(options: any): boolean { return; }
+	startAnimating(options: any): boolean | undefined { return; }
 	resetAnimation(): void { return; }
-	getTestDiv(): HTMLDivElement { return; }
+	getTestDiv(): HTMLDivElement | undefined { return; }
 	setPosition(x: number, y: number): void { return; } // Document objects only.
-	isCalcRTL(): boolean { return; }
+	isCalcRTL(): boolean | undefined { return; }
 
 	public getLineWidth(): number {
 		if (app.dpiScale > 1.0) {

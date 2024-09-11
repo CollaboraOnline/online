@@ -718,6 +718,12 @@ prettier: browser/node_modules
 prettier-write: browser/node_modules
 	@make -C browser prettier-write
 
+betterer: browser/node_modules
+	@make -C browser betterer
+
+betterer-write: browser/node_modules
+	@make -C browser betterer-write
+
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \
 	$(LN_S) coolconfig loolconfig && \
@@ -761,7 +767,7 @@ check-for-system-nss:
 
 check-recursive: eslint
 
-check: check-for-system-nss prettier eslint check-recursive
+check: check-for-system-nss prettier eslint betterer check-recursive
 	$(GEN_COVERAGE_COMMAND)
 
 coverage-report:

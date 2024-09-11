@@ -105,48 +105,50 @@ class MetaPresentation {
 		return this.docHeight;
 	}
 
-	public getCurrentSlideIndex(): number {
+	public getCurrentSlideIndex(): number | undefined {
 		return this.slideShowNavigator.currentSlideIndex;
 	}
 
-	public getCurrentSlideHash(): string {
+	public getCurrentSlideHash(): string | undefined {
 		return this.getSlideHash(this.getCurrentSlideIndex());
 	}
 
-	public getSlideHash(slideIndex: number) {
-		return this.partHashes.get(slideIndex);
+	public getSlideHash(slideIndex: number | undefined) {
+		return this.partHashes.get(slideIndex!);
 	}
 
 	public isFirstSlide(hash: string) {
 		return hash === this.firstSlideHash;
 	}
 
-	public isLastSlide(hash: string) {
+	public isLastSlide(hash: string | undefined) {
 		return hash === this.lastSlideHash;
 	}
 
-	public getMetaSlide(slideHash: string): MetaSlide {
-		return this.metaSlides.get(slideHash);
+	public getMetaSlide(slideHash: string | undefined): MetaSlide | undefined {
+		return this.metaSlides.get(slideHash!);
 	}
 
-	public getMetaSlideByIndex(slideIndex: number): MetaSlide {
-		return this.metaSlides.get(this.getSlideHash(slideIndex));
+	public getMetaSlideByIndex(
+		slideIndex: number | undefined,
+	): MetaSlide | undefined {
+		return this.metaSlides.get(this.getSlideHash(slideIndex)!);
 	}
 
-	public getSlideInfo(slideHash: string): SlideInfo {
-		return this.metaSlides.get(slideHash).info;
+	public getSlideInfo(slideHash: string | undefined): SlideInfo {
+		return this.metaSlides.get(slideHash!)!.info;
 	}
 
-	public getSlideInfoByIndex(slideIndex: number): SlideInfo {
+	public getSlideInfoByIndex(slideIndex: number): SlideInfo | null {
 		const slideHash = this.getSlideHash(slideIndex);
-		return slideHash ? this.metaSlides.get(slideHash).info : null;
+		return slideHash ? this.metaSlides.get(slideHash)!.info : null;
 	}
 
 	public setCurrentSlide(nSlideIndex: number) {
 		if (nSlideIndex >= 0 && nSlideIndex < this.numberOfSlides) {
 			const nCurSlide = this.getCurrentSlideIndex();
-			if (nCurSlide !== undefined) this.getMetaSlideByIndex(nCurSlide).hide();
-			this.getMetaSlideByIndex(nCurSlide).show();
+			if (nCurSlide !== undefined) this.getMetaSlideByIndex(nCurSlide)!.hide();
+			this.getMetaSlideByIndex(nCurSlide)!.show();
 		} else {
 			window.app.console.log(
 				'MetaPresentation.setCurrentSlide: slide index out of range: ' +

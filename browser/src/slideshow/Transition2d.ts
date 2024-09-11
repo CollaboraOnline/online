@@ -13,15 +13,15 @@
 declare var SlideShow: any;
 
 class TransitionParameters {
-	public context: RenderContext = null;
-	public current: WebGLTexture | ImageBitmap = null;
-	public next: WebGLTexture | ImageBitmap = null;
-	public slideInfo: SlideInfo = null;
-	public callback: VoidFunction = null;
+	public context: RenderContext | null = null;
+	public current: WebGLTexture | ImageBitmap | null = null;
+	public next: WebGLTexture | ImageBitmap | null = null;
+	public slideInfo: SlideInfo | null = null;
+	public callback: VoidFunction | null = null;
 }
 
 abstract class TransitionBase extends SlideChangeGl {
-	protected slideInfo: SlideInfo = null;
+	protected slideInfo: SlideInfo | null = null;
 
 	protected constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
@@ -59,10 +59,10 @@ abstract class TransitionBase extends SlideChangeGl {
 		this.gl.bindTexture(this.gl.TEXTURE_2D, null);
 
 		// Detach and delete shaders from the program
-		const attachedShaders = this.gl.getAttachedShaders(this.program);
+		const attachedShaders = this.gl.getAttachedShaders(this.program!);
 		if (attachedShaders) {
 			attachedShaders.forEach((shader) => {
-				this.gl.detachShader(this.program, shader);
+				this.gl.detachShader(this.program!, shader);
 				this.gl.deleteShader(shader);
 			});
 		}
@@ -103,21 +103,24 @@ class Transition2d extends TransitionBase {
 	public render(nT: number) {
 		const gl = this.gl;
 
-		gl.viewport(0, 0, this.context.canvas.width, this.context.canvas.height);
+		gl.viewport(0, 0, this.context!.canvas.width, this.context!.canvas.height);
 		gl.clearColor(0.0, 0.0, 0.0, 1.0);
 		gl.clear(gl.COLOR_BUFFER_BIT);
 
 		gl.useProgram(this.program);
-		gl.uniform1f(gl.getUniformLocation(this.program, 'time'), nT);
+		gl.uniform1f(gl.getUniformLocation(this.program!, 'time'), nT);
 
 		gl.activeTexture(gl.TEXTURE0);
 		gl.bindTexture(gl.TEXTURE_2D, this.leavingSlide);
-		gl.uniform1i(gl.getUniformLocation(this.program, 'leavingSlideTexture'), 0);
+		gl.uniform1i(
+			gl.getUniformLocation(this.program!, 'leavingSlideTexture'),
+			0,
+		);
 
 		gl.activeTexture(gl.TEXTURE1);
 		gl.bindTexture(gl.TEXTURE_2D, this.enteringSlide);
 		gl.uniform1i(
-			gl.getUniformLocation(this.program, 'enteringSlideTexture'),
+			gl.getUniformLocation(this.program!, 'enteringSlideTexture'),
 			1,
 		);
 

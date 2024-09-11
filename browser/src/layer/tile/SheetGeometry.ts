@@ -37,7 +37,7 @@ export interface DimensionStartEndPos {
 
 export interface IndexAndSpan {
 	index: number;
-	span: SpanData;
+	span: SpanData | undefined;
 }
 
 export interface SheetGeometryCoreData {
@@ -188,7 +188,7 @@ export class SheetGeometry {
 	// rowIndex should be zero based.
 	// 'startpos' (start position of the row in core pixels), 'size' (row size in core pixels).
 	// Note: All these fields are computed by assuming zero sizes for hidden/filtered rows.
-	public getRowData(rowIndex: number): DimensionPosSize {
+	public getRowData(rowIndex: number): DimensionPosSize | undefined {
 		return this._rows.getElementData(rowIndex);
 	}
 
@@ -304,8 +304,8 @@ export class SheetGeometry {
 		var horizPosSize = this._columns.getElementData(columnIndex, zoomScale);
 		var vertPosSize = this._rows.getElementData(rowIndex, zoomScale);
 
-		var topLeft = new L.Point(horizPosSize.startpos, vertPosSize.startpos);
-		var size = new L.Point(horizPosSize.size, vertPosSize.size);
+		var topLeft = new L.Point(horizPosSize!.startpos, vertPosSize!.startpos);
+		var size = new L.Point(horizPosSize!.size, vertPosSize!.size);
 
 		return new L.Bounds(topLeft, topLeft.add(size));
 	}
@@ -397,7 +397,7 @@ export class SheetGeometry {
 		return true;
 	}
 
-	private static getDimensionDataField(dimData: SheetDimensionCoreData, fieldName: string): string {
+	private static getDimensionDataField(dimData: SheetDimensionCoreData, fieldName: string): string | undefined {
 		switch (fieldName) {
 		case 'sizes':
 			return dimData.sizes;
@@ -427,7 +427,7 @@ export class SheetDimension {
 	private _hidden: BoolSpanList;
 	private _filtered: BoolSpanList;
 	private _outlines: DimensionOutlines;
-	private _visibleSizes: SpanList;
+	private _visibleSizes: SpanList | undefined;
 
 	private _maxIndex: number;
 	private _tileSizeTwips: number;
@@ -525,7 +525,7 @@ export class SheetDimension {
 
 		var posCorePx = 0; // position in core pixels.
 		var posPrintTwips = 0;
-		this._visibleSizes.addCustomDataForEachSpan(function (
+		this._visibleSizes!.addCustomDataForEachSpan(function (
 			index: number,
 			size: number, /* size in twips of one element in the span */
 			spanLength: number /* #elements in the span */) {
@@ -549,11 +549,11 @@ export class SheetDimension {
 	}
 
 	// returns the element pos/size in core pixels by default.
-	public getElementData(index: number, zoomScale?: number): DimensionPosSize {
+	public getElementData(index: number, zoomScale?: number): DimensionPosSize | undefined {
 		if (zoomScale !== undefined) {
 			var startpos = 0;
 			var size = 0;
-			this._visibleSizes.forEachSpanInRange(0, index, function (spanData) {
+			this._visibleSizes!.forEachSpanInRange(0, index, function (spanData) {
 				var count = spanData.end - spanData.start + 1;
 				var sizeOneCorePx = Math.floor(spanData.size * zoomScale / 15.0);
 				if (index > spanData.end) {
@@ -572,7 +572,7 @@ export class SheetDimension {
 			};
 		}
 
-		var span = this._visibleSizes.getSpanDataByIndex(index);
+		var span = this._visibleSizes!.getSpanDataByIndex(index);
 		if (span === undefined) {
 			return undefined;
 		}
@@ -580,8 +580,8 @@ export class SheetDimension {
 		return this._getElementDataFromSpanByIndex(index, span);
 	}
 
-	public getElementDataAny(index: number, unitName: GeometryUnit): DimensionPosSize {
-		var span = this._visibleSizes.getSpanDataByIndex(index);
+	public getElementDataAny(index: number, unitName: GeometryUnit): DimensionPosSize | undefined {
+		var span = this._visibleSizes!.getSpanDataByIndex(index);
 		if (span === undefined) {
 			return undefined;
 		}
@@ -590,12 +590,12 @@ export class SheetDimension {
 	}
 
 	// returns element pos/size in core pixels by default.
-	private _getElementDataFromSpanByIndex(index: number, span: any): DimensionPosSize {
+	private _getElementDataFromSpanByIndex(index: number, span: any): DimensionPosSize | undefined {
 		return this._getElementDataAnyFromSpanByIndex(index, span, 'corepixels');
 	}
 
 	// returns element pos/size in the requested unit.
-	private _getElementDataAnyFromSpanByIndex(index: number, span: any, unitName: GeometryUnit): DimensionPosSize {
+	private _getElementDataAnyFromSpanByIndex(index: number, span: any, unitName: GeometryUnit): DimensionPosSize | undefined {
 
 		if (span === undefined || index < span.start || span.end < index) {
 			return undefined;
@@ -635,7 +635,7 @@ export class SheetDimension {
 
 	public forEachInRange(start: number, end: number, callback: ((dimIndex: number, posSize: DimensionPosSize) => void)): void {
 
-		this._visibleSizes.forEachSpanInRange(start, end, function (span: SpanViewData) {
+		this._visibleSizes!.forEachSpanInRange(start, end, function (span: SpanViewData) {
 			var first = Math.max(span.start, start);
 			var last = Math.min(span.end, end);
 			for (var index = first; index <= last; ++index) {
@@ -646,7 +646,7 @@ export class SheetDimension {
 
 	// callback with a position and index for each grid line in this pixel range
 	public forEachInCorePixelRange(startPix: number, endPix: number, callback: ((startPosCorePx: number, index: number) => void)): void {
-		this._visibleSizes.forEachSpan(function (spanData: any) {
+		this._visibleSizes!.forEachSpan(function (spanData: any) {
 			// do we overlap ?
 			var spanFirstCorePx = spanData.data.poscorepx -
 				(spanData.data.sizecore * (spanData.end - spanData.start + 1));
@@ -670,12 +670,12 @@ export class SheetDimension {
 	// an object with this index and the span data.
 	private _getSpanAndIndexFromTileTwipsPos(pos: number): IndexAndSpan {
 		var result = {} as IndexAndSpan;
-		var span = this._visibleSizes.getSpanDataByCustomDataField(pos, 'postiletwips');
+		var span = this._visibleSizes!.getSpanDataByCustomDataField(pos, 'postiletwips');
 		result.span = span;
 		if (span === undefined) {
 			// enforce limits.
 			result.index = (pos >= 0) ? this._maxIndex : 0;
-			result.span = this._visibleSizes.getSpanDataByIndex(result.index);
+			result.span = this._visibleSizes!.getSpanDataByIndex(result.index);
 			return result;
 		}
 		var elementCount = span.end - span.start + 1;
@@ -699,12 +699,12 @@ export class SheetDimension {
 	// an object with this index and the span data.
 	private _getSpanAndIndexFromPrintTwipsPos(pos: number): IndexAndSpan {
 		var result = {} as IndexAndSpan;
-		var span = this._visibleSizes.getSpanDataByCustomDataField(pos, 'posprinttwips');
+		var span = this._visibleSizes!.getSpanDataByCustomDataField(pos, 'posprinttwips');
 		result.span = span;
 		if (span === undefined) {
 			// enforce limits.
 			result.index = (pos >= 0) ? this._maxIndex : 0;
-			result.span = this._visibleSizes.getSpanDataByIndex(result.index);
+			result.span = this._visibleSizes!.getSpanDataByIndex(result.index);
 			return result;
 		}
 		var elementCount = span.end - span.start + 1;
@@ -765,7 +765,7 @@ export class SheetDimension {
 
 	// Accepts a position in display twips at current zoom and returns corresponding
 	// display twips position at the given zoomScale.
-	public getTileTwipsAtZoom(posTT: number, zoomScale: number): number {
+	public getTileTwipsAtZoom(posTT: number, zoomScale: number): number | undefined {
 		if (typeof posTT !== 'number' || typeof zoomScale !== 'number') {
 			console.error('Wrong argument types');
 			return;
@@ -777,7 +777,7 @@ export class SheetDimension {
 
 	// Accepts a position in core-pixels at current zoom and returns corresponding
 	// core-pixels position at the given zoomScale.
-	public getCorePixelsAtZoom(posCP: number, zoomScale: number): number {
+	public getCorePixelsAtZoom(posCP: number, zoomScale: number): number | undefined {
 		if (typeof posCP !== 'number' || typeof zoomScale !== 'number') {
 			console.error('Wrong argument types');
 			return;
@@ -785,7 +785,7 @@ export class SheetDimension {
 
 		var posCPZ = 0; // Position in core-pixels at zoomScale.
 		var posCPRem = posCP; // Unconverted core-pixels position at current zoom.
-		this._visibleSizes.forEachSpan(function (span) {
+		this._visibleSizes!.forEachSpan(function (span) {
 			var elementCount = span.end - span.start + 1;
 			var sizeOneCP = span.data.sizecore;
 			var sizeOneCPZ = Math.floor(span.size / 15.0 * zoomScale);
@@ -816,7 +816,7 @@ export class SheetDimension {
 
 	// Accepts a position in core-pixels at *given* zoomScale and returns corresponding
 	// core-pixels position at the current zoom.
-	public getCorePixelsFromZoom(posCPZ: number, zoomScale: number): number {
+	public getCorePixelsFromZoom(posCPZ: number, zoomScale: number): number | undefined {
 		if (typeof posCPZ !== 'number' || typeof zoomScale !== 'number') {
 			console.error('Wrong argument types');
 			return;
@@ -824,7 +824,7 @@ export class SheetDimension {
 
 		var posCP = 0; // Position in core-pixels at current zoom.
 		var posCPZRem = posCPZ; // Unconverted core-pixels position at zoomScale.
-		this._visibleSizes.forEachSpan(function (span) {
+		this._visibleSizes!.forEachSpan(function (span) {
 			var elementCount = span.end - span.start + 1;
 			var sizeOneCP = span.data.sizecore;
 			var sizeOneCPZ = Math.floor(span.size / 15.0 * zoomScale);
@@ -854,7 +854,7 @@ export class SheetDimension {
 	}
 
 	// Accepts a position in print twips and returns the corresponding position in tile twips.
-	public getTileTwipsPosFromPrint(posPT: number, zoomScale?: number): number {
+	public getTileTwipsPosFromPrint(posPT: number | undefined, zoomScale?: number): number | undefined {
 
 		if (typeof posPT !== 'number') {
 			console.error('Wrong argument type');
@@ -864,7 +864,7 @@ export class SheetDimension {
 		if (typeof zoomScale === 'number') {
 			var posTT = 0;
 			var posPTInc = 0;
-			this._visibleSizes.forEachSpan(function (spanData) {
+			this._visibleSizes!.forEachSpan(function (spanData) {
 				var count = spanData.end - spanData.start + 1;
 				var sizeSpanPT = spanData.size * count;
 				var sizeOneCorePx = Math.floor(spanData.size * zoomScale / 15.0);
@@ -896,15 +896,15 @@ export class SheetDimension {
 		var elementDataTT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'tiletwips');
 		var elementDataPT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'printtwips');
 
-		var offset = posPT - elementDataPT.startpos;
+		var offset = posPT - elementDataPT!.startpos;
 		console.assert(offset >= 0, 'offset should not be negative');
 
 		// Preserve any offset from the matching column/row start position.
-		return elementDataTT.startpos + offset;
+		return elementDataTT!.startpos + offset;
 	}
 
 	// Accepts a position in tile twips and returns the corresponding position in print twips.
-	public getPrintTwipsPosFromTile(posTT: number): number {
+	public getPrintTwipsPosFromTile(posTT: number): number | undefined {
 
 		if (typeof posTT !== 'number') {
 			console.error('Wrong argument type');
@@ -915,11 +915,11 @@ export class SheetDimension {
 		var elementDataTT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'tiletwips');
 		var elementDataPT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'printtwips');
 
-		var offset = posTT - elementDataTT.startpos;
+		var offset = posTT - elementDataTT!.startpos;
 		console.assert(offset >= 0, 'offset should not be negative');
 
 		// Preserve any offset from the matching column/row start position.
-		return elementDataPT.startpos + offset;
+		return elementDataPT!.startpos + offset;
 	}
 
 	// Accepts a start and end positions in print twips, and returns the
@@ -933,15 +933,15 @@ export class SheetDimension {
 			// to imitate what core does when it sends cursor/ranges in tile-twips coordinates.
 			var rangeSize = Math.floor(this._twipsPerCorePixel);
 			return {
-				startpos: startData.startpos,
-				endpos: startData.startpos + rangeSize
+				startpos: startData!.startpos,
+				endpos: startData!.startpos + rangeSize
 			};
 		}
 		var endElement = this._getSpanAndIndexFromPrintTwipsPos(posEndPT);
 		var endData = this._getElementDataAnyFromSpanByIndex(endElement.index, endElement.span, 'tiletwips');
 
-		var startPos = startData.startpos;
-		var endPos = endData.startpos + endData.size;
+		var startPos = startData!.startpos;
+		var endPos = endData!.startpos + endData!.size;
 		if (endPos < startPos) {
 			endPos = startPos;
 		}
@@ -952,7 +952,7 @@ export class SheetDimension {
 		};
 	}
 
-	public getSize(unit: GeometryUnit): number {
+	public getSize(unit: GeometryUnit): number | undefined {
 		var posSize = this.getElementDataAny(this._maxIndex, unit);
 		if (!posSize) {
 			return undefined;
@@ -985,7 +985,7 @@ export class SheetDimension {
 			this._getSpanAndIndexFromTileTwipsPos(pos) :
 			this._getSpanAndIndexFromPrintTwipsPos(pos);
 
-		return this._getElementDataAnyFromSpanByIndex(result.index, result.span, origUnit).startpos;
+		return this._getElementDataAnyFromSpanByIndex(result.index, result.span, origUnit)!.startpos;
 	}
 
 	public getIndexFromPos(pos: number, unit: GeometryUnit): number {
@@ -1071,7 +1071,7 @@ class SpanList {
 	}
 
 	// Runs in O(#spans in 'this' + #spans in 'other')
-	public applyZeroValues(other: BoolSpanList) {
+	public applyZeroValues(other: BoolSpanList | undefined) {
 
 		if (!(other instanceof BoolSpanList)) {
 			return undefined;
@@ -1142,7 +1142,7 @@ class SpanList {
 		});
 	}
 
-	public getSpanDataByIndex(index: number): SpanData {
+	public getSpanDataByIndex(index: number): SpanData | undefined {
 
 		if (typeof index != 'number') {
 			return undefined;
@@ -1156,7 +1156,7 @@ class SpanList {
 		return this._getSpanData(spanid);
 	}
 
-	public getSpanDataByCustomDataField(value: number, fieldName: string): SpanViewData {
+	public getSpanDataByCustomDataField(value: number, fieldName: string): SpanViewData | undefined {
 
 		if (typeof value != 'number' || typeof fieldName != 'string' || !fieldName) {
 			return undefined;
@@ -1337,7 +1337,7 @@ class BoolSpanList {
 
 }
 
-function parseSpanListEncoding(encoding: string, booleanValue: boolean): (ParsedSpanList | ParsedBoolSpanList) {
+function parseSpanListEncoding(encoding: string, booleanValue: boolean): ParsedSpanList | ParsedBoolSpanList | undefined {
 
 	var spanlist: ParsedSpan[] = [];
 	var boolspanlist: BoolSpanData[] = [];

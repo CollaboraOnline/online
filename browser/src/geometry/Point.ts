@@ -17,12 +17,12 @@ export class Point {
 	public x: number;
 	public y: number;
 
-	constructor(x: number, y: number, round: boolean = false) {
+	constructor(x: number, y: number | undefined, round: boolean = false) {
 		this.x = (round ? Math.round(x) : x);
-		this.y = (round ? Math.round(y) : y);
+		this.y = (round ? Math.round(y!) : y!);
 	}
 
-	public static parse(pointString: string): Point { // (string) -> Point
+	public static parse(pointString: string): Point | undefined { // (string) -> Point
 		if (typeof pointString !== 'string') {
 			console.error('invalid point string');
 			return undefined;
@@ -43,7 +43,7 @@ export class Point {
 
 	/// non-destructive, returns a new point
 	public add(point: Point): Point {
-		return this.clone()._add(Point.toPoint(point));
+		return this.clone()._add(Point.toPoint(point)!);
 	}
 
 	// destructive, used directly for performance in situations where it's safe to modify existing point
@@ -54,7 +54,7 @@ export class Point {
 	}
 
 	public subtract(point: Point): Point {
-		return this.clone()._subtract(Point.toPoint(point));
+		return this.clone()._subtract(Point.toPoint(point)!);
 	}
 
 	public _subtract(point: Point): Point {
@@ -114,7 +114,7 @@ export class Point {
 	}
 
 	public distanceTo(point: Point): number {
-		point = Point.toPoint(point);
+		point = Point.toPoint(point)!;
 
 		var x = point.x - this.x;
 		var y = point.y - this.y;
@@ -123,7 +123,7 @@ export class Point {
 	}
 
 	public equals(point: Point): boolean {
-		point = Point.toPoint(point);
+		point = Point.toPoint(point)!;
 
 		// Proper ieee 754 equality comparison.
 		return Math.abs(point.x - this.x) < Number.EPSILON &&
@@ -131,7 +131,7 @@ export class Point {
 	}
 
 	public contains(point: Point): boolean {
-		point = Point.toPoint(point);
+		point = Point.toPoint(point)!;
 
 		return Math.abs(point.x) <= Math.abs(this.x) &&
 			Math.abs(point.y) <= Math.abs(this.y);
@@ -167,7 +167,7 @@ export class Point {
 			Point.formatNum(this.y) + ')';
 	}
 
-	public static toPoint(x: PointConvertable | number, y?: number, round?: boolean): Point {
+	public static toPoint(x: PointConvertable | number, y?: number, round?: boolean): Point | undefined {
 		if (x instanceof Point) {
 			return x;
 		}

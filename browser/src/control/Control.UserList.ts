@@ -82,7 +82,7 @@ class UserList extends L.Control {
 		}
 
 		const userListElement = document.getElementById('userListSummary');
-		userListElement.setAttribute('aria-label', _('User List Summary'));
+		userListElement!.setAttribute('aria-label', _('User List Summary'));
 
 		this.registerHeaderAvatarEvents();
 	}
@@ -226,7 +226,7 @@ class UserList extends L.Control {
 	}
 
 	registerHeaderAvatarEvents() {
-		document.getElementById('userListSummary').addEventListener(
+		document.getElementById('userListSummary')!.addEventListener(
 			'click',
 			function (e: MouseEvent) {
 				e.stopPropagation();
@@ -250,10 +250,14 @@ class UserList extends L.Control {
 		);
 	}
 
-	getSortedUsers(): Generator<[number, User], undefined, undefined> {
+	getSortedUsers(): Generator<
+		[number, User | undefined],
+		undefined,
+		undefined
+	> {
 		return function* (
 			this: UserList,
-		): Generator<[number, User], undefined, undefined> {
+		): Generator<[number, User | undefined], undefined, undefined> {
 			const self = this.users.get(this.map._docLayer._viewId);
 
 			if (this.users.get(this.map._docLayer._viewId) === undefined) {
@@ -301,8 +305,8 @@ class UserList extends L.Control {
 			this.hideUserList() ||
 			this.users.size === 1
 		) {
-			userListElement.removeAttribute('accesskey');
-			userListElementBackground.style.display = 'none';
+			userListElement!.removeAttribute('accesskey');
+			userListElementBackground!.style.display = 'none';
 			return;
 		}
 
@@ -320,19 +324,19 @@ class UserList extends L.Control {
 		);
 		const followed = this.getFollowedUser();
 
-		userListElement.setAttribute('accesskey', 'UP');
+		userListElement!.setAttribute('accesskey', 'UP');
 
-		userListElement.replaceChildren(
+		userListElement!.replaceChildren(
 			...avatarUsers.map(([viewId, user], index) => {
 				const img = this.createAvatar(
-					user.cachedHeaderAvatar,
+					user!.cachedHeaderAvatar,
 					viewId,
-					user.username,
-					user.extraInfo,
-					user.color,
+					user!.username,
+					user!.extraInfo,
+					user!.color,
 					displayCount - index,
 				);
-				user.cachedHeaderAvatar = img;
+				user!.cachedHeaderAvatar = img;
 
 				if (followed !== undefined && followed[0] === viewId) {
 					img.classList.add('following');
@@ -344,14 +348,14 @@ class UserList extends L.Control {
 			}),
 		);
 
-		userListElementBackground.style.display = 'block';
+		userListElementBackground!.style.display = 'block';
 	}
 
 	updateUserListCount() {
 		const count = this.users.size;
-		let text = '';
+		let text: string | undefined = '';
 		if (count > 1) {
-			text = this.options.nUsers.replace('%n', count.toString());
+			text = this.options.nUsers!.replace('%n', count.toString());
 		} else if (count === 1) {
 			text = this.options.oneUser;
 		} else {
@@ -430,7 +434,7 @@ class UserList extends L.Control {
 	showTooltip(text: string) {
 		const userList = $('#userListHeader');
 		if (userList) {
-			userList.get(0).title = text;
+			userList.get(0)!.title = text;
 			userList.tooltip({
 				content: text,
 			});
@@ -442,7 +446,7 @@ class UserList extends L.Control {
 	hideTooltip() {
 		const userList = $('#userListHeader');
 		if (userList) {
-			userList.get(0).title = undefined;
+			userList.get(0)!.title = '';
 			userList.tooltip('option', 'disabled', true);
 		}
 	}
@@ -470,7 +474,7 @@ class UserList extends L.Control {
 
 		this.showTooltip(sanitizer.innerHTML);
 
-		clearTimeout(this.options.userPopupTimeout);
+		clearTimeout(this.options.userPopupTimeout!);
 		this.options.userPopupTimeout = setTimeout(() => {
 			this.hideTooltip();
 		}, 3000);
@@ -484,7 +488,7 @@ class UserList extends L.Control {
 
 		const userElements = users.map(([viewId, user]) => {
 			const userLabel = L.DomUtil.create('div', 'user-list-item--name');
-			userLabel.innerText = user.username;
+			userLabel.innerText = user!.username;
 
 			const userFollowingLabel = L.DomUtil.create(
 				'div',
@@ -508,13 +512,13 @@ class UserList extends L.Control {
 			}
 
 			const avatar = this.createAvatar(
-				user.cachedUserListAvatar,
+				user!.cachedUserListAvatar,
 				viewId,
-				user.username,
-				user.extraInfo,
-				user.color,
+				user!.username,
+				user!.extraInfo,
+				user!.color,
 			);
-			user.cachedUserListAvatar = avatar;
+			user!.cachedUserListAvatar = avatar;
 
 			listItem.appendChild(avatar);
 			listItem.appendChild(userLabelContainer);
@@ -561,33 +565,33 @@ class UserList extends L.Control {
 		const following = this.getFollowedUser();
 
 		if (following === undefined && !app.isFollowingEditor()) {
-			followingChipBackground.style.display = 'none';
+			followingChipBackground!.style.display = 'none';
 			return;
 		}
 
 		const topAvatarZIndex = this.options.userLimitHeaderWhenFollowing;
 
 		if (app.isFollowingEditor()) {
-			followingChip.innerText = this.options.followingChipTextEditor;
-			followingChip.style.borderColor = 'var(--color-main-text)';
+			followingChip!.innerText = this.options.followingChipTextEditor;
+			followingChip!.style.borderColor = 'var(--color-main-text)';
 		} else {
-			followingChip.innerText = this.options.followingChipTextUser.replace(
+			followingChip!.innerText = this.options.followingChipTextUser.replace(
 				'{user}',
-				following[1].username,
+				following![1].username,
 			);
-			followingChip.style.borderColor = following[1].color;
+			followingChip!.style.borderColor = following![1].color;
 		}
 
-		followingChip.onclick = () => {
+		followingChip!.onclick = () => {
 			this.unfollowAll();
 			this.renderAll();
 		};
 
-		followingChip.title = this.options.followingChipTooltipText;
-		$(followingChip).tooltip();
+		followingChip!.title = this.options.followingChipTooltipText;
+		$(followingChip!).tooltip();
 
-		followingChipBackground.style.display = 'block';
-		followingChipBackground.style.zIndex = topAvatarZIndex.toString();
+		followingChipBackground!.style.display = 'block';
+		followingChipBackground!.style.zIndex = topAvatarZIndex.toString();
 	}
 }
 

@@ -43,9 +43,9 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
         this.adjustPopUpPosition();
 
-        this.context.strokeStyle = this.sectionProperties.color;
-        this.context.lineWidth = 2;
-        this.context.strokeRect(-0.5, -0.5, this.size[0], this.size[1]);
+        this.context!.strokeStyle = this.sectionProperties.color;
+        this.context!.lineWidth = 2;
+        this.context!.strokeRect(-0.5, -0.5, this.size[0], this.size[1]);
     }
 
     checkMyVisibility() {
@@ -59,7 +59,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
         const width = this.sectionProperties.popUpContainer.getBoundingClientRect().width;
         const height = this.sectionProperties.popUpContainer.getBoundingClientRect().height;
 
-        const pos = [this.myTopLeft[0] / app.dpiScale + this.size[0] * 0.5 / app.dpiScale - (width * 0.5), (this.myTopLeft[1] / app.dpiScale) - (height + 15)];
+        const pos = [this.myTopLeft[0]! / app.dpiScale + this.size[0] * 0.5 / app.dpiScale - (width * 0.5), (this.myTopLeft[1]! / app.dpiScale) - (height + 15)];
         this.sectionProperties.popUpContainer.style.left = pos[0] + 'px';
         this.sectionProperties.popUpContainer.style.top = pos[1] + 'px';
 
@@ -91,7 +91,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
             popUpContainer.style.backgroundColor = nameContainer.style.backgroundColor = this.sectionProperties.color;
             arrowDiv.style.backgroundColor = nameParagraph.style.backgroundColor = this.sectionProperties.color;
 
-            document.getElementById('document-container').appendChild(popUpContainer);
+            document.getElementById('document-container')!.appendChild(popUpContainer);
 
             this.sectionProperties.popUpContainer = popUpContainer;
 

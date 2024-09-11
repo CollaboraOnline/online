@@ -36,9 +36,9 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
     }
 
     onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
-        this.context.strokeStyle = this.sectionProperties.color;
-        this.context.lineWidth = 2;
-        this.context.strokeRect(-0.5, -0.5, this.size[0], this.size[1]);
+        this.context!.strokeStyle = this.sectionProperties.color;
+        this.context!.lineWidth = 2;
+        this.context!.strokeRect(-0.5, -0.5, this.size[0], this.size[1]);
     }
 
     checkMyVisibility() {

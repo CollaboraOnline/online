@@ -15,8 +15,8 @@ function createActivity(
 	aActivityParamSet: ActivityParamSet,
 	aAnimationNode: AnimationBaseNode3,
 	aAnimation: AnimationBase,
-	aInterpolator: PropertyInterpolatorType,
-): AnimationActivity {
+	aInterpolator: PropertyInterpolatorType | null | undefined,
+): AnimationActivity | null | undefined {
 	const eCalcMode = aAnimationNode.getCalcMode();
 
 	const sAttributeName = aAnimationNode.getAttributeName();
@@ -40,25 +40,25 @@ function createActivity(
 		);
 
 	if (aAnimationNode.getFormula()) {
-		let sFormula: string = aAnimationNode.getFormula();
+		let sFormula: string | null | undefined = aAnimationNode.getFormula();
 		const reMath = /abs|sqrt|asin|acos|atan|sin|cos|tan|exp|log|min|max/g;
-		sFormula = sFormula.replace(reMath, 'Math.$&');
+		sFormula = sFormula!.replace(reMath, 'Math.$&');
 		sFormula = sFormula.replace(/pi(?!\w)/g, 'Math.PI');
 		sFormula = sFormula.replace(/e(?!\w)/g, 'Math.E');
 		sFormula = sFormula.replace(/\$/g, '__PARAM0__');
 
 		const aAnimatedElement = aAnimationNode.getAnimatedElement();
-		const aBBox = aAnimatedElement.getBaseBBox();
+		const aBBox = aAnimatedElement!.getBaseBBox();
 
 		// the following variable are used for evaluating sFormula
 		/* eslint-disable no-unused-vars */
-		const width = aBBox.width / aActivityParamSet.nSlideWidth;
-		const height = aBBox.height / aActivityParamSet.nSlideHeight;
-		const x = (aBBox.x + aBBox.width / 2) / aActivityParamSet.nSlideWidth;
-		const y = (aBBox.y + aBBox.height / 2) / aActivityParamSet.nSlideHeight;
+		const width = aBBox!.width / aActivityParamSet.nSlideWidth;
+		const height = aBBox!.height / aActivityParamSet.nSlideHeight;
+		const x = (aBBox!.x + aBBox!.width / 2) / aActivityParamSet.nSlideWidth;
+		const y = (aBBox!.y + aBBox!.height / 2) / aActivityParamSet.nSlideHeight;
 
 		aActivityParamSet.aFormula = function (__PARAM0__: any) {
-			return eval(sFormula);
+			return eval(sFormula!);
 		};
 		/* eslint-enable no-unused-vars */
 	}
@@ -67,13 +67,13 @@ function createActivity(
 
 	// do we have a value list ?
 	const aValueSet = aAnimationNode.getValues();
-	const nValueSetSize = aValueSet.length;
+	const nValueSetSize = aValueSet!.length;
 
 	if (nValueSetSize != 0) {
 		// Value list activity
-		if (aActivityParamSet.aDiscreteTimes.length == 0) {
+		if (aActivityParamSet.aDiscreteTimes!.length == 0) {
 			for (let i = 0; i < nValueSetSize; ++i)
-				aActivityParamSet.aDiscreteTimes.push(i / nValueSetSize);
+				aActivityParamSet.aDiscreteTimes!.push(i / nValueSetSize);
 		}
 
 		switch (eCalcMode) {
@@ -94,7 +94,8 @@ function createActivity(
 				);
 			default:
 				window.app.console.log(
-					'createActivity: unexpected calculation mode: ' + CalcMode[eCalcMode],
+					'createActivity: unexpected calculation mode: ' +
+						CalcMode[eCalcMode!],
 				);
 			// FALLTHROUGH intended
 			case CalcMode.Paced:
@@ -130,7 +131,8 @@ function createActivity(
 
 			default:
 				window.app.console.log(
-					'createActivity: unexpected calculation mode: ' + CalcMode[eCalcMode],
+					'createActivity: unexpected calculation mode: ' +
+						CalcMode[eCalcMode!],
 				);
 			// FALLTHROUGH intended
 			case CalcMode.Paced:
@@ -153,8 +155,8 @@ function createValueListActivity(
 	aActivityParamSet: ActivityParamSet,
 	aAnimationNode: AnimationBaseNode3,
 	aAnimation: AnimationBase,
-	aInterpolator: PropertyInterpolatorType,
-	ValueListActivityCtor: ValueListActivityCtorType,
+	aInterpolator: PropertyInterpolatorType | null | undefined,
+	ValueListActivityCtor: ValueListActivityCtorType | null | undefined,
 	bAccumulate: boolean,
 	eValueType: PropertyValueType,
 ): AnimationActivity {
@@ -170,7 +172,7 @@ function createValueListActivity(
 		eValueType,
 		aValueList,
 		aValueSet,
-		aAnimatedElement.getBaseBBox(),
+		aAnimatedElement!.getBaseBBox(),
 		aActivityParamSet.nSlideWidth,
 		aActivityParamSet.nSlideHeight,
 	);
@@ -181,7 +183,7 @@ function createValueListActivity(
 		);
 	}
 
-	return new ValueListActivityCtor(
+	return new ValueListActivityCtor!(
 		aValueList,
 		aActivityParamSet,
 		aAnimation,
@@ -195,7 +197,7 @@ function createFromToByActivity(
 	aActivityParamSet: ActivityParamSet,
 	aAnimationNode: AnimationBaseNode3,
 	aAnimation: any,
-	aInterpolator: PropertyInterpolatorType,
+	aInterpolator: PropertyInterpolatorType | null | undefined,
 	ClassTemplateInstance: FromToByActivityCtorType,
 	bAccumulate: boolean,
 	eValueType: PropertyValueType,
@@ -226,7 +228,7 @@ function createFromToByActivity(
 		eValueType,
 		aValueList,
 		aValueSet,
-		aAnimatedElement.getBaseBBox(),
+		aAnimatedElement!.getBaseBBox(),
 		aActivityParamSet.nSlideWidth,
 		aActivityParamSet.nSlideHeight,
 	);
@@ -256,8 +258,8 @@ function createFromToByActivity(
 function extractAttributeValues(
 	eValueType: PropertyValueType,
 	aValueList: any[],
-	aValueSet: any[],
-	aBBox: DOMRect,
+	aValueSet: any[] | null,
+	aBBox: DOMRect | null,
 	nSlideWidth: number,
 	nSlideHeight: number,
 ) {
@@ -273,31 +275,31 @@ function extractAttributeValues(
 			);
 			break;
 		case PropertyValueType.Bool:
-			for (i = 0; i < aValueSet.length; ++i) {
-				const aValue = booleanParser(aValueSet[i]);
+			for (i = 0; i < aValueSet!.length; ++i) {
+				const aValue = booleanParser(aValueSet![i]);
 				aValueList.push(aValue);
 			}
 			break;
 		case PropertyValueType.String:
-			for (i = 0; i < aValueSet.length; ++i) {
-				aValueList.push(aValueSet[i]);
+			for (i = 0; i < aValueSet!.length; ++i) {
+				aValueList.push(aValueSet![i]);
 			}
 			break;
 		case PropertyValueType.Enum:
-			for (i = 0; i < aValueSet.length; ++i) {
-				aValueList.push(aValueSet[i]);
+			for (i = 0; i < aValueSet!.length; ++i) {
+				aValueList.push(aValueSet![i]);
 			}
 			break;
 		case PropertyValueType.Color:
-			for (i = 0; i < aValueSet.length; ++i) {
+			for (i = 0; i < aValueSet!.length; ++i) {
 				const aValue: any = null;
 				aValueList.push(aValue);
 			}
 			break;
 		case PropertyValueType.TupleNumber:
-			for (i = 0; i < aValueSet.length; ++i) {
-				if (typeof aValueSet[i] === 'string') {
-					const aTuple = aValueSet[i].split(',');
+			for (i = 0; i < aValueSet!.length; ++i) {
+				if (typeof aValueSet![i] === 'string') {
+					const aTuple = aValueSet![i].split(',');
 					const aValue: number[] = [];
 					evalValuesAttribute(aValue, aTuple, aBBox, nSlideWidth, nSlideHeight);
 					aValueList.push(aValue);
@@ -315,23 +317,23 @@ function extractAttributeValues(
 
 function evalValuesAttribute(
 	aValueList: number[],
-	aValueSet: any[],
-	aBBox: DOMRect,
+	aValueSet: any[] | null,
+	aBBox: DOMRect | null,
 	nSlideWidth: number,
 	nSlideHeight: number,
 ) {
 	// the following variables are used for evaluating sValue later
 	/* eslint-disable no-unused-vars */
-	const width = aBBox.width / nSlideWidth;
-	const height = aBBox.height / nSlideHeight;
-	const x = (aBBox.x + aBBox.width / 2) / nSlideWidth;
-	const y = (aBBox.y + aBBox.height / 2) / nSlideHeight;
+	const width = aBBox!.width / nSlideWidth;
+	const height = aBBox!.height / nSlideHeight;
+	const x = (aBBox!.x + aBBox!.width / 2) / nSlideWidth;
+	const y = (aBBox!.y + aBBox!.height / 2) / nSlideHeight;
 	/* eslint-enable no-unused-vars */
 
 	const reMath = /abs|sqrt|asin|acos|atan|sin|cos|tan|exp|log|min|max/g;
 
-	for (let i = 0; i < aValueSet.length; ++i) {
-		let sValue: string = aValueSet[i];
+	for (let i = 0; i < aValueSet!.length; ++i) {
+		let sValue: string = aValueSet![i];
 		if (sValue) {
 			sValue = sValue.replace(reMath, 'Math.$&');
 			sValue = sValue.replace(/pi(?!\w)/g, 'Math.PI');

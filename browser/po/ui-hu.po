@@ -392,15 +392,15 @@ msgstr " perc"
 msgid " s"
 msgstr " s"
 
-#: js/global.js:1361
+#: src/global.ts:1361
 msgid "Cluster is scaling, retrying..."
 msgstr "A klaszter átméreteződik, újrapróbálkozás..."
 
-#: js/global.js:1363
+#: src/global.ts:1363
 msgid "Document is migrating to new server, retrying..."
 msgstr "A dokumentum új kiszolgálóra migrálódik, újrapróbálkozás..."
 
-#: js/global.js:1365
+#: src/global.ts:1365
 msgid "Failed to get RouteToken from controller"
 msgstr "Nem sikerült megszerezni a RouteTokent a kontrollertől."
 

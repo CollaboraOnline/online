@@ -32,8 +32,8 @@ function onDemandRenderer(
 		placeholder = L.DomUtil.create('img', '', parentContainer);
 		const placeholderImg = placeholder as HTMLImageElement;
 		placeholderImg.src = cachedComboboxEntries.images[entryId];
-		placeholderImg.alt = entryText;
-		placeholderImg.title = entryText;
+		placeholderImg.alt = entryText!;
+		placeholderImg.title = entryText!;
 		requestRender = !cachedComboboxEntries.persistent;
 	}
 

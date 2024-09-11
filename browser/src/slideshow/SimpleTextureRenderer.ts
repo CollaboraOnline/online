@@ -12,22 +12,22 @@
 
 abstract class SimpleTextureRenderer {
 	protected gl: WebGL2RenderingContext;
-	protected program: WebGLProgram;
+	protected program: WebGLProgram | null;
 	protected vao!: WebGLVertexArrayObject | null;
-	protected context: RenderContextGl;
+	protected context: RenderContextGl | null;
 
-	constructor(canvasContext: RenderContextGl) {
+	constructor(canvasContext: RenderContextGl | null) {
 		this.context = canvasContext;
-		this.gl = this.context.getGl();
+		this.gl = this.context!.getGl();
 
 		const vertexShaderSource = this.getVertexShader();
 		const fragmentShaderSource = this.getFragmentShader();
 
-		const vertexShader = this.context.createVertexShader(vertexShaderSource);
+		const vertexShader = this.context!.createVertexShader(vertexShaderSource);
 		const fragmentShader =
-			this.context.createFragmentShader(fragmentShaderSource);
+			this.context!.createFragmentShader(fragmentShaderSource);
 
-		this.program = this.context.createProgram(vertexShader, fragmentShader);
+		this.program = this.context!.createProgram(vertexShader, fragmentShader);
 	}
 
 	protected getVertexShader(): string {
@@ -71,11 +71,11 @@ abstract class SimpleTextureRenderer {
 		this.gl.bindVertexArray(this.vao);
 
 		const positionLocation = this.gl.getAttribLocation(
-			this.program,
+			this.program!,
 			'a_position',
 		);
 		const texCoordLocation = this.gl.getAttribLocation(
-			this.program,
+			this.program!,
 			'a_texCoord',
 		);
 

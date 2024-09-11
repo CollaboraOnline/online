@@ -394,15 +394,15 @@ msgstr " мин"
 msgid " s"
 msgstr " с"
 
-#: js/global.js:1361
+#: src/global.ts:1361
 msgid "Cluster is scaling, retrying..."
 msgstr "Кластер масштабируется, повторная попытка..."
 
-#: js/global.js:1363
+#: src/global.ts:1363
 msgid "Document is migrating to new server, retrying..."
 msgstr "Документ переносится на новый сервер, повторная попытка..."
 
-#: js/global.js:1365
+#: src/global.ts:1365
 msgid "Failed to get RouteToken from controller"
 msgstr "Не удалось получить RouteToken от контроллера"
 

@@ -190,7 +190,7 @@ export class Comment extends CanvasSectionObject {
 		var _scrollTop = (e as any).currentTarget.scrollTop;
 		if ((e as any).deltaY < 0 && _scrollTop > 0)
 			e.stopPropagation();
-		else if ((e as any).deltaY > 0 && _scrollTop + $(e.currentTarget).height() < (e as any).target.scrollHeight)
+		else if ((e as any).deltaY > 0 && _scrollTop + $(e.currentTarget!).height() < (e as any).target.scrollHeight)
 			e.stopPropagation();
 	}
 
@@ -243,7 +243,7 @@ export class Comment extends CanvasSectionObject {
 		}
 
 		if (!(<any>window).mode.isMobile())
-			document.getElementById('document-container').appendChild(this.sectionProperties.container);
+			document.getElementById('document-container')!.appendChild(this.sectionProperties.container);
 
 		// We make comment directly visible when its transitioned to its determined position
 		if (cool.CommentSection.autoSavedComment)
@@ -483,7 +483,7 @@ export class Comment extends CanvasSectionObject {
 
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject!.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			this.backgroundColor = '#777777'; //background: rgba(119, 119, 119, 0.25);
@@ -491,15 +491,15 @@ export class Comment extends CanvasSectionObject {
 
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject!.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
-			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
+			(this.containerObject!.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
 
-		this.containerObject.requestReDraw();
+		this.containerObject!.requestReDraw();
 		this.sectionProperties.isHighlighted = true;
 	}
 
@@ -558,8 +558,8 @@ export class Comment extends CanvasSectionObject {
 		var pos: number[], size: number[];
 
 		if (rectangles) {
-			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
-			var diff = [documentAnchorSection.myTopLeft[0] - this.documentTopLeft[0], documentAnchorSection.myTopLeft[1] - this.documentTopLeft[1]];
+			var documentAnchorSection = this.containerObject!.getDocumentAnchorSection();
+			var diff = [documentAnchorSection!.myTopLeft[0]! - this.documentTopLeft[0], documentAnchorSection!.myTopLeft[1]! - this.documentTopLeft[1]];
 
 			for (var i = 0; i < rectangles.length; i++) {
 				pos = [
@@ -722,9 +722,9 @@ export class Comment extends CanvasSectionObject {
 			var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 			var originalSize = [Math.round((cellPos[2]) * ratio), Math.round((cellPos[3]) * ratio)];
 
-			const startX = this.isCalcRTL() ? this.myTopLeft[0] - this.getCommentWidth() : this.myTopLeft[0] + originalSize[0] - 3;
+			const startX = this.isCalcRTL() ? this.myTopLeft[0]! - this.getCommentWidth() : this.myTopLeft[0]! + originalSize[0] - 3;
 
-			var pos: Array<number> = [Math.round(startX / app.dpiScale), Math.round(this.myTopLeft[1] / app.dpiScale)];
+			var pos: Array<number> = [Math.round(startX / app.dpiScale), Math.round(this.myTopLeft[1]! / app.dpiScale)];
 			this.sectionProperties.container.style.transform = 'translate3d(' + pos[0] + 'px, ' + pos[1] + 'px, 0px)';
 		}
 	}
@@ -981,7 +981,7 @@ export class Comment extends CanvasSectionObject {
 				cool.CommentSection.autoSavedComment = this;
 				this.onSaveComment(e);
 			}
-			else if (this.containerObject.testing) {
+			else if (this.containerObject!.testing) {
 				var insertButton = document.getElementById('menu-insertcomment');
 				if (insertButton) {
 					if (window.getComputedStyle(insertButton).display === 'none') {
@@ -1036,7 +1036,7 @@ export class Comment extends CanvasSectionObject {
 		       (this.sectionProperties.nodeReply && this.sectionProperties.nodeReply.style.display !== 'none'));
 	}
 
-	public static isAnyEdit (): Comment {
+	public static isAnyEdit (): Comment | null {
 		var section = app.sectionContainer && app.sectionContainer instanceof CanvasSectionContainer ?
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name) : null;
 		if (!section) {
@@ -1153,8 +1153,8 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onCellAddressChanged(): void {
 		if (this.sectionProperties.data.rectangles) {
-			var midX = this.containerObject.getDocumentAnchor()[0] + Math.round(app.calc.cellCursorRectangle.pCenter[0]);
-			var midY = this.containerObject.getDocumentAnchor()[1] + Math.round(app.calc.cellCursorRectangle.pCenter[1]);
+			var midX = this.containerObject!.getDocumentAnchor()[0]! + Math.round(app.calc.cellCursorRectangle.pCenter[0]);
+			var midY = this.containerObject!.getDocumentAnchor()[1]! + Math.round(app.calc.cellCursorRectangle.pCenter[1]);
 
 			if (midX > this.sectionProperties.data.rectangles[0][0] && midX < this.sectionProperties.data.rectangles[0][0] + this.sectionProperties.data.rectangles[0][2]
 				&& midY > this.sectionProperties.data.rectangles[0][1] && midY < this.sectionProperties.data.rectangles[0][1] + this.sectionProperties.data.rectangles[0][3]) {
@@ -1182,19 +1182,19 @@ export class Comment extends CanvasSectionObject {
 			if (this.sectionProperties.docLayer._docType === 'text') {
 				var rectangles: Array<any> = this.sectionProperties.data.rectangles;
 				if (rectangles) {
-					this.context.fillStyle = this.sectionProperties.usedTextColor;
-					this.context.globalAlpha = 0.25;
+					this.context!.fillStyle = this.sectionProperties.usedTextColor;
+					this.context!.globalAlpha = 0.25;
 
 					for (var i: number = 0; i < this.sectionProperties.data.rectangles.length;i ++) {
-						var x = rectangles[i][0] - this.myTopLeft[0];
-						var y = rectangles[i][1] - this.myTopLeft[1];
+						var x = rectangles[i][0] - this.myTopLeft[0]!;
+						var y = rectangles[i][1] - this.myTopLeft[1]!;
 						var w = rectangles[i][2] > 3 ? rectangles[i][2]: 3;
 						var h = rectangles[i][3];
 
-						this.context.fillRect(x, y, w , h);
+						this.context!.fillRect(x, y, w , h);
 					}
 
-					this.context.globalAlpha = 1;
+					this.context!.globalAlpha = 1;
 				}
 			}
 			else if (this.sectionProperties.docLayer._docType === 'spreadsheet' &&
@@ -1209,8 +1209,8 @@ export class Comment extends CanvasSectionObject {
 					// this.size may currently have an artifically wide size if mouseEnter without moveLeave seen
 					// so fetch the real size
 					var x = this.isCalcRTL() ? margin : cellSize[0] - (margin + squareDim);
-					this.context.fillStyle = '#FF0000';
-					this.context.fillRect(x, 0, squareDim, squareDim);
+					this.context!.fillStyle = '#FF0000';
+					this.context!.fillRect(x, 0, squareDim, squareDim);
 				}
 			}
 		}
@@ -1225,7 +1225,7 @@ export class Comment extends CanvasSectionObject {
 		// CanvasSectionContainer fires the onClick event. But since Hammer.js is used for map, it disables the onClick for SectionContainer.
 		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
 		// Control.ColumnHeader.js file is not affected by this situation, because map element (so Hammer.js) doesn't cover headers.
-		if (!this.containerObject.isDraggingSomething() && (<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+		if (!this.containerObject!.isDraggingSomething() && (<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
 			if (this.sectionProperties.docLayer._docType === 'presentataion' || this.sectionProperties.docLayer._docType === 'drawing')
 				this.sectionProperties.docLayer._openCommentWizard(this);
 			this.onMouseEnter();
@@ -1342,7 +1342,7 @@ export class Comment extends CanvasSectionObject {
 		return this.sectionProperties.children.length;
 	}
 
-	public getChildByIndex(index: number): Comment {
+	public getChildByIndex(index: number): Comment | null {
 		if (this.sectionProperties.children.length > index)
 			return this.sectionProperties.children[index];
 		else
@@ -1354,7 +1354,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.children.splice(index, 1);
 	}
 
-	public getParentCommentId(): string {
+	public getParentCommentId(): string | null {
 		if (this.sectionProperties.data.parent && this.sectionProperties.data.parent !== '0')
 			return this.sectionProperties.data.parent;
 		else

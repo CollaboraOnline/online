@@ -48,22 +48,23 @@ class InvalidationRectangleSection extends CanvasSectionObject {
 	): void {
 		const rectangleList: Array<any> = this.sectionProperties
 			.rectangleList as Array<any>;
-		this.context.strokeStyle = 'red';
+		this.context!.strokeStyle = 'red';
 
-		const anchor: number[] = this.containerObject.getDocumentAnchor();
-		const xDiff = anchor[0] - this.documentTopLeft[0];
-		const yDiff = anchor[1] - this.documentTopLeft[1];
+		const anchor: (number | undefined)[] =
+			this.containerObject!.getDocumentAnchor();
+		const xDiff = anchor[0]! - this.documentTopLeft[0];
+		const yDiff = anchor[1]! - this.documentTopLeft[1];
 
 		for (let i = 0; i < rectangleList.length; i++) {
-			this.context.globalAlpha = 1 - 0.15 * i;
-			this.context.strokeRect(
+			this.context!.globalAlpha = 1 - 0.15 * i;
+			this.context!.strokeRect(
 				xDiff + rectangleList[i][0],
 				yDiff + rectangleList[i][1],
 				rectangleList[i][2],
 				rectangleList[i][3],
 			);
 		}
-		this.context.globalAlpha = 1;
+		this.context!.globalAlpha = 1;
 	}
 
 	checkDeletion() {

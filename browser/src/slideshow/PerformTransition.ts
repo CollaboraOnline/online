@@ -149,13 +149,13 @@ const stringToTransitionSubTypeMap: Record<string, TransitionSubType> = {
 SlideShow.PerformTransition = function (
 	transitionParameters: TransitionParameters,
 ) {
-	if (transitionParameters.context.is2dGl()) {
-		transitionParameters.callback();
+	if (transitionParameters.context!.is2dGl()) {
+		transitionParameters.callback!();
 		return;
 	}
 
 	switch (
-		stringToTransitionTypeMap[transitionParameters.slideInfo.transitionType]
+		stringToTransitionTypeMap[transitionParameters.slideInfo!.transitionType!]
 	) {
 		case TransitionType.FADE:
 			new SlideShow.FadeTransition(transitionParameters).start();
@@ -229,7 +229,7 @@ SlideShow.PerformTransition = function (
 			new SlideShow.NoTransition(transitionParameters).start();
 			console.log(
 				'Unknown transition type',
-				transitionParameters.slideInfo.transitionType,
+				transitionParameters.slideInfo!.transitionType,
 			);
 			break;
 	}

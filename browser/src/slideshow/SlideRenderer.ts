@@ -13,27 +13,33 @@
 declare var SlideShow: any;
 
 class VideoRenderInfo {
-	private texture: WebGLTexture | ImageBitmap = null;
+	private texture: WebGLTexture | ImageBitmap | null = null;
 	public videoElement: HTMLVideoElement;
-	private vao: WebGLVertexArrayObject = null;
+	private vao: WebGLVertexArrayObject | null = null;
 	public pos2d: number[];
 	public playing: boolean;
 
-	public getTexture(): WebGLTexture {
+	public getTexture(): WebGLTexture | null {
 		return this.texture;
 	}
 
-	public replaceTexture(context: RenderContext, newtexture: WebGLTexture) {
-		context.deleteTexture(this.texture);
+	public replaceTexture(
+		context: RenderContext,
+		newtexture: WebGLTexture | null,
+	) {
+		context.deleteTexture(this.texture!);
 		this.texture = newtexture;
 	}
 
-	public getVao(): WebGLVertexArrayObject {
+	public getVao(): WebGLVertexArrayObject | null {
 		return this.vao;
 	}
 
-	public replaceVao(context: RenderContext, newVao: WebGLVertexArrayObject) {
-		context.deleteVertexArray(this.vao);
+	public replaceVao(
+		context: RenderContext,
+		newVao: WebGLVertexArrayObject | null,
+	) {
+		context.deleteVertexArray(this.vao!);
 		this.vao = newVao;
 	}
 
@@ -44,12 +50,12 @@ class VideoRenderInfo {
 }
 
 abstract class SlideRenderer {
-	public _context: RenderContext = null;
-	protected _slideTexture: WebGLTexture | ImageBitmap;
+	public _context: RenderContext | null = null;
+	protected _slideTexture: WebGLTexture | ImageBitmap | null;
 	protected _videos: VideoRenderInfo[] = [];
 	protected _canvas: HTMLCanvasElement;
-	protected _renderedSlideIndex: number = undefined;
-	protected _requestAnimationFrameId: number = null;
+	protected _renderedSlideIndex: number | undefined = undefined;
+	protected _requestAnimationFrameId: number | null = null;
 	protected _isAnyVideoPlaying: boolean = false;
 
 	constructor(canvas: HTMLCanvasElement) {
@@ -61,7 +67,7 @@ abstract class SlideRenderer {
 	}
 
 	public getSlideTexture(): WebGLTexture {
-		return this._slideTexture;
+		return this._slideTexture!;
 	}
 
 	public getSlideImage(): ImageBitmap {
@@ -103,7 +109,7 @@ abstract class SlideRenderer {
 				for (const videoInfo of this._videos) {
 					if (videoInfo.playing) return;
 				}
-				cancelAnimationFrame(this._requestAnimationFrameId);
+				cancelAnimationFrame(this._requestAnimationFrameId!);
 				this._isAnyVideoPlaying = false;
 			},
 			true,
@@ -115,15 +121,15 @@ abstract class SlideRenderer {
 	}
 
 	public renderSlide(
-		currentSlideTexture: WebGLTexture | ImageBitmap,
-		slideInfo: SlideInfo,
+		currentSlideTexture: WebGLTexture | ImageBitmap | null,
+		slideInfo: SlideInfo | null,
 		docWidth: number,
 		docHeight: number,
 	) {
 		this.deleteCurrentSlideTexture();
-		this._renderedSlideIndex = slideInfo.index;
+		this._renderedSlideIndex = slideInfo!.index;
 		this._slideTexture = currentSlideTexture;
-		this.prepareVideos(slideInfo, docWidth, docHeight);
+		this.prepareVideos(slideInfo!, docWidth, docHeight);
 		requestAnimationFrame(this.render.bind(this));
 	}
 
@@ -150,7 +156,9 @@ abstract class SlideRenderer {
 		return [xMin, xMax, yMin, yMax];
 	}
 
-	public abstract createTexture(image: ImageBitmap): WebGLTexture | ImageBitmap;
+	public abstract createTexture(
+		image: ImageBitmap | undefined,
+	): WebGLTexture | ImageBitmap;
 
 	public abstract deleteCurrentSlideTexture(): void;
 
@@ -162,7 +170,7 @@ abstract class SlideRenderer {
 
 	protected abstract render(): void;
 
-	public createEmptyTexture(): WebGLTexture | ImageBitmap {
+	public createEmptyTexture(): WebGLTexture | ImageBitmap | null {
 		return null;
 	}
 }
@@ -210,7 +218,7 @@ class SlideRenderer2d extends SlideRenderer {
 	}
 
 	protected render() {
-		const gl = this._context.get2dGl();
+		const gl = this._context!.get2dGl();
 		gl.clearRect(0, 0, gl.canvas.width, gl.canvas.height);
 
 		const slideImage = this.getSlideImage();
@@ -236,8 +244,8 @@ class SlideRenderer2d extends SlideRenderer {
 }
 
 class SlideRendererGl extends SlideRenderer {
-	private _program: WebGLProgram = null;
-	private _vao: WebGLVertexArrayObject = null;
+	private _program: WebGLProgram | null = null;
+	private _vao: WebGLVertexArrayObject | null = null;
 
 	constructor(canvas: HTMLCanvasElement) {
 		super(canvas);
@@ -250,9 +258,9 @@ class SlideRendererGl extends SlideRenderer {
 			this.getFragmentShader(),
 		);
 
-		this._program = this._context.createProgram(vertexShader, fragmentShader);
+		this._program = this._context.createProgram(vertexShader!, fragmentShader!);
 
-		this._vao = this.setupPositions(-1.0, 1.0, 1.0, -1.0);
+		this._vao = this.setupPositions(-1.0, 1.0, 1.0, -1.0)!;
 		this._context.getGl().useProgram(this._program);
 	}
 
@@ -284,8 +292,8 @@ class SlideRendererGl extends SlideRenderer {
 				`;
 	}
 
-	private updateTexture(texture: WebGLTexture, video: HTMLVideoElement) {
-		const gl = this._context.getGl();
+	private updateTexture(texture: WebGLTexture | null, video: HTMLVideoElement) {
+		const gl = this._context!.getGl();
 		gl.bindTexture(gl.TEXTURE_2D, texture);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
 	}
@@ -295,10 +303,10 @@ class SlideRendererGl extends SlideRenderer {
 		xMax: number,
 		yMin: number,
 		yMax: number,
-	): WebGLVertexArrayObject {
-		if (this._context.is2dGl()) return;
+	): WebGLVertexArrayObject | undefined {
+		if (this._context!.is2dGl()) return;
 
-		const gl = this._context.getGl();
+		const gl = this._context!.getGl();
 
 		// 5 numbers -> 3 x vertex X,Y,Z and 2x texture X,Y
 		const positions = new Float32Array([
@@ -316,42 +324,42 @@ class SlideRendererGl extends SlideRenderer {
 		const vao = gl.createVertexArray();
 		gl.bindVertexArray(vao);
 
-		const positionLocation = gl.getAttribLocation(this._program, 'a_position');
+		const positionLocation = gl.getAttribLocation(this._program!, 'a_position');
 
 		gl.enableVertexAttribArray(positionLocation);
 		gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 5 * 4, 0);
 
-		const texCoordLocation = gl.getAttribLocation(this._program, 'a_texCoord');
+		const texCoordLocation = gl.getAttribLocation(this._program!, 'a_texCoord');
 
 		gl.enableVertexAttribArray(texCoordLocation);
 		gl.vertexAttribPointer(texCoordLocation, 2, gl.FLOAT, false, 5 * 4, 3 * 4);
 
-		return vao;
+		return vao!;
 	}
 
 	public createTexture(image: ImageBitmap) {
-		return this._context.loadTexture(<any>image);
+		return this._context!.loadTexture(<any>image);
 	}
 
-	public createEmptyTexture(): WebGLTexture | ImageBitmap {
-		return this._context.createEmptySlide();
+	public createEmptyTexture(): WebGLTexture | ImageBitmap | null {
+		return this._context!.createEmptySlide();
 	}
 
 	public deleteCurrentSlideTexture(): void {
-		this._context.deleteTexture(this.getSlideTexture());
+		this._context!.deleteTexture(this.getSlideTexture());
 		this._slideTexture = null;
 	}
 
 	public deleteResources(): void {
 		this.pauseVideos();
 		for (var videoRenderInfo of this._videos) {
-			videoRenderInfo.deleteResources(this._context);
+			videoRenderInfo.deleteResources(this._context!);
 		}
 		this.deleteCurrentSlideTexture();
 	}
 
 	private initTexture() {
-		const gl = this._context.getGl();
+		const gl = this._context!.getGl();
 		const texture = gl.createTexture();
 		gl.bindTexture(gl.TEXTURE_2D, texture);
 
@@ -387,9 +395,9 @@ class SlideRendererGl extends SlideRenderer {
 				const video = new VideoRenderInfo();
 				video.videoElement = this.setupVideo(video, videoInfo.url);
 
-				video.replaceTexture(this._context, this.initTexture());
+				video.replaceTexture(this._context!, this.initTexture());
 				video.replaceVao(
-					this._context,
+					this._context!,
 					this.setupRectangleInDocumentPositions(
 						videoInfo.x,
 						videoInfo.y,
@@ -397,7 +405,7 @@ class SlideRendererGl extends SlideRenderer {
 						videoInfo.height,
 						docWidth,
 						docHeight,
-					),
+					)!,
 				);
 				this._videos.push(video);
 			}
@@ -411,7 +419,7 @@ class SlideRendererGl extends SlideRenderer {
 		height: number,
 		docWidth: number,
 		docHeight: number,
-	): WebGLVertexArrayObject {
+	): WebGLVertexArrayObject | undefined {
 		const positions = this.getDocumentPositions(
 			x,
 			y,
@@ -429,7 +437,7 @@ class SlideRendererGl extends SlideRenderer {
 	}
 
 	protected render() {
-		const gl = this._context.getGl();
+		const gl = this._context!.getGl();
 		gl.viewport(0, 0, this._canvas.width, this._canvas.height);
 		gl.clearColor(0.0, 0.0, 0.0, 1.0);
 		gl.clear(gl.COLOR_BUFFER_BIT);
@@ -438,7 +446,7 @@ class SlideRendererGl extends SlideRenderer {
 
 		gl.activeTexture(gl.TEXTURE0);
 		gl.bindTexture(gl.TEXTURE_2D, this.getSlideTexture());
-		gl.uniform1i(gl.getUniformLocation(this._program, 'slideTexture'), 0);
+		gl.uniform1i(gl.getUniformLocation(this._program!, 'slideTexture'), 0);
 
 		gl.bindVertexArray(this._vao);
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
