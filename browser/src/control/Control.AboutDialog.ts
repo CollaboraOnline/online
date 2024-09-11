@@ -46,7 +46,7 @@ class AboutDialog {
 		const aboutDialogId = 'about-dialog';
 		// Move the div sitting in 'body' as content and make it visible
 		const content: HTMLElement = document
-			.getElementById(aboutDialogId)
+			.getElementById(aboutDialogId)!
 			.cloneNode(true) as HTMLElement;
 		content.style.display = 'block';
 
@@ -136,14 +136,14 @@ class AboutDialog {
 		);
 		var box = document.getElementById(aboutDialogId + '-box');
 		var innerDiv = L.DomUtil.create('div', '', null);
-		box.insertBefore(innerDiv, box.firstChild);
+		box!.insertBefore(innerDiv, box!.firstChild);
 		innerDiv.appendChild(content);
 
 		var form = document.getElementById('about-dialog-box');
 
-		form.addEventListener('click', this.aboutDialogClickHandler.bind(this));
-		form.addEventListener('keyup', this.aboutDialogKeyHandler.bind(this));
-		form.querySelector('#coolwsd-version').querySelector('a').focus();
+		form!.addEventListener('click', this.aboutDialogClickHandler.bind(this));
+		form!.addEventListener('keyup', this.aboutDialogKeyHandler.bind(this));
+		form!.querySelector('#coolwsd-version')!.querySelector('a')!.focus(); // FIXME: Why do we use querySelector twice here? CSS selectors can query multiple levels...
 		var copyversion = L.DomUtil.create(
 			'button',
 			'ui-pushbutton jsdialog',
@@ -213,9 +213,10 @@ class AboutDialog {
 			'\n';
 		text +=
 			'LOKit version: ' + this.getVersionInfoFromClass('lokit-version') + '\n';
-		text += 'Served by: ' + document.getElementById('os-info').innerText + '\n';
 		text +=
-			'Server ID: ' + document.getElementById('coolwsd-id').innerText + '\n';
+			'Served by: ' + document.getElementById('os-info')!.innerText + '\n';
+		text +=
+			'Server ID: ' + document.getElementById('coolwsd-id')!.innerText + '\n';
 		text = text.replace(/\u00A0/g, ' ');
 
 		if (navigator.clipboard && window.isSecureContext) {
@@ -268,7 +269,7 @@ class AboutDialog {
 
 	private getVersionInfoFromClass(className: string) {
 		const versionElement = document.getElementById(className);
-		let versionInfo = versionElement.innerText;
+		let versionInfo = versionElement!.innerText;
 
 		const gitHashIndex = versionInfo.indexOf('git hash');
 		if (gitHashIndex > -1) {

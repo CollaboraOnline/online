@@ -57,11 +57,11 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 		for (var y = 0; y < 256; y+=32) {
 			for (var x = 0; x < 256; x+=32) {
 				if (patternOn)
-					drawctx.fillStyle = 'darkgray';
+					drawctx!.fillStyle = 'darkgray';
 				else
-					drawctx.fillStyle = 'gray';
+					drawctx!.fillStyle = 'gray';
 				patternOn = !patternOn;
-				drawctx.fillRect(x, y, 32, 32);
+				drawctx!.fillRect(x, y, 32, 32);
 			}
 			patternOn = !patternOn;
 		}
@@ -111,7 +111,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 	}
 
 	// the bounding box of this set of tiles
-	public getSubsetBounds(canvasCtx: CanvasRenderingContext2D, tileSubset: Set<any>): cool.Bounds {
+	public getSubsetBounds(canvasCtx: CanvasRenderingContext2D, tileSubset: Set<any>): cool.Bounds | null {
 
 		// don't do anything for this atypical varient
 		if (app.file.fileBasedView)
@@ -124,14 +124,14 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 			var topLeft = new L.Point(coords.getPos().x, coords.getPos().y);
 			var rightBottom = new L.Point(topLeft.x + ctx.tileSize.x, topLeft.y + ctx.tileSize.y);
 
-			if (bounds === undefined)
+			if (bounds! === undefined)
 				bounds = new cool.Bounds(topLeft, rightBottom);
 			else {
 				bounds.extend(topLeft).extend(rightBottom);
 			}
 		}
 
-		return bounds;
+		return bounds!;
 	}
 
 	public clipSubsetBounds(canvasCtx: CanvasRenderingContext2D, subsetBounds: cool.Bounds): void {
@@ -242,7 +242,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 			this.paintSimple(tile, ctx, async, now);
 	}
 
-	private forEachTileInView(zoom: number, part: number, mode: number, ctx: any,
+	private forEachTileInView(zoom: number, part: number | undefined, mode: number | undefined, ctx: any,
 		callback: (tile: any, coords: any) => boolean) {
 		var docLayer = this.sectionProperties.docLayer;
 		var tileRanges = ctx.paneBoundsList.map(docLayer._pxBoundsToTileRange, docLayer);
@@ -388,7 +388,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 		}
 	}
 
-	public onDraw (frameCount: number = null, elapsedTime: number = null, subsetBounds: cool.Bounds = null): void {
+	public onDraw (frameCount: number | null = null, elapsedTime: number | null = null, subsetBounds: cool.Bounds | null = null): void {
 		if (this.containerObject.isInZoomAnimation())
 			return;
 

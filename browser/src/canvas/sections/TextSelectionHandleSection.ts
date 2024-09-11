@@ -10,7 +10,7 @@
 */
 
 class TextSelectionHandle extends HTMLObjectSection {
-	public rectangle: cool.SimpleRectangle = null; // This is the rectangle sent from the core side.
+	public rectangle: cool.SimpleRectangle | null = null; // This is the rectangle sent from the core side.
 
 	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint,  extraClass: string = "", showSection: boolean = false) {
 		super(sectionName, objectWidth, objectHeight, documentPosition, extraClass, showSection);
@@ -18,8 +18,8 @@ class TextSelectionHandle extends HTMLObjectSection {
 
 	onDrag(point: number[]) {
 		(<any>window).IgnorePanning = true;
-		const candidateX = Math.round((this.myTopLeft[0] + point[0]) / app.dpiScale);
-		const candidateY = Math.round((this.myTopLeft[1] + point[1]) / app.dpiScale);
+		const candidateX = Math.round((this.myTopLeft[0]! + point[0]) / app.dpiScale);
+		const candidateY = Math.round((this.myTopLeft[1]! + point[1]) / app.dpiScale);
 
 		this.sectionProperties.objectDiv.style.left = candidateX + 'px';
 		this.sectionProperties.objectDiv.style.top = candidateY + 'px';
@@ -55,7 +55,7 @@ class TextSelectionHandle extends HTMLObjectSection {
 
 	onMouseMove(point: number[], dragDistance: number[], e: MouseEvent): void {
 		e.stopPropagation();
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject!.isDraggingSomething()) {
 			this.stopPropagating();
 			this.onDrag(point);
 		}
@@ -80,7 +80,7 @@ class TextSelectionHandle extends HTMLObjectSection {
 
 	onMouseUp(point: number[], e: MouseEvent): void {
 		e.stopPropagation();
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject!.isDraggingSomething()) {
 			this.stopPropagating();
 			this.onDragEnd(point);
 		}

@@ -14,8 +14,8 @@ class InteractiveAnimationSequence {
 	private nId: number;
 	private aSlideShow: SlideShowHandler;
 	private bIsRunning = false;
-	private aStartEvent: DelayEvent = null;
-	private aEndEvent: DelayEvent = null;
+	private aStartEvent: DelayEvent | null = null;
+	private aEndEvent: DelayEvent | null = null;
 
 	constructor(nNodeId: number, aSlideShow: SlideShowHandler) {
 		this.nId = nNodeId;

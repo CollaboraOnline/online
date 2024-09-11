@@ -23,7 +23,7 @@ class Sidebar {
 
 	container: HTMLDivElement;
 	builder: any;
-	targetDeckCommand: string;
+	targetDeckCommand: string | null;
 
 	constructor(
 		map: any,
@@ -132,8 +132,8 @@ class Sidebar {
 
 	onResize() {
 		var wrapper = document.getElementById('sidebar-dock-wrapper');
-		wrapper.style.maxHeight =
-			document.getElementById('document-container').getBoundingClientRect()
+		wrapper!.style.maxHeight =
+			document.getElementById('document-container')!.getBoundingClientRect()
 				.height + 'px';
 	}
 
@@ -158,11 +158,11 @@ class Sidebar {
 		return '';
 	}
 
-	setupTargetDeck(unoCommand: string) {
+	setupTargetDeck(unoCommand: string | null) {
 		this.targetDeckCommand = unoCommand;
 	}
 
-	getTargetDeck(): string {
+	getTargetDeck(): string | null {
 		return this.targetDeckCommand;
 	}
 

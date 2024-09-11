@@ -13,14 +13,14 @@
 declare var app: any;
 
 class AnimationTransitionFilterNode extends AnimationBaseNode {
-	private eTransitionType: TransitionType;
-	private eTransitionSubType: TransitionSubType;
+	private eTransitionType: TransitionType | undefined;
+	private eTransitionSubType: TransitionSubType | undefined;
 	private bIsReverseDirection: boolean = false;
 	private eTransitionMode: TransitionMode;
 
 	constructor(
 		aNodeInfo: AnimationNodeInfo,
-		aParentNode: BaseContainerNode,
+		aParentNode: BaseContainerNode | null,
 		aNodeContext: NodeContext,
 	) {
 		super(aNodeInfo, aParentNode, aNodeContext);
@@ -89,14 +89,14 @@ class AnimationTransitionFilterNode extends AnimationBaseNode {
 		}
 	}
 
-	public createActivity(): AnimationActivity {
+	public createActivity(): AnimationActivity | null {
 		const aActivityParamSet = this.fillActivityParams();
 
 		return createShapeTransition(
 			aActivityParamSet,
 			this.getAnimatedElement(),
-			this.aNodeContext.aContext.nSlideWidth,
-			this.aNodeContext.aContext.nSlideHeight,
+			this.aNodeContext.aContext!.nSlideWidth,
+			this.aNodeContext.aContext!.nSlideHeight,
 			this,
 		);
 	}
@@ -122,10 +122,11 @@ class AnimationTransitionFilterNode extends AnimationBaseNode {
 
 		if (verbose) {
 			if (this.getTransitionType())
-				sInfo += '; type: ' + TransitionType[this.getTransitionType()];
+				sInfo += '; type: ' + TransitionType[this.getTransitionType()!];
 
 			if (this.getTransitionSubtype())
-				sInfo += '; subtype: ' + TransitionSubType[this.getTransitionSubtype()];
+				sInfo +=
+					'; subtype: ' + TransitionSubType[this.getTransitionSubtype()!];
 
 			sInfo += '; is reverse direction: ' + this.getReverseDirection();
 

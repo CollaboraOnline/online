@@ -49,14 +49,14 @@ class ActivityQueue {
 
 		while (this.aCurrentActivityWaitingSet.length != 0) {
 			const aActivity = this.aCurrentActivityWaitingSet.shift();
-			let bReinsert = false;
+			let bReinsert: boolean | undefined = false;
 
-			bReinsert = aActivity.perform();
+			bReinsert = aActivity!.perform();
 
 			if (bReinsert) {
-				this.aCurrentActivityReinsertSet.push(aActivity);
+				this.aCurrentActivityReinsertSet.push(aActivity!);
 			} else {
-				this.aDequeuedActivitySet.push(aActivity);
+				this.aDequeuedActivitySet.push(aActivity!);
 			}
 		}
 

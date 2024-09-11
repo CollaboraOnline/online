@@ -14,7 +14,7 @@ declare var app: any;
 
 abstract class SimpleContinuousActivityBase extends ActivityBase {
 	private aTimer: ElapsedTime;
-	protected nMinSimpleDuration: number;
+	protected nMinSimpleDuration: number | undefined;
 	private nMinNumberOfFrames: number;
 	protected nCurrPerformCalls: number;
 	constructor(aCommonParamSet: ActivityParamSet) {
@@ -52,7 +52,7 @@ abstract class SimpleContinuousActivityBase extends ActivityBase {
 		// times.
 
 		// fraction of time elapsed
-		const nFractionElapsedTime = nCurrElapsedTime / this.nMinSimpleDuration;
+		const nFractionElapsedTime = nCurrElapsedTime / this.nMinSimpleDuration!;
 
 		// fraction of minimum calls performed
 		const nFractionRequiredCalls =
@@ -79,7 +79,7 @@ abstract class SimpleContinuousActivityBase extends ActivityBase {
 			// lag global time, so all other animations lag, too:
 			return (
 				(nFractionElapsedTime - nFractionRequiredCalls) *
-				this.nMinSimpleDuration
+				this.nMinSimpleDuration!
 			);
 		}
 	}
@@ -90,7 +90,7 @@ abstract class SimpleContinuousActivityBase extends ActivityBase {
 
 		// get relative animation position
 		const nCurrElapsedTime = this.aTimer.getElapsedTime();
-		let nT = nCurrElapsedTime / this.nMinSimpleDuration;
+		let nT = nCurrElapsedTime / this.nMinSimpleDuration!;
 
 		// one of the stop criteria reached?
 
@@ -103,18 +103,18 @@ abstract class SimpleContinuousActivityBase extends ActivityBase {
 			// When we've autoreverse on, the repeat count doubles
 			const nRepeatCount = this.getRepeatCount();
 			const nEffectiveRepeat = this.isAutoReverse()
-				? 2.0 * nRepeatCount
+				? 2.0 * nRepeatCount!
 				: nRepeatCount;
 
 			// time (or frame count) elapsed?
-			if (nEffectiveRepeat <= nT) {
+			if (nEffectiveRepeat! <= nT) {
 				// Ok done for now. Will not exit right here,
 				// to give animation the chance to render the last
 				// frame below
 				bActivityEnding = true;
 
 				// clamp animation to max permissible value
-				nT = nEffectiveRepeat;
+				nT = nEffectiveRepeat!;
 			}
 		}
 
@@ -154,7 +154,7 @@ abstract class SimpleContinuousActivityBase extends ActivityBase {
 			nRelativeSimpleTime = nT - nRepeats;
 
 			// clamp repeats to max permissible value (maRepeats.getValue() - 1.0)
-			if (this.isRepeatCountValid() && nRepeats >= this.getRepeatCount()) {
+			if (this.isRepeatCountValid() && nRepeats >= this.getRepeatCount()!) {
 				// Note that this code here only gets
 				// triggered if this.nRepeats is an
 				// _integer_. Otherwise, nRepeats will never

@@ -515,7 +515,7 @@ class ColorPicker {
 					);
 				}
 
-				child.style.visibility = 'hidden';
+				child.style!.visibility = 'hidden';
 			}
 		}
 	}
@@ -536,7 +536,7 @@ class ColorPicker {
 					);
 				}
 
-				child.style.visibility = 'visible';
+				child.style!.visibility = 'visible';
 			}
 		}
 	}
@@ -561,9 +561,9 @@ class ColorPicker {
 					}
 
 					if (tint === this._selectedColor) {
-						child.style.visibility = 'visible';
+						child.style!.visibility = 'visible';
 					} else {
-						child.style.visibility = 'hidden';
+						child.style!.visibility = 'hidden';
 					}
 				}
 			}

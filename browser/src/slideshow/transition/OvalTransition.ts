@@ -26,7 +26,7 @@ class OvalTransition extends Transition2d {
 
 	public start(): void {
 		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+			stringToTransitionSubTypeMap[this.slideInfo!.transitionSubtype!];
 		if (transitionSubType == TransitionSubType.HORIZONTAL) {
 			this.direction = OvalSubType.HORIZONTAL;
 		} else if (transitionSubType == TransitionSubType.VERTICAL) {
@@ -39,7 +39,7 @@ class OvalTransition extends Transition2d {
 	// jscpd:ignore-start
 	public renderUniformValue(): void {
 		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
+			this.gl.getUniformLocation(this.program!, 'direction'),
 			this.direction,
 		);
 	}

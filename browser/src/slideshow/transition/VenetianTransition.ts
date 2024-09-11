@@ -26,7 +26,7 @@ class VenetianTransition extends Transition2d {
 
 	public start(): void {
 		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+			stringToTransitionSubTypeMap[this.slideInfo!.transitionSubtype!];
 
 		if (transitionSubType == TransitionSubType.HORIZONTAL) {
 			this.direction = VenetianSubType.HORIZONTAL;
@@ -39,13 +39,13 @@ class VenetianTransition extends Transition2d {
 
 	public renderUniformValue(): void {
 		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
+			this.gl.getUniformLocation(this.program!, 'direction'),
 			this.direction,
 		);
-		this.gl.uniform2fv(this.gl.getUniformLocation(this.program, 'resolution'), [
-			this.gl.canvas.width,
-			this.gl.canvas.height,
-		]);
+		this.gl.uniform2fv(
+			this.gl.getUniformLocation(this.program!, 'resolution'),
+			[this.gl.canvas.width, this.gl.canvas.height],
+		);
 	}
 
 	public getFragmentShader(): string {

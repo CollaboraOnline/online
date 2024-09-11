@@ -15,7 +15,7 @@
 /* global app */
 
 class FormulaAutoCompletePopup extends L.Control.AutoCompletePopup {
-	functionList: Array<any>;
+	functionList: Array<any> | null;
 
 	constructor(map: ReturnType<typeof L.map>) {
 		super('formulaautocompletePopup', map);
@@ -44,13 +44,16 @@ class FormulaAutoCompletePopup extends L.Control.AutoCompletePopup {
 	getPopupEntries(ev: FireEvent): any[] {
 		const entries: any[] = [];
 		this.functionList = ev.data.data;
-		if (this.functionList.length !== 0) {
+		if (this.functionList!.length !== 0) {
 			for (var i in this.functionList) {
 				var entry = {
-					text: this.functionList[i].name,
+					text: this.functionList[i as unknown as number].name,
 					columns: [
-						{ text: this.functionList[i].name },
-						{ text: '\n' + this.functionList[i].description },
+						{ text: this.functionList[i as unknown as number].name },
+						{
+							text:
+								'\n' + this.functionList[i as unknown as number].description,
+						},
 					],
 					row: i.toString(),
 				};
@@ -107,7 +110,7 @@ class FormulaAutoCompletePopup extends L.Control.AutoCompletePopup {
 
 		// Step-3: extract the text we want to complete using startIndex and endIndex
 		const partialText: string = currentCellFormula
-			.substring(startIndex, endIndex + 1)
+			.substring(startIndex!, endIndex + 1)
 			.trim();
 
 		// Step-4: compare partialText and functionName to find remaining text need to autocomplete
@@ -133,14 +136,14 @@ class FormulaAutoCompletePopup extends L.Control.AutoCompletePopup {
 		if (eventType === 'close') {
 			this.closePopup();
 		} else if (eventType === 'select' || eventType === 'activate') {
-			const namedRange: string = this.functionList[index].namedRange;
+			const namedRange: string = this.functionList![index].namedRange;
 			const currentText: string = this.map._docLayer._lastFormula;
 			const addedCharacterIndex: number =
 				this.map._docLayer._newFormulaDiffIndex;
 
 			const functionName: string = this.getAutocompleteText(
 				currentText,
-				this.functionList[index].name,
+				this.functionList![index].name,
 				addedCharacterIndex,
 			);
 

@@ -606,6 +606,10 @@ define global_file
 		@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@)
 endef
 
+define run_betterer_check
+	node_modules/@betterer/cli/bin/betterer -c ./.betterer.js $(1)
+endef
+
 define run_eslint_check
 	@$(NODE) node_modules/eslint/bin/eslint.js \
 		--resolve-plugins-relative-to $(abs_builddir) \
@@ -703,6 +707,7 @@ $(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DS
 	@printf "Checking for obsolete JS build intermediates in this makefile... "
 	@if ! test "z$(COOL_ASSERT_INTERSECT)" == "z"; then echo; echo "Error: please remove obsolete files:"; echo "$(COOL_ASSERT_INTERSECT)"; exit 1; else echo "clean"; fi
 	@echo "Checking for cool JS errors..."
+	$(call run_betterer_check,ci) || echo "Betterer doesn't have the latest state of the project. To fix it, you can run 'make betterer-write'"
 	$(call run_eslint_check,$(srcdir)/src $(srcdir)/js)
 	$(call run_prettier_check,--debug-check $(srcdir)/src $(srcdir)/js/global.js)
 	@echo "Bundling cool..."
@@ -1151,6 +1156,12 @@ prettier-write:
 		$(srcdir)/src \
 		$(srcdir)/js \
 		$(srcdir)/admin/src)
+
+betterer:
+	$(call run_betterer_check,ci) || (echo "Betterer doesn't have the latest state of the project. To fix it, you can run 'make betterer-write'" && exit 1)
+
+betterer-write:
+	$(call run_betterer_check,run)
 
 MOCHA_TEST_LOG = "`pwd`/mocha.log"
 DUPLICATION_TEST_LOG = "`pwd`/duplication.log"

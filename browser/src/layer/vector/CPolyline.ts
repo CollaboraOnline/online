@@ -97,7 +97,7 @@ class CPolyline extends CPath {
 		return [];
 	}
 
-	getCenter(): cool.Point {
+	getCenter(): cool.Point | undefined {
 		var i: number;
 		var halfDist: number;
 		var segDist: number;
@@ -148,7 +148,7 @@ class CPolyline extends CPath {
 		this.clipPoints(paintArea);
 		this.simplifyPoints();
 
-		this.renderer.updatePoly(this, false /* closed? */, paintArea, paneBounds, freezePane);
+		this.renderer!.updatePoly(this, false /* closed? */, paintArea, paneBounds, freezePane);
 	}
 
 	// clip polyline by renderer bounds so that we have less to render for performance
@@ -161,7 +161,7 @@ class CPolyline extends CPath {
 		this.parts = new Array<Array<cool.Point>>();
 
 		var parts = this.parts;
-		var bounds = paintArea ? paintArea : this.renderer.getBounds();
+		var bounds = paintArea ? paintArea : this.renderer!.getBounds();
 		var i: number;
 		var j: number;
 		var k: number;

@@ -16,11 +16,11 @@ class HTMLObjectSection extends CanvasSectionObject {
 	zIndex: number = L.CSections.HTMLObject.zIndex;
 	documentObject: boolean = true;
 
-	constructor (sectionName: string, objectWidth: number, objectHeight: number, documentPosition: cool.SimplePoint, extraClass: string = "", showSection: boolean = true) {
+	constructor (sectionName: string, objectWidth: number | null, objectHeight: number | null, documentPosition: cool.SimplePoint, extraClass: string = "", showSection: boolean = true) {
         super();
 
 		this.name = sectionName;
-		this.size = [objectWidth * app.dpiScale, objectHeight * app.dpiScale];
+		this.size = [objectWidth! * app.dpiScale, objectHeight! * app.dpiScale];
 		this.position = [documentPosition.pX, documentPosition.pY];
 		this.sectionProperties.objectWidth = objectWidth;
 		this.sectionProperties.objectHeight = objectHeight;
@@ -37,7 +37,7 @@ class HTMLObjectSection extends CanvasSectionObject {
 			this.sectionProperties.objectDiv.classList.add(extraClass);
 
 		// canvas-container and canvas overlap entirely. We can append the html object to canvas-container.
-		document.getElementById('canvas-container').appendChild(this.sectionProperties.objectDiv);
+		document.getElementById('canvas-container')!.appendChild(this.sectionProperties.objectDiv);
 
 		if (!showSection) {
 			this.sectionProperties.objectDiv.style.display = 'none';
@@ -62,15 +62,15 @@ class HTMLObjectSection extends CanvasSectionObject {
 		let topAddition = 0;
 
 		if (this.sectionProperties.objectDiv.parentNode.id === 'map') {
-			const clientRectMap = document.getElementById('map').getBoundingClientRect();
-			const clientRectCanvas = document.getElementById('canvas-container').getBoundingClientRect();
+			const clientRectMap = document.getElementById('map')!.getBoundingClientRect();
+			const clientRectCanvas = document.getElementById('canvas-container')!.getBoundingClientRect();
 
 			leftAddition = clientRectMap.width - clientRectCanvas.width;
 			topAddition = clientRectMap.height - clientRectCanvas.height;
 		}
 
-		const left = Math.round((this.myTopLeft[0] + leftAddition) / app.dpiScale) + 'px';
-		const top = Math.round((this.myTopLeft[1] + topAddition) / app.dpiScale) + 'px';
+		const left = Math.round((this.myTopLeft[0]! + leftAddition) / app.dpiScale) + 'px';
+		const top = Math.round((this.myTopLeft[1]! + topAddition) / app.dpiScale) + 'px';
 
 		if (this.sectionProperties.objectDiv.style.left !== left)
 			this.sectionProperties.objectDiv.style.left = left;

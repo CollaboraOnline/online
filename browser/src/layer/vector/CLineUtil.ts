@@ -71,10 +71,10 @@ namespace CLineUtil {
 		}
 
 		if (maxSqDist > sqTolerance) {
-			markers[index] = true;
+			markers[index!] = true;
 
-			_simplifyDPStep(points, markers, sqTolerance, first, index);
-			_simplifyDPStep(points, markers, sqTolerance, index, last);
+			_simplifyDPStep(points, markers, sqTolerance, first, index!);
+			_simplifyDPStep(points, markers, sqTolerance, index!, last);
 		}
 	}
 
@@ -156,7 +156,7 @@ namespace CLineUtil {
 			y = a.y + dy * (min.x - a.x) / dx;
 		}
 
-		return new cool.Point(x, y, round);
+		return new cool.Point(x!, y!, round);
 	}
 
 	function _getBitCode(p: cool.Point, bounds: cool.Bounds): number {

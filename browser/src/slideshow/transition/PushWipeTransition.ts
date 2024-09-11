@@ -15,7 +15,7 @@ declare var SlideShow: any;
 function PushWipeTransition(transitionParameters: TransitionParameters) {
 	const transitionSubType =
 		stringToTransitionSubTypeMap[
-			transitionParameters.slideInfo.transitionSubtype
+			transitionParameters.slideInfo!.transitionSubtype!
 		];
 	if (
 		transitionSubType == TransitionSubType.COMBHORIZONTAL ||

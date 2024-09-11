@@ -28,7 +28,7 @@ class FadeTransition extends SlideShow.Transition2d {
 
 	public start(): void {
 		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype!];
 
 		this.effectTransition = FadeSubType.FADEOVERBLACK; // default
 

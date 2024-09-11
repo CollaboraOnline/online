@@ -14,9 +14,9 @@ declare var app: any;
 
 abstract class ActivityBase extends AnimationActivity {
 	private aTargetElement: null;
-	private aEndEvent: DelayEvent;
+	private aEndEvent: DelayEvent | null;
 	private aTimerEventQueue: TimerEventQueue;
-	private nRepeats: number;
+	private nRepeats: number | undefined;
 	private nAccelerationFraction: number;
 	private nDecelerationFraction: number;
 	private bAutoReverse: boolean;

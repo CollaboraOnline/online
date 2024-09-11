@@ -43,11 +43,11 @@ class LayersCompositor extends SlideCompositor {
 		this.layerDrawing.requestSlide(this._initialSlideNumber, () => {
 			const oldCallback = this._onGotSlideCallback;
 			this._onGotSlideCallback = null;
-			oldCallback();
+			oldCallback!();
 		});
 	}
 
-	public getSlideInfo(slideHash: string): SlideInfo {
+	public getSlideInfo(slideHash: string | undefined): SlideInfo {
 		return this.metaPresentation.getSlideInfo(slideHash);
 	}
 
@@ -109,18 +109,21 @@ class LayersCompositor extends SlideCompositor {
 		return this.layerDrawing.getCanvasSize();
 	}
 
-	public getSlide(slideNumber: number): ImageBitmap {
+	public getSlide(slideNumber: number): ImageBitmap | undefined {
 		return this.layerDrawing.getSlide(slideNumber);
 	}
 
-	public getLayerImage(slideHash: string, targetElement: string): ImageBitmap {
+	public getLayerImage(
+		slideHash: string,
+		targetElement: string,
+	): ImageBitmap | null {
 		return this.layerDrawing.getLayerImage(slideHash, targetElement);
 	}
 
 	public getLayerBounds(
 		slideHash: string,
 		targetElement: string,
-	): BoundingBoxType {
+	): BoundingBoxType | null {
 		return this.layerDrawing.getLayerBounds(slideHash, targetElement);
 	}
 }

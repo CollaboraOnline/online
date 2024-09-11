@@ -26,7 +26,7 @@ class CheckersTransition extends Transition2d {
 
 	public start(): void {
 		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+			stringToTransitionSubTypeMap[this.slideInfo!.transitionSubtype!];
 
 		if (transitionSubType == TransitionSubType.DOWN) {
 			this.direction = CheckersSubType.DOWN;
@@ -40,7 +40,7 @@ class CheckersTransition extends Transition2d {
 	// jscpd:ignore-start
 	public renderUniformValue(): void {
 		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
+			this.gl.getUniformLocation(this.program!, 'direction'),
 			this.direction,
 		);
 	}

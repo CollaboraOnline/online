@@ -56,7 +56,7 @@ export class RowGroup extends GroupBase {
 
 	// This returns the required width for the section.
 	_computeSectionWidth(): number {
-		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
+		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups!.length + 1);
 	}
 
 	isGroupHeaderVisible (startY: number, startPos: number): boolean {
@@ -169,20 +169,20 @@ export class RowGroup extends GroupBase {
 	findClickedLevel (point: number[]): number {
 		if (point[1] < this._cornerHeaderHeight) {
 			let index = (this.transformX(point[0]) / this.size[0]) * 100; // Percentage.
-			const levelPercentage = (1 / (this._groups.length + 1)) * 100; // There is one more button than the number of levels.
+			const levelPercentage = (1 / (this._groups!.length + 1)) * 100; // There is one more button than the number of levels.
 			index = Math.floor(index / levelPercentage);
 			return index;
 		}
 		return -1;
 	}
 
-	findClickedGroup (point: number[]): GroupEntry {
+	findClickedGroup (point: number[]): GroupEntry | null {
 		const mirrorX = this.isCalcRTL();
-		for (let i = 0; i < this._groups.length; i++) {
-			if (this._groups[i]) {
-				for (const group in this._groups[i]) {
-					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-						const group_ = this._groups[i][group];
+		for (let i = 0; i < this._groups!.length; i++) {
+			if (this._groups![i]) {
+				for (const group in this._groups![i]) {
+					if (Object.prototype.hasOwnProperty.call(this._groups![i], group)) {
+						const group_ = this._groups![i][group];
 						const startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
 						const startY = this.getRelativeY(group_.startPos);
 						const endX = startX + this._groupHeadSize;

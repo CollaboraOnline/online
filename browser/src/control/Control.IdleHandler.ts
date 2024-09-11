@@ -29,8 +29,8 @@ class IdleHandler {
     _serverRecycling: boolean = false;
     _documentIdle: boolean = false;
 	_lastActivity: number = Date.now();
-	_inactivityTimer: ReturnType<typeof setTimeout> = null;
-	_outOfFocusTimer: ReturnType<typeof setTimeout> = null;
+	_inactivityTimer: ReturnType<typeof setTimeout> | null = null;
+	_outOfFocusTimer: ReturnType<typeof setTimeout> | null = null;
     _active: boolean = true;
     map: any;
 	dimId: string = app.idleHandlerId;
@@ -118,7 +118,7 @@ class IdleHandler {
 			return;
 		}
 
-		clearTimeout(this._inactivityTimer);
+		clearTimeout(this._inactivityTimer!);
 
 		this._inactivityTimer = setTimeout(() => {
 			this._dimIfInactive();
@@ -138,7 +138,7 @@ class IdleHandler {
 	}
 
 	_stopOutOfFocusTimer() {
-		clearTimeout(this._outOfFocusTimer);
+		clearTimeout(this._outOfFocusTimer!);
 	}
 
 	_dimIfInactive() {
@@ -177,18 +177,18 @@ class IdleHandler {
 		var uiManager = this.map.uiManager;
 		var dialogId = uiManager.generateModalId(this.dimId);
 		uiManager.showInfoModal(this.dimId);
-		document.getElementById(this.dimId).textContent = message;
+		document.getElementById(this.dimId)!.textContent = message;
 
 		var restartConnection = function() { restartConnectionFn(); }.bind(this);
 
 		if (message === '') {
-			document.getElementById(dialogId).style.display = 'none';
+			document.getElementById(dialogId)!.style.display = 'none';
 			L.LOUtil.onRemoveHTMLElement(document.getElementById(this.dimId), restartConnection);
 		}
 		else {
 			var overlayId = dialogId + '-overlay';
 			var overlay = document.getElementById(overlayId);
-			overlay.onmouseover = () => { restartConnection(); uiManager.closeModal(dialogId); };
+			overlay!.onmouseover = () => { restartConnection(); uiManager.closeModal(dialogId); };
 			L.LOUtil.onRemoveHTMLElement(overlay, restartConnection);
 		}
 

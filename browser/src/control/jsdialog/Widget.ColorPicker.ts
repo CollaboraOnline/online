@@ -150,9 +150,9 @@ function handleColorSelection(
 	}
 	// Update the recent colors list
 	const recentRow = palette[palette.length - 1];
-	if (recentRow.indexOf(colorCode) !== -1)
-		recentRow.splice(recentRow.indexOf(colorCode), 1);
-	recentRow.unshift(colorCode);
+	if (recentRow.indexOf(colorCode!) !== -1)
+		recentRow.splice(recentRow.indexOf(colorCode!), 1);
+	recentRow.unshift(colorCode!);
 	window.prefs.set('recentColor', JSON.stringify(recentRow));
 }
 

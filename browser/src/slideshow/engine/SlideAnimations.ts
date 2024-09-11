@@ -40,15 +40,15 @@ function getNodeChildren(aNode: ContainerNodeInfo): Array<AnimationNodeInfo> {
 function createAnimationTree(
 	aAnimationRoot: AnimationNodeInfo,
 	aNodeContext: NodeContext,
-): BaseNode {
+): BaseNode | null | undefined {
 	return createAnimationNode(aAnimationRoot, null, aNodeContext);
 }
 
 function createAnimationNode(
 	aNodeInfo: AnimationNodeInfo,
-	aParentNode: BaseContainerNode,
+	aParentNode: BaseContainerNode | null,
 	aNodeContext: NodeContext,
-): BaseNode {
+): BaseNode | null | undefined {
 	assert(aNodeInfo, 'createAnimationNode: invalid animation node');
 
 	const eAnimationNodeType = getAnimationNodeType(aNodeInfo);
@@ -153,7 +153,7 @@ function createChildNode(
 }
 
 class SlideAnimations {
-	private aRootNode: BaseNode;
+	private aRootNode: BaseNode | null | undefined;
 	private aContext: NodeContext;
 	private aSlideShowHandler: SlideShowHandler;
 	private aAnimationNodeMap: AnimationNodeMap;
@@ -209,7 +209,7 @@ class SlideAnimations {
 	isAnimated() {
 		if (!this.bElementsParsed) return false;
 
-		return this.aRootNode.hasPendingAnimation();
+		return this.aRootNode!.hasPendingAnimation();
 	}
 
 	start() {
@@ -228,22 +228,22 @@ class SlideAnimations {
 		else if (this.aContext.bFirstRun) this.aContext.bFirstRun = false;
 
 		// init all nodes
-		this.aContext.bIsInvalid = !this.aRootNode.init();
+		this.aContext.bIsInvalid = !this.aRootNode!.init();
 		if (this.aContext.bIsInvalid) {
 			ANIMDBG.print('SlideAnimationsthis.start: aContext.bIsInvalid');
 			return false;
 		}
 
 		// resolve root node
-		return this.aRootNode.resolve();
+		return this.aRootNode!.resolve();
 	}
 
 	end(bLeftEffectsSkipped: boolean) {
 		if (!this.bElementsParsed) return; // no animations there
 
 		// end root node
-		this.aRootNode.deactivate();
-		this.aRootNode.end();
+		this.aRootNode!.deactivate();
+		this.aRootNode!.end();
 
 		if (bLeftEffectsSkipped && this.isFirstRun()) {
 			// in case this is the first run and left events have been skipped

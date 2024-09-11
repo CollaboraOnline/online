@@ -169,14 +169,14 @@ class Transition3d extends TransitionBase {
 
 		const modelViewMatrix = this.calculateModelViewMatrix();
 		this.gl.uniformMatrix4fv(
-			this.gl.getUniformLocation(this.program, 'u_modelViewMatrix'),
+			this.gl.getUniformLocation(this.program!, 'u_modelViewMatrix'),
 			false,
 			modelViewMatrix,
 		);
 
 		const projectionMatrix = this.calculateProjectionMatrix();
 		this.gl.uniformMatrix4fv(
-			this.gl.getUniformLocation(this.program, 'u_projectionMatrix'),
+			this.gl.getUniformLocation(this.program!, 'u_projectionMatrix'),
 			false,
 			projectionMatrix,
 		);
@@ -189,7 +189,7 @@ class Transition3d extends TransitionBase {
             0, 0, 0, 1
         ]);
 		this.gl.uniformMatrix4fv(
-			this.gl.getUniformLocation(this.program, 'u_sceneTransformMatrix'),
+			this.gl.getUniformLocation(this.program!, 'u_sceneTransformMatrix'),
 			false,
 			sceneTransformMatrix,
 		);
@@ -202,7 +202,7 @@ class Transition3d extends TransitionBase {
             0, 0, 0, 1
         ]);
 		this.gl.uniformMatrix4fv(
-			this.gl.getUniformLocation(this.program, 'u_primitiveTransformMatrix'),
+			this.gl.getUniformLocation(this.program!, 'u_primitiveTransformMatrix'),
 			false,
 			primitiveTransformMatrix,
 		);
@@ -215,7 +215,7 @@ class Transition3d extends TransitionBase {
             0, 0, 0, 1
         ]);
 		this.gl.uniformMatrix4fv(
-			this.gl.getUniformLocation(this.program, 'u_operationsTransformMatrix'),
+			this.gl.getUniformLocation(this.program!, 'u_operationsTransformMatrix'),
 			false,
 			operationsTransformMatrix,
 		);
@@ -232,26 +232,26 @@ class Transition3d extends TransitionBase {
 		this.gl.viewport(
 			0,
 			0,
-			this.context.canvas.width,
-			this.context.canvas.height,
+			this.context!.canvas.width,
+			this.context!.canvas.height,
 		);
 		this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
 
 		this.gl.useProgram(this.program);
-		this.gl.uniform1f(this.gl.getUniformLocation(this.program, 'time'), nT);
+		this.gl.uniform1f(this.gl.getUniformLocation(this.program!, 'time'), nT);
 
 		this.gl.activeTexture(this.gl.TEXTURE0);
 		this.gl.bindTexture(this.gl.TEXTURE_2D, this.leavingSlide);
 		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'leavingSlideTexture'),
+			this.gl.getUniformLocation(this.program!, 'leavingSlideTexture'),
 			0,
 		);
 
 		this.gl.activeTexture(this.gl.TEXTURE1);
 		this.gl.bindTexture(this.gl.TEXTURE_2D, this.enteringSlide);
 		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'enteringSlideTexture'),
+			this.gl.getUniformLocation(this.program!, 'enteringSlideTexture'),
 			1,
 		);
 

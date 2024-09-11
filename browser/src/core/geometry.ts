@@ -70,13 +70,13 @@ export class SimplePoint {
 
 	// twips.
 	public get x(): number { return this._x; }
-	public set x(x: number) { this._x = Math.round(x); }
+	public set x(x: number | undefined) { this._x = Math.round(x!); }
 
 	public get y(): number { return this._y; }
-	public set y(y: number) { this._y = Math.round(y); }
+	public set y(y: number | undefined) { this._y = Math.round(y!); }
 
 	public equals(point: Array<number>): boolean { return this._x === Math.round(point[0]) && this._y === Math.round(point[1]); }
-	public toArray(): number[] { return [this._x, this._y]; }
+	public toArray(): (number | undefined)[] { return [this._x, this._y]; }
 	public distanceTo(point: number[]): number { return Math.sqrt(Math.pow(this._x - point[0], 2) + Math.pow(this._y - point[1], 2)); }
 
 	// Core / canvas pixel.

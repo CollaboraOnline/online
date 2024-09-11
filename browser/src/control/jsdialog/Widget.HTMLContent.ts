@@ -34,8 +34,8 @@ function sanitizeString(text: string): string {
 }
 
 function getPermissionModeElements(
-	isReadOnlyMode: boolean,
-	canUserWrite: boolean,
+	isReadOnlyMode: boolean | undefined,
+	canUserWrite: boolean | undefined,
 ) {
 	const permissionModeDiv = document.createElement('div');
 	permissionModeDiv.className = 'jsdialog ui-badge';
@@ -56,17 +56,21 @@ function getPermissionModeElements(
 	return permissionModeDiv;
 }
 
-function getStatusbarItemElements(id: string, title: string, text: string) {
+function getStatusbarItemElements(
+	id: string,
+	title: string,
+	text: string | undefined,
+) {
 	const div = document.createElement('div');
 	div.id = id;
 	div.className = 'jsdialog ui-badge';
 	div.title = title;
-	div.textContent = text;
+	div.textContent = text!;
 
 	return div;
 }
 
-function getPageNumberElements(text: string) {
+function getPageNumberElements(text: string | undefined) {
 	return getStatusbarItemElements(
 		'StatePageNumber',
 		_('Number of Pages'),
@@ -74,19 +78,19 @@ function getPageNumberElements(text: string) {
 	);
 }
 
-function getWordCountElements(text: string) {
+function getWordCountElements(text: string | undefined) {
 	return getStatusbarItemElements('StateWordCount', _('Word Counter'), text);
 }
 
-function getStatusDocPosElements(text: string) {
+function getStatusDocPosElements(text: string | undefined) {
 	return getStatusbarItemElements('StatusDocPos', _('Number of Sheets'), text);
 }
 
-function getInsertModeElements(text: string) {
+function getInsertModeElements(text: string | undefined) {
 	return getStatusbarItemElements('InsertMode', _('Entering text mode'), text);
 }
 
-function getSelectionModeElements(text: string) {
+function getSelectionModeElements(text: string | undefined) {
 	return getStatusbarItemElements(
 		'StatusSelectionMode',
 		_('Selection Mode'),
@@ -94,7 +98,7 @@ function getSelectionModeElements(text: string) {
 	);
 }
 
-function getRowColSelCountElements(text: string) {
+function getRowColSelCountElements(text: string | undefined) {
 	return getStatusbarItemElements(
 		'RowColSelCount',
 		_('Selected range of cells'),
@@ -102,7 +106,7 @@ function getRowColSelCountElements(text: string) {
 	);
 }
 
-function getStateTableCellElements(text: string) {
+function getStateTableCellElements(text: string | undefined) {
 	return getStatusbarItemElements(
 		'StateTableCell',
 		_('Choice of functions'),
@@ -110,11 +114,11 @@ function getStateTableCellElements(text: string) {
 	);
 }
 
-function getSlideStatusElements(text: string) {
+function getSlideStatusElements(text: string | undefined) {
 	return getStatusbarItemElements('SlideStatus', _('Number of Slides'), text);
 }
 
-function getPageStatusElements(text: string) {
+function getPageStatusElements(text: string | undefined) {
 	return getStatusbarItemElements('PageStatus', _('Number of Pages'), text);
 }
 

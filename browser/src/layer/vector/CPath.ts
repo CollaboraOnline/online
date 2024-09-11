@@ -36,8 +36,8 @@ abstract class CPath extends CEventsHandler {
 	static countObjects: number = 0;
 	private id: number;
 	private isDeleted: boolean = false;
-	private testDiv: HTMLDivElement;
-	protected renderer: CanvasOverlay = null;
+	private testDiv: HTMLDivElement | undefined;
+	protected renderer: CanvasOverlay | null = null;
 	protected underMouse: boolean = false;
 	private popup: any;
 	private popupHandlersAdded: boolean = false;
@@ -97,7 +97,7 @@ abstract class CPath extends CEventsHandler {
 
 	// Adds a div for cypress-tests (if active) for this CPath if not already done.
 	private addPathTestDiv() {
-		var testContainer = this.renderer.getTestDiv();
+		var testContainer = this.renderer!.getTestDiv();
 		if (testContainer && !this.testDiv) {
 			this.testDiv = document.createElement('div');
 			this.testDiv.id = 'test-div-overlay-' + this.name;
@@ -110,13 +110,13 @@ abstract class CPath extends CEventsHandler {
 		if (!this.testDiv)
 			return;
 		var bounds = this.getBounds();
-		if (this.empty() || !bounds.isValid()) {
+		if (this.empty() || !bounds!.isValid()) {
 			this.testDiv.innerText = '{}';
 			return;
 		}
 
-		var topLeft = bounds.getTopLeft();
-		var size = bounds.getSize();
+		var topLeft = bounds!.getTopLeft();
+		var size = bounds!.getSize();
 		this.testDiv.innerText = JSON.stringify({
 			top: Math.round(topLeft.y),
 			left: Math.round(topLeft.x),
@@ -168,7 +168,7 @@ abstract class CPath extends CEventsHandler {
 	}
 
 	updatePathAllPanes(paintArea?: cool.Bounds) {
-		var viewBounds = this.renderer.getBounds().clone();
+		var viewBounds = this.renderer!.getBounds().clone();
 
 		if (this.fixed) {
 			// Ignore freeze-panes.
@@ -181,7 +181,7 @@ abstract class CPath extends CEventsHandler {
 			return;
 		}
 
-		var splitPanesContext = this.renderer.getSplitPanesContext();
+		var splitPanesContext = this.renderer!.getSplitPanesContext();
 		var paneBoundsList: Array<cool.Bounds> = splitPanesContext ?
 			splitPanesContext.getPxBoundList() :
 			[viewBounds];
@@ -245,7 +245,7 @@ abstract class CPath extends CEventsHandler {
 		}
 	}
 
-	getBounds(): cool.Bounds {
+	getBounds(): cool.Bounds | undefined {
 		// Overridden in implementations.
 		return undefined;
 	}

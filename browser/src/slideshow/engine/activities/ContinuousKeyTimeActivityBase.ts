@@ -86,23 +86,23 @@ abstract class ContinuousKeyTimeActivityBase extends SimpleContinuousActivityBas
 	protected constructor(aCommonParamSet: ActivityParamSet) {
 		super(aCommonParamSet);
 
-		const nSize = aCommonParamSet.aDiscreteTimes.length;
+		const nSize = aCommonParamSet.aDiscreteTimes!.length;
 		assert(
 			nSize > 1,
 			'ContinuousKeyTimeActivityBase constructor: assertion (aDiscreteTimes.length > 1) failed',
 		);
 
 		assert(
-			aCommonParamSet.aDiscreteTimes[0] == 0.0,
+			aCommonParamSet.aDiscreteTimes![0] == 0.0,
 			'ContinuousKeyTimeActivityBase constructor: assertion (aDiscreteTimes.front() == 0.0) failed',
 		);
 
 		assert(
-			aCommonParamSet.aDiscreteTimes[nSize - 1] <= 1.0,
+			aCommonParamSet.aDiscreteTimes![nSize - 1] <= 1.0,
 			'ContinuousKeyTimeActivityBase constructor: assertion (aDiscreteTimes.back() <= 1.0) failed',
 		);
 
-		this.aLerper = new KeyStopLerp(aCommonParamSet.aDiscreteTimes);
+		this.aLerper = new KeyStopLerp(aCommonParamSet.aDiscreteTimes!);
 	}
 
 	public activate(aEndElement: any) {

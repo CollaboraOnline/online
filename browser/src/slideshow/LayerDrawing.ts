@@ -66,7 +66,7 @@ interface LayerInfo {
 }
 
 interface LayerEntry {
-	type: 'bitmap' | 'placeholder' | 'animated';
+	type: 'bitmap' | 'placeholder' | 'animated' | undefined;
 	content: LayerContentType;
 	isField?: boolean;
 }
@@ -76,10 +76,10 @@ class LayerDrawing {
 	private helper: LayersCompositor;
 
 	private slideCache: SlideCache = new SlideCache();
-	private requestedSlideHash: string = null;
-	private prefetchedSlideHash: string = null;
-	private nextRequestedSlideHash: string = null;
-	private nextPrefetchedSlideHash: string = null;
+	private requestedSlideHash: string | null = null;
+	private prefetchedSlideHash: string | null = null;
+	private nextRequestedSlideHash: string | null = null;
+	private nextPrefetchedSlideHash: string | null = null;
 	private slideRequestTimeout: any = null;
 	private resolutionWidth: number = 960;
 	private resolutionHeight: number = 540;
@@ -92,11 +92,11 @@ class LayerDrawing {
 	private cachedTextFields: Map<string, TextFieldInfo> = new Map();
 	private slideTextFieldsMap: Map<string, Map<TextFieldsType, string>> =
 		new Map();
-	private offscreenCanvas: OffscreenCanvas = null;
-	private offscreenContext: OffscreenCanvasRenderingContext2D = null;
-	private currentCanvas: OffscreenCanvas = null;
-	private currentCanvasContext: ImageBitmapRenderingContext = null;
-	private onSlideRenderingCompleteCallback: VoidFunction = null;
+	private offscreenCanvas: OffscreenCanvas | null = null;
+	private offscreenContext: OffscreenCanvasRenderingContext2D | null = null;
+	private currentCanvas: OffscreenCanvas | null = null;
+	private currentCanvasContext: ImageBitmapRenderingContext | null = null;
+	private onSlideRenderingCompleteCallback: VoidFunction | null = null;
 
 	constructor(mapObj: any, helper: LayersCompositor) {
 		this.map = mapObj;
@@ -130,22 +130,23 @@ class LayerDrawing {
 		this.map.off('sliderenderingcomplete', this.onSlideRenderingComplete, this);
 	}
 
-	private getSlideInfo(slideHash: string): SlideInfo {
+	private getSlideInfo(slideHash: string | undefined): SlideInfo {
 		return this.helper.getSlideInfo(slideHash);
 	}
 
-	public getSlide(slideNumber: number): ImageBitmap {
+	public getSlide(slideNumber: number): ImageBitmap | undefined {
 		const startSlideHash = this.helper.getSlideHash(slideNumber);
-		return this.slideCache.get(startSlideHash);
+		return this.slideCache.get(startSlideHash!);
 	}
 
 	public getLayerBounds(
 		slideHash: string,
 		targetElement: string,
-	): BoundingBoxType {
+	): BoundingBoxType | null {
 		const layers = this.cachedDrawPages.get(slideHash);
 		for (const i in layers) {
-			const animatedInfo = layers[i].content as AnimatedShapeInfo;
+			const animatedInfo = layers[i as unknown as number]
+				.content as AnimatedShapeInfo;
 			if (
 				animatedInfo &&
 				animatedInfo.hash === targetElement &&
@@ -156,10 +157,15 @@ class LayerDrawing {
 		return null;
 	}
 
-	public getLayerImage(slideHash: string, targetElement: string): ImageBitmap {
+	public getLayerImage(
+		slideHash: string,
+		targetElement: string,
+	): ImageBitmap | null {
 		const layers = this.cachedDrawPages.get(slideHash);
 		for (const i in layers) {
-			const animatedInfo = layers[i].content as AnimatedShapeInfo;
+			// TODO: const i of layers may save us from some ugly casting...
+			const animatedInfo = layers[i as unknown as number]
+				.content as AnimatedShapeInfo;
 			if (
 				animatedInfo &&
 				animatedInfo.hash === targetElement &&
@@ -203,7 +209,10 @@ class LayerDrawing {
 		this.offscreenContext = this.offscreenCanvas.getContext('2d');
 	}
 
-	private requestSlideImpl(slideHash: string, prefetch: boolean = false) {
+	private requestSlideImpl(
+		slideHash: string | undefined,
+		prefetch: boolean = false,
+	) {
 		const slideInfo = this.getSlideInfo(slideHash);
 		if (!slideInfo) {
 			window.app.console.log(
@@ -230,11 +239,11 @@ class LayerDrawing {
 				if (!prefetch) {
 					// maybe user has switched to a new slide
 					clearTimeout(this.slideRequestTimeout);
-					this.nextRequestedSlideHash = slideHash;
+					this.nextRequestedSlideHash = slideHash!;
 					this.nextPrefetchedSlideHash = null;
 				} else {
 					// prefetching and nothing already queued
-					this.nextPrefetchedSlideHash = slideHash;
+					this.nextPrefetchedSlideHash = slideHash!;
 				}
 				this.slideRequestTimeout = setTimeout(() => {
 					this.slideRequestTimeout = null;
@@ -247,22 +256,22 @@ class LayerDrawing {
 		}
 
 		if (prefetch) {
-			this.prefetchedSlideHash = slideHash;
+			this.prefetchedSlideHash = slideHash!;
 			this.requestedSlideHash = null;
 		} else {
-			this.requestedSlideHash = slideHash;
+			this.requestedSlideHash = slideHash!;
 			this.prefetchedSlideHash = null;
 		}
 
-		if (this.slideCache.has(slideHash)) {
+		if (this.slideCache.has(slideHash!)) {
 			this.onSlideRenderingComplete();
 			return;
 		}
 
-		const backgroundRendered = this.drawBackground(slideHash);
-		const masterPageRendered = this.drawMasterPage(slideHash);
+		const backgroundRendered = this.drawBackground(slideHash!);
+		const masterPageRendered = this.drawMasterPage(slideHash!);
 		if (backgroundRendered && masterPageRendered) {
-			if (this.drawDrawPage(slideHash)) {
+			if (this.drawDrawPage(slideHash!)) {
 				this.onSlideRenderingComplete();
 				return;
 			}
@@ -329,16 +338,16 @@ class LayerDrawing {
 
 	private handleBackgroundMsg(info: LayerInfo, img: any) {
 		const slideInfo = this.getSlideInfo(info.slideHash);
-		if (!slideInfo.background) {
+		if (!slideInfo!.background) {
 			return;
 		}
 		if (info.type === 'bitmap') {
 			const imageInfo = info.content as ImageInfo;
 			if (!this.checkAndAttachImageData(imageInfo, img)) return;
 
-			const pageHash = slideInfo.background.isCustom
+			const pageHash = slideInfo!.background.isCustom
 				? info.slideHash
-				: slideInfo.masterPage;
+				: slideInfo!.masterPage;
 			this.backgroundChecksums.set(pageHash, imageInfo.checksum);
 			this.cachedBackgrounds.set(imageInfo.checksum, imageInfo);
 
@@ -349,14 +358,17 @@ class LayerDrawing {
 
 	private handleMasterPageLayerMsg(info: LayerInfo, img: any) {
 		const slideInfo = this.getSlideInfo(info.slideHash);
-		if (!slideInfo.masterPageObjectsVisibility) {
+		if (!slideInfo!.masterPageObjectsVisibility) {
 			return;
 		}
 		if (info.index === 0) {
-			this.cachedMasterPages.set(slideInfo.masterPage, new Array<LayerEntry>());
+			this.cachedMasterPages.set(
+				slideInfo!.masterPage,
+				new Array<LayerEntry>(),
+			);
 		}
-		const layers = this.cachedMasterPages.get(slideInfo.masterPage);
-		if (layers.length !== info.index) {
+		const layers = this.cachedMasterPages.get(slideInfo!.masterPage);
+		if (layers!.length !== info.index) {
 			window.app.console.log(
 				'LayerDrawing.handleMasterPageLayerMsg: missed any layers ?',
 			);
@@ -370,7 +382,7 @@ class LayerDrawing {
 			if (!this.checkAndAttachImageData(layerEntry.content as ImageInfo, img))
 				return;
 		}
-		layers.push(layerEntry);
+		layers!.push(layerEntry);
 
 		this.drawMasterPageLayer(layerEntry, info.slideHash);
 	}
@@ -380,7 +392,7 @@ class LayerDrawing {
 			this.cachedDrawPages.set(info.slideHash, new Array<LayerEntry>());
 		}
 		const layers = this.cachedDrawPages.get(info.slideHash);
-		if (layers.length !== info.index) {
+		if (layers!.length !== info.index) {
 			window.app.console.log(
 				'LayerDrawing.handleDrawPageLayerMsg: missed any layers ?',
 			);
@@ -399,37 +411,42 @@ class LayerDrawing {
 					return;
 			}
 		}
-		layers.push(layerEntry);
+		layers!.push(layerEntry);
 
 		this.drawDrawPageLayer(layerEntry);
 	}
 
 	private clearCanvas() {
-		this.offscreenContext.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+		this.offscreenContext!.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 	}
 
 	private drawBackground(slideHash: string) {
 		this.clearCanvas();
 
 		// always draw a solid white rectangle behind the background
-		this.offscreenContext.fillStyle = '#FFFFFF';
-		this.offscreenContext.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+		this.offscreenContext!.fillStyle = '#FFFFFF';
+		this.offscreenContext!.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
 		const slideInfo = this.getSlideInfo(slideHash);
-		if (!slideInfo.background) return true;
+		if (!slideInfo!.background) return true;
 
-		if (slideInfo.background.fillColor) {
-			this.offscreenContext.fillStyle = '#' + slideInfo.background.fillColor;
+		if (slideInfo!.background.fillColor) {
+			this.offscreenContext!.fillStyle = '#' + slideInfo!.background.fillColor;
 			window.app.console.log(
-				'LayerDrawing.drawBackground: ' + this.offscreenContext.fillStyle,
+				'LayerDrawing.drawBackground: ' + this.offscreenContext!.fillStyle,
 			);
-			this.offscreenContext.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+			this.offscreenContext!.fillRect(
+				0,
+				0,
+				this.canvasWidth,
+				this.canvasHeight,
+			);
 			return true;
 		}
 
-		const pageHash = slideInfo.background.isCustom
+		const pageHash = slideInfo!.background.isCustom
 			? slideHash
-			: slideInfo.masterPage;
+			: slideInfo!.masterPage;
 		const checksum = this.backgroundChecksums.get(pageHash);
 		if (!checksum) return false;
 
@@ -447,13 +464,13 @@ class LayerDrawing {
 
 	private drawMasterPage(slideHash: string) {
 		const slideInfo = this.getSlideInfo(slideHash);
-		if (!slideInfo.masterPageObjectsVisibility) return true;
+		if (!slideInfo!.masterPageObjectsVisibility) return true;
 
-		const layers = this.cachedMasterPages.get(slideInfo.masterPage);
+		const layers = this.cachedMasterPages.get(slideInfo!.masterPage);
 		if (!layers || layers.length === 0) {
 			window.app.console.log(
 				'LayerDrawing: No layer cached for master page: ' +
-					slideInfo.masterPage,
+					slideInfo!.masterPage,
 			);
 			return false;
 		}
@@ -481,14 +498,14 @@ class LayerDrawing {
 				);
 				return;
 			}
-			const imageInfo = this.cachedTextFields.get(checksum).content;
+			const imageInfo = this.cachedTextFields.get(checksum)!.content;
 			this.drawBitmap(imageInfo);
 		}
 	}
 
 	private drawDrawPage(slideHash: string) {
 		const slideInfo = this.getSlideInfo(slideHash);
-		if (slideInfo.empty) {
+		if (slideInfo!.empty) {
 			return true;
 		}
 
@@ -526,7 +543,11 @@ class LayerDrawing {
 			return;
 		}
 		if (imageInfo.type === 'png') {
-			this.offscreenContext.drawImage(imageInfo.data as HTMLImageElement, 0, 0);
+			this.offscreenContext!.drawImage(
+				imageInfo.data as HTMLImageElement,
+				0,
+				0,
+			);
 		}
 	}
 
@@ -535,7 +556,7 @@ class LayerDrawing {
 			this.prefetchedSlideHash = null;
 			return;
 		}
-		const reqSlideInfo = this.getSlideInfo(this.requestedSlideHash);
+		const reqSlideInfo = this.getSlideInfo(this.requestedSlideHash!);
 
 		this.cacheAndNotify();
 		// fetch next slide and draw it on offscreen canvas
@@ -551,9 +572,9 @@ class LayerDrawing {
 			);
 			return;
 		}
-		if (!this.slideCache.has(this.requestedSlideHash)) {
+		if (!this.slideCache.has(this.requestedSlideHash!)) {
 			const renderedSlide = this.offscreenCanvas.transferToImageBitmap();
-			this.slideCache.set(this.requestedSlideHash, renderedSlide);
+			this.slideCache.set(this.requestedSlideHash!, renderedSlide);
 		}
 		this.requestedSlideHash = null;
 

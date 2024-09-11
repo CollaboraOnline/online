@@ -24,7 +24,7 @@ class SlideCache {
 		return this.renderedSlides.has(slideHash);
 	}
 
-	public get(slideHash: string): ImageBitmap {
+	public get(slideHash: string): ImageBitmap | undefined {
 		return this.renderedSlides.get(slideHash);
 	}
 

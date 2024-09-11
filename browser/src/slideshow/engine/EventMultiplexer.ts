@@ -11,28 +11,39 @@
  */
 
 interface MouseClickHandler {
-	handleClick: (aMouseEvent?: any) => boolean;
+	handleClick: ((aMouseEvent?: any) => boolean) | null;
 }
 
 class EventMultiplexer {
 	private static CURR_UNIQUE_ID = 0;
 	private nId: number;
 	private aTimerEventQueue: TimerEventQueue;
-	private aEventMap = new Map<EventTrigger, Map<string, EventBase[]>>();
-	private aAnimationsEndHandler: Handler0 = null;
-	private aSkipEffectEndHandlerSet: Handler0[] = [];
-	private aMouseClickHandlerSet: PriorityQueue = null;
-	private aSkipEffectEvent: DelayEvent = null;
-	private aRewindCurrentEffectEvent: DelayEvent = null;
-	private aRewindLastEffectEvent: DelayEvent = null;
-	private aSkipInteractiveEffectEventSet = new Map<number, DelayEvent>();
-	private aRewindRunningInteractiveEffectEventSet = new Map<
+	private aEventMap: Map<EventTrigger, Map<string, EventBase[]>> | null =
+		new Map<EventTrigger, Map<string, EventBase[]>>();
+	private aAnimationsEndHandler: Handler0 | null = null;
+	private aSkipEffectEndHandlerSet: Handler0[] | null = [];
+	private aMouseClickHandlerSet: PriorityQueue | null = null;
+	private aSkipEffectEvent: DelayEvent | null = null;
+	private aRewindCurrentEffectEvent: DelayEvent | null = null;
+	private aRewindLastEffectEvent: DelayEvent | null = null;
+	private aSkipInteractiveEffectEventSet: Map<number, DelayEvent> | null =
+		new Map<number, DelayEvent>();
+	private aRewindRunningInteractiveEffectEventSet: Map<
 		number,
 		DelayEvent
+	> | null = new Map<number, DelayEvent>();
+	private aRewindEndedInteractiveEffectEventSet: Map<
+		number,
+		DelayEvent
+	> | null = new Map<number, DelayEvent>();
+	private aRewindedEffectHandlerSet: Map<string, Handler0> | null = new Map<
+		string,
+		Handler0
 	>();
-	private aRewindEndedInteractiveEffectEventSet = new Map<number, DelayEvent>();
-	private aRewindedEffectHandlerSet = new Map<string, Handler0>();
-	private aElementChangedHandlerSet = new Map<string, Handler1>();
+	private aElementChangedHandlerSet: Map<string, Handler1> | null = new Map<
+		string,
+		Handler1
+	>();
 
 	constructor(aTimerEventQueue: TimerEventQueue) {
 		this.nId = EventMultiplexer.getUniqueId();
@@ -46,20 +57,20 @@ class EventMultiplexer {
 	}
 
 	clear() {
-		this.aEventMap.clear();
+		this.aEventMap!.clear();
 		this.aEventMap = null;
 		this.aSkipEffectEndHandlerSet = null;
-		this.aMouseClickHandlerSet.clear();
+		this.aMouseClickHandlerSet!.clear();
 		this.aMouseClickHandlerSet = null;
-		this.aSkipInteractiveEffectEventSet.clear();
+		this.aSkipInteractiveEffectEventSet!.clear();
 		this.aSkipInteractiveEffectEventSet = null;
-		this.aRewindRunningInteractiveEffectEventSet.clear();
+		this.aRewindRunningInteractiveEffectEventSet!.clear();
 		this.aRewindRunningInteractiveEffectEventSet = null;
-		this.aRewindEndedInteractiveEffectEventSet.clear();
+		this.aRewindEndedInteractiveEffectEventSet!.clear();
 		this.aRewindEndedInteractiveEffectEventSet = null;
-		this.aRewindedEffectHandlerSet.clear();
+		this.aRewindedEffectHandlerSet!.clear();
 		this.aRewindedEffectHandlerSet = null;
-		this.aElementChangedHandlerSet.clear();
+		this.aElementChangedHandlerSet!.clear();
 		this.aElementChangedHandlerSet = null;
 	}
 
@@ -68,16 +79,16 @@ class EventMultiplexer {
 	}
 
 	hasRegisteredMouseClickHandlers() {
-		return !this.aMouseClickHandlerSet.isEmpty();
+		return !this.aMouseClickHandlerSet!.isEmpty();
 	}
 
 	registerMouseClickHandler(aHandler: MouseClickHandler, nPriority: number) {
 		const aHandlerEntry = new PriorityEntry(aHandler, nPriority);
-		this.aMouseClickHandlerSet.push(aHandlerEntry);
+		this.aMouseClickHandlerSet!.push(aHandlerEntry);
 	}
 
 	notifyMouseClick(aMouseEvent: any) {
-		const aMouseClickHandlerSet = this.aMouseClickHandlerSet.clone();
+		const aMouseClickHandlerSet = this.aMouseClickHandlerSet!.clone();
 		while (!aMouseClickHandlerSet.isEmpty()) {
 			const aHandlerEntry = aMouseClickHandlerSet.top();
 			aMouseClickHandlerSet.pop();
@@ -94,24 +105,24 @@ class EventMultiplexer {
 	) {
 		const sNotifierId = '' + aNotifierId;
 		this.DBG('registerEvent', eEventType, sNotifierId);
-		if (!this.aEventMap.has(eEventType)) {
-			this.aEventMap.set(eEventType, new Map<string, EventBase[]>());
+		if (!this.aEventMap!.has(eEventType)) {
+			this.aEventMap!.set(eEventType, new Map<string, EventBase[]>());
 		}
-		if (!this.aEventMap.get(eEventType).has(sNotifierId)) {
-			this.aEventMap.get(eEventType).set(sNotifierId, []);
+		if (!this.aEventMap!.get(eEventType)!.has(sNotifierId)) {
+			this.aEventMap!.get(eEventType)!.set(sNotifierId, []);
 		}
-		this.aEventMap.get(eEventType).get(sNotifierId).push(aEvent);
+		this.aEventMap!.get(eEventType)!.get(sNotifierId)!.push(aEvent);
 	}
 
 	notifyEvent(eEventType: EventTrigger, aNotifierId: number | string) {
 		const sNotifierId = '' + aNotifierId;
 		this.DBG('notifyEvent', eEventType, sNotifierId);
-		if (this.aEventMap.has(eEventType)) {
-			if (this.aEventMap.get(eEventType).has(sNotifierId)) {
-				const aEventArray = this.aEventMap.get(eEventType).get(sNotifierId);
-				const nSize = aEventArray.length;
+		if (this.aEventMap!.has(eEventType)) {
+			if (this.aEventMap!.get(eEventType)!.has(sNotifierId)) {
+				const aEventArray = this.aEventMap!.get(eEventType)!.get(sNotifierId);
+				const nSize = aEventArray!.length;
 				for (let i = 0; i < nSize; ++i) {
-					this.aTimerEventQueue.addEvent(aEventArray[i]);
+					this.aTimerEventQueue.addEvent(aEventArray![i]);
 				}
 			}
 		}
@@ -126,13 +137,13 @@ class EventMultiplexer {
 	}
 
 	registerNextEffectEndHandler(aHandler: Handler0) {
-		this.aSkipEffectEndHandlerSet.push(aHandler);
+		this.aSkipEffectEndHandlerSet!.push(aHandler);
 	}
 
 	notifyNextEffectEndEvent() {
-		const nSize = this.aSkipEffectEndHandlerSet.length;
+		const nSize = this.aSkipEffectEndHandlerSet!.length;
 		for (let i = 0; i < nSize; ++i) {
-			this.aSkipEffectEndHandlerSet[i]();
+			this.aSkipEffectEndHandlerSet![i]();
 		}
 		this.aSkipEffectEndHandlerSet = [];
 	}
@@ -171,13 +182,13 @@ class EventMultiplexer {
 	}
 
 	registerSkipInteractiveEffectEvent(nNotifierId: number, aEvent: DelayEvent) {
-		this.aSkipInteractiveEffectEventSet.set(nNotifierId, aEvent);
+		this.aSkipInteractiveEffectEventSet!.set(nNotifierId, aEvent);
 	}
 
 	notifySkipInteractiveEffectEvent(nNotifierId: number) {
-		if (this.aSkipInteractiveEffectEventSet.has(nNotifierId)) {
+		if (this.aSkipInteractiveEffectEventSet!.has(nNotifierId)) {
 			this.aTimerEventQueue.addEvent(
-				this.aSkipInteractiveEffectEventSet.get(nNotifierId),
+				this.aSkipInteractiveEffectEventSet!.get(nNotifierId),
 			);
 		}
 	}
@@ -186,13 +197,13 @@ class EventMultiplexer {
 		nNotifierId: number,
 		aEvent: DelayEvent,
 	) {
-		this.aRewindRunningInteractiveEffectEventSet.set(nNotifierId, aEvent);
+		this.aRewindRunningInteractiveEffectEventSet!.set(nNotifierId, aEvent);
 	}
 
 	notifyRewindRunningInteractiveEffectEvent(nNotifierId: number) {
-		if (this.aRewindRunningInteractiveEffectEventSet.has(nNotifierId)) {
+		if (this.aRewindRunningInteractiveEffectEventSet!.has(nNotifierId)) {
 			this.aTimerEventQueue.addEvent(
-				this.aRewindRunningInteractiveEffectEventSet.get(nNotifierId),
+				this.aRewindRunningInteractiveEffectEventSet!.get(nNotifierId),
 			);
 		}
 	}
@@ -201,13 +212,13 @@ class EventMultiplexer {
 		nNotifierId: number,
 		aEvent: DelayEvent,
 	) {
-		this.aRewindEndedInteractiveEffectEventSet.set(nNotifierId, aEvent);
+		this.aRewindEndedInteractiveEffectEventSet!.set(nNotifierId, aEvent);
 	}
 
 	notifyRewindEndedInteractiveEffectEvent(nNotifierId: number) {
-		if (this.aRewindEndedInteractiveEffectEventSet.has(nNotifierId)) {
+		if (this.aRewindEndedInteractiveEffectEventSet!.has(nNotifierId)) {
 			this.aTimerEventQueue.addEvent(
-				this.aRewindEndedInteractiveEffectEventSet.get(nNotifierId),
+				this.aRewindEndedInteractiveEffectEventSet!.get(nNotifierId),
 			);
 		}
 	}
@@ -217,23 +228,23 @@ class EventMultiplexer {
 		aHandler: Handler0,
 	) {
 		const sNotifierId = '' + aNotifierId;
-		this.aRewindedEffectHandlerSet.set(sNotifierId, aHandler);
+		this.aRewindedEffectHandlerSet!.set(sNotifierId, aHandler);
 	}
 
 	notifyRewindedEffectEvent(aNotifierId: number | string) {
 		const sNotifierId = '' + aNotifierId;
-		if (this.aRewindedEffectHandlerSet.has(sNotifierId)) {
-			this.aRewindedEffectHandlerSet.get(sNotifierId)();
+		if (this.aRewindedEffectHandlerSet!.has(sNotifierId)) {
+			this.aRewindedEffectHandlerSet!.get(sNotifierId)!();
 		}
 	}
 
 	registerElementChangedHandler(aNotifierId: string, aHandler: Handler1) {
-		this.aElementChangedHandlerSet.set(aNotifierId, aHandler);
+		this.aElementChangedHandlerSet!.set(aNotifierId, aHandler);
 	}
 
 	notifyElementChangedEvent(aNotifierId: string, aElement: any) {
-		if (this.aElementChangedHandlerSet.has(aNotifierId)) {
-			this.aElementChangedHandlerSet.get(aNotifierId)(aElement);
+		if (this.aElementChangedHandlerSet!.has(aNotifierId)) {
+			this.aElementChangedHandlerSet!.get(aNotifierId)!(aElement);
 		}
 	}
 

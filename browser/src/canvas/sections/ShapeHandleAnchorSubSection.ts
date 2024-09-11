@@ -20,7 +20,7 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 
 		this.getHTMLObject().style.opacity = 1;
 		this.getHTMLObject().remove();
-		document.getElementById('map').appendChild(this.getHTMLObject());
+		document.getElementById('map')!.appendChild(this.getHTMLObject());
 
 		app.definitions.shapeHandlesSection.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
 
@@ -31,12 +31,12 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 
 	onMouseEnter() {
 		this.backgroundColor = 'grey';
-		this.containerObject.requestReDraw();
+		this.containerObject!.requestReDraw();
 	}
 
 	onMouseLeave() {
 		this.backgroundColor = null;
-		this.containerObject.requestReDraw();
+		this.containerObject!.requestReDraw();
 	}
 
 	tableMouseUp(point: number[], e: MouseEvent) {
@@ -74,7 +74,7 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 	}
 
 	onMouseUp(point: number[], e: MouseEvent): void {
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject!.isDraggingSomething()) {
 			// Tables don't have parent sections. This is used for separating table anchors from other anchors.
 			if (this.sectionProperties.parentHandlerSection) {
 				this.shapeMouseUp(point, e);
@@ -86,7 +86,7 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 	}
 
 	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
-		if (this.containerObject.isDraggingSomething()) {
+		if (this.containerObject!.isDraggingSomething()) {
 			// Show preview in its final position.
 			let svg;
 			let initialPosition;
@@ -97,10 +97,10 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 			}
 			else {
 				// Table..
-				svg = document.getElementById('canvas-container').querySelector('svg');
-				svg.style.display = '';
+				svg = document.getElementById('canvas-container')!.querySelector('svg');
+				svg!.style.display = '';
 				if (!this.sectionProperties.initialPosition) {
-					this.sectionProperties.initialPosition = [parseFloat(svg.style.left.replace('px', '')), parseFloat(svg.style.top.replace('px', ''))];
+					this.sectionProperties.initialPosition = [parseFloat(svg!.style.left.replace('px', '')), parseFloat(svg!.style.top.replace('px', ''))];
 				}
 				initialPosition = this.sectionProperties.initialPosition;
 			}

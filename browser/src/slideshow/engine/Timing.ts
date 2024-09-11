@@ -57,7 +57,7 @@ class Timing {
 	private static CHARCODE_0 = '0'.charCodeAt(0);
 	private static CHARCODE_9 = '9'.charCodeAt(0);
 
-	constructor(aAnimationNode: BaseNode, sTimingAttribute: string) {
+	constructor(aAnimationNode: BaseNode, sTimingAttribute: string | undefined) {
 		this.aAnimationNode = aAnimationNode; // the node, the timing attribute belongs to
 		this.sTimingDescription = removeWhiteSpaces(sTimingAttribute);
 
@@ -170,34 +170,34 @@ class Timing {
 		if (reFullClockValue.test(sClockValue)) {
 			const aClockTimeParts = reFullClockValue.exec(sClockValue);
 
-			const nHours = parseInt(aClockTimeParts[1]);
-			const nMinutes = parseInt(aClockTimeParts[2]);
-			let nSeconds = parseInt(aClockTimeParts[3]);
-			if (aClockTimeParts[4]) nSeconds += parseFloat(aClockTimeParts[4]);
+			const nHours = parseInt(aClockTimeParts![1]);
+			const nMinutes = parseInt(aClockTimeParts![2]);
+			let nSeconds = parseInt(aClockTimeParts![3]);
+			if (aClockTimeParts![4]) nSeconds += parseFloat(aClockTimeParts![4]);
 
 			nTimeInSec = (nHours * 60 + nMinutes) * 60 + nSeconds;
 		} else if (rePartialClockValue.test(sClockValue)) {
 			const aClockTimeParts = rePartialClockValue.exec(sClockValue);
 
-			const nMinutes = parseInt(aClockTimeParts[1]);
-			let nSeconds = parseInt(aClockTimeParts[2]);
-			if (aClockTimeParts[3]) nSeconds += parseFloat(aClockTimeParts[3]);
+			const nMinutes = parseInt(aClockTimeParts![1]);
+			let nSeconds = parseInt(aClockTimeParts![2]);
+			if (aClockTimeParts![3]) nSeconds += parseFloat(aClockTimeParts![3]);
 
 			nTimeInSec = nMinutes * 60 + nSeconds;
 		} else if (reTimeCountValue.test(sClockValue)) {
 			const aClockTimeParts = reTimeCountValue.exec(sClockValue);
 
-			let nTimeCount = parseInt(aClockTimeParts[1]);
-			if (aClockTimeParts[2]) nTimeCount += parseFloat(aClockTimeParts[2]);
+			let nTimeCount = parseInt(aClockTimeParts![1]);
+			if (aClockTimeParts![2]) nTimeCount += parseFloat(aClockTimeParts![2]);
 
-			if (aClockTimeParts[3]) {
-				if (aClockTimeParts[3] == 'h') {
+			if (aClockTimeParts![3]) {
+				if (aClockTimeParts![3] == 'h') {
 					nTimeInSec = nTimeCount * 3600;
-				} else if (aClockTimeParts[3] == 'min') {
+				} else if (aClockTimeParts![3] == 'min') {
 					nTimeInSec = nTimeCount * 60;
-				} else if (aClockTimeParts[3] == 's') {
+				} else if (aClockTimeParts![3] == 's') {
 					nTimeInSec = nTimeCount;
-				} else if (aClockTimeParts[3] == 'ms') {
+				} else if (aClockTimeParts![3] == 'ms') {
 					nTimeInSec = nTimeCount / 1000;
 				}
 			} else {
