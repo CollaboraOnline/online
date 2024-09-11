@@ -45,6 +45,10 @@ class MetaSlide {
 		return this._info;
 	}
 
+	public get hidden(): boolean {
+		return this._info.hidden;
+	}
+
 	public get next(): MetaSlide {
 		return this.info.next ? this._metaPres.getMetaSlide(this.info.next) : null;
 	}

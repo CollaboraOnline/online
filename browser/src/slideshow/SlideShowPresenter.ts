@@ -29,6 +29,7 @@ interface SlideInfo {
 	hash: string;
 	index: number;
 	empty: boolean;
+	hidden?: boolean;
 	masterPage: string;
 	masterPageObjectsVisibility: boolean;
 	videos: Array<VideoInfo>;

@@ -378,6 +378,7 @@ class SlideShowHandler {
 			const sCurSlideHash = this.theMetaPres.getCurrentSlideHash();
 			const aCurrentSlide = this.theMetaPres.getMetaSlide(sCurSlideHash);
 			if (
+				aCurrentSlide &&
 				aCurrentSlide.animationsHandler &&
 				aCurrentSlide.animationsHandler.elementsParsed()
 			) {
@@ -720,6 +721,12 @@ class SlideShowHandler {
 			this.exitSlideShow();
 		}
 
+		const aNewMetaSlide = aMetaDoc.getMetaSlideByIndex(nNewSlide);
+		if (aNewMetaSlide && aNewMetaSlide.hidden) {
+			NAVDBG.print('SlideShowHandler.displaySlide: slide hidden: ' + nNewSlide);
+			return false;
+		}
+
 		if (this.isTransitionPlaying()) {
 			this.skipTransition();
 		}
@@ -758,15 +765,6 @@ class SlideShowHandler {
 				(nOldSlide === undefined && this.isStarting) ||
 				(nOldSlide !== undefined && nNewSlide > nOldSlide)
 			) {
-				// let aOldMetaSlide;
-				// if (nOldSlide === undefined) {
-				// 	// for transition on start slide
-				// 	aOldMetaSlide = null; // aMetaDoc.getDummyMetaSlide()
-				// } else {
-				// 	aOldMetaSlide = aMetaDoc.getMetaSlideByIndex(nOldSlide);
-				// }
-				const aNewMetaSlide = aMetaDoc.getMetaSlideByIndex(nNewSlide);
-
 				const aSlideTransitionHandler = aNewMetaSlide.transitionHandler;
 				if (aSlideTransitionHandler && aSlideTransitionHandler.isValid()) {
 					const aTransitionEndEvent = makeEvent(
@@ -788,7 +786,7 @@ class SlideShowHandler {
 							this.aActivityQueue.addActivity(aTransitionActivity);
 							this.update();
 							this.presenter.stopLoader();
-							return;
+							return true;
 						}
 					} catch (message) {
 						console.error('displaySlide failed: ' + message);
@@ -798,6 +796,7 @@ class SlideShowHandler {
 		}
 
 		this.notifyTransitionEnd(nNewSlide, nOldSlide);
+		return true;
 	}
 
 	exitSlideShow() {
