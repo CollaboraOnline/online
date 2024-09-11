@@ -12,7 +12,7 @@
  * JSDialog.StatusBar - statusbar component
  */
 
-/* global $ app JSDialog _ _UNO */
+/* global $ app JSDialog _ _UNO  getPermissionModeElements */
 class StatusBar extends JSDialog.Toolbar {
 	constructor(map) {
 		super(map, 'toolbar-down');
@@ -377,12 +377,21 @@ class StatusBar extends JSDialog.Toolbar {
 			$('#toolbar-down').removeClass('readonly');
 		}
 
+		var canUserWrite = window.ThisIsAMobileApp ? !app.isReadOnly() : this.map['wopi'].UserCanWrite;
+
+		var permissionContainer = document.getElementById('permissionmode-container');
+		if (permissionContainer) {
+			while (permissionContainer.firstChild)
+				permissionContainer.removeChild(permissionContainer.firstChild);
+			permissionContainer.appendChild(getPermissionModeElements(isReadOnlyMode, canUserWrite));
+		}
+
 		this.builder.updateWidget(this.parentContainer, {
 			id: 'PermissionMode',
 			type: 'htmlcontent',
 			htmlId: 'permissionmode',
 			isReadOnlyMode: isReadOnlyMode,
-			canUserWrite: !app.isReadOnly()
+			canUserWrite: canUserWrite
 		});
 
 		JSDialog.RefreshScrollables();
