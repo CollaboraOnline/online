@@ -11,7 +11,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'PDF View Tests', function(
 	});
 
 	it('PDF page down', { env: { 'pdf-view': true } }, function() {
-		cy.cGet('#map').type('{pagedown}'); // Not sure if first button press should change the page.
 		cy.cGet('#map').type('{pagedown}');
 		cy.cGet('#preview-frame-part-1').should('have.attr', 'style', 'border: 2px solid darkgrey;');
 		cy.cGet('#map').type('{pageup}');
