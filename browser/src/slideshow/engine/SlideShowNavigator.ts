@@ -145,10 +145,14 @@ class SlideShowNavigator {
 
 	switchSlide(nOffset: number, bSkipTransition: boolean) {
 		NAVDBG.print('SlideShowNavigator.switchSlide: nOffset: ' + nOffset);
-		this.displaySlide(this.currentSlide + nOffset, bSkipTransition);
+		this.displaySlide(this.currentSlide + nOffset, bSkipTransition, nOffset);
 	}
 
-	displaySlide(nNewSlide: number, bSkipTransition: boolean) {
+	displaySlide(
+		nNewSlide: number,
+		bSkipTransition: boolean,
+		direction: number = 1,
+	) {
 		NAVDBG.print(
 			'SlideShowNavigator.displaySlide: current index: ' +
 				this.currentSlide +
@@ -175,11 +179,20 @@ class SlideShowNavigator {
 			if (this.prevSlide >= this.theMetaPres.numberOfSlides)
 				this.prevSlide = undefined;
 			this.currentSlide = nNewSlide;
-			this.slideShowHandler.displaySlide(
-				this.currentSlide,
-				this.prevSlide,
-				bSkipTransition,
-			);
+			if (
+				this.slideShowHandler.displaySlide(
+					this.currentSlide,
+					this.prevSlide,
+					bSkipTransition,
+				) === false
+			) {
+				// we got hidden slide
+				this.currentSlide = this.prevSlide;
+				this.displaySlide(
+					nNewSlide + (direction > 0 ? 1 : -1),
+					bSkipTransition,
+				);
+			}
 		});
 	}
 
