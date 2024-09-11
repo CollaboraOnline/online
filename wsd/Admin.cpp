@@ -13,6 +13,7 @@
 
 #include <chrono>
 #include <iomanip>
+#include <string>
 #include <sys/poll.h>
 #include <unistd.h>
 
@@ -22,6 +23,7 @@
 #include "Admin.hpp"
 #include "AdminModel.hpp"
 #include "Auth.hpp"
+#include "ConfigUtil.hpp"
 #include <Common.hpp>
 #include <Log.hpp>
 #include <Protocol.hpp>
@@ -131,9 +133,11 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     else if (tokens.equals(0, "version"))
     {
         // Send COOL version information
-        sendTextFrame("coolserver " +
-                      Util::getVersionJSON(EnableExperimental, COOLWSD::IndirectionServerEnabled &&
-                                                                   COOLWSD::GeolocationSetup));
+        std::string timezoneName;
+        if (COOLWSD::IndirectionServerEnabled && COOLWSD::GeolocationSetup)
+            timezoneName = config::getString("indirection_endpoint.geolocation_setup.timezone", "");
+
+        sendTextFrame("coolserver " + Util::getVersionJSON(EnableExperimental, timezoneName));
 
         // Send LOKit version information
         sendTextFrame("lokitversion " + COOLWSD::LOKitVersion);
