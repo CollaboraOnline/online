@@ -25,6 +25,7 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
+#include "ConfigUtil.hpp"
 #include "DocumentBroker.hpp"
 #include "COOLWSD.hpp"
 #include "FileServer.hpp"
@@ -635,10 +636,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             }
         }
 
+        std::string timezoneName;
+        if (COOLWSD::IndirectionServerEnabled && COOLWSD::GeolocationSetup)
+            timezoneName = config::getString("indirection_endpoint.geolocation_setup.timezone", "");
+
         // Send COOL version information
-        sendTextFrame("coolserver " +
-                      Util::getVersionJSON(EnableExperimental, COOLWSD::IndirectionServerEnabled &&
-                                                                   COOLWSD::GeolocationSetup));
+        sendTextFrame("coolserver " + Util::getVersionJSON(EnableExperimental, timezoneName));
         // Send LOKit version information
         sendTextFrame("lokitversion " + COOLWSD::LOKitVersion);
 

@@ -388,7 +388,7 @@ namespace Util
         return id;
     }
 
-    std::string getVersionJSON(bool enableExperimental, bool geolocationSetup)
+    std::string getVersionJSON(bool enableExperimental, const std::string& timezone)
     {
         std::string version, hash;
         Util::getVersionInfo(version, hash);
@@ -415,13 +415,10 @@ namespace Util
                            "\"Id\":          \"" +
                            Util::getProcessIdentifier() + "\", ";
 
-        if (geolocationSetup)
-            json += "\"TimeZone\":     \"" + getIANATimezone() +
-                    "\", "
-                    "\"Options\":     \"" +
-                    std::string(enableExperimental ? " (E)" : "") + "\" }";
-        else
-            json += "\"Options\":     \"" + std::string(enableExperimental ? " (E)" : "") + "\" }";
+        if (!timezone.empty())
+            json += "\"TimeZone\":     \"" + timezone + "\", ";
+
+        json += "\"Options\":     \"" + std::string(enableExperimental ? " (E)" : "") + "\" }";
         return json;
     }
 
@@ -961,26 +958,6 @@ namespace Util
                 std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
             }
         }
-    }
-
-    std::string getIANATimezone()
-    {
-        const char* tzfile = "/etc/localtime";
-        char buf[PATH_MAX];
-
-        ssize_t len = readlink(tzfile, buf, sizeof(buf) - 1);
-        if (len != -1)
-        {
-            buf[len] = '\0';
-            std::string fullPath(buf);
-
-            std::string prefix = "../usr/share/zoneinfo/";
-            if (fullPath.substr(0, prefix.size()) == prefix)
-            {
-                return fullPath.substr(prefix.size());
-            }
-        }
-        return std::string();
     }
 
     std::string Backtrace::Symbol::toString() const
