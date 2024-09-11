@@ -146,5 +146,7 @@ app.setServerAuditFromCore = function (entries) {
 };
 
 app.isExperimentalMode = function () {
-	return window.app.socket.WSDServer.Options.indexOf('E') !== -1;
+	if (app.socket && app.socket.WSDServer && app.socket.WSDServer.Options)
+		return app.socket.WSDServer.Options.indexOf('E') !== -1;
+	return false;
 };
