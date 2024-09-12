@@ -84,7 +84,7 @@ ClientSession::ClientSession(
     _splitX(0),
     _splitY(0),
     _clientSelectedPart(-1),
-    _clientSelectedMode(0),
+    _clientSelectedMode(ViewMode::NORMAL_VIEW),
     _tileWidthPixel(0),
     _tileHeightPixel(0),
     _tileWidthTwips(0),
@@ -1221,9 +1221,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             We set the view mode beforehand here.
         */
         if (firstLine == "uno .uno:NormalMultiPaneGUI")
-            _clientSelectedMode = 0;
+            _clientSelectedMode = ViewMode::NORMAL_VIEW;
         else if (firstLine == "uno .uno:NotesMode")
-            _clientSelectedMode = 2;
+            _clientSelectedMode = ViewMode::NOTES_VIEW;
 
         if (!filterMessage(firstLine))
         {
@@ -2315,7 +2315,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
                 int mode = 0;
                 if(getTokenInteger(tokens.getParam(token), "mode", mode))
-                    _clientSelectedMode = mode;
+                    _clientSelectedMode = static_cast<ViewMode>(mode);
 
                 // Get document type too
                 std::string docType;
@@ -2337,7 +2337,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         {
             uint32_t newValue;
             if (tokens.getUInt32(7, "mode", newValue))
-                this->_clientSelectedMode = newValue;
+                this->_clientSelectedMode = static_cast<ViewMode>(newValue);
         }
         else if (tokens.equals(0, "commandvalues:"))
         {
@@ -2872,7 +2872,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     int normalizedViewId = getCanonicalViewId();
 
     std::vector<TileDesc> invalidTiles;
-    if((part == _clientSelectedPart && mode == _clientSelectedMode) || _isTextDocument)
+    if((part == _clientSelectedPart && static_cast<ViewMode>(mode) == _clientSelectedMode) || _isTextDocument)
     {
         for(int paneIdx = 0; paneIdx < numPanes; ++paneIdx)
         {
