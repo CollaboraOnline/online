@@ -154,6 +154,12 @@ void ChildSession::disconnect()
             if (_docManager)
             {
                 _docManager->onUnload(*this);
+
+                // Notify that we've unloaded this view.
+                std::ostringstream oss;
+                oss << "unloaded: viewid=" << _viewId
+                    << " views=" << getLOKitDocument()->getViewsCount();
+                sendTextFrame(oss.str());
             }
         }
         else
@@ -903,6 +909,9 @@ bool ChildSession::loadDocument(const StringVector& tokens)
 
     SigUtil::addActivity(getId(), "load doc: " + getJailedFilePathAnonym());
 
+    // Note: _isDocLoaded is set on our return.
+    const bool isFirstView = !_docManager->isLoaded();
+
     const bool loaded = _docManager->onLoad(getId(), getJailedFilePathAnonym(), renderOpts);
     if (!loaded || _viewId < 0)
     {
@@ -910,6 +919,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
         return false;
     }
 
+    assert(getLOKitDocument() && "Expected valid LOKitDocument instance");
     LOG_INF("Created new view with viewid: [" << _viewId << "] for username: ["
                                               << getUserNameAnonym() << "] in session: [" << getId()
                                               << "], template: [" << doctemplate << ']');
@@ -972,6 +982,12 @@ bool ChildSession::loadDocument(const StringVector& tokens)
 
     // now we have the doc options parsed and set.
     _docManager->updateActivityHeader();
+
+    // Notify that we've loaded this view.
+    std::ostringstream oss;
+    oss << "loaded: viewid=" << _viewId << " views=" << getLOKitDocument()->getViewsCount()
+        << " isfirst=" << (isFirstView ? "true" : "false");
+    sendTextFrame(oss.str());
 
     LOG_INF("Loaded session " << getId());
     return true;
