@@ -978,7 +978,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
 }
 
 // attempt to shutdown threads, fork and execute in the background
-bool ChildSession::saveDocumentBackground(const StringVector &tokens)
+bool ChildSession::saveDocumentBackground([[maybe_unused]] const StringVector& tokens)
 {
 #if MOBILEAPP
     return false;
