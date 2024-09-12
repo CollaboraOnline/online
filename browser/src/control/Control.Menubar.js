@@ -1394,6 +1394,8 @@ L.Control.Menubar = L.Control.extend({
 		map.on('addmenu', this._addMenu, this);
 		map.on('languagesupdated', this._onInitLanguagesMenu, this);
 		map.on('updatetoolbarcommandvalues', this._onStyleMenu, this);
+		map.on('initmodificationindicator', this._onInitModificationIndicator, this);
+		map.on('updatemodificationindicator', this._onUpdateModificationIndicator, this);
 	},
 
 	onRemove: function() {
@@ -1402,6 +1404,8 @@ L.Control.Menubar = L.Control.extend({
 		this._map.off('addmenu', this._addMenu, this);
 		this._map.off('languagesupdated', this._onInitLanguagesMenu, this);
 		this._map.off('updatetoolbarcommandvalues', this._onStyleMenu, this);
+		this._map.off('initmodificationindicator', this._onInitModificationIndicator, this);
+		this._map.off('updatemodificationindicator', this._onUpdateModificationIndicator, this);
 
 		this._menubarCont.remove();
 		this._menubarCont = null;
@@ -2566,6 +2570,39 @@ L.Control.Menubar = L.Control.extend({
 		}
 		return null;
 	},
+
+	_onInitModificationIndicator: function(lastmodtime) {
+		var lastModButton = L.DomUtil.get('menu-last-mod');
+		if (lastModButton !== null && lastModButton !== undefined
+			&& lastModButton.firstChild.innerHTML !== null
+			&& lastModButton.firstChild.childElementCount == 0) {
+			if (lastmodtime == null) {
+				// No modification time -> hide the indicator
+				L.DomUtil.setStyle(lastModButton, 'display', 'none');
+				return;
+			}
+			var mainSpan = document.createElement('span');
+			this.lastModIndicator = document.createElement('span');
+			mainSpan.appendChild(this.lastModIndicator);
+
+			//this._map.updateModificationIndicator(this._lastmodtime);
+
+			// Replace menu button body with new content
+			lastModButton.firstChild.replaceChildren();
+			lastModButton.firstChild.appendChild(mainSpan);
+
+			if (L.Params.revHistoryEnabled) {
+				L.DomUtil.setStyle(lastModButton, 'cursor', 'pointer');
+			}
+
+			this._map.fire('modificationindicatorinitialized');
+		}
+	},
+	_onUpdateModificationIndicator: function(e) {
+		if (this.lastModIndicator !== null && this.lastModIndicator !== undefined) {
+			this.lastModIndicator.innerHTML = e.lastSaved;
+		}
+	}
 });
 
 L.control.menubar = function (options) {

@@ -329,7 +329,7 @@ L.Map.include({
 	},
 
 	save: function(dontTerminateEdit, dontSaveIfUnmodified, extendedData) {
-		this.setDocumentStatus('SAVING');
+		this.fire('updatemodificationindicator', { status: 'SAVING' });
 
 		var msg = 'save' +
 					' dontTerminateEdit=' + (dontTerminateEdit ? 1 : 0) +

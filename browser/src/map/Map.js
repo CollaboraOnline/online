@@ -148,6 +148,10 @@ L.Map = L.Evented.extend({
 			}
 		});
 
+		this.on('modificationindicatorinitialized', function() {
+			this._modIndicatorInitialized = true;
+		});
+
 		// When all these conditions are met, fire statusindicator:initializationcomplete
 		this.initConditions = {
 			'doclayerinit': false,
@@ -250,7 +254,7 @@ L.Map = L.Evented.extend({
 				this.fire('postMessage', {msgId: 'Doc_ModifiedStatus', args: { Modified: e.state === 'true' }});
 
 				if (this._everModified) {
-					this.setDocumentStatus(e.state === 'true' ? 'MODIFIED' : 'SAVED');
+					this.fire('updatemodificationindicator', { status: e.state === 'true' ? 'MODIFIED' : 'SAVED' });
 				}
 			}
 		}, this);
@@ -354,31 +358,6 @@ L.Map = L.Evented.extend({
 
 	// end of A11y
 
-	// can be '', 'SAVING', 'MODIFIED' or 'SAVED'
-	setDocumentStatus: function(status) {
-		if (status === 'SAVING') {
-			this._docStatusSaved.style.display = 'none';
-			this._docStatusLastSaved.textContent = '';
-			this._docStatusText.style.display = 'inline';
-			this._docStatusUI.style.display = 'inline';
-			return;
-		}
-
-		if (status === 'MODIFIED') {
-			this._docStatusUI.style.display = 'none';
-			this._docStatusLastSaved.textContent = '';
-			return;
-		}
-
-		if (status === 'SAVED') {
-			this._docStatusLastSaved.textContent = '';
-			this._docStatusText.style.display = 'none';
-			this._docStatusSaved.style.display = 'inline';
-			this._docStatusUI.style.display = 'inline';
-			return;
-		}
-	},
-
 	loadDocument: function(socket) {
 		app.socket.connect(socket);
 		if (this._clip)
@@ -456,58 +435,8 @@ L.Map = L.Evented.extend({
 	},
 
 	initializeModificationIndicator: function() {
-		this._docStatusUI = document.getElementById('documentstatus');
-		if (this._docStatusUI !== null && this._docStatusUI !== undefined) {
-			this._docStatusUI.replaceChildren();
-
-			//
-			const div = document.createElement('div');
-			div.className = 'jsdialog ui-badge';
-			this._docStatusSaved = div;
-			this._docStatusUI.appendChild(div);
-
-			const lastSaved = document.createElement('span');
-			lastSaved.title = _('Your changes have been saved') + '.';
-			lastSaved.textContent = '';
-			div.appendChild(lastSaved);
-			this._docStatusLastSaved = lastSaved;
-
-			const savedStatus = document.createElement('span');
-			savedStatus.id = 'saved-status-label';
-			savedStatus.textContent = _('Document saved');
-			div.appendChild(savedStatus);
-
-			const textDiv = document.createElement('div');
-			textDiv.textContent = _('Saving...');
-			textDiv.className = 'jsdialog ui-badge';
-			this._docStatusText = textDiv;
-			this._docStatusUI.appendChild(textDiv);
-
-			this.updateModificationIndicator(this._lastmodtime);
-		}
-		this._docStatusUI.style.display = 'none';
-
-		var lastModButton = L.DomUtil.get('menu-last-mod');
-		if (lastModButton !== null && lastModButton !== undefined
-			&& lastModButton.firstChild.innerHTML !== null
-			&& lastModButton.firstChild.childElementCount == 0) {
-			if (this._lastmodtime == null) {
-				// No modification time -> hide the indicator
-				L.DomUtil.setStyle(lastModButton, 'display', 'none');
-				return;
-			}
-			var mainSpan = document.createElement('span');
-			this.lastModIndicator = document.createElement('span');
-			mainSpan.appendChild(this.lastModIndicator);
-
-			// Replace menu button body with new content
-			lastModButton.firstChild.replaceChildren();
-			lastModButton.firstChild.appendChild(mainSpan);
-
-			if (L.Params.revHistoryEnabled) {
-				L.DomUtil.setStyle(lastModButton, 'cursor', 'pointer');
-			}
-		}
+		this.fire('initmodificationindicator', this._lastmodtime);
+		this.updateModificationIndicator(this._lastmodtime);
 	},
 
 	updateModificationIndicator: function(newModificationTime) {
@@ -519,8 +448,7 @@ L.Map = L.Evented.extend({
 
 		clearTimeout(this._modTimeout);
 
-		if ((this.lastModIndicator !== null && this.lastModIndicator !== undefined)
-			|| (this._docStatusLastSaved !== null && this._docStatusLastSaved !== undefined)) {
+		if (this._modIndicatorInitialized) {
 			var dateTime = new Date(this._lastmodtime.replace(/,.*/, 'Z'));
 			var dateValue;
 
@@ -544,12 +472,7 @@ L.Map = L.Evented.extend({
 				timeout = 60000;
 			}
 
-			if (this.lastModIndicator !== null && this.lastModIndicator !== undefined) {
-				this.lastModIndicator.innerHTML = dateValue;
-			}
-			if (this._docStatusLastSaved !== null && this._docStatusLastSaved !== undefined) {
-				this._docStatusLastSaved.innerHTML = dateValue;
-			}
+			this.fire('updatemodificationindicator', {lastSaved: dateValue});
 
 			if (timeout) {
 				this._modTimeout = setTimeout(L.bind(this.updateModificationIndicator, this, -1), timeout);
