@@ -48,6 +48,8 @@ interface JSDialogJSON extends DialogJSON {
 interface PopupData extends JSDialogJSON {
 	isAutoCompletePopup?: boolean;
 	cancellable?: boolean;
+	canHaveFocus: boolean;
+	noOverlay: boolean;
 	popupParent?: string;
 	clickToClose?: string;
 	posx: number;

@@ -1482,6 +1482,32 @@ L.CanvasTileLayer = L.Layer.extend({
 				var tooltipInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 				this._map.uiManager.showDocumentTooltip(tooltipInfo);
 			}
+			else if (tooltipInfo.type === 'autofillpreviewtooltip') {
+
+				var strTwips = textMsg.match(/\d+/g);
+				if (strTwips != null && this._map.isEditMode()) {
+					var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+					// var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+
+					var topLeftPixels = this._twipsToCorePixels(topLeftTwips);
+					// var offsetPixels = this._twipsToCorePixels(offset);
+					// var bottomRightTwips = topLeftTwips.add(offsetPixels);
+					// this._cellAutoFillAreaPixels = L.LOUtil.createRectangle(bottomRightTwips.x, bottomRightTwips.y, offsetPixels.x, offsetPixels.y);
+
+					// textMsg = textMsg.substring('cellautofilltooltipinfo: '.length);
+					// var strTwips = textMsg.match(/\d+/g);
+					// var tooltipInfo = JSON.parse(textMsg);
+
+					// tooltipInfo.location = this._map._docLayer._twipsToPixels(topLeftTwips);
+
+					tooltipInfo.location = this._map._docLayer._twipsToPixels(topLeftPixels);;
+
+					// tooltipInfo.location = this._map._docLayer._twipsToLatLng(buttonAreaTwips[1], this._map.getZoom());
+					// tooltipInfo.location = this._cellAutoFillAreaPixels;
+					this._map.fire('sendautofilllocation', { data: tooltipInfo });
+
+				}
+			}
 			else {
 				console.error('unknown tooltip type');
 			}
