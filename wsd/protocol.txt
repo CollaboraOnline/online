@@ -471,6 +471,17 @@ invalidatetiles: EMPTY, <partNumber>, <mode>, wid=<wid>
 
     Tells the client to invalidate all cached tiles.
 
+loaded: viewid=<viewId> views=<number of active views> isfirst=<true|false>
+
+    Sent after a view has been loaded successfully.
+    Best to rely on this to detect loading events (rather than status:).
+
+    <viewId> the unique ID of this view (meaningful only in LOKit).
+    <views> the total number of active views in the document after finishing loading this one.
+    <isfirst> "true" if this is the first view (i.e. the document has just loaded), otherwise "false".
+
+    See also unloaded:.
+
 pong rendercount=<num>
 
     sent in reply to a 'ping' message, where <num> is the total number
@@ -490,7 +501,7 @@ status: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=
 statusupdate: type=<typeName> parts=<numberOfParts> current=<currentPartNumber> width=<width> height=<height> viewid=<viewId> hiddenparts=<part1,part2,...> selectedparts=<part1,part2,...> [partNames]
 
     Same as status: but issued whenever the document parts have updated significantly.
-    status: implies document loading. statusupdate: is just an update.
+    status: implies document loading (deprecated, use loaded: instead). statusupdate: is just an update.
 
 styles: {"styleFamily": ["styles in family"], etc. }
 
@@ -689,6 +700,17 @@ contentcontrol: <JSON>
         - items - array of items for dropdown
 
 canonicalidchange: viewid=<id> canonicalid=<id> viewrenderedstate=<Light|Dark|Empty>
+
+unloaded: viewid=<viewId> views=<number of active views>
+
+    Sent after a view has been unloaded successfully.
+    Best to rely on this to detect unloading events.
+
+    <viewId> the unique ID of this view (meaningful only in LOKit).
+    <views> the total number of active views in the document after finishing loading this one.
+
+    See also loaded:.
+
 
 child -> parent
 ===============
