@@ -360,7 +360,6 @@ L.Map.include({
 		if ((command.startsWith('.uno:Sidebar') && !command.startsWith('.uno:SidebarShow')) ||
 			command.startsWith('.uno:SlideChangeWindow') || command.startsWith('.uno:CustomAnimation') ||
 			command.startsWith('.uno:MasterSlidesPanel') || command.startsWith('.uno:ModifyPage')) {
-			//command.startsWith('.uno:Navigator')) {
 
 			// sidebar control is present only in desktop/tablet case
 			if (this.sidebar) {
