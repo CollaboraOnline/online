@@ -281,6 +281,8 @@ L.Control.UIManager = L.Control.extend({
 
 			this.map.sidebar = JSDialog.Sidebar(this.map, {animSpeed: 200});
 
+			this.map.navigator = JSDialog.NavigatorPanel(this.map, { animSpeed: 200 });
+
 			this.map.formulaautocomplete = L.control.formulaautocomplete(this.map);
 			this.map.formulausage = L.control.formulausage(this.map);
 			this.map.autofillpreviewtooltip = L.control.autofillpreviewtooltip(this.map);
