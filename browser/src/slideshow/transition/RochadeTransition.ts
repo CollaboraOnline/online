@@ -19,38 +19,37 @@ class RochadeTransitionImp extends SimpleTransition {
 
 	// TODO - remove code duplication
 	/* jscpd:ignore-start */
-	public displaySlides_(): void {
-		const t = this.time;
+	public displaySlides_(t: number): void {
 		this.applyAllOperation(t);
 
 		if (t < 0.5) {
 			this.displayPrimitive(
 				t,
 				this.gl.TEXTURE0,
-				0,
-				this.leavingPrimitives,
+				1,
+				this.enteringPrimitives,
 				'slideTexture',
 			);
 			this.displayPrimitive(
 				t,
 				this.gl.TEXTURE0,
-				1,
-				this.enteringPrimitives,
+				0,
+				this.leavingPrimitives,
 				'slideTexture',
 			);
 		} else {
 			this.displayPrimitive(
 				t,
 				this.gl.TEXTURE0,
-				1,
-				this.enteringPrimitives,
+				0,
+				this.leavingPrimitives,
 				'slideTexture',
 			);
 			this.displayPrimitive(
 				t,
 				this.gl.TEXTURE0,
-				0,
-				this.leavingPrimitives,
+				1,
+				this.enteringPrimitives,
 				'slideTexture',
 			);
 		}
@@ -146,7 +145,7 @@ function RochadeTransition(transitionParameters: TransitionParameters) {
 		allOperations: [],
 	};
 
-	return new SimpleTransition(newTransitionParameters);
+	return new RochadeTransitionImp(newTransitionParameters);
 }
 /* jscpd:ignore-end */
 
