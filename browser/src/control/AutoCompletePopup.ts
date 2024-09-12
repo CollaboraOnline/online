@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /*
- * AutoCompletePopup - base class for mention, auto complete and auto fill popup
+ * AutoCompletePopup - base class for mention, formula auto complete, auto fill popup and auto fill preview popup
  */
 
 /* global app */
