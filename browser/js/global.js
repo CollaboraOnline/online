@@ -273,6 +273,7 @@ class InitializerBase {
 		window.fullyLoadedAndReady = false;
 		window.addEventListener('load', function() {
 			window.fullyLoadedAndReady = true;
+			document.getElementById('initial-load-indicator').remove();
 		}, false);
 
 		this.initiateCoolParams();

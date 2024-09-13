@@ -1208,6 +1208,18 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	user-select: text;
 }
 
+.page-initial-loader
+{
+	border: 3px solid mediumpurple;
+	border-top: 3px solid greenyellow;
+	border-radius: 50%;
+	width: 10px;
+	height: 10px;
+	animation: spin 2s linear infinite;
+	margin: auto;
+	display: inline-block;
+}
+
 .progress-bar {
 	width: 100%;
 	height: 2px;
