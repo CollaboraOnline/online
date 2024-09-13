@@ -395,7 +395,6 @@ private:
 #endif
     }
 
-private:
     std::string _clientAddress;
     const int _fd;
 
@@ -473,7 +472,7 @@ public:
     // -----------------------------------------------------------------
     //            Interface for external MessageHandlers
     // -----------------------------------------------------------------
-public:
+
     void setMessageHandler(const std::shared_ptr<MessageHandlerInterface> &msgHandler)
     {
         _msgHandler = msgHandler;
@@ -1612,7 +1611,6 @@ protected:
         return _shutdownSignalled;
     }
 
-protected:
 #if ENABLE_DEBUG
     /// Return true and set errno to simulate an error
     bool simulateSocketError(bool read);
