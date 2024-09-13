@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-02 11:10+0200\n"
+"POT-Creation-Date: 2024-09-13 15:38+0200\n"
 "PO-Revision-Date: 2024-09-02 20:22+0000\n"
 "Last-Translator: SC <larcansal@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Translate Toolkit 3.6.0\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -27,8 +27,7 @@ msgstr "Collabora Office: LibreOffice, OpenOffice e mais"
 msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
-msgstr ""
-"Editor LibreOffice para MS Office, LibreOffice e documentos OpenOffice."
+msgstr "Editor LibreOffice para MS Office, LibreOffice e documentos OpenOffice."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:13-1
@@ -80,9 +79,9 @@ msgstr "Reportar problemas:"
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:35-1
 msgid ""
-"Use the bugtracker and attach any files that caused problems via <a "
-"href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
-"that anything you enter in the bugtracker will be public."
+"Use the bugtracker and attach any files that caused problems via <a href="
+"\"https://col.la/android\"> https://col.la/android</a>. Please note that "
+"anything you enter in the bugtracker will be public."
 msgstr ""
 "Utilize o bugtracker e anexe os ficheiros que causaram problemas em <a href="
 "\"https://col.la/android\"> https://col.la/android</a>. Tenha em atenção que "
