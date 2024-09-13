@@ -959,6 +959,40 @@ public class LOActivity extends AppCompatActivity {
     }
 
     /**
+     * Specialized function for Collabora Online, returns an array of length 2 where the first
+     * element is the clipboard's text content, and the second is the clipboard's HTML content. One
+     * or both of these may be null if the clipboard does not contain it.
+     */
+    @JavascriptInterface
+    public String[] readFromClipboard() {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+        ClipData clipboardData = clipboard.getPrimaryClip();
+
+        if (clipboardData == null) return new String[] { null, null };
+
+        ClipData.Item clipboardItem = clipboardData.getItemAt(0);
+
+        return new String[] { clipboardItem.getHtmlText(), clipboardItem.coerceToText(getApplicationContext()).toString() };
+    }
+
+    @JavascriptInterface
+    public void writeToClipboard(String plain, String html) {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+        ClipData.Item clipboardItem = new ClipData.Item(plain, html);
+
+        ClipDescription clipboardItemMetadata = new ClipDescription(plain, new String[] {
+                ClipDescription.MIMETYPE_TEXT_HTML,
+                ClipDescription.MIMETYPE_TEXT_HTML,
+        });
+
+        ClipData clipboardData = new ClipData(clipboardItemMetadata, clipboardItem);
+
+        clipboard.setPrimaryClip(clipboardData);
+    }
+
+    /**
      * Passing message the other way around - from Java to the FakeWebSocket in JS.
      */
     void callFakeWebsocketOnMessage(final String message) {

@@ -854,33 +854,40 @@ L.Clipboard = L.Class.extend({
 				});
 		}); };
 
-		const text = new ClipboardItem({
-			'text/plain': awaitPromise('text/plain', 'plain'),
-			'text/html': awaitPromise('text/html', 'html'),
-		});
-		let clipboard = navigator.clipboard;
-		if (L.Browser.cypressTest) {
-			clipboard = this._dummyClipboard;
-		}
+		if (window.ThisIsTheAndroidApp) {
+			window.COOLMessageHandler.writeToClipboard(
+				await awaitPromise('text/plain', 'plain'),
+				await awaitPromise('text/html', 'html'),
+			);
+		} else {
+			const text = new ClipboardItem({
+				'text/plain': awaitPromise('text/plain', 'plain'),
+				'text/html': awaitPromise('text/html', 'html'),
+			});
+			let clipboard = navigator.clipboard;
+			if (L.Browser.cypressTest) {
+				clipboard = this._dummyClipboard;
+			}
 
-		try {
-			await clipboard.write([text]);
-		} catch (error) {
-			window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
+			try {
+				await clipboard.write([text]);
+			} catch (error) {
+				window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
 
-			// Warn that the copy failed.
-			this._warnCopyPaste();
-			// Once broken, always broken.
-			L.Browser.clipboardApiAvailable = false;
-			window.prefs.set('clipboardApiAvailable', 'false');
-			// Prefetch selection, so next time copy will work with the keyboard.
-			app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
+				// Warn that the copy failed.
+				this._warnCopyPaste();
+				// Once broken, always broken.
+				L.Browser.clipboardApiAvailable = false;
+				window.prefs.set('clipboardApiAvailable', false);
+				// Prefetch selection, so next time copy will work with the keyboard.
+				app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
+			}
 		}
 	},
 
 	// Executes the navigator.clipboard.write() call, if it's available.
 	_navigatorClipboardWrite: function() {
-		if (!L.Browser.clipboardApiAvailable) {
+		if (!L.Browser.clipboardApiAvailable && !window.ThisIsTheAndroidApp) {
 			return false;
 		}
 
@@ -930,7 +937,27 @@ L.Clipboard = L.Class.extend({
 		let clipboardContents;
 
 		try {
-			clipboardContents = await clipboard.read();
+			if (window.ThisIsTheAndroidApp) {
+				const clipboardData /*: [string?, string?] */ = window.COOLMessageHandler.readFromClipboard();
+
+				const dataByMimeType = {};
+
+				if (clipboardData[0]) {
+					dataByMimeType['text/plain'] = clipboardData[0];
+				}
+
+				if (clipboardData[1]) {
+					dataByMimeType['text/html'] = clipboardData[1];
+				}
+
+				if (Object.keys(dataByMimeType).length === 0) {
+					clipboardContents = [];
+				} else {
+					clipboardContents = [ new ClipboardItem(dataByMimeType) ];
+				}
+			} else {
+				clipboardContents = await clipboard.read();
+			}
 		} catch (error) {
 			window.app.console.log(
 				'navigator.clipboard.read() failed: ' + error.message,
@@ -983,7 +1010,7 @@ L.Clipboard = L.Class.extend({
 
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead: function(isSpecial) {
-		if (!L.Browser.clipboardApiAvailable) {
+		if (!L.Browser.clipboardApiAvailable && !window.ThisIsTheAndroidApp) {
 			return false;
 		}
 
