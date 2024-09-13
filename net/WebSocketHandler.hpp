@@ -221,8 +221,9 @@ protected:
 
     void shutdown(bool goingAway, const std::string &statusMessage) override
     {
-        shutdown(goingAway ? WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY :
-                 WebSocketHandler::StatusCodes::NORMAL_CLOSE, statusMessage);
+        shutdownImpl(goingAway ? WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY :
+                     WebSocketHandler::StatusCodes::NORMAL_CLOSE, statusMessage,
+                     /*hardShutdown=*/ false, /*silentShutdown=*/ false);
     }
 
     void getIOStats(uint64_t &sent, uint64_t &recv) override
@@ -242,20 +243,36 @@ public:
                   const std::string& statusMessage = std::string(),
                   bool hardShutdown = false)
     {
+        shutdownImpl(statusCode, statusMessage, hardShutdown, false);
+    }
+
+private:
+    void shutdownSilent()
+    {
+        shutdownImpl(WebSocketHandler::StatusCodes::POLICY_VIOLATION /* ignored */,
+                     std::string(), true /* hard async shutdown & close */, true);
+    }
+
+    void shutdownImpl(const StatusCodes statusCode,
+                      const std::string& statusMessage,
+                      bool hardShutdown,
+                      bool silentShutdown)
+    {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
         {
-            LOGA_TRC(WebSocket, "Shutdown: Closing Connection");
-            if (!_shuttingDown)
+            const bool silent = _shuttingDown || silentShutdown;
+            LOGA_TRC(WebSocket, "Shutdown: Closing Connection " << (silent ? "(silent)" : "(coop)"));
+            if (!silent)
                 sendCloseFrame(statusCode, statusMessage);
-            socket->closeConnection();
+            socket->shutdown();
             socket->ignoreInput();
             assert(socket->getInBuffer().empty() &&
                    "Socket buffer must be empty after ignoreInput");
 
-            // force close after writing this message
+            // force close after writing this message (real shutdown)
             if (hardShutdown)
-                socket->shutdown();
+                socket->closeConnection();
         }
 
         _wsPayload.clear();
@@ -265,11 +282,12 @@ public:
         _shuttingDown = false;
     }
 
+public:
     /// Don't wait for the remote Websocket to handshake with us; go down fast.
     void shutdownAfterWriting()
     {
-        shutdown(WebSocketHandler::StatusCodes::NORMAL_CLOSE, std::string(),
-                 true /* hard async shutdown & close */);
+        shutdownImpl(WebSocketHandler::StatusCodes::NORMAL_CLOSE, std::string(),
+                     true /* hard async shutdown & close */, false);
     }
 
     /// Returns true if the underlying socket is connected.
