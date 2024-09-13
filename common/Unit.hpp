@@ -210,9 +210,19 @@ public:
     }
 
     /// Called when the document has been loaded,
-    /// based on the "status:" message, in the context of filterSendWebSocketMessage.
+    /// based on the "loaded:" message, in the context of filterSendWebSocketMessage.
     /// Return true to stop further handling of messages.
     virtual bool onDocumentLoaded(const std::string&) { return false; }
+
+    /// Called when a view has been loaded,
+    /// based on the "loaded:" message, in the context of filterSendWebSocketMessage.
+    /// Return true to stop further handling of messages.
+    virtual bool onViewLoaded(const std::string&) { return false; }
+
+    /// Called when a view has been unloaded,
+    /// based on the "unloaded:" message, in the context of filterSendWebSocketMessage.
+    /// Return true to stop further handling of messages.
+    virtual bool onViewUnloaded(const std::string&) { return false; }
 
     /// Called when the document's 'modified' status
     /// changes to true.
