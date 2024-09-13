@@ -1649,10 +1649,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._map.slideShowPresenter) {
 				this._map.slideShowPresenter.onSlideShowInfo(content);
 			}
-		} else if (textMsg.startsWith('presentationinfochanged:')) {
-			if (this._map.slideShowPresenter) {
-				this._map.slideShowPresenter.onSlideShowInfoChanged();
-			}
 		} else if (textMsg.startsWith('slidelayer:')) {
 			const content = JSON.parse(textMsg.substring('slidelayer:'.length + 1));
 			this._map.fire('slidelayer', {
