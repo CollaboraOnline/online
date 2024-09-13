@@ -1323,8 +1323,6 @@ public:
 
 protected:
 
-    std::vector<std::pair<size_t, size_t>> findChunks(Poco::Net::HTTPRequest &request);
-
     /// Called when a polling event is received.
     /// @events is the mask of events that triggered the wake.
     void handlePoll(SocketDisposition &disposition,
