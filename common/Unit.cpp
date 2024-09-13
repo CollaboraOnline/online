@@ -487,9 +487,23 @@ bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t le
             LOG_TST("Expected json unocommandresult. Ignoring: " << message);
         }
     }
-    else if (message.starts_with("status:"))
+    else if (message.starts_with("loaded:"))
     {
-        if (onDocumentLoaded(message))
+        if (message.find("isfirst=true") != std::string::npos)
+        {
+            // The Document loaded.
+            if (onDocumentLoaded(message))
+                return false;
+        }
+
+        // A view loaded.
+        if (onViewLoaded(message))
+            return false;
+    }
+    else if (message.starts_with("unloaded:"))
+    {
+        // A view unloaded.
+        if (onViewUnloaded(message))
             return false;
     }
     else if (message == "statechanged: .uno:ModifiedStatus=true")

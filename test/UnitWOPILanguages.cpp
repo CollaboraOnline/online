@@ -37,8 +37,8 @@ public:
         return nullptr;
     }
 
-    /// The document is loaded.
-    bool onDocumentLoaded(const std::string& message) override
+    /// A view loaded.
+    bool onViewLoaded(const std::string& message) override
     {
         LOG_TST("onDocumentLoaded #" << ++_loaded_count << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::Save);
@@ -129,8 +129,8 @@ public:
     {
     }
 
-    /// The document is loaded.
-    bool onDocumentLoaded(const std::string& message) override
+    /// A view is loaded.
+    bool onViewLoaded(const std::string& message) override
     {
         LOG_TST("onDocumentLoaded #" << ++_loaded_count << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::Load2);
@@ -256,8 +256,8 @@ public:
     {
     }
 
-    /// The document is loaded.
-    bool onDocumentLoaded(const std::string& message) override
+    /// A view is loaded.
+    bool onViewLoaded(const std::string& message) override
     {
         LOG_TST("onDocumentLoaded #" << ++_loaded_count << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::Load2);
