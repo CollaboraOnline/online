@@ -1447,12 +1447,6 @@ protected:
             disposition.setClosed();
     }
 
-    void handshakeFail()
-    {
-        if (_socketHandler)
-            _socketHandler->onHandshakeFail();
-    }
-
 public:
     /// Override to write data out to socket.
     /// Returns the last return from writeData.
@@ -1518,6 +1512,12 @@ public:
     void dumpState(std::ostream& os) override;
 
 protected:
+    void handshakeFail()
+    {
+        if (_socketHandler)
+            _socketHandler->onHandshakeFail();
+    }
+
     /// Reads data with file descriptors as control data if received.
     /// Can be used only with Unix sockets.
     int readFDs(char* buf, int len, std::vector<int>& fds)
