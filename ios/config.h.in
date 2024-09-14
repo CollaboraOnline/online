@@ -125,7 +125,11 @@
 #define STDC_HEADERS 1
 
 /* Makes config variables conditionally static, only in non-debug builds, to allow for overriding them in unit-tests. */
-#undef CONFIG_STATIC
+#ifdef ENABLE_DEBUG
+#define CONFIG_STATIC
+#else
+#define CONFIG_STATIC static
+#endif
 
 /* Version number of package */
 /* #undef VERSION */
