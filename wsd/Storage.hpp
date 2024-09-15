@@ -239,7 +239,7 @@ public:
             State,
             None, //< No async upload in progress or isn't supported.
             Running, //< An async upload request is in progress.
-            Error, //< Failed to make an async upload request or timed out, no UploadResult.
+            Error, //< Failed to make an async upload request or timed out, no TResult.
             Complete //< The last async upload request completed (regardless of the server's response).
         );
 
