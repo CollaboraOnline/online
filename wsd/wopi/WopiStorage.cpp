@@ -1044,13 +1044,29 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
             // Internal server error, and other failures.
             if (responseString.empty())
             {
-                responseString = "No response received. Connection terminated or timed-out.";
+                if (http::StatusLine(details.httpResponseCode).statusCategory() ==
+                    http::StatusLine::StatusCodeClass::Invalid)
+                {
+                    responseString = "No response received. Connection terminated or timed-out.";
+                }
+                else
+                {
+                    std::ostringstream oss;
+                    oss << details.httpResponseCode << ' ' << details.httpResponseReason;
+                    responseString = oss.str();
+                }
+            }
+            else
+            {
+                std::ostringstream oss;
+                oss << details.httpResponseCode << ' ' << details.httpResponseReason << " - "
+                    << responseString;
+                responseString = oss.str();
             }
 
             LOG_ERR("Unexpected response to "
                     << wopiLog << ". Cannot upload file to WOPI storage uri [" << details.uriAnonym
-                    << "]: " << details.httpResponseCode << ' ' << details.httpResponseReason
-                    << ": " << responseString);
+                    << "]: " << responseString);
             result.setResult(StorageBase::UploadResult::Result::FAILED);
 
             // If we cannot be sure whether we up-loaded successfully eg. we got
