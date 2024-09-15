@@ -28,7 +28,7 @@
  *
  * The way this works is as follows:
  * 1. Load a document.
- * 2. When we get 'status:' in onFilterSendWebSocketMessage, we modify it.
+ * 2. When we get onDocumentLoaded ('loaded:'), we modify it.
  * 3. Simulate content-change in storage and attempt to save it.
  *  4a. Disconnect and the modified data must be discarded.
  *  4b. Save and, on getting the documentconflict error, discard.
@@ -37,7 +37,6 @@
  * 5. Load the document again and verify the expected contents.
  * 6. Move to the next test scenario.
  */
-
 class WOPIUploadConflictCommon : public WopiTestServer
 {
 private:
@@ -50,7 +49,13 @@ protected:
     STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose) _phase;
 
     /// The different test scenarios. All but VerifyOverwrite modify the document.
-    STATE_ENUM(Scenario, Disconnect, SaveDiscard, CloseDiscard, SaveOverwrite, VerifyOverwrite)
+    /// See the documentation above.
+    STATE_ENUM(Scenario,
+               Disconnect, //< Scenario 4a.
+               SaveDiscard, //< Scenario 4b.
+               CloseDiscard, //< Scenario 4c.
+               SaveOverwrite, //< Scenario 4d.
+               VerifyOverwrite) //< Scenario 5.
     _scenario;
 
     static constexpr auto OriginalDocContent = "Original contents";
