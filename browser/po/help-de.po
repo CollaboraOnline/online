@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-13 15:38+0200\n"
-"PO-Revision-Date: 2024-08-31 06:09+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2024-09-13 14:13+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "help/de/>\n"
 "Language: de\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -51,13 +51,12 @@ msgid "Copy"
 msgstr "Kopieren"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
 "/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, <kbd>Strg</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Einfügen</kbd>"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, <br "
+"/><kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Einfügen</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
@@ -2191,14 +2190,12 @@ msgid "comment"
 msgstr "Kommentar"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
-#, fuzzy
 msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
-"Klicken Sie auf das Submenu (<span class=\"cool-annotation-menu\" style="
-"\"height:0.6cm;width:0.6cm;\"></span>) Ikone, um Kommentare zu beantworten, "
-"zu verschieben und zu löschen."
+"Klicken Sie auf das Submenu (<span class=\"cool-annotation-menu icon-size\""
+"></span>) Ikone, um Kommentare zu beantworten, zu verschieben und zu löschen."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
@@ -3185,15 +3182,14 @@ msgid "Select the text with the existing format"
 msgstr "Wählen Sie den Text mit dem vorhandenen Format aus"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
-"Klicken Sie auf das Symbol Formatierung übertragen <img style=\"height:0."
-"6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Der "
-"Mauszeiger verwandelt sich in einen Farbeimer."
+"Klicken Sie auf das Symbol Formatierung übertragen <img class=\"icon-size\" "
+"alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Der Mauszeiger verwandelt "
+"sich in einen Farbeimer."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
@@ -3320,14 +3316,13 @@ msgstr ""
 "mehr."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
 msgstr ""
-"Klicken Sie auf das Symbol Formatierung übertragen <img style=\"height:0."
-"6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Der "
-"Mauszeiger verwandelt sich in einen Farbeimer."
+"Klicken Sie auf das Symbol Formatierung übertragen <img class=\"icon-size\" "
+"src=\"images/lc_formatpaintbrush.svg\">. Der Mauszeiger verwandelt sich in "
+"einen Farbeimer."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
