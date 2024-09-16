@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app _ brandProductName $ ClipboardItem Promise GraphicSelection */
+/* global app _ brandProductName $ ClipboardItem GraphicSelection */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -37,10 +37,6 @@ L.Clipboard = L.Class.extend({
 		this._dummyDiv = div;
 		this._dummyPlainDiv = null;
 		this._dummyClipboard = {};
-
-		// Tracks waiting for UNO commands to complete
-		this._commandCompletion = [];
-		this._map.on('commandresult', this._onCommandResult, this);
 
 		div.setAttribute('id', this._dummyDivName);
 		div.style.userSelect = 'text !important';
@@ -865,90 +861,59 @@ L.Clipboard = L.Class.extend({
 		this.paste(ev);
 	},
 
-	// Gets status of a copy/paste command from the remote Kit
-        _onCommandResult: function(e) {
-                if (e.commandName === '.uno:Copy' || e.commandName === '.uno:Cut')
-		{
-			window.app.console.log('Resolve clipboard command promise ' + e.commandName);
-			const that = this;
-			while (that._commandCompletion.length > 0)
-			{
-				let a = that._commandCompletion.shift();
-				a.resolve(a.fetch.then(function(text) {
-					const content = that.parseClipboard(text)[a.shorttype];
-					const blob = new Blob([content], { 'type': a.mimetype });
-					console.log('Generate blob of type ' + a.mimetype + ' from ' +a.shorttype + ' text: ' +content);
-					return blob;
-				}));
-			}
-		}
-	},
+	_fetchingData: false,
 
 	// Executes the navigator.clipboard.write() call, if it's available.
 	_navigatorClipboardWrite: function() {
-		if (!L.Browser.hasNavigatorClipboardWrite) {
-			return false;
-		}
-
-		if (this._selectionType !== 'text') {
-			return false;
-		}
+		if (!L.Browser.hasNavigatorClipboardWrite) return false;
+		else if (this._selectionType !== 'text') return false;
 
 		const command = this._unoCommandForCopyCutPaste;
 		app.socket.sendMessage('uno ' + command);
 
-		// This is sent down the websocket URL which can race with the
-		// web fetch - so first step is to wait for the result of
-		// that command so we are sure the clipboard is set before
-		// fetching it.
+		if (this._fetchingData)
+			window.app.console.error('Already have pending clipboard command.');
 
-		const that = this;
+		this._fetchingData = true;
 
-		if (that._commandCompletion.length > 0)
-			window.app.console.error('Already have ' + that._commandCompletion.length +
-						 ' pending clipboard command(s)');
+		const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
 
-		const url = that.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
+		fetch(url).then(function(response) {
+			response.text().then(function(result) {
+				const clipboardObject = JSON.parse(result);
 
-		// Share a single fetch
-		var fetchPromise = new Promise((resolve, reject) => {
-			try {
-				var result = fetch(url).then(response => response.text());
-				resolve(result);
-			} catch (err) {
-				reject(err);
-			}
-		});
+				if (clipboardObject['text/plain'] === undefined && clipboardObject['text/plain;charset=utf-8'] !== undefined)
+					clipboardObject['text/plain'] = clipboardObject['text/plain;charset=utf-8'];
 
-		var awaitPromise = function(url, mimetype, shorttype) {
-			return new Promise((resolve, reject) => {
-				window.app.console.log('New ' + command + ' promise');
-				// FIXME: add a timeout cleanup too ...
-				that._commandCompletion.push({ fetch: fetchPromise, command: command,
-							       resolve: resolve, reject: reject,
-							       mimetype: mimetype, shorttype: shorttype});
-		}); };
+				if (!app.sectionContainer.testing)
+					clipboardObject['text/html'] = this.stripStyle(clipboardObject['text/html']);
 
-		const text = new ClipboardItem({
-			'text/html': awaitPromise(url, 'text/html', 'html'),
-			'text/plain': awaitPromise(url, 'text/plain', 'plain')
-		});
-		let clipboard = navigator.clipboard;
-		if (L.Browser.cypressTest) {
-			clipboard = this._dummyClipboard;
-		}
-		clipboard.write([text]).then(function() {
-		}, function(error) {
-			window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
+				const textPlain = new Blob([clipboardObject['text/plain']], { type: 'text/plain' });
+				const textHtml = new Blob([clipboardObject['text/html']], { type: 'text/html' });
+				const data = [new ClipboardItem({ ['text/plain']: textPlain, ['text/html']: textHtml })];
 
-			// Warn that the copy failed.
-			that._warnCopyPaste();
-			// Once broken, always broken.
-			L.Browser.hasNavigatorClipboardWrite = false;
-			window.prefs.set('hasNavigatorClipboardWrite', false);
-			// Prefetch selection, so next time copy will work with the keyboard.
-			app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
-		});
+				if (app.sectionContainer.testing) {
+					app.map._clip._dummyClipboard.write(data);
+				}
+				else {
+					navigator.clipboard.write(data).catch(error => {
+						window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
+
+						// Warn that the copy failed.
+						this._warnCopyPaste();
+
+						// Once broken, always broken.
+						L.Browser.hasNavigatorClipboardWrite = false;
+						window.prefs.set('hasNavigatorClipboardWrite', false);
+
+						// Prefetch selection, so next time copy will work with the keyboard.
+						app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
+					});
+				}
+
+				this._fetchingData = false;
+			}.bind(this));
+		}.bind(this));
 
 		return true;
 	},
