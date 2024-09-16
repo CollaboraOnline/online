@@ -80,9 +80,13 @@ protected:
     /// Sets the file content to a given value and update the last file modified time
     void setFileContent(const std::string& fileContent)
     {
-        LOG_TST("setFileContent: [" << COOLProtocol::getAbbreviatedMessage(fileContent ) << ']');
         _fileContent = fileContent;
+        const auto oldTime = _fileLastModifiedTime;
         _fileLastModifiedTime = std::chrono::system_clock::now();
+        LOG_TST("setFileContent at " << Util::getIso8601FracformatTime(getFileLastModifiedTime())
+                                     << ": [" << COOLProtocol::getAbbreviatedMessage(_fileContent)
+                                     << "], previous version was at "
+                                     << Util::getIso8601FracformatTime(oldTime));
     }
 
     const std::chrono::system_clock::time_point& getFileLastModifiedTime() const
