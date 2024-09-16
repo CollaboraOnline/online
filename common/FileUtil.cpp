@@ -171,7 +171,7 @@ namespace FileUtil
         return newTmp;
     }
 
-    std::string createTmpDir(std::string dirName, std::string root)
+    std::string createTmpDir(const std::string& dirName, std::string root)
     {
         if (root.empty())
             root = getSysTempDirectoryPath();
