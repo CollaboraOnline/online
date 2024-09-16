@@ -4,17 +4,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-13 15:38+0200\n"
+"POT-Creation-Date: 2024-09-16 14:25+0200\n"
 "PO-Revision-Date: 2024-09-16 10:51+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: sl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.8-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -290,8 +290,8 @@ msgstr "Strežnik je izklopljen; prosimo, ponovno naložite stran."
 #: src/slideshow/SlideShowPresenter.ts:639 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
-#: src/canvas/sections/CommentListSection.ts:1258
-#: src/canvas/sections/CommentListSection.ts:2108 src/main.js:84
+#: src/canvas/sections/CommentListSection.ts:1274
+#: src/canvas/sections/CommentListSection.ts:2134 src/main.js:84
 #: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1226
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:167 src/map/handler/Map.SlideShow.js:282
@@ -685,7 +685,7 @@ msgstr "odgovorov"
 #: src/control/Control.JSDialogBuilder.js:1929
 #: src/layer/tile/CanvasTileLayer.js:3782
 #: src/layer/tile/CanvasTileLayer.js:3793
-#: src/canvas/sections/CommentListSection.ts:1044
+#: src/canvas/sections/CommentListSection.ts:1060
 msgid "Comment"
 msgstr "Komentar"
 
@@ -2507,7 +2507,7 @@ msgstr "Uspešno izvoženo: "
 msgid "Discard"
 msgstr "Zavrzi"
 
-#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1271
+#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1287
 msgid "Overwrite"
 msgstr "Prepiši"
 
@@ -2829,66 +2829,70 @@ msgstr "Komentar je sredi urejanja"
 msgid "Please save or discard the comment currently being edited."
 msgstr "Shranite ali opustite komentar, ki se trenutno ureja."
 
-#: src/canvas/sections/CommentListSection.ts:986
+#: src/canvas/sections/CommentListSection.ts:996
 msgid "Modify"
 msgstr "Spremeni"
 
-#: src/canvas/sections/CommentListSection.ts:992
+#: src/canvas/sections/CommentListSection.ts:1002
 #: src/canvas/sections/CommentSection.ts:152
 msgid "Reply"
 msgstr "Odgovori"
 
-#: src/canvas/sections/CommentListSection.ts:998
+#: src/canvas/sections/CommentListSection.ts:1008
 msgid "Remove"
 msgstr "Odstrani"
 
-#: src/canvas/sections/CommentListSection.ts:1004
+#: src/canvas/sections/CommentListSection.ts:1014
 msgid "Remove Thread"
 msgstr "Odstrani nit"
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1020
 msgid "Resolve"
 msgstr "Razreši"
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1020
 msgid "Unresolve"
 msgstr "Prekliči razrešitev"
 
-#: src/canvas/sections/CommentListSection.ts:1016
+#: src/canvas/sections/CommentListSection.ts:1026
 msgid "Unresolve Thread"
 msgstr "Prekliči razrešitev niti"
 
-#: src/canvas/sections/CommentListSection.ts:1016
+#: src/canvas/sections/CommentListSection.ts:1026
 msgid "Resolve Thread"
 msgstr "Razreši nit"
 
-#: src/canvas/sections/CommentListSection.ts:1256
-#: src/canvas/sections/CommentListSection.ts:1269
-#: src/canvas/sections/CommentListSection.ts:2106
+#: src/canvas/sections/CommentListSection.ts:1032
+msgid "Promote to top comment"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1272
+#: src/canvas/sections/CommentListSection.ts:1285
+#: src/canvas/sections/CommentListSection.ts:2132
 msgid "Comments Updated"
 msgstr "Komentarji posodobljeni"
 
-#: src/canvas/sections/CommentListSection.ts:1257
+#: src/canvas/sections/CommentListSection.ts:1273
 msgid "Another user has removed this comment."
 msgstr "Drug uporabnik je odstranil ta komentar."
 
-#: src/canvas/sections/CommentListSection.ts:1270
+#: src/canvas/sections/CommentListSection.ts:1286
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
 "Drug uporabnik je posodobil ta komentar. Ali želite prepisati te spremembe?"
 
-#: src/canvas/sections/CommentListSection.ts:1272
+#: src/canvas/sections/CommentListSection.ts:1288
 msgid "Update"
 msgstr "Posodobi"
 
-#: src/canvas/sections/CommentListSection.ts:1343
-#: src/canvas/sections/CommentListSection.ts:1405
+#: src/canvas/sections/CommentListSection.ts:1359
+#: src/canvas/sections/CommentListSection.ts:1431
 msgid "Autosaved"
 msgstr "Samodejno shranjeno"
 
-#: src/canvas/sections/CommentListSection.ts:2107
+#: src/canvas/sections/CommentListSection.ts:2133
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 "Drugi uporabnik je posodobil komentarje. Ali želite nadaljevati s "

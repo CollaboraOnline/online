@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-13 15:38+0200\n"
+"POT-Creation-Date: 2024-09-16 14:25+0200\n"
 "PO-Revision-Date: 2024-09-02 13:58+0000\n"
 "Last-Translator: Mike Kaganski <mikekaganski@hotmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
@@ -293,8 +293,8 @@ msgstr "Сервер был выключен; пожалуйста, переза
 #: src/slideshow/SlideShowPresenter.ts:639 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
-#: src/canvas/sections/CommentListSection.ts:1258
-#: src/canvas/sections/CommentListSection.ts:2108 src/main.js:84
+#: src/canvas/sections/CommentListSection.ts:1274
+#: src/canvas/sections/CommentListSection.ts:2134 src/main.js:84
 #: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1226
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:167 src/map/handler/Map.SlideShow.js:282
@@ -689,7 +689,7 @@ msgstr "ответы"
 #: src/control/Control.JSDialogBuilder.js:1929
 #: src/layer/tile/CanvasTileLayer.js:3782
 #: src/layer/tile/CanvasTileLayer.js:3793
-#: src/canvas/sections/CommentListSection.ts:1044
+#: src/canvas/sections/CommentListSection.ts:1060
 msgid "Comment"
 msgstr "Примечание"
 
@@ -2509,7 +2509,7 @@ msgstr "Успешно экспортировано: "
 msgid "Discard"
 msgstr "Отклонить"
 
-#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1271
+#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1287
 msgid "Overwrite"
 msgstr "Перезаписать"
 
@@ -2831,50 +2831,54 @@ msgid "Please save or discard the comment currently being edited."
 msgstr ""
 "Пожалуйста, сохраните или отмените изменения редактируемых комментариев."
 
-#: src/canvas/sections/CommentListSection.ts:986
+#: src/canvas/sections/CommentListSection.ts:996
 msgid "Modify"
 msgstr "Изменить"
 
-#: src/canvas/sections/CommentListSection.ts:992
+#: src/canvas/sections/CommentListSection.ts:1002
 #: src/canvas/sections/CommentSection.ts:152
 msgid "Reply"
 msgstr "Ответ"
 
-#: src/canvas/sections/CommentListSection.ts:998
+#: src/canvas/sections/CommentListSection.ts:1008
 msgid "Remove"
 msgstr "Удалить"
 
-#: src/canvas/sections/CommentListSection.ts:1004
+#: src/canvas/sections/CommentListSection.ts:1014
 msgid "Remove Thread"
 msgstr "Удалить обсуждение"
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1020
 msgid "Resolve"
 msgstr "Решено"
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1020
 msgid "Unresolve"
 msgstr "Удалить пометку \"Решено\""
 
-#: src/canvas/sections/CommentListSection.ts:1016
+#: src/canvas/sections/CommentListSection.ts:1026
 msgid "Unresolve Thread"
 msgstr "Удалить пометку \"Решено\" с обсуждения"
 
-#: src/canvas/sections/CommentListSection.ts:1016
+#: src/canvas/sections/CommentListSection.ts:1026
 msgid "Resolve Thread"
 msgstr "Обсуждение решено"
 
-#: src/canvas/sections/CommentListSection.ts:1256
-#: src/canvas/sections/CommentListSection.ts:1269
-#: src/canvas/sections/CommentListSection.ts:2106
+#: src/canvas/sections/CommentListSection.ts:1032
+msgid "Promote to top comment"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1272
+#: src/canvas/sections/CommentListSection.ts:1285
+#: src/canvas/sections/CommentListSection.ts:2132
 msgid "Comments Updated"
 msgstr "Комментарии обновлены"
 
-#: src/canvas/sections/CommentListSection.ts:1257
+#: src/canvas/sections/CommentListSection.ts:1273
 msgid "Another user has removed this comment."
 msgstr "Другой пользователь удалил этот комментарий."
 
-#: src/canvas/sections/CommentListSection.ts:1270
+#: src/canvas/sections/CommentListSection.ts:1286
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
@@ -2882,16 +2886,16 @@ msgstr ""
 "Другой пользователь обновил этот комментарий. Вы хотите перезаписать его "
 "изменения?"
 
-#: src/canvas/sections/CommentListSection.ts:1272
+#: src/canvas/sections/CommentListSection.ts:1288
 msgid "Update"
 msgstr "Обновить"
 
-#: src/canvas/sections/CommentListSection.ts:1343
-#: src/canvas/sections/CommentListSection.ts:1405
+#: src/canvas/sections/CommentListSection.ts:1359
+#: src/canvas/sections/CommentListSection.ts:1431
 msgid "Autosaved"
 msgstr "Автоматически сохранён"
 
-#: src/canvas/sections/CommentListSection.ts:2107
+#: src/canvas/sections/CommentListSection.ts:2133
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 "Другой пользователь обновил комментарии. Вы хотите продолжить обновление?"

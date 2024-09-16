@@ -12,18 +12,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-13 15:38+0200\n"
+"POT-Creation-Date: 2024-09-16 14:25+0200\n"
 "PO-Revision-Date: 2024-09-13 23:21+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: pl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
-"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
-"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
@@ -293,8 +293,8 @@ msgstr "Serwer został wyłączony, załaduj ponownie stronę."
 #: src/slideshow/SlideShowPresenter.ts:639 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
-#: src/canvas/sections/CommentListSection.ts:1258
-#: src/canvas/sections/CommentListSection.ts:2108 src/main.js:84
+#: src/canvas/sections/CommentListSection.ts:1274
+#: src/canvas/sections/CommentListSection.ts:2134 src/main.js:84
 #: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1226
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:167 src/map/handler/Map.SlideShow.js:282
@@ -686,7 +686,7 @@ msgstr "odpowiedzi"
 #: src/control/Control.JSDialogBuilder.js:1929
 #: src/layer/tile/CanvasTileLayer.js:3782
 #: src/layer/tile/CanvasTileLayer.js:3793
-#: src/canvas/sections/CommentListSection.ts:1044
+#: src/canvas/sections/CommentListSection.ts:1060
 msgid "Comment"
 msgstr "Komentarz"
 
@@ -2511,7 +2511,7 @@ msgstr "Pomyślnie wyeksportowano: "
 msgid "Discard"
 msgstr "Odrzuć"
 
-#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1271
+#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1287
 msgid "Overwrite"
 msgstr "Zastąp"
 
@@ -2836,65 +2836,69 @@ msgstr "Trwa edytowanie komentarza"
 msgid "Please save or discard the comment currently being edited."
 msgstr "Zapisz lub odrzuć aktualnie edytowany komentarz."
 
-#: src/canvas/sections/CommentListSection.ts:986
+#: src/canvas/sections/CommentListSection.ts:996
 msgid "Modify"
 msgstr "Modyfikuj"
 
-#: src/canvas/sections/CommentListSection.ts:992
+#: src/canvas/sections/CommentListSection.ts:1002
 #: src/canvas/sections/CommentSection.ts:152
 msgid "Reply"
 msgstr "Odpowiedz"
 
-#: src/canvas/sections/CommentListSection.ts:998
+#: src/canvas/sections/CommentListSection.ts:1008
 msgid "Remove"
 msgstr "Usuń"
 
-#: src/canvas/sections/CommentListSection.ts:1004
+#: src/canvas/sections/CommentListSection.ts:1014
 msgid "Remove Thread"
 msgstr "Usuń wątek"
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1020
 msgid "Resolve"
 msgstr "Rozwiąż"
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1020
 msgid "Unresolve"
 msgstr "Odwróć rozwiązanie"
 
-#: src/canvas/sections/CommentListSection.ts:1016
+#: src/canvas/sections/CommentListSection.ts:1026
 msgid "Unresolve Thread"
 msgstr "Odwróć rozwiązanie wątku"
 
-#: src/canvas/sections/CommentListSection.ts:1016
+#: src/canvas/sections/CommentListSection.ts:1026
 msgid "Resolve Thread"
 msgstr "Rozwiąż wątek"
 
-#: src/canvas/sections/CommentListSection.ts:1256
-#: src/canvas/sections/CommentListSection.ts:1269
-#: src/canvas/sections/CommentListSection.ts:2106
+#: src/canvas/sections/CommentListSection.ts:1032
+msgid "Promote to top comment"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1272
+#: src/canvas/sections/CommentListSection.ts:1285
+#: src/canvas/sections/CommentListSection.ts:2132
 msgid "Comments Updated"
 msgstr "Komentarze zaktualizowano"
 
-#: src/canvas/sections/CommentListSection.ts:1257
+#: src/canvas/sections/CommentListSection.ts:1273
 msgid "Another user has removed this comment."
 msgstr "Inny użytkownik usunął ten komentarz."
 
-#: src/canvas/sections/CommentListSection.ts:1270
+#: src/canvas/sections/CommentListSection.ts:1286
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr "Inny użytkownik zaktualizował komentarz. Czy chcesz zastąpić te zmiany?"
 
-#: src/canvas/sections/CommentListSection.ts:1272
+#: src/canvas/sections/CommentListSection.ts:1288
 msgid "Update"
 msgstr "Zaktualizuj"
 
-#: src/canvas/sections/CommentListSection.ts:1343
-#: src/canvas/sections/CommentListSection.ts:1405
+#: src/canvas/sections/CommentListSection.ts:1359
+#: src/canvas/sections/CommentListSection.ts:1431
 msgid "Autosaved"
 msgstr "Automatycznie zapisano"
 
-#: src/canvas/sections/CommentListSection.ts:2107
+#: src/canvas/sections/CommentListSection.ts:2133
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 "Inny użytkownik zaktualizował komentarze. Czy chcesz kontynuować "
