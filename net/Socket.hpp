@@ -164,15 +164,8 @@ public:
     /// Returns true if this socket has been closed, i.e. rejected from polling and potentially shutdown
     bool isClosed() const { return !_open; }
 
-    void setClientAddress(const std::string& address)
-    {
-        _clientAddress = address;
-    }
-
-    const std::string& clientAddress() const
-    {
-        return _clientAddress;
-    }
+    void setClientAddress(const std::string& address) { _clientAddress = address; }
+    const std::string& clientAddress() const { return _clientAddress; }
 
     /// Returns the OS native socket fd.
     int getFD() const { return _fd; }
