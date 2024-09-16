@@ -2,7 +2,9 @@ FROM ubuntu:24.04 AS builder
 
 ENV CORE_ASSETS https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-24.04-assets.tar.gz
 ENV BUILDDIR /build
-ENV ONLINE_EXTRA_BUILD_OPTIONS --enable-experimental
+ENV ONLINE_EXTRA_BUILD_OPTIONS --enable-experimental --disable-werror
+ENV COLLABORA_ONLINE_REPO https://github.com/Rash419/online.git
+ENV COLLABORA_ONLINE_BRANCH live-cluster-upgrading
 
 WORKDIR /build
 

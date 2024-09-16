@@ -11,8 +11,11 @@
 
 #pragma once
 
+#include <Poco/MemoryStream.h>
+#include <cstddef>
 #include <fcntl.h>
 #include <ios>
+#include <iosfwd>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -680,6 +683,22 @@ public:
                 return iss->gcount();
             },
             body.size());
+    }
+
+    void setBody(Poco::MemoryInputStream& message)
+    {
+        std::streampos currentPos = message.tellg();
+        message.seekg(0, std::ios::end);
+        size_t bodySize = message.tellg();
+        message.seekg(currentPos);
+
+        setBodySource(
+            [&message](char* buf, int64_t len) -> int64_t
+            {
+                message.read(buf, len);
+                return message.gcount();
+            },
+            bodySize);
     }
 
     Stage stage() const { return _stage; }

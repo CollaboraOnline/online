@@ -15,6 +15,8 @@
 
 #include "net/WebSocketHandler.hpp"
 #include "COOLWSD.hpp"
+#include <string>
+#include <vector>
 
 class Admin;
 
@@ -187,6 +189,14 @@ public:
 
     void setCloseMonitorFlag() { _closeMonitor = true; }
 
+    void setRollingUpdateInfo(const std::string& jsonString);
+
+    void setRollingUpdateStatus(bool status) { _rollingUpdateStatus = status; }
+
+    bool getRollingUpdateStatus() { return _rollingUpdateStatus; }
+
+    std::string getBuddyServer(const std::string& gitHash);
+
 private:
     /// Notify Forkit of changed settings.
     void notifyForkit();
@@ -254,6 +264,30 @@ private:
     std::map<std::string, std::shared_ptr<MonitorSocketHandler>> _monitorSockets;
 
     std::atomic<bool> _closeMonitor = false;
+
+    class RollingUpdateServerInfo
+    {
+    public:
+        std::string getGitHash() { return _gitHash; }
+        std::string getServerId() { return _serverId; }
+        std::string getRouteToken() { return _routeToken; }
+
+        RollingUpdateServerInfo(const std::string& gitHash, const std::string& serverId,
+                                const std::string& routeToken)
+            : _gitHash(gitHash)
+            , _serverId(serverId)
+            , _routeToken(routeToken)
+        {
+        }
+
+    private:
+        std::string _gitHash;
+        std::string _serverId;
+        std::string _routeToken;
+    };
+
+    std::map<std::string, RollingUpdateServerInfo> _rollingUpdateInfo;
+    std::atomic<bool> _rollingUpdateStatus;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

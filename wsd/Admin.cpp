@@ -9,10 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <Poco/JSON/Array.h>
+#include <Poco/JSON/Object.h>
 #include <config.h>
 
 #include <chrono>
+#include <cstddef>
 #include <iomanip>
+#include <string>
 #include <sys/poll.h>
 #include <unistd.h>
 
@@ -41,7 +45,6 @@
 
 using namespace COOLProtocol;
 
-using Poco::Net::HTTPResponse;
 using Poco::Util::Application;
 
 const int Admin::MinStatsIntervalMs = 50;
@@ -417,6 +420,10 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     else if(tokens.equals(0, "closemonitor"))
     {
        _admin->setCloseMonitorFlag();
+    }
+    else if (tokens.equals(0, "rollingupdate") && tokens.size() > 1)
+    {
+        _admin->setRollingUpdateInfo(tokens[1]);
     }
 }
 
@@ -1305,6 +1312,48 @@ void Admin::deleteMonitorSocket(const std::string& uriWithoutParam)
     {
         _monitorSockets.erase(uriWithoutParam);
     }
+}
+
+void Admin::setRollingUpdateInfo(const std::string& jsonString)
+{
+    Poco::JSON::Object::Ptr object;
+    if (JsonUtil::parseJSON(jsonString, object))
+    {
+        bool status = JsonUtil::getJSONValue<bool>(object, "inprogress");
+        setRollingUpdateStatus(status);
+        Poco::JSON::Array::Ptr infoArray = object->getArray("serverinfo");
+        if (!infoArray.isNull())
+        {
+            for(size_t i=0; i < infoArray->size(); i++)
+            {
+                if (!infoArray->isObject(i))
+                {
+                    return;
+                }
+                const auto serverInfoObject = infoArray->getObject(i);
+                const std::string gitHash = JsonUtil::getJSONValue<std::string>(serverInfoObject , "gitHash");
+                const std::string serverId = JsonUtil::getJSONValue<std::string>(serverInfoObject, "serverId");
+                const std::string routeToken = JsonUtil::getJSONValue<std::string>(serverInfoObject, "routeToken");
+                _rollingUpdateInfo.insert_or_assign(gitHash, RollingUpdateServerInfo(gitHash, serverId, routeToken));
+            }
+        }
+    }
+}
+
+std::string Admin::getBuddyServer(const std::string& gitHash)
+{
+    LOG_DBG("Getting routeToken for gitHash[" << gitHash << ']');
+    for (auto iterator : _rollingUpdateInfo)
+    {
+        LOG_DBG("gitHash[" << iterator.first << "] routeToken[" << iterator.second.getRouteToken()
+                           << "] serverId[" << iterator.second.getServerId() << ']');
+    }
+    auto iterator = _rollingUpdateInfo.find(gitHash);
+    if (iterator != _rollingUpdateInfo.end())
+    {
+        return iterator->second.getRouteToken();
+    }
+    return std::string();
 }
 
 void Admin::stop()
