@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-13 15:38+0200\n"
-"PO-Revision-Date: 2024-08-27 04:38+0000\n"
+"PO-Revision-Date: 2024-09-14 23:35+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "help/tr/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -51,13 +51,12 @@ msgid "Copy"
 msgstr "Kopyala"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
 "/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
+"/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
@@ -1670,6 +1669,11 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">Menü çubuğu:</span> Ana menü en üstte yer alır ve birçok "
+"seçenek, yazdırma, düzenleme, görüntüleme ve diğer gelişmiş komutlar için "
+"araçlar içerir. En sağdaki <span class=\"w2ui-icon fold icon-size\"></span> "
+"simgesine tıklayarak menü çubuğunu gizleyebilirsiniz. Menüyü göstermek için "
+"<span class=\"w2ui-icon unfold icon-size\"></span> simgesine tıklayın."
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
@@ -2122,14 +2126,12 @@ msgid "comment"
 msgstr "açıklama"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
-#, fuzzy
 msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
 "Açıklamaları cevaplamak, taşınmak ve silmek için alt menü (<span class"
-"=\"cool-annotation-menu\" style=\"height:0.6cm;width:0.6cm;\"></span>) "
-"simgesine tıklayın."
+"=\"cool-annotation-menu icon-size\"></span>) simgesine tıklayın."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
@@ -3081,15 +3083,14 @@ msgid "Select the text with the existing format"
 msgstr "Mevcut biçime sahip metni seçin"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
-"<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/ "
-"c_formatpaintbrush.svg\"> Çoğalt biçimlendirme simgesini tıklayın. Fare "
-"işaretçisi bir boya kovasına dönüşür."
+"<img class=\"icon-size\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\"> "
+"çoğalt biçimlendirme simgesini tıklayın. Fare işaretçisi bir boya kovasına "
+"dönüşür."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
@@ -3208,14 +3209,12 @@ msgstr ""
 "Kaynak hücreyi yazı tipi, renkli arka plan ve daha fazlasıyla biçimlendirin."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
 msgstr ""
-"<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/ "
-"c_formatpaintbrush.svg\"> Çoğalt biçimlendirme simgesini tıklayın. Fare "
-"işaretçisi bir boya kovasına dönüşür."
+"<img class=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\"> çoğalt "
+"biçimlendirme simgesini tıklayın. Fare işaretçisi bir boya kovasına dönüşür."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
