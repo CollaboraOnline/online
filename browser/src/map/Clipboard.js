@@ -1214,20 +1214,58 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_warnCopyPaste: function() {
-		var msg;
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			msg = _('<p>Please use the paste buttons on your on-screen keyboard.</p>');
-		} else {
-			msg = _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:</p><table class="warn-copy-paste"><tr><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd></td></tr><tr><td>Copy</td><td>Cut</td><td>Paste</td></tr></table>');
-			msg = L.Util.replaceCtrlAltInMac(msg);
-		}
-
 		var id = 'copy_paste_warning';
 		this._map.uiManager.showYesNoButton(id + '-box', '', '', _('OK'), null, null, null, true);
 		var box = document.getElementById(id + '-box');
 		var innerDiv = L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
-		innerDiv.innerHTML = msg;
+
+		if (window.mode.isMobile() || window.mode.isTablet()) {
+			const p = document.createElement('p');
+			p.textContent = _('Please use the paste buttons on your on-screen keyboard.');
+			innerDiv.appendChild(p);
+		}
+		else {
+			const ctrlText = L.Util.replaceCtrlAltInMac('Ctrl');
+			const p = document.createElement('p');
+			p.textContent = 'Your browser has very limited access to the clipboard, so use these keyboard shortcuts:';
+			innerDiv.appendChild(p);
+
+			const table = document.createElement('table');
+			table.className = 'warn-copy-paste';
+			innerDiv.appendChild(table);
+
+			let row = document.createElement('tr');
+			table.appendChild(row);
+
+			// Add three cells for copy & cut & paste.
+			for (let i = 0; i < 3; i++) {
+				const cell = document.createElement('td');
+				row.appendChild(cell);
+
+				let kbd = document.createElement('kbd');
+				kbd.textContent = ctrlText;
+				cell.appendChild(kbd);
+
+				const span = document.createElement('span');
+				span.textContent = '+';
+				span.className = 'kbd--plus';
+				cell.appendChild(span);
+
+				kbd = document.createElement('kbd');
+				kbd.textContent = i === 0 ? 'C': (i === 1 ? 'X': 'V');
+				cell.appendChild(kbd);
+			}
+
+			// Add table headers as second row.
+			row = document.createElement('tr');
+			table.appendChild(row);
+			for (let i = 0; i < 3; i++) {
+				const cell = document.createElement('td');
+				cell.textContent = i === 0 ? 'Copy': (i === 1 ? 'Cut': 'Paste');
+				row.appendChild(cell);
+			}
+		}
 	},
 
 	_substProductName: function (msg) {
