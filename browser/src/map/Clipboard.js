@@ -346,7 +346,7 @@ L.Clipboard = L.Class.extend({
 					function(progress) { return 50 + progress/2; },
 				);
 			} catch (_error) {
-				that.dataTransferToDocumentFallback(null, fallbackHtml);
+				await that.dataTransferToDocumentFallback(null, fallbackHtml);
 			}
 			return;
 		}
@@ -406,6 +406,7 @@ L.Clipboard = L.Class.extend({
 
 	// Returns true if it finished synchronously, and false if it have started an async operation
 	// that will likely end at a later time (required to avoid closing progress bar in paste(ev))
+	// FIXME: This comment is a lie if dataTransferToDocumentFallback is called, as it calls _doAsyncDownload
 	dataTransferToDocument: function (dataTransfer, preferInternal, htmlText, usePasteKeyEvent) {
 		// Look for our HTML meta magic.
 		//   cf. ClientSession.cpp /textselectioncontent:/
@@ -437,8 +438,7 @@ L.Clipboard = L.Class.extend({
 		return true;
 	},
 
-	dataTransferToDocumentFallback: function(dataTransfer, htmlText, usePasteKeyEvent) {
-
+	dataTransferToDocumentFallback: async function(dataTransfer, htmlText, usePasteKeyEvent) {
 		var content;
 		if (dataTransfer) {
 			// Suck HTML content out of dataTransfer now while it feels like working.
@@ -490,14 +490,11 @@ L.Clipboard = L.Class.extend({
 			formData.append('file', content);
 
 			var that = this;
-			this._doAsyncDownload('POST', this.getMetaURL(), formData, false,
+			await this._doAsyncDownload('POST', this.getMetaURL(), formData, false,
 				function(progress) { return progress; }
-			).then(
-				function() {
-					window.app.console.log('Posted ' + content.size + ' bytes successfully');
-					that._doInternalPaste(that._map, usePasteKeyEvent);
-				},
 			);
+			window.app.console.log('Posted ' + content.size + ' bytes successfully');
+			that._doInternalPaste(that._map, usePasteKeyEvent);
 		} else {
 			window.app.console.log('Nothing we can paste on the clipboard');
 		}
