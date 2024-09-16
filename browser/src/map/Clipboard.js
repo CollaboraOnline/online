@@ -340,14 +340,14 @@ L.Clipboard = L.Class.extend({
 				commandName: commandName,
 			});
 			formData.append('data', new Blob([data]), 'clipboard');
-			that._doAsyncDownload(
-				'POST', dest, formData, false,
-				function(progress) { return 50 + progress/2; },
-			).catch(
-				function() {
-					that.dataTransferToDocumentFallback(null, fallbackHtml);
-				}
-			);
+			try {
+				await that._doAsyncDownload(
+					'POST', dest, formData, false,
+					function(progress) { return 50 + progress/2; },
+				);
+			} catch (_error) {
+				that.dataTransferToDocumentFallback(null, fallbackHtml);
+			}
 			return;
 		}
 
@@ -355,21 +355,18 @@ L.Clipboard = L.Class.extend({
 		var formData = new FormData();
 		formData.append('data', response, 'clipboard');
 
-		that._doAsyncDownload(
+		await that._doAsyncDownload(
 			'POST', dest, formData, false,
 			function(progress) { return 50 + progress/2; }
-		).then(
-			function() {
-				if (that._checkAndDisablePasteSpecial()) {
-					window.app.console.log('up-load done, now paste special');
-					app.socket.sendMessage('uno .uno:PasteSpecial');
-				} else {
-					window.app.console.log('up-load done, now paste');
-					app.socket.sendMessage('uno .uno:Paste');
-				}
-
-			}.bind(this),
 		);
+
+		if (that._checkAndDisablePasteSpecial()) {
+			window.app.console.log('up-load done, now paste special');
+			app.socket.sendMessage('uno .uno:PasteSpecial');
+		} else {
+			window.app.console.log('up-load done, now paste');
+			app.socket.sendMessage('uno .uno:Paste');
+		}
 	},
 
 	_onImageLoadFunc: function (file) {
