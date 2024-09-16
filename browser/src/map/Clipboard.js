@@ -861,8 +861,13 @@ L.Clipboard = L.Class.extend({
 			return false;
 		}
 
+		this._asyncAttemptNavigatorClipboardWrite();
+		return true;
+	},
+
+	_asyncAttemptNavigatorClipboardWrite: async function() {
 		const command = this._unoCommandForCopyCutPaste;
-		const commandCompletion = this._sendCommandAndWaitForCompletion(command);
+		await this._sendCommandAndWaitForCompletion(command);
 
 		// This is sent down the websocket URL which can race with the
 		// web fetch - so first step is to wait for the result of
@@ -873,25 +878,21 @@ L.Clipboard = L.Class.extend({
 
 		const url = that.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
 
-		// TODO: Share a single fetch
-		var awaitPromise = function(url, mimetype, shorttype) {
-			return new Promise(async (resolve, reject) => {
-				await commandCompletion;
-				var result = await fetch(url);
-				var text = await result.text();
-				resolve(_parseClipboardFetchResult(text, mimetype, shorttype));
-		}); };
+		var result = await fetch(url);
+		var text = await result.text();
 
-		const text = new ClipboardItem({
-			'text/html': awaitPromise(url, 'text/html', 'html'),
-			'text/plain': awaitPromise(url, 'text/plain', 'plain')
+		const clipboardItem = new ClipboardItem({
+			'text/html': this._parseClipboardFetchResult(text, 'text/html', 'html'),
+			'text/plain': this._parseClipboardFetchResult(text, 'text/plain', 'plain')
 		});
 		let clipboard = navigator.clipboard;
 		if (L.Browser.cypressTest) {
 			clipboard = this._dummyClipboard;
 		}
-		clipboard.write([text]).then(function() {
-		}, function(error) {
+
+		try {
+			await clipboard.write([clipboardItem]);
+		} catch (error) {
 			window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
 
 			// Warn that the copy failed.
@@ -901,9 +902,7 @@ L.Clipboard = L.Class.extend({
 			window.prefs.set('clipboardApiAvailable', 'false');
 			// Prefetch selection, so next time copy will work with the keyboard.
 			app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
-		});
-
-		return true;
+		}
 	},
 
 	// Parses the result from the clipboard endpoint into HTML and plain text.
