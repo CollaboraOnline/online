@@ -55,27 +55,34 @@ private:
 
     static bool allowConvertTo(const std::string& address, const Poco::Net::HTTPRequest& request, AsyncFn asyncCb);
 
-    void handleRootRequest(const RequestDetails& requestDetails,
+    /// @return true if request has been handled synchronously and response sent, otherwise false
+    bool handleRootRequest(const RequestDetails& requestDetails,
                            const std::shared_ptr<StreamSocket>& socket);
 
-    static void handleFaviconRequest(const RequestDetails& requestDetails,
+    /// @return true if request has been handled synchronously and response sent, otherwise false
+    static bool handleFaviconRequest(const RequestDetails& requestDetails,
                                      const std::shared_ptr<StreamSocket>& socket);
 
-    void handleWopiDiscoveryRequest(const RequestDetails& requestDetails,
+    /// @return true if request has been handled synchronously and response sent, otherwise false
+    bool handleWopiDiscoveryRequest(const RequestDetails& requestDetails,
                                     const std::shared_ptr<StreamSocket>& socket);
 
-    void handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request,
+    /// @return true if request has been handled synchronously and response sent, otherwise false
+    bool handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request,
                                    const std::shared_ptr<StreamSocket>& socket);
 
-    static void handleClipboardRequest(const Poco::Net::HTTPRequest& request,
+    /// @return true if request has been handled synchronously and response sent, otherwise false
+    static bool handleClipboardRequest(const Poco::Net::HTTPRequest& request,
                                        Poco::MemoryInputStream& message,
                                        SocketDisposition& disposition,
                                        const std::shared_ptr<StreamSocket>& socket);
 
-    static void handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request,
+    /// @return true if request has been handled synchronously and response sent, otherwise false
+    static bool handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request,
                                        const std::shared_ptr<StreamSocket>& socket);
 
-    static void handleMediaRequest(const Poco::Net::HTTPRequest& request,
+    /// @return true if request has been handled synchronously and response sent, otherwise false
+    static bool handleMediaRequest(const Poco::Net::HTTPRequest& request,
                                    SocketDisposition& /*disposition*/,
                                    const std::shared_ptr<StreamSocket>& socket);
 
@@ -83,18 +90,20 @@ private:
 
     static bool isSpreadsheet(const std::string& fileName);
 
-    void handlePostRequest(const RequestDetails& requestDetails,
+    /// @return true if request has been handled synchronously and response sent, otherwise false
+    bool handlePostRequest(const RequestDetails& requestDetails,
                            const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
                            SocketDisposition& disposition,
                            const std::shared_ptr<StreamSocket>& socket);
 
-    void handleClientProxyRequest(const Poco::Net::HTTPRequest& request,
+    bool handleClientProxyRequest(const Poco::Net::HTTPRequest& request,
                                   const RequestDetails& requestDetails,
                                   Poco::MemoryInputStream& message, SocketDisposition& disposition);
 
 #endif // !MOBILEAPP
 
-    void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request,
+    /// @return true if request has been handled synchronously and response sent, otherwise false
+    bool handleClientWsUpgrade(const Poco::Net::HTTPRequest& request,
                                const RequestDetails& requestDetails, SocketDisposition& disposition,
                                const std::shared_ptr<StreamSocket>& socket,
                                unsigned mobileAppDocId = 0);

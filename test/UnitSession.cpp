@@ -61,7 +61,8 @@ class UnitSession : public UnitWSD
 {
     TestResult testBadRequest();
     TestResult testHandshake();
-    TestResult testFiles();
+    TestResult testFilesOpenConnection();
+    TestResult testFilesCloseConnection();
     TestResult testFileServer();
     TestResult testSlideShow();
     TestResult testSlideShowMultiDL();
@@ -156,7 +157,7 @@ UnitBase::TestResult UnitSession::testHandshake()
     return TestResult::Ok;
 }
 
-UnitBase::TestResult UnitSession::testFiles()
+UnitBase::TestResult UnitSession::testFilesOpenConnection()
 {
     setTestname(__func__);
 
@@ -196,6 +197,52 @@ UnitBase::TestResult UnitSession::testFiles()
             LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
             LOK_ASSERT_EQUAL(true, session->isConnected());
             LOK_ASSERT(http::Header::ConnectionToken::None ==
+                       response->header().getConnectionToken());
+            LOK_ASSERT(0 < response->header().getContentLength());
+            ++docIdx;
+        }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOK_ASSERT_FAIL(exc.displayText());
+    }
+    return TestResult::Ok;
+}
+
+UnitBase::TestResult UnitSession::testFilesCloseConnection()
+{
+    setTestname(__func__);
+
+    const std::vector<std::string> documentURLs = {
+        // "/cool/getMetrics", // < Requires Admin
+        "/", // <
+        "/favicon.ico",
+        "/hosting/discovery",
+        "/hosting/capabilities",
+        "/robots.txt",
+        // "/cool/media",
+        // "/cool/clipboard",
+        // "/cool/file:\/\/.../ws",
+    };
+    TerminatingPoll socketPoller(testname);
+    socketPoller.runOnClientThread();
+
+    int docIdx = 0;
+    try
+    {
+        for (const std::string& documentURL : documentURLs)
+        {
+            TST_LOG("Test: " << testname << "[" << docIdx << "]: `" << documentURL << "`");
+            http::Request request(documentURL, http::Request::VERB_GET);
+            request.header().setConnectionToken(http::Header::ConnectionToken::Close);
+            std::shared_ptr<http::Session> session = http::Session::create(helpers::getTestServerURI());
+            const std::shared_ptr<const http::Response> response =
+                session->syncRequest(request, socketPoller);
+            TST_LOG("Response: " << response->header().toString());
+            TST_LOG("Response size: " << testname << "[" << docIdx << "]: `" << documentURL << "`: " << response->header().getContentLength());
+            LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
+            LOK_ASSERT_EQUAL(false, session->isConnected());
+            LOK_ASSERT(http::Header::ConnectionToken::Close ==
                        response->header().getConnectionToken());
             LOK_ASSERT(0 < response->header().getContentLength());
             ++docIdx;
@@ -486,7 +533,11 @@ void UnitSession::invokeWSDTest()
     if (result != TestResult::Ok)
         exitTest(result);
 
-    result = testFiles();
+    result = testFilesOpenConnection();
+    if (result != TestResult::Ok)
+        exitTest(result);
+
+    result = testFilesCloseConnection();
     if (result != TestResult::Ok)
         exitTest(result);
 
