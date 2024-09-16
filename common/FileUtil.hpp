@@ -132,7 +132,7 @@ namespace FileUtil
     std::string createRandomTmpDir(std::string root = std::string());
 
     /// Create a temporary directory in the root provided
-    std::string createTmpDir(std::string dirName, std::string root = std::string());
+    std::string createTmpDir(const std::string& dirName, std::string root = std::string());
 
     /// Returns the realpath(3) of the provided path.
     std::string realpath(const char* path);
