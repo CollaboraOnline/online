@@ -744,34 +744,6 @@ L.Clipboard = L.Class.extend({
 		}, 150 /* ms */);
 	},
 
-	// navigator.clipboard.read() callback
-	_navigatorClipboardReadCallback: function(clipboardContents) {
-		if (clipboardContents.length < 1) {
-			window.app.console.log('navigator.clipboard has no clipboard items');
-			return;
-		}
-
-		var clipboardContent = clipboardContents[0];
-
-		var that = this;
-		if (clipboardContent.types.includes('text/html')) {
-			clipboardContent.getType('text/html').then(function(blob) {
-				that._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'text/html');
-			}, function(error) {
-				window.app.console.log('clipboardContent.getType(text/html) failed: ' + error.message);
-			});
-		} else if (clipboardContent.types.includes('text/plain')) {
-			clipboardContent.getType('text/plain').then(function(blob) {
-				that._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'text/plain');
-			}, function(error) {
-				window.app.console.log('clipboardContent.getType(text/plain) failed: ' + error.message);
-			});
-		} else {
-			window.app.console.log('navigator.clipboard has no text/html or text/plain');
-			return;
-		}
-	},
-
 	// ClipboardContent.getType() callback: used with the Paste button
 	_navigatorClipboardGetTypeCallback: async function(clipboardContent, blob, type) {
 		if (type == 'image/png') {
@@ -847,6 +819,65 @@ L.Clipboard = L.Class.extend({
 		}
 	},
 
+	_asyncAttemptNavigatorClipboardWrite: async function() {
+		const command = this._unoCommandForCopyCutPaste;
+		app.socket.sendMessage('uno ' + command);
+
+		// This is sent down the websocket URL which can race with the
+		// web fetch - so first step is to wait for the result of
+		// that command so we are sure the clipboard is set before
+		// fetching it.
+
+		if (this._commandCompletion.length > 0)
+			window.app.console.error('Already have ' + this._commandCompletion.length +
+						 ' pending clipboard command(s)');
+
+		const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
+
+		// Share a single fetch
+		const fetchPromise = async () => {
+			const response = await fetch(url);
+			return await response.text();
+		};
+
+		const awaitPromise = (mimetype, shorttype) => {
+			return new Promise((resolve, reject) => {
+				window.app.console.log('New ' + command + ' promise');
+				// FIXME: add a timeout cleanup too ...
+				this._commandCompletion.push({
+					fetch: fetchPromise,
+					command: command,
+					resolve: resolve,
+					reject: reject,
+					mimetype: mimetype,
+					shorttype: shorttype,
+				});
+		}); };
+
+		const text = new ClipboardItem({
+			'text/plain': awaitPromise('text/plain', 'plain'),
+			'text/html': awaitPromise('text/html', 'html'),
+		});
+		let clipboard = navigator.clipboard;
+		if (L.Browser.cypressTest) {
+			clipboard = this._dummyClipboard;
+		}
+
+		try {
+			await clipboard.write([text]);
+		} catch (error) {
+			window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
+
+			// Warn that the copy failed.
+			this._warnCopyPaste();
+			// Once broken, always broken.
+			L.Browser.clipboardApiAvailable = false;
+			window.prefs.set('clipboardApiAvailable', 'false');
+			// Prefetch selection, so next time copy will work with the keyboard.
+			app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
+		}
+	},
+
 	// Executes the navigator.clipboard.write() call, if it's available.
 	_navigatorClipboardWrite: function() {
 		if (!L.Browser.clipboardApiAvailable) {
@@ -857,63 +888,7 @@ L.Clipboard = L.Class.extend({
 			return false;
 		}
 
-		const command = this._unoCommandForCopyCutPaste;
-		app.socket.sendMessage('uno ' + command);
-
-		// This is sent down the websocket URL which can race with the
-		// web fetch - so first step is to wait for the result of
-		// that command so we are sure the clipboard is set before
-		// fetching it.
-
-		const that = this;
-
-		if (that._commandCompletion.length > 0)
-			window.app.console.error('Already have ' + that._commandCompletion.length +
-						 ' pending clipboard command(s)');
-
-		const url = that.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
-
-		// Share a single fetch
-		var fetchPromise = function() {
-			return new Promise((resolve, reject) => {
-				try {
-					var result = fetch(url).then(response => response.text());
-					resolve(result);
-				} catch (err) {
-					reject(err);
-				}
-			});
-		};
-
-		var awaitPromise = function(url, mimetype, shorttype) {
-			return new Promise((resolve, reject) => {
-				window.app.console.log('New ' + command + ' promise');
-				// FIXME: add a timeout cleanup too ...
-				that._commandCompletion.push({ fetch: fetchPromise, command: command,
-							       resolve: resolve, reject: reject,
-							       mimetype: mimetype, shorttype: shorttype});
-		}); };
-
-		const text = new ClipboardItem({
-			'text/html': awaitPromise(url, 'text/html', 'html'),
-			'text/plain': awaitPromise(url, 'text/plain', 'plain')
-		});
-		let clipboard = navigator.clipboard;
-		if (L.Browser.cypressTest) {
-			clipboard = this._dummyClipboard;
-		}
-		clipboard.write([text]).then(function() {
-		}, function(error) {
-			window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
-
-			// Warn that the copy failed.
-			that._warnCopyPaste();
-			// Once broken, always broken.
-			L.Browser.clipboardApiAvailable = false;
-			window.prefs.set('clipboardApiAvailable', 'false');
-			// Prefetch selection, so next time copy will work with the keyboard.
-			app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
-		});
+		this._asyncAttemptNavigatorClipboardWrite();
 
 		return true;
 	},
@@ -945,32 +920,75 @@ L.Clipboard = L.Class.extend({
 		};
 	},
 
+	_asyncAttemptNavigatorClipboardRead: async function(isSpecial) {
+		let clipboard = navigator.clipboard;
+
+		if (L.Browser.cypressTest) {
+			clipboard = this._dummyClipboard;
+		}
+
+		let clipboardContents;
+
+		try {
+			clipboardContents = await clipboard.read();
+		} catch (error) {
+			window.app.console.log(
+				'navigator.clipboard.read() failed: ' + error.message,
+			);
+			if (isSpecial) {
+				// Fallback to the old code, as in filterExecCopyPaste().
+				this._openPasteSpecialPopup();
+			} else {
+				// Fallback to the old code, as in _execCopyCutPaste().
+				this._afterCopyCutPaste('paste');
+			}
+			return;
+		}
+
+		if (isSpecial) {
+			this._navigatorClipboardPasteSpecial = true;
+		}
+
+		if (clipboardContents.length < 1) {
+			window.app.console.log('clipboard has no items');
+			return;
+		}
+
+		var clipboardContent = clipboardContents[0];
+
+		if (clipboardContent.types.includes('text/html')) {
+			let blob;
+			try {
+				blob = await clipboardContent.getType('text/html');
+			} catch (error) {
+				window.app.console.log('clipboardContent.getType(text/html) failed: ' + error.message);
+				return;
+			}
+
+			this._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'text/html');
+		} else if (clipboardContent.types.includes('text/plain')) {
+			let blob;
+			try {
+				blob = await clipboardContent.getType('text/plain');
+			} catch (error) {
+				window.app.console.log('clipboardContent.getType(text/plain) failed: ' + error.message);
+				return;
+			}
+
+			this._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'text/plain');
+		} else {
+			window.app.console.log('navigator.clipboard has no text/html or text/plain');
+		}
+	},
+
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead: function(isSpecial) {
 		if (!L.Browser.clipboardApiAvailable) {
 			return false;
 		}
 
-		var that = this;
-		var clipboard = navigator.clipboard;
-		if (L.Browser.cypressTest) {
-			clipboard = this._dummyClipboard;
-		}
-		clipboard.read().then(function(clipboardContents) {
-			if (isSpecial) {
-				that._navigatorClipboardPasteSpecial = true;
-			}
-			that._navigatorClipboardReadCallback(clipboardContents);
-		}, function(error) {
-			window.app.console.log('navigator.clipboard.read() failed: ' + error.message);
-			if (isSpecial) {
-				// Fallback to the old code, as in filterExecCopyPaste().
-				that._openPasteSpecialPopup();
-			} else {
-				// Fallback to the old code, as in _execCopyCutPaste().
-				that._afterCopyCutPaste('paste');
-			}
-		});
+		this._asyncAttemptNavigatorClipboardRead(isSpecial)
+
 		return true;
 	},
 
