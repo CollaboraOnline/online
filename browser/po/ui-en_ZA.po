@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-13 15:38+0200\n"
-"PO-Revision-Date: 2024-07-10 16:13+0000\n"
+"PO-Revision-Date: 2024-09-14 23:35+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_ZA/>\n"
-"Language: \n"
+"Language: en_ZA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1065,7 +1065,7 @@ msgstr "Save Comments"
 #: src/control/Control.Menubar.js:410
 #: src/control/Control.NotebookbarBuilder.js:433
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "HTML Document (.html)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:579
@@ -1134,7 +1134,7 @@ msgstr "CSV file (.csv)"
 
 #: src/control/Control.Menubar.js:704
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "HTML file (.html)"
 
 #: src/control/Control.Menubar.js:708
 #: src/control/jsdialog/Definitions.Menu.ts:111
@@ -1314,7 +1314,7 @@ msgstr "CSV File (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:399
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "HTML File (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:455
 msgid "Image (.png)"
@@ -1682,21 +1682,23 @@ msgstr "No problems with SSL verification detected"
 
 #: src/control/Control.ServerAuditDialog.ts:81
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "PostMessage API is initialized"
 
 #: src/control/Control.ServerAuditDialog.ts:86
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Integrator is not ready for PostMessage calls"
 
 #: src/control/Control.ServerAuditDialog.ts:94
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Your server is configured with insufficient hardware resources, which may "
+"lead to poor performance."
 
 #: src/control/Control.ServerAuditDialog.ts:100
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Hardware resources are sufficient for optimal performance"
 
 #: src/control/Control.ServerAuditDialog.ts:205
 msgid "No issues found"
@@ -1902,7 +1904,7 @@ msgstr "0 users"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "User List Summary"
 
 #: src/control/Control.UserList.ts:493
 msgid "Following"
@@ -2209,11 +2211,11 @@ msgstr "Very Loose"
 
 #: src/control/jsdialog/Definitions.Menu.ts:418
 msgid "From Beginning"
-msgstr ""
+msgstr "From Beginning"
 
 #: src/control/jsdialog/Definitions.Menu.ts:422
 msgid "From Current Slide"
-msgstr ""
+msgstr "From Current Slide"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2291,7 +2293,7 @@ msgstr "Headings and objects that you add to the document will appear here"
 
 #: src/slideshow/SlideShowPresenter.ts:302
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Click to exit presentation..."
 
 #: src/slideshow/SlideShowPresenter.ts:465
 #: src/map/handler/Map.SlideShow.js:170
@@ -2350,7 +2352,7 @@ msgstr "Presentation mode has been disabled for this document"
 
 #: src/slideshow/PauseTimer.ts:121
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Pause... ( %SECONDS% )"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -2797,7 +2799,7 @@ msgstr "Functions"
 
 #: src/layer/tile/CanvasTileLayer.js:2101
 msgid "Named Range"
-msgstr ""
+msgstr "Named Range"
 
 #: src/layer/tile/CanvasTileLayer.js:3810
 msgid "No Comments"
@@ -2928,9 +2930,8 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Failed to download clipboard, please re-copy"
 
 #: src/map/Clipboard.js:1219
-#, fuzzy
 msgid "<p>Please use the paste buttons on your on-screen keyboard.</p>"
-msgstr "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
+msgstr "<p>Please use the paste buttons on your on-screen keyboard.</p>"
 
 #: src/map/Clipboard.js:1221
 msgid ""
@@ -2986,7 +2987,7 @@ msgstr "Last saved:"
 
 #: src/map/Map.js:1464
 msgid "Please wait!"
-msgstr ""
+msgstr "Please wait!"
 
 #: src/map/handler/Map.Feedback.js:86
 msgid "Please send us your feedback"
