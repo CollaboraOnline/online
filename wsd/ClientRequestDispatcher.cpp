@@ -667,9 +667,12 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     if (!socket->parseHeader("Client", startmessage, request, map))
         return;
 
-    LOG_DBG("Handling request: " << request.getURI());
+    const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
+    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
+    const size_t preInBufferSz = socket->getInBuffer().size();
 
-    bool served = false;
+    // denotes whether the request has been served synchronously
+    bool servedSync = false;
 
     try
     {
@@ -732,7 +735,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                 {
                     ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen), socket,
                                                        ProxyRequestHandler::getProxyRatingServer());
-                    served = true;
+                    servedSync = true;
                 }
 #if ENABLE_FEATURE_LOCK
                 else
@@ -764,10 +767,10 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 
                     launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations);
                 }
-                served = true;
+                servedSync = true;
             }
 
-            if (!served)
+            if (!servedSync)
                 HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
@@ -834,39 +837,39 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                                     });
         }
         else if (requestDetails.isGetOrHead("/"))
-            handleRootRequest(requestDetails, socket);
+            servedSync = handleRootRequest(requestDetails, socket);
 
         else if (requestDetails.isGet("/favicon.ico"))
-            handleFaviconRequest(requestDetails, socket);
+            servedSync = handleFaviconRequest(requestDetails, socket);
 
         else if (requestDetails.equals(0, "hosting"))
         {
             if (requestDetails.equals(1, "discovery"))
-                handleWopiDiscoveryRequest(requestDetails, socket);
+                servedSync = handleWopiDiscoveryRequest(requestDetails, socket);
             else if (requestDetails.equals(1, "capabilities"))
-                handleCapabilitiesRequest(request, socket);
+                servedSync = handleCapabilitiesRequest(request, socket);
             else
                 HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
         else if (requestDetails.isGet("/robots.txt"))
-            handleRobotsTxtRequest(request, socket);
+            servedSync = handleRobotsTxtRequest(request, socket);
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "media"))
-            handleMediaRequest(request, disposition, socket);
+            servedSync = handleMediaRequest(request, disposition, socket);
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "clipboard"))
         {
             //              Util::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
-            handleClipboardRequest(request, message, disposition, socket);
+            servedSync = handleClipboardRequest(request, message, disposition, socket);
         }
 
         else if (requestDetails.isProxy() && requestDetails.equals(2, "ws"))
-            handleClientProxyRequest(request, requestDetails, message, disposition);
+            servedSync = handleClientProxyRequest(request, requestDetails, message, disposition);
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
-            handleClientWsUpgrade(request, requestDetails, disposition, socket);
+            servedSync = handleClientWsUpgrade(request, requestDetails, disposition, socket);
 
         else if (!requestDetails.isWebSocket() &&
                  (requestDetails.equals(RequestDetails::Field::Type, "cool") ||
@@ -874,7 +877,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         {
             // All post requests have url prefix 'cool', except when the prefix
             // is 'lool' e.g. when integrations use the old /lool/convert-to endpoint
-            handlePostRequest(requestDetails, request, message, disposition, socket);
+            servedSync = handlePostRequest(requestDetails, request, message, disposition, socket);
         }
         else if (requestDetails.equals(RequestDetails::Field::Type, "wasm"))
         {
@@ -926,21 +929,32 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
-    if( socket->getInBuffer().size() > 0 ) // buffer may have been cleared already due to ignoreInput
+    if( socket->getInBuffer().size() > 0 ) // erase request from inBuffer if not cleared by ignoreInput
     {
-        // If we succeeded - remove the request header from our input buffer
+        // Remove the request header from our input buffer
         socket->eraseFirstInputBytes(map._headerSize);
-        // Some handlers, like handleClientProxyRequest, used in the richdocumentscode
-        // Nextcloud 'Built-in CODE Server' case, launch a task that will consume the
-        // message contents later, while some like the file server, have already handled
-        // the message and we need to discard the message contents (cool.html POST) now
-        // because we expect multiple requests per socket
-        if (served)
+        if (servedSync)
         {
-            //remove the request body from our input buffer
+            // Remove the request body from our input buffer, as it has been served (synchronously)
+            // See cool#9621, commit 895c224efae9c21f0481e2fbf024a015656a5a97 and cool#10042
             socket->eraseFirstInputBytes(map._messageSize - map._headerSize);
         }
     }
+    if( servedSync && closeConnection && !socket->isClosed() )
+    {
+        LOG_DBG("Handled request: " << request.getURI()
+                << ", inBuf[sz " << preInBufferSz << " -> " << socket->getInBuffer().size()
+                << ", rm " <<  (preInBufferSz-socket->getInBuffer().size())
+                << "], served and closing connection.");
+        socket->shutdown();
+        socket->ignoreInput();
+    }
+    else
+        LOG_DBG("Handled request: " << request.getURI()
+                << ", inBuf[sz " << preInBufferSz << " -> " << socket->getInBuffer().size()
+                << ", rm " <<  (preInBufferSz-socket->getInBuffer().size())
+                << "], connection open " << !socket->isClosed());
+
 #else // !MOBILEAPP
     Poco::Net::HTTPRequest request;
 
@@ -979,7 +993,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 }
 
 #if !MOBILEAPP
-void ClientRequestDispatcher::handleRootRequest(const RequestDetails& requestDetails,
+bool ClientRequestDispatcher::handleRootRequest(const RequestDetails& requestDetails,
                                                 const std::shared_ptr<StreamSocket>& socket)
 {
     assert(socket && "Must have a valid socket");
@@ -993,14 +1007,17 @@ void ClientRequestDispatcher::handleRootRequest(const RequestDetails& requestDet
     httpResponse.set("Content-Length", std::to_string(responseString.size()));
     httpResponse.set("Content-Type", mimeType);
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+    if( requestDetails.closeConnection() )
+        httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Close);
     httpResponse.writeData(socket->getOutBuffer());
     if (requestDetails.isGet())
         socket->send(responseString);
     socket->flush();
     LOG_INF("Sent / response successfully.");
+    return true;
 }
 
-void ClientRequestDispatcher::handleFaviconRequest(const RequestDetails& requestDetails,
+bool ClientRequestDispatcher::handleFaviconRequest(const RequestDetails& requestDetails,
                                                    const std::shared_ptr<StreamSocket>& socket)
 {
     assert(socket && "Must have a valid socket");
@@ -1009,6 +1026,8 @@ void ClientRequestDispatcher::handleFaviconRequest(const RequestDetails& request
     http::Response response(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(response);
     response.setContentType("image/vnd.microsoft.icon");
+    if( requestDetails.closeConnection() )
+        response.header().setConnectionToken(http::Header::ConnectionToken::Close);
     std::string faviconPath =
         Poco::Path(Poco::Util::Application::instance().commandPath()).parent().toString() +
         "favicon.ico";
@@ -1016,9 +1035,10 @@ void ClientRequestDispatcher::handleFaviconRequest(const RequestDetails& request
         faviconPath = COOLWSD::FileServerRoot + "/favicon.ico";
 
     HttpHelper::sendFile(socket, faviconPath, response);
+    return true;
 }
 
-void ClientRequestDispatcher::handleWopiDiscoveryRequest(
+bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     const RequestDetails& requestDetails, const std::shared_ptr<StreamSocket>& socket)
 {
     assert(socket && "Must have a valid socket");
@@ -1043,12 +1063,15 @@ void ClientRequestDispatcher::handleWopiDiscoveryRequest(
     httpResponse.setBody(xml, "text/xml");
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     httpResponse.set("X-Content-Type-Options", "nosniff");
+    if( requestDetails.closeConnection() )
+        httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Close);
     LOG_TRC("Sending back discovery.xml: " << xml);
     socket->send(httpResponse);
     LOG_INF("Sent discovery.xml successfully.");
+    return true;
 }
 
-void ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPRequest& request,
+bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPRequest& request,
                                                      Poco::MemoryInputStream& message,
                                                      SocketDisposition& disposition,
                                                      const std::shared_ptr<StreamSocket>& socket)
@@ -1087,13 +1110,13 @@ void ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
         httpResponse.set("Content-Length", "0");
         socket->sendAndShutdown(httpResponse);
         socket->ignoreInput();
-        return;
+        return true;
     }
 
     // Verify that the WOPISrc is properly encoded.
     if (!HttpHelper::verifyWOPISrc(request.getURI(), WOPISrc, socket))
     {
-        return;
+        return false;
     }
 
     const auto docKey = RequestDetails::getDocKey(WOPISrc);
@@ -1163,10 +1186,12 @@ void ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
 
         // Bad request.
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket, errMsg);
+        return true;
     }
+    return false;
 }
 
-void ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request,
+bool ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request,
                                                      const std::shared_ptr<StreamSocket>& socket)
 {
     assert(socket && "Must have a valid socket");
@@ -1179,6 +1204,8 @@ void ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPReques
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     httpResponse.set("Content-Length", std::to_string(responseString.size()));
     httpResponse.set("Content-Type", "text/plain");
+    if( !request.getKeepAlive() )
+        httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Close);
     httpResponse.writeData(socket->getOutBuffer());
 
     if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
@@ -1187,9 +1214,10 @@ void ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPReques
     }
     socket->flush();
     LOG_INF_S("Sent robots.txt response successfully");
+    return true;
 }
 
-void ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& request,
+bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& request,
                                                  SocketDisposition& /*disposition*/,
                                                  const std::shared_ptr<StreamSocket>& socket)
 {
@@ -1229,13 +1257,13 @@ void ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
         httpResponse.set("Content-Length", "0");
         socket->sendAndShutdown(httpResponse);
         socket->ignoreInput();
-        return;
+        return true;
     }
 
     // Verify that the WOPISrc is properly encoded.
     if (!HttpHelper::verifyWOPISrc(request.getURI(), WOPISrc, socket))
     {
-        return;
+        return false;
     }
 
     const auto docKey = RequestDetails::getDocKey(WOPISrc);
@@ -1257,7 +1285,7 @@ void ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
             httpResponse.set("Content-Length", "0");
             socket->sendAndShutdown(httpResponse);
             socket->ignoreInput();
-            return;
+            return true;
         }
 
         docBroker = it->second;
@@ -1277,6 +1305,7 @@ void ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
         std::string range = request.get("Range", "none");
         docBroker->handleMediaRequest(std::move(range), socket, tag);
     }
+    return false; // async
 }
 
 std::string ClientRequestDispatcher::getContentType(const std::string& fileName)
@@ -1431,7 +1460,7 @@ bool ClientRequestDispatcher::isSpreadsheet(const std::string& fileName)
            sContentType == "application/vnd.ms-excel";
 }
 
-void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDetails,
+bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDetails,
                                                 const Poco::Net::HTTPRequest& request,
                                                 Poco::MemoryInputStream& message,
                                                 SocketDisposition& disposition,
@@ -1456,7 +1485,7 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             httpResponse.set("Content-Length", "0");
             socket->sendAndShutdown(httpResponse);
             socket->ignoreInput();
-            return;
+            return true;
         }
 
         ConvertToPartHandler handler;
@@ -1506,7 +1535,7 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                     httpResponse.set("Content-Length", "0");
                     socket->sendAndShutdown(httpResponse);
                     socket->ignoreInput();
-                    return;
+                    return true;
                 }
                 options += ",PDFVer=" + pdfVer + "PDFVEREND";
             }
@@ -1552,8 +1581,9 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             httpResponse.set("Content-Length", "0");
             socket->sendAndShutdown(httpResponse);
             socket->ignoreInput();
+            return true;
         }
-        return;
+        return false;
     }
     else if (requestDetails.equals(2, "insertfile"))
     {
@@ -1607,7 +1637,7 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 httpResponse.set("Content-Length", "0");
                 socket->sendAndShutdown(httpResponse);
                 socket->ignoreInput();
-                return;
+                return true;
             }
         }
     }
@@ -1702,8 +1732,9 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             http::Response httpResponse(http::StatusCode::NotFound);
             httpResponse.set("Content-Length", "0");
             socket->sendAndShutdown(httpResponse);
+            return true;
         }
-        return;
+        return false;
     }
     else if (requestDetails.equals(1, "render-search-result"))
     {
@@ -1715,7 +1746,7 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         LOG_INF("Create render-search-result POST command handler");
 
         if (fromPath.empty())
-            return;
+            return false;
 
         Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
         const std::string docKey = RequestDetails::getDocKey(uriPublic);
@@ -1741,13 +1772,13 @@ void ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             cleanupDocBrokers();
         }
 
-        return;
+        return false;
     }
 
     throw BadRequestException("Invalid or unknown request.");
 }
 
-void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequest& request,
+bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequest& request,
                                                        const RequestDetails& requestDetails,
                                                        Poco::MemoryInputStream& message,
                                                        SocketDisposition& disposition)
@@ -1787,7 +1818,7 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
         auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, streamSocket);
         // FIXME: send docunloading & re-try on client ?
-        return;
+        return true;
     }
 
     // need to move into the DocumentBroker context before doing session lookup / creation etc.
@@ -1828,10 +1859,11 @@ void ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
             // badness occurred:
             HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, streamSocket);
         });
+    return false; // async
 }
 #endif
 
-void ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest& request,
+bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest& request,
                                                     const RequestDetails& requestDetails,
                                                     SocketDisposition& disposition,
                                                     const std::shared_ptr<StreamSocket>& socket,
@@ -1857,7 +1889,7 @@ void ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
             if (config::isSupportKeyEnabled())
             {
                 shutdownLimitReached(ws);
-                return;
+                return true;
             }
         }
 
@@ -1886,6 +1918,7 @@ void ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         ws->sendMessage(status);
 
         _rvs->handleRequest(_id, requestDetails, ws, socket, mobileAppDocId, disposition);
+        return false; // async keep alive
     }
     catch (const std::exception& exc)
     {
@@ -1894,6 +1927,7 @@ void ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         ws->sendMessage(msg);
         ws->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, msg);
         socket->ignoreInput();
+        return true;
     }
 }
 
@@ -2065,7 +2099,7 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
 }
 
 /// Send the /hosting/capabilities JSON to socket
-static void sendCapabilities(bool convertToAvailable,
+static void sendCapabilities(bool convertToAvailable, bool closeConnection,
                              const std::shared_ptr<StreamSocket>& socket)
 {
     http::Response httpResponse(http::StatusCode::OK);
@@ -2073,22 +2107,28 @@ static void sendCapabilities(bool convertToAvailable,
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     httpResponse.setBody(getCapabilitiesJson(convertToAvailable), "application/json");
     httpResponse.set("X-Content-Type-Options", "nosniff");
-    socket->send(httpResponse);
+    if( closeConnection )
+        socket->sendAndShutdown(httpResponse);
+    else
+        socket->send(httpResponse);
     LOG_INF("Sent capabilities.json successfully.");
 }
 
-void ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request,
+bool ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request,
                                                         const std::shared_ptr<StreamSocket>& socket)
 {
     assert(socket && "Must have a valid socket");
 
     LOG_DBG("Wopi capabilities request: " << request.getURI());
+    const bool closeConnection = !request.getKeepAlive();
 
-    AsyncFn convertToAllowedCb = [socket](bool allowedConvert){
-        COOLWSD::getWebServerPoll()->addCallback([socket, allowedConvert]() { sendCapabilities(allowedConvert, socket); });
+    AsyncFn convertToAllowedCb = [socket, closeConnection](bool allowedConvert){
+        COOLWSD::getWebServerPoll()->addCallback([socket, allowedConvert, closeConnection]()
+                                                 { sendCapabilities(allowedConvert, closeConnection, socket); });
     };
 
     allowConvertTo(socket->clientAddress(), request, std::move(convertToAllowedCb));
+    return false;
 }
 
 #endif

@@ -117,6 +117,7 @@ private:
     bool _isHead : 1;
     bool _isProxy : 1;
     bool _isWebSocket : 1;
+    bool _closeConnection : 1;
     std::string _uriString;
     std::string _proxyPrefix;
     std::string _hostUntrusted;
@@ -242,6 +243,10 @@ public:
     bool isWebSocket() const
     {
         return _isWebSocket;
+    }
+    bool closeConnection() const
+    {
+        return _closeConnection;
     }
     bool isGet() const
     {

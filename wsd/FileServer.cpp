@@ -514,6 +514,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         noCache = !COOLWSD::ForceCaching; // for cypress
 #endif
         http::Response response(http::StatusCode::OK);
+        if( requestDetails.closeConnection() )
+            response.header().setConnectionToken(http::Header::ConnectionToken::Close);
         hstsHeaders(response);
 
         const auto& config = Application::instance().config();
