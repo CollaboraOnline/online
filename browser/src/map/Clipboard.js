@@ -307,67 +307,68 @@ L.Clipboard = L.Class.extend({
 	},
 
 	// Suck the data from one server to another asynchronously ...
-	_dataTransferDownloadAndPasteAsync: function(src, dest, fallbackHtml) {
+	_dataTransferDownloadAndPasteAsync: async function(src, dest, fallbackHtml) {
 		var that = this;
 		// FIXME: add a timestamp in the links (?) ignore old / un-responsive servers (?)
-		that._doAsyncDownload(
-			'GET', src, null, false,
-			function(progress) { return progress/2; },
-		).then(
-			function(response) {
-				window.app.console.log('download done - response ' + response);
-				var formData = new FormData();
-				formData.append('data', response, 'clipboard');
-				that._doAsyncDownload(
-					'POST', dest, formData, false,
-					function(progress) { return 50 + progress/2; }
-				).then(
-					function() {
-						if (that._checkAndDisablePasteSpecial()) {
-							window.app.console.log('up-load done, now paste special');
-							app.socket.sendMessage('uno .uno:PasteSpecial');
-						} else {
-							window.app.console.log('up-load done, now paste');
-							app.socket.sendMessage('uno .uno:Paste');
-						}
+		let response;
 
-					}.bind(this),
-				);
-			}.bind(this),
-		)
-		.catch(
-			function() {
-				window.app.console.log('failed to download clipboard using fallback html');
+		try {
+			response = await that._doAsyncDownload(
+				'GET', src, null, false,
+				function(progress) { return progress/2; },
+			);
+		} catch (_error) {
+			window.app.console.log('failed to download clipboard using fallback html');
 
-				// If it's the stub, avoid pasting.
-				if (that._isStubHtml(fallbackHtml))
-				{
-					// Let the user know they haven't really copied document content.
-					that._map.uiManager.showInfoModal('data transfer warning', '', _('Failed to download clipboard, please re-copy'));
-					return;
-				}
-
-				var formData = new FormData();
-				let commandName = null;
-				if (that._checkAndDisablePasteSpecial()) {
-					commandName = '.uno:PasteSpecial';
-				} else {
-					commandName = '.uno:Paste';
-				}
-				const data = JSON.stringify({
-					url: src,
-					commandName: commandName,
-				});
-				formData.append('data', new Blob([data]), 'clipboard');
-				that._doAsyncDownload(
-					'POST', dest, formData, false,
-					function(progress) { return 50 + progress/2; },
-				).catch(
-					function() {
-						that.dataTransferToDocumentFallback(null, fallbackHtml);
-					}
-				);
+			// If it's the stub, avoid pasting.
+			if (that._isStubHtml(fallbackHtml))
+			{
+				// Let the user know they haven't really copied document content.
+				that._map.uiManager.showInfoModal('data transfer warning', '', _('Failed to download clipboard, please re-copy'));
+				return;
 			}
+
+			var formData = new FormData();
+			let commandName = null;
+			if (that._checkAndDisablePasteSpecial()) {
+				commandName = '.uno:PasteSpecial';
+			} else {
+				commandName = '.uno:Paste';
+			}
+			const data = JSON.stringify({
+				url: src,
+				commandName: commandName,
+			});
+			formData.append('data', new Blob([data]), 'clipboard');
+			that._doAsyncDownload(
+				'POST', dest, formData, false,
+				function(progress) { return 50 + progress/2; },
+			).catch(
+				function() {
+					that.dataTransferToDocumentFallback(null, fallbackHtml);
+				}
+			);
+			return;
+		}
+
+		window.app.console.log('download done - response ' + response);
+		var formData = new FormData();
+		formData.append('data', response, 'clipboard');
+
+		that._doAsyncDownload(
+			'POST', dest, formData, false,
+			function(progress) { return 50 + progress/2; }
+		).then(
+			function() {
+				if (that._checkAndDisablePasteSpecial()) {
+					window.app.console.log('up-load done, now paste special');
+					app.socket.sendMessage('uno .uno:PasteSpecial');
+				} else {
+					window.app.console.log('up-load done, now paste');
+					app.socket.sendMessage('uno .uno:Paste');
+				}
+
+			}.bind(this),
 		);
 	},
 
