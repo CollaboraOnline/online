@@ -378,6 +378,11 @@ class StatusBar extends JSDialog.Toolbar {
 		}
 
 		var canUserWrite = window.ThisIsAMobileApp ? !app.isReadOnly() : this.map['wopi'].UserCanWrite;
+		var EditDocMode = true;
+		if (app.map['stateChangeHandler'].getItemValue('EditDoc') !== undefined)
+			EditDocMode = app.map['stateChangeHandler'].getItemValue('EditDoc') === "true";
+
+		canUserWrite = canUserWrite && EditDocMode;
 
 		var permissionContainer = document.getElementById('permissionmode-container');
 		if (permissionContainer) {
@@ -470,6 +475,12 @@ class StatusBar extends JSDialog.Toolbar {
 				state = this.toLocalePattern('Page %1 of %2', 'Slide (\\d+) of (\\d+)', state, '%1', '%2');
 				this.updateHtmlItem('PageStatus', state ? state : ' ');
 			}
+		}
+		else if (commandName === '.uno:EditDoc') {
+			state = state === "true";
+			this.onPermissionChanged({detail : {
+				perm: state && this.map.isEditMode() ? "edit" : "readonly"
+			} });
 		}
 	}
 
