@@ -1275,8 +1275,11 @@ L.Clipboard = L.Class.extend({
 
 	_warnLargeCopyPasteAlreadyStarted: function () {
 		this._map.uiManager.showInfoModal('large copy paste started warning');
-		document.getElementById('large copy paste started warning').innerHTML = _('<p>A download due to a large copy/paste operation has already started. ' +
-		'Please, wait for the current download or cancel it before starting a new one</p>');
+		const container = document.getElementById('large copy paste started warning');
+		container.replaceChildren();
+		const p = document.createElement('p');
+		p.textContent = _('A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one');
+		container.appendChild(p);
 	},
 
 	isPasteSpecialDialogOpen: function() {
