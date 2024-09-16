@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-13 15:38+0200\n"
-"PO-Revision-Date: 2024-08-01 02:30+0000\n"
+"PO-Revision-Date: 2024-09-14 23:35+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/help/en_ZA/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -48,16 +48,15 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
-msgstr ""
+msgstr "Copy"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
 "/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
+"/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
@@ -1679,6 +1678,11 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
+"and includes many options, commands for printing, editing, viewing and other "
+"advanced commands. You can hide the menu bar clicking on the <span class"
+"=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
+"<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
@@ -1984,13 +1988,12 @@ msgstr ""
 "document you are working in."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
 msgstr ""
 "When you paste text from outside of the document (another browser window or "
-"a desktop application, it will be pasted as rich text."
+"a desktop application), it will be pasted as rich text."
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
@@ -2125,13 +2128,12 @@ msgid "comment"
 msgstr "comment"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
-#, fuzzy
 msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
-"Click on the submenu (<span class=\"cool-annotation-menu\" style=\"height:0."
-"6cm;width:0.6cm;\"></span>) icon to reply, move and delete comments."
+"Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
+" icon to reply, move and delete comments."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
@@ -3069,15 +3071,14 @@ msgid "Select the text with the existing format"
 msgstr "Select the text with the existing format"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
-"Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" "
-"alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to "
-"a paint bucket."
+"Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
+"\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint "
+"bucket."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
@@ -3196,14 +3197,12 @@ msgid "Format the source cell with the font, color background and more."
 msgstr "Format the source cell with the font, colour background and more."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
 msgstr ""
-"Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" "
-"alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to "
-"a paint bucket."
+"Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
+"/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
