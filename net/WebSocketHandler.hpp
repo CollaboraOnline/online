@@ -246,6 +246,20 @@ public:
         shutdownImpl(statusCode, statusMessage, hardShutdown, false);
     }
 
+    /// Don't wait for the remote Websocket to handshake with us; go down fast.
+    void shutdownAfterWriting()
+    {
+        shutdownImpl(WebSocketHandler::StatusCodes::NORMAL_CLOSE, std::string(),
+                     true /* hard async shutdown & close */, false);
+    }
+
+    /// Returns true if the underlying socket is connected.
+    bool isConnected() const
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        return socket && !socket->isClosed();
+    }
+
 private:
     void shutdownSilent()
     {
@@ -281,22 +295,6 @@ private:
 #endif
         _shuttingDown = false;
     }
-
-public:
-    /// Don't wait for the remote Websocket to handshake with us; go down fast.
-    void shutdownAfterWriting()
-    {
-        shutdownImpl(WebSocketHandler::StatusCodes::NORMAL_CLOSE, std::string(),
-                     true /* hard async shutdown & close */, false);
-    }
-
-    /// Returns true if the underlying socket is connected.
-    bool isConnected() const {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
-        return nullptr != socket && !socket->isClosed();
-    }
-
-private:
     bool handleTCPStream(const std::shared_ptr<StreamSocket>& socket)
     {
         assert(socket && "Expected a valid socket instance.");
