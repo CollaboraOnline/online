@@ -50,8 +50,8 @@ class BrowserProperties {
 		// Firefox has undefined navigator.clipboard.read and navigator.clipboard.write,
 		// unsecure contexts (such as http + non-localhost) has the entire navigator.clipboard
 		// undefined.
-		hasNavigatorClipboardRead = navigator.clipboard && navigator.clipboard.read,
-		hasNavigatorClipboardWrite = navigator.clipboard && navigator.clipboard.write,
+		hasNavigatorClipboardRead = navigator.clipboard && navigator.clipboard.read !== undefined,
+		hasNavigatorClipboardWrite = navigator.clipboard && navigator.clipboard.write !== undefined,
 		webkit    = ua.indexOf('webkit') !== -1,
 		chrome    = ua.indexOf('chrome') !== -1,
 		gecko     = (ua.indexOf('gecko') !== -1 || (cypressTest && 'MozUserFocus' in doc.style))
