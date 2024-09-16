@@ -899,7 +899,7 @@ L.Clipboard = L.Class.extend({
 			that._warnCopyPaste();
 			// Once broken, always broken.
 			L.Browser.clipboardApiAvailable = false;
-			window.prefs.set('clipboardApiAvailable', 'false');
+			window.prefs.set('clipboardApiAvailable', false);
 			// Prefetch selection, so next time copy will work with the keyboard.
 			app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
 		}
