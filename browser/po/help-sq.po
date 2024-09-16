@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-13 15:38+0200\n"
+"POT-Creation-Date: 2024-09-16 14:25+0200\n"
 "PO-Revision-Date: 2024-01-31 15:37+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
@@ -2737,7 +2737,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
-"\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint "
+"\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
 
@@ -2838,7 +2838,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
-"/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
+"/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11

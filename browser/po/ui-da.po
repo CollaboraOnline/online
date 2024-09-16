@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-13 15:38+0200\n"
+"POT-Creation-Date: 2024-09-16 14:25+0200\n"
 "PO-Revision-Date: 2024-08-11 13:07+0000\n"
 "Last-Translator: Simon T <simonpmt@gmail.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
@@ -287,8 +287,8 @@ msgstr "Serveren er blevet lukket ned, venligst genindlæs siden."
 #: src/slideshow/SlideShowPresenter.ts:639 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
-#: src/canvas/sections/CommentListSection.ts:1258
-#: src/canvas/sections/CommentListSection.ts:2108 src/main.js:84
+#: src/canvas/sections/CommentListSection.ts:1274
+#: src/canvas/sections/CommentListSection.ts:2134 src/main.js:84
 #: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1226
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:167 src/map/handler/Map.SlideShow.js:282
@@ -676,7 +676,7 @@ msgstr "svar"
 #: src/control/Control.JSDialogBuilder.js:1929
 #: src/layer/tile/CanvasTileLayer.js:3782
 #: src/layer/tile/CanvasTileLayer.js:3793
-#: src/canvas/sections/CommentListSection.ts:1044
+#: src/canvas/sections/CommentListSection.ts:1060
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -2504,7 +2504,7 @@ msgstr ""
 msgid "Discard"
 msgstr "Kassér"
 
-#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1271
+#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1287
 msgid "Overwrite"
 msgstr "Overskriv"
 
@@ -2802,65 +2802,69 @@ msgstr ""
 msgid "Please save or discard the comment currently being edited."
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:986
+#: src/canvas/sections/CommentListSection.ts:996
 msgid "Modify"
 msgstr "Ændre"
 
-#: src/canvas/sections/CommentListSection.ts:992
+#: src/canvas/sections/CommentListSection.ts:1002
 #: src/canvas/sections/CommentSection.ts:152
 msgid "Reply"
 msgstr "Svar"
 
-#: src/canvas/sections/CommentListSection.ts:998
+#: src/canvas/sections/CommentListSection.ts:1008
 msgid "Remove"
 msgstr "Fjern"
 
-#: src/canvas/sections/CommentListSection.ts:1004
+#: src/canvas/sections/CommentListSection.ts:1014
 msgid "Remove Thread"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1020
 msgid "Resolve"
 msgstr "Løs"
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1020
 msgid "Unresolve"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1016
+#: src/canvas/sections/CommentListSection.ts:1026
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1016
+#: src/canvas/sections/CommentListSection.ts:1026
 msgid "Resolve Thread"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1256
-#: src/canvas/sections/CommentListSection.ts:1269
-#: src/canvas/sections/CommentListSection.ts:2106
+#: src/canvas/sections/CommentListSection.ts:1032
+msgid "Promote to top comment"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1272
+#: src/canvas/sections/CommentListSection.ts:1285
+#: src/canvas/sections/CommentListSection.ts:2132
 msgid "Comments Updated"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1257
+#: src/canvas/sections/CommentListSection.ts:1273
 msgid "Another user has removed this comment."
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1270
+#: src/canvas/sections/CommentListSection.ts:1286
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1272
+#: src/canvas/sections/CommentListSection.ts:1288
 msgid "Update"
 msgstr "Opdatér"
 
-#: src/canvas/sections/CommentListSection.ts:1343
-#: src/canvas/sections/CommentListSection.ts:1405
+#: src/canvas/sections/CommentListSection.ts:1359
+#: src/canvas/sections/CommentListSection.ts:1431
 msgid "Autosaved"
 msgstr "Autogemt"
 
-#: src/canvas/sections/CommentListSection.ts:2107
+#: src/canvas/sections/CommentListSection.ts:2133
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 

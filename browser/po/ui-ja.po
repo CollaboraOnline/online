@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-13 15:38+0200\n"
+"POT-Creation-Date: 2024-09-16 14:25+0200\n"
 "PO-Revision-Date: 2024-06-29 10:46+0000\n"
 "Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
@@ -286,8 +286,8 @@ msgstr "サーバをシャットダウンしました。ページをリロード
 #: src/slideshow/SlideShowPresenter.ts:639 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
-#: src/canvas/sections/CommentListSection.ts:1258
-#: src/canvas/sections/CommentListSection.ts:2108 src/main.js:84
+#: src/canvas/sections/CommentListSection.ts:1274
+#: src/canvas/sections/CommentListSection.ts:2134 src/main.js:84
 #: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1226
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:167 src/map/handler/Map.SlideShow.js:282
@@ -673,7 +673,7 @@ msgstr "返信"
 #: src/control/Control.JSDialogBuilder.js:1929
 #: src/layer/tile/CanvasTileLayer.js:3782
 #: src/layer/tile/CanvasTileLayer.js:3793
-#: src/canvas/sections/CommentListSection.ts:1044
+#: src/canvas/sections/CommentListSection.ts:1060
 msgid "Comment"
 msgstr "コメント"
 
@@ -2481,7 +2481,7 @@ msgstr "書き出しに成功しました "
 msgid "Discard"
 msgstr "破棄"
 
-#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1271
+#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1287
 msgid "Overwrite"
 msgstr "上書き"
 
@@ -2779,65 +2779,69 @@ msgstr "コメントは編集されています"
 msgid "Please save or discard the comment currently being edited."
 msgstr "コメントが編集されました、保存それとも破棄を行ってください。"
 
-#: src/canvas/sections/CommentListSection.ts:986
+#: src/canvas/sections/CommentListSection.ts:996
 msgid "Modify"
 msgstr "変更"
 
-#: src/canvas/sections/CommentListSection.ts:992
+#: src/canvas/sections/CommentListSection.ts:1002
 #: src/canvas/sections/CommentSection.ts:152
 msgid "Reply"
 msgstr "返信"
 
-#: src/canvas/sections/CommentListSection.ts:998
+#: src/canvas/sections/CommentListSection.ts:1008
 msgid "Remove"
 msgstr "削除"
 
-#: src/canvas/sections/CommentListSection.ts:1004
+#: src/canvas/sections/CommentListSection.ts:1014
 msgid "Remove Thread"
 msgstr "スレッドを削除"
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1020
 msgid "Resolve"
 msgstr "解決済"
 
-#: src/canvas/sections/CommentListSection.ts:1010
+#: src/canvas/sections/CommentListSection.ts:1020
 msgid "Unresolve"
 msgstr "未解決"
 
-#: src/canvas/sections/CommentListSection.ts:1016
+#: src/canvas/sections/CommentListSection.ts:1026
 msgid "Unresolve Thread"
 msgstr "未解決スラッド"
 
-#: src/canvas/sections/CommentListSection.ts:1016
+#: src/canvas/sections/CommentListSection.ts:1026
 msgid "Resolve Thread"
 msgstr "スレッドを削除"
 
-#: src/canvas/sections/CommentListSection.ts:1256
-#: src/canvas/sections/CommentListSection.ts:1269
-#: src/canvas/sections/CommentListSection.ts:2106
+#: src/canvas/sections/CommentListSection.ts:1032
+msgid "Promote to top comment"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1272
+#: src/canvas/sections/CommentListSection.ts:1285
+#: src/canvas/sections/CommentListSection.ts:2132
 msgid "Comments Updated"
 msgstr "コメントの更新"
 
-#: src/canvas/sections/CommentListSection.ts:1257
+#: src/canvas/sections/CommentListSection.ts:1273
 msgid "Another user has removed this comment."
 msgstr "このコメントを削除しました."
 
-#: src/canvas/sections/CommentListSection.ts:1270
+#: src/canvas/sections/CommentListSection.ts:1286
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr "別のユーザーがコメントを更新しました。 これらの変更を上書きしますか？"
 
-#: src/canvas/sections/CommentListSection.ts:1272
+#: src/canvas/sections/CommentListSection.ts:1288
 msgid "Update"
 msgstr "更新"
 
-#: src/canvas/sections/CommentListSection.ts:1343
-#: src/canvas/sections/CommentListSection.ts:1405
+#: src/canvas/sections/CommentListSection.ts:1359
+#: src/canvas/sections/CommentListSection.ts:1431
 msgid "Autosaved"
 msgstr "自動保存"
 
-#: src/canvas/sections/CommentListSection.ts:2107
+#: src/canvas/sections/CommentListSection.ts:2133
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr "別のユーザーがコメントを更新しました。更新を続行しますか?"
 
