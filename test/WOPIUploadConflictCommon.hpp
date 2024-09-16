@@ -121,24 +121,29 @@ public:
         setExpectedGetFile(1); // All the tests GetFile once.
         setExpectedPutRelative(0); // No renaming in these tests.
 
-        if (_scenario == Scenario::VerifyOverwrite)
+        switch (_scenario)
         {
-            // By default, we don't upload when verifying (unless always_save_on_exit is set).
-            setExpectedPutFile(0);
-        }
-        else if (_scenario == Scenario::Disconnect || _scenario == Scenario::SaveDiscard ||
-                 _scenario == Scenario::CloseDiscard)
-        {
-            // When there is no client connected, there is no way
-            // to decide how to resolve the conflict externally.
-            // So we quarantine and let it be.
-            // Similarly, when the client decides to discard changes.
-            setExpectedPutFile(1);
-        }
-        else
-        {
-            // With conflicts, we typically do two PutFile requests.
-            setExpectedPutFile(2);
+            case Scenario::Disconnect:
+            {
+                // When there is no client connected, there is no way
+                // to decide how to resolve the conflict externally.
+                // So we quarantine and let it be.
+                setExpectedPutFile(1);
+            }
+            break;
+            case Scenario::SaveDiscard:
+                setExpectedPutFile(1); // The client discards their changes; don't upload.
+                break;
+            case Scenario::CloseDiscard:
+                setExpectedPutFile(1); // The client discards their changes; don't upload.
+                break;
+            case Scenario::SaveOverwrite:
+                setExpectedPutFile(2); // Upload a second time to force client's changes.
+                break;
+            case Scenario::VerifyOverwrite:
+                // By default, we don't upload when verifying (unless always_save_on_exit is set).
+                setExpectedPutFile(0);
+                break;
         }
     }
 
