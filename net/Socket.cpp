@@ -1344,6 +1344,36 @@ LocalServerSocket::~LocalServerSocket()
 #  define LOG_CHUNK(X)
 #endif
 
+#endif // !MOBILEAPP
+
+std::string StreamSocket::toString(WSState t)
+{
+    if( WSState::WS == t )
+    {
+        return "WS";
+    }
+    return "HTTP";
+}
+
+std::ostream& StreamSocket::stream(std::ostream& os) const
+{
+    os << "StreamSocket[#" << getFD()
+       << ", " << toString(_wsState)
+       << ", " << Socket::toString(type())
+       << " @ ";
+    if (Type::IPv6 == type())
+    {
+        os << "[" << clientAddress() << "]:" << clientPort();
+    }
+    else
+    {
+        os << clientAddress() << ":" << clientPort();
+    }
+    return os << "]";
+}
+
+#if !MOBILEAPP
+
 bool StreamSocket::parseHeader(const char *clientName,
                                Poco::MemoryInputStream &message,
                                Poco::Net::HTTPRequest &request,
