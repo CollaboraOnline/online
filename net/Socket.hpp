@@ -137,13 +137,16 @@ public:
     static std::atomic<bool> InhibitThreadChecks;
 
     enum Type { IPv4, IPv6, All, Unix };
+    static std::string toString(Type t);
 
     // NB. see other Socket::Socket by init below.
     Socket(Type type)
-        : _fd(createSocket(type))
+        : _type(type)
+        , _clientPort(0)
+        , _fd(createSocket(type))
         , _open(_fd >= 0)
     {
-        init(type);
+        init();
     }
 
     virtual ~Socket()
@@ -153,7 +156,7 @@ public:
         // Doesn't block on sockets; no error handling needed.
 #if !MOBILEAPP
         ::close(_fd);
-        LOG_DBG("Closed socket to [" << clientAddress() << ']');
+        LOG_DBG("Closed socket " << toStringImpl());
 #else
         fakeSocketClose(_fd);
 #endif
@@ -164,8 +167,10 @@ public:
     /// Returns true if this socket has been closed, i.e. rejected from polling and potentially shutdown
     bool isClosed() const { return !_open; }
 
-    void setClientAddress(const std::string& address) { _clientAddress = address; }
+    Type type() const { return _type; }
+    void setClientAddress(const std::string& address, unsigned int port=0) { _clientAddress = address; _clientPort=port; }
     const std::string& clientAddress() const { return _clientAddress; }
+    unsigned int clientPort() const { return _clientPort; }
 
     /// Returns the OS native socket fd.
     int getFD() const { return _fd; }
@@ -362,10 +367,12 @@ protected:
     /// Construct based on an existing socket fd.
     /// Used by accept() only.
     Socket(const int fd, Type type)
-        : _fd(fd)
+        : _type(type)
+        , _clientPort(0)
+        , _fd(fd)
         , _open(_fd >= 0)
     {
-        init(type);
+        init();
     }
 
     inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
@@ -384,15 +391,18 @@ private:
     /// return >= 0 for a successfully created socket, -1 on error
     static int createSocket(Type type);
 
-    void init(Type type)
+    std::ostream& streamImpl(std::ostream& os) const;
+    std::string toStringImpl() const;
+
+    void init()
     {
-        if (type != Type::Unix)
+        if (_type != Type::Unix)
             setNoDelay();
         _ignoreInput = false;
         _noShutdown = false;
         _sendBufferSize = DefaultSendBufferSize;
         _owner = std::this_thread::get_id();
-        LOG_TRC("Created socket. Thread affinity set to " << Log::to_string(_owner));
+        LOG_TRC("Created socket. Thread affinity set to " << Log::to_string(_owner) << ", " << toStringImpl());
 
 #if !MOBILEAPP
 #if ENABLE_DEBUG
@@ -407,6 +417,8 @@ private:
     }
 
     std::string _clientAddress;
+    const Type _type;
+    unsigned int _clientPort;
     const int _fd;
     /// True if this socket is open.
     bool _open;
