@@ -245,16 +245,17 @@ L.Clipboard = L.Class.extend({
 	// forClipboard: a boolean telling if we need the "Confirm copy to clipboard" link in the end
 	// completeFn: called on completion - with response.
 	// progressFn: allows splitting the progress bar up.
-	_doAsyncDownload: function(type,url,optionalFormData,forClipboard,completeFn,progressFn,onErrorFn) {
-		try {
-			var that = this;
-			var request = new XMLHttpRequest();
+	_doAsyncDownload: async function(type,url,optionalFormData,forClipboard,progressFn,) {
+		var that = this;
+		var request = new XMLHttpRequest();
 
-			// avoid to invoke the following code if the download widget depends on user interaction
-			if (!that._downloadProgress || that._downloadProgress.isClosed()) {
-				that._startProgress(false);
-				that._downloadProgress.startProgressMode();
-			}
+		// avoid to invoke the following code if the download widget depends on user interaction
+		if (!that._downloadProgress || that._downloadProgress.isClosed()) {
+			that._startProgress(false);
+			that._downloadProgress.startProgressMode();
+		}
+
+		return await new Promise((resolve, reject) => {
 			request.onload = function() {
 				that._downloadProgress._onComplete();
 				if (!forClipboard) {
@@ -266,14 +267,13 @@ L.Clipboard = L.Class.extend({
 				// size==0, which signifies no response from the server.
 				// So we check the status code instead.
 				if (this.status == 200) {
-					completeFn(this.response);
-				} else if (onErrorFn) {
-					onErrorFn(this.response);
+					resolve(this.response);
+				} else {
+					reject(this.response);
 				}
 			};
-			request.onerror = function() {
-				if (onErrorFn)
-					onErrorFn();
+			request.onerror = function(error) {
+				reject(error);
 				that._downloadProgress._onComplete();
 				that._downloadProgress._onClose();
 			};
@@ -281,6 +281,7 @@ L.Clipboard = L.Class.extend({
 			request.ontimeout = function() {
 				that._map.uiManager.showSnackbar(_('warning: copy/paste request timed out'));
 				that._downloadProgress._onClose();
+				reject('request timed out');
 			};
 
 			request.upload.addEventListener('progress', function (e) {
@@ -302,10 +303,7 @@ L.Clipboard = L.Class.extend({
 				request.send(optionalFormData);
 			else
 				request.send();
-		} catch (error) {
-			if (onErrorFn)
-				onErrorFn();
-		}
+		});
 	},
 
 	// Suck the data from one server to another asynchronously ...
@@ -314,12 +312,16 @@ L.Clipboard = L.Class.extend({
 		// FIXME: add a timestamp in the links (?) ignore old / un-responsive servers (?)
 		that._doAsyncDownload(
 			'GET', src, null, false,
+			function(progress) { return progress/2; },
+		).then(
 			function(response) {
 				window.app.console.log('download done - response ' + response);
 				var formData = new FormData();
 				formData.append('data', response, 'clipboard');
 				that._doAsyncDownload(
 					'POST', dest, formData, false,
+					function(progress) { return 50 + progress/2; }
+				).then(
 					function() {
 						if (that._checkAndDisablePasteSpecial()) {
 							window.app.console.log('up-load done, now paste special');
@@ -330,10 +332,10 @@ L.Clipboard = L.Class.extend({
 						}
 
 					}.bind(this),
-					function(progress) { return 50 + progress/2; }
 				);
 			}.bind(this),
-			function(progress) { return progress/2; },
+		)
+		.catch(
 			function() {
 				window.app.console.log('failed to download clipboard using fallback html');
 
@@ -359,9 +361,8 @@ L.Clipboard = L.Class.extend({
 				formData.append('data', new Blob([data]), 'clipboard');
 				that._doAsyncDownload(
 					'POST', dest, formData, false,
-					function() {
-					}.bind(this),
 					function(progress) { return 50 + progress/2; },
+				).catch(
 					function() {
 						that.dataTransferToDocumentFallback(null, fallbackHtml);
 					}
@@ -481,12 +482,13 @@ L.Clipboard = L.Class.extend({
 
 			var that = this;
 			this._doAsyncDownload('POST', this.getMetaURL(), formData, false,
+				function(progress) { return progress; }
+			).then(
 				function() {
 					window.app.console.log('Posted ' + content.size + ' bytes successfully');
 					that._doInternalPaste(that._map, usePasteKeyEvent);
 				},
-				function(progress) { return progress; }
-					    );
+			);
 		} else {
 			window.app.console.log('Nothing we can paste on the clipboard');
 		}
