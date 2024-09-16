@@ -752,34 +752,6 @@ L.Clipboard = L.Class.extend({
 		}, 150 /* ms */);
 	},
 
-	// navigator.clipboard.read() callback
-	_navigatorClipboardReadCallback: function(clipboardContents) {
-		if (clipboardContents.length < 1) {
-			window.app.console.log('navigator.clipboard has no clipboard items');
-			return;
-		}
-
-		var clipboardContent = clipboardContents[0];
-
-		var that = this;
-		if (clipboardContent.types.includes('text/html')) {
-			clipboardContent.getType('text/html').then(function(blob) {
-				that._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'text/html');
-			}, function(error) {
-				window.app.console.log('clipboardContent.getType(text/html) failed: ' + error.message);
-			});
-		} else if (clipboardContent.types.includes('text/plain')) {
-			clipboardContent.getType('text/plain').then(function(blob) {
-				that._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'text/plain');
-			}, function(error) {
-				window.app.console.log('clipboardContent.getType(text/plain) failed: ' + error.message);
-			});
-		} else {
-			window.app.console.log('navigator.clipboard has no text/html or text/plain');
-			return;
-		}
-	},
-
 	// ClipboardContent.getType() callback: used with the Paste button
 	_navigatorClipboardGetTypeCallback: async function(clipboardContent, blob, type) {
 		if (type == 'image/png') {
@@ -967,17 +939,20 @@ L.Clipboard = L.Class.extend({
 			return false;
 		}
 
+		this._asyncAttemptNavigatorClipboardRead(isSpecial);
+		return true;
+	},
+
+	_asyncAttemptNavigatorClipboardRead: async function(isSpecial) {
 		var that = this;
 		var clipboard = navigator.clipboard;
 		if (L.Browser.cypressTest) {
 			clipboard = this._dummyClipboard;
 		}
-		clipboard.read().then(function(clipboardContents) {
-			if (isSpecial) {
-				that._navigatorClipboardPasteSpecial = true;
-			}
-			that._navigatorClipboardReadCallback(clipboardContents);
-		}, function(error) {
+		let clipboardContents;
+		try {
+			clipboardContents = await clipboard.read();
+		} catch (error) {
 			window.app.console.log('navigator.clipboard.read() failed: ' + error.message);
 			if (isSpecial) {
 				// Fallback to the old code, as in filterExecCopyPaste().
@@ -986,8 +961,43 @@ L.Clipboard = L.Class.extend({
 				// Fallback to the old code, as in _execCopyCutPaste().
 				that._afterCopyCutPaste('paste');
 			}
-		});
-		return true;
+			return;
+		}
+
+		if (isSpecial) {
+			that._navigatorClipboardPasteSpecial = true;
+		}
+
+		if (clipboardContents.length < 1) {
+			window.app.console.log('navigator.clipboard has no clipboard items');
+			return;
+		}
+
+		var clipboardContent = clipboardContents[0];
+
+		var that = this;
+		if (clipboardContent.types.includes('text/html')) {
+			let blob;
+			try {
+				blob = await clipboardContent.getType('text/html');
+			} catch (error) {
+				window.app.console.log('clipboardContent.getType(text/html) failed: ' + error.message);
+				return;
+			}
+			that._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'text/html');
+		} else if (clipboardContent.types.includes('text/plain')) {
+			let blob;
+			try {
+				blob = await clipboardContent.getType('text/plain');
+			} catch (error) {
+				window.app.console.log('clipboardContent.getType(text/plain) failed: ' + error.message);
+				return;
+			}
+			that._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'text/plain');
+		} else {
+			window.app.console.log('navigator.clipboard has no text/html or text/plain');
+			return;
+		}
 	},
 
 	// Pull UNO clipboard commands out from menus and normal user input.
