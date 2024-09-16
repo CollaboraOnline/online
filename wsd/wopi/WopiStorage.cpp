@@ -627,7 +627,12 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     setRootFilePath(Poco::Path(getLocalRootPath(), getFileInfo().getFilename()).toString());
     setRootFilePathAnonym(COOLWSD::anonymizeUrl(getRootFilePath()));
 
-    if (!FileUtil::checkDiskSpace(getRootFilePath()))
+    // Make sure the path is valid.
+    const Poco::Path downloadPath = Poco::Path(getRootFilePath()).parent();
+    Poco::File(downloadPath).createDirectories();
+
+    // Check for available space.
+    if (!FileUtil::checkDiskSpace(downloadPath.toString()))
     {
         throw StorageSpaceLowException("Low disk space for " + getRootFilePathAnonym());
     }
