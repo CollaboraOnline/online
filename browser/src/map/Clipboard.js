@@ -834,14 +834,38 @@ L.Clipboard = L.Class.extend({
 			while (that._commandCompletion.length > 0)
 			{
 				let a = that._commandCompletion.shift();
-				a.resolve(a.fetch().then(function(text) {
-					const content = that.parseClipboard(text)[a.shorttype];
-					const blob = new Blob([content], { 'type': a.mimetype });
-					console.log('Generate blob of type ' + a.mimetype + ' from ' +a.shorttype + ' text: ' +content);
-					return blob;
-				}));
+				a.resolve();
 			}
 		}
+	},
+
+	_sendCommandAndWaitForCompletion: function(command) {
+		if (command !== '.uno:Copy' && command !== '.uno:Cut') {
+			throw `_sendCommandAndWaitForCompletion was called with '${command}', but anything except Copy or Cut will never complete`;
+		}
+
+		if (this._commandCompletion.length > 0) {
+			throw 'Already have ' + this._commandCompletion.length +
+				' pending clipboard command(s)';
+		}
+
+		app.socket.sendMessage('uno ' + command);
+
+		return new Promise((resolve, reject) => {
+			window.app.console.log('New ' + command + ' promise');
+			// FIXME: add a timeout cleanup too ...
+			this._commandCompletion.push({
+				resolve: resolve,
+				reject: reject,
+			});
+		});
+	},
+
+	_parseClipboardFetchResult: function(text, mimetype, shorttype) {
+		const content = this.parseClipboard(text)[shorttype];
+		const blob = new Blob([content], { 'type': mimetype });
+		console.log('Generate blob of type ' + mimetype + ' from ' + shorttype + ' text: ' + content);
+		return blob;
 	},
 
 	// Executes the navigator.clipboard.write() call, if it's available.
@@ -855,7 +879,7 @@ L.Clipboard = L.Class.extend({
 		}
 
 		const command = this._unoCommandForCopyCutPaste;
-		app.socket.sendMessage('uno ' + command);
+		const commandCompletion = this._sendCommandAndWaitForCompletion(command);
 
 		// This is sent down the websocket URL which can race with the
 		// web fetch - so first step is to wait for the result of
@@ -864,31 +888,15 @@ L.Clipboard = L.Class.extend({
 
 		const that = this;
 
-		if (that._commandCompletion.length > 0)
-			window.app.console.error('Already have ' + that._commandCompletion.length +
-						 ' pending clipboard command(s)');
-
 		const url = that.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
 
-		// Share a single fetch
-		var fetchPromise = function() {
-			return new Promise((resolve, reject) => {
-				try {
-					var result = fetch(url).then(response => response.text());
-					resolve(result);
-				} catch (err) {
-					reject(err);
-				}
-			});
-		};
-
+		// TODO: Share a single fetch
 		var awaitPromise = function(url, mimetype, shorttype) {
-			return new Promise((resolve, reject) => {
-				window.app.console.log('New ' + command + ' promise');
-				// FIXME: add a timeout cleanup too ...
-				that._commandCompletion.push({ fetch: fetchPromise, command: command,
-							       resolve: resolve, reject: reject,
-							       mimetype: mimetype, shorttype: shorttype});
+			return new Promise(async (resolve, reject) => {
+				await commandCompletion;
+				var result = await fetch(url);
+				var text = await result.text();
+				resolve(_parseClipboardFetchResult(text, mimetype, shorttype));
 		}); };
 
 		const text = new ClipboardItem({
