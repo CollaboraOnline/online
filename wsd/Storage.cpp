@@ -270,7 +270,12 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
         throw BadRequestException("Invalid URI: " + getUri().toString());
     }
 
-    if (!FileUtil::checkDiskSpace(getRootFilePath()))
+    // Make sure the path is valid.
+    const Poco::Path downloadPath = Poco::Path(getRootFilePath()).parent();
+    Poco::File(downloadPath).createDirectories();
+
+    // Check for available space.
+    if (!FileUtil::checkDiskSpace(downloadPath.toString()))
     {
         throw StorageSpaceLowException("Low disk space for " + getRootFilePathAnonym());
     }
