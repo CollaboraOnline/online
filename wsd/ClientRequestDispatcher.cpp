@@ -926,17 +926,20 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
-    // If we succeeded - remove the request header from our input buffer
-    socket->eraseFirstInputBytes(map._headerSize);
-    // Some handlers, like handleClientProxyRequest, used in the richdocumentscode
-    // Nextcloud 'Built-in CODE Server' case, launch a task that will consume the
-    // message contents later, while some like the file server, have already handled
-    // the message and we need to discard the message contents (cool.html POST) now
-    // because we expect multiple requests per socket
-    if (served)
+    if( socket->getInBuffer().size() > 0 ) // buffer may have been cleared already due to ignoreInput
     {
-        //remove the request body from our input buffer
-        socket->eraseFirstInputBytes(map._messageSize - map._headerSize);
+        // If we succeeded - remove the request header from our input buffer
+        socket->eraseFirstInputBytes(map._headerSize);
+        // Some handlers, like handleClientProxyRequest, used in the richdocumentscode
+        // Nextcloud 'Built-in CODE Server' case, launch a task that will consume the
+        // message contents later, while some like the file server, have already handled
+        // the message and we need to discard the message contents (cool.html POST) now
+        // because we expect multiple requests per socket
+        if (served)
+        {
+            //remove the request body from our input buffer
+            socket->eraseFirstInputBytes(map._messageSize - map._headerSize);
+        }
     }
 #else // !MOBILEAPP
     Poco::Net::HTTPRequest request;
