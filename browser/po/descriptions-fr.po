@@ -79,15 +79,18 @@ msgstr "Microsoft Office 97/2000/XP/2003 (.doc, .ppt, .xls, .dot, .xlt, .pps)"
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:31-1
 msgid "Report issues:"
-msgstr ""
+msgstr "Signalement d'incident :"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:35-1
 msgid ""
-"Use the bugtracker and attach any files that caused problems via <a href="
-"\"https://col.la/android\"> https://col.la/android</a>. Please note that "
-"anything you enter in the bugtracker will be public."
+"Use the bugtracker and attach any files that caused problems via <a "
+"href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
+"that anything you enter in the bugtracker will be public."
 msgstr ""
+"Utiliser le bugtracker et joindre les fichiers qui ont causé des problèmes "
+"via <a href=\"https://col.la/android\"> https://col.la/android</a>. Veuillez "
+"noter que tout ce que vous entrez dans le bugtracker sera public."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
@@ -127,7 +130,7 @@ msgstr "License :"
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:56-1
 msgid "Open Source - Mozilla Public License v2 and other"
-msgstr ""
+msgstr "Open Source - Mozilla Public License v2 et autres"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:60-1
