@@ -164,10 +164,6 @@ public:
     /// Returns true if this socket has been closed, i.e. rejected from polling and potentially shutdown
     bool isClosed() const { return !_open; }
 
-    /// Create socket of the given type.
-    /// return >= 0 for a successfully created socket, -1 on error
-    static int createSocket(Type type);
-
     void setClientAddress(const std::string& address)
     {
         _clientAddress = address;
@@ -391,6 +387,10 @@ protected:
     void setClosed(SocketDisposition &disposition) { setClosed(); disposition.setClosed(); }
 
 private:
+    /// Create socket of the given type.
+    /// return >= 0 for a successfully created socket, -1 on error
+    static int createSocket(Type type);
+
     void init(Type type)
     {
         if (type != Type::Unix)
