@@ -2210,9 +2210,11 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
     _nextStorageAttrs.reset();
 
     _storageManager.markLastUploadRequestTime();
-    _storage->uploadLocalFileToStorageAsync(session->getAuthorization(), *_lockCtx, saveAsPath,
-                                            saveAsFilename, isRename, _lastStorageAttrs, *_poll,
-                                            asyncUploadCallback);
+    const std::size_t size = _storage->uploadLocalFileToStorageAsync(
+        session->getAuthorization(), *_lockCtx, saveAsPath, saveAsFilename, isRename,
+        _lastStorageAttrs, *_poll, asyncUploadCallback);
+
+    _storageManager.setSizeAsUploaded(size);
 }
 
 void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult)
