@@ -263,6 +263,13 @@ class AnimatedElement {
 	private slideRenderer: SlideRenderer;
 	private bIsValid: boolean = false;
 
+	public static readonly SupportedProperties = new Set<string>([
+		'x',
+		'y',
+		'opacity',
+		'visibility',
+	]);
+
 	constructor(
 		sId: string,
 		slideHash: string,
