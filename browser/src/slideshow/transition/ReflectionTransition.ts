@@ -18,8 +18,7 @@ class ReflectionTransition extends SimpleTransition {
 	}
 	// TODO - remove code duplication
 	/* jscpd:ignore-start */
-	public displaySlides_(): void {
-		const t = this.time;
+	public displaySlides_(t: number): void {
 		this.applyAllOperation(t);
 
 		if (t < 0.5) {

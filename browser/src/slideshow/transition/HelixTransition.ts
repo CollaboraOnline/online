@@ -17,8 +17,7 @@ class HelixTransition extends SimpleTransition {
 		super(transitionParameters);
 	}
 
-	public displaySlides_(): void {
-		const t = this.time;
+	public displaySlides_(t: number): void {
 		this.applyAllOperation(t);
 		if (t < 0.5)
 			this.displayPrimitive(
