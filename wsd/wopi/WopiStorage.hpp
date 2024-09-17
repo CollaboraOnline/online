@@ -205,11 +205,11 @@ public:
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
                                            const std::string& templateUri) override;
 
-    void uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
-                                       const std::string& saveAsPath,
-                                       const std::string& saveAsFilename, const bool isRename,
-                                       const Attributes&, SocketPoll& socketPoll,
-                                       const AsyncUploadCallback& asyncUploadCallback) override;
+    std::size_t
+    uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
+                                  const std::string& saveAsPath, const std::string& saveAsFilename,
+                                  const bool isRename, const Attributes&, SocketPoll& socketPoll,
+                                  const AsyncUploadCallback& asyncUploadCallback) override;
 
     /// Total time taken for making WOPI calls during uploading.
     std::chrono::milliseconds getWopiSaveDuration() const { return _wopiSaveDuration; }
