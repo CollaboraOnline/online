@@ -1052,20 +1052,7 @@ bool DocumentBroker::download(
                                  << _storageManager.getLastModifiedTime()
                                  << ", Actual: " << fileInfo.getLastModifiedTime());
 
-            _documentChangedInStorage = true;
-            // Do not reload the document ("close: documentconflict") if there are
-            // any changes in the loaded document, either saved or unsaved.
-            const std::string message =
-                (_lastStorageAttrs.isUserModified() || _currentStorageAttrs.isUserModified() ||
-                 isPossiblyModified())
-                    ? "error: cmd=storage kind=documentconflict"
-                    : "close: documentconflict";
-
-            if (session)
-            {
-                session->sendTextFrame(message);
-                broadcastMessage(message);
-            }
+            handleDocumentConflict();
         }
     }
 
@@ -2498,41 +2485,48 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
              || uploadResult.getResult() == StorageBase::UploadResult::Result::CONFLICT)
     {
         LOG_ERR("PutFile says that Document [" << _docKey << "] changed in storage");
-        _documentChangedInStorage = true;
-        // Do not reload the document ("close: documentconflict") if there are
-        // any changes in the loaded document, either saved or unsaved.
-        const std::string message = (_lastStorageAttrs.isUserModified() ||
-                                     _currentStorageAttrs.isUserModified() || isPossiblyModified())
-                                        ? "error: cmd=storage kind=documentconflict"
-                                        : "close: documentconflict";
-
-        const std::size_t activeClients = broadcastMessage(message);
         broadcastSaveResult(false, "Conflict: Document changed in storage",
                             uploadResult.getReason());
-        LOG_TRC("There are " << activeClients
-                             << " active clients after broadcasting documentconflict");
-        if (activeClients == 0)
-        {
-            // No clients were contacted; we will never resolve this conflict.
-            LOG_WRN("The document ["
-                    << _docKey
-                    << "] could not be uploaded to storage because there is a newer version there, "
-                       "and no active clients exist to resolve the conflict"
-#if !MOBILEAPP
-                    << (_storage && _quarantine && _quarantine->isEnabled()
-                            ? ". The document should be recoverable from the quarantine. "
-                            : ", but Quarantine is disabled. ")
-#else
-                    << ". "
-#endif // !MOBILEAPP
-                    << "Stopping.");
-            stop("conflict");
-        }
+        handleDocumentConflict();
     }
 
     // We failed to upload, merge the last attributes into the current one.
     _currentStorageAttrs.merge(_lastStorageAttrs);
     _lastStorageAttrs.reset();
+}
+
+void DocumentBroker::handleDocumentConflict()
+{
+    _documentChangedInStorage = true;
+
+    // Do not reload the document ("close: documentconflict") if there are
+    // any changes in the loaded document, either saved or unsaved.
+    const std::string message = (_lastStorageAttrs.isUserModified() ||
+                                 _currentStorageAttrs.isUserModified() || isPossiblyModified())
+                                    ? "error: cmd=storage kind=documentconflict"
+                                    : "close: documentconflict";
+
+    const std::size_t activeClients = broadcastMessage(message);
+    LOG_TRC("There are " << activeClients << " active clients after broadcasting documentconflict");
+    if (activeClients == 0)
+    {
+        // No clients were contacted; we will never resolve this conflict.
+        LOG_WRN(
+            "The document [" << _docKey
+                             << "] could not be uploaded to storage because there is a newer "
+                                "version there, and no active clients exist to resolve the conflict"
+#if !MOBILEAPP
+                             << (_storage && _quarantine && _quarantine->isEnabled()
+                                     ? ". The document should be recoverable from the quarantine. "
+                                     : ", but Quarantine is disabled. ")
+#else
+                             << ". "
+#endif // !MOBILEAPP
+                             << "Stopping.");
+
+        // Nothing more to do.
+        stop("conflict");
+    }
 }
 
 void DocumentBroker::broadcastSaveResult(bool success, const std::string& result, const std::string& errorMsg)
