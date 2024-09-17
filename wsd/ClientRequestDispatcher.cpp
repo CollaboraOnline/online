@@ -748,7 +748,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                             unlockImageUri.getScheme() + "://" + unlockImageUri.getAuthority();
                         ProxyRequestHandler::handleRequest(
                             uri.substr(pos + sizeof("/remote/static") - 1), socket, serverUri);
-                        served = true;
+                        servedSync = true;
                     }
                 }
 #endif
