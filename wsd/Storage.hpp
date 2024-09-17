@@ -406,11 +406,12 @@ public:
     /// Writes the contents of the file back to the source asynchronously, if possible.
     /// @param savedFile When the operation was saveAs, this is the path to the file that was saved.
     /// @param asyncUploadCallback Used to communicate the result back to the caller.
-    virtual void uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
-                                               const std::string& saveAsPath,
-                                               const std::string& saveAsFilename,
-                                               const bool isRename, const Attributes&, SocketPoll&,
-                                               const AsyncUploadCallback& asyncUploadCallback) = 0;
+    /// @returns The size of the document.
+    virtual std::size_t
+    uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
+                                  const std::string& saveAsPath, const std::string& saveAsFilename,
+                                  const bool isRename, const Attributes&, SocketPoll&,
+                                  const AsyncUploadCallback& asyncUploadCallback) = 0;
 
     /// Get the progress state of an asynchronous LocalFileToStorage upload.
     virtual AsyncUpload queryLocalFileToStorageAsyncUploadState()
@@ -551,11 +552,11 @@ public:
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
                                            const std::string& templateUri) override;
 
-    void uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
-                                       const std::string& saveAsPath,
-                                       const std::string& saveAsFilename, const bool isRename,
-                                       const Attributes&, SocketPoll&,
-                                       const AsyncUploadCallback& asyncUploadCallback) override;
+    std::size_t
+    uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
+                                  const std::string& saveAsPath, const std::string& saveAsFilename,
+                                  const bool isRename, const Attributes&, SocketPoll&,
+                                  const AsyncUploadCallback& asyncUploadCallback) override;
 
 private:
 #if !MOBILEAPP

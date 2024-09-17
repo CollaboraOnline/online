@@ -347,17 +347,16 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
 #endif
 }
 
-void LocalStorage::uploadLocalFileToStorageAsync(const Authorization& /*auth*/,
-                                                 LockContext& /*lockCtx*/,
-                                                 const std::string& /*saveAsPath*/,
-                                                 const std::string& /*saveAsFilename*/,
-                                                 bool /*isRename*/, const Attributes&, SocketPoll&,
-                                                 const AsyncUploadCallback& asyncUploadCallback)
+std::size_t LocalStorage::uploadLocalFileToStorageAsync(
+    const Authorization& /*auth*/, LockContext& /*lockCtx*/, const std::string& /*saveAsPath*/,
+    const std::string& /*saveAsFilename*/, bool /*isRename*/, const Attributes&, SocketPoll&,
+    const AsyncUploadCallback& asyncUploadCallback)
 {
     const std::string path = getUri().getPath();
 
     // Assume failure by default.
     UploadResult res = UploadResult(UploadResult::Result::FAILED, "Internal error");
+    std::size_t size = 0;
     try
     {
         LOG_TRC("Copying local file to local file storage (isCopy: " << _isCopy << ") for "
@@ -367,10 +366,12 @@ void LocalStorage::uploadLocalFileToStorageAsync(const Authorization& /*auth*/,
         if (_isCopy && Poco::File(getRootFilePathUploading()).exists())
             FileUtil::copyFileTo(getRootFilePathUploading(), path);
 
+        const FileUtil::Stat stat(path);
+        size = stat.size();
+
         // update its fileinfo object. This is used later to check if someone else changed the
         // document while we are/were editing it
-        setLastModifiedTime(
-            Util::getIso8601FracformatTime(FileUtil::Stat(path).modifiedTimepoint()));
+        setLastModifiedTime(Util::getIso8601FracformatTime(stat.modifiedTimepoint()));
         LOG_TRC("New FileInfo modified time in storage " << getLastModifiedTime());
         res = UploadResult(UploadResult::Result::OK);
     }
@@ -382,7 +383,11 @@ void LocalStorage::uploadLocalFileToStorageAsync(const Authorization& /*auth*/,
     }
 
     if (asyncUploadCallback)
+    {
         asyncUploadCallback(AsyncUpload(AsyncUpload::State::Complete, std::move(res)));
+    }
+
+    return size;
 }
 
 void LockContext::initSupportsLocks()
