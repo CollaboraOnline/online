@@ -482,6 +482,7 @@ class SlideRendererGl extends SlideRenderer {
 				gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 				this.updateTexture(video.getTexture(), video.videoElement);
 				gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+				gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
 			}
 		}
 
