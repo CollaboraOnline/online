@@ -432,6 +432,9 @@ class SlideShowHandler {
 			return true;
 		}
 
+		ANIMDBG.print(
+			`SlideShowHandler.nextEffect: current effect: ${this.nCurrentEffect}`,
+		);
 		if (this.isAnyEffectPlaying()) {
 			this.skipAllPlayingEffects();
 			return true;

@@ -729,7 +729,12 @@ abstract class BaseNode {
 			sInfo += ';  is container: ' + this.isContainer();
 
 			// begin
-			if (this.getBegin()) sInfo += ';  begin: ' + this.getBegin().info();
+			if (this.getBegin()) {
+				if (this.getBegin().getEventType() === EventTrigger.OnNext)
+					// on click starts the next effect
+					sInfo += ';  \x1B[31mbegin: ' + this.getBegin().info() + '\x1B[m';
+				else sInfo += ';  begin: ' + this.getBegin().info();
+			}
 
 			// duration
 			if (this.getDuration()) sInfo += ';  dur: ' + this.getDuration().info();
@@ -748,6 +753,14 @@ abstract class BaseNode {
 			// repeatCount
 			if (this.getRepeatCount() && this.getRepeatCount() != 1.0)
 				sInfo += ';  repeatCount: ' + this.getRepeatCount();
+
+			// preset id (effect type)
+			if (this.aNodeInfo.presetId)
+				sInfo += `; \x1B[31mpresetId: ${this.aNodeInfo.presetId}\x1B[m`;
+
+			// preset subType
+			if (this.aNodeInfo.presetSubType)
+				sInfo += `; presetSubType: ${this.aNodeInfo.presetSubType}`;
 
 			// accelerate
 			if (this.getAccelerateValue())
