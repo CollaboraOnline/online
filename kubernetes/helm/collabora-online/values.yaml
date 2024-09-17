@@ -236,6 +236,37 @@ autoscaling:
   targetMemoryUtilizationPercentage: 50
   scaleDownDisabled: false
 
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+# note: if enabled to need to allow ingress controller namespaceSelector so that CNIs can allow ingress to collabora traffic
+# - namespaceSelector:
+#   matchLabels:
+#     kubernetes.io/metadata.name: your-ingress-controller-namespace
+networkPolicy:
+  enabled: false
+  # ingress:
+  #   - ipBlock:
+  #       cidr: 172.17.0.0/16
+  #       except:
+  #       - 172.17.1.0/24
+  #   - namespaceSelector:
+  #       matchLabels:
+  #         project: myproject
+  #   - podSelector:
+  #       matchLabels:
+  #         role: mypodSelector
+  #   - ports:
+  #     - protocol: TCP
+  #       port: 8080
+  #     - protocol: TCP
+  #       port: 8000
+  #
+  # egress:
+  #   - ipBlock:
+  #       cidr: 10.0.0.0/24
+  #   - ports:
+  #     - protocol: TCP
+  #       port: 5978
+
 podDisruptionBudget:
   enabled: false
   # minAvailable: 1
