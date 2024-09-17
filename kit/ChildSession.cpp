@@ -11,6 +11,7 @@
 
 #include <config.h>
 
+#define LIBO_INTERNAL_ONLY
 #include "Kit.hpp"
 #include "ChildSession.hpp"
 #include "MobileApp.hpp"

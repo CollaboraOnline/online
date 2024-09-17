@@ -9,6 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#define LIBO_INTERNAL_ONLY
 #import <LibreOfficeKit/LibreOfficeKitInit.h>
 
 #import "ios.h"
