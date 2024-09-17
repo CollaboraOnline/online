@@ -81,6 +81,7 @@ class SlideShowHandler {
 	private automaticAdvanceTimeout: number | { rewindedEffect: number };
 	private enteringSlideTexture: WebGLTexture | ImageBitmap;
 	public isStarting: boolean;
+	private bIsFirstAutoEffectRunning: boolean = false;
 
 	constructor() {
 		this.aTimer = new ElapsedTime();
@@ -418,11 +419,16 @@ class SlideShowHandler {
 	 *  @return {Boolean}
 	 *      False if there is no more effect to start, true otherwise.
 	 */
-	nextEffect() {
+	nextEffect(): boolean {
 		if (!this.isEnabled()) return false;
 
 		if (this.isTransitionPlaying()) {
 			this.skipTransition();
+			return true;
+		}
+
+		if (this.isFirstAutoEffectRunning()) {
+			this.skipFirstAutoEffect();
 			return true;
 		}
 
@@ -494,8 +500,11 @@ class SlideShowHandler {
 	 */
 	skipNextEffect(): boolean {
 		if (this.bIsSkipping || this.bIsRewinding) return true;
+		ANIMDBG.print(
+			`SlideShowHandler.skipNextEffect: current effect: ${this.nCurrentEffect}`,
+		);
 
-		assert(!this.isAnyEffectPlaying(), 'SlideShow.skipNextEffect');
+		assert(!this.isAnyEffectPlaying(), 'SlideShowHandler.skipNextEffect');
 
 		if (!this.aNextEffectEventArray) return false;
 
@@ -525,6 +534,11 @@ class SlideShowHandler {
 			return true;
 		}
 
+		if (this.isFirstAutoEffectRunning()) {
+			this.skipFirstAutoEffect();
+			return true;
+		}
+
 		if (this.isAnyEffectPlaying()) return this.skipAllPlayingEffects();
 		else return this.skipNextEffect();
 	}
@@ -544,6 +558,10 @@ class SlideShowHandler {
 
 		if (this.isTransitionPlaying()) {
 			this.skipTransition();
+		}
+
+		if (this.isFirstAutoEffectRunning()) {
+			this.skipFirstAutoEffect();
 		}
 
 		if (this.isAnyEffectPlaying()) {
@@ -680,6 +698,10 @@ class SlideShowHandler {
 	 */
 	rewindToPreviousSlide() {
 		NAVDBG.print('SlideShowHandler.rewindToPreviousSlide');
+		if (this.isFirstAutoEffectRunning()) {
+			this.rewindFirstAutoEffect();
+		}
+
 		if (this.isTransitionPlaying()) {
 			this.rewindTransition();
 			return;
@@ -753,6 +775,10 @@ class SlideShowHandler {
 
 		if (this.isTransitionPlaying()) {
 			this.skipTransition();
+		}
+
+		if (this.isFirstAutoEffectRunning()) {
+			this.skipFirstAutoEffect();
 		}
 
 		if (this.slideRenderer.isAnyVideoPlaying) {
@@ -914,5 +940,35 @@ class SlideShowHandler {
 		transitionParameters.slideInfo = this.getSlideInfo(nNewSlide);
 
 		return transitionParameters;
+	}
+
+	public notifyFirstAutoEffectStarted() {
+		console.debug('SlideShowHandler.notifyFirstAutoEffectStarted');
+		this.bIsFirstAutoEffectRunning = true;
+	}
+
+	public notifyFirstAutoEffectEnded() {
+		console.debug('SlideShowHandler.notifyFirstAutoEffectEnded');
+		this.bIsFirstAutoEffectRunning = false;
+	}
+
+	public isFirstAutoEffectRunning() {
+		return this.bIsFirstAutoEffectRunning;
+	}
+
+	private skipFirstAutoEffect() {
+		console.debug('SlideShowHandler.skipFirstAutoEffect');
+		this.bIsSkipping = true;
+		this.aEventMultiplexer.notifySkipEffectEvent();
+		this.update();
+		this.bIsSkipping = false;
+		// empty body
+	}
+
+	private rewindFirstAutoEffect() {
+		this.bIsRewinding = true;
+		this.aEventMultiplexer.notifyRewindCurrentEffectEvent();
+		this.update();
+		this.bIsRewinding = false;
 	}
 }
