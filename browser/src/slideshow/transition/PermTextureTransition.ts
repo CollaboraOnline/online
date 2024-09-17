@@ -113,11 +113,8 @@ class PermTextureTransition extends SimpleTransition {
 		);
 	}
 
-	public displaySlides_(): void {
-		this.gl.uniform1f(
-			this.gl.getUniformLocation(this.program, 'time'),
-			this.time,
-		);
+	public displaySlides_(t: number): void {
+		this.gl.uniform1f(this.gl.getUniformLocation(this.program, 'time'), t);
 
 		this.setBufferData(this.leavingPrimitives[0].vertices);
 		this.gl.activeTexture(this.gl.TEXTURE0);
