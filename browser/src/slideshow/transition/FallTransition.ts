@@ -17,8 +17,7 @@ class FallTransition extends SimpleTransition {
 		super(transitionParameters);
 	}
 
-	public displaySlides_(): void {
-		const t = this.time;
+	public displaySlides_(t: number): void {
 		this.applyAllOperation(t);
 		this.displayPrimitive(
 			t,
