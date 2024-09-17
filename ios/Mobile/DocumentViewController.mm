@@ -28,10 +28,14 @@
 #import "MobileApp.hpp"
 #import "SigUtil.hpp"
 #import "Util.hpp"
+#import "Clipboard.hpp"
 
 #import "DocumentViewController.h"
 
-@interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, UIScrollViewDelegate, UIDocumentPickerDelegate, UIFontPickerViewControllerDelegate> {
+#import <MobileCoreServices/UTCoreTypes.h>
+#import <Poco/MemoryStream.h>
+
+@interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, WKScriptMessageHandlerWithReply, UIScrollViewDelegate, UIDocumentPickerDelegate, UIFontPickerViewControllerDelegate> {
     int closeNotificationPipeForForwardingThread[2];
     NSURL *downloadAsTmpURL;
 }
@@ -87,6 +91,7 @@ static IMP standardImpOfInputAccessoryView = nil;
     [userContentController addScriptMessageHandler:self name:@"debug"];
     [userContentController addScriptMessageHandler:self name:@"lok"];
     [userContentController addScriptMessageHandler:self name:@"error"];
+    [userContentController addScriptMessageHandlerWithReply:self contentWorld:[WKContentWorld pageWorld] name:@"clipboard"];
 
     configuration.userContentController = userContentController;
 
@@ -287,6 +292,152 @@ static IMP standardImpOfInputAccessoryView = nil;
     // Fix issue #5876 by closing the document if the content process dies
     [self bye];
     LOG_ERR("WebContent process terminated! Is closing the document enough?");
+}
+
+// This is the same method as Java_org_libreoffice_androidlib_LOActivity_getClipboardContent, with minimal editing to work with objective C
+- (bool)getClipboardWithTypesPlain:(out NSString ** _Nullable)plain HTML:(out NSString ** _Nullable)html {
+    const char** mimeTypes = nullptr;
+    size_t outCount = 0;
+    char  **outMimeTypes = nullptr;
+    size_t *outSizes = nullptr;
+    char  **outStreams = nullptr;
+    bool bResult = false;
+
+    if (DocumentData::get(self.document->appDocId).loKitDocument->getClipboard(mimeTypes,
+                                                     &outCount, &outMimeTypes,
+                                                     &outSizes, &outStreams))
+    {
+        // return early
+        if (outCount == 0)
+            return bResult;
+
+        for (size_t i = 0; i < outCount; ++i)
+        {
+            // Create new LokClipboardEntry instance
+            
+            if (strcmp(outMimeTypes[i], "text/html") == 0) {
+                *html = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
+            } else {
+                *plain = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
+            }
+        }
+        bResult = true;
+    }
+    else
+        LOG_DBG("failed to fetch mime-types");
+
+    const char* mimeTypesHTML[] = { "text/plain;charset=utf-8", "text/html", nullptr };
+
+    if (DocumentData::get(self.document->appDocId).loKitDocument->getClipboard(mimeTypesHTML,
+                                                     &outCount, &outMimeTypes,
+                                                     &outSizes, &outStreams))
+    {
+        // return early
+        if (outCount == 0)
+            return bResult;
+
+        for (size_t i = 0; i < outCount; ++i)
+        {
+            // Create new LokClipboardEntry instance
+            
+            if (strcmp(outMimeTypes[i], "text/html") == 0) {
+                *html = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
+            } else {
+                *plain = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
+            }
+        }
+        bResult = true;
+    }
+    else
+        LOG_DBG("failed to fetch mime-types");
+
+    return bResult;
+}
+
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message replyHandler:(nonnull void (^)(id _Nullable, NSString * _Nullable))replyHandler {
+
+    if ([message.name isEqualToString:@"clipboard"]) {
+        if ([message.body isEqualToString:@"read"]) {
+            UIPasteboard * pasteboard = [UIPasteboard generalPasteboard];
+            
+            NSString * _Nullable plain = [pasteboard string];
+            NSData * htmlPayload = [pasteboard dataForPasteboardType:(NSString*)kUTTypeHTML];
+                        
+            NSData * plainPayload = [plain dataUsingEncoding:NSUTF8StringEncoding];
+
+            NSString * encodedPlainPayload = [plainPayload base64EncodedStringWithOptions:0];
+            NSString * encodedHtmlPayload = [htmlPayload base64EncodedStringWithOptions:0];
+            
+            replyHandler([NSString stringWithFormat:@"%@ %@", encodedPlainPayload, encodedHtmlPayload], nil);
+        } else if ([message.body isEqualToString:@"write"]) {
+            NSString * _Nullable plain;
+            NSString * _Nullable html;
+
+            bool success = [self getClipboardWithTypesPlain:&plain HTML:&html];
+            
+            if (!success) {
+                replyHandler(nil, @"Failed to get clipboard contents...");
+                return;
+            }
+            
+            UIPasteboard * pasteboard = [UIPasteboard generalPasteboard];
+            
+            NSMutableDictionary * pasteboardItem = [NSMutableDictionary dictionaryWithCapacity:2];
+            [pasteboardItem setValue:plain forKey:(NSString*)kUTTypeUTF8PlainText];
+            [pasteboardItem setValue:html forKey:(NSString*)kUTTypeHTML];
+
+            [pasteboard setItems:[NSArray arrayWithObject:pasteboardItem]];
+            
+            replyHandler(nil, nil);
+        } else if ([message.body hasPrefix:@"sendToInternal "]) {
+            ClipboardData data;
+            NSString * content = [message.body substringFromIndex:[@"sendToInternal " length]];
+            std::vector<char> html;
+            
+            size_t nInCount;
+            
+            if ([content hasPrefix:@"<!DOCTYPE html>"]) {
+                // Content is just HTML
+                const char * _Nullable content_cstr = [content cStringUsingEncoding:NSUTF8StringEncoding];
+                html = std::vector(content_cstr, content_cstr + [content lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
+                nInCount = 1;
+            } else {
+                Poco::MemoryInputStream stream([content cStringUsingEncoding:NSUTF8StringEncoding], [content lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
+                data.read(stream);
+                nInCount = data.size();
+            }
+            
+            std::vector<size_t> pInSizes(nInCount);
+            std::vector<const char*> pInMimeTypes(nInCount);
+            std::vector<const char*> pInStreams(nInCount);
+            
+            if (html.empty()) {
+                for (size_t i = 0; i < nInCount; ++i) {
+                    pInSizes[i] = data._content[i].length();
+                    pInStreams[i] = data._content[i].c_str();
+                    pInMimeTypes[i] = data._mimeTypes[i].c_str();
+                }
+            } else {
+                pInSizes[0] = html.size();
+                pInStreams[0] = html.data();
+                pInMimeTypes[0] = "text/html";
+            }
+            
+            if (!DocumentData::get(self.document->appDocId).loKitDocument->setClipboard(nInCount, pInMimeTypes.data(), pInSizes.data(),
+                                                                                        pInStreams.data())) {
+                LOG_ERR("set clipboard returned failure");
+                replyHandler(nil, @"set clipboard returned failure");
+            } else {
+                LOG_TRC("set clipboard succeeded");
+                replyHandler(nil, nil);
+            }
+        } else {
+            replyHandler(nil, [NSString stringWithFormat:@"Invalid clipboard action %@", message.body]);
+        }
+    } else {
+        LOG_ERR("Unrecognized kind of message received from WebView: " << [message.name UTF8String] << ":" << [message.body UTF8String]);
+        replyHandler(nil, [NSString stringWithFormat:@"Message of type %@ does not exist or is not replyable", message.name]);
+    }
 }
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
