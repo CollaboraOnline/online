@@ -10,6 +10,8 @@
 .yavide_proj
 .yavide_session
 .vscode
+Doxyfile.cpp.cfg
+doc/cpp/**
 **/.clangd
 **/.cache
 Makefile

@@ -690,6 +690,14 @@ $(abs_srcdir)/.clangd: config.d/clangd.am
 
 dot_clangd: $(abs_srcdir)/.clangd
 
+$(abs_srcdir)/Doxyfile.cpp.cfg: config.d/Doxyfile.cpp.in
+	@sed -e 's|@COOL_DIR@|${abs_srcdir}|g' -e 's|@LOKIT_DIR@|${LOKIT_PATH}|g' -e 's|@COOL_VERSION@|${COOLWSD_VERSION}|g' $< > $@
+
+doxygen: $(abs_srcdir)/Doxyfile.cpp.cfg
+	rm -rf doc/cpp
+	mkdir -p doc/cpp
+	doxygen $(abs_srcdir)/Doxyfile.cpp.cfg
+
 $(abs_srcdir)/.vscode/settings.json: config.d/vscode/settings.json.am
 	mkdir -p $(abs_srcdir)/.vscode
 	sed -e 's|@COOL_DIR@|${abs_srcdir}|g' -e 's|@LOKIT_DIR@|${LOKIT_PATH}|g' $< > $@
