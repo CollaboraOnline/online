@@ -13,6 +13,7 @@
 
 #if MOBILEAPP
 
+#define LIBO_INTERNAL_ONLY
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
 #include <Storage.hpp>
