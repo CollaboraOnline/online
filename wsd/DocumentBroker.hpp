@@ -1287,6 +1287,7 @@ private:
     public:
         StorageManager(std::chrono::milliseconds minTimeBetweenUploads)
             : _request(minTimeBetweenUploads)
+            , _sizeOnServer(0)
             , _sizeAsUploaded(0)
         {
             if (Log::traceEnabled())
@@ -1347,6 +1348,12 @@ private:
         /// Returns the last modified time of the document.
         const std::string& getLastModifiedTime() const { return _lastModifiedTime; }
 
+        /// Set size of the document as we've downloaded it, or after a successful upload.
+        void setSizeOnServer(std::size_t size) { _sizeOnServer = size; }
+
+        /// Get size of the document as we've downloaded it, or after a successful upload.
+        std::size_t getSizeOnServer() const { return _sizeOnServer; }
+
         /// Set size of the document as we've uploaded.
         /// Used to resynchronize after an upload failure that break reliance on the LastModifiedTime.
         void setSizeAsUploaded(std::size_t size) { _sizeAsUploaded = size; }
@@ -1386,6 +1393,7 @@ private:
             os << indent << "last upload was successful: " << std::boolalpha
                << lastUploadSuccessful();
             os << indent << "upload failure count: " << uploadFailureCount();
+            os << indent << "size on server: " << _sizeOnServer;
             os << indent << "last upload size: " << _sizeAsUploaded;
         }
 
@@ -1398,6 +1406,11 @@ private:
 
         /// The modified time of the document in storage, as reported by the server.
         std::string _lastModifiedTime;
+
+        /// The size of the document, as we downloaded from the server,
+        /// and after successfully uploading.
+        /// Used to help resynchronize the LastModifiedTime after an upload failure.
+        std::size_t _sizeOnServer;
 
         /// The size of the document as we uploaded to the server.
         /// Used to help resynchronize the LastModifiedTime after an upload failure.
