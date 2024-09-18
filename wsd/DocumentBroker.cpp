@@ -2614,6 +2614,17 @@ void DocumentBroker::setInteractive(bool value)
     }
 }
 
+void DocumentBroker::onViewLoaded(const std::shared_ptr<ClientSession>& session)
+{
+    // A view loaded.
+    if (UnitWSD::isUnitTesting())
+    {
+        UnitWSD::get().onDocBrokerViewLoaded(getDocKey(), session);
+    }
+
+    //TODO: Take the WOPI lock, if necessary.
+}
+
 std::shared_ptr<ClientSession> DocumentBroker::getWriteableSession() const
 {
     ASSERT_CORRECT_THREAD();
