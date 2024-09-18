@@ -21,6 +21,8 @@
 	--color-stylesview-background: white;
 	--brightness-stylesview: 0.9;
 
+	--color-canvas: #141414;
+
 	--color-primary: #0b87e7; /* border-color */
 	--color-primary-text: #fff; /* text color when primary-lighter is background */
 	--color-primary-dark: #0063b1;
@@ -48,6 +50,5 @@
 
 [data-bg-theme='dark'] {
 	--color-cursor-blink-background: #fff;
-	--color-canvas: #141414;
 	--color-background-document: #121212;
 }
