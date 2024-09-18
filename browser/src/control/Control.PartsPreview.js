@@ -467,7 +467,7 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 
 		var part = this._findClickedPart(e.target.parentNode);
-		if (part !== null) {
+		if (part !== -1) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 
 			if (app.file.fileBasedView) {
