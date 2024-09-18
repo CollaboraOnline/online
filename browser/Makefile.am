@@ -227,7 +227,7 @@ COOL_JS_LST =\
 	src/layer/tile/SheetSwitch.ts \
 	src/layer/Layer.js \
 	src/layer/tile/SheetGeometry.ts \
-	src/layer/tile/Premult.ts \
+	src/layer/tile/CanvasTileUtils.ts \
 	src/canvas/CanvasSectionProps.js \
 	src/canvas/CanvasSectionContainer.ts \
 	src/canvas/CanvasSectionObject.ts \
