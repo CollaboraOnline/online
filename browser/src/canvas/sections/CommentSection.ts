@@ -126,6 +126,9 @@ export class Comment extends CanvasSectionObject {
 
 		this.sectionProperties.isRemoved = false;
 		this.sectionProperties.children = []; // This is used for Writer comments. There is parent / child relationship between comments in Writer files.
+		this.sectionProperties.childLinesNode = null;
+		this.sectionProperties.childLines = [];
+		this.sectionProperties.childCommentOffset = 8;
 
 		this.convertRectanglesToCoreCoordinates(); // Convert rectangle coordiantes into core pixels on initialization.
 	}
@@ -221,6 +224,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'cool-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
 		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'cool-annotation-textarea', this.sectionProperties.nodeReply);
 		this.sectionProperties.nodeReplyText.id = 'annotation-reply-textarea-' + this.sectionProperties.data.id;
+		this.createChildLinesNode();
 
 		this.sectionProperties.container.style.visibility = 'hidden';
 
@@ -241,6 +245,8 @@ export class Comment extends CanvasSectionObject {
 		} else {
 			this.sectionProperties.wrapper = L.DomUtil.create('div', 'cool-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
 		}
+
+		this.sectionProperties.wrapper.style.marginLeft = this.sectionProperties.childCommentOffset*this.getChildLevel() + 'px';
 
 		if (!(<any>window).mode.isMobile())
 			document.getElementById('document-container').appendChild(this.sectionProperties.container);
@@ -303,6 +309,48 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.menu.dataset.title = divMenuTooltipText;
 		this.sectionProperties.menu.setAttribute('aria-label', divMenuTooltipText);
 		this.sectionProperties.menu.annotation = this;
+	}
+
+	private createChildLinesNode (): void {
+		this.sectionProperties.childLinesNode = L.DomUtil.create('div', '', this.sectionProperties.container);
+		this.sectionProperties.childLinesNode.id = 'annotation-child-lines-' + this.sectionProperties.data.id;
+		this.sectionProperties.childLinesNode.style.width = this.sectionProperties.childCommentOffset*(this.getChildLevel() + 1) + 'px';
+	}
+
+	public updateChildLines (): void {
+		if (!this.isContainerVisible())
+			return;
+		this.sectionProperties.wrapper.style.marginLeft =  this.sectionProperties.childCommentOffset*this.getChildLevel() + 'px';
+		this.sectionProperties.childLinesNode.style.width = this.sectionProperties.childCommentOffset*(this.getChildLevel() + 1) + 'px';
+
+		const childPositions = [];
+		for (let i = 0; i < this.sectionProperties.children.length; i++) {
+			if (this.sectionProperties.children[i].isContainerVisible())
+				childPositions.push({ id: this.sectionProperties.children[i].sectionProperties.data.id,
+									posY: this.sectionProperties.children[i].sectionProperties.container._leaflet_pos.y});
+		}
+		childPositions.sort((a, b) => { return a.posY - b.posY; });
+		let lastPosY = this.sectionProperties.container._leaflet_pos.y + this.getCommentHeight();
+		let i = 0;
+		for (; i < childPositions.length; i++) {
+			if (this.sectionProperties.childLines[i] === undefined) {
+				this.sectionProperties.childLines[i] = L.DomUtil.create('div', 'cool-annotation-child-line', this.sectionProperties.childLinesNode);
+				this.sectionProperties.childLines[i].id = 'annotation-child-line-' + this.sectionProperties.data.id + '-' + i;
+				this.sectionProperties.childLines[i].style.width = this.sectionProperties.childCommentOffset/2 + 'px';
+				// this.sectionProperties.childLines[i].style.borderStyle = 'none none dashed dashed';
+				// this.sectionProperties.childLines[i].style.borderWidth = 'thin';
+				// this.sectionProperties.childLines[i].style.borderColor = 'darkgray';
+			}
+			this.sectionProperties.childLines[i].style.marginLeft =  (this.sectionProperties.childCommentOffset*this.getChildLevel() + 4) + 'px';
+			this.sectionProperties.childLines[i].style.height = (childPositions[i].posY + 24 - lastPosY) + 'px';
+			lastPosY = childPositions[i].posY + 24;
+		}
+		if (i < this.sectionProperties.childLines.length) {
+			for (let j = i; j < this.sectionProperties.childLines.length; j++)
+				this.sectionProperties.childLinesNode.removeChild(this.sectionProperties.childLines[i]);
+			this.sectionProperties.childLines.splice(i);
+		}
+
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -1363,6 +1411,17 @@ export class Comment extends CanvasSectionObject {
 
 	public getIndexOfChild(comment: Comment): number {
 		return this.sectionProperties.children.indexOf(comment);
+	}
+
+	public getChildLevel(): number {
+		if (this.isRootComment()) return 0;
+		const parentComment = this.sectionProperties.commentListSection.getComment(this.getParentCommentId());
+		if (parentComment) return parentComment.getChildLevel() + 1;
+		return 1; // Comment list not fully initialized but we know we are not root
+	}
+
+	public getCommentHeight(): number {
+		return this.sectionProperties.container.getBoundingClientRect().height  - this.sectionProperties.childLinesNode.getBoundingClientRect().height;
 	}
 
 	public setCollapsed(): void {
