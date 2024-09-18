@@ -3097,6 +3097,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		control.style.visibility = 'hidden';
 
 		var temporaryParent = L.DomUtil.create('div');
+
+		// Remove the id of the to-be-removed control, so _makeIdUnique() won't rename
+		// data.id to something we can't find later.
+		control.id = '';
+
 		buildFunc.bind(this)(temporaryParent, [data], false);
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		var backupGridSpan = control.style.gridColumn;

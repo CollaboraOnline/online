@@ -482,6 +482,11 @@ class StatusBar extends JSDialog.Toolbar {
 				perm: state && this.map.isEditMode() ? "edit" : "readonly"
 			} });
 		}
+		else if (commandName === '.uno:Signature') {
+			// Use the same handler as the 'signaturestatus:' protocol message, which is
+			// sent right after document load.
+			this.map.onChangeSignStatus(state);
+		}
 	}
 
 	onLanguagesUpdated() {
