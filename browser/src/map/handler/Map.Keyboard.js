@@ -734,14 +734,17 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
-		if (this._isCtrlKey(e) && e.keyCode === this.keyCodes.Z) {
-			app.socket.sendMessage('uno .uno:Undo');
+		if (
+			(this._isCtrlKey(e) && e.keyCode === this.keyCodes.Y) ||
+			(this._isCtrlKey(e) && e.shiftKey && e.keyCode === this.keyCodes.Z)
+		) {
+			app.socket.sendMessage('uno .uno:Redo');
 			e.preventDefault();
 			return true;
 		}
 
-		if (this._isCtrlKey(e) && e.keyCode === this.keyCodes.Y) {
-			app.socket.sendMessage('uno .uno:Redo');
+		if (this._isCtrlKey(e) && e.keyCode === this.keyCodes.Z) {
+			app.socket.sendMessage('uno .uno:Undo');
 			e.preventDefault();
 			return true;
 		}
