@@ -138,7 +138,7 @@ public:
     static constexpr int MaximumSendBufferSize = 128 * 1024;
     static std::atomic<bool> InhibitThreadChecks;
 
-    enum Type { IPv4, IPv6, All, Unix };
+    enum class Type : uint8_t { IPv4, IPv6, All, Unix };
     static std::string toString(Type t);
 
     // NB. see other Socket::Socket by init below.
@@ -965,14 +965,14 @@ public:
     }
 };
 
-enum SharedFDType { SMAPS, URPToKit, URPFromKit };
+enum class SharedFDType : uint8_t { SMAPS, URPToKit, URPFromKit };
 
 /// A plain, non-blocking, data streaming socket.
 class StreamSocket : public Socket,
                      public std::enable_shared_from_this<StreamSocket>
 {
 public:
-    enum ReadType
+    enum class ReadType : uint8_t
     {
         NormalRead,
         UseRecvmsgExpectFD
@@ -980,7 +980,7 @@ public:
 
     /// Create a StreamSocket from native FD.
     StreamSocket(std::string host, const int fd, Type type, bool /* isClient */,
-                 ReadType readType = NormalRead) :
+                 ReadType readType = ReadType::NormalRead) :
         Socket(fd, type),
         _hostname(std::move(host)),
         _bytesSent(0),
@@ -1255,7 +1255,7 @@ public:
     template <typename TSocket>
     static std::shared_ptr<TSocket> create(std::string hostname, const int fd, Type type, bool isClient,
                                            std::shared_ptr<ProtocolHandlerInterface> handler,
-                                           ReadType readType = NormalRead)
+                                           ReadType readType = ReadType::NormalRead)
     {
         // Without a handler we make no sense object.
         if (!handler)
@@ -1323,8 +1323,9 @@ public:
 
     int getIncomingFD(SharedFDType eType) const
     {
-        if (eType < _incomingFDs.size())
-            return _incomingFDs[eType];
+        const size_t eTypeIdx = static_cast<size_t>(eType);
+        if (eTypeIdx < _incomingFDs.size())
+            return _incomingFDs[eTypeIdx];
         return -1;
     }
 
@@ -1582,9 +1583,9 @@ protected:
                 size_t fds_count = static_cast<size_t>(cmsg->cmsg_len - CMSG_LEN(0)) / sizeof(int);
                 int* fdsField = (int*)CMSG_DATA(cmsg);
                 fds.assign(fdsField, fdsField + fds_count);
-                if (_readType == UseRecvmsgExpectFD)
+                if (_readType == ReadType::UseRecvmsgExpectFD)
                 {
-                    _readType = NormalRead;
+                    _readType = ReadType::NormalRead;
                 }
             }
         }
@@ -1602,7 +1603,7 @@ protected:
             return -1;
 
 #if !MOBILEAPP
-        if (_readType == UseRecvmsgExpectFD)
+        if (_readType == ReadType::UseRecvmsgExpectFD)
             return readFDs(buf, len, _incomingFDs);
 
 #if ENABLE_DEBUG
@@ -1659,7 +1660,7 @@ private:
     uint64_t _bytesSent;
     uint64_t _bytesRecvd;
 
-    enum class WSState { HTTP, WS } _wsState;
+    enum class WSState : uint8_t { HTTP, WS } _wsState;
     static std::string toString(WSState t);
 
     /// True if we've received a Continue in response to an Expect: 100-continue

@@ -3865,7 +3865,7 @@ private:
 
             _pid = pid;
             _socketFD = socket->getFD();
-            child->setSMapsFD(socket->getIncomingFD(SMAPS));
+            child->setSMapsFD(socket->getIncomingFD(SharedFDType::SMAPS));
             _childProcess = child; // weak
 
             addNewChild(std::move(child));

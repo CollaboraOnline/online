@@ -98,8 +98,8 @@ public:
         , _jailId(jailId)
         , _smapsFD(-1)
     {
-        int urpFromKitFD = socket->getIncomingFD(URPFromKit);
-        int urpToKitFD = socket->getIncomingFD(URPToKit);
+        int urpFromKitFD = socket->getIncomingFD(SharedFDType::URPFromKit);
+        int urpToKitFD = socket->getIncomingFD(SharedFDType::URPToKit);
         if (urpFromKitFD != -1 && urpToKitFD != -1)
         {
             _urpFromKit = StreamSocket::create<StreamSocket>(

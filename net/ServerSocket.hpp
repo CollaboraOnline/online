@@ -39,7 +39,7 @@ public:
     }
 
     /// Control access to a bound TCP socket
-    enum Type { Local, Public };
+    enum class Type : uint8_t { Local, Public };
 
     /// Create a new server socket - accepted sockets will be added
     /// to the @clientSockets' poll when created with @factory.
