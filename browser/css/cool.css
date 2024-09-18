@@ -540,6 +540,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	width: 250px;
 }
 
+.cool-annotation.annotation-pop-up {
+	width: 75%;
+}
+
 .cool-annotation.tracked-deleted-comment-show {
 	opacity: 0.5;
 }
