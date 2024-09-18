@@ -731,57 +731,67 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				$(this.sectionProperties.selectedComment.sectionProperties.container).addClass('annotation-active');
 			}
 
+			this.scrollCommentIntoView(annotation);
+
 			const selectedComment = this.sectionProperties.selectedComment;
-			const docType = this.sectionProperties.docLayer._docType;
-			let position: Array<number> = null;
-
-			switch (docType) {
-				case 'text':
-				{
-					position = this.numberArrayToCorePixFromTwips(
-						selectedComment.sectionProperties.data.anchorPos, 0, 2);
-					break;
-				}
-
-				case 'spreadsheet':
-				{
-					// in calc comments are not visible on canvas, anchor vertical position is always 1
-					// position is already in core pixels
-					position = selectedComment.getPosition();
-					break;
-				}
-
-				default:
-					break;
-			}
-
-			if (position) {
-				const rectHeight = selectedComment.getCommentHeight();
-				const annotationTop = position[1];
-				const annotationHeight = this.cssToCorePixels(rectHeight);
-				const annotationBottom = position[1] + annotationHeight;
-
-				if (!this.isInViewPort([annotationTop, annotationBottom]) && position[1] !== 0 && annotation === selectedComment) {
-					console.debug('Annotation outside view - scroll');
-					const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
-					const screenTopBottom = this.getScreenTopBottom();
-
-					scrollSection.scrollVerticalWithOffset(
-						position[1] < 0 ? 0 : position[1] - screenTopBottom[1] + annotationHeight);
-
-					if (docType === 'spreadsheet' && selectedComment) {
-						selectedComment.positionCalcComment();
-						selectedComment.focus();
-					}
-				}
-			}
-
 			if (this.isCollapsed) {
 				this.showCollapsedReplies(idx);
 				selectedComment.updateThreadInfoIndicator();
 			}
 
 			this.update();
+		}
+	}
+
+	private scrollCommentIntoView (comment: Comment) {
+		const docType = this.sectionProperties.docLayer._docType;
+		let anchorPosition: Array<number> = null;
+		const rootComment = this.sectionProperties.commentList[this.getRootIndexOf(comment.sectionProperties.data.id)];
+
+		switch (docType) {
+			case 'text':
+			{
+				anchorPosition = this.numberArrayToCorePixFromTwips(
+					rootComment.sectionProperties.data.anchorPos, 0, 2);
+				break;
+			}
+
+			case 'spreadsheet':
+			{
+				// in calc comments are not visible on canvas, anchor vertical position is always 1
+				// position is already in core pixels
+				anchorPosition = rootComment.getPosition();
+				break;
+			}
+
+			default:
+				break;
+		}
+
+		if (anchorPosition && anchorPosition[1] > 0) {
+			let annotationTop = anchorPosition[1];
+			const firstIdx = this.getIndexOf(rootComment.sectionProperties.data.id);
+			const lastIdx = this.getIndexOf(comment.sectionProperties.data.id);
+			for (let i = firstIdx; i < lastIdx; i++) {
+				annotationTop += this.cssToCorePixels(this.sectionProperties.commentList[i].getCommentHeight());
+			}
+			const annotationBottom = annotationTop + this.cssToCorePixels(comment.getCommentHeight());
+
+			if (!this.isInViewPort([annotationTop, annotationBottom])) {
+				const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+				const screenTopBottom = this.getScreenTopBottom();
+
+				if (annotationTop < screenTopBottom[0]) {
+					scrollSection.scrollVerticalWithOffset(annotationTop - screenTopBottom[0]);
+				}
+				else
+					scrollSection.scrollVerticalWithOffset(annotationBottom - screenTopBottom[1]);
+
+				if (docType === 'spreadsheet' && rootComment) {
+					rootComment.positionCalcComment();
+					rootComment.focus();
+				}
+			}
 		}
 	}
 
