@@ -2252,21 +2252,40 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         {
             docBroker->setInteractive(true);
         }
-        else if (tokens.equals(0, "status:"))
+        else if (tokens.equals(0, "loaded:"))
         {
             setState(ClientSession::SessionState::LIVE);
-            docBroker->setInteractive(false);
-            docBroker->setLoaded();
 
+            if (firstLine.find("isfirst=true") != std::string::npos)
+            {
+                // The document has just loaded.
+                docBroker->setInteractive(false);
+                docBroker->setLoaded();
+
+                // Wopi post load actions.
+                if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
+                {
+                    LOG_DBG("Uploading template [" << _wopiFileInfo->getTemplateSource()
+                                                   << "] to storage after loading.");
+                    docBroker->uploadAfterLoadingTemplate(client_from_this());
+                }
+            }
+
+            // A view loaded.
             if (UnitWSD::isUnitTesting())
             {
                 UnitWSD::get().onDocBrokerViewLoaded(docBroker->getDocKey(), client_from_this());
             }
 
 #if !MOBILEAPP
-            Admin::instance().setViewLoadDuration(docBroker->getDocKey(), getId(), std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - _viewLoadStart));
+            Admin::instance().setViewLoadDuration(
+                docBroker->getDocKey(), getId(),
+                std::chrono::duration_cast<std::chrono::milliseconds>(
+                    std::chrono::steady_clock::now() - _viewLoadStart));
 #endif
-
+        }
+        else if (tokens.equals(0, "status:"))
+        {
             // position cursor for thumbnail rendering
             if (_thumbnailSession)
             {
@@ -2287,14 +2306,6 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
                 const std::string renderThumbnailCmd = "uno .uno:OpenHyperLink " + cmd.str();
                 docBroker->forwardToChild(client_from_this(), renderThumbnailCmd);
-            }
-
-            // Wopi post load actions
-            if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
-            {
-                LOG_DBG("Uploading template [" << _wopiFileInfo->getTemplateSource()
-                                               << "] to storage after loading.");
-                docBroker->uploadAfterLoadingTemplate(client_from_this());
             }
 
             for(auto &token : tokens)
