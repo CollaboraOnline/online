@@ -2266,11 +2266,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 }
             }
 
-            // A view loaded.
-            if (UnitWSD::isUnitTesting())
-            {
-                UnitWSD::get().onDocBrokerViewLoaded(docBroker->getDocKey(), client_from_this());
-            }
+            docBroker->onViewLoaded(client_from_this());
 
 #if !MOBILEAPP
             Admin::instance().setViewLoadDuration(

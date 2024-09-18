@@ -363,6 +363,9 @@ public:
     /// Notify that the document has dialogs before load
     virtual void setInteractive(bool value);
 
+    /// Called when a new view is loaded.
+    void onViewLoaded(const std::shared_ptr<ClientSession>& session);
+
     /// If not yet locked, try to lock
     bool attemptLock(ClientSession& session, std::string& failReason);
 
