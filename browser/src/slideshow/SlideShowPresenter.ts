@@ -145,7 +145,8 @@ class SlideShowPresenter {
 			);
 			this.centerCanvas();
 		} else {
-			this._stopFullScreen();
+			// we need to cleanup current/prev slide
+			this._slideShowNavigator.endPresentation(true);
 		}
 	}
 
@@ -159,12 +160,6 @@ class SlideShowPresenter {
 			'keydown',
 			this._slideShowNavigator.onKeyDown.bind(this._slideShowNavigator),
 		);
-
-		if (this._fullscreen) {
-			// we need to cleanup current/prev slide,
-			// Escape handler is not called as we disabled it above
-			this._slideShowNavigator.endPresentation(false);
-		}
 
 		L.DomUtil.remove(this._slideShowCanvas);
 		this._slideShowCanvas = null;
