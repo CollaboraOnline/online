@@ -159,6 +159,13 @@ class SlideShowPresenter {
 			'keydown',
 			this._slideShowNavigator.onKeyDown.bind(this._slideShowNavigator),
 		);
+
+		if (this._fullscreen) {
+			// we need to cleanup current/prev slide,
+			// Escape handler is not called as we disabled it above
+			this._slideShowNavigator.endPresentation(false);
+		}
+
 		L.DomUtil.remove(this._slideShowCanvas);
 		this._slideShowCanvas = null;
 		if (this._presenterContainer) {
