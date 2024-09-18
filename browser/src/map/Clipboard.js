@@ -1016,7 +1016,7 @@ L.Clipboard = L.Class.extend({
 			return true;
 		}
 
-		if (window.ThisIsAMobileApp && (cmd === '.uno:Paste' || cmd === '.uno:PasteSpecial')) {
+		if (window.ThisIsAMobileApp) {
 			// perform internal operations
 			app.socket.sendMessage('uno ' + cmd);
 			return true;
@@ -1357,7 +1357,5 @@ L.Clipboard = L.Class.extend({
 });
 
 L.clipboard = function(map) {
-	if (window.ThisIsAMobileApp)
-		window.app.console.log('======> Assertion failed!? No L.Clipboard object should be needed in a mobile app');
 	return new L.Clipboard(map);
 };
