@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -723,8 +723,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._moveTileRequests = [];
 		this._canonicalIdInitialized = false;
 		this._nullDeltaUpdate = 0;
-
-		this._unpremult = new L.UnPremult(256);
 	},
 
 	_initContainer: function () {
@@ -5363,68 +5361,21 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// May have been changed by _ensureContext garbage collection
 		var canvas = tile.canvas;
+		var needsUnpremultiply = true;
 
 		if (isKeyframe)
 		{
 			if (this._debugDeltas)
 				window.app.console.log('Applying a raw RLE keyframe of length ' + allDeltas.length +
-						       ' hex: ' + hex2string(allDeltas, allDeltas.length));;
+						       ' hex: ' + hex2string(allDeltas, allDeltas.length));
 
-			// Byte bashing fun
 			var width = canvas.width;
 			var height = canvas.height;
 
-			var resultu32 = new Uint32Array(width * height);
-			var resultu8 = new Uint8ClampedArray(resultu32.buffer, resultu32.byteOffset, resultu32.byteLength);
-
-			for (var y = 0; y < height; ++y)
-			{
-				var rleSize = allDeltas[offset] + allDeltas[offset+1] * 256;
-				offset += 2;
-				if (this._debugDeltas)
-					window.app.console.log('rle size ' + rleSize);
-
-				var rleMask = offset;
-				var rleMaskSizeBytes = 256/8;
-
-				offset += rleMaskSizeBytes;
-
-				var uniquePixels;
-				if (rleSize > 0)
-				{
-					this._unpremult.unpremultiply(allDeltas, rleSize * 4, offset);
-					uniquePixels = this._unpremult._pixels;
-					if (this._debugDeltas)
-						window.app.console.log(
-							'Pixels hex: ' + hex2string(this._unpremult._bytes, rleSize * 4));;
-				}
-
-				// It would be rather nice to have real 64bit types [!]
-				var lastPix = 0;
-				var lastMask = 0;
-				var bitToCheck = 256;
-				var rleMaskOffset = rleMask;
-
-				var pixOffset = y * width;
-				var pixSrc = 0;
-
-				for (var x = 0; x < width; ++x)
-				{
-					if (bitToCheck > 128)
-					{
-						bitToCheck = 1;
-						lastMask = allDeltas[rleMaskOffset++];
-					}
-					if (!(lastMask & bitToCheck))
-						lastPix = uniquePixels[pixSrc++];
-					bitToCheck = bitToCheck << 1;
-					resultu32[pixOffset++] = lastPix;
-				}
-
-				offset += rleSize * 4;
-			}
-
-			imgData = new ImageData(resultu8, canvas.width, canvas.height);
+			var resultu8 = new Uint8ClampedArray(width * height * 4);
+			offset = L.CanvasTileUtils.unrle(allDeltas, width, height, resultu8, 0);
+			imgData = new ImageData(resultu8, width, height);
+			needsUnpremultiply = false;
 
 			if (this._debugDeltas)
 				window.app.console.log('Applied keyframe of total size ' + offset +
@@ -5457,7 +5408,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			// copy old data to work from:
 			var oldData = new Uint8ClampedArray(imgData.data);
 
-			var len = this._applyDeltaChunk(imgData, delta, oldData, canvas.width, canvas.height);
+			var len = this._applyDeltaChunk(imgData, delta, oldData, canvas.width, canvas.height, needsUnpremultiply);
 			if (this._debugDeltas)
 				window.app.console.log('Applied chunk ' + i++ + ' of total size ' + delta.length +
 						       ' at stream offset ' + offset + ' size ' + len);
@@ -5476,7 +5427,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			traceEvent.finish();
 	},
 
-	_applyDeltaChunk: function(imgData, delta, oldData, width, height) {
+	_applyDeltaChunk: function(imgData, delta, oldData, width, height, needsUnpremultiply = true) {
 		var pixSize = width * height * 4;
 		if (this._debugDeltas)
 			window.app.console.log('Applying a delta of length ' +
@@ -5532,11 +5483,10 @@ L.CanvasTileLayer = L.Layer.extend({
 							       ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
 				span *= 4;
-				// copy so this is suitably aligned for a Uint32Array view
-				this._unpremult.unpremultiply(delta, span, i);
-				// imgData.data[offset + 1] = 256; // debug - greener start
+				if (needsUnpremultiply)
+					L.CanvasTileUtils.unpremultiply(delta, span, i);
 				for (var j = 0; j < span; ++j)
-					imgData.data[offset++] = this._unpremult._bytes[j];
+					imgData.data[offset++] = delta[i+j];
 				i += span;
 				// imgData.data[offset - 2] = 256; // debug - blue terminator
 				break;
