@@ -70,6 +70,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		commentWidth: number;
 		collapsedMarginToTheEdge: number;
 		deflectionOfSelectedComment: number;
+		showSelectedBigger: boolean;
 		commentsAreListed: boolean;
 		[key: string]: any;
 	};
@@ -101,6 +102,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.sectionProperties.commentWidth = 200 * 1.3; // CSS pixels.
 		this.sectionProperties.collapsedMarginToTheEdge = 120; // CSS pixels.
 		this.sectionProperties.deflectionOfSelectedComment = 160; // CSS pixels.
+		this.sectionProperties.showSelectedBigger = false;
 		this.sectionProperties.calcCurrentComment = null; // We don't automatically show a Calc comment when cursor is on its cell. But we remember it to show if user presses Alt+C keys.
 		// This (commentsAreListed) variable means that comments are shown as a list on the right side of the document.
 		this.sectionProperties.commentsAreListed = (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') && !(<any>window).mode.isMobile();
@@ -731,6 +733,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				$(this.sectionProperties.selectedComment.sectionProperties.container).addClass('annotation-active');
 			}
 
+			if (this.sectionProperties.docLayer._docType === 'text' && this.sectionProperties.showSelectedBigger) {
+				this.setThreadPopup(this.sectionProperties.selectedComment, true);
+			}
+
 			this.scrollCommentIntoView(annotation);
 
 			const selectedComment = this.sectionProperties.selectedComment;
@@ -828,10 +834,46 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				this.sectionProperties.selectedComment.setCollapsed();
 				this.collapseReplies(this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id), this.sectionProperties.selectedComment.sectionProperties.data.id);
 			}
+			if (this.sectionProperties.docLayer._docType === 'text' && this.sectionProperties.showSelectedBigger) {
+				this.setThreadPopup(this.sectionProperties.selectedComment, false);
+				this.sectionProperties.showSelectedBigger = false;
+			}
 			this.sectionProperties.selectedComment = null;
 
 			this.update();
 		}
+	}
+
+	private setThreadPopup (comment: Comment, popup: boolean) {
+		if (popup && !$(comment.sectionProperties.container).hasClass('annotation-pop-up'))
+			$(comment.sectionProperties.container).addClass('annotation-pop-up');
+		else if (!popup && $(comment.sectionProperties.container).hasClass('annotation-pop-up'))
+			$(comment.sectionProperties.container).removeClass('annotation-pop-up');
+
+		for (const childComment of comment.sectionProperties.children) {
+			this.setThreadPopup(childComment, popup);
+		}
+	}
+
+	public toggleShowBigger (comment: Comment) {
+		const rootComment = this.sectionProperties.commentList[this.getRootIndexOf(comment.sectionProperties.data.id)];
+		const isSelected = this.sectionProperties.selectedComment === rootComment;
+		if (this.sectionProperties.showSelectedBigger && isSelected) {
+			this.sectionProperties.showSelectedBigger = false;
+			this.setThreadPopup(this.sectionProperties.selectedComment, false);
+		}
+		else if (!isSelected) {
+			if (this.sectionProperties.selectedComment)
+				this.unselect();
+			this.sectionProperties.showSelectedBigger = true;
+			this.select(comment);
+		}
+		else {
+			this.sectionProperties.showSelectedBigger = true;
+			this.setThreadPopup(rootComment, true);
+			this.scrollCommentIntoView(comment);
+		}
+		this.update();
 	}
 
 	public saveReply (annotation: any): void {
@@ -999,6 +1041,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			className: 'cool-font',
 			build: function ($trigger: any) {
 				const blockChangeFromDifferentAuthor = this.map.isReadOnlyMode() && docLayer._docType === 'text' && this.map.getViewName(docLayer._viewId) !== $trigger[0].annotation.sectionProperties.data.author;
+				const isShownBig = this.sectionProperties.showSelectedBigger && this.sectionProperties.selectedComment === this.sectionProperties.commentList[this.getRootIndexOf($trigger[0].annotation.sectionProperties.data.id)];
 				return {
 					autoHide: true,
 					items: {
@@ -1042,6 +1085,12 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 							name: _('Promote to top comment'),
 							callback: function (key: any, options: any) {
 								this.promote.call(this, options.$trigger[0].annotation);
+							}.bind(this)
+						},
+						showBigger: docLayer._docType !== 'text' || (<any>window).mode.isMobile() ? undefined : {
+							name: isShownBig ? _('Show on the side') : _('Show comment bigger'),
+							callback: function (key: any, options: any) {
+								this.toggleShowBigger.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						}
 					},
@@ -1696,8 +1745,12 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 
 			var isRTL = document.documentElement.dir === 'rtl';
 
-			if (selectedComment)
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
+			if (selectedComment) {
+				const posX = (this.sectionProperties.showSelectedBigger ?
+								Math.round((document.getElementById('document-container').getBoundingClientRect().width - subList[i].sectionProperties.container.getBoundingClientRect().width)/2) : 
+								Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1));
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: posX, y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
+			}
 			else
 				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
 
