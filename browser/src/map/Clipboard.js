@@ -972,6 +972,10 @@ L.Clipboard = L.Class.extend({
 				text = text.substring(idx, text.length);
 			textHtml = text;
 		}
+
+		if (!app.sectionContainer.testing)
+			textHtml = this.stripStyle(textHtml);
+
 		return {
 			'html': textHtml,
 			'plain': textPlain
