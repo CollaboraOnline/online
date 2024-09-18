@@ -866,15 +866,15 @@ L.Clipboard = L.Class.extend({
 	},
 
 	// Gets status of a copy/paste command from the remote Kit
-        _onCommandResult: function(e) {
-                if (e.commandName === '.uno:Copy' || e.commandName === '.uno:Cut')
+    _onCommandResult: function(e) {
+        if (e.commandName === '.uno:Copy' || e.commandName === '.uno:Cut')
 		{
 			window.app.console.log('Resolve clipboard command promise ' + e.commandName);
 			const that = this;
 			while (that._commandCompletion.length > 0)
 			{
 				let a = that._commandCompletion.shift();
-				a.resolve(a.fetch.then(function(text) {
+				a.resolve(a.fetch().then(function(text) {
 					const content = that.parseClipboard(text)[a.shorttype];
 					const blob = new Blob([content], { 'type': a.mimetype });
 					console.log('Generate blob of type ' + a.mimetype + ' from ' +a.shorttype + ' text: ' +content);
@@ -911,14 +911,16 @@ L.Clipboard = L.Class.extend({
 		const url = that.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
 
 		// Share a single fetch
-		var fetchPromise = new Promise((resolve, reject) => {
-			try {
-				var result = fetch(url).then(response => response.text());
-				resolve(result);
-			} catch (err) {
-				reject(err);
-			}
-		});
+		var fetchPromise = function() {
+			return new Promise((resolve, reject) => {
+				try {
+					var result = fetch(url).then(response => response.text());
+					resolve(result);
+				} catch (err) {
+					reject(err);
+				}
+			});
+		};
 
 		var awaitPromise = function(url, mimetype, shorttype) {
 			return new Promise((resolve, reject) => {
