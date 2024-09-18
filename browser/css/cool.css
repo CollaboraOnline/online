@@ -768,6 +768,12 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	padding: 0;
 	vertical-align: top;
 }
+
+.cool-annotation-child-line {
+	border-style: none none dashed dashed;
+	border-width: thin;
+	border-color: black;
+}
 /*Tooltips
 ----------------------------------*/
 [data-title]:hover:after {
