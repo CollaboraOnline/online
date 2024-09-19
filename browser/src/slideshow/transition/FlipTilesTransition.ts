@@ -12,6 +12,66 @@
 
 declare var SlideShow: any;
 
+class FlipTilesTransition extends SimpleTransition {
+	constructor(transitionParameters: TransitionParameters3D) {
+		super(transitionParameters);
+	}
+
+	public initWebglFlags(): void {
+		this.gl.enable(this.gl.DEPTH_TEST);
+		this.gl.depthFunc(this.gl.LEQUAL);
+
+		// Enable face culling
+		this.gl.enable(this.gl.CULL_FACE);
+		this.gl.cullFace(this.gl.BACK);
+
+		// Disable blending
+		this.gl.disable(this.gl.BLEND);
+	}
+
+	public processPrimitives(
+		t: number,
+		texturePrimitive: Primitive[],
+		applyOperations: (t: number, operations: Operation[]) => void,
+	): void {
+		for (const primitive of texturePrimitive) {
+			this.setBufferData(primitive.vertices);
+			applyOperations.call(this, t, primitive.operations);
+			this.gl.drawArrays(this.gl.TRIANGLES, 0, primitive.vertices.length);
+		}
+	}
+
+	public displaySlides_(t: number): void {
+		this.applyAllOperation(t);
+
+		// Render the entering slide primitives
+		this.gl.activeTexture(this.gl.TEXTURE0);
+		this.gl.bindTexture(this.gl.TEXTURE_2D, this.textures[1]);
+		this.gl.uniform1i(
+			this.gl.getUniformLocation(this.program, 'slideTexture'),
+			0,
+		);
+		this.processPrimitives(
+			t,
+			this.enteringPrimitives,
+			this.applyEnteringOperations,
+		);
+
+		// Render the leaving slide primitives
+		this.gl.activeTexture(this.gl.TEXTURE0);
+		this.gl.bindTexture(this.gl.TEXTURE_2D, this.textures[0]);
+		this.gl.uniform1i(
+			this.gl.getUniformLocation(this.program, 'slideTexture'),
+			0,
+		);
+		this.processPrimitives(
+			t,
+			this.leavingPrimitives,
+			this.applyLeavingOperations,
+		);
+	}
+}
+
 function vec(x: number, y: number, nx: number, ny: number): vec2 {
 	x = x < 0.0 ? 0.0 : x;
 	x = Math.min(x, nx);
@@ -20,7 +80,15 @@ function vec(x: number, y: number, nx: number, ny: number): vec2 {
 	return [x / nx, y / ny];
 }
 
-function FlipTilesTransition(
+function calculateMidpoint(vec1: vec3, vec2: vec3): vec3 {
+	return [
+		(vec1[0] + vec2[0]) / 2.0, // X coordinate
+		(vec1[1] + vec2[1]) / 2.0, // Y coordinate
+		(vec1[2] + vec2[2]) / 2.0, // Z coordinate
+	];
+}
+
+function makeFlipTilesTransition(
 	transitionParameters: TransitionParameters,
 	n: number = 8,
 	m: number = 6,
@@ -42,7 +110,7 @@ function FlipTilesTransition(
 			aTile.operations.push(
 				makeSRotate(
 					vec3.fromValues(0, 1, 0),
-					vec3.fromValues(0, 0.8, 0),
+					calculateMidpoint(aTile.getVertex(1), aTile.getVertex(3)),
 					180,
 					true,
 					(x11[0] * x11[1]) / 2.0,
@@ -54,7 +122,7 @@ function FlipTilesTransition(
 			aTile.operations.push(
 				makeSRotate(
 					vec3.fromValues(0, 1, 0),
-					vec3.fromValues(0, 0.8, 0),
+					calculateMidpoint(aTile.getVertex(1), aTile.getVertex(3)),
 					-180,
 					false,
 					(x11[0] * x11[1]) / 2.0,
@@ -72,7 +140,7 @@ function FlipTilesTransition(
 		allOperations: [],
 	};
 
-	return new SimpleTransition(newTransitionParameters);
+	return new FlipTilesTransition(newTransitionParameters);
 }
 
-SlideShow.FlipTilesTransition = FlipTilesTransition;
+SlideShow.makeFlipTilesTransition = makeFlipTilesTransition;
