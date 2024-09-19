@@ -74,7 +74,6 @@ class AutoFillPreviewTooltip extends L.Control.AutoCompletePopup {
 	}
 
 	openAutoFillPopup(ev: FireEvent): void {
-		const framePos = this.getAutoFillAreaBottomRightLocation(ev); // bottom-right position
 		const entry = ev.data.text;
 		let data: PopupData;
 
@@ -83,20 +82,23 @@ class AutoFillPreviewTooltip extends L.Control.AutoCompletePopup {
 
 			const control = this.getSimpleTextJSON(entry);
 			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
-				data = this.getPopupJSON(control, framePos);
+				data = this.getPopupJSON(control, {
+					x: ev.data.location.cX,
+					y: ev.data.location.cY,
+				});
 				this.sendUpdate(data);
 				return;
 			}
 
 			if (L.DomUtil.get(this.popupId))
 				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
-			data = this.newPopupData;
+			data = Object.assign({}, this.newPopupData);
 			data.children[0].children[0] = control;
 		}
 
 		// add position
-		data.posx = framePos.x;
-		data.posy = framePos.y;
+		data.posx = ev.data.location.cX;
+		data.posy = ev.data.location.cY;
 		this.sendJSON(data);
 	}
 }
