@@ -837,6 +837,7 @@ class SlideShowHandler {
 
 	exitSlideShow() {
 		// TODO: implement it;
+		this.automaticAdvanceTimeout = null;
 	}
 
 	update() {
@@ -883,6 +884,7 @@ class SlideShowHandler {
 		this.aActivityQueue.clear();
 		this.aNextEffectEventArray = null;
 		this.aEventMultiplexer = null;
+		this.automaticAdvanceTimeout = null;
 	}
 
 	getContext() {
