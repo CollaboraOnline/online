@@ -42,8 +42,9 @@ L.Map.StateChangeHandler = L.Handler.extend({
 				state = e.state;
 			}
 		}
+		const commandName = this.ensureUnoCommandPrefix(e.commandName);
 
-		this._items[e.commandName] = state;
+		this._items[commandName] = state;
 		if (e.commandName === '.uno:CurrentTrackedChangeId') {
 			var redlineId = 'change-' + state;
 			this._map._docLayer._annotations.selectById(redlineId);
@@ -84,19 +85,22 @@ L.Map.StateChangeHandler = L.Handler.extend({
 	},
 
 	getItemValue: function(unoCmd) {
-		if (unoCmd && unoCmd.substring(0, 5) !== '.uno:') {
-			unoCmd = '.uno:' + unoCmd;
-		}
+		unoCmd = this.ensureUnoCommandPrefix(unoCmd);
 
 		return this._items[unoCmd];
 	},
 
 	setItemValue: function(unoCmd, value) {
-		if (unoCmd && unoCmd.substring(0, 5) !== '.uno:') {
-			unoCmd = '.uno:' + unoCmd;
-		}
+		unoCmd = this.ensureUnoCommandPrefix(unoCmd);
 
 		this._items[unoCmd] = value;
+	},
+
+	ensureUnoCommandPrefix(unoCmd) {
+		if (unoCmd && unoCmd.substring(0, 5) !== '.uno:') {
+			return '.uno:' + unoCmd;
+		}
+		return unoCmd;
 	}
 });
 
