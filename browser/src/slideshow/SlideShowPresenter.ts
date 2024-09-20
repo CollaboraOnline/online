@@ -184,8 +184,7 @@ class SlideShowPresenter {
 			if (info?.isEndless == undefined || !info.isEndless) {
 				if (this._currentSlide + 1 === this._getSlidesCount()) {
 					this._currentSlide++;
-					this.exitSlideshowWithWarning();
-					return;
+					if (this.exitSlideshowWithWarning()) return;
 				}
 				this._closeSlideShowWindow();
 				this._stopFullScreen();
@@ -308,10 +307,14 @@ class SlideShowPresenter {
 		return canvas;
 	}
 
-	private exitSlideshowWithWarning() {
+	private exitSlideshowWithWarning(): boolean {
+		// TODO 2D version for disabled webGL
+		if (this._slideRenderer._context.is2dGl()) return false;
+
 		new SlideShow.StaticTextRenderer(this._slideRenderer._context).display(
 			_('Click to exit presentation...'),
 		);
+		return true;
 	}
 
 	private startTimer(loopAndRepeatDuration: number) {
@@ -335,8 +338,7 @@ class SlideShowPresenter {
 		console.debug('SlideShowPresenter.endPresentation');
 		const settings = this._presentationInfo;
 		if (force || !settings.isEndless) {
-			if (!force) {
-				this.exitSlideshowWithWarning();
+			if (!force && this.exitSlideshowWithWarning()) {
 				return;
 			}
 			this._closeSlideShowWindow();
