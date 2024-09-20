@@ -38,12 +38,20 @@ function getNodeChildren(aNode: ContainerNodeInfo): Array<AnimationNodeInfo> {
 }
 
 function isAttributeSupported(aNodeInfo: AnimateNodeInfo) {
+	if (!aNodeInfo.attributeName) {
+		console.error('slideshow: missing attributeName');
+		return false;
+	}
 	return AnimatedElement.SupportedProperties.has(
 		aNodeInfo.attributeName.toLowerCase(),
 	);
 }
 
 function isTransformSupported(aNodeInfo: AnimateTransformNodeInfo) {
+	if (!aNodeInfo.transformType) {
+		console.error('slideshow: missing transformType');
+		return false;
+	}
 	return AnimatedElement.SupportedProperties.has(
 		aNodeInfo.transformType.toLowerCase(),
 	);
