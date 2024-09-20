@@ -1395,9 +1395,11 @@ public:
         else
             os << indent << "response: null";
 
+        // We are typically called from the StreamSocket, so don't
+        // recurse back by calling dumpState on the socket again.
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
-            socket->dumpState(os);
+            os << indent << "socket: #" << socket->getFD();
         else
             os << indent << "socket: null";
     }
