@@ -68,6 +68,7 @@ L.Control.UIManager = L.Control.extend({
 		this.map.on('updateviewslist', this.onUpdateViews, this);
 
 		this.map['stateChangeHandler'].setItemValue('toggledarktheme', 'false');
+		this.map['stateChangeHandler'].setItemValue('invertbackground', 'false');
 	},
 
 	// UI initialization
@@ -121,6 +122,12 @@ L.Control.UIManager = L.Control.extend({
 
 	initDarkBackgroundUI: function(activate) {
 		document.documentElement.setAttribute('data-bg-theme', activate ? 'dark' : 'light');
+		if (activate) {
+			this._map.fire('commandstatechanged', {commandName : 'invertbackground', state : 'false'});
+		}
+		else {
+			this._map.fire('commandstatechanged', {commandName : 'invertbackground', state : 'true'});
+		}
 		this.setCanvasColorAfterModeChange();
 	},
 
