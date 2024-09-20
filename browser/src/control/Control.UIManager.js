@@ -66,6 +66,8 @@ L.Control.UIManager = L.Control.extend({
 		});
 
 		this.map.on('updateviewslist', this.onUpdateViews, this);
+
+		this.map['stateChangeHandler'].setItemValue('toggledarktheme', 'false');
 	},
 
 	// UI initialization
@@ -85,11 +87,13 @@ L.Control.UIManager = L.Control.extend({
 
 	loadLightMode: function() {
 		document.documentElement.setAttribute('data-theme','light');
+		this._map.fire('commandstatechanged', {commandName : 'toggledarktheme', state : 'false'});
 		this.map.fire('darkmodechanged');
 	},
 
 	loadDarkMode: function() {
 		document.documentElement.setAttribute('data-theme','dark');
+		this._map.fire('commandstatechanged', {commandName : 'toggledarktheme', state : 'true'});
 		this.map.fire('darkmodechanged');
 	},
 
