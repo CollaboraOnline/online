@@ -1050,8 +1050,7 @@ public:
         _sentHTTPContinue(false),
         _shutdownSignalled(false),
         _readType(readType),
-        _inputProcessingEnabled(true),
-        _lastSeenHTTPHeader( std::chrono::steady_clock::now() )
+        _inputProcessingEnabled(true)
     {
         LOG_TRC("StreamSocket ctor");
     }
@@ -1374,6 +1373,7 @@ public:
     bool parseHeader(const char *clientLoggingName,
                      Poco::MemoryInputStream &message,
                      Poco::Net::HTTPRequest &request,
+                     std::chrono::steady_clock::time_point &lastHTTPHeader,
                      MessageMap& map);
 
     Buffer& getInBuffer() { return _inBuffer; }
@@ -1739,9 +1739,6 @@ private:
     std::vector<int> _incomingFDs;
     ReadType _readType;
     std::atomic_bool _inputProcessingEnabled;
-
-    // Used in parseHeader, net::Defaults::HTTPTimeout acting as max delay
-    std::chrono::steady_clock::time_point _lastSeenHTTPHeader;
 };
 
 enum class WSOpCode : unsigned char {

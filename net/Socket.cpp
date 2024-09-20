@@ -1410,6 +1410,7 @@ std::ostream& StreamSocket::stream(std::ostream& os) const
 bool StreamSocket::parseHeader(const char *clientName,
                                Poco::MemoryInputStream &message,
                                Poco::Net::HTTPRequest &request,
+                               std::chrono::steady_clock::time_point &lastHTTPHeader,
                                MessageMap& map)
 {
     assert(map._headerSize == 0 && map._messageSize == 0);
@@ -1418,7 +1419,7 @@ bool StreamSocket::parseHeader(const char *clientName,
         std::chrono::duration_cast<std::chrono::milliseconds>(_httpTimeout);
 
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-    std::chrono::duration<float, std::milli> delayMs = now - _lastSeenHTTPHeader;
+    std::chrono::duration<float, std::milli> delayMs = now - lastHTTPHeader;
 
     // Find the end of the header, if any.
     static const std::string marker("\r\n\r\n");
@@ -1512,7 +1513,7 @@ bool StreamSocket::parseHeader(const char *clientName,
                 if (chunkLen == 0) // we're complete.
                 {
                     map._messageSize = chunkOffset;
-                    _lastSeenHTTPHeader = now;
+                    lastHTTPHeader = now;
                     return true;
                 }
 
@@ -1605,7 +1606,7 @@ bool StreamSocket::parseHeader(const char *clientName,
         return false;
     }
 
-    _lastSeenHTTPHeader = now;
+    lastHTTPHeader = now;
     return true;
 }
 
