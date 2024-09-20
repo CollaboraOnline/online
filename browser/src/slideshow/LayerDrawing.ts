@@ -578,6 +578,7 @@ class LayerDrawing {
 						}
 						return; // no layer means it is not visible
 					}
+					if (!animatedElement.getVisibility()) return;
 				}
 				this.drawBitmap(content.content as ImageInfo);
 			}
