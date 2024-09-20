@@ -595,6 +595,7 @@ void ClientRequestDispatcher::onConnect(const std::shared_ptr<StreamSocket>& soc
 {
     _id = COOLWSD::GetConnectionId();
     _socket = socket;
+    _lastSeenHTTPHeader = socket->getLastSeenTime();
     setLogContext(socket->getFD());
     LOG_TRC("Connected to ClientRequestDispatcher");
 }
@@ -664,7 +665,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     Poco::Net::HTTPRequest request;
 
     StreamSocket::MessageMap map;
-    if (!socket->parseHeader("Client", startmessage, request, map))
+    if (!socket->parseHeader("Client", startmessage, request, _lastSeenHTTPHeader, map))
         return;
 
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
