@@ -80,7 +80,7 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
                                                                   startTime);
 
         // Note: we don't log the response if obfuscation is enabled, except for failures.
-        std::string wopiResponse = httpResponse->getBody();
+        const std::string& wopiResponse = httpResponse->getBody();
         const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
 
         if (Log::isEnabled(failed ? Log::Level::ERR : Log::Level::TRC))
@@ -129,14 +129,11 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
         {
             _state = State::Fail;
 
-            if (COOLWSD::AnonymizeUserData)
-                wopiResponse = "obfuscated";
-
             LOG_ERR("WOPI::CheckFileInfo ("
                     << callDurationMs
                     << ") failed or no valid JSON payload returned. Access denied. "
                        "Original response: ["
-                    << wopiResponse << ']');
+                    << (COOLWSD::AnonymizeUserData ? "obfuscated" : wopiResponse) << ']');
         }
 
         if (_onFinishCallback)
