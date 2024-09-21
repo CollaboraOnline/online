@@ -262,11 +262,12 @@ void WopiProxy::download(const std::shared_ptr<TerminatingPoll>& poll, const std
         (void)callDurationMs;
 
         // Note: we don't log the response if obfuscation is enabled, except for failures.
-        std::string wopiResponse = httpResponse->getBody();
         const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
 
         if (Log::isEnabled(failed ? Log::Level::ERR : Log::Level::TRC))
         {
+            const std::string& wopiResponse = httpResponse->getBody();
+
             std::ostringstream oss;
             oss << "WOPI::GetFile " << (failed ? "failed" : "returned") << " for URI ["
                    << uriAnonym << "]: " << httpResponse->statusLine().statusCode() << ' '
