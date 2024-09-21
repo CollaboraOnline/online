@@ -90,7 +90,8 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
                 << uriAnonym << "]: " << httpResponse->statusLine().statusCode() << ' '
                 << httpResponse->statusLine().reasonPhrase()
                 << ". Headers: " << httpResponse->header()
-                << (failed ? "\tBody: [" + wopiResponse + ']' : std::string());
+                << (failed ? "\tBody: [" + COOLProtocol::getAbbreviatedMessage(wopiResponse) + ']'
+                           : std::string());
 
             if (failed)
             {
@@ -118,10 +119,9 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
 
         if (JsonUtil::parseJSON(wopiResponse, _wopiInfo))
         {
-            if (COOLWSD::AnonymizeUserData)
-                LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): anonymizing...");
-            else
-                LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): " << wopiResponse);
+            LOG_DBG("WOPI::CheckFileInfo ("
+                    << callDurationMs
+                    << "): " << (COOLWSD::AnonymizeUserData ? "obfuscated" : wopiResponse));
 
             _state = State::Pass;
         }
@@ -133,7 +133,7 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
                     << callDurationMs
                     << ") failed or no valid JSON payload returned. Access denied. "
                        "Original response: ["
-                    << (COOLWSD::AnonymizeUserData ? "obfuscated" : wopiResponse) << ']');
+                    << COOLProtocol::getAbbreviatedMessage(wopiResponse) << ']');
         }
 
         if (_onFinishCallback)
