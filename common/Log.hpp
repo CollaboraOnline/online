@@ -186,14 +186,6 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 
 #define LOG_END(LOG) LOG << "| " << LOG_FILE_NAME(__FILE__) << ":" STRING(__LINE__)
 
-/// Used to end multi-statement logging via Log::StreamLogger.
-#define LOG_END_FLUSH(LOG) \
-    do                     \
-    {                      \
-        LOG_END(LOG);      \
-        LOG.flush();       \
-    } while (false)
-
 #define LOG_MESSAGE_(LVL, A, X, PREFIX, SUFFIX)  \
     do                                          \
     {                                           \
