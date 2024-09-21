@@ -265,8 +265,7 @@ void WopiProxy::download(const std::shared_ptr<TerminatingPoll>& poll, const std
         std::string wopiResponse = httpResponse->getBody();
         const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
 
-        Log::Level level = failed ? Log::Level::ERR : Log::Level::TRC;
-        if (Log::isEnabled(level))
+        if (Log::isEnabled(failed ? Log::Level::ERR : Log::Level::TRC))
         {
             std::ostringstream oss;
             oss << "WOPI::GetFile " << (failed ? "failed" : "returned") << " for URI ["
@@ -275,8 +274,14 @@ void WopiProxy::download(const std::shared_ptr<TerminatingPoll>& poll, const std
                    << ". Headers: " << httpResponse->header()
                    << (failed ? "\tBody: [" + wopiResponse + ']' : std::string());
 
-            LOG_END_FLUSH(oss);
-            Log::log(level, oss.str());
+            if (failed)
+            {
+                LOG_ERR(oss.str());
+            }
+            else
+            {
+                LOG_TRC(oss.str());
+            }
         }
 
         if (failed)
