@@ -864,7 +864,7 @@ export class Comment extends CanvasSectionObject {
 		if (!autoSavedComment)
 			return false;
 
-		var authorMatch = autoSavedComment.sectionProperties.data.author === this.sectionProperties.data.author;
+		var authorMatch = this.sectionProperties.data.author === this.map.getViewName(this.sectionProperties.docLayer._viewId);
 		return authorMatch;
 	}
 
