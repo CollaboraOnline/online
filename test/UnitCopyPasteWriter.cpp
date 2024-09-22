@@ -84,7 +84,7 @@ public:
             std::shared_ptr<const http::Response> httpResponse =
                 httpSession->syncRequest(http::Request(Poco::URI(clipURI).getPathAndQuery()));
             LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
-            std::string body = httpResponse->getBody();
+            const std::string& body = httpResponse->getBody();
             Poco::JSON::Object::Ptr object;
             // This failed, we didn't return JSON.
             LOK_ASSERT(JsonUtil::parseJSON(body, object));
@@ -102,7 +102,7 @@ public:
             std::shared_ptr<const http::Response> httpResponse =
                 httpSession->syncRequest(http::Request(Poco::URI(clipURI).getPathAndQuery()));
             LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
-            std::string body = httpResponse->getBody();
+            const std::string& body = httpResponse->getBody();
             Poco::JSON::Object::Ptr object;
             LOK_ASSERT(JsonUtil::parseJSON(body, object));
             LOK_ASSERT(object->has("text/html"));
