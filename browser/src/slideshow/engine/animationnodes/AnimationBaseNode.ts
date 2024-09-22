@@ -246,8 +246,7 @@ abstract class AnimationBaseNode2 extends AnimationBaseNode {
 		if (!this.attributeName) {
 			this.eCurrentState = NodeState.Invalid;
 			window.app.console.log(
-				'AnimationBaseNode2.parseElement: target attribute name not found: ' +
-					this.attributeName,
+				`${this.sClassName}.parseElement: target attribute name not found`,
 			);
 		} else {
 			this.attributeName = this.attributeName.toLowerCase();
