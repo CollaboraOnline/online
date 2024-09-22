@@ -740,6 +740,16 @@ class SlideShowPresenter {
 		this._slideShowCanvas.height = canvasSize[1];
 		this.centerCanvas();
 
+		// animated elements needs to update canvas size
+		this._metaPresentation.getMetaSlides().forEach((metaSlide) => {
+			if (metaSlide.animationsHandler) {
+				const animElemMap = metaSlide.animationsHandler.getAnimatedElementMap();
+				animElemMap.forEach((animatedElement) => {
+					animatedElement.updateCanvasSize(canvasSize);
+				});
+			}
+		});
+
 		this.startLoader();
 
 		// allow user interaction
