@@ -42,6 +42,7 @@ function isAttributeSupported(aNodeInfo: AnimateNodeInfo) {
 		console.error('slideshow: missing attributeName');
 		return false;
 	}
+	// return true;
 	return AnimatedElement.SupportedProperties.has(
 		aNodeInfo.attributeName.toLowerCase(),
 	);
@@ -52,7 +53,8 @@ function isTransformSupported(aNodeInfo: AnimateTransformNodeInfo) {
 		console.error('slideshow: missing transformType');
 		return false;
 	}
-	return AnimatedElement.SupportedProperties.has(
+	// return true;
+	return AnimatedElement.SupportedTransformations.has(
 		aNodeInfo.transformType.toLowerCase(),
 	);
 }
@@ -69,6 +71,7 @@ function isTransitionFilterSupported(aNodeInfo: TransitionFilterNodeInfo) {
 }
 
 function isTargetSupported(aNodeInfo: AnimateNodeInfo) {
+	// return true;
 	return !(aNodeInfo.subItem && aNodeInfo.subItem === 'OnlyText');
 }
 

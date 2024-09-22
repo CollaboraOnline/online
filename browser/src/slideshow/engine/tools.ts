@@ -59,6 +59,21 @@ function makeScaler(nScale: number) {
 	};
 }
 
+function getRectCenter(rect: DOMRect) {
+	const cx = rect.x + rect.width / 2;
+	const cy = rect.y + rect.height / 2;
+	return { x: cx, y: cy };
+}
+
+function convert(convFactor: { x: number; y: number }, rect: DOMRect): DOMRect {
+	const x1 = Math.floor(rect.x * convFactor.x);
+	const y1 = Math.floor(rect.y * convFactor.y);
+	const x2 = Math.ceil((rect.x + rect.width) * convFactor.x);
+	const y2 = Math.ceil((rect.y + rect.height) * convFactor.y);
+
+	return new DOMRect(x1, y1, x2 - x1 + 1, y2 - y1 + 1);
+}
+
 class PriorityQueue {
 	private aSequence: any[];
 	private aCompareFunc: (a: any, b: any) => number;
