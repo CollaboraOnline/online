@@ -391,7 +391,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
 
         const std::shared_ptr<const http::Response> httpResponse =
             httpSession->syncRequest(httpRequest);
-        const std::string responseString = httpResponse->getBody();
+        const std::string& responseString = httpResponse->getBody();
 
         LOG_INF(wopiLog << " status: " << httpResponse->statusLine().statusCode()
                         << ", response: " << responseString);
@@ -501,7 +501,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
         LOG_TRC(wopiLog << " finished async request in " << _wopiSaveDuration);
 
         // Handle the response.
-        const std::string responseString = httpResponse->getBody();
+        const std::string& responseString = httpResponse->getBody();
 
         LOG_INF(wopiLog << " status: " << httpResponse->statusLine().statusCode()
                         << ", response: " << responseString);
@@ -683,7 +683,7 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     }
     else
     {
-        const std::string responseString = httpResponse->getBody();
+        const std::string& responseString = httpResponse->getBody();
         LOG_ERR("WOPI::GetFile [" << uriAnonym << "] failed with Status Code: "
                                   << httpResponse->statusLine().statusCode());
         throw StorageConnectionException("WOPI::GetFile [" + uriAnonym +

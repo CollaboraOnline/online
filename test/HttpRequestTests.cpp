@@ -642,7 +642,7 @@ void HttpRequestTests::testSimplePost_External()
     LOK_ASSERT(httpResponse->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Successful);
 
-    const std::string body = httpResponse->getBody();
+    const std::string& body = httpResponse->getBody();
     LOK_ASSERT(!body.empty());
     std::cerr << "[" << body << "]\n";
     LOK_ASSERT(body.find(data) != std::string::npos);

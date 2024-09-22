@@ -351,7 +351,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                             return;
                         }
 
-                        std::string body = httpResponse->getBody();
+                        const std::string& body = httpResponse->getBody();
                         std::istringstream stream(body);
                         if (ClipboardData::isOwnFormat(stream))
                         {
