@@ -334,5 +334,24 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function () {
 		cy.cGet('#annotation-content-area-2').should('not.exist');
 	});
 
+	it('Reply autosave different author', function () {
+		cy.cSetActiveFrame('#iframe1');
+		desktopHelper.insertComment();
+
+		cy.cSetActiveFrame('#iframe2');
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#annotation-content-area-1').should('have.text', 'some text0');
+		cy.cGet('#comment-annotation-menu-1').click();
+		cy.cGet('body').contains('.context-menu-item', 'Reply').click();
+		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
+		cy.cGet('#map').focus();
+		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
+		cy.cGet('#annotation-modify-textarea-2').should('be.visible');
+
+		cy.cSetActiveFrame('#iframe1');
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#annotation-content-area-2').should('have.text', 'some reply text');
+	});
+
 	});
 });
