@@ -1884,8 +1884,6 @@ private:
 
         const std::string& body = httpResponse->getBody();
 
-        std::string fontFile;
-
         // We intentionally use a new file name also when an updated version of a font is
         // downloaded. It causes trouble to rewrite the same file, in case it is in use in some Kit
         // process at the moment.
@@ -1894,17 +1892,19 @@ private:
 
         // And in reality, it is a bit unclear how likely it even is that fonts downloaded through
         // this mechanism even will be updated.
-        fontFile = COOLWSD::TmpFontDir + "/" + Util::encodeId(Util::rng::getNext()) + ".ttf";
+        const std::string fontFile =
+            COOLWSD::TmpFontDir + '/' + Util::encodeId(Util::rng::getNext()) + ".ttf";
 
         std::ofstream fontStream(fontFile);
         fontStream.write(body.data(), body.size());
         if (!fontStream.good())
         {
-                LOG_ERR("Could not write to " << fontFile);
-                return false;
+            LOG_ERR("Could not write " << body.size() << " bytes to [" << fontFile << ']');
+            return false;
         }
 
-        LOG_DBG("Got " << body.size() << " bytes for " << uri << " and wrote to " << fontFile);
+        LOG_DBG("Got " << body.size() << " bytes from [" << uri << "] and wrote to [" << fontFile
+                       << ']');
         fonts[uri].pathName = fontFile;
 
         COOLWSD::sendMessageToForKit("addfont " + fontFile);
