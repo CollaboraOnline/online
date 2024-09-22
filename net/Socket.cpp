@@ -929,20 +929,16 @@ void WebSocketHandler::dumpState(std::ostream& os, const std::string& /*indent*/
 
 void StreamSocket::dumpState(std::ostream& os)
 {
-    _dumpingNestingLevel++;
     int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS.count();
     const int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
     os << '\t' << std::setw(6) << getFD() << "\t0x" << std::hex << events << std::dec << '\t'
        << (ignoringInput() ? "ignore\t" : "process\t") << std::setw(6) << _inBuffer.size() << '\t'
        << std::setw(6) << _outBuffer.size() << '\t' << " r: " << std::setw(6) << _bytesRecvd
        << "\t w: " << std::setw(6) << _bytesSent << '\t' << clientAddress() << '\t';
-    // Only dump sockerHandler state on a top level dumpState
-    if (_dumpingNestingLevel == 1)
-        _socketHandler->dumpState(os);
+    _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
         Util::dumpHex(os, _inBuffer, "\t\tinBuffer:\n", "\t\t");
     _outBuffer.dumpHex(os, "\t\toutBuffer:\n", "\t\t");
-    _dumpingNestingLevel--;
 }
 
 bool StreamSocket::send(const http::Response& response)

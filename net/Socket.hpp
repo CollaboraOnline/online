@@ -958,7 +958,6 @@ public:
         _wsState(WSState::HTTP),
         _closed(false),
         _sentHTTPContinue(false),
-        _dumpingNestingLevel(0),
         _shutdownSignalled(false),
         _readType(readType),
         _inputProcessingEnabled(true),
@@ -1641,9 +1640,6 @@ private:
 
     /// True if we've received a Continue in response to an Expect: 100-continue
     bool _sentHTTPContinue;
-
-    /// Track recursive dumping
-    int _dumpingNestingLevel;
 
     /// True when shutdown was requested via shutdown().
     /// It's accessed from different threads.
