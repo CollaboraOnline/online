@@ -149,14 +149,10 @@ class SlideShowNavigator {
 
 	switchSlide(nOffset: number, bSkipTransition: boolean) {
 		NAVDBG.print('SlideShowNavigator.switchSlide: nOffset: ' + nOffset);
-		this.displaySlide(this.currentSlide + nOffset, bSkipTransition, nOffset);
+		this.displaySlide(this.currentSlide + nOffset, bSkipTransition);
 	}
 
-	displaySlide(
-		nNewSlide: number,
-		bSkipTransition: boolean,
-		direction: number = 1,
-	) {
+	displaySlide(nNewSlide: number, bSkipTransition: boolean) {
 		NAVDBG.print(
 			'SlideShowNavigator.displaySlide: current index: ' +
 				this.currentSlide +
@@ -173,6 +169,24 @@ class SlideShowNavigator {
 			else this.endPresentation(false);
 			return;
 		}
+
+		let slideAvailable = true;
+		const aNewMetaSlide = this.theMetaPres.getMetaSlideByIndex(nNewSlide);
+		if (!aNewMetaSlide) {
+			window.app.console.log('SlideShowNavigator.displaySlide: no meta slide for index: ' + nNewSlide);
+			slideAvailable = false;
+		} else if (aNewMetaSlide.hidden){
+			NAVDBG.print('SlideShowNavigator.displaySlide: hidden slide: ' + nNewSlide)
+			slideAvailable = false;
+		}
+		if (!slideAvailable) {
+			let offset = 1;
+			if (this.currentSlide !== undefined)
+				offset = Math.sign(nNewSlide - this.currentSlide);
+			this.displaySlide(nNewSlide + offset, bSkipTransition);
+			return;
+		}
+
 		this.slideCompositor.fetchAndRun(nNewSlide, () => {
 			assert(
 				this instanceof SlideShowNavigator,
@@ -184,20 +198,11 @@ class SlideShowNavigator {
 			if (this.prevSlide >= this.theMetaPres.numberOfSlides)
 				this.prevSlide = undefined;
 			this.currentSlide = nNewSlide;
-			if (
-				this.slideShowHandler.displaySlide(
-					this.currentSlide,
-					this.prevSlide,
-					bSkipTransition,
-				) === false
-			) {
-				// we got hidden slide
-				this.currentSlide = this.prevSlide;
-				this.displaySlide(
-					nNewSlide + (direction > 0 ? 1 : -1),
-					bSkipTransition,
-				);
-			}
+			this.slideShowHandler.displaySlide(
+				this.currentSlide,
+				this.prevSlide,
+				bSkipTransition,
+			);
 		});
 	}
 
