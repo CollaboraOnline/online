@@ -298,7 +298,7 @@
 #document-name-input {
 	color: var(--color-text-darker);
 	font-size: var(--header-font-size);
-	/* border: 1px solid transparent; */  /* removed to see the input box borders - will revert after development done */
+	border: 1px solid transparent;
 	background-color: transparent;
 	border-radius: var(--border-radius);
 	padding: 0px 2px;
