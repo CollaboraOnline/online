@@ -107,7 +107,6 @@ m4_ifelse(MOBILEAPP,[true],
         <!-- Mobile menu toggle button (hamburger/x icon) -->
         <input id="main-menu-state" type="checkbox" />
         <ul id="main-menu" class="sm sm-simple lo-menu readonly"></ul>
-        <div id="initial-load-indicator" class="page-initial-loader"></div>
         <div id="document-titlebar">
           <div class="document-title">
             <!-- visuallyhidden: hide it visually but keep it available to screen reader and other assistive technology -->
