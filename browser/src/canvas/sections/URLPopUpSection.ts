@@ -27,6 +27,10 @@ class URLPopUpSection extends HTMLObjectSection {
 			app.map.fire('postMessage', { msgId: 'Action_GetLinkPreview', args: { url: url } });
     }
 
+	getPopUpWidth(): number {
+		return this.getHTMLObject().getBoundingClientRect().width;
+	}
+
 	createUIElements(url: string) {
 		const parent = this.getHTMLObject();
 		L.DomUtil.createWithId('div', this.containerId, parent);
@@ -63,6 +67,10 @@ class URLPopUpSection extends HTMLObjectSection {
 		imgRemoveBtn.setAttribute('width', 18);
 		imgRemoveBtn.setAttribute('height', 18);
 		imgRemoveBtn.style.padding = '4px';
+
+		const arrowDiv = document.createElement('div');
+		arrowDiv.className = 'arrow-div';
+		parent.appendChild(arrowDiv);
 	}
 
 	setUpCallbacks(linkPosition?: cool.SimplePoint) {
@@ -106,7 +114,7 @@ class URLPopUpSection extends HTMLObjectSection {
 
 		const section = new URLPopUpSection(url, documentPosition, linkPosition);
 		app.sectionContainer.addSection(section);
-		section.setPosition(section.position[0], section.position[1] - 35 * app.dpiScale);
+		section.setPosition(section.position[0] - (section.getPopUpWidth() * 0.5 * app.dpiScale), section.position[1] - 55 * app.dpiScale);
     }
 
     public static closeURLPopUp() {

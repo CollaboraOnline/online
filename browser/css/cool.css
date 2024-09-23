@@ -987,6 +987,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	line-height: 1;
 	background-color: var(--color-background-lighter);
 	width: 301px;
+	overflow: visible !important;
 }
 
 .hyperlink-pop-up-container a {
@@ -1180,6 +1181,17 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	position: relative;
 	top: calc(-10px - var(--border-radius));
 	border-radius: var(--border-radius);
+}
+
+.hyperlink-pop-up-container .arrow-div {
+	width: 20px;
+	height: 20px;
+	transform: rotate(45deg);
+	display: inline-block;
+	position: relative;
+	top: calc(25px);
+	left: Calc(-50% + 10px);
+	background-color: inherit;
 }
 
 #hyperlink-pop-up-preview:not(.no-preview) {
