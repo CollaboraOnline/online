@@ -20,10 +20,12 @@
 #include <Protocol.hpp>
 #include <SetupKitEnvironment.hpp>
 #include <Util.hpp>
+#include <Clipboard.hpp>
 
 #include <osl/detail/android-bootstrap.h>
 
 #include <Poco/Base64Encoder.h>
+#include <Poco/MemoryStream.h>
 
 const int SHOW_JS_MAXLEN = 70;
 
@@ -507,7 +509,7 @@ Java_org_libreoffice_androidlib_LOActivity_getClipboardContent(JNIEnv *env, jobj
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_org_libreoffice_androidlib_LOActivity_setClipboardContent(JNIEnv *env, jobject, jobject lokClipboardData) {
+Java_org_libreoffice_androidlib_LOActivity_old_setClipboardContent(JNIEnv *env, jobject, jobject lokClipboardData) {
     jclass class_ArrayList= env->FindClass("java/util/ArrayList");
     jmethodID methodId_ArrayList_ToArray = env->GetMethodID(class_ArrayList, "toArray", "()[Ljava/lang/Object;");
 
@@ -549,6 +551,72 @@ Java_org_libreoffice_androidlib_LOActivity_setClipboardContent(JNIEnv *env, jobj
     }
 
     getLOKDocumentForAndroidOnly()->setClipboard(nEntrySize, pMimeTypes, pSizes, pStreams);
+}
+
+extern "C"
+JNIEXPORT jboolean JNICALL
+Java_org_libreoffice_androidlib_LOActivity_setClipboardContent(JNIEnv *env, jobject, jstring content)
+{
+    const char* aContent = env->GetStringUTFChars(content, nullptr);
+    const size_t aLength = env->GetStringUTFLength(content);
+
+    try {
+        ClipboardData data;
+        Poco::MemoryInputStream stream(aContent, aLength);
+
+        // See if the data is in the usual mimetype-size-content format or is just plain HTML.
+        std::streampos pos = stream.tellg();
+        std::string firstLine;
+        std::getline(stream, firstLine, '\n');
+        std::vector<char> html;
+        bool hasHTML = firstLine.starts_with("<!DOCTYPE html>");
+        stream.seekg(pos, stream.beg);
+        if (hasHTML)
+        {
+            // It's just HTML: copy that as-is.
+            std::vector<char> buf(std::istreambuf_iterator<char>(stream), {});
+            html = std::move(buf);
+        }
+        else
+        {
+            data.read(stream);
+        }
+
+        const size_t nInCount = html.empty() ? data.size() : 1;
+        std::vector<size_t> pInSizes(nInCount);
+        std::vector<const char*> pInMimeTypes(nInCount);
+        std::vector<const char*> pInStreams(nInCount);
+
+        if (html.empty())
+        {
+            for (size_t i = 0; i < nInCount; ++i)
+            {
+                pInSizes[i] = data._content[i].length();
+                pInStreams[i] = data._content[i].c_str();
+                pInMimeTypes[i] = data._mimeTypes[i].c_str();
+            }
+        }
+        else
+        {
+            pInSizes[0] = html.size();
+            pInStreams[0] = html.data();
+            pInMimeTypes[0] = "text/html";
+        }
+
+        if (!getLOKDocumentForAndroidOnly()->setClipboard(nInCount, pInMimeTypes.data(), pInSizes.data(),
+                                              pInStreams.data()))
+            LOG_ERR("set clipboard returned failure");
+        else
+            LOG_TRC("set clipboard succeeded");
+    } catch (const std::exception& ex) {
+        LOG_ERR("set clipboard failed with exception: " << ex.what());
+    } catch (...) {
+        LOG_ERR("set clipboard failed with exception");
+    }
+
+    env->ReleaseStringUTFChars(content, aContent);
+
+    return false;
 }
 
 extern "C"

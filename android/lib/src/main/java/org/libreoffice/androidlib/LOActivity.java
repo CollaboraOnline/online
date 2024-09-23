@@ -959,6 +959,69 @@ public class LOActivity extends AppCompatActivity {
     }
 
     /**
+     * Specialized function for Collabora Online, returns an array of length 2 where the first
+     * element is the clipboard's text content, and the second is the clipboard's HTML content. One
+     * or both of these may be null if the clipboard does not contain it.
+     */
+    @JavascriptInterface
+    public String readFromClipboard() {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+        ClipData clipboardData = clipboard.getPrimaryClip();
+
+        if (clipboardData == null) return "";
+
+        ClipData.Item clipboardItem = clipboardData.getItemAt(0);
+
+        return Base64.getEncoder().encodeToString(clipboardItem.coerceToText(getApplicationContext()).toString().getBytes())
+                + " "
+                + Base64.getEncoder().encodeToString(clipboardItem.getHtmlText().getBytes());
+    }
+
+    /**
+     * Specialized function for Collabora Online, writes plaintext and HTML for whatever is
+     * highlighted to the clipboard
+     *
+     * Unlike the navigator.write version of this, we don't take in plain/HTML content, as there's
+     * no good way to get that (without making another native function to uselessly round-trip it)
+     * <p>
+     * Instead, we use getClipboardContent to do it ourselves, and then put whatever we found into
+     * the clipboard item...
+     * ...this probably makes much of the L.clipboard API obsolete on Android, but it's nicer to do
+     * this than to some other special-case path off-the-beaten-and-expected-track
+     */
+    @JavascriptInterface
+    public void writeToClipboard() {
+        LokClipboardData lokClipboardData = new LokClipboardData();
+
+        if (!LOActivity.this.getClipboardContent(lokClipboardData)) {
+            Log.e(TAG, "no clipboard to copy");
+            return;
+        }
+
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+ 
+        String plain = lokClipboardData.getText();
+        String html = lokClipboardData.getHtml();
+
+        ClipData.Item clipboardItem = new ClipData.Item(plain, html);
+
+        ClipDescription clipboardItemMetadata = new ClipDescription(plain, new String[] {
+                ClipDescription.MIMETYPE_TEXT_PLAIN,
+                ClipDescription.MIMETYPE_TEXT_HTML,
+        });
+
+        ClipData clipboardData = new ClipData(clipboardItemMetadata, clipboardItem);
+
+        clipboard.setPrimaryClip(clipboardData);
+    }
+
+    @JavascriptInterface
+    public void sendToInternalClipboard(String content) {
+        LOActivity.this.setClipboardContent(content);
+    }
+ 
+    /**
      * Passing message the other way around - from Java to the FakeWebSocket in JS.
      */
     void callFakeWebsocketOnMessage(final String message) {
@@ -1384,7 +1447,8 @@ public class LOActivity extends AppCompatActivity {
 
     public native boolean getClipboardContent(LokClipboardData aData);
 
-    public native void setClipboardContent(LokClipboardData aData);
+    public native void old_setClipboardContent(LokClipboardData aData); // cannot overload because LokClipboardData and String are typed too similarly on the C++-side
+    public native boolean setClipboardContent(String content);
 
     public native void paste(String mimeType, byte[] data);
 
@@ -1464,7 +1528,7 @@ public class LOActivity extends AppCompatActivity {
                             clipboardData = LokClipboardData.createFromFile(clipboardFile);
 
                         if (clipboardData != null) {
-                            LOActivity.this.setClipboardContent(clipboardData);
+                            LOActivity.this.old_setClipboardContent(clipboardData);
                             return true;
                         } else {
                             // Couldn't get data from the clipboard file, but we can still paste html
