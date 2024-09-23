@@ -986,22 +986,22 @@ public class LOActivity extends AppCompatActivity {
         }
 
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-
+ 
         String plain = lokClipboardData.getText();
         String html = lokClipboardData.getHtml();
 
         ClipData.Item clipboardItem = new ClipData.Item(plain, html);
-
+ 
         ClipDescription clipboardItemMetadata = new ClipDescription(plain, new String[] {
                 ClipDescription.MIMETYPE_TEXT_HTML,
                 ClipDescription.MIMETYPE_TEXT_HTML,
         });
-
+ 
         ClipData clipboardData = new ClipData(clipboardItemMetadata, clipboardItem);
-
+ 
         clipboard.setPrimaryClip(clipboardData);
     }
-
+ 
     /**
      * Passing message the other way around - from Java to the FakeWebSocket in JS.
      */
