@@ -21,11 +21,13 @@ class SlideShowNavigator {
 	private currentSlide: number;
 	private prevSlide: number;
 	private isEnabled: boolean;
+	private isRewindingToPrevSlide: boolean;
 
 	constructor(slideShowHandler: SlideShowHandler) {
 		this.slideShowHandler = slideShowHandler;
 		this.currentSlide = undefined;
 		this.prevSlide = undefined;
+		this.isRewindingToPrevSlide = false;
 		this.initKeyMap();
 		this.addHandlers();
 	}
@@ -170,6 +172,19 @@ class SlideShowNavigator {
 		this.displaySlide(this.currentSlide + nOffset, bSkipTransition);
 	}
 
+	rewindToPreviousSlide() {
+		let prevSlide = 0;
+		if (this.currentSlide !== undefined && this.currentSlide > 0) {
+			prevSlide = this.currentSlide - 1;
+		}
+		NAVDBG.print(
+			'SlideShowNavigator.rewindToPreviousSlide: slide to display: ' +
+				prevSlide,
+		);
+		this.isRewindingToPrevSlide = true;
+		this.displaySlide(prevSlide, true);
+	}
+
 	displaySlide(nNewSlide: number, bSkipTransition: boolean) {
 		NAVDBG.print(
 			'SlideShowNavigator.displaySlide: current index: ' +
@@ -191,10 +206,15 @@ class SlideShowNavigator {
 		let slideAvailable = true;
 		const aNewMetaSlide = this.theMetaPres.getMetaSlideByIndex(nNewSlide);
 		if (!aNewMetaSlide) {
-			window.app.console.log('SlideShowNavigator.displaySlide: no meta slide for index: ' + nNewSlide);
+			window.app.console.log(
+				'SlideShowNavigator.displaySlide: no meta slide for index: ' +
+					nNewSlide,
+			);
 			slideAvailable = false;
-		} else if (aNewMetaSlide.hidden){
-			NAVDBG.print('SlideShowNavigator.displaySlide: hidden slide: ' + nNewSlide)
+		} else if (aNewMetaSlide.hidden) {
+			NAVDBG.print(
+				'SlideShowNavigator.displaySlide: hidden slide: ' + nNewSlide,
+			);
 			slideAvailable = false;
 		}
 		if (!slideAvailable) {
@@ -221,6 +241,10 @@ class SlideShowNavigator {
 				this.prevSlide,
 				bSkipTransition,
 			);
+			if (this.isRewindingToPrevSlide) {
+				this.slideShowHandler.skipAllEffects();
+				this.isRewindingToPrevSlide = false;
+			}
 		});
 	}
 
@@ -232,6 +256,7 @@ class SlideShowNavigator {
 				nStartSlide,
 		);
 		this.slideShowHandler.isStarting = true;
+		this.isRewindingToPrevSlide = false;
 		this.currentSlide = undefined;
 		this.prevSlide = undefined;
 		this.displaySlide(nStartSlide, bSkipTransition);
