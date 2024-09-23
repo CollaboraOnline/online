@@ -278,9 +278,11 @@ class LayerDrawing {
 					this.nextPrefetchedSlideHash = slideHash;
 				}
 				this.slideRequestTimeout = setTimeout(() => {
+					if (!this.helper.isSlideShowPlaying()) return;
 					this.slideRequestTimeout = null;
 					this.nextRequestedSlideHash = null;
 					this.nextPrefetchedSlideHash = null;
+
 					this.requestSlideImpl(slideHash, prefetch);
 				}, 500);
 			}
