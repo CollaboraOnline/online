@@ -8,11 +8,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
  * Toolbar handler
  */
 
-/* global app $ window brandProductName _ */
+/* global app $ window brandProductName DocUtil _ */
+
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -748,6 +750,7 @@ L.Map.include({
 	},
 
 	extractContent: function(html) {
+		html = DocUtil.stripHTML(html);
 		var parser = new DOMParser;
 		return parser.parseFromString(html, 'text/html').documentElement.getElementsByTagName('body')[0].textContent;
 	},
