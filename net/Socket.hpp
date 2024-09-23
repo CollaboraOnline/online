@@ -175,14 +175,14 @@ public:
     /// Returns true if this socket has been closed, i.e. rejected from polling and potentially shutdown
     bool isClosed() const { return !_open; }
 
-    Type type() const { return _type; }
-    bool isIPType() const { return Type::IPv4 == _type || Type::IPv6 == _type; }
+    constexpr Type type() const { return _type; }
+    constexpr bool isIPType() const { return Type::IPv4 == _type || Type::IPv6 == _type; }
     void setClientAddress(const std::string& address, unsigned int port=0) { _clientAddress = address; _clientPort=port; }
     const std::string& clientAddress() const { return _clientAddress; }
     unsigned int clientPort() const { return _clientPort; }
 
     /// Returns the OS native socket fd.
-    int getFD() const { return _fd; }
+    constexpr int getFD() const { return _fd; }
 
     std::ostream& streamStats(std::ostream& os, const std::chrono::steady_clock::time_point &now) const;
     std::string getStatsString(const std::chrono::steady_clock::time_point &now) const;
@@ -190,20 +190,20 @@ public:
     virtual std::ostream& stream(std::ostream& os) const  { return streamImpl(os); }
 
     /// Returns monotonic creation timestamp
-    std::chrono::steady_clock::time_point getCreationTime() const { return _creationTime; }
+    constexpr std::chrono::steady_clock::time_point getCreationTime() const { return _creationTime; }
     /// Returns monotonic timestamp of last received signal from remote
-    std::chrono::steady_clock::time_point getLastSeenTime() const { return _lastSeenTime; }
+    constexpr std::chrono::steady_clock::time_point getLastSeenTime() const { return _lastSeenTime; }
 
     /// Sets monotonic timestamp of last received signal from remote
     void setLastSeenTime(std::chrono::steady_clock::time_point now) { _lastSeenTime = now; }
 
     /// Returns bytes sent statistic
-    uint64_t bytesSent() const { return _bytesSent; }
+    constexpr uint64_t bytesSent() const { return _bytesSent; }
     /// Returns bytes received statistic
-    uint64_t bytesRcvd() const { return _bytesRcvd; }
+    constexpr uint64_t bytesRcvd() const { return _bytesRcvd; }
 
     /// Get input/output statistics on this stream
-    void getIOStats(uint64_t &sent, uint64_t &recv) const
+    constexpr void getIOStats(uint64_t &sent, uint64_t &recv) const
     {
         sent = _bytesSent;
         recv = _bytesRcvd;
@@ -421,9 +421,9 @@ protected:
     inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
 
     /// Adds `len` sent bytes to statistic
-    void notifyBytesSent(uint64_t len) { _bytesSent += len; }
+    constexpr void notifyBytesSent(uint64_t len) { _bytesSent += len; }
     /// Adds `len` received bytes to statistic
-    void notifyBytesRcvd(uint64_t len) { _bytesRcvd += len; }
+    constexpr void notifyBytesRcvd(uint64_t len) { _bytesRcvd += len; }
 
     /// avoid doing a shutdown before close
     void setNoShutdown() { _noShutdown = true; }
