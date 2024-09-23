@@ -832,34 +832,31 @@ L.Clipboard = L.Class.extend({
 			window.app.console.error('Already have ' + this._commandCompletion.length +
 						 ' pending clipboard command(s)');
 
-		const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
-
-		// Share a single fetch
-		const fetchPromise = async () => {
-			const response = await fetch(url);
-			return await response.text();
-		};
-
-		const awaitPromise = (mimetype, shorttype) => {
-			return new Promise((resolve, reject) => {
-				window.app.console.log('New ' + command + ' promise');
-				// FIXME: add a timeout cleanup too ...
-				this._commandCompletion.push({
-					fetch: fetchPromise,
-					command: command,
-					resolve: resolve,
-					reject: reject,
-					mimetype: mimetype,
-					shorttype: shorttype,
-				});
-		}); };
-
 		if (window.ThisIsTheAndroidApp) {
-			window.COOLMessageHandler.writeToClipboard(
-				await awaitPromise('text/plain', 'plain'),
-				await awaitPromise('text/html', 'html'),
-			);
+			window.COOLMessageHandler.writeToClipboard(); // Native code also handles the clipboard request, so no need for awaitPromise
 		} else {
+			const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
+
+			// Share a single fetch
+			const fetchPromise = async () => {
+				const response = await fetch(url);
+				return await response.text();
+			};
+
+			const awaitPromise = (mimetype, shorttype) => {
+				return new Promise((resolve, reject) => {
+					window.app.console.log('New ' + command + ' promise');
+					// FIXME: add a timeout cleanup too ...
+					this._commandCompletion.push({
+						fetch: fetchPromise,
+						command: command,
+						resolve: resolve,
+						reject: reject,
+						mimetype: mimetype,
+						shorttype: shorttype,
+					});
+			}); };
+
 			const text = new ClipboardItem({
 				'text/plain': awaitPromise('text/plain', 'plain'),
 				'text/html': awaitPromise('text/html', 'html'),
