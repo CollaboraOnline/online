@@ -102,51 +102,53 @@ m4_ifelse(MOBILEAPP,[true],
         and width, this being inside the smaller "document-container" will
         cause the content to overflow, creating scrollbars -->
 
-    <nav class="main-nav" role="navigation">
-      <!-- Mobile menu toggle button (hamburger/x icon) -->
-      <input id="main-menu-state" type="checkbox" />
-      <ul id="main-menu" class="sm sm-simple lo-menu readonly"></ul>
-      <div id="initial-load-indicator" class="page-initial-loader"></div>
-      <div id="document-titlebar">
-        <div class="document-title">
-          <!-- visuallyhidden: hide it visually but keep it available to screen reader and other assistive technology -->
-          <label class="visuallyhidden" for="document-name-input" aria-hidden="false">Document name</label>
-          <input id="document-name-input" type="text" spellcheck="false" disabled="true" />
-          <div id="document-name-input-loading-bar"></div>
-          <progress id="document-name-input-progress-bar" class="progress-bar" value="0" max="99"></progress>
-        </div>
-      </div>
-
-      <div id="userListHeader">
-        <div id="followingChipBackground">
-          <div id="followingChip"></div>
-        </div>
-        <div id="userListSummaryBackground"><button id="userListSummary"></button></div>
-      </div>
-      <div id="closebuttonwrapperseparator"></div>
-      <div id="closebuttonwrapper">
-        <div class="closebuttonimage" id="closebutton"></div>
-      </div>
-     </nav>
-
-     <div id="toolbar-wrapper" role="toolbar" aria-orientation="horizontal">
-        <div id="toolbar-row" class="toolbar-row">
-          <div id="toolbar-logo"></div>
-          <div id="toolbar-mobile-back" class="editmode-off"></div>
-          <div class="jsdialog ui-spacer"></div>
-          <div id="toolbar-up"></div>
-          <div id="toolbar-hamburger">
-            <label class="main-menu-btn" for="main-menu-state">
-              <span class="main-menu-btn-icon" id="main-menu-btn-icon"></span>
-            </label>
+    <dialog id="content-keeper">
+      <nav class="main-nav" role="navigation">
+        <!-- Mobile menu toggle button (hamburger/x icon) -->
+        <input id="main-menu-state" type="checkbox" />
+        <ul id="main-menu" class="sm sm-simple lo-menu readonly"></ul>
+        <div id="initial-load-indicator" class="page-initial-loader"></div>
+        <div id="document-titlebar">
+          <div class="document-title">
+            <!-- visuallyhidden: hide it visually but keep it available to screen reader and other assistive technology -->
+            <label class="visuallyhidden" for="document-name-input" aria-hidden="false">Document name</label>
+            <input id="document-name-input" type="text" spellcheck="false" disabled="true" />
+            <div id="document-name-input-loading-bar"></div>
+            <progress id="document-name-input-progress-bar" class="progress-bar" value="0" max="99"></progress>
           </div>
         </div>
-       <div colspan="4" id="formulabar"></div>
-       <progress id="mobile-progress-bar" class="progress-bar" value="0" max="99"></progress>
-    </div>
 
-    <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*">
-    <input id="selectbackground" aria-labelledby="menu-selectbackground" type="file" accept="image/*">
+        <div id="userListHeader">
+          <div id="followingChipBackground">
+            <div id="followingChip"></div>
+          </div>
+          <div id="userListSummaryBackground"><button id="userListSummary"></button></div>
+        </div>
+        <div id="closebuttonwrapperseparator"></div>
+        <div id="closebuttonwrapper">
+          <div class="closebuttonimage" id="closebutton"></div>
+        </div>
+      </nav>
+
+      <div id="toolbar-wrapper" role="toolbar" aria-orientation="horizontal">
+          <div id="toolbar-row" class="toolbar-row">
+            <div id="toolbar-logo"></div>
+            <div id="toolbar-mobile-back" class="editmode-off"></div>
+            <div class="jsdialog ui-spacer"></div>
+            <div id="toolbar-up"></div>
+            <div id="toolbar-hamburger">
+              <label class="main-menu-btn" for="main-menu-state">
+                <span class="main-menu-btn-icon" id="main-menu-btn-icon"></span>
+              </label>
+            </div>
+          </div>
+        <div colspan="4" id="formulabar"></div>
+        <progress id="mobile-progress-bar" class="progress-bar" value="0" max="99"></progress>
+      </div>
+
+      <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*">
+      <input id="selectbackground" aria-labelledby="menu-selectbackground" type="file" accept="image/*">
+    </dialog>
 
     <div id="main-document-content">
       <div id="presentation-controls-wrapper" class="readonly">

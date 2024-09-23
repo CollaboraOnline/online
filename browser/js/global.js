@@ -274,6 +274,11 @@ class InitializerBase {
 		window.addEventListener('load', function() {
 			window.fullyLoadedAndReady = true;
 			document.getElementById('initial-load-indicator').remove();
+			const contentKeeper = document.getElementById('content-keeper');
+			while (contentKeeper.children.length > 0)
+				document.body.insertBefore(contentKeeper.children[contentKeeper.children.length - 1], document.body.firstChild);
+
+			document.getElementById('content-keeper').remove();
 		}, false);
 
 		this.initiateCoolParams();
