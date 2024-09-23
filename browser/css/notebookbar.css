@@ -3,7 +3,7 @@
 
 .notebookbar-tabs-container {
 	display: inline-flex;
-	flex: 1 1 auto;
+	flex: 0.1 0.1 auto;
 	margin-inline-start: 5px;
 }
 
