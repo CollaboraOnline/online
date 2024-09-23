@@ -754,6 +754,8 @@ class SlideShowHandler {
 		}
 	}
 
+	// This method must be invoked by SlideShowNavigator.displaySlide only,
+	// since we need to update the current slide index.
 	displaySlide(
 		nNewSlide: number,
 		nOldSlide: number | undefined,
@@ -768,12 +770,6 @@ class SlideShowHandler {
 		const aMetaDoc = this.theMetaPres;
 		if (nNewSlide >= aMetaDoc.numberOfSlides) {
 			this.exitSlideShow();
-		}
-
-		const aNewMetaSlide = aMetaDoc.getMetaSlideByIndex(nNewSlide);
-		if (aNewMetaSlide && aNewMetaSlide.hidden) {
-			NAVDBG.print('SlideShowHandler.displaySlide: slide hidden: ' + nNewSlide);
-			return false;
 		}
 
 		if (this.isTransitionPlaying()) {
@@ -801,6 +797,7 @@ class SlideShowHandler {
 				(nOldSlide === undefined && this.isStarting) ||
 				(nOldSlide !== undefined && nNewSlide > nOldSlide)
 			) {
+				const aNewMetaSlide = aMetaDoc.getMetaSlideByIndex(nNewSlide);
 				const aSlideTransitionHandler = aNewMetaSlide.transitionHandler;
 				if (aSlideTransitionHandler && aSlideTransitionHandler.isValid()) {
 					const aTransitionEndEvent = makeEvent(
@@ -822,7 +819,7 @@ class SlideShowHandler {
 							this.aActivityQueue.addActivity(aTransitionActivity);
 							this.update();
 							this.presenter.stopLoader();
-							return true;
+							return;
 						}
 					} catch (message) {
 						console.error('displaySlide failed: ' + message);
@@ -832,7 +829,6 @@ class SlideShowHandler {
 		}
 
 		this.notifyTransitionEnd(nNewSlide, nOldSlide);
-		return true;
 	}
 
 	exitSlideShow() {
