@@ -152,6 +152,10 @@ class LayersCompositor extends SlideCompositor {
 	): BoundingBoxType {
 		return this.layerDrawing.getLayerBounds(slideHash, targetElement);
 	}
+
+	public isSlideShowPlaying() {
+		return this._slideShowPresenter._checkAlreadyPresenting();
+	}
 }
 
 SlideShow.LayersCompositor = LayersCompositor;
