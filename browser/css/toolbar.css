@@ -316,7 +316,7 @@
 	text-align: center;
 	font-size: var(--default-font-size) !important;
 	padding: 0px 4px;
-	width: auto !important;
+	width: 95% !important;
 	border-radius: 20px;
 	box-shadow: inset 0 0 2px 0 var(--color-border-dark);
 	background-color: var(--color-background-lighter);
