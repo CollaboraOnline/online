@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app _ brandProductName $ ClipboardItem Promise GraphicSelection */
+/* global app DocUtil _ brandProductName $ ClipboardItem Promise GraphicSelection */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -83,46 +83,6 @@ L.Clipboard = L.Class.extend({
 		document.onbeforecut = beforeSelect;
 		document.onbeforecopy = beforeSelect;
 		document.onbeforepaste = beforeSelect;
-	},
-
-	inlineStyleHelper: function(text, toBeReplaced, quotes) {
-		let startIndex = 1;
-		while (startIndex !== -1) {
-			startIndex = text.indexOf(toBeReplaced);
-			if (startIndex !== -1) {
-				let endIndex = text.indexOf(quotes, startIndex + toBeReplaced.length + 1);
-				let subString = text.substr(startIndex, endIndex - startIndex + 1);
-				text = text.replace(subString, "");
-			}
-		}
-		return text;
-	},
-
-	// Attempt to cleanup unwanted elements
-	stripStyle: function(htmlString) {
-		let startIndex = 1;
-
-		while (startIndex !== -1) {
-			startIndex = htmlString.indexOf('<style ');
-			if (startIndex !== -1) {
-				let endIndex = htmlString.indexOf('</style>');
-				let subString = htmlString.substr(startIndex, endIndex - startIndex + '</style>'.length);
-				htmlString = htmlString.replace(subString, '');
-			}
-		}
-
-		// Remove also inline styles.
-		htmlString = this.inlineStyleHelper(htmlString, 'style="', '"'); // For double quotes.
-		htmlString = this.inlineStyleHelper(htmlString, "style='", "'"); // For single quotes.
-
-		return htmlString;
-	},
-
-	// We can do a much better job when we fetch text/plain too.
-	stripHTML: function(html) {
-		html = this.stripStyle(html);
-		var tmp = new DOMParser().parseFromString(html, 'text/html').body;
-		return tmp.textContent.trim() || tmp.innerText.trim() || '';
 	},
 
 	// Decides if `html` effectively contains just an image.
@@ -584,7 +544,7 @@ L.Clipboard = L.Class.extend({
 
 		var text = this._getHtmlForClipboard();
 
-		var plainText = this.stripHTML(text);
+		var plainText = DocUtil.stripHTML(text);
 		if (text == this._selectionContent && this._selectionPlainTextContent != '') {
 			plainText = this._selectionPlainTextContent;
 		}
@@ -595,7 +555,7 @@ L.Clipboard = L.Class.extend({
 				var match = re.exec(text);
 				if (match !== null && match.length === 6) {
 					text = match[1] + match[3] + match[5];
-					plainText = this.stripHTML(text);
+					plainText = DocUtil.stripHTML(text);
 				}
 			}
 			// if copied content is graphical then plainText is null and it does not work on mobile.
@@ -972,6 +932,10 @@ L.Clipboard = L.Class.extend({
 				text = text.substring(idx, text.length);
 			textHtml = text;
 		}
+
+		if (!app.sectionContainer.testing)
+			textHtml = DocUtil.stripStyle(textHtml);
+
 		return {
 			'html': textHtml,
 			'plain': textPlain
@@ -1054,7 +1018,7 @@ L.Clipboard = L.Class.extend({
 		if (this._map['wopi'].DisableCopy === true)
 		{
 			var text = this._getDisabledCopyStubHtml();
-			var plainText = this.stripHTML(text);
+			var plainText = DocUtil.stripHTML(text);
 			if (ev.clipboardData) {
 				window.app.console.log('Copying disabled: put stub message on the clipboard');
 				ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
