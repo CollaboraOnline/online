@@ -74,6 +74,9 @@
 	.main-nav.hasnotebookbar:not(.readonly) #document-titlebar {
 		display: none;
 	}
+	.notebookbar-tabs-container {
+		flex: 1 1 auto !important;
+	}
 }
 
 .main-nav.readonly #optionstoolboxdown {
