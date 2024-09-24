@@ -72,10 +72,6 @@ body {
 	top: -100em;
 }
 
-#wopi-host-id {
-	display: none !important;
-}
-
 .about-dialog-info-div {
 	margin-inline-end: auto;
 }

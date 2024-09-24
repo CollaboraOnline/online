@@ -29,11 +29,6 @@ class AboutDialog {
 	private aboutDialogClickHandler(e: any) {
 		if (e.detail === 3) {
 			this.map._debug.toggle();
-
-			var wopiHostIds = document.querySelectorAll('#wopi-host-id');
-			wopiHostIds.forEach(function (element: any) {
-				element.style.display = 'block';
-			});
 		}
 	}
 
