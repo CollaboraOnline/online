@@ -27,27 +27,26 @@ class SplitTransition extends Transition2d {
 	}
 
 	public start(): void {
-		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 
 		if (
 			transitionSubType == TransitionSubType.HORIZONTAL &&
-			this.slideInfo.transitionDirection == false
+			this.transitionFilterInfo.isDirectionForward == false
 		) {
 			this.direction = SplitSubType.HORIZONTALIN;
 		} else if (
 			transitionSubType == TransitionSubType.HORIZONTAL &&
-			this.slideInfo.transitionDirection == true
+			this.transitionFilterInfo.isDirectionForward == true
 		) {
 			this.direction = SplitSubType.HORIZONTALOUT;
 		} else if (
 			transitionSubType == TransitionSubType.VERTICAL &&
-			this.slideInfo.transitionDirection == false
+			this.transitionFilterInfo.isDirectionForward == false
 		) {
 			this.direction = SplitSubType.VERTICALIN;
 		} else if (
 			transitionSubType == TransitionSubType.VERTICAL &&
-			this.slideInfo.transitionDirection == true
+			this.transitionFilterInfo.isDirectionForward == true
 		) {
 			this.direction = SplitSubType.VERTICALOUT;
 		}

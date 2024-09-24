@@ -16,16 +16,16 @@ class TransitionParameters {
 	public context: RenderContext = null;
 	public current: WebGLTexture | ImageBitmap = null;
 	public next: WebGLTexture | ImageBitmap = null;
-	public slideInfo: SlideInfo = null;
+	public transitionFilterInfo: TransitionFilterInfo = null;
 	public callback: VoidFunction = null;
 }
 
 abstract class TransitionBase extends SlideChangeGl {
-	protected slideInfo: SlideInfo = null;
+	protected transitionFilterInfo: TransitionFilterInfo = null;
 
 	protected constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
-		this.slideInfo = transitionParameters.slideInfo;
+		this.transitionFilterInfo = transitionParameters.transitionFilterInfo;
 		this.prepareTransition();
 	}
 

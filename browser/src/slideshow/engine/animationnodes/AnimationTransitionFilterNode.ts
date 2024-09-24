@@ -12,6 +12,46 @@
 
 declare var app: any;
 
+class TransitionFilterInfo {
+	transitionType: TransitionType = null;
+	transitionSubtype: TransitionSubType = null;
+	isDirectionForward: boolean = true;
+	isModeIn: boolean = true;
+	fadeColor?: string = null;
+
+	constructor(
+		type?: TransitionType,
+		subtype?: TransitionSubType,
+		isDirectionForward: boolean = true,
+		isModeIn: boolean = true,
+		fadeColor?: string,
+	) {
+		this.transitionType = type;
+		this.transitionSubtype = subtype;
+		this.isDirectionForward = isDirectionForward;
+		this.isModeIn = isModeIn;
+		this.fadeColor = fadeColor;
+	}
+
+	static fromSlideInfo(slideInfo: SlideInfo): TransitionFilterInfo {
+		const transitionFilterInfo = new TransitionFilterInfo();
+		if (!slideInfo) return null;
+
+		if (slideInfo.transitionType)
+			transitionFilterInfo.transitionType =
+				stringToTransitionTypeMap[slideInfo.transitionType];
+		if (slideInfo.transitionSubtype)
+			transitionFilterInfo.transitionSubtype =
+				stringToTransitionSubTypeMap[slideInfo.transitionSubtype];
+		if (typeof slideInfo.transitionDirection === 'boolean')
+			transitionFilterInfo.isDirectionForward = slideInfo.transitionDirection;
+		if (slideInfo.transitionFadeColor)
+			transitionFilterInfo.fadeColor = slideInfo.transitionFadeColor;
+
+		return transitionFilterInfo;
+	}
+}
+
 class AnimationTransitionFilterNode extends AnimationBaseNode {
 	private eTransitionType: TransitionType;
 	private eTransitionSubType: TransitionSubType;

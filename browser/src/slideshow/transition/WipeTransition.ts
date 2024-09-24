@@ -27,21 +27,20 @@ class WipeTransition extends Transition2d {
 	}
 
 	public start(): void {
-		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 		if (
 			transitionSubType == TransitionSubType.TOPTOBOTTOM &&
-			this.slideInfo.transitionDirection
+			this.transitionFilterInfo.isDirectionForward
 		) {
 			this.direction = WipeSubType.TOPTOBOTTOM;
 		} else if (
 			transitionSubType == TransitionSubType.TOPTOBOTTOM &&
-			!this.slideInfo.transitionDirection
+			!this.transitionFilterInfo.isDirectionForward
 		) {
 			this.direction = WipeSubType.BOTTOMTOTOP;
 		} else if (
 			transitionSubType == TransitionSubType.LEFTTORIGHT &&
-			this.slideInfo.transitionDirection
+			this.transitionFilterInfo.isDirectionForward
 		) {
 			this.direction = WipeSubType.LEFTTORIGHT;
 		} else {

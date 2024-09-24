@@ -436,7 +436,8 @@ class SlideShowPresenter {
 			transitionParameters.context = this._slideRenderer._context;
 			transitionParameters.current = currentTexture;
 			transitionParameters.next = nextTexture;
-			transitionParameters.slideInfo = slideInfo;
+			transitionParameters.transitionFilterInfo =
+				TransitionFilterInfo.fromSlideInfo(slideInfo);
 			transitionParameters.callback = () => {
 				this._slideRenderer.renderSlide(
 					nextTexture,

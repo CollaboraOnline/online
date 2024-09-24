@@ -27,8 +27,7 @@ class WheelTransition extends Transition2d {
 	}
 
 	public start(): void {
-		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 
 		if (transitionSubType == TransitionSubType.TWOBLADEVERTICAL) {
 			this.stocks = WheelSubType.TWOWHEEL;

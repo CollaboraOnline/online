@@ -27,8 +27,7 @@ class CoverTransition extends Transition2d {
 	}
 
 	public start(): void {
-		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 
 		if (transitionSubType == TransitionSubType.FROMTOP) {
 			this.direction = CoverSubType.FROMTOP;
