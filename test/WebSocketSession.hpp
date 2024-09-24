@@ -205,6 +205,10 @@ public:
             if (elapsed >= timeout)
                 break;
 
+            // Only continue if still connected
+            if( !isConnected() )
+                break;
+
             const std::chrono::milliseconds remaining = timeout - elapsed;
             _inCv.wait_for(lock, remaining / 20,
                            [this]()
@@ -257,6 +261,18 @@ public:
         {
             std::unique_lock<std::mutex> lock(_outMutex);
             _outQueue.emplace_back(msg.data(), msg.data() + msg.size());
+        }
+
+        const auto pollPtr = _socketPoll.lock();
+        if (pollPtr)
+            pollPtr->wakeup();
+    }
+
+    template <std::size_t N> void sendMessage(const char (&msg)[N])
+    {
+        {
+            std::unique_lock<std::mutex> lock(_outMutex);
+            _outQueue.emplace_back(msg, msg + N - 1); // Minus the null-terminator.
         }
 
         const auto pollPtr = _socketPoll.lock();
