@@ -211,6 +211,8 @@ class AboutDialog {
 		text += 'Served by: ' + document.getElementById('os-info').innerText + '\n';
 		text +=
 			'Server ID: ' + document.getElementById('coolwsd-id').innerText + '\n';
+		text +=
+			'WOPI host: ' + document.getElementById('wopi-host-id').innerText + '\n';
 		text = text.replace(/\u00A0/g, ' ');
 
 		if (navigator.clipboard && window.isSecureContext) {
