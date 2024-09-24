@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-16 14:25+0200\n"
-"PO-Revision-Date: 2024-09-13 23:21+0000\n"
+"PO-Revision-Date: 2024-09-17 01:26+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "help/es/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -3141,15 +3141,14 @@ msgid "Select the text with the existing format"
 msgstr "Seleccione el texto con el formato deseado"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
-"Haz clic en el icono de clonación <img class=\"icon-size\" alt=\"\" src="
-"\"images/lc_formatpaintbrush.svg\">. El puntero del ratón se convierte en un "
-"bote de pintura."
+"Haz clic en el icono de formato de clonación <img class=\"icon-size\" alt=\""
+"\" src=\"images/lc_formatpaintbrush.svg\" />. El puntero del ratón se "
+"convierte en un bote de pintura."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
@@ -3274,14 +3273,13 @@ msgid "Format the source cell with the font, color background and more."
 msgstr "Formatee la celda de origen con tipo de letra, color, fondo, etc."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
 "Haz clic en el icono de formato de clonación <img class=\"icon-size\" src="
-"\"images/lc_formatpaintbrush.svg\">. El puntero del ratón se convierte en un "
-"bote de pintura."
+"\"images/lc_formatpaintbrush.svg\" />. El puntero del ratón se convierte en "
+"un bote de pintura."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
