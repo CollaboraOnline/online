@@ -167,6 +167,10 @@ class SlideShowPresenter {
 		if (this._checkAlreadyPresenting()) this.onSlideShowInfoChanged();
 	}
 
+	public getNavigator() {
+		return this._slideShowNavigator;
+	}
+
 	public getSlideInfo(slideNumber: number): SlideInfo | null {
 		return this._presentationInfo
 			? this._presentationInfo.slides[slideNumber]
