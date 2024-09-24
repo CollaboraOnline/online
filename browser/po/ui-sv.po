@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-16 14:25+0200\n"
-"PO-Revision-Date: 2024-09-14 23:35+0000\n"
+"PO-Revision-Date: 2024-09-17 01:26+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2853,7 +2853,7 @@ msgstr "Lös tråd"
 
 #: src/canvas/sections/CommentListSection.ts:1032
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Befordra till toppkommentar"
 
 #: src/canvas/sections/CommentListSection.ts:1272
 #: src/canvas/sections/CommentListSection.ts:1285
