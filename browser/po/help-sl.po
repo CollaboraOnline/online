@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Collabora Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-16 14:25+0200\n"
-"PO-Revision-Date: 2024-09-16 10:51+0000\n"
+"PO-Revision-Date: 2024-09-24 12:47+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/help/sl/>\n"
@@ -13,10 +13,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.8-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
@@ -3138,14 +3138,14 @@ msgid "Select the text with the existing format"
 msgstr "Izberite besedilo z obstoječim oblikovanjem."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
 "Kliknite ikono kloniranja oblikovanja <img class=\"icon-size\" alt=\"\" src="
-"\"images/lc_formatpaintbrush.svg\">. Kazalec miške se spremeni v vedro barve."
+"\"images/lc_formatpaintbrush.svg\" />. Kazalec miške se spremeni v vedro "
+"barve."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
@@ -3265,13 +3265,12 @@ msgstr ""
 "Celico vira lahko oblikujete z določanjem pisave, barve ozadja in drugim."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
 "Kliknite ikono kloniranja oblikovanja <img class=\"icon-size\" src=\"images"
-"/lc_formatpaintbrush.svg\">. Kazalec miške se spremeni v vedro barve."
+"/lc_formatpaintbrush.svg\" />. Kazalec miške se spremeni v vedro barve."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
