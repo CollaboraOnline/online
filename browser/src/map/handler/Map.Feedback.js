@@ -96,8 +96,7 @@ L.Map.Feedback = L.Handler.extend({
 		lokitHash = lokitHash ? lokitHash.innerText : '';
 		var wopiHostId = document.querySelector('#wopi-host-id') || {};
 		wopiHostId = wopiHostId ? wopiHostId.innerText : '';
-		var proxyPrefixEnabled = document.querySelector('#proxy-prefix-id') || {};
-		proxyPrefixEnabled = proxyPrefixEnabled ? proxyPrefixEnabled.innerText : '';
+		var proxyPrefixEnabled = window.socketProxy ? "True" : "False";
 
 		var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
 		var params = [{ mobile : window.mode.isMobile() },
