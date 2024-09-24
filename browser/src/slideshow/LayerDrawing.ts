@@ -93,10 +93,17 @@ class LayerDrawing {
 	private slideTextFieldsMap: Map<string, Map<TextFieldsType, string>> =
 		new Map();
 	private offscreenCanvas: OffscreenCanvas = null;
-	private offscreenContext: OffscreenCanvasRenderingContext2D = null;
+	private offscreenContext: WebGLRenderingContext = null;
 	private currentCanvas: OffscreenCanvas = null;
 	private currentCanvasContext: ImageBitmapRenderingContext = null;
 	private onSlideRenderingCompleteCallback: VoidFunction = null;
+	private textureCache: Map<string, WebGLTexture> = new Map();
+	private program: WebGLProgram;
+	private positionBuffer: WebGLBuffer;
+	private texCoordBuffer: WebGLBuffer;
+	private positionLocation: number;
+	private texCoordLocation: number;
+	private samplerLocation: WebGLUniformLocation;
 
 	constructor(mapObj: any, helper: LayersCompositor) {
 		this.map = mapObj;
@@ -134,6 +141,35 @@ class LayerDrawing {
 		return this.helper.getSlideInfo(slideHash);
 	}
 
+	private disposeTextures() {
+		const gl = this.offscreenContext as WebGLRenderingContext;
+		for (const texture of this.textureCache.values()) {
+			gl.deleteTexture(texture);
+		}
+		this.textureCache.clear();
+	}
+	public dispose() {
+		this.disposeTextures();
+		const gl = this.offscreenContext as WebGLRenderingContext;
+		if (this.positionBuffer) {
+			gl.deleteBuffer(this.positionBuffer);
+		}
+		if (this.texCoordBuffer) {
+			gl.deleteBuffer(this.texCoordBuffer);
+		}
+		if (this.program) {
+			gl.deleteProgram(this.program);
+		}
+
+		this.offscreenContext = null;
+		this.offscreenCanvas = null;
+
+		this.textureCache.clear();
+		this.slideCache.invalidateAll();
+
+		this.removeHooks();
+	}
+
 	public getSlide(slideNumber: number): ImageBitmap {
 		const startSlideHash = this.helper.getSlideHash(slideNumber);
 		return this.slideCache.get(startSlideHash);
@@ -165,6 +201,8 @@ class LayerDrawing {
 	}
 
 	public composeLayers(slideHash: string): void {
+		this.clearCanvas();
+
 		this.drawBackground(slideHash);
 		this.drawMasterPage(slideHash);
 		this.drawDrawPage(slideHash);
@@ -232,7 +270,128 @@ class LayerDrawing {
 			this.canvasWidth,
 			this.canvasHeight,
 		);
-		this.offscreenContext = this.offscreenCanvas.getContext('2d');
+		// Get the WebGL rendering context
+		this.offscreenContext = this.offscreenCanvas.getContext('webgl');
+		if (!this.offscreenContext) {
+			console.error('WebGL not supported in this environment.');
+			return;
+		}
+
+		// Initialize shaders, buffers, and program
+		this.initializeWebGL();
+	}
+
+	private loadTexture(
+		gl: WebGLRenderingContext,
+		imageInfo: HTMLImageElement | ImageBitmap,
+	): WebGLTexture {
+		const texture = gl.createTexture();
+		gl.bindTexture(gl.TEXTURE_2D, texture);
+
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+
+		gl.texImage2D(
+			gl.TEXTURE_2D,
+			0,
+			gl.RGBA,
+			gl.RGBA,
+			gl.UNSIGNED_BYTE,
+			imageInfo,
+		);
+
+		return texture;
+	}
+
+	private vertexShaderSource = `
+		attribute vec2 a_position;
+		attribute vec2 a_texCoord;
+		varying vec2 v_texCoord;
+		void main() {
+			gl_Position = vec4(a_position, 0, 1);
+			v_texCoord = a_texCoord;
+		}
+	`;
+
+	private fragmentShaderSource = `
+    precision mediump float;
+    varying vec2 v_texCoord;
+    uniform sampler2D u_sampler;
+    void main() {
+        gl_FragColor = texture2D(u_sampler, v_texCoord);
+    }
+`;
+
+	private initializeWebGL() {
+		const gl = this.offscreenContext as WebGLRenderingContext;
+
+		const vertexShader = this.createShader(
+			gl,
+			gl.VERTEX_SHADER,
+			this.vertexShaderSource,
+		);
+		const fragmentShader = this.createShader(
+			gl,
+			gl.FRAGMENT_SHADER,
+			this.fragmentShaderSource,
+		);
+
+		this.program = this.createProgram(gl, vertexShader, fragmentShader);
+
+		this.positionLocation = gl.getAttribLocation(this.program, 'a_position');
+		this.texCoordLocation = gl.getAttribLocation(this.program, 'a_texCoord');
+		this.samplerLocation = gl.getUniformLocation(this.program, 'u_sampler');
+
+		this.positionBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
+		const positions = new Float32Array([
+			-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
+		]);
+		gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+		this.texCoordBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordBuffer);
+		const texCoords = new Float32Array([0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0]);
+		gl.bufferData(gl.ARRAY_BUFFER, texCoords, gl.STATIC_DRAW);
+
+		gl.enable(gl.BLEND);
+		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+	}
+
+	private createShader(
+		gl: WebGLRenderingContext,
+		type: number,
+		source: string,
+	): WebGLShader {
+		const shader = gl.createShader(type);
+		gl.shaderSource(shader, source);
+		gl.compileShader(shader);
+		if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+			const info = gl.getShaderInfoLog(shader);
+			console.error('Could not compile WebGL shader.' + info);
+			gl.deleteShader(shader);
+			return null;
+		}
+		return shader;
+	}
+
+	private createProgram(
+		gl: WebGLRenderingContext,
+		vertexShader: WebGLShader,
+		fragmentShader: WebGLShader,
+	): WebGLProgram {
+		const program = gl.createProgram();
+		gl.attachShader(program, vertexShader);
+		gl.attachShader(program, fragmentShader);
+		gl.linkProgram(program);
+		if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+			const info = gl.getProgramInfoLog(program);
+			console.error('Could not link WebGL program.' + info);
+			gl.deleteProgram(program);
+			return null;
+		}
+		return program;
 	}
 
 	private requestSlideImpl(slideHash: string, prefetch: boolean = false) {
@@ -456,27 +615,50 @@ class LayerDrawing {
 	}
 
 	private clearCanvas() {
-		this.offscreenContext.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+		const gl = this.offscreenContext as WebGLRenderingContext;
+		gl.clearColor(1.0, 1.0, 1.0, 1.0); // Clear to white
+		gl.clear(gl.COLOR_BUFFER_BIT);
+	}
+
+	private hexToRgb(hex: string): { r: number; g: number; b: number } | null {
+		hex = hex.replace(/^#/, '');
+		let bigint: number;
+		if (hex.length === 3) {
+			const r = parseInt(hex.charAt(0) + hex.charAt(0), 16);
+			const g = parseInt(hex.charAt(1) + hex.charAt(1), 16);
+			const b = parseInt(hex.charAt(2) + hex.charAt(2), 16);
+			return { r, g, b };
+		} else if (hex.length === 6) {
+			bigint = parseInt(hex, 16);
+			const r = (bigint >> 16) & 255;
+			const g = (bigint >> 8) & 255;
+			const b = bigint & 255;
+			return { r, g, b };
+		} else {
+			return null;
+		}
 	}
 
 	private drawBackground(slideHash: string) {
-		this.clearCanvas();
-
-		// always draw a solid white rectangle behind the background
-		this.offscreenContext.fillStyle = '#FFFFFF';
-		this.offscreenContext.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+		const gl = this.offscreenContext as WebGLRenderingContext;
 
 		const slideInfo = this.getSlideInfo(slideHash);
-		if (!slideInfo.background) return true;
 
-		if (slideInfo.background.fillColor) {
-			this.offscreenContext.fillStyle = '#' + slideInfo.background.fillColor;
-			window.app.console.log(
-				'LayerDrawing.drawBackground: ' + this.offscreenContext.fillStyle,
-			);
-			this.offscreenContext.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-			return true;
+		if (slideInfo.background && slideInfo.background.fillColor) {
+			const fillColor = slideInfo.background.fillColor;
+			const rgb = this.hexToRgb(fillColor);
+			if (rgb) {
+				gl.clearColor(rgb.r / 255, rgb.g / 255, rgb.b / 255, 1.0);
+			} else {
+				gl.clearColor(1.0, 1.0, 1.0, 1.0);
+			}
+			gl.clear(gl.COLOR_BUFFER_BIT);
+		} else {
+			gl.clearColor(1.0, 1.0, 1.0, 1.0);
+			gl.clear(gl.COLOR_BUFFER_BIT);
 		}
+
+		if (!slideInfo.background) return true;
 
 		const pageHash = slideInfo.background.isCustom
 			? slideHash
@@ -582,7 +764,7 @@ class LayerDrawing {
 						const nextFrame = animatedElement.getAnimatedLayer();
 						if (nextFrame) {
 							console.debug('LayerDrawing.drawDrawPageLayer: draw next frame');
-							this.offscreenContext.drawImage(nextFrame, 0, 0);
+							this.drawBitmap(nextFrame);
 							return;
 						}
 						return; // no layer means it is not visible
@@ -593,14 +775,34 @@ class LayerDrawing {
 		}
 	}
 
-	private drawBitmap(imageInfo: ImageInfo) {
+	private drawBitmap(imageInfo: ImageInfo | ImageBitmap) {
 		if (!imageInfo) {
-			window.app.console.log('LayerDrawing.drawBitmap: no image');
+			console.log('LayerDrawing.drawBitmap: no image');
 			return;
 		}
-		if (imageInfo.type === 'png') {
-			this.offscreenContext.drawImage(imageInfo.data as HTMLImageElement, 0, 0);
+		const gl = this.offscreenContext as WebGLRenderingContext;
+		let texture;
+		if (imageInfo instanceof ImageBitmap) {
+			texture = this.loadTexture(gl, imageInfo);
+		} else {
+			texture = this.loadTexture(gl, imageInfo.data as HTMLImageElement);
 		}
+
+		gl.useProgram(this.program);
+
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
+		gl.enableVertexAttribArray(this.positionLocation);
+		gl.vertexAttribPointer(this.positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordBuffer);
+		gl.enableVertexAttribArray(this.texCoordLocation);
+		gl.vertexAttribPointer(this.texCoordLocation, 2, gl.FLOAT, false, 0, 0);
+
+		gl.activeTexture(gl.TEXTURE0);
+		gl.bindTexture(gl.TEXTURE_2D, texture);
+		gl.uniform1i(this.samplerLocation, 0);
+
+		gl.drawArrays(gl.TRIANGLES, 0, 6);
 	}
 
 	onSlideRenderingComplete(e: any) {
