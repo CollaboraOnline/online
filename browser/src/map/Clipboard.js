@@ -1281,8 +1281,11 @@ L.Clipboard = L.Class.extend({
 		p = document.createElement('p');
 		innerDiv.appendChild(p);
 		const bold = document.createElement('b');
-		bold.textContent = _('Please press ');
+		bold.textContent = _('Please use following combination to see more options:');
 		p.appendChild(bold);
+
+		p = document.createElement('p');
+		innerDiv.appendChild(p);
 		let kbd = document.createElement('kbd');
 		kbd.textContent = ctrlText;
 		p.appendChild(kbd);
@@ -1293,7 +1296,7 @@ L.Clipboard = L.Class.extend({
 		kbd = document.createElement('kbd');
 		kbd.textContent = 'V';
 		p.appendChild(kbd);
-		p.appendChild(document.createTextNode(_(' to see more options')));
+
 		p = document.createElement('p');
 		innerDiv.appendChild(p);
 		p.textContent = _('Close popup to ignore paste special');
