@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-16 14:25+0200\n"
-"PO-Revision-Date: 2024-08-25 08:26+0000\n"
+"PO-Revision-Date: 2024-09-17 16:21+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.7.1-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1074,7 +1074,7 @@ msgstr "Spremi komentar"
 #: src/control/Control.Menubar.js:410
 #: src/control/Control.NotebookbarBuilder.js:433
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "HTML dokument (.html)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:579
@@ -1143,7 +1143,7 @@ msgstr "CSV datoteka (.csv)"
 
 #: src/control/Control.Menubar.js:704
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "HTML datoteka (.html)"
 
 #: src/control/Control.Menubar.js:708
 #: src/control/jsdialog/Definitions.Menu.ts:111
@@ -1323,7 +1323,7 @@ msgstr "CSV datoteka (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:399
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "HTML datoteka (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:455
 msgid "Image (.png)"
@@ -2222,11 +2222,11 @@ msgstr "Jako široko"
 
 #: src/control/jsdialog/Definitions.Menu.ts:418
 msgid "From Beginning"
-msgstr ""
+msgstr "Od početka"
 
 #: src/control/jsdialog/Definitions.Menu.ts:422
 msgid "From Current Slide"
-msgstr ""
+msgstr "Od trenutačnog slajda"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2304,7 +2304,7 @@ msgstr "Ovdje će se pojaviti naslovi i objekti koje dodaš u dokument"
 
 #: src/slideshow/SlideShowPresenter.ts:302
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Pritisni za izlaz iz prezentacije …"
 
 #: src/slideshow/SlideShowPresenter.ts:465
 #: src/map/handler/Map.SlideShow.js:170
@@ -2363,7 +2363,7 @@ msgstr "Modus prezentacije je deaktiviran za ovaj dokument"
 
 #: src/slideshow/PauseTimer.ts:121
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Pauza … ( %SECONDS% )"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -2815,7 +2815,7 @@ msgstr "Funkcije"
 
 #: src/layer/tile/CanvasTileLayer.js:2101
 msgid "Named Range"
-msgstr ""
+msgstr "Imenovani raspon"
 
 #: src/layer/tile/CanvasTileLayer.js:3810
 msgid "No Comments"
@@ -3010,7 +3010,7 @@ msgstr "Zadnji put spremljeno:"
 
 #: src/map/Map.js:1464
 msgid "Please wait!"
-msgstr ""
+msgstr "Pričekaj!"
 
 #: src/map/handler/Map.Feedback.js:86
 msgid "Please send us your feedback"
