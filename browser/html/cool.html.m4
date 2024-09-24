@@ -206,7 +206,7 @@ m4_ifelse(MOBILEAPP,[true],
               m4_ifelse(DEBUG,[true],[<div id="js-dialog">JSDialogs: <a href="#">View widgets</a></div>])
               <div id="routeToken"></div>
               <div id="timeZone"></div>
-              m4_ifelse(MOBILEAPP,[],[<div id="wopi-host-id">%WOPI_HOST_ID%</div>],[<p></p>])
+              m4_ifelse(MOBILEAPP,[],[<div id="wopi-host-id" style="display: none;">%WOPI_HOST_ID%</div>],[<p></p>])
               <p class="about-dialog-info-div"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
             </div>
           </div>
