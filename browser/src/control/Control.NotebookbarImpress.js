@@ -469,6 +469,26 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true, combination: 'MP', de: null }
 			},
 			{
+				'type': 'toolbox',
+				'children': [
+					{
+						'id': 'home-grid-visible',
+						'type': 'toolitem',
+						'text': _('Show Grid'),
+						'command': '.uno:GridVisible',
+						'accessibility': { focusBack: true, combination: 'GV', de: null }
+					},
+					{
+						'id': 'home-grid-use',
+						'type': 'toolitem',
+						'text': _('Snap to Grid'),
+						'command': '.uno:GridUse',
+						'accessibility': { focusBack: true, combination: 'GU', de: null }
+					}
+				],
+				'vertical': 'true'
+			},
+			{
 				'id':'toggledarktheme',
 				'class': 'unotoggledarktheme',
 				'type': 'bigcustomtoolitem',
@@ -915,27 +935,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					}
 				],
 				'vertical': 'true'
-			},
-			{
-				'type': 'toolbox',
-				'children': [
-					{
-						'id': 'home-grid-visible',
-						'type': 'toolitem',
-						'text': _UNO('.uno:GridVisible'),
-						'command': '.uno:GridVisible',
-						'accessibility': { focusBack: true, combination: 'GV', de: null }
-					},
-					{
-						'id': 'home-grid-use',
-						'type': 'toolitem',
-						'text': _UNO('.uno:GridUse'),
-						'command': '.uno:GridUse',
-						'accessibility': { focusBack: true, combination: 'GU', de: null }
-					}
-				],
-				'vertical': 'true'
-
 			},
 			{
 				'type': 'container',

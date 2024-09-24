@@ -407,6 +407,26 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'accessibility': { focusBack: true, combination: 'CU', de: null }
 			},
 			{
+				'type': 'toolbox',
+				'children': [
+					{
+						'id': 'home-grid-visible',
+						'type': 'toolitem',
+						'text': _UNO('.uno:GridVisible'),
+						'command': '.uno:GridVisible',
+						'accessibility': { focusBack: true, combination: 'GV', de: null }
+					},
+					{
+						'id': 'home-grid-use',
+						'type': 'toolitem',
+						'text': _UNO('.uno:GridUse'),
+						'command': '.uno:GridUse',
+						'accessibility': { focusBack: true, combination: 'GU', de: null }
+					}
+				],
+				'vertical': 'true'
+			},
+			{
 				'id':'toggledarktheme',
 				'type': 'bigcustomtoolitem',
 				'text': _('Dark Mode'),
@@ -851,27 +871,6 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					}
 				],
 				'vertical': 'true'
-			},
-			{
-				'type': 'toolbox',
-				'children': [
-					{
-						'id': 'home-grid-visible',
-						'type': 'toolitem',
-						'text': _UNO('.uno:GridVisible'),
-						'command': '.uno:GridVisible',
-						'accessibility': { focusBack: true, combination: 'GV', de: null }
-					},
-					{
-						'id': 'home-grid-use',
-						'type': 'toolitem',
-						'text': _UNO('.uno:GridUse'),
-						'command': '.uno:GridUse',
-						'accessibility': { focusBack: true, combination: 'GU', de: null }
-					}
-				],
-				'vertical': 'true'
-
 			},
 			{
 				'type': 'container',
