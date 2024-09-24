@@ -372,6 +372,7 @@ L.Control.UIManager = L.Control.extend({
 			$('#presentation-controls-wrapper').show();
 			this.initializeRuler();
 			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map);
+			this.map.presenterConsole = new SlideShow.PresenterConsole(this.map);
 		}
 
 		if (docType === 'text') {
