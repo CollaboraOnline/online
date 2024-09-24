@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-16 14:25+0200\n"
-"PO-Revision-Date: 2024-09-13 23:21+0000\n"
+"PO-Revision-Date: 2024-09-17 01:26+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "help/pl/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -3108,14 +3108,13 @@ msgid "Select the text with the existing format"
 msgstr "Zaznacz tekst z istniejącym formatowaniem"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
 "Kliknij ikonę klonowania formatowania <img class=\"icon-size\" alt=\"\" src="
-"\"images/lc_formatpaintbrush.svg\">. Kursor myszy zmieni się w kubełek z "
+"\"images/lc_formatpaintbrush.svg\" />. Kursor myszy zmieni się w kubełek z "
 "farbą."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
@@ -3232,13 +3231,12 @@ msgid "Format the source cell with the font, color background and more."
 msgstr "Ustaw czcionkę, kolor tła i więcej w komórce źródłowej."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
 "Kliknij ikonę klonowania formatowania <img class=\"icon-size\" src=\"images"
-"/lc_formatpaintbrush.svg\">. Kursor myszy zmieni się w kubełek z farbą."
+"/lc_formatpaintbrush.svg\" />. Kursor myszy zmieni się w kubełek z farbą."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
