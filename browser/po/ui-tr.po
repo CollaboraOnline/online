@@ -14,11 +14,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-16 14:25+0200\n"
-"PO-Revision-Date: 2024-09-14 23:35+0000\n"
+"PO-Revision-Date: 2024-09-17 01:26+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2858,7 +2858,7 @@ msgstr "Sorunu Çöz"
 
 #: src/canvas/sections/CommentListSection.ts:1032
 msgid "Promote to top comment"
-msgstr ""
+msgstr "En iyi yoruma yükselt"
 
 #: src/canvas/sections/CommentListSection.ts:1272
 #: src/canvas/sections/CommentListSection.ts:1285
