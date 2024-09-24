@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-16 14:25+0200\n"
-"PO-Revision-Date: 2024-09-02 16:11+0000\n"
+"PO-Revision-Date: 2024-09-24 06:53+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2226,11 +2226,11 @@ msgstr "Zeer los"
 
 #: src/control/jsdialog/Definitions.Menu.ts:418
 msgid "From Beginning"
-msgstr ""
+msgstr "Vanaf het begin"
 
 #: src/control/jsdialog/Definitions.Menu.ts:422
 msgid "From Current Slide"
-msgstr ""
+msgstr "Vanaf huidige dia"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2876,7 +2876,7 @@ msgstr "Opgeloste draad"
 
 #: src/canvas/sections/CommentListSection.ts:1032
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Promoveer naar bovenste reactie"
 
 #: src/canvas/sections/CommentListSection.ts:1272
 #: src/canvas/sections/CommentListSection.ts:1285
@@ -3019,7 +3019,7 @@ msgstr "Laatst opgeslagen:"
 
 #: src/map/Map.js:1464
 msgid "Please wait!"
-msgstr ""
+msgstr "Een ogenblik geduld!"
 
 #: src/map/handler/Map.Feedback.js:86
 msgid "Please send us your feedback"
