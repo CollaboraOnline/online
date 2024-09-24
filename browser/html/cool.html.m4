@@ -201,7 +201,7 @@ m4_ifelse(MOBILEAPP,[true],
               <div class="spacer"></div>
               <div id="lokit-version-label"></div>
               <div class="about-dialog-info-div"><div id="lokit-version" dir="ltr"></div></div>
-              m4_ifelse(MOBILEAPP,[],[<div id="served-by"><span id="served-by-label"></span>&nbsp;<span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
+              m4_ifelse(MOBILEAPP,[],[<div id="served-by" style="display: none;"><span id="served-by-label"></span>&nbsp;<span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
               <div id="slow-proxy"></div>
               m4_ifelse(DEBUG,[true],[<div id="js-dialog">JSDialogs: <a href="#">View widgets</a></div>])
               <div id="routeToken"></div>
