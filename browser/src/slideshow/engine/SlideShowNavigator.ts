@@ -301,8 +301,8 @@ class SlideShowNavigator {
 
 			// Get the coordinates of the click
 			const canvas = this.presenter.getCanvas();
-			const width = canvas.width;
-			const height = canvas.height;
+			const width = canvas.clientWidth;
+			const height = canvas.clientHeight;
 
 			const x = (aEvent.offsetX / width) * this.theMetaPres.slideWidth;
 			const y = (aEvent.offsetY / height) * this.theMetaPres.slideHeight;
