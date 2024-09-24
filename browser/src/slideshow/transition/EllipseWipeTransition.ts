@@ -14,9 +14,7 @@ declare var SlideShow: any;
 
 function EllipseWipeTransition(transitionParameters: TransitionParameters) {
 	const transitionSubType =
-		stringToTransitionSubTypeMap[
-			transitionParameters.slideInfo.transitionSubtype
-		];
+		transitionParameters.transitionFilterInfo.transitionSubtype;
 	if (transitionSubType == TransitionSubType.CIRCLE) {
 		return new SlideShow.CircleTransition(transitionParameters);
 	} else {

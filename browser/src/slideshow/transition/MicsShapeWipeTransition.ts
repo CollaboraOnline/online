@@ -14,9 +14,8 @@ declare var SlideShow: any;
 
 function MicsShapeWipeTransition(transitionParameters: TransitionParameters) {
 	const transitionSubType =
-		stringToTransitionSubTypeMap[
-			transitionParameters.slideInfo.transitionSubtype
-		];
+		transitionParameters.transitionFilterInfo.transitionSubtype;
+
 	if (transitionSubType == TransitionSubType.CORNERSOUT) {
 		return SlideShow.CubeTransition(transitionParameters, true);
 	} else if (transitionSubType == TransitionSubType.LEFTTORIGHT) {

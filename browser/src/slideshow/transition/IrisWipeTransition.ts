@@ -14,9 +14,7 @@ declare var SlideShow: any;
 
 function IrisWipeTransition(transitionParameters: TransitionParameters) {
 	const transitionSubType =
-		stringToTransitionSubTypeMap[
-			transitionParameters.slideInfo.transitionSubtype
-		];
+		transitionParameters.transitionFilterInfo.transitionSubtype;
 	if (transitionSubType == TransitionSubType.DIAMOND) {
 		return new SlideShow.DiamondTransition(transitionParameters);
 	} else {
