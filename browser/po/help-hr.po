@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-16 14:25+0200\n"
-"PO-Revision-Date: 2024-08-25 08:26+0000\n"
+"PO-Revision-Date: 2024-09-17 16:21+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/help/hr/>\n"
@@ -11,9 +11,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -49,20 +49,19 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
-msgstr ""
+msgstr "Kopiraj"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
 "/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
+"/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Umetni</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
-msgstr "Umetanje neformatiranog teksta"
+msgstr "Umetni kao neformatiran tekst"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-90
 msgid ""
@@ -1656,8 +1655,8 @@ msgid ""
 "cursor, although others will see you with a different color."
 msgstr ""
 "Svakom se korisniku dodjeljuje jedna boja. Kursor svakog korisnika bit će "
-"prikazan u dodijeljenoj boji. Napomena: ti ćeš kursor vidjeti kao crn, "
-"trepereći kursor, drugi korisnici će te vidjeti vidjeti u jednoj drugoj boji."
+"prikazan u dodijeljenoj boji. Napomena: ti ćeš kursor vidjeti kao crni, "
+"trepereći kursor, drugi korisnici će te vidjeti u jednoj drugoj boji."
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li.p:358-11
 msgid ""
@@ -1703,6 +1702,11 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">Traka izbornika:</span> Glavni izbornik se nalazi na "
+"vrhu i uključuje mnoge opcije, naredbe za ispis, uređivanje, pregledavanje i "
+"druge napredne naredbe. Traku izbornika možeš sakriti pritiskom na ikonu "
+"<span class=\"w2ui-icon fold icon-size\"></span> skroz desno. Pritisni ikonu "
+"<span class=\"w2ui-icon unfold icon-size\"></span> za prikaz izbornika."
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
@@ -2157,14 +2161,12 @@ msgid "comment"
 msgstr "komentar"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
-#, fuzzy
 msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
-"Pritisni ikonu podizbornika (<span class=\"cool-annotation-menu\" style="
-"\"height:0.6cm;width:0.6cm;\"></span>) za odgovaranje, premještenje i "
-"brisanje komentara."
+"Pritisni ikonu podizbornika <span class=\"cool-annotation-menu icon-size\"></"
+"span> za odgovaranje, premještenje i brisanje komentara."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
@@ -3110,15 +3112,13 @@ msgid "Select the text with the existing format"
 msgstr "Odaberi tekst s postojećim formatom"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
-"Pritisni ikonu za kloniranje formata <img style=\"height:0.6cm;width:0.6cm;\""
-" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Kursor miša se mijenja u "
-"kanticu boje."
+"Pritisni ikonu za kloniranje <img class=\"icon-size\" alt=\"\" src=\"images"
+"/lc_formatpaintbrush.svg\" />. Kursor miša se mijenja u kanticu boje."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
@@ -3239,14 +3239,12 @@ msgid "Format the source cell with the font, color background and more."
 msgstr "Formatiranje izvornog polja s fontom, bojom pozadine i još više."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
-"Pritisni ikonu za kloniranje formata <img style=\"height:0.6cm;width:0.6cm;\""
-" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Kursor miša se mijenja u "
-"kanticu boje."
+"Pritisni ikonu za kloniranje <img class=\"icon-size\" src=\"images"
+"/lc_formatpaintbrush.svg\" />. Kursor miša se mijenja u kanticu boje."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
