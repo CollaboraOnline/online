@@ -65,6 +65,7 @@ L.DebugManager = L.Class.extend({
 
 		// Display debug info in About box
 		document.querySelector('#wopi-host-id').style.display = 'block';
+		document.querySelector('#served-by').style.display = 'flex';
 	},
 
 	_stop: function() {
@@ -83,6 +84,7 @@ L.DebugManager = L.Class.extend({
 
 		// Hide debug info in About box
 		document.querySelector('#wopi-host-id').style.display = 'none';
+		document.querySelector('#served-by').style.display = 'none';
 	},
 
 	_addDebugTool: function (tool) {
