@@ -27,17 +27,16 @@ class DiagonalTransition extends Transition2d {
 	}
 
 	public start(): void {
-		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 
 		if (
 			transitionSubType == TransitionSubType.HORIZONTALRIGHT &&
-			!this.slideInfo.transitionDirection
+			!this.transitionFilterInfo.isDirectionForward
 		) {
 			this.direction = DiagonalSubType.BOTTOMLEFT;
 		} else if (
 			transitionSubType == TransitionSubType.HORIZONTALLEFT &&
-			!this.slideInfo.transitionDirection
+			!this.transitionFilterInfo.isDirectionForward
 		) {
 			this.direction = DiagonalSubType.BOTTOMRIGHT;
 		} else if (transitionSubType == TransitionSubType.HORIZONTALRIGHT) {

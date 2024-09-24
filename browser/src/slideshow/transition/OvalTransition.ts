@@ -25,8 +25,7 @@ class OvalTransition extends Transition2d {
 	}
 
 	public start(): void {
-		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 		if (transitionSubType == TransitionSubType.HORIZONTAL) {
 			this.direction = OvalSubType.HORIZONTAL;
 		} else if (transitionSubType == TransitionSubType.VERTICAL) {

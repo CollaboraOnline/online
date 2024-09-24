@@ -20,15 +20,13 @@ enum FadeSubType {
 
 class FadeTransition extends SlideShow.Transition2d {
 	private effectTransition: number = 0;
-	private slideInfo: SlideInfo;
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
 
 	public start(): void {
-		const transitionSubType =
-			stringToTransitionSubTypeMap[this.slideInfo.transitionSubtype];
+		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 
 		this.effectTransition = FadeSubType.FADEOVERBLACK; // default
 
@@ -36,8 +34,8 @@ class FadeTransition extends SlideShow.Transition2d {
 			this.effectTransition = FadeSubType.SMOOTHLY;
 		} else if (
 			transitionSubType == TransitionSubType.FADEOVERCOLOR &&
-			this.slideInfo.transitionFadeColor &&
-			this.slideInfo.transitionFadeColor.toUpperCase() === '#FFFFFF'
+			this.transitionFilterInfo.fadeColor &&
+			this.transitionFilterInfo.fadeColor.toUpperCase() === '#FFFFFF'
 		) {
 			this.effectTransition = FadeSubType.FADEOVERWHITE;
 		}

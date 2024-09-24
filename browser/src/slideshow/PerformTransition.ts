@@ -154,9 +154,7 @@ SlideShow.PerformTransition = function (
 		return;
 	}
 
-	switch (
-		stringToTransitionTypeMap[transitionParameters.slideInfo.transitionType]
-	) {
+	switch (transitionParameters.transitionFilterInfo.transitionType) {
 		case TransitionType.FADE:
 			new SlideShow.FadeTransition(transitionParameters).start();
 			break;
@@ -229,7 +227,7 @@ SlideShow.PerformTransition = function (
 			new SlideShow.NoTransition(transitionParameters).start();
 			console.log(
 				'Unknown transition type',
-				transitionParameters.slideInfo.transitionType,
+				transitionParameters.transitionFilterInfo.transitionType,
 			);
 			break;
 	}
