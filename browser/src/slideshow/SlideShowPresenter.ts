@@ -555,17 +555,7 @@ class SlideShowPresenter {
 		}
 
 		if (!this._slideShowWindowProxy) {
-			this._map.uiManager.showInfoModal(
-				'popup-blocked-modal',
-				_('Windowed Presentation Blocked'),
-				_(
-					'Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.',
-				),
-				'',
-				_('OK'),
-				null,
-				false,
-			);
+			this._notifyBlockedPresenting();
 			return;
 		}
 
@@ -706,6 +696,20 @@ class SlideShowPresenter {
 			'already-presenting-modal',
 			_('Already presenting'),
 			_('You are already presenting this document'),
+			'',
+			_('OK'),
+			null,
+			false,
+		);
+	}
+
+	_notifyBlockedPresenting() {
+		this._map.uiManager.showInfoModal(
+			'popup-blocked-modal',
+			_('Windowed Presentation Blocked'),
+			_(
+				'Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.',
+			),
 			'',
 			_('OK'),
 			null,
