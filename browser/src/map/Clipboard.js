@@ -978,7 +978,7 @@ L.Clipboard = L.Class.extend({
 			return true;
 		}
 
-		if (window.ThisIsAMobileApp && (cmd === '.uno:Paste' || cmd === '.uno:PasteSpecial')) {
+		if (window.ThisIsAMobileApp) {
 			// perform internal operations
 			app.socket.sendMessage('uno ' + cmd);
 			return true;
