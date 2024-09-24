@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-16 14:25+0200\n"
-"PO-Revision-Date: 2024-09-08 01:34+0000\n"
-"Last-Translator: TY Wong <wongty@peoplewarehk.com>\n"
+"PO-Revision-Date: 2024-09-24 06:53+0000\n"
+"Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/ui/zh_Hant/>\n"
-"Language: \n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -673,11 +673,11 @@ msgstr "所有回覆"
 #: src/layer/tile/CanvasTileLayer.js:3793
 #: src/canvas/sections/CommentListSection.ts:1060
 msgid "Comment"
-msgstr "評論"
+msgstr "評註"
 
 #: src/control/Control.JSDialogBuilder.js:1993
 msgid "Insert Comment"
-msgstr "插入評論"
+msgstr "插入評註"
 
 #: src/control/Control.JSDialogBuilder.js:2896
 #: src/control/Control.Menubar.js:866
@@ -1053,7 +1053,7 @@ msgstr "PowerPoint 簡報 (.pptx)"
 
 #: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:560
 msgid "Save Comments"
-msgstr "保存評論"
+msgstr "儲存評註"
 
 #: src/control/Control.Menubar.js:410
 #: src/control/Control.NotebookbarBuilder.js:433
@@ -2191,11 +2191,11 @@ msgstr "非常疏鬆"
 
 #: src/control/jsdialog/Definitions.Menu.ts:418
 msgid "From Beginning"
-msgstr ""
+msgstr "從第一張投影片開始"
 
 #: src/control/jsdialog/Definitions.Menu.ts:422
 msgid "From Current Slide"
-msgstr ""
+msgstr "從目前投影片開始"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2739,15 +2739,15 @@ msgstr "已命名的範圍"
 
 #: src/layer/tile/CanvasTileLayer.js:3810
 msgid "No Comments"
-msgstr "暫無評論"
+msgstr "暫無評註"
 
 #: src/canvas/sections/CommentListSection.ts:141
 msgid "A comment is being edited"
-msgstr "評論被編輯中"
+msgstr "某人正在編輯評註"
 
 #: src/canvas/sections/CommentListSection.ts:142
 msgid "Please save or discard the comment currently being edited."
-msgstr "請儲存或放棄目前正在編輯的評論。"
+msgstr "請儲存或放棄目前正在編輯的評註。"
 
 #: src/canvas/sections/CommentListSection.ts:996
 msgid "Modify"
@@ -2784,23 +2784,23 @@ msgstr "解決討論串"
 
 #: src/canvas/sections/CommentListSection.ts:1032
 msgid "Promote to top comment"
-msgstr ""
+msgstr "提昇至評註頂部"
 
 #: src/canvas/sections/CommentListSection.ts:1272
 #: src/canvas/sections/CommentListSection.ts:1285
 #: src/canvas/sections/CommentListSection.ts:2132
 msgid "Comments Updated"
-msgstr "評論已更新"
+msgstr "評註已更新"
 
 #: src/canvas/sections/CommentListSection.ts:1273
 msgid "Another user has removed this comment."
-msgstr "另一位用戶已刪除此評論。"
+msgstr "其他使用者已移除此評註。"
 
 #: src/canvas/sections/CommentListSection.ts:1286
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
-msgstr "另一位用戶更新了評論。您想覆蓋這些變更嗎？"
+msgstr "其他使用者更新了評註。您想要覆寫那些變更嗎？"
 
 #: src/canvas/sections/CommentListSection.ts:1288
 msgid "Update"
@@ -2813,7 +2813,7 @@ msgstr "已自動儲存"
 
 #: src/canvas/sections/CommentListSection.ts:2133
 msgid "Another user has updated comments. Would you like to proceed updating?"
-msgstr "另一位用戶更新了評論。您想繼續更新嗎？"
+msgstr "其他使用者更新了評註。您想要繼續更新嗎？"
 
 #: src/canvas/sections/CommentSection.ts:302
 msgid "Open menu"
@@ -2914,15 +2914,15 @@ msgstr "取消選擇性貼上"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
-msgstr "初始化中..."
+msgstr "正在初始化……"
 
 #: src/map/Map.js:468 src/map/Map.js:471 src/map/Map.js:474 src/map/Map.js:477
 msgid "Last saved:"
-msgstr "最後保存於："
+msgstr "最後儲存於："
 
 #: src/map/Map.js:1464
 msgid "Please wait!"
-msgstr ""
+msgstr "請稍候！"
 
 #: src/map/handler/Map.Feedback.js:86
 msgid "Please send us your feedback"
