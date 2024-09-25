@@ -809,6 +809,15 @@ public:
     /// Global wakeup - signal safe: wakeup all socket polls.
     static void wakeupWorld();
 
+    /// Enable connection accounting and limiter
+    /// Internally we allow one extra connection for the WS upgrade
+    /// @param connectionLimit socket connection limit
+    void setLimiter(size_t connectionLimit)
+    {
+        _limitedConnections = true;
+        _connectionLimit = connectionLimit > 0 ? connectionLimit + 1 : 0;
+    }
+
     /// Insert a new socket to be polled.
     /// A socket is removed when it is closed, readIncomingData
     /// returns false, or when removeSockets is called (which is
@@ -972,6 +981,8 @@ private:
     /// Debug name used for logging.
     const std::string _name;
     const std::chrono::microseconds _pollTimeout;
+    bool _limitedConnections;
+    size_t _connectionLimit;
 
     /// main-loop wakeup pipe
     int _wakeup[2];
@@ -998,6 +1009,13 @@ private:
     /// Time-stamp for profiling
     int _ownerThreadId;
     std::atomic<uint64_t> _watchdogTime;
+
+    static std::mutex StatsMutex;
+    static std::atomic<size_t> StatsConnectionCount; // total of all _pollSockets (excluding _newSockets)
+    static size_t StatsConnectionMod(size_t added, size_t removed); // safe add-sub of StatsConnectionCount
+
+public:
+    static int64_t GetStatsConnectionCount() { return StatsConnectionCount.load(std::memory_order_seq_cst); }
 };
 
 /// A SocketPoll that will stop polling and

@@ -15,6 +15,7 @@
 #include "TraceEvent.hpp"
 #include "Util.hpp"
 
+#include <atomic>
 #include <chrono>
 #include <cstring>
 #include <cctype>
@@ -60,6 +61,25 @@ std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
 std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
+
+std::mutex SocketPoll::StatsMutex;
+std::atomic<size_t> SocketPoll::StatsConnectionCount(0);
+
+size_t SocketPoll::StatsConnectionMod(size_t added, size_t removed) {
+    if( added == 0 && removed == 0 ) {
+        return GetStatsConnectionCount();
+    }
+    size_t res, pre;
+    {
+        std::lock_guard<std::mutex> lock(StatsMutex);
+        pre = GetStatsConnectionCount();
+        res = pre + added; // overflow impossible due to MAX_CONNECTIONS
+        res -= removed; // underflow impossible due to MAX_CONNECTIONS
+        StatsConnectionCount.store(res, std::memory_order_seq_cst);
+    }
+    LOG_DBG("SocketPoll::ConnectionCount: " << pre << " +" << added << " -" << removed << " = " << res);
+    return res;
+}
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
@@ -291,6 +311,8 @@ namespace {
 SocketPoll::SocketPoll(std::string threadName)
     : _name(std::move(threadName)),
       _pollTimeout( net::Defaults::get().SocketPollTimeout ),
+      _limitedConnections( false ),
+      _connectionLimit( 0 ),
       _pollStartIndex(0),
       _stop(false),
       _threadStarted(0),
@@ -488,6 +510,8 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
     // The events to poll on change each spin of the loop.
     setupPollFds(now, timeoutMaxMicroS);
     const size_t size = _pollSockets.size();
+    size_t itemsAdded = 0;
+    size_t itemsErased = 0;
 
     // disable watchdog - it's good to sleep
     disableWatchdog();
@@ -540,7 +564,29 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         std::vector<CallbackFn> invoke;
         {
             std::lock_guard<std::mutex> lock(_mutex);
+            const size_t newConnCount = _newSockets.size();
+            const size_t globCount = GetStatsConnectionCount();
 
+            if( _limitedConnections &&
+                _connectionLimit > 0 &&
+                globCount + newConnCount > _connectionLimit)
+            {
+                // For now we simply drop new connections
+                const size_t overhead = globCount + newConnCount - _connectionLimit;
+                for(size_t i=0; i<overhead; ++i)
+                {
+                    std::shared_ptr<Socket>& socket = _newSockets.back(); // oldest
+                    assert(socket);
+
+                    LOG_WRN("Limiter: #" << socket->getFD() << ": Removing "
+                             << (i+1) << " / " << overhead << " new socket of (pre "
+                             << globCount << " + new " << newConnCount << ") / max " << _connectionLimit
+                             << " from " << _name);
+
+                    socket->resetThreadOwner();
+                    _newSockets.pop_back();
+                }
+            }
             if (!_newSockets.empty())
             {
                 LOGA_TRC(Socket, "Inserting " << _newSockets.size() << " new sockets after the existing "
@@ -552,6 +598,8 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
                 // Copy the new sockets over and clear.
                 _pollSockets.insert(_pollSockets.end(), _newSockets.begin(), _newSockets.end());
+
+                itemsAdded += _newSockets.size();
 
                 _newSockets.clear();
             }
@@ -586,10 +634,15 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         }
     }
 
-    if (_pollSockets.size() != size)
+    if (itemsAdded != _pollSockets.size() - size)
     {
-        LOG_TRC("PollSocket container size has changed from " << size << " to "
-                                                              << _pollSockets.size());
+        // unexpected
+        LOG_WRN("PollSocket container size has changed from " << size
+            << " + " << itemsAdded << " to " << _pollSockets.size());
+    } else if (itemsAdded > 0)
+    {
+        LOG_TRC("PollSocket container size increased from " << size
+            << " + " << itemsAdded << " to " << _pollSockets.size());
     }
 
     // If we had sockets to process.
@@ -606,7 +659,6 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         if (_pollStartIndex > size - 1)
             _pollStartIndex = 0;
 
-        size_t itemsErased = 0;
         size_t i = _pollStartIndex;
         for (std::size_t j = 0; j < size; ++j)
         {
@@ -685,15 +737,35 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
         if (itemsErased)
         {
-            LOG_TRC("Scanning to removing " << itemsErased << " defunct sockets from "
-                    << _pollSockets.size() << " sockets");
+            const size_t itemsErasedPre = itemsErased;
+            itemsErased = 0; // correcting itemsErased
 
             _pollSockets.erase(
                 std::remove_if(_pollSockets.begin(), _pollSockets.end(),
-                    [](const std::shared_ptr<Socket>& s)->bool
-                    { return !s; }),
+                               [&itemsErased](const std::shared_ptr<Socket>& s) -> bool
+                               {
+                                   if (!s)
+                                   {
+                                       ++itemsErased;
+                                       return true;
+                                   }
+                                   else
+                                   {
+                                       return false;
+                                   }
+                               }),
                 _pollSockets.end());
+
+            LOG_TRC("Removed " << itemsErased
+                    << "(" << itemsErasedPre << ") defunct sockets from "
+                    << _pollSockets.size() << " sockets");
         }
+    }
+    if( _limitedConnections )
+    {
+        // Perform bookkeeping if required
+        // New connections might be dropped if exceeding limits, see _newSockets above.
+        StatsConnectionMod(itemsAdded, itemsErased);
     }
 
     return rc;
@@ -801,9 +873,11 @@ void SocketPoll::createWakeups()
 void SocketPoll::removeSockets()
 {
     LOG_DBG("Removing all " << _pollSockets.size() + _newSockets.size()
-                            << " sockets from SocketPoll thread " << _name);
+                            << " sockets from SocketPoll thread " << _name
+                            << " of " << GetStatsConnectionCount() << " total poll sockets");
     ASSERT_CORRECT_SOCKET_THREAD(this);
 
+    size_t removedPollSockets = 0;
     while (!_pollSockets.empty())
     {
         const std::shared_ptr<Socket>& socket = _pollSockets.back();
@@ -814,6 +888,10 @@ void SocketPoll::removeSockets()
         socket->resetThreadOwner();
 
         _pollSockets.pop_back();
+        ++removedPollSockets;
+    }
+    if( _limitedConnections ) {
+        StatsConnectionMod(0, removedPollSockets);
     }
 
     while (!_newSockets.empty())
@@ -1078,7 +1156,9 @@ void SocketPoll::dumpState(std::ostream& os) const
 
     os << "\n  SocketPoll:";
     os << "\n    Poll [" << name() << "] with " << pollSockets.size() << " socket"
-       << (pollSockets.size() == 1 ? "" : "s") << " - wakeup rfd: " << _wakeup[0]
+       << (pollSockets.size() == 1 ? "" : "s")
+       << " of " << GetStatsConnectionCount()
+       << " total - wakeup rfd: " << _wakeup[0]
        << " wfd: " << _wakeup[1] << '\n';
     const auto callbacks = _newCallbacks.size();
     if (callbacks > 0)
@@ -1447,15 +1527,14 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
                 LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
                 shutdown(); // signal
                 closeConnection(); // real -> setClosed()
-                assert(isOpen() == false); // should have issued shutdown
             }
         }
         else
         {
             shutdown(); // signal
             closeConnection(); // real -> setClosed()
-            assert(isOpen() == false); // should have issued shutdown
         }
+        assert(isOpen() == false); // should have issued shutdown
         return true;
     }
     else if (_socketHandler && _socketHandler->checkTimeout(now))
@@ -1464,8 +1543,6 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
         setClosed();
         LOG_WRN("CheckRemoval: Timeout: " << getStatsString(now) << ", " << *this);
         return true;
-    } else {
-        LOG_DBG("CheckRemoval: Test " << getStatsString(now) << ", " << *this);
     }
     return false;
 }

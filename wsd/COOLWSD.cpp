@@ -2363,9 +2363,10 @@ void COOLWSD::innerInitialize(Application& self)
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(conf);
 
-    // Allow UT to manipulate before using net::Defaults.
+    // net::Defaults: Set MaxConnections field and allow UT to manipulate before using
     {
         net::Defaults& defaults = net::Defaults::get();
+        net::Defaults::get().MaxConnections = std::max<size_t>(3, MAX_CONNECTIONS);
         UnitWSD::get().configure(defaults);
     }
     // Trace Event Logging.
@@ -2772,18 +2773,19 @@ void COOLWSD::innerInitialize(Application& self)
     if (getConfigValue<bool>(conf, "home_mode.enable", false))
     {
         COOLWSD::MaxConnections = 20;
+        net::Defaults::get().MaxConnections = COOLWSD::MaxConnections; // re-align
         COOLWSD::MaxDocuments = 10;
     }
     else
     {
         conf.setString("feedback.show", "true");
         conf.setString("welcome.enable", "true");
-        COOLWSD::MaxConnections = MAX_CONNECTIONS;
+        COOLWSD::MaxConnections = net::Defaults::get().MaxConnections; // aligned w/ MAX_CONNECTIONS above
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #else
     {
-        COOLWSD::MaxConnections = MAX_CONNECTIONS;
+        COOLWSD::MaxConnections = net::Defaults::get().MaxConnections; // aligned w/ MAX_CONNECTIONS above
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #endif
@@ -2791,7 +2793,8 @@ void COOLWSD::innerInitialize(Application& self)
         net::Defaults& netDefaults = net::Defaults::get();
         LOG_DBG("net::Defaults: WSPing[Timeout "
                 << netDefaults.WSPingTimeout << ", Period " << netDefaults.WSPingPeriod << "], HTTP[Timeout "
-                << netDefaults.HTTPTimeout << "], Socket[MinBytesPerSec " << netDefaults.MinBytesPerSec
+                << netDefaults.HTTPTimeout << "], Socket[MaxConnections " << netDefaults.MaxConnections
+                << ", MinBytesPerSec " << netDefaults.MinBytesPerSec
                 << "], SocketPoll[Timeout " << netDefaults.SocketPollTimeout << "]");
     }
 
@@ -2965,6 +2968,7 @@ void COOLWSD::innerInitialize(Application& self)
 #endif
 
     WebServerPoll = std::make_unique<TerminatingPoll>("websrv_poll");
+    WebServerPoll->setLimiter( net::Defaults::get().MaxConnections );
 
 #if !MOBILEAPP
     net::AsyncDNS::startAsyncDNS();
