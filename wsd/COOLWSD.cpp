@@ -2087,7 +2087,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "net.proxy_prefix", "false" },
         { "net.content_security_policy", "" },
         { "net.frame_ancestors", "" },
-        { "num_prespawn_children", "1" },
+        { "num_prespawn_children", NUM_PRESPAWN_CHILDREN },
         { "per_document.always_save_on_exit", "false" },
         { "per_document.autosave_duration_secs", "300" },
         { "per_document.cleanup.cleanup_interval_ms", "10000" },
