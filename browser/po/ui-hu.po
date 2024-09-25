@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-16 14:25+0200\n"
+"POT-Creation-Date: 2024-09-25 14:41+0200\n"
 "PO-Revision-Date: 2024-09-17 01:26+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: hu\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -147,8 +147,8 @@ msgstr "Hálózatgrafikon"
 #: src/control/Control.NotebookbarImpress.js:29
 #: src/control/Control.NotebookbarImpress.js:176
 #: src/control/Control.NotebookbarWriter.js:155
-#: src/canvas/sections/CommentListSection.ts:446
-#: src/canvas/sections/CommentSection.ts:149
+#: src/canvas/sections/CommentListSection.ts:448
+#: src/canvas/sections/CommentSection.ts:152
 msgid "Save"
 msgstr "Mentés"
 
@@ -234,8 +234,8 @@ msgstr "Naplózási szintek"
 #: src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
-#: src/control/Parts.js:506 src/core/Socket.js:419 src/core/Socket.js:1175
-#: src/core/Socket.js:1180 src/canvas/sections/CommentListSection.ts:142
+#: src/control/Parts.js:514 src/core/Socket.js:419 src/core/Socket.js:1175
+#: src/core/Socket.js:1180 src/canvas/sections/CommentListSection.ts:144
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Bezárás"
@@ -275,7 +275,7 @@ msgstr "A kiszolgáló leállt, töltse be újra az oldalt."
 
 #: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
-#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:131
+#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:126
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119
@@ -283,16 +283,16 @@ msgstr "A kiszolgáló leállt, töltse be újra az oldalt."
 #: src/control/Control.Tabs.js:392 src/control/Control.Tabs.js:401
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Permission.js:89 src/control/Permission.js:99
-#: src/control/Permission.js:149 src/control/Toolbar.js:723
-#: src/control/Toolbar.js:814 src/slideshow/SlideShowPresenter.ts:478
-#: src/slideshow/SlideShowPresenter.ts:608
-#: src/slideshow/SlideShowPresenter.ts:623
-#: src/slideshow/SlideShowPresenter.ts:639 src/core/Socket.js:681
+#: src/control/Permission.js:149 src/control/Toolbar.js:725
+#: src/control/Toolbar.js:817 src/slideshow/SlideShowPresenter.ts:539
+#: src/slideshow/SlideShowPresenter.ts:670
+#: src/slideshow/SlideShowPresenter.ts:685
+#: src/slideshow/SlideShowPresenter.ts:701 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
-#: src/canvas/sections/CommentListSection.ts:1274
-#: src/canvas/sections/CommentListSection.ts:2134 src/main.js:84
-#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1226
+#: src/canvas/sections/CommentListSection.ts:1333
+#: src/canvas/sections/CommentListSection.ts:2205 src/main.js:84
+#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1184
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:167 src/map/handler/Map.SlideShow.js:282
 #: src/map/handler/Map.SlideShow.js:293 src/map/handler/Map.WOPI.js:604
@@ -317,12 +317,12 @@ msgstr "Biztosan be szeretné zárni ezt a munkamenetet?"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1281 src/control/Control.UIManager.js:1348
-#: src/control/Control.UIManager.js:1483 src/control/Control.UIManager.js:1642
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:809
-#: src/core/Socket.js:1388 src/canvas/sections/CommentListSection.ts:441
-#: src/canvas/sections/CommentSection.ts:148
+#: src/control/Control.UIManager.js:1292 src/control/Control.UIManager.js:1359
+#: src/control/Control.UIManager.js:1494 src/control/Control.UIManager.js:1653
+#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:812
+#: src/core/Socket.js:1388 src/canvas/sections/CommentListSection.ts:443
 #: src/canvas/sections/CommentSection.ts:151
+#: src/canvas/sections/CommentSection.ts:154
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -392,15 +392,15 @@ msgstr " perc"
 msgid " s"
 msgstr " s"
 
-#: js/global.js:1372
+#: js/global.js:1378
 msgid "Cluster is scaling, retrying..."
 msgstr "A klaszter átméreteződik, újrapróbálkozás..."
 
-#: js/global.js:1374
+#: js/global.js:1380
 msgid "Document is migrating to new server, retrying..."
 msgstr "A dokumentum új kiszolgálóra migrálódik, újrapróbálkozás..."
 
-#: js/global.js:1376
+#: js/global.js:1382
 msgid "Failed to get RouteToken from controller"
 msgstr "Nem sikerült megszerezni a RouteTokent a kontrollertől."
 
@@ -412,15 +412,15 @@ msgstr "Nincs szín"
 msgid "Automatic color"
 msgstr "Automatikus szín"
 
-#: src/control/Control.AboutDialog.ts:88
+#: src/control/Control.AboutDialog.ts:83
 msgid "This version of {productname} is powered by"
 msgstr "{productname} verzióinformációk:"
 
-#: src/control/Control.AboutDialog.ts:111
+#: src/control/Control.AboutDialog.ts:106
 msgid "\"Slow Proxy\""
 msgstr "„Lassú proxy üzemmód”"
 
-#: src/control/Control.AboutDialog.ts:155
+#: src/control/Control.AboutDialog.ts:150
 msgid "Copy all version information in English"
 msgstr "Összes verzióinformáció másolása angolul"
 
@@ -477,19 +477,19 @@ msgstr "A kiszolgáló {0} hibába ütközött a(z) {1} parancs feldolgozása k�
 msgid "Unlock"
 msgstr "Feloldás"
 
-#: src/control/Control.ContextMenu.js:220 src/docdispatcher.ts:432
+#: src/control/Control.ContextMenu.js:221 src/docdispatcher.ts:432
 msgid "Delete"
 msgstr "Törlés"
 
-#: src/control/Control.ContextMenu.js:240
+#: src/control/Control.ContextMenu.js:241
 msgid "Paste Special"
 msgstr "Irányított beillesztés"
 
-#: src/control/Control.ContextMenu.js:248
+#: src/control/Control.ContextMenu.js:249
 msgid "Copy Cells"
 msgstr "Cellák másolása"
 
-#: src/control/Control.ContextMenu.js:256
+#: src/control/Control.ContextMenu.js:257
 msgid "Fill Series"
 msgstr "Kitöltés sorozattal"
 
@@ -662,11 +662,11 @@ msgid "Select range"
 msgstr "Tartomány kijelölése"
 
 #: src/control/Control.JSDialogBuilder.js:1647
-#: src/control/Control.NotebookbarBuilder.js:158
+#: src/control/Control.NotebookbarBuilder.js:157
 msgid "Font Name"
 msgstr "Betűkészlet"
 
-#: src/control/Control.JSDialogBuilder.js:1649 src/control/Toolbar.js:132
+#: src/control/Control.JSDialogBuilder.js:1649 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Betűméret"
 
@@ -684,9 +684,9 @@ msgid "replies"
 msgstr "válasz"
 
 #: src/control/Control.JSDialogBuilder.js:1929
-#: src/layer/tile/CanvasTileLayer.js:3782
-#: src/layer/tile/CanvasTileLayer.js:3793
-#: src/canvas/sections/CommentListSection.ts:1060
+#: src/layer/tile/CanvasTileLayer.js:3785
+#: src/layer/tile/CanvasTileLayer.js:3796
+#: src/canvas/sections/CommentListSection.ts:1119
 msgid "Comment"
 msgstr "Megjegyzés"
 
@@ -711,7 +711,7 @@ msgstr "Táblázat beszúrása"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:357
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:361
 #: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:670
-#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:483
+#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:499
 msgid "None (Do not check spelling)"
 msgstr "Nincs (nincs helyesírás-ellenőrzés)"
 
@@ -725,29 +725,29 @@ msgstr "Nyelv"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
 #: src/control/Control.Menubar.js:983
-#: src/control/Control.NotebookbarBuilder.js:348
-#: src/control/Control.NotebookbarBuilder.js:474
+#: src/control/Control.NotebookbarBuilder.js:347
+#: src/control/Control.NotebookbarBuilder.js:473
 msgid "ODF text document (.odt)"
 msgstr "ODF szöveges dokumentum (.odt)"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:92
 #: src/control/Control.Menubar.js:984
-#: src/control/Control.NotebookbarBuilder.js:360
-#: src/control/Control.NotebookbarBuilder.js:486
+#: src/control/Control.NotebookbarBuilder.js:359
+#: src/control/Control.NotebookbarBuilder.js:485
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 dokumentum (.doc)"
 
 #: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:93
 #: src/control/Control.Menubar.js:985
-#: src/control/Control.NotebookbarBuilder.js:356
-#: src/control/Control.NotebookbarBuilder.js:482
+#: src/control/Control.NotebookbarBuilder.js:355
+#: src/control/Control.NotebookbarBuilder.js:481
 msgid "Word Document (.docx)"
 msgstr "Word dokumentum (.docx)"
 
 #: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:986
-#: src/control/Control.NotebookbarBuilder.js:352
-#: src/control/Control.NotebookbarBuilder.js:478
+#: src/control/Control.NotebookbarBuilder.js:351
+#: src/control/Control.NotebookbarBuilder.js:477
 msgid "Rich Text (.rtf)"
 msgstr "Rich Text (.rtf)"
 
@@ -770,25 +770,25 @@ msgstr "Exportálás mint"
 #: src/control/Control.Menubar.js:1038 src/control/Control.Menubar.js:1046
 #: src/control/Control.Menubar.js:1103 src/control/Control.Menubar.js:1110
 #: src/control/Control.Menubar.js:1158 src/control/Control.Menubar.js:1168
-#: src/control/Control.NotebookbarBuilder.js:369
-#: src/control/Control.NotebookbarBuilder.js:403
-#: src/control/Control.NotebookbarBuilder.js:437
-#: src/control/Control.NotebookbarBuilder.js:535
-#: src/control/Control.NotebookbarBuilder.js:546
-#: src/control/Control.NotebookbarBuilder.js:553
-#: src/control/Control.NotebookbarBuilder.js:560
+#: src/control/Control.NotebookbarBuilder.js:368
+#: src/control/Control.NotebookbarBuilder.js:402
+#: src/control/Control.NotebookbarBuilder.js:436
+#: src/control/Control.NotebookbarBuilder.js:534
+#: src/control/Control.NotebookbarBuilder.js:545
+#: src/control/Control.NotebookbarBuilder.js:552
+#: src/control/Control.NotebookbarBuilder.js:559
 #: src/control/Control.NotebookbarDraw.js:248
 msgid "PDF Document (.pdf)"
 msgstr "PDF dokumentum (.pdf)"
 
 #: src/control/Control.Menubar.js:83 src/control/Control.Menubar.js:95
 #: src/control/Control.Menubar.js:973 src/control/Control.Menubar.js:987
-#: src/control/Control.NotebookbarBuilder.js:364
-#: src/control/Control.NotebookbarBuilder.js:539
+#: src/control/Control.NotebookbarBuilder.js:363
+#: src/control/Control.NotebookbarBuilder.js:538
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
-#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:203
+#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:214
 msgid "Rename Document"
 msgstr "Dokumentum átnevezése"
 
@@ -817,9 +817,9 @@ msgstr "Letöltés másként"
 #: src/control/Control.Menubar.js:566 src/control/Control.Menubar.js:699
 #: src/control/Control.Menubar.js:982 src/control/Control.Menubar.js:1047
 #: src/control/Control.Menubar.js:1111 src/control/Control.Menubar.js:1169
-#: src/control/Control.NotebookbarBuilder.js:375
-#: src/control/Control.NotebookbarBuilder.js:409
-#: src/control/Control.NotebookbarBuilder.js:443
+#: src/control/Control.NotebookbarBuilder.js:374
+#: src/control/Control.NotebookbarBuilder.js:408
+#: src/control/Control.NotebookbarBuilder.js:442
 msgid "PDF Document (.pdf) as..."
 msgstr "PDF dokumentum (.pdf) ..."
 
@@ -1047,22 +1047,22 @@ msgstr "Utolsó módosítás"
 
 #: src/control/Control.Menubar.js:394 src/control/Control.Menubar.js:407
 #: src/control/Control.Menubar.js:1048
-#: src/control/Control.NotebookbarBuilder.js:417
-#: src/control/Control.NotebookbarBuilder.js:508
+#: src/control/Control.NotebookbarBuilder.js:416
+#: src/control/Control.NotebookbarBuilder.js:507
 msgid "ODF presentation (.odp)"
 msgstr "ODF bemutató (.odp)"
 
 #: src/control/Control.Menubar.js:395 src/control/Control.Menubar.js:408
 #: src/control/Control.Menubar.js:1049
-#: src/control/Control.NotebookbarBuilder.js:429
-#: src/control/Control.NotebookbarBuilder.js:516
+#: src/control/Control.NotebookbarBuilder.js:428
+#: src/control/Control.NotebookbarBuilder.js:515
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 bemutató (.ppt)"
 
 #: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:409
 #: src/control/Control.Menubar.js:1050
-#: src/control/Control.NotebookbarBuilder.js:425
-#: src/control/Control.NotebookbarBuilder.js:512
+#: src/control/Control.NotebookbarBuilder.js:424
+#: src/control/Control.NotebookbarBuilder.js:511
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint bemutató (.pptx)"
 
@@ -1071,17 +1071,17 @@ msgid "Save Comments"
 msgstr "Megjegyzések mentése"
 
 #: src/control/Control.Menubar.js:410
-#: src/control/Control.NotebookbarBuilder.js:433
+#: src/control/Control.NotebookbarBuilder.js:432
 msgid "HTML Document (.html)"
 msgstr "HTML-dokumentum (.html)"
 
 #: src/control/Control.Menubar.js:415
-#: src/control/Control.NotebookbarBuilder.js:579
+#: src/control/Control.NotebookbarBuilder.js:578
 msgid "Full Page Slides"
 msgstr "Csak diák"
 
 #: src/control/Control.Menubar.js:416
-#: src/control/Control.NotebookbarBuilder.js:583
+#: src/control/Control.NotebookbarBuilder.js:582
 msgid "Notes Pages"
 msgstr "Diák és jegyzetek"
 
@@ -1110,29 +1110,29 @@ msgstr "Diavetítés új ablakban"
 
 #: src/control/Control.Menubar.js:567 src/control/Control.Menubar.js:1051
 #: src/control/Control.Menubar.js:1112
-#: src/control/Control.NotebookbarBuilder.js:421
-#: src/control/Control.NotebookbarBuilder.js:451
+#: src/control/Control.NotebookbarBuilder.js:420
+#: src/control/Control.NotebookbarBuilder.js:450
 msgid "ODF Drawing (.odg)"
 msgstr "ODF rajz (.odg)"
 
 #: src/control/Control.Menubar.js:688 src/control/Control.Menubar.js:700
 #: src/control/Control.Menubar.js:1170
-#: src/control/Control.NotebookbarBuilder.js:383
-#: src/control/Control.NotebookbarBuilder.js:493
+#: src/control/Control.NotebookbarBuilder.js:382
+#: src/control/Control.NotebookbarBuilder.js:492
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF munkafüzet (.ods)"
 
 #: src/control/Control.Menubar.js:689 src/control/Control.Menubar.js:701
 #: src/control/Control.Menubar.js:1171
-#: src/control/Control.NotebookbarBuilder.js:391
-#: src/control/Control.NotebookbarBuilder.js:501
+#: src/control/Control.NotebookbarBuilder.js:390
+#: src/control/Control.NotebookbarBuilder.js:500
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 munkafüzet (.xls)"
 
 #: src/control/Control.Menubar.js:690 src/control/Control.Menubar.js:702
 #: src/control/Control.Menubar.js:1172
-#: src/control/Control.NotebookbarBuilder.js:387
-#: src/control/Control.NotebookbarBuilder.js:497
+#: src/control/Control.NotebookbarBuilder.js:386
+#: src/control/Control.NotebookbarBuilder.js:496
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel munkafüzet (.xlsx)"
 
@@ -1238,7 +1238,7 @@ msgstr "Átlag alatt..."
 #: src/control/Control.NotebookbarWriter.js:874
 #: src/control/Control.MobileSearchBar.ts:29
 #: src/control/Control.StatusBar.js:224 src/control/Control.Zotero.js:218
-#: src/control/Toolbar.js:558
+#: src/control/Toolbar.js:560
 msgid "Search"
 msgstr "Keresés"
 
@@ -1254,7 +1254,7 @@ msgstr "Nyomtatási terület meghatározása"
 msgid "Remove print area"
 msgstr "Nyomtatási terület eltávolítása"
 
-#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:482
+#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:498
 msgid "Reset to Default Language"
 msgstr "Vissza az alapértelmezett nyelvre"
 
@@ -1307,24 +1307,24 @@ msgstr "Kezdőszín"
 msgid "Gradient End"
 msgstr "Végszín"
 
-#: src/control/Control.NotebookbarBuilder.js:227
+#: src/control/Control.NotebookbarBuilder.js:226
 msgid "Tap to expand"
 msgstr "Koppintson a kibontáshoz"
 
-#: src/control/Control.NotebookbarBuilder.js:228
-#: src/control/Control.NotebookbarBuilder.js:272
+#: src/control/Control.NotebookbarBuilder.js:227
+#: src/control/Control.NotebookbarBuilder.js:271
 msgid "Tap to collapse"
 msgstr "Koppintson az összecsukáshoz"
 
-#: src/control/Control.NotebookbarBuilder.js:395
+#: src/control/Control.NotebookbarBuilder.js:394
 msgid "CSV File (.csv)"
 msgstr "CSV-fájl (.csv)"
 
-#: src/control/Control.NotebookbarBuilder.js:399
+#: src/control/Control.NotebookbarBuilder.js:398
 msgid "HTML File (.html)"
 msgstr "HTML-fájl (.html)"
 
-#: src/control/Control.NotebookbarBuilder.js:455
+#: src/control/Control.NotebookbarBuilder.js:454
 msgid "Image (.png)"
 msgstr "Kép (.png)"
 
@@ -1429,7 +1429,7 @@ msgstr "Előzmények megtekintése"
 #: src/control/Control.NotebookbarDraw.js:303
 #: src/control/Control.NotebookbarImpress.js:320
 #: src/control/Control.NotebookbarWriter.js:323
-#: src/control/Control.UIManager.js:203
+#: src/control/Control.UIManager.js:214
 msgid "Rename"
 msgstr "Átnevezés"
 
@@ -1471,7 +1471,7 @@ msgstr "Tört"
 msgid "Boolean Value"
 msgstr "Logikai érték"
 
-#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:781
+#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:784
 msgid "Text"
 msgstr "Szöveg"
 
@@ -1569,7 +1569,7 @@ msgstr "Értékgörbe"
 #: src/control/Control.NotebookbarDraw.js:1326
 #: src/control/Control.NotebookbarImpress.js:881
 #: src/control/Control.NotebookbarImpress.js:1331
-#: src/control/Control.NotebookbarImpress.js:2365
+#: src/control/Control.NotebookbarImpress.js:2372
 #: src/control/Control.NotebookbarWriter.js:1058
 #: src/control/Control.NotebookbarWriter.js:2831
 msgid "Shapes"
@@ -1779,27 +1779,27 @@ msgstr "Kijelöltek száma"
 msgid "Cancel the search"
 msgstr "Keresés leállítása"
 
-#: src/control/Control.StatusBar.js:427
+#: src/control/Control.StatusBar.js:432
 msgid "Select multiple cells"
 msgstr "Több cella kijelölése"
 
-#: src/control/Control.StatusBar.js:430
+#: src/control/Control.StatusBar.js:435
 msgid "Insert mode: inactive"
 msgstr "Beszúrási mód: inaktív"
 
-#: src/control/Control.StatusBar.js:441
+#: src/control/Control.StatusBar.js:446
 msgid "Selection mode: inactive"
 msgstr "Kijelölési mód: inaktív"
 
-#: src/control/Control.StatusBar.js:499
+#: src/control/Control.StatusBar.js:515
 msgid "Set Language for All text"
 msgstr "Nyelv beállítása az egész szöveghez"
 
-#: src/control/Control.StatusBar.js:502
+#: src/control/Control.StatusBar.js:518
 msgid "Set Language for Paragraph"
 msgstr "Nyelv beállítása a bekezdéshez"
 
-#: src/control/Control.StatusBar.js:503
+#: src/control/Control.StatusBar.js:519
 msgid "Set Language for Selection"
 msgstr "Nyelv beállítása a kijelöléshez"
 
@@ -1863,15 +1863,15 @@ msgstr "Alakzatok beszúrása"
 msgid "Insert connectors"
 msgstr "Összekötők beszúrása"
 
-#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:808
+#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:819
 msgid "Hide Menu"
 msgstr "Menü elrejtése"
 
-#: src/control/Control.UIManager.js:203
+#: src/control/Control.UIManager.js:214
 msgid "Enter new name"
 msgstr "Írja be az új nevet"
 
-#: src/control/Control.UIManager.js:831
+#: src/control/Control.UIManager.js:842
 msgid "Show Menu"
 msgstr "Menü megjelenítése"
 
@@ -2136,27 +2136,31 @@ msgstr "Felső margó"
 msgid "Bottom Margin"
 msgstr "Alsó margó"
 
-#: src/control/Signing.js:27
+#: src/control/Signing.js:21
+msgid "The document is not signed."
+msgstr ""
+
+#: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
 msgstr "A dokumentum alá van írva, és az aláírás érvényes."
 
-#: src/control/Signing.js:31
+#: src/control/Signing.js:36
 msgid "This document has an invalid signature."
 msgstr "A dokumentum aláírása nem érvényes."
 
-#: src/control/Signing.js:35
+#: src/control/Signing.js:40
 msgid "The signature was valid, but the document has been modified."
 msgstr "Az aláírás érvényes, de a dokumentum módosítva lett."
 
-#: src/control/Signing.js:39
+#: src/control/Signing.js:44
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "Az aláírás rendben van, de a tanúsítványt nem lehet érvényesíteni."
 
-#: src/control/Signing.js:43
+#: src/control/Signing.js:48
 msgid "The signature is OK, but the document is only partially signed."
 msgstr "Az aláírás rendben van, de a dokumentum csak részben van aláírva."
 
-#: src/control/Signing.js:47
+#: src/control/Signing.js:52
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
@@ -2164,27 +2168,27 @@ msgstr ""
 "Az aláírás rendben van, de a tanúsítványt nem sikerült érvényesíteni, és a "
 "dokumentum csak részben van aláírva."
 
-#: src/control/Toolbar.js:54
+#: src/control/Toolbar.js:56
 msgid "Font"
 msgstr "Betűkészlet"
 
-#: src/control/Toolbar.js:249 src/control/Toolbar.js:262
+#: src/control/Toolbar.js:251 src/control/Toolbar.js:264
 msgid "Downloading..."
 msgstr "Letöltés…"
 
-#: src/control/Toolbar.js:278
+#: src/control/Toolbar.js:280
 msgid "Saving..."
 msgstr "Mentés…"
 
-#: src/control/Toolbar.js:297
+#: src/control/Toolbar.js:299
 msgid "Renaming..."
 msgstr "Átnevezés..."
 
-#: src/control/Toolbar.js:774
+#: src/control/Toolbar.js:777
 msgid "Insert hyperlink"
 msgstr "Hiperhivatkozás beszúrása"
 
-#: src/control/Toolbar.js:793
+#: src/control/Toolbar.js:796
 msgid "Link"
 msgstr "Hivatkozás"
 
@@ -2303,21 +2307,21 @@ msgstr "{name} további beállításai"
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Itt jelennek meg a dokumentumhoz hozzáadott címsorok és objektumok."
 
-#: src/slideshow/SlideShowPresenter.ts:302
+#: src/slideshow/SlideShowPresenter.ts:358
 msgid "Click to exit presentation..."
 msgstr "Kattintson bárhova a bemutató befejezéséhez..."
 
-#: src/slideshow/SlideShowPresenter.ts:465
+#: src/slideshow/SlideShowPresenter.ts:526
 #: src/map/handler/Map.SlideShow.js:170
 msgid "Windowed Presentation: "
 msgstr "Ablakban vetített bemutató: "
 
-#: src/slideshow/SlideShowPresenter.ts:473
+#: src/slideshow/SlideShowPresenter.ts:534
 #: src/map/handler/Map.SlideShow.js:165
 msgid "Windowed Presentation Blocked"
 msgstr "Az ablakban diavetítés blokkolva van"
 
-#: src/slideshow/SlideShowPresenter.ts:475
+#: src/slideshow/SlideShowPresenter.ts:536
 #: src/map/handler/Map.SlideShow.js:166
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
@@ -2328,36 +2332,36 @@ msgstr ""
 "Így lehetségessé válik a bemutató megjelenítése egy új ablakban, ami például "
 "a képernyő megosztásakor lehet hasznos, egy videohívás során."
 
-#: src/slideshow/SlideShowPresenter.ts:515
+#: src/slideshow/SlideShowPresenter.ts:576
 #: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in window"
 msgstr "Diavetítés ablakban"
 
-#: src/slideshow/SlideShowPresenter.ts:516
+#: src/slideshow/SlideShowPresenter.ts:577
 #: src/map/handler/Map.SlideShow.js:195
 msgid "Close Presentation"
 msgstr "Bemutató bezárása"
 
-#: src/slideshow/SlideShowPresenter.ts:605 src/map/handler/Map.SlideShow.js:55
+#: src/slideshow/SlideShowPresenter.ts:667 src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
 msgstr "Üres bemutató"
 
-#: src/slideshow/SlideShowPresenter.ts:620
+#: src/slideshow/SlideShowPresenter.ts:682
 #: src/map/handler/Map.SlideShow.js:280
 msgid "Already presenting"
 msgstr "Már megy a diavetítés"
 
-#: src/slideshow/SlideShowPresenter.ts:621
+#: src/slideshow/SlideShowPresenter.ts:683
 #: src/map/handler/Map.SlideShow.js:281
 msgid "You are already presenting this document"
 msgstr "Ezt a dokumentumot már megnyitotta diavetítésre"
 
-#: src/slideshow/SlideShowPresenter.ts:636
+#: src/slideshow/SlideShowPresenter.ts:698
 #: src/map/handler/Map.SlideShow.js:291
 msgid "Presentation disabled"
 msgstr "Diavetítés letiltva"
 
-#: src/slideshow/SlideShowPresenter.ts:637
+#: src/slideshow/SlideShowPresenter.ts:699
 #: src/map/handler/Map.SlideShow.js:292
 msgid "Presentation mode has been disabled for this document"
 msgstr "A bemutató levetítése nem megengedett"
@@ -2509,7 +2513,7 @@ msgstr "Sikeresen exportálva: "
 msgid "Discard"
 msgstr "Elvetés"
 
-#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1287
+#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1346
 msgid "Overwrite"
 msgstr "Felülírás"
 
@@ -2817,74 +2821,82 @@ msgstr "A fájl feltöltése a kiszolgálóra nem sikerült, a fájl nem találh
 msgid "Uploading file to server failed, the file is too large."
 msgstr "A fájl feltöltése a kiszolgálóra nem sikerült, a fájl túl nagy."
 
-#: src/layer/tile/CanvasTileLayer.js:1836
+#: src/layer/tile/CanvasTileLayer.js:1839
 msgid "Functions"
 msgstr "Függvények"
 
-#: src/layer/tile/CanvasTileLayer.js:2101
+#: src/layer/tile/CanvasTileLayer.js:2104
 msgid "Named Range"
 msgstr "Nevesített tartomány"
 
-#: src/layer/tile/CanvasTileLayer.js:3810
+#: src/layer/tile/CanvasTileLayer.js:3813
 msgid "No Comments"
 msgstr "Nincsenek megjegyzések"
 
-#: src/canvas/sections/CommentListSection.ts:141
+#: src/canvas/sections/CommentListSection.ts:143
 msgid "A comment is being edited"
 msgstr "A megjegyzés jelenleg szerkesztés alatt áll"
 
-#: src/canvas/sections/CommentListSection.ts:142
+#: src/canvas/sections/CommentListSection.ts:144
 msgid "Please save or discard the comment currently being edited."
 msgstr "Mentse vagy vesse el a jelenleg szerkesztés alatt álló megjegyzést."
 
-#: src/canvas/sections/CommentListSection.ts:996
+#: src/canvas/sections/CommentListSection.ts:1049
 msgid "Modify"
 msgstr "Módosítás"
 
-#: src/canvas/sections/CommentListSection.ts:1002
-#: src/canvas/sections/CommentSection.ts:152
+#: src/canvas/sections/CommentListSection.ts:1055
+#: src/canvas/sections/CommentSection.ts:155
 msgid "Reply"
 msgstr "Válasz"
 
-#: src/canvas/sections/CommentListSection.ts:1008
+#: src/canvas/sections/CommentListSection.ts:1061
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: src/canvas/sections/CommentListSection.ts:1014
+#: src/canvas/sections/CommentListSection.ts:1067
 msgid "Remove Thread"
 msgstr "Szál eltávolítása"
 
-#: src/canvas/sections/CommentListSection.ts:1020
+#: src/canvas/sections/CommentListSection.ts:1073
 msgid "Resolve"
 msgstr "Megoldás"
 
-#: src/canvas/sections/CommentListSection.ts:1020
+#: src/canvas/sections/CommentListSection.ts:1073
 msgid "Unresolve"
 msgstr "Megoldatlan"
 
-#: src/canvas/sections/CommentListSection.ts:1026
+#: src/canvas/sections/CommentListSection.ts:1079
 msgid "Unresolve Thread"
 msgstr "A szál legyen megoldatlan"
 
-#: src/canvas/sections/CommentListSection.ts:1026
+#: src/canvas/sections/CommentListSection.ts:1079
 msgid "Resolve Thread"
 msgstr "Szál megoldása"
 
-#: src/canvas/sections/CommentListSection.ts:1032
+#: src/canvas/sections/CommentListSection.ts:1085
 msgid "Promote to top comment"
 msgstr "Válasz a nyitó megjegyzésre"
 
-#: src/canvas/sections/CommentListSection.ts:1272
-#: src/canvas/sections/CommentListSection.ts:1285
-#: src/canvas/sections/CommentListSection.ts:2132
+#: src/canvas/sections/CommentListSection.ts:1091
+msgid "Show on the side"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1091
+msgid "Show comment bigger"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1331
+#: src/canvas/sections/CommentListSection.ts:1344
+#: src/canvas/sections/CommentListSection.ts:2203
 msgid "Comments Updated"
 msgstr "Megjegyzések frissítve"
 
-#: src/canvas/sections/CommentListSection.ts:1273
+#: src/canvas/sections/CommentListSection.ts:1332
 msgid "Another user has removed this comment."
 msgstr "Egy másik felhasználó eltávolította ezt a megjegyzést."
 
-#: src/canvas/sections/CommentListSection.ts:1286
+#: src/canvas/sections/CommentListSection.ts:1345
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
@@ -2892,47 +2904,47 @@ msgstr ""
 "Egy másik felhasználó frissítette ezt a megjegyzést. Felülírja azokat a "
 "változtatásokat?"
 
-#: src/canvas/sections/CommentListSection.ts:1288
+#: src/canvas/sections/CommentListSection.ts:1347
 msgid "Update"
 msgstr "Frissítés"
 
-#: src/canvas/sections/CommentListSection.ts:1359
-#: src/canvas/sections/CommentListSection.ts:1431
+#: src/canvas/sections/CommentListSection.ts:1418
+#: src/canvas/sections/CommentListSection.ts:1490
 msgid "Autosaved"
 msgstr "Automatikusan mentve"
 
-#: src/canvas/sections/CommentListSection.ts:2133
+#: src/canvas/sections/CommentListSection.ts:2204
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 "Egy másik felhasználó frissítette a megjegyzéseket. Folytatja a frissítést?"
 
-#: src/canvas/sections/CommentSection.ts:302
+#: src/canvas/sections/CommentSection.ts:308
 msgid "Open menu"
 msgstr "Menü megnyitása"
 
-#: src/canvas/sections/CommentSection.ts:320
-#: src/canvas/sections/CommentSection.ts:321
+#: src/canvas/sections/CommentSection.ts:368
+#: src/canvas/sections/CommentSection.ts:369
 msgid "Accept change"
 msgstr "Változás elfogadása"
 
-#: src/canvas/sections/CommentSection.ts:327
-#: src/canvas/sections/CommentSection.ts:328
+#: src/canvas/sections/CommentSection.ts:375
+#: src/canvas/sections/CommentSection.ts:376
 msgid "Reject change"
 msgstr "Változás elvetése"
 
-#: src/canvas/sections/CommentSection.ts:351
+#: src/canvas/sections/CommentSection.ts:399
 msgid "Resolved"
 msgstr "Megoldva"
 
-#: src/canvas/sections/URLPopUpSection.ts:39
+#: src/canvas/sections/URLPopUpSection.ts:43
 msgid "Copy link location"
 msgstr "Hivatkozás helyének másolása"
 
-#: src/canvas/sections/URLPopUpSection.ts:49
+#: src/canvas/sections/URLPopUpSection.ts:53
 msgid "Edit link"
 msgstr "Hivatkozás szerkesztése"
 
-#: src/canvas/sections/URLPopUpSection.ts:59
+#: src/canvas/sections/URLPopUpSection.ts:63
 msgid "Remove link"
 msgstr "Hivatkozás eltávolítása"
 
@@ -2940,74 +2952,60 @@ msgstr "Hivatkozás eltávolítása"
 msgid "Warning! The browser you are using is not supported."
 msgstr "Figyelem! Az Ön által használt böngésző nem támogatott."
 
-#: src/map/Clipboard.js:212
+#: src/map/Clipboard.js:172
 msgid ""
 "To paste outside {productname}, please first click the 'download' button"
 msgstr "Ha másolni akar a {productname}-ból, kattintson a „Letöltés” gombra."
 
-#: src/map/Clipboard.js:220
+#: src/map/Clipboard.js:180
 msgid "Copying from the document disabled"
 msgstr "Nem engedélyezett a másolás"
 
-#: src/map/Clipboard.js:322
+#: src/map/Clipboard.js:282
 msgid "warning: copy/paste request timed out"
 msgstr "figyelem: időtúllépés másolás/beillesztés közben"
 
-#: src/map/Clipboard.js:384
+#: src/map/Clipboard.js:344
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Nem sikerült letölteni a vágólapot, másolja ki újra."
 
-#: src/map/Clipboard.js:1219
-msgid "<p>Please use the paste buttons on your on-screen keyboard.</p>"
+#: src/map/Clipboard.js:1191
+#, fuzzy
+msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr ""
 "<p>Használja a képernyőn megjelenő billentyűzeten lévő beillesztés "
 "gombokat.</p>"
 
-#: src/map/Clipboard.js:1221
+#: src/map/Clipboard.js:1247
+#, fuzzy
 msgid ""
-"<p>Your browser has very limited access to the clipboard, so use these "
-"keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
-"td><td>Cut</td><td>Paste</td></tr></table>"
-msgstr ""
-"<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz, ezért használja "
-"az alábbi gyorsbillentyűket:</p><table class=\"warn-copy-paste\""
-"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
-"n><kbd>V</kbd></td></tr><tr><td>Másolás</td><td>Kivágás</td><td>Beillesztés</"
-"td></tr></table>"
-
-#: src/map/Clipboard.js:1240
-msgid ""
-"<p>A download due to a large copy/paste operation has already started. "
-"Please, wait for the current download or cancel it before starting a new "
-"one</p>"
+"A download due to a large copy/paste operation has already started. Please, "
+"wait for the current download or cancel it before starting a new one"
 msgstr ""
 "<p>Már elkezdődött egy letöltés egy másolási/beillesztési művelet "
 "következtében. Várjon, amíg véget nem ér a letöltés, vagy szakítsa meg, "
 "mielőtt egy új letöltést kezdeményez.</p>"
 
-#: src/map/Clipboard.js:1258
-msgid ""
-"<p>Your browser has very limited access to the clipboard</p><p><b>Please "
-"press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
-"see more options</p><p>Close popup to ignore paste special</p>"
-msgstr ""
-"<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz.</p><p>A további "
-"lehetőségek megtekintéséhez használja az alábbi gyorsbillentyűt: <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>.</p><p>A speciális "
-"beillesztés elvetéséhez zárja be ezt a felugró ablakot.</p>"
-
-#: src/map/Clipboard.js:1265
+#: src/map/Clipboard.js:1269
 msgid "Paste from this document"
 msgstr "Beillesztés ebből a dokumentumból"
 
-#: src/map/Clipboard.js:1265
+#: src/map/Clipboard.js:1269
 msgid "Cancel paste special"
 msgstr "Speciális beillesztés elvetése"
+
+#: src/map/Clipboard.js:1279
+#, fuzzy
+msgid "Your browser has very limited access to the clipboard"
+msgstr "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz.</p>"
+
+#: src/map/Clipboard.js:1284
+msgid "Please use following combination to see more options:"
+msgstr ""
+
+#: src/map/Clipboard.js:1302
+msgid "Close popup to ignore paste special"
+msgstr ""
 
 #: src/map/Map.js:212
 msgid "Initializing..."
@@ -3150,6 +3148,32 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid ""
+#~ "<p>Your browser has very limited access to the clipboard, so use these "
+#~ "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
+#~ "kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
+#~ "kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
+#~ "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
+#~ "td><td>Cut</td><td>Paste</td></tr></table>"
+#~ msgstr ""
+#~ "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz, ezért használja "
+#~ "az alábbi gyorsbillentyűket:</p><table class=\"warn-copy-paste\""
+#~ "><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+#~ ">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+#~ ">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
+#~ "n><kbd>V</kbd></td></tr><tr><td>Másolás</td><td>Kivágás</td><td>Beillesztés</"
+#~ "td></tr></table>"
+
+#~ msgid ""
+#~ "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
+#~ "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
+#~ "see more options</p><p>Close popup to ignore paste special</p>"
+#~ msgstr ""
+#~ "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz.</p><p>A további "
+#~ "lehetőségek megtekintéséhez használja az alábbi gyorsbillentyűt: <kbd>Ctrl</"
+#~ "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>.</p><p>A speciális "
+#~ "beillesztés elvetéséhez zárja be ezt a felugró ablakot.</p>"
 
 #~ msgid "Normal View"
 #~ msgstr "Normál nézet"
@@ -3670,6 +3694,3 @@ msgstr ""
 
 #~ msgid "Save as PDF"
 #~ msgstr "Mentés PDF-ként"
-
-#~ msgid "<p>Your browser has very limited access to the clipboard</p>"
-#~ msgstr "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz.</p>"
