@@ -196,9 +196,9 @@
         <enable type="bool" desc="Controls whether SSL encryption between coolwsd and the network is enabled (do not disable for production deployment). If default is false, must first be compiled with SSL support to enable." default="@ENABLE_SSL@">@ENABLE_SSL@</enable>
         <!-- SSL off-load can be done in a proxy, if so disable SSL, and enable termination below in production -->
         <termination desc="Connection via proxy where coolwsd acts as working via https, but actually uses http." type="bool" default="false">false</termination>
-        <cert_file_path desc="Path to the cert file" relative="false">/etc/coolwsd/cert.pem</cert_file_path>
-        <key_file_path desc="Path to the key file" relative="false">/etc/coolwsd/key.pem</key_file_path>
-        <ca_file_path desc="Path to the ca file" relative="false">/etc/coolwsd/ca-chain.cert.pem</ca_file_path>
+        <cert_file_path desc="Path to the cert file" relative="false">@COOLWSD_CONFIGDIR@/cert.pem</cert_file_path>
+        <key_file_path desc="Path to the key file" relative="false">@COOLWSD_CONFIGDIR@/key.pem</key_file_path>
+        <ca_file_path desc="Path to the ca file" relative="false">@COOLWSD_CONFIGDIR@/ca-chain.cert.pem</ca_file_path>
         <ssl_verification desc="Enable or disable SSL verification of hosts remote to coolwsd. If true SSL verification will be strict, otherwise certs of hosts will not be verified. You may have to disable it in test environments with self-signed certificates." type="string" default="@SSL_VERIFY@">@SSL_VERIFY@</ssl_verification>
         <cipher_list desc="List of OpenSSL ciphers to accept" default="ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"></cipher_list>
         <hpkp desc="Enable HTTP Public key pinning" enable="false" report_only="false">
