@@ -32,6 +32,26 @@ class AboutDialog {
 		}
 	}
 
+	private adjustIDs(content: HTMLElement) {
+		const servedBy = content.querySelector(':scope #served-by');
+		if (servedBy) servedBy.id += '-cloned';
+
+		const wopiHostId = content.querySelector(':scope #wopi-host-id');
+		if (wopiHostId) wopiHostId.id += '-cloned';
+	}
+
+	private hideElementsHiddenByDefault(content: HTMLElement) {
+		const servedBy = content.querySelector(
+			':scope #served-by-cloned',
+		) as HTMLElement;
+		if (servedBy) servedBy.style.display = 'none';
+
+		const wopiHostId = content.querySelector(
+			':scope #wopi-host-id-cloned',
+		) as HTMLElement;
+		if (wopiHostId) wopiHostId.style.display = 'none';
+	}
+
 	public show() {
 		const windowAny = window as any;
 		// Just as a test to exercise the Async Trace Event functionality, uncomment this
@@ -44,6 +64,14 @@ class AboutDialog {
 			.getElementById(aboutDialogId)
 			.cloneNode(true) as HTMLElement;
 		content.style.display = 'block';
+
+		/*
+			Now we copied the about dialog content which was already in the document, hidden.
+			This copied content also includes the IDs. So we have now duplicate IDs for elements, which is contrary to HTML rules.
+			Let's modify the IDs of such elements and add "-cloned" at the end.
+		*/
+		this.adjustIDs(content);
+		this.hideElementsHiddenByDefault(content); // Now we can safely hide the elements that we want hidden by default.
 
 		if (content.querySelector('#js-dialog')) {
 			(content.querySelector('#js-dialog') as HTMLAnchorElement).onclick =
