@@ -79,6 +79,7 @@ endif
 
 AM_CPPFLAGS = -pthread -DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
 	      -DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
+	      -DCOOLWSD_LOGLEVEL='"@COOLWSD_LOGLEVEL@"' \
 	      -DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
 	      ${include_paths}
 

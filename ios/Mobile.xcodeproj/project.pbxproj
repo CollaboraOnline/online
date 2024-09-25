@@ -3853,6 +3853,7 @@
 					"DISABLE_DYNLOADING=1",
 					"ENABLE_DEBUG=1",
 					"COOLWSD_CONFIGDIR='\".\"'",
+					"COOLWSD_LOGLEVEL='\"trace\"'",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				HEADER_SEARCH_PATHS = (
@@ -3916,6 +3917,7 @@
 					"IOS=IOS",
 					"DISABLE_DYNLOADING=1",
 					"COOLWSD_CONFIGDIR='\".\"'",
+					"COOLWSD_LOGLEVEL='\"warning\"'",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				HEADER_SEARCH_PATHS = (
