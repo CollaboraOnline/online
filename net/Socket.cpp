@@ -121,8 +121,9 @@ std::string Socket::toStringImpl() const
     return oss.str();
 }
 
-bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
-                              std::shared_ptr<StreamSocket> &child)
+bool StreamSocket::socketpair(const std::chrono::steady_clock::time_point &creationTime,
+                              std::shared_ptr<StreamSocket>& parent,
+                              std::shared_ptr<StreamSocket>& child)
 {
 #if MOBILEAPP
     return false;
@@ -132,10 +133,10 @@ bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
     if (rc != 0)
         return false;
 
-    child = std::make_shared<StreamSocket>("save-child", pair[0], Socket::Type::Unix, true);
+    child = std::make_shared<StreamSocket>("save-child", pair[0], Socket::Type::Unix, true, ReadType::NormalRead, creationTime);
     child->setNoShutdown();
     child->setClientAddress("save-child");
-    parent = std::make_shared<StreamSocket>("save-kit-parent", pair[1], Socket::Type::Unix, true);
+    parent = std::make_shared<StreamSocket>("save-kit-parent", pair[1], Socket::Type::Unix, true, ReadType::NormalRead, creationTime);
     parent->setNoShutdown();
     parent->setClientAddress("save-parent");
 

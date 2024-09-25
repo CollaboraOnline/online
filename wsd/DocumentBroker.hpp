@@ -102,12 +102,15 @@ public:
         int urpToKitFD = socket->getIncomingFD(SharedFDType::URPToKit);
         if (urpFromKitFD != -1 && urpToKitFD != -1)
         {
+            std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
             _urpFromKit = StreamSocket::create<StreamSocket>(
                 std::string(), urpFromKitFD, Socket::Type::Unix,
-                false, std::make_shared<UrpHandler>(this));
+                false, std::make_shared<UrpHandler>(this),
+                StreamSocket::ReadType::NormalRead, now);
             _urpToKit = StreamSocket::create<StreamSocket>(
                 std::string(), urpToKitFD, Socket::Type::Unix,
-                false, std::make_shared<UrpHandler>(this));
+                false, std::make_shared<UrpHandler>(this),
+                StreamSocket::ReadType::NormalRead, now);
         }
     }
 

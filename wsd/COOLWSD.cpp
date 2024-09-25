@@ -922,8 +922,8 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, unsigned 
 class InotifySocket : public Socket
 {
 public:
-    InotifySocket():
-        Socket(inotify_init1(IN_NONBLOCK), Socket::Type::Unix)
+    InotifySocket(std::chrono::steady_clock::time_point creationTime):
+        Socket(inotify_init1(IN_NONBLOCK), Socket::Type::Unix, creationTime)
         , m_stopOnConfigChange(true)
     {
         if (getFD() == -1)
@@ -4185,7 +4185,8 @@ private:
     {
         std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
 #if !MOBILEAPP
-        auto socket = std::make_shared<LocalServerSocket>(*PrisonerPoll, factory);
+        auto socket = std::make_shared<LocalServerSocket>(
+                        std::chrono::steady_clock::now(), *PrisonerPoll, factory);
 
         const std::string location = socket->bind();
         if (!location.length())
@@ -4214,7 +4215,7 @@ private:
         constexpr int DEFAULT_MASTER_PORT_NUMBER = 9981;
         std::shared_ptr<ServerSocket> socket
             = ServerSocket::create(ServerSocket::Type::Public, DEFAULT_MASTER_PORT_NUMBER,
-                                   ClientPortProto, *PrisonerPoll, factory);
+                                   ClientPortProto, std::chrono::steady_clock::now(), *PrisonerPoll, factory);
 
         COOLWSD::prisonerServerSocketFD = socket->getFD();
         LOG_INF("Listening to prisoner connections on #" << COOLWSD::prisonerServerSocketFD);
@@ -4226,6 +4227,7 @@ private:
     std::shared_ptr<ServerSocket> findServerPort()
     {
         std::shared_ptr<SocketFactory> factory;
+        std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
 
         if (ClientPortNumber <= 0)
         {
@@ -4242,7 +4244,7 @@ private:
             factory = std::make_shared<PlainSocketFactory>();
 
         std::shared_ptr<ServerSocket> socket = ServerSocket::create(
-            ClientListenAddr, ClientPortNumber, ClientPortProto, *WebServerPoll, factory);
+            ClientListenAddr, ClientPortNumber, ClientPortProto, now, *WebServerPoll, factory);
 
         const int firstPortNumber = ClientPortNumber;
         while (!socket &&
@@ -4257,7 +4259,7 @@ private:
             LOG_INF("Client port " << (ClientPortNumber - 1) << " is busy, trying "
                                    << ClientPortNumber);
             socket = ServerSocket::create(ClientListenAddr, ClientPortNumber, ClientPortProto,
-                                          *WebServerPoll, factory);
+                                          now, *WebServerPoll, factory);
         }
 
         if (!socket)
@@ -4554,7 +4556,7 @@ int COOLWSD::innerMain()
 
 #ifdef __linux__
     if (getConfigValue<bool>("stop_on_config_change", false)) {
-        std::shared_ptr<InotifySocket> inotifySocket = std::make_shared<InotifySocket>();
+        std::shared_ptr<InotifySocket> inotifySocket = std::make_shared<InotifySocket>(startStamp);
         mainWait.insertNewSocket(inotifySocket);
     }
 #endif

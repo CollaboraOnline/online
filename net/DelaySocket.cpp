@@ -55,8 +55,8 @@ class DelaySocket : public Socket {
 
     std::vector<std::shared_ptr<WriteChunk>> _chunks;
 public:
-    DelaySocket(int delayMs, int fd) :
-        Socket (fd, Socket::Type::Unix), _delayMs(delayMs),
+    DelaySocket(int delayMs, int fd, std::chrono::steady_clock::time_point creationTime) :
+        Socket(fd, Socket::Type::Unix, creationTime), _delayMs(delayMs),
         _state(State::ReadWrite)
 	{
 //        setSocketBufferSize(Socket::DefaultSendBufferSize);
@@ -264,8 +264,9 @@ int Delay::create(int delayMs, int physicalFd)
         int internalFd = pair[0];
         int delayFd = pair[1];
 
-        auto physical = std::make_shared<DelaySocket>(delayMs, physicalFd);
-        auto internal = std::make_shared<DelaySocket>(delayMs, internalFd);
+        const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+        auto physical = std::make_shared<DelaySocket>(delayMs, physicalFd, now);
+        auto internal = std::make_shared<DelaySocket>(delayMs, internalFd, now);
         physical->setDestination(internal);
         internal->setDestination(physical);
 

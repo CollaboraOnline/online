@@ -1449,7 +1449,7 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
     // FIXME: defer and queue a 2nd save if queued during save ...
 
     std::shared_ptr<StreamSocket> parentSocket, childSocket;
-    if (!StreamSocket::socketpair(parentSocket, childSocket))
+    if (!StreamSocket::socketpair(start, parentSocket, childSocket))
         return false;
 
     // To encode into the child process id for debugging

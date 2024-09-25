@@ -143,7 +143,8 @@ public:
     static std::string toString(Type t);
 
     // NB. see other Socket::Socket by init below.
-    Socket(Type type)
+    Socket(Type type,
+           std::chrono::steady_clock::time_point /*creationTime*/ = std::chrono::steady_clock::now())
         : _type(type)
         , _clientPort(0)
         , _fd(createSocket(type))
@@ -371,7 +372,8 @@ public:
 protected:
     /// Construct based on an existing socket fd.
     /// Used by accept() only.
-    Socket(const int fd, Type type)
+    Socket(const int fd, Type type,
+           std::chrono::steady_clock::time_point /*creationTime*/ = std::chrono::steady_clock::now())
         : _type(type)
         , _clientPort(0)
         , _fd(fd)
@@ -980,8 +982,9 @@ public:
 
     /// Create a StreamSocket from native FD.
     StreamSocket(std::string host, const int fd, Type type, bool /* isClient */,
-                 ReadType readType = ReadType::NormalRead) :
-        Socket(fd, type),
+                 ReadType readType = ReadType::NormalRead,
+                 std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now() ) :
+        Socket(fd, type, creationTime),
         _pollTimeout( net::Defaults::get().SocketPollTimeout ),
         _httpTimeout( net::Defaults::get().HTTPTimeout ),
         _hostname(std::move(host)),
@@ -1061,7 +1064,8 @@ public:
     }
 
     /// Create a pair of connected stream sockets
-    static bool socketpair(std::shared_ptr<StreamSocket> &parent,
+    static bool socketpair(const std::chrono::steady_clock::time_point &creationTime,
+                           std::shared_ptr<StreamSocket> &parent,
                            std::shared_ptr<StreamSocket> &child);
 
     /// Send data to the socket peer.
@@ -1257,14 +1261,15 @@ public:
     template <typename TSocket>
     static std::shared_ptr<TSocket> create(std::string hostname, const int fd, Type type, bool isClient,
                                            std::shared_ptr<ProtocolHandlerInterface> handler,
-                                           ReadType readType = ReadType::NormalRead)
+                                           ReadType readType = ReadType::NormalRead,
+                                           std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now())
     {
         // Without a handler we make no sense object.
         if (!handler)
             throw std::runtime_error("StreamSocket " + std::to_string(fd) +
                                      " expects a valid SocketHandler instance.");
 
-        auto socket = std::make_shared<TSocket>(std::move(hostname), fd, type, isClient, readType);
+        auto socket = std::make_shared<TSocket>(std::move(hostname), fd, type, isClient, readType, creationTime);
         socket->setHandler(std::move(handler));
 
         return socket;
