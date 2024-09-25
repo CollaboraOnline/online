@@ -14,6 +14,7 @@ AM_CPPFLAGS = \
 	-I@LOBUILDDIR@/workdir/UnpackedTarball/libpng \
 	-I@LOBUILDDIR@/workdir/UnpackedTarball/zlib \
 	-DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
+	-DCOOLWSD_LOGLEVEL='"@COOLWSD_LOGLEVEL@"' \
 	-DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
 	-DMOBILEAPP=1
 
