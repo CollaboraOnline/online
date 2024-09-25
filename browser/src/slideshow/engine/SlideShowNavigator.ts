@@ -121,7 +121,7 @@ class SlideShowNavigator {
 		NAVDBG.print(
 			'SlideShowNavigator.goToFirstSlide: current index: ' + this.currentSlide,
 		);
-		this.displaySlide(0, true);
+		this.startPresentation(0, false);
 	}
 
 	goToLastSlide() {
