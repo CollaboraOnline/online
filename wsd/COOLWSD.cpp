@@ -2096,7 +2096,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "per_document.cleanup.limit_dirty_mem_mb", "3072" },
         { "per_document.cleanup.limit_cpu_per", "85" },
         { "per_document.cleanup.lost_kit_grace_period_secs", "120" },
-        { "per_document.cleanup[@enable]", "false" },
+        { "per_document.cleanup[@enable]", "true" },
         { "per_document.idle_timeout_secs", "3600" },
         { "per_document.idlesave_duration_secs", "30" },
         { "per_document.limit_file_size_mb", "0" },
@@ -2995,7 +2995,7 @@ void COOLWSD::innerInitialize(Application& self)
     docProcSettings.setLimitNumberOpenFiles(getConfigValue<int>("per_document.limit_num_open_files", 0));
 
     DocCleanupSettings &docCleanupSettings = docProcSettings.getCleanupSettings();
-    docCleanupSettings.setEnable(getConfigValue<bool>("per_document.cleanup[@enable]", false));
+    docCleanupSettings.setEnable(getConfigValue<bool>("per_document.cleanup[@enable]", true));
     docCleanupSettings.setCleanupInterval(getConfigValue<int>("per_document.cleanup.cleanup_interval_ms", 10000));
     docCleanupSettings.setBadBehaviorPeriod(getConfigValue<int>("per_document.cleanup.bad_behavior_period_secs", 60));
     docCleanupSettings.setIdleTime(getConfigValue<int>("per_document.cleanup.idle_time_secs", 300));
