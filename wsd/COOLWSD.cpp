@@ -2071,7 +2071,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "logging.file.property[7]", "false" },
         { "logging.file.property[7][@name]", "archive" },
         { "logging.file[@enable]", "false" },
-        { "logging.level", "trace" },
+        { "logging.level", COOLWSD_LOGLEVEL },
         { "logging.level_startup", "trace" },
         { "logging.lokit_sal_log", "-INFO-WARN" },
         { "logging.docstats", "false" },
