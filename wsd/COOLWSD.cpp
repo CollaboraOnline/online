@@ -2132,7 +2132,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "ssl.sts.enabled", "false" },
         { "ssl.sts.max_age", "31536000" },
         { "ssl.key_file_path", COOLWSD_CONFIGDIR "/key.pem" },
-        { "ssl.termination", "true" },
+        { "ssl.termination", "false" },
 #if !MOBILEAPP
         { "ssl.ssl_verification", SSL_VERIFY },
 #endif
@@ -2515,7 +2515,7 @@ void COOLWSD::innerInitialize(Application& self)
 
 #if ENABLE_SSL
     COOLWSD::SSLEnabled.set(getConfigValue<bool>(conf, "ssl.enable", true));
-    COOLWSD::SSLTermination.set(getConfigValue<bool>(conf, "ssl.termination", true));
+    COOLWSD::SSLTermination.set(getConfigValue<bool>(conf, "ssl.termination", false));
 #endif
 
     LOG_INF("SSL support: SSL is " << (COOLWSD::isSSLEnabled() ? "enabled." : "disabled."));
