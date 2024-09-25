@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-16 14:25+0200\n"
+"POT-Creation-Date: 2024-09-25 14:41+0200\n"
 "PO-Revision-Date: 2020-12-08 13:30+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Amharic <https://hosted.weblate.org/projects/collabora-online/"
@@ -151,8 +151,8 @@ msgstr "የ ኔትዎርክ ድጋፍ"
 #: src/control/Control.NotebookbarImpress.js:29
 #: src/control/Control.NotebookbarImpress.js:176
 #: src/control/Control.NotebookbarWriter.js:155
-#: src/canvas/sections/CommentListSection.ts:446
-#: src/canvas/sections/CommentSection.ts:149
+#: src/canvas/sections/CommentListSection.ts:448
+#: src/canvas/sections/CommentSection.ts:152
 msgid "Save"
 msgstr "ማስቀመጫ"
 
@@ -235,8 +235,8 @@ msgstr ""
 #: src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
-#: src/control/Parts.js:506 src/core/Socket.js:419 src/core/Socket.js:1175
-#: src/core/Socket.js:1180 src/canvas/sections/CommentListSection.ts:142
+#: src/control/Parts.js:514 src/core/Socket.js:419 src/core/Socket.js:1175
+#: src/core/Socket.js:1180 src/canvas/sections/CommentListSection.ts:144
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "መዝጊያ"
@@ -276,7 +276,7 @@ msgstr ""
 
 #: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
-#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:131
+#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:126
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119
@@ -284,16 +284,16 @@ msgstr ""
 #: src/control/Control.Tabs.js:392 src/control/Control.Tabs.js:401
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Permission.js:89 src/control/Permission.js:99
-#: src/control/Permission.js:149 src/control/Toolbar.js:723
-#: src/control/Toolbar.js:814 src/slideshow/SlideShowPresenter.ts:478
-#: src/slideshow/SlideShowPresenter.ts:608
-#: src/slideshow/SlideShowPresenter.ts:623
-#: src/slideshow/SlideShowPresenter.ts:639 src/core/Socket.js:681
+#: src/control/Permission.js:149 src/control/Toolbar.js:725
+#: src/control/Toolbar.js:817 src/slideshow/SlideShowPresenter.ts:539
+#: src/slideshow/SlideShowPresenter.ts:670
+#: src/slideshow/SlideShowPresenter.ts:685
+#: src/slideshow/SlideShowPresenter.ts:701 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
-#: src/canvas/sections/CommentListSection.ts:1274
-#: src/canvas/sections/CommentListSection.ts:2134 src/main.js:84
-#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1226
+#: src/canvas/sections/CommentListSection.ts:1333
+#: src/canvas/sections/CommentListSection.ts:2205 src/main.js:84
+#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1184
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:167 src/map/handler/Map.SlideShow.js:282
 #: src/map/handler/Map.SlideShow.js:293 src/map/handler/Map.WOPI.js:604
@@ -318,12 +318,12 @@ msgstr "በ እርግጥ ይህን ክፍል ጊዜ ማጥፋት ይፈልጋሉ
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1281 src/control/Control.UIManager.js:1348
-#: src/control/Control.UIManager.js:1483 src/control/Control.UIManager.js:1642
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:809
-#: src/core/Socket.js:1388 src/canvas/sections/CommentListSection.ts:441
-#: src/canvas/sections/CommentSection.ts:148
+#: src/control/Control.UIManager.js:1292 src/control/Control.UIManager.js:1359
+#: src/control/Control.UIManager.js:1494 src/control/Control.UIManager.js:1653
+#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:812
+#: src/core/Socket.js:1388 src/canvas/sections/CommentListSection.ts:443
 #: src/canvas/sections/CommentSection.ts:151
+#: src/canvas/sections/CommentSection.ts:154
 msgid "Cancel"
 msgstr "መሰረዣ"
 
@@ -391,15 +391,15 @@ msgstr " ደቂቃ"
 msgid " s"
 msgstr " s"
 
-#: js/global.js:1372
+#: js/global.js:1378
 msgid "Cluster is scaling, retrying..."
 msgstr ""
 
-#: js/global.js:1374
+#: js/global.js:1380
 msgid "Document is migrating to new server, retrying..."
 msgstr ""
 
-#: js/global.js:1376
+#: js/global.js:1382
 msgid "Failed to get RouteToken from controller"
 msgstr ""
 
@@ -411,15 +411,15 @@ msgstr ""
 msgid "Automatic color"
 msgstr ""
 
-#: src/control/Control.AboutDialog.ts:88
+#: src/control/Control.AboutDialog.ts:83
 msgid "This version of {productname} is powered by"
 msgstr "ይህ እትም {productname} የ ተሰናዳው በ"
 
-#: src/control/Control.AboutDialog.ts:111
+#: src/control/Control.AboutDialog.ts:106
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Control.AboutDialog.ts:155
+#: src/control/Control.AboutDialog.ts:150
 msgid "Copy all version information in English"
 msgstr ""
 
@@ -472,19 +472,19 @@ msgstr "ይህ ሰርቨር {0} ስህተት ገጥሞታል ትእዛዙን በ
 msgid "Unlock"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:220 src/docdispatcher.ts:432
+#: src/control/Control.ContextMenu.js:221 src/docdispatcher.ts:432
 msgid "Delete"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:240
+#: src/control/Control.ContextMenu.js:241
 msgid "Paste Special"
 msgstr "የተለየ መለጠፊያ"
 
-#: src/control/Control.ContextMenu.js:248
+#: src/control/Control.ContextMenu.js:249
 msgid "Copy Cells"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:256
+#: src/control/Control.ContextMenu.js:257
 msgid "Fill Series"
 msgstr ""
 
@@ -654,12 +654,12 @@ msgid "Select range"
 msgstr "ለውጡን አልቀበልም"
 
 #: src/control/Control.JSDialogBuilder.js:1647
-#: src/control/Control.NotebookbarBuilder.js:158
+#: src/control/Control.NotebookbarBuilder.js:157
 #, fuzzy
 msgid "Font Name"
 msgstr "ፊደል"
 
-#: src/control/Control.JSDialogBuilder.js:1649 src/control/Toolbar.js:132
+#: src/control/Control.JSDialogBuilder.js:1649 src/control/Toolbar.js:134
 #, fuzzy
 msgid "Font Size"
 msgstr "ፊደል"
@@ -679,9 +679,9 @@ msgid "replies"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1929
-#: src/layer/tile/CanvasTileLayer.js:3782
-#: src/layer/tile/CanvasTileLayer.js:3793
-#: src/canvas/sections/CommentListSection.ts:1060
+#: src/layer/tile/CanvasTileLayer.js:3785
+#: src/layer/tile/CanvasTileLayer.js:3796
+#: src/canvas/sections/CommentListSection.ts:1119
 msgid "Comment"
 msgstr "አስተያየት"
 
@@ -707,7 +707,7 @@ msgstr "ሰንጠረዥ ማስገቢያ"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:357
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:361
 #: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:670
-#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:483
+#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:499
 msgid "None (Do not check spelling)"
 msgstr "ምንም (ፊደሉን አታርም)"
 
@@ -721,29 +721,29 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
 #: src/control/Control.Menubar.js:983
-#: src/control/Control.NotebookbarBuilder.js:348
-#: src/control/Control.NotebookbarBuilder.js:474
+#: src/control/Control.NotebookbarBuilder.js:347
+#: src/control/Control.NotebookbarBuilder.js:473
 msgid "ODF text document (.odt)"
 msgstr "የ ODF ጽሁፍ ሰነድ (.odt)"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:92
 #: src/control/Control.Menubar.js:984
-#: src/control/Control.NotebookbarBuilder.js:360
-#: src/control/Control.NotebookbarBuilder.js:486
+#: src/control/Control.NotebookbarBuilder.js:359
+#: src/control/Control.NotebookbarBuilder.js:485
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 Document (.doc)"
 
 #: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:93
 #: src/control/Control.Menubar.js:985
-#: src/control/Control.NotebookbarBuilder.js:356
-#: src/control/Control.NotebookbarBuilder.js:482
+#: src/control/Control.NotebookbarBuilder.js:355
+#: src/control/Control.NotebookbarBuilder.js:481
 msgid "Word Document (.docx)"
 msgstr "Word Document (.docx)"
 
 #: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:986
-#: src/control/Control.NotebookbarBuilder.js:352
-#: src/control/Control.NotebookbarBuilder.js:478
+#: src/control/Control.NotebookbarBuilder.js:351
+#: src/control/Control.NotebookbarBuilder.js:477
 msgid "Rich Text (.rtf)"
 msgstr "ሀብታም ጽሁፍ (.rtf)"
 
@@ -766,25 +766,25 @@ msgstr ""
 #: src/control/Control.Menubar.js:1038 src/control/Control.Menubar.js:1046
 #: src/control/Control.Menubar.js:1103 src/control/Control.Menubar.js:1110
 #: src/control/Control.Menubar.js:1158 src/control/Control.Menubar.js:1168
-#: src/control/Control.NotebookbarBuilder.js:369
-#: src/control/Control.NotebookbarBuilder.js:403
-#: src/control/Control.NotebookbarBuilder.js:437
-#: src/control/Control.NotebookbarBuilder.js:535
-#: src/control/Control.NotebookbarBuilder.js:546
-#: src/control/Control.NotebookbarBuilder.js:553
-#: src/control/Control.NotebookbarBuilder.js:560
+#: src/control/Control.NotebookbarBuilder.js:368
+#: src/control/Control.NotebookbarBuilder.js:402
+#: src/control/Control.NotebookbarBuilder.js:436
+#: src/control/Control.NotebookbarBuilder.js:534
+#: src/control/Control.NotebookbarBuilder.js:545
+#: src/control/Control.NotebookbarBuilder.js:552
+#: src/control/Control.NotebookbarBuilder.js:559
 #: src/control/Control.NotebookbarDraw.js:248
 msgid "PDF Document (.pdf)"
 msgstr "PDF ሰነድ (.pdf)"
 
 #: src/control/Control.Menubar.js:83 src/control/Control.Menubar.js:95
 #: src/control/Control.Menubar.js:973 src/control/Control.Menubar.js:987
-#: src/control/Control.NotebookbarBuilder.js:364
-#: src/control/Control.NotebookbarBuilder.js:539
+#: src/control/Control.NotebookbarBuilder.js:363
+#: src/control/Control.NotebookbarBuilder.js:538
 msgid "EPUB (.epub)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:203
+#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:214
 #, fuzzy
 msgid "Rename Document"
 msgstr "ሰነድ መጠገኛ"
@@ -814,9 +814,9 @@ msgstr "የወረዱ"
 #: src/control/Control.Menubar.js:566 src/control/Control.Menubar.js:699
 #: src/control/Control.Menubar.js:982 src/control/Control.Menubar.js:1047
 #: src/control/Control.Menubar.js:1111 src/control/Control.Menubar.js:1169
-#: src/control/Control.NotebookbarBuilder.js:375
-#: src/control/Control.NotebookbarBuilder.js:409
-#: src/control/Control.NotebookbarBuilder.js:443
+#: src/control/Control.NotebookbarBuilder.js:374
+#: src/control/Control.NotebookbarBuilder.js:408
+#: src/control/Control.NotebookbarBuilder.js:442
 #, fuzzy
 msgid "PDF Document (.pdf) as..."
 msgstr "PDF ሰነድ (.pdf)"
@@ -1046,22 +1046,22 @@ msgstr "መጨረሻ የ ተሻሻለው"
 
 #: src/control/Control.Menubar.js:394 src/control/Control.Menubar.js:407
 #: src/control/Control.Menubar.js:1048
-#: src/control/Control.NotebookbarBuilder.js:417
-#: src/control/Control.NotebookbarBuilder.js:508
+#: src/control/Control.NotebookbarBuilder.js:416
+#: src/control/Control.NotebookbarBuilder.js:507
 msgid "ODF presentation (.odp)"
 msgstr "የ ODF ማቅረቢያ (.odp)"
 
 #: src/control/Control.Menubar.js:395 src/control/Control.Menubar.js:408
 #: src/control/Control.Menubar.js:1049
-#: src/control/Control.NotebookbarBuilder.js:429
-#: src/control/Control.NotebookbarBuilder.js:516
+#: src/control/Control.NotebookbarBuilder.js:428
+#: src/control/Control.NotebookbarBuilder.js:515
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 Presentation (.ppt)"
 
 #: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:409
 #: src/control/Control.Menubar.js:1050
-#: src/control/Control.NotebookbarBuilder.js:425
-#: src/control/Control.NotebookbarBuilder.js:512
+#: src/control/Control.NotebookbarBuilder.js:424
+#: src/control/Control.NotebookbarBuilder.js:511
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint Presentation (.pptx)"
 
@@ -1071,17 +1071,17 @@ msgid "Save Comments"
 msgstr "አስተያየት"
 
 #: src/control/Control.Menubar.js:410
-#: src/control/Control.NotebookbarBuilder.js:433
+#: src/control/Control.NotebookbarBuilder.js:432
 msgid "HTML Document (.html)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:415
-#: src/control/Control.NotebookbarBuilder.js:579
+#: src/control/Control.NotebookbarBuilder.js:578
 msgid "Full Page Slides"
 msgstr ""
 
 #: src/control/Control.Menubar.js:416
-#: src/control/Control.NotebookbarBuilder.js:583
+#: src/control/Control.NotebookbarBuilder.js:582
 msgid "Notes Pages"
 msgstr ""
 
@@ -1110,30 +1110,30 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:567 src/control/Control.Menubar.js:1051
 #: src/control/Control.Menubar.js:1112
-#: src/control/Control.NotebookbarBuilder.js:421
-#: src/control/Control.NotebookbarBuilder.js:451
+#: src/control/Control.NotebookbarBuilder.js:420
+#: src/control/Control.NotebookbarBuilder.js:450
 #, fuzzy
 msgid "ODF Drawing (.odg)"
 msgstr "የ ODF ማቅረቢያ (.odp)"
 
 #: src/control/Control.Menubar.js:688 src/control/Control.Menubar.js:700
 #: src/control/Control.Menubar.js:1170
-#: src/control/Control.NotebookbarBuilder.js:383
-#: src/control/Control.NotebookbarBuilder.js:493
+#: src/control/Control.NotebookbarBuilder.js:382
+#: src/control/Control.NotebookbarBuilder.js:492
 msgid "ODF spreadsheet (.ods)"
 msgstr "የ ODF ሰንጠረዥ (.ods)"
 
 #: src/control/Control.Menubar.js:689 src/control/Control.Menubar.js:701
 #: src/control/Control.Menubar.js:1171
-#: src/control/Control.NotebookbarBuilder.js:391
-#: src/control/Control.NotebookbarBuilder.js:501
+#: src/control/Control.NotebookbarBuilder.js:390
+#: src/control/Control.NotebookbarBuilder.js:500
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 Spreadsheet (.xls)"
 
 #: src/control/Control.Menubar.js:690 src/control/Control.Menubar.js:702
 #: src/control/Control.Menubar.js:1172
-#: src/control/Control.NotebookbarBuilder.js:387
-#: src/control/Control.NotebookbarBuilder.js:497
+#: src/control/Control.NotebookbarBuilder.js:386
+#: src/control/Control.NotebookbarBuilder.js:496
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel Spreadsheet (.xlsx)"
 
@@ -1239,7 +1239,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:874
 #: src/control/Control.MobileSearchBar.ts:29
 #: src/control/Control.StatusBar.js:224 src/control/Control.Zotero.js:218
-#: src/control/Toolbar.js:558
+#: src/control/Toolbar.js:560
 msgid "Search"
 msgstr "መፈለጊያ:"
 
@@ -1255,7 +1255,7 @@ msgstr ""
 msgid "Remove print area"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:482
+#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:498
 msgid "Reset to Default Language"
 msgstr "ነባሩን ቋንቋ እንደ ነበረ መመለሻ"
 
@@ -1310,24 +1310,24 @@ msgstr ""
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:227
+#: src/control/Control.NotebookbarBuilder.js:226
 msgid "Tap to expand"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:228
-#: src/control/Control.NotebookbarBuilder.js:272
+#: src/control/Control.NotebookbarBuilder.js:227
+#: src/control/Control.NotebookbarBuilder.js:271
 msgid "Tap to collapse"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:395
+#: src/control/Control.NotebookbarBuilder.js:394
 msgid "CSV File (.csv)"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:399
+#: src/control/Control.NotebookbarBuilder.js:398
 msgid "HTML File (.html)"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:455
+#: src/control/Control.NotebookbarBuilder.js:454
 msgid "Image (.png)"
 msgstr ""
 
@@ -1434,7 +1434,7 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:303
 #: src/control/Control.NotebookbarImpress.js:320
 #: src/control/Control.NotebookbarWriter.js:323
-#: src/control/Control.UIManager.js:203
+#: src/control/Control.UIManager.js:214
 msgid "Rename"
 msgstr ""
 
@@ -1477,7 +1477,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:781
+#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:784
 msgid "Text"
 msgstr ""
 
@@ -1580,7 +1580,7 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:1326
 #: src/control/Control.NotebookbarImpress.js:881
 #: src/control/Control.NotebookbarImpress.js:1331
-#: src/control/Control.NotebookbarImpress.js:2365
+#: src/control/Control.NotebookbarImpress.js:2372
 #: src/control/Control.NotebookbarWriter.js:1058
 #: src/control/Control.NotebookbarWriter.js:2831
 msgid "Shapes"
@@ -1789,27 +1789,27 @@ msgstr "መምረጫ መቁጠሪያ"
 msgid "Cancel the search"
 msgstr "ፍለጋውን መሰረዣ"
 
-#: src/control/Control.StatusBar.js:427
+#: src/control/Control.StatusBar.js:432
 msgid "Select multiple cells"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:430
+#: src/control/Control.StatusBar.js:435
 msgid "Insert mode: inactive"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:441
+#: src/control/Control.StatusBar.js:446
 msgid "Selection mode: inactive"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:499
+#: src/control/Control.StatusBar.js:515
 msgid "Set Language for All text"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:502
+#: src/control/Control.StatusBar.js:518
 msgid "Set Language for Paragraph"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:503
+#: src/control/Control.StatusBar.js:519
 msgid "Set Language for Selection"
 msgstr ""
 
@@ -1872,15 +1872,15 @@ msgstr "ቅርጾች ማስገቢያ"
 msgid "Insert connectors"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:808
+#: src/control/Control.TopToolbar.js:199 src/control/Control.UIManager.js:819
 msgid "Hide Menu"
 msgstr ""
 
-#: src/control/Control.UIManager.js:203
+#: src/control/Control.UIManager.js:214
 msgid "Enter new name"
 msgstr ""
 
-#: src/control/Control.UIManager.js:831
+#: src/control/Control.UIManager.js:842
 msgid "Show Menu"
 msgstr ""
 
@@ -2139,55 +2139,59 @@ msgstr ""
 msgid "Bottom Margin"
 msgstr ""
 
-#: src/control/Signing.js:27
+#: src/control/Signing.js:21
+msgid "The document is not signed."
+msgstr ""
+
+#: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
 msgstr "ይህ ሰነድ ዲጂታሊ የ ተፈረመ ነው: እና ፊርማው ዋጋ ያለው ነው:"
 
-#: src/control/Signing.js:31
+#: src/control/Signing.js:36
 msgid "This document has an invalid signature."
 msgstr "ይህ ሰነድ ዋጋ የሌለው ፊርማ አለው:"
 
-#: src/control/Signing.js:35
+#: src/control/Signing.js:40
 #, fuzzy
 msgid "The signature was valid, but the document has been modified."
 msgstr "ፊርማው ዋጋ ያለው ነው: ነገር ግን ሰነዱ ተሻሽሏል:"
 
-#: src/control/Signing.js:39
+#: src/control/Signing.js:44
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr ""
 
-#: src/control/Signing.js:43
+#: src/control/Signing.js:48
 #, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
 msgstr "ፊርማው ጥሩ ነው: ነገር ግን ሰነዱ የ ተፈረመው በ ከፊል ነው"
 
-#: src/control/Signing.js:47
+#: src/control/Signing.js:52
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
 
-#: src/control/Toolbar.js:54
+#: src/control/Toolbar.js:56
 msgid "Font"
 msgstr "ፊደል"
 
-#: src/control/Toolbar.js:249 src/control/Toolbar.js:262
+#: src/control/Toolbar.js:251 src/control/Toolbar.js:264
 msgid "Downloading..."
 msgstr "በማውረድ ላይ..."
 
-#: src/control/Toolbar.js:278
+#: src/control/Toolbar.js:280
 msgid "Saving..."
 msgstr "በማስቀመጥ ላይ..."
 
-#: src/control/Toolbar.js:297
+#: src/control/Toolbar.js:299
 msgid "Renaming..."
 msgstr "እንደገና መሰየሚያ..."
 
-#: src/control/Toolbar.js:774
+#: src/control/Toolbar.js:777
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:793
+#: src/control/Toolbar.js:796
 msgid "Link"
 msgstr ""
 
@@ -2307,21 +2311,21 @@ msgstr ""
 msgid "Headings and objects that you add to the document will appear here"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:302
+#: src/slideshow/SlideShowPresenter.ts:358
 msgid "Click to exit presentation..."
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:465
+#: src/slideshow/SlideShowPresenter.ts:526
 #: src/map/handler/Map.SlideShow.js:170
 msgid "Windowed Presentation: "
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:473
+#: src/slideshow/SlideShowPresenter.ts:534
 #: src/map/handler/Map.SlideShow.js:165
 msgid "Windowed Presentation Blocked"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:475
+#: src/slideshow/SlideShowPresenter.ts:536
 #: src/map/handler/Map.SlideShow.js:166
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
@@ -2329,36 +2333,36 @@ msgid ""
 "sharing."
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:515
+#: src/slideshow/SlideShowPresenter.ts:576
 #: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in window"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:516
+#: src/slideshow/SlideShowPresenter.ts:577
 #: src/map/handler/Map.SlideShow.js:195
 msgid "Close Presentation"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:605 src/map/handler/Map.SlideShow.js:55
+#: src/slideshow/SlideShowPresenter.ts:667 src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:620
+#: src/slideshow/SlideShowPresenter.ts:682
 #: src/map/handler/Map.SlideShow.js:280
 msgid "Already presenting"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:621
+#: src/slideshow/SlideShowPresenter.ts:683
 #: src/map/handler/Map.SlideShow.js:281
 msgid "You are already presenting this document"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:636
+#: src/slideshow/SlideShowPresenter.ts:698
 #: src/map/handler/Map.SlideShow.js:291
 msgid "Presentation disabled"
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:637
+#: src/slideshow/SlideShowPresenter.ts:699
 #: src/map/handler/Map.SlideShow.js:292
 msgid "Presentation mode has been disabled for this document"
 msgstr ""
@@ -2505,7 +2509,7 @@ msgstr ""
 msgid "Discard"
 msgstr "ማስወገጃ"
 
-#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1287
+#: src/core/Socket.js:1392 src/canvas/sections/CommentListSection.ts:1346
 msgid "Overwrite"
 msgstr "በላዩ ላይ ደርቦ መጻፊያ"
 
@@ -2768,120 +2772,128 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:1836
+#: src/layer/tile/CanvasTileLayer.js:1839
 #, fuzzy
 msgid "Functions"
 msgstr "ተግባር"
 
-#: src/layer/tile/CanvasTileLayer.js:2101
+#: src/layer/tile/CanvasTileLayer.js:2104
 msgid "Named Range"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:3810
+#: src/layer/tile/CanvasTileLayer.js:3813
 msgid "No Comments"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:141
+#: src/canvas/sections/CommentListSection.ts:143
 msgid "A comment is being edited"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:142
+#: src/canvas/sections/CommentListSection.ts:144
 msgid "Please save or discard the comment currently being edited."
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:996
+#: src/canvas/sections/CommentListSection.ts:1049
 msgid "Modify"
 msgstr "ማሻሻያ"
 
-#: src/canvas/sections/CommentListSection.ts:1002
-#: src/canvas/sections/CommentSection.ts:152
+#: src/canvas/sections/CommentListSection.ts:1055
+#: src/canvas/sections/CommentSection.ts:155
 msgid "Reply"
 msgstr "መመለሻ"
 
-#: src/canvas/sections/CommentListSection.ts:1008
+#: src/canvas/sections/CommentListSection.ts:1061
 msgid "Remove"
 msgstr "ማስወገጃ"
 
-#: src/canvas/sections/CommentListSection.ts:1014
+#: src/canvas/sections/CommentListSection.ts:1067
 msgid "Remove Thread"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1020
+#: src/canvas/sections/CommentListSection.ts:1073
 msgid "Resolve"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1020
+#: src/canvas/sections/CommentListSection.ts:1073
 msgid "Unresolve"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1026
+#: src/canvas/sections/CommentListSection.ts:1079
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1026
+#: src/canvas/sections/CommentListSection.ts:1079
 msgid "Resolve Thread"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1032
+#: src/canvas/sections/CommentListSection.ts:1085
 msgid "Promote to top comment"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1272
-#: src/canvas/sections/CommentListSection.ts:1285
-#: src/canvas/sections/CommentListSection.ts:2132
+#: src/canvas/sections/CommentListSection.ts:1091
+msgid "Show on the side"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1091
+msgid "Show comment bigger"
+msgstr ""
+
+#: src/canvas/sections/CommentListSection.ts:1331
+#: src/canvas/sections/CommentListSection.ts:1344
+#: src/canvas/sections/CommentListSection.ts:2203
 msgid "Comments Updated"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1273
+#: src/canvas/sections/CommentListSection.ts:1332
 msgid "Another user has removed this comment."
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1286
+#: src/canvas/sections/CommentListSection.ts:1345
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1288
+#: src/canvas/sections/CommentListSection.ts:1347
 msgid "Update"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:1359
-#: src/canvas/sections/CommentListSection.ts:1431
+#: src/canvas/sections/CommentListSection.ts:1418
+#: src/canvas/sections/CommentListSection.ts:1490
 msgid "Autosaved"
 msgstr ""
 
-#: src/canvas/sections/CommentListSection.ts:2133
+#: src/canvas/sections/CommentListSection.ts:2204
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 
-#: src/canvas/sections/CommentSection.ts:302
+#: src/canvas/sections/CommentSection.ts:308
 msgid "Open menu"
 msgstr "ዝርዝር መክፈቻ"
 
-#: src/canvas/sections/CommentSection.ts:320
-#: src/canvas/sections/CommentSection.ts:321
+#: src/canvas/sections/CommentSection.ts:368
+#: src/canvas/sections/CommentSection.ts:369
 msgid "Accept change"
 msgstr "ለውጡን እቀበላለሁ"
 
-#: src/canvas/sections/CommentSection.ts:327
-#: src/canvas/sections/CommentSection.ts:328
+#: src/canvas/sections/CommentSection.ts:375
+#: src/canvas/sections/CommentSection.ts:376
 msgid "Reject change"
 msgstr "ለውጡን አልቀበልም"
 
-#: src/canvas/sections/CommentSection.ts:351
+#: src/canvas/sections/CommentSection.ts:399
 msgid "Resolved"
 msgstr ""
 
-#: src/canvas/sections/URLPopUpSection.ts:39
+#: src/canvas/sections/URLPopUpSection.ts:43
 msgid "Copy link location"
 msgstr ""
 
-#: src/canvas/sections/URLPopUpSection.ts:49
+#: src/canvas/sections/URLPopUpSection.ts:53
 msgid "Edit link"
 msgstr ""
 
-#: src/canvas/sections/URLPopUpSection.ts:59
+#: src/canvas/sections/URLPopUpSection.ts:63
 msgid "Remove link"
 msgstr ""
 
@@ -2889,57 +2901,51 @@ msgstr ""
 msgid "Warning! The browser you are using is not supported."
 msgstr ""
 
-#: src/map/Clipboard.js:212
+#: src/map/Clipboard.js:172
 msgid ""
 "To paste outside {productname}, please first click the 'download' button"
 msgstr ""
 
-#: src/map/Clipboard.js:220
+#: src/map/Clipboard.js:180
 msgid "Copying from the document disabled"
 msgstr ""
 
-#: src/map/Clipboard.js:322
+#: src/map/Clipboard.js:282
 msgid "warning: copy/paste request timed out"
 msgstr ""
 
-#: src/map/Clipboard.js:384
+#: src/map/Clipboard.js:344
 msgid "Failed to download clipboard, please re-copy"
 msgstr ""
 
-#: src/map/Clipboard.js:1219
-msgid "<p>Please use the paste buttons on your on-screen keyboard.</p>"
+#: src/map/Clipboard.js:1191
+msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr ""
 
-#: src/map/Clipboard.js:1221
+#: src/map/Clipboard.js:1247
 msgid ""
-"<p>Your browser has very limited access to the clipboard, so use these "
-"keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
-"td><td>Cut</td><td>Paste</td></tr></table>"
+"A download due to a large copy/paste operation has already started. Please, "
+"wait for the current download or cancel it before starting a new one"
 msgstr ""
 
-#: src/map/Clipboard.js:1240
-msgid ""
-"<p>A download due to a large copy/paste operation has already started. "
-"Please, wait for the current download or cancel it before starting a new "
-"one</p>"
-msgstr ""
-
-#: src/map/Clipboard.js:1258
-msgid ""
-"<p>Your browser has very limited access to the clipboard</p><p><b>Please "
-"press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
-"see more options</p><p>Close popup to ignore paste special</p>"
-msgstr ""
-
-#: src/map/Clipboard.js:1265
+#: src/map/Clipboard.js:1269
 msgid "Paste from this document"
 msgstr ""
 
-#: src/map/Clipboard.js:1265
+#: src/map/Clipboard.js:1269
 msgid "Cancel paste special"
+msgstr ""
+
+#: src/map/Clipboard.js:1279
+msgid "Your browser has very limited access to the clipboard"
+msgstr ""
+
+#: src/map/Clipboard.js:1284
+msgid "Please use following combination to see more options:"
+msgstr ""
+
+#: src/map/Clipboard.js:1302
+msgid "Close popup to ignore paste special"
 msgstr ""
 
 #: src/map/Map.js:212
