@@ -2899,7 +2899,7 @@ bool anyInputCallback(void* data)
 
     // Have no pending callbacks and the tile queue is also empty, report that we have no
     // pending input events.
-    return true;
+    return false;
 }
 
 /// Called by LOK main-loop
