@@ -194,7 +194,10 @@ class SlideShowNavigator {
 				', bSkipTransition: ' +
 				bSkipTransition,
 		);
-		if (nNewSlide === undefined || nNewSlide < 0) return;
+		if (nNewSlide === undefined || nNewSlide < 0) {
+			NAVDBG.print('SlideShowNavigator.displaySlide: unexpected nNewSlide');
+			return;
+		}
 		if (nNewSlide >= this.theMetaPres.numberOfSlides) {
 			this.currentSlide = nNewSlide;
 			const force = nNewSlide > this.theMetaPres.numberOfSlides;
@@ -221,6 +224,10 @@ class SlideShowNavigator {
 			let offset = 1;
 			if (this.currentSlide !== undefined)
 				offset = Math.sign(nNewSlide - this.currentSlide);
+			if (offset === 0) {
+				NAVDBG.print('SlideShowNavigator.displaySlide: offset === 0');
+				return;
+			}
 			this.displaySlide(nNewSlide + offset, bSkipTransition);
 			return;
 		}
@@ -236,6 +243,14 @@ class SlideShowNavigator {
 			if (this.prevSlide >= this.theMetaPres.numberOfSlides)
 				this.prevSlide = undefined;
 			this.currentSlide = nNewSlide;
+
+			if (this.currentSlide === this.prevSlide) {
+				NAVDBG.print(
+					'SlideShowNavigator.displaySlide: slideCompositor.fetchAndRun: this.currentSlide === this.prevSlide',
+				);
+				return;
+			}
+
 			this.slideShowHandler.displaySlide(
 				this.currentSlide,
 				this.prevSlide,
