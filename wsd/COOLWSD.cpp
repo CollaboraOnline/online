@@ -2113,7 +2113,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "per_document.pdf_resolution_dpi", "96" },
         { "per_document.redlining_as_comments", "false" },
         { "per_view.idle_timeout_secs", "900" },
-        { "per_view.out_of_focus_timeout_secs", "120" },
+        { "per_view.out_of_focus_timeout_secs", "300" },
         { "per_view.custom_os_info", "" },
         { "security.capabilities", "true" },
         { "security.seccomp", "true" },
