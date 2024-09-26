@@ -2975,6 +2975,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			break;
 
 		case 'enable':
+			// E.g. GtkEntry is represented as an <input> inside a <div>, the disabled
+			// attribute is on the <input>, not the <div>.
+			var innerInput = control.querySelector('input');
+			if (innerInput)
+				control = innerInput;
+
 			control.disabled = false;
 			control.removeAttribute('disabled');
 			break;
