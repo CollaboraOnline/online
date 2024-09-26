@@ -16,15 +16,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	it('No jump on long merged cell', function() {
 		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
 		calcHelper.clickOnFirstCell(true, false, false);
-		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1:Z1');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1:Z1');
 		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
 	});
 
 	it('Jump on address with not visible cursor', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
-		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'Z11');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'Z11');
 
-		cy.cGet('input#addressInput-input').type('{selectAll}A110{enter}');
+		cy.cGet(helper.addressInputSelector).type('{selectAll}A110{enter}');
 		desktopHelper.assertScrollbarPosition('vertical', 205, 315);
 	});
 
@@ -32,20 +32,20 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
 		cy.cGet('input#search-input').clear().type('FIRST{enter}');
 
-		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A10');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A10');
 		desktopHelper.assertScrollbarPosition('horizontal', 40, 60);
 	});
 
 	it('Show cursor on sheet insertion', function() {
 		// scroll down
-		cy.cGet('input#addressInput-input').type('{selectAll}A110{enter}');
+		cy.cGet(helper.addressInputSelector).type('{selectAll}A110{enter}');
 		desktopHelper.assertScrollbarPosition('vertical', 205, 315);
 
 		// insert sheet before
 		calcHelper.selectOptionFromContextMenu('Insert sheet before this');
 
 		// we should see the top left corner of the sheet
-		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
 		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 	});
 });
@@ -71,7 +71,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 			cy.cGet('body').click(XPos, YPos);
 		});
 
-		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'B2:AA2');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'B2:AA2');
 		desktopHelper.assertScrollbarPosition('horizontal', 270, 390);
 	});
 });
