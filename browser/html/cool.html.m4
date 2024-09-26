@@ -141,7 +141,7 @@ m4_ifelse(MOBILEAPP,[true],
               </label>
             </div>
           </div>
-        <div id="formulabar-row">
+        <div id="formulabar-row" class="hidden">
           <div id="addressInput"></div>
           <div id="formulabar"></div>
         </div>
