@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-25 14:41+0200\n"
-"PO-Revision-Date: 2024-09-24 06:53+0000\n"
+"PO-Revision-Date: 2024-09-26 13:16+0000\n"
 "Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/ui/zh_Hant/>\n"
-"Language: \n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2109,7 +2109,7 @@ msgstr "下邊距"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "文件尚未簽署。"
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2792,11 +2792,11 @@ msgstr "提昇至評註頂部"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show on the side"
-msgstr ""
+msgstr "側邊顯示"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
-msgstr ""
+msgstr "顯示較大的評註"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/canvas/sections/CommentListSection.ts:1344
@@ -2879,17 +2879,15 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "無法下載剪貼簿，請重新複製"
 
 #: src/map/Clipboard.js:1191
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr "<p>請使用螢幕鍵盤上的貼上按鈕。</p>"
+msgstr "請使用螢幕鍵盤上的貼上按鈕。"
 
 #: src/map/Clipboard.js:1247
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
-msgstr "<p>因為有大量複製/貼上操作而已經啟動下載程序。請先等候目前下載程序完成，或是"
-"在開始新的下載程序前先將它取消</p>"
+msgstr "由於大型複製/貼上作業導致的下載已經開始。請等待目前的下載或先取消下載，再開始"
+"新的下載"
 
 #: src/map/Clipboard.js:1269
 msgid "Paste from this document"
@@ -2901,15 +2899,15 @@ msgstr "取消選擇性貼上"
 
 #: src/map/Clipboard.js:1279
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "您的瀏覽器對剪貼簿的存取相當受限"
 
 #: src/map/Clipboard.js:1284
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "請使用以下組合來檢視更多選項："
 
 #: src/map/Clipboard.js:1302
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "關閉彈出式視窗以忽略選擇性貼上"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
