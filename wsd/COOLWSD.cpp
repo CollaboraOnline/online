@@ -11,6 +11,7 @@
 
 #include <config.h>
 #include <config_version.h>
+#include <NetUtil.hpp>
 
 #include "COOLWSD.hpp"
 #if ENABLE_FEATURE_LOCK
@@ -2362,6 +2363,11 @@ void COOLWSD::innerInitialize(Application& self)
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(conf);
 
+    // Allow UT to manipulate before using net::Defaults.
+    {
+        net::Defaults& defaults = net::Defaults::get();
+        UnitWSD::get().configure(defaults);
+    }
     // Trace Event Logging.
     EnableTraceEventLogging = getConfigValue<bool>(conf, "trace_event[@enable]", false);
 
@@ -2781,6 +2787,13 @@ void COOLWSD::innerInitialize(Application& self)
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #endif
+    {
+        net::Defaults& netDefaults = net::Defaults::get();
+        LOG_DBG("net::Defaults: WSPing[Timeout "
+                << netDefaults.WSPingTimeout << ", Period " << netDefaults.WSPingPeriod << "], HTTP[Timeout "
+                << netDefaults.HTTPTimeout << "], Socket[MinBytesPerSec " << netDefaults.MinBytesPerSec
+                << "], SocketPoll[Timeout " << netDefaults.SocketPollTimeout << "]");
+    }
 
 #if !MOBILEAPP
     NoSeccomp = Util::isKitInProcess() || !getConfigValue<bool>(conf, "security.seccomp", true);
@@ -4548,11 +4561,12 @@ int COOLWSD::innerMain()
 #endif
 
     SigUtil::addActivity("coolwsd running");
+    const std::chrono::microseconds PollTimeoutMicroS = net::Defaults::get().SocketPollTimeout;
 
     while (!SigUtil::getShutdownRequestFlag())
     {
         // This timeout affects the recovery time of prespawned children.
-        std::chrono::microseconds waitMicroS = SocketPoll::DefaultPollTimeoutMicroS * 4;
+        std::chrono::microseconds waitMicroS = PollTimeoutMicroS * 4;
 
         if (UnitWSD::isUnitTesting() && !SigUtil::getShutdownRequestFlag())
         {
