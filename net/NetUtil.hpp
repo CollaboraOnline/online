@@ -51,6 +51,8 @@ public:
     const std::string& getCanonicalName() const { return  _canonicalName; }
     const std::vector<std::string>& getAddresses() const { return  _ipAddresses; }
     const addrinfo* getAddrInfo() const { return _ainfo.get(); }
+
+    std::string resolveHostAddress() const;
 };
 
 #if !MOBILEAPP

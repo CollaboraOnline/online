@@ -189,26 +189,29 @@ std::vector<std::string> resolveAddresses(const std::string& addressToCheck)
     return hostEntry.getAddresses();
 }
 
-std::string resolveHostAddress(const std::string& targetHost)
+std::string HostEntry::resolveHostAddress() const
 {
-    HostEntry hostEntry = resolveDNS(targetHost);
-    const auto& addresses = hostEntry.getAddresses();
-    if (!addresses.empty())
-        return addresses[0];
+    if (!_ipAddresses.empty())
+        return _ipAddresses[0];
 
-    LOG_WRN("resolveDNS(\"" << targetHost << "\") failed");
+    LOG_WRN("resolveDNS(\"" << _requestName << "\") failed");
 
     try
     {
-        return Poco::Net::IPAddress(targetHost).toString();
+        return Poco::Net::IPAddress(_requestName).toString();
     }
     catch (const Poco::Exception& exc1)
     {
-        LOG_WRN("Poco::Net::IPAddress(\"" << targetHost
+        LOG_WRN("Poco::Net::IPAddress(\"" << _requestName
                                           << "\") failed: " << exc1.displayText());
     }
 
-    return targetHost;
+    return _requestName;
+}
+
+std::string resolveHostAddress(const std::string& targetHost)
+{
+    return resolveDNS(targetHost).resolveHostAddress();
 }
 
 bool isLocalhost(const std::string& targetHost)
