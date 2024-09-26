@@ -411,12 +411,19 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
                     else
                     {
                         Socket::Type type = ai->ai_family == AF_INET ? Socket::Type::IPv4 : Socket::Type::IPv6;
+                        HostType hostType = hostEntry.isLocalhost() ? HostType::LocalHost : HostType::Other;
 #if ENABLE_SSL
                         if (isSSL)
-                            socket = StreamSocket::create<SslStreamSocket>(host, fd, type, true, protocolHandler);
+                        {
+                            socket = StreamSocket::create<SslStreamSocket>(host, fd, type, true,
+                                                                           hostType, protocolHandler);
+                        }
 #endif
                         if (!socket && !isSSL)
-                            socket = StreamSocket::create<StreamSocket>(host, fd, type, true, protocolHandler);
+                        {
+                            socket = StreamSocket::create<StreamSocket>(host, fd, type, true,
+                                                                        hostType, protocolHandler);
+                        }
 
                         if (socket)
                         {
@@ -494,12 +501,19 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
                 else
                 {
                     Socket::Type type = ai->ai_family == AF_INET ? Socket::Type::IPv4 : Socket::Type::IPv6;
+                    HostType hostType = hostEntry.isLocalhost() ? HostType::LocalHost : HostType::Other;
 #if ENABLE_SSL
                     if (isSSL)
-                        socket = StreamSocket::create<SslStreamSocket>(host, fd, type, true, protocolHandler);
+                    {
+                        socket = StreamSocket::create<SslStreamSocket>(host, fd, type, true,
+                                                                       hostType, protocolHandler);
+                    }
 #endif
                     if (!socket && !isSSL)
-                        socket = StreamSocket::create<StreamSocket>(host, fd, type, true, protocolHandler);
+                    {
+                        socket = StreamSocket::create<StreamSocket>(host, fd, type, true,
+                                                                    hostType, protocolHandler);
+                    }
 
                     if (socket)
                     {

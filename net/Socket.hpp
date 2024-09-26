@@ -936,7 +936,9 @@ public:
 
 enum SharedFDType { SMAPS, URPToKit, URPFromKit };
 
-/// A plain, non-blocking, data streaming socket.
+enum HostType : uint8_t { LocalHost, Other };
+
+// A plain, non-blocking, data streaming socket.
 class StreamSocket : public Socket,
                      public std::enable_shared_from_this<StreamSocket>
 {
@@ -949,12 +951,13 @@ public:
 
     /// Create a StreamSocket from native FD.
     StreamSocket(std::string host, const int fd, Type type, bool /* isClient */,
-                 ReadType readType = NormalRead) :
+                 HostType hostType, ReadType readType = NormalRead) :
         Socket(fd, type),
         _hostname(std::move(host)),
         _bytesSent(0),
         _bytesRecvd(0),
         _wsState(WSState::HTTP),
+        _isLocalHost(hostType == LocalHost),
         _closed(false),
         _sentHTTPContinue(false),
         _shutdownSignalled(false),
@@ -988,6 +991,7 @@ public:
     bool isClosed() const { return _closed; }
     bool isWebSocket() const { return _wsState == WSState::WS; }
     void setWebSocket() { _wsState = WSState::WS; }
+    bool isLocalHost() const { return _isLocalHost; }
 
     /// Returns the peer hostname, if set.
     const std::string& hostname() const { return _hostname; }
@@ -1222,7 +1226,8 @@ public:
     /// We need this helper since the handler needs a shared_ptr to the socket
     /// but we can't have a shared_ptr in the ctor.
     template <typename TSocket>
-    static std::shared_ptr<TSocket> create(std::string hostname, const int fd, Type type, bool isClient,
+    static std::shared_ptr<TSocket> create(std::string hostname, const int fd, Type type,
+                                           bool isClient, HostType hostType,
                                            std::shared_ptr<ProtocolHandlerInterface> handler,
                                            ReadType readType = NormalRead)
     {
@@ -1231,7 +1236,7 @@ public:
             throw std::runtime_error("StreamSocket " + std::to_string(fd) +
                                      " expects a valid SocketHandler instance.");
 
-        auto socket = std::make_shared<TSocket>(std::move(hostname), fd, type, isClient, readType);
+        auto socket = std::make_shared<TSocket>(std::move(hostname), fd, type, isClient, hostType, readType);
         socket->setHandler(std::move(handler));
 
         return socket;
@@ -1630,6 +1635,9 @@ private:
     uint64_t _bytesRecvd;
 
     enum class WSState { HTTP, WS } _wsState;
+
+    /// True if host is localhost
+    bool _isLocalHost;
 
     /// True if we are already closed.
     bool _closed;

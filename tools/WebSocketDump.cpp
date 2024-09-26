@@ -193,13 +193,13 @@ public:
 #if ENABLE_SSL
         if (_isSSL)
             return StreamSocket::create<SslStreamSocket>(
-                std::string(), physicalFd, type, false,
+                std::string(), physicalFd, type, false, HostType::Other,
                 std::make_shared<ClientRequestDispatcher>());
 #else
         (void)_isSSL;
 #endif
         return StreamSocket::create<StreamSocket>(
-            std::string(), physicalFd, type, false,
+            std::string(), physicalFd, type, false, HostType::Other,
             std::make_shared<ClientRequestDispatcher>());
     }
 };
