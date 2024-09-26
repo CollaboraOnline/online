@@ -44,8 +44,11 @@ class JSDialogMessageRouter {
 
 			var isNotebookbarInitialized =
 				app.socket._map.uiManager && app.socket._map.uiManager.notebookbar;
-			if ((msgData.jsontype === 'notebookbar' && !isNotebookbarInitialized) ||
-					(msgData.jsontype === 'addressinputfield' && !app.socket._map.formulabar)) {
+			if (
+				(msgData.jsontype === 'notebookbar' && !isNotebookbarInitialized) ||
+				(msgData.jsontype === 'addressinputfield' &&
+					!app.socket._map.addressInputField)
+			) {
 				setTimeout(fireJSDialogEvent, 1000);
 				return;
 			} else if (fireJSDialogEvent() === true) {
