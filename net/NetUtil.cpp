@@ -214,9 +214,9 @@ std::string resolveHostAddress(const std::string& targetHost)
     return resolveDNS(targetHost).resolveHostAddress();
 }
 
-bool isLocalhost(const std::string& targetHost)
+bool HostEntry::isLocalhost() const
 {
-    const std::string targetAddress = resolveHostAddress(targetHost);
+    const std::string targetAddress = resolveHostAddress();
 
     const Poco::Net::NetworkInterface::NetworkInterfaceList list =
         Poco::Net::NetworkInterface::list(true, true);
@@ -226,15 +226,20 @@ bool isLocalhost(const std::string& targetHost)
         address = address.substr(0, address.find('%', 0));
         if (address == targetAddress)
         {
-            LOG_TRC("Host [" << targetHost << "] is on the same host as the client: \""
+            LOG_TRC("Host [" << _requestName << "] is on the same host as the client: \""
                              << targetAddress << "\".");
             return true;
         }
     }
 
-    LOG_TRC("Host [" << targetHost << "] is not on the same host as the client: \"" << targetAddress
+    LOG_TRC("Host [" << _requestName << "] is not on the same host as the client: \"" << targetAddress
                      << "\".");
     return false;
+}
+
+bool isLocalhost(const std::string& targetHost)
+{
+    return resolveDNS(targetHost).isLocalhost();
 }
 
 void AsyncDNS::startThread()

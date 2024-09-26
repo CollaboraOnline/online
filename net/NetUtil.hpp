@@ -53,6 +53,7 @@ public:
     const addrinfo* getAddrInfo() const { return _ainfo.get(); }
 
     std::string resolveHostAddress() const;
+    bool isLocalhost() const;
 };
 
 #if !MOBILEAPP
