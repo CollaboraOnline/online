@@ -28,8 +28,6 @@ struct sockaddr;
 namespace net
 {
 
-#if !MOBILEAPP
-
 class HostEntry
 {
     std::string _requestName;
@@ -54,6 +52,8 @@ public:
     const std::vector<std::string>& getAddresses() const { return  _ipAddresses; }
     const addrinfo* getAddrInfo() const { return _ainfo.get(); }
 };
+
+#if !MOBILEAPP
 
 /// Resolves the IP of the given hostname. On failure, returns @targetHost.
 std::string resolveHostAddress(const std::string& targetHost);

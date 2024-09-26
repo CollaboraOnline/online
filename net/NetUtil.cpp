@@ -32,8 +32,6 @@
 namespace net
 {
 
-#if !MOBILEAPP
-
 std::string HostEntry::makeIPAddress(const sockaddr* ai_addr)
 {
     char addrstr[INET6_ADDRSTRLEN];
@@ -125,6 +123,8 @@ HostEntry::HostEntry(const std::string& desc, const char* port)
 }
 
 HostEntry::~HostEntry() = default;
+
+#if !MOBILEAPP
 
 struct DNSCacheEntry
 {
@@ -474,15 +474,10 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
     }
 #endif
 
-    // FIXME: store the address?
-    struct addrinfo* ainfo = nullptr;
-    struct addrinfo hints;
-    std::memset(&hints, 0, sizeof(hints));
-    const int rc = getaddrinfo(host.c_str(), port.c_str(), &hints, &ainfo);
-
-    if (!rc && ainfo)
+    HostEntry hostEntry(host, !port.empty() ? port.c_str() : nullptr);
+    if (const addrinfo* ainfo = hostEntry.getAddrInfo())
     {
-        for (struct addrinfo* ai = ainfo; ai; ai = ai->ai_next)
+        for (const addrinfo* ai = ainfo; ai; ai = ai->ai_next)
         {
             if (ai->ai_addrlen && ai->ai_addr)
             {
@@ -522,8 +517,6 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
                 }
             }
         }
-
-        freeaddrinfo(ainfo);
     }
     else
         LOG_SYS("Failed to lookup host [" << host << "]. Skipping");
