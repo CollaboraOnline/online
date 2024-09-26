@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-25 14:41+0200\n"
-"PO-Revision-Date: 2022-12-05 13:37+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2024-09-26 13:16+0000\n"
+"Last-Translator: \"Miguel A. Bouzada\" <mbouzada@gmail.com>\n"
 "Language-Team: Galician <https://hosted.weblate.org/projects/"
 "collabora-online/ui/gl/>\n"
-"Language: \n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2936,19 +2936,17 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Produciuse un fallo ao descargar o portapapeis; copie de novo"
 
 #: src/map/Clipboard.js:1191
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr "<p>Empregue os botóns copiar/pegar do teclado da pantalla.</p>"
+msgstr "Empregue os botóns pegar do teclado en pantalla."
 
 #: src/map/Clipboard.js:1247
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Xa se iniciou unha descarga debida a unha operación de copiado/pegado "
-"grande. Agarde poloa descarga actual ou cancélea antes de iniciar unha "
-"nova</p>"
+"Xa se iniciou unha descarga por mor dunha grande operación de copiado/pegado "
+"grande. Agarde que remate a descarga actual ou cancélea antes de iniciar "
+"unha nova"
 
 #: src/map/Clipboard.js:1269
 msgid "Paste from this document"
@@ -2959,9 +2957,8 @@ msgid "Cancel paste special"
 msgstr ""
 
 #: src/map/Clipboard.js:1279
-#, fuzzy
 msgid "Your browser has very limited access to the clipboard"
-msgstr "<p>O seu navegador ten acceso moi limitado ao portapapeis</p>"
+msgstr "O seu navegador ten un acceso moi limitado ao portapapeis"
 
 #: src/map/Clipboard.js:1284
 msgid "Please use following combination to see more options:"
