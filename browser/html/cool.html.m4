@@ -141,7 +141,10 @@ m4_ifelse(MOBILEAPP,[true],
               </label>
             </div>
           </div>
-        <div colspan="4" id="formulabar"></div>
+        <div id="formulabar-row">
+          <div id="addressInput"></div>
+          <div id="formulabar"></div>
+        </div>
         <progress id="mobile-progress-bar" class="progress-bar" value="0" max="99"></progress>
       </div>
 

@@ -217,20 +217,13 @@
 }
 
 /* formulabar */
-
-#addressInput {
-	display: flex;
-	flex-flow: column;
-}
-#addressInput-input {
-	color: var(--color-main-text);
-	background-color: var(--color-background-lighter);
-	border: 1px solid var(--color-border);
-	border-radius: var(--border-radius);
-	align-self: stretch;
-	/* Same line-height as formulabar input */
-	line-height: 1.2;
-	flex-basis: 30px;
+#formulabar-row {
+	display: grid;
+	grid-template-columns: 120px auto;
+	align-items: center;
+	padding: 4px;
+	background-color: var(--color-main-background);
+	border-top: 1px solid var(--color-border);
 }
 
 #formulabar-toolbox {
@@ -250,16 +243,13 @@
 	grid-template-rows: 72px;
 }
 
-#formulabar {
-	padding: 4px;
-	background-color: var(--color-main-background);
-	border-top: 1px solid var(--color-border);
+#formulabar, #addressInput {
 	display: none;
 }
 
 #formulabar > .root-container > .formulabar {
 	display: grid;
-	grid-template-columns: 110px 112px auto;
+	grid-template-columns: 112px auto;
 	grid-template-rows: 30px;
 }
 
