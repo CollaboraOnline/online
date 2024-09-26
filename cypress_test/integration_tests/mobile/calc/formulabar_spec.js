@@ -17,9 +17,9 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		calcHelper.clickOnFirstCell();
 
 		// Select a different cell using address input.
-		helper.typeIntoInputField('input#addressInput-input', 'B2');
+		helper.typeIntoInputField(helper.addressInputSelector, 'B2');
 
-		helper.typeIntoInputField('input#addressInput-input', 'A1');
+		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
 
 		cy.cGet('#test-div-cell_selection_handle_start').should('exist');
 	});
@@ -29,13 +29,13 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		calcHelper.clickOnFirstCell();
 
 		// Select a cell range using address input.
-		helper.typeIntoInputField('input#addressInput-input', 'B2:B3');
+		helper.typeIntoInputField(helper.addressInputSelector, 'B2:B3');
 
 		// Select first cell by clicking on it.
 		calcHelper.clickOnFirstCell();
 
 		// Select a cell range again using address input.
-		helper.typeIntoInputField('input#addressInput-input', 'B2:B3');
+		helper.typeIntoInputField(helper.addressInputSelector, 'B2:B3');
 
 		cy.cGet('#test-div-cell_selection_handle_start').should('exist');
 	});
@@ -48,7 +48,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		helper.expectTextForClipboard('long line long line long line');
 
 		// A2 cell is empty
-		helper.typeIntoInputField('input#addressInput-input', 'A2');
+		helper.typeIntoInputField(helper.addressInputSelector, 'A2');
 
 		cy.cGet('[id="test-div-auto fill marker"]').should('exist');
 

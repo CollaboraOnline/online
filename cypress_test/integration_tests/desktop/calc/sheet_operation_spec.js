@@ -17,13 +17,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 
 	it.skip('Switching sheet sets the view that contains cell-cursor', function () {
 		calcHelper.assertNumberofSheets(1);
-		helper.typeIntoInputField('input#addressInput-input', 'A1');
+		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
 		calcHelper.ensureViewContainsCellCursor();
 		cy.cGet('#spreadsheet-toolbar #insertsheet').click();
 		calcHelper.assertNumberofSheets(2);
 		cy.cGet('#spreadsheet-tab1').click();
 		calcHelper.ensureViewContainsCellCursor();
-		helper.typeIntoInputField('input#addressInput-input', 'A200');
+		helper.typeIntoInputField(helper.addressInputSelector, 'A200');
 		calcHelper.ensureViewContainsCellCursor();
 		cy.cGet('#spreadsheet-tab0').click();
 		calcHelper.ensureViewContainsCellCursor();
