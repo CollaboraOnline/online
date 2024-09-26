@@ -1,0 +1,129 @@
+/* -*- js-indent-level: 8 -*- */
+/*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/*
+ * JSDialog.AddressInputField - implementation of address input field in calc
+ */
+
+/* global JSDialog _ _UNO UNOKey app */
+
+class AddressInputField {
+	map: any;
+	parentContainer: HTMLElement;
+	builder: any;
+
+	public constructor(map: any) {
+		this.map = map;
+		this.parentContainer = L.DomUtil.get('addressInput');
+
+		this.map.on('jsdialogupdate', this.onJSUpdate, this);
+		this.map.on('jsdialogaction', this.onJSAction, this);
+		this.map.on('doclayerinit', this.onDocLayerInit, this);
+		this.map.on('celladdress', this.onCellAddress, this);
+
+		this.builder = new L.control.jsDialogBuilder({
+			mobileWizard: this,
+			map: this.map,
+			cssClass: 'addressInput jsdialog',
+		});
+
+		this.createAddressInputField();
+	}
+
+	public onRemove() {
+		this.map.off('jsdialogupdate', this.onJSUpdate, this);
+		this.map.off('jsdialogaction', this.onJSAction, this);
+		this.map.off('doclayerinit', this.onDocLayerInit, this);
+		this.map.off('celladdress', this.onCellAddress, this);
+	}
+
+	private onCellAddress(event: any) {
+		const addressInput = document.querySelector<HTMLInputElement>(
+			'#addressInput input',
+		);
+		if (addressInput && document.activeElement !== addressInput) {
+			// if the user is not editing the address field
+			addressInput.value = event.address;
+		}
+		this.map.formulabarSetDirty();
+	}
+
+	private createAddressInputField() {
+		const data: any = [
+			{
+				id: 'pos_window',
+				type: 'combobox',
+				text: _('cell address'),
+				enabled: true,
+				children: [
+					{
+						id: 'expand',
+						type: 'pushbutton',
+						text: '',
+						symbol: 'SPIN_DOWN',
+					},
+					{
+						id: '',
+						type: 'edit',
+						text: '',
+						enabled: true,
+					},
+					{
+						id: '',
+						type: 'borderwindow',
+						text: '',
+						enabled: true,
+						children: [
+							{
+								type: 'edit',
+								id: '',
+								text: '',
+								enabled: true,
+							},
+						],
+					},
+				],
+				selectedEntries: [],
+				selectedCount: 0,
+			},
+		];
+		this.parentContainer.replaceChildren();
+		this.builder.build(this.parentContainer, data);
+	}
+
+	private onJSUpdate(e: any) {
+		const data = e?.data;
+		if (data.jsontype !== 'addressinputfield') return;
+
+		this.builder.updateWidget(this.parentContainer, data.control);
+	}
+
+	private onDocLayerInit() {
+		var docType = this.map.getDocType();
+		if (docType == 'spreadsheet' && this.parentContainer) {
+			this.parentContainer.style.setProperty('display', 'table-cell');
+		}
+	}
+
+	private onJSAction(e: any) {
+		const data = e.data;
+		if (data.jsontype !== 'addressinputfield') return;
+
+		this.builder.setWindowId(data.id);
+
+		const innerData = data?.data;
+		this.builder.executeAction(this.parentContainer, innerData);
+	}
+}
+
+JSDialog.AddressInputField = function (map: any) {
+	return new AddressInputField(map);
+};

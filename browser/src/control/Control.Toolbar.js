@@ -855,7 +855,7 @@ function onInsertBackground() {
 
 function onWopiProps(e) {
 	if (e.DisableCopy) {
-		$('input#addressInput-input').bind('copy', function(evt) {
+		$('#addressInput input').bind('copy', function(evt) {
 			evt.preventDefault();
 		});
 	}
