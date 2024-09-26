@@ -155,12 +155,22 @@ public:
         LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
-        LOK_ASSERT_EQUAL_MESSAGE("Expect only documentconflict errors",
-                                 std::string("error: cmd=storage kind=savefailed"), message);
+        if (getCountCheckFileInfo() == 1)
+        {
+            LOK_ASSERT_EQUAL_MESSAGE("Expect only savefailed errors on first upload",
+                                     std::string("error: cmd=storage kind=savefailed"), message);
+        }
+        else
+        {
+            // Once the first upload fails, we issue CheckFileInfo, which detects the conflict.
+            LOK_ASSERT_EQUAL_MESSAGE(
+                "Expect only documentconflict errors after the second CheckFileInfo",
+                std::string("error: cmd=storage kind=documentconflict"), message);
 
-        // Close the document.
-        LOG_TST("Closing the document");
-        WSD_CMD("closedocument");
+            // Close the document.
+            LOG_TST("Closing the document");
+            WSD_CMD("closedocument");
+        }
 
         return true;
     }
