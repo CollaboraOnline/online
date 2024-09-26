@@ -189,20 +189,15 @@ std::vector<std::string> resolveAddresses(const std::string& addressToCheck)
     return hostEntry.getAddresses();
 }
 
-std::string resolveOneAddress(const std::string& addressToCheck)
-{
-    HostEntry hostEntry = resolveDNS(addressToCheck);
-    const auto& addresses = hostEntry.getAddresses();
-    if (addresses.empty())
-        throw Poco::Net::NoAddressFoundException(addressToCheck);
-    return addresses[0];
-}
-
 std::string resolveHostAddress(const std::string& targetHost)
 {
     try
     {
-        return resolveOneAddress(targetHost);
+        HostEntry hostEntry = resolveDNS(targetHost);
+        const auto& addresses = hostEntry.getAddresses();
+        if (addresses.empty())
+            throw Poco::Net::NoAddressFoundException(targetHost);
+        return addresses[0];
     }
     catch (const Poco::Exception& exc)
     {
