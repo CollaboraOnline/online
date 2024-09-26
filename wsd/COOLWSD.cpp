@@ -3946,7 +3946,7 @@ class PlainSocketFactory final : public SocketFactory
         }
 #endif
         return StreamSocket::create<StreamSocket>(
-            std::string(), fd, type, false,
+            std::string(), fd, type, false, HostType::Other,
             std::make_shared<ClientRequestDispatcher>());
     }
 };
@@ -3969,7 +3969,7 @@ class SslSocketFactory final : public SocketFactory
         }
 #endif
 
-        return StreamSocket::create<SslStreamSocket>(std::string(), fd, type, false,
+        return StreamSocket::create<SslStreamSocket>(std::string(), fd, type, false, HostType::Other,
                                                      std::make_shared<ClientRequestDispatcher>());
     }
 };
@@ -3980,7 +3980,7 @@ class PrisonerSocketFactory final : public SocketFactory
     std::shared_ptr<Socket> create(const int fd, Socket::Type type) override
     {
         // No local delay.
-        return StreamSocket::create<StreamSocket>(std::string(), fd, type, false,
+        return StreamSocket::create<StreamSocket>(std::string(), fd, type, false, HostType::Other,
                                                   std::make_shared<PrisonerRequestDispatcher>(),
                                                   StreamSocket::ReadType::UseRecvmsgExpectFD);
     }

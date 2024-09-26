@@ -104,10 +104,10 @@ public:
         {
             _urpFromKit = StreamSocket::create<StreamSocket>(
                 std::string(), urpFromKitFD, Socket::Type::Unix,
-                false, std::make_shared<UrpHandler>(this));
+                false, HostType::Other, std::make_shared<UrpHandler>(this));
             _urpToKit = StreamSocket::create<StreamSocket>(
                 std::string(), urpToKitFD, Socket::Type::Unix,
-                false, std::make_shared<UrpHandler>(this));
+                false, HostType::Other, std::make_shared<UrpHandler>(this));
         }
     }
 
