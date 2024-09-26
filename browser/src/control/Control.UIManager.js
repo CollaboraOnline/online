@@ -354,6 +354,9 @@ L.Control.UIManager = L.Control.extend({
 
 		if (docType === 'spreadsheet') {
 			this.sheetsBar = JSDialog.SheetsBar(this.map, isDesktop || window.mode.isTablet());
+
+			let formulabarRow = document.getElementById('formulabar-row');
+			formulabarRow.classList.remove('hidden');
 			this.map.formulabar = JSDialog.FormulaBar(this.map);
 			this.map.addressInputField = JSDialog.AddressInputField(this.map);
 			$('#toolbar-wrapper').addClass('spreadsheet');
