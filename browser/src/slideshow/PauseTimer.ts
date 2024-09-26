@@ -18,6 +18,7 @@ declare var SlideShow: any;
 
 abstract class PauseTimer {
 	public abstract startTimer(): void;
+	public abstract stopTimer(): void;
 }
 
 class PauseTimer2d implements PauseTimer {
@@ -33,6 +34,9 @@ class PauseTimer2d implements PauseTimer {
 	public startTimer(): void {
 		this.onComplete();
 	}
+
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	public stopTimer(): void {}
 }
 
 class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
@@ -64,6 +68,11 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 	public startTimer(): void {
 		this.startTime = performance.now();
 		requestAnimationFrame(this.animate.bind(this));
+	}
+
+	public stopTimer(): void {
+		this.pauseTimeRemaining = 0;
+		this.delete2dTextCanvas();
 	}
 
 	public animate(): void {
