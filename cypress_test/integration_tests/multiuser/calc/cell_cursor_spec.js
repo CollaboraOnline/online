@@ -21,7 +21,7 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 		// first view goes somewhere in the middle of a sheet: A400
 		cy.cSetActiveFrame('#iframe1');
 
-		cy.cGet('input#addressInput-input').type('{selectAll}A400{enter}');
+		cy.cGet(helper.addressInputSelector).type('{selectAll}A400{enter}');
 		desktopHelper.assertScrollbarPosition('vertical', 210, 240);
 		cy.cGet('#sc_input_window .ui-custom-textarea-text-layer').click();
 		cy.cGet('#sc_input_window .ui-custom-textarea-text-layer').type('some text{enter}');
@@ -34,7 +34,7 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 210, 240);
 
 		// second view should still have cursor at the end: A588
-		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A588');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A588');
 
 		// now insert row in the first view
 		cy.cSetActiveFrame('#iframe1');
@@ -45,7 +45,7 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 210, 240);
 
 		// second view should still have cursor at the previous cell: A588+1
-		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A589');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A589');
 	});
 
 	it('Jump to the other sheet', function() {
@@ -58,7 +58,7 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 		// first view goes somewhere in the middle of a sheet
 		cy.cSetActiveFrame('#iframe1');
 
-		cy.cGet('input#addressInput-input').type('{selectAll}A400{enter}');
+		cy.cGet(helper.addressInputSelector).type('{selectAll}A400{enter}');
 		desktopHelper.assertScrollbarPosition('vertical', 210, 240);
 		calcHelper.clickOnFirstCell(true, true, false);
 		cy.cGet('body').type('abc{enter}');
@@ -73,7 +73,7 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 		cy.cGet('#map').focus();
 
 		// we should see A1
-		cy.cGet('input#addressInput-input').should('have.prop', 'value', 'A1');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
 		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 
 		// verify that second view followed the first one
