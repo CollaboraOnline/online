@@ -1350,7 +1350,7 @@ L.Control.Menubar = L.Control.extend({
 			!window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
 			!(L.Browser.ie || L.Browser.edge) ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'toggledarktheme', // view menu
-			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'online-help', 'report-an-issue', // help menu
+			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'serveraudit', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
 		]
 	},
@@ -1864,6 +1864,8 @@ L.Control.Menubar = L.Control.extend({
 						}
 					}
 					if (id === 'insertcomment' && (self._map.getDocType() !== 'drawing' && !app.isCommentEditingAllowed()))
+						found = false;
+					if (id === 'serveraudit' && (app.isAdminUser === false || !self._map.serverAuditDialog))
 						found = false;
 					if (!found) {
 						$(aItem).hide();
