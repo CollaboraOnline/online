@@ -235,6 +235,8 @@ export class Header extends app.definitions.canvasSectionObject {
 
 		this._map.wholeRowSelected = true; // This variable is set early, state change will set this again.
 		this._map.sendUnoCommand('.uno:SelectRow ', command);
+		// Ensures the focus is returned to the map area after the row is selected
+		this._map.focus();
 	}
 
 	_insertRowAbove(): void {
@@ -378,6 +380,8 @@ export class Header extends app.definitions.canvasSectionObject {
 
 		this._map.wholeColumnSelected = true; // This variable is set early, state change will set this again.
 		this._map.sendUnoCommand('.uno:SelectColumn ', command);
+		// Ensures the focus is returned to the map area after the column is selected
+		this._map.focus();
 	}
 
 	_insertColBefore(): void {
