@@ -521,8 +521,8 @@ class SlideShowPresenter {
 	}
 
 	_doFallbackPresentation() {
-		// TODO: fallback to "open in new tab"
 		this._stopFullScreen();
+		this._doInWindowPresentation();
 	}
 
 	_doInWindowPresentation() {
@@ -735,6 +735,11 @@ class SlideShowPresenter {
 
 		const numberOfSlides = this._getSlidesCount();
 		if (numberOfSlides === 0) return;
+
+		if (!this.getCanvas()) {
+			console.debug('onSlideShowInfo: no canvas available');
+			return;
+		}
 
 		let skipTransition = false;
 
