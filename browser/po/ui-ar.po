@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 14:41+0200\n"
+"POT-Creation-Date: 2024-09-27 13:49+0200\n"
 "PO-Revision-Date: 2024-09-02 16:11+0000\n"
 "Last-Translator: Ali <alimahwer@yahoo.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
@@ -275,7 +275,7 @@ msgstr "تم إغلاق الخادم؛ يرجى إعادة تحميل الصفح
 
 #: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
-#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:126
+#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:154
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119
@@ -284,10 +284,10 @@ msgstr "تم إغلاق الخادم؛ يرجى إعادة تحميل الصفح
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Permission.js:89 src/control/Permission.js:99
 #: src/control/Permission.js:149 src/control/Toolbar.js:725
-#: src/control/Toolbar.js:817 src/slideshow/SlideShowPresenter.ts:539
-#: src/slideshow/SlideShowPresenter.ts:670
-#: src/slideshow/SlideShowPresenter.ts:685
-#: src/slideshow/SlideShowPresenter.ts:701 src/core/Socket.js:681
+#: src/control/Toolbar.js:822 src/slideshow/SlideShowPresenter.ts:542
+#: src/slideshow/SlideShowPresenter.ts:673
+#: src/slideshow/SlideShowPresenter.ts:688
+#: src/slideshow/SlideShowPresenter.ts:704 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
 #: src/canvas/sections/CommentListSection.ts:1333
@@ -319,7 +319,7 @@ msgstr "أمتأكد من إنهاء هذه الجلسة؟"
 #: src/control/Control.MobileTopBar.ts:43
 #: src/control/Control.UIManager.js:1292 src/control/Control.UIManager.js:1359
 #: src/control/Control.UIManager.js:1494 src/control/Control.UIManager.js:1653
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:812
+#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:817
 #: src/core/Socket.js:1388 src/canvas/sections/CommentListSection.ts:443
 #: src/canvas/sections/CommentSection.ts:151
 #: src/canvas/sections/CommentSection.ts:154
@@ -410,15 +410,15 @@ msgstr "لا لون"
 msgid "Automatic color"
 msgstr "لون تلقائي"
 
-#: src/control/Control.AboutDialog.ts:83
+#: src/control/Control.AboutDialog.ts:111
 msgid "This version of {productname} is powered by"
 msgstr "هذا الإصدار من {productname} مدعوم من قِبَل"
 
-#: src/control/Control.AboutDialog.ts:106
+#: src/control/Control.AboutDialog.ts:134
 msgid "\"Slow Proxy\""
 msgstr "\"وكيل بطيء\""
 
-#: src/control/Control.AboutDialog.ts:150
+#: src/control/Control.AboutDialog.ts:178
 msgid "Copy all version information in English"
 msgstr "إنسَخ جميع معلومات الإصدار"
 
@@ -677,8 +677,8 @@ msgid "replies"
 msgstr "ردود"
 
 #: src/control/Control.JSDialogBuilder.js:1929
-#: src/layer/tile/CanvasTileLayer.js:3785
-#: src/layer/tile/CanvasTileLayer.js:3796
+#: src/layer/tile/CanvasTileLayer.js:3790
+#: src/layer/tile/CanvasTileLayer.js:3801
 #: src/canvas/sections/CommentListSection.ts:1119
 msgid "Comment"
 msgstr "التعليق"
@@ -704,7 +704,7 @@ msgstr "إدراج جدول"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:357
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:361
 #: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:670
-#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:499
+#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:502
 msgid "None (Do not check spelling)"
 msgstr "بلا (لا تدقّق الإملاء)"
 
@@ -1247,7 +1247,7 @@ msgstr "تحديد منطقة الطباعة"
 msgid "Remove print area"
 msgstr "قم بإزالة منطقة الطباعة"
 
-#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:498
+#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:501
 msgid "Reset to Default Language"
 msgstr "صفّر إلى اللغة المبدئيّة"
 
@@ -1265,15 +1265,15 @@ msgstr "استعمِل العرض المُدمج"
 msgid "Use Tabbed view"
 msgstr "استعمِل العرض المُبوَّب"
 
-#: src/control/Control.Menubar.js:1853 src/control/Control.Menubar.js:1870
+#: src/control/Control.Menubar.js:1853
 msgid "Read-only mode"
 msgstr "وضع القراءة فقط"
 
-#: src/control/Control.Menubar.js:1891
+#: src/control/Control.Menubar.js:1890
 msgid "Insert Shape"
 msgstr "إدراج الشكل"
 
-#: src/control/Control.Menubar.js:2111
+#: src/control/Control.Menubar.js:2110
 msgid "file type icon"
 msgstr "رمز نوع الملف"
 
@@ -1464,7 +1464,7 @@ msgstr "جزء"
 msgid "Boolean Value"
 msgstr "القيمة المنطقية"
 
-#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:784
+#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:789
 msgid "Text"
 msgstr "نص"
 
@@ -1770,27 +1770,33 @@ msgstr "مقدار التحديد"
 msgid "Cancel the search"
 msgstr "ألغِ البحث"
 
-#: src/control/Control.StatusBar.js:432
+#: src/control/Control.StatusBar.js:385
+msgid ""
+"To prevent accidental changes, the author has set this file to open as view-"
+"only"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
 msgstr "حدد عدة خلايا"
 
-#: src/control/Control.StatusBar.js:435
+#: src/control/Control.StatusBar.js:438
 msgid "Insert mode: inactive"
 msgstr "وضع الإدراج: غير نشط"
 
-#: src/control/Control.StatusBar.js:446
+#: src/control/Control.StatusBar.js:449
 msgid "Selection mode: inactive"
 msgstr "وضع التحديد: غير نشط"
 
-#: src/control/Control.StatusBar.js:515
+#: src/control/Control.StatusBar.js:518
 msgid "Set Language for All text"
 msgstr "ضبط اللغة لكل النص"
 
-#: src/control/Control.StatusBar.js:518
+#: src/control/Control.StatusBar.js:521
 msgid "Set Language for Paragraph"
 msgstr "ضبط لغة الفقرة"
 
-#: src/control/Control.StatusBar.js:519
+#: src/control/Control.StatusBar.js:522
 msgid "Set Language for Selection"
 msgstr "ضبط اللغة للمختارة"
 
@@ -2174,7 +2180,7 @@ msgstr "إعادة تسمية ..."
 msgid "Insert hyperlink"
 msgstr "إدراج ارتباط تشعبي"
 
-#: src/control/Toolbar.js:796
+#: src/control/Toolbar.js:801
 msgid "Link"
 msgstr "رابط"
 
@@ -2292,21 +2298,21 @@ msgstr "خيارات أخرى لـ {name}"
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "ستظهر هنا العناوين والكائنات التي تضيفها إلى المستند"
 
-#: src/slideshow/SlideShowPresenter.ts:358
+#: src/slideshow/SlideShowPresenter.ts:359
 msgid "Click to exit presentation..."
 msgstr "إضغَط للخروج من العرض ..."
 
-#: src/slideshow/SlideShowPresenter.ts:526
+#: src/slideshow/SlideShowPresenter.ts:529
 #: src/map/handler/Map.SlideShow.js:170
 msgid "Windowed Presentation: "
 msgstr "عرض في نافذة: "
 
-#: src/slideshow/SlideShowPresenter.ts:534
+#: src/slideshow/SlideShowPresenter.ts:537
 #: src/map/handler/Map.SlideShow.js:165
 msgid "Windowed Presentation Blocked"
 msgstr "إيقاف العرض في نافذة"
 
-#: src/slideshow/SlideShowPresenter.ts:536
+#: src/slideshow/SlideShowPresenter.ts:539
 #: src/map/handler/Map.SlideShow.js:166
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
@@ -2316,41 +2322,41 @@ msgstr ""
 "تم حظر العرض التقديمي. يرجى السماح بالنوافذ المنبثقة في متصفحك. يتيح ذلك "
 "إمكانية عرض عروض الشرائح في نوافذ منفصلة، مما يسمح بمشاركة الشاشة بسهولة."
 
-#: src/slideshow/SlideShowPresenter.ts:576
+#: src/slideshow/SlideShowPresenter.ts:579
 #: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in window"
 msgstr "عرض في نافذة"
 
-#: src/slideshow/SlideShowPresenter.ts:577
+#: src/slideshow/SlideShowPresenter.ts:580
 #: src/map/handler/Map.SlideShow.js:195
 msgid "Close Presentation"
 msgstr "إغلاق العرض"
 
-#: src/slideshow/SlideShowPresenter.ts:667 src/map/handler/Map.SlideShow.js:55
+#: src/slideshow/SlideShowPresenter.ts:670 src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
 msgstr "عرض شريحة فارغة"
 
-#: src/slideshow/SlideShowPresenter.ts:682
+#: src/slideshow/SlideShowPresenter.ts:685
 #: src/map/handler/Map.SlideShow.js:280
 msgid "Already presenting"
 msgstr "يتم عرضه حالياً"
 
-#: src/slideshow/SlideShowPresenter.ts:683
+#: src/slideshow/SlideShowPresenter.ts:686
 #: src/map/handler/Map.SlideShow.js:281
 msgid "You are already presenting this document"
 msgstr "أنت تعرض هذه المستند حالياً"
 
-#: src/slideshow/SlideShowPresenter.ts:698
+#: src/slideshow/SlideShowPresenter.ts:701
 #: src/map/handler/Map.SlideShow.js:291
 msgid "Presentation disabled"
 msgstr "تمّ تعطيل العرض"
 
-#: src/slideshow/SlideShowPresenter.ts:699
+#: src/slideshow/SlideShowPresenter.ts:702
 #: src/map/handler/Map.SlideShow.js:292
 msgid "Presentation mode has been disabled for this document"
 msgstr "وضعية العرض لهذا المستند تمّ تعطيلها"
 
-#: src/slideshow/PauseTimer.ts:121
+#: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
 msgstr "إيقاف ... ( %SECONDS% )"
 
@@ -2784,15 +2790,15 @@ msgstr "فشل تحميل الملف إلى الخادم، لم يتم العث�
 msgid "Uploading file to server failed, the file is too large."
 msgstr "فشل تحميل الملف إلى الخادم، الملف كبير جدا."
 
-#: src/layer/tile/CanvasTileLayer.js:1839
+#: src/layer/tile/CanvasTileLayer.js:1844
 msgid "Functions"
 msgstr "الدوال"
 
-#: src/layer/tile/CanvasTileLayer.js:2104
+#: src/layer/tile/CanvasTileLayer.js:2109
 msgid "Named Range"
 msgstr "النطاق المُسمّى"
 
-#: src/layer/tile/CanvasTileLayer.js:3813
+#: src/layer/tile/CanvasTileLayer.js:3818
 msgid "No Comments"
 msgstr "لا تعليقات"
 
