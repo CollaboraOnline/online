@@ -228,13 +228,9 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	container.addEventListener('click', function () { content.focus(); });
 
 	content.addEventListener('keyup', function (event) {
-		// special case for address input field combobox in calc.
-		// we don't want to send change event on every keypress,
-		// otherwise core will keep on adding new named range on every keypress.
-		// we want to create a named range only when user presses the 'Enter' key.
-		if (data.id === 'pos_window') {
-			if (event.key === 'Enter')
-				builder.callback('combobox', 'change', data, this.value, builder);
+		if (data.changeOnEnterOnly) {
+				if (event.key === 'Enter')
+					builder.callback('combobox', 'change', data, this.value, builder);
 		} else {
 			builder.callback('combobox', 'change', data, this.value, builder);
 		}
