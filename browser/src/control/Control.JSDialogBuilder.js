@@ -1514,7 +1514,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			edit.type = 'password';
 
 		if (data.enabled === 'false' || data.enabled === false)
-			$(edit).prop('disabled', true);
+			edit.disabled = true;
 
 		JSDialog.SynchronizeDisabledState(container, [edit]);
 
@@ -2975,12 +2975,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			break;
 
 		case 'enable':
-			// E.g. GtkEntry is represented as an <input> inside a <div>, the disabled
-			// attribute is on the <input>, not the <div>.
-			var innerInput = control.querySelector('input');
-			if (innerInput)
-				control = innerInput;
-
 			control.disabled = false;
 			control.removeAttribute('disabled');
 			break;
