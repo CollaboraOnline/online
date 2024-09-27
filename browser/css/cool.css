@@ -1189,8 +1189,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	transform: rotate(45deg);
 	display: inline-block;
 	position: relative;
-	top: calc(25px);
-	left: Calc(-50% + 10px);
+	top: 25px;
+	left: calc(-50% + 10px);
 	background-color: inherit;
 }
 
