@@ -63,6 +63,7 @@ class AddressInputField {
 				type: 'combobox',
 				text: _('cell address'),
 				enabled: true,
+				changeOnEnterOnly: true,
 				children: [
 					{
 						id: 'expand',
@@ -103,6 +104,10 @@ class AddressInputField {
 		const data = e?.data;
 		if (data.jsontype !== 'addressinputfield') return;
 
+		// we don't want to send change event on every keypress,
+		// otherwise core will keep on adding new named range on every keypress.
+		// we want to create a named range only when user presses the 'Enter' key.
+		data.control.changeOnEnterOnly = true;
 		this.builder.updateWidget(this.parentContainer, data.control);
 	}
 
