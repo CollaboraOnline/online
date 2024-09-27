@@ -194,6 +194,12 @@ class SlideShowNavigator {
 				', bSkipTransition: ' +
 				bSkipTransition,
 		);
+
+		if (this.presenter && !this.presenter._checkAlreadyPresenting()) {
+			NAVDBG.print('SlideShowNavigator.displaySlide: no more presenting');
+			this.quit();
+			return;
+		}
 		if (nNewSlide === undefined || nNewSlide < 0) {
 			NAVDBG.print('SlideShowNavigator.displaySlide: unexpected nNewSlide');
 			return;
