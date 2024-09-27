@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 14:41+0200\n"
+"POT-Creation-Date: 2024-09-27 13:49+0200\n"
 "PO-Revision-Date: 2024-06-29 10:46+0000\n"
 "Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
@@ -271,7 +271,7 @@ msgstr "サーバをシャットダウンしました。ページをリロード
 
 #: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
-#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:126
+#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:154
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119
@@ -280,10 +280,10 @@ msgstr "サーバをシャットダウンしました。ページをリロード
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Permission.js:89 src/control/Permission.js:99
 #: src/control/Permission.js:149 src/control/Toolbar.js:725
-#: src/control/Toolbar.js:817 src/slideshow/SlideShowPresenter.ts:539
-#: src/slideshow/SlideShowPresenter.ts:670
-#: src/slideshow/SlideShowPresenter.ts:685
-#: src/slideshow/SlideShowPresenter.ts:701 src/core/Socket.js:681
+#: src/control/Toolbar.js:822 src/slideshow/SlideShowPresenter.ts:542
+#: src/slideshow/SlideShowPresenter.ts:673
+#: src/slideshow/SlideShowPresenter.ts:688
+#: src/slideshow/SlideShowPresenter.ts:704 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
 #: src/canvas/sections/CommentListSection.ts:1333
@@ -315,7 +315,7 @@ msgstr "本当にこのセッションを終了しますか？"
 #: src/control/Control.MobileTopBar.ts:43
 #: src/control/Control.UIManager.js:1292 src/control/Control.UIManager.js:1359
 #: src/control/Control.UIManager.js:1494 src/control/Control.UIManager.js:1653
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:812
+#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:817
 #: src/core/Socket.js:1388 src/canvas/sections/CommentListSection.ts:443
 #: src/canvas/sections/CommentSection.ts:151
 #: src/canvas/sections/CommentSection.ts:154
@@ -406,15 +406,15 @@ msgstr "色なし"
 msgid "Automatic color"
 msgstr "色の自動設定"
 
-#: src/control/Control.AboutDialog.ts:83
+#: src/control/Control.AboutDialog.ts:111
 msgid "This version of {productname} is powered by"
 msgstr "このバージョンの {productname} は以下で動作しています"
 
-#: src/control/Control.AboutDialog.ts:106
+#: src/control/Control.AboutDialog.ts:134
 msgid "\"Slow Proxy\""
 msgstr "\"プロキシ減速\""
 
-#: src/control/Control.AboutDialog.ts:150
+#: src/control/Control.AboutDialog.ts:178
 msgid "Copy all version information in English"
 msgstr "すべてのバージョン情報を英語でコピーします"
 
@@ -671,8 +671,8 @@ msgid "replies"
 msgstr "返信"
 
 #: src/control/Control.JSDialogBuilder.js:1929
-#: src/layer/tile/CanvasTileLayer.js:3785
-#: src/layer/tile/CanvasTileLayer.js:3796
+#: src/layer/tile/CanvasTileLayer.js:3790
+#: src/layer/tile/CanvasTileLayer.js:3801
 #: src/canvas/sections/CommentListSection.ts:1119
 msgid "Comment"
 msgstr "コメント"
@@ -698,7 +698,7 @@ msgstr "表の挿入"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:357
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:361
 #: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:670
-#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:499
+#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:502
 msgid "None (Do not check spelling)"
 msgstr "なし（スペルチェックを行わない）"
 
@@ -1241,7 +1241,7 @@ msgstr "印刷範囲の定義"
 msgid "Remove print area"
 msgstr "印刷範囲の削除"
 
-#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:498
+#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:501
 msgid "Reset to Default Language"
 msgstr "既定の言語に戻す"
 
@@ -1259,15 +1259,15 @@ msgstr "コンパクトビューを使用"
 msgid "Use Tabbed view"
 msgstr "タブレットビューを使用"
 
-#: src/control/Control.Menubar.js:1853 src/control/Control.Menubar.js:1870
+#: src/control/Control.Menubar.js:1853
 msgid "Read-only mode"
 msgstr "読み取り専用モード"
 
-#: src/control/Control.Menubar.js:1891
+#: src/control/Control.Menubar.js:1890
 msgid "Insert Shape"
 msgstr "シェイプの挿入"
 
-#: src/control/Control.Menubar.js:2111
+#: src/control/Control.Menubar.js:2110
 msgid "file type icon"
 msgstr "ファイルの種類 アイコン"
 
@@ -1458,7 +1458,7 @@ msgstr "小数部"
 msgid "Boolean Value"
 msgstr "Boolean 値"
 
-#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:784
+#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:789
 msgid "Text"
 msgstr "文字列"
 
@@ -1763,27 +1763,33 @@ msgstr "選択した個数"
 msgid "Cancel the search"
 msgstr "検索のキャンセル"
 
-#: src/control/Control.StatusBar.js:432
+#: src/control/Control.StatusBar.js:385
+msgid ""
+"To prevent accidental changes, the author has set this file to open as view-"
+"only"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
 msgstr "複数のセルを選択"
 
-#: src/control/Control.StatusBar.js:435
+#: src/control/Control.StatusBar.js:438
 msgid "Insert mode: inactive"
 msgstr "インサートモード:非アクティブ"
 
-#: src/control/Control.StatusBar.js:446
+#: src/control/Control.StatusBar.js:449
 msgid "Selection mode: inactive"
 msgstr "選択モード:非アクティブ"
 
-#: src/control/Control.StatusBar.js:515
+#: src/control/Control.StatusBar.js:518
 msgid "Set Language for All text"
 msgstr "すべてのテキストの言語を設定する"
 
-#: src/control/Control.StatusBar.js:518
+#: src/control/Control.StatusBar.js:521
 msgid "Set Language for Paragraph"
 msgstr "パラグラフの言語設定"
 
-#: src/control/Control.StatusBar.js:519
+#: src/control/Control.StatusBar.js:522
 msgid "Set Language for Selection"
 msgstr "選択の言語を設定する"
 
@@ -2167,7 +2173,7 @@ msgstr "リネーム..."
 msgid "Insert hyperlink"
 msgstr "ハイパーリンクの挿入"
 
-#: src/control/Toolbar.js:796
+#: src/control/Toolbar.js:801
 msgid "Link"
 msgstr "リンク"
 
@@ -2285,21 +2291,21 @@ msgstr ""
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "追加した見出しとオブジェクトはここに表示されます"
 
-#: src/slideshow/SlideShowPresenter.ts:358
+#: src/slideshow/SlideShowPresenter.ts:359
 msgid "Click to exit presentation..."
 msgstr ""
 
-#: src/slideshow/SlideShowPresenter.ts:526
+#: src/slideshow/SlideShowPresenter.ts:529
 #: src/map/handler/Map.SlideShow.js:170
 msgid "Windowed Presentation: "
 msgstr "ウィンドープレゼンテーション: "
 
-#: src/slideshow/SlideShowPresenter.ts:534
+#: src/slideshow/SlideShowPresenter.ts:537
 #: src/map/handler/Map.SlideShow.js:165
 msgid "Windowed Presentation Blocked"
 msgstr "ウィンドープレゼンテーションがブロックされました"
 
-#: src/slideshow/SlideShowPresenter.ts:536
+#: src/slideshow/SlideShowPresenter.ts:539
 #: src/map/handler/Map.SlideShow.js:166
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
@@ -2309,41 +2315,41 @@ msgstr ""
 "プレゼンテーションがブロックされました。利用しているブラウザでのポップアップ"
 "を許可してください。スライドが別画面になり、画面共有が許可されます。"
 
-#: src/slideshow/SlideShowPresenter.ts:576
+#: src/slideshow/SlideShowPresenter.ts:579
 #: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in window"
 msgstr "ウィンドウズでプレゼンテーションします"
 
-#: src/slideshow/SlideShowPresenter.ts:577
+#: src/slideshow/SlideShowPresenter.ts:580
 #: src/map/handler/Map.SlideShow.js:195
 msgid "Close Presentation"
 msgstr "プレゼンテーションを閉じる"
 
-#: src/slideshow/SlideShowPresenter.ts:667 src/map/handler/Map.SlideShow.js:55
+#: src/slideshow/SlideShowPresenter.ts:670 src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
 msgstr "空のスライドショー"
 
-#: src/slideshow/SlideShowPresenter.ts:682
+#: src/slideshow/SlideShowPresenter.ts:685
 #: src/map/handler/Map.SlideShow.js:280
 msgid "Already presenting"
 msgstr "プレゼンテーションされています"
 
-#: src/slideshow/SlideShowPresenter.ts:683
+#: src/slideshow/SlideShowPresenter.ts:686
 #: src/map/handler/Map.SlideShow.js:281
 msgid "You are already presenting this document"
 msgstr "すでに文書は開かれています"
 
-#: src/slideshow/SlideShowPresenter.ts:698
+#: src/slideshow/SlideShowPresenter.ts:701
 #: src/map/handler/Map.SlideShow.js:291
 msgid "Presentation disabled"
 msgstr "Presentation 無効化"
 
-#: src/slideshow/SlideShowPresenter.ts:699
+#: src/slideshow/SlideShowPresenter.ts:702
 #: src/map/handler/Map.SlideShow.js:292
 msgid "Presentation mode has been disabled for this document"
 msgstr "現在のドキュメントのPresentation プレゼンテーションモードは無効になっています"
 
-#: src/slideshow/PauseTimer.ts:121
+#: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
 msgstr ""
 
@@ -2763,15 +2769,15 @@ msgstr "ファイルのアップロードが失敗しました、ファイルが
 msgid "Uploading file to server failed, the file is too large."
 msgstr "ファイルのサイズが大きすぎて、アップロードが失敗しました。"
 
-#: src/layer/tile/CanvasTileLayer.js:1839
+#: src/layer/tile/CanvasTileLayer.js:1844
 msgid "Functions"
 msgstr "関数"
 
-#: src/layer/tile/CanvasTileLayer.js:2104
+#: src/layer/tile/CanvasTileLayer.js:2109
 msgid "Named Range"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:3813
+#: src/layer/tile/CanvasTileLayer.js:3818
 msgid "No Comments"
 msgstr "コメントはありません"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 14:41+0200\n"
+"POT-Creation-Date: 2024-09-27 13:49+0200\n"
 "PO-Revision-Date: 2024-09-20 10:34+0000\n"
 "Last-Translator: Jérôme Herbinet <jerome@herbinet.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
@@ -277,7 +277,7 @@ msgstr "Le serveur a été arrêté, veuillez recharger la page."
 
 #: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
-#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:126
+#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:154
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119
@@ -286,10 +286,10 @@ msgstr "Le serveur a été arrêté, veuillez recharger la page."
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Permission.js:89 src/control/Permission.js:99
 #: src/control/Permission.js:149 src/control/Toolbar.js:725
-#: src/control/Toolbar.js:817 src/slideshow/SlideShowPresenter.ts:539
-#: src/slideshow/SlideShowPresenter.ts:670
-#: src/slideshow/SlideShowPresenter.ts:685
-#: src/slideshow/SlideShowPresenter.ts:701 src/core/Socket.js:681
+#: src/control/Toolbar.js:822 src/slideshow/SlideShowPresenter.ts:542
+#: src/slideshow/SlideShowPresenter.ts:673
+#: src/slideshow/SlideShowPresenter.ts:688
+#: src/slideshow/SlideShowPresenter.ts:704 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
 #: src/canvas/sections/CommentListSection.ts:1333
@@ -321,7 +321,7 @@ msgstr "Voulez-vous vraiment terminer cette session ?"
 #: src/control/Control.MobileTopBar.ts:43
 #: src/control/Control.UIManager.js:1292 src/control/Control.UIManager.js:1359
 #: src/control/Control.UIManager.js:1494 src/control/Control.UIManager.js:1653
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:812
+#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:817
 #: src/core/Socket.js:1388 src/canvas/sections/CommentListSection.ts:443
 #: src/canvas/sections/CommentSection.ts:151
 #: src/canvas/sections/CommentSection.ts:154
@@ -414,15 +414,15 @@ msgstr "Aucune couleur"
 msgid "Automatic color"
 msgstr "Couleur automatique"
 
-#: src/control/Control.AboutDialog.ts:83
+#: src/control/Control.AboutDialog.ts:111
 msgid "This version of {productname} is powered by"
 msgstr "Cette version de {productname} est fournie par"
 
-#: src/control/Control.AboutDialog.ts:106
+#: src/control/Control.AboutDialog.ts:134
 msgid "\"Slow Proxy\""
 msgstr "\"Proxy lent\""
 
-#: src/control/Control.AboutDialog.ts:150
+#: src/control/Control.AboutDialog.ts:178
 msgid "Copy all version information in English"
 msgstr "Copier toutes les informations de version en anglais"
 
@@ -689,8 +689,8 @@ msgid "replies"
 msgstr "réponses"
 
 #: src/control/Control.JSDialogBuilder.js:1929
-#: src/layer/tile/CanvasTileLayer.js:3785
-#: src/layer/tile/CanvasTileLayer.js:3796
+#: src/layer/tile/CanvasTileLayer.js:3790
+#: src/layer/tile/CanvasTileLayer.js:3801
 #: src/canvas/sections/CommentListSection.ts:1119
 msgid "Comment"
 msgstr "Commentaire"
@@ -716,7 +716,7 @@ msgstr "Insérer un tableau"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:357
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:361
 #: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:670
-#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:499
+#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:502
 msgid "None (Do not check spelling)"
 msgstr "Aucune (pas de vérification orthographique)"
 
@@ -1259,7 +1259,7 @@ msgstr "Définir la zone d’impression"
 msgid "Remove print area"
 msgstr "Supprimer la zone d’impression"
 
-#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:498
+#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:501
 msgid "Reset to Default Language"
 msgstr "Rétablir la langue par défaut"
 
@@ -1277,15 +1277,15 @@ msgstr "Utiliser la vue compacte"
 msgid "Use Tabbed view"
 msgstr "Utiliser la vue en onglets"
 
-#: src/control/Control.Menubar.js:1853 src/control/Control.Menubar.js:1870
+#: src/control/Control.Menubar.js:1853
 msgid "Read-only mode"
 msgstr "Mode lecture seule"
 
-#: src/control/Control.Menubar.js:1891
+#: src/control/Control.Menubar.js:1890
 msgid "Insert Shape"
 msgstr "Insérer une forme"
 
-#: src/control/Control.Menubar.js:2111
+#: src/control/Control.Menubar.js:2110
 msgid "file type icon"
 msgstr "icône de type de fichier"
 
@@ -1476,7 +1476,7 @@ msgstr "Fraction"
 msgid "Boolean Value"
 msgstr "Valeur booléenne"
 
-#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:784
+#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:789
 msgid "Text"
 msgstr "Texte"
 
@@ -1786,27 +1786,33 @@ msgstr "Compte de la sélection"
 msgid "Cancel the search"
 msgstr "Annuler la recherche"
 
-#: src/control/Control.StatusBar.js:432
+#: src/control/Control.StatusBar.js:385
+msgid ""
+"To prevent accidental changes, the author has set this file to open as view-"
+"only"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
 msgstr "Sélectionner plusieurs cellules"
 
-#: src/control/Control.StatusBar.js:435
+#: src/control/Control.StatusBar.js:438
 msgid "Insert mode: inactive"
 msgstr "Mode d'insertion : inactif"
 
-#: src/control/Control.StatusBar.js:446
+#: src/control/Control.StatusBar.js:449
 msgid "Selection mode: inactive"
 msgstr "Mode de sélection : inactif"
 
-#: src/control/Control.StatusBar.js:515
+#: src/control/Control.StatusBar.js:518
 msgid "Set Language for All text"
 msgstr "Définir la langue pour tout le texte"
 
-#: src/control/Control.StatusBar.js:518
+#: src/control/Control.StatusBar.js:521
 msgid "Set Language for Paragraph"
 msgstr "Définir la langue du paragraphe"
 
-#: src/control/Control.StatusBar.js:519
+#: src/control/Control.StatusBar.js:522
 msgid "Set Language for Selection"
 msgstr "Définir la langue pour la sélection"
 
@@ -2197,7 +2203,7 @@ msgstr "Renommage..."
 msgid "Insert hyperlink"
 msgstr "Insérer un hyperlien"
 
-#: src/control/Toolbar.js:796
+#: src/control/Toolbar.js:801
 msgid "Link"
 msgstr "Lien"
 
@@ -2315,21 +2321,21 @@ msgstr "Plus d’options pour {name}"
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Les titres et les objets que vous ajoutez au document apparaîtront ici"
 
-#: src/slideshow/SlideShowPresenter.ts:358
+#: src/slideshow/SlideShowPresenter.ts:359
 msgid "Click to exit presentation..."
 msgstr "Cliquez pour quitter la présentation …"
 
-#: src/slideshow/SlideShowPresenter.ts:526
+#: src/slideshow/SlideShowPresenter.ts:529
 #: src/map/handler/Map.SlideShow.js:170
 msgid "Windowed Presentation: "
 msgstr "Présentation dans une fenêtre : "
 
-#: src/slideshow/SlideShowPresenter.ts:534
+#: src/slideshow/SlideShowPresenter.ts:537
 #: src/map/handler/Map.SlideShow.js:165
 msgid "Windowed Presentation Blocked"
 msgstr "Présentation dans une fenêtre bloquée"
 
-#: src/slideshow/SlideShowPresenter.ts:536
+#: src/slideshow/SlideShowPresenter.ts:539
 #: src/map/handler/Map.SlideShow.js:166
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
@@ -2340,41 +2346,41 @@ msgstr ""
 "navigateur. Cela permettra au diaporama d'être affiché dans une fenêtre "
 "séparée, facilitant le partage d'écran."
 
-#: src/slideshow/SlideShowPresenter.ts:576
+#: src/slideshow/SlideShowPresenter.ts:579
 #: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in window"
 msgstr "Présentation en cours dans une fenêtre"
 
-#: src/slideshow/SlideShowPresenter.ts:577
+#: src/slideshow/SlideShowPresenter.ts:580
 #: src/map/handler/Map.SlideShow.js:195
 msgid "Close Presentation"
 msgstr "Fermer Présentation"
 
-#: src/slideshow/SlideShowPresenter.ts:667 src/map/handler/Map.SlideShow.js:55
+#: src/slideshow/SlideShowPresenter.ts:670 src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
 msgstr "Présentation vide"
 
-#: src/slideshow/SlideShowPresenter.ts:682
+#: src/slideshow/SlideShowPresenter.ts:685
 #: src/map/handler/Map.SlideShow.js:280
 msgid "Already presenting"
 msgstr "Présentation déjà en cours"
 
-#: src/slideshow/SlideShowPresenter.ts:683
+#: src/slideshow/SlideShowPresenter.ts:686
 #: src/map/handler/Map.SlideShow.js:281
 msgid "You are already presenting this document"
 msgstr "Vous présentez déjà ce document"
 
-#: src/slideshow/SlideShowPresenter.ts:698
+#: src/slideshow/SlideShowPresenter.ts:701
 #: src/map/handler/Map.SlideShow.js:291
 msgid "Presentation disabled"
 msgstr "Présentation désactivée"
 
-#: src/slideshow/SlideShowPresenter.ts:699
+#: src/slideshow/SlideShowPresenter.ts:702
 #: src/map/handler/Map.SlideShow.js:292
 msgid "Presentation mode has been disabled for this document"
 msgstr "Le mode présentation a été désactivé pour ce document"
 
-#: src/slideshow/PauseTimer.ts:121
+#: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
 msgstr "Pause … ( %SECONDS% )"
 
@@ -2834,15 +2840,15 @@ msgstr ""
 "Le téléversement du fichier sur le serveur a échoué, le fichier est trop "
 "volumineux."
 
-#: src/layer/tile/CanvasTileLayer.js:1839
+#: src/layer/tile/CanvasTileLayer.js:1844
 msgid "Functions"
 msgstr "Fonctions"
 
-#: src/layer/tile/CanvasTileLayer.js:2104
+#: src/layer/tile/CanvasTileLayer.js:2109
 msgid "Named Range"
 msgstr "Plage nommée"
 
-#: src/layer/tile/CanvasTileLayer.js:3813
+#: src/layer/tile/CanvasTileLayer.js:3818
 msgid "No Comments"
 msgstr "Aucun commentaire"
 

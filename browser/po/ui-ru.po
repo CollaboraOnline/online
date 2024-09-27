@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 14:41+0200\n"
+"POT-Creation-Date: 2024-09-27 13:49+0200\n"
 "PO-Revision-Date: 2024-09-02 13:58+0000\n"
 "Last-Translator: Mike Kaganski <mikekaganski@hotmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
@@ -278,7 +278,7 @@ msgstr "Сервер был выключен; пожалуйста, переза
 
 #: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
-#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:126
+#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:154
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119
@@ -287,10 +287,10 @@ msgstr "Сервер был выключен; пожалуйста, переза
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Permission.js:89 src/control/Permission.js:99
 #: src/control/Permission.js:149 src/control/Toolbar.js:725
-#: src/control/Toolbar.js:817 src/slideshow/SlideShowPresenter.ts:539
-#: src/slideshow/SlideShowPresenter.ts:670
-#: src/slideshow/SlideShowPresenter.ts:685
-#: src/slideshow/SlideShowPresenter.ts:701 src/core/Socket.js:681
+#: src/control/Toolbar.js:822 src/slideshow/SlideShowPresenter.ts:542
+#: src/slideshow/SlideShowPresenter.ts:673
+#: src/slideshow/SlideShowPresenter.ts:688
+#: src/slideshow/SlideShowPresenter.ts:704 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
 #: src/canvas/sections/CommentListSection.ts:1333
@@ -322,7 +322,7 @@ msgstr "Действительно завершить сеанс?"
 #: src/control/Control.MobileTopBar.ts:43
 #: src/control/Control.UIManager.js:1292 src/control/Control.UIManager.js:1359
 #: src/control/Control.UIManager.js:1494 src/control/Control.UIManager.js:1653
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:812
+#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:817
 #: src/core/Socket.js:1388 src/canvas/sections/CommentListSection.ts:443
 #: src/canvas/sections/CommentSection.ts:151
 #: src/canvas/sections/CommentSection.ts:154
@@ -414,15 +414,15 @@ msgstr "Нет цвета"
 msgid "Automatic color"
 msgstr "Автоматический цвет"
 
-#: src/control/Control.AboutDialog.ts:83
+#: src/control/Control.AboutDialog.ts:111
 msgid "This version of {productname} is powered by"
 msgstr "Эта версия {productname} работает на"
 
-#: src/control/Control.AboutDialog.ts:106
+#: src/control/Control.AboutDialog.ts:134
 msgid "\"Slow Proxy\""
 msgstr "\"Медленный прокси\""
 
-#: src/control/Control.AboutDialog.ts:150
+#: src/control/Control.AboutDialog.ts:178
 msgid "Copy all version information in English"
 msgstr "Скопировать всю информацию о версии на английском языке"
 
@@ -687,8 +687,8 @@ msgid "replies"
 msgstr "ответы"
 
 #: src/control/Control.JSDialogBuilder.js:1929
-#: src/layer/tile/CanvasTileLayer.js:3785
-#: src/layer/tile/CanvasTileLayer.js:3796
+#: src/layer/tile/CanvasTileLayer.js:3790
+#: src/layer/tile/CanvasTileLayer.js:3801
 #: src/canvas/sections/CommentListSection.ts:1119
 msgid "Comment"
 msgstr "Примечание"
@@ -714,7 +714,7 @@ msgstr "Вставить таблицу"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:357
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:361
 #: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:670
-#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:499
+#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:502
 msgid "None (Do not check spelling)"
 msgstr "Нет (не проверять орфографию)"
 
@@ -1257,7 +1257,7 @@ msgstr "Выберите область печати"
 msgid "Remove print area"
 msgstr "Убрать область печати"
 
-#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:498
+#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:501
 msgid "Reset to Default Language"
 msgstr "Установить язык по умолчанию"
 
@@ -1275,15 +1275,15 @@ msgstr "Использовать компактный вид"
 msgid "Use Tabbed view"
 msgstr "Использовать представление вкладками"
 
-#: src/control/Control.Menubar.js:1853 src/control/Control.Menubar.js:1870
+#: src/control/Control.Menubar.js:1853
 msgid "Read-only mode"
 msgstr "Режим только для чтения"
 
-#: src/control/Control.Menubar.js:1891
+#: src/control/Control.Menubar.js:1890
 msgid "Insert Shape"
 msgstr "Вставить фигуру"
 
-#: src/control/Control.Menubar.js:2111
+#: src/control/Control.Menubar.js:2110
 msgid "file type icon"
 msgstr "значок типа файла"
 
@@ -1474,7 +1474,7 @@ msgstr "Дробь"
 msgid "Boolean Value"
 msgstr "Логический"
 
-#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:784
+#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:789
 msgid "Text"
 msgstr "Текст"
 
@@ -1782,27 +1782,33 @@ msgstr "Выделено"
 msgid "Cancel the search"
 msgstr "Отменить поиск"
 
-#: src/control/Control.StatusBar.js:432
+#: src/control/Control.StatusBar.js:385
+msgid ""
+"To prevent accidental changes, the author has set this file to open as view-"
+"only"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
 msgstr "Выбор нескольких ячеек"
 
-#: src/control/Control.StatusBar.js:435
+#: src/control/Control.StatusBar.js:438
 msgid "Insert mode: inactive"
 msgstr "Режим вставки: откл"
 
-#: src/control/Control.StatusBar.js:446
+#: src/control/Control.StatusBar.js:449
 msgid "Selection mode: inactive"
 msgstr "Режим выбора: откл"
 
-#: src/control/Control.StatusBar.js:515
+#: src/control/Control.StatusBar.js:518
 msgid "Set Language for All text"
 msgstr "Задать язык для всего текста"
 
-#: src/control/Control.StatusBar.js:518
+#: src/control/Control.StatusBar.js:521
 msgid "Set Language for Paragraph"
 msgstr "Задать язык для абзаца"
 
-#: src/control/Control.StatusBar.js:519
+#: src/control/Control.StatusBar.js:522
 msgid "Set Language for Selection"
 msgstr "Задать язык для выделения"
 
@@ -2190,7 +2196,7 @@ msgstr "Переименование..."
 msgid "Insert hyperlink"
 msgstr "Вставить гиперссылку"
 
-#: src/control/Toolbar.js:796
+#: src/control/Toolbar.js:801
 msgid "Link"
 msgstr "Связь"
 
@@ -2308,21 +2314,21 @@ msgstr "Больше настроек для {name}"
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Заголовки и объекты, которые вы добавите в документ, появятся здесь"
 
-#: src/slideshow/SlideShowPresenter.ts:358
+#: src/slideshow/SlideShowPresenter.ts:359
 msgid "Click to exit presentation..."
 msgstr "Нажмите для выхода из презентации..."
 
-#: src/slideshow/SlideShowPresenter.ts:526
+#: src/slideshow/SlideShowPresenter.ts:529
 #: src/map/handler/Map.SlideShow.js:170
 msgid "Windowed Presentation: "
 msgstr "Презентация в окне: "
 
-#: src/slideshow/SlideShowPresenter.ts:534
+#: src/slideshow/SlideShowPresenter.ts:537
 #: src/map/handler/Map.SlideShow.js:165
 msgid "Windowed Presentation Blocked"
 msgstr "Презентация в окне заблокирована"
 
-#: src/slideshow/SlideShowPresenter.ts:536
+#: src/slideshow/SlideShowPresenter.ts:539
 #: src/map/handler/Map.SlideShow.js:166
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
@@ -2333,41 +2339,41 @@ msgstr ""
 "вашем браузере. Это позволит показ презентации в отдельных окнах, облегчая "
 "показ экрана."
 
-#: src/slideshow/SlideShowPresenter.ts:576
+#: src/slideshow/SlideShowPresenter.ts:579
 #: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in window"
 msgstr "Презентация в окне"
 
-#: src/slideshow/SlideShowPresenter.ts:577
+#: src/slideshow/SlideShowPresenter.ts:580
 #: src/map/handler/Map.SlideShow.js:195
 msgid "Close Presentation"
 msgstr "Закрыть презентацию"
 
-#: src/slideshow/SlideShowPresenter.ts:667 src/map/handler/Map.SlideShow.js:55
+#: src/slideshow/SlideShowPresenter.ts:670 src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
 msgstr "Пустая презентация"
 
-#: src/slideshow/SlideShowPresenter.ts:682
+#: src/slideshow/SlideShowPresenter.ts:685
 #: src/map/handler/Map.SlideShow.js:280
 msgid "Already presenting"
 msgstr "Презентация уже запущена"
 
-#: src/slideshow/SlideShowPresenter.ts:683
+#: src/slideshow/SlideShowPresenter.ts:686
 #: src/map/handler/Map.SlideShow.js:281
 msgid "You are already presenting this document"
 msgstr "Вы уже начали презентацию этого документа"
 
-#: src/slideshow/SlideShowPresenter.ts:698
+#: src/slideshow/SlideShowPresenter.ts:701
 #: src/map/handler/Map.SlideShow.js:291
 msgid "Presentation disabled"
 msgstr "Презентация запрещена"
 
-#: src/slideshow/SlideShowPresenter.ts:699
+#: src/slideshow/SlideShowPresenter.ts:702
 #: src/map/handler/Map.SlideShow.js:292
 msgid "Presentation mode has been disabled for this document"
 msgstr "Режим презентации был запрещён для этого документа"
 
-#: src/slideshow/PauseTimer.ts:121
+#: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
 msgstr "Пауза... ( %SECONDS% )"
 
@@ -2814,15 +2820,15 @@ msgstr "Не удалось загрузить файл на сервер, фа�
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Не удалось загрузить файл на сервер, слишком большой размер файла."
 
-#: src/layer/tile/CanvasTileLayer.js:1839
+#: src/layer/tile/CanvasTileLayer.js:1844
 msgid "Functions"
 msgstr "Функции"
 
-#: src/layer/tile/CanvasTileLayer.js:2104
+#: src/layer/tile/CanvasTileLayer.js:2109
 msgid "Named Range"
 msgstr "Именованный диапазон"
 
-#: src/layer/tile/CanvasTileLayer.js:3813
+#: src/layer/tile/CanvasTileLayer.js:3818
 msgid "No Comments"
 msgstr "Нет комментариев"
 

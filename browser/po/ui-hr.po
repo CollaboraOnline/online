@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 14:41+0200\n"
+"POT-Creation-Date: 2024-09-27 13:49+0200\n"
 "PO-Revision-Date: 2024-09-17 16:21+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
@@ -276,7 +276,7 @@ msgstr "Server je bio isključen. Ponovo učitaj stranicu."
 
 #: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:74
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketOverview.js:431
-#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:126
+#: admin/src/AdminSocketSettings.js:47 src/control/Control.AboutDialog.ts:154
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.LanguageDialog.js:119
@@ -285,10 +285,10 @@ msgstr "Server je bio isključen. Ponovo učitaj stranicu."
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Permission.js:89 src/control/Permission.js:99
 #: src/control/Permission.js:149 src/control/Toolbar.js:725
-#: src/control/Toolbar.js:817 src/slideshow/SlideShowPresenter.ts:539
-#: src/slideshow/SlideShowPresenter.ts:670
-#: src/slideshow/SlideShowPresenter.ts:685
-#: src/slideshow/SlideShowPresenter.ts:701 src/core/Socket.js:681
+#: src/control/Toolbar.js:822 src/slideshow/SlideShowPresenter.ts:542
+#: src/slideshow/SlideShowPresenter.ts:673
+#: src/slideshow/SlideShowPresenter.ts:688
+#: src/slideshow/SlideShowPresenter.ts:704 src/core/Socket.js:681
 #: src/core/Socket.js:1145 src/core/Socket.js:1215 src/core/Socket.js:1363
 #: src/core/Socket.js:1367 src/docdispatcher.ts:435
 #: src/canvas/sections/CommentListSection.ts:1333
@@ -320,7 +320,7 @@ msgstr "Stvarno želiš završiti sesiju?"
 #: src/control/Control.MobileTopBar.ts:43
 #: src/control/Control.UIManager.js:1292 src/control/Control.UIManager.js:1359
 #: src/control/Control.UIManager.js:1494 src/control/Control.UIManager.js:1653
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:812
+#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:817
 #: src/core/Socket.js:1388 src/canvas/sections/CommentListSection.ts:443
 #: src/canvas/sections/CommentSection.ts:151
 #: src/canvas/sections/CommentSection.ts:154
@@ -412,15 +412,15 @@ msgstr "Bez boje"
 msgid "Automatic color"
 msgstr "Automatska boja"
 
-#: src/control/Control.AboutDialog.ts:83
+#: src/control/Control.AboutDialog.ts:111
 msgid "This version of {productname} is powered by"
 msgstr "Ovu verziju {productname}a omogućuje"
 
-#: src/control/Control.AboutDialog.ts:106
+#: src/control/Control.AboutDialog.ts:134
 msgid "\"Slow Proxy\""
 msgstr "„Slow Proxy”"
 
-#: src/control/Control.AboutDialog.ts:150
+#: src/control/Control.AboutDialog.ts:178
 msgid "Copy all version information in English"
 msgstr "Kopiraj sve informacije o verziji na engleskom jeziku"
 
@@ -685,8 +685,8 @@ msgid "replies"
 msgstr "odgovori"
 
 #: src/control/Control.JSDialogBuilder.js:1929
-#: src/layer/tile/CanvasTileLayer.js:3785
-#: src/layer/tile/CanvasTileLayer.js:3796
+#: src/layer/tile/CanvasTileLayer.js:3790
+#: src/layer/tile/CanvasTileLayer.js:3801
 #: src/canvas/sections/CommentListSection.ts:1119
 msgid "Comment"
 msgstr "Komentar"
@@ -712,7 +712,7 @@ msgstr "Umetni tablicu"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:357
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:361
 #: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:670
-#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:499
+#: src/control/Control.Menubar.js:948 src/control/Control.StatusBar.js:502
 msgid "None (Do not check spelling)"
 msgstr "Ništa (bez provjere pravopisa)"
 
@@ -1255,7 +1255,7 @@ msgstr "Odredi područje ispisa"
 msgid "Remove print area"
 msgstr "Ukloni područje ispisa"
 
-#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:498
+#: src/control/Control.Menubar.js:1444 src/control/Control.StatusBar.js:501
 msgid "Reset to Default Language"
 msgstr "Vrati na standardni jezik"
 
@@ -1273,15 +1273,15 @@ msgstr "Koristi kompaktni prikaz"
 msgid "Use Tabbed view"
 msgstr "Koristi prikaz kartica"
 
-#: src/control/Control.Menubar.js:1853 src/control/Control.Menubar.js:1870
+#: src/control/Control.Menubar.js:1853
 msgid "Read-only mode"
 msgstr "Modus samo-za-čitanje"
 
-#: src/control/Control.Menubar.js:1891
+#: src/control/Control.Menubar.js:1890
 msgid "Insert Shape"
 msgstr "Umetni oblik"
 
-#: src/control/Control.Menubar.js:2111
+#: src/control/Control.Menubar.js:2110
 msgid "file type icon"
 msgstr "ikona vrste datoteke"
 
@@ -1472,7 +1472,7 @@ msgstr "Razlomak"
 msgid "Boolean Value"
 msgstr "Booleova vrijednost"
 
-#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:784
+#: src/control/Control.NotebookbarCalc.js:601 src/control/Toolbar.js:789
 msgid "Text"
 msgstr "Tekst"
 
@@ -1780,27 +1780,33 @@ msgstr "Ukupni broj odabira"
 msgid "Cancel the search"
 msgstr "Prekini pretragu"
 
-#: src/control/Control.StatusBar.js:432
+#: src/control/Control.StatusBar.js:385
+msgid ""
+"To prevent accidental changes, the author has set this file to open as view-"
+"only"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
 msgstr "Odaberi više polja"
 
-#: src/control/Control.StatusBar.js:435
+#: src/control/Control.StatusBar.js:438
 msgid "Insert mode: inactive"
 msgstr "Modus umetanja: neaktivno"
 
-#: src/control/Control.StatusBar.js:446
+#: src/control/Control.StatusBar.js:449
 msgid "Selection mode: inactive"
 msgstr "Modus odabira: neaktivno"
 
-#: src/control/Control.StatusBar.js:515
+#: src/control/Control.StatusBar.js:518
 msgid "Set Language for All text"
 msgstr "Postavi jezik za sav tekst"
 
-#: src/control/Control.StatusBar.js:518
+#: src/control/Control.StatusBar.js:521
 msgid "Set Language for Paragraph"
 msgstr "Postavi jezik za odlomak"
 
-#: src/control/Control.StatusBar.js:519
+#: src/control/Control.StatusBar.js:522
 msgid "Set Language for Selection"
 msgstr "Postavi jezik za odabir"
 
@@ -2188,7 +2194,7 @@ msgstr "Preimenovanje …"
 msgid "Insert hyperlink"
 msgstr "Umetni hiper-poveznicu"
 
-#: src/control/Toolbar.js:796
+#: src/control/Toolbar.js:801
 msgid "Link"
 msgstr "Poveznica"
 
@@ -2306,21 +2312,21 @@ msgstr "Još više opcija za {name}"
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Ovdje će se pojaviti naslovi i objekti koje dodaš u dokument"
 
-#: src/slideshow/SlideShowPresenter.ts:358
+#: src/slideshow/SlideShowPresenter.ts:359
 msgid "Click to exit presentation..."
 msgstr "Pritisni za izlaz iz prezentacije …"
 
-#: src/slideshow/SlideShowPresenter.ts:526
+#: src/slideshow/SlideShowPresenter.ts:529
 #: src/map/handler/Map.SlideShow.js:170
 msgid "Windowed Presentation: "
 msgstr "Prezentacija u prozoru: "
 
-#: src/slideshow/SlideShowPresenter.ts:534
+#: src/slideshow/SlideShowPresenter.ts:537
 #: src/map/handler/Map.SlideShow.js:165
 msgid "Windowed Presentation Blocked"
 msgstr "Prezentacija u prozoru je blokirana"
 
-#: src/slideshow/SlideShowPresenter.ts:536
+#: src/slideshow/SlideShowPresenter.ts:539
 #: src/map/handler/Map.SlideShow.js:166
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
@@ -2331,41 +2337,41 @@ msgstr ""
 "omogućuje prikaz dijaprojekcija u zasebnim prozorima, što omogućuje "
 "jednostavno dijeljenje ekrana."
 
-#: src/slideshow/SlideShowPresenter.ts:576
+#: src/slideshow/SlideShowPresenter.ts:579
 #: src/map/handler/Map.SlideShow.js:194
 msgid "Presenting in window"
 msgstr "Prikazivanje u prozoru"
 
-#: src/slideshow/SlideShowPresenter.ts:577
+#: src/slideshow/SlideShowPresenter.ts:580
 #: src/map/handler/Map.SlideShow.js:195
 msgid "Close Presentation"
 msgstr "Zatvori prezentaciju"
 
-#: src/slideshow/SlideShowPresenter.ts:667 src/map/handler/Map.SlideShow.js:55
+#: src/slideshow/SlideShowPresenter.ts:670 src/map/handler/Map.SlideShow.js:55
 msgid "Empty Slide Show"
 msgstr "Prazna dijaprojekcija"
 
-#: src/slideshow/SlideShowPresenter.ts:682
+#: src/slideshow/SlideShowPresenter.ts:685
 #: src/map/handler/Map.SlideShow.js:280
 msgid "Already presenting"
 msgstr "Već se prikazuje"
 
-#: src/slideshow/SlideShowPresenter.ts:683
+#: src/slideshow/SlideShowPresenter.ts:686
 #: src/map/handler/Map.SlideShow.js:281
 msgid "You are already presenting this document"
 msgstr "Već prikazuješ ovaj dokument"
 
-#: src/slideshow/SlideShowPresenter.ts:698
+#: src/slideshow/SlideShowPresenter.ts:701
 #: src/map/handler/Map.SlideShow.js:291
 msgid "Presentation disabled"
 msgstr "Prezentacija deaktivirana"
 
-#: src/slideshow/SlideShowPresenter.ts:699
+#: src/slideshow/SlideShowPresenter.ts:702
 #: src/map/handler/Map.SlideShow.js:292
 msgid "Presentation mode has been disabled for this document"
 msgstr "Modus prezentacije je deaktiviran za ovaj dokument"
 
-#: src/slideshow/PauseTimer.ts:121
+#: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
 msgstr "Pauza … ( %SECONDS% )"
 
@@ -2813,15 +2819,15 @@ msgstr "Neuspjelo prenošenje datoteke na server, datoteka nije pronađena."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Neuspjelo prenošenje datoteke na server, datoteka je prevelika."
 
-#: src/layer/tile/CanvasTileLayer.js:1839
+#: src/layer/tile/CanvasTileLayer.js:1844
 msgid "Functions"
 msgstr "Funkcije"
 
-#: src/layer/tile/CanvasTileLayer.js:2104
+#: src/layer/tile/CanvasTileLayer.js:2109
 msgid "Named Range"
 msgstr "Imenovani raspon"
 
-#: src/layer/tile/CanvasTileLayer.js:3813
+#: src/layer/tile/CanvasTileLayer.js:3818
 msgid "No Comments"
 msgstr "Bez komentara"
 
