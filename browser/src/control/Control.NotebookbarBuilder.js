@@ -368,6 +368,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
 				},
+				{
+					'action': 'downloadas-html',
+					'text': _('HTML File (.html)')
+				},
 			].concat(!window.ThisIsTheAndroidApp ? [
 				{
 					'action': 'exportpdf' ,
