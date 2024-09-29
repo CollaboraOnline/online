@@ -35,7 +35,7 @@ public:
           _poll("proxy-poll"),
           _sentRequest(false)
     {
-        setTimeout(std::chrono::seconds(5));
+        setTimeout(std::chrono::seconds(10));
     }
 
     void invokeWSDTest() override
@@ -46,10 +46,11 @@ public:
 
         auto httpSession = http::Session::create(helpers::getTestServerURI());
 
-        httpSession->setTimeout(std::chrono::seconds(5));
+        httpSession->setTimeout(std::chrono::seconds(9));
 
         TST_LOG("Attempt proxy URL fetch");
 
+        // Request from rating.collaboraonline.com.
         _req = http::Request("/browser/a90f83c/foo/remote/static/lokit-extra-img.svg");
 
         httpSession->setConnectFailHandler([this]() {
