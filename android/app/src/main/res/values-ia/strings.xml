@@ -67,4 +67,21 @@
     <string name="about_moreinfo">Plus de information</string>
     <string name="bad_directory">Percurso de directorio non valide</string>
     <string name="current_dir">Directorio actual: %1$s</string>
+    <string name="pref_sort_title">Ordinamento de files</string>
+    <string name="pref_filter_title">Filtro de files predefinite</string>
+    <string name="pref_enable_chrome_debugger">Depuration de Chrome</string>
+    <string name="pref_enable_chrome_debugger_info">Activa lo pro usar le instrumento de depuration de Chrome in le documento</string>
+    <string name="filter">Filtrar per</string>
+    <string name="sort_az">A-Z</string>
+    <string name="sort_za">Z-A</string>
+    <string name="usb_connected_configure">USB connectite, configura tu apparato.</string>
+    <string name="physical_storage_settings">Parametros de immagazinage physic</string>
+    <string name="server_url">URL del servitor</string>
+    <string name="confirm_label">Confirmar</string>
+    <string name="title_permission_required">Permission requirite</string>
+    <string name="positive_ok">OK</string>
+    <string name="action_overwrite">Superscriber</string>
+    <string name="loading">Cargante...</string>
+    <string name="share_document">Compartir le documento</string>
+    <string name="bmp_null">BMP non valide!</string>
 </resources>

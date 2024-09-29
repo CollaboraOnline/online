@@ -2,4 +2,5 @@
 <resources>
     <string name="storage_permission_required">Es requirite un permission de immagazinage</string>
     <string name="ask_for_convert_odf">Confirmar le formato de file</string>
+    <string name="loading">Cargante...</string>
 </resources>
