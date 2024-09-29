@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-27 13:49+0200\n"
-"PO-Revision-Date: 2024-09-24 12:47+0000\n"
+"PO-Revision-Date: 2024-09-28 06:17+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.8-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -1783,6 +1783,8 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Da bi preprečil neželene spremembe, je avtor datoteko nastavil tako, da se "
+"odpre samo za ogled"
 
 #: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
@@ -2143,7 +2145,7 @@ msgstr "Spodnji rob"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Dokument ni podpisan."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2878,11 +2880,11 @@ msgstr "Povišaj v vrhnji komentar"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show on the side"
-msgstr ""
+msgstr "Pokaži ob strani"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Pokaži večji komentar"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/canvas/sections/CommentListSection.ts:1344
@@ -2970,18 +2972,16 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Odložišča ni mogoče prenesti s strežnika, prosimo, kopirajte ponovno."
 
 #: src/map/Clipboard.js:1191
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr "<p>Prosimo, da uporabite gumbe za prilepi na zaslonski tipkovnici.</p>"
+msgstr "Prosimo, da uporabite gumbe za lepljenje na zaslonski tipkovnici."
 
 #: src/map/Clipboard.js:1247
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Prenos se je zaradi obsežne operacije kopiraj/prilepi že začel. Prosimo, "
-"počakajte na trenutni prenos ali ga prekličite, preden začnete z novim.</p>"
+"Prenos se je zaradi obsežne operacije kopiraj/prilepi že začel. Prosimo, "
+"počakajte na trenutni prenos ali ga prekličite, preden začnete z novim"
 
 #: src/map/Clipboard.js:1269
 msgid "Paste from this document"
@@ -2993,15 +2993,15 @@ msgstr "Prekliči posebno lepljenje"
 
 #: src/map/Clipboard.js:1279
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Vaš brskalnik ima zelo omejen dostop do odložišča"
 
 #: src/map/Clipboard.js:1284
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Uporabite naslednjo kombinacijo, da si ogledate več možnosti:"
 
 #: src/map/Clipboard.js:1302
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Zaprite pojavno okno, da prezrete posebno lepljenje"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
