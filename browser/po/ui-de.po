@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-27 13:49+0200\n"
-"PO-Revision-Date: 2024-09-16 12:23+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2024-09-27 17:15+0000\n"
+"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1794,6 +1794,8 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Um versehentliche Änderungen zu vermeiden, hat der Autor diese Datei "
+"schreibgeschützt geöffnet."
 
 #: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
@@ -2156,7 +2158,7 @@ msgstr "Unterer Rand"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Das Dokument ist nicht signiert."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2915,15 +2917,15 @@ msgstr "Thread als gelöst markieren"
 
 #: src/canvas/sections/CommentListSection.ts:1085
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Zum Top-Kommentar hochstufen"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show on the side"
-msgstr ""
+msgstr "Auf der Seite anzeigen"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Kommentar größer anzeigen"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/canvas/sections/CommentListSection.ts:1344
@@ -3012,21 +3014,17 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Fehler beim Herunterladen der Zwischenablage, bitte kopieren Sie erneut"
 
 #: src/map/Clipboard.js:1191
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr ""
-"<p>Bitte verwenden Sie die Schaltflächen Kopieren/ Einfügen auf Ihrer "
-"Bildschirmtastatur.</p>"
+msgstr "Bitte verwenden Sie die Einfügen-Tasten auf Ihrer Bildschirmtastatur."
 
 #: src/map/Clipboard.js:1247
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Ein Download wurde bereits aufgrund eines großen Kopier-/Einfügevorgangs "
-"gestartet. Bitte warten Sie auf den aktuellen Download oder brechen Sie ihn "
-"ab, bevor Sie einen neuen starten.</p>"
+"Ein Download aufgrund eines großen Kopier-/Einfügevorgangs hat bereits "
+"begonnen. Bitte warten Sie den aktuellen Download ab oder brechen Sie ihn "
+"ab, bevor Sie einen neuen starten"
 
 #: src/map/Clipboard.js:1269
 msgid "Paste from this document"
@@ -3038,15 +3036,16 @@ msgstr "Abbrechen Einfügen Spezial"
 
 #: src/map/Clipboard.js:1279
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Ihr Browser hat nur sehr begrenzten Zugriff auf die Zwischenablage"
 
 #: src/map/Clipboard.js:1284
 msgid "Please use following combination to see more options:"
 msgstr ""
+"Bitte verwenden Sie die folgende Kombination, um weitere Optionen zu sehen:"
 
 #: src/map/Clipboard.js:1302
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Schließen Sie das Popup, um das Einfügen von Inhalten zu ignorieren"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
