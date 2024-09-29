@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-27 13:49+0200\n"
-"PO-Revision-Date: 2024-08-12 13:09+0000\n"
+"PO-Revision-Date: 2024-09-27 17:15+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cy/>\n"
-"Language: \n"
+"Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : "
 "(n==3) ? 3 :(n==6) ? 4 : 5;\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1068,7 +1068,7 @@ msgstr "Cadw Sylwadau"
 #: src/control/Control.Menubar.js:410
 #: src/control/Control.NotebookbarBuilder.js:432
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "Dogfen HTML (.html)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:578
@@ -1137,7 +1137,7 @@ msgstr "Ffeil CSV (.csv)"
 
 #: src/control/Control.Menubar.js:704
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "Ffeil HTML (.html)"
 
 #: src/control/Control.Menubar.js:708
 #: src/control/jsdialog/Definitions.Menu.ts:111
@@ -1317,7 +1317,7 @@ msgstr "Ffeil CSV (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:398
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "Ffeil HTML (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:454
 msgid "Image (.png)"
@@ -1779,6 +1779,8 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Er mwyn atal newidiadau damweiniol, mae'r awdur wedi anfon y ffeil hon fel "
+"un darllen yn unig"
 
 #: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
@@ -2139,7 +2141,7 @@ msgstr "Ymyl Gwaelod"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Nid yw'r ddogfen wedi'i llofnodi."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2228,11 +2230,11 @@ msgstr "Rhydd Iawn"
 
 #: src/control/jsdialog/Definitions.Menu.ts:418
 msgid "From Beginning"
-msgstr ""
+msgstr "O'r Cychwyn"
 
 #: src/control/jsdialog/Definitions.Menu.ts:422
 msgid "From Current Slide"
-msgstr ""
+msgstr "O'r Sleid Gyfredol"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2312,7 +2314,7 @@ msgstr ""
 
 #: src/slideshow/SlideShowPresenter.ts:359
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Cliciwch i adael y cyflwyniad..."
 
 #: src/slideshow/SlideShowPresenter.ts:529
 #: src/map/handler/Map.SlideShow.js:170
@@ -2371,7 +2373,7 @@ msgstr "Mae'r modd cyflwyno wedi'i analluogi ar gyfer y ddogfen hon"
 
 #: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Oedi... ( %SECONDS% )"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -2823,7 +2825,7 @@ msgstr "Swyddogaeth"
 
 #: src/layer/tile/CanvasTileLayer.js:2109
 msgid "Named Range"
-msgstr ""
+msgstr "Ystod Wedi'i Henwi"
 
 #: src/layer/tile/CanvasTileLayer.js:3818
 msgid "No Comments"
@@ -2872,15 +2874,15 @@ msgstr "Datrys Trywydd"
 
 #: src/canvas/sections/CommentListSection.ts:1085
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Symud i'r prif sylw"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show on the side"
-msgstr ""
+msgstr "Dangos ar yr ochr"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Dangos sylw'n fwy"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/canvas/sections/CommentListSection.ts:1344
@@ -2968,19 +2970,17 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Methu llwytho'r clipfwrdd i lawr, ail gopïwch"
 
 #: src/map/Clipboard.js:1191
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr "<p>Defnyddiwch y botymau gludo ar eich bysellfwrdd ar-sgrin.</p>"
+msgstr "Defnyddiwch y botymau gludo ar eich bysellfwrdd ar-sgrin."
 
 #: src/map/Clipboard.js:1247
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Mae llwytho i lawr oherwydd gweithred copïo/gludo eisoes wedi cychwyn. "
+"Mae llwytho i lawr oherwydd gweithred copïo/gludo eisoes wedi cychwyn. "
 "Arhoswch i'r llwytho i lawr cyfredol orffen neu ei ddiddymu cyn cychwyn un "
-"newydd</p>"
+"newydd"
 
 #: src/map/Clipboard.js:1269
 msgid "Paste from this document"
@@ -2991,17 +2991,16 @@ msgid "Cancel paste special"
 msgstr "Dileu gludo arbennig"
 
 #: src/map/Clipboard.js:1279
-#, fuzzy
 msgid "Your browser has very limited access to the clipboard"
-msgstr "<p>Mae gan eich porwr fynediad cyfyngedig iawn i'r clipfwrdd</p>"
+msgstr "Mae gan eich porwr fynediad cyfyngedig iawn i'r clipfwrdd"
 
 #: src/map/Clipboard.js:1284
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Defnyddiwch y cyfuniad canlynol i weld rhagor o ddewisiadau:"
 
 #: src/map/Clipboard.js:1302
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Caewch y llamlen er mwyn anwybyddu'r gludo arbennig"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
@@ -3013,7 +3012,7 @@ msgstr "Cadwyd diwethaf:"
 
 #: src/map/Map.js:1464
 msgid "Please wait!"
-msgstr ""
+msgstr "Arhoswch!"
 
 #: src/map/handler/Map.Feedback.js:86
 msgid "Please send us your feedback"
