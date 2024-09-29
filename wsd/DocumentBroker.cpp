@@ -1242,10 +1242,20 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     if (!COOLWSD::getHardwareResourceWarning().empty())
         _serverAudit.set("hardwarewarning", COOLWSD::getHardwareResourceWarning());
 
-    if (!wopiFileInfo->getUserCanWrite() ||
-        session->isReadOnly()) // Readonly. Second boolean checks for URL "permission=readonly"
+    // Explicitly set the write-permission to match the UserCanWrite flag.
+    // Technically, we only need to disable it when UserCanWrite=false,
+    // but this is more readily comprehensible and easier to reason about.
+    session->setWritePermission(wopiFileInfo->getUserCanWrite());
+
+    if (!wopiFileInfo->getUserCanWrite())
     {
+        // We can't write in the storage, so we can't even add comments.
         LOG_DBG("Setting session [" << sessionId << "] to readonly for UserCanWrite=false");
+        session->setWritePermission(false); // Disable editing and commenting.
+    }
+    else if (session->isReadOnly()) // Readonly. Checks for URL "permission=readonly".
+    {
+        LOG_DBG("Setting session [" << sessionId << "] to readonly for permission=readonly");
         session->setWritable(false);
         // TODO: Somewhere around here, we need to put "setAllowChangeComments" if we allow editing comments in readonly mode.
     }
