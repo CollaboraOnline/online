@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-27 13:49+0200\n"
-"PO-Revision-Date: 2024-09-02 13:58+0000\n"
-"Last-Translator: Mike Kaganski <mikekaganski@hotmail.com>\n"
+"PO-Revision-Date: 2024-09-28 06:17+0000\n"
+"Last-Translator: Artur Yakupov <arturyak@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1783,10 +1783,13 @@ msgid "Cancel the search"
 msgstr "Отменить поиск"
 
 #: src/control/Control.StatusBar.js:385
+#, fuzzy
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Чтобы предотвратить случайные изменения, автор пометил этот файл как \"только"
+" для чтения\"."
 
 #: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
@@ -2146,7 +2149,7 @@ msgstr "Нижнее поле"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Этот документ не подписан."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2234,11 +2237,11 @@ msgstr "Очень свободно"
 
 #: src/control/jsdialog/Definitions.Menu.ts:418
 msgid "From Beginning"
-msgstr ""
+msgstr "С начала"
 
 #: src/control/jsdialog/Definitions.Menu.ts:422
 msgid "From Current Slide"
-msgstr ""
+msgstr "С текущего слайда"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2879,8 +2882,9 @@ msgid "Promote to top comment"
 msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1091
+#, fuzzy
 msgid "Show on the side"
-msgstr ""
+msgstr "Показать сбоку"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
@@ -2971,9 +2975,8 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Не удалось загрузить буфер обмена, повторите копирование"
 
 #: src/map/Clipboard.js:1191
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr "<p>Используйте кнопки вставки на экранной клавиатуре.</p>"
+msgstr "<p>Используйте клавиши вставки на экранной клавиатуре.</p>"
 
 #: src/map/Clipboard.js:1247
 #, fuzzy
@@ -2993,16 +2996,19 @@ msgid "Cancel paste special"
 msgstr "Отменить специальную вставку"
 
 #: src/map/Clipboard.js:1279
+#, fuzzy
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "У Вашего браузера ограничен доступ к буферу копирования"
 
 #: src/map/Clipboard.js:1284
+#, fuzzy
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Используйте следующие сочетания, чтобы посмотреть больше опций:"
 
 #: src/map/Clipboard.js:1302
+#, fuzzy
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Закройте всплывающее окно, чтобы игнорировать специальную вставку"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
@@ -3014,7 +3020,7 @@ msgstr "Последнее сохранение:"
 
 #: src/map/Map.js:1464
 msgid "Please wait!"
-msgstr ""
+msgstr "Пожалуйста подождите!"
 
 #: src/map/handler/Map.Feedback.js:86
 msgid "Please send us your feedback"
