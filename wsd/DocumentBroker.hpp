@@ -651,8 +651,7 @@ private:
     bool isInteractive() const { return _docState.isInteractive(); }
 
     /// Before downloading the document, we lock if the document is loaded for editing.
-    void lockIfEditing(const std::shared_ptr<ClientSession>& session, const Poco::URI& uriPublic,
-                       bool userCanWrite);
+    void lockIfEditing(const std::shared_ptr<ClientSession>& session);
 
     /// Updates the document's lock in storage to either locked or unlocked.
     /// Returns true iff the operation was successful.

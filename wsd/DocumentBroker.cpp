@@ -966,7 +966,6 @@ bool DocumentBroker::download(
 
     // Call the storage specific fileinfo functions
     std::string templateSource;
-    bool userCanWrite = false;
 #if !MOBILEAPP
     std::chrono::milliseconds checkFileInfoCallDurationMs = std::chrono::milliseconds::zero();
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
@@ -994,7 +993,6 @@ bool DocumentBroker::download(
 
         wopiStorage->handleWOPIFileInfo(*wopiFileInfo, *_lockCtx);
         _isViewFileExtension = COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
-        userCanWrite = wopiFileInfo->getUserCanWrite();
 
         if (session)
         {
@@ -1088,9 +1086,6 @@ bool DocumentBroker::download(
     if (session)
         broadcastLastModificationTime(session);
 
-    // Only lock the document on storage for editing sessions.
-    lockIfEditing(session, uriPublic, userCanWrite);
-
     // Let's download the document now, if not downloaded.
     std::chrono::milliseconds getFileCallDurationMs = std::chrono::milliseconds::zero();
     if (!_storage->isDownloaded())
@@ -1126,48 +1121,35 @@ bool DocumentBroker::download(
     return true;
 }
 
-void DocumentBroker::lockIfEditing(const std::shared_ptr<ClientSession>& session,
-                                   const Poco::URI& uriPublic, bool userCanWrite)
+void DocumentBroker::lockIfEditing(const std::shared_ptr<ClientSession>& session)
 {
     if (_lockCtx == nullptr || !_lockCtx->supportsLocks() || _lockCtx->isLocked())
     {
         return; // Nothing to do.
     }
 
-    if (session)
+    // If we have a session, isReadOnly() will be correctly set
+    // based on the URI (which may include a readonly permission),
+    // as well as the WOPI Info that we got above.
+    if (!session->isReadOnly())
     {
-        // If we have a session, isReadOnly() will be correctly set
-        // based on the URI (which may include a readonly permission),
-        // as well as the WOPI Info that we got above.
-        if (!session->isReadOnly())
-        {
-            LOG_DBG("Locking docKey [" << _docKey << "], which is editable");
-            std::string error;
-            if (!updateStorageLockState(*session, StorageBase::LockState::LOCK, error))
-            {
-                LOG_ERR("Failed to lock docKey ["
-                        << _docKey << "] with session [" << session->getId()
-                        << "] before downloading. Session will be read-only: " << error);
-                session->setWritable(false);
-            }
-        }
-
-        return;
-    }
-
-    // No Session yet, we need to rely on the URI and
-    // the WOPI Info we got above, explicitly.
-    // See if we have permission-override from the UI.
-    // Primarily used by mobile, which starts in read-only
-    // mode until the user clicks on the "edit" button.
-    if (userCanWrite && !_isViewFileExtension && !Uri::hasReadonlyPermission(uriPublic.toString()))
-    {
-        LOG_DBG("Locking docKey [" << _docKey << "], which is editable");
+        LOG_DBG("Locking docKey [" << _docKey
+                                   << "] asynchronously, which is editable, with session ["
+                                   << session->getId() << ']');
+        //TODO: Convert to Async. Unfortunately, that complicates
+        // things quite a bit and makes tests tricky.
         std::string error;
-        if (!lockDocumentInStorage(Authorization::create(uriPublic), error))
+        if (!updateStorageLockState(*session, StorageBase::LockState::LOCK, error))
         {
-            LOG_ERR("Failed to lock docKey [" << _docKey << "] in advance: " << error);
+            LOG_ERR("Failed to lock docKey ["
+                    << _docKey << "] with session [" << session->getId()
+                    << "] before downloading. Session will be read-only: " << error);
+            session->setWritable(false);
         }
+    }
+    else
+    {
+        LOG_DBG("Session [" << session->getId() << "] is read-only and cannot lock the document");
     }
 }
 
@@ -2648,13 +2630,14 @@ void DocumentBroker::setInteractive(bool value)
 
 void DocumentBroker::onViewLoaded(const std::shared_ptr<ClientSession>& session)
 {
+    // Only lock the document on storage for editing sessions.
+    lockIfEditing(session);
+
     // A view loaded.
     if (UnitWSD::isUnitTesting())
     {
         UnitWSD::get().onDocBrokerViewLoaded(getDocKey(), session);
     }
-
-    //TODO: Take the WOPI lock, if necessary.
 }
 
 std::shared_ptr<ClientSession> DocumentBroker::getFirstAuthorizedSession() const
