@@ -82,7 +82,17 @@ public:
     bool isDisconnected() const { return _disconnected; }
 
     /// Sets the permission to write to storage (for a given document).
-    void setWritePermission(bool write) { _writePermission = write; }
+    /// If set to false, will setWritable(false).
+    void setWritePermission(bool write)
+    {
+        _writePermission = write;
+        if (!write)
+        {
+            // Disable writing.
+            setWritable(false);
+        }
+    }
+
     /// Gets the permission to write to storage (for a given document).
     bool getWritePermission() const { return _writePermission; }
 
