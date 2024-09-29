@@ -78,6 +78,7 @@ public:
             // With always_save_on_exit=true and limit_store_failures=LimitStoreFailures,
             // we expect exactly two PutFile requests per document.
             setExpectedPutFile(LimitStoreFailures);
+            setExpectedCheckFileInfo(2); // Conflict recovery requires second CFI.
         }
     }
 

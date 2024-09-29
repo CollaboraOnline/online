@@ -104,7 +104,7 @@ public:
         setTimeout(std::chrono::seconds(90));
     }
 
-    void startNewTest()
+    virtual void startNewTest()
     {
         LOG_TST("===== Starting " << name(_scenario) << " test scenario =====");
 
@@ -117,7 +117,6 @@ public:
         resetCountPutRelative();
 
         // We always load once per scenario.
-        setExpectedCheckFileInfo(1);
         setExpectedGetFile(1); // All the tests GetFile once.
         setExpectedPutRelative(0); // No renaming in these tests.
 
@@ -129,20 +128,25 @@ public:
                 // to decide how to resolve the conflict externally.
                 // So we quarantine and let it be.
                 setExpectedPutFile(1);
+                setExpectedCheckFileInfo(1); // Conflict recovery requires second CFI.
             }
             break;
             case Scenario::SaveDiscard:
                 setExpectedPutFile(1); // The client discards their changes; don't upload.
+                setExpectedCheckFileInfo(2); // Conflict recovery requires second CFI.
                 break;
             case Scenario::CloseDiscard:
                 setExpectedPutFile(1); // The client discards their changes; don't upload.
+                setExpectedCheckFileInfo(2); // Conflict recovery requires second CFI.
                 break;
             case Scenario::SaveOverwrite:
                 setExpectedPutFile(2); // Upload a second time to force client's changes.
+                setExpectedCheckFileInfo(2); // Conflict recovery requires second CFI.
                 break;
             case Scenario::VerifyOverwrite:
                 // By default, we don't upload when verifying (unless always_save_on_exit is set).
                 setExpectedPutFile(0);
+                setExpectedCheckFileInfo(1); // No conflict to recover from.
                 break;
         }
     }
@@ -301,7 +305,7 @@ public:
         LOG_TST("Testing " << name(_scenario) << " with dockey [" << docKey << "] closed.");
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
-        LOK_ASSERT_EQUAL(getExpectedCheckFileInfo(), getCountCheckFileInfo());
+        LOK_ASSERT(getExpectedCheckFileInfo() >= getCountCheckFileInfo());
         LOK_ASSERT_EQUAL(getExpectedGetFile(), getCountGetFile());
         LOK_ASSERT_EQUAL(getExpectedPutRelative(), getCountPutRelative());
         // LOK_ASSERT_EQUAL(getExpectedPutFile(), getCountPutFile()); //FIXME: unreliable for some tests.

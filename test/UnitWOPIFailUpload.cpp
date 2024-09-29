@@ -19,7 +19,6 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
-#include "Util.hpp"
 #include "Log.hpp"
 #include "lokassert.hpp"
 
@@ -38,6 +37,53 @@ class UnitWOPIFailUpload : public WOPIUploadConflictCommon
 
     static constexpr std::size_t LimitStoreFailures = 2;
     static constexpr bool SaveOnExit = true;
+
+    void startNewTest() override
+    {
+        LOG_TST("===== Starting " << name(_scenario) << " test scenario =====");
+
+        LOG_TST("Resetting the document in storage");
+        setFileContent(OriginalDocContent); // Reset to test overwriting.
+
+        resetCountCheckFileInfo();
+        resetCountGetFile();
+        resetCountPutFile();
+        resetCountPutRelative();
+
+        // We always load once per scenario.
+        setExpectedGetFile(1); // All the tests GetFile once.
+        setExpectedPutRelative(0); // No renaming in these tests.
+
+        switch (_scenario)
+        {
+            case Scenario::Disconnect:
+            {
+                // When there is no client connected, there is no way
+                // to decide how to resolve the conflict externally.
+                // So we quarantine and let it be.
+                setExpectedPutFile(1);
+                setExpectedCheckFileInfo(2); // Conflict recovery requires second CFI.
+            }
+            break;
+            case Scenario::SaveDiscard:
+                setExpectedPutFile(1); // The client discards their changes; don't upload.
+                setExpectedCheckFileInfo(2); // Conflict recovery requires second CFI.
+                break;
+            case Scenario::CloseDiscard:
+                setExpectedPutFile(1); // The client discards their changes; don't upload.
+                setExpectedCheckFileInfo(2); // Conflict recovery requires second CFI.
+                break;
+            case Scenario::SaveOverwrite:
+                setExpectedPutFile(2); // Upload a second time to force client's changes.
+                setExpectedCheckFileInfo(2); // Conflict recovery requires second CFI.
+                break;
+            case Scenario::VerifyOverwrite:
+                // By default, we don't upload when verifying (unless always_save_on_exit is set).
+                setExpectedPutFile(0);
+                setExpectedCheckFileInfo(1); // No conflict to recover from.
+                break;
+        }
+    }
 
 public:
     UnitWOPIFailUpload()
@@ -149,8 +195,18 @@ public:
         LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
-        LOK_ASSERT_EQUAL_MESSAGE("Expect only documentconflict errors",
-                                 std::string("error: cmd=storage kind=savefailed"), message);
+        if (getCountCheckFileInfo() == 1)
+        {
+            LOK_ASSERT_EQUAL_MESSAGE("Expect only savefailed errors on first upload",
+                                     std::string("error: cmd=storage kind=savefailed"), message);
+        }
+        else
+        {
+            // Once the first upload fails, we issue CheckFileInfo, which detects the conflict.
+            LOK_ASSERT_EQUAL_MESSAGE(
+                "Expect only documentconflict errors after the second CheckFileInfo",
+                std::string("error: cmd=storage kind=documentconflict"), message);
+        }
 
         // Close the document.
         LOG_TST("Closing the document");
@@ -518,6 +574,11 @@ public:
         {
             LOG_TST("First PutFile, which will fail");
 
+            LOG_TST("Modifying again");
+            TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+            WSD_CMD("key type=input char=97 key=0");
+            WSD_CMD("key type=up char=0 key=512");
+
             // Fail with error.
             LOG_TST("Simulate PutFile failure");
             return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
@@ -527,20 +588,12 @@ public:
         {
             LOG_TST("Second PutFile, which will also fail");
 
+            TRANSITION_STATE(_phase, Phase::WaitDestroy);
+            LOG_TST("More than one upload attempted, closing the document");
+            WSD_CMD("closedocument");
+
             LOG_TST("Simulate PutFile failure (again)");
             return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
-        }
-
-        if (getCountPutFile() == 3)
-        {
-            // This is during closing the document.
-            LOG_TST("Third PutFile, which will succeed");
-
-            // The document should now unload.
-            TRANSITION_STATE(_phase, Phase::WaitDestroy);
-
-            // Success.
-            return nullptr;
         }
 
         failTest("Unexpected Phase in PutFile: " + std::to_string(static_cast<int>(_phase)));
@@ -566,32 +619,8 @@ public:
         LOG_TST("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
-        TRANSITION_STATE(_phase, Phase::WaitUnmodifiedStatus);
         WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
                 "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
-
-        return true;
-    }
-
-    /// The document is unmodified. Modify again.
-    bool onDocumentUnmodified(const std::string& message) override
-    {
-        LOG_TST("Got: [" << message << ']');
-        LOK_ASSERT_STATE(_phase, Phase::WaitUnmodifiedStatus);
-
-        if (getCountPutFile() <= 1)
-        {
-            // Modify again.
-            TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
-            WSD_CMD("key type=input char=97 key=0");
-            WSD_CMD("key type=up char=0 key=512");
-        }
-        else
-        {
-            LOG_ASSERT(getCountPutFile() > 1);
-            LOG_TST("More than one upload attempted, closing the document");
-            WSD_CMD("closedocument");
-        }
 
         return true;
     }
