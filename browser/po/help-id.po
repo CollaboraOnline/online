@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-27 13:49+0200\n"
-"PO-Revision-Date: 2024-07-18 12:07+0000\n"
+"PO-Revision-Date: 2024-09-27 17:15+0000\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/help/id/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -48,16 +48,15 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
-msgstr ""
+msgstr "Salin"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
 "/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
+"/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
@@ -1682,6 +1681,12 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">Bilah menu:</span> Menu utama ditempatkan di bagian atas "
+"dan mencakup banyak opsi, perintah untuk pencetakan, mengedit, melihat, dan "
+"perintah lanjut lainnya. Anda dapat menyembunyikan bilah menu dengan "
+"mengklik ikon <span class=\"w2ui-icon fold icon-size\"></span> di ujung "
+"kanan. Klik pada ikon <span class=\"w2ui-icon unfold icon-size\"></span> "
+"untuk menampilkan menu."
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
@@ -1996,13 +2001,12 @@ msgstr ""
 "tempat Anda bekerja."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
 msgstr ""
 "Ketika Anda menempelkan teks dari luar dokumen (jendela peramban lain atau "
-"aplikasi desktop), teks tersebut akan ditempelkan sebagai rich text."
+"aplikasi desktop), itu akan ditempelkan sebagai rich text."
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
@@ -2141,14 +2145,12 @@ msgid "comment"
 msgstr "komentar"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
-#, fuzzy
 msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
-"Klik ikon sub menu (<span class=\"cool-annotation-menu\" style=\"height:0."
-"6cm;width:0.6cm;\"></span>) untuk membalas, memindahkan, dan menghapus "
-"komentar."
+"Klik ikon sub menu (<span class=\"cool-annotation-menu icon-size\"></span>) "
+"untuk membalas, memindahkan, dan menghapus komentar."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
@@ -2982,7 +2984,6 @@ msgstr ""
 "dokumen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:726-5
-#, fuzzy
 msgid ""
 "To display or hide track changes choose <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. "
@@ -3105,15 +3106,14 @@ msgid "Select the text with the existing format"
 msgstr "Pilih teks dengan format yang sudah ada"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
-"Klik pada ikon pemformatan klon<img style=\"height:0.6cm;width:0.6cm;\" alt="
-"\"\" src=\"images/lc_formatpaintbrush.svg\">. Penunjuk tetikus berubah "
-"menjadi ember cat."
+"Klik pada ikon pemformatan klon <img class=\"icon-size\" alt=\"\" src="
+"\"images/lc_formatpaintbrush.svg\" />. Penunjuk tetikus berubah menjadi "
+"ember cat."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
@@ -3233,14 +3233,12 @@ msgid "Format the source cell with the font, color background and more."
 msgstr "Format sel sumber dengan font, latar belakang warna, dan lainnya."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
-"Klik pada ikon pemformatan klon<img style=\"height:0.6cm;width:0.6cm;\" alt="
-"\"\" src=\"images/lc_formatpaintbrush.svg\">. Penunjuk tetikus berubah "
-"menjadi ember cat."
+"Klik pada ikon pemformatan klon <img class=\"icon-size\" src=\"images"
+"/lc_formatpaintbrush.svg\" />. Penunjuk tetikus berubah menjadi ember cat."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
