@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-27 13:49+0200\n"
-"PO-Revision-Date: 2024-09-17 01:26+0000\n"
-"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
+"PO-Revision-Date: 2024-09-27 17:15+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1779,6 +1779,8 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"För att undvika oavsiktliga ändringar är dokumentet satt till att endast "
+"öppnas läsbart"
 
 #: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
@@ -2138,7 +2140,7 @@ msgstr "Undre kant"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Dokumentet är inte signerat."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2867,11 +2869,11 @@ msgstr "Befordra till toppkommentar"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show on the side"
-msgstr ""
+msgstr "Visa på sidan av"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Visa kommentarer med större grad"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/canvas/sections/CommentListSection.ts:1344
@@ -2960,20 +2962,16 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Kunde inte ladda ner urklippet, försök igen"
 
 #: src/map/Clipboard.js:1191
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr ""
-"<p>Använd knapparna för kopiera och klistra in på skärmens tangentbord.</p>"
+msgstr "Använd klistra in på skärmtangentbordet."
 
 #: src/map/Clipboard.js:1247
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>En hämtning på grund av en stor kopiera/klistra in aktivitet har redan "
-"startat. Avvakta pågående hämtning eller avbryt den innan du startar en "
-"ny</p>"
+"En hämtning på grund av en stor kopiera/klistra in aktivitet har redan "
+"startat. Avvakta pågående hämtning eller avbryt den innan du startar en ny"
 
 #: src/map/Clipboard.js:1269
 msgid "Paste from this document"
@@ -2985,15 +2983,15 @@ msgstr "Avbryt klistra in-special"
 
 #: src/map/Clipboard.js:1279
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Din webbläsare har mycket begränsad åtkomst till urklipp"
 
 #: src/map/Clipboard.js:1284
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Använd följande kombination för att se fler alternativ:"
 
 #: src/map/Clipboard.js:1302
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Stäng popup-fönstret för att ignorera klistra in special"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
