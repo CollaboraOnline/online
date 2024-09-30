@@ -1543,37 +1543,6 @@ void DocumentBroker::endRenameFileCommand()
     endActivity();
 }
 
-bool DocumentBroker::lockDocumentInStorage(const Authorization& auth, std::string& error)
-{
-    assert(_lockCtx && "Expected an initialized LockContext");
-    assert(_lockCtx->supportsLocks() && "Expected to have lock support");
-    assert(!_lockCtx->isLocked() && "Expected not to have locked already");
-
-    const StorageBase::LockUpdateResult result = _storage->updateLockState(
-        auth, *_lockCtx, StorageBase::LockState::LOCK, _currentStorageAttrs);
-    error = result.getReason();
-
-    switch (result.getStatus())
-    {
-        case StorageBase::LockUpdateResult::Status::UNSUPPORTED:
-            LOG_DBG("Locks on docKey [" << _docKey << "] are unsupported");
-            return true; // Not an error.
-            break;
-        case StorageBase::LockUpdateResult::Status::OK:
-            LOG_DBG("Locked docKey [" << _docKey << "] successfully");
-            return true;
-            break;
-        case StorageBase::LockUpdateResult::Status::UNAUTHORIZED:
-            LOG_ERR("Failed to lock docKey [" << _docKey << "]. Invalid or expired access token");
-            break;
-        case StorageBase::LockUpdateResult::Status::FAILED:
-            LOG_ERR("Failed to lock docKey [" << _docKey << "] with reason: " << error);
-            break;
-    }
-
-    return false;
-}
-
 bool DocumentBroker::updateStorageLockState(ClientSession& session, StorageBase::LockState lock,
                                             std::string& error)
 {

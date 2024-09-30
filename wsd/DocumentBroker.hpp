@@ -663,9 +663,6 @@ private:
     bool updateStorageLockStateAsync(const std::shared_ptr<ClientSession>& session,
                                      StorageBase::LockState lock, std::string& error);
 
-    /// Take the lock before loading the first session, if we know we can edit.
-    bool lockDocumentInStorage(const Authorization& auth, std::string& error);
-
     std::size_t getIdleTimeSecs() const
     {
         const auto duration = (std::chrono::steady_clock::now() - _lastActivityTime);
