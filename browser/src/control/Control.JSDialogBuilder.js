@@ -2475,8 +2475,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		$(controls.button).on('click', clickFunction);
 		$(controls.label).on('click', clickFunction);
-		$(div).on('mouseenter', mouseEnterFunction);
-		$(div).on('mouseleave', mouseLeaveFunction);
+		// We need a way to also handle the cutome tooltip for any tool button like save in shortcut bar
+		if (data.isCustomTooltip) {
+			this._handleCutomTooltip(div, builder);
+		}
+		else {
+			$(div).on('mouseenter', mouseEnterFunction);
+			$(div).on('mouseleave', mouseLeaveFunction);
+		}
 
 		div.addEventListener('keydown', function(e) {
 			switch (e.key) {
@@ -2495,6 +2501,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder.map.disableLockedItem(data, controls['container'], controls['container']);
 
 		return controls;
+	},
+
+	_handleCutomTooltip: function(elem, builder) {
+		switch (elem.id) {
+			case 'save':
+				$(elem).on('mouseenter', function() {
+					if (builder.map.tooltip)
+						builder.map.tooltip.show(elem, builder.map.getLastModDateValue()); // Show the tooltip with the correct content
+				});
+	
+				$(elem).on('mouseleave', function() {
+					if (builder.map.tooltip)
+						builder.map.tooltip.hide(elem);
+				});
+		}
 	},
 
 	_mapDispatchToolItem: function (parentContainer, data, builder) {
