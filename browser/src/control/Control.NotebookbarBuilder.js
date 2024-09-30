@@ -437,6 +437,30 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('HTML Document (.html)')
 				},
 				{
+					'action': 'downloadas-swf',
+					'text': _('Shockwave Flash (.swf)')
+				},
+				{
+					'action': 'downloadas-svg',
+					'text': _('Scalable Vector Graphics (.svg)')
+				},
+				{
+					'action': 'downloadas-bmp',
+					'text': _('Current slide as Bitmap (.bmp)')
+				},
+				{
+					'action': 'downloadas-gif',
+					'text': _('Current slide as Graphics Interchange Format (.gif)')
+				},
+				{
+					'action': 'downloadas-png',
+					'text': _('Current slide as Portable Network Graphics (.png)')
+				},
+				{
+					'action': 'downloadas-tiff',
+					'text': _('Current slide as Tag Image File Format (.tiff)')
+				},
+				{
 					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
