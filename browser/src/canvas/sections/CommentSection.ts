@@ -148,6 +148,8 @@ export class Comment extends CanvasSectionObject {
 		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
 		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'input', this.textAreaInput, this);
 		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'input', this.textAreaInput, this);
+		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'keydown', this.textAreaKeyDown, this);
+		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'keydown', this.textAreaKeyDown, this);
 		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
 		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, 'annotation-button button-primary',_('Save'), this.handleSaveCommentButton);
 		button = L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
@@ -448,6 +450,46 @@ export class Comment extends CanvasSectionObject {
 			// this.handleMentionInput(e, removeBefore);
 			this.handleMentionInput(ev, 0);
 		}
+	}
+
+	private handleKeyDownForPopup (ev: any, id: string): void {
+		var popup = L.DomUtil.get(id);
+		if (popup) {
+			if (ev.key === 'ArrowDown') {
+				var initialFocusElement = (<HTMLElement>document.querySelector('#' + id + ' span'));
+				if (initialFocusElement) {
+					initialFocusElement.tabIndex = 0;
+					initialFocusElement.focus();
+					ev.preventDefault();
+					ev.stopPropagation();
+				}
+
+			} else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
+				ev.key === 'ArrowUp' || ev.key === 'Home' ||
+				ev.key === 'End' || ev.key === 'PageUp' ||
+				ev.key === 'PageDown' || ev.key === 'Enter' ||
+				ev.key === 'Escape' || ev.key === 'Control' ||
+				ev.key === 'Tab') {
+
+				if (id === 'mentionPopup') {
+					this.map.fire('closementionpopup', { 'typingMention': false });
+					if (ev.key === 'Escape') {
+						ev.preventDefault();
+						ev.stopPropagation();
+					}
+					const targetId: string = ev?.currentTarget.id;
+					const isReplyNode: boolean = targetId.includes('annotation-reply-textarea-');
+					let targetTextArea = this.sectionProperties.nodeModifyText;
+					if (isReplyNode)
+						targetTextArea = this.sectionProperties.nodeReplyText;
+					targetTextArea.focus();
+				}
+			}
+		}
+	}
+
+	private textAreaKeyDown (ev: any): void {
+                this.handleKeyDownForPopup(ev, 'mentionPopup');
 	}
 
 	private updateContent (): void {
