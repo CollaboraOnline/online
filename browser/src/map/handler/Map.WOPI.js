@@ -3,7 +3,7 @@
  * L.WOPI contains WOPI related logic
  */
 
-/* global _ app _UNO JSDialog errorMessages */
+/* global _ app _UNO JSDialog errorMessages URLPopUpSection */
 L.Map.WOPI = L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
@@ -553,12 +553,16 @@ L.Map.WOPI = L.Handler.extend({
 				if (msg.Values.image && msg.Values.image.indexOf('data:') === 0) {
 					var image = L.DomUtil.create('img', '', preview);
 					image.src = msg.Values.image;
+					image.onload = function() {
+						URLPopUpSection.resetPosition();
+					};
 				} else {
 					L.DomUtil.addClass(preview, 'no-preview');
 				}
 				if (msg.Values.title) {
 					var title = L.DomUtil.create('p', '', preview);
 					title.innerText = msg.Values.title;
+					URLPopUpSection.resetPosition();
 				}
 			}
 		}
