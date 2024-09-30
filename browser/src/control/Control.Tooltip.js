@@ -109,8 +109,9 @@ class Tooltip {
 		return rect;
 	}
 
-	show(elem) {
-		let content = elem.dataset.cooltip,
+	show(elem, textContent) {
+		// `textContent` adds flexibility, enabling custom messages like document "Saved" instead of the fixed "cool-tooltip."
+		let content = textContent ? textContent : elem.dataset.cooltip,
 			rectView = new DOMRect(0, 0, window.innerWidth, window.innerHeight),
 			rectElem = elem.getBoundingClientRect(),
 			rectCont,
