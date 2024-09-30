@@ -3,4 +3,9 @@
 set -e
 
 rm -f /etc/apt/apt.conf.d/25coolwsd
-rm -f /etc/apparmor.d/usr.bin.coolwsd
+
+case "$1" in
+    remove)
+        rm -f /etc/apparmor.d/usr.bin.coolwsd
+    ;;
+esac
