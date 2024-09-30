@@ -103,7 +103,8 @@ class LayerRendererGl implements LayerRenderer {
 		gl.bufferData(gl.ARRAY_BUFFER, texCoords, gl.STATIC_DRAW);
 
 		gl.enable(gl.BLEND);
-		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+		gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+		gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
 	}
 
 	private loadTexture(
