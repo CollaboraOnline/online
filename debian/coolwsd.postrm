@@ -3,4 +3,10 @@
 set -e
 
 rm -f /etc/apt/apt.conf.d/25coolwsd
-rm -f /etc/apparmor.d/usr.bin.coolwsd
+# If abi 4.0 is not present, then remove the apparmor profile config
+# It may be a leftover from a broken install. But do not remove otherwise,
+# because during upgrade postrm runs runs after the files from the package
+# are unpacked, before postinst, so this file is always deleted.
+if [ ! -e /etc/apparmor.d/abi/4.0 ]; then
+    rm -f /etc/apparmor.d/usr.bin.coolwsd
+fi
