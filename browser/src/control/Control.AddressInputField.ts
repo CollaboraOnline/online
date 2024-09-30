@@ -33,6 +33,7 @@ class AddressInputField {
 			mobileWizard: this,
 			map: this.map,
 			cssClass: 'addressInput jsdialog',
+			windowId: -4,
 		});
 
 		this.createAddressInputField();
@@ -121,8 +122,6 @@ class AddressInputField {
 	private onJSAction(e: any) {
 		const data = e.data;
 		if (data.jsontype !== 'addressinputfield') return;
-
-		this.builder.setWindowId(data.id);
 
 		const innerData = data?.data;
 		this.builder.executeAction(this.parentContainer, innerData);
