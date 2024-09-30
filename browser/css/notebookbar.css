@@ -90,7 +90,9 @@ button.ui-tab.notebookbar {
 }
 
 .unoSave.savemodified .unobutton img,
-.savemodified.unotoolbutton .unobutton img {
+.savemodified.unotoolbutton .unobutton img,
+#save.saving img,
+#save.saved img {
 	box-sizing: border-box;
 	padding-left: 24px;
 }

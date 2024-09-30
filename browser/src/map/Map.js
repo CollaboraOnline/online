@@ -1446,12 +1446,14 @@ L.Map = L.Evented.extend({
 			{
 			case 'start':
 				this.uiManager.documentNameInput.showProgressBar();
+				this.uiManager.showSavingStatus();
 				break;
 			case 'setvalue':
 				this.uiManager.documentNameInput.setProgressBarValue(e.value);
 				break;
 			case 'finish':
 				this.uiManager.documentNameInput.hideProgressBar();
+				this.uiManager.showSavedStatus();
 				break;
 			}
 		}
