@@ -239,6 +239,9 @@ L.Map = L.Evented.extend({
 		// after we receive status for the first time.
 		this._docLoadedOnce = false;
 
+		//Last modified time of document saved state
+		this._lastModDateValue = '';
+
 		this.on('commandstatechanged', function(e) {
 			if (e.commandName === '.uno:ModifiedStatus') {
 				this._everModified = this._everModified || (e.state === 'true');
@@ -424,6 +427,8 @@ L.Map = L.Evented.extend({
 	},
 
 	initializeModificationIndicator: function() {
+		// we need dateValue at other places so this function should be called on docload ( do not restrict only for classic view)
+		this.updateModificationIndicator(this._lastmodtime);
 		var lastModButton = L.DomUtil.get('menu-last-mod');
 		if (lastModButton !== null && lastModButton !== undefined
 			&& lastModButton.firstChild.innerHTML !== null
@@ -436,8 +441,6 @@ L.Map = L.Evented.extend({
 			var mainSpan = document.createElement('span');
 			this.lastModIndicator = document.createElement('span');
 			mainSpan.appendChild(this.lastModIndicator);
-
-			this.updateModificationIndicator(this._lastmodtime);
 
 			// Replace menu button body with new content
 			lastModButton.firstChild.replaceChildren();
@@ -458,33 +461,41 @@ L.Map = L.Evented.extend({
 
 		clearTimeout(this._modTimeout);
 
-		if (this.lastModIndicator !== null && this.lastModIndicator !== undefined) {
-			var dateTime = new Date(this._lastmodtime.replace(/,.*/, 'Z'));
-			var dateValue;
+		// just for safty check sometimes this var may not be intialized then in that case better to return empty
+		if (!this._lastmodtime)
+			return;
 
-			var elapsed = Date.now() - dateTime;
-			var rtf1 = new Intl.RelativeTimeFormat(String.locale, { style: 'narrow' });
-			if (elapsed < 60000) {
-				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 1000), 'second');
-				timeout = 6000;
-			} else if (elapsed < 3600000) {
-				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 60000), 'minute');
-				timeout = 60000;
-			} else if (elapsed < 3600000 * 24) {
-				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 3600000), 'hour');
-				timeout = 60000;
-			} else {
-				dateValue = _('Last saved:') + ' ' + dateTime.toLocaleDateString(String.locale,
-					{ year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-				timeout = 60000;
-			}
+		var dateTime = new Date(this._lastmodtime.replace(/,.*/, 'Z'));
+		var dateValue;
 
-			this.lastModIndicator.innerHTML = dateValue;
-
-			if (timeout) {
-				this._modTimeout = setTimeout(L.bind(this.updateModificationIndicator, this, -1), timeout);
-			}
+		var elapsed = Date.now() - dateTime;
+		var rtf1 = new Intl.RelativeTimeFormat(String.locale, { style: 'narrow' });
+		if (elapsed < 60000) {
+			dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 1000), 'second');
+			timeout = 6000;
+		} else if (elapsed < 3600000) {
+			dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 60000), 'minute');
+			timeout = 60000;
+		} else if (elapsed < 3600000 * 24) {
+			dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 3600000), 'hour');
+			timeout = 60000;
+		} else {
+			dateValue = _('Last saved:') + ' ' + dateTime.toLocaleDateString(String.locale,
+				{ year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+			timeout = 60000;
 		}
+		if (this.lastModIndicator !== null && this.lastModIndicator !== undefined)
+			this.lastModIndicator.innerHTML = dateValue;
+		this.setLastModDateValue(dateValue);
+		this._modTimeout = setTimeout(L.bind(this.updateModificationIndicator, this, -1), timeout);
+	},
+
+	setLastModDateValue: function(dateValue) {
+		this._lastModDateValue = dateValue;
+	},
+
+	getLastModDateValue: function() {
+		return this._lastModDateValue;
 	},
 
 	showBusy: function(label, bar) {
