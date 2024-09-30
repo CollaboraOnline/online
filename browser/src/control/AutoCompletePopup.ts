@@ -21,6 +21,7 @@ interface Point {
 
 interface FireEvent {
 	data?: any;
+	cursor?: Point;
 }
 interface CloseMessageEvent extends FireEvent {
 	typingMention?: boolean;
@@ -59,19 +60,6 @@ abstract class AutoCompletePopup {
 	}
 
 	abstract onAdd(): void;
-
-	getCurrentCursorPosition(): Point {
-		var currPos = {
-			x: app.file.textCursor.rectangle.cX1,
-			y: app.file.textCursor.rectangle.cY2,
-		};
-		var origin = this.map.getPixelOrigin();
-		var panePos = this.map._getMapPanePos();
-		return new L.Point(
-			Math.round(currPos.x + panePos.x - origin.x),
-			Math.round(currPos.y + panePos.y - origin.y),
-		);
-	}
 
 	closePopup(): void {
 		var popupExists = L.DomUtil.get(this.popupId);
@@ -131,7 +119,6 @@ abstract class AutoCompletePopup {
 	}
 
 	openMentionPopup(ev: FireEvent): void {
-		const framePos = this.getCurrentCursorPosition();
 		const entries = this.getPopupEntries(ev);
 		let data: PopupData;
 
@@ -139,7 +126,7 @@ abstract class AutoCompletePopup {
 			const control = this.getTreeJSON();
 			// update the popup with list if mentionList already exist
 			if (L.DomUtil.get(this.popupId + 'List')) {
-				data = this.getPopupJSON(control, framePos);
+				data = this.getPopupJSON(control, ev.cursor);
 				(data.control as TreeWidget).entries = entries;
 				this.sendUpdate(data);
 				return;
@@ -152,7 +139,7 @@ abstract class AutoCompletePopup {
 		} else {
 			const control = this.getSimpleTextJSON();
 			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
-				data = this.getPopupJSON(control, framePos);
+				data = this.getPopupJSON(control, ev.cursor);
 				this.sendUpdate(data);
 				return;
 			}
@@ -162,8 +149,8 @@ abstract class AutoCompletePopup {
 			data.children[0].children[0] = control;
 		}
 		// add position
-		data.posx = framePos.x;
-		data.posy = framePos.y;
+		data.posx = ev.cursor.x;
+		data.posy = ev.cursor.y;
 		this.sendJSON(data);
 	}
 

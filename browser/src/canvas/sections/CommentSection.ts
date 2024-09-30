@@ -401,8 +401,53 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
-	private textAreaInput (): void {
+	getCurrentCursorPosition(isReplyNode: boolean): Point {
+		const caretRect = window.getSelection().getRangeAt(0).getBoundingClientRect();
+
+		var mapRect = this.map._container.getBoundingClientRect();
+		return new L.Point(
+			caretRect.left - mapRect.left,
+			caretRect.bottom - mapRect.top,
+		);
+	}
+
+	private handleMentionInput (ev: any, removeBefore: number): void {
+		var docLayer = this.sectionProperties.docLayer;
+		if (docLayer._typingMention)  {
+			const targetId: string = ev?.currentTarget.id;
+			const isReplyNode: boolean = targetId.includes('annotation-reply-textarea-');
+			if (removeBefore > 0) {
+				var ch = docLayer._mentionText.pop();
+				if (ch === '@') {
+					this.map.fire('closementionpopup', { 'typingMention': false });
+				} else {
+					this.map.fire('sendmentiontext', {data: docLayer._mentionText, cursor: this.getCurrentCursorPosition(isReplyNode)});
+				}
+			} else if (removeBefore === 0) {
+				docLayer._mentionText.push(ev.data);
+				var regEx = /^[0-9a-zA-Z ]+$/;
+				if (ev.data && ev.data.match(regEx)) {
+					this.map.fire('sendmentiontext', {data: docLayer._mentionText, cursor: this.getCurrentCursorPosition(isReplyNode)});
+				} else {
+					this.map.fire('closementionpopup', { 'typingMention': false });
+				}
+			}
+		}
+
+		if (ev.data === '@' && this.map.getDocType() === 'text') {
+			docLayer._mentionText.push(ev.data);
+			docLayer._typingMention = true;
+		}
+	}
+
+	private textAreaInput (ev: any): void {
 		this.sectionProperties.autoSave.innerText = '';
+
+		if (ev && this.sectionProperties.docLayer._docType === 'text') {
+			// special handling for mentions
+			// this.handleMentionInput(e, removeBefore);
+			this.handleMentionInput(ev, 0);
+		}
 	}
 
 	private updateContent (): void {
@@ -942,7 +987,7 @@ export class Comment extends CanvasSectionObject {
 	public handleReplyCommentButton (e: any): void {
 		cool.CommentSection.autoSavedComment = null;
 		cool.CommentSection.commentWasAutoAdded = false;
-		this.textAreaInput();
+		this.textAreaInput(null);
 		this.onReplyClick(e);
 	}
 
@@ -1007,7 +1052,7 @@ export class Comment extends CanvasSectionObject {
 		cool.CommentSection.autoSavedComment = null;
 		cool.CommentSection.commentWasAutoAdded = false;
 		this.sectionProperties.contentText.unedited = null;
-		this.textAreaInput();
+		this.textAreaInput(null);
 		this.onSaveComment(e);
 	}
 
