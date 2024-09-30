@@ -13,10 +13,10 @@
 declare var SlideShow: any;
 
 abstract class RenderContext {
-	public canvas: HTMLCanvasElement;
+	public canvas: HTMLCanvasElement | OffscreenCanvas;
 	protected gl: WebGL2RenderingContext | CanvasRenderingContext2D;
 
-	constructor(canvas: HTMLCanvasElement) {
+	constructor(canvas: HTMLCanvasElement | OffscreenCanvas) {
 		this.canvas = canvas;
 	}
 
@@ -27,7 +27,15 @@ abstract class RenderContext {
 		return this.gl as CanvasRenderingContext2D;
 	}
 
+	public createTextureWithColor(color: RGBAArray): WebGLTexture | ImageBitmap {
+		return null;
+	}
+
 	public createEmptySlide(): WebGLTexture | ImageBitmap {
+		return null;
+	}
+
+	public createTransparentTexture(): WebGLTexture | ImageBitmap {
 		return null;
 	}
 
@@ -54,7 +62,7 @@ abstract class RenderContext {
 }
 
 class RenderContextGl extends RenderContext {
-	constructor(canvas: HTMLCanvasElement) {
+	constructor(canvas: HTMLCanvasElement | OffscreenCanvas) {
 		super(canvas);
 		this.gl = this.canvas.getContext('webgl2') as WebGL2RenderingContext;
 		if (!this.gl) {
@@ -67,7 +75,9 @@ class RenderContextGl extends RenderContext {
 		return false;
 	}
 
-	public loadTexture(image: HTMLImageElement): WebGLTexture | ImageBitmap {
+	public loadTexture(
+		image: HTMLImageElement | ImageBitmap,
+	): WebGLTexture | ImageBitmap {
 		const gl = this.getGl();
 
 		const texture = gl.createTexture();
@@ -79,7 +89,8 @@ class RenderContextGl extends RenderContext {
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-		console.log(`Texture loaded:`, image.src);
+		if (image instanceof HTMLImageElement)
+			console.log(`Texture loaded:`, image.src);
 		return texture;
 	}
 
@@ -93,7 +104,7 @@ class RenderContextGl extends RenderContext {
 		gl.deleteVertexArray(vao);
 	}
 
-	public createEmptySlide(): WebGLTexture | ImageBitmap {
+	public createTextureWithColor(color: RGBAArray): WebGLTexture | ImageBitmap {
 		const gl = this.getGl();
 		const texture = gl.createTexture();
 		if (!texture) {
@@ -101,7 +112,7 @@ class RenderContextGl extends RenderContext {
 		}
 		gl.bindTexture(gl.TEXTURE_2D, texture);
 
-		const blackPixel = new Uint8Array([0, 0, 0, 255]);
+		const colorPixel = new Uint8Array(color);
 
 		gl.texImage2D(
 			gl.TEXTURE_2D,
@@ -112,7 +123,7 @@ class RenderContextGl extends RenderContext {
 			0,
 			gl.RGBA,
 			gl.UNSIGNED_BYTE,
-			blackPixel,
+			colorPixel,
 		);
 
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
@@ -121,6 +132,14 @@ class RenderContextGl extends RenderContext {
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
 		return texture;
+	}
+
+	public createEmptySlide(): WebGLTexture | ImageBitmap {
+		return this.createTextureWithColor([0, 0, 0, 255]);
+	}
+
+	public createTransparentTexture(): WebGLTexture | ImageBitmap {
+		return this.createTextureWithColor([0, 0, 0, 0]);
 	}
 
 	public createVertexShader(source: string): WebGLShader {
@@ -174,7 +193,7 @@ class RenderContextGl extends RenderContext {
 }
 
 class RenderContext2d extends RenderContext {
-	constructor(canvas: HTMLCanvasElement) {
+	constructor(canvas: HTMLCanvasElement | OffscreenCanvas) {
 		super(canvas);
 
 		this.gl = this.canvas.getContext('2d') as CanvasRenderingContext2D;

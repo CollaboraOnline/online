@@ -22,9 +22,7 @@ class BoxTransition extends Transition2d {
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
-	}
 
-	public start(): void {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 		if (
 			transitionSubType == TransitionSubType.RECTANGLE &&
@@ -34,7 +32,9 @@ class BoxTransition extends Transition2d {
 		} else {
 			this.direction = BoxSubType.VERTICAL;
 		}
+	}
 
+	public start(): void {
 		this.startTransition();
 	}
 
