@@ -25,10 +25,16 @@ class URLPopUpSection extends HTMLObjectSection {
 
 		if (app.map['wopi'].EnableRemoteLinkPicker)
 			app.map.fire('postMessage', { msgId: 'Action_GetLinkPreview', args: { url: url } });
+
+		this.sectionProperties.documentPosition = documentPosition.clone();
     }
 
 	getPopUpWidth(): number {
 		return this.getHTMLObject().getBoundingClientRect().width;
+	}
+
+	getPopUpHeight(): number {
+		return this.getHTMLObject().getBoundingClientRect().height;
 	}
 
 	createUIElements(url: string) {
@@ -108,13 +114,26 @@ class URLPopUpSection extends HTMLObjectSection {
 		};
 	}
 
+	public static resetPosition(section: URLPopUpSection) {
+		if (!section)
+			section = app.sectionContainer.getSectionWithName(URLPopUpSection.sectionName);
+
+		const left = section.sectionProperties.documentPosition.pX - section.getPopUpWidth() * 0.5 * app.dpiScale;
+		const top = section.sectionProperties.documentPosition.pY - (section.getPopUpHeight() + 20) * app.dpiScale;
+
+		if (section) {
+			section.setPosition(left, top);
+			section.containerObject.requestReDraw();
+		}
+	}
+
 	public static showURLPopUP(url: string, documentPosition: cool.SimplePoint, linkPosition?: cool.SimplePoint) {
 		if (URLPopUpSection.isOpen())
 			URLPopUpSection.closeURLPopUp();
 
 		const section = new URLPopUpSection(url, documentPosition, linkPosition);
 		app.sectionContainer.addSection(section);
-		section.setPosition(section.position[0] - (section.getPopUpWidth() * 0.5 * app.dpiScale), section.position[1] - 55 * app.dpiScale);
+		this.resetPosition(section);
     }
 
     public static closeURLPopUp() {
