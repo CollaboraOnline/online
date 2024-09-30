@@ -13,6 +13,7 @@
 
 #include <sstream>
 #include <string>
+#include <unordered_map>
 
 #include <JsonUtil.hpp>
 #include <Util.hpp>
@@ -41,6 +42,77 @@ namespace LOKitHelper
         }
     }
 
+    inline std::string getPartData(LibreOfficeKitDocument *loKitDocument, int part)
+    {
+        char* ptrToData = loKitDocument->pClass->getPartInfo(loKitDocument, part);
+        std::string result(ptrToData);
+        std::free(ptrToData);
+        return result;
+    }
+
+    inline std::string MapToJSONString(std::unordered_map<std::string, std::string> &map)
+    {
+        std::string resultingString = "{";
+        for (std::unordered_map<std::string, std::string>::iterator i = map.begin(); i != map.end(); i++)
+        {
+            resultingString += "\"" + i->first + "\": " + i->second + ",";
+        }
+        resultingString.pop_back();
+        resultingString += "}";
+
+        std::cout << "Resulting string: " << resultingString << std::endl;
+
+        return resultingString;
+    }
+
+    inline void fetchPartsData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int partsCount)
+    {
+        /*
+            Except for Writer.
+
+            Since parts should be an array, we will start an array and put parts into it.
+            We are building a JSON array.
+        */
+
+        std::string resultingPartsArray = "[";
+
+        for (int i = 0; i < partsCount; ++i)
+        {
+            std::string partData = getPartData(loKitDocument, i); // Part data is sent from the core side as JSON string.
+            resultingPartsArray += partData + (i < partsCount - 1 ? ", ": "]");
+        }
+
+        resultInfo["parts"] = resultingPartsArray;
+    }
+
+    inline void fetchWriterSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo)
+    {
+        std::string rectangles = loKitDocument->pClass->getPartPageRectangles(loKitDocument);
+
+        std::string::iterator end_pos = std::remove(rectangles.begin(), rectangles.end(), ' ');
+        rectangles.erase(end_pos, rectangles.end());
+
+        resultInfo["pagerectangles"] = rectangles;
+    }
+
+    inline void fetchCalcSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int part)
+    {
+        long lastColumn, lastRow;
+        loKitDocument->pClass->getDataArea(loKitDocument, part, &lastColumn, &lastRow);
+        resultInfo["lastcolumn"] = std::to_string(lastColumn);
+        resultInfo["lastrow"] = std::to_string(lastRow);
+
+        char* value = loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly");
+        if (value)
+        {
+            const std::string isReadOnly = std::string(value);
+            std::free(value);
+
+            bool readOnly = (isReadOnly.find("true") != std::string::npos);
+            resultInfo["readonly"] = readOnly ? "true": "false";
+        }
+    }
+
     inline std::string getDocumentTypeAsString(LibreOfficeKitDocument *loKitDocument)
     {
         assert(loKitDocument && "null loKitDocument");
@@ -50,146 +122,34 @@ namespace LOKitHelper
 
     inline std::string documentStatus(LibreOfficeKitDocument *loKitDocument)
     {
-        char *ptrValue;
         assert(loKitDocument && "null loKitDocument");
         const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
 
-        const int parts = loKitDocument->pClass->getParts(loKitDocument);
-        const int part = loKitDocument->pClass->getPart(loKitDocument);
-        std::ostringstream oss;
-        oss << "type=" << documentTypeToString(type)
-            << " parts=" << parts
-            << " current=" << part;
+        std::unordered_map<std::string, std::string> resultInfo;
+
+        const int partsCount = loKitDocument->pClass->getParts(loKitDocument);
+        const int selectedPart = loKitDocument->pClass->getPart(loKitDocument);
 
         long width, height;
         loKitDocument->pClass->getDocumentSize(loKitDocument, &width, &height);
-        oss << " width=" << width
-            << " height=" << height
-            << " viewid=" << loKitDocument->pClass->getView(loKitDocument);
+        int viewId = loKitDocument->pClass->getView(loKitDocument);
+
+        resultInfo["type"] = "\"" + documentTypeToString(type) + "\"";
+        resultInfo["partscount"] = std::to_string(partsCount);
+        resultInfo["selectedpart"] = std::to_string(selectedPart);
+        resultInfo["width"] = std::to_string(width);
+        resultInfo["height"] = std::to_string(height);
+        resultInfo["viewid"] = std::to_string(viewId);
 
         if (type == LOK_DOCTYPE_SPREADSHEET)
-        {
-            long lastColumn, lastRow;
-            loKitDocument->pClass->getDataArea(loKitDocument, part, &lastColumn, &lastRow);
-            oss << " lastcolumn=" << lastColumn
-                << " lastrow=" << lastRow;
-        }
+            fetchCalcSpecificData(loKitDocument, resultInfo, selectedPart);
+        else if (type == LOK_DOCTYPE_TEXT)
+            fetchWriterSpecificData(loKitDocument, resultInfo);
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
-        {
-            std::ostringstream hposs;
-            std::ostringstream sposs;
-            std::ostringstream rtlposs;
-            std::ostringstream protectss;
-            std::string mode;
-            for (int i = 0; i < parts; ++i)
-            {
-                ptrValue = loKitDocument->pClass->getPartInfo(loKitDocument, i);
-                const std::string partinfo(ptrValue);
-                std::free(ptrValue);
-                for (const auto& prop : JsonUtil::jsonToMap(partinfo))
-                {
-                    const std::string& name = prop.first;
-                    if (name == "visible")
-                    {
-                        if (prop.second == "0")
-                            hposs << i << ',';
-                    }
-                    else if (name == "selected")
-                    {
-                        if (prop.second == "1")
-                            sposs << i << ',';
-                    }
-                    else if (name == "rtllayout")
-                    {
-                        if (prop.second == "1")
-                            rtlposs << i << ',';
-                    }
-                    else if (name == "protected")
-                    {
-                        if (prop.second == "1")
-                            protectss << i << ',';
-                    }
-                    else if (name == "mode" && mode.empty())
-                    {
-                        mode = prop.second;
-                    }
-                }
-            }
+            fetchPartsData(loKitDocument, resultInfo, partsCount);
 
-            if (!mode.empty())
-                oss << " mode=" << mode;
-
-            std::string hiddenparts = hposs.str();
-            if (!hiddenparts.empty())
-            {
-                hiddenparts.pop_back(); // Remove last ','
-                oss << " hiddenparts=" << hiddenparts;
-            }
-
-            std::string selectedparts = sposs.str();
-            if (!selectedparts.empty())
-            {
-                selectedparts.pop_back(); // Remove last ','
-                oss << " selectedparts=" << selectedparts;
-            }
-
-            std::string rtlparts = rtlposs.str();
-            if (!rtlparts.empty())
-            {
-                rtlparts.pop_back(); // Remove last ','
-                oss << " rtlparts=" << rtlparts;
-            }
-
-            std::string protectparts = protectss.str();
-            if (!protectparts.empty())
-            {
-                protectparts.pop_back(); // Remove last ','
-                oss << " protectedparts=" << protectparts;
-            }
-
-            if (type == LOK_DOCTYPE_SPREADSHEET)
-            {
-                char* values = loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly");
-                if (values)
-                {
-                    const std::string isReadOnly = std::string(values);
-                    oss << " readonly=" << (isReadOnly.find("true") != std::string::npos);
-                    std::free(values);
-                }
-            }
-
-            for (int i = 0; i < parts; ++i)
-            {
-                oss << '\n';
-                ptrValue = loKitDocument->pClass->getPartName(loKitDocument, i);
-                oss << ptrValue;
-                std::free(ptrValue);
-            }
-
-            if (type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
-            {
-                for (int i = 0; i < parts; ++i)
-                {
-                    oss << '\n';
-                    ptrValue = loKitDocument->pClass->getPartHash(loKitDocument, i);
-                    oss << ptrValue;
-                    std::free(ptrValue);
-                }
-            }
-        }
-
-        if (type == LOK_DOCTYPE_TEXT)
-        {
-            std::string rectangles = loKitDocument->pClass->getPartPageRectangles(loKitDocument);
-
-            std::string::iterator end_pos = std::remove(rectangles.begin(), rectangles.end(), ' ');
-            rectangles.erase(end_pos, rectangles.end());
-
-            oss << " pagerectangles=" << rectangles.c_str();
-        }
-
-        return oss.str();
+        return MapToJSONString(resultInfo);
     }
 }
 
