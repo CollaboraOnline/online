@@ -1068,6 +1068,9 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
+		if (this.sectionProperties.docLayer._typingMention) {
+			return;
+		}
 		if (!this.sectionProperties.isRemoved) {
 			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
 			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
@@ -1090,6 +1093,9 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocusReply (e: any): void {
+		if (this.sectionProperties.docLayer._typingMention) {
+			return;
+		}
 		if (this.sectionProperties.nodeReplyText.value !== '') {
 			if (!this.sectionProperties.contentText.unedited)
 				this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
@@ -1517,6 +1523,28 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.docLayer._docType === 'text')
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';
 		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+	}
+
+
+	// TODO: use profileLink parameter to create hyperlink html element inside comment textarea
+	// TODO: fix not work with replyNode for now
+	public autoCompleteMention(username: string, profileLink: string, replacement: string): void {
+		let currentText: string = this.sectionProperties.nodeModifyText.value
+		const cursorPosition = this.sectionProperties.nodeModifyText.selectionStart;
+		const mentionStart = currentText.lastIndexOf(replacement, cursorPosition);
+
+		if (mentionStart !== -1) {
+			const mentionEnd = mentionStart + replacement.length;
+
+			currentText =
+				currentText.substring(0, mentionStart) +
+				`@${username}` +
+				currentText.substring(mentionEnd);
+		}
+
+		this.sectionProperties.nodeModifyText.value = currentText;
+		this.sectionProperties.nodeModifyText.selectionStart = mentionStart + username.length + 1;
+		this.sectionProperties.nodeModifyText.selectionEnd = mentionStart + username.length + 1;
 	}
 }
 
