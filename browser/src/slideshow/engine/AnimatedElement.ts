@@ -207,6 +207,78 @@ const aPropertyGetterSetterMap = {
 
 type PropertyGetterSetterMapKeyType = keyof typeof aPropertyGetterSetterMap;
 
+interface TransitionFilterFrameInfo {
+	animation: TransitionFilterAnimation;
+	time: number;
+}
+
+interface TransitionFiltersState {
+	filterQueue: Array<number>;
+	frameInfoMap: Map<number, TransitionFilterFrameInfo>;
+}
+
+class TransitionFiltersManager {
+	private filterQueue = new Array<number>();
+	private frameInfoMap = new Map<number, TransitionFilterFrameInfo>();
+
+	public isEmpty() {
+		return this.filterQueue.length === 0;
+	}
+
+	public add(animation: TransitionFilterAnimation, time: number) {
+		this.frameInfoMap.set(animation.getNodeId(), {
+			animation: animation,
+			time: time,
+		});
+		this.updateQueue(animation.getNodeId());
+	}
+
+	private updateQueue(nodeId: number) {
+		const length = this.filterQueue.length;
+		const last = this.filterQueue[length];
+		if (nodeId === last) return;
+		const index = this.filterQueue.indexOf(nodeId);
+		if (index > -1) {
+			// remove it
+			this.filterQueue.splice(index, 1);
+		}
+		this.filterQueue.push(nodeId);
+	}
+
+	public apply(): boolean {
+		let applied = false;
+		this.filterQueue.forEach((nodeId) => {
+			const frameInfo = this.frameInfoMap.get(nodeId);
+			if (frameInfo) {
+				applied = true;
+				ANIMDBG.print(`TransitionFiltersManager.apply: node: ${nodeId}`);
+				frameInfo.animation.renderFrame(frameInfo.time);
+			}
+		});
+		return applied;
+	}
+
+	public clear() {
+		this.frameInfoMap.forEach((frameInfo) => {
+			frameInfo.animation.notifySlideEnd();
+		});
+		this.filterQueue = [];
+		this.frameInfoMap.clear();
+	}
+
+	public getState(): TransitionFiltersState {
+		return {
+			filterQueue: structuredClone(this.filterQueue),
+			frameInfoMap: structuredClone(this.frameInfoMap),
+		};
+	}
+
+	public setState(state: TransitionFiltersState) {
+		this.filterQueue = structuredClone(state.filterQueue);
+		this.frameInfoMap = structuredClone(state.frameInfoMap);
+	}
+}
+
 interface AnimatedElementState {
 	nCenterX: number;
 	nCenterY: number;
@@ -216,6 +288,7 @@ interface AnimatedElementState {
 	aTMatrix: DOMMatrix;
 	nOpacity: number;
 	bVisible: boolean;
+	transitionFiltersState: TransitionFiltersState;
 }
 
 function BBoxToString(aBB: BoundingBoxType) {
@@ -236,6 +309,14 @@ class AnimatedElement {
 		'translate',
 		'scale',
 	]);
+
+	public static readonly SupportedGlTransitionFilters = new Set<string>([
+		'Fade',
+		'EllipseWipe',
+		'IrisWipe',
+	]);
+
+	public static readonly SupportedTransitionFilters = new Set<string>(['Fade']);
 
 	private sId: string;
 	private slideHash: string;
@@ -274,6 +355,10 @@ class AnimatedElement {
 	private aPreviousElement: AnimatedObjectType = null;
 	private bIsUpdated = true;
 
+	private glCanvas: OffscreenCanvas;
+	private glContext: RenderContextGl;
+	private transitionFiltersManager: TransitionFiltersManager;
+
 	constructor(
 		sId: string,
 		slideHash: string,
@@ -287,6 +372,8 @@ class AnimatedElement {
 		this.slideHeight = slideHeight;
 		this.bIsValid = false;
 
+		this.transitionFiltersManager = new TransitionFiltersManager();
+
 		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
 		this.slideRenderer = presenter._slideRenderer;
 	}
@@ -297,6 +384,10 @@ class AnimatedElement {
 
 	public isValid() {
 		return this.bIsValid;
+	}
+
+	private isGlSupported() {
+		return !this.glContext.is2dGl();
 	}
 
 	private cloneBBox(aBBox: BoundingBoxType): BoundingBoxType {
@@ -383,7 +474,27 @@ class AnimatedElement {
 				`\n  base center: x: ${this.nBaseCenterX} y: ${this.nBaseCenterY}`,
 		);
 
+		this.glCanvas = new OffscreenCanvas(
+			this.aBaseElement.width,
+			this.aBaseElement.height,
+		);
+
+		this.glContext = new RenderContextGl(this.glCanvas);
+		if (!this.glContext) {
+			this.glContext = new RenderContext2d(this.glCanvas);
+		}
+
 		this.bIsValid = true;
+	}
+
+	private getTextureFromElement(element: AnimatedObjectType) {
+		return this.glContext.loadTexture(element);
+	}
+
+	public setTransitionParameters(transitionParameters: TransitionParameters) {
+		transitionParameters.context = this.glContext;
+		transitionParameters.current = this.glContext.createTransparentTexture();
+		transitionParameters.next = this.getTextureFromElement(this.aBaseElement);
 	}
 
 	private resetProperties() {
@@ -397,6 +508,7 @@ class AnimatedElement {
 		this.bVisible = this.animatedLayerInfo
 			? this.animatedLayerInfo.initVisible
 			: false;
+		this.transitionFiltersManager.clear();
 		// this.aActiveBBox = this.cloneBBox(this.aBaseBBox);
 	}
 
@@ -437,7 +549,14 @@ class AnimatedElement {
 		return null;
 	}
 
+	applyTransitionFilters(): boolean {
+		if (!this.isGlSupported()) return false;
+		return this.transitionFiltersManager.apply();
+	}
+
 	updateLayer(renderingContext: OffscreenCanvasRenderingContext2D) {
+		const applied = this.applyTransitionFilters();
+
 		renderingContext.save();
 
 		// factor to convert from slide coordinate to canvas coordinate
@@ -458,7 +577,9 @@ class AnimatedElement {
 		]);
 		renderingContext.setTransform(transform);
 
-		const aElement = this.aBaseElement;
+		const aElement = applied
+			? this.glCanvas.transferToImageBitmap()
+			: this.aBaseElement;
 		console.debug(
 			`AnimatedElement(${this.sId}).updateLayer:
 				element width: ${aElement.width}
@@ -507,6 +628,7 @@ class AnimatedElement {
 	}
 
 	public getAnimatedLayer() {
+		ANIMDBG.print(`AnimatedElement(${this.getId()}).getAnimatedLayer`);
 		this.update();
 		return this.bVisible ? this.aActiveElement : null;
 	}
@@ -527,7 +649,7 @@ class AnimatedElement {
 	}
 
 	notifySlideEnd() {
-		// empty body
+		this.transitionFiltersManager.clear();
 	}
 
 	notifyAnimationStart() {
@@ -597,6 +719,7 @@ class AnimatedElement {
 			aTMatrix: DOMMatrix.fromMatrix(this.aTMatrix),
 			nOpacity: this.nOpacity,
 			bVisible: this.bVisible,
+			transitionFiltersState: this.transitionFiltersManager.getState(),
 		};
 		this.aStateSet.set(nAnimationNodeId, aState);
 	}
@@ -642,6 +765,7 @@ class AnimatedElement {
 			this.aTMatrix = aState.aTMatrix;
 			this.nOpacity = aState.nOpacity;
 			this.bVisible = aState.bVisible;
+			this.transitionFiltersManager.setState(aState.transitionFiltersState);
 		}
 		// we need to trigger at least one request animation frame for SlideRenderer.render method
 		// maybe we could implement a SlideRenderer.oneShot method.
@@ -901,6 +1025,13 @@ class AnimatedElement {
 			const sPathData = aClipPath.getAttribute('d');
 			this.aClipPath.setAttribute('d', sPathData);
 		}
+	}
+
+	setTransitionFilterFrame(
+		aTransitionFilterAnimation: TransitionFilterAnimation,
+		nT: number,
+	) {
+		this.transitionFiltersManager.add(aTransitionFilterAnimation, nT);
 	}
 
 	DBG(sMessage: string, nTime?: number) {

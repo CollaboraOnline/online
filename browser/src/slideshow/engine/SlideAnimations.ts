@@ -59,15 +59,18 @@ function isTransformSupported(aNodeInfo: AnimateTransformNodeInfo) {
 	);
 }
 
-function isTransitionFilterSupported(aNodeInfo: TransitionFilterNodeInfo) {
-	if (
-		aNodeInfo.transitionType === 'Fade' &&
-		aNodeInfo.transitionSubType === 'CrossFade'
-	) {
-		return true;
-	} else {
+function isTransitionFilterSupported(
+	aNodeInfo: TransitionFilterNodeInfo,
+	isGlSupported: boolean,
+) {
+	if (!aNodeInfo.transitionType) {
+		console.error('slideshow: missing transition type');
 		return false;
 	}
+	// return true;
+	return isGlSupported
+		? AnimatedElement.SupportedGlTransitionFilters.has(aNodeInfo.transitionType)
+		: AnimatedElement.SupportedTransitionFilters.has(aNodeInfo.transitionType);
 }
 
 function isTargetSupported(aNodeInfo: AnimateNodeInfo) {
@@ -173,7 +176,12 @@ function createAnimationNode(
 				return null;
 			}
 		case AnimationNodeType.TransitionFilter:
-			if (isTransitionFilterSupported(aNodeInfo as TransitionFilterNodeInfo)) {
+			if (
+				isTransitionFilterSupported(
+					aNodeInfo as TransitionFilterNodeInfo,
+					aNodeContext.aContext.aSlideShowHandler.isGlSupported(),
+				)
+			) {
 				aCreatedNode = new AnimationTransitionFilterNode(
 					aNodeInfo,
 					aParentNode,

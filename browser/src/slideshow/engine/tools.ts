@@ -17,6 +17,8 @@ type AGConstructor<T> = abstract new (...args: any[]) => T;
 type Handler0 = () => void;
 type Handler1 = (x: any) => void;
 
+type RGBAArray = [number, number, number, number];
+
 function assert(object: any, message: string) {
 	if (!object) {
 		window.app.console.trace();
