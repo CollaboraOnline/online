@@ -77,14 +77,8 @@ abstract class AutoCompletePopup {
 		var popupExists = L.DomUtil.get(this.popupId);
 		if (!popupExists) return;
 
-		var closePopupData = {
-			jsontype: 'dialog',
-			type: 'modalpopup',
-			action: 'close',
-			id: this.popupId,
-		} as PopupData;
-
-		this.map.fire('jsdialog', { data: closePopupData, callback: undefined });
+		this.map.jsdialog.focusToLastElement(this.popupId);
+		this.map.jsdialog.clearDialog(this.popupId);
 	}
 
 	abstract getPopupEntries(ev: FireEvent): Array<TreeEntryJSON>;
