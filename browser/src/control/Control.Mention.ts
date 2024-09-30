@@ -83,29 +83,55 @@ class Mention extends L.Control.AutoCompletePopup {
 		return entries;
 	}
 
+	private sendHyperlinkUnoCommand(
+		username: string,
+		profile: string,
+		replacement: string,
+	) {
+		var command = {
+			'Hyperlink.Text': {
+				type: 'string',
+				value: '@' + username,
+			},
+			'Hyperlink.URL': {
+				type: 'string',
+				value: profile,
+			},
+			'Hyperlink.ReplacementText': {
+				type: 'string',
+				value: replacement,
+			},
+		};
+		this.map.sendUnoCommand('.uno:SetHyperlink', command, true);
+		this.map.fire('postMessage', {
+			msgId: 'UI_Mention',
+			args: { type: 'selected', username: username },
+		});
+	}
+
 	callback(objectType: any, eventType: any, object: any, index: number) {
 		if (eventType === 'close') {
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'select' || eventType === 'activate') {
-			var command = {
-				'Hyperlink.Text': {
-					type: 'string',
-					value: '@' + this.itemList[index].username,
-				},
-				'Hyperlink.URL': {
-					type: 'string',
-					value: this.itemList[index].profile,
-				},
-				'Hyperlink.ReplacementText': {
-					type: 'string',
-					value: this.map._docLayer._mentionText.join(''),
-				},
-			};
-			this.map.sendUnoCommand('.uno:SetHyperlink', command, true);
-			this.map.fire('postMessage', {
-				msgId: 'UI_Mention',
-				args: { type: 'selected', username: this.itemList[index].username },
-			});
+			const username = this.itemList[index].username;
+			const profileLink = this.itemList[index].profile;
+			const replacement = this.map._docLayer._mentionText.join('');
+
+			var section = app.sectionContainer.getSectionWithName(
+				L.CSections.CommentList.name,
+			);
+			if (
+				section &&
+				section.sectionProperties.selectedComment &&
+				section.sectionProperties.selectedComment.isEdit()
+			)
+				section.sectionProperties.selectedComment.autoCompleteMention(
+					username,
+					profileLink,
+					replacement,
+				);
+			else this.sendHyperlinkUnoCommand(username, profileLink, replacement);
+
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'keydown') {
 			if (object.key !== 'Tab' && object.key !== 'Shift') {
