@@ -68,6 +68,12 @@ function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 			this.isLastFrame = last;
 		}
 
+		public renderFrame(nT: number) {
+			if (nT !== null && nT >= 0.0) {
+				this.render(nT);
+			}
+		}
+
 		protected animate() {
 			if (this.time !== null && this.time > 0.0) {
 				this.render(this.time);
@@ -91,7 +97,7 @@ function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 // expected by SlideChangeBase, so we define the following wrapper class
 abstract class TextureRendererCtorForSlideChangeBase extends SimpleTextureRenderer {
 	constructor(transitionParameters: TransitionParameters) {
-		super(transitionParameters.context);
+		super(transitionParameters.context as RenderContextGl);
 	}
 }
 

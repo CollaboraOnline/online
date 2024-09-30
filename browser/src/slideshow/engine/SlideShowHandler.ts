@@ -139,6 +139,10 @@ class SlideShowHandler {
 		this.slideShowNavigator = slideShowNavigator;
 	}
 
+	isGlSupported(): boolean {
+		return !this.presenter._slideRenderer._context.is2dGl();
+	}
+
 	setSlideEvents(
 		aNextEffectEventArray: NextEffectEventArray,
 		aInteractiveAnimationSequenceMap: InteractiveAnimationSequenceMap,

@@ -168,6 +168,10 @@ abstract class SlideRenderer {
 		return null;
 	}
 
+	public createTransparentTexture(): WebGLTexture | ImageBitmap {
+		return null;
+	}
+
 	public notifyAnimationStarted(sId: string) {
 		const isAnyLayerActive = this.isAnyLayerActive();
 		this._activeLayers.add(sId);
@@ -367,6 +371,10 @@ class SlideRendererGl extends SlideRenderer {
 
 	public createEmptyTexture(): WebGLTexture | ImageBitmap {
 		return this._context.createEmptySlide();
+	}
+
+	public createTransparentTexture(): WebGLTexture | ImageBitmap {
+		return this._context.createTransparentTexture();
 	}
 
 	public deleteCurrentSlideTexture(): void {
