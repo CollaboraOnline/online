@@ -52,6 +52,57 @@
 	justify-content: flex-end;
 }
 
+/* Add a class for the rotating effect */
+.rotate-icon {
+	animation: spin 2s linear infinite;
+}
+
+/* Keyframes for rotation */
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+#save {
+	display: flex;
+	font-size: var(--default-font-size);
+	font-family: var(--cool-font);
+	position: relative;
+	background: transparent;
+	padding-inline-start: 2px;
+	height: 24px;
+	align-items: center;
+}
+
+#save.saving img {
+	background: url('images/lc_arrowspin.svg') no-repeat center;
+}
+
+#save.saving::after {
+	content: 'Saving...';
+	font-size: var(--default-font-size);
+	font-family: var(--cool-font);
+	color: var(--color-main-text);
+	margin-left: 2%;
+}
+
+#save.saved img {
+	background: url('images/lc_saved.svg') no-repeat center;
+}
+
+#save.saved::after {
+	content: 'Saved';
+	color: #309048;
+	margin-left: 2%;
+}
+
+[data-theme='dark'] #save.saving img {
+	background: url('images/dark/lc_arrowspin.svg') no-repeat center;
+}
 #document-titlebar {
 	display: inline-table; /*new*/
 	table-layout: fixed;
