@@ -46,6 +46,11 @@ class PresenterConsole {
 			'beforeunload',
 			L.bind(this._onClose, this),
 		);
+		this._proxyPresenter.addEventListener('click', L.bind(this._onClick, this));
+		this._proxyPresenter.addEventListener(
+			'keydown',
+			L.bind(this._onKeyDown, this),
+		);
 
 		this._proxyPresenter.document.documentElement.innerHTML =
 			this._slideShowPresenter._generateSlideWindowHtml(_('Presenter Console'));
@@ -56,7 +61,23 @@ class PresenterConsole {
 		this._proxyPresenter.document.body.style.overflow = 'hidden';
 	}
 
+	_onKeyDown(e) {
+		this._map.slideShowPresenter.getNavigator().onKeyDown(e);
+	}
+
+	_onClick(e) {
+		this._map.slideShowPresenter.getNavigator().onClick(e);
+	}
+
 	_onClose() {
+		this._proxyPresenter.removeEventListener(
+			'click',
+			L.bind(this._onClick, this),
+		);
+		this._proxyPresenter.removeEventListener(
+			'keydown',
+			L.bind(this._onKeyDown, this),
+		);
 		delete this._proxyPresenter;
 	}
 }
