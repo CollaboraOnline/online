@@ -553,13 +553,20 @@ class LayerDrawing {
 						'LayerDrawing.drawDrawPageLayer: retrieved animatedElement',
 					);
 					if (animatedElement.isValid()) {
-						const nextFrame = animatedElement.getAnimatedLayer();
-						if (nextFrame) {
-							console.debug('LayerDrawing.drawDrawPageLayer: draw next frame');
-							this.drawBitmap(nextFrame);
+						if (this.layerRenderer.isGlRenderer()) {
+							animatedElement.renderLayer(this.layerRenderer);
 							return;
+						} else {
+							const nextFrame = animatedElement.getAnimatedLayer();
+							if (nextFrame) {
+								console.debug(
+									'LayerDrawing.drawDrawPageLayer: draw next frame',
+								);
+								this.drawBitmap(nextFrame);
+								return;
+							}
+							return; // no layer means it is not visible
 						}
-						return; // no layer means it is not visible
 					}
 				}
 				this.drawBitmap(content.content as ImageInfo);
