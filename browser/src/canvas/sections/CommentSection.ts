@@ -1567,31 +1567,38 @@ export class Comment extends CanvasSectionObject {
 		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 	}
 
-
-	// TODO: use profileLink parameter to create hyperlink html element inside comment textarea
-	// TODO: fix not work with replyNode for now
 	public autoCompleteMention(username: string, profileLink: string, replacement: string): void {
-		const contentEditableDiv = this.sectionProperties.nodeModifyText;
-		const currentText = contentEditableDiv.textContent;
-
 		const selection = window.getSelection();
 		if (!selection.rangeCount) return;
 
 		const range = selection.getRangeAt(0);
+
 		const cursorPosition = range.endOffset;
-		const mentionStart = currentText.lastIndexOf(replacement, cursorPosition);
+		const container = range.startContainer;
+
+		const containerText = container.textContent || '';
+		const mentionStart = containerText.lastIndexOf(replacement, cursorPosition);
 
 		if (mentionStart !== -1) {
 			const mentionEnd = mentionStart + replacement.length;
-			const beforeMention = currentText.substring(0, mentionStart);
-			const afterMention = currentText.substring(mentionEnd);
-			const newContent = beforeMention + `@${username}` + afterMention;
 
-			contentEditableDiv.textContent = newContent;
+			const beforeMention = containerText.substring(0, mentionStart);
+			const afterMention = containerText.substring(mentionEnd);
+
+			const hyperlink = document.createElement('a');
+			hyperlink.href = profileLink;
+			hyperlink.textContent = `@${username}`;
+
+			container.textContent = beforeMention;
+			container.parentNode?.insertBefore(hyperlink, container.nextSibling);
+
+			const afterTextNode = document.createTextNode(afterMention);
+			hyperlink.parentNode?.insertBefore(afterTextNode, hyperlink.nextSibling);
 
 			const newRange = document.createRange();
-			newRange.setStart(contentEditableDiv.childNodes[0], mentionStart + username.length + 1);
-			newRange.setEnd(contentEditableDiv.childNodes[0], mentionStart + username.length + 1);
+			newRange.setStartAfter(hyperlink);
+			newRange.setEndAfter(hyperlink);
+
 			selection.removeAllRanges();
 			selection.addRange(newRange);
 		}
