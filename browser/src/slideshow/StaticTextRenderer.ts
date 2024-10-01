@@ -31,8 +31,7 @@ class StaticTextRenderer extends TextureAnimationBase {
 	}
 
 	public animate(): void {
-		this.render();
-		requestAnimationFrame(this.animate.bind(this));
+		requestAnimationFrame(this.render.bind(this));
 	}
 
 	public createTextTexture(displayText: string): WebGLTexture {
