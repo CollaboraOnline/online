@@ -636,6 +636,7 @@ app.definitions.Socket = L.Class.extend({
 		this._logSocket('INCOMING', textMsg);
 
 		var command = this.parseServerCmd(textMsg);
+
 		if (textMsg.startsWith('coolserver ')) {
 			// This must be the first message, unless we reconnect.
 			var oldVersion = null;
@@ -1295,7 +1296,7 @@ app.definitions.Socket = L.Class.extend({
 		}
 
 		if (textMsg.startsWith('status:')) {
-			this._onStatusMsg(textMsg, command);
+			this._onStatusMsg(textMsg, JSON.parse(textMsg.replace('status:', '').replace('statusupdate:', '')));
 			return;
 		}
 

@@ -103,24 +103,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this.requestCellCursor();
 	},
 
-	isHiddenPart: function (part) {
-		if (!this._hiddenParts)
-			return false;
-		return this._hiddenParts.indexOf(part) !== -1;
-	},
-
-	hiddenParts: function () {
-		if (!this._hiddenParts)
-			return 0;
-		return this._hiddenParts.length;
-	},
-
-	hasAnyHiddenPart: function () {
-		if (!this._hiddenParts)
-			return false;
-		return this.hiddenParts() !== 0;
-	},
-
 	_onUpdateParts: function (e) {
 		if (typeof this._prevSelectedPart === 'number' && !e.source) {
 			this.refreshViewData(undefined, false /* compatDataSrcOnly */, true /* sheetGeometryChanged */);
@@ -234,7 +216,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
-		if (!this.isHiddenPart(part)) {
+		if (!app.calc.isPartHidden(part)) {
 			this.refreshViewData(undefined, true /* compatDataSrcOnly */, false /* sheetGeometryChanged */);
 			this._replayPrintTwipsMsgAllViews('cellviewcursor');
 			this._replayPrintTwipsMsgAllViews('textviewselection');
@@ -368,53 +350,87 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	_handleRTLFlags: function (command) {
-		var rtlChanged = command.rtlParts === undefined;
-		rtlChanged = rtlChanged || this._rtlParts !== undefined && (
-			command.rtlParts.length !== this._rtlParts.length
-			|| this._rtlParts.some(function (part, index) {
-				return part !== command.rtlParts[index];
-			}));
-		this._rtlParts = command.rtlParts || [];
-		if (rtlChanged) {
-			this._adjustCanvasSectionsForLayoutChange();
+	_hasPartsCountOrNamesChanged(lastStatusJSON, statusJSON) {
+		if (!lastStatusJSON)
+			return true;
+
+		if (lastStatusJSON.parts.length !== statusJSON.parts.length)
+			return true;
+		else {
+			for (let i = 0; i < statusJSON.parts.length; i++) {
+				if (statusJSON.parts[i].name !== lastStatusJSON.parts[i].name)
+					return true;
+			}
+			return false;
+		}
+	},
+
+	_refreshPartNames(statusJSON) {
+		this._partNames = [];
+
+		for (let i = 0; i < statusJSON.parts.length; i++) {
+			this._partNames.push(statusJSON.parts[i].name);
+		}
+	},
+
+	_refreshPartHashes(statusJSON) {
+		app.calc.partHashes = [];
+
+		for (let i = 0; i < statusJSON.parts.length; i++) {
+			app.calc.partHashes.push(statusJSON.parts[i].hash);
 		}
 	},
 
 	_onStatusMsg: function (textMsg) {
 		console.log('DEBUG: onStatusMsg: ' + textMsg);
-		var command = app.socket.parseServerCmd(textMsg);
-		if (command.width && command.height && this._documentInfo !== textMsg) {
+
+		const statusJSON = JSON.parse(textMsg.replace('status:', '').replace('statusupdate:', ''));
+
+		if (statusJSON.width && statusJSON.height && this._documentInfo !== textMsg) {
+			const temp = this._lastStatusJSON ? Object.assign({}, this._lastStatusJSON): null;
+			this._lastStatusJSON = statusJSON;
+			this._documentInfo = textMsg;
+
 			var firstSelectedPart = (typeof this._selectedPart !== 'number');
-			if (command.readonly === 1)
-				this._map.setPermission('readonly');
-			this._docWidthTwips = command.width;
-			this._docHeightTwips = command.height;
+
+			if (statusJSON.readonly) this._map.setPermission('readonly');
+
+			this._docWidthTwips = statusJSON.width;
+			this._docHeightTwips = statusJSON.height;
+
 			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
 			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
 			app.view.size.pixels = app.file.size.pixels.slice();
-			this._docType = command.type;
-			this._parts = command.parts;
+
+			this._docType = statusJSON.type;
+			this._parts = statusJSON.partscount;
+
 			if (app.socket._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 				this._resetInternalState();
 				window.keyboard.hintOnscreenKeyboard(window.keyboard.onscreenKeyboardHint);
 			} else {
-				this._selectedPart = command.selectedPart;
+				this._selectedPart = statusJSON.selectedpart;
 			}
-			this._lastColumn = command.lastcolumn;
-			this._lastRow = command.lastrow;
-			this._selectedMode = (command.mode !== undefined) ? command.mode : 0;
+
+			this._lastColumn = statusJSON.lastcolumn;
+			this._lastRow = statusJSON.lastrow;
+			this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+
 			if (this.sheetGeometry && this._selectedPart != this.sheetGeometry.getPart()) {
 				// Core initiated sheet switch, need to get full sheetGeometry data for the selected sheet.
 				this.requestSheetGeometryData();
 			}
-			this._viewId = parseInt(command.viewid);
+
+			this._viewId = statusJSON.viewid;
+
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
+
 			var mapSize = this._map.getSize();
 			var sizePx = this._twipsToPixels(new L.Point(this._docWidthTwips, this._docHeightTwips));
 			var width = sizePx.x;
 			var height = sizePx.y;
+
 			if (width < mapSize.x || height < mapSize.y) {
 				width = Math.max(width, mapSize.x);
 				height = Math.max(height, mapSize.y);
@@ -427,43 +443,30 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			else {
 				this._updateMaxBounds(true);
 			}
-			this._hiddenParts = command.hiddenparts || [];
 
-			var pparts = [];
-			pparts.length = command.parts;
-			this._protectedParts = pparts.fill(false, 0, command.parts);
-			if (command.protectedParts) {
-				command.protectedParts.forEach(function(i) {
-					return this._protectedParts[i] = true;
-				}.bind(this));
-			}
+			this._adjustCanvasSectionsForLayoutChange();
 
-			this._handleRTLFlags(command);
-			this._documentInfo = textMsg;
-			var partNames = textMsg.match(/[^\r\n]+/g);
-			// only get the last matches
-			var oldPartNames = this._partNames;
-			this._partNames = partNames.slice(partNames.length - this._parts);
-			app.calc.partHashes = this._partNames; // TODO: generate unique hash on the core side
+			this._refreshPartNames(statusJSON);
+			this._refreshPartHashes(statusJSON);
+
 			// if the number of parts, or order has changed then refresh comment positions
-			if (oldPartNames !== this._partNames) {
+			if (this._hasPartsCountOrNamesChanged(temp, statusJSON))
 				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
-			}
+
+
 			this._map.fire('updateparts', {
 				selectedPart: this._selectedPart,
 				parts: this._parts,
 				docType: this._docType,
-				partNames: this._partNames,
-				hiddenParts: this._hiddenParts,
-				protectedParts: this._protectedParts,
-				source: 'status'
+				source: 'status',
+				partNames: this._partNames
 			});
+
 			this._resetPreFetching(true);
-			if (firstSelectedPart) {
-				this._switchSplitPanesContext();
-			}
+
+			if (firstSelectedPart) this._switchSplitPanesContext();
 		} else {
-			this._handleRTLFlags(command);
+			this._adjustCanvasSectionsForLayoutChange();
 		}
 
 		var scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
@@ -639,7 +642,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_adjustCanvasSectionsForLayoutChange: function () {
-		var sheetIsRTL = this._rtlParts.indexOf(this._selectedPart) >= 0;
+		var sheetIsRTL = app.calc.isRTL();
 		if (sheetIsRTL && this._layoutIsRTL !== true) {
 			console.log('debug: in LTR -> RTL canvas section adjustments');
 			var sectionContainer = app.sectionContainer;
