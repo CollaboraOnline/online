@@ -212,6 +212,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		// 1s after the last invalidation, update the preview
 		clearTimeout(this._previewInvalidator);
 		this._previewInvalidator = setTimeout(L.bind(this._invalidatePreviews, this), this.options.previewInvalidationTimeout);
+		this._update();
 	},
 
 	_onSetPartMsg: function (textMsg) {
