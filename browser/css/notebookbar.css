@@ -282,6 +282,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	cursor: pointer;
 }
 
+.unotoolbutton[disabled] * {
+	cursor: not-allowed !important;
+}
+
 .unotoolbutton.notebookbar {
 	margin-inline-end: 5px !important;
 	text-align: center;
