@@ -32,10 +32,12 @@ class PresenterConsole {
 	_onPresentInConsole() {
 		this._map.fire('newpresentinwindow');
 
+		let top = screen.height - 500;
+		let left = screen.width - 500;
 		this._proxyPresenter = window.open(
 			'',
 			'_blank',
-			'popup,width=500,height=500',
+			'popup,width=500,height=500,left=' + left + ',top=' + top,
 		);
 		if (!this._proxyPresenter) {
 			this._map.slideShowPresenter._notifyBlockedPresenting();
