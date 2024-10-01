@@ -68,8 +68,16 @@
             <action name="edit" default="true" ext="dif"/>
             <action name="edit" default="true" ext="slk"/>
             <action name="edit" default="true" ext="csv"/>
+            <action name="edit" default="true" ext="tsv"/>
             <action name="edit" default="true" ext="dbf"/>
             <action name="view" default="true" ext="wk1"/>
+            <action name="view" default="true" ext="wks"/>
+            <action name="view" default="true" ext="xlr"/>
+            <action name="view" default="true" ext="123"/>
+            <action name="view" default="true" ext="qpw"/>
+            <action name="view" default="true" ext="wb1"/>
+            <action name="view" default="true" ext="wq1"/>
+            <action name="view" default="true" ext="wq2"/>
             <action name="view" default="true" ext="gnumeric"/>
             <action name="view" default="true" ext="numbers"/>
         </app>
@@ -325,6 +333,9 @@
             <action name="view" default="true" ext=""/>
         </app>
         <app name="application/vnd.ms-works">
+            <action name="view" default="true" ext=""/>
+        </app>
+        <app name="application/vnd.ms-office">
             <action name="view" default="true" ext=""/>
         </app>
         <app name="application/x-mswrite">
