@@ -434,7 +434,7 @@ L.Map.include({
 			return;
 		}
 
-		if (this.getDocType() === 'spreadsheet' && docLayer._parts <= docLayer.hiddenParts() + 1) {
+		if (this.getDocType() === 'spreadsheet' && docLayer._parts <= app.calc.getHiddenPartCount() + 1) {
 			return;
 		}
 
@@ -478,21 +478,20 @@ L.Map.include({
 	},
 
 	showPage: function () {
-		if (this.getDocType() === 'spreadsheet' && this.hasAnyHiddenPart()) {
-			var partNames_ = this._docLayer._partNames;
-			var hiddenParts_ = this._docLayer._hiddenParts;
+		if (this.getDocType() === 'spreadsheet' && app.calc.isAnyPartHidden()) {
+			var hiddenParts = app.calc.getHiddenPartNameArray();
 
-			if (hiddenParts_.length > 0) {
+			if (app.calc.isAnyPartHidden()) {
 				var container = document.createElement('div');
 				container.style.maxHeight = '300px';
 				container.style.overflowY = 'auto';
-				for (var i = 0; i < hiddenParts_.length; i++) {
+				for (var i = 0; i < hiddenParts.length; i++) {
 					var checkbox = document.createElement('input');
 					checkbox.type = 'checkbox';
-					checkbox.id = 'hidden-part-checkbox-' + String(hiddenParts_[i]);
+					checkbox.id = 'hidden-part-checkbox-' + hiddenParts[i];
 					var label = document.createElement('label');
-					label.htmlFor = 'hidden-part-checkbox-' + String(hiddenParts_[i]);
-					label.innerText = partNames_[hiddenParts_[i]];
+					label.htmlFor = 'hidden-part-checkbox-' + hiddenParts[i];
+					label.innerText = hiddenParts[i];
 					var newLine = document.createElement('br');
 					container.appendChild(checkbox);
 					container.appendChild(label);
@@ -504,7 +503,7 @@ L.Map.include({
 				var checkboxList = document.querySelectorAll('input[id^="hidden-part-checkbox"]');
 				for (var i = 0; i < checkboxList.length; i++) {
 					if (checkboxList[i].checked === true) {
-						var partName_ = partNames_[parseInt(checkboxList[i].id.replace('hidden-part-checkbox-', ''))];
+						var partName_ = checkboxList[i].id.replace('hidden-part-checkbox-', '');
 						var argument = {aTableName: {type: 'string', value: partName_}};
 						app.socket.sendMessage('uno .uno:Show ' + JSON.stringify(argument));
 					}
@@ -512,12 +511,13 @@ L.Map.include({
 			};
 
 			this.uiManager.showInfoModal('show-sheets-modal', '', ' ', ' ', _('Close'), callback, true, 'show-sheets-modal-response');
-			document.getElementById('show-sheets-modal').querySelectorAll('label')[0].outerHTML = container.outerHTML;
+			const modal = document.getElementById('show-sheets-modal');
+			modal.insertBefore(container, modal.children[0]);
 		}
 	},
 
 	hidePage: function (tabNumber) {
-		if (this.getDocType() === 'spreadsheet' && this.getNumberOfVisibleParts() > 1) {
+		if (this.getDocType() === 'spreadsheet' && app.calc.getVisiblePartCount() > 1) {
 			var argument = {nTabNumber: {type: 'int16', value: tabNumber}};
 			app.socket.sendMessage('uno .uno:Hide ' + JSON.stringify(argument));
 		}
@@ -545,24 +545,8 @@ L.Map.include({
 		this.fire('toggleslidehide');
 	},
 
-	isHiddenPart: function (part) {
-		if (this.getDocType() !== 'spreadsheet')
-			return false;
-		return this._docLayer.isHiddenPart(part);
-	},
-
-	hasAnyHiddenPart: function () {
-		if (this.getDocType() !== 'spreadsheet')
-			return false;
-		return this._docLayer.hasAnyHiddenPart();
-	},
-
 	getNumberOfParts: function () {
 		return this._docLayer._parts;
-	},
-
-	getNumberOfVisibleParts: function () {
-		return this.getNumberOfParts() - this._docLayer.hiddenParts();
 	},
 
 	getCurrentPartNumber: function () {
