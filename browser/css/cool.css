@@ -62,7 +62,7 @@ body {
 	user-select: none;
 }
 
-#insertgraphic {
+#insertgraphic, #insertmultimedia {
 	position: fixed;
 	top: -100em;
 }
