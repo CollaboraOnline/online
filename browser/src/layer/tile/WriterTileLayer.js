@@ -120,11 +120,12 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		// 1s after the last invalidation, update the preview
 		clearTimeout(this._previewInvalidator);
 		this._previewInvalidator = setTimeout(L.bind(this._invalidatePreviews, this), this.options.previewInvalidationTimeout);
+		this._update();
 	},
 
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
-		if (part !== this._selectedPart) {
+		if (part !== this._currentPage) {
 			this._currentPage = part;
 			this._map.fire('pagenumberchanged', {
 				currentPage: part,
@@ -135,7 +136,8 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_onStatusMsg: function (textMsg) {
-		var command = app.socket.parseServerCmd(textMsg);
+		const statusJSON = JSON.parse(textMsg.replace('status:', '').replace('statusupdate:', ''));
+
 		if (app.socket._reconnecting) {
 			// persist cursor position on reconnection
 			// In writer, core always sends the cursor coordinates
@@ -145,33 +147,32 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			this._postMouseEvent('buttondown', this.lastCursorPos.center[0], this.lastCursorPos.center[1], 1, 1, 0);
 			this._postMouseEvent('buttonup', this.lastCursorPos.center[0], this.lastCursorPos.center[1], 1, 1, 0);
 		}
-		if (!command.width || !command.height || this._documentInfo === textMsg)
+		if (!statusJSON.width || !statusJSON.height || this._documentInfo === textMsg)
 			return;
 
-		var sizeChanged = command.width !== this._docWidthTwips || command.height !== this._docHeightTwips;
+		var sizeChanged = statusJSON.width !== this._docWidthTwips || statusJSON.height !== this._docHeightTwips;
 
-		if (command.viewid !== undefined) {
-			this._viewId = parseInt(command.viewid);
-		}
+		if (statusJSON.viewid !== undefined) this._viewId = statusJSON.viewid;
+
 		console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 
 		if (sizeChanged) {
-			this._docWidthTwips = command.width;
-			this._docHeightTwips = command.height;
+			this._docWidthTwips = statusJSON.width;
+			this._docHeightTwips = statusJSON.height;
 			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
 			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
 			app.view.size.pixels = app.file.size.pixels.slice();
-			this._docType = command.type;
+			this._docType = statusJSON.type;
 			this._updateMaxBounds(true);
 		}
 
 		this._documentInfo = textMsg;
 		this._selectedPart = 0;
-		this._selectedMode = (command.mode !== undefined) ? command.mode : 0;
+		this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
 		this._parts = 1;
-		this._currentPage = command.selectedPart;
-		this._pages = command.parts;
-		app.file.writer.pageRectangleList = command.pageRectangleList.slice(); // Copy the array.
+		this._currentPage = statusJSON.selectedpart;
+		this._pages = statusJSON.partscount;
+		app.file.writer.pageRectangleList = statusJSON.pagerectangles.slice(); // Copy the array.
 		this._map.fire('pagenumberchanged', {
 			currentPage: this._currentPage,
 			pages: this._pages,
