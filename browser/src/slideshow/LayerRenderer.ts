@@ -19,12 +19,20 @@ declare var SlideShow: any;
 interface LayerRenderer {
 	initialize(): void;
 	clearCanvas(): void;
-	drawBitmap(imageInfo: ImageInfo | ImageBitmap): void;
+	drawBitmap(
+		imageInfo: ImageInfo | ImageBitmap,
+		properties?: AnimatedElementRenderProperties,
+	): void;
 	dispose(): void;
 	fillColor(slideInfo: SlideInfo): boolean;
+	isGlRenderer(): boolean;
 }
 
 class LayerRendererGl implements LayerRenderer {
+	private static readonly DefaultVertices = [
+		-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
+	];
+
 	private offscreenCanvas: OffscreenCanvas;
 	private gl: WebGLRenderingContext;
 	private program: WebGLProgram;
@@ -50,6 +58,10 @@ class LayerRendererGl implements LayerRenderer {
 		// do nothing!
 	}
 
+	isGlRenderer(): boolean {
+		return true;
+	}
+
 	private vertexShaderSource = `
 			attribute vec2 a_position;
 			attribute vec2 a_texCoord;
@@ -62,10 +74,13 @@ class LayerRendererGl implements LayerRenderer {
 
 	private fragmentShaderSource = `
 		precision mediump float;
+		uniform float alpha;
 		varying vec2 v_texCoord;
 		uniform sampler2D u_sampler;
 		void main() {
-			gl_FragColor = texture2D(u_sampler, v_texCoord);
+			vec4 color = texture2D(u_sampler, v_texCoord);
+			color = color * alpha;
+			gl_FragColor = color;
 		}
 		`;
 
@@ -94,11 +109,6 @@ class LayerRendererGl implements LayerRenderer {
 
 		// Create buffers
 		this.positionBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
-		const positions = new Float32Array([
-			-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
-		]);
-		gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
 
 		this.texCoordBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordBuffer);
@@ -117,6 +127,28 @@ class LayerRendererGl implements LayerRenderer {
 		gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 		gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
 		this.gl.disable(this.gl.DEPTH_TEST);
+	}
+
+	private initPositionBuffer(bounds: BoundsType) {
+		const gl = this.gl;
+
+		let vertices = LayerRendererGl.DefaultVertices;
+		if (bounds) {
+			// convert [0,1] => [-1,1]
+			for (let i = 0; i < bounds.length; ++i) bounds[i] = 2 * bounds[i] - 1;
+
+			// flip y coordinates
+			const l = bounds[0]; // left bound
+			const t = -bounds[1]; // top bound
+			const r = bounds[2]; // right bound
+			const b = -bounds[3]; // bottom bound
+
+			vertices = [l, b, r, b, l, t, l, t, r, b, r, t];
+		}
+
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
+		const positions = new Float32Array(vertices);
+		gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
 	}
 
 	private loadTexture(
@@ -183,11 +215,22 @@ class LayerRendererGl implements LayerRenderer {
 		gl.clear(gl.COLOR_BUFFER_BIT);
 	}
 
-	drawBitmap(imageInfo: ImageInfo | ImageBitmap): void {
+	drawBitmap(
+		imageInfo: ImageInfo | ImageBitmap,
+		properties?: AnimatedElementRenderProperties,
+	): void {
 		if (!imageInfo) {
 			console.log('LayerDrawing.drawBitmap: no image');
 			return;
 		}
+
+		let bounds: BoundsType = null;
+		let alpha = 1.0;
+		if (properties) {
+			bounds = properties.bounds;
+			alpha = properties.alpha;
+		}
+
 		let texture: WebGLTexture;
 		let textureKey: string;
 
@@ -202,6 +245,7 @@ class LayerRendererGl implements LayerRenderer {
 
 		if (this.textureCache.has(textureKey)) {
 			texture = this.textureCache.get(textureKey);
+			// console.debug(`LayerDrawing.drawBitmap: cache hit: key: ${textureKey}`);
 		} else {
 			if (imageInfo instanceof ImageBitmap) {
 				texture = this.loadTexture(this.gl, imageInfo);
@@ -212,6 +256,9 @@ class LayerRendererGl implements LayerRenderer {
 		}
 
 		this.gl.useProgram(this.program);
+
+		this.initPositionBuffer(bounds);
+		this.gl.uniform1f(this.gl.getUniformLocation(this.program, 'alpha'), alpha);
 
 		this.gl.activeTexture(this.gl.TEXTURE0);
 		this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
@@ -280,6 +327,10 @@ class LayerRenderer2d implements LayerRenderer {
 		// Initialization is handled in the constructor
 	}
 
+	isGlRenderer(): boolean {
+		return false;
+	}
+
 	clearCanvas(): void {
 		this.offscreenContext.clearRect(
 			0,
@@ -296,7 +347,10 @@ class LayerRenderer2d implements LayerRenderer {
 		);
 	}
 
-	drawBitmap(imageInfo: ImageInfo | ImageBitmap): void {
+	drawBitmap(
+		imageInfo: ImageInfo | ImageBitmap,
+		properties?: AnimatedElementRenderProperties,
+	): void {
 		if (!imageInfo) {
 			console.log('Canvas2DRenderer.drawBitmap: no image');
 			return;
