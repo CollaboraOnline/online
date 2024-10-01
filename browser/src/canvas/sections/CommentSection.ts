@@ -1041,6 +1041,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.commentListSection.saveReply(this);
 		} else {
 			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.textContent;
+			this.sectionProperties.data.html = this.sectionProperties.nodeReplyText.innerHTML;
 			// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
 			// While in browsers like Chrome and Firefox, a null value is automatically converted to ''
 			// Better to assign '' here instead of null to keep the behavior same for all
@@ -1102,6 +1103,7 @@ export class Comment extends CanvasSectionObject {
 	public onSaveComment (e: any): void {
 		L.DomEvent.stopPropagation(e);
 		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.textContent;
+		this.sectionProperties.data.html = this.sectionProperties.nodeModifyText.innerHTML;
 		this.updateContent();
 		if (!cool.CommentSection.autoSavedComment)
 			this.show();
