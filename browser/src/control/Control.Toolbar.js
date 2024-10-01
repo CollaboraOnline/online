@@ -808,18 +808,33 @@ function onSearchBlur() {
 	map._onGotFocus();
 }
 
-function onInsertFile() {
+function onInsertGraphic() {
 	var insertGraphic = L.DomUtil.get('insertgraphic');
 	if ('files' in insertGraphic) {
 		for (var i = 0; i < insertGraphic.files.length; i++) {
 			var file = insertGraphic.files[i];
-			map.insertFile(file);
+			map.insertGraphic(file);
 		}
 	}
 
 	// Set the value to null everytime so that onchange event is triggered,
 	// even if the same file is selected
 	insertGraphic.value = null;
+	return false;
+}
+
+function onInsertMultimedia() {
+	var insertMultimedia = L.DomUtil.get('insertmultimedia');
+	if ('files' in insertMultimedia) {
+		for (var i = 0; i < insertMultimedia.files.length; i++) {
+			var file = insertMultimedia.files[i];
+			map.insertMultimedia(file);
+		}
+	}
+
+	// Set the value to null everytime so that onchange event is triggered,
+	// even if the same file is selected
+	insertMultimedia.value = null;
 	return false;
 }
 
@@ -1111,7 +1126,8 @@ global.editorUpdate = editorUpdate;
 
 $(document).ready(function() {
 	// Attach insert file action
-	$('#insertgraphic').on('change', onInsertFile);
+	$('#insertgraphic').on('change', onInsertGraphic);
+	$('#insertmultimedia').on('change', onInsertMultimedia);
 	$('#selectbackground').on('change', onInsertBackground);
 });
 

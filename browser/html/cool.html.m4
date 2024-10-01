@@ -146,6 +146,7 @@ m4_ifelse(MOBILEAPP,[true],
       </div>
 
       <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*">
+      <input id="insertmultimedia" aria-labelledby="menu-insertmultimedia" type="file" accept="audio/*, video/*">
       <input id="selectbackground" aria-labelledby="menu-selectbackground" type="file" accept="image/*">
     </dialog>
 
