@@ -1513,8 +1513,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.password === true)
 			edit.type = 'password';
 
-		if (data.enabled === 'false' || data.enabled === false)
+		if (data.enabled === 'false' || data.enabled === false) {
+			container.setAttribute('disabled', 'true');
 			edit.disabled = true;
+		}
 
 		JSDialog.SynchronizeDisabledState(container, [edit]);
 
