@@ -89,10 +89,9 @@ namespace LOKitHelper
     {
         std::string rectangles = loKitDocument->pClass->getPartPageRectangles(loKitDocument);
 
-        std::string::iterator end_pos = std::remove(rectangles.begin(), rectangles.end(), ' ');
-        rectangles.erase(end_pos, rectangles.end());
+        rectangles = Util::replace(rectangles, ";", "], [");
 
-        resultInfo["pagerectangles"] = rectangles;
+        resultInfo["pagerectangles"] = "[ [" + rectangles + "] ]";
     }
 
     inline void fetchCalcSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int part)
