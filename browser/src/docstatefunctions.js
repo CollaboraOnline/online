@@ -134,10 +134,12 @@ app.isFollowingEditor = function () {
 	return app.following.mode === 'editor';
 };
 
-app.isCalcRTL = function () {
-	return (
-		app.map._docLayer._rtlParts.indexOf(app.map._docLayer._selectedPart) >= 0
-	);
+app.calc.isRTL = function () {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
+
+	const part =
+		app.map._docLayer._lastStatusJSON.parts[app.map._docLayer._selectedPart];
+	return part.rtllayout !== 0;
 };
 
 app.setServerAuditFromCore = function (entries) {
@@ -149,4 +151,62 @@ app.isExperimentalMode = function () {
 	if (app.socket && app.socket.WSDServer && app.socket.WSDServer.Options)
 		return app.socket.WSDServer.Options.indexOf('E') !== -1;
 	return false;
+};
+
+app.calc.isPartHidden = function (part) {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
+
+	return app.map._docLayer._lastStatusJSON.parts[part].visible === 0; // ToDo: Move _lastStatusJSON into docstate.js
+};
+
+app.calc.isPartProtected = function (part) {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
+
+	return app.map._docLayer._lastStatusJSON.parts[part].protected === 1;
+};
+
+app.calc.isAnyPartHidden = function () {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
+
+	for (let i = 0; i < app.map._docLayer._lastStatusJSON.parts.length; i++) {
+		if (app.map._docLayer._lastStatusJSON.parts[i].visible === 0) return true;
+	}
+	return false;
+};
+
+app.calc.getHiddenPartCount = function () {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return 0;
+
+	let count = 0;
+
+	for (let i = 0; i < app.map._docLayer._lastStatusJSON.parts.length; i++) {
+		if (app.map._docLayer._lastStatusJSON.parts[i].visible === 0) count++;
+	}
+
+	return count;
+};
+
+app.calc.getVisiblePartCount = function () {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return 0;
+
+	let count = 0;
+
+	for (let i = 0; i < app.map._docLayer._lastStatusJSON.parts.length; i++) {
+		if (app.map._docLayer._lastStatusJSON.parts[i].visible === 1) count++;
+	}
+
+	return count;
+};
+
+app.calc.getHiddenPartNameArray = function () {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return [];
+
+	let array = [];
+
+	for (let i = 0; i < app.map._docLayer._lastStatusJSON.parts.length; i++) {
+		let part = app.map._docLayer._lastStatusJSON.parts[i];
+		if (part.visible === 0) array.push(part.name);
+	}
+
+	return array;
 };
