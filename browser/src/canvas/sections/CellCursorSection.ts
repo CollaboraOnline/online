@@ -84,7 +84,7 @@ class CellCursorSection extends CanvasSectionObject {
 			}
 
 			let x: number = 0;
-			if (app.isCalcRTL()) {
+			if (app.calc.isRTL()) {
 				const rightMost = this.containerObject.getDocumentAnchor()[0] + this.containerObject.getDocumentAnchorSection().size[0];
 				x = rightMost - penX * 2 - app.calc.cellCursorRectangle.pWidth;
 			}
