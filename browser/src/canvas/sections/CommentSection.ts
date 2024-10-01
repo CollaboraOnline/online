@@ -461,7 +461,7 @@ export class Comment extends CanvasSectionObject {
 		// Original unlinked text
 		this.sectionProperties.contentText.origText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
-		this.sectionProperties.nodeModifyText.value = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		this.sectionProperties.contentAuthor.innerText = this.sectionProperties.data.author;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
@@ -998,11 +998,11 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.data.reply = this.sectionProperties.data.text;
 			this.sectionProperties.commentListSection.saveReply(this);
 		} else {
-			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.value;
+			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.textContent;
 			// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
 			// While in browsers like Chrome and Firefox, a null value is automatically converted to ''
 			// Better to assign '' here instead of null to keep the behavior same for all
-			this.sectionProperties.nodeReplyText.value = '';
+			this.sectionProperties.nodeReplyText.textContent = '';
 			this.show();
 			this.sectionProperties.commentListSection.saveReply(this);
 		}
@@ -1023,8 +1023,8 @@ export class Comment extends CanvasSectionObject {
 		// it makes things simple by not adding so many condition for different apps and different situation
 		// It is mandatory to change these values before handleSaveCommentButton is called
 		// calling handleSaveCommentButton in onCancelClick causes problem because that is also called from many other events/function (i.e: onPartChange)
-		this.sectionProperties.nodeModifyText.value = this.sectionProperties.contentText.origText;
-		this.sectionProperties.nodeReplyText.value = '';
+		this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.contentText.origText;
+		this.sectionProperties.nodeReplyText.textContent = '';
 
 		if (cool.CommentSection.autoSavedComment)
 			this.handleSaveCommentButton(e);
@@ -1040,8 +1040,8 @@ export class Comment extends CanvasSectionObject {
 	public onCancelClick (e: any): void {
 		if (e)
 			L.DomEvent.stopPropagation(e);
-		this.sectionProperties.nodeModifyText.value = this.sectionProperties.contentText.origText;
-		this.sectionProperties.nodeReplyText.value = '';
+		this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.contentText.origText;
+		this.sectionProperties.nodeReplyText.textContent = '';
 		if (this.sectionProperties.docLayer._docType !== 'spreadsheet')
 			this.show();
 		this.sectionProperties.commentListSection.cancel(this);
@@ -1059,7 +1059,7 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onSaveComment (e: any): void {
 		L.DomEvent.stopPropagation(e);
-		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.value;
+		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.textContent;
 		this.updateContent();
 		if (!cool.CommentSection.autoSavedComment)
 			this.show();
@@ -1073,7 +1073,7 @@ export class Comment extends CanvasSectionObject {
 		}
 		if (!this.sectionProperties.isRemoved) {
 			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
-			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
+			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.textContent) {
 				if (!this.sectionProperties.contentText.unedited)
 					this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
 				cool.CommentSection.autoSavedComment = this;
@@ -1096,7 +1096,7 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.docLayer._typingMention) {
 			return;
 		}
-		if (this.sectionProperties.nodeReplyText.value !== '') {
+		if (this.sectionProperties.nodeReplyText.textContent !== '') {
 			if (!this.sectionProperties.contentText.unedited)
 				this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
 			cool.CommentSection.autoSavedComment = this;
@@ -1529,22 +1529,30 @@ export class Comment extends CanvasSectionObject {
 	// TODO: use profileLink parameter to create hyperlink html element inside comment textarea
 	// TODO: fix not work with replyNode for now
 	public autoCompleteMention(username: string, profileLink: string, replacement: string): void {
-		let currentText: string = this.sectionProperties.nodeModifyText.value
-		const cursorPosition = this.sectionProperties.nodeModifyText.selectionStart;
+		const contentEditableDiv = this.sectionProperties.nodeModifyText;
+		const currentText = contentEditableDiv.textContent;
+
+		const selection = window.getSelection();
+		if (!selection.rangeCount) return;
+
+		const range = selection.getRangeAt(0);
+		const cursorPosition = range.endOffset;
 		const mentionStart = currentText.lastIndexOf(replacement, cursorPosition);
 
 		if (mentionStart !== -1) {
 			const mentionEnd = mentionStart + replacement.length;
+			const beforeMention = currentText.substring(0, mentionStart);
+			const afterMention = currentText.substring(mentionEnd);
+			const newContent = beforeMention + `@${username}` + afterMention;
 
-			currentText =
-				currentText.substring(0, mentionStart) +
-				`@${username}` +
-				currentText.substring(mentionEnd);
+			contentEditableDiv.textContent = newContent;
+
+			const newRange = document.createRange();
+			newRange.setStart(contentEditableDiv.childNodes[0], mentionStart + username.length + 1);
+			newRange.setEnd(contentEditableDiv.childNodes[0], mentionStart + username.length + 1);
+			selection.removeAllRanges();
+			selection.addRange(newRange);
 		}
-
-		this.sectionProperties.nodeModifyText.value = currentText;
-		this.sectionProperties.nodeModifyText.selectionStart = mentionStart + username.length + 1;
-		this.sectionProperties.nodeModifyText.selectionEnd = mentionStart + username.length + 1;
 	}
 }
 
