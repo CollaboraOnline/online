@@ -1,7 +1,7 @@
 /* global describe it require cy beforeEach */
 
 var helper = require('../../common/helper');
-var { insertImage, deleteImage, assertImageSize } = require('../../common/desktop_helper');
+var { insertImage, insertVideo, deleteImage, assertImageSize } = require('../../common/desktop_helper');
 var desktopHelper = require('../../common/desktop_helper');
 var { triggerNewSVGForShapeInTheCenter } = require('../../common/impress_helper');
 
@@ -20,6 +20,11 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 			.should('exist');
 
 		deleteImage();
+	});
+
+	it("Insert multimedia", function () {
+		desktopHelper.switchUIToNotebookbar();
+		insertVideo();
 	});
 
 	it('Resize image when keep ratio option enabled and disabled', function() {
