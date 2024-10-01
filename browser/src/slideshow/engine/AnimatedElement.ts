@@ -291,6 +291,13 @@ interface AnimatedElementState {
 	transitionFiltersState: TransitionFiltersState;
 }
 
+type BoundsType = [number, number, number, number];
+
+interface AnimatedElementRenderProperties {
+	bounds: BoundsType;
+	alpha: number;
+}
+
 function BBoxToString(aBB: BoundingBoxType) {
 	return `{ x: ${aBB.x}, y: ${aBB.y}, width: ${aBB.width}, height: ${aBB.height} }`;
 }
@@ -355,8 +362,8 @@ class AnimatedElement {
 	private aPreviousElement: AnimatedObjectType = null;
 	private bIsUpdated = true;
 
-	private glCanvas: OffscreenCanvas;
-	private glContext: RenderContextGl;
+	private tfCanvas: OffscreenCanvas;
+	private tfContext: RenderContextGl;
 	private transitionFiltersManager: TransitionFiltersManager;
 
 	constructor(
@@ -387,7 +394,7 @@ class AnimatedElement {
 	}
 
 	private isGlSupported() {
-		return !this.glContext.is2dGl();
+		return !this.tfContext.is2dGl();
 	}
 
 	private cloneBBox(aBBox: BoundingBoxType): BoundingBoxType {
@@ -474,26 +481,26 @@ class AnimatedElement {
 				`\n  base center: x: ${this.nBaseCenterX} y: ${this.nBaseCenterY}`,
 		);
 
-		this.glCanvas = new OffscreenCanvas(
+		this.tfCanvas = new OffscreenCanvas(
 			this.aBaseElement.width,
 			this.aBaseElement.height,
 		);
 
-		this.glContext = new RenderContextGl(this.glCanvas);
-		if (!this.glContext) {
-			this.glContext = new RenderContext2d(this.glCanvas);
+		this.tfContext = new RenderContextGl(this.tfCanvas);
+		if (!this.tfContext) {
+			this.tfContext = new RenderContext2d(this.tfCanvas);
 		}
 
 		this.bIsValid = true;
 	}
 
 	private getTextureFromElement(element: AnimatedObjectType) {
-		return this.glContext.loadTexture(element);
+		return this.tfContext.loadTexture(element);
 	}
 
 	public setTransitionParameters(transitionParameters: TransitionParameters) {
-		transitionParameters.context = this.glContext;
-		transitionParameters.current = this.glContext.createTransparentTexture();
+		transitionParameters.context = this.tfContext;
+		transitionParameters.current = this.tfContext.createTransparentTexture();
 		transitionParameters.next = this.getTextureFromElement(this.aBaseElement);
 	}
 
@@ -578,7 +585,7 @@ class AnimatedElement {
 		renderingContext.setTransform(transform);
 
 		const aElement = applied
-			? this.glCanvas.transferToImageBitmap()
+			? this.tfCanvas.transferToImageBitmap()
 			: this.aBaseElement;
 		console.debug(
 			`AnimatedElement(${this.sId}).updateLayer:
@@ -613,6 +620,47 @@ class AnimatedElement {
 			aElement.height,
 		);
 		renderingContext.restore();
+	}
+
+	renderLayer(renderer: LayerRenderer) {
+		if (!this.bVisible) return;
+		const applied = this.applyTransitionFilters();
+
+		const T = this.aTMatrix;
+
+		const aElement = applied
+			? this.tfCanvas.transferToImageBitmap()
+			: this.aBaseElement;
+		console.debug(
+			`AnimatedElement(${this.sId}).renderLayer:
+				element width: ${aElement.width}
+				element height: ${aElement.height}
+				base center: (${this.nBaseCenterX}, ${this.nBaseCenterY})
+				actual center: (${this.nCenterX}, ${this.nCenterY})
+				transform: ${T.toString()}`,
+		);
+
+		const tl = new DOMPoint(this.aBaseBBox.x, this.aBaseBBox.y);
+		const tlT = tl.matrixTransform(T);
+		const br = new DOMPoint(
+			tl.x + this.aBaseBBox.width,
+			tl.y + this.aBaseBBox.height,
+		);
+		const brT = br.matrixTransform(T);
+
+		const unitBounds: BoundsType = [
+			tlT.x / this.slideWidth,
+			tlT.y / this.slideHeight,
+			brT.x / this.slideWidth,
+			brT.y / this.slideHeight,
+		];
+
+		const properties: AnimatedElementRenderProperties = {
+			bounds: unitBounds,
+			alpha: this.nOpacity,
+		};
+
+		renderer.drawBitmap(aElement, properties);
 	}
 
 	private update() {
