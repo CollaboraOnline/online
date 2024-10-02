@@ -33,6 +33,9 @@ class LayerRendererGl implements LayerRenderer {
 	private positionLocation: number;
 	private texCoordLocation: number;
 	private samplerLocation: WebGLUniformLocation;
+	private imageBitmapIdCounter = 0;
+	private textureCache: Map<string, WebGLTexture> = new Map();
+	private imageBitmapIdMap = new WeakMap<ImageBitmap, number>();
 
 	constructor(offscreenCanvas: OffscreenCanvas) {
 		this.offscreenCanvas = offscreenCanvas;
@@ -102,9 +105,18 @@ class LayerRendererGl implements LayerRenderer {
 		const texCoords = new Float32Array([0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0]);
 		gl.bufferData(gl.ARRAY_BUFFER, texCoords, gl.STATIC_DRAW);
 
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
+		gl.enableVertexAttribArray(this.positionLocation);
+		gl.vertexAttribPointer(this.positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordBuffer);
+		gl.enableVertexAttribArray(this.texCoordLocation);
+		gl.vertexAttribPointer(this.texCoordLocation, 2, gl.FLOAT, false, 0, 0);
+
 		gl.enable(gl.BLEND);
 		gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 		gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+		this.gl.disable(this.gl.DEPTH_TEST);
 	}
 
 	private loadTexture(
@@ -176,36 +188,30 @@ class LayerRendererGl implements LayerRenderer {
 			console.log('LayerDrawing.drawBitmap: no image');
 			return;
 		}
-		let texture;
+		let texture: WebGLTexture;
+		let textureKey: string;
+
 		if (imageInfo instanceof ImageBitmap) {
-			texture = this.loadTexture(this.gl, imageInfo);
+			if (!this.imageBitmapIdMap.has(imageInfo)) {
+				this.imageBitmapIdMap.set(imageInfo, this.imageBitmapIdCounter++);
+			}
+			textureKey = `imageBitmap_${this.imageBitmapIdMap.get(imageInfo)}`;
 		} else {
-			texture = this.loadTexture(this.gl, imageInfo.data as HTMLImageElement);
+			textureKey = imageInfo.checksum;
+		}
+
+		if (this.textureCache.has(textureKey)) {
+			texture = this.textureCache.get(textureKey);
+		} else {
+			if (imageInfo instanceof ImageBitmap) {
+				texture = this.loadTexture(this.gl, imageInfo);
+			} else {
+				texture = this.loadTexture(this.gl, imageInfo.data as HTMLImageElement);
+			}
+			this.textureCache.set(textureKey, texture);
 		}
 
 		this.gl.useProgram(this.program);
-
-		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.positionBuffer);
-		this.gl.enableVertexAttribArray(this.positionLocation);
-		this.gl.vertexAttribPointer(
-			this.positionLocation,
-			2,
-			this.gl.FLOAT,
-			false,
-			0,
-			0,
-		);
-
-		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.texCoordBuffer);
-		this.gl.enableVertexAttribArray(this.texCoordLocation);
-		this.gl.vertexAttribPointer(
-			this.texCoordLocation,
-			2,
-			this.gl.FLOAT,
-			false,
-			0,
-			0,
-		);
 
 		this.gl.activeTexture(this.gl.TEXTURE0);
 		this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
