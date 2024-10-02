@@ -490,6 +490,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.contentText.innerHTML = linkedText;
 		// Original unlinked text
 		this.sectionProperties.contentText.origText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		this.sectionProperties.contentText.origHTML = this.sectionProperties.data.html;
 		this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		if (this.sectionProperties.data.html) {
 			this.sectionProperties.nodeModifyText.innerHTML = this.sectionProperties.data.html;
@@ -1048,15 +1049,22 @@ export class Comment extends CanvasSectionObject {
 		}
 
 		if (cool.CommentSection.autoSavedComment) {
-			this.sectionProperties.contentText.origText = this.sectionProperties.contentText.unedited;
-			this.sectionProperties.contentText.unedited = null;
+			this.sectionProperties.contentText.origText = this.sectionProperties.contentText.uneditedText;
+			this.sectionProperties.contentText.uneditedText = null;
+			this.sectionProperties.contentText.origHTML = this.sectionProperties.contentText.uneditedHTML;
+			this.sectionProperties.contentText.uneditedHTML = null;
 		}
 
 		// These lines are repeated in onCancelClick,
 		// it makes things simple by not adding so many condition for different apps and different situation
 		// It is mandatory to change these values before handleSaveCommentButton is called
 		// calling handleSaveCommentButton in onCancelClick causes problem because that is also called from many other events/function (i.e: onPartChange)
-		this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.contentText.origText;
+		if (this.sectionProperties.contentText.origHTML) {
+			this.sectionProperties.nodeModifyText.innerHTML = this.sectionProperties.contentText.origHTML;
+		}
+		else {
+			this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.contentText.origText;
+		}
 		this.sectionProperties.nodeReplyText.textContent = '';
 
 		if (cool.CommentSection.autoSavedComment)
@@ -1073,7 +1081,12 @@ export class Comment extends CanvasSectionObject {
 	public onCancelClick (e: any): void {
 		if (e)
 			L.DomEvent.stopPropagation(e);
-		this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.contentText.origText;
+		if (this.sectionProperties.contentText.origHTML) {
+			this.sectionProperties.nodeModifyText.innerHTML = this.sectionProperties.contentText.origHTML;
+		}
+		else {
+			this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.contentText.origText;
+		}
 		this.sectionProperties.nodeReplyText.textContent = '';
 		if (this.sectionProperties.docLayer._docType !== 'spreadsheet')
 			this.show();
@@ -1084,7 +1097,8 @@ export class Comment extends CanvasSectionObject {
 	public handleSaveCommentButton (e: any): void {
 		cool.CommentSection.autoSavedComment = null;
 		cool.CommentSection.commentWasAutoAdded = false;
-		this.sectionProperties.contentText.unedited = null;
+		this.sectionProperties.contentText.uneditedText = null;
+		this.sectionProperties.contentText.uneditedHTML = null;
 		this.textAreaInput(null);
 		this.onSaveComment(e);
 	}
@@ -1107,9 +1121,12 @@ export class Comment extends CanvasSectionObject {
 		}
 		if (!this.sectionProperties.isRemoved) {
 			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
-			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.textContent) {
-				if (!this.sectionProperties.contentText.unedited)
-					this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
+			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.textContent ||
+			    this.sectionProperties.contentText.origHTML != this.sectionProperties.nodeModifyText.innerHTML ) {
+				if (!this.sectionProperties.contentText.uneditedHTML)
+					this.sectionProperties.contentText.uneditedHTML = this.sectionProperties.contentText.origHTML;
+				if (!this.sectionProperties.contentText.uneditedText)
+					this.sectionProperties.contentText.uneditedText = this.sectionProperties.contentText.origText;
 				cool.CommentSection.autoSavedComment = this;
 				this.onSaveComment(e);
 			}
@@ -1131,8 +1148,10 @@ export class Comment extends CanvasSectionObject {
 			return;
 		}
 		if (this.sectionProperties.nodeReplyText.textContent !== '') {
-			if (!this.sectionProperties.contentText.unedited)
-				this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
+			if (!this.sectionProperties.contentText.uneditedHTML)
+				this.sectionProperties.contentText.uneditedHTML = this.sectionProperties.contentText.origHTML;
+			if (!this.sectionProperties.contentText.uneditedText)
+				this.sectionProperties.contentText.uneditedText = this.sectionProperties.contentText.origText;
 			cool.CommentSection.autoSavedComment = this;
 			this.onReplyClick(e);
 		}
