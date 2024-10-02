@@ -57,10 +57,24 @@ public:
 
             // successfully exit the test if we also got the outgoing message
             // notifying about saving the file
+            // Don't end the test here, as we'd trigger dead-lock check on
+            // joining the socket poll thread, which is where we're called from.
             TRANSITION_STATE(_phase, Phase::Done);
         }
 
         return false;
+    }
+
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        LOG_TST("onDocumentLoaded: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::RenameFile);
+
+        TRANSITION_STATE(_phase, Phase::WaitRenameNotification);
+
+        WSD_CMD("renamefile filename=" + Uri::encode(FilenameUtf8));
+
+        return true;
     }
 
     void invokeWSDTest() override
@@ -78,9 +92,6 @@ public:
             }
             case Phase::RenameFile:
             {
-                TRANSITION_STATE(_phase, Phase::WaitRenameNotification);
-
-                WSD_CMD("renamefile filename=" + Uri::encode(FilenameUtf8));
                 break;
             }
             case Phase::WaitRenameNotification:
