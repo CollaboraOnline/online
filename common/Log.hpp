@@ -74,6 +74,8 @@ namespace Log
     /// Shutdown and release the logging system.
     void shutdown();
 
+    void flush();
+
     /// Cleanup state after forking
     void postFork();
 
