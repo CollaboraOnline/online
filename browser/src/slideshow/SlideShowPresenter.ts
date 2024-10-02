@@ -316,7 +316,12 @@ class SlideShowPresenter {
 		}
 	}
 
-	private _createPresenterHTML(parent: Element, width: number, height: number) {
+	private _createPresenterHTML(
+		parent: Element,
+		width: number,
+		height: number,
+		options: any = undefined,
+	) {
 		const presenterContainer = L.DomUtil.create(
 			'div',
 			'leaflet-slideshow2',
@@ -333,11 +338,17 @@ class SlideShowPresenter {
 			slideshowContainer,
 			width,
 			height,
+			options,
 		);
 		return presenterContainer;
 	}
 
-	_createCanvas(parent: Element, width: number, height: number) {
+	_createCanvas(
+		parent: Element,
+		width: number,
+		height: number,
+		options: any = undefined,
+	) {
 		const canvas = L.DomUtil.create('canvas', 'leaflet-slideshow2', parent);
 
 		canvas.id = 'slideshow-canvas';
@@ -345,10 +356,12 @@ class SlideShowPresenter {
 		canvas.style.margin = 0;
 		canvas.style.position = 'absolute';
 
-		canvas.addEventListener(
-			'click',
-			this._slideShowNavigator.onClick.bind(this._slideShowNavigator),
-		);
+		if (!options || !options.noClick) {
+			canvas.addEventListener(
+				'click',
+				this._slideShowNavigator.onClick.bind(this._slideShowNavigator),
+			);
+		}
 
 		try {
 			this._slideRenderer = new SlideRendererGl(canvas);
@@ -541,7 +554,7 @@ class SlideShowPresenter {
 		else return this._slideShowWindowProxy.document;
 	}
 
-	_doInWindowPresentation() {
+	_doInWindowPresentation(options: any = undefined) {
 		const popupTitle =
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
 		const htmlContent = this._generateSlideWindowHtml(popupTitle);
@@ -586,10 +599,13 @@ class SlideShowPresenter {
 			'resize',
 			this.onSlideWindowResize.bind(this),
 		);
-		this._slideShowWindowProxy.addEventListener(
-			'keydown',
-			this._slideShowNavigator.onKeyDown.bind(this._slideShowNavigator),
-		);
+
+		if (!options || !options.noKeyDown) {
+			this._slideShowWindowProxy.addEventListener(
+				'keydown',
+				this._slideShowNavigator.onKeyDown.bind(this._slideShowNavigator),
+			);
+		}
 
 		const slideShowWindow = this._slideShowWindowProxy;
 		this._map.uiManager.showSnackbar(
@@ -619,7 +635,7 @@ class SlideShowPresenter {
 	}
 
 	/// returns true on success
-	_onPrepareScreen(inWindow: boolean) {
+	_onPrepareScreen(inWindow: boolean, options: any = undefined) {
 		if (this._checkPresentationDisabled()) {
 			this._notifyPresentationDisabled();
 			return false;
@@ -750,7 +766,7 @@ class SlideShowPresenter {
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow(that: any) {
-		if (!this._onPrepareScreen(true))
+		if (!this._onPrepareScreen(true, that.options))
 			// opens full screen, has to be on user interaction
 			return;
 

@@ -30,7 +30,9 @@ class PresenterConsole {
 	}
 
 	_onPresentInConsole() {
-		this._map.fire('newpresentinwindow');
+		this._map.fire('newpresentinwindow', {
+			options: { noClick: true, noKeyDown: true },
+		});
 
 		let top = screen.height - 500;
 		let left = screen.width - 500;
@@ -44,6 +46,7 @@ class PresenterConsole {
 			return;
 		}
 
+		this._map.off('newpresentinconsole', this._onPresentInConsole, this);
 		this._proxyPresenter.addEventListener(
 			'beforeunload',
 			L.bind(this._onClose, this),
@@ -81,6 +84,7 @@ class PresenterConsole {
 			L.bind(this._onKeyDown, this),
 		);
 		delete this._proxyPresenter;
+		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
 	}
 }
 
