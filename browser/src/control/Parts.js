@@ -28,15 +28,15 @@ L.Map.include({
 
 		var docLayer = this._docLayer;
 		var docType = docLayer._docType;
-		var isTheSamePart = true;
+		var isTheSamePart = false;
 
 		// check hashes, when we add/delete/move parts they can have the same part number as before
 		if (docType === 'spreadsheet') {
 			isTheSamePart =
 				app.calc.partHashes[docLayer._prevSelectedPart] === app.calc.partHashes[part];
-		} else if (docType === 'presentation' || docType === 'drawing') {
-			isTheSamePart =
-				app.impress.partHashes[docLayer._prevSelectedPart] === app.impress.partHashes[part];
+		} else if ((docType === 'presentation' || docType === 'drawing')) {
+			if (docLayer._prevSelectedPart !== undefined && part < app.impress.partList.length)
+				isTheSamePart = app.impress.partList[docLayer._prevSelectedPart].hash === app.impress.partList[part].hash;
 		} else if (docType !== 'text') {
 			console.error('Unknown docType: ' + docType);
 		}
@@ -50,7 +50,7 @@ L.Map.include({
 
 		docLayer._clearMsgReplayStore(true /* notOtherMsg*/);
 		docLayer._prevSelectedPart = docLayer._selectedPart;
-		docLayer._selectedParts = [];
+
 		if (part === 'prev') {
 			if (docLayer._selectedPart > 0) {
 				docLayer._selectedPart -= 1;
@@ -95,7 +95,6 @@ L.Map.include({
 
 		this.fire('scrolltopart');
 
-		docLayer._selectedParts.push(docLayer._selectedPart);
 		if (app.file.textCursor.visible) {
 			// a click outside the slide to clear any selection
 			app.socket.sendMessage('resetselection');
@@ -105,7 +104,6 @@ L.Map.include({
 
 		this.fire('updateparts', {
 			selectedPart: docLayer._selectedPart,
-			selectedParts: docLayer._selectedParts,
 			parts: docLayer._parts,
 			docType: docLayer._docType
 		});
@@ -129,46 +127,31 @@ L.Map.include({
 
 	// part is the part index/id
 	// how is 0 to deselect, 1 to select, and 2 to toggle selection
-	selectPart: function (part, how, external) {
-		//TODO: Update/track selected parts(?).
-		var docLayer = this._docLayer;
-		var oldParts = docLayer._selectedParts.slice();
-		var newParts = docLayer._selectedParts;
-		var index = docLayer._selectedParts.indexOf(part);
-		if (index >= 0 && how != 1) {
-			// Remove (i.e. deselect)
-			docLayer._selectedParts.splice(index, 1);
-		}
-		else if (how != 0) {
-			// Add (i.e. select)
-			docLayer._selectedParts.push(part);
-		}
+	// This function is Impress only.
+	selectPart: function (part, how, external, fireEvent = true) {
+		const currentSelectedCount = app.impress.getSelectedSlidesCount();
 
-		// did we change anything?
-		if (oldParts.length === newParts.length &&
-			oldParts.every((value, index) => { return value === newParts[index]; })) {
-			return;
-		}
+		const targetPart = app.impress.partList[part];
 
-		this.fire('updateparts', {
-			selectedPart: docLayer._selectedPart,
-			selectedParts: docLayer._selectedParts,
-			parts: docLayer._parts,
-			docType: docLayer._docType
-		});
+		if (how < 2) targetPart.selected = how;
+		else targetPart.selected = targetPart.selected === 1 ? 0 : 1;
 
-		// If this wasn't triggered from the server,
-		// then notify the server of the change.
-		if (!external) {
-			app.socket.sendMessage('selectclientpart part=' + part + ' how=' + how);
+		if (currentSelectedCount !== app.impress.getSelectedSlidesCount()) {
+			if (fireEvent) this.fire('updateparts', {});
+
+			// If this wasn't triggered from the server,
+			// then notify the server of the change.
+			if (!external) {
+				app.socket.sendMessage('selectclientpart part=' + part + ' how=' + how);
+			}
 		}
 	},
 
 	deselectAll: function() {
-		var docLayer = this._docLayer;
-		while (docLayer._selectedParts.length > 0) {
-			this.selectPart(docLayer._selectedParts[0], 0, false);
+		for (let i = 0; i < app.impress.partList.length; i++) {
+			this.selectPart(i, 0, false, false);
 		}
+		this.fire('updateparts', {});
 	},
 
 	_processPreviewQueue: function() {
@@ -524,10 +507,11 @@ L.Map.include({
 	},
 
 	hideSlide: function() {
-		for (var index = 0; index < this._docLayer._selectedParts.length; index++) {
-			var id = this._docLayer._selectedParts[index];
-			L.DomUtil.addClass(this._docLayer._preview._previewTiles[id], 'hidden-slide');
-			this._docLayer._hiddenSlides.add(id);
+		for (let i = 0; i < app.impress.partList.length; i++) {
+			if (app.impress.partList[i].selected) {
+				app.impress.partList[i].visible = 0;
+				L.DomUtil.addClass(this._docLayer._preview._previewTiles[i], 'hidden-slide');
+			}
 		}
 
 		app.socket.sendMessage('uno .uno:HideSlide');
@@ -535,10 +519,11 @@ L.Map.include({
 	},
 
 	showSlide: function() {
-		for (var index = 0; index < this._docLayer._selectedParts.length; index++) {
-			var id = this._docLayer._selectedParts[index];
-			L.DomUtil.removeClass(this._docLayer._preview._previewTiles[id], 'hidden-slide');
-			this._docLayer._hiddenSlides.delete(id);
+		for (let i = 0; i < app.impress.partList.length; i++) {
+			if (app.impress.partList[i].selected) {
+				app.impress.partList[i].visible = 1;
+				L.DomUtil.removeClass(this._docLayer._preview._previewTiles[i], 'hidden-slide');
+			}
 		}
 
 		app.socket.sendMessage('uno .uno:ShowSlide');

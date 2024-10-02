@@ -1801,12 +1801,12 @@ L.Control.Menubar = L.Control.extend({
 							$(aItem).text(_('Use Tabbed view'));
 						}
 					} else if (id === 'showslide') {
-						if (!self._map._docLayer.isHiddenSlide(self._map.getCurrentPartNumber()))
+						if (!app.impress.isSlideHidden(self._map.getCurrentPartNumber()))
 							$(aItem).hide();
 						else
 							$(aItem).show();
 					} else if (id === 'hideslide') {
-						if (self._map._docLayer.isHiddenSlide(self._map.getCurrentPartNumber()))
+						if (app.impress.isSlideHidden(self._map.getCurrentPartNumber()))
 							$(aItem).hide();
 						else
 							$(aItem).show();
