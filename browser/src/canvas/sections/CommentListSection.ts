@@ -1601,7 +1601,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	private adjustCommentFileBasedView (comment: any): void {
 		// Below calculations are the same with the ones we do while drawing tiles in fileBasedView.
 		var partHeightTwips = this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts;
-		var index = app.impress.partHashes.indexOf(String(comment.parthash));
+		var index = app.impress.getIndexFromSlideHash(comment.parthash);
 		var yAddition = index * partHeightTwips;
 		comment.yAddition = yAddition; // We'll use this while we save the new position of the comment.
 
@@ -1747,7 +1747,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 
 			if (selectedComment) {
 				const posX = (this.sectionProperties.showSelectedBigger ?
-								Math.round((document.getElementById('document-container').getBoundingClientRect().width - subList[i].sectionProperties.container.getBoundingClientRect().width)/2) : 
+								Math.round((document.getElementById('document-container').getBoundingClientRect().width - subList[i].sectionProperties.container.getBoundingClientRect().width)/2) :
 								Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1));
 				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: posX, y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
 			}

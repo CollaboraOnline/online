@@ -210,3 +210,59 @@ app.calc.getHiddenPartNameArray = function () {
 
 	return array;
 };
+
+app.impress.isSlideHidden = function (index) {
+	if (app.impress.partList) {
+		if (app.impress.partList.length > index)
+			return !app.impress.partList[index].visible;
+		else {
+			console.warn(
+				'Index is bigger than the part count (isSlideHidden): ' + index,
+			);
+			return true;
+		}
+	} else return false;
+};
+
+app.impress.areAllSlidesHidden = function () {
+	if (app.impress.partList) {
+		for (let i = 0; i < app.impress.partList.length; i++) {
+			if (app.impress.partList[i].visible === 1) return false;
+		}
+		return true;
+	} else return false;
+};
+
+app.impress.getSelectedSlidesCount = function () {
+	let count = 0;
+
+	if (app.impress.partList) {
+		for (let i = 0; i < app.impress.partList.length; i++) {
+			if (app.impress.partList[i].selected === 1) count++;
+		}
+	}
+
+	return count;
+};
+
+app.impress.getIndexFromSlideHash = function (hash) {
+	if (app.impress.partList) {
+		for (let i = 0; i < app.impress.partList.length; i++) {
+			if (app.impress.partList[i].hash === hash) return i;
+		}
+
+		console.warn('No part with hash (getIndexFromSlideHash): ' + hash);
+
+		return 0;
+	} else return 0;
+};
+
+app.impress.isSlideSelected = function (index) {
+	if (
+		app.impress.partList &&
+		index >= 0 &&
+		index < app.impress.partList.length
+	) {
+		return app.impress.partList[index].selected === 1;
+	} else return false;
+};
