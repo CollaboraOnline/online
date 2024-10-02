@@ -796,19 +796,6 @@ L.TextInput = L.Layer.extend({
 		}
 	},
 
-	_getCurrentCursorPosition: function() {
-		var currPos = {
-			x: app.file.textCursor.rectangle.cX1,
-			y: app.file.textCursor.rectangle.cY2,
-		};
-		var origin = this._map.getPixelOrigin();
-		var panePos = this._map._getMapPanePos();
-		return new L.Point(
-			Math.round(currPos.x + panePos.x - origin.x),
-			Math.round(currPos.y + panePos.y - origin.y),
-		);
-	},
-
 	_handleMentionInput: function (ev, removeBefore) {
 		var docLayer = this._map._docLayer;
 		if (docLayer._typingMention)  {
@@ -817,13 +804,13 @@ L.TextInput = L.Layer.extend({
 				if (ch === '@') {
 					this._map.fire('closementionpopup', { 'typingMention': false });
 				} else {
-					this._map.fire('sendmentiontext', {data: docLayer._mentionText, cursor: this._getCurrentCursorPosition()});
+					this._map.fire('sendmentiontext', { data: docLayer._mentionText });
 				}
 			} else if (removeBefore === 0) {
 				docLayer._mentionText.push(ev.data);
 				var regEx = /^[0-9a-zA-Z ]+$/;
 				if (ev.data && ev.data.match(regEx)) {
-					this._map.fire('sendmentiontext', {data: docLayer._mentionText, cursor: this._getCurrentCursorPosition()});
+					this._map.fire('sendmentiontext', { data: docLayer._mentionText });
 				} else {
 					this._map.fire('closementionpopup', { 'typingMention': false });
 				}

@@ -403,33 +403,21 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
-	getCurrentCursorPosition(isReplyNode: boolean): Point {
-		const caretRect = window.getSelection().getRangeAt(0).getBoundingClientRect();
-
-		var mapRect = this.map._container.getBoundingClientRect();
-		return new L.Point(
-			caretRect.left - mapRect.left,
-			caretRect.bottom - mapRect.top,
-		);
-	}
-
 	private handleMentionInput (ev: any, removeBefore: number): void {
 		var docLayer = this.sectionProperties.docLayer;
 		if (docLayer._typingMention)  {
-			const targetId: string = ev?.currentTarget.id;
-			const isReplyNode: boolean = targetId.includes('annotation-reply-textarea-');
 			if (removeBefore > 0) {
 				var ch = docLayer._mentionText.pop();
 				if (ch === '@') {
 					this.map.fire('closementionpopup', { 'typingMention': false });
 				} else {
-					this.map.fire('sendmentiontext', {data: docLayer._mentionText, cursor: this.getCurrentCursorPosition(isReplyNode)});
+					this.map.fire('sendmentiontext', { data: docLayer._mentionText });
 				}
 			} else if (removeBefore === 0) {
 				docLayer._mentionText.push(ev.data);
 				var regEx = /^[0-9a-zA-Z ]+$/;
 				if (ev.data && ev.data.match(regEx)) {
-					this.map.fire('sendmentiontext', {data: docLayer._mentionText, cursor: this.getCurrentCursorPosition(isReplyNode)});
+					this.map.fire('sendmentiontext', { data: docLayer._mentionText });
 				} else {
 					this.map.fire('closementionpopup', { 'typingMention': false });
 				}
@@ -489,7 +477,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private textAreaKeyDown (ev: any): void {
-                this.handleKeyDownForPopup(ev, 'mentionPopup');
+		this.handleKeyDownForPopup(ev, 'mentionPopup');
 	}
 
 	private updateContent (): void {
