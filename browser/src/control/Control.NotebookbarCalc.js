@@ -247,6 +247,18 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'type': 'container',
 				'children': [
 					{
+						'id': 'signature',
+						'type': 'bigtoolitem',
+						'text': _('Signature'),
+						'command': '.uno:Signature',
+						'accessibility': { focusBack: true, combination: 'SN' }
+					}
+				]
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
 						'id': 'renamedocument',
 						'class': 'unoRenameDocument',
 						'type': 'bigcustomtoolitem',

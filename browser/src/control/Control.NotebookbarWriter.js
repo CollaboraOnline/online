@@ -311,6 +311,18 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true,	combination: 'I', de: 'I' }
 					}
 				]
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'signature',
+						'type': 'bigtoolitem',
+						'text': _('Signature'),
+						'command': '.uno:Signature',
+						'accessibility': { focusBack: true, combination: 'SN' }
+					}
+				]
 			});
 
 		content.push({
