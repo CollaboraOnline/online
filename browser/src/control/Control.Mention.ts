@@ -45,7 +45,7 @@ class Mention extends L.Control.AutoCompletePopup {
 			});
 			this.firstChar = text[0];
 		} else {
-			this.openMentionPopup({ data: this.users, cursor: ev.cursor });
+			this.openMentionPopup({ data: this.users });
 		}
 	}
 

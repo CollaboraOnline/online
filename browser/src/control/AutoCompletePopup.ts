@@ -21,8 +21,8 @@ interface Point {
 
 interface FireEvent {
 	data?: any;
-	cursor?: Point;
 }
+
 interface CloseMessageEvent extends FireEvent {
 	typingMention?: boolean;
 }
@@ -118,15 +118,45 @@ abstract class AutoCompletePopup {
 		});
 	}
 
+	getCursorPosition(): Point {
+		const commentSection = app.sectionContainer.getSectionWithName(
+			L.CSections.CommentList.name,
+		);
+
+		if (commentSection?.sectionProperties?.selectedComment?.isEdit()) {
+			const caretRect = window
+				.getSelection()
+				.getRangeAt(0)
+				.getBoundingClientRect();
+			const mapRect = this.map._container.getBoundingClientRect();
+			return new L.Point(
+				caretRect.left - mapRect.left,
+				caretRect.bottom - mapRect.top,
+			);
+		}
+
+		const currPos = {
+			x: app.file.textCursor.rectangle.cX1,
+			y: app.file.textCursor.rectangle.cY2,
+		};
+		const origin = this.map.getPixelOrigin();
+		const panePos = this.map._getMapPanePos();
+		return new L.Point(
+			Math.round(currPos.x + panePos.x - origin.x),
+			Math.round(currPos.y + panePos.y - origin.y),
+		);
+	}
+
 	openMentionPopup(ev: FireEvent): void {
 		const entries = this.getPopupEntries(ev);
 		let data: PopupData;
+		const cursorPos = this.getCursorPosition();
 
 		if (entries.length > 0) {
 			const control = this.getTreeJSON();
 			// update the popup with list if mentionList already exist
 			if (L.DomUtil.get(this.popupId + 'List')) {
-				data = this.getPopupJSON(control, ev.cursor);
+				data = this.getPopupJSON(control, cursorPos);
 				(data.control as TreeWidget).entries = entries;
 				this.sendUpdate(data);
 				return;
@@ -139,7 +169,7 @@ abstract class AutoCompletePopup {
 		} else {
 			const control = this.getSimpleTextJSON();
 			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
-				data = this.getPopupJSON(control, ev.cursor);
+				data = this.getPopupJSON(control, cursorPos);
 				this.sendUpdate(data);
 				return;
 			}
@@ -148,9 +178,10 @@ abstract class AutoCompletePopup {
 			data = this.newPopupData;
 			data.children[0].children[0] = control;
 		}
+
 		// add position
-		data.posx = ev.cursor.x;
-		data.posy = ev.cursor.y;
+		data.posx = cursorPos.x;
+		data.posy = cursorPos.y;
 		this.sendJSON(data);
 	}
 
