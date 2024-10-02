@@ -4,10 +4,9 @@ set +x
 # Modify the Info.plist to ensure that CFBundleVersion is always incremented
 # AppStoreConnect requires each upload, whether it is released or not, to be
 # higher than the previous successful upload's CFBundleVersion. So this
-# script sets the CFBundleVersion to the first and second components of
-# CFBundleShortVersionString and the UTC timestamp of when this script was
-# run is appended as the third component (or the second component if there
-# isn't a second component in CFBundleShortVersionString).
+# script sets the CFBundleVersion to the first component of
+# CFBundleShortVersionString and the UTC timestamp of when this script was run
+# is appended as the second component
 info_plist="$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH"
 if [ ! -f "$info_plist" ]; then
     echo "Error: $info_plist does not exist or is not a regular file" >&2
@@ -26,13 +25,7 @@ if [ -z "$major_version" -o "$major_version" = "0" ]; then
     exit 1
 fi
 
-bundle_version="$major_version"
-minor_version=`echo "$bundle_short_version" | cut -d. -f2`
-if [ ! -z "$minor_version" ]; then
-    bundle_version="$bundle_version.$minor_version"
-fi
-
-bundle_version="$bundle_version.`date -u '+%Y%m%d%H%M'`"
+bundle_version="$major_version.`date -u '+%Y%m%d%H%M'`"
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $bundle_version" "$info_plist"
 
 echo "Succesfully Updated CFBundleVersion"
