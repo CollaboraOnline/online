@@ -247,9 +247,13 @@
 
 	     Also, currently the version in configure.ac is four numbers. This
 	     CFBundleShortVersionString must, however, be three numbers.
+
+	     To avoid us getting as out-of-sync, we merge the year and major into Apple's "major"
+	     version, allowing us to bump patch without it becoming a new release. This looks slightly
+	     weird, but at least isn't as bad as being completely misleading.
 	-->
 	<key>CFBundleShortVersionString</key>
-	<string>24.04.8</string>
+	<string>2404.8.2</string>
 	<key>CFBundleVersion</key>
 	<string>@IOSAPP_BUNDLE_VERSION@</string>
 	<key>LSRequiresIPhoneOS</key>
