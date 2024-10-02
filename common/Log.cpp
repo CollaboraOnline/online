@@ -283,8 +283,6 @@ namespace Log
         inline std::size_t size() const { return _tlb.size(); }
         inline std::size_t available() const { return _tlb.available(); }
 
-        inline void flush() { _tlb.flush(); }
-
         inline void buffer(const char* data, std::size_t size) { _tlb.buffer(data, size); }
 
         template <std::size_t N> inline void buffer(const char (&data)[N])
@@ -298,6 +296,8 @@ namespace Log
         ~BufferedConsoleChannel() { flush(); }
 
         void close() override { flush(); }
+
+        static inline void flush() { _tlb.flush(); }
 
         void log(const Poco::Message& msg) override
         {
@@ -700,7 +700,13 @@ namespace Log
 
         Poco::Logger::shutdown();
 
-        // Flush
+        flush();
+    }
+
+    void flush()
+    {
+        BufferedConsoleChannel::flush();
+
         fflush(stdout);
         fflush(stderr);
     }
