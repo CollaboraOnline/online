@@ -420,6 +420,8 @@ L.Map.Keyboard = L.Handler.extend({
 				if (!deletePart) {
 					var partToSelect = (ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.LEFT ||
 						            ev.keyCode === this.keyCodes.PAGEUP) ? 'prev' : 'next';
+
+					this._map.deselectAll();
 					this._map.setPart(partToSelect);
 					if (app.file.fileBasedView)
 						this._map._docLayer._checkSelectedPart();
@@ -453,7 +455,7 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 			ev.preventDefault();
 		}
-		
+
 	},
 
 	// _handleKeyEvent - checks if the given keyboard event shall trigger

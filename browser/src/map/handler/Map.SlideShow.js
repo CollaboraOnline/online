@@ -3,7 +3,7 @@
  * L.Map.SlideShow is handling the slideShow action
  */
 
-/* global _ sanitizeUrl */
+/* global _ sanitizeUrl app */
 L.Map.mergeOptions({
 	slideShow: true
 });
@@ -51,7 +51,7 @@ L.Map.SlideShow = L.Handler.extend({
 			return;
 		}
 
-		if (this._map._docLayer.hiddenSlides() >= this._map.getNumberOfParts()) {
+		if (app.impress.areAllSlidesHidden()) {
 			this._map.uiManager.showInfoModal('allslidehidden-modal', _('Empty Slide Show'),
 					'All slides are hidden!', '', _('OK'), function () { }, false, 'allslidehidden-modal-response');
 			return;

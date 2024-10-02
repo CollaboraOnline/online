@@ -69,14 +69,10 @@ L.Control.PartsPreview = L.Control.extend({
 		this._partsPreviewCont.style.whiteSpace = 'nowrap';
 	},
 
-	_updateDisabled: function (e) {
-		var parts = e.parts;
-		var selectedPart = e.selectedPart;
-		var selectedParts = e.selectedParts;
-		var docType = e.docType;
-		if (docType === 'text' || isNaN(parts)) {
-			return;
-		}
+	_updateDisabled: function () {
+		const selectedPart = app.map._docLayer._selectedPart;
+
+		const docType = app.map._docLayer._docType;
 
 		if (docType === 'presentation' || docType === 'drawing') {
 			if (!this._previewInitialized)
@@ -103,8 +99,8 @@ L.Control.PartsPreview = L.Control.extend({
 				}
 
 				// Create the preview parts
-				for (var i = 0; i < parts; i++) {
-					this._previewTiles.push(this._createPreview(i, e.partNames[i]));
+				for (var i = 0; i < app.impress.partList.length; i++) {
+					this._previewTiles.push(this._createPreview(i, app.impress.partList[i].hash));
 				}
 				if (!app.file.fileBasedView)
 					L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-currentpart');
@@ -113,18 +109,16 @@ L.Control.PartsPreview = L.Control.extend({
 			}
 			else
 			{
-				if (e.partNames !== undefined) {
-					this._syncPreviews(e);
-				}
+				this._syncPreviews();
 
 				if (!app.file.fileBasedView) {
 					// change the border style of the selected preview.
-					for (var j = 0; j < parts; j++) {
+					for (let j = 0; j < app.impress.partList.length; j++) {
 						L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-currentpart');
 						L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-selectedpart');
 						if (j === selectedPart)
 							L.DomUtil.addClass(this._previewTiles[j], 'preview-img-currentpart');
-						else if (selectedParts.indexOf(j) >= 0)
+						else if (app.impress.partList[j].selected)
 							L.DomUtil.addClass(this._previewTiles[j], 'preview-img-selectedpart');
 					}
 				}
@@ -146,10 +140,10 @@ L.Control.PartsPreview = L.Control.extend({
 				addPreviewFrame = 'preview-frame-portrait';
 			}
 
-			for (i = 0; i < parts; i++) {
+			for (i = 0; i < app.impress.partList.length; i++) {
 				L.DomUtil.removeClass(this._previewTiles[i], removePreviewImg);
 				L.DomUtil.addClass(this._previewTiles[i], addPreviewImg);
-				if (this._map._docLayer._hiddenSlides.has(i))
+				if (app.impress.isSlideHidden(i))
 					L.DomUtil.addClass(this._previewTiles[i], 'hidden-slide');
 				else
 					L.DomUtil.removeClass(this._previewTiles[i], 'hidden-slide');
@@ -343,7 +337,7 @@ L.Control.PartsPreview = L.Control.extend({
 						},
 						visible: function(key, options) {
 							var part = that._findClickedPart(options.$trigger[0].parentNode);
-							return that._map._docLayer._docType == 'presentation' && that._map._docLayer.isHiddenSlide(parseInt(part) - 1);
+							return that._map._docLayer._docType === 'presentation' && app.impress.isSlideHidden(parseInt(part) - 1);
 						}
 					},
 					hideslide: {
@@ -356,7 +350,7 @@ L.Control.PartsPreview = L.Control.extend({
 						},
 						visible: function(key, options) {
 							var part = that._findClickedPart(options.$trigger[0].parentNode);
-							return that._map._docLayer._docType == 'presentation' && !that._map._docLayer.isHiddenSlide(parseInt(part) - 1);
+							return that._map._docLayer._docType === 'presentation' && !app.impress.isSlideHidden(parseInt(part) - 1);
 						}
 					}
 				}
@@ -486,7 +480,7 @@ L.Control.PartsPreview = L.Control.extend({
 				if (this.firstSelection === undefined)
 					this.firstSelection = this._map._docLayer._selectedPart;
 
-				//deselect all slide
+				//deselect all slides
 				this._map.deselectAll();
 
 				//reselect the first origianl selection
@@ -503,6 +497,7 @@ L.Control.PartsPreview = L.Control.extend({
 					}
 				}
 			} else {
+				this._map.deselectAll();
 				this._map.setPart(partId);
 				this._map.selectPart(partId, 1, false); // And select.
 				this.firstSelection = partId;
@@ -516,27 +511,27 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 	},
 
-	_syncPreviews: function (e) {
+	_syncPreviews: function () {
 		var it = 0;
-		var parts = e.parts;
-		if (parts !== this._previewTiles.length) {
-			if (Math.abs(parts - this._previewTiles.length) === 1) {
-				if (parts > this._previewTiles.length) {
-					for (it = 0; it < parts; it++) {
+
+		if (app.impress.partList.length !== this._previewTiles.length) {
+			if (Math.abs(app.impress.partList.length - this._previewTiles.length) === 1) {
+				if (app.impress.partList.length > this._previewTiles.length) {
+					for (it = 0; it < app.impress.partList.length; it++) {
 						if (it === this._previewTiles.length) {
-							this._insertPreview({selectedPart: it - 1, hashCode: e.partNames[it]});
+							this._insertPreview({selectedPart: it - 1, hashCode: app.impress.partList[it].hash});
 							break;
 						}
-						if (this._previewTiles[it].hash !== e.partNames[it]) {
-							this._insertPreview({selectedPart: it, hashCode: e.partNames[it]});
+						if (this._previewTiles[it].hash !== app.impress.partList[it].hash) {
+							this._insertPreview({selectedPart: it, hashCode: app.impress.partList[it].hash});
 							break;
 						}
 					}
 				}
 				else {
 					for (it = 0; it < this._previewTiles.length; it++) {
-						if (it === e.partNames.length ||
-						    this._previewTiles[it].hash !== e.partNames[it]) {
+						if (it === app.impress.partList.length ||
+						    this._previewTiles[it].hash !== app.impress.partList[it].hash) {
 							this._deletePreview({selectedPart: it});
 							break;
 						}
@@ -545,17 +540,17 @@ L.Control.PartsPreview = L.Control.extend({
 			}
 			else {
 				// sync all, should never happen
-				while (this._previewTiles.length < e.partNames.length) {
+				while (this._previewTiles.length < app.impress.partList.length) {
 					this._insertPreview({selectedPart: this._previewTiles.length - 1,
-							     hashCode: e.partNames[this._previewTiles.length]});
+							     hashCode: app.impress.partList[this._previewTiles.length].hash});
 				}
 
-				while (this._previewTiles.length > e.partNames.length) {
+				while (this._previewTiles.length > app.impress.partList.length) {
 					this._deletePreview({selectedPart: this._previewTiles.length - 1});
 				}
 
-				for (it = 0; it < e.partNames.length; it++) {
-					this._previewTiles[it].hash = e.partNames[it];
+				for (it = 0; it < app.impress.partList.length; it++) {
+					this._previewTiles[it].hash = app.impress.partList[it].hash;
 					this._previewTiles[it].src = document.querySelector('meta[name="previewSmile"]').content;
 					this._previewTiles[it].fetched = false;
 				}
@@ -563,9 +558,9 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 		else {
 			// update hash code when user click insert slide.
-			for (it = 0; it < parts; it++) {
-				if (this._previewTiles[it].hash !== e.partNames[it]) {
-					this._previewTiles[it].hash = e.partNames[it];
+			for (it = 0; it < app.impress.partList.length; it++) {
+				if (this._previewTiles[it].hash !== app.impress.partList[it].hash) {
+					this._previewTiles[it].hash = app.impress.partList[it].hash;
 					this._map.getPreview(it, it, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
 				}
 			}
@@ -767,7 +762,7 @@ L.Control.PartsPreview = L.Control.extend({
 		var part = this.partsPreview._findClickedPart(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
-			if (this.partsPreview._map._docLayer && !this.partsPreview._map._docLayer._selectedParts.indexOf(partId) >= 0)
+			if (this.partsPreview._map._docLayer && !app.impress.isSlideSelected(partId))
 			{
 				this.partsPreview._map.setPart(partId);
 				this.partsPreview._map.selectPart(partId, 1, false); // And select.

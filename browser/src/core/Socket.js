@@ -1815,13 +1815,6 @@ app.definitions.Socket = L.Class.extend({
 					command.hiddenparts.push(parseInt(item));
 				});
 			}
-			else if (tokens[i].startsWith('selectedparts=')) {
-				var selectedParts = tokens[i].substring(14).split(',');
-				command.selectedParts = [];
-				selectedParts.forEach(function (item) {
-					command.selectedParts.push(parseInt(item));
-				});
-			}
 			else if (tokens[i].startsWith('rtlparts=')) {
 				var rtlParts = tokens[i].substring(9).split(',');
 				command.rtlParts = [];

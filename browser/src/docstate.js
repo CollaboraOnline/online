@@ -31,7 +31,7 @@ window.app = {
 		partHashes: null, // hashes used to distinguish parts (we use sheet name)
 	},
 	impress: {
-		partHashes: null, // hashes used to distinguish parts
+		partList: null, // Info for parts.
 		notesMode: false // Contrary to "NormalMultiPaneGUI"
 	},
 	map: null, // Make map object a part of this.

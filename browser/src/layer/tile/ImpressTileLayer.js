@@ -12,7 +12,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global app $ L Set */
+/* global app $ L */
 
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
@@ -24,7 +24,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		this._preview = L.control.partsPreview();
-		app.impress.partHashes = null;
+
 		if (window.mode.isMobile()) {
 			this._addButton = L.control.mobileSlide();
 			L.DomUtil.addClass(L.DomUtil.get('mobile-edit-button'), 'impress');
@@ -99,7 +99,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		comment.anchorPos = [docTopLeft[0], docTopLeft[1]];
 		comment.rectangle = [docTopLeft[0], docTopLeft[1], 566, 566];
 
-		comment.parthash = app.impress.partHashes[this._selectedPart];
+		comment.parthash = app.impress.partList[this._selectedPart].hash;
 		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(annotation);
 	},
@@ -247,30 +247,33 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		// 1s after the last invalidation, update the preview
 		clearTimeout(this._previewInvalidator);
 		this._previewInvalidator = setTimeout(L.bind(this._invalidatePreviews, this), this.options.previewInvalidationTimeout);
+		this._update();
 	},
 	/* jscpd:ignore-end */
 
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
 		if (part !== this._selectedPart) {
+			this._map.deselectAll(); // Deselect all first. This is a single selection.
 			this._map.setPart(part, true);
 			this._map.fire('setpart', {selectedPart: this._selectedPart});
 		}
 	},
 
 	_onStatusMsg: function (textMsg) {
-		var command = app.socket.parseServerCmd(textMsg);
+		const statusJSON = JSON.parse(textMsg.replace('status:', '').replace('statusupdate:', ''));
+
 		// Since we have two status commands, remove them so we store and compare payloads only.
 		textMsg = textMsg.replace('status: ', '');
 		textMsg = textMsg.replace('statusupdate: ', '');
-		if (command.width && command.height && this._documentInfo !== textMsg) {
-			this._docWidthTwips = command.width;
-			this._docHeightTwips = command.height;
-			this._docType = command.type;
+		if (statusJSON.width && statusJSON.height && this._documentInfo !== textMsg) {
+			this._docWidthTwips = statusJSON.width;
+			this._docHeightTwips = statusJSON.height;
+			this._docType = statusJSON.type;
 			if (this._docType === 'drawing') {
 				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'drawing');
 			}
-			this._parts = command.parts;
+			this._parts = statusJSON.partscount;
 			this._partHeightTwips = this._docHeightTwips;
 			this._partWidthTwips = this._docWidthTwips;
 
@@ -284,31 +287,26 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
 			app.view.size.pixels = app.file.size.pixels.slice();
 
+			app.impress.partList = Object.assign([], statusJSON.parts);
+
 			this._updateMaxBounds(true);
-			this._documentInfo = textMsg;
-			this._viewId = parseInt(command.viewid);
+
+			this._viewId = statusJSON.viewid;
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 			if (app.socket._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 			} else {
-				this._selectedPart = command.selectedPart;
-				this._selectedParts = command.selectedParts || [command.selectedPart];
+				this._selectedPart = statusJSON.selectedpart;
 			}
-			this._selectedMode = (command.mode !== undefined) ? command.mode : 0;
+			this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : (statusJSON.parts.length > 0 && statusJSON.parts[0].mode !== undefined ? statusJSON.parts[0].mode : 0);
 			this._resetPreFetching(true);
-			var partMatch = textMsg.match(/[^\r\n]+/g);
-			// only get the last matches
-			var newPartHashes = partMatch.slice(partMatch.length - this._parts);
-			var refreshAnnotation = app.impress.partHashes && (app.impress.partHashes.length !== newPartHashes.length || !app.impress.partHashes.every(function(element,i) { return element === newPartHashes[i]; }));
-			app.impress.partHashes = newPartHashes;
-			this._hiddenSlides = new Set(command.hiddenparts);
-			this._map.fire('updateparts', {
-				selectedPart: this._selectedPart,
-				selectedParts: this._selectedParts,
-				parts: this._parts,
-				docType: this._docType,
-				partNames: app.impress.partHashes
-			});
+
+			var refreshAnnotation = this._documentInfo !== textMsg;
+
+			this._documentInfo = textMsg;
+
+			this._map.fire('updateparts', {});
+
 			if (refreshAnnotation)
 				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		}
@@ -330,18 +328,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	_removeHighlightSelectedWizardComment: function() {
 		if (this.lastWizardCommentHighlight)
 			this.lastWizardCommentHighlight.removeClass('impress-comment-highlight');
-	},
-
-	isHiddenSlide: function(slideNum) {
-		if (!this._hiddenSlides)
-			return false;
-		return this._hiddenSlides.has(slideNum);
-	},
-
-	hiddenSlides: function () {
-		if (!this._hiddenSlides)
-			return 0;
-		return this._hiddenSlides.size;
 	},
 
 	_invalidateAllPreviews: function () {
