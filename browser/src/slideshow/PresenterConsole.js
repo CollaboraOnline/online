@@ -44,9 +44,14 @@ class PresenterConsole {
 			return;
 		}
 
+		this._map.off('newpresentinconsole', this._onPresentInConsole, this);
+		this._map.slideShowPresenter._slideShowWindowProxy.addEventListener(
+			'unload',
+			L.bind(this._onWindowClose, this),
+		);
 		this._proxyPresenter.addEventListener(
-			'beforeunload',
-			L.bind(this._onClose, this),
+			'unload',
+			L.bind(this._onConsoleClose, this),
 		);
 		this._proxyPresenter.addEventListener('click', L.bind(this._onClick, this));
 		this._proxyPresenter.addEventListener(
@@ -71,7 +76,20 @@ class PresenterConsole {
 		this._map.slideShowPresenter.getNavigator().onClick(e);
 	}
 
-	_onClose() {
+	_onWindowClose() {
+		if (this._proxyPresenter && !this._proxyPresenter.closed)
+			this._proxyPresenter.close();
+
+		this._map.slideShowPresenter._stopFullScreen();
+	}
+
+	_onConsoleClose() {
+		if (
+			this._map.slideShowPresenter._slideShowWindowProxy &&
+			!this._map.slideShowPresenter._slideShowWindowProxy.closed
+		)
+			this._map.slideShowPresenter._slideShowWindowProxy.close();
+
 		this._proxyPresenter.removeEventListener(
 			'click',
 			L.bind(this._onClick, this),
