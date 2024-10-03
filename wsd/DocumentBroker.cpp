@@ -2204,6 +2204,176 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
     _storageManager.setSizeAsUploaded(size);
 }
 
+void DocumentBroker::handleUploadToStorageSuccessful(const StorageBase::UploadResult& uploadResult)
+{
+    LOG_DBG("Last upload result: OK");
+
+#if !MOBILEAPP
+    WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
+    if (wopiStorage != nullptr)
+        _admin.setDocWopiUploadDuration(_docKey, wopiStorage->getWopiSaveDuration());
+#endif
+
+    if (!_uploadRequest->isSaveAs() && !_uploadRequest->isRename())
+    {
+        // Saved and stored; update flags.
+        _saveManager.setLastModifiedTime(_uploadRequest->newFileModifiedTime());
+
+        // Save the storage timestamp.
+        _storageManager.setLastModifiedTime(_storage->getLastModifiedTime());
+
+        // Set the timestamp of the file we uploaded, to detect changes.
+        _storageManager.setLastUploadedFileModifiedTime(_uploadRequest->newFileModifiedTime());
+
+        // After a successful save, we are sure that document in the storage is same as ours
+        _documentChangedInStorage = false;
+
+        // Reset the storage attributes; They've been used and we can discard them.
+        _lastStorageAttrs.reset();
+
+        LOG_DBG("Uploaded docKey ["
+                << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
+                << "] and updated timestamps. Document modified timestamp: "
+                << _storageManager.getLastModifiedTime()
+                << ". Current Activity: " << DocumentState::name(_docState.activity()));
+
+        // Handle activity-specific logic.
+        switch (_docState.activity())
+        {
+            case DocumentState::Activity::Rename:
+            {
+                const auto it = _sessions.find(_renameSessionId);
+                if (it == _sessions.end())
+                {
+                    LOG_ERR("Session [" << _renameSessionId << "] not found to rename docKey ["
+                                        << _docKey << "]. The document will not be renamed.");
+                    broadcastSaveResult(false, "Renaming session not found");
+                    endRenameFileCommand();
+                }
+                else
+                {
+                    LOG_DBG("Renaming in storage as we just finished pending upload");
+                    std::string uploadAsPath;
+                    constexpr bool isRename = true;
+                    constexpr bool isExport = false;
+                    constexpr bool force = false;
+                    uploadToStorageInternal(it->second, uploadAsPath, _renameFilename, isRename,
+                                            isExport, force);
+                }
+            }
+            break;
+
+#if !MOBILEAPP && !WASMAPP
+            case DocumentState::Activity::SwitchingToOffline:
+            {
+                switchToOffline();
+            }
+            break;
+#endif // !MOBILEAPP && !WASMAPP
+
+            default:
+            {
+                // Check stop conditions.
+            }
+            break;
+        }
+
+        // Resume polling.
+        _poll->wakeup();
+    }
+    else if (_uploadRequest->isRename())
+    {
+        endRenameFileCommand();
+
+        // encode the name
+        const std::string& filename = uploadResult.getSaveAsName();
+        auto uri = Poco::URI(uploadResult.getSaveAsUrl());
+
+        // Remove the access_token, which belongs to the renaming user.
+        Poco::URI::QueryParameters queryParams = uri.getQueryParameters();
+        queryParams.erase(std::remove_if(queryParams.begin(), queryParams.end(),
+                                         [](const std::pair<std::string, std::string>& pair)
+                                         { return pair.first == "access_token"; }),
+                          queryParams.end());
+        uri.setQueryParameters(queryParams);
+
+        const std::string url = uri.toString();
+        std::string encodedName = Uri::encode(filename);
+        const std::string filenameAnonym = COOLWSD::anonymizeUrl(filename);
+        std::ostringstream oss;
+        oss << "renamefile: " << "filename=" << encodedName << " url=" << url;
+        broadcastMessage(oss.str());
+        broadcastMessage("close: reloadafterrename");
+    }
+    else
+    {
+        // normalize the url (mainly to " " -> "%20")
+        const std::string url = Poco::URI(uploadResult.getSaveAsUrl()).toString();
+
+        const std::string& filename = uploadResult.getSaveAsName();
+
+        // encode the name
+        std::string encodedName;
+        Poco::URI::encode(filename, "", encodedName);
+        const std::string filenameAnonym = COOLWSD::anonymizeUrl(filename);
+
+        const auto session = _uploadRequest->session();
+        if (session)
+        {
+            LOG_DBG("Uploaded SaveAs docKey [" << _docKey << "] to URI ["
+                                               << COOLWSD::anonymizeUrl(url) << "] with name ["
+                                               << filenameAnonym << "] successfully.");
+
+            std::ostringstream oss;
+            oss << (_uploadRequest->isExport() ? "exportas:" : "saveas:") << " url=" << url
+                << " filename=" << encodedName << " xfilename=" << filenameAnonym;
+            session->sendTextFrame(oss.str());
+
+            const auto fileExtension = _filename.substr(_filename.find_last_of('.'));
+            if (!strcasecmp(fileExtension.c_str(), ".csv") ||
+                !strcasecmp(fileExtension.c_str(), ".txt"))
+            {
+                broadcastMessageToOthers(
+                    "warn: " + oss.str() + " username=" + session->getUserName(), session);
+            }
+        }
+        else
+        {
+            LOG_DBG("Uploaded SaveAs docKey ["
+                    << _docKey << "] to URI [" << COOLWSD::anonymizeUrl(url) << "] with name ["
+                    << filenameAnonym << "] successfully, but the client session is closed.");
+        }
+    }
+
+    broadcastLastModificationTime();
+
+    if (_docState.isUnloadRequested())
+    {
+        // We just uploaded, flag to destroy if unload is requested.
+        LOG_DBG("Unload requested after uploading, marking to destroy.");
+        _docState.markToDestroy();
+    }
+
+    // If marked to destroy, and there are no late-arriving modifications, then stop.
+    if ((_docState.isMarkedToDestroy() || _sessions.empty()) && !isPossiblyModified())
+    {
+        // Stop so we get cleaned up and removed.
+        LOG_DBG("Stopping after uploading because "
+                << (_sessions.empty() ? "there are no active sessions left."
+                                      : "the document is marked to destroy."));
+        stop("unloading");
+    }
+
+    // After uploading, disconnect the sessions pending disconnection.
+    for (const auto& pair : _sessions)
+    {
+        if (pair.second->isCloseFrame() && !pair.second->inWaitDisconnected())
+        {
+            disconnectSessionInternal(pair.second);
+        }
+    }
+}
+
 void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult)
 {
     if (!_uploadRequest)
@@ -2238,171 +2408,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 
     if (uploadResult.getResult() == StorageBase::UploadResult::Result::OK)
     {
-        LOG_DBG("Last upload result: OK");
-#if !MOBILEAPP
-        WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
-        if (wopiStorage != nullptr)
-            _admin.setDocWopiUploadDuration(_docKey, wopiStorage->getWopiSaveDuration());
-#endif
-
-        if (!_uploadRequest->isSaveAs() && !_uploadRequest->isRename())
-        {
-            // Saved and stored; update flags.
-            _saveManager.setLastModifiedTime(_uploadRequest->newFileModifiedTime());
-
-            // Save the storage timestamp.
-            _storageManager.setLastModifiedTime(_storage->getLastModifiedTime());
-
-            // Set the timestamp of the file we uploaded, to detect changes.
-            _storageManager.setLastUploadedFileModifiedTime(_uploadRequest->newFileModifiedTime());
-
-            // After a successful save, we are sure that document in the storage is same as ours
-            _documentChangedInStorage = false;
-
-            // Reset the storage attributes; They've been used and we can discard them.
-            _lastStorageAttrs.reset();
-
-            LOG_DBG("Uploaded docKey ["
-                    << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
-                    << "] and updated timestamps. Document modified timestamp: "
-                    << _storageManager.getLastModifiedTime()
-                    << ". Current Activity: " << DocumentState::name(_docState.activity()));
-
-            // Handle activity-specific logic.
-            switch (_docState.activity())
-            {
-                case DocumentState::Activity::Rename:
-                {
-                    const auto it = _sessions.find(_renameSessionId);
-                    if (it == _sessions.end())
-                    {
-                        LOG_ERR("Session [" << _renameSessionId << "] not found to rename docKey ["
-                                            << _docKey << "]. The document will not be renamed.");
-                        broadcastSaveResult(false, "Renaming session not found");
-                        endRenameFileCommand();
-                    }
-                    else
-                    {
-                        LOG_DBG("Renaming in storage as we just finished pending upload");
-                        std::string uploadAsPath;
-                        constexpr bool isRename = true;
-                        constexpr bool isExport = false;
-                        constexpr bool force = false;
-                        uploadToStorageInternal(it->second, uploadAsPath, _renameFilename, isRename,
-                                                isExport, force);
-                    }
-                }
-                break;
-
-#if !MOBILEAPP && !WASMAPP
-                case DocumentState::Activity::SwitchingToOffline:
-                {
-                    switchToOffline();
-                }
-                break;
-#endif // !MOBILEAPP && !WASMAPP
-
-                default:
-                {
-                    // Check stop conditions.
-                }
-                break;
-            }
-
-            // Resume polling.
-            _poll->wakeup();
-        }
-        else if (_uploadRequest->isRename())
-        {
-            endRenameFileCommand();
-
-            // encode the name
-            const std::string& filename = uploadResult.getSaveAsName();
-            auto uri = Poco::URI(uploadResult.getSaveAsUrl());
-
-            // Remove the access_token, which belongs to the renaming user.
-            Poco::URI::QueryParameters queryParams = uri.getQueryParameters();
-            queryParams.erase(std::remove_if(queryParams.begin(), queryParams.end(),
-                                             [](const std::pair<std::string, std::string>& pair)
-                                             { return pair.first == "access_token"; }),
-                              queryParams.end());
-            uri.setQueryParameters(queryParams);
-
-            const std::string url = uri.toString();
-            std::string encodedName = Uri::encode(filename);
-            const std::string filenameAnonym = COOLWSD::anonymizeUrl(filename);
-            std::ostringstream oss;
-            oss << "renamefile: " << "filename=" << encodedName << " url=" << url;
-            broadcastMessage(oss.str());
-            broadcastMessage("close: reloadafterrename");
-        }
-        else
-        {
-            // normalize the url (mainly to " " -> "%20")
-            const std::string url = Poco::URI(uploadResult.getSaveAsUrl()).toString();
-
-            const std::string& filename = uploadResult.getSaveAsName();
-
-            // encode the name
-            std::string encodedName;
-            Poco::URI::encode(filename, "", encodedName);
-            const std::string filenameAnonym = COOLWSD::anonymizeUrl(filename);
-
-            const auto session = _uploadRequest->session();
-            if (session)
-            {
-                LOG_DBG("Uploaded SaveAs docKey [" << _docKey << "] to URI ["
-                                                   << COOLWSD::anonymizeUrl(url) << "] with name ["
-                                                   << filenameAnonym << "] successfully.");
-
-                std::ostringstream oss;
-                oss << (_uploadRequest->isExport() ? "exportas:" : "saveas:") << " url=" << url << " filename=" << encodedName
-                    << " xfilename=" << filenameAnonym;
-                session->sendTextFrame(oss.str());
-
-                const auto fileExtension = _filename.substr(_filename.find_last_of('.'));
-                if (!strcasecmp(fileExtension.c_str(), ".csv") || !strcasecmp(fileExtension.c_str(), ".txt"))
-                {
-                    broadcastMessageToOthers("warn: " + oss.str() + " username=" + session->getUserName(), session);
-                }
-            }
-            else
-            {
-                LOG_DBG("Uploaded SaveAs docKey ["
-                        << _docKey << "] to URI [" << COOLWSD::anonymizeUrl(url) << "] with name ["
-                        << filenameAnonym << "] successfully, but the client session is closed.");
-            }
-        }
-
-        broadcastLastModificationTime();
-
-        if (_docState.isUnloadRequested())
-        {
-            // We just uploaded, flag to destroy if unload is requested.
-            LOG_DBG("Unload requested after uploading, marking to destroy.");
-            _docState.markToDestroy();
-        }
-
-        // If marked to destroy, and there are no late-arriving modifications, then stop.
-        if ((_docState.isMarkedToDestroy() || _sessions.empty()) && !isPossiblyModified())
-        {
-            // Stop so we get cleaned up and removed.
-            LOG_DBG("Stopping after uploading because "
-                    << (_sessions.empty() ? "there are no active sessions left."
-                                          : "the document is marked to destroy."));
-            stop("unloading");
-        }
-
-        // After uploading, disconnect the sessions pending disconnection.
-        for (const auto& pair : _sessions)
-        {
-            if (pair.second->isCloseFrame() && !pair.second->inWaitDisconnected())
-            {
-                disconnectSessionInternal(pair.second);
-            }
-        }
-
-        return;
+        return handleUploadToStorageSuccessful(uploadResult);
     }
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::TOO_LARGE)
     {
