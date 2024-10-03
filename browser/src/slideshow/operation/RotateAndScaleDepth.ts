@@ -15,7 +15,7 @@ declare var SlideShow: any;
 
 var { vec3, mat4 } = glMatrix;
 
-class RotateAndScaleDepthByWidth extends Operation {
+class RotateAndScaleDepth extends Operation {
 	private axis: vec3 = vec3.create();
 	private origin: vec3 = vec3.create();
 	private angle: number = 0.0;
@@ -23,6 +23,7 @@ class RotateAndScaleDepthByWidth extends Operation {
 	private mbInterpolate: boolean = false;
 	private mnT0: number = 0.0;
 	private mnT1: number = 0.0;
+	private isDepthByWidth: boolean = true;
 
 	constructor(
 		axis: vec3,
@@ -32,6 +33,7 @@ class RotateAndScaleDepthByWidth extends Operation {
 		mbInterpolate: boolean,
 		mnT0: number,
 		mnT1: number,
+		isDepthByWidth: boolean,
 	) {
 		super();
 		this.axis = axis;
@@ -41,6 +43,7 @@ class RotateAndScaleDepthByWidth extends Operation {
 		this.mbInterpolate = mbInterpolate;
 		this.mnT0 = mnT0;
 		this.mnT1 = mnT1;
+		this.isDepthByWidth = isDepthByWidth;
 	}
 
 	public interpolate(
@@ -59,7 +62,8 @@ class RotateAndScaleDepthByWidth extends Operation {
 		const translationVector = vec3.fromValues(
 			SlideWidthScale * this.origin[0],
 			SlideHeightScale * this.origin[1],
-			SlideWidthScale * this.origin[2],
+			(this.isDepthByWidth ? SlideWidthScale : SlideHeightScale) *
+				this.origin[2],
 		);
 		const scaleVector = vec3.fromValues(
 			SlideWidthScale * SlideWidthScale,
@@ -100,7 +104,7 @@ function makeRotateAndScaleDepthByWidth(
 	mnT0: number,
 	mnT1: number,
 ) {
-	return new RotateAndScaleDepthByWidth(
+	return new RotateAndScaleDepth(
 		axis,
 		origin,
 		angle,
@@ -108,7 +112,30 @@ function makeRotateAndScaleDepthByWidth(
 		mbInterpolate,
 		mnT0,
 		mnT1,
+		true,
+	);
+}
+
+function makeRotateAndScaleDepthByHeight(
+	axis: vec3,
+	origin: vec3,
+	angle: number,
+	scale: boolean,
+	mbInterpolate: boolean,
+	mnT0: number,
+	mnT1: number,
+) {
+	return new RotateAndScaleDepth(
+		axis,
+		origin,
+		angle,
+		scale,
+		mbInterpolate,
+		mnT0,
+		mnT1,
+		false,
 	);
 }
 
 SlideShow.makeRotateAndScaleDepthByWidth = makeRotateAndScaleDepthByWidth;
+SlideShow.makeRotateAndScaleDepthByHeight = makeRotateAndScaleDepthByHeight;
