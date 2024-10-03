@@ -403,17 +403,18 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
-	private handleMentionInput (ev: any, removeBefore: number): void {
-		var docLayer = this.sectionProperties.docLayer;
-		if (docLayer._typingMention)  {
-			if (removeBefore > 0) {
+	private handleMentionInput(ev: any): void {
+		const docLayer = this.sectionProperties.docLayer;
+		const deleteEvent = ev.inputType === 'deleteContentBackward' || ev.inputType === 'deleteContentForward';
+		if (docLayer._typingMention) {
+			if (deleteEvent) {
 				var ch = docLayer._mentionText.pop();
 				if (ch === '@') {
 					this.map.fire('closementionpopup', { 'typingMention': false });
 				} else {
 					this.map.fire('sendmentiontext', { data: docLayer._mentionText });
 				}
-			} else if (removeBefore === 0) {
+			} else {
 				docLayer._mentionText.push(ev.data);
 				var regEx = /^[0-9a-zA-Z ]+$/;
 				if (ev.data && ev.data.match(regEx)) {
@@ -436,7 +437,7 @@ export class Comment extends CanvasSectionObject {
 		if (ev && this.sectionProperties.docLayer._docType === 'text') {
 			// special handling for mentions
 			// this.handleMentionInput(e, removeBefore);
-			this.handleMentionInput(ev, 0);
+			this.handleMentionInput(ev);
 		}
 	}
 
