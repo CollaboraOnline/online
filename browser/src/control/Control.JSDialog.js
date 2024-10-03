@@ -383,9 +383,19 @@ L.Control.JSDialog = L.Control.extend({
 		if (instance.canHaveFocus && initialFocusElement && initialFocusElement.length)
 			initialFocusElement[0].focus();
 
-		var focusWidget = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : null;
-		if (focusWidget)
-			focusWidget.focus();
+		// pass the current instance and get the tabcontrol object if it exist
+		// this will only search in current instance and not in whole docuemnt
+		const tabControlWidget = this.findTabControl(instance);
+
+		let focusWidget ;
+
+		if (tabControlWidget) {
+			// get DOM element of tabControl from current instance
+			focusWidget = instance.content.querySelector('[id="' + tabControlWidget.id + '"]');
+		} else {
+			focusWidget = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : null;
+		}
+
 		if (focusWidget && document.activeElement !== focusWidget) {
 			var firstFocusable = JSDialog.GetFocusableElements(focusWidget);
 			if (firstFocusable && firstFocusable.length)
@@ -401,6 +411,20 @@ L.Control.JSDialog = L.Control.extend({
 		}
 	},
 
+	 findTabControl: function(obj) {
+		if (obj.type === 'tabcontrol') {
+			// this return the main tabcontrol object
+			return obj;
+		}
+		if (obj.children && obj.children.length > 0) {
+			for (let child of obj.children) {
+				const result = this.findTabControl(child); // Recursively search in children
+				if (result) return result; // If found, return the tabcontrol
+			}
+		}
+		return null; // Return null if tabcontrol is not found
+	},
+	
 	/// if you use updatePos - instance param is binded automatically
 	setPosition: function(instance, updatedPos) {
 		var calculated = false;
