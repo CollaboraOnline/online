@@ -34,6 +34,7 @@ class LayerRendererGl implements LayerRenderer {
 	];
 
 	private offscreenCanvas: OffscreenCanvas;
+	private glContext: RenderContextGl;
 	private gl: WebGLRenderingContext;
 	private program: WebGLProgram;
 	private positionBuffer: WebGLBuffer;
@@ -47,10 +48,8 @@ class LayerRendererGl implements LayerRenderer {
 
 	constructor(offscreenCanvas: OffscreenCanvas) {
 		this.offscreenCanvas = offscreenCanvas;
-		this.gl = this.offscreenCanvas.getContext('webgl');
-		if (!this.gl) {
-			throw new Error('WebGL not supported');
-		}
+		this.glContext = new RenderContextGl(this.offscreenCanvas);
+		this.gl = this.glContext.getGl();
 		this.initializeWebGL();
 	}
 
@@ -87,20 +86,16 @@ class LayerRendererGl implements LayerRenderer {
 	private initializeWebGL() {
 		const gl = this.gl;
 
-		// Compile shaders
-		const vertexShader = this.createShader(
-			gl,
-			gl.VERTEX_SHADER,
+		// Compile shaders using RenderContextGl
+		const vertexShader = this.glContext.createVertexShader(
 			this.vertexShaderSource,
 		);
-		const fragmentShader = this.createShader(
-			gl,
-			gl.FRAGMENT_SHADER,
+		const fragmentShader = this.glContext.createFragmentShader(
 			this.fragmentShaderSource,
 		);
 
-		// Link program
-		this.program = this.createProgram(gl, vertexShader, fragmentShader);
+		// Link program using RenderContextGl
+		this.program = this.glContext.createProgram(vertexShader, fragmentShader);
 
 		// Get attribute and uniform locations
 		this.positionLocation = gl.getAttribLocation(this.program, 'a_position');
@@ -151,64 +146,6 @@ class LayerRendererGl implements LayerRenderer {
 		gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
 	}
 
-	private loadTexture(
-		gl: WebGLRenderingContext,
-		imageInfo: HTMLImageElement | ImageBitmap,
-	): WebGLTexture {
-		const texture = gl.createTexture();
-		gl.bindTexture(gl.TEXTURE_2D, texture);
-
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-
-		gl.texImage2D(
-			gl.TEXTURE_2D,
-			0,
-			gl.RGBA,
-			gl.RGBA,
-			gl.UNSIGNED_BYTE,
-			imageInfo,
-		);
-
-		return texture;
-	}
-
-	private createShader(
-		gl: WebGLRenderingContext,
-		type: number,
-		source: string,
-	): WebGLShader {
-		const shader = gl.createShader(type);
-		gl.shaderSource(shader, source);
-		gl.compileShader(shader);
-		if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-			const info = gl.getShaderInfoLog(shader);
-			console.error('Could not compile WebGL shader.' + info);
-			gl.deleteShader(shader);
-			throw new Error('Shader compilation failed');
-		}
-		return shader;
-	}
-
-	private createProgram(
-		gl: WebGLRenderingContext,
-		vertexShader: WebGLShader,
-		fragmentShader: WebGLShader,
-	): WebGLProgram {
-		const program = gl.createProgram();
-		gl.attachShader(program, vertexShader);
-		gl.attachShader(program, fragmentShader);
-		gl.linkProgram(program);
-		if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-			const info = gl.getProgramInfoLog(program);
-			console.error('Could not link WebGL program.' + info);
-			gl.deleteProgram(program);
-			throw new Error('Program linking failed');
-		}
-		return program;
-	}
-
 	clearCanvas(): void {
 		const gl = this.gl;
 		gl.clearColor(1.0, 1.0, 1.0, 1.0); // Clear to white
@@ -248,9 +185,11 @@ class LayerRendererGl implements LayerRenderer {
 			// console.debug(`LayerDrawing.drawBitmap: cache hit: key: ${textureKey}`);
 		} else {
 			if (imageInfo instanceof ImageBitmap) {
-				texture = this.loadTexture(this.gl, imageInfo);
+				texture = this.glContext.loadTexture(imageInfo);
 			} else {
-				texture = this.loadTexture(this.gl, imageInfo.data as HTMLImageElement);
+				texture = this.glContext.loadTexture(
+					imageInfo.data as HTMLImageElement,
+				);
 			}
 			this.textureCache.set(textureKey, texture);
 		}
