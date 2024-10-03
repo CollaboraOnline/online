@@ -15,15 +15,15 @@
 */
 
 class ShapeHandleScalingSubSection extends CanvasSectionObject {
-    processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
+	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
 	drawingOrder: number = L.CSections.DefaultForDocumentObjects.drawingOrder + 1; // Handle events before the parent section.
 	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
-    documentObject: boolean = true;
+	documentObject: boolean = true;
 
 	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
-        super();
+		super();
 
-        this.size = size;
+		this.size = size;
 		this.sectionProperties.position = documentPosition.clone();
 		this.name = sectionName;
 
@@ -89,25 +89,55 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
+	private overrideHandle(kind: string): [string, number, number] {
+		const handle = {
+			id: this.sectionProperties.ownInfo.id,
+			x: this.position[0],
+			y: this.position[1],
+		};
+		const subSections = this.sectionProperties.parentHandlerSection.sectionProperties.subSections;
+
+		if (kind === '5') {
+			handle.id = '7';
+			handle.y = subSections['7'].position[1];
+		} else if (kind === '4') {
+			handle.id = '5';
+			handle.y = subSections['5'].position[1];
+		} else if (kind === '2') {
+			handle.id = '2';
+			handle.x = subSections['2'].position[0];
+		} else if (kind === '7') {
+			handle.id = '7';
+			handle.x = subSections['7'].position[0];
+		}
+
+		return [handle.id, handle.x, handle.y];
+	}
+
 	onMouseUp(point: number[], e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();
 			e.stopPropagation();
 
-			let x = this.sectionProperties.parentHandlerSection.sectionProperties.closestX;
-			if (!x) x = point[0] + this.position[0];
+			const keepRatio = e.ctrlKey && e.shiftKey;
+			let handleId = this.sectionProperties.ownInfo.id;
+			const parentHandlerSection = this.sectionProperties.parentHandlerSection;
 
-			let y = this.sectionProperties.parentHandlerSection.sectionProperties.closestY;
-			if (!y) y = point[1] + this.position[1];
+			let x = parentHandlerSection.sectionProperties.closestX ?? point[0] + this.position[0];
+			let y = parentHandlerSection.sectionProperties.closestY ?? point[1] + this.position[1];
+
+			if (keepRatio) {
+				[handleId, x, y] = this.overrideHandle(this.sectionProperties.ownInfo.kind);
+			}
 
 			const parameters = {
-				HandleNum: { type: 'long', value: this.sectionProperties.ownInfo.id },
+				HandleNum: { type: 'long', value: handleId },
 				NewPosX: { type: 'long', value: Math.round(x * app.pixelsToTwips) },
 				NewPosY: { type: 'long', value: Math.round(y * app.pixelsToTwips) }
 			};
-
+			
 			app.map.sendUnoCommand('.uno:MoveShapeHandle', parameters);
-			this.sectionProperties.parentHandlerSection.hideSVG();
+			parentHandlerSection.hideSVG();
 		}
 
 		(window as any).IgnorePanning = false;
@@ -132,8 +162,37 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		}
 	}
 
-	calculateNewShapeRectangleProperties(point: number[]) {
+	private calculateRatioPoint(point: number[], shapeRecProps: any) {
+		const isVerticalHandler = ['2', '7'].includes(this.sectionProperties.ownInfo.kind);
+
+		const primaryDelta = isVerticalHandler 
+		    ? point[1] - shapeRecProps.center[1]
+		    : point[0] - shapeRecProps.center[0];
+		
+		const aspectRatio = isVerticalHandler
+		    ? shapeRecProps.width / shapeRecProps.height
+		    : shapeRecProps.height / shapeRecProps.width;
+		
+		const secondaryDelta = primaryDelta * aspectRatio;
+		
+		const direction = ['3', '4', '6', '2'].includes(this.sectionProperties.ownInfo.kind) ? -1 : 1;
+		
+		if (isVerticalHandler) {
+		    point[0] = shapeRecProps.center[0] + secondaryDelta * direction;
+		} else {
+		    point[1] = shapeRecProps.center[1] + secondaryDelta * direction;
+		}
+
+		return point;
+	}
+
+	calculateNewShapeRectangleProperties(point: number[], e: MouseEvent) {
 		const shapeRecProps: any = JSON.parse(JSON.stringify(this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties));
+		const keepRatio = e.ctrlKey && e.shiftKey;
+
+		if (keepRatio) {
+			point = this.calculateRatioPoint(point, shapeRecProps);
+		}
 
 		const diff = [point[0] - shapeRecProps.center[0], -(point[1] - shapeRecProps.center[1])];
 		const length = Math.pow(Math.pow(diff[0], 2) + Math.pow(diff[1], 2), 0.5);
@@ -166,6 +225,14 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		else if (['6', '7', '8'].includes(this.sectionProperties.ownInfo.kind))
 			rectangle.pY2 = point[1];
 
+		if (keepRatio) {
+			if (['4', '5'].includes(this.sectionProperties.ownInfo.kind)) {
+				rectangle.pY2 = point[1];
+			} else if (['2', '7'].includes(this.sectionProperties.ownInfo.kind)) {
+				rectangle.pX2 = point[0];
+			}
+		}
+
 		const centerAngle = Math.atan2(oldpCenter[1] - rectangle.pCenter[1], rectangle.pCenter[0] - oldpCenter[0]);
 		const centerLength = Math.pow(Math.pow(rectangle.pCenter[1] - oldpCenter[1], 2) + Math.pow(rectangle.pCenter[0] - oldpCenter[0], 2), 0.5);
 
@@ -181,11 +248,11 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	}
 
 	// While dragging a handle, we want to simulate handles to their final positions.
-	moveHandlesOnDrag(point: number[]) {
+	moveHandlesOnDrag(point: number[], e: MouseEvent) {
 		const shapeRecProps = this.calculateNewShapeRectangleProperties([
 			point[0] + this.myTopLeft[0] + this.documentTopLeft[0] - this.containerObject.getDocumentAnchor()[0],
 			point[1] + this.myTopLeft[1] + this.documentTopLeft[1] - this.containerObject.getDocumentAnchor()[1]
-		]);
+		], e);
 
 		this.sectionProperties.parentHandlerSection.calculateInitialAnglesOfShapeHandlers(shapeRecProps);
 
@@ -213,7 +280,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			this.stopPropagating();
 			e.stopPropagation();
 			this.sectionProperties.parentHandlerSection.sectionProperties.svg.style.opacity = 0.5;
-			this.moveHandlesOnDrag(point);
+			this.moveHandlesOnDrag(point, e);
 			this.sectionProperties.parentHandlerSection.checkObjectsBoundaries([this.position[0]], [this.position[1]]);
 			this.containerObject.requestReDraw();
 			this.sectionProperties.parentHandlerSection.showSVG();
