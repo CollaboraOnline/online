@@ -23,7 +23,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
  collaboraofficebasis-draw,
  collaboraofficebasis-extension-pdf-import,
  collaboraofficebasis-ooolinguistic,
- collaboraofficebasis-math
+ collaboraofficebasis-math,
+ coolwsd-deprecated
 Conflicts: loolwsd,
  collaboraoffice-dict-br,
  collaboraoffice-dict-et,
