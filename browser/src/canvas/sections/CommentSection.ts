@@ -481,7 +481,10 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private updateContent (): void {
-		this.sectionProperties.contentText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		if(this.sectionProperties.data.html)
+			this.sectionProperties.contentText.innerHTML = this.sectionProperties.data.html ? this.sectionProperties.data.html: ''
+		else
+			this.sectionProperties.contentText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		// Get the escaped HTML out and find for possible, useful links
 		var linkedText = Autolinker.link(this.sectionProperties.contentText.outerHTML);
 		// Set the property of text field directly. This is insecure otherwise because it doesn't escape the input
