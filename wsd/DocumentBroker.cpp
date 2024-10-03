@@ -2419,6 +2419,24 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
     assert(uploadResult.getResult() != StorageBase::UploadResult::Result::OK &&
            "Expected upload failure");
 
+    if (_docState.activity() == DocumentState::Activity::Rename)
+    {
+        // Must end the renaming, as we've failed.
+        LOG_DBG("Failed to renameFile because uploading pre-renaming failed");
+
+        const auto it = _sessions.find(_renameSessionId);
+        endRenameFileCommand();
+        if (it == _sessions.end() || it->second == nullptr)
+        {
+            LOG_WRN("Session [" << _renameSessionId << "] not found to rename docKey [" << _docKey
+                                << "]. The document will not be renamed.");
+        }
+        else
+        {
+            it->second->sendTextFrameAndLogError("error: cmd=renamefile kind=failed");
+        }
+    }
+
     if (uploadResult.getResult() == StorageBase::UploadResult::Result::TOO_LARGE)
     {
         LOG_WRN("Got Entitity Too Large while uploading docKey ["
