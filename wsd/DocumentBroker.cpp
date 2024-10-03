@@ -2410,7 +2410,16 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
     {
         return handleUploadToStorageSuccessful(uploadResult);
     }
-    else if (uploadResult.getResult() == StorageBase::UploadResult::Result::TOO_LARGE)
+
+    handleUploadToStorageFailed(uploadResult);
+}
+
+void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult& uploadResult)
+{
+    assert(uploadResult.getResult() != StorageBase::UploadResult::Result::OK &&
+           "Expected upload failure");
+
+    if (uploadResult.getResult() == StorageBase::UploadResult::Result::TOO_LARGE)
     {
         LOG_WRN("Got Entitity Too Large while uploading docKey ["
                 << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
