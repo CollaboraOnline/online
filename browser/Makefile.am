@@ -519,7 +519,7 @@ COOL_JS_LST =\
 	src/slideshow/transition/FlipTilesTransition.ts \
 	src/slideshow/transition/StaticNoiseTransition.ts \
 	src/slideshow/transition/MicsShapeWipeTransition.ts \
-	src/slideshow/operation/RotateAndScaleDepthByWidth.ts \
+	src/slideshow/operation/RotateAndScaleDepth.ts \
 	src/slideshow/operation/SEllipseTranslate.ts \
 	src/slideshow/operation/SRotate.ts \
 	src/slideshow/operation/SScale.ts \
@@ -1069,7 +1069,7 @@ pot:
 		src/slideshow/transition/DissolveTransition3d.ts \
 		src/slideshow/transition/FlipTilesTransition.ts \
 		src/slideshow/transition/MicsShapeWipeTransition.ts \
-		src/slideshow/operation/RotateAndScaleDepthByWidth.ts \
+		src/slideshow/operation/RotateAndScaleDepth.ts \
 		src/slideshow/operation/SEllipseTranslate.ts \
 		src/slideshow/operation/SRotate.ts \
 		src/slideshow/operation/SScale.ts \
