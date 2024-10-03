@@ -64,6 +64,7 @@ var unoCommandsArray = {
 	'ConditionalFormatManagerDialog':{spreadsheet:{menu:_('Manage...'),},},
 	'ConditionalFormatMenu':{spreadsheet:{menu:_('C~onditional'),},},
 	'ConnectorToolbox':{presentation:{context:_('Connectors (double click for multi-selection)'),menu:_('Connectors'),},},
+	'ContentControlProperties':{text:{context:_('Content Control Properties'),menu:_('Properties'),},},
 	'ContinueNumbering':{text:{menu:_('~Add to List'),},},
 	'ContourDialog':{global:{menu:_('~Edit Contour...'),},},
 	'ControlCodes':{text:{context:_('Toggle Formatting Marks'),menu:_('For~matting Marks'),},},
