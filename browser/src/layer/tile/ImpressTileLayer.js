@@ -298,7 +298,19 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			} else {
 				this._selectedPart = statusJSON.selectedpart;
 			}
+
 			this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : (statusJSON.parts.length > 0 && statusJSON.parts[0].mode !== undefined ? statusJSON.parts[0].mode : 0);
+
+			if (statusJSON.gridSnapEnabled === true)
+				app.map.stateChangeHandler.setItemValue('.uno:GridUse', 'true');
+			else if (statusJSON.parts.length > 0 && statusJSON.parts[0].gridSnapEnabled === true)
+				app.map.stateChangeHandler.setItemValue('.uno:GridUse', 'true');
+
+			if (statusJSON.gridVisible === true)
+				app.map.stateChangeHandler.setItemValue('.uno:GridVisible', 'true');
+			else if (statusJSON.parts.length > 0 && statusJSON.parts[0].gridVisible === true)
+				app.map.stateChangeHandler.setItemValue('.uno:GridVisible', 'true');
+
 			this._resetPreFetching(true);
 
 			var refreshAnnotation = this._documentInfo !== textMsg;
