@@ -264,6 +264,9 @@ private:
         _queue->putCallback(-1, type, payload);
     }
 
+    /// Cleanup bgSave child processes.
+    static void reapZombieChildren();
+
 public:
     /// Request loading a document, or a new view, if one exists,
     /// and register callbacks.
