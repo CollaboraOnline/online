@@ -378,6 +378,20 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     std::atomic<unsigned> lastLocalId;
     std::vector<std::shared_ptr<LocalFileInfo>> LocalFileInfo::fileInfoVec;
 
+    /// Reads the content of `path`, returns an empty string on failure.
+    std::string readFileToString(const std::string& path)
+    {
+        if (!FileUtil::Stat(path).exists())
+        {
+            return {};
+        }
+
+        std::ifstream stream(path);
+        std::stringstream buffer;
+        buffer << stream.rdbuf();
+        return buffer.str();
+    }
+
     //handles request starts with /wopi/files
     void handleWopiRequest(const HTTPRequest& request,
                            const RequestDetails &requestDetails,
@@ -423,6 +437,26 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("OwnerId", "test");
             fileInfo->set("UserId", userId);
             fileInfo->set("UserFriendlyName", userNameString);
+
+            Poco::JSON::Object::Ptr userPrivateInfo = new Poco::JSON::Object();
+            // If there is matching sign data next to the file to be loaded, use it.
+            std::string signatureCert = readFileToString(localPath + ".cert.pem");
+            if (!signatureCert.empty())
+            {
+                userPrivateInfo->set("SignatureCert", signatureCert);
+            }
+            std::string signatureKey = readFileToString(localPath + ".key.pem");
+            if (!signatureKey.empty())
+            {
+                userPrivateInfo->set("SignatureKey", signatureKey);
+            }
+            std::string signatureCa = readFileToString(localPath + ".ca.pem");
+            if (!signatureCa.empty())
+            {
+                userPrivateInfo->set("SignatureCa", signatureCa);
+            }
+            fileInfo->set("UserPrivateInfo", userPrivateInfo);
+
             fileInfo->set("UserCanWrite", (requestDetails.getParam("permission") != "readonly") ? "true": "false");
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
             fileInfo->set("LastModifiedTime", localFile->getLastModifiedTime());
