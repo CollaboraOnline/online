@@ -13,6 +13,7 @@
 
 #include <Exceptions.hpp>
 #include <Protocol.hpp>
+#include <Rectangle.hpp>
 #include <StringVector.hpp>
 
 #include <cassert>
@@ -146,23 +147,43 @@ public:
         return a ^ b;
     }
 
-    static bool rectanglesIntersect(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2)
+    /// Returns the tile's AABBox, i.e. tile-position + tile-extend
+    Util::Rectangle toAABBox() const
     {
-        return x1 + w1 >= x2 &&
-               x1 <= x2 + w2 &&
-               y1 + h1 >= y2 &&
-               y1 <= y2 + h2;
+        return Util::Rectangle::create(getTilePosX(), getTilePosY(),
+                 getTilePosX()+getTileWidth(), getTilePosY()+getTileHeight());
     }
 
+    /// Returns whether the given rectangle `a` intersects (partially contains) the given rectangle `b`.
+    static bool rectanglesIntersect(int ax, int ay, int aw, int ah, int bx, int by, int bw, int bh)
+    {
+        const Util::Rectangle a = Util::Rectangle::create(ax, ay, ax+aw, ay+ah);
+        const Util::Rectangle b = Util::Rectangle::create(bx, by, bx+bw, by+bh);
+        return a.intersects(b);
+    }
+
+    /// Returns whether this Tile's AABBox intersects (partially contains) given rectangle.
     bool intersectsWithRect(int x, int y, int w, int h) const
     {
-        return rectanglesIntersect(getTilePosX(), getTilePosY(), getTileWidth(), getTileHeight(), x, y, w, h);
+        return toAABBox().intersects( Util::Rectangle::create(x, y, x+w, y+h) );
     }
 
+    /// Returns whether this Tile's AABBox intersects (partially contains) given Tile's AABBox.
     bool intersects(const TileDesc& other) const
     {
-        return intersectsWithRect(other.getTilePosX(), other.getTilePosY(),
-                                  other.getTileWidth(), other.getTileHeight());
+        return toAABBox().intersects(other.toAABBox());
+    }
+
+    /// Returns whether this Tile's AABBox intersects (partially contains) given AABBox.
+    bool intersects(const Util::Rectangle& otherAABBox) const
+    {
+        return toAABBox().intersects(otherAABBox);
+    }
+
+    /// Returns whether this Tile's AABBox is fully contained by the given AABBox.
+    bool isContained(const Util::Rectangle& otherAABBox) const
+    {
+        return otherAABBox.contains(toAABBox());
     }
 
     bool isAdjacent(const TileDesc& other) const
