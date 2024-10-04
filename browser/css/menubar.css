@@ -79,7 +79,7 @@
 }
 
 #save.saving img {
-	background: url('images/lc_arrowspin.svg') no-repeat center;
+	background: url('images/lc_saving.svg') no-repeat center;
 }
 
 #save.saving::after {
@@ -101,7 +101,7 @@
 }
 
 [data-theme='dark'] #save.saving img {
-	background: url('images/dark/lc_arrowspin.svg') no-repeat center;
+	background: url('images/dark/lc_saving.svg') no-repeat center;
 }
 #document-titlebar {
 	display: inline-table; /*new*/
