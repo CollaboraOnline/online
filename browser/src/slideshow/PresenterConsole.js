@@ -23,6 +23,39 @@ class PresenterConsole {
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
 	}
 
+	_generateHtml(title) {
+		let sanitizer = document.createElement('div');
+		sanitizer.innerText = title;
+
+		let sanitizedTitle = sanitizer.innerHTML;
+		return `
+			<!DOCTYPE html>
+			<html lang="en">
+			<head>
+				<meta charset="UTF-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<title>${sanitizedTitle}</title>
+			</head>
+			<body>
+                                <header>
+                                </header>
+                                <main id="main-content">
+                                     <div id="first-presentation">
+                                         <canvas id="current-presentation"></canvas>
+                                         <div id="timer"></div>
+                                     </div>
+                                     <div id="second-presentation">
+                                         <canvas id="next-presentation"></canvas>
+                                         <div id='notes'></div>
+                                     </div>
+                                </main>
+                                <footer>
+                                </footer>
+			</body>
+			</html>
+			`;
+	}
+
 	_onPresentationInfo() {
 		if (!this._proxyPresenter) {
 			return;
@@ -33,11 +66,11 @@ class PresenterConsole {
 		this._map.fire('newpresentinwindow');
 
 		let top = screen.height - 500;
-		let left = screen.width - 500;
+		let left = screen.width - 800;
 		this._proxyPresenter = window.open(
 			'',
 			'_blank',
-			'popup,width=500,height=500,left=' + left + ',top=' + top,
+			'popup,width=800,height=500,left=' + left + ',top=' + top,
 		);
 		if (!this._proxyPresenter) {
 			this._map.slideShowPresenter._notifyBlockedPresenting();
@@ -45,6 +78,13 @@ class PresenterConsole {
 		}
 
 		this._map.off('newpresentinconsole', this._onPresentInConsole, this);
+
+		this._proxyPresenter.document.open();
+		this._proxyPresenter.document.write(
+			this._generateHtml(_('Presenter Console')),
+		);
+		this._proxyPresenter.document.close();
+
 		this._map.slideShowPresenter._slideShowWindowProxy.addEventListener(
 			'unload',
 			L.bind(this._onWindowClose, this),
@@ -59,13 +99,49 @@ class PresenterConsole {
 			L.bind(this._onKeyDown, this),
 		);
 
-		this._proxyPresenter.document.documentElement.innerHTML =
-			this._slideShowPresenter._generateSlideWindowHtml(_('Presenter Console'));
-
 		this._proxyPresenter.document.body.style.margin = '0';
 		this._proxyPresenter.document.body.style.padding = '0';
-		this._proxyPresenter.document.body.style.height = '50%';
 		this._proxyPresenter.document.body.style.overflow = 'hidden';
+
+		this._proxyPresenter.document.body.style.display = 'flex';
+		this._proxyPresenter.document.body.style.flexDirection = 'column';
+		this._proxyPresenter.document.body.style.minHeight = '100vh';
+		this._proxyPresenter.document.body.style.minWidth = '100vw';
+
+		let elem = this._proxyPresenter.document.querySelector('#main-content');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'row';
+		elem.style.flexWrap = 'wrap';
+		elem.style.minWidth = '100vh';
+		elem.style.minHeight = '100vw';
+
+		elem = this._proxyPresenter.document.querySelector('#first-presentation');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.flex = '1';
+
+		elem = this._proxyPresenter.document.querySelector('#second-presentation');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.flex = '1';
+
+		elem = this._proxyPresenter.document.querySelector('#current-presentation');
+		elem.style.height = '50%';
+		elem.style.width = '100%';
+
+		elem = this._proxyPresenter.document.querySelector('#timer');
+		elem.style.textAlign = 'center';
+		elem.style.verticalAlign = 'middle';
+		elem.style.fontSize = 'large';
+		elem.style.fontWeight = 'bold';
+		elem.style.height = '50%';
+
+		elem = this._proxyPresenter.document.querySelector('#next-presentation');
+		elem.style.height = '50%';
+		elem.style.width = '100%';
+
+		elem = this._proxyPresenter.document.querySelector('#notes');
+		elem.style.height = '50%';
 	}
 
 	_onKeyDown(e) {
