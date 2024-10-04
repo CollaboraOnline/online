@@ -35,6 +35,7 @@
 #include <utime.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#include <sys/wait.h>
 #include <sysexits.h>
 
 #include <atomic>
@@ -1536,9 +1537,38 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
         getLOKit()->setForkedChild(false);
 
         startThreads();
+
+        // What better time than to reap while saving?
+        reapZombieChildren();
     }
     return true;
 #endif // !MOBILEAPP
+}
+
+void Document::reapZombieChildren()
+{
+    /// Normally, we reap children when the WebSocket is disconnected.
+    /// See BgSaveParentWebSocketHandler::onDisconnect().
+    /// This works well, except when the kernel is slower to unmap the
+    /// pages, close descriptors, etc. than we do the waitpid(2) in
+    /// onDisconnect(). It seems for small documents, that have a small
+    /// memory footprint, unloading the process is fast, and we reap it.
+    /// For large documents, however, the process ends up a zombie.
+    /// Here, we reap any zombies that might exist--at most 1.
+    int status = 0;
+    pid_t pid;
+    while ((pid = ::waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
+    {
+        if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGSEGV || WTERMSIG(status) == SIGBUS ||
+                                    WTERMSIG(status) == SIGABRT))
+        {
+            LOG_WRN("BgSave zombie child " << pid << " has exited abnormally");
+        }
+        else
+        {
+            LOG_DBG("Reaped zombie BgSave child " << pid);
+        }
+    }
 }
 
 void Document::notifyViewInfo()
