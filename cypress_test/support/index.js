@@ -4,7 +4,9 @@
 require('cypress-wait-until');
 require('cypress-file-upload');
 import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector';
+const { addCompareSnapshotCommand } = require('cypress-visual-regression/dist/command');
 
+addCompareSnapshotCommand();
 
 beforeEach(function() {
 	cy.log('Starting test: ' + getFullTestName());
