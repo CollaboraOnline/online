@@ -28,6 +28,7 @@
     "url": "https://github.com/CollaboraOnline/online.git"
   },
   "dependencies": {
-    "cypress-tags": "^1.2.2"
+    "cypress-tags": "^1.2.2",
+    "cypress-visual-regression": "^5.2.2"
   }
 }
