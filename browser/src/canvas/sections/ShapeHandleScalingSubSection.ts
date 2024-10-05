@@ -135,7 +135,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 				NewPosX: { type: 'long', value: Math.round(x * app.pixelsToTwips) },
 				NewPosY: { type: 'long', value: Math.round(y * app.pixelsToTwips) }
 			};
-			
+
 			app.map.sendUnoCommand('.uno:MoveShapeHandle', parameters);
 			parentHandlerSection.hideSVG();
 		}
@@ -165,18 +165,18 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	private calculateRatioPoint(point: number[], shapeRecProps: any) {
 		const isVerticalHandler = ['2', '7'].includes(this.sectionProperties.ownInfo.kind);
 
-		const primaryDelta = isVerticalHandler 
+		const primaryDelta = isVerticalHandler
 		    ? point[1] - shapeRecProps.center[1]
 		    : point[0] - shapeRecProps.center[0];
-		
+
 		const aspectRatio = isVerticalHandler
 		    ? shapeRecProps.width / shapeRecProps.height
 		    : shapeRecProps.height / shapeRecProps.width;
-		
+
 		const secondaryDelta = primaryDelta * aspectRatio;
-		
+
 		const direction = ['3', '4', '6', '2'].includes(this.sectionProperties.ownInfo.kind) ? -1 : 1;
-		
+
 		if (isVerticalHandler) {
 		    point[0] = shapeRecProps.center[0] + secondaryDelta * direction;
 		} else {
@@ -281,7 +281,10 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			e.stopPropagation();
 			this.sectionProperties.parentHandlerSection.sectionProperties.svg.style.opacity = 0.5;
 			this.moveHandlesOnDrag(point, e);
-			this.sectionProperties.parentHandlerSection.checkObjectsBoundaries([this.position[0]], [this.position[1]]);
+
+			// Here we are checking a point, so the size 0. dragDistance is also 0 because we already set the new position (moveHandlesOnDrag).
+			this.sectionProperties.parentHandlerSection.checkHelperLinesAndSnapPoints([0, 0], this.position, [0, 0]);
+
 			this.containerObject.requestReDraw();
 			this.sectionProperties.parentHandlerSection.showSVG();
 		}
