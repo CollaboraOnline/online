@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-27 13:49+0200\n"
-"PO-Revision-Date: 2024-09-14 23:35+0000\n"
+"PO-Revision-Date: 2024-09-30 12:42+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_ZA/>\n"
-"Language: \n"
+"Language: en_ZA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1776,6 +1776,8 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"To prevent accidental changes, the author has set this file to open as view-"
+"only"
 
 #: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
@@ -2133,7 +2135,7 @@ msgstr "Bottom Margin"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "The document is not signed."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2858,15 +2860,15 @@ msgstr "Resolve Thread"
 
 #: src/canvas/sections/CommentListSection.ts:1085
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Promote to top comment"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show on the side"
-msgstr ""
+msgstr "Show on the side"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Show comment bigger"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/canvas/sections/CommentListSection.ts:1344
@@ -2952,19 +2954,16 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Failed to download clipboard, please re-copy"
 
 #: src/map/Clipboard.js:1191
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr "<p>Please use the paste buttons on your on-screen keyboard.</p>"
+msgstr "Please use the paste buttons on your on-screen keyboard."
 
 #: src/map/Clipboard.js:1247
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>A download due to a large copy/paste operation has already started. "
-"Please, wait for the current download or cancel it before starting a new "
-"one</p>"
+"A download due to a large copy/paste operation has already started. Please, "
+"wait for the current download or cancel it before starting a new one"
 
 #: src/map/Clipboard.js:1269
 msgid "Paste from this document"
@@ -2976,15 +2975,15 @@ msgstr "Cancel paste special"
 
 #: src/map/Clipboard.js:1279
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Your browser has very limited access to the clipboard"
 
 #: src/map/Clipboard.js:1284
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Please use following combination to see more options:"
 
 #: src/map/Clipboard.js:1302
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Close popup to ignore paste special"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
