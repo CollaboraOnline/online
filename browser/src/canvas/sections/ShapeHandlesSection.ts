@@ -45,6 +45,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.lastDragDistance = [0, 0];
 		this.sectionProperties.pickedIndexX = 0; // Which corner of shape is closest to snap point when moving the shape.
 		this.sectionProperties.pickedIndexY = 0; // Which corner of shape is closest to snap point when moving the shape.
+		this.sectionProperties.closestGridPoint = null; // This will hold the position to highlight and snap.
+		this.sectionProperties.radiusForGridSnap = 20 * app.dpiScale; // How close should the point be to a grid point to snap.
 
 		// These are for snapping the objects to the same level with others' boundaries.
 		this.sectionProperties.closestX = null;
@@ -751,11 +753,157 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		else this.sectionProperties.closestY = null;
 	}
 
+	private findClosestGridPoint(size: number[], position: number[], dragDistance: number[]): boolean {
+		this.sectionProperties.closestGridPoint = null;
+
+		if (app.map.stateChangeHandler.getItemValue('.uno:GridUse') === 'true') {
+			/*
+				We will find and highlight a close-enough grid point, if any.
+			*/
+
+			const selectedPart = Object.assign({}, app.impress.partList[app.map._docLayer._selectedPart]);
+			selectedPart.leftBorder *= app.impress.twipsCorrection;
+			selectedPart.upperBorder *= app.impress.twipsCorrection;
+			selectedPart.rightBorder *= app.impress.twipsCorrection;
+			selectedPart.lowerBorder *= app.impress.twipsCorrection;
+			selectedPart.gridCoarseWidth *= app.impress.twipsCorrection;
+			selectedPart.gridCoarseHeight *= app.impress.twipsCorrection;
+
+			// The 4 corners and the midpoints of selected object's rectangle.
+			const checkList = [
+				// 4 corners.
+				new cool.SimplePoint((position[0] + dragDistance[0]) * app.pixelsToTwips, (position[1] + dragDistance[1]) * app.pixelsToTwips),
+				new cool.SimplePoint((size[0] + position[0] + dragDistance[0]) * app.pixelsToTwips, (position[1] + dragDistance[1]) * app.pixelsToTwips),
+				new cool.SimplePoint((position[0] + dragDistance[0]) * app.pixelsToTwips, (size[1] + position[1] + dragDistance[1]) * app.pixelsToTwips),
+				new cool.SimplePoint((size[0] + position[0] + dragDistance[0]) * app.pixelsToTwips, (size[1] + position[1] + dragDistance[1]) * app.pixelsToTwips),
+
+				// Mid points.
+				new cool.SimplePoint((position[0] + size[0] * 0.5 + dragDistance[0]) * app.pixelsToTwips, (position[1] + dragDistance[1]) * app.pixelsToTwips),
+				new cool.SimplePoint((position[0] + dragDistance[0]) * app.pixelsToTwips, (position[1] + size[1] * 0.5 + dragDistance[1]) * app.pixelsToTwips),
+				new cool.SimplePoint((position[0] + size[0] + dragDistance[0]) * app.pixelsToTwips, (position[1] + size[1] * 0.5 + dragDistance[1]) * app.pixelsToTwips),
+				new cool.SimplePoint((position[0] + size[0] * 0.5 + dragDistance[0]) * app.pixelsToTwips, (position[1] + size[1] + dragDistance[1]) * app.pixelsToTwips),
+			];
+
+			// We need to subtract the left and top borders.
+			for (let i = 0; i < checkList.length; i++) {
+				checkList[i].x -= selectedPart.leftBorder;
+				checkList[i].y -= selectedPart.upperBorder;
+			}
+
+			// The rectangle that is shaped by the page margins.
+			const innerRectangle = new cool.SimpleRectangle(
+				selectedPart.leftBorder,
+				selectedPart.upperBorder,
+				(selectedPart.width - selectedPart.leftBorder - selectedPart.rightBorder),
+				(selectedPart.height - selectedPart.upperBorder - selectedPart.lowerBorder)
+			);
+
+			let minDistance = 1000000;
+			let pickedPoint = null;
+			const gapX = selectedPart.gridCoarseWidth / (selectedPart.innerSpacesX > 0 ? selectedPart.innerSpacesX : 1);
+			const gapY = selectedPart.gridCoarseHeight / (selectedPart.innerSpacesY > 0 ? selectedPart.innerSpacesY : 1);
+			for (let i = 0; i < checkList.length; i++) {
+				if (innerRectangle.containsPoint(checkList[i].toArray())) {
+					// Now, think the areas enclosed with thick grid points as rectangles.
+					// We need to find which enclosed rectangle contains our point.
+
+					// Position the grid rectangle.
+					const leftCount = Math.round(checkList[i].x / selectedPart.gridCoarseWidth);
+					const topCount = Math.round(checkList[i].y / selectedPart.gridCoarseHeight);
+
+					// Distances to the edges of grid rectangle.
+					const distances = [
+						checkList[i].x - leftCount * selectedPart.gridCoarseWidth, // To left.
+						checkList[i].y - topCount * selectedPart.gridCoarseHeight, // To top.
+						(leftCount + 1) * selectedPart.gridCoarseWidth - checkList[i].x, // To right.
+						(topCount + 1) * selectedPart.gridCoarseHeight - checkList[i].y // To bottom.
+					];
+
+					const closestDistance = Math.min(...distances);
+					const index = distances.indexOf(closestDistance);
+
+					if (index === 0 || index === 2) { // closestDistance is horizontal.
+						let closestSmallDotVerticalDistance;
+						const leftOver = checkList[i].y % gapY;
+						if (leftOver > gapY * 0.5)
+							closestSmallDotVerticalDistance = gapY - leftOver;
+						else
+							closestSmallDotVerticalDistance = leftOver;
+
+						const lineDistance = Math.pow(Math.pow(closestDistance, 2) + Math.pow(closestSmallDotVerticalDistance, 2), 0.5);
+
+						if (lineDistance < minDistance) {
+							minDistance = lineDistance;
+							pickedPoint = [];
+							pickedPoint[0] = (index === 0 ? leftCount : leftCount + 1);
+							pickedPoint[1] = topCount;
+
+							// pickedPoint currently holds indexes, turn them to coordinates, don't forget to add small dots detail to vertical.
+							pickedPoint[0] *= selectedPart.gridCoarseWidth;
+							pickedPoint[1] *= selectedPart.gridCoarseHeight;
+							pickedPoint[1] += Math.round((checkList[i].y % selectedPart.gridCoarseHeight) / gapY) + (leftOver > gapY * 0.5 ? gapY : 0);
+						}
+					}
+					else { // closestDistance is vertical.
+						let closestSmallDotHorizontalDistance;
+						const leftOver = checkList[i].x % gapX;
+						if (leftOver > gapX * 0.5)
+							closestSmallDotHorizontalDistance = gapX - leftOver;
+						else
+							closestSmallDotHorizontalDistance = leftOver;
+
+						const lineDistance = Math.pow(Math.pow(closestDistance, 2) + Math.pow(closestSmallDotHorizontalDistance, 2), 0.5);
+
+						if (lineDistance < minDistance) {
+							minDistance = lineDistance;
+							pickedPoint = [];
+							pickedPoint[0] = leftCount;
+							pickedPoint[1] = (index === 1 ? topCount : topCount + 1);
+
+							// pickedPoint currently holds indexes, turn them to coordinates, don't forget to add small dots detail to horizontal.
+							pickedPoint[0] *= selectedPart.gridCoarseWidth;
+							pickedPoint[0] += Math.round((checkList[i].x % selectedPart.gridCoarseWidth) / gapX) + (leftOver > gapX * 0.5 ? gapX : 0);
+							pickedPoint[1] *= selectedPart.gridCoarseHeight;
+						}
+					}
+				}
+			}
+
+			if (minDistance * app.twipsToPixels < this.sectionProperties.radiusForGridSnap) {
+				this.sectionProperties.closestGridPoint = pickedPoint;
+				this.sectionProperties.closestGridPoint[0] += selectedPart.leftBorder;
+				this.sectionProperties.closestGridPoint[1] += selectedPart.upperBorder;
+				this.sectionProperties.closestGridPoint[0] *= app.twipsToPixels;
+				this.sectionProperties.closestGridPoint[1] *= app.twipsToPixels;
+				this.sectionProperties.closestGridPoint[0] += this.containerObject.getDocumentAnchor()[0] - this.documentTopLeft[0];
+				this.sectionProperties.closestGridPoint[1] += this.containerObject.getDocumentAnchor()[1] - this.documentTopLeft[1];
+			}
+		}
+		else return false;
+	}
+
 	public checkObjectsBoundaries(xListToCheck: number[], yListToCheck: number[]) {
 		if (app.map._docLayer._docType === 'presentation') {
 			this.findClosestX(xListToCheck);
 			this.findClosestY(yListToCheck);
 			this.containerObject.requestReDraw();
+		}
+	}
+
+	public checkHelperLinesAndSnapPoints(size: number[], position: number[], dragDistance: number[]) {
+		/*
+			We will first check if grid-snap is enabled and if we are close to a grid point.
+			If there is a grid point to snap to, then we'll ignore helper lines.
+			Because core side doesn't know about our helper lines, and it'll ignore them if it can snap to a grid point.
+		*/
+		if (this.findClosestGridPoint(size, position, dragDistance)) {
+			this.sectionProperties.closestX = this.sectionProperties.closestY = null;
+		}
+		else {
+			this.checkObjectsBoundaries(
+				[position[0] + dragDistance[0], position[0] + dragDistance[0] + size[0]],
+				[position[1] + dragDistance[1], position[1] + dragDistance[1] + size[1]]
+			);
 		}
 	}
 
@@ -767,10 +915,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svg.style.opacity = 0.5;
 			this.sectionProperties.lastDragDistance = [dragDistance[0], dragDistance[1]];
-			this.checkObjectsBoundaries(
-				[this.position[0] + dragDistance[0], this.position[0] + dragDistance[0] + this.size[0]],
-				[this.position[1] + dragDistance[1], this.position[1] + dragDistance[1] + this.size[1]]
-			);
+			this.checkHelperLinesAndSnapPoints(this.size, this.position, dragDistance);
 
 			this.showSVG();
 		}
@@ -871,13 +1016,26 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.context.closePath();
 		}
 
+		if (this.sectionProperties.closestGridPoint) {
+			const p = this.sectionProperties.closestGridPoint;
+			this.context.fillStyle = 'orange';
+			this.context.arc(p[0], p[1], 10 * app.dpiScale, 0, 2 * Math.PI, false);
+			this.context.fill();
+		}
+
 		this.context.restore();
+	}
+
+	private anythingToDraw(): boolean {
+		return 	this.sectionProperties.closestX !== null ||
+				this.sectionProperties.closestY !== null ||
+				this.sectionProperties.closestGridPoint !== null;
 	}
 
 	public onDraw() {
 		if (!this.showSection || !this.isVisible)
 			this.hideSVG();
-		else if (this.sectionProperties.closestX !== null || this.sectionProperties.closestY !== null) {
+		else if (this.anythingToDraw()) {
 			this.drawGuides();
 		}
 	}

@@ -101,13 +101,11 @@ class GraphicSelection {
 	// When a shape is selected, the rectangles of other shapes are also sent from the core side.
 	// They are in twips units.
 	static convertObjectRectangleTwipsToPixels() {
-		const correction = 0.567; // Correction for impress case.
-
 		if (this.extraInfo && this.extraInfo.ObjectRectangles) {
 			for (let i = 0; i < this.extraInfo.ObjectRectangles.length; i++) {
 				for (let j = 0; j < 4; j++)
 					this.extraInfo.ObjectRectangles[i][j] *=
-						app.twipsToPixels * correction;
+						app.twipsToPixels * app.impress.twipsCorrection;
 			}
 		}
 	}

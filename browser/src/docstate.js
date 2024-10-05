@@ -32,7 +32,8 @@ window.app = {
 	},
 	impress: {
 		partList: null, // Info for parts.
-		notesMode: false // Contrary to "NormalMultiPaneGUI"
+		notesMode: false, // Opposite of "NormalMultiPaneGUI".
+		twipsCorrection: 0.567 // There is a constant ratio between tiletwips and impress page twips. For now, this seems safe to use.
 	},
 	map: null, // Make map object a part of this.
 	dispatcher: null, // A Dispatcher class instance is assigned to this.
