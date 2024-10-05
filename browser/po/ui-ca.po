@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-27 13:49+0200\n"
-"PO-Revision-Date: 2024-09-28 06:17+0000\n"
+"PO-Revision-Date: 2024-10-05 07:15+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
@@ -2970,20 +2970,19 @@ msgstr ""
 
 #: src/map/Clipboard.js:1269
 msgid "Paste from this document"
-msgstr ""
+msgstr "Enganxa des d'aquest document"
 
 #: src/map/Clipboard.js:1269
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Cancel·la l'enganxament especial"
 
 #: src/map/Clipboard.js:1279
-#, fuzzy
 msgid "Your browser has very limited access to the clipboard"
-msgstr "<p>El vostre navegador té accés molt limitat al porta-retalls</p>"
+msgstr "El vostre navegador té accés molt limitat al porta-retalls"
 
 #: src/map/Clipboard.js:1284
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Feu servir la combinació següent per a veure més opcions:"
 
 #: src/map/Clipboard.js:1302
 msgid "Close popup to ignore paste special"
