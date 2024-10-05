@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-27 13:49+0200\n"
-"PO-Revision-Date: 2024-09-28 06:17+0000\n"
-"Last-Translator: Artur Yakupov <arturyak@gmail.com>\n"
+"PO-Revision-Date: 2024-10-01 17:39+0000\n"
+"Last-Translator: Mike Kaganski <mikekaganski@hotmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
 "Language: ru\n"
@@ -1783,13 +1783,12 @@ msgid "Cancel the search"
 msgstr "Отменить поиск"
 
 #: src/control/Control.StatusBar.js:385
-#, fuzzy
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
-"Чтобы предотвратить случайные изменения, автор пометил этот файл как \"только"
-" для чтения\"."
+"Чтобы предотвратить случайные изменения, автор пометил этот файл \"только "
+"для чтения\""
 
 #: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
@@ -2879,16 +2878,15 @@ msgstr "Обсуждение решено"
 
 #: src/canvas/sections/CommentListSection.ts:1085
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Сделать комментарием верхнего уровня"
 
 #: src/canvas/sections/CommentListSection.ts:1091
-#, fuzzy
 msgid "Show on the side"
 msgstr "Показать сбоку"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Показать комментарий крупнее"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/canvas/sections/CommentListSection.ts:1344
@@ -2979,13 +2977,12 @@ msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "<p>Используйте клавиши вставки на экранной клавиатуре.</p>"
 
 #: src/map/Clipboard.js:1247
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Идёт загрузка для копирования/вставки крупного фрагмента. Пожалуйста, "
-"дождитесь завершения загрузки или отмените её, чтобы начать новую</p>"
+"Идёт загрузка для копирования/вставки крупного фрагмента. Пожалуйста, "
+"дождитесь завершения загрузки или отмените её, чтобы начать новую"
 
 #: src/map/Clipboard.js:1269
 msgid "Paste from this document"
@@ -2996,17 +2993,14 @@ msgid "Cancel paste special"
 msgstr "Отменить специальную вставку"
 
 #: src/map/Clipboard.js:1279
-#, fuzzy
 msgid "Your browser has very limited access to the clipboard"
-msgstr "У Вашего браузера ограничен доступ к буферу копирования"
+msgstr "У вашего браузера ограничен доступ к буферу обмена"
 
 #: src/map/Clipboard.js:1284
-#, fuzzy
 msgid "Please use following combination to see more options:"
-msgstr "Используйте следующие сочетания, чтобы посмотреть больше опций:"
+msgstr "Используйте следующее сочетание, чтобы посмотреть больше опций:"
 
 #: src/map/Clipboard.js:1302
-#, fuzzy
 msgid "Close popup to ignore paste special"
 msgstr "Закройте всплывающее окно, чтобы игнорировать специальную вставку"
 
