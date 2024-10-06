@@ -38,10 +38,7 @@
 #include <common/TraceEvent.hpp>
 #include <common/Util.hpp>
 #include <common/CommandControl.hpp>
-
-#if !MOBILEAPP
 #include <net/HttpHelper.hpp>
-#endif
 
 using namespace COOLProtocol;
 
@@ -232,7 +229,7 @@ std::string ClientSession::createPublicURI(const std::string& subPath, const std
 #if !MOBILEAPP
     if (!COOLWSD::RouteToken.empty())
         meta += "&RouteToken=" + COOLWSD::RouteToken;
-#endif
+#endif // !MOBILEAPP
 
     if (!encode)
         return meta;
@@ -270,9 +267,8 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             return; // the getclipboard already completed.
         if (type == DocumentBroker::CLIP_REQUEST_SET)
         {
-#if !MOBILEAPP
-            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
-#endif
+            if constexpr (!Util::isMobileApp())
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
         else // will be handled during shutdown
         {
@@ -418,9 +414,8 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         }
         else
         {
-#if !MOBILEAPP
-            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
-#endif
+            if constexpr (!Util::isMobileApp())
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
     }
 }
