@@ -69,30 +69,33 @@ std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
 int Socket::createSocket([[maybe_unused]] Socket::Type type)
 {
-#if !MOBILEAPP
-    int domain = AF_UNSPEC;
-    switch (type)
+    if constexpr (!Util::isMobileApp())
     {
-    case Type::IPv4: domain = AF_INET;  break;
-    case Type::IPv6: domain = AF_INET6; break;
-    case Type::All:  domain = AF_INET6; break;
-    case Type::Unix: domain = AF_UNIX;  break;
-    default: assert(!"Unknown Socket::Type"); break;
+        int domain = AF_UNSPEC;
+        switch (type)
+        {
+        case Type::IPv4: domain = AF_INET;  break;
+        case Type::IPv6: domain = AF_INET6; break;
+        case Type::All:  domain = AF_INET6; break;
+        case Type::Unix: domain = AF_UNIX;  break;
+        default: assert(!"Unknown Socket::Type"); break;
+        }
+
+        return ::socket(domain, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
     }
 
-    return ::socket(domain, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
-#else
     return fakeSocketSocket();
-#endif
 }
 
 
 bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
                               std::shared_ptr<StreamSocket> &child)
 {
-#if MOBILEAPP
-    return false;
-#else
+    if constexpr (Util::isMobileApp())
+    {
+        return false;
+    }
+
     int pair[2];
     int rc = ::socketpair(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0, pair);
     if (rc != 0)
@@ -106,7 +109,6 @@ bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
     parent->setClientAddress("save-parent");
 
     return true;
-#endif
 }
 
 
@@ -287,13 +289,17 @@ void SocketPoll::removeFromWakeupArray()
             getWakeupsArray().erase(it);
     }
 
-#if !MOBILEAPP
-    ::close(_wakeup[0]);
-    ::close(_wakeup[1]);
-#else
-    fakeSocketClose(_wakeup[0]);
-    fakeSocketClose(_wakeup[1]);
-#endif
+    if constexpr (!Util::isMobileApp())
+    {
+        ::close(_wakeup[0]);
+        ::close(_wakeup[1]);
+    }
+    else
+    {
+        fakeSocketClose(_wakeup[0]);
+        fakeSocketClose(_wakeup[1]);
+    }
+
     _wakeup[0] = -1;
     _wakeup[1] = -1;
 }
