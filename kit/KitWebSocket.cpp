@@ -99,7 +99,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
 
     else if (tokens.equals(0, "exit"))
     {
-        if (!Util::isMobileApp())
+        if constexpr (!Util::isMobileApp())
         {
             LOG_INF("Terminating immediately due to parent 'exit' command.");
             flushTraceEventRecordings();
@@ -187,7 +187,7 @@ void KitWebSocketHandler::onDisconnect()
         return;
     }
 
-    if (!Util::isMobileApp())
+    if constexpr (!Util::isMobileApp())
     {
         //FIXME: We could try to recover.
         LOG_ERR("Kit for DocBroker ["

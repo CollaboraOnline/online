@@ -601,7 +601,7 @@ namespace Log
         Static.setName(name);
         std::ostringstream oss;
         oss << Static.getName();
-        if (!Util::isMobileApp())
+        if constexpr (!Util::isMobileApp())
             oss << '-' << std::setw(5) << std::setfill('0') << getpid();
         Static.setId(oss.str());
 
@@ -689,7 +689,7 @@ namespace Log
 
     void shutdown()
     {
-        if (Util::isMobileApp())
+        if constexpr (Util::isMobileApp())
             return;
         if (!Util::isKitInProcess())
             assert(ThreadLocalBufferCount <= 1 &&

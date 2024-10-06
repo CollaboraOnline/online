@@ -13,8 +13,6 @@
 
 namespace Util
 {
-bool isMobileApp() { return true; }
-
 /// No-op implementation of desktop only functions
 DirectoryCounter::DirectoryCounter(const char* procPath) { (void)_tasks; }
 DirectoryCounter::~DirectoryCounter() {}
@@ -39,4 +37,4 @@ std::string getLinuxVersion() { return "unknown"; }
 
 void alertAllUsers(const std::string&) {}
 void alertAllUsers(const std::string&, const std::string&) {}
-}
+} // namespace Util

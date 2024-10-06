@@ -188,7 +188,7 @@ protected:
 
     void onDisconnect() override
     {
-        if (Util::isMobileApp())
+        if constexpr (Util::isMobileApp())
             return;
         LOG_ERR("ForKit connection lost without exit arriving from wsd. Setting TerminationFlag");
         SigUtil::setTerminationFlag();

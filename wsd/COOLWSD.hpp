@@ -382,7 +382,7 @@ public:
     {
         std::string lowerCaseExtension = extension;
         std::transform(lowerCaseExtension.begin(), lowerCaseExtension.end(), lowerCaseExtension.begin(), ::tolower);
-        if (Util::isMobileApp())
+        if constexpr (Util::isMobileApp())
         {
             if (lowerCaseExtension == "pdf")
                 return true; // true for only pdf - it is not editable

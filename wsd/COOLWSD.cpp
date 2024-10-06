@@ -351,7 +351,7 @@ void COOLWSD::appendAllowedAliasGroups(LayeredConfiguration& conf, std::vector<s
 /// connected to any document.
 void COOLWSD::alertAllUsersInternal(const std::string& msg)
 {
-    if (Util::isMobileApp())
+    if constexpr (Util::isMobileApp())
         return;
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
@@ -370,7 +370,7 @@ void COOLWSD::alertAllUsersInternal(const std::string& msg)
 
 void COOLWSD::alertUserInternal(const std::string& dockey, const std::string& msg)
 {
-    if (Util::isMobileApp())
+    if constexpr (Util::isMobileApp())
         return;
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
@@ -3102,7 +3102,7 @@ void COOLWSD::dumpOutgoingTrace(const std::string& id, const std::string& sessio
 
 void COOLWSD::defineOptions(OptionSet& optionSet)
 {
-    if (Util::isMobileApp())
+    if constexpr (Util::isMobileApp())
         return;
     ServerApplication::defineOptions(optionSet);
 
@@ -3860,7 +3860,7 @@ private:
 
             auto child = std::make_shared<ChildProcess>(pid, jailId, socket, request);
 
-            if (!Util::isMobileApp())
+            if constexpr (!Util::isMobileApp())
                 UnitWSD::get().newChild(child);
 
             _pid = pid;
