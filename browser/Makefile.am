@@ -505,22 +505,22 @@ COOL_JS_LST =\
 	src/slideshow/transition/PushWipeTransition.ts \
 	src/slideshow/transition/CombTransition.ts \
 	src/slideshow/transition/NoTransition.ts \
-	src/slideshow/transition/SimpleTransition.ts \
-	src/slideshow/transition/CubeTransition.ts \
-	src/slideshow/transition/HelixTransition.ts \
-	src/slideshow/transition/FallTransition.ts \
-	src/slideshow/transition/ReflectionTransition.ts \
-	src/slideshow/transition/RochadeTransition.ts \
-	src/slideshow/transition/TurnDownTransition.ts \
-	src/slideshow/transition/Venetian3dTransition.ts \
-	src/slideshow/transition/TurnAroundTransition.ts \
-	src/slideshow/transition/PermTextureTransition.ts \
-	src/slideshow/transition/RippleTransition.ts \
-	src/slideshow/transition/NewsFlashTransition.ts \
-	src/slideshow/transition/DissolveTransition3d.ts \
-	src/slideshow/transition/FlipTilesTransition.ts \
-	src/slideshow/transition/StaticNoiseTransition.ts \
-	src/slideshow/transition/MicsShapeWipeTransition.ts \
+	src/slideshow/transition3d/SimpleTransition.ts \
+	src/slideshow/transition3d/CubeTransition.ts \
+	src/slideshow/transition3d/HelixTransition.ts \
+	src/slideshow/transition3d/FallTransition.ts \
+	src/slideshow/transition3d/ReflectionTransition.ts \
+	src/slideshow/transition3d/RochadeTransition.ts \
+	src/slideshow/transition3d/TurnDownTransition.ts \
+	src/slideshow/transition3d/Venetian3dTransition.ts \
+	src/slideshow/transition3d/TurnAroundTransition.ts \
+	src/slideshow/transition3d/PermTextureTransition.ts \
+	src/slideshow/transition3d/RippleTransition.ts \
+	src/slideshow/transition3d/NewsFlashTransition.ts \
+	src/slideshow/transition3d/DissolveTransition3d.ts \
+	src/slideshow/transition3d/FlipTilesTransition.ts \
+	src/slideshow/transition3d/StaticNoiseTransition.ts \
+	src/slideshow/transition3d/MicsShapeWipeTransition.ts \
 	src/slideshow/operation/RotateAndScaleDepth.ts \
 	src/slideshow/operation/SEllipseTranslate.ts \
 	src/slideshow/operation/SRotate.ts \
@@ -1057,22 +1057,22 @@ pot:
 		src/slideshow/transition/CombTransition.ts \
 		src/slideshow/transition/BarWipeTransition.ts \
 		src/slideshow/transition/NoTransition.ts \
-		src/slideshow/transition/SimpleTransition.ts \
-		src/slideshow/transition/CubeTransition.ts \
-		src/slideshow/transition/HelixTransition.ts \
-		src/slideshow/transition/FallTransition.ts \
-		src/slideshow/transition/ReflectionTransition.ts \
-		src/slideshow/transition/RochadeTransition.ts \
-		src/slideshow/transition/TurnDownTransition.ts \
-		src/slideshow/transition/Venetian3dTransition.ts \
-		src/slideshow/transition/TurnAroundTransition.ts \
-		src/slideshow/transition/PermTextureTransition.ts \
-		src/slideshow/transition/StaticNoiseTransition.ts \
-		src/slideshow/transition/RippleTransition.ts \
-		src/slideshow/transition/NewsFlashTransition.ts \
-		src/slideshow/transition/DissolveTransition3d.ts \
-		src/slideshow/transition/FlipTilesTransition.ts \
-		src/slideshow/transition/MicsShapeWipeTransition.ts \
+		src/slideshow/transition3d/SimpleTransition.ts \
+		src/slideshow/transition3d/CubeTransition.ts \
+		src/slideshow/transition3d/HelixTransition.ts \
+		src/slideshow/transition3d/FallTransition.ts \
+		src/slideshow/transition3d/ReflectionTransition.ts \
+		src/slideshow/transition3d/RochadeTransition.ts \
+		src/slideshow/transition3d/TurnDownTransition.ts \
+		src/slideshow/transition3d/Venetian3dTransition.ts \
+		src/slideshow/transition3d/TurnAroundTransition.ts \
+		src/slideshow/transition3d/PermTextureTransition.ts \
+		src/slideshow/transition3d/StaticNoiseTransition.ts \
+		src/slideshow/transition3d/RippleTransition.ts \
+		src/slideshow/transition3d/NewsFlashTransition.ts \
+		src/slideshow/transition3d/DissolveTransition3d.ts \
+		src/slideshow/transition3d/FlipTilesTransition.ts \
+		src/slideshow/transition3d/MicsShapeWipeTransition.ts \
 		src/slideshow/operation/RotateAndScaleDepth.ts \
 		src/slideshow/operation/SEllipseTranslate.ts \
 		src/slideshow/operation/SRotate.ts \
