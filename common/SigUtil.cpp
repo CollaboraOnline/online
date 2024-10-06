@@ -61,12 +61,10 @@ enum class RunState : char
 
 /// Single flag to control the current run state.
 static std::atomic<RunState> RunStateFlag(RunState::Run);
+#endif // IOS
 
-#if !MOBILEAPP
 static std::atomic<bool> DumpGlobalState(false);
 static std::atomic<bool> ForwardSigUsr2Flag(false); //< Flags to forward SIG_USR2 to children.
-#endif
-#endif
 
 static std::atomic<size_t> ActivityStringIndex = 0;
 static std::string ActivityHeader;
@@ -114,26 +112,28 @@ void requestShutdown()
 
     void checkDumpGlobalState([[maybe_unused]] GlobalDumpStateFn dumpState)
     {
-#if !MOBILEAPP
-        assert(dumpState && "Invalid callback for checkDumpGlobalState");
-        if (DumpGlobalState)
+        if constexpr (!Util::isMobileApp())
         {
-            DumpGlobalState = false;
-            dumpState();
+            assert(dumpState && "Invalid callback for checkDumpGlobalState");
+            if (DumpGlobalState)
+            {
+                DumpGlobalState = false;
+                dumpState();
+            }
         }
-#endif
     }
 
     void checkForwardSigUsr2([[maybe_unused]] ForwardSigUsr2Fn forwardSigUsr2)
     {
-#if !MOBILEAPP
-        assert(forwardSigUsr2 && "Invalid callback for checkForwardSigUsr2");
-        if (ForwardSigUsr2Flag)
+        if constexpr (!Util::isMobileApp())
         {
-            ForwardSigUsr2Flag = false;
-            forwardSigUsr2();
+            assert(forwardSigUsr2 && "Invalid callback for checkForwardSigUsr2");
+            if (ForwardSigUsr2Flag)
+            {
+                ForwardSigUsr2Flag = false;
+                forwardSigUsr2();
+            }
         }
-#endif
     }
 
     void setActivityHeader(const std::string &message)
