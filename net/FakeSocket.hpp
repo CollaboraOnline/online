@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "Util.hpp"
+
 #if MOBILEAPP
 
 #include <string>
@@ -54,6 +56,85 @@ int fakeSocketClose(int fd);
 
 void fakeSocketDumpState();
 
-#endif // MOBILEAPP
+#else
+
+inline void fakeSocketSetLoggingCallback(void (*)(const std::string&))
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+}
+
+inline int fakeSocketSocket()
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+inline int fakeSocketPipe2(int[2])
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+inline int fakeSocketPoll(struct pollfd*, int, int)
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+inline int fakeSocketListen(int)
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+inline int fakeSocketConnect(int, int)
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+inline int fakeSocketAccept4(int)
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+inline int fakeSocketPeer(int)
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+inline ssize_t fakeSocketAvailableDataLength(int)
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+inline ssize_t fakeSocketRead(int, void*, size_t)
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+inline ssize_t fakeSocketWrite(int, const void*, size_t)
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+inline int fakeSocketShutdown(int)
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+inline int fakeSocketClose(int)
+{
+    assert(Util::isMobileApp() && "Never used in non-mobile builds");
+    return -1;
+}
+
+#endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
