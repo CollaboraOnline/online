@@ -42,7 +42,7 @@ class MetaSlide {
 	}
 
 	public hasTransition(): boolean {
-		return !!stringToTransitionTypeMap[this._info.transitionType];
+		return stringToTransitionTypeMap[this._info.transitionType] !== undefined;
 	}
 
 	public get info(): SlideInfo {
