@@ -30,8 +30,6 @@
 
 namespace Util
 {
-bool isMobileApp() { return false; }
-
 DirectoryCounter::DirectoryCounter(const char* procPath)
     : _tasks(opendir(procPath))
 {
@@ -459,6 +457,6 @@ std::chrono::microseconds SysStopwatch::elapsedTime() const
     return std::chrono::microseconds(totalUs);
 }
 
-}
+} // namespace Util
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

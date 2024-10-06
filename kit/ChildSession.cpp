@@ -955,7 +955,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
             return false;
         }
 
-        if (!Util::isMobileApp())
+        if constexpr (!Util::isMobileApp())
             renameForUpload(url);
     }
 
@@ -1305,7 +1305,7 @@ bool ChildSession::downloadAs(const StringVector& tokens)
         jailDoc = jailDoc.substr(0, jailDoc.find(JAILED_DOCUMENT_ROOT)) + JAILED_DOCUMENT_ROOT;
     }
 
-    if (!Util::isMobileApp())
+    if constexpr (!Util::isMobileApp())
         consistencyCheckJail();
 
     // The file is removed upon downloading.
@@ -1630,7 +1630,7 @@ bool ChildSession::insertFile(const StringVector& tokens)
 {
     std::string name, type, data;
 
-    if (!Util::isMobileApp())
+    if constexpr (!Util::isMobileApp())
     {
         if (tokens.size() != 3 || !getTokenString(tokens[1], "name", name) ||
             !getTokenString(tokens[2], "type", type))
@@ -1657,7 +1657,7 @@ bool ChildSession::insertFile(const StringVector& tokens)
     {
         std::string url;
 
-        if (!Util::isMobileApp())
+        if constexpr (!Util::isMobileApp())
         {
             if (type == "graphic" || type == "selectbackground")
             {
@@ -2704,7 +2704,7 @@ bool ChildSession::saveAs(const StringVector& tokens)
         // url is already encoded
         encodedURL = url;
 
-    if (!Util::isMobileApp())
+    if constexpr (!Util::isMobileApp())
         consistencyCheckJail();
 
     std::string encodedWopiFilename;
@@ -3325,7 +3325,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 
         if (!commandName.isEmpty() && commandName.toString() == ".uno:Save")
         {
-            if (!Util::isMobileApp())
+            if constexpr (!Util::isMobileApp())
             {
                 consistencyCheckJail();
 
@@ -3525,7 +3525,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("printranges: " + payload);
         break;
     case LOK_CALLBACK_FONTS_MISSING:
-        if (!Util::isMobileApp())
+        if constexpr (!Util::isMobileApp())
         {
             // This environment variable is always set in COOLWSD::innerInitialize().
             static std::string fontsMissingHandling = std::string(std::getenv("FONTS_MISSING_HANDLING"));

@@ -650,7 +650,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (COOLWSD::EnableTraceEventLogging)
             sendTextFrame("enabletraceeventlogging yes");
 
-        if (!Util::isMobileApp())
+        if constexpr (!Util::isMobileApp())
         {
             // If it is not mobile, it must be Linux (for now).
             std::string osVersionInfo(COOLWSD::getConfigValue<std::string>("per_view.custom_os_info", ""));
@@ -1826,7 +1826,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
     const bool isConvertTo = static_cast<bool>(_saveAsSocket);
 
-    if (!Util::isMobileApp())
+    if constexpr (!Util::isMobileApp())
         COOLWSD::dumpOutgoingTrace(docBroker->getJailId(), getId(), firstLine);
 
     const auto& tokens = payload->tokens();
