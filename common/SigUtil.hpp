@@ -11,9 +11,6 @@
 
 #pragma once
 
-#include <atomic>
-#include <mutex>
-#include <signal.h>
 #include <string>
 
 namespace SigUtil

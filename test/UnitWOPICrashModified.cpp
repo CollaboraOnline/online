@@ -17,6 +17,8 @@
 #include <Util.hpp>
 #include <lokassert.hpp>
 
+#include <csignal>
+
 /// Test crashing a document after modifications.
 class UnitWOPICrashModified : public WopiTestServer
 {
