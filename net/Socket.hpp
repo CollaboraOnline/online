@@ -632,7 +632,7 @@ public:
     {
         LOG_DBG("Stopping SocketPoll thread " << _name);
         _stop = true;
-        if (!Util::isMobileApp())
+        if constexpr (!Util::isMobileApp())
         {
             // We don't want to risk some callbacks in _newCallbacks being invoked when we start
             // running a thread for this SocketPoll again.
@@ -1304,7 +1304,7 @@ public:
     /// buffer for an optimal transmission.
     int getSendBufferCapacity() const
     {
-        if (Util::isMobileApp())
+        if constexpr (Util::isMobileApp())
             return INT_MAX; // We want to always send a single record in one go
         const int capacity = getSendBufferSize();
         return std::max<int>(0, capacity - _outBuffer.size());

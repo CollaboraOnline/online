@@ -1369,7 +1369,7 @@ int main(int argc, char**argv)
      */
     bool isFuzzing();
 
-    bool isMobileApp();
+    constexpr bool isMobileApp() { return MOBILEAPP; }
 
     void setKitInProcess(bool value);
     bool isKitInProcess();

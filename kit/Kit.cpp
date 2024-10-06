@@ -1805,7 +1805,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     const std::string& userTimezone = session->getTimezone();
     const std::string& userPrivateInfo = session->getUserPrivateInfo();
 
-    if (!Util::isMobileApp())
+    if constexpr (!Util::isMobileApp())
         consistencyCheckFileExists(uri);
 
     std::string options;
@@ -2375,13 +2375,13 @@ void Document::drainQueue()
     catch (const std::exception& exc)
     {
         LOG_FTL("drainQueue: Exception: " << exc.what());
-        if (!Util::isMobileApp())
+        if constexpr (!Util::isMobileApp())
             flushAndExit(EX_SOFTWARE);
     }
     catch (...)
     {
         LOG_FTL("drainQueue: Unknown exception");
-        if (!Util::isMobileApp())
+        if constexpr (!Util::isMobileApp())
             flushAndExit(EX_SOFTWARE);
     }
 }
@@ -2844,7 +2844,7 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
     if (_document)
         _document->trimAfterInactivity();
 
-    if (!Util::isMobileApp())
+    if constexpr (!Util::isMobileApp())
     {
         flushTraceEventRecordings();
 
