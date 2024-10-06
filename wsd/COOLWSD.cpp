@@ -4104,6 +4104,12 @@ public:
            << "\n  UserInterface: " << COOLWSD::UserInterface
             ;
 
+        std::string smap;
+        if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
+            os << "\n  smaps_rollup: <unavailable>";
+        else
+            os << "\n  smaps_rollup: " << smap;
+
 #if !MOBILEAPP
         if (FetchHttpSession)
         {
