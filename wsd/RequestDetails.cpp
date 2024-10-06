@@ -74,7 +74,7 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
     _isWebSocket = it != request.end() && Util::iequal(it->second, "websocket");
     _closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
     // request.getHost fires an exception on mobile.
-    if (!Util::isMobileApp())
+    if constexpr (!Util::isMobileApp())
         _hostUntrusted = request.getHost();
 
     processURI();

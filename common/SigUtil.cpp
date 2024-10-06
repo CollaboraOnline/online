@@ -93,7 +93,7 @@ void setTerminationFlag()
     // Set the forced-termination flag.
     RunStateFlag = RunState::Terminate;
 
-    if (!Util::isMobileApp())
+    if constexpr (!Util::isMobileApp())
     {
         // And wake-up the thread.
         SocketPoll::wakeupWorld();

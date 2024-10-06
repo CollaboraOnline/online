@@ -198,7 +198,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     assert(!_docKey.empty());
     assert(!COOLWSD::ChildRoot.empty());
 
-    if (!Util::isMobileApp())
+    if constexpr (!Util::isMobileApp())
         assert(_mobileAppDocId == 0 && "Unexpected to have mobileAppDocId in the non-mobile build");
 #ifdef IOS
     assert(_mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
@@ -223,7 +223,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
 
 void DocumentBroker::setupPriorities()
 {
-    if (Util::isMobileApp())
+    if constexpr (Util::isMobileApp())
         return;
     if (_type == ChildType::Batch)
     {
@@ -998,7 +998,7 @@ bool DocumentBroker::download(
                     // message for "view file extension" document types
                     session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
                 }
-                else if (Util::isMobileApp())
+                else if constexpr (Util::isMobileApp())
                 {
                     // Fix issue #5887 by assuming that documents are writable on iOS and Android
                     // The iOS and Android app saves directly to local disk so, other than for
