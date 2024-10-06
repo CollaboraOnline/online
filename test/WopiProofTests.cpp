@@ -157,7 +157,7 @@ void WopiProofTests::testOurProof()
     LOK_ASSERT_EQUAL(pairs[2].first, std::string("X-WOPI-ProofOld"));
     std::string proofOld = pairs[2].second;
 
-    int64_t ticks = std::stoll(timestamp.c_str(), nullptr, 10);
+    int64_t ticks = std::stoll(timestamp, nullptr, 10);
     verifySignature(access_token, uri, ticks, modulus, exponent, proof, testname);
     verifySignature(access_token, uri, ticks, modulus, exponent, proofOld, testname);
 
@@ -175,7 +175,7 @@ void WopiProofTests::testOurProof()
     LOK_ASSERT_EQUAL(pairs[2].first, std::string("X-WOPI-ProofOld"));
     proofOld = pairs[2].second;
 
-    ticks = std::stoll(timestamp.c_str(), nullptr, 10);
+    ticks = std::stoll(timestamp, nullptr, 10);
     verifySignature(access_token, uri, ticks, modulus, exponent, proof, testname);
     verifySignature(access_token, uri, ticks, modulus, exponent, proofOld, testname);
 }
