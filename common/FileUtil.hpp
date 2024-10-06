@@ -148,7 +148,11 @@ namespace FileUtil
     /// have equal size and every byte of their contents match.
     bool compareFileContents(const std::string& rhsPath, const std::string& lhsPath);
 
-    /// Reads the whole file into the given buffer. Only for small files.
+    /// Read nbytes from fd into buf. Retries on EINTR.
+    /// Returns the number of bytes read, or -1 on error.
+    ssize_t read(int fd, void* buf, size_t nbytes);
+
+    /// Reads the whole file appending onto the given buffer. Only for small files.
     /// Does *not* clear the buffer before writing to it. Returns the number of bytes read, -1 for error.
     template <typename T>
     ssize_t readFile(const std::string& path, T& data, int maxSize = 256 * 1024)
@@ -165,38 +169,15 @@ namespace FileUtil
         }
 
         const std::size_t originalSize = data.size();
-        auto remainingSize = st.st_size;
+        const auto remainingSize = (st.st_size > 0 ? st.st_size : maxSize);
         data.resize(originalSize + remainingSize);
-        off_t off = originalSize;
-        for (;;)
-        {
-            if (remainingSize == 0)
-            {
-                // Nothing to read.
-                break;
-            }
 
-            int n;
-            while ((n = ::read(fd, &data[off], remainingSize)) < 0 && errno == EINTR)
-            {
-            }
+        const ssize_t n = read(fd, &data[originalSize], remainingSize);
+        ::close(fd);
 
-            if (n <= 0)
-            {
-                if (n == 0) // EOF.
-                    break;
+        data.resize(originalSize + (n <= 0 ? 0 : n));
 
-                ::close(fd);
-                data.resize(originalSize);
-                return -1; // Error.
-            }
-
-            off += n;
-            remainingSize -= n;
-        }
-
-        close(fd);
-        return st.st_size;
+        return n;
     }
 
     /// Reads the whole file to memory. Only for small files.

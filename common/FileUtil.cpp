@@ -20,6 +20,7 @@
 #include <pwd.h>
 #include <stdexcept>
 #include <sys/time.h>
+#include <unistd.h>
 #ifdef __linux__
 #include <sys/vfs.h>
 #elif defined IOS
@@ -387,6 +388,7 @@ namespace FileUtil
     std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize)
     {
         auto data = std::make_unique<std::vector<char>>(maxSize);
+        data->resize(0);
         return (readFile(path, *data, maxSize) >= 0) ? std::move(data) : nullptr;
     }
 
@@ -425,6 +427,41 @@ namespace FileUtil
         Poco::File(rootPath).createDirectories();
 
         return rootPath.toString();
+    }
+
+    ssize_t read(int fd, void* buf, size_t nbytes)
+    {
+        ssize_t off = 0;
+        char* p = static_cast<char*>(buf);
+        for (;;)
+        {
+            if (static_cast<ssize_t>(nbytes) <= 0)
+            {
+                // Nothing to read.
+                break;
+            }
+
+            ssize_t n;
+            while ((n = ::read(fd, p, nbytes)) < 0 && errno == EINTR)
+            {
+            }
+
+            if (n <= 0)
+            {
+                if (n == 0) // EOF.
+                    break;
+
+                return -1; // Error.
+            }
+
+            assert(n >= 0 && "Expected a positive read byte-count");
+            p += n;
+            off += n;
+            assert(static_cast<size_t>(n) <= nbytes && "Unexpectedly read more than requested");
+            nbytes -= n;
+        }
+
+        return off;
     }
 
 } // namespace FileUtil
