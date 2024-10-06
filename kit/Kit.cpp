@@ -2494,8 +2494,14 @@ void Document::dumpState(std::ostream& oss)
         << "\n\tduringLoad: " << _duringLoad
         << "\n\tmodified: " << name(_modified)
         << "\n\tbgSaveProc: " << _isBgSaveProcess
-        << "\n\tbgSaveDisabled: "<< _isBgSaveDisabled
-        << "\n";
+        << "\n\tbgSaveDisabled: "<< _isBgSaveDisabled;
+
+    std::string smap;
+    if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
+        oss << "\n  smaps_rollup: <unavailable>";
+    else
+        oss << "\n  smaps_rollup: " << smap;
+    oss << '\n';
 
     // dumpState:
     // TODO: _websocketHandler - but this is an odd one.
@@ -2507,7 +2513,7 @@ void Document::dumpState(std::ostream& oss)
             << " editorId: " << it.second->getDoc()->getEditorId()
             << " mobileAppDocId: " << it.second->getDoc()->getMobileAppDocId();
     }
-    oss << "\n";
+    oss << '\n';
 
     _deltaPool.dumpState(oss);
     _sessions.dumpState(oss);
@@ -2522,7 +2528,7 @@ void Document::dumpState(std::ostream& oss)
         oss << "\n\t\tviewId: " << it.first
             << " last update time(ms): " << ms;
     }
-    oss << "\n";
+    oss << '\n';
 
     oss << "\tspeedCount:";
     for (const auto &it : _speedCount)
@@ -2543,14 +2549,14 @@ void Document::dumpState(std::ostream& oss)
             << " readOnly: " << it.second.isReadOnly()
             << " connected: " << it.second.isConnected();
     }
-    oss << "\n";
+    oss << '\n';
 
     char *pState = nullptr;
     _loKit->dumpState("", &pState);
     oss << "lok state:\n";
     if (pState)
         oss << pState;
-    oss << "\n";
+    oss << '\n';
 }
 
 #if !defined BUILDING_TESTS && !MOBILEAPP && !LIBFUZZER
