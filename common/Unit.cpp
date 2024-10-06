@@ -9,17 +9,17 @@
 
 #include "Unit.hpp"
 
-#include <iostream>
 #include <cassert>
 #include <condition_variable>
+#include <csignal>
 #include <dlfcn.h>
-#include <fstream>
+#include <iostream>
 #include <mutex>
 #include <sstream>
 #include <sysexits.h>
 #include <thread>
+#include <unistd.h>
 
-#include "JsonUtil.hpp"
 #include <Poco/Util/LayeredConfiguration.h>
 #include <Poco/Util/Application.h>
 
@@ -27,10 +27,10 @@
 #include "Util.hpp"
 #include <test/testlog.hpp>
 
+#include <common/JsonUtil.hpp>
+#include <common/Message.hpp>
 #include <common/SigUtil.hpp>
 #include <common/StringVector.hpp>
-#include <common/Message.hpp>
-#include <unistd.h>
 
 UnitKit *GlobalKit = nullptr;
 UnitWSD *GlobalWSD = nullptr;
