@@ -132,6 +132,18 @@ void forkLibreOfficeKit(const std::string& childRoot, const std::string& sysTemp
 
 class Document;
 
+/// Document::drainQueue statistics
+struct DocDrainStats {
+    /// Number of messages dequeued
+    size_t messages;
+    /// Number of tiles queued before draining
+    size_t tilesPre;
+    /// Number of tiles sent
+    size_t tilesSent;
+    /// Number of tiles queued after draining and sending
+    size_t tilesPost;
+};
+
 /// The main main-loop of the Kit process
 class KitSocketPoll final : public SocketPoll
 {
@@ -144,7 +156,7 @@ class KitSocketPoll final : public SocketPoll
 
 public:
     ~KitSocketPoll();
-    void drainQueue();
+    DocDrainStats drainQueue(std::chrono::steady_clock::time_point startTime, long timeoutMicroS);
 
     static void dumpGlobalState(std::ostream& oss);
     static std::shared_ptr<KitSocketPoll> create();
@@ -335,6 +347,7 @@ public:
     /// A new message from wsd for the queue
     void queueMessage(const std::string &msg) { _queue->put(msg); }
     bool hasQueueItems() const { return _queue && !_queue->isEmpty(); }
+    size_t getTileQueueSize() const { return _queue ? _queue->getTileQueueSize() : 0; }
     bool hasCallbacks() const { return _queue && _queue->callbackSize() > 0; }
 
     /// Should we get through the SocketPoll fast to process queus ?
@@ -344,12 +357,14 @@ public:
             return true;
         if (hasQueueItems() && processInputEnabled())
             return true;
+        if (getTileQueueSize() > 0)
+            return true;
         return false;
     }
 
     // poll is idle, are we ?
     void checkIdle();
-    void drainQueue();
+    DocDrainStats drainQueue(std::chrono::steady_clock::time_point startTime, long timeoutMicroS);
     void drainCallbacks();
 
     void dumpState(std::ostream& oss);

@@ -2377,12 +2377,14 @@ void Document::drainCallbacks()
         _websocketHandler->flush();
 }
 
-void Document::drainQueue()
+DocDrainStats Document::drainQueue(std::chrono::steady_clock::time_point startTime, long timeoutMicroS)
 {
+    DocDrainStats res{ .messages=0, .tilesPre=_queue->getTileQueueSize(),
+                       .tilesSent=0, .tilesPost=0};
     if (UnitKit::get().filterDrainQueue())
     {
         LOG_TRC("Filter disabled drainQueue");
-        return;
+        return res;
     }
 
     try
@@ -2406,7 +2408,7 @@ void Document::drainQueue()
             }
 
             const KitQueue::Payload input = _queue->pop();
-
+            ++res.messages;
             LOG_TRC("Kit handling queue message: " << COOLProtocol::getAbbreviatedMessage(input));
 
             const StringVector tokens = StringVector::tokenize(input.data(), input.size());
@@ -2441,17 +2443,41 @@ void Document::drainQueue()
             }
         }
 
+        const size_t tilesQueued = _queue->getTileQueueSize();
         if (processInputEnabled() && !isLoadOngoing() &&
-            !isBackgroundSaveProcess() && _queue->getTileQueueSize() > 0)
+            !isBackgroundSaveProcess() && tilesQueued > 0)
         {
+            // Render as much tiles until reaching timeout, if timeout>0.
+            // Otherwise render only the first visible TileCombined, but at least one TileCombined (if none are visible).
+            // The latter ensures draining tiles even without timeout>0.
+            const auto drainEnd = startTime + std::chrono::microseconds(timeoutMicroS);
             std::vector<TileCombined> tileRequests = _queue->popWholeTileQueue();
-
-            // Put requests that include tiles in the visible area to the front to handle those first
-            std::partition(tileRequests.begin(), tileRequests.end(), [this](const TileCombined& req) {
-                return isTileRequestInsideVisibleArea(req); });
-            for (auto& tileCombined : tileRequests)
-                renderTiles(tileCombined);
+            std::vector<TileCombined*> earmarkedTiles;
+            for (TileCombined& tileCombined : tileRequests)
+            {
+                if ( ( res.tilesSent==0 && isTileRequestInsideVisibleArea(tileCombined) ) ||
+                     ( timeoutMicroS>0 && std::chrono::steady_clock::now() < drainEnd ) )
+                {
+                    renderTiles(tileCombined);
+                    res.tilesSent += tileCombined.getTiles().size();
+                }
+                else if (res.tilesSent>0)
+                    _queue->pushTileQueue(tileCombined.getTiles());
+                else
+                    earmarkedTiles.push_back(&tileCombined);
+            }
+            for (TileCombined* tileCombined : earmarkedTiles)
+            {
+                if (res.tilesSent==0) // ensure at least one TileCombined gets rendered (if all are invisible)
+                {
+                    renderTiles(*tileCombined);
+                    res.tilesSent += tileCombined->getTiles().size();
+                }
+                else
+                    _queue->pushTileQueue(tileCombined->getTiles());
+            }
         }
+        res.tilesPost = _queue->getTileQueueSize();
     }
     catch (const std::exception& exc)
     {
@@ -2465,6 +2491,7 @@ void Document::drainQueue()
         if constexpr (!Util::isMobileApp())
             flushAndExit(EX_SOFTWARE);
     }
+    return res;
 }
 
 /// Return access to the lok::Document instance.
@@ -2819,12 +2846,13 @@ std::shared_ptr<KitSocketPoll> KitSocketPoll::create() // static
 }
 
 // process pending message-queue events.
-void KitSocketPoll::drainQueue()
+DocDrainStats KitSocketPoll::drainQueue(std::chrono::steady_clock::time_point startTime, long timeoutMicroS)
 {
     SigUtil::checkDumpGlobalState(dump_kit_state);
 
     if (_document)
-        _document->drainQueue();
+        return _document->drainQueue(startTime, timeoutMicroS);
+    return { .messages=0, .tilesPre=0, .tilesSent=0, .tilesPost=0};
 }
 
 // called from inside poll, inside a wakeup
@@ -2874,11 +2902,12 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
     // The maximum number of extra events to process beyond the first.
     int maxExtraEvents = 15;
     int eventsSignalled = 0;
+    int drainedQueueCalls = 0;
 
-    auto startTime = std::chrono::steady_clock::now();
+    const auto startTime = std::chrono::steady_clock::now();
 
     // handle processtoidle waiting optimization
-    bool checkForIdle = ProcessToIdleDeadline >= startTime;
+    const bool checkForIdle = ProcessToIdleDeadline >= startTime;
 
     if (timeoutMicroS < 0)
     {
@@ -2891,23 +2920,42 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
         if (checkForIdle)
             timeoutMicroS = 0;
 
-        // Flush at most maxEvents+1, or return when nothing left.
+        // Flush at most maxEvents+1, or return when nothing left,
+        // while looping over time-slices until reaching timeoutMicroS via `poll` + `drainQueue` at 10Hz.
         _pollEnd = startTime + std::chrono::microseconds(timeoutMicroS);
+        int slice = 0;
         do
         {
-            int realTimeout = timeoutMicroS;
-            if (_document && _document->needsQuickPoll())
-                realTimeout = 0;
+            const int timeoutMicroSPre = timeoutMicroS;
+            const size_t tilesPrePoll = _document ? _document->getTileQueueSize() : 0;
+            const bool quickPoll = _document && _document->needsQuickPoll();
+            const int pollTimeout = quickPoll ? 0 : std::min(100000, timeoutMicroS); // 10Hz maximum slice or zero
 
-            if (poll(std::chrono::microseconds(realTimeout)) <= 0)
+            const int rc = poll(std::chrono::microseconds(pollTimeout));
+            if (rc<0) // poll error
+                break;
+            else if (rc>0) // poll event
+                ++eventsSignalled;
+            else if (pollTimeout>0 && timeoutMicroS-pollTimeout<=0) // && rc==0: poll timeout on last slice
                 break;
 
-            const auto now = std::chrono::steady_clock::now();
-            drainQueue();
+            // _pollEnd could be reset to current time by `SocketPoll::poll` calling into `KitSocketPoll::wakeupHook`
+            const auto postPoll = std::chrono::steady_clock::now();
+            const int drainTimeoutMicroS = std::chrono::duration_cast<std::chrono::microseconds>(_pollEnd - postPoll).count();
+            const DocDrainStats drained = drainQueue(postPoll, drainTimeoutMicroS);
+            ++drainedQueueCalls;
 
-            timeoutMicroS =
-                std::chrono::duration_cast<std::chrono::microseconds>(_pollEnd - now).count();
-            ++eventsSignalled;
+            const auto postDrain = std::chrono::steady_clock::now();
+            timeoutMicroS = std::chrono::duration_cast<std::chrono::microseconds>(_pollEnd - postDrain).count();
+            LOG_TRC(
+                "Poll #" << slice << "/" << eventsSignalled << "/" << maxExtraEvents << " qp " << quickPoll
+                << ", to[t " << timeoutMicroSPre/1000 << ", p " << pollTimeout/1000 << ", d " << drainTimeoutMicroS/1000 << "]: rc " << rc
+                << ", t[+" << (drained.tilesPre-tilesPrePoll) << " " << drained.tilesPre << "-" << drained.tilesSent << "=" << drained.tilesPost << "], msg " << drained.messages
+                << ", used[p " << std::chrono::duration_cast<std::chrono::milliseconds>(postPoll - startTime).count()
+                << ", d " << std::chrono::duration_cast<std::chrono::milliseconds>(postDrain - postPoll).count()
+                << ", t " << std::chrono::duration_cast<std::chrono::milliseconds>(postDrain - startTime).count()
+                << "], left " << timeoutMicroS/1000); // all durations in milliseconds
+            ++slice;
         } while (timeoutMicroS > 0 && !SigUtil::getTerminationFlag() && maxExtraEvents-- > 0);
     }
 
@@ -2926,7 +2974,8 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
             LOG_TRC("Poll of would not close gap - continuing");
     }
 
-    drainQueue();
+    if (drainedQueueCalls==0)
+        drainQueue(/*startTime=*/startTime, /*timeoutMicroS=*/0);
 
     if (_document)
         _document->trimAfterInactivity();
