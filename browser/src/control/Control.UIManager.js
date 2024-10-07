@@ -1056,7 +1056,7 @@ L.Control.UIManager = L.Control.extend({
 				toolbar.selectItem('close', false);
 			}
 		} else {
-			window.onClose();
+			app.dispatcher.dispatch('closeapp');
 		}
 	},
 

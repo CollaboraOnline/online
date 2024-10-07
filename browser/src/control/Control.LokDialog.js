@@ -262,7 +262,7 @@ L.Control.LokDialog = L.Control.extend({
 		// In that state the document is not really loaded and closing or cancelling it
 		// returns docnotloaded error. Instead of this we can return to the integration
 		if (!this._map._docLoaded && !window._firstDialogHandled) {
-			window.onClose();
+			app.dispatcher.dispatch('closeapp');
 		}
 	},
 

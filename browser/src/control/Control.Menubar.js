@@ -2013,7 +2013,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (L.Params.revHistoryEnabled && (id === 'rev-history' || id === 'Rev-History' || id === 'last-mod')) {
 			app.dispatcher.dispatch('rev-history');
 		} else if (id === 'closedocument') {
-			window.onClose();
+			app.dispatcher.dispatch('closeapp');
 		} else if (id === 'repair') {
 			app.dispatcher.dispatch('repair');
 		} else if (id === 'searchdialog') {

@@ -294,7 +294,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				 !window._firstDialogHandled &&
 				 (eventType === 'close' ||
 				 (objectType === 'responsebutton' && data == 7))) {
-				window.onClose();
+				app.dispatcher.dispatch('closeapp');
 			}
 			switch (typeof data) {
 			case 'string':
