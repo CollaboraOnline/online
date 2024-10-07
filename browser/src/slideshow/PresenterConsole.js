@@ -21,6 +21,7 @@ class PresenterConsole {
 		this._map = map;
 		this._map.on('presentationinfo', this._onPresentationInfo, this);
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
+		this._map.on('transitionend', this._onEndTransition, this);
 	}
 
 	_generateHtml(title) {
@@ -175,6 +176,14 @@ class PresenterConsole {
 			L.bind(this._onKeyDown, this),
 		);
 		delete this._proxyPresenter;
+	}
+
+	_onEndTransition(e) {
+		let notes = this._map.slideShowPresenter.getNotes(e.slide);
+		let elem = this._proxyPresenter.document.querySelector('#notes');
+		if (elem) {
+			elem.innerText = notes;
+		}
 	}
 }
 
