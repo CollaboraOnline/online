@@ -1034,6 +1034,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.data.reply = this.sectionProperties.data.text;
 			this.sectionProperties.commentListSection.saveReply(this);
 		} else {
+			this.removeBRTag(this.sectionProperties.nodeReplyText);
 			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.textContent;
 			this.sectionProperties.data.html = this.sectionProperties.nodeReplyText.innerHTML;
 			// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
@@ -1109,12 +1110,22 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onSaveComment (e: any): void {
 		L.DomEvent.stopPropagation(e);
+		this.removeBRTag(this.sectionProperties.nodeModifyText);
 		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.textContent;
 		this.sectionProperties.data.html = this.sectionProperties.nodeModifyText.innerHTML;
 		this.updateContent();
 		if (!cool.CommentSection.autoSavedComment)
 			this.show();
 		this.sectionProperties.commentListSection.save(this);
+	}
+
+	// for somereasone firefox adds <br> at of the end of text in contenteditable div
+	// there have been similar reports: https://bugzilla.mozilla.org/show_bug.cgi?id=1615852
+	private removeBRTag(element: HTMLElement) {
+		if (!L.Browser.gecko)
+			return;
+		const brElements = element.querySelectorAll('br');
+		brElements.forEach(br => br.remove());
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -1124,8 +1135,9 @@ export class Comment extends CanvasSectionObject {
 		}
 		if (!this.sectionProperties.isRemoved) {
 			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
+			this.removeBRTag(this.sectionProperties.nodeModifyText);
 			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.textContent ||
-			    this.sectionProperties.contentText.origHTML !== this.sectionProperties.nodeModifyText.innerHTML ) {
+			    this.sectionProperties.contentText.origHTML !== this.sectionProperties.nodeModifyText.innerHTML) {
 				if (!this.sectionProperties.contentText.uneditedHTML)
 					this.sectionProperties.contentText.uneditedHTML = this.sectionProperties.contentText.origHTML;
 				if (!this.sectionProperties.contentText.uneditedText)
