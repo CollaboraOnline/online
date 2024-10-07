@@ -63,7 +63,19 @@ namespace LOKitHelper
         return resultingString;
     }
 
-    inline void fetchPartsData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int partsCount)
+    inline int getMode(const std::string &partData)
+    {
+        Poco::JSON::Parser parser;
+        Poco::Dynamic::Var partJsonVar = parser.parse(partData);
+        const Poco::SharedPtr<Poco::JSON::Object>& partObject = partJsonVar.extract<Poco::JSON::Object::Ptr>();
+
+        if (partObject->has("mode"))
+            return std::atoi(partObject->get("mode").toString().c_str());
+        else
+            return 0;
+    }
+
+    inline void fetchPartsData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int partsCount, int &mode)
     {
         /*
             Except for Writer.
@@ -78,6 +90,9 @@ namespace LOKitHelper
         {
             std::string partData = getPartData(loKitDocument, i); // Part data is sent from the core side as JSON string.
             resultingPartsArray += partData + (i < partsCount - 1 ? ", ": "]");
+
+            if (i == 0)
+                mode = getMode(partData);
         }
 
         resultInfo["parts"] = resultingPartsArray;
@@ -138,13 +153,17 @@ namespace LOKitHelper
         resultInfo["height"] = std::to_string(height);
         resultInfo["viewid"] = std::to_string(viewId);
 
+        int mode = 0;
+
         if (type == LOK_DOCTYPE_SPREADSHEET)
             fetchCalcSpecificData(loKitDocument, resultInfo, selectedPart);
         else if (type == LOK_DOCTYPE_TEXT)
             fetchWriterSpecificData(loKitDocument, resultInfo);
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
-            fetchPartsData(loKitDocument, resultInfo, partsCount);
+            fetchPartsData(loKitDocument, resultInfo, partsCount, mode);
+
+        resultInfo["mode"] = std::to_string(mode);
 
         return MapToJSONString(resultInfo);
     }
