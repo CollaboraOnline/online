@@ -218,6 +218,23 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		return textBoxes.includes(document.activeElement);
 	}
 
+	public getActiveEdit(): Comment {
+		if (!this.sectionProperties.selectedComment) {
+			return null;
+		}
+		if (this.sectionProperties.selectedComment.isEdit()) {
+			return this.sectionProperties.selectedComment;
+		}
+		var openArray: Comment[] = [];
+		this.getChildren(this.sectionProperties.selectedComment, openArray);
+		for (var i = 0; i < openArray.length; i++) {
+			if (openArray[i].isEdit()) {
+				return openArray[i];
+			}
+		}
+		return null;
+	}
+
 	public setCollapsed(): void {
 		if (this.isEditing()) {
 			return;

@@ -119,7 +119,10 @@ abstract class AutoCompletePopup {
 	}
 
 	getCursorPosition(): Point {
-		if (cool.Comment?.isAnyEdit()) {
+		const commentSection = app.sectionContainer.getSectionWithName(
+			L.CSections.CommentList.name,
+		);
+		if (commentSection?.getActiveEdit()) {
 			const caretRect = window
 				.getSelection()
 				.getRangeAt(0)
