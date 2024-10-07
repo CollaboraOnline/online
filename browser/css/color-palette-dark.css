@@ -46,6 +46,7 @@
 	--color-success: #46ba61;
 
 	--color-box-shadow: rgba(0, 0, 0, 0.5);
+	--color-hyperlink: #1d99f3;
 }
 
 [data-bg-theme='dark'] {
