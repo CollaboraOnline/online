@@ -269,13 +269,13 @@ class TransitionFiltersManager {
 	public getState(): TransitionFiltersState {
 		return {
 			filterQueue: structuredClone(this.filterQueue),
-			frameInfoMap: structuredClone(this.frameInfoMap),
+			frameInfoMap: new Map(this.frameInfoMap),
 		};
 	}
 
 	public setState(state: TransitionFiltersState) {
 		this.filterQueue = structuredClone(state.filterQueue);
-		this.frameInfoMap = structuredClone(state.frameInfoMap);
+		this.frameInfoMap = new Map(state.frameInfoMap);
 	}
 }
 
