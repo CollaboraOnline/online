@@ -2208,7 +2208,7 @@ Object::Ptr makePropertyValue(const std::string& type, const T& val)
     return std::string();
 }
 
-bool Document::isTileRequestInsideVisibleArea(const TileCombined& tileCombined)
+bool Document::isTileRequestInsideVisibleArea(const TileCombined& tileCombined) const
 {
     const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
     if (!session)
