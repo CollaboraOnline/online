@@ -76,28 +76,32 @@
 	padding-inline-start: 2px;
 	height: 24px;
 	align-items: center;
+	justify-content: center;
 }
 
 #save.saving img {
 	background: url('images/lc_saving.svg') no-repeat center;
 }
 
-#save.saving::after {
-	content: 'Saving...';
+nav.hasnotebookbar #save::after {
+	position: absolute;
+	top: 18px;
+}
+
+nav.hasnotebookbar #save.saving::after {
+	content: 'Saving';
 	font-size: var(--default-font-size);
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
-	margin-left: 2%;
 }
 
 #save.saved img {
 	background: url('images/lc_saved.svg') no-repeat center;
 }
 
-#save.saved::after {
+nav.hasnotebookbar #save.saved::after {
 	content: 'Saved';
 	color: #309048;
-	margin-left: 2%;
 }
 
 [data-theme='dark'] #save.saving img {
