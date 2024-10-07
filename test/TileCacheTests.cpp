@@ -1236,45 +1236,21 @@ void TileCacheTests::testTileInvalidatePartImpress()
 void TileCacheTests::checkTiles(std::shared_ptr<http::WebSocketSession>& socket,
                                 const std::string& docType, const std::string& testname)
 {
-    const std::string current = "current=";
-    const std::string height = "height=";
-    const std::string parts = "parts=";
-    const std::string type = "type=";
-    const std::string width = "width=";
-
     int currentPart = -1;
     int totalParts = 0;
     int docHeight = 0;
     int docWidth = 0;
+    int docViewId = -1;
 
     // check total slides 10
     sendTextFrame(socket, "status", testname);
     const auto response = assertResponseString(socket, "status:", testname);
     {
-        std::string line;
-        std::istringstream istr(response.substr(8));
-        std::getline(istr, line);
+        std::string text = docType;
 
-        StringVector tokens(StringVector::tokenize(line, ' '));
-#if defined CPPUNIT_ASSERT_GREATEREQUAL
-        if (docType == "presentation")
-            CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7),
-                                        tokens.size()); // We have an extra field.
-        else
-            CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(6), tokens.size());
-#else
-        if (docType == "presentation")
-            LOK_ASSERT_EQUAL(static_cast<size_t>(7), tokens.size()); // We have an extra field.
-        else
-            LOK_ASSERT_EQUAL(static_cast<size_t>(6), tokens.size());
-#endif
+        parseDocSize(response.substr(7), docType, currentPart, totalParts, docWidth, docHeight,
+                     docViewId, testname);
 
-        // Expected format is something like 'type= parts= current= width= height='.
-        const std::string text = tokens[0].substr(type.size());
-        totalParts = std::stoi(tokens[1].substr(parts.size()));
-        currentPart = std::stoi(tokens[2].substr(current.size()));
-        docWidth = std::stoi(tokens[3].substr(width.size()));
-        docHeight = std::stoi(tokens[4].substr(height.size()));
         LOK_ASSERT_EQUAL(docType, text);
         LOK_ASSERT_EQUAL(10, totalParts);
         LOK_ASSERT(currentPart > -1);
