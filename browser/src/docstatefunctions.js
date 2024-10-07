@@ -139,7 +139,9 @@ app.calc.isRTL = function () {
 
 	const part =
 		app.map._docLayer._lastStatusJSON.parts[app.map._docLayer._selectedPart];
-	return part.rtllayout !== 0;
+
+	if (part) return part.rtllayout !== 0;
+	else return false;
 };
 
 app.setServerAuditFromCore = function (entries) {
