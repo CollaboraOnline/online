@@ -41,6 +41,11 @@ class Dispatcher {
 			if ((window as any).ThisIsAMobileApp) {
 				window.postMobileMessage('BYE');
 			} else {
+				if (window.onbeforeunload) {
+					alert(app.getUnsavedCloseMessage());
+					return;
+				}
+
 				app.map.fire('postMessage', {
 					msgId: 'close',
 					args: { EverModified: app.map._everModified, Deprecated: true },
@@ -319,6 +324,7 @@ class Dispatcher {
 			app.map.onFormulaBarBlur();
 			app.map.formulabarBlur();
 			app.map.formulabarSetDirty();
+			app.allowExit();
 		};
 
 		this.actionsMap['cancelformula'] = function () {
@@ -326,6 +332,7 @@ class Dispatcher {
 			app.map.onFormulaBarBlur();
 			app.map.formulabarBlur();
 			app.map.formulabarSetDirty();
+			app.allowExit();
 		};
 
 		this.actionsMap['startformula'] = function () {

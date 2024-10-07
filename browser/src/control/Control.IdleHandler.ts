@@ -230,6 +230,10 @@ class IdleHandler {
 			return;
 		}
 
+		// save content of a cell if leaving the app
+		if (app.map && app.map.getDocType() === 'spreadsheet')
+			app.dispatcher.dispatch('acceptformula');
+
 		this._startOutOfFocusTimer();
 	}
 }

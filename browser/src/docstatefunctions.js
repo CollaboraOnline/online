@@ -15,7 +15,7 @@
  * This file is meant to be used for setting and getting the document states.
  */
 
-/* global app */
+/* global app _ */
 
 window.addEventListener('load', function () {
 	app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(
@@ -149,4 +149,16 @@ app.isExperimentalMode = function () {
 	if (app.socket && app.socket.WSDServer && app.socket.WSDServer.Options)
 		return app.socket.WSDServer.Options.indexOf('E') !== -1;
 	return false;
+};
+
+app.getUnsavedCloseMessage = function () {
+	return _('You have unsaved changes. Are you sure you want to quit?');
+};
+
+app.preventExit = function () {
+	window.onbeforeunload = app.getUnsavedCloseMessage;
+};
+
+app.allowExit = function () {
+	window.onbeforeunload = undefined;
 };

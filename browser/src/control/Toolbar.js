@@ -957,6 +957,8 @@ L.Map.include({
 			jsdialogFormulabar.show('cancelformula');
 			jsdialogFormulabar.show('acceptformula');
 		}
+
+		app.preventExit();
 	},
 
 	onFormulaBarBlur: function() {

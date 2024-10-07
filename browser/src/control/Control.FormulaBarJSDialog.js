@@ -241,9 +241,11 @@ class FormulaBar {
 		// in the core we have DrawingArea not TextView
 		if (object.id.indexOf('sc_input_window') === 0) {
 			objectType = 'drawingarea';
-			if (eventType === 'keypress' && data === UNOKey.RETURN || data === UNOKey.ESCAPE)
+			if (eventType === 'keypress' && data === UNOKey.RETURN || data === UNOKey.ESCAPE) {
+				// TODO: not used anymore? now acceptformula dispatch command is executed instead
 				builder.map.focus();
-			else if (eventType === 'grab_focus') {
+				app.allowExit();
+			} else if (eventType === 'grab_focus') {
 				this.focusField();
 				builder.map.onFormulaBarFocus();
 			}
@@ -254,10 +256,12 @@ class FormulaBar {
 
 	focusField() {
 		L.DomUtil.addClass(this.getInputField(), 'focused');
+		app.preventExit();
 	}
 
 	blurField() {
 		L.DomUtil.removeClass(this.getInputField(), 'focused');
+		app.allowExit();
 	}
 
 	enable() {
