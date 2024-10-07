@@ -12,24 +12,14 @@
 
 declare var SlideShow: any;
 
-class PlusTransition extends SlideShow.Transition2d {
+class PlusTransition extends ClippingTransition {
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
 
-	public getFragmentShader(): string {
-		return `#version 300 es
-                precision mediump float;
-
-                uniform sampler2D leavingSlideTexture;
-                uniform sampler2D enteringSlideTexture;
-                uniform float time;
-
-                in vec2 v_texCoord;
-                out vec4 outColor;
-
-                void main() {
-                    vec2 uv = v_texCoord;
+	protected getMaskFunction(): string {
+		return `
+                float getMaskValue(vec2 uv, float time) {
                     float progress = time;
 
                     vec2 center = vec2(0.5, 0.5);
@@ -40,13 +30,11 @@ class PlusTransition extends SlideShow.Transition2d {
 
                     float mask = step(dist.x, size / 5.0) + step(dist.y, size / 5.0);
 
-                    mask = min(mask, 1.0);
+                    mask = 1.0 - min(mask, 1.0);
 
-                    vec4 color1 = texture(leavingSlideTexture, uv);
-                    vec4 color2 = texture(enteringSlideTexture, uv);
-
-                    outColor = mix(color2, color1, mask);
-                }`;
+                    return mask;
+                }
+		`;
 	}
 }
 

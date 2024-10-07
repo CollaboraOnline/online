@@ -12,27 +12,16 @@
 
 declare var SlideShow: any;
 
-class WedgeTransition extends SlideShow.Transition2d {
+class WedgeTransition extends ClippingTransition {
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
 
-	public getFragmentShader(): string {
-		return `#version 300 es
-                precision mediump float;
+	protected getMaskFunction(): string {
+		return `
+		            #define M_PI ${Math.PI}
 
-                #define M_PI 3.14159265359
-
-
-                uniform sampler2D leavingSlideTexture;
-                uniform sampler2D enteringSlideTexture;
-                uniform float time;
-
-                in vec2 v_texCoord;
-                out vec4 outColor;
-
-                void main() {
-                    vec2 uv = v_texCoord;
+                float getMaskValue(vec2 uv, float time) {
                     float progress = time;
 
                     vec2 center = vec2(0.5, 0.5);
@@ -47,15 +36,11 @@ class WedgeTransition extends SlideShow.Transition2d {
                     float wedgeAngle = M_PI * progress;
 
                     float mask = step(angle, wedgeAngle) + step(2.0 * M_PI - wedgeAngle, angle);
+										mask = min(mask, 1.0);
 
-                    mask = min(mask, 1.0);
-
-                    vec4 color1 = texture(leavingSlideTexture, uv);
-                    vec4 color2 = texture(enteringSlideTexture, uv);
-
-                    outColor = mix(color1, color2, mask);
+                    return mask;
                 }
-                `;
+		`;
 	}
 }
 

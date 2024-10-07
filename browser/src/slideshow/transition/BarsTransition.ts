@@ -17,71 +17,42 @@ enum BarsSubType {
 	HORIZONTAL,
 }
 
-class BarsTransition extends Transition2d {
-	private direction: number = 0;
+class BarsTransition extends ClippingTransition {
+	private direction: number;
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
 
-	public start(): void {
+	protected initProgramTemplateParams() {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
-
 		if (transitionSubType == TransitionSubType.VERTICAL) {
 			this.direction = BarsSubType.VERTICAL;
 		} else if (transitionSubType == TransitionSubType.HORIZONTAL) {
 			this.direction = BarsSubType.HORIZONTAL;
 		}
-		this.startTransition();
 	}
 
 	// jscpd:ignore-start
-	public renderUniformValue(): void {
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
-			this.direction,
-		);
-	}
+	protected getMaskFunction(): string {
+		const isVerticalDir = this.direction == BarsSubType.VERTICAL;
 
-	public getFragmentShader(): string {
-		return `#version 300 es
-                precision mediump float;
-
-                uniform sampler2D leavingSlideTexture;
-                uniform sampler2D enteringSlideTexture;
-                uniform float time;
-                uniform int direction;
-
-                in vec2 v_texCoord;
-                out vec4 outColor;
-
+		return `
                 float random(vec2 co) {
                     return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
                 }
 
-                void main() {
-                    vec2 uv = v_texCoord;
+                float getMaskValue(vec2 uv, float time) {
                     float progress = time;
 
-                    float numBars = 70.0;
-                    float randValue;
-
-                    if (direction == 0) {
-                        // Vertical bars
-                        randValue = random(vec2(floor(uv.x * numBars), 0.0));
-                    } else {
-                        // Horizontal bars
-                        randValue = random(vec2(floor(uv.y * numBars), 0.0));
-                    }
+                    float numBars = 128.0;
+                    float coord = ${isVerticalDir ? 'uv.x' : 'uv.y'};
+                    float randValue = random(vec2(floor(coord * numBars), 0.0));
 
                     bool showEntering = (randValue < progress);
-
-                    vec4 color1 = texture(leavingSlideTexture, uv);
-                    vec4 color2 = texture(enteringSlideTexture, uv);
-
-                    outColor = mix(color1, color2, float(showEntering));
+                    return float(showEntering);
                 }
-                `;
+		`;
 	}
 	// jscpd:ignore-end
 }

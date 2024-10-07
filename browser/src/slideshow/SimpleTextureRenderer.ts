@@ -16,9 +16,18 @@ abstract class SimpleTextureRenderer {
 	protected vao!: WebGLVertexArrayObject | null;
 	protected context: RenderContextGl;
 
-	constructor(canvasContext: RenderContextGl) {
+	constructor(canvasContext: RenderContextGl, createProgram: boolean = true) {
 		this.context = canvasContext;
 		this.gl = this.context.getGl();
+
+		if (createProgram) this.createProgram();
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	protected initProgramTemplateParams(): void {}
+
+	protected createProgram() {
+		this.initProgramTemplateParams();
 
 		const vertexShaderSource = this.getVertexShader();
 		const fragmentShaderSource = this.getFragmentShader();

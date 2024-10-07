@@ -97,7 +97,10 @@ function SlideChangeTemplate<T extends AGConstructor<any>>(BaseType: T) {
 // expected by SlideChangeBase, so we define the following wrapper class
 abstract class TextureRendererCtorForSlideChangeBase extends SimpleTextureRenderer {
 	constructor(transitionParameters: TransitionParameters) {
-		super(transitionParameters.context as RenderContextGl);
+		super(
+			transitionParameters.context as RenderContextGl,
+			/*create program*/ false,
+		);
 	}
 }
 
