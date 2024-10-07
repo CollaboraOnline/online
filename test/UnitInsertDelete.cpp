@@ -27,52 +27,16 @@
 
 namespace
 {
-void getPartHashCodes(const std::string& testname, const std::string& response,
-                      std::vector<std::string>& parts)
+std::vector<std::string> getPartHashCodes(const Poco::SharedPtr<Poco::JSON::Object> status)
 {
-    std::string line;
-    std::istringstream istr(response);
-    std::getline(istr, line);
+    std::vector<std::string> partHashes;
 
-    TST_LOG("Reading parts from [" << response << "].");
-
-    // Expected format is something like 'type= parts= current= width= height= viewid= [hiddenparts=]'.
-    StringVector tokens(StringVector::tokenize(line, ' '));
-#if defined CPPUNIT_ASSERT_GREATEREQUAL
-    CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.size());
-#else
-    LOK_ASSERT_MESSAGE("Expected at least 7 tokens.", static_cast<size_t>(7) <= tokens.size());
-#endif
-
-    const std::string type = tokens[0].substr(std::string("type=").size());
-    LOK_ASSERT_MESSAGE("Expected presentation or spreadsheet type to read part names/codes.",
-                           type == "presentation" || type == "spreadsheet");
-
-    const int totalParts = std::stoi(tokens[1].substr(std::string("parts=").size()));
-    TST_LOG("Status reports " << totalParts << " parts.");
-
-    Poco::RegularExpression endLine("[^\n\r]+");
-    Poco::RegularExpression number("^-?[0-9]+$");
-    Poco::RegularExpression::MatchVec matches;
-    int offset = 0;
-
-    parts.clear();
-    while (endLine.match(response, offset, matches) > 0)
+    for (std::size_t i = 0; i < status->getArray("parts")->size(); i++)
     {
-        LOK_ASSERT_EQUAL(1, (int)matches.size());
-        const std::string str = response.substr(matches[0].offset, matches[0].length);
-        if (number.match(str, 0))
-        {
-            parts.push_back(str);
-        }
-
-        offset = static_cast<int>(matches[0].offset + matches[0].length);
+        partHashes.push_back(status->getArray("parts")->getObject(i)->get("hash").toString());
     }
 
-    TST_LOG("Found " << parts.size() << " part names/codes.");
-
-    // Validate that Core is internally consistent when emitting status messages.
-    LOK_ASSERT_EQUAL(totalParts, (int)parts.size());
+    return partHashes;
 }
 }
 
@@ -97,7 +61,7 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
 {
     try
     {
-        std::vector<std::string> parts;
+        std::vector<std::string> currentPartHashes;
         std::string response;
 
         // Load a document
@@ -115,10 +79,16 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         helpers::sendTextFrame(socket, "status", testname);
         response = helpers::getResponseString(socket, "status:", testname);
         LOK_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        getPartHashCodes(testname, response.substr(7), parts);
-        LOK_ASSERT_EQUAL(1, (int)parts.size());
 
-        const std::string slide1Hash = parts[0];
+        Poco::JSON::Parser parser;
+        Poco::Dynamic::Var statusJsonVar = parser.parse(response.substr(7));
+        const Poco::SharedPtr<Poco::JSON::Object>& statusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
+
+        currentPartHashes = getPartHashCodes(statusJsonObject);
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), currentPartHashes.size());
+
+        const std::string slide1Hash = currentPartHashes[0];
 
         // insert 10 slides
         TST_LOG("Inserting 10 slides.");
@@ -128,13 +98,19 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
-            getPartHashCodes(testname, response.substr(7), parts);
-            LOK_ASSERT_EQUAL(it + 1, parts.size());
+
+            statusJsonVar = parser.parse(response.substr(7));
+            const Poco::SharedPtr<Poco::JSON::Object>& loopStatusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
+
+            currentPartHashes = getPartHashCodes(loopStatusJsonObject);
+
+            LOK_ASSERT_EQUAL(it + 1, currentPartHashes.size());
         }
 
         LOK_ASSERT_MESSAGE("Hash code of slide #1 changed after inserting extra slides.",
-                               parts[0] == slide1Hash);
-        const std::vector<std::string> parts_after_insert(parts.begin(), parts.end());
+                               currentPartHashes[0] == slide1Hash);
+
+        const std::vector<std::string> parts_after_insert = currentPartHashes;
 
         // delete 10 slides
         TST_LOG("Deleting 10 slides.");
@@ -146,12 +122,17 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
-            getPartHashCodes(testname, response.substr(7), parts);
-            LOK_ASSERT_EQUAL(11 - it, parts.size());
+
+            statusJsonVar = parser.parse(response.substr(7));
+            const Poco::SharedPtr<Poco::JSON::Object>& loopStatusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
+
+            currentPartHashes = getPartHashCodes(loopStatusJsonObject);
+
+            LOK_ASSERT_EQUAL(11 - it, currentPartHashes.size());
         }
 
         LOK_ASSERT_MESSAGE("Hash code of slide #1 changed after deleting extra slides.",
-                               parts[0] == slide1Hash);
+                               currentPartHashes[0] == slide1Hash);
 
         // undo delete slides
         TST_LOG("Undoing 10 slide deletes.");
@@ -161,13 +142,20 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
-            getPartHashCodes(testname, response.substr(7), parts);
-            LOK_ASSERT_EQUAL(it + 1, parts.size());
+
+            statusJsonVar = parser.parse(response.substr(7));
+            const Poco::SharedPtr<Poco::JSON::Object>& loopStatusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
+
+            currentPartHashes = getPartHashCodes(loopStatusJsonObject);
+
+            LOK_ASSERT_EQUAL(it + 1, currentPartHashes.size());
         }
 
         LOK_ASSERT_MESSAGE("Hash code of slide #1 changed after undoing slide delete.",
-                               parts[0] == slide1Hash);
-        const std::vector<std::string> parts_after_undo(parts.begin(), parts.end());
+                               currentPartHashes[0] == slide1Hash);
+
+        const std::vector<std::string> parts_after_undo = currentPartHashes;
+
         LOK_ASSERT_MESSAGE("Hash codes changed between deleting and undo.",
                                parts_after_insert == parts_after_undo);
 
@@ -179,20 +167,29 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
-            getPartHashCodes(testname, response.substr(7), parts);
-            LOK_ASSERT_EQUAL(11 - it, parts.size());
+
+            statusJsonVar = parser.parse(response.substr(7));
+            const Poco::SharedPtr<Poco::JSON::Object>& loopStatusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
+
+            currentPartHashes = getPartHashCodes(loopStatusJsonObject);
+
+            LOK_ASSERT_EQUAL(11 - it, currentPartHashes.size());
         }
 
         LOK_ASSERT_MESSAGE("Hash code of slide #1 changed after redoing slide delete.",
-                               parts[0] == slide1Hash);
+                               currentPartHashes[0] == slide1Hash);
 
         // check total slides 1
         TST_LOG("Expecting 1 slide.");
         helpers::sendTextFrame(socket, "status", testname);
         response = helpers::getResponseString(socket, "status:", testname);
         LOK_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
-        getPartHashCodes(testname, response.substr(7), parts);
-        LOK_ASSERT_EQUAL(1, (int)parts.size());
+
+        statusJsonVar = parser.parse(response.substr(7));
+        const Poco::SharedPtr<Poco::JSON::Object>& checkStatusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
+        currentPartHashes = getPartHashCodes(checkStatusJsonObject);
+
+        LOK_ASSERT_EQUAL((long unsigned int)1, currentPartHashes.size());
     }
     catch (const Poco::Exception& exc)
     {
