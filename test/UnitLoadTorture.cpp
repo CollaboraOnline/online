@@ -79,7 +79,11 @@ void UnitLoadTorture::loadTorture(const std::string& name, const std::string& do
                 const std::string status = COOLProtocol::getFirstLine(message);
 
                 int viewid = -1;
-                LOK_ASSERT(COOLProtocol::getTokenIntegerFromMessage(status, "viewid", viewid));
+                Poco::JSON::Parser parser;
+                Poco::Dynamic::Var statusJsonVar = parser.parse(status.substr(7));
+                const Poco::SharedPtr<Poco::JSON::Object>& statusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
+                if (statusJsonObject->has("viewid"))
+                    viewid = std::atoi(statusJsonObject->get("viewid").toString().c_str());
 
                 LOK_ASSERT("Failed to create view in time " && viewid >= 0);
 
