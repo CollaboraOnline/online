@@ -976,6 +976,7 @@ L.TextInput = L.Layer.extend({
 					this._map.fire('closepopup');
 			}
 		}
+		return popup;
 	},
 
 	_onKeyDown: function(ev) {
