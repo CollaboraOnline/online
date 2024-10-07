@@ -110,9 +110,7 @@ class Mention extends L.Control.AutoCompletePopup {
 	}
 
 	callback(objectType: any, eventType: any, object: any, index: number) {
-		const section = app.sectionContainer.getSectionWithName(
-			L.CSections.CommentList.name,
-		);
+		const comment = cool.Comment?.isAnyEdit();
 		if (eventType === 'close') {
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'select' || eventType === 'activate') {
@@ -120,19 +118,14 @@ class Mention extends L.Control.AutoCompletePopup {
 			const profileLink = this.itemList[index].profile;
 			const replacement = this.map._docLayer._mentionText.join('');
 
-			if (section?.sectionProperties?.selectedComment?.isEdit())
-				section.sectionProperties.selectedComment.autoCompleteMention(
-					username,
-					profileLink,
-					replacement,
-				);
+			if (comment)
+				comment.autoCompleteMention(username, profileLink, replacement);
 			else this.sendHyperlinkUnoCommand(username, profileLink, replacement);
 
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'keydown') {
 			if (object.key !== 'Tab' && object.key !== 'Shift') {
-				const comment = section?.sectionProperties?.selectedComment;
-				if (comment?.isEdit()) comment.focus();
+				if (comment) comment.focus();
 				else this.map.focus();
 				return true;
 			}
