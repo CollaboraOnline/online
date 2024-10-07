@@ -441,38 +441,11 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private handleKeyDownForPopup (ev: any, id: string): void {
-		var popup = L.DomUtil.get(id);
-		if (popup) {
-			if (ev.key === 'ArrowDown') {
-				var initialFocusElement = (<HTMLElement>document.querySelector('#' + id + ' span'));
-				if (initialFocusElement) {
-					initialFocusElement.tabIndex = 0;
-					initialFocusElement.focus();
-					ev.preventDefault();
-					ev.stopPropagation();
-				}
-
-			} else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
-				ev.key === 'ArrowUp' || ev.key === 'Home' ||
-				ev.key === 'End' || ev.key === 'PageUp' ||
-				ev.key === 'PageDown' || ev.key === 'Enter' ||
-				ev.key === 'Escape' || ev.key === 'Control' ||
-				ev.key === 'Tab') {
-
-				if (id === 'mentionPopup') {
-					this.map.fire('closementionpopup', { 'typingMention': false });
-					if (ev.key === 'Escape') {
-						ev.preventDefault();
-						ev.stopPropagation();
-					}
-					const targetId: string = ev?.currentTarget.id;
-					const isReplyNode: boolean = targetId.includes('annotation-reply-textarea-');
-					let targetTextArea = this.sectionProperties.nodeModifyText;
-					if (isReplyNode)
-						targetTextArea = this.sectionProperties.nodeReplyText;
-					targetTextArea.focus();
-				}
-			}
+		var popup = this.map._textInput._handleKeyDownForPopup(ev, id);
+		// Block Esc from propogating if it closes the comment mention Popup
+		if (popup && id === 'mentionPopup' && ev.key === 'Escape') {
+			ev.preventDefault();
+			ev.stopPropagation();
 		}
 	}
 
