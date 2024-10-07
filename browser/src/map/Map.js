@@ -148,6 +148,10 @@ L.Map = L.Evented.extend({
 			}
 		});
 
+		this.on('modificationindicatorinitialized', function() {
+			this._modIndicatorInitialized = true;
+		});
+
 		// When all these conditions are met, fire statusindicator:initializationcomplete
 		this.initConditions = {
 			'doclayerinit': false,
@@ -245,6 +249,10 @@ L.Map = L.Evented.extend({
 
 				// Fire an event to let the client know whether the document needs saving or not.
 				this.fire('postMessage', {msgId: 'Doc_ModifiedStatus', args: { Modified: e.state === 'true' }});
+
+				if (this._everModified) {
+					this.fire('updatemodificationindicator', { status: e.state === 'true' ? 'MODIFIED' : 'SAVED' });
+				}
 			}
 		}, this);
 
@@ -424,29 +432,8 @@ L.Map = L.Evented.extend({
 	},
 
 	initializeModificationIndicator: function() {
-		var lastModButton = L.DomUtil.get('menu-last-mod');
-		if (lastModButton !== null && lastModButton !== undefined
-			&& lastModButton.firstChild.innerHTML !== null
-			&& lastModButton.firstChild.childElementCount == 0) {
-			if (this._lastmodtime == null) {
-				// No modification time -> hide the indicator
-				L.DomUtil.setStyle(lastModButton, 'display', 'none');
-				return;
-			}
-			var mainSpan = document.createElement('span');
-			this.lastModIndicator = document.createElement('span');
-			mainSpan.appendChild(this.lastModIndicator);
-
-			this.updateModificationIndicator(this._lastmodtime);
-
-			// Replace menu button body with new content
-			lastModButton.firstChild.replaceChildren();
-			lastModButton.firstChild.appendChild(mainSpan);
-
-			if (L.Params.revHistoryEnabled) {
-				L.DomUtil.setStyle(lastModButton, 'cursor', 'pointer');
-			}
-		}
+		this.fire('initmodificationindicator', this._lastmodtime);
+		this.updateModificationIndicator(this._lastmodtime);
 	},
 
 	updateModificationIndicator: function(newModificationTime) {
@@ -458,13 +445,16 @@ L.Map = L.Evented.extend({
 
 		clearTimeout(this._modTimeout);
 
-		if (this.lastModIndicator !== null && this.lastModIndicator !== undefined) {
+		if (this._modIndicatorInitialized) {
 			var dateTime = new Date(this._lastmodtime.replace(/,.*/, 'Z'));
 			var dateValue;
 
 			var elapsed = Date.now() - dateTime;
 			var rtf1 = new Intl.RelativeTimeFormat(String.locale, { style: 'narrow' });
-			if (elapsed < 60000) {
+			if (('minSavedMessageTimeoutSecs' in window) && (elapsed < (window.minSavedMessageTimeoutSecs * 1000))) {
+				timeout = window.minSavedMessageTimeoutSecs * 1000;
+				dateValue = '';
+			} else if (elapsed < 60000) {
 				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 1000), 'second');
 				timeout = 6000;
 			} else if (elapsed < 3600000) {
@@ -479,7 +469,7 @@ L.Map = L.Evented.extend({
 				timeout = 60000;
 			}
 
-			this.lastModIndicator.innerHTML = dateValue;
+			this.fire('updatemodificationindicator', {lastSaved: dateValue});
 
 			if (timeout) {
 				this._modTimeout = setTimeout(L.bind(this.updateModificationIndicator, this, -1), timeout);
