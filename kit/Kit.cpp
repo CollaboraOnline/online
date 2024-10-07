@@ -2285,7 +2285,7 @@ bool Document::forwardToChild(const std::string& prefix, const std::vector<char>
     return std::string();
 }
 
-bool Document::isTileRequestInsideVisibleArea(const TileCombined& tileCombined)
+bool Document::isTileRequestInsideVisibleArea(const TileCombined& tileCombined) const
 {
     const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
     if (!session)
