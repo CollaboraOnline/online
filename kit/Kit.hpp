@@ -325,7 +325,8 @@ private:
 
     static std::string makeRenderParams(const std::string& renderOpts, const std::string& userName,
                                         const std::string& spellOnline, const std::string& theme,
-                                        const std::string& backgroundTheme);
+                                        const std::string& backgroundTheme,
+                                        const std::string& userPrivateInfo);
     bool isTileRequestInsideVisibleArea(const TileCombined& tileCombined);
 
 public:
