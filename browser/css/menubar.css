@@ -97,6 +97,7 @@ nav.hasnotebookbar #save.saving::after {
 
 #save.saved img {
 	background: url('images/lc_saved.svg') no-repeat center;
+	filter: grayscale(0);
 }
 
 nav.hasnotebookbar #save.saved::after {
