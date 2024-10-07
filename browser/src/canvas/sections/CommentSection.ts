@@ -693,7 +693,7 @@ export class Comment extends CanvasSectionObject {
 				}),
 				draggable: true
 			});
-			if (app.impress.partList[this.sectionProperties.docLayer._selectedPart].hash === this.sectionProperties.data.parthash || app.file.fileBasedView)
+			if (app.impress.partList[this.sectionProperties.docLayer._selectedPart].hash === parseInt(this.sectionProperties.data.parthash) || app.file.fileBasedView)
 				this.map.addLayer(this.sectionProperties.annotationMarker);
 		}
 		if (this.sectionProperties.data.rectangle != null) {
