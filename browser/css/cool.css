@@ -1159,12 +1159,20 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	background-position: 0;
 }
 
+#mentionPopup {
+	min-width: 100px;
+}
+
 #mentionPopup .lokdialog.ui-dialog-content.ui-widget-content {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	min-height: 100px;
 	min-width: 100px;
+}
+
+#mentionPopup .ui-dialog-content {
+	padding: 0;
 }
 
 .username-pop-up {
