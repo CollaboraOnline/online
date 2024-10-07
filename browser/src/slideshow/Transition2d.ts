@@ -26,6 +26,7 @@ abstract class TransitionBase extends SlideChangeGl {
 	protected constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 		this.transitionFilterInfo = transitionParameters.transitionFilterInfo;
+		this.createProgram();
 		this.prepareTransition();
 	}
 

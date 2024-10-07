@@ -13,71 +13,49 @@
 declare var SlideShow: any;
 
 enum BoxSubType {
-	VERTICAL,
-	HORIZONTAL,
+	IN,
+	OUT,
 }
 
-class BoxTransition extends Transition2d {
-	private direction: number = 0;
+class BoxTransition extends ClippingTransition {
+	private direction: number;
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
+	}
 
+	protected initProgramTemplateParams() {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 		if (
 			transitionSubType == TransitionSubType.RECTANGLE &&
 			this.transitionFilterInfo.isDirectionForward
 		) {
-			this.direction = BoxSubType.HORIZONTAL;
+			this.direction = BoxSubType.OUT;
 		} else {
-			this.direction = BoxSubType.VERTICAL;
+			this.direction = BoxSubType.IN;
 		}
 	}
 
-	public start(): void {
-		this.startTransition();
-	}
-
 	// jscpd:ignore-start
-	public renderUniformValue(): void {
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
-			this.direction,
-		);
-	}
-
-	public getFragmentShader(): string {
-		return `#version 300 es
-                precision mediump float;
-
-                uniform sampler2D leavingSlideTexture;
-                uniform sampler2D enteringSlideTexture;
-                uniform float time;
-                uniform int direction;
-
-                in vec2 v_texCoord;
-                out vec4 outColor;
-
-                void main() {
-                    vec2 uv = v_texCoord;
+	protected getMaskFunction(): string {
+		const isInDir = this.direction == BoxSubType.IN;
+		return `
+                float getMaskValue(vec2 uv, float time) {
                     float progress = time;
 
                     vec2 center = vec2(0.5, 0.5);
 
                     vec2 dist = abs(uv - center);
 
-                    float size = (direction == 1) ? progress * 1.5 : (1.0 - progress * 1.5);
+                    float size = progress * 1.5;
+                    ${isInDir ? 'size = 1.0 - size;' : ''}
 
                     float mask = step(dist.x, size / 2.0) * step(dist.y, size / 2.0);
+                    ${isInDir ? 'mask = 1.0 - mask;' : ''}
 
-                    mask = min(mask, 1.0);
-
-                    vec4 color1 = texture(enteringSlideTexture, uv);
-                    vec4 color2 = texture(leavingSlideTexture, uv);
-
-                    outColor = (direction == 0) ? mix(color1, color2, mask) : mix(color2, color1, mask);
+                    return mask;
                 }
-                `;
+		`;
 	}
 	// jscpd:ignore-end
 }

@@ -19,14 +19,14 @@ enum DiagonalSubType {
 	BOTTOMRIGHT,
 }
 
-class DiagonalTransition extends Transition2d {
-	private direction: number = 0;
+class DiagonalTransition extends ClippingTransition {
+	private direction: number;
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
 
-	public start(): void {
+	protected initProgramTemplateParams() {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 
 		if (
@@ -44,54 +44,34 @@ class DiagonalTransition extends Transition2d {
 		} else {
 			this.direction = DiagonalSubType.TOPLEFT;
 		}
-		this.startTransition();
 	}
 
 	// jscpd:ignore-start
-	public renderUniformValue(): void {
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
-			this.direction,
-		);
-	}
+	protected getMaskFunction(): string {
+		const startsFromRight =
+			this.direction == DiagonalSubType.TOPRIGHT ||
+			this.direction == DiagonalSubType.BOTTOMRIGHT;
+		const startsFromBottom =
+			this.direction == DiagonalSubType.BOTTOMLEFT ||
+			this.direction == DiagonalSubType.BOTTOMRIGHT;
 
-	public getFragmentShader(): string {
-		return `#version 300 es
-				precision mediump float;
+		return `
+                float getMaskValue(vec2 uv, float time) {
+                    float u_steps = 10.0f;
 
-				uniform sampler2D leavingSlideTexture;
-				uniform sampler2D enteringSlideTexture;
-				uniform float time;
-				uniform int direction;
+                    float xCoord = ${startsFromRight ? '1.0f - uv.x' : 'uv.x'};
+                    float yCoord = floor(uv.y * u_steps) / u_steps;
+                    float yStep = ${startsFromBottom ? '1.0f - yCoord' : 'yCoord'};
 
-				in vec2 v_texCoord;
-				out vec4 outColor;
+                    float stepDelay = 1.0f;
+                    float adjustedTime = time * 2.0f - yStep * stepDelay;
 
-				void main() {
-					float u_steps = 10.0f;
-					vec4 color1 = texture(leavingSlideTexture, v_texCoord);
-					vec4 color2 = texture(enteringSlideTexture, v_texCoord);
+                    float stepWidth = 1.0f;
+                    float mask = step(xCoord * stepWidth, adjustedTime);
 
-					float yStep;
-					float xCoord;
-					float adjustedTime;
-
-					if(direction == 0 || direction == 1) {
-						xCoord = v_texCoord.x;
-						yStep = direction == 0 ? floor(v_texCoord.y * u_steps) / u_steps : 1.0f - floor(v_texCoord.y * u_steps) / u_steps;
-					} else {
-						xCoord = 1.0f - v_texCoord.x;
-						yStep = direction == 2 ? 1.0f - floor(v_texCoord.y * u_steps) / u_steps : floor(v_texCoord.y * u_steps) / u_steps;
-					}
-
-					float stepDelay = 1.0f;
-					adjustedTime = (time * 2.0f) - (1.0f - yStep) * stepDelay;
-
-					float stepWidth = 1.0f;
-					float threshold = step(xCoord * stepWidth, adjustedTime);
-
-					outColor = mix(color1, color2, threshold);
-				}`;
+                    return mask;
+                }
+		`;
 	}
 	// jscpd:ignore-end
 }

@@ -17,14 +17,14 @@ enum VenetianSubType {
 	VERTICAL,
 }
 
-class VenetianTransition extends Transition2d {
-	private direction: number = 0;
+class VenetianTransition extends ClippingTransition {
+	private direction: number;
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
 
-	public start(): void {
+	protected initProgramTemplateParams() {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 
 		if (transitionSubType == TransitionSubType.HORIZONTAL) {
@@ -32,52 +32,34 @@ class VenetianTransition extends Transition2d {
 		} else {
 			this.direction = VenetianSubType.VERTICAL;
 		}
-
-		this.startTransition();
 	}
 
-	public renderUniformValue(): void {
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
-			this.direction,
-		);
-		this.gl.uniform2fv(this.gl.getUniformLocation(this.program, 'resolution'), [
-			this.gl.canvas.width,
-			this.gl.canvas.height,
-		]);
-	}
+	protected getMaskFunction(): string {
+		const numBlinds = 6.0;
+		const blindWidth = this.gl.canvas.width / numBlinds;
+		const blindHeight = this.gl.canvas.height / numBlinds;
+		const blindSize =
+			this.direction == VenetianSubType.VERTICAL ? blindWidth : blindHeight;
 
-	public getFragmentShader(): string {
-		return `#version 300 es
-                precision mediump float;
+		const comp: string = this.direction == VenetianSubType.VERTICAL ? 'x' : 'y';
 
-                uniform sampler2D leavingSlideTexture;
-                uniform sampler2D enteringSlideTexture;
-                uniform float time;
-                uniform vec2 resolution;
-                uniform int direction;
+		return `
+                #define CANVAS_WIDTH ${this.gl.canvas.width}
+                #define CANVAS_HEIGHT ${this.gl.canvas.height}
 
-                in vec2 v_texCoord;
-                out vec4 outColor;
-
-                void main() {
-                    vec2 uv = v_texCoord;
+                float getMaskValue(vec2 uv, float time) {
                     float progress = time;
 
-                    float numBlinds = 6.0;
+                    vec2 resolution = vec2(CANVAS_WIDTH, CANVAS_HEIGHT);
+                    float blindSize = float(${blindSize});
 
-                    float blindSize = (direction == 1) ? resolution.x / numBlinds : resolution.y / numBlinds;
+                    float position = mod(uv.${comp} * resolution.${comp}, blindSize);
 
-                    float position = (direction == 1) ? mod(uv.x * resolution.x, blindSize) : mod(uv.y * resolution.y, blindSize);
+                    float mask = step(position / blindSize, progress);
 
-                    float mask = step(progress, position / blindSize);
-
-                    vec4 color1 = texture(leavingSlideTexture, uv);
-                    vec4 color2 = texture(enteringSlideTexture, uv);
-
-                    outColor = mix(color2, color1, mask);
+                    return mask;
                 }
-                `;
+		`;
 	}
 }
 

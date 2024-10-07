@@ -17,58 +17,34 @@ enum OvalSubType {
 	VERTICAL,
 }
 
-class OvalTransition extends Transition2d {
-	private direction: number = 0;
+class OvalTransition extends ClippingTransition {
+	private direction: number;
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
-
-	public start(): void {
+	protected initProgramTemplateParams() {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 		if (transitionSubType == TransitionSubType.HORIZONTAL) {
 			this.direction = OvalSubType.HORIZONTAL;
 		} else if (transitionSubType == TransitionSubType.VERTICAL) {
 			this.direction = OvalSubType.VERTICAL;
 		}
-
-		this.startTransition();
 	}
 
 	// jscpd:ignore-start
-	public renderUniformValue(): void {
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
-			this.direction,
-		);
-	}
+	protected getMaskFunction(): string {
+		const isHorizontalDir = this.direction == OvalSubType.HORIZONTAL;
 
-	public getFragmentShader(): string {
-		return `#version 300 es
-                precision mediump float;
-
-                uniform sampler2D leavingSlideTexture;
-                uniform sampler2D enteringSlideTexture;
-                uniform float time;
-                uniform int direction;
-
-
-                in vec2 v_texCoord;
-                out vec4 outColor;
-
-                void main() {
-                    vec2 uv = v_texCoord;
+		return `
+                float getMaskValue(vec2 uv, float time) {
                     float progress = time;
 
                     vec2 center = vec2(0.5, 0.5);
 
                     vec2 dist = abs(uv - center);
 
-                    if (direction == 1) {
-                        dist.x *= 2.0;
-                    } else {
-                        dist.y *= 2.0;
-                    }
+                    ${isHorizontalDir ? 'dist.y' : 'dist.x'} *= 2.0;
 
                     float size = progress * 1.2;
 
@@ -76,12 +52,9 @@ class OvalTransition extends Transition2d {
 
                     mask = min(mask, 1.0);
 
-                    vec4 color1 = texture(leavingSlideTexture, uv);
-                    vec4 color2 = texture(enteringSlideTexture, uv);
-
-                    outColor = mix(color1, color2, mask);
+                    return mask;
                 }
-                `;
+		`;
 	}
 	// jscpd:ignore-end
 }

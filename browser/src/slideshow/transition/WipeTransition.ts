@@ -19,14 +19,14 @@ enum WipeSubType {
 	BOTTOMTOTOP,
 }
 
-class WipeTransition extends Transition2d {
-	private direction: number = 0;
+class WipeTransition extends ClippingTransition {
+	private direction: number;
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
 
-	public start(): void {
+	protected initProgramTemplateParams() {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 		if (
 			transitionSubType == TransitionSubType.TOPTOBOTTOM &&
@@ -46,59 +46,27 @@ class WipeTransition extends Transition2d {
 		} else {
 			this.direction = WipeSubType.RIGHTTOLEFT;
 		}
-		this.startTransition();
 	}
 
 	// jscpd:ignore-start
-	public renderUniformValue(): void {
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
-			this.direction,
-		);
-	}
+	protected getMaskFunction(): string {
+		const isHorizontalDir =
+			this.direction == WipeSubType.LEFTTORIGHT ||
+			this.direction == WipeSubType.RIGHTTOLEFT;
+		const isBackwardDir =
+			this.direction == WipeSubType.RIGHTTOLEFT ||
+			this.direction == WipeSubType.BOTTOMTOTOP;
 
-	public getFragmentShader(): string {
-		return `#version 300 es
-				precision mediump float;
+		return `
+        float getMaskValue(vec2 uv, float time) {
+            float progress = time;
 
-				uniform sampler2D leavingSlideTexture;
-				uniform sampler2D enteringSlideTexture;
-				uniform float time;
-				uniform int direction; // 0: Left to Right, 1: Right to Left, 2: Top to Bottom, 4: Bottom to Top
-
-				in vec2 v_texCoord;
-				out vec4 outColor;
-
-				void main() {
-					vec2 uv = v_texCoord;
-					float progress = time;
-
-					if (direction == 0) {
-						if (uv.x < progress) {
-							outColor = texture(enteringSlideTexture, uv);
-						} else {
-							outColor = texture(leavingSlideTexture, uv);
-						}
-					} else if (direction == 1) {
-						if (uv.x > 1.0 - progress) {
-							outColor = texture(enteringSlideTexture, uv);
-						} else {
-							outColor = texture(leavingSlideTexture, uv);
-						}
-					} else if (direction == 2) {
-						if (uv.y < progress) {
-							outColor = texture(enteringSlideTexture, uv);
-						} else {
-							outColor = texture(leavingSlideTexture, uv);
-						}
-					} else if (direction == 3) {
-						if (uv.y > 1.0 - progress) {
-							outColor = texture(enteringSlideTexture, uv);
-						} else {
-							outColor = texture(leavingSlideTexture, uv);
-						}
-					}
-				}`;
+            float coord = ${isHorizontalDir ? 'uv.x' : 'uv.y'};
+            ${isBackwardDir ? 'coord = 1.0 - coord;' : ''}
+            float mask = step(coord, progress);
+            return mask;
+        }
+		`;
 	}
 	// jscpd:ignore-end
 }

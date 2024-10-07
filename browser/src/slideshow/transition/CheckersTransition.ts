@@ -17,14 +17,14 @@ enum CheckersSubType {
 	DOWN,
 }
 
-class CheckersTransition extends Transition2d {
-	private direction: number = 0;
+class CheckersTransition extends ClippingTransition {
+	private direction: number;
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
 
-	public start(): void {
+	protected initProgramTemplateParams() {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 
 		if (transitionSubType == TransitionSubType.DOWN) {
@@ -32,57 +32,33 @@ class CheckersTransition extends Transition2d {
 		} else if (transitionSubType == TransitionSubType.ACROSS) {
 			this.direction = CheckersSubType.ACROSS;
 		}
-
-		this.startTransition();
 	}
 
 	// jscpd:ignore-start
-	public renderUniformValue(): void {
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
-			this.direction,
-		);
-	}
+	protected getMaskFunction(): string {
+		const numSquares = 8;
+		const edgeSize = 1.0 / numSquares;
+		const isAcrossDir = this.direction == CheckersSubType.ACROSS;
 
-	public getFragmentShader(): string {
-		return `#version 300 es
-                precision mediump float;
-
-                uniform sampler2D leavingSlideTexture;
-                uniform sampler2D enteringSlideTexture;
-                uniform float time;
-                uniform int direction; // 1 for vertical, 2 for horizontal
-
-                in vec2 v_texCoord;
-                out vec4 outColor;
-
-                void main() {
-                    vec2 uv = v_texCoord;
-
+		return `
+                float getMaskValue(vec2 uv, float time) {
                     float progress = time * 2.0;
-                    float numSquares = 8.0;
 
-                    vec2 squareSize = vec2(1.0 / numSquares, 1.0 / numSquares);
+                    vec2 squareSize = vec2(${edgeSize}, ${edgeSize});
                     vec2 checkerCoord = floor(uv / squareSize);
 
                     bool isWhiteSquare = mod(checkerCoord.x + checkerCoord.y, 2.0) == 0.0;
                     vec2 localUV = fract(uv / squareSize);
 
-                    bool showEntering = false;
                     float adjustedProgress = isWhiteSquare ? progress : progress - 1.0;
                     adjustedProgress = clamp(adjustedProgress, 0.0, 1.0);
 
-                    if (direction == 1) {
-                        showEntering = localUV.y < adjustedProgress; // Across
-                    } else {
-                        showEntering = localUV.x < adjustedProgress; // Down
-                    }
+                    float localCoord = ${isAcrossDir ? 'localUV.x' : 'localUV.y'};
+                    bool showEntering = localCoord < adjustedProgress;
 
-                    vec4 color1 = texture(leavingSlideTexture, uv);
-                    vec4 color2 = texture(enteringSlideTexture, uv);
-                    outColor = mix(color1, color2, float(showEntering));
+                    return float(showEntering);
                 }
-                `;
+		`;
 	}
 	// jscpd:ignore-end
 }
