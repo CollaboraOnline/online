@@ -1467,13 +1467,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('removesession')) {
 			var viewId = parseInt(textMsg.substring('removesession'.length + 1));
-			if (this._map._docLayer._viewId === viewId) {
-				this._map.fire('postMessage', {msgId: 'close', args: {EverModified: this._map._everModified, Deprecated: true}});
-				this._map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: this._map._everModified}});
-				if (!this._map._disableDefaultAction['UI_Close']) {
-					this._map.remove();
-				}
-			}
+			if (this._map._docLayer._viewId === viewId)
+				app.dispatcher.dispatch('closeapp');
 		}
 		else if (textMsg.startsWith('calcfunctionlist:')) {
 			this._onCalcFunctionListMsg(textMsg.substring('calcfunctionlist:'.length + 1));

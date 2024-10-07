@@ -37,6 +37,22 @@ class Dispatcher {
 			}
 		};
 
+		this.actionsMap['closeapp'] = () => {
+			if ((window as any).ThisIsAMobileApp) {
+				window.postMobileMessage('BYE');
+			} else {
+				app.map.fire('postMessage', {
+					msgId: 'close',
+					args: { EverModified: app.map._everModified, Deprecated: true },
+				});
+				app.map.fire('postMessage', {
+					msgId: 'UI_Close',
+					args: { EverModified: app.map._everModified },
+				});
+			}
+			if (!app.map._disableDefaultAction['UI_Close']) app.map.remove();
+		};
+
 		this.actionsMap['userlist'] = () => {
 			if (app.map.userList) app.map.userList.openDropdown();
 		};

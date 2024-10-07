@@ -36,18 +36,6 @@ function getUNOCommand(unoData) {
 	return unoData.objectCommand;
 }
 
-function onClose() {
-	if (window.ThisIsAMobileApp) {
-		window.postMobileMessage('BYE');
-	} else {
-		map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
-		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
-	}
-	if (!map._disableDefaultAction['UI_Close']) {
-		map.remove();
-	}
-}
-
 function _setBorders(left, right, bottom, top, horiz, vert, color) {
 	var params = {
 		OuterBorder: {
@@ -1191,10 +1179,11 @@ function setupToolbar(e) {
 		$('#closebuttonwrapper').css('display', 'block');
 	}
 
-	$('#closebutton').click(onClose);
+	$('#closebutton').click(function () {
+		global.app.dispatcher.dispatch('closeapp');
+	});
 }
 
-global.onClose = onClose;
 global.setupToolbar = setupToolbar;
 global.insertTable = insertTable;
 global.getInsertTablePopupElements = getInsertTablePopupElements;
