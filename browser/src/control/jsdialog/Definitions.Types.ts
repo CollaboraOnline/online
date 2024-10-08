@@ -47,6 +47,7 @@ interface JSDialogJSON extends DialogJSON {
 // JSDialog message for popup
 interface PopupData extends JSDialogJSON {
 	isAutoCompletePopup?: boolean;
+	isAutoFillPreviewTooltip?: boolean;
 	cancellable?: boolean;
 	canHaveFocus: boolean;
 	noOverlay: boolean;

@@ -1486,13 +1486,15 @@ L.CanvasTileLayer = L.Layer.extend({
 
 				var strTwips = textMsg.match(/\d+/g);
 				if (strTwips != null && this._map.isEditMode()) {
-					tooltipInfo.location = new app.definitions.simplePoint(parseInt(strTwips[1]), parseInt(strTwips[2]));
 
-					tooltipInfo.location.pX -= app.sectionContainer.getDocumentTopLeft()[0] - app.sectionContainer.getDocumentAnchor()[0];
-					tooltipInfo.location.pY -= app.sectionContainer.getDocumentTopLeft()[1] - app.sectionContainer.getDocumentAnchor()[1];
+					var cellRange = this._map._docLayer._parseCellRange(JSON.stringify(tooltipInfo.celladdress));
+					tooltipInfo.celladdress = this._map._docLayer._cellRangeToTwipRect(cellRange).toRectangle();
 
-					this._map.fire('sendautofilllocation', { data: tooltipInfo });
+					tooltipInfo.celladdress = new app.definitions.simplePoint(parseInt(tooltipInfo.celladdress[0]), parseInt(tooltipInfo.celladdress[1]));
+					tooltipInfo.celladdress.pX -= app.sectionContainer.getDocumentTopLeft()[0] - app.sectionContainer.getDocumentAnchor()[0];
+					tooltipInfo.celladdress.pY -= app.sectionContainer.getDocumentTopLeft()[1] - app.sectionContainer.getDocumentAnchor()[1];
 
+					this._map.fire('openautofillpreviewpopup', { data: tooltipInfo });
 				}
 			}
 			else {
