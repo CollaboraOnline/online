@@ -920,7 +920,9 @@ L.Map = L.Evented.extend({
 	},
 
 	getViewName: function(viewid) {
-		return this._viewInfo[viewid].username;
+		if (this._viewInfo[viewid] !== undefined)
+			return this._viewInfo[viewid].username;
+		else return null;
 	},
 
 	getViewColor: function(viewid) {
