@@ -106,6 +106,7 @@ class IdleHandler {
 		if (window.mode.isDesktop()
 		&& !this.map.uiManager.isAnyDialogOpen()
 		&& !cool.Comment.isAnyEdit()
+		&& (this.map.formulabar && !this.map.formulabar.hasFocus())
 		&& $('input:focus').length === 0) {
 			this.map.focus();
 		}
@@ -229,6 +230,9 @@ class IdleHandler {
 
 			return;
 		}
+
+		if (app.map && app.map.formulabar && app.map.formulabar.hasFocus())
+			app.dispatcher.dispatch('acceptformula'); // save data from the edited cell on exit
 
 		this._startOutOfFocusTimer();
 	}
