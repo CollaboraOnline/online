@@ -40,32 +40,32 @@ class BrowserProperties {
 	static initiateBrowserProperties(global) {
 		global.L = {};
 
-		var ua = navigator.userAgent.toLowerCase(),
-		uv = navigator.vendor.toLowerCase(),
-		doc = document.documentElement,
+		let ua = navigator.userAgent.toLowerCase();
+		let uv = navigator.vendor.toLowerCase();
+		let doc = document.documentElement;
 
-		ie = 'ActiveXObject' in global,
+		let ie = 'ActiveXObject' in global;
 
-		cypressTest = ua.indexOf('cypress') !== -1,
+		let cypressTest = ua.indexOf('cypress') !== -1;
+
 		// Firefox has undefined navigator.clipboard.read and navigator.clipboard.write,
 		// unsecure contexts (such as http + non-localhost) has the entire navigator.clipboard
 		// undefined.
-		hasNavigatorClipboardRead = navigator.clipboard && navigator.clipboard.read !== undefined,
-		hasNavigatorClipboardWrite = navigator.clipboard && navigator.clipboard.write !== undefined,
-		webkit    = ua.indexOf('webkit') !== -1,
-		chrome    = ua.indexOf('chrome') !== -1,
-		gecko     = (ua.indexOf('gecko') !== -1 || (cypressTest && 'MozUserFocus' in doc.style))
-			&& !webkit && !global.opera && !ie,
-		safari    = !chrome && (ua.indexOf('safari') !== -1 || uv.indexOf('apple') == 0),
+		let clipboardApiAvailable = navigator.clipboard !== undefined && navigator.clipboard.write !== undefined && navigator.clipboard.read !== undefined;
 
-		win = navigator.platform.indexOf('Win') === 0,
+		let webkit    = ua.indexOf('webkit') !== -1;
+		let chrome    = ua.indexOf('chrome') !== -1;
+		let gecko     = (ua.indexOf('gecko') !== -1 || (cypressTest && 'MozUserFocus' in doc.style)) && !webkit && !global.opera && !ie;
+		let safari    = !chrome && (ua.indexOf('safari') !== -1 || uv.indexOf('apple') == 0);
 
-		mobile = typeof orientation !== 'undefined' || ua.indexOf('mobile') !== -1,
-		msPointer = !global.PointerEvent && global.MSPointerEvent,
-		pointer = (global.PointerEvent && navigator.pointerEnabled && navigator.maxTouchPoints) || msPointer,
+		let win = navigator.platform.indexOf('Win') === 0;
 
-		webkit3d = ('WebKitCSSMatrix' in global) && ('m11' in new global.WebKitCSSMatrix()),
-		gecko3d = 'MozPerspective' in doc.style;
+		let mobile = typeof orientation !== 'undefined' || ua.indexOf('mobile') !== -1;
+		let msPointer = !global.PointerEvent && global.MSPointerEvent;
+		let pointer = (global.PointerEvent && navigator.pointerEnabled && navigator.maxTouchPoints) || msPointer;
+
+		let webkit3d = ('WebKitCSSMatrix' in global) && ('m11' in new global.WebKitCSSMatrix());
+		let gecko3d = 'MozPerspective' in doc.style;
 
 		var mac = navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1;
 		var chromebook = global.ThisIsTheAndroidApp && global.COOLMessageHandler.isChromeOS();
@@ -143,13 +143,10 @@ class BrowserProperties {
 			// `true` when the browser run by cypress
 			cypressTest: cypressTest,
 
-			// @property hasNavigatorClipboardRead: Boolean
-			// `true` when permission-based clipboard paste is available.
-			hasNavigatorClipboardRead: hasNavigatorClipboardRead,
 
-			// @property hasNavigatorClipboardWrite: Boolean
-			// `true` when permission-based clipboard copy is available.
-			hasNavigatorClipboardWrite: hasNavigatorClipboardWrite,
+			// @property clipboardApiAvailable: Boolean
+			// `true` when permission-based clipboard api is available.
+			clipboardApiAvailable: clipboardApiAvailable,
 
 			// @property msPointer: Boolean
 			// `true` for browsers implementing the Microsoft touch events model (notably IE10).
@@ -905,9 +902,9 @@ function getInitializerClass() {
 
 	};
 
-	if (!global.prefs.getBoolean('hasNavigatorClipboardWrite', true)) {
+	if (!global.prefs.getBoolean('clipboardApiAvailable', true)) {
 		// navigator.clipboard.write failed on us once, don't even try it.
-		global.L.Browser.hasNavigatorClipboardWrite = false;
+		global.L.Browser.clipboardApiAvailable = false;
 	}
 
 	global.deviceFormFactor = global.mode.getDeviceFormFactor();
