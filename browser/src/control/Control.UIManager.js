@@ -1183,7 +1183,7 @@ L.Control.UIManager = L.Control.extend({
 			const saveIconEl = document.querySelector('#save img');
 			saveEle.classList.remove('savemodified');
 			saveEle.classList.add('saving');
-			saveIconEl.classList.add('rotate-icon'); // Stop the icon rotation
+			saveIconEl.classList.add('rotate-icon'); // Start the icon rotation
 			saveEle.setAttribute('disabled', true);  // Disable the button
 		}
 	},
@@ -1201,7 +1201,7 @@ L.Control.UIManager = L.Control.extend({
 			// Add some delay to show "saved" status, then hide this info
 			setTimeout(() => {
 				saveEle.classList.remove('saved');
-				saveEle.removeAttribute('disabled');  // Disable the button
+				saveEle.removeAttribute('disabled');  // Enable the button
 			}, 2000);
 		}
 	},

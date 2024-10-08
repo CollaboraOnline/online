@@ -461,7 +461,7 @@ L.Map = L.Evented.extend({
 
 		clearTimeout(this._modTimeout);
 
-		// just for safty check sometimes this var may not be intialized then in that case better to return empty
+		// just for safety check sometimes this var may not be intialized then in that case better to return empty
 		if (!this._lastmodtime)
 			return;
 
