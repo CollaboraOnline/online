@@ -165,6 +165,7 @@ nav.hasnotebookbar #save.saved::after {
 	background: var(--color-main-background);
 	padding: 0px;
 	overflow: scroll hidden;
+	padding-inline-start: 5px;
 }
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
