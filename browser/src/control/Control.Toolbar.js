@@ -906,11 +906,18 @@ function processStateChangedCommand(commandName, state) {
 		}
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
-		if (document.getElementById('save')) {
-			if (state === 'true')
-				document.getElementById('save').classList.add('savemodified');
+		const saveEle = document.getElementById('save');
+		const saveIconEl = document.querySelector('#save img');
+		if (saveEle) {
+			if (state === 'true') {
+				saveEle.classList.remove('saving');
+				saveEle.classList.remove('saved');
+				saveIconEl.classList.remove('rotate-icon'); // Stop the icon rotation
+				saveEle.removeAttribute('disabled');  // Enable the button
+				saveEle.classList.add('savemodified');
+			}
 			else
-				document.getElementById('save').classList.remove('savemodified');
+				saveEle.classList.remove('savemodified');
 		}
 		state = ''; // stop processing below
 	}

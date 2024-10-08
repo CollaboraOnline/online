@@ -1196,7 +1196,7 @@ L.Control.UIManager = L.Control.extend({
 		if (window.mode.isMobile())
 			return;
 		const saveEle = document.getElementById('save');
-		if (saveEle.classList.contains('saving')) {
+		if (!saveEle.classList.contains('savemodified')) {
 			const saveIconEl = document.querySelector('#save img');
 			saveEle.classList.remove('saving');
 			saveIconEl.classList.remove('rotate-icon'); // Stop the icon rotation
