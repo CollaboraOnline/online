@@ -500,7 +500,7 @@ class AnimatedElement {
 
 	public setTransitionParameters(transitionParameters: TransitionParameters) {
 		transitionParameters.context = this.tfContext;
-		transitionParameters.current = this.tfContext.createTransparentTexture();
+		transitionParameters.current = null;
 		transitionParameters.next = this.getTextureFromElement(this.aBaseElement);
 	}
 

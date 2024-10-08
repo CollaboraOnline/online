@@ -83,10 +83,11 @@ class Transition2d extends TransitionBase {
 	}
 
 	protected getFragmentShader(): string {
+		const isSlideTransition: boolean = !!this.leavingSlide;
 		return `#version 300 es
 				precision mediump float;
 
-				uniform sampler2D leavingSlideTexture;
+				${isSlideTransition ? 'uniform sampler2D leavingSlideTexture;' : ''}
 				uniform sampler2D enteringSlideTexture;
 				uniform float time;
 
@@ -94,7 +95,11 @@ class Transition2d extends TransitionBase {
 				out vec4 outColor;
 
 				void main() {
-					vec4 color0 = texture(leavingSlideTexture, v_texCoord);
+					vec4 color0 = ${
+						isSlideTransition
+							? 'texture(leavingSlideTexture, v_texCoord)'
+							: 'vec4(0, 0, 0, 0)'
+					};
 					vec4 color1 = texture(enteringSlideTexture, v_texCoord);
 					outColor = mix(color0, color1, time);
 				}
@@ -111,9 +116,14 @@ class Transition2d extends TransitionBase {
 		gl.useProgram(this.program);
 		gl.uniform1f(gl.getUniformLocation(this.program, 'time'), nT);
 
-		gl.activeTexture(gl.TEXTURE0);
-		gl.bindTexture(gl.TEXTURE_2D, this.leavingSlide);
-		gl.uniform1i(gl.getUniformLocation(this.program, 'leavingSlideTexture'), 0);
+		if (this.leavingSlide) {
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_2D, this.leavingSlide);
+			gl.uniform1i(
+				gl.getUniformLocation(this.program, 'leavingSlideTexture'),
+				0,
+			);
+		}
 
 		gl.activeTexture(gl.TEXTURE1);
 		gl.bindTexture(gl.TEXTURE_2D, this.enteringSlide);

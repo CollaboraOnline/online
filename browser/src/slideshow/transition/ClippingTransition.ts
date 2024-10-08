@@ -22,10 +22,14 @@ class ClippingTransition extends Transition2d {
 	}
 
 	public getFragmentShader(): string {
+		const isSlideTransition = !!this.leavingSlide;
+		// prettier-ignore
 		return `#version 300 es
                 precision mediump float;
 
-                uniform sampler2D leavingSlideTexture;
+                ${isSlideTransition
+                      ? 'uniform sampler2D leavingSlideTexture;'
+                      : ''}
                 uniform sampler2D enteringSlideTexture;
                 uniform float time;
 
@@ -39,7 +43,10 @@ class ClippingTransition extends Transition2d {
 
                     float mask = getMaskValue(uv, time);
 
-                    vec4 color1 = texture(leavingSlideTexture, uv);
+                    vec4 color1 = ${
+                        isSlideTransition
+                          ? 'texture(leavingSlideTexture, uv)'
+                          : 'vec4(0, 0, 0, 0)'};
                     vec4 color2 = texture(enteringSlideTexture, uv);
 
                     outColor = mix(color1, color2, mask);
