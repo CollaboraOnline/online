@@ -2595,7 +2595,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._cellCSelections.setPointSet(pointSet);
 
 			this._map.removeLayer(this._map._textInput._cursorHandler); // User selected a text, we remove the carret marker.
-			if (L.Browser.hasNavigatorClipboardWrite) {
+			if (L.Browser.clipboardApiAvailable) {
 				// Just set the selection type, no fetch of the content.
 				this._map._clip.setTextSelectionType('text');
 			} else {
