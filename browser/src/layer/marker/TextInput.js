@@ -238,9 +238,6 @@ L.TextInput = L.Layer.extend({
 		if (ev.type === 'blur' && this._isComposing) {
 			this._abortComposition(ev);
 		}
-
-		if (ev.type === 'blur' && this._hasFormulaBarFocus())
-			this._map.formulabar.blurField();
 	},
 
 	// Focus the textarea/contenteditable
