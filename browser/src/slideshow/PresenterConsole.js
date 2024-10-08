@@ -61,6 +61,8 @@ class PresenterConsole {
 		if (!this._proxyPresenter) {
 			return;
 		}
+		this._timer = setInterval(L.bind(this._onTimer, this), 1000);
+		this._ticks = 0;
 	}
 
 	_onPresentInConsole() {
@@ -143,6 +145,8 @@ class PresenterConsole {
 
 		elem = this._proxyPresenter.document.querySelector('#notes');
 		elem.style.height = '50%';
+		this._ticks = 0;
+		this._onTimer();
 	}
 
 	_onKeyDown(e) {
@@ -151,6 +155,25 @@ class PresenterConsole {
 
 	_onClick(e) {
 		this._map.slideShowPresenter.getNavigator().onClick(e);
+	}
+
+	_onTimer() {
+		let sec, min, hour, elem;
+		++this._ticks;
+		sec = this._ticks % 60;
+		min = Math.floor(this._ticks / 60);
+		hour = Math.floor(min / 60);
+		min = min % 60;
+
+		elem = this._proxyPresenter.document.querySelector('#timer');
+		if (elem) {
+			elem.innerText =
+				String(hour).padStart(2, '0') +
+				':' +
+				String(min).padStart(2, '0') +
+				':' +
+				String(sec).padStart(2, '0');
+		}
 	}
 
 	_onWindowClose() {
