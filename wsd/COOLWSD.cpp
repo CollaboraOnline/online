@@ -4960,6 +4960,10 @@ void dump_state()
     const std::string msg = oss.str();
     fprintf(stderr, "%s\n", msg.c_str());
     LOG_TRC(msg);
+
+#if !MOBILEAPP
+    Admin::dumpMetrics();
+#endif
 }
 
 void lslr_childroot()

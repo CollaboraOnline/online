@@ -173,6 +173,9 @@ public:
 
     void getMetrics(std::ostringstream &metrics);
 
+    /// Will dump the metrics in the log and stderr from the Admin SocketPoll.
+    static void dumpMetrics() { instance()._dumpMetrics = true; }
+
     // delete entry from _monitorSocket map
     void deleteMonitorSocket(const std::string &uriWithoutParam);
 
@@ -225,6 +228,9 @@ private:
     uint64_t _lastSentCount;
     uint64_t _lastRecvCount;
     std::string _forkitLogLevel;
+
+    /// When set, the metrics will be dumped into the log and stderr.
+    std::atomic_bool _dumpMetrics;
 
     struct MonitorConnectRecord
     {

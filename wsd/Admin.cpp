@@ -13,6 +13,7 @@
 
 #include <chrono>
 #include <iomanip>
+#include <sstream>
 #include <string>
 #include <sys/poll.h>
 #include <unistd.h>
@@ -693,6 +694,17 @@ void Admin::pollingThread()
                 _pendingConnects.erase(_pendingConnects.begin());
                 connectToMonitorSync(rec.getUri());
             }
+        }
+
+        bool dumpMetrics = true;
+        if (_dumpMetrics.compare_exchange_strong(dumpMetrics, false))
+        {
+            std::ostringstream oss;
+            oss << "Admin Metrics:\n";
+            getMetrics(oss);
+            const std::string str = oss.str();
+            fprintf(stderr, "%s\n", str.c_str());
+            LOG_TRC(str);
         }
 
         // Handle websockets & other work.
