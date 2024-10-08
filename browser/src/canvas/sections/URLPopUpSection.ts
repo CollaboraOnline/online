@@ -122,7 +122,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		const top = section.sectionProperties.documentPosition.pY - (section.getPopUpHeight() + 20) * app.dpiScale;
 
 		if (section) {
-			section.setPosition(left, top);
+			section.setPosition((left >= 0 ? left : 10), (top >= 0 ? top : 10));
 			section.containerObject.requestReDraw();
 		}
 	}
