@@ -862,7 +862,7 @@ L.Map.include({
 			text = this.hyperlinkUnderCursor.text;
 		} else if (this._clip && this._clip._selectionType == 'text') {
 			if (map['stateChangeHandler'].getItemValue('.uno:Copy') === 'enabled') {
-				if (L.Browser.hasNavigatorClipboardWrite) {
+				if (L.Browser.clipboardApiAvailable) {
 					// Async copy, trigger fetching the text selection.
 					app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
 				} else {
