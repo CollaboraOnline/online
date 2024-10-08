@@ -73,7 +73,7 @@
 	font-family: var(--cool-font);
 	position: relative;
 	background: transparent;
-	padding-inline-start: 2px;
+	line-height: 0;
 	height: 24px;
 	align-items: center;
 	justify-content: center;
@@ -85,7 +85,7 @@
 
 nav.hasnotebookbar #save::after {
 	position: absolute;
-	top: 18px;
+	bottom: 0px;
 }
 
 nav.hasnotebookbar #save.saving::after {
