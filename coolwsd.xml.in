@@ -229,7 +229,7 @@
     </security>
 
     <certificates>
-      <database_path type="string" desc="Path to the NSS certificates that are used for signing documents" default=""></database_path>
+      <database_path type="string" desc="Path to the NSS certificates that are available to all users" default=""></database_path>
     </certificates>
 
     <watermark>
@@ -347,5 +347,9 @@
         <enable desc="Enable WASM support" type="bool" default="false"></enable>
         <force desc="When enabled, all requests are redirected to WASM." type="bool" default="false"></force>
     </wasm>
+
+    <document_signing desc="Document signing settings">
+        <enable desc="Enable document signing" type="bool" default="true">true</enable>
+    </document_signing>
 
 </config>

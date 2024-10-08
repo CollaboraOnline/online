@@ -2088,6 +2088,9 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
     capabilities->set("hasWASMSupport",
                       COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled);
 
+    // Set if this instance supports document signing.
+    capabilities->set("hasDocumentSigningSupport", config::getBool("document_signing.enable", true));
+
     const std::string serverName = config::getString("indirection_endpoint.server_name", "");
     if (const char* podName = std::getenv("POD_NAME"))
         capabilities->set("podName", podName);

@@ -1413,6 +1413,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
 
     Poco::replaceInPlace(preprocess, std::string("%DEEPL_ENABLED%"), boolToString(config.getBool("deepl.enabled", false)));
     Poco::replaceInPlace(preprocess, std::string("%ZOTERO_ENABLED%"), boolToString(config.getBool("zotero.enable", true)));
+    Poco::replaceInPlace(preprocess, std::string("%DOCUMENT_SIGNING_ENABLED%"), boolToString(config.getBool("document_signing.enable", true)));
     Poco::replaceInPlace(preprocess, std::string("%WASM_ENABLED%"), boolToString(COOLWSD::getConfigValue<bool>("wasm.enable", false)));
     Poco::URI indirectionURI(config.getString("indirection_endpoint.url", ""));
     Poco::replaceInPlace(preprocess, std::string("%INDIRECTION_URL%"), indirectionURI.toString());
