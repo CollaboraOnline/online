@@ -89,7 +89,7 @@ nav.hasnotebookbar #save::after {
 }
 
 nav.hasnotebookbar #save.saving::after {
-	content: 'Saving';
+	content: var(--save-state);
 	font-size: var(--default-font-size);
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
@@ -101,7 +101,7 @@ nav.hasnotebookbar #save.saving::after {
 }
 
 nav.hasnotebookbar #save.saved::after {
-	content: 'Saved';
+	content: var(--save-state);
 	color: #309048;
 }
 
