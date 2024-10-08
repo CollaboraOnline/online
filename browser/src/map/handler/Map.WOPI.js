@@ -357,6 +357,31 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.uiManager.extendNotebookbar();
 			return;
 		}
+		else if (msg.MessageId === 'Show_Navigator') {
+			if (!this._map.sidebar.isVisible()) {
+				this._map.sendUnoCommand('.uno:SidebarShow');
+			}
+			this._map.sendUnoCommand('.uno:Navigator');
+			return;
+		}
+		else if (msg.MessageId === 'Show_Sidebar') {
+			/* id is optional */
+			if (msg.Values && msg.Values.id) {
+				/* ids are: PropertyDeck, SdSlideTransitionDeck, SdCustomAnimationDeck,
+				 * SdCustomAnimationDeck, and NavigatorDeck
+				 */
+				var commandForDeck = this._map.sidebar.commandForDeck(msg.Values.id);
+				if (commandForDeck) {
+					this._map.sidebar.setupTargetDeck(commandForDeck);
+				}
+			}
+			this._map.sendUnoCommand('.uno:SidebarShow');
+			return;
+		}
+		else if (msg.MessageId === 'Hide_Sidebar' || msg.MessageId === 'Hide_Navigator') {
+			this._map.sendUnoCommand('.uno:SidebarHide');
+			return;
+		}
 		else if (msg.MessageId === 'Show_Menu_Item' || msg.MessageId === 'Hide_Menu_Item') {
 			if (!msg.Values) {
 				window.app.console.error('Property "Values" not set');
