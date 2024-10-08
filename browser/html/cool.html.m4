@@ -257,6 +257,7 @@ m4_ifelse(MOBILEAPP, [true],
       data-check-file-info-override = "%CHECK_FILE_INFO_OVERRIDE%"
       data-deepl-enabled = "%DEEPL_ENABLED%"
       data-zotero-enabled = "%ZOTERO_ENABLED%"
+      data-document-signing-enabled = "%DOCUMENT_SIGNING_ENABLED%"
       data-saved-ui-state = "%SAVED_UI_STATE%"
       data-wasm-enabled = "%WASM_ENABLED%"
       data-indirection-url = "%INDIRECTION_URL%"
