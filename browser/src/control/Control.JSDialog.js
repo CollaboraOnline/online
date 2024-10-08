@@ -733,10 +733,9 @@ L.Control.JSDialog = L.Control.extend({
 			} else {
 				instance.updatePos();
 			}
-
-			if (instance.isAutofilter && instance.id !== 'autoFillPreviewTooltip')
+			if (instance.isAutofilter && !instance.isAutoFillPreviewTooltip)
 				this.calculateAutoFilterPosition(instance);
-			else if (instance.id === 'autoFillPreviewTooltip')
+			else if (instance.isAutoFillPreviewTooltip)
 				this.updatePosition(instance.container, instance.posx, instance.posy);
 
 			this.dialogs[instance.id] = instance;

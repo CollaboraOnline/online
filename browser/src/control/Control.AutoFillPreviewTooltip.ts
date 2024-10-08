@@ -39,29 +39,22 @@ class AutoFillPreviewTooltip extends L.Control.AutoCompletePopup {
 			canHaveFocus: false,
 			noOverlay: true,
 			title: '',
+			isAutoFillPreviewTooltip: true,
 		} as PopupData;
 	}
 
 	onAdd() {
 		this.newPopupData.isAutoCompletePopup = true;
-		this.map.on('openautofillpopup', this.openAutoFillPopup, this);
-		this.map.on('sendautofilllocation', this.sendAutoFillLocation, this);
-	}
-
-	getAutoFillAreaBottomRightLocation(ev: FireEvent): Point {
-		var currPos = {
-			x: app.calc.cellCursorRectangle.pX2 + ev.data.location.x,
-			y: app.calc.cellCursorRectangle.pY2 + ev.data.location.y,
-		};
-
-		// console.error("--core   : " + JSON.stringify(ev.data.location));
-		// console.error("--currPos: " + JSON.stringify(currPos));
-
-		return new L.Point(currPos.x, currPos.y);
-	}
-
-	sendAutoFillLocation(ev: FireEvent) {
-		this.openAutoFillPopup({ data: ev.data });
+		this.map.on(
+			'openautofillpreviewpopup',
+			this.openAutoFillPreviewPopup,
+			this,
+		);
+		this.map.on(
+			'closeautofillpreviewpopup',
+			this.closeAutoFillPreviewPopup,
+			this,
+		);
 	}
 
 	getSimpleTextJSON(cellValue: string): TextWidget {
@@ -73,33 +66,35 @@ class AutoFillPreviewTooltip extends L.Control.AutoCompletePopup {
 		} as TextWidget;
 	}
 
-	openAutoFillPopup(ev: FireEvent): void {
+	openAutoFillPreviewPopup(ev: FireEvent): void {
 		const entry = ev.data.text;
 		let data: PopupData;
 
 		if (entry.length > 0) {
-			this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
-
+			this.closeAutoFillPreviewPopup();
 			const control = this.getSimpleTextJSON(entry);
 			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
 				data = this.getPopupJSON(control, {
-					x: ev.data.location.cX,
-					y: ev.data.location.cY,
+					x: ev.data.celladdress.cX,
+					y: ev.data.celladdress.cY,
 				});
 				this.sendUpdate(data);
 				return;
 			}
 
-			if (L.DomUtil.get(this.popupId))
-				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
+			if (L.DomUtil.get(this.popupId)) this.closeAutoFillPreviewPopup();
 			data = Object.assign({}, this.newPopupData);
 			data.children[0].children[0] = control;
 		}
 
 		// add position
-		data.posx = ev.data.location.cX;
-		data.posy = ev.data.location.cY;
+		data.posx = ev.data.celladdress.cX;
+		data.posy = ev.data.celladdress.cY;
 		this.sendJSON(data);
+	}
+
+	closeAutoFillPreviewPopup(): void {
+		super.closePopup();
 	}
 }
 L.control.autofillpreviewtooltip = function (map: any) {
