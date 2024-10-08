@@ -385,6 +385,7 @@ class BrowserInitializer extends InitializerBase {
 		window.checkFileInfoOverride = element.dataset.checkFileInfoOverride;
 		window.deeplEnabled = element.dataset.deeplEnabled.toLowerCase().trim() === "true";
 		window.zoteroEnabled = element.dataset.zoteroEnabled.toLowerCase().trim() === "true";
+		window.documentSigningEnabled = element.dataset.documentSigningEnabled.toLowerCase().trim() === "true";
 		window.savedUIState = element.dataset.savedUiState.toLowerCase().trim() === "true";
 		window.wasmEnabled = element.dataset.wasmEnabled.toLowerCase().trim() === "true";
 		window.indirectionUrl = element.dataset.indirectionUrl;
