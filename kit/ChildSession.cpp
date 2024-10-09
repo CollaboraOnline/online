@@ -1223,8 +1223,7 @@ bool ChildSession::clientVisibleArea(const StringVector& tokens)
 
 bool ChildSession::isTileInsideVisibleArea(const TileDesc& tile) const
 {
-    return (tile.getTilePosX() >= _clientVisibleArea.getLeft() && tile.getTilePosX() <= _clientVisibleArea.getRight() &&
-        tile.getTilePosY() >= _clientVisibleArea.getTop() && tile.getTilePosY() <= _clientVisibleArea.getBottom());
+    return tile.intersects( _clientVisibleArea );
 }
 
 bool ChildSession::outlineState(const StringVector& tokens)
