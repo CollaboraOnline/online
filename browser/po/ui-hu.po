@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-09 07:43+0200\n"
-"PO-Revision-Date: 2024-10-07 18:36+0000\n"
+"PO-Revision-Date: 2024-10-09 12:27+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1892,12 +1892,11 @@ msgstr "Menü megjelenítése"
 
 #: src/control/Control.UIManager.js:1186
 msgid "Saving"
-msgstr ""
+msgstr "Mentés"
 
 #: src/control/Control.UIManager.js:1204
-#, fuzzy
 msgid "Saved"
-msgstr "Mentés"
+msgstr "Mentve"
 
 #: src/control/Control.UserList.ts:54
 msgid "{user} has joined"

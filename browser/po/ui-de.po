@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-09 07:43+0200\n"
-"PO-Revision-Date: 2024-09-27 17:15+0000\n"
-"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
+"PO-Revision-Date: 2024-10-09 12:27+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1440,7 +1440,7 @@ msgstr "Versionsgeschichte betrachten"
 #: src/control/Control.NotebookbarImpress.js:320
 #: src/control/Control.NotebookbarWriter.js:322
 msgid "Signature"
-msgstr ""
+msgstr "Unterschrift"
 
 #: src/control/Control.NotebookbarCalc.js:268
 #: src/control/Control.NotebookbarDraw.js:303
@@ -1902,12 +1902,11 @@ msgstr "Menü anzeigen"
 
 #: src/control/Control.UIManager.js:1186
 msgid "Saving"
-msgstr ""
+msgstr "Speichere"
 
 #: src/control/Control.UIManager.js:1204
-#, fuzzy
 msgid "Saved"
-msgstr "Speichern"
+msgstr "Gespeichert"
 
 #: src/control/Control.UserList.ts:54
 msgid "{user} has joined"
