@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-07 15:55+0200\n"
-"PO-Revision-Date: 2024-09-30 12:42+0000\n"
+"PO-Revision-Date: 2024-10-09 02:15+0000\n"
 "Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/ui/zh_Hant/>\n"
-"Language: \n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1415,7 +1415,7 @@ msgstr "瀏覽歷史"
 #: src/control/Control.NotebookbarImpress.js:319
 #: src/control/Control.NotebookbarWriter.js:321
 msgid "Signature"
-msgstr ""
+msgstr "簽章"
 
 #: src/control/Control.NotebookbarCalc.js:265
 #: src/control/Control.NotebookbarDraw.js:303
@@ -2895,7 +2895,7 @@ msgstr "無法下載剪貼簿，請重新複製"
 msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
-msgstr ""
+msgstr "您的瀏覽器不支援非同步剪貼簿 API，切換到 HTTPS 是為了解決這個問題。"
 
 #: src/map/Clipboard.js:1195
 msgid "Please use the paste buttons on your on-screen keyboard."
