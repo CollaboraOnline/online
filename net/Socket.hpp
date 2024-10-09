@@ -65,6 +65,8 @@ namespace Poco
 }
 
 class Socket;
+std::ostream& operator<<(std::ostream& os, const Socket &s);
+
 class Watchdog;
 class SocketPoll;
 
@@ -176,6 +178,8 @@ public:
     /// Returns the OS native socket fd.
     int getFD() const { return _fd; }
 
+    virtual std::ostream& stream(std::ostream& os) const  { return streamImpl(os); }
+
     /// Shutdown the socket.
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
@@ -183,7 +187,7 @@ public:
         setClosed();
         if (!_noShutdown)
         {
-            LOG_TRC("Socket shutdown RDWR.");
+            LOG_TRC("Socket shutdown RDWR. " << *this);
             if constexpr (!Util::isMobileApp())
                 ::shutdown(_fd, SHUT_RDWR);
             else
@@ -441,6 +445,8 @@ private:
     /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;
 };
+
+inline std::ostream& operator<<(std::ostream& os, const Socket &s) { return s.stream(os); }
 
 class StreamSocket;
 class MessageHandlerInterface;
@@ -1036,6 +1042,8 @@ public:
 
     /// Returns the peer hostname, if set.
     const std::string& hostname() const { return _hostname; }
+
+    std::ostream& stream(std::ostream& os) const override;
 
     /// Just trigger the async shutdown.
     void shutdown() override
@@ -1679,6 +1687,7 @@ private:
     uint64_t _bytesRecvd;
 
     enum class WSState { HTTP, WS } _wsState;
+    static std::string toString(WSState t);
 
     /// True if host is localhost
     bool _isLocalHost;
