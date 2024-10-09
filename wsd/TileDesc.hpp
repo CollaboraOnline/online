@@ -499,6 +499,7 @@ private:
             _tiles.emplace_back(_normalizedViewId, _part, _mode, _width, _height, x, y, _tileWidth, _tileHeight, ver, imgSize, -1);
             _tiles.back().setOldWireId(oldWireId);
             _tiles.back().setWireId(wireId);
+            _aabbox.extend(_tiles.back().toAABBox());
         }
     }
 protected:
@@ -525,6 +526,8 @@ public:
     int getHeight() const { return _height; }
     int getTileWidth() const { return _tileWidth; }
     int getTileHeight() const { return _tileHeight; }
+    /// Returns the combined-tile's AABBox, i.e. min-position + max-extend
+    Util::Rectangle toAABBox() const { return _aabbox; }
     bool getCombined() const { return _isCombined; }
 
     const std::vector<TileDesc>& getTiles() const { return _tiles; }
@@ -791,6 +794,7 @@ protected:
     bool _hasOldWids : 1;
     bool _isCombined : 1;
     bool _hasImgSizes : 1;
+    Util::Rectangle _aabbox;
 };
 
 class TileCombinedBuilder : public TileCombined

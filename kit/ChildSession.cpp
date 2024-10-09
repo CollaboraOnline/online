@@ -1226,6 +1226,11 @@ bool ChildSession::isTileInsideVisibleArea(const TileDesc& tile) const
     return tile.intersects( _clientVisibleArea );
 }
 
+bool ChildSession::isTileInsideVisibleArea(const TileCombined& tileCombined) const
+{
+    return tileCombined.toAABBox().intersects( _clientVisibleArea );
+}
+
 bool ChildSession::outlineState(const StringVector& tokens)
 {
     std::string type, state;

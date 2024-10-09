@@ -24,6 +24,7 @@ void ChildSession::disconnect() {}
 int ChildSession::getSpeed() { return 0; }
 bool ChildSession::_handleInput(const char* /*buffer*/, int /*length*/) { return false; }
 bool ChildSession::isTileInsideVisibleArea(const TileDesc& /*tile*/) const { return false; }
+bool ChildSession::isTileInsideVisibleArea(const TileCombined& /*tileCombined*/) const { return false; }
 ChildSession::~ChildSession() {}
 
 int simd_initPixRowSimd(const uint32_t *, uint32_t *, size_t *, uint64_t *) { return 0; }
