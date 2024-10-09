@@ -308,7 +308,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-tabs-content.jsdialog > .ui-content.hidden {
-	display: inherit !important;
+	display: none !important;
 	visibility: hidden;
 }
 
