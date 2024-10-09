@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-09 07:43+0200\n"
-"PO-Revision-Date: 2024-09-27 17:15+0000\n"
+"PO-Revision-Date: 2024-10-09 12:27+0000\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1432,7 +1432,7 @@ msgstr "Lihat riwayat"
 #: src/control/Control.NotebookbarImpress.js:320
 #: src/control/Control.NotebookbarWriter.js:322
 msgid "Signature"
-msgstr ""
+msgstr "Tanda tangan"
 
 #: src/control/Control.NotebookbarCalc.js:268
 #: src/control/Control.NotebookbarDraw.js:303
@@ -1894,12 +1894,11 @@ msgstr "Tampilkan Menu"
 
 #: src/control/Control.UIManager.js:1186
 msgid "Saving"
-msgstr ""
+msgstr "Menyimpan"
 
 #: src/control/Control.UIManager.js:1204
-#, fuzzy
 msgid "Saved"
-msgstr "Simpan"
+msgstr "Tersimpan"
 
 #: src/control/Control.UserList.ts:54
 msgid "{user} has joined"
@@ -2993,6 +2992,8 @@ msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
+"API Clipboard async tidak didukung oleh peramban Anda, beralih ke HTTPS "
+"dimaksudkan untuk memperbaiki itu."
 
 #: src/map/Clipboard.js:1195
 msgid "Please use the paste buttons on your on-screen keyboard."
