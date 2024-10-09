@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-07 15:55+0200\n"
-"PO-Revision-Date: 2024-09-27 17:15+0000\n"
+"PO-Revision-Date: 2024-10-07 18:37+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1430,7 +1430,7 @@ msgstr "Zobacz historię"
 #: src/control/Control.NotebookbarImpress.js:319
 #: src/control/Control.NotebookbarWriter.js:321
 msgid "Signature"
-msgstr ""
+msgstr "Podpis"
 
 #: src/control/Control.NotebookbarCalc.js:265
 #: src/control/Control.NotebookbarDraw.js:303
@@ -2987,6 +2987,8 @@ msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
+"Twoja przeglądarka nie obsługuje asynchronicznego interfejsu Clipboard API. "
+"Przejście na protokół HTTPS ma rozwiązać ten problem."
 
 #: src/map/Clipboard.js:1195
 msgid "Please use the paste buttons on your on-screen keyboard."
