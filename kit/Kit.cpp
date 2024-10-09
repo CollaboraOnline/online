@@ -2204,12 +2204,7 @@ bool Document::isTileRequestInsideVisibleArea(const TileCombined& tileCombined)
     const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
     if (!session)
         return false;
-    for (const auto& rTile : tileCombined.getTiles())
-    {
-        if (session->isTileInsideVisibleArea(rTile))
-            return true;
-    }
-    return false;
+    return session->isTileInsideVisibleArea(tileCombined);
 }
 
 // poll is idle, are we ?
