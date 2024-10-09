@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-09 07:43+0200\n"
-"PO-Revision-Date: 2024-03-28 20:01+0000\n"
+"PO-Revision-Date: 2024-10-09 12:27+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sq/>\n"
-"Language: \n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -488,11 +488,11 @@ msgstr "Ngjitje Speciale"
 
 #: src/control/Control.ContextMenu.js:249
 msgid "Copy Cells"
-msgstr ""
+msgstr "Kopjo Kutiza"
 
 #: src/control/Control.ContextMenu.js:257
 msgid "Fill Series"
-msgstr ""
+msgstr "Plotësoni Seri"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -828,7 +828,7 @@ msgstr "Dokument PDF (.pdf) si…"
 
 #: src/control/Control.Menubar.js:96 src/control/Control.Menubar.js:705
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "Kartelë HTML (.html)"
 
 #: src/control/Control.Menubar.js:100 src/control/Control.Menubar.js:419
 #: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:712
@@ -1080,22 +1080,22 @@ msgstr "Ruaji Komentet"
 #: src/control/Control.Menubar.js:411
 #: src/control/Control.NotebookbarBuilder.js:436
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "Dokument HTML (.html)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:582
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Diapozitiva Sa Tërë Faqja"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:586
 msgid "Notes Pages"
-msgstr ""
+msgstr "Faqe Shënimesh"
 
 #: src/control/Control.Menubar.js:448
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "Parje Shënimesh"
 
 #: src/control/Control.Menubar.js:452
 #: src/control/Control.NotebookbarImpress.js:467
@@ -1160,43 +1160,43 @@ msgstr "Krejt Fletët"
 #: src/control/Control.Menubar.js:839
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Theksoji kutizat me…"
 
 #: src/control/Control.Menubar.js:840
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
-msgstr ""
+msgstr "Vlera më të mëdha se…"
 
 #: src/control/Control.Menubar.js:841
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
-msgstr ""
+msgstr "Vlera më të vogla se…"
 
 #: src/control/Control.Menubar.js:842
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
-msgstr ""
+msgstr "Vlera të barabarta me…"
 
 #: src/control/Control.Menubar.js:843
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
-msgstr ""
+msgstr "Vlera mes…"
 
 #: src/control/Control.Menubar.js:844
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Përsëdytje vlere…"
 
 #: src/control/Control.Menubar.js:845
 #: src/control/jsdialog/Definitions.Menu.ts:309
 msgid "Containing text..."
-msgstr ""
+msgstr "Që përmban tekst…"
 
 #: src/control/Control.Menubar.js:847 src/control/Control.Menubar.js:857
 #: src/control/jsdialog/Definitions.Menu.ts:314
 #: src/control/jsdialog/Definitions.Menu.ts:348
 msgid "More highlights..."
-msgstr ""
+msgstr "Më tepër theksime…"
 
 #: src/control/Control.Menubar.js:849
 #: src/control/jsdialog/Definitions.Menu.ts:320
@@ -1206,32 +1206,32 @@ msgstr ""
 #: src/control/Control.Menubar.js:850
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Top N elements..."
-msgstr ""
+msgstr "N elementët kryesues…"
 
 #: src/control/Control.Menubar.js:851
 #: src/control/jsdialog/Definitions.Menu.ts:327
 msgid "Top N percent..."
-msgstr ""
+msgstr "N përqind kryesueset…"
 
 #: src/control/Control.Menubar.js:852
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "N elementët e fundit…"
 
 #: src/control/Control.Menubar.js:853
 #: src/control/jsdialog/Definitions.Menu.ts:335
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "N përqind e fundit…"
 
 #: src/control/Control.Menubar.js:854
 #: src/control/jsdialog/Definitions.Menu.ts:339
 msgid "Above Average..."
-msgstr ""
+msgstr "Mbi Mesataren…"
 
 #: src/control/Control.Menubar.js:855
 #: src/control/jsdialog/Definitions.Menu.ts:343
 msgid "Below Average..."
-msgstr ""
+msgstr "Nën Mesataren…"
 
 #: src/control/Control.Menubar.js:971 src/control/Control.Menubar.js:1037
 #: src/control/Control.Menubar.js:1102 src/control/Control.Menubar.js:1157
@@ -1322,7 +1322,7 @@ msgstr "Prekeni që të tkurret"
 #: src/control/Control.NotebookbarBuilder.js:373
 #: src/control/Control.NotebookbarBuilder.js:402
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "Kartelë HTML (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:398
 msgid "CSV File (.csv)"
@@ -1433,7 +1433,7 @@ msgstr "Shihni historikun"
 #: src/control/Control.NotebookbarImpress.js:320
 #: src/control/Control.NotebookbarWriter.js:322
 msgid "Signature"
-msgstr ""
+msgstr "Nënshkrim"
 
 #: src/control/Control.NotebookbarCalc.js:268
 #: src/control/Control.NotebookbarDraw.js:303
@@ -1499,15 +1499,15 @@ msgstr "Krye 2"
 
 #: src/control/Control.NotebookbarCalc.js:807
 msgid "Good"
-msgstr ""
+msgstr "E mirë"
 
 #: src/control/Control.NotebookbarCalc.js:814
 msgid "Neutral"
-msgstr ""
+msgstr "Asnjanëse"
 
 #: src/control/Control.NotebookbarCalc.js:821
 msgid "Bad"
-msgstr ""
+msgstr "E keqe"
 
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
@@ -1676,56 +1676,59 @@ msgstr "Spastro fushë kërkimesh"
 
 #: src/control/Control.ServerAuditDialog.ts:50
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Vetia IsAdminUser s’është ujdisur nga integrimi"
 
 #: src/control/Control.ServerAuditDialog.ts:56
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Është përdorur fushë is_admin e nxjerrë nga përdorimi, integrimi duhet të "
+"përdorë vetinë IsAdminUser, në vend të saj"
 
 #: src/control/Control.ServerAuditDialog.ts:62
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "Vetia IsAdminUser është ujdisur nga integrimi"
 
 #: src/control/Control.ServerAuditDialog.ts:69
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Shërbyesi juaj WOPI s’është i siguruar: verifikimi SSL dështoi"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "S’u pikasën probleme me verifikimin SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:81
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "API PostMessage është vënë në punë"
 
 #: src/control/Control.ServerAuditDialog.ts:86
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Integruesi s’është gati për thirrje ndaj PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:94
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Shërbyesi juaj është formësuar me burime “hardware” të pamjaftueshme, çka "
+"mund të shpjerë në funksionim të dobët."
 
 #: src/control/Control.ServerAuditDialog.ts:100
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Burimet “hardware” janë të mjaftueshme për funksionim optimal"
 
 #: src/control/Control.ServerAuditDialog.ts:205
 msgid "No issues found"
-msgstr ""
+msgstr "S’u gjetën probleme"
 
 #: src/control/Control.ServerAuditDialog.ts:211
-#, fuzzy
 msgid "Status"
-msgstr "Gjendje:"
+msgstr "Gjendje"
 
 #: src/control/Control.ServerAuditDialog.ts:259
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Shihni sinjalizime sigurie të shërbyesit tuaj"
 
 #: src/control/Control.ServerAuditDialog.ts:260
 msgid "OPEN"
@@ -1791,6 +1794,8 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Për të parandaluar ndryshime aksidentale, autorët e kanë vënë këtë kartelë "
+"për hapje vetëm për lexim"
 
 #: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
@@ -1890,12 +1895,11 @@ msgstr "Shfaq Menu"
 
 #: src/control/Control.UIManager.js:1186
 msgid "Saving"
-msgstr ""
+msgstr "Po ruhet"
 
 #: src/control/Control.UIManager.js:1204
-#, fuzzy
 msgid "Saved"
-msgstr "Ruaje"
+msgstr "U ruajt"
 
 #: src/control/Control.UserList.ts:54
 msgid "{user} has joined"
@@ -1915,7 +1919,7 @@ msgstr "Po ndiqet redaktori"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Ndale ndjekjen"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for {user}"
@@ -1935,7 +1939,7 @@ msgstr "0 përdorues"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "Përmbledhje Liste Përdoruesish"
 
 #: src/control/Control.UserList.ts:493
 msgid "Following"
@@ -2151,15 +2155,15 @@ msgstr "Fshije ndalesën Tab"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "Mënjanë e Epërme"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Mënjanë e Poshtme"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Dokumenti s’është nënshkruar."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2228,31 +2232,31 @@ msgstr "Futni Figurë Vendore"
 
 #: src/control/jsdialog/Definitions.Menu.ts:264
 msgid "Very Tight"
-msgstr ""
+msgstr "Shumë Ngushtë"
 
 #: src/control/jsdialog/Definitions.Menu.ts:265
 msgid "Tight"
-msgstr ""
+msgstr "Ngushtë"
 
 #: src/control/jsdialog/Definitions.Menu.ts:266
 msgid "Normal"
-msgstr ""
+msgstr "Normale"
 
 #: src/control/jsdialog/Definitions.Menu.ts:267
 msgid "Loose"
-msgstr ""
+msgstr "Rrallë"
 
 #: src/control/jsdialog/Definitions.Menu.ts:268
 msgid "Very Loose"
-msgstr ""
+msgstr "Shumë Rrallë"
 
 #: src/control/jsdialog/Definitions.Menu.ts:418
 msgid "From Beginning"
-msgstr ""
+msgstr "Nga Fillimi"
 
 #: src/control/jsdialog/Definitions.Menu.ts:422
 msgid "From Current Slide"
-msgstr ""
+msgstr "Nga Diapozitivi i Tanishëm"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2322,7 +2326,7 @@ msgstr "Anë kutize"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {name}"
-msgstr ""
+msgstr "Më tepër mundësi për {name}"
 
 #: src/control/jsdialog/Widget.TreeView.js:705
 msgid "Headings and objects that you add to the document will appear here"
@@ -2330,12 +2334,12 @@ msgstr "Krye dhe objekte që shtoni te dokumenti do të duken këtu"
 
 #: src/slideshow/SlideShowPresenter.ts:359
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Klikoni që të dilet nga paraqitja…"
 
 #: src/slideshow/SlideShowPresenter.ts:530
 #: src/map/handler/Map.SlideShow.js:170
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Paraqitje Me Dritare: "
 
 #: src/slideshow/SlideShowPresenter.ts:538
 #: src/map/handler/Map.SlideShow.js:165
@@ -2380,16 +2384,16 @@ msgstr "Po e paraqitni tashmë këtë dokument"
 #: src/slideshow/SlideShowPresenter.ts:702
 #: src/map/handler/Map.SlideShow.js:291
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Paraqitja u çaktivizua"
 
 #: src/slideshow/SlideShowPresenter.ts:703
 #: src/map/handler/Map.SlideShow.js:292
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Për këtë dokument është çaktivizuar mënyra Paraqitje"
 
 #: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Ndalesë… ( %SECONDS% )"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -2518,7 +2522,7 @@ msgstr "Po lidhet…"
 
 #: src/core/Socket.js:1330
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Shërbyesi po fiket"
 
 #: src/core/Socket.js:1363
 msgid "Exported to storage"
@@ -2650,7 +2654,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Gabimi i autorizimit qe: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2773,6 +2777,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Dokumenti s’mund të ruhet, për shkak skadimi sesioni, ju lutemi, që të "
+"vazhdohet, rihapeni dokumentin."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2814,6 +2820,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Dokumenti s’mund të ruhet, për shkak skadimi sesioni, ju lutemi, që të "
+"vazhdohet, ringarkoni faqen."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -2841,7 +2849,7 @@ msgstr "Funksione"
 
 #: src/layer/tile/CanvasTileLayer.js:2109
 msgid "Named Range"
-msgstr ""
+msgstr "Interval i Emërtuar"
 
 #: src/layer/tile/CanvasTileLayer.js:3818
 msgid "No Comments"
@@ -2890,35 +2898,37 @@ msgstr "Zgjidhe Rrjedhën"
 
 #: src/canvas/sections/CommentListSection.ts:1085
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Promovoje si koment në krye"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show on the side"
-msgstr ""
+msgstr "Shfaqe anash"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Shfaqe komentin më të madh"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/canvas/sections/CommentListSection.ts:1344
 #: src/canvas/sections/CommentListSection.ts:2203
 msgid "Comments Updated"
-msgstr ""
+msgstr "Komentet u Përditësuan"
 
 #: src/canvas/sections/CommentListSection.ts:1332
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Këtë koment e ka hequr një tjetër përdorues."
 
 #: src/canvas/sections/CommentListSection.ts:1345
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Këtë koment e ka përditësuar një tjetër përdorues. Doni të mbishkruhen ato "
+"ndryshime?"
 
 #: src/canvas/sections/CommentListSection.ts:1347
 msgid "Update"
-msgstr ""
+msgstr "Përditësoje"
 
 #: src/canvas/sections/CommentListSection.ts:1418
 #: src/canvas/sections/CommentListSection.ts:1490
@@ -2928,6 +2938,8 @@ msgstr "U vetëruajt"
 #: src/canvas/sections/CommentListSection.ts:2204
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Komentet i ka përditësuar një tjetër përdorues. Doni të vazhdohet me "
+"përditësimin?"
 
 #: src/canvas/sections/CommentSection.ts:308
 msgid "Open menu"
@@ -2987,22 +2999,21 @@ msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
+"API Clipboard asinkrone nuk mbulohet nga shfletuesi juaj, kalimi te HTTPS "
+"është menduar ta ndreqë këtë."
 
 #: src/map/Clipboard.js:1195
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr ""
-"<p>Ju lutemi, përdorni butonat kopjoje/ngjite të tastierës tuaj në ekran.</p>"
+msgstr "Ju lutemi, përdorni butonat kopjoje/ngjite të tastierës tuaj në ekran."
 
 #: src/map/Clipboard.js:1251
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Ka filluar tashmë një shkarkim për shkak të një veprimi kopjimi/ngjitjeje "
-"të madhe. Ju lutemi, përpara se të filloni një të ri, pritni të mbarojë "
-"shkarkimi i tanishëm, ose anulojeni</p>"
+"Ka filluar tashmë një shkarkim për shkak të një veprimi kopjimi/ngjitjeje të "
+"madhe. Ju lutemi, përpara se të filloni një të ri, pritni të mbarojë "
+"shkarkimi i tanishëm, ose anulojeni"
 
 #: src/map/Clipboard.js:1273
 msgid "Paste from this document"
@@ -3014,15 +3025,15 @@ msgstr "Anuloje ngjitjen speciale"
 
 #: src/map/Clipboard.js:1283
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Shfletuesi juaj ka hyrje shumë të kufizuar te e papastra"
 
 #: src/map/Clipboard.js:1288
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Ju lutemi, që të shihni më tepër mundësi, përdorni ndërthurjen vijuese:"
 
 #: src/map/Clipboard.js:1306
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Që të shpërfillet ngjitja e posaçme, mbylleni dritaren flluskë"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
@@ -3034,7 +3045,7 @@ msgstr "Ruajtur së fundi më:"
 
 #: src/map/Map.js:1479
 msgid "Please wait!"
-msgstr ""
+msgstr "Ju lutemi, prisni!"
 
 #: src/map/handler/Map.Feedback.js:86
 msgid "Please send us your feedback"
@@ -3165,6 +3176,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
