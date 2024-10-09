@@ -65,11 +65,13 @@ abstract class AutoCompletePopup {
 	abstract onAdd(): void;
 
 	closePopup(): void {
-		var popupExists = L.DomUtil.get(this.popupId);
+		var popupExists =
+			L.DomUtil.get(this.popupId) || L.DomUtil.get(this.popupId + 'List');
 		if (!popupExists) return;
 
 		this.map.jsdialog.focusToLastElement(this.popupId);
-		this.map.jsdialog.clearDialog(this.popupId);
+		if (this.isMobile) this.map.fire('closemobilewizard');
+		else this.map.jsdialog.clearDialog(this.popupId);
 	}
 
 	abstract getPopupEntries(ev: FireEvent): Array<TreeEntryJSON>;
