@@ -165,13 +165,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		else if (commandName === '.uno:ModifiedStatus') {
 			const saveEle = document.getElementById('save');
 			if (saveEle) {
-				if (state === 'true') {
-					saveEle.classList.remove('saving');
-					saveEle.classList.remove('saved');
-					const saveIconEl = document.querySelector('#save img');
-					saveIconEl.classList.remove('rotate-icon');
-					saveEle.removeAttribute('disabled');  // Enable the button
-					document.getElementById('save').classList.add('savemodified');
+				if (state === 'true' &&  this.map.saveState) {
+					this.map.saveState.showModifiedStatus();
 					document.getElementById('file-save').classList.add('savemodified');
 				} else {
 					document.getElementById('save').classList.remove('savemodified');

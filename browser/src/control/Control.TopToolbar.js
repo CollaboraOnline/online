@@ -256,6 +256,9 @@ class TopToolbar extends JSDialog.Toolbar {
 		// on mode switch NB -> Compact
 		if (this.map._docLoadedOnce)
 			this.onDocLayerInit();
+
+		// if app opens direct in compact mode then we need to set the saveState first
+		this.map.saveState = new app.definitions.saveState(this.map);
 	}
 
 	onDocLayerInit() {

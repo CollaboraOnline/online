@@ -303,6 +303,9 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 
 		this.builder.build(shortcutsBar, shortcutsBarData);
+
+		//create SaveState object after addition of shortcut bar in UI
+		this.map.saveState = new app.definitions.saveState(this.map);
 	},
 
 	reloadShortcutsBar: function() {

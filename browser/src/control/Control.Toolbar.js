@@ -906,18 +906,11 @@ function processStateChangedCommand(commandName, state) {
 		}
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
-		const saveEle = document.getElementById('save');
-		const saveIconEl = document.querySelector('#save img');
-		if (saveEle) {
-			if (state === 'true') {
-				saveEle.classList.remove('saving');
-				saveEle.classList.remove('saved');
-				saveIconEl.classList.remove('rotate-icon'); // Stop the icon rotation
-				saveEle.removeAttribute('disabled');  // Enable the button
-				saveEle.classList.add('savemodified');
-			}
+		if (document.getElementById('save')) {
+			if (state === 'true' && map.saveState)
+				map.saveState.showModifiedStatus();
 			else
-				saveEle.classList.remove('savemodified');
+				document.getElementById('save').classList.remove('savemodified');
 		}
 		state = ''; // stop processing below
 	}

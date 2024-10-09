@@ -1172,46 +1172,6 @@ L.Control.UIManager = L.Control.extend({
 		JSDialog.SnackbarController.setSnackbarProgress(value);
 	},
 
-	// Function to show the saving status
-	showSavingStatus() {
-		if (window.mode.isMobile())
-			return;
-
-		const saveEle = document.getElementById('save');
-		// Only do saving animation if any content is modified in document
-		if (saveEle.classList.contains('savemodified')) {
-			const saveIconEl = document.querySelector('#save img');
-			saveEle.classList.remove('savemodified');
-			// Dynamically set the content string for saving state
-			const savingText = _('Saving')
-			saveEle.style.setProperty('--save-state', `"${savingText}"`);
-			saveEle.classList.add('saving');
-			saveIconEl.classList.add('rotate-icon'); // Start the icon rotation
-			saveEle.setAttribute('disabled', true);  // Disable the button
-		}
-	},
-
-	// Function to show the saved status
-	showSavedStatus() {
-		if (window.mode.isMobile())
-			return;
-		const saveEle = document.getElementById('save');
-		if (!saveEle.classList.contains('savemodified')) {
-			const saveIconEl = document.querySelector('#save img');
-			saveEle.classList.remove('saving');
-			saveIconEl.classList.remove('rotate-icon'); // Stop the icon rotation
-			// Dynamically set the content string for saved state
-			const savedText = _('Saved');
-			saveEle.style.setProperty('--save-state', `"${savedText}"`);
-			saveEle.classList.add('saved');
-			// Add some delay to show "saved" status, then hide this info
-			setTimeout(() => {
-				saveEle.classList.remove('saved');
-				saveEle.removeAttribute('disabled');  // Enable the button
-			}, 2000);
-		}
-	},
-
 	// Modals
 
 	/// shows modal dialog
