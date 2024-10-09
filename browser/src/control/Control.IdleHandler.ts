@@ -231,7 +231,8 @@ class IdleHandler {
 			return;
 		}
 
-		if (app.map && app.map.formulabar && app.map.formulabar.hasFocus())
+		if (app.map && app.map.formulabar &&
+			(app.map.formulabar.hasFocus() || app.map.formulabar.isInEditMode()))
 			app.dispatcher.dispatch('acceptformula'); // save data from the edited cell on exit
 
 		this._startOutOfFocusTimer();
