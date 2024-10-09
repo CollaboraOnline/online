@@ -524,9 +524,10 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			this._reset();
 			this.isPopup = isPopupJson;
 			this.isPopupFullscreen = data.isPopupFullscreen;
+			this.persistKeyboard = data.persistKeyboard;
 
 			this._showWizard();
-			if (this.map._docLayer && !this.map._docLayer.isCalc()) {
+			if (this.map._docLayer && !this.map._docLayer.isCalc() && !this.persistKeyboard) {
 				// In Calc, the wizard is used for the formulas,
 				// and it's easier to allow the user to search
 				// for a formula by typing the first few characters.

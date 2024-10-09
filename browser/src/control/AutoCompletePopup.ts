@@ -53,12 +53,11 @@ abstract class AutoCompletePopup {
 			popupParent: '_POPOVER_',
 			clickToClose: '_POPOVER_',
 			id: this.popupId,
+			persistKeyboard: true,
 		} as PopupData;
 
 		this.isMobile = (<any>window).mode.isMobile();
-
 		this.onAdd();
-
 		this.map.on('closepopup', this.closePopup, this);
 	}
 

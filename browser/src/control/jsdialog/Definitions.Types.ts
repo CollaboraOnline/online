@@ -50,6 +50,7 @@ interface PopupData extends JSDialogJSON {
 	cancellable?: boolean;
 	popupParent?: string;
 	clickToClose?: string;
+	persistKeyboard?: boolean;
 	posx: number;
 	posy: number;
 }
