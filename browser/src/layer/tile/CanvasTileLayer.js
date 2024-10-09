@@ -1485,17 +1485,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			else if (tooltipInfo.type === 'autofillpreviewtooltip') {
 
 				var strTwips = textMsg.match(/\d+/g);
-				if (strTwips != null && this._map.isEditMode()) {
-
-					var cellRange = this._map._docLayer._parseCellRange(JSON.stringify(tooltipInfo.celladdress));
-					tooltipInfo.celladdress = this._map._docLayer._cellRangeToTwipRect(cellRange).toRectangle();
-
-					tooltipInfo.celladdress = new app.definitions.simplePoint(parseInt(tooltipInfo.celladdress[0]), parseInt(tooltipInfo.celladdress[1]));
-					tooltipInfo.celladdress.pX -= app.sectionContainer.getDocumentTopLeft()[0] - app.sectionContainer.getDocumentAnchor()[0];
-					tooltipInfo.celladdress.pY -= app.sectionContainer.getDocumentTopLeft()[1] - app.sectionContainer.getDocumentAnchor()[1];
-
+				if (strTwips != null && this._map.isEditMode())
 					this._map.fire('openautofillpreviewpopup', { data: tooltipInfo });
-				}
 			}
 			else {
 				console.error('unknown tooltip type');

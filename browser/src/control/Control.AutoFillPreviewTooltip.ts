@@ -20,31 +20,14 @@ class AutoFillPreviewTooltip extends L.Control.AutoCompletePopup {
 
 	constructor(map: ReturnType<typeof L.map>) {
 		super('autoFillPreviewTooltip', map);
-		this.newPopupData = {
-			children: [
-				{
-					id: 'container',
-					type: 'container',
-					enabled: false,
-					children: new Array<WidgetJSON>(),
-					vertical: false,
-				} as any as WidgetJSON,
-			] as Array<WidgetJSON>,
-			jsontype: 'dialog',
-			type: 'modalpopup',
-			cancellable: false,
-			popupParent: '_POPOVER_',
-			clickToClose: '_POPOVER_',
-			id: 'autoFillPreviewTooltip',
-			canHaveFocus: false,
-			noOverlay: true,
-			title: '',
-			isAutoFillPreviewTooltip: true,
-		} as PopupData;
 	}
 
 	onAdd() {
-		this.newPopupData.isAutoCompletePopup = true;
+		this.newPopupData.isAutoFillPreviewTooltip = true;
+		this.newPopupData.canHaveFocus = false;
+		this.newPopupData.noOverlay = true;
+		this.newPopupData.id = 'autoFillPreviewTooltip';
+
 		this.map.on(
 			'openautofillpreviewpopup',
 			this.openAutoFillPreviewPopup,
@@ -67,6 +50,25 @@ class AutoFillPreviewTooltip extends L.Control.AutoCompletePopup {
 	}
 
 	openAutoFillPreviewPopup(ev: FireEvent): void {
+		// calculate the popup position
+		var cellRange = this.map._docLayer._parseCellRange(
+			JSON.stringify(ev.data.celladdress),
+		);
+		ev.data.celladdress = this.map._docLayer
+			._cellRangeToTwipRect(cellRange)
+			.toRectangle();
+
+		ev.data.celladdress = new app.definitions.simplePoint(
+			parseInt(ev.data.celladdress[0]),
+			parseInt(ev.data.celladdress[1]),
+		);
+		ev.data.celladdress.pX -=
+			app.sectionContainer.getDocumentTopLeft()[0] -
+			app.sectionContainer.getDocumentAnchor()[0];
+		ev.data.celladdress.pY -=
+			app.sectionContainer.getDocumentTopLeft()[1] -
+			app.sectionContainer.getDocumentAnchor()[1];
+
 		const entry = ev.data.text;
 		let data: PopupData;
 
