@@ -1,3 +1,9 @@
+coolwsd (24.04.9.0-1) unstable; urgency=medium
+
+  * snapshot from master
+
+ -- Andras Timar <andras.timar@collabora.com>  Wed, 09 Oct 2024 14:38:00 +0200
+
 coolwsd (24.04.8.1-1) unstable; urgency=medium
 
   * https://github.com/CollaboraOnline/online/releases/tag/cp-24.04.8-1
