@@ -1803,7 +1803,6 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     const std::string& macroSecurityLevel = session->getMacroSecurityLevel();
     const bool accessibilityState = session->getAccessibilityState();
     const std::string& userTimezone = session->getTimezone();
-    const std::string& userPrivateInfo = session->getUserPrivateInfo();
 
     if (!Util::isMobileApp())
         consistencyCheckFileExists(uri);
@@ -1970,13 +1969,12 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
 
     std::string backgroundTheme = getDefaultBackgroundTheme(session);
 
-    // Avoid logging userPrivateInfo till it's not anonymized.
     LOG_INF("Initializing for rendering session [" << sessionId << "] on document url [" <<
-            anonymizeUrl(_url) << "] with: [" << makeRenderParams(_renderOpts, userNameAnonym, spellOnline, theme, backgroundTheme, "") << "].");
+            anonymizeUrl(_url) << "] with: [" << makeRenderParams(_renderOpts, userNameAnonym, spellOnline, theme, backgroundTheme) << "].");
 
     // initializeForRendering() should be called before
     // registerCallback(), as the previous creates a new view in Impress.
-    const std::string renderParams = makeRenderParams(_renderOpts, userName, spellOnline, theme, backgroundTheme, userPrivateInfo);
+    const std::string renderParams = makeRenderParams(_renderOpts, userName, spellOnline, theme, backgroundTheme);
 
     _loKitDocument->initializeForRendering(renderParams.c_str());
 
@@ -2120,8 +2118,7 @@ Object::Ptr makePropertyValue(const std::string& type, const T& val)
 
 /* static */ std::string Document::makeRenderParams(const std::string& renderOpts, const std::string& userName,
                                                     const std::string& spellOnline, const std::string& theme,
-                                                    const std::string& backgroundTheme,
-                                                    const std::string& userPrivateInfo)
+                                                    const std::string& backgroundTheme)
 {
     Object::Ptr renderOptsObj;
 
@@ -2137,43 +2134,11 @@ Object::Ptr makePropertyValue(const std::string& type, const T& val)
         renderOptsObj = new Object();
     }
 
-    Object::Ptr userPrivateInfoObj;
-    if (!userPrivateInfo.empty())
-    {
-        Parser parser;
-        Poco::Dynamic::Var var = parser.parse(userPrivateInfo);
-        userPrivateInfoObj = var.extract<Object::Ptr>();
-    }
-    else
-    {
-        userPrivateInfoObj = new Object();
-    }
-
     // Append name of the user, if any, who opened the document to rendering options
     if (!userName.empty())
     {
         // userName must be decoded already.
         renderOptsObj->set(".uno:Author", makePropertyValue("string", userName));
-    }
-
-    // Extract settings relevant as view options from userPrivateInfo.
-    std::string signatureCert;
-    JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCert", signatureCert);
-    if (!signatureCert.empty())
-    {
-        renderOptsObj->set(".uno:SignatureCert", makePropertyValue("string", signatureCert));
-    }
-    std::string signatureKey;
-    JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureKey", signatureKey);
-    if (!signatureKey.empty())
-    {
-        renderOptsObj->set(".uno:SignatureKey", makePropertyValue("string", signatureKey));
-    }
-    std::string signatureCa;
-    JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCa", signatureCa);
-    if (!signatureCa.empty())
-    {
-        renderOptsObj->set(".uno:SignatureCa", makePropertyValue("string", signatureCa));
     }
 
     // By default we enable spell-checking, unless it's disabled explicitly.
