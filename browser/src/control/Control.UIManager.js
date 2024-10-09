@@ -252,7 +252,6 @@ L.Control.UIManager = L.Control.extend({
 
 			this.map.sidebar = JSDialog.Sidebar(this.map, {animSpeed: 200});
 
-			this.map.mention = L.control.mention(this.map);
 			this.map.formulaautocomplete = L.control.formulaautocomplete(this.map);
 			this.map.formulausage = L.control.formulausage(this.map);
 			this.map.autofillpreviewtooltip = L.control.autofillpreviewtooltip(this.map);
@@ -382,6 +381,8 @@ L.Control.UIManager = L.Control.extend({
 			var showResolved = this.getBooleanDocTypePref('ShowResolved', true);
 			if (showResolved === false || showResolved === 'false')
 				this.map.sendUnoCommand('.uno:ShowResolvedAnnotations');
+
+			this.map.mention = L.control.mention(this.map);
 		}
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {

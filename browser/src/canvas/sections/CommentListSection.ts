@@ -470,6 +470,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				layoutstyle: 'end'
 			},
 		]);
+		json.isPopupFullscreen = true;
 
 		var cancelFunction = function() {
 			this.cancel(comment);

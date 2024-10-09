@@ -32,6 +32,7 @@ abstract class AutoCompletePopup {
 	protected newPopupData: PopupData;
 	protected data: MessageEvent<any>;
 	protected popupId: string;
+	protected isMobile: boolean;
 
 	constructor(popupId: string, map: ReturnType<typeof L.map>) {
 		this.map = map;
@@ -53,6 +54,8 @@ abstract class AutoCompletePopup {
 			clickToClose: '_POPOVER_',
 			id: this.popupId,
 		} as PopupData;
+
+		this.isMobile = (<any>window).mode.isMobile();
 
 		this.onAdd();
 
@@ -112,7 +115,8 @@ abstract class AutoCompletePopup {
 	}
 
 	sendJSON(data: any): void {
-		this.map.fire('jsdialog', {
+		const fireEvent = this.isMobile ? 'mobilewizard' : 'jsdialog';
+		this.map.fire(fireEvent, {
 			data: data,
 			callback: this.callback.bind(this),
 		});
