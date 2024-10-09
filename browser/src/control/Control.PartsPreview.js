@@ -759,7 +759,8 @@ L.Control.PartsPreview = L.Control.extend({
 	_handleDragStart: function (e) {
 		// To avoid having to add a new message to move an arbitrary part, let's select the
 		// slide that is being dragged.
-		var part = this.partsPreview._findClickedPart(e.target.parentNode);
+		const targetNode = (e.target.id.startsWith('preview') ? e.target : e.target.parentNode);
+		var part = this.partsPreview._findClickedPart(targetNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 			if (this.partsPreview._map._docLayer && !app.impress.isSlideSelected(partId))
