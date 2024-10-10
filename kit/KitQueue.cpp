@@ -641,6 +641,12 @@ void KitQueue::pushTileQueue(const Payload &value)
     _tileQueue.push_back(desc);
 }
 
+void KitQueue::pushTileQueue(const std::vector<TileDesc>& tiles)
+{
+    for(const TileDesc desc : tiles)
+        _tileQueue.push_back(desc);
+}
+
 std::string KitQueue::combineRemoveText(const StringVector& tokens)
 {
     std::string id;

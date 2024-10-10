@@ -276,7 +276,7 @@ public:
     /// Process an SVG to replace embedded file:/// media URIs with public http URLs.
     std::string processSVGContent(const std::string& svg);
 
-    int  getCanonicalViewId() { return _canonicalViewId; }
+    int  getCanonicalViewId() const { return _canonicalViewId; }
 
 private:
     std::shared_ptr<ClientSession> client_from_this()

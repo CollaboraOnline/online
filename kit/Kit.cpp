@@ -2199,7 +2199,7 @@ Object::Ptr makePropertyValue(const std::string& type, const T& val)
     return std::string();
 }
 
-bool Document::isTileRequestInsideVisibleArea(const TileCombined& tileCombined)
+bool Document::isTileRequestInsideVisibleArea(const TileCombined& tileCombined) const
 {
     const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
     if (!session)
@@ -2296,7 +2296,7 @@ void Document::drainCallbacks()
         _websocketHandler->flush();
 }
 
-void Document::drainQueue()
+void Document::drainQueue(bool isIDLE)
 {
     if (UnitKit::get().filterDrainQueue())
     {
@@ -2365,11 +2365,34 @@ void Document::drainQueue()
         {
             std::vector<TileCombined> tileRequests = _queue->popWholeTileQueue();
 
-            // Put requests that include tiles in the visible area to the front to handle those first
-            std::partition(tileRequests.begin(), tileRequests.end(), [this](const TileCombined& req) {
-                return isTileRequestInsideVisibleArea(req); });
-            for (auto& tileCombined : tileRequests)
-                renderTiles(tileCombined);
+            if(isIDLE)
+            {
+                // Put requests that include tiles in the visible area to the front to handle those first
+                std::partition(tileRequests.begin(), tileRequests.end(), [this](const TileCombined& req) {
+                    return isTileRequestInsideVisibleArea(req); });
+                for (auto& tileCombined : tileRequests)
+                    renderTiles(tileCombined);
+
+                LOG_TRC("Kit TileCombined Items: " << tileRequests.size());
+            }
+            else
+            {
+                // Limited time left, push-back all invisible tile-requests
+                size_t invisibleCount = 0;
+                for(TileCombined& tileCombined : tileRequests)
+                {
+                    if( isTileRequestInsideVisibleArea(tileCombined) )
+                    {
+                        renderTiles(tileCombined);
+                    } else {
+                        ++invisibleCount;
+                        _queue->pushTileQueue(tileCombined.getTiles());
+                    }
+                }
+                LOG_TRC("Kit TileCombined Items: " << tileRequests.size()
+                        << ", invisible " << invisibleCount << " "
+                        << 100.0f * (float)invisibleCount / (float)tileRequests.size() << "%");
+            }
         }
     }
     catch (const std::exception& exc)
@@ -2738,12 +2761,12 @@ std::shared_ptr<KitSocketPoll> KitSocketPoll::create() // static
 }
 
 // process pending message-queue events.
-void KitSocketPoll::drainQueue()
+void KitSocketPoll::drainQueue(bool isIDLE)
 {
     SigUtil::checkDumpGlobalState(dump_kit_state);
 
     if (_document)
-        _document->drainQueue();
+        _document->drainQueue(isIDLE);
 }
 
 // called from inside poll, inside a wakeup
@@ -2794,10 +2817,10 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
     int maxExtraEvents = 15;
     int eventsSignalled = 0;
 
-    auto startTime = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 
     // handle processtoidle waiting optimization
-    bool checkForIdle = ProcessToIdleDeadline >= startTime;
+    const bool checkForIdle = ProcessToIdleDeadline >= startTime;
 
     if (timeoutMicroS < 0)
     {
@@ -2812,20 +2835,32 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
 
         // Flush at most maxEvents+1, or return when nothing left.
         _pollEnd = startTime + std::chrono::microseconds(timeoutMicroS);
+        bool isIDLE = false;
         do
         {
             int realTimeout = timeoutMicroS;
             if (_document && _document->needsQuickPoll())
                 realTimeout = 0;
 
-            if (poll(std::chrono::microseconds(realTimeout)) <= 0)
+            const int rc = poll(std::chrono::microseconds(realTimeout));
+            if(rc > 0)
+            {
+                // poll successful w/o timeout
+                const auto now = std::chrono::steady_clock::now();
+                timeoutMicroS =
+                    std::chrono::duration_cast<std::chrono::microseconds>(_pollEnd - now).count();
+            }
+            else if(rc == 0)
+            {
+                // poll timed out, i.e. IDLE client activity
+                isIDLE = true;
+                timeoutMicroS = 0;
+            }
+            else // poll error
                 break;
 
-            const auto now = std::chrono::steady_clock::now();
-            drainQueue();
+            drainQueue(isIDLE);
 
-            timeoutMicroS =
-                std::chrono::duration_cast<std::chrono::microseconds>(_pollEnd - now).count();
             ++eventsSignalled;
         } while (timeoutMicroS > 0 && !SigUtil::getTerminationFlag() && maxExtraEvents-- > 0);
     }
@@ -2845,7 +2880,7 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
             LOG_TRC("Poll of would not close gap - continuing");
     }
 
-    drainQueue();
+    drainQueue(/*isIDLE=*/false);
 
     if (_document)
         _document->trimAfterInactivity();
