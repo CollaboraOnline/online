@@ -3,6 +3,8 @@
   "version": "0.8.0-dev",
   "description": "Collabora Online front-end",
   "devDependencies": {
+    "@betterer/cli": "^5.4.0",
+    "@betterer/eslint": "^5.4.0",
     "@braintree/sanitize-url": "6.0.2",
     "@types/jquery": "^3.5.29",
     "@types/jquery.contextmenu": "^1.7.38",
@@ -52,11 +54,13 @@
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
+    "globby": "^14.0.2",
     "jsdom": "^16.4.0"
   },
   "scripts": {
     "test": "mocha 'mocha_tests/**/*.js'",
     "test-single": "mocha",
-    "duplication": "jscpd ./src/ --exitCode 1 --min-lines 17"
+    "duplication": "jscpd ./src/ --exitCode 1 --min-lines 17",
+    "betterer": "betterer -c ./.betterer.js"
   }
 }
