@@ -354,11 +354,13 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 #stylesview {
 	height: 64px;
-	width: 530px;
+	width: 35vw;
 	overflow: auto;
-	display: inline-flex;
-	display: -ms-inline-flexbox;
-	flex-wrap: wrap;
+	display: grid;
+	/* Preview base64's width = 100px + container border's etc */
+	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+	/* Preview base64's height = 30px  + container border's etc */
+	grid-template-rows: repeat(auto-fit, minmax(33px, 1fr));
 	padding: 0px;
 	border: 1px solid var(--color-stylesview-border);
 	border-radius: var(--border-radius);
