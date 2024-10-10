@@ -82,7 +82,6 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 /usr/share/man/man1/coolconfig.1.gz
 /usr/share/man/man1/coolstress.1.gz
 /usr/share/man/man1/coolwsd-systemplate-setup.1.gz
-/usr/share/man/man1/coolmount.1.gz
 /usr/lib/systemd/system/coolwsd.service
 
 %config(noreplace) /etc/pam.d/coolwsd
@@ -98,6 +97,8 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 %defattr(-,root,root,-)
 /usr/bin/coolforkit-caps
 /usr/bin/coolmount
+/usr/share/man/man1/coolforkit-caps.1.gz
+/usr/share/man/man1/coolmount.1.gz
 
 %pre
 getent group cool >/dev/null || groupadd -r cool

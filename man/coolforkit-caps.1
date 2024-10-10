@@ -1,0 +1,12 @@
+.TH COOLFORKIT "1" "May 2018" "coolforkit-caps " "User Commands"
+.SH NAME
+coolforkit-caps \- Utility that spawns LOK instances for Collabora Online
+.SH SYNOPSIS
+coolforkit-caps OPTIONS
+.SH DESCRIPTION
+Single-threaded process that spawns LibreOfficeKit (LOK) instances. This version of coolforkit uses
+capabilities (CAP_CHOWN, CAP_FOWNER and CAP_SYS_CHROOT) to create document jails.
+.PP
+\fBNote\fR: Running this standalone is not possible. It is spawned by coolwsd and is controlled via a pipe.
+.SH "SEE ALSO"
+coolwsd(1), coolconvert(1), coolconfig(1), coolforkit-ns(1), coolwsd-systemplate-setup(1), coolmount(1)
