@@ -12,6 +12,7 @@
 #include <config.h>
 
 #include "AdminModel.hpp"
+#include "Uri.hpp"
 
 #include <chrono>
 #include <cmath>
@@ -558,7 +559,8 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     }
 
     const std::string& wopiHost = wopiSrc.getHost();
-    oss << memoryAllocated << ' ' << wopiHost << ' ' << isViewReadOnly << ' ' << wopiSrc.toString();
+    oss << memoryAllocated << ' ' << wopiHost << ' ' << isViewReadOnly << ' ' << wopiSrc.toString()
+        << ' ' << Uri::decode(docKey);
     if (COOLWSD::getConfigValue<bool>("logging.docstats", false))
     {
         std::string docstats = "docstats : adding a document : " + filename
