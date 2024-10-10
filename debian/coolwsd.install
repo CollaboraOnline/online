@@ -11,4 +11,10 @@ usr/bin/coolwsd-systemplate-setup
 usr/bin/loolconfig
 usr/bin/loolwsd
 usr/bin/loolwsd-systemplate-setup
-usr/share/
+usr/share/coolwsd
+usr/share/man/man1/coolconfig.1.gz
+usr/share/man/man1/coolconvert.1.gz
+usr/share/man/man1/coolforkit-ns.1.gz
+usr/share/man/man1/coolstress.1.gz
+usr/share/man/man1/coolwsd-systemplate-setup.1.gz
+usr/share/man/man1/coolwsd.1.gz
