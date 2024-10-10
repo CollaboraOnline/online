@@ -13,7 +13,7 @@
  * JSDialog.FormulaBar - implementation of formulabar toolbar
  */
 
-/* global JSDialog _ _UNO UNOKey app */
+/* global JSDialog _ _UNO UNOKey */
 
 class FormulaBar {
 	constructor(map) {
@@ -23,10 +23,7 @@ class FormulaBar {
 		this.map.on('formulabar', this.onFormulaBar, this);
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
 		this.map.on('jsdialogaction', this.onJSAction, this);
-
 		this.map.on('doclayerinit', this.onDocLayerInit, this);
-		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
-		this.map.on('celladdress', this.onCellAddress, this);
 
 		this.builder = new L.control.jsDialogBuilder(
 			{
@@ -45,7 +42,6 @@ class FormulaBar {
 		this.map.off('jsdialogaction', this.onJSAction, this);
 
 		this.map.off('doclayerinit', this.onDocLayerInit, this);
-		this.map.off('celladdress', this.onCellAddress, this);
 	}
 
 	onDocLayerInit() {
@@ -54,53 +50,9 @@ class FormulaBar {
 			this.showFormulabar();
 	}
 
-	onUpdatePermission(e) {
-		var adressInput = L.DomUtil.get('addressInput-input');
-
-		if (e.detail.perm === 'edit') {
-			if (adressInput)
-				adressInput.removeAttribute('disabled');
-			this.enable();
-		} else {
-			if (adressInput)
-				adressInput.setAttribute('disabled', '');
-			this.disable();
-		}
-	}
-
-	onCellAddress (e) {
-		var adressInput = L.DomUtil.get('addressInput-input');
-		if (adressInput && document.activeElement !== adressInput) {
-			// if the user is not editing the address field
-			adressInput.value = e.address;
-		}
-		this.map.formulabarSetDirty();
-	}
-
-	onAddressInputChange() {
-		// address control should not have focus anymore
-		L.DomUtil.get('addressInput-input').blur();
-		this.map.focus();
-		var value = L.DomUtil.get('addressInput-input').value;
-		var command = {
-			ToPoint : {
-				type: 'string',
-				value: value
-			}
-
-		};
-		this.map.sendUnoCommand('.uno:GoToCell', command);
-	}
-
 	createFormulabar(text) {
 		if (!window.mode.isMobile()) {
 			var data = [
-				{
-					id: 'addressInput',
-					type: 'edit',
-					text: _('cell address'),
-					changedCallback: this.callbackAddress.bind(this)
-				},
 				{
 					id: 'formulabar-buttons-toolbox',
 					type: 'toolbox',
@@ -156,12 +108,7 @@ class FormulaBar {
 		} else {
 			var data = [
 				{
-					id: 'addressInput',
-					type: 'edit',
-					text: _('cell address'),
-					changedCallback: this.callbackAddress.bind(this)
-				},
-				{
+					id: 'formulabar-toolbox',
 					type: 'toolbox',
 					children: [
 						{
@@ -223,10 +170,6 @@ class FormulaBar {
 		}
 	}
 
-	callbackAddress() {
-		this.onAddressInputChange();
-	}
-
 	callback(objectType, eventType, object, data, builder) {
 		if (object.id === 'expand') {
 			var input = this.getInputField();
@@ -234,9 +177,6 @@ class FormulaBar {
 				this.toggleMultiLine(input);
 			return;
 		}
-
-		if (object.id === 'addressInput')
-			return;
 
 		// in the core we have DrawingArea not TextView
 		if (object.id.indexOf('sc_input_window') === 0) {
