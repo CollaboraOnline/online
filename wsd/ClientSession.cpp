@@ -2987,8 +2987,7 @@ bool ClientSession::isTileInsideVisibleArea(const TileDesc& tile) const
 {
     if (!_splitX && !_splitY)
     {
-        return (tile.getTilePosX() >= _clientVisibleArea.getLeft() && tile.getTilePosX() <= _clientVisibleArea.getRight() &&
-            tile.getTilePosY() >= _clientVisibleArea.getTop() && tile.getTilePosY() <= _clientVisibleArea.getBottom());
+        return tile.intersects( _clientVisibleArea );
     }
 
     constexpr SplitPaneName panes[4] = {
@@ -3003,9 +3002,8 @@ bool ClientSession::isTileInsideVisibleArea(const TileDesc& tile) const
         if (!isSplitPane(panes[i]))
             continue;
 
-        Util::Rectangle paneRect = getNormalizedVisiblePaneArea(panes[i]);
-        if (tile.getTilePosX() >= paneRect.getLeft() && tile.getTilePosX() <= paneRect.getRight() &&
-            tile.getTilePosY() >= paneRect.getTop() && tile.getTilePosY() <= paneRect.getBottom())
+        const Util::Rectangle paneRect = getNormalizedVisiblePaneArea(panes[i]);
+        if( tile.intersects( paneRect ) )
             return true;
     }
 

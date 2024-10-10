@@ -18,16 +18,29 @@
 namespace Util
 {
 
-/// Holds the position and size of a rectangle.
+/// Axis-aligned 2D rectangle (AABBox)
+/// with 0/0 as top-left origin extending to +x/+y bottom-right corner.
 struct Rectangle
 {
 private:
+    /// left
     int _x1;
+    /// top
     int _y1;
+    /// right
     int _x2;
+    /// bottom
     int _y2;
 
+    explicit Rectangle(bool, int x1, int y1, int x2, int y2)
+        : _x1(x1)
+        , _y1(y1)
+        , _x2(x2)
+        , _y2(y2)
+    {}
+
 public:
+    /// Ctor using inverse top/left and bottom/right extremes, allowing to extend this AABBox
     Rectangle()
         : _x1(std::numeric_limits<int>::max())
         , _y1(std::numeric_limits<int>::max())
@@ -35,6 +48,8 @@ public:
         , _y2(std::numeric_limits<int>::min())
     {}
 
+    /// Ctor via top/left coordinates and extent, validating for overflow
+    /// If width or height exceeds maximum, the right or bottom addition is dropped.
     Rectangle(int x, int y, int width, int height)
         : _x1(x)
         , _y1(y)
@@ -51,7 +66,14 @@ public:
         }
     }
 
-    void extend(Rectangle& rectangle)
+    /// Ctor via top/left and bottom/right coordinates
+    static Rectangle create(int x1, int y1, int x2, int y2)
+    {
+        return Rectangle(true, x1, y1, x2, y2);
+    }
+
+    /// Grow this rectangle to enclose the given one
+    void extend(const Rectangle& rectangle)
     {
         if (rectangle._x1 < _x1)
             _x1 = rectangle._x1;
@@ -87,15 +109,25 @@ public:
 
     bool hasSurface() const { return _x1 < _x2 && _y1 < _y2; }
 
-    bool intersects(const Rectangle& rOther)
+    /// Returns whether this Rectangle intersects (partially contains) given Rectangle.
+    bool intersects(const Rectangle& rOther) const
     {
-        Util::Rectangle intersection;
-        intersection._x1 = std::max(_x1, rOther._x1);
-        intersection._y1 = std::max(_y1, rOther._y1);
-        intersection._x2 = std::min(_x2, rOther._x2);
-        intersection._y2 = std::min(_y2, rOther._y2);
-        return intersection.isValid();
+        const int x1 = std::max(_x1, rOther._x1);
+        const int y1 = std::max(_y1, rOther._y1);
+        const int x2 = std::min(_x2, rOther._x2);
+        const int y2 = std::min(_y2, rOther._y2);
+        return x1 <= x2 && y1 <= y2;
     }
+
+    /// Returns whether this Rectangle fully contains given Rectangle.
+    bool contains(const Rectangle& o) const
+    {
+        return    _x2 >= o._x2
+               && _y2 >= o._y2
+               && _y1 <= o._y1
+               && _x1 <= o._x1;
+    }
+
     std::string toString()
     {
         std::ostringstream oss;

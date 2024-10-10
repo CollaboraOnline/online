@@ -387,8 +387,7 @@ int KitQueue::priority(const TileDesc &tile)
     for (int i = static_cast<int>(_viewOrder.size()) - 1; i >= 0; --i)
     {
         auto& cursor = _cursorPositions[_viewOrder[i]];
-        if (tile.intersectsWithRect(cursor.getX(), cursor.getY(), cursor.getWidth(),
-                                    cursor.getHeight()))
+        if (tile.intersects(cursor.toAABBox()))
             return i;
     }
 

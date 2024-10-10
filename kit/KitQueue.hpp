@@ -154,6 +154,8 @@ private:
         int getY() const { return _y; }
         int getWidth() const { return _width; }
         int getHeight() const { return _height; }
+        /// Returns the cursor's AABBox, i.e. cursor-position + cursor-extend
+        Util::Rectangle toAABBox() const { return Util::Rectangle::create(_x, _y, _x+_width, _y+_height); }
 
     private:
         int _part = 0;
