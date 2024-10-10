@@ -229,6 +229,7 @@ define cleanup_before_run
 	$(V)rm -f $(ERROR_LOG)
 	$(V)rm -f $(PID_FILE)
 	$(V)rm -rf cypress
+	$(V)rm -rf integration_tests/snapshots/actual
 endef
 
 NODE_BINS = \
@@ -250,6 +251,7 @@ clean-local:
 	rm -rf node_modules
 	rm -rf workdir
 	rm -rf cypress
+	rm -rf integration_tests/snapshots/actual
 	rm -rf package-lock.json
 	rm -rf .nyc_output
 	rm -rf coverage

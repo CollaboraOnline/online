@@ -5,3 +5,4 @@ workdir
 support/commands.js
 coverage
 .nyc_output
+integration_tests/snapshots/actual
