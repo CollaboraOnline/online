@@ -1653,13 +1653,16 @@ bool ChildSession::insertFile(const StringVector& tokens)
 
     LOG_TRC("InsertFile with arguments: " << type << ": " << (data.empty() ? name : std::string("binary data")));
 
-    if (type == "graphic" || type == "graphicurl" || type == "selectbackground")
+    if (type == "graphic" ||
+        type == "graphicurl" ||
+        type == "selectbackground" ||
+        type == "multimedia")
     {
         std::string url;
 
         if constexpr (!Util::isMobileApp())
         {
-            if (type == "graphic" || type == "selectbackground")
+            if (type == "graphic" || type == "selectbackground" || type == "multimedia")
             {
                 std::string jailDoc = JAILED_DOCUMENT_ROOT;
                 if (NoCapsForKit)
@@ -1685,7 +1688,7 @@ bool ChildSession::insertFile(const StringVector& tokens)
         }
         else
         {
-            assert(type == "graphic");
+            assert(type == "graphic" || type == "multimedia");
             auto binaryData = decodeBase64(data);
             const std::string tempFile = FileUtil::createRandomTmpDir() + '/' + name;
             std::ofstream fileStream;
@@ -1695,12 +1698,43 @@ bool ChildSession::insertFile(const StringVector& tokens)
             url = "file://" + tempFile;
         }
 
-        const std::string command = (type == "selectbackground" ? ".uno:SelectBackground" : ".uno:InsertGraphic");
-        const std::string arguments = "{"
-            "\"FileName\":{"
-                "\"type\":\"string\","
-                "\"value\":\"" + url + "\""
-            "}}";
+        std::string command;
+        std::string arguments;
+        if (type == "multimedia") {
+            command = ".uno:InsertAVMedia";
+            arguments = "{"
+                "\"URL\":{"
+                    "\"type\":\"string\","
+                    "\"value\":\"" + url + "\""
+                "},"
+                "\"IsLink\":{"
+                    "\"type\":\"boolean\","
+                    "\"value\":\"false\""
+                "},"
+                "\"Size\":{"
+                    "\"type\":\"[]com.sun.star.beans.PropertyValue\","
+                    "\"value\":{"
+                        // We don't know the real size, but the core we have can't calculate it for us either due to a lack of gstreamer. Use the default...
+                        // TODO: someday, maybe we could send this from online, perhaps calculating it by using a video element, if we're inserting a video?
+                        "\"Width\":{"
+                            "\"type\":\"long\","
+                            "\"value\":0"
+                        "},"
+                        "\"Height\":{"
+                            "\"type\":\"long\","
+                            "\"value\":0"
+                        "}"
+                    "}"
+                "}"
+            "}";
+        } else {
+            command = (type == "selectbackground" ? ".uno:SelectBackground" : ".uno:InsertGraphic");
+            arguments = "{"
+                "\"FileName\":{"
+                    "\"type\":\"string\","
+                    "\"value\":\"" + url + "\""
+                "}}";
+        }
 
         getLOKitDocument()->setView(_viewId);
 

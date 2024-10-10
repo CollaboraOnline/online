@@ -1185,6 +1185,13 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true, combination: 'IG', de: null }
 			},
 			{
+				'id': 'insert-insert-multimedia',
+				'type': 'bigcustomtoolitem',
+				'text': _UNO('.uno:InsertAVMedia'),
+				'command': 'insertmultimedia',
+				'accessibility': { focusBack: true, combination: 'MM', de: null }, // IM was already taken, so 'MM' for MultiMedia
+			},
+			{
 				'type': 'container',
 				'children': [
 					{

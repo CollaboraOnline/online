@@ -271,6 +271,7 @@ var unoCommandsArray = {
 	'InsertFootnote':{text:{context:_('Insert Footnote'),menu:_('~Footnote'),},},
 	'InsertFrame':{text:{context:_('Insert Frame'),menu:_('F~rame...'),},},
 	'InsertGraphic':{global:{context:_('Insert Image...'),menu:_('~Image...'),},},
+	'InsertAVMedia':{global:{context:_('Insert Multimedia...'),menu:_('Multimedia...'),},},
 	'InsertHardHyphen':{global:{menu:_('Non-breaking ~Hyphen'),},},
 	'InsertHeaderFooterMenu':{text:{menu:_('He~ader and Footer'),},},
 	'InsertIndexesEntry':{text:{context:_('Insert Index Entry'),menu:_('~Index Entry...'),},},

@@ -14,7 +14,8 @@ L.Map.FileInserter = L.Handler.extend({
 	initialize: function (map) {
 		this._map = map;
 		this._childId = null;
-		this._toInsert = {};
+		this._toInsertGraphic = {};
+		this._toInsertMultimedia = {};
 		this._toInsertURL = {};
 		this._toInsertBackground = {};
 		var parser = document.createElement('a');
@@ -26,26 +27,38 @@ L.Map.FileInserter = L.Handler.extend({
 	},
 
 	addHooks: function () {
-		this._map.on('insertfile', this._onInsertFile, this);
+		this._map.on('insertgraphic', this._onInsertGraphic, this);
+		this._map.on('insertmultimedia', this._onInsertMultimedia, this);
 		this._map.on('inserturl', this._onInsertURL, this);
 		this._map.on('childid', this._onChildIdMsg, this);
 		this._map.on('selectbackground', this._onSelectBackground, this);
 	},
 
 	removeHooks: function () {
-		this._map.off('insertfile', this._onInsertFile, this);
+		this._map.off('insertgraphic', this._onInsertGraphic, this);
+		this._map.off('insertmultimedia', this._onInsertMultimedia, this);
 		this._map.off('inserturl', this._onInsertURL, this);
 		this._map.off('childid', this._onChildIdMsg, this);
 		this._map.off('selectbackground', this._onSelectBackground, this);
 	},
 
-	_onInsertFile: function (e) {
+	_onInsertGraphic: function (e) {
 		if (!this._childId) {
 			app.socket.sendMessage('getchildid');
-			this._toInsert[Date.now()] = e.file;
+			this._toInsertGraphic[Date.now()] = e.file;
 		}
 		else {
 			this._sendFile(Date.now(), e.file, 'graphic');
+		}
+	},
+
+	_onInsertMultimedia: function (e) {
+		if (!this._childId) {
+			app.socket.sendMessage('getchildid');
+			this._toInsertMultimedia[Date.now()] = e.file;
+		}
+		else {
+			this._sendFile(Date.now(), e.file, 'multimedia');
 		}
 	},
 
@@ -71,14 +84,19 @@ L.Map.FileInserter = L.Handler.extend({
 
 	_onChildIdMsg: function (e) {
 		// When childId is not created (usually when we insert file/URL very first time), we send message to get child ID
-		// and store the file(s) into respective arrays (look at _onInsertFile, _onInsertURL, _onSelectBackground)
+		// and store the file(s) into respective arrays (look at _onInsertGraphic, _onInsertMultimedia, _onInsertURL, _onSelectBackground)
 		// When we receive the childId we empty all the array and insert respective file/URL from here
 
 		this._childId = e.id;
-		for (var name in this._toInsert) {
-			this._sendFile(name, this._toInsert[name], 'graphic');
+		for (var name in this._toInsertGraphic) {
+			this._sendFile(name, this._toInsertGraphic[name], 'graphic');
 		}
-		this._toInsert = {};
+		this._toInsertGraphic = {};
+
+		for (var name in this._toInsertMultimedia) {
+			this._sendFile(name, this._toInsertMultimedia[name], 'multimedia');
+		}
+		this._toInsertMultimedia = {};
 
 		for (name in this._toInsertURL) {
 			this._sendURL(name, this._toInsertURL[name]);

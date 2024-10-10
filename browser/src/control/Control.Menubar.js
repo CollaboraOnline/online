@@ -461,6 +461,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
+				{name: _('Local Multimedia...'), id: 'insertmultimedia', type: 'action'},
 				{name: _UNO('.uno:SelectBackground', 'presentation'), id: 'selectbackground', type: 'action'},
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:InsertAnnotation', 'presentation'), L.Control.MenubarShortcuts.shortcuts.COMMENT), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
@@ -1958,6 +1959,8 @@ L.Control.Menubar = L.Control.extend({
 			L.DomUtil.get('insertgraphic').click();
 		} else if (id === 'insertgraphicremote') {
 			this._map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
+		} else if (id === 'insertmultimedia') {
+			L.DomUtil.get('insertmultimedia').click();
 		} else if (id === 'selectbackground') {
 			app.dispatcher.dispatch('selectbackground');
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
@@ -2202,6 +2205,9 @@ L.Control.Menubar = L.Control.extend({
 			return false;
 
 		if (menuItem.id === 'insertgraphic' && this._map['wopi'].DisableInsertLocalImage)
+			return false;
+
+		if (menuItem.id === 'insertmultimedia' && this._map['wopi'].DisableInsertLocalImage)
 			return false;
 
 		if (menuItem.id && menuItem.id.startsWith('fullscreen-presentation') && this._map['wopi'].HideExportOption)

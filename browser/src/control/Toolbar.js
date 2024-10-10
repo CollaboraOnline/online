@@ -429,8 +429,12 @@ L.Map.include({
 		}
 	},
 
-	insertFile: function (file) {
-		this.fire('insertfile', {file: file});
+	insertGraphic: function (file) {
+		this.fire('insertgraphic', {file: file});
+	},
+
+	insertMultimedia: function (file) {
+		this.fire('insertmultimedia', {file: file});
 	},
 
 	insertURL: function (url) {

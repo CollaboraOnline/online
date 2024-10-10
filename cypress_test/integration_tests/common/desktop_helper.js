@@ -288,6 +288,28 @@ function insertImage(docType) {
 	cy.log('<< insertImage - end');
 }
 
+function insertVideo() {
+	cy.log('>> insertVideo - start');
+
+	selectZoomLevel("50");
+
+	cy.cGet('#toolbar-up .ui-scroll-right').click();
+
+	const mode = Cypress.env('USER_INTERFACE');
+
+	if (mode === 'notebookbar') cy.cGet('#toolbar-up .ui-scroll-right').click();
+
+	cy.cGet('#Insert-tab-label').click();
+	cy.cGet('#Insert-container .insertmultimedia').click({ force: true });
+
+	cy.cGet('#insertmultimedia[type=file]').attachFile(
+		'/desktop/impress/video_to_insert.mp4'
+	);
+	cy.cGet('#document-container svg foreignObject video').should('exist');
+
+	cy.log('<< insertVideo - end');
+}
+
 function deleteImage() {
 	cy.log('>> deleteImage - start');
 
@@ -533,6 +555,7 @@ module.exports.shouldHaveZoomLevel = shouldHaveZoomLevel;
 module.exports.selectZoomLevel = selectZoomLevel;
 module.exports.resetZoomLevel = resetZoomLevel;
 module.exports.insertImage = insertImage;
+module.exports.insertVideo = insertVideo;
 module.exports.deleteImage = deleteImage;
 module.exports.insertComment = insertComment;
 module.exports.actionOnSelector = actionOnSelector;
