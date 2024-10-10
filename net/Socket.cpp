@@ -556,6 +556,14 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
                 // removed in a callback
                 ++itemsErased;
             }
+            else if (!_pollSockets[i]->isOpen())
+            {
+                // closed socket ..
+                ++itemsErased;
+                LOGA_TRC(Socket, '#' << _pollFds[i].fd << ": Removing socket (at " << i
+                         << " of " << _pollSockets.size() << ") from " << _name);
+                _pollSockets[i] = nullptr;
+            }
             else if (_pollFds[i].fd == _pollSockets[i]->getFD())
             {
                 SocketDisposition disposition(_pollSockets[i]);
@@ -575,7 +583,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
                     rc = -1;
                 }
 
-                if (!disposition.isContinue())
+                if (!_pollSockets[i]->isOpen() || !disposition.isContinue())
                 {
                     ++itemsErased;
                     LOGA_TRC(Socket, '#' << _pollFds[i].fd << ": Removing socket (at " << i

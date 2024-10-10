@@ -186,13 +186,15 @@ public:
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
     {
-        if (_noShutdown)
-            return;
-        LOG_TRC("Socket shutdown RDWR.");
-        if constexpr (!Util::isMobileApp())
-            ::shutdown(_fd, SHUT_RDWR);
-        else
-            fakeSocketShutdown(_fd);
+        setClosed();
+        if (!_noShutdown)
+        {
+            LOG_TRC("Socket shutdown RDWR.");
+            if constexpr (!Util::isMobileApp())
+                ::shutdown(_fd, SHUT_RDWR);
+            else
+                fakeSocketShutdown(_fd);
+        }
     }
 
     /// Prepare our poll record; adjust @timeoutMaxMs downwards
@@ -392,6 +394,9 @@ protected:
 
     /// Explicitly marks this socket closed, i.e. rejected from polling and potentially shutdown
     void setClosed() { _open = false; }
+
+    /// Explicitly marks this socket and the given SocketDisposition closed
+    void setClosed(SocketDisposition &disposition) { setClosed(); disposition.setClosed(); }
 
 private:
     void init(Type type)
@@ -1479,11 +1484,10 @@ protected:
         if (closed)
         {
             LOG_TRC("Closed. Firing onDisconnect.");
-            setClosed();
             _socketHandler->onDisconnect();
+            setClosed(disposition);
         }
-
-        if (isClosed())
+        else if (!isOpen())
             disposition.setClosed();
     }
 
