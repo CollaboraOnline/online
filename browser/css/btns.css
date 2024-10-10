@@ -25,17 +25,32 @@
 .hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline),
 .sidebar.unotoolbutton,
 .jsdialog.unotoolbutton,
+.notebookbar.unotoolbutton,
 #closebutton {
 	background-color: transparent;
 	border: 1px solid transparent;
 	color: var(--color-main-text);
 	border-radius: var(--border-radius);
 }
+
+/* toolbuttons non selected hover */
+.hasnotebookbar .ui-content.unotoolbutton.has-label:hover,
+.hasnotebookbar .ui-content.unotoolbutton.inline:hover,
+.hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline):hover,
+.sidebar.unotoolbutton:hover,
+.jsdialog.unotoolbutton:hover,
+.notebookbar.unotoolbutton:hover {
+	border: 1px solid var(--color-border-darker);
+	color: var(--color-text-darker);
+	border-radius: var(--border-radius);
+}
+
 /* toolbuttons selected */
 .hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
 .hasnotebookbar .ui-content.unotoolbutton.selected.inline,
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
 .sidebar.unotoolbutton.selected,
+.notebookbar.unotoolbutton.selected,
 .jsdialog.unotoolbutton.selected {
 	background-color: var(--color-background-dark);
 	border: 1px solid var(--color-border-dark);
@@ -50,14 +65,16 @@
 	background-color: var(--color-background-darker);
 	border-color: var(--color-border-darker);
 }
+
 /* toolbuttons selected hover */
+.hasnotebookbar .ui-content.unotoolbutton.has-label:hover,
 .hasnotebookbar .ui-content.unotoolbutton.selected:hover,
 .unotoolbutton.notebookbar:hover,
 .unotoolbutton.jsdialog:hover,
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover,
 .sidebar.unotoolbutton.selected:hover,
+.notebookbar.unotoolbutton.selected:hover,
 .jsdialog.unotoolbutton.selected:hover {
-	background-color: var(--color-background-darker) !important;
 	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
 	border-radius: var(--border-radius);

@@ -24,7 +24,6 @@ img.sidebar.ui-drawing-area {
 .sidebar .ui-content .unobutton {
 	box-sizing: border-box;
 	margin: 0;
-	padding: 0;
 }
 
 .sidebar .unobutton > img {
@@ -71,6 +70,7 @@ img.sidebar.ui-drawing-area {
 	width: 10px;
 	height: 10px;
 	margin-inline-end: 10px;
+	padding: 0;
 }
 
 .ui-expander.jsdialog.sidebar .ui-expander-icon-right img {
@@ -90,6 +90,9 @@ img.sidebar.ui-drawing-area {
 #ParaPropertyPanel.sidebar.ui-grid #box1.sidebar.ui-grid-cell,
 #NumberFormatPropertyPanel.sidebar.ui-grid #grid1 {
 	justify-content: space-between !important;
+	row-gap: 8px;
+	grid-auto-flow: revert !important;
+	grid-template-columns: repeat(2, auto);
 }
 
 /* section content */
@@ -125,26 +128,10 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	background-color: var(--color-background-dark);
 }
 
-.menubutton.sidebar span {
-	display: none;
-}
-
-.menubutton.sidebar:hover span {
-	position: absolute;
-	font-size: var(--default-font-size);
-	display: block;
-	width: auto;
-	padding: 14px 4px;
-	border-radius: var(--border-radius);
-	white-space: nowrap;
-	margin-inline-start: -14px;
-	margin-block-start: 2px;
-}
-
 .sidebar.ui-grid.ui-grid-cell .menubutton {
 	justify-content: space-between;
 	justify-self: end;
-	padding: 4px;
+	padding: 0;
 	margin-right: 1px;
 }
 
@@ -178,7 +165,7 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 }
 .sidebar.unotoolbutton {
 	border: 1px solid transparent;
-	margin-right: 5px;
+	margin-right: 3px;
 }
 .sidebar.jsdialog.checkbutton {
 	font-size: var(--default-font-size);
@@ -191,6 +178,10 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	line-height: 1;
 	flex-direction: column;
 	justify-content: center;
+}
+
+.sidebar.menubutton.has-colorpicker:hover span {
+	box-shadow: revert;
 }
 
 /* writer */
