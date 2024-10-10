@@ -20,6 +20,7 @@
 #include <cctype>
 #include <iomanip>
 #include <memory>
+#include <ostream>
 #include <ratio>
 #include <sstream>
 #include <cstdio>
@@ -67,6 +68,22 @@ std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
+std::string Socket::toString(Type t)
+{
+    switch (t)
+    {
+        case Type::IPv4:
+            return "IPv4";
+        case Type::IPv6:
+            return "IPv6";
+        case Type::All:
+            return "All";
+        case Type::Unix:
+            return "Unix";
+    }
+    return "Unknown";
+}
+
 int Socket::createSocket([[maybe_unused]] Socket::Type type)
 {
     if constexpr (!Util::isMobileApp())
@@ -87,6 +104,28 @@ int Socket::createSocket([[maybe_unused]] Socket::Type type)
     return fakeSocketSocket();
 }
 
+std::ostream& Socket::streamImpl(std::ostream& os) const
+{
+    os << "Socket[#" << getFD()
+       << ", " << toString(type())
+       << " @ ";
+    if (Type::IPv6 == type())
+    {
+        os << "[" << clientAddress() << "]:" << clientPort();
+    }
+    else
+    {
+        os << clientAddress() << ":" << clientPort();
+    }
+    return os << "]";
+}
+
+std::string Socket::toStringImpl() const
+{
+    std::ostringstream oss;
+    streamImpl(oss);
+    return oss.str();
+}
 
 bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
                               std::shared_ptr<StreamSocket> &child)
@@ -110,7 +149,6 @@ bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
 
     return true;
 }
-
 
 #if ENABLE_DEBUG
 static std::atomic<long> socketErrorCount;
@@ -1115,7 +1153,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
             std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, type);
 
             ::inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
-            _socket->setClientAddress(addrstr); // @ clientInfo.sin6_port
+            _socket->setClientAddress(addrstr, clientInfo.sin6_port);
 
             LOG_TRC("Accepted socket #" << _socket->getFD() << " has family "
                                         << clientInfo.sin6_family << " address "
