@@ -1418,6 +1418,15 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     Poco::URI indirectionURI(config.getString("indirection_endpoint.url", ""));
     Poco::replaceInPlace(preprocess, std::string("%INDIRECTION_URL%"), indirectionURI.toString());
 
+    std::string extraExportFormats;
+    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_swf", false)) extraExportFormats += " impress_swf";
+    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_bmp", false)) extraExportFormats += " impress_bmp";
+    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_gif", false)) extraExportFormats += " impress_gif";
+    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_png", false)) extraExportFormats += " impress_png";
+    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_svg", false)) extraExportFormats += " impress_svg";
+    if (COOLWSD::getConfigValue<bool>("extra_export_formats.impress_tiff", false)) extraExportFormats += " impress_tiff";
+    Poco::replaceInPlace(preprocess, std::string("%EXTRA_EXPORT_FORMATS%"), extraExportFormats);
+
     bool geoLocationSetup = config.getBool("indirection_endpoint.geolocation_setup.enable", false);
     if (geoLocationSetup)
         Poco::replaceInPlace(preprocess, std::string("%GEOLOCATION_SETUP%"),

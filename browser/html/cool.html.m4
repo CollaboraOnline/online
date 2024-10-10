@@ -259,6 +259,7 @@ m4_ifelse(MOBILEAPP, [true],
       data-zotero-enabled = "%ZOTERO_ENABLED%"
       data-document-signing-enabled = "%DOCUMENT_SIGNING_ENABLED%"
       data-saved-ui-state = "%SAVED_UI_STATE%"
+      data-extra-export-formats = "%EXTRA_EXPORT_FORMATS%"
       data-wasm-enabled = "%WASM_ENABLED%"
       data-indirection-url = "%INDIRECTION_URL%"
       data-geolocation-setup = "%GEOLOCATION_SETUP%"

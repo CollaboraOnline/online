@@ -2229,6 +2229,19 @@ L.Control.Menubar = L.Control.extend({
 		// to get access to.
 		if (menuItem.id && menuItem.id.startsWith('downloadas-')) {
 			var format = menuItem.id.substring('downloadas-'.length);
+
+			const docType = this._map.getDocType();
+			const extraFormats = docType === 'presentation' ? ['swf', 'svg', 'bmp', 'gif', 'png', 'tiff']
+				: [];
+
+			const appNames = {
+				presentation: 'impress'
+			};
+
+			if (extraFormats.includes(format) && !window.extraExportFormats.includes(`${format}_${appNames[docType]}`)) {
+				return false;
+			}
+
 			app.registerExportFormat(menuItem.name, format);
 
 			if (this._map['wopi'].HideExportOption)
