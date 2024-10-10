@@ -437,41 +437,100 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('HTML Document (.html)')
 				},
 				{
-					'action': 'downloadas-swf',
-					'text': _('Shockwave Flash (.swf)')
-				},
-				{
-					'action': 'downloadas-svg',
-					'text': _('Scalable Vector Graphics (.svg)')
-				},
-				{
-					'action': 'downloadas-bmp',
-					'text': _('Current slide as Bitmap (.bmp)')
-				},
-				{
-					'action': 'downloadas-gif',
-					'text': _('Current slide as Graphics Interchange Format (.gif)')
-				},
-				{
-					'action': 'downloadas-png',
-					'text': _('Current slide as Portable Network Graphics (.png)')
-				},
-				{
-					'action': 'downloadas-tiff',
-					'text': _('Current slide as Tag Image File Format (.tiff)')
-				},
-				{
-					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
+					'action': !window.ThisIsAMobileApp
+						? 'exportdirectpdf'
+						: 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
-					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
+					'command': !window.ThisIsAMobileApp
+						? 'exportdirectpdf'
+						: 'downloadas-pdf',
 				},
-			].concat(!window.ThisIsTheAndroidApp ? [
-				{
-					'action': 'exportpdf' ,
-					'text': _('PDF Document (.pdf) as...'),
-					'command': 'exportpdf'
-				}
-			] : []);
+			]
+				.concat(
+					!window.ThisIsTheAndroidApp
+						? [
+								{
+									'action': 'exportpdf',
+									'text': _(
+										'PDF Document (.pdf) as...',
+									),
+									'command': 'exportpdf',
+								},
+							]
+						: [],
+				)
+				.concat(
+					window.extraExportFormats.includes('impress_swf')
+						? [
+								{
+									'action': 'downloadas-swf',
+									'text': _(
+										'Shockwave Flash (.swf)',
+									),
+								},
+							]
+						: [],
+				)
+				.concat(
+					window.extraExportFormats.includes('impress_svg')
+						? [
+								{
+									'action': 'downloadas-svg',
+									'text': _(
+										'Scalable Vector Graphics (.svg)',
+									),
+								},
+							]
+						: [],
+				)
+				.concat(
+					window.extraExportFormats.includes('impress_bmp')
+						? [
+								{
+									'action': 'downloadas-bmp',
+									'text': _(
+										'Current slide as Bitmap (.bmp)',
+									),
+								},
+							]
+						: [],
+				)
+				.concat(
+					window.extraExportFormats.includes('impress_gif')
+						? [
+								{
+									'action': 'downloadas-gif',
+									'text': _(
+										'Current slide as Graphics Interchange Format (.gif)',
+									),
+								},
+							]
+						: [],
+				)
+				.concat(
+					window.extraExportFormats.includes('impress_png')
+						? [
+								{
+									'action': 'downloadas-png',
+									'text': _(
+										'Current slide as Portable Network Graphics (.png)',
+									),
+								},
+							]
+						: [],
+				)
+				.concat(
+					window.extraExportFormats.includes('impress_tiff')
+						? [
+								{
+									'action': 'downloadas-tiff',
+									'text': _(
+										'Current slide as Tag Image File Format (.tiff)',
+									),
+								},
+							]
+						: [],
+				);
 		} else if (docType === 'drawing') {
 			submenuOpts = [
 				{

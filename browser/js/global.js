@@ -254,6 +254,7 @@ class InitializerBase {
 		window.deeplEnabled = false;
 		window.zoteroEnabled = false;
 		window.savedUIState = true;
+		window.extraExportFormats = [];
 		window.wasmEnabled = false;
 		window.indirectionUrl = "";
 		window.geolocationSetup = false;
@@ -384,6 +385,7 @@ class BrowserInitializer extends InitializerBase {
 		window.zoteroEnabled = element.dataset.zoteroEnabled.toLowerCase().trim() === "true";
 		window.documentSigningEnabled = element.dataset.documentSigningEnabled.toLowerCase().trim() === "true";
 		window.savedUIState = element.dataset.savedUiState.toLowerCase().trim() === "true";
+		window.extraExportFormats = Array.from(element.dataset.extraExportFormats.split(" "));
 		window.wasmEnabled = element.dataset.wasmEnabled.toLowerCase().trim() === "true";
 		window.indirectionUrl = element.dataset.indirectionUrl;
 		window.geolocationSetup = element.dataset.geolocationSetup.toLowerCase().trim() === "true";
