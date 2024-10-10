@@ -618,6 +618,7 @@ void HTTPServerTest::testExtractDocStructure()
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/extract-document-structure");
     Poco::Net::HTMLForm form;
     form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
+    form.set("filter", "contentcontrol");
     form.addPart("data", new Poco::Net::FilePartSource(srcPath));
     form.prepareSubmit(request);
     try
@@ -698,6 +699,7 @@ void HTTPServerTest::testTransformDocStructure()
         Poco::Net::HTMLForm form;
         form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
         form.set("format", "docx");
+        form.set("filter", "contentcontrol");
         form.addPart("data", new Poco::Net::FilePartSource(srcPath2));
         form.prepareSubmit(request);
         try
