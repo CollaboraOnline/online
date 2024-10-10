@@ -560,6 +560,26 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	background: url('images/lc_insertgraphic.svg') center;
 }
 
+[class*='as-bmp-submenu-icon'] {
+	background: url('images/lc_insertgraphic.svg') center;
+}
+
+[class*='as-gif-submenu-icon'] {
+	background: url('images/lc_insertgraphic.svg') center;
+}
+
+[class*='as-tiff-submenu-icon'] {
+	background: url('images/lc_insertgraphic.svg') center;
+}
+
+[class*='as-swf-submenu-icon'] {
+	background: url('images/lc_exportswf.svg') center;
+}
+
+[class*='as-svg-submenu-icon'] {
+	background: url('images/lc_exportsvg.svg') center;
+}
+
 [class*='as-rtf-submenu-icon'] {
 	background: url('images/lc_downloadas-rtf.svg') center;
 }
