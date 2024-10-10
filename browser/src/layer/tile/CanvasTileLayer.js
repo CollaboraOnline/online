@@ -1482,6 +1482,12 @@ L.CanvasTileLayer = L.Layer.extend({
 				var tooltipInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 				this._map.uiManager.showDocumentTooltip(tooltipInfo);
 			}
+			else if (tooltipInfo.type === 'autofillpreviewtooltip') {
+
+				var strTwips = textMsg.match(/\d+/g);
+				if (strTwips != null && this._map.isEditMode())
+					this._map.fire('openautofillpreviewpopup', { data: tooltipInfo });
+			}
 			else {
 				console.error('unknown tooltip type');
 			}

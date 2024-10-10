@@ -211,6 +211,10 @@ L.Control.JSDialog = L.Control.extend({
 		// Dialogue overlay which will allow automatic positioning and cancellation of the dialogue if cancellable.
 		var overlay = L.DomUtil.get(instance.id + '-overlay');
 		if (!overlay) {
+
+			if (instance.noOverlay)
+				return;
+
 			overlay = L.DomUtil.create('div', 'jsdialog-overlay ' + (instance.cancellable && !instance.hasOverlay ? 'cancellable' : ''), instance.containerParent);
 			overlay.id = instance.id + '-overlay';
 			if (instance.cancellable) {
@@ -729,9 +733,10 @@ L.Control.JSDialog = L.Control.extend({
 			} else {
 				instance.updatePos();
 			}
-
-			if (instance.isAutofilter)
+			if (instance.isAutofilter && !instance.isAutoFillPreviewTooltip)
 				this.calculateAutoFilterPosition(instance);
+			else if (instance.isAutoFillPreviewTooltip)
+				this.updatePosition(instance.container, instance.posx, instance.posy);
 
 			this.dialogs[instance.id] = instance;
 
