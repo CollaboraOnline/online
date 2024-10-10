@@ -424,12 +424,13 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	public newAnnotationMobile (comment: any, addCommentFn: any, isMod: any): void {
 		var commentData = comment.sectionProperties.data;
 
-		var callback = function(data: string) {
-			if (data) {
+		var callback = function(div: HTMLDivElement) {
+			if (div.textContent || div.innerHTML) {
 				var annotation = comment;
 
-				annotation.sectionProperties.data.text = data;
-				comment.text = data;
+				annotation.sectionProperties.data.text = div.textContent;
+				annotation.sectionProperties.data.html = div.innerHTML;
+				comment.text = div.textContent;
 
 				addCommentFn.call(annotation, annotation, comment);
 				if (!isMod)
@@ -446,7 +447,8 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			{
 				id: 'input-modal-input',
 				type: 'multilineedit',
-				text: (commentData.text && isMod ? commentData.text: '')
+				text: (commentData.text && isMod ? commentData.text: ''),
+				contenteditable: true
 			},
 			{
 				id: '',
@@ -480,8 +482,8 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.map.uiManager.showModal(json, [
 			{id: 'response-ok', func: function() {
 				if (typeof callback === 'function') {
-					var input = document.getElementById('input-modal-input') as HTMLTextAreaElement;
-					callback(input.value);
+					var input = document.getElementById('input-modal-input') as HTMLDivElement;
+					callback(input);
 				}
 				this.map.uiManager.closeModal(dialogId);
 			}.bind(this)},
