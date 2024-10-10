@@ -225,7 +225,7 @@ COOL_JS_LST =\
 	src/layer/tile/SheetSwitch.ts \
 	src/layer/Layer.js \
 	src/layer/tile/SheetGeometry.ts \
-	src/layer/tile/Premult.ts \
+	src/layer/tile/CanvasTileUtils.ts \
 	src/canvas/CanvasSectionProps.js \
 	src/canvas/CanvasSectionContainer.ts \
 	src/canvas/CanvasSectionObject.ts \
@@ -266,6 +266,7 @@ COOL_JS_LST =\
 	src/layer/marker/Cursor.ts \
 	src/layer/vector/CanvasOverlay.ts \
 	src/canvas/sections/ScrollSection.ts \
+	src/layer/tile/CanvasTileWorker.js \
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
@@ -1085,6 +1086,7 @@ pot:
 		src/app/DocEvents.ts \
 		src/app/GraphicSelectionMiddleware.ts \
 		src/errormessages.js \
+		src/layer/tile/CanvasTileWorker.js \
 		src/layer/tile/CanvasTileLayer.js \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
