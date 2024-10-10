@@ -146,11 +146,6 @@ L.Map.SlideShow = L.Handler.extend({
 		this._slideURL = e.url;
 		window.app.console.debug('slide file url : ', this._slideURL);
 
-		if ('processCoolUrl' in window) {
-			this._processSlideshowLinks();
-		}
-		this._processSlideshowVideoForSafari();
-
 		this._startPlaying();
 	},
 
@@ -181,6 +176,12 @@ L.Map.SlideShow = L.Handler.extend({
 			iFrame.style.height = '100%';
 			iFrame.style.border = 'none';
 			this._slideShowWindowProxy.document.body.appendChild(iFrame);
+			this._slideShow = iFrame;
+
+			if ('processCoolUrl' in window) {
+				this._processSlideshowLinks();
+			}
+			this._processSlideshowVideoForSafari();
 
 			this._slideShowWindowProxy.document.close();
 			this._slideShowWindowProxy.focus();
@@ -201,10 +202,17 @@ L.Map.SlideShow = L.Handler.extend({
 					clearInterval(this._windowCloseInterval);
 					this._map.uiManager.closeSnackbar();
 					this._slideShowWindowProxy = null;
+					this._slideShow = null;
 				}
 			}.bind(this), 500);
 			return;
 		}
+
+		if ('processCoolUrl' in window) {
+			this._processSlideshowLinks();
+		}
+		this._processSlideshowVideoForSafari();
+
 		// Cypress Presentation
 		if (this._cypressSVGPresentationTest || !this._slideShow) {
 			window.open(this._slideURL, '_self');
