@@ -218,6 +218,23 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		return textBoxes.includes(document.activeElement);
 	}
 
+	public getActiveEdit(): Comment {
+		if (!this.sectionProperties.selectedComment) {
+			return null;
+		}
+		if (this.sectionProperties.selectedComment.isEdit()) {
+			return this.sectionProperties.selectedComment;
+		}
+		var openArray: Comment[] = [];
+		this.getChildren(this.sectionProperties.selectedComment, openArray);
+		for (var i = 0; i < openArray.length; i++) {
+			if (openArray[i].isEdit()) {
+				return openArray[i];
+			}
+		}
+		return null;
+	}
+
 	public setCollapsed(): void {
 		if (this.isEditing()) {
 			return;
@@ -453,6 +470,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				layoutstyle: 'end'
 			},
 		]);
+		json.isPopupFullscreen = true;
 
 		var cancelFunction = function() {
 			this.cancel(comment);
@@ -566,6 +584,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				Author: {
 					type: 'string',
 					value: annotation.sectionProperties.data.author
+				},
+				Html: {
+					type: 'string',
+					value: annotation.sectionProperties.data.html
 				}
 			};
 			if (app.file.fileBasedView) {
@@ -599,13 +621,17 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 					type: 'string',
 					value: annotation.sectionProperties.data.id
 				},
-			        Author: {
+			  Author: {
 					type: 'string',
 					value: annotation.sectionProperties.data.author
 				},
 				Text: {
 					type: 'string',
 					value: annotation.sectionProperties.data.text
+				},
+				Html: {
+					type: 'string',
+					value: annotation.sectionProperties.data.html
 				}
 			};
 			this.map.sendUnoCommand('.uno:EditAnnotation', comment, true /* force */);
@@ -885,6 +911,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			Text: {
 				type: 'string',
 				value: annotation.sectionProperties.data.reply
+			},
+			Html: {
+				type: 'string',
+				value: annotation.sectionProperties.data.html
 			}
 		};
 

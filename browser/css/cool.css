@@ -656,9 +656,17 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	background-color: var(--color-background-dark);
 	color: var(--color-main-text);
 	overflow-x: hidden;
+	padding: 2px;
 	height: 54px;
 	width: 100%;
 	box-sizing: border-box;
+}
+
+.cool-annotation-textarea a:link,
+.cool-annotation-textarea a:visited,
+.cool-annotation-content a:link,
+.cool-annotation-content a:visited {
+	color: var(--color-hyperlink);
 }
 
 #input-modal-input.cool-annotation-textarea {
@@ -1151,12 +1159,20 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	background-position: 0;
 }
 
+#mentionPopup {
+	min-width: 100px;
+}
+
 #mentionPopup .lokdialog.ui-dialog-content.ui-widget-content {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	min-height: 100px;
 	min-width: 100px;
+}
+
+#mentionPopup .ui-dialog-content {
+	padding: 0;
 }
 
 .username-pop-up {

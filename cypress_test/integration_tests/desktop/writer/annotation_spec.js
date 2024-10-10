@@ -316,5 +316,132 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('#annotation-content-area-2').should('not.exist');
 	});
+});
 
+describe(['tagdesktop'], 'Annotation with @mention', function() {
+	beforeEach(function() {
+		cy.viewport(1400, 600);
+		helper.setupAndLoadDocument('writer/annotation.odt');
+		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		desktopHelper.switchUIToNotebookbar();
+		selectZoomLevel('50');
+	});
+
+	it('Insert comment with mention', function() {
+		desktopHelper.insertComment('some text0', false);
+		
+		cy.cGet('.cool-annotation').find('#annotation-modify-textarea-new').type(' @Ale');
+		cy.cGet('#mentionPopup').should('be.visible');
+		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').type('{enter}');
+		
+		cy.cGet('#annotation-modify-textarea-new a').should('exist');
+		cy.cGet('#annotation-modify-textarea-new a').should('have.text', '@Alexandra');
+		cy.cGet('#annotation-modify-textarea-new a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#annotation-modify-textarea-new').should('have.text','some text0 @Alexandra');
+
+		cy.cGet('#annotation-save-new').click();
+		
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#annotation-content-area-1 a').should('exist');
+		cy.cGet('#annotation-content-area-1 a').should('have.text', '@Alexandra');
+		cy.cGet('#annotation-content-area-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#annotation-content-area-1').should('have.text','some text0 @Alexandra');
+	});
+
+	it('Modify comment by adding mention', function () {
+		desktopHelper.insertComment();
+
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#annotation-content-area-1').should('contain', 'some text0');
+		cy.cGet('#comment-annotation-menu-1').click();
+		cy.cGet('body').contains('.context-menu-item', 'Modify').click();
+
+		cy.cGet('#annotation-modify-textarea-1').type('{end}');
+		cy.cGet('#annotation-modify-textarea-1').type(' @Ale');
+		cy.cGet('#mentionPopup').should('be.visible');
+		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').type('{enter}');
+
+		cy.cGet('#annotation-modify-textarea-1 a').should('exist');
+		cy.cGet('#annotation-modify-textarea-1 a').should('have.text', '@Alexandra');
+		cy.cGet('#annotation-modify-textarea-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#annotation-modify-textarea-1').should('have.text', 'some text0 @Alexandra');
+
+		cy.cGet('#annotation-save-1').click();
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+
+		cy.cGet('#annotation-content-area-1 a').should('exist');
+		cy.cGet('#annotation-content-area-1 a').should('have.text', '@Alexandra');
+		cy.cGet('#annotation-content-area-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#annotation-content-area-1').should('have.text', 'some text0 @Alexandra');
+	})
+
+	it('Reply to parent comment by adding mention', function() {
+		desktopHelper.insertComment();
+
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#annotation-content-area-1').should('contain','some text0');
+		cy.cGet('#comment-annotation-menu-1').click();
+		cy.cGet('body').contains('.context-menu-item', 'Reply').click();
+
+		cy.cGet('#annotation-reply-textarea-1').type('some reply text @Ale');
+
+		cy.cGet('#mentionPopup').should('be.visible');
+		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').type('{enter}');
+
+		cy.cGet('#annotation-reply-textarea-1 a').should('exist');
+		cy.cGet('#annotation-reply-textarea-1 a').should('have.text', '@Alexandra');
+		cy.cGet('#annotation-reply-textarea-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#annotation-reply-textarea-1').should('have.text', 'some reply text @Alexandra');
+
+		cy.cGet('#annotation-reply-1').click();
+		cy.cGet('#annotation-content-area-2').should('contain','some reply text @Alexandra');
+	});
+
+	it('Reply to reply comment by adding mention', function() {
+		desktopHelper.insertComment();
+
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#annotation-content-area-1').should('contain','some text0');
+		cy.cGet('#comment-annotation-menu-1').click();
+		cy.cGet('body').contains('.context-menu-item', 'Reply').click();
+
+		cy.cGet('#annotation-reply-textarea-1').type('some reply text @Ale');
+
+		cy.cGet('#mentionPopup').should('be.visible');
+		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').type('{enter}');
+
+		cy.cGet('#annotation-reply-textarea-1 a').should('exist');
+		cy.cGet('#annotation-reply-textarea-1 a').should('have.text', '@Alexandra');
+		cy.cGet('#annotation-reply-textarea-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#annotation-reply-textarea-1').should('have.text', 'some reply text @Alexandra');
+
+		cy.cGet('#annotation-reply-1').click();
+		cy.cGet('#annotation-content-area-2').should('contain','some reply text @Alexandra');
+
+		cy.cGet('#comment-annotation-menu-2').should('exist').click();
+		cy.cGet('body').contains('.context-menu-item', 'Reply').click();
+		cy.cGet('#annotation-reply-textarea-2').type('some reply to reply text @Ale');
+
+		cy.cGet('#mentionPopup').should('be.visible');
+		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').type('{enter}');
+
+		cy.cGet('#annotation-reply-textarea-2 a').should('exist');
+		cy.cGet('#annotation-reply-textarea-2 a').should('have.text', '@Alexandra');
+		cy.cGet('#annotation-reply-textarea-2 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#annotation-reply-textarea-2').should('have.text', 'some reply to reply text @Alexandra');
+
+		cy.cGet('#annotation-reply-2').click();
+		cy.cGet('#annotation-content-area-3').should('contain','some reply to reply text @Alexandra');
+	});
+
+	it('Escape should close the mentionPopup, comment should be in focus', function() {
+		desktopHelper.insertComment('some text0', false);
+
+		cy.cGet('.cool-annotation').find('#annotation-modify-textarea-new').type(' @Ale');
+		cy.cGet('#mentionPopup').should('be.visible');
+		helper.typeIntoDocument('{esc}');
+
+		cy.cGet('#mentionPopup').should('not.exist');
+		cy.cGet('#annotation-modify-textarea-new').should('have.focus');
+	});
 });

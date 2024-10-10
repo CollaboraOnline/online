@@ -1233,20 +1233,24 @@ label.disabled {
 	display: none;
 }
 
-[id$='contentControlModalpopup'].mobile-wizard {
+[id$='contentControlModalpopup'].mobile-wizard, [id$='mentionPopup'].mobile-wizard {
 	display: flex;
 	flex: 1;
 	align-self: stretch;
 }
 
-#contentControlList.mobile-wizard {
+#contentControlList.mobile-wizard, #mentionPopupList.mobile-wizard {
 	margin: 0;
 	border-color: transparent;
 	width: 100%;
 }
 
-#contentControlList.mobile-wizard li:not(:last-child) {
+#contentControlList.mobile-wizard li:not(:last-child), #mentionPopupList.mobile-wizard li:not(:last-child) {
 	border-bottom: 1px solid var(--color-border-lighter);
+}
+
+#contentControlList.mobile-wizard .ui-treeview-body, #mentionPopupList.mobile-wizard .ui-treeview-body {
+	max-height: none;
 }
 
 .unotoolbutton.mobile-wizard .unobutton img{

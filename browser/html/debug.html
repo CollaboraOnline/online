@@ -39,33 +39,81 @@
                 var wopiSrc = localServer + "/wopi/files/" + encodeURIComponent(filePath);
             }
             return localUrl + "WOPISrc=" + wopiSrc + '&' + params.toString();
-         }
-       var form = document.getElementById("form");
-       form.action = constructWopiUrl();
-       form.submit();
+          }
+        var form = document.getElementById("form");
+        form.action = constructWopiUrl();
+        form.submit();
 
-        window.addEventListener(
-            'message',
-            (event) => {
-                if (event.origin !== window.origin) {
-                    return;
-                }
+        // TODO: share code between debug.html and framed.doc.html
+        window.addEventListener('message', receivePostMessage);
 
-                if (typeof event.data !== 'object' || event.data === null) {
-                    return;
-                }
+        function post(msg) {
+          window.frames[0].postMessage(JSON.stringify(msg), '*');
+        }
 
-                if (typeof event.data.name !== 'string') {
-                    return;
-                }
+        function getMentionUserData() {
+          const usernames = ['Alexandra', 'Alison', 'Amanda', 'Amelia', 'Amy', 'Andrea', 'Angela', 'Anna',
+                             'Audrey', 'Ava', 'Bella', 'Bernadette', 'Carol', 'Caroline', 'Carolyn'];
+          const userProfileLink = 'https://github.com/CollaboraOnline/online';
+          let data = [];
+          usernames.forEach(username => data.push({
+            username: username,
+            profile: userProfileLink
+          }));
 
-                if (!event.data.name.endsWith("Error")) {
-                    return;
-                }
+          return data;
+        }
 
-                throw event.data;
-            }
-        );
+        function receivePostMessage(event) {
+          console.log('==== debug.html receiveMessage: ' + event.data);
+          if (event.origin !== window.origin)
+            return;
+
+          // check if event is a error message
+          if (typeof event.data === 'object' &&
+              event.data !== null &&
+              typeof event.data.name === 'string' &&
+              event.data.name.endsWith("Error"))
+            throw event.data;
+
+          let msg = JSON.parse(event.data);
+          if (!msg)
+            return;
+          switch (msg.MessageId) {
+            case 'App_LoadingStatus':
+              if (!msg.Values)
+                return;
+              if (msg.Values.Status == 'Document_Loaded')
+                post({'MessageId': 'Host_PostmessageReady'});
+              break;
+            case 'UI_Mention':
+              if (!msg.Values)
+                return;
+              const type = msg.Values.type;
+              const text = msg.Values.text;
+
+              const userData = getMentionUserData();
+
+              let filteredUser = [];
+              userData.forEach(element => {
+                if (element.username.toLowerCase().includes(text.toLowerCase()))
+                  filteredUser.push(element);
+              });
+
+              if (type === 'autocomplete')
+              {
+                setTimeout(post, 0,
+                  {
+                    'MessageId': 'Action_Mention',
+                    'SendTime': Date.now(),
+                    'Values': {
+                      'list': filteredUser,
+                    }
+                  });
+              }
+              break;
+          }
+        }
     </script>
 </body>
 </html>
