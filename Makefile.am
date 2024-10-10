@@ -36,6 +36,7 @@ endif
 dist_bin_SCRIPTS = coolwsd-systemplate-setup
 
 man_MANS = man/coolwsd.1 \
+           man/coolforkit-caps.1 \
            man/coolforkit-ns.1 \
            man/coolconvert.1 \
            man/coolconfig.1 \
