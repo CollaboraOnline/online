@@ -2061,49 +2061,55 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 						if (actHeight > maxMaxHeight) {
 							actHeight = maxMaxHeight;
 						}
-						// check if there is more space after this commit
-						var maxSize = maxMaxHeight;
-						if (i+1 < this.sectionProperties.commentList.length)
-							// max size of text should be the space between comments - size of non text parts
-							maxSize = this.sectionProperties.commentList[i+1].sectionProperties.container._leaflet_pos.y
-								- this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y
-								- this.sectionProperties.commentList[i].sectionProperties.author.getBoundingClientRect().height
-								- 3 * this.sectionProperties.marginY //top/bottom of comment window + space between comments
-								- 2; // not sure why
+						// if _leaflet_pos are not calculated (undefined) then dont do it (leave the comment at default size)
+						if (typeof this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos !== 'undefined'
+							 && (i+1 >= this.sectionProperties.commentList.length
+							 || typeof this.sectionProperties.commentList[i+1].sectionProperties.container._leaflet_pos !== 'undefined'))
+						{
+							// check if there is more space after this commit
+							var maxSize = maxMaxHeight;
+							if (i+1 < this.sectionProperties.commentList.length)
+								// max size of text should be the space between comments - size of non text parts
+								maxSize = this.sectionProperties.commentList[i+1].sectionProperties.container._leaflet_pos.y
+									- this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y
+									- this.sectionProperties.commentList[i].sectionProperties.author.getBoundingClientRect().height
+									- 3 * this.sectionProperties.marginY //top/bottom of comment window + space between comments
+									- 2; // not sure why
 
-						if (maxSize > maxMaxHeight) {
-							maxSize = maxMaxHeight;
-						} else if (growUp && actHeight > maxSize) {
-							// if more space needed as we have after the comment
-							// check it there is any space before the comment
-							var spaceBefore = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y;
-							if (i > 0) {
-								spaceBefore -= this.sectionProperties.commentList[i-1].sectionProperties.container._leaflet_pos.y
-									+ this.sectionProperties.commentList[i-1].getCommentHeight()
-									+ this.sectionProperties.marginY;
-							} else {
-								spaceBefore += this.documentTopLeft[1];
-							}
-							// if there is more space
-							if (spaceBefore > 0) {
-								var moveUp = 0;
-								if (actHeight - maxSize < spaceBefore) {
-									// there is enought space, move up as much as we can;
-									moveUp = actHeight - maxSize;
+							if (maxSize > maxMaxHeight) {
+								maxSize = maxMaxHeight;
+							} else if (growUp && actHeight > maxSize) {
+								// if more space needed as we have after the comment
+								// check it there is any space before the comment
+								var spaceBefore = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y;
+								if (i > 0) {
+									spaceBefore -= this.sectionProperties.commentList[i-1].sectionProperties.container._leaflet_pos.y
+										+ this.sectionProperties.commentList[i-1].getCommentHeight()
+										+ this.sectionProperties.marginY;
 								} else {
-									// there is not enought space
-									moveUp = spaceBefore;
+									spaceBefore += this.documentTopLeft[1];
 								}
-								// move up
-								var posX = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.x;
-								var posY = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y-moveUp;
-								(new L.PosAnimation()).run(this.sectionProperties.commentList[i].sectionProperties.container, {x: Math.round(posX), y: Math.round(posY)}, this.getAnimationDuration());
-								// increase comment height
-								maxSize += moveUp;
+								// if there is more space
+								if (spaceBefore > 0) {
+									var moveUp = 0;
+									if (actHeight - maxSize < spaceBefore) {
+										// there is enought space, move up as much as we can;
+										moveUp = actHeight - maxSize;
+									} else {
+										// there is not enought space
+										moveUp = spaceBefore;
+									}
+									// move up
+									var posX = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.x;
+									var posY = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y-moveUp;
+									(new L.PosAnimation()).run(this.sectionProperties.commentList[i].sectionProperties.container, {x: Math.round(posX), y: Math.round(posY)}, this.getAnimationDuration());
+									// increase comment height
+									maxSize += moveUp;
+								}
 							}
+							if (maxSize > minMaxHeight)
+								this.sectionProperties.commentList[i].sectionProperties.contentNode.style.maxHeight = Math.round(maxSize) + 'px';
 						}
-						if (maxSize > minMaxHeight)
-							this.sectionProperties.commentList[i].sectionProperties.contentNode.style.maxHeight = Math.round(maxSize) + 'px';
 					}
 				}
 			}
