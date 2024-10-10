@@ -702,15 +702,16 @@ void parseDocSize(const std::string& message, const std::string& type,
                   int& part, int& parts, int& width, int& height, int& viewid,
                   const std::string& testname)
 {
-    StringVector tokens(StringVector::tokenize(message, ' '));
+    Poco::JSON::Parser parser;
+    Poco::Dynamic::Var statusJsonVar = parser.parse(message);
+    const Poco::SharedPtr<Poco::JSON::Object>& statusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
 
-    // Expected format is something like 'type= parts= current= width= height='.
-    const std::string text = tokens[0].substr(std::string("type=").size());
-    parts = std::stoi(tokens[1].substr(std::string("parts=").size()));
-    part = std::stoi(tokens[2].substr(std::string("current=").size()));
-    width = std::stoi(tokens[3].substr(std::string("width=").size()));
-    height = std::stoi(tokens[4].substr(std::string("height=").size()));
-    viewid = std::stoi(tokens[5].substr(std::string("viewid=").size()));
+    const std::string text = statusJsonObject->get("type").toString();
+    parts = std::stoi(statusJsonObject->get("partscount").toString());
+    part = std::stoi(statusJsonObject->get("selectedpart").toString());
+    width = std::stoi(statusJsonObject->get("width").toString());
+    height = std::stoi(statusJsonObject->get("height").toString());
+    viewid = std::stoi(statusJsonObject->get("viewid").toString());
     LOK_ASSERT_EQUAL(type, text);
     LOK_ASSERT(parts > 0);
     LOK_ASSERT(part >= 0);

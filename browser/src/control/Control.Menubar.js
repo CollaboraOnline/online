@@ -442,6 +442,9 @@ L.Control.Menubar = L.Control.extend({
 				   {name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				]).concat([
 				   {type: 'separator'},
+				   {uno: '.uno:GridVisible', name: _UNO('.uno:GridVisible')},
+				   {uno: '.uno:GridUse', name: _UNO('.uno:GridUse')},
+				   {type: 'separator'},
 				   {name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 				   {name: _('Show Ruler'), id: 'showruler', type: 'action'},
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
@@ -594,6 +597,9 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
 					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				]).concat([
+					{type: 'separator'},
+					{uno: '.uno:GridVisible', name: _UNO('.uno:GridVisible')},
+					{uno: '.uno:GridUse', name: _UNO('.uno:GridUse')},
 					{type: 'separator'},
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
@@ -1789,12 +1795,12 @@ L.Control.Menubar = L.Control.extend({
 							$(aItem).text(_('Use Tabbed view'));
 						}
 					} else if (id === 'showslide') {
-						if (!self._map._docLayer.isHiddenSlide(self._map.getCurrentPartNumber()))
+						if (!app.impress.isSlideHidden(self._map.getCurrentPartNumber()))
 							$(aItem).hide();
 						else
 							$(aItem).show();
 					} else if (id === 'hideslide') {
-						if (self._map._docLayer.isHiddenSlide(self._map.getCurrentPartNumber()))
+						if (app.impress.isSlideHidden(self._map.getCurrentPartNumber()))
 							$(aItem).hide();
 						else
 							$(aItem).show();

@@ -622,7 +622,7 @@ class SlideShowPresenter {
 			return false;
 		}
 
-		if (this._map._docLayer.hiddenSlides() >= this._map.getNumberOfParts()) {
+		if (app.impress.areAllSlidesHidden()) {
 			this._notifyAllSlidesHidden();
 			return false;
 		}

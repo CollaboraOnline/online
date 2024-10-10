@@ -450,12 +450,12 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	onSlideHideToggle: function() {
-		if (!this.map._docLayer.isHiddenSlide(this.map.getCurrentPartNumber()))
+		if (!app.impress.isSlideHidden(this.map.getCurrentPartNumber()))
 			$('#showslide').hide();
 		else
 			$('#showslide').show();
 
-		if (this.map._docLayer.isHiddenSlide(this.map.getCurrentPartNumber()))
+		if (app.impress.isSlideHidden(this.map.getCurrentPartNumber()))
 			$('#hideslide').hide();
 		else
 			$('#hideslide').show();

@@ -2309,40 +2309,31 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 docBroker->forwardToChild(client_from_this(), renderThumbnailCmd);
             }
 
-            for(auto &token : tokens)
-            {
-                // Need to get the initial part id from status message
-                int part = -1;
-                if(getTokenInteger(tokens.getParam(token), "current", part))
-                {
-                    _clientSelectedPart = part;
-                }
+            Poco::JSON::Parser parser;
+            Poco::Dynamic::Var statusJsonVar = parser.parse(firstLine.substr(7));
+            const Poco::SharedPtr<Poco::JSON::Object>& statusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
 
-                int mode = 0;
-                if(getTokenInteger(tokens.getParam(token), "mode", mode))
-                    _clientSelectedMode = static_cast<ViewMode>(mode);
+            if (statusJsonObject->has("selectedpart"))
+                _clientSelectedPart = std::atoi(statusJsonObject->get("selectedpart").toString().c_str());
 
-                // Get document type too
-                std::string docType;
-                if(getTokenString(tokens.getParam(token), "type", docType))
-                {
-                    _isTextDocument = docType.find("text") != std::string::npos;
-                }
-
-                // Store our Kit ViewId
-                int viewId = -1;
-                if(getTokenInteger(tokens.getParam(token), "viewid", viewId))
-                    _kitViewId = viewId;
-            }
+            if (statusJsonObject->has("mode"))
+                _clientSelectedMode = static_cast<ClientSession::ViewMode>(std::atoi(statusJsonObject->get("mode").toString().c_str()));
+            if (statusJsonObject->has("type"))
+                _isTextDocument = statusJsonObject->get("type").toString() == "text";
+            if (statusJsonObject->has("viewid"))
+                _kitViewId = std::atoi(statusJsonObject->get("viewid").toString().c_str());
 
             // Forward the status response to the client.
             return forwardToClient(payload);
         }
         else if (tokens.equals(0, "statusupdate:"))
         {
-            uint32_t newValue;
-            if (tokens.getUInt32(7, "mode", newValue))
-                this->_clientSelectedMode = static_cast<ViewMode>(newValue);
+            Poco::JSON::Parser parser;
+            Poco::Dynamic::Var statusJsonVar = parser.parse(firstLine.substr(13));
+            const Poco::SharedPtr<Poco::JSON::Object>& statusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
+
+            if (statusJsonObject->has("mode"))
+                _clientSelectedMode = static_cast<ClientSession::ViewMode>(std::atoi(statusJsonObject->get("mode").toString().c_str()));
         }
         else if (tokens.equals(0, "commandvalues:"))
         {

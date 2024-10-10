@@ -55,15 +55,11 @@ void UnitRenderingOptions::invokeWSDTest()
         helpers::sendTextFrame(socket, "status", testname);
         const auto status = helpers::assertResponseString(socket, "status:", testname);
 
-        // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
+        Poco::JSON::Parser parser;
+        Poco::Dynamic::Var statusJsonVar = parser.parse(status.substr(7));
+        const Poco::SharedPtr<Poco::JSON::Object>& statusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
 
-        StringVector tokens(StringVector::tokenize(status, ' '));
-        LOK_ASSERT_EQUAL(static_cast<size_t>(8), tokens.size());
-
-        const std::string token = tokens[5];
-        const std::string prefix = "height=";
-        LOK_ASSERT_EQUAL(static_cast<size_t>(0), token.find(prefix));
-        const int height = std::stoi(token.substr(prefix.size()));
+        const int height = std::stoi(statusJsonObject->get("height").toString());
         // HideWhitespace was ignored, this was 32532, should be around 16706.
         LOK_ASSERT(height < 20000);
     }

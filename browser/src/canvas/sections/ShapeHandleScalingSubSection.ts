@@ -214,7 +214,10 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			e.stopPropagation();
 			this.sectionProperties.parentHandlerSection.sectionProperties.svg.style.opacity = 0.5;
 			this.moveHandlesOnDrag(point);
-			this.sectionProperties.parentHandlerSection.checkObjectsBoundaries([this.position[0]], [this.position[1]]);
+
+			// Here we are checking a point, so the size 0. dragDistance is also 0 because we already set the new position (moveHandlesOnDrag).
+			this.sectionProperties.parentHandlerSection.checkHelperLinesAndSnapPoints([0, 0], this.position, [0, 0]);
+
 			this.containerObject.requestReDraw();
 			this.sectionProperties.parentHandlerSection.showSVG();
 		}
