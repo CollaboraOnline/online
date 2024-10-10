@@ -71,6 +71,7 @@ interface SlideInfo {
 	hash: string;
 	index: number;
 	name: string;
+	notes: string;
 	empty: boolean;
 	hidden?: boolean;
 	masterPage: string;
@@ -111,25 +112,28 @@ class SlideShowPresenter {
 	_slideShowWindowProxy: ReturnType<typeof window.open> = null;
 	_windowCloseInterval: ReturnType<typeof setInterval> = null;
 	_currentSlide: number = 0;
+	_startSlide: number;
 	_slideRenderer: SlideRenderer = null;
 	_animationsHandler: SlideAnimations = null;
 	_canvasLoader: CanvasLoader | null = null;
 	_isAnimationPlaying: boolean = false;
 	_isPresentInWindow: boolean = false;
+	_eventCallback: (slide: number) => any;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
 	private _slideShowHandler: SlideShowHandler;
 	private _slideShowNavigator: SlideShowNavigator;
 	private _metaPresentation: MetaPresentation;
-	private _startSlide: number;
 	private _presentationInfoChanged: boolean = false;
 
-	constructor(map: any) {
+	constructor(map: any, options: any) {
 		this._map = map;
 		this._init();
+		if (options && options.noHooks) return;
 		this.addHooks();
 	}
 
 	addHooks() {
+		this._map.on('presentationinfo', this.onSlideShowInfo, this);
 		this._map.on('newfullscreen', this._onStart, this);
 		this._map.on('newpresentinwindow', this._onStartInWindow, this);
 		L.DomEvent.on(document, 'fullscreenchange', this._onFullScreenChange, this);
@@ -137,6 +141,7 @@ class SlideShowPresenter {
 	}
 
 	removeHooks() {
+		this._map.off('presentationinfo', this.onSlideShowInfo, this);
 		this._map.off('newfullscreen', this._onStart, this);
 		this._map.off('newpresentinwindow', this._onStartInWindow, this);
 		L.DomEvent.off(
@@ -149,17 +154,22 @@ class SlideShowPresenter {
 	}
 
 	private _init() {
-		this._slideShowHandler = new SlideShowHandler();
-		this._slideShowHandler.setPresenter(this);
-		this._slideShowNavigator = new SlideShowNavigator(this._slideShowHandler);
+		this._slideShowHandler = new SlideShowHandler(this);
+		this._slideShowNavigator = new SlideShowNavigator(
+			this,
+			this._slideShowHandler,
+		);
 		// do not allow user interaction until we get presentation info
 		this._slideShowNavigator.disable();
 		this._slideShowHandler.setNavigator(this._slideShowNavigator);
-		this._slideShowNavigator.setPresenter(this);
 	}
 
 	private onUpdateParts() {
 		if (this._checkAlreadyPresenting()) this.onSlideShowInfoChanged();
+	}
+
+	public getNavigator() {
+		return this._slideShowNavigator;
 	}
 
 	public getSlideInfo(slideNumber: number): SlideInfo | null {
@@ -178,6 +188,15 @@ class SlideShowPresenter {
 
 	public getCanvas(): HTMLCanvasElement {
 		return this._slideShowCanvas;
+	}
+
+	public addEventCallback(callback: (slide: number) => any) {
+		this._eventCallback = callback;
+	}
+
+	public getNotes(slide: number) {
+		const info = this.getSlideInfo(slide);
+		return info.notes;
 	}
 
 	_onFullScreenChange() {
@@ -307,7 +326,12 @@ class SlideShowPresenter {
 		}
 	}
 
-	private _createPresenterHTML(parent: Element, width: number, height: number) {
+	private _createPresenterHTML(
+		parent: Element,
+		width: number,
+		height: number,
+		options: any,
+	) {
 		const presenterContainer = L.DomUtil.create(
 			'div',
 			'leaflet-slideshow2',
@@ -324,27 +348,39 @@ class SlideShowPresenter {
 			slideshowContainer,
 			width,
 			height,
+			options,
 		);
 		return presenterContainer;
 	}
 
-	_createCanvas(parent: Element, width: number, height: number) {
+	_createCanvas(parent: Element, width: number, height: number, options: any) {
 		const canvas = L.DomUtil.create('canvas', 'leaflet-slideshow2', parent);
 
-		canvas.id = 'slideshow-canvas';
-		// set canvas styles
-		canvas.style.margin = 0;
-		canvas.style.position = 'absolute';
+		canvas.style.width = '100%';
+		canvas.style.height = '100%';
 
-		canvas.addEventListener(
-			'click',
-			this._slideShowNavigator.onClick.bind(this._slideShowNavigator),
-		);
+		if (options && !options.noStyle) {
+			canvas.id = 'slideshow-canvas';
+			// set canvas styles
+			canvas.style.margin = 0;
+			canvas.style.position = 'absolute';
+		}
+
+		if (!options || !options.noClick) {
+			canvas.addEventListener(
+				'click',
+				this._slideShowNavigator.onClick.bind(this._slideShowNavigator),
+			);
+		}
 
 		try {
-			this._slideRenderer = new SlideRendererGl(canvas);
+			if (options && options.render2d) {
+				this._slideRenderer = new SlideRenderer2d(this, canvas);
+			} else {
+				this._slideRenderer = new SlideRendererGl(this, canvas);
+			}
 		} catch (error) {
-			this._slideRenderer = new SlideRenderer2d(canvas);
+			this._slideRenderer = new SlideRenderer2d(this, canvas);
 		}
 
 		if (this._slideRenderer._context.is2dGl()) this._slideShowHandler.disable();
@@ -353,11 +389,14 @@ class SlideShowPresenter {
 	}
 
 	exitSlideshowWithWarning(): boolean {
-		// TODO 2D version for disabled webGL
-		if (this._slideRenderer._context.is2dGl()) return false;
-		new SlideShow.StaticTextRenderer(this._slideRenderer._context).display(
-			_('Click to exit presentation...'),
-		);
+		if (this._slideRenderer._context.is2dGl())
+			new SlideShow.StaticTextRenderer2D(this._slideRenderer._context).display(
+				_('Click to exit presentation...'),
+			);
+		else
+			new SlideShow.StaticTextRenderer(this._slideRenderer._context).display(
+				_('Click to exit presentation...'),
+			);
 		return true;
 	}
 
@@ -522,10 +561,10 @@ class SlideShowPresenter {
 
 	_doFallbackPresentation() {
 		this._stopFullScreen();
-		this._doInWindowPresentation();
+		this._doInWindowPresentation({});
 	}
 
-	_doInWindowPresentation() {
+	_doInWindowPresentation(options: any) {
 		const popupTitle =
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
 		const htmlContent = this._generateSlideWindowHtml(popupTitle);
@@ -533,17 +572,7 @@ class SlideShowPresenter {
 		this._slideShowWindowProxy = window.open('', '_blank', 'popup');
 
 		if (!this._slideShowWindowProxy) {
-			this._map.uiManager.showInfoModal(
-				'popup-blocked-modal',
-				_('Windowed Presentation Blocked'),
-				_(
-					'Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.',
-				),
-				'',
-				_('OK'),
-				null,
-				false,
-			);
+			this._notifyBlockedPresenting();
 			return;
 		}
 
@@ -563,6 +592,7 @@ class SlideShowPresenter {
 			body,
 			window.screen.width,
 			window.screen.height,
+			options,
 		);
 		this._slideShowCanvas.focus();
 
@@ -570,10 +600,13 @@ class SlideShowPresenter {
 			'resize',
 			this.onSlideWindowResize.bind(this),
 		);
-		this._slideShowWindowProxy.addEventListener(
-			'keydown',
-			this._slideShowNavigator.onKeyDown.bind(this._slideShowNavigator),
-		);
+
+		if (!options || !options.noKeyDown) {
+			this._slideShowWindowProxy.addEventListener(
+				'keydown',
+				this._slideShowNavigator.onKeyDown.bind(this._slideShowNavigator),
+			);
+		}
 
 		const slideShowWindow = this._slideShowWindowProxy;
 		this._map.uiManager.showSnackbar(
@@ -603,7 +636,7 @@ class SlideShowPresenter {
 	}
 
 	/// returns true on success
-	_onPrepareScreen(inWindow: boolean) {
+	_onPrepareScreen(inWindow: boolean, options: any) {
 		if (this._checkPresentationDisabled()) {
 			this._notifyPresentationDisabled();
 			return false;
@@ -629,7 +662,7 @@ class SlideShowPresenter {
 
 		if (!this._map['wopi'].DownloadAsPostMessage) {
 			if (inWindow) {
-				this._doInWindowPresentation();
+				this._doInWindowPresentation(options);
 				return true;
 			}
 
@@ -638,6 +671,7 @@ class SlideShowPresenter {
 				this._map._container,
 				window.screen.width,
 				window.screen.height,
+				{},
 			);
 			if (this._presenterContainer.requestFullscreen) {
 				this._presenterContainer
@@ -692,6 +726,20 @@ class SlideShowPresenter {
 		);
 	}
 
+	_notifyBlockedPresenting() {
+		this._map.uiManager.showInfoModal(
+			'popup-blocked-modal',
+			_('Windowed Presentation Blocked'),
+			_(
+				'Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.',
+			),
+			'',
+			_('OK'),
+			null,
+			false,
+		);
+	}
+
 	_checkPresentationDisabled() {
 		return this._map['wopi'].DisablePresentation;
 	}
@@ -710,7 +758,7 @@ class SlideShowPresenter {
 
 	/// called when user triggers the presentation using UI
 	_onStart(that: any) {
-		if (!this._onPrepareScreen(false))
+		if (!this._onPrepareScreen(false, {}))
 			// opens full screen, has to be on user interaction
 			return;
 
@@ -720,7 +768,7 @@ class SlideShowPresenter {
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow(that: any) {
-		if (!this._onPrepareScreen(true))
+		if (!this._onPrepareScreen(true, that.options))
 			// opens full screen, has to be on user interaction
 			return;
 
@@ -729,7 +777,7 @@ class SlideShowPresenter {
 	}
 
 	/// called as a response on getpresentationinfo
-	onSlideShowInfo(data: PresentationInfo) {
+	onSlideShowInfo(data: PresentationInfo, options: any) {
 		console.debug('SlideShow: received information about presentation');
 		this._presentationInfo = data;
 
@@ -748,6 +796,7 @@ class SlideShowPresenter {
 				data,
 				this._slideShowHandler,
 				this._slideShowNavigator,
+				options,
 			);
 			this._slideShowHandler.setMetaPresentation(this._metaPresentation);
 			this._slideShowNavigator.setMetaPresentation(this._metaPresentation);
@@ -803,6 +852,8 @@ class SlideShowPresenter {
 		});
 
 		this.startLoader();
+
+		if (options && options.noStart) return;
 
 		// allow user interaction
 		this._slideShowNavigator.enable();

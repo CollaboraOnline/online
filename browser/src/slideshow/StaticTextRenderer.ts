@@ -137,4 +137,46 @@ class StaticTextRenderer extends TextureAnimationBase {
 	}
 }
 
+class StaticTextRenderer2D {
+	private _canvasContext: RenderContext2d;
+	private _image: ImageBitmap;
+
+	constructor(canvasContext: RenderContext2d) {
+		this._canvasContext = canvasContext;
+	}
+
+	public display(displayText: string) {
+		this._image = this.createImageText(displayText);
+		requestAnimationFrame(this.render.bind(this));
+	}
+
+	public createImageText(displayText: string): ImageBitmap {
+		const width = this._canvasContext.canvas.width;
+		const height = this._canvasContext.canvas.height;
+		const offscreenCanvas = new OffscreenCanvas(width, height);
+		const ctx = offscreenCanvas.getContext('2d');
+
+		// Set background color
+		ctx.fillStyle = 'black';
+		ctx.fillRect(0, 0, width, height);
+
+		// Set text attributes
+		ctx.fillStyle = 'white';
+		ctx.font = '20px sans-serif';
+		ctx.textAlign = 'center';
+		ctx.textBaseline = 'middle';
+
+		ctx.fillText(displayText, width / 2, height / 2);
+
+		return offscreenCanvas.transferToImageBitmap();
+	}
+
+	public render(): void {
+		const gl = this._canvasContext.get2dGl();
+		gl.clearRect(0, 0, gl.canvas.width, gl.canvas.height);
+		gl.drawImage(this._image, 0, 0);
+	}
+}
+
 SlideShow.StaticTextRenderer = StaticTextRenderer;
+SlideShow.StaticTextRenderer2D = StaticTextRenderer2D;

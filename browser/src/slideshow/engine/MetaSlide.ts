@@ -27,7 +27,7 @@ class MetaSlide {
 		if (this.hasTransition())
 			this._transitionHandler = new SlideTransition(slideInfo);
 
-		if (slideInfo.animations) {
+		if (slideInfo.animations && !metaPres._noAnimation) {
 			this._animationsHandler = new SlideAnimations(
 				this._slideShowHandler.getContext(),
 				this,

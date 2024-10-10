@@ -285,7 +285,7 @@ class LayerDrawing {
 		}
 
 		if (this.slideCache.has(slideHash)) {
-			this.onSlideRenderingComplete({ success: true });
+			this.onSlideRenderingComplete({ success: true, slide: slideHash });
 			return;
 		}
 
@@ -293,7 +293,7 @@ class LayerDrawing {
 		const masterPageRendered = this.drawMasterPage(slideHash);
 		if (backgroundRendered && masterPageRendered) {
 			if (this.drawDrawPage(slideHash)) {
-				this.onSlideRenderingComplete({ success: true });
+				this.onSlideRenderingComplete({ success: true, slide: slideHash });
 				return;
 			}
 		}
@@ -484,10 +484,10 @@ class LayerDrawing {
 		}
 
 		var hasField = false;
-		for (const layer of layers) {
-			this.drawMasterPageLayer(layer, slideHash);
-			if (layer.isField) {
-				this.cachedMasterPages.delete(slideInfo.masterPage);
+		for (const layer in layers) {
+			this.drawMasterPageLayer(layers[layer], slideHash);
+			if (layers[layer].isField) {
+				delete layers[layer];
 				hasField = true;
 			}
 		}
@@ -596,6 +596,21 @@ class LayerDrawing {
 			this.prefetchedSlideHash = null;
 			return;
 		}
+
+		if (!this.requestedSlideHash) {
+			app.console.warn('onSlideRenderingComplete: requestedSlideHash is null');
+			return;
+		}
+
+		const layers = this.cachedDrawPages.get(this.requestedSlideHash);
+		if (!layers || layers.length === 0) {
+			return;
+		}
+
+		if (e.slide !== this.requestedSlideHash) {
+			return;
+		}
+
 		const reqSlideInfo = this.getSlideInfo(this.requestedSlideHash);
 
 		this.cacheAndNotify();

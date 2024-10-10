@@ -81,12 +81,14 @@ abstract class AnimationBaseNode extends BaseNode {
 							slideHash,
 							slideWidth,
 							slideHeight,
+							this.aNodeContext.aContext.aSlideShowHandler.getPresenter()._slideRenderer,
 						)
 					: new AnimatedElement(
 							this.aTargetHash,
 							slideHash,
 							slideWidth,
 							slideHeight,
+							this.aNodeContext.aContext.aSlideShowHandler.getPresenter()._slideRenderer,
 						);
 
 				this.aNodeContext.aAnimatedElementMap.set(

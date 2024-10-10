@@ -415,6 +415,11 @@ class Dispatcher {
 				else app.map.fire('presentinwindow');
 			};
 
+		this.actionsMap['presenterconsole'] = () => {
+			if (app.map._debug.debugOn || app.isExperimentalMode())
+				app.map.fire('newpresentinconsole');
+		};
+
 		this.actionsMap['fullscreen-drawing'] = () => {
 			L.toggleFullScreen();
 		};

@@ -83,7 +83,8 @@ class SlideShowHandler {
 	public isStarting: boolean;
 	private bIsFirstAutoEffectRunning: boolean = false;
 
-	constructor() {
+	constructor(presenter: SlideShowPresenter) {
+		this.presenter = presenter;
 		this.aTimer = new ElapsedTime();
 		this.aFrameSynchronization = new FrameSynchronization(
 			SlideShowHandler.PREFERRED_FRAME_RATE,
@@ -131,8 +132,8 @@ class SlideShowHandler {
 		this.theMetaPres = metaPres;
 	}
 
-	setPresenter(presenter: SlideShowPresenter) {
-		this.presenter = presenter;
+	getPresenter() {
+		return this.presenter;
 	}
 
 	setNavigator(slideShowNavigator: SlideShowNavigator) {
@@ -394,6 +395,10 @@ class SlideShowHandler {
 
 			this.update();
 		} else this.notifyAnimationsEnd();
+
+		if (this.presenter._eventCallback) {
+			this.presenter._eventCallback(nNewSlide);
+		}
 	}
 
 	notifyInteractiveAnimationSequenceStart(nNodeId: number) {

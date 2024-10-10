@@ -51,9 +51,11 @@ abstract class SlideRenderer {
 	protected _renderedSlideIndex: number = undefined;
 	protected _requestAnimationFrameId: number = null;
 	protected _isAnyVideoPlaying: boolean = false;
+	public _presenter: SlideShowPresenter = null;
 	private _activeLayers: Set<string> = new Set();
 
-	constructor(canvas: HTMLCanvasElement) {
+	constructor(presenter: SlideShowPresenter, canvas: HTMLCanvasElement) {
+		this._presenter = presenter;
 		this._canvas = canvas;
 	}
 
@@ -192,8 +194,8 @@ abstract class SlideRenderer {
 }
 
 class SlideRenderer2d extends SlideRenderer {
-	constructor(canvas: HTMLCanvasElement) {
-		super(canvas);
+	constructor(presenter: SlideShowPresenter, canvas: HTMLCanvasElement) {
+		super(presenter, canvas);
 		this._context = new RenderContext2d(canvas);
 	}
 
@@ -263,8 +265,8 @@ class SlideRendererGl extends SlideRenderer {
 	private _program: WebGLProgram = null;
 	private _vao: WebGLVertexArrayObject = null;
 
-	constructor(canvas: HTMLCanvasElement) {
-		super(canvas);
+	constructor(presenter: SlideShowPresenter, canvas: HTMLCanvasElement) {
+		super(presenter, canvas);
 		this._context = new RenderContextGl(canvas);
 
 		const vertexShader = this._context.createVertexShader(
@@ -357,10 +359,10 @@ class SlideRendererGl extends SlideRenderer {
 	}
 
 	private getNextTexture(): WebGLTexture {
-		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
-		const slideImage: ImageBitmap = presenter._slideCompositor.getAnimatedSlide(
-			this._renderedSlideIndex,
-		);
+		const slideImage: ImageBitmap =
+			this._presenter._slideCompositor.getAnimatedSlide(
+				this._renderedSlideIndex,
+			);
 		this.updateTexture(this._slideTexture, slideImage);
 		return this._slideTexture;
 	}

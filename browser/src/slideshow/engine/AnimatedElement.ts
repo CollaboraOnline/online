@@ -371,6 +371,7 @@ class AnimatedElement {
 		slideHash: string,
 		slideWidth: number,
 		slideHeight: number,
+		slideRenderer: SlideRenderer,
 	) {
 		ANIMDBG.print(`AnimatedElement(${sId}, ${slideHash})`);
 		this.sId = sId;
@@ -382,7 +383,7 @@ class AnimatedElement {
 		this.transitionFiltersManager = new TransitionFiltersManager();
 
 		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
-		this.slideRenderer = presenter._slideRenderer;
+		this.slideRenderer = slideRenderer;
 	}
 
 	getId() {
@@ -546,7 +547,7 @@ class AnimatedElement {
 	// TODO unused, to be removed (?)
 	private getAnimatedLayerInfo(): AnimatedShapeInfo {
 		ANIMDBG.print('AnimatedElement.getAnimatedLayerInfo');
-		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
+		const presenter: SlideShowPresenter = this.slideRenderer._presenter;
 		if (presenter) {
 			const compositor = presenter._slideCompositor;
 			if (compositor) {

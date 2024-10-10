@@ -23,15 +23,19 @@ class MetaPresentation {
 	private partHashes: Map<number, string>;
 	private aSlideShowHandler: SlideShowHandler;
 	private slideShowNavigator: SlideShowNavigator;
+	public _noAnimation: boolean;
 
 	constructor(
 		info: PresentationInfo,
 		aSlideShowHandler: SlideShowHandler,
 		aSlideShowNavigator: SlideShowNavigator,
+		options: any,
 	) {
 		this.aSlideShowHandler = aSlideShowHandler;
 		this.update(info);
 		this.setNavigator(aSlideShowNavigator);
+		this._noAnimation =
+			options && options.noAnimation ? options.noAnimation : false;
 	}
 
 	setNavigator(nav: SlideShowNavigator) {

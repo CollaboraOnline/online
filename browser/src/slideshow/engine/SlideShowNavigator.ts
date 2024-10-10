@@ -19,11 +19,17 @@ class SlideShowNavigator {
 	private keyHandlerMap: Record<string, () => void>;
 	private _canvasClickHandler: MouseClickHandler;
 	private currentSlide: number;
+	private _minSlide: number = 0;
+	private _maxSlide: number = Number.MAX_VALUE;
 	private prevSlide: number;
 	private isEnabled: boolean;
 	private isRewindingToPrevSlide: boolean;
 
-	constructor(slideShowHandler: SlideShowHandler) {
+	constructor(
+		presenter: SlideShowPresenter,
+		slideShowHandler: SlideShowHandler,
+	) {
+		this.presenter = presenter;
 		this.slideShowHandler = slideShowHandler;
 		this.currentSlide = undefined;
 		this.prevSlide = undefined;
@@ -56,6 +62,11 @@ class SlideShowNavigator {
 
 	private removeHandlers() {
 		this._canvasClickHandler.handleClick = null;
+	}
+
+	public setMinMaxSlide(minSlide: number, maxSlide: number) {
+		this._minSlide = minSlide;
+		this._maxSlide = maxSlide;
 	}
 
 	public setMetaPresentation(metaPres: MetaPresentation) {
@@ -204,6 +215,10 @@ class SlideShowNavigator {
 			NAVDBG.print('SlideShowNavigator.displaySlide: unexpected nNewSlide');
 			return;
 		}
+
+		nNewSlide = Math.max(this._minSlide, nNewSlide);
+		nNewSlide = Math.min(this._maxSlide, nNewSlide);
+
 		if (nNewSlide >= this.theMetaPres.numberOfSlides) {
 			this.currentSlide = nNewSlide;
 			const force = nNewSlide > this.theMetaPres.numberOfSlides;
@@ -380,8 +395,8 @@ class SlideShowNavigator {
 		if (handler) handler();
 	}
 
-	setPresenter(presenter: SlideShowPresenter) {
-		this.presenter = presenter;
+	getPresenter() {
+		return this.presenter;
 	}
 
 	private get slideCompositor(): SlideCompositor {

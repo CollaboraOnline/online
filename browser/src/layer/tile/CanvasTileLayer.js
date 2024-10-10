@@ -1651,9 +1651,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.fire('adminuser');
 		} else if (textMsg.startsWith('presentationinfo:')) {
 			var content = JSON.parse(textMsg.substring('presentationinfo:'.length + 1));
-			if (this._map.slideShowPresenter) {
-				this._map.slideShowPresenter.onSlideShowInfo(content);
-			}
+			this._map.fire('presentationinfo', content);
 		} else if (textMsg.startsWith('slidelayer:')) {
 			const content = JSON.parse(textMsg.substring('slidelayer:'.length + 1));
 			this._map.fire('slidelayer', {
@@ -1661,10 +1659,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				image: img
 			});
 		} else if (textMsg.startsWith('sliderenderingcomplete:')) {
-			const status = textMsg.substring('sliderenderingcomplete:'.length + 1);
-			this._map.fire('sliderenderingcomplete', {
-				success: status === 'success'
-			});
+			const data = JSON.parse(textMsg.substring('sliderenderingcomplete:'.length + 1));
+			this._map.fire('sliderenderingcomplete', data);
 		}
 	},
 

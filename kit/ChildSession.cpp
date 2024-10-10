@@ -2310,7 +2310,7 @@ bool ChildSession::renderSlide(const StringVector& tokens)
                                                            &bufferWidth, &bufferHeight,
                                                            renderBackground, renderMasterPage);
     if (!success) {
-        sendTextFrame("sliderenderingcomplete: fail");
+        sendTextFrame("sliderenderingcomplete: {\"success\": 0 , \"slide\": \"" + hash + "\"}");
         return false;
     }
 
@@ -2327,8 +2327,8 @@ bool ChildSession::renderSlide(const StringVector& tokens)
 
     getLOKitDocument()->postSlideshowCleanup();
 
-    std::string msg = "sliderenderingcomplete: ";
-    msg += (success ? "success" : "fail");
+    std::string msg = "sliderenderingcomplete: "
+        "{\"success\":" + std::string((success ? "1" : "0")) + ", \"slide\": \"" + hash + "\"}";
     sendTextFrame(msg);
 
     return success;
