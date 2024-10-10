@@ -40,10 +40,6 @@ public:
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
                       int64_t &/* timeoutMaxMs */) override;
 
-    void checkTimeout(std::chrono::steady_clock::time_point /* now */) override
-    {
-    }
-
     void performWrites(std::size_t capacity) override;
 
     void onDisconnect() override

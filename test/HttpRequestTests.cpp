@@ -145,6 +145,7 @@ public:
     void setUp()
     {
         LOG_INF("HttpRequestTests::setUp");
+        std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         std::shared_ptr<SocketFactory> factory = std::make_shared<ServerSocketFactory>();
         _port = 9990;
         for (int i = 0; i < 40; ++i, ++_port)
@@ -152,7 +153,7 @@ public:
             // Try listening on this port.
             LOG_INF("HttpRequestTests::setUp: creating socket to listen on port " << _port);
             _socket = ServerSocket::create(ServerSocket::Type::Local, _port, Socket::Type::IPv4,
-                                           _pollServerThread, factory);
+                                           now, _pollServerThread, factory);
             if (_socket)
                 break;
         }

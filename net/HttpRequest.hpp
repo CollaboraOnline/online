@@ -153,6 +153,8 @@ STATE_ENUM(FieldParseState,
 /// See https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 enum class StatusCode : unsigned
 {
+    None = 0, // Undefined status (unknown)
+
     // Informational
     Continue = 100,
     SwitchingProtocols = 101,
@@ -1199,9 +1201,9 @@ public:
     }
 
     /// Returns the default timeout.
-    static constexpr std::chrono::milliseconds getDefaultTimeout()
+    static std::chrono::milliseconds getDefaultTimeout()
     {
-        return std::chrono::seconds(30);
+        return std::chrono::duration_cast<std::chrono::milliseconds>( net::Defaults::get().HTTPTimeout );
     }
 
     /// Returns the current protocol scheme.
@@ -1434,7 +1436,8 @@ private:
         while (!_response->done())
         {
             const auto now = std::chrono::steady_clock::now();
-            checkTimeout(now);
+            if (checkTimeout(now))
+                return false;
 
             const auto remaining =
                 std::chrono::duration_cast<std::chrono::microseconds>(deadline - now);
@@ -1694,17 +1697,21 @@ private:
         net::asyncConnect(_host, _port, isSecure(), shared_from_this(), pushConnectCompleteToPoll);
     }
 
-    void checkTimeout(std::chrono::steady_clock::time_point now) override
+    bool checkTimeout(std::chrono::steady_clock::time_point now) override
     {
         if (!_response || _response->done())
-            return;
+            return false;
 
+        const std::chrono::microseconds timeout = getTimeout();
         const auto duration =
             std::chrono::duration_cast<std::chrono::milliseconds>(now - _startTime);
-        if (now < _startTime || duration > getTimeout() || SigUtil::getTerminationFlag())
+
+        if (now < _startTime ||
+            (timeout > std::chrono::microseconds::zero() && duration > timeout) ||
+            SigUtil::getTerminationFlag())
         {
-            LOG_WRN("Timed out while requesting [" << _request.getVerb() << ' ' << _host
-                                                   << _request.getUrl() << "] after " << duration);
+            LOG_WRN("CheckTimeout: Timeout while requesting [" << _request.getVerb() << ' ' << _host
+                                                               << _request.getUrl() << "] after " << duration);
 
             // Flag that we timed out.
             _response->timeout();
@@ -1714,7 +1721,9 @@ private:
             // no good maintaining a poor connection (if that's the issue).
             onDisconnect(); // Trigger manually (why wait for poll to do it?).
             assert(isConnected() == false);
+            return true;
         }
+        return false;
     }
 
     int sendTextMessage(const char*, const size_t, bool) const override { return 0; }

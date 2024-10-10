@@ -264,7 +264,9 @@ int main (int argc, char **argv)
 
     // Setup listening socket with a factory for connected sockets.
     auto serverSocket = std::make_shared<ServerSocket>(
-        Socket::Type::All, DumpSocketPoll,
+        Socket::Type::All,
+        std::chrono::steady_clock::now(),
+        DumpSocketPoll,
         std::make_shared<DumpSocketFactory>(isSSL));
 
     if (!serverSocket->bind(ServerSocket::Type::Public, port))

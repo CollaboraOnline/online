@@ -119,6 +119,9 @@ private:
     std::weak_ptr<StreamSocket> _socket;
     std::string _id;
 
+    // Used for StreamSocket::parseHeader, net::Defaults::HTTPTimeout acting as max delay
+    std::chrono::steady_clock::time_point _lastSeenHTTPHeader;
+
 #if !MOBILEAPP
     /// WASM document request handler. Used only when WASM is enabled.
     std::unique_ptr<WopiProxy> _wopiProxy;
