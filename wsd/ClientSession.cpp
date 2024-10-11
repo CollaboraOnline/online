@@ -2329,6 +2329,12 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             // Forward the status response to the client.
             return forwardToClient(payload);
         }
+        else if (tokens.equals(0, "statusupdate:"))
+        {
+            uint32_t newValue;
+            if (tokens.getUInt32(7, "mode", newValue))
+                this->_clientSelectedMode = newValue;
+        }
         else if (tokens.equals(0, "commandvalues:"))
         {
             const std::string stringJSON = payload->jsonString();
