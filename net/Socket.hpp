@@ -225,6 +225,7 @@ public:
 #if !MOBILEAPP
     /// Uses peercreds to get prisoner PID if present or -1
     int getPid() const;
+#endif
 
     /// Sets the kernel socket send buffer in size bytes.
     /// Note: TCP will allocate twice this size for admin purposes,
@@ -235,6 +236,7 @@ public:
     /// Returns true on success only.
     bool setSocketBufferSize(const int size)
     {
+#if !MOBILEAPP
         int rc = ::setsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, sizeof(size));
 
         _sendBufferSize = getSocketBufferSize();
@@ -257,17 +259,23 @@ public:
                 LOG_TRC("Set socket buffer size to " << _sendBufferSize);
             return true;
         }
+#else
+        return false;
+#endif
     }
 
     /// Gets the actual send buffer size in bytes, -1 for failure.
     int getSocketBufferSize() const
     {
+#if !MOBILEAPP
         int size;
         unsigned int len = sizeof(size);
         const int rc = ::getsockopt(_fd, SOL_SOCKET, SO_SNDBUF, &size, &len);
         return rc == 0 ? size : -1;
-    }
+#else
+        return -1;
 #endif
+    }
 
     /// Gets our fast cache of the socket buffer size
     int getSendBufferSize() const { return (Util::isMobileApp() ? INT_MAX : _sendBufferSize); }
