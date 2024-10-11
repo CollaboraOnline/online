@@ -2696,9 +2696,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var colorParameterID = data.command.replace('.uno:', '') + '.Color';
 		var themeParameterID = data.command.replace('.uno:', '') + '.ComplexColorJSON';
 
+		var parsed = builder.parseHexColor(color);
+
 		params[colorParameterID] = {
 			type : 'long',
-			value : builder.parseHexColor(color)
+			value : parsed ? parsed : parseInt(color)
 		};
 
 		if (themeData != null)
@@ -2716,14 +2718,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_getDefaultColorForCommand: function(command) {
 		if (command == '.uno:CharBackColor')
-			return '#';
+			return -1;
 		else if (command == '.uno:BackgroundColor')
-			return '#';
+			return -1;
 		return 0;
 	},
 
+	/// returns string, if color is transparent we get -1
 	_toHexColor: function(colorInt) {
-		var colorHex = parseInt(colorInt).toString(16);
+		var colorInt = parseInt(colorInt);
+		if (colorInt < 0)
+			return '' + colorInt;
+
+		var colorHex = colorInt.toString(16);
 
 		while (colorHex != '#' && colorHex.length < 6)
 			colorHex = '0' + colorHex;
@@ -2735,7 +2742,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_getCurrentColor: function(data, builder) {
-		var selectedColor = parseInt(builder.map['stateChangeHandler'].getItemValue(data.command));
+		var selectedColor = builder.map['stateChangeHandler'].getItemValue(data.command);
 
 		if (!selectedColor || selectedColor < 0)
 			selectedColor = builder._getUnoStateForItemId(data.id, builder);
@@ -2743,7 +2750,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!selectedColor || selectedColor < 0)
 			selectedColor = builder._getDefaultColorForCommand(data.command);
 
-		return builder._toHexColor(selectedColor);
+		return builder._toHexColor(parseInt(selectedColor));
 	},
 
 	_colorControl: function(parentContainer, data, builder) {
@@ -2767,9 +2774,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (!colorToApply || colorToApply === '#')
 					return;
 
-				var color = -1;
-				if (colorToApply !== -1)
-					color = colorToApply.indexOf('#') === 0 ? colorToApply.substr(1) : colorToApply;
+				var color =
+					colorToApply.indexOf('#') === 0 ? colorToApply.substr(1) : colorToApply;
 
 				builder._sendColorCommand(builder, data, color);
 			};
