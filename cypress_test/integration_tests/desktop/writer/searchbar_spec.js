@@ -21,6 +21,19 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 		helper.expectTextForClipboard('a');
 	});
 
+	it('Search existing word in table.', function() {
+		helper.setDummyClipboardForCopy();
+		cy.cGet('input#search-input').clear().type('b'); // check character inside table
+		cy.wait(500);
+		cy.cGet('input#search-input').should('have.focus');
+
+		// Part of the text should be selected
+		helper.textSelectionShouldExist();
+
+		helper.copy();
+		helper.expectTextForClipboard('b');
+	});
+
 	it('Search not existing word.', function() {
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('input#search-input').clear().type('q');
