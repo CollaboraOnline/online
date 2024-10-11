@@ -33,6 +33,16 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 			.should('have.attr', 'style', 'background: #ffb66c');
 	});
 
+	it('Apply transparent highlight color.', function() {
+		helper.setDummyClipboardForCopy();
+		desktopHelper.actionOnSelector('backColor',
+			(selector) => { cy.cGet(selector.replace('.unoarrow', '') + ' .unobutton').click(); });
+		writerHelper.selectAllTextOfDoc();
+		helper.copy();
+		cy.cGet('#copy-paste-container p font span')
+			.should('have.attr', 'style', 'background: transparent');
+	});
+
 	it('Apply font color.', function() {
 		helper.setDummyClipboardForCopy();
 		desktopHelper.actionOnSelector('fontColor', (selector) => { cy.cGet(selector).click(); });
