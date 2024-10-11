@@ -3255,17 +3255,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._replayPrintTwipsMsg('invalidatecursor');
 	},
 
-	_isAnyInputFocused: function() {
-		var hasTunneledDialogOpened = this._map.dialog ? this._map.dialog.hasOpenedDialog() : false;
-		var hasJSDialogOpened = this._map.jsdialog ? this._map.jsdialog.hasDialogOpened() : false;
-		var hasJSDialogFocused = L.DomUtil.hasClass(document.activeElement, 'jsdialog');
-		var commentHasFocus = app.view.commentHasFocus;
-		var inputHasFocus = $('input:focus').length > 0 || $('textarea.jsdialog:focus').length > 0;
-
-		return hasTunneledDialogOpened || hasJSDialogOpened || hasJSDialogFocused
-			|| commentHasFocus || inputHasFocus;
-	},
-
 	// enable or disable blinking cursor and  the cursor overlay depending on
 	// the state of the document (if the falgs are set)
 	_updateCursorAndOverlay: function (/*update*/) {
@@ -3286,7 +3275,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			// Don't show the keyboard when the Wizard is visible.
 			if (!window.mobileWizard && !window.pageMobileWizard &&
 				!window.insertionMobileWizard && !hasMobileWizardOpened &&
-				!this._isAnyInputFocused() && !hasIframeModalOpened) {
+				!JSDialog.IsAnyInputFocused() && !hasIframeModalOpened) {
 				// If the user is editing, show the keyboard, but don't change
 				// anything if nothing is changed.
 
@@ -3303,7 +3292,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map._textInput.hideCursor();
 			// Maintain input if a dialog or search-box has the focus.
 			if (this._map.editorHasFocus() && !this._map.uiManager.isAnyDialogOpen() && !this._map.isSearching()
-				&& !this._isAnyInputFocused())
+				&& !JSDialog.IsAnyInputFocused())
 				this._map.focus(false);
 		}
 
@@ -3391,7 +3380,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._addCellDropDownArrow();
 
 			var focusOutOfDocument = document.activeElement === document.body;
-			var dontFocusDocument = this._isAnyInputFocused() || focusOutOfDocument;
+			var dontFocusDocument = JSDialog.IsAnyInputFocused() || focusOutOfDocument;
 			var dontStealFocus = sameAddress && this._map.calcInputBarHasFocus();
 			dontFocusDocument = dontFocusDocument || dontStealFocus;
 

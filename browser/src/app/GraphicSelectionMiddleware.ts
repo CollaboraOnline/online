@@ -10,6 +10,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+declare var JSDialog: any;
+
 class GraphicSelection {
 	public static rectangle: cool.SimpleRectangle = null;
 	public static extraInfo: any = null;
@@ -153,7 +155,7 @@ class GraphicSelection {
 		if (this.hasActiveSelection()) {
 			// Hide the keyboard on graphic selection, unless cursor is visible.
 			// Don't interrupt editing in dialogs
-			if (!app.map._docLayer._isAnyInputFocused())
+			if (!JSDialog.IsAnyInputFocused())
 				app.map.focus(app.file.textCursor.visible);
 
 			if (!app.map.isEditMode()) {

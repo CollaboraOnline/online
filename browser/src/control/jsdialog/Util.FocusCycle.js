@@ -13,7 +13,21 @@
  * JSDialog.FocusCycle - focus related functions
  */
 
-/* global JSDialog */
+/* global app JSDialog $ */
+
+function isAnyInputFocused() {
+	if (!app.map)
+		return false;
+
+	var hasTunneledDialogOpened = app.map.dialog ? app.map.dialog.hasOpenedDialog() : false;
+	var hasJSDialogOpened = app.map.jsdialog ? app.map.jsdialog.hasDialogOpened() : false;
+	var hasJSDialogFocused = L.DomUtil.hasClass(document.activeElement, 'jsdialog');
+	var commentHasFocus = app.view.commentHasFocus;
+	var inputHasFocus = $('input:focus').length > 0 || $('textarea.jsdialog:focus').length > 0;
+
+	return hasTunneledDialogOpened || hasJSDialogOpened || hasJSDialogFocused
+		|| commentHasFocus || inputHasFocus;
+}
 
 function getFocusableElements(container) {
 	if (!container)
@@ -112,6 +126,7 @@ function findFocusableWithin(element, direction){
 		: (focusableElements.reverse().find(isFocusable));
 }
 
+JSDialog.IsAnyInputFocused = isAnyInputFocused;
 JSDialog.GetFocusableElements = getFocusableElements;
 JSDialog.MakeFocusCycle = makeFocusCycle;
 JSDialog.FindFocusableElement = findFocusableElement;
