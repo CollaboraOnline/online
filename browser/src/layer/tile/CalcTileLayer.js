@@ -912,7 +912,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		var unoName = isSplitCol ? 'FreezePanesColumn' : 'FreezePanesRow';
 		var command = {};
-		command[unoName] = {
+		command['Index'] = {
 			type: 'int32',
 			value: newSplitIndex
 		};
