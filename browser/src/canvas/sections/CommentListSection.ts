@@ -75,6 +75,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		[key: string]: any;
 	};
 	disableLayoutAnimation: boolean = false;
+	mobileCommentMentionListId: string = 'mentionPopupList';
+	mobileCommentId: string = 'new-annotation-dialog';
+	mobileCommentModalId: string;
 
 	map: any;
 	static autoSavedComment: cool.Comment;
@@ -107,6 +110,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		// This (commentsAreListed) variable means that comments are shown as a list on the right side of the document.
 		this.sectionProperties.commentsAreListed = (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') && !(<any>window).mode.isMobile();
 		this.idIndexMap = new Map<any, number>();
+		this.mobileCommentModalId = this.map.uiManager.generateModalId(this.mobileCommentId);
 	}
 
 	public onInitialize (): void {
@@ -421,6 +425,13 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		}
 	}
 
+	public isMobileCommentActive (): boolean {
+		const newComment = document.getElementById(this.mobileCommentId);
+		if (!newComment)
+			return false;
+		return newComment.style.display !== 'none'
+	}
+
 	public newAnnotationMobile (comment: any, addCommentFn: any, isMod: any): void {
 		var commentData = comment.sectionProperties.data;
 
@@ -441,14 +452,21 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			}
 		}.bind(this);
 
-		var id = 'new-annotation-dialog';
-		var dialogId = this.map.uiManager.generateModalId(id);
-		var json = this.map.uiManager._modalDialogJSON(id, '', true, [
+		var json = this.map.uiManager._modalDialogJSON(this.mobileCommentId, '', true, [
 			{
 				id: 'input-modal-input',
 				type: 'multilineedit',
 				text: (commentData.text && isMod ? commentData.text: ''),
 				contenteditable: true
+			},
+			{
+				id: this.mobileCommentMentionListId,
+				type: 'treelistbox',
+				text: '',
+				enabled: true,
+				singleclickactivate: false,
+				fireKeyEvents: true,
+				entries: [] as Array<TreeEntryJSON>,
 			},
 			{
 				id: '',
@@ -476,7 +494,18 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 
 		var cancelFunction = function() {
 			this.cancel(comment);
-			this.map.uiManager.closeModal(dialogId);
+			this.map.uiManager.closeModal(this.mobileCommentModalId);
+		}.bind(this);
+
+		const mentionListCallback = function(objectType: any, eventType: any, object: any, index: number) {
+				if (eventType === 'close')
+					this.map.fire('closementionpopup', { 'typingMention': false });
+				else if (eventType === 'select' || eventType === 'activate') {
+					const item = this.map.mention.itemList[index];
+					const replacement = this.map._docLayer._mentionText.join('');
+					comment.autoCompleteMention(item.username, item.profile, replacement)
+					this.map.fire('closementionpopup', { 'typingMention': false });
+				}
 		}.bind(this);
 
 		this.map.uiManager.showModal(json, [
@@ -485,12 +514,21 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 					var input = document.getElementById('input-modal-input') as HTMLDivElement;
 					callback(input);
 				}
-				this.map.uiManager.closeModal(dialogId);
+				this.map.uiManager.closeModal(this.mobileCommentModalId);
 			}.bind(this)},
 			{id: 'response-cancel', func: cancelFunction},
 			{id: '__POPOVER__', func: cancelFunction},
-			{id: '__DIALOG__', func: cancelFunction}
+			{id: '__DIALOG__', func: cancelFunction},
+			{id: 'mentionPopupList', func: mentionListCallback}
 		]);
+
+	  const multilineEditDiv = document.getElementById('input-modal-input');
+		multilineEditDiv.addEventListener('input', function(ev: any){
+			if (ev && comment.sectionProperties.docLayer._docType === 'text') {
+				// special handling for mentions
+				comment.handleMentionInput(ev);
+			}
+		});
 
 		var tagTd = 'td',
 		empty = '',
