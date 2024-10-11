@@ -69,8 +69,23 @@ abstract class AutoCompletePopup {
 		if (!popupExists) return;
 
 		this.map.jsdialog.focusToLastElement(this.popupId);
-		if (this.isMobile) this.map.fire('closemobilewizard');
-		else this.map.jsdialog.clearDialog(this.popupId);
+		if (this.isMobile) {
+			const commentSection = app.sectionContainer.getSectionWithName(
+				L.CSections.CommentList.name,
+			);
+
+			if (commentSection?.isMobileCommentActive()) {
+				const control = this.getTreeJSON();
+				const data = this.getPopupJSON(control, { x: 0, y: 0 });
+				if (commentSection?.isMobileCommentActive()) {
+					data.id = 'modal-dialog-new-annotation-dialog';
+				}
+				(data.control as TreeWidget).entries = [];
+				this.sendUpdate(data);
+			} else {
+				this.map.fire('closemobilewizard');
+			}
+		} else this.map.jsdialog.clearDialog(this.popupId);
 	}
 
 	abstract getPopupEntries(ev: FireEvent): Array<TreeEntryJSON>;
@@ -155,12 +170,17 @@ abstract class AutoCompletePopup {
 		const entries = this.getPopupEntries(ev);
 		let data: PopupData;
 		const cursorPos = this.getCursorPosition();
-
+		const commentSection = app.sectionContainer.getSectionWithName(
+			L.CSections.CommentList.name,
+		);
 		if (entries.length > 0) {
 			const control = this.getTreeJSON();
 			// update the popup with list if mentionList already exist
 			if (L.DomUtil.get(this.popupId + 'List')) {
 				data = this.getPopupJSON(control, cursorPos);
+				if (commentSection?.isMobileCommentActive()) {
+					data.id = 'modal-dialog-new-annotation-dialog';
+				}
 				(data.control as TreeWidget).entries = entries;
 				this.sendUpdate(data);
 				return;
@@ -170,6 +190,15 @@ abstract class AutoCompletePopup {
 			data = this.newPopupData;
 			data.children[0].children[0] = control;
 			(data.children[0].children[0] as TreeWidget).entries = entries;
+		} else if (this.isMobile && commentSection?.isMobileCommentActive()) {
+			const control = this.getTreeJSON();
+			data = this.getPopupJSON(control, cursorPos);
+			if (commentSection?.isMobileCommentActive()) {
+				data.id = 'modal-dialog-new-annotation-dialog';
+			}
+			(data.control as TreeWidget).entries = [];
+			this.sendUpdate(data);
+			return;
 		} else {
 			const control = this.getSimpleTextJSON();
 			if (L.DomUtil.get(this.popupId + 'fixedtext')) {

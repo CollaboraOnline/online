@@ -1190,7 +1190,7 @@ L.Control.UIManager = L.Control.extend({
 			for (var i in callbacks) {
 				var callback = callbacks[i];
 				if (object.id === callback.id && (!callback.type || eventType === callback.type)) {
-					callback.func();
+					callback.func(objectType, eventType, object, data);
 				}
 			}
 		};
