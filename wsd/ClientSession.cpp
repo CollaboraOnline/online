@@ -1218,16 +1218,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             docBroker->updateLastModifyingActivityTime();
         }
 
-        /*
-            When the UI mode is switched, tile invalidation callback is sent before the mode switch callback.
-            This causes the tiles' ui mode to conflict with the view mode.
-            We set the view mode beforehand here.
-        */
-        if (firstLine == "uno .uno:NormalMultiPaneGUI")
-            _clientSelectedMode = 0;
-        else if (firstLine == "uno .uno:NotesMode")
-            _clientSelectedMode = 2;
-
         if (!filterMessage(firstLine))
         {
             const std::string dummyFrame = "dummymsg";
@@ -2329,7 +2319,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
                 int mode = 0;
                 if(getTokenInteger(tokens.getParam(token), "mode", mode))
-                    _clientSelectedMode = static_cast<ViewMode>(mode);
+                    _clientSelectedMode = mode;
 
                 // Get document type too
                 std::string docType;
@@ -2351,7 +2341,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         {
             uint32_t newValue;
             if (tokens.getUInt32(7, "mode", newValue))
-                this->_clientSelectedMode = static_cast<ViewMode>(newValue);
+                this->_clientSelectedMode = newValue;
         }
         else if (tokens.equals(0, "commandvalues:"))
         {
