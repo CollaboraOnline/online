@@ -260,7 +260,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			if (!tabs[t].enterPressed) {
 				// don't lose focus on tab change
 				event.preventDefault();
-				if (builder.map._docLayer && !builder.map._docLayer._isAnyInputFocused())
+				if (!JSDialog.IsAnyInputFocused())
 					builder.map.focus();
 				t.enterPressed = false;
 			}
