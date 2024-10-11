@@ -82,7 +82,7 @@ ClientSession::ClientSession(
     _splitX(0),
     _splitY(0),
     _clientSelectedPart(-1),
-    _clientSelectedMode(ViewMode::NORMAL_VIEW),
+    _clientSelectedMode(0),
     _tileWidthPixel(0),
     _tileHeightPixel(0),
     _tileWidthTwips(0),
@@ -1219,9 +1219,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             We set the view mode beforehand here.
         */
         if (firstLine == "uno .uno:NormalMultiPaneGUI")
-            _clientSelectedMode = ViewMode::NORMAL_VIEW;
+            _clientSelectedMode = 0;
         else if (firstLine == "uno .uno:NotesMode")
-            _clientSelectedMode = ViewMode::NOTES_VIEW;
+            _clientSelectedMode = 2;
 
         if (!filterMessage(firstLine))
         {
@@ -2868,7 +2868,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     int normalizedViewId = getCanonicalViewId();
 
     std::vector<TileDesc> invalidTiles;
-    if((part == _clientSelectedPart && static_cast<ViewMode>(mode) == _clientSelectedMode) || _isTextDocument)
+    if((part == _clientSelectedPart && mode == _clientSelectedMode) || _isTextDocument)
     {
         for(int paneIdx = 0; paneIdx < numPanes; ++paneIdx)
         {
