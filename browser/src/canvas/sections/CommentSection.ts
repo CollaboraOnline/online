@@ -412,13 +412,15 @@ export class Comment extends CanvasSectionObject {
 				if (ch === '@') {
 					this.map.fire('closementionpopup', { 'typingMention': false });
 				} else {
-					this.map.fire('sendmentiontext', { data: docLayer._mentionText });
+					this.map.fire('sendmentiontext', { data: docLayer._mentionText,
+					                                   triggerKey: ev.data });
 				}
 			} else {
 				docLayer._mentionText.push(ev.data);
 				var regEx = /^[0-9a-zA-Z ]+$/;
 				if (ev.data && ev.data.match(regEx)) {
-					this.map.fire('sendmentiontext', { data: docLayer._mentionText });
+					this.map.fire('sendmentiontext', { data: docLayer._mentionText,
+					                                   triggerKey: ev.data });
 				} else {
 					this.map.fire('closementionpopup', { 'typingMention': false });
 				}

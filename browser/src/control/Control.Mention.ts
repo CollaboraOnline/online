@@ -36,7 +36,7 @@ class Mention extends L.Control.AutoCompletePopup {
 		this.itemList = null;
 	}
 
-	sendMentionText(ev: FireEvent) {
+	sendMentionText(ev: MentionEvent) {
 		const text = ev.data.join('').substring(1);
 		if (text.length === 1 && this.firstChar !== text[0]) {
 			this.map.fire('postMessage', {
@@ -45,7 +45,10 @@ class Mention extends L.Control.AutoCompletePopup {
 			});
 			this.firstChar = text[0];
 		} else {
-			this.openMentionPopup({ data: this.users });
+			this.openMentionPopup({
+				data: this.users,
+				triggerKey: ev.triggerKey,
+			} as MentionEvent);
 		}
 	}
 
