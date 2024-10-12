@@ -264,7 +264,7 @@ public:
         }
 
         const StringToken& token = _tokens[index];
-        return _string.compare(token._index, token._length, string) == 0;
+        return std::string_view(_string.data() + token._index, token._length) == string;
     }
 
     /// Compares the nth token with string.
@@ -276,7 +276,10 @@ public:
         }
 
         const StringToken& token = _tokens[index];
-        return _string.compare(token._index, token._length, string, N - 1) == 0;
+        constexpr auto len = N - 1; // we don't want to compare the '\0'
+        return token._length == len &&
+               std::string_view(_string.data() + token._index, token._length) ==
+                   std::string_view(string, len);
     }
 
     // Checks if the token text at index starts with the given string
