@@ -1567,6 +1567,9 @@ bool DocumentBroker::lockDocumentInStorage(const Authorization& auth, std::strin
 bool DocumentBroker::updateStorageLockState(ClientSession& session, StorageBase::LockState lock,
                                             std::string& error)
 {
+    LOG_TRC("Requesting sync " << (lock == StorageBase::LockState::LOCK ? "Locking" : "Unlocking")
+                               << " of [" << _docKey << "] by session #" << session.getId());
+
     if (session.getAuthorization().isExpired())
     {
         error = "Expired authorization token";
@@ -3046,12 +3049,12 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     // If Core does report something different after saving, we'll update this flag.
     _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
 
-    static bool forceBackgroundEnv = !!getenv("COOL_FORCE_BGSAVE");
+    static const bool forceBackgroundEnv = !!getenv("COOL_FORCE_BGSAVE");
 
     // Note: It's odd to capture these here, but this function is used from ClientSession too.
-    bool autosave = isAutosave || (_unitWsd && _unitWsd->isAutosave());
-    bool backgroundConfigured = (autosave && _backgroundAutoSave) || _backgroundManualSave;
-    bool background = forceBackgroundEnv || (!finalWrite && backgroundConfigured);
+    const bool autosave = isAutosave || (_unitWsd && _unitWsd->isAutosave());
+    const bool backgroundConfigured = (autosave && _backgroundAutoSave) || _backgroundManualSave;
+    const bool background = forceBackgroundEnv || (!finalWrite && backgroundConfigured);
 
     if (finalWrite)
         LOG_TRC("suspected final save: don't do background write");
@@ -3060,12 +3063,13 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     _nextStorageAttrs.setExtendedData(extendedData);
 
     const std::string saveArgs = oss.str();
-    LOG_TRC("save arguments: " << saveArgs);
 
     // re-written to .uno:Save in the Kit.
-    const auto command = std::string("save background=") + (background ? "true" : "")+ " " + saveArgs;
+    const auto command = std::string("save background=") + (background ? "true " : " ") + saveArgs;
     if (forwardToChild(session, command))
     {
+        LOG_DBG("Saving [" << _docKey << "] using [" << sessionId << "]: " << command);
+
         _saveManager.markLastSaveRequestTime();
         if (_docState.activity() == DocumentState::Activity::None)
         {
