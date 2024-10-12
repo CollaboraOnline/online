@@ -26,6 +26,9 @@ interface FireEvent {
 interface CloseMessageEvent extends FireEvent {
 	typingMention?: boolean;
 }
+interface MentionEvent extends FireEvent {
+	triggerKey?: string;
+}
 
 abstract class AutoCompletePopup {
 	protected map: ReturnType<typeof L.map>;
@@ -166,7 +169,7 @@ abstract class AutoCompletePopup {
 		);
 	}
 
-	openMentionPopup(ev: FireEvent): void {
+	openMentionPopup(ev: MentionEvent): void {
 		const entries = this.getPopupEntries(ev);
 		let data: PopupData;
 		const cursorPos = this.getCursorPosition();
@@ -200,6 +203,14 @@ abstract class AutoCompletePopup {
 			this.sendUpdate(data);
 			return;
 		} else {
+			// If the key pressed was a space, and there are no matches, then just
+			// dismiss the popup.
+			// const noMatchOnFinalSpace: boolean = ev.triggerKey === ' ';
+			const noMatchOnFinalSpace = ev.triggerKey === ' ';
+			if (noMatchOnFinalSpace) {
+				this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
+				return;
+			}
 			const control = this.getSimpleTextJSON();
 			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
 				data = this.getPopupJSON(control, cursorPos);

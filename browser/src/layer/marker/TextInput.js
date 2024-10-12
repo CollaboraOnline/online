@@ -804,13 +804,15 @@ L.TextInput = L.Layer.extend({
 				if (ch === '@') {
 					this._map.fire('closementionpopup', { 'typingMention': false });
 				} else {
-					this._map.fire('sendmentiontext', { data: docLayer._mentionText });
+					this._map.fire('sendmentiontext', { data: docLayer._mentionText,
+					                                    triggerKey: ev.data });
 				}
 			} else if (removeBefore === 0) {
 				docLayer._mentionText.push(ev.data);
 				var regEx = /^[0-9a-zA-Z ]+$/;
 				if (ev.data && ev.data.match(regEx)) {
-					this._map.fire('sendmentiontext', { data: docLayer._mentionText });
+					this._map.fire('sendmentiontext', { data: docLayer._mentionText,
+					                                    triggerKey: ev.data });
 				} else {
 					this._map.fire('closementionpopup', { 'typingMention': false });
 				}
