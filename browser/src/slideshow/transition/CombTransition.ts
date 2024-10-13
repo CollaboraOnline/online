@@ -23,8 +23,7 @@ class CombTransition extends Transition2d {
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
-
-	public start(): void {
+	protected initProgramTemplateParams() {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 
 		if (transitionSubType == TransitionSubType.COMBVERTICAL) {
@@ -32,25 +31,18 @@ class CombTransition extends Transition2d {
 		} else {
 			this.direction = CombSubType.COMBHORIZONTAL;
 		}
-		this.startTransition();
 	}
 
 	// jscpd:ignore-start
-	public renderUniformValue(): void {
-		this.gl.uniform1i(
-			this.gl.getUniformLocation(this.program, 'direction'),
-			this.direction,
-		);
-	}
-
 	public getFragmentShader(): string {
+		const isVertical = this.direction == CombSubType.COMBVERTICAL;
+		// prettier-ignore
 		return `#version 300 es
                 precision mediump float;
 
                 uniform sampler2D leavingSlideTexture;
                 uniform sampler2D enteringSlideTexture;
                 uniform float time;
-                uniform int direction;
 
                 in vec2 v_texCoord;
                 out vec4 outColor;
@@ -60,7 +52,7 @@ class CombTransition extends Transition2d {
 
                     float progress = smoothstep(0.0, 1.0, time);
 
-                    float coord = direction == 1 ? v_texCoord.x : v_texCoord.y;
+                    float coord = ${isVertical ? 'v_texCoord.x' : 'v_texCoord.y'};
 
                     float toothIndex = floor(coord * numTeeth);
 
@@ -69,15 +61,22 @@ class CombTransition extends Transition2d {
                     float offset = moveDirection * (1.0 - progress);
 
                     float threshold = moveDirection > 0.0 ?
-                        (direction == 1 ? v_texCoord.y : v_texCoord.x) :
-                        (direction == 1 ? 1.0 - v_texCoord.y : 1.0 - v_texCoord.x);
+                        ${isVertical ? 'v_texCoord.y' : 'v_texCoord.x'} :
+                        ${isVertical ? '1.0 - v_texCoord.y' : '1.0 - v_texCoord.x'};
 
                     if (threshold < progress) {
-                        outColor = texture(enteringSlideTexture, v_texCoord);
+                       vec2 enteringCoord = ${
+                           isVertical ?
+                               'vec2(v_texCoord.x, fract(v_texCoord.y + offset))' :
+                               'vec2(fract(v_texCoord.x + offset), v_texCoord.y)'
+                       };
+                       outColor = texture(enteringSlideTexture, enteringCoord);
                     } else {
-                        vec2 leavingCoord = direction == 1 ?
-                            vec2(v_texCoord.x, fract(v_texCoord.y + offset)) :
-                            vec2(fract(v_texCoord.x + offset), v_texCoord.y);
+                        vec2 leavingCoord = ${
+                            isVertical ?
+                                'vec2(v_texCoord.x, fract(v_texCoord.y + offset))' :
+                                'vec2(fract(v_texCoord.x + offset), v_texCoord.y)'
+                        };
                         outColor = texture(leavingSlideTexture, leavingCoord);
                     }
                 }`;
