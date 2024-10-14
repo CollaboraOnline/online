@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-09 07:43+0200\n"
-"PO-Revision-Date: 2024-09-10 22:08+0000\n"
+"PO-Revision-Date: 2024-10-14 21:16+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.8-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.8-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1089,7 +1089,7 @@ msgstr "Сторінка приміток"
 #: src/control/Control.Menubar.js:448
 #: src/control/Control.NotebookbarImpress.js:461
 msgid "Notes View"
-msgstr ""
+msgstr "Перегляд приміток"
 
 #: src/control/Control.Menubar.js:452
 #: src/control/Control.NotebookbarImpress.js:467
@@ -1315,7 +1315,6 @@ msgstr "Торкніться, щоб згорнути"
 
 #: src/control/Control.NotebookbarBuilder.js:373
 #: src/control/Control.NotebookbarBuilder.js:402
-#, fuzzy
 msgid "HTML File (.html)"
 msgstr "Файл HTML (.html)"
 
@@ -1884,12 +1883,11 @@ msgstr "Показати меню"
 
 #: src/control/Control.UIManager.js:1186
 msgid "Saving"
-msgstr ""
+msgstr "Збереження"
 
 #: src/control/Control.UIManager.js:1204
-#, fuzzy
 msgid "Saved"
-msgstr "Зберегти"
+msgstr "Збережено"
 
 #: src/control/Control.UserList.ts:54
 msgid "{user} has joined"
@@ -2976,18 +2974,17 @@ msgid ""
 msgstr ""
 
 #: src/map/Clipboard.js:1195
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr "<p>Використовуйте кнопки вставлення на екранній клавіатурі.</p>"
+msgstr "Використовуйте кнопки вставлення на екранній клавіатурі."
 
 #: src/map/Clipboard.js:1251
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Іде завантаження для копіювання/вставки великого фрагменту. Будь ласка, "
-"дочекайтесь завершення завантаження або відмініть його, щоб почати нове</p>"
+"Триває завантаження для копіювання/вставлення великого фрагмента. "
+"Дочекайтесь завершення поточного завантаження або скасуйте його, щоб "
+"розпочати нове"
 
 #: src/map/Clipboard.js:1273
 msgid "Paste from this document"
