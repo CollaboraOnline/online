@@ -10,14 +10,10 @@
 }
 
 /* toolbuttons */
-
-.unotoolbutton .unobutton img {
-	width: var(--btn-size);
-	height: var(--btn-size);
-}
 .unotoolbutton .unobutton.selected + .ui-content.unolabel {
 	color: var(--color-text-dark);
 }
+
 /* toolbuttons non selected */
 #clearFormatting,
 .hasnotebookbar .ui-content.unotoolbutton.has-label,

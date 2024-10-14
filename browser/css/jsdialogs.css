@@ -418,8 +418,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-listview-icon {
-	height: var(--btn-size-s);
-	width: var(--btn-size-s);
+	height: var(--btn-img-size-s);
+	width: var(--btn-img-size-s);
 	margin-inline-end: 8px;
 	vertical-align: middle;
 }
@@ -1318,10 +1318,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 /* color selector */
 .unotoolbutton .selected-color {
 	height: 5px;
-	width: 24px;
+	width: calc(var(--btn-img-size) - var(--btn-padding) * 2);
 	position: relative;
-	grid-column: 1;
-	grid-row: 2;
 	border: 1px solid var(--color-border-dark);
 	border-radius: 7px;
 	outline: 1px solid var(--color-background-lighter);
@@ -1378,8 +1376,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-dark);
 }
 
-.jsdialog.menubutton img {
-	vertical-align: middle;
+.jsdialog .unobutton img {
+	min-width: 0;
+	min-height: 0;
 }
 
 .menubutton .arrow {
@@ -1765,13 +1764,18 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* toolbuttons */
 .jsdialog .ui-content.unobutton {
+	height: var(--btn-size);
+	width: var(--btn-size);
 	display: flex;
 	flex-direction: column;
-	padding: 3px;
+	padding: var(--btn-padding);
 	vertical-align: middle;
 	background-color: transparent;
 	border: none;
 	position: relative;
+	overflow: hidden;
+	justify-content: center;
+	align-items: center;
 }
 
 .unoarrow::after,
