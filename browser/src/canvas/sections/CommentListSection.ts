@@ -75,7 +75,6 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		[key: string]: any;
 	};
 	disableLayoutAnimation: boolean = false;
-	mobileCommentMentionListId: string = 'mentionPopupList';
 	mobileCommentId: string = 'new-annotation-dialog';
 	mobileCommentModalId: string;
 
@@ -432,6 +431,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		return newComment.style.display !== 'none'
 	}
 
+	public getMobileCommentModalId (): string {
+		return this.mobileCommentModalId;
+	}
+
 	public newAnnotationMobile (comment: any, addCommentFn: any, isMod: any): void {
 		var commentData = comment.sectionProperties.data;
 
@@ -452,6 +455,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			}
 		}.bind(this);
 
+		const listId = 'mentionPopupList';
 		var json = this.map.uiManager._modalDialogJSON(this.mobileCommentId, '', true, [
 			{
 				id: 'input-modal-input',
@@ -460,7 +464,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				contenteditable: true
 			},
 			{
-				id: this.mobileCommentMentionListId,
+				id: listId,
 				type: 'treelistbox',
 				text: '',
 				enabled: true,
@@ -519,7 +523,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			{id: 'response-cancel', func: cancelFunction},
 			{id: '__POPOVER__', func: cancelFunction},
 			{id: '__DIALOG__', func: cancelFunction},
-			{id: 'mentionPopupList', func: mentionListCallback}
+			{id: listId, func: mentionListCallback}
 		]);
 
 	  const multilineEditDiv = document.getElementById('input-modal-input');
