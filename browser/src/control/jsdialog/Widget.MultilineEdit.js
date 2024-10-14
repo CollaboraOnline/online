@@ -17,6 +17,7 @@
  *     id: 'id',
  *     type: 'multilineedit',
  *     text: 'text content\nsecond line',
+ *     html: '<a href="hyperlink">hyperlink</a>' // only if contenteditable is true
  *     cursor: true,
  *     contenteditable: false
  *     enabled: false
@@ -52,6 +53,8 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 	else if (controlType === 'p') {
 		data.text = data.text.replace(/(?:\r\n|\r|\n)/g, '<br>');
 		edit.textContent = builder._cleanText(data.text);
+	} else if (controlType === 'div') {
+		edit.innerHTML = data.html;
 	}
 
 	edit.id = data.id;
