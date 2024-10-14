@@ -30,6 +30,7 @@ class SlideCache {
 
 	public set(slideHash: string, image: ImageBitmap): void {
 		this.renderedSlides.set(slideHash, image);
+		app.map.fire('slidecached', { slideHash: slideHash });
 	}
 
 	public invalidate(slideHash: string): void {

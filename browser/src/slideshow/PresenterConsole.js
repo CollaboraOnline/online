@@ -21,6 +21,7 @@ class PresenterConsole {
 		this._map = map;
 		this._map.on('presentationinfo', this._onPresentationInfo, this);
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
+		this._map.on('slidecached', this._onSlideCached, this);
 		this._map.on('transitionend', this._onEndTransition, this);
 	}
 
@@ -267,6 +268,23 @@ class PresenterConsole {
 				let renderer = canvas.getContext('bitmaprenderer');
 				renderer.transferFromImageBitmap(image);
 			});
+		}
+	}
+
+	_onSlideCached(e) {
+		if (this._currentIndex === undefined) {
+			return;
+		}
+
+		let slide = this._map.slideShowPresenter._slideCompositor.getSlideInfo(
+			e.slideHash,
+		);
+
+		if (this._currentIndex + 1 === slide.index) {
+			this.drawImage(
+				this._proxyPresenter.document.querySelector('#next-presentation'),
+				slide.index,
+			);
 		}
 	}
 
