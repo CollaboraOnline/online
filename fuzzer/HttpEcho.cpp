@@ -49,7 +49,7 @@ class HttpRequestTests final
         std::shared_ptr<Socket> create(const int physicalFd, Socket::Type type) override
         {
             return StreamSocket::create<StreamSocket>("localhost", physicalFd, type, false,
-                                                      std::make_shared<ServerRequestHandler>());
+                                                      HostType::LocalHost, std::make_shared<ServerRequestHandler>());
         }
     };
 
