@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-09 07:43+0200\n"
-"PO-Revision-Date: 2024-09-13 23:21+0000\n"
+"PO-Revision-Date: 2024-10-14 21:16+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/help/uk/>\n"
@@ -11,9 +11,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.8-rc\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -1692,6 +1692,12 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">Панель меню:</span> Головне меню розташоване зверху і "
+"містить багато опцій, команд для друку, редагування, перегляду та інших "
+"додаткових команд. Ви можете сховати рядок меню, натиснувши на <span class"
+"=\"w2ui-icon fold icon-size\"></span> піктограму у крайньому правому куті. "
+"Натисніть на <span class=\"w2ui-icon unfold icon-size\"></span> піктограму, "
+"щоб показати меню."
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
@@ -2148,14 +2154,12 @@ msgid "comment"
 msgstr "коментар"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
-#, fuzzy
 msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
-"Клацніть на піктограму підменю (<span class=\"cool-annotation-menu\" style="
-"\"height:0.6cm;width:0.6cm;\"></span>), щоб відповісти, перемістити або "
-"видалити коментарі."
+"Клацніть на піктограму підменю (<span class=\"cool-annotation-menu icon-"
+"size\"></span>), щоб відповісти, перемістити та видалити коментарі."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
@@ -3104,15 +3108,14 @@ msgid "Select the text with the existing format"
 msgstr "Виділіть текст із наявним форматуванням"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
-"Клацніть на піктограму форматування клонованого <img style=\"height:0."
-"6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. "
-"Вказівник миші перетвориться на відро з фарбою."
+"Клацніть на піктограму клонування форматування <img class=\"icon-size\" alt="
+"\"\" src=\"images/lc_formatpaintbrush.svg\" />. Вказівник миші перетвориться "
+"на відро з фарбою."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
@@ -3233,14 +3236,13 @@ msgid "Format the source cell with the font, color background and more."
 msgstr "Відформатуйте початкову комірку за допомогою шрифту, кольору тла тощо."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
-"Клацніть на піктограму форматування клонованого <img style=\"height:0."
-"6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. "
-"Вказівник миші перетвориться на відро з фарбою."
+"Клацніть на піктограму клонування форматування <img class=\"icon-size\" src="
+"\"images/lc_formatpaintbrush.svg\" />. Вказівник миші перетвориться на відро "
+"з фарбою."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
