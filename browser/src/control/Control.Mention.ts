@@ -96,8 +96,9 @@ class Mention extends L.Control.AutoCompletePopup {
 		const mobileCommentModalId = commentSection?.getMobileCommentModalId();
 		if (entries.length === 0 && this.isMobile && isMobileCommentActive) {
 			const control = this.getTreeJSON();
+			control.hideIfEmpty = true;
 			const data = this.getPopupJSON(control, { x: 0, y: 0 });
-			if (isMobileCommentActive) data.id = mobileCommentModalId;
+			data.id = mobileCommentModalId;
 			(data.control as TreeWidget).entries = [];
 			this.sendUpdate(data);
 			return;
@@ -130,6 +131,7 @@ class Mention extends L.Control.AutoCompletePopup {
 		}
 
 		const control = this.getTreeJSON();
+		if (isMobileCommentActive) control.hideIfEmpty = true;
 		if (L.DomUtil.get(this.popupId + 'List')) {
 			const data = this.getPopupJSON(control, cursorPos);
 			if (isMobileCommentActive) data.id = mobileCommentModalId;
@@ -158,9 +160,9 @@ class Mention extends L.Control.AutoCompletePopup {
 	}
 
 	private closeMentionPopup(ev: CloseMessageEvent): void {
-		var popupExists =
+		var mentionPopup =
 			L.DomUtil.get(this.popupId) || L.DomUtil.get(this.popupId + 'List');
-		if (!popupExists) return;
+		if (!mentionPopup) return;
 
 		this.map.jsdialog.focusToLastElement(this.popupId);
 		if (this.isMobile) {
@@ -172,8 +174,9 @@ class Mention extends L.Control.AutoCompletePopup {
 
 			if (isMobileCommentActive) {
 				const control = this.getTreeJSON();
+				control.hideIfEmpty = true;
 				const data = this.getPopupJSON(control, { x: 0, y: 0 });
-				if (isMobileCommentActive) data.id = mobileCommentModalId;
+				data.id = mobileCommentModalId;
 				(data.control as TreeWidget).entries = [];
 				this.sendUpdate(data);
 			} else {
