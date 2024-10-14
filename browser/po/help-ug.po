@@ -3,14 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-09 07:43+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2024-10-14 02:46+0000\n"
+"Last-Translator: \"K.Y.\" <keramyasina@gmail.com>\n"
+"Language-Team: Uyghur <https://hosted.weblate.org/projects/collabora-online/"
+"help/ug/>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -22,7 +24,7 @@ msgstr "ئادەتتىكى ھەرپتاختا تېزلەتمىلىرى"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-38
 msgid "Undo"
-msgstr "يېنىۋال"
+msgstr "ئەمەلدىن قالدۇرۇش"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-69
 #, fuzzy
@@ -31,7 +33,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-38
 msgid "Redo"
-msgstr "قايتىلا"
+msgstr "Redo"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-69
 #, fuzzy
@@ -49,7 +51,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
-msgstr ""
+msgstr "كۆچۈرۈڭ"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
 #, fuzzy
@@ -677,9 +679,8 @@ msgstr "قۇر بېشىغا يۆتكەل"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:136-119
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-88
-#, fuzzy
 msgid "Home"
-msgstr "باش بەت"
+msgstr "ئۆي"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:73-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
