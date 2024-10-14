@@ -73,6 +73,7 @@
 #toolbar-down {
 	z-index: 11;
 	border-top: 1px solid var(--color-toolbar-border);
+	min-height: 32px;
 }
 #toolbar-down > .ui-scroll-wrapper > .vertical {
 	/* To do: test if all .ui-scroll-wrapper.vertical
