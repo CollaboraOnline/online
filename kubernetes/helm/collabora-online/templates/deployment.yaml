@@ -125,6 +125,14 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            {{- if .Values.collabora.proofKeysSecretRef }}
+            - name: wopi-proof
+              mountPath: /etc/coolwsd/proof_key
+              subPath: proof_key
+            - name: wopi-proof
+              mountPath: /etc/coolwsd/proof_key.pub
+              subPath: proof_key.pub
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -140,4 +148,11 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
+        {{- if .Values.collabora.proofKeysSecretRef }}
+        - name: wopi-proof
+          secret:
+            secretName: {{ .Values.collabora.proofKeysSecretRef | quote }}
+        {{- end }}
+
+
 {{- end }}
