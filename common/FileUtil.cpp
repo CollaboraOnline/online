@@ -178,7 +178,7 @@ namespace FileUtil
             {
                 const Stat st(fromPath);
                 updateTimestamps(randFilename,
-#ifdef IOS
+#if defined(IOS) || defined(MACOS)
                                  st.sb().st_atimespec, st.sb().st_mtimespec
 #else
                                  st.sb().st_atim, st.sb().st_mtim

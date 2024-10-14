@@ -1,0 +1,838 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BE2231B82CC679DE00385A9C /* Crypto-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231B72CC679DE00385A9C /* Crypto-stub.cpp */; };
+		BE2231BA2CC67FDE00385A9C /* coolwsd-fork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */; };
+		BE2231BC2CC6804D00385A9C /* Util-mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231BB2CC6804D00385A9C /* Util-mobile.cpp */; };
+		BEA2636D2CBE38E20007435A /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2636A2CBE38E20007435A /* Uri.cpp */; };
+		BEA2636E2CBE38E20007435A /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2636C2CBE38E20007435A /* Util.cpp */; };
+		BEA2636F2CBE38E20007435A /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263682CBE38E20007435A /* Unit.cpp */; };
+		BEA263702CBE38E20007435A /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263582CBE38E20007435A /* Log.cpp */; };
+		BEA263712CBE38E20007435A /* Simd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263612CBE38E20007435A /* Simd.cpp */; };
+		BEA263722CBE38E20007435A /* FileUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263562CBE38E20007435A /* FileUtil.cpp */; };
+		BEA263732CBE38E20007435A /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2635D2CBE38E20007435A /* Session.cpp */; };
+		BEA263742CBE38E20007435A /* TraceEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263662CBE38E20007435A /* TraceEvent.cpp */; };
+		BEA263752CBE38E20007435A /* SigUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2635F2CBE38E20007435A /* SigUtil.cpp */; };
+		BEA263762CBE38E20007435A /* SpookyV2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263622CBE38E20007435A /* SpookyV2.cpp */; };
+		BEA263772CBE38E20007435A /* ConfigUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263552CBE38E20007435A /* ConfigUtil.cpp */; };
+		BEA263782CBE38E20007435A /* StringVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263642CBE38E20007435A /* StringVector.cpp */; };
+		BEA263792CBE38E20007435A /* Protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2635B2CBE38E20007435A /* Protocol.cpp */; };
+		BEA2637A2CBE38E20007435A /* Authorization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263532CBE38E20007435A /* Authorization.cpp */; };
+		BEA264162CBE7A770007435A /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BEA264152CBE7A770007435A /* Config.xcconfig */; };
+		BEA264922CBE986C0007435A /* KitQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264902CBE986C0007435A /* KitQueue.cpp */; };
+		BEA264932CBE986C0007435A /* KitWebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264912CBE986C0007435A /* KitWebSocket.cpp */; };
+		BEA264942CBE986C0007435A /* ChildSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2648D2CBE986C0007435A /* ChildSession.cpp */; };
+		BEA264952CBE986C0007435A /* Kit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2648E2CBE986C0007435A /* Kit.cpp */; };
+		BEA264962CBE986C0007435A /* DeltaSimd.c in Sources */ = {isa = PBXBuildFile; fileRef = BEA2648C2CBE986C0007435A /* DeltaSimd.c */; };
+		BEA264A02CBE98CD0007435A /* NetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2649C2CBE98CD0007435A /* NetUtil.cpp */; };
+		BEA264A12CBE98CD0007435A /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2649E2CBE98CD0007435A /* Socket.cpp */; };
+		BEA264A22CBE98CD0007435A /* HttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2649A2CBE98CD0007435A /* HttpRequest.cpp */; };
+		BEA264A32CBE98CD0007435A /* FakeSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264982CBE98CD0007435A /* FakeSocket.cpp */; };
+		BEA264AD2CBE99340007435A /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264AB2CBE99340007435A /* Storage.cpp */; };
+		BEA264AE2CBE99340007435A /* TileCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264AC2CBE99340007435A /* TileCache.cpp */; };
+		BEA264AF2CBE99340007435A /* COOLWSD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264A62CBE99340007435A /* COOLWSD.cpp */; };
+		BEA264B02CBE99340007435A /* ClientSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264A52CBE99340007435A /* ClientSession.cpp */; };
+		BEA264B12CBE99340007435A /* RequestDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264A92CBE99340007435A /* RequestDetails.cpp */; };
+		BEA264B22CBE99340007435A /* ClientRequestDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264A42CBE99340007435A /* ClientRequestDispatcher.cpp */; };
+		BEA264B32CBE99340007435A /* DocumentBroker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264A72CBE99340007435A /* DocumentBroker.cpp */; };
+		BEA264B42CBE99340007435A /* RequestVettingStation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264AA2CBE99340007435A /* RequestVettingStation.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BECC4BBD2CBD3FA400A120B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BECC4BA32CBD3FA300A120B3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BECC4BAA2CBD3FA300A120B3;
+			remoteInfo = coda;
+		};
+		BECC4BC72CBD3FA400A120B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BECC4BA32CBD3FA300A120B3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BECC4BAA2CBD3FA300A120B3;
+			remoteInfo = coda;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BE2231B72CC679DE00385A9C /* Crypto-stub.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Crypto-stub.cpp"; path = "/Users/kendy/Projects/collabora/online/common/Crypto-stub.cpp"; sourceTree = "<absolute>"; };
+		BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "coolwsd-fork.cpp"; path = "/Users/kendy/Projects/collabora/online/wsd/coolwsd-fork.cpp"; sourceTree = "<absolute>"; };
+		BE2231BB2CC6804D00385A9C /* Util-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-mobile.cpp"; path = "/Users/kendy/Projects/collabora/online/common/Util-mobile.cpp"; sourceTree = "<absolute>"; };
+		BEA263522CBE38E20007435A /* Authorization.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Authorization.hpp; path = /Users/kendy/Projects/collabora/online/common/Authorization.hpp; sourceTree = "<absolute>"; };
+		BEA263532CBE38E20007435A /* Authorization.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Authorization.cpp; path = /Users/kendy/Projects/collabora/online/common/Authorization.cpp; sourceTree = "<absolute>"; };
+		BEA263542CBE38E20007435A /* ConfigUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ConfigUtil.hpp; path = /Users/kendy/Projects/collabora/online/common/ConfigUtil.hpp; sourceTree = "<absolute>"; };
+		BEA263552CBE38E20007435A /* ConfigUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigUtil.cpp; path = /Users/kendy/Projects/collabora/online/common/ConfigUtil.cpp; sourceTree = "<absolute>"; };
+		BEA263562CBE38E20007435A /* FileUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FileUtil.cpp; path = /Users/kendy/Projects/collabora/online/common/FileUtil.cpp; sourceTree = "<absolute>"; };
+		BEA263572CBE38E20007435A /* Log.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Log.hpp; path = /Users/kendy/Projects/collabora/online/common/Log.hpp; sourceTree = "<absolute>"; };
+		BEA263582CBE38E20007435A /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = /Users/kendy/Projects/collabora/online/common/Log.cpp; sourceTree = "<absolute>"; };
+		BEA263592CBE38E20007435A /* Png.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Png.hpp; path = /Users/kendy/Projects/collabora/online/common/Png.hpp; sourceTree = "<absolute>"; };
+		BEA2635A2CBE38E20007435A /* Protocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Protocol.hpp; path = /Users/kendy/Projects/collabora/online/common/Protocol.hpp; sourceTree = "<absolute>"; };
+		BEA2635B2CBE38E20007435A /* Protocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Protocol.cpp; path = /Users/kendy/Projects/collabora/online/common/Protocol.cpp; sourceTree = "<absolute>"; };
+		BEA2635C2CBE38E20007435A /* Session.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Session.hpp; path = /Users/kendy/Projects/collabora/online/common/Session.hpp; sourceTree = "<absolute>"; };
+		BEA2635D2CBE38E20007435A /* Session.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Session.cpp; path = /Users/kendy/Projects/collabora/online/common/Session.cpp; sourceTree = "<absolute>"; };
+		BEA2635E2CBE38E20007435A /* SigUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SigUtil.hpp; path = /Users/kendy/Projects/collabora/online/common/SigUtil.hpp; sourceTree = "<absolute>"; };
+		BEA2635F2CBE38E20007435A /* SigUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SigUtil.cpp; path = /Users/kendy/Projects/collabora/online/common/SigUtil.cpp; sourceTree = "<absolute>"; };
+		BEA263602CBE38E20007435A /* Simd.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Simd.hpp; path = /Users/kendy/Projects/collabora/online/common/Simd.hpp; sourceTree = "<absolute>"; };
+		BEA263612CBE38E20007435A /* Simd.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Simd.cpp; path = /Users/kendy/Projects/collabora/online/common/Simd.cpp; sourceTree = "<absolute>"; };
+		BEA263622CBE38E20007435A /* SpookyV2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpookyV2.cpp; path = /Users/kendy/Projects/collabora/online/common/SpookyV2.cpp; sourceTree = "<absolute>"; };
+		BEA263632CBE38E20007435A /* StringVector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = StringVector.hpp; path = /Users/kendy/Projects/collabora/online/common/StringVector.hpp; sourceTree = "<absolute>"; };
+		BEA263642CBE38E20007435A /* StringVector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StringVector.cpp; path = /Users/kendy/Projects/collabora/online/common/StringVector.cpp; sourceTree = "<absolute>"; };
+		BEA263652CBE38E20007435A /* TraceEvent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TraceEvent.hpp; path = /Users/kendy/Projects/collabora/online/common/TraceEvent.hpp; sourceTree = "<absolute>"; };
+		BEA263662CBE38E20007435A /* TraceEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TraceEvent.cpp; path = /Users/kendy/Projects/collabora/online/common/TraceEvent.cpp; sourceTree = "<absolute>"; };
+		BEA263672CBE38E20007435A /* Unit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Unit.hpp; path = /Users/kendy/Projects/collabora/online/common/Unit.hpp; sourceTree = "<absolute>"; };
+		BEA263682CBE38E20007435A /* Unit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Unit.cpp; path = /Users/kendy/Projects/collabora/online/common/Unit.cpp; sourceTree = "<absolute>"; };
+		BEA263692CBE38E20007435A /* Uri.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Uri.hpp; path = /Users/kendy/Projects/collabora/online/common/Uri.hpp; sourceTree = "<absolute>"; };
+		BEA2636A2CBE38E20007435A /* Uri.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Uri.cpp; path = /Users/kendy/Projects/collabora/online/common/Uri.cpp; sourceTree = "<absolute>"; };
+		BEA2636B2CBE38E20007435A /* Util.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = /Users/kendy/Projects/collabora/online/common/Util.hpp; sourceTree = "<absolute>"; };
+		BEA2636C2CBE38E20007435A /* Util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = /Users/kendy/Projects/collabora/online/common/Util.cpp; sourceTree = "<absolute>"; };
+		BEA2637B2CBE38F50007435A /* coda-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "coda-Bridging-Header.h"; sourceTree = "<group>"; };
+		BEA264152CBE7A770007435A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		BEA2648B2CBE986C0007435A /* DeltaSimd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeltaSimd.h; path = /Users/kendy/Projects/collabora/online/kit/DeltaSimd.h; sourceTree = "<absolute>"; };
+		BEA2648C2CBE986C0007435A /* DeltaSimd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = DeltaSimd.c; path = /Users/kendy/Projects/collabora/online/kit/DeltaSimd.c; sourceTree = "<absolute>"; };
+		BEA2648D2CBE986C0007435A /* ChildSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChildSession.cpp; path = /Users/kendy/Projects/collabora/online/kit/ChildSession.cpp; sourceTree = "<absolute>"; };
+		BEA2648E2CBE986C0007435A /* Kit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Kit.cpp; path = /Users/kendy/Projects/collabora/online/kit/Kit.cpp; sourceTree = "<absolute>"; };
+		BEA2648F2CBE986C0007435A /* KitQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = KitQueue.hpp; path = /Users/kendy/Projects/collabora/online/kit/KitQueue.hpp; sourceTree = "<absolute>"; };
+		BEA264902CBE986C0007435A /* KitQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KitQueue.cpp; path = /Users/kendy/Projects/collabora/online/kit/KitQueue.cpp; sourceTree = "<absolute>"; };
+		BEA264912CBE986C0007435A /* KitWebSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KitWebSocket.cpp; path = /Users/kendy/Projects/collabora/online/kit/KitWebSocket.cpp; sourceTree = "<absolute>"; };
+		BEA264972CBE98CD0007435A /* AsyncDNS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = AsyncDNS.hpp; path = /Users/kendy/Projects/collabora/online/net/AsyncDNS.hpp; sourceTree = "<absolute>"; };
+		BEA264982CBE98CD0007435A /* FakeSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FakeSocket.cpp; path = /Users/kendy/Projects/collabora/online/net/FakeSocket.cpp; sourceTree = "<absolute>"; };
+		BEA264992CBE98CD0007435A /* HttpRequest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = HttpRequest.hpp; path = /Users/kendy/Projects/collabora/online/net/HttpRequest.hpp; sourceTree = "<absolute>"; };
+		BEA2649A2CBE98CD0007435A /* HttpRequest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HttpRequest.cpp; path = /Users/kendy/Projects/collabora/online/net/HttpRequest.cpp; sourceTree = "<absolute>"; };
+		BEA2649B2CBE98CD0007435A /* NetUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = NetUtil.hpp; path = /Users/kendy/Projects/collabora/online/net/NetUtil.hpp; sourceTree = "<absolute>"; };
+		BEA2649C2CBE98CD0007435A /* NetUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NetUtil.cpp; path = /Users/kendy/Projects/collabora/online/net/NetUtil.cpp; sourceTree = "<absolute>"; };
+		BEA2649D2CBE98CD0007435A /* Socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Socket.hpp; path = /Users/kendy/Projects/collabora/online/net/Socket.hpp; sourceTree = "<absolute>"; };
+		BEA2649E2CBE98CD0007435A /* Socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Socket.cpp; path = /Users/kendy/Projects/collabora/online/net/Socket.cpp; sourceTree = "<absolute>"; };
+		BEA2649F2CBE98CD0007435A /* WebSocketHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = WebSocketHandler.hpp; path = /Users/kendy/Projects/collabora/online/net/WebSocketHandler.hpp; sourceTree = "<absolute>"; };
+		BEA264A42CBE99340007435A /* ClientRequestDispatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ClientRequestDispatcher.cpp; path = /Users/kendy/Projects/collabora/online/wsd/ClientRequestDispatcher.cpp; sourceTree = "<absolute>"; };
+		BEA264A52CBE99340007435A /* ClientSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ClientSession.cpp; path = /Users/kendy/Projects/collabora/online/wsd/ClientSession.cpp; sourceTree = "<absolute>"; };
+		BEA264A62CBE99340007435A /* COOLWSD.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = COOLWSD.cpp; path = /Users/kendy/Projects/collabora/online/wsd/COOLWSD.cpp; sourceTree = "<absolute>"; };
+		BEA264A72CBE99340007435A /* DocumentBroker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DocumentBroker.cpp; path = /Users/kendy/Projects/collabora/online/wsd/DocumentBroker.cpp; sourceTree = "<absolute>"; };
+		BEA264A82CBE99340007435A /* RequestDetails.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RequestDetails.hpp; path = /Users/kendy/Projects/collabora/online/wsd/RequestDetails.hpp; sourceTree = "<absolute>"; };
+		BEA264A92CBE99340007435A /* RequestDetails.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RequestDetails.cpp; path = /Users/kendy/Projects/collabora/online/wsd/RequestDetails.cpp; sourceTree = "<absolute>"; };
+		BEA264AA2CBE99340007435A /* RequestVettingStation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RequestVettingStation.cpp; path = /Users/kendy/Projects/collabora/online/wsd/RequestVettingStation.cpp; sourceTree = "<absolute>"; };
+		BEA264AB2CBE99340007435A /* Storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Storage.cpp; path = /Users/kendy/Projects/collabora/online/wsd/Storage.cpp; sourceTree = "<absolute>"; };
+		BEA264AC2CBE99340007435A /* TileCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TileCache.cpp; path = /Users/kendy/Projects/collabora/online/wsd/TileCache.cpp; sourceTree = "<absolute>"; };
+		BEA264B52CBE9BEF0007435A /* Storage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Storage.hpp; path = /Users/kendy/Projects/collabora/online/wsd/Storage.hpp; sourceTree = "<absolute>"; };
+		BECC4BAB2CBD3FA300A120B3 /* coda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coda.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BECC4BBC2CBD3FA400A120B3 /* codaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BECC4BC62CBD3FA400A120B3 /* codaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		BECC4BAD2CBD3FA300A120B3 /* coda */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = coda;
+			sourceTree = "<group>";
+		};
+		BECC4BBF2CBD3FA400A120B3 /* codaTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = codaTests;
+			sourceTree = "<group>";
+		};
+		BECC4BC92CBD3FA400A120B3 /* codaUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = codaUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BECC4BA82CBD3FA300A120B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BECC4BB92CBD3FA400A120B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BECC4BC32CBD3FA400A120B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BEA2637C2CBE38FE0007435A /* common */ = {
+			isa = PBXGroup;
+			children = (
+				BEA263522CBE38E20007435A /* Authorization.hpp */,
+				BEA263532CBE38E20007435A /* Authorization.cpp */,
+				BEA263542CBE38E20007435A /* ConfigUtil.hpp */,
+				BEA263552CBE38E20007435A /* ConfigUtil.cpp */,
+				BE2231B72CC679DE00385A9C /* Crypto-stub.cpp */,
+				BEA263562CBE38E20007435A /* FileUtil.cpp */,
+				BEA263572CBE38E20007435A /* Log.hpp */,
+				BEA263582CBE38E20007435A /* Log.cpp */,
+				BEA263592CBE38E20007435A /* Png.hpp */,
+				BEA2635A2CBE38E20007435A /* Protocol.hpp */,
+				BEA2635B2CBE38E20007435A /* Protocol.cpp */,
+				BEA2635C2CBE38E20007435A /* Session.hpp */,
+				BEA2635D2CBE38E20007435A /* Session.cpp */,
+				BEA2635E2CBE38E20007435A /* SigUtil.hpp */,
+				BEA2635F2CBE38E20007435A /* SigUtil.cpp */,
+				BEA263602CBE38E20007435A /* Simd.hpp */,
+				BEA263612CBE38E20007435A /* Simd.cpp */,
+				BEA263622CBE38E20007435A /* SpookyV2.cpp */,
+				BEA263632CBE38E20007435A /* StringVector.hpp */,
+				BEA263642CBE38E20007435A /* StringVector.cpp */,
+				BEA263652CBE38E20007435A /* TraceEvent.hpp */,
+				BEA263662CBE38E20007435A /* TraceEvent.cpp */,
+				BEA263672CBE38E20007435A /* Unit.hpp */,
+				BEA263682CBE38E20007435A /* Unit.cpp */,
+				BEA263692CBE38E20007435A /* Uri.hpp */,
+				BEA2636A2CBE38E20007435A /* Uri.cpp */,
+				BEA2636B2CBE38E20007435A /* Util.hpp */,
+				BEA2636C2CBE38E20007435A /* Util.cpp */,
+				BE2231BB2CC6804D00385A9C /* Util-mobile.cpp */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		BEA2637D2CBE39C30007435A /* Online */ = {
+			isa = PBXGroup;
+			children = (
+				BEA2637C2CBE38FE0007435A /* common */,
+				BEA264882CBE97C30007435A /* kit */,
+				BEA264892CBE97D40007435A /* net */,
+				BEA2648A2CBE98010007435A /* wsd */,
+			);
+			path = Online;
+			sourceTree = "<group>";
+		};
+		BEA264882CBE97C30007435A /* kit */ = {
+			isa = PBXGroup;
+			children = (
+				BEA2648B2CBE986C0007435A /* DeltaSimd.h */,
+				BEA2648C2CBE986C0007435A /* DeltaSimd.c */,
+				BEA2648D2CBE986C0007435A /* ChildSession.cpp */,
+				BEA2648E2CBE986C0007435A /* Kit.cpp */,
+				BEA2648F2CBE986C0007435A /* KitQueue.hpp */,
+				BEA264902CBE986C0007435A /* KitQueue.cpp */,
+				BEA264912CBE986C0007435A /* KitWebSocket.cpp */,
+			);
+			path = kit;
+			sourceTree = "<group>";
+		};
+		BEA264892CBE97D40007435A /* net */ = {
+			isa = PBXGroup;
+			children = (
+				BEA264972CBE98CD0007435A /* AsyncDNS.hpp */,
+				BEA264982CBE98CD0007435A /* FakeSocket.cpp */,
+				BEA264992CBE98CD0007435A /* HttpRequest.hpp */,
+				BEA2649A2CBE98CD0007435A /* HttpRequest.cpp */,
+				BEA2649B2CBE98CD0007435A /* NetUtil.hpp */,
+				BEA2649C2CBE98CD0007435A /* NetUtil.cpp */,
+				BEA2649D2CBE98CD0007435A /* Socket.hpp */,
+				BEA2649E2CBE98CD0007435A /* Socket.cpp */,
+				BEA2649F2CBE98CD0007435A /* WebSocketHandler.hpp */,
+			);
+			path = net;
+			sourceTree = "<group>";
+		};
+		BEA2648A2CBE98010007435A /* wsd */ = {
+			isa = PBXGroup;
+			children = (
+				BEA264A42CBE99340007435A /* ClientRequestDispatcher.cpp */,
+				BEA264A52CBE99340007435A /* ClientSession.cpp */,
+				BEA264A62CBE99340007435A /* COOLWSD.cpp */,
+				BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */,
+				BEA264A72CBE99340007435A /* DocumentBroker.cpp */,
+				BEA264A82CBE99340007435A /* RequestDetails.hpp */,
+				BEA264A92CBE99340007435A /* RequestDetails.cpp */,
+				BEA264AA2CBE99340007435A /* RequestVettingStation.cpp */,
+				BEA264AB2CBE99340007435A /* Storage.cpp */,
+				BEA264B52CBE9BEF0007435A /* Storage.hpp */,
+				BEA264AC2CBE99340007435A /* TileCache.cpp */,
+			);
+			path = wsd;
+			sourceTree = "<group>";
+		};
+		BECC4BA22CBD3FA300A120B3 = {
+			isa = PBXGroup;
+			children = (
+				BEA2637D2CBE39C30007435A /* Online */,
+				BECC4BAD2CBD3FA300A120B3 /* coda */,
+				BECC4BBF2CBD3FA400A120B3 /* codaTests */,
+				BECC4BC92CBD3FA400A120B3 /* codaUITests */,
+				BECC4BAC2CBD3FA300A120B3 /* Products */,
+				BEA2637B2CBE38F50007435A /* coda-Bridging-Header.h */,
+				BEA264152CBE7A770007435A /* Config.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		BECC4BAC2CBD3FA300A120B3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BECC4BAB2CBD3FA300A120B3 /* coda.app */,
+				BECC4BBC2CBD3FA400A120B3 /* codaTests.xctest */,
+				BECC4BC62CBD3FA400A120B3 /* codaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BECC4BAA2CBD3FA300A120B3 /* coda */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BECC4BD02CBD3FA400A120B3 /* Build configuration list for PBXNativeTarget "coda" */;
+			buildPhases = (
+				BECC4BA72CBD3FA300A120B3 /* Sources */,
+				BECC4BA82CBD3FA300A120B3 /* Frameworks */,
+				BECC4BA92CBD3FA300A120B3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				BECC4BAD2CBD3FA300A120B3 /* coda */,
+			);
+			name = coda;
+			packageProductDependencies = (
+			);
+			productName = coda;
+			productReference = BECC4BAB2CBD3FA300A120B3 /* coda.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BECC4BBB2CBD3FA400A120B3 /* codaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BECC4BD32CBD3FA400A120B3 /* Build configuration list for PBXNativeTarget "codaTests" */;
+			buildPhases = (
+				BECC4BB82CBD3FA400A120B3 /* Sources */,
+				BECC4BB92CBD3FA400A120B3 /* Frameworks */,
+				BECC4BBA2CBD3FA400A120B3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BECC4BBE2CBD3FA400A120B3 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				BECC4BBF2CBD3FA400A120B3 /* codaTests */,
+			);
+			name = codaTests;
+			packageProductDependencies = (
+			);
+			productName = codaTests;
+			productReference = BECC4BBC2CBD3FA400A120B3 /* codaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BECC4BC52CBD3FA400A120B3 /* codaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BECC4BD62CBD3FA400A120B3 /* Build configuration list for PBXNativeTarget "codaUITests" */;
+			buildPhases = (
+				BECC4BC22CBD3FA400A120B3 /* Sources */,
+				BECC4BC32CBD3FA400A120B3 /* Frameworks */,
+				BECC4BC42CBD3FA400A120B3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BECC4BC82CBD3FA400A120B3 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				BECC4BC92CBD3FA400A120B3 /* codaUITests */,
+			);
+			name = codaUITests;
+			packageProductDependencies = (
+			);
+			productName = codaUITests;
+			productReference = BECC4BC62CBD3FA400A120B3 /* codaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BECC4BA32CBD3FA300A120B3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					BECC4BAA2CBD3FA300A120B3 = {
+						CreatedOnToolsVersion = 16.0;
+						LastSwiftMigration = 1600;
+					};
+					BECC4BBB2CBD3FA400A120B3 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = BECC4BAA2CBD3FA300A120B3;
+					};
+					BECC4BC52CBD3FA400A120B3 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = BECC4BAA2CBD3FA300A120B3;
+					};
+				};
+			};
+			buildConfigurationList = BECC4BA62CBD3FA300A120B3 /* Build configuration list for PBXProject "coda" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BECC4BA22CBD3FA300A120B3;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = BECC4BAC2CBD3FA300A120B3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BECC4BAA2CBD3FA300A120B3 /* coda */,
+				BECC4BBB2CBD3FA400A120B3 /* codaTests */,
+				BECC4BC52CBD3FA400A120B3 /* codaUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BECC4BA92CBD3FA300A120B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEA264162CBE7A770007435A /* Config.xcconfig in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BECC4BBA2CBD3FA400A120B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BECC4BC42CBD3FA400A120B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BECC4BA72CBD3FA300A120B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEA2636D2CBE38E20007435A /* Uri.cpp in Sources */,
+				BEA264922CBE986C0007435A /* KitQueue.cpp in Sources */,
+				BEA264932CBE986C0007435A /* KitWebSocket.cpp in Sources */,
+				BEA264942CBE986C0007435A /* ChildSession.cpp in Sources */,
+				BEA264952CBE986C0007435A /* Kit.cpp in Sources */,
+				BEA264962CBE986C0007435A /* DeltaSimd.c in Sources */,
+				BEA2636E2CBE38E20007435A /* Util.cpp in Sources */,
+				BE2231B82CC679DE00385A9C /* Crypto-stub.cpp in Sources */,
+				BEA2636F2CBE38E20007435A /* Unit.cpp in Sources */,
+				BEA263702CBE38E20007435A /* Log.cpp in Sources */,
+				BEA263712CBE38E20007435A /* Simd.cpp in Sources */,
+				BE2231BC2CC6804D00385A9C /* Util-mobile.cpp in Sources */,
+				BEA263722CBE38E20007435A /* FileUtil.cpp in Sources */,
+				BEA263732CBE38E20007435A /* Session.cpp in Sources */,
+				BEA263742CBE38E20007435A /* TraceEvent.cpp in Sources */,
+				BEA264A02CBE98CD0007435A /* NetUtil.cpp in Sources */,
+				BEA264A12CBE98CD0007435A /* Socket.cpp in Sources */,
+				BEA264A22CBE98CD0007435A /* HttpRequest.cpp in Sources */,
+				BEA264A32CBE98CD0007435A /* FakeSocket.cpp in Sources */,
+				BEA263752CBE38E20007435A /* SigUtil.cpp in Sources */,
+				BEA263762CBE38E20007435A /* SpookyV2.cpp in Sources */,
+				BEA264AD2CBE99340007435A /* Storage.cpp in Sources */,
+				BEA264AE2CBE99340007435A /* TileCache.cpp in Sources */,
+				BEA264AF2CBE99340007435A /* COOLWSD.cpp in Sources */,
+				BEA264B02CBE99340007435A /* ClientSession.cpp in Sources */,
+				BEA264B12CBE99340007435A /* RequestDetails.cpp in Sources */,
+				BEA264B22CBE99340007435A /* ClientRequestDispatcher.cpp in Sources */,
+				BE2231BA2CC67FDE00385A9C /* coolwsd-fork.cpp in Sources */,
+				BEA264B32CBE99340007435A /* DocumentBroker.cpp in Sources */,
+				BEA264B42CBE99340007435A /* RequestVettingStation.cpp in Sources */,
+				BEA263772CBE38E20007435A /* ConfigUtil.cpp in Sources */,
+				BEA263782CBE38E20007435A /* StringVector.cpp in Sources */,
+				BEA263792CBE38E20007435A /* Protocol.cpp in Sources */,
+				BEA2637A2CBE38E20007435A /* Authorization.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BECC4BB82CBD3FA400A120B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BECC4BC22CBD3FA400A120B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BECC4BBE2CBD3FA400A120B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BECC4BAA2CBD3FA300A120B3 /* coda */;
+			targetProxy = BECC4BBD2CBD3FA400A120B3 /* PBXContainerItemProxy */;
+		};
+		BECC4BC82CBD3FA400A120B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BECC4BAA2CBD3FA300A120B3 /* coda */;
+			targetProxy = BECC4BC72CBD3FA400A120B3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		BECC4BCE2CBD3FA400A120B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BEA264152CBE7A770007435A /* Config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"MACOS=MACOS",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+					"$(SRCROOT)/coda",
+					"$(SRCROOT)/../..",
+					"$(SRCROOT)/../../common",
+					"$(SRCROOT)/../../kit",
+					"$(SRCROOT)/../../net",
+					"$(SRCROOT)/../../wsd",
+					/opt/homebrew/include,
+				);
+				LIBRARY_SEARCH_PATHS = /opt/homebrew/lib;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lPocoFoundation",
+					"-lPocoUtil",
+					"-lPocoXML",
+					"-lPocoJSON",
+					"-lPocoNet",
+					"-lzstd",
+					"-lpng",
+				);
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BECC4BCF2CBD3FA400A120B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BEA264152CBE7A770007435A /* Config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MACOS=MACOS",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+					"$(SRCROOT)/coda",
+					"$(SRCROOT)/../..",
+					"$(SRCROOT)/../../common",
+					"$(SRCROOT)/../../kit",
+					"$(SRCROOT)/../../net",
+					"$(SRCROOT)/../../wsd",
+					/opt/homebrew/include,
+				);
+				LIBRARY_SEARCH_PATHS = /opt/homebrew/lib;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"-lPocoFoundation",
+					"-lPocoUtil",
+					"-lPocoXML",
+					"-lPocoJSON",
+					"-lPocoNet",
+					"-lzstd",
+					"-lpng",
+				);
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		BECC4BD12CBD3FA400A120B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = coda/coda.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J4FQ687VJK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.coda;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "coda-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		BECC4BD22CBD3FA400A120B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = coda/coda.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J4FQ687VJK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.coda;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "coda-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		BECC4BD42CBD3FA400A120B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J4FQ687VJK;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.codaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coda.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/coda";
+			};
+			name = Debug;
+		};
+		BECC4BD52CBD3FA400A120B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J4FQ687VJK;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.codaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coda.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/coda";
+			};
+			name = Release;
+		};
+		BECC4BD72CBD3FA400A120B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J4FQ687VJK;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.codaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = coda;
+			};
+			name = Debug;
+		};
+		BECC4BD82CBD3FA400A120B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J4FQ687VJK;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.codaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = coda;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BECC4BA62CBD3FA300A120B3 /* Build configuration list for PBXProject "coda" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BECC4BCE2CBD3FA400A120B3 /* Debug */,
+				BECC4BCF2CBD3FA400A120B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BECC4BD02CBD3FA400A120B3 /* Build configuration list for PBXNativeTarget "coda" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BECC4BD12CBD3FA400A120B3 /* Debug */,
+				BECC4BD22CBD3FA400A120B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BECC4BD32CBD3FA400A120B3 /* Build configuration list for PBXNativeTarget "codaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BECC4BD42CBD3FA400A120B3 /* Debug */,
+				BECC4BD52CBD3FA400A120B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BECC4BD62CBD3FA400A120B3 /* Build configuration list for PBXNativeTarget "codaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BECC4BD72CBD3FA400A120B3 /* Debug */,
+				BECC4BD82CBD3FA400A120B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BECC4BA32CBD3FA300A120B3 /* Project object */;
+}

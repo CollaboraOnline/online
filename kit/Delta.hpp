@@ -19,6 +19,11 @@
 #include <zlib.h>
 #include <zstd.h>
 #include <stdint.h>
+#if defined(MACOS)
+#  include <machine/endian.h>
+#else
+#  include <endian.h>
+#endif
 
 #include <common/HexUtil.hpp>
 #include <Log.hpp>

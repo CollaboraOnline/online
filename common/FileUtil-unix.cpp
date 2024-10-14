@@ -464,14 +464,14 @@ namespace FileUtil
                           {
                               {
                                   tsAccess.tv_sec,
-#ifdef IOS
+#if defined(IOS) || defined(MACOS)
                                   (__darwin_suseconds_t)
 #endif
                                   (tsAccess.tv_nsec / 1000)
                               },
                               {
                                   tsModified.tv_sec,
-#ifdef IOS
+#if defined(IOS) || defined(MACOS)
                                   (__darwin_suseconds_t)
 #endif
                                   (tsModified.tv_nsec / 1000)
