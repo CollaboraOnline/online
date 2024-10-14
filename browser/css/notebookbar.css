@@ -83,10 +83,18 @@ button.ui-tab.notebookbar {
 	height: 31px;
 }
 
+.notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton {
+	width: var(--btn-size-m);
+	height: var(--btn-size-m);
+	padding: var(--btn-padding);
+	justify-content: center;
+	align-items: center;
+}
+
 .notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton img {
-	width: 16px !important;
-	height: 16px !important;
-	margin: 0 !important;
+	width: 16px;
+	height: 16px;
+	margin: 0;
 }
 
 .unoSave.savemodified .unobutton img,
@@ -94,7 +102,6 @@ button.ui-tab.notebookbar {
 #save.saving img,
 #save.saved img {
 	box-sizing: border-box;
-	padding-left: 24px;
 }
 
 html:not([data-theme='dark']) .unoSave.savemodified .unobutton img,
@@ -202,9 +209,9 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 .unotoolbutton.notebookbar .unobutton {
 	box-sizing: border-box;
-	padding: 3px;
-	min-width: var(--btn-size);
-	min-height: var(--btn-size);
+	padding: var(--btn-padding);
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background-color: transparent;
 	margin: 0;
 	vertical-align: middle;
@@ -215,6 +222,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	display: flex;
 	flex-direction: column;
 	position: relative;
+	justify-content: center;
+	align-items: center;
 }
 
 .unotoolbutton.notebookbar .unobutton::after {
@@ -236,8 +245,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 .ui-tabs-content .unobutton > img {
-	width: var(--btn-size);
-	height: var(--btn-size);
+	min-height: 0;
+	min-width: 0;
 }
 
 .has-dropdown--color.notebookbar {
@@ -362,10 +371,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	line-height: 22px;
 }
 
-.has-colorpicker.menubutton img {
-	width: var(--btn-size-m) !important;
-	height: var(--btn-size-m) !important;
-}
 /* Styles preview */
 
 #stylesview {
