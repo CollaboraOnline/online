@@ -461,6 +461,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				id: 'input-modal-input',
 				type: 'multilineedit',
 				text: (commentData.text && isMod ? commentData.text: ''),
+				html: (commentData.html && isMod ? commentData.html: ''),
 				contenteditable: true
 			},
 			{
