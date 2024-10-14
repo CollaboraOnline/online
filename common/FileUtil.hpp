@@ -267,7 +267,7 @@ namespace FileUtil
         /// nanosecond precision, if/when the filesystem supports it.
         timespec modifiedTime() const
         {
-#ifdef IOS
+#if defined(IOS) || defined(MACOS)
             return _sb.st_mtimespec;
 #else
             return _sb.st_mtim;
