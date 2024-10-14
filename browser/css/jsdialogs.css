@@ -56,6 +56,11 @@
 	margin: 0 !important;
 }
 
+div#autoFillPreviewTooltip {
+	min-width: fit-content;
+	max-width: fit-content;
+}
+
 .jsdialog-window.modalpopup:not(.snackbar),
 .hyperlink-pop-up-container {
 	min-width: 198px;
