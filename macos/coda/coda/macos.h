@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -7,21 +8,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#pragma once
 
-#if MOBILEAPP
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
 
-#include <Kit.hpp>
-#ifdef IOS
-#include "ios.h"
-#elif defined(MACOS)
-#include "macos.h"
-#elif defined(GTKAPP)
-#include "gtk.hpp"
-#elif defined(__ANDROID__)
-#include "androidapp.hpp"
-#elif WASMAPP
-#include "wasmapp.hpp"
-#endif
+extern const char *user_name;
 
-#endif // MOBILEAPP
+extern int coolwsd_server_socket_fd;
+
+extern LibreOfficeKit *lo_kit;
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
