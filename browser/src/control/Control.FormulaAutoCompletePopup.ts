@@ -34,7 +34,7 @@ class FormulaAutoCompletePopup extends L.Control.AutoCompletePopup {
 
 	openFormulaAutoCompletePopup(ev: FireEvent) {
 		this.map.fire('closepopup');
-		this.openMentionPopup({ data: ev });
+		this.openPopup({ data: ev });
 	}
 
 	sendFormulaText(ev: FireEvent) {
