@@ -61,6 +61,15 @@ class PresenterConsole {
 		if (!this._proxyPresenter) {
 			return;
 		}
+
+		this._computeSize(
+			this._proxyPresenter.document.querySelector('#current-presentation'),
+		);
+
+		this._computeSize(
+			this._proxyPresenter.document.querySelector('#next-presentation'),
+		);
+
 		this._timer = setInterval(L.bind(this._onTimer, this), 1000);
 		this._ticks = 0;
 	}
@@ -207,6 +216,21 @@ class PresenterConsole {
 		if (elem) {
 			elem.innerText = notes;
 		}
+	}
+
+	_computeSize(canvas) {
+		let rect = canvas.getBoundingClientRect();
+		let size =
+			this._map.slideShowPresenter._slideCompositor.computeLayerResolution(
+				rect.width,
+				rect.height,
+			);
+		size = this._map.slideShowPresenter._slideCompositor.computeLayerSize(
+			size[0],
+			size[1],
+		);
+		canvas.width = size[0];
+		canvas.height = size[1];
 	}
 }
 
