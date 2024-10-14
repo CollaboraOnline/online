@@ -1253,6 +1253,14 @@ label.disabled {
 	max-height: none;
 }
 
+#new-annotation-dialog #mentionPopupList.mobile-wizard {
+	margin-left: 5%;
+	margin-right: 5%;
+	height: 20vh;
+	width: auto;
+	border: 1px solid var(--color-border);
+}
+
 .unotoolbutton.mobile-wizard .unobutton img{
 	width: 24px;
 	height: 24px;
