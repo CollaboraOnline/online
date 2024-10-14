@@ -61,6 +61,7 @@ class UnitLoad : public UnitWSD
     TestResult testExcelLoad();
     TestResult testReload();
     TestResult testLoad();
+    TestResult testLoadUserPrivateInfo();
 
     void configure(Poco::Util::LayeredConfiguration& config) override
     {
@@ -236,6 +237,29 @@ UnitBase::TestResult UnitLoad::testLoad()
     return TestResult::Ok;
 }
 
+UnitBase::TestResult UnitLoad::testLoadUserPrivateInfo()
+{
+    // Given a document to be loaded:
+    testname = __func__;
+    std::string documentPath, documentURL;
+    helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
+    std::shared_ptr<SocketPoll> socketPollPtr = std::make_shared<SocketPoll>("LoadPoll");
+    socketPollPtr->startThread();
+    auto wsSession
+        = http::WebSocketSession::create(socketPollPtr, helpers::getTestServerURI(), documentURL);
+
+    // When the user private info is valid JSON, but is not a dictionary:
+    wsSession->sendMessage("load url=" + documentURL + " authorprivateinfo=%5B%5D");
+
+    // Then make sure we can still load the document:
+    std::vector<char> message = wsSession->waitForMessage("status:", std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+    // This failed, invalid user private info resulted in a failed load.
+    LOK_ASSERT(!message.empty());
+    wsSession->asyncShutdown();
+    LOK_ASSERT(wsSession->waitForDisconnection(std::chrono::seconds(COMMAND_TIMEOUT_SECS)));
+    return TestResult::Ok;
+}
+
 void UnitLoad::invokeWSDTest()
 {
     UnitBase::TestResult result = testLoad();
@@ -251,6 +275,10 @@ void UnitLoad::invokeWSDTest()
         exitTest(result);
 
     result = testExcelLoad();
+    if (result != TestResult::Ok)
+        exitTest(result);
+
+    result = testLoadUserPrivateInfo();
     if (result != TestResult::Ok)
         exitTest(result);
 
