@@ -13,9 +13,16 @@
 	/* Shared color for cell and selection border */
 	--cell-cursor-selection-border-color: var(--color-primary);
 
-	--btn-size: 24px;
-	--btn-size-m: 18px;
-	--btn-size-s: 16px;
+	--btn-size: 28px;
+	--btn-padding: 2px;
+	--btn-img-size: calc(var(--btn-size) - var(--btn-padding) * 2);
+
+	--btn-size-m: 22px;
+	--btn-img-size-m: calc(var(--btn-size-m) - var(--btn-padding) * 2);
+
+	--btn-size-s: 20px;
+	--btn-img-size-s: calc(var(--btn-size-s) - var(--btn-padding) * 2);
+
 	--border-radius: 4px; /* buttons, widgets */
 	--border-radius-large: 10px; /* dialog */
 
