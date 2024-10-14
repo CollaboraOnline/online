@@ -208,13 +208,65 @@ class PresenterConsole {
 			L.bind(this._onKeyDown, this),
 		);
 		delete this._proxyPresenter;
+		delete this._currentIndex;
+		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
 	}
 
 	_onEndTransition(e) {
+		this._currentIndex = e.slide;
+
+		this.drawImage(
+			this._proxyPresenter.document.querySelector('#current-presentation'),
+			e.slide,
+		);
+
+		let next =
+			this._proxyPresenter.document.querySelector('#next-presentation');
+		if (
+			this._currentIndex + 1 ===
+			this._map.slideShowPresenter._getSlidesCount()
+		) {
+			requestAnimationFrame(this.drawEnd.bind(this, next));
+		} else {
+			this.drawImage(next, this._currentIndex + 1);
+		}
+
 		let notes = this._map.slideShowPresenter.getNotes(e.slide);
 		let elem = this._proxyPresenter.document.querySelector('#notes');
 		if (elem) {
 			elem.innerText = notes;
+		}
+	}
+
+	drawEnd(canvas) {
+		const width = canvas.width;
+		const height = canvas.height;
+		const offscreen = new OffscreenCanvas(width, height);
+		const renderer = canvas.getContext('bitmaprenderer');
+		const ctx = offscreen.getContext('2d');
+
+		ctx.fillStyle = 'black';
+		ctx.fillRect(0, 0, width, height);
+
+		ctx.fillStyle = 'white';
+		ctx.font = '20px sans-serif';
+		ctx.textAlign = 'center';
+		ctx.textBaseline = 'middle';
+
+		ctx.fillText(_('Click to exit presentation...'), width / 2, height / 2);
+
+		const bitmap = offscreen.transferToImageBitmap();
+		renderer.transferFromImageBitmap(bitmap);
+	}
+
+	drawImage(canvas, slide) {
+		const bitmap =
+			this._map.slideShowPresenter._slideCompositor.getSlide(slide);
+		if (bitmap) {
+			createImageBitmap(bitmap).then(function (image) {
+				let renderer = canvas.getContext('bitmaprenderer');
+				renderer.transferFromImageBitmap(image);
+			});
 		}
 	}
 
