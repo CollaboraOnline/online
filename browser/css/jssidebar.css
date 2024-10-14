@@ -26,11 +26,6 @@ img.sidebar.ui-drawing-area {
 	margin: 0;
 }
 
-.sidebar .unobutton > img {
-	width: var(--btn-size);
-	height: var(--btn-size);
-}
-
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
 	padding: 0;
 	box-sizing: border-box;
@@ -182,6 +177,10 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 
 .sidebar.menubutton.has-colorpicker:hover span {
 	box-shadow: revert;
+}
+
+.sidebar #FrameLineColor-button img {
+	margin-bottom: -4px;
 }
 
 /* writer */
