@@ -67,28 +67,11 @@ abstract class AutoCompletePopup {
 	abstract onAdd(): void;
 
 	closePopup(): void {
-		var popupExists =
-			L.DomUtil.get(this.popupId) || L.DomUtil.get(this.popupId + 'List');
+		var popupExists = L.DomUtil.get(this.popupId);
 		if (!popupExists) return;
 
 		this.map.jsdialog.focusToLastElement(this.popupId);
-		if (this.isMobile) {
-			const commentSection = app.sectionContainer.getSectionWithName(
-				L.CSections.CommentList.name,
-			);
-
-			if (commentSection?.isMobileCommentActive()) {
-				const control = this.getTreeJSON();
-				const data = this.getPopupJSON(control, { x: 0, y: 0 });
-				if (commentSection?.isMobileCommentActive()) {
-					data.id = 'modal-dialog-new-annotation-dialog';
-				}
-				(data.control as TreeWidget).entries = [];
-				this.sendUpdate(data);
-			} else {
-				this.map.fire('closemobilewizard');
-			}
-		} else this.map.jsdialog.clearDialog(this.popupId);
+		this.map.jsdialog.clearDialog(this.popupId);
 	}
 
 	abstract getPopupEntries(ev: FireEvent): Array<TreeEntryJSON>;
@@ -115,15 +98,6 @@ abstract class AutoCompletePopup {
 			fireKeyEvents: true,
 			entries: [] as Array<TreeEntryJSON>,
 		} as TreeWidget;
-	}
-
-	getSimpleTextJSON(): TextWidget {
-		return {
-			id: this.popupId + 'fixedtext',
-			type: 'fixedtext',
-			text: 'no search results found!',
-			enabled: true,
-		} as TextWidget;
 	}
 
 	sendUpdate(data: any): void {
@@ -169,72 +143,28 @@ abstract class AutoCompletePopup {
 		);
 	}
 
-	openMentionPopup(ev: MentionEvent): void {
+	openPopup(ev: FireEvent): void {
 		const entries = this.getPopupEntries(ev);
-		let data: PopupData;
+		if (entries.length === 0) return;
+
 		const cursorPos = this.getCursorPosition();
-		const commentSection = app.sectionContainer.getSectionWithName(
-			L.CSections.CommentList.name,
-		);
-		if (entries.length > 0) {
-			const control = this.getTreeJSON();
-			// update the popup with list if mentionList already exist
-			if (L.DomUtil.get(this.popupId + 'List')) {
-				data = this.getPopupJSON(control, cursorPos);
-				if (commentSection?.isMobileCommentActive()) {
-					data.id = 'modal-dialog-new-annotation-dialog';
-				}
-				(data.control as TreeWidget).entries = entries;
-				this.sendUpdate(data);
-				return;
-			}
-			if (L.DomUtil.get(this.popupId))
-				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
-			data = this.newPopupData;
-			data.children[0].children[0] = control;
-			(data.children[0].children[0] as TreeWidget).entries = entries;
-		} else if (this.isMobile && commentSection?.isMobileCommentActive()) {
-			const control = this.getTreeJSON();
-			data = this.getPopupJSON(control, cursorPos);
-			if (commentSection?.isMobileCommentActive()) {
-				data.id = 'modal-dialog-new-annotation-dialog';
-			}
-			(data.control as TreeWidget).entries = [];
+		const control = this.getTreeJSON();
+		if (L.DomUtil.get(this.popupId + 'List')) {
+			const data = this.getPopupJSON(control, cursorPos);
+			(data.control as TreeWidget).entries = entries;
 			this.sendUpdate(data);
 			return;
-		} else {
-			// If the key pressed was a space, and there are no matches, then just
-			// dismiss the popup.
-			// const noMatchOnFinalSpace: boolean = ev.triggerKey === ' ';
-			const noMatchOnFinalSpace = ev.triggerKey === ' ';
-			if (noMatchOnFinalSpace) {
-				this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
-				return;
-			}
-			const control = this.getSimpleTextJSON();
-			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
-				data = this.getPopupJSON(control, cursorPos);
-				this.sendUpdate(data);
-				return;
-			}
-			if (L.DomUtil.get(this.popupId))
-				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
-			data = this.newPopupData;
-			data.children[0].children[0] = control;
 		}
 
-		// add position
+		if (L.DomUtil.get(this.popupId)) this.closePopup();
+
+		const data = this.newPopupData;
+		data.children[0].children[0] = control;
+		(data.children[0].children[0] as TreeWidget).entries = entries;
+
 		data.posx = cursorPos.x;
 		data.posy = cursorPos.y;
 		this.sendJSON(data);
-	}
-
-	closeMentionPopup(ev: CloseMessageEvent): void {
-		this.closePopup();
-		if (!ev.typingMention) {
-			this.map._docLayer._typingMention = false;
-			this.map._docLayer._mentionText = [];
-		}
 	}
 
 	callback(objectType: any, eventType: any, object: any, index: number) {

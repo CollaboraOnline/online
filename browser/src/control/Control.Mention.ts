@@ -86,6 +86,110 @@ class Mention extends L.Control.AutoCompletePopup {
 		return entries;
 	}
 
+	private openMentionPopup(ev: MentionEvent): void {
+		const entries = this.getPopupEntries(ev);
+		const commentSection = app.sectionContainer.getSectionWithName(
+			L.CSections.CommentList.name,
+		);
+		if (
+			entries.length === 0 &&
+			this.isMobile &&
+			commentSection?.isMobileCommentActive()
+		) {
+			const control = this.getTreeJSON();
+			const data = this.getPopupJSON(control, { x: 0, y: 0 });
+			if (commentSection?.isMobileCommentActive()) {
+				data.id = 'modal-dialog-new-annotation-dialog';
+			}
+			(data.control as TreeWidget).entries = [];
+			this.sendUpdate(data);
+			return;
+		}
+
+		const cursorPos = this.getCursorPosition();
+		if (entries.length === 0) {
+			// If the key pressed was a space, and there are no matches, then just
+			// dismiss the popup.
+			// const noMatchOnFinalSpace: boolean = ev.triggerKey === ' ';
+			const noMatchOnFinalSpace = ev.triggerKey === ' ';
+			if (noMatchOnFinalSpace) {
+				this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
+				return;
+			}
+			const control = this.getSimpleTextJSON();
+			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
+				const data = this.getPopupJSON(control, cursorPos);
+				this.sendUpdate(data);
+				return;
+			}
+			if (L.DomUtil.get(this.popupId))
+				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
+			const data = this.newPopupData;
+			data.children[0].children[0] = control;
+			data.posx = cursorPos.x;
+			data.posy = cursorPos.y;
+			this.sendJSON(data);
+			return;
+		}
+
+		const control = this.getTreeJSON();
+		if (L.DomUtil.get(this.popupId + 'List')) {
+			const data = this.getPopupJSON(control, cursorPos);
+			if (commentSection?.isMobileCommentActive())
+				data.id = 'modal-dialog-new-annotation-dialog';
+			(data.control as TreeWidget).entries = entries;
+			this.sendUpdate(data);
+			return;
+		}
+
+		if (L.DomUtil.get(this.popupId))
+			this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
+		const data = this.newPopupData;
+		data.children[0].children[0] = control;
+		(data.children[0].children[0] as TreeWidget).entries = entries;
+		data.posx = cursorPos.x;
+		data.posy = cursorPos.y;
+		this.sendJSON(data);
+	}
+
+	private getSimpleTextJSON(): TextWidget {
+		return {
+			id: this.popupId + 'fixedtext',
+			type: 'fixedtext',
+			text: 'no search results found!',
+			enabled: true,
+		} as TextWidget;
+	}
+
+	private closeMentionPopup(ev: CloseMessageEvent): void {
+		var popupExists =
+			L.DomUtil.get(this.popupId) || L.DomUtil.get(this.popupId + 'List');
+		if (!popupExists) return;
+
+		this.map.jsdialog.focusToLastElement(this.popupId);
+		if (this.isMobile) {
+			const commentSection = app.sectionContainer.getSectionWithName(
+				L.CSections.CommentList.name,
+			);
+
+			if (commentSection?.isMobileCommentActive()) {
+				const control = this.getTreeJSON();
+				const data = this.getPopupJSON(control, { x: 0, y: 0 });
+				if (commentSection?.isMobileCommentActive()) {
+					data.id = 'modal-dialog-new-annotation-dialog';
+				}
+				(data.control as TreeWidget).entries = [];
+				this.sendUpdate(data);
+			} else {
+				this.map.fire('closemobilewizard');
+			}
+		} else this.map.jsdialog.clearDialog(this.popupId);
+		if (!ev.typingMention) {
+			this.map._docLayer._typingMention = false;
+			this.map._docLayer._mentionText = [];
+		}
+	}
+
 	private sendHyperlinkUnoCommand(
 		username: string,
 		profile: string,
