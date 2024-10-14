@@ -20,7 +20,11 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdint.h>
-#include <endian.h>
+#if defined(MACOS)
+#  include <machine/endian.h>
+#else
+#  include <endian.h>
+#endif
 
 #include "DeltaSimd.h"
 

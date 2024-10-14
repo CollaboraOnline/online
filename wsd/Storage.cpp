@@ -50,6 +50,8 @@
 
 #ifdef IOS
 #include <ios.h>
+#elif defined(MACOS)
+#include <macos.h>
 #elif defined(__ANDROID__)
 #include "androidapp.hpp"
 #elif defined(GTKAPP)

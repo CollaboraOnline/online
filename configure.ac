@@ -142,6 +142,10 @@ AC_ARG_ENABLE([iosapp],
               AS_HELP_STRING([--enable-iosapp],
                              [Use on a Mac where you will build the iOS app.]))
 
+AC_ARG_ENABLE([macosapp],
+              AS_HELP_STRING([--enable-macosapp],
+                             [Use on a Mac where you will build the macOS app.]))
+
 AC_ARG_WITH([wasm-fallback],
               AS_HELP_STRING([--with-wasm-fallback=<path>],
                              [Build a COOL where the client can fall back to a WASM implementation if the connection to the server fails.
@@ -872,13 +876,13 @@ fi
 
 if test "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes"; then
    if test -n "$LIBPNG_INCLUDES" ; then
-      AC_MSG_ERROR([--with-libpng-includes is ignored on Android, please remove the parameter.])
+      AC_MSG_ERROR([--with-libpng-includes is ignored on iOS / Android, please remove the parameter.])
    fi
    if test -n "$LIBPNG_LIBS" ; then
-      AC_MSG_ERROR([--with-libpng-libs is ignored on Android, please remove the parameter.])
+      AC_MSG_ERROR([--with-libpng-libs is ignored on iOS / Android, please remove the parameter.])
    fi
    if test -n "$LOKIT_PATH" ; then
-      AC_MSG_ERROR([--with-lokit-path is ignored on Android, please remove the parameter.])
+      AC_MSG_ERROR([--with-lokit-path is ignored on iOS / Android, please remove the parameter.])
       LOKIT_PATH=`readlink -f $LOBUILDDIR/include`
    fi
 fi
@@ -913,8 +917,8 @@ AC_SUBST(APP_NAME)
 
 VENDOR=
 AC_MSG_CHECKING([for vendor])
-if test "$enable_iosapp" = yes -a -z "$with_vendor"; then
-    AC_MSG_ERROR([You must use --with-vendor when configuring for the iOS app])
+if test \( "$enable_iosapp" = yes -o "$enable_macosapp" = yes \) -a -z "$with_vendor"; then
+    AC_MSG_ERROR([You must use --with-vendor when configuring for the iOS / macOS app])
 fi
 if test -z "$with_vendor" -o "$with_vendor" = "no"; then
     VENDOR="$USERNAME"
@@ -959,6 +963,24 @@ AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
 AC_SUBST(IOSAPP_BUNDLE_SHORT_VERSION)
 AC_SUBST(IOSAPP_BUNDLE_VERSION)
+
+ENABLE_MACOSAPP=
+#MACOSAPP_BUNDLE_VERSION=
+
+if test "$enable_macosapp" = "yes"; then
+   ENABLE_MACOSAPP=true
+
+   #if test -f BUNDLE-VERSION; then
+   #    MACOSAPP_BUNDLE_VERSION=$(cat BUNDLE-VERSION)
+   #else
+   #    MACOSAPP_BUNDLE_VERSION=1
+   #fi
+   #echo $MACOSAPP_BUNDLE_VERSION >BUNDLE-VERSION
+fi
+
+AC_SUBST(ENABLE_MACOSAPP)
+AM_CONDITIONAL([ENABLE_MACOSAPP], [test "$ENABLE_MACOSAPP" = "true"])
+#AC_SUBST(MACOSAPP_BUNDLE_VERSION)
 
 AC_MSG_CHECKING([for custom icon theme])
 CUSTOM_ICONS_DIRECTORY=
@@ -1267,7 +1289,7 @@ AS_IF([test -n "$LOKIT_PATH"],
       [CPPFLAGS="$CPPFLAGS -I${LOKIT_PATH}"])
 lokit_msg="$LOKIT_PATH"
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_MACOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
       [AC_MSG_CHECKING([for LibreOffice path])
       if test -n "$with_lo_path"; then
           # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
@@ -1342,7 +1364,7 @@ AS_IF([test `uname -s` != Darwin],
                       [],
                       [AC_MSG_ERROR([dlopen not found])])])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_MACOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
       [PKG_CHECK_MODULES([PNG], [libpng])
 dnl    deflated HTTP / web-page serving
        PKG_CHECK_MODULES([ZLIB], [zlib])
@@ -1725,6 +1747,8 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
       ])
 AC_SUBST(IOSAPP_FONTS)
 
+# TODO MACOSAPP_FONTS?
+
 AC_CHECK_FUNCS(ppoll)
 AC_CHECK_FUNCS([memrchr])
 
@@ -1981,6 +2005,11 @@ if test "$enable_iosapp" = "yes"; then
     AC_CONFIG_FILES([ios/config.h
                  ios/Mobile/Info.plist
                  ios/Mobile/Resources/Settings.bundle/Root.plist])
+fi
+
+if test "$enable_macosapp" = "yes"; then
+    AC_CONFIG_FILES([macos/coda/config.h
+                 macos/coda/Config.xcconfig])
 fi
 
 if test "$enable_androidapp" = "yes"; then
