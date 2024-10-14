@@ -471,6 +471,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				enabled: true,
 				singleclickactivate: false,
 				fireKeyEvents: true,
+				hideIfEmpty: true,
 				entries: [] as Array<TreeEntryJSON>,
 			},
 			{
@@ -565,7 +566,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			$(contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString((<any>String).locale, <any>dateOptions));
 		}
 
-		var newAnnotationDialog = document.getElementById('new-annotation-dialog');
+		var newAnnotationDialog = document.getElementById(this.mobileCommentId);
 		$(newAnnotationDialog).css('width', '100%');
 		var dialogInput = newAnnotationDialog.children[0];
 		$(dialogInput).css('height', '30vh');

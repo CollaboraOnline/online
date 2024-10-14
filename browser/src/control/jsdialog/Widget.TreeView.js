@@ -21,6 +21,7 @@
  *         { row: 0, text: 'first entry', collapsed: true, children: [ { row: 1, text: 'first subentry' } ] },
  *         { row: 2, text: 'second entry', selected: true, state: false, ondemand: true }
  *     ]
+ *     hideIfEmpty: true // hide treelistbox if entries array is empty
  * }
  *
  * b) with headers
@@ -705,6 +706,8 @@ function _treelistboxControl(parentContainer, data, builder) {
 			tr.innerText = _('Headings and objects that you add to the document will appear here');
 		} else {
 			L.DomUtil.addClass(table, 'empty');
+			if (data.hideIfEmpty)
+				L.DomUtil.addClass(table, 'hidden');
 		}
 		return false;
 	}
