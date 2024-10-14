@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-09 07:43+0200\n"
-"PO-Revision-Date: 2024-10-09 02:15+0000\n"
+"PO-Revision-Date: 2024-10-14 21:16+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.8-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -681,7 +681,7 @@ msgstr "beantwoorden"
 
 #: src/control/Control.JSDialogBuilder.js:1920
 msgid "replies"
-msgstr "Antwoorden"
+msgstr "antwoorden"
 
 #: src/control/Control.JSDialogBuilder.js:1931
 #: src/layer/tile/CanvasTileLayer.js:3790
@@ -1543,9 +1543,7 @@ msgstr "Kolommen verwijderen"
 #: src/control/Control.NotebookbarImpress.js:350
 #: src/control/Control.NotebookbarWriter.js:1404
 msgid "Read mode"
-msgstr ""
-"Tablet: weergave met tabbladen: Laat gebruiker teruggaan naar alleen lezen "
-"modus"
+msgstr "Leesmodus"
 
 #: src/control/Control.NotebookbarCalc.js:1217
 #: src/control/Control.NotebookbarDraw.js:369
@@ -1894,12 +1892,11 @@ msgstr "Menu weergeven"
 
 #: src/control/Control.UIManager.js:1186
 msgid "Saving"
-msgstr ""
+msgstr "Bezig met opslaan"
 
 #: src/control/Control.UIManager.js:1204
-#, fuzzy
 msgid "Saved"
-msgstr "Opslaan"
+msgstr "Opgeslagen"
 
 #: src/control/Control.UserList.ts:54
 msgid "{user} has joined"
@@ -2900,7 +2897,7 @@ msgstr "Draad niet opgelost"
 
 #: src/canvas/sections/CommentListSection.ts:1079
 msgid "Resolve Thread"
-msgstr "Opgeloste draad"
+msgstr "Draadje oplossen"
 
 #: src/canvas/sections/CommentListSection.ts:1085
 msgid "Promote to top comment"
