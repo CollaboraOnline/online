@@ -93,7 +93,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			this.mobileWizard.addClass('menuwizard');
 		if (this.isFunctionMenu)
 			this.mobileWizard.addClass('funcwizard');
-		if (this.isPopup && this.isPopupFullscreen)
+		if (this.isPopup && !this.isAutoCompletePopup && !this.isPopupPartialScreen)
 			this.mobileWizard.addClass('popup');
 		if (this.isSnackBar)
 			this.mobileWizard.addClass('snackbar');
@@ -523,7 +523,8 @@ L.Control.MobileWizardWindow = L.Control.extend({
 
 			this._reset();
 			this.isPopup = isPopupJson;
-			this.isPopupFullscreen = data.isPopupFullscreen;
+			this.isAutoCompletePopup = data.isAutoCompletePopup;
+			this.isPopupPartialScreen = data.isPopupPartialScreen;
 			this.persistKeyboard = data.persistKeyboard;
 
 			this._showWizard();
