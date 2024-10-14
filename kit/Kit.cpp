@@ -2142,9 +2142,16 @@ Object::Ptr makePropertyValue(const std::string& type, const T& val)
     {
         Parser parser;
         Poco::Dynamic::Var var = parser.parse(userPrivateInfo);
-        userPrivateInfoObj = var.extract<Object::Ptr>();
+        try
+        {
+            userPrivateInfoObj = var.extract<Object::Ptr>();
+        }
+        catch (const Poco::BadCastException& exception)
+        {
+            LOG_DBG("user private data is not a dictionary: " << exception.what());
+        }
     }
-    else
+    if (!userPrivateInfoObj)
     {
         userPrivateInfoObj = new Object();
     }
