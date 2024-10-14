@@ -61,6 +61,12 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			else
 				targetElement.classList.remove('selected');
 		}
+
+		if (['DrawPage', 'NotesPage'].includes(e.detail.context)) {
+			this._selectedMode = e.detail.context === 'NotesPage' ? 2 : 0;
+			this._refreshTilesInBackground();
+			this._update();
+		}
 	},
 
 	_isPCWInsideFlex: function () {
