@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-09 07:43+0200\n"
-"PO-Revision-Date: 2024-09-02 20:22+0000\n"
+"PO-Revision-Date: 2024-10-10 00:37+0000\n"
 "Last-Translator: SC <larcansal@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1431,7 +1431,7 @@ msgstr "Ver histórico"
 #: src/control/Control.NotebookbarImpress.js:320
 #: src/control/Control.NotebookbarWriter.js:322
 msgid "Signature"
-msgstr ""
+msgstr "Assinatura"
 
 #: src/control/Control.NotebookbarCalc.js:268
 #: src/control/Control.NotebookbarDraw.js:303
@@ -1792,6 +1792,8 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Para evitar alterações acidentais, o autor definiu este ficheiro para ser "
+"aberto apenas para visualização"
 
 #: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
@@ -1891,12 +1893,11 @@ msgstr "Mostrar menu"
 
 #: src/control/Control.UIManager.js:1186
 msgid "Saving"
-msgstr ""
+msgstr "A guardar"
 
 #: src/control/Control.UIManager.js:1204
-#, fuzzy
 msgid "Saved"
-msgstr "Guardar"
+msgstr "Guardado"
 
 #: src/control/Control.UserList.ts:54
 msgid "{user} has joined"
@@ -2161,7 +2162,7 @@ msgstr "Margem inferior"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "O documento não está assinado."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2249,11 +2250,11 @@ msgstr "Muito largo"
 
 #: src/control/jsdialog/Definitions.Menu.ts:418
 msgid "From Beginning"
-msgstr ""
+msgstr "Desde o início"
 
 #: src/control/jsdialog/Definitions.Menu.ts:422
 msgid "From Current Slide"
-msgstr ""
+msgstr "Do diapositivo atual"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2899,15 +2900,15 @@ msgstr "Resolver tópico"
 
 #: src/canvas/sections/CommentListSection.ts:1085
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Promover para o comentário superior"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show on the side"
-msgstr ""
+msgstr "Mostrar ao lado"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Mostrar comentário maior"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/canvas/sections/CommentListSection.ts:1344
@@ -2980,7 +2981,7 @@ msgid ""
 "To paste outside {productname}, please first click the 'download' button"
 msgstr ""
 "Para colar fora do {productname}, por favor clique primeiro no botão "
-"'Transferir'"
+"'Descarregar'"
 
 #: src/map/Clipboard.js:180
 msgid "Copying from the document disabled"
@@ -2992,28 +2993,28 @@ msgstr "aviso: o tempo de espera do pedido de copiar/colar expirou"
 
 #: src/map/Clipboard.js:344
 msgid "Failed to download clipboard, please re-copy"
-msgstr "Falha ao transferir a área de transferência. Por favor copie novamente"
+msgstr "Falha ao descarregar a área de transferência, por favor volte a copiar"
 
 #: src/map/Clipboard.js:852
 msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
+"A API da área de transferência assíncrona não é suportada pelo seu "
+"navegador, a mudança para HTTPS destina-se a resolver esse problema."
 
 #: src/map/Clipboard.js:1195
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr "<p>Utilize os botões de colar do seu teclado no ecrã.</p>"
+msgstr "Utilize os botões de colar do seu teclado no ecrã."
 
 #: src/map/Clipboard.js:1251
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Já começou uma transferência devido a uma grande operação de copiar/"
-"colar. Por favor espere pela transferência atual, ou cancele-a antes de "
-"iniciar uma nova</p>"
+"Já foi iniciado um descarregamento devido a uma grande operação de copiar/"
+"colar. Aguarde o descarregamento atual ou cancele-a antes de iniciar um novo "
+"descarregamento"
 
 #: src/map/Clipboard.js:1273
 msgid "Paste from this document"
@@ -3024,17 +3025,16 @@ msgid "Cancel paste special"
 msgstr "Cancelar colar especial"
 
 #: src/map/Clipboard.js:1283
-#, fuzzy
 msgid "Your browser has very limited access to the clipboard"
-msgstr "<p>O seu navegador tem acesso limitado à área de transferência</p>"
+msgstr "O seu navegador tem um acesso muito limitado à área de transferência"
 
 #: src/map/Clipboard.js:1288
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Utilize a seguinte combinação para ver mais opções:"
 
 #: src/map/Clipboard.js:1306
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Fechar a janela pop-up para ignorar a colagem especial"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
@@ -3046,7 +3046,7 @@ msgstr "Última vez guardado:"
 
 #: src/map/Map.js:1479
 msgid "Please wait!"
-msgstr ""
+msgstr "Por favor, aguarde!"
 
 #: src/map/handler/Map.Feedback.js:86
 msgid "Please send us your feedback"
