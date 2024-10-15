@@ -170,6 +170,10 @@ class PresenterConsole {
 	}
 
 	_onTimer() {
+		if (!this._proxyPresenter) {
+			return;
+		}
+
 		let sec, min, hour, elem;
 		++this._ticks;
 		sec = this._ticks % 60;
@@ -216,6 +220,10 @@ class PresenterConsole {
 	}
 
 	_onTransitionStart(e) {
+		if (!this._proxyPresenter) {
+			return;
+		}
+
 		this._currentIndex = e.slide;
 
 		this.drawImage(
@@ -274,6 +282,10 @@ class PresenterConsole {
 	}
 
 	_onSlideCached(e) {
+		if (!this._proxyPresenter) {
+			return;
+		}
+
 		if (this._currentIndex === undefined) {
 			return;
 		}
