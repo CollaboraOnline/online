@@ -182,14 +182,7 @@ function createAutoColorButton(
 	autoButton.focus();
 
 	autoButton.addEventListener('click', () => {
-		builder.map['stateChangeHandler'].setItemValue(data.command, -1);
-
-		var parameters;
-		if (data.command === '.uno:FontColor')
-			parameters = { FontColor: { type: 'long', value: -1 } };
-		else parameters = { Color: { type: 'long', value: -1 } };
-
-		builder.map.sendUnoCommand(data.command, parameters);
+		builder._sendColorCommand(builder, data, 'transparent');
 		builder.callback('colorpicker', 'hidedropdown', data, '-1', builder);
 	});
 }
