@@ -1356,19 +1356,10 @@ LocalServerSocket::~LocalServerSocket()
 
 #endif // !MOBILEAPP
 
-std::string StreamSocket::toString(WSState t)
-{
-    if( WSState::WS == t )
-    {
-        return "WS";
-    }
-    return "HTTP";
-}
-
 std::ostream& StreamSocket::stream(std::ostream& os) const
 {
     os << "StreamSocket[#" << getFD()
-       << ", " << toString(_wsState)
+       << ", " << toStringShort(_wsState)
        << ", " << Socket::toString(type())
        << " @ ";
     if (Type::IPv6 == type())
