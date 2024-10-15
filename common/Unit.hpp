@@ -334,6 +334,12 @@ private:
         return false;
     }
 
+    std::shared_ptr<SocketPoll> getSocketPoll()
+    {
+        std::lock_guard<std::mutex> guard(_lockSocketPoll);
+        return _socketPoll;
+    }
+
     static UnitBase* get(UnitType type);
 
     /// setup global instance for get() method
@@ -357,6 +363,7 @@ private:
     UnitType _type;
 
     std::mutex _lock; //< Used to protect cleanup functions.
+    std::mutex _lockSocketPoll; //< Used to sync _socketPoll
     std::shared_ptr<SocketPoll> _socketPoll; //< Poll thread for async http comm.
 
 protected:
