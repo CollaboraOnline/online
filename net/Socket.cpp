@@ -243,7 +243,7 @@ SocketPoll::SocketPoll(std::string threadName)
 
     createWakeups();
 
-    LOG_DBG("New SocketPoll [" << _name << "] owned by " << Log::to_string(_owner));
+    LOG_DBG("New " << logInfo());
 
     if (PollWatchdog)
         PollWatchdog->addTime(&_watchdogTime, &_ownerThreadId);
@@ -251,7 +251,7 @@ SocketPoll::SocketPoll(std::string threadName)
 
 SocketPoll::~SocketPoll()
 {
-    LOG_TRC("~SocketPoll [" << _name << "] destroying. Joining thread now.");
+    LOG_DBG("~" << logInfo());
 
     if (PollWatchdog)
         PollWatchdog->removeTime(&_watchdogTime);

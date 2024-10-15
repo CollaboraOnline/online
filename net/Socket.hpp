@@ -633,7 +633,7 @@ public:
     /// Stop the polling thread.
     void stop()
     {
-        LOG_DBG("Stopping SocketPoll thread " << _name);
+        LOG_DBG("Stopping " << logInfo());
         _stop = true;
         if constexpr (!Util::isMobileApp())
         {
@@ -886,6 +886,16 @@ private:
         _pollFds[size].fd = _wakeup[0];
         _pollFds[size].events = POLLIN;
         _pollFds[size].revents = 0;
+    }
+
+    std::string logInfo() const {
+        std::ostringstream os;
+        os << "SocketPoll[this " << std::hex << this << std::dec
+           << ", thread[name " << _name
+           << ", id[owner " << Log::to_string(_owner)
+           << ", caller " << Log::to_string(std::this_thread::get_id())
+           << "]]]";
+        return os.str();
     }
 
     /// The polling thread entry.
