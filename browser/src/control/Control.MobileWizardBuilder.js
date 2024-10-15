@@ -41,6 +41,16 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['tabcontrol'] = JSDialog.mobileTabControl;
 		this._controlHandlers['borderstyle'] = JSDialog.mobileBorderSelector;
 
+		this._controlHandlers['colorlistbox'] = this._colorControl;
+		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:CharBackColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:BackgroundColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:Color'] = this._colorControl;
+		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
+
 		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function () { return false; };
 		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function () { return false; };
 		this._toolitemHandlers['.uno:ExtrusionToggle'] = function () { return false; };
@@ -519,7 +529,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		var selectedColor = null;
 
 		var updateFunction = function (titleSpan) {
-			selectedColor = builder._getCurrentColor(data, builder);
+			selectedColor = JSDialog.getCurrentColor(data, builder);
 			valueNode.style.backgroundColor = selectedColor;
 			if (titleSpan) {
 				if (data.id === 'fillattr')
@@ -539,7 +549,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		var autoColorControl = (data.command === '.uno:FontColor' || data.command === '.uno:Color');
 
 		var callback = function(color) {
-			builder._sendColorCommand(builder, data, color);
+			JSDialog.sendColorCommand(builder, data, color);
 		};
 
 		var colorPickerControl = new L.ColorPicker(
