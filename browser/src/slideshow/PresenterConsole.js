@@ -22,7 +22,7 @@ class PresenterConsole {
 		this._map.on('presentationinfo', this._onPresentationInfo, this);
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
 		this._map.on('slidecached', this._onSlideCached, this);
-		this._map.on('transitionend', this._onEndTransition, this);
+		this._map.on('transitionstart', this._onTransitionStart, this);
 	}
 
 	_generateHtml(title) {
@@ -213,7 +213,7 @@ class PresenterConsole {
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
 	}
 
-	_onEndTransition(e) {
+	_onTransitionStart(e) {
 		this._currentIndex = e.slide;
 
 		this.drawImage(
