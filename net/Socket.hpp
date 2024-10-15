@@ -35,6 +35,7 @@
 #include "Util.hpp"
 #include "Buffer.hpp"
 #include "SigUtil.hpp"
+#include "NetUtil.hpp"
 
 #include "FakeSocket.hpp"
 
@@ -140,7 +141,8 @@ public:
     static std::string toString(Type t);
 
     // NB. see other Socket::Socket by init below.
-    Socket(Type type)
+    Socket(Type type,
+           std::chrono::steady_clock::time_point /*creationTime*/ = std::chrono::steady_clock::now())
         : _type(type)
         , _clientPort(0)
         , _fd(createSocket(type))
@@ -378,7 +380,8 @@ public:
 protected:
     /// Construct based on an existing socket fd.
     /// Used by accept() only.
-    Socket(const int fd, Type type)
+    Socket(const int fd, Type type,
+           std::chrono::steady_clock::time_point /*creationTime*/ = std::chrono::steady_clock::now())
         : _type(type)
         , _clientPort(0)
         , _fd(fd)
@@ -663,8 +666,6 @@ public:
 
     static std::unique_ptr<Watchdog> PollWatchdog;
 
-    /// Default poll time - useful to increase for debugging.
-    static constexpr std::chrono::microseconds DefaultPollTimeoutMicroS = std::chrono::seconds(64);
     static std::atomic<bool> InhibitThreadChecks;
 
     /// Stop the polling thread.
@@ -889,7 +890,7 @@ private:
     {
         while (continuePolling())
         {
-            poll(DefaultPollTimeoutMicroS);
+            poll(_pollTimeout);
         }
     }
 
@@ -941,6 +942,7 @@ private:
 
     /// Debug name used for logging.
     const std::string _name;
+    const std::chrono::microseconds _pollTimeout;
 
     /// main-loop wakeup pipe
     int _wakeup[2];
@@ -996,8 +998,11 @@ public:
 
     /// Create a StreamSocket from native FD.
     StreamSocket(std::string host, const int fd, Type type, bool /* isClient */,
-                 HostType hostType, ReadType readType = ReadType::NormalRead) :
-        Socket(fd, type),
+                 HostType hostType, ReadType readType = ReadType::NormalRead,
+                 std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now() ) :
+        Socket(fd, type, creationTime),
+        _pollTimeout( net::Defaults::get().SocketPollTimeout ),
+        _httpTimeout( net::Defaults::get().HTTPTimeout ),
         _hostname(std::move(host)),
         _bytesSent(0),
         _bytesRecvd(0),
@@ -1077,7 +1082,8 @@ public:
     }
 
     /// Create a pair of connected stream sockets
-    static bool socketpair(std::shared_ptr<StreamSocket> &parent,
+    static bool socketpair(const std::chrono::steady_clock::time_point &creationTime,
+                           std::shared_ptr<StreamSocket> &parent,
                            std::shared_ptr<StreamSocket> &child);
 
     /// Send data to the socket peer.
@@ -1278,14 +1284,15 @@ public:
     static std::shared_ptr<TSocket> create(std::string hostname, const int fd, Type type,
                                            bool isClient, HostType hostType,
                                            std::shared_ptr<ProtocolHandlerInterface> handler,
-                                           ReadType readType = ReadType::NormalRead)
+                                           ReadType readType = ReadType::NormalRead,
+                                           std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now())
     {
         // Without a handler we make no sense object.
         if (!handler)
             throw std::runtime_error("StreamSocket " + std::to_string(fd) +
                                      " expects a valid SocketHandler instance.");
 
-        auto socket = std::make_shared<TSocket>(std::move(hostname), fd, type, isClient, hostType, readType);
+        auto socket = std::make_shared<TSocket>(std::move(hostname), fd, type, isClient, hostType, readType, creationTime);
         socket->setHandler(std::move(handler));
 
         return socket;
@@ -1671,6 +1678,11 @@ protected:
 #endif
 
 private:
+    /// default to 64s, see net::Defaults::SocketPollTimeout
+    const std::chrono::microseconds _pollTimeout;
+    /// defaults to 30s, see net::Defaults::HTTPTimeout
+    const std::chrono::microseconds _httpTimeout;
+
     /// The hostname (or IP) of the peer we are connecting to.
     const std::string _hostname;
 
@@ -1699,7 +1711,7 @@ private:
     ReadType _readType;
     std::atomic_bool _inputProcessingEnabled;
 
-    // Used in parseHeader, SocketPoll::DefaultPollTimeoutMicroS acting as max delay
+    // Used in parseHeader, net::Defaults::HTTPTimeout acting as max delay
     std::chrono::steady_clock::time_point _lastSeenHTTPHeader;
 };
 

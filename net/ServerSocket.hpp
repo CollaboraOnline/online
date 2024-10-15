@@ -28,8 +28,10 @@ public:
 class ServerSocket : public Socket
 {
 public:
-    ServerSocket(Socket::Type type, SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory) :
-        Socket(type),
+    ServerSocket(Socket::Type type,
+                 std::chrono::steady_clock::time_point creationTime,
+                 SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory) :
+        Socket(type, creationTime),
 #if !MOBILEAPP
         _type(type),
 #endif
@@ -43,11 +45,14 @@ public:
 
     /// Create a new server socket - accepted sockets will be added
     /// to the @clientSockets' poll when created with @factory.
-    static std::shared_ptr<ServerSocket> create(ServerSocket::Type type, int port,
-                                                Socket::Type socketType, SocketPoll& clientSocket,
+    static std::shared_ptr<ServerSocket> create(ServerSocket::Type type,
+                                                int port,
+                                                Socket::Type socketType,
+                                                std::chrono::steady_clock::time_point creationTime,
+                                                SocketPoll& clientSocket,
                                                 std::shared_ptr<SocketFactory> factory)
     {
-        auto serverSocket = std::make_shared<ServerSocket>(socketType, clientSocket, std::move(factory));
+        auto serverSocket = std::make_shared<ServerSocket>(socketType, creationTime, clientSocket, std::move(factory));
 
         if (serverSocket && serverSocket->bind(type, port) && serverSocket->listen())
             return serverSocket;
@@ -130,8 +135,9 @@ private:
 class LocalServerSocket : public ServerSocket
 {
 public:
-    LocalServerSocket(SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory) :
-        ServerSocket(Socket::Type::Unix, clientPoller, std::move(sockFactory))
+    LocalServerSocket(std::chrono::steady_clock::time_point creationTime,
+                      SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory) :
+        ServerSocket(Socket::Type::Unix, creationTime, clientPoller, std::move(sockFactory))
     {
     }
     ~LocalServerSocket() override;
