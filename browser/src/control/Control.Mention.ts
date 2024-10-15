@@ -14,12 +14,17 @@
 
 /* global app */
 
+interface Item {
+	username: string;
+	profile: string;
+}
+
 class Mention extends L.Control.AutoCompletePopup {
 	map: ReturnType<typeof L.map>;
 	newPopupData: PopupData;
 	firstChar: string;
 	users: any;
-	itemList: Array<any>;
+	itemList: Array<Item>;
 	data: MessageEvent<any>;
 
 	constructor(map: ReturnType<typeof L.map>) {
@@ -187,6 +192,12 @@ class Mention extends L.Control.AutoCompletePopup {
 			this.map._docLayer._typingMention = false;
 			this.map._docLayer._mentionText = [];
 		}
+	}
+
+	public getItem(index: number): Item {
+		if (index >= this.itemList.length)
+			return { username: '', profile: '' } as Item;
+		return this.itemList[index];
 	}
 
 	private sendHyperlinkUnoCommand(

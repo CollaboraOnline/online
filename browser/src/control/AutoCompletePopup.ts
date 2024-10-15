@@ -167,6 +167,10 @@ abstract class AutoCompletePopup {
 		this.sendJSON(data);
 	}
 
+	public getPopupId() {
+		return this.popupId;
+	}
+
 	callback(objectType: any, eventType: any, object: any, index: number) {
 		if (eventType === 'keydown') {
 			if (object.key !== 'Tab' && object.key !== 'Shift') {

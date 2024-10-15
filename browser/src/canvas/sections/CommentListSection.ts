@@ -455,7 +455,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			}
 		}.bind(this);
 
-		const listId = 'mentionPopupList';
+		let listId = 'mentionPopupList';
+		if (this.map.mention)
+			listId = this.map.mention.getPopupId() + 'List';
 		var json = this.map.uiManager._modalDialogJSON(this.mobileCommentId, '', true, [
 			{
 				id: 'input-modal-input',
@@ -506,9 +508,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				if (eventType === 'close')
 					this.map.fire('closementionpopup', { 'typingMention': false });
 				else if (eventType === 'select' || eventType === 'activate') {
-					const item = this.map.mention.itemList[index];
+					const item = this.map.mention.getItem(index);
 					const replacement = this.map._docLayer._mentionText.join('');
-					comment.autoCompleteMention(item.username, item.profile, replacement)
+					if (item.username !== '' && item.profile !== '')
+						comment.autoCompleteMention(item.username, item.profile, replacement)
 					this.map.fire('closementionpopup', { 'typingMention': false });
 				}
 		}.bind(this);
