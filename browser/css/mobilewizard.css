@@ -1165,6 +1165,13 @@ label.disabled {
 	height: auto !important;
 }
 
+#new-annotation-dialog .ui-textarea a:link,
+#new-annotation-dialog .ui-textarea a:visited,
+#mobile-wizard .cool-annotation-content a:link,
+#mobile-wizard .cool-annotation-content a:visited {
+	color: var(--color-hyperlink);
+}
+
 /* Fontwork property panel */
 #ExtrusionToggle.mobile-wizard {
 	display: inline-table
