@@ -34,6 +34,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 
 		cy.cGet('.cool-annotation-table').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
+		cy.cGet('#input-modal-input').type('{end}');
 		cy.cGet('#input-modal-input').type('modified');
 		cy.cGet('#response-ok').click();
 		cy.cGet('#toolbar-up #comment_wizard').click();
