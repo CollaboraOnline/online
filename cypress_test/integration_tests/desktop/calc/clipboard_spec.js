@@ -178,6 +178,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		let url = 'http://www.example.com/';
 		helper.typeIntoDocument(url + '{enter}');
 
+		// We need to close the hyperlink popup because currently mouse cursor is on the cell and it opens hyperlink popup window.
+		helper.typeIntoDocument('{rightArrow}');
+		helper.typeIntoDocument('{leftArrow}');
+
 		calcHelper.clickOnFirstCell();
 		cy.cGet('#hyperlink-pop-up-copy').click();
 
