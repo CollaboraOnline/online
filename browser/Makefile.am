@@ -114,6 +114,7 @@ COOL_ADMIN_JS =\
 
 NODE_MODULES_SRC =\
 	autolinker@3.14.1 \
+	dompurify@3.1.7 \
 	json-js@1.1.2 \
 	select2@4.0.13 \
 	l10n-for-node@0.0.1 \
@@ -161,6 +162,7 @@ $(eval $(call file_targets,$(COOL_CSS)))
 
 NODE_MODULES_JS =\
 	$(if $(IS_SEPARATE),node_modules/hammerjs/hammer.js,node_modules/hammerjs/hammer.min.js) \
+	node_modules/dompurify/dist/purify.min.js \
 	node_modules/jquery/dist/jquery.js \
 	node_modules/jquery-mousewheel/jquery.mousewheel.js \
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \

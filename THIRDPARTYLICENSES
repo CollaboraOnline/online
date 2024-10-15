@@ -285,6 +285,10 @@ hammer.js – A javascript library for multi-touch gestures
 Copyright (C) 2011-2017 by Jorik Tangelder (Eight Media)
 MIT License
 
+DOMPurify - XSS sanitizer for HTML, MathML and SVG
+Copyright (C) 2024 by Dr.-Ing. Mario Heiderich, Cure53
+MPL-2.0 or Apache-2.0
+
 jQuery JavaScript Library
 Includes Sizzle.js https://sizzlejs.com/
 Copyright JS Foundation and other contributors
