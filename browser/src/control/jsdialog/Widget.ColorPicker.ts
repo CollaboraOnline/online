@@ -130,7 +130,7 @@ function handleColorSelection(
 	const themeData = target.getAttribute('theme');
 
 	if (colorCode != null) {
-		builder._sendColorCommand(builder, widgetData, colorCode, themeData);
+		JSDialog.sendColorCommand(builder, widgetData, colorCode, themeData);
 		builder.callback(
 			'colorpicker',
 			'hidedropdown',
@@ -139,7 +139,7 @@ function handleColorSelection(
 			builder,
 		);
 	} else {
-		builder._sendColorCommand(builder, widgetData, 'transparent');
+		JSDialog.sendColorCommand(builder, widgetData, 'transparent');
 		builder.callback(
 			'colorpicker',
 			'hidedropdown',
@@ -182,7 +182,7 @@ function createAutoColorButton(
 	autoButton.focus();
 
 	autoButton.addEventListener('click', () => {
-		builder._sendColorCommand(builder, data, 'transparent');
+		JSDialog.sendColorCommand(builder, data, 'transparent');
 		builder.callback('colorpicker', 'hidedropdown', data, '-1', builder);
 	});
 }
@@ -230,7 +230,7 @@ function updatePalette(
 	customContainer: HTMLElement,
 	recentContainer: HTMLElement,
 ) {
-	const hexColor = String(builder._getCurrentColor(data, builder));
+	const hexColor = String(JSDialog.getCurrentColor(data, builder));
 	const currentColor: ColorItem = hexColor.toUpperCase().replace('#', '');
 
 	const palette = generatePalette(paletteName);

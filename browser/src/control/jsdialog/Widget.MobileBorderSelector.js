@@ -79,7 +79,7 @@ function _borderControlItem(parentContainer, data, builder, i, selected) {
 		// Find our associated color picker
 		var item = L.LOUtil.findItemWithAttributeRecursive(data.parent, 'command', '.uno:FrameLineColor');
 		if (item)
-			color = builder._getCurrentColor(item, builder);
+			color = JSDialog.getCurrentColor(item, builder);
 		window.setBorderStyle(i, color);
 	});
 }
