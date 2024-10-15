@@ -61,6 +61,10 @@ div#autoFillPreviewTooltip {
 	max-width: fit-content;
 }
 
+div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
+	padding: 0em 0.2em;
+}
+
 .jsdialog-window.modalpopup:not(.snackbar),
 .hyperlink-pop-up-container {
 	min-width: 198px;
