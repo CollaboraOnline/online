@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -75,7 +75,7 @@ jobs:
 
             # convert uppercase->lowercase to make sure it follows oci rules
             lowercase=$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')
-            
+
             echo "Pushing package - ${pkg} to ghcr.io repository - ${lowercase}"
             helm push "${pkg}" "oci://ghcr.io/${lowercase}/charts"
           done
