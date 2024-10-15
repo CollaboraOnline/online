@@ -210,46 +210,40 @@ L.Map.include({
 		this._previewQueue.push([part, tileMsg]);
 	},
 
-	getPreview: function (id, index, maxWidth, maxHeight, options) {
-		if (!this._docPreviews) {
-			this._docPreviews = {};
-		}
-		var autoUpdate = options ? !!options.autoUpdate : false;
-		var fetchThumbnail = options && options.fetchThumbnail ? options.fetchThumbnail : true;
-		var isSlideshow = options && options.slideshow ? options.slideshow : false;
-		this._docPreviews[id] = {id: id, index: index, maxWidth: maxWidth, maxHeight: maxHeight, autoUpdate: autoUpdate, invalid: false};
+	getPreview: function (id, part, maxWidth, maxHeight, options) {
 
-		var docLayer = this._docLayer;
-		if (docLayer._docType === 'text') {
-			return;
-		}
-		else {
-			var part = index;
-			var tilePosX = 0;
-			var tilePosY = 0;
-			var tileWidth = docLayer._partWidthTwips ? docLayer._partWidthTwips: docLayer._docWidthTwips;
-			var tileHeight = docLayer._partHeightTwips ? docLayer._partHeightTwips: docLayer._docHeightTwips;
-		}
-		var docRatio = tileWidth / tileHeight;
-		var imgRatio = maxWidth / maxHeight;
+		if (!this._docPreviews) this._docPreviews = {};
+
+		const autoUpdate = options ? !!options.autoUpdate : false;
+		const fetchThumbnail = options && options.fetchThumbnail ? options.fetchThumbnail : true;
+		const isSlideshow = options && options.slideshow ? options.slideshow : false;
+
+		this._docPreviews[id] = {id: id, index: part, maxWidth: maxWidth, maxHeight: maxHeight, autoUpdate: autoUpdate, invalid: false};
+
+		let docLayer = this._docLayer;
+
+		if (docLayer._docType === 'text') return;
+
+		const tileWidth = docLayer._partWidthTwips ? docLayer._partWidthTwips: docLayer._docWidthTwips;
+		const tileHeight = docLayer._partHeightTwips ? docLayer._partHeightTwips: docLayer._docHeightTwips;
+
+		const docRatio = tileWidth / tileHeight;
+		const imgRatio = maxWidth / maxHeight;
+
 		// fit into the given rectangle while maintaining the ratio
-		if (imgRatio > docRatio) {
-			maxWidth = Math.round(tileWidth * maxHeight / tileHeight);
-		}
-		else {
-			maxHeight = Math.round(tileHeight * maxWidth / tileWidth);
-		}
+		if (imgRatio > docRatio) maxWidth = Math.round(tileWidth * maxHeight / tileHeight);
+		else maxHeight = Math.round(tileHeight * maxWidth / tileWidth);
 
 		if (fetchThumbnail) {
 			var mode = docLayer._selectedMode;
 			this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +
-							((mode !== 0) ? ('mode=' + mode + ' ') : '') +
+							'mode=' + mode + ' ' +
 							'width=' + maxWidth * app.roundedDpiScale + ' ' +
 							'height=' + maxHeight * app.roundedDpiScale + ' ' +
-							'tileposx=' + tilePosX + ' ' +
-							'tileposy=' + tilePosY + ' ' +
+							'tileposx=' + 0 + ' ' +
+							'tileposy=' + 0 + ' ' +
 							'tilewidth=' + tileWidth + ' ' +
 							'tileheight=' + tileHeight + ' ' +
 							'id=' + id +
