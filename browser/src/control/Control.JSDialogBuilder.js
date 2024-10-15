@@ -129,7 +129,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['toolitem'] = this._toolitemHandler;
 		this._controlHandlers['colorsample'] = this._colorSampleControl;
 		this._controlHandlers['divcontainer'] = this._divContainerHandler;
-		this._controlHandlers['colorlistbox'] = this._colorControl;
+		this._controlHandlers['colorlistbox'] = JSDialog.colorPickerButton;
 		this._controlHandlers['treelistbox'] = JSDialog.treeView;
 		this._controlHandlers['iconview'] = JSDialog.iconView;
 		this._controlHandlers['drawingarea'] = JSDialog.drawingArea;
@@ -156,14 +156,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._menuItemHandlers['inserttable'] = this._insertTableMenuItem;
 
 		this._toolitemHandlers = {};
-		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:CharBackColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:BackgroundColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:Color'] = this._colorControl;
-		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:XLineColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:FontColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:CharBackColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:BackgroundColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:FrameLineColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:Color'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:FillColor'] = JSDialog.colorPickerButton;
 
 		this._toolitemHandlers['.uno:InsertFormula'] = function () {};
 
@@ -2646,191 +2646,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		 builder._setupHandlers(colorSample, data.handlers);
 
 		 return false;
-	},
-
-	parseHexColor: function(color) {
-		if (color === 'transparent')
-			return -1;
-		else
-			return parseInt('0x' + color);
-	},
-
-	_sendColorCommand: function(builder, data, color, themeData) {
-		var gradientItem;
-
-		// complex color properties
-
-		if (data.id === 'fillgrad1') {
-			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillGradient');
-			gradientItem.startcolor = color;
-			builder.map.sendUnoCommand('.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem));
-			return;
-		} else if (data.id === 'fillgrad2') {
-			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillGradient');
-			gradientItem.endcolor = color;
-			builder.map.sendUnoCommand('.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem));
-			return;
-		} else if (data.id === 'fillattr2') {
-			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillPageGradient');
-			gradientItem.startcolor = color;
-			builder.map.sendUnoCommand('.uno:FillPageGradient?FillPageGradientJSON:string=' + JSON.stringify(gradientItem));
-			return;
-		} else if (data.id === 'fillattr3') {
-			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillPageGradient');
-			gradientItem.endcolor = color;
-			builder.map.sendUnoCommand('.uno:FillPageGradient?FillPageGradientJSON:string=' + JSON.stringify(gradientItem));
-			return;
-		}
-
-		// simple numeric color values
-
-		if (data.id === 'fillattr') {
-			data.command = '.uno:FillPageColor';
-		} else if (data.id === 'LB_GLOW_COLOR') {
-			data.id = 'GlowColor';
-		} else if (data.id === 'LB_SHADOW_COLOR') {
-			data.command = '.uno:FillShadowColor';
-		}
-
-		var params = {};
-		var colorParameterID = data.command.replace('.uno:', '') + '.Color';
-		var themeParameterID = data.command.replace('.uno:', '') + '.ComplexColorJSON';
-
-		var parsed = builder.parseHexColor(color);
-
-		params[colorParameterID] = {
-			type : 'long',
-			value : parsed ? parsed : parseInt(color)
-		};
-
-		if (themeData != null)
-		{
-			params[themeParameterID] = {
-				type : 'string',
-				value : themeData
-			};
-		}
-
-		builder.map['stateChangeHandler'].setItemValue(data.command, params[colorParameterID].value);
-		builder.map.sendUnoCommand(data.command, params);
-		app.colorLastSelection[data.command] = color;
-	},
-
-	_getDefaultColorForCommand: function(command) {
-		if (command == '.uno:CharBackColor')
-			return -1;
-		else if (command == '.uno:BackgroundColor')
-			return -1;
-		return 0;
-	},
-
-	/// returns string, if color is transparent we get -1
-	_toHexColor: function(colorInt) {
-		var colorInt = parseInt(colorInt);
-		if (colorInt < 0)
-			return '' + colorInt;
-
-		var colorHex = colorInt.toString(16);
-
-		while (colorHex != '#' && colorHex.length < 6)
-			colorHex = '0' + colorHex;
-
-		if (colorHex[0] != '#')
-			colorHex = '#' + colorHex;
-
-		return colorHex;
-	},
-
-	_getCurrentColor: function(data, builder) {
-		var selectedColor = builder.map['stateChangeHandler'].getItemValue(data.command);
-
-		if (!selectedColor || selectedColor < 0)
-			selectedColor = builder._getUnoStateForItemId(data.id, builder);
-
-		if (!selectedColor || selectedColor < 0)
-			selectedColor = builder._getDefaultColorForCommand(data.command);
-
-		return builder._toHexColor(parseInt(selectedColor));
-	},
-
-	_colorControl: function(parentContainer, data, builder) {
-		var commandOverride = data.command === '.uno:Color' && builder.map.getDocType() === 'text';
-		if (commandOverride)
-			data.command = '.uno:FontColor';
-
-		var titleOverride = builder._getTitleForControlWithId(data.id);
-		if (titleOverride)
-			data.text = titleOverride;
-
-		data.id = data.id ? data.id : (data.command ? data.command.replace('.uno:', '') : undefined);
-		data.text = builder._cleanText(data.text);
-
-		if (data.command) {
-			var applyFunction = function(event) {
-				event.preventDefault();
-				event.stopPropagation();
-
-				var colorToApply = app.colorLastSelection[data.command];
-				if (!colorToApply || colorToApply === '#')
-					return;
-
-				var color =
-					colorToApply.indexOf('#') === 0 ? colorToApply.substr(1) : colorToApply;
-
-				builder._sendColorCommand(builder, data, color);
-			};
-
-			// add menu id for dropdown
-			if (data.id.indexOf(':ColorPickerMenu') === -1)
-				data.id = data.id + ':ColorPickerMenu';
-			data.noLabel = true;
-
-			// make it a split button
-			data.applyCallback = applyFunction;
-
-			var menubutton = builder._controlHandlers['menubutton'](parentContainer, data, builder);
-
-			if (typeof menubutton === 'object') {
-				L.DomUtil.addClass(menubutton.container, data.class ? data.class + ' has-colorpicker': 'has-colorpicker');
-
-				var valueNode = L.DomUtil.create('div', 'selected-color', menubutton.container);
-				valueNode.addEventListener('click', applyFunction);
-
-				var updateFunction = function () {
-					if (app.colorLastSelection[data.command] !== undefined) {
-						var selectedColor = app.colorLastSelection[data.command];
-					}
-					else {
-						selectedColor = builder._getCurrentColor(data, builder);
-						app.colorLastSelection[data.command] = selectedColor;
-					}
-
-					if (parseInt(selectedColor) === -1) selectedColor = 'transparent';
-
-					valueNode.style.backgroundColor =
-						(selectedColor[0] !== '#' && selectedColor !== 'transparent')
-						? '#' + selectedColor : selectedColor;
-
-					// Make sure the border around the color indicator is not too bright
-					// when the color is black so to avoid weird contast artifacts
-					if (valueNode.style.backgroundColor == '#000000'
-						|| valueNode.style.backgroundColor == 'rgb(0, 0, 0)') {
-						valueNode.style.borderColor = '#6a6a6a';
-					} else {
-						valueNode.style.borderColor = 'var(--color-border)';
-					}
-				};
-
-				builder.map.on('commandstatechanged', function(e) {
-					if (e.commandName === data.command)
-						updateFunction();
-				}, this);
-
-				updateFunction();
-			}
-		}
-
-		return false;
 	},
 
 	_subMenuHandler: function(parentContainer, data, builder) {

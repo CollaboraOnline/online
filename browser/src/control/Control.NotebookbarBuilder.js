@@ -35,14 +35,14 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['formattedfield'] = function() { return false; };
 		this._controlHandlers['metricfield'] = function() { return false; };
 
-		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:CharBackColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:BackgroundColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:Color'] = this._colorControl;
-		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:XLineColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:FontColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:CharBackColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:BackgroundColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:FrameLineColor'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:Color'] = JSDialog.colorPickerButton;
+		this._toolitemHandlers['.uno:FillColor'] = JSDialog.colorPickerButton;
 
 		this._toolitemHandlers['.uno:SelectBackground'] = this._selectBackgroundControl;
 		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
