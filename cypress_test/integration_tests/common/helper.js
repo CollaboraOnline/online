@@ -366,11 +366,10 @@ function documentChecks() {
 								expect(doc[0].getBoundingClientRect().right).to.be.lessThan(win.innerWidth * 0.95);
 						});
 				});
-
-			// Check also that the inputbar is drawn in Calc.
-			doIfInCalc(function() {
-				cy.cframe().find('#sc_input_window.formulabar');
-			});
+		});
+		// Check also that the inputbar is drawn in Calc.
+		doIfInCalc(function() {
+			cy.cframe().find('#sc_input_window.formulabar');
 		});
 	}
 

@@ -54,7 +54,10 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 		data.text = data.text.replace(/(?:\r\n|\r|\n)/g, '<br>');
 		edit.textContent = builder._cleanText(data.text);
 	} else if (controlType === 'div') {
-		edit.innerHTML = data.html;
+		if (data.html)
+			edit.innerHTML = data.html;
+		else
+			edit.textContent = builder._cleanText(data.text);
 	}
 
 	edit.id = data.id;
