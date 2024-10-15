@@ -56,11 +56,6 @@
 #include <Watchdog.hpp>
 #include <wasm/base64.hpp>
 
-// Bug in pre C++17 where static constexpr must be defined. Fixed in C++17.
-constexpr std::chrono::microseconds SocketPoll::DefaultPollTimeoutMicroS;
-constexpr std::chrono::microseconds WebSocketHandler::InitialPingDelayMicroS;
-constexpr std::chrono::microseconds WebSocketHandler::PingFrequencyMicroS;
-
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
@@ -127,8 +122,9 @@ std::string Socket::toStringImpl() const
     return oss.str();
 }
 
-bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
-                              std::shared_ptr<StreamSocket> &child)
+bool StreamSocket::socketpair(const std::chrono::steady_clock::time_point &creationTime,
+                              std::shared_ptr<StreamSocket>& parent,
+                              std::shared_ptr<StreamSocket>& child)
 {
     if constexpr (Util::isMobileApp())
     {
@@ -140,10 +136,10 @@ bool StreamSocket::socketpair(std::shared_ptr<StreamSocket> &parent,
     if (rc != 0)
         return false;
 
-    child = std::make_shared<StreamSocket>("save-child", pair[0], Socket::Type::Unix, true, HostType::Other);
+    child = std::make_shared<StreamSocket>("save-child", pair[0], Socket::Type::Unix, true, HostType::Other, ReadType::NormalRead, creationTime);
     child->setNoShutdown();
     child->setClientAddress("save-child");
-    parent = std::make_shared<StreamSocket>("save-kit-parent", pair[1], Socket::Type::Unix, true, HostType::Other);
+    parent = std::make_shared<StreamSocket>("save-kit-parent", pair[1], Socket::Type::Unix, true, HostType::Other, ReadType::NormalRead, creationTime);
     parent->setNoShutdown();
     parent->setClientAddress("save-parent");
 
@@ -261,6 +257,7 @@ namespace {
 
 SocketPoll::SocketPoll(std::string threadName)
     : _name(std::move(threadName)),
+      _pollTimeout( net::Defaults::get().SocketPollTimeout ),
       _pollStartIndex(0),
       _stop(false),
       _threadStarted(0),
@@ -985,7 +982,7 @@ void WebSocketHandler::dumpState(std::ostream& os, const std::string& /*indent*/
 
 void StreamSocket::dumpState(std::ostream& os)
 {
-    int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS.count();
+    int64_t timeoutMaxMicroS = _pollTimeout.count();
     const int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
     os << '\t' << std::setw(6) << getFD() << "\t0x" << std::hex << events << std::dec << '\t'
        << (ignoringInput() ? "ignore\t" : "process\t") << std::setw(6) << _inBuffer.size() << '\t'
@@ -1382,8 +1379,8 @@ bool StreamSocket::parseHeader(const char *clientName,
 {
     assert(map._headerSize == 0 && map._messageSize == 0);
 
-    constexpr std::chrono::duration<float, std::milli> delayMax =
-        std::chrono::duration_cast<std::chrono::milliseconds>(SocketPoll::DefaultPollTimeoutMicroS);
+    const std::chrono::duration<float, std::milli> delayMax =
+        std::chrono::duration_cast<std::chrono::milliseconds>(_httpTimeout);
 
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
     std::chrono::duration<float, std::milli> delayMs = now - _lastSeenHTTPHeader;
