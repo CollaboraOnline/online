@@ -350,10 +350,6 @@ function insertComment(text = 'some text0', save = true) {
 	// Use .last() because there might be multiple comments
 	cy.cGet('.cool-annotation').last({log: false}).find('#annotation-modify-textarea-new').should('not.have.attr','disabled');
 	cy.cGet('.cool-annotation').last({log: false}).find('#annotation-modify-textarea-new').type(text);
-	// Click outside modify area to trigger update
-	cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-table').click();
-	// In case of small window to expand the comments
-	cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-img').click();
 	// Check that comment exists
 	cy.cGet('.cool-annotation').last({log: false}).find('.cool-annotation-textarea').should('contain',text);
 
