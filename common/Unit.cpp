@@ -32,9 +32,9 @@
 #include <common/SigUtil.hpp>
 #include <common/StringVector.hpp>
 
-UnitKit *GlobalKit = nullptr;
-UnitWSD *GlobalWSD = nullptr;
-UnitTool *GlobalTool = nullptr;
+std::atomic<UnitKit *>GlobalKit = nullptr;
+std::atomic<UnitWSD *>GlobalWSD = nullptr;
+std::atomic<UnitTool *>GlobalTool = nullptr;
 UnitBase** UnitBase::GlobalArray = nullptr;
 int UnitBase::GlobalIndex = -1;
 char* UnitBase::UnitLibPath = nullptr;
@@ -704,8 +704,9 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
 
                 LOG_TST("Starting test #" << GlobalIndex + 1 << ": "
                                           << GlobalArray[GlobalIndex]->getTestname());
-                if (GlobalWSD)
-                    GlobalWSD->configure(Poco::Util::Application::instance().config());
+                UnitWSD *globalWSD = GlobalWSD;
+                if (globalWSD)
+                    globalWSD->configure(Poco::Util::Application::instance().config());
                 GlobalArray[GlobalIndex]->initialize();
             }
 
@@ -717,8 +718,9 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
 
 UnitWSD& UnitWSD::get()
 {
-    assert(GlobalWSD);
-    return *GlobalWSD;
+    UnitWSD *globalWSD = GlobalWSD;
+    assert(globalWSD);
+    return *globalWSD;
 }
 
 void UnitWSD::onExitTest(TestResult result, const std::string&)
@@ -768,8 +770,9 @@ UnitKit& UnitKit::get()
     if (Util::isKitInProcess() && !GlobalKit)
         GlobalKit = new UnitKit("UnitKit");
 
-    assert(GlobalKit);
-    return *GlobalKit;
+    UnitKit *globalKit = GlobalKit;
+    assert(globalKit);
+    return *globalKit;
 }
 
 void UnitKit::onExitTest(TestResult, const std::string&)
