@@ -527,7 +527,7 @@ public:
     int getTileWidth() const { return _tileWidth; }
     int getTileHeight() const { return _tileHeight; }
     /// Returns the combined-tile's AABBox, i.e. min-position + max-extend
-    Util::Rectangle toAABBox() const { return _aabbox; }
+    const Util::Rectangle& toAABBox() const { return _aabbox; }
     bool getCombined() const { return _isCombined; }
 
     const std::vector<TileDesc>& getTiles() const { return _tiles; }
