@@ -159,6 +159,20 @@ COOL_CSS_M4 = $(strip $(foreach file,$(COOL_CSS),$(notdir $(file))))
 
 $(eval $(call file_targets,$(COOL_CSS)))
 
+WORKER_NODE_MODULES_JS =\
+	node_modules/fzstd/umd/index.js
+
+$(srcdir)/src/layer/tile/CanvasTileWorker.js: \
+	$(srcdir)/src/layer/tile/CanvasTileWorker.js.m4 \
+	$(srcdir)/src/layer/tile/CanvasTileWorkerSrc.js \
+	$(WORKER_NODE_MODULES_JS)
+
+	@echo "Generating CanvasTileWorker.js..."
+	m4 -PE -DDEBUG=$(ENABLE_DEBUG) \
+		-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(WORKER_NODE_MODULES_JS)) \
+		-DWORKER_JS=$(srcdir)/src/layer/tile/CanvasTileWorkerSrc.js \
+		$(srcdir)/src/layer/tile/CanvasTileWorker.js.m4 > $@
+
 NODE_MODULES_JS =\
 	$(if $(IS_SEPARATE),node_modules/hammerjs/hammer.js,node_modules/hammerjs/hammer.min.js) \
 	node_modules/jquery/dist/jquery.js \

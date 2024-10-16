@@ -16,7 +16,6 @@
 if ('undefined' === typeof window) {
 	self.L = {};
 
-	importScripts('../../../node_modules/fzstd/umd/index.js');
 	importScripts('CanvasTileUtils.js');
 	addEventListener('message', onMessage);
 
