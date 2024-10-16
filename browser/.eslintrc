@@ -51,7 +51,9 @@
         "@typescript-eslint/no-namespace": "off",
         "no-inner-declarations": "off",
         "no-constant-condition": "off",
-        "@typescript-eslint/triple-slash-reference": "off"
+        "@typescript-eslint/triple-slash-reference": "off",
+
+        "@typescript-eslint/no-unused-expressions": "off" // improving in .betterer.ts
       }
     }
   ]
