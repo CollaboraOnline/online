@@ -478,6 +478,7 @@ COOL_JS_LST =\
     src/slideshow/engine/animationnodes/NodeContext.ts \
     src/slideshow/engine/animationnodes/PropertyAnimationNode.ts \
     src/slideshow/engine/AnimatedElement.ts \
+    src/slideshow/TransitionsInfo.ts \
     src/slideshow/Transition2d.ts \
     src/slideshow/Transition3d.ts \
     src/slideshow/transition/ClippingTransition.ts \
@@ -1027,6 +1028,7 @@ pot:
         src/slideshow/engine/animationnodes/NodeContext.ts \
         src/slideshow/engine/animationnodes/PropertyAnimationNode.ts \
         src/slideshow/engine/AnimatedElement.ts \
+        src/slideshow/TransitionsInfo.ts \
         src/slideshow/Transition2d.ts \
         src/slideshow/transition/ClippingTransition.ts \
 		src/slideshow/transition/FadeTransition.ts \

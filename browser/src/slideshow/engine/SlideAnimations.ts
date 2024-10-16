@@ -67,9 +67,9 @@ function isTransitionFilterSupported(
 		console.error('slideshow: missing transition type');
 		return false;
 	}
-	// return true;
+
 	return isGlSupported
-		? AnimatedElement.SupportedGlTransitionFilters.has(aNodeInfo.transitionType)
+		? true // all supported
 		: AnimatedElement.SupportedTransitionFilters.has(aNodeInfo.transitionType);
 }
 
