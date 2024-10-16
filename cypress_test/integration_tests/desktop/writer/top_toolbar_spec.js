@@ -41,6 +41,9 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.copy();
 		cy.cGet('#copy-paste-container p font span')
 			.should('have.attr', 'style', 'background: transparent');
+		desktopHelper.actionOnSelector('backColor',
+			(selector) => { cy.cGet(selector.replace('.unoarrow', '') + ' .selected-color')
+				.should('have.attr', 'style', 'background-color: transparent; border-color: var(--color-border);') });
 	});
 
 	it('Apply font color.', function() {
