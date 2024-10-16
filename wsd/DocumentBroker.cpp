@@ -694,6 +694,34 @@ void DocumentBroker::pollThread()
         LOG_WRN(state.str());
     }
 
+    if (_lockCtx && _lockCtx->supportsLocks() && _lockCtx->isLocked())
+    {
+        LOG_DBG("Document [" << _docKey << "] is locked and needs unlocking before unloading");
+        const std::shared_ptr<ClientSession> session = getWriteableSession();
+        if (!session)
+        {
+            LOG_ERR("No write-able session to unlock with");
+            _lockCtx->bumpTimer();
+        }
+        else if (session->getAuthorization().isExpired())
+        {
+            LOG_ERR("No write-able session with valid authorization to unlock with");
+            _lockCtx->bumpTimer();
+        }
+        else
+        {
+            const std::string unlockSessionId = session->getId();
+            LOG_INF("Unlocking " << _lockCtx->lockToken() << " with session [" << unlockSessionId
+                                 << ']');
+            std::string error;
+            if (!updateStorageLockState(*session, StorageBase::LockState::UNLOCK, error))
+            {
+                LOG_ERR("Failed to unlock docKey [" << _docKey << "] with session ["
+                                                    << unlockSessionId << "]: " << error);
+            }
+        }
+    }
+
     // Flush socket data first, if any.
     if (_poll->getSocketCount())
     {
