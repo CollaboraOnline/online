@@ -270,7 +270,7 @@
             <as_scheme type="bool" default="true" desc="When set we exclusively use the WOPI URI's scheme to enable SSL for storage">true</as_scheme>
             <enable type="bool" desc="If as_scheme is false or not set, this can be set to force SSL encryption between storage and coolwsd. When empty this defaults to following the ssl.enable setting"></enable>
             <cert_file_path desc="Path to the cert file. When empty this defaults to following the ssl.cert_file_path setting" relative="false"></cert_file_path>
-            <key_file_path desc="Path to the key file. When empty this defaults to following the ssl.key_file_path settinge" relative="false"></key_file_path>
+            <key_file_path desc="Path to the key file. When empty this defaults to following the ssl.key_file_path setting" relative="false"></key_file_path>
             <ca_file_path desc="Path to the ca file. When empty this defaults to following the ssl.ca_file_path setting" relative="false"></ca_file_path>
             <cipher_list desc="List of OpenSSL ciphers to accept. If empty the defaults are used. These can be overridden only if absolutely needed."></cipher_list>
         </ssl>
@@ -290,7 +290,7 @@
     </admin_console>
 
     <monitors desc="Addresses of servers we connect to on start for monitoring">
-        <!-- <monitor desc="Address of the monitor and interval after which it should try reconnting after disconnect" retryInterval="20">wss://foobar:234/ws</monitor> -->
+        <!-- <monitor desc="Address of the monitor and interval after which it should try reconnecting after disconnect" retryInterval="20">wss://foobar:234/ws</monitor> -->
     </monitors>
 
     <quarantine_files desc="Files are stored here to be examined later in cases of crashes or similar situation." default="false" enable="false">
@@ -324,7 +324,7 @@
     </home_mode>
 
     <fonts_missing>
-        <handling desc="How to handle fonts mising in a document: 'report', 'log', 'both', or 'ignore'" type="string" default="log">log</handling>
+        <handling desc="How to handle fonts missing in a document: 'report', 'log', 'both', or 'ignore'" type="string" default="log">log</handling>
     </fonts_missing>
 
     <indirection_endpoint>
