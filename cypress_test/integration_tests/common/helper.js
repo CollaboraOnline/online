@@ -1227,3 +1227,4 @@ module.exports.setDummyClipboardForCopy = setDummyClipboardForCopy;
 module.exports.copy = copy;
 module.exports.getFileName = getFileName;
 module.exports.getSubFolder = getSubFolder;
+module.exports.addressInputSelector = "#addressInput input";
