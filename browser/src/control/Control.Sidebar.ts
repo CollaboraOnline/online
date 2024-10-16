@@ -167,7 +167,8 @@ class Sidebar {
 	}
 
 	changeDeck(unoCommand: string | null) {
-		if (unoCommand !== null) app.socket.sendMessage('uno ' + unoCommand);
+		if (unoCommand !== null && unoCommand !== undefined)
+			app.socket.sendMessage('uno ' + unoCommand);
 		this.setupTargetDeck(unoCommand);
 	}
 
