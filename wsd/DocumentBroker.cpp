@@ -1687,6 +1687,7 @@ bool DocumentBroker::updateStorageLockStateAsync(const std::shared_ptr<ClientSes
             case StorageBase::LockUpdateResult::Status::OK:
                 LOG_DBG((requestedLock == StorageBase::LockState::LOCK ? "Locked" : "Unlocked")
                         << " docKey [" << _docKey << "] successfully");
+                _lockCtx->setState(requestedLock);
                 return;
                 break;
 

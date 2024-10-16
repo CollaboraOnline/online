@@ -484,7 +484,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
     httpHeader.setContentLength(0);
 
     http::Session::FinishedCallback finishedCallback =
-        [this, startTime, lockCtx, lock, wopiLog, uriAnonym, asyncLockStateCallback,
+        [this, startTime, lock, wopiLog, uriAnonym, asyncLockStateCallback,
          profileZone =
              std::move(profileZone)](const std::shared_ptr<http::Session>& httpSession) mutable
     {
@@ -508,7 +508,6 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
 
         if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
         {
-            lockCtx.setState(lock);
             return asyncLockStateCallback(
                 AsyncLockUpdate(AsyncLockUpdate::State::Complete,
                                 LockUpdateResult(LockUpdateResult::Status::OK, lock)));
