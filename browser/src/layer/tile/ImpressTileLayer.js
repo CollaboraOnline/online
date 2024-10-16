@@ -50,9 +50,19 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_onContextChange(e) {
-		app.impress.notesMode = e.detail.context === 'NotesPage';
+		/*
+			We need to check the context content for now. Because we are using this property for both context and the page kind.
+			When user modifies the content of the notes, the context is changed again. As we use context as a view mode, we shouldn't change our variable in that case.
+			We need to check if the context is something related to view mode or not.
+			For a better solution, we need to send the page kinds along with status messages. Then we will check the page kind and set the notes view toggle accordingly.
+		*/
 
-		if (app.map.uiManager.getCurrentMode() === 'notebookbar') {
+		const isDrawOrNotesPage = ['DrawPage', 'NotesPage'].includes(e.detail.context);
+
+		if (isDrawOrNotesPage)
+			app.impress.notesMode = e.detail.context === 'NotesPage';
+
+		if (app.map.uiManager.getCurrentMode() === 'notebookbar' && isDrawOrNotesPage) {
 			const targetElement = document.getElementById('notesmode');
 			if (!targetElement) return;
 
@@ -62,7 +72,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 				targetElement.classList.remove('selected');
 		}
 
-		if (['DrawPage', 'NotesPage'].includes(e.detail.context)) {
+		if (isDrawOrNotesPage) {
 			this._selectedMode = e.detail.context === 'NotesPage' ? 2 : 0;
 			this._refreshTilesInBackground();
 			this._update();
