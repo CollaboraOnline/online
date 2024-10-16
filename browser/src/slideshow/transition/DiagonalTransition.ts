@@ -26,7 +26,7 @@ class DiagonalTransition extends ClippingTransition {
 		super(transitionParameters);
 	}
 
-	protected initProgramTemplateParams() {
+	protected initMaskFunctionParams() {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 
 		if (

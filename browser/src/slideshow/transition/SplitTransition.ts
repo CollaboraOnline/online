@@ -12,55 +12,17 @@
 
 declare var SlideShow: any;
 
-enum SplitSubType {
-	HORIZONTALIN,
-	HORIZONTALOUT,
-	VERTICALIN,
-	VERTICALOUT,
-}
-
 class SplitTransition extends ClippingTransition {
-	private direction: number;
-
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
 
-	protected initProgramTemplateParams() {
-		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
-
-		if (
-			transitionSubType == TransitionSubType.HORIZONTAL &&
-			this.transitionFilterInfo.isDirectionForward == false
-		) {
-			this.direction = SplitSubType.HORIZONTALIN;
-		} else if (
-			transitionSubType == TransitionSubType.HORIZONTAL &&
-			this.transitionFilterInfo.isDirectionForward == true
-		) {
-			this.direction = SplitSubType.HORIZONTALOUT;
-		} else if (
-			transitionSubType == TransitionSubType.VERTICAL &&
-			this.transitionFilterInfo.isDirectionForward == false
-		) {
-			this.direction = SplitSubType.VERTICALIN;
-		} else if (
-			transitionSubType == TransitionSubType.VERTICAL &&
-			this.transitionFilterInfo.isDirectionForward == true
-		) {
-			this.direction = SplitSubType.VERTICALOUT;
-		}
-	}
-
 	// jscpd:ignore-start
 	protected getMaskFunction(): string {
-		const isHorizontalDir =
-			this.direction == SplitSubType.HORIZONTALIN ||
-			this.direction == SplitSubType.HORIZONTALOUT;
-		const isOutDir =
-			this.direction == SplitSubType.HORIZONTALOUT ||
-			this.direction == SplitSubType.VERTICALOUT;
+		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
+		const isHorizontalDir = transitionSubType == TransitionSubType.HORIZONTAL;
 
+		// Horizontal Out, Vertical Out
 		return `
                 float getMaskValue(vec2 uv, float time) {
                     float progress = time;
@@ -69,15 +31,13 @@ class SplitTransition extends ClippingTransition {
 
                     vec2 dist = abs(uv - center);
 
-                    float size = ${
-											isOutDir ? 'progress * 1.5' : '1.0 - progress * 1.5'
-										};
+                    float size = progress * 1.5;
 
                     float distCoord = ${isHorizontalDir ? 'dist.y' : 'dist.x'};
 
                     float mask = step(size / 2.0, distCoord);
 
-                    ${isOutDir ? 'mask = 1.0 - mask' : ''};
+                    mask = 1.0 - mask;
 
                     return mask;
                 }

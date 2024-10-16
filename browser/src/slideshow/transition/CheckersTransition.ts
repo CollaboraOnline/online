@@ -24,7 +24,7 @@ class CheckersTransition extends ClippingTransition {
 		super(transitionParameters);
 	}
 
-	protected initProgramTemplateParams() {
+	protected initMaskFunctionParams() {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 
 		if (transitionSubType == TransitionSubType.DOWN) {

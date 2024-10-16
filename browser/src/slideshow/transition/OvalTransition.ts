@@ -23,7 +23,7 @@ class OvalTransition extends ClippingTransition {
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
-	protected initProgramTemplateParams() {
+	protected initMaskFunctionParams() {
 		const transitionSubType = this.transitionFilterInfo.transitionSubtype;
 		if (transitionSubType == TransitionSubType.HORIZONTAL) {
 			this.direction = OvalSubType.HORIZONTAL;

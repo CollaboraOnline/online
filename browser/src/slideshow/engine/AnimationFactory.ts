@@ -218,72 +218,6 @@ function createPairPropertyAnimation(
 	);
 }
 
-enum TransitionClass {
-	Invalid,
-	ClipPoligon,
-	Special,
-}
-
-function createClipPolyPolygon(
-	eTransitionType: TransitionType,
-	eTransitionSubType: TransitionSubType,
-): any {
-	// TODO implement createClipPolyPolygon
-	window.app.console.log(
-		'createClipPolyPolygon: Transition Type: ' +
-			TransitionType[eTransitionType] +
-			', Transition SubType: ' +
-			TransitionSubType[eTransitionSubType],
-	);
-	return null;
-}
-
-class ClippingAnimation extends AnimationBase {
-	constructor(
-		aParametricPolyPolygon: any,
-		aTransitionInfo: any,
-		bDirectionForward: boolean,
-		bModeIn: boolean,
-	) {
-		window.app.console.log(
-			'ClippingAnimation ctor: ' +
-				'aParametricPolyPolygon' +
-				aParametricPolyPolygon +
-				',  aTransitionInfo: ' +
-				aTransitionInfo +
-				', bDirectionForward: ' +
-				bDirectionForward +
-				', bModeIn: ' +
-				bModeIn,
-		);
-		super();
-	}
-
-	start(aAnimatableElement: AnimatedElement): void {
-		// TODO implement ClippingAnimation.start()
-		window.app.console.log(
-			'ClippingAnimation.start(): Animated Element Id: ' +
-				aAnimatableElement.getId(),
-		);
-	}
-
-	end(): void {
-		// TODO implement ClippingAnimation.end()
-		window.app.console.log('ClippingAnimation.end()');
-	}
-
-	perform(aValue: any): void {
-		// TODO implement ClippingAnimation.perform()
-		window.app.console.log('ClippingAnimation.perform(): value: ' + aValue);
-	}
-
-	getUnderlyingValue(): any {
-		// TODO implement ClippingAnimation.getUnderlyingValue()
-		window.app.console.log('ClippingAnimation.getUnderlyingValue()');
-		return null;
-	}
-}
-
 class TransitionFilterAnimation extends AnimationBase {
 	private nNodeId: number;
 	private aTransitionFilterInfo: TransitionFilterInfo;
@@ -362,7 +296,6 @@ class TransitionFilterAnimation extends AnimationBase {
 	}
 
 	getUnderlyingValue(): any {
-		window.app.console.log('TransitionFilterAnimation.getUnderlyingValue()');
 		return 0.0;
 	}
 
@@ -376,16 +309,47 @@ class TransitionFilterAnimation extends AnimationBase {
 		return transitionParameters;
 	}
 
+	/* jscpd:ignore-start */
 	private createShapeTransition(
 		transitionParameters: TransitionParameters,
 	): TransitionBase {
 		const type = this.aTransitionFilterInfo.transitionType;
 		switch (type) {
-			case TransitionType.ELLIPSEWIPE:
-				return SlideShow.EllipseWipeTransition(transitionParameters);
+			case TransitionType.BARWIPE:
+				return BarWipeTransition(transitionParameters);
+
+			case TransitionType.PINWHEELWIPE:
+				return new SlideShow.WheelTransition(transitionParameters);
+
+			case TransitionType.RANDOMBARWIPE:
+				return new SlideShow.BarsTransition(transitionParameters);
+
+			case TransitionType.CHECKERBOARDWIPE:
+				return new SlideShow.CheckersTransition(transitionParameters);
+
+			case TransitionType.FOURBOXWIPE:
+				return new SlideShow.PlusTransition(transitionParameters);
 
 			case TransitionType.IRISWIPE:
 				return SlideShow.IrisWipeTransition(transitionParameters);
+
+			case TransitionType.ELLIPSEWIPE:
+				return SlideShow.EllipseWipeTransition(transitionParameters);
+
+			case TransitionType.FANWIPE:
+				return new SlideShow.WedgeTransition(transitionParameters);
+
+			case TransitionType.BLINDSWIPE:
+				return new SlideShow.VenetianTransition(transitionParameters);
+
+			case TransitionType.DISSOLVE:
+				return new SlideShow.SimpleDissolveTransition(transitionParameters);
+
+			case TransitionType.BARNDOORWIPE:
+				return new SlideShow.SplitTransition(transitionParameters);
+
+			case TransitionType.WATERFALLWIPE:
+				return new SlideShow.DiagonalTransition(transitionParameters);
 
 			default:
 				console.log(
@@ -396,83 +360,7 @@ class TransitionFilterAnimation extends AnimationBase {
 		}
 	}
 }
-
-const aTransitionInfoTable: any = {};
-// type: fake transition
-aTransitionInfoTable[0] = {};
-// subtype: default
-aTransitionInfoTable[0][0] = {
-	class: TransitionClass.Invalid,
-	rotationAngle: 0.0,
-	scaleX: 0.0,
-	scaleY: 0.0,
-	reverseMethod: 0,
-	outInvertsSweep: false,
-	scaleIsotropically: false,
-};
-
-aTransitionInfoTable[TransitionType.FADE] = {};
-aTransitionInfoTable[TransitionType.FADE][TransitionSubType.CROSSFADE] =
-	aTransitionInfoTable[TransitionType.FADE][TransitionSubType.FADEOVERCOLOR] = {
-		class: TransitionClass.Special,
-		rotationAngle: 0.0,
-		scaleX: 1.0,
-		scaleY: 1.0,
-		reverseMethod: 0,
-		outInvertsSweep: true,
-		scaleIsotropically: false,
-	};
-
-aTransitionInfoTable[TransitionType.ELLIPSEWIPE] = {};
-aTransitionInfoTable[TransitionType.ELLIPSEWIPE][TransitionSubType.CIRCLE] = {
-	class: TransitionClass.ClipPoligon,
-	rotationAngle: 0.0,
-	scaleX: 1.0,
-	scaleY: 1.0,
-	reverseMethod: 3,
-	outInvertsSweep: true,
-	scaleIsotropically: true,
-};
-aTransitionInfoTable[TransitionType.ELLIPSEWIPE][TransitionSubType.HORIZONTAL] =
-	{
-		class: TransitionClass.ClipPoligon,
-		rotationAngle: 0.0,
-		scaleX: 1.0,
-		scaleY: 1.0,
-		reverseMethod: 3,
-		outInvertsSweep: true,
-		scaleIsotropically: false,
-	};
-aTransitionInfoTable[TransitionType.ELLIPSEWIPE][TransitionSubType.VERTICAL] = {
-	class: TransitionClass.ClipPoligon,
-	rotationAngle: 90.0,
-	scaleX: 1.0,
-	scaleY: 1.0,
-	reverseMethod: 3,
-	outInvertsSweep: true,
-	scaleIsotropically: false,
-};
-
-aTransitionInfoTable[TransitionType.IRISWIPE] = {};
-aTransitionInfoTable[TransitionType.IRISWIPE][TransitionSubType.RECTANGLE] = {
-	class: TransitionClass.ClipPoligon,
-	rotationAngle: 0.0,
-	scaleX: 1.0,
-	scaleY: 1.0,
-	reverseMethod: 3,
-	outInvertsSweep: true,
-	scaleIsotropically: false,
-};
-
-aTransitionInfoTable[TransitionType.IRISWIPE][TransitionSubType.DIAMOND] = {
-	class: TransitionClass.ClipPoligon,
-	rotationAngle: 45.0,
-	scaleX: Math.SQRT2,
-	scaleY: Math.SQRT2,
-	reverseMethod: 3,
-	outInvertsSweep: true,
-	scaleIsotropically: false,
-};
+/* jscpd:ignore-end */
 
 function createShapeTransition(
 	aActivityParamSet: ActivityParamSet,
@@ -525,16 +413,6 @@ function createShapeTransition(
 				aAnimatedElement,
 			);
 
-			// const aParametricPolyPolygon = createClipPolyPolygon(
-			// 	eTransitionType,
-			// 	eTransitionSubType,
-			// );
-			// const aClippingAnimation = new ClippingAnimation(
-			// 	aParametricPolyPolygon,
-			// 	aTransitionInfo,
-			// 	bDirectionForward,
-			// 	bModeIn,
-			// );
 			return new SimpleActivity(
 				aActivityParamSet,
 				aClippingAnimation,
@@ -544,8 +422,51 @@ function createShapeTransition(
 
 		case TransitionClass.Special:
 			switch (eTransitionType) {
-				// no special transition filter provided
-				// we map everything to crossfade
+				// map SLIDEWIPE to BARWIPE, for now
+				case TransitionType.SLIDEWIPE: {
+					let subtype = TransitionSubType.DEFAULT;
+					let isForwardDirection = true;
+					switch (eTransitionSubType) {
+						case TransitionSubType.FROMLEFT:
+							subtype = TransitionSubType.LEFTTORIGHT;
+							isForwardDirection = true;
+							break;
+						case TransitionSubType.FROMRIGHT:
+							subtype = TransitionSubType.LEFTTORIGHT;
+							isForwardDirection = false;
+							break;
+						case TransitionSubType.FROMTOP:
+							subtype = TransitionSubType.TOPTOBOTTOM;
+							isForwardDirection = true;
+							break;
+						case TransitionSubType.FROMBOTTOM:
+							subtype = TransitionSubType.TOPTOBOTTOM;
+							isForwardDirection = false;
+							break;
+						default:
+							window.app.console.log(
+								'createShapeTransition: unexpected subtype for SLIDEWIPE',
+							);
+							break;
+					}
+
+					transitionFilterInfo.transitionType = TransitionType.BARWIPE;
+					transitionFilterInfo.transitionSubtype = subtype;
+					transitionFilterInfo.isDirectionForward = isForwardDirection;
+
+					const aClippingAnimation = new TransitionFilterAnimation(
+						aAnimatedTransitionFilterNode.getId(),
+						transitionFilterInfo,
+						aAnimatedElement,
+					);
+
+					return new SimpleActivity(
+						aActivityParamSet,
+						aClippingAnimation,
+						DirectionType.Forward,
+					);
+				}
+				// we map everything else to crossfade
 				default: {
 					const aAnimation = createPropertyAnimation(
 						'opacity',
