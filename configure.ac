@@ -986,7 +986,7 @@ AC_DEFINE_UNQUOTED([WELCOME_URL],["$WELCOME_URL"],[The welcome url of the build.
 # Test for build environment
 
 AS_IF([test "$ENABLE_GTKAPP" != true],
-      [CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wshadow -Wundef"])
+      [CXXFLAGS="$CXXFLAGS -Wall -Wextra -Woverloaded-virtual -Wshadow -Wundef"])
 
 CFLAGS="$CFLAGS -Wall -Wextra"
 
