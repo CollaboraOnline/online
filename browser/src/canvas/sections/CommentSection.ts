@@ -1325,13 +1325,18 @@ export class Comment extends CanvasSectionObject {
 				if (cellSize[0] !== 0 && cellSize[1] !== 0) { // don't draw notes in hidden cells
 					// For calc comments (aka postits) draw the same sort of square as ScOutputData::DrawNoteMarks
 					// does for offline
-					var margin = 3;
+					var margin = cellSize[0] * 0.06;
 					var squareDim = 6;
 					// this.size may currently have an artifically wide size if mouseEnter without moveLeave seen
 					// so fetch the real size
 					var x = this.isCalcRTL() ? margin : cellSize[0] - (margin + squareDim);
-					this.context.fillStyle = '#FF0000';
-					this.context.fillRect(x, 0, squareDim, squareDim);
+					this.context.fillStyle = '#BF819E';
+					var region = new Path2D();
+					region.moveTo(x, 0);
+					region.lineTo(cellSize[0], 0);
+					region.lineTo(cellSize[0], cellSize[1]/2);
+					region.closePath();
+					this.context.fill(region);
 				}
 			}
 		}
