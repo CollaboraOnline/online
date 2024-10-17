@@ -63,8 +63,8 @@ class PresenterConsole {
 			return;
 		}
 
-		this._map.on('slidecached', this._onSlideCached, this);
-		this._map.on('transitionstart', this._onTransitionStart, this);
+		this._map.on('newslideshowframe', this._onNextFrame, this);
+		this._map.on('transitionend', this._onTransitionEnd, this);
 		this._map.on('tilepreview', this._onTilePreview, this);
 
 		this._computeCanvas(
@@ -99,6 +99,9 @@ class PresenterConsole {
 			this._generateHtml(_('Presenter Console')),
 		);
 		this._proxyPresenter.document.close();
+
+		this._currentSlideCanvas = this._proxyPresenter.document.querySelector('#current-presentation');
+		this._currentSlideContext = this._currentSlideCanvas.getContext('bitmaprenderer');
 
 		this._proxyPresenter.addEventListener(
 			'resize',
@@ -226,8 +229,8 @@ class PresenterConsole {
 		delete this._currentIndex;
 		delete this._previews;
 		clearInterval(this._timer);
-		this._map.off('slidecached', this._onSlideCached, this);
-		this._map.off('transitionstart', this._onTransitionStart, this);
+		this._map.off('newslideshowframe', this._onNextFrame, this);
+		this._map.off('transitionend', this._onTransitionEnd, this);
 		this._map.off('tilepreview', this._onTilePreview, this);
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
 	}
@@ -247,17 +250,12 @@ class PresenterConsole {
 		}
 	}
 
-	_onTransitionStart(e) {
+	_onTransitionEnd(e) {
 		if (!this._proxyPresenter) {
 			return;
 		}
 
 		this._currentIndex = e.slide;
-
-		this.drawImage(
-			this._proxyPresenter.document.querySelector('#current-presentation'),
-			e.slide,
-		);
 
 		let notes = this._map.slideShowPresenter.getNotes(e.slide);
 		let elem = this._proxyPresenter.document.querySelector('#notes');
@@ -342,36 +340,13 @@ class PresenterConsole {
 		return offscreen.convertToBlob({ type: 'image/png' });
 	}
 
-	drawImage(canvas, slide) {
-		const bitmap =
-			this._map.slideShowPresenter._slideCompositor.getSlide(slide);
-		if (bitmap) {
-			createImageBitmap(bitmap).then(function (image) {
-				let renderer = canvas.getContext('bitmaprenderer');
-				renderer.transferFromImageBitmap(image);
-			});
-		}
-	}
-
-	_onSlideCached(e) {
-		if (!this._proxyPresenter) {
+	_onNextFrame(e) {
+		const bitmap = e.frame;
+		if (!bitmap)
 			return;
-		}
-
-		if (this._currentIndex === undefined) {
-			return;
-		}
-
-		let slide = this._map.slideShowPresenter._slideCompositor.getSlideInfo(
-			e.slideHash,
-		);
-
-		if (this._currentIndex === slide.index) {
-			this.drawImage(
-				this._proxyPresenter.document.querySelector('#current-presentation'),
-				slide.index,
-			);
-		}
+		createImageBitmap(bitmap).then((image)=> {
+			this._currentSlideContext.transferFromImageBitmap(image);
+		});
 	}
 
 	_onTilePreview(e) {

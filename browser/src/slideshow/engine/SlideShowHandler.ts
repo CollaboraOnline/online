@@ -326,8 +326,6 @@ class SlideShowHandler {
 		this.aStartedEffectIndexMap = new Map();
 		this.aStartedEffectIndexMap.set(-1, undefined);
 
-		this.presenter._map.fire('transitionstart', { slide: nNewSlideIndex });
-
 		if (nOldSlideIndex !== undefined) {
 			const metaOldSlide = this.theMetaPres.getMetaSlideByIndex(nOldSlideIndex);
 			if (metaOldSlide.animationsHandler) {
@@ -373,6 +371,8 @@ class SlideShowHandler {
 		} catch (message) {
 			console.error('notifyTransitionEnd: ' + message);
 		}
+
+		this.presenter._map.fire('transitionend', { slide: nNewSlide });
 
 		this.enteringSlideTexture = null;
 		this.isStarting = false;
