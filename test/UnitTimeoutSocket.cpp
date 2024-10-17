@@ -35,7 +35,7 @@ class UnitTimeoutSocket : public UnitTimeoutBase0
     TestResult testWSPing();
     TestResult testWSDChatPing();
 
-    void configure(net::Defaults& defaults) override
+    void configNet(net::Defaults& defaults) override
     {
         // defaults.WSPingTimeout = std::chrono::microseconds(2000000);
         // defaults.WSPingPeriod = std::chrono::microseconds(3000000);
