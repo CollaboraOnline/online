@@ -71,6 +71,7 @@ interface SlideInfo {
 	hash: string;
 	index: number;
 	name: string;
+	notes: string;
 	empty: boolean;
 	hidden?: boolean;
 	masterPage: string;
@@ -133,6 +134,7 @@ class SlideShowPresenter {
 	}
 
 	addHooks() {
+		this._map.on('presentationinfo', this.onSlideShowInfo, this);
 		this._map.on('newfullscreen', this._onStart, this);
 		this._map.on('newpresentinwindow', this._onStartInWindow, this);
 		L.DomEvent.on(document, 'fullscreenchange', this._onFullScreenChange, this);
@@ -140,6 +142,7 @@ class SlideShowPresenter {
 	}
 
 	removeHooks() {
+		this._map.off('presentationinfo', this.onSlideShowInfo, this);
 		this._map.off('newfullscreen', this._onStart, this);
 		this._map.off('newpresentinwindow', this._onStartInWindow, this);
 		L.DomEvent.off(
@@ -165,6 +168,10 @@ class SlideShowPresenter {
 		if (this._checkAlreadyPresenting()) this.onSlideShowInfoChanged();
 	}
 
+	public getNavigator() {
+		return this._slideShowNavigator;
+	}
+
 	public getSlideInfo(slideNumber: number): SlideInfo | null {
 		return this._presentationInfo
 			? this._presentationInfo.slides[slideNumber]
@@ -181,6 +188,11 @@ class SlideShowPresenter {
 
 	public getCanvas(): HTMLCanvasElement {
 		return this._slideShowCanvas;
+	}
+
+	public getNotes(slide: number) {
+		const info = this.getSlideInfo(slide);
+		return info.notes;
 	}
 
 	_onFullScreenChange() {
@@ -310,7 +322,12 @@ class SlideShowPresenter {
 		}
 	}
 
-	private _createPresenterHTML(parent: Element, width: number, height: number) {
+	private _createPresenterHTML(
+		parent: Element,
+		width: number,
+		height: number,
+		options: any = undefined,
+	) {
 		const presenterContainer = L.DomUtil.create(
 			'div',
 			'leaflet-slideshow2',
@@ -327,11 +344,17 @@ class SlideShowPresenter {
 			slideshowContainer,
 			width,
 			height,
+			options,
 		);
 		return presenterContainer;
 	}
 
-	_createCanvas(parent: Element, width: number, height: number) {
+	_createCanvas(
+		parent: Element,
+		width: number,
+		height: number,
+		options: any = undefined,
+	) {
 		const canvas = L.DomUtil.create('canvas', 'leaflet-slideshow2', parent);
 
 		canvas.id = 'slideshow-canvas';
@@ -339,10 +362,12 @@ class SlideShowPresenter {
 		canvas.style.margin = 0;
 		canvas.style.position = 'absolute';
 
-		canvas.addEventListener(
-			'click',
-			this._slideShowNavigator.onClick.bind(this._slideShowNavigator),
-		);
+		if (!options || !options.noClick) {
+			canvas.addEventListener(
+				'click',
+				this._slideShowNavigator.onClick.bind(this._slideShowNavigator),
+			);
+		}
 
 		try {
 			this._slideRenderer = new SlideRendererGl(canvas);
@@ -535,7 +560,7 @@ class SlideShowPresenter {
 		else return this._slideShowWindowProxy.document;
 	}
 
-	_doInWindowPresentation() {
+	_doInWindowPresentation(options: any = undefined) {
 		const popupTitle =
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
 		const htmlContent = this._generateSlideWindowHtml(popupTitle);
@@ -554,17 +579,7 @@ class SlideShowPresenter {
 		}
 
 		if (!this._slideShowWindowProxy) {
-			this._map.uiManager.showInfoModal(
-				'popup-blocked-modal',
-				_('Windowed Presentation Blocked'),
-				_(
-					'Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.',
-				),
-				'',
-				_('OK'),
-				null,
-				false,
-			);
+			this._notifyBlockedPresenting();
 			return;
 		}
 
@@ -590,10 +605,13 @@ class SlideShowPresenter {
 			'resize',
 			this.onSlideWindowResize.bind(this),
 		);
-		this._slideShowWindowProxy.addEventListener(
-			'keydown',
-			this._slideShowNavigator.onKeyDown.bind(this._slideShowNavigator),
-		);
+
+		if (!options || !options.noKeyDown) {
+			this._slideShowWindowProxy.addEventListener(
+				'keydown',
+				this._slideShowNavigator.onKeyDown.bind(this._slideShowNavigator),
+			);
+		}
 
 		const slideShowWindow = this._slideShowWindowProxy;
 		this._map.uiManager.showSnackbar(
@@ -623,7 +641,7 @@ class SlideShowPresenter {
 	}
 
 	/// returns true on success
-	_onPrepareScreen(inWindow: boolean) {
+	_onPrepareScreen(inWindow: boolean, options: any = undefined) {
 		if (this._checkPresentationDisabled()) {
 			this._notifyPresentationDisabled();
 			return false;
@@ -712,6 +730,20 @@ class SlideShowPresenter {
 		);
 	}
 
+	_notifyBlockedPresenting() {
+		this._map.uiManager.showInfoModal(
+			'popup-blocked-modal',
+			_('Windowed Presentation Blocked'),
+			_(
+				'Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.',
+			),
+			'',
+			_('OK'),
+			null,
+			false,
+		);
+	}
+
 	_checkPresentationDisabled() {
 		return this._map['wopi'].DisablePresentation;
 	}
@@ -740,7 +772,7 @@ class SlideShowPresenter {
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow(that: any) {
-		if (!this._onPrepareScreen(true))
+		if (!this._onPrepareScreen(true, that.options))
 			// opens full screen, has to be on user interaction
 			return;
 

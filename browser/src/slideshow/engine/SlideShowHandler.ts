@@ -372,6 +372,8 @@ class SlideShowHandler {
 			console.error('notifyTransitionEnd: ' + message);
 		}
 
+		this.presenter._map.fire('transitionend', { slide: nNewSlide });
+
 		this.enteringSlideTexture = null;
 		this.isStarting = false;
 
