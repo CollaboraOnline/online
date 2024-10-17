@@ -225,6 +225,7 @@ class PresenterConsole {
 		delete this._proxyPresenter;
 		delete this._currentIndex;
 		delete this._previews;
+		clearInterval(this._timer);
 		this._map.off('slidecached', this._onSlideCached, this);
 		this._map.off('transitionstart', this._onTransitionStart, this);
 		this._map.off('tilepreview', this._onTilePreview, this);
