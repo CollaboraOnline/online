@@ -204,6 +204,10 @@ class SimpleTransition extends SlideShow.Transition3d {
 		this.displaySlides_(nT);
 
 		this.gl.bindVertexArray(null);
+
+		app.map.fire('newslideshowframe', {
+			frame: this.gl.canvas
+		});
 	}
 
 	public setBufferData(vertices: Vertex[]): void {
