@@ -213,8 +213,7 @@ class PresenterConsole {
 		);
 		delete this._proxyPresenter;
 		delete this._currentIndex;
-		delete this._previewHeight;
-		delete this._previewWidth;
+		delete this._previews;
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
 	}
 
@@ -238,19 +237,37 @@ class PresenterConsole {
 
 		let next =
 			this._proxyPresenter.document.querySelector('#next-presentation');
+		this.drawNext(next);
+	}
 
-		if (!this._previewWidth || !this._previewHeight) {
-			this._computePreview(next);
+	drawNext(elem) {
+		let rect = elem.getBoundingClientRect();
+		if (rect.width === 0 && rect.height === 0) {
+			requestAnimationFrame(this.drawNext.bind(this, elem));
+			return;
+		}
+
+		let size = this._map.getPreview(2000, 0, rect.width, rect.height, {
+			fetchThumbnail: false,
+			autoUpdate: false,
+		});
+
+		if (rect.width !== size.width || rect.height !== size.height) {
+			elem.style.width = size.width + 'px';
+			elem.style.height = size.height + 'px';
+		} else {
+			size.width = rect.width;
+			size.height = rect.height;
 		}
 
 		if (
 			this._currentIndex + 1 >=
 			this._map.slideShowPresenter._getSlidesCount()
 		) {
-			this.drawEnd().then(function (blob) {
+			this.drawEnd(size).then(function (blob) {
 				var reader = new FileReader();
 				reader.onload = function (e) {
-					next.src = e.target.result;
+					elem.src = e.target.result;
 				};
 				reader.readAsDataURL(blob);
 			});
@@ -259,25 +276,25 @@ class PresenterConsole {
 
 		let preview = this._previews[this._currentIndex + 1];
 		if (!preview) {
-			next.src = document.querySelector('meta[name="previewImg"]').content;
+			elem.src = document.querySelector('meta[name="previewImg"]').content;
 			this._map.getPreview(
 				2000,
 				this._currentIndex + 1,
-				this._previewWidth,
-				this._previewHeight,
+				size.width,
+				size.height,
 				{
 					autoUpdate: false,
 					slideshow: true,
 				},
 			);
 		} else {
-			next.src = preview;
+			elem.src = preview;
 		}
 	}
 
-	drawEnd() {
-		const width = this._previewWidth;
-		const height = this._previewHeight;
+	drawEnd(size) {
+		const width = size.width;
+		const height = size.height;
 		const offscreen = new OffscreenCanvas(width, height);
 		const ctx = offscreen.getContext('2d');
 
@@ -359,12 +376,6 @@ class PresenterConsole {
 		);
 		canvas.width = size[0];
 		canvas.height = size[1];
-	}
-
-	_computePreview(elem) {
-		let rect = elem.getBoundingClientRect();
-		this._previewWidth = rect.width;
-		this._previewHeight = rect.height;
 	}
 }
 
