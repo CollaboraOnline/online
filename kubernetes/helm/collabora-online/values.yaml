@@ -45,6 +45,13 @@ collabora:
   username: admin
   env: []
 
+  # name of a secret that holds the WOPI proof keys for Collabora
+  # How to generate this secret:
+  # 1. ssh-keygen -t rsa -N "" -m PEM -f proof_key
+  # 2. kubectl create secret generic <name-of-the-secret> --from-file=proof_key --from-file=proof_key.pub
+  # finally set proofKeysSecretRef to the name of the secret
+  proofKeysSecretRef: ""
+
 prometheus:
   servicemonitor:
     enabled: false
