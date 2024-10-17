@@ -32,7 +32,7 @@ static constexpr size_t ConnectionCount = 9;
 /// Base test suite class for connection limit (limited) using HTTP and WS sessions.
 class UnitTimeoutConnections : public UnitTimeoutBase1
 {
-    void configure(net::Defaults& defaults) override
+    void configNet(net::Defaults& defaults) override
     {
         // defaults.WSPingTimeout = std::chrono::microseconds(2000000);
         // defaults.WSPingPeriod = std::chrono::microseconds(3000000);

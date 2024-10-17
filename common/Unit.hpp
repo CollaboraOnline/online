@@ -415,7 +415,7 @@ public:
     virtual void configure(Poco::Util::LayeredConfiguration& /* config */) {}
 
     /// Manipulate and modify the net::Defaults for before any usage.
-    virtual void configure(net::Defaults& /* defaults */) {}
+    virtual void configNet(net::Defaults& /* defaults */) {}
 
     /// Main-loop reached, time for testing.
     /// Invoked from coolwsd's main thread.
