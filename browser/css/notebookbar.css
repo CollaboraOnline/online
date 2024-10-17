@@ -245,8 +245,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 .ui-tabs-content .unobutton > img {
-	min-height: 0;
-	min-width: 0;
+	width: var(--btn-size);
+	height: var(--btn-size);
 }
 
 .has-dropdown--color.notebookbar {

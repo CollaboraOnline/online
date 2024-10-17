@@ -350,7 +350,10 @@
 	background-position: right;
 	background-repeat: no-repeat;
 }
-
+.unospan-optionstoolboxdown .unobutton > img {
+	width: var(--btn-size);
+	height: var(--btn-size);
+}
 #closebuttonwrapper {
 	order: 99;
 	flex-shrink: 0;
