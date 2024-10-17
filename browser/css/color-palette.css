@@ -46,6 +46,7 @@
 	--color-success: #46ba61;
 
 	--color-box-shadow: rgba(77, 77, 77, 0.5);
+	--color-hyperlink: #000080;
 }
 
 [data-bg-theme='light'] {

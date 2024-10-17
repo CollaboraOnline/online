@@ -15,6 +15,7 @@ declare var L: any;
 declare var app: any;
 declare var _: any;
 declare var Autolinker: any;
+declare var DOMPurify : any;
 declare var Hammer: any;
 
 namespace cool {
@@ -148,6 +149,8 @@ export class Comment extends CanvasSectionObject {
 		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
 		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'input', this.textAreaInput, this);
 		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'input', this.textAreaInput, this);
+		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'keydown', this.textAreaKeyDown, this);
+		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'keydown', this.textAreaKeyDown, this);
 		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.handleCancelCommentButton);
 		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, 'annotation-button button-primary',_('Save'), this.handleSaveCommentButton);
 		button = L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
@@ -218,11 +221,13 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.contentNode = L.DomUtil.create('div', 'cool-annotation-content cool-dont-break', this.sectionProperties.wrapper);
 		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
 		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeModifyText = L.DomUtil.create('textarea', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
+		this.sectionProperties.nodeModifyText = L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
+		this.sectionProperties.nodeModifyText.setAttribute('contenteditable', 'true');
 		this.sectionProperties.nodeModifyText.id = 'annotation-modify-textarea-' + this.sectionProperties.data.id;
 		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
 		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'cool-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'cool-annotation-textarea', this.sectionProperties.nodeReply);
+		this.sectionProperties.nodeReplyText = L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeReply);
+		this.sectionProperties.nodeReplyText.setAttribute('contenteditable', 'true');
 		this.sectionProperties.nodeReplyText.id = 'annotation-reply-textarea-' + this.sectionProperties.data.id;
 		this.createChildLinesNode();
 
@@ -399,22 +404,80 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
-	private textAreaInput (): void {
+	private handleMentionInput(ev: any): void {
+		const docLayer = this.sectionProperties.docLayer;
+		const deleteEvent = ev.inputType === 'deleteContentBackward' || ev.inputType === 'deleteContentForward';
+		if (docLayer._typingMention) {
+			if (deleteEvent) {
+				var ch = docLayer._mentionText.pop();
+				if (ch === '@') {
+					this.map.fire('closementionpopup', { 'typingMention': false });
+				} else {
+					this.map.fire('sendmentiontext', { data: docLayer._mentionText,
+					                                   triggerKey: ev.data });
+				}
+			} else {
+				docLayer._mentionText.push(ev.data);
+				var regEx = /^[0-9a-zA-Z ]+$/;
+				if (ev.data && ev.data.match(regEx)) {
+					this.map.fire('sendmentiontext', { data: docLayer._mentionText,
+					                                   triggerKey: ev.data });
+				} else {
+					this.map.fire('closementionpopup', { 'typingMention': false });
+				}
+			}
+		}
+
+		if (ev.data === '@' && this.map.getDocType() === 'text') {
+			docLayer._mentionText.push(ev.data);
+			docLayer._typingMention = true;
+		}
+	}
+
+	private textAreaInput (ev: any): void {
 		this.sectionProperties.autoSave.innerText = '';
+
+		if (ev && this.sectionProperties.docLayer._docType === 'text') {
+			// special handling for mentions
+			this.handleMentionInput(ev);
+		}
+	}
+
+	private handleKeyDownForPopup (ev: any, id: string): void {
+		var popup = this.map._textInput._handleKeyDownForPopup(ev, id);
+		// Block Esc from propogating if it closes the comment mention Popup
+		if (popup && id === 'mentionPopup' && ev.key === 'Escape') {
+			ev.preventDefault();
+			ev.stopPropagation();
+		}
+	}
+
+	private textAreaKeyDown (ev: any): void {
+		this.handleKeyDownForPopup(ev, 'mentionPopup');
+	}
+
+	private sanitize (html: string): string {
+		if (DOMPurify.isSupported) {
+			return DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
+		}
+		return '';
 	}
 
 	private updateContent (): void {
-		this.sectionProperties.contentText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		if(this.sectionProperties.data.html)
+			this.sectionProperties.contentText.innerHTML = this.sanitize(this.sectionProperties.data.html);
+		else
+			this.sectionProperties.contentText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		// Get the escaped HTML out and find for possible, useful links
 		var linkedText = Autolinker.link(this.sectionProperties.contentText.outerHTML);
-		// Set the property of text field directly. This is insecure otherwise because it doesn't escape the input
-		// But we have already escaped the input before and only thing we are adding on top of that is Autolinker
-		// generated text.
-		this.sectionProperties.contentText.innerHTML = linkedText;
+		this.sectionProperties.contentText.innerHTML = this.sanitize(linkedText);
 		// Original unlinked text
 		this.sectionProperties.contentText.origText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		this.sectionProperties.contentText.origHTML = this.sectionProperties.data.html;
 		this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
-		this.sectionProperties.nodeModifyText.value = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		if (this.sectionProperties.data.html) {
+			this.sectionProperties.nodeModifyText.innerHTML = this.sanitize(this.sectionProperties.data.html);
+		}
 		this.sectionProperties.contentAuthor.innerText = this.sectionProperties.data.author;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
@@ -940,7 +1003,7 @@ export class Comment extends CanvasSectionObject {
 	public handleReplyCommentButton (e: any): void {
 		cool.CommentSection.autoSavedComment = null;
 		cool.CommentSection.commentWasAutoAdded = false;
-		this.textAreaInput();
+		this.textAreaInput(null);
 		this.onReplyClick(e);
 	}
 
@@ -951,11 +1014,13 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.data.reply = this.sectionProperties.data.text;
 			this.sectionProperties.commentListSection.saveReply(this);
 		} else {
-			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.value;
+			this.removeBRTag(this.sectionProperties.nodeReplyText);
+			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.textContent;
+			this.sectionProperties.data.html = this.sectionProperties.nodeReplyText.innerHTML;
 			// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
 			// While in browsers like Chrome and Firefox, a null value is automatically converted to ''
 			// Better to assign '' here instead of null to keep the behavior same for all
-			this.sectionProperties.nodeReplyText.value = '';
+			this.sectionProperties.nodeReplyText.textContent = '';
 			this.show();
 			this.sectionProperties.commentListSection.saveReply(this);
 		}
@@ -968,16 +1033,23 @@ export class Comment extends CanvasSectionObject {
 		}
 
 		if (cool.CommentSection.autoSavedComment) {
-			this.sectionProperties.contentText.origText = this.sectionProperties.contentText.unedited;
-			this.sectionProperties.contentText.unedited = null;
+			this.sectionProperties.contentText.origText = this.sectionProperties.contentText.uneditedText;
+			this.sectionProperties.contentText.uneditedText = null;
+			this.sectionProperties.contentText.origHTML = this.sectionProperties.contentText.uneditedHTML;
+			this.sectionProperties.contentText.uneditedHTML = null;
 		}
 
 		// These lines are repeated in onCancelClick,
 		// it makes things simple by not adding so many condition for different apps and different situation
 		// It is mandatory to change these values before handleSaveCommentButton is called
 		// calling handleSaveCommentButton in onCancelClick causes problem because that is also called from many other events/function (i.e: onPartChange)
-		this.sectionProperties.nodeModifyText.value = this.sectionProperties.contentText.origText;
-		this.sectionProperties.nodeReplyText.value = '';
+		if (this.sectionProperties.contentText.origHTML) {
+			this.sectionProperties.nodeModifyText.innerHTML = this.sanitize(this.sectionProperties.contentText.origHTML);
+		}
+		else {
+			this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.contentText.origText;
+		}
+		this.sectionProperties.nodeReplyText.textContent = '';
 
 		if (cool.CommentSection.autoSavedComment)
 			this.handleSaveCommentButton(e);
@@ -993,8 +1065,13 @@ export class Comment extends CanvasSectionObject {
 	public onCancelClick (e: any): void {
 		if (e)
 			L.DomEvent.stopPropagation(e);
-		this.sectionProperties.nodeModifyText.value = this.sectionProperties.contentText.origText;
-		this.sectionProperties.nodeReplyText.value = '';
+		if (this.sectionProperties.contentText.origHTML) {
+			this.sectionProperties.nodeModifyText.innerHTML = this.sanitize(this.sectionProperties.contentText.origHTML);
+		}
+		else {
+			this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.contentText.origText;
+		}
+		this.sectionProperties.nodeReplyText.textContent = '';
 		if (this.sectionProperties.docLayer._docType !== 'spreadsheet')
 			this.show();
 		this.sectionProperties.commentListSection.cancel(this);
@@ -1004,28 +1081,47 @@ export class Comment extends CanvasSectionObject {
 	public handleSaveCommentButton (e: any): void {
 		cool.CommentSection.autoSavedComment = null;
 		cool.CommentSection.commentWasAutoAdded = false;
-		this.sectionProperties.contentText.unedited = null;
-		this.textAreaInput();
+		this.sectionProperties.contentText.uneditedText = null;
+		this.sectionProperties.contentText.uneditedHTML = null;
+		this.textAreaInput(null);
 		this.onSaveComment(e);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onSaveComment (e: any): void {
 		L.DomEvent.stopPropagation(e);
-		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.value;
+		this.removeBRTag(this.sectionProperties.nodeModifyText);
+		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.textContent;
+		this.sectionProperties.data.html = this.sectionProperties.nodeModifyText.innerHTML;
 		this.updateContent();
 		if (!cool.CommentSection.autoSavedComment)
 			this.show();
 		this.sectionProperties.commentListSection.save(this);
 	}
 
+	// for somereasone firefox adds <br> at of the end of text in contenteditable div
+	// there have been similar reports: https://bugzilla.mozilla.org/show_bug.cgi?id=1615852
+	private removeBRTag(element: HTMLElement) {
+		if (!L.Browser.gecko)
+			return;
+		const brElements = element.querySelectorAll('br');
+		brElements.forEach(br => br.remove());
+	}
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
+		if (this.sectionProperties.docLayer._typingMention) {
+			return;
+		}
 		if (!this.sectionProperties.isRemoved) {
 			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
-			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
-				if (!this.sectionProperties.contentText.unedited)
-					this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
+			this.removeBRTag(this.sectionProperties.nodeModifyText);
+			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.textContent ||
+			    this.sectionProperties.contentText.origHTML !== this.sectionProperties.nodeModifyText.innerHTML) {
+				if (!this.sectionProperties.contentText.uneditedHTML)
+					this.sectionProperties.contentText.uneditedHTML = this.sectionProperties.contentText.origHTML;
+				if (!this.sectionProperties.contentText.uneditedText)
+					this.sectionProperties.contentText.uneditedText = this.sectionProperties.contentText.origText;
 				cool.CommentSection.autoSavedComment = this;
 				this.onSaveComment(e);
 			}
@@ -1043,9 +1139,14 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocusReply (e: any): void {
-		if (this.sectionProperties.nodeReplyText.value !== '') {
-			if (!this.sectionProperties.contentText.unedited)
-				this.sectionProperties.contentText.unedited = this.sectionProperties.contentText.origText;
+		if (this.sectionProperties.docLayer._typingMention) {
+			return;
+		}
+		if (this.sectionProperties.nodeReplyText.textContent !== '') {
+			if (!this.sectionProperties.contentText.uneditedHTML)
+				this.sectionProperties.contentText.uneditedHTML = this.sectionProperties.contentText.origHTML;
+			if (!this.sectionProperties.contentText.uneditedText)
+				this.sectionProperties.contentText.uneditedText = this.sectionProperties.contentText.origText;
 			cool.CommentSection.autoSavedComment = this;
 			this.onReplyClick(e);
 		}
@@ -1470,6 +1571,43 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.docLayer._docType === 'text')
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';
 		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+	}
+
+	public autoCompleteMention(username: string, profileLink: string, replacement: string): void {
+		const selection = window.getSelection();
+		if (!selection.rangeCount) return;
+
+		const range = selection.getRangeAt(0);
+
+		const cursorPosition = range.endOffset;
+		const container = range.startContainer;
+
+		const containerText = container.textContent || '';
+		const mentionStart = containerText.lastIndexOf(replacement, cursorPosition);
+
+		if (mentionStart !== -1) {
+			const mentionEnd = mentionStart + replacement.length;
+
+			const beforeMention = containerText.substring(0, mentionStart);
+			const afterMention = containerText.substring(mentionEnd);
+
+			const hyperlink = document.createElement('a');
+			hyperlink.href = profileLink;
+			hyperlink.textContent = `@${username}`;
+
+			container.textContent = beforeMention;
+			container.parentNode?.insertBefore(hyperlink, container.nextSibling);
+
+			const afterTextNode = document.createTextNode(afterMention);
+			hyperlink.parentNode?.insertBefore(afterTextNode, hyperlink.nextSibling);
+
+			const newRange = document.createRange();
+			newRange.setStartAfter(hyperlink);
+			newRange.setEndAfter(hyperlink);
+
+			selection.removeAllRanges();
+			selection.addRange(newRange);
+		}
 	}
 }
 

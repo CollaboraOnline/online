@@ -14,12 +14,17 @@
 
 /* global app */
 
+interface Item {
+	username: string;
+	profile: string;
+}
+
 class Mention extends L.Control.AutoCompletePopup {
 	map: ReturnType<typeof L.map>;
 	newPopupData: PopupData;
 	firstChar: string;
 	users: any;
-	itemList: Array<any>;
+	itemList: Array<Item>;
 	data: MessageEvent<any>;
 
 	constructor(map: ReturnType<typeof L.map>) {
@@ -36,7 +41,7 @@ class Mention extends L.Control.AutoCompletePopup {
 		this.itemList = null;
 	}
 
-	sendMentionText(ev: FireEvent) {
+	sendMentionText(ev: MentionEvent) {
 		const text = ev.data.join('').substring(1);
 		if (text.length === 1 && this.firstChar !== text[0]) {
 			this.map.fire('postMessage', {
@@ -45,7 +50,10 @@ class Mention extends L.Control.AutoCompletePopup {
 			});
 			this.firstChar = text[0];
 		} else {
-			this.openMentionPopup({ data: this.users });
+			this.openMentionPopup({
+				data: this.users,
+				triggerKey: ev.triggerKey,
+			} as MentionEvent);
 		}
 	}
 
@@ -83,33 +91,162 @@ class Mention extends L.Control.AutoCompletePopup {
 		return entries;
 	}
 
+	private openMentionPopup(ev: MentionEvent): void {
+		const entries = this.getPopupEntries(ev);
+		const commentSection = app.sectionContainer.getSectionWithName(
+			L.CSections.CommentList.name,
+		);
+
+		const isMobileCommentActive = commentSection?.isMobileCommentActive();
+		const mobileCommentModalId = commentSection?.getMobileCommentModalId();
+		if (entries.length === 0 && this.isMobile && isMobileCommentActive) {
+			const control = this.getTreeJSON();
+			control.hideIfEmpty = true;
+			const data = this.getPopupJSON(control, { x: 0, y: 0 });
+			data.id = mobileCommentModalId;
+			(data.control as TreeWidget).entries = [];
+			this.sendUpdate(data);
+			return;
+		}
+
+		const cursorPos = this.getCursorPosition();
+		if (entries.length === 0) {
+			// If the key pressed was a space, and there are no matches, then just
+			// dismiss the popup.
+			// const noMatchOnFinalSpace: boolean = ev.triggerKey === ' ';
+			const noMatchOnFinalSpace = ev.triggerKey === ' ';
+			if (noMatchOnFinalSpace) {
+				this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
+				return;
+			}
+			const control = this.getSimpleTextJSON();
+			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
+				const data = this.getPopupJSON(control, cursorPos);
+				this.sendUpdate(data);
+				return;
+			}
+			if (L.DomUtil.get(this.popupId))
+				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
+			const data = this.newPopupData;
+			data.children[0].children[0] = control;
+			data.posx = cursorPos.x;
+			data.posy = cursorPos.y;
+			this.sendJSON(data);
+			return;
+		}
+
+		const control = this.getTreeJSON();
+		if (isMobileCommentActive) control.hideIfEmpty = true;
+		if (L.DomUtil.get(this.popupId + 'List')) {
+			const data = this.getPopupJSON(control, cursorPos);
+			if (isMobileCommentActive) data.id = mobileCommentModalId;
+			(data.control as TreeWidget).entries = entries;
+			this.sendUpdate(data);
+			return;
+		}
+
+		if (L.DomUtil.get(this.popupId))
+			this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
+		const data = this.newPopupData;
+		data.children[0].children[0] = control;
+		(data.children[0].children[0] as TreeWidget).entries = entries;
+		data.posx = cursorPos.x;
+		data.posy = cursorPos.y;
+		this.sendJSON(data);
+	}
+
+	private getSimpleTextJSON(): TextWidget {
+		return {
+			id: this.popupId + 'fixedtext',
+			type: 'fixedtext',
+			text: 'no search results found!',
+			enabled: true,
+		} as TextWidget;
+	}
+
+	private closeMentionPopup(ev: CloseMessageEvent): void {
+		var mentionPopup =
+			L.DomUtil.get(this.popupId) || L.DomUtil.get(this.popupId + 'List');
+		if (!mentionPopup) return;
+
+		this.map.jsdialog.focusToLastElement(this.popupId);
+		if (this.isMobile) {
+			const commentSection = app.sectionContainer.getSectionWithName(
+				L.CSections.CommentList.name,
+			);
+			const isMobileCommentActive = commentSection?.isMobileCommentActive();
+			const mobileCommentModalId = commentSection?.getMobileCommentModalId();
+
+			if (isMobileCommentActive) {
+				const control = this.getTreeJSON();
+				control.hideIfEmpty = true;
+				const data = this.getPopupJSON(control, { x: 0, y: 0 });
+				data.id = mobileCommentModalId;
+				(data.control as TreeWidget).entries = [];
+				this.sendUpdate(data);
+			} else {
+				this.map.fire('closemobilewizard');
+			}
+		} else this.map.jsdialog.clearDialog(this.popupId);
+		if (!ev.typingMention) {
+			this.map._docLayer._typingMention = false;
+			this.map._docLayer._mentionText = [];
+		}
+	}
+
+	public getItem(index: number): Item {
+		if (index >= this.itemList.length)
+			return { username: '', profile: '' } as Item;
+		return this.itemList[index];
+	}
+
+	private sendHyperlinkUnoCommand(
+		username: string,
+		profile: string,
+		replacement: string,
+	) {
+		var command = {
+			'Hyperlink.Text': {
+				type: 'string',
+				value: '@' + username,
+			},
+			'Hyperlink.URL': {
+				type: 'string',
+				value: profile,
+			},
+			'Hyperlink.ReplacementText': {
+				type: 'string',
+				value: replacement,
+			},
+		};
+		this.map.sendUnoCommand('.uno:SetHyperlink', command, true);
+		this.map.fire('postMessage', {
+			msgId: 'UI_Mention',
+			args: { type: 'selected', username: username },
+		});
+	}
+
 	callback(objectType: any, eventType: any, object: any, index: number) {
+		const commentSection = app.sectionContainer.getSectionWithName(
+			L.CSections.CommentList.name,
+		);
+		const comment = commentSection?.getActiveEdit();
 		if (eventType === 'close') {
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'select' || eventType === 'activate') {
-			var command = {
-				'Hyperlink.Text': {
-					type: 'string',
-					value: '@' + this.itemList[index].username,
-				},
-				'Hyperlink.URL': {
-					type: 'string',
-					value: this.itemList[index].profile,
-				},
-				'Hyperlink.ReplacementText': {
-					type: 'string',
-					value: this.map._docLayer._mentionText.join(''),
-				},
-			};
-			this.map.sendUnoCommand('.uno:SetHyperlink', command, true);
-			this.map.fire('postMessage', {
-				msgId: 'UI_Mention',
-				args: { type: 'selected', username: this.itemList[index].username },
-			});
+			const username = this.itemList[index].username;
+			const profileLink = this.itemList[index].profile;
+			const replacement = this.map._docLayer._mentionText.join('');
+
+			if (comment)
+				comment.autoCompleteMention(username, profileLink, replacement);
+			else this.sendHyperlinkUnoCommand(username, profileLink, replacement);
+
 			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
 		} else if (eventType === 'keydown') {
 			if (object.key !== 'Tab' && object.key !== 'Shift') {
-				this.map.focus();
+				if (comment) comment.focus();
+				else this.map.focus();
 				return true;
 			}
 		}

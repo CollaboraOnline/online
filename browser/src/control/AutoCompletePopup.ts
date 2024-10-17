@@ -22,8 +22,12 @@ interface Point {
 interface FireEvent {
 	data?: any;
 }
+
 interface CloseMessageEvent extends FireEvent {
 	typingMention?: boolean;
+}
+interface MentionEvent extends FireEvent {
+	triggerKey?: string;
 }
 
 abstract class AutoCompletePopup {
@@ -31,6 +35,7 @@ abstract class AutoCompletePopup {
 	protected newPopupData: PopupData;
 	protected data: MessageEvent<any>;
 	protected popupId: string;
+	protected isMobile: boolean;
 
 	constructor(popupId: string, map: ReturnType<typeof L.map>) {
 		this.map = map;
@@ -51,40 +56,22 @@ abstract class AutoCompletePopup {
 			popupParent: '_POPOVER_',
 			clickToClose: '_POPOVER_',
 			id: this.popupId,
+			persistKeyboard: true,
 		} as PopupData;
 
+		this.isMobile = (<any>window).mode.isMobile();
 		this.onAdd();
-
 		this.map.on('closepopup', this.closePopup, this);
 	}
 
 	abstract onAdd(): void;
 
-	getCurrentCursorPosition(): Point {
-		var currPos = {
-			x: app.file.textCursor.rectangle.cX1,
-			y: app.file.textCursor.rectangle.cY2,
-		};
-		var origin = this.map.getPixelOrigin();
-		var panePos = this.map._getMapPanePos();
-		return new L.Point(
-			Math.round(currPos.x + panePos.x - origin.x),
-			Math.round(currPos.y + panePos.y - origin.y),
-		);
-	}
-
 	closePopup(): void {
 		var popupExists = L.DomUtil.get(this.popupId);
 		if (!popupExists) return;
 
-		var closePopupData = {
-			jsontype: 'dialog',
-			type: 'modalpopup',
-			action: 'close',
-			id: this.popupId,
-		} as PopupData;
-
-		this.map.fire('jsdialog', { data: closePopupData, callback: undefined });
+		this.map.jsdialog.focusToLastElement(this.popupId);
+		this.map.jsdialog.clearDialog(this.popupId);
 	}
 
 	abstract getPopupEntries(ev: FireEvent): Array<TreeEntryJSON>;
@@ -113,15 +100,6 @@ abstract class AutoCompletePopup {
 		} as TreeWidget;
 	}
 
-	getSimpleTextJSON(): TextWidget {
-		return {
-			id: this.popupId + 'fixedtext',
-			type: 'fixedtext',
-			text: 'no search results found!',
-			enabled: true,
-		} as TextWidget;
-	}
-
 	sendUpdate(data: any): void {
 		this.map.fire('jsdialogupdate', {
 			data: data,
@@ -130,55 +108,67 @@ abstract class AutoCompletePopup {
 	}
 
 	sendJSON(data: any): void {
-		this.map.fire('jsdialog', {
+		const fireEvent = this.isMobile ? 'mobilewizard' : 'jsdialog';
+		this.map.fire(fireEvent, {
 			data: data,
 			callback: this.callback.bind(this),
 		});
 	}
 
-	openMentionPopup(ev: FireEvent): void {
-		const framePos = this.getCurrentCursorPosition();
-		const entries = this.getPopupEntries(ev);
-		let data: PopupData;
-
-		if (entries.length > 0) {
-			const control = this.getTreeJSON();
-			// update the popup with list if mentionList already exist
-			if (L.DomUtil.get(this.popupId + 'List')) {
-				data = this.getPopupJSON(control, framePos);
-				(data.control as TreeWidget).entries = entries;
-				this.sendUpdate(data);
-				return;
-			}
-			if (L.DomUtil.get(this.popupId))
-				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
-			data = this.newPopupData;
-			data.children[0].children[0] = control;
-			(data.children[0].children[0] as TreeWidget).entries = entries;
-		} else {
-			const control = this.getSimpleTextJSON();
-			if (L.DomUtil.get(this.popupId + 'fixedtext')) {
-				data = this.getPopupJSON(control, framePos);
-				this.sendUpdate(data);
-				return;
-			}
-			if (L.DomUtil.get(this.popupId))
-				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
-			data = this.newPopupData;
-			data.children[0].children[0] = control;
+	getCursorPosition(): Point {
+		const commentSection = app.sectionContainer.getSectionWithName(
+			L.CSections.CommentList.name,
+		);
+		if (commentSection?.getActiveEdit()) {
+			const caretRect = window
+				.getSelection()
+				.getRangeAt(0)
+				.getBoundingClientRect();
+			const mapRect = this.map._container.getBoundingClientRect();
+			return new L.Point(
+				caretRect.left - mapRect.left,
+				caretRect.bottom - mapRect.top,
+			);
 		}
-		// add position
-		data.posx = framePos.x;
-		data.posy = framePos.y;
+
+		const currPos = {
+			x: app.file.textCursor.rectangle.cX1,
+			y: app.file.textCursor.rectangle.cY2,
+		};
+		const origin = this.map.getPixelOrigin();
+		const panePos = this.map._getMapPanePos();
+		return new L.Point(
+			Math.round(currPos.x + panePos.x - origin.x),
+			Math.round(currPos.y + panePos.y - origin.y),
+		);
+	}
+
+	openPopup(ev: FireEvent): void {
+		const entries = this.getPopupEntries(ev);
+		if (entries.length === 0) return;
+
+		const cursorPos = this.getCursorPosition();
+		const control = this.getTreeJSON();
+		if (L.DomUtil.get(this.popupId + 'List')) {
+			const data = this.getPopupJSON(control, cursorPos);
+			(data.control as TreeWidget).entries = entries;
+			this.sendUpdate(data);
+			return;
+		}
+
+		if (L.DomUtil.get(this.popupId)) this.closePopup();
+
+		const data = this.newPopupData;
+		data.children[0].children[0] = control;
+		(data.children[0].children[0] as TreeWidget).entries = entries;
+
+		data.posx = cursorPos.x;
+		data.posy = cursorPos.y;
 		this.sendJSON(data);
 	}
 
-	closeMentionPopup(ev: CloseMessageEvent): void {
-		this.closePopup();
-		if (!ev.typingMention) {
-			this.map._docLayer._typingMention = false;
-			this.map._docLayer._mentionText = [];
-		}
+	public getPopupId() {
+		return this.popupId;
 	}
 
 	callback(objectType: any, eventType: any, object: any, index: number) {

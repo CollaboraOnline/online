@@ -75,6 +75,8 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		[key: string]: any;
 	};
 	disableLayoutAnimation: boolean = false;
+	mobileCommentId: string = 'new-annotation-dialog';
+	mobileCommentModalId: string;
 
 	map: any;
 	static autoSavedComment: cool.Comment;
@@ -107,6 +109,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		// This (commentsAreListed) variable means that comments are shown as a list on the right side of the document.
 		this.sectionProperties.commentsAreListed = (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') && !(<any>window).mode.isMobile();
 		this.idIndexMap = new Map<any, number>();
+		this.mobileCommentModalId = this.map.uiManager.generateModalId(this.mobileCommentId);
 	}
 
 	public onInitialize (): void {
@@ -216,6 +219,23 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			.filter((textBox: any) => textBox !== undefined);
 
 		return textBoxes.includes(document.activeElement);
+	}
+
+	public getActiveEdit(): Comment {
+		if (!this.sectionProperties.selectedComment) {
+			return null;
+		}
+		if (this.sectionProperties.selectedComment.isEdit()) {
+			return this.sectionProperties.selectedComment;
+		}
+		var openArray: Comment[] = [];
+		this.getChildren(this.sectionProperties.selectedComment, openArray);
+		for (var i = 0; i < openArray.length; i++) {
+			if (openArray[i].isEdit()) {
+				return openArray[i];
+			}
+		}
+		return null;
 	}
 
 	public setCollapsed(): void {
@@ -404,15 +424,27 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		}
 	}
 
+	public isMobileCommentActive (): boolean {
+		const newComment = document.getElementById(this.mobileCommentId);
+		if (!newComment)
+			return false;
+		return newComment.style.display !== 'none'
+	}
+
+	public getMobileCommentModalId (): string {
+		return this.mobileCommentModalId;
+	}
+
 	public newAnnotationMobile (comment: any, addCommentFn: any, isMod: any): void {
 		var commentData = comment.sectionProperties.data;
 
-		var callback = function(data: string) {
-			if (data) {
+		var callback = function(div: HTMLDivElement) {
+			if (div.textContent || div.innerHTML) {
 				var annotation = comment;
 
-				annotation.sectionProperties.data.text = data;
-				comment.text = data;
+				annotation.sectionProperties.data.text = div.textContent;
+				annotation.sectionProperties.data.html = div.innerHTML;
+				comment.text = div.textContent;
 
 				addCommentFn.call(annotation, annotation, comment);
 				if (!isMod)
@@ -423,13 +455,26 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			}
 		}.bind(this);
 
-		var id = 'new-annotation-dialog';
-		var dialogId = this.map.uiManager.generateModalId(id);
-		var json = this.map.uiManager._modalDialogJSON(id, '', true, [
+		let listId = 'mentionPopupList';
+		if (this.map.mention)
+			listId = this.map.mention.getPopupId() + 'List';
+		var json = this.map.uiManager._modalDialogJSON(this.mobileCommentId, '', true, [
 			{
 				id: 'input-modal-input',
 				type: 'multilineedit',
-				text: (commentData.text && isMod ? commentData.text: '')
+				text: (commentData.text && isMod ? commentData.text: ''),
+				html: (commentData.html && isMod ? commentData.html: ''),
+				contenteditable: true
+			},
+			{
+				id: listId,
+				type: 'treelistbox',
+				text: '',
+				enabled: true,
+				singleclickactivate: false,
+				fireKeyEvents: true,
+				hideIfEmpty: true,
+				entries: [] as Array<TreeEntryJSON>,
 			},
 			{
 				id: '',
@@ -456,21 +501,42 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 
 		var cancelFunction = function() {
 			this.cancel(comment);
-			this.map.uiManager.closeModal(dialogId);
+			this.map.uiManager.closeModal(this.mobileCommentModalId);
+		}.bind(this);
+
+		const mentionListCallback = function(objectType: any, eventType: any, object: any, index: number) {
+				if (eventType === 'close')
+					this.map.fire('closementionpopup', { 'typingMention': false });
+				else if (eventType === 'select' || eventType === 'activate') {
+					const item = this.map.mention.getItem(index);
+					const replacement = this.map._docLayer._mentionText.join('');
+					if (item.username !== '' && item.profile !== '')
+						comment.autoCompleteMention(item.username, item.profile, replacement)
+					this.map.fire('closementionpopup', { 'typingMention': false });
+				}
 		}.bind(this);
 
 		this.map.uiManager.showModal(json, [
 			{id: 'response-ok', func: function() {
 				if (typeof callback === 'function') {
-					var input = document.getElementById('input-modal-input') as HTMLTextAreaElement;
-					callback(input.value);
+					var input = document.getElementById('input-modal-input') as HTMLDivElement;
+					callback(input);
 				}
-				this.map.uiManager.closeModal(dialogId);
+				this.map.uiManager.closeModal(this.mobileCommentModalId);
 			}.bind(this)},
 			{id: 'response-cancel', func: cancelFunction},
 			{id: '__POPOVER__', func: cancelFunction},
-			{id: '__DIALOG__', func: cancelFunction}
+			{id: '__DIALOG__', func: cancelFunction},
+			{id: listId, func: mentionListCallback}
 		]);
+
+	  const multilineEditDiv = document.getElementById('input-modal-input');
+		multilineEditDiv.addEventListener('input', function(ev: any){
+			if (ev && comment.sectionProperties.docLayer._docType === 'text') {
+				// special handling for mentions
+				comment.handleMentionInput(ev);
+			}
+		});
 
 		var tagTd = 'td',
 		empty = '',
@@ -502,7 +568,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			$(contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString((<any>String).locale, <any>dateOptions));
 		}
 
-		var newAnnotationDialog = document.getElementById('new-annotation-dialog');
+		var newAnnotationDialog = document.getElementById(this.mobileCommentId);
 		$(newAnnotationDialog).css('width', '100%');
 		var dialogInput = newAnnotationDialog.children[0];
 		$(dialogInput).css('height', '30vh');
@@ -566,6 +632,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				Author: {
 					type: 'string',
 					value: annotation.sectionProperties.data.author
+				},
+				Html: {
+					type: 'string',
+					value: annotation.sectionProperties.data.html
 				}
 			};
 			if (app.file.fileBasedView) {
@@ -599,13 +669,17 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 					type: 'string',
 					value: annotation.sectionProperties.data.id
 				},
-			        Author: {
+			  Author: {
 					type: 'string',
 					value: annotation.sectionProperties.data.author
 				},
 				Text: {
 					type: 'string',
 					value: annotation.sectionProperties.data.text
+				},
+				Html: {
+					type: 'string',
+					value: annotation.sectionProperties.data.html
 				}
 			};
 			this.map.sendUnoCommand('.uno:EditAnnotation', comment, true /* force */);
@@ -885,6 +959,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			Text: {
 				type: 'string',
 				value: annotation.sectionProperties.data.reply
+			},
+			Html: {
+				type: 'string',
+				value: annotation.sectionProperties.data.html
 			}
 		};
 

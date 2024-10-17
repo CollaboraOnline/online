@@ -93,7 +93,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			this.mobileWizard.addClass('menuwizard');
 		if (this.isFunctionMenu)
 			this.mobileWizard.addClass('funcwizard');
-		if (this.isPopup)
+		if (this.isPopup && !this.isAutoCompletePopup && !this.isPopupPartialScreen)
 			this.mobileWizard.addClass('popup');
 		if (this.isSnackBar)
 			this.mobileWizard.addClass('snackbar');
@@ -523,9 +523,12 @@ L.Control.MobileWizardWindow = L.Control.extend({
 
 			this._reset();
 			this.isPopup = isPopupJson;
+			this.isAutoCompletePopup = data.isAutoCompletePopup;
+			this.isPopupPartialScreen = data.isPopupPartialScreen;
+			this.persistKeyboard = data.persistKeyboard;
 
 			this._showWizard();
-			if (this.map._docLayer && !this.map._docLayer.isCalc()) {
+			if (this.map._docLayer && !this.map._docLayer.isCalc() && !this.persistKeyboard) {
 				// In Calc, the wizard is used for the formulas,
 				// and it's easier to allow the user to search
 				// for a formula by typing the first few characters.

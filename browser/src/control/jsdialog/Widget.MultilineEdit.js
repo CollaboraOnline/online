@@ -16,8 +16,10 @@
  * {
  *     id: 'id',
  *     type: 'multilineedit',
- *     test: 'text content\nsecond line',
+ *     text: 'text content\nsecond line',
+ *     html: '<a href="hyperlink">hyperlink</a>' // only if contenteditable is true
  *     cursor: true,
+ *     contenteditable: false
  *     enabled: false
  * }
  *
@@ -37,17 +39,25 @@ function _sendSimpleSelection(edit, builder) {
 
 function _multiLineEditControl(parentContainer, data, builder, callback) {
 	var controlType = 'textarea';
-	if (data.cursor && (data.cursor === 'false' || data.cursor === false))
+	if (data.contenteditable)
+		controlType = 'div';
+	else if (data.cursor && (data.cursor === 'false' || data.cursor === false))
 		controlType = 'p';
 
-	var edit = L.DomUtil.create(controlType, 'ui-textarea ' + builder.options.cssClass, parentContainer);
+	let edit = L.DomUtil.create(controlType, 'ui-textarea ' + builder.options.cssClass, parentContainer);
+	if (data.contenteditable)
+		edit.setAttribute('contenteditable', 'true');
 
 	if (controlType === 'textarea')
 		edit.value = builder._cleanText(data.text);
-	else
-	{
+	else if (controlType === 'p') {
 		data.text = data.text.replace(/(?:\r\n|\r|\n)/g, '<br>');
 		edit.textContent = builder._cleanText(data.text);
+	} else if (controlType === 'div') {
+		if (data.html)
+			edit.innerHTML = data.html;
+		else
+			edit.textContent = builder._cleanText(data.text);
 	}
 
 	edit.id = data.id;
