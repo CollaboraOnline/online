@@ -21,9 +21,6 @@ class PresenterConsole {
 		this._map = map;
 		this._map.on('presentationinfo', this._onPresentationInfo, this);
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
-		this._map.on('slidecached', this._onSlideCached, this);
-		this._map.on('transitionstart', this._onTransitionStart, this);
-		this._map.on('tilepreview', this._onTilePreview, this);
 	}
 
 	_generateHtml(title) {
@@ -65,6 +62,10 @@ class PresenterConsole {
 		if (!this._proxyPresenter) {
 			return;
 		}
+
+		this._map.on('slidecached', this._onSlideCached, this);
+		this._map.on('transitionstart', this._onTransitionStart, this);
+		this._map.on('tilepreview', this._onTilePreview, this);
 
 		this._computeCanvas(
 			this._proxyPresenter.document.querySelector('#current-presentation'),
@@ -224,6 +225,9 @@ class PresenterConsole {
 		delete this._proxyPresenter;
 		delete this._currentIndex;
 		delete this._previews;
+		this._map.off('slidecached', this._onSlideCached, this);
+		this._map.off('transitionstart', this._onTransitionStart, this);
+		this._map.off('tilepreview', this._onTilePreview, this);
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
 	}
 
