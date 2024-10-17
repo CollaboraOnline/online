@@ -56,7 +56,7 @@ public:
     }
 
     /// Lookup one session in the map that matches this canonical view id, only used by Kit
-    std::shared_ptr<T> findByCanonicalId(int id)
+    std::shared_ptr<T> findByCanonicalId(int id) const
     {
         for (const auto &it : *this) {
             if (it.second->getCanonicalViewId() == id)
