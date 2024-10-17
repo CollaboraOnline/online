@@ -1377,8 +1377,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .jsdialog .unobutton img {
-	min-width: 0;
-	min-height: 0;
+	width: var(--btn-img-size);
+	height: var(--btn-img-size);
 }
 
 .menubutton .arrow {
