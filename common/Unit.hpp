@@ -54,6 +54,83 @@ namespace Poco
 class Session;
 class StorageBase;
 
+/// AtomicSharedPtr provides atomic operation for `std::shared_ptr<T>` similar to `std::atomic<std::shared_ptr<T>>`
+/// It further provides thread-safe `assignIfNull` and `assignIfNotNull` atomic conditional assignment methods.
+/// Implementation uses `std::mutex` to synchronize `std::shared_ptr<T>` access.
+template <class T>
+class AtomicSharedPtr
+{
+    private:
+        mutable std::mutex _lock;
+        std::shared_ptr<T> _sptr;
+    public:
+        AtomicSharedPtr()
+        : _sptr(nullptr)
+        {}
+
+        AtomicSharedPtr(const AtomicSharedPtr& o)
+        : _sptr(nullptr)
+        {
+            std::lock_guard<std::mutex> guard(o._lock);
+            _sptr = o._sptr;
+        }
+
+        AtomicSharedPtr(const std::shared_ptr<T>& sptr)
+        : _sptr(sptr)
+        {}
+
+        AtomicSharedPtr& operator=(const AtomicSharedPtr& o)
+        {
+            std::scoped_lock lock(_lock, o._lock);
+            _sptr = o._sptr;
+            return *this;
+        }
+
+        AtomicSharedPtr& operator=(const std::shared_ptr<T>& sptr)
+        {
+            std::lock_guard<std::mutex> guard(_lock);
+            _sptr = sptr;
+            return *this;
+        }
+        void store(const std::shared_ptr<T>& sptr)
+        {
+            std::lock_guard<std::mutex> guard(_lock);
+            _sptr = sptr;
+        }
+
+        /// Assigns returned `std::shared_ptr<T>` from `ctor` iff this's instance's `std::shared_ptr` is `nullptr`
+        template<class CtorFunc>
+        const std::shared_ptr<T>& assignIfNull(CtorFunc ctor)
+        {
+            std::lock_guard<std::mutex> guard(_lock);
+            if( nullptr == _sptr)
+                _sptr = ctor();
+            return _sptr;
+        }
+        /// Assigns returned `std::shared_ptr<T>` from `ctor` iff this's instance's `std::shared_ptr` is not `nullptr`
+        template<class CtorFunc>
+        const std::shared_ptr<T>& assignIfNotNull(CtorFunc ctor)
+        {
+            std::lock_guard<std::mutex> guard(_lock);
+            if( nullptr != _sptr)
+                _sptr = ctor();
+            return _sptr;
+        }
+
+        /// Return a copy of this instance's `std::shared_ptr<T>`
+        std::shared_ptr<T> load() const
+        {
+            std::lock_guard<std::mutex> guard(_lock);
+            return _sptr;
+        }
+        /// Return a copy of this instance's `std::shared_ptr<T>`
+        operator std::shared_ptr<T>() const
+        {
+            std::lock_guard<std::mutex> guard(_lock);
+            return _sptr;
+        }
+};
+
 typedef UnitBase *(CreateUnitHooksFunction)();
 typedef UnitBase**(CreateUnitHooksFunctionMulti)();
 extern "C" {
