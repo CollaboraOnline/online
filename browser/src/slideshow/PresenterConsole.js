@@ -48,7 +48,9 @@ class PresenterConsole {
                                          <div id="timer"></div>
                                      </div>
                                      <div id="second-presentation">
-                                         <img id="next-presentation"></img>
+                                         <div id='container'>
+                                            <img id="next-presentation"></img>
+                                         </div>
                                          <div id='notes'></div>
                                      </div>
                                 </main>
@@ -99,6 +101,10 @@ class PresenterConsole {
 		);
 		this._proxyPresenter.document.close();
 
+		this._proxyPresenter.addEventListener(
+			'resize',
+			L.bind(this._onResize, this),
+		);
 		this._map.slideShowPresenter._slideShowWindowProxy.addEventListener(
 			'unload',
 			L.bind(this._onWindowClose, this),
@@ -140,8 +146,8 @@ class PresenterConsole {
 		elem.style.flex = '1';
 
 		elem = this._proxyPresenter.document.querySelector('#current-presentation');
-		elem.style.height = '50%';
-		elem.style.width = '100%';
+		elem.style.height = '50vh';
+		elem.style.width = '50vw';
 
 		elem = this._proxyPresenter.document.querySelector('#timer');
 		elem.style.textAlign = 'center';
@@ -150,9 +156,9 @@ class PresenterConsole {
 		elem.style.fontWeight = 'bold';
 		elem.style.height = '50%';
 
-		elem = this._proxyPresenter.document.querySelector('#next-presentation');
-		elem.style.height = '50%';
-		elem.style.width = '100%';
+		elem = this._proxyPresenter.document.querySelector('#container');
+		elem.style.height = '50vh';
+		elem.style.width = '50vw';
 
 		elem = this._proxyPresenter.document.querySelector('#notes');
 		elem.style.height = '50%';
@@ -206,6 +212,10 @@ class PresenterConsole {
 			this._map.slideShowPresenter._slideShowWindowProxy.close();
 
 		this._proxyPresenter.removeEventListener(
+			'resize',
+			L.bind(this._onResize, this),
+		);
+		this._proxyPresenter.removeEventListener(
 			'click',
 			L.bind(this._onClick, this),
 		);
@@ -217,6 +227,21 @@ class PresenterConsole {
 		delete this._currentIndex;
 		delete this._previews;
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
+	}
+
+	_onResize() {
+		let container = this._proxyPresenter.document.querySelector('#container');
+		if (!container) {
+			return;
+		}
+		let rect = container.getBoundingClientRect();
+		let next =
+			this._proxyPresenter.document.querySelector('#next-presentation');
+		if (next) {
+			next.style.width = rect.width + 'px';
+			next.style.height = rect.height + 'px';
+			this.drawNext(next);
+		}
 	}
 
 	_onTransitionStart(e) {
@@ -243,6 +268,10 @@ class PresenterConsole {
 	}
 
 	drawNext(elem) {
+		if (this._currentIndex === undefined) {
+			return;
+		}
+
 		let rect = elem.getBoundingClientRect();
 		if (rect.width === 0 && rect.height === 0) {
 			requestAnimationFrame(this.drawNext.bind(this, elem));
@@ -253,14 +282,6 @@ class PresenterConsole {
 			fetchThumbnail: false,
 			autoUpdate: false,
 		});
-
-		if (rect.width !== size.width || rect.height !== size.height) {
-			elem.style.width = size.width + 'px';
-			elem.style.height = size.height + 'px';
-		} else {
-			size.width = rect.width;
-			size.height = rect.height;
-		}
 
 		if (
 			this._currentIndex + 1 >=
@@ -279,6 +300,11 @@ class PresenterConsole {
 		let preview = this._previews[this._currentIndex + 1];
 		if (!preview) {
 			elem.src = document.querySelector('meta[name="previewImg"]').content;
+		} else {
+			elem.src = preview;
+		}
+
+		if (!preview || rect.width !== size.width || rect.height !== size.height) {
 			this._map.getPreview(
 				2000,
 				this._currentIndex + 1,
@@ -289,8 +315,8 @@ class PresenterConsole {
 					slideshow: true,
 				},
 			);
-		} else {
-			elem.src = preview;
+			elem.style.width = size.width + 'px';
+			elem.style.height = size.height + 'px';
 		}
 	}
 
