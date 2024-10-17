@@ -1632,7 +1632,45 @@ void Document::notifyViewInfo()
             if (viewId == it.second->getViewId() && !it.second->getUserPrivateInfo().empty())
             {
                 oss << "{" << viewStrings[viewId];
-                oss << ",\"userprivateinfo\":" << it.second->getUserPrivateInfo();
+                std::string userPrivateInfo = it.second->getUserPrivateInfo();
+                try
+                {
+                    if (!userPrivateInfo.empty())
+                    {
+                        // No need to actually send the signing certs/keys to the client, it's
+                        // enough to know if these are provided or not. Replace the actual content
+                        // with a placeholder.
+                        Parser parser;
+                        Poco::Dynamic::Var var = parser.parse(userPrivateInfo);
+                        Object::Ptr userPrivateInfoObj = var.extract<Object::Ptr>();
+                        std::string signatureCert;
+                        JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCert", signatureCert);
+                        if (!signatureCert.empty())
+                        {
+                            userPrivateInfoObj->set("SignatureCert", " ");
+                        }
+                        std::string signatureKey;
+                        JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureKey", signatureKey);
+                        if (!signatureKey.empty())
+                        {
+                            userPrivateInfoObj->set("SignatureKey", " ");
+                        }
+                        std::string signatureCa;
+                        JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCa", signatureCa);
+                        if (!signatureCa.empty())
+                        {
+                            userPrivateInfoObj->set("SignatureCa", " ");
+                        }
+                        std::ostringstream userPrivateStream;
+                        userPrivateInfoObj->stringify(userPrivateStream);
+                        userPrivateInfo = userPrivateStream.str();
+                    }
+                }
+                catch(const Poco::BadCastException& exception)
+                {
+                    LOG_DBG("user private data is not a dictionary: " << exception.what());
+                }
+                oss << ",\"userprivateinfo\":" << userPrivateInfo;
                 oss << "},";
             }
             else
