@@ -460,6 +460,12 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 .context-menu-list .context-menu-item:nth-child(4) span {
 	background: url('images/lc_ok.svg') no-repeat left center /24px;
 }
+.context-menu-list .context-menu-item:nth-child(5) span {
+	background: url('images/lc_swresredline_deleted.svg') no-repeat left center /24px;
+}
+.context-menu-list .context-menu-item:nth-child(6) span {
+	background: url('images/lc_resolvethread.svg') no-repeat left center /24px;
+}
 
 /* Related to jsdialogs.css */
 /*   - macros */
