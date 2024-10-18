@@ -1,0 +1,39 @@
+// BETTERER RESULTS V2.
+// 
+// If this file contains merge conflicts, use `betterer merge` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[`avoid expressions which have no effect`] = {
+  value: `{
+    "mocha_tests/Rectangle.test.ts:3311899269": [
+      [137, 4, 44, "Expected an assignment or function call and instead saw an expression.", "59882392"],
+      [175, 4, 44, "Expected an assignment or function call and instead saw an expression.", "1509182872"],
+      [212, 4, 55, "Expected an assignment or function call and instead saw an expression.", "3330792896"],
+      [285, 4, 46, "Expected an assignment or function call and instead saw an expression.", "3589066905"],
+      [321, 4, 54, "Expected an assignment or function call and instead saw an expression.", "2205591640"]
+    ],
+    "src/canvas/sections/CalcGridSection.ts:4187413316": [
+      [18, 8, 77, "Expected an assignment or function call and instead saw an expression.", "1426129941"],
+      [20, 8, 294, "Expected an assignment or function call and instead saw an expression.", "2353581431"]
+    ],
+    "src/canvas/sections/CommentListSection.ts:2180680674": [
+      [1873, 4, 86, "Expected an assignment or function call and instead saw an expression.", "4162620073"]
+    ],
+    "src/control/Control.Header.ts:301747788": [
+      [602, 2, 73, "Expected an assignment or function call and instead saw an expression.", "59194745"]
+    ],
+    "src/control/Control.IdleHandler.ts:1404505661": [
+      [210, 2, 76, "Expected an assignment or function call and instead saw an expression.", "802093524"]
+    ],
+    "src/control/jsdialog/Widget.SidebarContainers.ts:4170730336": [
+      [51, 2, 13, "Expected an assignment or function call and instead saw an expression.", "412599327"]
+    ],
+    "src/layer/CalcSplitPanesContext.ts:1499463670": [
+      [59, 3, 106, "Expected an assignment or function call and instead saw an expression.", "2941789142"],
+      [60, 3, 106, "Expected an assignment or function call and instead saw an expression.", "3922277399"]
+    ],
+    "src/slideshow/SlideShowPresenter.ts:3217713974": [
+      [675, 4, 2, "Expected an assignment or function call and instead saw an expression.", "5859342"]
+    ]
+  }`
+};
