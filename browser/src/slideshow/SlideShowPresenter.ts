@@ -71,6 +71,7 @@ interface SlideInfo {
 	hash: string;
 	index: number;
 	name: string;
+	notes: string;
 	empty: boolean;
 	hidden?: boolean;
 	masterPage: string;
@@ -133,6 +134,7 @@ class SlideShowPresenter {
 	}
 
 	addHooks() {
+		this._map.on('presentationinfo', this.onSlideShowInfo, this);
 		this._map.on('newfullscreen', this._onStart, this);
 		this._map.on('newpresentinwindow', this._onStartInWindow, this);
 		L.DomEvent.on(document, 'fullscreenchange', this._onFullScreenChange, this);
@@ -140,6 +142,7 @@ class SlideShowPresenter {
 	}
 
 	removeHooks() {
+		this._map.off('presentationinfo', this.onSlideShowInfo, this);
 		this._map.off('newfullscreen', this._onStart, this);
 		this._map.off('newpresentinwindow', this._onStartInWindow, this);
 		L.DomEvent.off(
@@ -165,6 +168,10 @@ class SlideShowPresenter {
 		if (this._checkAlreadyPresenting()) this.onSlideShowInfoChanged();
 	}
 
+	public getNavigator() {
+		return this._slideShowNavigator;
+	}
+
 	public getSlideInfo(slideNumber: number): SlideInfo | null {
 		return this._presentationInfo
 			? this._presentationInfo.slides[slideNumber]
@@ -182,6 +189,11 @@ class SlideShowPresenter {
 
 	public getCanvas(): HTMLCanvasElement {
 		return this._slideShowCanvas;
+	}
+
+	public getNotes(slide: number) {
+		const info = this.getSlideInfo(slide);
+		return info.notes;
 	}
 
 	_onFullScreenChange() {
@@ -555,17 +567,7 @@ class SlideShowPresenter {
 		}
 
 		if (!this._slideShowWindowProxy) {
-			this._map.uiManager.showInfoModal(
-				'popup-blocked-modal',
-				_('Windowed Presentation Blocked'),
-				_(
-					'Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.',
-				),
-				'',
-				_('OK'),
-				null,
-				false,
-			);
+			this._notifyBlockedPresenting();
 			return;
 		}
 
@@ -706,6 +708,20 @@ class SlideShowPresenter {
 			'already-presenting-modal',
 			_('Already presenting'),
 			_('You are already presenting this document'),
+			'',
+			_('OK'),
+			null,
+			false,
+		);
+	}
+
+	_notifyBlockedPresenting() {
+		this._map.uiManager.showInfoModal(
+			'popup-blocked-modal',
+			_('Windowed Presentation Blocked'),
+			_(
+				'Presentation was blocked. Please allow pop-ups in your browser. This lets slide shows to be displayed in separated windows, allowing for easy screen sharing.',
+			),
 			'',
 			_('OK'),
 			null,
