@@ -1499,50 +1499,51 @@ std::ostream& StreamSocket::stream(std::ostream& os) const
 
 bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
 {
-    if (!isIPType()) // forced removal on outside-facing IPv[46] network connections only
-        return false;
-
-    const auto durTotal =
-        std::chrono::duration_cast<std::chrono::milliseconds>(now - getCreationTime());
-    const auto durLast =
-        std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
-    const double bytesPerSecIn = durTotal.count() > 0 ? (double)bytesRcvd() / ((double)durTotal.count() / 1000.0) : 0.0;
-    /// TO Criteria: Violate creation time? (invalid passed now)
-    const bool cNow = now < getCreationTime();
-    /// TO Criteria: Violate maximum idle (_pollTimeout default 64s)
-    const bool cIDLE = _pollTimeout > std::chrono::microseconds::zero() &&
-                       durLast > _pollTimeout;
-    /// TO Criteria: Violate minimum bytes-per-sec throughput? (_minBytesPerSec default 0, disabled)
-    const bool cMinThroughput = _minBytesPerSec > std::numeric_limits<double>::epsilon() &&
-                                bytesPerSecIn > std::numeric_limits<double>::epsilon() &&
-                                bytesPerSecIn < _minBytesPerSec;
-    /// TO Criteria: Shall terminate?
-    const bool cTermination = SigUtil::getTerminationFlag();
-    if (cNow || cIDLE || cMinThroughput || cTermination )
+    if( isIPType() )
     {
-        LOG_WRN("CheckRemoval: Timeout: {Now " << cNow << ", IDLE " << cIDLE
-                << ", MinThroughput " << cMinThroughput << ", Termination " << cTermination << "}, "
-                << getStatsString(now) << ", "
-                << *this);
-        if (_socketHandler)
+        // Forced removal on outside-facing IPv[46] network connections only
+        const auto durTotal =
+            std::chrono::duration_cast<std::chrono::milliseconds>(now - getCreationTime());
+        const auto durLast =
+            std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
+        const double bytesPerSecIn = durTotal.count() > 0 ? (double)bytesRcvd() / ((double)durTotal.count() / 1000.0) : 0.0;
+        /// TO Criteria: Violate creation time? (invalid passed now)
+        const bool cNow = now < getCreationTime();
+        /// TO Criteria: Violate maximum idle (_pollTimeout default 64s)
+        const bool cIDLE = _pollTimeout > std::chrono::microseconds::zero() &&
+                           durLast > _pollTimeout;
+        /// TO Criteria: Violate minimum bytes-per-sec throughput? (_minBytesPerSec default 0, disabled)
+        const bool cMinThroughput = _minBytesPerSec > std::numeric_limits<double>::epsilon() &&
+                                    bytesPerSecIn > std::numeric_limits<double>::epsilon() &&
+                                    bytesPerSecIn < _minBytesPerSec;
+        /// TO Criteria: Shall terminate?
+        const bool cTermination = SigUtil::getTerminationFlag();
+        if (cNow || cIDLE || cMinThroughput || cTermination )
         {
-            _socketHandler->onDisconnect();
-            if( isOpen() ) {
-                // Note: Ensure proper semantics of onDisconnect()
-                LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
+            LOG_WRN("CheckRemoval: Timeout: {Now " << cNow << ", IDLE " << cIDLE
+                    << ", MinThroughput " << cMinThroughput << ", Termination " << cTermination << "}, "
+                    << getStatsString(now) << ", "
+                    << *this);
+            if (_socketHandler)
+            {
+                _socketHandler->onDisconnect();
+                if( isOpen() ) {
+                    // Note: Ensure proper semantics of onDisconnect()
+                    LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
+                    shutdown(); // signal
+                    closeConnection(); // real -> setClosed()
+                }
+            }
+            else
+            {
                 shutdown(); // signal
                 closeConnection(); // real -> setClosed()
             }
+            assert(isOpen() == false); // should have issued shutdown
+            return true;
         }
-        else
-        {
-            shutdown(); // signal
-            closeConnection(); // real -> setClosed()
-        }
-        assert(isOpen() == false); // should have issued shutdown
-        return true;
     }
-    else if (_socketHandler && _socketHandler->checkTimeout(now))
+    if (_socketHandler && _socketHandler->checkTimeout(now))
     {
         assert(isOpen() == false); // should have issued shutdown
         setClosed();
