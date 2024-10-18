@@ -14,7 +14,7 @@
 
 /* global app */
 
-interface Item {
+interface MentionUserData {
 	username: string;
 	profile: string;
 }
@@ -22,10 +22,13 @@ interface Item {
 class Mention extends L.Control.AutoCompletePopup {
 	map: ReturnType<typeof L.map>;
 	newPopupData: PopupData;
-	firstChar: string;
-	users: any;
-	itemList: Array<Item>;
+	users: Array<MentionUserData>;
+	filteredUsers: Array<MentionUserData>;
 	data: MessageEvent<any>;
+	debouceTimeoutId: NodeJS.Timeout;
+	lastTriggerKey: string;
+	partialMention: Array<string>;
+	typingMention: boolean;
 
 	constructor(map: ReturnType<typeof L.map>) {
 		super('mentionPopup', map);
@@ -33,66 +36,59 @@ class Mention extends L.Control.AutoCompletePopup {
 
 	onAdd() {
 		this.newPopupData.isAutoCompletePopup = true;
-		this.map.on('openmentionpopup', this.openMentionPopup, this);
-		this.map.on('closementionpopup', this.closeMentionPopup, this);
-		this.map.on('sendmentiontext', this.sendMentionText, this);
-		this.firstChar = null;
-		this.users = null;
-		this.itemList = null;
+		this.typingMention = false;
+		this.partialMention = [];
+		this.lastTriggerKey = '';
 	}
 
-	sendMentionText(ev: MentionEvent) {
-		const text = ev.data.join('').substring(1);
-		if (text.length === 1 && this.firstChar !== text[0]) {
+	sendMentionPostMsg(partialText: string) {
+		if (this.debouceTimeoutId) clearTimeout(this.debouceTimeoutId);
+
+		this.debouceTimeoutId = setTimeout(() => {
 			this.map.fire('postMessage', {
 				msgId: 'UI_Mention',
-				args: { type: 'autocomplete', text: text },
+				args: { type: 'autocomplete', text: partialText },
 			});
-			this.firstChar = text[0];
-		} else {
-			this.openMentionPopup({
-				data: this.users,
-				triggerKey: ev.triggerKey,
-			} as MentionEvent);
-		}
+		}, 300);
 	}
 
-	getPopupEntries(ev: FireEvent): any[] {
-		const entries: any[] = [];
-		this.users = ev.data;
-		if (this.users === null) return entries;
+	getPopupEntries(users: Array<MentionUserData>): any[] {
+		const entries: Array<TreeEntryJSON> = [];
+		if (users === null) return entries;
 
-		const text = this.map._docLayer._mentionText.join('').substring(1);
+		const text = this.getPartialMention();
+
 		// filterout the users from list according to the text
 		if (text.length > 1) {
-			this.itemList = this.users.filter((element: any) => {
+			this.filteredUsers = users.filter((element: any) => {
 				// case insensitive
 				return element.username.toLowerCase().includes(text.toLowerCase());
 			});
 		} else {
-			this.itemList = this.users;
+			this.filteredUsers = users;
 		}
 
-		if (this.itemList.length !== 0) {
-			for (var i in this.itemList) {
-				var entry = {
-					text: this.itemList[i].username,
+		if (this.filteredUsers.length !== 0) {
+			for (const i in this.filteredUsers) {
+				const entry = {
+					text: this.filteredUsers[i].username,
 					columns: [
 						{
-							text: this.itemList[i].username,
+							text: this.filteredUsers[i].username,
 						},
 					],
 					row: i.toString(),
-				};
+				} as TreeEntryJSON;
 				entries.push(entry);
 			}
 		}
-
 		return entries;
 	}
 
-	private openMentionPopup(ev: MentionEvent): void {
-		const entries = this.getPopupEntries(ev);
+	openMentionPopup(users: Array<MentionUserData>) {
+		if (!this.typingMention) return;
+
+		const entries = this.getPopupEntries(users);
 		const commentSection = app.sectionContainer.getSectionWithName(
 			L.CSections.CommentList.name,
 		);
@@ -114,9 +110,9 @@ class Mention extends L.Control.AutoCompletePopup {
 			// If the key pressed was a space, and there are no matches, then just
 			// dismiss the popup.
 			// const noMatchOnFinalSpace: boolean = ev.triggerKey === ' ';
-			const noMatchOnFinalSpace = ev.triggerKey === ' ';
+			const noMatchOnFinalSpace = this.lastTriggerKey === ' ';
 			if (noMatchOnFinalSpace) {
-				this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
+				this.closeMentionPopup(false);
 				return;
 			}
 			const control = this.getSimpleTextJSON();
@@ -125,8 +121,7 @@ class Mention extends L.Control.AutoCompletePopup {
 				this.sendUpdate(data);
 				return;
 			}
-			if (L.DomUtil.get(this.popupId))
-				this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
+			if (L.DomUtil.get(this.popupId)) this.closeMentionPopup(true);
 			const data = this.newPopupData;
 			data.children[0].children[0] = control;
 			data.posx = cursorPos.x;
@@ -145,8 +140,7 @@ class Mention extends L.Control.AutoCompletePopup {
 			return;
 		}
 
-		if (L.DomUtil.get(this.popupId))
-			this.closeMentionPopup({ typingMention: true } as CloseMessageEvent);
+		if (L.DomUtil.get(this.popupId)) this.closeMentionPopup(true);
 		const data = this.newPopupData;
 		data.children[0].children[0] = control;
 		(data.children[0].children[0] as TreeWidget).entries = entries;
@@ -164,8 +158,9 @@ class Mention extends L.Control.AutoCompletePopup {
 		} as TextWidget;
 	}
 
-	private closeMentionPopup(ev: CloseMessageEvent): void {
-		var mentionPopup =
+	closeMentionPopup(typingMention: boolean): void {
+		this.typingMention = typingMention;
+		const mentionPopup =
 			L.DomUtil.get(this.popupId) || L.DomUtil.get(this.popupId + 'List');
 		if (!mentionPopup) return;
 
@@ -188,16 +183,54 @@ class Mention extends L.Control.AutoCompletePopup {
 				this.map.fire('closemobilewizard');
 			}
 		} else this.map.jsdialog.clearDialog(this.popupId);
-		if (!ev.typingMention) {
-			this.map._docLayer._typingMention = false;
-			this.map._docLayer._mentionText = [];
+
+		if (!typingMention) {
+			this.partialMention = [];
 		}
 	}
 
-	public getItem(index: number): Item {
-		if (index >= this.itemList.length)
-			return { username: '', profile: '' } as Item;
-		return this.itemList[index];
+	getPartialMention(): string {
+		return this.partialMention.join('').substring(1);
+	}
+
+	isTypingMention(): boolean {
+		return this.typingMention;
+	}
+
+	handleMentionInput(ev: any) {
+		const deleteEvent =
+			ev.inputType === 'deleteContentBackward' ||
+			ev.inputType === 'deleteContentForward';
+		if (this.typingMention) {
+			if (deleteEvent) {
+				var ch = this.partialMention.pop();
+				if (ch === '@') {
+					this.closeMentionPopup(false);
+				} else {
+					this.sendMentionPostMsg(this.getPartialMention());
+				}
+			} else {
+				this.partialMention.push(ev.data);
+				var regEx = /^[0-9a-zA-Z ]+$/;
+				if (ev.data && ev.data.match(regEx)) {
+					this.lastTriggerKey = ev.data;
+					this.sendMentionPostMsg(this.getPartialMention());
+				} else {
+					this.closeMentionPopup(false);
+				}
+			}
+		}
+
+		if (ev.data === '@' && this.map.getDocType() === 'text') {
+			this.partialMention.push(ev.data);
+			this.typingMention = true;
+		}
+	}
+
+	getMentionUserData(index: number): MentionUserData {
+		if (index >= this.filteredUsers.length)
+			return { username: '', profile: '' } as MentionUserData;
+		return this.filteredUsers[index];
 	}
 
 	private sendHyperlinkUnoCommand(
@@ -232,17 +265,16 @@ class Mention extends L.Control.AutoCompletePopup {
 		);
 		const comment = commentSection?.getActiveEdit();
 		if (eventType === 'close') {
-			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
+			this.closeMentionPopup(false);
 		} else if (eventType === 'select' || eventType === 'activate') {
-			const username = this.itemList[index].username;
-			const profileLink = this.itemList[index].profile;
-			const replacement = this.map._docLayer._mentionText.join('');
+			const username = this.filteredUsers[index].username;
+			const profileLink = this.filteredUsers[index].profile;
+			const replacement = '@' + this.getPartialMention();
 
 			if (comment)
 				comment.autoCompleteMention(username, profileLink, replacement);
 			else this.sendHyperlinkUnoCommand(username, profileLink, replacement);
-
-			this.closeMentionPopup({ typingMention: false } as CloseMessageEvent);
+			this.closeMentionPopup(false);
 		} else if (eventType === 'keydown') {
 			if (object.key !== 'Tab' && object.key !== 'Shift') {
 				if (comment) comment.focus();

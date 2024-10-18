@@ -778,7 +778,7 @@ L.TextInput = L.Layer.extend({
 		this._finishFormulabarEditing(content, matchTo);
 
 		// special handling for mentions
-		this._handleMentionInput(ev, removeBefore);
+		this._map.mention.handleMentionInput(ev);
 
 		this._statusLog('_onInput ]');
 	},
@@ -794,36 +794,6 @@ L.TextInput = L.Layer.extend({
 		else {
 			this._sendText(this.codePointsToString(newText));
 		}
-	},
-
-	_handleMentionInput: function (ev, removeBefore) {
-		var docLayer = this._map._docLayer;
-		if (docLayer._typingMention)  {
-			if (removeBefore > 0) {
-				var ch = docLayer._mentionText.pop();
-				if (ch === '@') {
-					this._map.fire('closementionpopup', { 'typingMention': false });
-				} else {
-					this._map.fire('sendmentiontext', { data: docLayer._mentionText,
-					                                    triggerKey: ev.data });
-				}
-			} else if (removeBefore === 0) {
-				docLayer._mentionText.push(ev.data);
-				var regEx = /^[0-9a-zA-Z ]+$/;
-				if (ev.data && ev.data.match(regEx)) {
-					this._map.fire('sendmentiontext', { data: docLayer._mentionText,
-					                                    triggerKey: ev.data });
-				} else {
-					this._map.fire('closementionpopup', { 'typingMention': false });
-				}
-			}
-		}
-
-		if (ev.data === '@' && this._map.getDocType() === 'text') {
-			docLayer._mentionText.push(ev.data);
-			docLayer._typingMention = true;
-		}
-
 	},
 
 	_finishFormulabarEditing: function(content, matchTo) {
@@ -973,7 +943,7 @@ L.TextInput = L.Layer.extend({
 				ev.key === 'Tab') {
 
 				if (id === 'mentionPopup')
-					this._map.fire('closementionpopup', { 'typingMention': false });
+					this._map.mention.closeMentionPopup(false);
 				else if (id === 'formulaautocompletePopup')
 					this._map.fire('closepopup');
 			}
