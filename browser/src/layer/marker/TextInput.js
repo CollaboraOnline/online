@@ -926,15 +926,24 @@ L.TextInput = L.Layer.extend({
 	_handleKeyDownForPopup: function (ev, id) {
 		var popup = L.DomUtil.get(id);
 		if (popup) {
+			const entries = document.querySelectorAll('#' + id + ' span.ui-treeview-cell')
 			if (ev.key === 'ArrowDown') {
-				var initialFocusElement = document.querySelector('#' + id + ' span');
+				const initialFocusElement = entries[0];
 				if (initialFocusElement) {
 					initialFocusElement.tabIndex = 0;
 					initialFocusElement.focus();
 					ev.preventDefault();
 					ev.stopPropagation();
 				}
-
+			} else if (ev.key === 'Enter' && entries.length === 1) {
+					const event = new KeyboardEvent('keydown', {
+						key: 'Enter',
+						bubbles: true,
+						cancelable: true,
+					});
+					entries[0].dispatchEvent(event);
+					ev.preventDefault();
+					ev.stopPropagation();
 			} else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
 				ev.key === 'ArrowUp' || ev.key === 'Home' ||
 				ev.key === 'End' || ev.key === 'PageUp' ||
