@@ -307,6 +307,13 @@ public:
         // LOK_ASSERT_EQUAL(getExpectedPutFile(), getCountPutFile()); //FIXME: unreliable for some tests.
 
         LOG_TST("===== Finished " << name(_scenario) << " test scenario =====");
+
+        if (_scenario != Scenario::VerifyOverwrite)
+        {
+            // Restart the next scenario, unless we are at the last one.
+            TRANSITION_STATE(_phase, Phase::Load);
+        }
+
         switch (_scenario)
         {
             case Scenario::Disconnect:
@@ -325,8 +332,6 @@ public:
                 passTest("Finished all test scenarios without issues");
                 break;
         }
-
-        TRANSITION_STATE(_phase, Phase::Load);
     }
 
     void invokeWSDTest() override

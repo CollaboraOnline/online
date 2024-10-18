@@ -256,7 +256,10 @@ namespace COOLProtocol
         {
             // By default, all uno commands are modifying, unless we are certain they don't.
             return !tokens.equals(1, ".uno:SidebarHide") && !tokens.equals(1, ".uno:SidebarShow") &&
-                   !tokens.equals(1, ".uno:Copy") && !tokens.equals(1, ".uno:Save");
+                   !tokens.equals(1, ".uno:Copy") && !tokens.equals(1, ".uno:Save") &&
+                   !tokens.startsWith(1, ".uno:ToolbarMode") && // ToolbarMode?Mode...
+                   !tokens.equals(1, ".uno:InvertBackground") &&
+                   !tokens.equals(1, ".uno:ChangeTheme");
         }
 
         return false;
