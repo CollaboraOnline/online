@@ -2236,3 +2236,10 @@ kbd,
 	display: table-caption;
 	height: 16px;
 }
+
+/* text-area overflow on function wizard window */
+
+#FormulaDialog #ed_formula.ui-textarea {
+	max-width: 392px;
+}
+
