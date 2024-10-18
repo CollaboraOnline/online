@@ -678,6 +678,9 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .jsdialog.checkbutton {
 	white-space: nowrap;
+	display: flex;
+	margin: 0;
+	align-items: center;
 }
 
 .jsdialog.checkbutton input,
