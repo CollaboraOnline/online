@@ -271,20 +271,20 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		// limit to data area only (and map size for margin)
 		if (limitWidth)
-			newDocWidth = Math.min(lastCellTwips.x + limitMargin.x, newDocWidth);
+			newDocWidth = lastCellTwips.x + limitMargin.x;
 
 		if (limitHeight)
-			newDocHeight = Math.min(lastCellTwips.y + limitMargin.y, newDocHeight);
+			newDocHeight = lastCellTwips.y + limitMargin.y;
 
 		var extendedLimit = false;
 
 		if (!limitWidth && maxDocSize.x > this._docWidthTwips) {
-			newDocWidth = this._docWidthTwips + mapSizeTwips.x;
+			newDocWidth = Math.min(this._docWidthTwips + mapSizeTwips.x, maxDocSize.x);
 			extendedLimit = true;
 		}
 
 		if (!limitHeight && maxDocSize.y > this._docHeightTwips) {
-			newDocHeight = this._docHeightTwips + mapSizeTwips.y;
+			newDocHeight = Math.min(this._docHeightTwips + mapSizeTwips.y, maxDocSize.y);
 			extendedLimit = true;
 		}
 
@@ -345,7 +345,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	/// take into account only data area to reduce scrollbar range
 	updateScrollLimit: function () {
-		if (this.sheetGeometry && this._lastColumn && this._lastRow) {
+		if (this.sheetGeometry
+			&& this._lastColumn !== undefined && this._lastColumn !== null
+			&& this._lastRow !== undefined && this._lastRow !== null) {
 			this._restrictDocumentSize();
 		}
 	},
