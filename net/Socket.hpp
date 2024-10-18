@@ -210,10 +210,6 @@ public:
         recv = _bytesRcvd;
     }
 
-    /// Checks whether socket is due for forced removal, e.g. by internal timeout or small throughput. Method will shutdown connection and socket on forced removal.
-    /// Returns true in case of forced removal, caller shall stop processing
-    virtual bool checkRemoval(std::chrono::steady_clock::time_point /* now */) { return false; }
-
     /// Shutdown the socket.
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
@@ -234,11 +230,6 @@ public:
     /// @returns POLLIN and POLLOUT if output is expected.
     virtual int getPollEvents(std::chrono::steady_clock::time_point now,
                               int64_t &timeoutMaxMicroS) = 0;
-
-    /// Handle results of events returned from poll
-    virtual void handlePoll(SocketDisposition &disposition,
-                            std::chrono::steady_clock::time_point now,
-                            int events) = 0;
 
     /// Do we have internally queued incoming / outgoing data ?
     virtual bool hasBuffered() const { return false; }
@@ -409,6 +400,16 @@ public:
         LOG_TRC("Ignore further input on socket.");
         _ignoreInput = true;
     }
+
+    /// Checks whether socket is due for forced removal, e.g. by internal timeout or small throughput. Method will shutdown connection and socket on forced removal.
+    /// Returns true in case of forced removal, caller shall stop processing
+    virtual bool checkRemoval(std::chrono::steady_clock::time_point /* now */) { return false; }
+
+    /// Handle results of events returned from poll
+    virtual void handlePoll(SocketDisposition &disposition,
+                            std::chrono::steady_clock::time_point now,
+                            int events) = 0;
+
 protected:
     /// Construct based on an existing socket fd.
     /// Used by accept() only.
@@ -1109,8 +1110,6 @@ public:
 
     std::ostream& stream(std::ostream& os) const override;
 
-    bool checkRemoval(std::chrono::steady_clock::time_point now) override;
-
     /// Just trigger the async shutdown.
     void shutdown() override
     {
@@ -1441,7 +1440,8 @@ public:
         return std::string();
     }
 
-protected:
+    bool checkRemoval(std::chrono::steady_clock::time_point now) override;
+
 
     /// Called when a polling event is received.
     /// @events is the mask of events that triggered the wake.
