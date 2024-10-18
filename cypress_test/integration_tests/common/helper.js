@@ -6,7 +6,7 @@
  * filePath: test document file path
  * returns new test document file path
  */
-function setupDocument(filePath) {
+function setupDocument(filePath, copyCertificates = false) {
 	cy.log('>> setupDocument - start');
 	cy.log('Param - filePath: ' + filePath);
 
@@ -33,6 +33,11 @@ function setupDocument(filePath) {
 		}
 
 		copyFile(filePath, newFilePath);
+		if (copyCertificates) {
+			for (const suffix of ['.cert.pem', '.key.pem', '.ca.pem']) {
+				copyFile(filePath + suffix, newFilePath + suffix);
+			}
+		}
 	}
 
 	cy.log('<< setupDocument - end');
@@ -101,10 +106,10 @@ function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
  * call setupDocument and loadDocument directly
  * filePath: test document path, for example: 'calc/hello-world.ods'
  */
-function setupAndLoadDocument(filePath, isMultiUser = false) {
+function setupAndLoadDocument(filePath, isMultiUser = false, copyCertificates = false) {
 	cy.log('>> setupAndLoadDocument - start');
 
-	var newFilePath = setupDocument(filePath);
+	var newFilePath = setupDocument(filePath, copyCertificates);
 	if (isMultiUser) {
 		loadDocument(newFilePath, undefined, isMultiUser);
 	} else {
