@@ -46,15 +46,15 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
       hosts:
          - host: chart-example.local
             paths:
-            - path: /
-            pathType: ImplementationSpecific
+              - path: /
+                pathType: ImplementationSpecific
 
    autoscaling:
       enabled: false
 
    collabora:
       aliasgroups:
-         - host: "https://example.integrator.com:443"
+        - host: "https://example.integrator.com"
       extra_params: --o:ssl.enable=false --o:ssl.termination=true
       # for production enviroment we recommend appending `extra_params` with `--o:num_prespawn_children=4`. It defines number of child processes to keep started in advance and waiting for new clients
 
@@ -100,7 +100,9 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
 
    collabora:
       aliasgroups:
-         - host: "https://example.integrator.com:443"
+        - host: "https://example.integrator.com"
+          aliases:
+            - exmaple.integrator.de
       extra_params: --o:ssl.enable=false --o:ssl.termination=true
       # for production enviroment we recommend appending `extra_params` with `--o:num_prespawn_children=4`. It defines number of child processes to keep started in advance and waiting for new clients
 
