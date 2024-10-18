@@ -716,8 +716,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		app.setFollowingUser(options.viewId);
 
 		this._selectedTextContent = '';
-		this._typingMention = false;
-		this._mentionText = [];
 
 		this._moveInProgress = false;
 		// tile requests issued while _moveInProgress is true,

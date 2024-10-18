@@ -648,7 +648,7 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId === 'Action_Mention') {
 			var list = msg.Values.list;
-			this._map.fire('openmentionpopup', {data: list});
+			this._map.mention.openMentionPopup(list);
 		}
 	},
 

@@ -404,42 +404,12 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
-	private handleMentionInput(ev: any): void {
-		const docLayer = this.sectionProperties.docLayer;
-		const deleteEvent = ev.inputType === 'deleteContentBackward' || ev.inputType === 'deleteContentForward';
-		if (docLayer._typingMention) {
-			if (deleteEvent) {
-				var ch = docLayer._mentionText.pop();
-				if (ch === '@') {
-					this.map.fire('closementionpopup', { 'typingMention': false });
-				} else {
-					this.map.fire('sendmentiontext', { data: docLayer._mentionText,
-					                                   triggerKey: ev.data });
-				}
-			} else {
-				docLayer._mentionText.push(ev.data);
-				var regEx = /^[0-9a-zA-Z ]+$/;
-				if (ev.data && ev.data.match(regEx)) {
-					this.map.fire('sendmentiontext', { data: docLayer._mentionText,
-					                                   triggerKey: ev.data });
-				} else {
-					this.map.fire('closementionpopup', { 'typingMention': false });
-				}
-			}
-		}
-
-		if (ev.data === '@' && this.map.getDocType() === 'text') {
-			docLayer._mentionText.push(ev.data);
-			docLayer._typingMention = true;
-		}
-	}
-
 	private textAreaInput (ev: any): void {
 		this.sectionProperties.autoSave.innerText = '';
 
 		if (ev && this.sectionProperties.docLayer._docType === 'text') {
 			// special handling for mentions
-			this.handleMentionInput(ev);
+			this.map.mention.handleMentionInput(ev);
 		}
 	}
 
@@ -1110,7 +1080,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
-		if (this.sectionProperties.docLayer._typingMention) {
+		if (this.map.mention.isTypingMention()) {
 			return;
 		}
 		if (!this.sectionProperties.isRemoved) {
@@ -1139,7 +1109,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocusReply (e: any): void {
-		if (this.sectionProperties.docLayer._typingMention) {
+		if (this.map.mention.isTypingMention()) {
 			return;
 		}
 		if (this.sectionProperties.nodeReplyText.textContent !== '') {

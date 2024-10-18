@@ -505,14 +505,15 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		}.bind(this);
 
 		const mentionListCallback = function(objectType: any, eventType: any, object: any, index: number) {
+				const mention = this.map.mention;
 				if (eventType === 'close')
-					this.map.fire('closementionpopup', { 'typingMention': false });
+					mention.closeMentionPopup(false);
 				else if (eventType === 'select' || eventType === 'activate') {
-					const item = this.map.mention.getItem(index);
-					const replacement = this.map._docLayer._mentionText.join('');
+					const item = mention.getMentionUserData(index);
+					const replacement = '@' + mention.getPartialMention();
 					if (item.username !== '' && item.profile !== '')
 						comment.autoCompleteMention(item.username, item.profile, replacement)
-					this.map.fire('closementionpopup', { 'typingMention': false });
+					mention.closeMentionPopup(false);
 				}
 		}.bind(this);
 
@@ -534,9 +535,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		multilineEditDiv.addEventListener('input', function(ev: any){
 			if (ev && comment.sectionProperties.docLayer._docType === 'text') {
 				// special handling for mentions
-				comment.handleMentionInput(ev);
+				this.map.mention.handleMentionInput(ev);
 			}
-		});
+		}.bind(this));
 
 		var tagTd = 'td',
 		empty = '',
