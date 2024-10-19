@@ -634,7 +634,6 @@ class UnitWopiLockIdle : public WopiTestServer
 
     std::string _lockState;
     std::string _lockToken;
-    std::size_t _lockRefreshCount;
     std::chrono::steady_clock::time_point _refreshTime;
 
     static constexpr int IdleTimeoutSeconds = 5;
@@ -644,7 +643,6 @@ public:
         : WopiTestServer("UnitWopiLockIdle")
         , _phase(Phase::Load)
         , _lockState("UNLOCK")
-        , _lockRefreshCount(0)
     {
     }
 
