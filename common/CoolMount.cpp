@@ -310,6 +310,7 @@ int domount(int argc, const char* const* argv)
         {
             // Now we need to set read-only and other flags with a remount.
             unsigned long mountflags = (MS_BIND | MS_REMOUNT | MS_NODEV | MS_NOSUID | MS_RDONLY);
+            const char* fstype = "none";
 
             /* a) In the linux namespace mount case an additional MS_NOATIME, etc. will result in
                EPERM on remounting something hosted in a toplevel [rel]atime mount. man 2 mount
@@ -322,7 +323,7 @@ int domount(int argc, const char* const* argv)
                where the closest match is:  "mount options=(ro,remount,bind,nodev,nosuid)"
                so additional 'MS_SILENT' or 'MS_REC' flags cause the remount to be denied
             */
-            int retval = MOUNT(source, target, nullptr, mountflags, nullptr);
+            int retval = MOUNT(source, target, fstype, mountflags, nullptr);
             if (retval)
             {
                 fprintf(stderr, "%s: mount failed remount [%s] readonly: %s.\n", program, target,
@@ -330,7 +331,7 @@ int domount(int argc, const char* const* argv)
                 return EX_SOFTWARE;
             }
 
-            retval = MOUNT(source, target, nullptr, (MS_UNBINDABLE | MS_REC), nullptr);
+            retval = MOUNT(source, target, fstype, (MS_UNBINDABLE | MS_REC), nullptr);
             if (retval)
             {
                 fprintf(stderr, "%s: mount failed make [%s] private: %s.\n", program, target,
