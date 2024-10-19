@@ -91,11 +91,11 @@ int Stress::main(const std::vector<std::string>& args)
 
     const std::chrono::microseconds PollTimeoutMicroS = net::Defaults::get().SocketPollTimeout;
 
-    std::string server = args[0];
+    const std::string& server = args[0];
 
     if (!strncmp(server.c_str(), "http", 4))
     {
-        std::cerr << "Server should be wss:// or ws:// URL not " << server << "\n";
+        std::cerr << "Server should be wss:// or ws:// URL, not " << server << '\n';
         return -1;
     }
 
