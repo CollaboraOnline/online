@@ -89,7 +89,7 @@ int Stress::main(const std::vector<std::string>& args)
     }
 #endif
 
-    std::string server = args[0];
+    const std::string& server = args[0];
 
     if (!strncmp(server.c_str(), "http", 4))
     {
