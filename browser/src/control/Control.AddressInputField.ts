@@ -13,7 +13,8 @@
  * JSDialog.AddressInputField - implementation of address input field in calc
  */
 
-/* global JSDialog _ _UNO UNOKey app */
+declare var JSDialog: any;
+declare var L: any;
 
 class AddressInputField {
 	map: any;
