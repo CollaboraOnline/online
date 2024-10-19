@@ -819,7 +819,8 @@ class DeltaGenerator {
                          loc, output, wid, forceKeyframe, mode, rleData))
         {
             assert(rleData);
-            size_t maxCompressed = ZSTD_COMPRESSBOUND((size_t)width * height * 4 + spaceForBitmask);
+            size_t rowSize = (size_t)width * 4 + spaceForBitmask + 2;
+            size_t maxCompressed = ZSTD_COMPRESSBOUND(rowSize * height);
 
             std::unique_ptr<char, void (*)(void*)> compressed((char*)malloc(maxCompressed), free);
             if (!compressed)
@@ -837,7 +838,7 @@ class DeltaGenerator {
             outb.size = maxCompressed;
             outb.pos = 0;
 
-            unsigned char packedLine[2 + spaceForBitmask + width * 4];
+            unsigned char packedLine[rowSize];
 
             for (int y = 0; y < height; ++y)
             {
