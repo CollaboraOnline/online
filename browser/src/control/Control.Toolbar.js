@@ -203,7 +203,7 @@ function getConditionalFormatMenuElementsImpl(more, type, count, unoCommand, jsd
 			const button = document.createElement('button');
 			button.className = 'w2ui-tb-image w2ui-icon ' + iconClass;
 			button.onclick = function() {
-				setConditionalFormat(number + ', \'' + unoCommand + '\', ' + !!jsdialogDropdown);
+				setConditionalFormat(number, unoCommand, !!jsdialogDropdown);
 			};
 			table.appendChild(button);
 		}
