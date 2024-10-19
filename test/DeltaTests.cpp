@@ -13,6 +13,8 @@
 
 #include <test/lokassert.hpp>
 
+#include <random>
+
 #include <Delta.hpp>
 #include <Util.hpp>
 #include <Png.hpp>
@@ -28,6 +30,7 @@ class DeltaTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testRle);
     CPPUNIT_TEST(testRleComplex);
+    CPPUNIT_TEST(testRleRandom);
     CPPUNIT_TEST(testRleIdentical);
     CPPUNIT_TEST(testDeltaSequence);
     CPPUNIT_TEST(testRandomDeltas);
@@ -37,6 +40,7 @@ class DeltaTests : public CPPUNIT_NS::TestFixture
 
     void testRle();
     void testRleComplex();
+    void testRleRandom();
     void testRleIdentical();
     void testDeltaSequence();
     void testRandomDeltas();
@@ -308,6 +312,41 @@ void DeltaTests::testRleComplex()
             off++;
         }
     }
+}
+
+void DeltaTests::testRleRandom()
+{
+    constexpr auto testname = __func__;
+
+    DeltaGenerator gen;
+
+    std::vector<unsigned char> randomImg(256*256*4);
+    std::mt19937 random;
+    random.seed(42);
+    std::uniform_int_distribution<unsigned char> dist(0,255);
+
+    for (size_t i = 0; i < randomImg.size(); ++i)
+        randomImg[i] = dist(random);
+
+    DeltaGenerator::DeltaData data(
+        1, randomImg.data(), 0, 0, 256, 256,
+        TileLocation(9, 9, 9, 0, 1, 0), 256, 256);
+
+    // Compress
+    std::vector<char> output;
+    size_t size = gen.compressOrDelta(
+        randomImg.data(), 0, 0, 256, 256, 256, 256,
+        TileLocation(42, 2, 3, 0, 1, 0),
+        output, 1, true, false, LOK_TILEMODE_RGBA);
+    LOK_ASSERT(size > 1);
+    LOK_ASSERT(output[0] == 'Z');
+
+    // Decompress
+    std::vector<char> frame;
+    frame.resize(1024*1024*4); // lots of extra space.
+    size_t compSize = ZSTD_decompress( frame.data(), frame.size(),
+                                       output.data() + 1, output.size() - 1);
+    LOK_ASSERT_EQUAL(ZSTD_isError(compSize), (unsigned)false);
 }
 
 void DeltaTests::testRleIdentical()
