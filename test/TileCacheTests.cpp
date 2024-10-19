@@ -22,9 +22,6 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <sstream>
-#include <random>
-
 #include <Common.hpp>
 #include <Protocol.hpp>
 #include <Png.hpp>
