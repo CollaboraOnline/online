@@ -421,11 +421,6 @@ void UnitBase::initialize()
     socketPoll()->startThread();
 }
 
-bool UnitBase::isUnitTesting()
-{
-    return DlHandle;
-}
-
 void UnitBase::setTimeout(std::chrono::milliseconds timeoutMilliSeconds)
 {
     assert(!TimeoutThread.joinable() && "setTimeout must be called before starting a test");

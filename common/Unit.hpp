@@ -147,7 +147,14 @@ public:
     static int uninit();
 
     /// Do we have a unit test library hooking things & loaded
-    static bool isUnitTesting();
+    static bool isUnitTesting()
+    {
+#ifdef ENABLE_DEBUG
+        return DlHandle;
+#else
+        return false; // In non-debug builds unit-tests cannot be run. See test/run_unit.sh.
+#endif
+    }
 
     /// Tweak the return value from the process.
     virtual void returnValue(int& /* retValue */);
