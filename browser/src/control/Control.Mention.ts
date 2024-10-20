@@ -168,6 +168,8 @@ class Mention extends L.Control.AutoCompletePopup {
 
 	closeMentionPopup(typingMention: boolean): void {
 		this.typingMention = typingMention;
+		if (!typingMention) this.partialMention = [];
+
 		const mentionPopup =
 			L.DomUtil.get(this.popupId) ||
 			L.DomUtil.get(this.popupId + 'List') ||
@@ -193,10 +195,6 @@ class Mention extends L.Control.AutoCompletePopup {
 				this.map.fire('closemobilewizard');
 			}
 		} else this.map.jsdialog.clearDialog(this.popupId);
-
-		if (!typingMention) {
-			this.partialMention = [];
-		}
 	}
 
 	// get partialMention excluding '@'
@@ -227,14 +225,13 @@ class Mention extends L.Control.AutoCompletePopup {
 			return;
 		}
 
-		if (ev.data === '@') {
-			this.sendMentionPostMsg(this.getPartialMention());
+		if (ev.data === '@' && this.partialMention.length === 1) {
 			return;
 		}
 
-		this.partialMention.push(ev.data);
 		const regEx = /^[0-9a-zA-Z ]+$/;
 		if (ev.data && ev.data.match(regEx)) {
+			this.partialMention.push(ev.data);
 			this.lastTriggerKey = ev.data;
 			this.sendMentionPostMsg(this.getPartialMention());
 		} else {
