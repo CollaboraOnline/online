@@ -291,7 +291,7 @@ interface AnimatedElementState {
 	transitionFiltersState: TransitionFiltersState;
 }
 
-type BoundsType = [number, number, number, number];
+type BoundsType = [DOMPoint, DOMPoint, DOMPoint, DOMPoint];
 
 interface AnimatedElementRenderProperties {
 	bounds: BoundsType;
@@ -310,11 +310,13 @@ class AnimatedElement {
 		'height',
 		'opacity',
 		'visibility',
+		'rotate',
 	]);
 
 	public static readonly SupportedTransformations = new Set<string>([
 		'translate',
 		'scale',
+		'rotate',
 	]);
 
 	public static readonly SupportedTransitionFilters = new Set<string>(['Fade']);
@@ -628,22 +630,23 @@ class AnimatedElement {
 		);
 
 		const tl = new DOMPoint(this.aBaseBBox.x, this.aBaseBBox.y);
-		const tlT = tl.matrixTransform(T);
 		const br = new DOMPoint(
 			tl.x + this.aBaseBBox.width,
 			tl.y + this.aBaseBBox.height,
 		);
-		const brT = br.matrixTransform(T);
+		const bl = new DOMPoint(tl.x, br.y);
+		const tr = new DOMPoint(br.x, tl.y);
 
-		const unitBounds: BoundsType = [
-			tlT.x / this.slideWidth,
-			tlT.y / this.slideHeight,
-			brT.x / this.slideWidth,
-			brT.y / this.slideHeight,
-		];
+		const unitBounds = [];
+		for (const v of [bl, br, tl, tr]) {
+			const u = v.matrixTransform(T);
+			u.x = u.x / this.slideWidth;
+			u.y = u.y / this.slideHeight;
+			unitBounds.push(u);
+		}
 
 		const properties: AnimatedElementRenderProperties = {
-			bounds: unitBounds,
+			bounds: unitBounds as BoundsType,
 			alpha: this.nOpacity,
 		};
 

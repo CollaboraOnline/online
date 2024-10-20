@@ -29,9 +29,7 @@ interface LayerRenderer {
 }
 
 class LayerRendererGl implements LayerRenderer {
-	private static readonly DefaultVertices = [
-		-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
-	];
+	private static readonly DefaultVertices = [-1, -1, 1, -1, -1, 1, 1, 1];
 
 	private offscreenCanvas: OffscreenCanvas;
 	private glContext: RenderContextGl;
@@ -107,7 +105,7 @@ class LayerRendererGl implements LayerRenderer {
 
 		this.texCoordBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordBuffer);
-		const texCoords = new Float32Array([0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0]);
+		const texCoords = new Float32Array([0, 1, 1, 1, 0, 0, 1, 0]);
 		gl.bufferData(gl.ARRAY_BUFFER, texCoords, gl.STATIC_DRAW);
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
@@ -129,16 +127,15 @@ class LayerRendererGl implements LayerRenderer {
 
 		let vertices = LayerRendererGl.DefaultVertices;
 		if (bounds) {
+			vertices = [];
 			// convert [0,1] => [-1,1]
-			for (let i = 0; i < bounds.length; ++i) bounds[i] = 2 * bounds[i] - 1;
-
-			// flip y coordinates
-			const l = bounds[0]; // left bound
-			const t = -bounds[1]; // top bound
-			const r = bounds[2]; // right bound
-			const b = -bounds[3]; // bottom bound
-
-			vertices = [l, b, r, b, l, t, l, t, r, b, r, t];
+			for (let i = 0; i < bounds.length; ++i) {
+				const x = 2 * bounds[i].x - 1;
+				vertices.push(x);
+				// flip y coordinates
+				const y = -(2 * bounds[i].y - 1);
+				vertices.push(y);
+			}
 		}
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
@@ -203,7 +200,7 @@ class LayerRendererGl implements LayerRenderer {
 		this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
 		this.gl.uniform1i(this.samplerLocation, 0);
 
-		this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
+		this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
 	}
 
 	dispose(): void {
