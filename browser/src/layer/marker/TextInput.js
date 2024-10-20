@@ -926,7 +926,7 @@ L.TextInput = L.Layer.extend({
 	_handleKeyDownForPopup: function (ev, id) {
 		var popup = L.DomUtil.get(id);
 		if (popup) {
-			const entries = document.querySelectorAll('#' + id + ' span.ui-treeview-cell')
+			const entries = document.querySelectorAll('#' + id + ' span.ui-treeview-cell');
 			if (ev.key === 'ArrowDown') {
 				const initialFocusElement = entries[0];
 				if (initialFocusElement) {
