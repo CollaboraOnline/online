@@ -468,22 +468,12 @@ class AnimatedElement {
 		this.aBBoxInCanvas = convert(this.canvasScaleFactor, this.aBaseBBox);
 		this.aBaseElement = this.createBaseElement(this.aLayer, this.aBBoxInCanvas);
 
-		console.debug(
-			'AnimatedElement.updateAnimationInfo: ' +
+		this.DBG(
+			'.updateAnimationInfo: ' +
 				`\n  aBaseBBox: ${BBoxToString(this.aBaseBBox)}` +
 				`\n  aBBoxInCanvas: ${BBoxToString(this.aBBoxInCanvas)}` +
 				`\n  base center: x: ${this.nBaseCenterX} y: ${this.nBaseCenterY}`,
 		);
-
-		this.tfCanvas = new OffscreenCanvas(
-			this.aBaseElement.width,
-			this.aBaseElement.height,
-		);
-
-		this.tfContext = new RenderContextGl(this.tfCanvas);
-		if (!this.tfContext) {
-			this.tfContext = new RenderContext2d(this.tfCanvas);
-		}
 
 		this.bIsValid = true;
 	}
@@ -493,6 +483,7 @@ class AnimatedElement {
 	}
 
 	public setTransitionParameters(transitionParameters: TransitionParameters) {
+		this.createTFGLContext();
 		transitionParameters.context = this.tfContext;
 		transitionParameters.current = null;
 		transitionParameters.next = this.getTextureFromElement(this.aBaseElement);
@@ -551,7 +542,9 @@ class AnimatedElement {
 	}
 
 	applyTransitionFilters(): boolean {
-		if (!this.isGlSupported()) return false;
+		if (this.transitionFiltersManager.isEmpty() || !this.isGlSupported()) {
+			return false;
+		}
 		return this.transitionFiltersManager.apply();
 	}
 
@@ -692,6 +685,7 @@ class AnimatedElement {
 
 	notifySlideEnd() {
 		this.transitionFiltersManager.clear();
+		this.deleteTFGLContext();
 	}
 
 	notifyAnimationStart() {
@@ -720,6 +714,32 @@ class AnimatedElement {
 
 	notifyNextEffectStart(nEffectIndex?: number) {
 		// empty body
+	}
+
+	private createTFGLContext() {
+		if (!this.tfCanvas) {
+			this.DBG('.createTFGLContext: canvas');
+			this.tfCanvas = new OffscreenCanvas(
+				this.aBaseElement.width,
+				this.aBaseElement.height,
+			);
+		}
+
+		if (!this.tfContext) {
+			this.DBG('.createTFGLContext: context');
+			this.tfContext = new RenderContextGl(this.tfCanvas);
+			if (!this.tfContext) {
+				this.tfContext = new RenderContext2d(this.tfCanvas);
+			}
+		}
+	}
+
+	private deleteTFGLContext() {
+		if (this.tfContext) {
+			this.DBG('.deleteTFGLContext');
+			this.tfContext = null;
+			this.tfCanvas = null;
+		}
 	}
 
 	// TODO remove it
