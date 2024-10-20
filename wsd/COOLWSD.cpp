@@ -59,7 +59,6 @@
 #include <map>
 #include <memory>
 #include <mutex>
-#include <queue>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -67,22 +66,9 @@
 
 #if !MOBILEAPP
 
-#include <Poco/Net/Context.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/IPAddress.h>
-#include <Poco/Net/MessageHeader.h>
-#include <Poco/Net/NameValueCollection.h>
-#include <Poco/Net/Net.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/Net/PartHandler.h>
-#include <Poco/Net/SocketAddress.h>
-#include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/Net/Context.h>
-#include <Poco/Net/KeyConsoleHandler.h>
+#if ENABLE_SSL
 #include <Poco/Net/SSLManager.h>
-
-using Poco::Net::PartHandler;
+#endif
 
 #include <cerrno>
 #include <stdexcept>
@@ -96,15 +82,10 @@ using Poco::Net::PartHandler;
 
 #endif
 
-#include <Poco/DateTimeFormatter.h>
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
-#include <Poco/FileStream.h>
-#include <Poco/MemoryStream.h>
-#include <Poco/Net/HostEntry.h>
 #include <Poco/Path.h>
-#include <Poco/TemporaryFile.h>
 #include <Poco/URI.h>
 #include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/HelpFormatter.h>
@@ -115,7 +96,6 @@ using Poco::Net::PartHandler;
 #include <Poco/Util/ServerApplication.h>
 #include <Poco/Util/XMLConfiguration.h>
 
-#include "ClientSession.hpp"
 #include <ClientRequestDispatcher.hpp>
 #include <Common.hpp>
 #include <Clipboard.hpp>
@@ -136,18 +116,15 @@ using Poco::Net::PartHandler;
 #if ENABLE_SSL
 #  include <SslSocket.hpp>
 #endif
-#include "Storage.hpp"
 #include <wsd/wopi/StorageConnectionManager.hpp>
-#include "TraceFile.hpp"
+#include <wsd/TraceFile.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <common/ConfigUtil.hpp>
-#include <common/TraceEvent.hpp>
 
 #include <common/SigUtil.hpp>
 #include <net/AsyncDNS.hpp>
 
-#include <RequestVettingStation.hpp>
 #include <ServerSocket.hpp>
 
 #if MOBILEAPP
