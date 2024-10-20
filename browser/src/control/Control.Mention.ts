@@ -26,7 +26,6 @@ class Mention extends L.Control.AutoCompletePopup {
 	filteredUsers: Array<MentionUserData>;
 	data: MessageEvent<any>;
 	debouceTimeoutId: NodeJS.Timeout;
-	lastTriggerKey: string;
 	partialMention: Array<string>;
 	typingMention: boolean;
 
@@ -38,7 +37,6 @@ class Mention extends L.Control.AutoCompletePopup {
 		this.newPopupData.isAutoCompletePopup = true;
 		this.typingMention = false;
 		this.partialMention = [];
-		this.lastTriggerKey = '';
 	}
 
 	sendMentionPostMsg(partialText: string) {
@@ -117,9 +115,8 @@ class Mention extends L.Control.AutoCompletePopup {
 		if (entries.length === 0) {
 			// If the key pressed was a space, and there are no matches, then just
 			// dismiss the popup.
-			// const noMatchOnFinalSpace: boolean = ev.triggerKey === ' ';
-			const noMatchOnFinalSpace = this.lastTriggerKey === ' ';
-			if (noMatchOnFinalSpace) {
+			const noMatchOnSpace = this.getPartialMention().indexOf(' ');
+			if (noMatchOnSpace !== -1) {
 				this.closeMentionPopup(false);
 				return;
 			}
@@ -232,7 +229,6 @@ class Mention extends L.Control.AutoCompletePopup {
 		const regEx = /^[0-9a-zA-Z ]+$/;
 		if (ev.data && ev.data.match(regEx)) {
 			this.partialMention.push(ev.data);
-			this.lastTriggerKey = ev.data;
 			this.sendMentionPostMsg(this.getPartialMention());
 		} else {
 			this.closeMentionPopup(false);
