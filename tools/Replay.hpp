@@ -382,17 +382,16 @@ class StressSocketHandler : public WebSocketHandler
     std::chrono::steady_clock::time_point _lastTile;
 
 public:
-    StressSocketHandler(SocketPoll &poll, /* bad style */
-                        const std::shared_ptr<Stats> stats,
-                        const std::string &uri, const std::string &trace,
-                        const int delayMs = 0) :
-        WebSocketHandler(true, true),
-        _poll(poll),
-        _reader(trace),
-        _connecting(true),
-        _uri(uri),
-        _trace(trace),
-        _stats(stats)
+    StressSocketHandler(SocketPoll& poll, /* bad style */
+                        const std::shared_ptr<Stats>& stats, const std::string& uri,
+                        const std::string& trace, const int delayMs = 0)
+        : WebSocketHandler(true, true)
+        , _poll(poll)
+        , _reader(trace)
+        , _connecting(true)
+        , _uri(uri)
+        , _trace(trace)
+        , _stats(stats)
     {
         assert(_stats && "stats must be provided");
 
