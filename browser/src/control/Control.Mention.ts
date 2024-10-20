@@ -204,7 +204,7 @@ class Mention extends L.Control.AutoCompletePopup {
 	}
 
 	handleMentionInput(ev: any) {
-		if (this.map.getDocType() === 'text' && !this.typingMention) {
+		if (!this.typingMention) {
 			if (ev.data === '@') {
 				this.partialMention.push(ev.data);
 				this.typingMention = true;
