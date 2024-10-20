@@ -1087,7 +1087,11 @@ COOLWSD::COOLWSD()
 
 COOLWSD::~COOLWSD()
 {
-    UnitWSD::get().setWSD(nullptr);
+    if (UnitBase::isUnitTesting())
+    {
+        // We won't have a valid UnitWSD::get() when not testing.
+        UnitWSD::get().setWSD(nullptr);
+    }
 }
 
 #if !MOBILEAPP
