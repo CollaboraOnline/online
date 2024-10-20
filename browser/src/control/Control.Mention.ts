@@ -44,7 +44,13 @@ class Mention extends L.Control.AutoCompletePopup {
 	sendMentionPostMsg(partialText: string) {
 		if (this.debouceTimeoutId) clearTimeout(this.debouceTimeoutId);
 
-		if (partialText === '') return;
+		// happens when user deletes last character before '@'
+		// if we send empty string to the WOPIHost. They might return us list
+		// with thousand of users
+		if (partialText === '') {
+			this.closeMentionPopup(true);
+			return;
+		}
 
 		this.debouceTimeoutId = setTimeout(() => {
 			this.map.fire('postMessage', {
