@@ -132,7 +132,11 @@ public:
             _urpFromKit->shutdown();
         if (_urpToKit)
             _urpToKit->shutdown();
-        ::close(_smapsFD);
+        if (_smapsFD != -1)
+        {
+            ::close(_smapsFD);
+            _smapsFD = -1;
+        }
     }
 
     const ChildProcess& operator=(ChildProcess&& other) = delete;
