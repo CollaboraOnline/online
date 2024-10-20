@@ -571,7 +571,8 @@ L.A11yTextInput = L.TextInput.extend({
 		this._finishFormulabarEditing(content, matchTo);
 
 		// special handling for mentions
-		this._handleMentionInput(ev, removeBefore);
+		if (this._map.getDocType() === 'text')
+			this._map.mention.handleMentionInput(ev);
 
 		this._statusLog('_onInput ]');
 	},

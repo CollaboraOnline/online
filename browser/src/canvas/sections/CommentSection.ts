@@ -1080,7 +1080,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
-		if (this.map.mention.isTypingMention()) {
+		if (this.sectionProperties.docLayer._docType === 'text' && this.map.mention?.isTypingMention()) {
 			return;
 		}
 		if (!this.sectionProperties.isRemoved) {
@@ -1109,7 +1109,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocusReply (e: any): void {
-		if (this.map.mention.isTypingMention()) {
+		if (this.sectionProperties.docLayer._docType === 'text' && this.map.mention?.isTypingMention()) {
 			return;
 		}
 		if (this.sectionProperties.nodeReplyText.textContent !== '') {
