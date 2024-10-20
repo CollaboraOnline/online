@@ -44,6 +44,8 @@ class Mention extends L.Control.AutoCompletePopup {
 	sendMentionPostMsg(partialText: string) {
 		if (this.debouceTimeoutId) clearTimeout(this.debouceTimeoutId);
 
+		if (partialText === '') return;
+
 		this.debouceTimeoutId = setTimeout(() => {
 			this.map.fire('postMessage', {
 				msgId: 'UI_Mention',
@@ -201,34 +203,36 @@ class Mention extends L.Control.AutoCompletePopup {
 	}
 
 	handleMentionInput(ev: any) {
+		if (this.map.getDocType() === 'text' && !this.typingMention) {
+			if (ev.data === '@') {
+				this.partialMention.push(ev.data);
+				this.typingMention = true;
+			}
+			return;
+		}
+
 		const deleteEvent =
 			ev.inputType === 'deleteContentBackward' ||
 			ev.inputType === 'deleteContentForward';
-		if (this.typingMention) {
-			if (deleteEvent) {
-				var ch = this.partialMention.pop();
-				if (ch === '@') {
-					this.closeMentionPopup(false);
-				} else {
-					const partialMention = this.getPartialMention();
-					if (partialMention !== '')
-						this.sendMentionPostMsg(this.getPartialMention());
-				}
-			} else {
-				this.partialMention.push(ev.data);
-				var regEx = /^[0-9a-zA-Z ]+$/;
-				if (ev.data && ev.data.match(regEx)) {
-					this.lastTriggerKey = ev.data;
-					this.sendMentionPostMsg(this.getPartialMention());
-				} else {
-					this.closeMentionPopup(false);
-				}
-			}
+		if (deleteEvent) {
+			const ch = this.partialMention.pop();
+			if (ch === '@') this.closeMentionPopup(false);
+			else this.sendMentionPostMsg(this.getPartialMention());
+			return;
 		}
 
-		if (ev.data === '@' && this.map.getDocType() === 'text') {
-			this.partialMention.push(ev.data);
-			this.typingMention = true;
+		if (ev.data === '@') {
+			this.sendMentionPostMsg(this.getPartialMention());
+			return;
+		}
+
+		this.partialMention.push(ev.data);
+		const regEx = /^[0-9a-zA-Z ]+$/;
+		if (ev.data && ev.data.match(regEx)) {
+			this.lastTriggerKey = ev.data;
+			this.sendMentionPostMsg(this.getPartialMention());
+		} else {
+			this.closeMentionPopup(false);
 		}
 	}
 
