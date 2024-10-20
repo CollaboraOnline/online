@@ -38,6 +38,7 @@
 #include <common/TraceEvent.hpp>
 #include <common/Util.hpp>
 #include <common/CommandControl.hpp>
+#include <wsd/TileDesc.hpp>
 #include <net/HttpHelper.hpp>
 
 using namespace COOLProtocol;
@@ -2606,22 +2607,24 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
     docBroker->ASSERT_CORRECT_THREAD();
 
-    std::unique_ptr<TileDesc> tile;
+    TileWireId wireId = 0;
+    bool haveWireId = false;
     if (data->firstTokenMatches("tile:") ||
         data->firstTokenMatches("delta:"))
     {
         // Avoid sending tile or delta if it has the same wireID as the
         // previously sent tile
-        tile = std::make_unique<TileDesc>(TileDesc::parse(data->firstLine()));
+        wireId = TileDesc::parse(data->firstLine()).getWireId();
+        haveWireId = true;
     }
 
     LOG_TRC("Enqueueing client message " << data->id());
-    std::size_t sizeBefore = _senderQueue.size();
-    std::size_t newSize = _senderQueue.enqueue(data);
+    const std::size_t sizeBefore = _senderQueue.size();
+    const std::size_t newSize = _senderQueue.enqueue(data);
 
     // Track sent tile
-    if (tile && sizeBefore != newSize)
-        addTileOnFly(tile->getWireId());
+    if (haveWireId && sizeBefore != newSize)
+        addTileOnFly(wireId);
 }
 
 void ClientSession::addTileOnFly(TileWireId wireId)
