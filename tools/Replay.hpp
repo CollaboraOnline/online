@@ -562,8 +562,9 @@ public:
 
             sendMessage("tileprocessed tile=" + desc.generateID());
             std::cerr << _logPre << "Sent tileprocessed tile= " + desc.generateID() << "\n";
-        } if (tokens.equals(0, "error:")) {
-
+        }
+        else if (tokens.equals(0, "error:"))
+        {
             bool reconnect = false;
             if (firstLine == "error: cmd=load kind=docunloading")
             {
