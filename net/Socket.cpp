@@ -1004,7 +1004,7 @@ void SocketPoll::dumpState(std::ostream& os) const
     os << "\t    fd\tevents\trbuffered\twbuffered\trtotal\twtotal\tclientaddress\n";
     for (const std::shared_ptr<Socket>& socket : pollSockets)
         socket->dumpState(os);
-    os << "\n  Done [" << name() << ']';
+    os << "\n  Done [" << name() << "]\n";
 }
 
 /// Returns true on success only.
