@@ -2574,6 +2574,7 @@ L.Control.Menubar = L.Control.extend({
 	_onInitModificationIndicator: function(lastmodtime) {
 		var lastModButton = L.DomUtil.get('menu-last-mod');
 		if (lastModButton !== null && lastModButton !== undefined
+			&& lastModButton.firstChild
 			&& lastModButton.firstChild.innerHTML !== null
 			&& lastModButton.firstChild.childElementCount == 0) {
 			if (lastmodtime == null) {
@@ -2584,8 +2585,6 @@ L.Control.Menubar = L.Control.extend({
 			var mainSpan = document.createElement('span');
 			this.lastModIndicator = document.createElement('span');
 			mainSpan.appendChild(this.lastModIndicator);
-
-			//this._map.updateModificationIndicator(this._lastmodtime);
 
 			// Replace menu button body with new content
 			lastModButton.firstChild.replaceChildren();
@@ -2600,7 +2599,7 @@ L.Control.Menubar = L.Control.extend({
 	},
 	_onUpdateModificationIndicator: function(e) {
 		if (this.lastModIndicator !== null && this.lastModIndicator !== undefined) {
-			this.lastModIndicator.innerHTML = e.lastSaved;
+			this.lastModIndicator.textContent = e.lastSaved;
 		}
 	}
 });
