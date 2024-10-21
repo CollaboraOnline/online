@@ -625,18 +625,21 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		var comment;
 		if (annotation.sectionProperties.data.id === 'new') {
 			comment = {
-				Text: {
-					type: 'string',
-					value: annotation.sectionProperties.data.text
-				},
 				Author: {
 					type: 'string',
 					value: annotation.sectionProperties.data.author
 				},
-				Html: {
-					type: 'string',
-					value: annotation.sectionProperties.data.html
-				}
+				// send if html exists, and it's writer send just html, otherwise text
+				... (this.sectionProperties.docLayer._docType === 'text' &&
+				     annotation.sectionProperties.data.html) ?
+					{ Html: {
+						type: 'string',
+						value: annotation.sectionProperties.data.html
+					} } :
+					{ Text: {
+						type: 'string',
+						value: annotation.sectionProperties.data.text
+					} }
 			};
 			if (app.file.fileBasedView) {
 				this.map.setPart(this.sectionProperties.docLayer._selectedPart, false);
@@ -669,18 +672,21 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 					type: 'string',
 					value: annotation.sectionProperties.data.id
 				},
-			  Author: {
+				Author: {
 					type: 'string',
 					value: annotation.sectionProperties.data.author
 				},
-				Text: {
-					type: 'string',
-					value: annotation.sectionProperties.data.text
-				},
-				Html: {
-					type: 'string',
-					value: annotation.sectionProperties.data.html
-				}
+				// send if html exists, and it's writer send just html, otherwise text
+				... (this.sectionProperties.docLayer._docType === 'text' &&
+				     annotation.sectionProperties.data.html) ?
+					{ Html: {
+						type: 'string',
+						value: annotation.sectionProperties.data.html
+					} } :
+					{ Text: {
+						type: 'string',
+						value: annotation.sectionProperties.data.text
+					} }
 			};
 			this.map.sendUnoCommand('.uno:EditAnnotation', comment, true /* force */);
 		}
@@ -956,14 +962,17 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				type: 'string',
 				value: annotation.sectionProperties.data.id
 			},
-			Text: {
-				type: 'string',
-				value: annotation.sectionProperties.data.reply
-			},
-			Html: {
-				type: 'string',
-				value: annotation.sectionProperties.data.html
-			}
+			// send if html exists, and it's writer send just html, otherwise text
+			... (this.sectionProperties.docLayer._docType === 'text' &&
+			     annotation.sectionProperties.data.html) ?
+				{ Html: {
+					type: 'string',
+					value: annotation.sectionProperties.data.html
+				} } :
+				{ Text: {
+					type: 'string',
+					value: annotation.sectionProperties.data.reply
+				} }
 		};
 
 		if (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'spreadsheet')
