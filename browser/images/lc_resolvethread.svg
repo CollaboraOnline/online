@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/css" href="icons.css" ?><svg
+   viewBox="0 0 556.46277 573.87921"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   width="556.46277"
+   height="573.87921"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1" /><g
+     fill="none"
+     stroke="#ed3d3b"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="2"
+     transform="matrix(46.3719,0,0,46.3719,2.6451738e-7,-185.48759)"
+     id="g2"><path
+       d="M 1,15 11,4.9999998"
+       id="path1-6"
+       style="display:inline" /><path
+       d="M 11,15 1,4.9999998"
+       id="path2"
+       style="display:inline" /></g><g
+     fill="#3a3a38"
+     id="g3"
+     transform="matrix(23.567689,0,0,23.567689,398.15441,155.08289)"
+     style="stroke-width:1.08063;stroke-dasharray:none"><path
+       d="m -2.9926598,7.2326603 c -0.554,0 -1,0.446 -1,1 V 13.23266 c 0,0.554 0.446,1 1,1 h 1 v 2.5 c 1.74e-4,0.445319 0.538519,0.668295 0.853516,0.353516 l 2.853515,-2.853516 h 3.292969 c 0.554,0 1,-0.446 1,-1 V 8.2326603 c 0,-0.554 -0.446,-1 -1,-1 z"
+       fill="#0063b1"
+       id="path2-3"
+       style="stroke:#ffffff;stroke-width:1.08063;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill" /><path
+       d="m -1.0008334,15.228066 v -2 h -2 V 8.2280661 h 8 V 13.228066 H 0.99916657 Z"
+       fill="#83beec"
+       id="path4"
+       style="display:inline;stroke-width:1.08063;stroke-dasharray:none" /></g></svg>
