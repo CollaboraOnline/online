@@ -174,6 +174,18 @@ const aPropertyGetterSetterMap = {
 		set: 'setRotationAngle',
 	},
 
+	skewx: {
+		type: PropertyValueType.Number,
+		get: 'getSkewX',
+		set: 'setSkewX',
+	},
+
+	skewy: {
+		type: PropertyValueType.Number,
+		get: 'getSkewY',
+		set: 'setSkewY',
+	},
+
 	width: {
 		type: PropertyValueType.Number,
 		get: 'getWidth',
@@ -285,6 +297,8 @@ interface AnimatedElementState {
 	nScaleFactorX: number;
 	nScaleFactorY: number;
 	nRotationAngle: number;
+	nSkewX: number;
+	nSkewY: number;
 	aTMatrix: DOMMatrix;
 	nOpacity: number;
 	bVisible: boolean;
@@ -311,6 +325,8 @@ class AnimatedElement {
 		'opacity',
 		'visibility',
 		'rotate',
+		'skewx',
+		'skewy',
 	]);
 
 	public static readonly SupportedTransformations = new Set<string>([
@@ -346,6 +362,8 @@ class AnimatedElement {
 	private nScaleFactorX: number = 1.0;
 	private nScaleFactorY: number = 1.0;
 	private nRotationAngle: number = 0;
+	private nSkewX: number = 0;
+	private nSkewY: number = 0;
 	private aTMatrix: DOMMatrix;
 	private nOpacity: number; // [0, 1]
 	private bVisible: boolean;
@@ -497,6 +515,8 @@ class AnimatedElement {
 		this.nScaleFactorX = 1.0;
 		this.nScaleFactorY = 1.0;
 		this.nRotationAngle = 0.0;
+		this.nSkewX = 0.0;
+		this.nSkewY = 0.0;
 		this.aTMatrix = new DOMMatrix([1, 0, 0, 1, 0, 0]);
 		this.nOpacity = 1;
 		this.bVisible = this.animatedLayerInfo
@@ -781,6 +801,8 @@ class AnimatedElement {
 			nScaleFactorX: this.nScaleFactorX,
 			nScaleFactorY: this.nScaleFactorY,
 			nRotationAngle: this.nRotationAngle,
+			nSkewX: this.nSkewX,
+			nSkewY: this.nSkewY,
 			aTMatrix: DOMMatrix.fromMatrix(this.aTMatrix),
 			nOpacity: this.nOpacity,
 			bVisible: this.bVisible,
@@ -827,6 +849,8 @@ class AnimatedElement {
 			this.nScaleFactorX = aState.nScaleFactorX;
 			this.nScaleFactorY = aState.nScaleFactorY;
 			this.nRotationAngle = aState.nRotationAngle;
+			this.nSkewX = aState.nSkewX;
+			this.nSkewY = aState.nSkewY;
 			this.aTMatrix = aState.aTMatrix;
 			this.nOpacity = aState.nOpacity;
 			this.bVisible = aState.bVisible;
@@ -862,6 +886,20 @@ class AnimatedElement {
 
 	setAdditiveMode(eAdditiveMode: AdditiveMode) {
 		this.eAdditiveMode = eAdditiveMode;
+	}
+
+	private updateTransformationMatrix() {
+		const aTMatrix = new DOMMatrix([1, 0, 0, 1, 0, 0]);
+		const skewXAngle = (180 * Math.atan(this.nSkewX)) / Math.PI;
+		const skewYAngle = (180 * Math.atan(this.nSkewY)) / Math.PI;
+		aTMatrix
+			.translateSelf(this.nCenterX, this.nCenterY)
+			.rotateSelf(this.nRotationAngle)
+			.scaleSelf(this.nScaleFactorX, this.nScaleFactorY)
+			.skewXSelf(skewYAngle)
+			.skewXSelf(skewXAngle)
+			.translateSelf(-this.nBaseCenterX, -this.nBaseCenterY);
+		this.aTMatrix = aTMatrix;
 	}
 
 	// Get/Set Properties
@@ -937,14 +975,8 @@ class AnimatedElement {
 		if (nScaleFactorX < 1e-5) nScaleFactorX = 1e-5;
 		if (nScaleFactorX == this.nScaleFactorX) return;
 
-		const aTMatrix = new DOMMatrix([1, 0, 0, 1, 0, 0]);
-		aTMatrix
-			.translateSelf(this.nCenterX, this.nCenterY)
-			.rotateSelf(this.nRotationAngle)
-			.scaleSelf(nScaleFactorX, this.nScaleFactorY)
-			.translateSelf(-this.nBaseCenterX, -this.nBaseCenterY);
-		this.aTMatrix = aTMatrix;
 		this.nScaleFactorX = nScaleFactorX;
+		this.updateTransformationMatrix();
 		window.app.console.log('AnimatedElement.setWidth(' + nNewWidth + ')');
 	}
 
@@ -963,14 +995,8 @@ class AnimatedElement {
 		if (nScaleFactorY < 1e-5) nScaleFactorY = 1e-5;
 		if (nScaleFactorY == this.nScaleFactorY) return;
 
-		const aTMatrix = new DOMMatrix([1, 0, 0, 1, 0, 0]);
-		aTMatrix
-			.translateSelf(this.nCenterX, this.nCenterY)
-			.rotateSelf(this.nRotationAngle)
-			.scaleSelf(this.nScaleFactorX, nScaleFactorY)
-			.translateSelf(-this.nBaseCenterX, -this.nBaseCenterY);
-		this.aTMatrix = aTMatrix;
 		this.nScaleFactorY = nScaleFactorY;
+		this.updateTransformationMatrix();
 		window.app.console.log('AnimatedElement.setHeight(' + nNewHeight + ')');
 	}
 
@@ -1007,15 +1033,9 @@ class AnimatedElement {
 		)
 			return;
 
-		const aTMatrix = new DOMMatrix([1, 0, 0, 1, 0, 0]);
-		aTMatrix
-			.translateSelf(this.nCenterX, this.nCenterY)
-			.rotateSelf(this.nRotationAngle)
-			.scaleSelf(nScaleFactorX, nScaleFactorY)
-			.translateSelf(-this.nBaseCenterX, -this.nBaseCenterY);
-		this.aTMatrix = aTMatrix;
 		this.nScaleFactorX = nScaleFactorX;
 		this.nScaleFactorY = nScaleFactorY;
+		this.updateTransformationMatrix();
 		window.app.console.log(
 			'AnimatedElement.setSize(' + nNewWidth + ', ' + nNewHeight + ')',
 		);
@@ -1035,17 +1055,31 @@ class AnimatedElement {
 	}
 
 	setRotationAngle(nNewRotAngle: number) {
-		const aTMatrix = new DOMMatrix([1, 0, 0, 1, 0, 0]);
-		aTMatrix
-			.translateSelf(this.nCenterX, this.nCenterY)
-			.rotateSelf(nNewRotAngle)
-			.scaleSelf(this.nScaleFactorX, this.nScaleFactorY)
-			.translateSelf(-this.nBaseCenterX, -this.nBaseCenterY);
-		this.aTMatrix = aTMatrix;
 		this.nRotationAngle = nNewRotAngle;
+		this.updateTransformationMatrix();
 		window.app.console.log(
 			'AnimatedElement.setRotationAngle(' + nNewRotAngle + ')',
 		);
+	}
+
+	getSkewX() {
+		return this.nSkewX;
+	}
+
+	setSkewX(nSkewValue: number) {
+		this.nSkewX = nSkewValue;
+		this.updateTransformationMatrix();
+		window.app.console.log('AnimatedElement.setSkewX(' + nSkewValue + ')');
+	}
+
+	getSkewY() {
+		return this.nSkewY;
+	}
+
+	setSkewY(nSkewValue: number) {
+		this.nSkewY = nSkewValue;
+		this.updateTransformationMatrix();
+		window.app.console.log('AnimatedElement.setSkewY(' + nSkewValue + ')');
 	}
 
 	getVisibility(): boolean {
