@@ -936,31 +936,79 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
-	drawGuides() {
+	drawXAxis(x: number) {
+		this.context.moveTo(x, 0);
+		this.context.lineTo(x, this.context.canvas.height);
+		this.context.stroke();
+	}
+
+	drawYAxis(y: number) {
+		this.context.moveTo(0, y);
+		this.context.lineTo(this.context.canvas.width, y);
+		this.context.stroke();
+	}
+
+	drawShapeAlignmentHelperLines() {
 		this.context.save();
+
+		this.context.setLineDash([4, 3]);
+		this.context.strokeStyle = '#f36d4f';
 		this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
 
-		this.context.setLineDash([12, 3, 3]);
+		this.context.beginPath();
+
+		if (this.sectionProperties.closestX !== null)
+			this.drawXAxis(this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - this.documentTopLeft[0]);
+
+		if (this.sectionProperties.closestY !== null)
+			this.drawYAxis(this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - this.documentTopLeft[1]);
+
+		this.context.closePath();
+
+		this.context.restore();
+	}
+
+	drawGridHelperLines() {
+		this.context.save();
+
+		this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
+
+		const whiteSolidStyle = '#e6e6e6';
+		const darkStyle = '#191919';
+
+		this.context.beginPath();
 
 		if (this.sectionProperties.closestX !== null) {
+			this.context.strokeStyle = whiteSolidStyle;
+			this.context.setLineDash([]);
+
 			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - this.documentTopLeft[0];
-			this.context.strokeStyle = 'grey';
-			this.context.beginPath();
-			this.context.moveTo(x, 0);
-			this.context.lineTo(x, this.context.canvas.height);
-			this.context.stroke();
-			this.context.closePath();
+
+			this.drawXAxis(x);
+
+			// Draw a second line on top of solid white-ish line.
+			this.context.setLineDash([4, 3]);
+			this.context.strokeStyle = darkStyle;
+
+			this.drawXAxis(x);
 		}
 
 		if (this.sectionProperties.closestY !== null) {
+			this.context.strokeStyle = whiteSolidStyle;
+			this.context.setLineDash([]);
+
 			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - this.documentTopLeft[1];
-			this.context.strokeStyle = 'grey';
-			this.context.beginPath();
-			this.context.moveTo(0, y);
-			this.context.lineTo(this.context.canvas.width, y);
-			this.context.stroke();
-			this.context.closePath();
+
+			this.drawYAxis(y);
+
+			// Draw a second line on top of solid white-ish line.
+			this.context.setLineDash([4, 3]);
+			this.context.strokeStyle = darkStyle;
+
+			this.drawYAxis(y);
 		}
+
+		this.context.closePath();
 
 		this.context.restore();
 	}
@@ -974,7 +1022,10 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		if (!this.showSection || !this.isVisible)
 			this.hideSVG();
 		else if (this.anythingToDraw()) {
-			this.drawGuides();
+			if (app.map.stateChangeHandler.getItemValue('.uno:GridUse') === 'true')
+				this.drawGridHelperLines();
+			else
+				this.drawShapeAlignmentHelperLines();
 		}
 	}
 
