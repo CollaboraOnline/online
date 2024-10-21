@@ -197,13 +197,20 @@ L.Control.ContextMenu = L.Control.extend({
 						},
 						items: contextMenu
 					};
+				},
+				events: {
+					show: function (opt) {
+						var $menu = opt.$menu;
+						$menu.attr('tabindex', 0); // Make the context menu focusable
+					},
+					hide: function() { map.focus(); }
 				}
 			});
-
 			if (autoFillContextMenu)
 				$('.leaflet-layer').contextMenu(this._currMousePos);
 			else
 				$('.leaflet-layer').contextMenu(this._prevMousePos);
+			$('.context-menu-root').focus();
 			this.hasContextMenu = true;
 		}
 	},
