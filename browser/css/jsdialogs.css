@@ -1778,6 +1778,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-items: center;
 }
 
+.has-dropdown > .ui-content.unobutton {
+	width: auto;
+}
+
 .unoarrow::after,
 .jsdialog .ui-content.unobutton::after {
 	--click-increment: -1px;
