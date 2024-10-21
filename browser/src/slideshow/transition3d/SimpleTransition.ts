@@ -206,7 +206,7 @@ class SimpleTransition extends SlideShow.Transition3d {
 		this.gl.bindVertexArray(null);
 
 		app.map.fire('newslideshowframe', {
-			frame: this.gl.canvas
+			frame: this.gl.canvas,
 		});
 	}
 

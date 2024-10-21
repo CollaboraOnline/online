@@ -100,8 +100,11 @@ class PresenterConsole {
 		);
 		this._proxyPresenter.document.close();
 
-		this._currentSlideCanvas = this._proxyPresenter.document.querySelector('#current-presentation');
-		this._currentSlideContext = this._currentSlideCanvas.getContext('bitmaprenderer');
+		this._currentSlideCanvas = this._proxyPresenter.document.querySelector(
+			'#current-presentation',
+		);
+		this._currentSlideContext =
+			this._currentSlideCanvas.getContext('bitmaprenderer');
 
 		this._proxyPresenter.addEventListener(
 			'resize',
@@ -342,9 +345,8 @@ class PresenterConsole {
 
 	_onNextFrame(e) {
 		const bitmap = e.frame;
-		if (!bitmap)
-			return;
-		createImageBitmap(bitmap).then((image)=> {
+		if (!bitmap) return;
+		createImageBitmap(bitmap).then((image) => {
 			this._currentSlideContext.transferFromImageBitmap(image);
 		});
 	}
