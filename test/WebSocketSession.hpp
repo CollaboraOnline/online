@@ -436,15 +436,15 @@ private:
     const std::string _port;
     const Protocol _protocol;
     Request _request;
-    BufferQueue _inQueue; //< The incoming message queue.
-    std::condition_variable _inCv; //< The incoming queue cond_var.
-    std::mutex _inMutex; //< The incoming queue lock.
-    BufferQueue _outQueue; //< The outgoing message queue.
-    std::mutex _outMutex; //< The outgoing queue lock.
-    std::condition_variable _disconnectCv; //< Traps disconnections.
-    std::mutex _disconnectMutex; //< The disconnection event lock.
-    std::atomic_bool _disconnected; //< True iff we are disconnected.
-    std::atomic_bool _shutdown; //< Whether we should shutdown after sending all the data.
+    BufferQueue _inQueue; ///< The incoming message queue.
+    std::condition_variable _inCv; ///< The incoming queue cond_var.
+    std::mutex _inMutex; ///< The incoming queue lock.
+    BufferQueue _outQueue; ///< The outgoing message queue.
+    std::mutex _outMutex; ///< The outgoing queue lock.
+    std::condition_variable _disconnectCv; ///< Traps disconnections.
+    std::mutex _disconnectMutex; ///< The disconnection event lock.
+    std::atomic_bool _disconnected; ///< True iff we are disconnected.
+    std::atomic_bool _shutdown; ///< Whether we should shutdown after sending all the data.
     std::weak_ptr<SocketPoll> _socketPoll;
 };
 

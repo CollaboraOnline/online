@@ -25,7 +25,7 @@ class KitWebSocketHandler final : public WebSocketHandler
     std::string _socketName;
     std::shared_ptr<lok::Office> _loKit;
     std::string _jailId;
-    std::string _docKey; //< When we get it while creating a new view.
+    std::string _docKey; ///< When we get it while creating a new view.
     std::shared_ptr<Document> _document;
     std::shared_ptr<KitSocketPoll> _ksPoll;
     const unsigned _mobileAppDocId;

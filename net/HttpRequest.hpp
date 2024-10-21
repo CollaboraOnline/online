@@ -143,10 +143,10 @@ namespace http
 {
 /// The parse-state of a field.
 STATE_ENUM(FieldParseState,
-           Unknown, //< Not yet parsed.
-           Incomplete, //< Not enough data to parse this field. Need more data.
-           Invalid, //< The field is invalid/unexpected/long.
-           Valid //< The field is both complete and valid.
+           Unknown, ///< Not yet parsed.
+           Incomplete, ///< Not enough data to parse this field. Need more data.
+           Invalid, ///< The field is invalid/unexpected/long.
+           Valid ///< The field is both complete and valid.
 );
 
 /// Named HTTP Status Codes.
@@ -360,18 +360,18 @@ public:
     /// Describes the `Connection` header token value
     STATE_ENUM(
         ConnectionToken,
-        None, //< No `Connection` header token set
-        Close, //< `Connection: close` [RFC2616 14.10](https://www.rfc-editor.org/rfc/rfc2616#section-14.10)
-        KeepAlive, //< `Connection: Keep-Alive` Obsolete [RFC2068 19.7.1](https://www.rfc-editor.org/rfc/rfc2068#section-19.7.1)
-        Upgrade //< `Connection: Upgrade` HTTP/1.1 only [RFC2817](https://www.rfc-editor.org/rfc/rfc2817)
+        None, ///< No `Connection` header token set
+        Close, ///< `Connection: close` [RFC2616 14.10](https://www.rfc-editor.org/rfc/rfc2616#section-14.10)
+        KeepAlive, ///< `Connection: Keep-Alive` Obsolete [RFC2068 19.7.1](https://www.rfc-editor.org/rfc/rfc2068#section-19.7.1)
+        Upgrade ///< `Connection: Upgrade` HTTP/1.1 only [RFC2817](https://www.rfc-editor.org/rfc/rfc2817)
     );
 
     /// Describes the header state during parsing.
     STATE_ENUM(State, New,
-               Incomplete, //< Haven't reached the end yet.
-               InvalidField, //< Too long, no colon, etc.
-               TooManyFields, //< Too many fields to accept.
-               Complete //< Header is complete and valid.
+               Incomplete, ///< Haven't reached the end yet.
+               InvalidField, ///< Too long, no colon, etc.
+               TooManyFields, ///< Too many fields to accept.
+               Complete ///< Header is complete and valid.
     );
 
     using Pair = std::pair<std::string, std::string>;
@@ -590,9 +590,9 @@ public:
 
     /// The stages of processing the request.
     STATE_ENUM(Stage,
-               Header, //< Communicate the header.
-               Body, //< Communicate the body (if any).
-               Finished //< Done.
+               Header, ///< Communicate the header.
+               Body, ///< Communicate the body (if any).
+               Finished ///< Done.
     );
 
     /// Create a Request given a @url, http @verb, @header, and http @version.
@@ -762,9 +762,9 @@ public:
 
 private:
     Header _header;
-    std::string _url; //< The URL to request, without hostname.
-    std::string _verb; //< Used as-is, but only POST supported.
-    std::string _version; //< The protocol version, currently 1.1.
+    std::string _url; ///< The URL to request, without hostname.
+    std::string _verb; ///< Used as-is, but only POST supported.
+    std::string _version; ///< The protocol version, currently 1.1.
     IoReadFunc _bodyReaderCb;
     Stage _stage;
 };
@@ -812,12 +812,12 @@ public:
     /// The Status Code class of the response.
     /// None of these implies complete receipt of the response.
     STATE_ENUM(StatusCodeClass,
-               Invalid, //< Not a valid Status Code.
-               Informational, //< Request being processed, not final response.
-               Successful, //< Successfully processed request, response on the way.
-               Redirection, //< Redirected to a different resource.
-               Client_Error, //< Bad request, cannot respond.
-               Server_Error //< Bad server, cannot respond.
+               Invalid, ///< Not a valid Status Code.
+               Informational, ///< Request being processed, not final response.
+               Successful, ///< Successfully processed request, response on the way.
+               Redirection, ///< Redirected to a different resource.
+               Client_Error, ///< Bad request, cannot respond.
+               Server_Error ///< Bad server, cannot respond.
     );
 
     StatusCodeClass statusCategory() const
@@ -857,11 +857,11 @@ public:
     const std::string& reasonPhrase() const { return _reasonPhrase; }
 
 private:
-    std::string _httpVersion; //< Typically "HTTP/1.1"
-    unsigned _versionMajor; //< The first version digit (typically 1).
-    unsigned _versionMinor; //< The second version digit (typically 1).
+    std::string _httpVersion; ///< Typically "HTTP/1.1"
+    unsigned _versionMajor; ///< The first version digit (typically 1).
+    unsigned _versionMinor; ///< The second version digit (typically 1).
     unsigned _statusCode;
-    std::string _reasonPhrase; //< A client SHOULD ignore the reason-phrase content.
+    std::string _reasonPhrase; ///< A client SHOULD ignore the reason-phrase content.
 };
 
 /// The response for an HTTP request.
@@ -912,11 +912,11 @@ public:
 
     /// The state of an incoming response, when parsing.
     STATE_ENUM(State,
-               New, //< Valid but meaningless.
-               Incomplete, //< In progress, no errors.
-               Error, //< This is for protocol errors, not 400 and 500 reponses.
-               Timeout, //< The request has exceeded the time allocated.
-               Complete //< Successfully completed (does *not* imply 200 OK).
+               New, ///< Valid but meaningless.
+               Incomplete, ///< In progress, no errors.
+               Error, ///< This is for protocol errors, not 400 and 500 reponses.
+               Timeout, ///< The request has exceeded the time allocated.
+               Complete ///< Successfully completed (does *not* imply 200 OK).
     );
 
     /// The state of the Response (for the server's response use statusLine).
@@ -1085,14 +1085,14 @@ private:
 
     StatusLine _statusLine;
     Header _header;
-    std::atomic<State> _state; //< The state of the Response.
-    ParserStage _parserStage; //< The parser's state.
-    int64_t _recvBodySize; //< The amount of data we received (compared to the Content-Length).
-    std::string _body; //< Used when _bodyHandling is InMemory.
-    std::ofstream _bodyFile; //< Used when _bodyHandling is OnDisk.
-    IoWriteFunc _onBodyWriteCb; //< Used to handling body receipt in all cases.
-    FinishedCallback _finishedCallback; //< Called when response is finished.
-    int _fd; //< The socket file-descriptor.
+    std::atomic<State> _state; ///< The state of the Response.
+    ParserStage _parserStage; ///< The parser's state.
+    int64_t _recvBodySize; ///< The amount of data we received (compared to the Content-Length).
+    std::string _body; ///< Used when _bodyHandling is InMemory.
+    std::ofstream _bodyFile; ///< Used when _bodyHandling is OnDisk.
+    IoWriteFunc _onBodyWriteCb; ///< Used to handling body receipt in all cases.
+    FinishedCallback _finishedCallback; ///< Called when response is finished.
+    int _fd; ///< The socket file-descriptor.
 };
 
 /// A client socket to make asynchronous HTTP requests.
@@ -1733,8 +1733,8 @@ private:
     const std::string _host;
     const std::string _port;
     const Protocol _protocol;
-    int _fd; //< The socket file-descriptor.
-    long _handshakeSslVerifyFailure; //< Save SslVerityResult at onHandshakeFail
+    int _fd; ///< The socket file-descriptor.
+    long _handshakeSslVerifyFailure; ///< Save SslVerityResult at onHandshakeFail
     std::chrono::microseconds _timeout;
     std::chrono::steady_clock::time_point _startTime;
     bool _connected;
@@ -1742,7 +1742,7 @@ private:
     FinishedCallback _onFinished;
     ConnectFailCallback _onConnectFail;
     std::shared_ptr<Response> _response;
-    std::weak_ptr<StreamSocket> _socket; //< Must be the last member.
+    std::weak_ptr<StreamSocket> _socket; ///< Must be the last member.
 };
 
 /// HTTP Get a URL synchronously.
@@ -2104,25 +2104,25 @@ private:
 private:
     std::chrono::microseconds _timeout;
     std::chrono::steady_clock::time_point _startTime;
-    std::string _data; //< Data to upload, if not from a file, OR, the filename (if _pos == -1).
-    std::string _mimeType; //< The data Content-Type.
-    int _pos; //< The current position in the data string.
-    int _size; //< The size of the data in bytes.
-    int _fd; //< The descriptor of the file to upload.
+    std::string _data; ///< Data to upload, if not from a file, OR, the filename (if _pos == -1).
+    std::string _mimeType; ///< The data Content-Type.
+    int _pos; ///< The current position in the data string.
+    int _size; ///< The size of the data in bytes.
+    int _fd; ///< The descriptor of the file to upload.
     bool _connected;
-    int _start; //< The position we start reading from, the data includes this first byte
+    int _start; ///< The position we start reading from, the data includes this first byte
                 //  If this is greater than _size we will return no bytes
                 //  If this is less than 0 or greater than _end behavior is unspecified
-    int _end; //< The position we stop reading at, the data does not include this last byte
+    int _end; ///< The position we stop reading at, the data does not include this last byte
               //  If this is greater than or equal to _start we will only return bytes in the range
               //  If this is greater than _size we will return all bytes between _start and _size
               //  If this is -1 we will treat it as if it were equal to _size
-    bool _startIsSuffix; //< If this is true, we'll treat _start as an offset from the end, not from the start
+    bool _startIsSuffix; ///< If this is true, we'll treat _start as an offset from the end, not from the start
                          //  In that case, we'll ignore end entirely
                          //  e.g. if this is true and start is 5, we will send the last 5 bytes
     http::StatusCode _statusCode;
     FinishedCallback _onFinished;
-    std::shared_ptr<StreamSocket> _socket; //< Must be the last member.
+    std::shared_ptr<StreamSocket> _socket; ///< Must be the last member.
 };
 }
 

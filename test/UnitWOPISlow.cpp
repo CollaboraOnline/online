@@ -156,7 +156,7 @@ class UnitSuperfluousSaves : public WopiTestServer
 
     /// The number of key input sent.
     std::size_t _saveCount;
-    int _uploadCount; //< The number of times we uploaded.
+    int _uploadCount; ///< The number of times we uploaded.
 
 public:
     UnitSuperfluousSaves()

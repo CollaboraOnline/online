@@ -32,10 +32,10 @@ class Authorization
 public:
     enum class Type
     {
-        None, //< Unlike Expired, this implies no Authorization needed.
+        None, ///< Unlike Expired, this implies no Authorization needed.
         Token,
         Header,
-        Expired //< The server is rejecting the current authorization key.
+        Expired ///< The server is rejecting the current authorization key.
     };
 
 private:

@@ -43,12 +43,12 @@ class Quarantine
         uint64_t size() const { return _size; }
 
     private:
-        std::string _fullPath; //< The full path, including the quarantine directory and filename.
-        uint64_t _secondsSinceEpoch = 0; //< The timestamp in the filename.
-        int _pid = 0; //< The PID that generated it; informational.
-        std::string _docKey; //< The DocKey the file belongs to.
-        std::string _filename; //< The filename, without the path or other components.
-        uint64_t _size = 0; //< The size of the file in bytes.
+        std::string _fullPath; ///< The full path, including the quarantine directory and filename.
+        uint64_t _secondsSinceEpoch = 0; ///< The timestamp in the filename.
+        int _pid = 0; ///< The PID that generated it; informational.
+        std::string _docKey; ///< The DocKey the file belongs to.
+        std::string _filename; ///< The filename, without the path or other components.
+        uint64_t _size = 0; ///< The size of the file in bytes.
     };
 
 public:
@@ -87,9 +87,9 @@ private:
     /// Protects the shared QuarantineMap from concurrent modification.
     static std::mutex Mutex;
     static std::string QuarantinePath;
-    static std::size_t MaxSizeBytes; //< Total limit on all quarantined files.
-    static std::size_t MaxAgeSecs; //< The oldest quarantined file for any doc.
-    static std::size_t MaxVersions; //< The maximum number of quarantines per doc.
+    static std::size_t MaxSizeBytes; ///< Total limit on all quarantined files.
+    static std::size_t MaxAgeSecs; ///< The oldest quarantined file for any doc.
+    static std::size_t MaxVersions; ///< The maximum number of quarantines per doc.
 
     /// The delimiter used in the quarantine filename.
     static constexpr char Delimiter = '_';

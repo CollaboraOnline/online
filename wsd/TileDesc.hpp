@@ -382,15 +382,15 @@ public:
 private:
     int _normalizedViewId;
     int _part;
-    int _mode; //< Used in Impress for EditMode::(Page|MasterPage), 0 = default
+    int _mode; ///< Used in Impress for EditMode::(Page|MasterPage), 0 = default
     int _width;
     int _height;
     int _tilePosX;
     int _tilePosY;
     int _tileWidth;
     int _tileHeight;
-    int _ver; //< Versioning support.
-    int _imgSize; //< Used for responses.
+    int _ver; ///< Versioning support.
+    int _imgSize; ///< Used for responses.
     int _id;
     TileWireId _oldWireId;
     TileWireId _wireId;

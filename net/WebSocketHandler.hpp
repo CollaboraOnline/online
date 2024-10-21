@@ -43,7 +43,7 @@ private:
     bool _inFragmentBlock;
     /// The security key. Meaningful only for clients.
     const std::string _key;
-    unsigned char _lastFlags; //< The flags in the last frame.
+    unsigned char _lastFlags; ///< The flags in the last frame.
 #endif
 
     std::vector<char> _wsPayload;

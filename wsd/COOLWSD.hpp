@@ -202,7 +202,7 @@ protected:
 
 private:
     std::string _name;
-    std::atomic<pid_t> _pid; //< The process-id, which can be access from different threads.
+    std::atomic<pid_t> _pid; ///< The process-id, which can be access from different threads.
     std::shared_ptr<WebSocketHandler> _ws;  // FIXME: should be weak ? ...
     std::weak_ptr<StreamSocket> _socket;
 };
@@ -251,7 +251,7 @@ public:
     static bool NoCapsForKit;
     static bool NoSeccomp;
     static bool AdminEnabled;
-    static bool UnattendedRun; //< True when run from an unattended test, not interactive.
+    static bool UnattendedRun; ///< True when run from an unattended test, not interactive.
     static bool SignalParent;
     static bool UseEnvVarOptions;
     static std::string RouteToken;
@@ -307,7 +307,7 @@ public:
         Enabled
 #if ENABLE_DEBUG
         ,
-        Forced //< When Forced, only WASM is served.
+        Forced ///< When Forced, only WASM is served.
 #endif
     };
     static WASMActivationState WASMState;

@@ -276,7 +276,7 @@ namespace Log
     private:
         char _buffer[BufferSize];
         std::size_t _size;
-        std::int64_t _oldest_time_us; //< The timestamp of the oldest buffered entry.
+        std::int64_t _oldest_time_us; ///< The timestamp of the oldest buffered entry.
         };
 
     protected:

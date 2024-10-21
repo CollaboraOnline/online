@@ -24,8 +24,8 @@ PreProcessedFile::PreProcessedFile(std::string filename, const std::string& data
     : _filename(std::move(filename))
     , _size(data.length())
 {
-    std::size_t pos = 0; //< The current position to search from.
-    std::size_t lastpos = 0; //< The last position in a literal string.
+    std::size_t pos = 0; ///< The current position to search from.
+    std::size_t lastpos = 0; ///< The last position in a literal string.
 
     do
     {

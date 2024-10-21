@@ -708,10 +708,10 @@ private:
     /// (regardless of whether we need to or not).
     STATE_ENUM(
         CanSave,
-        Yes, //< Saving is possible.
-        NoKit, //< There is no Kit.
-        NotLoaded, //< No document is loaded.
-        NoWriteSession, //< No available session can write.
+        Yes, ///< Saving is possible.
+        NoKit, ///< There is no Kit.
+        NotLoaded, ///< No document is loaded.
+        NoWriteSession, ///< No available session can write.
     );
 
     /// Returns the state of whether saving is possible.
@@ -740,8 +740,8 @@ private:
     /// (regardless of whether we need to or not).
     STATE_ENUM(
         CanUpload,
-        Yes, //< Uploading is possible.
-        NoStorage, //< Storage instance missing.
+        Yes, ///< Uploading is possible.
+        NoStorage, ///< Storage instance missing.
     );
 
     /// Returns the state of whether uploading is possible.
@@ -753,8 +753,8 @@ private:
 
     /// Encodes whether or not uploading is needed.
     STATE_ENUM(NeedToUpload,
-               No, //< No need to upload, data up-to-date.
-               Yes, //< Data is out of date.
+               No, ///< No need to upload, data up-to-date.
+               Yes, ///< Data is out of date.
     );
 
     /// Returns the state of the need to upload.
@@ -812,10 +812,10 @@ private:
 
     /// Encodes whether or not saving is needed.
     STATE_ENUM(NeedToSave,
-               No, //< No need to save, data up-to-date.
-               Maybe, //< We have activity post saving.
-               Yes_Modified, //< Data is out of date.
-               Yes_LastSaveFailed, //< Yes, need to produce file on disk.
+               No, ///< No need to save, data up-to-date.
+               Maybe, ///< We have activity post saving.
+               Yes_Modified, ///< Data is out of date.
+               Yes_LastSaveFailed, ///< Yes, need to produce file on disk.
     );
 
     /// Returns the state of the need to save.
@@ -1283,7 +1283,7 @@ private:
         bool isRename() const { return _isRename; }
 
     private:
-        const std::chrono::steady_clock::time_point _startTime; //< The time we made the request.
+        const std::chrono::steady_clock::time_point _startTime; ///< The time we made the request.
         const std::string _uriAnonym;
         const std::chrono::system_clock::time_point _newFileModifiedTime;
         const std::weak_ptr<class ClientSession> _session;
@@ -1454,9 +1454,9 @@ private:
         std::shared_ptr<class ClientSession> session() const { return _session.lock(); }
 
     private:
-        const std::chrono::steady_clock::time_point _startTime; //< The time we made the request.
+        const std::chrono::steady_clock::time_point _startTime; ///< The time we made the request.
         const StorageBase::LockState _requestedLockState;
-        const std::weak_ptr<class ClientSession> _session; //< Allows for cleanup, if it's closed.
+        const std::weak_ptr<class ClientSession> _session; ///< Allows for cleanup, if it's closed.
     };
 
 protected:
@@ -1492,34 +1492,34 @@ private:
         /// A document starts as New and progresses towards Unloaded.
         /// Upon error, intermediary states may be skipped.
         STATE_ENUM(Status,
-                   None, //< Doesn't exist, pending downloading.
-                   Downloading, //< Download from Storage to disk. Synchronous.
-                   Loading, //< Loading the document in Core.
-                   Live, //< General availability for viewing/editing.
-                   Destroying, //< End-of-life, marked to destroy.
-                   Destroyed //< Unloading complete, destruction pending.
+                   None, ///< Doesn't exist, pending downloading.
+                   Downloading, ///< Download from Storage to disk. Synchronous.
+                   Loading, ///< Loading the document in Core.
+                   Live, ///< General availability for viewing/editing.
+                   Destroying, ///< End-of-life, marked to destroy.
+                   Destroyed ///< Unloading complete, destruction pending.
         );
 
         /// The current activity taking place.
         /// Meaningful only when Status is Status::Live, but
         /// we may Save and Upload during Status::Destroying.
         STATE_ENUM(Activity,
-                   None, //< No particular activity.
-                   Rename, //< The document is being renamed.
-                   SaveAs, //< The document format is being converted.
-                   Conflict, //< The document is conflicted in storaged.
-                   Save, //< The document is being saved, manually or auto-save.
-                   Upload, //< The document is being uploaded to storage.
+                   None, ///< No particular activity.
+                   Rename, ///< The document is being renamed.
+                   SaveAs, ///< The document format is being converted.
+                   Conflict, ///< The document is conflicted in storaged.
+                   Save, ///< The document is being saved, manually or auto-save.
+                   Upload, ///< The document is being uploaded to storage.
 #if !MOBILEAPP && !WASMAPP
-                   SwitchingToOffline, //< The document will switch to Offline mode.
-                   SwitchingToOnline, //< The document will switch to Online mode.
+                   SwitchingToOffline, ///< The document will switch to Offline mode.
+                   SwitchingToOnline, ///< The document will switch to Online mode.
 #endif // !MOBILEAPP && !WASMAPP
         );
 
         STATE_ENUM(Disconnected,
-                   No, //< No, not disconnected
-                   Normal, //< Yes, normal disconnection
-                   Unexpected, //< Yes, unexpected disconnection from Kit
+                   No, ///< No, not disconnected
+                   Normal, ///< Yes, normal disconnection
+                   Unexpected, ///< Yes, unexpected disconnection from Kit
         );
 
         DocumentState()
@@ -1600,11 +1600,11 @@ private:
     private:
         Status _status;
         Activity _activity;
-        std::atomic<bool> _loaded; //< If the document ever loaded (check isLive to see if it still is).
-        std::atomic<bool> _closeRequested; //< Owner-Termination flag.
-        std::atomic<bool> _unloadRequested; //< Unload-Requested flag, which may be reset.
-        std::atomic<Disconnected> _disconnected; //< Disconnected from the Kit. Implies unloading.
-        bool _interactive; //< If the document has interactive dialogs before load
+        std::atomic<bool> _loaded; ///< If the document ever loaded (check isLive to see if it still is).
+        std::atomic<bool> _closeRequested; ///< Owner-Termination flag.
+        std::atomic<bool> _unloadRequested; ///< Unload-Requested flag, which may be reset.
+        std::atomic<Disconnected> _disconnected; ///< Disconnected from the Kit. Implies unloading.
+        bool _interactive; ///< If the document has interactive dialogs before load
     };
 
     /// Transition to a given activity. Returns false if an activity exists.
@@ -1705,9 +1705,9 @@ private:
     std::atomic<bool> _stop;
     std::string _closeReason;
     std::unique_ptr<LockContext> _lockCtx;
-    std::string _renameFilename; //< The new filename to rename to.
-    std::string _renameSessionId; //< The sessionId used for renaming.
-    std::string _lastEditingSessionId; //< The last session edited, for auto-saving.
+    std::string _renameFilename; ///< The new filename to rename to.
+    std::string _renameSessionId; ///< The sessionId used for renaming.
+    std::string _lastEditingSessionId; ///< The last session edited, for auto-saving.
 
     /// Versioning is used to prevent races between
     /// painting and invalidation.

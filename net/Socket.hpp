@@ -504,7 +504,7 @@ class MessageHandlerInterface;
 class ProtocolHandlerInterface :
     public std::enable_shared_from_this<ProtocolHandlerInterface>
 {
-    int _fdSocket; //< The socket file-descriptor.
+    int _fdSocket; ///< The socket file-descriptor.
 
 protected:
     /// We own a message handler, after decoding the socket data we pass it on as messages.

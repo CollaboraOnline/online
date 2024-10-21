@@ -345,12 +345,12 @@ private:
     /// setup global instance for get() method
     static void rememberInstance(UnitType type, UnitBase* instance);
 
-    static void* DlHandle; //< The handle to the unit-test .so.
+    static void* DlHandle; ///< The handle to the unit-test .so.
     static char *UnitLibPath;
-    static UnitBase** GlobalArray; //< All the tests.
-    static int GlobalIndex; //< The index of the current test.
-    static TestOptions GlobalTestOptions; //< The test options for this Test Suite.
-    static TestResult GlobalResult; //< The result of all tests. Latches at first failure.
+    static UnitBase** GlobalArray; ///< All the tests.
+    static int GlobalIndex; ///< The index of the current test.
+    static TestOptions GlobalTestOptions; ///< The test options for this Test Suite.
+    static TestResult GlobalResult; ///< The result of all tests. Latches at first failure.
 
     /// Did we set the result of the test yet ?
     bool _setRetValue;
@@ -362,9 +362,9 @@ private:
     std::chrono::milliseconds _startTimeMilliSeconds;
     UnitType _type;
 
-    std::mutex _lock; //< Used to protect cleanup functions.
-    std::mutex _lockSocketPoll; //< Used to sync _socketPoll
-    std::shared_ptr<SocketPoll> _socketPoll; //< Poll thread for async http comm.
+    std::mutex _lock; ///< Used to protect cleanup functions.
+    std::mutex _lockSocketPoll; ///< Used to sync _socketPoll
+    std::shared_ptr<SocketPoll> _socketPoll; ///< Poll thread for async http comm.
 
 protected:
 

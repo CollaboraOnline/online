@@ -92,8 +92,8 @@ private:
     }
 
     std::shared_ptr<TerminatingPoll> _poll;
-    Poco::URI _url; //< Sanitized URL to the document. Can change through redirection.
-    const std::string _docKey; //< Unique DocKey.
+    Poco::URI _url; ///< Sanitized URL to the document. Can change through redirection.
+    const std::string _docKey; ///< Unique DocKey.
     std::function<void(CheckFileInfo&)> _onFinishCallback;
     std::shared_ptr<http::Session> _httpSession;
     std::atomic<State> _state;

@@ -34,7 +34,7 @@ private:
     static void emitInstantEvent(const std::string& name, const std::string& args);
 
     const std::string _args;
-    int _pid; //< -1 when not recording, or done recording.
+    int _pid; ///< -1 when not recording, or done recording.
 
 protected:
     static std::atomic<bool> recordingOn; // True during recoding/emission

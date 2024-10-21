@@ -29,7 +29,7 @@ class UnitWopiOwnertermination : public WopiTestServer
 {
     STATE_ENUM(Phase, Start, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose, Done) _phase;
 
-    int _loadedIndex; //< The connection index that is loaded now.
+    int _loadedIndex; ///< The connection index that is loaded now.
 
 public:
     UnitWopiOwnertermination()

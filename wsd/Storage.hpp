@@ -91,7 +91,7 @@ public:
         std::size_t _size;
         std::string _filename;
         std::string _ownerId;
-        std::string _modifiedTime; //< Opaque modified timestamp as received from the server.
+        std::string _modifiedTime; ///< Opaque modified timestamp as received from the server.
     };
 
     /// Represents attributes of interest to the storage.
@@ -187,12 +187,12 @@ public:
     {
     public:
         STATE_ENUM(Result,
-                   OK = 0, //< Uploaded successfully
-                   DISKFULL, //< Unused.
-                   TOO_LARGE, //< 413
-                   UNAUTHORIZED, //< 401, 403, 404
+                   OK = 0, ///< Uploaded successfully
+                   DISKFULL, ///< Unused.
+                   TOO_LARGE, ///< 413
+                   UNAUTHORIZED, ///< 401, 403, 404
                    DOC_CHANGED, /**< Document changed in storage */
-                   CONFLICT, //< 409
+                   CONFLICT, ///< 409
                    FAILED);
 
         explicit UploadResult(Result result)
@@ -237,10 +237,10 @@ public:
     public:
         STATE_ENUM(
             State,
-            None, //< No async upload in progress or isn't supported.
-            Running, //< An async upload request is in progress.
-            Error, //< Failed to make an async upload request or timed out, no TResult.
-            Complete //< The last async upload request completed (regardless of the server's response).
+            None, ///< No async upload in progress or isn't supported.
+            Running, ///< An async upload request is in progress.
+            Error, ///< Failed to make an async upload request or timed out, no TResult.
+            Complete ///< The last async upload request completed (regardless of the server's response).
         );
 
         AsyncRequest(State state, TResult result)
@@ -264,8 +264,8 @@ public:
     using AsyncUpload = AsyncRequest<UploadResult>;
 
     STATE_ENUM(LockState,
-               LOCK, //< Lock the document.
-               UNLOCK, //< Unlock the document .
+               LOCK, ///< Lock the document.
+               UNLOCK, ///< Unlock the document .
     );
 
     /// Represents the Lock request result, with a Result code
@@ -275,10 +275,10 @@ public:
     {
     public:
         STATE_ENUM(Status,
-                   UNSUPPORTED, //< Locking is not supported on this host.
-                   OK, //< Succeeded to either lock or unlock (see LockContext).
-                   UNAUTHORIZED, //< 401, 403, 404.
-                   FAILED //< Other failures.
+                   UNSUPPORTED, ///< Locking is not supported on this host.
+                   OK, ///< Succeeded to either lock or unlock (see LockContext).
+                   UNAUTHORIZED, ///< 401, 403, 404.
+                   FAILED ///< Other failures.
         );
 
         /// Construct a LockUpdateResult without a failure reason.
@@ -430,11 +430,11 @@ public:
     static void initialize();
 
     STATE_ENUM(StorageType,
-               Unsupported, //< An unsupported type.
-               Unauthorized, //< The host is not allowed by the admin.
-               FileSystem, //< File-System storage. Only for testing.
+               Unsupported, ///< An unsupported type.
+               Unauthorized, ///< The host is not allowed by the admin.
+               FileSystem, ///< File-System storage. Only for testing.
 #if !MOBILEAPP
-               Wopi //< WOPI-like storage.
+               Wopi ///< WOPI-like storage.
 #endif //!MOBILEAPP
     );
 

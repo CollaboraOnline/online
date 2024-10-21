@@ -484,7 +484,7 @@ private:
 private:
     BIO* _bio;
     SSL* _ssl;
-    ssl::CertificateVerification _verification; //< The certificate verification requirement.
+    ssl::CertificateVerification _verification; ///< The certificate verification requirement.
 
     /// During handshake SSL might want to read
     /// on write, or write on read.

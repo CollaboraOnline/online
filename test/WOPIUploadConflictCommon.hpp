@@ -51,11 +51,11 @@ protected:
     /// The different test scenarios. All but VerifyOverwrite modify the document.
     /// See the documentation above.
     STATE_ENUM(Scenario,
-               Disconnect, //< Scenario 4a.
-               SaveDiscard, //< Scenario 4b.
-               CloseDiscard, //< Scenario 4c.
-               SaveOverwrite, //< Scenario 4d.
-               VerifyOverwrite) //< Scenario 5.
+               Disconnect, ///< Scenario 4a.
+               SaveDiscard, ///< Scenario 4b.
+               CloseDiscard, ///< Scenario 4c.
+               SaveOverwrite, ///< Scenario 4d.
+               VerifyOverwrite) ///< Scenario 5.
     _scenario;
 
     static constexpr auto OriginalDocContent = "Original contents";

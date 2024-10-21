@@ -54,8 +54,8 @@ public:
     std::string substitute(const std::unordered_map<std::string, std::string>& values);
 
 private:
-    const std::string _filename; //< Filename on disk, with extension.
-    const std::size_t _size; //< Number of bytes in original file.
+    const std::string _filename; ///< Filename on disk, with extension.
+    const std::size_t _size; ///< Number of bytes in original file.
     /// The segments of the file in <IsVariable, Data> pairs.
     std::vector<std::pair<SegmentType, std::string>> _segments;
 };

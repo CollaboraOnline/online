@@ -54,9 +54,9 @@ namespace
 /// The valid states of the process.
 enum class RunState : char
 {
-    Run = 0, //< Normal up-and-running state.
-    ShutDown, //< Request to shut down gracefully.
-    Terminate //< Immediate termination.
+    Run = 0, ///< Normal up-and-running state.
+    ShutDown, ///< Request to shut down gracefully.
+    Terminate ///< Immediate termination.
 };
 
 /// Single flag to control the current run state.
@@ -64,14 +64,14 @@ static std::atomic<RunState> RunStateFlag(RunState::Run);
 #endif // IOS
 
 static std::atomic<bool> DumpGlobalState(false);
-static std::atomic<bool> ForwardSigUsr2Flag(false); //< Flags to forward SIG_USR2 to children.
+static std::atomic<bool> ForwardSigUsr2Flag(false); ///< Flags to forward SIG_USR2 to children.
 
 static std::atomic<size_t> ActivityStringIndex = 0;
 static std::string ActivityHeader;
 static std::array<std::atomic<char *>, 16> ActivityStrings;
 static bool UnattendedRun = false;
 #if !MOBILEAPP
-static int SignalLogFD = STDERR_FILENO; //< The FD where signalLogs are dumped.
+static int SignalLogFD = STDERR_FILENO; ///< The FD where signalLogs are dumped.
 static char* VersionInfo = nullptr;
 static char FatalGdbString[256] = { '\0' };
 static SigUtil::SigChildHandler SigChildHandle;
