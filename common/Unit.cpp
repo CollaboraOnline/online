@@ -404,16 +404,13 @@ std::shared_ptr<SocketPoll> UnitBase::socketPoll()
 {
     // We could be called from either a UnitWSD::DocBrokerDestroy (prisoner_poll)
     // or from UnitWSD::invokeTest() (coolwsd main).
-    std::lock_guard<std::mutex> guard(_lockSocketPoll);
-    if (!_socketPoll)
-        _socketPoll = std::make_shared<SocketPoll>(getTestname());
-    return _socketPoll;
+    return _socketPoll.assignIfNull( [this]() { return std::make_shared<SocketPoll>(getTestname()); });
 }
 
 void UnitKit::postFork()
 {
     // Don't drag wakeup pipes into the new process.
-    std::shared_ptr<SocketPoll> socketPoll = getSocketPoll();
+    std::shared_ptr<SocketPoll> socketPoll = _socketPoll;
     if (socketPoll)
         socketPoll->closeAllSockets();
 }
@@ -441,7 +438,7 @@ UnitBase::~UnitBase()
 {
     LOG_TST(getTestname() << ": ~UnitBase: " << (failed() ? "FAILED" : "SUCCESS"));
 
-    std::shared_ptr<SocketPoll> socketPoll = getSocketPoll();
+    std::shared_ptr<SocketPoll> socketPoll = _socketPoll;
     if (socketPoll)
         socketPoll->joinThread();
 }
@@ -624,7 +621,7 @@ void UnitBase::returnValue(int& retValue)
 void UnitBase::endTest([[maybe_unused]] const std::string& reason)
 {
     LOG_TST("Ending test by stopping SocketPoll [" << getTestname() << "]: " << reason);
-    std::shared_ptr<SocketPoll> socketPoll = getSocketPoll();
+    std::shared_ptr<SocketPoll> socketPoll = _socketPoll;
     if (socketPoll)
         socketPoll->joinThread();
 
