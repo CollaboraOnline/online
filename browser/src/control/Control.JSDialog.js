@@ -767,9 +767,8 @@ L.Control.JSDialog = L.Control.extend({
 
 		var dialogInfo = this.dialogs[data.id];
 		if (dialogInfo.isDocumentAreaPopup) {
-			// FIXME: suspicious false to remove, leftover from: 629b25b, updatePos rework: a2d666d
-			// FIXME: data here doesn't seem to have posx, posy in any case (only with full updates)
-			dialogInfo.updatePos(false, new L.Point(data.posx, data.posy));
+			// In case of AutocompletePopup's update data would have posx, posy
+			dialogInfo.updatePos(new L.Point(data.posx, data.posy));
 		}
 
 		// FIXME: remove 100 ms magic timing, drawing areas should request dialog position update
