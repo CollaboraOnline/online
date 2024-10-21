@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection Map PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -693,6 +693,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Tile garbage collection counter
 		this._gcCounter = 0;
 
+		// Pause/resume drawing counter
+		this._drawingPaused = 0;
+
 		// Queue of tiles which were GC'd earlier than coolwsd expected
 		this._fetchKeyframeQueue = [];
 
@@ -726,7 +729,22 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._canonicalIdInitialized = false;
 		this._nullDeltaUpdate = 0;
 
-		this._unpremult = new L.UnPremult(256);
+		if (window.Worker) {
+			window.app.console.info('Creating CanvasTileWorker');
+			this._worker = new Worker('src/layer/tile/CanvasTileWorker.js');
+			this._worker.addEventListener('message', (e) => this._onWorkerMessage(e));
+			this._workerPendingEvents = [];
+			this._workerMap = new Map();
+			this._workerId = 0;
+
+			const bufferSize = window.tileSize * window.tileSize * 4;
+			const nBuffers = 512;
+
+			this._workerBuffers = [];
+			for (var i = 0; i < nBuffers; ++i) {
+				this._workerBuffers.push(new Uint8Array(bufferSize));
+			}
+		}
 	},
 
 	_initContainer: function () {
@@ -1231,6 +1249,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			wireId: 0, // monotonic timestamp for optimizing fetch
 			invalidFrom: 0, // a wireId - for avoiding races on invalidation
 			lastRendered: new Date(),
+			hasPendingDelta: false,
+			hasPendingKeyframe: false,
 			hasContent: function() {
 				return this.imgDataCache || this.hasKeyframe();
 			},
@@ -1239,7 +1259,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			},
 			hasKeyframe: function() {
 				return this.rawDeltas && this.rawDeltas.length > 0;
-			}
+			},
+			hasPendingUpdate: function() {
+				return this.hasPendingDelta || this.hasPendingKeyframe;
+			},
 		};
 		this._emptyTilesCount += 1;
 		this._tiles[key] = tile;
@@ -3917,13 +3940,18 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	pauseDrawing: function () {
-		if (this._painter && app.sectionContainer)
+		if (this._painter && app.sectionContainer) {
 			app.sectionContainer.pauseDrawing();
+			++this._drawingPaused;
+		}
 	},
 
 	resumeDrawing: function (topLevel) {
-		if (this._painter && app.sectionContainer)
+		if (this._painter && app.sectionContainer) {
 			app.sectionContainer.resumeDrawing(topLevel);
+			if (this._drawingPaused && --this._drawingPaused === 0)
+				app.sectionContainer.requestReDraw();
+		}
 	},
 
 	enableDrawing: function () {
@@ -5051,7 +5079,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!tile)
 			return;
 
-		if (!tile.hasContent() && this._emptyTilesCount > 0)
+		if (!tile.hasContent() && !tile.hasPendingKeyframe && this._emptyTilesCount > 0)
 			this._emptyTilesCount -= 1;
 
 		this._reclaimTileCanvasMemory(tile);
@@ -5074,7 +5102,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._debug.tileDataAddInvalidate();
 		}
 
-		if (!tile.hasContent())
+		if (!tile.hasContent() && !tile.hasPendingKeyframe)
 			this._removeTile(key);
 		else
 		{
@@ -5129,14 +5157,14 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (this._debugDeltas)
 					window.app.console.log('Restoring a tile from cached delta at ' +
 							       this._tileCoordsToKey(tile.coords));
-				this._applyDelta(tile, tile.rawDeltas, true, false);
+				this._applyCompressedDelta(tile, tile.rawDeltas, true, false);
 			}
 		}
 		if (!forPrefetch)
 		{
 			if (now !== null)
 				tile.lastRendered = now;
-			if (!tile.hasContent())
+			if (!tile.hasContent() && !tile.hasPendingKeyframe)
 				tile.missingContent++;
 		}
 	},
@@ -5285,7 +5313,64 @@ L.CanvasTileLayer = L.Layer.extend({
 		return ctx;
 	},
 
-	_applyDelta: function(tile, rawDelta, isKeyframe, wireMessage) {
+	_applyCompressedDelta: function(tile, rawDelta, isKeyframe, wireMessage) {
+		if (window.Worker) {
+			var e = { tile: tile, rawDelta: rawDelta, isKeyframe: isKeyframe, wireMessage: wireMessage };
+			if (tile.hasPendingUpdate() || !this._workerBuffers.length) {
+				this._workerPendingEvents.push(e);
+				return;
+			}
+
+			var buffer = this._workerBuffers.shift();
+			var id = this._workerId++;
+
+			try {
+				this._worker.postMessage(
+					{ 'message': 'decompress',
+					  'tile': { id: id,
+								rawDelta: rawDelta, // Note: This is copied intentionally
+								isKeyframe: isKeyframe,
+								tileSize: window.tileSize },
+					  'buffer': buffer,
+					}, [buffer.buffer]);
+
+				this.pauseDrawing();
+				this._workerMap.set(id, e);
+				if (isKeyframe)
+					tile.hasPendingKeyframe = true;
+				else
+					tile.hasPendingDelta = true;
+
+				return;
+			} catch(error) {
+				window.app.console.error('Failed to post message to worker', error);
+				this._workerBuffers.push(buffer);
+				// Fall through to the fall-back path below
+			}
+		}
+
+		// Fall-back synchronous path
+		var deltas = window.fzstd.decompress(rawDelta);
+		if (isKeyframe)
+		{
+			if (this._debugDeltas)
+				window.app.console.log('Applying a raw RLE keyframe of length ' + deltas.length +
+								' hex: ' + hex2string(deltas, deltas.length));
+
+			var width = window.tileSize;
+			var height = window.tileSize;
+			var resultu8 = new Uint8ClampedArray(width * height * 4);
+			L.CanvasTileUtils.unrle(deltas, width, height, resultu8, 0);
+			deltas = resultu8;
+
+			if (this._debugDeltas)
+				window.app.console.log('Applied keyframe of total size ' + resultu8.length +
+								' at stream offset 0');
+		}
+		this._applyDelta(tile, rawDelta, deltas, isKeyframe, wireMessage);
+	},
+
+	_applyDelta: function(tile, rawDelta, deltas, isKeyframe, wireMessage) {
 		// 'Uint8Array' rawDelta
 
 		if (this._debugDeltas)
@@ -5368,86 +5453,20 @@ L.CanvasTileLayer = L.Layer.extend({
 		var offset = 0;
 
 		// FIXME:used clamped array ... as a 2nd parameter
-		var allDeltas = window.fzstd.decompress(rawDelta);
-
 		var imgData;
 
 		// May have been changed by _ensureContext garbage collection
 		var canvas = tile.canvas;
 
 		if (isKeyframe)
+			imgData = new ImageData(deltas, canvas.width, canvas.height);
+
+		while (offset < deltas.length)
 		{
 			if (this._debugDeltas)
-				window.app.console.log('Applying a raw RLE keyframe of length ' + allDeltas.length +
-						       ' hex: ' + hex2string(allDeltas, allDeltas.length));;
+				window.app.console.log('Next delta at ' + offset + ' length ' + (deltas.length - offset));
 
-			// Byte bashing fun
-			var width = canvas.width;
-			var height = canvas.height;
-
-			var resultu32 = new Uint32Array(width * height);
-			var resultu8 = new Uint8ClampedArray(resultu32.buffer, resultu32.byteOffset, resultu32.byteLength);
-
-			for (var y = 0; y < height; ++y)
-			{
-				var rleSize = allDeltas[offset] + allDeltas[offset+1] * 256;
-				offset += 2;
-				if (this._debugDeltas)
-					window.app.console.log('rle size ' + rleSize);
-
-				var rleMask = offset;
-				var rleMaskSizeBytes = 256/8;
-
-				offset += rleMaskSizeBytes;
-
-				var uniquePixels;
-				if (rleSize > 0)
-				{
-					this._unpremult.unpremultiply(allDeltas, rleSize * 4, offset);
-					uniquePixels = this._unpremult._pixels;
-					if (this._debugDeltas)
-						window.app.console.log(
-							'Pixels hex: ' + hex2string(this._unpremult._bytes, rleSize * 4));;
-				}
-
-				// It would be rather nice to have real 64bit types [!]
-				var lastPix = 0;
-				var lastMask = 0;
-				var bitToCheck = 256;
-				var rleMaskOffset = rleMask;
-
-				var pixOffset = y * width;
-				var pixSrc = 0;
-
-				for (var x = 0; x < width; ++x)
-				{
-					if (bitToCheck > 128)
-					{
-						bitToCheck = 1;
-						lastMask = allDeltas[rleMaskOffset++];
-					}
-					if (!(lastMask & bitToCheck))
-						lastPix = uniquePixels[pixSrc++];
-					bitToCheck = bitToCheck << 1;
-					resultu32[pixOffset++] = lastPix;
-				}
-
-				offset += rleSize * 4;
-			}
-
-			imgData = new ImageData(resultu8, canvas.width, canvas.height);
-
-			if (this._debugDeltas)
-				window.app.console.log('Applied keyframe of total size ' + offset +
-						       ' at stream offset 0');
-		}
-
-		while (offset < allDeltas.length)
-		{
-			if (this._debugDeltas)
-				window.app.console.log('Next delta at ' + offset + ' length ' + (allDeltas.length - offset));
-
-			var delta = !offset ? allDeltas : allDeltas.subarray(offset);
+			var delta = !offset ? deltas : deltas.subarray(offset);
 
 			// Debugging paranoia: if we get this wrong bad things happen.
 			if (delta.length >= canvas.width * canvas.height * 4)
@@ -5543,11 +5562,8 @@ L.CanvasTileLayer = L.Layer.extend({
 							       ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
 				span *= 4;
-				// copy so this is suitably aligned for a Uint32Array view
-				this._unpremult.unpremultiply(delta, span, i);
-				// imgData.data[offset + 1] = 256; // debug - greener start
 				for (var j = 0; j < span; ++j)
-					imgData.data[offset++] = this._unpremult._bytes[j];
+					imgData.data[offset++] = delta[i+j];
 				i += span;
 				// imgData.data[offset - 2] = 256; // debug - blue terminator
 				break;
@@ -5621,7 +5637,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// keyframe content in JS but coolwsd still thinks we have
 		// it and now we just have a delta with nothing to apply
 		// it to; if so, mark it bad to re-fetch.
-		if (img && !img.isKeyframe && !tile.hasKeyframe())
+		if (img && !img.isKeyframe && !tile.hasKeyframe() && !tile.hasPendingKeyframe)
 		{
 			window.app.console.debug('Unusual: Delta sent - but we have no keyframe for ' + key);
 			// force keyframe
@@ -5639,7 +5655,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// updates don't need more chattiness with a tileprocessed
 		if (hasContent)
 		{
-			this._applyDelta(tile, img.rawData, img.isKeyframe, true);
+			this._applyCompressedDelta(tile, img.rawData, img.isKeyframe, true);
 			this._tileReady(coords);
 		}
 
@@ -5656,6 +5672,35 @@ L.CanvasTileLayer = L.Layer.extend({
 			window.app.console.warn('re-fetching prematurely GCd keyframes');
 			this._sendTileCombineRequest(this._fetchKeyframeQueue);
 			this._fetchKeyframeQueue = [];
+		}
+	},
+
+	_onWorkerMessage: function(e) {
+		switch (e.data.message) {
+		case 'decompress':
+			var params = this._workerMap.get(e.data.tile.id);
+			this._workerMap.delete(e.data.tile.id);
+			if (params.isKeyframe)
+				params.tile.hasPendingKeyframe = false;
+			else
+				params.tile.hasPendingDelta = false;
+			this._applyDelta(params.tile, e.data.tile.rawDelta, e.data.tile.deltas, params.isKeyframe, params.wireMessage, false);
+			this._workerBuffers.push(e.data.buffer);
+
+			for (var i = 0; this._workerBuffers.length && i < this._workerPendingEvents.length;) {
+				var params = this._workerPendingEvents[i];
+				if (!params.tile.hasPendingUpdate()) {
+					this._workerPendingEvents.splice(i, 1);
+					this._applyCompressedDelta(params.tile, params.rawDelta, params.isKeyframe, params.wireMessage);
+				} else
+					++i;
+			}
+
+			this.resumeDrawing(false);
+			break;
+
+		default:
+			window.app.console.error('Unrecognised message from worker');
 		}
 	},
 

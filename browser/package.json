@@ -58,6 +58,6 @@
   "scripts": {
     "test": "mocha 'mocha_tests/**/*.js'",
     "test-single": "mocha",
-    "duplication": "jscpd ./src/ --exitCode 1 --min-lines 17"
+    "duplication": "jscpd --ignore src/layer/tile/CanvasTileWorker.js ./src/ --exitCode 1 --min-lines 17"
   }
 }
