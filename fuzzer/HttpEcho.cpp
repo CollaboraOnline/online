@@ -68,13 +68,14 @@ public:
                             logProperties);
         }
 
+        std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         std::shared_ptr<SocketFactory> factory = std::make_shared<ServerSocketFactory>();
         int port = 9990;
         for (int i = 0; i < 40; ++i, ++port)
         {
             // Try listening on this port.
             _socket = ServerSocket::create(ServerSocket::Type::Local, port, Socket::Type::IPv4,
-                                           _pollServerThread, factory);
+                                           now, _pollServerThread, factory);
             if (_socket)
                 break;
         }
