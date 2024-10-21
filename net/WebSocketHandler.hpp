@@ -417,7 +417,7 @@ private:
                     const int64_t us = std::chrono::duration_cast<std::chrono::microseconds>
                                           (now - _lastPingSentTime).count();
                     const double avg_us = _pingMicroS.add(_lastPingSentTime, static_cast<double>(us));
-                    LOGA_TRC(WebSocket, "Pong received: " << us << "us, avg " << avg_us << "us over "
+                    LOG_DBG("Ping: Pong received: " << us << "us, avg " << avg_us << "us over "
                                          << (int)_pingMicroS.duration() << "s");
                     gotPing(code, static_cast<int>(us));
                 }
@@ -432,7 +432,7 @@ private:
                                           (now - _lastPingSentTime).count();
                     const double avg_us = _pingMicroS.add(_lastPingSentTime, static_cast<double>(us));
                     sendPong(now, &ctrlPayload[0], payloadLen, socket);
-                    LOGA_TRC(WebSocket, "Ping received: " << us << " us -> avg " << avg_us << " us");
+                    LOG_DBG("Ping: Ping received: " << us << " us -> avg " << avg_us << " us");
                     gotPing(code, static_cast<int>(us));
                 }
                 break;
@@ -634,7 +634,7 @@ private:
             setPingPongTime(now); // Pretend we sent it to avoid timing out immediately.
             return;
         }
-        LOGA_TRC(WebSocket, "Ping: Sending " << (code == WSOpCode::Ping ? "ping" : "pong") );
+        LOG_DBG("Ping: Sending " << (code == WSOpCode::Ping ? "ping" : "pong") );
         _lastPingSentTime = now;
         // FIXME: allow an empty payload.
         sendMessage(data, len, code, false);
