@@ -448,7 +448,7 @@ L.Map = L.Evented.extend({
 
 		clearTimeout(this._modTimeout);
 
-		if (this._modIndicatorInitialized) {
+		if (this._modIndicatorInitialized && this._lastmodtime) {
 			var dateTime = new Date(this._lastmodtime.replace(/,.*/, 'Z'));
 			var dateValue;
 
