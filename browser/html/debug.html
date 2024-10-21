@@ -65,7 +65,6 @@
         }
 
         function receivePostMessage(event) {
-          console.log('==== debug.html receiveMessage: ' + event.data);
           if (event.origin !== window.origin)
             return;
 
@@ -76,9 +75,16 @@
               event.data.name.endsWith("Error"))
             throw event.data;
 
-          let msg = JSON.parse(event.data);
-          if (!msg)
+          let msg;
+          try {
+            msg = JSON.parse(event.data);
+            if (!msg)
+              return;
+          } catch(e) {
             return;
+          }
+
+          console.log('==== debug.html receiveMessage: ' + event.data);
           switch (msg.MessageId) {
             case 'App_LoadingStatus':
               if (!msg.Values)
