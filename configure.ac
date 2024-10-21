@@ -146,6 +146,12 @@ AC_ARG_ENABLE([macosapp],
               AS_HELP_STRING([--enable-macosapp],
                              [Use on a Mac where you will build the macOS app.]))
 
+AC_ARG_ENABLE([windowsapp],
+              AS_HELP_STRING([--enable-windowsapp],
+                             [Use in WSL2 on a Windows PC where you will build the Windows app that works
+                              similarly to the iOS app, from the JavaScript and the pseudo WebSocket
+                              message plumbing point of view.]))
+
 AC_ARG_WITH([wasm-fallback],
               AS_HELP_STRING([--with-wasm-fallback=<path>],
                              [Build a COOL where the client can fall back to a WASM implementation if the connection to the server fails.
@@ -629,7 +635,7 @@ ZSTDLIB_X86=
 ZSTDLIB_X86_64=
 
 CORE_VERSION_HASH=""
-if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \) -o "$host_os" = "emscripten" ; then
+if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_windowsapp" = "yes" \) -o \( "$enable_androidapp" = "yes" \) -o "$host_os" = "emscripten" ; then
    if test "$enable_androidapp" = "yes" ; then
       AC_MSG_CHECKING([for Android ABI to build for])
       if test -n "$with_android_abi" ; then
@@ -653,7 +659,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
 
    AC_MSG_CHECKING([for LibreOffice build tree to build against])
    if test -z "$with_lo_builddir"; then
-      AC_MSG_ERROR([You MUST use the --with-lo-builddir option when configuring the mobile app build tree.])
+      AC_MSG_ERROR([You MUST use the --with-lo-builddir option when configuring the mobile or Windows app build tree.])
    fi
 
    LOBUILDDIR="$with_lo_builddir"
@@ -682,15 +688,21 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
 
    LOBUILDDIR=`readlink -f "$LOBUILDDIR"`
 
-   # Get the git hash of the core build
-   CORE_VERSION_HASH=`cd $LOBUILDDIR && grep buildid instdir/program/setuprc | sed -e 's/buildid=//' -e 's/............................$//'`
-
-   # Sanity check, just a random object file in the LibreOffice build tree
-   if test \( "$enable_iosapp" = "yes" -a -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o" \) -o \( "$enable_androidapp" = "yes" -a -f "$LOBUILDDIR/workdir/LinkTarget/StaticLibrary/liblibpng.a" \) -o \( "$host_os" = "emscripten" -a -f "${LOBUILDDIR}/workdir/LinkTarget/StaticLibrary/liblibpng.a" \); then
-       AC_MSG_RESULT([$LOBUILDDIR])
+   # Get the git hash of the core build.
+   # Also use the setuprc or setup.ini file existence as a sanity check.
+   if test "$enable_windowsapp" = "yes"; then
+      setuprc=setup.ini
    else
-       AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
+      setuprc=setuprc
    fi
+
+   if test -f "$LOBUILDDIR/instdir/program/$setuprc"; then
+      AC_MSG_RESULT([$LOBUILDDIR])
+   else
+      AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
+   fi
+
+   CORE_VERSION_HASH=`grep buildid $LOBUILDDIR/instdir/program/$setuprc | sed -e 's/buildid=//' -e 's/............................$//'`
 
    if test -n "$LOBUILDDIR_ARM64_V8A" ; then
       if test -f "$LOBUILDDIR_ARM64_V8A/workdir/LinkTarget/StaticLibrary/liblibpng.a" ; then
@@ -718,7 +730,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
 
    AC_MSG_CHECKING([for Poco include directory to build against])
    if test -z "$with_poco_includes"; then
-      AC_MSG_ERROR([You MUST use the --with-poco-includes option when configuring the mobile app build tree.])
+      AC_MSG_ERROR([You MUST use the --with-poco-includes option when configuring the mobile or Windows app build tree.])
    fi
 
    POCOINCLUDE="$with_poco_includes"
@@ -773,18 +785,26 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    fi
 
    # Sanity checks
-   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib)
-   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_ARM64_V8A)
-   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X64)
-   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86_X64)
+   if test "$enable_windowsapp" = "yes"; then
+      CHK_FILE_VAR(POCOLIB,PocoFoundation.lib,Poco lib)
+   else
+      CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib)
+      CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_ARM64_V8A)
+      CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X64)
+      CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86_X64)
+   fi
 
    if test "$ENABLE_DEBUG" = "true" ; then
        POCODEBUG=d
    fi
 
-   AC_MSG_CHECKING([for zstd lib directory to build against])
+   AC_MSG_CHECKING([for zstd directories to build against])
+   if test -z "$with_zstd_includes"; then
+      AC_MSG_ERROR([You MUST use the --with-zstd-includes option when configuring the mobile or Windows app build tree.])
+   fi
+
    if test -z "$with_zstd_libs"; then
-      AC_MSG_ERROR([You MUST use the --with-zstd-libs option when configuring the mobile app build tree.])
+      AC_MSG_ERROR([You MUST use the --with-zstd-libs option when configuring the mobile or Windows app build tree.])
    fi
 
    ZSTDINCLUDE="$with_zstd_includes"
@@ -833,10 +853,14 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
       fi
    fi
 
-   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib)
-   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_ARM64_V8A)
-   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X64)
-   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86_64)
+   if test "$enable_windowsapp"; then
+      CHK_FILE_VAR(ZSTDLIB,libzstd_static.lib,Zstd lib)
+   else
+      CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib)
+      CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_ARM64_V8A)
+      CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X64)
+      CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86_64)
+   fi
 fi
 
 AC_SUBST(LOSOURCEDIR)
@@ -870,7 +894,7 @@ AC_DEFINE_UNQUOTED([CORE_VERSION_HASH],[["$CORE_VERSION_HASH"]],[LibreOffice cor
 LIBPNG_INCLUDES="$with_libpng_includes"
 LIBPNG_LIBS="$with_libpng_libs"
 
-if test "$enable_iosapp" != yes -a "$enable_androidapp" != yes; then
+if test "$enable_iosapp" != yes -a "$enable_windowsapp" != yes -a "$enable_androidapp" != yes; then
    LOKIT_PATH=`readlink -f $with_lokit_path`
 fi
 
@@ -981,6 +1005,14 @@ fi
 AC_SUBST(ENABLE_MACOSAPP)
 AM_CONDITIONAL([ENABLE_MACOSAPP], [test "$ENABLE_MACOSAPP" = "true"])
 #AC_SUBST(MACOSAPP_BUNDLE_VERSION)
+
+ENABLE_WINDOWSAPP=
+
+if test "$enable_windowsapp" = "yes"; then
+   ENABLE_WINDOWSAPP=true
+fi
+AC_SUBST(ENABLE_WINDOWSAPP)
+AM_CONDITIONAL([ENABLE_WINDOWSAPP], [test "$ENABLE_WINDOWSAPP" = "true"])
 
 AC_MSG_CHECKING([for custom icon theme])
 CUSTOM_ICONS_DIRECTORY=
@@ -1289,7 +1321,7 @@ AS_IF([test -n "$LOKIT_PATH"],
       [CPPFLAGS="$CPPFLAGS -I${LOKIT_PATH}"])
 lokit_msg="$LOKIT_PATH"
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_MACOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_MACOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
       [AC_MSG_CHECKING([for LibreOffice path])
       if test -n "$with_lo_path"; then
           # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
@@ -1406,7 +1438,7 @@ mobile_app=
 ENABLE_MOBILEAPP=
 MOBILEAPP=0
 AC_MSG_CHECKING([if this is a mobile app])
-if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
+if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_windowsapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
      AC_MSG_RESULT([yes])
      mobile_app=true;
      MOBILEAPP=1
@@ -1521,7 +1553,7 @@ fi
 AS_IF([test "$ENABLE_SSL" = "true"],
       [LIBS="$LIBS -lssl -lcrypto"])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
       [AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
                         [],
                         [AC_MSG_ERROR([header LibreOfficeKit/LibreOfficeKit.h not found, perhaps you want to use --with-lokit-path])])
