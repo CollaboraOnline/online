@@ -32,6 +32,6 @@ class AnimationSetNode extends AnimationBaseNode2 {
 
 		const aActivityParamSet = this.fillActivityParams();
 
-		return new SetActivity(aActivityParamSet, aAnimation, this.getToValue());
+		return new SetActivity(aActivityParamSet, this, aAnimation);
 	}
 }

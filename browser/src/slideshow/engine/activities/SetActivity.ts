@@ -17,13 +17,13 @@ class SetActivity extends AnimationActivity {
 	private aTargetElement: null;
 	private aEndEvent: DelayEvent;
 	private aTimerEventQueue: TimerEventQueue;
-	private aToAttr: string;
+	private aToAttr: any;
 	private bIsActive: boolean;
 
 	constructor(
 		aCommonParamSet: ActivityParamSet,
+		aAnimationNode: AnimationSetNode,
 		aAnimation: AnimationBase,
-		aToAttr: string,
 	) {
 		super();
 
@@ -31,8 +31,38 @@ class SetActivity extends AnimationActivity {
 		this.aTargetElement = null;
 		this.aEndEvent = aCommonParamSet.aEndEvent;
 		this.aTimerEventQueue = aCommonParamSet.aTimerEventQueue;
-		this.aToAttr = aToAttr;
 		this.bIsActive = true;
+
+		const aAnimatedElement = aAnimationNode.getAnimatedElement();
+		const sAttributeName = aAnimationNode.getAttributeName();
+		const sKey = sAttributeName as PropertyGetterSetterMapKeyType;
+		const aAttributeProp = aPropertyGetterSetterMap[sKey];
+
+		const eValueType: PropertyValueType = aAttributeProp['type'];
+
+		const aValueSet = [aAnimationNode.getToValue()];
+
+		ANIMDBG.print(
+			'SetActivity: value type: ' +
+				PropertyValueType[eValueType] +
+				', aTo = ' +
+				aValueSet[0],
+		);
+
+		const aValueList: any[] = [];
+
+		extractAttributeValues(
+			eValueType,
+			aValueList,
+			aValueSet,
+			aAnimatedElement.getBaseBBox(),
+			aCommonParamSet.nSlideWidth,
+			aCommonParamSet.nSlideHeight,
+		);
+
+		ANIMDBG.print('SetActivity ctor: aTo = ' + aValueList[0]);
+
+		this.aToAttr = aValueList[0];
 	}
 
 	public activate(aEndEvent: DelayEvent) {
