@@ -138,7 +138,7 @@ class Transition2d extends TransitionBase {
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
 		app.map.fire('newslideshowframe', {
-			frame: gl.canvas
+			frame: gl.canvas,
 		});
 	}
 }

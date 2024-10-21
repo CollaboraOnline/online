@@ -362,7 +362,7 @@ class SlideRendererGl extends SlideRenderer {
 			this._renderedSlideIndex,
 		);
 		app.map.fire('newslideshowframe', {
-			frame: slideImage
+			frame: slideImage,
 		});
 		this.updateTexture(this._slideTexture, slideImage);
 		return this._slideTexture;
