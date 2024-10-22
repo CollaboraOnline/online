@@ -252,6 +252,14 @@ L.Util = {
 			result += ValidCharacters.charAt(Math.floor(Math.random() * ValidCharacters.length));
 		}
 		return result;
+	},
+
+	listenProtocol: function(protocol) {
+		var element = document.body.querySelector('#listener-protocol');
+		if (element)
+			element.remove();
+
+		L._protocol = protocol;
 	}
 };
 

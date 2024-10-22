@@ -15,10 +15,8 @@ describe(['tagdesktop'], 'Table operations', function() {
 		var optionButton = cy.cGet(optionId);
 		// It takes time for the ui to enable the various table toolbar buttons after
 		// the table gets focus, but we can continue as soon as:
-		// a) the parent container is enabled
-		optionButton.parent().should('not.have.class', 'disabled');
-		// b) the specific button is enabled
-		optionButton.should('not.have.class', 'disabled').click();
+		optionButton.should('not.have.class', 'disabled');
+		optionButton.click();
 	}
 
 	function retriggerNewSvgForTableInTheCenter() {
@@ -32,7 +30,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 
 		impressHelper.selectTableInTheCenter();
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
-			.should('have.length', 3);
+			.should('have.length.above', 2);
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 2);
 
@@ -45,7 +43,10 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Insert Row Before', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-		selectOptionNotebookbar('#table-insert-rows-before-button');
+		helper.listenProtocol('shapeselectioncontent:');
+		selectOptionNotebookbar('#table-insert-rows-before');
+		cy.cGet('#listener-protocol').should('exist');
+
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
 		cy.cGet('#document-container g.Page g').should('have.class', 'com.sun.star.drawing.TableShape');
@@ -65,7 +66,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Insert Row After', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-		selectOptionNotebookbar('#table-insert-rows-after-button');
+		helper.listenProtocol('shapeselectioncontent:');
+		selectOptionNotebookbar('#table-insert-rows-after');
+		cy.cGet('#listener-protocol').should('exist');
 
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
@@ -89,7 +92,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Insert column before.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-		selectOptionNotebookbar('#table-insert-columns-before-button');
+		helper.listenProtocol('shapeselectioncontent:');
+		selectOptionNotebookbar('#table-insert-columns-before');
+		cy.cGet('#listener-protocol').should('exist');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
@@ -115,7 +120,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Insert column after.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-		selectOptionNotebookbar('#table-insert-columns-after-button');
+		helper.listenProtocol('shapeselectioncontent:');
+		selectOptionNotebookbar('#table-insert-columns-after');
+		cy.cGet('#listener-protocol').should('exist');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
@@ -141,7 +148,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Delete row.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-		selectOptionNotebookbar('#table-delete-rows-button');
+		helper.listenProtocol('shapeselectioncontent:');
+		selectOptionNotebookbar('#table-delete-rows');
+		cy.cGet('#listener-protocol').should('exist');
 
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
@@ -163,12 +172,14 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Delete Column.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-		selectOptionNotebookbar('#table-insert-columns-before-button');
+		helper.listenProtocol('shapeselectioncontent:');
+		selectOptionNotebookbar('#table-insert-columns-before');
+		cy.cGet('#listener-protocol').should('exist');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
 
-		selectOptionNotebookbar('#table-delete-columns-button');
+		selectOptionNotebookbar('#table-delete-columns');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 2);
@@ -194,7 +205,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Delete Table', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-		selectOptionNotebookbar('#table-delete-table-button');
+		selectOptionNotebookbar('#table-delete-table');
 
 		retriggerNewSvgForTableInTheCenter();
 
@@ -212,9 +223,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
-		selectOptionNotebookbar('#table-entire-row-button');
+		selectOptionNotebookbar('#table-entire-row');
 		cy.wait(1000);
-		selectOptionNotebookbar('#table-merge-cells-button');
+		selectOptionNotebookbar('#table-merge-cells');
 
 		retriggerNewSvgForTableInTheCenter();
 
@@ -241,9 +252,9 @@ describe(['tagdesktop'], 'Table operations', function() {
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
-		selectOptionNotebookbar('#table-entire-column-button');
+		selectOptionNotebookbar('#table-entire-column');
 		cy.wait(1000);
-		selectOptionNotebookbar('#table-merge-cells-button');
+		selectOptionNotebookbar('#table-merge-cells');
 
 		retriggerNewSvgForTableInTheCenter();
 

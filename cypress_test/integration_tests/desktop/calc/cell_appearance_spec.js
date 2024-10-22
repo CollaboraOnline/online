@@ -15,7 +15,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		calcHelper.clickOnFirstCell();
 		cy.cGet('#Home').click();
-		cy.cGet('#Home-container .unoBackgroundColor .arrowbackground').click();
+		cy.cGet('#Home-container .unoBackgroundColor').click();
 		desktopHelper.selectColorFromPalette('BF0041');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -199,7 +199,7 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		cy.wait(500); // Wait for first popup to close.
 
 		// Then apply border color
-		cy.cGet('#FrameLineColor .arrowbackground').click();
+		cy.cGet('#FrameLineColor').click();
 		desktopHelper.selectColorFromPalette('BF0041');
 		helper.copy();
 		calcHelper.selectEntireSheet();

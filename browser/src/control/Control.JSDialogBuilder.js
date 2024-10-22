@@ -2246,22 +2246,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_unoToolButton: function(parentContainer, data, builder, options) {
-		var button = null;
+		var button = null, buttonImage, label, container, inline;
 
 		var controls = {};
 
-		var div;
 		if (data.command === '.uno:Paste' || data.command === '.uno:Cut' || data.command === '.uno:Copy') {
 			var hyperlink = L.DomUtil.create('a', '', parentContainer);
-			div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', hyperlink, data);
+			button = this._createIdentifiable('button', 'unotoolbutton ' + builder.options.cssClass
+							  + ' ui-content unobutton unospan', hyperlink, data);
 		} else {
-			div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+			button = this._createIdentifiable('button', 'unotoolbutton ' + builder.options.cssClass
+							  + ' ui-content unobutton unospan', parentContainer, data);
 		}
 
-		controls['container'] = div;
-		div.tabIndex = -1;
+		controls['container'] = button;
+		button.tabIndex = -1;
 		if (data.class)
-			div.classList.add(data.class);
+			button.classList.add(data.class);
 
 		var isRealUnoCommand = true;
 		var hasPopUp = false;
@@ -2288,12 +2289,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				console.warn('_unoToolButton: no id provided');
 
 			if (data.command)
-				L.DomUtil.addClass(div, data.command.replace(':', '').replace('.', ''));
+				L.DomUtil.addClass(button, data.command.replace(':', '').replace('.', ''));
 
 			if (isRealUnoCommand)
 				id = builder._makeIdUnique(id);
 
-			div.id = id;
+			button.id = id;
 			data.id = id; // change in input data for postprocess
 
 			var buttonId = id + '-button';
@@ -2318,19 +2319,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (data.w2icon) {
 				// FIXME: DEPRECATED, this is legacy way to setup icon based on CSS class
-				var buttonImage = L.DomUtil.create('div', 'w2ui-icon ' + data.w2icon, button);
+				buttonImage = L.DomUtil.create('div', 'w2ui-icon ' + data.w2icon);
 			}
 			else if (hasImage !== false){
 				if (data.icon) {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '');
 					this._isStringCloseToURL(data.icon) ? buttonImage.src = data.icon : L.LOUtil.setImage(buttonImage, data.icon, builder.map);
 				}
 				else if (data.image) {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '');
 					buttonImage.src = data.image;
 				}
 				else {
-					buttonImage = L.DomUtil.create('img', '', button);
+					buttonImage = L.DomUtil.create('img', '');
 					L.LOUtil.setImage(buttonImage, builder._createIconURL(data.command), builder.map);
 				}
 			} else {
@@ -2339,17 +2340,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			controls['button'] = button;
 			if (builder.options.noLabelsForUnoButtons !== true) {
-				var label = L.DomUtil.create('label', 'ui-content unolabel', button);
+				label = L.DomUtil.create('label', 'ui-content unolabel');
 				label.htmlFor = buttonId;
 				label.textContent = builder._cleanText(data.text);
 				builder._stressAccessKey(label, button.accessKey);
 				controls['label'] = label;
-				$(div).addClass('has-label');
+				L.DomUtil.addClass(button, 'has-label');
 			} else if (builder.options.useInLineLabelsForUnoButtons === true) {
-				$(div).addClass('no-label');
+				L.DomUtil.addClass(button, 'no-label');
 			} else {
-				builder.map.uiManager.enableTooltip(div);
-				$(div).addClass('no-label');
+				L.DomUtil.addClass(button, 'no-label');
 			}
 
 			if (buttonImage !== false) {
@@ -2360,15 +2360,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 			}
 
-			div.setAttribute('data-cooltip', builder._cleanText(data.text));
+			button.setAttribute('data-cooltip', builder._cleanText(data.text));
 
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
-				$(div).addClass('inline');
-				label = L.DomUtil.create('span', 'ui-content unolabel', div);
-				label.htmlFor = buttonId;
-				label.textContent = builder._cleanText(data.text);
+				L.DomUtil.addClass(button, 'inline');
+				inline = L.DomUtil.create('span', 'ui-content unolabel');
+				inline.htmlFor = buttonId;
+				inline.textContent = builder._cleanText(data.text);
 
-				controls['label'] = label;
+				controls['label'] = inline;
 			}
 			var disabled = data.enabled === 'false' || data.enabled === false;
 			if (data.command) {
@@ -2377,12 +2377,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					var state = items.getItemValue(data.command);
 
 					if (state && state === 'true') {
-						$(button).addClass('selected');
-						$(div).addClass('selected');
+						L.DomUtil.addClass(button, 'selected');
 					}
 					else {
-						$(button).removeClass('selected');
-						$(div).removeClass('selected');
+						L.DomUtil.removeClass(button, 'selected');
 					}
 
 					if (disabled)
@@ -2411,54 +2409,45 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var selectFn = function() {
 				L.DomUtil.addClass(button, 'selected');
-				L.DomUtil.addClass(div, 'selected');
 			};
 
 			var unSelectFn = function() {
 				L.DomUtil.removeClass(button, 'selected');
-				L.DomUtil.removeClass(div, 'selected');
 			};
 
-			div.onSelect = selectFn;
-			div.onUnSelect = unSelectFn;
+			button.onSelect = selectFn;
+			button.onUnSelect = unSelectFn;
 
 			if (data.selected === true)
 				selectFn();
 		} else {
-			var label = L.DomUtil.create('label', 'ui-content unolabel', div);
-			label.textContent = builder._cleanText(data.text);
+			inline = L.DomUtil.create('label', 'ui-content unolabel', button);
+			inline.textContent = builder._cleanText(data.text);
 			controls['button'] = button;
-			controls['label'] = label;
+			controls['label'] = inline;
 		}
 
-		if (options && options.hasDropdownArrow) {
-			$(div).addClass('has-dropdown');
-			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
-			L.DomUtil.create('i', 'unoarrow', arrowbackground);
-			controls['arrow'] = arrowbackground;
+		if (builder.wizard && window.mode.isMobile()) {
+			controls['arrow'] = false;
+		} else if (options && options.hasDropdownArrow) {
+			L.DomUtil.addClass(button, 'dropdown');
+			controls['arrow'] = true;
 		} else if (data.dropdown === true) {
-			$(div).addClass('has-dropdown');
-			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
-			L.DomUtil.create('i', 'unoarrow', arrowbackground);
-			controls['arrow'] = arrowbackground;
-			$(arrowbackground).click(function (event) {
-				if (!div.hasAttribute('disabled')) {
-					builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
-					event.stopPropagation();
-				}
-			});
-
-			div.closeDropdown = function() {
+			L.DomUtil.addClass(button, 'dropdown');
+			controls['arrow'] = true;
+			button.closeDropdown = function() {
 				builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
 			};
 		}
 
 		var clickFunction = function (e) {
-			if (!div.hasAttribute('disabled')) {
+			if (!button.hasAttribute('disabled')) {
 				builder.refreshSidebar = true;
 				if (data.postmessage)
 					builder.map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: data.id} });
-				else if (isRealUnoCommand && data.dropdown !== true)
+				else if (button.closeDropdown)
+					builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
+				else if (isRealUnoCommand)
 					builder.callback('toolbutton', 'click', button, data.command, builder);
 				else
 					builder.callback('toolbox', 'click', parentContainer, data.command, builder);
@@ -2469,12 +2458,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var mouseEnterFunction = function () {
 			if (builder.map.tooltip)
-				builder.map.tooltip.beginShow(div);
+				builder.map.tooltip.beginShow(button);
 		};
 
 		var mouseLeaveFunction = function () {
 			if (builder.map.tooltip)
-				builder.map.tooltip.beginHide(div);
+				builder.map.tooltip.beginHide(button);
 		};
 
 		$(controls.button).on('click', clickFunction);
@@ -2488,7 +2477,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(div).on('mouseleave', mouseLeaveFunction);
 		}
 
-		div.addEventListener('keydown', function(e) {
+		button.addEventListener('keydown', function(e) {
 			switch (e.key) {
 			case 'Escape':
 				builder.map.focus();
@@ -2496,13 +2485,31 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		});
 
-		builder._preventDocumentLosingFocusOnClick(div);
+		builder._preventDocumentLosingFocusOnClick(button);
 
 		if (data.enabled === 'false' || data.enabled === false)
-			div.setAttribute('disabled', '');
+			button.setAttribute('disabled', '');
 
 		builder.map.hideRestrictedItems(data, controls['container'], controls['container']);
 		builder.map.disableLockedItem(data, controls['container'], controls['container']);
+
+		var insertChilds = function (container) {
+			if (buttonImage)
+				container.appendChild(buttonImage);
+			if (label)
+				container.appendChild(label);
+			if (inline)
+				container.appendChild(inline);
+		};
+
+		if (options && options.container) {
+			insertChilds(options.container);
+		} else if (buttonImage && label) {
+			container = L.DomUtil.create('span', 'container-button', button);
+			insertChilds(container);
+		} else {
+			insertChilds(button);
+		}
 
 		return controls;
 	},
@@ -2514,7 +2521,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					if (builder.map.tooltip)
 						builder.map.tooltip.show(elem, builder.map.getLastModDateValue()); // Show the tooltip with the correct content
 				});
-	
+
 				$(elem).on('mouseleave', function() {
 					if (builder.map.tooltip)
 						builder.map.tooltip.hide(elem);

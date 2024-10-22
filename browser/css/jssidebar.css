@@ -134,8 +134,7 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 
 .sidebar.ui-pushbutton,
 .sidebar.spinfield,
-.sidebar.ui-listbox,
-.sidebar.menubutton:not(.has-dropdown) {
+.sidebar.ui-listbox {
 	width: 121px;
 }
 

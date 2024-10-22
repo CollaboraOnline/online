@@ -10,7 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		helper.setupAndLoadDocument('impress/apply_paragraph_props_text.odp');
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#modifypage').scrollIntoView();
-		cy.cGet('#modifypage button').click();
+		cy.cGet('#modifypage').click();
 		cy.cGet('#sidebar-panel').should('not.be.visible');
 	});
 
