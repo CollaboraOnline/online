@@ -14,6 +14,11 @@ Setup
     * NB. version 3.0 needed, it upgrades the API to fit the new node.js
     * npm install canvas@next
 
+* Install and/or update the Command Line Tools for Xcode:
+    * xcode-select --install
+    * After that you might need to update them in System Settings > General > Software Updates
+        * For some reason for me it lists both 15.3 and 16.0 there. As I have Xcode 16.0, I choose just that one.
+
 Build LO
 
 autogen.input:
