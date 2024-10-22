@@ -147,6 +147,10 @@ public:
     {
         // Delegate to the docBroker.
         _docBroker.pollThread();
+
+        // We are done; let's clean up. (Is it excessive to be impatient?)
+        LOG_TRC("Waking up world after finishing DocBroker poll");
+        SocketPoll::wakeupWorld();
     }
 };
 
