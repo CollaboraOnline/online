@@ -574,7 +574,7 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
              const std::string& url, const std::string& testname)
 {
     TST_LOG("Connecting to " << uri.toString() << " with URL: " << url);
-    constexpr int max_retries = 11;
+    constexpr int max_retries = 3;
     int retries = max_retries - 1;
     do
     {

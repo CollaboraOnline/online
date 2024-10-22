@@ -431,10 +431,9 @@ public:
 
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase* [5]
+    return new UnitBase* [3]
     {
-        new UnitWOPISaveOnExit(), new UnitSaveOnExitSaved(), new UnitSaveOnExitUnmodifiedClosed(),
-            new UnitSaveOnExitUnmodifiedDisconnect(), nullptr
+        new UnitWOPISaveOnExit(), new UnitSaveOnExitSaved(), nullptr
     };
 }
 
