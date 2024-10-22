@@ -113,6 +113,10 @@ namespace Util
         {
         }
 
+        /// Returns the start-time.
+        std::chrono::steady_clock::time_point startTime() const { return _startTime; }
+
+        /// Resets the start-time to now.
         void restart() { _startTime = std::chrono::steady_clock::now(); }
 
         /// Returns the time that has elapsed since starting, in the units required.
@@ -125,9 +129,12 @@ namespace Util
         }
 
         /// Returns true iff at least the given amount of time has elapsed.
-        template <typename T> bool elapsed(T duration) const
+        template <typename T>
+        bool
+        elapsed(T duration,
+                std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now()) const
         {
-            return elapsed<std::chrono::nanoseconds>() >= duration;
+            return elapsed<std::chrono::nanoseconds>(now) >= duration;
         }
 
     private:
