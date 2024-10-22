@@ -16,6 +16,8 @@
 	--btn-size: 28px;
 	--btn-padding: 2px;
 	--btn-img-size: calc(var(--btn-size) - var(--btn-padding) * 2);
+	--btn-color-colorpicker-size: 4px;
+	--btn-img-colorpicker-size: calc(var(--btn-size) - var(--btn-padding) * 2 - var(--btn-color-colorpicker-size));
 
 	--btn-size-m: 22px;
 	--btn-img-size-m: calc(var(--btn-size-m) - var(--btn-padding) * 2);
