@@ -1,0 +1,42 @@
+Backtrace 370511 - wsd 24.04.9.0 6f98df7a:
+/usr/local/projects/collabora/LibreOffice/online/test/../coolwsd(_ZN7SigUtil13dumpBacktraceEv+0x99)[0x55fff08c2d0b]
+/usr/local/projects/collabora/LibreOffice/online/test/../coolwsd(+0x5c1c14)[0x55fff08c2c14]
+/lib/x86_64-linux-gnu/libc.so.6(+0x3c050)[0x7f9c771d3050]
+/lib/x86_64-linux-gnu/libc.so.6(+0x8ae3c)[0x7f9c77221e3c]
+/lib/x86_64-linux-gnu/libc.so.6(gsignal+0x12)[0x7f9c771d2fb2]
+/lib/x86_64-linux-gnu/libc.so.6(abort+0xd3)[0x7f9c771bd472]
+/lib/x86_64-linux-gnu/libc.so.6(+0x26395)[0x7f9c771bd395]
+/lib/x86_64-linux-gnu/libc.so.6(+0x34eb2)[0x7f9c771cbeb2]
+/usr/local/projects/collabora/LibreOffice/online/test/../coolwsd(_ZN7UnitWSD3getEv+0x3c)[0x55fff08cda4a]
+/usr/local/projects/collabora/LibreOffice/online/test/../coolwsd(_ZN7COOLWSD9innerMainEv+0x2a36)[0x55fff06a1cd4]
+/usr/local/projects/collabora/LibreOffice/online/test/../coolwsd(_ZN7COOLWSD4mainERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EE+0x3c)[0x55fff06a4ed4]
+/lib/x86_64-linux-gnu/libPocoUtil.so.80(_ZN4Poco4Util11Application3runEv+0x33)[0x7f9c779e1763]
+/usr/local/projects/collabora/LibreOffice/online/test/../coolwsd(main+0x13b)[0x55fff06a6a7a]
+/lib/x86_64-linux-gnu/libc.so.6(+0x2724a)[0x7f9c771be24a]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x85)[0x7f9c771be305]
+/usr/local/projects/collabora/LibreOffice/online/test/../coolwsd(_start+0x21)[0x55fff05dc921]
+Crashed in unattended run and won't wait for debugger. Re-run without --unattended to attach a debugger.
+
+sven@risa:/usr/local/projects/collabora/LibreOffice/online (ut-stability-01_triage0_02_patch1)$ addr2line -e coolwsd _ZN7UnitWSD3getEv+0x3c
+/usr/local/projects/collabora/LibreOffice/online/common/Unit.cpp:721
+
+UnitWSD& UnitWSD::get()
+{
+    assert(GlobalWSD); <<<<< assertion
+    return *GlobalWSD;
+}
+
++++
+
+sven@risa:/usr/local/projects/collabora/LibreOffice/online (ut-stability-01_triage0_02_patch1)$ addr2line -e coolwsd _ZN7COOLWSD9innerMainEv+0x2a36
+/usr/local/projects/collabora/LibreOffice/online/wsd/COOLWSD.cpp:4610
+
+COOLWSD::innerMain()
+        // Unit test timeout
+        if (UnitWSD::isUnitTesting() && !SigUtil::getShutdownRequestFlag())
+        {
+            UnitWSD::get().checkTimeout(timeSinceStartMs);
+        }
+
+
+
