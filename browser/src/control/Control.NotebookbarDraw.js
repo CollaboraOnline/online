@@ -1426,6 +1426,24 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					}
 				],
 				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+
+							{
+								'id': 'bezier_unfilled',
+								'type': 'toolitem',
+								'text': _UNO('.uno:Bezier_Unfilled', 'presentation'),
+								'command': '.uno:Bezier_Unfilled',
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			}
 		];
 
