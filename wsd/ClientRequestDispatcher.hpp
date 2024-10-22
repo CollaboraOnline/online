@@ -114,6 +114,9 @@ private:
     /// Process the discovery.xml file and return as string.
     static std::string getDiscoveryXML();
 
+    /// Keeps RVS instances in check.
+    void CleanupRequestVettingStations();
+
 private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
@@ -128,9 +131,19 @@ private:
     /// WS is created and as long as it is connected.
     std::shared_ptr<RequestVettingStation> _rvs;
 
+    /// The minimum number of RVS instances in flight to trigger cleanup.
+    static constexpr std::size_t RvsLowWatermark = 1 * 1024;
+
     /// The absolute maximum number of RVS instances in flight.
     /// Note: exceeding this means we will not do parallel CheckFileInfo, ahead of loading.
-    static constexpr std::size_t RvsHighWatermark = 10 * 1024;
+    static constexpr std::size_t RvsHighWatermark = (10 * RvsLowWatermark) - 1;
+
+    /// Any RVS instance, in RequestVettingStations, older than this will be purged.
+    static constexpr std::chrono::seconds RvsMaxAge = std::chrono::seconds(60);
+
+    /// The expected size of RVS to trigger the next cleanup.
+    /// This is to avoid excessive cleanup attempts.
+    static std::size_t NextRvsCleanupSize;
 
     /// External requests are first vetted before allocating DocBroker and Kit process.
     /// This is a map of the request URI to the RequestVettingStation for vetting.
