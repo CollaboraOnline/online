@@ -128,8 +128,15 @@ private:
     /// WS is created and as long as it is connected.
     std::shared_ptr<RequestVettingStation> _rvs;
 
+    /// The absolute maximum number of RVS instances in flight.
+    /// Note: exceeding this means we will not do parallel CheckFileInfo, ahead of loading.
+    static constexpr std::size_t RvsHighWatermark = 10 * 1024;
+
     /// External requests are first vetted before allocating DocBroker and Kit process.
     /// This is a map of the request URI to the RequestVettingStation for vetting.
+    /// This is a temporary storage until we get the WS upgrade. If we don't, we purge.
+    /// Note: this is accessed exclusively from websrv_poll, through
+    /// handleIncomingMessage and handleClientWsUpgrade. Do *not* access in the ctor/dtor!
     static std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>
         RequestVettingStations;
 
