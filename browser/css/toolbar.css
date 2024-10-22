@@ -351,8 +351,8 @@
 	background-repeat: no-repeat;
 }
 .unospan-optionstoolboxdown .unobutton > img {
-	width: var(--btn-size);
-	height: var(--btn-size);
+	width: var(--btn-img-size);
+	height: var(--btn-img-size);
 }
 #closebuttonwrapper {
 	order: 99;
