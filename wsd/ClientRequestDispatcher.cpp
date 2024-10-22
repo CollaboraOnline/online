@@ -599,8 +599,10 @@ void ClientRequestDispatcher::onConnect(const std::shared_ptr<StreamSocket>& soc
     LOG_TRC("Connected to ClientRequestDispatcher");
 }
 
-void launchAsyncCheckFileInfo(const std::string& id, const FileServerRequestHandler::ResourceAccessDetails& accessDetails,
-                              std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>& requestVettingStations)
+void launchAsyncCheckFileInfo(
+    const std::string& id, const FileServerRequestHandler::ResourceAccessDetails& accessDetails,
+    std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>& requestVettingStations,
+    const std::size_t highWatermark)
 {
     const std::string requestKey = RequestDetails::getRequestKey(
         accessDetails.wopiSrc(), accessDetails.accessToken());
@@ -618,6 +620,12 @@ void launchAsyncCheckFileInfo(const std::string& id, const FileServerRequestHand
     if (requestVettingStations.find(requestKey) != requestVettingStations.end())
     {
         LOG_TRC("Found RVS under key: " << requestKey << ", nothing to do");
+    }
+    else if (requestVettingStations.size() >= highWatermark)
+    {
+        LOG_WRN("RequestVettingStations in flight ("
+                << requestVettingStations.size() << ") hit the high-watermark (" << highWatermark
+                << "); suppressing ahead-of-time CheckFileInfo");
     }
     else
     {
@@ -711,7 +719,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                         mapAccessDetails.at("wopiSrc"),
                         mapAccessDetails.at("accessToken"),
                         mapAccessDetails.at("permission"));
-                    launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations);
+                    launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations,
+                                             RvsHighWatermark);
                 }
             }
         }
@@ -765,7 +774,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                             Uri::decode(accessDetails.wopiSrc()),
                         "Expected identical WOPISrc in the request as in cool.html");
 
-                    launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations);
+                    launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations,
+                                             RvsHighWatermark);
                 }
                 servedSync = true;
             }
