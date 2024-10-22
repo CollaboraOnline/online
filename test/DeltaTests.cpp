@@ -330,13 +330,13 @@ void DeltaTests::testRleRandom()
 
     DeltaGenerator::DeltaData data(
         1, randomImg.data(), 0, 0, 256, 256,
-        TileLocation(9, 9, 9, 0, 1, 0), 256, 256);
+        TileLocation(9, 9, 9, 0, 1), 256, 256);
 
     // Compress
     std::vector<char> output;
     size_t size = gen.compressOrDelta(
         randomImg.data(), 0, 0, 256, 256, 256, 256,
-        TileLocation(42, 2, 3, 0, 1, 0),
+        TileLocation(42, 2, 3, 0, 1),
         output, 1, true, false, LOK_TILEMODE_RGBA);
     LOK_ASSERT(size > 1);
     LOK_ASSERT(output[0] == 'Z');
