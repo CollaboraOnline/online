@@ -249,6 +249,7 @@ m4_ifelse(MOBILEAPP, [true],
       data-allow-update-notification = "%ENABLE_UPDATE_NOTIFICATION%"
       data-user-interface-mode = "%USER_INTERFACE_MODE%"
       data-use-integration-theme = "%USE_INTEGRATION_THEME%"
+      data-statusbar-save-indicator = "%STATUSBAR_SAVE_INDICATOR%"
       data-enable-macros-execution = "%ENABLE_MACROS_EXECUTION%"
       data-enable-accessibility = "%ENABLE_ACCESSIBILITY%"
       data-out-of-focus-timeout-secs = "%OUT_OF_FOCUS_TIMEOUT_SECS%"

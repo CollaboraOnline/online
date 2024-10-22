@@ -1303,6 +1303,10 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         COOLWSD::getConfigValue<bool>("hexify_embedded_urls", false) ? "true" : "false";
     Poco::replaceInPlace(preprocess, std::string("%HEXIFY_URL%"), hexifyEmbeddedUrls);
 
+    static const std::string useStatusbarSaveIndicator =
+        config.getBool("user_interface.statusbar_save_indicator", false) ? "true" : "false";
+    Poco::replaceInPlace(preprocess, std::string("%STATUSBAR_SAVE_INDICATOR%"), useStatusbarSaveIndicator);
+
     static const bool useIntegrationTheme =
         config.getBool("user_interface.use_integration_theme", true);
     const bool hasIntegrationTheme =
