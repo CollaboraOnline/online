@@ -11,8 +11,6 @@
 
 #include <config.h>
 
-#include <ClientRequestDispatcher.hpp>
-
 #if ENABLE_FEATURE_LOCK
 #include "CommandControl.hpp"
 #endif
@@ -21,7 +19,6 @@
 #include <COOLWSD.hpp>
 #include <ClientSession.hpp>
 #include <ConfigUtil.hpp>
-#include <wsd/DocumentBroker.hpp>
 #include <Exceptions.hpp>
 #include <FileServer.hpp>
 #include <HttpRequest.hpp>
@@ -34,6 +31,9 @@
 #include <Util.hpp>
 #include <net/AsyncDNS.hpp>
 #include <net/HttpHelper.hpp>
+#include <wsd/ClientRequestDispatcher.hpp>
+#include <wsd/DocumentBroker.hpp>
+#include <wsd/RequestVettingStation.hpp>
 #if !MOBILEAPP
 #include <wsd/SpecialBrokers.hpp>
 #include <HostUtil.hpp>
@@ -54,12 +54,15 @@
 #include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
 
+#include <algorithm>
 #include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
 std::map<std::string, std::string> ClientRequestDispatcher::StaticFileContentCache;
+
+std::size_t ClientRequestDispatcher::NextRvsCleanupSize = RvsLowWatermark;
 std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>
     ClientRequestDispatcher::RequestVettingStations;
 
@@ -703,6 +706,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             else if (!socket->isLocal())
                 throw BadRequestException("ProxyPrefix request from non-local socket");
         }
+
+        CleanupRequestVettingStations();
 
         // Routing
         const bool isUnitTesting = UnitWSD::isUnitTesting();
@@ -2048,6 +2053,30 @@ std::string ClientRequestDispatcher::getDiscoveryXML()
     writer.writeNode(ostrXML, docXML);
     return ostrXML.str();
 #endif
+}
+
+void ClientRequestDispatcher::CleanupRequestVettingStations()
+{
+    if (RequestVettingStations.size() >= NextRvsCleanupSize)
+    {
+        LOG_DBG("Cleaning up RequestVettingStations ("
+                << RequestVettingStations.size()
+                << ") with NextRvsCleanupSize: " << NextRvsCleanupSize);
+
+        const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+        std::erase_if(RequestVettingStations,
+                      [now](const auto& pair) { return pair.second->aged(RvsMaxAge, now); });
+
+        // Clean up next when we grow by 10%.
+        NextRvsCleanupSize =
+            std::min(RvsHighWatermark - 1,
+                     std::max(RvsLowWatermark + 1,
+                              static_cast<std::size_t>(RequestVettingStations.size() * 1.1)));
+
+        LOG_DBG("Cleaned up RequestVettingStations ("
+                << RequestVettingStations.size()
+                << ") with NextRvsCleanupSize: " << NextRvsCleanupSize);
+    }
 }
 
 #if !MOBILEAPP
