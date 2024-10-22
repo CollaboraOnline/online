@@ -1462,6 +1462,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					}
 				],
 				'vertical': 'true'
+			},
+			{
+				'id': 'bezier_unfilled',
+				'type': 'toolitem',
+				'text': _UNO('.uno:Bezier_Unfilled', 'presentation'),
+				'command': '.uno:Bezier_Unfilled',
 			}
 		];
 
