@@ -13,6 +13,7 @@
 
 #include "RequestDetails.hpp"
 #include <Storage.hpp>
+#include "Util.hpp"
 #include "WebSocketHandler.hpp"
 
 #include <Poco/URI.h>
@@ -66,6 +67,14 @@ public:
                        const std::shared_ptr<StreamSocket>& socket, unsigned mobileAppDocId,
                        SocketDisposition& disposition);
 
+    /// Returns true iff we are older than the given age.
+    template <typename T>
+    bool aged(T minAge,
+              std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now()) const
+    {
+        return _birthday.elapsed<T>(minAge, now);
+    }
+
 private:
     bool createDocBroker(const std::string& docKey, const std::string& url,
                          const Poco::URI& uriPublic);
@@ -87,6 +96,7 @@ private:
     std::unique_ptr<CheckFileInfo> _checkFileInfo;
 #endif // !MOBILEAPP
 
+    Util::Stopwatch _birthday;
     std::shared_ptr<TerminatingPoll> _poll;
     std::string _id;
     std::shared_ptr<WebSocketHandler> _ws;
