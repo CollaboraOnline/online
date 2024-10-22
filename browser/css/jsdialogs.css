@@ -1316,8 +1316,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* color selector */
+.has-colorpicker.unotoolbutton > .unobutton img {
+	height: var(--btn-img-colorpicker-size);
+}
 .unotoolbutton .selected-color {
-	height: 5px;
+	box-sizing: border-box;
+	height: var(--btn-color-colorpicker-size);
 	width: calc(var(--btn-img-size) - var(--btn-padding) * 2);
 	position: relative;
 	border: 1px solid var(--color-border-dark);
@@ -1778,7 +1782,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-items: center;
 }
 
-.has-dropdown > .ui-content.unobutton {
+#toolbar-down .has-dropdown > .ui-content.unobutton {
 	width: auto;
 }
 
