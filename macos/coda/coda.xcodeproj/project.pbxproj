@@ -10,6 +10,13 @@
 		BE2231B82CC679DE00385A9C /* Crypto-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231B72CC679DE00385A9C /* Crypto-stub.cpp */; };
 		BE2231BA2CC67FDE00385A9C /* coolwsd-fork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */; };
 		BE2231BC2CC6804D00385A9C /* Util-mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231BB2CC6804D00385A9C /* Util-mobile.cpp */; };
+		BE22492C2CC79AD700385A9C /* cool.html in Resources */ = {isa = PBXBuildFile; fileRef = BE22492B2CC79AD700385A9C /* cool.html */; };
+		BE2252292CC79BAE00385A9C /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = BE22492E2CC79BAE00385A9C /* bundle.js */; };
+		BE22529E2CC79BAE00385A9C /* cool-help.html in Resources */ = {isa = PBXBuildFile; fileRef = BE22492F2CC79BAE00385A9C /* cool-help.html */; };
+		BE2253F32CC79BAE00385A9C /* device-desktop.css in Resources */ = {isa = PBXBuildFile; fileRef = BE2249302CC79BAE00385A9C /* device-desktop.css */; };
+		BE22557E2CC79BAE00385A9C /* global.js in Resources */ = {isa = PBXBuildFile; fileRef = BE2249312CC79BAE00385A9C /* global.js */; };
+		BE2257AD2CC79BAE00385A9C /* bundle.css in Resources */ = {isa = PBXBuildFile; fileRef = BE22492D2CC79BAE00385A9C /* bundle.css */; };
+		BE22AA9C2CC7AE7400385A9C /* images in Resources */ = {isa = PBXBuildFile; fileRef = BE22AA9B2CC7AE7400385A9C /* images */; };
 		BEA2636D2CBE38E20007435A /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2636A2CBE38E20007435A /* Uri.cpp */; };
 		BEA2636E2CBE38E20007435A /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2636C2CBE38E20007435A /* Util.cpp */; };
 		BEA2636F2CBE38E20007435A /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263682CBE38E20007435A /* Unit.cpp */; };
@@ -65,6 +72,13 @@
 		BE2231B72CC679DE00385A9C /* Crypto-stub.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Crypto-stub.cpp"; path = "/Users/kendy/Projects/collabora/online/common/Crypto-stub.cpp"; sourceTree = "<absolute>"; };
 		BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "coolwsd-fork.cpp"; path = "/Users/kendy/Projects/collabora/online/wsd/coolwsd-fork.cpp"; sourceTree = "<absolute>"; };
 		BE2231BB2CC6804D00385A9C /* Util-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-mobile.cpp"; path = "/Users/kendy/Projects/collabora/online/common/Util-mobile.cpp"; sourceTree = "<absolute>"; };
+		BE22492B2CC79AD700385A9C /* cool.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = cool.html; path = /Users/kendy/Projects/collabora/online/browser/dist/cool.html; sourceTree = "<absolute>"; };
+		BE22492D2CC79BAE00385A9C /* bundle.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = bundle.css; path = /Users/kendy/Projects/collabora/online/browser/dist/bundle.css; sourceTree = "<absolute>"; };
+		BE22492E2CC79BAE00385A9C /* bundle.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = /Users/kendy/Projects/collabora/online/browser/dist/bundle.js; sourceTree = "<absolute>"; };
+		BE22492F2CC79BAE00385A9C /* cool-help.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = "cool-help.html"; path = "/Users/kendy/Projects/collabora/online/browser/dist/cool-help.html"; sourceTree = "<absolute>"; };
+		BE2249302CC79BAE00385A9C /* device-desktop.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "device-desktop.css"; path = "/Users/kendy/Projects/collabora/online/browser/dist/device-desktop.css"; sourceTree = "<absolute>"; };
+		BE2249312CC79BAE00385A9C /* global.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = global.js; path = /Users/kendy/Projects/collabora/online/browser/dist/global.js; sourceTree = "<absolute>"; };
+		BE22AA9B2CC7AE7400385A9C /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../browser/dist/images; sourceTree = "<group>"; };
 		BEA263522CBE38E20007435A /* Authorization.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Authorization.hpp; path = /Users/kendy/Projects/collabora/online/common/Authorization.hpp; sourceTree = "<absolute>"; };
 		BEA263532CBE38E20007435A /* Authorization.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Authorization.cpp; path = /Users/kendy/Projects/collabora/online/common/Authorization.cpp; sourceTree = "<absolute>"; };
 		BEA263542CBE38E20007435A /* ConfigUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ConfigUtil.hpp; path = /Users/kendy/Projects/collabora/online/common/ConfigUtil.hpp; sourceTree = "<absolute>"; };
@@ -168,6 +182,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE22492A2CC79AAC00385A9C /* dist */ = {
+			isa = PBXGroup;
+			children = (
+				BE22AA9B2CC7AE7400385A9C /* images */,
+				BE22492D2CC79BAE00385A9C /* bundle.css */,
+				BE22492E2CC79BAE00385A9C /* bundle.js */,
+				BE22492B2CC79AD700385A9C /* cool.html */,
+				BE22492F2CC79BAE00385A9C /* cool-help.html */,
+				BE2249302CC79BAE00385A9C /* device-desktop.css */,
+				BE2249312CC79BAE00385A9C /* global.js */,
+			);
+			path = dist;
+			sourceTree = "<group>";
+		};
 		BEA2637C2CBE38FE0007435A /* common */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +294,7 @@
 		BECC4BA22CBD3FA300A120B3 = {
 			isa = PBXGroup;
 			children = (
+				BE22492A2CC79AAC00385A9C /* dist */,
 				BEA2637D2CBE39C30007435A /* Online */,
 				BECC4BAD2CBD3FA300A120B3 /* coda */,
 				BECC4BBF2CBD3FA400A120B3 /* codaTests */,
@@ -407,6 +436,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE22AA9C2CC7AE7400385A9C /* images in Resources */,
+				BE2252292CC79BAE00385A9C /* bundle.js in Resources */,
+				BE22529E2CC79BAE00385A9C /* cool-help.html in Resources */,
+				BE2253F32CC79BAE00385A9C /* device-desktop.css in Resources */,
+				BE22557E2CC79BAE00385A9C /* global.js in Resources */,
+				BE2257AD2CC79BAE00385A9C /* bundle.css in Resources */,
+				BE22492C2CC79AD700385A9C /* cool.html in Resources */,
 				BEA264162CBE7A770007435A /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

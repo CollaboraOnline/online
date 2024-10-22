@@ -9,6 +9,7 @@ m4_dnl------------------------------------------------------------------------
 m4_dnl# Define MOBILEAPP as true if this is either for the iOS/Android app or for the gtk+ "app" testbed
 m4_define([MOBILEAPP],[])m4_dnl
 m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(MACOSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_ifelse(WINDOWSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
@@ -64,6 +65,7 @@ m4_ifelse(MOBILEAPP, [true],
 
 m4_dnl# For use in conditionals in JS:
 m4_ifelse(IOSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="IOS" />])
+m4_ifelse(MACOSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="MACOS" />])
 m4_ifelse(GTKAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="GTK" />])
 m4_ifelse(WINDOWSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="WINDOWS" />])
 m4_ifelse(ANDROIDAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="ANDROID" />])
