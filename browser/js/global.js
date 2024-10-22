@@ -250,6 +250,7 @@ class InitializerBase {
 		window.frameAncestors = "";
 		window.socketProxy = false;
 		window.uiDefaults = {};
+		window.useStatusbarSaveIndicator = false;
 		window.checkFileInfoOverride = {};
 		window.deeplEnabled = false;
 		window.zoteroEnabled = false;
@@ -371,6 +372,7 @@ class BrowserInitializer extends InitializerBase {
 		window.allowUpdateNotification = element.dataset.allowUpdateNotification.toLowerCase().trim() === "true";
 		window.userInterfaceMode = element.dataset.userInterfaceMode;
 		window.useIntegrationTheme = element.dataset.useIntegrationTheme.toLowerCase().trim() === "true";
+		window.useStatusbarSaveIndicator = element.dataset.statusbarSaveIndicator.toLowerCase().trim() === "true";
 		window.enableMacrosExecution = element.dataset.enableMacrosExecution.toLowerCase().trim() === "true";
 		window.enableAccessibility = element.dataset.enableAccessibility.toLowerCase().trim() === "true";
 		window.outOfFocusTimeoutSecs = parseInt(element.dataset.outOfFocusTimeoutSecs);

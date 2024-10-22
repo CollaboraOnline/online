@@ -2179,6 +2179,7 @@ void COOLWSD::innerInitialize(Application& self)
 #endif
         { "user_interface.mode", "default" },
         { "user_interface.use_integration_theme", "true" },
+        { "user_interface.statusbar_save_indicator", "true" },
         { "quarantine_files[@enable]", "false" },
         { "quarantine_files.limit_dir_size_mb", "250" },
         { "quarantine_files.max_versions_to_maintain", "5" },
