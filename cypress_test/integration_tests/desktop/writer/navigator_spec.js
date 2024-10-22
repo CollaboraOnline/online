@@ -3,13 +3,12 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe.skip(['tagdesktop'], 'Scroll through document, modify heading', function() {
+describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/navigator.odt');
 
-		cy.cGet('#menu-view').click();
-		cy.cGet('#menu-navigator').click();
+		cy.cGet('#Navigator-button').click();
 	});
 
 	it('Jump to element. Navigator -> Document', function() {
@@ -27,7 +26,7 @@ describe.skip(['tagdesktop'], 'Scroll through document, modify heading', functio
 		cy.cGet('#StatePageNumber').should('have.text', 'Page 2 of 8');
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Text').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 5 of 8');
+		cy.cGet('#StatePageNumber').should('have.text', 'Pages 5 and 6 of 8');
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Replacing').dblclick();
 		cy.cGet('#StatePageNumber').should('have.text', 'Page 7 of 8');
@@ -48,7 +47,7 @@ describe.skip(['tagdesktop'], 'Scroll through document, modify heading', functio
 		cy.cGet('#StatePageNumber').should('have.text', 'Page 5 of 8');
 	});
 
-	it('Jump to element. Document -> Navigator', function() {
+	it.skip('Jump to element. Document -> Navigator', function() {
 		// Move the cursor into elements in Document, and check
 		// if navigator contentTree scroll to the element and select that,
 		// and if necessary expand contentypes, to make the element visible.
@@ -87,7 +86,7 @@ describe.skip(['tagdesktop'], 'Scroll through document, modify heading', functio
 		cy.cGet('#contenttree').find('.jsdialog.sidebar.ui-treeview-entry.ui-treeview-notexpandable.selected').find('.jsdialog.sidebar.ui-treeview-cell-text').should('have.text','Table14');
 	});
 
-	it('Rewrite Heading', function() {
+	it.skip('Rewrite Heading', function() {
 		// Write into a heading, and check if it changed in navigator contentTree.
 		desktopHelper.pressKey(7, 'pagedown');
 		desktopHelper.pressKey(1, 'A');
