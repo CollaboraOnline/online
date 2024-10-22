@@ -3903,7 +3903,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_syncTilePanePos: function () {
-		var tilePane = this._container.parentElement;
+		var tilePane = this._container ? this._container.parentElement : null;
 		if (tilePane) {
 			var mapPanePos = this._map._getMapPanePos();
 			L.DomUtil.setPosition(tilePane, new L.Point(-mapPanePos.x , -mapPanePos.y));
