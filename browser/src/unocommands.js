@@ -27,6 +27,7 @@ var unoCommandsArray = {
 	'AutoFill':{spreadsheet:{menu:_('AutoFill Data Series: automatic'),},},
 	'AutoFormatMenu':{text:{menu:_('AutoCorr~ect'),},},
 	'BackgroundColor':{global:{menu:_('Background Color'),},},
+	'Bezier_Unfilled':{global:{menu:_('Curve'),},},
 	'Bold':{global:{menu:_('Bold'),},},
 	'BringToFront':{global:{menu:_('~Bring to Front'),},},
 	'Calculate':{spreadsheet:{menu:_('~Recalculate'),},},
