@@ -132,11 +132,6 @@ function getDocumentStatusElements(text: string) {
 		lastSaved.title = _('Your changes have been saved') + '.';
 		lastSaved.textContent = '';
 		docstat.appendChild(lastSaved);
-
-		const savedStatus = document.createElement('span');
-		savedStatus.id = 'saved-status-label';
-		savedStatus.textContent = _('Document saved');
-		docstat.appendChild(savedStatus);
 	}
 
 	return docstat;
