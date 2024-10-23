@@ -118,6 +118,25 @@ function getPageStatusElements(text: string) {
 	return getStatusbarItemElements('PageStatus', _('Number of Pages'), text);
 }
 
+function getDocumentStatusElements(text: string) {
+	const docstat = getStatusbarItemElements(
+		'DocumentStatus',
+		_('Your changes have been saved'),
+		'',
+	);
+
+	if (text === 'SAVING') docstat.textContent = _('Saving...');
+	else if (text === 'SAVED') {
+		const lastSaved = document.createElement('span');
+		lastSaved.id = 'last-saved';
+		lastSaved.title = _('Your changes have been saved') + '.';
+		lastSaved.textContent = '';
+		docstat.appendChild(lastSaved);
+	}
+
+	return docstat;
+}
+
 var getElementsFromId = function (
 	id: string,
 	closeCallback: EventListenerOrEventListenerObject,
