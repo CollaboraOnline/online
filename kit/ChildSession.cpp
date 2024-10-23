@@ -674,6 +674,46 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                     }
                 }
             }
+            else if (tokens[1].find(".uno:Signature") != std::string::npos)
+            {
+                // extract user SignatureCert and SignatureKey and append as
+                // args to uno:Signature
+                const std::string& userPrivateInfo = getUserPrivateInfo();
+
+                Object::Ptr userPrivateInfoObj;
+                if (!userPrivateInfo.empty())
+                {
+                    Parser parser;
+                    Poco::Dynamic::Var var = parser.parse(userPrivateInfo);
+                    userPrivateInfoObj = var.extract<Object::Ptr>();
+                }
+                else
+                {
+                    userPrivateInfoObj = new Object();
+                }
+
+                std::string signatureCert;
+                JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCert", signatureCert);
+                std::string signatureKey;
+                JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureKey", signatureKey);
+
+                std::string arguments;
+                arguments = "{"
+                    "\"SignatureCert\":{"
+                        "\"type\":\"string\","
+                        "\"value\":\"" + JsonUtil::escapeJSONValue(signatureCert) + "\""
+                    "},"
+                    "\"SignatureKey\":{"
+                        "\"type\":\"string\","
+                        "\"value\":\"" + JsonUtil::escapeJSONValue(signatureKey) + "\""
+                    "}"
+                "}";
+
+                StringVector newTokens(tokens);
+                newTokens.push_back(arguments);
+
+                return unoCommand(newTokens);
+            }
 
             return unoCommand(tokens);
         }
