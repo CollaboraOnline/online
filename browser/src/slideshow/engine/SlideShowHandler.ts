@@ -82,6 +82,21 @@ class SlideShowHandler {
 	private enteringSlideTexture: WebGLTexture | ImageBitmap;
 	public isStarting: boolean;
 	private bIsFirstAutoEffectRunning: boolean = false;
+	private transitionsWithMipMapEnabled = new Set([
+		TransitionSubType.CORNERSOUT,
+		TransitionSubType.TOPTOBOTTOM,
+		TransitionSubType.LEFTTORIGHT,
+		TransitionSubType.BOTTOMRIGHT,
+		TransitionSubType.BOTTOMLEFT,
+		TransitionSubType.TOPCENTER,
+		TransitionSubType.CORNERSIN,
+		TransitionSubType.TOPLEFT,
+		TransitionSubType.CIRCLE,
+		TransitionSubType.FANOUTHORIZONTAL,
+		TransitionSubType.ACROSS,
+		TransitionSubType.DIAMOND,
+		TransitionSubType.HEART,
+	]);
 
 	constructor() {
 		this.aTimer = new ElapsedTime();
@@ -903,25 +918,11 @@ class SlideShowHandler {
 	}
 
 	private isMipMapsEnable(transitionFilterInfo: TransitionFilterInfo): boolean {
-		const allowedSubtypes = new Set([
-			TransitionSubType.CORNERSOUT,
-			TransitionSubType.TOPTOBOTTOM,
-			TransitionSubType.LEFTTORIGHT,
-			TransitionSubType.BOTTOMRIGHT,
-			TransitionSubType.BOTTOMLEFT,
-			TransitionSubType.TOPCENTER,
-			TransitionSubType.CORNERSIN,
-			TransitionSubType.TOPLEFT,
-			TransitionSubType.CIRCLE,
-			TransitionSubType.FANOUTHORIZONTAL,
-			TransitionSubType.ACROSS,
-			TransitionSubType.DIAMOND,
-			TransitionSubType.HEART,
-		]);
-
 		return (
 			transitionFilterInfo.transitionType === TransitionType.MISCSHAPEWIPE &&
-			allowedSubtypes.has(transitionFilterInfo.transitionSubtype)
+			this.transitionsWithMipMapEnabled.has(
+				transitionFilterInfo.transitionSubtype,
+			)
 		);
 	}
 
