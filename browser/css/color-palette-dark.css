@@ -49,6 +49,10 @@
 
 	--color-box-shadow: rgba(0, 0, 0, 0.5);
 	--color-hyperlink: #1d99f3;
+
+	--color-grid-helper-line-solid: #e6e6e6;
+	--color-grid-helper-line-dashed: #191919;
+	--color-smart-guides-helper-line: #f36d4f;
 }
 
 [data-bg-theme='dark'] {

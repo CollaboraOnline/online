@@ -14,6 +14,47 @@
 	Shape is rendered on the core side. Only the handles are drawn here and modification commands are sent to the core side.
 */
 
+class HelperLineStyles {
+	static initiated: false;
+	static gridSolidStyle: string = null;
+	static gridDashedStyle: string = null;
+	static smartGuidesStyle: string = null;
+	static darkModeListenerAdded = false;
+
+	private static addListener() {
+		app.map.on('darkmodechanged', function() {
+			this.gridSolidStyle = null;
+			this.gridDashedStyle = null;
+			this.smartGuidesStyle = null;
+		}.bind(this));
+
+		this.darkModeListenerAdded = true;
+	}
+
+	public static initiate() {
+		if (!this.darkModeListenerAdded) this.addListener();
+
+		const tempElement = document.createElement('div');
+
+		tempElement.style.display = 'none';
+		document.body.appendChild(tempElement);
+
+		tempElement.style.color = 'var(--color-grid-helper-line-solid)';
+		let computedStyle = window.getComputedStyle(tempElement);
+		this.gridSolidStyle = computedStyle.color;
+
+		tempElement.style.color = 'var(--color-grid-helper-line-dashed)';
+		computedStyle = window.getComputedStyle(tempElement);
+		this.gridDashedStyle = computedStyle.color;
+
+		tempElement.style.color = 'var(--color-smart-guides-helper-line)';
+		computedStyle = window.getComputedStyle(tempElement);
+		this.smartGuidesStyle = computedStyle.color;
+
+		tempElement.remove();
+	}
+}
+
 class ShapeHandlesSection extends CanvasSectionObject {
 	name: string = "shapeHandlesSection";
 	processingOrder: number = L.CSections.DefaultForDocumentObjects.processingOrder;
@@ -51,6 +92,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.closestY = null;
 
 		this.refreshInfo(info);
+
+		if (HelperLineStyles.gridDashedStyle === null) HelperLineStyles.initiate();
 	}
 
 	public refreshInfo(info: any) {
@@ -952,7 +995,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.context.save();
 
 		this.context.setLineDash([4, 3]);
-		this.context.strokeStyle = '#f36d4f';
+		this.context.strokeStyle = HelperLineStyles.smartGuidesStyle;
 		this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
 
 		this.context.beginPath();
@@ -973,13 +1016,10 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
 
-		const whiteSolidStyle = '#e6e6e6';
-		const darkStyle = '#191919';
-
 		this.context.beginPath();
 
 		if (this.sectionProperties.closestX !== null) {
-			this.context.strokeStyle = whiteSolidStyle;
+			this.context.strokeStyle = HelperLineStyles.gridSolidStyle;
 			this.context.setLineDash([]);
 
 			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - this.documentTopLeft[0];
@@ -988,13 +1028,13 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 			// Draw a second line on top of solid white-ish line.
 			this.context.setLineDash([4, 3]);
-			this.context.strokeStyle = darkStyle;
+			this.context.strokeStyle = HelperLineStyles.gridDashedStyle;
 
 			this.drawXAxis(x);
 		}
 
 		if (this.sectionProperties.closestY !== null) {
-			this.context.strokeStyle = whiteSolidStyle;
+			this.context.strokeStyle = HelperLineStyles.gridSolidStyle;
 			this.context.setLineDash([]);
 
 			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - this.documentTopLeft[1];
@@ -1003,7 +1043,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 			// Draw a second line on top of solid white-ish line.
 			this.context.setLineDash([4, 3]);
-			this.context.strokeStyle = darkStyle;
+			this.context.strokeStyle = HelperLineStyles.gridDashedStyle;
 
 			this.drawYAxis(y);
 		}
