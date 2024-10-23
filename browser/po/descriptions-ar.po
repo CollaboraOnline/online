@@ -1,16 +1,20 @@
+# Ali <alimahwer@yahoo.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-16 11:13+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-10-19 22:39+0000\n"
+"Last-Translator: Ali <alimahwer@yahoo.com>\n"
+"Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
+"app-store-descriptions/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.8-rc\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -23,8 +27,7 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
-"محرر مبني على ليبر أوفيس لمستندات مايكروسوفت أوفيس، و ليبر أوفيس، و أوبن "
-"أوفيس و غيرها."
+"محرر مبني على ليبرأوفيس لمستندات أوفيس، و ليبرأوفيس، و أوبن أوفيس و غيرها."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:13-1
@@ -72,7 +75,7 @@ msgstr ""
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:31-1
 msgid "Report issues:"
-msgstr "إبلاغ عن إشكاليات:"
+msgstr "التبليغ عن إشكاليات:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:35-1

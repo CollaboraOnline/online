@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-16 11:13+0200\n"
-"PO-Revision-Date: 2024-09-28 06:17+0000\n"
+"PO-Revision-Date: 2024-10-19 22:39+0000\n"
 "Last-Translator: Ali <alimahwer@yahoo.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
-"Language: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.8-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1075,32 +1075,32 @@ msgstr "مستند إتش تي إم إل (.html)"
 #: src/control/Control.Menubar.js:412
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "صيغة فلاش \"شُك وَيف\" (.swf)"
 
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "رسومات قابلة للتكبير (.svg)"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "الشريحة الحالية كصورة \"بِت ماب\" (.bmp)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "الشريحة الحالية في صيغة تبادل الرسوميات (.gif)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "الشريحة الحالية في صيغة رسوميات شبكية نقّالة (.png)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "الشريحة الحالية في صيغة وسم ملف صور (.tiff)"
 
 #: src/control/Control.Menubar.js:422
 #: src/control/Control.NotebookbarBuilder.js:666
@@ -1453,7 +1453,7 @@ msgstr "أنظُر السجل التاريخي"
 #: src/control/Control.NotebookbarImpress.js:320
 #: src/control/Control.NotebookbarWriter.js:322
 msgid "Signature"
-msgstr ""
+msgstr "التوقيع"
 
 #: src/control/Control.NotebookbarCalc.js:268
 #: src/control/Control.NotebookbarDraw.js:303
@@ -1640,11 +1640,11 @@ msgstr "موجود في النافذة"
 
 #: src/control/Control.NotebookbarImpress.js:477
 msgid "Show Grid"
-msgstr ""
+msgstr "عرض الشبكة"
 
 #: src/control/Control.NotebookbarImpress.js:484
 msgid "Snap to Grid"
-msgstr ""
+msgstr "الالتقاط إلى الشبكة"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1762,12 +1762,11 @@ msgstr "مفتوح"
 
 #: src/control/Control.SaveState.ts:37
 msgid "Saving"
-msgstr ""
+msgstr "حفظ"
 
 #: src/control/Control.SaveState.ts:52
-#, fuzzy
 msgid "Saved"
-msgstr "احفظ"
+msgstr "تمّ الحفظ"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2996,6 +2995,8 @@ msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
+"لا يدعم متصفحك واجهة برمجة تطبيقات الحافظة غير المتزامنة. يتم التحول إلى "
+"HTTPS بهدف إصلاح ذلك."
 
 #: src/map/Clipboard.js:1195
 msgid "Please use the paste buttons on your on-screen keyboard."
