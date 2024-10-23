@@ -26,6 +26,7 @@ interface LayerRenderer {
 	dispose(): void;
 	fillColor(slideInfo: SlideInfo): boolean;
 	isGlRenderer(): boolean;
+	getRenderContext(): RenderContext;
 }
 
 class LayerRendererGl implements LayerRenderer {
@@ -33,8 +34,9 @@ class LayerRendererGl implements LayerRenderer {
 
 	private offscreenCanvas: OffscreenCanvas;
 	private glContext: RenderContextGl;
-	private gl: WebGLRenderingContext;
+	private gl: WebGL2RenderingContext;
 	private program: WebGLProgram;
+	private vao: WebGLVertexArrayObject;
 	private positionBuffer: WebGLBuffer;
 	private texCoordBuffer: WebGLBuffer;
 	private positionLocation: number;
@@ -57,6 +59,10 @@ class LayerRendererGl implements LayerRenderer {
 
 	isGlRenderer(): boolean {
 		return true;
+	}
+
+	public getRenderContext(): RenderContextGl {
+		return this.glContext;
 	}
 
 	private vertexShaderSource = `
@@ -108,6 +114,9 @@ class LayerRendererGl implements LayerRenderer {
 		const texCoords = new Float32Array([0, 1, 1, 1, 0, 0, 1, 0]);
 		gl.bufferData(gl.ARRAY_BUFFER, texCoords, gl.STATIC_DRAW);
 
+		this.vao = gl.createVertexArray();
+		gl.bindVertexArray(this.vao);
+
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
 		gl.enableVertexAttribArray(this.positionLocation);
 		gl.vertexAttribPointer(this.positionLocation, 2, gl.FLOAT, false, 0, 0);
@@ -154,7 +163,7 @@ class LayerRendererGl implements LayerRenderer {
 		properties?: AnimatedElementRenderProperties,
 	): void {
 		if (!imageInfo) {
-			console.log('LayerDrawing.drawBitmap: no image');
+			console.log('LayerRenderer.drawBitmap: no image');
 			return;
 		}
 
@@ -192,6 +201,7 @@ class LayerRendererGl implements LayerRenderer {
 		}
 
 		this.gl.useProgram(this.program);
+		this.gl.bindVertexArray(this.vao);
 
 		this.initPositionBuffer(bounds);
 		this.gl.uniform1f(this.gl.getUniformLocation(this.program, 'alpha'), alpha);
@@ -265,6 +275,10 @@ class LayerRenderer2d implements LayerRenderer {
 
 	isGlRenderer(): boolean {
 		return false;
+	}
+
+	getRenderContext(): RenderContext {
+		return null;
 	}
 
 	clearCanvas(): void {

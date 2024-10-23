@@ -90,6 +90,7 @@ class Transition2d extends TransitionBase {
 				${isSlideTransition ? 'uniform sampler2D leavingSlideTexture;' : ''}
 				uniform sampler2D enteringSlideTexture;
 				uniform float time;
+				${!isSlideTransition ? 'uniform float alpha;' : ''}
 
 				in vec2 v_texCoord;
 				out vec4 outColor;
@@ -101,27 +102,73 @@ class Transition2d extends TransitionBase {
 							: 'vec4(0, 0, 0, 0)'
 					};
 					vec4 color1 = texture(enteringSlideTexture, v_texCoord);
+					${!isSlideTransition ? 'color1 *= alpha;' : ''}
 					outColor = mix(color0, color1, time);
 				}
 				`;
 	}
 
-	public render(nT: number) {
-		const gl = this.gl;
+	private setPositionBuffer(bounds: BoundsType) {
+		if (!bounds) return;
 
-		gl.viewport(0, 0, this.context.canvas.width, this.context.canvas.height);
-		gl.clearColor(0.0, 0.0, 0.0, 1.0);
-		gl.clear(gl.COLOR_BUFFER_BIT);
+		const v = [];
+		// convert [0,1] => [-1,1]
+		for (let i = 0; i < bounds.length; ++i) {
+			const x = 2 * bounds[i].x - 1;
+			v.push(x);
+			// flip y coordinates
+			const y = -(2 * bounds[i].y - 1);
+			v.push(y);
+		}
+
+		const positions = new Float32Array([
+			...[v[0], v[1], 0, 0, 1],
+			...[v[2], v[3], 0, 1, 1],
+			...[v[4], v[5], 0, 0, 0],
+			...[v[6], v[7], 0, 1, 0],
+		]);
+
+		const gl = this.gl;
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+	}
+
+	public render(nT: number, properties?: AnimatedElementRenderProperties) {
+		const isSlideTransition: boolean = !!this.leavingSlide;
+
+		console.debug(`Transition2d.render: nT: ${nT}`);
+
+		const gl = this.gl;
+		if (isSlideTransition) {
+			gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+			gl.clearColor(0.0, 0.0, 0.0, 1.0);
+			gl.clear(gl.COLOR_BUFFER_BIT);
+		}
 
 		gl.useProgram(this.program);
+		gl.bindVertexArray(this.vao);
 		gl.uniform1f(gl.getUniformLocation(this.program, 'time'), nT);
 
-		if (this.leavingSlide) {
+		if (isSlideTransition) {
 			gl.activeTexture(gl.TEXTURE0);
 			gl.bindTexture(gl.TEXTURE_2D, this.leavingSlide);
 			gl.uniform1i(
 				gl.getUniformLocation(this.program, 'leavingSlideTexture'),
 				0,
+			);
+		} else {
+			let bounds: BoundsType = null;
+			let alpha = 1.0;
+			if (properties) {
+				bounds = properties.bounds;
+				alpha = properties.alpha;
+			}
+			console.debug(`Transition2d.render: alpha: ${alpha}`);
+
+			this.setPositionBuffer(bounds);
+			this.gl.uniform1f(
+				this.gl.getUniformLocation(this.program, 'alpha'),
+				alpha,
 			);
 		}
 
@@ -137,9 +184,11 @@ class Transition2d extends TransitionBase {
 		gl.bindVertexArray(this.vao);
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-		app.map.fire('newslideshowframe', {
-			frame: gl.canvas,
-		});
+		if (isSlideTransition) {
+			app.map.fire('newslideshowframe', {
+				frame: gl.canvas,
+			});
+		}
 	}
 }
 
