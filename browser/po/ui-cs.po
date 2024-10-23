@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-16 11:13+0200\n"
-"PO-Revision-Date: 2024-10-05 07:15+0000\n"
+"PO-Revision-Date: 2024-10-19 22:39+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.8-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1086,32 +1086,32 @@ msgstr "HTML dokument (.html)"
 #: src/control/Control.Menubar.js:412
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Aktuální snímek jako rastr (.bmp)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Aktuální snímek jako Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Aktuální snímek jako Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Aktuální snímek jako Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.js:422
 #: src/control/Control.NotebookbarBuilder.js:666
@@ -1464,7 +1464,7 @@ msgstr "Zobrazit historii"
 #: src/control/Control.NotebookbarImpress.js:320
 #: src/control/Control.NotebookbarWriter.js:322
 msgid "Signature"
-msgstr ""
+msgstr "Podpis"
 
 #: src/control/Control.NotebookbarCalc.js:268
 #: src/control/Control.NotebookbarDraw.js:303
@@ -1651,11 +1651,11 @@ msgstr "Prezentovat v okně"
 
 #: src/control/Control.NotebookbarImpress.js:477
 msgid "Show Grid"
-msgstr ""
+msgstr "Zobrazit mřížku"
 
 #: src/control/Control.NotebookbarImpress.js:484
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Přichytit k mřížce"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1775,12 +1775,11 @@ msgstr "OTEVŘÍT"
 
 #: src/control/Control.SaveState.ts:37
 msgid "Saving"
-msgstr ""
+msgstr "Ukládání"
 
 #: src/control/Control.SaveState.ts:52
-#, fuzzy
 msgid "Saved"
-msgstr "Uložit"
+msgstr "Uloženo"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2202,7 +2201,7 @@ msgstr "Dolní okraj"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Dokument není podepsán."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2290,11 +2289,11 @@ msgstr "Velmi volné"
 
 #: src/control/jsdialog/Definitions.Menu.ts:418
 msgid "From Beginning"
-msgstr ""
+msgstr "Od začátku"
 
 #: src/control/jsdialog/Definitions.Menu.ts:422
 msgid "From Current Slide"
-msgstr ""
+msgstr "Od aktuálního snímku"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2930,15 +2929,15 @@ msgstr "Vyřešit vlákno"
 
 #: src/canvas/sections/CommentListSection.ts:1085
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Komentář na základní úroveň"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show on the side"
-msgstr ""
+msgstr "Zobrazit po straně"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Zobrazit komentář zvětšený"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/canvas/sections/CommentListSection.ts:1344
@@ -3028,20 +3027,20 @@ msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
+"Prohlížeč nepodporuje asynchronní rozhraní Clipboard API. Tento problém má "
+"řešit přechod na protokol HTTPS."
 
 #: src/map/Clipboard.js:1195
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr "<p>Použijte tlačítko vložit na klávesnici na obrazovce.</p>"
+msgstr "Použijte tlačítko vložit na klávesnici na obrazovce."
 
 #: src/map/Clipboard.js:1251
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Stahování za účelem rozsáhlého kopírování/vkládání již začalo. Počkejte "
-"na jeho dokončení, nebo ho před zahájením nového nejprve zrušte.</p>"
+"Stahování za účelem rozsáhlého kopírování/vkládání již začalo. Počkejte na "
+"jeho dokončení, nebo ho před zahájením nového nejprve zrušte."
 
 #: src/map/Clipboard.js:1273
 msgid "Paste from this document"
@@ -3053,15 +3052,15 @@ msgstr "Zrušit vložení jinak"
 
 #: src/map/Clipboard.js:1283
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Prohlížeč má velmi omezený přístup ke schránce"
 
 #: src/map/Clipboard.js:1288
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Následující kombinací zobrazíte další možnosti:"
 
 #: src/map/Clipboard.js:1306
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Zavřením okna vložení jinak ignorujete"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
@@ -3073,7 +3072,7 @@ msgstr "Naposledy uloženo:"
 
 #: src/map/Map.js:1481
 msgid "Please wait!"
-msgstr ""
+msgstr "Počkejte"
 
 #: src/map/handler/Map.Feedback.js:86
 msgid "Please send us your feedback"
