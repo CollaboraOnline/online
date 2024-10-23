@@ -1000,21 +1000,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._move();
 		this._moveInProgress = false;
 		this._moveTileRequests = [];
-
-		var isCellCursorVisible = app.calc.cellCursorVisible;
-		var isTextCursorVisible = app.file.textCursor.visible;
-		if (isCellCursorVisible || isTextCursorVisible) {
-			if (isCellCursorVisible)
-				var cursorPos = this._map._docLayer._twipsToLatLng({ x: app.calc.cellCursorRectangle.x2, y: app.calc.cellCursorRectangle.y2 });
-			else
-				cursorPos = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x2, y: app.file.textCursor.rectangle.y2 });
-			var cursorPositionInView = this._isLatLngInView(cursorPos);
-			if (parseInt(app.getFollowedViewId()) === parseInt(this._viewId) && !cursorPositionInView) {
-				app.setFollowingOff();
-			} else if (parseInt(app.getFollowedViewId()) === -1 && cursorPositionInView) {
-				app.setFollowingUser(parseInt(this._viewId));
-			}
-		}
+		app.updateFollowingUsers();
 	},
 
 	_requestNewTiles: function () {
@@ -3030,9 +3016,11 @@ L.CanvasTileLayer = L.Layer.extend({
 				' buttons=' + buttons + ' modifier=' + modifier);
 
 
-		if (type === 'buttondown') {
+		if (type === 'buttondown')
 			this._clearSearchResults();
-		}
+
+		if (this._map && this._map._docLayer && (type === 'buttondown' || type === 'buttonup'))
+			app.setFollowingUser(this._map._docLayer._getViewId());
 	},
 
 	// Given a character code and a UNO keycode, send a "key" message to coolwsd.

@@ -134,6 +134,36 @@ app.isFollowingEditor = function () {
 	return app.following.mode === 'editor';
 };
 
+app.updateFollowingUsers = function () {
+	var isCellCursorVisible = app.calc.cellCursorVisible;
+	var isTextCursorVisible = app.file.textCursor.visible;
+	if (isCellCursorVisible || isTextCursorVisible) {
+		if (isCellCursorVisible)
+			var cursorPos = app.map._docLayer._twipsToLatLng({
+				x: app.calc.cellCursorRectangle.x2,
+				y: app.calc.cellCursorRectangle.y2,
+			});
+		else
+			cursorPos = app.map._docLayer._twipsToLatLng({
+				x: app.file.textCursor.rectangle.x2,
+				y: app.file.textCursor.rectangle.y2,
+			});
+		var cursorPositionInView = app.map._docLayer._isLatLngInView(cursorPos);
+		if (
+			parseInt(app.getFollowedViewId()) ===
+				parseInt(app.map._docLayer._viewId) &&
+			!cursorPositionInView
+		) {
+			app.setFollowingOff();
+		} else if (
+			parseInt(app.getFollowedViewId()) === -1 &&
+			cursorPositionInView
+		) {
+			app.setFollowingUser(parseInt(app.map._docLayer._viewId));
+		}
+	}
+};
+
 app.calc.isRTL = function () {
 	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
 
