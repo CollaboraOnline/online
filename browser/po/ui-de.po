@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-16 11:13+0200\n"
-"PO-Revision-Date: 2024-10-12 21:16+0000\n"
+"PO-Revision-Date: 2024-10-23 00:25+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.8.2-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1064,7 +1064,7 @@ msgstr "Letzte Bearbeitung"
 #: src/control/Control.NotebookbarBuilder.js:421
 #: src/control/Control.NotebookbarBuilder.js:595
 msgid "ODF presentation (.odp)"
-msgstr "ODF Präsentation (.odp)"
+msgstr "ODF-Präsentation (.odp)"
 
 #: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:409
 #: src/control/Control.Menubar.js:1065
@@ -1092,7 +1092,7 @@ msgstr "HTML-Dokument (.html)"
 #: src/control/Control.Menubar.js:412
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:480
@@ -1102,7 +1102,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Aktuelle Folie als Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:504
@@ -1657,11 +1657,11 @@ msgstr "Im Fenster anzeigen"
 
 #: src/control/Control.NotebookbarImpress.js:477
 msgid "Show Grid"
-msgstr ""
+msgstr "Raster anzeigen"
 
 #: src/control/Control.NotebookbarImpress.js:484
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Am Raster einrasten"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
