@@ -102,6 +102,7 @@ button.ui-tab.notebookbar {
 #save.saving img,
 #save.saved img {
 	box-sizing: border-box;
+	padding-left: var(--btn-img-size) !important;
 }
 
 html:not([data-theme='dark']) .unoSave.savemodified .unobutton img,
