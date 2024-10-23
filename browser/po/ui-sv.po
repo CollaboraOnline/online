@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-16 11:13+0200\n"
-"PO-Revision-Date: 2024-10-10 10:41+0000\n"
+"PO-Revision-Date: 2024-10-17 01:59+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.8-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1077,32 +1077,32 @@ msgstr "HTML-dokument (.html)"
 #: src/control/Control.Menubar.js:412
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Skalbar vektorgrafik (.svg)"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Aktuell bild som bitmapp (.bmp)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Aktuell bild som grafikutbytesformat (.gif)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Aktuell bild som portabel nätverksgrafik (.png)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Aktuell bild som taggbildsfilformat (.tiff)"
 
 #: src/control/Control.Menubar.js:422
 #: src/control/Control.NotebookbarBuilder.js:666
@@ -1642,11 +1642,11 @@ msgstr "Presentera i fönster"
 
 #: src/control/Control.NotebookbarImpress.js:477
 msgid "Show Grid"
-msgstr ""
+msgstr "Visa rutnät"
 
 #: src/control/Control.NotebookbarImpress.js:484
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Fäst till rutnät"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
