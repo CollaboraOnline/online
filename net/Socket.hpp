@@ -218,10 +218,10 @@ public:
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
     {
-        setClosed();
         if (!_noShutdown)
         {
             LOG_TRC("Socket shutdown RDWR. " << *this);
+            setClosed();
             if constexpr (!Util::isMobileApp())
                 ::shutdown(_fd, SHUT_RDWR);
             else
