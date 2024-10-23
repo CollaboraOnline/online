@@ -1507,21 +1507,19 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
         const auto durLast =
             std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
         const double bytesPerSecIn = durTotal.count() > 0 ? (double)bytesRcvd() / ((double)durTotal.count() / 1000.0) : 0.0;
-        /// TO Criteria: Violate creation time? (invalid passed now)
-        const bool cNow = now < getCreationTime();
         /// TO Criteria: Violate maximum idle (_pollTimeout default 64s)
-        const bool cIDLE = _pollTimeout > std::chrono::microseconds::zero() &&
+        const bool isIDLE = _pollTimeout > std::chrono::microseconds::zero() &&
                            durLast > _pollTimeout;
         /// TO Criteria: Violate minimum bytes-per-sec throughput? (_minBytesPerSec default 0, disabled)
-        const bool cMinThroughput = _minBytesPerSec > std::numeric_limits<double>::epsilon() &&
+        const bool isMinThroughput = _minBytesPerSec > std::numeric_limits<double>::epsilon() &&
                                     bytesPerSecIn > std::numeric_limits<double>::epsilon() &&
                                     bytesPerSecIn < _minBytesPerSec;
         /// TO Criteria: Shall terminate?
-        const bool cTermination = SigUtil::getTerminationFlag();
-        if (cNow || cIDLE || cMinThroughput || cTermination )
+        const bool isTermination = SigUtil::getTerminationFlag();
+        if (isIDLE || isMinThroughput || isTermination )
         {
-            LOG_WRN("CheckRemoval: Timeout: {Now " << cNow << ", IDLE " << cIDLE
-                    << ", MinThroughput " << cMinThroughput << ", Termination " << cTermination << "}, "
+            LOG_WRN("CheckRemoval: Timeout: {IDLE " << isIDLE
+                    << ", MinThroughput " << isMinThroughput << ", Termination " << isTermination << "}, "
                     << getStatsString(now) << ", "
                     << *this);
             if (_socketHandler)
