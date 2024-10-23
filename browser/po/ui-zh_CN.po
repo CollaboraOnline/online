@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 18:49+0200\n"
-"PO-Revision-Date: 2024-10-23 16:37+0000\n"
+"POT-Creation-Date: 2024-10-16 11:13+0200\n"
+"PO-Revision-Date: 2024-10-23 16:51+0000\n"
 "Last-Translator: Jason Deng <chunhui-deng@cxria.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/ui/zh_Hans/>\n"
@@ -1048,26 +1048,26 @@ msgstr "PowerPoint 2003 演示文稿 (.ppt)"
 #: src/control/Control.NotebookbarBuilder.js:429
 #: src/control/Control.NotebookbarBuilder.js:599
 msgid "PowerPoint Presentation (.pptx)"
-msgstr "PowerPoint 演示文稿 (.pptx)"
+msgstr "PowerPoint 演示文稿（.pptx）"
 
-#: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:571
+#: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:570
 msgid "Save Comments"
 msgstr "保存批注"
 
 #: src/control/Control.Menubar.js:411
 #: src/control/Control.NotebookbarBuilder.js:437
 msgid "HTML Document (.html)"
-msgstr "HTML文档（.html）"
+msgstr "HTML 文档（.html）"
 
 #: src/control/Control.Menubar.js:412
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr "Flash文件 (.swf)"
+msgstr "Flash 文件（.swf）"
 
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr "可缩放矢量图(.svg)"
+msgstr "可缩放矢量图（.svg）"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:492
@@ -1092,7 +1092,7 @@ msgstr "当前幻灯片为 TIFF 图片（.tiff）"
 #: src/control/Control.Menubar.js:422
 #: src/control/Control.NotebookbarBuilder.js:666
 msgid "Full Page Slides"
-msgstr "完整页边栏"
+msgstr "整页幻灯片"
 
 #: src/control/Control.Menubar.js:423
 #: src/control/Control.NotebookbarBuilder.js:670
@@ -1131,32 +1131,32 @@ msgstr "在新窗口中显示"
 #: src/control/Control.NotebookbarBuilder.js:425
 #: src/control/Control.NotebookbarBuilder.js:538
 msgid "ODF Drawing (.odg)"
-msgstr "ODF 绘图 (.odg)"
+msgstr "ODF 绘图（.odg）"
 
-#: src/control/Control.Menubar.js:702 src/control/Control.Menubar.js:714
-#: src/control/Control.Menubar.js:1187
+#: src/control/Control.Menubar.js:701 src/control/Control.Menubar.js:713
+#: src/control/Control.Menubar.js:1186
 #: src/control/Control.NotebookbarBuilder.js:387
 #: src/control/Control.NotebookbarBuilder.js:580
 msgid "ODF spreadsheet (.ods)"
-msgstr "ODF 电子表格 (.ods)"
+msgstr "ODF 电子表格（.ods）"
 
 #: src/control/Control.Menubar.js:703 src/control/Control.Menubar.js:715
 #: src/control/Control.Menubar.js:1188
 #: src/control/Control.NotebookbarBuilder.js:395
 #: src/control/Control.NotebookbarBuilder.js:588
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr "Excel 2003 电子表格 (.xls)"
+msgstr "Excel 2003 电子表格（.xls）"
 
 #: src/control/Control.Menubar.js:704 src/control/Control.Menubar.js:716
 #: src/control/Control.Menubar.js:1189
 #: src/control/Control.NotebookbarBuilder.js:391
 #: src/control/Control.NotebookbarBuilder.js:584
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr "Excel 电子表格 （.xlsx）"
+msgstr "Excel 电子表格（.xlsx）"
 
 #: src/control/Control.Menubar.js:717
 msgid "CSV file (.csv)"
-msgstr "CSV文件(.csv)"
+msgstr "CSV 文件（.csv）"
 
 #: src/control/Control.Menubar.js:722
 #: src/control/jsdialog/Definitions.Menu.ts:111
@@ -1201,7 +1201,7 @@ msgstr "值重复…"
 #: src/control/Control.Menubar.js:858
 #: src/control/jsdialog/Definitions.Menu.ts:309
 msgid "Containing text..."
-msgstr "包含文本..."
+msgstr "包含文本…"
 
 #: src/control/Control.Menubar.js:860 src/control/Control.Menubar.js:870
 #: src/control/jsdialog/Definitions.Menu.ts:314
@@ -1212,37 +1212,37 @@ msgstr "更多高亮条件…"
 #: src/control/Control.Menubar.js:862
 #: src/control/jsdialog/Definitions.Menu.ts:320
 msgid "Top/Bottom Rules..."
-msgstr "顶部/底部规则..."
+msgstr "顶部/底部规则…"
 
 #: src/control/Control.Menubar.js:863
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Top N elements..."
-msgstr "顶部 N 个元素..."
+msgstr "顶部 N 个元素…"
 
 #: src/control/Control.Menubar.js:864
 #: src/control/jsdialog/Definitions.Menu.ts:327
 msgid "Top N percent..."
-msgstr "顶部 N 百分比..."
+msgstr "顶部 N 百分比…"
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Bottom N elements..."
-msgstr "底部 N 个元素..."
+msgstr "底部 N 个元素…"
 
 #: src/control/Control.Menubar.js:866
 #: src/control/jsdialog/Definitions.Menu.ts:335
 msgid "Bottom N percent..."
-msgstr "底部 N 百分百..."
+msgstr "底部 N 百分比…"
 
 #: src/control/Control.Menubar.js:867
 #: src/control/jsdialog/Definitions.Menu.ts:339
 msgid "Above Average..."
-msgstr "超出平均..."
+msgstr "超出平均…"
 
 #: src/control/Control.Menubar.js:868
 #: src/control/jsdialog/Definitions.Menu.ts:343
 msgid "Below Average..."
-msgstr "低于平均..."
+msgstr "低于平均…"
 
 #: src/control/Control.Menubar.js:984 src/control/Control.Menubar.js:1050
 #: src/control/Control.Menubar.js:1115 src/control/Control.Menubar.js:1170
@@ -1276,7 +1276,7 @@ msgstr "重置为默认语言"
 #: src/control/Control.Menubar.js:1498 src/control/Control.Toolbar.js:140
 #: src/control/Control.Toolbar.js:206
 msgid "More..."
-msgstr "更多..."
+msgstr "更多…"
 
 #: src/control/Control.Menubar.js:1804
 msgid "Use Compact view"
@@ -1393,7 +1393,7 @@ msgstr "格式"
 #: src/control/Control.NotebookbarDraw.js:106
 #: src/control/Control.NotebookbarWriter.js:92
 msgid "Draw"
-msgstr "下拉"
+msgstr "绘制"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:113
@@ -1460,7 +1460,7 @@ msgstr "常规"
 
 #: src/control/Control.NotebookbarCalc.js:608
 msgid "Number"
-msgstr "号码"
+msgstr "数字"
 
 #: src/control/Control.NotebookbarCalc.js:609
 msgid "Percent"
@@ -1482,11 +1482,11 @@ msgstr "时间"
 
 #: src/control/Control.NotebookbarCalc.js:613
 msgid "Scientific"
-msgstr "科学的"
+msgstr "科学计数"
 
 #: src/control/Control.NotebookbarCalc.js:614
 msgid "Fraction"
-msgstr "派别"
+msgstr "分数"
 
 #: src/control/Control.NotebookbarCalc.js:615
 msgid "Boolean Value"
