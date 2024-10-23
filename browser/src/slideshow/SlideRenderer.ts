@@ -152,7 +152,10 @@ abstract class SlideRenderer {
 		return [xMin, xMax, yMin, yMax];
 	}
 
-	public abstract createTexture(image: ImageBitmap): WebGLTexture | ImageBitmap;
+	public abstract createTexture(
+		image: ImageBitmap,
+		isMipMapEnable?: boolean,
+	): WebGLTexture | ImageBitmap;
 
 	public abstract deleteCurrentSlideTexture(): void;
 
@@ -197,7 +200,7 @@ class SlideRenderer2d extends SlideRenderer {
 		this._context = new RenderContext2d(canvas);
 	}
 
-	public createTexture(image: ImageBitmap) {
+	public createTexture(image: ImageBitmap, isMipMapsEnable: boolean = false) {
 		return image;
 	}
 
@@ -368,8 +371,8 @@ class SlideRendererGl extends SlideRenderer {
 		return this._slideTexture;
 	}
 
-	public createTexture(image: ImageBitmap) {
-		return this._context.loadTexture(<any>image);
+	public createTexture(image: ImageBitmap, isMipMapsEnable: boolean = false) {
+		return this._context.loadTexture(<any>image, isMipMapsEnable);
 	}
 
 	public createEmptyTexture(): WebGLTexture | ImageBitmap {
