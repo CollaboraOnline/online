@@ -131,6 +131,10 @@ class LayersCompositor extends SlideCompositor {
 		return this.layerDrawing.getSlide(slideNumber);
 	}
 
+	public getLayerRendererContext(): RenderContext {
+		return this.layerDrawing.getLayerRendererContext();
+	}
+
 	public getAnimatedSlide(slideIndex: number): ImageBitmap {
 		return this.layerDrawing.getAnimatedSlide(slideIndex);
 	}

@@ -15,6 +15,7 @@ abstract class SimpleTextureRenderer {
 	protected program: WebGLProgram;
 	protected vao!: WebGLVertexArrayObject | null;
 	protected context: RenderContextGl;
+	protected positionBuffer: WebGLBuffer;
 
 	constructor(canvasContext: RenderContextGl, createProgram: boolean = true) {
 		this.context = canvasContext;
@@ -72,8 +73,8 @@ abstract class SimpleTextureRenderer {
 			...[1.0, 1.0, 0, 1, 0],
 		]);
 
-		const buffer = this.gl.createBuffer();
-		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
+		this.positionBuffer = this.gl.createBuffer();
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.positionBuffer);
 		this.gl.bufferData(this.gl.ARRAY_BUFFER, positions, this.gl.STATIC_DRAW);
 
 		this.vao = this.gl.createVertexArray();

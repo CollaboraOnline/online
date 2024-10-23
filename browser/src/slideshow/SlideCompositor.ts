@@ -57,6 +57,8 @@ abstract class SlideCompositor {
 		slideHash: string,
 		targetElement: string,
 	): AnimatedShapeInfo;
+
+	public abstract getLayerRendererContext(): RenderContext;
 }
 
 SlideShow.SlideCompositor = SlideCompositor;
