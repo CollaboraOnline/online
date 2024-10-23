@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-16 11:13+0200\n"
-"PO-Revision-Date: 2024-10-17 07:39+0000\n"
-"Last-Translator: shaokuuipo <shaonick@mail.com>\n"
+"PO-Revision-Date: 2024-10-23 16:37+0000\n"
+"Last-Translator: Jason Deng <chunhui-deng@cxria.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/ui/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.8-rc\n"
+"X-Generator: Weblate 5.8.2-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -70,7 +70,7 @@ msgstr " 位用户。"
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
-msgstr " 个文档正被打开。"
+msgstr " 个打开的文档。"
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -78,7 +78,7 @@ msgstr "文件数"
 
 #: admin/admin.strings.js:29
 msgid "Memory consumed"
-msgstr "消耗的内存"
+msgstr "占用的内存"
 
 #: admin/admin.strings.js:30
 msgid "Bytes sent"
@@ -174,23 +174,23 @@ msgstr "结束会话。"
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr "最大文档处理虚拟内存 (MB) - 仅降低"
+msgstr "最大文档处理虚拟内存（MB） - 仅降低"
 
 #: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "最大文档处理栈内存 (KB) - 仅降低"
+msgstr "最大文档处理栈内存（KB） - 仅降低"
 
 #: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr "最大允许写入磁盘的文件大小 (MB) - 仅降低"
+msgstr "最大允许写入磁盘的文件大小（MB） - 仅降低"
 
 #: admin/admin.strings.js:54
 msgid "Documents:"
-msgstr "文档:"
+msgstr "文档："
 
 #: admin/admin.strings.js:55
 msgid "Expired:"
-msgstr "失效:"
+msgstr "失效："
 
 #: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
 #: src/control/Control.Zotero.js:209
@@ -203,7 +203,7 @@ msgstr "关闭服务器"
 
 #: admin/admin.strings.js:58
 msgid "Server uptime"
-msgstr "服务器持续运行时间 (uptime)"
+msgstr "服务器持续运行时间（uptime）"
 
 #: admin/admin.strings.js:59
 msgid "Refresh Log"
@@ -211,7 +211,7 @@ msgstr "刷新日志"
 
 #: admin/admin.strings.js:60
 msgid "Channel Filter:"
-msgstr "信道滤波器："
+msgstr "信道筛选器："
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:487
 #: src/control/Control.StatusBar.js:192 src/control/Control.StatusBar.js:195
@@ -305,7 +305,7 @@ msgstr "确认"
 
 #: admin/src/AdminSocketOverview.js:107
 msgid "Are you sure you want to terminate this session?"
-msgstr "您确定要停止此次会话吗？"
+msgstr "您确定要终止此次会话吗？"
 
 #: admin/src/AdminSocketOverview.js:109 admin/src/AdminSocketOverview.js:432
 #: admin/src/AdminSocketSettings.js:48
@@ -324,7 +324,7 @@ msgstr "取消"
 
 #: admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr "无法通过不安全的连接设置 JSON 网络令牌 (JWT) 的身份验证 cookie"
+msgstr "无法通过不安全的连接设置 JSON 网络令牌（JWT）的身份验证 cookie"
 
 #: admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol {0}"
@@ -396,7 +396,7 @@ msgstr "文档正在迁移到新服务器，正在重试..."
 
 #: js/global.js:1382
 msgid "Failed to get RouteToken from controller"
-msgstr "无法从控制器获取RouteToken"
+msgstr "无法从控制器获取 RouteToken"
 
 #: src/control/ColorPicker.ts:269
 msgid "No color"
@@ -416,7 +416,7 @@ msgstr "“慢速代理”"
 
 #: src/control/Control.AboutDialog.ts:178
 msgid "Copy all version information in English"
-msgstr "复制所有英文版本信息"
+msgstr "以英文复制所有版本信息"
 
 #: src/control/Control.AlertDialog.js:53
 msgid "External link"
@@ -428,7 +428,7 @@ msgstr "打开链接"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr "不允许复制外部源"
+msgstr "不允许复制的外部源"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
@@ -454,7 +454,7 @@ msgstr "您似乎在尝试插入外部数据。"
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
-msgstr "所选外部数据源被禁止。请联系系统管理员。"
+msgstr "所选的外部数据源被禁止。请联系系统管理员。"
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
@@ -482,7 +482,7 @@ msgstr "复制单元格"
 
 #: src/control/Control.ContextMenu.js:257
 msgid "Fill Series"
-msgstr "文件系列"
+msgstr "填充序列"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -516,7 +516,7 @@ msgstr "时间？"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "You have not done anything to rollback yet..."
-msgstr "还没有做任何回滚操作..."
+msgstr "您还没有可回滚的操作..."
 
 #: src/control/Control.DocumentRepair.js:169
 msgid "Redo"
@@ -534,7 +534,7 @@ msgstr "下载选中项目"
 msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
-msgstr "如果你想在 {productname} 以外分享大型项目，有必要先下载他们。"
+msgstr "如果您想在 {productname} 以外分享大型项目，请先下载它们。"
 
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
@@ -556,7 +556,7 @@ msgstr "复制"
 
 #: src/control/Control.DownloadProgress.js:109
 msgid "Download completed and ready to be copied to clipboard."
-msgstr "下载完成并准备好复制到剪切板中。"
+msgstr "下载完成并已准备好复制到剪切板中。"
 
 #: src/control/Control.DownloadProgress.js:110
 msgid ""
@@ -677,7 +677,7 @@ msgstr "批注"
 
 #: src/control/Control.JSDialogBuilder.js:1995
 msgid "Insert Comment"
-msgstr "插入评论"
+msgstr "插入批注"
 
 #: src/control/Control.JSDialogBuilder.js:2925
 #: src/control/Control.Menubar.js:879
@@ -698,7 +698,7 @@ msgstr "插入表格"
 #: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:683
 #: src/control/Control.Menubar.js:964 src/control/Control.StatusBar.js:502
 msgid "None (Do not check spelling)"
-msgstr "无 (不检查拼写)"
+msgstr "无（不检查拼写）"
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
@@ -713,28 +713,28 @@ msgstr "语言"
 #: src/control/Control.NotebookbarBuilder.js:348
 #: src/control/Control.NotebookbarBuilder.js:561
 msgid "ODF text document (.odt)"
-msgstr "ODF 文本文档 (.odt)"
+msgstr "ODF 文本文档（.odt）"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:92
 #: src/control/Control.Menubar.js:1000
 #: src/control/Control.NotebookbarBuilder.js:360
 #: src/control/Control.NotebookbarBuilder.js:573
 msgid "Word 2003 Document (.doc)"
-msgstr "Word 2003 文档 (.doc)"
+msgstr "Word 2003 文档（.doc）"
 
 #: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:93
 #: src/control/Control.Menubar.js:1001
 #: src/control/Control.NotebookbarBuilder.js:356
 #: src/control/Control.NotebookbarBuilder.js:569
 msgid "Word Document (.docx)"
-msgstr "Word 文档 (.docx)"
+msgstr "Word 文档（.docx）"
 
 #: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:1002
 #: src/control/Control.NotebookbarBuilder.js:352
 #: src/control/Control.NotebookbarBuilder.js:565
 msgid "Rich Text (.rtf)"
-msgstr "富文本 (.rtf)"
+msgstr "富文本（.rtf）"
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:88
 #: src/control/Control.Menubar.js:399 src/control/Control.Menubar.js:405
@@ -764,14 +764,14 @@ msgstr "导出为"
 #: src/control/Control.NotebookbarBuilder.js:647
 #: src/control/Control.NotebookbarDraw.js:248
 msgid "PDF Document (.pdf)"
-msgstr "PDF 文档 (.pdf)"
+msgstr "PDF 文档（.pdf）"
 
 #: src/control/Control.Menubar.js:83 src/control/Control.Menubar.js:95
 #: src/control/Control.Menubar.js:989 src/control/Control.Menubar.js:1003
 #: src/control/Control.NotebookbarBuilder.js:364
 #: src/control/Control.NotebookbarBuilder.js:626
 msgid "EPUB (.epub)"
-msgstr "电子出版物 (.epub)"
+msgstr "电子出版物（.epub）"
 
 #: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:214
 msgid "Rename Document"
@@ -806,11 +806,11 @@ msgstr "下载为"
 #: src/control/Control.NotebookbarBuilder.js:413
 #: src/control/Control.NotebookbarBuilder.js:455
 msgid "PDF Document (.pdf) as..."
-msgstr "PDF 文档 (.pdf)..."
+msgstr "PDF 文档（.pdf）为…"
 
 #: src/control/Control.Menubar.js:96 src/control/Control.Menubar.js:717
 msgid "HTML file (.html)"
-msgstr "HTML文件(.html)"
+msgstr "HTML 文件（.html）"
 
 #: src/control/Control.Menubar.js:100 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:581 src/control/Control.Menubar.js:724
@@ -844,7 +844,7 @@ msgstr "重置缩放"
 #: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:454
 #: src/control/Control.Menubar.js:610 src/control/Control.Menubar.js:750
 msgid "Toggle UI Mode"
-msgstr "切换UI模式"
+msgstr "切换界面模式"
 
 #: src/control/Control.Menubar.js:143 src/control/Control.Menubar.js:455
 msgid "Show Ruler"
@@ -1077,22 +1077,22 @@ msgstr "可缩放矢量图(.svg)"
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "当前幻灯片为位图（.bmp）"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "当前幻灯片为 GIF 图片（.gif）"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "当前幻灯片为 PNG 图片（.png）"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "当前幻灯片为 TIFF 图片（.tiff）"
 
 #: src/control/Control.Menubar.js:422
 #: src/control/Control.NotebookbarBuilder.js:666
@@ -1334,7 +1334,7 @@ msgstr "点击折叠"
 #: src/control/Control.NotebookbarBuilder.js:374
 #: src/control/Control.NotebookbarBuilder.js:403
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "HTML 文件（.html）"
 
 #: src/control/Control.NotebookbarBuilder.js:399
 msgid "CSV File (.csv)"
@@ -1445,7 +1445,7 @@ msgstr "查看历史记录"
 #: src/control/Control.NotebookbarImpress.js:320
 #: src/control/Control.NotebookbarWriter.js:322
 msgid "Signature"
-msgstr ""
+msgstr "签名"
 
 #: src/control/Control.NotebookbarCalc.js:268
 #: src/control/Control.NotebookbarDraw.js:303
@@ -1632,11 +1632,11 @@ msgstr "显示在窗口中"
 
 #: src/control/Control.NotebookbarImpress.js:477
 msgid "Show Grid"
-msgstr ""
+msgstr "显示网格"
 
 #: src/control/Control.NotebookbarImpress.js:484
 msgid "Snap to Grid"
-msgstr ""
+msgstr "对齐到网格"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1718,21 +1718,21 @@ msgstr "SSL验证检测无误"
 
 #: src/control/Control.ServerAuditDialog.ts:81
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "PostMessage API 已初始化"
 
 #: src/control/Control.ServerAuditDialog.ts:86
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Integrator 尚未准备好为 PostMessage 调用"
 
 #: src/control/Control.ServerAuditDialog.ts:94
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
-msgstr ""
+msgstr "您的服务器硬件配置过低，可能影响性能。"
 
 #: src/control/Control.ServerAuditDialog.ts:100
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "硬件配置足以提供最佳性能"
 
 #: src/control/Control.ServerAuditDialog.ts:205
 msgid "No issues found"
@@ -1752,7 +1752,7 @@ msgstr "打开"
 
 #: src/control/Control.SaveState.ts:37
 msgid "Saving"
-msgstr ""
+msgstr "正在保存"
 
 #: src/control/Control.SaveState.ts:52
 msgid "Saved"
@@ -1817,7 +1817,7 @@ msgstr "取消搜索"
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
-msgstr ""
+msgstr "为防止意外的修改，作者已将文件设置为只读"
 
 #: src/control/Control.StatusBar.js:435
 msgid "Select multiple cells"
@@ -1951,7 +1951,7 @@ msgstr "0 位用户"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "用户列表概览"
 
 #: src/control/Control.UserList.ts:493
 msgid "Following"
@@ -2168,7 +2168,7 @@ msgstr "居底"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "文档尚未签名。"
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2254,11 +2254,11 @@ msgstr "非常松的"
 
 #: src/control/jsdialog/Definitions.Menu.ts:418
 msgid "From Beginning"
-msgstr ""
+msgstr "从头"
 
 #: src/control/jsdialog/Definitions.Menu.ts:422
 msgid "From Current Slide"
-msgstr ""
+msgstr "从当前幻灯片"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2336,7 +2336,7 @@ msgstr "您添加到文档中的标题和对象将显示在此处"
 
 #: src/slideshow/SlideShowPresenter.ts:359
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "点击以退出演示…"
 
 #: src/slideshow/SlideShowPresenter.ts:530
 #: src/map/handler/Map.SlideShow.js:168
@@ -2393,7 +2393,7 @@ msgstr "该文档演示模式已被禁用"
 
 #: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "暂停…（%SECONDS%）"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -2798,7 +2798,7 @@ msgstr "函数"
 
 #: src/layer/tile/CanvasTileLayer.js:2104
 msgid "Named Range"
-msgstr ""
+msgstr "命名范围"
 
 #: src/layer/tile/CanvasTileLayer.js:3802
 msgid "No Comments"
@@ -2847,15 +2847,15 @@ msgstr "已解决的主题"
 
 #: src/canvas/sections/CommentListSection.ts:1085
 msgid "Promote to top comment"
-msgstr ""
+msgstr "置顶评论"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show on the side"
-msgstr ""
+msgstr "在侧边显示"
 
 #: src/canvas/sections/CommentListSection.ts:1091
 msgid "Show comment bigger"
-msgstr ""
+msgstr "更大地显示评论"
 
 #: src/canvas/sections/CommentListSection.ts:1331
 #: src/canvas/sections/CommentListSection.ts:1344
