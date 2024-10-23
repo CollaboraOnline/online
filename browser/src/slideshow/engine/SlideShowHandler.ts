@@ -902,13 +902,49 @@ class SlideShowHandler {
 		return this.theMetaPres.getSlideInfoByIndex(nSlideIndex);
 	}
 
-	private getTexture(nSlideIndex: number): WebGLTexture | ImageBitmap | null {
+	private isMipMapsEnable(transitionFilterInfo: TransitionFilterInfo): boolean {
+		const allowedSubtypes = new Set([
+			TransitionSubType.CORNERSOUT,
+			TransitionSubType.TOPTOBOTTOM,
+			TransitionSubType.LEFTTORIGHT,
+			TransitionSubType.BOTTOMRIGHT,
+			TransitionSubType.BOTTOMLEFT,
+			TransitionSubType.TOPCENTER,
+			TransitionSubType.CORNERSIN,
+			TransitionSubType.TOPLEFT,
+			TransitionSubType.CIRCLE,
+			TransitionSubType.FANOUTHORIZONTAL,
+			TransitionSubType.ACROSS,
+			TransitionSubType.DIAMOND,
+			TransitionSubType.HEART,
+		]);
+
+		return (
+			transitionFilterInfo.transitionType === TransitionType.MISCSHAPEWIPE &&
+			allowedSubtypes.has(transitionFilterInfo.transitionSubtype)
+		);
+	}
+
+	private getTexture(
+		nSlideIndex: number,
+		transitionFilterInfo?: TransitionFilterInfo,
+	): WebGLTexture | ImageBitmap | null {
 		const slideImage = this.slideCompositor.getSlide(nSlideIndex);
 		if (!slideImage) {
 			console.error('SlideShowHandler: cannot get texture');
 			return null;
 		}
-		return this.slideRenderer.createTexture(slideImage);
+
+		// added check for mipmap texture
+		let isMipMapEnable = false;
+		if (
+			transitionFilterInfo &&
+			transitionFilterInfo.transitionType &&
+			transitionFilterInfo.transitionSubtype
+		) {
+			isMipMapEnable = this.isMipMapsEnable(transitionFilterInfo);
+		}
+		return this.slideRenderer.createTexture(slideImage, isMipMapEnable);
 	}
 
 	private presentSlide(nSlideIndex: number) {
@@ -928,6 +964,9 @@ class SlideShowHandler {
 		nOldSlide: number,
 	): TransitionParameters {
 		let leavingSlideTexture = null;
+		const transitionFilterInfo = TransitionFilterInfo.fromSlideInfo(
+			this.getSlideInfo(nNewSlide),
+		);
 		if (this.isStarting) {
 			leavingSlideTexture = this.slideRenderer.createEmptyTexture();
 		} else {
@@ -935,15 +974,17 @@ class SlideShowHandler {
 				nOldSlide !== undefined &&
 				this.slideRenderer.lastRenderedSlideIndex === nOldSlide
 					? this.slideRenderer.getSlideTexture()
-					: this.getTexture(nOldSlide);
+					: this.getTexture(nOldSlide, transitionFilterInfo);
 		}
-		const enteringSlideTexture = this.getTexture(nNewSlide);
+		const enteringSlideTexture = this.getTexture(
+			nNewSlide,
+			transitionFilterInfo,
+		);
 		const transitionParameters = new TransitionParameters();
 		transitionParameters.context = this.slideRenderer._context;
 		transitionParameters.current = leavingSlideTexture;
 		transitionParameters.next = enteringSlideTexture;
-		transitionParameters.transitionFilterInfo =
-			TransitionFilterInfo.fromSlideInfo(this.getSlideInfo(nNewSlide));
+		transitionParameters.transitionFilterInfo = transitionFilterInfo;
 
 		return transitionParameters;
 	}

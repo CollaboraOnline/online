@@ -43,6 +43,7 @@ abstract class RenderContext {
 
 	public abstract loadTexture(
 		image: HTMLImageElement,
+		isMipMapEnable?: boolean,
 	): WebGLTexture | ImageBitmap;
 
 	public abstract deleteTexture(texture: WebGLTexture | ImageBitmap): void;
@@ -77,6 +78,7 @@ class RenderContextGl extends RenderContext {
 
 	public loadTexture(
 		image: HTMLImageElement | ImageBitmap,
+		isMipMapEnable: boolean = false,
 	): WebGLTexture | ImageBitmap {
 		const gl = this.getGl();
 
@@ -86,9 +88,22 @@ class RenderContextGl extends RenderContext {
 		}
 		gl.bindTexture(gl.TEXTURE_2D, texture);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+		if (isMipMapEnable) {
+			gl.generateMipmap(gl.TEXTURE_2D);
+			gl.texParameteri(
+				gl.TEXTURE_2D,
+				gl.TEXTURE_MIN_FILTER,
+				gl.LINEAR_MIPMAP_LINEAR,
+			);
+		} else {
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+		}
+
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
 		if (image instanceof HTMLImageElement)
 			console.log(`Texture loaded:`, image.src);
 		return texture;
@@ -207,7 +222,10 @@ class RenderContext2d extends RenderContext {
 		return true;
 	}
 
-	public loadTexture(image: HTMLImageElement): WebGLTexture | ImageBitmap {
+	public loadTexture(
+		image: HTMLImageElement,
+		isMipMapEnable: boolean = false,
+	): WebGLTexture | ImageBitmap {
 		return image;
 	}
 
