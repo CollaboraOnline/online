@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-16 11:13+0200\n"
-"PO-Revision-Date: 2024-08-06 06:27+0000\n"
-"Last-Translator: Tron Lee <472734894@qq.com>\n"
-"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
-"collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"PO-Revision-Date: 2024-10-17 07:39+0000\n"
+"Last-Translator: shaokuuipo <shaonick@mail.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
+"projects/collabora-online/ui/zh_Hans/>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.8-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -810,7 +810,7 @@ msgstr "PDF 文档 (.pdf)..."
 
 #: src/control/Control.Menubar.js:96 src/control/Control.Menubar.js:717
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "HTML文件(.html)"
 
 #: src/control/Control.Menubar.js:100 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:581 src/control/Control.Menubar.js:724
@@ -1062,17 +1062,17 @@ msgstr "保存批注"
 #: src/control/Control.Menubar.js:411
 #: src/control/Control.NotebookbarBuilder.js:437
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "HTML文档（.html）"
 
 #: src/control/Control.Menubar.js:412
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Flash文件 (.swf)"
 
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "可缩放矢量图(.svg)"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:492
@@ -1755,9 +1755,8 @@ msgid "Saving"
 msgstr ""
 
 #: src/control/Control.SaveState.ts:52
-#, fuzzy
 msgid "Saved"
-msgstr "保存"
+msgstr "已保存"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2942,20 +2941,18 @@ msgstr "下载剪切板失败，请重新复制"
 msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
-msgstr ""
+msgstr "您的浏览器不支持HTTPS API，切换到HTTPS就是为了解决这个问题。"
 
 #: src/map/Clipboard.js:1195
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr "<p>请使用您屏幕键盘上的「复制／粘贴」按钮。</p>"
+msgstr "请使用屏幕键盘上的粘贴按钮。"
 
 #: src/map/Clipboard.js:1251
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
-msgstr "<p>大型复制／粘贴操作所需的下载已经开始。请等待下载完成之后或将其取消后，再开"
-"始新的下载</p>"
+msgstr "由于大规模复制/粘贴操作而导致的下载已经开始。请等待当前下载，或在开始新下载之"
+"前取消它"
 
 #: src/map/Clipboard.js:1273
 msgid "Paste from this document"
@@ -2967,15 +2964,15 @@ msgstr "取消特殊粘贴"
 
 #: src/map/Clipboard.js:1283
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "您的浏览器对剪贴板的访问权限非常有限"
 
 #: src/map/Clipboard.js:1288
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "请使用以下组合以查看更多选项："
 
 #: src/map/Clipboard.js:1306
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "关闭弹出窗口以忽略选择性粘贴"
 
 #: src/map/Map.js:212
 msgid "Initializing..."
@@ -2987,7 +2984,7 @@ msgstr "上次保存："
 
 #: src/map/Map.js:1481
 msgid "Please wait!"
-msgstr ""
+msgstr "请稍后！"
 
 #: src/map/handler/Map.Feedback.js:86
 msgid "Please send us your feedback"
@@ -3004,7 +3001,7 @@ msgstr "无法将类型为 {0} 的文件上传到服务器，因为该文件没�
 #, javascript-format
 msgid ""
 "The file of type: {0} cannot be uploaded to server since the file is empty"
-msgstr "无法将类型为 {0} 的文件上传到服务器，因为该文件空白"
+msgstr "无法将类型为 {0} 的文件上传到服务器，因为该文件是空的"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
@@ -3012,7 +3009,7 @@ msgstr "正在上传..."
 
 #: src/map/handler/Map.FileInserter.js:161
 msgid "Uploading file to server failed with status: {0}"
-msgstr "向服务器上传文件失败，失败状态为 {0}"
+msgstr "文件上传失败，状态为 {0}"
 
 #: src/map/handler/Map.SlideShow.js:226
 msgid "Presenting in fullscreen"
@@ -3024,7 +3021,7 @@ msgstr "结束演示"
 
 #: src/map/handler/Map.WOPI.js:151
 msgid "Creating new file from template..."
-msgstr "从模版创建新文件..."
+msgstr "使用模版创建新文件..."
 
 #: src/map/handler/Map.WOPI.js:608
 msgid "Error"
