@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-16 11:13+0200\n"
-"PO-Revision-Date: 2024-10-11 00:42+0000\n"
+"PO-Revision-Date: 2024-10-18 05:49+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.8-rc\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:15
@@ -1081,32 +1081,32 @@ msgstr "Dokument HTML (.html)"
 #: src/control/Control.Menubar.js:412
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "SVG - Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Trenutna prosojnica kot bitna slika (.bmp)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Trenutna prosojnica kot GIF - Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Trenutna prosojnica kot PNG - Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Trenutna prosojnica kot TIFF - Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.js:422
 #: src/control/Control.NotebookbarBuilder.js:666
@@ -1646,11 +1646,11 @@ msgstr "Predstavi v oknu"
 
 #: src/control/Control.NotebookbarImpress.js:477
 msgid "Show Grid"
-msgstr ""
+msgstr "Pokaži mrežo"
 
 #: src/control/Control.NotebookbarImpress.js:484
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Pripni na mrežo"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
