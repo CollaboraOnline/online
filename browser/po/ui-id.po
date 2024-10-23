@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-16 11:13+0200\n"
+"POT-Creation-Date: 2024-10-23 18:49+0200\n"
 "PO-Revision-Date: 2024-10-09 12:27+0000\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
@@ -148,11 +148,11 @@ msgstr "Grafik Jaringan"
 #: src/control/Control.NotebookbarCalc.js:112
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:153
-#: src/control/Control.NotebookbarImpress.js:29
-#: src/control/Control.NotebookbarImpress.js:176
+#: src/control/Control.NotebookbarImpress.js:30
+#: src/control/Control.NotebookbarImpress.js:177
 #: src/control/Control.NotebookbarWriter.js:155
-#: src/canvas/sections/CommentListSection.ts:448
-#: src/canvas/sections/CommentSection.ts:152
+#: src/canvas/sections/CommentListSection.ts:493
+#: src/canvas/sections/CommentSection.ts:155
 msgid "Save"
 msgstr "Simpan"
 
@@ -219,8 +219,8 @@ msgstr "Segarkan Log"
 msgid "Channel Filter:"
 msgstr "Filter Saluran:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:487
-#: src/control/Control.StatusBar.js:192 src/control/Control.StatusBar.js:195
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:491
+#: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:201
 msgid "None"
 msgstr "Nihil"
 
@@ -237,7 +237,7 @@ msgstr "Aras Log"
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
 #: src/control/Parts.js:496 src/core/Socket.js:419 src/core/Socket.js:1176
-#: src/core/Socket.js:1181 src/canvas/sections/CommentListSection.ts:144
+#: src/core/Socket.js:1181 src/canvas/sections/CommentListSection.ts:147
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Tutup"
@@ -255,10 +255,10 @@ msgid "License"
 msgstr "Lisensi"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:386
-#: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:692
-#: src/control/Control.Menubar.js:977 src/control/Control.Menubar.js:1045
-#: src/control/Control.Menubar.js:1110 src/control/Control.Menubar.js:1165
-#: src/control/Control.Menubar.js:1240
+#: src/control/Control.Menubar.js:559 src/control/Control.Menubar.js:693
+#: src/control/Control.Menubar.js:978 src/control/Control.Menubar.js:1046
+#: src/control/Control.Menubar.js:1111 src/control/Control.Menubar.js:1166
+#: src/control/Control.Menubar.js:1241
 #: src/control/Control.NotebookbarWriter.js:476
 msgid "About"
 msgstr "Ihwal"
@@ -285,16 +285,16 @@ msgstr "Server telah dimatikan; silakan muat ulang halaman."
 #: src/control/Control.Tabs.js:392 src/control/Control.Tabs.js:401
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Permission.js:89 src/control/Permission.js:99
-#: src/control/Permission.js:149 src/control/Toolbar.js:725
-#: src/control/Toolbar.js:822 src/slideshow/SlideShowPresenter.ts:543
-#: src/slideshow/SlideShowPresenter.ts:674
-#: src/slideshow/SlideShowPresenter.ts:689
-#: src/slideshow/SlideShowPresenter.ts:705 src/core/Socket.js:682
+#: src/control/Permission.js:149 src/control/Toolbar.js:731
+#: src/control/Toolbar.js:828 src/slideshow/SlideShowPresenter.ts:697
+#: src/slideshow/SlideShowPresenter.ts:712
+#: src/slideshow/SlideShowPresenter.ts:726
+#: src/slideshow/SlideShowPresenter.ts:742 src/core/Socket.js:682
 #: src/core/Socket.js:1146 src/core/Socket.js:1216 src/core/Socket.js:1364
-#: src/core/Socket.js:1368 src/docdispatcher.ts:459
-#: src/canvas/sections/CommentListSection.ts:1333
-#: src/canvas/sections/CommentListSection.ts:2211 src/main.js:84
-#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1188
+#: src/core/Socket.js:1368 src/docdispatcher.ts:468
+#: src/canvas/sections/CommentListSection.ts:1421
+#: src/canvas/sections/CommentListSection.ts:2299 src/main.js:84
+#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1195
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
 #: src/map/handler/Map.SlideShow.js:304 src/map/handler/Map.WOPI.js:608
@@ -319,12 +319,12 @@ msgstr "Anda yakin ingin mengakhiri sesi ini?"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1292 src/control/Control.UIManager.js:1359
-#: src/control/Control.UIManager.js:1494 src/control/Control.UIManager.js:1653
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:817
-#: src/core/Socket.js:1389 src/canvas/sections/CommentListSection.ts:443
-#: src/canvas/sections/CommentSection.ts:151
+#: src/control/Control.UIManager.js:1312 src/control/Control.UIManager.js:1379
+#: src/control/Control.UIManager.js:1514 src/control/Control.UIManager.js:1673
+#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:823
+#: src/core/Socket.js:1389 src/canvas/sections/CommentListSection.ts:488
 #: src/canvas/sections/CommentSection.ts:154
+#: src/canvas/sections/CommentSection.ts:157
 msgid "Cancel"
 msgstr "Batal"
 
@@ -392,15 +392,15 @@ msgstr " menit"
 msgid " s"
 msgstr " d"
 
-#: js/global.js:1378
+#: js/global.js:1380
 msgid "Cluster is scaling, retrying..."
 msgstr "Klaster sedang diskalakan, mencoba ulang..."
 
-#: js/global.js:1380
+#: js/global.js:1382
 msgid "Document is migrating to new server, retrying..."
 msgstr "Dokumen sedang dimigrasi ke server baru, mencoba ulang..."
 
-#: js/global.js:1382
+#: js/global.js:1384
 msgid "Failed to get RouteToken from controller"
 msgstr "Gagal mendapatkan RouteToken dari pengendali"
 
@@ -479,19 +479,19 @@ msgstr "Server mengalami kesalahan {0} saat menguraikan perintah {1}."
 msgid "Unlock"
 msgstr "Buka"
 
-#: src/control/Control.ContextMenu.js:221 src/docdispatcher.ts:456
+#: src/control/Control.ContextMenu.js:223 src/docdispatcher.ts:465
 msgid "Delete"
 msgstr "Hapus"
 
-#: src/control/Control.ContextMenu.js:241
+#: src/control/Control.ContextMenu.js:243
 msgid "Paste Special"
 msgstr "Tempel Khusus"
 
-#: src/control/Control.ContextMenu.js:249
+#: src/control/Control.ContextMenu.js:251
 msgid "Copy Cells"
 msgstr "Salin Sel"
 
-#: src/control/Control.ContextMenu.js:257
+#: src/control/Control.ContextMenu.js:259
 msgid "Fill Series"
 msgstr "Isi Seri"
 
@@ -552,7 +552,7 @@ msgstr ""
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
 #: src/control/Control.NotebookbarDraw.js:234
-#: src/control/Control.NotebookbarImpress.js:280
+#: src/control/Control.NotebookbarImpress.js:281
 #: src/control/Control.NotebookbarWriter.js:281
 msgid "Download"
 msgstr "Unduh"
@@ -585,21 +585,16 @@ msgstr "Isi disalin ke papan klip"
 msgid "Download failed"
 msgstr "Pengunduhan gagal"
 
-#: src/control/Control.FormulaBarJSDialog.js:101
-#: src/control/Control.FormulaBarJSDialog.js:161
-msgid "cell address"
-msgstr "alamat sel"
-
-#: src/control/Control.FormulaBarJSDialog.js:111
-#: src/control/Control.FormulaBarJSDialog.js:170
+#: src/control/Control.FormulaBarJSDialog.js:63
+#: src/control/Control.FormulaBarJSDialog.js:117
 msgid "Function Wizard"
 msgstr "Fungsi Wisaya"
 
-#: src/control/Control.FormulaBarJSDialog.js:123
+#: src/control/Control.FormulaBarJSDialog.js:75
 msgid "Formula"
 msgstr "Rumus"
 
-#: src/control/Control.FormulaBarJSDialog.js:129
+#: src/control/Control.FormulaBarJSDialog.js:81
 #: src/control/Control.MobileTopBar.ts:42
 msgid "Accept"
 msgstr "Terima"
@@ -615,105 +610,105 @@ msgstr ""
 "Dokumen menganggur - harap ketuk untuk memuat ulang dan melanjutkan "
 "penyuntingan"
 
-#: src/control/Control.JSDialogBuilder.js:490
+#: src/control/Control.JSDialogBuilder.js:494
 msgid "Solid"
 msgstr "Padat"
 
-#: src/control/Control.JSDialogBuilder.js:493
+#: src/control/Control.JSDialogBuilder.js:497
 msgid "Linear"
 msgstr "Linier"
 
-#: src/control/Control.JSDialogBuilder.js:496
+#: src/control/Control.JSDialogBuilder.js:500
 msgid "Axial"
 msgstr "Aksial"
 
-#: src/control/Control.JSDialogBuilder.js:499
+#: src/control/Control.JSDialogBuilder.js:503
 msgid "Radial"
 msgstr "Radial"
 
-#: src/control/Control.JSDialogBuilder.js:502
+#: src/control/Control.JSDialogBuilder.js:506
 msgid "Ellipsoid"
 msgstr "Elipsoid"
 
-#: src/control/Control.JSDialogBuilder.js:506
+#: src/control/Control.JSDialogBuilder.js:510
 msgid "Quadratic"
 msgstr "Kuadratis"
 
-#: src/control/Control.JSDialogBuilder.js:509
+#: src/control/Control.JSDialogBuilder.js:513
 msgid "Square"
 msgstr "Bujur Sangkar"
 
-#: src/control/Control.JSDialogBuilder.js:512
+#: src/control/Control.JSDialogBuilder.js:516
 msgid "Fixed size"
 msgstr "Ukuran tetap"
 
-#: src/control/Control.JSDialogBuilder.js:1424
+#: src/control/Control.JSDialogBuilder.js:1428
 msgid "From"
 msgstr "Dari"
 
-#: src/control/Control.JSDialogBuilder.js:1427
+#: src/control/Control.JSDialogBuilder.js:1431
 msgid "To"
 msgstr "Ke"
 
-#: src/control/Control.JSDialogBuilder.js:1430
+#: src/control/Control.JSDialogBuilder.js:1434
 msgid "Color"
 msgstr "Warna"
 
-#: src/control/Control.JSDialogBuilder.js:1549
+#: src/control/Control.JSDialogBuilder.js:1553
 msgid "Select range"
 msgstr "Pilih rentang"
 
-#: src/control/Control.JSDialogBuilder.js:1649
+#: src/control/Control.JSDialogBuilder.js:1653
 #: src/control/Control.NotebookbarBuilder.js:156
 msgid "Font Name"
 msgstr "Nama huruf"
 
-#: src/control/Control.JSDialogBuilder.js:1651 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1655 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Ukuran Fonta"
 
-#: src/control/Control.JSDialogBuilder.js:1653
+#: src/control/Control.JSDialogBuilder.js:1657
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "Gaya"
 
-#: src/control/Control.JSDialogBuilder.js:1917
+#: src/control/Control.JSDialogBuilder.js:1921
 msgid "reply"
 msgstr "balas"
 
-#: src/control/Control.JSDialogBuilder.js:1920
+#: src/control/Control.JSDialogBuilder.js:1924
 msgid "replies"
 msgstr "balasan"
 
-#: src/control/Control.JSDialogBuilder.js:1931
-#: src/layer/tile/CanvasTileLayer.js:3774
-#: src/layer/tile/CanvasTileLayer.js:3785
-#: src/canvas/sections/CommentListSection.ts:1119
+#: src/control/Control.JSDialogBuilder.js:1935
+#: src/layer/tile/CanvasTileLayer.js:3764
+#: src/layer/tile/CanvasTileLayer.js:3775
+#: src/canvas/sections/CommentListSection.ts:1207
 msgid "Comment"
 msgstr "Komentar"
 
-#: src/control/Control.JSDialogBuilder.js:1995
+#: src/control/Control.JSDialogBuilder.js:1999
 msgid "Insert Comment"
 msgstr "Tambah Komentar"
 
-#: src/control/Control.JSDialogBuilder.js:2925
-#: src/control/Control.Menubar.js:879
+#: src/control/Control.JSDialogBuilder.js:2747
+#: src/control/Control.Menubar.js:880
 msgid "Rows"
 msgstr "Baris"
 
-#: src/control/Control.JSDialogBuilder.js:2926
-#: src/control/Control.Menubar.js:882
+#: src/control/Control.JSDialogBuilder.js:2748
+#: src/control/Control.Menubar.js:883
 msgid "Columns"
 msgstr "Kolom"
 
-#: src/control/Control.JSDialogBuilder.js:2946
+#: src/control/Control.JSDialogBuilder.js:2768
 msgid "Insert Table"
 msgstr "Sisip Tabel"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:358
 #: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:362
-#: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:683
-#: src/control/Control.Menubar.js:964 src/control/Control.StatusBar.js:502
+#: src/control/Control.Menubar.js:547 src/control/Control.Menubar.js:684
+#: src/control/Control.Menubar.js:965 src/control/Control.StatusBar.js:513
 msgid "None (Do not check spelling)"
 msgstr "Tidak (Jangan periksa ejaan)"
 
@@ -726,28 +721,28 @@ msgid "Language"
 msgstr "Bahasa"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
-#: src/control/Control.Menubar.js:999
+#: src/control/Control.Menubar.js:1000
 #: src/control/Control.NotebookbarBuilder.js:348
 #: src/control/Control.NotebookbarBuilder.js:561
 msgid "ODF text document (.odt)"
 msgstr "Dokumen teks ODF (*.odt)"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:92
-#: src/control/Control.Menubar.js:1000
+#: src/control/Control.Menubar.js:1001
 #: src/control/Control.NotebookbarBuilder.js:360
 #: src/control/Control.NotebookbarBuilder.js:573
 msgid "Word 2003 Document (.doc)"
 msgstr "Dokumen Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:93
-#: src/control/Control.Menubar.js:1001
+#: src/control/Control.Menubar.js:1002
 #: src/control/Control.NotebookbarBuilder.js:356
 #: src/control/Control.NotebookbarBuilder.js:569
 msgid "Word Document (.docx)"
 msgstr "Word Dokument (.docx)"
 
 #: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:94
-#: src/control/Control.Menubar.js:1002
+#: src/control/Control.Menubar.js:1003
 #: src/control/Control.NotebookbarBuilder.js:352
 #: src/control/Control.NotebookbarBuilder.js:565
 msgid "Rich Text (.rtf)"
@@ -755,23 +750,23 @@ msgstr "Teks Kaya (.rtf)"
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:88
 #: src/control/Control.Menubar.js:399 src/control/Control.Menubar.js:405
-#: src/control/Control.Menubar.js:567 src/control/Control.Menubar.js:574
-#: src/control/Control.Menubar.js:705 src/control/Control.Menubar.js:710
-#: src/control/Control.Menubar.js:987 src/control/Control.Menubar.js:996
-#: src/control/Control.Menubar.js:1053 src/control/Control.Menubar.js:1061
-#: src/control/Control.Menubar.js:1118 src/control/Control.Menubar.js:1125
-#: src/control/Control.Menubar.js:1173 src/control/Control.Menubar.js:1183
-msgid "Export as"
-msgstr "Ekspor sebagai"
-
-#: src/control/Control.Menubar.js:82 src/control/Control.Menubar.js:89
-#: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:406
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:575
 #: src/control/Control.Menubar.js:706 src/control/Control.Menubar.js:711
 #: src/control/Control.Menubar.js:988 src/control/Control.Menubar.js:997
 #: src/control/Control.Menubar.js:1054 src/control/Control.Menubar.js:1062
 #: src/control/Control.Menubar.js:1119 src/control/Control.Menubar.js:1126
 #: src/control/Control.Menubar.js:1174 src/control/Control.Menubar.js:1184
+msgid "Export as"
+msgstr "Ekspor sebagai"
+
+#: src/control/Control.Menubar.js:82 src/control/Control.Menubar.js:89
+#: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:406
+#: src/control/Control.Menubar.js:569 src/control/Control.Menubar.js:576
+#: src/control/Control.Menubar.js:707 src/control/Control.Menubar.js:712
+#: src/control/Control.Menubar.js:989 src/control/Control.Menubar.js:998
+#: src/control/Control.Menubar.js:1055 src/control/Control.Menubar.js:1063
+#: src/control/Control.Menubar.js:1120 src/control/Control.Menubar.js:1127
+#: src/control/Control.Menubar.js:1175 src/control/Control.Menubar.js:1185
 #: src/control/Control.NotebookbarBuilder.js:369
 #: src/control/Control.NotebookbarBuilder.js:407
 #: src/control/Control.NotebookbarBuilder.js:443
@@ -784,7 +779,7 @@ msgid "PDF Document (.pdf)"
 msgstr "Dokumen PDF (.pdf)"
 
 #: src/control/Control.Menubar.js:83 src/control/Control.Menubar.js:95
-#: src/control/Control.Menubar.js:989 src/control/Control.Menubar.js:1003
+#: src/control/Control.Menubar.js:990 src/control/Control.Menubar.js:1004
 #: src/control/Control.NotebookbarBuilder.js:364
 #: src/control/Control.NotebookbarBuilder.js:626
 msgid "EPUB (.epub)"
@@ -795,71 +790,71 @@ msgid "Rename Document"
 msgstr "Namai Ulang Dokumen"
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:403
-#: src/control/Control.Menubar.js:571 src/control/Control.Menubar.js:708
-#: src/control/Control.Menubar.js:991 src/control/Control.Menubar.js:1056
-#: src/control/Control.Menubar.js:1121 src/control/Control.Menubar.js:1176
+#: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:709
+#: src/control/Control.Menubar.js:992 src/control/Control.Menubar.js:1057
+#: src/control/Control.Menubar.js:1122 src/control/Control.Menubar.js:1177
 msgid "Share..."
 msgstr "Bagikan..."
 
 #: src/control/Control.Menubar.js:87 src/control/Control.Menubar.js:404
-#: src/control/Control.Menubar.js:573 src/control/Control.Menubar.js:709
-#: src/control/Control.Menubar.js:992 src/control/Control.Menubar.js:1057
-#: src/control/Control.Menubar.js:1123 src/control/Control.Menubar.js:1177
+#: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:710
+#: src/control/Control.Menubar.js:993 src/control/Control.Menubar.js:1058
+#: src/control/Control.Menubar.js:1124 src/control/Control.Menubar.js:1178
 msgid "See revision history"
 msgstr "Lihat histori perubahan"
 
 #: src/control/Control.Menubar.js:88 src/control/Control.Menubar.js:405
-#: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:710
-#: src/control/Control.Menubar.js:996 src/control/Control.Menubar.js:1061
-#: src/control/Control.Menubar.js:1125 src/control/Control.Menubar.js:1183
+#: src/control/Control.Menubar.js:575 src/control/Control.Menubar.js:711
+#: src/control/Control.Menubar.js:997 src/control/Control.Menubar.js:1062
+#: src/control/Control.Menubar.js:1126 src/control/Control.Menubar.js:1184
 msgid "Download as"
 msgstr "Unduh sebagai"
 
 #: src/control/Control.Menubar.js:90 src/control/Control.Menubar.js:407
-#: src/control/Control.Menubar.js:576 src/control/Control.Menubar.js:712
-#: src/control/Control.Menubar.js:998 src/control/Control.Menubar.js:1063
-#: src/control/Control.Menubar.js:1127 src/control/Control.Menubar.js:1185
+#: src/control/Control.Menubar.js:577 src/control/Control.Menubar.js:713
+#: src/control/Control.Menubar.js:999 src/control/Control.Menubar.js:1064
+#: src/control/Control.Menubar.js:1128 src/control/Control.Menubar.js:1186
 #: src/control/Control.NotebookbarBuilder.js:379
 #: src/control/Control.NotebookbarBuilder.js:413
 #: src/control/Control.NotebookbarBuilder.js:455
 msgid "PDF Document (.pdf) as..."
 msgstr "Dokumen PDF (.pdf) sebagai..."
 
-#: src/control/Control.Menubar.js:96 src/control/Control.Menubar.js:717
+#: src/control/Control.Menubar.js:96 src/control/Control.Menubar.js:718
 msgid "HTML file (.html)"
 msgstr "Berkas HTML (.html)"
 
 #: src/control/Control.Menubar.js:100 src/control/Control.Menubar.js:425
-#: src/control/Control.Menubar.js:581 src/control/Control.Menubar.js:724
-#: src/control/Control.Toolbar.js:1173
+#: src/control/Control.Menubar.js:582 src/control/Control.Menubar.js:725
+#: src/control/Control.Toolbar.js:1189
 msgid "Close document"
 msgstr "Tutup dokumen"
 
 #: src/control/Control.Menubar.js:105 src/control/Control.Menubar.js:430
-#: src/control/Control.Menubar.js:586 src/control/Control.Menubar.js:729
-#: src/control/Control.Menubar.js:1008 src/control/Control.Menubar.js:1072
-#: src/control/Control.Menubar.js:1133 src/control/Control.Menubar.js:1193
+#: src/control/Control.Menubar.js:587 src/control/Control.Menubar.js:730
+#: src/control/Control.Menubar.js:1009 src/control/Control.Menubar.js:1073
+#: src/control/Control.Menubar.js:1134 src/control/Control.Menubar.js:1194
 #: src/control/Control.NotebookbarCalc.js:225
 #: src/control/Control.NotebookbarDraw.js:276
-#: src/control/Control.NotebookbarImpress.js:293
+#: src/control/Control.NotebookbarImpress.js:294
 #: src/control/Control.NotebookbarWriter.js:294
 msgid "Repair"
 msgstr "Perbaiki"
 
 #: src/control/Control.Menubar.js:133 src/control/Control.Menubar.js:139
 #: src/control/Control.Menubar.js:442 src/control/Control.Menubar.js:448
-#: src/control/Control.Menubar.js:598 src/control/Control.Menubar.js:604
-#: src/control/Control.Menubar.js:741 src/control/Control.Menubar.js:747
+#: src/control/Control.Menubar.js:599 src/control/Control.Menubar.js:605
+#: src/control/Control.Menubar.js:742 src/control/Control.Menubar.js:748
 #: src/control/Control.NotebookbarCalc.js:1180
 #: src/control/Control.NotebookbarDraw.js:332
-#: src/control/Control.NotebookbarImpress.js:380
+#: src/control/Control.NotebookbarImpress.js:389
 #: src/control/Control.NotebookbarWriter.js:1425
-#: src/control/Control.StatusBar.js:249
+#: src/control/Control.StatusBar.js:256
 msgid "Reset zoom"
 msgstr "Atur ulang zum"
 
 #: src/control/Control.Menubar.js:142 src/control/Control.Menubar.js:454
-#: src/control/Control.Menubar.js:610 src/control/Control.Menubar.js:750
+#: src/control/Control.Menubar.js:611 src/control/Control.Menubar.js:751
 msgid "Toggle UI Mode"
 msgstr "Jungkit Modus UI"
 
@@ -868,54 +863,54 @@ msgid "Show Ruler"
 msgstr "Tampilkan Penggaris"
 
 #: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:456
-#: src/control/Control.Menubar.js:615 src/control/Control.Menubar.js:751
+#: src/control/Control.Menubar.js:616 src/control/Control.Menubar.js:752
 msgid "Show Status Bar"
 msgstr "Tampilkan Bilah Status"
 
 #: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:458
-#: src/control/Control.Menubar.js:616 src/control/Control.Menubar.js:752
+#: src/control/Control.Menubar.js:617 src/control/Control.Menubar.js:753
 msgid "Hide Menu Bar"
 msgstr "Sembunyikan Bilah Menu"
 
 #: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:459
-#: src/control/Control.Menubar.js:611 src/control/Control.Menubar.js:753
-#: src/control/Control.Menubar.js:1029 src/control/Control.Menubar.js:1082
-#: src/control/Control.Menubar.js:1143 src/control/Control.Menubar.js:1203
+#: src/control/Control.Menubar.js:612 src/control/Control.Menubar.js:754
+#: src/control/Control.Menubar.js:1030 src/control/Control.Menubar.js:1083
+#: src/control/Control.Menubar.js:1144 src/control/Control.Menubar.js:1204
 #: src/control/Control.NotebookbarCalc.js:1254
 #: src/control/Control.NotebookbarDraw.js:432
-#: src/control/Control.NotebookbarImpress.js:495
+#: src/control/Control.NotebookbarImpress.js:504
 #: src/control/Control.NotebookbarWriter.js:1505
 msgid "Dark Mode"
 msgstr "Modus Gelap"
 
 #: src/control/Control.Menubar.js:147 src/control/Control.Menubar.js:460
-#: src/control/Control.Menubar.js:612 src/control/Control.Menubar.js:754
-#: src/control/Control.Menubar.js:1030 src/control/Control.Menubar.js:1083
-#: src/control/Control.Menubar.js:1144 src/control/Control.Menubar.js:1204
+#: src/control/Control.Menubar.js:613 src/control/Control.Menubar.js:755
+#: src/control/Control.Menubar.js:1031 src/control/Control.Menubar.js:1084
+#: src/control/Control.Menubar.js:1145 src/control/Control.Menubar.js:1205
 #: src/control/Control.NotebookbarCalc.js:1261
 #: src/control/Control.NotebookbarDraw.js:439
-#: src/control/Control.NotebookbarImpress.js:502
+#: src/control/Control.NotebookbarImpress.js:511
 #: src/control/Control.NotebookbarWriter.js:1512
 msgid "Invert Background"
 msgstr "Balikkan Latar Belakang"
 
 #: src/control/Control.Menubar.js:155 src/control/Control.Menubar.js:471
-#: src/control/Control.Menubar.js:619 src/control/Control.Menubar.js:766
-#: src/control/Control.Menubar.js:1246 src/control/Control.Menubar.js:1296
-#: src/control/Control.Menubar.js:1310 src/control/Control.Menubar.js:1333
+#: src/control/Control.Menubar.js:620 src/control/Control.Menubar.js:767
+#: src/control/Control.Menubar.js:1247 src/control/Control.Menubar.js:1297
+#: src/control/Control.Menubar.js:1311 src/control/Control.Menubar.js:1334
 msgid "Local Image..."
 msgstr "Gambar Lokal..."
 
 #: src/control/Control.Menubar.js:179 src/control/Control.Menubar.js:181
-#: src/control/Control.Menubar.js:1263 src/control/Control.Menubar.js:1265
+#: src/control/Control.Menubar.js:1264 src/control/Control.Menubar.js:1266
 msgid "All"
 msgstr "Semua"
 
-#: src/control/Control.Menubar.js:190 src/control/Control.Menubar.js:481
-#: src/control/Control.Menubar.js:626 src/control/Control.Menubar.js:778
+#: src/control/Control.Menubar.js:190 src/control/Control.Menubar.js:482
+#: src/control/Control.Menubar.js:627 src/control/Control.Menubar.js:779
 #: src/control/Control.NotebookbarCalc.js:1385
 #: src/control/Control.NotebookbarDraw.js:1260
-#: src/control/Control.NotebookbarImpress.js:1261
+#: src/control/Control.NotebookbarImpress.js:1277
 #: src/control/Control.NotebookbarWriter.js:1116
 msgid "Smart Picker"
 msgstr "Pemetik Cerdas"
@@ -965,36 +960,36 @@ msgstr "Lepaskan Sitasi"
 msgid "Citation Preferences"
 msgstr "Preferensi Sitasi"
 
-#: src/control/Control.Menubar.js:341 src/control/Control.Menubar.js:1285
+#: src/control/Control.Menubar.js:341 src/control/Control.Menubar.js:1286
 msgid "Insert Rich Text"
 msgstr "Sisipkan Rich Text"
 
-#: src/control/Control.Menubar.js:342 src/control/Control.Menubar.js:1286
+#: src/control/Control.Menubar.js:342 src/control/Control.Menubar.js:1287
 msgid "Insert Checkbox"
 msgstr "Sisipkan Kotak Centang"
 
-#: src/control/Control.Menubar.js:343 src/control/Control.Menubar.js:1287
+#: src/control/Control.Menubar.js:343 src/control/Control.Menubar.js:1288
 msgid "Insert Dropdown"
 msgstr "Sisipkan Tarik Turun"
 
-#: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:1288
+#: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:1289
 msgid "Insert Picture"
 msgstr "Sisipkan Gambar"
 
-#: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:1289
+#: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:1290
 msgid "Insert Date"
 msgstr "Sisipkan Tanggal"
 
-#: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:1290
+#: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:1291
 #: src/control/Control.NotebookbarCalc.js:240
 #: src/control/Control.NotebookbarDraw.js:290
-#: src/control/Control.NotebookbarImpress.js:308
+#: src/control/Control.NotebookbarImpress.js:309
 #: src/control/Control.NotebookbarWriter.js:309
 #: src/control/Control.NotebookbarWriter.js:1388
 msgid "Properties"
 msgstr "Properti"
 
-#: src/control/Control.Menubar.js:366 src/control/Control.Menubar.js:1034
+#: src/control/Control.Menubar.js:366 src/control/Control.Menubar.js:1035
 #: src/control/Control.NotebookbarWriter.js:414
 msgid "Screen Reading"
 msgstr "Pembacaan Layar"
@@ -1004,75 +999,75 @@ msgstr "Pembacaan Layar"
 msgid "Forum"
 msgstr "Forum"
 
-#: src/control/Control.Menubar.js:380 src/control/Control.Menubar.js:552
-#: src/control/Control.Menubar.js:686 src/control/Control.Menubar.js:971
+#: src/control/Control.Menubar.js:380 src/control/Control.Menubar.js:553
+#: src/control/Control.Menubar.js:687 src/control/Control.Menubar.js:972
 #: src/control/Control.NotebookbarWriter.js:392
 msgid "Online Help"
 msgstr "Bantuan daring"
 
-#: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:553
-#: src/control/Control.Menubar.js:687 src/control/Control.Menubar.js:972
+#: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:554
+#: src/control/Control.Menubar.js:688 src/control/Control.Menubar.js:973
 #: src/control/Control.NotebookbarWriter.js:404
 msgid "Keyboard shortcuts"
 msgstr "Pintasan papan tik"
 
-#: src/control/Control.Menubar.js:382 src/control/Control.Menubar.js:554
-#: src/control/Control.Menubar.js:688 src/control/Control.Menubar.js:973
+#: src/control/Control.Menubar.js:382 src/control/Control.Menubar.js:555
+#: src/control/Control.Menubar.js:689 src/control/Control.Menubar.js:974
 #: src/control/Control.NotebookbarWriter.js:439
 msgid "Report an issue"
 msgstr "Laporkan isu"
 
-#: src/control/Control.Menubar.js:383 src/control/Control.Menubar.js:555
-#: src/control/Control.Menubar.js:689 src/control/Control.Menubar.js:974
-#: src/control/Control.Menubar.js:1043 src/control/Control.Menubar.js:1108
-#: src/control/Control.Menubar.js:1163 src/control/Control.Menubar.js:1238
+#: src/control/Control.Menubar.js:383 src/control/Control.Menubar.js:556
+#: src/control/Control.Menubar.js:690 src/control/Control.Menubar.js:975
+#: src/control/Control.Menubar.js:1044 src/control/Control.Menubar.js:1109
+#: src/control/Control.Menubar.js:1164 src/control/Control.Menubar.js:1239
 #: src/control/Control.NotebookbarWriter.js:452
 msgid "Latest Updates"
 msgstr "Pembaruan Terakhir"
 
-#: src/control/Control.Menubar.js:384 src/control/Control.Menubar.js:556
-#: src/control/Control.Menubar.js:690 src/control/Control.Menubar.js:975
-#: src/control/Control.Menubar.js:1044 src/control/Control.Menubar.js:1109
-#: src/control/Control.Menubar.js:1164 src/control/Control.Menubar.js:1239
+#: src/control/Control.Menubar.js:384 src/control/Control.Menubar.js:557
+#: src/control/Control.Menubar.js:691 src/control/Control.Menubar.js:976
+#: src/control/Control.Menubar.js:1045 src/control/Control.Menubar.js:1110
+#: src/control/Control.Menubar.js:1165 src/control/Control.Menubar.js:1240
 #: src/control/Control.NotebookbarWriter.js:464
 msgid "Send Feedback"
 msgstr "Kirim Umpan"
 
-#: src/control/Control.Menubar.js:385 src/control/Control.Menubar.js:557
-#: src/control/Control.Menubar.js:691 src/control/Control.Menubar.js:976
+#: src/control/Control.Menubar.js:385 src/control/Control.Menubar.js:558
+#: src/control/Control.Menubar.js:692 src/control/Control.Menubar.js:977
 #: src/control/Control.NotebookbarWriter.js:429
 #: src/control/Control.ServerAuditDialog.ts:186
 #: src/control/Control.ServerAuditDialog.ts:187
 msgid "Server audit"
 msgstr "Audit server"
 
-#: src/control/Control.Menubar.js:388 src/control/Control.Menubar.js:560
-#: src/control/Control.Menubar.js:694 src/control/Control.Menubar.js:979
+#: src/control/Control.Menubar.js:388 src/control/Control.Menubar.js:561
+#: src/control/Control.Menubar.js:695 src/control/Control.Menubar.js:980
 msgid "Last modification"
 msgstr "Modifikasi terakhir"
 
 #: src/control/Control.Menubar.js:395 src/control/Control.Menubar.js:408
-#: src/control/Control.Menubar.js:1064
+#: src/control/Control.Menubar.js:1065
 #: src/control/Control.NotebookbarBuilder.js:421
 #: src/control/Control.NotebookbarBuilder.js:595
 msgid "ODF presentation (.odp)"
 msgstr "Presentasi ODF (.odp)"
 
 #: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:409
-#: src/control/Control.Menubar.js:1065
+#: src/control/Control.Menubar.js:1066
 #: src/control/Control.NotebookbarBuilder.js:433
 #: src/control/Control.NotebookbarBuilder.js:603
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "Presentasi PowerPoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:397 src/control/Control.Menubar.js:410
-#: src/control/Control.Menubar.js:1066
+#: src/control/Control.Menubar.js:1067
 #: src/control/Control.NotebookbarBuilder.js:429
 #: src/control/Control.NotebookbarBuilder.js:599
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "Presentasi PowerPoint (.pptx)"
 
-#: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:570
+#: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:571
 msgid "Save Comments"
 msgstr "Simpan Komentar"
 
@@ -1122,197 +1117,201 @@ msgid "Notes Pages"
 msgstr "Halaman Catatan"
 
 #: src/control/Control.Menubar.js:457
-#: src/control/Control.NotebookbarImpress.js:461
+#: src/control/Control.NotebookbarImpress.js:470
 msgid "Notes View"
 msgstr "Tilikan Catatan"
 
 #: src/control/Control.Menubar.js:461
-#: src/control/Control.NotebookbarImpress.js:467
+#: src/control/Control.NotebookbarImpress.js:476
 msgid "Master View"
 msgstr "Tilikan Induk"
 
-#: src/control/Control.Menubar.js:538 src/control/Control.Menubar.js:1107
+#: src/control/Control.Menubar.js:473
+msgid "Local Multimedia..."
+msgstr ""
+
+#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:1108
 #: src/control/Control.PresentationBar.js:127
 msgid "Fullscreen presentation"
 msgstr "Presentasi layar penuh"
 
-#: src/control/Control.Menubar.js:539
+#: src/control/Control.Menubar.js:540
 msgid "Present current slide"
 msgstr "Sajikan salindia saat ini"
 
-#: src/control/Control.Menubar.js:540
+#: src/control/Control.Menubar.js:541
 msgid "Present in new window"
 msgstr "Ada di jendela baru"
 
-#: src/control/Control.Menubar.js:577 src/control/Control.Menubar.js:1067
-#: src/control/Control.Menubar.js:1128
+#: src/control/Control.Menubar.js:578 src/control/Control.Menubar.js:1068
+#: src/control/Control.Menubar.js:1129
 #: src/control/Control.NotebookbarBuilder.js:425
 #: src/control/Control.NotebookbarBuilder.js:538
 msgid "ODF Drawing (.odg)"
 msgstr "Gambar ODF (.odg)"
 
-#: src/control/Control.Menubar.js:701 src/control/Control.Menubar.js:713
-#: src/control/Control.Menubar.js:1186
+#: src/control/Control.Menubar.js:702 src/control/Control.Menubar.js:714
+#: src/control/Control.Menubar.js:1187
 #: src/control/Control.NotebookbarBuilder.js:387
 #: src/control/Control.NotebookbarBuilder.js:580
 msgid "ODF spreadsheet (.ods)"
 msgstr "Lembar sebar ODF (.ods)"
 
-#: src/control/Control.Menubar.js:702 src/control/Control.Menubar.js:714
-#: src/control/Control.Menubar.js:1187
+#: src/control/Control.Menubar.js:703 src/control/Control.Menubar.js:715
+#: src/control/Control.Menubar.js:1188
 #: src/control/Control.NotebookbarBuilder.js:395
 #: src/control/Control.NotebookbarBuilder.js:588
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Lembar Sebar Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:703 src/control/Control.Menubar.js:715
-#: src/control/Control.Menubar.js:1188
+#: src/control/Control.Menubar.js:704 src/control/Control.Menubar.js:716
+#: src/control/Control.Menubar.js:1189
 #: src/control/Control.NotebookbarBuilder.js:391
 #: src/control/Control.NotebookbarBuilder.js:584
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Lembar Sebar Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:716
+#: src/control/Control.Menubar.js:717
 msgid "CSV file (.csv)"
 msgstr "Berkas CSV (.csv)"
 
-#: src/control/Control.Menubar.js:721
+#: src/control/Control.Menubar.js:722
 #: src/control/jsdialog/Definitions.Menu.ts:111
 msgid "Active sheet"
 msgstr "Lembar aktif"
 
-#: src/control/Control.Menubar.js:722 src/control/Control.TopToolbar.js:109
+#: src/control/Control.Menubar.js:723 src/control/Control.TopToolbar.js:109
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "All Sheets"
 msgstr "Semua Lembar"
 
-#: src/control/Control.Menubar.js:851
+#: src/control/Control.Menubar.js:852
 #: src/control/jsdialog/Definitions.Menu.ts:286
 msgid "Highlight cells with..."
 msgstr "Soroti sel dengan..."
 
-#: src/control/Control.Menubar.js:852
+#: src/control/Control.Menubar.js:853
 #: src/control/jsdialog/Definitions.Menu.ts:289
 msgid "Values greater than..."
 msgstr "Nilai yang lebih dari..."
 
-#: src/control/Control.Menubar.js:853
+#: src/control/Control.Menubar.js:854
 #: src/control/jsdialog/Definitions.Menu.ts:293
 msgid "Values less than..."
 msgstr "Nilai yang kurang dari..."
 
-#: src/control/Control.Menubar.js:854
+#: src/control/Control.Menubar.js:855
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "Values equal to..."
 msgstr "Nilai yang sama dengan..."
 
-#: src/control/Control.Menubar.js:855
+#: src/control/Control.Menubar.js:856
 #: src/control/jsdialog/Definitions.Menu.ts:301
 msgid "Values between..."
 msgstr "Nilai antara..."
 
-#: src/control/Control.Menubar.js:856
+#: src/control/Control.Menubar.js:857
 #: src/control/jsdialog/Definitions.Menu.ts:305
 msgid "Values duplicate..."
 msgstr "Nilai duplikat..."
 
-#: src/control/Control.Menubar.js:857
+#: src/control/Control.Menubar.js:858
 #: src/control/jsdialog/Definitions.Menu.ts:309
 msgid "Containing text..."
 msgstr "Memuat teks..."
 
-#: src/control/Control.Menubar.js:859 src/control/Control.Menubar.js:869
+#: src/control/Control.Menubar.js:860 src/control/Control.Menubar.js:870
 #: src/control/jsdialog/Definitions.Menu.ts:314
 #: src/control/jsdialog/Definitions.Menu.ts:348
 msgid "More highlights..."
 msgstr "Lebih banyak sorotan..."
 
-#: src/control/Control.Menubar.js:861
+#: src/control/Control.Menubar.js:862
 #: src/control/jsdialog/Definitions.Menu.ts:320
 msgid "Top/Bottom Rules..."
 msgstr "Aturan Puncak/Dasar..."
 
-#: src/control/Control.Menubar.js:862
+#: src/control/Control.Menubar.js:863
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Top N elements..."
 msgstr "Elemen N tertinggi..."
 
-#: src/control/Control.Menubar.js:863
+#: src/control/Control.Menubar.js:864
 #: src/control/jsdialog/Definitions.Menu.ts:327
 msgid "Top N percent..."
 msgstr "Tertinggi N persen..."
 
-#: src/control/Control.Menubar.js:864
+#: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Bottom N elements..."
 msgstr "Elemen N terbawah..."
 
-#: src/control/Control.Menubar.js:865
+#: src/control/Control.Menubar.js:866
 #: src/control/jsdialog/Definitions.Menu.ts:335
 msgid "Bottom N percent..."
 msgstr "Terbawah N persen..."
 
-#: src/control/Control.Menubar.js:866
+#: src/control/Control.Menubar.js:867
 #: src/control/jsdialog/Definitions.Menu.ts:339
 msgid "Above Average..."
 msgstr "Di Atas Rata-rata..."
 
-#: src/control/Control.Menubar.js:867
+#: src/control/Control.Menubar.js:868
 #: src/control/jsdialog/Definitions.Menu.ts:343
 msgid "Below Average..."
 msgstr "Di Bawah Rata-rata..."
 
-#: src/control/Control.Menubar.js:983 src/control/Control.Menubar.js:1049
-#: src/control/Control.Menubar.js:1114 src/control/Control.Menubar.js:1169
+#: src/control/Control.Menubar.js:984 src/control/Control.Menubar.js:1050
+#: src/control/Control.Menubar.js:1115 src/control/Control.Menubar.js:1170
 #: src/control/Control.NotebookbarCalc.js:840
 #: src/control/Control.NotebookbarDraw.js:972
-#: src/control/Control.NotebookbarImpress.js:1044
+#: src/control/Control.NotebookbarImpress.js:1053
 #: src/control/Control.NotebookbarWriter.js:888
 #: src/control/Control.MobileSearchBar.ts:29
-#: src/control/Control.StatusBar.js:224 src/control/Control.Zotero.js:218
-#: src/control/Toolbar.js:560
+#: src/control/Control.StatusBar.js:230 src/control/Control.Zotero.js:218
+#: src/control/Toolbar.js:566
 msgid "Search"
 msgstr "Cari"
 
-#: src/control/Control.Menubar.js:1036
+#: src/control/Control.Menubar.js:1037
 msgid "Page Setup"
 msgstr "Pengaturan Halaman"
 
-#: src/control/Control.Menubar.js:1180
+#: src/control/Control.Menubar.js:1181
 msgid "Define print area"
 msgstr "Tentukan wilayah cetak"
 
-#: src/control/Control.Menubar.js:1181
+#: src/control/Control.Menubar.js:1182
 msgid "Remove print area"
 msgstr "Buang wilayah cetak"
 
-#: src/control/Control.Menubar.js:1460 src/control/Control.StatusBar.js:501
+#: src/control/Control.Menubar.js:1465 src/control/Control.StatusBar.js:512
 msgid "Reset to Default Language"
 msgstr "Atur Ulang ke Bahasa Baku"
 
-#: src/control/Control.Menubar.js:1491 src/control/Control.Menubar.js:1492
-#: src/control/Control.Menubar.js:1493 src/control/Control.Toolbar.js:140
+#: src/control/Control.Menubar.js:1496 src/control/Control.Menubar.js:1497
+#: src/control/Control.Menubar.js:1498 src/control/Control.Toolbar.js:140
 #: src/control/Control.Toolbar.js:206
 msgid "More..."
 msgstr "Lebih..."
 
-#: src/control/Control.Menubar.js:1799
+#: src/control/Control.Menubar.js:1804
 msgid "Use Compact view"
 msgstr "Gunakan tilikan Ringkas"
 
-#: src/control/Control.Menubar.js:1801
+#: src/control/Control.Menubar.js:1806
 msgid "Use Tabbed view"
 msgstr "Gunakan tilikan Bertab"
 
-#: src/control/Control.Menubar.js:1869
+#: src/control/Control.Menubar.js:1874
 msgid "Read-only mode"
 msgstr "Modus hanya-baca"
 
-#: src/control/Control.Menubar.js:1906
+#: src/control/Control.Menubar.js:1911
 msgid "Insert Shape"
 msgstr "Sisipkan bentuk"
 
-#: src/control/Control.Menubar.js:2126
+#: src/control/Control.Menubar.js:2133
 msgid "file type icon"
 msgstr "ikon jenis berkas"
 
@@ -1327,15 +1326,15 @@ msgstr "Tampilkan bilah pencarian"
 msgid "Borders"
 msgstr "Bingkai"
 
-#: src/control/Control.MobileWizardBuilder.js:526
+#: src/control/Control.MobileWizardBuilder.js:536
 msgid "Background Color"
 msgstr "Warna Latar"
 
-#: src/control/Control.MobileWizardBuilder.js:528
+#: src/control/Control.MobileWizardBuilder.js:538
 msgid "Gradient Start"
 msgstr "Awal Gradien"
 
-#: src/control/Control.MobileWizardBuilder.js:530
+#: src/control/Control.MobileWizardBuilder.js:540
 msgid "Gradient End"
 msgstr "Akhir Gradien"
 
@@ -1363,28 +1362,28 @@ msgstr "Gambar (.png)"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:62
-#: src/control/Control.NotebookbarImpress.js:77
+#: src/control/Control.NotebookbarImpress.js:78
 #: src/control/Control.NotebookbarWriter.js:36
 msgid "File"
 msgstr "Berkas"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:68
-#: src/control/Control.NotebookbarImpress.js:83
+#: src/control/Control.NotebookbarImpress.js:84
 #: src/control/Control.NotebookbarWriter.js:42
 msgid "Home"
 msgstr "Beranda"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:75
-#: src/control/Control.NotebookbarImpress.js:90
+#: src/control/Control.NotebookbarImpress.js:91
 #: src/control/Control.NotebookbarWriter.js:49
 msgid "Insert"
 msgstr "Sisip"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:81
-#: src/control/Control.NotebookbarImpress.js:96
+#: src/control/Control.NotebookbarImpress.js:97
 #: src/control/Control.NotebookbarWriter.js:55
 msgid "Layout"
 msgstr "Tata Letak"
@@ -1395,14 +1394,14 @@ msgstr "Data"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
-#: src/control/Control.NotebookbarImpress.js:102
+#: src/control/Control.NotebookbarImpress.js:103
 #: src/control/Control.NotebookbarWriter.js:67
 msgid "Review"
 msgstr "Ulasan"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:93
-#: src/control/Control.NotebookbarImpress.js:108
+#: src/control/Control.NotebookbarImpress.js:109
 #: src/control/Control.NotebookbarWriter.js:73
 msgid "Format"
 msgstr "Format"
@@ -1415,21 +1414,21 @@ msgstr "Gambar"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:113
-#: src/control/Control.NotebookbarImpress.js:135
+#: src/control/Control.NotebookbarImpress.js:136
 #: src/control/Control.NotebookbarWriter.js:99
 msgid "View"
 msgstr "Tilikan"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:119
-#: src/control/Control.NotebookbarImpress.js:141
+#: src/control/Control.NotebookbarImpress.js:142
 #: src/control/Control.NotebookbarWriter.js:105
 #: src/control/Control.ServerAuditDialog.ts:211
 msgid "Help"
 msgstr "Bantuan"
 
 #: src/control/Control.NotebookbarCalc.js:127
-#: src/control/Control.NotebookbarImpress.js:192
+#: src/control/Control.NotebookbarImpress.js:193
 #: src/control/Control.NotebookbarWriter.js:169
 #: src/control/Control.NotebookbarWriter.js:281
 msgid "Save As"
@@ -1437,14 +1436,14 @@ msgstr "Simpan Sebagai"
 
 #: src/control/Control.NotebookbarCalc.js:146
 #: src/control/Control.NotebookbarDraw.js:180
-#: src/control/Control.NotebookbarImpress.js:212
+#: src/control/Control.NotebookbarImpress.js:213
 #: src/control/Control.NotebookbarWriter.js:189
 msgid "Export As"
 msgstr "Ekspor Sebagai"
 
 #: src/control/Control.NotebookbarCalc.js:161
 #: src/control/Control.NotebookbarDraw.js:196
-#: src/control/Control.NotebookbarImpress.js:227
+#: src/control/Control.NotebookbarImpress.js:228
 #: src/control/Control.NotebookbarWriter.js:203
 #: src/control/Control.NotebookbarWriter.js:227
 msgid "Share"
@@ -1452,21 +1451,21 @@ msgstr "Bagikan"
 
 #: src/control/Control.NotebookbarCalc.js:171
 #: src/control/Control.NotebookbarDraw.js:206
-#: src/control/Control.NotebookbarImpress.js:237
+#: src/control/Control.NotebookbarImpress.js:238
 #: src/control/Control.NotebookbarWriter.js:211
 #: src/control/Control.NotebookbarWriter.js:241
 msgid "See history"
 msgstr "Lihat riwayat"
 
 #: src/control/Control.NotebookbarCalc.js:253
-#: src/control/Control.NotebookbarImpress.js:320
+#: src/control/Control.NotebookbarImpress.js:321
 #: src/control/Control.NotebookbarWriter.js:322
 msgid "Signature"
 msgstr "Tanda tangan"
 
 #: src/control/Control.NotebookbarCalc.js:268
 #: src/control/Control.NotebookbarDraw.js:303
-#: src/control/Control.NotebookbarImpress.js:335
+#: src/control/Control.NotebookbarImpress.js:336
 #: src/control/Control.NotebookbarWriter.js:337
 #: src/control/Control.UIManager.js:214
 msgid "Rename"
@@ -1510,7 +1509,7 @@ msgstr "Pecahan"
 msgid "Boolean Value"
 msgstr "Nilai Boolean"
 
-#: src/control/Control.NotebookbarCalc.js:616 src/control/Toolbar.js:789
+#: src/control/Control.NotebookbarCalc.js:616 src/control/Toolbar.js:795
 msgid "Text"
 msgstr "Teks"
 
@@ -1572,28 +1571,28 @@ msgstr "Hapus Kolom"
 
 #: src/control/Control.NotebookbarCalc.js:1166
 #: src/control/Control.NotebookbarDraw.js:318
-#: src/control/Control.NotebookbarImpress.js:350
+#: src/control/Control.NotebookbarImpress.js:351
 #: src/control/Control.NotebookbarWriter.js:1404
 msgid "Read mode"
 msgstr "Modus baca"
 
 #: src/control/Control.NotebookbarCalc.js:1217
 #: src/control/Control.NotebookbarDraw.js:369
-#: src/control/Control.NotebookbarImpress.js:417
+#: src/control/Control.NotebookbarImpress.js:426
 #: src/control/Control.NotebookbarWriter.js:1462
 msgid "Compact view"
 msgstr "Tilikan Ringkas"
 
 #: src/control/Control.NotebookbarCalc.js:1230
 #: src/control/Control.NotebookbarDraw.js:406
-#: src/control/Control.NotebookbarImpress.js:454
+#: src/control/Control.NotebookbarImpress.js:463
 #: src/control/Control.NotebookbarWriter.js:1499
 msgid "Collapse Tabs"
 msgstr "Perluas Tab"
 
 #: src/control/Control.NotebookbarCalc.js:1242
 #: src/control/Control.NotebookbarDraw.js:394
-#: src/control/Control.NotebookbarImpress.js:442
+#: src/control/Control.NotebookbarImpress.js:451
 #: src/control/Control.NotebookbarWriter.js:1487
 msgid "Status Bar"
 msgstr "Bilah Status"
@@ -1606,16 +1605,16 @@ msgstr "Grafik mini"
 #: src/control/Control.NotebookbarCalc.js:2361
 #: src/control/Control.NotebookbarDraw.js:852
 #: src/control/Control.NotebookbarDraw.js:1346
-#: src/control/Control.NotebookbarImpress.js:916
-#: src/control/Control.NotebookbarImpress.js:1366
-#: src/control/Control.NotebookbarImpress.js:2407
+#: src/control/Control.NotebookbarImpress.js:925
+#: src/control/Control.NotebookbarImpress.js:1382
+#: src/control/Control.NotebookbarImpress.js:2423
 #: src/control/Control.NotebookbarWriter.js:1072
 #: src/control/Control.NotebookbarWriter.js:2845
 msgid "Shapes"
 msgstr "Bentuk"
 
 #: src/control/Control.NotebookbarDraw.js:99
-#: src/control/Control.NotebookbarImpress.js:114
+#: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:85
 msgid "Table"
 msgstr "Tabel"
@@ -1625,7 +1624,7 @@ msgid "PDF Document (.pdf) - Expert"
 msgstr "Dokumen PDF (.pdf) - Tingkat Lanjut"
 
 #: src/control/Control.NotebookbarDraw.js:382
-#: src/control/Control.NotebookbarImpress.js:430
+#: src/control/Control.NotebookbarImpress.js:439
 #: src/control/Control.NotebookbarWriter.js:1475
 msgid "Ruler"
 msgstr "Penggaris"
@@ -1634,24 +1633,28 @@ msgstr "Penggaris"
 msgid "Page Layout"
 msgstr "Tata Letak Halaman"
 
-#: src/control/Control.NotebookbarImpress.js:128
+#: src/control/Control.NotebookbarImpress.js:129
 msgid "Master"
 msgstr "Induk"
 
-#: src/control/Control.NotebookbarImpress.js:357
-#: src/control/Control.NotebookbarImpress.js:1030
+#: src/control/Control.NotebookbarImpress.js:358
+#: src/control/Control.NotebookbarImpress.js:1039
 msgid "Presentation"
 msgstr "Presentasi"
 
-#: src/control/Control.NotebookbarImpress.js:365
+#: src/control/Control.NotebookbarImpress.js:366
 msgid "Present in Window"
 msgstr "Ada dalam Jendela"
 
-#: src/control/Control.NotebookbarImpress.js:477
+#: src/control/Control.NotebookbarImpress.js:374
+msgid "Presenter Console"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:486
 msgid "Show Grid"
 msgstr ""
 
-#: src/control/Control.NotebookbarImpress.js:484
+#: src/control/Control.NotebookbarImpress.js:493
 msgid "Snap to Grid"
 msgstr ""
 
@@ -1799,42 +1802,42 @@ msgstr "Gulir ke lembar terakhir"
 msgid "Insert sheet"
 msgstr "Sisipkan lembar"
 
-#: src/control/Control.StatusBar.js:185
+#: src/control/Control.StatusBar.js:191
 #: src/control/jsdialog/Definitions.Menu.ts:23
 msgid "Average"
 msgstr "Rerata"
 
-#: src/control/Control.StatusBar.js:186
+#: src/control/Control.StatusBar.js:192
 msgid "CountA"
 msgstr "HitungA"
 
-#: src/control/Control.StatusBar.js:187
+#: src/control/Control.StatusBar.js:193
 #: src/control/jsdialog/Definitions.Menu.ts:26
 msgid "Count"
 msgstr "Hitung"
 
-#: src/control/Control.StatusBar.js:188
+#: src/control/Control.StatusBar.js:194
 msgid "Maximum"
 msgstr "Maksimum"
 
-#: src/control/Control.StatusBar.js:189
+#: src/control/Control.StatusBar.js:195
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.StatusBar.js:190
+#: src/control/Control.StatusBar.js:196
 #: src/control/jsdialog/Definitions.Menu.ts:22
 msgid "Sum"
 msgstr "Jumlah"
 
-#: src/control/Control.StatusBar.js:191
+#: src/control/Control.StatusBar.js:197
 msgid "Selection count"
 msgstr "Cacah pilihan"
 
-#: src/control/Control.StatusBar.js:227
+#: src/control/Control.StatusBar.js:233
 msgid "Cancel the search"
 msgstr "Batalkan pencarian"
 
-#: src/control/Control.StatusBar.js:385
+#: src/control/Control.StatusBar.js:396
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
@@ -1842,27 +1845,27 @@ msgstr ""
 "Untuk mencegah perubahan yang tak diharapkan, penulis telah menata berkas "
 "ini untuk dibuka sebagai hanya-tilik"
 
-#: src/control/Control.StatusBar.js:435
+#: src/control/Control.StatusBar.js:446
 msgid "Select multiple cells"
 msgstr "Pilih beberapa sel"
 
-#: src/control/Control.StatusBar.js:438
+#: src/control/Control.StatusBar.js:449
 msgid "Insert mode: inactive"
 msgstr "Mode sisip: tidak aktif"
 
-#: src/control/Control.StatusBar.js:449
+#: src/control/Control.StatusBar.js:460
 msgid "Selection mode: inactive"
 msgstr "Mode pemilihan: tidak aktif"
 
-#: src/control/Control.StatusBar.js:518
+#: src/control/Control.StatusBar.js:529
 msgid "Set Language for All text"
 msgstr "Tata Bahasa untuk Semua Teks"
 
-#: src/control/Control.StatusBar.js:521
+#: src/control/Control.StatusBar.js:532
 msgid "Set Language for Paragraph"
 msgstr "Tata Bahasa untuk Paragraf"
 
-#: src/control/Control.StatusBar.js:522
+#: src/control/Control.StatusBar.js:533
 msgid "Set Language for Selection"
 msgstr "Tata Bahasa untuk Pemilihan"
 
@@ -1898,7 +1901,7 @@ msgstr "Ganti nama lembar"
 msgid "Enter new sheet name"
 msgstr "Masukkan nama lembar baru"
 
-#: src/control/Control.Toolbar.js:1035
+#: src/control/Control.Toolbar.js:1050
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
@@ -1926,7 +1929,7 @@ msgstr "Sisipkan bentuk"
 msgid "Insert connectors"
 msgstr "Sisip konektor"
 
-#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:819
+#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:829
 msgid "Hide Menu"
 msgstr "Sembunyikan Menu"
 
@@ -1934,7 +1937,7 @@ msgstr "Sembunyikan Menu"
 msgid "Enter new name"
 msgstr "Masukkan nama baru"
 
-#: src/control/Control.UIManager.js:842
+#: src/control/Control.UIManager.js:852
 msgid "Show Menu"
 msgstr "Tampilkan Menu"
 
@@ -2239,7 +2242,7 @@ msgstr "Fonta"
 msgid "Downloading..."
 msgstr "Mengunduh..."
 
-#: src/control/Toolbar.js:280
+#: src/control/Toolbar.js:280 src/control/jsdialog/Widget.HTMLContent.ts:128
 msgid "Saving..."
 msgstr "Menyimpan..."
 
@@ -2247,11 +2250,11 @@ msgstr "Menyimpan..."
 msgid "Renaming..."
 msgstr "Mengganti nama..."
 
-#: src/control/Toolbar.js:777
+#: src/control/Toolbar.js:783
 msgid "Insert hyperlink"
 msgstr "Sisipkan hipertaut"
 
-#: src/control/Toolbar.js:801
+#: src/control/Toolbar.js:807
 msgid "Link"
 msgstr "Tautan"
 
@@ -2307,7 +2310,7 @@ msgstr "Tidak ada isian"
 msgid "Automatic"
 msgstr "Otomatis"
 
-#: src/control/jsdialog/Widget.ColorPicker.ts:356
+#: src/control/jsdialog/Widget.ColorPicker.ts:349
 msgid "Recent"
 msgstr "Terkini"
 
@@ -2357,6 +2360,11 @@ msgstr "Pilih Fungsi"
 msgid "Number of Slides"
 msgstr "Nomor Salindia"
 
+#: src/control/jsdialog/Widget.HTMLContent.ts:124
+#: src/control/jsdialog/Widget.HTMLContent.ts:132
+msgid "Your changes have been saved"
+msgstr ""
+
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
 msgstr "Tepi sel"
@@ -2365,25 +2373,49 @@ msgstr "Tepi sel"
 msgid "More options for {name}"
 msgstr "Lebih banyak pilihan untuk {name}"
 
-#: src/control/jsdialog/Widget.TreeView.js:705
+#: src/control/jsdialog/Widget.TreeView.js:706
 msgid "Headings and objects that you add to the document will appear here"
 msgstr "Judul dan objek yang Anda tambahkan ke dokumen akan muncul di sini"
 
-#: src/slideshow/SlideShowPresenter.ts:359
+#: src/slideshow/SlideShowPresenter.ts:375
 msgid "Click to exit presentation..."
 msgstr "Klik untuk keluar presentasi..."
 
-#: src/slideshow/SlideShowPresenter.ts:530
+#: src/slideshow/SlideShowPresenter.ts:553
 #: src/map/handler/Map.SlideShow.js:168
 msgid "Windowed Presentation: "
 msgstr "Presentasi Dalam Jendela: "
 
-#: src/slideshow/SlideShowPresenter.ts:538
+#: src/slideshow/SlideShowPresenter.ts:603
+#: src/map/handler/Map.SlideShow.js:198
+msgid "Presenting in window"
+msgstr "Menyajikan dalam jendela"
+
+#: src/slideshow/SlideShowPresenter.ts:604
+#: src/map/handler/Map.SlideShow.js:199
+msgid "Close Presentation"
+msgstr "Tutup Presentasi"
+
+#: src/slideshow/SlideShowPresenter.ts:694 src/map/handler/Map.SlideShow.js:55
+msgid "Empty Slide Show"
+msgstr "Pertunjukan Salindia Kosong"
+
+#: src/slideshow/SlideShowPresenter.ts:709
+#: src/map/handler/Map.SlideShow.js:291
+msgid "Already presenting"
+msgstr "Sudah menyajikan"
+
+#: src/slideshow/SlideShowPresenter.ts:710
+#: src/map/handler/Map.SlideShow.js:292
+msgid "You are already presenting this document"
+msgstr "Anda sudah mulai menyajikan dokumen ini"
+
+#: src/slideshow/SlideShowPresenter.ts:721
 #: src/map/handler/Map.SlideShow.js:163
 msgid "Windowed Presentation Blocked"
 msgstr "Presentasi Dalam Jendela Diblokir"
 
-#: src/slideshow/SlideShowPresenter.ts:540
+#: src/slideshow/SlideShowPresenter.ts:723
 #: src/map/handler/Map.SlideShow.js:164
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
@@ -2394,36 +2426,12 @@ msgstr ""
 "pertunjukan salindia ditampilkan dalam jendela terpisah, memungkinkan untuk "
 "berbagi layar secara mudah."
 
-#: src/slideshow/SlideShowPresenter.ts:580
-#: src/map/handler/Map.SlideShow.js:198
-msgid "Presenting in window"
-msgstr "Menyajikan dalam jendela"
-
-#: src/slideshow/SlideShowPresenter.ts:581
-#: src/map/handler/Map.SlideShow.js:199
-msgid "Close Presentation"
-msgstr "Tutup Presentasi"
-
-#: src/slideshow/SlideShowPresenter.ts:671 src/map/handler/Map.SlideShow.js:55
-msgid "Empty Slide Show"
-msgstr "Pertunjukan Salindia Kosong"
-
-#: src/slideshow/SlideShowPresenter.ts:686
-#: src/map/handler/Map.SlideShow.js:291
-msgid "Already presenting"
-msgstr "Sudah menyajikan"
-
-#: src/slideshow/SlideShowPresenter.ts:687
-#: src/map/handler/Map.SlideShow.js:292
-msgid "You are already presenting this document"
-msgstr "Anda sudah mulai menyajikan dokumen ini"
-
-#: src/slideshow/SlideShowPresenter.ts:702
+#: src/slideshow/SlideShowPresenter.ts:739
 #: src/map/handler/Map.SlideShow.js:302
 msgid "Presentation disabled"
 msgstr "Presentasi dinonaktifkan"
 
-#: src/slideshow/SlideShowPresenter.ts:703
+#: src/slideshow/SlideShowPresenter.ts:740
 #: src/map/handler/Map.SlideShow.js:303
 msgid "Presentation mode has been disabled for this document"
 msgstr "Mode presentasi telah dinonaktifkan untuk dokumen ini"
@@ -2575,7 +2583,7 @@ msgstr "Berhasil diekspor: "
 msgid "Discard"
 msgstr "Buang"
 
-#: src/core/Socket.js:1393 src/canvas/sections/CommentListSection.ts:1346
+#: src/core/Socket.js:1393 src/canvas/sections/CommentListSection.ts:1434
 msgid "Overwrite"
 msgstr "Timpa"
 
@@ -2631,11 +2639,11 @@ msgstr "Warna tema"
 msgid "Document colors"
 msgstr "Warna dokumen"
 
-#: src/docdispatcher.ts:449
+#: src/docdispatcher.ts:458
 msgid "Are you sure you want to delete this slide?"
 msgstr "Anda yakin ingin menghapus salindia ini?"
 
-#: src/docdispatcher.ts:452
+#: src/docdispatcher.ts:461
 msgid "Are you sure you want to delete this page?"
 msgstr "Anda yakin ingin menghapus halaman ini?"
 
@@ -2876,82 +2884,82 @@ msgstr "Mengunggah berkas ke server gagal, berkas tidak ditemukan."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Gagal mengunggah berkas ke server, ukuran berkas terlalu besar."
 
-#: src/layer/tile/CanvasTileLayer.js:1839
+#: src/layer/tile/CanvasTileLayer.js:1827
 msgid "Functions"
 msgstr "Fungsi"
 
-#: src/layer/tile/CanvasTileLayer.js:2104
+#: src/layer/tile/CanvasTileLayer.js:2092
 msgid "Named Range"
 msgstr "Rentang Yang Dinamai"
 
-#: src/layer/tile/CanvasTileLayer.js:3802
+#: src/layer/tile/CanvasTileLayer.js:3792
 msgid "No Comments"
 msgstr "Tidak ada komentar"
 
-#: src/canvas/sections/CommentListSection.ts:143
+#: src/canvas/sections/CommentListSection.ts:146
 msgid "A comment is being edited"
 msgstr "Suatu komentar sedang disunting"
 
-#: src/canvas/sections/CommentListSection.ts:144
+#: src/canvas/sections/CommentListSection.ts:147
 msgid "Please save or discard the comment currently being edited."
 msgstr "Silakan simpan atau buang komentar yang saat ini sedang disunting."
 
-#: src/canvas/sections/CommentListSection.ts:1049
+#: src/canvas/sections/CommentListSection.ts:1137
 msgid "Modify"
 msgstr "Ubah"
 
-#: src/canvas/sections/CommentListSection.ts:1055
-#: src/canvas/sections/CommentSection.ts:155
+#: src/canvas/sections/CommentListSection.ts:1143
+#: src/canvas/sections/CommentSection.ts:158
 msgid "Reply"
 msgstr "Balas"
 
-#: src/canvas/sections/CommentListSection.ts:1061
+#: src/canvas/sections/CommentListSection.ts:1149
 msgid "Remove"
 msgstr "Buang"
 
-#: src/canvas/sections/CommentListSection.ts:1067
+#: src/canvas/sections/CommentListSection.ts:1155
 msgid "Remove Thread"
 msgstr "Hapus Thread"
 
-#: src/canvas/sections/CommentListSection.ts:1073
+#: src/canvas/sections/CommentListSection.ts:1161
 msgid "Resolve"
 msgstr "Selesaikan"
 
-#: src/canvas/sections/CommentListSection.ts:1073
+#: src/canvas/sections/CommentListSection.ts:1161
 msgid "Unresolve"
 msgstr "Tidak terselesaikan"
 
-#: src/canvas/sections/CommentListSection.ts:1079
+#: src/canvas/sections/CommentListSection.ts:1167
 msgid "Unresolve Thread"
 msgstr "Utas Belum Terselesaikan"
 
-#: src/canvas/sections/CommentListSection.ts:1079
+#: src/canvas/sections/CommentListSection.ts:1167
 msgid "Resolve Thread"
 msgstr "Selesaikan Thread"
 
-#: src/canvas/sections/CommentListSection.ts:1085
+#: src/canvas/sections/CommentListSection.ts:1173
 msgid "Promote to top comment"
 msgstr "Promosikan ke komentar puncak"
 
-#: src/canvas/sections/CommentListSection.ts:1091
+#: src/canvas/sections/CommentListSection.ts:1179
 msgid "Show on the side"
 msgstr "Tampilkan di sisi"
 
-#: src/canvas/sections/CommentListSection.ts:1091
+#: src/canvas/sections/CommentListSection.ts:1179
 msgid "Show comment bigger"
 msgstr "Tampilkan komentar lebih besar"
 
-#: src/canvas/sections/CommentListSection.ts:1331
-#: src/canvas/sections/CommentListSection.ts:1344
-#: src/canvas/sections/CommentListSection.ts:2209
+#: src/canvas/sections/CommentListSection.ts:1419
+#: src/canvas/sections/CommentListSection.ts:1432
+#: src/canvas/sections/CommentListSection.ts:2297
 msgid "Comments Updated"
 msgstr "Komentar Diperbarui"
 
-#: src/canvas/sections/CommentListSection.ts:1332
+#: src/canvas/sections/CommentListSection.ts:1420
 msgid "Another user has removed this comment."
 msgstr "Pengguna lain telah menghapus komentar ini."
 
-#: src/canvas/sections/CommentListSection.ts:1345
+#: src/canvas/sections/CommentListSection.ts:1433
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
@@ -2959,36 +2967,36 @@ msgstr ""
 "Pengguna lain telah memperbarui komentar. Apakah Anda ingin menimpa "
 "perubahan tersebut?"
 
-#: src/canvas/sections/CommentListSection.ts:1347
+#: src/canvas/sections/CommentListSection.ts:1435
 msgid "Update"
 msgstr "Perbarui"
 
-#: src/canvas/sections/CommentListSection.ts:1418
-#: src/canvas/sections/CommentListSection.ts:1490
+#: src/canvas/sections/CommentListSection.ts:1506
+#: src/canvas/sections/CommentListSection.ts:1578
 msgid "Autosaved"
 msgstr "Disimpan otomatis"
 
-#: src/canvas/sections/CommentListSection.ts:2210
+#: src/canvas/sections/CommentListSection.ts:2298
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 "Pengguna lain telah memperbarui komentar. Apakah Anda ingin melanjutkan "
 "memperbarui?"
 
-#: src/canvas/sections/CommentSection.ts:308
+#: src/canvas/sections/CommentSection.ts:313
 msgid "Open menu"
 msgstr "Buka Menu"
 
-#: src/canvas/sections/CommentSection.ts:368
-#: src/canvas/sections/CommentSection.ts:369
+#: src/canvas/sections/CommentSection.ts:373
+#: src/canvas/sections/CommentSection.ts:374
 msgid "Accept change"
 msgstr "Terima Perubahan"
 
-#: src/canvas/sections/CommentSection.ts:375
-#: src/canvas/sections/CommentSection.ts:376
+#: src/canvas/sections/CommentSection.ts:380
+#: src/canvas/sections/CommentSection.ts:381
 msgid "Reject change"
 msgstr "Tolak Perubahan"
 
-#: src/canvas/sections/CommentSection.ts:399
+#: src/canvas/sections/CommentSection.ts:404
 msgid "Resolved"
 msgstr "Terselesaikan"
 
@@ -3025,7 +3033,7 @@ msgstr "peringatan: permintaan salin/tempel kehabisan waktu"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Gagal unduh ke papan, tolong salin ulang"
 
-#: src/map/Clipboard.js:852
+#: src/map/Clipboard.js:859
 msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
@@ -3033,11 +3041,11 @@ msgstr ""
 "API Clipboard async tidak didukung oleh peramban Anda, beralih ke HTTPS "
 "dimaksudkan untuk memperbaiki itu."
 
-#: src/map/Clipboard.js:1195
+#: src/map/Clipboard.js:1202
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "Harap gunakan tombol tempel di papan ketik pada layar Anda."
 
-#: src/map/Clipboard.js:1251
+#: src/map/Clipboard.js:1258
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -3045,35 +3053,35 @@ msgstr ""
 "Pengunduhan karena operasi besar salin/tempel sudah dimulai. Harap tunggu "
 "untuk pengunduhan saat ini atau batalkan sebelum memulai sebuah unduhan baru"
 
-#: src/map/Clipboard.js:1273
+#: src/map/Clipboard.js:1280
 msgid "Paste from this document"
 msgstr "Tempel dari dokumen ini"
 
-#: src/map/Clipboard.js:1273
+#: src/map/Clipboard.js:1280
 msgid "Cancel paste special"
 msgstr "Batalkan tempel khusus"
 
-#: src/map/Clipboard.js:1283
+#: src/map/Clipboard.js:1290
 msgid "Your browser has very limited access to the clipboard"
 msgstr "Peramban Anda memiliki akses yang sangat terbatas ke papan klip"
 
-#: src/map/Clipboard.js:1288
+#: src/map/Clipboard.js:1295
 msgid "Please use following combination to see more options:"
 msgstr "Harap gunakan kombinasi berikut untuk melihat lebih banyak opsi:"
 
-#: src/map/Clipboard.js:1306
+#: src/map/Clipboard.js:1313
 msgid "Close popup to ignore paste special"
 msgstr "Tutup popup untuk mengabaikan tempel khusus"
 
-#: src/map/Map.js:212
+#: src/map/Map.js:216
 msgid "Initializing..."
 msgstr "Menginisialisasi..."
 
-#: src/map/Map.js:474 src/map/Map.js:477 src/map/Map.js:480 src/map/Map.js:483
+#: src/map/Map.js:461 src/map/Map.js:464 src/map/Map.js:467 src/map/Map.js:470
 msgid "Last saved:"
 msgstr "Terakhir tersimpan:"
 
-#: src/map/Map.js:1481
+#: src/map/Map.js:1475
 msgid "Please wait!"
 msgstr "Harap tunggu!"
 
@@ -3081,7 +3089,7 @@ msgstr "Harap tunggu!"
 msgid "Please send us your feedback"
 msgstr "Kirimkan tanggapan Anda kepada kami"
 
-#: src/map/handler/Map.FileInserter.js:105
+#: src/map/handler/Map.FileInserter.js:123
 #, javascript-format
 msgid ""
 "The file of type: {0} cannot be uploaded to server since the file has no "
@@ -3090,17 +3098,17 @@ msgstr ""
 "Berkas bertipe: {0} tidak dapat diunggah ke server karena berkas tidak "
 "memiliki nama"
 
-#: src/map/handler/Map.FileInserter.js:107
+#: src/map/handler/Map.FileInserter.js:125
 #, javascript-format
 msgid ""
 "The file of type: {0} cannot be uploaded to server since the file is empty"
 msgstr "Berkas bertipe: {0} tidak dapat diunggah ke server karena berkas kosong"
 
-#: src/map/handler/Map.FileInserter.js:138
+#: src/map/handler/Map.FileInserter.js:156
 msgid "Uploading..."
 msgstr "Memuat..."
 
-#: src/map/handler/Map.FileInserter.js:161
+#: src/map/handler/Map.FileInserter.js:179
 msgid "Uploading file to server failed with status: {0}"
 msgstr "Mengunggah berkas ke server gagal dengan status: {0}"
 
@@ -3208,6 +3216,9 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2 </a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3 </a>"
+
+#~ msgid "cell address"
+#~ msgstr "alamat sel"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
