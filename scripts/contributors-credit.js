@@ -24,12 +24,10 @@ tags = [
 images = [
     "debug-code.jpg",
 ]
-type = "sidebar"
-layout = "sidebar"
 showimage = false
+showtitle = true
 +++
 
-# Contributors
 A huge shoutout to our incredible contributors! Your dedication and hard work are the backbone of the COOL project.
 
 <!--more-->
