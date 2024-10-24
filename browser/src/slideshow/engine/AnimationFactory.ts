@@ -468,17 +468,31 @@ function createShapeTransition(
 				}
 				// we map everything else to crossfade
 				default: {
-					const aAnimation = createPropertyAnimation(
-						'opacity',
+					return createCrossFadeTransition(
+						aActivityParamSet,
 						aAnimatedElement,
 						nSlideWidth,
 						nSlideHeight,
+						bModeIn,
 					);
-					const eDirection = bModeIn
-						? DirectionType.Forward
-						: DirectionType.Backward;
-					return new SimpleActivity(aActivityParamSet, aAnimation, eDirection);
 				}
 			}
 	}
+}
+
+function createCrossFadeTransition(
+	aActivityParamSet: ActivityParamSet,
+	aAnimatedElement: AnimatedElement,
+	nSlideWidth: number,
+	nSlideHeight: number,
+	bModeIn: boolean,
+): AnimationActivity {
+	const aAnimation = createPropertyAnimation(
+		'opacity',
+		aAnimatedElement,
+		nSlideWidth,
+		nSlideHeight,
+	);
+	const eDirection = bModeIn ? DirectionType.Forward : DirectionType.Backward;
+	return new SimpleActivity(aActivityParamSet, aAnimation, eDirection);
 }

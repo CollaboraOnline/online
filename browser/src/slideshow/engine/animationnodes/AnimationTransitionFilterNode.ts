@@ -132,6 +132,18 @@ class AnimationTransitionFilterNode extends AnimationBaseNode {
 	public createActivity(): AnimationActivity {
 		const aActivityParamSet = this.fillActivityParams();
 
+		// in the 2d context case map any transition to cross-fade
+		if (!this.aNodeContext.aContext.aSlideShowHandler.isGlSupported()) {
+			const bModeIn = this.getTransitionMode() == TransitionMode.in;
+			return createCrossFadeTransition(
+				aActivityParamSet,
+				this.getAnimatedElement(),
+				this.aNodeContext.aContext.nSlideWidth,
+				this.aNodeContext.aContext.nSlideHeight,
+				bModeIn,
+			);
+		}
+
 		return createShapeTransition(
 			aActivityParamSet,
 			this.getAnimatedElement(),

@@ -553,20 +553,8 @@ class LayerDrawing {
 						'LayerDrawing.drawDrawPageLayer: retrieved animatedElement',
 					);
 					if (animatedElement.isValid()) {
-						if (this.layerRenderer.isGlRenderer()) {
-							animatedElement.renderLayer(this.layerRenderer);
-							return;
-						} else {
-							const nextFrame = animatedElement.getAnimatedLayer();
-							if (nextFrame) {
-								console.debug(
-									'LayerDrawing.drawDrawPageLayer: draw next frame',
-								);
-								this.drawBitmap(nextFrame);
-								return;
-							}
-							return; // no layer means it is not visible
-						}
+						animatedElement.renderLayer(this.layerRenderer);
+						return;
 					}
 				}
 				this.drawBitmap(content.content as ImageInfo);

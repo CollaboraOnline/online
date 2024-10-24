@@ -260,10 +260,12 @@ class LayerRendererGl implements LayerRenderer {
 class LayerRenderer2d implements LayerRenderer {
 	private offscreenCanvas: OffscreenCanvas;
 	private offscreenContext: OffscreenCanvasRenderingContext2D;
+	private context2d: RenderContext2d;
 
 	constructor(offscreenCanvas: OffscreenCanvas) {
 		this.offscreenCanvas = offscreenCanvas;
-		this.offscreenContext = this.offscreenCanvas.getContext('2d');
+		this.context2d = new RenderContext2d(this.offscreenCanvas);
+		this.offscreenContext = this.context2d.get2dOffscreen();
 		if (!this.offscreenContext) {
 			throw new Error('2D Canvas context not available');
 		}
@@ -278,7 +280,7 @@ class LayerRenderer2d implements LayerRenderer {
 	}
 
 	getRenderContext(): RenderContext {
-		return null;
+		return this.context2d;
 	}
 
 	clearCanvas(): void {
