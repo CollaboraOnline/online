@@ -854,7 +854,7 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 #mobile-wizard input[type='checkbox']{
 	width: var(--btn-size);
 	height: var(--btn-size);
-	margin: 10px 20px 10px 0px !important;
+	margin: 10px 10px 10px auto !important;
 	float: right;
 	-webkit-appearance: none;
 	-moz-appearance: none;
