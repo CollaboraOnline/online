@@ -166,7 +166,7 @@ m4_ifelse(MOBILEAPP,[true],
       </div>
     </div>
 
-    <div id="spreadsheet-toolbar"></div>
+    <div id="spreadsheet-toolbar" class="hidden"></div>
 
     <div id="mobile-edit-button">
       <div id="mobile-edit-button-image"></div>
