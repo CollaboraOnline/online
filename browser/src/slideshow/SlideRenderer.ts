@@ -69,6 +69,13 @@ abstract class SlideRenderer {
 		return this._slideTexture as ImageBitmap;
 	}
 
+	public getAnimatedSlideImage(): ImageBitmap {
+		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
+		return presenter._slideCompositor.getAnimatedSlide(
+			this._renderedSlideIndex,
+		);
+	}
+
 	public abstract deleteResources(): void;
 
 	public get isAnyVideoPlaying(): boolean {
@@ -240,7 +247,10 @@ class SlideRenderer2d extends SlideRenderer {
 		const gl = this._context.get2dGl();
 		gl.clearRect(0, 0, gl.canvas.width, gl.canvas.height);
 
-		const slideImage = this.getSlideImage();
+		const slideImage = this.getAnimatedSlideImage();
+		app.map.fire('newslideshowframe', {
+			frame: slideImage,
+		});
 		const width = slideImage.width;
 		const height = slideImage.height;
 
@@ -258,7 +268,11 @@ class SlideRenderer2d extends SlideRenderer {
 
 		gl.setTransform(1, 0, 0, 1, 0, 0);
 
-		if (this._isAnyVideoPlaying) requestAnimationFrame(this.render.bind(this));
+		if (this.isAnyLayerActive() || this._isAnyVideoPlaying) {
+			this._requestAnimationFrameId = requestAnimationFrame(
+				this.render.bind(this),
+			);
+		}
 	}
 }
 
@@ -360,10 +374,7 @@ class SlideRendererGl extends SlideRenderer {
 	}
 
 	private getNextTexture(): WebGLTexture {
-		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
-		const slideImage: ImageBitmap = presenter._slideCompositor.getAnimatedSlide(
-			this._renderedSlideIndex,
-		);
+		const slideImage = this.getAnimatedSlideImage();
 		app.map.fire('newslideshowframe', {
 			frame: slideImage,
 		});

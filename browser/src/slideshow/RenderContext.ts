@@ -14,7 +14,10 @@ declare var SlideShow: any;
 
 abstract class RenderContext {
 	public canvas: HTMLCanvasElement | OffscreenCanvas;
-	protected gl: WebGL2RenderingContext | CanvasRenderingContext2D;
+	protected gl:
+		| WebGL2RenderingContext
+		| CanvasRenderingContext2D
+		| OffscreenCanvasRenderingContext2D;
 
 	constructor(canvas: HTMLCanvasElement | OffscreenCanvas) {
 		this.canvas = canvas;
@@ -23,8 +26,15 @@ abstract class RenderContext {
 	public getGl(): WebGL2RenderingContext {
 		return this.gl as WebGL2RenderingContext;
 	}
+
 	public get2dGl(): CanvasRenderingContext2D {
-		return this.gl as CanvasRenderingContext2D;
+		return this.gl instanceof CanvasRenderingContext2D ? this.gl : null;
+	}
+
+	public get2dOffscreen(): OffscreenCanvasRenderingContext2D {
+		return this.gl instanceof OffscreenCanvasRenderingContext2D
+			? this.gl
+			: null;
 	}
 
 	public createTextureWithColor(color: RGBAArray): WebGLTexture | ImageBitmap {
