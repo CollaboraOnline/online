@@ -161,10 +161,6 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	vertical-align: middle;
 }
 
-.jsdialog.vertical:not(.sidebar):not(.ui-separator) {
-	width: 100%;
-}
-
 th.jsdialog:not(:first-child) {
 	padding-inline-end: 24px;
 }
