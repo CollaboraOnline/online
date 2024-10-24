@@ -4,5 +4,6 @@
 **/js/sanitize-url.js
 **/js/l10n.js
 **/src/unocommands.js
+**/src/layer/tile/CanvasTileWorker.js
 node_modules
 dist/src
