@@ -368,12 +368,7 @@ namespace Util
 
     std::string getCoolVersion() { return std::string(COOLWSD_VERSION); }
 
-    std::string getCoolVersionHash()
-    {
-        std::string hash(COOLWSD_VERSION_HASH);
-        hash.resize(std::min(8, (int)hash.length()));
-        return hash;
-    }
+    std::string getCoolVersionHash() { return std::string(COOLWSD_VERSION_HASH); }
 
     void getVersionInfo(std::string& version, std::string& hash)
     {
