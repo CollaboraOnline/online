@@ -36,6 +36,7 @@ L.Map.Keyboard = L.Handler.extend({
 		38  : UNOKey.UP,
 		39  : UNOKey.RIGHT,
 		40  : UNOKey.DOWN,
+		41	: null, // select key	: UNKOWN
 		45  : UNOKey.INSERT,
 		46  : UNOKey.DELETE,
 		48  : UNOKey.NUM0,
@@ -76,7 +77,7 @@ L.Map.Keyboard = L.Handler.extend({
 		90  : UNOKey.Z,
 		91  : null, // left window key	: UNKOWN
 		92  : null, // right window key	: UNKOWN
-		93  : null, // select key	: UNKOWN
+		93	: UNOKey.CONTEXTMENU,
 		96  : UNOKey.NUM0,
 		97  : UNOKey.NUM1,
 		98  : UNOKey.NUM2,
@@ -137,9 +138,11 @@ L.Map.Keyboard = L.Handler.extend({
 		39  : true, // right arrow
 		40  : true, // down arrow
 		45  : true, // insert
+		93  : true, // context menu
 		113 : true  // f2
 	},
 
+	// See https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode for list of keycodes
 	keyCodes: {
 
 		pageUp:   33,
@@ -161,6 +164,7 @@ L.Map.Keyboard = L.Handler.extend({
 		UP:       38,
 		RIGHT:    39,
 		DOWN:     40,
+		SELECTKEY:41, // select key	: UNKOWN
 		INSERT:   45,
 		DELETE:   46,
 		NUM0:     [48,96], // two values because of different mapping in mac and windows for same keys
@@ -205,7 +209,7 @@ L.Map.Keyboard = L.Handler.extend({
 		Z:        90,
 		LEFTWINDOWKEY :    [91,91], // left window key	: UNKOWN  and also for MAC
 		RIGHTWINDOWKEY:    [92,93], // right window key	: UNKOWN  and also for MAC
-		SELECTKEY:         93, // select key	: UNKOWN
+		CONTEXTMENU:       93, // context menu 
 		// NUM0:     96,
 		// NUM1:     97,
 		// NUM2:     98,
@@ -275,6 +279,7 @@ L.Map.Keyboard = L.Handler.extend({
 		46:    true,  // DELETE
 		91:    true,  // LEFTWINDOWKEY
 		92:    true,  // RIGHTWINDOWKEY
+		93:    true,  // CONTEXTMENU
 		112:    true,  //F1
 		113:    true,  //F2
 		114:    true,  //F3
