@@ -356,6 +356,8 @@ L.Control.UIManager = L.Control.extend({
 			this.sheetsBar = JSDialog.SheetsBar(this.map, isDesktop || window.mode.isTablet());
 
 			let formulabarRow = document.getElementById('formulabar-row');
+			let spreadsheetToolbar = document.getElementById('spreadsheet-toolbar');
+			spreadsheetToolbar.classList.remove('hidden');
 			formulabarRow.classList.remove('hidden');
 			this.map.formulabar = JSDialog.FormulaBar(this.map);
 			this.map.addressInputField = JSDialog.AddressInputField(this.map);
@@ -368,7 +370,6 @@ L.Control.UIManager = L.Control.extend({
 
 		if (this.map.isPresentationOrDrawing()) {
 			// remove unused elements
-			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 			$('#presentation-controls-wrapper').show();
 			this.initializeRuler();
 			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(this.map);
@@ -377,7 +378,6 @@ L.Control.UIManager = L.Control.extend({
 
 		if (docType === 'text') {
 			// remove unused elements
-			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 			document.getElementById('selectbackground').parentNode.removeChild(document.getElementById('selectbackground'));
 
