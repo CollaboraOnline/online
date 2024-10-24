@@ -213,7 +213,7 @@ function getConditionalFormatMenuElementsImpl(more, type, count, unoCommand, jsd
 		const button = document.createElement('button');
 		button.id = 'more';
 		button.onclick = function() {
-			moreConditionalFormat('\'' + unoCommand + '\', ' + !!jsdialogDropdown);
+			moreConditionalFormat(unoCommand, !!jsdialogDropdown);
 		};
 		button.textContent = _('More...');
 		table.appendChild(button);
