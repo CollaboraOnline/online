@@ -267,6 +267,15 @@ inline std::map<std::string, std::string> jsonToMap(const std::string& jsonStrin
     return map;
 }
 
+template <typename T>
+Poco::JSON::Object::Ptr makePropertyValue(const std::string& type, const T& val)
+{
+    Poco::JSON::Object::Ptr obj = new Poco::JSON::Object();
+    obj->set("type", type);
+    obj->set("value", val);
+    return obj;
+}
+
 } // end namespace JsonUtil
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
