@@ -479,7 +479,7 @@ bool TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
 Tile TileCache::findTile(const TileDesc &desc)
 {
     const auto it = _cache.find(desc);
-    if (it != _cache.end() && it->first.getNormalizedViewId() == desc.getNormalizedViewId())
+    if (it != _cache.end())
     {
         LOG_TRC("Found cache tile: " << desc.serialize() << " of size " << it->second);
         return it->second;

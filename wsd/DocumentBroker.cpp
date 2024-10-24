@@ -3690,7 +3690,10 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens, bool forceKey
     if (cachedTile && cachedTile->isValid())
     {
         if (tile.getWireId() == 0)
+        {
             tile.setWireId(cachedTile->_wids.back());
+            cachedTile->invalidate();
+        }
 
         session->sendTileNow(tile, cachedTile);
         return;
