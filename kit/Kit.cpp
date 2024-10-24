@@ -115,6 +115,7 @@ using Poco::Path;
 #endif
 
 using namespace COOLProtocol;
+using JsonUtil::makePropertyValue;
 
 extern "C" { void dump_kit_state(void); /* easy for gdb */ }
 
@@ -2147,17 +2148,6 @@ bool Document::forwardToChild(const std::string& prefix, const std::vector<char>
     return false;
 }
 
-namespace {
-template <typename T>
-Object::Ptr makePropertyValue(const std::string& type, const T& val)
-{
-    Object::Ptr obj = new Object();
-    obj->set("type", type);
-    obj->set("value", val);
-    return obj;
-}
-}
-
 /* static */ std::string Document::makeRenderParams(const std::string& renderOpts, const std::string& userName,
                                                     const std::string& spellOnline, const std::string& theme,
                                                     const std::string& backgroundTheme,
@@ -2204,18 +2194,6 @@ Object::Ptr makePropertyValue(const std::string& type, const T& val)
     }
 
     // Extract settings relevant as view options from userPrivateInfo.
-    std::string signatureCert;
-    JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCert", signatureCert);
-    if (!signatureCert.empty())
-    {
-        renderOptsObj->set(".uno:SignatureCert", makePropertyValue("string", signatureCert));
-    }
-    std::string signatureKey;
-    JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureKey", signatureKey);
-    if (!signatureKey.empty())
-    {
-        renderOptsObj->set(".uno:SignatureKey", makePropertyValue("string", signatureKey));
-    }
     std::string signatureCa;
     JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCa", signatureCa);
     if (!signatureCa.empty())

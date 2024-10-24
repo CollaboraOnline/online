@@ -155,6 +155,7 @@ private:
     bool dialogEvent(const StringVector& tokens);
     bool completeFunction(const StringVector& tokens);
     bool unoCommand(const StringVector& tokens);
+    bool unoSignatureCommand();
     bool selectText(const StringVector& tokens, const LokEventTargetEnum target);
     bool selectGraphic(const StringVector& tokens);
     bool renderNextSlideLayer(const unsigned width, const unsigned height, bool& done);

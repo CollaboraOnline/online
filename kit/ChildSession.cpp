@@ -676,43 +676,11 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             }
             else if (tokens[1].find(".uno:Signature") != std::string::npos)
             {
-                // extract user SignatureCert and SignatureKey and append as
-                // args to uno:Signature
-                const std::string& userPrivateInfo = getUserPrivateInfo();
-
-                Object::Ptr userPrivateInfoObj;
-                if (!userPrivateInfo.empty())
+                if (unoSignatureCommand())
                 {
-                    Parser parser;
-                    Poco::Dynamic::Var var = parser.parse(userPrivateInfo);
-                    userPrivateInfoObj = var.extract<Object::Ptr>();
+                    // .uno:Signature has been sent with parameters from user private info, done.
+                    return true;
                 }
-                else
-                {
-                    userPrivateInfoObj = new Object();
-                }
-
-                std::string signatureCert;
-                JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCert", signatureCert);
-                std::string signatureKey;
-                JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureKey", signatureKey);
-
-                std::string arguments;
-                arguments = "{"
-                    "\"SignatureCert\":{"
-                        "\"type\":\"string\","
-                        "\"value\":\"" + JsonUtil::escapeJSONValue(signatureCert) + "\""
-                    "},"
-                    "\"SignatureKey\":{"
-                        "\"type\":\"string\","
-                        "\"value\":\"" + JsonUtil::escapeJSONValue(signatureKey) + "\""
-                    "}"
-                "}";
-
-                StringVector newTokens(tokens);
-                newTokens.push_back(arguments);
-
-                return unoCommand(newTokens);
             }
 
             return unoCommand(tokens);
@@ -2167,6 +2135,58 @@ bool ChildSession::completeFunction(const StringVector& tokens)
 
     getLOKitDocument()->completeFunction(functionName.c_str());
     return true;
+}
+
+bool ChildSession::unoSignatureCommand()
+{
+    // See if user private info has a signing key/cert: if so, annotate the UNO command with those
+    // parameters before sending.
+    const std::string& userPrivateInfo = getUserPrivateInfo();
+    if (userPrivateInfo.empty())
+    {
+        return false;
+    }
+
+    Object::Ptr userPrivateInfoObj;
+    Parser parser;
+    Poco::Dynamic::Var var = parser.parse(userPrivateInfo);
+    try
+    {
+        userPrivateInfoObj = var.extract<Object::Ptr>();
+    }
+    catch (const Poco::BadCastException& exception)
+    {
+        LOG_DBG("user private data is not a dictionary: " << exception.what());
+    }
+    if (!userPrivateInfoObj)
+    {
+        return false;
+    }
+
+    std::string signatureCert;
+    JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCert", signatureCert);
+    Object::Ptr argumentsObj = new Object();
+    if (signatureCert.empty())
+    {
+        return false;
+    }
+
+    argumentsObj->set("SignatureCert", JsonUtil::makePropertyValue("string", signatureCert));
+    std::string signatureKey;
+    JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureKey", signatureKey);
+    if (signatureKey.empty())
+    {
+        return false;
+    }
+
+    argumentsObj->set("SignatureKey", JsonUtil::makePropertyValue("string", signatureKey));
+
+    std::ostringstream oss;
+    oss << "uno .uno:Signature ";
+    argumentsObj->stringify(oss);
+    std::string str = oss.str();
+    StringVector tokens = StringVector::tokenize(str.data(), str.size());
+    return unoCommand(tokens);
 }
 
 bool ChildSession::unoCommand(const StringVector& tokens)
