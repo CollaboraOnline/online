@@ -144,7 +144,7 @@ class KitSocketPoll final : public SocketPoll
 
 public:
     ~KitSocketPoll();
-    void drainQueue();
+    void drainQueue(bool isIDLE);
 
     static void dumpGlobalState(std::ostream& oss);
     static std::shared_ptr<KitSocketPoll> create();
@@ -327,7 +327,7 @@ private:
                                         const std::string& spellOnline, const std::string& theme,
                                         const std::string& backgroundTheme,
                                         const std::string& userPrivateInfo);
-    bool isTileRequestInsideVisibleArea(const TileCombined& tileCombined);
+    bool isTileRequestInsideVisibleArea(const TileCombined& tileCombined) const;
 
 public:
     bool processInputEnabled() const;
@@ -349,7 +349,7 @@ public:
 
     // poll is idle, are we ?
     void checkIdle();
-    void drainQueue();
+    void drainQueue(bool isIDLE);
     void drainCallbacks();
 
     void dumpState(std::ostream& oss);
