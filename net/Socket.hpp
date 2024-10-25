@@ -1069,7 +1069,6 @@ public:
         Socket(fd, type, creationTime),
         _pollTimeout( net::Defaults::get().SocketPollTimeout ),
         _httpTimeout( net::Defaults::get().HTTPTimeout ),
-        _minBytesPerSec( net::Defaults::get().MinBytesPerSec ),
         _hostname(std::move(host)),
         _wsState(WSState::HTTP),
         _isLocalHost(hostType == LocalHost),
@@ -1739,8 +1738,6 @@ private:
     const std::chrono::microseconds _pollTimeout;
     /// defaults to 30s, see net::Defaults::HTTPTimeout
     const std::chrono::microseconds _httpTimeout;
-    /// defaults to 0 (disabled), see net::Defaults::MinBytesPerSec
-    const double _minBytesPerSec;
 
     /// The hostname (or IP) of the peer we are connecting to.
     const std::string _hostname;

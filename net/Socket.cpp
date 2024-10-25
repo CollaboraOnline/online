@@ -1502,24 +1502,17 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
     if( isIPType() )
     {
         // Forced removal on outside-facing IPv[46] network connections only
-        const auto durTotal =
-            std::chrono::duration_cast<std::chrono::milliseconds>(now - getCreationTime());
         const auto durLast =
             std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
-        const double bytesPerSecIn = durTotal.count() > 0 ? (double)bytesRcvd() / ((double)durTotal.count() / 1000.0) : 0.0;
         /// TO Criteria: Violate maximum idle (_pollTimeout default 64s)
         const bool isIDLE = _pollTimeout > std::chrono::microseconds::zero() &&
                            durLast > _pollTimeout;
-        /// TO Criteria: Violate minimum bytes-per-sec throughput? (_minBytesPerSec default 0, disabled)
-        const bool isMinThroughput = _minBytesPerSec > std::numeric_limits<double>::epsilon() &&
-                                    bytesPerSecIn > std::numeric_limits<double>::epsilon() &&
-                                    bytesPerSecIn < _minBytesPerSec;
         /// TO Criteria: Shall terminate?
         const bool isTermination = SigUtil::getTerminationFlag();
-        if (isIDLE || isMinThroughput || isTermination )
+        if (isIDLE || isTermination )
         {
             LOG_WRN("CheckRemoval: Timeout: {IDLE " << isIDLE
-                    << ", MinThroughput " << isMinThroughput << ", Termination " << isTermination << "}, "
+                    << ", Termination " << isTermination << "}, "
                     << getStatsString(now) << ", "
                     << *this);
             if (_socketHandler)
