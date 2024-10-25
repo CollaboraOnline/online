@@ -211,8 +211,10 @@ public:
         recv = _bytesRcvd;
     }
 
-    /// Checks whether socket is due for forced removal, e.g. by internal timeout or small throughput. Method will shutdown connection and socket on forced removal.
-    /// Returns true in case of forced removal, caller shall stop processing
+    /// Checks whether socket is due for forced removal, e.g. by internal timeout or small throughput.
+    /// Method either shutdown connection and socket immediately for forced removal,
+    /// signals a pending shutdown or keeping the socket alive.
+    /// Returns `true` if isClosed(), i.e. immediately socket shutdown and set for removal.
     virtual bool checkRemoval(std::chrono::steady_clock::time_point /* now */) { return false; }
 
     /// Shutdown the socket.

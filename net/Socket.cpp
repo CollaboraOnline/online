@@ -688,8 +688,8 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             }
             else if( _pollSockets[i]->checkRemoval(newNow) )
             {
-                // timed out socket .. also checks
-                // ProtocolHandlerInterface
+                // Socket to be removed (timeout) w/ immediate shutdown/disconnect,
+                // also checks ProtocolHandlerInterface
                 // - http::Session::checkTimeout() OK
                 // - WebSocketHandler::checkTimeout() OK
                 ++itemsErased;
@@ -1517,31 +1517,28 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
                     << *this);
             if (_socketHandler)
             {
-                _socketHandler->onDisconnect();
-                if( isOpen() ) {
-                    // Note: Ensure proper semantics of onDisconnect()
-                    LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
-                    shutdown(); // signal
-                    closeConnection(); // real -> setClosed()
+                _socketHandler->onDisconnect(); // Note: Ensure proper semantics of onDisconnect()
+                if( isOpen() )
+                {
+                    LOG_WRN("Socket still open post onDisconnect(), forced " <<  (isTermination ? "disconnect." : "shutdown-signal" ));
+                    if( isTermination )
+                        closeConnection();
+                    else if( !isShutdownSignalled() )
+                        shutdown(); // signal shutdown only, allowing to drain remaining bytes
                 }
             }
+            else if( isTermination )
+                closeConnection();
             else
-            {
-                shutdown(); // signal
-                closeConnection(); // real -> setClosed()
-            }
-            assert(isOpen() == false); // should have issued shutdown
-            return true;
+                shutdown(); // signal shutdown only, allowing to drain remaining bytes
         }
     }
     if (_socketHandler && _socketHandler->checkTimeout(now))
     {
         assert(isOpen() == false); // should have issued shutdown
-        setClosed();
         LOG_WRN("CheckRemoval: Timeout: " << getStatsString(now) << ", " << *this);
-        return true;
     }
-    return false;
+    return isClosed();
 }
 
 #if !MOBILEAPP
