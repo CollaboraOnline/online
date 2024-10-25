@@ -111,12 +111,8 @@ class SlideShowPresenter {
 	_slideShowCanvas: HTMLCanvasElement = null;
 	_slideShowWindowProxy: ReturnType<typeof window.open> = null;
 	_windowCloseInterval: ReturnType<typeof setInterval> = null;
-	_currentSlide: number = 0;
 	_slideRenderer: SlideRenderer = null;
-	_animationsHandler: SlideAnimations = null;
 	_canvasLoader: CanvasLoader | null = null;
-	_isAnimationPlaying: boolean = false;
-	_isPresentInWindow: boolean = false;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
 	private _slideShowHandler: SlideShowHandler;
 	private _slideShowNavigator: SlideShowNavigator;
@@ -232,60 +228,6 @@ class SlideShowPresenter {
 		// in chome so a later second attempt at launching a presentation
 		// fails
 		this._map.focus();
-	}
-
-	// TODO _nextSlide (don't hack this, no more used):
-	//  port endless/repeat to SlideShowNavigator,
-	//  to be removed
-	_nextSlide() {
-		window.app.console.log('SlideShowPresenter._nextSlide');
-
-		if (this._currentSlide + 1 >= this._getSlidesCount()) {
-			const info = this._presentationInfo;
-			if (info?.isEndless == undefined || !info.isEndless) {
-				if (this._currentSlide + 1 === this._getSlidesCount()) {
-					this._currentSlide++;
-					if (this.exitSlideshowWithWarning()) return;
-				}
-				this._closeSlideShowWindow();
-				this._stopFullScreen();
-				return;
-			}
-
-			this.startTimer(info.loopAndRepeatDuration);
-			return;
-		}
-
-		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
-			this._currentSlide++;
-			this._doTransition(
-				this._slideRenderer.getSlideTexture(),
-				this._currentSlide,
-			);
-		});
-	}
-
-	// TODO _previoustSlide (don't hack this, no more used) to be removed
-	_previoustSlide() {
-		window.app.console.log('SlideShowPresenter._previoustSlide');
-
-		if (this._currentSlide <= 0) {
-			return;
-		}
-
-		// if we are at exit text slide, we have to go back....
-		if (this._currentSlide === this._getSlidesCount()) {
-			this._currentSlide--;
-			this._slideCompositor.fetchAndRun(this._currentSlide, () => {
-				this._doPresentation();
-			});
-			return;
-		}
-
-		this._slideCompositor.fetchAndRun(this._currentSlide, () => {
-			this._currentSlide--;
-			this._doPresentation();
-		});
 	}
 
 	private centerCanvas() {
@@ -425,52 +367,6 @@ class SlideShowPresenter {
 		this._canvasLoader = null;
 	}
 
-	// TODO _doTransition (don't hack this, no more used)
-	//  port to SlideShowHandler transitionType = 'NONE' (?)
-	//  to be removed
-	_doTransition(
-		currentTexture: WebGLTexture | ImageBitmap,
-		nextSlideNumber: number,
-	) {
-		this._slideCompositor.fetchAndRun(nextSlideNumber, () => {
-			const slideInfo = this.getSlideInfo(nextSlideNumber);
-			if (
-				slideInfo.transitionType == undefined ||
-				slideInfo.transitionType.length == 0
-			) {
-				slideInfo.transitionType = 'NONE';
-			}
-
-			this.stopLoader();
-
-			const nextSlide = this._slideCompositor.getSlide(nextSlideNumber);
-			const nextTexture = this._slideRenderer.createTexture(nextSlide);
-
-			const transitionParameters = new TransitionParameters();
-			transitionParameters.context = this._slideRenderer._context;
-			transitionParameters.current = currentTexture;
-			transitionParameters.next = nextTexture;
-			transitionParameters.transitionFilterInfo =
-				TransitionFilterInfo.fromSlideInfo(slideInfo);
-			transitionParameters.callback = () => {
-				this._slideRenderer.renderSlide(
-					nextTexture,
-					slideInfo,
-					this._presentationInfo.docWidth,
-					this._presentationInfo.docHeight,
-				);
-			};
-
-			SlideShow.PerformTransition(transitionParameters);
-
-			if (slideInfo?.nextSlideDuration && slideInfo.nextSlideDuration > 0) {
-				setTimeout(() => {
-					this._nextSlide();
-				}, slideInfo.transitionDuration + slideInfo.nextSlideDuration);
-			}
-		});
-	}
-
 	_generateSlideWindowHtml(title: string) {
 		const sanitizer = document.createElement('div');
 		sanitizer.innerText = title;
@@ -501,37 +397,6 @@ class SlideShowPresenter {
 		this._slideShowWindowProxy.opener.focus();
 		this._slideShowWindowProxy.close();
 		this._map.uiManager.closeSnackbar();
-	}
-
-	// TODO _doPresentation (don't hack this, no more used) to be removed
-	_doPresentation(isStarting = false) {
-		this._slideRenderer.pauseVideos();
-		const slideInfo = this.getSlideInfo(this._currentSlide);
-		// To speed up the process, if we have transition info, then only render
-		// a black empty slide as the first slide. otherwise, directly render the first slide.
-		if (
-			isStarting &&
-			slideInfo?.transitionType != undefined &&
-			slideInfo.transitionType != 'NONE'
-		) {
-			// generate empty black slide
-			const blankTexture = this._slideRenderer.createEmptyTexture();
-
-			this._doTransition(blankTexture, this._currentSlide);
-		} else {
-			this._slideCompositor.fetchAndRun(this._currentSlide, () => {
-				const slideInfo = this.getSlideInfo(this._currentSlide);
-				const slideImage = this._slideCompositor.getSlide(this._currentSlide);
-				const currentTexture = this._slideRenderer.createTexture(slideImage);
-				this._slideRenderer.renderSlide(
-					currentTexture,
-					slideInfo,
-					this._presentationInfo.docWidth,
-					this._presentationInfo.docHeight,
-				);
-				this.stopLoader();
-			});
-		}
 	}
 
 	_doFallbackPresentation() {
@@ -846,10 +711,6 @@ class SlideShowPresenter {
 			this._startSlide,
 			skipTransition,
 		);
-		// TODO remove comment out code
-		// this._slideCompositor.fetchAndRun(0, () => {
-		// 	this._doPresentation(true);
-		// });
 	}
 
 	onSlideShowInfoChanged() {
