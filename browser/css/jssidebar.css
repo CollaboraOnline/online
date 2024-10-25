@@ -6,6 +6,11 @@
 	color: var(--color-main-text);
 }
 
+div.ui-grid-cell.sidebar.jsdialog {
+	display: inline-grid;
+	row-gap: 5px;
+}
+
 img.sidebar.ui-image {
 	/* Images that are not buttons (e.g. spinfield)
 	   16px + 6px + 6px = 28px, same height as grid cell */
@@ -355,4 +360,25 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 #NavigatorDeck .ui-expander {
 	display: none;
+}
+
+/* Styles deck */
+#StyleListPanelPanelExpander [id='2'] button { background: transparent url('images/lc_parastyle.svg') no-repeat center; }
+#StyleListPanelPanelExpander [id='1'] button { background: transparent url('images/lc_charstyle.svg') no-repeat center; }
+#StyleListPanelPanelExpander [id='3'] button { background: transparent url('images/lc_framestyle.svg') no-repeat center; }
+#StyleListPanelPanelExpander [id='4'] button { background: transparent url('images/lc_pagestyle.svg') no-repeat center; }
+#StyleListPanelPanelExpander [id='5'] button { background: transparent url('images/lc_liststyle.svg') no-repeat center; }
+#StyleListPanelPanelExpander [id='6'] button { background: transparent url('images/lc_tablestyle.svg') no-repeat center; }
+
+#StyleListPanelPanelExpander #left.toolbox button {
+	background-size: cover;
+}
+
+#StyleListPanelPanelExpander #left.toolbox img {
+	visibility: hidden;
+}
+
+/* Styles Deck */
+#StyleListPanelPanelExpander #TemplatePanel #filter select {
+	width: 100%;
 }

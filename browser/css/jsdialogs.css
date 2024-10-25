@@ -1,4 +1,4 @@
-/* JSDialog */
+/* Overlay for popups and dropdowns allowing to handle click outside */
 .jsdialog-overlay {
 	position: absolute;
 	background: transparent;
@@ -21,6 +21,8 @@
 .jsdialog-overlay.dimmed {
 	background: #1c5fa814;
 }
+
+/* JSDialog windows */
 
 .lokdialog_container.ui-dialog.ui-widget-content.modalpopup,
 .jsdialog-window.modalpopup {
