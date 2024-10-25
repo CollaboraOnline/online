@@ -280,8 +280,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		window.app.console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
 		// if user does action - enter following own cursor mode
-		if (app.viewId)
-			app.setFollowingUser(app.viewId);
+		var viewId = builder.map && builder.map._docLayer ? builder.map._docLayer._getViewId() : -1;
+		if (viewId >= 0)
+			app.setFollowingUser(viewId);
 
 		if (builder.wizard.setCurrentScrollPosition)
 			builder.wizard.setCurrentScrollPosition();
