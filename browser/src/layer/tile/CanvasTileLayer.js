@@ -2429,6 +2429,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		this._searchTerm = originalPhrase;
 		this._map.fire('search', {originalPhrase: originalPhrase, count: count, highlightAll: highlightAll, results: results});
+		app.setFollowingUser(this._viewId);
 	},
 
 	_clearSearchResults: function() {
