@@ -309,58 +309,12 @@ class TransitionFilterAnimation extends AnimationBase {
 		return transitionParameters;
 	}
 
-	/* jscpd:ignore-start */
 	private createShapeTransition(
 		transitionParameters: TransitionParameters,
 	): TransitionBase {
-		const type = this.aTransitionFilterInfo.transitionType;
-		switch (type) {
-			case TransitionType.BARWIPE:
-				return BarWipeTransition(transitionParameters);
-
-			case TransitionType.PINWHEELWIPE:
-				return new SlideShow.WheelTransition(transitionParameters);
-
-			case TransitionType.RANDOMBARWIPE:
-				return new SlideShow.BarsTransition(transitionParameters);
-
-			case TransitionType.CHECKERBOARDWIPE:
-				return new SlideShow.CheckersTransition(transitionParameters);
-
-			case TransitionType.FOURBOXWIPE:
-				return new SlideShow.PlusTransition(transitionParameters);
-
-			case TransitionType.IRISWIPE:
-				return SlideShow.IrisWipeTransition(transitionParameters);
-
-			case TransitionType.ELLIPSEWIPE:
-				return SlideShow.EllipseWipeTransition(transitionParameters);
-
-			case TransitionType.FANWIPE:
-				return new SlideShow.WedgeTransition(transitionParameters);
-
-			case TransitionType.BLINDSWIPE:
-				return new SlideShow.VenetianTransition(transitionParameters);
-
-			case TransitionType.DISSOLVE:
-				return new SlideShow.SimpleDissolveTransition(transitionParameters);
-
-			case TransitionType.BARNDOORWIPE:
-				return new SlideShow.SplitTransition(transitionParameters);
-
-			case TransitionType.WATERFALLWIPE:
-				return new SlideShow.DiagonalTransition(transitionParameters);
-
-			default:
-				console.log(
-					'Unknown transition type',
-					transitionParameters.transitionFilterInfo.transitionType,
-				);
-				return new SlideShow.NoTransition(transitionParameters);
-		}
+		return createTransition(transitionParameters, /*isSlideTransition*/ false);
 	}
 }
-/* jscpd:ignore-end */
 
 function createShapeTransition(
 	aActivityParamSet: ActivityParamSet,
