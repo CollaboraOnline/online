@@ -28,7 +28,6 @@
 #include <Poco/Net/NetException.h>
 #include <Poco/URI.h>
 
-#include "COOLWSD.hpp"
 #include <JsonUtil.hpp>
 #include <Log.hpp>
 #include <Protocol.hpp>
