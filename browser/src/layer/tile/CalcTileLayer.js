@@ -253,8 +253,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var isCalcRTL = this._map._docLayer.isCalcRTL();
 		lastCellPixel = isCalcRTL ? lastCellPixel.getBottomRight() : lastCellPixel.getBottomLeft();
 		var lastCellTwips = this._corePixelsToTwips(lastCellPixel);
-		var mapSizeTwips = this._corePixelsToTwips(this._map.getSize());
-		var mapPosTwips = this._corePixelsToTwips(this._map._getTopLeftPoint());
+		var mapSizeTwips = this._pixelsToTwips(this._map.getSize());
+		var mapPosTwips = this._pixelsToTwips(this._map._getTopLeftPoint());
 
 		// margin outside data area we allow to scroll
 		// has to be bigger on mobile to allow scroll
