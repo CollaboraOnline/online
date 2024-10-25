@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 var searchHelper = require('../../common/search_helper');
 var writerHelper = require('../../common/writer_helper');
 
@@ -101,5 +102,32 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 		helper.textSelectionShouldNotExist();
 
 		cy.cGet('input#search-input').should('be.visible');
+	});
+
+	it('Search when cursor not visible', function() {
+		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
+
+		helper.setDummyClipboardForCopy();
+		searchHelper.typeIntoSearchField('sit');
+
+		// Part of the text should be selected
+		helper.textSelectionShouldExist();
+
+		helper.copy();
+		helper.expectTextForClipboard('sit');
+		desktopHelper.assertScrollbarPosition('vertical', 60, 75);
+		cy.cGet('#StatePageNumber').should('have.text', 'Page 2 of 6');
+
+		// Scroll document to the top so cursor is no longer visible, that turns following off
+		desktopHelper.scrollWriterDocumentToTop();
+		desktopHelper.updateFollowingUsers();
+
+		cy.cGet('#searchnext').click();
+		desktopHelper.assertScrollbarPosition('vertical', 135, 150);
+		cy.cGet('#StatePageNumber').should('have.text', 'Pages 2 and 3 of 6');
+
+		cy.cGet('#searchnext').click();
+		desktopHelper.assertScrollbarPosition('vertical', 215, 230);
+		cy.cGet('#StatePageNumber').should('have.text', 'Pages 3 and 4 of 6');
 	});
 });
