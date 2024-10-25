@@ -12,8 +12,6 @@
 
 declare var SlideShow: any;
 
-// TODO TransitionType, TransitionSubType to be moved to a separate file: engine/TransitionType.ts
-
 enum TransitionType {
 	INVALID,
 	BARWIPE,
@@ -147,96 +145,71 @@ const stringToTransitionSubTypeMap: Record<string, TransitionSubType> = {
 	RotateIn: TransitionSubType.ROTATEIN,
 };
 
-// TODO SlideShow.PerformTransition (don't hack it, no more used)
-//  look at SlideTransition.createSlideTransition
-//  3d transition still to be integrated in SlideTransition
-//  to be tested 2d context case with ported engine
-//  to be removed
-SlideShow.PerformTransition = function (
+function createTransition(
 	transitionParameters: TransitionParameters,
+	isSlideTransition: boolean,
 ) {
-	if (transitionParameters.context.is2dGl()) {
-		transitionParameters.callback();
-		return;
-	}
-
-	switch (transitionParameters.transitionFilterInfo.transitionType) {
-		case TransitionType.FADE:
-			new SlideShow.FadeTransition(transitionParameters).start();
-			break;
-
+	const type = transitionParameters.transitionFilterInfo.transitionType;
+	switch (type) {
 		case TransitionType.BARWIPE:
-			BarWipeTransition(transitionParameters).start();
-			break;
+			return BarWipeTransition(transitionParameters);
 
 		case TransitionType.PINWHEELWIPE:
-			new SlideShow.WheelTransition(transitionParameters).start();
-			break;
-
-		case TransitionType.SLIDEWIPE:
-			SlideWipeTransition(transitionParameters).start();
-			break;
+			return new SlideShow.WheelTransition(transitionParameters);
 
 		case TransitionType.RANDOMBARWIPE:
-			new SlideShow.BarsTransition(transitionParameters).start();
-			break;
+			return new SlideShow.BarsTransition(transitionParameters);
 
 		case TransitionType.CHECKERBOARDWIPE:
-			new SlideShow.CheckersTransition(transitionParameters).start();
-			break;
+			return new SlideShow.CheckersTransition(transitionParameters);
 
 		case TransitionType.FOURBOXWIPE:
-			new SlideShow.PlusTransition(transitionParameters).start();
-			break;
+			return new SlideShow.PlusTransition(transitionParameters);
 
 		case TransitionType.IRISWIPE:
-			SlideShow.IrisWipeTransition(transitionParameters).start();
-			break;
+			return SlideShow.IrisWipeTransition(transitionParameters);
 
 		case TransitionType.ELLIPSEWIPE:
-			SlideShow.EllipseWipeTransition(transitionParameters).start();
-			break;
+			return SlideShow.EllipseWipeTransition(transitionParameters);
 
 		case TransitionType.FANWIPE:
-			new SlideShow.WedgeTransition(transitionParameters).start();
-			break;
+			return new SlideShow.WedgeTransition(transitionParameters);
 
 		case TransitionType.BLINDSWIPE:
-			new SlideShow.VenetianTransition(transitionParameters).start();
-			break;
+			return new SlideShow.VenetianTransition(transitionParameters);
 
 		case TransitionType.DISSOLVE:
-			new SlideShow.SimpleDissolveTransition(transitionParameters).start();
-			break;
-
-		case TransitionType.PUSHWIPE:
-			SlideShow.PushWipeTransition(transitionParameters).start();
-			break;
+			return new SlideShow.SimpleDissolveTransition(transitionParameters);
 
 		case TransitionType.BARNDOORWIPE:
-			new SlideShow.SplitTransition(transitionParameters).start();
-			break;
+			return new SlideShow.SplitTransition(transitionParameters);
 
 		case TransitionType.WATERFALLWIPE:
-			new SlideShow.DiagonalTransition(transitionParameters).start();
-			break;
-		// TODO: move also MISCSHAPEWIPE to SlideTransition
-		case TransitionType.MISCSHAPEWIPE:
-			SlideShow.MicsShapeWipeTransition(transitionParameters).start();
-			break;
-
-		case TransitionType.ZOOM:
-			SlideShow.NewsFlashTransition(transitionParameters).start();
-			break;
-
-		default:
-			new SlideShow.NoTransition(transitionParameters).start();
-			console.log(
-				'Unknown transition type',
-				transitionParameters.transitionFilterInfo.transitionType,
-			);
-			break;
+			return new SlideShow.DiagonalTransition(transitionParameters);
 	}
 
-	return;
-};
+	if (isSlideTransition) {
+		switch (type) {
+			case TransitionType.FADE:
+				return new SlideShow.FadeTransition(transitionParameters);
+
+			case TransitionType.SLIDEWIPE:
+				return SlideWipeTransition(transitionParameters);
+
+			case TransitionType.PUSHWIPE:
+				return SlideShow.PushWipeTransition(transitionParameters);
+
+			case TransitionType.MISCSHAPEWIPE:
+				return SlideShow.MicsShapeWipeTransition(transitionParameters);
+
+			case TransitionType.ZOOM:
+				return SlideShow.NewsFlashTransition(transitionParameters);
+		}
+	}
+
+	console.log(
+		'Unknown transition type',
+		transitionParameters.transitionFilterInfo.transitionType,
+	);
+	return new SlideShow.NoTransition(transitionParameters);
+}

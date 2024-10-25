@@ -45,66 +45,7 @@ class SlideTransition {
 		transitionParameters: TransitionParameters,
 	): ISlideChangeBase {
 		if (!this.isValid()) return null;
-
-		switch (this.getType()) {
-			case TransitionType.FADE:
-				return new SlideShow.FadeTransition(transitionParameters);
-
-			case TransitionType.BARWIPE:
-				return BarWipeTransition(transitionParameters);
-
-			case TransitionType.PINWHEELWIPE:
-				return new SlideShow.WheelTransition(transitionParameters);
-
-			case TransitionType.SLIDEWIPE:
-				return SlideWipeTransition(transitionParameters);
-
-			case TransitionType.RANDOMBARWIPE:
-				return new SlideShow.BarsTransition(transitionParameters);
-
-			case TransitionType.CHECKERBOARDWIPE:
-				return new SlideShow.CheckersTransition(transitionParameters);
-
-			case TransitionType.FOURBOXWIPE:
-				return new SlideShow.PlusTransition(transitionParameters);
-
-			case TransitionType.IRISWIPE:
-				return SlideShow.IrisWipeTransition(transitionParameters);
-
-			case TransitionType.ELLIPSEWIPE:
-				return SlideShow.EllipseWipeTransition(transitionParameters);
-
-			case TransitionType.FANWIPE:
-				return new SlideShow.WedgeTransition(transitionParameters);
-
-			case TransitionType.BLINDSWIPE:
-				return new SlideShow.VenetianTransition(transitionParameters);
-
-			case TransitionType.DISSOLVE:
-				return new SlideShow.SimpleDissolveTransition(transitionParameters);
-
-			case TransitionType.PUSHWIPE:
-				return SlideShow.PushWipeTransition(transitionParameters);
-
-			case TransitionType.BARNDOORWIPE:
-				return new SlideShow.SplitTransition(transitionParameters);
-
-			case TransitionType.WATERFALLWIPE:
-				return new SlideShow.DiagonalTransition(transitionParameters);
-
-			case TransitionType.MISCSHAPEWIPE:
-				return SlideShow.MicsShapeWipeTransition(transitionParameters);
-
-			case TransitionType.ZOOM:
-				return SlideShow.NewsFlashTransition(transitionParameters);
-
-			default:
-				console.log(
-					'Unknown transition type',
-					transitionParameters.transitionFilterInfo.transitionType,
-				);
-				return new SlideShow.NoTransition(transitionParameters);
-		}
+		return createTransition(transitionParameters, /*isSlideTransition*/ true);
 	}
 
 	public getType() {
