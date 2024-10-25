@@ -40,7 +40,6 @@ class UnitTimeoutWSPing : public UnitTimeoutBase0
         defaults.WSPingPeriod = std::chrono::microseconds(10000);
         // defaults.HTTPTimeout = std::chrono::microseconds(30000000);
         // defaults.MaxConnections = 9999;
-        // defaults.MinBytesPerSec = 0.0;
         // defaults.SocketPollTimeout = std::chrono::microseconds(64000000);
     }
 

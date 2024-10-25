@@ -2771,7 +2771,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         LOG_DBG("net::Defaults: WSPing[Timeout "
                 << netDefaults.WSPingTimeout << ", Period " << netDefaults.WSPingPeriod << "], HTTP[Timeout "
                 << netDefaults.HTTPTimeout << "], Socket[MaxConnections " << netDefaults.MaxConnections
-                << ", MinBytesPerSec " << netDefaults.MinBytesPerSec
                 << "], SocketPoll[Timeout " << netDefaults.SocketPollTimeout << "]");
     }
 
