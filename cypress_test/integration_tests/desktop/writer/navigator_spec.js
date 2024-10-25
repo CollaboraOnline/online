@@ -47,6 +47,37 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		cy.cGet('#StatePageNumber').should('have.text', 'Page 5 of 8');
 	});
 
+	it('Jump to element even when cursor not visible', function() {
+		// Expand Tables, Frames, Images
+		// Note click()/dblclick() scrolls the contenttree even if it would be not needed to click
+		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Tables').parent().prev().click();
+		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Frames').parent().prev().click();
+		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Images').parent().prev().click();
+
+		//Scroll back to Top
+		cy.cGet('#contenttree').scrollTo(0,0);
+
+		// Doubleclick several items, and check if the document is scrolled to the right page
+		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Feedback').dblclick();
+		cy.cGet('#StatePageNumber').should('have.text', 'Page 2 of 8');
+
+		desktopHelper.assertScrollbarPosition('vertical', 55, 65);
+
+		// Scroll document to the top so cursor is no longer visible, that turns following off
+		desktopHelper.scrollWriterDocumentToTop();
+		desktopHelper.updateFollowingUsers();
+
+		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Text').dblclick();
+		cy.cGet('#StatePageNumber').should('have.text', 'Pages 5 and 6 of 8');
+
+		desktopHelper.assertScrollbarPosition('vertical', 235, 250);
+
+		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Replacing').dblclick();
+		cy.cGet('#StatePageNumber').should('have.text', 'Page 7 of 8');
+
+		desktopHelper.assertScrollbarPosition('vertical', 335, 355);
+	});
+
 	it.skip('Jump to element. Document -> Navigator', function() {
 		// Move the cursor into elements in Document, and check
 		// if navigator contentTree scroll to the element and select that,

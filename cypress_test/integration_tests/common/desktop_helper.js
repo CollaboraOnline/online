@@ -534,6 +534,24 @@ function setAccessibilityState(enable) {
 	cy.log('<< setAccessibilityState - end');
 }
 
+// best way to simulate scrolling using mouse wheel I found -> no click performed
+function scrollWriterDocumentToTop() {
+	cy.getFrameWindow()
+		.its('L')
+		.then(function(L) {
+			L.Map.THIS.panTo({lat: -58.62652658901402, lng: 68.96288389396415});
+		});
+	assertScrollbarPosition('vertical', 0, 10);
+}
+
+function updateFollowingUsers() {
+	cy.getFrameWindow()
+		.its('app')
+		.then(function(app) {
+			app.updateFollowingUsers();
+		});
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.hideSidebarImpress = hideSidebarImpress;
@@ -563,3 +581,5 @@ module.exports.switchUIToNotebookbar = switchUIToNotebookbar;
 module.exports.switchUIToCompact = switchUIToCompact;
 module.exports.checkAccessibilityEnabledToBe = checkAccessibilityEnabledToBe;
 module.exports.setAccessibilityState = setAccessibilityState;
+module.exports.scrollWriterDocumentToTop = scrollWriterDocumentToTop;
+module.exports.updateFollowingUsers = updateFollowingUsers;
