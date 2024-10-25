@@ -2117,6 +2117,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		// tells who trigerred cursor invalidation, but recCursors is stil "our"
 		var modifierViewId = parseInt(obj.viewId);
 		var weAreModifier = (modifierViewId === this._viewId);
+		if (weAreModifier && app.isFollowingOff())
+			app.setFollowingUser(this._viewId);
 
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
 
