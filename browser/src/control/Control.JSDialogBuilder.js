@@ -2204,6 +2204,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'hamburger-tablet': 'fold',
 			'exportdirectpdf': 'exportpdf',
 			'textcolumnspropertypanel':'entirecolumn',
+			'sidebardeck.stylelistdeck': 'editstyle',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];

@@ -147,6 +147,7 @@ class Sidebar {
 		this.map.uiManager.setDocTypePref('SdCustomAnimationDeck', false);
 		this.map.uiManager.setDocTypePref('SdMasterPagesDeck', false);
 		this.map.uiManager.setDocTypePref('NavigatorDeck', false);
+		this.map.uiManager.setDocTypePref('StyleListDeck', false);
 		this.map.uiManager.setDocTypePref('A11yCheckDeck', false);
 	}
 
@@ -157,6 +158,8 @@ class Sidebar {
 		else if (deckId === 'SdCustomAnimationDeck') return '.uno:CustomAnimation';
 		else if (deckId === 'SdMasterPagesDeck') return '.uno:MasterSlidesPanel';
 		else if (deckId === 'NavigatorDeck') return '.uno:Navigator';
+		else if (deckId === 'StyleListDeck')
+			return '.uno:SidebarDeck.StyleListDeck';
 		else if (deckId === 'A11yCheckDeck')
 			return '.uno:SidebarDeck.A11yCheckDeck';
 		return '';
