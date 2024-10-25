@@ -12,7 +12,6 @@
 #include <config.h>
 
 #include "ProofKey.hpp"
-#include "COOLWSD.hpp"
 
 #include <algorithm>
 #include <cassert>

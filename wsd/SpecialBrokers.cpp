@@ -17,12 +17,8 @@
 #include <cassert>
 #include <chrono>
 #include <ctime>
-#include <ios>
-#include <fstream>
 #include <memory>
-#include <stdexcept>
 #include <string>
-#include <sstream>
 
 #include <Poco/DigestStream.h>
 #include <Poco/Exception.h>
@@ -31,19 +27,13 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
-#include "Admin.hpp"
 #include "Authorization.hpp"
 #include "ClientSession.hpp"
 #include "Common.hpp"
-#include "Exceptions.hpp"
 #include "COOLWSD.hpp"
 #include "FileServer.hpp"
 #include "Socket.hpp"
-#include "Storage.hpp"
 #include "TileCache.hpp"
-#include "TraceEvent.hpp"
-#include "ProxyProtocol.hpp"
-#include "Util.hpp"
 #include "QuarantineUtil.hpp"
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
