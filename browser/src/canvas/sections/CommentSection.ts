@@ -132,6 +132,8 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.childCommentOffset = 8;
 
 		this.convertRectanglesToCoreCoordinates(); // Convert rectangle coordiantes into core pixels on initialization.
+
+		app.map.on('sheetgeometrychanged', this.setPositionAndSize.bind(this));
 	}
 
 	// Comments import can be costly if the document has a lot of them. If they are all imported/initialized

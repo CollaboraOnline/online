@@ -133,6 +133,8 @@ export class SheetGeometry {
 		updatePositions: boolean): void {
 		this._columns.setTileGeometryData(tileWidthTwips, tileSizePixels, updatePositions);
 		this._rows.setTileGeometryData(tileHeightTwips, tileSizePixels, updatePositions);
+
+		if (app.map) app.map.fire('sheetgeometrychanged');
 	}
 
 	public setViewArea(topLeftTwipsPoint: Point, sizeTwips: Point): boolean {
