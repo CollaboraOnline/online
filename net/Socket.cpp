@@ -678,25 +678,6 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
                 // removed in a callback
                 ++itemsErased;
             }
-            else if (!_pollSockets[i]->isOpen())
-            {
-                // closed socket ..
-                ++itemsErased;
-                LOGA_TRC(Socket, '#' << _pollFds[i].fd << ": Removing socket (at " << i
-                         << " of " << _pollSockets.size() << ") from " << _name);
-                _pollSockets[i] = nullptr;
-            }
-            else if( _pollSockets[i]->checkRemoval(newNow) )
-            {
-                // timed out socket .. also checks
-                // ProtocolHandlerInterface
-                // - http::Session::checkTimeout() OK
-                // - WebSocketHandler::checkTimeout() OK
-                ++itemsErased;
-                LOGA_TRC(Socket, '#' << _pollFds[i].fd << ": Removing socket (at " << i
-                         << " of " << _pollSockets.size() << ") from " << _name);
-                _pollSockets[i] = nullptr;
-            }
             else if (_pollFds[i].fd == _pollSockets[i]->getFD())
             {
                 SocketDisposition disposition(_pollSockets[i]);
@@ -1533,13 +1514,6 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
             assert(isOpen() == false); // should have issued shutdown
             return true;
         }
-    }
-    if (_socketHandler && _socketHandler->checkTimeout(now))
-    {
-        assert(isOpen() == false); // should have issued shutdown
-        setClosed();
-        LOG_WRN("CheckRemoval: Timeout: " << getStatsString(now) << ", " << *this);
-        return true;
     }
     return false;
 }
