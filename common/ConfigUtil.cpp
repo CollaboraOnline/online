@@ -124,13 +124,4 @@ bool has(const std::string& key)
     return Config ? Config->has(key) : false;
 }
 
-bool isSupportKeyEnabled()
-{
-#if ENABLE_SUPPORT_KEY
-    return true;
-#else
-    return false;
-#endif
-}
-
 } // namespace ConfigUtil
