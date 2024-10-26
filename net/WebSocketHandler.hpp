@@ -225,7 +225,8 @@ protected:
 
     void shutdown(bool goingAway, const std::string &statusMessage) override
     {
-        shutdownImpl(goingAway ? WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY :
+        shutdownImpl(_socket.lock(),
+                     goingAway ? WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY :
                      WebSocketHandler::StatusCodes::NORMAL_CLOSE, statusMessage,
                      /*hardShutdown=*/ false, /*silentShutdown=*/ false);
     }
@@ -247,13 +248,15 @@ public:
                   const std::string& statusMessage = std::string(),
                   bool hardShutdown = false)
     {
-        shutdownImpl(statusCode, statusMessage, hardShutdown, false);
+        shutdownImpl(_socket.lock(),
+                     statusCode, statusMessage, hardShutdown, false);
     }
 
     /// Don't wait for the remote Websocket to handshake with us; go down fast.
     void shutdownAfterWriting()
     {
-        shutdownImpl(WebSocketHandler::StatusCodes::NORMAL_CLOSE, std::string(),
+        shutdownImpl(_socket.lock(),
+                     WebSocketHandler::StatusCodes::NORMAL_CLOSE, std::string(),
                      true /* hard async shutdown & close */, false);
     }
 
@@ -265,18 +268,19 @@ public:
     }
 
 private:
-    void shutdownSilent()
+    void shutdownSilent(const std::shared_ptr<StreamSocket>& socket)
     {
-        shutdownImpl(WebSocketHandler::StatusCodes::POLICY_VIOLATION /* ignored */,
+        shutdownImpl(socket,
+                     WebSocketHandler::StatusCodes::POLICY_VIOLATION /* ignored */,
                      std::string(), true /* hard async shutdown & close */, true);
     }
 
-    void shutdownImpl(const StatusCodes statusCode,
+    void shutdownImpl(const std::shared_ptr<StreamSocket>& socket,
+                      const StatusCodes statusCode,
                       const std::string& statusMessage,
                       bool hardShutdown,
                       bool silentShutdown)
     {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
         {
             const bool silent = _shuttingDown || silentShutdown;
@@ -671,11 +675,15 @@ public:
         if (_pingTimeout.count() > std::numeric_limits<double>::epsilon() &&
             _pingMicroS.average() >= _pingTimeout.count())
         {
-            LOG_WRN("CheckTimeout: Timeout websocket: Ping: last " << _pingMicroS.last() << "us, avg "
-                    << _pingMicroS.average() << "us >= " << _pingTimeout.count() << "us over "
-                    << (int)_pingMicroS.duration() << "s");
-            shutdownSilent();
-            return true;
+            std::shared_ptr<StreamSocket> socket = _socket.lock();
+            if (socket && socket->isIPType()) // Exclude non-IP local sockets
+            {
+                LOG_WRN("CheckTimeout: Timeout websocket: Ping: last " << _pingMicroS.last() << "us, avg "
+                        << _pingMicroS.average() << "us >= " << _pingTimeout.count() << "us over "
+                        << (int)_pingMicroS.duration() << "s, " << *socket);
+                shutdownSilent(socket);
+                return true;
+            }
         }
         if (!_pingMicroS.initialized() || (_pingPeriod > std::chrono::microseconds::zero() &&
                                            now - _pingMicroS.lastTime() >= _pingPeriod))
