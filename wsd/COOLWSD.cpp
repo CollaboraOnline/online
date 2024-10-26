@@ -599,7 +599,7 @@ inline std::string getLaunchBase(bool asAdmin = false)
 {
     std::ostringstream oss;
     oss << "    ";
-    oss << ((COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination()) ? "https://" : "http://");
+    oss << ((ConfigUtil::isSslEnabled() || COOLWSD::isSSLTermination()) ? "https://" : "http://");
 
     if (asAdmin)
     {
@@ -2115,7 +2115,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         { "per_view.idle_timeout_secs", "900" },
         { "per_view.out_of_focus_timeout_secs", "300" },
         { "per_view.custom_os_info", "" },
-        { "per_view.min_saved_message_timeout_secs", "0" },
+        { "per_view.min_saved_message_timeout_secs", "0"},
         { "security.capabilities", "true" },
         { "security.seccomp", "true" },
         { "security.jwt_expiry_secs", "1800" },
@@ -2548,7 +2548,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     IsProxyPrefixEnabled = ConfigUtil::getConfigValue<bool>(conf, "net.proxy_prefix", false);
 
-    LOG_INF("SSL support: SSL is " << (COOLWSD::isSSLEnabled() ? "enabled." : "disabled."));
+    LOG_INF("SSL support: SSL is " << (ConfigUtil::isSslEnabled() ? "enabled." : "disabled."));
     LOG_INF("SSL support: termination is " << (COOLWSD::isSSLTermination() ? "enabled." : "disabled."));
 
     std::string allowedLanguages(config().getString("allowed_languages"));
@@ -2636,7 +2636,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     }
 
     // Fixup some config entries to match out decisions/overrides.
-    KitXmlConfig->setBool("ssl.enable", isSSLEnabled());
+    KitXmlConfig->setBool("ssl.enable", ConfigUtil::isSslEnabled());
     KitXmlConfig->setBool("ssl.termination", isSSLTermination());
 
     // We don't pass the config via command-line
@@ -3074,7 +3074,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 void COOLWSD::initializeSSL()
 {
 #if ENABLE_SSL
-    if (!COOLWSD::isSSLEnabled())
+    if (!ConfigUtil::isSslEnabled())
         return;
 
     const std::string ssl_cert_file_path = ConfigUtil::getPathFromConfig("ssl.cert_file_path");
@@ -4128,9 +4128,9 @@ public:
 
         os << "COOLWSDServer: " << version << " - " << hash << " state dumping"
 #if !MOBILEAPP
-           << "\n  Kit version: " << COOLWSD::LOKitVersion
-           << "\n  Ports: server " << ClientPortNumber << " prisoner " << MasterLocation
-           << "\n  SSL: " << (COOLWSD::isSSLEnabled() ? "https" : "http")
+           << "\n  Kit version: " << COOLWSD::LOKitVersion << "\n  Ports: server "
+           << ClientPortNumber << " prisoner " << MasterLocation
+           << "\n  SSL: " << (ConfigUtil::isSslEnabled() ? "https" : "http")
            << "\n  SSL-Termination: " << (COOLWSD::isSSLTermination() ? "yes" : "no")
            << "\n  Security " << (COOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
            << (COOLWSD::NoSeccomp ? "no" : "") << " api lockdown"
@@ -4299,7 +4299,7 @@ private:
         }
 
 #if ENABLE_SSL
-        if (COOLWSD::isSSLEnabled())
+        if (ConfigUtil::isSslEnabled())
             factory = std::make_shared<SslSocketFactory>();
         else
 #endif
@@ -4875,7 +4875,7 @@ void COOLWSD::cleanup()
 
 #if ENABLE_SSL
         // Finally, we no longer need SSL.
-        if (COOLWSD::isSSLEnabled())
+        if (ConfigUtil::isSslEnabled())
         {
             Poco::Net::uninitializeSSL();
             Poco::Crypto::uninitializeCrypto();

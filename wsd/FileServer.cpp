@@ -307,7 +307,7 @@ bool FileServerRequestHandler::authenticateAdmin(const Poco::Net::HTTPBasicCrede
     Poco::Net::HTTPCookie cookie("jwt", jwtToken);
     // bundlify appears to add an extra /dist -> dist/dist/admin
     cookie.setPath(COOLWSD::ServiceRoot + "/browser/dist/");
-    cookie.setSecure(COOLWSD::isSSLEnabled());
+    cookie.setSecure(ConfigUtil::isSslEnabled());
     response.header().addCookie(cookie.toString());
 
     return true;
@@ -1571,7 +1571,8 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     httpResponse.add("Content-Security-Policy", csp.generate());
 
     // Setup HTTP Public key pinning
-    if ((COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination()) && config.getBool("ssl.hpkp[@enable]", false))
+    if ((ConfigUtil::isSslEnabled() || COOLWSD::isSSLTermination()) &&
+        config.getBool("ssl.hpkp[@enable]", false))
     {
         size_t i = 0;
         std::string pinPath = "ssl.hpkp.pins.pin[" + std::to_string(i) + ']';

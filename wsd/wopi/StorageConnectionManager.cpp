@@ -181,7 +181,7 @@ void StorageConnectionManager::initialize()
 
     if (SSLEnabled || SSLAsScheme)
     {
-        if (COOLWSD::isSSLEnabled())
+        if (ConfigUtil::isSslEnabled())
         {
             sslClientParams.certificateFile = ConfigUtil::getPathFromConfigWithFallback(
                 "storage.ssl.cert_file_path", "ssl.cert_file_path");

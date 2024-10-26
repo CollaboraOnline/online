@@ -172,7 +172,7 @@ public:
     {
         // HSTS hardening. Disabled in debug builds.
 #if !ENABLE_DEBUG
-        if (COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination())
+        if (ConfigUtil::isSslEnabled() || COOLWSD::isSSLTermination())
         {
             if (ConfigUtil::getConfigValue<bool>("ssl.sts.enabled", false))
             {
