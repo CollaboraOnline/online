@@ -11,6 +11,11 @@
 
 #pragma once
 
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <common/Util.hpp>
+#include <net/WebSocketHandler.hpp>
+
 #include <algorithm>
 #include <atomic>
 #include <chrono>
@@ -28,11 +33,6 @@
 #include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/ServerApplication.h>
-
-#include "Util.hpp"
-#include "FileUtil.hpp"
-#include "WebSocketHandler.hpp"
-#include "QuarantineUtil.hpp"
 
 class ChildProcess;
 class TraceFileWriter;
@@ -484,8 +484,8 @@ protected:
 
 private:
 #if ENABLE_SSL
-    static Util::RuntimeConstant<bool> SSLEnabled;
-    static Util::RuntimeConstant<bool> SSLTermination;
+    static ConfigUtil::RuntimeConstant<bool> SSLEnabled;
+    static ConfigUtil::RuntimeConstant<bool> SSLTermination;
 #endif
 
 #if !MOBILEAPP
