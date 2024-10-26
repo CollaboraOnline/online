@@ -27,6 +27,44 @@
 
 namespace ConfigUtil
 {
+/// A logical constant that is allowed to initialize
+/// exactly once and checks usage before initialization.
+template <typename T> class RuntimeConstant
+{
+    T _value;
+    std::atomic<bool> _initialized;
+
+public:
+    RuntimeConstant()
+        : _value()
+        , _initialized(false)
+    {
+    }
+
+    /// Use a compile-time const instead.
+    RuntimeConstant(const T& value) = delete;
+
+    const T& get()
+    {
+        assert(_initialized);
+
+        if (_initialized)
+        {
+            return _value;
+        }
+
+        throw std::runtime_error("RuntimeConstant instance read before being initialized.");
+    }
+
+    void set(const T& value)
+    {
+        assert(!_initialized);
+
+        _initialized = true;
+        _value = value;
+    }
+};
+
 /// Initialize the config from an XML string.
 void initialize(const std::string& xml);
 

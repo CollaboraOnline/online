@@ -1264,43 +1264,6 @@ int main(int argc, char**argv)
         std::set<std::string> _denied;
     };
 
-    /// A logical constant that is allowed to initialize
-    /// exactly once and checks usage before initialization.
-    template <typename T>
-    class RuntimeConstant
-    {
-        T _value;
-        std::atomic<bool> _initialized;
-
-    public:
-        RuntimeConstant()
-            : _value()
-            , _initialized(false)
-        {
-        }
-
-        /// Use a compile-time const instead.
-        RuntimeConstant(const T& value) = delete;
-
-        const T& get()
-        {
-            if (_initialized)
-            {
-                return _value;
-            }
-
-            throw std::runtime_error("RuntimeConstant instance read before being initialized.");
-        }
-
-        void set(const T& value)
-        {
-            assert(!_initialized);
-
-            _initialized = true;
-            _value = value;
-        }
-    };
-
     /// Simple backtrace capture
     /// Use case, e.g. streaming up to 20 frames to log: `LOG_TRC( Util::Backtrace::get(20) );`
     /// Enabled for !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)

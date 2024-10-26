@@ -697,8 +697,8 @@ bool COOLWSD::CheckCoolUser = true;
 bool COOLWSD::CleanupOnly = false; ///< If we should cleanup and exit.
 bool COOLWSD::IsProxyPrefixEnabled = false;
 #if ENABLE_SSL
-Util::RuntimeConstant<bool> COOLWSD::SSLEnabled;
-Util::RuntimeConstant<bool> COOLWSD::SSLTermination;
+ConfigUtil::RuntimeConstant<bool> COOLWSD::SSLEnabled;
+ConfigUtil::RuntimeConstant<bool> COOLWSD::SSLTermination;
 #endif
 unsigned COOLWSD::MaxConnections;
 unsigned COOLWSD::MaxDocuments;
