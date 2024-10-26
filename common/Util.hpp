@@ -1478,7 +1478,14 @@ int main(int argc, char**argv)
      */
     bool isFuzzing();
 
-    constexpr bool isMobileApp() { return MOBILEAPP; }
+    constexpr bool isMobileApp()
+    {
+#ifdef MOBILEAPP
+        return MOBILEAPP;
+#else
+        return false;
+#endif
+    }
 
     void setKitInProcess(bool value);
     bool isKitInProcess();
