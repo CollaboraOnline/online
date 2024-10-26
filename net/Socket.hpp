@@ -1449,6 +1449,21 @@ public:
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
 
+        if (_socketHandler->checkTimeout(now))
+        {
+            assert(isOpen() == false); // should have issued shutdown
+            setClosed();
+            LOGA_DBG(Socket, "socket timeout: " << getStatsString(now) << ", " << *this);
+            disposition.setClosed();
+            return;
+        }
+
+        if (!isOpen() || checkRemoval(now))
+        {
+            disposition.setClosed();
+            return;
+        }
+
         if (!events && _inBuffer.empty())
             return;
 
