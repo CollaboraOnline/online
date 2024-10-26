@@ -1480,40 +1480,40 @@ std::ostream& StreamSocket::stream(std::ostream& os) const
 
 bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
 {
-    if( isIPType() )
+    if( !isIPType() )
+        return false;
+
+    // Forced removal on outside-facing IPv[46] network connections only
+    const auto durLast =
+        std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
+    /// TO Criteria: Violate maximum idle (_pollTimeout default 64s)
+    const bool isIdle = _pollTimeout > std::chrono::microseconds::zero() &&
+        durLast > _pollTimeout;
+    /// TO Criteria: Shall terminate?
+    const bool isTermination = SigUtil::getTerminationFlag();
+    if (isIdle || isTermination )
     {
-        // Forced removal on outside-facing IPv[46] network connections only
-        const auto durLast =
-            std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
-        /// TO Criteria: Violate maximum idle (_pollTimeout default 64s)
-        const bool isIdle = _pollTimeout > std::chrono::microseconds::zero() &&
-            durLast > _pollTimeout;
-        /// TO Criteria: Shall terminate?
-        const bool isTermination = SigUtil::getTerminationFlag();
-        if (isIdle || isTermination )
+        LOG_WRN("CheckRemoval: Timeout: {Idle " << isIdle
+                << ", Termination " << isTermination << "}, "
+                << getStatsString(now) << ", "
+                << *this);
+        if (_socketHandler)
         {
-            LOG_WRN("CheckRemoval: Timeout: {Idle " << isIdle
-                    << ", Termination " << isTermination << "}, "
-                    << getStatsString(now) << ", "
-                    << *this);
-            if (_socketHandler)
-            {
-                _socketHandler->onDisconnect();
-                if( isOpen() ) {
-                    // Note: Ensure proper semantics of onDisconnect()
-                    LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
-                    shutdown(); // signal
-                    closeConnection(); // real -> setClosed()
-                }
-            }
-            else
-            {
+            _socketHandler->onDisconnect();
+            if( isOpen() ) {
+                // Note: Ensure proper semantics of onDisconnect()
+                LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
                 shutdown(); // signal
                 closeConnection(); // real -> setClosed()
             }
-            assert(isOpen() == false); // should have issued shutdown
-            return true;
         }
+        else
+        {
+            shutdown(); // signal
+            closeConnection(); // real -> setClosed()
+        }
+        assert(isOpen() == false); // should have issued shutdown
+        return true;
     }
     return false;
 }
