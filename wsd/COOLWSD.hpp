@@ -357,8 +357,6 @@ public:
         return HardwareResourceWarning;
     }
 
-    static bool isSSLEnabled() { return ConfigUtil::isSslEnabled(); }
-
     static bool isSSLTermination() { return ConfigUtil::isSSLTermination(); }
 
     static std::shared_ptr<TerminatingPoll> getWebServerPoll();
