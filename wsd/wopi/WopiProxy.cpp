@@ -16,6 +16,7 @@
 #include "FileUtil.hpp"
 #include "HttpHelper.hpp"
 #include "HttpRequest.hpp"
+#include "Protocol.hpp"
 #include <COOLWSD.hpp>
 #include <Exceptions.hpp>
 #include <Log.hpp>

@@ -15,6 +15,7 @@
 
 #include <atomic>
 #include <chrono>
+#include <csignal>
 #include <string>
 
 class ChildProcess;

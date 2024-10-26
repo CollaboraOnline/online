@@ -13,10 +13,11 @@
 
 #pragma once
 
-#include "COOLWSD.hpp"
-#include "Log.hpp"
 #include <common/Authorization.hpp>
+#include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
+#include <common/Log.hpp>
+#include <wsd/COOLWSD.hpp>
 
 #include <Poco/URI.h>
 

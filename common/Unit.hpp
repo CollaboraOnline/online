@@ -7,6 +7,10 @@
 
 #pragma once
 
+#include <common/StateEnum.hpp>
+#include <common/Util.hpp>
+#include <net/Socket.hpp>
+
 #include <cassert>
 #include <chrono>
 #include <map>
@@ -14,9 +18,6 @@
 #include <string>
 #include <vector>
 
-#include <common/StateEnum.hpp>
-#include "Util.hpp"
-#include "net/Socket.hpp"
 #include <Poco/Exception.h>
 
 #include <test/testlog.hpp>
