@@ -82,88 +82,6 @@ private:
     ChildProcess* _childProcess;
 };
 
-/// A ChildProcess object represents a Kit process that hosts a document and manipulates the
-/// document using the LibreOfficeKit API. It isn't actually a child of the WSD process, but a
-/// grandchild. The comments loosely talk about "child" anyway.
-
-class ChildProcess final : public WSProcess
-{
-public:
-    /// @param pid is the process ID of the child.
-    /// @param socket is the underlying Socket to the child.
-    template <typename T>
-    ChildProcess(const pid_t pid, const std::string& jailId,
-                 const std::shared_ptr<StreamSocket>& socket, const T& request)
-        : WSProcess("ChildProcess", pid, socket,
-                    std::make_shared<WebSocketHandler>(socket, request))
-        , _jailId(jailId)
-        , _smapsFD(-1)
-    {
-        int urpFromKitFD = socket->getIncomingFD(SharedFDType::URPFromKit);
-        int urpToKitFD = socket->getIncomingFD(SharedFDType::URPToKit);
-        if (urpFromKitFD != -1 && urpToKitFD != -1)
-        {
-            std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-            _urpFromKit = StreamSocket::create<StreamSocket>(
-                std::string(), urpFromKitFD, Socket::Type::Unix,
-                false, HostType::Other, std::make_shared<UrpHandler>(this),
-                StreamSocket::ReadType::NormalRead, now);
-            _urpToKit = StreamSocket::create<StreamSocket>(
-                std::string(), urpToKitFD, Socket::Type::Unix,
-                false, HostType::Other, std::make_shared<UrpHandler>(this),
-                StreamSocket::ReadType::NormalRead, now);
-        }
-    }
-
-    ChildProcess(ChildProcess&& other) = delete;
-
-    bool sendUrpMessage(const std::string& message)
-    {
-        if (!_urpToKit)
-            return false;
-        if (message.size() < 4)
-        {
-            LOG_ERR("URP Message too short");
-            return false;
-        }
-        _urpToKit->send(message.data() + 4, message.size() - 4);
-        return true;
-    }
-
-    virtual ~ChildProcess()
-    {
-        if (_urpFromKit)
-            _urpFromKit->shutdown();
-        if (_urpToKit)
-            _urpToKit->shutdown();
-        if (_smapsFD != -1)
-        {
-            ::close(_smapsFD);
-            _smapsFD = -1;
-        }
-    }
-
-    const ChildProcess& operator=(ChildProcess&& other) = delete;
-
-    void setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker);
-    std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }
-    const std::string& getJailId() const { return _jailId; }
-    void setSMapsFD(int smapsFD) { _smapsFD = smapsFD;}
-    int getSMapsFD(){ return _smapsFD; }
-
-    void moveSocketFromTo(const std::shared_ptr<SocketPoll> &from, SocketPoll &to)
-    {
-        to.takeSocket(from, getSocket());
-    }
-
-private:
-    const std::string _jailId;
-    std::weak_ptr<DocumentBroker> _docBroker;
-    std::shared_ptr<StreamSocket> _urpFromKit;
-    std::shared_ptr<StreamSocket> _urpToKit;
-    int _smapsFD;
-};
-
 class RequestDetails;
 class ClientSession;
 
@@ -532,8 +450,8 @@ public:
     /// Flag that we have been disconnected from the Kit and request unloading.
     void disconnectedFromKit(bool unexpected);
 
-    /// Get the PID of the associated child process
-    pid_t getPid() const { return _childProcess ? _childProcess->getPid() : 0; }
+    /// Get the PID of the associated child process.
+    pid_t getPid() const;
 
     /// Update the last activity time to now.
     /// Best to be inlined as it's called frequently.

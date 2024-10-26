@@ -54,6 +54,7 @@
 #include <common/FileUtil.hpp>
 #include <common/Uri.hpp>
 #include <CommandControl.hpp>
+#include <wsd/Process.hpp>
 
 #if !MOBILEAPP
 #include <wopi/CheckFileInfo.hpp>
@@ -226,6 +227,8 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
         _poll->startThread();
     }
 }
+
+pid_t DocumentBroker::getPid() const { return _childProcess ? _childProcess->getPid() : 0; }
 
 void DocumentBroker::setupPriorities()
 {

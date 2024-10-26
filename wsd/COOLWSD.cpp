@@ -99,6 +99,7 @@
 #include <Crypto.hpp>
 #include <DelaySocket.hpp>
 #include <wsd/DocumentBroker.hpp>
+#include <wsd/Process.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JailUtil.hpp>

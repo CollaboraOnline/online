@@ -17,6 +17,7 @@
 #include <WopiTestServer.hpp>
 
 #include <wsd/DocumentBroker.hpp>
+#include <wsd/Process.hpp>
 
 #include <Poco/Net/HTTPRequest.h>
 
