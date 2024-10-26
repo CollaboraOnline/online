@@ -205,7 +205,7 @@ public:
     constexpr uint64_t bytesRcvd() const { return _bytesRcvd; }
 
     /// Get input/output statistics on this stream
-    constexpr void getIOStats(uint64_t &sent, uint64_t &recv) const
+    void getIOStats(uint64_t& sent, uint64_t& recv) const
     {
         sent = _bytesSent;
         recv = _bytesRcvd;
@@ -430,9 +430,9 @@ protected:
     inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
 
     /// Adds `len` sent bytes to statistic
-    constexpr void notifyBytesSent(uint64_t len) { _bytesSent += len; }
+    void notifyBytesSent(uint64_t len) { _bytesSent += len; }
     /// Adds `len` received bytes to statistic
-    constexpr void notifyBytesRcvd(uint64_t len) { _bytesRcvd += len; }
+    void notifyBytesRcvd(uint64_t len) { _bytesRcvd += len; }
 
     /// avoid doing a shutdown before close
     void setNoShutdown() { _noShutdown = true; }
