@@ -70,6 +70,11 @@ public:
     }
 };
 
+#if ENABLE_SSL
+extern RuntimeConstant<bool> SslEnabled;
+extern RuntimeConstant<bool> SslTermination;
+#endif
+
 /// Initialize the config from an XML string.
 void initialize(const std::string& xml);
 
@@ -95,7 +100,29 @@ bool getBool(const std::string& key, const bool def);
 int getInt(const std::string& key, const int def);
 
 /// Return true if SSL is enabled in the config and no fuzzing is enabled.
-bool isSslEnabled();
+inline bool isSslEnabled()
+{
+#if defined(ENABLE_SSL) && ENABLE_SSL
+#if ENABLE_DEBUG
+    // Unit-tests enable/disable SSL at will.
+    return !Util::isFuzzing() && getBool("ssl.enable", true);
+#else
+    return !Util::isFuzzing() && SslEnabled.get();
+#endif
+#else
+    return false;
+#endif
+}
+
+/// Returns true if SSL Termination is enabled in the config and no fuzzing is enabled.
+inline bool isSSLTermination()
+{
+#if defined(ENABLE_SSL) && ENABLE_SSL
+    return !Util::isFuzzing() && SslTermination.get();
+#else
+    return false;
+#endif
+}
 
 /// Return true if build is support key enabled (ENABLE_SUPPORT_KEY is defined)
 bool isSupportKeyEnabled();
