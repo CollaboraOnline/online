@@ -13,8 +13,8 @@
 
 #include <common/ConfigUtil.hpp>
 #include <common/FileUtil.hpp>
+#include <common/Unit.hpp>
 #include <common/Util.hpp>
-#include <net/WebSocketHandler.hpp>
 
 #include <algorithm>
 #include <atomic>
@@ -25,9 +25,6 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <string>
-#include <utility>
-
-#include <signal.h>
 
 #include <Poco/Path.h>
 #include <Poco/Util/AbstractConfiguration.h>
@@ -37,10 +34,12 @@
 class WSProcess;
 class ForKitProcess;
 class ChildProcess;
-class TraceFileWriter;
-class DocumentBroker;
 class ClipboardCache;
+class DocumentBroker;
 class FileServerRequestHandler;
+class ForKitProcess;
+class SocketPoll;
+class TraceFileWriter;
 
 std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, unsigned mobileAppDocId);
 

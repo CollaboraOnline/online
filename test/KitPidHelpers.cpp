@@ -10,17 +10,18 @@
  */
 #include "KitPidHelpers.hpp"
 
+#include <wsd/COOLWSD.hpp>
+
+#include <lokassert.hpp>
+#include <testlog.hpp>
+
+#include <csignal>
 #include <set>
 #include <chrono>
 #include <iostream>
 #include <algorithm>
 #include <thread>
 #include <string>
-
-#include <wsd/COOLWSD.hpp>
-
-#include <lokassert.hpp>
-#include <testlog.hpp>
 
 std::string getPidList(const std::set<pid_t>& pids);
 

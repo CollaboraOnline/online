@@ -12,6 +12,7 @@
 #include <config.h>
 
 #include <chrono>
+#include <csignal>
 #include <iomanip>
 #include <sstream>
 #include <string>
