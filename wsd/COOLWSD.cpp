@@ -696,10 +696,6 @@ bool COOLWSD::AnonymizeUserData = false;
 bool COOLWSD::CheckCoolUser = true;
 bool COOLWSD::CleanupOnly = false; ///< If we should cleanup and exit.
 bool COOLWSD::IsProxyPrefixEnabled = false;
-#if ENABLE_SSL
-ConfigUtil::RuntimeConstant<bool> COOLWSD::SSLEnabled;
-ConfigUtil::RuntimeConstant<bool> COOLWSD::SSLTermination;
-#endif
 unsigned COOLWSD::MaxConnections;
 unsigned COOLWSD::MaxDocuments;
 std::string COOLWSD::HardwareResourceWarning = "ok";
@@ -2036,6 +2032,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     StartTime = std::chrono::steady_clock::now();
 
+    // Initialize the config subsystem.
     LayeredConfiguration& conf = config();
 
     // Add default values of new entries here, so there is a sensible default in case
@@ -2237,6 +2234,8 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     const std::string configFilePath =
         Poco::Util::Application::findFile(configPath) ? configPath.toString() : ConfigFile;
     loadConfiguration(configFilePath, PRIO_DEFAULT);
+
+    ConfigUtil::initialize(&config());
 
     // Load extra ("plug-in") configuration files, if present
     Poco::File dir(ConfigDir);
@@ -2549,11 +2548,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     IsProxyPrefixEnabled = ConfigUtil::getConfigValue<bool>(conf, "net.proxy_prefix", false);
 
-#if ENABLE_SSL
-    COOLWSD::SSLEnabled.set(ConfigUtil::getConfigValue<bool>(conf, "ssl.enable", true));
-    COOLWSD::SSLTermination.set(ConfigUtil::getConfigValue<bool>(conf, "ssl.termination", false));
-#endif
-
     LOG_INF("SSL support: SSL is " << (COOLWSD::isSSLEnabled() ? "enabled." : "disabled."));
     LOG_INF("SSL support: termination is " << (COOLWSD::isSSLTermination() ? "enabled." : "disabled."));
 
@@ -2650,9 +2644,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     std::ostringstream oss;
     KitXmlConfig->save(oss);
     setenv("COOL_CONFIG", oss.str().c_str(), true);
-
-    // Initialize the config subsystem too.
-    ConfigUtil::initialize(&config());
 
     Util::sleepFromEnvIfSet("Coolwsd", "SLEEPFORDEBUGGER");
 

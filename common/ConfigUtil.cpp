@@ -26,10 +26,21 @@ namespace ConfigUtil
 static Poco::AutoPtr<Poco::Util::XMLConfiguration> XmlConfig;
 static const Poco::Util::AbstractConfiguration* Config{ 0 };
 
+#if ENABLE_SSL
+RuntimeConstant<bool> SslEnabled;
+RuntimeConstant<bool> SslTermination;
+#endif
+
 void initialize(const Poco::Util::AbstractConfiguration* config)
 {
+    assert(config && "Cannot initialize with invalid config instance");
     assert(!Config && "Config is already initialized.");
     Config = config;
+
+#if ENABLE_SSL
+    SslEnabled.set(getBool("ssl.enable", true));
+    SslTermination.set(getBool("ssl.termination", false));
+#endif
 }
 
 void initialize(const std::string& xml)
@@ -111,15 +122,6 @@ bool has(const std::string& key)
 {
     assert(Config && "Config is not initialized.");
     return Config ? Config->has(key) : false;
-}
-
-bool isSslEnabled()
-{
-#if ENABLE_SSL
-    return !Util::isFuzzing() && getBool("ssl.enable", true);
-#else
-    return false;
-#endif
 }
 
 bool isSupportKeyEnabled()
