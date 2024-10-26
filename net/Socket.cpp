@@ -1505,13 +1505,13 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
         const auto durLast =
             std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
         /// TO Criteria: Violate maximum idle (_pollTimeout default 64s)
-        const bool isIDLE = _pollTimeout > std::chrono::microseconds::zero() &&
-                           durLast > _pollTimeout;
+        const bool isIdle = _pollTimeout > std::chrono::microseconds::zero() &&
+            durLast > _pollTimeout;
         /// TO Criteria: Shall terminate?
         const bool isTermination = SigUtil::getTerminationFlag();
-        if (isIDLE || isTermination )
+        if (isIdle || isTermination )
         {
-            LOG_WRN("CheckRemoval: Timeout: {IDLE " << isIDLE
+            LOG_WRN("CheckRemoval: Timeout: {Idle " << isIdle
                     << ", Termination " << isTermination << "}, "
                     << getStatsString(now) << ", "
                     << *this);
