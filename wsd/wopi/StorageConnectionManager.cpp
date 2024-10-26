@@ -129,7 +129,7 @@ StorageConnectionManager::getHttpSession(const Poco::URI& uri, std::chrono::seco
         // We decoupled the Wopi communication from client communication because
         // the Wopi communication must have an independent policy.
         // So, we will use here only Storage settings.
-        useSSL = SSLEnabled || COOLWSD::isSSLTermination();
+        useSSL = SSLEnabled || ConfigUtil::isSSLTermination();
     }
 
     const auto protocol =
