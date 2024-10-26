@@ -278,7 +278,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
 
     // Update the scheme to https if ssl or ssl termination is on
     if (_postMessageOrigin.starts_with("http://") &&
-        (ConfigUtil::isSslEnabled() || COOLWSD::isSSLTermination()))
+        (ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination()))
     {
         _postMessageOrigin.replace(0, 4, "https");
         LOG_DBG("Updating PostMessageOrigin scheme to HTTPS. Updated origin is now ["

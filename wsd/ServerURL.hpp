@@ -42,7 +42,7 @@ public:
         // The user can override the ServerRoot with a new prefix.
         _pathPlus = COOLWSD::ServiceRoot;
 
-        _ssl = (ConfigUtil::isSslEnabled() || COOLWSD::isSSLTermination());
+        _ssl = (ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination());
         _websocket = true;
         _schemeAuthority = COOLWSD::ServerName.empty() ? host : COOLWSD::ServerName;
 

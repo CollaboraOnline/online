@@ -1571,7 +1571,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     httpResponse.add("Content-Security-Policy", csp.generate());
 
     // Setup HTTP Public key pinning
-    if ((ConfigUtil::isSslEnabled() || COOLWSD::isSSLTermination()) &&
+    if ((ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination()) &&
         config.getBool("ssl.hpkp[@enable]", false))
     {
         size_t i = 0;
