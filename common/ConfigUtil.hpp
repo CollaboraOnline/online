@@ -125,7 +125,14 @@ inline bool isSSLTermination()
 }
 
 /// Return true if build is support key enabled (ENABLE_SUPPORT_KEY is defined)
-bool isSupportKeyEnabled();
+inline constexpr bool isSupportKeyEnabled()
+{
+#ifdef ENABLE_SUPPORT_KEY
+    return ENABLE_SUPPORT_KEY;
+#else
+    return false;
+#endif
+}
 
 class ConfigValueGetter
 {
