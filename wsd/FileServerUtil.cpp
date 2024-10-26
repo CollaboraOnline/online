@@ -399,15 +399,21 @@ std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
     StringVector tokens(StringVector::tokenize(cssVars, ';'));
     for (const auto& token : tokens)
     {
+        if (tokens.getParam(token).find('=') == std::string::npos)
+        {
+            LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since it does not have '='");
+            continue;
+        }
+
         StringVector keyValue(StringVector::tokenize(tokens.getParam(token), '='));
         if (keyValue.size() < 2)
         {
-            LOG_ERR("Skipping the token [" << tokens.getParam(token) << "] since it does not have '='");
+            LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since the value is not set");
             continue;
         }
         else if (keyValue.size() > 2)
         {
-            LOG_ERR("Skipping the token [" << tokens.getParam(token) << "] since it has more than one '=' pair");
+            LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since it has more than one '=' pair");
             continue;
         }
 
