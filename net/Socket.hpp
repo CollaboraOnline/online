@@ -211,10 +211,6 @@ public:
         recv = _bytesRcvd;
     }
 
-    /// Checks whether socket is due for forced removal, e.g. by internal timeout or small throughput. Method will shutdown connection and socket on forced removal.
-    /// Returns true in case of forced removal, caller shall stop processing
-    virtual bool checkRemoval(std::chrono::steady_clock::time_point /* now */) { return false; }
-
     /// Shutdown the socket.
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
@@ -1096,7 +1092,9 @@ public:
 
     std::ostream& stream(std::ostream& os) const override;
 
-    bool checkRemoval(std::chrono::steady_clock::time_point now) override;
+    /// Checks whether StreamSocket is due for forced removal, e.g. by inactivity. Method will shutdown connection and socket on forced removal.
+    /// Returns true in case of forced removal, caller shall stop processing
+    bool checkRemoval(std::chrono::steady_clock::time_point now);
 
     /// Just trigger the async shutdown.
     void shutdown() override
