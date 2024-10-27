@@ -431,12 +431,6 @@ namespace Util
         return json;
     }
 
-    std::string UniqueId()
-    {
-        static std::atomic_int counter(0);
-        return std::to_string(getpid()) + '/' + std::to_string(counter++);
-    }
-
     bool isValidURIScheme(const std::string& scheme)
     {
         if (scheme.empty())
