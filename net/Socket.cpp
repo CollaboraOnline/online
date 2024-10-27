@@ -1409,7 +1409,7 @@ std::ostream& StreamSocket::stream(std::ostream& os) const
 
 bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
 {
-    if( !isIPType() )
+    if (!isIPType())
         return false;
 
     // Forced removal on outside-facing IPv[46] network connections only
