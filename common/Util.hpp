@@ -500,7 +500,7 @@ namespace Util
 
     std::string getVersionJSON(bool enableExperimental, const std::string& timezone);
 
-    inline unsigned short hexFromByte(unsigned char byte)
+    inline constexpr unsigned short hexFromByte(unsigned char byte)
     {
         constexpr auto hex = "0123456789ABCDEF";
         return (hex[byte >> 4] << 8) | hex[byte & 0xf];
