@@ -13,6 +13,8 @@
 
 #include "DocumentBroker.hpp"
 
+#include <common/Anonymizer.hpp>
+
 #include <atomic>
 #include <cassert>
 #include <chrono>
@@ -2133,7 +2135,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
         LOG_DBG("New filename [" << COOLWSD::anonymizeUrl(newFilename)
                                  << "] will be known by its fileId [" << fileId << ']');
 
-        Util::mapAnonymized(newFilename, fileId);
+        Anonymizer::mapAnonymized(newFilename, fileId);
     }
 
     if (!_storage)

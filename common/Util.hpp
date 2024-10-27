@@ -1163,20 +1163,6 @@ int main(int argc, char**argv)
     /// either for a URL or for a file path
     std::string cleanupFilename(const std::string &filename);
 
-    /// Anonymize a sensitive string to avoid leaking it.
-    /// Called on strings to be logged or exposed.
-    std::string anonymize(const std::string& text, const std::uint64_t nAnonymizationSalt);
-
-    /// Sets the anonymized version of a given plain-text string.
-    /// After this, 'anonymize(plain)' will return 'anonymized'.
-    void mapAnonymized(const std::string& plain, const std::string& anonymized);
-
-    /// Clears the shared state of mapAnonymized() / anonymize().
-    void clearAnonymized();
-
-    /// Anonymize the basename of filenames only, preserving the path and extension.
-    std::string anonymizeUrl(const std::string& url, const std::uint64_t nAnonymizationSalt);
-
     /// Return true if the subject matches in given set. It uses regex
     /// Mainly used to match WOPI hosts patterns
     bool matchRegex(const std::set<std::string>& set, const std::string& subject);

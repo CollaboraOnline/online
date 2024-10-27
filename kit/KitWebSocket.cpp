@@ -21,13 +21,13 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 
+#include <common/Anonymizer.hpp>
 #include <common/Seccomp.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Uri.hpp>
 
 #include "Kit.hpp"
-#include "KitQueue.hpp"
 #include "ChildSession.hpp"
 #include "KitWebSocket.hpp"
 
@@ -68,7 +68,8 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         _docKey = tokens[2];
         const std::string& docId = tokens[3];
         const std::string fileId = Uri::getFilenameFromURL(_docKey);
-        Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
+        Anonymizer::mapAnonymized(fileId,
+                                  fileId); // Identity mapping, since fileId is already obfuscated
 
         const std::string url = Uri::decode(_docKey);
 #ifndef IOS

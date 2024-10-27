@@ -11,6 +11,11 @@
 
 #include <config.h>
 
+#include <common/Anonymizer.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/Crypto.hpp>
+#include <common/Util.hpp>
+
 #include <iostream>
 #include <iomanip>
 #include <pwd.h>
@@ -32,10 +37,6 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/XMLConfiguration.h>
-
-#include <common/ConfigUtil.hpp>
-#include <Util.hpp>
-#include <Crypto.hpp>
 
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
@@ -422,7 +423,8 @@ int Config::main(const std::vector<std::string>& args)
 
         for (std::size_t i = 1; i < args.size(); ++i)
         {
-            std::cout << '[' << args[i] << "]: " << Util::anonymizeUrl(args[i], AnonymizationSalt) << std::endl;
+            std::cout << '[' << args[i]
+                      << "]: " << Anonymizer::anonymizeUrl(args[i], AnonymizationSalt) << std::endl;
         }
     }
     else if (args[0] == "migrateconfig")

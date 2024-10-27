@@ -80,6 +80,9 @@
 #include "Protocol.hpp"
 #include "TraceEvent.hpp"
 
+std::unordered_map<std::string, std::string> AnonymizedStrings;
+std::mutex AnonymizedMutex;
+
 namespace Util
 {
     namespace rng
@@ -479,77 +482,6 @@ namespace Util
         std::tie(filename, ext) = Util::splitLast(filename, '.', false);
 
         return std::make_tuple(base, filename, ext, params);
-    }
-
-    static std::unordered_map<std::string, std::string> AnonymizedStrings;
-    static std::atomic<unsigned> AnonymizationCounter(0);
-    static std::mutex AnonymizedMutex;
-
-    void mapAnonymized(const std::string& plain, const std::string& anonymized)
-    {
-        if (plain.empty() || anonymized.empty())
-            return;
-
-        if (Log::traceEnabled() && plain != anonymized)
-            LOG_TRC("Anonymizing [" << plain << "] -> [" << anonymized << "].");
-
-        std::unique_lock<std::mutex> lock(AnonymizedMutex);
-
-        AnonymizedStrings[plain] = anonymized;
-    }
-
-    std::string anonymize(const std::string& text, const std::uint64_t nAnonymizationSalt)
-    {
-        {
-            std::unique_lock<std::mutex> lock(AnonymizedMutex);
-
-            const auto it = AnonymizedStrings.find(text);
-            if (it != AnonymizedStrings.end())
-            {
-                if (Log::traceEnabled() && text != it->second)
-                    LOG_TRC("Found anonymized [" << text << "] -> [" << it->second << "].");
-                return it->second;
-            }
-        }
-
-        // Modified 64-bit FNV-1a to add salting.
-        // For the algorithm and the magic numbers, see http://isthe.com/chongo/tech/comp/fnv/
-        std::uint64_t hash = 0xCBF29CE484222325LL;
-        hash ^= nAnonymizationSalt;
-        hash *= 0x100000001b3ULL;
-        for (const char c : text)
-        {
-            hash ^= static_cast<std::uint64_t>(c);
-            hash *= 0x100000001b3ULL;
-        }
-
-        hash ^= nAnonymizationSalt;
-        hash *= 0x100000001b3ULL;
-
-        // Generate the anonymized string. The '#' is to hint that it's anonymized.
-        // Prepend with count to make it unique within a single process instance,
-        // in case we get collisions (which we will, eventually). N.B.: Identical
-        // strings likely to have different prefixes when logged in WSD process vs. Kit.
-        std::string res
-            = '#' + Util::encodeId(AnonymizationCounter++, 0) + '#' + Util::encodeId(hash, 0) + '#';
-        mapAnonymized(text, res);
-        return res;
-    }
-
-    void clearAnonymized()
-    {
-        AnonymizedStrings.clear();
-    }
-
-    std::string anonymizeUrl(const std::string& url, const std::uint64_t nAnonymizationSalt)
-    {
-        std::string base;
-        std::string filename;
-        std::string ext;
-        std::string params;
-        std::tie(base, filename, ext, params) = Util::splitUrl(url);
-
-        return base + Util::anonymize(filename, nAnonymizationSalt) + ext + params;
     }
 
     std::string getTimeNow(const char* format)
