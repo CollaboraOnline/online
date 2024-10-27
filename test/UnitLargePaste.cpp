@@ -55,7 +55,7 @@ void UnitLargePaste::invokeWSDTest()
     std::ostringstream oss;
     for (int i = 0; i < 1000; ++i)
     {
-        oss << Util::encodeId(Util::rng::getNext(), 6);
+        Util::encodeId(oss, Util::rng::getNext(), 6);
     }
 
     const std::string documentContents = oss.str();
