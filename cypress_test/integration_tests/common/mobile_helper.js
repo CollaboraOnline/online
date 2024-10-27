@@ -136,28 +136,6 @@ function closeMobileWizard() {
 	cy.log('<< closeMobileWizard - end');
 }
 
-function executeCopyFromContextMenu(XPos, YPos) {
-	cy.log('>> executeCopyFromContextMenu - start');
-	cy.log('Param - XPos: ' + XPos);
-	cy.log('Param - YPos: ' + YPos);
-
-	longPressOnDocument(XPos, YPos);
-
-	// Execute copy
-	cy.cGet('body').contains('.menu-entry-with-icon', 'Copy')
-		.click();
-
-	// Close warning about clipboard operations
-	cy.cGet('.vex-dialog-buttons .button-primary')
-		.click();
-
-	// Wait until it's closed
-	cy.cGet('.vex-overlay')
-		.should('not.exist');
-
-	cy.log('<< executeCopyFromContextMenu - end');
-}
-
 function openInsertionWizard() {
 	cy.log('>> openInsertionWizard - start');
 
@@ -397,7 +375,6 @@ module.exports.selectAnnotationMenuItem = selectAnnotationMenuItem;
 module.exports.closeHamburgerMenu = closeHamburgerMenu;
 module.exports.openMobileWizard = openMobileWizard;
 module.exports.closeMobileWizard = closeMobileWizard;
-module.exports.executeCopyFromContextMenu = executeCopyFromContextMenu;
 module.exports.openInsertionWizard = openInsertionWizard;
 module.exports.closeInsertionWizard = closeInsertionWizard;
 module.exports.selectFromColorPalette = selectFromColorPalette;
