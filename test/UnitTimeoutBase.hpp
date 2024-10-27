@@ -133,13 +133,13 @@ inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLi
 
     constexpr bool UseOwnPoller = true;
     constexpr bool PollerOnClientThread = true;
-    std::vector<std::shared_ptr<TerminatingPoll>> socketPollers;
+    std::vector<std::shared_ptr<SocketPoll>> socketPollers;
     std::vector<std::shared_ptr<http::Session>> sessions;
 
     try
     {
         for(size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx) {
-            std::shared_ptr<TerminatingPoll> socketPoller;
+            std::shared_ptr<SocketPoll> socketPoller;
             if( UseOwnPoller )
             {
                 socketPoller = std::make_shared<TerminatingPoll>(testname);
@@ -150,26 +150,25 @@ inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLi
                     socketPoller->startThread();
                 }
                 socketPollers.push_back(socketPoller);
-            }
+            } else
+                socketPoller = socketPoll();
 
             std::shared_ptr<http::Session> session = http::Session::create(helpers::getTestServerURI());
             sessions.push_back( session );
             TST_LOG("Test: " << testname << "[" << sockIdx << "]: `" << documentURL << "`");
             http::Request request(documentURL, http::Request::VERB_GET);
             const std::shared_ptr<const http::Response> response =
-                session->syncRequest(request, UseOwnPoller ? *socketPoller : *socketPoll());
+                session->syncRequest(request, *socketPoller);
             TST_LOG("Response: " << response->header().toString());
             TST_LOG("Response size: " << testname << "[" << sockIdx << "]: `" << documentURL << "`: " << response->header().getContentLength());
             if( session->isConnected() ) {
                 LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
-                LOK_ASSERT_EQUAL(true, session->isConnected());
                 LOK_ASSERT(http::Header::ConnectionToken::None ==
                            response->header().getConnectionToken());
                 LOK_ASSERT(0 < response->header().getContentLength());
             } else {
                 // connection limit hit
                 LOK_ASSERT_EQUAL(http::StatusCode::None, response->statusCode());
-                LOK_ASSERT_EQUAL(false, session->isConnected());
             }
         }
     }
@@ -187,13 +186,11 @@ inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLi
             session->asyncShutdown();
         }
         if( UseOwnPoller ) {
-            std::shared_ptr<TerminatingPoll> socketPoller = socketPollers[sockIdx];
+            std::shared_ptr<SocketPoll> socketPoller = socketPollers[sockIdx];
             if( PollerOnClientThread )
-            {
                 socketPoller->closeAllSockets();
-            } else {
+            else
                 socketPoller->joinThread();
-            }
         }
     }
     TST_LOG("Test: X01 Connected: " << connected << " / " << connectionsCount << ", limit " << connectionLimit);
@@ -219,30 +216,25 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
     constexpr bool UseOwnPoller = true;
-    constexpr bool PollerOnClientThread = false;
-    std::vector<std::shared_ptr<TerminatingPoll>> socketPollers;
+    std::vector<std::shared_ptr<SocketPoll>> socketPollers;
     std::vector<std::shared_ptr<http::WebSocketSession>> sessions;
 
     size_t connected0 = 0;
     for(size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx) {
-        std::shared_ptr<TerminatingPoll> socketPoller;
+        std::shared_ptr<SocketPoll> socketPoller;
         if( UseOwnPoller )
         {
             socketPoller = std::make_shared<TerminatingPoll>(testname);
-            if( PollerOnClientThread )
-            {
-                socketPoller->runOnClientThread();
-            } else {
-                socketPoller->startThread();
-            }
+            socketPoller->startThread();
             socketPollers.push_back(socketPoller);
-        }
+        } else
+            socketPoller = socketPoll();
 
         std::shared_ptr<http::WebSocketSession> session = http::WebSocketSession::create(helpers::getTestServerURI());
         sessions.push_back( session );
         TST_LOG("Test: " << testname << "[" << sockIdx << "]: `" << documentURL << "`");
         http::Request req(documentURL);
-        session->asyncRequest(req, UseOwnPoller ? socketPoller : socketPoll());
+        session->asyncRequest(req, socketPoller);
         session->sendMessage("load url=" + documentURL);
 
         TST_LOG("Test: XX0 " << testname << "[" << sockIdx << "]: connected " << session->isConnected());
@@ -285,13 +277,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
             wsSession->shutdownWS();
         }
         if( UseOwnPoller ) {
-            std::shared_ptr<TerminatingPoll> socketPoller = socketPollers[sockIdx];
-            if( PollerOnClientThread )
-            {
-                socketPoller->closeAllSockets();
-            } else {
-                socketPoller->joinThread();
-            }
+            std::shared_ptr<SocketPoll> socketPoller = socketPollers[sockIdx];
+            socketPoller->joinThread();
         }
     }
     // 5 x Limiter hits occurred!
@@ -318,29 +305,24 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
     constexpr bool UseOwnPoller = true;
-    constexpr bool PollerOnClientThread = false;
-    std::vector<std::shared_ptr<TerminatingPoll>> socketPollers;
+    std::vector<std::shared_ptr<SocketPoll>> socketPollers;
     std::vector<std::shared_ptr<http::WebSocketSession>> sessions;
 
     for(size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx) {
-        std::shared_ptr<TerminatingPoll> socketPoller;
+        std::shared_ptr<SocketPoll> socketPoller;
         if( UseOwnPoller )
         {
             socketPoller = std::make_shared<TerminatingPoll>(testname);
-            if( PollerOnClientThread )
-            {
-                socketPoller->runOnClientThread();
-            } else {
-                socketPoller->startThread();
-            }
+            socketPoller->startThread();
             socketPollers.push_back(socketPoller);
-        }
+        } else
+            socketPoller = socketPoll();
 
         std::shared_ptr<http::WebSocketSession> session = http::WebSocketSession::create(helpers::getTestServerURI());
         sessions.push_back( session );
         TST_LOG("Test: " << testname << "[" << sockIdx << "]: `" << documentURL << "`");
         http::Request req(documentURL);
-        session->asyncRequest(req, UseOwnPoller ? socketPoller : socketPoll());
+        session->asyncRequest(req, socketPoller);
         session->sendMessage("load url=" + documentURL);
 
         TST_LOG("Test: XX0 " << testname << "[" << sockIdx << "]: connected " << session->isConnected());
@@ -380,13 +362,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
             wsSession->shutdownWS();
         }
         if( UseOwnPoller ) {
-            std::shared_ptr<TerminatingPoll> socketPoller = socketPollers[sockIdx];
-            if( PollerOnClientThread )
-            {
-                socketPoller->closeAllSockets();
-            } else {
-                socketPoller->joinThread();
-            }
+            std::shared_ptr<SocketPoll> socketPoller = socketPollers[sockIdx];
+            socketPoller->joinThread();
         }
     }
     // 5 x Limiter hits occurred!

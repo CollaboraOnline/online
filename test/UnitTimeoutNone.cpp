@@ -34,12 +34,13 @@ class UnitTimeoutNone : public UnitTimeoutBase1
     void configNet(net::Defaults& /* defaults */) override
     {
         // Keep original values -> No timeout
-        // defaults.WSPingTimeout = std::chrono::microseconds(2000000);
-        // defaults.WSPingPeriod = std::chrono::microseconds(3000000);
-        // defaults.HTTPTimeout = std::chrono::microseconds(30000000);
+        // defaults.InactivityTimeout = std::chrono::seconds(3600);
+        // defaults.WSPingTimeout = std::chrono::seconds(2);
+        // defaults.WSPingPeriod = std::chrono::seconds(3);
+        // defaults.HTTPTimeout = std::chrono::seconds(30);
         // defaults.MaxConnections = 9999;
         // defaults.MaxConnections = ConnectionLimit;
-        // defaults.SocketPollTimeout = std::chrono::microseconds(64000000);
+        // defaults.SocketPollTimeout = std::chrono::seconds(64);
     }
 
 public:
