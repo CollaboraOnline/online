@@ -443,9 +443,6 @@ namespace Util
 
     std::string getVersionJSON(bool enableExperimental, const std::string& timezone);
 
-    /// Return a string that is unique across processes and calls.
-    std::string UniqueId();
-
     inline unsigned short hexFromByte(unsigned char byte)
     {
         constexpr auto hex = "0123456789ABCDEF";
