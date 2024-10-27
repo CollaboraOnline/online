@@ -26,6 +26,7 @@ class SlideShowContext {
 	public bIsSkipping: boolean;
 	public nSlideWidth: number;
 	public nSlideHeight: number;
+	public aCanvas: HTMLCanvasElement;
 
 	constructor(
 		aSlideShowHandler: SlideShowHandler,
@@ -98,7 +99,9 @@ class SlideShowHandler {
 		TransitionSubType.HEART,
 	]);
 
-	constructor() {
+	constructor(presenter: SlideShowPresenter) {
+		this.presenter = presenter;
+
 		this.aTimer = new ElapsedTime();
 		this.aFrameSynchronization = new FrameSynchronization(
 			SlideShowHandler.PREFERRED_FRAME_RATE,
@@ -144,10 +147,6 @@ class SlideShowHandler {
 
 	setMetaPresentation(metaPres: MetaPresentation) {
 		this.theMetaPres = metaPres;
-	}
-
-	setPresenter(presenter: SlideShowPresenter) {
-		this.presenter = presenter;
 	}
 
 	setNavigator(slideShowNavigator: SlideShowNavigator) {

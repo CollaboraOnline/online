@@ -10,42 +10,55 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// TODO:
-// need to have access to canvas element for setting cursor style
-// need to also the layer with the object that triggers the event
-// maybe later rename to LayerEventSource
 class SourceEventElement implements MouseClickHandler {
 	private sId: string;
+	private aCanvas: HTMLCanvasElement;
+	private bounds: DOMRect;
 	private aSlideShow: SlideShowHandler = null;
-	private aElement: any;
 	private aEventMultiplexer: EventMultiplexer;
 	private bClickHandled = false;
 	private bIsPointerOver = false;
 
 	constructor(
 		sId: string,
+		aCanvas: HTMLCanvasElement,
+		bounds: DOMRect,
+		priority: number,
 		aSlideShow: SlideShowHandler,
-		aElement: any,
 		aEventMultiplexer: EventMultiplexer,
 	) {
 		this.sId = sId;
+		this.aCanvas = aCanvas;
+		this.bounds = bounds;
 		this.aSlideShow = aSlideShow;
-		this.aElement = aElement;
+
 		this.aEventMultiplexer = aEventMultiplexer;
 
-		// TODO: still make sense ?
-		this.aEventMultiplexer.registerMouseClickHandler(this, 1000);
-		// TODO handle mouseover, mouseout event for aElement
+		this.aEventMultiplexer.registerMouseClickHandler(this, 1000 + priority);
 	}
 
 	getId() {
 		return this.sId;
 	}
 
-	isOver(cursorX: number, cursorY: number): boolean {
-		// TODO check if cursor is over source event object
-		window.app.console.log('isOver: x: ' + cursorX + ', y: ' + cursorY);
-		return false;
+	onMouseMove(cursorX: number, cursorY: number): boolean {
+		const bIsOver = this.isOver(cursorX, cursorY);
+		if (bIsOver !== this.bIsPointerOver) {
+			if (bIsOver) this.onMouseEnter();
+			else this.onMouseLeave();
+		}
+		return bIsOver;
+	}
+
+	isOver(x: number, y: number): boolean {
+		// console.debug('SourceEventElement.isOver: x: ' + x + ', y: ' + y);
+		const bounds = this.bounds;
+		return (
+			x >= bounds.x &&
+			x <= bounds.x + bounds.width &&
+			y >= bounds.y &&
+			y <= bounds.y + bounds.height
+		);
 	}
 
 	onMouseEnter() {
@@ -77,11 +90,10 @@ class SourceEventElement implements MouseClickHandler {
 
 	setPointerCursor() {
 		if (this.bClickHandled) return;
-
-		// TODO set style cursor to 'cursor: pointer'
+		this.aCanvas.style.cursor = 'pointer';
 	}
 
 	setDefaultCursor() {
-		// TODO set style cursor to 'cursor: default'
+		this.aCanvas.style.cursor = 'default';
 	}
 }

@@ -345,6 +345,34 @@ class SlideShowNavigator {
 		}
 	}
 
+	onMouseMove(aEvent: MouseEvent) {
+		if (!this.isEnabled) return;
+
+		const metaSlide = this.theMetaPres.getMetaSlideByIndex(this.currentSlide);
+		if (!metaSlide)
+			window.app.console.log(
+				'SlideShowNavigator.onMouseMove: no meta slide available for index: ' +
+					this.currentSlide,
+			);
+
+		if (metaSlide && metaSlide.animationsHandler) {
+			const aEventMultiplexer = metaSlide.animationsHandler.eventMultiplexer;
+			if (aEventMultiplexer) {
+				if (aEventMultiplexer.hasRegisteredMouseClickHandlers()) {
+					const canvas = this.presenter.getCanvas();
+					const width = canvas.clientWidth;
+					const height = canvas.clientHeight;
+
+					const x = (aEvent.offsetX / width) * this.theMetaPres.slideWidth;
+					const y = (aEvent.offsetY / height) * this.theMetaPres.slideHeight;
+
+					aEventMultiplexer.notifyMouseMove({ x: x, y: y });
+					return;
+				}
+			}
+		}
+	}
+
 	_onExecuteInteraction(action: ClickAction) {
 		if (action) {
 			switch (action.action) {

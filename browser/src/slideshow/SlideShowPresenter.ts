@@ -67,6 +67,11 @@ interface Interaction {
 	clickAction?: ClickAction;
 }
 
+interface Trigger {
+	hash: string;
+	bounds: DOMRect;
+}
+
 interface SlideInfo {
 	hash: string;
 	index: number;
@@ -89,6 +94,7 @@ interface SlideInfo {
 		fillColor: string;
 	};
 	animations: any;
+	triggers: Array<Trigger>;
 	next: string;
 	prev: string;
 	indexInSlideShow?: number;
@@ -151,8 +157,7 @@ class SlideShowPresenter {
 	}
 
 	private _init() {
-		this._slideShowHandler = new SlideShowHandler();
-		this._slideShowHandler.setPresenter(this);
+		this._slideShowHandler = new SlideShowHandler(this);
 		this._slideShowNavigator = new SlideShowNavigator(this._slideShowHandler);
 		// do not allow user interaction until we get presentation info
 		this._slideShowNavigator.disable();
@@ -298,6 +303,12 @@ class SlideShowPresenter {
 			'click',
 			this._slideShowNavigator.onClick.bind(this._slideShowNavigator),
 		);
+		canvas.addEventListener(
+			'mousemove',
+			this._slideShowNavigator.onMouseMove.bind(this._slideShowNavigator),
+		);
+
+		this._slideShowHandler.getContext().aCanvas = canvas;
 
 		try {
 			this._slideRenderer = new SlideRendererGl(canvas);

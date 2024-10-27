@@ -183,20 +183,9 @@ function registerEvent(
 					const eEventType = aTiming.getEventType();
 					const sEventBaseElemId = aTiming.getEventBaseElementId();
 					if (sEventBaseElemId) {
-						// const aEventBaseElem =
-						// 	aNodeContext.aContext.getSlideElement(sEventBaseElemId);
-						const aEventBaseElem = sEventBaseElemId;
-						if (!aEventBaseElem) {
-							window.app.console.log(
-								'registerEvent: TimingType.Event: event base element not found: ' +
-									sEventBaseElemId,
-							);
-							return;
-						}
 						const aSourceEventElement = aNodeContext.makeSourceEventElement(
 							sEventBaseElemId,
 							aSlideShow,
-							aEventBaseElem,
 						);
 
 						if (!aInteractiveAnimationSequenceMap.has(nNodeId)) {
