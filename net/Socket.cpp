@@ -1088,7 +1088,7 @@ void WebSocketHandler::dumpState(std::ostream& os, const std::string& /*indent*/
 
 void StreamSocket::dumpState(std::ostream& os)
 {
-    int64_t timeoutMaxMicroS = _pollTimeout.count();
+    int64_t timeoutMaxMicroS = net::Defaults::get().SocketPollTimeout.count();
     const int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
     os << '\t' << std::setw(6) << getFD() << "\t0x" << std::hex << events << std::dec << '\t'
        << (ignoringInput() ? "ignore\t" : "process\t") << std::setw(6) << _inBuffer.size() << '\t'
@@ -1480,20 +1480,20 @@ std::ostream& StreamSocket::stream(std::ostream& os) const
 
 bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
 {
-    if( !isIPType() )
+    if (!isIPType())
         return false;
 
     // Forced removal on outside-facing IPv[46] network connections only
     const auto durLast =
         std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
-    /// TO Criteria: Violate maximum idle (_pollTimeout default 64s)
-    const bool isIdle = _pollTimeout > std::chrono::microseconds::zero() &&
-        durLast > _pollTimeout;
-    /// TO Criteria: Shall terminate?
+    /// Timeout criteria: Violate maximum inactivity (_inactivityTimeout default 3600s)
+    const bool isInactive = _inactivityTimeout > std::chrono::microseconds::zero() &&
+        durLast > _inactivityTimeout;
+    /// Timeout criteria: Shall terminate?
     const bool isTermination = SigUtil::getTerminationFlag();
-    if (isIdle || isTermination )
+    if (isInactive || isTermination )
     {
-        LOG_WRN("CheckRemoval: Timeout: {Idle " << isIdle
+        LOG_WRN("CheckRemoval: Timeout: {Inactive " << isInactive
                 << ", Termination " << isTermination << "}, "
                 << getStatsString(now) << ", "
                 << *this);

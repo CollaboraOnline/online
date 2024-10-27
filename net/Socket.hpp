@@ -211,10 +211,6 @@ public:
         recv = _bytesRcvd;
     }
 
-    /// Checks whether socket is due for forced removal, e.g. by internal timeout or small throughput. Method will shutdown connection and socket on forced removal.
-    /// Returns true in case of forced removal, caller shall stop processing
-    virtual bool checkRemoval(std::chrono::steady_clock::time_point /* now */) { return false; }
-
     /// Shutdown the socket.
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
@@ -1067,7 +1063,7 @@ public:
                  HostType hostType, ReadType readType = ReadType::NormalRead,
                  std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now() ) :
         Socket(fd, type, creationTime),
-        _pollTimeout( net::Defaults::get().SocketPollTimeout ),
+        _inactivityTimeout( net::Defaults::get().InactivityTimeout ),
         _httpTimeout( net::Defaults::get().HTTPTimeout ),
         _hostname(std::move(host)),
         _wsState(WSState::HTTP),
@@ -1109,7 +1105,9 @@ public:
 
     std::ostream& stream(std::ostream& os) const override;
 
-    bool checkRemoval(std::chrono::steady_clock::time_point now) override;
+    /// Checks whether StreamSocket is due for forced removal, e.g. by inactivity. Method will shutdown connection and socket on forced removal.
+    /// Returns true in case of forced removal, caller shall stop processing
+    bool checkRemoval(std::chrono::steady_clock::time_point now);
 
     /// Just trigger the async shutdown.
     void shutdown() override
@@ -1749,8 +1747,8 @@ protected:
 #endif
 
 private:
-    /// default to 64s, see net::Defaults::SocketPollTimeout
-    const std::chrono::microseconds _pollTimeout;
+    /// default to 3600s, see net::Defaults::InactivityTimeout
+    const std::chrono::microseconds _inactivityTimeout;
     /// defaults to 30s, see net::Defaults::HTTPTimeout
     const std::chrono::microseconds _httpTimeout;
 

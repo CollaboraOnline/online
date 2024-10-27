@@ -32,14 +32,16 @@ namespace net
 class Defaults
 {
 public:
-    /// WebSocketHandler ping timeout in us (2s default). Zero disables metric.
+    /// StreamSocket inactivity timeout in us (3600s default). Zero disables instrument.
+    std::chrono::microseconds InactivityTimeout;
+    /// WebSocketHandler ping timeout in us (2s default). Zero disables instrument.
     std::chrono::microseconds WSPingTimeout;
-    /// WebSocketHandler ping period in us (3s default), i.e. duration until next ping. Zero disables metric.
+    /// WebSocketHandler ping period in us (3s default), i.e. duration until next ping. Zero disables instrument.
     std::chrono::microseconds WSPingPeriod;
-    /// http::Session timeout in us (30s default). Zero disables metric.
+    /// http::Session timeout in us (30s default). Zero disables instrument.
     std::chrono::microseconds HTTPTimeout;
 
-    /// Maximum total connections (9999 or MAX_CONNECTIONS). Zero disables metric.
+    /// Maximum total connections (9999 or MAX_CONNECTIONS). Zero disables instrument.
     size_t MaxConnections;
 
     /// Socket poll timeout in us (64s), useful to increase for debugging.
@@ -47,11 +49,12 @@ public:
 
 private:
     Defaults()
-        : WSPingTimeout(std::chrono::microseconds(2000000))
-        , WSPingPeriod(std::chrono::microseconds(3000000))
-        , HTTPTimeout(std::chrono::microseconds(30000000))
+        : InactivityTimeout(std::chrono::seconds(3600))
+        , WSPingTimeout(std::chrono::seconds(2))
+        , WSPingPeriod(std::chrono::seconds(3))
+        , HTTPTimeout(std::chrono::seconds(30))
         , MaxConnections(9999)
-        , SocketPollTimeout(std::chrono::microseconds(64000000))
+        , SocketPollTimeout(std::chrono::seconds(64))
     {
     }
 
