@@ -1,7 +1,5 @@
 /* JSDialog */
 .jsdialog-overlay {
-	-webkit-animation: vex-fadein .5s;
-	animation: vex-fadein .5s;
 	position: absolute;
 	background: transparent;
 	top: 0;
