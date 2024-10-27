@@ -15,6 +15,8 @@
 
 #include <config.h>
 
+#include <common/Anonymizer.hpp>
+
 #include <csignal>
 #include <dlfcn.h>
 #include <limits>
@@ -1972,7 +1974,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         _isDocPasswordProtected = false;
 
         const char *pURL = uri.c_str();
-        LOG_DBG("Calling lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ", \"" << options << "\").");
+        LOG_DBG("Calling lokit::documentLoad(" << anonymizeUrl(pURL) << ", \"" << options << "\")");
         const auto start = std::chrono::steady_clock::now();
         _loKitDocument.reset(_loKit->documentLoad(pURL, options.c_str()));
 #ifdef __ANDROID__
@@ -1980,8 +1982,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
 #endif
         const auto duration = std::chrono::steady_clock::now() - start;
         const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-        LOG_DBG("Returned lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ") in "
-                << elapsed);
+        LOG_DBG("Returned lokit::documentLoad(" << anonymizeUrl(pURL) << ") in " << elapsed);
 #ifdef IOS
         DocumentData::get(_mobileAppDocId).loKitDocument = _loKitDocument.get();
 #endif
@@ -3815,7 +3816,7 @@ TileWireId getCurrentWireId(bool increment)
 std::string anonymizeUrl(const std::string& url)
 {
 #ifndef BUILDING_TESTS
-    return AnonymizeUserData ? Util::anonymizeUrl(url, AnonymizationSalt) : url;
+    return AnonymizeUserData ? Anonymizer::anonymizeUrl(url, AnonymizationSalt) : url;
 #else
     return url;
 #endif
@@ -3967,7 +3968,7 @@ bool globalPreinit(const std::string &loTemplate)
 std::string anonymizeUsername(const std::string& username)
 {
 #ifndef BUILDING_TESTS
-    return AnonymizeUserData ? Util::anonymize(username, AnonymizationSalt) : username;
+    return AnonymizeUserData ? Anonymizer::anonymize(username, AnonymizationSalt) : username;
 #else
     return username;
 #endif

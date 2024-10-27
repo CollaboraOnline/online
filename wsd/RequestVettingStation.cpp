@@ -13,6 +13,7 @@
 
 #include <RequestVettingStation.hpp>
 
+#include <common/Anonymizer.hpp>
 #include <COOLWSD.hpp>
 #include <RequestDetails.hpp>
 #include <TraceEvent.hpp>
@@ -63,7 +64,8 @@ void RequestVettingStation::handleRequest(const std::string& id)
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
     const std::string fileId = Uri::getFilenameFromURL(docKey);
-    Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
+    Anonymizer::mapAnonymized(fileId,
+                              fileId); // Identity mapping, since fileId is already obfuscated
 
     // Check if readonly session is required.
     const bool isReadOnly = Uri::hasReadonlyPermission(uriPublic.toString());
@@ -156,7 +158,8 @@ void RequestVettingStation::handleRequest(const std::string& id,
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
     const std::string fileId = Uri::getFilenameFromURL(docKey);
-    Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
+    Anonymizer::mapAnonymized(fileId,
+                              fileId); // Identity mapping, since fileId is already obfuscated
 
     // Check if readonly session is required.
     const bool isReadOnly = Uri::hasReadonlyPermission(uriPublic.toString());

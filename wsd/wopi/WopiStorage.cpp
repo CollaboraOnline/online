@@ -12,7 +12,6 @@
 #include <config.h>
 
 #include "WopiStorage.hpp"
-#include "wopi/StorageConnectionManager.hpp"
 
 #include <Auth.hpp>
 #include <CommandControl.hpp>
@@ -25,10 +24,12 @@
 #include <ProofKey.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
+#include <common/Anonymizer.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Uri.hpp>
+#include <wopi/StorageConnectionManager.hpp>
 
 #include <Poco/Exception.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
@@ -169,8 +170,8 @@ void WopiStorage::handleWOPIFileInfo(const WOPIFileInfo& wopiFileInfo, LockConte
     setFileInfo(wopiFileInfo);
 
     if (COOLWSD::AnonymizeUserData)
-        Util::mapAnonymized(Uri::getFilenameFromURL(wopiFileInfo.getFilename()),
-                            Uri::getFilenameFromURL(getUri().toString()));
+        Anonymizer::mapAnonymized(Uri::getFilenameFromURL(wopiFileInfo.getFilename()),
+                                  Uri::getFilenameFromURL(getUri().toString()));
 
     if (wopiFileInfo.getSupportsLocks())
         lockCtx.initSupportsLocks();
@@ -211,9 +212,9 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
         JsonUtil::findJSONValue(object, "ObfuscatedUserId", _obfuscatedUserId);
         if (!_obfuscatedUserId.empty())
         {
-            Util::mapAnonymized(getOwnerId(), _obfuscatedUserId);
-            Util::mapAnonymized(_userId, _obfuscatedUserId);
-            Util::mapAnonymized(_username, _obfuscatedUserId);
+            Anonymizer::mapAnonymized(getOwnerId(), _obfuscatedUserId);
+            Anonymizer::mapAnonymized(_userId, _obfuscatedUserId);
+            Anonymizer::mapAnonymized(_username, _obfuscatedUserId);
         }
 
         // Set anonymized version of the above fields before logging.
@@ -963,11 +964,12 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
                         // Get the FileId form the URL, which we use as the anonymized filename.
                         const std::string decodedUrl = Uri::decode(url);
                         const std::string obfuscatedFileId = Uri::getFilenameFromURL(decodedUrl);
-                        Util::mapAnonymized(obfuscatedFileId,
-                                            obfuscatedFileId); // Identity, to avoid re-anonymizing.
+                        Anonymizer::mapAnonymized(
+                            obfuscatedFileId,
+                            obfuscatedFileId); // Identity, to avoid re-anonymizing.
 
                         const std::string filenameOnly = Uri::getFilenameFromURL(filename);
-                        Util::mapAnonymized(filenameOnly, obfuscatedFileId);
+                        Anonymizer::mapAnonymized(filenameOnly, obfuscatedFileId);
                         object->set("Name", COOLWSD::anonymizeUrl(filename));
                     }
 

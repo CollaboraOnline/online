@@ -13,6 +13,11 @@
 
 #include "FileUtil.hpp"
 
+#include <common/Anonymizer.hpp>
+#include <common/Log.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+
 #include <dirent.h>
 #include <exception>
 #include <ftw.h>
@@ -42,10 +47,6 @@
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
-
-#include "Log.hpp"
-#include "Util.hpp"
-#include "Unit.hpp"
 
 namespace FileUtil
 {
@@ -621,14 +622,14 @@ namespace FileUtil
     /// Anonymize the basename of filenames, preserving the path and extension.
     std::string anonymizeUrl(const std::string& url)
     {
-        return AnonymizeUserData ? Util::anonymizeUrl(url, AnonymizationSalt) : url;
+        return AnonymizeUserData ? Anonymizer::anonymizeUrl(url, AnonymizationSalt) : url;
     }
 
     /// Anonymize user names and IDs.
     /// Will use the Obfuscated User ID if one is provided via WOPI.
     std::string anonymizeUsername(const std::string& username)
     {
-        return AnonymizeUserData ? Util::anonymize(username, AnonymizationSalt) : username;
+        return AnonymizeUserData ? Anonymizer::anonymize(username, AnonymizationSalt) : username;
     }
 
     std::string extractFileExtension(const std::string& path)
