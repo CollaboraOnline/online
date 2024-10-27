@@ -987,7 +987,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         if (tokens.size() > 1 && (isDocumentOwner() || !isReadOnly()))
         {
-            std::string sessionId = Util::encodeId(std::stoi(tokens[1]), 4);
             docBroker->broadcastMessage(firstLine);
             docBroker->removeSession(client_from_this());
         }
