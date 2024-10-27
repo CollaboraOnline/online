@@ -26,18 +26,7 @@ class NodeContext {
 		this.aContext = aSlideShowContext;
 	}
 
-	public makeSourceEventElement(
-		sId: string,
-		aSlideShow: SlideShowHandler,
-		aEventBaseElem: any,
-	) {
-		if (!aEventBaseElem) {
-			window.app.console.log(
-				'NodeContext.makeSourceEventElement: event base element is not valid',
-			);
-			return null;
-		}
-
+	public makeSourceEventElement(sId: string, aSlideShow: SlideShowHandler) {
 		if (!this.aContext.aEventMultiplexer) {
 			window.app.console.log(
 				'NodeContext.makeSourceEventElement: event multiplexer not initialized',
@@ -46,12 +35,23 @@ class NodeContext {
 		}
 
 		if (!this.aSourceEventElementMap.has(sId)) {
+			const triggerInfo = this.metaSlide.getTriggerInfo(sId);
+			if (!triggerInfo) {
+				window.app.console.log(
+					'NodeContext.makeSourceEventElement: no bounds found for event trigger: ' +
+						sId,
+				);
+				return null;
+			}
+
 			this.aSourceEventElementMap.set(
 				sId,
 				new SourceEventElement(
 					sId,
+					this.aContext.aCanvas,
+					triggerInfo.bounds,
+					triggerInfo.index,
 					aSlideShow,
-					aEventBaseElem,
 					this.aContext.aEventMultiplexer,
 				),
 			);

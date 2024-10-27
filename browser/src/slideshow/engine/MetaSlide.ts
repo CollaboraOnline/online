@@ -69,6 +69,20 @@ class MetaSlide {
 		return this._animationsHandler;
 	}
 
+	public getTriggerInfo(hash: string) {
+		const triggers = this._info.triggers;
+		if (triggers) {
+			const index = triggers.findIndex((value) => value.hash === hash);
+			if (index !== -1) {
+				return {
+					bounds: triggers[index].bounds,
+					index: index,
+				};
+			}
+		}
+		return null;
+	}
+
 	public show() {
 		// TODO implement it ?
 	}
