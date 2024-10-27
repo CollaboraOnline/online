@@ -18,6 +18,10 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <cstdint>
+#include <iomanip>
+#include <sstream>
+
 /// Util unit-tests.
 class UtilTests : public CPPUNIT_NS::TestFixture
 {
@@ -26,6 +30,7 @@ class UtilTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testStringifyHexLine);
     CPPUNIT_TEST(testHexify);
     CPPUNIT_TEST(testBytesToHex);
+    CPPUNIT_TEST(testNumberToHex);
     CPPUNIT_TEST(testCharacterConverter);
 #if ENABLE_DEBUG
     CPPUNIT_TEST(testUtf8);
@@ -36,6 +41,7 @@ class UtilTests : public CPPUNIT_NS::TestFixture
     void testStringifyHexLine();
     void testHexify();
     void testBytesToHex();
+    void testNumberToHex();
     void testCharacterConverter();
     void testUtf8();
 };
@@ -87,6 +93,65 @@ void UtilTests::testBytesToHex()
         LOK_ASSERT_EQUAL(d, s);
     }
 }
+
+static std::string hexifyStd(const std::uint64_t number, int width, std::size_t size = INTMAX_MAX)
+{
+    std::ostringstream oss;
+    oss << std::hex << std::setw(width) << std::setfill('0') << number;
+    std::string str = oss.str();
+    return size < str.size() ? str.substr(str.size() - size) : str;
+}
+
+void UtilTests::testNumberToHex()
+{
+    constexpr auto testname = __func__;
+
+    for (int width = 0; width < 33; ++width)
+    {
+        std::uint64_t number = 0;
+        LOK_TRACE("Number: " << std::hex << number << std::dec << " (shift: 0"
+                             << "), width: " << width);
+        LOK_ASSERT_EQUAL_STR(hexifyStd(number, width), Util::encodeId(number, width));
+        LOK_ASSERT_EQUAL_STR(hexifyStd(~number, width), Util::encodeId(~number, width));
+
+        for (int shift = 0; shift < 64; ++shift)
+        {
+            number = 1UL << shift;
+            LOK_TRACE("Number: " << std::hex << number << std::dec << " (shift: " << shift
+                                 << "), width: " << width);
+            LOK_ASSERT_EQUAL_STR(hexifyStd(number, width), Util::encodeId(number, width));
+            LOK_ASSERT_EQUAL_STR(hexifyStd(~number, width), Util::encodeId(~number, width));
+        }
+    }
+
+    char buffer[32];
+    for (ssize_t sz = sizeof(buffer); sz >= 0; --sz)
+    {
+        std::size_t size = static_cast<std::size_t>(sz);
+        for (int width = 0; width < 33; ++width)
+        {
+            std::uint64_t number = 0;
+            LOK_TRACE("Number: " << std::hex << number << std::dec << " (shift: 0"
+                                 << "), width: " << width << ", size: " << size);
+            LOK_ASSERT_EQUAL_STR(hexifyStd(number, width, size),
+                                 Util::encodeId(buffer, size, number, width));
+            LOK_ASSERT_EQUAL_STR(hexifyStd(~number, width, size),
+                                 Util::encodeId(buffer, size, ~number, width));
+
+            for (int shift = 0; shift < 64; ++shift)
+            {
+                number = 1UL << shift;
+                LOK_TRACE("Number: " << std::hex << number << std::dec << " (shift: " << shift
+                                     << "), width: " << width << ", size: " << size);
+                LOK_ASSERT_EQUAL_STR(hexifyStd(number, width, size),
+                                     Util::encodeId(buffer, size, number, width));
+                LOK_ASSERT_EQUAL_STR(hexifyStd(~number, width, size),
+                                     Util::encodeId(buffer, size, ~number, width));
+            }
+        }
+    }
+}
+
 void UtilTests::testCharacterConverter()
 {
     constexpr auto testname = __func__;
