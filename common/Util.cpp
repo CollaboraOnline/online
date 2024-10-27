@@ -186,10 +186,19 @@ namespace Util
         }
     }
 
+    /// Encode an ID into the given stream.
+    std::ostringstream& encodeId(std::ostringstream& oss, const std::uint64_t number,
+                                 const int padding)
+    {
+        oss << std::hex << std::setw(padding) << std::setfill('0') << number;
+        return oss;
+    }
+
+    /// Encode an ID into a string.
     std::string encodeId(const std::uint64_t number, const int padding)
     {
         std::ostringstream oss;
-        oss << std::hex << std::setw(padding) << std::setfill('0') << number;
+        encodeId(oss, number, padding);
         return oss.str();
     }
 
