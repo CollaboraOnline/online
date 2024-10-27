@@ -21,7 +21,6 @@
 
 #include <Poco/Base64Decoder.h>
 #include <Poco/Base64Encoder.h>
-#include <Poco/BinaryWriter.h>
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
 #include <Poco/LineEndingConverter.h>
