@@ -71,7 +71,7 @@ namespace RenderTiles
                                  size_t pixmapHeight, int pixelWidth, int pixelHeight,
                                  LibreOfficeKitTileMode mode)>& blendWatermark,
         const std::function<void(const char* buffer, size_t length)>& outputMessage,
-        [[maybe_unused]] unsigned mobileAppDocId, int canonicalViewId, bool dumpTiles)
+        [[maybe_unused]] unsigned mobileAppDocId, bool dumpTiles)
     {
         const auto& tiles = tileCombined.getTiles();
 
@@ -191,20 +191,7 @@ namespace RenderTiles
                             deltaGen.compressOrDelta(pixmap.data(), offsetX, offsetY,
                                                      pixelWidth, pixelHeight,
                                                      pixmapWidth, pixmapHeight,
-                                                     TileLocation(
-                                                         canonicalViewId,
-                                                         tileCombined.getPart(),
-                                                         tileCombined.getEditMode(),
-                                                         tiles[tileIndex].getWidth(),
-                                                         tiles[tileIndex].getHeight(),
-                                                         tileRect.getLeft(),
-                                                         tileRect.getTop(),
-                                                         tiles[tileIndex].getTileWidth(),
-                                                         tiles[tileIndex].getTileHeight(),
-                                                         tiles[tileIndex].getVersion(),
-                                                         tiles[tileIndex].getImgSize(),
-                                                         tiles[tileIndex].getId()
-                                                         ),
+                                                     tiles[tileIndex],
                                                      data, wireId, forceKeyframe, dumpTiles, mode);
                         }
                         else

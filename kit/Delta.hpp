@@ -23,6 +23,7 @@
 
 #include <Log.hpp>
 #include <Common.hpp>
+#include <wsd/TileDesc.hpp>
 #include <FileUtil.hpp>
 #include <Png.hpp>
 #include <Simd.hpp>
@@ -32,49 +33,6 @@
 #  define TILE_WIRE_ID
    typedef uint32_t TileWireId;
 #endif
-
-/// Unique location of a tile
-struct TileLocation {
-    // in TWIPS
-    int _canonicalViewId;
-    int _part;
-    int _viewMode;
-    int _width;
-    int _height;
-    int _left;
-    int _top;
-    int _tileWidth;
-    int _tileHeight;
-    int _ver;
-    int _imgSize;
-    int _id;
-    int _oldWireId;
-    int _wireId;
-    TileLocation(int canonicalViewId, int part, int viewMode, int width, int height, int left, int top,
-        int tileWidth, int tileHeight, int ver, int imgSize, int id)
-        : _canonicalViewId(canonicalViewId), _part(part), _viewMode(viewMode), _width(width), _height(height), _left(left), _top(top),
-            _tileWidth(tileWidth), _tileHeight(tileHeight), _ver(ver), _imgSize(imgSize), _id(id), _oldWireId(0), _wireId(0)
-    {
-    }
-    size_t hash() const
-    {
-        size_t left = _left;
-        size_t top = _top;
-        size_t part = _part;
-        size_t width = _width;
-        size_t canonicalViewId = _canonicalViewId;
-        size_t viewMode = _viewMode;
-        return (left << 20) ^ top ^ (part << 15) ^ (width << 7) ^
-               (canonicalViewId << 24) ^ (viewMode << 28);
-    }
-    bool operator==(const TileLocation& other) const
-    {
-        return _left == other._left && _top == other._top &&
-               _width == other._width && _part == other._part &&
-               _canonicalViewId == other._canonicalViewId &&
-               _viewMode == other._viewMode;
-    }
-};
 
 /// A quick and dirty, thread-safe delta generator for last tile changes
 class DeltaGenerator {
@@ -372,7 +330,7 @@ class DeltaGenerator {
         DeltaData& operator=(const DeltaData&) = delete;
 
         DeltaData(TileWireId wid, unsigned char* pixmap, size_t startX, size_t startY, int width,
-                  int height, const TileLocation& loc, int bufferWidth,
+                  int height, const TileDesc& loc, int bufferWidth,
                   [[maybe_unused]] int bufferHeight)
             : _loc(loc)
             , _inUse(false)
@@ -475,7 +433,7 @@ class DeltaGenerator {
             assert(wasInUse && "Error: delta was already un-used by another thread");
         }
 
-        TileLocation _loc;
+        TileDesc _loc;
     private:
         std::atomic<bool> _inUse; // thread debugging check.
         TileWireId _wid;
@@ -487,7 +445,7 @@ class DeltaGenerator {
     struct DeltaHasher {
         std::size_t operator()(const std::shared_ptr<DeltaData> &t) const
         {
-            return t->_loc.hash();
+            return t->_loc.equalityHash();
         }
     };
 
@@ -691,7 +649,7 @@ class DeltaGenerator {
         for (const auto& it : _deltaEntries)
         {
             size_t size = it->sizeBytes();
-            oss << "\t\t" << it->_loc._width << "," << it->_loc._part << "," << it->_loc._left << "," << it->_loc._top << " wid: " << it->getWid() << " size: " << size << "\n";
+            oss << "\t\t" << it->_loc.getWidth() << "," << it->_loc.getPart() << "," << it->_loc.getTilePosX() << "," << it->_loc.getTilePosY() << " wid: " << it->getWid() << " size: " << size << "\n";
             totalSize += size;
         }
         oss << "\tdelta generator consumes " << totalSize << " bytes\n";
@@ -707,7 +665,7 @@ class DeltaGenerator {
         unsigned char* pixmap, size_t startX, size_t startY,
         int width, int height,
         int bufferWidth, int bufferHeight,
-        const TileLocation &loc,
+        const TileDesc &loc,
         std::vector<char>& output,
         TileWireId wid, bool forceKeyframe,
         LibreOfficeKitTileMode mode,
@@ -775,7 +733,7 @@ class DeltaGenerator {
         unsigned char* pixmap, size_t startX, size_t startY,
         int width, int height,
         int bufferWidth, int bufferHeight,
-        const TileLocation &loc,
+        const TileDesc &loc,
         std::vector<char>& output,
         TileWireId wid, bool forceKeyframe,
         bool dumpTiles, LibreOfficeKitTileMode mode)
@@ -794,7 +752,7 @@ class DeltaGenerator {
 
             // filename format: tile-<viewid>-<part>-<left>-<top>-<index>.png
             std::ostringstream oss;
-            oss << "tile-" << loc._canonicalViewId << "-" << loc._part << "-" << loc._left << "-" << loc._top << "-";
+            oss << "tile-" << loc.getNormalizedViewId() << "-" << loc.getPart() << "-" << loc.getTilePosX() << "-" << loc.getTilePosY() << "-";
             std::string baseFilename = oss.str();
 
             // find the next available filename
@@ -894,7 +852,7 @@ class DeltaGenerator {
                 std::string path = FileUtil::getSysTempDirectoryPath() + "/tiledump";
                 std::ostringstream oss;
                 // filename format: tile-delta-<viewid>-<part>-<left>-<top>-<prev_index>_to_<index>.zstd
-                oss << "tile-delta-" << loc._canonicalViewId << "-" << loc._part << "-" << loc._left << "-" << loc._top
+                oss << "tile-delta-" << loc.getNormalizedViewId() << "-" << loc.getPart() << "-" << loc.getTilePosX() << "-" << loc.getTilePosY()
                     << "-" << dumpedIndex - 1 << "_to_" << dumpedIndex << ".zstd";
                 path += oss.str();
                 std::ofstream tileFile(path, std::ios::binary);
