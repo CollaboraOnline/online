@@ -86,7 +86,11 @@ class PresenterConsole {
 		this._proxyPresenter = window.open(
 			'',
 			'_blank',
-			'popup,width=800,height=500,left=' + left + ',top=' + top,
+			'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,' +
+				'resizable=1,popup=true,width=800,height=500,left=' +
+				left +
+				',top=' +
+				top,
 		);
 		if (!this._proxyPresenter) {
 			this._presenter._notifyBlockedPresenting();
