@@ -2763,12 +2763,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #endif
-    {
-        LOG_DBG("net::Defaults: WSPing[timeout "
-                << net::Defaults.wsPingAvgTimeout << ", interval " << net::Defaults.wsPingInterval
-                << "], Socket[inactivity " << net::Defaults.inactivityTimeout
-                << ", maxConnections " << net::Defaults.maxConnections << "]");
-    }
+    LOG_DBG("net::Defaults: " << net::Defaults);
 
 #if !MOBILEAPP
     NoSeccomp = Util::isKitInProcess() || !getConfigValue<bool>(conf, "security.seccomp", true);

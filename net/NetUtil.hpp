@@ -13,6 +13,7 @@
 
 #include <chrono>
 #include <functional>
+#include <iomanip>
 #include <string>
 #include <memory>
 #include <vector>
@@ -41,6 +42,28 @@ public:
 
     /// Maximum total connections (9999 or MAX_CONNECTIONS). Zero disables instrument.
     size_t maxConnections;
+
+    /// Returns true if wsPingAvgTimeout>0 && wsPingInterval>0
+    bool isWSPingTOEnabled() const
+    {
+        return wsPingAvgTimeout.count() > std::numeric_limits<double>::epsilon() &&
+               wsPingInterval > std::chrono::microseconds::zero();
+    }
+
+    std::ostream& stream(std::ostream& os) const
+    {
+        os << "WSPing[enabled " << isWSPingTOEnabled()
+           << std::setw(5)
+           << ", avgTimeout " << wsPingAvgTimeout.count() / 1000.0
+           << std::setw(5)
+           << "ms, interval " << wsPingInterval.count() / 1000.0
+           << "ms], Socket[MaxConnections " << maxConnections
+           << "], Inactivity[timeout "
+           << std::setw(5)
+           << inactivityTimeout.count() / 1000.0 << "ms]";
+        return os;
+    }
+
 };
 extern DefaultValues Defaults;
 
@@ -140,3 +163,6 @@ inline std::string parseUrl(const std::string& uri)
 }
 
 } // namespace net
+
+inline std::ostream& operator<<(std::ostream& os, const net::DefaultValues &v) { return v.stream(os); }
+

@@ -415,9 +415,8 @@ private:
                     const auto now = std::chrono::steady_clock::now();
                     const int64_t us = std::chrono::duration_cast<std::chrono::microseconds>
                                           (now - _lastPingSentTime).count();
-                    const double avg_us = _pingMicroS.add(_lastPingSentTime, static_cast<double>(us));
-                    LOGA_TRC(WebSocket, "Pong received: " << us << "us, avg " << avg_us << "us over "
-                                         << (int)_pingMicroS.duration() << "s");
+                    _pingMicroS.add(_lastPingSentTime, static_cast<double>(us));
+                    LOGA_TRC(WebSocket, "Ping: Pong received: " << toLogString(socket));
                     gotPing(code, static_cast<int>(us));
                 }
                 break;
@@ -429,9 +428,9 @@ private:
                     const auto now = std::chrono::steady_clock::now();
                     const int64_t us = std::chrono::duration_cast<std::chrono::microseconds>
                                           (now - _lastPingSentTime).count();
-                    const double avg_us = _pingMicroS.add(_lastPingSentTime, static_cast<double>(us));
+                    _pingMicroS.add(_lastPingSentTime, static_cast<double>(us));
                     sendPong(now, &ctrlPayload[0], payloadLen, socket);
-                    LOGA_TRC(WebSocket, "Ping received: " << us << " us -> avg " << avg_us << " us");
+                    LOGA_TRC(WebSocket, "Ping: Ping received: " << toLogString(socket));
                     gotPing(code, static_cast<int>(us));
                 }
                 break;
@@ -633,10 +632,19 @@ private:
             setPingPongTime(now); // Pretend we sent it to avoid timing out immediately.
             return;
         }
-        LOGA_TRC(WebSocket, "Ping: Sending " << (code == WSOpCode::Ping ? "ping" : "pong") );
+        LOGA_TRC(WebSocket, "Ping: Sending " << (code == WSOpCode::Ping ? "ping" : "pong") << ", " << toLogString(nullptr) );
         _lastPingSentTime = now;
         // FIXME: allow an empty payload.
         sendMessage(data, len, code, false);
+    }
+
+    std::string toLogString(const std::shared_ptr<StreamSocket>& socket) const
+    {
+        std::ostringstream oss;
+        dumpState(oss, "");
+        if( socket )
+            oss << ", " << *socket;
+        return oss.str();
     }
 
 public:
@@ -667,15 +675,13 @@ public:
         if (_isClient)
             return false;
 
-        if (net::Defaults.wsPingAvgTimeout > std::chrono::microseconds::zero() &&
+        if (net::Defaults.isWSPingTOEnabled() &&
             _pingMicroS.average() >= net::Defaults.wsPingAvgTimeout.count())
         {
             std::shared_ptr<StreamSocket> socket = _socket.lock();
             if (socket && socket->isIPType()) // Exclude non-IP local sockets
             {
-                LOG_WRN("CheckTimeout: Timeout websocket: Ping: last " << _pingMicroS.last() << "us, avg "
-                        << _pingMicroS.average() << "us >= " << net::Defaults.wsPingAvgTimeout.count() << "us over "
-                        << (int)_pingMicroS.duration() << "s, " << *socket);
+                LOG_WRN("CheckTimeout: Ping: Timeout websocket: " << toLogString(socket));
                 shutdownSilent(socket);
                 return true;
             }
