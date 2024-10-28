@@ -1210,7 +1210,8 @@ class TreeViewFactory {
 	fillEntries(data, entries, builder, level, parent) {
 		for (let index in entries) {
 			let entry = this._implementation.fillRow(data, entries[index], builder, level, parent);
-			this.fillEntries(data, entries[index].children, builder, level + 1, entry);
+			if (entries[index].children && entries[index].children.length)
+				this.fillEntries(data, entries[index].children, builder, level + 1, entry);
 		}
 	}
 
