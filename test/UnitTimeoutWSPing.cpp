@@ -32,17 +32,10 @@ class UnitTimeoutWSPing : public UnitTimeoutBase0
 {
     TestResult testWSPing();
 
-    void configNet(net::Defaults& defaults) override
+    void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
-        // defaults.InactivityTimeout = std::chrono::seconds(3600);
-        // defaults.WSPingTimeout = std::chrono::seconds(2);
-        defaults.WSPingTimeout = std::chrono::microseconds(20);
-        // defaults.WSPingPeriod = std::chrono::seconds(3);
-        defaults.WSPingPeriod = std::chrono::milliseconds(10);
-        // defaults.HTTPTimeout = std::chrono::seconds(30);
-        // defaults.MaxConnections = 9999;
-        // defaults.MaxConnections = ConnectionLimit;
-        // defaults.SocketPollTimeout = std::chrono::seconds(64);
+        net::Defaults.wsPingAvgTimeout = std::chrono::microseconds(20);
+        net::Defaults.wsPingInterval = std::chrono::milliseconds(10);
     }
 
 public:

@@ -13,7 +13,6 @@
 
 #include "NetUtil.hpp"
 #include "Socket.hpp"
-#include "common/Common.hpp"
 #include "common/Log.hpp"
 #include "common/Protocol.hpp"
 #include "common/Unit.hpp"
@@ -35,8 +34,6 @@ private:
     std::weak_ptr<StreamSocket> _socket;
 
 #if !MOBILEAPP
-    std::chrono::microseconds _pingPeriod;
-    std::chrono::duration<double, std::micro> _pingTimeout;
     std::chrono::steady_clock::time_point _lastPingSentTime;
     Util::TimeAverage _pingMicroS;
     bool _isMasking;
@@ -74,10 +71,8 @@ public:
     WebSocketHandler(bool isClient, [[maybe_unused]] bool isMasking)
         :
 #if !MOBILEAPP
-        _pingPeriod(net::Defaults::get().WSPingPeriod),
-        _pingTimeout(net::Defaults::get().WSPingTimeout),
         _lastPingSentTime(std::chrono::steady_clock::now() -
-                          _pingPeriod +
+                          net::Defaults.wsPingInterval +
                           std::chrono::microseconds(InitialPingDelayMicroS))
         , _isMasking(isClient && isMasking)
         , _inFragmentBlock(false)
@@ -605,7 +600,7 @@ protected:
             const auto timeSincePingMicroS
                 = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime);
             timeoutMaxMicroS
-                = std::min(timeoutMaxMicroS, (int64_t)(_pingPeriod - timeSincePingMicroS).count());
+                = std::min(timeoutMaxMicroS, (int64_t)(net::Defaults.wsPingInterval - timeSincePingMicroS).count());
         }
 #endif
         int events = POLLIN;
@@ -672,21 +667,21 @@ public:
         if (_isClient)
             return false;
 
-        if (_pingTimeout.count() > std::numeric_limits<double>::epsilon() &&
-            _pingMicroS.average() >= _pingTimeout.count())
+        if (net::Defaults.wsPingAvgTimeout > std::chrono::microseconds::zero() &&
+            _pingMicroS.average() >= net::Defaults.wsPingAvgTimeout.count())
         {
             std::shared_ptr<StreamSocket> socket = _socket.lock();
             if (socket && socket->isIPType()) // Exclude non-IP local sockets
             {
                 LOG_WRN("CheckTimeout: Timeout websocket: Ping: last " << _pingMicroS.last() << "us, avg "
-                        << _pingMicroS.average() << "us >= " << _pingTimeout.count() << "us over "
+                        << _pingMicroS.average() << "us >= " << net::Defaults.wsPingAvgTimeout.count() << "us over "
                         << (int)_pingMicroS.duration() << "s, " << *socket);
                 shutdownSilent(socket);
                 return true;
             }
         }
-        if (!_pingMicroS.initialized() || (_pingPeriod > std::chrono::microseconds::zero() &&
-                                           now - _pingMicroS.lastTime() >= _pingPeriod))
+        if (!_pingMicroS.initialized() || (net::Defaults.wsPingInterval > std::chrono::microseconds::zero() &&
+                                           now - _pingMicroS.lastTime() >= net::Defaults.wsPingInterval))
         {
             const std::shared_ptr<StreamSocket> socket = _socket.lock();
             if (socket)

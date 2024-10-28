@@ -710,6 +710,8 @@ public:
 
     static std::unique_ptr<Watchdog> PollWatchdog;
 
+    /// Default poll time - useful to increase for debugging.
+    static constexpr std::chrono::microseconds DefaultPollTimeoutMicroS = std::chrono::seconds(64);
     static std::atomic<bool> InhibitThreadChecks;
 
     /// Stop the polling thread.
@@ -943,7 +945,7 @@ private:
     {
         while (continuePolling())
         {
-            poll(_pollTimeout);
+            poll(DefaultPollTimeoutMicroS);
         }
     }
 
@@ -995,7 +997,6 @@ private:
 
     /// Debug name used for logging.
     const std::string _name;
-    const std::chrono::microseconds _pollTimeout;
     bool _limitedConnections;
     size_t _connectionLimit;
 
@@ -1063,8 +1064,6 @@ public:
                  HostType hostType, ReadType readType = ReadType::NormalRead,
                  std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now() ) :
         Socket(fd, type, creationTime),
-        _inactivityTimeout( net::Defaults::get().InactivityTimeout ),
-        _httpTimeout( net::Defaults::get().HTTPTimeout ),
         _hostname(std::move(host)),
         _wsState(WSState::HTTP),
         _isLocalHost(hostType == LocalHost),
@@ -1747,11 +1746,6 @@ protected:
 #endif
 
 private:
-    /// default to 3600s, see net::Defaults::InactivityTimeout
-    const std::chrono::microseconds _inactivityTimeout;
-    /// defaults to 30s, see net::Defaults::HTTPTimeout
-    const std::chrono::microseconds _httpTimeout;
-
     /// The hostname (or IP) of the peer we are connecting to.
     const std::string _hostname;
 

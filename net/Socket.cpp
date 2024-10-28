@@ -51,8 +51,8 @@
 #include <openssl/x509v3.h>
 #endif
 #include "WebSocketHandler.hpp"
-#include <net/HttpRequest.hpp>
-#include <NetUtil.hpp>
+#include "net/HttpRequest.hpp"
+#include "net/NetUtil.hpp"
 #include <Log.hpp>
 #include <Watchdog.hpp>
 #include <wasm/base64.hpp>
@@ -64,6 +64,11 @@ std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
 std::mutex SocketPoll::StatsMutex;
 std::atomic<size_t> SocketPoll::StatsConnectionCount(0);
+
+net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3600),
+                                     .wsPingAvgTimeout = std::chrono::seconds(2),
+                                     .wsPingInterval = std::chrono::seconds(3),
+                                     .maxConnections = 9999 };
 
 size_t SocketPoll::StatsConnectionMod(size_t added, size_t removed) {
     if( added == 0 && removed == 0 ) {
@@ -312,7 +317,6 @@ namespace {
 
 SocketPoll::SocketPoll(std::string threadName)
     : _name(std::move(threadName)),
-      _pollTimeout( net::Defaults::get().SocketPollTimeout ),
       _limitedConnections( false ),
       _connectionLimit( 0 ),
       _pollStartIndex(0),
@@ -1088,7 +1092,7 @@ void WebSocketHandler::dumpState(std::ostream& os, const std::string& /*indent*/
 
 void StreamSocket::dumpState(std::ostream& os)
 {
-    int64_t timeoutMaxMicroS = net::Defaults::get().SocketPollTimeout.count();
+    int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS.count();
     const int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
     os << '\t' << std::setw(6) << getFD() << "\t0x" << std::hex << events << std::dec << '\t'
        << (ignoringInput() ? "ignore\t" : "process\t") << std::setw(6) << _inBuffer.size() << '\t'
@@ -1486,9 +1490,9 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
     // Forced removal on outside-facing IPv[46] network connections only
     const auto durLast =
         std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
-    /// Timeout criteria: Violate maximum inactivity (_inactivityTimeout default 3600s)
-    const bool isInactive = _inactivityTimeout > std::chrono::microseconds::zero() &&
-        durLast > _inactivityTimeout;
+    /// Timeout criteria: Violate maximum inactivity (default 3600s)
+    const bool isInactive = net::Defaults.inactivityTimeout > std::chrono::microseconds::zero() &&
+        durLast > net::Defaults.inactivityTimeout;
     /// Timeout criteria: Shall terminate?
     const bool isTermination = SigUtil::getTerminationFlag();
     if (isInactive || isTermination )
@@ -1529,7 +1533,7 @@ bool StreamSocket::parseHeader(const char *clientName,
     assert(map._headerSize == 0 && map._messageSize == 0);
 
     const std::chrono::duration<float, std::milli> delayMax =
-        std::chrono::duration_cast<std::chrono::milliseconds>(_httpTimeout);
+        std::chrono::duration_cast<std::chrono::milliseconds>(SocketPoll::DefaultPollTimeoutMicroS);
 
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
     std::chrono::duration<float, std::milli> delayMs = now - lastHTTPHeader;

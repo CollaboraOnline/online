@@ -24,7 +24,6 @@
 #include <UserMessages.hpp>
 #include <Util.hpp>
 #include <helpers.hpp>
-#include <thread>
 
 #include "UnitTimeoutBase.hpp"
 
@@ -34,21 +33,13 @@ class UnitTimeoutInactivity : public UnitTimeoutBase0
     TestResult testHttp(bool forceInactivityTO);
     TestResult testWS(bool forceInactivityTO);
 
-    void configNet(net::Defaults& defaults) override
+    void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
-        // defaults.InactivityTimeout = std::chrono::seconds(3600);
-        defaults.InactivityTimeout = std::chrono::milliseconds(100);
-        // defaults.WSPingTimeout = std::chrono::seconds(2);
-        // defaults.WSPingPeriod = std::chrono::seconds(3);
+        net::Defaults.inactivityTimeout = std::chrono::milliseconds(100);
         //
         // The following WSPing setup would cause ping/pong packages avoiding the inactivity TO
-        //   defaults.WSPingTimeout = std::chrono::milliseconds(25);
-        //   defaults.WSPingPeriod = std::chrono::milliseconds(30);
-        //
-        // defaults.HTTPTimeout = std::chrono::seconds(30);
-        // defaults.MaxConnections = 9999;
-        // defaults.MaxConnections = ConnectionLimit;
-        // defaults.SocketPollTimeout = std::chrono::seconds(64);
+        //   net::Defaults.wsPingTimeout = std::chrono::milliseconds(25);
+        //   net::Defaults.wsPingPeriod = std::chrono::milliseconds(30);
     }
 
 public:
@@ -104,7 +95,7 @@ inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivity
         }
         if( session->isConnected() ) {
             if (forceInactivityTO) {
-                std::this_thread::sleep_for( net::Defaults::get().InactivityTimeout * 2 );
+                std::this_thread::sleep_for( net::Defaults.inactivityTimeout * 2 );
             }
             TST_LOG("Test Req2: " << testname << ": `" << documentURL << "`");
             http::Request request(documentURL, http::Request::VERB_GET);
@@ -182,7 +173,7 @@ UnitBase::TestResult UnitTimeoutInactivity::testWS(bool forceInactivityTO)
         LOK_ASSERT_EQUAL(true, session->isConnected());
 
         if (forceInactivityTO) {
-            std::this_thread::sleep_for( net::Defaults::get().InactivityTimeout * 2 );
+            std::this_thread::sleep_for( net::Defaults.inactivityTimeout * 2 );
         }
         TST_LOG("Test: XX2 " << testname << ": connected " << session->isConnected());
         session->sendMessage("ping");

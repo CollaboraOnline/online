@@ -29,45 +29,20 @@ struct sockaddr;
 namespace net
 {
 
-class Defaults
+class DefaultValues
 {
 public:
     /// StreamSocket inactivity timeout in us (3600s default). Zero disables instrument.
-    std::chrono::microseconds InactivityTimeout;
-    /// WebSocketHandler ping timeout in us (2s default). Zero disables instrument.
-    std::chrono::microseconds WSPingTimeout;
-    /// WebSocketHandler ping period in us (3s default), i.e. duration until next ping. Zero disables instrument.
-    std::chrono::microseconds WSPingPeriod;
-    /// http::Session timeout in us (30s default). Zero disables instrument.
-    std::chrono::microseconds HTTPTimeout;
+    std::chrono::microseconds inactivityTimeout;
+    /// WebSocketHandler average ping timeout in us (2s default). Zero disables instrument.
+    std::chrono::microseconds wsPingAvgTimeout;
+    /// WebSocketHandler ping interval in us (3s default), i.e. duration until next ping. Zero disables instrument.
+    std::chrono::microseconds wsPingInterval;
 
     /// Maximum total connections (9999 or MAX_CONNECTIONS). Zero disables instrument.
-    size_t MaxConnections;
-
-    /// Socket poll timeout in us (64s), useful to increase for debugging.
-    std::chrono::microseconds SocketPollTimeout;
-
-private:
-    Defaults()
-        : InactivityTimeout(std::chrono::seconds(3600))
-        , WSPingTimeout(std::chrono::seconds(2))
-        , WSPingPeriod(std::chrono::seconds(3))
-        , HTTPTimeout(std::chrono::seconds(30))
-        , MaxConnections(9999)
-        , SocketPollTimeout(std::chrono::seconds(64))
-    {
-    }
-
-public:
-    Defaults(const Defaults&) = delete;
-    Defaults(Defaults&&) = delete;
-
-    static Defaults& get()
-    {
-        static Defaults def;
-        return def;
-    }
+    size_t maxConnections;
 };
+extern DefaultValues Defaults;
 
 class HostEntry
 {

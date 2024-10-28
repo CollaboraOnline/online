@@ -1203,7 +1203,7 @@ public:
     /// Returns the default timeout.
     static std::chrono::milliseconds getDefaultTimeout()
     {
-        return std::chrono::duration_cast<std::chrono::milliseconds>( net::Defaults::get().HTTPTimeout );
+        return std::chrono::seconds(30);
     }
 
     /// Returns the current protocol scheme.

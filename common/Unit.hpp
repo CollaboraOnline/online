@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <atomic>
 #include <cassert>
 #include <chrono>
 #include <map>
@@ -17,7 +16,6 @@
 
 #include <common/StateEnum.hpp>
 #include "Util.hpp"
-#include "NetUtil.hpp"
 #include "net/Socket.hpp"
 #include <Poco/Exception.h>
 
@@ -420,9 +418,6 @@ public:
 
     /// Manipulate and modify the configuration before any usage.
     virtual void configure(Poco::Util::LayeredConfiguration& /* config */) {}
-
-    /// Manipulate and modify the net::Defaults for before any usage.
-    virtual void configNet(net::Defaults& /* defaults */) {}
 
     /// Main-loop reached, time for testing.
     /// Invoked from coolwsd's main thread.
