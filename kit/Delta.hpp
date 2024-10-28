@@ -47,10 +47,13 @@ struct TileLocation {
     int _tileHeight;
     int _ver;
     int _imgSize;
+    int _id;
+    int _oldWireId;
+    int _wireId;
     TileLocation(int canonicalViewId, int part, int viewMode, int width, int height, int left, int top,
-        int tileWidth, int tileHeight, int ver, int imgSize)
+        int tileWidth, int tileHeight, int ver, int imgSize, int id)
         : _canonicalViewId(canonicalViewId), _part(part), _viewMode(viewMode), _width(width), _height(height), _left(left), _top(top),
-            _tileWidth(tileWidth), _tileHeight(tileHeight), _ver(ver), _imgSize(imgSize)
+            _tileWidth(tileWidth), _tileHeight(tileHeight), _ver(ver), _imgSize(imgSize), _id(id), _oldWireId(0), _wireId(0)
     {
     }
     size_t hash() const
