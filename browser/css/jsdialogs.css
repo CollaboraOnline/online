@@ -1825,21 +1825,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .fadeout {
 	animation: fade 0.7s;
-	-webkit-animation: fade 0.7s;
-	-moz-animation: fade 0.7s;
 }
 
 @keyframes fade {
-	from { opacity: 1 }
-	to { opacity: 0 }
-}
-
-@-moz-keyframes fade {
-	from { opacity: 1 }
-	to { opacity: 0 }
-}
-
-@-webkit-keyframes fade {
 	from { opacity: 1 }
 	to { opacity: 0 }
 }
