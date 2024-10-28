@@ -145,6 +145,9 @@ public:
     /// Returns 0 on success.
     static int uninit();
 
+    static void setCppunitTesting(bool cppunitTesting);
+    static bool isCppunitTesting();
+
     /// Do we have a unit test library hooking things & loaded
     static bool isUnitTesting()
     {

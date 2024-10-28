@@ -421,6 +421,7 @@ bundle_msg="using uglified bundled JS and CSS"
 LOK_LOG_ASSERTIONS=0
 log_asserts_msg="disabled"
 SSL_VERIFY="true"
+SERVER_SIGNATURE="false"
 
 # a reasonable default
 NUM_PRESPAWN_CHILDREN=4
@@ -440,6 +441,7 @@ if test "$enable_debug" = "yes"; then
    BROWSER_LOGGING="true"
    debug_msg="low security debugging mode"
    SSL_VERIFY="false"
+   SERVER_SIGNATURE="true"
 
    # helps attaching to the right process
    NUM_PRESPAWN_CHILDREN=1
@@ -526,6 +528,8 @@ AC_MSG_CHECKING([if ssl verification is enabled by default])
 AC_MSG_RESULT([$SSL_VERIFY])
 AC_DEFINE_UNQUOTED([SSL_VERIFY],["$SSL_VERIFY"],[Default SSL Verification mode])
 AC_SUBST(SSL_VERIFY)
+
+AC_SUBST(SERVER_SIGNATURE)
 
 dnl check for a file at a path with an env-var with a given suffix
 AC_DEFUN([CHK_FILE_VAR], dnl env-var, suffix, file-to-match, msg
