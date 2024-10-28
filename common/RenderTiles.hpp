@@ -192,11 +192,11 @@ namespace RenderTiles
                                                      pixelWidth, pixelHeight,
                                                      pixmapWidth, pixmapHeight,
                                                      TileLocation(
+                                                         canonicalViewId,
                                                          tileRect.getLeft(),
                                                          tileRect.getTop(),
                                                          tileRect.getWidth(),
                                                          tileCombined.getPart(),
-                                                         canonicalViewId,
                                                          tileCombined.getEditMode()
                                                          ),
                                                      data, wireId, forceKeyframe, dumpTiles, mode);

@@ -36,16 +36,14 @@
 /// Unique location of a tile
 struct TileLocation {
     // in TWIPS
+    int _canonicalViewId;
     int _left;
     int _top;
     int _size;
     int _part;
-    int _canonicalViewId;
     int _viewMode;
-    TileLocation(int left, int top, int size, int part,
-                 int canonicalViewId, int viewMode)
-        : _left(left), _top(top), _size(size), _part(part),
-          _canonicalViewId(canonicalViewId), _viewMode(viewMode)
+    TileLocation(int canonicalViewId, int left, int top, int size, int part, int viewMode)
+        : _canonicalViewId(canonicalViewId), _left(left), _top(top), _size(size), _part(part), _viewMode(viewMode)
     {
     }
     size_t hash() const
