@@ -1201,13 +1201,27 @@ class ComplexTableControl extends TreeViewControl {
 	}
 }
 
-class FactoryTreeView {
+class TreeViewFactory {
 	constructor(data, builder) {
-		this._simpleContainer = new SimpleTableControl(data, builder);
-		this._complexContainer = new ComplexTableControl(data, builder);
-
-		if (!data.headers || data.headers.length === 0)
+		if (this.isRealTree(data) || this.isHeaderListBox(data)) {
+			this._complexContainer = new ComplexTableControl(data, builder);
+		} else {
 			this._ulContainer = new UnorderedListControl(data, builder);
+			this._simpleContainer = new SimpleTableControl(data, builder);
+		}
+	}
+
+	isHeaderListBox(data) { return data.headers && data.headers.length !== 0; }
+
+	isRealTree(data) {
+		let isRealTreeView = false;
+		for (var i in data.entries) {
+			if (data.entries[i].children && data.entries[i].children.length) {
+				isRealTreeView = true;
+				break;
+			}
+		}
+		return isRealTreeView;
 	}
 
 	fillHeaders(headers, builder) {
@@ -1297,7 +1311,7 @@ JSDialog.treeView = function (parentContainer, data, builder) {
 		treeType = 'navigator';
 	// TODO: remove this hack
 
-	var factory = new FactoryTreeView(data, builder);
+	var factory = new TreeViewFactory(data, builder);
 	if (!factory.build(data, builder, parentContainer)) {
 		console.debug('treeview: legacy');
 		return _treelistboxControl(parentContainer, data, builder);
