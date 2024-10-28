@@ -20,7 +20,7 @@ describe.skip('Repair Document', function() {
 		cy.cGet('#menu-editmenu').click().cGet('#menu-repair').click();
 		cy.cGet('#DocumentRepairDialog').should('exist');
 		cy.cGet('#versions').should('exist');
-		cy.cGet('body').contains('#versions .ui-treeview-body .ui-listview-entry td','Input').click();
+		cy.cGet('body').contains('#versions tbody .ui-listview-entry td','Input').click();
 		cy.cGet('#ok.ui-pushbutton.jsdialog').should('exist');
 		cy.cGet('#ok.ui-pushbutton.jsdialog').click();
 		cy.wait(500);
