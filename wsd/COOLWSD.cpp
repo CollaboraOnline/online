@@ -2759,9 +2759,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     }
 #endif
     {
-        LOG_DBG("net::Defaults: WSPing[timeout "
-                << net::Defaults.wsPingAvgTimeout << ", interval " << net::Defaults.wsPingInterval
-                << "], Socket[inactivityTimeout " << net::Defaults.inactivityTimeout
+        LOG_DBG("net::Defaults: Socket[inactivityTimeout " << net::Defaults.inactivityTimeout
                 << ", maxExtConnections " << net::Defaults.maxExtConnections << "]");
     }
 
