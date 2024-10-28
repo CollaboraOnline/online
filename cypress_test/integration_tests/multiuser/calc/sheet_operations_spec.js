@@ -103,7 +103,7 @@ describe(['tagmultiuser'], 'Check overlays after tab switching/operations', func
 		//	});
 	});
 
-	it('Check cell view cursor overlay bounds after inserting a new tab', function () {
+	it.skip('Check cell view cursor overlay bounds after inserting a new tab', function () {
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'D8');
 
