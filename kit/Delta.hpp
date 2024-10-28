@@ -58,16 +58,16 @@ struct TileLocation {
         size_t left = _left;
         size_t top = _top;
         size_t part = _part;
-        size_t size = _size;
+        size_t width = _width;
         size_t canonicalViewId = _canonicalViewId;
         size_t viewMode = _viewMode;
-        return (left << 20) ^ top ^ (part << 15) ^ (size << 7) ^
+        return (left << 20) ^ top ^ (part << 15) ^ (width << 7) ^
                (canonicalViewId << 24) ^ (viewMode << 28);
     }
     bool operator==(const TileLocation& other) const
     {
         return _left == other._left && _top == other._top &&
-               _size == other._size && _part == other._part &&
+               _width == other._width && _part == other._part &&
                _canonicalViewId == other._canonicalViewId &&
                _viewMode == other._viewMode;
     }
@@ -688,7 +688,7 @@ class DeltaGenerator {
         for (const auto& it : _deltaEntries)
         {
             size_t size = it->sizeBytes();
-            oss << "\t\t" << it->_loc._size << "," << it->_loc._part << "," << it->_loc._left << "," << it->_loc._top << " wid: " << it->getWid() << " size: " << size << "\n";
+            oss << "\t\t" << it->_loc._width << "," << it->_loc._part << "," << it->_loc._left << "," << it->_loc._top << " wid: " << it->getWid() << " size: " << size << "\n";
             totalSize += size;
         }
         oss << "\tdelta generator consumes " << totalSize << " bytes\n";
