@@ -928,28 +928,6 @@ class TreeViewControl {
 	}
 }
 
-// ul -> li container, no headers, no columns or columns == 1
-class UnorderedListControl extends TreeViewControl {
-	constructor(data, builder) {
-		super(data, builder);
-
-		this._container = L.DomUtil.create('ul', builder.options.cssClass + ' ui-treeview');
-		this._container.id = data.id;
-	}
-
-	fillRow(entry, builder, parent) {
-		let li = L.DomUtil.create('li', builder.options.cssClass, parent);
-		let span0 = L.DomUtil.create('span', builder.options.cssClass +
-					     ' ui-treeview-entry ui-treeview-notexpandable', li);
-		let span1 = L.DomUtil.create('span', builder.options.cssClass +
-					     ' ui-treeview-cell', span0);
-		let text = L.DomUtil.create('span', builder.options.cssClass +
-					    ' ui-treeview-cell-text', span1);
-		text.innerText = entry.text;
-		return li;
-	}
-}
-
 // table -> tr -> td, simple list (no children), with or no headers, columns > 1
 class SimpleTableControl extends TreeViewControl {
 	constructor(data, builder) {
@@ -1203,12 +1181,10 @@ class ComplexTableControl extends TreeViewControl {
 
 class TreeViewFactory {
 	constructor(data, builder) {
-		if (this.isRealTree(data) || this.isHeaderListBox(data)) {
+		if (this.isRealTree(data) || this.isHeaderListBox(data))
 			this._complexContainer = new ComplexTableControl(data, builder);
-		} else {
-			this._ulContainer = new UnorderedListControl(data, builder);
+		else
 			this._simpleContainer = new SimpleTableControl(data, builder);
-		}
 	}
 
 	isHeaderListBox(data) { return data.headers && data.headers.length !== 0; }
@@ -1234,28 +1210,10 @@ class TreeViewFactory {
 		}
 	}
 
-	fillEntries(data, entries, builder, level, ulParent, simpleParent, complexParent) {
-		let ulChild, simpleChild, complexChild;
+	fillEntries(data, entries, builder, level, simpleParent, complexParent) {
+		let simpleChild, complexChild;
 
 		for (let index in entries) {
-			if (this._ulContainer && entries[index].columns &&
-			    entries[index].columns.length > 1)
-				delete this._ulContainer;
-
-			if (!entries[index].columns || entries[index].columns.length === 1) {
-				if (this._simpleContainer)
-					delete this._simpleContainer;
-				if (this._complexContainer)
-					delete this._complexContainer;
-			}
-
-			if (this._simpleContainer && level > 1)
-				delete this._simpleContainer;
-
-			if (this._ulContainer && ulParent) {
-				ulChild = this._ulContainer.fillRow(entries[index], builder, ulParent);
-			}
-
 			if (this._simpleContainer && simpleParent) {
 				simpleChild = this._simpleContainer.fillRow(data, entries[index], builder, level, simpleParent);
 			}
@@ -1270,23 +1228,16 @@ class TreeViewFactory {
 										      level, complexParent);
 			}
 
-			this.fillEntries(data, entries[index].children, builder, level + 1, ulChild, simpleChild, complexChild);
+			this.fillEntries(data, entries[index].children, builder, level + 1, simpleChild, complexChild);
 		}
 	}
 
 	build(data, builder, parentContainer) {
-		let ulContainer = this._ulContainer ? this._ulContainer.Container : null;
 		let simpleContainer = this._simpleContainer ? this._simpleContainer.Container._tbody : null;
 		let complexContainer = this._complexContainer ? this._complexContainer.Container._tbody : null;
 
-		this.fillEntries(data, data.entries, builder, 1, ulContainer, simpleContainer, complexContainer);
+		this.fillEntries(data, data.entries, builder, 1, simpleContainer, complexContainer);
 		this.fillHeaders(data.headers, builder);
-
-		if (this._ulContainer && this._ulContainer.Container.hasChildNodes()) {
-			console.debug('treeview: ulContainer');
-			parentContainer.appendChild(this._ulContainer.Container);
-			return true;
-		}
 
 		if (this._complexContainer && this._complexContainer.Container.hasChildNodes()) {
 			console.debug('treeview: complexContainer');
