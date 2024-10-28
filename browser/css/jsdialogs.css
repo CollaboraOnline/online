@@ -517,6 +517,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 ul.ui-treeview {
 	margin: 0;
 	padding: 0;
+	overflow-y: auto;
 }
 
 ul.ui-treeview > * {
