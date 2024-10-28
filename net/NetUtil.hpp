@@ -35,29 +35,13 @@ class DefaultValues
 public:
     /// StreamSocket inactivity timeout in us (3600s default). Zero disables instrument.
     std::chrono::microseconds inactivityTimeout;
-    /// WebSocketHandler average ping timeout in us (2s default). Zero disables instrument.
-    std::chrono::microseconds wsPingAvgTimeout;
-    /// WebSocketHandler ping interval in us (3s default), i.e. duration until next ping. Zero disables instrument.
-    std::chrono::microseconds wsPingInterval;
 
     /// Maximum total connections (9999 or MAX_CONNECTIONS). Zero disables instrument.
     size_t maxConnections;
 
-    /// Returns true if wsPingAvgTimeout>0 && wsPingInterval>0
-    bool isWSPingTOEnabled() const
-    {
-        return wsPingAvgTimeout.count() > std::numeric_limits<double>::epsilon() &&
-               wsPingInterval > std::chrono::microseconds::zero();
-    }
-
     std::ostream& stream(std::ostream& os) const
     {
-        os << "WSPing[enabled " << isWSPingTOEnabled()
-           << std::setw(5)
-           << ", avgTimeout " << wsPingAvgTimeout.count() / 1000.0
-           << std::setw(5)
-           << "ms, interval " << wsPingInterval.count() / 1000.0
-           << "ms], Socket[MaxConnections " << maxConnections
+        os << "Socket[MaxConnections " << maxConnections
            << "], Inactivity[timeout "
            << std::setw(5)
            << inactivityTimeout.count() / 1000.0 << "ms]";

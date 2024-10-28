@@ -66,8 +66,6 @@ std::mutex SocketPoll::StatsMutex;
 std::atomic<size_t> SocketPoll::StatsConnectionCount(0);
 
 net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3600),
-                                     .wsPingAvgTimeout = std::chrono::seconds(2),
-                                     .wsPingInterval = std::chrono::seconds(3),
                                      .maxConnections = 9999 };
 
 size_t SocketPoll::StatsConnectionMod(size_t added, size_t removed) {
@@ -1078,17 +1076,7 @@ void WebSocketHandler::dumpState(std::ostream& os, const std::string& /*indent*/
     os << (_shuttingDown ? "shutd " : "alive ") << ", "
        << (_isClient ? "client" : "server" );
 #if !MOBILEAPP
-    os << std::setw(5)
-       << ", Ping[latency[last " << _pingMicroS.last() / 1000.0
-       << std::setw(5)
-       << "ms, avg " << _pingMicroS.average() / 1000.0
-       << "ms over " << (int)_pingMicroS.duration()
-       << "s], timeout[enabled " << net::Defaults.isWSPingTOEnabled()
-       << std::setw(5)
-       << ", avgTimeout " << net::Defaults.wsPingAvgTimeout.count() / 1000.0
-       << std::setw(5)
-       << "ms, interval " << net::Defaults.wsPingInterval.count() / 1000.0
-       << "ms]]";
+    os << std::setw(5) << _pingTimeUs/1000. << "ms ";
 #endif
     if (_wsPayload.size() > 0)
         Util::dumpHex(os, _wsPayload, "\t\tws queued payload:\n", "\t\t");
