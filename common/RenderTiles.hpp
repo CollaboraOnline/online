@@ -201,6 +201,7 @@ namespace RenderTiles
                                                          tileRect.getTop(),
                                                          tiles[tileIndex].getTileWidth(),
                                                          tiles[tileIndex].getTileHeight(),
+                                                         tiles[tileIndex].getVersion(),
                                                          tileRect.getWidth()
                                                          ),
                                                      data, wireId, forceKeyframe, dumpTiles, mode);
