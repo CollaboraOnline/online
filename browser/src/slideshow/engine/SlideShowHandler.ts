@@ -361,6 +361,8 @@ class SlideShowHandler {
 				aAnimatedElement.notifySlideStart(this.aContext);
 			});
 		}
+
+		this.presenter._map.fire('transitionstart', { slide: nNewSlideIndex });
 	}
 
 	notifyTransitionEnd(nNewSlide: number, nOldSlide: number | undefined) {
