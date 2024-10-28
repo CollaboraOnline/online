@@ -15,7 +15,7 @@
  * This file is meant to be used for setting and getting the document states.
  */
 
-/* global app */
+/* global app _ */
 
 window.addEventListener('load', function () {
 	app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(
@@ -166,6 +166,21 @@ app.updateFollowingUsers = function () {
 			app.setFollowingUser(parseInt(app.map._docLayer._viewId));
 		}
 	}
+};
+
+app.showAsyncDownloadError = function (response, initalMsg) {
+	const reader = new FileReader();
+	const timeout = 10000;
+	reader.onload = function () {
+		if (reader.result === 'wrong server') {
+			initalMsg +=
+				initalMsg + _(', cluster configuration error: mis-matching serverid');
+			app.map.uiManager.showSnackbar(initalMsg, '', null, timeout);
+		} else {
+			app.map.uiManager.showSnackbar(initalMsg, '', null, timeout);
+		}
+	};
+	reader.readAsText(response);
 };
 
 app.calc.isRTL = function () {

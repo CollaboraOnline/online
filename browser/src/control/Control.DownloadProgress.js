@@ -11,7 +11,7 @@
 /*
  * L.Control.DownloadProgress.
  */
-/* global _ $ JSDialog */
+/* global _ $ JSDialog app */
 L.Control.DownloadProgress = L.Control.extend({
 	options: {
 		snackbarTimeout: 20000,
@@ -302,11 +302,7 @@ L.Control.DownloadProgress = L.Control.extend({
 			function(progress) { return progress/2; },
 			function (response) {
 				that._onClose();
-				let msg = _('Download failed');
-				if (response && response.responseText === 'wrong server')
-					msg += _(', cluster configuration error: mis-matching serverid');
-				that._map.uiManager.showSnackbar(
-					msg, '', null, this.options.snackbarTimeout);
+				app.showAsyncDownloadError(response, _('Download failed'));
 			}
 		);
 	},
