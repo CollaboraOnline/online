@@ -155,8 +155,8 @@ class PresenterConsole {
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'row';
 		elem.style.flexWrap = 'wrap';
-		elem.style.minWidth = '100vh';
-		elem.style.minHeight = '100vw';
+		elem.style.minWidth = '100vw';
+		elem.style.minHeight = '100vh';
 
 		elem = this._proxyPresenter.document.querySelector('#first-presentation');
 		elem.style.display = 'flex';
