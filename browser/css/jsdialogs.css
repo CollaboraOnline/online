@@ -375,7 +375,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-expander-label::before,
 .ui-treeview-expandable.collapsed > .ui-treeview-expander::before,
-.ui-treeview tr[aria-expanded='false'] > td:first-child::before,
 .ui-treeview tr[aria-expanded='false'] > td > .ui-treeview-expander::before {
 	display: inline-block;
 	content: 'V';
@@ -387,7 +386,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-expander-label.expanded::before,
 .ui-treeview-expandable:not(.collapsed) > .ui-treeview-expander::before,
-.ui-treeview tr[aria-expanded='true'] > td:first-child::before,
 .ui-treeview tr[aria-expanded='true'] > td > .ui-treeview-expander::before  {
 	content: 'V';
 	color: transparent;
@@ -404,7 +402,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-treeview-expandable > .ui-treeview-expander::before,
-.ui-treeview tr[aria-expanded] > td:first-child::before,
 .ui-treeview tr[aria-expanded] > td > .ui-treeview-expander::before {
 	margin-inline-end: 7px !important;
 	display: inline-block;
