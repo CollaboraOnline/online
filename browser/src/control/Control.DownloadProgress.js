@@ -300,10 +300,13 @@ L.Control.DownloadProgress = L.Control.extend({
 				reader.readAsText(response);
 			},
 			function(progress) { return progress/2; },
-			function () {
+			function (response) {
 				that._onClose();
+				let msg = _('Download failed');
+				if (response && response.responseText === 'wrong server')
+					msg += _(', cluster configuration error: mis-matching serverid');
 				that._map.uiManager.showSnackbar(
-					_('Download failed'), '', null,this.options.snackbarTimeout);
+					msg, '', null, this.options.snackbarTimeout);
 			}
 		);
 	},
