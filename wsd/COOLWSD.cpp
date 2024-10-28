@@ -2083,6 +2083,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         { "security.seccomp", "true" },
         { "security.jwt_expiry_secs", "1800" },
         { "security.enable_metrics_unauthenticated", "false" },
+        { "security.server_signature", "false" },
         { "certificates.database_path", "" },
         { "server_name", "" },
         { "ssl.ca_file_path", COOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
