@@ -1024,12 +1024,12 @@ private:
     int _ownerThreadId;
     std::atomic<uint64_t> _watchdogTime;
 
-    static std::mutex StatsMutex;
-    static std::atomic<size_t> StatsConnectionCount; // total of all _pollSockets (excluding _newSockets)
-    static size_t StatsConnectionMod(size_t added, size_t removed); // safe add-sub of StatsConnectionCount
+    static std::mutex _statsMutex;
+    static std::atomic<size_t> _statsConnectionCount; // total of all _pollSockets (excluding _newSockets)
+    static size_t statsConnectionMod(size_t added, size_t removed); // safe add-sub of StatsConnectionCount
 
 public:
-    static int64_t GetStatsConnectionCount() { return StatsConnectionCount.load(std::memory_order_seq_cst); }
+    static int64_t getStatsConnectionCount() { return _statsConnectionCount.load(std::memory_order_seq_cst); }
 };
 
 /// A SocketPoll that will stop polling and

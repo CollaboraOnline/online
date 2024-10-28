@@ -62,23 +62,23 @@ std::atomic<bool> Socket::InhibitThreadChecks(false);
 
 std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
-std::mutex SocketPoll::StatsMutex;
-std::atomic<size_t> SocketPoll::StatsConnectionCount(0);
+std::mutex SocketPoll::_statsMutex;
+std::atomic<size_t> SocketPoll::_statsConnectionCount(0);
 
 net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3600),
                                      .maxConnections = 9999 };
 
-size_t SocketPoll::StatsConnectionMod(size_t added, size_t removed) {
+size_t SocketPoll::statsConnectionMod(size_t added, size_t removed) {
     if( added == 0 && removed == 0 ) {
-        return GetStatsConnectionCount();
+        return getStatsConnectionCount();
     }
     size_t res, pre;
     {
-        std::lock_guard<std::mutex> lock(StatsMutex);
-        pre = GetStatsConnectionCount();
+        std::lock_guard<std::mutex> lock(_statsMutex);
+        pre = getStatsConnectionCount();
         res = pre + added; // overflow impossible due to MAX_CONNECTIONS
         res -= removed; // underflow impossible due to MAX_CONNECTIONS
-        StatsConnectionCount.store(res, std::memory_order_seq_cst);
+        _statsConnectionCount.store(res, std::memory_order_seq_cst);
     }
     LOG_DBG("SocketPoll::ConnectionCount: " << pre << " +" << added << " -" << removed << " = " << res);
     return res;
@@ -573,7 +573,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         {
             std::lock_guard<std::mutex> lock(_mutex);
             const size_t newConnCount = _newSockets.size();
-            const size_t globCount = GetStatsConnectionCount();
+            const size_t globCount = getStatsConnectionCount();
 
             if( _limitedConnections &&
                 _connectionLimit > 0 &&
@@ -740,7 +740,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
     {
         // Perform bookkeeping if required
         // New connections might be dropped if exceeding limits, see _newSockets above.
-        StatsConnectionMod(itemsAdded, itemsErased);
+        statsConnectionMod(itemsAdded, itemsErased);
     }
 
     return rc;
@@ -849,7 +849,7 @@ void SocketPoll::removeSockets()
 {
     LOG_DBG("Removing all " << _pollSockets.size() + _newSockets.size()
                             << " sockets from SocketPoll thread " << _name
-                            << " of " << GetStatsConnectionCount() << " total poll sockets");
+                            << " of " << getStatsConnectionCount() << " total poll sockets");
     ASSERT_CORRECT_SOCKET_THREAD(this);
 
     size_t removedPollSockets = 0;
@@ -866,7 +866,7 @@ void SocketPoll::removeSockets()
         ++removedPollSockets;
     }
     if( _limitedConnections ) {
-        StatsConnectionMod(0, removedPollSockets);
+        statsConnectionMod(0, removedPollSockets);
     }
 
     while (!_newSockets.empty())
@@ -1135,7 +1135,7 @@ void SocketPoll::dumpState(std::ostream& os) const
 
     os << "\n  SocketPoll [" << name() << "] with " << pollSockets.size() << " socket"
        << (pollSockets.size() == 1 ? "" : "s")
-       << " of " << GetStatsConnectionCount()
+       << " of " << getStatsConnectionCount()
        << " total - wakeup rfd: " << _wakeup[0]
        << " wfd: " << _wakeup[1] << '\n';
     const auto callbacks = _newCallbacks.size();
