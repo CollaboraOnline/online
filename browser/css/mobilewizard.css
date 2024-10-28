@@ -1256,7 +1256,7 @@ label.disabled {
 	border-bottom: 1px solid var(--color-border-lighter);
 }
 
-#contentControlList.mobile-wizard .ui-treeview-body, #mentionPopupList.mobile-wizard .ui-treeview-body {
+#contentControlList.mobile-wizard tbody, #mentionPopupList.mobile-wizard tbody {
 	max-height: none;
 }
 

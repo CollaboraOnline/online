@@ -25,7 +25,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert objects via insertio
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Properties').click();
 
 		cy.cGet('#mobile-wizard-title').should('have.text', 'Content Control Properties');
-		cy.cGet('#listitems .mobile-wizard.ui-treeview-body .ui-listview-entry').should('have.length', 1);
+		cy.cGet('#listitems tbody.mobile-wizard .ui-listview-entry').should('have.length', 1);
 
 		// Add new entry
 		cy.cGet('body').contains('button', 'Add').click();
@@ -36,8 +36,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert objects via insertio
 
 		// Verify we are back in parent window and added entries
 		cy.cGet('#mobile-wizard-title').should('have.text', 'Content Control Properties');
-		cy.cGet('#listitems .mobile-wizard.ui-treeview-body .ui-listview-entry').should('have.length', 2);
-		cy.cGet('#listitems .mobile-wizard.ui-treeview-body .ui-listview-entry').each((item, index) => {
+		cy.cGet('#listitems tbody.mobile-wizard .ui-listview-entry').should('have.length', 2);
+		cy.cGet('#listitems tbody.mobile-wizard .ui-listview-entry').each((item, index) => {
 				if (index == 0)
 					expect(item.get(0).innerText).to.eq('\tChoose an item');
 				else if (index == 1)

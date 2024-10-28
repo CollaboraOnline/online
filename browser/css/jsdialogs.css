@@ -472,12 +472,23 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: block;
 	border: 1px solid var(--color-border);
 	border-radius: var(--border-radius);
-	overflow-y: auto;
+	overflow-y: hidden;
 	overflow-x: hidden;
 	max-width: 1000px;
 	min-width: 150px;
+	min-height: 100px;
+	max-height: 150px;
 	padding: 1px;
 	padding-inline-end: 3px;
+	color: var(--color-main-text);
+	font-size: var(--default-font-size);
+	line-height: var(--default-height);
+}
+
+.ui-treeview tbody {
+	overflow-y: auto;
+	max-height: inherit;
+	display: block;
 }
 
 .ui-treeview.disabled,
@@ -486,19 +497,12 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	color: var(--color-text-lighter) !important;
 }
 
-.ui-treeview-body,
 #custom_animation_label_parent {
-	color: var(--color-main-text);
-	font-size: var(--default-font-size);
-	line-height: var(--default-height);
 	display: block;
-	min-height: 100px;
-	min-width: 100px;
-	max-height: 150px;
 	width: inherit;
 }
 
-.ui-treeview.empty .ui-treeview-body {
+.ui-treeview.empty {
 	color: var(--color-text-lighter);
 }
 
@@ -510,12 +514,12 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: none;
 }
 
-.ui-treeview-body > ul {
+ul.ui-treeview {
 	margin: 0;
 	padding: 0;
 }
 
-.ui-treeview-body ul {
+ul.ui-treeview > * {
 	list-style-type: none;
 }
 
@@ -589,7 +593,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	color: var(--color-text-darker);
 }
 
-#mobile-wizard .ui-treeview-body input[type='checkbox'] {
+#mobile-wizard tbody input[type='checkbox'] {
 	float: none;
 	vertical-align: middle;
 }
@@ -1128,7 +1132,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .autofilter-container .ui-treeview {
 	border: none;
 }
-.autofilter-container #menu.ui-treeview .ui-treeview-body {
+.autofilter-container #menu.ui-treeview tbody {
 	height: auto;
 	width: 100%;
 	padding: 8px 1px;
@@ -1189,14 +1193,14 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	line-height: normal;
 }
 
-.autofilter-container #check_tree_box.ui-treeview .ui-treeview-body,
-.autofilter-container #check_list_box.ui-treeview .ui-treeview-body {
+.autofilter-container #check_tree_box.ui-treeview tbody,
+.autofilter-container #check_list_box.ui-treeview tbody {
 	width: 100%;
 	min-width: 200px;
 	max-height: 150px;
 }
 
-#ZoteroDialog .ui-treeview-body {
+#ZoteroDialog tbody {
 	max-height: 500px;
 	max-width: 100%;
 }
@@ -2121,7 +2125,7 @@ kbd,
 
 /* manage changes dialog */
 
-.jsdialog #writerchanges .ui-treeview-body {
+.jsdialog #writerchanges tbody {
 	min-height: 300px;
 }
 

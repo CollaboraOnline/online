@@ -502,7 +502,7 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	height: auto;
 	border-color: var(--color-border);
 }
-#mobile-wizard-content #MacroSelectorDialog #categories > .ui-treeview-body > .mobile-wizard li {
+#mobile-wizard-content #MacroSelectorDialog #categories > tbody > .mobile-wizard li {
 	border-bottom: 1px solid var(--color-border);
 }
 #mobile-wizard-content #MacroSelectorDialog #commands {
@@ -511,10 +511,10 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 #mobile-wizard-content #MacroSelectorDialog #commands.selected {
 	border-color: var(--color-primary-dark);
 }
-#mobile-wizard-content #MacroSelectorDialog #commands > .mobile-wizard.ui-treeview-body {
+#mobile-wizard-content #MacroSelectorDialog #commands > tbody {
 	min-height: auto;
 }
-#mobile-wizard-content #MacroSelectorDialog #commands.empty > .mobile-wizard.ui-treeview-body::after {
+#mobile-wizard-content #MacroSelectorDialog #commands.empty > tbody::after {
 	content: '…';
 	width: 22px;
 	height: 22px;
