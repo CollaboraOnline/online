@@ -1288,18 +1288,19 @@ class FactoryTreeView {
 }
 
 JSDialog.treeView = function (parentContainer, data, builder) {
+	// TODO: remove this hack
 	var id = data.parent ? (data.parent.parent ? (data.parent.parent.parent ? (data.parent.parent.parent.id ? data.parent.parent.parent.id: null): null): null): null;
-
 	if (id && typeof(id) === 'string' && id.startsWith('Navigator'))
 		treeType = 'navigator';
+	// TODO: remove this hack
 
 	var factory = new FactoryTreeView(data, builder);
-	var buildInnerData = factory.build(data, builder, parentContainer);
-	if (!buildInnerData) {
+	if (!factory.build(data, builder, parentContainer)) {
 		console.debug('treeview: legacy');
-		buildInnerData = _treelistboxControl(parentContainer, data, builder);
+		return _treelistboxControl(parentContainer, data, builder);
 	}
-	return buildInnerData;
+
+	return false;
 };
 
 JSDialog.isDnDActive = function () {
