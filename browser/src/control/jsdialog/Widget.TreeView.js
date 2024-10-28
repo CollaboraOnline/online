@@ -1266,17 +1266,20 @@ class FactoryTreeView {
 		this.fillHeaders(data.headers, builder);
 
 		if (this._ulContainer && this._ulContainer.Container.hasChildNodes()) {
+			console.debug('treeview: ulContainer');
 			parentContainer.appendChild(this._ulContainer.Container);
 			return true;
 		}
 
-		if (this._simpleContainer && this._simpleContainer.Container.hasChildNodes()) {
-			parentContainer.appendChild(this._simpleContainer.Container);
+		if (this._complexContainer && this._complexContainer.Container.hasChildNodes()) {
+			console.debug('treeview: complexContainer');
+			parentContainer.appendChild(this._complexContainer.Container);
 			return true;
 		}
 
-		if (this._complexContainer && this._complexContainer.Container.hasChildNodes()) {
-			parentContainer.appendChild(this._complexContainer.Container);
+		if (this._simpleContainer && this._simpleContainer.Container.hasChildNodes()) {
+			console.debug('treeview: simpleContainer');
+			parentContainer.appendChild(this._simpleContainer.Container);
 			return true;
 		}
 
@@ -1292,8 +1295,10 @@ JSDialog.treeView = function (parentContainer, data, builder) {
 
 	var factory = new FactoryTreeView(data, builder);
 	var buildInnerData = factory.build(data, builder, parentContainer);
-	if (!buildInnerData)
+	if (!buildInnerData) {
+		console.debug('treeview: legacy');
 		buildInnerData = _treelistboxControl(parentContainer, data, builder);
+	}
 	return buildInnerData;
 };
 
