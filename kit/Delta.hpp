@@ -37,13 +37,13 @@
 struct TileLocation {
     // in TWIPS
     int _canonicalViewId;
+    int _part;
     int _left;
     int _top;
     int _size;
-    int _part;
     int _viewMode;
-    TileLocation(int canonicalViewId, int left, int top, int size, int part, int viewMode)
-        : _canonicalViewId(canonicalViewId), _left(left), _top(top), _size(size), _part(part), _viewMode(viewMode)
+    TileLocation(int canonicalViewId, int part, int left, int top, int size, int viewMode)
+        : _canonicalViewId(canonicalViewId), _part(part), _left(left), _top(top), _size(size), _viewMode(viewMode)
     {
     }
     size_t hash() const
