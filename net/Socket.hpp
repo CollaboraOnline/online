@@ -174,8 +174,6 @@ public:
 
     /// Returns true if this socket is open, i.e. allowed to be polled and not shutdown
     bool isOpen() const { return _open; }
-    /// Returns true if this socket has been closed, i.e. rejected from polling and potentially shutdown
-    bool isClosed() const { return !_open; }
 
     constexpr Type type() const { return _type; }
     constexpr bool isIPType() const { return Type::IPv4 == _type || Type::IPv6 == _type; }

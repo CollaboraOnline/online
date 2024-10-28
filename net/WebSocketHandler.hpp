@@ -193,7 +193,7 @@ protected:
             return;
         }
 
-        if (socket->isClosed())
+        if (!socket->isOpen())
         {
             LOG_DBG("Socket is closed. Cannot send Close Frame");
             return;
@@ -261,7 +261,7 @@ public:
     bool isConnected() const
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
-        return socket && !socket->isClosed();
+        return socket && socket->isOpen();
     }
 
 private:
@@ -823,7 +823,7 @@ protected:
             return -1;
         }
 
-        if (socket->isClosed())
+        if (!socket->isOpen())
         {
             LOG_DBG("Socket is closed. Cannot send WS frame");
             return 0;

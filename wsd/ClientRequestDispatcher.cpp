@@ -956,7 +956,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             socket->eraseFirstInputBytes(map._messageSize - map._headerSize);
         }
     }
-    if( servedSync && closeConnection && !socket->isClosed() )
+    if( servedSync && closeConnection && socket->isOpen() )
     {
         LOG_DBG("Handled request: " << request.getURI()
                 << ", inBuf[sz " << preInBufferSz << " -> " << socket->getInBuffer().size()
@@ -969,7 +969,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         LOG_DBG("Handled request: " << request.getURI()
                 << ", inBuf[sz " << preInBufferSz << " -> " << socket->getInBuffer().size()
                 << ", rm " <<  (preInBufferSz-socket->getInBuffer().size())
-                << "], connection open " << !socket->isClosed());
+                << "], connection open " << socket->isOpen());
 
 #else // !MOBILEAPP
     Poco::Net::HTTPRequest request;
