@@ -218,6 +218,46 @@ class PresenterConsole {
 				':' +
 				String(sec).padStart(2, '0');
 		}
+
+		if (this._ticks % 2 == 0) {
+			setTimeout(
+				L.bind(
+					this._fetchPreviews,
+					this,
+					this._proxyPresenter.document.querySelector('#next-presentation'),
+				),
+				0,
+			);
+		}
+	}
+
+	_fetchPreviews(elem) {
+		if (
+			!this._lastIndex ||
+			this._lastIndex + 1 >= this._presenter._getSlidesCount()
+		) {
+			return;
+		}
+
+		let rect = elem.getBoundingClientRect();
+		if (rect.width === 0 && rect.height === 0) {
+			return;
+		}
+
+		let preview = this._previews[this._lastIndex + 1];
+		if (preview) {
+			return;
+		}
+
+		let size = this._map.getPreview(2000, 0, rect.width, rect.height, {
+			fetchThumbnail: false,
+			autoUpdate: false,
+		});
+
+		this._map.getPreview(2000, this._lastIndex + 1, size.width, size.height, {
+			autoUpdate: false,
+			slideshow: true,
+		});
 	}
 
 	_onWindowClose() {
@@ -248,6 +288,7 @@ class PresenterConsole {
 		);
 		delete this._proxyPresenter;
 		delete this._currentIndex;
+		delete this._lastIndex;
 		delete this._previews;
 		clearInterval(this._timer);
 		this._map.off('newslideshowframe', this._onNextFrame, this);
@@ -395,8 +436,11 @@ class PresenterConsole {
 		if (this._currentIndex + 1 === e.part) {
 			let next =
 				this._proxyPresenter.document.querySelector('#next-presentation');
-			next.src = this._previews[this._currentIndex + 1] = e.tile.src;
+			next.src = e.tile.src;
 		}
+
+		this._previews[e.part] = e.tile.src;
+		this._lastIndex = e.part;
 	}
 
 	_computeCanvas(canvas) {
