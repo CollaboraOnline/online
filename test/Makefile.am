@@ -91,7 +91,6 @@ all_la_unit_tests = \
 	unit-join-disconnect.la \
 	unit-initial-load-fail.la \
 	unit-timeout.la \
-	unit-timeout_wsping.la \
 	unit-timeout_inactive.la \
 	unit-timeout_conn.la \
 	unit-timeout_none.la \
@@ -227,8 +226,6 @@ unit_join_disconnect_la_SOURCES = UnitJoinDisconnect.cpp
 unit_join_disconnect_la_LIBADD = $(CPPUNIT_LIBS)
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_timeout_la_LIBADD = $(CPPUNIT_LIBS)
-unit_timeout_wsping_la_SOURCES = UnitTimeoutWSPing.cpp
-unit_timeout_wsping_la_LIBADD = $(CPPUNIT_LIBS)
 unit_timeout_inactive_la_SOURCES = UnitTimeoutInactive.cpp
 unit_timeout_inactive_la_LIBADD = $(CPPUNIT_LIBS)
 unit_timeout_conn_la_SOURCES = UnitTimeoutConnections.cpp

@@ -34,10 +34,6 @@ class DefaultValues
 public:
     /// StreamSocket inactivity timeout in us (3600s default). Zero disables instrument.
     std::chrono::microseconds inactivityTimeout;
-    /// WebSocketHandler average ping timeout in us (12s default). Zero disables instrument.
-    std::chrono::microseconds wsPingAvgTimeout;
-    /// WebSocketHandler ping interval in us (18s default), i.e. duration until next ping. Zero disables instrument.
-    std::chrono::microseconds wsPingInterval;
 
     /// Maximum number of concurrent external TCP connections. Zero disables instrument.
     size_t maxExtConnections;

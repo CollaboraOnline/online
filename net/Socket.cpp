@@ -68,8 +68,6 @@ std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 std::atomic<size_t> StreamSocket::ExternalConnectionCount = 0;
 
 net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3600),
-                                     .wsPingAvgTimeout = std::chrono::seconds(12),
-                                     .wsPingInterval = std::chrono::seconds(18),
                                      .maxExtConnections = 200000 /* arbitrary value to be resolved */ };
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
@@ -1005,8 +1003,7 @@ void WebSocketHandler::dumpState(std::ostream& os, const std::string& /*indent*/
 {
     os << (_shuttingDown ? "shutd " : "alive ");
 #if !MOBILEAPP
-    os << std::setw(5) << _pingMicroS.last()/1000. << "ms, avg "
-       << _pingMicroS.average()/1000. << "ms ";
+    os << std::setw(5) << _pingTimeUs/1000. << "ms ";
 #endif
     if (_wsPayload.size() > 0)
         Util::dumpHex(os, _wsPayload, "\t\tws queued payload:\n", "\t\t");
