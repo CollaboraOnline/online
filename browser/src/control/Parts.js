@@ -215,8 +215,8 @@ L.Map.include({
 			this._docPreviews = {};
 		}
 		var autoUpdate = options ? !!options.autoUpdate : false;
-		var fetchThumbnail = options && options.fetchThumbnail ? options.fetchThumbnail : true;
-		var isSlideshow = options && options.slideshow ? options.slideshow : false;
+		var fetchThumbnail = options && typeof options.fetchThumbnail !== 'undefined' ? options.fetchThumbnail : true;
+		var isSlideshow = options && typeof options.slideshow !== 'undefined' ? options.slideshow : false;
 		this._docPreviews[id] = {id: id, index: index, maxWidth: maxWidth, maxHeight: maxHeight, autoUpdate: autoUpdate, invalid: false};
 
 		var docLayer = this._docLayer;
