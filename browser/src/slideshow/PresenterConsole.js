@@ -65,6 +65,7 @@ class PresenterConsole {
 		}
 
 		this._map.on('newslideshowframe', this._onNextFrame, this);
+		this._map.on('transitionstart', this._onTransitionStart, this);
 		this._map.on('transitionend', this._onTransitionEnd, this);
 		this._map.on('tilepreview', this._onTilePreview, this);
 
@@ -290,6 +291,7 @@ class PresenterConsole {
 		delete this._previews;
 		clearInterval(this._timer);
 		this._map.off('newslideshowframe', this._onNextFrame, this);
+		this._map.off('transitionstart', this._onTransitionStart, this);
 		this._map.off('transitionend', this._onTransitionEnd, this);
 		this._map.off('tilepreview', this._onTilePreview, this);
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
@@ -308,6 +310,18 @@ class PresenterConsole {
 			next.style.height = rect.height + 'px';
 			this.drawNext(next);
 		}
+	}
+
+	_onTransitionStart(e) {
+		if (!this._proxyPresenter) {
+			return;
+		}
+
+		this._currentIndex = e.slide;
+
+		let next =
+			this._proxyPresenter.document.querySelector('#next-presentation');
+		this._fetchPreview(this._currentIndex + 1, next);
 	}
 
 	_onTransitionEnd(e) {
