@@ -726,28 +726,14 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
         if (itemsErased)
         {
-            const size_t itemsErasedPre = itemsErased;
-            itemsErased = 0; // correcting itemsErased
+            LOG_TRC("Scanning to removing " << itemsErased << " defunct sockets from "
+                    << _pollSockets.size() << " sockets");
 
             _pollSockets.erase(
                 std::remove_if(_pollSockets.begin(), _pollSockets.end(),
-                               [&itemsErased](const std::shared_ptr<Socket>& s) -> bool
-                               {
-                                   if (!s)
-                                   {
-                                       ++itemsErased;
-                                       return true;
-                                   }
-                                   else
-                                   {
-                                       return false;
-                                   }
-                               }),
+                    [](const std::shared_ptr<Socket>& s)->bool
+                    { return !s; }),
                 _pollSockets.end());
-
-            LOG_TRC("Removed " << itemsErased
-                    << "(" << itemsErasedPre << ") defunct sockets from "
-                    << _pollSockets.size() << " sockets");
         }
     }
     if( _limitedConnections )
