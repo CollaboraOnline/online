@@ -195,6 +195,7 @@ namespace RenderTiles
                                                          canonicalViewId,
                                                          tileCombined.getPart(),
                                                          tileCombined.getEditMode(),
+                                                         tiles[tileIndex].getWidth(),
                                                          tileRect.getLeft(),
                                                          tileRect.getTop(),
                                                          tileRect.getWidth()

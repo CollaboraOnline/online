@@ -39,11 +39,12 @@ struct TileLocation {
     int _canonicalViewId;
     int _part;
     int _viewMode;
+    int _width;
     int _left;
     int _top;
     int _size;
-    TileLocation(int canonicalViewId, int part, int viewMode, int left, int top, int size)
-        : _canonicalViewId(canonicalViewId), _part(part), _viewMode(viewMode), _left(left), _top(top), _size(size)
+    TileLocation(int canonicalViewId, int part, int viewMode, int width, int left, int top, int size)
+        : _canonicalViewId(canonicalViewId), _part(part), _viewMode(viewMode), _width(width), _left(left), _top(top), _size(size)
     {
     }
     size_t hash() const
