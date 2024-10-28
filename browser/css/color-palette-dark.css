@@ -11,10 +11,12 @@
 	--color-text-darker: #c0bfbc;  /* hover */
 	--color-text-lighter: #fff; /* secondard text, disabled */
 	--color-status-badge: #d6d6d6;
+	--color-slideshow: #d6d6d6;
 
 	--color-main-background: #121212;
 	--color-background-dark: #1E1E1E;  /* select */
 	--color-background-darker: #000;  /* todo: apply to pressed (active), li:hover(top menu on classic mode)*/
+	--color-background-slideshow: #171717;
 	--color-background-lighter: #262626; /* hover, toolbar, dialog, disabled */
 	--color-overlay: #1c5fa814;
 	--color-background-tabs-group: #303030;
