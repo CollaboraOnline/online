@@ -1182,9 +1182,9 @@ class ComplexTableControl extends TreeViewControl {
 class TreeViewFactory {
 	constructor(data, builder) {
 		if (this.isRealTree(data) || this.isHeaderListBox(data))
-			this._complexContainer = new ComplexTableControl(data, builder);
+			this._implementation = new ComplexTableControl(data, builder);
 		else
-			this._simpleContainer = new SimpleTableControl(data, builder);
+			this._implementation = new SimpleTableControl(data, builder);
 	}
 
 	isHeaderListBox(data) { return data.headers && data.headers.length !== 0; }
@@ -1201,53 +1201,26 @@ class TreeViewFactory {
 	}
 
 	fillHeaders(headers, builder) {
-		for (let index in headers) {
-			if (this._simpleContainer)
-				this._simpleContainer.fillHeader(headers[index], builder);
-			if (this._complexContainer) {
-				this._complexContainer.fillHeader(headers[index], builder);
-			}
-		}
+		for (let index in headers)
+			this._implementation.fillHeader(headers[index], builder);
 	}
 
-	fillEntries(data, entries, builder, level, simpleParent, complexParent) {
-		let simpleChild, complexChild;
-
+	fillEntries(data, entries, builder, level, parent) {
 		for (let index in entries) {
-			if (this._simpleContainer && simpleParent) {
-				simpleChild = this._simpleContainer.fillRow(data, entries[index], builder, level, simpleParent);
-			}
-
-			if (this._complexContainer && complexParent) {
-				if (simpleChild && level === 1) {
-					complexParent.appendChild(simpleChild);
-					complexChild = simpleChild;
-				}
-				else
-					complexChild = this._complexContainer.fillRow(data, entries[index], builder,
-										      level, complexParent);
-			}
-
-			this.fillEntries(data, entries[index].children, builder, level + 1, simpleChild, complexChild);
+			let entry = this._implementation.fillRow(data, entries[index], builder, level, parent);
+			this.fillEntries(data, entries[index].children, builder, level + 1, entry);
 		}
 	}
 
 	build(data, builder, parentContainer) {
-		let simpleContainer = this._simpleContainer ? this._simpleContainer.Container._tbody : null;
-		let complexContainer = this._complexContainer ? this._complexContainer.Container._tbody : null;
+		let container = this._implementation ? this._implementation.Container._tbody : null;
 
-		this.fillEntries(data, data.entries, builder, 1, simpleContainer, complexContainer);
+		this.fillEntries(data, data.entries, builder, 1, container);
 		this.fillHeaders(data.headers, builder);
 
-		if (this._complexContainer && this._complexContainer.Container.hasChildNodes()) {
-			console.debug('treeview: complexContainer');
-			parentContainer.appendChild(this._complexContainer.Container);
-			return true;
-		}
-
-		if (this._simpleContainer && this._simpleContainer.Container.hasChildNodes()) {
-			console.debug('treeview: simpleContainer');
-			parentContainer.appendChild(this._simpleContainer.Container);
+		if (this._implementation && this._implementation.Container.hasChildNodes()) {
+			console.debug('treeview: new implementation');
+			parentContainer.appendChild(this._implementation.Container);
 			return true;
 		}
 
