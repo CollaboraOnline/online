@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /* config.h.  Manually edited from config.h.in.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
@@ -77,7 +78,7 @@
 #define HAVE_SYS_TYPES_H 1
 
 /* Define to 1 if you have the <unistd.h> header file. */
-#define HAVE_UNISTD_H 1
+#undef HAVE_UNISTD_H
 
 /* Collabora Online WebSocket server version */
 #define COOLWSD_VERSION "@COOLWSD_VERSION@"
@@ -139,6 +140,13 @@
 #include <cstddef>
 
 typedef ptrdiff_t ssize_t;
+typedef int pid_t;
+
+#define lstat(f,s) stat(f,s)
+#define link(a, b) -1
+
+// MSVC's _putenv_s doesn't do removal of environment variables, but we don't need that anyway
+#define setenv(variable, value, one) _putenv_s(variable, value)
 
 #define POLLIN   0x001
 #define POLLPRI  0x002
