@@ -307,7 +307,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 #NavigatorDeck .ui-expander-content > .root-container.jsdialog {
 	margin: 0;
 }
-#NavigatorDeck .ui-treeview-entry {
+#NavigatorDeck div {
 	padding-inline-start: 0;
 	background-color: transparent;
 	margin-block-end: 8px;
@@ -316,15 +316,15 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	width: var(--btn-size-s);
 	height: var(--btn-size-s);
 }
-#NavigatorDeck .ui-treeview-entry.selected {
+#NavigatorDeck div.selected {
 	background-color: var(--color-background-dark);
 	color: var(--color-primary);
 }
-[data-theme='dark'] #NavigatorDeck .ui-treeview-entry.selected {
+[data-theme='dark'] #NavigatorDeck div.selected {
 	background-color: transparent;
 	color: var(--color-text-lighter);
 }
-#NavigatorDeck .ui-treeview-entry.selected:not(.ui-listview-expandable-with-icon)::before {
+#NavigatorDeck div.selected:not(.ui-listview-expandable-with-icon)::before {
 	content: '–';
 	font-size: 17px;
 	font-weight: 500;
@@ -340,11 +340,10 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	/* Move this whole block away and fix in the main control */
 	display: flex;
 	align-items: center;
-	width: 200px;
 	word-break: break-word;
 }
 
-span.jsdialog.sidebar.ui-treeview-entry.ui-treeview-notexpandable {
+span.jsdialog.sidebar.ui-treeview-notexpandable {
 	margin-left: 15px;
 }
 

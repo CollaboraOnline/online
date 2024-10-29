@@ -375,7 +375,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-expander-label::before,
 .ui-treeview-expandable.collapsed > .ui-treeview-expander::before,
-.ui-treeview div[aria-expanded='false'] > div > .ui-treeview-expander::before {
+.ui-treeview div[aria-expanded='false'] > .ui-treeview-expander::before {
 	display: inline-block;
 	content: 'V';
 	color: transparent;
@@ -386,7 +386,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-expander-label.expanded::before,
 .ui-treeview-expandable:not(.collapsed) > .ui-treeview-expander::before,
-.ui-treeview div[aria-expanded='true'] > div > .ui-treeview-expander::before  {
+.ui-treeview div[aria-expanded='true'] > .ui-treeview-expander::before  {
 	content: 'V';
 	color: transparent;
 	margin-inline-end: 7px;
@@ -397,12 +397,12 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 [data-theme='dark'] .ui-expander-label::before,
 [data-theme='dark'] .ui-treeview-expandable > .ui-treeview-expander::before,
-[data-theme='dark'] .ui-treeview div[aria-expanded] > div > .ui-treeview-expander::before  {
+[data-theme='dark'] .ui-treeview div[aria-expanded] > .ui-treeview-expander::before  {
 	filter: brightness(1);
 }
 
 .ui-treeview-expandable > .ui-treeview-expander::before,
-.ui-treeview div[aria-expanded] > div > .ui-treeview-expander::before {
+.ui-treeview div[aria-expanded] > .ui-treeview-expander::before {
 	margin-inline-end: 7px !important;
 	display: inline-block;
 	position: relative !important;
@@ -489,7 +489,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-treeview.disabled,
-.ui-treeview-entry.disabled {
+.ui-treeview-entry div.disabled {
 	background-color: var(--color-background-dark) !important;
 	color: var(--color-text-lighter) !important;
 }
@@ -521,18 +521,18 @@ ul.ui-treeview > * {
 	list-style-type: none;
 }
 
-.ui-treeview-entry {
+.ui-treeview-entry div {
 	display: flex;
 	width: 100%;
 }
 
-.ui-treeview-entry:not(.autofilter) {
+.ui-treeview-entry div:not(.autofilter) {
 	padding-inline-start: 2px;
 	margin-inline-end: 2px;
 	background-color: var(--color-background-lighter);
 }
 
-.ui-treeview.disabled .ui-treeview-entry:not(.autofilter) {
+.ui-treeview.disabled .ui-treeview-entry div:not(.autofilter) {
 	background-color: var(--color-background-dark);
 }
 
@@ -560,11 +560,11 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	background-image: url('images/dark/lc_checkbox.svg');
 }
 
-.ui-treeview-entry span {
+.ui-treeview-entry div span {
 	width: 100%;
 }
 
-.ui-treeview-entry.mobile-wizard {
+.ui-treeview-entry div.mobile-wizard {
 	line-height: 40px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -574,18 +574,18 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	vertical-align: middle;
 }
 
-.ui-treeview-entry.selected,
+.ui-treeview-entry div.selected,
 .ui-listview-entry.selected {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 }
 
-.ui-treeview.disabled .ui-treeview-entry.selected,
+.ui-treeview.disabled .ui-treeview-entry div.selected,
 .ui-treeview.disabled .ui-listview-entry.selected {
 	background-color: var(--color-background-darker) !important;
 }
 
-.ui-treeview-entry:hover,
+.ui-treeview-entry div:hover,
 .ui-listview-entry:hover {
 	background-color: var(--color-background-darker);
 	color: var(--color-text-darker);
@@ -622,12 +622,11 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	padding-left: 10ch;
 }
 
-.ui-treeview div > div:first-child .ui-treeview-expander {
-	display: inline-block;
+.ui-treeview div.ui-treeview-expander {
 	vertical-align: top;
 }
 
-.ui-treeview div[aria-level]:not([aria-expanded]) > div:first-child::before {
+.ui-treeview div[aria-level]:not([aria-expanded]) ::before {
 	font-family: monospace;
 	content: 'V';
 	color: transparent;
@@ -1321,11 +1320,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-color: transparent;
 }
 
-#MacroSelectorDialog #categories .ui-treeview-entry.selected, #MacroSelectorDialog #categories .ui-listview-entry, #MacroSelectorDialog #categories .ui-listview-entry.selected {
+#MacroSelectorDialog #categories .ui-treeview-entry div.selected, #MacroSelectorDialog #categories .ui-listview-entry, #MacroSelectorDialog #categories .ui-listview-entry.selected {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 }
-#MacroSelectorDialog #categories .ui-treeview-entry:hover, #MacroSelectorDialog #categories .ui-treeview-entry.selected:hover, #MacroSelectorDialog #categories .ui-listview-entry:hover, #MacroSelectorDialog #categories .ui-listview-entry.selected:hover, #MacroSelectorDialog #categories .ui-treeview-entry.selected {
+#MacroSelectorDialog #categories .ui-treeview-entry div:hover, #MacroSelectorDialog #categories .ui-treeview-entry div.selected:hover, #MacroSelectorDialog #categories .ui-listview-entry:hover, #MacroSelectorDialog #categories .ui-listview-entry.selected:hover, #MacroSelectorDialog #categories .ui-treeview-entry div.selected {
 	background-color: var(--color-background-darker);
 	color: var(--color-text-darker);
 }
@@ -2056,7 +2055,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	grid-template-rows: auto 1fr;
 	grid-row-gap: 4px;
 }
-#FormulaDialog #StructPage .ui-treeview-entry {
+#FormulaDialog #StructPage .ui-treeview-entry div {
 	background-color: transparent;
 }
 #FormulaDialog #search {
