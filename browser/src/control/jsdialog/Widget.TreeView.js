@@ -841,7 +841,20 @@ class TreeViewControl {
 				maxColumns = count;
 		}
 
+		if (this.hasState(data))
+			maxColumns++;
+
 		return maxColumns;
+	}
+
+	static hasState(data) {
+		for (var e in data.entries) {
+			const entry = data.entries[e];
+			if (entry.state !== undefined)
+				return true;
+		}
+
+		return false;
 	}
 
 	static findEntryWithRow(entries, row) {
@@ -906,8 +919,7 @@ class TreeViewControl {
 		let checkboxtype = treeViewData.checkboxtype;
 		if (checkboxtype == 'radio') {
 			selectionElement = this.createRadioButton(parent, treeViewData, builder, entry);
-		}
-		else {
+		} else {
 			selectionElement = this.createCheckbox(parent, treeViewData, builder, entry);
 		}
 		return selectionElement;
@@ -917,6 +929,10 @@ class TreeViewControl {
 		if (!element.text)
 			return false;
 		return element.text.toLowerCase() === 'separator';
+	}
+
+	isNavigator(data) {
+		return data.id && typeof(data.id) === 'string' && data.id.startsWith('Navigator');
 	}
 
 	getCellIconId(cellData) {
@@ -953,7 +969,7 @@ class TreeViewControl {
 	}
 
 	fillRow(data, entry, builder, level) {
-		if (entry.state !== undefined) {
+		if (this._hasState) {
 			let td = L.DomUtil.create('div', '', this._container._tbody);
 			this.createSelectionElement(td, data, entry, builder);
 		}
@@ -971,10 +987,20 @@ class TreeViewControl {
 	fillCells(entry, builder, tr) {
 		let td, span, text, img, icon, iconId, iconName, link, innerText;
 
-		for (let index = 0; index < this._columns; index++) {
+		// check / radio
+		let dummyColumns = this._columns - entry.columns.length;
+		if (this._hasState)
+			dummyColumns--;
+
+		// dummy columns
+		for (let index = dummyColumns; index > 0; index--)
 			td = L.DomUtil.create('div', '', tr);
-			if (index >= entry.columns)
-				continue;
+
+		for (let index in entry.columns) {
+			td = L.DomUtil.create('div', '', tr);
+
+			if (index == 0 && entry.children)
+				L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander', td);
 
 			span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', td);
 			text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', span);
@@ -984,6 +1010,10 @@ class TreeViewControl {
 				this.createImageColumn(text, builder, img);
 			} else if (entry.columns[index].collapsed || entry.columns[index].expanded) {
 				icon = L.DomUtil.create('img', 'ui-listview-icon', text);
+
+				if (this._isNavigator)
+					icon.draggable = false;
+
 				iconId = this.getCellIconId(entry.columns[index]);
 				L.DomUtil.addClass(icon, iconId + 'img');
 				iconName = builder._createIconURL(iconId, true);
@@ -1014,9 +1044,11 @@ class SimpleTableControl extends TreeViewControl {
 	constructor(data, builder) {
 		super(data, builder);
 
-		this._container = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
+		this._container = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview');
 		this._container.id = data.id;
 		this._columns = TreeViewControl.countColumns(data);
+		this._hasState = TreeViewControl.hasState(data);
+		this._isNavigator = this.isNavigator(data);
 
 		this._container._tbody = this._container;
 		this._container._thead = this._container;
@@ -1035,6 +1067,8 @@ class ComplexTableControl extends TreeViewControl {
 		this._container = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview');
 		this._container.id = data.id;
 		this._columns = TreeViewControl.countColumns(data);
+		this._hasState = TreeViewControl.hasState(data);
+		this._isNavigator = this.isNavigator(data);
 
 		this._container._tbody = this._container;
 		this._container._thead = this._container;
@@ -1071,11 +1105,11 @@ class ComplexTableControl extends TreeViewControl {
 	}
 
 	static onClick(e) {
-		let tr = ComplexTableControl.findRow(e.target);
+		let tr = e.target
 		if (!tr)
 			return;
 
-		let expand = tr.firstChild.firstChild;
+		let expand = tr.firstChild;
 		if (expand && tr.hasAttribute('aria-expanded') &&
 		    e.clientX < expand.getBoundingClientRect().left) {
 			ComplexTableControl.toggleExpand(tr);
@@ -1087,18 +1121,6 @@ class ComplexTableControl extends TreeViewControl {
 			ComplexTableControl.selectEntry(ComplexTableControl.Selected, false);
 
 		ComplexTableControl.Selected = ComplexTableControl.selectEntry(tr, !selected);
-	}
-
-	static findRow(elem) {
-		let tr = elem;
-		if (tr && tr.localName === 'tbody')
-			return null;
-
-		while (tr && tr.localName !== 'tr') {
-			tr = tr.parentElement;
-		}
-
-		return tr;
 	}
 }
 
@@ -1129,8 +1151,6 @@ class TreeViewFactory {
 			return;
 
 		let dummyCells = this._implementation._columns - headers.length;
-		if (dummyCells < 0) dummyCells = 0;
-
 		for (let index = 0; index < dummyCells; index++)
 			this._implementation.fillHeader({text: ''}, builder);
 
