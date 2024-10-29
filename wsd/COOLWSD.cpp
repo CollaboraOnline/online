@@ -2935,7 +2935,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 #endif
 
     WebServerPoll = std::make_unique<TerminatingPoll>("websrv_poll");
-    WebServerPoll->setLimiter( net::Defaults.maxTCPConnections );
 
 #if !MOBILEAPP
     net::AsyncDNS::startAsyncDNS();
