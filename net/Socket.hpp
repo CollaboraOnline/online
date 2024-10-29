@@ -715,8 +715,6 @@ public:
 
     /// Default poll time - useful to increase for debugging.
     static constexpr std::chrono::microseconds DefaultPollTimeoutMicroS = std::chrono::seconds(64);
-    static constexpr std::chrono::microseconds DefaultInactivityimeoutMicroS = std::chrono::seconds(3600);
-    static constexpr size_t DefaultMaxTCPConnections = 200000; // arbitrary value to be resolved
     static std::atomic<bool> InhibitThreadChecks;
 
     /// Stop the polling thread.

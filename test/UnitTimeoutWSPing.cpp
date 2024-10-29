@@ -34,9 +34,8 @@ class UnitTimeoutWSPing : public UnitTimeoutBase0
 
     void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
-        // to be resolved!
-        // defaults.WSPingTimeout = std::chrono::microseconds(20);
-        // defaults.WSPingPeriod = std::chrono::microseconds(10000);
+        net::Defaults.wsPingAvgTimeout = std::chrono::microseconds(20);
+        net::Defaults.wsPingInterval = std::chrono::milliseconds(10);
     }
 
 public:
@@ -82,15 +81,12 @@ UnitBase::TestResult UnitTimeoutWSPing::testWSPing()
 
 void UnitTimeoutWSPing::invokeWSDTest()
 {
-    // to be resolved!
-    if( false )
-    {
-        UnitBase::TestResult result = TestResult::Ok;
+    UnitBase::TestResult result;
 
-        result = testWSPing();
-        if (result != TestResult::Ok)
-           exitTest(result);
-    }
+    result = testWSPing();
+    if (result != TestResult::Ok)
+       exitTest(result);
+
     exitTest(TestResult::Ok);
 }
 
