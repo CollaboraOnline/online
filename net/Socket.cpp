@@ -618,6 +618,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
 void SocketPoll::wakeupWorld()
 {
+    std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
     for (const auto& fd : getWakeupsArray())
         wakeup(fd);
 }
