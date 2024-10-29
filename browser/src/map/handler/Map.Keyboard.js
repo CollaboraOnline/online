@@ -426,7 +426,10 @@ L.Map.Keyboard = L.Handler.extend({
 					if (app.file.fileBasedView)
 						this._map._docLayer._checkSelectedPart();
 				}
-				else if (this._map.isEditMode() && !app.file.fileBasedView) {
+				else if (this._map.isEditMode() && !app.file.fileBasedView &&
+						this._map.jsdialog &&
+						!this._map.jsdialog.hasDialogOpened()
+				) {
 					this._map.deletePage(this._map._docLayer._selectedPart);
 				}
 				ev.preventDefault();
