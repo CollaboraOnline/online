@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <limits>
 #include <poll.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -814,12 +815,17 @@ public:
     /// Global wakeup - signal safe: wakeup all socket polls.
     static void wakeupWorld();
 
-    /// Enable connection accounting and limiter
+    /// Enable connection accounting and limiter if passing `connectionLimit > 0`.
     /// Internally we allow one extra connection for the WS upgrade
     /// @param connectionLimit socket connection limit
     void setLimiter(size_t connectionLimit)
     {
-        _connectionLimit = connectionLimit > 0 ? connectionLimit + 1 : 0;
+        if( connectionLimit == 0 )
+            _connectionLimit = 0;
+        else if( connectionLimit < std::numeric_limits<size_t>::max() )
+            _connectionLimit = connectionLimit + 1;
+        else
+            _connectionLimit = connectionLimit;
     }
 
     bool isConnectionLimited() const { return _connectionLimit > 0; }
