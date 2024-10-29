@@ -36,15 +36,15 @@ public:
     /// StreamSocket inactivity timeout in us (3600s default). Zero disables instrument.
     std::chrono::microseconds inactivityTimeout;
 
-    /// Maximum total connections (9999 or MAX_CONNECTIONS). Zero disables instrument.
-    size_t maxConnections;
+    /// Maximum number of concurrent TCP connections. Zero disables instrument.
+    size_t maxTCPConnections;
 
     std::ostream& stream(std::ostream& os) const
     {
-        os << "Socket[MaxConnections " << maxConnections
-           << "], Inactivity[timeout "
+        os << "Socket[maxTCPConnections " << maxTCPConnections
+           << "], Inactivity-timeout "
            << std::setw(5)
-           << inactivityTimeout.count() / 1000.0 << "ms]";
+           << inactivityTimeout.count() / 1000.0 << "ms";
         return os;
     }
 

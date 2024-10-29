@@ -34,7 +34,7 @@ class UnitTimeoutConnections : public UnitTimeoutBase1
 {
     void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
-        net::Defaults.maxConnections = ConnectionLimit;
+        net::Defaults.maxTCPConnections = ConnectionLimit;
     }
 
 public:

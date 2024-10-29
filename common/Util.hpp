@@ -353,6 +353,9 @@ namespace Util
     /// Returns the total physical memory (in kB) available in the system
     size_t getTotalSystemMemoryKb();
 
+    /// Returns the maximum number of concurrent TCP connections, zero if undefined.
+    std::size_t getMaxConcurrentTCPConnections();
+
     /// Returns the numerical content of a file at @path
     std::size_t getFromFile(const char *path);
 

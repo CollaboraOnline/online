@@ -66,7 +66,7 @@ std::mutex SocketPoll::_statsMutex;
 std::atomic<size_t> SocketPoll::_statsConnectionCount(0);
 
 net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3600),
-                                     .maxConnections = 9999 };
+                                     .maxTCPConnections = 0 /* undefined default */};
 
 size_t SocketPoll::statsConnectionMod(size_t added, size_t removed) {
     if( added == 0 && removed == 0 ) {

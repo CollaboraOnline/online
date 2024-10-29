@@ -11,6 +11,7 @@
 #include <config.h>
 
 #include "Util.hpp"
+#include "FileUtil.hpp"
 
 #ifdef __linux__
 #include <sys/time.h>
@@ -158,6 +159,21 @@ std::size_t getTotalSystemMemoryKb()
     }
 
     return totalMemKb;
+}
+
+std::size_t getMaxConcurrentTCPConnections()
+{
+#ifdef __linux__
+    char line[1024+1]; // includes EOS
+    const ssize_t tcp_max_orphans = FileUtil::readDecimal("/proc/sys/net/ipv4/tcp_max_orphans", line, sizeof(line)-1, 0);
+    const ssize_t nf_conntrack_max = FileUtil::readDecimal("/proc/sys/net/nf_conntrack_max", line, sizeof(line)-1, 0);
+    LOG_DBG("MaxConcurrentTCPConnections: min(orphans " << tcp_max_orphans
+            << ", conntrack " << nf_conntrack_max << ") = "
+            << std::min(tcp_max_orphans, nf_conntrack_max));
+    return std::min(tcp_max_orphans, nf_conntrack_max);
+#else
+    return 0;
+#endif
 }
 
 std::size_t getFromCGroup(const std::string& group, const std::string& key)

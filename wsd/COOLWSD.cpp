@@ -2336,7 +2336,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     UnitWSD::get().setWSD(this);
 
     // net::Defaults: Set MaxConnections field
-    net::Defaults.maxConnections = std::max<size_t>(3, MAX_CONNECTIONS);
+    net::Defaults.maxTCPConnections = std::max(Util::getMaxConcurrentTCPConnections(), std::max<size_t>(3, MAX_CONNECTIONS));
 
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(conf);
@@ -2747,19 +2747,16 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     if (getConfigValue<bool>(conf, "home_mode.enable", false))
     {
         COOLWSD::MaxConnections = 20;
-        net::Defaults.maxConnections = COOLWSD::MaxConnections; // re-align
         COOLWSD::MaxDocuments = 10;
     }
     else
     {
         conf.setString("feedback.show", "true");
         conf.setString("welcome.enable", "true");
-        COOLWSD::MaxConnections = net::Defaults.maxConnections; // aligned w/ MAX_CONNECTIONS above
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #else
     {
-        COOLWSD::MaxConnections = net::Defaults.maxConnections; // aligned w/ MAX_CONNECTIONS above
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #endif
@@ -2935,7 +2932,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 #endif
 
     WebServerPoll = std::make_unique<TerminatingPoll>("websrv_poll");
-    WebServerPoll->setLimiter( net::Defaults.maxConnections );
+    WebServerPoll->setLimiter( net::Defaults.maxTCPConnections ); // enabled if `maxTCPConnections` > 0
 
 #if !MOBILEAPP
     net::AsyncDNS::startAsyncDNS();
