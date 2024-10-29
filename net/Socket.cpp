@@ -315,7 +315,6 @@ namespace {
 
 SocketPoll::SocketPoll(std::string threadName)
     : _name(std::move(threadName)),
-      _limitedConnections( false ),
       _connectionLimit( 0 ),
       _pollStartIndex(0),
       _stop(false),
@@ -575,8 +574,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             const size_t newConnCount = _newSockets.size();
             const size_t globCount = getStatsConnectionCount();
 
-            if( _limitedConnections &&
-                _connectionLimit > 0 &&
+            if( isConnectionLimited() &&
                 globCount + newConnCount > _connectionLimit)
             {
                 // For now we simply drop new connections
@@ -736,7 +734,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
                 _pollSockets.end());
         }
     }
-    if( _limitedConnections )
+    if( isConnectionLimited() )
     {
         // Perform bookkeeping if required
         // New connections might be dropped if exceeding limits, see _newSockets above.
@@ -865,7 +863,7 @@ void SocketPoll::removeSockets()
         _pollSockets.pop_back();
         ++removedPollSockets;
     }
-    if( _limitedConnections ) {
+    if( isConnectionLimited() ) {
         statsConnectionMod(0, removedPollSockets);
     }
 

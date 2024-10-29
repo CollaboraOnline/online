@@ -819,9 +819,10 @@ public:
     /// @param connectionLimit socket connection limit
     void setLimiter(size_t connectionLimit)
     {
-        _limitedConnections = true;
         _connectionLimit = connectionLimit > 0 ? connectionLimit + 1 : 0;
     }
+
+    bool isConnectionLimited() const { return _connectionLimit > 0; }
 
     /// Insert a new socket to be polled.
     /// A socket is removed when it is closed, readIncomingData
@@ -995,7 +996,6 @@ private:
 
     /// Debug name used for logging.
     const std::string _name;
-    bool _limitedConnections;
     size_t _connectionLimit;
 
     /// main-loop wakeup pipe
