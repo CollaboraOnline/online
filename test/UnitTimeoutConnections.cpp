@@ -34,8 +34,7 @@ class UnitTimeoutConnections : public UnitTimeoutBase1
 {
     void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
-        // to be resolved!
-        // defaults.MaxConnections = ConnectionLimit;
+        net::Defaults.maxTCPConnections = ConnectionLimit;
     }
 
 public:
@@ -49,24 +48,20 @@ public:
 
 void UnitTimeoutConnections::invokeWSDTest()
 {
-    // to be resolved!
-    if( false )
-    {
-        UnitBase::TestResult result = TestResult::Ok;
+    UnitBase::TestResult result = TestResult::Ok;
 
-        result = testHttp(ConnectionLimit, ConnectionCount);
-        if (result != TestResult::Ok)
-            exitTest(result);
+    result = testHttp(ConnectionLimit, ConnectionCount);
+    if (result != TestResult::Ok)
+        exitTest(result);
 
-        result = testWSPing(ConnectionLimit, ConnectionCount);
-        if (result != TestResult::Ok)
-            exitTest(result);
+    result = testWSPing(ConnectionLimit, ConnectionCount);
+    if (result != TestResult::Ok)
+        exitTest(result);
 
-        result = testWSDChatPing(ConnectionLimit, ConnectionCount);
-        if (result != TestResult::Ok)
-            exitTest(result);
+    result = testWSDChatPing(ConnectionLimit, ConnectionCount);
+    if (result != TestResult::Ok)
+        exitTest(result);
 
-    }
     exitTest(TestResult::Ok);
 }
 

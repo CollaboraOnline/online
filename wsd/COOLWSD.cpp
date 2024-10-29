@@ -2758,6 +2758,12 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #endif
+    {
+        LOG_DBG("net::Defaults: WSPing[timeout "
+                << net::Defaults.wsPingAvgTimeout << ", interval " << net::Defaults.wsPingInterval
+                << "], Socket[inactivityTimeout " << net::Defaults.inactivityTimeout
+                << ", maxTCPConnections " << net::Defaults.maxTCPConnections << "]");
+    }
 
 #if !MOBILEAPP
     NoSeccomp = Util::isKitInProcess() || !getConfigValue<bool>(conf, "security.seccomp", true);
@@ -2929,7 +2935,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 #endif
 
     WebServerPoll = std::make_unique<TerminatingPoll>("websrv_poll");
-    WebServerPoll->setLimiter( SocketPoll::DefaultMaxTCPConnections );
+    WebServerPoll->setLimiter( net::Defaults.maxTCPConnections );
 
 #if !MOBILEAPP
     net::AsyncDNS::startAsyncDNS();

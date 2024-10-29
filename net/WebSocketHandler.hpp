@@ -13,7 +13,6 @@
 
 #include "NetUtil.hpp"
 #include "Socket.hpp"
-#include "common/Common.hpp"
 #include "common/Log.hpp"
 #include "common/Protocol.hpp"
 #include "common/Unit.hpp"
@@ -62,8 +61,6 @@ protected:
     };
 
     static constexpr std::chrono::microseconds InitialPingDelayMicroS = std::chrono::milliseconds(25);
-    static constexpr std::chrono::microseconds PingFrequencyMicroS = std::chrono::seconds(18);
-    static constexpr std::chrono::microseconds PingTimeoutMicroS = std::chrono::seconds(12);
 
 public:
     /// Perform upgrade ourselves, or select a client web socket.
@@ -75,7 +72,7 @@ public:
         :
 #if !MOBILEAPP
         _lastPingSentTime(std::chrono::steady_clock::now() -
-                          PingFrequencyMicroS +
+                          net::Defaults.wsPingInterval +
                           std::chrono::microseconds(InitialPingDelayMicroS))
         , _isMasking(isClient && isMasking)
         , _inFragmentBlock(false)
@@ -603,7 +600,7 @@ protected:
             const auto timeSincePingMicroS
                 = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime);
             timeoutMaxMicroS
-                = std::min(timeoutMaxMicroS, (int64_t)(PingFrequencyMicroS - timeSincePingMicroS).count());
+                = std::min(timeoutMaxMicroS, (int64_t)(net::Defaults.wsPingInterval - timeSincePingMicroS).count());
         }
 #endif
         int events = POLLIN;
@@ -670,21 +667,21 @@ public:
         if (_isClient)
             return false;
 
-        if (PingTimeoutMicroS.count() > std::numeric_limits<double>::epsilon() &&
-            _pingMicroS.average() >= PingTimeoutMicroS.count())
+        if (net::Defaults.wsPingAvgTimeout > std::chrono::microseconds::zero() &&
+            _pingMicroS.average() >= net::Defaults.wsPingAvgTimeout.count())
         {
             std::shared_ptr<StreamSocket> socket = _socket.lock();
             if (socket && socket->isIPType()) // Exclude non-IP local sockets
             {
                 LOG_WRN("CheckTimeout: Timeout websocket: Ping: last " << _pingMicroS.last() << "us, avg "
-                        << _pingMicroS.average() << "us >= " << PingTimeoutMicroS.count() << "us over "
+                        << _pingMicroS.average() << "us >= " << net::Defaults.wsPingAvgTimeout.count() << "us over "
                         << (int)_pingMicroS.duration() << "s, " << *socket);
                 shutdownSilent(socket);
                 return true;
             }
         }
-        if (!_pingMicroS.initialized() || (PingFrequencyMicroS > std::chrono::microseconds::zero() &&
-                                           now - _pingMicroS.lastTime() >= PingFrequencyMicroS))
+        if (!_pingMicroS.initialized() || (net::Defaults.wsPingInterval > std::chrono::microseconds::zero() &&
+                                           now - _pingMicroS.lastTime() >= net::Defaults.wsPingInterval))
         {
             const std::shared_ptr<StreamSocket> socket = _socket.lock();
             if (socket)

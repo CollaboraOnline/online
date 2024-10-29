@@ -139,7 +139,7 @@ public:
         TerminatingPoll(threadName),
         _docBroker(docBroker)
     {
-        setLimiter( SocketPoll::DefaultMaxTCPConnections );
+        setLimiter( net::Defaults.maxTCPConnections );
     }
 
     void pollingThread() override

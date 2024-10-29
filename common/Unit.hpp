@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <atomic>
 #include <cassert>
 #include <chrono>
 #include <map>

@@ -60,7 +60,6 @@
 // Bug in pre C++17 where static constexpr must be defined. Fixed in C++17.
 constexpr std::chrono::microseconds SocketPoll::DefaultPollTimeoutMicroS;
 constexpr std::chrono::microseconds WebSocketHandler::InitialPingDelayMicroS;
-constexpr std::chrono::microseconds WebSocketHandler::PingFrequencyMicroS;
 
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
@@ -69,6 +68,11 @@ std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
 std::mutex SocketPoll::StatsMutex;
 std::atomic<size_t> SocketPoll::StatsConnectionCount(0);
+
+net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3600),
+                                     .wsPingAvgTimeout = std::chrono::seconds(12),
+                                     .wsPingInterval = std::chrono::seconds(18),
+                                     .maxTCPConnections = 200000 /* arbitrary value to be resolved */ };
 
 size_t SocketPoll::StatsConnectionMod(size_t added, size_t removed) {
     if( added == 0 && removed == 0 ) {
@@ -316,6 +320,8 @@ namespace {
 
 SocketPoll::SocketPoll(std::string threadName)
     : _name(std::move(threadName)),
+      _limitedConnections( false ),
+      _connectionLimit( 0 ),
       _pollStartIndex(0),
       _stop(false),
       _threadStarted(0),
@@ -1488,10 +1494,10 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
     // Forced removal on outside-facing IPv[46] network connections only
     const auto durLast =
         std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
-    /// TO Criteria: Violate maximum idle (DefaultInactivityimeoutMicroS default 3600s)
-    const bool isInactive = SocketPoll::DefaultInactivityimeoutMicroS > std::chrono::microseconds::zero() &&
-        durLast > SocketPoll::DefaultInactivityimeoutMicroS;
-    /// TO Criteria: Shall terminate?
+    /// Timeout criteria: Violate maximum inactivity (default 3600s)
+    const bool isInactive = net::Defaults.inactivityTimeout > std::chrono::microseconds::zero() &&
+        durLast > net::Defaults.inactivityTimeout;
+    /// Timeout criteria: Shall terminate?
     const bool isTermination = SigUtil::getTerminationFlag();
     if (isInactive || isTermination )
     {
