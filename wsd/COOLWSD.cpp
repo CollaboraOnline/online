@@ -11,7 +11,6 @@
 
 #include <config.h>
 #include <config_version.h>
-#include <NetUtil.hpp>
 
 #include "COOLWSD.hpp"
 #if ENABLE_FEATURE_LOCK
@@ -2338,12 +2337,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(conf);
 
-    // net::Defaults: Set MaxConnections field and allow UT to manipulate before using
-    {
-        net::Defaults& defaults = net::Defaults::get();
-        net::Defaults::get().MaxConnections = std::max<size_t>(3, MAX_CONNECTIONS);
-        UnitWSD::get().configNet(defaults);
-    }
     // Trace Event Logging.
     EnableTraceEventLogging = getConfigValue<bool>(conf, "trace_event[@enable]", false);
 
@@ -2750,29 +2743,21 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     if (getConfigValue<bool>(conf, "home_mode.enable", false))
     {
         COOLWSD::MaxConnections = 20;
-        net::Defaults::get().MaxConnections = COOLWSD::MaxConnections; // re-align
         COOLWSD::MaxDocuments = 10;
     }
     else
     {
         conf.setString("feedback.show", "true");
         conf.setString("welcome.enable", "true");
-        COOLWSD::MaxConnections = net::Defaults::get().MaxConnections; // aligned w/ MAX_CONNECTIONS above
+        COOLWSD::MaxConnections = MAX_CONNECTIONS;
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #else
     {
-        COOLWSD::MaxConnections = net::Defaults::get().MaxConnections; // aligned w/ MAX_CONNECTIONS above
+        COOLWSD::MaxConnections = MAX_CONNECTIONS;
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #endif
-    {
-        net::Defaults& netDefaults = net::Defaults::get();
-        LOG_DBG("net::Defaults: WSPing[Timeout "
-                << netDefaults.WSPingTimeout << ", Period " << netDefaults.WSPingPeriod << "], HTTP[Timeout "
-                << netDefaults.HTTPTimeout << "], Socket[MaxConnections " << netDefaults.MaxConnections
-                << "], SocketPoll[Timeout " << netDefaults.SocketPollTimeout << "]");
-    }
 
 #if !MOBILEAPP
     NoSeccomp = Util::isKitInProcess() || !getConfigValue<bool>(conf, "security.seccomp", true);
@@ -2944,7 +2929,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 #endif
 
     WebServerPoll = std::make_unique<TerminatingPoll>("websrv_poll");
-    WebServerPoll->setLimiter( net::Defaults::get().MaxConnections );
+    WebServerPoll->setLimiter( SocketPoll::DefaultMaxTCPConnections );
 
 #if !MOBILEAPP
     net::AsyncDNS::startAsyncDNS();
@@ -4550,12 +4535,11 @@ int COOLWSD::innerMain()
 #endif
 
     SigUtil::addActivity("coolwsd running");
-    const std::chrono::microseconds PollTimeoutMicroS = net::Defaults::get().SocketPollTimeout;
 
     while (!SigUtil::getShutdownRequestFlag())
     {
         // This timeout affects the recovery time of prespawned children.
-        std::chrono::microseconds waitMicroS = PollTimeoutMicroS * 4;
+        std::chrono::microseconds waitMicroS = SocketPoll::DefaultPollTimeoutMicroS * 4;
 
         if (UnitWSD::isUnitTesting() && !SigUtil::getShutdownRequestFlag())
         {

@@ -36,7 +36,6 @@
 #include "Util.hpp"
 #include "Buffer.hpp"
 #include "SigUtil.hpp"
-#include "NetUtil.hpp"
 
 #include "FakeSocket.hpp"
 
@@ -714,6 +713,10 @@ public:
 
     static std::unique_ptr<Watchdog> PollWatchdog;
 
+    /// Default poll time - useful to increase for debugging.
+    static constexpr std::chrono::microseconds DefaultPollTimeoutMicroS = std::chrono::seconds(64);
+    static constexpr std::chrono::microseconds DefaultInactivityimeoutMicroS = std::chrono::seconds(3600);
+    static constexpr size_t DefaultMaxTCPConnections = 200000; // arbitrary value to be resolved
     static std::atomic<bool> InhibitThreadChecks;
 
     /// Stop the polling thread.
@@ -947,7 +950,7 @@ private:
     {
         while (continuePolling())
         {
-            poll(_pollTimeout);
+            poll(DefaultPollTimeoutMicroS);
         }
     }
 
@@ -999,7 +1002,6 @@ private:
 
     /// Debug name used for logging.
     const std::string _name;
-    const std::chrono::microseconds _pollTimeout;
     bool _limitedConnections;
     size_t _connectionLimit;
 
@@ -1067,8 +1069,6 @@ public:
                  HostType hostType, ReadType readType = ReadType::NormalRead,
                  std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now() ) :
         Socket(fd, type, creationTime),
-        _pollTimeout( net::Defaults::get().SocketPollTimeout ),
-        _httpTimeout( net::Defaults::get().HTTPTimeout ),
         _hostname(std::move(host)),
         _wsState(WSState::HTTP),
         _isLocalHost(hostType == LocalHost),
@@ -1749,11 +1749,6 @@ protected:
 #endif
 
 private:
-    /// default to 64s, see net::Defaults::SocketPollTimeout
-    const std::chrono::microseconds _pollTimeout;
-    /// defaults to 30s, see net::Defaults::HTTPTimeout
-    const std::chrono::microseconds _httpTimeout;
-
     /// The hostname (or IP) of the peer we are connecting to.
     const std::string _hostname;
 

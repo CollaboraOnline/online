@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include <chrono>
 #include <functional>
 #include <string>
 #include <memory>
@@ -28,43 +27,6 @@ struct sockaddr;
 
 namespace net
 {
-
-class Defaults
-{
-public:
-    /// WebSocketHandler ping timeout in us (2s default). Zero disables metric.
-    std::chrono::microseconds WSPingTimeout;
-    /// WebSocketHandler ping period in us (3s default), i.e. duration until next ping. Zero disables metric.
-    std::chrono::microseconds WSPingPeriod;
-    /// http::Session timeout in us (30s default). Zero disables metric.
-    std::chrono::microseconds HTTPTimeout;
-
-    /// Maximum total connections (9999 or MAX_CONNECTIONS). Zero disables metric.
-    size_t MaxConnections;
-
-    /// Socket poll timeout in us (64s), useful to increase for debugging.
-    std::chrono::microseconds SocketPollTimeout;
-
-private:
-    Defaults()
-        : WSPingTimeout(std::chrono::microseconds(2000000))
-        , WSPingPeriod(std::chrono::microseconds(3000000))
-        , HTTPTimeout(std::chrono::microseconds(30000000))
-        , MaxConnections(9999)
-        , SocketPollTimeout(std::chrono::microseconds(64000000))
-    {
-    }
-
-public:
-    Defaults(const Defaults&) = delete;
-    Defaults(Defaults&&) = delete;
-
-    static Defaults& get()
-    {
-        static Defaults def;
-        return def;
-    }
-};
 
 class HostEntry
 {

@@ -57,6 +57,11 @@
 #include <Watchdog.hpp>
 #include <wasm/base64.hpp>
 
+// Bug in pre C++17 where static constexpr must be defined. Fixed in C++17.
+constexpr std::chrono::microseconds SocketPoll::DefaultPollTimeoutMicroS;
+constexpr std::chrono::microseconds WebSocketHandler::InitialPingDelayMicroS;
+constexpr std::chrono::microseconds WebSocketHandler::PingFrequencyMicroS;
+
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
@@ -190,7 +195,6 @@ bool StreamSocket::socketpair(const std::chrono::steady_clock::time_point &creat
     int rc = ::socketpair(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0, pair);
     if (rc != 0)
         return false;
-
     child = std::make_shared<StreamSocket>("save-child", pair[0], Socket::Type::Unix, true, HostType::Other, ReadType::NormalRead, creationTime);
     child->setNoShutdown();
     child->setClientAddress("save-child");
@@ -312,9 +316,6 @@ namespace {
 
 SocketPoll::SocketPoll(std::string threadName)
     : _name(std::move(threadName)),
-      _pollTimeout( net::Defaults::get().SocketPollTimeout ),
-      _limitedConnections( false ),
-      _connectionLimit( 0 ),
       _pollStartIndex(0),
       _stop(false),
       _threadStarted(0),
@@ -1089,7 +1090,7 @@ void WebSocketHandler::dumpState(std::ostream& os, const std::string& /*indent*/
 
 void StreamSocket::dumpState(std::ostream& os)
 {
-    int64_t timeoutMaxMicroS = _pollTimeout.count();
+    int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS.count();
     const int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
     os << '\t' << std::setw(6) << getFD() << "\t0x" << std::hex << events << std::dec << '\t'
        << (ignoringInput() ? "ignore\t" : "process\t") << std::setw(6) << _inBuffer.size() << '\t'
@@ -1487,14 +1488,14 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
     // Forced removal on outside-facing IPv[46] network connections only
     const auto durLast =
         std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
-    /// TO Criteria: Violate maximum idle (_pollTimeout default 64s)
-    const bool isIdle = _pollTimeout > std::chrono::microseconds::zero() &&
-        durLast > _pollTimeout;
+    /// TO Criteria: Violate maximum idle (DefaultInactivityimeoutMicroS default 3600s)
+    const bool isInactive = SocketPoll::DefaultInactivityimeoutMicroS > std::chrono::microseconds::zero() &&
+        durLast > SocketPoll::DefaultInactivityimeoutMicroS;
     /// TO Criteria: Shall terminate?
     const bool isTermination = SigUtil::getTerminationFlag();
-    if (isIdle || isTermination )
+    if (isInactive || isTermination )
     {
-        LOG_WRN("CheckRemoval: Timeout: {Idle " << isIdle
+        LOG_WRN("CheckRemoval: Timeout: {Inactive " << isInactive
                 << ", Termination " << isTermination << "}, "
                 << getStatsString(now) << ", "
                 << *this);
@@ -1529,8 +1530,8 @@ bool StreamSocket::parseHeader(const char *clientName,
 {
     assert(map._headerSize == 0 && map._messageSize == 0);
 
-    const std::chrono::duration<float, std::milli> delayMax =
-        std::chrono::duration_cast<std::chrono::milliseconds>(_httpTimeout);
+    constexpr std::chrono::duration<float, std::milli> delayMax =
+        std::chrono::duration_cast<std::chrono::milliseconds>(SocketPoll::DefaultPollTimeoutMicroS);
 
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
     std::chrono::duration<float, std::milli> delayMs = now - lastHTTPHeader;

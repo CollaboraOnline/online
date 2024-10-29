@@ -31,15 +31,9 @@ static constexpr size_t ConnectionCount = 9;
 /// Base test suite class for connection limit (no limits) using HTTP and WS sessions.
 class UnitTimeoutNone : public UnitTimeoutBase1
 {
-    void configNet(net::Defaults& /* defaults */) override
+    void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
         // Keep original values -> No timeout
-        // defaults.WSPingTimeout = std::chrono::microseconds(2000000);
-        // defaults.WSPingPeriod = std::chrono::microseconds(3000000);
-        // defaults.HTTPTimeout = std::chrono::microseconds(30000000);
-        // defaults.MaxConnections = 9999;
-        // defaults.MaxConnections = ConnectionLimit;
-        // defaults.SocketPollTimeout = std::chrono::microseconds(64000000);
     }
 
 public:
