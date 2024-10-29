@@ -139,7 +139,6 @@ public:
         TerminatingPoll(threadName),
         _docBroker(docBroker)
     {
-        setLimiter( net::Defaults.maxTCPConnections );
     }
 
     void pollingThread() override
