@@ -140,7 +140,6 @@ class PresenterConsole {
 		this._proxyPresenter.document.body.style.display = 'flex';
 		this._proxyPresenter.document.body.style.flexDirection = 'column';
 		this._proxyPresenter.document.body.style.minHeight = '100vh';
-		this._proxyPresenter.document.body.style.minWidth = '100vw';
 
 		let elem = this._proxyPresenter.document.querySelector('#main-content');
 		let slideShowBGColor = window
@@ -152,25 +151,28 @@ class PresenterConsole {
 
 		elem.style.backgroundColor = slideShowBGColor;
 		elem.style.color = slideShowColor;
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'row';
-		elem.style.flexWrap = 'wrap';
+		elem.style.display = 'grid';
+		elem.style.gridTemplateColumns = '0.65fr 0.35fr';
+		elem.style.boxSizing = 'border-box';
 		elem.style.minWidth = '100vw';
 		elem.style.minHeight = '100vh';
+		elem.style.padding = '24px';
+		elem.style.gridGap = '12px';
 
 		elem = this._proxyPresenter.document.querySelector('#first-presentation');
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
 		elem.style.flex = '1';
+		elem.style.gap = '12px';
 
 		elem = this._proxyPresenter.document.querySelector('#second-presentation');
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
 		elem.style.flex = '1';
+		elem.style.gap = '12px';
 
 		elem = this._proxyPresenter.document.querySelector('#current-presentation');
-		elem.style.height = '50vh';
-		elem.style.width = '50vw';
+		elem.style.width = '100%';
 
 		elem = this._proxyPresenter.document.querySelector('#timer');
 		elem.style.textAlign = 'center';
