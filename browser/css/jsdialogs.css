@@ -375,7 +375,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-expander-label::before,
 .ui-treeview-expandable.collapsed > .ui-treeview-expander::before,
-.ui-treeview tr[aria-expanded='false'] > td > .ui-treeview-expander::before {
+.ui-treeview div[aria-expanded='false'] > div > .ui-treeview-expander::before {
 	display: inline-block;
 	content: 'V';
 	color: transparent;
@@ -386,7 +386,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-expander-label.expanded::before,
 .ui-treeview-expandable:not(.collapsed) > .ui-treeview-expander::before,
-.ui-treeview tr[aria-expanded='true'] > td > .ui-treeview-expander::before  {
+.ui-treeview div[aria-expanded='true'] > div > .ui-treeview-expander::before  {
 	content: 'V';
 	color: transparent;
 	margin-inline-end: 7px;
@@ -397,12 +397,12 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 [data-theme='dark'] .ui-expander-label::before,
 [data-theme='dark'] .ui-treeview-expandable > .ui-treeview-expander::before,
-[data-theme='dark'] .ui-treeview tr[aria-expanded] > td > .ui-treeview-expander::before  {
+[data-theme='dark'] .ui-treeview div[aria-expanded] > div > .ui-treeview-expander::before  {
 	filter: brightness(1);
 }
 
 .ui-treeview-expandable > .ui-treeview-expander::before,
-.ui-treeview tr[aria-expanded] > td > .ui-treeview-expander::before {
+.ui-treeview div[aria-expanded] > div > .ui-treeview-expander::before {
 	margin-inline-end: 7px !important;
 	display: inline-block;
 	position: relative !important;
@@ -469,7 +469,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: block;
 	border: 1px solid var(--color-border);
 	border-radius: var(--border-radius);
-	overflow-y: hidden;
+	overflow-y: auto;
 	overflow-x: hidden;
 	max-width: 1000px;
 	min-width: 150px;
@@ -570,7 +570,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	padding-right: 10px;
 }
 
-.ui-treeview .ui-listview-entry td {
+.ui-treeview .ui-listview-entry div {
 	vertical-align: middle;
 }
 
@@ -606,28 +606,28 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 /* tree grid */
 
-.ui-treeview tr[aria-level='2'] > td:first-child {
+.ui-treeview div[aria-level='2'] > div:first-child {
 	padding-left: 2.5ch;
 }
 
-.ui-treeview tr[aria-level='3'] > td:first-child {
+.ui-treeview div[aria-level='3'] > div:first-child {
 	padding-left: 5ch;
 }
 
-.ui-treeview tr[aria-level='4'] > td:first-child {
+.ui-treeview div[aria-level='4'] > div:first-child {
 	padding-left: 7.5ch;
 }
 
-.ui-treeview tr[aria-level='5'] > td:first-child {
+.ui-treeview div[aria-level='5'] > div:first-child {
 	padding-left: 10ch;
 }
 
-.ui-treeview tr > td:first-child .ui-treeview-expander {
+.ui-treeview div > div:first-child .ui-treeview-expander {
 	display: inline-block;
 	vertical-align: top;
 }
 
-.ui-treeview tr[aria-level]:not([aria-expanded]) > td:first-child::before {
+.ui-treeview div[aria-level]:not([aria-expanded]) > div:first-child::before {
 	font-family: monospace;
 	content: 'V';
 	color: transparent;

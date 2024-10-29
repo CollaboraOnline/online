@@ -832,6 +832,18 @@ class TreeViewControl {
 		return this._container;
 	}
 
+	static countColumns(data) {
+		var maxColumns = 0;
+		for (var e in data.entries) {
+			const entry = data.entries[e];
+			const count = entry.columns ? entry.columns.length : 0;
+			if (count > maxColumns)
+				maxColumns = count;
+		}
+
+		return maxColumns;
+	}
+
 	static findEntryWithRow(entries, row) {
 		for (let i in entries) {
 			if (i == row)
@@ -935,23 +947,21 @@ class SimpleTableControl extends TreeViewControl {
 
 		this._container = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
 		this._container.id = data.id;
+		this._columns = TreeViewControl.countColumns(data);
 
-		if (data.headers && data.headers.length > 0) {
-			this._container._thead = L.DomUtil.create('thead', builder.options.cssClass,
-								  this._container);
-			L.DomUtil.create('tr', builder.options.cssClass, this._container._thead);
-		}
-
-		this._container._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
-							  ' ui-treeview-body', this._container);
+		this._container._tbody = this._container;
+		this._container._thead = this._container;
 		this._container.setAttribute('role', 'grid');
 	}
 
 	fillCells(entry, builder, tr) {
 		let td, span, text, img, icon, iconId, iconName, link, innerText;
 
-		for (let index in entry.columns) {
-			td = L.DomUtil.create('td', '', tr);
+		for (let index = 0; index < this._columns; index++) {
+			td = L.DomUtil.create('div', '', tr);
+			if (index >= entry.columns)
+				continue;
+
 			span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', td);
 			text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', span);
 			img = entry.columns[index].collapsedimage ? entry.columns[index].collapsedimage :
@@ -986,31 +996,23 @@ class SimpleTableControl extends TreeViewControl {
 
 	fillRow(data, entry, builder) {
 		let td, selectionElement;
-		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry',
-					  this._container._tbody);
-		tr.setAttribute('role', 'row');
-		if (entry.children && entry.children.length) {
-			tr.setAttribute('aria-expanded', 'false');
-		}
 
 		if (entry.state !== undefined) {
-			td = L.DomUtil.create('td', '', tr);
+			td = L.DomUtil.create('div', '', this._container._tbody);
 			selectionElement = this.createSelectionElement(td, data, entry, builder);
 		}
 
-		ComplexTableControl.selectEntry(tr, entry.selected);
+		this.fillCells(entry, builder, this._container._tbody);
+		ComplexTableControl.selectEntry(this._container._tbody.lastChild, entry.selected);
 
-		this.fillCells(entry, builder, tr);
-
-		return tr;
+		return td;
 	}
 
 	fillHeader(header, builder) {
 		if (!header)
 			return;
 
-		let th = L.DomUtil.create('th', builder.options.cssClass,
-					  this._container._thead.firstChild);
+		let th = L.DomUtil.create('th', builder.options.cssClass, this._container._thead);
 		let span = L.DomUtil.create('span', builder.options.cssClass +
 					    ' ui-treeview-header-text', th);
 		L.DomUtil.create('span', builder.options.cssClass +
@@ -1027,17 +1029,12 @@ class ComplexTableControl extends TreeViewControl {
 		super(data, builder);
 
 		this._isRealTree = isRealTree;
-		this._container = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview');
+		this._container = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview');
 		this._container.id = data.id;
+		this._columns = TreeViewControl.countColumns(data);
 
-		if (data.headers && data.headers.length > 0) {
-			this._container._thead = L.DomUtil.create('thead', builder.options.cssClass,
-								  this._container);
-			L.DomUtil.create('tr', builder.options.cssClass, this._container._thead);
-		}
-
-		this._container._tbody = L.DomUtil.create('tbody', builder.options.cssClass +
-							  ' ui-treeview-body', this._container);
+		this._container._tbody = this._container;
+		this._container._thead = this._container;
 		this._container.setAttribute('role', 'treegrid');
 		this._container.addEventListener('click', L.bind(ComplexTableControl.onClick));
 	}
@@ -1104,8 +1101,11 @@ class ComplexTableControl extends TreeViewControl {
 	fillCells(entry, builder, tr) {
 		let td, span, text, img, icon, iconId, iconName, link, innerText;
 
-		for (let index in entry.columns) {
-			td = L.DomUtil.create('td', '', tr);
+		for (let index = 0; index < this._columns; index++) {
+			td = L.DomUtil.create('div', '', tr);
+			if (index >= entry.columns)
+				continue;
+
 			span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', td);
 			text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', span);
 			img = entry.columns[index].collapsedimage ? entry.columns[index].collapsedimage :
@@ -1138,40 +1138,32 @@ class ComplexTableControl extends TreeViewControl {
 		}
 	}
 
-	fillRow(data, entry, builder, level, parent) {
-		let td, state, selectionElement;
-		let tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry',
-					  this._container._tbody);
-		tr.setAttribute('role', 'row');
-		if (this._isRealTree)
-			tr.setAttribute('aria-level', level);
-
-		if (entry.children && entry.children.length) {
-			tr.setAttribute('aria-expanded', 'false');
-		}
+	fillRow(data, entry, builder, level) {
+		let td, selectionElement;
 
 		if (entry.state !== undefined) {
-			td = L.DomUtil.create('td', '', tr);
+			td = L.DomUtil.create('div', '', this._container._tbody);
 			selectionElement = this.createSelectionElement(td, data, entry, builder);
 		}
 
-		ComplexTableControl.selectEntry(tr, entry.selected);
+		this.fillCells(entry, builder, this._container._tbody);
 
-		this.fillCells(entry, builder, tr);
+		if (this._isRealTree)
+			this._container._tbody.lastChild.setAttribute('aria-level', level);
+		if (entry.children && entry.children.length)
+			this._container._tbody.lastChild.setAttribute('aria-expanded', 'false');
 
-		if (parent.getAttribute('aria-expanded') === 'false') {
-			L.DomUtil.addClass(tr, 'hidden');
-		}
+		ComplexTableControl.selectEntry(this._container._tbody.lastChild, entry.selected);
 
-		return tr;
+		return td;
 	}
 
 	fillHeader(header, builder) {
 		if (!header)
 			return;
 
-		let th = L.DomUtil.create('th', builder.options.cssClass,
-					  this._container._thead.firstChild);
+		let th = L.DomUtil.create('div', builder.options.cssClass,
+					  this._container._thead);
 		let span = L.DomUtil.create('span', builder.options.cssClass +
 					    ' ui-treeview-header-text', th);
 		L.DomUtil.create('span', builder.options.cssClass +
@@ -1203,6 +1195,15 @@ class TreeViewFactory {
 	}
 
 	fillHeaders(headers, builder) {
+		if (!headers)
+			return;
+
+		let dummyCells = this._implementation._columns - headers.length;
+		if (dummyCells < 0) dummyCells = 0;
+
+		for (let index = 0; index < dummyCells; index++)
+			this._implementation.fillHeader({text: ''}, builder);
+
 		for (let index in headers)
 			this._implementation.fillHeader(headers[index], builder);
 	}
@@ -1218,8 +1219,11 @@ class TreeViewFactory {
 	build(data, builder, parentContainer) {
 		let container = this._implementation ? this._implementation.Container._tbody : null;
 
-		this.fillEntries(data, data.entries, builder, 1, container);
+		var gridStyle = 'display: grid; grid-template-columns: repeat(' + this._implementation._columns  + ', auto);';
+		container.style = gridStyle;
+
 		this.fillHeaders(data.headers, builder);
+		this.fillEntries(data, data.entries, builder, 1, container);
 
 		if (this._implementation && this._implementation.Container.hasChildNodes()) {
 			console.debug('treeview: new implementation');
