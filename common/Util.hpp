@@ -27,6 +27,7 @@
 #include <sstream>
 #include <string>
 #include <map>
+#include <type_traits>
 #include <utility>
 #include <inttypes.h>
 #include <cctype>
@@ -228,6 +229,25 @@ namespace Util
         }
 
         return true;
+    }
+
+    /// Returns the decimal value of given data segment if parsed correctly by `std::strtoll`,
+    /// otherwise returns `defaultValue`.
+    template<typename T,
+             std::enable_if_t<  std::is_integral_v<T>, bool> = true>
+    T dataToDecimal(const char* data, const size_t dataLen, const T defaultValue)
+    {
+        if( dataLen <= 1 ) // no space for data + EOS
+            return defaultValue;
+        char* endptr = const_cast<char*>(data) + dataLen;
+        errno = 0;  // Flush previous error indicator. Reminder: errno is thread-local
+        const long long num = std::strtoll(data, &endptr, 10);
+        if( 0 != errno || nullptr == endptr || endptr == data || // parsing error
+            ( std::is_unsigned_v<T> && num < 0 ) )               // unsigned target type
+        {
+            return defaultValue;
+        }
+        return static_cast<T>(num);
     }
 
     /// Exception safe scope count/guard

@@ -20,6 +20,7 @@
 #include <Poco/Path.h>
 
 #include "Log.hpp"
+#include "Util.hpp"
 
 namespace FileUtil
 {
@@ -182,6 +183,39 @@ namespace FileUtil
 
     /// Reads the whole file to memory. Only for small files.
     std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize = 256 * 1024);
+
+    /// Returns the decimal value of given file content being cached in the given data segment if parsed correctly by `std::strtoll`,
+    /// otherwise returns `defaultValue`.
+    template<typename T,
+             std::enable_if_t<  std::is_integral_v<T>, bool> = true>
+    T readDecimal(const std::string& path, char* data, const size_t dataLen, const T defaultValue)
+    {
+        if (dataLen <= 1) // no space for data + EOS
+            return defaultValue;
+        errno = 0;  // Flush previous error indicator. Reminder: errno is thread-local
+        const int fd = ::open(path.c_str(), O_RDONLY);
+        if (fd < 0)
+            return defaultValue;
+
+        ::memset(data, 0, dataLen);
+        size_t consumed = 0;
+        while ( dataLen-consumed-1 /* ex-EOS */ > 0 )
+        {
+            ssize_t n;
+            while ((n = ::read(fd, data+consumed, dataLen-consumed-1 /* ex-EOS */)) < 0 && errno == EINTR) {}
+            if (n < 0) // Error
+            {
+                consumed = 0;
+                break;
+            }
+            else if (n == 0) // EOF
+                break;
+            consumed += static_cast<size_t>(n);
+        }
+        ::close(fd);
+        return consumed > 0 ? Util::dataToDecimal(data, consumed+1 /* re-add EOS */, defaultValue) : defaultValue;
+    }
+
 
     /// File/Directory stat helper.
     class Stat
