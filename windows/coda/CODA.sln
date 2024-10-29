@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CODA", "CODA\CODA.csproj", "{4D688348-30C3-4141-B56E-ACAE0D143135}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B0E65DEC-1CB0-4DAA-B3ED-709F8169BC40} = {B0E65DEC-1CB0-4DAA-B3ED-709F8169BC40}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CODALib", "CODALib\CODALib.vcxproj", "{B0E65DEC-1CB0-4DAA-B3ED-709F8169BC40}"
 EndProject
