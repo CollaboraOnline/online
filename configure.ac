@@ -64,12 +64,6 @@ AC_DEFINE_UNQUOTED([COOLWSD_BUILDCONFIG],[["$ac_configure_args"]],[Options passe
 # don't include config_unused.h anywhere!
 AC_CONFIG_HEADERS([config_unused.h])
 
-# maintain config.h.in and config_version.h.in manually
-# config.h.in is for configurable variables that are stable if configure parameters are unchanged
-AC_CONFIG_HEADERS([config.h])
-# config_version.h.in is for version/hash related variables
-AC_CONFIG_HEADERS([config_version.h])
-
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
@@ -2033,6 +2027,15 @@ AC_CONFIG_FILES([Makefile
                  coolwsd.xml
                  debian/coolwsd.postinst])
 
+# maintain config.h.in and config_version.h.in manually
+# config.h.in is for configurable variables that are stable if configure parameters are unchanged
+if test "$enable_iosapp" != "yes" -a "$enable_macosapp" != "yes" -a "$enable_windowsapp" != "yes"; then
+    AC_CONFIG_HEADERS([config.h])
+fi
+
+# config_version.h.in is for version/hash related variables
+AC_CONFIG_HEADERS([config_version.h])
+
 if test "$enable_iosapp" = "yes"; then
     AC_CONFIG_FILES([ios/config.h
                  ios/Mobile/Info.plist
@@ -2042,6 +2045,10 @@ fi
 if test "$enable_macosapp" = "yes"; then
     AC_CONFIG_FILES([macos/coda/config.h
                  macos/coda/Config.xcconfig])
+fi
+
+if test "$enable_windowsapp" = "yes"; then
+    AC_CONFIG_FILES([windows/coda/config.h])
 fi
 
 if test "$enable_androidapp" = "yes"; then
