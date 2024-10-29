@@ -972,19 +972,20 @@ class TreeViewControl {
 		if (this._hasState) {
 			let td = L.DomUtil.create('div', '', this._container._tbody);
 			this.createSelectionElement(td, data, entry, builder);
+			if (this._isRealTree) td.setAttribute('aria-level', level);
 		}
 
-		this.fillCells(entry, builder, this._container._tbody);
+		this.fillCells(entry, builder, this._container._tbody, level);
 
 		if (this._isRealTree)
 			this._container._tbody.lastChild.setAttribute('aria-level', level);
 		if (entry.children && entry.children.length)
 			this._container._tbody.lastChild.setAttribute('aria-expanded', 'false');
 
-		ComplexTableControl.selectEntry(this._container._tbody.lastChild, entry.selected);
+		ComplexTableControl.selectEntry(this._container._tbody.lastChild, !!entry.selected);
 	}
 
-	fillCells(entry, builder, tr) {
+	fillCells(entry, builder, tr, level) {
 		let td, span, text, img, icon, iconId, iconName, link, innerText;
 
 		// check / radio
@@ -993,11 +994,15 @@ class TreeViewControl {
 			dummyColumns--;
 
 		// dummy columns
-		for (let index = dummyColumns; index > 0; index--)
+		for (let index = dummyColumns; index > 0; index--) {
 			td = L.DomUtil.create('div', '', tr);
+			if (level !== undefined) td.setAttribute('aria-level', level);
+		}
 
 		for (let index in entry.columns) {
 			td = L.DomUtil.create('div', '', tr);
+			td.style.display = 'flex';
+			if (level !== undefined && this._isRealTree) td.setAttribute('aria-level', level);
 
 			if (index == 0 && entry.children)
 				L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander', td);
@@ -1109,9 +1114,8 @@ class ComplexTableControl extends TreeViewControl {
 		if (!tr)
 			return;
 
-		let expand = tr.firstChild;
-		if (expand && tr.hasAttribute('aria-expanded') &&
-		    e.clientX < expand.getBoundingClientRect().left) {
+		if (tr && tr.hasAttribute('aria-expanded') &&
+		    e.clientX < tr.getBoundingClientRect().left) {
 			ComplexTableControl.toggleExpand(tr);
 			return;
 		}
