@@ -3085,6 +3085,26 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
 }
 
 #endif
+
+void copyPresetsToJail(const std::string& tmpSubDir)
+{
+#if ENABLE_DEBUG
+    // The /user/user issue is a preexisting quirk.
+    constexpr const char* AutoTextPathInJail = "/user/user/autotext/";
+
+    Poco::File autoTextFile(Poco::Path(tmpSubDir, AutoTextPathInJail));
+    autoTextFile.createDirectories();
+    if (!FileUtil::copy("test/data/autotextsample.bau",
+                   Poco::Path(autoTextFile.path(), "autotextsample.bau").toString(), false, false))
+    {
+        LOG_WRN("Failed to create install autotext");
+    }
+
+#else
+    (void)tmpSubDir;
+#endif
+}
+
 } // namespace
 
 void lokit_main(
@@ -3406,6 +3426,8 @@ void lokit_main(
             constexpr const char* HomePathInJail = "/tmp/home";
             Poco::File(Poco::Path(jailPath, HomePathInJail)).createDirectories();
             ::setenv("HOME", HomePathInJail, 1);
+
+            copyPresetsToJail(tmpSubDir);
 
             const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now() - jailSetupStartTime);
