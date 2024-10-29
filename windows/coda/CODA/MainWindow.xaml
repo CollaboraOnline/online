@@ -1,0 +1,28 @@
+﻿<!-- -*- mode: nxml; nxml-child-indent: 4; tab-width: 4; indent-tabs-mode: nil -*- -->
+<Window x:Class="CODA.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        xmlns:local="clr-namespace:CODA"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+  <Grid x:Name="Layout">
+    <wv2:WebView2 x:Name="webView2XamlElement">
+      <wv2:WebView2.CreationProperties>
+        <!--
+            By default, this CreationProperties uses the Evergreen WebView2 Runtime that's installed on the machine.
+            If you want to use a specific version of WebView2 Runtime, change BrowserExecutableFolder to point to the folder
+            with the runtime. https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution#the-fixed-version-runtime-distribution-mode
+        -->
+        <wv2:CoreWebView2CreationProperties
+            BrowserExecutableFolder=""
+            AdditionalBrowserArguments="" />
+      </wv2:WebView2.CreationProperties>
+    </wv2:WebView2>
+    <!-- The control event handlers are set in code behind so they can be reused when replacing the control after
+         a WebView2 Runtime's browser process failure
+    -->
+  </Grid>
+</Window>
