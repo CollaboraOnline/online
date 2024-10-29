@@ -3462,6 +3462,23 @@ void lokit_main(
 
             SigUtil::setVersionInfo(versionString);
 
+            LOG_INF("Kit core version is " << versionString);
+
+            // Extend the list on new releases
+            static const char *denyVersions[] = {
+                "\"22.05\"", "\"23.05\""
+            };
+            for (auto const &deny: denyVersions)
+            {
+                if (Util::findSubArray(versionString.c_str(), versionString.length(),
+                                       deny, strlen(deny)) >= 0)
+                {
+                    LOG_FTL("Mis-matching, obsolete core version, "
+                            "please update your packages: " << versionString);
+                    Util::forcedExit(EX_SOFTWARE);
+                }
+            }
+
             // Add some parameters we want to pass to the client. Could not figure out how to get
             // the configuration parameters from COOLWSD.cpp's initialize() or coolwsd.xml here, so
             // oh well, just have the value hardcoded in KitHelper.hpp. It isn't really useful to
