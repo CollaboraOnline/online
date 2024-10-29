@@ -931,6 +931,10 @@ class TreeViewControl {
 		return element.text.toLowerCase() === 'separator';
 	}
 
+	static isSingleClickActivate (treeViewData) {
+		return treeViewData.singleclickactivate === true;
+	}
+
 	isNavigator(data) {
 		return data.id && typeof(data.id) === 'string' && data.id.startsWith('Navigator');
 	}
@@ -969,24 +973,25 @@ class TreeViewControl {
 	}
 
 	fillRow(data, entry, builder, level) {
+		let selectionElement;
 		if (this._hasState) {
 			let td = L.DomUtil.create('div', '', this._container._tbody);
-			this.createSelectionElement(td, data, entry, builder);
+			selectionElement = this.createSelectionElement(td, data, entry, builder);
 			if (this._isRealTree) td.setAttribute('aria-level', level);
 		}
 
-		this.fillCells(entry, builder, this._container._tbody, level);
+		this.fillCells(entry, builder, data, this._container._tbody, level, selectionElement);
 
 		if (this._isRealTree)
 			this._container._tbody.lastChild.setAttribute('aria-level', level);
 		if (entry.children && entry.children.length)
 			this._container._tbody.lastChild.setAttribute('aria-expanded', 'false');
-
-		ComplexTableControl.selectEntry(this._container._tbody.lastChild, !!entry.selected);
 	}
 
-	fillCells(entry, builder, tr, level) {
+	fillCells(entry, builder, treeViewData, tr, level, selectionElement) {
 		let td, span, text, img, icon, iconId, iconName, link, innerText;
+
+		let rowElements = [];
 
 		// check / radio
 		let dummyColumns = this._columns - entry.columns.length;
@@ -996,13 +1001,14 @@ class TreeViewControl {
 		// dummy columns
 		for (let index = dummyColumns; index > 0; index--) {
 			td = L.DomUtil.create('div', '', tr);
-			if (level !== undefined) td.setAttribute('aria-level', level);
+			rowElements.push(td);
 		}
 
+		// regular columns
 		for (let index in entry.columns) {
 			td = L.DomUtil.create('div', '', tr);
+			rowElements.push(td);
 			td.style.display = 'flex';
-			if (level !== undefined && this._isRealTree) td.setAttribute('aria-level', level);
 
 			if (index == 0 && entry.children)
 				L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander', td);
@@ -1039,8 +1045,123 @@ class TreeViewControl {
 				innerText.innerText = entry.columns[index].text || entry.text;
 			}
 
-			td.setAttribute('role', 'gridcell');
+			for (let i in rowElements) {
+				let element = rowElements[i];
+
+				// setup properties
+				element.setAttribute('role', 'gridcell');
+				if (level !== undefined && this._isRealTree) element.setAttribute('aria-level', level);
+
+				if (entry.selected === true)
+					this.selectEntry(element, selectionElement);
+
+				const disabled = entry.enabled === false
+				if (disabled)
+					L.DomUtil.addClass(element, 'disabled');
+
+				// setup callbacks
+				var singleClick = this._singleClickActivate;
+				var clickFunction = this.createClickFunction('div', tr, element, selectionElement,
+					true, singleClick, builder, treeViewData, entry);
+				var doubleClickFunction = this.createClickFunction('div', tr, element, selectionElement,
+					false, true, builder, treeViewData, entry);
+
+				element.addEventListener('click', clickFunction);
+
+				if (!singleClick) {
+					if (window.ThisIsTheiOSApp) {
+						// TODO: remove this hack
+						element.addEventListener('click', () => {
+							if (L.DomUtil.hasClass(element, 'disabled'))
+								return;
+
+							if (entry.row == lastClickHelperRow && treeViewData.id == lastClickHelperId)
+								doubleClickFunction();
+							else {
+								lastClickHelperRow = entry.row;
+								lastClickHelperId = treeViewData.id;
+								setTimeout(() => {
+									lastClickHelperRow = -1;
+								}, 300);
+							}
+						});
+						// TODO: remove this hack
+					} else {
+						$(element).dblclick(doubleClickFunction);
+					}
+				}
+
+				// TODO: drag & drop
+			}
 		}
+	}
+
+	selectEntry(span, checkbox) {
+		L.DomUtil.addClass(span, 'selected');
+		span.setAttribute('aria-selected', true);
+		span.tabIndex = 0;
+		if (checkbox)
+			checkbox.removeAttribute('tabindex');
+	}
+
+	unselectEntry(item) {
+		L.DomUtil.removeClass(item, 'selected');
+		item.removeAttribute('aria-selected');
+		item.removeAttribute('tabindex');
+		var itemCheckbox = item.querySelector('input');
+		if (itemCheckbox)
+			itemCheckbox.tabIndex = -1;
+	}
+
+	findEntryWithRow(entries, row) {
+		for (var i in entries) {
+			if (i == row)
+				return entries[i];
+			else if (entries[i].children) {
+				var found = this.findEntryWithRow(entries[i].children, row);
+				if (found)
+					return found;
+			}
+		}
+
+		return null;
+	}
+
+	changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry) {
+		if (checkbox.checked) {
+			var foundEntry = this.findEntryWithRow(treeViewData.entries, entry.row);
+			if (foundEntry)
+				foundEntry.state = true;
+			builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
+		} else {
+			var foundEntry = this.findEntryWithRow(treeViewData.entries, entry.row);
+			if (foundEntry)
+				foundEntry.state = false;
+			builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
+		}
+	}
+
+	createClickFunction(entryClass, parentContainer, span, checkbox, select, activate,
+		builder, treeViewData, entry) {
+		return () => {
+			if (L.DomUtil.hasClass(span, 'disabled'))
+				return;
+
+			parentContainer.querySelectorAll(entryClass)
+				.forEach((item) => { this.unselectEntry(item); });
+
+			this.selectEntry(span, checkbox);
+			if (checkbox) {
+				checkbox.checked = !checkbox.checked;
+				this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);
+			}
+
+			if (select)
+				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
+
+			if (activate)
+				builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
+		};
 	}
 }
 
@@ -1054,6 +1175,7 @@ class SimpleTableControl extends TreeViewControl {
 		this._columns = TreeViewControl.countColumns(data);
 		this._hasState = TreeViewControl.hasState(data);
 		this._isNavigator = this.isNavigator(data);
+		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
 
 		this._container._tbody = this._container;
 		this._container._thead = this._container;
@@ -1078,53 +1200,6 @@ class ComplexTableControl extends TreeViewControl {
 		this._container._tbody = this._container;
 		this._container._thead = this._container;
 		this._container.setAttribute('role', 'treegrid');
-		this._container.addEventListener('click', L.bind(ComplexTableControl.onClick));
-	}
-
-	static selectEntry(tr, selected) {
-		tr.setAttribute('aria-selected', selected);
-		if (selected)
-			L.DomUtil.addClass(tr, 'selected');
-		else
-			L.DomUtil.removeClass(tr, 'selected');
-
-		return selected ? tr : null;
-	}
-
-	static toggleExpand(tr) {
-		let expanded = tr.getAttribute('aria-expanded') === 'true';
-		var level = tr.getAttribute('aria-level');
-
-		tr.setAttribute('aria-expanded', !expanded);
-
-		// show/hide sub entries
-		let sibling = tr.nextSibling;
-		while (sibling && sibling.getAttribute('aria-level') > level) {
-			if (expanded)
-				L.DomUtil.addClass(sibling, 'hidden');
-			else
-				L.DomUtil.removeClass(sibling, 'hidden');
-
-			sibling = sibling.nextSibling;
-		}
-	}
-
-	static onClick(e) {
-		let tr = e.target
-		if (!tr)
-			return;
-
-		if (tr && tr.hasAttribute('aria-expanded') &&
-		    e.clientX < tr.getBoundingClientRect().left) {
-			ComplexTableControl.toggleExpand(tr);
-			return;
-		}
-
-		let selected = tr.getAttribute('aria-selected') === 'true';
-		if (ComplexTableControl.Selected)
-			ComplexTableControl.selectEntry(ComplexTableControl.Selected, false);
-
-		ComplexTableControl.Selected = ComplexTableControl.selectEntry(tr, !selected);
 	}
 }
 
