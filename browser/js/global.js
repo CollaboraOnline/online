@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 
 /* global Module ArrayBuffer Uint8Array _ */
 
@@ -491,6 +491,22 @@ class GTKAppInitializer extends MobileAppInitializer {
 	}
 }
 
+class WindowsAppInitializer extends MobileAppInitializer {
+	constructor() {
+		super();
+
+		window.ThisIsTheWindowsApp = true;
+		window.postMobileMessage = function(msg) { window.chrome.webview.postMessage(msg); };
+
+		// FIXME: No registration of separate handlers in Windows WebView2, so just log
+		// errors and debug messages? Maybe instead send a JSON object with separate name
+		// and body? But then we would have to parse that JSON object from the string in C#
+		// anyway.
+		window.postMobileError   = function(msg) { console.log('COOL Error: ' + msg); };
+		window.postMobileDebug   = function(msg) { console.log('COOL Debug: ' + msg); };
+	}
+}
+
 class AndroidAppInitializer extends MobileAppInitializer {
 	constructor() {
 		super();
@@ -533,6 +549,8 @@ function getInitializerClass() {
 				return new IOSAppInitializer();
 			else if (osType === "GTK")
 				return new GTKAppInitializer();
+			else if (osType === "WINDOWS")
+				return new WindowsAppInitializer();
 			else if (osType === "ANDROID")
 				return new AndroidAppInitializer();
 			else if (osType === "EMSCRIPTEN")

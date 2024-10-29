@@ -133,3 +133,7 @@
 
 /* Version number of package */
 /* #undef VERSION */
+
+/* This config.h is used only in CODA for macOS app, thus we don't need the Windows version of EXPORT here */
+
+#define EXPORT /**/
