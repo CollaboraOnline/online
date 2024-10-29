@@ -486,16 +486,9 @@ class LayerDrawing {
 			return false;
 		}
 
-		var hasField = false;
 		for (const layer of layers) {
 			this.drawMasterPageLayer(layer, slideHash);
-			if (layer.isField) {
-				this.cachedMasterPages.delete(slideInfo.masterPage);
-				hasField = true;
-			}
 		}
-
-		if (hasField) return false;
 
 		return true;
 	}
