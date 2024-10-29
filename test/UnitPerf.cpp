@@ -57,8 +57,6 @@ void UnitPerf::testPerf(std::string testType, std::string fileType, std::string 
     stats = std::make_shared<Stats>();
     stats->setTypeOfTest(std::move(testType));
 
-    const std::chrono::microseconds PollTimeoutMicroS = net::Defaults::get().SocketPollTimeout;
-
     TerminatingPoll poll("performance test");
 
     std::string docName = "empty." + fileType;
@@ -74,7 +72,7 @@ void UnitPerf::testPerf(std::string testType, std::string fileType, std::string 
         stats);
 
     do {
-        poll.poll(PollTimeoutMicroS);
+        poll.poll(TerminatingPoll::DefaultPollTimeoutMicroS);
     } while (poll.continuePolling() && poll.getSocketCount() > 0);
 
     stats->dump();

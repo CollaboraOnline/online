@@ -89,9 +89,7 @@ int Stress::main(const std::vector<std::string>& args)
     }
 #endif
 
-    const std::chrono::microseconds PollTimeoutMicroS = net::Defaults::get().SocketPollTimeout;
-
-    const std::string& server = args[0];
+    std::string server = args[0];
 
     if (!strncmp(server.c_str(), "http", 4))
     {
@@ -106,7 +104,7 @@ int Stress::main(const std::vector<std::string>& args)
         StressSocketHandler::addPollFor(poll, server, args[i], args[i+1], stats);
 
     do {
-        poll.poll(PollTimeoutMicroS);
+        poll.poll(TerminatingPoll::DefaultPollTimeoutMicroS);
     } while (poll.continuePolling() && poll.getSocketCount() > 0);
 
     stats->dump();
