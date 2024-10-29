@@ -60,6 +60,7 @@
 
 #if !MOBILEAPP
 #include <wopi/CheckFileInfo.hpp>
+#include <wopi/StorageConnectionManager.hpp>
 #include <net/HttpHelper.hpp>
 #endif
 #include <sys/types.h>
@@ -1444,6 +1445,8 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
         _serverAudit.disable();
     }
 
+    const std::string userSettingsUri = wopiFileInfo->getUserSettingsUri();
+
     // Pass the ownership to the client session.
     session->setWopiFileInfo(std::move(wopiFileInfo));
     session->setUserId(userId);
@@ -1453,6 +1456,71 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     session->setUserPrivateInfo(userPrivateInfo);
     session->setServerPrivateInfo(serverPrivateInfo);
     session->setWatermarkText(watermarkText);
+
+    if (!userSettingsUri.empty())
+    {
+        const Poco::URI settingsUri{userSettingsUri};
+        std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(settingsUri));
+
+        http::Request request(settingsUri.getPathAndQuery());
+
+        request.set("User-Agent", http::getAgentString());
+
+        const std::shared_ptr<const http::Response> httpResponse
+            = httpSession->syncRequest(request);
+
+        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        {
+            LOG_ERR("Fetch of userSettings json: " << userSettingsUri << " failed: " <<
+                    httpResponse->statusLine().statusCode());
+        }
+        else
+        {
+            std::string configPath = wopiStorage->getJailPresetsPath();
+
+            const std::string& body = httpResponse->getBody();
+            Poco::JSON::Object::Ptr settings;
+            if (JsonUtil::parseJSON(body, settings))
+            {
+                if (auto autotexts = settings->get("autotext").extract<Poco::JSON::Array::Ptr>())
+                {
+                    for (std::size_t i = 0, count = autotexts->size(); i < count; ++i)
+                    {
+                        auto autotext = autotexts->get(i).extract<Poco::JSON::Object::Ptr>();
+                        if (!autotext)
+                            continue;
+                        const std::string uri = JsonUtil::getJSONValue<std::string>(autotext, "uri");
+
+                        const Poco::URI autotextUri{uri};
+                        std::shared_ptr<http::Session> autotextHttpSession(StorageConnectionManager::getHttpSession(autotextUri));
+
+                        http::Request autotextRequest(autotextUri.getPathAndQuery());
+
+                        autotextRequest.set("User-Agent", http::getAgentString());
+
+                        std::string fileName = configPath + "autotext/" + Uri::getFilenameWithExtFromURL(uri);
+
+                        const std::shared_ptr<const http::Response> autotextHttpResponse
+                            = autotextHttpSession->syncDownload(autotextRequest, fileName);
+                        if (autotextHttpResponse->statusLine().statusCode() != http::StatusCode::OK)
+                        {
+                            LOG_ERR("Fetch of userSettings autotext uri: " << uri << " failed: " <<
+                                    autotextHttpResponse->statusLine().statusCode());
+                        }
+                        else
+                        {
+                            LOG_INF("Fetch of userSettings autotext uri: " << uri << " succeeded");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                LOG_ERR("Parse of userSettings json: " << userSettingsUri << " failed");
+            }
+
+        }
+    }
 
     return templateSource;
 }
