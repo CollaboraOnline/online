@@ -323,7 +323,7 @@ public:
     };
 
     /// localStorePath the absolute root path of the chroot.
-    /// jailPath the path within the jail that the child uses.
+    /// jailPath the path within the jail that the child uses for documents.
     StorageBase(const Poco::URI& uri, const std::string& localStorePath,
                 const std::string& jailPath)
         : _localStorePath(localStorePath)
@@ -341,6 +341,9 @@ public:
     const Poco::URI& getUri() const { return _uri; }
 
     const std::string& getJailPath() const { return _jailPath; }
+
+    /// Returns the root path of the jail directory of user presets.
+    std::string getJailPresetsPath() const;
 
     /// Returns the root path to the jailed file.
     const std::string& getRootFilePath() const { return _jailedFilePath; }
