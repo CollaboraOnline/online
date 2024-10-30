@@ -41,6 +41,8 @@ app.definitions.Socket = L.Class.extend({
 		this._msgQueue = [];
 		this._delayedMessages = [];
 		this._handlingDelayedMessages = false;
+		this._inLayerTransaction = false;
+		this._slurpDuringTransaction = false;
 	},
 
 	getWebSocketBaseURI: function(map) {
@@ -355,6 +357,10 @@ app.definitions.Socket = L.Class.extend({
 				that._slurpTimer = undefined;
 				that._slurpTimerLaunchTime = undefined;
 				that._slurpTimerDelay = undefined;
+				if (that._inLayerTransaction) {
+					that._slurpDuringTransaction = true;
+					return;
+				}
 				that._emitSlurpedEvents();
 			}, delayMS);
 		}
@@ -366,6 +372,8 @@ app.definitions.Socket = L.Class.extend({
 									       {'_slurpQueue.length' : String(queueLength)});
 		if (this._map && this._map._docLayer) {
 			this._map._docLayer.pauseDrawing();
+			this._map._docLayer.beginTransaction();
+			this._inLayerTransaction = true;
 
 			// Queue an instant timeout early to try to measure the
 			// re-rendering delay before we get back to the main-loop.
@@ -447,14 +455,28 @@ app.definitions.Socket = L.Class.extend({
 			this._slurpQueue = [];
 
 		if (this._map) {
-			if (this._map._docLayer) {
-				// Resume with redraw if dirty due to previous _onMessage() calls.
-				this._map._docLayer.resumeDrawing(true);
-			}
-			// Let other layers / overlays catch up.
-			this._map.fire('messagesdone');
+			var completeCallback = () => {
+				if (this._map._docLayer)
+					this._map._docLayer.resumeDrawing(true);
 
-			this._renderEventTimerStart = performance.now();
+				// Let other layers / overlays catch up.
+				this._map.fire('messagesdone');
+
+				this._renderEventTimerStart = performance.now();
+
+				this._inLayerTransaction = false;
+				if (this._slurpDuringTransaction) {
+					this._slurpDuringTransaction = false;
+					this._queueSlurpEventEmission(1);
+				}
+			};
+
+			if (this._inLayerTransaction && this._map._docLayer) {
+				// Resume with redraw if dirty due to previous _onMessage() calls.
+				this._map._docLayer.endTransaction(completeCallback);
+			} else {
+				completeCallback();
+			}
 		}
 	},
 

@@ -21,86 +21,73 @@ if ('undefined' === typeof window) {
 
 	console.info('CanvasTileWorker initialised');
 
-	// Reusable buffer for fzstd decompression
-	var bufferSize = 0;
-	var buffer;
-
 	function onMessage(e) {
 		switch (e.data.message) {
-			case 'decompress':
-				var tile = e.data.tile;
+			case 'endTransaction':
+				var tileByteSize = e.data.tileSize * e.data.tileSize * 4;
+				var decompressed = [];
+				var buffers = [];
+				for (var tile of e.data.deltas) {
+					var buffer = self.fzstd.decompress(tile.rawDelta);
 
-				// Allocate decompression buffer
-				// FIXME: This is an over-allocation, we should store the uncompressed size
-				//        on the server-side and communicate that with the client.
-				var tileByteSize = tile.tileSize * tile.tileSize * 4;
-				if (tileByteSize > bufferSize) {
-					bufferSize = tileByteSize;
-					buffer = new Uint8Array(tileByteSize);
-				}
+					// Copy the subsection of the array with the data to give back to the main thread
+					var deltas;
+					if (tile.isKeyframe) {
+						deltas = new Uint8Array(tileByteSize);
+						L.CanvasTileUtils.unrle(
+							buffer,
+							e.data.tileSize,
+							e.data.tileSize,
+							deltas,
+						);
+					} else {
+						deltas = buffer;
 
-				var decompressedSize = 0;
-				var stream = new self.fzstd.Decompress((chunk, _isLast) => {
-					buffer.set(chunk, decompressedSize);
-					decompressedSize += chunk.length;
-				});
-				stream.push(tile.rawDelta);
-
-				// Copy the subsection of the array with the data to give back to the main thread
-				var deltas;
-				if (tile.isKeyframe) {
-					deltas = new Uint8Array(tileByteSize);
-					L.CanvasTileUtils.unrle(
-						buffer,
-						tile.tileSize,
-						tile.tileSize,
-						deltas,
-						0,
-					);
-				} else {
-					deltas = buffer.slice(0, decompressedSize);
-
-					// Unpremultiply delta updates
-					var stop = false;
-					for (var i = 0; i < deltas.length && !stop; ) {
-						switch (deltas[i]) {
-							case 99: // 'c': // copy row
-								i += 4;
-								break;
-							case 100: // 'd': // new run
-								var span = deltas[i + 3] * 4;
-								i += 4;
-								L.CanvasTileUtils.unpremultiply(deltas, span, i);
-								i += span;
-								break;
-							case 116: // 't': // terminate delta
-								stop = true;
-								i++;
-								break;
-							default:
-								console.error(
-									'[' + i + ']: ERROR: Unknown delta code ' + deltas[i],
-								);
-								i = deltas.length;
-								break;
+						// Unpremultiply delta updates
+						var stop = false;
+						for (var i = 0; i < deltas.length && !stop; ) {
+							switch (deltas[i]) {
+								case 99: // 'c': // copy row
+									i += 4;
+									break;
+								case 100: // 'd': // new run
+									var span = deltas[i + 3] * 4;
+									i += 4;
+									L.CanvasTileUtils.unpremultiply(deltas, span, i);
+									i += span;
+									break;
+								case 116: // 't': // terminate delta
+									stop = true;
+									i++;
+									break;
+								default:
+									console.error(
+										'[' + i + ']: ERROR: Unknown delta code ' + deltas[i],
+									);
+									i = deltas.length;
+									break;
+							}
 						}
 					}
-				}
 
-				// Now wrap as Uint8ClampedArray as that's what ImageData requires. Don't do
-				// it earlier to avoid unnecessarily incurring bounds-checking penalties.
-				deltas = new Uint8ClampedArray(
-					deltas.buffer,
-					deltas.byteOffset,
-					deltas.length,
-				);
+					// Now wrap as Uint8ClampedArray as that's what ImageData requires. Don't do
+					// it earlier to avoid unnecessarily incurring bounds-checking penalties.
+					tile.deltas = new Uint8ClampedArray(
+						deltas.buffer,
+						deltas.byteOffset,
+						deltas.length,
+					);
+					decompressed.push(tile);
+					buffers.push(tile.rawDelta.buffer);
+					buffers.push(tile.deltas.buffer);
+				}
 
 				postMessage(
 					{
 						message: e.data.message,
-						tile: { id: tile.id, rawDelta: tile.rawDelta, deltas: deltas },
+						deltas: decompressed,
 					},
-					[tile.rawDelta.buffer, deltas.buffer],
+					buffers,
 				);
 				break;
 
