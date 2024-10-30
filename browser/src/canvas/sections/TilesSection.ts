@@ -427,7 +427,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 			// Ensure tile is within document bounds.
 			if (tile && docLayer._isValidTile(coords)) {
 				if (!this.isJSDOM) { // perf-test code
-					if (tile.hasContent() || this.map._debug.tileOverlaysOn) { // Ensure tile is loaded
+					if (docLayer._isTileReadyToDraw(tile) || this.map._debug.tileOverlaysOn) { // Ensure tile is loaded
 						this.paint(tile, ctx, false /* async? */, now);
 					}
 					// else if (this.map._debug.tileOverlaysOn) {
@@ -831,7 +831,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 			this.beforeDraw(canvasContext);
 			var now = new Date();
 			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, mode, ctx, function (tile, coords, section): boolean {
-				if (!tile || !tile.hasContent() || !docLayer._isValidTile(coords))
+				if (!tile || !docLayer._isTileReadyToDraw(tile) || !docLayer._isValidTile(coords))
 					return false;
 
 				var tileCoords = tile.coords.getPos();
