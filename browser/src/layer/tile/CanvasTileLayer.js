@@ -1796,8 +1796,9 @@ L.CanvasTileLayer = L.Layer.extend({
 					break;
 				}
 			}
+
 			if (index === -1)
-				index = minLength;
+				index = newFormula.length-1;
 
 			// newFormulaDiffIndex have index of last added character in formula
 			// It is used during Formula Autocomplete to find partial remaining text
