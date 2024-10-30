@@ -991,7 +991,7 @@ class TreeViewControl {
 	}
 
 	fillCells(entry, builder, treeViewData, tr, level, selectionElement) {
-		let td, span, text, img, icon, iconId, iconName, link, innerText;
+		let td, expander, span, text, img, icon, iconId, iconName, link, innerText;
 
 		let rowElements = [];
 
@@ -1013,10 +1013,14 @@ class TreeViewControl {
 			td.style.display = 'flex';
 
 			if (index == 0 && entry.children && entry.children.length)
-				L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander', td);
+				expander = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander', td);
 
 			span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', td);
 			text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', span);
+
+			if (entry.text == '<dummy>')
+				continue;
+
 			img = entry.columns[index].collapsedimage ? entry.columns[index].collapsedimage :
 				entry.columns[index].expandedimage;
 			if (img) {
@@ -1054,11 +1058,6 @@ class TreeViewControl {
 				// setup properties
 				element.setAttribute('role', 'gridcell');
 
-				if (entry.children || entry.ondemand) {
-					const isExpanded = this.isExpanded(entry);
-					element.setAttribute('aria-expanded', isExpanded);
-				}
-
 				if (level !== undefined && this._isRealTree) element.setAttribute('aria-level', level);
 
 				if (entry.selected === true)
@@ -1067,6 +1066,14 @@ class TreeViewControl {
 				const disabled = entry.enabled === false
 				if (disabled)
 					L.DomUtil.addClass(element, 'disabled');
+
+				if (entry.children)
+					element.setAttribute('aria-expanded', true);
+
+				if (entry.ondemand || entry.collapsed) {
+					L.DomUtil.addClass(element, 'collapsed');
+					element.setAttribute('aria-expanded', false);
+				}
 
 				// setup callbacks
 				var singleClick = this._singleClickActivate;
@@ -1100,9 +1107,44 @@ class TreeViewControl {
 					}
 				}
 
+				if (entry.children) {
+					const toggleFunction =
+						() => { this.toggleEntry(element, treeViewData, entry, builder); };
+					if (entry.ondemand) {
+						L.DomEvent.on(expander, 'click',
+							() => { this.expandEntry(element, treeViewData, entry, builder); });
+					} else {
+						$(expander).click(toggleFunction);
+					}
+
+					// block expand/collapse on checkbox
+					if (entry.state)
+						$(selectionElement).click(toggleFunction);
+				}
+
 				// TODO: drag & drop
 			}
 		}
+	}
+
+	toggleEntry (span, treeViewData, entry, builder) {
+		if (entry.enabled === false)
+			return;
+
+		if (L.DomUtil.hasClass(span, 'collapsed'))
+			builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
+		else
+			builder.callback('treeview', 'collapse', treeViewData, entry.row, builder);
+		$(span).toggleClass('collapsed');
+	}
+
+	expandEntry (span, treeViewData, entry, builder) {
+		if (entry.enabled === false)
+			return;
+
+		if (entry.ondemand && L.DomUtil.hasClass(span, 'collapsed'))
+			builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
+		$(span).toggleClass('collapsed');
 	}
 
 	selectEntry(span, checkbox) {
