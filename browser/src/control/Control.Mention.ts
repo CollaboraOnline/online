@@ -287,10 +287,12 @@ class Mention extends L.Control.AutoCompletePopup {
 			const profileLink = this.filteredUsers[index].profile;
 			const replacement = '@' + this.getPartialMention();
 
-			if (comment)
+			if (comment) {
 				comment.autoCompleteMention(username, profileLink, replacement);
-			else this.sendHyperlinkUnoCommand(username, profileLink, replacement);
-
+			} else {
+				this.sendHyperlinkUnoCommand(username, profileLink, replacement);
+				this.map._textInput._sendText(' ');
+			}
 			this.map.fire('postMessage', {
 				msgId: 'UI_Mention',
 				args: { type: 'selected', username: username },

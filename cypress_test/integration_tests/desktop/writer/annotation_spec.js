@@ -332,12 +332,12 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		
 		cy.cGet('.cool-annotation').find('#annotation-modify-textarea-new').type(' @Ale');
 		cy.cGet('#mentionPopup').should('be.visible');
-		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').type('{enter}');
+		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').click();
 		
 		cy.cGet('#annotation-modify-textarea-new a').should('exist');
 		cy.cGet('#annotation-modify-textarea-new a').should('have.text', '@Alexandra');
 		cy.cGet('#annotation-modify-textarea-new a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
-		cy.cGet('#annotation-modify-textarea-new').should('have.text','some text0 @Alexandra');
+		cy.cGet('#annotation-modify-textarea-new').should('have.text','some text0 @Alexandra\u00A0');
 
 		cy.cGet('#annotation-save-new').click();
 		
@@ -345,7 +345,7 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#annotation-content-area-1 a').should('exist');
 		cy.cGet('#annotation-content-area-1 a').should('have.text', '@Alexandra');
 		cy.cGet('#annotation-content-area-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
-		cy.cGet('#annotation-content-area-1').should('have.text','some text0 @Alexandra');
+		cy.cGet('#annotation-content-area-1').should('have.text','some text0 @Alexandra ');
 	});
 
 	it('Modify comment by adding mention', function () {
@@ -359,12 +359,12 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#annotation-modify-textarea-1').type('{end}');
 		cy.cGet('#annotation-modify-textarea-1').type(' @Ale');
 		cy.cGet('#mentionPopup').should('be.visible');
-		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').type('{enter}');
+		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').click();
 
 		cy.cGet('#annotation-modify-textarea-1 a').should('exist');
 		cy.cGet('#annotation-modify-textarea-1 a').should('have.text', '@Alexandra');
 		cy.cGet('#annotation-modify-textarea-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
-		cy.cGet('#annotation-modify-textarea-1').should('have.text', 'some text0 @Alexandra');
+		cy.cGet('#annotation-modify-textarea-1').should('have.text', 'some text0 @Alexandra\u00A0');
 
 		cy.cGet('#annotation-save-1').click();
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
@@ -372,7 +372,7 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#annotation-content-area-1 a').should('exist');
 		cy.cGet('#annotation-content-area-1 a').should('have.text', '@Alexandra');
 		cy.cGet('#annotation-content-area-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
-		cy.cGet('#annotation-content-area-1').should('have.text', 'some text0 @Alexandra');
+		cy.cGet('#annotation-content-area-1').should('have.text', 'some text0 @Alexandra ');
 	})
 
 	it('Reply to parent comment by adding mention', function() {
@@ -386,15 +386,15 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#annotation-reply-textarea-1').type('some reply text @Ale');
 
 		cy.cGet('#mentionPopup').should('be.visible');
-		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').type('{enter}');
+		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').click();
 
 		cy.cGet('#annotation-reply-textarea-1 a').should('exist');
 		cy.cGet('#annotation-reply-textarea-1 a').should('have.text', '@Alexandra');
 		cy.cGet('#annotation-reply-textarea-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
-		cy.cGet('#annotation-reply-textarea-1').should('have.text', 'some reply text @Alexandra');
+		cy.cGet('#annotation-reply-textarea-1').should('have.text', 'some reply text @Alexandra\u00A0');
 
 		cy.cGet('#annotation-reply-1').click();
-		cy.cGet('#annotation-content-area-2').should('contain','some reply text @Alexandra');
+		cy.cGet('#annotation-content-area-2').should('contain','some reply text @Alexandra ');
 	});
 
 	it('Reply to reply comment by adding mention', function() {
@@ -413,10 +413,10 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#annotation-reply-textarea-1 a').should('exist');
 		cy.cGet('#annotation-reply-textarea-1 a').should('have.text', '@Alexandra');
 		cy.cGet('#annotation-reply-textarea-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
-		cy.cGet('#annotation-reply-textarea-1').should('have.text', 'some reply text @Alexandra');
+		cy.cGet('#annotation-reply-textarea-1').should('have.text', 'some reply text @Alexandra\u00A0');
 
 		cy.cGet('#annotation-reply-1').click();
-		cy.cGet('#annotation-content-area-2').should('contain','some reply text @Alexandra');
+		cy.cGet('#annotation-content-area-2').should('contain','some reply text @Alexandra ');
 
 		cy.cGet('#comment-annotation-menu-2').should('exist').click();
 		cy.cGet('body').contains('.context-menu-item', 'Reply').click();
@@ -428,10 +428,10 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#annotation-reply-textarea-2 a').should('exist');
 		cy.cGet('#annotation-reply-textarea-2 a').should('have.text', '@Alexandra');
 		cy.cGet('#annotation-reply-textarea-2 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
-		cy.cGet('#annotation-reply-textarea-2').should('have.text', 'some reply to reply text @Alexandra');
+		cy.cGet('#annotation-reply-textarea-2').should('have.text', 'some reply to reply text @Alexandra\u00A0');
 
 		cy.cGet('#annotation-reply-2').click();
-		cy.cGet('#annotation-content-area-3').should('contain','some reply to reply text @Alexandra');
+		cy.cGet('#annotation-content-area-3').should('contain','some reply to reply text @Alexandra ');
 	});
 
 	it('Escape should close the mentionPopup, comment should be in focus', function() {

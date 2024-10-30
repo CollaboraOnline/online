@@ -1071,7 +1071,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.commentListSection.save(this);
 	}
 
-	// for somereasone firefox adds <br> at of the end of text in contenteditable div
+	// for some reason firefox adds <br> at of the end of text in contenteditable div
 	// there have been similar reports: https://bugzilla.mozilla.org/show_bug.cgi?id=1615852
 	private removeBRTag(element: HTMLElement) {
 		if (!L.Browser.gecko)
@@ -1576,11 +1576,13 @@ export class Comment extends CanvasSectionObject {
 			container.parentNode?.insertBefore(hyperlink, container.nextSibling);
 
 			const afterTextNode = document.createTextNode(afterMention);
-			hyperlink.parentNode?.insertBefore(afterTextNode, hyperlink.nextSibling);
+			const extraSpaceNode = document.createTextNode('\u00A0');
+			hyperlink.parentNode?.insertBefore(extraSpaceNode, hyperlink.nextSibling);
+			hyperlink.parentNode?.insertBefore(afterTextNode, extraSpaceNode.nextSibling);
 
 			const newRange = document.createRange();
-			newRange.setStartAfter(hyperlink);
-			newRange.setEndAfter(hyperlink);
+			newRange.setStartAfter(extraSpaceNode);
+			newRange.setEndAfter(extraSpaceNode);
 
 			selection.removeAllRanges();
 			selection.addRange(newRange);
