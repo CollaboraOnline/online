@@ -204,6 +204,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLi
     sessions.clear();
     TST_LOG("Clearing Poller: " << testname);
     socketPollers.clear();
+    // TCP Connection Count: Just an estimation, no locking on server side
+    TST_LOG("TCP Connection Count: " << testname << ", " << StreamSocket::getExternalConnectionCount() << " / " << net::Defaults.maxExtConnections);
     TST_LOG("Ending Test: " << testname);
     return TestResult::Ok;
 }
@@ -302,6 +304,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
     sessions.clear();
     TST_LOG("Clearing Poller: " << testname);
     socketPollers.clear();
+    // TCP Connection Count: Just an estimation, no locking on server side
+    TST_LOG("TCP Connection Count: " << testname << ", " << StreamSocket::getExternalConnectionCount() << " / " << net::Defaults.maxExtConnections);
     TST_LOG("Ending Test: " << testname);
     return TestResult::Ok;
 }
@@ -397,6 +401,8 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
     sessions.clear();
     TST_LOG("Clearing Poller: " << testname);
     socketPollers.clear();
+    // TCP Connection Count: Just an estimation, no locking on server side
+    TST_LOG("TCP Connection Count: " << testname << ", " << StreamSocket::getExternalConnectionCount() << " / " << net::Defaults.maxExtConnections);
     TST_LOG("Ending Test: " << testname);
     return TestResult::Ok;
 }

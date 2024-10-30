@@ -33,6 +33,7 @@
 
 #include <common/StateEnum.hpp>
 #include "Log.hpp"
+#include "NetUtil.hpp"
 #include "Util.hpp"
 #include "Buffer.hpp"
 #include "SigUtil.hpp"
@@ -409,6 +410,7 @@ public:
         LOG_TRC("Ignore further input on socket.");
         _ignoreInput = true;
     }
+
 protected:
     /// Construct based on an existing socket fd.
     /// Used by accept() only.
@@ -1045,12 +1047,13 @@ public:
     STATE_ENUM(ReadType, NormalRead, UseRecvmsgExpectFD);
 
     /// Create a StreamSocket from native FD.
-    StreamSocket(std::string host, const int fd, Type type, bool /* isClient */,
+    StreamSocket(std::string host, const int fd, Type type, bool isClient,
                  HostType hostType, ReadType readType = ReadType::NormalRead,
                  std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now() ) :
         Socket(fd, type, creationTime),
         _hostname(std::move(host)),
         _wsState(WSState::HTTP),
+        _isClient(isClient),
         _isLocalHost(hostType == LocalHost),
         _sentHTTPContinue(false),
         _shutdownSignalled(false),
@@ -1058,6 +1061,8 @@ public:
         _inputProcessingEnabled(true)
     {
         LOG_TRC("StreamSocket ctor");
+        if (isExternalCountedConnection())
+            ++ExternalConnectionCount;
     }
 
     ~StreamSocket() override
@@ -1078,6 +1083,8 @@ public:
             _shutdownSignalled = true;
             StreamSocket::closeConnection();
         }
+        if (isExternalCountedConnection())
+            --ExternalConnectionCount;
     }
 
     bool isWebSocket() const { return _wsState == WSState::WS; }
@@ -1322,11 +1329,12 @@ public:
         _socketHandler.reset();
     }
 
-    /// Create a socket of type TSocket given an FD and a handler.
+    /// Create a socket of type TSocket derived from StreamSocket given an FD and a handler.
     /// We need this helper since the handler needs a shared_ptr to the socket
     /// but we can't have a shared_ptr in the ctor.
-    template <typename TSocket>
-    static std::shared_ptr<TSocket> create(std::string hostname, const int fd, Type type,
+    template <typename TSocket,
+              std::enable_if_t<std::is_base_of_v<StreamSocket, TSocket>, bool> = true>
+    static std::shared_ptr<TSocket> create(std::string hostname, int fd, Type type,
                                            bool isClient, HostType hostType,
                                            std::shared_ptr<ProtocolHandlerInterface> handler,
                                            ReadType readType = ReadType::NormalRead,
@@ -1623,6 +1631,8 @@ public:
 
     void dumpState(std::ostream& os) override;
 
+    static size_t getExternalConnectionCount() { return ExternalConnectionCount; }
+
 protected:
     void handshakeFail()
     {
@@ -1741,11 +1751,14 @@ private:
     STATE_ENUM(WSState, HTTP, WS);
     WSState _wsState;
 
+    /// True if owner is in client role, otherwise false (server)
+    bool _isClient:1;
+
     /// True if host is localhost
-    bool _isLocalHost;
+    bool _isLocalHost:1;
 
     /// True if we've received a Continue in response to an Expect: 100-continue
-    bool _sentHTTPContinue;
+    bool _sentHTTPContinue:1;
 
     /// True when shutdown was requested via shutdown().
     /// It's accessed from different threads.
@@ -1753,6 +1766,9 @@ private:
     std::vector<int> _incomingFDs;
     ReadType _readType;
     std::atomic_bool _inputProcessingEnabled;
+
+    bool isExternalCountedConnection() const { return !_isClient && isIPType(); }
+    static std::atomic<size_t> ExternalConnectionCount; // accepted external TCP IPv4/IPv6 socket count
 };
 
 enum class WSOpCode : unsigned char {

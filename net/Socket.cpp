@@ -65,10 +65,12 @@ std::atomic<bool> Socket::InhibitThreadChecks(false);
 
 std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
+std::atomic<size_t> StreamSocket::ExternalConnectionCount = 0;
+
 net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3600),
                                      .wsPingAvgTimeout = std::chrono::seconds(12),
                                      .wsPingInterval = std::chrono::seconds(18),
-                                     .maxTCPConnections = 200000 /* arbitrary value to be resolved */ };
+                                     .maxExtConnections = 200000 /* arbitrary value to be resolved */ };
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
@@ -1189,8 +1191,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
             _socket->setClientAddress(addrstr, clientInfo.sin6_port);
 
             LOG_TRC("Accepted socket #" << _socket->getFD() << " has family "
-                                        << clientInfo.sin6_family << " address "
-                                        << _socket->clientAddress());
+                                        << clientInfo.sin6_family << ", " << *_socket);
 #else
             std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, Socket::Type::Unix);
 #endif
