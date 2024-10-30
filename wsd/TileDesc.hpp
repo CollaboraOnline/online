@@ -92,7 +92,7 @@ public:
             _tileHeight <= 0 ||
             _imgSize < 0)
         {
-            throw BadArgumentException("Invalid tile descriptor.");
+            //throw BadArgumentException("Invalid tile descriptor.");
         }
     }
 
