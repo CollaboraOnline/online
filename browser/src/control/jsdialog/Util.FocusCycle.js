@@ -108,14 +108,7 @@ function findFocusableElement(element, direction) {
 	const focusableInSibling = findFocusableWithin(element, direction);
 	if (focusableInSibling) return focusableInSibling;
 
-	// Depending on the direction, find the next or previous sibling
-	const sibling =
-		direction === 'next'
-			? element.nextElementSibling
-			: element.previousElementSibling;
-
-	// Recursively check the next or previous sibling of the current sibling
-	return findFocusableElement(sibling, direction);
+	return findNextFocusableSiblingElement(element, direction);
 }
 
 // Helper function to find the first focusable element within an element
@@ -126,7 +119,26 @@ function findFocusableWithin(element, direction){
 		: (focusableElements.reverse().find(isFocusable));
 }
 
+function findNextFocusableSiblingElement(element, direction) {
+	// Depending on the direction, find the next or previous sibling
+	const sibling =
+		direction === 'next'
+			? element.nextElementSibling
+			: element.previousElementSibling;
+
+	// Recursively check the next or previous sibling of the current sibling is focusable
+	return findFocusableElement(sibling, direction);
+}
+
+// Helper function to find the current active element is a input TEXTAREA
+function isTextInputField(currentActiveElement){
+	return (currentActiveElement.tagName === 'INPUT' && currentActiveElement.type === 'text') || currentActiveElement.tagName === 'TEXTAREA';
+}
+
 JSDialog.IsAnyInputFocused = isAnyInputFocused;
 JSDialog.GetFocusableElements = getFocusableElements;
 JSDialog.MakeFocusCycle = makeFocusCycle;
 JSDialog.FindFocusableElement = findFocusableElement;
+JSDialog.FindNextFocusableSiblingElement = findNextFocusableSiblingElement;
+JSDialog.IsFocusable = isFocusable;
+JSDialog.IsTextInputField = isTextInputField;

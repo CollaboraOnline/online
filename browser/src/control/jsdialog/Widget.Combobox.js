@@ -242,6 +242,16 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 				break;
 			}
 		}
+		// check for drop down is in open state or not.
+		// If open then we should make focus in entries field for Arrow key navigation
+		if (event.key === 'ArrowDown' && builder.map.jsdialog.hasDropdownOpened()) {
+			const comboboxEntries =  JSDialog.GetDropdown(data.id);
+			const selectedElement = comboboxEntries.querySelector(".selected");
+			if (selectedElement) {
+				selectedElement.focus();
+				return;
+			}
+		}
 	});
 
 	var comboboxId = data.id;
