@@ -833,6 +833,9 @@ class TreeViewControl {
 	}
 
 	static countColumns(data) {
+		if (!data.entries || !data.entries.length)
+			return data.headers ? data.headers.length : 1;
+
 		var maxColumns = 0;
 		for (var e in data.entries) {
 			const entry = data.entries[e];
