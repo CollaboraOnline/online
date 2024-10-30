@@ -39,8 +39,8 @@ public:
     /// WebSocketHandler ping interval in us (18s default), i.e. duration until next ping. Zero disables instrument.
     std::chrono::microseconds wsPingInterval;
 
-    /// Maximum number of concurrent TCP connections. Zero disables instrument.
-    size_t maxTCPConnections;
+    /// Maximum number of concurrent external TCP connections. Zero disables instrument.
+    size_t maxExtConnections;
 };
 extern DefaultValues Defaults;
 

@@ -2762,7 +2762,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         LOG_DBG("net::Defaults: WSPing[timeout "
                 << net::Defaults.wsPingAvgTimeout << ", interval " << net::Defaults.wsPingInterval
                 << "], Socket[inactivityTimeout " << net::Defaults.inactivityTimeout
-                << ", maxTCPConnections " << net::Defaults.maxTCPConnections << "]");
+                << ", maxExtConnections " << net::Defaults.maxExtConnections << "]");
     }
 
 #if !MOBILEAPP
