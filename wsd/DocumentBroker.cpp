@@ -4049,7 +4049,7 @@ void DocumentBroker::handleTileResponse(const std::shared_ptr<Message>& message)
             const char* buffer = message->data().data();
             const std::size_t offset = firstLine.size() + 1;
 
-            tileCache().saveTileAndNotify(tile, buffer + offset, length - offset);
+            tileCache().saveTileAndNotify(tile.getNormalizedViewId(), tile.getEditMode(), tile.getPart(), tile, buffer + offset, length - offset);
         }
         else
         {
@@ -4081,7 +4081,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::shared_ptr<Message>& 
 
             for (const auto& tile : tileCombined.getTiles())
             {
-                tileCache().saveTileAndNotify(tile, buffer + offset, tile.getImgSize());
+                tileCache().saveTileAndNotify(tileCombined.getNormalizedViewId(), tileCombined.getEditMode(), tileCombined.getPart(), tile, buffer + offset, tile.getImgSize());
                 offset += tile.getImgSize();
             }
         }

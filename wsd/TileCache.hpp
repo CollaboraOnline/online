@@ -245,7 +245,7 @@ public:
     /// Find the tile with this description
     Tile lookupTile(const TileDesc& tile);
 
-    void saveTileAndNotify(const TileDesc& tile, const char* data, size_t size);
+    void saveTileAndNotify(int normalizedViewId, int editMode, int part, const TileDesc& tile, const char* data, size_t size);
 
     enum StreamType {
         Font,
@@ -313,7 +313,7 @@ private:
     static bool intersectsTile(const TileDesc &tileDesc, int part, int mode, int x, int y,
                                int width, int height, int normalizedViewId);
 
-    Tile saveDataToCache(const TileDesc& desc, const char* data, size_t size);
+    Tile saveDataToCache(int normalizedViewId, int editMode, int part, const TileDesc& desc, const char* data, size_t size);
     void saveDataToStreamCache(StreamType type, const std::string& fileName, const char* data,
                                size_t size);
 
@@ -329,10 +329,25 @@ private:
     /// Maximum (high watermark) size of the tilecache in bytes
     size_t _maxCacheSize;
 
-    // FIXME: should we have a tile-desc to WID map instead and a simpler lookup ?
-    std::unordered_map<TileDesc, Tile,
-                       TileDescCacheHasher,
-                       TileDescCacheCompareEq> _cache;
+    std::string getTileCombinedHash(int normalizedViewId, int editMode, int part)
+    {
+        std::string hash = std::to_string(normalizedViewId) + std::to_string(editMode) + std::to_string(part);
+
+        return hash;
+    }
+
+    unsigned long int getCachedTileCount() const {
+        unsigned long int result = 0;
+        for (auto it = _alternativeCache.begin(); it != _alternativeCache.end(); it++)
+        {
+            result += it->second.size();
+        }
+
+        return result;
+    }
+
+    std::unordered_map<std::string, std::unordered_map<uint32_t, std::pair<TileDesc, Tile>>> _alternativeCache;
+
     // FIXME: TileBeingRendered contains TileDesc too ...
     std::unordered_map<TileDesc, std::shared_ptr<TileBeingRendered>,
                        TileDescCacheHasher,

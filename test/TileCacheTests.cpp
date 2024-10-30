@@ -243,7 +243,7 @@ void TileCacheTests::testSimple()
     const int size = 1024;
     std::vector<char> data = genRandomData(size);
     data[0] = 'Z'; // compressed pixels.
-    tc.saveTileAndNotify(tile, data.data(), size);
+    tc.saveTileAndNotify(nviewid, mode, part, tile, data.data(), size);
 
     // Find Tile
     tileData = tc.lookupTile(tile);
@@ -437,7 +437,7 @@ void TileCacheTests::testSize()
         TileDesc tile(nviewid, part, mode, width, height, tilePosX, tilePosY * tileHeight,
                       tileWidth, tileHeight, -1, 0, -1);
         tile.setWireId(id++);
-        tc.saveTileAndNotify(tile, data.data(), data.size());
+        tc.saveTileAndNotify(nviewid, mode, part, tile, data.data(), data.size());
     }
     LOK_ASSERT_MESSAGE("tile cache too big", tc.getMemorySize() < maxSize);
 }

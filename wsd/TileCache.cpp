@@ -60,7 +60,7 @@ TileCache::~TileCache()
 
 void TileCache::clear()
 {
-    _cache.clear();
+    _alternativeCache.clear();
     _cacheSize = 0;
     for (std::map<std::string, Blob>& i : _streamCache)
         i.clear();
@@ -182,7 +182,7 @@ Tile TileCache::lookupTile(const TileDesc& tile)
     return ret;
 }
 
-void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const size_t size)
+void TileCache::saveTileAndNotify(int normalizedViewId, int editMode, int part, const TileDesc& desc, const char *data, const size_t size)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
@@ -192,7 +192,7 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
 
     // Ignore if we can't save the tile, things will work anyway, but slower.
     // An error indication is supposed to be sent to all users in that case.
-    Tile tile = saveDataToCache(desc, data, size);
+    Tile tile = saveDataToCache(normalizedViewId, editMode, part, desc, data, size);
     if (!_dontCache)
         LOG_TRC("Saved cache tile: " << cacheFileName(desc) << " of size " << size << " bytes");
     else
@@ -287,24 +287,18 @@ void TileCache::invalidateTiles(int part, int mode, int x, int y, int width, int
 
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
-    for (auto it = _cache.begin(); it != _cache.end();)
+    const std::string tileCombinedHash = getTileCombinedHash(normalizedViewId, mode, part);
+    auto tileSet = _alternativeCache.find(tileCombinedHash);
+
+    if (tileSet != _alternativeCache.end())
     {
-        if (intersectsTile(it->first, part, mode, x, y, width, height, normalizedViewId))
+        for (auto it = tileSet->second.begin(); it != tileSet->second.end(); it++)
         {
-            // FIXME: only want to keep as invalid keyframes in the view area(s)
-            it->second->invalidate();
-            ++it;
-        }
-#if 0
-        {
-            LOG_TRC("Removing tile: " << it->first.serialize());
-            _cacheSize -= itemCacheSize(it->second);
-            it = _cache.erase(it);
-        }
-#endif
-        else
-        {
-            ++it;
+            if (intersectsTile(it->second.first, part, mode, x, y, width, height, normalizedViewId))
+            {
+                // FIXME: only want to keep as invalid keyframes in the view area(s)
+                it->second.second->invalidate();
+            }
         }
     }
 }
@@ -478,24 +472,39 @@ bool TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
 
 Tile TileCache::findTile(const TileDesc &desc)
 {
-    const auto it = _cache.find(desc);
-    if (it != _cache.end() && it->first.getNormalizedViewId() == desc.getNormalizedViewId())
+    std::string tileCombinedHash = getTileCombinedHash(desc.getNormalizedViewId(), desc.getEditMode(), desc.getPart());
+
+    auto it = _alternativeCache.find(tileCombinedHash);
+
+    if (it != _alternativeCache.end())
     {
-        LOG_TRC("Found cache tile: " << desc.serialize() << " of size " << it->second);
-        return it->second;
+        auto it2 = it->second.find(desc.equalityHash());
+
+        if (it2 != it->second.end())
+            return it2->second.second;
     }
 
     return Tile();
 }
 
-Tile TileCache::saveDataToCache(const TileDesc &desc, const char *data, const size_t size)
+Tile TileCache::saveDataToCache(int normalizedViewId, int editMode, int part, const TileDesc &desc, const char *data, const size_t size)
 {
     if (_dontCache)
         return std::make_shared<TileData>(desc.getWireId(), data, size);
 
     ensureCacheSize();
 
-    Tile tile = _cache[desc];
+    std::string tileCombinedHash = getTileCombinedHash(normalizedViewId, editMode, part);
+
+    Tile tile;
+    if (_alternativeCache.find(tileCombinedHash) != _alternativeCache.end())
+    {
+        if (_alternativeCache[tileCombinedHash].find(desc.equalityHash()) != _alternativeCache[tileCombinedHash].end())
+        {
+            tile = _alternativeCache[tileCombinedHash].find(desc.equalityHash())->second.second;
+        }
+    }
+
     if (!tile)
     {
         if (!TileData::isKeyframe(data, size))
@@ -505,14 +514,20 @@ Tile TileCache::saveDataToCache(const TileDesc &desc, const char *data, const si
             // underlying keyframe.
             LOG_TRC("rare race between canceltiles and delta rendering - "
                     "discarding delta for " << desc.serialize());
-            _cache.erase(desc);
+            if (_alternativeCache.find(tileCombinedHash) != _alternativeCache.end())
+                _alternativeCache[tileCombinedHash].erase(desc.equalityHash());
+
             return Tile();
         }
         else
         {
             LOG_TRC("new tile for " << desc.serialize() << " of size " << size);
             tile = std::make_shared<TileData>(desc.getWireId(), data, size);
-            _cache[desc] = tile;
+
+            if (_alternativeCache.find(tileCombinedHash) == _alternativeCache.end())
+                _alternativeCache[tileCombinedHash] = std::unordered_map<uint32_t, std::pair<TileDesc, Tile>>();
+
+            _alternativeCache[tileCombinedHash].insert(std::make_pair(desc.equalityHash(), std::make_pair(desc, tile)));
             _cacheSize += itemCacheSize(tile);
         }
     }
@@ -534,9 +549,13 @@ void TileCache::assertCacheSize()
 {
 #if ENABLE_DEBUG
     size_t recalcSize = 0;
-    for (const auto& it : _cache)
+
+    for (auto it2 = _alternativeCache.begin(); it2 != _alternativeCache.end(); it2++)
     {
-        recalcSize += itemCacheSize(it.second);
+        for (const auto& it : it2->second)
+        {
+            recalcSize += itemCacheSize(it.second.second);
+        }
     }
     assert(recalcSize == _cacheSize);
 #endif
@@ -546,11 +565,11 @@ void TileCache::ensureCacheSize()
 {
     assertCacheSize();
 
-    if (_cacheSize < _maxCacheSize || _cache.size() < 2)
+    if (_cacheSize < _maxCacheSize || getCachedTileCount() < 2)
         return;
 
     LOG_TRC("Cleaning tile cache of size " << _cacheSize << " vs. " << _maxCacheSize <<
-            " with " << _cache.size() << " entries");
+            " with " << getCachedTileCount() << " entries");
 
     struct WidSize {
         TileWireId _wid;
@@ -558,8 +577,12 @@ void TileCache::ensureCacheSize()
         WidSize(TileWireId w, size_t s) : _wid(w), _size(s) {}
     };
     std::vector<WidSize> wids;
-    for (const auto& it : _cache)
-        wids.emplace_back(it.first.getWireId(), itemCacheSize(it.second));
+
+    for (const auto& it2: _alternativeCache)
+    {
+        for (const auto& it : it2.second)
+            wids.emplace_back(it.second.first.getWireId(), itemCacheSize(it.second.second));
+    }
 
     std::sort(wids.begin(), wids.end(),
               [](const WidSize &a, const WidSize &b) { return a._wid < b._wid; });
@@ -588,33 +611,36 @@ void TileCache::ensureCacheSize()
     LOG_TRC("cleaning up to wid " << maxToRemove << " between " <<
             wids.front()._wid << " and " << wids.back()._wid);
 
-    for (auto it = _cache.begin(); it != _cache.end();)
+    for (auto it2 = _alternativeCache.begin(); it2 != _alternativeCache.end(); it2++)
     {
-        if (it->first.getWireId() <= maxToRemove)
+        for (auto it = it2->second.begin(); it != it2->second.end();)
         {
-            auto rit = _tilesBeingRendered.find(it->first);
-            if (rit != _tilesBeingRendered.end())
+            if (it->second.first.getWireId() <= maxToRemove)
             {
-                // avoid getting a delta instead of a keyframe at the bottom.
-                LOG_TRC("skip cleaning tile we are waiting on: " << it->first.serialize() <<
-                        " which has " << rit->second->getSubscribers().size() << " waiting");
-                ++it;
+                auto rit = _tilesBeingRendered.find(it->second.first);
+                if (rit != _tilesBeingRendered.end())
+                {
+                    // avoid getting a delta instead of a keyframe at the bottom.
+                    LOG_TRC("skip cleaning tile we are waiting on: " << it->second.first.serialize() <<
+                            " which has " << rit->second->getSubscribers().size() << " waiting");
+                    ++it;
+                }
+                else
+                {
+                    LOG_TRC("cleaned out tile: " << it->second.first.serialize());
+                    _cacheSize -= itemCacheSize(it->second.second);
+                    it = it2->second.erase(it);
+                }
             }
             else
             {
-                LOG_TRC("cleaned out tile: " << it->first.serialize());
-                _cacheSize -= itemCacheSize(it->second);
-                it = _cache.erase(it);
+                ++it;
             }
-        }
-        else
-        {
-            ++it;
         }
     }
 
     LOG_TRC("Cache is now of size " << _cacheSize << " and " <<
-            _cache.size() << " entries after cleaning");
+            getCachedTileCount() << " entries after cleaning");
 
     assertCacheSize();
 }
@@ -653,14 +679,18 @@ void TileCache::TileBeingRendered::dumpState(std::ostream& os)
 void TileCache::dumpState(std::ostream& os)
 {
     os << "\n  TileCache:";
-    os << "\n    num: " << _cache.size() << " size: " << _cacheSize << " bytes\n";
-    for (const auto& it : _cache)
+    os << "\n    num: " << getCachedTileCount() << " size: " << _cacheSize << " bytes\n";
+
+    for (const auto& it2 : _alternativeCache)
     {
-        os << "    " << std::setw(4) << it.first.getWireId()
-           << '\t' << std::setw(6) << it.second->size() << " bytes"
-           << "\t'" << it.first.serialize() << " ";
-        it.second->dumpState(os);
-        os << "\n";
+        for (const auto& it : it2.second)
+        {
+            os << "    " << std::setw(4) << it.second.first.getWireId()
+            << '\t' << std::setw(6) << it.second.second->size() << " bytes"
+            << "\t'" << it.second.first.serialize() << " ";
+            it.second.second->dumpState(os);
+            os << "\n";
+        }
     }
 
     int type = 0;
