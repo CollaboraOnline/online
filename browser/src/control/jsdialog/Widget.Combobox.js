@@ -237,7 +237,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 
 		resetSelection();
 		for (var i in entries) {
-			if (entries[i] == this.value) {
+			if (entries[i] == this.value || entries[i].text == this.value) {
 				entries[i].selected = true;
 				break;
 			}
