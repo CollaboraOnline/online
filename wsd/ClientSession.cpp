@@ -2860,8 +2860,6 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     int normalizedViewId = getCanonicalViewId();
 
     std::vector<TileDesc> invalidTiles;
-    if((part == _clientSelectedPart && mode == _clientSelectedMode) || _isTextDocument)
-    {
         for(int paneIdx = 0; paneIdx < numPanes; ++paneIdx)
         {
             const Util::Rectangle& normalizedVisArea = paneRects[paneIdx];
@@ -2911,7 +2909,6 @@ void ClientSession::handleTileInvalidation(const std::string& message,
                 }
             }
         }
-    }
 
     if(!invalidTiles.empty())
     {
