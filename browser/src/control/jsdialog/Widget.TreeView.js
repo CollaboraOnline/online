@@ -959,6 +959,13 @@ class TreeViewControl {
 		return colorPreviewButton;
 	}
 
+	isExpanded(entry) {
+		for (let i in entry.columns)
+			if (entry.columns[i].expanded === true)
+				return true;
+		return false;
+	}
+
 	fillHeader(header, builder) {
 		if (!header)
 			return;
@@ -981,11 +988,6 @@ class TreeViewControl {
 		}
 
 		this.fillCells(entry, builder, data, this._container._tbody, level, selectionElement);
-
-		if (this._isRealTree)
-			this._container._tbody.lastChild.setAttribute('aria-level', level);
-		if (entry.children && entry.children.length)
-			this._container._tbody.lastChild.setAttribute('aria-expanded', 'false');
 	}
 
 	fillCells(entry, builder, treeViewData, tr, level, selectionElement) {
@@ -1010,7 +1012,7 @@ class TreeViewControl {
 			rowElements.push(td);
 			td.style.display = 'flex';
 
-			if (index == 0 && entry.children)
+			if (index == 0 && entry.children && entry.children.length)
 				L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander', td);
 
 			span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', td);
@@ -1030,9 +1032,6 @@ class TreeViewControl {
 				iconName = builder._createIconURL(iconId, true);
 				L.LOUtil.setImage(icon, iconName, builder.map);
 				L.DomUtil.addClass(span, 'ui-listview-expandable-with-icon');
-				if (entry.children && entry.children.length > 0) {
-					tr.setAttribute('aria-expanded', Boolean(entry.columns[index].expanded));
-				}
 			} else if (entry.columns[index].link && !this.isSeparator(entry.columns[index])) {
 				innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text',
 							     text);
@@ -1048,8 +1047,18 @@ class TreeViewControl {
 			for (let i in rowElements) {
 				let element = rowElements[i];
 
+				// mark row with common class
+				const rowClass = 'row-' + entry.row;
+				L.DomUtil.addClass(element, rowClass);
+
 				// setup properties
 				element.setAttribute('role', 'gridcell');
+
+				if (entry.children || entry.ondemand) {
+					const isExpanded = this.isExpanded(entry);
+					element.setAttribute('aria-expanded', isExpanded);
+				}
+
 				if (level !== undefined && this._isRealTree) element.setAttribute('aria-level', level);
 
 				if (entry.selected === true)
@@ -1061,9 +1070,9 @@ class TreeViewControl {
 
 				// setup callbacks
 				var singleClick = this._singleClickActivate;
-				var clickFunction = this.createClickFunction('div', tr, element, selectionElement,
+				var clickFunction = this.createClickFunction(rowClass, tr, element, selectionElement,
 					true, singleClick, builder, treeViewData, entry);
-				var doubleClickFunction = this.createClickFunction('div', tr, element, selectionElement,
+				var doubleClickFunction = this.createClickFunction(rowClass, tr, element, selectionElement,
 					false, true, builder, treeViewData, entry);
 
 				element.addEventListener('click', clickFunction);
@@ -1147,20 +1156,22 @@ class TreeViewControl {
 			if (L.DomUtil.hasClass(span, 'disabled'))
 				return;
 
-			parentContainer.querySelectorAll(entryClass)
+			parentContainer.querySelectorAll('div')
 				.forEach((item) => { this.unselectEntry(item); });
 
-			this.selectEntry(span, checkbox);
-			if (checkbox) {
-				checkbox.checked = !checkbox.checked;
-				this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);
-			}
+			parentContainer.querySelectorAll('.' + entryClass).forEach((item) => {
+				this.selectEntry(item, checkbox);
+				if (checkbox) {
+					checkbox.checked = !checkbox.checked;
+					this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);
+				}
 
-			if (select)
-				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
+				if (select)
+					builder.callback('treeview', 'select', treeViewData, entry.row, builder);
 
-			if (activate)
-				builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
+				if (activate)
+					builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
+			});
 		};
 	}
 }
