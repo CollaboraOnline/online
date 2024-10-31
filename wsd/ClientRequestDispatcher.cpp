@@ -1099,7 +1099,8 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
 
     Poco::URI requestUri(request.getURI());
     Poco::URI::QueryParameters params = requestUri.getQueryParameters();
-    std::string WOPISrc, serverId, viewId, tag, mime;
+    std::string WOPISrc, serverId, viewId, tag, mime, charset;
+
     for (const auto& it : params)
     {
         if (it.first == "WOPISrc")
@@ -1112,7 +1113,12 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
             tag = it.second;
         else if (it.first == "MimeType")
             mime = it.second;
+        else if (it.first == "charset")
+            charset = it.second;
     }
+
+    if (!charset.empty())
+        mime += ";charset=" + charset;
 
     if (serverId != Util::getProcessIdentifier())
     {
