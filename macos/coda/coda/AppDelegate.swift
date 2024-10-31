@@ -13,21 +13,18 @@ import Cocoa
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-
-
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        // Initialize the COOLWSD
+        COWrapper.shared.startServer()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+        COWrapper.shared.stopServer()
     }
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
     }
 
-
 }
-
