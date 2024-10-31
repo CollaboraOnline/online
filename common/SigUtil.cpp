@@ -63,7 +63,9 @@ enum class RunState : char
 static std::atomic<RunState> RunStateFlag(RunState::Run);
 #endif // IOS
 
+[[maybe_unused]]
 static std::atomic<bool> DumpGlobalState(false);
+[[maybe_unused]]
 static std::atomic<bool> ForwardSigUsr2Flag(false); ///< Flags to forward SIG_USR2 to children.
 
 static std::atomic<size_t> ActivityStringIndex = 0;
