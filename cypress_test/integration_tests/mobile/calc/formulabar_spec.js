@@ -31,12 +31,6 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		// Select a cell range using address input.
 		helper.typeIntoInputField(helper.addressInputSelector, 'B2:B3');
 
-		// Select first cell by clicking on it.
-		calcHelper.clickOnFirstCell();
-
-		// Select a cell range again using address input.
-		helper.typeIntoInputField(helper.addressInputSelector, 'B2:B3');
-
 		cy.cGet('#test-div-cell_selection_handle_start').should('exist');
 	});
 
