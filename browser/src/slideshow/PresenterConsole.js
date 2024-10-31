@@ -43,7 +43,6 @@ class PresenterConsole {
                                 <main id="main-content">
                                      <div id="first-presentation">
                                          <canvas id="current-presentation"></canvas>
-                                         <div id="timer"></div>
                                      </div>
                                      <div id="second-presentation">
                                          <div id='container'>
@@ -70,6 +69,10 @@ class PresenterConsole {
                                      <label>Slides</label>
                                   </button>
                                   <div id="separator1"></div>
+                                  <div id="timer-container">
+                                     <div id="today"> </div>
+                                     <div id="timer"></div>
+                                  </div>
                                 </div>
                                 <footer>
                                 </footer>
@@ -197,13 +200,6 @@ class PresenterConsole {
 		elem.style.height = '50vh';
 		elem.style.width = '50vw';
 
-		elem = this._proxyPresenter.document.querySelector('#timer');
-		elem.style.textAlign = 'center';
-		elem.style.verticalAlign = 'middle';
-		elem.style.fontSize = 'large';
-		elem.style.fontWeight = 'bold';
-		elem.style.height = '50%';
-
 		elem = this._proxyPresenter.document.querySelector('#container');
 		elem.style.height = '50vh';
 		elem.style.width = '50vw';
@@ -267,6 +263,26 @@ class PresenterConsole {
 		elem.style.borderLeft = '1px';
 		elem.style.borderColor = 'white';
 		elem.style.borderStyle = 'solid';
+
+		elem = this._proxyPresenter.document.querySelector('#timer-container');
+		elem.style.height = '33px';
+
+		elem = this._proxyPresenter.document.querySelector('#today');
+		elem.style.paddingLeft = '4px';
+		elem.style.paddingRight = '4px';
+		elem.style.textAlign = 'center';
+		elem.style.verticalAlign = 'middle';
+		elem.style.fontSize = 'large';
+		elem.style.fontWeight = 'bold';
+		elem.style.color = 'white';
+
+		elem = this._proxyPresenter.document.querySelector('#timer');
+		elem.style.textAlign = 'center';
+		elem.style.verticalAlign = 'middle';
+		elem.style.fontSize = 'large';
+		elem.style.fontWeight = 'bold';
+		elem.style.color = 'yellow';
+
 		this._ticks = 0;
 		this._onTimer();
 
@@ -317,6 +333,14 @@ class PresenterConsole {
 				':' +
 				String(sec).padStart(2, '0');
 		}
+
+		let dateTime = new Date();
+		elem = this._proxyPresenter.document.querySelector('#today');
+		elem.innerText = dateTime.toLocaleDateString(String.Locale, {
+			hour: '2-digit',
+			minute: '2-digit',
+			second: '2-digit',
+		});
 
 		if (this._ticks % 2 == 0 && typeof this._lastIndex !== 'undefined') {
 			setTimeout(
