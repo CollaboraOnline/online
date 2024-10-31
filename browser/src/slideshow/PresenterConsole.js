@@ -91,6 +91,11 @@ class PresenterConsole {
                                      <img src="images/presenterscreen-ButtonHelpNormal.png">
                                      <label>Help</label>
                                   </button>
+                                  <div id="separator4"></div>
+                                  <button type="button" id="exit" disabled>
+                                     <img src="images/presenterscreen-ButtonExitPresenterNormal.png">
+                                     <label>Exit</label>
+                                  </button>
                                 </div>
                                 <footer>
                                 </footer>
@@ -128,6 +133,8 @@ class PresenterConsole {
 			button = this._proxyPresenter.document.querySelector('#pause');
 			button.disabled = false;
 			button = this._proxyPresenter.document.querySelector('#exchange');
+			button.disabled = false;
+			button = this._proxyPresenter.document.querySelector('#exit');
 			button.disabled = false;
 		}
 	}
@@ -362,6 +369,23 @@ class PresenterConsole {
 		elem.style.color = 'white';
 		elem.addEventListener('click', L.bind(this._onHelp, this));
 
+		elem = this._proxyPresenter.document.querySelector('#separator4');
+		elem.style.width = '1px';
+		elem.style.height = '30px';
+		elem.style.borderLeft = '1px';
+		elem.style.borderColor = 'white';
+		elem.style.borderStyle = 'solid';
+
+		elem = this._proxyPresenter.document.querySelector('#exit');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.justifyContent = 'center';
+		elem.style.alignItems = 'center';
+		elem.style.backgroundColor = 'transparent';
+		elem.style.border = 'none';
+		elem.style.color = 'white';
+		elem.addEventListener('click', L.bind(this._onExit, this));
+
 		this._ticks = 0;
 		this._onTimer();
 
@@ -399,6 +423,11 @@ class PresenterConsole {
 
 	_onRestart(e) {
 		this._ticks = 0;
+		e.stopPropagation();
+	}
+
+	_onExit(e) {
+		this._proxyPresenter.close();
 		e.stopPropagation();
 	}
 
