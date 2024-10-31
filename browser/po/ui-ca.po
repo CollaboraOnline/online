@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-23 18:49+0200\n"
-"PO-Revision-Date: 2024-10-05 07:15+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2024-10-31 02:43+0000\n"
+"Last-Translator: Bernat Romagosa <bernat@romagosa.work>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.8.2-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -394,7 +394,7 @@ msgstr " s"
 
 #: js/global.js:1380
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "El clúster s'està redimensionant. Reintentant..."
 
 #: js/global.js:1382
 msgid "Document is migrating to new server, retrying..."
@@ -402,7 +402,7 @@ msgstr "S'està migrant el document a un nou servidor. S'està intentant de nou.
 
 #: js/global.js:1384
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "No s'ha pogut obtenir el RouteToken del controlador"
 
 #: src/control/ColorPicker.ts:269
 msgid "No color"
@@ -1079,32 +1079,32 @@ msgstr "Document HTML (.html)"
 #: src/control/Control.Menubar.js:412
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Gràfics Vectorials Escalables (.svg)"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Diapositiva actual com a Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Diapositiva actual com a Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Diapositiva actual com a Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Diapositiva actual com a Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.js:422
 #: src/control/Control.NotebookbarBuilder.js:666
@@ -1128,7 +1128,7 @@ msgstr "Visualització mestra"
 
 #: src/control/Control.Menubar.js:473
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "Arxiu multimèdia local..."
 
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:1108
 #: src/control/Control.PresentationBar.js:127
@@ -1141,7 +1141,7 @@ msgstr "Presenta la diapositiva actual"
 
 #: src/control/Control.Menubar.js:541
 msgid "Present in new window"
-msgstr ""
+msgstr "Presentar en una finestra nova"
 
 #: src/control/Control.Menubar.js:578 src/control/Control.Menubar.js:1068
 #: src/control/Control.Menubar.js:1129
@@ -1234,22 +1234,22 @@ msgstr "Regles superior/inferior..."
 #: src/control/Control.Menubar.js:863
 #: src/control/jsdialog/Definitions.Menu.ts:323
 msgid "Top N elements..."
-msgstr ""
+msgstr "N elements superiors..."
 
 #: src/control/Control.Menubar.js:864
 #: src/control/jsdialog/Definitions.Menu.ts:327
 msgid "Top N percent..."
-msgstr ""
+msgstr "N per cent superior..."
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:331
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "N elements inferiors..."
 
 #: src/control/Control.Menubar.js:866
 #: src/control/jsdialog/Definitions.Menu.ts:335
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "N per cent inferior..."
 
 #: src/control/Control.Menubar.js:867
 #: src/control/jsdialog/Definitions.Menu.ts:339
@@ -1461,7 +1461,7 @@ msgstr "Mostra l'historial"
 #: src/control/Control.NotebookbarImpress.js:321
 #: src/control/Control.NotebookbarWriter.js:322
 msgid "Signature"
-msgstr ""
+msgstr "Signatura"
 
 #: src/control/Control.NotebookbarCalc.js:268
 #: src/control/Control.NotebookbarDraw.js:303
@@ -1588,7 +1588,7 @@ msgstr "Visualització compacta"
 #: src/control/Control.NotebookbarImpress.js:463
 #: src/control/Control.NotebookbarWriter.js:1499
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Contraure pestanyes"
 
 #: src/control/Control.NotebookbarCalc.js:1242
 #: src/control/Control.NotebookbarDraw.js:394
@@ -1621,7 +1621,7 @@ msgstr "Taula"
 
 #: src/control/Control.NotebookbarDraw.js:257
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "Document PDF (.pdf) - Avançat"
 
 #: src/control/Control.NotebookbarDraw.js:382
 #: src/control/Control.NotebookbarImpress.js:439
@@ -1645,19 +1645,19 @@ msgstr "Presentació"
 
 #: src/control/Control.NotebookbarImpress.js:366
 msgid "Present in Window"
-msgstr ""
+msgstr "Presentar en finestra"
 
 #: src/control/Control.NotebookbarImpress.js:374
 msgid "Presenter Console"
-msgstr ""
+msgstr "Consola del presentador"
 
 #: src/control/Control.NotebookbarImpress.js:486
 msgid "Show Grid"
-msgstr ""
+msgstr "Mostra la quadrícula"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Ajusta a la quadrícula"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1665,11 +1665,11 @@ msgstr "Formulari"
 
 #: src/control/Control.NotebookbarWriter.js:351
 msgid "Go Online"
-msgstr ""
+msgstr "Connecta't"
 
 #: src/control/Control.NotebookbarWriter.js:351
 msgid "Go Offline"
-msgstr ""
+msgstr "Desconnecta't"
 
 #: src/control/Control.NotebookbarWriter.js:1353
 msgid "Rich Text"
