@@ -73,6 +73,10 @@ class PresenterConsole {
                                      <div id="today"> </div>
                                      <div id="timer"></div>
                                   </div>
+                                  <button type="button" id="pause" disabled>
+                                     <img src="images/presenterscreen-ButtonPauseTimerNormal.png">
+                                     <label>Pause</label>
+                                  </button>
                                   <button type="button" id="restart" disabled>
                                      <img src="images/presenterscreen-ButtonRestartTimerNormal.png">
                                      <label>Restart</label>
@@ -101,6 +105,7 @@ class PresenterConsole {
 
 		this._timer = setInterval(L.bind(this._onTimer, this), 1000);
 		this._ticks = 0;
+		this._pause = false;
 
 		this._previews = new Array(this._presenter._getSlidesCount());
 		if (this._previews.length > 1) {
@@ -109,6 +114,8 @@ class PresenterConsole {
 			button = this._proxyPresenter.document.querySelector('#next');
 			button.disabled = false;
 			button = this._proxyPresenter.document.querySelector('#restart');
+			button.disabled = false;
+			button = this._proxyPresenter.document.querySelector('#pause');
 			button.disabled = false;
 		}
 	}
@@ -289,6 +296,16 @@ class PresenterConsole {
 		elem.style.fontWeight = 'bold';
 		elem.style.color = 'yellow';
 
+		elem = this._proxyPresenter.document.querySelector('#pause');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.justifyContent = 'center';
+		elem.style.alignItems = 'center';
+		elem.style.backgroundColor = 'transparent';
+		elem.style.border = 'none';
+		elem.style.color = 'white';
+		elem.addEventListener('click', L.bind(this._onPause, this));
+
 		elem = this._proxyPresenter.document.querySelector('#restart');
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
@@ -324,6 +341,11 @@ class PresenterConsole {
 		e.stopPropagation();
 	}
 
+	_onPause(e) {
+		this._pause = !this._pause;
+		e.stopPropagation();
+	}
+
 	_onRestart(e) {
 		this._ticks = 0;
 		e.stopPropagation();
@@ -339,20 +361,23 @@ class PresenterConsole {
 		}
 
 		let sec, min, hour, elem;
-		++this._ticks;
-		sec = this._ticks % 60;
-		min = Math.floor(this._ticks / 60);
-		hour = Math.floor(min / 60);
-		min = min % 60;
 
-		elem = this._proxyPresenter.document.querySelector('#timer');
-		if (elem) {
-			elem.innerText =
-				String(hour).padStart(2, '0') +
-				':' +
-				String(min).padStart(2, '0') +
-				':' +
-				String(sec).padStart(2, '0');
+		if (!this._pause) {
+			++this._ticks;
+			sec = this._ticks % 60;
+			min = Math.floor(this._ticks / 60);
+			hour = Math.floor(min / 60);
+			min = min % 60;
+
+			elem = this._proxyPresenter.document.querySelector('#timer');
+			if (elem) {
+				elem.innerText =
+					String(hour).padStart(2, '0') +
+					':' +
+					String(min).padStart(2, '0') +
+					':' +
+					String(sec).padStart(2, '0');
+			}
 		}
 
 		let dateTime = new Date();
