@@ -86,6 +86,11 @@ class PresenterConsole {
                                      <img src="images/presenterscreen-ButtonSwitchMonitorNormal.png">
                                      <label>Exchange</label>
                                   </button>
+                                  <div id="separator3"></div>
+                                  <button type="button" id="help" disabled>
+                                     <img src="images/presenterscreen-ButtonHelpNormal.png">
+                                     <label>Help</label>
+                                  </button>
                                 </div>
                                 <footer>
                                 </footer>
@@ -340,6 +345,23 @@ class PresenterConsole {
 		elem.style.color = 'white';
 		elem.addEventListener('click', L.bind(this._onExchange, this));
 
+		elem = this._proxyPresenter.document.querySelector('#separator3');
+		elem.style.width = '1px';
+		elem.style.height = '30px';
+		elem.style.borderLeft = '1px';
+		elem.style.borderColor = 'white';
+		elem.style.borderStyle = 'solid';
+
+		elem = this._proxyPresenter.document.querySelector('#help');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.justifyContent = 'center';
+		elem.style.alignItems = 'center';
+		elem.style.backgroundColor = 'transparent';
+		elem.style.border = 'none';
+		elem.style.color = 'white';
+		elem.addEventListener('click', L.bind(this._onHelp, this));
+
 		this._ticks = 0;
 		this._onTimer();
 
@@ -379,6 +401,8 @@ class PresenterConsole {
 		this._ticks = 0;
 		e.stopPropagation();
 	}
+
+	_onHelp() {}
 
 	_onNotes() {}
 
