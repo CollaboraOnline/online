@@ -41,7 +41,6 @@
 // number of child processes, each which handles a viewing (editing) session for one document.
 
 #include <unistd.h>
-#include <stdlib.h>
 #include <sysexits.h>
 
 #include <sys/types.h>

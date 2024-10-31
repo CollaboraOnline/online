@@ -11,11 +11,11 @@
 
 #include "config.h"
 
-#include <errno.h>
 #include <fcntl.h>
 #include <poll.h>
 
 #include <cassert>
+#include <cerrno>
 #include <chrono>
 #include <condition_variable>
 #include <cstdlib>

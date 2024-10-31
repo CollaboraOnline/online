@@ -13,8 +13,8 @@
 
 #include "KitQueue.hpp"
 
-#include <string.h>
 #include <climits>
+#include <cstring>
 #include <algorithm>
 #include <string>
 #include <string_view>
