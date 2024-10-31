@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE16C9F02CD51F58005E5960 /* hello.odt in Resources */ = {isa = PBXBuildFile; fileRef = BE16C9EF2CD51F58005E5960 /* hello.odt */; };
 		BE2231B82CC679DE00385A9C /* Crypto-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231B72CC679DE00385A9C /* Crypto-stub.cpp */; };
 		BE2231BA2CC67FDE00385A9C /* coolwsd-fork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */; };
 		BE2231BC2CC6804D00385A9C /* Util-mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231BB2CC6804D00385A9C /* Util-mobile.cpp */; };
@@ -69,71 +70,72 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BE2231B72CC679DE00385A9C /* Crypto-stub.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Crypto-stub.cpp"; path = "/Users/kendy/Projects/collabora/online/common/Crypto-stub.cpp"; sourceTree = "<absolute>"; };
-		BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "coolwsd-fork.cpp"; path = "/Users/kendy/Projects/collabora/online/wsd/coolwsd-fork.cpp"; sourceTree = "<absolute>"; };
-		BE2231BB2CC6804D00385A9C /* Util-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-mobile.cpp"; path = "/Users/kendy/Projects/collabora/online/common/Util-mobile.cpp"; sourceTree = "<absolute>"; };
-		BE22492B2CC79AD700385A9C /* cool.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = cool.html; path = /Users/kendy/Projects/collabora/online/browser/dist/cool.html; sourceTree = "<absolute>"; };
-		BE22492D2CC79BAE00385A9C /* bundle.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = bundle.css; path = /Users/kendy/Projects/collabora/online/browser/dist/bundle.css; sourceTree = "<absolute>"; };
-		BE22492E2CC79BAE00385A9C /* bundle.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = /Users/kendy/Projects/collabora/online/browser/dist/bundle.js; sourceTree = "<absolute>"; };
-		BE22492F2CC79BAE00385A9C /* cool-help.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = "cool-help.html"; path = "/Users/kendy/Projects/collabora/online/browser/dist/cool-help.html"; sourceTree = "<absolute>"; };
-		BE2249302CC79BAE00385A9C /* device-desktop.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "device-desktop.css"; path = "/Users/kendy/Projects/collabora/online/browser/dist/device-desktop.css"; sourceTree = "<absolute>"; };
-		BE2249312CC79BAE00385A9C /* global.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = global.js; path = /Users/kendy/Projects/collabora/online/browser/dist/global.js; sourceTree = "<absolute>"; };
+		BE16C9EF2CD51F58005E5960 /* hello.odt */ = {isa = PBXFileReference; lastKnownFileType = file; name = hello.odt; path = ../../../test/data/hello.odt; sourceTree = "<group>"; };
+		BE2231B72CC679DE00385A9C /* Crypto-stub.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Crypto-stub.cpp"; path = "../../../../common/Crypto-stub.cpp"; sourceTree = "<group>"; };
+		BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "coolwsd-fork.cpp"; path = "../../../../wsd/coolwsd-fork.cpp"; sourceTree = "<group>"; };
+		BE2231BB2CC6804D00385A9C /* Util-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-mobile.cpp"; path = "../../../../common/Util-mobile.cpp"; sourceTree = "<group>"; };
+		BE22492B2CC79AD700385A9C /* cool.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = cool.html; path = ../../../browser/dist/cool.html; sourceTree = "<group>"; };
+		BE22492D2CC79BAE00385A9C /* bundle.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = bundle.css; path = ../../../browser/dist/bundle.css; sourceTree = "<group>"; };
+		BE22492E2CC79BAE00385A9C /* bundle.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../browser/dist/bundle.js; sourceTree = "<group>"; };
+		BE22492F2CC79BAE00385A9C /* cool-help.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = "cool-help.html"; path = "../../../browser/dist/cool-help.html"; sourceTree = "<group>"; };
+		BE2249302CC79BAE00385A9C /* device-desktop.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "device-desktop.css"; path = "../../../browser/dist/device-desktop.css"; sourceTree = "<group>"; };
+		BE2249312CC79BAE00385A9C /* global.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = global.js; path = ../../../browser/dist/global.js; sourceTree = "<group>"; };
 		BE22AA9B2CC7AE7400385A9C /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../browser/dist/images; sourceTree = "<group>"; };
-		BEA263522CBE38E20007435A /* Authorization.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Authorization.hpp; path = /Users/kendy/Projects/collabora/online/common/Authorization.hpp; sourceTree = "<absolute>"; };
-		BEA263532CBE38E20007435A /* Authorization.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Authorization.cpp; path = /Users/kendy/Projects/collabora/online/common/Authorization.cpp; sourceTree = "<absolute>"; };
-		BEA263542CBE38E20007435A /* ConfigUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ConfigUtil.hpp; path = /Users/kendy/Projects/collabora/online/common/ConfigUtil.hpp; sourceTree = "<absolute>"; };
-		BEA263552CBE38E20007435A /* ConfigUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigUtil.cpp; path = /Users/kendy/Projects/collabora/online/common/ConfigUtil.cpp; sourceTree = "<absolute>"; };
-		BEA263562CBE38E20007435A /* FileUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FileUtil.cpp; path = /Users/kendy/Projects/collabora/online/common/FileUtil.cpp; sourceTree = "<absolute>"; };
-		BEA263572CBE38E20007435A /* Log.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Log.hpp; path = /Users/kendy/Projects/collabora/online/common/Log.hpp; sourceTree = "<absolute>"; };
-		BEA263582CBE38E20007435A /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = /Users/kendy/Projects/collabora/online/common/Log.cpp; sourceTree = "<absolute>"; };
-		BEA263592CBE38E20007435A /* Png.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Png.hpp; path = /Users/kendy/Projects/collabora/online/common/Png.hpp; sourceTree = "<absolute>"; };
-		BEA2635A2CBE38E20007435A /* Protocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Protocol.hpp; path = /Users/kendy/Projects/collabora/online/common/Protocol.hpp; sourceTree = "<absolute>"; };
-		BEA2635B2CBE38E20007435A /* Protocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Protocol.cpp; path = /Users/kendy/Projects/collabora/online/common/Protocol.cpp; sourceTree = "<absolute>"; };
-		BEA2635C2CBE38E20007435A /* Session.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Session.hpp; path = /Users/kendy/Projects/collabora/online/common/Session.hpp; sourceTree = "<absolute>"; };
-		BEA2635D2CBE38E20007435A /* Session.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Session.cpp; path = /Users/kendy/Projects/collabora/online/common/Session.cpp; sourceTree = "<absolute>"; };
-		BEA2635E2CBE38E20007435A /* SigUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SigUtil.hpp; path = /Users/kendy/Projects/collabora/online/common/SigUtil.hpp; sourceTree = "<absolute>"; };
-		BEA2635F2CBE38E20007435A /* SigUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SigUtil.cpp; path = /Users/kendy/Projects/collabora/online/common/SigUtil.cpp; sourceTree = "<absolute>"; };
-		BEA263602CBE38E20007435A /* Simd.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Simd.hpp; path = /Users/kendy/Projects/collabora/online/common/Simd.hpp; sourceTree = "<absolute>"; };
-		BEA263612CBE38E20007435A /* Simd.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Simd.cpp; path = /Users/kendy/Projects/collabora/online/common/Simd.cpp; sourceTree = "<absolute>"; };
-		BEA263622CBE38E20007435A /* SpookyV2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpookyV2.cpp; path = /Users/kendy/Projects/collabora/online/common/SpookyV2.cpp; sourceTree = "<absolute>"; };
-		BEA263632CBE38E20007435A /* StringVector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = StringVector.hpp; path = /Users/kendy/Projects/collabora/online/common/StringVector.hpp; sourceTree = "<absolute>"; };
-		BEA263642CBE38E20007435A /* StringVector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StringVector.cpp; path = /Users/kendy/Projects/collabora/online/common/StringVector.cpp; sourceTree = "<absolute>"; };
-		BEA263652CBE38E20007435A /* TraceEvent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TraceEvent.hpp; path = /Users/kendy/Projects/collabora/online/common/TraceEvent.hpp; sourceTree = "<absolute>"; };
-		BEA263662CBE38E20007435A /* TraceEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TraceEvent.cpp; path = /Users/kendy/Projects/collabora/online/common/TraceEvent.cpp; sourceTree = "<absolute>"; };
-		BEA263672CBE38E20007435A /* Unit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Unit.hpp; path = /Users/kendy/Projects/collabora/online/common/Unit.hpp; sourceTree = "<absolute>"; };
-		BEA263682CBE38E20007435A /* Unit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Unit.cpp; path = /Users/kendy/Projects/collabora/online/common/Unit.cpp; sourceTree = "<absolute>"; };
-		BEA263692CBE38E20007435A /* Uri.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Uri.hpp; path = /Users/kendy/Projects/collabora/online/common/Uri.hpp; sourceTree = "<absolute>"; };
-		BEA2636A2CBE38E20007435A /* Uri.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Uri.cpp; path = /Users/kendy/Projects/collabora/online/common/Uri.cpp; sourceTree = "<absolute>"; };
-		BEA2636B2CBE38E20007435A /* Util.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = /Users/kendy/Projects/collabora/online/common/Util.hpp; sourceTree = "<absolute>"; };
-		BEA2636C2CBE38E20007435A /* Util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = /Users/kendy/Projects/collabora/online/common/Util.cpp; sourceTree = "<absolute>"; };
+		BEA263522CBE38E20007435A /* Authorization.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Authorization.hpp; path = ../../../../common/Authorization.hpp; sourceTree = "<group>"; };
+		BEA263532CBE38E20007435A /* Authorization.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Authorization.cpp; path = ../../../../common/Authorization.cpp; sourceTree = "<group>"; };
+		BEA263542CBE38E20007435A /* ConfigUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ConfigUtil.hpp; path = ../../../../common/ConfigUtil.hpp; sourceTree = "<group>"; };
+		BEA263552CBE38E20007435A /* ConfigUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigUtil.cpp; path = ../../../../common/ConfigUtil.cpp; sourceTree = "<group>"; };
+		BEA263562CBE38E20007435A /* FileUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FileUtil.cpp; path = ../../../../common/FileUtil.cpp; sourceTree = "<group>"; };
+		BEA263572CBE38E20007435A /* Log.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Log.hpp; path = ../../../../common/Log.hpp; sourceTree = "<group>"; };
+		BEA263582CBE38E20007435A /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = ../../../../common/Log.cpp; sourceTree = "<group>"; };
+		BEA263592CBE38E20007435A /* Png.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Png.hpp; path = ../../../../common/Png.hpp; sourceTree = "<group>"; };
+		BEA2635A2CBE38E20007435A /* Protocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Protocol.hpp; path = ../../../../common/Protocol.hpp; sourceTree = "<group>"; };
+		BEA2635B2CBE38E20007435A /* Protocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Protocol.cpp; path = ../../../../common/Protocol.cpp; sourceTree = "<group>"; };
+		BEA2635C2CBE38E20007435A /* Session.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Session.hpp; path = ../../../../common/Session.hpp; sourceTree = "<group>"; };
+		BEA2635D2CBE38E20007435A /* Session.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Session.cpp; path = ../../../../common/Session.cpp; sourceTree = "<group>"; };
+		BEA2635E2CBE38E20007435A /* SigUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SigUtil.hpp; path = ../../../../common/SigUtil.hpp; sourceTree = "<group>"; };
+		BEA2635F2CBE38E20007435A /* SigUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SigUtil.cpp; path = ../../../../common/SigUtil.cpp; sourceTree = "<group>"; };
+		BEA263602CBE38E20007435A /* Simd.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Simd.hpp; path = ../../../../common/Simd.hpp; sourceTree = "<group>"; };
+		BEA263612CBE38E20007435A /* Simd.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Simd.cpp; path = ../../../../common/Simd.cpp; sourceTree = "<group>"; };
+		BEA263622CBE38E20007435A /* SpookyV2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpookyV2.cpp; path = ../../../../common/SpookyV2.cpp; sourceTree = "<group>"; };
+		BEA263632CBE38E20007435A /* StringVector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = StringVector.hpp; path = ../../../../common/StringVector.hpp; sourceTree = "<group>"; };
+		BEA263642CBE38E20007435A /* StringVector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StringVector.cpp; path = ../../../../common/StringVector.cpp; sourceTree = "<group>"; };
+		BEA263652CBE38E20007435A /* TraceEvent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TraceEvent.hpp; path = ../../../../common/TraceEvent.hpp; sourceTree = "<group>"; };
+		BEA263662CBE38E20007435A /* TraceEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TraceEvent.cpp; path = ../../../../common/TraceEvent.cpp; sourceTree = "<group>"; };
+		BEA263672CBE38E20007435A /* Unit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Unit.hpp; path = ../../../../common/Unit.hpp; sourceTree = "<group>"; };
+		BEA263682CBE38E20007435A /* Unit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Unit.cpp; path = ../../../../common/Unit.cpp; sourceTree = "<group>"; };
+		BEA263692CBE38E20007435A /* Uri.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Uri.hpp; path = ../../../../common/Uri.hpp; sourceTree = "<group>"; };
+		BEA2636A2CBE38E20007435A /* Uri.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Uri.cpp; path = ../../../../common/Uri.cpp; sourceTree = "<group>"; };
+		BEA2636B2CBE38E20007435A /* Util.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = ../../../../common/Util.hpp; sourceTree = "<group>"; };
+		BEA2636C2CBE38E20007435A /* Util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = ../../../../common/Util.cpp; sourceTree = "<group>"; };
 		BEA2637B2CBE38F50007435A /* coda-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "coda-Bridging-Header.h"; sourceTree = "<group>"; };
 		BEA264152CBE7A770007435A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		BEA2648B2CBE986C0007435A /* DeltaSimd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeltaSimd.h; path = /Users/kendy/Projects/collabora/online/kit/DeltaSimd.h; sourceTree = "<absolute>"; };
-		BEA2648C2CBE986C0007435A /* DeltaSimd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = DeltaSimd.c; path = /Users/kendy/Projects/collabora/online/kit/DeltaSimd.c; sourceTree = "<absolute>"; };
-		BEA2648D2CBE986C0007435A /* ChildSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChildSession.cpp; path = /Users/kendy/Projects/collabora/online/kit/ChildSession.cpp; sourceTree = "<absolute>"; };
-		BEA2648E2CBE986C0007435A /* Kit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Kit.cpp; path = /Users/kendy/Projects/collabora/online/kit/Kit.cpp; sourceTree = "<absolute>"; };
-		BEA2648F2CBE986C0007435A /* KitQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = KitQueue.hpp; path = /Users/kendy/Projects/collabora/online/kit/KitQueue.hpp; sourceTree = "<absolute>"; };
-		BEA264902CBE986C0007435A /* KitQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KitQueue.cpp; path = /Users/kendy/Projects/collabora/online/kit/KitQueue.cpp; sourceTree = "<absolute>"; };
-		BEA264912CBE986C0007435A /* KitWebSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KitWebSocket.cpp; path = /Users/kendy/Projects/collabora/online/kit/KitWebSocket.cpp; sourceTree = "<absolute>"; };
-		BEA264972CBE98CD0007435A /* AsyncDNS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = AsyncDNS.hpp; path = /Users/kendy/Projects/collabora/online/net/AsyncDNS.hpp; sourceTree = "<absolute>"; };
-		BEA264982CBE98CD0007435A /* FakeSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FakeSocket.cpp; path = /Users/kendy/Projects/collabora/online/net/FakeSocket.cpp; sourceTree = "<absolute>"; };
-		BEA264992CBE98CD0007435A /* HttpRequest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = HttpRequest.hpp; path = /Users/kendy/Projects/collabora/online/net/HttpRequest.hpp; sourceTree = "<absolute>"; };
-		BEA2649A2CBE98CD0007435A /* HttpRequest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HttpRequest.cpp; path = /Users/kendy/Projects/collabora/online/net/HttpRequest.cpp; sourceTree = "<absolute>"; };
-		BEA2649B2CBE98CD0007435A /* NetUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = NetUtil.hpp; path = /Users/kendy/Projects/collabora/online/net/NetUtil.hpp; sourceTree = "<absolute>"; };
-		BEA2649C2CBE98CD0007435A /* NetUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NetUtil.cpp; path = /Users/kendy/Projects/collabora/online/net/NetUtil.cpp; sourceTree = "<absolute>"; };
-		BEA2649D2CBE98CD0007435A /* Socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Socket.hpp; path = /Users/kendy/Projects/collabora/online/net/Socket.hpp; sourceTree = "<absolute>"; };
-		BEA2649E2CBE98CD0007435A /* Socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Socket.cpp; path = /Users/kendy/Projects/collabora/online/net/Socket.cpp; sourceTree = "<absolute>"; };
-		BEA2649F2CBE98CD0007435A /* WebSocketHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = WebSocketHandler.hpp; path = /Users/kendy/Projects/collabora/online/net/WebSocketHandler.hpp; sourceTree = "<absolute>"; };
-		BEA264A42CBE99340007435A /* ClientRequestDispatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ClientRequestDispatcher.cpp; path = /Users/kendy/Projects/collabora/online/wsd/ClientRequestDispatcher.cpp; sourceTree = "<absolute>"; };
-		BEA264A52CBE99340007435A /* ClientSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ClientSession.cpp; path = /Users/kendy/Projects/collabora/online/wsd/ClientSession.cpp; sourceTree = "<absolute>"; };
-		BEA264A62CBE99340007435A /* COOLWSD.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = COOLWSD.cpp; path = /Users/kendy/Projects/collabora/online/wsd/COOLWSD.cpp; sourceTree = "<absolute>"; };
-		BEA264A72CBE99340007435A /* DocumentBroker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DocumentBroker.cpp; path = /Users/kendy/Projects/collabora/online/wsd/DocumentBroker.cpp; sourceTree = "<absolute>"; };
-		BEA264A82CBE99340007435A /* RequestDetails.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RequestDetails.hpp; path = /Users/kendy/Projects/collabora/online/wsd/RequestDetails.hpp; sourceTree = "<absolute>"; };
-		BEA264A92CBE99340007435A /* RequestDetails.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RequestDetails.cpp; path = /Users/kendy/Projects/collabora/online/wsd/RequestDetails.cpp; sourceTree = "<absolute>"; };
-		BEA264AA2CBE99340007435A /* RequestVettingStation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RequestVettingStation.cpp; path = /Users/kendy/Projects/collabora/online/wsd/RequestVettingStation.cpp; sourceTree = "<absolute>"; };
-		BEA264AB2CBE99340007435A /* Storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Storage.cpp; path = /Users/kendy/Projects/collabora/online/wsd/Storage.cpp; sourceTree = "<absolute>"; };
-		BEA264AC2CBE99340007435A /* TileCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TileCache.cpp; path = /Users/kendy/Projects/collabora/online/wsd/TileCache.cpp; sourceTree = "<absolute>"; };
-		BEA264B52CBE9BEF0007435A /* Storage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Storage.hpp; path = /Users/kendy/Projects/collabora/online/wsd/Storage.hpp; sourceTree = "<absolute>"; };
+		BEA2648B2CBE986C0007435A /* DeltaSimd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeltaSimd.h; path = ../../../../kit/DeltaSimd.h; sourceTree = "<group>"; };
+		BEA2648C2CBE986C0007435A /* DeltaSimd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = DeltaSimd.c; path = ../../../../kit/DeltaSimd.c; sourceTree = "<group>"; };
+		BEA2648D2CBE986C0007435A /* ChildSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChildSession.cpp; path = ../../../../kit/ChildSession.cpp; sourceTree = "<group>"; };
+		BEA2648E2CBE986C0007435A /* Kit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Kit.cpp; path = ../../../../kit/Kit.cpp; sourceTree = "<group>"; };
+		BEA2648F2CBE986C0007435A /* KitQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = KitQueue.hpp; path = ../../../../kit/KitQueue.hpp; sourceTree = "<group>"; };
+		BEA264902CBE986C0007435A /* KitQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KitQueue.cpp; path = ../../../../kit/KitQueue.cpp; sourceTree = "<group>"; };
+		BEA264912CBE986C0007435A /* KitWebSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KitWebSocket.cpp; path = ../../../../kit/KitWebSocket.cpp; sourceTree = "<group>"; };
+		BEA264972CBE98CD0007435A /* AsyncDNS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = AsyncDNS.hpp; path = ../../../../net/AsyncDNS.hpp; sourceTree = "<group>"; };
+		BEA264982CBE98CD0007435A /* FakeSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FakeSocket.cpp; path = ../../../../net/FakeSocket.cpp; sourceTree = "<group>"; };
+		BEA264992CBE98CD0007435A /* HttpRequest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = HttpRequest.hpp; path = ../../../../net/HttpRequest.hpp; sourceTree = "<group>"; };
+		BEA2649A2CBE98CD0007435A /* HttpRequest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HttpRequest.cpp; path = ../../../../net/HttpRequest.cpp; sourceTree = "<group>"; };
+		BEA2649B2CBE98CD0007435A /* NetUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = NetUtil.hpp; path = ../../../../net/NetUtil.hpp; sourceTree = "<group>"; };
+		BEA2649C2CBE98CD0007435A /* NetUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NetUtil.cpp; path = ../../../../net/NetUtil.cpp; sourceTree = "<group>"; };
+		BEA2649D2CBE98CD0007435A /* Socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Socket.hpp; path = ../../../../net/Socket.hpp; sourceTree = "<group>"; };
+		BEA2649E2CBE98CD0007435A /* Socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Socket.cpp; path = ../../../../net/Socket.cpp; sourceTree = "<group>"; };
+		BEA2649F2CBE98CD0007435A /* WebSocketHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = WebSocketHandler.hpp; path = ../../../../net/WebSocketHandler.hpp; sourceTree = "<group>"; };
+		BEA264A42CBE99340007435A /* ClientRequestDispatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ClientRequestDispatcher.cpp; path = ../../../../wsd/ClientRequestDispatcher.cpp; sourceTree = "<group>"; };
+		BEA264A52CBE99340007435A /* ClientSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ClientSession.cpp; path = ../../../../wsd/ClientSession.cpp; sourceTree = "<group>"; };
+		BEA264A62CBE99340007435A /* COOLWSD.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = COOLWSD.cpp; path = ../../../../wsd/COOLWSD.cpp; sourceTree = "<group>"; };
+		BEA264A72CBE99340007435A /* DocumentBroker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DocumentBroker.cpp; path = ../../../../wsd/DocumentBroker.cpp; sourceTree = "<group>"; };
+		BEA264A82CBE99340007435A /* RequestDetails.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RequestDetails.hpp; path = ../../../../wsd/RequestDetails.hpp; sourceTree = "<group>"; };
+		BEA264A92CBE99340007435A /* RequestDetails.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RequestDetails.cpp; path = ../../../../wsd/RequestDetails.cpp; sourceTree = "<group>"; };
+		BEA264AA2CBE99340007435A /* RequestVettingStation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RequestVettingStation.cpp; path = ../../../../wsd/RequestVettingStation.cpp; sourceTree = "<group>"; };
+		BEA264AB2CBE99340007435A /* Storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Storage.cpp; path = ../../../../wsd/Storage.cpp; sourceTree = "<group>"; };
+		BEA264AC2CBE99340007435A /* TileCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TileCache.cpp; path = ../../../../wsd/TileCache.cpp; sourceTree = "<group>"; };
+		BEA264B52CBE9BEF0007435A /* Storage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Storage.hpp; path = ../../../../wsd/Storage.hpp; sourceTree = "<group>"; };
 		BECC4BAB2CBD3FA300A120B3 /* coda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECC4BBC2CBD3FA400A120B3 /* codaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECC4BC62CBD3FA400A120B3 /* codaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +194,7 @@
 				BE22492F2CC79BAE00385A9C /* cool-help.html */,
 				BE2249302CC79BAE00385A9C /* device-desktop.css */,
 				BE2249312CC79BAE00385A9C /* global.js */,
+				BE16C9EF2CD51F58005E5960 /* hello.odt */,
 			);
 			path = dist;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				BE22529E2CC79BAE00385A9C /* cool-help.html in Resources */,
 				BE2253F32CC79BAE00385A9C /* device-desktop.css in Resources */,
 				BE22557E2CC79BAE00385A9C /* global.js in Resources */,
+				BE16C9F02CD51F58005E5960 /* hello.odt in Resources */,
 				BE2257AD2CC79BAE00385A9C /* bundle.css in Resources */,
 				BE22492C2CC79AD700385A9C /* cool.html in Resources */,
 				BEA264162CBE7A770007435A /* Config.xcconfig in Resources */,
