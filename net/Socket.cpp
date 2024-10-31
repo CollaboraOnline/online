@@ -15,6 +15,7 @@
 #include "TraceEvent.hpp"
 #include "Util.hpp"
 
+#include <cerrno>
 #include <chrono>
 #include <cstring>
 #include <cctype>
@@ -26,6 +27,7 @@
 #include <cstdio>
 #include <string>
 #include <unistd.h>
+#include <sysexits.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/un.h>
@@ -1144,6 +1146,41 @@ bool ServerSocket::bind([[maybe_unused]] Type type, [[maybe_unused]] int port)
 #endif
 }
 
+bool ServerSocket::isUnrecoverableAcceptError(const int cause)
+{
+    constexpr const char * messagePrefix = "Failed to accept. (errno: ";
+    switch(cause)
+    {
+        case EINTR:
+        case EAGAIN:        // == EWOULDBLOCK
+        case ENETDOWN:
+        case EPROTO:
+        case ENOPROTOOPT:
+        case EHOSTDOWN:
+#ifdef ENONET
+        case ENONET:
+#endif
+        case EHOSTUNREACH:
+        case EOPNOTSUPP:
+        case ENETUNREACH:
+        case ECONNABORTED:
+        case ETIMEDOUT:
+        case EMFILE:
+        case ENFILE:
+        case ENOMEM:
+        case ENOBUFS:
+        {
+            LOG_DBG(messagePrefix << std::to_string(cause) << ", " << std::strerror(cause) << ')');
+            return false;
+        }
+        default:
+        {
+            LOG_FTL(messagePrefix << std::to_string(cause) << ", " << std::strerror(cause) << ')');
+            return true;
+        }
+    }
+}
+
 std::shared_ptr<Socket> ServerSocket::accept()
 {
     // Accept a connection (if any) and set it to non-blocking.
@@ -1151,56 +1188,73 @@ std::shared_ptr<Socket> ServerSocket::accept()
 #if !MOBILEAPP
     assert(_type != Socket::Type::Unix);
 
+    UnitWSD* const unitWsd = UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr;
+    if (unitWsd && unitWsd->simulateExternalAcceptError())
+        return nullptr; // Recoverable error, ignore to retry
+
     struct sockaddr_in6 clientInfo;
     socklen_t addrlen = sizeof(clientInfo);
     const int rc = ::accept4(getFD(), (struct sockaddr *)&clientInfo, &addrlen, SOCK_NONBLOCK | SOCK_CLOEXEC);
 #else
     const int rc = fakeSocketAccept4(getFD());
 #endif
+    if (rc < 0)
+    {
+        if (isUnrecoverableAcceptError(errno))
+            Util::forcedExit(EX_SOFTWARE);
+        return nullptr;
+    }
     LOG_TRC("Accepted socket #" << rc << ", creating socket object.");
+
+#if !MOBILEAPP
+    char addrstr[INET6_ADDRSTRLEN];
+
+    Socket::Type type;
+    const void *inAddr;
+    if (clientInfo.sin6_family == AF_INET)
+    {
+        struct sockaddr_in *ipv4 = (struct sockaddr_in *)&clientInfo;
+        inAddr = &(ipv4->sin_addr);
+        type = Socket::Type::IPv4;
+    }
+    else
+    {
+        struct sockaddr_in6 *ipv6 = &clientInfo;
+        inAddr = &(ipv6->sin6_addr);
+        type = Socket::Type::IPv6;
+    }
+    ::inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
+
+    const size_t extConnCount = StreamSocket::getExternalConnectionCount();
+    if (net::Defaults.maxExtConnections > 0 && extConnCount >= net::Defaults.maxExtConnections)
+    {
+        LOG_WRN("Limiter rejected extConn[" << extConnCount << "/" << net::Defaults.maxExtConnections << "]: #"
+                << rc << " has family "
+                << clientInfo.sin6_family << ", address " << addrstr << ":" << clientInfo.sin6_port);
+        ::close(rc);
+        return nullptr;
+    }
     try
     {
         // Create a socket object using the factory.
-        if (rc != -1)
-        {
-#if !MOBILEAPP
-            char addrstr[INET6_ADDRSTRLEN];
+        std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, type);
+        if (unitWsd)
+            unitWsd->simulateExternalSocketCtorException(_socket);
 
-            Socket::Type type;
-            const void *inAddr;
-            if (clientInfo.sin6_family == AF_INET)
-            {
-                struct sockaddr_in *ipv4 = (struct sockaddr_in *)&clientInfo;
-                inAddr = &(ipv4->sin_addr);
-                type = Socket::Type::IPv4;
-            }
-            else
-            {
-                struct sockaddr_in6 *ipv6 = &clientInfo;
-                inAddr = &(ipv6->sin6_addr);
-                type = Socket::Type::IPv6;
-            }
+        _socket->setClientAddress(addrstr, clientInfo.sin6_port);
 
-            std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, type);
-
-            ::inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
-            _socket->setClientAddress(addrstr, clientInfo.sin6_port);
-
-            LOG_TRC("Accepted socket #" << _socket->getFD() << " has family "
-                                        << clientInfo.sin6_family << ", " << *_socket);
-#else
-            std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, Socket::Type::Unix);
-#endif
-            return _socket;
-        }
-        return std::shared_ptr<Socket>(nullptr);
+        LOG_TRC("Accepted socket #" << _socket->getFD() << " has family "
+                                    << clientInfo.sin6_family << ", " << *_socket);
+        return _socket;
     }
     catch (const std::exception& ex)
     {
         LOG_ERR("Failed to create client socket #" << rc << ". Error: " << ex.what());
     }
-
     return nullptr;
+#else
+    return createSocketFromAccept(rc, Socket::Type::Unix);
+#endif
 }
 
 #if !MOBILEAPP
@@ -1246,11 +1300,15 @@ bool Socket::isLocal() const
 std::shared_ptr<Socket> LocalServerSocket::accept()
 {
     const int rc = ::accept4(getFD(), nullptr, nullptr, SOCK_NONBLOCK | SOCK_CLOEXEC);
+    if (rc < 0)
+    {
+        if (isUnrecoverableAcceptError(errno))
+            Util::forcedExit(EX_SOFTWARE);
+        return nullptr;
+    }
     try
     {
         LOG_DBG("Accepted prisoner socket #" << rc << ", creating socket object.");
-        if (rc < 0)
-            return std::shared_ptr<Socket>(nullptr);
 
         std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, Socket::Type::Unix);
         // Sanity check this incoming socket
@@ -1300,8 +1358,8 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
     catch (const std::exception& ex)
     {
         LOG_ERR("Failed to create client socket #" << rc << ". Error: " << ex.what());
-        return std::shared_ptr<Socket>(nullptr);
     }
+    return nullptr;
 }
 
 /// Returns true on success only.

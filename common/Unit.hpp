@@ -503,6 +503,15 @@ public:
         return false;
     }
 
+    // ---------------- ServerSocket hooks ----------------
+    /// Simulate `::accept` errors for external `ServerSocket::accept`. Implement unrecoverable errors by throwing an exception.
+    virtual bool simulateExternalAcceptError()
+    {
+        return false;
+    }
+    /// Simulate exceptions during `StreamSocket` constructor for external `ServerSocket::accept`.
+    virtual void simulateExternalSocketCtorException(std::shared_ptr<Socket>& /*socket*/) { }
+
     // ---------------- TileCache hooks ----------------
     /// Called before the lookupTile call returns. Should always be called to fire events.
     virtual void lookupTile(int part, int mode, int width, int height, int tilePosX, int tilePosY,

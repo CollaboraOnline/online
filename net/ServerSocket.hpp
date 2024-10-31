@@ -104,22 +104,16 @@ public:
         if (events & POLLIN)
         {
             std::shared_ptr<Socket> clientSocket = accept();
-            if (!clientSocket)
+            if (clientSocket)
             {
-                const std::string msg = "Failed to accept. (errno: ";
-                throw std::runtime_error(msg + std::strerror(errno) + ')');
-            }
-            const size_t extConnCount = StreamSocket::getExternalConnectionCount();
-            if( 0 == net::Defaults.maxExtConnections || extConnCount <= net::Defaults.maxExtConnections )
-            {
-                LOG_TRC("Accepted client #" << clientSocket->getFD());
+                LOGA_TRC(Socket, "Accepted client #" << clientSocket->getFD() << ", " << *clientSocket);
                 _clientPoller.insertNewSocket(std::move(clientSocket));
-            } else
-                LOG_WRN("Limiter rejected extConn[" << extConnCount << "/" << net::Defaults.maxExtConnections << "]: " << *clientSocket);
+            }
         }
     }
 
 protected:
+    bool isUnrecoverableAcceptError(const int cause);
     /// Create a Socket instance from the accepted socket FD.
     std::shared_ptr<Socket> createSocketFromAccept(int fd, Socket::Type type) const
     {

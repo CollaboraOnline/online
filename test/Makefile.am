@@ -94,6 +94,8 @@ all_la_unit_tests = \
 	unit-timeout_inactive.la \
 	unit-timeout_conn.la \
 	unit-timeout_none.la \
+	unit-serversock_accept1.la \
+	unit-streamsock_ctor1.la \
 	unit-base.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
@@ -232,6 +234,10 @@ unit_timeout_conn_la_SOURCES = UnitTimeoutConnections.cpp
 unit_timeout_conn_la_LIBADD = $(CPPUNIT_LIBS)
 unit_timeout_none_la_SOURCES = UnitTimeoutNone.cpp
 unit_timeout_none_la_LIBADD = $(CPPUNIT_LIBS)
+unit_serversock_accept1_la_SOURCES = UnitServerSocketAcceptFailure1.cpp
+unit_serversock_accept1_la_LIBADD = $(CPPUNIT_LIBS)
+unit_streamsock_ctor1_la_SOURCES = UnitStreamSocketCtorFailure1.cpp
+unit_streamsock_ctor1_la_LIBADD = $(CPPUNIT_LIBS)
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_prefork_la_LIBADD = $(CPPUNIT_LIBS)
 unit_storage_la_SOURCES = UnitStorage.cpp
