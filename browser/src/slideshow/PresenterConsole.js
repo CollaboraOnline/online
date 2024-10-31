@@ -163,6 +163,9 @@ class PresenterConsole {
 
 	_onPresentInConsole() {
 		this._map.fire('newpresentinwindow');
+		if (!this._presenter._slideShowWindowProxy) {
+			return;
+		}
 
 		this._proxyPresenter = window.open(
 			'',
