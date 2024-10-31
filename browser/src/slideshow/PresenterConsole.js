@@ -81,6 +81,11 @@ class PresenterConsole {
                                      <img src="images/presenterscreen-ButtonRestartTimerNormal.png">
                                      <label>Restart</label>
                                   </button>
+                                  <div id="separator2"></div>
+                                  <button type="button" id="exchange" disabled>
+                                     <img src="images/presenterscreen-ButtonSwitchMonitorNormal.png">
+                                     <label>Exchange</label>
+                                  </button>
                                 </div>
                                 <footer>
                                 </footer>
@@ -116,6 +121,8 @@ class PresenterConsole {
 			button = this._proxyPresenter.document.querySelector('#restart');
 			button.disabled = false;
 			button = this._proxyPresenter.document.querySelector('#pause');
+			button.disabled = false;
+			button = this._proxyPresenter.document.querySelector('#exchange');
 			button.disabled = false;
 		}
 	}
@@ -316,6 +323,23 @@ class PresenterConsole {
 		elem.style.color = 'white';
 		elem.addEventListener('click', L.bind(this._onRestart, this));
 
+		elem = this._proxyPresenter.document.querySelector('#separator2');
+		elem.style.width = '1px';
+		elem.style.height = '30px';
+		elem.style.borderLeft = '1px';
+		elem.style.borderColor = 'white';
+		elem.style.borderStyle = 'solid';
+
+		elem = this._proxyPresenter.document.querySelector('#exchange');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.justifyContent = 'center';
+		elem.style.alignItems = 'center';
+		elem.style.backgroundColor = 'transparent';
+		elem.style.border = 'none';
+		elem.style.color = 'white';
+		elem.addEventListener('click', L.bind(this._onExchange, this));
+
 		this._ticks = 0;
 		this._onTimer();
 
@@ -343,6 +367,11 @@ class PresenterConsole {
 
 	_onPause(e) {
 		this._pause = !this._pause;
+		e.stopPropagation();
+	}
+
+	_onExchange(e) {
+		this._presenter._slideShowWindowProxy.focus();
 		e.stopPropagation();
 	}
 
