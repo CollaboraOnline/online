@@ -1052,10 +1052,13 @@ function typeIntoInputField(selector, text, clearBefore = true)
 	cy.log('>> typeIntoInputField - start');
 
 	cy.cGet(selector).as('input');
+	cy.get('@input').focus();
+	cy.get('@input').should('have.focus');
 	if (clearBefore) {
-		cy.get('@input').focus();
 		cy.get('@input').clear();
+		cy.get('@input').should('be.empty');
 	}
+
 	cy.get('@input').type(text + '{enter}');
 	cy.get('@input').should('have.value', text);
 

@@ -299,6 +299,8 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	};
 
 	container.onSetText = function (text) {
+		if (document.activeElement === content)
+			return;
 		content.value = text;
 	};
 
