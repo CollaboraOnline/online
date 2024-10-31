@@ -73,6 +73,10 @@ class PresenterConsole {
                                      <div id="today"> </div>
                                      <div id="timer"></div>
                                   </div>
+                                  <button type="button" id="restart" disabled>
+                                     <img src="images/presenterscreen-ButtonRestartTimerNormal.png">
+                                     <label>Restart</label>
+                                  </button>
                                 </div>
                                 <footer>
                                 </footer>
@@ -103,6 +107,8 @@ class PresenterConsole {
 			let button = this._proxyPresenter.document.querySelector('#prev');
 			button.disabled = false;
 			button = this._proxyPresenter.document.querySelector('#next');
+			button.disabled = false;
+			button = this._proxyPresenter.document.querySelector('#restart');
 			button.disabled = false;
 		}
 	}
@@ -283,6 +289,16 @@ class PresenterConsole {
 		elem.style.fontWeight = 'bold';
 		elem.style.color = 'yellow';
 
+		elem = this._proxyPresenter.document.querySelector('#restart');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.justifyContent = 'center';
+		elem.style.alignItems = 'center';
+		elem.style.backgroundColor = 'transparent';
+		elem.style.border = 'none';
+		elem.style.color = 'white';
+		elem.addEventListener('click', L.bind(this._onRestart, this));
+
 		this._ticks = 0;
 		this._onTimer();
 
@@ -305,6 +321,11 @@ class PresenterConsole {
 
 	_onNext(e) {
 		this._presenter.getNavigator().dispatchEffect();
+		e.stopPropagation();
+	}
+
+	_onRestart(e) {
+		this._ticks = 0;
 		e.stopPropagation();
 	}
 
