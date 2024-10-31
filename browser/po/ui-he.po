@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-23 18:49+0200\n"
-"PO-Revision-Date: 2024-10-13 09:39+0000\n"
+"PO-Revision-Date: 2024-10-28 14:02+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.8.2-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1064,32 +1064,32 @@ msgstr "מסמך HTML‏ (‎.html)"
 #: src/control/Control.Menubar.js:412
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash ‏(‎.swf)"
 
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "גרפיקת וקטורים מתכווננת (‎.svg)"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "השקופית הנוכחית כמפת סיביות (‎.bmp)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "השקופית הנוכחית כתסדיר החלפת גרפיקה (‎.gif)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "השקופית הנוכחית כגרפיקת רשת ניידת (‎.png)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "השקופית הנוכחית כתסדיר קובץ תמונה מתויגת (‎.tiff)"
 
 #: src/control/Control.Menubar.js:422
 #: src/control/Control.NotebookbarBuilder.js:666
@@ -1113,7 +1113,7 @@ msgstr "תצוגה ראשית"
 
 #: src/control/Control.Menubar.js:473
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "מולטימדיה מקומית…"
 
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:1108
 #: src/control/Control.PresentationBar.js:127
@@ -1633,15 +1633,15 @@ msgstr "הצגה בחלון"
 
 #: src/control/Control.NotebookbarImpress.js:374
 msgid "Presenter Console"
-msgstr ""
+msgstr "מסוף מציג"
 
 #: src/control/Control.NotebookbarImpress.js:486
 msgid "Show Grid"
-msgstr ""
+msgstr "הצגת רשת"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Snap to Grid"
-msgstr ""
+msgstr "הצמדה לרשת"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -1701,69 +1701,69 @@ msgstr "מחיקת שדה החיפוש"
 
 #: src/control/Control.ServerAuditDialog.ts:50
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "המאפיין IsAdminUser (האם משתמש ניהולי) לא מוגדר על ידי השילוב"
 
 #: src/control/Control.ServerAuditDialog.ts:56
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"נעשה שימוש בשדה is_admin המיושן, השילוב אמור להשתמש במאפיין IsAdminUser במקום"
 
 #: src/control/Control.ServerAuditDialog.ts:62
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "מאפיין המשתמש IsAdminUser מוגדר על ידי השילוב"
 
 #: src/control/Control.ServerAuditDialog.ts:69
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "שרת ה־WOPI שלך לא מאובטח: אימות ה־SSL נכשל"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "לא התגלו בעיות עם אימות ה־SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:81
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "ה־API של PostMessage מאותחל"
 
 #: src/control/Control.ServerAuditDialog.ts:86
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "המשלב לא מוכן לקריאות PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:94
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"השרת שלך מוגדר עם משאבי חומרה לא מספקים, מה שיכול לגרום לפגיעה בביצועים."
 
 #: src/control/Control.ServerAuditDialog.ts:100
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "משאבי החומרה מספיקים לביצועים מיטביים"
 
 #: src/control/Control.ServerAuditDialog.ts:205
 msgid "No issues found"
-msgstr ""
+msgstr "לא נמצאו תקלות"
 
 #: src/control/Control.ServerAuditDialog.ts:211
-#, fuzzy
 msgid "Status"
-msgstr "מצב:"
+msgstr "מצב"
 
 #: src/control/Control.ServerAuditDialog.ts:259
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "נא לבדוק אזהרות אבטחת מידע בשרת שלך"
 
 #: src/control/Control.ServerAuditDialog.ts:260
 msgid "OPEN"
-msgstr ""
+msgstr "פתוח"
 
 #: src/control/Control.SaveState.ts:37
 msgid "Saving"
-msgstr ""
+msgstr "נשמר"
 
 #: src/control/Control.SaveState.ts:52
-#, fuzzy
 msgid "Saved"
-msgstr "שמירה"
+msgstr "נשמר"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -1825,6 +1825,7 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"כדי למנוע שינויים מקריים, היוצר או היוצרת הגדירו שהקובץ הזה ייפתח לקריאה בלבד"
 
 #: src/control/Control.StatusBar.js:446
 msgid "Select multiple cells"
@@ -1959,7 +1960,7 @@ msgstr "אין משתמשים"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "תקציר רשימת משתמשים"
 
 #: src/control/Control.UserList.ts:493
 msgid "Following"
@@ -2171,15 +2172,15 @@ msgstr "מחיקת טאב עצירה"
 
 #: src/control/VRuler.ts:377
 msgid "Top Margin"
-msgstr ""
+msgstr "שול עליון"
 
 #: src/control/VRuler.ts:378
 msgid "Bottom Margin"
-msgstr ""
+msgstr "שול תחתון"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "המסמך לא חתום."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2265,11 +2266,11 @@ msgstr "משוחרר מאוד"
 
 #: src/control/jsdialog/Definitions.Menu.ts:418
 msgid "From Beginning"
-msgstr ""
+msgstr "מההתחלה"
 
 #: src/control/jsdialog/Definitions.Menu.ts:422
 msgid "From Current Slide"
-msgstr ""
+msgstr "מהשקופית הנוכחית"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2336,7 +2337,7 @@ msgstr "מספר שקופיות"
 #: src/control/jsdialog/Widget.HTMLContent.ts:124
 #: src/control/jsdialog/Widget.HTMLContent.ts:132
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "השינויים שלך נשמרו"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -2344,7 +2345,7 @@ msgstr "גבולות התא"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {name}"
-msgstr ""
+msgstr "אפשרויות נוספות עבור {name}"
 
 #: src/control/jsdialog/Widget.TreeView.js:706
 msgid "Headings and objects that you add to the document will appear here"
@@ -2352,7 +2353,7 @@ msgstr "כותרות ועצמים שבחרת להוסיף למסמך יופיע�
 
 #: src/slideshow/SlideShowPresenter.ts:375
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "לחיצה תסגור את המצגת…"
 
 #: src/slideshow/SlideShowPresenter.ts:553
 #: src/map/handler/Map.SlideShow.js:168
@@ -2410,7 +2411,7 @@ msgstr "מצב מצגת הושבת למסמך הזה"
 
 #: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "השהייה… ( %SECONDS% )"
 
 #: src/core/Socket.js:65
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -2660,7 +2661,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "שגיאת האימות הייתה: ‚{errormessage}’."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2767,6 +2768,7 @@ msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"אי אפשר לשמור את המסמך כי תוקף ההפעלה פג, נא לפתוח את העמוד מחדש כדי להמשיך."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -2803,7 +2805,7 @@ msgstr ""
 msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
-msgstr ""
+msgstr "אי אפשר לשמור את המסמך כי תוקף ההפעלה פג, נא לרענן את העמוד כדי להמשיך."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -2880,31 +2882,31 @@ msgstr "פתרון שרשור"
 
 #: src/canvas/sections/CommentListSection.ts:1173
 msgid "Promote to top comment"
-msgstr ""
+msgstr "קידום לתגובה המובילה"
 
 #: src/canvas/sections/CommentListSection.ts:1179
 msgid "Show on the side"
-msgstr ""
+msgstr "הצגה בצד"
 
 #: src/canvas/sections/CommentListSection.ts:1179
 msgid "Show comment bigger"
-msgstr ""
+msgstr "הצגת ההערות בגדול יותר"
 
 #: src/canvas/sections/CommentListSection.ts:1419
 #: src/canvas/sections/CommentListSection.ts:1432
 #: src/canvas/sections/CommentListSection.ts:2297
 msgid "Comments Updated"
-msgstr ""
+msgstr "ההערות עודכנו"
 
 #: src/canvas/sections/CommentListSection.ts:1420
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "משתמש אחר הסיר את ההערה הזאת."
 
 #: src/canvas/sections/CommentListSection.ts:1433
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
-msgstr ""
+msgstr "משתמש אחר עדכן את ההערה הזאת. לדרוס את השינויים האלה?"
 
 #: src/canvas/sections/CommentListSection.ts:1435
 msgid "Update"
@@ -2975,6 +2977,8 @@ msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
+"ה־API האסינכרוני של לוח הגזירים לא נתמך על ידי הדפדפן שלך, מעבר ל־HTTPS אמור "
+"לתקן את זה."
 
 #: src/map/Clipboard.js:1202
 msgid "Please use the paste buttons on your on-screen keyboard."
