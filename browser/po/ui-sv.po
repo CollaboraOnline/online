@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-23 18:49+0200\n"
-"PO-Revision-Date: 2024-10-17 01:59+0000\n"
+"PO-Revision-Date: 2024-10-26 12:58+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8-rc\n"
+"X-Generator: Weblate 5.8.2-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1121,7 +1121,7 @@ msgstr "Master-vy"
 
 #: src/control/Control.Menubar.js:473
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "Lokal multimedia..."
 
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:1108
 #: src/control/Control.PresentationBar.js:127
@@ -1641,7 +1641,7 @@ msgstr "Presentera i fönster"
 
 #: src/control/Control.NotebookbarImpress.js:374
 msgid "Presenter Console"
-msgstr ""
+msgstr "Presentatörskonsol"
 
 #: src/control/Control.NotebookbarImpress.js:486
 msgid "Show Grid"
@@ -2355,7 +2355,7 @@ msgstr "Antal bilder"
 #: src/control/jsdialog/Widget.HTMLContent.ts:124
 #: src/control/jsdialog/Widget.HTMLContent.ts:132
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "Dina ändringar har sparats"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
