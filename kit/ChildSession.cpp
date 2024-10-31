@@ -862,6 +862,7 @@ namespace {
      * because we don't know if the last upload worked or not.
      * DocBroker will have to decide to upload or skip.
      */
+    [[maybe_unused]]
     void renameForUpload(const std::string& url)
     {
         const std::string oldName = Poco::URI(url).getPath();
