@@ -2335,6 +2335,27 @@ bool ChildSession::renderNextSlideLayer(const unsigned width, const unsigned hei
         return true;
     }
 
+    const auto tileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
+
+    if (watermark())
+    {
+        const int watermarkWidth = width / 4;
+        const int watermarkHeight = height / 3;
+        const int stampsByX = 4;
+        const int stampsByY = 3;
+        for (int i = 0; i < stampsByX; ++i)
+        {
+            int offsetX = i * watermarkWidth;
+            for (int j = 0; j < stampsByY; ++j)
+            {
+                int offsetY = j * watermarkHeight;
+                watermark()->blending(pixmap.data(), offsetX, offsetY,
+                                      width, height, watermarkWidth, watermarkHeight,
+                                      tileMode, /*isSlideShowLayer*/ true);
+            }
+        }
+    }
+
     uint64_t pixmapHash = hashSubBuffer(pixmap.data(), 0, 0, width, height, width, height) + getViewId();
     if (size_t start = jsonMsg.find("%IMAGETYPE%"); start != std::string::npos)
         jsonMsg.replace(start, 11, "png");
@@ -2349,8 +2370,6 @@ bool ChildSession::renderNextSlideLayer(const unsigned width, const unsigned hei
     output.reserve(response.size() + pixmap.size());
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
-
-    const auto tileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
 
     if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, width, height, width, height, output, tileMode))
     {

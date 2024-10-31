@@ -1391,7 +1391,11 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
         wopiInfo->set("HideChangeTrackingControls", wopiFileInfo->getHideChangeTrackingControls() ==
                                                         WopiStorage::WOPIFileInfo::TriState::True);
     wopiInfo->set("IsOwner", session->isDocumentOwner());
-    bool disablePresentation = !watermarkText.empty() || wopiFileInfo->getDisableExport() || wopiFileInfo->getHideExportOption();
+
+    bool disablePresentation = wopiFileInfo->getDisableExport() || wopiFileInfo->getHideExportOption();
+    // the new slideshow supports watermarking, anyway it's still an experimental features
+    // TODO remove the following line when the new slideshow is no more experimental
+    disablePresentation = disablePresentation || (!ConfigUtil::getBool("experimental_features", false) && !watermarkText.empty());
     wopiInfo->set("DisablePresentation", disablePresentation);
 
     std::ostringstream ossWopiInfo;
