@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 18:49+0200\n"
+"POT-Creation-Date: 2024-10-31 22:53+0100\n"
 "PO-Revision-Date: 2023-08-05 21:48+0000\n"
 "Last-Translator: Salif Mehmed <mail@salif.eu>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/"
@@ -148,7 +148,7 @@ msgstr "Графика на мрежата"
 #: src/control/Control.NotebookbarImpress.js:177
 #: src/control/Control.NotebookbarWriter.js:155
 #: src/canvas/sections/CommentListSection.ts:493
-#: src/canvas/sections/CommentSection.ts:155
+#: src/canvas/sections/CommentSection.ts:157
 msgid "Save"
 msgstr "Записване"
 
@@ -213,7 +213,7 @@ msgstr "Опресняване на дневника"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:491
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:492
 #: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:201
 msgid "None"
 msgstr "Няма"
@@ -288,7 +288,7 @@ msgstr ""
 #: src/core/Socket.js:1368 src/docdispatcher.ts:468
 #: src/canvas/sections/CommentListSection.ts:1421
 #: src/canvas/sections/CommentListSection.ts:2299 src/main.js:84
-#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1195
+#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1198
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
 #: src/map/handler/Map.SlideShow.js:304 src/map/handler/Map.WOPI.js:608
@@ -313,12 +313,12 @@ msgstr "Наистина ли искате да приключите сесия�
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1312 src/control/Control.UIManager.js:1379
-#: src/control/Control.UIManager.js:1514 src/control/Control.UIManager.js:1673
+#: src/control/Control.UIManager.js:1314 src/control/Control.UIManager.js:1381
+#: src/control/Control.UIManager.js:1516 src/control/Control.UIManager.js:1675
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:823
 #: src/core/Socket.js:1389 src/canvas/sections/CommentListSection.ts:488
-#: src/canvas/sections/CommentSection.ts:154
-#: src/canvas/sections/CommentSection.ts:157
+#: src/canvas/sections/CommentSection.ts:156
+#: src/canvas/sections/CommentSection.ts:159
 msgid "Cancel"
 msgstr "Отказ"
 
@@ -567,8 +567,12 @@ msgstr ""
 msgid "Content copied to clipboard"
 msgstr ""
 
-#: src/control/Control.DownloadProgress.js:306
+#: src/control/Control.DownloadProgress.js:305
 msgid "Download failed"
+msgstr ""
+
+#: src/control/Control.DownloadProgress.js:307
+msgid ", cluster configuration error: mis-matching serverid"
 msgstr ""
 
 #: src/control/Control.FormulaBarJSDialog.js:63
@@ -593,99 +597,99 @@ msgstr "Неактивен документ - щракнете за презар
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Неактивен документ – чукнете за презареждане и редактиране"
 
-#: src/control/Control.JSDialogBuilder.js:494
+#: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
 msgstr "Плътен"
 
-#: src/control/Control.JSDialogBuilder.js:497
+#: src/control/Control.JSDialogBuilder.js:498
 msgid "Linear"
 msgstr "Линеен"
 
-#: src/control/Control.JSDialogBuilder.js:500
+#: src/control/Control.JSDialogBuilder.js:501
 msgid "Axial"
 msgstr "Осев"
 
-#: src/control/Control.JSDialogBuilder.js:503
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Radial"
 msgstr "Радиален"
 
-#: src/control/Control.JSDialogBuilder.js:506
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Ellipsoid"
 msgstr "Елиптичен"
 
-#: src/control/Control.JSDialogBuilder.js:510
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Quadratic"
 msgstr "Квадратен"
 
-#: src/control/Control.JSDialogBuilder.js:513
+#: src/control/Control.JSDialogBuilder.js:514
 msgid "Square"
 msgstr "Правоъгълен"
 
-#: src/control/Control.JSDialogBuilder.js:516
+#: src/control/Control.JSDialogBuilder.js:517
 msgid "Fixed size"
 msgstr "Фиксиран размер"
 
-#: src/control/Control.JSDialogBuilder.js:1428
+#: src/control/Control.JSDialogBuilder.js:1429
 msgid "From"
 msgstr "От"
 
-#: src/control/Control.JSDialogBuilder.js:1431
+#: src/control/Control.JSDialogBuilder.js:1432
 msgid "To"
 msgstr "До"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1435
 msgid "Color"
 msgstr "Цвят"
 
-#: src/control/Control.JSDialogBuilder.js:1553
+#: src/control/Control.JSDialogBuilder.js:1554
 msgid "Select range"
 msgstr "Избиране на диапазон"
 
-#: src/control/Control.JSDialogBuilder.js:1653
+#: src/control/Control.JSDialogBuilder.js:1654
 #: src/control/Control.NotebookbarBuilder.js:156
 msgid "Font Name"
 msgstr "Име на шрифт"
 
-#: src/control/Control.JSDialogBuilder.js:1655 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1656 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Размер на шрифта"
 
-#: src/control/Control.JSDialogBuilder.js:1657
+#: src/control/Control.JSDialogBuilder.js:1658
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "Стил"
 
-#: src/control/Control.JSDialogBuilder.js:1921
+#: src/control/Control.JSDialogBuilder.js:1922
 #, fuzzy
 msgid "reply"
 msgstr "Отговор"
 
-#: src/control/Control.JSDialogBuilder.js:1924
+#: src/control/Control.JSDialogBuilder.js:1925
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1935
-#: src/layer/tile/CanvasTileLayer.js:3764
-#: src/layer/tile/CanvasTileLayer.js:3775
+#: src/control/Control.JSDialogBuilder.js:1936
+#: src/layer/tile/CanvasTileLayer.js:3767
+#: src/layer/tile/CanvasTileLayer.js:3778
 #: src/canvas/sections/CommentListSection.ts:1207
 msgid "Comment"
 msgstr "Коментар"
 
-#: src/control/Control.JSDialogBuilder.js:1999
+#: src/control/Control.JSDialogBuilder.js:2000
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2747
+#: src/control/Control.JSDialogBuilder.js:2748
 #: src/control/Control.Menubar.js:880
 msgid "Rows"
 msgstr "Редове"
 
-#: src/control/Control.JSDialogBuilder.js:2748
+#: src/control/Control.JSDialogBuilder.js:2749
 #: src/control/Control.Menubar.js:883
 msgid "Columns"
 msgstr "Колони"
 
-#: src/control/Control.JSDialogBuilder.js:2768
+#: src/control/Control.JSDialogBuilder.js:2769
 #, fuzzy
 msgid "Insert Table"
 msgstr "Вмъкване на таблица"
@@ -1609,7 +1613,7 @@ msgstr "Блещукаща линия"
 #: src/control/Control.NotebookbarDraw.js:1346
 #: src/control/Control.NotebookbarImpress.js:925
 #: src/control/Control.NotebookbarImpress.js:1382
-#: src/control/Control.NotebookbarImpress.js:2423
+#: src/control/Control.NotebookbarImpress.js:2441
 #: src/control/Control.NotebookbarWriter.js:1072
 #: src/control/Control.NotebookbarWriter.js:2845
 msgid "Shapes"
@@ -1929,7 +1933,7 @@ msgstr "Вмъкване на фигури"
 msgid "Insert connectors"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:829
+#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:831
 msgid "Hide Menu"
 msgstr ""
 
@@ -1937,7 +1941,7 @@ msgstr ""
 msgid "Enter new name"
 msgstr ""
 
-#: src/control/Control.UIManager.js:852
+#: src/control/Control.UIManager.js:854
 msgid "Show Menu"
 msgstr ""
 
@@ -2855,7 +2859,7 @@ msgstr "Функции"
 msgid "Named Range"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:3792
+#: src/layer/tile/CanvasTileLayer.js:3795
 msgid "No Comments"
 msgstr ""
 
@@ -2872,7 +2876,7 @@ msgid "Modify"
 msgstr "Променяне"
 
 #: src/canvas/sections/CommentListSection.ts:1143
-#: src/canvas/sections/CommentSection.ts:158
+#: src/canvas/sections/CommentSection.ts:160
 msgid "Reply"
 msgstr "Отговор"
 
@@ -2941,21 +2945,21 @@ msgstr ""
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 
-#: src/canvas/sections/CommentSection.ts:313
+#: src/canvas/sections/CommentSection.ts:315
 msgid "Open menu"
 msgstr "Отваряне на менюто"
 
-#: src/canvas/sections/CommentSection.ts:373
-#: src/canvas/sections/CommentSection.ts:374
+#: src/canvas/sections/CommentSection.ts:375
+#: src/canvas/sections/CommentSection.ts:376
 msgid "Accept change"
 msgstr "Приемане на промяната"
 
-#: src/canvas/sections/CommentSection.ts:380
-#: src/canvas/sections/CommentSection.ts:381
+#: src/canvas/sections/CommentSection.ts:382
+#: src/canvas/sections/CommentSection.ts:383
 msgid "Reject change"
 msgstr "Отхвърляне на промяната"
 
-#: src/canvas/sections/CommentSection.ts:404
+#: src/canvas/sections/CommentSection.ts:406
 msgid "Resolved"
 msgstr "Разрешено"
 
@@ -2993,20 +2997,20 @@ msgstr ""
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Неуспешно изтегляне на клипборда – моля, копирайте отново."
 
-#: src/map/Clipboard.js:859
+#: src/map/Clipboard.js:862
 msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
 
-#: src/map/Clipboard.js:1202
+#: src/map/Clipboard.js:1205
 #, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr ""
 "<p>Моля, използвайте бутоните за копиране/поставяне на екранната "
 "клавиатура.</p>"
 
-#: src/map/Clipboard.js:1258
+#: src/map/Clipboard.js:1261
 #, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
@@ -3016,23 +3020,23 @@ msgstr ""
 "поставяне. Моля изчакайте края му или го прекратете, преди да започнете "
 "ново.</p>"
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Paste from this document"
 msgstr ""
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Cancel paste special"
 msgstr ""
 
-#: src/map/Clipboard.js:1290
+#: src/map/Clipboard.js:1293
 msgid "Your browser has very limited access to the clipboard"
 msgstr ""
 
-#: src/map/Clipboard.js:1295
+#: src/map/Clipboard.js:1298
 msgid "Please use following combination to see more options:"
 msgstr ""
 
-#: src/map/Clipboard.js:1313
+#: src/map/Clipboard.js:1316
 msgid "Close popup to ignore paste special"
 msgstr ""
 

@@ -4,17 +4,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 18:49+0200\n"
+"POT-Creation-Date: 2024-10-31 22:53+0100\n"
 "PO-Revision-Date: 2024-10-27 13:30+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: sl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.8.2-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -148,7 +148,7 @@ msgstr "Grafikon rabe omrežja"
 #: src/control/Control.NotebookbarImpress.js:177
 #: src/control/Control.NotebookbarWriter.js:155
 #: src/canvas/sections/CommentListSection.ts:493
-#: src/canvas/sections/CommentSection.ts:155
+#: src/canvas/sections/CommentSection.ts:157
 msgid "Save"
 msgstr "Shrani"
 
@@ -217,7 +217,7 @@ msgstr "Osveži dnevnik"
 msgid "Channel Filter:"
 msgstr "Filter kanala:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:491
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:492
 #: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:201
 msgid "None"
 msgstr "Brez"
@@ -292,7 +292,7 @@ msgstr "Strežnik je izklopljen; prosimo, ponovno naložite stran."
 #: src/core/Socket.js:1368 src/docdispatcher.ts:468
 #: src/canvas/sections/CommentListSection.ts:1421
 #: src/canvas/sections/CommentListSection.ts:2299 src/main.js:84
-#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1195
+#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1198
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
 #: src/map/handler/Map.SlideShow.js:304 src/map/handler/Map.WOPI.js:608
@@ -317,12 +317,12 @@ msgstr "Ste prepričani, da želite zaključiti to sejo?"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1312 src/control/Control.UIManager.js:1379
-#: src/control/Control.UIManager.js:1514 src/control/Control.UIManager.js:1673
+#: src/control/Control.UIManager.js:1314 src/control/Control.UIManager.js:1381
+#: src/control/Control.UIManager.js:1516 src/control/Control.UIManager.js:1675
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:823
 #: src/core/Socket.js:1389 src/canvas/sections/CommentListSection.ts:488
-#: src/canvas/sections/CommentSection.ts:154
-#: src/canvas/sections/CommentSection.ts:157
+#: src/canvas/sections/CommentSection.ts:156
+#: src/canvas/sections/CommentSection.ts:159
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -579,9 +579,13 @@ msgstr "Odslej se bodo obvestila odložišča diskretno pojavljala na dnu."
 msgid "Content copied to clipboard"
 msgstr "Vsebina kopirana na odložišče"
 
-#: src/control/Control.DownloadProgress.js:306
+#: src/control/Control.DownloadProgress.js:305
 msgid "Download failed"
 msgstr "Prenos je spodletel"
+
+#: src/control/Control.DownloadProgress.js:307
+msgid ", cluster configuration error: mis-matching serverid"
+msgstr ""
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -607,98 +611,98 @@ msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Neaktivni dokument – tapnite za ponovno nalaganje in nadaljevanje urejanja"
 
-#: src/control/Control.JSDialogBuilder.js:494
+#: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
 msgstr "Polno"
 
-#: src/control/Control.JSDialogBuilder.js:497
+#: src/control/Control.JSDialogBuilder.js:498
 msgid "Linear"
 msgstr "Linearno"
 
-#: src/control/Control.JSDialogBuilder.js:500
+#: src/control/Control.JSDialogBuilder.js:501
 msgid "Axial"
 msgstr "Osno"
 
-#: src/control/Control.JSDialogBuilder.js:503
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Radial"
 msgstr "Radialno"
 
-#: src/control/Control.JSDialogBuilder.js:506
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Ellipsoid"
 msgstr "Elipsoidno"
 
-#: src/control/Control.JSDialogBuilder.js:510
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Quadratic"
 msgstr "Pravokotno"
 
-#: src/control/Control.JSDialogBuilder.js:513
+#: src/control/Control.JSDialogBuilder.js:514
 msgid "Square"
 msgstr "Kvadratno"
 
-#: src/control/Control.JSDialogBuilder.js:516
+#: src/control/Control.JSDialogBuilder.js:517
 msgid "Fixed size"
 msgstr "Fiksna velikost"
 
-#: src/control/Control.JSDialogBuilder.js:1428
+#: src/control/Control.JSDialogBuilder.js:1429
 msgid "From"
 msgstr "Od"
 
-#: src/control/Control.JSDialogBuilder.js:1431
+#: src/control/Control.JSDialogBuilder.js:1432
 msgid "To"
 msgstr "Do"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1435
 msgid "Color"
 msgstr "Barvno"
 
-#: src/control/Control.JSDialogBuilder.js:1553
+#: src/control/Control.JSDialogBuilder.js:1554
 msgid "Select range"
 msgstr "Izberite obseg"
 
-#: src/control/Control.JSDialogBuilder.js:1653
+#: src/control/Control.JSDialogBuilder.js:1654
 #: src/control/Control.NotebookbarBuilder.js:156
 msgid "Font Name"
 msgstr "Ime pisave"
 
-#: src/control/Control.JSDialogBuilder.js:1655 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1656 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Velikost pisave"
 
-#: src/control/Control.JSDialogBuilder.js:1657
+#: src/control/Control.JSDialogBuilder.js:1658
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "Slog"
 
-#: src/control/Control.JSDialogBuilder.js:1921
+#: src/control/Control.JSDialogBuilder.js:1922
 msgid "reply"
 msgstr "odgovor"
 
-#: src/control/Control.JSDialogBuilder.js:1924
+#: src/control/Control.JSDialogBuilder.js:1925
 msgid "replies"
 msgstr "odgovorov"
 
-#: src/control/Control.JSDialogBuilder.js:1935
-#: src/layer/tile/CanvasTileLayer.js:3764
-#: src/layer/tile/CanvasTileLayer.js:3775
+#: src/control/Control.JSDialogBuilder.js:1936
+#: src/layer/tile/CanvasTileLayer.js:3767
+#: src/layer/tile/CanvasTileLayer.js:3778
 #: src/canvas/sections/CommentListSection.ts:1207
 msgid "Comment"
 msgstr "Komentar"
 
-#: src/control/Control.JSDialogBuilder.js:1999
+#: src/control/Control.JSDialogBuilder.js:2000
 msgid "Insert Comment"
 msgstr "Vstavi komentar"
 
-#: src/control/Control.JSDialogBuilder.js:2747
+#: src/control/Control.JSDialogBuilder.js:2748
 #: src/control/Control.Menubar.js:880
 msgid "Rows"
 msgstr "Vrstice"
 
-#: src/control/Control.JSDialogBuilder.js:2748
+#: src/control/Control.JSDialogBuilder.js:2749
 #: src/control/Control.Menubar.js:883
 msgid "Columns"
 msgstr "Stolpci"
 
-#: src/control/Control.JSDialogBuilder.js:2768
+#: src/control/Control.JSDialogBuilder.js:2769
 msgid "Insert Table"
 msgstr "Vstavi tabelo"
 
@@ -1604,7 +1608,7 @@ msgstr "Mini grafikon"
 #: src/control/Control.NotebookbarDraw.js:1346
 #: src/control/Control.NotebookbarImpress.js:925
 #: src/control/Control.NotebookbarImpress.js:1382
-#: src/control/Control.NotebookbarImpress.js:2423
+#: src/control/Control.NotebookbarImpress.js:2441
 #: src/control/Control.NotebookbarWriter.js:1072
 #: src/control/Control.NotebookbarWriter.js:2845
 msgid "Shapes"
@@ -1926,7 +1930,7 @@ msgstr "Vstavi like"
 msgid "Insert connectors"
 msgstr "Vstavi konektorje"
 
-#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:829
+#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:831
 msgid "Hide Menu"
 msgstr "Skrij meni"
 
@@ -1934,7 +1938,7 @@ msgstr "Skrij meni"
 msgid "Enter new name"
 msgstr "Vnesite novo ime"
 
-#: src/control/Control.UIManager.js:852
+#: src/control/Control.UIManager.js:854
 msgid "Show Menu"
 msgstr "Pokaži meni"
 
@@ -2890,7 +2894,7 @@ msgstr "Funkcije"
 msgid "Named Range"
 msgstr "Imenovani obseg"
 
-#: src/layer/tile/CanvasTileLayer.js:3792
+#: src/layer/tile/CanvasTileLayer.js:3795
 msgid "No Comments"
 msgstr "Ni komentarjev"
 
@@ -2907,7 +2911,7 @@ msgid "Modify"
 msgstr "Spremeni"
 
 #: src/canvas/sections/CommentListSection.ts:1143
-#: src/canvas/sections/CommentSection.ts:158
+#: src/canvas/sections/CommentSection.ts:160
 msgid "Reply"
 msgstr "Odgovori"
 
@@ -2979,21 +2983,21 @@ msgstr ""
 "Drugi uporabnik je posodobil komentarje. Ali želite nadaljevati s "
 "posodabljanjem?"
 
-#: src/canvas/sections/CommentSection.ts:313
+#: src/canvas/sections/CommentSection.ts:315
 msgid "Open menu"
 msgstr "Odpri meni"
 
-#: src/canvas/sections/CommentSection.ts:373
-#: src/canvas/sections/CommentSection.ts:374
+#: src/canvas/sections/CommentSection.ts:375
+#: src/canvas/sections/CommentSection.ts:376
 msgid "Accept change"
 msgstr "Sprejmi spremembo"
 
-#: src/canvas/sections/CommentSection.ts:380
-#: src/canvas/sections/CommentSection.ts:381
+#: src/canvas/sections/CommentSection.ts:382
+#: src/canvas/sections/CommentSection.ts:383
 msgid "Reject change"
 msgstr "Zavrni spremembo"
 
-#: src/canvas/sections/CommentSection.ts:404
+#: src/canvas/sections/CommentSection.ts:406
 msgid "Resolved"
 msgstr "Razrešeno"
 
@@ -3032,7 +3036,7 @@ msgstr "opozorilo: zahteva za kopiranje/lepljenje je potekla"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Odložišča ni mogoče prenesti s strežnika, prosimo, kopirajte ponovno."
 
-#: src/map/Clipboard.js:859
+#: src/map/Clipboard.js:862
 msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
@@ -3040,11 +3044,11 @@ msgstr ""
 "Asinhroni API odložišča ni podprt v vašem brskalniku, preklop na HTTPS naj "
 "bi to popravil."
 
-#: src/map/Clipboard.js:1202
+#: src/map/Clipboard.js:1205
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "Prosimo, da uporabite gumbe za lepljenje na zaslonski tipkovnici."
 
-#: src/map/Clipboard.js:1258
+#: src/map/Clipboard.js:1261
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -3052,23 +3056,23 @@ msgstr ""
 "Prenos se je zaradi obsežne operacije kopiraj/prilepi že začel. Prosimo, "
 "počakajte na trenutni prenos ali ga prekličite, preden začnete z novim"
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Paste from this document"
 msgstr "Prilepi iz tega dokumenta"
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Cancel paste special"
 msgstr "Prekliči posebno lepljenje"
 
-#: src/map/Clipboard.js:1290
+#: src/map/Clipboard.js:1293
 msgid "Your browser has very limited access to the clipboard"
 msgstr "Vaš brskalnik ima zelo omejen dostop do odložišča"
 
-#: src/map/Clipboard.js:1295
+#: src/map/Clipboard.js:1298
 msgid "Please use following combination to see more options:"
 msgstr "Uporabite naslednjo kombinacijo, da si ogledate več možnosti:"
 
-#: src/map/Clipboard.js:1313
+#: src/map/Clipboard.js:1316
 msgid "Close popup to ignore paste special"
 msgstr "Zaprite pojavno okno, da prezrete posebno lepljenje"
 

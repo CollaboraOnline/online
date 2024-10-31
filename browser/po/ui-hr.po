@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 18:49+0200\n"
+"POT-Creation-Date: 2024-10-31 22:53+0100\n"
 "PO-Revision-Date: 2024-09-17 16:21+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
@@ -150,7 +150,7 @@ msgstr "Grafikon mreže"
 #: src/control/Control.NotebookbarImpress.js:177
 #: src/control/Control.NotebookbarWriter.js:155
 #: src/canvas/sections/CommentListSection.ts:493
-#: src/canvas/sections/CommentSection.ts:155
+#: src/canvas/sections/CommentSection.ts:157
 msgid "Save"
 msgstr "Spremi"
 
@@ -218,7 +218,7 @@ msgstr "Aktualiziraj dnevnik"
 msgid "Channel Filter:"
 msgstr "Filtar kanala:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:491
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:492
 #: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:201
 msgid "None"
 msgstr "Ništa"
@@ -293,7 +293,7 @@ msgstr "Server je bio isključen. Ponovo učitaj stranicu."
 #: src/core/Socket.js:1368 src/docdispatcher.ts:468
 #: src/canvas/sections/CommentListSection.ts:1421
 #: src/canvas/sections/CommentListSection.ts:2299 src/main.js:84
-#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1195
+#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1198
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
 #: src/map/handler/Map.SlideShow.js:304 src/map/handler/Map.WOPI.js:608
@@ -318,12 +318,12 @@ msgstr "Stvarno želiš završiti sesiju?"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1312 src/control/Control.UIManager.js:1379
-#: src/control/Control.UIManager.js:1514 src/control/Control.UIManager.js:1673
+#: src/control/Control.UIManager.js:1314 src/control/Control.UIManager.js:1381
+#: src/control/Control.UIManager.js:1516 src/control/Control.UIManager.js:1675
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:823
 #: src/core/Socket.js:1389 src/canvas/sections/CommentListSection.ts:488
-#: src/canvas/sections/CommentSection.ts:154
-#: src/canvas/sections/CommentSection.ts:157
+#: src/canvas/sections/CommentSection.ts:156
+#: src/canvas/sections/CommentSection.ts:159
 msgid "Cancel"
 msgstr "Odustani"
 
@@ -579,9 +579,13 @@ msgstr "Od sada će se obavijesti međuspremnika diskretno pojavljivati na dnu."
 msgid "Content copied to clipboard"
 msgstr "Sadržaj je kopiran u međuspremnik"
 
-#: src/control/Control.DownloadProgress.js:306
+#: src/control/Control.DownloadProgress.js:305
 msgid "Download failed"
 msgstr "Preuzimanje nije uspjelo"
+
+#: src/control/Control.DownloadProgress.js:307
+msgid ", cluster configuration error: mis-matching serverid"
+msgstr ""
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -609,98 +613,98 @@ msgstr ""
 "Neaktivan dokument – dodirni, kako bi se ponovo učitao i nastavi s "
 "uređivanjem"
 
-#: src/control/Control.JSDialogBuilder.js:494
+#: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
 msgstr "Jednobojno"
 
-#: src/control/Control.JSDialogBuilder.js:497
+#: src/control/Control.JSDialogBuilder.js:498
 msgid "Linear"
 msgstr "Linearno"
 
-#: src/control/Control.JSDialogBuilder.js:500
+#: src/control/Control.JSDialogBuilder.js:501
 msgid "Axial"
 msgstr "Osno"
 
-#: src/control/Control.JSDialogBuilder.js:503
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Radial"
 msgstr "Kružno"
 
-#: src/control/Control.JSDialogBuilder.js:506
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Ellipsoid"
 msgstr "Elipsoid"
 
-#: src/control/Control.JSDialogBuilder.js:510
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Quadratic"
 msgstr "Pravokutno"
 
-#: src/control/Control.JSDialogBuilder.js:513
+#: src/control/Control.JSDialogBuilder.js:514
 msgid "Square"
 msgstr "Kvadratično"
 
-#: src/control/Control.JSDialogBuilder.js:516
+#: src/control/Control.JSDialogBuilder.js:517
 msgid "Fixed size"
 msgstr "Fiksne veličine"
 
-#: src/control/Control.JSDialogBuilder.js:1428
+#: src/control/Control.JSDialogBuilder.js:1429
 msgid "From"
 msgstr "Od"
 
-#: src/control/Control.JSDialogBuilder.js:1431
+#: src/control/Control.JSDialogBuilder.js:1432
 msgid "To"
 msgstr "Do"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1435
 msgid "Color"
 msgstr "Boja"
 
-#: src/control/Control.JSDialogBuilder.js:1553
+#: src/control/Control.JSDialogBuilder.js:1554
 msgid "Select range"
 msgstr "Odaberi raspon"
 
-#: src/control/Control.JSDialogBuilder.js:1653
+#: src/control/Control.JSDialogBuilder.js:1654
 #: src/control/Control.NotebookbarBuilder.js:156
 msgid "Font Name"
 msgstr "Ime fonta"
 
-#: src/control/Control.JSDialogBuilder.js:1655 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1656 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Veličina fonta"
 
-#: src/control/Control.JSDialogBuilder.js:1657
+#: src/control/Control.JSDialogBuilder.js:1658
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "Stil"
 
-#: src/control/Control.JSDialogBuilder.js:1921
+#: src/control/Control.JSDialogBuilder.js:1922
 msgid "reply"
 msgstr "odgovor"
 
-#: src/control/Control.JSDialogBuilder.js:1924
+#: src/control/Control.JSDialogBuilder.js:1925
 msgid "replies"
 msgstr "odgovori"
 
-#: src/control/Control.JSDialogBuilder.js:1935
-#: src/layer/tile/CanvasTileLayer.js:3764
-#: src/layer/tile/CanvasTileLayer.js:3775
+#: src/control/Control.JSDialogBuilder.js:1936
+#: src/layer/tile/CanvasTileLayer.js:3767
+#: src/layer/tile/CanvasTileLayer.js:3778
 #: src/canvas/sections/CommentListSection.ts:1207
 msgid "Comment"
 msgstr "Komentar"
 
-#: src/control/Control.JSDialogBuilder.js:1999
+#: src/control/Control.JSDialogBuilder.js:2000
 msgid "Insert Comment"
 msgstr "Umetni komentar"
 
-#: src/control/Control.JSDialogBuilder.js:2747
+#: src/control/Control.JSDialogBuilder.js:2748
 #: src/control/Control.Menubar.js:880
 msgid "Rows"
 msgstr "Redci"
 
-#: src/control/Control.JSDialogBuilder.js:2748
+#: src/control/Control.JSDialogBuilder.js:2749
 #: src/control/Control.Menubar.js:883
 msgid "Columns"
 msgstr "Stupci"
 
-#: src/control/Control.JSDialogBuilder.js:2768
+#: src/control/Control.JSDialogBuilder.js:2769
 msgid "Insert Table"
 msgstr "Umetni tablicu"
 
@@ -1606,7 +1610,7 @@ msgstr "Minijatura grafikona"
 #: src/control/Control.NotebookbarDraw.js:1346
 #: src/control/Control.NotebookbarImpress.js:925
 #: src/control/Control.NotebookbarImpress.js:1382
-#: src/control/Control.NotebookbarImpress.js:2423
+#: src/control/Control.NotebookbarImpress.js:2441
 #: src/control/Control.NotebookbarWriter.js:1072
 #: src/control/Control.NotebookbarWriter.js:2845
 msgid "Shapes"
@@ -1927,7 +1931,7 @@ msgstr "Umetni oblike"
 msgid "Insert connectors"
 msgstr "Umetni poveznice"
 
-#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:829
+#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:831
 msgid "Hide Menu"
 msgstr "Sakrij izbornik"
 
@@ -1935,7 +1939,7 @@ msgstr "Sakrij izbornik"
 msgid "Enter new name"
 msgstr "Upiši novo ime"
 
-#: src/control/Control.UIManager.js:852
+#: src/control/Control.UIManager.js:854
 msgid "Show Menu"
 msgstr "Prikaži izbornik"
 
@@ -2889,7 +2893,7 @@ msgstr "Funkcije"
 msgid "Named Range"
 msgstr "Imenovani raspon"
 
-#: src/layer/tile/CanvasTileLayer.js:3792
+#: src/layer/tile/CanvasTileLayer.js:3795
 msgid "No Comments"
 msgstr "Bez komentara"
 
@@ -2906,7 +2910,7 @@ msgid "Modify"
 msgstr "Promijeni"
 
 #: src/canvas/sections/CommentListSection.ts:1143
-#: src/canvas/sections/CommentSection.ts:158
+#: src/canvas/sections/CommentSection.ts:160
 msgid "Reply"
 msgstr "Odgovori"
 
@@ -2979,21 +2983,21 @@ msgstr ""
 "Jedan drugi korisnik je aktualizirao komentare. Želiš li nastaviti s "
 "aktualiziranjem?"
 
-#: src/canvas/sections/CommentSection.ts:313
+#: src/canvas/sections/CommentSection.ts:315
 msgid "Open menu"
 msgstr "Otvori izbornik"
 
-#: src/canvas/sections/CommentSection.ts:373
-#: src/canvas/sections/CommentSection.ts:374
+#: src/canvas/sections/CommentSection.ts:375
+#: src/canvas/sections/CommentSection.ts:376
 msgid "Accept change"
 msgstr "Prihvati promjenu"
 
-#: src/canvas/sections/CommentSection.ts:380
-#: src/canvas/sections/CommentSection.ts:381
+#: src/canvas/sections/CommentSection.ts:382
+#: src/canvas/sections/CommentSection.ts:383
 msgid "Reject change"
 msgstr "Odbaci promjenu"
 
-#: src/canvas/sections/CommentSection.ts:404
+#: src/canvas/sections/CommentSection.ts:406
 msgid "Resolved"
 msgstr "Riješeno"
 
@@ -3030,18 +3034,18 @@ msgstr "upozorenje: vrijeme zahtjeva za kopiranje/umetanje je isteklo"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Neuspjelo preuzimanje međuspremnika, kopiraj ponovo"
 
-#: src/map/Clipboard.js:859
+#: src/map/Clipboard.js:862
 msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
 
-#: src/map/Clipboard.js:1202
+#: src/map/Clipboard.js:1205
 #, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "<p>Koristi gumbe za umetanje na ekranskoj tipkovnici.</p>"
 
-#: src/map/Clipboard.js:1258
+#: src/map/Clipboard.js:1261
 #, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
@@ -3051,23 +3055,23 @@ msgstr ""
 "Čekaj na trenutačno preuzimanje ili ga prekini prije nego što pokreneš "
 "novi</p>"
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Paste from this document"
 msgstr "Umetni iz ovog dokumenta"
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Cancel paste special"
 msgstr "Prekini posebno umetanje"
 
-#: src/map/Clipboard.js:1290
+#: src/map/Clipboard.js:1293
 msgid "Your browser has very limited access to the clipboard"
 msgstr ""
 
-#: src/map/Clipboard.js:1295
+#: src/map/Clipboard.js:1298
 msgid "Please use following combination to see more options:"
 msgstr ""
 
-#: src/map/Clipboard.js:1313
+#: src/map/Clipboard.js:1316
 msgid "Close popup to ignore paste special"
 msgstr ""
 

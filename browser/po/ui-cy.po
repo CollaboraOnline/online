@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 18:49+0200\n"
+"POT-Creation-Date: 2024-10-31 22:53+0100\n"
 "PO-Revision-Date: 2024-09-27 17:15+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
@@ -149,7 +149,7 @@ msgstr "Graff Rhwydwaith"
 #: src/control/Control.NotebookbarImpress.js:177
 #: src/control/Control.NotebookbarWriter.js:155
 #: src/canvas/sections/CommentListSection.ts:493
-#: src/canvas/sections/CommentSection.ts:155
+#: src/canvas/sections/CommentSection.ts:157
 msgid "Save"
 msgstr "Cadw"
 
@@ -214,7 +214,7 @@ msgstr "Adnewyddu'r Cofnod"
 msgid "Channel Filter:"
 msgstr "Hidlydd Sianel:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:491
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:492
 #: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:201
 msgid "None"
 msgstr "Dim"
@@ -289,7 +289,7 @@ msgstr "Gweinydd wedi ei gau i lawr; ail-lwythwch y dudalen, os gwelwch yn dda."
 #: src/core/Socket.js:1368 src/docdispatcher.ts:468
 #: src/canvas/sections/CommentListSection.ts:1421
 #: src/canvas/sections/CommentListSection.ts:2299 src/main.js:84
-#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1195
+#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1198
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
 #: src/map/handler/Map.SlideShow.js:304 src/map/handler/Map.WOPI.js:608
@@ -314,12 +314,12 @@ msgstr "Ydych chi'n siŵr eich bod eisiau dileu'r sesiwn hwn?"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1312 src/control/Control.UIManager.js:1379
-#: src/control/Control.UIManager.js:1514 src/control/Control.UIManager.js:1673
+#: src/control/Control.UIManager.js:1314 src/control/Control.UIManager.js:1381
+#: src/control/Control.UIManager.js:1516 src/control/Control.UIManager.js:1675
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:823
 #: src/core/Socket.js:1389 src/canvas/sections/CommentListSection.ts:488
-#: src/canvas/sections/CommentSection.ts:154
-#: src/canvas/sections/CommentSection.ts:157
+#: src/canvas/sections/CommentSection.ts:156
+#: src/canvas/sections/CommentSection.ts:159
 msgid "Cancel"
 msgstr "Diddymu"
 
@@ -577,9 +577,13 @@ msgstr ""
 msgid "Content copied to clipboard"
 msgstr "Cynnwys wedi'i gopïo i'r clipfwrdd"
 
-#: src/control/Control.DownloadProgress.js:306
+#: src/control/Control.DownloadProgress.js:305
 msgid "Download failed"
 msgstr "Methwyd llwytho i lawr"
+
+#: src/control/Control.DownloadProgress.js:307
+msgid ", cluster configuration error: mis-matching serverid"
+msgstr ""
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -603,98 +607,98 @@ msgstr "Dogfen anweithredol - cliciwch i ail-lwytho ac ailgychwyn golygu"
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Dogfen anweithredol - tapiwch i ail-lwytho ac ailgychwyn golygu"
 
-#: src/control/Control.JSDialogBuilder.js:494
+#: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
 msgstr "Solet"
 
-#: src/control/Control.JSDialogBuilder.js:497
+#: src/control/Control.JSDialogBuilder.js:498
 msgid "Linear"
 msgstr "Llinol"
 
-#: src/control/Control.JSDialogBuilder.js:500
+#: src/control/Control.JSDialogBuilder.js:501
 msgid "Axial"
 msgstr "Echelinol"
 
-#: src/control/Control.JSDialogBuilder.js:503
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Radial"
 msgstr "Rheiddiol"
 
-#: src/control/Control.JSDialogBuilder.js:506
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Ellipsoid"
 msgstr "Elipsoid"
 
-#: src/control/Control.JSDialogBuilder.js:510
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Quadratic"
 msgstr "Cwadratig"
 
-#: src/control/Control.JSDialogBuilder.js:513
+#: src/control/Control.JSDialogBuilder.js:514
 msgid "Square"
 msgstr "Sgwâr"
 
-#: src/control/Control.JSDialogBuilder.js:516
+#: src/control/Control.JSDialogBuilder.js:517
 msgid "Fixed size"
 msgstr "Maint gosodedig"
 
-#: src/control/Control.JSDialogBuilder.js:1428
+#: src/control/Control.JSDialogBuilder.js:1429
 msgid "From"
 msgstr "O"
 
-#: src/control/Control.JSDialogBuilder.js:1431
+#: src/control/Control.JSDialogBuilder.js:1432
 msgid "To"
 msgstr "At"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1435
 msgid "Color"
 msgstr "Lliw"
 
-#: src/control/Control.JSDialogBuilder.js:1553
+#: src/control/Control.JSDialogBuilder.js:1554
 msgid "Select range"
 msgstr "Dewis ystod"
 
-#: src/control/Control.JSDialogBuilder.js:1653
+#: src/control/Control.JSDialogBuilder.js:1654
 #: src/control/Control.NotebookbarBuilder.js:156
 msgid "Font Name"
 msgstr "Enw Ffont"
 
-#: src/control/Control.JSDialogBuilder.js:1655 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1656 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Maint Ffont"
 
-#: src/control/Control.JSDialogBuilder.js:1657
+#: src/control/Control.JSDialogBuilder.js:1658
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "Arddull"
 
-#: src/control/Control.JSDialogBuilder.js:1921
+#: src/control/Control.JSDialogBuilder.js:1922
 msgid "reply"
 msgstr "ateb"
 
-#: src/control/Control.JSDialogBuilder.js:1924
+#: src/control/Control.JSDialogBuilder.js:1925
 msgid "replies"
 msgstr "ymatebion"
 
-#: src/control/Control.JSDialogBuilder.js:1935
-#: src/layer/tile/CanvasTileLayer.js:3764
-#: src/layer/tile/CanvasTileLayer.js:3775
+#: src/control/Control.JSDialogBuilder.js:1936
+#: src/layer/tile/CanvasTileLayer.js:3767
+#: src/layer/tile/CanvasTileLayer.js:3778
 #: src/canvas/sections/CommentListSection.ts:1207
 msgid "Comment"
 msgstr "Sylw"
 
-#: src/control/Control.JSDialogBuilder.js:1999
+#: src/control/Control.JSDialogBuilder.js:2000
 msgid "Insert Comment"
 msgstr "Mewnosod Sylw"
 
-#: src/control/Control.JSDialogBuilder.js:2747
+#: src/control/Control.JSDialogBuilder.js:2748
 #: src/control/Control.Menubar.js:880
 msgid "Rows"
 msgstr "Rhesi"
 
-#: src/control/Control.JSDialogBuilder.js:2748
+#: src/control/Control.JSDialogBuilder.js:2749
 #: src/control/Control.Menubar.js:883
 msgid "Columns"
 msgstr "Colofnau"
 
-#: src/control/Control.JSDialogBuilder.js:2768
+#: src/control/Control.JSDialogBuilder.js:2769
 msgid "Insert Table"
 msgstr "Mewnosod Tabl"
 
@@ -1600,7 +1604,7 @@ msgstr "Sparkline"
 #: src/control/Control.NotebookbarDraw.js:1346
 #: src/control/Control.NotebookbarImpress.js:925
 #: src/control/Control.NotebookbarImpress.js:1382
-#: src/control/Control.NotebookbarImpress.js:2423
+#: src/control/Control.NotebookbarImpress.js:2441
 #: src/control/Control.NotebookbarWriter.js:1072
 #: src/control/Control.NotebookbarWriter.js:2845
 msgid "Shapes"
@@ -1923,7 +1927,7 @@ msgstr "Mewnosod siapiau"
 msgid "Insert connectors"
 msgstr "Mewnosod cysylltwyr"
 
-#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:829
+#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:831
 msgid "Hide Menu"
 msgstr "Cuddio Dewislen"
 
@@ -1931,7 +1935,7 @@ msgstr "Cuddio Dewislen"
 msgid "Enter new name"
 msgstr "Rhoi enw newydd"
 
-#: src/control/Control.UIManager.js:852
+#: src/control/Control.UIManager.js:854
 msgid "Show Menu"
 msgstr "Dangos Dewislen"
 
@@ -2889,7 +2893,7 @@ msgstr "Swyddogaeth"
 msgid "Named Range"
 msgstr "Ystod Wedi'i Henwi"
 
-#: src/layer/tile/CanvasTileLayer.js:3792
+#: src/layer/tile/CanvasTileLayer.js:3795
 msgid "No Comments"
 msgstr "Dim Sylwadau"
 
@@ -2906,7 +2910,7 @@ msgid "Modify"
 msgstr "Newid"
 
 #: src/canvas/sections/CommentListSection.ts:1143
-#: src/canvas/sections/CommentSection.ts:158
+#: src/canvas/sections/CommentSection.ts:160
 msgid "Reply"
 msgstr "Ateb"
 
@@ -2979,21 +2983,21 @@ msgstr ""
 "Mae defnyddiwr arall wedi diweddaru sylwadau. Hoffech chi barhau i "
 "ddiweddaru?"
 
-#: src/canvas/sections/CommentSection.ts:313
+#: src/canvas/sections/CommentSection.ts:315
 msgid "Open menu"
 msgstr "Agor dewislen"
 
-#: src/canvas/sections/CommentSection.ts:373
-#: src/canvas/sections/CommentSection.ts:374
+#: src/canvas/sections/CommentSection.ts:375
+#: src/canvas/sections/CommentSection.ts:376
 msgid "Accept change"
 msgstr "Derbyn newid"
 
-#: src/canvas/sections/CommentSection.ts:380
-#: src/canvas/sections/CommentSection.ts:381
+#: src/canvas/sections/CommentSection.ts:382
+#: src/canvas/sections/CommentSection.ts:383
 msgid "Reject change"
 msgstr "Gwrthod newid"
 
-#: src/canvas/sections/CommentSection.ts:404
+#: src/canvas/sections/CommentSection.ts:406
 msgid "Resolved"
 msgstr "Datryswyd"
 
@@ -3031,17 +3035,17 @@ msgstr "rhybudd: copi/gludo cais wedi dod i ben"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Methu llwytho'r clipfwrdd i lawr, ail gopïwch"
 
-#: src/map/Clipboard.js:859
+#: src/map/Clipboard.js:862
 msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
 
-#: src/map/Clipboard.js:1202
+#: src/map/Clipboard.js:1205
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "Defnyddiwch y botymau gludo ar eich bysellfwrdd ar-sgrin."
 
-#: src/map/Clipboard.js:1258
+#: src/map/Clipboard.js:1261
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -3050,23 +3054,23 @@ msgstr ""
 "Arhoswch i'r llwytho i lawr cyfredol orffen neu ei ddiddymu cyn cychwyn un "
 "newydd"
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Paste from this document"
 msgstr "Gludo o'r ddogfen hon"
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Cancel paste special"
 msgstr "Dileu gludo arbennig"
 
-#: src/map/Clipboard.js:1290
+#: src/map/Clipboard.js:1293
 msgid "Your browser has very limited access to the clipboard"
 msgstr "Mae gan eich porwr fynediad cyfyngedig iawn i'r clipfwrdd"
 
-#: src/map/Clipboard.js:1295
+#: src/map/Clipboard.js:1298
 msgid "Please use following combination to see more options:"
 msgstr "Defnyddiwch y cyfuniad canlynol i weld rhagor o ddewisiadau:"
 
-#: src/map/Clipboard.js:1313
+#: src/map/Clipboard.js:1316
 msgid "Close popup to ignore paste special"
 msgstr "Caewch y llamlen er mwyn anwybyddu'r gludo arbennig"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 18:49+0200\n"
+"POT-Creation-Date: 2024-10-31 22:53+0100\n"
 "PO-Revision-Date: 2024-06-29 10:46+0000\n"
 "Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
@@ -148,7 +148,7 @@ msgstr "ネットワークグラフ"
 #: src/control/Control.NotebookbarImpress.js:177
 #: src/control/Control.NotebookbarWriter.js:155
 #: src/canvas/sections/CommentListSection.ts:493
-#: src/canvas/sections/CommentSection.ts:155
+#: src/canvas/sections/CommentSection.ts:157
 msgid "Save"
 msgstr "保存"
 
@@ -213,7 +213,7 @@ msgstr "更新ログ"
 msgid "Channel Filter:"
 msgstr "チャネル フィルター:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:491
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:492
 #: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:201
 msgid "None"
 msgstr "なし"
@@ -288,7 +288,7 @@ msgstr "サーバをシャットダウンしました。ページをリロード
 #: src/core/Socket.js:1368 src/docdispatcher.ts:468
 #: src/canvas/sections/CommentListSection.ts:1421
 #: src/canvas/sections/CommentListSection.ts:2299 src/main.js:84
-#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1195
+#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1198
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
 #: src/map/handler/Map.SlideShow.js:304 src/map/handler/Map.WOPI.js:608
@@ -313,12 +313,12 @@ msgstr "本当にこのセッションを終了しますか？"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1312 src/control/Control.UIManager.js:1379
-#: src/control/Control.UIManager.js:1514 src/control/Control.UIManager.js:1673
+#: src/control/Control.UIManager.js:1314 src/control/Control.UIManager.js:1381
+#: src/control/Control.UIManager.js:1516 src/control/Control.UIManager.js:1675
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:823
 #: src/core/Socket.js:1389 src/canvas/sections/CommentListSection.ts:488
-#: src/canvas/sections/CommentSection.ts:154
-#: src/canvas/sections/CommentSection.ts:157
+#: src/canvas/sections/CommentSection.ts:156
+#: src/canvas/sections/CommentSection.ts:159
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -569,9 +569,13 @@ msgstr "今後、クリップボードの通知は控えめに画面下部に表
 msgid "Content copied to clipboard"
 msgstr "クリップボードにコピーされたコンテンツ"
 
-#: src/control/Control.DownloadProgress.js:306
+#: src/control/Control.DownloadProgress.js:305
 msgid "Download failed"
 msgstr "ダウンロードに失敗しました"
+
+#: src/control/Control.DownloadProgress.js:307
+msgid ", cluster configuration error: mis-matching serverid"
+msgstr ""
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -595,98 +599,98 @@ msgstr "アイドルのドキュメント - リロードをクリックして編
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "アイドルのドキュメント - リロードをタップして編集を継続してください"
 
-#: src/control/Control.JSDialogBuilder.js:494
+#: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
 msgstr "実線"
 
-#: src/control/Control.JSDialogBuilder.js:497
+#: src/control/Control.JSDialogBuilder.js:498
 msgid "Linear"
 msgstr "線形"
 
-#: src/control/Control.JSDialogBuilder.js:500
+#: src/control/Control.JSDialogBuilder.js:501
 msgid "Axial"
 msgstr "軸"
 
-#: src/control/Control.JSDialogBuilder.js:503
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Radial"
 msgstr "放射状"
 
-#: src/control/Control.JSDialogBuilder.js:506
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Ellipsoid"
 msgstr "楕円"
 
-#: src/control/Control.JSDialogBuilder.js:510
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Quadratic"
 msgstr "放物線"
 
-#: src/control/Control.JSDialogBuilder.js:513
+#: src/control/Control.JSDialogBuilder.js:514
 msgid "Square"
 msgstr "正方形"
 
-#: src/control/Control.JSDialogBuilder.js:516
+#: src/control/Control.JSDialogBuilder.js:517
 msgid "Fixed size"
 msgstr "固定サイズ"
 
-#: src/control/Control.JSDialogBuilder.js:1428
+#: src/control/Control.JSDialogBuilder.js:1429
 msgid "From"
 msgstr "から"
 
-#: src/control/Control.JSDialogBuilder.js:1431
+#: src/control/Control.JSDialogBuilder.js:1432
 msgid "To"
 msgstr "お問い合わせ"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1435
 msgid "Color"
 msgstr "色"
 
-#: src/control/Control.JSDialogBuilder.js:1553
+#: src/control/Control.JSDialogBuilder.js:1554
 msgid "Select range"
 msgstr "範囲を選択"
 
-#: src/control/Control.JSDialogBuilder.js:1653
+#: src/control/Control.JSDialogBuilder.js:1654
 #: src/control/Control.NotebookbarBuilder.js:156
 msgid "Font Name"
 msgstr "フォント名"
 
-#: src/control/Control.JSDialogBuilder.js:1655 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1656 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "フォントサイズ"
 
-#: src/control/Control.JSDialogBuilder.js:1657
+#: src/control/Control.JSDialogBuilder.js:1658
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "スタイル"
 
-#: src/control/Control.JSDialogBuilder.js:1921
+#: src/control/Control.JSDialogBuilder.js:1922
 msgid "reply"
 msgstr "返信"
 
-#: src/control/Control.JSDialogBuilder.js:1924
+#: src/control/Control.JSDialogBuilder.js:1925
 msgid "replies"
 msgstr "返信"
 
-#: src/control/Control.JSDialogBuilder.js:1935
-#: src/layer/tile/CanvasTileLayer.js:3764
-#: src/layer/tile/CanvasTileLayer.js:3775
+#: src/control/Control.JSDialogBuilder.js:1936
+#: src/layer/tile/CanvasTileLayer.js:3767
+#: src/layer/tile/CanvasTileLayer.js:3778
 #: src/canvas/sections/CommentListSection.ts:1207
 msgid "Comment"
 msgstr "コメント"
 
-#: src/control/Control.JSDialogBuilder.js:1999
+#: src/control/Control.JSDialogBuilder.js:2000
 msgid "Insert Comment"
 msgstr "コメントの挿入"
 
-#: src/control/Control.JSDialogBuilder.js:2747
+#: src/control/Control.JSDialogBuilder.js:2748
 #: src/control/Control.Menubar.js:880
 msgid "Rows"
 msgstr "行"
 
-#: src/control/Control.JSDialogBuilder.js:2748
+#: src/control/Control.JSDialogBuilder.js:2749
 #: src/control/Control.Menubar.js:883
 msgid "Columns"
 msgstr "列"
 
-#: src/control/Control.JSDialogBuilder.js:2768
+#: src/control/Control.JSDialogBuilder.js:2769
 msgid "Insert Table"
 msgstr "表の挿入"
 
@@ -1592,7 +1596,7 @@ msgstr "スパークライン"
 #: src/control/Control.NotebookbarDraw.js:1346
 #: src/control/Control.NotebookbarImpress.js:925
 #: src/control/Control.NotebookbarImpress.js:1382
-#: src/control/Control.NotebookbarImpress.js:2423
+#: src/control/Control.NotebookbarImpress.js:2441
 #: src/control/Control.NotebookbarWriter.js:1072
 #: src/control/Control.NotebookbarWriter.js:2845
 msgid "Shapes"
@@ -1909,7 +1913,7 @@ msgstr "シェイプの挿入"
 msgid "Insert connectors"
 msgstr "コネクターの挿入"
 
-#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:829
+#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:831
 msgid "Hide Menu"
 msgstr "メニューを隠す"
 
@@ -1917,7 +1921,7 @@ msgstr "メニューを隠す"
 msgid "Enter new name"
 msgstr "新しい名前を入力"
 
-#: src/control/Control.UIManager.js:852
+#: src/control/Control.UIManager.js:854
 msgid "Show Menu"
 msgstr "メニューを表示"
 
@@ -2839,7 +2843,7 @@ msgstr "関数"
 msgid "Named Range"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:3792
+#: src/layer/tile/CanvasTileLayer.js:3795
 msgid "No Comments"
 msgstr "コメントはありません"
 
@@ -2856,7 +2860,7 @@ msgid "Modify"
 msgstr "変更"
 
 #: src/canvas/sections/CommentListSection.ts:1143
-#: src/canvas/sections/CommentSection.ts:158
+#: src/canvas/sections/CommentSection.ts:160
 msgid "Reply"
 msgstr "返信"
 
@@ -2925,21 +2929,21 @@ msgstr "自動保存"
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr "別のユーザーがコメントを更新しました。更新を続行しますか?"
 
-#: src/canvas/sections/CommentSection.ts:313
+#: src/canvas/sections/CommentSection.ts:315
 msgid "Open menu"
 msgstr "メニューを開く"
 
-#: src/canvas/sections/CommentSection.ts:373
-#: src/canvas/sections/CommentSection.ts:374
+#: src/canvas/sections/CommentSection.ts:375
+#: src/canvas/sections/CommentSection.ts:376
 msgid "Accept change"
 msgstr "変更の承認"
 
-#: src/canvas/sections/CommentSection.ts:380
-#: src/canvas/sections/CommentSection.ts:381
+#: src/canvas/sections/CommentSection.ts:382
+#: src/canvas/sections/CommentSection.ts:383
 msgid "Reject change"
 msgstr "変更の却下"
 
-#: src/canvas/sections/CommentSection.ts:404
+#: src/canvas/sections/CommentSection.ts:406
 msgid "Resolved"
 msgstr "解決済"
 
@@ -2976,18 +2980,18 @@ msgstr "警告:copy/pasteがタイムアウトしました"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "クリップボードをダウンロードできない場合は、再コピーしてください"
 
-#: src/map/Clipboard.js:859
+#: src/map/Clipboard.js:862
 msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
 
-#: src/map/Clipboard.js:1202
+#: src/map/Clipboard.js:1205
 #, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "<p> 画面上のキーボードのコピー/貼り付けボタンを使用してください。</p>"
 
-#: src/map/Clipboard.js:1258
+#: src/map/Clipboard.js:1261
 #, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
@@ -2996,23 +3000,23 @@ msgstr ""
 "<p>コピー/貼り付け操作によるダウンロードがすでに開始されています。新しいダウ"
 "ンロードを開始する前に、現在のダウンロードを待つかキャンセルしてください</p>"
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Paste from this document"
 msgstr "このドキュメントから貼り付ける"
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Cancel paste special"
 msgstr "特殊ペーストをキャンセル"
 
-#: src/map/Clipboard.js:1290
+#: src/map/Clipboard.js:1293
 msgid "Your browser has very limited access to the clipboard"
 msgstr ""
 
-#: src/map/Clipboard.js:1295
+#: src/map/Clipboard.js:1298
 msgid "Please use following combination to see more options:"
 msgstr ""
 
-#: src/map/Clipboard.js:1313
+#: src/map/Clipboard.js:1316
 msgid "Close popup to ignore paste special"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 18:49+0200\n"
+"POT-Creation-Date: 2024-10-31 22:53+0100\n"
 "PO-Revision-Date: 2024-10-14 02:46+0000\n"
 "Last-Translator: \"K.Y.\" <keramyasina@gmail.com>\n"
 "Language-Team: Uyghur <https://hosted.weblate.org/projects/collabora-online/"
@@ -150,7 +150,7 @@ msgstr "تور گىرافىكى"
 #: src/control/Control.NotebookbarImpress.js:177
 #: src/control/Control.NotebookbarWriter.js:155
 #: src/canvas/sections/CommentListSection.ts:493
-#: src/canvas/sections/CommentSection.ts:155
+#: src/canvas/sections/CommentSection.ts:157
 msgid "Save"
 msgstr "ساقلا"
 
@@ -217,7 +217,7 @@ msgstr "Log نى يېڭىلاش"
 msgid "Channel Filter:"
 msgstr "Channel Filter:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:491
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:492
 #: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:201
 msgid "None"
 msgstr "يوق"
@@ -292,7 +292,7 @@ msgstr "مۇلازىمېتىر تاقالدى بەتنى قايتا يۈكلەڭ
 #: src/core/Socket.js:1368 src/docdispatcher.ts:468
 #: src/canvas/sections/CommentListSection.ts:1421
 #: src/canvas/sections/CommentListSection.ts:2299 src/main.js:84
-#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1195
+#: src/main.js:87 src/main.js:140 src/map/Clipboard.js:1198
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
 #: src/map/handler/Map.SlideShow.js:304 src/map/handler/Map.WOPI.js:608
@@ -317,12 +317,12 @@ msgstr "بۇ جەرياننى راستلا ئاخىرلاشتۇرامسىز؟"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1312 src/control/Control.UIManager.js:1379
-#: src/control/Control.UIManager.js:1514 src/control/Control.UIManager.js:1673
+#: src/control/Control.UIManager.js:1314 src/control/Control.UIManager.js:1381
+#: src/control/Control.UIManager.js:1516 src/control/Control.UIManager.js:1675
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:823
 #: src/core/Socket.js:1389 src/canvas/sections/CommentListSection.ts:488
-#: src/canvas/sections/CommentSection.ts:154
-#: src/canvas/sections/CommentSection.ts:157
+#: src/canvas/sections/CommentSection.ts:156
+#: src/canvas/sections/CommentSection.ts:159
 msgid "Cancel"
 msgstr "ۋاز كەچ"
 
@@ -579,9 +579,13 @@ msgstr ""
 msgid "Content copied to clipboard"
 msgstr "چاپلاش تاختىسىغا كۆچۈرۈلگەن مەزمۇن"
 
-#: src/control/Control.DownloadProgress.js:306
+#: src/control/Control.DownloadProgress.js:305
 msgid "Download failed"
 msgstr "چۈشۈرۈش مەغلۇب بولدى"
+
+#: src/control/Control.DownloadProgress.js:307
+msgid ", cluster configuration error: mis-matching serverid"
+msgstr ""
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -606,101 +610,101 @@ msgstr "بىكار ھۆججەت - قايتا چېكىپ تەھرىرلەشنى �
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "بىكار ھۆججەت - قايتا چېكىپ تەھرىرلەشنى ئەسلىگە كەلتۈرۈڭ"
 
-#: src/control/Control.JSDialogBuilder.js:494
+#: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
 msgstr "قاتتىق"
 
-#: src/control/Control.JSDialogBuilder.js:497
+#: src/control/Control.JSDialogBuilder.js:498
 msgid "Linear"
 msgstr "Linear"
 
-#: src/control/Control.JSDialogBuilder.js:500
+#: src/control/Control.JSDialogBuilder.js:501
 msgid "Axial"
 msgstr "Axial"
 
-#: src/control/Control.JSDialogBuilder.js:503
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Radial"
 msgstr "Radial"
 
-#: src/control/Control.JSDialogBuilder.js:506
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Ellipsoid"
 msgstr "Ellipsoid"
 
-#: src/control/Control.JSDialogBuilder.js:510
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Quadratic"
 msgstr "Quadratic"
 
-#: src/control/Control.JSDialogBuilder.js:513
+#: src/control/Control.JSDialogBuilder.js:514
 msgid "Square"
 msgstr "مەيدان"
 
-#: src/control/Control.JSDialogBuilder.js:516
+#: src/control/Control.JSDialogBuilder.js:517
 msgid "Fixed size"
 msgstr "مۇقىم چوڭلۇقى"
 
-#: src/control/Control.JSDialogBuilder.js:1428
+#: src/control/Control.JSDialogBuilder.js:1429
 msgid "From"
 msgstr "From"
 
-#: src/control/Control.JSDialogBuilder.js:1431
+#: src/control/Control.JSDialogBuilder.js:1432
 msgid "To"
 msgstr "To"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1435
 msgid "Color"
 msgstr "رەڭ"
 
-#: src/control/Control.JSDialogBuilder.js:1553
+#: src/control/Control.JSDialogBuilder.js:1554
 #, fuzzy
 msgid "Select range"
 msgstr "تاللانغان كاتەكچە دائىرىسى"
 
-#: src/control/Control.JSDialogBuilder.js:1653
+#: src/control/Control.JSDialogBuilder.js:1654
 #: src/control/Control.NotebookbarBuilder.js:156
 #, fuzzy
 msgid "Font Name"
 msgstr "خەت نۇسخا"
 
-#: src/control/Control.JSDialogBuilder.js:1655 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1656 src/control/Toolbar.js:134
 #, fuzzy
 msgid "Font Size"
 msgstr "خەت نۇسخا"
 
-#: src/control/Control.JSDialogBuilder.js:1657
+#: src/control/Control.JSDialogBuilder.js:1658
 #: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "ئۇسلۇب"
 
-#: src/control/Control.JSDialogBuilder.js:1921
+#: src/control/Control.JSDialogBuilder.js:1922
 msgid "reply"
 msgstr "جاۋاب"
 
-#: src/control/Control.JSDialogBuilder.js:1924
+#: src/control/Control.JSDialogBuilder.js:1925
 msgid "replies"
 msgstr "دەپ جاۋاب بېرىدۇ"
 
-#: src/control/Control.JSDialogBuilder.js:1935
-#: src/layer/tile/CanvasTileLayer.js:3764
-#: src/layer/tile/CanvasTileLayer.js:3775
+#: src/control/Control.JSDialogBuilder.js:1936
+#: src/layer/tile/CanvasTileLayer.js:3767
+#: src/layer/tile/CanvasTileLayer.js:3778
 #: src/canvas/sections/CommentListSection.ts:1207
 msgid "Comment"
 msgstr "ئىزاھات"
 
-#: src/control/Control.JSDialogBuilder.js:1999
+#: src/control/Control.JSDialogBuilder.js:2000
 msgid "Insert Comment"
 msgstr "باھا قىستۇرۇش"
 
-#: src/control/Control.JSDialogBuilder.js:2747
+#: src/control/Control.JSDialogBuilder.js:2748
 #: src/control/Control.Menubar.js:880
 msgid "Rows"
 msgstr "قۇر"
 
-#: src/control/Control.JSDialogBuilder.js:2748
+#: src/control/Control.JSDialogBuilder.js:2749
 #: src/control/Control.Menubar.js:883
 msgid "Columns"
 msgstr "ستون"
 
-#: src/control/Control.JSDialogBuilder.js:2768
+#: src/control/Control.JSDialogBuilder.js:2769
 #, fuzzy
 msgid "Insert Table"
 msgstr "جەدۋەل قىستۇر"
@@ -1620,7 +1624,7 @@ msgstr "Sparkline"
 #: src/control/Control.NotebookbarDraw.js:1346
 #: src/control/Control.NotebookbarImpress.js:925
 #: src/control/Control.NotebookbarImpress.js:1382
-#: src/control/Control.NotebookbarImpress.js:2423
+#: src/control/Control.NotebookbarImpress.js:2441
 #: src/control/Control.NotebookbarWriter.js:1072
 #: src/control/Control.NotebookbarWriter.js:2845
 msgid "Shapes"
@@ -1948,7 +1952,7 @@ msgstr "جەدۋەل قىستۇر"
 msgid "Insert connectors"
 msgstr "ئۇلىغۇچ قىستۇر"
 
-#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:829
+#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:831
 msgid "Hide Menu"
 msgstr "تىزىملىكنى يوشۇرۇش"
 
@@ -1956,7 +1960,7 @@ msgstr "تىزىملىكنى يوشۇرۇش"
 msgid "Enter new name"
 msgstr "يېڭى ئىسىم كىرگۈزۈڭ"
 
-#: src/control/Control.UIManager.js:852
+#: src/control/Control.UIManager.js:854
 msgid "Show Menu"
 msgstr "تىزىملىكنى كۆرسەت"
 
@@ -2903,7 +2907,7 @@ msgstr "فۇنكسىيە"
 msgid "Named Range"
 msgstr "Range"
 
-#: src/layer/tile/CanvasTileLayer.js:3792
+#: src/layer/tile/CanvasTileLayer.js:3795
 msgid "No Comments"
 msgstr "باھا يوق"
 
@@ -2920,7 +2924,7 @@ msgid "Modify"
 msgstr "ئۆزگەرتىش"
 
 #: src/canvas/sections/CommentListSection.ts:1143
-#: src/canvas/sections/CommentSection.ts:158
+#: src/canvas/sections/CommentSection.ts:160
 msgid "Reply"
 msgstr "جاۋاب"
 
@@ -2989,21 +2993,21 @@ msgstr "Autosaved"
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr "يەنە بىر ئىشلەتكۈچى ئىنكاسلارنى يېڭىلىدى. يېڭىلاشنى داۋاملاشتۇرامسىز؟"
 
-#: src/canvas/sections/CommentSection.ts:313
+#: src/canvas/sections/CommentSection.ts:315
 msgid "Open menu"
 msgstr "تىزىملىكنى ئېچىڭ"
 
-#: src/canvas/sections/CommentSection.ts:373
-#: src/canvas/sections/CommentSection.ts:374
+#: src/canvas/sections/CommentSection.ts:375
+#: src/canvas/sections/CommentSection.ts:376
 msgid "Accept change"
 msgstr "ئۆزگەرتىشنى قوبۇل قىلىڭ"
 
-#: src/canvas/sections/CommentSection.ts:380
-#: src/canvas/sections/CommentSection.ts:381
+#: src/canvas/sections/CommentSection.ts:382
+#: src/canvas/sections/CommentSection.ts:383
 msgid "Reject change"
 msgstr "ئۆزگەرتىشنى رەت قىلىڭ"
 
-#: src/canvas/sections/CommentSection.ts:404
+#: src/canvas/sections/CommentSection.ts:406
 msgid "Resolved"
 msgstr "ھەل قىلىندى"
 
@@ -3042,17 +3046,17 @@ msgstr "ئاگاھلاندۇرۇش: كۆچۈرۈش / چاپلاش تەلىپىن
 msgid "Failed to download clipboard, please re-copy"
 msgstr "چاپلاش تاختىسىنى چۈشۈرەلمىدى ، قايتا كۆچۈرۈڭ"
 
-#: src/map/Clipboard.js:859
+#: src/map/Clipboard.js:862
 msgid ""
 "The async Clipboard API is not supported by your browser, switching to "
 "HTTPS is meant to fix that."
 msgstr ""
 
-#: src/map/Clipboard.js:1202
+#: src/map/Clipboard.js:1205
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "ئېكراندىكى كۇنۇپكا تاختىسىدىكى چاپلاش كۇنۇپكىسىنى ئىشلىتىڭ."
 
-#: src/map/Clipboard.js:1258
+#: src/map/Clipboard.js:1261
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -3060,23 +3064,23 @@ msgstr ""
 "چوڭ كۆچۈرۈش / چاپلاش مەشغۇلاتى سەۋەبىدىن چۈشۈرۈش ئاللىقاچان باشلاندى. "
 "نۆۋەتتىكى چۈشۈرۈشنى ساقلاڭ ياكى يېڭىنى باشلاشتىن بۇرۇن ئۇنى ئەمەلدىن قالدۇرۇڭ"
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Paste from this document"
 msgstr "بۇ ھۆججەتتىن چاپلاڭ"
 
-#: src/map/Clipboard.js:1280
+#: src/map/Clipboard.js:1283
 msgid "Cancel paste special"
 msgstr "چاپلاشنى ئالاھىدە ئەمەلدىن قالدۇرۇڭ"
 
-#: src/map/Clipboard.js:1290
+#: src/map/Clipboard.js:1293
 msgid "Your browser has very limited access to the clipboard"
 msgstr "تور كۆرگۈچىڭىزنىڭ چاپلاش تاختىسىغا كىرىش ھوقۇقى ئىنتايىن چەكلىك"
 
-#: src/map/Clipboard.js:1295
+#: src/map/Clipboard.js:1298
 msgid "Please use following combination to see more options:"
 msgstr "تېخىمۇ كۆپ تاللاشلارنى كۆرۈش ئۈچۈن تۆۋەندىكى بىرلەشتۈرۈشنى ئىشلىتىڭ:"
 
-#: src/map/Clipboard.js:1313
+#: src/map/Clipboard.js:1316
 msgid "Close popup to ignore paste special"
 msgstr "چاپلاقنى تاقاپ ئالاھىدە چاپلاش"
 
