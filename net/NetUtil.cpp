@@ -218,18 +218,27 @@ bool HostEntry::isLocalhost() const
 {
     const std::string targetAddress = resolveHostAddress();
 
-    const Poco::Net::NetworkInterface::NetworkInterfaceList list =
-        Poco::Net::NetworkInterface::list(true, true);
-    for (const auto& netif : list)
+    try
     {
-        std::string address = netif.address().toString();
-        address = address.substr(0, address.find('%', 0));
-        if (address == targetAddress)
+        const Poco::Net::NetworkInterface::NetworkInterfaceList list =
+            Poco::Net::NetworkInterface::list(true, true);
+        for (const auto& netif : list)
         {
-            LOG_TRC("Host [" << _requestName << "] is on the same host as the client: \""
-                             << targetAddress << "\".");
-            return true;
+            std::string address = netif.address().toString();
+            address = address.substr(0, address.find('%', 0));
+            if (address == targetAddress)
+            {
+                LOG_TRC("Host [" << _requestName << "] is on the same host as the client: \""
+                                 << targetAddress << "\".");
+                return true;
+            }
         }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        // possibly getifaddrs failed
+        LOG_WRN("Poco::Net::NetworkInterface::list failed: " << exc.displayText() <<
+                " (" << Util::symbolicErrno(errno) << ' ' << strerror(errno) << ")");
     }
 
     LOG_TRC("Host [" << _requestName << "] is not on the same host as the client: \"" << targetAddress
