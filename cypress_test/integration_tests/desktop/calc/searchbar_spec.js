@@ -35,21 +35,21 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 		searchHelper.typeIntoSearchField('a');
 		searchHelper.searchNext();
 
-		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
+		cy.cGet(helper.addressInputSelector).invoke('val').should('equal', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance
 		searchHelper.searchNext();
 
-		cy.cGet(helper.addressInputSelector).should('have.value', 'B1');
+		cy.cGet(helper.addressInputSelector).invoke('val').should('equal', 'B1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search prev instance
 		searchHelper.searchPrev();
 
-		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
+		cy.cGet(helper.addressInputSelector).invoke('val').should('equal', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
@@ -60,21 +60,22 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 
 		searchHelper.searchNext();
 
-		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
+		cy.cGet(helper.addressInputSelector).invoke('val').should('equal', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance
 		searchHelper.searchNext();
 
-		cy.cGet(helper.addressInputSelector).should('have.value', 'B1');
+		cy.cGet(helper.addressInputSelector).invoke('val').should('equal', 'B1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance, which is in the beginning of the document.
 		searchHelper.searchNext();
+		cy.wait(500);
 
-		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
+		cy.cGet(helper.addressInputSelector).invoke('val').should('equal', 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});

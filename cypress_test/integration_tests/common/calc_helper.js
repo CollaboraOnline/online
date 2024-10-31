@@ -57,7 +57,9 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	}
 
 	if (isA1)
-		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
+		cy.cGet(helper.addressInputSelector)
+				.invoke('val')
+				.should('equal', 'A1');
 
 	cy.log('<< clickOnFirstCell - end');
 }
