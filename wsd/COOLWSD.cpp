@@ -3802,6 +3802,9 @@ int COOLWSD::innerMain()
 #endif
     }
 
+#ifndef IOS // SigUtil::getShutdownRequestFlag() always returns false on iOS, thus the above while
+            // loop never exits.
+
     COOLWSD::alertAllUsersInternal("close: shuttingdown");
 
     SigUtil::addActivity("shutting down");
@@ -3974,6 +3977,7 @@ int COOLWSD::innerMain()
     Util::forcedExit(returnValue);
 
     return returnValue;
+#endif
 }
 
 std::shared_ptr<TerminatingPoll> COOLWSD:: getWebServerPoll ()
