@@ -334,13 +334,9 @@ L.Clipboard = L.Class.extend({
 				);
 			}.bind(this),
 			function(progress) { return progress/2; },
-			function(response) {
+			function() {
 				window.app.console.log('failed to download clipboard using fallback html');
 
-				if (response) {
-					app.showAsyncDownloadError(response, _('Failed to download clipboard'));
-					return;
-				}
 				// If it's the stub, avoid pasting.
 				if (that._isStubHtml(fallbackHtml))
 				{
