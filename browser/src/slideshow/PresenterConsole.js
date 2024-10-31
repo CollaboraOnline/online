@@ -52,6 +52,16 @@ class PresenterConsole {
                                          <div id='notes'></div>
                                      </div>
                                 </main>
+                                <div id="toolbar">
+                                  <button type="button" id="prev" disabled>
+                                     <img src="images/presenterscreen-ButtonSlidePreviousSelected.png">
+                                     <label>Previous</label>
+                                  </button>
+                                  <button type="button" id="next" disabled>
+                                     <img src="images/presenterscreen-ButtonEffectNextSelected.png">
+                                     <label>Next</label>
+                                  </button>
+                                </div>
                                 <footer>
                                 </footer>
 			</body>
@@ -77,6 +87,12 @@ class PresenterConsole {
 		this._ticks = 0;
 
 		this._previews = new Array(this._presenter._getSlidesCount());
+		if (this._previews.length > 1) {
+			let button = this._proxyPresenter.document.querySelector('#prev');
+			button.disabled = false;
+			button = this._proxyPresenter.document.querySelector('#next');
+			button.disabled = false;
+		}
 	}
 
 	_onPresentInConsole() {
@@ -185,6 +201,37 @@ class PresenterConsole {
 
 		elem = this._proxyPresenter.document.querySelector('#notes');
 		elem.style.height = '50%';
+
+		elem = this._proxyPresenter.document.querySelector('#toolbar');
+		elem.style.display = 'flex';
+		elem.style.alignItems = 'center';
+		elem.style.justifyContent = 'center';
+		elem.style.backgroundColor = slideShowBGColor;
+		elem.style.overflow = 'hidden';
+		elem.style.position = 'fixed';
+		elem.style.bottom = 0;
+		elem.style.width = '100%';
+
+		elem = this._proxyPresenter.document.querySelector('#prev');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.justifyContent = 'center';
+		elem.style.alignItems = 'center';
+		elem.style.backgroundColor = 'transparent';
+		elem.style.border = 'none';
+		elem.style.color = 'white';
+		elem.addEventListener('click', L.bind(this._onPrev, this));
+
+		elem = this._proxyPresenter.document.querySelector('#next');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.justifyContent = 'center';
+		elem.style.alignItems = 'center';
+		elem.style.backgroundColor = 'transparent';
+		elem.style.border = 'none';
+		elem.style.color = 'white';
+		elem.addEventListener('click', L.bind(this._onNext, this));
+
 		this._ticks = 0;
 		this._onTimer();
 
@@ -198,6 +245,16 @@ class PresenterConsole {
 
 	_onClick(e) {
 		this._presenter.getNavigator().onClick(e);
+	}
+
+	_onPrev(e) {
+		this._presenter.getNavigator().rewindEffect();
+		e.stopPropagation();
+	}
+
+	_onNext(e) {
+		this._presenter.getNavigator().dispatchEffect();
+		e.stopPropagation();
 	}
 
 	_onTimer() {
