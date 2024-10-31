@@ -65,6 +65,11 @@ class PresenterConsole {
                                      <img src="images/presenterscreen-ButtonNotesNormal.png">
                                      <label>Notes</label>
                                   </button>
+                                  <button type="button" id="slides" disabled>
+                                     <img src="images/presenterscreen-ButtonSlideSorterNormal.png">
+                                     <label>Slides</label>
+                                  </button>
+                                  <div id="separator1"></div>
                                 </div>
                                 <footer>
                                 </footer>
@@ -246,6 +251,22 @@ class PresenterConsole {
 		elem.style.color = 'white';
 		elem.addEventListener('click', L.bind(this._onNotes, this));
 
+		elem = this._proxyPresenter.document.querySelector('#slides');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.justifyContent = 'center';
+		elem.style.alignItems = 'center';
+		elem.style.backgroundColor = 'transparent';
+		elem.style.border = 'none';
+		elem.style.color = 'white';
+		elem.addEventListener('click', L.bind(this._onSlides, this));
+
+		elem = this._proxyPresenter.document.querySelector('#separator1');
+		elem.style.width = '1px';
+		elem.style.height = '30px';
+		elem.style.borderLeft = '1px';
+		elem.style.borderColor = 'white';
+		elem.style.borderStyle = 'solid';
 		this._ticks = 0;
 		this._onTimer();
 
@@ -272,6 +293,8 @@ class PresenterConsole {
 	}
 
 	_onNotes() {}
+
+	_onSlides() {}
 
 	_onTimer() {
 		if (!this._proxyPresenter) {
