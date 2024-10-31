@@ -74,7 +74,7 @@ static int read_buffer(char *buffer, unsigned size,
 
     for (;;)
     {
-        ssize_t number_bytes = read(file_desc,
+        ptrdiff_t number_bytes = read(file_desc,
                                     buffer + total_bytes,
                                     size - total_bytes);
         if (number_bytes == -1)

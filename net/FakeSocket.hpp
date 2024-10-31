@@ -44,11 +44,11 @@ int fakeSocketAccept4(int fd);
 
 int fakeSocketPeer(int fd);
 
-ssize_t fakeSocketAvailableDataLength(int fd);
+ptrdiff_t fakeSocketAvailableDataLength(int fd);
 
-ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes);
+ptrdiff_t fakeSocketRead(int fd, void *buf, size_t nbytes);
 
-ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes);
+ptrdiff_t fakeSocketWrite(int fd, const void *buf, size_t nbytes);
 
 int fakeSocketShutdown(int fd);
 
@@ -105,19 +105,19 @@ inline int fakeSocketPeer(int)
     return -1;
 }
 
-inline ssize_t fakeSocketAvailableDataLength(int)
+inline ptrdiff_t fakeSocketAvailableDataLength(int)
 {
     assert(Util::isMobileApp() && "Never used in non-mobile builds");
     return -1;
 }
 
-inline ssize_t fakeSocketRead(int, void*, size_t)
+inline ptrdiff_t fakeSocketRead(int, void*, size_t)
 {
     assert(Util::isMobileApp() && "Never used in non-mobile builds");
     return -1;
 }
 
-inline ssize_t fakeSocketWrite(int, const void*, size_t)
+inline ptrdiff_t fakeSocketWrite(int, const void*, size_t)
 {
     assert(Util::isMobileApp() && "Never used in non-mobile builds");
     return -1;

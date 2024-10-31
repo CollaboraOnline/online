@@ -869,7 +869,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             filesRead += ' ';
 
             std::string uncompressedFile;
-            const ssize_t size =
+            const ptrdiff_t size =
                 FileUtil::readFile(basePath + relPath, uncompressedFile, MaxFileSizeToCacheInBytes);
             assert(size < MaxFileSizeToCacheInBytes && "MaxFileSizeToCacheInBytes is too small for "
                                                        "static-file serving; please increase it");
@@ -890,7 +890,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
         else if (S_ISREG(fileStat.st_mode))
         {
             std::string uncompressedFile;
-            const ssize_t size =
+            const ptrdiff_t size =
                 FileUtil::readFile(basePath + relPath, uncompressedFile, MaxFileSizeToCacheInBytes);
             assert(size < MaxFileSizeToCacheInBytes && "MaxFileSizeToCacheInBytes is too small for "
                                                        "static-file serving; please increase it");

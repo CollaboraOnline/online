@@ -364,9 +364,9 @@ void COOLWSD::checkSessionLimitsAndWarnClients()
     if (config::isSupportKeyEnabled())
         return;
 
-    ssize_t docBrokerCount = DocBrokers.size() - ConvertToBroker::getInstanceCount();
+    ptrdiff_t docBrokerCount = DocBrokers.size() - ConvertToBroker::getInstanceCount();
     if (COOLWSD::MaxDocuments < 10000 &&
-        (docBrokerCount > static_cast<ssize_t>(COOLWSD::MaxDocuments) || COOLWSD::NumConnections >= COOLWSD::MaxConnections))
+        (docBrokerCount > static_cast<ptrdiff_t>(COOLWSD::MaxDocuments) || COOLWSD::NumConnections >= COOLWSD::MaxConnections))
     {
         const std::string info = Poco::format(PAYLOAD_INFO_LIMIT_REACHED, COOLWSD::MaxDocuments, COOLWSD::MaxConnections);
         LOG_INF("Sending client 'limitreached' message: " << info);
@@ -952,7 +952,7 @@ void InotifySocket::handlePoll(SocketDisposition & /* disposition */, std::chron
 
     while (true)
     {
-        ssize_t len = read(getFD(), buf, sizeof(buf));
+        ptrdiff_t len = read(getFD(), buf, sizeof(buf));
 
         if (len == -1 && errno != EAGAIN)
         {
@@ -4089,7 +4089,7 @@ public:
             ;
 
         std::string smap;
-        if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
+        if (const ptrdiff_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
             os << "\n  smaps_rollup: <unavailable>";
         else
             os << "\n  smaps_rollup: " << smap;

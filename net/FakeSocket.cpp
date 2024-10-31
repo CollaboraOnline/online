@@ -483,7 +483,7 @@ int fakeSocketPeer(int fd)
     return pair.fd[N];
 }
 
-ssize_t fakeSocketAvailableDataLength(int fd)
+ptrdiff_t fakeSocketAvailableDataLength(int fd)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
@@ -505,7 +505,7 @@ ssize_t fakeSocketAvailableDataLength(int fd)
         return -1;
     }
 
-    ssize_t result = 0;
+    ptrdiff_t result = 0;
     if (pair.buffer[K].size() > 0)
         result = pair.buffer[K][0].size();
 
@@ -514,7 +514,7 @@ ssize_t fakeSocketAvailableDataLength(int fd)
     return result;
 }
 
-ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
+ptrdiff_t fakeSocketRead(int fd, void *buf, size_t nbytes)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);
@@ -552,7 +552,7 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
         return -1;
     }
 
-    ssize_t result = 0;
+    ptrdiff_t result = 0;
     if (pair.buffer[K].size() > 0)
     {
         // These sockets are record-oriented. It won't work to read less than the whole record in
@@ -580,7 +580,7 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
     return result;
 }
 
-ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes)
+ptrdiff_t fakeSocketWrite(int fd, const void *buf, size_t nbytes)
 {
     std::vector<FakeSocketPair>& fds = getFds();
     std::unique_lock<std::mutex> lock(theMutex);

@@ -656,7 +656,7 @@ class DeltaGenerator {
     {}
 
     /// Re-balances the cache size to fit the number of sessions
-    void rebalanceDeltas(ssize_t limit = -1)
+    void rebalanceDeltas(ptrdiff_t limit = -1)
     {
         std::unique_lock<std::mutex> guard(_deltaGuard);
         if (limit > 0)

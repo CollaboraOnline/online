@@ -150,12 +150,12 @@ namespace FileUtil
 
     /// Read nbytes from fd into buf. Retries on EINTR.
     /// Returns the number of bytes read, or -1 on error.
-    ssize_t read(int fd, void* buf, size_t nbytes);
+    ptrdiff_t read(int fd, void* buf, size_t nbytes);
 
     /// Reads the whole file appending onto the given buffer. Only for small files.
     /// Does *not* clear the buffer before writing to it. Returns the number of bytes read, -1 for error.
     template <typename T>
-    ssize_t readFile(const std::string& path, T& data, int maxSize = 256 * 1024)
+    ptrdiff_t readFile(const std::string& path, T& data, int maxSize = 256 * 1024)
     {
         const int fd = ::open(path.c_str(), O_RDONLY);
         if (fd < 0)
@@ -172,7 +172,7 @@ namespace FileUtil
         const auto remainingSize = (st.st_size > 0 ? st.st_size : maxSize);
         data.resize(originalSize + remainingSize);
 
-        const ssize_t n = read(fd, &data[originalSize], remainingSize);
+        const ptrdiff_t n = read(fd, &data[originalSize], remainingSize);
         ::close(fd);
 
         data.resize(originalSize + (n <= 0 ? 0 : n));

@@ -68,7 +68,7 @@ struct Histogram {
     void dump(const char *legend)
     {
         size_t max = 0;
-        ssize_t firstBucket = -1;
+        ptrdiff_t firstBucket = -1;
         for (size_t i = 0; i < _buckets.size(); ++i)
         {
             size_t n = _buckets[i];

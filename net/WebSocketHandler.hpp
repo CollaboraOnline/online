@@ -813,13 +813,13 @@ protected:
 
             // copy and mask the data
             char copy[16384];
-            ssize_t i = 0, toSend;
+            ptrdiff_t i = 0, toSend;
             while (true)
             {
                 toSend = std::min(sizeof(copy), len - i);
                 if (toSend == 0)
                     break;
-                for (ssize_t j = 0; j < toSend; ++j, ++i)
+                for (ptrdiff_t j = 0; j < toSend; ++j, ++i)
                     copy[j] = data[i] ^ mask[i%4];
                 out.append(copy, toSend);
             }

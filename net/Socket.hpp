@@ -1240,7 +1240,7 @@ public:
             return false; // error - close it.
         }
 
-        ssize_t len = 0;
+        ptrdiff_t len = 0;
         if constexpr (!Util::isMobileApp())
         {
             // SSL decodes blocks of 16Kb, so for efficiency we use the same.
@@ -1282,7 +1282,7 @@ public:
 
                 if (len > 0)
                 {
-                    LOG_ASSERT_MSG(len <= ssize_t(sizeof(buf)),
+                    LOG_ASSERT_MSG(len <= ptrdiff_t(sizeof(buf)),
                                    "Read more data than the buffer size");
                     notifyBytesRcvd(len);
                     _inBuffer.append(&buf[0], len);
@@ -1296,7 +1296,7 @@ public:
         else
         {
             LOG_TRC("readIncomingData #" << getFD());
-            ssize_t available = fakeSocketAvailableDataLength(getFD());
+            ptrdiff_t available = fakeSocketAvailableDataLength(getFD());
             if (available == -1)
                 len = -1;
             else if (available == 0)
@@ -1574,7 +1574,7 @@ public:
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
         assert(!_outBuffer.empty());
-        ssize_t len = 0;
+        ptrdiff_t len = 0;
         int last_errno = 0;
         do
         {
@@ -1608,7 +1608,7 @@ public:
 
             if (len > 0)
             {
-                LOG_ASSERT_MSG(len <= ssize_t(_outBuffer.size()),
+                LOG_ASSERT_MSG(len <= ptrdiff_t(_outBuffer.size()),
                                "Consumed more data than available");
                 notifyBytesSent(len);
                 _outBuffer.eraseFirst(len);

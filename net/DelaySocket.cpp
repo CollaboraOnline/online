@@ -135,7 +135,7 @@ public:
             auto chunk = std::make_shared<WriteChunk>(_delayMs);
 
             char buf[64 * 1024];
-            ssize_t len;
+            ptrdiff_t len;
             size_t toRead = sizeof(buf); //std::min(sizeof(buf), WindowSize - _chunksSize);
             do {
                 len = ::read(getFD(), buf, toRead);
@@ -178,7 +178,7 @@ public:
                 }
                 else
                 {
-                    ssize_t len;
+                    ptrdiff_t len;
                     do {
                         len = ::write(getFD(), &chunk->getData()[0], chunk->getData().size());
                     } while (len < 0 && errno == EINTR);

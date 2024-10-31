@@ -1221,7 +1221,7 @@ int main(int argc, char**argv)
 
     /// Append a length bytes to a vector, or strlen of data as a C string if not provided
     /// returns count of bytes appended.
-    inline void vectorAppend(std::vector<char> &vector, const char *data, ssize_t length = -1)
+    inline void vectorAppend(std::vector<char> &vector, const char *data, ptrdiff_t length = -1)
     {
         size_t vlen = vector.size();
 

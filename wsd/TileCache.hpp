@@ -71,7 +71,7 @@ struct TileData
     }
 
     // Add a frame or delta and - return the size change
-    ssize_t appendBlob(TileWireId id, const char *data, const size_t dataSize)
+    ptrdiff_t appendBlob(TileWireId id, const char *data, const size_t dataSize)
     {
         size_t oldCacheSize = size();
 

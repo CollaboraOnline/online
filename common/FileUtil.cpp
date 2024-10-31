@@ -429,19 +429,19 @@ namespace FileUtil
         return rootPath.toString();
     }
 
-    ssize_t read(int fd, void* buf, size_t nbytes)
+    ptrdiff_t read(int fd, void* buf, size_t nbytes)
     {
-        ssize_t off = 0;
+        ptrdiff_t off = 0;
         char* p = static_cast<char*>(buf);
         for (;;)
         {
-            if (static_cast<ssize_t>(nbytes) <= 0)
+            if (static_cast<ptrdiff_t>(nbytes) <= 0)
             {
                 // Nothing to read.
                 break;
             }
 
-            ssize_t n;
+            ptrdiff_t n;
             while ((n = ::read(fd, p, nbytes)) < 0 && errno == EINTR)
             {
             }
@@ -792,7 +792,7 @@ namespace FileUtil
                 const std::size_t size = entry._size;
                 std::vector<char> target(size + 1);
                 char* target_data = target.data();
-                const ssize_t read = readlink(fullpath.c_str(), target_data, size);
+                const ptrdiff_t read = readlink(fullpath.c_str(), target_data, size);
                 if (read <= 0 || static_cast<std::size_t>(read) > size)
                     std::cerr << "lslr: fail to read: " << fullpath << " error: " << std::strerror(errno) << std::endl;
                 else

@@ -474,7 +474,7 @@ namespace
                 const std::size_t size = sb->st_size;
                 std::vector<char> target(size + 1);
                 char* target_data = target.data();
-                const ssize_t written = readlink(fpath, target_data, size);
+                const ptrdiff_t written = readlink(fpath, target_data, size);
                 if (written <= 0 || static_cast<std::size_t>(written) > size)
                 {
                     LOG_SYS("nftw: readlink(\"" << fpath << "\") failed");
@@ -2551,7 +2551,7 @@ void Document::dumpState(std::ostream& oss)
         << "\n\tbgSaveDisabled: "<< _isBgSaveDisabled;
 
     std::string smap;
-    if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
+    if (const ptrdiff_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
         oss << "\n  smaps_rollup: <unavailable>";
     else
         oss << "\n  smaps_rollup: " << smap;

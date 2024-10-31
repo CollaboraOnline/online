@@ -125,7 +125,7 @@ void UtilTests::testNumberToHex()
     }
 
     char buffer[32];
-    for (ssize_t sz = sizeof(buffer); sz >= 0; --sz)
+    for (ptrdiff_t sz = sizeof(buffer); sz >= 0; --sz)
     {
         std::size_t size = static_cast<std::size_t>(sz);
         for (int width = 0; width < 33; ++width)
