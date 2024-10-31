@@ -43,7 +43,8 @@ public:
                    int offsetX, int offsetY,
                    int tilesPixmapWidth, int tilesPixmapHeight,
                    int tileWidth, int tileHeight,
-                   LibreOfficeKitTileMode /*mode*/)
+                   LibreOfficeKitTileMode /*mode*/,
+                   bool isSlideShowLayer = false)
     {
         // set requested watermark size a little bit smaller than tile size
         const int width = tileWidth * 0.8;
@@ -58,14 +59,16 @@ public:
             const int maxY = std::min(tileHeight, height);
             offsetX += (tileWidth - maxX) / 2;
             offsetY += (tileHeight - maxY) / 2;
-            alphaBlend(*pixmap, width, height, offsetX, offsetY, tilePixmap, tilesPixmapWidth, tilesPixmapHeight, false);
+            alphaBlend(*pixmap, width, height, offsetX, offsetY,
+                       tilePixmap, tilesPixmapWidth, tilesPixmapHeight,
+                       /*isFontBlending*/ false,  isSlideShowLayer);
         }
     }
 
 private:
     /// Alpha blend pixels from 'from' over the 'to'.
     void alphaBlend(const std::vector<unsigned char>& from, int from_width, int from_height, int from_offset_x, int from_offset_y,
-            unsigned char* to, int to_width, int to_height, const bool isFontBlending)
+            unsigned char* to, int to_width, int to_height, const bool isFontBlending, bool isSlideShowLayer = false)
     {
         bool isCalc = (_loKitDoc->getDocumentType() == LOK_DOCTYPE_SPREADSHEET);
         for (int to_y = from_offset_y, from_y = 0; (to_y < to_height) && (from_y < from_height) ; ++to_y, ++from_y)
@@ -73,7 +76,8 @@ private:
             {
                 unsigned char* t = to + 4 * (to_y * to_width + to_x);
 
-                if (!isFontBlending && !isCalc && t[3] != 255)
+                const bool isTransparentBackground = isSlideShowLayer && t[3] == 0;
+                if (!isFontBlending && !isCalc && t[3] != 255 && !isTransparentBackground)
                     continue;
 
                 double dst_r = t[0];
@@ -88,6 +92,8 @@ private:
                 double src_a = f[3] / 255.0;
 
                 double out_a = src_a + dst_a * (1.0 - src_a);
+                if (isTransparentBackground)
+                    out_a /= 8;
                 unsigned char out_r = src_r + dst_r * (1.0 - src_a);
                 unsigned char out_g = src_g + dst_g * (1.0 - src_a);
                 unsigned char out_b = src_b + dst_b * (1.0 - src_a);
