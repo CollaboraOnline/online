@@ -21,6 +21,11 @@ describe(['tagdesktop'], 'Presenter Console.', function() {
 
 			var map = new fakeMap();
 
+			class FakeWindowProxy {
+				addEventListener() {}
+				close() {}
+			}
+
 			class FakeCompositor {
 				computeLayerResolution(width, height) {
 					return [width, height];
@@ -33,6 +38,8 @@ describe(['tagdesktop'], 'Presenter Console.', function() {
 			class FakePresenter {
 				constructor() {
 					this._slideCompositor = new FakeCompositor();
+					// fake window
+					this._slideShowWindowProxy = new FakeWindowProxy();
 				}
 
 				_getSlidesCount() {
