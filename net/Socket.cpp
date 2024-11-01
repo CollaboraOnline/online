@@ -92,22 +92,21 @@ std::string Socket::toString(Type t)
 
 int Socket::createSocket([[maybe_unused]] Socket::Type type)
 {
-    if constexpr (!Util::isMobileApp())
+#if !MOBILEAPP
+    int domain = AF_UNSPEC;
+    switch (type)
     {
-        int domain = AF_UNSPEC;
-        switch (type)
-        {
-        case Type::IPv4: domain = AF_INET;  break;
-        case Type::IPv6: domain = AF_INET6; break;
-        case Type::All:  domain = AF_INET6; break;
-        case Type::Unix: domain = AF_UNIX;  break;
-        default: assert(!"Unknown Socket::Type"); break;
-        }
-
-        return ::socket(domain, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
+    case Type::IPv4: domain = AF_INET;  break;
+    case Type::IPv6: domain = AF_INET6; break;
+    case Type::All:  domain = AF_INET6; break;
+    case Type::Unix: domain = AF_UNIX;  break;
+    default: assert(!"Unknown Socket::Type"); break;
     }
 
+    return ::socket(domain, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
+#else
     return fakeSocketSocket();
+#endif
 }
 
 std::ostream& Socket::streamStats(std::ostream& os, const std::chrono::steady_clock::time_point &now) const
@@ -168,15 +167,12 @@ std::string Socket::toStringImpl() const
     return oss.str();
 }
 
+#if !MOBILEAPP
+
 bool StreamSocket::socketpair(const std::chrono::steady_clock::time_point &creationTime,
                               std::shared_ptr<StreamSocket>& parent,
                               std::shared_ptr<StreamSocket>& child)
 {
-    if constexpr (Util::isMobileApp())
-    {
-        return false;
-    }
-
     int pair[2];
     int rc = ::socketpair(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0, pair);
     if (rc != 0)
@@ -190,6 +186,8 @@ bool StreamSocket::socketpair(const std::chrono::steady_clock::time_point &creat
 
     return true;
 }
+
+#endif
 
 #if ENABLE_DEBUG
 static std::atomic<long> socketErrorCount;
@@ -368,16 +366,13 @@ void SocketPoll::removeFromWakeupArray()
             getWakeupsArray().erase(it);
     }
 
-    if constexpr (!Util::isMobileApp())
-    {
-        ::close(_wakeup[0]);
-        ::close(_wakeup[1]);
-    }
-    else
-    {
-        fakeSocketClose(_wakeup[0]);
-        fakeSocketClose(_wakeup[1]);
-    }
+#if !MOBILEAPP
+    ::close(_wakeup[0]);
+    ::close(_wakeup[1]);
+#else
+    fakeSocketClose(_wakeup[0]);
+    fakeSocketClose(_wakeup[1]);
+#endif
 
     _wakeup[0] = -1;
     _wakeup[1] = -1;
