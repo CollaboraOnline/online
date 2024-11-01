@@ -400,7 +400,7 @@ L.Control.JSDialog = L.Control.extend({
 			focusWidget = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : null;
 		}
 
-		if (focusWidget && document.activeElement !== focusWidget) {
+		if (focusWidget && document.activeElement !== focusWidget && instance.canHaveFocus) {
 			var firstFocusable = JSDialog.GetFocusableElements(focusWidget);
 			if (firstFocusable && firstFocusable.length)
 				firstFocusable[0].focus();
@@ -428,7 +428,7 @@ L.Control.JSDialog = L.Control.extend({
 		}
 		return null; // Return null if tabcontrol is not found
 	},
-	
+
 	/// if you use updatePos - instance param is binded automatically
 	setPosition: function(instance, updatedPos) {
 		var calculated = false;
