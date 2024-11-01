@@ -50,7 +50,6 @@ class PresenterConsole {
                                          <div id='container'>
                                             <img id="next-presentation"></img>
                                          </div>
-                                         <div id='notes'></div>
                                      </div>
                                 </main>
                                 <div id="toolbar">
@@ -62,7 +61,7 @@ class PresenterConsole {
                                      <img src="images/presenterscreen-ButtonEffectNextSelected.png">
                                      <label>Next</label>
                                   </button>
-                                  <button type="button" id="notes-button" disabled>
+                                  <button type="button" id="notes" disabled>
                                      <img src="images/presenterscreen-ButtonNotesNormal.png">
                                      <label>Notes</label>
                                   </button>
@@ -235,6 +234,7 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.querySelector('#second-presentation');
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
+		elem.style.alignItems = 'center';
 		elem.style.flex = '1';
 		elem.style.height = '100vh';
 		elem.style.width = '40vw';
@@ -250,11 +250,24 @@ class PresenterConsole {
 		elem.style.color = 'white';
 
 		elem = this._proxyPresenter.document.querySelector('#container');
-		elem.style.width = '36vw';
-		elem.style.height = '80vh';
+		elem.style.width = '25vw';
+		elem.style.height = '50vh';
 
-		elem = this._proxyPresenter.document.querySelector('#notes');
-		elem.style.height = '50%';
+		this._notes = this._proxyPresenter.document.createElement('div');
+		this._notes.style.height = '80%';
+		this._notes.style.width = '100%';
+		elem = this._proxyPresenter.document.createElement('div');
+		elem.id = 'notes';
+		elem.style.height = '90%';
+		elem.style.width = '100%';
+		this._notes.appendChild(elem);
+		elem = this._proxyPresenter.document.createElement('div');
+		elem.style.textAlign = 'center';
+		let button = this._proxyPresenter.document.createElement('button');
+		button.innerText = _("Close");
+		button.addEventListener('click', L.bind(this._onHideNotes, this));
+		elem.appendChild(button);
+		this._notes.appendChild(elem);
 
 		elem = this._proxyPresenter.document.querySelector('#toolbar');
 		elem.style.display = 'flex';
@@ -356,12 +369,79 @@ class PresenterConsole {
 				break;
 			case 'help':
 				break;
-			case 'notes-button':
+			case 'notes':
+				this._onShowNotes();
 				break;
 			case 'slides':
 				break;
 		}
 
+		e.stopPropagation();
+	}
+
+	_onShowNotes() {
+		let elem = this._proxyPresenter.document.querySelector(
+			'#notes',
+		);
+		elem.disable = true;
+
+		let title = this._proxyPresenter.document.querySelector('#title-next');
+		title.remove();
+
+		let container = this._proxyPresenter.document.querySelector('#container');
+		container.remove();
+
+		elem = this._proxyPresenter.document.querySelector(
+			'#first-presentation',
+		);
+		elem.style.justifyContent = 'center';
+		elem.style.alignItems = 'center';
+		elem.style.marginTop = '1vw';
+		elem.style.width = '50vw';
+
+		elem.appendChild(title);
+		elem.appendChild(container);
+
+		elem = this._proxyPresenter.document.querySelector('#current-presentation');
+		elem.style.width = '50vw';
+
+		elem = this._proxyPresenter.document.querySelector(
+			'#second-presentation',
+		);
+		elem.appendChild(this._notes);
+		this._onResize();
+	}
+
+	_onHideNotes(e) {
+		let title = this._proxyPresenter.document.querySelector('#title-next');
+		title.remove();
+
+		let container = this._proxyPresenter.document.querySelector('#container');
+		container.remove();
+
+		this._notes.remove();
+
+		let elem = this._proxyPresenter.document.querySelector(
+			'#first-presentation',
+		);
+		elem.style.justifyContent = '';
+		elem.style.alignItems = '';
+		elem.style.marginTop = '5vw';
+		elem.style.width = '60vw';
+
+		elem = this._proxyPresenter.document.querySelector('#current-presentation');
+		elem.style.width = '56vw';
+
+		elem = this._proxyPresenter.document.querySelector(
+			'#second-presentation',
+		);
+		elem.appendChild(title);
+		elem.appendChild(container);
+		elem = this._proxyPresenter.document.querySelector(
+			'#notes',
+		);
+		elem.disable = false;
+		this._onResize();
 		e.stopPropagation();
 	}
 
@@ -521,10 +601,12 @@ class PresenterConsole {
 			', ' +
 			this._previews.length;
 
-		let notes = this._presenter.getNotes(e.slide);
-		elem = this._proxyPresenter.document.querySelector('#notes');
-		if (elem) {
-			elem.innerText = notes;
+		if (this._notes) {
+			let notes = this._presenter.getNotes(e.slide);
+			elem = this._notes.querySelector('#notes');
+			if (elem) {
+				elem.innerText = notes;
+			}
 		}
 
 		let next =
