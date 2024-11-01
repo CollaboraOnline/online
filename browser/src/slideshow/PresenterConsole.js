@@ -42,9 +42,11 @@ class PresenterConsole {
                                 </header>
                                 <main id="main-content">
                                      <div id="first-presentation">
+                                         <div id="title-current">Current Slide</div>
                                          <canvas id="current-presentation"></canvas>
                                      </div>
                                      <div id="second-presentation">
+                                         <div id="title-next">Next Slide</div>
                                          <div id='container'>
                                             <img id="next-presentation"></img>
                                          </div>
@@ -222,19 +224,41 @@ class PresenterConsole {
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
 		elem.style.flex = '1';
+		elem.style.height = '100vh';
+		elem.style.width = '60vw';
+		elem.style.marginTop = '5vw';
+		elem.style.marginLeft = elem.style.marginRight = '2vw';
+
+		elem = this._proxyPresenter.document.querySelector('#title-current');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.justifyContent = 'center';
+		elem.style.alignItems = 'center';
+		elem.style.backgroundColor = 'transparent';
+		elem.style.color = 'white';
+
+		elem = this._proxyPresenter.document.querySelector('#current-presentation');
+		elem.style.width = '56vw';
 
 		elem = this._proxyPresenter.document.querySelector('#second-presentation');
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
 		elem.style.flex = '1';
+		elem.style.height = '100vh';
+		elem.style.width = '40vw';
+		elem.style.marginTop = '5vw';
+		elem.style.marginLeft = elem.style.marginRight = '2vw';
 
-		elem = this._proxyPresenter.document.querySelector('#current-presentation');
-		elem.style.height = '50vh';
-		elem.style.width = '50vw';
+		elem = this._proxyPresenter.document.querySelector('#title-next');
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.justifyContent = 'center';
+		elem.style.alignItems = 'center';
+		elem.style.backgroundColor = 'transparent';
+		elem.style.color = 'white';
 
 		elem = this._proxyPresenter.document.querySelector('#container');
-		elem.style.height = '50vh';
-		elem.style.width = '50vw';
+		elem.style.width = '36vw';
 
 		elem = this._proxyPresenter.document.querySelector('#notes');
 		elem.style.height = '50%';
@@ -570,9 +594,9 @@ class PresenterConsole {
 
 		this._currentIndex = e.slide;
 
-		let next =
+		let elem =
 			this._proxyPresenter.document.querySelector('#next-presentation');
-		this._fetchPreview(this._currentIndex + 1, next);
+		this._fetchPreview(this._currentIndex + 1, elem);
 	}
 
 	_onTransitionEnd(e) {
@@ -582,8 +606,16 @@ class PresenterConsole {
 
 		this._currentIndex = e.slide;
 
+		let elem = this._proxyPresenter.document.querySelector('#title-current');
+		elem.innerText =
+			_('Current Slide, Slide') +
+			' ' +
+			(e.slide + 1) +
+			', ' +
+			this._previews.length;
+
 		let notes = this._presenter.getNotes(e.slide);
-		let elem = this._proxyPresenter.document.querySelector('#notes');
+		elem = this._proxyPresenter.document.querySelector('#notes');
 		if (elem) {
 			elem.innerText = notes;
 		}
