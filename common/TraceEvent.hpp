@@ -13,7 +13,6 @@
 #include <string>
 
 #include <sys/types.h>
-#include <unistd.h>
 
 #ifdef TEST_TRACEEVENT_EXE
 #include <iostream>
