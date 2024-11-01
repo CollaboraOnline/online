@@ -259,6 +259,7 @@ class PresenterConsole {
 
 		elem = this._proxyPresenter.document.querySelector('#container');
 		elem.style.width = '36vw';
+		elem.style.height = '80vh';
 
 		elem = this._proxyPresenter.document.querySelector('#notes');
 		elem.style.height = '50%';
@@ -578,12 +579,15 @@ class PresenterConsole {
 			return;
 		}
 		let rect = container.getBoundingClientRect();
+		let size = this._map.getPreview(2000, 0, rect.width, rect.height, {
+			fetchThumbnail: false,
+			autoUpdate: false,
+		});
 		let next =
 			this._proxyPresenter.document.querySelector('#next-presentation');
 		if (next) {
-			next.style.width = rect.width + 'px';
-			next.style.height = rect.height + 'px';
-			this.drawNext(next);
+			next.style.width = size.width + 'px';
+			next.style.height = size.height + 'px';
 		}
 	}
 
