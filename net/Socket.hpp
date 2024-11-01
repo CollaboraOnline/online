@@ -160,16 +160,13 @@ public:
     {
         LOG_TRC("Socket dtor");
 
+#if !MOBILEAPP
         // Doesn't block on sockets; no error handling needed.
-        if constexpr (!Util::isMobileApp())
-        {
-            ::close(_fd);
-            LOG_DBG("Closed socket " << toStringImpl());
-        }
-        else
-        {
-            fakeSocketClose(_fd);
-        }
+        ::close(_fd);
+        LOG_DBG("Closed socket " << toStringImpl());
+#else
+        fakeSocketClose(_fd);
+#endif
     }
 
     /// Returns true if this socket is open, i.e. allowed to be polled and not shutdown
@@ -223,10 +220,11 @@ public:
         {
             LOG_TRC("Socket shutdown RDWR. " << *this);
             setClosed();
-            if constexpr (!Util::isMobileApp())
-                ::shutdown(_fd, SHUT_RDWR);
-            else
-                fakeSocketShutdown(_fd);
+#if !MOBILEAPP
+            ::shutdown(_fd, SHUT_RDWR);
+#else
+            fakeSocketShutdown(_fd);
+#endif
         }
     }
 
@@ -244,27 +242,24 @@ public:
     /// Do we have internally queued incoming / outgoing data ?
     virtual bool hasBuffered() const { return false; }
 
+#if !MOBILEAPP
     /// manage latency issues around packet aggregation
     void setNoDelay()
     {
-        if constexpr (!Util::isMobileApp())
+        const int val = 1;
+        if (::setsockopt(_fd, IPPROTO_TCP, TCP_NODELAY, (char*)&val, sizeof(val)) == -1)
         {
-            const int val = 1;
-            if (::setsockopt(_fd, IPPROTO_TCP, TCP_NODELAY, (char*)&val, sizeof(val)) == -1)
-            {
-                static std::once_flag once;
-                std::call_once(once,
-                               [&]()
-                               {
-                                   LOG_WRN("Failed setsockopt TCP_NODELAY. Will not report further "
-                                           "failures to set TCP_NODELAY: "
-                                           << strerror(errno));
-                               });
-            }
+            static std::once_flag once;
+            std::call_once(once,
+                           [&]()
+                           {
+                               LOG_WRN("Failed setsockopt TCP_NODELAY. Will not report further "
+                                       "failures to set TCP_NODELAY: "
+                                       << strerror(errno));
+                           });
         }
     }
 
-#if !MOBILEAPP
     /// Uses peercreds to get prisoner PID if present or -1
     int getPid() const;
 #endif
@@ -795,10 +790,11 @@ public:
         // wakeup the main-loop.
         int rc;
         do {
-            if constexpr (!Util::isMobileApp())
-                rc = ::write(fd, "w", 1);
-            else
-                rc = fakeSocketWrite(fd, "w", 1);
+#if !MOBILEAPP
+            rc = ::write(fd, "w", 1);
+#else
+            rc = fakeSocketWrite(fd, "w", 1);
+#endif
         } while (rc == -1 && errno == EINTR);
 
         if (rc == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
