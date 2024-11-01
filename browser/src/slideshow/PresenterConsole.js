@@ -130,6 +130,22 @@ class PresenterConsole {
 				list[index].disabled = false;
 			}
 		}
+
+		if (this._slides) {
+			let img;
+			let elem = this._slides.querySelector('#slides');
+			for (let index = 0; index < this._previews.length; index++) {
+				img = this._proxyPresenter.document.createElement('img');
+				img.src = document.querySelector('meta[name="previewImg"]').content;
+				img.style.marginLeft = '10px';
+				img.style.marginRight = '10px';
+				img.style.marginTop = '10px';
+				img.style.marginBottom = '10px';
+				img.width = 100;
+				img.height = 100;
+				elem.append(img);
+			}
+		}
 	}
 
 	_onPresentInConsole() {
@@ -211,7 +227,9 @@ class PresenterConsole {
 		elem.style.minWidth = '100vw';
 		elem.style.minHeight = '100vh';
 
-		elem = this._proxyPresenter.document.querySelector('#first-presentation');
+		this._first = elem = this._proxyPresenter.document.querySelector(
+			'#first-presentation',
+		);
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
 		elem.style.flex = '1';
@@ -231,7 +249,9 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.querySelector('#current-presentation');
 		elem.style.width = '56vw';
 
-		elem = this._proxyPresenter.document.querySelector('#second-presentation');
+		this._second = elem = this._proxyPresenter.document.querySelector(
+			'#second-presentation',
+		);
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
 		elem.style.alignItems = 'center';
@@ -264,10 +284,27 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.createElement('div');
 		elem.style.textAlign = 'center';
 		let button = this._proxyPresenter.document.createElement('button');
-		button.innerText = _("Close");
+		button.innerText = _('Close');
 		button.addEventListener('click', L.bind(this._onHideNotes, this));
 		elem.appendChild(button);
 		this._notes.appendChild(elem);
+
+		this._slides = this._proxyPresenter.document.createElement('div');
+		this._slides.style.height = '100%';
+		this._slides.style.width = '100%';
+		elem = this._proxyPresenter.document.createElement('div');
+		elem.id = 'slides';
+		elem.style.overflow = 'auto';
+		elem.style.height = '80vh';
+		elem.style.width = '100%';
+		this._slides.appendChild(elem);
+		elem = this._proxyPresenter.document.createElement('div');
+		elem.style.textAlign = 'center';
+		button = this._proxyPresenter.document.createElement('button');
+		button.innerText = _('Close');
+		button.addEventListener('click', L.bind(this._onHideSlides, this));
+		elem.appendChild(button);
+		this._slides.appendChild(elem);
 
 		elem = this._proxyPresenter.document.querySelector('#toolbar');
 		elem.style.display = 'flex';
@@ -373,16 +410,59 @@ class PresenterConsole {
 				this._onShowNotes();
 				break;
 			case 'slides':
+				this._onShowSlides();
 				break;
 		}
 
 		e.stopPropagation();
 	}
 
+	_onShowSlides() {
+		let elem = this._proxyPresenter.document.querySelector('#slides');
+		elem.disable = true;
+
+		elem = this._proxyPresenter.document.querySelector('#next-presentation');
+		let rect = elem.getBoundingClientRect();
+		let size = this._map.getPreview(2000, 0, rect.width, rect.height, {
+			fetchThumbnail: false,
+			autoUpdate: false,
+		});
+
+		this._first.remove();
+		this._second.remove();
+
+		elem = this._proxyPresenter.document.querySelector('#main-content');
+		elem.appendChild(this._slides);
+
+		let preview;
+		for (let index = 0; index < this._previews.length; index++) {
+			preview = this._previews[index];
+			if (
+				!preview ||
+				rect.width !== size.width ||
+				rect.height !== size.height
+			) {
+				this._map.getPreview(2000, index, size.width, size.height, {
+					autoUpdate: false,
+					slideshow: true,
+				});
+			}
+		}
+	}
+
+	_onHideSlides(e) {
+		let elem = this._proxyPresenter.document.querySelector('#main-content');
+		this._slides.remove();
+		elem.appendChild(this._first);
+		elem.appendChild(this._second);
+
+		elem = this._proxyPresenter.document.querySelector('#slides');
+		elem.disable = false;
+		e.stopPropagation();
+	}
+
 	_onShowNotes() {
-		let elem = this._proxyPresenter.document.querySelector(
-			'#notes',
-		);
+		let elem = this._proxyPresenter.document.querySelector('#notes');
 		elem.disable = true;
 
 		let title = this._proxyPresenter.document.querySelector('#title-next');
@@ -391,9 +471,7 @@ class PresenterConsole {
 		let container = this._proxyPresenter.document.querySelector('#container');
 		container.remove();
 
-		elem = this._proxyPresenter.document.querySelector(
-			'#first-presentation',
-		);
+		elem = this._proxyPresenter.document.querySelector('#first-presentation');
 		elem.style.justifyContent = 'center';
 		elem.style.alignItems = 'center';
 		elem.style.marginTop = '1vw';
@@ -405,9 +483,7 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.querySelector('#current-presentation');
 		elem.style.width = '50vw';
 
-		elem = this._proxyPresenter.document.querySelector(
-			'#second-presentation',
-		);
+		elem = this._proxyPresenter.document.querySelector('#second-presentation');
 		elem.appendChild(this._notes);
 		this._onResize();
 	}
@@ -432,14 +508,10 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.querySelector('#current-presentation');
 		elem.style.width = '56vw';
 
-		elem = this._proxyPresenter.document.querySelector(
-			'#second-presentation',
-		);
+		elem = this._proxyPresenter.document.querySelector('#second-presentation');
 		elem.appendChild(title);
 		elem.appendChild(container);
-		elem = this._proxyPresenter.document.querySelector(
-			'#notes',
-		);
+		elem = this._proxyPresenter.document.querySelector('#notes');
 		elem.disable = false;
 		this._onResize();
 		e.stopPropagation();
@@ -478,14 +550,15 @@ class PresenterConsole {
 			second: '2-digit',
 		});
 
-		if (this._ticks % 2 == 0 && typeof this._lastIndex !== 'undefined') {
+		let next =
+			this._proxyPresenter.document.querySelector('#next-presentation');
+		if (
+			this._ticks % 2 == 0 &&
+			typeof this._lastIndex !== 'undefined' &&
+			next
+		) {
 			setTimeout(
-				L.bind(
-					this._fetchPreview,
-					this,
-					this._lastIndex + 1,
-					this._proxyPresenter.document.querySelector('#next-presentation'),
-				),
+				L.bind(this._fetchPreview, this, this._lastIndex + 1, next),
 				0,
 			);
 		}
@@ -583,7 +656,9 @@ class PresenterConsole {
 
 		let elem =
 			this._proxyPresenter.document.querySelector('#next-presentation');
-		this._fetchPreview(this._currentIndex + 1, elem);
+		if (elem) {
+			this._fetchPreview(this._currentIndex + 1, elem);
+		}
 	}
 
 	_onTransitionEnd(e) {
@@ -594,12 +669,14 @@ class PresenterConsole {
 		this._currentIndex = e.slide;
 
 		let elem = this._proxyPresenter.document.querySelector('#title-current');
-		elem.innerText =
-			_('Current Slide, Slide') +
-			' ' +
-			(e.slide + 1) +
-			', ' +
-			this._previews.length;
+		if (elem) {
+			elem.innerText =
+				_('Current Slide, Slide') +
+				' ' +
+				(e.slide + 1) +
+				', ' +
+				this._previews.length;
+		}
 
 		if (this._notes) {
 			let notes = this._presenter.getNotes(e.slide);
@@ -707,11 +784,21 @@ class PresenterConsole {
 		if (this._currentIndex + 1 === e.part) {
 			let next =
 				this._proxyPresenter.document.querySelector('#next-presentation');
-			next.src = e.tile.src;
+			if (next) {
+				next.src = e.tile.src;
+			}
 		}
 
 		this._previews[e.part] = e.tile.src;
 		this._lastIndex = e.part;
+
+		let elem = this._slides.querySelector('#slides');
+		let img = elem.children.item(e.part);
+		if (img) {
+			img.src = e.tile.src;
+			img.width = e.width;
+			img.height = e.height;
+		}
 	}
 
 	_computeCanvas(canvas) {
