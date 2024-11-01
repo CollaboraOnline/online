@@ -857,10 +857,6 @@ L.Clipboard = L.Class.extend({
 	// Executes the navigator.clipboard.write() call, if it's available.
 	_navigatorClipboardWrite: function() {
 		if (!L.Browser.clipboardApiAvailable) {
-			// Show a visible warning, this should not happen in production.
-			this._map.uiManager.showSnackbar(
-				_('The async Clipboard API is not supported by your browser, switching to HTTPS is meant to fix that.')
-			);
 			return false;
 		}
 
