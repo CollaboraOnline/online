@@ -399,21 +399,30 @@ std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
     StringVector tokens(StringVector::tokenize(cssVars, ';'));
     for (const auto& token : tokens)
     {
-        StringVector keyValue(StringVector::tokenize(tokens.getParam(token), '='));
+        const std::string param = tokens.getParam(token);
+        StringVector keyValue(StringVector::tokenize(param, '='));
         if (keyValue.size() < 2)
         {
-            LOG_ERR("Skipping the token [" << tokens.getParam(token) << "] since it does not have '='");
+            static bool warnedOnce = false;
+            if (!warnedOnce)
+            {
+                warnedOnce = true;
+                LOG_ERR("Skipping the token ["
+                        << param << "] since it "
+                        << (param.ends_with('=') ? "is empty" : "does not have '='"));
+            }
+
             continue;
         }
         else if (keyValue.size() > 2)
         {
-            LOG_ERR("Skipping the token [" << tokens.getParam(token) << "] since it has more than one '=' pair");
+            LOG_ERR("Skipping the token [" << param << "] since it has more than one '=' pair");
             continue;
         }
 
-        if (!isValidCss(tokens.getParam(token)))
+        if (!isValidCss(param))
         {
-            LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since it contains forbidden characters");
+            LOG_WRN("Skipping the token [" << param << "] since it contains forbidden characters");
             continue;
         }
 
