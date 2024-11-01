@@ -373,9 +373,9 @@ std::string FileServerRequestHandler::checkFileInfoToJSON(const std::string& che
 
 namespace
 {
-bool isValidCss(const std::string& token)
+constexpr bool isValidCss(const std::string_view& token)
 {
-    const std::string forbidden = "<>{}&|\\\"^`'$[]";
+    constexpr std::string_view forbidden = "<>{}&|\\\"^`'$[]";
     for (auto c: token)
     {
         if (c < 0x20 || c >= 0x7F || forbidden.find(c) != std::string::npos)
