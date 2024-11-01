@@ -501,12 +501,6 @@ L.Clipboard = L.Class.extend({
 	_getHtmlForClipboard: function() {
 		var text;
 
-		if ($('.ui-edit').is(':focus'))
-			return $('.ui-edit').value();
-
-		if ($('.w2ui-input').is(':focus'))
-			return $('.w2ui-input').value();
-
 		if (this._selectionType === 'complex' || GraphicSelection.hasActiveSelection()) {
 			window.app.console.log('Copy/Cut with complex/graphical selection');
 			if (this._selectionType === 'text' && this._selectionContent !== '')
@@ -536,33 +530,32 @@ L.Clipboard = L.Class.extend({
 	populateClipboard: function(ev) {
 		this._checkSelection();
 
-		if (this._navigatorClipboardWrite()) {
-			// This is the codepath where the browser initiates the clipboard operation,
-			// e.g. the keyboard is used.
-			return true;
-		}
+		// This is the codepath (_navigatorClipboardWrite) where the browser initiates the clipboard operation, e.g. the keyboard is used.
+		if (!this._navigatorClipboardWrite()) {
+			// If the copy paste API is not supported, we download the content as a fallback method.
 
-		var text = this._getHtmlForClipboard();
+			var text = this._getHtmlForClipboard();
 
-		var plainText = DocUtil.stripHTML(text);
-		if (text == this._selectionContent && this._selectionPlainTextContent != '') {
-			plainText = this._selectionPlainTextContent;
-		}
-		if (ev.clipboardData) { // Standard
-			if (this._unoCommandForCopyCutPaste === '.uno:CopyHyperlinkLocation') {
-				var ess = 's';
-				var re = new RegExp('^(.*)(<a href=")([^"]+)(">.*</a>)(</p>\n</body>\n</html>)$', ess);
-				var match = re.exec(text);
-				if (match !== null && match.length === 6) {
-					text = match[1] + match[3] + match[5];
-					plainText = DocUtil.stripHTML(text);
-				}
+			var plainText = DocUtil.stripHTML(text);
+			if (text == this._selectionContent && this._selectionPlainTextContent != '') {
+				plainText = this._selectionPlainTextContent;
 			}
-			// if copied content is graphical then plainText is null and it does not work on mobile.
-			ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
-			ev.clipboardData.setData('text/html', text);
-			window.app.console.log('Put "' + text + '" on the clipboard');
-			this._clipboardSerial++;
+			if (ev.clipboardData) { // Standard
+				if (this._unoCommandForCopyCutPaste === '.uno:CopyHyperlinkLocation') {
+					var ess = 's';
+					var re = new RegExp('^(.*)(<a href=")([^"]+)(">.*</a>)(</p>\n</body>\n</html>)$', ess);
+					var match = re.exec(text);
+					if (match !== null && match.length === 6) {
+						text = match[1] + match[3] + match[5];
+						plainText = DocUtil.stripHTML(text);
+					}
+				}
+				// if copied content is graphical then plainText is null and it does not work on mobile.
+				ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
+				ev.clipboardData.setData('text/html', text);
+				window.app.console.log('Put "' + text + '" on the clipboard');
+				this._clipboardSerial++;
+			}
 		}
 
 		return true; // prevent default
