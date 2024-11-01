@@ -374,7 +374,7 @@ L.Clipboard = L.Class.extend({
 		);
 	},
 
-	_onFileLoadFunc: function(file) {
+	_onImageLoadFunc: function (file) {
 		var that = this;
 		return function(e) {
 			that._pasteTypedBlob(file.type, e.target.result);
@@ -387,14 +387,26 @@ L.Clipboard = L.Class.extend({
 		app.socket.sendMessage(blob);
 	},
 
-	_asyncReadPasteImage: function(file) {
+	_asyncReadPasteFile: function (file) {
 		if (file.type.match(/image.*/)) {
-			var reader = new FileReader();
-			reader.onload = this._onFileLoadFunc(file);
-			reader.readAsArrayBuffer(file);
-			return true;
+			return this._asyncReadPasteImage(file);
+		}
+		if (file.type.match(/audio.*/) || file.type.match(/video.*/)) {
+			return this._asyncReadPasteAVMedia(file);
 		}
 		return false;
+	},
+
+	_asyncReadPasteImage: function (file) {
+		var reader = new FileReader();
+		reader.onload = this._onImageLoadFunc(file);
+		reader.readAsArrayBuffer(file);
+		return true;
+	},
+
+	_asyncReadPasteAVMedia: function (file) {
+		this._map.insertMultimedia(file);
+		return true;
 	},
 
 	// Returns true if it finished synchronously, and false if it have started an async operation
@@ -463,10 +475,9 @@ L.Clipboard = L.Class.extend({
 					if (files !== null)
 					{
 						for (var f = 0; f < files.length; ++f)
-							this._asyncReadPasteImage(files[f]);
-					}
-					else // IE / Edge
-						this._asyncReadPasteImage(dataTransfer.items[t].getAsFile());
+							this._asyncReadPasteFile(files[f]);
+					} // IE / Edge
+					else this._asyncReadPasteFile(dataTransfer.items[t].getAsFile());
 				}
 			}
 
