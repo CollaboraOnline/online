@@ -64,6 +64,9 @@ L.Control.DownloadProgress = L.Control.extend({
 				msg, buttonText, this._onStartDownload.bind(this), this.options.snackbarTimeout);
 
 			this.setupKeyboardShortcutForSnackbar();
+
+			// Snackbars cannot get focus, but we are using it with a button and it requires to be focused. No need to change snackbar imp for now.
+			document.getElementById('button').focus(); // TODO: This "button" id is too generic. It could be something like "snackbar-button" etc.
 		} else {
 			this._map.uiManager.showInfoModal(modalId, this._getDialogTitle(), msg, '',
 				buttonText, this._onStartDownload.bind(this), true, modalId + '-response');
@@ -150,7 +153,7 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	setupKeyboardShortcutForSnackbar: function () {
-		this._setupKeyboardShortcutForElement('snackbar', 'button');
+		this._setupKeyboardShortcutForElement('snackbar-container', 'button');
 	},
 
 	// isLargeCopy specifies if we are copying and have to explain user the process
