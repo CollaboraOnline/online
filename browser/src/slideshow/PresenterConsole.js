@@ -70,7 +70,7 @@ class PresenterConsole {
                                      <img src="images/presenterscreen-ButtonSlideSorterNormal.png">
                                      <label>Slides</label>
                                   </button>
-                                  <div id="separator1"></div>
+                                  <div id="separator"></div>
                                   <div id="timer-container">
                                      <div id="today"> </div>
                                      <div id="timer"></div>
@@ -83,17 +83,17 @@ class PresenterConsole {
                                      <img src="images/presenterscreen-ButtonRestartTimerNormal.png">
                                      <label>Restart</label>
                                   </button>
-                                  <div id="separator2"></div>
+                                  <div id="separator"></div>
                                   <button type="button" id="exchange" disabled>
                                      <img src="images/presenterscreen-ButtonSwitchMonitorNormal.png">
                                      <label>Exchange</label>
                                   </button>
-                                  <div id="separator3"></div>
+                                  <div id="separator"></div>
                                   <button type="button" id="help" disabled>
                                      <img src="images/presenterscreen-ButtonHelpNormal.png">
                                      <label>Help</label>
                                   </button>
-                                  <div id="separator4"></div>
+                                  <div id="separator"></div>
                                   <button type="button" id="exit" disabled>
                                      <img src="images/presenterscreen-ButtonExitPresenterNormal.png">
                                      <label>Exit</label>
@@ -126,18 +126,10 @@ class PresenterConsole {
 
 		this._previews = new Array(this._presenter._getSlidesCount());
 		if (this._previews.length > 1) {
-			let button = this._proxyPresenter.document.querySelector('#prev');
-			button.disabled = false;
-			button = this._proxyPresenter.document.querySelector('#next');
-			button.disabled = false;
-			button = this._proxyPresenter.document.querySelector('#restart');
-			button.disabled = false;
-			button = this._proxyPresenter.document.querySelector('#pause');
-			button.disabled = false;
-			button = this._proxyPresenter.document.querySelector('#exchange');
-			button.disabled = false;
-			button = this._proxyPresenter.document.querySelector('#exit');
-			button.disabled = false;
+			let list = this._proxyPresenter.document.querySelectorAll('button');
+			for (let index = 0; index < list.length; index++) {
+				list[index].disabled = false;
+			}
 		}
 	}
 
@@ -273,53 +265,27 @@ class PresenterConsole {
 		elem.style.position = 'fixed';
 		elem.style.bottom = 0;
 		elem.style.width = '100%';
+		elem.addEventListener('click', L.bind(this._onToolbarClick, this));
 
-		elem = this._proxyPresenter.document.querySelector('#prev');
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
-		elem.style.justifyContent = 'center';
-		elem.style.alignItems = 'center';
-		elem.style.backgroundColor = 'transparent';
-		elem.style.border = 'none';
-		elem.style.color = 'white';
-		elem.addEventListener('click', L.bind(this._onPrev, this));
+		let list = this._proxyPresenter.document.querySelectorAll('button');
+		for (elem = 0; elem < list.length; elem++) {
+			list[elem].style.display = 'flex';
+			list[elem].style.flexDirection = 'column';
+			list[elem].style.justifyContent = 'center';
+			list[elem].style.alignItems = 'center';
+			list[elem].style.backgroundColor = 'transparent';
+			list[elem].style.border = 'none';
+			list[elem].style.color = 'white';
+		}
 
-		elem = this._proxyPresenter.document.querySelector('#next');
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
-		elem.style.justifyContent = 'center';
-		elem.style.alignItems = 'center';
-		elem.style.backgroundColor = 'transparent';
-		elem.style.border = 'none';
-		elem.style.color = 'white';
-		elem.addEventListener('click', L.bind(this._onNext, this));
-
-		elem = this._proxyPresenter.document.querySelector('#notes-button');
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
-		elem.style.justifyContent = 'center';
-		elem.style.alignItems = 'center';
-		elem.style.backgroundColor = 'transparent';
-		elem.style.border = 'none';
-		elem.style.color = 'white';
-		elem.addEventListener('click', L.bind(this._onNotes, this));
-
-		elem = this._proxyPresenter.document.querySelector('#slides');
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
-		elem.style.justifyContent = 'center';
-		elem.style.alignItems = 'center';
-		elem.style.backgroundColor = 'transparent';
-		elem.style.border = 'none';
-		elem.style.color = 'white';
-		elem.addEventListener('click', L.bind(this._onSlides, this));
-
-		elem = this._proxyPresenter.document.querySelector('#separator1');
-		elem.style.width = '1px';
-		elem.style.height = '30px';
-		elem.style.borderLeft = '1px';
-		elem.style.borderColor = 'white';
-		elem.style.borderStyle = 'solid';
+		list = this._proxyPresenter.document.querySelectorAll('[id=separator]');
+		for (elem = 0; elem < list.length; elem++) {
+			list[elem].style.width = '1px';
+			list[elem].style.height = '30px';
+			list[elem].style.borderLeft = '1px';
+			list[elem].style.borderColor = 'white';
+			list[elem].style.borderStyle = 'solid';
+		}
 
 		elem = this._proxyPresenter.document.querySelector('#timer-container');
 		elem.style.height = '33px';
@@ -340,77 +306,6 @@ class PresenterConsole {
 		elem.style.fontWeight = 'bold';
 		elem.style.color = 'yellow';
 
-		elem = this._proxyPresenter.document.querySelector('#pause');
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
-		elem.style.justifyContent = 'center';
-		elem.style.alignItems = 'center';
-		elem.style.backgroundColor = 'transparent';
-		elem.style.border = 'none';
-		elem.style.color = 'white';
-		elem.addEventListener('click', L.bind(this._onPause, this));
-
-		elem = this._proxyPresenter.document.querySelector('#restart');
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
-		elem.style.justifyContent = 'center';
-		elem.style.alignItems = 'center';
-		elem.style.backgroundColor = 'transparent';
-		elem.style.border = 'none';
-		elem.style.color = 'white';
-		elem.addEventListener('click', L.bind(this._onRestart, this));
-
-		elem = this._proxyPresenter.document.querySelector('#separator2');
-		elem.style.width = '1px';
-		elem.style.height = '30px';
-		elem.style.borderLeft = '1px';
-		elem.style.borderColor = 'white';
-		elem.style.borderStyle = 'solid';
-
-		elem = this._proxyPresenter.document.querySelector('#exchange');
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
-		elem.style.justifyContent = 'center';
-		elem.style.alignItems = 'center';
-		elem.style.backgroundColor = 'transparent';
-		elem.style.border = 'none';
-		elem.style.color = 'white';
-		elem.addEventListener('click', L.bind(this._onExchange, this));
-
-		elem = this._proxyPresenter.document.querySelector('#separator3');
-		elem.style.width = '1px';
-		elem.style.height = '30px';
-		elem.style.borderLeft = '1px';
-		elem.style.borderColor = 'white';
-		elem.style.borderStyle = 'solid';
-
-		elem = this._proxyPresenter.document.querySelector('#help');
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
-		elem.style.justifyContent = 'center';
-		elem.style.alignItems = 'center';
-		elem.style.backgroundColor = 'transparent';
-		elem.style.border = 'none';
-		elem.style.color = 'white';
-		elem.addEventListener('click', L.bind(this._onHelp, this));
-
-		elem = this._proxyPresenter.document.querySelector('#separator4');
-		elem.style.width = '1px';
-		elem.style.height = '30px';
-		elem.style.borderLeft = '1px';
-		elem.style.borderColor = 'white';
-		elem.style.borderStyle = 'solid';
-
-		elem = this._proxyPresenter.document.querySelector('#exit');
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
-		elem.style.justifyContent = 'center';
-		elem.style.alignItems = 'center';
-		elem.style.backgroundColor = 'transparent';
-		elem.style.border = 'none';
-		elem.style.color = 'white';
-		elem.addEventListener('click', L.bind(this._onExit, this));
-
 		this._ticks = 0;
 		this._onTimer();
 
@@ -426,41 +321,49 @@ class PresenterConsole {
 		this._presenter.getNavigator().onClick(e);
 	}
 
-	_onPrev(e) {
-		this._presenter.getNavigator().rewindEffect();
+	_onToolbarClick(e) {
+		let target = e.target;
+		if (!target) {
+			return;
+		}
+
+		if (target.localName !== 'button') {
+			target = target.parentElement;
+		}
+
+		if (target.localName !== 'button') {
+			return;
+		}
+
+		switch (target.id) {
+			case 'prev':
+				this._presenter.getNavigator().rewindEffect();
+				break;
+			case 'next':
+				this._presenter.getNavigator().dispatchEffect();
+				break;
+			case 'pause':
+				this._pause = !this._pause;
+				break;
+			case 'exchange':
+				this._presenter._slideShowWindowProxy.focus();
+				break;
+			case 'restart':
+				this._ticks = 0;
+				break;
+			case 'exit':
+				this._proxyPresenter.close();
+				break;
+			case 'help':
+				break;
+			case 'notes-button':
+				break;
+			case 'slides':
+				break;
+		}
+
 		e.stopPropagation();
 	}
-
-	_onNext(e) {
-		this._presenter.getNavigator().dispatchEffect();
-		e.stopPropagation();
-	}
-
-	_onPause(e) {
-		this._pause = !this._pause;
-		e.stopPropagation();
-	}
-
-	_onExchange(e) {
-		this._presenter._slideShowWindowProxy.focus();
-		e.stopPropagation();
-	}
-
-	_onRestart(e) {
-		this._ticks = 0;
-		e.stopPropagation();
-	}
-
-	_onExit(e) {
-		this._proxyPresenter.close();
-		e.stopPropagation();
-	}
-
-	_onHelp() {}
-
-	_onNotes() {}
-
-	_onSlides() {}
 
 	_onTimer() {
 		if (!this._proxyPresenter) {
