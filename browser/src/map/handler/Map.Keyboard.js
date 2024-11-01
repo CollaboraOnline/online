@@ -662,6 +662,11 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
+		// Control + Shift + I, open browser developper tools
+		if (this._isCtrlKey(e) && e.shiftKey && e.keyCode === this.keyCodes.I) {
+			return true;
+		}
+
 		if (e.keyCode !== this.keyCodes.C[DEFAULT] && e.keyCode !== this.keyCodes.V[DEFAULT] && e.keyCode !== this.keyCodes.X[DEFAULT] &&
 		/* Safari */ e.keyCode !== this.keyCodes.C[MAC] && e.keyCode !== this.keyCodes.V[MAC] && e.keyCode !== this.keyCodes.X[MAC]) {
 			// not copy or paste
