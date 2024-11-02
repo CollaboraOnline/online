@@ -198,7 +198,6 @@ namespace FileUtil
 
         bool good() const { return _res == 0; }
         bool bad() const { return !good(); }
-        bool erno() const { return _stat_errno; }
         const struct ::stat& sb() const { return _sb; }
 
         const std::string path() const { return _path; }
