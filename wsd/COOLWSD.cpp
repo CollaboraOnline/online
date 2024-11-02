@@ -3331,6 +3331,8 @@ void COOLWSD::handleOption(const std::string& optionName,
 #endif
 }
 
+#if !MOBILEAPP
+
 void COOLWSD::initializeEnvOptions()
 {
     int n = 0;
@@ -3372,8 +3374,6 @@ void COOLWSD::initializeEnvOptions()
     if ((optionValue = std::getenv("dictionaries")) != nullptr) _overrideSettings["allowed_languages"] = optionValue;
     if ((optionValue = std::getenv("remoteconfigurl")) != nullptr) _overrideSettings["remote_config.remote_url"] = optionValue;
 }
-
-#if !MOBILEAPP
 
 void COOLWSD::displayHelp()
 {

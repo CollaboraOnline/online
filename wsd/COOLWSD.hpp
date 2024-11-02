@@ -460,7 +460,6 @@ protected:
 
     void defineOptions(Poco::Util::OptionSet& options) override;
     void handleOption(const std::string& name, const std::string& value) override;
-    void initializeEnvOptions();
     int main(const std::vector<std::string>& args) override;
 
     /// Handle various global static destructors.
@@ -470,7 +469,9 @@ private:
 #if !MOBILEAPP
     void processFetchUpdate(SocketPoll& poll);
     static void setupChildRoot(const bool UseMountNamespaces);
-#endif
+    void initializeEnvOptions();
+#endif // !MOBILEAPP
+
     void initializeSSL();
     void displayHelp();
 
