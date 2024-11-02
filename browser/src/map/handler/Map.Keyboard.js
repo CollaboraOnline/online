@@ -397,6 +397,11 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
+		// if we press F1/F2 then the keyboard event is handled twice, use that
+		// the defaultPrevented is set the first time to avoid the double dispatch
+		if (ev.defaultPrevented)
+			return;
+
 		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev)) {
 			ev.preventDefault();
 			return;
