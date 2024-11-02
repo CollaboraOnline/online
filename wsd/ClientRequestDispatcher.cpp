@@ -2139,7 +2139,7 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
         std::string timezoneName =
             config::getString("indirection_endpoint.geolocation_setup.timezone", "");
         if (!timezoneName.empty())
-            capabilities->set("timezone", std::string(timezoneName));
+            capabilities->set("timezone", timezoneName);
     }
 
     std::ostringstream ostrJSON;
