@@ -1257,8 +1257,20 @@ public:
                         last_errno = errno; // Save only on error.
 
                     if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
-                        LOG_SYS_ERRNO(last_errno, "Read failed, have " << _inBuffer.size()
-                                                                       << " buffered bytes");
+                    {
+                        if (last_errno == ECONNRESET && _inBuffer.empty())
+                        {
+                            // Unexpected, but often intentional on an idle connection.
+                            LOGA_TRC(Socket, "Read failed because the connection is reset by peer, "
+                                             "have 0 buffered bytes: ECONNRESET");
+                        }
+                        else
+                        {
+                            // Unexpected read error while draining the read buffer.
+                            LOG_SYS_ERRNO(last_errno, "Read failed, have " << _inBuffer.size()
+                                                                           << " buffered bytes");
+                        }
+                    }
                     else if (len < 0)
                         LOGA_TRC(Socket, "Read failed (" << len << "), have " << _inBuffer.size()
                                                          << " buffered bytes ("
@@ -1459,7 +1471,7 @@ public:
 
         if (events & POLLIN)
         {
-            // readIncomingData returns false only if the read len is 0 (closed).
+            // readIncomingData returns 0 only if the read len is 0 (closed).
             // Oddly enough, we don't necessarily get POLLHUP after read(2) returns 0.
             const int read = readIncomingData();
             const int last_errno = errno;
@@ -1486,6 +1498,7 @@ public:
             }
             else if (read == 0 || (read < 0 && (last_errno == EPIPE || last_errno == ECONNRESET)))
             {
+                // There is nothing more to read; either we got EOF, or we drained after ECONNRESET.
                 LOG_DBG("Closed after reading");
                 closed = true;
             }
