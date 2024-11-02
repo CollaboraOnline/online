@@ -46,7 +46,7 @@ class HostEntry
     std::string _canonicalName;
     std::vector<std::string> _ipAddresses;
     std::shared_ptr<addrinfo> _ainfo;
-    int _errno;
+    int _saved_errno;
     int _eaino;
 
     void setEAI(int eaino);
@@ -57,7 +57,7 @@ public:
     HostEntry(const std::string& desc, const char* port);
     ~HostEntry();
 
-    bool good() const { return _errno == 0 && _eaino == 0; }
+    bool good() const { return _saved_errno == 0 && _eaino == 0; }
     std::string errorMessage() const;
 
     const std::string& getCanonicalName() const { return  _canonicalName; }

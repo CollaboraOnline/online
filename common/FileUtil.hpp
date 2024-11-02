@@ -192,13 +192,13 @@ namespace FileUtil
             : _path(file)
             , _sb{}
             , _res(link ? lstat(file.c_str(), &_sb) : stat(file.c_str(), &_sb))
-            , _errno(errno)
+            , _stat_errno(errno)
         {
         }
 
         bool good() const { return _res == 0; }
         bool bad() const { return !good(); }
-        bool erno() const { return _errno; }
+        bool erno() const { return _stat_errno; }
         const struct ::stat& sb() const { return _sb; }
 
         const std::string path() const { return _path; }
@@ -251,7 +251,7 @@ namespace FileUtil
         }
 
         /// Returns true iff the path exists, regardless of access permission.
-        bool exists() const { return good() || (_errno != ENOENT && _errno != ENOTDIR); }
+        bool exists() const { return good() || (_stat_errno != ENOENT && _stat_errno != ENOTDIR); }
 
         /// Returns true if both files exist and have
         /// the same size and same contents.
@@ -291,7 +291,7 @@ namespace FileUtil
         const std::string _path;
         struct ::stat _sb;
         const int _res;
-        const int _errno;
+        const int _stat_errno;
     };
 
     std::vector<std::string> getDirEntries(const std::string dirPath);

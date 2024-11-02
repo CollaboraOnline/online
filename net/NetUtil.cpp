@@ -64,7 +64,7 @@ std::string HostEntry::makeIPAddress(const sockaddr* ai_addr)
     const char* result = inet_ntop(ai_addr->sa_family, inAddr, addrstr, sizeof(addrstr));
     if (!result)
     {
-        _errno = errno;
+        _saved_errno = errno;
         LOG_WRN("inet_ntop failure: " << errorMessage());
         return std::string();
     }
@@ -76,7 +76,7 @@ void HostEntry::setEAI(int eaino)
     _eaino = eaino;
     // EAI_SYSTEM: Other system error; errno is set to indicate the error.
     if (_eaino == EAI_SYSTEM)
-        _errno = errno;
+        _saved_errno = errno;
 }
 
 std::string HostEntry::errorMessage() const
@@ -85,13 +85,13 @@ std::string HostEntry::errorMessage() const
     if (_eaino && _eaino != EAI_SYSTEM)
         errmsg = gai_strerror(_eaino);
     else
-        errmsg = strerror(_errno);
+        errmsg = strerror(_saved_errno);
     return std::string("[" + _requestName + "]: " + errmsg);
 }
 
 HostEntry::HostEntry(const std::string& desc, const char* port)
     : _requestName(desc)
-    , _errno(0)
+    , _saved_errno(0)
     , _eaino(0)
 {
     addrinfo hints;
