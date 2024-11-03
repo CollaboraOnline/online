@@ -19,11 +19,34 @@
 #include <Poco/Path.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Util/LayeredConfiguration.h>
+#include <Poco/Util/MapConfiguration.h>
 
 #include <Util.hpp>
 
 #include <string>
 #include <map>
+
+/// Helper class to hold default configuration entries.
+class AppConfigMap final : public Poco::Util::MapConfiguration
+{
+public:
+    AppConfigMap(const std::map<std::string, std::string>& map)
+    {
+        for (const auto& pair : map)
+        {
+            setRaw(pair.first, pair.second);
+        }
+    }
+
+    void reset(const std::map<std::string, std::string>& map)
+    {
+        clear();
+        for (const auto& pair : map)
+        {
+            setRaw(pair.first, pair.second);
+        }
+    }
+};
 
 namespace ConfigUtil
 {
