@@ -72,6 +72,21 @@ namespace PropertyOperators {
 			return r;
 		},
 	};
+	const ColorPropOpSet = {
+		equal: (a: any, b: any): boolean => {
+			return a.equal(b);
+		},
+		add: (a: any, b: any): any => {
+			const c = a.clone();
+			c.add(b);
+			return c;
+		},
+		scale: (k: number, v: any): any => {
+			const c = v.clone();
+			c.scale(k);
+			return c;
+		},
+	};
 
 	export type PropOpSet = typeof GenericPropOpSet;
 	export type PropertyOperatorsMap = Map<PropertyValueType, PropOpSet>;
@@ -81,6 +96,7 @@ namespace PropertyOperators {
 	aOperatorSetMap.set(PropertyValueType.String, GenericPropOpSet);
 	aOperatorSetMap.set(PropertyValueType.Bool, GenericPropOpSet);
 	aOperatorSetMap.set(PropertyValueType.TupleNumber, TupleNumberPropOpSet);
+	aOperatorSetMap.set(PropertyValueType.Color, ColorPropOpSet);
 }
 
 type PropertyOperatorSet = PropertyOperators.PropOpSet;
@@ -90,45 +106,50 @@ const aOperatorSetMap = PropertyOperators.aOperatorSetMap;
 type PropertyInterpolatorType = (nFrom: any, nTo: any, nT: number) => any;
 
 namespace PropertyInterpolator {
-	const aLinearLerpFunctor = new Map([
-		[
-			PropertyValueType.Number,
-			(nFrom: any, nTo: any, nT: number): any => {
-				return (1.0 - nT) * nFrom + nT * nTo;
-			},
-		],
-		[
-			PropertyValueType.TupleNumber,
-			(aFrom: any, aTo: any, nT: number): any => {
-				const aRes = [];
-				for (let i = 0; i < aFrom.length; ++i) {
-					aRes.push((1.0 - nT) * aFrom[i] + nT * aTo[i]);
-				}
-				return aRes as any;
-			},
-		],
-	]);
-
-	type LerpFunctorMap = Map<CalcMode, typeof aLinearLerpFunctor>;
-	const aLerpFunctorMap: LerpFunctorMap = new Map();
-	aLerpFunctorMap.set(CalcMode.Linear, aLinearLerpFunctor);
-
 	export function getInterpolator(
-		eCalcMode: CalcMode,
 		eValueType: PropertyValueType,
+		eValueSubType?: ColorSpace,
+		eClockDirection?: ClockDirection,
 	): PropertyInterpolatorType {
-		if (
-			aLerpFunctorMap.has(eCalcMode) &&
-			aLerpFunctorMap.get(eCalcMode).has(eValueType)
-		) {
-			return aLerpFunctorMap.get(eCalcMode).get(eValueType);
+		switch (eValueType) {
+			case PropertyValueType.Number:
+				return (nFrom: any, nTo: any, nT: number): any => {
+					return (1.0 - nT) * nFrom + nT * nTo;
+				};
+			case PropertyValueType.TupleNumber:
+				return (aFrom: any, aTo: any, nT: number): any => {
+					const aRes = [];
+					for (let i = 0; i < aFrom.length; ++i) {
+						aRes.push((1.0 - nT) * aFrom[i] + nT * aTo[i]);
+					}
+					return aRes as any;
+				};
+			case PropertyValueType.Color:
+				if (eValueSubType !== undefined) {
+					switch (eValueSubType) {
+						case ColorSpace.rgb:
+							return (nFrom: any, nTo: any, nT: number): any => {
+								return RGBColor.interpolate(nFrom, nTo, nT);
+							};
+						case ColorSpace.hsl: {
+							const bCCW = eClockDirection == ClockDirection.counterClockwise;
+							return (nFrom: any, nTo: any, nT: number): any => {
+								return HSLColor.interpolate(nFrom, nTo, nT, bCCW);
+							};
+						}
+					}
+				} else {
+					window.app.console.log(
+						'PropertyInterpolator.getInterpolator: color space not defined.',
+					);
+				}
+				break;
+			default:
+				window.app.console.log(
+					'PropertyInterpolator.getInterpolator: not found any valid interpolator for value type ' +
+						PropertyValueType[eValueType],
+				);
 		}
-		window.app.console.log(
-			'aInterpolatorHandler.getInterpolator: not found any valid interpolator for calc mode ' +
-				CalcMode[eCalcMode] +
-				' and value type ' +
-				PropertyValueType[eValueType],
-		);
 		return null;
 	}
 }
@@ -214,6 +235,36 @@ const aPropertyGetterSetterMap = {
 		type: PropertyValueType.Enum,
 		get: 'getVisibility',
 		set: 'setVisibility',
+	},
+
+	fillstyle: {
+		type: PropertyValueType.String,
+		get: 'getFillStyle',
+		set: 'setFillStyle',
+	},
+
+	linestyle: {
+		type: PropertyValueType.String,
+		get: 'getLineStyle',
+		set: 'setLineStyle',
+	},
+
+	fillcolor: {
+		type: PropertyValueType.Color,
+		get: 'getFillColor',
+		set: 'setFillColor',
+	},
+
+	linecolor: {
+		type: PropertyValueType.Color,
+		get: 'getStrokeColor',
+		set: 'setStrokeColor',
+	},
+
+	charcolor: {
+		type: PropertyValueType.Color,
+		get: 'getFontColor',
+		set: 'setFontColor',
 	},
 };
 
@@ -301,15 +352,25 @@ interface AnimatedElementState {
 	nSkewY: number;
 	aTMatrix: DOMMatrix;
 	nOpacity: number;
+	aFillColor: RGBColor;
+	aLineColor: RGBColor;
+	aFontColor: RGBColor;
 	bVisible: boolean;
 	transitionFiltersState: TransitionFiltersState;
 }
 
 type BoundsType = [DOMPoint, DOMPoint, DOMPoint, DOMPoint];
 
+interface AnimatedElementColorMap {
+	fromFillColor?: RGBColor;
+	toFillColor?: RGBColor;
+	fromLineColor?: RGBColor;
+	toLineColor?: RGBColor;
+}
 interface AnimatedElementRenderProperties {
 	bounds: BoundsType;
 	alpha: number;
+	colorMap?: AnimatedElementColorMap;
 }
 
 function BBoxToString(aBB: BoundingBoxType) {
@@ -317,6 +378,8 @@ function BBoxToString(aBB: BoundingBoxType) {
 }
 
 class AnimatedElement {
+	public static readonly DefaultColor = new RGBColor(0, 0, 0);
+
 	public static readonly SupportedProperties = new Set<string>([
 		'x',
 		'y',
@@ -327,6 +390,11 @@ class AnimatedElement {
 		'rotate',
 		'skewx',
 		'skewy',
+		'fillstyle',
+		'linestyle',
+		'fillcolor',
+		'linecolor',
+		'charcolor',
 	]);
 
 	public static readonly SupportedTransformations = new Set<string>([
@@ -364,6 +432,12 @@ class AnimatedElement {
 	private nSkewY: number = 0;
 	private aTMatrix: DOMMatrix;
 	private nOpacity: number; // [0, 1]
+	private aBaseFillColor = AnimatedElement.DefaultColor;
+	private aFillColor = AnimatedElement.DefaultColor;
+	private aBaseLineColor = AnimatedElement.DefaultColor;
+	private aLineColor = AnimatedElement.DefaultColor;
+	private aBaseFontColor = AnimatedElement.DefaultColor;
+	private aFontColor = AnimatedElement.DefaultColor;
 	private bVisible: boolean;
 	private aClipPath: SVGPathElement = null;
 	private runningAnimations: number = 0;
@@ -400,6 +474,10 @@ class AnimatedElement {
 
 	private isGlSupported() {
 		return !this.tfContext.is2dGl();
+	}
+
+	public isTextElement() {
+		return false;
 	}
 
 	private cloneBBox(aBBox: BoundingBoxType): BoundingBoxType {
@@ -472,6 +550,22 @@ class AnimatedElement {
 		this.aBBoxInCanvas = convert(this.canvasScaleFactor, this.aBaseBBox);
 		this.aBaseElement = this.createBaseElement(this.aLayer, this.aBBoxInCanvas);
 
+		if (this.animatedLayerInfo.fillColor) {
+			this.aBaseFillColor = colorParser(
+				this.animatedLayerInfo.fillColor,
+			) as RGBColor;
+		}
+		if (this.animatedLayerInfo.lineColor) {
+			this.aBaseLineColor = colorParser(
+				this.animatedLayerInfo.lineColor,
+			) as RGBColor;
+		}
+		if (this.animatedLayerInfo.fontColor) {
+			this.aBaseFontColor = colorParser(
+				this.animatedLayerInfo.fontColor,
+			) as RGBColor;
+		}
+
 		this.DBG(
 			'.updateAnimationInfo: ' +
 				`\n  aBaseBBox: ${BBoxToString(this.aBaseBBox)}` +
@@ -519,6 +613,9 @@ class AnimatedElement {
 		this.nSkewY = 0.0;
 		this.aTMatrix = new DOMMatrix([1, 0, 0, 1, 0, 0]);
 		this.nOpacity = 1;
+		this.aFillColor = this.aBaseFillColor;
+		this.aLineColor = this.aBaseLineColor;
+		this.aFontColor = this.aBaseFontColor;
 		this.bVisible = this.animatedLayerInfo
 			? this.animatedLayerInfo.initVisible
 			: false;
@@ -660,9 +757,35 @@ class AnimatedElement {
 			unitBounds.push(u);
 		}
 
+		// This color mapping solution doesn't work if fill and line colors have
+		// the same initial value. For a proper solution we would need separated
+		// layers for stroke and fill, at least when a color animation is involved.
+		const colorMap: AnimatedElementColorMap = {};
+		if (this.isTextElement()) {
+			// On desktop, fill and line color animations seem to have no effect
+			// when applied to a paragraph, so here we take into account font color
+			// changes only, and we forward them to the renderer as a fill color map,
+			// so that we can avoid to perform a further color comparison
+			// in the fragment shader.
+			if (!this.aFontColor.equal(this.aBaseFontColor)) {
+				colorMap.fromFillColor = this.aBaseFontColor;
+				colorMap.toFillColor = this.aFontColor;
+			}
+		} else {
+			if (!this.aFillColor.equal(this.aBaseFillColor)) {
+				colorMap.fromFillColor = this.aBaseFillColor;
+				colorMap.toFillColor = this.aFillColor;
+			}
+			if (!this.aLineColor.equal(this.aBaseLineColor)) {
+				colorMap.fromLineColor = this.aBaseLineColor;
+				colorMap.toLineColor = this.aLineColor;
+			}
+		}
+
 		const properties: AnimatedElementRenderProperties = {
 			bounds: unitBounds as BoundsType,
 			alpha: this.nOpacity,
+			colorMap: colorMap,
 		};
 
 		if (this.applyTransitionFilters(properties)) return;
@@ -751,6 +874,9 @@ class AnimatedElement {
 			nSkewY: this.nSkewY,
 			aTMatrix: DOMMatrix.fromMatrix(this.aTMatrix),
 			nOpacity: this.nOpacity,
+			aFillColor: this.aFillColor,
+			aLineColor: this.aLineColor,
+			aFontColor: this.aFontColor,
 			bVisible: this.bVisible,
 			transitionFiltersState: this.transitionFiltersManager.getState(),
 		};
@@ -799,6 +925,9 @@ class AnimatedElement {
 			this.nSkewY = aState.nSkewY;
 			this.aTMatrix = aState.aTMatrix;
 			this.nOpacity = aState.nOpacity;
+			this.aFillColor = aState.aFillColor;
+			this.aLineColor = aState.aLineColor;
+			this.aFontColor = aState.aFontColor;
 			this.bVisible = aState.bVisible;
 			this.transitionFiltersManager.setState(aState.transitionFiltersState);
 		}
@@ -1010,25 +1139,56 @@ class AnimatedElement {
 		console.debug('AnimatedElement.setVisibility(' + sValue + ')');
 	}
 
-	getFillColor(): any {
-		window.app.console.log('AnimatedElement.getFillColor() not implemented');
-		return null;
+	getFillColor(): RGBColor {
+		return this.aFillColor;
 	}
 
-	setFillColor(aRGBValue: any) {
+	setFillColor(aRGBValue: RGBColor) {
 		window.app.console.log(
-			'AnimatedElement.setFillColor(' + aRGBValue + ') not implemented',
+			'AnimatedElement.setFillColor(' + aRGBValue.toString() + ')',
+		);
+		this.aFillColor = aRGBValue;
+	}
+
+	getStrokeColor(): RGBColor {
+		return this.aLineColor;
+	}
+
+	setStrokeColor(aRGBValue: RGBColor) {
+		window.app.console.log(
+			'AnimatedElement.setStrokeColor(' + aRGBValue.toString() + ')',
+		);
+		this.aLineColor = aRGBValue;
+	}
+
+	getFontColor(): RGBColor {
+		return this.aFontColor;
+	}
+
+	setFontColor(aRGBValue: RGBColor) {
+		window.app.console.log(
+			'AnimatedElement.setFontColor(' + aRGBValue.toString() + ')',
+		);
+		this.aFontColor = aRGBValue;
+	}
+
+	getFillStyle(): string {
+		return 'solid';
+	}
+
+	setFillStyle(sValue: string) {
+		window.app.console.log(
+			'AnimatedElement.setFillStyle(' + sValue + ') not implemented',
 		);
 	}
 
-	getStrokeColor(): any {
-		window.app.console.log('AnimatedElement.getStrokeColor() not implemented');
-		return null;
+	getLineStyle(): string {
+		return 'solid';
 	}
 
-	setStrokeColor(aRGBValue: any) {
+	setLineStyle(sValue: string) {
 		window.app.console.log(
-			'AnimatedElement.setStrokeColor(' + aRGBValue + ') not implemented',
+			'AnimatedElement.setLineStyle(' + sValue + ') not implemented',
 		);
 	}
 
@@ -1061,5 +1221,8 @@ class AnimatedElement {
 }
 
 class AnimatedTextElement extends AnimatedElement {
+	public isTextElement() {
+		return true;
+	}
 	// TODO: to be implemented
 }

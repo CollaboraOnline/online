@@ -119,7 +119,15 @@ class ClippingTransition extends Transition2d {
                       : ''}
                 uniform sampler2D enteringSlideTexture;
                 uniform float time;
-                ${!isSlideTransition ? 'uniform float alpha;' : ''}
+                ${!isSlideTransition
+                      ? `
+                          uniform float alpha;
+                          uniform vec4 fromFillColor;
+                          uniform vec4 toFillColor;
+                          uniform vec4 fromLineColor;
+                          uniform vec4 toLineColor;
+                          `
+                      : ''}
 
                 in vec2 v_texCoord;
                 out vec4 outColor;
@@ -152,7 +160,14 @@ class ClippingTransition extends Transition2d {
                           ? 'texture(leavingSlideTexture, v_texCoord)'
                           : 'vec4(0, 0, 0, 0)'};
                     vec4 color2 = texture(enteringSlideTexture, v_texCoord);
-                    ${!isSlideTransition ? 'color2 *= alpha;' : ''}
+                    ${!isSlideTransition
+                          ? `
+                              color2 = mix(mix(color2, toLineColor, float(distance(color2, fromLineColor) < 0.03)),
+                                          toFillColor,
+                                          float(distance(color2, fromFillColor) < 0.03));
+                              color2 *= alpha;
+                              `
+                          : ''}
 
                     outColor = mix(color1, color2, mask);
                 }

@@ -131,10 +131,12 @@ function createAnimationNode(
 			);
 			return null;
 		case AnimationNodeType.AnimateColor:
-			window.app.console.log(
-				'createAnimationNode: AnimateColor not implemented',
+			aCreatedNode = new AnimationColorNode(
+				aNodeInfo,
+				aParentNode,
+				aNodeContext,
 			);
-			return null;
+			break;
 		case AnimationNodeType.AnimateTransform:
 			if (isTransformSupported(aNodeInfo as AnimateTransformNodeInfo)) {
 				aCreatedNode = new AnimationTransformNode(

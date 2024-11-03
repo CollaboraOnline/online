@@ -78,6 +78,9 @@ abstract class TransitionBase extends SlideChangeGl {
 }
 
 class Transition2d extends TransitionBase {
+	private static readonly InvalidColor = new Float32Array([-1, -1, -1, -1]);
+	private static readonly ErrorColor = new Float32Array([1, 0, 0, 1]);
+
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
 	}
@@ -157,11 +160,27 @@ class Transition2d extends TransitionBase {
 				0,
 			);
 		} else {
+			// jscpd:ignore-start
 			let bounds: BoundsType = null;
 			let alpha = 1.0;
+			let fromFillColor = Transition2d.InvalidColor;
+			let toFillColor = Transition2d.ErrorColor;
+			let fromLineColor = Transition2d.InvalidColor;
+			let toLineColor = Transition2d.ErrorColor;
 			if (properties) {
 				bounds = properties.bounds;
 				alpha = properties.alpha;
+				const colorMap = properties.colorMap;
+				if (colorMap) {
+					if (colorMap.fromFillColor && colorMap.toFillColor) {
+						fromFillColor = colorMap.fromFillColor.toFloat32Array();
+						toFillColor = colorMap.toFillColor.toFloat32Array();
+					}
+					if (colorMap.fromLineColor && colorMap.toLineColor) {
+						fromLineColor = colorMap.fromLineColor.toFloat32Array();
+						toLineColor = colorMap.toLineColor.toFloat32Array();
+					}
+				}
 			}
 			console.debug(`Transition2d.render: alpha: ${alpha}`);
 
@@ -170,6 +189,23 @@ class Transition2d extends TransitionBase {
 				this.gl.getUniformLocation(this.program, 'alpha'),
 				alpha,
 			);
+			this.gl.uniform4fv(
+				this.gl.getUniformLocation(this.program, 'fromFillColor'),
+				fromFillColor,
+			);
+			this.gl.uniform4fv(
+				this.gl.getUniformLocation(this.program, 'toFillColor'),
+				toFillColor,
+			);
+			this.gl.uniform4fv(
+				this.gl.getUniformLocation(this.program, 'fromLineColor'),
+				fromLineColor,
+			);
+			this.gl.uniform4fv(
+				this.gl.getUniformLocation(this.program, 'toLineColor'),
+				toLineColor,
+			);
+			// jscpd:ignore-end
 		}
 
 		gl.activeTexture(gl.TEXTURE1);

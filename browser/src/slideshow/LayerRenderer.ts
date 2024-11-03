@@ -31,7 +31,8 @@ interface LayerRenderer {
 
 class LayerRendererGl implements LayerRenderer {
 	private static readonly DefaultVertices = [-1, -1, 1, -1, -1, 1, 1, 1];
-
+	private static readonly InvalidColor = new Float32Array([-1, -1, -1, -1]);
+	private static readonly ErrorColor = new Float32Array([1, 0, 0, 1]);
 	private offscreenCanvas: OffscreenCanvas;
 	private glContext: RenderContextGl;
 	private gl: WebGL2RenderingContext;
@@ -77,11 +78,19 @@ class LayerRendererGl implements LayerRenderer {
 
 	private fragmentShaderSource = `
 		precision mediump float;
+		uniform vec4 fromFillColor;
+		uniform vec4 toFillColor;
+		uniform vec4 fromLineColor;
+		uniform vec4 toLineColor;
 		uniform float alpha;
 		varying vec2 v_texCoord;
 		uniform sampler2D u_sampler;
+
 		void main() {
 			vec4 color = texture2D(u_sampler, v_texCoord);
+			color = mix(mix(color, toLineColor, float(distance(color, fromLineColor) < 0.03)),
+			            toFillColor,
+			            float(distance(color, fromFillColor) < 0.03));
 			color = color * alpha;
 			gl_FragColor = color;
 		}
@@ -169,9 +178,24 @@ class LayerRendererGl implements LayerRenderer {
 
 		let bounds: BoundsType = null;
 		let alpha = 1.0;
+		let fromFillColor = LayerRendererGl.InvalidColor;
+		let toFillColor = LayerRendererGl.ErrorColor;
+		let fromLineColor = LayerRendererGl.InvalidColor;
+		let toLineColor = LayerRendererGl.ErrorColor;
 		if (properties) {
 			bounds = properties.bounds;
 			alpha = properties.alpha;
+			const colorMap = properties.colorMap;
+			if (colorMap) {
+				if (colorMap.fromFillColor && colorMap.toFillColor) {
+					fromFillColor = colorMap.fromFillColor.toFloat32Array();
+					toFillColor = colorMap.toFillColor.toFloat32Array();
+				}
+				if (colorMap.fromLineColor && colorMap.toLineColor) {
+					fromLineColor = colorMap.fromLineColor.toFloat32Array();
+					toLineColor = colorMap.toLineColor.toFloat32Array();
+				}
+			}
 		}
 
 		let texture: WebGLTexture;
@@ -204,7 +228,24 @@ class LayerRendererGl implements LayerRenderer {
 		this.gl.bindVertexArray(this.vao);
 
 		this.initPositionBuffer(bounds);
+
 		this.gl.uniform1f(this.gl.getUniformLocation(this.program, 'alpha'), alpha);
+		this.gl.uniform4fv(
+			this.gl.getUniformLocation(this.program, 'fromFillColor'),
+			fromFillColor,
+		);
+		this.gl.uniform4fv(
+			this.gl.getUniformLocation(this.program, 'toFillColor'),
+			toFillColor,
+		);
+		this.gl.uniform4fv(
+			this.gl.getUniformLocation(this.program, 'fromLineColor'),
+			fromLineColor,
+		);
+		this.gl.uniform4fv(
+			this.gl.getUniformLocation(this.program, 'toLineColor'),
+			toLineColor,
+		);
 
 		this.gl.activeTexture(this.gl.TEXTURE0);
 		this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
