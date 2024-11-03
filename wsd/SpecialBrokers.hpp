@@ -21,7 +21,6 @@
 #include <memory>
 #include <string>
 
-#include <Poco/SharedPtr.h>
 #include <Poco/URI.h>
 
 class ClientSession;
