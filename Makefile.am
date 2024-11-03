@@ -152,6 +152,7 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/ProxyProtocol.cpp \
                   wsd/ProxyRequestHandler.cpp \
                   wsd/QuarantineUtil.cpp \
+                  wsd/RemoteConfig.cpp \
                   wsd/RequestDetails.cpp \
                   wsd/RequestVettingStation.cpp \
                   wsd/ServerAuditUtil.cpp \
