@@ -755,9 +755,9 @@ public:
     void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
     {
         os << indent << "http::Request: " << _version << ' ' << _verb << ' ' << _url;
-        os << indent << "stage: " << name(_stage);
-        os << indent << "headers: ";
-        _header.serialize(os);
+        os << indent << "\tstage: " << name(_stage);
+        os << indent << "\theaders: ";
+        Util::joinPair(os, _header, (indent + '\t').c_str());
     }
 
 private:
@@ -1055,14 +1055,17 @@ public:
     void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
     {
         os << indent << "http::Response: #" << _fd;
-        os << indent << "statusLine: " << _statusLine.httpVersion() << ' '
+        os << indent << "\tstatusLine: " << _statusLine.httpVersion() << ' '
            << getReasonPhraseForCode(_statusLine.statusCode()) << ' ' << _statusLine.reasonPhrase();
-        os << indent << "state: " << name(_state);
-        os << indent << "parseStage: " << name(_parserStage);
-        os << indent << "recvBodySize: " << _recvBodySize;
-        os << indent << "headers: ";
-        _header.serialize(os);
-        os << indent << "body: " << Util::dumpHex(_body);
+        os << indent << "\tstate: " << name(_state);
+        os << indent << "\tparseStage: " << name(_parserStage);
+        os << indent << "\trecvBodySize: " << _recvBodySize;
+        os << indent << "\theaders: ";
+
+        std::string childIndent = indent + '\t';
+        Util::joinPair(os, _header, childIndent.c_str());
+        os << indent
+           << Util::dumpHex(_body, "\tbody: ", Util::replace(childIndent, "\n", "").c_str());
     }
 
 private:
@@ -1383,27 +1386,25 @@ public:
     void dumpState(std::ostream& os, const std::string& indent) const override
     {
         const auto now = std::chrono::steady_clock::now();
-        os << indent << "http::Session: #" << _fd;
-        os << indent << "connected: " << std::boolalpha << _connected;
-        os << indent << "timeout: " << _timeout;
-        os << indent << "host: " << _host;
-        os << indent << "port: " << _port;
-        os << indent << "protocol: " << name(_protocol);
-        os << indent << "handshakeSslVerifyFailure: " << _handshakeSslVerifyFailure;
-        os << indent << "startTime: " << Util::getTimeForLog(now, _startTime);
-        _request.dumpState(os, indent);
+        os << indent << "http::Session: #" << _fd << " (" << (_socket.lock() ? "have" : "no")
+           << " socket)";
+        os << indent << "\tconnected: " << std::boolalpha << _connected;
+        os << indent << "\ttimeout: " << _timeout;
+        os << indent << "\thost: " << _host;
+        os << indent << "\tport: " << _port;
+        os << indent << "\tprotocol: " << name(_protocol);
+        os << indent << "\thandshakeSslVerifyFailure: " << _handshakeSslVerifyFailure;
+        os << indent << "\tstartTime: " << Util::getTimeForLog(now, _startTime);
+        _request.dumpState(os, indent + '\t');
         if (_response)
-            _response->dumpState(os, indent);
+            _response->dumpState(os, indent + '\t');
         else
-            os << indent << "response: null";
+            os << indent << "\tresponse: null";
+
+        os << '\n';
 
         // We are typically called from the StreamSocket, so don't
         // recurse back by calling dumpState on the socket again.
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
-        if (socket)
-            os << indent << "socket: #" << socket->getFD();
-        else
-            os << indent << "socket: null";
     }
 
 private:
@@ -1948,21 +1949,22 @@ public:
     void dumpState(std::ostream& os, const std::string& indent) const override
     {
         const auto now = std::chrono::steady_clock::now();
-        os << indent << "http::server::Session: #" << _fd;
-        os << indent << "connected: " << std::boolalpha << _connected;
-        os << indent << "startTime: " << Util::getTimeForLog(now, _startTime);
-        os << indent << "mimeType: " << _mimeType;
-        os << indent << "statusCode: " << getReasonPhraseForCode(_statusCode);
-        os << indent << "size: " << _size;
-        os << indent << "pos: " << _pos;
-        os << indent << "start: " << _start;
-        os << indent << "end: " << _end;
-        os << indent << "startIsSuffix: " << _startIsSuffix;
-        os << indent << "data: " << Util::dumpHex(_data);
-        if (_socket)
-            _socket->dumpState(os);
-        else
-            os << indent << "socket: null";
+        os << indent << "http::server::Session: #" << _fd << " (" << (_socket ? "have" : "no")
+           << " socket)";
+        os << indent << "\tconnected: " << std::boolalpha << _connected;
+        os << indent << "\tstartTime: " << Util::getTimeForLog(now, _startTime);
+        os << indent << "\tmimeType: " << _mimeType;
+        os << indent << "\tstatusCode: " << getReasonPhraseForCode(_statusCode);
+        os << indent << "\tsize: " << _size;
+        os << indent << "\tpos: " << _pos;
+        os << indent << "\tstart: " << _start;
+        os << indent << "\tend: " << _end;
+        os << indent << "\tstartIsSuffix: " << _startIsSuffix;
+        os << indent << "\tdata: " << Util::dumpHex(_data);
+        os << '\n';
+
+        // We are typically called from the StreamSocket, so don't
+        // recurse back by calling dumpState on the socket again.
     }
 
 private:

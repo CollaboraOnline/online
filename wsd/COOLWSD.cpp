@@ -4123,33 +4123,37 @@ public:
         os << "\nServer poll:\n";
         _acceptPoll.dumpState(os);
 
-        os << "Web Server poll:\n";
+        os << "\nWeb Server poll:\n";
         WebServerPoll->dumpState(os);
 
-        os << "Prisoner poll:\n";
+        os << "\nPrisoner poll:\n";
         PrisonerPoll->dumpState(os);
 
 #if !MOBILEAPP
-        os << "Admin poll:\n";
+        os << "\nAdmin poll:\n";
         _admin.dumpState(os);
 
         // If we have any delaying work going on.
+        os << '\n';
         Delay::dumpState(os);
 
         // If we have any DNS work going on.
+        os << '\n';
         net::AsyncDNS::dumpState(os);
 
+        os << '\n';
         COOLWSD::SavedClipboards->dumpState(os);
 #endif
 
-        os << "Document Broker polls "
-                  << "[ " << DocBrokers.size() << " ]:\n";
+        os << "\nDocument Broker polls " << "[ " << DocBrokers.size() << " ]:\n";
         for (auto &i : DocBrokers)
             i.second->dumpState(os);
 
 #if !MOBILEAPP
-        os << "Converter count: " << ConvertToBroker::getInstanceCount() << '\n';
+        os << "\nConverter count: " << ConvertToBroker::getInstanceCount() << '\n';
 #endif
+
+        os << "\nDone COOLWSDServer state dumping.\n";
 
         Socket::InhibitThreadChecks = false;
         SocketPoll::InhibitThreadChecks = false;
