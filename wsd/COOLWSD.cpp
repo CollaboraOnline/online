@@ -18,7 +18,6 @@
 #endif
 #if !MOBILEAPP
 #include <wsd/SpecialBrokers.hpp>
-#include <HostUtil.hpp>
 #endif // !MOBILEAPP
 
 /* Default host used in the start test URI */
