@@ -341,6 +341,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/ProxyProtocol.hpp \
               wsd/ProxyRequestHandler.hpp \
               wsd/QuarantineUtil.hpp \
+              wsd/RemoteConfig.hpp \
               wsd/RequestDetails.hpp \
               wsd/RequestVettingStation.hpp \
               wsd/SenderQueue.hpp \
