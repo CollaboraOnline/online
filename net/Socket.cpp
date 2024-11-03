@@ -999,7 +999,7 @@ void SocketDisposition::execute()
     }
 }
 
-void WebSocketHandler::dumpState(std::ostream& os, const std::string& /*indent*/) const
+void WebSocketHandler::dumpState(std::ostream& os, const std::string& indent) const
 {
     os << (_shuttingDown ? "shutd " : "alive ");
 #if !MOBILEAPP
@@ -1010,7 +1010,7 @@ void WebSocketHandler::dumpState(std::ostream& os, const std::string& /*indent*/
     os << '\n';
     if (_msgHandler)
     {
-        os << "msgHandler:\n";
+        os << indent << "msgHandler:\n";
         _msgHandler->dumpState(os);
     }
 }
