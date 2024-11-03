@@ -741,7 +741,7 @@ bool RemoteFontConfigPoll::downloadWithETag(const std::string& uri, const std::s
 }
 
 bool RemoteFontConfigPoll::finishDownload(const std::string& uri,
-                                          const std::shared_ptr<const http::Response> httpResponse)
+                                          const std::shared_ptr<const http::Response>& httpResponse)
 {
     if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
     {
