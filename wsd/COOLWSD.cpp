@@ -4975,6 +4975,10 @@ void dump_state()
 #if !MOBILEAPP
     Admin::dumpMetrics();
 #endif
+
+    std::lock_guard<std::mutex> docBrokerLock(DocBrokersMutex);
+    std::lock_guard<std::mutex> newChildLock(NewChildrenMutex);
+    forwardSignal(SIGUSR1);
 }
 
 void lslr_childroot()
