@@ -61,48 +61,42 @@ class AnimationColorNode extends AnimationBaseNode3 {
 		}
 	}
 
-	// TODO fix this
-	public createActivity(): any {
-		return null;
-	}
-
-	/*
-	public createActivity(): any
-	{
-		return null;
+	public createActivity(): AnimationActivity {
 		const aActivityParamSet = this.fillActivityParams();
 
 		const aAnimation = createPropertyAnimation(
 			this.getAttributeName(),
 			this.getAnimatedElement(),
 			this.aNodeContext.aContext.nSlideWidth,
-			this.aNodeContext.aContext.nSlideHeight );
+			this.aNodeContext.aContext.nSlideHeight,
+		);
 
-		let aColorAnimation;
+		let aColorAnimation: AnimationBase;
 		let aInterpolator;
-		if( this.getColorInterpolation() === ColorSpace.hsl )
-		{
-			ANIMDBG.print( 'AnimationColorNode.createActivity: color space hsl'  );
-			aColorAnimation = new HSLAnimationWrapper( aAnimation );
-			var aInterpolatorMaker = PropertyInterpolator.getInterpolator(
-				this.getCalcMode(),
+		if (this.getColorInterpolation() === ColorSpace.hsl) {
+			ANIMDBG.print('AnimationColorNode.createActivity: color space hsl');
+			aColorAnimation = new HSLAnimationWrapper(aAnimation);
+			aInterpolator = PropertyInterpolator.getInterpolator(
 				PropertyValueType.Color,
-				ColorSpace.hsl );
-			aInterpolator = aInterpolatorMaker( this.getColorInterpolationDirection() );
-		}
-		else
-		{
-			ANIMDBG.print( 'AnimationColorNode.createActivity: color space rgb'  );
+				ColorSpace.hsl,
+				this.getColorInterpolationDirection(),
+			);
+		} else {
+			ANIMDBG.print('AnimationColorNode.createActivity: color space rgb');
 			aColorAnimation = aAnimation;
 			aInterpolator = PropertyInterpolator.getInterpolator(
-				this.getCalcMode(),
 				PropertyValueType.Color,
-				ColorSpace.rgb );
+				ColorSpace.rgb,
+			);
 		}
 
-		return createActivity( aActivityParamSet, this, aColorAnimation, aInterpolator );
+		return createActivity(
+			aActivityParamSet,
+			this,
+			aColorAnimation,
+			aInterpolator,
+		);
 	}
-*/
 
 	public getColorInterpolation() {
 		return this.eColorInterpolation;

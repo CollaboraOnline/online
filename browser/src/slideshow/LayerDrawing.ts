@@ -50,6 +50,9 @@ interface AnimatedShapeInfo {
 	type: 'bitmap' | 'svg';
 	content: ImageInfo | SVGElement;
 	bounds: BoundingBoxType;
+	fillColor?: string;
+	lineColor?: string;
+	fontColor?: string;
 }
 
 interface PlaceholderInfo {

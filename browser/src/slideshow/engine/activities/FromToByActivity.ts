@@ -78,7 +78,7 @@ function FromToByActivityTemplate<T extends AGConstructor<ActivityBase>>(
 		}
 
 		public initAnimatedElement() {
-			if (this.aAnimation && this.aFrom !== undefined) {
+			if (this.aAnimation && hasValue(this.aFrom)) {
 				const aValue = this.aFormula ? this.aFormula(this.aFrom) : this.aFrom;
 				this.aAnimation.perform(aValue);
 			}
@@ -103,15 +103,15 @@ function FromToByActivityTemplate<T extends AGConstructor<ActivityBase>>(
 			// are actually valid.
 			// See http://www.w3.org/TR/smil20/animation.html#AnimationNS-FromToBy
 			// for a definition
-			if (this.aFrom !== undefined) {
+			if (hasValue(this.aFrom)) {
 				// From-to or From-by animation. According to
 				// SMIL spec, the To value takes precedence
 				// over the By value, if both are specified
-				if (this.aTo !== undefined) {
+				if (hasValue(this.aTo)) {
 					// From-To animation
 					this.aStartValue = this.aFrom;
 					this.aEndValue = this.aTo;
-				} else if (this.aBy !== undefined) {
+				} else if (hasValue(this.aBy)) {
 					// From-By animation
 					this.aStartValue = this.aFrom;
 
@@ -125,7 +125,7 @@ function FromToByActivityTemplate<T extends AGConstructor<ActivityBase>>(
 				// By or To animation. According to SMIL spec,
 				// the To value takes precedence over the By
 				// value, if both are specified
-				if (this.aTo !== undefined) {
+				if (hasValue(this.aTo)) {
 					// To animation
 
 					// According to the SMIL spec
@@ -135,7 +135,7 @@ function FromToByActivityTemplate<T extends AGConstructor<ActivityBase>>(
 					this.bDynamicStartValue = true;
 					this.aPreviousValue = this.aStartValue;
 					this.aEndValue = this.aTo;
-				} else if (this.aBy !== undefined) {
+				} else if (hasValue(this.aBy)) {
 					// By animation
 					this.aStartValue = aAnimationStartValue;
 

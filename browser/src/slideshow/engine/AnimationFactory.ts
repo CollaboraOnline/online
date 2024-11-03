@@ -135,6 +135,30 @@ class TupleAnimation extends GenericAnimation {
 	}
 }
 
+class HSLAnimationWrapper implements AnimationBase {
+	private aAnimation: AnimationBase;
+
+	constructor(aColorAnimation: AnimationBase) {
+		this.aAnimation = aColorAnimation;
+	}
+
+	start(aAnimatableElement: AnimatedElement) {
+		this.aAnimation.start(aAnimatableElement);
+	}
+
+	end() {
+		this.aAnimation.end();
+	}
+
+	perform(aHSLValue: HSLColor) {
+		this.aAnimation.perform(aHSLValue.convertToRGB());
+	}
+
+	getUnderlyingValue() {
+		return this.aAnimation.getUnderlyingValue().convertToHSL();
+	}
+}
+
 function createPropertyAnimation(
 	sAttrName: string,
 	aAnimatedElement: AnimatedElement,
