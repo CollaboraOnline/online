@@ -45,8 +45,6 @@ public:
     {
     }
 
-    virtual ~RemoteJSONPoll() {}
-
     virtual void handleJSON(const Poco::JSON::Object::Ptr& json) = 0;
 
     virtual void handleUnchangedJSON() {}
@@ -74,8 +72,6 @@ public:
         _persistConfig = new AppConfigMap(std::map<std::string, std::string>{});
         _conf.addWriteable(_persistConfig, PRIO_JSON);
     }
-
-    virtual ~RemoteConfigPoll() {}
 
     void handleJSON(const Poco::JSON::Object::Ptr& remoteJson) override;
 
@@ -127,8 +123,6 @@ public:
     {
     }
 
-    virtual ~RemoteFontConfigPoll() {}
-
     void handleJSON(const Poco::JSON::Object::Ptr& remoteJson) override;
 
     void handleUnchangedJSON() override;
@@ -141,7 +135,7 @@ private:
     bool downloadWithETag(const std::string& uri, const std::string& oldETag);
 
     bool finishDownload(const std::string& uri,
-                        const std::shared_ptr<const http::Response> httpResponse);
+                        const std::shared_ptr<const http::Response>& httpResponse);
 
     void restartForKitAndReDownloadConfigFile();
 
