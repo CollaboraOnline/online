@@ -1643,6 +1643,9 @@ int main(int argc, char**argv)
     // coverity[+kill]
     void forcedExit(int code) __attribute__ ((__noreturn__));
 
+    /// Returns the result of malloc_info, which is an XML string with all the arenas.
+    std::string getMallocInfo();
+
     // std::size isn't available on our android baseline so use this
     // solution as a workaround
     template <typename T, size_t S> char (&n_array_size( T(&)[S] ))[S];
