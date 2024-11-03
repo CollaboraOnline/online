@@ -4956,6 +4956,8 @@ void alertAllUsers(const std::string& msg)
 
 #endif
 
+void forwardSignal(const int signum);
+
 void dump_state()
 {
     std::ostringstream oss;
@@ -4992,11 +4994,21 @@ void forwardSigUsr2()
     Util::assertIsLocked(DocBrokersMutex);
     std::lock_guard<std::mutex> newChildLock(NewChildrenMutex);
 
+    forwardSignal(SIGUSR2);
+}
+
+void forwardSignal(const int signum)
+{
+    const char* name = SigUtil::signalName(signum);
+
+    Util::assertIsLocked(DocBrokersMutex);
+    Util::assertIsLocked(NewChildrenMutex);
+
 #if !MOBILEAPP
     if (COOLWSD::ForKitProcId > 0)
     {
-        LOG_INF("Sending SIGUSR2 to forkit " << COOLWSD::ForKitProcId);
-        ::kill(COOLWSD::ForKitProcId, SIGUSR2);
+        LOG_INF("Sending " << name << " to forkit " << COOLWSD::ForKitProcId);
+        ::kill(COOLWSD::ForKitProcId, signum);
     }
 #endif
 
@@ -5004,8 +5016,8 @@ void forwardSigUsr2()
     {
         if (child && child->getPid() > 0)
         {
-            LOG_INF("Sending SIGUSR2 to child " << child->getPid());
-            ::kill(child->getPid(), SIGUSR2);
+            LOG_INF("Sending " << name << " to child " << child->getPid());
+            ::kill(child->getPid(), signum);
         }
     }
 
@@ -5014,8 +5026,8 @@ void forwardSigUsr2()
         std::shared_ptr<DocumentBroker> docBroker = pair.second;
         if (docBroker)
         {
-            LOG_INF("Sending SIGUSR2 to docBroker " << docBroker->getPid());
-            ::kill(docBroker->getPid(), SIGUSR2);
+            LOG_INF("Sending " << name << " to docBroker " << docBroker->getPid());
+            ::kill(docBroker->getPid(), signum);
         }
     }
 }
