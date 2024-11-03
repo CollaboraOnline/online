@@ -44,6 +44,10 @@
 #include <fcntl.h>
 #include <spawn.h>
 
+#if defined __GLIBC__
+#include <malloc.h>
+#endif
+
 #include <atomic>
 #include <cassert>
 #include <chrono>
@@ -804,6 +808,31 @@ namespace Util
         SigUtil::SigHandlerTrap::wait();
 
         std::_Exit(code);
+    }
+
+    std::string getMallocInfo()
+    {
+        std::string info;
+
+#if defined __GLIBC__
+        size_t size = 0;
+        char* p = nullptr;
+        FILE* f = open_memstream(&p, &size);
+        if (f)
+        {
+            // Dump malloc internal structures.
+            malloc_info(0, f);
+            fclose(f);
+
+            if (p && size)
+            {
+                info = std::string(p, size);
+                free(p);
+            }
+        }
+#endif // __GLIBC__
+
+        return info;
     }
 
     bool matchRegex(const std::set<std::string>& set, const std::string& subject)
