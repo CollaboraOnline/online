@@ -11,10 +11,17 @@
 
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
+#include <string>
+
 extern const char *user_name;
 
 extern int coolwsd_server_socket_fd;
 
 extern LibreOfficeKit *lo_kit;
+
+/**
+ * Get the own installation path.
+ */
+std::string getBundlePath();
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

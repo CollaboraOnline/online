@@ -70,7 +70,7 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
 
                 if body == "HULLO" {
                     // Now we know that the JS has started completely
-                    COWrapper.shared.handleHULLO(withDocumentURL: document.fileURL, appDocId: document.appDocId)
+                    COWrapper.shared.handleHULLO(with: document)
                     return
                 }
                 else if body == "BYE" {
