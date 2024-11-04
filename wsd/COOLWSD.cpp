@@ -1017,19 +1017,42 @@ void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
     const std::string firstLine = COOLProtocol::getFirstLine(&data[0], data.size());
     const StringVector tokens = StringVector::tokenize(firstLine.data(), firstLine.size());
 
-    if (tokens.equals(0, "segfaultcount"))
+    if (tokens.startsWith(0, "segfaultcount"))
     {
-        int count = std::stoi(tokens[1]);
-        if (count >= 0)
+        int segFaultcount = 0;
+        int killedCount = 0;
+        int oomKilledCount = 0;
+        if (COOLProtocol::getNonNegTokenInteger(tokens[0], "segfaultcount", segFaultcount)
+            && COOLProtocol::getNonNegTokenInteger(tokens[1], "killedcount", killedCount)
+            && COOLProtocol::getNonNegTokenInteger(tokens[2], "oomkilledcount", oomKilledCount))
         {
-            Admin::instance().addSegFaultCount(count);
-            LOG_INF(count << " coolkit processes crashed with segmentation fault.");
-            SigUtil::addActivity("coolkit(s) crashed");
-            UnitWSD::get().kitSegfault(count);
+            Admin::instance().addErrorExitCounters(segFaultcount, killedCount, oomKilledCount);
+
+            if (segFaultcount)
+            {
+                LOG_INF(segFaultcount << " coolkit processes crashed with segmentation fault.");
+                SigUtil::addActivity("coolkit(s) crashed");
+                UnitWSD::get().kitSegfault(segFaultcount);
+            }
+
+            if (killedCount)
+            {
+                LOG_INF(killedCount << " coolkit processes killed.");
+                SigUtil::addActivity("coolkit(s) killed");
+                UnitWSD::get().kitKilled(killedCount);
+            }
+
+            if (oomKilledCount)
+            {
+                LOG_INF(oomKilledCount << " coolkit processes killed by oom.");
+                SigUtil::addActivity("coolkit(s) killed by oom");
+                UnitWSD::get().kitOomKilled(oomKilledCount);
+            }
         }
         else
         {
-            LOG_WRN("Invalid 'segfaultcount' message received.");
+            LOG_WRN(
+                "ForKitProcWSHandler: Invalid 'segfaultcount' message received. Got:" << firstLine);
         }
     }
     else

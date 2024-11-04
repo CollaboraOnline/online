@@ -964,9 +964,11 @@ void Admin::setDocWopiUploadDuration(const std::string& docKey, const std::chron
     addCallback([this, docKey, uploadDuration]{ _model.setDocWopiUploadDuration(docKey, uploadDuration); });
 }
 
-void Admin::addSegFaultCount(unsigned segFaultCount)
+void Admin::addErrorExitCounters(unsigned segFaultCount, unsigned killedCount,
+                                 unsigned oomKilledCount)
 {
-    addCallback([this, segFaultCount]{ _model.addSegFaultCount(segFaultCount); });
+    addCallback([this, segFaultCount, killedCount, oomKilledCount]
+                { _model.addErrorExitCounters(segFaultCount, killedCount, oomKilledCount); });
 }
 
 void Admin::addLostKitsTerminated(unsigned lostKitsTerminated)
