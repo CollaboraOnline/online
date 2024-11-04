@@ -478,6 +478,20 @@ public:
             exitTest(TestResult::Failed, "kit segfault");
     }
 
+    /// When we get a killed message from forkit; override to test crashes ...
+    virtual void kitKilled(int /* count */)
+    {
+        if (get().isUnitTesting())
+            exitTest(TestResult::Failed, "kit killed");
+    }
+
+    /// When we get killed by oom message from forkit; override to test crashes ...
+    virtual void kitOomKilled(int /* count */)
+    {
+        if (get().isUnitTesting())
+            exitTest(TestResult::Failed, "kit killed by oom");
+    }
+
     /// Intercept createStorage
     virtual bool createStorage(const Poco::URI& /* uri */,
                                const std::string& /* jailRoot */,

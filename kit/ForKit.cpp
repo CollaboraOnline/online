@@ -283,25 +283,61 @@ static void cleanupChildren()
     pid_t exitedChildPid;
     int status = 0;
     int segFaultCount = 0;
+    int killedCount = 0;
+    int oomKilledCount = 0;
 
+    siginfo_t info;
     // Reap quickly without doing slow cleanup so WSD can spawn more rapidly.
-    while ((exitedChildPid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
+    while (waitid(P_ALL, -1, &info, WEXITED | WUNTRACED | WNOHANG) == 0)
     {
+        if (info.si_pid == 0)
+        {
+            // WNOHANG special case
+            break;
+        }
+
+        exitedChildPid = info.si_pid;
+        status = info.si_status;
+
         const auto it = childJails.find(exitedChildPid);
         if (it != childJails.end())
         {
-            if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGSEGV ||
-                                        WTERMSIG(status) == SIGBUS ||
-                                        WTERMSIG(status) == SIGABRT))
+            if (WIFSIGNALED(status))
             {
-                ++segFaultCount;
+                if (WTERMSIG(status) == SIGSEGV || WTERMSIG(status) == SIGBUS ||
+                    WTERMSIG(status) == SIGABRT)
+                {
+                    ++segFaultCount;
 
-                std::string noteCrashFile(it->second + "/tmp/kit-crashed");
-                int noteCrashFD = open(noteCrashFile.c_str(), O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR);
-                if (noteCrashFD < 0)
-                    LOG_ERR("Couldn't create file: " << noteCrashFile << " due to error: " << strerror(errno));
+                    std::string noteCrashFile(it->second + "/tmp/kit-crashed");
+                    int noteCrashFD = open(noteCrashFile.c_str(), O_CREAT | O_TRUNC | O_WRONLY,
+                                           S_IRUSR | S_IWUSR);
+                    if (noteCrashFD < 0)
+                        LOG_ERR("Couldn't create file: " << noteCrashFile
+                                                         << " due to error: " << strerror(errno));
+                    else
+                        close(noteCrashFD);
+                }
+                else if (WTERMSIG(status) == SIGKILL)
+                {
+                    // TODO differentiate with docker
+                    int si_code = info.si_code;
+                    if (si_code == SI_KERNEL)
+                    {
+                        ++oomKilledCount;
+                        LOG_WRN("Child " << exitedChildPid << " was killed by OOM, with status"
+                                         << status);
+                    }
+                    else
+                    {
+                        ++killedCount;
+                        LOG_WRN("Child " << exitedChildPid << " was killed, with status" << status);
+                    }
+                }
                 else
-                    close(noteCrashFD);
+                {
+                    LOG_ERR("Child " << exitedChildPid << " has exited, with status" << status);
+                }
             }
 
             LOG_INF("Child " << exitedChildPid << " has exited, will remove its jail [" << it->second << "].");
@@ -315,7 +351,7 @@ static void cleanupChildren()
         }
         else
         {
-            LOG_ERR("Unknown child " << exitedChildPid << " has exited");
+            LOG_ERR("Unknown child " << exitedChildPid << " has exited, with status" << status);
         }
     }
 
@@ -329,12 +365,14 @@ static void cleanupChildren()
                                           << childJails.size() << " left: " << oss.str());
     }
 
-    if (segFaultCount)
+    if (segFaultCount || killedCount || oomKilledCount)
     {
         if (WSHandler)
         {
             std::stringstream stream;
-            stream << "segfaultcount " << segFaultCount << '\n';
+            stream << "segfaultcount=" << segFaultCount << ' ' << "killedcount=" << killedCount
+                    << ' ' << "oomkilledcount=" << oomKilledCount << '\n';
+
             int ret = WSHandler->sendMessage(stream.str());
             if (ret == -1)
             {

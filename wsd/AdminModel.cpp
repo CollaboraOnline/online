@@ -878,9 +878,12 @@ void AdminModel::setDocWopiUploadDuration(const std::string& docKey, const std::
         it->second->setWopiUploadDuration(wopiUploadDuration);
 }
 
-void AdminModel::addSegFaultCount(unsigned segFaultCount)
+void AdminModel::addErrorExitCounters(unsigned segFaultCount, unsigned killedCount,
+                                      unsigned oomKilledCount)
 {
     _segFaultCount += segFaultCount;
+    _killedCount += killedCount;
+    _oomKilledCount += oomKilledCount;
 }
 
 void AdminModel::addLostKitsTerminated(unsigned lostKitsTerminated)
@@ -1148,6 +1151,8 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     oss << "kit_assigned_count " << kitStats.assignedCount << std::endl;
     oss << "kit_segfault_count " << _segFaultCount << std::endl;
     oss << "kit_lost_terminated_count " << _lostKitsTerminatedCount << std::endl;
+    oss << "kit_killed_count " << _killedCount << std::endl;
+    oss << "kit_killed_oom_count " << _oomKilledCount << std::endl;
     PrintKitAggregateMetrics(oss, "thread_count", "", kitStats._threadCount);
     PrintKitAggregateMetrics(oss, "memory_used", "bytes", docStats._kitUsedMemory._active);
     PrintKitAggregateMetrics(oss, "cpu_time", "seconds", kitStats._cpuTime);

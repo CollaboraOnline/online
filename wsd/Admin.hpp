@@ -168,7 +168,8 @@ public:
     void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
     void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
     void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds uploadDuration);
-    void addSegFaultCount(unsigned segFaultCount);
+    void addErrorExitCounters(unsigned segFaultCount, unsigned killedCount,
+                              unsigned oomKilledCount);
     void addLostKitsTerminated(unsigned lostKitsTerminated);
 
     void getMetrics(std::ostringstream &metrics);
