@@ -328,8 +328,9 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	/* good to move this into css var*/
 	font-size: 17px;
 	font-weight: 500;
-	position: absolute;
-	left: 20px;
+	position: relative;
+	left: -20px;
+	width: 0px;
 }
 #NavigatorDeck .ui-treeview-cell-text {
 	/* good to move this into css var*/
