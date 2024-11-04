@@ -164,16 +164,10 @@ class PresenterConsole {
 	_onPresentInConsole() {
 		this._map.fire('newpresentinwindow');
 
-		let top = screen.height - 500;
-		let left = screen.width - 800;
 		this._proxyPresenter = window.open(
 			'',
 			'_blank',
-			'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,' +
-				'resizable=1,popup=true,width=800,height=500,left=' +
-				left +
-				',top=' +
-				top,
+			'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,popup=true',
 		);
 		if (!this._proxyPresenter) {
 			this._presenter._notifyBlockedPresenting();
