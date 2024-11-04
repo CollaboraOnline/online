@@ -37,6 +37,7 @@ public:
     typedef std::vector<char>::const_iterator const_iterator;
 
     std::size_t size() const { return _buffer.size() - _offset; }
+    std::size_t capacity() const { return _buffer.capacity(); }
     bool empty() const { return _offset == _buffer.size(); }
 
     const char *getBlock() const

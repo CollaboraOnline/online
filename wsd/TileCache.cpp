@@ -558,6 +558,7 @@ void TileCache::ensureCacheSize()
         WidSize(TileWireId w, size_t s) : _wid(w), _size(s) {}
     };
     std::vector<WidSize> wids;
+    wids.reserve(_cache.size());
     for (const auto& it : _cache)
         wids.emplace_back(it.first.getWireId(), itemCacheSize(it.second));
 
@@ -653,14 +654,18 @@ void TileCache::TileBeingRendered::dumpState(std::ostream& os)
 void TileCache::dumpState(std::ostream& os)
 {
     os << "\n  TileCache:";
-    os << "\n    num: " << _cache.size() << " size: " << _cacheSize << " bytes\n";
+    os << "\n    num: " << _cache.size() << ", size: " << _cacheSize << " (" << _maxCacheSize
+       << ") bytes\n";
+    size_t totalSize = 0;
+    size_t totalCapacity = 0;
     for (const auto& it : _cache)
     {
-        os << "    " << std::setw(4) << it.first.getWireId()
-           << '\t' << std::setw(6) << it.second->size() << " bytes"
-           << "\t'" << it.first.serialize() << " ";
+        totalSize += it.second->size();
+        totalCapacity += it.second->data().capacity();
+        os << "    " << std::setw(4) << it.first.getWireId() << '\t' << std::setw(6)
+           << it.second->size() << " bytes" << "\t'" << it.first.serialize() << " ";
         it.second->dumpState(os);
-        os << "\n";
+        os << '\n';
     }
 
     int type = 0;
@@ -668,20 +673,26 @@ void TileCache::dumpState(std::ostream& os)
     {
         size_t num = 0;
         size_t size = 0;
+        size_t capacity = 0;
         for (const auto& it : i)
         {
             num++;
             size += it.second->size();
+            capacity += it.second->capacity();
         }
 
-        os << "    stream cache: " << type++ << " num: " << num << " size: " << size << " bytes\n";
+        totalSize += size;
+        totalCapacity += capacity;
+        os << "    stream cache: " << type++ << ", num: " << num << ", size: " << size << " ("
+           << capacity << ") bytes\n";
         for (const auto& it : i)
         {
-            os << "    " << it.first
-               << '\t' << std::setw(6) << it.second->size() << " bytes\n";
+            os << "    " << it.first << '\t' << std::setw(6) << it.second->size() << " ("
+               << std::setw(6) << it.second->capacity() << ") bytes\n";
         }
     }
 
+    os << "    total size: " << totalSize << ", total capacity: " << totalCapacity << " bytes\n";
     os << "    tiles being rendered " << _tilesBeingRendered.size() << '\n';
     for (const auto& it : _tilesBeingRendered)
         it.second->dumpState(os);
