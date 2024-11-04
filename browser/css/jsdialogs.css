@@ -374,8 +374,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-expander-label::before,
-.ui-treeview-expandable.collapsed > .ui-treeview-expander::before,
-.ui-treeview div[aria-expanded='false'] > .ui-treeview-expander::before {
+.ui-treeview-expandable.collapsed > div > .ui-treeview-expander::before,
+.ui-treeview div[aria-expanded='false'] > div > .ui-treeview-expander::before {
 	display: inline-block;
 	content: 'V';
 	color: transparent;
@@ -385,8 +385,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-expander-label.expanded::before,
-.ui-treeview-expandable:not(.collapsed) > .ui-treeview-expander::before,
-.ui-treeview div[aria-expanded='true'] > .ui-treeview-expander::before  {
+.ui-treeview-expandable:not(.collapsed) > div > .ui-treeview-expander::before,
+.ui-treeview div[aria-expanded='true'] > div > .ui-treeview-expander::before  {
 	content: 'V';
 	color: transparent;
 	margin-inline-end: 7px;
@@ -396,13 +396,13 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 [data-theme='dark'] .ui-expander-label::before,
-[data-theme='dark'] .ui-treeview-expandable > .ui-treeview-expander::before,
-[data-theme='dark'] .ui-treeview div[aria-expanded] > .ui-treeview-expander::before  {
+[data-theme='dark'] .ui-treeview-expandable > div > .ui-treeview-expander::before,
+[data-theme='dark'] .ui-treeview div[aria-expanded] > div > .ui-treeview-expander::before  {
 	filter: brightness(1);
 }
 
-.ui-treeview-expandable > .ui-treeview-expander::before,
-.ui-treeview div[aria-expanded] > .ui-treeview-expander::before {
+.ui-treeview-expandable > div > .ui-treeview-expander::before,
+.ui-treeview div[aria-expanded] > div > .ui-treeview-expander::before {
 	margin-inline-end: 7px !important;
 	display: inline-block;
 	position: relative !important;
@@ -474,12 +474,15 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	max-width: 1000px;
 	min-width: 150px;
 	min-height: 100px;
-	max-height: 150px;
 	padding: 1px;
 	padding-inline-end: 3px;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
 	line-height: var(--default-height);
+}
+
+.jsdialog:not(.sidebar).ui-treeview {
+	max-height: 150px; /* only in dialogs */
 }
 
 .ui-treeview tbody {
@@ -507,8 +510,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	cursor: context-menu;
 }
 
-.ui-treeview-expandable.collapsed + ul {
-	display: none;
+.ui-treeview-expandable.collapsed + .ui-treeview-expanded-content {
+	display: none !important;
 }
 
 ul.ui-treeview {
@@ -521,9 +524,41 @@ ul.ui-treeview > * {
 	list-style-type: none;
 }
 
-.ui-treeview-entry div {
+.ui-treeview-entry,
+.ui-treeview-expanded-content {
+	margin-block-end: 8px;
+	display: grid;
+	grid-auto-flow: column;
+	/* grid-column: '1 / ' + (this._columns + 1) - set inside JS */
+	justify-content: stretch;
+	align-items: start;
+}
+
+.ui-treeview-entry {
+	display: flex !important;
+}
+
+.ui-treeview .ui-treeview-entry[aria-level='1'] {
+	grid-template-columns: 20px 30px auto;
+}
+
+.ui-treeview .ui-treeview-entry:not([aria-level]),
+.ui-treeview-expanded-content,
+.ui-treeview-expanded-content > .ui-treeview-entry > div {
+	grid-template-columns: subgrid;
+}
+
+.ui-treeview-entry div:first-child {
+	display: flex;
+	width: min-content;
+	justify-content: start;
+}
+
+.ui-treeview-entry div:last-child {
 	display: flex;
 	width: 100%;
+	justify-content: start;
+	grid-column: 3;
 }
 
 .ui-treeview-entry div:not(.autofilter) {
@@ -606,33 +641,25 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 /* tree grid */
 
-.ui-treeview div[aria-level='2'] > div:first-child {
-	padding-left: 2.5ch;
+.ui-treeview div[aria-level='2'] + .ui-treeview-expanded-content {
+	margin-left: 2.5ch;
 }
 
-.ui-treeview div[aria-level='3'] > div:first-child {
-	padding-left: 5ch;
+.ui-treeview div[aria-level='3'] + .ui-treeview-expanded-content {
+	margin-left: 5ch;
 }
 
-.ui-treeview div[aria-level='4'] > div:first-child {
-	padding-left: 7.5ch;
+.ui-treeview div[aria-level='4'] + .ui-treeview-expanded-content {
+	margin-left: 7.5ch;
 }
 
-.ui-treeview div[aria-level='5'] > div:first-child {
-	padding-left: 10ch;
+.ui-treeview div[aria-level='5'] + .ui-treeview-expanded-content {
+	margin-left: 10ch;
 }
 
 .ui-treeview div.ui-treeview-expander {
 	vertical-align: top;
-}
-
-.ui-treeview div[aria-level]:not([aria-expanded]) ::before {
-	font-family: monospace;
-	content: 'V';
-	color: transparent;
-	display: inline-block;
-	margin-inline-end: 7px;
-	vertical-align: top;
+	justify-content: end;
 }
 
 /* context menu */
