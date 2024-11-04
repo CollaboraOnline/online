@@ -12,6 +12,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 struct SupportKeyImpl;
 namespace Poco {
