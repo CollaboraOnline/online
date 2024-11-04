@@ -1021,10 +1021,11 @@ void StreamSocket::dumpState(std::ostream& os)
 {
     int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS.count();
     const int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
-    os << '\t' << std::setw(6) << getFD() << "\t0x" << std::hex << events << std::dec << '\t'
-       << (ignoringInput() ? "ignore\t" : "process\t") << std::setw(6) << _inBuffer.size() << '\t'
-       << std::setw(6) << _outBuffer.size() << '\t' << " r: " << std::setw(6) << bytesRcvd()
-       << "\t w: " << std::setw(6) << bytesSent() << '\t' << clientAddress() << '\t';
+    os << '\t' << std::setw(6) << getFD() << "\t0x" << std::hex << events << std::dec
+       << (ignoringInput() ? "\t\tignore\t" : "\t\tprocess\t") << std::setw(7) << _inBuffer.size()
+       << '\t' << std::setw(7) << _inBuffer.capacity() << '\t' << std::setw(6) << _outBuffer.size()
+       << '\t' << std::setw(7) << _outBuffer.capacity() << '\t' << " r: " << std::setw(6)
+       << bytesRcvd() << "\t w: " << std::setw(6) << bytesSent() << '\t' << clientAddress() << '\t';
     _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
         Util::dumpHex(os, _inBuffer, "\t\tinBuffer:\n", "\t\t");
@@ -1082,7 +1083,8 @@ void SocketPoll::dumpState(std::ostream& os) const
     const auto callbacks = _newCallbacks.size();
     if (callbacks > 0)
         os << "\tcallbacks: " << callbacks << '\n';
-    os << "\t    fd\tevents\trbuffered\twbuffered\trtotal\twtotal\tclientaddress\n";
+    os << "\t\tfd\tevents\tstatus\trbuffered\trcapacity\twbuffered\twcapacity\trtotal\twtotal\tclie"
+          "ntaddress\n";
     for (const std::shared_ptr<Socket>& socket : pollSockets)
         socket->dumpState(os);
     os << "\n  Done [" << name() << "]\n";
