@@ -25,6 +25,19 @@ class PresenterConsole {
 	}
 
 	_generateHtml(title) {
+		let labels = [
+			_('Current Slide'),
+			_('Next Slide'),
+			_('Previous'),
+			_('Next'),
+			_('Notes'),
+			_('Slides'),
+			_('Pause'),
+			_('Restart'),
+			_('Exchange'),
+			_('Help'),
+			_('Exit'),
+		];
 		let sanitizer = document.createElement('div');
 		sanitizer.innerText = title;
 
@@ -42,11 +55,11 @@ class PresenterConsole {
                                 </header>
                                 <main id="main-content">
                                      <div id="first-presentation">
-                                         <div id="title-current">Current Slide</div>
+                                         <div id="title-current">${labels[0]}</div>
                                          <canvas id="current-presentation"></canvas>
                                      </div>
                                      <div id="second-presentation">
-                                         <div id="title-next">Next Slide</div>
+                                         <div id="title-next">${labels[1]}</div>
                                          <div id='container'>
                                             <img id="next-presentation"></img>
                                          </div>
@@ -55,19 +68,19 @@ class PresenterConsole {
                                 <div id="toolbar">
                                   <button type="button" id="prev" disabled>
                                      <img src="images/presenterscreen-ButtonSlidePreviousSelected.png">
-                                     <label>Previous</label>
+                                     <label>${labels[2]}</label>
                                   </button>
                                   <button type="button" id="next" disabled>
                                      <img src="images/presenterscreen-ButtonEffectNextSelected.png">
-                                     <label>Next</label>
+                                     <label>${labels[3]}</label>
                                   </button>
                                   <button type="button" id="notes" disabled>
                                      <img src="images/presenterscreen-ButtonNotesNormal.png">
-                                     <label>Notes</label>
+                                     <label>${labels[4]}</label>
                                   </button>
                                   <button type="button" id="slides" disabled>
                                      <img src="images/presenterscreen-ButtonSlideSorterNormal.png">
-                                     <label>Slides</label>
+                                     <label>${labels[5]}</label>
                                   </button>
                                   <div id="separator"></div>
                                   <div id="timer-container">
@@ -76,26 +89,26 @@ class PresenterConsole {
                                   </div>
                                   <button type="button" id="pause" disabled>
                                      <img src="images/presenterscreen-ButtonPauseTimerNormal.png">
-                                     <label>Pause</label>
+                                     <label>${labels[6]}</label>
                                   </button>
                                   <button type="button" id="restart" disabled>
                                      <img src="images/presenterscreen-ButtonRestartTimerNormal.png">
-                                     <label>Restart</label>
+                                     <label>${labels[7]}</label>
                                   </button>
                                   <div id="separator"></div>
                                   <button type="button" id="exchange" disabled>
                                      <img src="images/presenterscreen-ButtonSwitchMonitorNormal.png">
-                                     <label>Exchange</label>
+                                     <label>${labels[8]}</label>
                                   </button>
                                   <div id="separator"></div>
                                   <button type="button" id="help" disabled>
                                      <img src="images/presenterscreen-ButtonHelpNormal.png">
-                                     <label>Help</label>
+                                     <label>${labels[9]}</label>
                                   </button>
                                   <div id="separator"></div>
                                   <button type="button" id="exit" disabled>
                                      <img src="images/presenterscreen-ButtonExitPresenterNormal.png">
-                                     <label>Exit</label>
+                                     <label>${labels[10]}</label>
                                   </button>
                                 </div>
                                 <footer>
