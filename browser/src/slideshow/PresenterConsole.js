@@ -413,6 +413,8 @@ class PresenterConsole {
 				this._proxyPresenter.close();
 				break;
 			case 'help':
+				// TODO. add help.collaboraonline.com
+				window.open('https://collaboraonline.com', '_blank');
 				break;
 			case 'notes':
 				this._onShowNotes();
