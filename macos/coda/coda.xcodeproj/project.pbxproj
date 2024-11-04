@@ -328,6 +328,7 @@
 				BECC4BA72CBD3FA300A120B3 /* Sources */,
 				BECC4BA82CBD3FA300A120B3 /* Frameworks */,
 				BECC4BA92CBD3FA300A120B3 /* Resources */,
+				BEE076602CDA3024004111EF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -466,6 +467,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BEE076602CDA3024004111EF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nLO_PATH=/Users/kendy/Projects/lo/core/instdir/CollaboraOffice.app\nrsync -a $LO_PATH/Contents/ ${CONFIGURATION_BUILD_DIR}/${TARGET_NAME}.app/Contents/lokit/\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BECC4BA72CBD3FA300A120B3 /* Sources */ = {
@@ -718,6 +740,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J4FQ687VJK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -748,6 +771,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J4FQ687VJK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
