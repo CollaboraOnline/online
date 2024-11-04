@@ -40,7 +40,7 @@ COOLWSD *coolwsd = nullptr;
     return sharedInstance;
 }
 
-- (void) startServer {
+- (void)startServer {
     // Initialize logging
     Log::initialize("Mobile", "trace", false, false, {});
     Util::setThreadName("main");
@@ -72,18 +72,18 @@ COOLWSD *coolwsd = nullptr;
     }).detach();
 }
 
-- (void) stopServer {
+- (void)stopServer {
     if (coolwsd) {
         delete coolwsd;
         coolwsd = nullptr;
     }
 }
 
-- (void)handleHULLOWithDocumentURL:(NSURL *)documentURL appDocId:(NSInteger)appDocId {
+- (void)handleHULLOWithDocument:(CODocument *)document {
     // Contact the permanently (during app lifetime) listening COOLWSD server
     // "public" socket
     assert(coolwsd_server_socket_fd != -1);
-    int rc = fakeSocketConnect(self.document->fakeClientFd, coolwsd_server_socket_fd);
+    int rc = fakeSocketConnect(document->fakeClientFd, coolwsd_server_socket_fd);
     assert(rc != -1);
 
     // Create a socket pair to notify the below thread when the document has been closed
@@ -95,7 +95,7 @@ COOLWSD *coolwsd = nullptr;
                        Util::setThreadName("app2js");
                        while (true) {
                            struct pollfd p[2];
-                           p[0].fd = self.document->fakeClientFd;
+                           p[0].fd = document->fakeClientFd;
                            p[0].events = POLLIN;
                            p[1].fd = self->closeNotificationPipeForForwardingThread[1];
                            p[1].events = POLLIN;
@@ -111,12 +111,12 @@ COOLWSD *coolwsd = nullptr;
 
                                    // Close our end of the fake socket connection to the
                                    // ClientSession thread, so that it terminates
-                                   fakeSocketClose(self.document->fakeClientFd);
+                                   fakeSocketClose(document->fakeClientFd);
 
                                    return;
                                }
                                if (p[0].revents == POLLIN) {
-                                   size_t n = fakeSocketAvailableDataLength(self.document->fakeClientFd);
+                                   size_t n = fakeSocketAvailableDataLength(document->fakeClientFd);
                                    // I don't want to check for n being -1 here, even if
                                    // that will lead to a crash (std::length_error from the
                                    // below std::vector constructor), as n being -1 is a
@@ -126,8 +126,8 @@ COOLWSD *coolwsd = nullptr;
                                    if (n == 0)
                                        return;
                                    std::vector<char> buf(n);
-                                   n = fakeSocketRead(self.document->fakeClientFd, buf.data(), n);
-                                   [self.document send2JS:buf.data() length:n];
+                                   n = fakeSocketRead(document->fakeClientFd, buf.data(), n);
+                                   [document send2JS:buf.data() length:n];
                                }
                            }
                            else
@@ -138,31 +138,31 @@ COOLWSD *coolwsd = nullptr;
 
     // First we simply send the Online C++ parts the URL and the appDocId. This corresponds
     // to the GET request with Upgrade to WebSocket.
-    std::string url([[self.document.fileURL absoluteString] UTF8String]);
+    std::string url([[document.fileURL absoluteString] UTF8String]);
     struct pollfd p;
-    p.fd = self.document->fakeClientFd;
+    p.fd = document->fakeClientFd;
     p.events = POLLOUT;
     fakeSocketPoll(&p, 1, -1);
 
     // This is read in the iOS-specific code in ClientRequestDispatcher::handleIncomingMessage() in COOLWSD.cpp
-    std::string message(url + " " + std::to_string(self.document.appDocId));
-    fakeSocketWrite(self.document->fakeClientFd, message.c_str(), message.size());
+    std::string message(url + " " + std::to_string(document.appDocId));
+    fakeSocketWrite(document->fakeClientFd, message.c_str(), message.size());
 }
 
 /**
  * Convert NSString to std::string & call the C++ version of the logging function.
  */
-+ (void) LOG_DBG:(NSString *)message {
++ (void)LOG_DBG:(NSString *)message {
     std::string stdMessage = [message UTF8String];
     LOG_DBG(stdMessage);
 }
 
-+ (void) LOG_ERR:(NSString *)message {
++ (void)LOG_ERR:(NSString *)message {
     std::string stdMessage = [message UTF8String];
     LOG_ERR(stdMessage);
 }
 
-+ (void) LOG_TRC:(NSString *)message {
++ (void)LOG_TRC:(NSString *)message {
     std::string stdMessage = [message UTF8String];
     LOG_TRC(stdMessage);
 }

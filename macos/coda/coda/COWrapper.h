@@ -19,15 +19,14 @@
 }
 
 @property (class, nonatomic, readonly) COWrapper *shared;
-@property (strong) CODocument *document;
 
-- (void) startServer;
-- (void) stopServer;
+- (void)startServer;
+- (void)stopServer;
 
-- (void)handleHULLOWithDocumentURL:(NSURL *)documentURL appDocId:(unsigned)appDocId;
+- (void)handleHULLOWithDocument:(CODocument *)document;
 
-+ (void) LOG_DBG:(NSString *)message NS_SWIFT_NAME(LOG_DBG(_:));
-+ (void) LOG_ERR:(NSString *)message NS_SWIFT_NAME(LOG_ERR(_:));
-+ (void) LOG_TRC:(NSString *)message NS_SWIFT_NAME(LOG_TRC(_:));
++ (void)LOG_DBG:(NSString *)message NS_SWIFT_NAME(LOG_DBG(_:));
++ (void)LOG_ERR:(NSString *)message NS_SWIFT_NAME(LOG_ERR(_:));
++ (void)LOG_TRC:(NSString *)message NS_SWIFT_NAME(LOG_TRC(_:));
 
 @end

@@ -69,7 +69,8 @@ static std::atomic<unsigned> appDocIdCounter(1);
                              ];
 
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:components.URL];
-    [self.webView loadFileRequest:request allowingReadAccessToURL:components.URL];
+    NSURL *urlDir = [url URLByDeletingLastPathComponent];
+    [self.webView loadFileRequest:request allowingReadAccessToURL:urlDir];
 
     return self;
 }
