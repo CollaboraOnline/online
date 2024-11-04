@@ -15,4 +15,13 @@ int coolwsd_server_socket_fd = -1;
 
 LibreOfficeKit *lo_kit;
 
+std::string getBundlePath() {
+    static std::string bundlePath;
+    if (bundlePath.empty()) {
+        NSString *path = [[NSBundle mainBundle] bundlePath];
+        bundlePath = std::string([path UTF8String]);
+    }
+    return bundlePath;
+}
+
 // vim:set shiftwidth=4 softtabstop=4 expandtab:

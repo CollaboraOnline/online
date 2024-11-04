@@ -474,6 +474,19 @@ class IOSAppInitializer extends MobileAppInitializer {
 	}
 }
 
+class MacOSAppInitializer extends MobileAppInitializer {
+	constructor() {
+		super();
+
+		window.ThisIsTheMacOSApp = true;
+		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lok.postMessage(msg); };
+		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
+		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };
+
+		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
+	}
+}
+
 class GTKAppInitializer extends MobileAppInitializer {
 	constructor() {
 		super();
@@ -541,6 +554,8 @@ function getInitializerClass() {
 
 			if (osType === "IOS")
 				return new IOSAppInitializer();
+			else if (osType === "MACOS")
+				return new MacOSAppInitializer();
 			else if (osType === "GTK")
 				return new GTKAppInitializer();
 			else if (osType === "WINDOWS")
