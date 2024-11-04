@@ -84,8 +84,12 @@ namespace SigUtil
     /// Signal log number
     void signalLogNumber(std::size_t num, int base = 10);
 
+#endif // !MOBILEAPP
+
     /// Returns the name of the signal.
     const char* signalName(int signo);
+
+#if !MOBILEAPP
 
     /// Register a wakeup function when changing
 

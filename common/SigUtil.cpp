@@ -232,6 +232,7 @@ void requestShutdown()
         signalLog(buf + i + 1);
     }
 
+#endif // !MOBILEAPP
 
     const char *signalName(const int signo)
     {
@@ -294,6 +295,8 @@ void requestShutdown()
         }
         // LCOV_EXCL_STOP Coverage for these is not very useful.
     }
+
+#if !MOBILEAPP
 
     static
     void handleTerminationSignal(const int signal)
