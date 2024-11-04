@@ -305,6 +305,7 @@ class PresenterConsole {
 		elem.style.height = '80vh';
 		elem.style.width = '100%';
 		this._slides.appendChild(elem);
+		this._slides.addEventListener('click', L.bind(this._onClickSlides, this));
 		elem = this._proxyPresenter.document.createElement('div');
 		elem.style.textAlign = 'center';
 		button = this._proxyPresenter.document.createElement('button');
@@ -459,12 +460,31 @@ class PresenterConsole {
 
 	_onHideSlides(e) {
 		let elem = this._proxyPresenter.document.querySelector('#main-content');
+		let selection = this._proxyPresenter.document.getSelection();
+		if (selection && selection.rangeCount > 1) {
+			let range = selection.getRangeAt(0);
+			if (range) {
+				this._presenter.getNavigator().displaySlide(range.startOffset, true);
+			}
+		}
+
 		this._slides.remove();
 		elem.appendChild(this._first);
 		elem.appendChild(this._second);
 
 		elem = this._proxyPresenter.document.querySelector('#slides');
 		elem.disable = false;
+		e.stopPropagation();
+	}
+
+	_onClickSlides(e) {
+		if (e.target && e.target.localName === 'img') {
+			this._proxyPresenter.document.getSelection().empty();
+			let range = document.createRange();
+			range.selectNode(e.target);
+			this._proxyPresenter.document.getSelection().addRange(range);
+		}
+
 		e.stopPropagation();
 	}
 
