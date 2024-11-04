@@ -1330,7 +1330,7 @@ AS_IF([test -n "$LOKIT_PATH"],
       [CPPFLAGS="$CPPFLAGS -I${LOKIT_PATH}"])
 lokit_msg="$LOKIT_PATH"
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_MACOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
       [AC_MSG_CHECKING([for LibreOffice path])
       if test -n "$with_lo_path"; then
           # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
@@ -1446,8 +1446,8 @@ AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
 mobile_app=
 ENABLE_MOBILEAPP=
 MOBILEAPP=0
-AC_MSG_CHECKING([if this is a mobile app])
-if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_windowsapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
+AC_MSG_CHECKING([whether this is a mobile app])
+if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_macosapp" = "yes" -o "$enable_windowsapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
      AC_MSG_RESULT([yes])
      mobile_app=true;
      MOBILEAPP=1
@@ -2044,7 +2044,7 @@ AC_CONFIG_FILES([Makefile
 
 # maintain config.h.in and config_version.h.in manually
 # config.h.in is for configurable variables that are stable if configure parameters are unchanged
-if test "$enable_iosapp" != "yes" -a "$enable_macosapp" != "yes" -a "$enable_windowsapp" != "yes"; then
+if test "$enable_iosapp" != "yes" -a "$enable_windowsapp" != "yes"; then
     AC_CONFIG_HEADERS([config.h])
 fi
 
@@ -2058,8 +2058,7 @@ if test "$enable_iosapp" = "yes"; then
 fi
 
 if test "$enable_macosapp" = "yes"; then
-    AC_CONFIG_FILES([macos/coda/config.h
-                 macos/coda/Config.xcconfig])
+    AC_CONFIG_FILES([macos/coda/Config.xcconfig])
 fi
 
 if test "$enable_windowsapp" = "yes"; then
