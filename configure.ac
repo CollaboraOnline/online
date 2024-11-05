@@ -320,6 +320,16 @@ AC_ARG_WITH([libpng-libs],
                            [Path to the "lib" directory with the libpng
                             libraries.  Not used on Android.]))
 
+AC_ARG_WITH([zlib-includes],
+            AS_HELP_STRING([--with-zlib-includes=<path>],
+                           [Path to the "include" directory with the libpng
+                            headers. Only used on Windows.]))
+
+AC_ARG_WITH([zlib-libs],
+            AS_HELP_STRING([--with-zlib-libs=<path>],
+                           [Path to the "lib" directory with the zlib
+                            libraries. Only used on Windows.]))
+
 AC_ARG_WITH([cppunit-includes],
             AS_HELP_STRING([--with-cppunit-includes=<path>],
                            [Path to the "include" directory with the Cppunit headers]))
@@ -723,7 +733,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_w
    fi
 
    if test "$enable_windowsapp" = "yes" ; then
-      LOBUILDDIR_WINDOWS=`cd "$LOBUILDDIR" && cmd.exe /c cd | tr '\\' '/' | tr -d '\r'`
+      LOBUILDDIR_WINDOWS=`cd "$LOBUILDDIR" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
    fi
 
    AC_MSG_CHECKING([for Poco include directory to build against])
@@ -758,7 +768,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_w
    CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_X86_64)
 
    if test "$enable_windowsapp" = "yes" ; then
-      POCOINCLUDE_WINDOWS=`cd "$POCOINCLUDE" && cmd.exe /c cd | tr '\\' '/' | tr -d '\r'`
+      POCOINCLUDE_WINDOWS=`cd "$POCOINCLUDE" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
    fi
 
    AC_MSG_CHECKING([for Poco lib directory to build against])
@@ -797,14 +807,14 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_w
    fi
 
    if test "$enable_windowsapp" = "yes" ; then
-      POCOLIB_WINDOWS=`cd "$POCOLIB" && cmd.exe /c cd | tr '\\' '/' | tr -d '\r'`
+      POCOLIB_WINDOWS=`cd "$POCOLIB" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
    fi
 
    if test "$ENABLE_DEBUG" = "true" ; then
        POCODEBUG=d
    fi
 
-   AC_MSG_CHECKING([for zstd directories to build against])
+   AC_MSG_CHECKING([for zstd include directory to build against])
    if test -z "$with_zstd_includes"; then
       AC_MSG_ERROR([You MUST use the --with-zstd-includes option when configuring the mobile or Windows app build tree.])
    fi
@@ -839,6 +849,12 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_w
    CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_X64)
    CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_X86_64)
 
+   if test "$enable_windowsapp" = "yes" ; then
+      ZSTDINCLUDE_WINDOWS=`cd "$ZSTDINCLUDE" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+   fi
+
+   AC_MSG_CHECKING([for zstd lib directory to build against])
+
    ZSTDLIB="$with_zstd_libs"
    if test "$enable_androidapp" = "yes" ; then
       if echo "$ZSTDLIB" | grep -qs ':' ; then
@@ -867,6 +883,10 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_w
       CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X64)
       CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86_64)
    fi
+
+   if test "$enable_windowsapp" = "yes" ; then
+     ZSTDLIB_WINDOWS=`cd "$ZSTDLIB" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+   fi
 fi
 
 AC_SUBST(LOSOURCEDIR)
@@ -892,16 +912,39 @@ AC_SUBST(ZSTDINCLUDE)
 AC_SUBST(ZSTDINCLUDE_ARM64_V8A)
 AC_SUBST(ZSTDINCLUDE_X86)
 AC_SUBST(ZSTDINCLUDE_X86_64)
+AC_SUBST(ZSTDINCLUDE_WINDOWS)
 AC_SUBST(ZSTDLIB)
 AC_SUBST(ZSTDLIB_ARM64_V8A)
 AC_SUBST(ZSTDLIB_X86)
 AC_SUBST(ZSTDLIB_X86_64)
+AC_SUBST(ZSTDLIB_WINDOWS)
 AC_SUBST([CORE_VERSION_HASH])
 
 AC_DEFINE_UNQUOTED([CORE_VERSION_HASH],[["$CORE_VERSION_HASH"]],[LibreOffice core git hash if present])
 
 LIBPNG_INCLUDES="$with_libpng_includes"
 LIBPNG_LIBS="$with_libpng_libs"
+
+if test "$enable_windowsapp" = "yes" ; then
+   LIBPNG_INCLUDES_WINDOWS=`cd "$LIBPNG_INCLUDES" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+   LIBPNG_LIBS_WINDOWS=`cd "$LIBPNG_LIBS" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+fi
+
+AC_SUBST(LIBPNG_INCLUDES)
+AC_SUBST(LIBPNG_INCLUDES_WINDOWS)
+AC_SUBST(LIBPNG_LIBS)
+AC_SUBST(LIBPNG_LIBS_WINDOWS)
+
+ZLIB_INCLUDES="$with_zlib_includes"
+ZLIB_LIBS="$with_zlib_libs"
+
+if test "$enable_windowsapp" = "yes" ; then
+   ZLIB_INCLUDES_WINDOWS=`cd "$ZLIB_INCLUDES" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+   ZLIB_LIBS_WINDOWS=`cd "$ZLIB_LIBS" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+fi
+
+AC_SUBST(ZLIB_INCLUDES_WINDOWS)
+AC_SUBST(ZLIB_LIBS_WINDOWS)
 
 if test "$enable_iosapp" != yes -a "$enable_windowsapp" != yes -a "$enable_androidapp" != yes; then
    LOKIT_PATH=`readlink -f $with_lokit_path`
@@ -919,8 +962,7 @@ if test "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes"; then
       LOKIT_PATH=`readlink -f $LOBUILDDIR/include`
    fi
 fi
-AC_SUBST(LIBPNG_INCLUDES)
-AC_SUBST(LIBPNG_LIBS)
+
 AC_SUBST(LOKIT_PATH)
 
 ENABLE_ANDROIDAPP=
