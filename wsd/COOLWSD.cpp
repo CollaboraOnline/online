@@ -2231,14 +2231,11 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     // Load default configuration files, with name independent
     // of Poco's view of app-name, from local file if present.
+    // Fallback to the COOLWSD_CONFIGDIR or --config-file path.
     Poco::Path configPath("coolwsd.xml");
-    if (Poco::Util::Application::findFile(configPath))
-        loadConfiguration(configPath.toString(), PRIO_DEFAULT);
-    else
-    {
-        // Fallback to the COOLWSD_CONFIGDIR or --config-file path.
-        loadConfiguration(ConfigFile, PRIO_DEFAULT);
-    }
+    const std::string configFilePath =
+        Poco::Util::Application::findFile(configPath) ? configPath.toString() : ConfigFile;
+    loadConfiguration(configFilePath, PRIO_DEFAULT);
 
     // Load extra ("plug-in") configuration files, if present
     Poco::File dir(ConfigDir);
