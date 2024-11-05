@@ -918,6 +918,13 @@ class SlideShowHandler {
 		return this.theMetaPres.getSlideInfoByIndex(nSlideIndex);
 	}
 
+	getAnimatedLayerInfo(
+		slideHash: string,
+		targetElement: string,
+	): AnimatedShapeInfo {
+		return this.slideCompositor.getAnimatedLayerInfo(slideHash, targetElement);
+	}
+
 	private isMipMapsEnable(transitionFilterInfo: TransitionFilterInfo): boolean {
 		return (
 			transitionFilterInfo.transitionType === TransitionType.MISCSHAPEWIPE &&
