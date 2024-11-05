@@ -3358,7 +3358,7 @@ void COOLWSD::processFetchUpdate(SocketPoll& poll)
 #if ENABLE_DEBUG
 std::string COOLWSD::getServerURL()
 {
-    return getServiceURI(COOLWSD_TEST_COOL_UI);
+    return getServiceURI("");
 }
 #endif
 #endif
