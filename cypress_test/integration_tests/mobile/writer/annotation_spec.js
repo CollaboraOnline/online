@@ -92,7 +92,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		openCommentDialog();
 		cy.cGet('#input-modal-input').type('some text @Ale');
 		cy.cGet('#mentionPopupList').should('be.visible');
-		cy.cGet('#mentionPopupList li.mobile-wizard:nth-child(1)').click();
+		cy.cGet('#mentionPopupList.mobile-wizard > :nth-child(1)').click();
 
 		cy.cGet('#input-modal-input a').should('exist');
 		cy.cGet('#input-modal-input a').should('have.text', '@Alexandra');
@@ -118,7 +118,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		cy.cGet('#input-modal-input').type('{end}');
 		cy.cGet('#input-modal-input').type(' @Ale');
 		cy.cGet('#mentionPopupList').should('be.visible');
-		cy.cGet('#mentionPopupList li.mobile-wizard:nth-child(1)').click();
+		cy.cGet('#mentionPopupList.mobile-wizard > :nth-child(1)').click();
 
 		cy.cGet('#input-modal-input a').should('exist');
 		cy.cGet('#input-modal-input a').should('have.text', '@Alexandra');
@@ -146,7 +146,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		cy.cGet('#input-modal-input').type('reply @Ale');
 
 		cy.cGet('#mentionPopupList').should('be.visible');
-		cy.cGet('#mentionPopupList li.mobile-wizard:nth-child(1)').click();
+		cy.cGet('#mentionPopupList.mobile-wizard > :nth-child(1)').click();
 
 		cy.cGet('#input-modal-input a').should('exist');
 		cy.cGet('#input-modal-input a').should('have.text', '@Alexandra');
@@ -167,7 +167,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		openCommentDialog();
 		cy.cGet('#input-modal-input').type('some text @Ale');
 		cy.cGet('#mentionPopupList').should('be.visible');
-		cy.cGet('#mentionPopupList li.mobile-wizard:nth-child(1)').should('have.text', 'Alexandra');
+		cy.cGet('#mentionPopupList.mobile-wizard > :nth-child(1)').should('have.text', 'Alexandra');
 
 		cy.cGet('#input-modal-input').type('{backspace}{backspace}{backspace}{backspace}');
 		cy.cGet('#mentionPopupList').should('be.not.visible');
