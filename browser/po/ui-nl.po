@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-31 22:53+0100\n"
-"PO-Revision-Date: 2024-10-24 16:36+0000\n"
+"PO-Revision-Date: 2024-11-01 07:36+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -588,7 +588,7 @@ msgstr "Downloaden mislukt"
 
 #: src/control/Control.DownloadProgress.js:307
 msgid ", cluster configuration error: mis-matching serverid"
-msgstr ""
+msgstr ", fout in clusterconfiguratie: serverid komt niet overeen"
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
