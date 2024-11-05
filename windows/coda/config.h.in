@@ -145,6 +145,9 @@ typedef int pid_t;
 #define lstat(f,s) stat(f,s)
 #define link(a, b) -1
 
+#define localtime_r(time_t_ptr, struct_tm_ptr) (localtime_s(struct_tm_ptr, time_t_ptr), struct_tm_ptr)
+#define gmtime_r(time_t_ptr, struct_tm_ptr) (gmtime_s(struct_tm_ptr, time_t_ptr), struct_tm_ptr)
+
 // MSVC's _putenv_s doesn't do removal of environment variables, but we don't need that anyway
 #define setenv(variable, value, one) _putenv_s(variable, value)
 
