@@ -503,6 +503,11 @@ namespace Log
 #if defined(IOS) || defined(__FreeBSD__)
         // Don't bother with the "Source" which would be just "Mobile" always and non-informative as
         // there is just one process in the app anyway.
+
+        // FIXME: Not sure why FreeBSD is here, too. Surely on FreeBSD COOL runs just like on Linux,
+        // as a set of separate processes, so it would be useful to see from which process a log
+        // line is?
+
         char *pos = buffer;
 
         // Don't bother with the thread identifier either. We output the thread name which is much
