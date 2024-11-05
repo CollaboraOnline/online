@@ -538,6 +538,7 @@ ul.ui-treeview > * {
 	/* grid-column: '1 / ' + (this._columns + 1) - set inside JS */
 	justify-content: stretch;
 	align-items: start;
+	white-space: nowrap;
 }
 
 .ui-treeview-entry > div.ui-treeview-expander-column {
@@ -1245,10 +1246,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* hide radio in filter by color */
-.jsdialog.autofilter #background tr th:nth-of-type(1),
-.jsdialog.autofilter #textcolor tr th:nth-of-type(1),
-.jsdialog.autofilter #background tr td:nth-of-type(1),
-.jsdialog.autofilter #textcolor tr td:nth-of-type(1) {
+.jsdialog.autofilter #background .ui-treeview-entry div:nth-of-type(1),
+.jsdialog.autofilter #textcolor .ui-treeview-entry div:nth-of-type(1),
+.jsdialog.autofilter #background > div:nth-of-type(1),
+.jsdialog.autofilter #textcolor > div:nth-of-type(1) {
 	display: none;
 }
 
