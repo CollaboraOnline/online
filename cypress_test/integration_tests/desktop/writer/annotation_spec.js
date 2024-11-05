@@ -332,7 +332,7 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		
 		cy.cGet('.cool-annotation').find('#annotation-modify-textarea-new').type(' @Ale');
 		cy.cGet('#mentionPopup').should('be.visible');
-		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').click();
+		cy.cGet('#mentionPopupList .ui-treeview-entry:nth-child(1)').click();
 		
 		cy.cGet('#annotation-modify-textarea-new a').should('exist');
 		cy.cGet('#annotation-modify-textarea-new a').should('have.text', '@Alexandra');
@@ -359,7 +359,7 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#annotation-modify-textarea-1').type('{end}');
 		cy.cGet('#annotation-modify-textarea-1').type(' @Ale');
 		cy.cGet('#mentionPopup').should('be.visible');
-		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').click();
+		cy.cGet('#mentionPopupList .ui-treeview-entry:nth-child(1)').click();
 
 		cy.cGet('#annotation-modify-textarea-1 a').should('exist');
 		cy.cGet('#annotation-modify-textarea-1 a').should('have.text', '@Alexandra');
@@ -386,7 +386,7 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#annotation-reply-textarea-1').type('some reply text @Ale');
 
 		cy.cGet('#mentionPopup').should('be.visible');
-		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').click();
+		cy.cGet('#mentionPopupList .ui-treeview-entry:nth-child(1)').click();
 
 		cy.cGet('#annotation-reply-textarea-1 a').should('exist');
 		cy.cGet('#annotation-reply-textarea-1 a').should('have.text', '@Alexandra');
@@ -408,7 +408,7 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#annotation-reply-textarea-1').type('some reply text @Ale');
 
 		cy.cGet('#mentionPopup').should('be.visible');
-		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').type('{enter}');
+		cy.cGet('#mentionPopupList .ui-treeview-entry:nth-child(1)').type('{enter}');
 
 		cy.cGet('#annotation-reply-textarea-1 a').should('exist');
 		cy.cGet('#annotation-reply-textarea-1 a').should('have.text', '@Alexandra');
@@ -423,7 +423,7 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#annotation-reply-textarea-2').type('some reply to reply text @Ale');
 
 		cy.cGet('#mentionPopup').should('be.visible');
-		cy.cGet('#mentionPopupList li.jsdialog:nth-child(1)').type('{enter}');
+		cy.cGet('#mentionPopupList .ui-treeview-entry:nth-child(1)').type('{enter}');
 
 		cy.cGet('#annotation-reply-textarea-2 a').should('exist');
 		cy.cGet('#annotation-reply-textarea-2 a').should('have.text', '@Alexandra');

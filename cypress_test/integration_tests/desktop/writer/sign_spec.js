@@ -17,7 +17,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sign operations.', functio
 		// This element `<button#sign.ui-pushbutton.jsdialog.hidden>` is not visible because it has CSS property: `display: none`
 		cy.cGet('#DigitalSignaturesDialog button#sign').click();
 		// Click on the only signature, not on the header:
-		cy.cGet('#SelectCertificateDialog table#signatures tr.ui-listview-entry').click();
+		cy.cGet('#SelectCertificateDialog #signatures .ui-treeview-entry > div:first-child').click();
 		cy.cGet('#SelectCertificateDialog button#ok').click();
 		cy.cGet('#DigitalSignaturesDialog button#close').click();
 

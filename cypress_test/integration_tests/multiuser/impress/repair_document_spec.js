@@ -32,7 +32,7 @@ describe.skip('Repair Document', function() {
 		cy.cGet('#DocumentRepairDialog').should('exist');
 		cy.cGet('#versions').should('exist');
 
-		cy.cGet('body').contains('#versions tbody .ui-listview-entry td','Typing: “World”').click();
+		cy.cGet('body').contains('#versions .ui-treeview-entry div','Typing: “World”').click();
 		cy.cGet('#ok.ui-pushbutton.jsdialog').should('exist');
 		cy.cGet('#ok.ui-pushbutton.jsdialog').click();
 		helper.typeIntoDocument('{ctrl}{a}');

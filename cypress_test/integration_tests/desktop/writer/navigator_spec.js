@@ -5,6 +5,17 @@ var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 
+	function expandSecion(name) {
+		cy.cGet('#contenttree')
+			.contains('.jsdialog.sidebar.ui-treeview-cell-text', name)
+			.parent() // .ui-treeview-cell-text
+			.parent() // .ui-treeview-cell
+			.parent() // div - column
+			.parent() // .ui-treeview-entry
+			.find('.ui-treeview-expander-column')
+			.click();
+	}
+
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/navigator.odt');
 
@@ -18,9 +29,9 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 	it('Jump to element. Navigator -> Document', function() {
 		// Expand Tables, Frames, Images
 		// Note click()/dblclick() scrolls the contenttree even if it would be not needed to click
-		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Tables').parent().prev().click();
-		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Frames').parent().prev().click();
-		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Images').parent().prev().click();
+		expandSecion('Tables');
+		expandSecion('Frames');
+		expandSecion('Images');
 
 		//Scroll back to Top
 		cy.cGet('#contenttree').scrollTo(0,0);
@@ -54,9 +65,9 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 	it('Jump to element even when cursor not visible', function() {
 		// Expand Tables, Frames, Images
 		// Note click()/dblclick() scrolls the contenttree even if it would be not needed to click
-		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Tables').parent().prev().click();
-		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Frames').parent().prev().click();
-		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Images').parent().prev().click();
+		expandSecion('Tables');
+		expandSecion('Frames');
+		expandSecion('Images');
 
 		//Scroll back to Top
 		cy.cGet('#contenttree').scrollTo(0,0);

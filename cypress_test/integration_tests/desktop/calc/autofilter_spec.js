@@ -24,8 +24,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		//filter by pass
 		calcHelper.openAutoFilterMenu(true);
 		cy.cGet('.autofilter .vertical').should('be.visible');
-		cy.cGet('.autofilter .ui-treeview-checkbox').eq(0).uncheck();
-		cy.cGet('.autofilter .ui-treeview-checkbox').eq(1).uncheck();
+		cy.cGet('.autofilter  .ui-treeview-entry-checkbox').eq(0).uncheck();
+		cy.cGet('.autofilter  .ui-treeview-entry-checkbox').eq(1).uncheck();
 		cy.cGet('.autofilter .ui-button-box-right #ok').click();
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
@@ -62,7 +62,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 	it('Filter empty/non-empty cells', function() {
 		//empty
 		calcHelper.openAutoFilterMenu(true);
-		cy.cGet('#check_list_box > tbody > ul > li:nth-child(1) > span > input').click();
+		cy.cGet('#check_list_box .ui-treeview-entry:nth-child(1) > div > input').click();
 		cy.cGet('#ok').click();
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
@@ -103,7 +103,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		cy.cGet('body').contains('.autofilter', 'Filter by Color').click();
 
 		// Find the table element with ID "background"
-		cy.cGet('table#background')
+		cy.cGet('#background')
 		.find('input') // Find all input elements inside the table
 		.each(($input) => { // Iterate through each input element
 			// Assert that each input is of type radio
@@ -111,7 +111,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		});
 
 		// Find the table element with ID "background"
-		cy.cGet('table#background')
+		cy.cGet('#background')
 		.find('img') // Find all input elements inside the table
 		.first() // Select the first input element
 		.click(); // Click on the first input element
@@ -122,7 +122,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 	it('Disable already filtered', function () {
 		// Filter row with ['Test 4', ''] on the first column
 		calcHelper.openAutoFilterMenu();
-		cy.cGet('#check_list_box > tbody > ul > li:nth-child(4) > span > input').click();
+		cy.cGet('#check_list_box .ui-treeview-entry:nth-child(4) > div > input').click();
 		cy.cGet('#ok').click();
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
@@ -130,8 +130,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		// Open autofilter menu on the second column
 		calcHelper.openAutoFilterMenu(true);
 		// Check that '(empty)' option is disabled
-		cy.cGet('#check_list_box > tbody > ul > li:nth-child(3) > span').should('contain.text', '(empty)');
-		cy.cGet('#check_list_box > tbody > ul > li:nth-child(3) > span > input').should('be.disabled');
+		cy.cGet('#check_list_box .ui-treeview-entry:nth-child(3) > div').should('contain.text', '(empty)');
+		cy.cGet('#check_list_box .ui-treeview-entry:nth-child(3) > div > input').should('be.disabled');
 
 	});
 });

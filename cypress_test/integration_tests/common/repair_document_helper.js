@@ -37,7 +37,7 @@ function rollbackPastChange(selector, mobile = false) {
 	const versions = cy.cGet('#versions');
 
 	versions
-		.contains('.ui-listview-entry', selector)
+		.contains('.ui-treeview-entry', selector)
 		.click();
 
 	if (mobile) {
