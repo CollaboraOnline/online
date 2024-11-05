@@ -11,6 +11,10 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		cy.cGet('#Navigator-button').click();
 	});
 
+	it('Navigator visual test', function() {
+		cy.cGet('#contenttree').compareSnapshot('navigator_writer', 0.05);
+	});
+
 	it('Jump to element. Navigator -> Document', function() {
 		// Expand Tables, Frames, Images
 		// Note click()/dblclick() scrolls the contenttree even if it would be not needed to click
