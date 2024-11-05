@@ -1090,63 +1090,64 @@ class TreeViewControl {
 				tr.setAttribute('aria-expanded', false);
 			}
 
+			var singleClick = this._singleClickActivate;
+
 			// row sub-elements
 			for (let i in rowElements) {
 				let element = rowElements[i];
 
 				// setup properties
 				element.setAttribute('role', 'gridcell');
+			}
+		}
 
-				// setup callbacks
-				var singleClick = this._singleClickActivate;
-				var clickFunction = this.createClickFunction(tr, selectionElement,
-					true, singleClick, builder, treeViewData, entry);
-				var doubleClickFunction = this.createClickFunction(tr, selectionElement,
-					false, true, builder, treeViewData, entry);
+		// setup callbacks
+		var clickFunction = this.createClickFunction(tr, selectionElement,
+			true, singleClick, builder, treeViewData, entry);
+		var doubleClickFunction = this.createClickFunction(tr, selectionElement,
+			false, true, builder, treeViewData, entry);
 
-				element.addEventListener('click', clickFunction);
+		tr.addEventListener('click', clickFunction);
 
-				if (!singleClick) {
-					if (window.ThisIsTheiOSApp) {
-						// TODO: remove this hack
-						element.addEventListener('click', () => {
-							if (L.DomUtil.hasClass(tr, 'disabled'))
-								return;
+		if (!singleClick) {
+			if (window.ThisIsTheiOSApp) {
+				// TODO: remove this hack
+				tr.addEventListener('click', () => {
+					if (L.DomUtil.hasClass(tr, 'disabled'))
+						return;
 
-							if (entry.row == lastClickHelperRow && treeViewData.id == lastClickHelperId)
-								doubleClickFunction();
-							else {
-								lastClickHelperRow = entry.row;
-								lastClickHelperId = treeViewData.id;
-								setTimeout(() => {
-									lastClickHelperRow = -1;
-								}, 300);
-							}
-						});
-						// TODO: remove this hack
-					} else {
-						$(element).dblclick(doubleClickFunction);
+					if (entry.row == lastClickHelperRow && treeViewData.id == lastClickHelperId)
+						doubleClickFunction();
+					else {
+						lastClickHelperRow = entry.row;
+						lastClickHelperId = treeViewData.id;
+						setTimeout(() => {
+							lastClickHelperRow = -1;
+						}, 300);
 					}
-				}
-
-				// TODO: drag & drop
+				});
+				// TODO: remove this hack
+			} else {
+				$(tr).dblclick(doubleClickFunction);
 			}
+		}
 
-			const toggleFunction =
-					() => { this.toggleEntry(tr, treeViewData, entry, builder); };
-			const expandFunction =
-					() => { this.expandEntry(tr, treeViewData, entry, builder); };
+		// TODO: drag & drop
 
-			if (entry.children) {
-				if (entry.ondemand)
-					L.DomEvent.on(expander, 'click', expandFunction);
-				else
-					$(expander).click(toggleFunction);
+		const toggleFunction =
+				() => { this.toggleEntry(tr, treeViewData, entry, builder); };
+		const expandFunction =
+				() => { this.expandEntry(tr, treeViewData, entry, builder); };
 
-				// block expand/collapse on checkbox
-				if (entry.state)
-					$(selectionElement).click(toggleFunction);
-			}
+		if (entry.children) {
+			if (entry.ondemand)
+				L.DomEvent.on(expander, 'click', expandFunction);
+			else
+				$(expander).click(toggleFunction);
+
+			// block expand/collapse on checkbox
+			if (entry.state)
+				$(selectionElement).click(toggleFunction);
 		}
 	}
 
@@ -1189,9 +1190,11 @@ class TreeViewControl {
 
 	createClickFunction(parentContainer, checkbox, select, activate,
 		builder, treeViewData, entry) {
-		return () => {
-			if (L.DomUtil.hasClass(parentContainer, 'disabled'))
+		return (e) => {
+			if (L.DomUtil.hasClass(parentContainer, 'disabled')) {
+				e.preventDefault();
 				return;
+			}
 
 			this._container.querySelectorAll('div.selected')
 				.forEach((item) => { this.unselectEntry(item); });
@@ -1207,6 +1210,8 @@ class TreeViewControl {
 
 			if (activate)
 				builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
+
+			e.preventDefault();
 		};
 	}
 }
@@ -1244,6 +1249,7 @@ class ComplexTableControl extends TreeViewControl {
 		this._hasState = TreeViewControl.hasState(data);
 		this._hasIcon = TreeViewControl.hasIcon(data);
 		this._isNavigator = this.isNavigator(data);
+		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
 
 		this._container._tbody = this._container;
 		this._container._thead = this._container;
