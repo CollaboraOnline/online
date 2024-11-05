@@ -872,12 +872,12 @@ class TreeViewControl {
 		return false;
 	}
 
-	static findEntryWithRow(entries, row) {
+	findEntryWithRow(entries, row) {
 		for (let i in entries) {
 			if (i == row)
 				return entries[i];
 			else if (entries[i].children) {
-				var found = TreeViewControl.findEntryWithRow(entries[i].children, row);
+				var found = this.findEntryWithRow(entries[i].children, row);
 				if (found)
 					return found;
 			}
@@ -886,15 +886,15 @@ class TreeViewControl {
 		return null;
 	}
 
-	static changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry) {
+	changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry) {
 		let foundEntry;
 		if (checkbox.checked) {
-			foundEntry = TreeViewControl.findEntryWithRow(treeViewData.entries, entry.row);
+			foundEntry = this.findEntryWithRow(treeViewData.entries, entry.row);
 			if (foundEntry)
 				foundEntry.state = true;
 			builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
 		} else {
-			foundEntry = TreeViewControl.findEntryWithRow(treeViewData.entries, entry.row);
+			foundEntry = this.findEntryWithRow(treeViewData.entries, entry.row);
 			if (foundEntry)
 				foundEntry.state = false;
 			builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
@@ -908,12 +908,6 @@ class TreeViewControl {
 
 		if (entry.state === 'true' || entry.state === true)
 			checkbox.checked = true;
-
-		if (treeViewData.enabled !== false && treeViewData.enabled !== 'false') {
-			$(checkbox).change(function() {
-				TreeViewControl.changeCheckboxStateOnClick(this, treeViewData, builder, entry);
-			});
-		}
 
 		return checkbox;
 	}
@@ -936,6 +930,11 @@ class TreeViewControl {
 			selectionElement = this.createRadioButton(parent, treeViewData, builder, entry);
 		} else {
 			selectionElement = this.createCheckbox(parent, treeViewData, builder, entry);
+		}
+		if (treeViewData.enabled !== false && treeViewData.enabled !== 'false') {
+			$(selectionElement).change(() => {
+				this.changeCheckboxStateOnClick(selectionElement, treeViewData, builder, entry);
+			});
 		}
 		return selectionElement;
 	}
@@ -1130,23 +1129,23 @@ class TreeViewControl {
 					}
 				}
 
-				const toggleFunction =
-						() => { this.toggleEntry(element, treeViewData, entry, builder); };
-				const expandFunction =
-						() => { this.expandEntry(element, treeViewData, entry, builder); };
-
-				if (entry.children) {
-					if (entry.ondemand)
-						L.DomEvent.on(expander, 'click', expandFunction);
-					else
-						$(expander).click(toggleFunction);
-
-					// block expand/collapse on checkbox
-					if (entry.state)
-						$(selectionElement).click(toggleFunction);
-				}
-
 				// TODO: drag & drop
+			}
+
+			const toggleFunction =
+					() => { this.toggleEntry(tr, treeViewData, entry, builder); };
+			const expandFunction =
+					() => { this.expandEntry(tr, treeViewData, entry, builder); };
+
+			if (entry.children) {
+				if (entry.ondemand)
+					L.DomEvent.on(expander, 'click', expandFunction);
+				else
+					$(expander).click(toggleFunction);
+
+				// block expand/collapse on checkbox
+				if (entry.state)
+					$(selectionElement).click(toggleFunction);
 			}
 		}
 	}
@@ -1188,34 +1187,6 @@ class TreeViewControl {
 			itemCheckbox.tabIndex = -1;
 	}
 
-	findEntryWithRow(entries, row) {
-		for (var i in entries) {
-			if (i == row)
-				return entries[i];
-			else if (entries[i].children) {
-				var found = this.findEntryWithRow(entries[i].children, row);
-				if (found)
-					return found;
-			}
-		}
-
-		return null;
-	}
-
-	changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry) {
-		if (checkbox.checked) {
-			var foundEntry = this.findEntryWithRow(treeViewData.entries, entry.row);
-			if (foundEntry)
-				foundEntry.state = true;
-			builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
-		} else {
-			var foundEntry = this.findEntryWithRow(treeViewData.entries, entry.row);
-			if (foundEntry)
-				foundEntry.state = false;
-			builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
-		}
-	}
-
 	createClickFunction(parentContainer, checkbox, select, activate,
 		builder, treeViewData, entry) {
 		return () => {
@@ -1225,19 +1196,17 @@ class TreeViewControl {
 			this._container.querySelectorAll('div.selected')
 				.forEach((item) => { this.unselectEntry(item); });
 
-			[parentContainer].forEach((item) => {
-				this.selectEntry(item, checkbox);
-				if (checkbox) {
-					checkbox.checked = !checkbox.checked;
-					this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);
-				}
+			this.selectEntry(parentContainer, checkbox);
+			if (checkbox) {
+				checkbox.checked = !checkbox.checked;
+				this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);
+			}
 
-				if (select)
-					builder.callback('treeview', 'select', treeViewData, entry.row, builder);
+			if (select)
+				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
 
-				if (activate)
-					builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
-			});
+			if (activate)
+				builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
 		};
 	}
 }
