@@ -1,6 +1,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <IncludePath>@POCOINCLUDE_WINDOWS@;@LOBUILDDIR_WINDOWS@\include;$(IncludePath)</IncludePath>
-    <LibraryPath>@POCOLIB_WINDOWS@;$(LibraryPath)</LibraryPath>
+    <IncludePath>@POCOINCLUDE_WINDOWS@;@ZSTDINCLUDE_WINDOWS@;@LIBPNG_INCLUDES_WINDOWS@;@ZLIB_INCLUDES_WINDOWS@;@LOBUILDDIR_WINDOWS@\include;$(IncludePath)</IncludePath>
+    <LibraryPath>@POCOLIB_WINDOWS@;@ZSTDLIB_WINDOWS@;@LIBPNG_LIBS_WINDOWS@;@ZLIB_LIBS_WINDOWS@;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
 </Project>
