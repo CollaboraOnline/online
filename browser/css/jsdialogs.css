@@ -479,6 +479,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
 	line-height: var(--default-height);
+	align-content: start;
+	justify-content: stretch;
 }
 
 .jsdialog:not(.sidebar).ui-treeview {
@@ -524,9 +526,13 @@ ul.ui-treeview > * {
 	list-style-type: none;
 }
 
+.ui-treeview-entry {
+	display: inline-flex !important;
+	width: 100%;
+}
+
 .ui-treeview-entry,
 .ui-treeview-expanded-content {
-	margin-block-end: 8px;
 	display: grid;
 	grid-auto-flow: column;
 	/* grid-column: '1 / ' + (this._columns + 1) - set inside JS */
@@ -534,18 +540,17 @@ ul.ui-treeview > * {
 	align-items: start;
 }
 
-.ui-treeview-entry {
-	display: flex !important;
+.ui-treeview-entry > div.ui-treeview-expander-column {
+	width: 20px !important; /* overwrite first-child rule */
 }
 
-.ui-treeview .ui-treeview-entry[aria-level='1'] {
-	grid-template-columns: 20px 30px auto;
+.ui-treeview-entry.ui-treeview-expandable > div.ui-treeview-icon-column {
+	width: 30px; /* in table with headers has to be 100% */
 }
 
-.ui-treeview .ui-treeview-entry:not([aria-level]),
-.ui-treeview-expanded-content,
-.ui-treeview-expanded-content > .ui-treeview-entry > div {
-	grid-template-columns: subgrid;
+.ui-treeview-entry > div {
+	display: table-cell;
+	width: 100%;
 }
 
 .ui-treeview-entry div:first-child {
@@ -558,13 +563,11 @@ ul.ui-treeview > * {
 	display: flex;
 	width: 100%;
 	justify-content: start;
-	grid-column: 3;
 }
 
 .ui-treeview-entry div:not(.autofilter) {
 	padding-inline-start: 2px;
 	margin-inline-end: 2px;
-	background-color: var(--color-background-lighter);
 }
 
 .ui-treeview.disabled .ui-treeview-entry div:not(.autofilter) {
@@ -609,13 +612,13 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	vertical-align: middle;
 }
 
-.ui-treeview-entry div.selected,
+.ui-treeview-entry.selected,
 .ui-listview-entry.selected {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 }
 
-.ui-treeview.disabled .ui-treeview-entry div.selected,
+.ui-treeview.disabled .ui-treeview-entry.selected,
 .ui-treeview.disabled .ui-listview-entry.selected {
 	background-color: var(--color-background-darker) !important;
 }
@@ -641,20 +644,24 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 /* tree grid */
 
-.ui-treeview div[aria-level='2'] + .ui-treeview-expanded-content {
+.ui-treeview div[aria-level='1'] + .ui-treeview-expanded-content {
 	margin-left: 2.5ch;
 }
 
-.ui-treeview div[aria-level='3'] + .ui-treeview-expanded-content {
+.ui-treeview div[aria-level='2'] + .ui-treeview-expanded-content {
 	margin-left: 5ch;
 }
 
-.ui-treeview div[aria-level='4'] + .ui-treeview-expanded-content {
+.ui-treeview div[aria-level='3'] + .ui-treeview-expanded-content {
 	margin-left: 7.5ch;
 }
 
-.ui-treeview div[aria-level='5'] + .ui-treeview-expanded-content {
+.ui-treeview div[aria-level='4'] + .ui-treeview-expanded-content {
 	margin-left: 10ch;
+}
+
+.ui-treeview div[aria-level='5'] + .ui-treeview-expanded-content {
+	margin-left: 12.5ch;
 }
 
 .ui-treeview div.ui-treeview-expander {
