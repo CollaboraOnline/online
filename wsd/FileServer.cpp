@@ -55,6 +55,9 @@
 #include <Poco/Util/LayeredConfiguration.h>
 
 #include <chrono>
+#if ENABLE_DEBUG
+#include <filesystem>
+#endif
 #include <iomanip>
 #include <string>
 #include <vector>
@@ -440,6 +443,15 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("OwnerId", "test");
             fileInfo->set("UserId", userId);
             fileInfo->set("UserFriendlyName", userNameString);
+
+            Poco::JSON::Object::Ptr settingsInfo = new Poco::JSON::Object();
+            std::string uri = COOLWSD::getServerURL() + "/wopi/settings/sharedconfig.json";
+            settingsInfo->set("SharedSettings", Util::trim(uri));
+            uri = COOLWSD::getServerURL() + "/wopi/settings/userconfig.json";
+            settingsInfo->set("UserSettings", Util::trim(uri));
+            // authentication token to get them ??
+            fileInfo->set("SettingsJSON", settingsInfo);
+
             fileInfo->set("UserCanWrite", (requestDetails.getParam("permission") != "readonly") ? "true": "false");
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
             fileInfo->set("LastModifiedTime", localFile->getLastModifiedTime());
@@ -516,6 +528,66 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             return;
         }
     }
+
+    //handles request starts with /wopi/settings
+    void handleSettingsRequest(const HTTPRequest& request,
+                               const std::shared_ptr<StreamSocket>& socket)
+    {
+        Poco::URI requestUri(request.getURI());
+        const Poco::Path path = requestUri.getPath();
+        const std::string prefix = "/wopi/settings";
+        std::string configPath = path.toString().substr(prefix.length());
+
+        if (request.getMethod() == "GET" && configPath.ends_with("config.json"))
+        {
+            // TODO serverconfig later
+            if (configPath != "/userconfig.json")
+                throw BadRequestException("Invalid Config Request: " + configPath);
+
+            Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
+            configInfo->set("kind", "user");
+
+            std::string cwd = std::filesystem::current_path();
+
+            Poco::JSON::Array::Ptr configAutoTexts = new Poco::JSON::Array();
+            for (std::string autotext : { "/test/data/autotextsample.bau", "/noexist.bau" })
+            {
+                Poco::JSON::Object::Ptr configAutoTextEntry = new Poco::JSON::Object();
+                std::string uri = COOLWSD::getServerURL() + prefix + cwd + autotext;
+                //COOLWSD::getServerURL tediously includes spaces at the start
+                configAutoTextEntry->set("uri", Util::trim(uri));
+                configAutoTexts->add(configAutoTextEntry);
+            }
+            configInfo->set("autotext", configAutoTexts);
+
+            std::ostringstream jsonStream;
+            configInfo->stringify(jsonStream);
+
+            http::Response httpResponse(http::StatusCode::OK);
+            FileServerRequestHandler::hstsHeaders(httpResponse);
+            httpResponse.set("Last-Modified", Util::getHttpTime(std::chrono::system_clock::now()));
+            httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
+            socket->send(httpResponse);
+
+            return;
+        }
+        else if(request.getMethod() == "GET")
+        {
+            std::shared_ptr<LocalFileInfo> localFile =
+                LocalFileInfo::getOrCreateFile(configPath, path.getFileName());
+            auto ss = std::ostringstream{};
+            std::ifstream inputFile(localFile->localPath);
+            ss << inputFile.rdbuf();
+
+            http::Response httpResponse(http::StatusCode::OK);
+            FileServerRequestHandler::hstsHeaders(httpResponse);
+            httpResponse.set("Last-Modified", Util::getHttpTime(localFile->fileLastModifiedTime));
+            httpResponse.setBody(ss.str(), "text/plain; charset=utf-8");
+            socket->send(httpResponse);
+            return;
+        }
+    }
+
 #endif
 
 void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
@@ -565,7 +637,11 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (relPath.starts_with("/wopi/files")) {
             handleWopiRequest(request, requestDetails, message, socket);
             return;
+        } else if (relPath.starts_with("/wopi/settings")) {
+            handleSettingsRequest(request, socket);
+            return;
         }
+
 #endif
         if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "logging.html")
         {
