@@ -411,7 +411,16 @@ export class Comment extends CanvasSectionObject {
 
 		if (ev && this.sectionProperties.docLayer._docType === 'text') {
 			// special handling for mentions
-			this.map.mention.handleMentionInput(ev);
+			const selection = window.getSelection();
+			if (!selection.rangeCount) return;
+
+			const range = selection.getRangeAt(0);
+			const cursorPosition = range.startOffset;
+			const node = range.startContainer;
+
+			const beforeCursor = node.textContent.slice(0, cursorPosition);
+			const newPara = /^\s*$/.test(beforeCursor.slice(0, -1));
+			this.map.mention.handleMentionInput(ev, newPara);
 		}
 	}
 

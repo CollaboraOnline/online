@@ -28,6 +28,7 @@ class Mention extends L.Control.AutoCompletePopup {
 	debouceTimeoutId: NodeJS.Timeout;
 	partialMention: Array<string>;
 	typingMention: boolean;
+	lastTypedChar: string;
 	cursorPosAtStart: Point;
 
 	constructor(map: ReturnType<typeof L.map>) {
@@ -214,13 +215,18 @@ class Mention extends L.Control.AutoCompletePopup {
 		return this.typingMention;
 	}
 
-	handleMentionInput(ev: any) {
+	handleMentionInput(ev: any, newPara: boolean) {
 		if (!this.typingMention) {
-			if (ev.data === '@') {
+			const isAtSymbol = ev.data === '@';
+			const isLastCharAtOrSpace =
+				this.lastTypedChar === ' ' || this.lastTypedChar === '@';
+			if ((newPara && isAtSymbol) || (isAtSymbol && isLastCharAtOrSpace)) {
 				this.partialMention.push(ev.data);
 				this.typingMention = true;
 				this.cursorPosAtStart = this.getCursorPosition();
+				return;
 			}
+			this.lastTypedChar = ev.data;
 			return;
 		}
 

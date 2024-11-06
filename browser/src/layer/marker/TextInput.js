@@ -778,8 +778,11 @@ L.TextInput = L.Layer.extend({
 		this._finishFormulabarEditing(content, matchTo);
 
 		// special handling for mentions
-		if (this._map.getDocType() === 'text')
-			this._map.mention.handleMentionInput(ev);
+		if (this._map.getDocType() === 'text') {
+			const contentStr = this.codePointsToString(content);
+			const newPara = contentStr.length === 1;
+			this._map.mention.handleMentionInput(ev, newPara);
+		}
 
 		this._statusLog('_onInput ]');
 	},

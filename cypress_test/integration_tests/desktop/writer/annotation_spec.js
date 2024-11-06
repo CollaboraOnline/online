@@ -444,4 +444,11 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#mentionPopup').should('not.exist');
 		cy.cGet('#annotation-modify-textarea-new').should('have.focus');
 	});
+
+	it('Typing email address should not show mention popup', function() {
+		desktopHelper.insertComment('collaboraonline@al', false);
+
+		cy.cGet('#mentionPopup').should('not.exist');
+		cy.cGet('#annotation-modify-textarea-new').should('have.focus');
+	});
 });
