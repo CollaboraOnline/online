@@ -435,19 +435,29 @@
 
       // Select the app with extension.
       function selectApp(ext) {
+          let filename;
           switch (ext) {
-          case 'odt':
+          case 'fodt':
+              filename = 'writer-edit.fodt';
+              break;
           case 'ods':
-          case 'odp':
+              filename = 'calc-edit.ods';
+              break;
+          case 'fodp':
+              filename = 'impress-edit.fodp';
+              break;
           case 'odg':
-              var params = frameUrl.searchParams;
-              var file_path = params.get('file_path');
-              file_path = file_path.substr(0, file_path.length - 3) + ext;
-              startCool(frameUrl, file_path)
+              filename = 'draw-edit.odg';
               break;
           default:
               console.error('Invalid app ', ext);
+              return;
           }
+          let params = frameUrl.searchParams;
+          let file_path = params.get('file_path');
+          let index = file_path.lastIndexOf('/');
+          file_path = file_path.substr(0, index + 1) + filename;
+          startCool(frameUrl, file_path);
       }
 
     </script>
@@ -617,9 +627,9 @@
 
     <div class="vbox framed">
       <div class="hbox">
-        <button onclick="selectApp('odt');">Writer</button>
+        <button onclick="selectApp('fodt');">Writer</button>
         <button onclick="selectApp('ods');">Calc</button>
-        <button onclick="selectApp('odp');">Impress</button>
+        <button onclick="selectApp('fodp');">Impress</button>
         <button onclick="selectApp('odg');">Draw</button>
       </div>
     </div>
