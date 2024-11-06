@@ -35,6 +35,7 @@ type TextFields = {
 
 interface TextFieldInfo {
 	type: TextFieldsType;
+	hash: string;
 	content: ImageInfo;
 }
 
@@ -57,6 +58,7 @@ interface AnimatedShapeInfo {
 
 interface PlaceholderInfo {
 	type: TextFieldsType;
+	hash: string;
 }
 
 interface LayerInfo {
@@ -93,8 +95,7 @@ class LayerDrawing {
 	private cachedMasterPages: Map<string, Array<LayerEntry>> = new Map();
 	private cachedDrawPages: Map<string, Array<LayerEntry>> = new Map();
 	private cachedTextFields: Map<string, TextFieldInfo> = new Map();
-	private slideTextFieldsMap: Map<string, Map<TextFieldsType, string>> =
-		new Map();
+	private slideTextFieldsMap: Map<string, Map<string, string>> = new Map();
 	private offscreenCanvas: OffscreenCanvas = null;
 	private onSlideRenderingCompleteCallback: VoidFunction = null;
 	private layerRenderer: LayerRenderer;
@@ -352,10 +353,10 @@ class LayerDrawing {
 
 		let textFields = this.slideTextFieldsMap.get(info.slideHash);
 		if (!textFields) {
-			textFields = new Map<TextFieldsType, string>();
+			textFields = new Map<string, string>();
 			this.slideTextFieldsMap.set(info.slideHash, textFields);
 		}
-		textFields.set(textFieldInfo.type, imageInfo.checksum);
+		textFields.set(textFieldInfo.hash, imageInfo.checksum);
 
 		this.cachedTextFields.set(imageInfo.checksum, textFieldInfo);
 	}
@@ -500,7 +501,7 @@ class LayerDrawing {
 			const placeholder = layer.content as PlaceholderInfo;
 			const slideTextFields = this.slideTextFieldsMap.get(slideHash);
 			const checksum = slideTextFields
-				? slideTextFields.get(placeholder.type)
+				? slideTextFields.get(placeholder.hash)
 				: null;
 			if (!checksum) {
 				window.app.console.log(
