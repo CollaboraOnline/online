@@ -81,7 +81,10 @@ L.Path = L.Layer.extend({
 
 	_clickTolerance: function () {
 		// used when doing hit detection for Canvas layers
-		return (this.options.stroke ? this.options.weight / 2 : 0) + (window.touch.hasAnyTouchscreen() ? 10 : 0);
+		return (
+			(this.options.stroke ? this.options.weight / 2 : 0) +
+			(window.touch.currentlyUsingTouchscreen() ? 10 : 0)
+		);
 	},
 
 	addPathNode: function (pathNode, actualRenderer) {

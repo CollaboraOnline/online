@@ -904,7 +904,37 @@ function getInitializerClass() {
 			return global.matchMedia('(any-pointer: coarse)').matches;
 		},
 
+		/// a tristate (boolean | null) determining whether the last event was a touch event
+		/// may be useful to supplement hasAnyTouchscreen or hasPrimaryTouchscreen for, for example, determining UI or
+		///   hitboxes after a tap in a place where you can't sensibly figure out whether the direct trigger was a
+		///   touchscreen. Examples might be click events that are roundtripped through core
+		/// is null when no touch or click events have yet occured, true when the last touch or click event was from a
+		///   touchscreen, and false when the last touch or click event was from a mouse
+		/// is updated with active listeners during the capture phase of the <html> element, so should be done before
+		///   most other event processing takes place
+		lastEventWasTouch: null,
+
+		/// detect if the last event was a touch event, or if no events have yet occured whether we have a touchscreen
+		///   available to us. Should be able to replace uses of hasAnyTouchscreen for uses where we are OK with the
+		///   result being less stable
+		currentlyUsingTouchscreen: function() {
+			if (global.touch.lastEventWasTouch !== null) {
+				return global.touch.lastEventWasTouch;
+			}
+
+			return global.touch.hasAnyTouchscreen();
+		},
 	};
+
+	const registerTapOrClick = (e) => {
+		global.touch.lastEventWasTouch = global.touch.isTouchEvent(e);
+	};
+	document.addEventListener('touchstart', registerTapOrClick, { capture: true });
+	document.addEventListener('touchend', registerTapOrClick, { capture: true });
+	document.addEventListener('mousedown', registerTapOrClick, { capture: true });
+	document.addEventListener('mouseup', registerTapOrClick, { capture: true });
+	document.addEventListener('pointerdown', registerTapOrClick, { capture: true });
+	document.addEventListener('pointerup', registerTapOrClick, { capture: true });
 
 	if (!global.prefs.getBoolean('clipboardApiAvailable', true)) {
 		// navigator.clipboard.write failed on us once, don't even try it.
