@@ -1436,7 +1436,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     }
 
     // Pass the ownership to the client session.
-    session->setWopiFileInfo(wopiFileInfo);
+    session->setWopiFileInfo(std::move(wopiFileInfo));
     session->setUserId(userId);
     session->setUserName(username);
     session->setUserExtraInfo(userExtraInfo);

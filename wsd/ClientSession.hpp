@@ -178,7 +178,7 @@ public:
     }
 
     /// Set WOPI fileinfo object
-    void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
+    void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
 
     /// Get requested tiles waiting for sending to the client
     std::deque<TileDesc>& getRequestedTiles() { return _requestedTiles; }
