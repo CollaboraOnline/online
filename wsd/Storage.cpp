@@ -60,17 +60,32 @@ bool StorageBase::FilesystemEnabled;
 
 #if !MOBILEAPP
 
-std::string StorageBase::getLocalRootPath() const
+namespace {
+
+std::string getLocalJailPath(const std::string& localStorePath, const std::string& jailPath)
 {
-    std::string localPath = _jailPath;
+    std::string localPath = jailPath;
     if (localPath[0] == '/')
     {
         // Remove the leading /
         localPath.erase(0, 1);
     }
 
-    return FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, _localStorePath, std::move(localPath));
+    return FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, localStorePath, std::move(localPath));
 }
+
+}
+
+std::string StorageBase::getLocalRootPath() const
+{
+    return getLocalJailPath(_localStorePath, _jailPath);
+}
+
+std::string StorageBase::getJailPresetsPath() const
+{
+    return getLocalJailPath(_localStorePath, JAILED_CONFIG_ROOT);
+}
+
 #endif
 
 void StorageBase::initialize()
