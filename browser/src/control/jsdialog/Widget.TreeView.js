@@ -983,13 +983,14 @@ class TreeViewControl {
 		if (!header)
 			return;
 
-		let th = L.DomUtil.create('div', builder.options.cssClass,
+		let th = L.DomUtil.create('div', builder.options.cssClass + ' .ui-treeview-header',
 					  this._container._thead);
 		let span = L.DomUtil.create('span', builder.options.cssClass +
 					    ' ui-treeview-header-text', th);
-		L.DomUtil.create('span', builder.options.cssClass +
-				 ' ui-treeview-header-sort-icon', span);
+
 		span.innerText = header.text;
+		L.DomUtil.create('span', builder.options.cssClass +
+			' ui-treeview-header-sort-icon', span);
 	}
 
 	fillRow(data, entry, builder, level, parent) {
@@ -1297,8 +1298,72 @@ class TreeViewFactory {
 		for (let index = 0; index < dummyCells; index++)
 			this._implementation.fillHeader({text: ''}, builder);
 
-		for (let index in headers)
+		for (let index in headers) {
 			this._implementation.fillHeader(headers[index], builder);
+
+			var sortByColumn = (columnIndex, up) => {
+				var compareFunction = (a, b) => {
+					if (!a || !b)
+						return 0;
+
+					var tda = a.querySelectorAll('td').item(columnIndex);
+					var tdb = b.querySelectorAll('td').item(columnIndex);
+
+					if (tda.querySelector('input')) {
+						if (tda.querySelector('input').checked === tdb.querySelector('input').checked)
+							return 0;
+						if (up) {
+							if (tda.querySelector('input').checked > tdb.querySelector('input').checked)
+								return 1;
+							else
+								return -1;
+						} else if (tdb.querySelector('input').checked > tda.querySelector('input').checked)
+							return 1;
+						else
+							return -1;
+					}
+
+					if (up)
+						return tdb.innerText.toLowerCase().localeCompare(tda.innerText.toLowerCase());
+					else
+						return tda.innerText.toLowerCase().localeCompare(tdb.innerText.toLowerCase());
+				};
+
+				var toSort = [];
+
+				this._implementation._container.querySelectorAll('.jsdialog.ui-listview-entry')
+					.forEach(function (item) { toSort.push(item); this._implementation._container.removeChild(item); });
+
+				toSort.sort(compareFunction);
+
+				toSort.forEach(function (item) { this._implementation._container.insertBefore(item, this._container.lastChild.nextSibling); });
+			};
+
+			var clickFunction = (columnIndex, icon) => {
+				var clearSorting = () => {
+					var icons = this._implementation._container.querySelectorAll('.ui-treeview-header-sort-icon');
+					icons.forEach(function (icon) {
+						L.DomUtil.removeClass(icon, 'down');
+						L.DomUtil.removeClass(icon, 'up');
+					});
+				};
+
+				return () => {
+					if (L.DomUtil.hasClass(icon, 'down')) {
+						clearSorting();
+						L.DomUtil.addClass(icon, 'up');
+						sortByColumn(columnIndex, true);
+					} else {
+						clearSorting();
+						L.DomUtil.addClass(icon, 'down');
+						sortByColumn(columnIndex, false);
+					}
+				};
+			};
+
+			// TODO: if (!isTreeGrid)
+			this._implementation._container.lastChild.onclick = clickFunction(index, this._implementation._container.lastChild.querySelector('.ui-treeview-header-sort-icon'));
+		}
 	}
 
 	fillEntries(data, entries, builder, level, parent) {
