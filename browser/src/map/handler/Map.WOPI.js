@@ -357,6 +357,26 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.uiManager.extendNotebookbar();
 			return;
 		}
+		else if (msg.MessageId === 'Show_Sidebar') {
+			/* id is optional */
+                        if (msg.Values) {
+				switch (msg.Values.id) {
+				case 'Navigator':
+				case 'ModifyPage':
+				case 'SlideChangeWindow':
+				case 'CustomAnimation':
+				case 'MasterSlidesPanel':
+					this._map.sendUnoCommand(`.uno:${msg.Values.id}`);
+					return;
+				}
+			}
+			this._map.sendUnoCommand('.uno:SidebarDeck.PropertyDeck');
+			return;
+		}
+		else if (msg.MessageId === 'Hide_Sidebar') {
+			this._map.sendUnoCommand('.uno:SidebarHide');
+			return;
+		}
 		else if (msg.MessageId === 'Show_Menu_Item' || msg.MessageId === 'Hide_Menu_Item') {
 			if (!msg.Values) {
 				window.app.console.error('Property "Values" not set');
