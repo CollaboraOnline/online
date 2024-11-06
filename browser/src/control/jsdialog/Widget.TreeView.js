@@ -931,6 +931,10 @@ class TreeViewControl {
 		} else {
 			selectionElement = this.createCheckbox(parent, treeViewData, builder, entry);
 		}
+
+		if (entry.enabled === false)
+			selectionElement.disabled = true;
+
 		return selectionElement;
 	}
 
