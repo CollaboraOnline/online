@@ -41,6 +41,13 @@ L.Map.include({
 		this.sendUnoCommand(unoCommand);
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).setViewResolved(on);
 		this.uiManager.setDocTypePref('ShowResolved', on ? true : false);
+	},
+
+	showComments: function(on: any) {
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).setView(on);
+		this.uiManager.setDocTypePref('showannotations', on ? true : false);
+		this.fire('commandstatechanged', {commandName : 'showannotations', state : on ? 'true': 'false'});
+		this.fire('showannotationschanged', {state: on ? 'true': 'false'});
 	}
 });
 
@@ -95,6 +102,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.sectionProperties.commentList = new Array(0);
 		this.sectionProperties.selectedComment = null;
 		this.sectionProperties.arrow = null;
+		this.sectionProperties.show = null;
 		this.sectionProperties.showResolved = null;
 		this.sectionProperties.marginY = 10 * app.dpiScale;
 		this.sectionProperties.offset = 5 * app.dpiScale;
@@ -124,6 +132,8 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.map.on('commandstatechanged', function (event: any) {
 			if (event.commandName === '.uno:ShowResolvedAnnotations')
 				this.setViewResolved(event.state === 'true');
+			else if (event.commandName === 'showannotations')
+				this.setView(event.state === 'true');
 			else if (event.commandName === '.uno:ShowTrackedChanges' && event.state === 'true')
 				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		}, this);
@@ -2099,6 +2109,16 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.update();
 	}
 
+	public setView (state: any): void {
+		this.sectionProperties.show = state;
+		for (var idx = 0; idx < this.sectionProperties.commentList.length;idx++) {
+			if (state == false)
+				this.sectionProperties.commentList[idx].hide();
+			else
+				this.sectionProperties.commentList[idx].show();
+		}
+	}
+
 	private orderCommentList (): void {
 		this.sectionProperties.commentList.sort(function(a: any, b: any) {
 			return Math.abs(a.sectionProperties.data.anchorPos[1]) - Math.abs(b.sectionProperties.data.anchorPos[1]) ||
@@ -2331,6 +2351,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			this.checkSize();
 			this.update();
 		}
+
+		var show = this.map.stateChangeHandler.getItemValue('showannotations');
+		this.setView(show === true || show === 'true');
 
 		var showResolved = this.map.stateChangeHandler.getItemValue('ShowResolvedAnnotations');
 		this.setViewResolved(showResolved === true || showResolved === 'true');

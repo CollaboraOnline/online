@@ -59,6 +59,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('statusbarchanged', this.onStatusbarChange, this);
 		this.map.on('rulerchanged', this.onRulerChange, this);
 		this.map.on('darkmodechanged', this.onDarkModeToggleChange, this);
+		this.map.on('showannotationschanged', this.onShowAnnotationsChange, this);
 		this.map.on('a11ystatechanged', this.onAccessibilityToggleChange, this);
 		if (docType === 'presentation') {
 			this.map.on('updateparts', this.onSlideHideToggle, this);
@@ -485,6 +486,19 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 		else {
 			$('#invertbackground').hide();
+		}
+	},
+
+	onShowAnnotationsChange: function(e) {
+		if (e.state === 'true')
+		{
+			$('#review-show-resolved-annotations').removeClass('disabled');
+			$('#review-show-resolved-annotations-button').attr('disabled', false);
+		}
+		else
+		{
+			$('#review-show-resolved-annotations').addClass('disabled');
+			$('#review-show-resolved-annotations-button').attr('disabled', true);
 		}
 	},
 
