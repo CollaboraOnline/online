@@ -1013,6 +1013,10 @@ class TreeViewControl {
 
 		let rowElements = [];
 
+		// row is a separator
+		if (this.isSeparator(entry))
+			L.DomUtil.addClass(tr, 'context-menu-separator');
+
 		// column for expander
 		if (this._isRealTree) {
 			td = L.DomUtil.create('div', 'ui-treeview-expander-column', tr);

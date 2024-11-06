@@ -549,6 +549,11 @@ ul.ui-treeview > * {
 	width: 30px; /* in table with headers has to be 100% */
 }
 
+.ui-treeview-header-text {
+	display: table-caption;
+	font-weight: bold;
+}
+
 .ui-treeview-entry > div {
 	display: table-cell;
 	width: 100%;
@@ -624,7 +629,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	background-color: var(--color-background-darker) !important;
 }
 
-.ui-treeview-entry div:hover,
+.ui-treeview-entry:hover,
 .ui-listview-entry:hover {
 	background-color: var(--color-background-darker);
 	color: var(--color-text-darker);
