@@ -108,7 +108,6 @@ public:
             = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
         Poco::Net::SSLManager::instance().initializeClient(nullptr, std::move(invalidCertHandler), std::move(sslContext));
 #endif
-        UnitBase::setCppunitTesting(true);
     }
 
     ~HttpRequestTests()
