@@ -105,6 +105,7 @@ var unoCommandsArray = {
 	'DeleteCell':{spreadsheet:{context:_('De~lete...'),menu:_('Delete C~ells...'),},},
 	'DeleteColumns':{global:{context:_('Delete selected columns'),menu:_('Delete ~Columns'),},text:{context:_('Delete selected columns'),menu:_('~Columns'),},},
 	'DeleteComment':{global:{menu:_('Delete Comment'),},},
+	'DeleteContentControl':{text:{context:_('Delete Content Control'),menu:_('Delete Content Control'),},},
 	'DeleteDataLabel':{global:{menu:_('Delete Single Data Label'),},},
 	'DeleteDataLabels':{global:{menu:_('Delete Data Labels'),},},
 	'DeleteLegend':{global:{menu:_('Delete Legend'),},},
