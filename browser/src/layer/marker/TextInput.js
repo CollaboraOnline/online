@@ -497,12 +497,10 @@ L.TextInput = L.Layer.extend({
 
 		// Move and display under-caret marker
 
-		if (window.touch.hasAnyTouchscreen()) {
-			if (this._map._docLayer._textCSelections.empty()) {
-				this._cursorHandler.setLatLng(bottom).addTo(this._map);
-			} else {
-				this._map.removeLayer(this._cursorHandler);
-			}
+		if (window.touch.currentlyUsingTouchscreen() && this._map._docLayer._textCSelections.empty()) {
+			this._cursorHandler.setLatLng(bottom).addTo(this._map);
+		} else {
+			this._map.removeLayer(this._cursorHandler);
 		}
 
 		// Move the hidden text area with the cursor
