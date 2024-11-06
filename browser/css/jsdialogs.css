@@ -549,8 +549,11 @@ ul.ui-treeview > * {
 	width: 30px; /* in table with headers has to be 100% */
 }
 
-.ui-treeview-header-text {
+.ui-treeview-header {
 	display: table-caption;
+}
+
+.ui-treeview-header-text {
 	font-weight: bold;
 }
 
@@ -2293,10 +2296,10 @@ kbd,
 #ServerAuditDialog .ui-treeview td[role='gridcell'] {
 	padding-inline-start: 0;
 }
-#ServerAuditDialog tr:first-child th:first-child .ui-treeview-header-sort-icon:after {
+#ServerAuditDialog div:first-child .ui-treeview-header-sort-icon:after {
 	display: none;
 }
-#ServerAuditDialog tr:first-child th:first-child .ui-treeview-header-sort-icon {
+#ServerAuditDialog div:first-child .ui-treeview-header-sort-icon {
 	background: url('images/lc_serverauditheader.svg') no-repeat center;
 	width: 16px;
 	display: table-caption;
