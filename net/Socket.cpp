@@ -1739,8 +1739,12 @@ std::string getAgentString() { return "COOLWSD HTTP Agent " + Util::getCoolVersi
 std::string getServerString()
 {
     if (!UnitBase::isCppunitTesting())
-        if (config::getBool("security.server_signature", false))
+    {
+        CONFIG_STATIC const bool sig = config::getBool("security.server_signature", false);
+        if (sig)
             return "COOLWSD HTTP Server " + Util::getCoolVersion();
+    }
+
     return "COOLWSD HTTP Server";
 }
 }
