@@ -448,6 +448,7 @@ var unoCommandsArray = {
 	'SheetMenu':{spreadsheet:{menu:_('~Sheet'),},},
 	'SheetRightToLeft':{spreadsheet:{context:_('Sheet R~ight-To-Left'),menu:_('R~ight-To-Left'),},},
 	'Show':{spreadsheet:{menu:_('~Show Sheet...'),},},
+	'ShowAnnotations':{global:{menu:_('Show Comments'),},},
 	'ShowColumn':{spreadsheet:{context:_('S~how Columns'),menu:_('~Show'),},},
 	'ShowDetail':{global:{menu:_('~Show Details'),},},
 	'ShowResolvedAnnotations':{text:{menu:_('Resolved Comments'),},},

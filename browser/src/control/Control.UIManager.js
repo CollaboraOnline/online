@@ -69,6 +69,7 @@ L.Control.UIManager = L.Control.extend({
 
 		this.map['stateChangeHandler'].setItemValue('toggledarktheme', 'false');
 		this.map['stateChangeHandler'].setItemValue('invertbackground', 'false');
+		this.map['stateChangeHandler'].setItemValue('showannotations', 'true');
 	},
 
 	// UI initialization

@@ -2157,6 +2157,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: false, combination: 'C', de: 'N' }
 			},
 			{
+				'id': 'showannotations',
+				'class': 'unoshowannotations',
+				'type': 'bigcustomtoolitem',
+				'text': _UNO('.uno:ShowAnnotations', 'text'),
+				'command': 'showannotations',
+				'accessibility': { focusBack: true, combination: 'SA', de: null }
+			},
+			{
 				'id': 'review-show-resolved-annotations',
 				'class': 'unoshowresolvedannotations',
 				'type': 'bigcustomtoolitem',
