@@ -1834,7 +1834,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 #toolbar-down .has-dropdown > .ui-content.unobutton {
-	width: auto;
+	width: max-content;
 }
 
 .unoarrow::after,
