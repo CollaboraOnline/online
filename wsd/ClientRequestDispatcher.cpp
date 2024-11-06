@@ -1185,10 +1185,12 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
             port = std::stoul(portStr);
 
         } catch(std::invalid_argument &exception) {
-            LOG_DBG("Wopi Access Check erro parsing invalid_argument:" << portStr);
+            LOG_DBG("Wopi Access Check error parsing invalid_argument portStr:" << portStr);
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+            return false;
         } catch(std::exception &exception) {
 
-            LOG_DBG("Wopi Access Check erro parsing portStr:" << portStr);
+            LOG_DBG("Wopi Access Check error parsing portStr:" << portStr);
 
             LOG_ERR_S("Wopi Access Check request error, bad request stoul ["
                   << text << "] on request to URL: " << request.getURI());
@@ -1301,7 +1303,10 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 
         LOG_DBG("Wopi Access Check requesting: " << httpRequest.getUrl());
 
-        httpProbeSession->asyncRequest(httpRequest, *COOLWSD::getWebServerPoll());
+        TerminatingPoll wopiCheckPoll ("wopi_check_poll");
+        wopiCheckPoll.startThread();
+
+        httpProbeSession->asyncRequest(httpRequest, wopiCheckPoll);
 
         ///auto response = session->response();
 
