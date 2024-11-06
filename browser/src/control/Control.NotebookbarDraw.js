@@ -292,7 +292,24 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'accessibility': { focusBack: true, combination: 'FP', de: null }
 					}
 				]
-			},
+			});
+		if (window.documentSigningEnabled) {
+			content.push(
+				{
+					'type': 'container',
+					'children': [
+						{
+							'id': 'signature',
+							'type': 'bigtoolitem',
+							'text': _('Signature'),
+							'command': '.uno:Signature',
+							'accessibility': { focusBack: true, combination: 'SN' }
+						}
+					]
+				}
+			);
+		}
+		content.push(
 			{
 				'type': 'container',
 				'children': [

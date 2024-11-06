@@ -95,6 +95,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('EPUB (.epub)'), id: !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', type: 'action'},
 					{name: _('HTML file (.html)'), id: 'downloadas-html', type: 'action'}]},
 				{name: _UNO('.uno:SetDocumentProperties', 'text'), uno: '.uno:SetDocumentProperties', id: 'properties'},
+				{name: _UNO('.uno:Signature', 'text'), uno: '.uno:Signature', id: 'signature'},
 				{type: 'separator'},
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'text'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'action'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
@@ -417,6 +418,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Current slide as Tag Image File Format (.tiff)'), id: 'downloadas-tiff', type: 'action'},
 				]},
 				{name: _UNO('.uno:SetDocumentProperties', 'presentation'), uno: '.uno:SetDocumentProperties', id: 'properties'},
+				{name: _UNO('.uno:Signature', 'presentation'), uno: '.uno:Signature', id: 'signature'},
 				{type: 'separator'},
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'presentation'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'menu', menu: [
 					{name: _('Full Page Slides'), id: 'print', type: 'action'},
@@ -578,6 +580,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('ODF Drawing (.odg)'), id: 'downloadas-odg', type: 'action'}
 				]},
 				{name: _UNO('.uno:SetDocumentProperties', 'presentation'), uno: '.uno:SetDocumentProperties', id: 'properties'},
+				{name: _UNO('.uno:Signature', 'presentation'), uno: '.uno:Signature', id: 'signature'},
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
@@ -717,6 +720,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('CSV file (.csv)'), id: 'downloadas-csv', type: 'action'},
 					{name: _('HTML file (.html)'), id: 'downloadas-html', type: 'action'}]},
 				{name: _UNO('.uno:SetDocumentProperties', 'spreadsheet'), uno: '.uno:SetDocumentProperties', id: 'properties'},
+				{name: _UNO('.uno:Signature', 'spreadsheet'), uno: '.uno:Signature', id: 'signature'},
 				{type: 'separator'},
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'menu', menu: [
 					{name: _('Active sheet'), id: 'print-active-sheet', type: 'action'},
