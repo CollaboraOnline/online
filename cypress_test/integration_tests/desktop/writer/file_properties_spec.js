@@ -13,25 +13,21 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 	it('Add File Description.', function() {
 		writerHelper.openFileProperties();
+		// Too early click on the 'Description' button would have no effect.
+		cy.wait(500);
 		cy.cGet('#tabcontrol-2').click();
 		helper.waitUntilIdle('#title-input.ui-edit');
 		cy.cGet('#title-input.ui-edit').type('New Title');
 		// sometimes it doesn't finish typing
 		helper.waitUntilIdle('#title-input.ui-edit');
 
-		// Fixme: type now char by char because we receive update messages
-		//        can be reverted after core update
-		cy.cGet('#comments.ui-textarea').type('N');
-		cy.wait(500);
-		cy.cGet('#comments.ui-textarea').type('e');
-		cy.wait(500);
-		cy.cGet('#comments.ui-textarea').type('w');
-		cy.wait(500);
+		cy.cGet('#comments.ui-textarea').type('New');
 
 		helper.waitUntilIdle('#comments.ui-textarea');
 		cy.cGet('#ok.ui-pushbutton').click();
 		writerHelper.openFileProperties();
 
+		cy.wait(500);
 		cy.cGet('#tabcontrol-2').click();
 		cy.cGet('#title-input.ui-edit').should('have.value', 'New Title');
 		cy.cGet('#comments.ui-textarea').should('have.value', 'New');
