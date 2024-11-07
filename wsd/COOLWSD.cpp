@@ -1216,14 +1216,6 @@ private:
     std::string _expectedKind;
 };
 
-static void requestTerminateSpareKits()
-{
-    std::unique_lock<std::mutex> lock(NewChildrenMutex);
-    const int count = NewChildren.size();
-    for (int i = count - 1; i >= 0; --i)
-        NewChildren[i]->requestTermination();
-}
-
 class RemoteConfigPoll : public RemoteJSONPoll
 {
 public:
@@ -1902,12 +1894,7 @@ private:
 
         COOLWSD::sendMessageToForKit("addfont " + fontFile);
 
-        // Request existing spare kits to quit, to get replaced with ones that
-        // include the new fonts.
-        if (PrisonerPoll)
-        {
-            PrisonerPoll->addCallback([]{ requestTerminateSpareKits(); });
-        }
+        COOLWSD::requestTerminateSpareKits();
 
         return true;
     }
@@ -1945,6 +1932,23 @@ private:
     // The key of this map is the download URI of the font.
     std::map<std::string, FontData> fonts;
 };
+
+void COOLWSD::requestTerminateSpareKits()
+{
+    // Request existing spare kits to quit, to get replaced with ones that
+    // include the new fonts.
+    if (PrisonerPoll)
+    {
+        PrisonerPoll->addCallback(
+            []
+            {
+                std::unique_lock<std::mutex> lock(NewChildrenMutex);
+                const int count = NewChildren.size();
+                for (int i = count - 1; i >= 0; --i)
+                    NewChildren[i]->requestTermination();
+            });
+    }
+}
 
 void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
 {
