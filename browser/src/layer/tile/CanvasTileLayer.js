@@ -729,7 +729,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._pendingDeltas = [];
 		this._transactionCallbacks = [];
 
-		if (window.Worker) {
+		if (window.Worker && !window.ThisIsAMobileApp) {
 			window.app.console.info('Creating CanvasTileWorker');
 			this._worker = new Worker('src/layer/tile/CanvasTileWorker.js');
 			this._worker.addEventListener('message', (e) => this._onWorkerMessage(e));
