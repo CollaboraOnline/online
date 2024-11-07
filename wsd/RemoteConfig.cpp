@@ -24,6 +24,7 @@
 #include <wsd/COOLWSD.hpp>
 #include <wsd/HostUtil.hpp>
 #include <wsd/wopi/StorageConnectionManager.hpp>
+#include <CommandControl.hpp>
 
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
