@@ -4001,8 +4001,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
+		--this._inTransaction;
+
+		// Ignore transactions that did nothing
+		if (this._pendingDeltas.length === 0 && !this._hasPendingTransactions()) {
+			if (callback) callback();
+			return;
+		}
+
 		this._transactionCallbacks.push(callback);
-		if (--this._inTransaction !== 0)
+		if (this._inTransaction !== 0)
 			return;
 
 		try {
@@ -4784,7 +4792,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// be sure canvas is initialized already, has correct size and that we aren't
 		// currently processing a transaction
 		var size = map.getSize();
-		if (size.x === 0 || size.y === 0 || this._hasPendingTransactions()) {
+		if (size.x === 0 || size.y === 0) {
 			setTimeout(function () { this._update(); }.bind(this), 1);
 			return;
 		}
