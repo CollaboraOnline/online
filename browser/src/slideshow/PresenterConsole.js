@@ -425,7 +425,11 @@ class PresenterConsole {
 				window.open('https://collaboraonline.com', '_blank');
 				break;
 			case 'notes':
-				this._onShowNotes();
+				if (this._proxyPresenter.document.contains(this._notes)) {
+					this._onHideNotes();
+				} else {
+					this._onShowNotes();
+				}
 				break;
 			case 'slides':
 				this._onShowSlides();
@@ -551,7 +555,10 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.querySelector('#notes');
 		elem.disable = false;
 		this._onResize();
-		e.stopPropagation();
+
+		if (e) {
+			e.stopPropagation();
+		}
 	}
 
 	_onTimer() {
