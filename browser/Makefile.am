@@ -568,7 +568,7 @@ COOL_ASSERT_INTERSECT = $(filter $(COOL_JS_SRC), $(patsubst %.ts,%.js,$(COOL_TS_
 COMMA := ,
 EMPTY :=
 SPACE := $(EMPTY) $(EMPTY)
-COOL_VERSION = $(shell cd $(srcdir) && git log -1 --pretty=format:"%h")
+COOL_VERSION = $(shell cd $(srcdir) && git log -1 --format=%h --abbrev=10)
 INTERMEDIATE_DIR ?= $(if $(IS_SEPARATE),$(abs_builddir)/debug,$(abs_builddir)/release)
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' -not -path './node_modules/*' -not -path './l10n/*' | sed 's/.\///')
