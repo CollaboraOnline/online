@@ -1230,8 +1230,11 @@ void Document::trimAfterInactivity()
             std::shared_ptr<ChildSession> session = document->findSessionByViewId(descriptor->getViewId());
             if (session)
             {
-                session->setViewRenderState(payload);
-                document->invalidateCanonicalId(session->getId());
+                if (!payload.empty())
+                {
+                    session->setViewRenderState(payload);
+                    document->invalidateCanonicalId(session->getId());
+                }
             }
             else
             {
