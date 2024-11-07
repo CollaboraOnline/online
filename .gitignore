@@ -89,6 +89,7 @@ browser/admin/jsconfig.json
 browser/dist
 browser/compilets
 browser/typescript_js
+browser/src/layer/tile/CanvasTileWorker.js
 
 coolforkit
 coolforkitns
