@@ -51,6 +51,14 @@ std::string Uri::getFilenameFromURL(const std::string& url)
     return filename;
 }
 
+std::string Uri::getFilenameWithExtFromURL(const std::string& url)
+{
+    const auto [base, filename, ext, params] = Util::splitUrl(url);
+    if (ext.empty())
+        return filename;
+    return filename + ext;
+}
+
 bool Uri::hasReadonlyPermission(const std::string& url)
 {
     //FIXME: Replace with our own implementation.

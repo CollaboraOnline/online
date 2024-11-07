@@ -53,8 +53,11 @@ public:
     /// Return true if the URI needs encoding. Used for warning about unencoded URIs.
     static bool needsEncoding(const std::string& uri, const std::string& reserved = Reserved);
 
-    /// Extract and return the filename given a url or path.
+    /// Extract and return the filename (without extension) given a url or path.
     static std::string getFilenameFromURL(const std::string& url);
+
+    /// Extract and return the filename (with extension) given a url or path.
+    static std::string getFilenameWithExtFromURL(const std::string& url);
 
     static bool hasReadonlyPermission(const std::string& url);
 
