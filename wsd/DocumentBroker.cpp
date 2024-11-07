@@ -1456,6 +1456,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
 
 void DocumentBroker::asyncInstallPresets(const std::string& userSettingsUri, const std::string& presetsPath)
 {
+    // Download the json for settings
     const Poco::URI settingsUri{userSettingsUri};
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(settingsUri));
     http::Request request(settingsUri.getPathAndQuery());
@@ -1464,6 +1465,8 @@ void DocumentBroker::asyncInstallPresets(const std::string& userSettingsUri, con
     const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
     LOG_DBG("Getting settings from [" << uriAnonym << ']');
 
+    // When result arrives, extract uris of what we want to install to the jail's user presets
+    // and async download and install those.
     http::Session::FinishedCallback finishedCallback =
         [this, uriAnonym, presetsPath](const std::shared_ptr<http::Session>& configSession)
     {
@@ -1502,28 +1505,10 @@ void DocumentBroker::asyncInstallPresets(const std::string& userSettingsUri, con
                     auto autotext = autotexts->get(i).extract<Poco::JSON::Object::Ptr>();
                     if (!autotext)
                         continue;
+                    // TODO worry that we are potentially spamming here
                     const std::string uri = JsonUtil::getJSONValue<std::string>(autotext, "uri");
-
-                    const Poco::URI autotextUri{uri};
-                    std::shared_ptr<http::Session> autotextHttpSession(StorageConnectionManager::getHttpSession(autotextUri));
-
-                    http::Request autotextRequest(autotextUri.getPathAndQuery());
-
-                    autotextRequest.set("User-Agent", http::getAgentString());
-
                     std::string fileName = presetsPath + "autotext/" + Uri::getFilenameWithExtFromURL(uri);
-
-                    const std::shared_ptr<const http::Response> autotextHttpResponse
-                        = autotextHttpSession->syncDownload(autotextRequest, fileName);
-                    if (autotextHttpResponse->statusLine().statusCode() != http::StatusCode::OK)
-                    {
-                        LOG_ERR("Fetch of userSettings autotext uri: " << uri << " failed: " <<
-                                autotextHttpResponse->statusLine().statusCode());
-                    }
-                    else
-                    {
-                        LOG_INF("Fetch of userSettings autotext uri: " << uri << " succeeded");
-                    }
+                    asyncInstallPreset(uri, fileName);
                 }
             }
         }
@@ -1537,6 +1522,48 @@ void DocumentBroker::asyncInstallPresets(const std::string& userSettingsUri, con
 
     // Run the request on the WebServer Poll.
     httpSession->asyncRequest(request, *_poll);
+}
+
+void DocumentBroker::asyncInstallPreset(const std::string& presetUri, const std::string& presetFile)
+{
+    const Poco::URI autotextUri{presetUri};
+    std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(autotextUri));
+    http::Request request(autotextUri.getPathAndQuery());
+    request.set("User-Agent", http::getAgentString());
+
+    const std::string uriAnonym = COOLWSD::anonymizeUrl(presetUri);
+    LOG_DBG("Getting autotext from [" << uriAnonym << ']');
+
+    http::Session::FinishedCallback finishedCallback =
+        [this, uriAnonym](const std::shared_ptr<http::Session>& autotextSession)
+    {
+        if (SigUtil::getShutdownRequestFlag())
+        {
+            LOG_DBG("Shutdown flagged, giving up on in-flight requests");
+            return;
+        }
+
+        const std::shared_ptr<const http::Response> autotextHttpResponse = autotextSession->response();
+
+        if (autotextHttpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        {
+            LOG_ERR("Fetch of userSettings autotext uri: " << uriAnonym << " failed: " <<
+                    autotextHttpResponse->statusLine().statusCode());
+        }
+        else
+        {
+            LOG_INF("Fetch of userSettings autotext uri: " << uriAnonym << " succeeded");
+        }
+    };
+
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+
+    // Run the request on the WebServer Poll.
+    httpSession->asyncRequest(request, *_poll);
+
+    const std::shared_ptr<http::Response> autotextHttpResponse = httpSession->response();
+    // TODO: Might be a tad late, might need to tweak things to get this set earlier before launch
+    autotextHttpResponse->saveBodyToFile(presetFile);
 }
 
 bool DocumentBroker::processPlugins(std::string& localPath)
