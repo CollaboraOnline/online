@@ -577,6 +577,9 @@ private:
     /// Start an asynchronous CheckFileInfo request.
     void checkFileInfo(const std::shared_ptr<ClientSession>& uri, int redirectLimit);
 
+    /// Start an asynchronous Installation of the user presets, e.g. autotext etc
+    void asyncInstallPresets(const std::string& userSettingsUri, const std::string& presetsPath);
+
 #endif // !MOBILEAPP
 
     bool isLoaded() const { return _docState.hadLoaded(); }
