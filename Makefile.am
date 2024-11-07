@@ -434,10 +434,10 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  test/helpers.hpp
 
 GIT_BRANCH := $(shell git symbolic-ref --short HEAD)
-GIT_HASH := $(shell git log -1 --format=%h)
+GIT_HASH := $(shell git log -1 --format=%h --abbrev=10)
 
 dist-hook:
-	git log -1 --format=%h > $(distdir)/dist_git_hash 2> /dev/null || rm $(distdir)/dist_git_hash
+	git log -1 --format=%h --abbrev=10 > $(distdir)/dist_git_hash 2> /dev/null || rm $(distdir)/dist_git_hash
 	mkdir -p $(distdir)/bundled/include/LibreOfficeKit/
 	cp @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKit.h \
 	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKit.hxx \
