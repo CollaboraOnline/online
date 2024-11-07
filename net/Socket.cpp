@@ -1745,7 +1745,7 @@ std::string getServerString()
             return "COOLWSD HTTP Server " + Util::getCoolVersion();
     }
 
-    return "COOLWSD HTTP Server";
+    return " ";
 }
 }
 
