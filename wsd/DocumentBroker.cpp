@@ -1450,71 +1450,94 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     session->setWatermarkText(watermarkText);
 
     if (!userSettingsUri.empty())
+        asyncInstallPresets(userSettingsUri, wopiStorage->getJailPresetsPath());
+
+    return templateSource;
+}
+
+void DocumentBroker::asyncInstallPresets(const std::string& userSettingsUri, const std::string& presetsPath)
+{
+    const Poco::URI settingsUri{userSettingsUri};
+    std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(settingsUri));
+    http::Request request(settingsUri.getPathAndQuery());
+    request.set("User-Agent", http::getAgentString());
+
+    const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
+    LOG_DBG("Getting settings from [" << uriAnonym << ']');
+
+    http::Session::FinishedCallback finishedCallback =
+        [this, uriAnonym, presetsPath](const std::shared_ptr<http::Session>& configSession)
     {
-        const Poco::URI settingsUri{userSettingsUri};
-        std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(settingsUri));
-
-        http::Request request(settingsUri.getPathAndQuery());
-
-        request.set("User-Agent", http::getAgentString());
-
-        const std::shared_ptr<const http::Response> httpResponse
-            = httpSession->syncRequest(request);
-
-        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        if (SigUtil::getShutdownRequestFlag())
         {
-            LOG_ERR("Fetch of userSettings json: " << userSettingsUri << " failed: " <<
-                    httpResponse->statusLine().statusCode());
+            LOG_DBG("Shutdown flagged, giving up on in-flight requests");
+            return;
         }
-        else
+
+        const std::shared_ptr<const http::Response> httpResponse = configSession->response();
+        LOG_TRC("DocumentBroker::asyncInstallPresets returned " << httpResponse->statusLine().statusCode());
+
+        // TODO are redirects an issue to take care of?
+
+        const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
+        if (failed)
         {
-            std::string configPath = wopiStorage->getJailPresetsPath();
-
-            const std::string& body = httpResponse->getBody();
-            Poco::JSON::Object::Ptr settings;
-            if (JsonUtil::parseJSON(body, settings))
+            if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
             {
-                if (auto autotexts = settings->get("autotext").extract<Poco::JSON::Array::Ptr>())
+                LOG_ERR("Access denied to [" << uriAnonym << ']');
+                return;
+            }
+
+            LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
+            return;
+        }
+
+        const std::string& body = httpResponse->getBody();
+        Poco::JSON::Object::Ptr settings;
+        if (JsonUtil::parseJSON(body, settings))
+        {
+            if (auto autotexts = settings->get("autotext").extract<Poco::JSON::Array::Ptr>())
+            {
+                for (std::size_t i = 0, count = autotexts->size(); i < count; ++i)
                 {
-                    for (std::size_t i = 0, count = autotexts->size(); i < count; ++i)
+                    auto autotext = autotexts->get(i).extract<Poco::JSON::Object::Ptr>();
+                    if (!autotext)
+                        continue;
+                    const std::string uri = JsonUtil::getJSONValue<std::string>(autotext, "uri");
+
+                    const Poco::URI autotextUri{uri};
+                    std::shared_ptr<http::Session> autotextHttpSession(StorageConnectionManager::getHttpSession(autotextUri));
+
+                    http::Request autotextRequest(autotextUri.getPathAndQuery());
+
+                    autotextRequest.set("User-Agent", http::getAgentString());
+
+                    std::string fileName = presetsPath + "autotext/" + Uri::getFilenameWithExtFromURL(uri);
+
+                    const std::shared_ptr<const http::Response> autotextHttpResponse
+                        = autotextHttpSession->syncDownload(autotextRequest, fileName);
+                    if (autotextHttpResponse->statusLine().statusCode() != http::StatusCode::OK)
                     {
-                        auto autotext = autotexts->get(i).extract<Poco::JSON::Object::Ptr>();
-                        if (!autotext)
-                            continue;
-                        const std::string uri = JsonUtil::getJSONValue<std::string>(autotext, "uri");
-
-                        const Poco::URI autotextUri{uri};
-                        std::shared_ptr<http::Session> autotextHttpSession(StorageConnectionManager::getHttpSession(autotextUri));
-
-                        http::Request autotextRequest(autotextUri.getPathAndQuery());
-
-                        autotextRequest.set("User-Agent", http::getAgentString());
-
-                        std::string fileName = configPath + "autotext/" + Uri::getFilenameWithExtFromURL(uri);
-
-                        const std::shared_ptr<const http::Response> autotextHttpResponse
-                            = autotextHttpSession->syncDownload(autotextRequest, fileName);
-                        if (autotextHttpResponse->statusLine().statusCode() != http::StatusCode::OK)
-                        {
-                            LOG_ERR("Fetch of userSettings autotext uri: " << uri << " failed: " <<
-                                    autotextHttpResponse->statusLine().statusCode());
-                        }
-                        else
-                        {
-                            LOG_INF("Fetch of userSettings autotext uri: " << uri << " succeeded");
-                        }
+                        LOG_ERR("Fetch of userSettings autotext uri: " << uri << " failed: " <<
+                                autotextHttpResponse->statusLine().statusCode());
+                    }
+                    else
+                    {
+                        LOG_INF("Fetch of userSettings autotext uri: " << uri << " succeeded");
                     }
                 }
             }
-            else
-            {
-                LOG_ERR("Parse of userSettings json: " << userSettingsUri << " failed");
-            }
-
         }
-    }
+        else
+        {
+            LOG_ERR("Parse of userSettings json: " << uriAnonym << " failed");
+        }
+    };
 
-    return templateSource;
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+
+    // Run the request on the WebServer Poll.
+    httpSession->asyncRequest(request, *_poll);
 }
 
 bool DocumentBroker::processPlugins(std::string& localPath)
