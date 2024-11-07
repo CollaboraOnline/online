@@ -338,19 +338,19 @@ public:
 
     const Poco::URI& getUri() const { return _uri; }
 
-    const std::string& getJailPath() const { return _jailPath; };
+    const std::string& getJailPath() const { return _jailPath; }
 
     /// Returns the root path to the jailed file.
-    const std::string& getRootFilePath() const { return _jailedFilePath; };
+    const std::string& getRootFilePath() const { return _jailedFilePath; }
 
     /// Returns the root path to the jailed file to be uploaded.
-    std::string getRootFilePathToUpload() const { return _jailedFilePath + TO_UPLOAD_SUFFIX; };
+    std::string getRootFilePathToUpload() const { return _jailedFilePath + TO_UPLOAD_SUFFIX; }
 
     /// Returns the root path to the jailed file being uploaded.
     std::string getRootFilePathUploading() const
     {
         return _jailedFilePath + TO_UPLOAD_SUFFIX + UPLOADING_SUFFIX;
-    };
+    }
 
     /// Set the root path of the jailed file, only for use in cases where we actually have converted
     /// it to another format, in the same directory
@@ -360,7 +360,7 @@ public:
         _jailedFilePath = newPath;
     }
 
-    const std::string& getRootFilePathAnonym() const { return _jailedFilePathAnonym; };
+    const std::string& getRootFilePathAnonym() const { return _jailedFilePathAnonym; }
 
     void setRootFilePathAnonym(const std::string& newPath)
     {
