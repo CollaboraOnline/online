@@ -1742,7 +1742,7 @@ std::string getServerString()
     if (sig)
         return "COOLWSD HTTP Server " + Util::getCoolVersion();
 
-    return "COOLWSD HTTP Server";
+    return " ";
 }
 }
 
