@@ -1363,6 +1363,11 @@ L.Control.Menubar = L.Control.extend({
 		// Only these menu options will be visible in readonly mode
 		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'insert', 'slide', 'help'],
 
+		// Only these UNO commands will be enabled in readonly mode
+		allowedViewModeCommands: [
+			'.uno:Signature',
+		],
+
 		allowedViewModeActions: [
 			() => app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hasAnyComments() ? 'savecomments' : undefined,
 			'shareas', 'print', // file menu
@@ -1723,6 +1728,7 @@ L.Control.Menubar = L.Control.extend({
 			var aItem = this;
 			var type = $(aItem).data('type');
 			var id = $(aItem).data('id');
+			let uno = $(aItem).data('uno');
 			var constChecked = 'lo-menu-item-checked';
 			if (self._map.isEditMode()) {
 				if (type === 'unocommand') { // enable all depending on stored commandStates
@@ -1874,8 +1880,12 @@ L.Control.Menubar = L.Control.extend({
 				}
 			} else { // eslint-disable-next-line no-lonely-if
 				if (type === 'unocommand') { // disable all uno commands
-					$(aItem).addClass('disabled');
-					aItem.title = _('Read-only mode');
+					// Except the ones listed in allowedViewModeCommands:
+					let allowed = self.options.allowedViewModeCommands.includes(uno);
+					if (!allowed) {
+						$(aItem).addClass('disabled');
+						aItem.title = _('Read-only mode');
+					}
 				} else if (type === 'action') { // disable all except allowedViewModeActions
 					var found = false;
 					for (var i in self.options.allowedViewModeActions) {
