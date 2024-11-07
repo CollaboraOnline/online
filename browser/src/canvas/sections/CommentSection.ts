@@ -1540,14 +1540,18 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 			return;
 
+		var innerText;
 		if (this.isEdit())
-			this.sectionProperties.collapsedInfoNode.innerText = '!';
+			innerText = '!';
 		else if (replycount === '!' || typeof replycount === "number" && replycount > 0)
-			this.sectionProperties.collapsedInfoNode.innerText = replycount;
+			innerText = replycount;
 		else
-			this.sectionProperties.collapsedInfoNode.innerText = '';
+			innerText = '';
 
-		if (this.sectionProperties.collapsedInfoNode.innerText === '' || this.isContainerVisible())
+		if (this.sectionProperties.collapsedInfoNode.innerText != innerText)
+			this.sectionProperties.collapsedInfoNode.innerText = innerText;
+
+		if (innerText === '' || this.isContainerVisible())
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';
 		else if ((!this.isContainerVisible() && this.sectionProperties.collapsedInfoNode.innerText !== ''))
 			this.sectionProperties.collapsedInfoNode.style.display = '';
