@@ -47,7 +47,12 @@ jobs:
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
-    - if: matrix.language == 'cpp'
+    - if: |
+        matrix.language == 'cpp' &&
+       (
+         github.event.pull_request &&
+         contains(fromJSON('["cpp","hpp"]'), join(github.event.pull_request.changed_files, ' '))
+       )
       name: Install dependencies
       run: |
         sudo sh -c "echo deb-src http://archive.ubuntu.com/ubuntu/ noble main restricted >> /etc/apt/sources.list"
@@ -59,7 +64,12 @@ jobs:
         sudo apt install -y libunwind-dev
         sudo apt-get install -y build-essential git libpoco-dev libcap-dev python3-polib npm libpng-dev python3-lxml libpam-dev libzstd-dev libssl-dev libcppunit-dev
 
-    - if: matrix.language == 'cpp'
+    - if: |
+        matrix.language == 'cpp' &&
+       (
+         github.event.pull_request &&
+         contains(fromJSON('["cpp","hpp"]'), join(github.event.pull_request.changed_files, ' '))
+       )
       name: Configure
       run: |
         cd .. && wget https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-24.04-assets.tar.gz
@@ -68,7 +78,12 @@ jobs:
         ./configure --enable-silent-rules --with-lokit-path=${LOCOREPATH}/include --with-lo-path=${LOCOREPATH}/instdir --enable-debug
         cd browser && npm update
 
-    - if: matrix.language == 'cpp'
+    - if: |
+        matrix.language == 'cpp' &&
+       (
+         github.event.pull_request &&
+         contains(fromJSON('["cpp","hpp"]'), join(github.event.pull_request.changed_files, ' '))
+       )
       name: Build
       run: make -j `nproc` build-nocheck
 
