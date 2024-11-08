@@ -1438,6 +1438,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     }
 
     const std::string userSettingsUri = wopiFileInfo->getUserSettingsUri();
+    const std::string sharedSettingsUri = wopiFileInfo->getSharedSettingsUri();
 
     // Pass the ownership to the client session.
     session->setWopiFileInfo(std::move(wopiFileInfo));
@@ -1451,6 +1452,11 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
 
     if (!userSettingsUri.empty())
         asyncInstallPresets(userSettingsUri, wopiStorage->getJailPresetsPath());
+
+    // TODO for testing, just put these into the same destination autotext as
+    // user autotext for now
+    if (!sharedSettingsUri.empty())
+        asyncInstallPresets(sharedSettingsUri, wopiStorage->getJailPresetsPath());
 
     return templateSource;
 }
