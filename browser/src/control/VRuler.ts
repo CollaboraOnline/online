@@ -433,12 +433,19 @@ class VRuler {
 		const firstTileXTranslate = topLeft.y;
 
 		let mapPaneYTranslate: number = 0;
-		const computedStyle = window.getComputedStyle(mapPane);
-		const transformValue = computedStyle.getPropertyValue('transform');
-		const transformMatrix = new DOMMatrixReadOnly(transformValue);
 
-		// Get the translateY values
-		mapPaneYTranslate = transformMatrix.f;
+		// Extract the transform property directly from the mapPane style
+		const transformValue = mapPane.style.transform;
+
+		// Check if the transformValue exists and contains 'translate3d'
+		if (transformValue && transformValue.startsWith('translate3d')) {
+			// Split the transformValue string by commas and get the Y value
+			const transformArray = transformValue.split(',');
+			if (transformArray.length >= 2) {
+				// The Y value is the second item in the 'translate3d' format
+				mapPaneYTranslate = parseFloat(transformArray[1].trim());
+			}
+		}
 
 		// we need to also consider  if there is more then 1 page then pageoffset is crucial to consider
 		// i have calculated current page using pageoffset and pageWidth coming from CORE
