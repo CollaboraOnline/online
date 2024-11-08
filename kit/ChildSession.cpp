@@ -1027,7 +1027,7 @@ bool ChildSession::saveDocumentBackground([[maybe_unused]] const StringVector& t
     }, getViewId()))
         return false; // fork failed
 
-    LOG_TRC("saveDocumentBackground returns succesful start.");
+    LOG_TRC("saveDocumentBackground returns successful start.");
     return true;
 #endif // !MOBILEAPP
 }
