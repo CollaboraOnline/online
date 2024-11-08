@@ -114,6 +114,9 @@ L.Clipboard = L.Class.extend({
 	},
 
 	getMetaBase: function() {
+		if (window.ThisIsAMobileApp) {
+			return 'collabora-online-mobile';
+		}
 		return window.makeHttpUrl('');
 	},
 
