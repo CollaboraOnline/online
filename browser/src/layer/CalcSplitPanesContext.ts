@@ -37,6 +37,8 @@ export class CalcSplitPanesContext extends SplitPanesContext {
 
 	/// Calculates the split position in (core-pixels) from the split-cell.
 	public setSplitPosFromCell(forceSplittersUpdate: boolean): void {
+		if (this._docLayer.sheetGeometry.getPart() !== this._docLayer._selectedPart)
+			return;
 		var newSplitPos = this._docLayer.sheetGeometry.getCellRect(this._splitCell.x, this._splitCell.y).min;
 
 		// setSplitPos limits the split position based on the screen size and it fires 'splitposchanged' (if there is any change).
