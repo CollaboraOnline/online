@@ -2481,7 +2481,7 @@ bool ChildSession::renderWindow(const StringVector& tokens)
     const double elapsedMics = elapsedMs.count() * 1000.; // Need MPixels/second, use Pixels/mics.
     LOG_TRC("paintWindow for " << winId << " returned " << width << 'X' << height << "@(" << startX
                                << ',' << startY << ',' << " with dpi scale: " << dpiScale
-                               << " and rendered in " << elapsedMs << " (" << area / elapsedMics
+                               << " and rendered in " << elapsedMs << " (" << (elapsedMics ? area / elapsedMics : 0)
                                << " MP/s).");
 
     uint64_t pixmapHash = hashSubBuffer(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight) + getViewId();
