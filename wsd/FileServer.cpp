@@ -444,13 +444,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("UserId", userId);
             fileInfo->set("UserFriendlyName", userNameString);
 
-            Poco::JSON::Object::Ptr settingsInfo = new Poco::JSON::Object();
+            Poco::JSON::Object::Ptr configStoreSettingsInfo = new Poco::JSON::Object();
             std::string uri = COOLWSD::getServerURL() + "/wopi/settings/sharedconfig.json";
-            settingsInfo->set("SharedSettings", Util::trim(uri));
+            configStoreSettingsInfo->set("SharedSettings", Util::trim(uri));
             uri = COOLWSD::getServerURL() + "/wopi/settings/userconfig.json";
-            settingsInfo->set("UserSettings", Util::trim(uri));
+            configStoreSettingsInfo->set("UserSettings", Util::trim(uri));
             // authentication token to get them ??
-            fileInfo->set("SettingsJSON", settingsInfo);
+            fileInfo->set("SettingsJSON", configStoreSettingsInfo);
 
             fileInfo->set("UserCanWrite", (requestDetails.getParam("permission") != "readonly") ? "true": "false");
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
@@ -529,6 +529,37 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         }
     }
 
+    //handle requests for settings.json contents
+    void handlePresetRequest(const std::string& kind, const std::string& prefix,
+                             const std::shared_ptr<StreamSocket>& socket,
+                             const std::vector<std::string> items)
+    {
+        Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
+        configInfo->set("kind", kind);
+
+        std::string cwd = std::filesystem::current_path();
+
+        Poco::JSON::Array::Ptr configAutoTexts = new Poco::JSON::Array();
+        for (std::string autotext : items)
+        {
+            Poco::JSON::Object::Ptr configAutoTextEntry = new Poco::JSON::Object();
+            std::string uri = COOLWSD::getServerURL() + prefix + cwd + autotext;
+            //COOLWSD::getServerURL tediously includes spaces at the start
+            configAutoTextEntry->set("uri", Util::trim(uri));
+            configAutoTexts->add(configAutoTextEntry);
+        }
+        configInfo->set("autotext", configAutoTexts);
+
+        std::ostringstream jsonStream;
+        configInfo->stringify(jsonStream);
+
+        http::Response httpResponse(http::StatusCode::OK);
+        FileServerRequestHandler::hstsHeaders(httpResponse);
+        httpResponse.set("Last-Modified", Util::getHttpTime(std::chrono::system_clock::now()));
+        httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
+        socket->send(httpResponse);
+    }
+
     //handles request starts with /wopi/settings
     void handleSettingsRequest(const HTTPRequest& request,
                                const std::shared_ptr<StreamSocket>& socket)
@@ -540,36 +571,18 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
         if (request.getMethod() == "GET" && configPath.ends_with("config.json"))
         {
-            // TODO serverconfig later
-            if (configPath != "/userconfig.json")
-                throw BadRequestException("Invalid Config Request: " + configPath);
-
-            Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
-            configInfo->set("kind", "user");
-
-            std::string cwd = std::filesystem::current_path();
-
-            Poco::JSON::Array::Ptr configAutoTexts = new Poco::JSON::Array();
-            for (std::string autotext : { "/test/data/autotextsample.bau", "/noexist.bau" })
+            if (configPath == "/userconfig.json")
             {
-                Poco::JSON::Object::Ptr configAutoTextEntry = new Poco::JSON::Object();
-                std::string uri = COOLWSD::getServerURL() + prefix + cwd + autotext;
-                //COOLWSD::getServerURL tediously includes spaces at the start
-                configAutoTextEntry->set("uri", Util::trim(uri));
-                configAutoTexts->add(configAutoTextEntry);
+                handlePresetRequest("user", prefix, socket,
+                                    { "/test/data/autotextsample.bau", "/noexist.bau" });
             }
-            configInfo->set("autotext", configAutoTexts);
-
-            std::ostringstream jsonStream;
-            configInfo->stringify(jsonStream);
-
-            http::Response httpResponse(http::StatusCode::OK);
-            FileServerRequestHandler::hstsHeaders(httpResponse);
-            httpResponse.set("Last-Modified", Util::getHttpTime(std::chrono::system_clock::now()));
-            httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
-            socket->send(httpResponse);
-
-            return;
+            else if (configPath == "/sharedconfig.json")
+            {
+                handlePresetRequest("shared", prefix, socket,
+                                    { "/test/data/autotextshared.bau" });
+            }
+            else
+                throw BadRequestException("Invalid Config Request: " + configPath);
         }
         else if(request.getMethod() == "GET")
         {
@@ -584,7 +597,6 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             httpResponse.set("Last-Modified", Util::getHttpTime(localFile->fileLastModifiedTime));
             httpResponse.setBody(ss.str(), "text/plain; charset=utf-8");
             socket->send(httpResponse);
-            return;
         }
     }
 
