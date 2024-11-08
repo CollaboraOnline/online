@@ -319,6 +319,7 @@ public:
 #endif
 
     static std::unordered_set<std::string> EditFileExtensions;
+    static constexpr unsigned MinConnectedSessions = 3; ///< Minimum value for MaxConnections
     static unsigned MaxConnections;
     static unsigned MaxDocuments;
     static std::string HardwareResourceWarning;

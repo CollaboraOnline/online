@@ -9,6 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include <config.h>
+#include <limits>
 
 #include "Util.hpp"
 
@@ -158,6 +159,38 @@ std::size_t getTotalSystemMemoryKb()
     }
 
     return totalMemKb;
+}
+
+std::size_t getFromFile(const char* path, const size_t defaultValue)
+{
+    FILE* file = fopen(path, "r");
+    if (!file)
+        return defaultValue;
+    char line[4096] = { 0 };
+    // coverity[tainted_data_argument : FALSE] - we trust the kernel-provided data
+    const char *line2 = fgets(line, sizeof(line), file);
+    fclose(file);
+    if(!line2)
+        return defaultValue;
+    const uint64_t num = u64FromString(line, /*def=*/defaultValue).first;
+    return num > std::numeric_limits<size_t>::max() ? defaultValue : size_t(num);
+}
+
+size_t getMaxConcurrentTCPConnections()
+{
+#ifdef __linux__
+    // - 4 tcp_max_orphans sockets per MB
+    // - {4096M -> 16384}, {16384M -> 65536}, {65407M -> 262144}, ...
+    const ssize_t tcp_max_orphans = getFromFile("/proc/sys/net/ipv4/tcp_max_orphans", 0); // ignored if n/a
+    const ssize_t nf_conntrack_max = getFromFile("/proc/sys/net/nf_conntrack_max", 0); // ignored if n/a
+    const size_t res = nf_conntrack_max > 0 ? std::min(tcp_max_orphans, nf_conntrack_max) : tcp_max_orphans;
+    LOG_DBG("MaxConcurrentTCPConnections: min(orphans " << tcp_max_orphans
+            << ", conntrack " << nf_conntrack_max << ") -> "
+            << res);
+    return res;
+#else
+    return 0;
+#endif
 }
 
 std::size_t getFromCGroup(const std::string& group, const std::string& key)

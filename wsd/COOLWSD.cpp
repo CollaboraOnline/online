@@ -11,6 +11,8 @@
 
 #include <config.h>
 #include <config_version.h>
+#include <cstdint>
+#include <limits>
 
 #include "COOLWSD.hpp"
 
@@ -1208,6 +1210,8 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         { "net.proxy_prefix", "false" },
         { "net.content_security_policy", "" },
         { "net.frame_ancestors", "" },
+        // Maximum number of concurrent external TCP connections. See `net::Defaults.maxExtConnections`.
+        { "net.max_ext_connections", "0" },
         { "num_prespawn_children", NUM_PRESPAWN_CHILDREN },
         { "per_document.always_save_on_exit", "false" },
         { "per_document.autosave_duration_secs", "300" },
@@ -1532,6 +1536,27 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(conf);
+
+    {
+        // Determine `net::Defaults.maxExtConnections` (maximum external concurrent TCP connections)
+        const size_t maxSessions = std::max<size_t>(COOLWSD::MinConnectedSessions, MAX_CONNECTIONS); // min. ext session count
+        const int64_t confMaxConcurrentTCPConnections = ConfigUtil::getConfigValue<int64_t>(conf, "net.max_ext_connections", 0);
+        const size_t sysMaxConcurrentTCPConnections = Util::getMaxConcurrentTCPConnections();
+        size_t maxConcurrentTCPConnections;
+        if (confMaxConcurrentTCPConnections >= COOLWSD::MinConnectedSessions)
+            maxConcurrentTCPConnections = static_cast<size_t>(confMaxConcurrentTCPConnections); // use config value
+        else if (confMaxConcurrentTCPConnections < 0)
+            maxConcurrentTCPConnections = 0; // ignores instrument
+        else if (sysMaxConcurrentTCPConnections >= maxSessions)
+            maxConcurrentTCPConnections = sysMaxConcurrentTCPConnections; // use system value
+        else
+            maxConcurrentTCPConnections = 0; // ignores instrument
+        net::Defaults.maxExtConnections = maxConcurrentTCPConnections;
+        LOG_DBG("net::Defaults.maxExtConnections: maxSessions " << maxSessions
+                << ", maxExtConnections[conf " << confMaxConcurrentTCPConnections
+                << ", sys " << sysMaxConcurrentTCPConnections << "] -> "
+                << net::Defaults.maxExtConnections);
+    }
 
     // Trace Event Logging.
     EnableTraceEventLogging = ConfigUtil::getConfigValue<bool>(conf, "trace_event[@enable]", false);
@@ -2049,10 +2074,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         }
     }
 
-    if (COOLWSD::MaxConnections < 3)
+    if (COOLWSD::MaxConnections < COOLWSD::MinConnectedSessions)
     {
-        LOG_ERR("MAX_CONNECTIONS must be at least 3");
-        COOLWSD::MaxConnections = 3;
+        LOG_ERR("MAX_CONNECTIONS must be at least " << COOLWSD::MinConnectedSessions);
+        COOLWSD::MaxConnections = COOLWSD::MinConnectedSessions;
     }
 
     if (COOLWSD::MaxDocuments > COOLWSD::MaxConnections)

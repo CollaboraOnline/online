@@ -34,8 +34,11 @@ class UnitTimeoutInactivity : public UnitTimeoutBase0
     TestResult testHttp(bool forceInactivityTO);
     TestResult testWS(bool forceInactivityTO);
 
-    void configure(Poco::Util::LayeredConfiguration& /* config */) override
+    void configure(Poco::Util::LayeredConfiguration& config) override
     {
+        // Ensured config-default zero to use system-default for `net::Defaults.maxExtConnections`
+        config.setInt64("net.max_ext_connections", 0);
+
         // net::Defaults.inactivityTimeout = std::chrono::seconds(3600);
         net::Defaults.inactivityTimeout = std::chrono::milliseconds(100);
         //

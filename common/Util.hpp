@@ -333,8 +333,12 @@ namespace Util
     /// Returns the total physical memory (in kB) available in the system
     size_t getTotalSystemMemoryKb();
 
+    /// Returns the maximum number of concurrent TCP connections, zero if undefined.
+    /// Value is memory bound. On GNU/Linux approximately 4 concurrent TCP connections per MB system memory are provided.
+    size_t getMaxConcurrentTCPConnections();
+
     /// Returns the numerical content of a file at @path
-    std::size_t getFromFile(const char *path);
+    std::size_t getFromFile(const char *path, const size_t defaultValue=0);
 
     /// Returns the cgroup's memory limit, or 0 if not available in bytes
     std::size_t getCGroupMemLimit();

@@ -72,7 +72,7 @@ std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 std::atomic<size_t> StreamSocket::ExternalConnectionCount = 0;
 
 net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3600),
-                                     .maxExtConnections = 200000 /* arbitrary value to be resolved */ };
+                                     .maxExtConnections = 0 /* disabled by default */};
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 

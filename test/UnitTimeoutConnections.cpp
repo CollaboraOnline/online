@@ -11,6 +11,7 @@
 
 #include <config.h>
 
+#include <cstdint>
 #include <string>
 
 #include <HttpRequest.hpp>
@@ -32,9 +33,9 @@ static constexpr size_t ConnectionCount = 9;
 /// Base test suite class for connection limit (limited) using HTTP and WS sessions.
 class UnitTimeoutConnections : public UnitTimeoutBase1
 {
-    void configure(Poco::Util::LayeredConfiguration& /* config */) override
+    void configure(Poco::Util::LayeredConfiguration& config) override
     {
-        net::Defaults.maxExtConnections = ConnectionLimit;
+        config.setInt64("net.max_ext_connections", static_cast<int64_t>(ConnectionLimit)); // Sets `net::Defaults.maxExtConnections`
     }
 
 public:

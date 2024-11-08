@@ -36,6 +36,9 @@ public:
     std::chrono::microseconds inactivityTimeout;
 
     /// Maximum number of concurrent external TCP connections. Zero disables instrument.
+    /// Set to COOLWSD config `net.max_ext_connections` if >= `COOLWSD::MinConnectedSessions`
+    /// or is disabled (zeroed) if config < 0.
+    /// Otherwise set to system-value, see `Util::getMaxConcurrentTCPConnections`.
     size_t maxExtConnections;
 };
 extern DefaultValues Defaults;

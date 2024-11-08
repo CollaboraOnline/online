@@ -21,7 +21,8 @@ int spawnProcess(const std::string& cmd, const StringVector& args) { return 0; }
 
 std::string getHumanizedBytes(unsigned long nBytes) { return std::string(); }
 size_t getTotalSystemMemoryKb() { return 0; }
-std::size_t getFromFile(const char* path) { return 0; }
+size_t getMaxConcurrentTCPConnections() { return 0; }
+std::size_t getFromFile(const char* /*path*/, const size_t /*defaultValue*/) { return 0; }
 std::size_t getCGroupMemLimit() { return 0; }
 std::size_t getCGroupMemSoftLimit() { return 0; }
 size_t getMemoryUsagePSS(const pid_t pid) { return 0; }
