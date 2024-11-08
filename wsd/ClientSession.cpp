@@ -931,7 +931,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens.equals(0, "clientzoom"))
     {
         int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
-        if (tokens.size() != 5 ||
+        if (tokens.size() < 5 ||
             !getTokenInteger(tokens[1], "tilepixelwidth", tilePixelWidth) ||
             !getTokenInteger(tokens[2], "tilepixelheight", tilePixelHeight) ||
             !getTokenInteger(tokens[3], "tiletwipwidth", tileTwipWidth) ||

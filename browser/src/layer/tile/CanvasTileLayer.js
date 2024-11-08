@@ -1030,9 +1030,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 
 		var newClientZoom = 'tilepixelwidth=' + this._tileWidthPx + ' ' +
-			'tilepixelheight=' + this._tileHeightPx + ' ' +
-			'tiletwipwidth=' + this._tileWidthTwips + ' ' +
-			'tiletwipheight=' + this._tileHeightTwips;
+		    'tilepixelheight=' + this._tileHeightPx + ' ' +
+		    'tiletwipwidth=' + this._tileWidthTwips + ' ' +
+		    'tiletwipheight=' + this._tileHeightTwips + ' ' +
+		    'dpiscale=' + window.devicePixelRatio + ' ' +
+		    'zoom=' + this._map.getZoom()
 
 		if (this._clientZoom !== newClientZoom || forceUpdate) {
 			// the zoom level has changed

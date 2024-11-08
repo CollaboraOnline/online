@@ -1189,8 +1189,9 @@ bool ChildSession::getCommandValues(const StringVector& tokens)
 bool ChildSession::clientZoom(const StringVector& tokens)
 {
     int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
+    std::string dpiScale, zoom;
 
-    if (tokens.size() != 5 ||
+    if (tokens.size() < 5 ||
         !getTokenInteger(tokens[1], "tilepixelwidth", tilePixelWidth) ||
         !getTokenInteger(tokens[2], "tilepixelheight", tilePixelHeight) ||
         !getTokenInteger(tokens[3], "tiletwipwidth", tileTwipWidth) ||
@@ -1203,6 +1204,15 @@ bool ChildSession::clientZoom(const StringVector& tokens)
     getLOKitDocument()->setView(_viewId);
 
     getLOKitDocument()->setClientZoom(tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight);
+
+    if (tokens.size() == 7 &&
+        getTokenString(tokens[5], "dpiscale", dpiScale) &&
+        getTokenString(tokens[6], "zoom", zoom))
+    {
+        getLOKitDocument()->setViewOption("dpiscale", dpiScale.c_str());
+        getLOKitDocument()->setViewOption("zoom", zoom.c_str());
+    }
+
     return true;
 }
 
