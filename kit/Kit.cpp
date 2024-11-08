@@ -15,6 +15,7 @@
 
 #include <config.h>
 
+#include <csignal>
 #include <dlfcn.h>
 #include <limits>
 #ifdef __linux__
@@ -177,6 +178,55 @@ bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *
 
 [[maybe_unused]]
 static LokHookFunction2* initFunction = nullptr;
+
+class BackgroundSaveWatchdog
+{
+public:
+    BackgroundSaveWatchdog(unsigned mobileAppDocId)
+        : _saveCompleted(false)
+        , _watchdogThread(
+              [&]()
+              {
+                  Util::setThreadName("kitbgsv_" + Util::encodeId(mobileAppDocId, 3) + "_wdg");
+
+                  const auto timeout = std::chrono::seconds(
+                      ConfigUtil::getInt("per_document.bgsave_timeout_secs", 60));
+
+                  std::unique_lock<std::mutex> lock(_watchdogMutex);
+
+                  LOG_TRC("Starting bgsave watchdog with " << timeout << " timeout");
+                  if (_watchdogCV.wait_for(lock, timeout,
+                                           [this]() { return _saveCompleted.load(); }))
+                  {
+                      // Done!
+                      LOG_TRC("BgSave finished in time");
+                  }
+                  else
+                  {
+                      // Failed!
+                      LOG_WRN("BgSave timed out and will self-destroy");
+                      Log::shutdown(); // Flush logs.
+                      // raise(3) will exit the current thread, not the process.
+                      ::kill(0, SIGKILL); // kill(2) is trapped by seccomp.
+                  }
+              })
+    {
+    }
+
+    void complete()
+    {
+        _saveCompleted = true;
+        _watchdogCV.notify_all();
+    }
+
+private:
+    std::atomic_bool _saveCompleted; ///< Defend against spurious wakes.
+    std::thread _watchdogThread;
+    std::condition_variable _watchdogCV;
+    std::mutex _watchdogMutex;
+};
+
+static std::unique_ptr<BackgroundSaveWatchdog> BgSaveWatchdog;
 
 namespace
 {
@@ -1355,6 +1405,12 @@ void Document::handleSaveMessage(const std::string &)
     // if a bgsave process - now we can clean up.
     if (_isBgSaveProcess)
     {
+        LOG_TRC("BgSave completed");
+        if (BgSaveWatchdog)
+        {
+            BgSaveWatchdog->complete();
+        }
+
         auto socket = _saveProcessParent.lock();
         if (socket)
         {
@@ -1483,6 +1539,9 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
         // now we just have a single socket to our parent
 
         Util::sleepFromEnvIfSet("KitBackgroundSave", "SLEEPBACKGROUNDFORDEBUGGER");
+
+        assert(!BgSaveWatchdog && "Unexpected to have BackgroundSaveWatchdog instance");
+        BgSaveWatchdog = std::make_unique<BackgroundSaveWatchdog>(_mobileAppDocId);
 
         UnitKit::get().postBackgroundSaveFork();
 
