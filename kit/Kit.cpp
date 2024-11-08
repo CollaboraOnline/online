@@ -41,18 +41,17 @@
 
 #include <atomic>
 #include <cassert>
+#include <chrono>
 #include <climits>
 #include <condition_variable>
-#include <chrono>
 #include <cstdlib>
 #include <cstring>
-#include <filesystem>
 #include <iostream>
 #include <memory>
-#include <string>
-#include <sstream>
-#include <thread>
 #include <mutex>
+#include <sstream>
+#include <string>
+#include <thread>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
