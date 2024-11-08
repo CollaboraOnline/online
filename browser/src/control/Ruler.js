@@ -38,6 +38,7 @@ L.Control.Ruler = L.Control.extend({
 		map.on('scrolllimits', this._updatePaintTimer, this);
 		map.on('moveend', this._fixOffset, this);
 		app.events.on('updatepermission', this._changeInteractions.bind(this));
+		this._map.on('rulerchanged', this._onRulerChanged, this);
 		L.DomUtil.addClass(map.getContainer(), 'hasruler');
 		this._map = map;
 
@@ -200,6 +201,16 @@ L.Control.Ruler = L.Control.extend({
 		return this._rWrapper;
 	},
 
+	_onRulerChanged() {
+		// update show ruler state on rulerChange event
+		this.options.showruler = this._map.uiManager.getBooleanDocTypePref('ShowRuler', true);
+		if(this.options.showruler) {
+			// in case of disabled ruler at docload calculation of offset can be ignored 
+			// but after enabling the ruler we need to set the offset.
+			this._fixOffset();
+		}
+	},
+
 	_updateOptions: function(obj) {
 		// window.app.console.log('===> _updateOptions');
 		// Note that the values for margin1, margin2 and leftOffset are not in any sane
@@ -226,6 +237,8 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_updateParagraphIndentations: function() {
+		// if ruler is hidden no need to calculate the indentation of the para
+		if (!this.options.showruler) return;
 		var items = this._map['stateChangeHandler'];
 		var state = items.getItemValue('.uno:LeftRightParaMargin');
 		// in impress/draw values are not as per Inch factore we should consider this case
@@ -401,7 +414,8 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_fixOffset: function() {
-		if (!this._map.options.docBounds)
+		// in case of disabled ruler at docload or event like 'moveend' calculation of offset can be ignored
+		if (!this._map.options.docBounds || !this.options.showruler)
 			return;
 
 		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
