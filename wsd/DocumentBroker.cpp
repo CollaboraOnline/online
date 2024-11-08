@@ -3089,7 +3089,10 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     // Note: It's odd to capture these here, but this function is used from ClientSession too.
     const bool autosave = isAutosave || (_unitWsd && _unitWsd->isAutosave());
     const bool backgroundConfigured = (autosave && _backgroundAutoSave) || _backgroundManualSave;
-    const bool background = forceBackgroundEnv || (!finalWrite && backgroundConfigured);
+    const bool canBackground = forceBackgroundEnv || (!finalWrite && backgroundConfigured);
+    constexpr std::size_t MaxFailureCountForBackgroundSaving = 2; // Give only 1 extra chance.
+    const bool background = canBackground && _saveManager.lastSaveSuccessful() &&
+                            _saveManager.saveFailureCount() < MaxFailureCountForBackgroundSaving;
 
     if (finalWrite)
         LOG_TRC("suspected final save: don't do background write");
