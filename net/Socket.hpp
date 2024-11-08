@@ -147,7 +147,7 @@ public:
         : _type(type)
         , _clientPort(0)
         , _fd(createSocket(type))
-        , _open(_fd >= 0)
+        , _closed(_fd < 0)
         , _creationTime(creationTime)
         , _lastSeenTime(_creationTime)
         , _bytesSent(0)
@@ -172,10 +172,8 @@ public:
         }
     }
 
-    /// Returns true if this socket is open, i.e. allowed to be polled and not shutdown
-    bool isOpen() const { return _open; }
     /// Returns true if this socket has been closed, i.e. rejected from polling and potentially shutdown
-    bool isClosed() const { return !_open; }
+    bool isClosed() const { return _closed; }
 
     constexpr Type type() const { return _type; }
     constexpr bool isIPType() const { return Type::IPv4 == _type || Type::IPv6 == _type; }
@@ -415,7 +413,7 @@ protected:
         : _type(type)
         , _clientPort(0)
         , _fd(fd)
-        , _open(_fd >= 0)
+        , _closed(_fd < 0)
         , _creationTime(creationTime)
         , _lastSeenTime(_creationTime)
         , _bytesSent(0)
@@ -435,7 +433,7 @@ protected:
     void setNoShutdown() { _noShutdown = true; }
 
     /// Explicitly marks this socket closed, i.e. rejected from polling and potentially shutdown
-    void setClosed() { _open = false; }
+    void setClosed() { _closed = true; }
 
     /// Explicitly marks this socket and the given SocketDisposition closed
     void setClosed(SocketDisposition &disposition) { setClosed(); disposition.setClosed(); }
@@ -475,8 +473,8 @@ private:
     const Type _type;
     unsigned int _clientPort;
     const int _fd;
-    /// True if this socket is open.
-    bool _open;
+    /// True if this socket is closed.
+    bool _closed;
 
     const std::chrono::steady_clock::time_point _creationTime;
     std::chrono::steady_clock::time_point _lastSeenTime;
@@ -1066,7 +1064,7 @@ public:
         LOG_TRC("StreamSocket dtor called with pending write: " << _outBuffer.size()
                                                                 << ", read: " << _inBuffer.size());
 
-        if (isOpen())
+        if (!isClosed())
         {
             ASSERT_CORRECT_SOCKET_THREAD(this);
             if (_socketHandler)
@@ -1449,14 +1447,14 @@ public:
 
         if (_socketHandler->checkTimeout(now))
         {
-            assert(isOpen() == false); // should have issued shutdown
+            assert(isClosed()); // should have issued shutdown
             setClosed();
             LOGA_DBG(Socket, "socket timeout: " << getStatsString(now) << ", " << *this);
             disposition.setClosed();
             return;
         }
 
-        if (!isOpen() || checkRemoval(now))
+        if (isClosed() || checkRemoval(now))
         {
             disposition.setClosed();
             return;
@@ -1578,7 +1576,7 @@ public:
             _socketHandler->onDisconnect();
             setClosed(disposition);
         }
-        else if (!isOpen())
+        else if (isClosed())
             disposition.setClosed();
     }
 
