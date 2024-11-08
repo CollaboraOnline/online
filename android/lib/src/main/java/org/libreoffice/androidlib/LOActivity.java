@@ -964,7 +964,7 @@ public class LOActivity extends AppCompatActivity {
     void callFakeWebsocketOnMessage(final String message) {
         String base64Message = Base64.getEncoder().encodeToString(message.getBytes());
 
-        rawCallFakeWebsocketOnMessage("window.atob('" + base64Message + "')");
+        rawCallFakeWebsocketOnMessage("b64d('" + base64Message + "')");
     }
 
     /**
@@ -996,49 +996,74 @@ public class LOActivity extends AppCompatActivity {
             });
 
         // update progress bar when loading
-        if (message.startsWith("'progress")) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    JSONObject messageJSON;
-                    String messageID;
+        if (b64MessageStartsWith(message, "progress")) {
+            runOnUiThread(() -> {
+                JSONObject messageJSON;
+                String messageID;
+                String decodedMessage = b64d(message);
 
-                    int jsonStart = message.indexOf("{");
-                    if (jsonStart == -1) {
-                        return;
-                    }
-
-                    try {
-                        messageJSON = new JSONObject(message.substring(jsonStart));
-                        messageID = messageJSON.getString("id");
-                    } catch (JSONException e) {
-                        return;
-                    }
-
-                    if (messageID.equals("finish")) {
-                        mProgressDialog.dismiss();
-                        if (BuildConfig.GOOGLE_PLAY_ENABLED && rateAppController != null)
-                            rateAppController.askUserForRating();
-                        return;
-                    }
-
-                    try {
-                        String text = messageJSON.getString("text");
-                        mProgressDialog.mTextView.setText(text);
-                    } catch (JSONException ignored) {}
-
-                    try {
-                        int progress = messageJSON.getInt("value");
-                        mProgressDialog.determinateProgress(progress);
-                    } catch (JSONException ignored) {}
+                int jsonStart = decodedMessage.indexOf("{");
+                if (jsonStart == -1) {
+                    return;
                 }
-            });
-        } else if (message.startsWith("'error:")) {
-            runOnUiThread(new Runnable() {
-                public void run() {
+
+                try {
+                    messageJSON = new JSONObject(decodedMessage.substring(jsonStart));
+                    messageID = messageJSON.getString("id");
+                } catch (JSONException e) {
+                    return;
+                }
+
+                if (messageID.equals("finish")) {
                     mProgressDialog.dismiss();
+                    if (BuildConfig.GOOGLE_PLAY_ENABLED && rateAppController != null)
+                        rateAppController.askUserForRating();
+                    return;
                 }
+
+                try {
+                    String text = messageJSON.getString("text");
+                    mProgressDialog.mTextView.setText(text);
+                } catch (JSONException ignored) {}
+
+                try {
+                    int progress = messageJSON.getInt("value");
+                    mProgressDialog.determinateProgress(progress);
+                } catch (JSONException ignored) {}
             });
+        } else if (b64MessageStartsWith(message, "error:")) {
+            runOnUiThread(() -> mProgressDialog.dismiss());
         }
+    }
+
+    /**
+     * determine if a base64-encoded message which would normally be decoded with b64d on the online-side starts with a specific string
+     * useful to see if a message is a specific command...
+     *
+     * @param message The message to test for the prefix, including the "b64d('" decoder wrapping
+     * @param prefix The prefix to test for, not including any sort of wrapping
+     * @return true if the decoded message starts with the prefix, else false
+     */
+    private static boolean b64MessageStartsWith(String message, String prefix) {
+        String base64Message = Base64.getEncoder().withoutPadding().encodeToString(prefix.getBytes());
+
+        return message.startsWith("b64d('" + base64Message);
+    }
+
+    /**
+     * decode a base64-encoded message which would normally be decoded with b64d on the online-side
+     *
+     * @param message The message to decode, including the "b64d('{message}')" decoder wrapping
+     * @return The decoded message
+     */
+    private static String b64d(String message) {
+        assert message.startsWith("b64d('");
+        assert message.endsWith("')");
+
+        String messageContent = message.substring("b64d('".length(), message.length() - "')".length());
+
+        byte[] decodedContent = Base64.getDecoder().decode(messageContent);
+        return new String(decodedContent);
     }
 
     /**
