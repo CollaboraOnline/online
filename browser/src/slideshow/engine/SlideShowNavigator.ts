@@ -173,6 +173,10 @@ class SlideShowNavigator {
 	}
 
 	rewindToPreviousSlide() {
+		// play again transition on first slide and any effect that starts
+		// automatically after the first slide is displayed
+		if (this.currentSlide === 0) this.goToFirstSlide();
+
 		let prevSlide = 0;
 		if (this.currentSlide !== undefined && this.currentSlide > 0) {
 			prevSlide = this.currentSlide - 1;
@@ -183,6 +187,7 @@ class SlideShowNavigator {
 		);
 		this.isRewindingToPrevSlide = true;
 		this.displaySlide(prevSlide, true);
+		this.isRewindingToPrevSlide = false;
 	}
 
 	displaySlide(nNewSlide: number, bSkipTransition: boolean) {
