@@ -5,6 +5,7 @@ which can be found here: https://prometheus.io/docs/instrumenting/exposition_for
 GLOBAL
 
     global_host_system_memory_bytes - Total host system memory in bytes.
+    global_host_tcp_connections - Configured maximum number of concurrent TCP connections.
     global_memory_available_bytes – Memory available to our application in bytes. This is equal to global_host_system_memory_bytes * memproportion where memproportion represents the maximum percentage of system memory consumed by all of the Collabora Online, after which we start cleaning up idle documents. This parameter can be setup in coolwsd.xml.
     global_memory_used_bytes – Total memory usage: PSS(coolwsd) + RSS(forkit) + Private_Dirty(all assigned coolkits).
     global_memory_free_bytes - global_memory_available_bytes - global_memory_used_bytes
@@ -15,6 +16,7 @@ COOLWSD
     coolwsd_thread_count – number of threads in the current coolwsd process.
     coolwsd_cpu_time_seconds – the CPU usage by current coolwsd process.
     coolwsd_memory_used_bytes – the memory used by current coolwsd process: PSS(coolwsd).
+    coolwsd_tcp_connections_used - number of used TCP connections.
 
 FORKIT
 
