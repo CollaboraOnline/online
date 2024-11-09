@@ -1073,12 +1073,20 @@ fi
 # Code Coverage.
 AC_MSG_CHECKING([whether code-coverage is enabled])
 if test "x$with_coverage" != "x"; then
-    AC_MSG_RESULT([yes ($with_coverage)])
-    CODE_COVERAGE=1
-    CXXFLAGS="$CXXFLAGS --coverage"
-    CFLAGS="$CFLAGS --coverage"
-    LDFLAGS="$LDFLAGS -Wl,--dynamic-list-data --coverage"
-    coverage_msg="Code-Coverage is enabled"
+
+    AC_DEFUN(AC_PROG_LCOV, [AC_CHECK_PROG(LCOV,lcov,yes)])
+    AC_PROG_LCOV
+    if test x"${LCOV}" == x"yes" ; then
+        AC_MSG_RESULT([yes ($with_coverage)])
+        CODE_COVERAGE=1
+        CXXFLAGS="$CXXFLAGS --coverage"
+        CFLAGS="$CFLAGS --coverage"
+        LDFLAGS="$LDFLAGS -Wl,--dynamic-list-data --coverage"
+        coverage_msg="Code-Coverage is enabled"
+    else
+        AC_MSG_ERROR([Please install lcov (v1.16 preferred) to enable code-coverage])
+    fi
+
 else
     AC_MSG_RESULT([no])
     CODE_COVERAGE=0
