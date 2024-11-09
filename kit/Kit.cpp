@@ -557,18 +557,20 @@ namespace
     int linkGCDAFilesFunction(const char* fpath, const struct stat*, int typeflag,
                               struct FTW* /*ftwbuf*/)
     {
-        if (strcmp(fpath, sourceForGCDAFiles.c_str()) == 0)
+        const std::string path = fpath;
+        if (path == sourceForGCDAFiles)
         {
             LOG_TRC("nftw: Skipping redundant path: " << fpath);
             return FTW_CONTINUE;
         }
 
-        if (fpath.starts_with(childRootForGCDAFiles))
+        if (path.starts_with(childRootForGCDAFiles))
         {
             LOG_TRC("nftw: Skipping childRoot subtree: " << fpath);
             return FTW_SKIP_SUBTREE;
         }
 
+        assert(path.size() >= sourceForGCDAFiles.size());
         assert(fpath[strlen(sourceForGCDAFiles.c_str())] == '/');
         const char* relativeOldPath = fpath + strlen(sourceForGCDAFiles.c_str()) + 1;
         const Poco::Path newPath(destForGCDAFiles, Poco::Path(relativeOldPath));
