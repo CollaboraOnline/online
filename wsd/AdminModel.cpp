@@ -277,6 +277,14 @@ std::string AdminModel::query(const std::string& command)
     {
         return std::to_string(std::max(_sentStatsSize, _recvStatsSize));
     }
+    else if (token == "connection_activity")
+    {
+        return getConnectionActivity();
+    }
+    else if (token == "connection_stats_size")
+    {
+        return std::to_string(_connStatsSize);
+    }
 
     return std::string("");
 }
@@ -408,6 +416,17 @@ void AdminModel::addRecvStats(uint64_t recv)
         _recvStats.pop_front();
 
     notify("recv_activity " + std::to_string(recv));
+}
+
+void AdminModel::addConnectionStats(size_t connections)
+{
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
+
+    _connStats.push_back(connections);
+    if (_connStats.size() > _connStatsSize)
+        _connStats.pop_front();
+
+    notify("connection_activity " + std::to_string(connections));
 }
 
 void AdminModel::setCpuStatsSize(unsigned size)
@@ -688,6 +707,19 @@ std::string AdminModel::getRecvActivity()
 
     std::ostringstream oss;
     for (const auto& i: _recvStats)
+    {
+        oss << i << ',';
+    }
+
+    return oss.str();
+}
+
+std::string AdminModel::getConnectionActivity()
+{
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
+
+    std::ostringstream oss;
+    for (const auto& i: _connStats)
     {
         oss << i << ',';
     }

@@ -31,6 +31,37 @@ var Util = Base.extend({
 		return kbytes.toFixed(1) + ' ' + units[i];
 	},
 
+    /// Return human readable quantity with added multiple, percentage (1/100) or permyriad (1/10'000) to maximum, if maximum > 1.
+    humanizeQty: function (quantity, maximum) {
+        var qtyPrecision = 1;
+        var pct_s = '';
+        if (maximum > 1) {
+            qtyPrecision = 0;
+            var pct = ( 100 * quantity ) / maximum;
+            if( pct > 100 ) {
+                pct = quantity / maximum;
+                pct_s = ', ' + pct.toFixed(1) + 'x';
+            } else if( pct >= 10 ) {
+                pct_s = ', ' + pct.toFixed(0) + '%';
+            } else if( pct >= 0.1 ) {
+                pct_s = ', ' + pct.toFixed(1) + '%';
+            } else {
+                pct = ( 10000 * quantity ) / maximum;
+                if( pct >= 10 ) {
+                    pct_s = ', ' + pct.toFixed(0) + '‱';
+                } else {
+                    pct_s = ', ' + pct.toFixed(1) + '‱';
+                }
+            }
+        }
+        var unit = 1000;
+        var units = [_(''), ('k'), _('M'), _('G'), _('T'), _('P'), _('E'), _('Z'), _('Y'), _('B')];
+        for (var i = 0; Math.abs(quantity) >= unit && i < units.length; i++) {
+            quantity /= unit;
+        }
+        return quantity.toFixed(qtyPrecision) + units[i] + pct_s;
+    },
+
 	humanizeSecs: function(secs) {
 		var mins = 0;
 		var hrs = 0;

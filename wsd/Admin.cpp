@@ -122,7 +122,8 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
              tokens.equals(0, "mem_stats") ||
              tokens.equals(0, "cpu_stats") ||
              tokens.equals(0, "sent_activity") ||
-             tokens.equals(0, "recv_activity"))
+             tokens.equals(0, "recv_activity") ||
+             tokens.equals(0, "connection_activity"))
     {
         const std::string result = model.query(tokens[0]);
         if (!result.empty())
@@ -219,7 +220,9 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             << "cpu_stats_size="  << model.query("cpu_stats_size") << ' '
             << "cpu_stats_interval=" << std::to_string(_admin->getCpuStatsInterval()) << ' '
             << "net_stats_size=" << model.query("net_stats_size") << ' '
-            << "net_stats_interval=" << std::to_string(_admin->getNetStatsInterval()) << ' ';
+            << "net_stats_interval=" << std::to_string(_admin->getNetStatsInterval()) << ' '
+            << "connection_stats_size=" << model.query("connection_stats_size") << ' '
+            << "global_host_tcp_connections=" << net::Defaults.maxExtConnections << ' ';
 
         const DocProcSettings& docProcSettings = _admin->getDefDocProcSettings();
         oss << "limit_virt_mem_mb=" << docProcSettings.getLimitVirtMemMb() << ' '
@@ -659,6 +662,7 @@ void Admin::pollingThread()
 
             _model.addSentStats(sentCount - _lastSentCount);
             _model.addRecvStats(recvCount - _lastRecvCount);
+            _model.addConnectionStats(StreamSocket::getExternalConnectionCount());
 
             if (_lastRecvCount != recvCount || _lastSentCount != sentCount)
             {
