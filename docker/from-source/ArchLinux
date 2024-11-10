@@ -7,7 +7,7 @@ FROM archlinux
 RUN pacman -Syu --noconfirm && \
     pacman -S --noconfirm libpng fontconfig cpio \
               nano \
-              openssh inotify-tools \
+              openssh \
               libxcb libxrender libxext \
               wqy-zenhei wqy-microhei ttf-droid \
               noto-fonts-cjk perl

@@ -1,3 +1,1 @@
-# FIXME
-
-This folder needs to be updated for Collabora Online 23.05.
+This directory contains relevant files for building a docker image from source code.
