@@ -10,7 +10,7 @@ FROM opensuse/leap
 # install an editor
 # tdf#117557 - Add CJK Fonts to Collabora Online Docker Image
 RUN zypper ref && \
-    zypper --non-interactive install libcap-progs libpng16-16 fontconfig nano openssh inotify-tools timezone
+    zypper --non-interactive install libcap-progs libpng16-16 fontconfig nano openssh timezone
 
 # copy freshly built LOKit and Collabora Online
 COPY /instdir /
