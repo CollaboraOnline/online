@@ -13,14 +13,6 @@
 # * ONLINE_EXTRA_BUILD_OPTIONS - extra build options for online
 # * NO_DOCKER_IMAGE - if set, don't build the docker image itself, just do all the preps
 
-# check we can sudo without asking a pwd
-echo "Trying if sudo works without a password"
-echo
-echo "If you get a password prompt now, break, and fix your setup using 'sudo visudo'; add something like:"
-echo "yourusername ALL=(ALL) NOPASSWD: /sbin/setcap"
-echo
-sudo echo "works"
-
 # Check env variables
 if [ -z "$DOCKER_HUB_REPO" ]; then
   DOCKER_HUB_REPO="mydomain/collaboraonline"
