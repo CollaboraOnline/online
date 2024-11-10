@@ -26,9 +26,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh && b
 RUN mkdir -p $BUILDDIR
 
 # Build poco separately to cache it
-ADD https://github.com/pocoproject/poco/archive/poco-1.11.1-release.tar.gz /build/builddir/poco-1.11.1-release.tar.gz
+ADD https://pocoproject.org/releases/poco-1.12.5p2/poco-1.12.5p2-all.tar.gz /build/builddir/poco-1.12.5p2-all.tar.gz
 
-RUN cd builddir && tar xf poco-1.11.1-release.tar.gz && cd poco-poco-1.11.1-release/ && \
+RUN cd builddir && tar xf poco-1.12.5p2-all.tar.gz && cd poco-1.12.5p2-all/ && \
     ./configure --static --no-tests --no-samples --no-sharedlibs --cflags="-fPIC" --omit=Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,Redis,Encodings,ActiveRecord --prefix=$BUILDDIR/poco && \
     make -j $(nproc) && \
     make install
