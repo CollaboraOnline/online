@@ -13,7 +13,7 @@
 
 if [ -z "$CORE_ASSETS" ]; then
   if [ -z "$CORE_BRANCH" ]; then
-    CORE_BRANCH="distro/collabora/co-24.05"
+    CORE_BRANCH="distro/collabora/co-24.04"
   fi;
   echo "Building core branch '$CORE_BRANCH'"
 else
