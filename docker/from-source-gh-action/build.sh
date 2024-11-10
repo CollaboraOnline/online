@@ -112,7 +112,7 @@ fi
 
 # Build online branding if available
 if test -d online-branding ; then
-  npm install -g sass
+  if ! which sass &> /dev/null; then npm install -g sass; fi
   cd online-branding
   ./brand.sh $INSTDIR/opt/lokit $INSTDIR/usr/share/coolwsd/browser/dist 3 # CODE
   ./brand.sh $INSTDIR/opt/lokit $INSTDIR/usr/share/coolwsd/browser/dist 5 # Nextcloud Office
