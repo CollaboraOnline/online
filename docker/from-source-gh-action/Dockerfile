@@ -18,8 +18,8 @@ RUN --mount=type=cache,target=/var/cache/apt apt-get update && \
     libcap2-bin python3-lxml libpng-dev libcppunit-dev \
     pkg-config fontconfig snapd chromium-browser \
     rsync curl \
-    # core build dependencies
-    git build-essential zip ccache junit4 libkrb5-dev nasm graphviz python3 python3-dev qtbase5-dev libkf5coreaddons-dev libkf5i18n-dev libkf5config-dev libkf5windowsystem-dev libkf5kio-dev libqt5x11extras5-dev autoconf libcups2-dev libfontconfig1-dev gperf openjdk-17-jdk doxygen libxslt1-dev xsltproc libxml2-utils libxrandr-dev libx11-dev bison flex libgtk-3-dev libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev ant ant-optional libnss3-dev libavahi-client-dev libxt-dev
+    # core build dependencies, only those that are needed for LOKit
+    git build-essential zip ccache autoconf gperf nasm xsltproc flex bison
 
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y nodejs
 
