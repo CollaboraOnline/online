@@ -358,7 +358,7 @@ void COOLWSD::writeTraceEventRecording(const std::string &recording)
 void COOLWSD::checkSessionLimitsAndWarnClients()
 {
 #if !MOBILEAPP
-    if (ConfigUtil::isSupportKeyEnabled())
+    if constexpr (ConfigUtil::isSupportKeyEnabled())
         return;
 
     ssize_t docBrokerCount = DocBrokers.size() - ConvertToBroker::getInstanceCount();
@@ -1992,7 +1992,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     setenv("LOK_HELP_URL", "", 1);
 #endif
 
-    if (ConfigUtil::isSupportKeyEnabled())
+    if constexpr (ConfigUtil::isSupportKeyEnabled())
     {
         const std::string supportKeyString =
             ConfigUtil::getConfigValue<std::string>(conf, "support_key", "");

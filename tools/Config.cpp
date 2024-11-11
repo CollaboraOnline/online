@@ -133,7 +133,7 @@ void Config::displayHelp()
               << "    migrateconfig [--old-config-file=<path>] [--config-file=<path>] [--write]" << std::endl
               << "    anonymize [string-1]...[string-n]" << std::endl
               << "    set-admin-password" << std::endl;
-    if (ConfigUtil::isSupportKeyEnabled())
+    if constexpr (ConfigUtil::isSupportKeyEnabled())
     {
         std::cout << "    set-support-key" << std::endl;
     }
@@ -171,7 +171,7 @@ void Config::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("number"));
 
-    if (ConfigUtil::isSupportKeyEnabled())
+    if constexpr (ConfigUtil::isSupportKeyEnabled())
     {
         optionSet.addOption(Option("support-key", "", "Specify the support key [set-support-key].")
                             .required(false)
