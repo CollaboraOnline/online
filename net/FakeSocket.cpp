@@ -341,6 +341,7 @@ static bool fakeSocketHasAnyPendingActivityGlobal()
 /**
  * Wait for any event on any of the fake sockets (theCV is notified on write/close/connect/etc.)
  */
+EXPORT
 void fakeSocketWaitAny(int timeoutUs)
 {
     if (timeoutUs == 0)
