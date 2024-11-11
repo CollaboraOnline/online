@@ -11,11 +11,8 @@
 
 #pragma once
 
-#include <sys/time.h>
-#include <sys/syscall.h>
-#include <unistd.h>
-
 #include <cerrno>
+#include <chrono>
 #include <cstddef>
 #include <functional>
 #include <iostream>
@@ -87,17 +84,19 @@ namespace Log
 
     void setThreadLocalLogLevel(const std::string& logLevel);
 
-    /// Generates log entry prefix. Example follows (without the pipes).
+    /// Generates log entry prefix. Example follows (without the vertical bars).
     /// |wsd-07272-07298 2020-04-25 17:29:28.928697 -0400 [ websrv_poll ] TRC  |
     /// This is fully signal-safe. Buffer must be at least 128 bytes.
-    char* prefix(const timeval& tv, char* buffer, const char* level);
+    char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp,
+                 char* buffer,
+                 const char* level);
+
     template <int Size> inline char* prefix(char buffer[Size], const char* level)
     {
         static_assert(Size >= 128, "Buffer size must be at least 128 bytes.");
 
-        struct timeval tv;
-        gettimeofday(&tv, NULL);
-        return prefix(tv, buffer, level);
+        const auto tp = std::chrono::system_clock::now();
+        return prefix(tp, buffer, level);
     }
 
     /// is a certain level of logging enabled ?

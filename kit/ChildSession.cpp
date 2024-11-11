@@ -947,7 +947,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
 #if ENABLE_DEBUG && !MOBILEAPP
     if (std::getenv("PAUSEFORDEBUGGER"))
     {
-        std::cerr << getDocURL() << " paused waiting for a debugger to attach: " << getpid() << std::endl;
+        std::cerr << getDocURL() << " paused waiting for a debugger to attach: " << Util::getProcessId() << std::endl;
         SigUtil::setDebuggerSignal();
         pause();
     }

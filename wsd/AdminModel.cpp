@@ -1187,9 +1187,9 @@ void AdminModel::getMetrics(std::ostream& oss) const
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     oss << "coolwsd_count " << getPidsFromProcName(std::regex("coolwsd"), nullptr) << std::endl;
-    oss << "coolwsd_thread_count " << Util::getStatFromPid(getpid(), 19) << std::endl;
-    oss << "coolwsd_cpu_time_seconds " << Util::getCpuUsage(getpid()) / sysconf (_SC_CLK_TCK) << std::endl;
-    oss << "coolwsd_memory_used_bytes " << Util::getMemoryUsagePSS(getpid()) * 1024 << std::endl;
+    oss << "coolwsd_thread_count " << Util::getStatFromPid(Util::getProcessId(), 19) << std::endl;
+    oss << "coolwsd_cpu_time_seconds " << Util::getCpuUsage(Util::getProcessId()) / sysconf (_SC_CLK_TCK) << std::endl;
+    oss << "coolwsd_memory_used_bytes " << Util::getMemoryUsagePSS(Util::getProcessId()) * 1024 << std::endl;
     oss << "coolwsd_tcp_connections_used " << StreamSocket::getExternalConnectionCount() << std::endl;
     oss << std::endl;
 

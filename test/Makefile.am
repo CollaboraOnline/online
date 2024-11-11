@@ -158,11 +158,12 @@ common_sources = \
 	../common/ConfigUtil.cpp \
 	../common/DummyTraceEventEmitter.cpp \
 	../common/FileUtil.cpp \
+	../common/FileUtil-unix.cpp \
 	../common/Log.cpp \
 	../common/Protocol.cpp \
 	../common/RegexUtil.cpp \
 	../common/Session.cpp \
-	../common/SigUtil.cpp \
+	../common/SigUtil-server.cpp \
 	../common/Simd.cpp \
 	../common/SpookyV2.cpp \
 	../common/StringVector.cpp \
@@ -170,6 +171,7 @@ common_sources = \
 	../common/Unit.cpp \
 	../common/Uri.cpp \
 	../common/Util-server.cpp \
+	../common/Util-unix.cpp \
 	../common/Util.cpp \
 	../kit/KitQueue.cpp \
 	../kit/LogUI.cpp \
@@ -202,7 +204,7 @@ unit_base_la_LIBADD += -lssl -lcrypto
 endif
 
 fakesockettest_CPPFLAGS = -g
-fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log.cpp ../common/Util.cpp ../common/Util-server.cpp
+fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log.cpp ../common/Util.cpp ../common/Util-server.cpp ../common/Util-unix.cpp
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # old-style unit tests - bootstrapped via UnitClient

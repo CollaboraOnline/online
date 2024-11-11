@@ -115,6 +115,7 @@ AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclud
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
 shared_sources = common/FileUtil.cpp \
+                 common/FileUtil-unix.cpp \
                  common/JailUtil.cpp \
                  common/Log.cpp \
                  common/Protocol.cpp \
@@ -123,13 +124,14 @@ shared_sources = common/FileUtil.cpp \
                  common/Seccomp.cpp \
                  common/MobileApp.cpp \
                  common/RegexUtil.cpp \
-                 common/SigUtil.cpp \
+                 common/SigUtil-server.cpp \
                  common/SpookyV2.cpp \
                  common/TraceEvent.cpp \
                  common/Unit.cpp \
                  common/Uri.cpp \
                  common/Util.cpp \
                  common/Util-server.cpp \
+                 common/Util-unix.cpp \
                  common/ConfigUtil.cpp \
                  common/Authorization.cpp \
                  common/CommandControl.cpp \
@@ -202,7 +204,8 @@ connect_SOURCES = tools/Connect.cpp \
                   common/Protocol.cpp \
                   common/StringVector.cpp \
                   common/Util.cpp \
-                  common/Util-server.cpp
+                  common/Util-server.cpp \
+                  common/Util-unix.cpp
 
 lokitclient_SOURCES = common/Log.cpp \
                       common/DummyTraceEventEmitter.cpp \
@@ -211,7 +214,8 @@ lokitclient_SOURCES = common/Log.cpp \
                       common/StringVector.cpp \
                       common/TraceEvent.cpp \
                       common/Util.cpp \
-                      common/Util-server.cpp
+                      common/Util-server.cpp \
+                      common/Util-unix.cpp
 
 noinst_LIBRARIES = libsimd.a
 libsimd_a_SOURCES = kit/DeltaSimd.c
@@ -300,7 +304,8 @@ clientnb_SOURCES = net/clientnb.cpp \
                    common/Log.cpp \
                    common/StringVector.cpp \
                    common/Util.cpp \
-                   common/Util-server.cpp
+                   common/Util-server.cpp \
+                   common/Util-unix.cpp
 
 coolmount_SOURCES = tools/mount.cpp \
                     common/CoolMount.cpp
@@ -313,7 +318,9 @@ coolbench_SOURCES = tools/Benchmark.cpp \
                     common/StringVector.cpp \
                     common/Util.cpp \
                     common/Util-server.cpp \
+                    common/Util-unix.cpp \
                     common/Simd.cpp
+
 coolbench_LDADD = libsimd.a
 
 coolconvert_SOURCES = tools/Tool.cpp
@@ -333,6 +340,7 @@ coolconfig_SOURCES = tools/Config.cpp \
                     common/Log.cpp \
                     common/StringVector.cpp \
                     common/Util-server.cpp \
+		     common/Util-unix.cpp \
                     common/Util.cpp
 
 coolsocketdump_SOURCES = tools/WebSocketDump.cpp \

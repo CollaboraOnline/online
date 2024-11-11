@@ -11,30 +11,38 @@
 
 #pragma once
 
-#include <fcntl.h>
-#include <ios>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/stat.h>
-
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
+#include <ios>
 #include <iostream>
 #include <fstream>
 #include <memory>
 #include <sstream>
 #include <string>
+#include <utility>
+
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#if !MOBILEAPP
+#include <sys/socket.h>
+#endif
+
+#if !MOBILEAPP
 #include <netdb.h>
+#endif
 
 #include <Common.hpp>
 #include <common/StateEnum.hpp>
 #include <NetUtil.hpp>
 #include <net/Socket.hpp>
-#include <utility>
-#include <algorithm>
+
 #if ENABLE_SSL
 #include <net/SslSocket.hpp>
 #endif
+
 #include "Log.hpp"
 #include "Util.hpp"
 
@@ -1852,6 +1860,8 @@ get(const std::string& url, const std::string& path,
     return httpSession->syncRequest(http::Request(path), timeout);
 }
 
+#if !MOBILEAPP
+
 /// A server http Session to make asynchronous HTTP responses.
 class ServerSession final : public ProtocolHandlerInterface
 {
@@ -2216,6 +2226,8 @@ private:
     /// the peer members it depends on are not destructed before it
     std::weak_ptr<StreamSocket> _socket;
 };
+
+#endif
 
 inline std::ostream& operator<<(std::ostream& os, const http::Header& header)
 {

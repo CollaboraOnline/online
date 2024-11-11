@@ -99,7 +99,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
             // We can do this only after creating the Document object.
             TraceEvent::emitOneRecordingIfEnabled(
                 std::string("{\"name\":\"process_name\",\"ph\":\"M\",\"args\":{\"name\":\"") +
-                "Kit-" + docId + "\"},\"pid\":" + std::to_string(getpid()) +
+                "Kit-" + docId + "\"},\"pid\":" + std::to_string(Util::getProcessId()) +
                 ",\"tid\":" + std::to_string(Util::getThreadId()) + "},\n");
         }
 

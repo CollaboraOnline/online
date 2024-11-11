@@ -51,8 +51,6 @@
 
 namespace
 {
-#ifndef IOS
-
 /// The valid states of the process.
 enum class RunState : char
 {
@@ -63,7 +61,6 @@ enum class RunState : char
 
 /// Single flag to control the current run state.
 static std::atomic<RunState> RunStateFlag(RunState::Run);
-#endif // IOS
 
 [[maybe_unused]]
 static std::atomic<bool> DumpGlobalState(false);
@@ -99,7 +96,6 @@ void uninitialize()
 #endif
 }
 
-#ifndef IOS
 bool getShutdownRequestFlag() { return RunStateFlag >= RunState::ShutDown; }
 
 bool getTerminationFlag() { return RunStateFlag >= RunState::Terminate; }
@@ -130,7 +126,6 @@ void requestShutdown()
 #if MOBILEAPP
     void resetTerminationFlags() { RunStateFlag = RunState::Run; }
 #endif
-#endif // !IOS
 
     void checkDumpGlobalState([[maybe_unused]] GlobalDumpStateFn dumpState)
     {
@@ -582,7 +577,7 @@ void requestShutdown()
 
     void dieOnParentDeath()
     {
-#if !defined(ANDROID) && !defined(IOS) && !defined(__FreeBSD__)
+#if !defined(ANDROID) && !defined(__FreeBSD__)
         prctl(PR_SET_PDEATHSIG, SIGKILL);
 #endif
     }
