@@ -138,7 +138,12 @@
 /* Makes config variables conditionally static, only in non-debug builds, to allow for overriding them in unit-tests. */
 #undef CONFIG_STATIC_TYPE
 
-/* This top-level config.h is used only in "normal" COOL, thus we don't need the Windows version of EXPORT here */
+/* This top-level config.h is used only in "normal" COOL, thus we
+ * don't need the Windows version of EXPORT here, and not EXTERNC
+ * either.
+ */
+
+#define EXTERNC /**/
 #define EXPORT /**/
 
 /* Controls whether or not we allow loading documents from the local filesystem. */
