@@ -16,18 +16,29 @@
 
 #include <Log.hpp>
 
+#if defined(MACOS)
+#include <macos.h>
+#endif
+
 inline void setupKitEnvironment(const std::string& userInterface)
 {
     // Setup & check environment
     std::string layers(
+#if defined(MACOS)
+        "xcsxcu:${BRAND_BASE_DIR}/Resources/registry "
+        "res:${BRAND_BASE_DIR}/Resources/registry "
+#else
         "xcsxcu:${BRAND_BASE_DIR}/share/registry "
         "res:${BRAND_BASE_DIR}/share/registry "
+#endif
         "bundledext:${${BRAND_BASE_DIR}/program/lounorc:BUNDLED_EXTENSIONS_USER}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "
         "sharedext:${${BRAND_BASE_DIR}/program/lounorc:SHARED_EXTENSIONS_USER}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "
         "userext:${${BRAND_BASE_DIR}/program/lounorc:UNO_USER_PACKAGES_CACHE}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "
         );
 #ifdef IOS
     layers += "user:*${BRAND_BASE_DIR}/coolkitconfig.xcu ";
+#elif defined(MACOS)
+    layers += "user:*" + getResourceURL("coolkitconfig", "xcu");
 #elif ENABLE_DEBUG && !defined(ANDROID) // '*' denotes non-writable.
     layers += "user:*file://" DEBUG_ABSSRCDIR "/coolkitconfig.xcu ";
 #else

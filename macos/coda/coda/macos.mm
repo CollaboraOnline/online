@@ -24,4 +24,9 @@ std::string getBundlePath() {
     return bundlePath;
 }
 
+std::string getResourceURL(const char *name, const char *ext) {
+    NSURL *url = [[NSBundle mainBundle] URLForResource:[NSString stringWithUTF8String:name] withExtension:[NSString stringWithUTF8String:ext]];
+    return std::string([[url absoluteString] UTF8String]);
+}
+
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
