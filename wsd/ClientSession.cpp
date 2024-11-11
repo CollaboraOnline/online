@@ -116,10 +116,10 @@ ClientSession::ClientSession(
     TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"process_name\",\"ph\":\"M\",\"args\":{\"name\":\""
                                           "cool-" + id
                                           + "\"},\"pid\":"
-                                          + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
+                                          + std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET)
                                           + ",\"tid\":1},\n");
     TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"thread_name\",\"ph\":\"M\",\"args\":{\"name\":\"JS\"},\"pid\":"
-                                          + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
+                                          + std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET)
                                           + ",\"tid\":1},\n");
 
     _browserSettingsJSON = new Poco::JSON::Object();
@@ -619,7 +619,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                                           + ",\"ts\":"
                                                           + std::to_string(ts + _performanceCounterEpoch)
                                                           + ",\"pid\":"
-                                                          + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
+                                                          + std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET)
                                                           + ",\"tid\":1},\n");
                     }
                     // Should the first getTokenUInt64()'s return value really
@@ -637,7 +637,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                                           + ",\"ts\":"
                                                           + std::to_string(ts + _performanceCounterEpoch)
                                                           + ",\"pid\":"
-                                                          + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
+                                                          + std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET)
                                                           + ",\"tid\":"
                                                           + std::to_string(tid)
                                                           + ",\"id\":"
@@ -654,7 +654,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                                           + ",\"ts\":"
                                                           + std::to_string(ts + _performanceCounterEpoch)
                                                           + ",\"pid\":"
-                                                          + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
+                                                          + std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET)
                                                           + ",\"tid\":1"
                                                             ",\"dur\":"
                                                           + std::to_string(dur)

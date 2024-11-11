@@ -361,11 +361,8 @@ namespace Util
 
     const char *getThreadName();
 
-#if defined __linux__
-    pid_t getThreadId();
-#else
     long getThreadId();
-#endif
+    long getProcessId();
 
     void killThreadById(int tid, int signal);
 
@@ -588,7 +585,9 @@ int main(int argc, char**argv)
         case ENOMEM: return "ENOMEM";
         case EACCES: return "EACCES";
         case EFAULT: return "EFAULT";
+#ifdef ENOTBLK
         case ENOTBLK: return "ENOTBLK";
+#endif
         case EBUSY: return "EBUSY";
         case EEXIST: return "EEXIST";
         case EXDEV: return "EXDEV";
@@ -671,7 +670,9 @@ int main(int argc, char**argv)
 #ifdef ENOPKG
         case ENOPKG: return "ENOPKG";
 #endif
+#ifdef EREMOTE
         case EREMOTE: return "EREMOTE";
+#endif
         case ENOLINK: return "ENOLINK";
 #ifdef EADV
         case EADV: return "EADV";
@@ -683,7 +684,9 @@ int main(int argc, char**argv)
         case ECOMM: return "ECOMM";
 #endif
         case EPROTO: return "EPROTO";
+#ifdef EMULTIHOP
         case EMULTIHOP: return "EMULTIHOP";
+#endif
 #ifdef EDOTDOT
         case EDOTDOT: return "EDOTDOT";
 #endif
@@ -720,16 +723,22 @@ int main(int argc, char**argv)
 #ifdef ESTRPIPE
         case ESTRPIPE: return "ESTRPIPE";
 #endif
+#ifdef EUSERS
         case EUSERS: return "EUSERS";
+#endif
         case ENOTSOCK: return "ENOTSOCK";
         case EDESTADDRREQ: return "EDESTADDRREQ";
         case EMSGSIZE: return "EMSGSIZE";
         case EPROTOTYPE: return "EPROTOTYPE";
         case ENOPROTOOPT: return "ENOPROTOOPT";
         case EPROTONOSUPPORT: return "EPROTONOSUPPORT";
+#ifdef ESOCKTNOSUPPORT
         case ESOCKTNOSUPPORT: return "ESOCKTNOSUPPORT";
+#endif
         case EOPNOTSUPP: return "EOPNOTSUPP";
+#ifdef EPFNOSUPPORT
         case EPFNOSUPPORT: return "EPFNOSUPPORT";
+#endif
         case EAFNOSUPPORT: return "EAFNOSUPPORT";
         case EADDRINUSE: return "EADDRINUSE";
         case EADDRNOTAVAIL: return "EADDRNOTAVAIL";
@@ -739,17 +748,29 @@ int main(int argc, char**argv)
         case ECONNABORTED: return "ECONNABORTED";
         case ECONNRESET: return "ECONNRESET";
         case ENOBUFS: return "ENOBUFS";
+#ifdef EISCONN
         case EISCONN: return "EISCONN";
+#endif
+#ifdef ENOTCONN
         case ENOTCONN: return "ENOTCONN";
+#endif
+#ifdef ESHUTDOWN
         case ESHUTDOWN: return "ESHUTDOWN";
+#endif
+#ifdef ETOOMANYREFS
         case ETOOMANYREFS: return "ETOOMANYREFS";
+#endif
         case ETIMEDOUT: return "ETIMEDOUT";
         case ECONNREFUSED: return "ECONNREFUSED";
+#ifdef EHOSTDOWN
         case EHOSTDOWN: return "EHOSTDOWN";
+#endif
         case EHOSTUNREACH: return "EHOSTUNREACH";
         case EALREADY: return "EALREADY";
         case EINPROGRESS: return "EINPROGRESS";
+#ifdef ESTALE
         case ESTALE: return "ESTALE";
+#endif
 #ifdef EUCLEAN
         case EUCLEAN: return "EUCLEAN";
 #endif
@@ -765,7 +786,9 @@ int main(int argc, char**argv)
 #ifdef EREMOTEIO
         case EREMOTEIO: return "EREMOTEIO";
 #endif
+#ifdef EDQUOT
         case EDQUOT: return "EDQUOT";
+#endif
 #ifdef ENOMEDIUM
         case ENOMEDIUM: return "ENOMEDIUM";
 #endif
@@ -1309,6 +1332,8 @@ int main(int argc, char**argv)
     template <typename T, size_t S> char (&n_array_size( T(&)[S] ))[S];
 
 #define N_ELEMENTS(arr)     (sizeof(Util::n_array_size(arr)))
+
+    void time_t_to_localtime(std::time_t t, std::tm& tm);
 
 } // end namespace Util
 

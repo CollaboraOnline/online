@@ -15,15 +15,58 @@
 #include <chrono>
 #include <fcntl.h>
 #include <filesystem>
-#include <string>
 #include <sys/stat.h>
+
+#include <string>
+#include <fstream>
 
 #include <Poco/Path.h>
 
 #include "Log.hpp"
 
+#if !defined(S_ISREG) && defined(S_IFMT) && defined(S_IFREG)
+#define S_ISREG(m) (((m) & S_IFMT) == S_IFREG)
+#endif
+
+#if !defined(S_ISLNK)
+#if defined(S_IFMT) && defined(S_IFLNK)
+#define S_ISLNK(m) (((m) & S_IFMT) == S_IFLNK)
+#else
+#define S_ISLNK(m) 0
+#endif
+#endif
+
+#if !defined(S_ISDIR) && defined(S_IFMT) && defined(S_IFDIR)
+#define S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
+#endif
+
 namespace FileUtil
 {
+    // Wrappers for actual file handling library API.
+
+    // Also needed because Visual Studio insists on claiming that some POSIXy functions are "deprecated" and
+    // wants you to call the variant prefixed with an underscore instead, for example _close().
+
+    // As open(). Returns the file descriptor. On error returns -1 and sets errno.
+    int openFileAsFD(const std::string& file, int oflag, int mode = 0);
+
+    // As close().
+    int closeFD(int fd);
+
+    // As std::ifstream::open.
+    void openFileToIFStream(const std::string& file, std::ifstream& stream, std::ios_base::openmode mode = std::ios_base::in);
+
+    // As stat().
+    int getStatOfFile(const std::string& file, struct stat& sb);
+
+    // As lstat().
+    int getLStatOfFile(const std::string& file, struct stat& sb);
+
+    // Wraps std::filesystem::create_directory.
+    void createDirectory(const std::string& dir);
+
+    // End of wrappers for platform-dependent API.
+
     /// Used for anonymizing URLs
     void setUrlAnonymization(bool anonymize, std::uint64_t salt);
 
@@ -64,6 +107,8 @@ namespace FileUtil
     // space on the file system is below 5%, return false, otherwise true. Note that this function
     // does not call 'alertAllUsers'.
     bool checkDiskSpace(const std::string& path);
+
+    bool platformDependentCheckDiskSpace(const std::string& path, int64_t enoughSpace);
 
     /// Safely remove a file or directory.
     /// Suppresses exception when the file is already removed.
@@ -110,19 +155,8 @@ namespace FileUtil
 
     /// Try to hard-link, and fallback to copying it linking fails.
     /// Returns true iff either linking or copying succeeds.
-    inline bool linkOrCopyFile(const std::string& source, const std::string& newPath)
-    {
-        // first try a simple hard-link
-        if (link(source.c_str(), newPath.c_str()) == 0)
-            return true;
-
-        const auto onrre = errno;
-        LOG_DBG("Failed to link [" << source << "] to [" << newPath << "] ("
-                                   << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre)
-                                   << "), will try to copy");
-
-        return FileUtil::copy(source, newPath, /*log=*/true, /*throw_on_error=*/false);
-    }
+    /// Platform-dependent implementations.
+    bool linkOrCopyFile(const std::string& source, const std::string& newPath);
 
     /// Returns the system temporary directory.
     std::string getSysTempDirectoryPath();
@@ -137,6 +171,7 @@ namespace FileUtil
 
     /// Returns the realpath(3) of the provided path.
     std::string realpath(const char* path);
+
     inline std::string realpath(const std::string& path)
     {
         return realpath(path.c_str());
@@ -158,14 +193,14 @@ namespace FileUtil
     template <typename T>
     ssize_t readFile(const std::string& path, T& data, int maxSize = 256 * 1024)
     {
-        const int fd = ::open(path.c_str(), O_RDONLY);
+        const int fd = FileUtil::openFileAsFD(path.c_str(), O_RDONLY);
         if (fd < 0)
             return -1;
 
         struct stat st;
         if (::fstat(fd, &st) != 0 || st.st_size > maxSize)
         {
-            ::close(fd);
+            closeFD(fd);
             return -1;
         }
 
@@ -174,7 +209,7 @@ namespace FileUtil
         data.resize(originalSize + remainingSize);
 
         const ssize_t n = read(fd, &data[originalSize], remainingSize);
-        ::close(fd);
+        closeFD(fd);
 
         data.resize(originalSize + (n <= 0 ? 0 : n));
 
@@ -192,7 +227,7 @@ namespace FileUtil
         Stat(std::string file, bool link = false)
             : _path(std::move(file))
             , _sb{}
-            , _res(link ? lstat(_path.c_str(), &_sb) : stat(_path.c_str(), &_sb))
+            , _res(link ? FileUtil::getLStatOfFile(_path, _sb) : FileUtil::getStatOfFile(_path, _sb))
             , _stat_errno(errno)
         {
         }
@@ -294,9 +329,9 @@ namespace FileUtil
         const int _stat_errno;
     };
 
-    std::vector<std::string> getDirEntries(std::string dirPath);
-
     void lslr(const std::string& dir);
+
+    std::vector<std::string> getDirEntries(std::string dirPath);
 
 } // end namespace FileUtil
 

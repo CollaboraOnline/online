@@ -16,7 +16,10 @@
 
 namespace SigUtil
 {
-#ifndef IOS
+    /// All of this is implemented as no-ops for the mobile apps. No flags are set and functions
+    /// checking them always return false. There is no "signal log". The functions do exist, though,
+    /// so calls don't need to be surrounded by ifdefs or bypassed using Util::isMobileApp().
+
     /// Get the flag used to commence clean shutdown.
     /// requestShutdown() is used to set the flag.
     bool getShutdownRequestFlag();
@@ -26,27 +29,6 @@ namespace SigUtil
     bool getTerminationFlag();
     /// Set the flag to stop pump loops forcefully and request shutting down.
     void setTerminationFlag();
-#if MOBILEAPP
-    /// Reset the flags to stop pump loops forcefully.
-    /// Only necessary in Mobile.
-    void resetTerminationFlags();
-#endif
-#else
-    // In the mobile apps we have no need to shut down the app.
-    inline constexpr bool getShutdownRequestFlag()
-    {
-        return false;
-    }
-
-    inline constexpr bool getTerminationFlag()
-    {
-        return false;
-    }
-
-    inline void setTerminationFlag()
-    {
-    }
-#endif
 
     extern "C" { typedef void (*GlobalDumpStateFn)(void); }
 
@@ -80,8 +62,6 @@ namespace SigUtil
     /// Uninitialize and free memory.
     void uninitialize();
 
-#if !MOBILEAPP
-
     /// Open the signalLog file.
     void signalLogOpen();
     /// Close the signalLog file.
@@ -94,22 +74,6 @@ namespace SigUtil
     /// Signal log number
     void signalLogNumber(std::size_t num, int base = 10);
 
-#else // MOBILEAPP
-
-    /// Open the signalLog file.
-    inline void signalLogOpen() {}
-    /// Close the signalLog file.
-    inline void signalLogClose() {}
-
-    /// Signal safe prefix logging
-    inline void signalLogPrefix() {}
-    /// Signal safe logging
-    inline void signalLog(const char*) {}
-    /// Signal log number
-    inline void signalLogNumber(std::size_t, int = 10) {}
-
-#endif // MOBILEAPP
-
     /// Returns the name of the signal.
     const char* signalName(int signo);
 
@@ -117,8 +81,6 @@ namespace SigUtil
     {
         typedef void (*SigChildHandler)(int);
     }
-
-#if !MOBILEAPP
 
     /// Register a wakeup function when changing
 
@@ -156,31 +118,6 @@ namespace SigUtil
 
     /// Dump a signal-safe back-trace
     void dumpBacktrace();
-
-#else // MOBILEAPP
-
-    /// Trap all fatal signals to assist debugging.
-    inline void setFatalSignals(const std::string&) {}
-
-    /// Update version info
-    inline void setVersionInfo(const std::string&) {}
-
-    /// Trap generally useful signals
-    inline void setUserSignals() {}
-
-    /// Trap to unpause the process
-    inline void setDebuggerSignal() {}
-
-    /// Sets a child death signal handler
-    inline void setSigChildHandler(SigChildHandler) {}
-
-    /// Ensure that if a parent process is killed we go down too
-    inline void dieOnParentDeath() {}
-
-    /// Dump a signal-safe back-trace
-    inline void dumpBacktrace() {}
-
-#endif // MOBILEAPP
 
 } // end namespace SigUtil
 

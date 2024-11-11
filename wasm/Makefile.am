@@ -33,7 +33,7 @@ online_SOURCES = \
 	../common/Protocol.cpp \
 	../common/StringVector.cpp \
 	../common/Session.cpp \
-	../common/SigUtil.cpp \
+	../common/SigUtil-mobile.cpp \
 	../common/Simd.cpp \
 	../common/SpookyV2.cpp \
 	../common/Unit.cpp \

@@ -88,7 +88,7 @@ protected:
 
     explicit TraceEvent(std::string args)
         : _args(std::move(args))
-        , _pid(recordingOn ? getpid() : -1)
+        , _pid(recordingOn ? Util::getProcessId() : -1)
     {
     }
 

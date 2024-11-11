@@ -38,7 +38,7 @@ void TraceEvent::emitInstantEvent(const std::string& name, const std::string& ar
                               .count())
                      + ","
                        "\"pid\":"
-                     + std::to_string(getpid())
+                     + std::to_string(Util::getProcessId())
                      + ","
                        "\"tid\":"
                      + std::to_string(getThreadId())

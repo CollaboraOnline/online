@@ -17,7 +17,9 @@
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 #include <net/HttpHelper.hpp>
+#if !MOBILEAPP
 #include <net/HttpRequest.hpp>
+#endif
 #include <net/NetUtil.hpp>
 #include <net/Socket.hpp>
 

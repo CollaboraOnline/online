@@ -11,12 +11,6 @@
 
 #include <config.h>
 
-#ifdef __linux__
-#include <sys/prctl.h>
-#include <sys/syscall.h>
-#endif
-#include <unistd.h>
-
 #include <atomic>
 #include <cassert>
 #include <cstdint>
@@ -27,6 +21,8 @@
 #include <sstream>
 #include <string>
 #include <unordered_map>
+
+#include <unistd.h>
 
 #include <Poco/AutoPtr.h>
 #include <Poco/FileChannel.h>
@@ -505,7 +501,9 @@ namespace Log
         return buf + i;
     }
 
-    char* prefix(const timeval& tv, char* buffer, const char* level)
+    char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp,
+                 char* buffer,
+                 const char* level)
     {
 #if defined(IOS) || defined(__FreeBSD__)
         // Don't bother with the "Source" which would be just "Mobile" always and non-informative as
@@ -553,9 +551,9 @@ namespace Log
         *pos++ = ' ';
 #endif
 
-        const time_t tv_sec = tv.tv_sec;
-        struct tm tm;
-        localtime_r(&tv_sec, &tm);
+        auto t = std::chrono::system_clock::to_time_t(tp);
+        std::tm tm;
+        Util::time_t_to_localtime(t, tm);
 
         // YYYY-MM-DD.
         to_ascii_fixed<4>(pos, tm.tm_year + 1900);
@@ -578,7 +576,9 @@ namespace Log
         to_ascii_fixed<2>(pos, tm.tm_sec);
         pos[2] = '.';
         pos += 3;
-        to_ascii_fixed<6>(pos, tv.tv_usec);
+        auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(tp.time_since_epoch());
+        auto fractional_seconds = microseconds.count() % 1000000;
+        to_ascii_fixed<6>(pos, fractional_seconds);
         pos[6] = ' ';
         pos += 7;
 
@@ -616,7 +616,7 @@ namespace Log
         std::ostringstream oss;
         oss << Static.getName();
         if constexpr (!Util::isMobileApp())
-            oss << '-' << std::setw(5) << std::setfill('0') << getpid();
+            oss << '-' << std::setw(5) << std::setfill('0') << Util::getProcessId();
         Static.setId(oss.str());
 
         // Configure the logger.
