@@ -82,7 +82,7 @@ public:
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Doc (" << toString(_phase) << "): [" << message << ']');
+        LOG_TST("Doc (" << name(_phase) << "): [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         // Modify and wait for the notification.
@@ -102,7 +102,7 @@ public:
         // Only the first time is handled here.
         if (_phase == Phase::WaitModifiedStatus)
         {
-            LOG_TST("Doc (" << toString(_phase) << "): [" << message << ']');
+            LOG_TST("Doc (" << name(_phase) << "): [" << message << ']');
             LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
             // Save and immediately modify, then close the connection.
@@ -197,7 +197,7 @@ public:
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Doc (" << toString(_phase) << "): [" << message << ']');
+        LOG_TST("Doc (" << name(_phase) << "): [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         // Modify and wait for the notification.
@@ -212,7 +212,7 @@ public:
     /// The document is modified. Save, modify, and close it.
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Doc (" << toString(_phase) << "): [" << message << ']');
+        LOG_TST("Doc (" << name(_phase) << "): [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         _stopwatch.restart();

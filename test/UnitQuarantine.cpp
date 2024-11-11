@@ -85,7 +85,7 @@ public:
     std::unique_ptr<http::Response>
     assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        LOG_TST("Testing " << toString(_scenario));
+        LOG_TST("Testing " << name(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         assertGetFileCount();
@@ -101,7 +101,7 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
-        LOG_TST("Testing " << toString(_scenario));
+        LOG_TST("Testing " << name(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         assertPutFileCount();
@@ -120,7 +120,7 @@ public:
 
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
+        LOG_TST("Testing " << name(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         TRANSITION_STATE(_phase, Phase::WaitDocClose);
@@ -153,7 +153,7 @@ public:
 
     bool onDocumentError(const std::string& message) override
     {
-        LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
+        LOG_TST("Testing " << name(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         if (getCountCheckFileInfo() == 1)
@@ -194,7 +194,7 @@ public:
     // Wait for clean unloading.
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Testing " << toString(_scenario) << " with dockey [" << docKey << "] closed.");
+        LOG_TST("Testing " << name(_scenario) << " with dockey [" << docKey << "] closed.");
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         // Uploading fails and we can't have anything but the original.

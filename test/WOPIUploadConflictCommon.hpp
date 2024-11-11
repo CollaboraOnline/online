@@ -168,7 +168,7 @@ public:
 
     void assertPutFileCount()
     {
-        LOG_TST("Testing " << toString(_scenario));
+        LOG_TST("Testing " << name(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         if (getExpectedPutRelative() < getCountPutRelative())
@@ -187,7 +187,7 @@ public:
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
+        LOG_TST("Testing " << name(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         if (_scenario != Scenario::VerifyOverwrite)
@@ -211,7 +211,7 @@ public:
 
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
+        LOG_TST("Testing " << name(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
         // Change the underlying document in storage.
@@ -251,7 +251,7 @@ public:
 
     bool onDocumentError(const std::string& message) override
     {
-        LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
+        LOG_TST("Testing " << name(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         LOK_ASSERT_EQUAL_MESSAGE("Expect only documentconflict errors",
@@ -292,8 +292,8 @@ public:
         // and upload. But because we don't wait for the modified=false, we can end-up
         // here. Since we will verify after reloading that we have no data-loss, it's OK.
         LOK_ASSERT_MESSAGE(
-            "Expected to be in Scenario::Disconnect OR Scenario::SaveOverwrite but was " +
-                toString(_scenario),
+            "Expected to be in Scenario::Disconnect OR Scenario::SaveOverwrite but was "
+                << name(_scenario),
             (_scenario == Scenario::Disconnect) || (_scenario == Scenario::SaveOverwrite));
 
         return failed();
@@ -346,7 +346,7 @@ public:
             {
                 startNewTest();
 
-                LOG_TST("Loading the document for " << toString(_scenario));
+                LOG_TST("Loading the document for " << name(_scenario));
 
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 

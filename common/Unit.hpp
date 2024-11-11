@@ -683,7 +683,6 @@ private:
 #define TRANSITION_STATE(VAR, STATE) TRANSITION_STATE_MSG(VAR, STATE, "Transitioning " #VAR " from")
 
 #define LOK_ASSERT_STATE(VAR, STATE)                                                               \
-    LOK_ASSERT_MESSAGE("Expected " #VAR " to be in " #STATE " but was " + toString(VAR),           \
-                       VAR == STATE)
+    LOK_ASSERT_MESSAGE("Expected " #VAR " to be in " #STATE " but was " << name(VAR), VAR == STATE)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
