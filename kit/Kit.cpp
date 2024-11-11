@@ -3263,6 +3263,10 @@ void lokit_main(
             const std::string sharedTemplate = Poco::Path(tmpIncoming, "templates/presnt").toString();
             const std::string loJailDestImpressTemplatePath = Poco::Path(loJailDestPath, "share/template/common/presnt").toString();
 
+            const std::string sharedPresets = Poco::Path(childRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
+            const std::string sharedAutotext = Poco::Path(sharedPresets, "autotext").toString();
+            const std::string loJailDestAutotextPath = Poco::Path(loJailDestPath, "share/autotext/common").toString();
+
             const std::string sysTemplateSubDir = Poco::Path(tempRoot, "systemplate-" + jailId).toString();
             const std::string jailEtcDir = Poco::Path(jailPath, "etc").toString();
 
@@ -3328,6 +3332,17 @@ void lokit_main(
                 {
                     LOG_WRN("Failed to mount [" << sharedTemplate << "] -> ["
                                                 << loJailDestImpressTemplatePath
+                                                << "], will link contents");
+                    return false;
+                }
+
+                // mount the shared autotext over the lo shared autotext's 'common' dir
+                if (!JailUtil::bind(sharedAutotext, loJailDestAutotextPath)
+                    || !JailUtil::remountReadonly(sharedAutotext, loJailDestAutotextPath))
+                {
+                    // TODO: actually do this link on failure
+                    LOG_WRN("Failed to mount [" << sharedAutotext << "] -> ["
+                                                << loJailDestAutotextPath
                                                 << "], will link contents");
                     return false;
                 }

@@ -429,6 +429,7 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
 
     createJailPath(childRoot + CHILDROOT_TMP_INCOMING_PATH + "/fonts");
     createJailPath(childRoot + CHILDROOT_TMP_INCOMING_PATH + "/templates/presnt");
+    createJailPath(childRoot + CHILDROOT_TMP_SHARED_PRESETS_PATH + "/autotext");
 
     disableBindMounting(); // Clear to avoid surprises.
 
