@@ -807,22 +807,29 @@ L.Clipboard = L.Class.extend({
 	},
 
 	// Gets status of a copy/paste command from the remote Kit
-    _onCommandResult: function(e) {
+    _onCommandResult: async function(e) {
         if (e.commandName === '.uno:Copy' || e.commandName === '.uno:Cut')
 		{
 			window.app.console.log('Resolve clipboard command promise ' + e.commandName);
-			const that = this;
-			while (that._commandCompletion.length > 0)
+			while (this._commandCompletion.length > 0)
 			{
-				let a = that._commandCompletion.shift();
-				a.resolve(a.fetch().then(function(text) {
-					const content = that.parseClipboard(text)[a.shorttype];
-					const blob = new Blob([content], { 'type': a.mimetype });
-					console.log('Generate blob of type ' + a.mimetype + ' from ' +a.shorttype + ' text: ' +content);
-					return blob;
-				}));
+				this._commandCompletion.shift().resolve();
 			}
 		}
+	},
+
+	_parseClipboardFetchResult: async function(text, mimetype, shorttype) {
+		const content = this.parseClipboard(text)[shorttype];
+		const blob = new Blob([content], { type: mimetype });
+		console.log(
+			'Generate blob of type ' +
+				mimetype +
+				' from ' +
+				shorttype +
+				' text: ' +
+				content,
+		);
+		return blob;
 	},
 
 	_asyncAttemptNavigatorClipboardWrite: async function() {
@@ -838,36 +845,36 @@ L.Clipboard = L.Class.extend({
 			window.app.console.error('Already have ' + this._commandCompletion.length +
 						 ' pending clipboard command(s)');
 
+		const commandCompletePromise = new Promise((resolve, reject) => {
+			window.app.console.log('New ' + command + ' promise');
+			// FIXME: add a timeout cleanup too ...
+			this._commandCompletion.push({
+				resolve: resolve,
+				reject: reject,
+			});
+		});
+
 		if (window.ThisIsTheAndroidApp) {
-			window.COOLMessageHandler.writeToClipboard(); // Native code also handles the clipboard request, so no need for awaitPromise
+			await commandCompletePromise;
+			window.COOLMessageHandler.writeToClipboard();
 		} else if (window.ThisIsTheiOSApp) {
+			await commandCompletePromise;
 			await window.webkit.messageHandlers.clipboard.postMessage(`write`); // Ditto with native code handling clipboard request
 		} else {
 			const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
 
-			// Share a single fetch
-			const fetchPromise = async () => {
-				const response = await fetch(url);
-				return await response.text();
-			};
+			const response = await fetch(url);
+			const responseText = response.text();
 
-			const awaitPromise = (mimetype, shorttype) => {
-				return new Promise((resolve, reject) => {
-					window.app.console.log('New ' + command + ' promise');
-					// FIXME: add a timeout cleanup too ...
-					this._commandCompletion.push({
-						fetch: fetchPromise,
-						command: command,
-						resolve: resolve,
-						reject: reject,
-						mimetype: mimetype,
-						shorttype: shorttype,
-					});
-			}); };
-
-			const text = new ClipboardItem({
-				'text/plain': awaitPromise('text/plain', 'plain'),
-				'text/html': awaitPromise('text/html', 'html'),
+			const clipboardItem = new ClipboardItem({
+				'text/plain': async () => {
+					await commandCompletePromise;
+					return this._parseClipboardFetchResult(responseText, 'text/plain', 'plain');
+				},
+				'text/html': async () => {
+					await commandCompletePromise;
+					return this._parseClipboardFetchResult(responseText, 'text/html', 'html');
+				},
 			});
 			let clipboard = navigator.clipboard;
 			if (L.Browser.cypressTest) {
@@ -875,7 +882,7 @@ L.Clipboard = L.Class.extend({
 			}
 
 			try {
-				await clipboard.write([text]);
+				await clipboard.write([clipboardItem]);
 			} catch (error) {
 				window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
 
