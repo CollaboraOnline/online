@@ -24,4 +24,9 @@ extern LibreOfficeKit *lo_kit;
  */
 std::string getBundlePath();
 
+/**
+ * Get URL of a resource in the bundle.
+ */
+std::string getResourceURL(const char *name, const char *ext);
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
