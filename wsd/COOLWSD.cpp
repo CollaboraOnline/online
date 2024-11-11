@@ -1357,6 +1357,13 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         Poco::Util::Application::findFile(configPath) ? configPath.toString() : ConfigFile;
     loadConfiguration(configFilePath, PRIO_DEFAULT);
 
+    // Override any settings passed on the command-line or via environment variables
+    if (UseEnvVarOptions)
+        initializeEnvOptions();
+    Poco::AutoPtr<AppConfigMap> overrideConfig(new AppConfigMap(_overrideSettings));
+    conf.addWriteable(overrideConfig, PRIO_APPLICATION); // Highest priority
+
+    // This caches some oft-used settings and must come after overriding.
     ConfigUtil::initialize(&config());
 
     // Load extra ("plug-in") configuration files, if present
@@ -1376,12 +1383,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
             }
         }
     }
-
-    // Override any settings passed on the command-line or via environment variables
-    if (UseEnvVarOptions)
-        initializeEnvOptions();
-    Poco::AutoPtr<AppConfigMap> overrideConfig(new AppConfigMap(_overrideSettings));
-    conf.addWriteable(overrideConfig, PRIO_APPLICATION); // Highest priority
 
     if (!UnitTestLibrary.empty())
     {
