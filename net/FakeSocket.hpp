@@ -17,36 +17,53 @@
 
 #include <string>
 
+#ifndef _WINDOWS
 #include <poll.h>
+#endif
 
+EXTERNC
 void fakeSocketSetLoggingCallback(void (*)(const std::string&));
 
+EXTERNC
 int fakeSocketSocket();
 
+EXTERNC
 int fakeSocketPipe2(int pipefd[2]);
 
+EXTERNC
 void fakeSocketWaitAny(int timeoutUs);
 
+EXTERNC
 int fakeSocketPoll(struct pollfd *fds, int nfds, int timeout);
 
+EXTERNC
 int fakeSocketListen(int fd);
 
+EXTERNC
 int fakeSocketConnect(int fd1, int fd2);
 
+EXTERNC
 int fakeSocketAccept4(int fd);
 
+EXTERNC
 int fakeSocketPeer(int fd);
 
+EXTERNC
 ssize_t fakeSocketAvailableDataLength(int fd);
 
+EXTERNC
 ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes);
 
+EXTERNC
 ssize_t fakeSocketWrite(int fd, const void *buf, size_t nbytes);
 
+EXTERNC
 int fakeSocketShutdown(int fd);
 
+EXTERNC
 int fakeSocketClose(int fd);
 
+EXTERNC
 void fakeSocketDumpState();
 
 #else

@@ -40,12 +40,15 @@
 
 namespace FileUtil
 {
-    // Wrappers for actual file handling library API.
+    // Wrappers for actual file handling library API. Needed because the file names we handle are in
+    // UTF-8, and on Windows we can't pass such to C and C++ library APIs. We need to convert to
+    // UTF-16 strings and call the proper wide character APIs.
 
     // Also needed because Visual Studio insists on claiming that some POSIXy functions are "deprecated" and
     // wants you to call the variant prefixed with an underscore instead, for example _close().
 
-    // As open(). Returns the file descriptor. On error returns -1 and sets errno.
+    // As open(). Returns the file descriptor (which on Windows is just a thing the C library knows
+    // about, not the OS). On error returns -1 and sets errno.
     int openFileAsFD(const std::string& file, int oflag, int mode = 0);
 
     // As read() and write().
@@ -187,7 +190,8 @@ namespace FileUtil
     /// Create a temporary directory in the root provided
     std::string createTmpDir(const std::string& dirName, std::string root = std::string());
 
-    /// Returns the realpath(3) of the provided path.
+    /// Returns the realpath(3) of the provided path. This also has a separate implementation for
+    /// Windows.
     std::string realpath(const char* path);
 
     inline std::string realpath(const std::string& path)
@@ -269,6 +273,9 @@ namespace FileUtil
         {
 #if defined(IOS) || defined(MACOS)
             return _sb.st_mtimespec;
+#elif defined(_WINDOWS)
+            timespec result{ _sb.st_mtime, 0 };
+            return result;
 #else
             return _sb.st_mtim;
 #endif

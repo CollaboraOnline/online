@@ -29,10 +29,14 @@
 #include <fcntl.h>
 #include <filesystem>
 #include <fstream>
+#include <grp.h>
 #include <mutex>
+#include <pwd.h>
 #include <set>
 #include <stdexcept>
 #include <string>
+#include <sys/time.h>
+#include <unistd.h>
 
 namespace FileUtil
 {
