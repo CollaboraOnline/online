@@ -50,9 +50,11 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#ifndef _WINDOWS
 #include <sysexits.h>
 #include <unistd.h>
 #include <sys/un.h>
+#endif
 
 #ifdef __FreeBSD__
 #include <sys/ucred.h>
