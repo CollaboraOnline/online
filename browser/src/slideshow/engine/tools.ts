@@ -74,7 +74,7 @@ function colorParser(sValue: string): RGBColor | HSLColor {
 	/* eslint-enable no-unused-vars */
 
 	const sCommaPattern = ' *[,] *';
-	const sIntegerPattern = '[+-]?[0-9]+';
+	const sNumberPattern = '[+-]?[0-9]+[.]?[0-9]*';
 	const sHexDigitPattern = '[0-9A-Fa-f]';
 
 	const sHexColorPattern =
@@ -88,33 +88,33 @@ function colorParser(sValue: string): RGBColor | HSLColor {
 
 	const sRGBIntegerPattern =
 		'rgb[(] *' +
-		sIntegerPattern +
+		sNumberPattern +
 		sCommaPattern +
-		sIntegerPattern +
+		sNumberPattern +
 		sCommaPattern +
-		sIntegerPattern +
+		sNumberPattern +
 		' *[)]';
 
 	const sRGBPercentPattern =
 		'rgb[(] *' +
-		sIntegerPattern +
+		sNumberPattern +
 		'%' +
 		sCommaPattern +
-		sIntegerPattern +
+		sNumberPattern +
 		'%' +
 		sCommaPattern +
-		sIntegerPattern +
+		sNumberPattern +
 		'%' +
 		' *[)]';
 
 	const sHSLPercentPattern =
 		'hsl[(] *' +
-		sIntegerPattern +
+		sNumberPattern +
 		sCommaPattern +
-		sIntegerPattern +
+		sNumberPattern +
 		'%' +
 		sCommaPattern +
-		sIntegerPattern +
+		sNumberPattern +
 		'%' +
 		' *[)]';
 
