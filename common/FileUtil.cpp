@@ -19,7 +19,11 @@
 #include <common/Util.hpp>
 
 #include <exception>
+#include <grp.h>
+#include <pwd.h>
 #include <stdexcept>
+#include <sys/time.h>
+#include <unistd.h>
 
 #include <fcntl.h>
 #include <chrono>

@@ -2,6 +2,8 @@
 /* config.h.  Manually edited from config.h.in.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+#pragma once
+
 #define APP_NAME "@APP_NAME@"
 
 /* LibreOffice core git hash if present */
@@ -137,9 +139,7 @@
 
 /* Stuff manually added just for CODA for Windows */
 
-#include <cstddef>
-
-typedef ptrdiff_t ssize_t;
+typedef __int64 ssize_t;
 typedef int pid_t;
 
 #define lstat(f,s) stat(f,s)
@@ -150,6 +150,8 @@ typedef int pid_t;
 
 // MSVC's _putenv_s doesn't do removal of environment variables, but we don't need that anyway
 #define setenv(variable, value, one) _putenv_s(variable, value)
+
+#define strcasecmp _stricmp
 
 #define POLLIN   0x001
 #define POLLPRI  0x002
@@ -166,4 +168,5 @@ struct pollfd {
 
 #define MOBILEAPP 1
 
-#define EXPORT extern "C" __declspec(dllexport)
+#define EXTERNC extern "C"
+#define EXPORT EXTERNC __declspec(dllexport)

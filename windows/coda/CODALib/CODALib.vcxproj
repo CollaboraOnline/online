@@ -68,6 +68,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>libpng16.lib;zlib.lib;libzstd_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -91,25 +92,47 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>libpng16.lib;zlib.lib;libzstd_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\common\Authorization.cpp" />
     <ClCompile Include="..\..\..\common\ConfigUtil.cpp" />
     <ClCompile Include="..\..\..\common\Crypto-stub.cpp" />
+    <ClCompile Include="..\..\..\common\FileUtil-windows.cpp" />
+    <ClCompile Include="..\..\..\common\FileUtil.cpp" />
     <ClCompile Include="..\..\..\common\Log.cpp" />
     <ClCompile Include="..\..\..\common\MobileApp.cpp" />
     <ClCompile Include="..\..\..\common\Protocol.cpp" />
     <ClCompile Include="..\..\..\common\Session.cpp" />
-    <ClCompile Include="..\..\..\common\SigUtil.cpp" />
+    <ClCompile Include="..\..\..\common\SigUtil-mobile.cpp" />
     <ClCompile Include="..\..\..\common\Simd.cpp" />
     <ClCompile Include="..\..\..\common\SpookyV2.cpp" />
     <ClCompile Include="..\..\..\common\StringVector.cpp" />
+    <ClCompile Include="..\..\..\common\TraceEvent.cpp" />
+    <ClCompile Include="..\..\..\common\Unit.cpp" />
+    <ClCompile Include="..\..\..\common\Uri.cpp" />
     <ClCompile Include="..\..\..\common\Util-mobile.cpp" />
+    <ClCompile Include="..\..\..\common\Util-windows.cpp" />
     <ClCompile Include="..\..\..\common\Util.cpp" />
     <ClCompile Include="..\..\..\kit\ChildSession.cpp" />
+    <ClCompile Include="..\..\..\kit\DeltaSimd.c" />
+    <ClCompile Include="..\..\..\kit\Kit.cpp" />
+    <ClCompile Include="..\..\..\kit\KitQueue.cpp" />
+    <ClCompile Include="..\..\..\kit\KitWebSocket.cpp" />
     <ClCompile Include="..\..\..\net\FakeSocket.cpp" />
     <ClCompile Include="..\..\..\net\Socket.cpp" />
+    <ClCompile Include="..\..\..\wsd\ClientRequestDispatcher.cpp" />
+    <ClCompile Include="..\..\..\wsd\ClientSession.cpp" />
+    <ClCompile Include="..\..\..\wsd\coolwsd-fork.cpp" />
     <ClCompile Include="..\..\..\wsd\COOLWSD.cpp" />
+    <ClCompile Include="..\..\..\wsd\DocumentBroker.cpp" />
+    <ClCompile Include="..\..\..\wsd\RequestDetails.cpp" />
+    <ClCompile Include="..\..\..\wsd\RequestVettingStation.cpp" />
+    <ClCompile Include="..\..\..\wsd\Storage.cpp" />
+    <ClCompile Include="..\..\..\wsd\TileCache.cpp" />
+    <ClCompile Include="..\testheader.cpp" />
+    <ClCompile Include="..\windows.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

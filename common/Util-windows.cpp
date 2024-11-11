@@ -11,9 +11,7 @@
 
 #include <config.h>
 
-#include <sys/types.h>
-#include <time.h>
-#include <unistd.h>
+#include <process.h>
 
 #include <common/Util.hpp>
 
@@ -21,17 +19,12 @@ namespace Util
 {
     long getProcessId()
     {
-        return getpid();
+        return _getpid();
     }
 
-    std::tm *time_t_to_localtime(std::time_t t, std::tm& tm)
+    void time_t_to_localtime(std::time_t t, std::tm& tm)
     {
-        return localtime_r(&t, &tm);
-    }
-
-    std::tm *time_t_to_gmtime(std::time_t t, std::tm& tm)
-    {
-        return gmtime_r(&t, &tm);
+        localtime_s(&tm, &t);
     }
 } // namespace Util
 

@@ -22,7 +22,9 @@
 #include <string>
 #include <unordered_map>
 
+#ifndef _WINDOWS
 #include <unistd.h>
+#endif
 
 #include <Poco/AutoPtr.h>
 #include <Poco/FileChannel.h>
