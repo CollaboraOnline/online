@@ -488,7 +488,7 @@ else
 CLEANUP_COMMAND=if test -s ./coolwsd -a -x ./coolwsd; then echo "Cleaning up..." && ./coolwsd --disable-cool-user-checking --cleanup --o:logging.level=trace || rm -f ./coolwsd; fi
 endif
 
-CLEANUP_COVERAGE=rm -rf ${abs_top_srcdir}/gcov; find . -iname "*.gc??" -delete
+CLEANUP_COVERAGE=rm -rf ${abs_top_srcdir}/gcov; find . -iname "*.gcda" -delete
 
 if HAVE_LO_PATH
 
