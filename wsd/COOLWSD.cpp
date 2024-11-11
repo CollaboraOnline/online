@@ -2372,7 +2372,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         const auto it = DefAppConfig.find(pair.first);
         if (it == DefAppConfig.end() || it->second != pair.second)
         {
-            ossConfig << pair.first << ": " << pair.second << '\n';
+            ossConfig << '\t' << pair.first << ": " << pair.second << '\n';
         }
     }
 
