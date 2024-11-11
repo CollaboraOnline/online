@@ -242,7 +242,7 @@ public:
                 WSD_CMD("closedocument");
                 break;
             case Scenario::VerifyOverwrite:
-                LOK_ASSERT_FAIL("Unexpected modification in " + toString(_scenario));
+                LOK_ASSERT_FAIL("Unexpected modification in " << name(_scenario));
                 break;
         }
 
@@ -272,7 +272,7 @@ public:
                 WSD_CMD("savetostorage force=1");
                 break;
             case Scenario::VerifyOverwrite:
-                LOK_ASSERT_FAIL("Unexpected error in " + toString(_scenario));
+                LOK_ASSERT_FAIL("Unexpected error in " << name(_scenario));
                 break;
         }
 

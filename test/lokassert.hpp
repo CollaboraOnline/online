@@ -208,5 +208,7 @@ inline constexpr bool failed() { return false; }
     {                                                                                              \
         TST_LOG("ERROR: Forced failure: " << message);                                             \
         LOK_ASSERT_IMPL(!"Forced failure: " #message); /* NOLINT(misc-static-assert) */            \
-        CPPUNIT_FAIL((message));                                                                   \
+        std::stringstream dummyStringstream;                                                       \
+        dummyStringstream << message;                                                              \
+        CPPUNIT_FAIL(dummyStringstream.str().c_str());                                             \
     } while (false)

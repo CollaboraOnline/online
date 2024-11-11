@@ -103,7 +103,7 @@ void helpers::waitForKitPidsReady(
         oss << "Current kit processes:"
             << " Doc Kits: " << getPidList(docKitPids)
             << " Spare Kits: " << getPidList(spareKitPids);
-        LOK_ASSERT_FAIL("Timed out waiting for kit processes to close: " + oss.str());
+        LOK_ASSERT_FAIL("Timed out waiting for kit processes to close: " << oss.str());
     }
 }
 
