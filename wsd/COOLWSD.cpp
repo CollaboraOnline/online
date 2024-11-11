@@ -1703,6 +1703,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
 #endif // !MOBILEAPP
 
+#if defined(MACOS) && defined(DEBUG)
+    setenv("SAL_LOG", "+INFO+WARN", 0);
+#endif
+
     int pdfResolution =
         ConfigUtil::getConfigValue<int>(conf, "per_document.pdf_resolution_dpi", 96);
     if (pdfResolution > 0)
