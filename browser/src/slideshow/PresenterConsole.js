@@ -327,6 +327,8 @@ class PresenterConsole {
 		elem.style.bottom = 0;
 		elem.style.width = '100%';
 		elem.addEventListener('click', L.bind(this._onToolbarClick, this));
+		elem.addEventListener('mousedown', L.bind(this._onToolbarMouseDown, this));
+		elem.addEventListener('mouseup', L.bind(this._onToolbarMouseUp, this));
 
 		let list = this._proxyPresenter.document.querySelectorAll('button');
 		for (elem = 0; elem < list.length; elem++) {
@@ -382,18 +384,34 @@ class PresenterConsole {
 		this._presenter.getNavigator().onClick(e);
 	}
 
-	_onToolbarClick(e) {
-		let target = e.target;
-		let elem;
-		if (!target) {
-			return;
-		}
-
-		if (target.localName !== 'button') {
+	_getButton(target) {
+		while (target && target.localName !== 'button') {
 			target = target.parentElement;
 		}
 
-		if (target.localName !== 'button') {
+		return target;
+	}
+
+	_onToolbarMouseDown(e) {
+		let target = this._getButton(e.target);
+		if (!target) {
+			return;
+		}
+		target.style.transform = 'translateY(5px)';
+	}
+
+	_onToolbarMouseUp(e) {
+		let target = this._getButton(e.target);
+		if (!target) {
+			return;
+		}
+		target.style.transform = '';
+	}
+
+	_onToolbarClick(e) {
+		let elem;
+		let target = this._getButton(e.target);
+		if (!target) {
 			return;
 		}
 
