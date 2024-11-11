@@ -47,6 +47,7 @@
 #include "ProxyProtocol.hpp"
 #include "Util.hpp"
 #include "QuarantineUtil.hpp"
+#include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Message.hpp>
@@ -1464,7 +1465,10 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     // TODO for testing, just put these into the same destination autotext as
     // user autotext for now
     if (!sharedSettingsUri.empty())
-        asyncInstallPresets(sharedSettingsUri, wopiStorage->getJailPresetsPath());
+    {
+        std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
+        asyncInstallPresets(sharedSettingsUri, presetsPath);
+    }
 
     return templateSource;
 }
@@ -1522,7 +1526,8 @@ void DocumentBroker::asyncInstallPresets(const std::string& userSettingsUri, con
                         continue;
                     // TODO worry that we are potentially spamming here
                     const std::string uri = JsonUtil::getJSONValue<std::string>(autotext, "uri");
-                    std::string fileName = presetsPath + "autotext/" + Uri::getFilenameWithExtFromURL(uri);
+                    std::string fileName = Poco::Path(Poco::Path(presetsPath, "autotext").toString(),
+                                                      Uri::getFilenameWithExtFromURL(uri)).toString();
                     asyncInstallPreset(uri, fileName);
                 }
             }
