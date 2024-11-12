@@ -36,7 +36,6 @@ L.Map.Keyboard = L.Handler.extend({
 		38  : UNOKey.UP,
 		39  : UNOKey.RIGHT,
 		40  : UNOKey.DOWN,
-		41	: null, // select key	: UNKOWN
 		45  : UNOKey.INSERT,
 		46  : UNOKey.DELETE,
 		48  : UNOKey.NUM0,
@@ -164,7 +163,6 @@ L.Map.Keyboard = L.Handler.extend({
 		UP:       38,
 		RIGHT:    39,
 		DOWN:     40,
-		SELECTKEY:41, // select key	: UNKOWN
 		INSERT:   45,
 		DELETE:   46,
 		NUM0:     [48,96], // two values because of different mapping in mac and windows for same keys
