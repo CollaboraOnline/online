@@ -98,7 +98,7 @@ img.sidebar.ui-drawing-area {
 	line-height: var(--default-height);
 }
 
-.sidebar.ui-grid.ui-grid-cell > div {
+.sidebar.ui-grid.ui-grid-cell > div:not(.ui-treeview) {
 	justify-content: start;
 	display: flex;
 }

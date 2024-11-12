@@ -466,7 +466,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 /* TreeView */
 
 .ui-treeview {
-	display: block;
+	display: grid;
+	grid-template-columns: repeat(1, auto);
 	border: 1px solid var(--color-border);
 	border-radius: var(--border-radius);
 	overflow-y: auto;
@@ -545,12 +546,23 @@ ul.ui-treeview > * {
 	width: 20px !important; /* overwrite first-child rule */
 }
 
-.ui-treeview-entry.ui-treeview-expandable > div.ui-treeview-icon-column {
+.ui-treeview div.ui-treeview-icon-column {
 	width: 30px; /* in table with headers has to be 100% */
 }
 
+.ui-treeview div.ui-treeview-state-column {
+	width: 38px;
+}
+
+.ui-treeview-headers {
+	white-space: nowrap;
+	display: inline-flex;
+	grid-column: 1 / 6;
+}
+
 .ui-treeview-header {
-	display: table-caption;
+	display: inline-block;
+	width: 100%;
 }
 
 .ui-treeview-header-text {
