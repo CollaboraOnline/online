@@ -1547,7 +1547,7 @@ void DocumentBroker::asyncInstallPreset(const std::string& presetUri, const std:
     LOG_DBG("Getting autotext from [" << uriAnonym << ']');
 
     http::Session::FinishedCallback finishedCallback =
-        [this, uriAnonym](const std::shared_ptr<http::Session>& autotextSession)
+        [this, uriAnonym, presetFile](const std::shared_ptr<http::Session>& autotextSession)
     {
         if (SigUtil::getShutdownRequestFlag())
         {
@@ -1559,12 +1559,13 @@ void DocumentBroker::asyncInstallPreset(const std::string& presetUri, const std:
 
         if (autotextHttpResponse->statusLine().statusCode() != http::StatusCode::OK)
         {
-            LOG_ERR("Fetch of userSettings autotext uri: " << uriAnonym << " failed: " <<
+            LOG_ERR("Fetch of preset uri: " << uriAnonym << " failed: " <<
                     autotextHttpResponse->statusLine().statusCode());
+            FileUtil::removeFile(presetFile);
         }
         else
         {
-            LOG_INF("Fetch of userSettings autotext uri: " << uriAnonym << " succeeded");
+            LOG_INF("Fetch of preset uri: " << uriAnonym << " succeeded");
         }
     };
 
