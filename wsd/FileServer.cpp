@@ -583,7 +583,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             if (configPath == "/userconfig.json")
             {
                 handlePresetRequest("user", prefix, socket,
-                                    { "/test/data/autotextsample.bau", "/noexist.bau" });
+                                    { "/test/data/autotextuser.bau", "/noexist.bau" });
             }
             else if (configPath == "/sharedconfig.json")
             {
