@@ -586,6 +586,12 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         }
         else if(request.getMethod() == "GET")
         {
+            if (!FileUtil::Stat(configPath).exists())
+            {
+                LOG_ERR("Local file URI [" << configPath << "] invalid or doesn't exist.");
+                throw BadRequestException("Invalid URI: " + configPath);
+            }
+
             std::shared_ptr<LocalFileInfo> localFile =
                 LocalFileInfo::getOrCreateFile(configPath, path.getFileName());
             auto ss = std::ostringstream{};
