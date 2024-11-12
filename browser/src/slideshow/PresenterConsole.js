@@ -305,9 +305,7 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.createElement('div');
 		elem.style.textAlign = 'center';
 		let button = this._proxyPresenter.document.createElement('button');
-		button.innerText = _('Close');
-		button.addEventListener('click', L.bind(this._onHideNotes, this));
-		elem.appendChild(button);
+
 		this._notes.appendChild(elem);
 
 		this._slides = this._proxyPresenter.document.createElement('div');
@@ -514,7 +512,7 @@ class PresenterConsole {
 
 	_onShowNotes() {
 		let elem = this._proxyPresenter.document.querySelector('#notes');
-		elem.disable = true;
+		this.toggleButtonState(elem, true);
 
 		let title = this._proxyPresenter.document.querySelector('#title-next');
 		title.remove();
@@ -567,11 +565,24 @@ class PresenterConsole {
 		elem.appendChild(title);
 		elem.appendChild(container);
 		elem = this._proxyPresenter.document.querySelector('#notes');
-		elem.disable = false;
+		this.toggleButtonState(elem, false);
 		this._onResize();
 
 		if (e) {
 			e.stopPropagation();
+		}
+	}
+
+	toggleButtonState(elem, toggleOn) {
+		if (toggleOn) {
+			// Apply the 'selected' styles on show notes to display toggle effect on button
+			elem.style.filter = 'invert(1)';
+			elem.style.backgroundColor = 'black';
+			elem.disable = true;
+		} else {
+			elem.style.filter = '';
+			elem.style.backgroundColor = 'transparent';
+			elem.disable = false;
 		}
 	}
 
