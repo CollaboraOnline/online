@@ -566,10 +566,16 @@ class PresenterConsole {
 			return;
 		}
 
-		let sec, min, hour, elem;
-
 		if (!this._pause) {
 			++this._ticks;
+		}
+
+		requestAnimationFrame(this._drawClock.bind(this));
+	}
+
+	_drawClock() {
+		let sec, min, hour, elem;
+		if (!this._pause) {
 			sec = this._ticks % 60;
 			min = Math.floor(this._ticks / 60);
 			hour = Math.floor(min / 60);
