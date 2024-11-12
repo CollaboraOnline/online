@@ -828,6 +828,26 @@ function _treelistboxControl(parentContainer, data, builder) {
 
 class TreeViewControl {
 
+	constructor(data, builder, isRealTree) {
+		this._isRealTree = isRealTree;
+		this._container = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview');
+		this._container.id = data.id;
+		this._columns = TreeViewControl.countColumns(data);
+		this._hasState = TreeViewControl.hasState(data);
+		this._hasIcon = TreeViewControl.hasIcon(data);
+		this._isNavigator = this.isNavigator(data);
+		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
+
+		this._container._tbody = this._container;
+		this._container._thead = this._container;
+
+		this._isRealTree = isRealTree;
+		if (isRealTree)
+			this._container.setAttribute('role', 'treegrid');
+		else
+			this._container.setAttribute('role', 'grid');
+	}
+
 	get Container() {
 		return this._container;
 	}
@@ -1085,7 +1105,7 @@ class TreeViewControl {
 			if (entry.selected === true)
 				this.selectEntry(tr, selectionElement);
 
-			const disabled = entry.enabled === false
+			const disabled = entry.enabled === false;
 			if (disabled)
 				L.DomUtil.addClass(tr, 'disabled');
 
@@ -1224,52 +1244,10 @@ class TreeViewControl {
 	}
 }
 
-// table -> tr -> td, simple list (no children), with or no headers, columns > 1
-class SimpleTableControl extends TreeViewControl {
-	constructor(data, builder) {
-		super(data, builder);
-
-		this._container = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview');
-		this._container.id = data.id;
-		this._columns = TreeViewControl.countColumns(data);
-		this._hasState = TreeViewControl.hasState(data);
-		this._hasIcon = TreeViewControl.hasIcon(data);
-		this._isNavigator = this.isNavigator(data);
-		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
-
-		this._container._tbody = this._container;
-		this._container._thead = this._container;
-		this._container.setAttribute('role', 'grid');
-	}
-}
-
-// complex table treegrid, with children, with or no headers, columns > 1
-class ComplexTableControl extends TreeViewControl {
-	constructor(data, builder, isRealTree) {
-		super(data, builder);
-
-		this._isRealTree = isRealTree;
-		this._container = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview');
-		this._container.id = data.id;
-		this._columns = TreeViewControl.countColumns(data);
-		this._hasState = TreeViewControl.hasState(data);
-		this._hasIcon = TreeViewControl.hasIcon(data);
-		this._isNavigator = this.isNavigator(data);
-		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
-
-		this._container._tbody = this._container;
-		this._container._thead = this._container;
-		this._container.setAttribute('role', 'treegrid');
-	}
-}
-
 class TreeViewFactory {
 	constructor(data, builder) {
-		const isRealTree = this.isRealTree(data);
-		if (isRealTree || this.isHeaderListBox(data))
-			this._implementation = new ComplexTableControl(data, builder, isRealTree);
-		else
-			this._implementation = new SimpleTableControl(data, builder);
+		const isRealTree = this.isRealTree(data); // has expandable entries
+		this._implementation = new TreeViewControl(data, builder, isRealTree);
 	}
 
 	isHeaderListBox(data) { return data.headers && data.headers.length !== 0; }
