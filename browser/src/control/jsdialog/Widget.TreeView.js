@@ -983,7 +983,7 @@ class TreeViewControl {
 		if (!header)
 			return;
 
-		let th = L.DomUtil.create('div', builder.options.cssClass + ' .ui-treeview-header',
+		let th = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-header',
 					  this._container._thead);
 		let span = L.DomUtil.create('span', builder.options.cssClass +
 					    ' ui-treeview-header-text', th);
@@ -1291,12 +1291,19 @@ class TreeViewFactory {
 		if (!headers)
 			return;
 
+		this._implementation._container._thead = L.DomUtil.create('div', 'ui-treeview-headers', this._implementation._container);
+
 		let dummyCells = this._implementation._columns - headers.length;
 		if (this._implementation._hasState)
 			dummyCells++;
 
-		for (let index = 0; index < dummyCells; index++)
+		for (let index = 0; index < dummyCells; index++) {
 			this._implementation.fillHeader({text: ''}, builder);
+			if (index === 0 && this._implementation._hasState)
+				L.DomUtil.addClass(this._implementation._container._thead.lastChild, 'ui-treeview-state-column');
+			else
+				L.DomUtil.addClass(this._implementation._container._thead.lastChild, 'ui-treeview-icon-column');
+		}
 
 		for (let index in headers) {
 			this._implementation.fillHeader(headers[index], builder);
@@ -1306,8 +1313,8 @@ class TreeViewFactory {
 					if (!a || !b)
 						return 0;
 
-					var tda = a.querySelectorAll('td').item(columnIndex);
-					var tdb = b.querySelectorAll('td').item(columnIndex);
+					var tda = a.querySelectorAll('div').item(columnIndex);
+					var tdb = b.querySelectorAll('div').item(columnIndex);
 
 					if (tda.querySelector('input')) {
 						if (tda.querySelector('input').checked === tdb.querySelector('input').checked)
@@ -1331,18 +1338,23 @@ class TreeViewFactory {
 
 				var toSort = [];
 
-				this._implementation._container.querySelectorAll('.jsdialog.ui-listview-entry')
-					.forEach(function (item) { toSort.push(item); this._implementation._container.removeChild(item); });
+				var that = this;
+				this._implementation._container.querySelectorAll(':not(.ui-treeview-expanded-content) .ui-treeview-entry')
+					.forEach((item) => { toSort.push(item); that._implementation._container.removeChild(item); });
 
 				toSort.sort(compareFunction);
 
-				toSort.forEach(function (item) { this._implementation._container.insertBefore(item, this._container.lastChild.nextSibling); });
+				toSort.forEach((item) => {
+					that._implementation._container.insertBefore(
+						item,
+						that._implementation._container.lastChild.nextSibling);
+				});
 			};
 
 			var clickFunction = (columnIndex, icon) => {
 				var clearSorting = () => {
-					var icons = this._implementation._container.querySelectorAll('.ui-treeview-header-sort-icon');
-					icons.forEach(function (icon) {
+					var icons = this._implementation._container._thead.querySelectorAll('.ui-treeview-header-sort-icon');
+					icons.forEach((icon) => {
 						L.DomUtil.removeClass(icon, 'down');
 						L.DomUtil.removeClass(icon, 'up');
 					});
@@ -1352,17 +1364,18 @@ class TreeViewFactory {
 					if (L.DomUtil.hasClass(icon, 'down')) {
 						clearSorting();
 						L.DomUtil.addClass(icon, 'up');
-						sortByColumn(columnIndex, true);
+						sortByColumn(columnIndex + dummyCells, true);
 					} else {
 						clearSorting();
 						L.DomUtil.addClass(icon, 'down');
-						sortByColumn(columnIndex, false);
+						sortByColumn(columnIndex + dummyCells, false);
 					}
 				};
 			};
 
-			// TODO: if (!isTreeGrid)
-			this._implementation._container.lastChild.onclick = clickFunction(index, this._implementation._container.lastChild.querySelector('.ui-treeview-header-sort-icon'));
+			this._implementation._container._thead.lastChild.onclick =
+				clickFunction(parseInt(index),
+					this._implementation._container._thead.lastChild.querySelector('.ui-treeview-header-sort-icon'));
 		}
 	}
 
@@ -1385,9 +1398,6 @@ class TreeViewFactory {
 
 	build(data, builder, parentContainer) {
 		let container = this._implementation ? this._implementation.Container._tbody : null;
-
-		var gridStyle = 'display: grid; grid-template-columns: repeat(' + this._implementation._columns  + ', auto);';
-		container.style = gridStyle;
 
 		this.fillHeaders(data.headers, builder);
 		this.fillEntries(data, data.entries, builder, 1, container);
