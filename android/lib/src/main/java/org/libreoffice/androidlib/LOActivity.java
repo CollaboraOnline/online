@@ -60,6 +60,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -952,16 +953,18 @@ public class LOActivity extends AppCompatActivity {
      * or both of these may be null if the clipboard does not contain it.
      */
     @JavascriptInterface
-    public String[] readFromClipboard() {
+    public String readFromClipboard() {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
         ClipData clipboardData = clipboard.getPrimaryClip();
 
-        if (clipboardData == null) return new String[] { null, null };
+        if (clipboardData == null) return "";
 
         ClipData.Item clipboardItem = clipboardData.getItemAt(0);
 
-        return new String[] { clipboardItem.getHtmlText(), clipboardItem.coerceToText(getApplicationContext()).toString() };
+        return Base64.getEncoder().encodeToString(clipboardItem.coerceToText(getApplicationContext()).toString().getBytes())
+                + " "
+                + Base64.getEncoder().encodeToString(clipboardItem.getHtmlText().getBytes());
     }
 
     /**
@@ -1000,6 +1003,11 @@ public class LOActivity extends AppCompatActivity {
         ClipData clipboardData = new ClipData(clipboardItemMetadata, clipboardItem);
  
         clipboard.setPrimaryClip(clipboardData);
+    }
+
+    @JavascriptInterface
+    public void sendToInternalClipboard(String content) {
+        LOActivity.this.setClipboardContent(content);
     }
  
     /**
@@ -1378,6 +1386,7 @@ public class LOActivity extends AppCompatActivity {
 
     public native boolean getClipboardContent(LokClipboardData aData);
 
+    public native boolean setClipboardContent(String content);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */

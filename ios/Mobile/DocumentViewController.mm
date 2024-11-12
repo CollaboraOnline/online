@@ -28,10 +28,12 @@
 #import "MobileApp.hpp"
 #import "SigUtil.hpp"
 #import "Util.hpp"
+#import "Clipboard.hpp"
 
 #import "DocumentViewController.h"
 
 #import <MobileCoreServices/UTCoreTypes.h>
+#import <Poco/MemoryStream.h>
 
 @interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, WKScriptMessageHandlerWithReply, UIScrollViewDelegate, UIDocumentPickerDelegate, UIFontPickerViewControllerDelegate> {
     int closeNotificationPipeForForwardingThread[2];
@@ -387,6 +389,48 @@ static IMP standardImpOfInputAccessoryView = nil;
             [pasteboard setItems:[NSArray arrayWithObject:pasteboardItem]];
             
             replyHandler(nil, nil);
+        } else if ([message.body hasPrefix:@"sendToInternal "]) {
+            ClipboardData data;
+            NSString * content = [message.body substringFromIndex:[@"sendToInternal " length]];
+            std::vector<char> html;
+            
+            size_t nInCount;
+            
+            if ([content hasPrefix:@"<!DOCTYPE html>"]) {
+                // Content is just HTML
+                const char * _Nullable content_cstr = [content cStringUsingEncoding:NSUTF8StringEncoding];
+                html = std::vector(content_cstr, content_cstr + [content lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
+                nInCount = 1;
+            } else {
+                Poco::MemoryInputStream stream([content cStringUsingEncoding:NSUTF8StringEncoding], [content lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
+                data.read(stream);
+                nInCount = data.size();
+            }
+            
+            std::vector<size_t> pInSizes(nInCount);
+            std::vector<const char*> pInMimeTypes(nInCount);
+            std::vector<const char*> pInStreams(nInCount);
+            
+            if (html.empty()) {
+                for (size_t i = 0; i < nInCount; ++i) {
+                    pInSizes[i] = data._content[i].length();
+                    pInStreams[i] = data._content[i].c_str();
+                    pInMimeTypes[i] = data._mimeTypes[i].c_str();
+                }
+            } else {
+                pInSizes[0] = html.size();
+                pInStreams[0] = html.data();
+                pInMimeTypes[0] = "text/html";
+            }
+            
+            if (!DocumentData::get(self.document->appDocId).loKitDocument->setClipboard(nInCount, pInMimeTypes.data(), pInSizes.data(),
+                                                                                        pInStreams.data())) {
+                LOG_ERR("set clipboard returned failure");
+                replyHandler(nil, @"set clipboard returned failure");
+            } else {
+                LOG_TRC("set clipboard succeeded");
+                replyHandler(nil, nil);
+            }
         } else {
             replyHandler(nil, [NSString stringWithFormat:@"Invalid clipboard action %@", message.body]);
         }

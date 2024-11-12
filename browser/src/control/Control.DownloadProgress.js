@@ -288,29 +288,35 @@ L.Control.DownloadProgress = L.Control.extend({
 			this._map.focus();
 	},
 
-	_download: function () {
-		var that = this;
-		this._map._clip._doAsyncDownload(
-			'GET', that._uri, null, true,
-			function(response) {
-				window.app.console.log('clipboard async download done');
-				// annoying async parse of the blob ...
-				var reader = new FileReader();
-				reader.onload = function() {
-					var text = reader.result;
-					window.app.console.log('async clipboard parse done: ' + text.substring(0, 256));
-					let result = that._map._clip.parseClipboard(text);
-					that._map._clip.setTextSelectionHTML(result['html'], result['plain']);
-				};
-				// TODO: failure to parse ? ...
-				reader.readAsText(response);
-			},
-			function(progress) { return progress/2; },
-			function (response) {
-				that._onClose();
-				app.showAsyncDownloadError(response, _('Download failed'));
-			}
-		);
+	_download: async function () {
+		let response;
+		try {
+			response = await this._map._clip._doAsyncDownload(
+				'GET', this._uri, null, true,
+				function(progress) { return progress/2; },
+			);
+		} catch (error) {
+			this._onClose();
+			app.showAsyncDownloadError(error, _('Download failed'));
+			return;
+		}
+
+		window.app.console.log('clipboard async download done');
+		// annoying async parse of the blob ...
+		var reader = new FileReader();
+		reader.onload = () => {
+			var text = reader.result;
+			window.app.console.log(
+				'async clipboard parse done: ' + text.substring(0, 256),
+			);
+			let result = this._map._clip.parseClipboard(text);
+			this._map._clip.setTextSelectionHTML(
+				result['html'],
+				result['plain'],
+			);
+		};
+		// TODO: failure to parse ? ...
+		reader.readAsText(response);
 	},
 
 	_cancelDownload: function () {
