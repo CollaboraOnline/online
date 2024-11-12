@@ -74,6 +74,7 @@ extern void cleanupDocBrokers();
 namespace
 {
 
+#if ENABLE_SUPPORT_KEY
 /// Used in support key enabled builds
 inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>& proto)
 {
@@ -97,6 +98,7 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
         LOG_ERR("Error while shutting down socket on reaching limit: " << ex.what());
     }
 }
+#endif
 
 } // end anonymous namespace
 
@@ -1915,7 +1917,9 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
                                                                  << " reached.");
             if (ConfigUtil::isSupportKeyEnabled())
             {
+#if ENABLE_SUPPORT_KEY
                 shutdownLimitReached(ws);
+#endif
                 return true;
             }
         }
