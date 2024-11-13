@@ -255,7 +255,10 @@ L.Clipboard = L.Class.extend({
 		forClipboard,
 		progressFn,
 	) {
-		if (window.ThisIsAMobileApp) return
+		if (window.ThisIsAMobileApp)
+			throw new Error(
+				'Attempted to call _doAsyncDownload on a mobile platform, this will never work so should never happen...',
+			);
 
 		var request = new XMLHttpRequest();
 
@@ -461,6 +464,27 @@ L.Clipboard = L.Class.extend({
 		return true;
 	},
 
+	_sendToInternalClipboard: async function (content) {
+		if (window.ThisIsTheAndroidApp) {
+			window.COOLMessageHandler.sendToInternalClipboard(content);
+		} else if (window.ThisIsTheiOSApp) {
+			await window.webkit.messageHandlers.clipboard.postMessage(`sendToInternal ${content}`); // no need to base64 in this direction...
+		} else {
+			var formData = new FormData();
+			formData.append('file', content);
+
+			return await this._doAsyncDownload(
+				'POST',
+				this.getMetaURL(),
+				formData,
+				false,
+				function (progress) {
+					return progress;
+				},
+			);
+		}
+	},
+
 	dataTransferToDocumentFallback: async function (
 		dataTransfer,
 		htmlText,
@@ -511,21 +535,24 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
-		if (content != null) {
-			window.app.console.log('Normal HTML, so smart paste not possible');
-
-			var formData = new FormData();
-			formData.append('file', content);
-
-			var that = this;
-			await this._doAsyncDownload('POST', this.getMetaURL(), formData, false,
-				function(progress) { return progress; });
-
-			window.app.console.log('Posted ' + content.size + ' bytes successfully');
-			that._doInternalPaste(that._map, usePasteKeyEvent);
-		} else {
+		if (content == null) {
 			window.app.console.log('Nothing we can paste on the clipboard');
 		}
+
+		window.app.console.log('Normal HTML, so smart paste not possible');
+
+		let text;
+		try {
+			text = await content.text();
+		} catch (_error) {
+			text = content;
+		}
+
+		await this._sendToInternalClipboard(text);
+
+		window.app.console.log('clipboard: Sent ' + content.size + ' bytes successfully');
+
+		this._doInternalPaste(this._map, usePasteKeyEvent);
 	},
 
 	_checkSelection: function() {
@@ -725,7 +752,8 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
-		if (document.execCommand(operation) &&
+		if (!window.ThisIsAMobileApp && // in mobile apps, we want to drop straight to navigatorClipboardRead as execCommand will require user interaction...
+			document.execCommand(operation) &&
 			serial !== this._clipboardSerial) {
 			window.app.console.log('copied successfully');
 			this._unoCommandForCopyCutPaste = null;
@@ -875,7 +903,6 @@ L.Clipboard = L.Class.extend({
 			window.app.console.error('Already have ' + this._commandCompletion.length +
 						 ' pending clipboard command(s)');
 
-		const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
 		const commandCompletePromise = new Promise((resolve, reject) => {
 			window.app.console.log('New ' + command + ' promise');
 			// FIXME: add a timeout cleanup too ...
@@ -887,36 +914,44 @@ L.Clipboard = L.Class.extend({
 
 		await commandCompletePromise;
 
-		const response = await fetch(url);
-		const responseText = await response.text();
+		if (window.ThisIsTheAndroidApp) {
+			window.COOLMessageHandler.writeToClipboard();
+		} else if (window.ThisIsTheiOSApp) {
+			await window.webkit.messageHandlers.clipboard.postMessage(`write`);
+		} else {
+			const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
 
-		const clipboardItem = new ClipboardItem({
-			'text/plain': this._parseClipboardFetchResult(responseText, 'text/plain', 'plain'),
-			'text/html': this._parseClipboardFetchResult(responseText, 'text/html', 'html'),
-		});
-		let clipboard = navigator.clipboard;
-		if (L.Browser.cypressTest) {
-			clipboard = this._dummyClipboard;
-		}
+			const response = await fetch(url);
+			const responseText = await response.text();
 
-		try {
-			await clipboard.write([clipboardItem]);
-		} catch (error) {
-			window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
+			const clipboardItem = new ClipboardItem({
+				'text/plain': this._parseClipboardFetchResult(responseText, 'text/plain', 'plain'),
+				'text/html': this._parseClipboardFetchResult(responseText, 'text/html', 'html'),
+			});
+			let clipboard = navigator.clipboard;
+			if (L.Browser.cypressTest) {
+				clipboard = this._dummyClipboard;
+			}
 
-			// Warn that the copy failed.
-			this._warnCopyPaste();
-			// Once broken, always broken.
-			L.Browser.clipboardApiAvailable = false;
-			window.prefs.set('clipboardApiAvailable', false);
-			// Prefetch selection, so next time copy will work with the keyboard.
-			app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
+			try {
+				await clipboard.write([clipboardItem]);
+			} catch (error) {
+				window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
+
+				// Warn that the copy failed.
+				this._warnCopyPaste();
+				// Once broken, always broken.
+				L.Browser.clipboardApiAvailable = false;
+				window.prefs.set('clipboardApiAvailable', false);
+				// Prefetch selection, so next time copy will work with the keyboard.
+				app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
+			}
 		}
 	},
 
 	// Executes the navigator.clipboard.write() call, if it's available.
 	_navigatorClipboardWrite: function() {
-		if (!L.Browser.clipboardApiAvailable) {
+		if (!L.Browser.clipboardApiAvailable && !window.ThisIsTheAndroidApp && !window.ThisIsTheiOSApp) {
 			return false;
 		}
 
@@ -966,7 +1001,35 @@ L.Clipboard = L.Class.extend({
 		let clipboardContents;
 
 		try {
-			clipboardContents = await clipboard.read();
+			if (window.ThisIsTheAndroidApp || window.ThisIsTheiOSApp) {
+				const encodedClipboardData =
+					window.ThisIsTheAndroidApp
+						? window.COOLMessageHandler.readFromClipboard()
+						: await window.webkit.messageHandlers.clipboard.postMessage('read');
+				const clipboardData = Array.from(
+					encodedClipboardData.split(' '),
+				).map((encoded) =>
+					(encoded === '(null)' ? '' : window.b64d(encoded)),
+				);
+
+				const dataByMimeType = {};
+
+				if (clipboardData[0]) {
+					dataByMimeType['text/plain'] = clipboardData[0];
+				}
+
+				if (clipboardData[1]) {
+					dataByMimeType['text/html'] = clipboardData[1];
+				}
+
+				if (Object.keys(dataByMimeType).length === 0) {
+					clipboardContents = [];
+				} else {
+					clipboardContents = [new ClipboardItem(dataByMimeType)];
+				}
+			} else {
+				clipboardContents = await clipboard.read();
+			}
 		} catch (error) {
 			window.app.console.log(
 				'navigator.clipboard.read() failed: ' + error.message,
@@ -1019,7 +1082,7 @@ L.Clipboard = L.Class.extend({
 
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead: function(isSpecial) {
-		if (!L.Browser.clipboardApiAvailable) {
+		if (!L.Browser.clipboardApiAvailable && !window.ThisIsTheAndroidApp && !window.ThisIsTheiOSApp) {
 			return false;
 		}
 
@@ -1032,12 +1095,6 @@ L.Clipboard = L.Class.extend({
 	// We try to massage and re-emit these, to get good security event / credentials.
 	filterExecCopyPaste: function(cmd) {
 		if (this._map['wopi'].DisableCopy && (cmd === '.uno:Copy' || cmd === '.uno:Cut')) {
-			// perform internal operations
-			app.socket.sendMessage('uno ' + cmd);
-			return true;
-		}
-
-		if (window.ThisIsAMobileApp) {
 			// perform internal operations
 			app.socket.sendMessage('uno ' + cmd);
 			return true;
@@ -1381,7 +1438,5 @@ L.Clipboard = L.Class.extend({
 });
 
 L.clipboard = function(map) {
-	if (window.ThisIsAMobileApp)
-		window.app.console.log('======> Assertion failed!? No L.Clipboard object should be needed in a mobile app');
 	return new L.Clipboard(map);
 };
