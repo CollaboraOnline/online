@@ -9,17 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/WebSocket.h>
 #include <config.h>
-#include <config_version.h>
-
-#include <ClientRequestDispatcher.hpp>
-#include <cstdio>
-#include <exception>
-#include <istream>
-#include <stdexcept>
 
 #if ENABLE_FEATURE_LOCK
 #include "CommandControl.hpp"
@@ -38,7 +28,6 @@
 #include <ProxyRequestHandler.hpp>
 #include <RequestDetails.hpp>
 #include <Socket.hpp>
-#include <ServerSocket.hpp>
 #include <UserMessages.hpp>
 #include <Util.hpp>
 #include <net/AsyncDNS.hpp>
@@ -62,15 +51,9 @@
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/NetException.h>
-#include <Poco/Net/DNS.h>
 #include <Poco/Net/PartHandler.h>
-#if !MOBILEAPP
-#include <Poco/Net/SSLException.h>
-#include <Poco/Net/HTTPSClientSession.h>
-#endif // !MOBILEAPP
 #include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
-#include <Poco/Timespan.h>
 
 #include <algorithm>
 #include <map>
@@ -1167,6 +1150,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
     http::Session::Protocol protocol = http::Session::Protocol::HttpSsl;
     ulong port = 443;
     if (scheme == "https://" || scheme.empty()) {
+        // empty scheme assumes https
     } else if (scheme == "http://") {
         protocol = http::Session::Protocol::HttpUnencrypted;
         port = 80;
@@ -1177,7 +1161,6 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         return false;
     }
-    LOG_DBG("Wopi Access Check request scheme: " << scheme << port << portStr);
 
     if (!portStr.empty()) {
         try {
@@ -1199,6 +1182,8 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
             return false;
         }
     }
+
+    LOG_DBG("Wopi Access Check request scheme: " << scheme << port << portStr);
 
     enum class CheckStatus
     {
@@ -1227,167 +1212,88 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         { CheckStatus::NotHttps, "NOT_HTTPS" },
         { CheckStatus::NoScheme, "NO_SCHEME" },
         { CheckStatus::Timeout, "TIMEOUT" }
+        // TODO allowed host check
     };
 
-    CheckStatus result = CheckStatus::Ok;
+    auto sendResult = [=, this](CheckStatus result)
+    {
+        Poco::JSON::Object::Ptr status = new Poco::JSON::Object;
+        status->set("status", (int)result);
+        status->set("details", checkStatusNames.at(result));
+
+        std::ostringstream ostrJSON;
+        status->stringify(ostrJSON);
+        const auto output = ostrJSON.str();
+
+        http::Response jsonResponse(http::StatusCode::OK);
+        FileServerRequestHandler::hstsHeaders(jsonResponse);
+        jsonResponse.set("Last-Modified", Util::getHttpTimeNow());
+        jsonResponse.setBody(output, "application/json");
+        jsonResponse.set("X-Content-Type-Options", "nosniff");
+
+        socket->sendAndShutdown(jsonResponse);
+        LOG_INF("Sent wopiAccessCheck.json successfully.");
+    };
 
     if (scheme.empty())
     {
-        result = CheckStatus::NoScheme;
+        sendResult(CheckStatus::NoScheme);
+        return true;
     }
     else if (protocol != http::Session::Protocol::HttpSsl)
     {
-        result = CheckStatus::NotHttps;
+        sendResult(CheckStatus::NotHttps);
+        return true;
     }
-    else
-    {
-        LOG_DBG("Wopi Access Check about to prepare http session");
-        
-        http::Request httpRequest(url);
-        auto httpProbeSession = http::Session::create(host, protocol, port);
-        httpProbeSession->setTimeout(std::chrono::seconds(2));
 
+    LOG_DBG("Wopi Access Check about to prepare http session");
 
-        LOG_DBG("Wopi Access Check preparing http session");
+    http::Request httpRequest(url);
+    auto httpProbeSession = http::Session::create(host, protocol, port);
+    httpProbeSession->setTimeout(std::chrono::seconds(2));
 
-        // thread to probe http
+    LOG_DBG("Wopi Access Check preparing http session");
 
-/*
-        std::shared_ptr<SocketFactory> factory;
-#if ENABLE_SSL
-        if (protocol == http::Session::Protocol::HttpUnencrypted)
-            factory = std::make_shared<SslSocketFactory>();
-        else
-#endif
-            factory = std::make_shared<PlainSocketFactory>();
-
-        static std::shared_ptr<TerminatingPoll> httpProbingServerPoll(new TerminatingPoll("HttpProbeThread"));
-        auto httpServerSocket = ServerSocket::create(ServerSocket::Type::Local, port, Socket::Type::IPv4,
-                                *httpProbingServerPoll, factory);
-        httpProbingServerPoll->insertNewSocket(httpServerSocket);
-        */
-
-        httpProbeSession->setFinishedHandler([=, this, &result](const std::shared_ptr<http::Session>&probeSession) {
-            LOG_INF("contacted successfully.");
+    httpProbeSession->setFinishedHandler(
+        [=, this](const std::shared_ptr<http::Session>& probeSession)
+        {
             auto httpResponse = probeSession->response();
+            LOG_DBG("Wopi Access Check: got response" << httpResponse->state()
+                                                      << httpResponse->statusCode());
 
-            if (httpResponse->state() == http::Response::State::Timeout) {
-                result = CheckStatus::Timeout;
-            }
+            CheckStatus result = CheckStatus::Ok;
 
-            if (httpResponse->state() == http::Response::State::Error) {
+            if (httpResponse->state() != http::Response::State::Complete)
+            {
                 // are TLS errors here ?
                 result = CheckStatus::UnspecifiedError;
             }
 
-            // construct the result
-            Poco::JSON::Object::Ptr status = new Poco::JSON::Object;
-            status->set("status", (int)result);
-            status->set("details", checkStatusNames.at(result));
+            if (!probeSession->isConnected())
+            {
+                result = CheckStatus::ConnectionAborted;
+            }
 
-            std::ostringstream ostrJSON;
-            status->stringify(ostrJSON);
-            const auto output = ostrJSON.str();
+            if (httpResponse->state() == http::Response::State::Timeout)
+            {
+                result = CheckStatus::Timeout;
+            }
 
-            http::Response jsonResponse(http::StatusCode::OK);
-            FileServerRequestHandler::hstsHeaders(jsonResponse);
-            jsonResponse.set("Last-Modified", Util::getHttpTimeNow());
-            jsonResponse.setBody(output, "application/json");
-            jsonResponse.set("X-Content-Type-Options", "nosniff");
-            
+            // TODO complete error coverage
 
-            socket->sendAndShutdown(jsonResponse);
-            LOG_INF("Sent wopiAccessCheck.json successfully.");
+            if (!probeSession->getSslVerifyMessage().empty())
+            {
+                result = CheckStatus::CertificateValidation;
 
+                LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+            }
+
+            sendResult(result);
         });
 
-        LOG_DBG("Wopi Access Check requesting: " << httpRequest.getUrl());
+    LOG_DBG("Wopi Access Check requesting: " << httpRequest.getUrl());
 
-        TerminatingPoll wopiCheckPoll ("wopi_check_poll");
-        wopiCheckPoll.startThread();
-
-        httpProbeSession->asyncRequest(httpRequest, wopiCheckPoll);
-
-        ///auto response = session->response();
-
-        // httpRequest.async
-        //if (!httpRequest->asyncRequest(requestProxy, *COOLWSD::getWebServerPoll())) {
-
-        /*
-        // request the url
-        try
-        {
-            const auto hostAddress(Poco::Net::DNS::resolve(uri.getHost()));
-
-            Poco::Net::HTTPSClientSession httpSession(uri.getHost(), 443);
-            httpSession.setConnectTimeout(Poco::Timespan(0, 300));
-            Poco::Net::HTTPRequest httpRequest(Poco::Net::HTTPRequest::HTTP_GET,
-                                               uri.getPathAndQuery());
-            httpSession.sendRequest(httpRequest);
-            Poco::Net::HTTPResponse response;
-            std::istream* responseStream = &httpSession.receiveResponse(response);
-
-            std::cout << responseStream->rdbuf();
-            if (response.getStatus() != 200)
-            {
-                result = CheckStatus::NotHttpSucess;
-            }
-        }
-        catch (Poco::Net::HostNotFoundException& hostNotfound)
-        {
-            result = CheckStatus::HostNotFound;
-        }
-        catch (Poco::Net::NoAddressFoundException& noAddressFound)
-        {
-            result = CheckStatus::HostUnReachable;
-        }
-        catch (Poco::Net::ConnectionAbortedException& connectionAborted)
-        {
-            result = CheckStatus::ConnectionAborted;
-        }
-        catch (Poco::Net::ConnectionRefusedException& exception)
-        {
-            result = CheckStatus::ConnectionRefused;
-        }
-        catch (Poco::Net::InvalidCertificateException& invalidCertification)
-        {
-            result = CheckStatus::InvalidCertificate;
-        }
-        catch (Poco::Net::CertificateValidationException& certificateValidation)
-        {
-            result = CheckStatus::CertificateValidation;
-        }
-        catch (Poco::TimeoutException& timeout)
-        {
-            result = CheckStatus::Timeout;
-        }
-        catch (Poco::Exception& exception)
-        {
-            LOG_ERR_S("Wopi Access Check request error, query to callback ["
-                      << uri.toString() << "] failed:" << exception.what() << exception.className()
-                      << exception.name() << exception.message());
-
-            result = CheckStatus::UnspecifiedError;
-        }
-        */
-    }
-
-    // construct the result
-    Poco::JSON::Object::Ptr status = new Poco::JSON::Object;
-    status->set("status", (int)result);
-    status->set("details", checkStatusNames.at(result));
-
-    std::ostringstream ostrJSON;
-    status->stringify(ostrJSON);
-    const auto output = ostrJSON.str();
-
-    http::Response httpResponse(http::StatusCode::OK);
-    FileServerRequestHandler::hstsHeaders(httpResponse);
-    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-    httpResponse.setBody(output, "application/json");
-    httpResponse.set("X-Content-Type-Options", "nosniff");
-    socket->sendAndShutdown(httpResponse);
-    LOG_INF("Sent capabilities.json successfully.");
+    httpProbeSession->asyncRequest(httpRequest, *COOLWSD::getWebServerPoll());
     return true;
 }
 
