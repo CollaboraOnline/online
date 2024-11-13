@@ -230,9 +230,13 @@ class PresenterConsole {
 		let slideShowColor = window
 			.getComputedStyle(document.documentElement)
 			.getPropertyValue('--color-slideshow');
+		let slideShowFontFamily = window
+			.getComputedStyle(document.documentElement)
+			.getPropertyValue('--cool-font');
 
 		elem.style.backgroundColor = slideShowBGColor;
 		elem.style.color = slideShowColor;
+		elem.style.fontFamily = slideShowFontFamily;
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
 		elem.style.minWidth = '100vw';
