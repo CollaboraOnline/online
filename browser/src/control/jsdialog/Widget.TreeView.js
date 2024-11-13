@@ -842,6 +842,8 @@ class TreeViewControl {
 		this._container._thead = this._container;
 		this._container.filterEntries = this.filterEntries.bind(this);
 
+		this.setupDragAndDrop(data, builder);
+
 		this._isRealTree = isRealTree;
 		if (isRealTree)
 			this._container.setAttribute('role', 'treegrid');
@@ -1036,6 +1038,45 @@ class TreeViewControl {
 		this.fillCells(entry, builder, data, tr, level, selectionElement);
 
 		this.setupRowProperties(tr, entry, level, selectionElement);
+		this.setupRowDragAndDrop(tr, data, entry, builder);
+	}
+
+	highlightAllTreeViews (highlight) {
+		if (highlight) {
+			document.querySelectorAll('.ui-treeview')
+				.forEach((item) => { L.DomUtil.addClass(item, 'droptarget'); });
+		} else {
+			document.querySelectorAll('.ui-treeview')
+				.forEach((item) => { L.DomUtil.removeClass(item, 'droptarget'); });
+		}
+	}
+
+	setupDragAndDrop (treeViewData, builder) {
+		if (treeViewData.enabled !== false) {
+			this._container.ondrop = (ev) => {
+				ev.preventDefault();
+				var row = ev.dataTransfer.getData('text');
+				builder.callback('treeview', 'dragend', treeViewData, row, builder);
+				this.highlightAllTreeViews(false);
+			};
+			this._container.ondragover = (event) => { event.preventDefault(); };
+		}
+	}
+
+	setupRowDragAndDrop (tr, treeViewData, entry, builder) {
+		if (treeViewData.enabled !== false && entry.state == null) {
+			tr.draggable = treeType === 'navigator' ? false : true;
+
+			tr.ondragstart = (ev) => {
+				ev.dataTransfer.setData('text', entry.row);
+				builder.callback('treeview', 'dragstart', treeViewData, entry.row, builder);
+
+				this.highlightAllTreeViews(true);
+			};
+
+			tr.ondragend = () => { this.highlightAllTreeViews(false); };
+			tr.ondragover = (event) => { event.preventDefault(); };
+		}
 	}
 
 	setupRowProperties(tr, entry, level, selectionElement) {
@@ -1165,8 +1206,6 @@ class TreeViewControl {
 				$(tr).dblclick(doubleClickFunction);
 			}
 		}
-
-		// TODO: drag & drop
 
 		const toggleFunction =
 				() => { this.toggleEntry(tr, treeViewData, entry, builder); };
@@ -1393,6 +1432,18 @@ class TreeViewFactory {
 		}
 	}
 
+	makeEmptyList(data, builder) {
+		// contentbox and tree can never be empty, 1 page or 1 sheet always exists
+		if (data.id === 'contenttree') {
+			var tr = L.DomUtil.create('div', builder.options.cssClass + ' ui-treview-entry', this._container);
+			tr.innerText = _('Headings and objects that you add to the document will appear here');
+		} else {
+			L.DomUtil.addClass(this._container, 'empty');
+			if (data.hideIfEmpty)
+				L.DomUtil.addClass(this._container, 'hidden');
+		}
+	}
+
 	fillEntries(data, entries, builder, level, parent) {
 		for (let index in entries) {
 			this._implementation.fillRow(data, entries[index], builder, level, parent);
@@ -1408,6 +1459,9 @@ class TreeViewFactory {
 				this.fillEntries(data, entries[index].children, builder, level + 1, subGrid);
 			}
 		}
+
+		if (!entries || !entries.length)
+			this.makeEmptyList(data, builder);
 	}
 
 	build(data, builder, parentContainer) {
@@ -1416,13 +1470,9 @@ class TreeViewFactory {
 		this.fillHeaders(data.headers, builder);
 		this.fillEntries(data, data.entries, builder, 1, container);
 
-		if (this._implementation && this._implementation.Container.hasChildNodes()) {
-			console.debug('treeview: new implementation');
-			parentContainer.appendChild(this._implementation.Container);
-			return true;
-		}
+		parentContainer.appendChild(this._implementation.Container);
 
-		return false;
+		return true;
 	}
 }
 
@@ -1438,6 +1488,8 @@ JSDialog.treeView = function (parentContainer, data, builder) {
 		console.debug('treeview: legacy');
 		return _treelistboxControl(parentContainer, data, builder);
 	}
+
+	treeType = '';
 
 	return false;
 };
