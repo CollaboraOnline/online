@@ -423,6 +423,10 @@ namespace Log
 
     } Static;
 
+#ifdef ENABLE_LOG_UICOMMANDS
+    static StaticHelper StaticUILog;
+#endif
+
     thread_local GenericLogger* StaticHelper::_threadLocalLogger = nullptr;
 
     bool IsShutdown = false;
@@ -654,6 +658,23 @@ namespace Log
         LOG_INF("Initializing " << name << ". Local time: "
                                 << std::put_time(localtime_r(&t, &tm), "%a %F %T %z")
                                 << ". Log level is [" << logger->getLevel() << ']');
+
+#ifdef ENABLE_LOG_UICOMMANDS
+        AutoPtr<Channel> channelUILog;
+        channelUILog = static_cast<Poco::Channel*>(new Poco::FileChannel("/tmp/coolwsdUICmd.log"));
+        channelUILog->open();
+        StaticUILog.setName("coolwsdUICmd.log");
+        try
+        {
+            auto& loggerUILog = GenericLogger::create(StaticUILog.getName(), std::move(channelUILog), Poco::Message::PRIO_TRACE);
+            StaticUILog.setLogger(&loggerUILog);
+        }
+        catch (ExistsException&)
+        {
+            auto loggerUILog = static_cast<GenericLogger *>(&Poco::Logger::get(StaticUILog.getName()));
+            StaticUILog.setLogger(loggerUILog);
+        }
+#endif
     }
 
     GenericLogger& logger()
@@ -667,6 +688,25 @@ namespace Log
             : *static_cast<GenericLogger *>(
                 &GenericLogger::get(Static.getInited() ? Static.getName() : std::string()));
     }
+
+#ifdef ENABLE_LOG_UICOMMANDS
+    GenericLogger& loggerUI()
+    {
+        GenericLogger* pLogger = StaticUILog.getThreadLocalLogger();
+        if (pLogger != nullptr)
+            return *pLogger;
+
+        pLogger = StaticUILog.getLogger();
+        return pLogger ? *pLogger
+            : *static_cast<GenericLogger *>(
+                &GenericLogger::get(StaticUILog.getInited() ? StaticUILog.getName() : std::string()));
+    }
+
+    void logUI(Level l, const std::string &text)
+    {
+        Log::loggerUI().doLog(l, text);
+    }
+#endif
 
     bool isEnabled(Level l, Area a)
     {

@@ -30,6 +30,8 @@
 #include "Util.hpp"
 #include "StateEnum.hpp"
 
+#define ENABLE_LOG_UICOMMANDS
+
 namespace Log
 {
     enum Level
@@ -104,6 +106,9 @@ namespace Log
 
     /// Main entry function for all logging
     void log(Level l, const std::string &text);
+#ifdef ENABLE_LOG_UICOMMANDS
+    void logUI(Level l, const std::string &text);
+#endif
 
     /// Setting the logging level
     void setLevel(const std::string &l);

@@ -136,6 +136,22 @@ ChildSession::ChildSession(const std::shared_ptr<ProtocolHandlerInterface>& prot
 
 ChildSession::~ChildSession()
 {
+#ifdef ENABLE_LOG_UICOMMANDS
+    if (aFileStreamUICommands.is_open())
+    {
+        // copy the log into a bigger file
+        Log::logUI(Log::WRN, "LOGSTART");
+        aFileStreamUICommands.seekg(0, std::ios::beg);
+        std::string line;
+        while (std::getline(aFileStreamUICommands, line))
+        {
+            if (line.size()>0)
+                Log::logUI(Log::WRN, line);
+        }
+        aFileStreamUICommands.close();
+        Log::logUI(Log::WRN, "LOGEND");
+    }
+#endif
     LOG_INF("~ChildSession dtor [" << getName() << ']');
     disconnect();
 
@@ -195,11 +211,104 @@ namespace
     };
 }
 
+#ifdef ENABLE_LOG_UICOMMANDS
+    LOG_UICOMMANDS::~LOG_UICOMMANDS()
+    {
+        if (aSession->_isDocLoaded)
+        {
+            if (!aSession->aFileStreamUICommands.is_open())
+            {
+                // open the file to log
+                const std::string tempFile = "/tmp/session.log";
+                aSession->aFileStreamUICommands.open(tempFile, std::fstream::in | std::fstream::out | std::fstream::trunc);
+            }
+            if (aSession->aFileStreamUICommands.is_open())
+            {
+                // if the command is to Log
+                if (aTokens->size() > 0 && aCmdToLog.find((*aTokens)[0]) != aCmdToLog.end())
+                {
+                    // check if the previous command is repeated.
+                    bool bToMerge=false;
+                    if (aSession->aLastCmd==(*aTokens)[0])
+                    {
+                        if (aCmdToMergeLog.find((*aTokens)[0]) != aCmdToMergeLog.end())
+                        {
+                            if (aTokens->equals(0, "mouse"))
+                            {
+                                if (aSession->aLastSubCmd==(*aTokens)[1])
+                                {
+                                    bToMerge=true;
+                                }
+                                else
+                                {
+                                    aSession->aLastSubCmd=(*aTokens)[1];
+                                }
+                            }
+                            // Todo: Think about "key" case (space, arrow, pageup/down)
+                            else
+                            {
+                                bToMerge=true;
+                            }
+                        }
+                    }
+                    // If it is a new command.
+                    if (!bToMerge) {
+                        // If the last command was repeated, write the count of repeat
+                        if (aSession->nLastCmdRepeatCount > 0)
+                        {
+                            char aBuf[32];
+                            snprintf(aBuf,32,"CMD_REPATED:%d\n",aSession->nLastCmdRepeatCount);
+                            aSession->aFileStreamUICommands.write(aBuf, strlen(aBuf));
+                        }
+
+                        // log command
+                        aSession->aFileStreamUICommands.write("CMD:", 4);
+                        aSession->aFileStreamUICommands.write(aBufStr.c_str(), aBufStr.size());
+                        aSession->aFileStreamUICommands.write("\n", 1);
+                        aSession->nLastCmdRepeatCount=0;
+                        aSession->aLastCmd=(*aTokens)[0];
+                        if (aTokens->size() > 1)
+                        {
+                            aSession->aLastSubCmd=(*aTokens)[1];
+                        }
+                    }
+                    else
+                    {
+                        aSession->nLastCmdRepeatCount++;
+                    }
+
+                    int undo = 0;
+                    undo = atoi(aSession->getLOKitDocument()->getCommandValues(".uno:UndoCount"));
+
+                    if (aSession->nLastUndoCount!=undo)
+                    {
+                        char aBuf[50];
+                        snprintf(aBuf,50,"UNDO_CHG:(%d -> %d):",aSession->nLastUndoCount,undo);
+                        aSession->aFileStreamUICommands.write(aBuf, strlen(aBuf));
+                        aSession->aFileStreamUICommands.write(aBufStr.c_str(), aBufStr.size());
+                        aSession->aFileStreamUICommands.write("\n", 1);
+                        aSession->nLastUndoCount = undo;
+                    }
+                }
+            }
+        }
+    }
+#endif
+
 bool ChildSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC("handling [" << getAbbreviatedMessage(buffer, length) << ']');
     const std::string firstLine = getFirstLine(buffer, length);
     const StringVector tokens = StringVector::tokenize(firstLine.data(), firstLine.size());
+
+#ifdef ENABLE_LOG_UICOMMANDS
+    LOG_UICOMMANDS aLogUndoRelatedcommandAtfunctionEnd(this, &tokens);
+    if (_isDocLoaded)
+    {
+        std::string aBufStr = std::string(buffer, length);
+        aLogUndoRelatedcommandAtfunctionEnd.aBufStr = aBufStr;
+    }
+#endif
 
     if (COOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
     {
