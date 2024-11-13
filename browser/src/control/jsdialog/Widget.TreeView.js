@@ -384,7 +384,7 @@ class TreeViewControl {
 				this.createImageColumn(text, builder, img);
 			} else if (entry.columns[index].collapsed || entry.columns[index].expanded) {
 				L.DomUtil.addClass(td, 'ui-treeview-icon-column');
-				icon = L.DomUtil.create('img', 'ui-listview-icon', text);
+				icon = L.DomUtil.create('img', 'ui-treeview-icon', text);
 
 				if (this._isNavigator)
 					icon.draggable = false;
@@ -393,7 +393,7 @@ class TreeViewControl {
 				L.DomUtil.addClass(icon, iconId + 'img');
 				iconName = builder._createIconURL(iconId, true);
 				L.LOUtil.setImage(icon, iconName, builder.map);
-				L.DomUtil.addClass(span, 'ui-listview-expandable-with-icon');
+				L.DomUtil.addClass(span, 'ui-treeview-expandable-with-icon');
 			} else if (entry.columns[index].link && !this.isSeparator(entry.columns[index])) {
 				innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text',
 							     text);
@@ -804,12 +804,12 @@ class TreeViewFactory {
 	makeEmptyList(data, builder) {
 		// contentbox and tree can never be empty, 1 page or 1 sheet always exists
 		if (data.id === 'contenttree') {
-			var tr = L.DomUtil.create('div', builder.options.cssClass + ' ui-treview-entry', this._container);
+			var tr = L.DomUtil.create('div', builder.options.cssClass + ' ui-treview-entry', this._implementation._container);
 			tr.innerText = _('Headings and objects that you add to the document will appear here');
 		} else {
-			L.DomUtil.addClass(this._container, 'empty');
+			L.DomUtil.addClass(this._implementation._container, 'empty');
 			if (data.hideIfEmpty)
-				L.DomUtil.addClass(this._container, 'hidden');
+				L.DomUtil.addClass(this._implementation._container, 'hidden');
 		}
 	}
 
@@ -829,7 +829,7 @@ class TreeViewFactory {
 			}
 		}
 
-		if (!entries || !entries.length)
+		if (entries && entries.length === 0)
 			this.makeEmptyList(data, builder);
 	}
 
