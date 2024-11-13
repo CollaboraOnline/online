@@ -1157,8 +1157,6 @@ public class LOActivity extends AppCompatActivity {
                 return false;
             case "uno":
                 switch (messageAndParam[1]) {
-                    case ".uno:Paste":
-                        return performPaste();
                     default:
                         break;
                 }
@@ -1394,10 +1392,6 @@ public class LOActivity extends AppCompatActivity {
         switch (messageAndParameterArray[0]) {
             case "uno":
                 switch (messageAndParameterArray[1]) {
-                    case ".uno:Copy":
-                    case ".uno:Cut":
-                        populateClipboard();
-                        break;
                     default:
                         break;
                 }
