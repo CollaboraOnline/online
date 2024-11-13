@@ -382,6 +382,13 @@ class PresenterConsole {
 		this._onResize();
 	}
 
+	_pauseButton() {
+		let elem = this._proxyPresenter.document.querySelector('#pause>label');
+		if (elem) {
+			elem.innerText = this._pause ? _('Resume') : _('Pause');
+		}
+	}
+
 	_onKeyDown(e) {
 		this._presenter.getNavigator().onKeyDown(e);
 	}
@@ -392,7 +399,6 @@ class PresenterConsole {
 
 	_onToolbarClick(e) {
 		let target = e.target;
-		let elem;
 		if (!target) {
 			return;
 		}
@@ -414,16 +420,15 @@ class PresenterConsole {
 				break;
 			case 'pause':
 				this._pause = !this._pause;
-				elem = this._proxyPresenter.document.querySelector('#pause>label');
-				if (elem) {
-					elem.innerText = this._pause ? _('Resume') : _('Pause');
-				}
+				this._pauseButton();
 				break;
 			case 'exchange':
 				this._presenter._slideShowWindowProxy.focus();
 				break;
 			case 'restart':
+				this._pause = false;
 				this._ticks = 0;
+				this._pauseButton();
 				break;
 			case 'exit':
 				this._proxyPresenter.close();
