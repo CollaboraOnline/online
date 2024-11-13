@@ -840,6 +840,7 @@ class TreeViewControl {
 
 		this._container._tbody = this._container;
 		this._container._thead = this._container;
+		this._container.filterEntries = this.filterEntries.bind(this);
 
 		this._isRealTree = isRealTree;
 		if (isRealTree)
@@ -1248,6 +1249,36 @@ class TreeViewControl {
 
 			e.preventDefault();
 		};
+	}
+
+	filterEntries(filter) {
+		if (this.filterTimer)
+			clearTimeout(this.filterTimer);
+
+		var entriesToHide = [];
+		var allEntries = this._container.querySelectorAll('.ui-treeview-entry');
+
+		filter = filter.trim();
+
+		allEntries.forEach((entry) => {
+			if (filter === '')
+				return;
+
+			var cells = entry.querySelectorAll('div');
+			for (var i in cells) {
+				var entryText = cells[i].innerText;
+				if (entryText && entryText.toLowerCase().indexOf(filter.toLowerCase()) >= 0) {
+					return;
+				}
+			}
+
+			entriesToHide.push(entry);
+		});
+
+		this.filterTimer = setTimeout(() => {
+			allEntries.forEach((entry) => { L.DomUtil.removeClass(entry, 'hidden'); });
+			entriesToHide.forEach((entry) => { L.DomUtil.addClass(entry, 'hidden'); });
+		}, 100);
 	}
 }
 
