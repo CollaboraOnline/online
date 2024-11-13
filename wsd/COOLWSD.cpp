@@ -469,6 +469,22 @@ static void forkChildren(const int number)
     }
 }
 
+bool COOLWSD::spawnSubForKit(const std::string& id)
+{
+    if (Util::isKitInProcess())
+        return false;
+
+    LOG_TRC("Request forkit to spawn subForKit " << id);
+
+    COOLWSD::checkDiskSpaceAndWarnClients(false);
+
+    const std::string aMessage = "addforkit " + id + '\n';
+    LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
+    COOLWSD::sendMessageToForKit(aMessage);
+
+    return true;
+}
+
 /// Cleans up dead children.
 /// Returns true if removed at least one.
 static bool cleanupChildren()
@@ -770,7 +786,8 @@ std::mutex COOLWSD::lokit_main_mutex;
 #endif
 #endif
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, unsigned mobileAppDocId)
+std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, const std::string& configId,
+                                                 unsigned mobileAppDocId)
 {
     (void)mobileAppDocId;
     const auto startTime = std::chrono::steady_clock::now();
@@ -813,10 +830,21 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, unsigned 
     // If we fail fast and return, the next document will spawn more children without knowing
     // there are some on the way already. And if the system is slow already, that wouldn't help.
     LOG_TRC("Waiting for NewChildrenCV");
-    if (NewChildrenCV.wait_for(lock, timeout, []()
+    if (NewChildrenCV.wait_for(lock, timeout, [configId]()
                                {
                                    LOG_TRC("Predicate for NewChildrenCV wait: NewChildren.size()=" << NewChildren.size());
-                                   return !NewChildren.empty();
+
+                                   // find a candidate with matching configId
+                                   auto found =
+                                       std::find_if(NewChildren.begin(), NewChildren.end(), [configId](auto candidate)->bool {
+                                           return candidate->getConfigId() == configId;
+                                       });
+
+                                   const bool candidateMatch = found != NewChildren.end();
+                                   // move this candidate into the last position
+                                   if (candidateMatch)
+                                        std::swap(*found, NewChildren.back());
+                                   return candidateMatch;
                                }))
     {
         LOG_TRC("NewChildrenCV wait successful");
@@ -2811,6 +2839,8 @@ private:
 
         try
         {
+            std::string jailId;
+            std::string configId;
 #if !MOBILEAPP
             LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getUrl())
                                                   << ']');
@@ -2842,12 +2872,12 @@ private:
             // New Child is spawned.
             const Poco::URI::QueryParameters params = requestURI.getQueryParameters();
             const int pid = socket->getPid();
-            std::string jailId;
             for (const auto& param : params)
             {
                 if (param.first == "jailid")
                     jailId = param.second;
-
+                else if (param.first == "configid")
+                    configId = param.second;
                 else if (param.first == "version")
                     COOLWSD::LOKitVersion = param.second;
             }
@@ -2869,15 +2899,15 @@ private:
             LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
             socket->getInBuffer().clear();
 
-            LOG_INF("New child [" << pid << "], jailId: " << jailId);
+            LOG_INF("New child [" << pid << "], jailId: " << jailId << ", configId: " << configId);
 #else
             pid_t pid = 100;
-            std::string jailId = "jail";
+            jailId = "jail";
             socket->getInBuffer().clear();
 #endif
             LOG_TRC("Calling make_shared<ChildProcess>, for NewChildren?");
 
-            auto child = std::make_shared<ChildProcess>(pid, jailId, socket, request);
+            auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request);
 
             if constexpr (!Util::isMobileApp())
                 UnitWSD::get().newChild(child);
