@@ -502,7 +502,7 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	height: auto;
 	border-color: var(--color-border);
 }
-#mobile-wizard-content #MacroSelectorDialog #categories > tbody > .mobile-wizard li {
+#mobile-wizard-content #MacroSelectorDialog #categories > .ui-treeview-entry {
 	border-bottom: 1px solid var(--color-border);
 }
 #mobile-wizard-content #MacroSelectorDialog #commands {
