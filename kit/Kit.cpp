@@ -3271,6 +3271,10 @@ void lokit_main(
             const std::string tmpSubDir = Poco::Path(tempRoot, "cool-" + jailId).toString();
             const std::string jailTmpDir = Poco::Path(jailPath, "tmp").toString();
 
+            const std::string tmpIncoming = Poco::Path(childRoot, JailUtil::CHILDROOT_TMP_INCOMING_PATH).toString();
+            const std::string sharedTemplate = Poco::Path(tmpIncoming, "templates").toString();
+            const std::string loJailDestImpressTemplatePath = Poco::Path(loJailDestPath, "share/template/common/presnt").toString();
+
             const std::string sysTemplateSubDir = Poco::Path(tempRoot, "systemplate-" + jailId).toString();
             const std::string jailEtcDir = Poco::Path(jailPath, "etc").toString();
 
@@ -3327,6 +3331,34 @@ void lokit_main(
                 {
                     LOG_WRN("Failed to mount [" << loTemplate << "] -> [" << loJailDestPath
                                                 << "], will link/copy contents");
+                    return false;
+                }
+
+                // copy default tempates from 'common' dir to shared templates dir
+                // TODO: maybe I shouldn't copy if whole point to mounting is that we don't require copying. Maybe symlink it
+                auto defaultTemplates = FileUtil::getDirEntries(loJailDestImpressTemplatePath);
+                for (auto& name : defaultTemplates)
+                {
+                    std::string sourcePath = loJailDestImpressTemplatePath;
+                    sourcePath.append("/");
+                    sourcePath.append(name);
+                    std::string destPath = sharedTemplate;
+                    destPath.append("/");
+                    destPath.append(name);
+                    if (!FileUtil::copy(sourcePath, destPath, false, false))
+                    {
+                        LOG_WRN("Failed to copy default impress template from ["
+                                << sourcePath << "] to [" << sharedTemplate << ']');
+                    }
+                }
+
+                // mount the shared templates over the lo shared templates' 'common' dir
+                if (!JailUtil::bind(sharedTemplate, loJailDestImpressTemplatePath) ||
+                    !JailUtil::remountReadonly(sharedTemplate, loJailDestImpressTemplatePath))
+                {
+                    // TODO: actually do this link on failure
+                    LOG_WRN("Failed to mount [" << sharedTemplate << "] -> [" << sharedTemplate
+                                                << "], will link contents");
                     return false;
                 }
 
