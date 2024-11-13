@@ -685,9 +685,23 @@ int forkit_main(int argc, char** argv)
     {
         logProperties["path"] = std::string(logFilename);
     }
+    const bool logToFileUICmd = std::getenv("COOL_LOGFILE_UICMD");
+    const char* logFilenameUICmd = std::getenv("COOL_LOGFILENAME_UICMD");
+    std::map<std::string, std::string> logPropertiesUICmd;
+    if (logToFileUICmd && logFilenameUICmd)
+    {
+        logPropertiesUICmd["path"] = std::string(logFilenameUICmd);
+    }
 
     LogLevelStartup = logLevelStartup ? logLevelStartup : "trace";
-    Log::initialize("frk", LogLevelStartup, logColor != nullptr, logToFile, logProperties);
+    Log::initialize("frk", LogLevelStartup, logColor != nullptr, logToFile, logProperties, logToFileUICmd, logPropertiesUICmd);
+
+    if (logToFileUICmd)
+    {
+        const bool mergeUiCmd = std::getenv("COOL_LOG_UICMD_MERGE");
+        const bool logTimeEndOfMergedUiCmd = std::getenv("COOL_LOG_UICMD_END_TIME");
+        Log::setUILogMergeInfo(mergeUiCmd, logTimeEndOfMergedUiCmd);
+    }
 
     LogLevel = logLevel ? logLevel : "trace";
     if (LogLevel != LogLevelStartup)

@@ -412,6 +412,8 @@ COOLWSD_LOG_TO_FILE="false"
 COOLWSD_LOGFILE="/var/log/coolwsd.log"
 COOLWSD_TRACEEVENTFILE="/var/log/coolwsd.trace.json"
 COOLWSD_ANONYMIZE_USER_DATA=false
+COOLWSD_LOG_UICMD_TO_FILE="false"
+COOLWSD_LOGFILE_UICMD="/var/log/coolwsd-ui-cmd.log"
 BROWSER_LOGGING="false"
 debug_msg="secure mode: product build"
 anonym_msg=""
@@ -438,6 +440,8 @@ if test "$enable_debug" = "yes"; then
    COOLWSD_LOGFILE="/tmp/coolwsd.log"
    COOLWSD_TRACEEVENTFILE="/tmp/coolwsd.trace.json"
    COOLWSD_ANONYMIZE_USER_DATA=false
+   COOLWSD_LOG_UICMD_TO_FILE="true"
+   COOLWSD_LOGFILE_UICMD="/tmp/coolwsd-ui-cmd.log"
    BROWSER_LOGGING="true"
    debug_msg="low security debugging mode"
    SSL_VERIFY="false"
@@ -472,6 +476,7 @@ AC_SUBST(ENABLE_DEBUG)
 AC_SUBST(ENABLE_BUNDLE)
 AC_SUBST(COOLWSD_LOGLEVEL)
 AC_SUBST(COOLWSD_LOG_TO_FILE)
+AC_SUBST(COOLWSD_LOG_UICMD_TO_FILE)
 AC_SUBST(BROWSER_LOGGING)
 AC_SUBST(NUM_PRESPAWN_CHILDREN)
 
@@ -492,6 +497,7 @@ if test -n "$with_logfile" ; then
    COOLWSD_LOGFILE="$with_logfile"
 fi
 AC_SUBST(COOLWSD_LOGFILE)
+AC_SUBST(COOLWSD_LOGFILE_UICMD)
 
 if test -n "$with_trace_event_file" ; then
    COOLWSD_TRACEEVENTFILE="$with_trace_event_file"

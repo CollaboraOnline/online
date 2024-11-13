@@ -1201,6 +1201,25 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         { "logging.docstats", "false" },
         { "logging.userstats", "false" },
         { "logging.disable_server_audit", "false" },
+        { "logging_ui_cmd.file.property[0]", "coolwsd-ui-cmd.log" },
+        { "logging_ui_cmd.file.property[0][@name]", "path" },
+        { "logging_ui_cmd.file.property[1]", "never" },
+        { "logging_ui_cmd.file.property[1][@name]", "rotation" },
+        { "logging_ui_cmd.file.property[2]", "false" },
+        { "logging_ui_cmd.file.property[2][@name]", "archive" },
+        { "logging_ui_cmd.file.property[3]", "false" },
+        { "logging_ui_cmd.file.property[3][@name]", "compress" },
+        { "logging_ui_cmd.file.property[4]", "60 days" },
+        { "logging_ui_cmd.file.property[4][@name]", "purgeAge" },
+        { "logging_ui_cmd.file.property[5]", "10" },
+        { "logging_ui_cmd.file.property[5][@name]", "purgeCount" },
+        { "logging_ui_cmd.file.property[6]", "true" },
+        { "logging_ui_cmd.file.property[6][@name]", "rotateOnOpen" },
+        { "logging_ui_cmd.file.property[7]", "false" },
+        { "logging_ui_cmd.file.property[7][@name]", "flush" },
+        { "logging_ui_cmd.file[@enable]", "false" },
+        { "logging_ui_cmd.merge", "true" },
+        { "logging_ui_cmd.merge_display_end_time", "false" },
         { "browser_logging", "false" },
         { "mount_jail_tree", "true" },
         { "net.connection_timeout_secs", "30" },
@@ -1434,6 +1453,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     // disable color since this isn't going to the terminal.
     constexpr bool withColor = false;
     constexpr bool logToFile = false;
+    constexpr bool logToFileUICmd = false;
 #else
     const bool withColor =
         ConfigUtil::getConfigValue<bool>(conf, "logging.color", true) && isatty(fileno(stderr));
@@ -1471,6 +1491,46 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
                       << std::endl;
         }
     }
+
+    // Do the same for ui command logging
+    const auto logToFileUICmd = ConfigUtil::getConfigValue<bool>(conf, "logging_ui_cmd.file[@enable]", false);
+    std::map<std::string, std::string> logPropertiesUICmd;
+    for (std::size_t i = 0; ; ++i)
+    {
+        const std::string confPath = "logging_ui_cmd.file.property[" + std::to_string(i) + ']';
+        const std::string confName = config().getString(confPath + "[@name]", "");
+        if (!confName.empty())
+        {
+            const std::string value = config().getString(confPath, "");
+            logPropertiesUICmd.emplace(confName, value);
+        }
+        else if (!config().has(confPath))
+        {
+            break;
+        }
+    }
+
+    // Setup the logfile envar for the kit processes.
+    if (logToFileUICmd)
+    {
+        const auto it = logPropertiesUICmd.find("path");
+        if (it != logPropertiesUICmd.end())
+        {
+            setenv("COOL_LOGFILE_UICMD", "1", true);
+            setenv("COOL_LOGFILENAME_UICMD", it->second.c_str(), true);
+            std::cerr << "\nLogging UI Commands to file: " << it->second.c_str() << std::endl;
+        }
+        const bool merge = ConfigUtil::getConfigValue<bool>(conf, "logging_ui_cmd.merge", true);
+        const bool logEndtime = ConfigUtil::getConfigValue<bool>(conf, "logging_ui_cmd.merge_display_end_time", true);
+        if (merge)
+        {
+            setenv("COOL_LOG_UICMD_MERGE", "1", true);
+        }
+        if (logEndtime)
+        {
+            setenv("COOL_LOG_UICMD_END_TIME", "1", true);
+        }
+    }
 #endif
 
     // Log at trace level until we complete the initialization.
@@ -1478,7 +1538,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         ConfigUtil::getConfigValue<std::string>(conf, "logging.level_startup", "trace");
     setenv("COOL_LOGLEVEL_STARTUP", LogLevelStartup.c_str(), true);
 
-    Log::initialize("wsd", LogLevelStartup, withColor, logToFile, logProperties);
+    Log::initialize("wsd", LogLevelStartup, withColor, logToFile, logProperties, logToFileUICmd, logPropertiesUICmd);
     if (LogLevel != LogLevelStartup)
     {
         LOG_INF("Setting log-level to [" << LogLevelStartup << "] and delaying setting to ["

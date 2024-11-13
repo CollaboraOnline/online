@@ -65,7 +65,7 @@ public:
         if (log_level)
         {
             Log::initialize("fuz", log_level ? log_level : "error", isatty(fileno(stderr)), false,
-                            logProperties);
+                            logProperties, false, {});
         }
 
         std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();

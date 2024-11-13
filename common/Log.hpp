@@ -69,7 +69,9 @@ namespace Log
                     const std::string& logLevel,
                     bool withColor,
                     bool logToFile,
-                    const std::map<std::string, std::string>& config);
+                    const std::map<std::string, std::string>& config,
+                    bool logToFileUICmd,
+                    const std::map<std::string, std::string>& configUICmd);
 
     /// Shutdown and release the logging system.
     void shutdown();
@@ -104,6 +106,11 @@ namespace Log
 
     /// Main entry function for all logging
     void log(Level l, const std::string &text);
+    bool isLogUIEnabled();
+    void logUI(Level l, const std::string &text);
+    bool isLogUIMerged();
+    bool isLogUITimeEnd();
+    void setUILogMergeInfo(bool mergeCmd, bool logTimeEndOfMergedCmd);
 
     /// Setting the logging level
     void setLevel(const std::string &l);

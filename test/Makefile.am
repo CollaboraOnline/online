@@ -165,6 +165,7 @@ common_sources = \
 	../common/Util-server.cpp \
 	../common/Util.cpp \
 	../kit/KitQueue.cpp \
+	../kit/LogUI.cpp \
 	../wsd/Exceptions.cpp \
 	../net/HttpRequest.cpp \
 	../net/Socket.cpp \
