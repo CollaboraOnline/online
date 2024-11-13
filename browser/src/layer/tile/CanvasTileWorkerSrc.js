@@ -28,45 +28,49 @@ if ('undefined' === typeof window) {
 				var decompressed = [];
 				var buffers = [];
 				for (var tile of e.data.deltas) {
-					var buffer = self.fzstd.decompress(tile.rawDelta);
+					var deltas = self.fzstd.decompress(tile.rawDelta);
+					tile.keyframeDeltaSize = 0;
 
-					// Copy the subsection of the array with the data to give back to the main thread
-					var deltas;
+					// Decompress the keyframe buffer
 					if (tile.isKeyframe) {
-						deltas = new Uint8Array(tileByteSize);
-						L.CanvasTileUtils.unrle(
-							buffer,
-							e.data.tileSize,
-							e.data.tileSize,
+						var keyframeBuffer = new Uint8Array(tileByteSize);
+						tile.keyframeDeltaSize = L.CanvasTileUtils.unrle(
 							deltas,
+							e.data.tileSize,
+							e.data.tileSize,
+							keyframeBuffer,
 						);
-					} else {
-						deltas = buffer;
+						tile.keyframeBuffer = new Uint8ClampedArray(
+							keyframeBuffer.buffer,
+							keyframeBuffer.byteOffset,
+							keyframeBuffer.byteLength,
+						);
+						buffers.push(tile.keyframeBuffer.buffer);
+					}
 
-						// Unpremultiply delta updates
-						var stop = false;
-						for (var i = 0; i < deltas.length && !stop; ) {
-							switch (deltas[i]) {
-								case 99: // 'c': // copy row
-									i += 4;
-									break;
-								case 100: // 'd': // new run
-									var span = deltas[i + 3] * 4;
-									i += 4;
-									L.CanvasTileUtils.unpremultiply(deltas, span, i);
-									i += span;
-									break;
-								case 116: // 't': // terminate delta
-									stop = true;
-									i++;
-									break;
-								default:
-									console.error(
-										'[' + i + ']: ERROR: Unknown delta code ' + deltas[i],
-									);
-									i = deltas.length;
-									break;
-							}
+					// Unpremultiply delta updates
+					var stop = false;
+					for (var i = tile.keyframeDeltaSize; i < deltas.length && !stop; ) {
+						switch (deltas[i]) {
+							case 99: // 'c': // copy row
+								i += 4;
+								break;
+							case 100: // 'd': // new run
+								var span = deltas[i + 3] * 4;
+								i += 4;
+								L.CanvasTileUtils.unpremultiply(deltas, span, i);
+								i += span;
+								break;
+							case 116: // 't': // terminate delta
+								stop = true;
+								i++;
+								break;
+							default:
+								console.error(
+									'[' + i + ']: ERROR: Unknown delta code ' + deltas[i],
+								);
+								i = deltas.length;
+								break;
 						}
 					}
 
@@ -77,6 +81,7 @@ if ('undefined' === typeof window) {
 						deltas.byteOffset,
 						deltas.length,
 					);
+
 					decompressed.push(tile);
 					buffers.push(tile.rawDelta.buffer);
 					buffers.push(tile.deltas.buffer);
@@ -86,6 +91,7 @@ if ('undefined' === typeof window) {
 					{
 						message: e.data.message,
 						deltas: decompressed,
+						tileSize: e.data.tileSize,
 					},
 					buffers,
 				);
