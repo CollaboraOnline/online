@@ -54,6 +54,7 @@ class PresenterConsole {
                                 <header>
                                 </header>
                                 <main id="main-content">
+                                  <div id="presentation-content">
                                      <div id="first-presentation">
                                          <div id="title-current">${labels[0]}</div>
                                          <canvas id="current-presentation"></canvas>
@@ -64,53 +65,54 @@ class PresenterConsole {
                                             <img id="next-presentation"></img>
                                          </div>
                                      </div>
-                                </main>
-                                <div id="toolbar">
-                                  <button type="button" id="prev" disabled>
-                                     <img src="images/presenterscreen-ButtonSlidePreviousSelected.png">
-                                     <label>${labels[2]}</label>
-                                  </button>
-                                  <button type="button" id="next" disabled>
-                                     <img src="images/presenterscreen-ButtonEffectNextSelected.png">
-                                     <label>${labels[3]}</label>
-                                  </button>
-                                  <button type="button" id="notes" disabled>
-                                     <img src="images/presenterscreen-ButtonNotesNormal.png">
-                                     <label>${labels[4]}</label>
-                                  </button>
-                                  <button type="button" id="slides" disabled>
-                                     <img src="images/presenterscreen-ButtonSlideSorterNormal.png">
-                                     <label>${labels[5]}</label>
-                                  </button>
-                                  <div id="separator"></div>
-                                  <div id="timer-container">
-                                     <div id="today"> </div>
-                                     <div id="timer"></div>
                                   </div>
-                                  <button type="button" id="pause" disabled>
-                                     <img src="images/presenterscreen-ButtonPauseTimerNormal.png">
-                                     <label>${labels[6]}</label>
-                                  </button>
-                                  <button type="button" id="restart" disabled>
-                                     <img src="images/presenterscreen-ButtonRestartTimerNormal.png">
-                                     <label>${labels[7]}</label>
-                                  </button>
-                                  <div id="separator"></div>
-                                  <button type="button" id="exchange" disabled>
-                                     <img src="images/presenterscreen-ButtonSwitchMonitorNormal.png">
-                                     <label>${labels[8]}</label>
-                                  </button>
-                                  <div id="separator"></div>
-                                  <button type="button" id="help" disabled>
-                                     <img src="images/presenterscreen-ButtonHelpNormal.png">
-                                     <label>${labels[9]}</label>
-                                  </button>
-                                  <div id="separator"></div>
-                                  <button type="button" id="exit" disabled>
-                                     <img src="images/presenterscreen-ButtonExitPresenterNormal.png">
-                                     <label>${labels[10]}</label>
-                                  </button>
-                                </div>
+                                  <div id="toolbar">
+									<button type="button" id="prev" disabled>
+										<img src="images/presenterscreen-ButtonSlidePreviousSelected.png">
+										<label>${labels[2]}</label>
+									</button>
+									<button type="button" id="next" disabled>
+										<img src="images/presenterscreen-ButtonEffectNextSelected.png">
+										<label>${labels[3]}</label>
+									</button>
+									<button type="button" id="notes" disabled>
+										<img src="images/presenterscreen-ButtonNotesNormal.png">
+										<label>${labels[4]}</label>
+									</button>
+									<button type="button" id="slides" disabled>
+										<img src="images/presenterscreen-ButtonSlideSorterNormal.png">
+										<label>${labels[5]}</label>
+									</button>
+									<div id="separator"></div>
+									<div id="timer-container">
+										<div id="today"> </div>
+										<div id="timer"></div>
+									</div>
+									<button type="button" id="pause" disabled>
+										<img src="images/presenterscreen-ButtonPauseTimerNormal.png">
+										<label>${labels[6]}</label>
+									</button>
+									<button type="button" id="restart" disabled>
+										<img src="images/presenterscreen-ButtonRestartTimerNormal.png">
+										<label>${labels[7]}</label>
+									</button>
+									<div id="separator"></div>
+									<button type="button" id="exchange" disabled>
+										<img src="images/presenterscreen-ButtonSwitchMonitorNormal.png">
+										<label>${labels[8]}</label>
+									</button>
+									<div id="separator"></div>
+									<button type="button" id="help" disabled>
+										<img src="images/presenterscreen-ButtonHelpNormal.png">
+										<label>${labels[9]}</label>
+									</button>
+									<div id="separator"></div>
+									<button type="button" id="exit" disabled>
+										<img src="images/presenterscreen-ButtonExitPresenterNormal.png">
+										<label>${labels[10]}</label>
+									</button>
+                                  </div>
+                                </main>
                                 <footer>
                                 </footer>
 			</body>
@@ -232,10 +234,14 @@ class PresenterConsole {
 		elem.style.backgroundColor = slideShowBGColor;
 		elem.style.color = slideShowColor;
 		elem.style.display = 'flex';
-		elem.style.flexDirection = 'row';
-		elem.style.flexWrap = 'wrap';
+		elem.style.flexDirection = 'column';
 		elem.style.minWidth = '100vw';
 		elem.style.minHeight = '100vh';
+
+		elem = this._proxyPresenter.document.querySelector('#presentation-content');
+		elem.style.display = 'flex';
+		elem.style.flexWrap = 'wrap';
+		elem.style.gap = '3vw';
 
 		this._first = elem = this._proxyPresenter.document.querySelector(
 			'#first-presentation',
@@ -453,7 +459,7 @@ class PresenterConsole {
 		this._first.remove();
 		this._second.remove();
 
-		elem = this._proxyPresenter.document.querySelector('#main-content');
+		elem = this._proxyPresenter.document.querySelector('#presentation-content');
 		elem.appendChild(this._slides);
 
 		let preview;
@@ -473,7 +479,9 @@ class PresenterConsole {
 	}
 
 	_onHideSlides(e) {
-		let elem = this._proxyPresenter.document.querySelector('#main-content');
+		let elem = this._proxyPresenter.document.querySelector(
+			'#presentation-content',
+		);
 		let selection = this._proxyPresenter.document.getSelection();
 		if (selection && selection.rangeCount > 1) {
 			let range = selection.getRangeAt(0);
