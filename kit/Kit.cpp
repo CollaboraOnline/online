@@ -939,7 +939,7 @@ void Document::renderTiles(TileCombined &tileCombined)
 
     if (!RenderTiles::doRender(_loKitDocument, *_deltaGen, tileCombined, _deltaPool,
                                blenderFunc, postMessageFunc, _mobileAppDocId,
-                               session->getCanonicalViewId(), session->getDumpTiles()))
+                               session->getDumpTiles()))
     {
         LOG_DBG("All tiles skipped, not producing empty tilecombine: message");
         return;

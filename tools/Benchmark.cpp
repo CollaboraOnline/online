@@ -27,7 +27,7 @@ class DeltaTests {
 public:
     static void rleBitmap(Pixmap &pix)
     {
-        TileLocation loc = { 0, 0, 0, 0, 0, 0 };
+        TileDesc loc = { 0, 0, 0, 3840, 3840, 256, 256, 0, 0, 0, 0, 0 };
         DeltaGenerator::DeltaData rleData(
             1 /*wid*/, reinterpret_cast<unsigned char *>(pix.data()),
             0, 0, 256, 256, loc, 256, 256);

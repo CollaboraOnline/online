@@ -92,7 +92,7 @@ public:
             _tileHeight <= 0 ||
             _imgSize < 0)
         {
-            throw BadArgumentException("Invalid tile descriptor.");
+            LOG_ERR("Invalid tile descriptor.");
         }
     }
 
@@ -112,6 +112,7 @@ public:
     void setImgSize(const int imgSize) { _imgSize = imgSize; }
     bool isPreview() const { return _id >= 0; }
     void setId(TileWireId id) { _id = id; }
+    int getId() const { return _id; }
     void setOldWireId(TileWireId id) { _oldWireId = id; }
     void forceKeyframe() { setOldWireId(0); }
     TileWireId getOldWireId() const { return _oldWireId; }
