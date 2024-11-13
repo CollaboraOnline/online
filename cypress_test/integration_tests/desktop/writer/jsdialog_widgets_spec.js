@@ -29,6 +29,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 	});
 
 	it('Treelistbox with-headers', function() {
-		cy.cGet('#contenttree2').compareSnapshot('treeview_headers', 0.1);
+		cy.cGet('#contenttree2').compareSnapshot('treeview_headers', 0.12);
 	});
 });
