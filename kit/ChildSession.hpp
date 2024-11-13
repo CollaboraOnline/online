@@ -29,6 +29,27 @@
 class Document;
 class ChildSession;
 
+#ifdef ENABLE_LOG_UICOMMANDS
+class LOG_UICOMMANDS {
+public:
+    ChildSession* aSession;
+    std::string aBufStr = "";
+    const StringVector* aTokens;
+    LOG_UICOMMANDS(ChildSession* session, const StringVector* tokens) : aSession(session),aTokens(tokens) {}
+    ~LOG_UICOMMANDS();
+private:
+    // list the commands to log here.
+    std::set<std::string> aCmdToLog = {
+        "uno", "key", "mouse", "textinput", "removetextcontext",
+        "paste", "insertfile", "commandvalues" };
+    // list here those commands that should be merged.. log once, then log the repeated count.
+    // Note: mouse command have a deeper merge logic coded.
+    // "key" could have deeper meanings sometimes it could be merged. (in case of spaces)
+    std::set<std::string> aCmdToMergeLog = {
+        "mouse", "textinput", "removetextcontext" };
+};
+#endif
+
 enum class LokEventTargetEnum
 {
     Document,
@@ -300,6 +321,16 @@ private:
     bool _hasURP;
 
     // When state is added - please update dumpState above.
+
+#ifdef ENABLE_LOG_UICOMMANDS
+    friend class LOG_UICOMMANDS;
+    int nLastUndoCount=0;
+    int nLastCmdRepeatCount=0;
+    std::string aLastCmd="";
+    std::string aLastSubCmd="";
+    std::fstream aFileStreamUICommands;
+#endif
+
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
