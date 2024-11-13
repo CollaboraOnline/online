@@ -1252,11 +1252,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	max-height: 150px;
 }
 
-#ZoteroDialog tbody {
-	max-height: 500px;
-	max-width: 100%;
-}
-
 .autofilter-container-submenu > .autofilter-container {
 	padding: 0px;
 }
@@ -2038,6 +2033,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* Zotero dialog*/
+
+#ZoteroDialog .ui-treeview {
+	max-height: 500px;
+	max-width: 100%;
+}
 
 #ZoteroDialog-mainbox.jsdialog .ui-treeview {
 	height: 400px;
