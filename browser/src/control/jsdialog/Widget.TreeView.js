@@ -843,6 +843,7 @@ class TreeViewControl {
 		this._container.filterEntries = this.filterEntries.bind(this);
 
 		this.setupDragAndDrop(data, builder);
+		this.setupKeyEvents(data, builder);
 
 		this._isRealTree = isRealTree;
 		if (isRealTree)
@@ -1223,6 +1224,32 @@ class TreeViewControl {
 				}));
 			}
 		}
+
+		this.setupEntryKeyEvent(tr, entry, selectionElement, expander, clickFunction);
+	}
+
+	setupEntryKeyEvent(tr, entry, selectionElement, expander, clickFunction) {
+		if (entry.enabled === false)
+			return;
+
+		tr.addEventListener('keydown', (event) => {
+			if (event.key === ' ' && expander) {
+				expander.click();
+				tr.focus();
+				event.preventDefault();
+				event.stopPropagation();
+			} else if (event.key === 'Enter' || event.key === ' ') {
+				clickFunction();
+				if (selectionElement)
+					selectionElement.click();
+				tr.focus();
+				event.preventDefault();
+				event.stopPropagation();
+			} else if (event.key === 'Tab') {
+				if (!L.DomUtil.hasClass(tr, 'selected'))
+					this.unselectEntry(tr); // remove tabIndex
+			}
+		});
 	}
 
 	toggleEntry (span, treeViewData, entry, builder) {
@@ -1265,10 +1292,10 @@ class TreeViewControl {
 	createClickFunction(parentContainer, checkbox, select, activate,
 		builder, treeViewData, entry) {
 		return (e) => {
-			if (e.target === checkbox)
+			if (e && e.target === checkbox)
 				return; // allow default handler to trigger change event
 
-			if (L.DomUtil.hasClass(parentContainer, 'disabled')) {
+			if (e && L.DomUtil.hasClass(parentContainer, 'disabled')) {
 				e.preventDefault();
 				return;
 			}
@@ -1286,7 +1313,7 @@ class TreeViewControl {
 			if (activate)
 				builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
 
-			e.preventDefault();
+			if (e) e.preventDefault();
 		};
 	}
 
@@ -1318,6 +1345,108 @@ class TreeViewControl {
 			allEntries.forEach((entry) => { L.DomUtil.removeClass(entry, 'hidden'); });
 			entriesToHide.forEach((entry) => { L.DomUtil.addClass(entry, 'hidden'); });
 		}, 100);
+	}
+
+	setupKeyEvents(data, builder) {
+		this._container.addEventListener('keydown', (event) => {
+			const listElements = this._container.querySelectorAll(
+				this._isRealTree ? '.ui-treeview-cell-text' : '.ui-treeview-entry');
+			this.handleKeyEvent(event, listElements, builder, data);
+		});
+	}
+
+	changeFocusedRow(listElements, fromIndex, toIndex) {
+		var nextElement = listElements.at(toIndex);
+		nextElement.tabIndex = 0;
+		nextElement.focus();
+
+		var nextInput = listElements.at(toIndex).querySelectorAll('td input');
+		if (nextInput && nextInput.length)
+			nextInput.get(0).removeAttribute('tabindex');
+
+		if (fromIndex >= 0) {
+			var oldElement = listElements.at(fromIndex);
+			if (L.DomUtil.hasClass(oldElement, 'selected'))
+				return;
+
+			oldElement.removeAttribute('tabindex');
+			var oldInput = listElements.at(fromIndex).querySelectorAll('td input');
+			if (oldInput && oldInput.length)
+				oldInput.get(0).tabIndex = -1;
+		}
+	}
+
+	getCurrentEntry(listElements) {
+		var focusedElement = document.activeElement;
+		// tr - row itself
+		var currIndex = listElements.indexOf(focusedElement);
+		// input - child of a row
+		if (currIndex < 0)
+			currIndex = listElements.indexOf(focusedElement.parentNode.parentNode);
+		// no focused entry - try with selected one
+		if (currIndex < 0) {
+			var selected = listElements.filter((o) => { return o.classList.contains('.selected'); });
+			if (selected && selected.length)
+				currIndex = listElements.indexOf(selected[0]);
+		}
+		if (currIndex < 0) {
+			for (var i in listElements) {
+				var parent = listElements[i].parentNode;
+
+				if (parent)
+					parent = parent.parentNode;
+				else
+					break;
+
+				if (parent && L.DomUtil.hasClass(parent, 'selected')) {
+					currIndex = listElements.indexOf(listElements[i]);
+					break;
+				}
+			}
+		}
+
+		return currIndex;
+	}
+
+	handleKeyEvent(event, nodeList, builder, data) {
+		var preventDef = false;
+		var listElements = Array.from(nodeList); // querySelector returns NodeList not array
+		var treeLength = listElements.length;
+		var currIndex = this.getCurrentEntry(listElements);
+
+		if (event.key === 'ArrowDown') {
+			if (currIndex < 0)
+				this.changeFocusedRow(listElements, currIndex, 0);
+			else {
+				var nextIndex = currIndex + 1;
+				while (nextIndex < treeLength - 1 && listElements[nextIndex].clientHeight <= 0)
+					nextIndex++;
+				if (nextIndex < treeLength)
+					this.changeFocusedRow(listElements, currIndex, nextIndex);
+			}
+			preventDef = true;
+		} else if (event.key === 'ArrowUp') {
+			if (currIndex < 0)
+				this.changeFocusedRow(listElements, currIndex, treeLength - 1);
+			else {
+				var nextIndex = currIndex - 1;
+				while (nextIndex >= 0 && listElements[nextIndex].clientHeight <= 0)
+					nextIndex--;
+				if (nextIndex >= 0)
+					this.changeFocusedRow(listElements, currIndex, nextIndex);
+			}
+
+			preventDef = true;
+		} else if (data.fireKeyEvents &&
+			builder.callback('treeview', 'keydown', { id: data.id, key: event.key }, currIndex, builder)) {
+			// used in mentions
+			preventDef = true;
+		}
+
+		if (preventDef) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
 	}
 }
 
