@@ -160,7 +160,8 @@ public:
 std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 
 DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
-                               const std::string& docKey, unsigned mobileAppDocId,
+                               const std::string& docKey, const std::string& configId,
+                               unsigned mobileAppDocId,
                                std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
     : _limitLifeSeconds(std::chrono::seconds::zero())
     , _uriOrig(uri)
@@ -195,6 +196,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _debugRenderedTileCount(0)
     , _loadDuration(0)
     , _wopiDownloadDuration(0)
+    , _configId(configId)
     , _mobileAppDocId(mobileAppDocId)
     , _alwaysSaveOnExit(ConfigUtil::getConfigValue<bool>("per_document.always_save_on_exit", false))
     , _backgroundAutoSave(
@@ -282,7 +284,7 @@ void DocumentBroker::pollThread()
     do
     {
         static constexpr std::chrono::milliseconds timeoutMs(COMMAND_TIMEOUT_MS * 5);
-        _childProcess = getNewChild_Blocks(*_poll, _mobileAppDocId);
+        _childProcess = getNewChild_Blocks(*_poll, _configId, _mobileAppDocId);
         if (_childProcess
             || std::chrono::duration_cast<std::chrono::milliseconds>(
                    std::chrono::steady_clock::now() - _threadStart)
@@ -1466,6 +1468,8 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     // user autotext for now
     if (!sharedSettingsUri.empty())
     {
+        // if this wopi server has some shared settings we want to have a subForKit for those settings
+        // TODO, this is just for testing
         std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
         asyncInstallPresets(sharedSettingsUri, presetsPath);
     }
