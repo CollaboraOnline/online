@@ -619,6 +619,8 @@ public:
     void switchMode(const std::shared_ptr<ClientSession>& session, const std::string& mode);
 #endif // !MOBILEAPP && !WASMAPP
 
+    StorageBase* getStorage() { return _storage.get(); }
+
 private:
     /// Get the session that can write the document for save / locking / uploading.
     /// Note that if there is no loaded and writable session, the first will be returned.
