@@ -1466,6 +1466,11 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     // user autotext for now
     if (!sharedSettingsUri.empty())
     {
+        // if this wopi server has some shared settings we want to have a subForKit for those settings
+        // TODO, this is just for testing, create a new one each time and we don't actually make any
+        // real use of this yet
+        COOLWSD::spawnSubForKit("testing-id");
+
         std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
         asyncInstallPresets(sharedSettingsUri, presetsPath);
     }
