@@ -552,7 +552,7 @@ Java_org_libreoffice_androidlib_LOActivity_setClipboardContent(JNIEnv *env, jobj
 
     getLOKDocumentForAndroidOnly()->setClipboard(nEntrySize, pMimeTypes, pSizes, pStreams);
 }
-
+ 
 extern "C"
 JNIEXPORT jboolean JNICALL
 Java_org_libreoffice_androidlib_LOActivity_setClipboardContent(JNIEnv *env, jobject, jstring content)
