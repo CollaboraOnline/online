@@ -863,21 +863,21 @@ namespace {
      * DocBroker will have to decide to upload or skip.
      */
     [[maybe_unused]]
-    void renameForUpload(const std::string& url)
+    void copyForUpload(const std::string& url)
     {
         const std::string oldName = Poco::URI(url).getPath();
         const std::string newName = oldName + TO_UPLOAD_SUFFIX;
-        if (rename(oldName.c_str(), newName.c_str()) < 0)
+        if (!FileUtil::copyAtomic(oldName, newName, /*preserveTimestamps=*/true))
         {
-            // It's not an error if there was no file to rename, when the document isn't modified.
+            // It's not an error if there was no file to copy, when the document isn't modified.
             const auto onrre = errno;
-            LOG_TRC("Failed to rename [" << oldName << "] to [" << newName << "] ("
+            LOG_TRC("Failed to copy [" << oldName << "] to [" << newName << "] ("
                                          << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre)
                                          << ')');
         }
         else
         {
-            LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+            LOG_TRC("Copied [" << oldName << "] to [" << newName << ']');
         }
     }
 }
@@ -966,7 +966,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
         }
 
         if constexpr (!Util::isMobileApp())
-            renameForUpload(url);
+            copyForUpload(url);
     }
 
     getLOKitDocument()->setView(_viewId);
@@ -3452,7 +3452,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             {
                 consistencyCheckJail();
 
-                renameForUpload(getJailedFilePath());
+                copyForUpload(getJailedFilePath());
 
                 saveCommand = true;
             }
