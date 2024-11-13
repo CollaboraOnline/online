@@ -76,8 +76,8 @@ public:
     }
 
 private:
-    bool createDocBroker(const std::string& docKey, const std::string& url,
-                         const Poco::URI& uriPublic);
+    bool createDocBroker(const std::string& docKey, const std::string& configId,
+                         const std::string& url, const Poco::URI& uriPublic);
 
     void createClientSession(const std::string& docKey, const std::string& url,
                              const Poco::URI& uriPublic, const bool isReadOnly);

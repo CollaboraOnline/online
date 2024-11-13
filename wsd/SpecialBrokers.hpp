@@ -33,7 +33,7 @@ protected:
 public:
     StatelessBatchBroker(const std::string& uri, const Poco::URI& uriPublic,
                          const std::string& docKey)
-        : DocumentBroker(ChildType::Batch, uri, uriPublic, docKey)
+        : DocumentBroker(ChildType::Batch, uri, uriPublic, docKey, /*TODO*/ "")
     {
     }
 

@@ -41,7 +41,8 @@ class ForKitProcess;
 class SocketPoll;
 class TraceFileWriter;
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, unsigned mobileAppDocId);
+std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, const std::string& configId,
+                                                 unsigned mobileAppDocId);
 
 /// The Server class which is responsible for all
 /// external interactions.
@@ -210,6 +211,9 @@ public:
 
     /// Terminates spare kits that aren't assigned a document yet.
     static void requestTerminateSpareKits();
+
+    // Request creation of a subForKit
+    static bool spawnSubForKit(const std::string& id);
 
     /// Checks forkit (and respawns), rebalances
     /// child kit processes and cleans up DocBrokers.

@@ -68,6 +68,7 @@ static std::string LogLevel;
 static std::string LogDisabledAreas;
 static std::string LogLevelStartup;
 static std::atomic<unsigned> ForkCounter(0);
+static std::vector<std::string> SubForKitRequests;
 
 /// The [child pid -> jail path] map.
 static std::map<pid_t, std::string> childJails;
@@ -157,6 +158,12 @@ protected:
             {
                 LOG_WRN("Cannot spawn " << tokens[1] << " children as requested.");
             }
+        }
+        else if (tokens.size() == 2 && tokens.equals(0, "addforkit"))
+        {
+            std::string ident = tokens[1];
+            LOG_INF("Setting to spawn additional forkit with ident [" << ident << "] per request.");
+            SubForKitRequests.emplace_back(ident);
         }
         else if (tokens.size() == 2 && tokens.equals(0, "setloglevel"))
         {
@@ -484,6 +491,7 @@ static int forkKit(const std::function<void()> &childFunc,
 static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& sysTemplate,
                                 const std::string& loTemplate,
+                                const std::string& configId,
                                 bool useMountNamespaces,
                                 bool queryVersion = false)
 {
@@ -503,24 +511,24 @@ static int createLibreOfficeKit(const std::string& childRoot,
     pid_t childPid = 0;
     if (Util::isKitInProcess())
     {
-        std::thread([childRoot, jailId, sysTemplate, loTemplate, queryVersion,
-                     sysTemplateIncomplete] {
+        std::thread([childRoot, jailId, configId, sysTemplate, loTemplate,
+                     queryVersion, sysTemplateIncomplete] {
             sleepForDebugger();
-            lokit_main(childRoot, jailId, sysTemplate, loTemplate, true, true,
-                       false, queryVersion, DisplayVersion, sysTemplateIncomplete,
-                       spareKitId);
+            lokit_main(childRoot, jailId, configId, sysTemplate, loTemplate, true,
+                       true, false, queryVersion, DisplayVersion,
+                       sysTemplateIncomplete, spareKitId);
         })
             .detach();
     }
     else
     {
-        auto childFunc = [childRoot, jailId, sysTemplate, loTemplate,
-                          useMountNamespaces, queryVersion,
-                          sysTemplateIncomplete]()
+        auto childFunc = [childRoot, jailId, configId, sysTemplate,
+                          loTemplate, useMountNamespaces,
+                          queryVersion, sysTemplateIncomplete]()
         {
-            lokit_main(childRoot, jailId, sysTemplate, loTemplate, NoCapsForKit, NoSeccomp,
-                       useMountNamespaces, queryVersion, DisplayVersion,
-                       sysTemplateIncomplete, spareKitId);
+            lokit_main(childRoot, jailId, configId, sysTemplate, loTemplate,
+                       NoCapsForKit, NoSeccomp, useMountNamespaces, queryVersion,
+                       DisplayVersion, sysTemplateIncomplete, spareKitId);
         };
 
         auto parentFunc = [childRoot, jailId](int pid)
@@ -528,7 +536,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
             // Parent
             if (pid < 0)
             {
-                LOG_SYS("Fork failed");
+                LOG_SYS("Fork failed for kit");
             }
             else
             {
@@ -548,6 +556,84 @@ static int createLibreOfficeKit(const std::string& childRoot,
     return childPid;
 }
 
+static int createSubForKit(const std::string& subForKitIdent,
+                           const std::string& childRoot,
+                           const std::string& sysTemplate,
+                           const std::string& loTemplate,
+                           bool useMountNamespaces)
+{
+    static size_t subForKitId = 0;
+    ++subForKitId;
+    LOG_DBG("Forking a forkit process with subForKitId: " << subForKitIdent <<
+            " as subForKit #" << subForKitId << ".");
+    const auto startForkingTime = std::chrono::steady_clock::now();
+
+    pid_t childPid = 0;
+
+    auto childFunc = [childRoot, sysTemplate, loTemplate,
+                      subForKitIdent, useMountNamespaces]()
+    {
+        // TODO, here we can presumably apply settings to this forkit for
+        // its coolkits to inherit
+
+        // reset parent of this subforkit to its forkit parent, main loop
+        // detects a parentPid != getppid() as a cue to exit
+        parentPid = getppid();
+
+        // reset this global counter for this new subForKit
+        ForkCounter = 0;
+        LOG_INF("SubForKit process is ready. Parent: " << parentPid);
+
+        // launch first coolkit child of this subForKit
+        const pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate,
+                                                     loTemplate, subForKitIdent,
+                                                     useMountNamespaces);
+        if (forKitPid < 0)
+        {
+            LOG_FTL("Failed to create a kit process.");
+            Util::forcedExit(EX_SOFTWARE);
+        }
+    };
+
+    auto parentFunc = [](int pid)
+    {
+        // Parent
+        if (pid < 0)
+        {
+            LOG_SYS("Fork failed for subForKit");
+        }
+        else
+        {
+            LOG_INF("Forked subForKit [" << pid << ']');
+        }
+    };
+
+    std::string processName = "subforkit_" + Util::encodeId(subForKitId, 3);
+    childPid = forkKit(childFunc, processName, parentFunc);
+
+    const auto duration = (std::chrono::steady_clock::now() - startForkingTime);
+    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+    LOG_TRC("Forking subForKit took " << durationMs);
+
+    return childPid;
+}
+
+static void createSubForKits(const std::string& childRoot,
+                             const std::string& sysTemplate,
+                             const std::string& loTemplate,
+                             bool useMountNamespaces)
+{
+    std::vector<std::string> subForKitRequests = std::move(SubForKitRequests);
+    for (const auto& subForKitIdent : subForKitRequests)
+    {
+        if (createSubForKit(subForKitIdent, childRoot, sysTemplate, loTemplate,
+                            useMountNamespaces) < 0)
+        {
+            LOG_ERR("Failed to create a subForKit process for ident: " << subForKitIdent);
+        }
+    }
+}
+
 void forkLibreOfficeKit(const std::string& childRoot,
                         const std::string& sysTemplate,
                         const std::string& loTemplate,
@@ -564,7 +650,8 @@ void forkLibreOfficeKit(const std::string& childRoot,
         const size_t retry = count * 2;
         for (size_t i = 0; ForkCounter > 0 && i < retry; ++i)
         {
-            if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate, useMountNamespaces) < 0)
+            if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate,
+                                                           "", useMountNamespaces) < 0)
             {
                 LOG_ERR("Failed to create a kit process.");
                 ++ForkCounter;
@@ -896,7 +983,8 @@ int forkit_main(int argc, char** argv)
     // We must have at least one child, more are created dynamically.
     // Ask this first child to send version information to master process and trace startup.
     ::setenv("COOL_TRACE_STARTUP", "1", 1);
-    const pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, useMountNamespaces, true);
+    const pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate,
+                                                 "", useMountNamespaces, true);
     if (forKitPid < 0)
     {
         LOG_FTL("Failed to create a kit process.");
@@ -953,9 +1041,13 @@ int forkit_main(int argc, char** argv)
 #if ENABLE_DEBUG
         if (!SingleKit)
 #endif
-            // new kits are launched primarily after a 'spawn' message
             if (!Util::isKitInProcess() && !SigUtil::getTerminationFlag())
+            {
+                // new kits are launched primarily after a 'spawn' message
                 forkLibreOfficeKit(childRoot, sysTemplate, loTemplate, useMountNamespaces);
+                // new kits are launched after an 'addforkit' message
+                createSubForKits(childRoot, sysTemplate, loTemplate, useMountNamespaces);
+            }
     }
 
     const int returnValue = UnitBase::uninit();
