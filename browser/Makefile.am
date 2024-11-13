@@ -163,7 +163,7 @@ $(eval $(call file_targets,$(COOL_CSS)))
 WORKER_NODE_MODULES_JS =\
 	node_modules/fzstd/umd/index.js
 
-$(srcdir)/src/layer/tile/CanvasTileWorker.js: \
+$(DIST_FOLDER)/src/layer/tile/CanvasTileWorker.js: \
 	$(srcdir)/src/layer/tile/CanvasTileWorker.js.m4 \
 	$(srcdir)/src/layer/tile/CanvasTileWorkerSrc.js \
 	$(WORKER_NODE_MODULES_JS)
@@ -282,7 +282,6 @@ COOL_JS_LST =\
 	src/layer/marker/Cursor.ts \
 	src/layer/vector/CanvasOverlay.ts \
 	src/canvas/sections/ScrollSection.ts \
-	src/layer/tile/CanvasTileWorker.js \
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
@@ -561,7 +560,7 @@ COOL_TS_SRC = $(filter %.ts,$(COOL_JS_WEBORDER))
 
 # beware these are not helpfully ordered
 COOL_TS_JS_DST = $(patsubst src/%.ts,$(DIST_FOLDER)/src/%.js,$(COOL_TS_SRC))
-COOL_JS_DST = $(patsubst src/%.js,$(DIST_FOLDER)/src/%.js,$(COOL_JS_SRC)) $(COOL_TS_JS_DST)
+COOL_JS_DST = $(patsubst src/%.js,$(DIST_FOLDER)/src/%.js,$(COOL_JS_SRC)) $(COOL_TS_JS_DST) $(DIST_FOLDER)/src/layer/tile/CanvasTileWorker.js
 # should be no lingering / obsolete files:
 COOL_ASSERT_INTERSECT = $(filter $(COOL_JS_SRC), $(patsubst %.ts,%.js,$(COOL_TS_SRC)))
 
@@ -1111,7 +1110,6 @@ pot:
 		src/app/DocEvents.ts \
 		src/app/GraphicSelectionMiddleware.ts \
 		src/errormessages.js \
-		src/layer/tile/CanvasTileWorker.js \
 		src/layer/tile/CanvasTileLayer.js \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
