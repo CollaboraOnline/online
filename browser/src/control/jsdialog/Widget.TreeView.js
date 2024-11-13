@@ -1033,6 +1033,28 @@ class TreeViewControl {
 		}
 
 		this.fillCells(entry, builder, data, tr, level, selectionElement);
+
+		this.setupRowProperties(tr, entry, level, selectionElement);
+	}
+
+	setupRowProperties(tr, entry, level, selectionElement) {
+		if (entry.children)
+			tr.setAttribute('aria-expanded', true);
+
+		if (level !== undefined && this._isRealTree)
+			tr.setAttribute('aria-level', level);
+
+		if (entry.selected === true)
+			this.selectEntry(tr, selectionElement);
+
+		const disabled = entry.enabled === false;
+		if (disabled)
+			L.DomUtil.addClass(tr, 'disabled');
+
+		if (entry.ondemand || entry.collapsed) {
+			L.DomUtil.addClass(tr, 'collapsed');
+			tr.setAttribute('aria-expanded', false);
+		}
 	}
 
 	fillCells(entry, builder, treeViewData, tr, level, selectionElement) {
@@ -1099,25 +1121,6 @@ class TreeViewControl {
 				innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text',
 							     text);
 				innerText.innerText = entry.columns[index].text || entry.text;
-			}
-
-			// row properties
-			if (entry.children)
-				tr.setAttribute('aria-expanded', true);
-
-			if (level !== undefined && this._isRealTree)
-				tr.setAttribute('aria-level', level);
-
-			if (entry.selected === true)
-				this.selectEntry(tr, selectionElement);
-
-			const disabled = entry.enabled === false;
-			if (disabled)
-				L.DomUtil.addClass(tr, 'disabled');
-
-			if (entry.ondemand || entry.collapsed) {
-				L.DomUtil.addClass(tr, 'collapsed');
-				tr.setAttribute('aria-expanded', false);
 			}
 
 			var singleClick = this._singleClickActivate;
