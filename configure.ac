@@ -1677,7 +1677,7 @@ AC_SUBST(UNLOCK_TITLE)
 
 UNLOCK_LINK=
 if test "$enable_feature_lock" = "yes"; then
-    UNLOCK_LINK="https://www.collaboraoffice.com/subscriptions/"
+    UNLOCK_LINK="https://www.collaboraonline.com/subscriptions/"
 fi
 AC_DEFINE_UNQUOTED([UNLOCK_LINK],["$UNLOCK_LINK"],[Default value of feature_lock.unlock_link])
 AC_SUBST(UNLOCK_LINK)
