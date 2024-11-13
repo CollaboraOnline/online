@@ -507,14 +507,12 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 }
 #mobile-wizard-content #MacroSelectorDialog #commands {
 	margin-bottom: 6px;
+	min-height: auto;
 }
 #mobile-wizard-content #MacroSelectorDialog #commands.selected {
 	border-color: var(--color-primary-dark);
 }
-#mobile-wizard-content #MacroSelectorDialog #commands > tbody {
-	min-height: auto;
-}
-#mobile-wizard-content #MacroSelectorDialog #commands.empty > tbody::after {
+#mobile-wizard-content #MacroSelectorDialog #commands.empty ::after {
 	content: '…';
 	width: 22px;
 	height: 22px;

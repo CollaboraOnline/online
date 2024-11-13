@@ -424,7 +424,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: inline-block;
 }
 
-.ui-listview-icon {
+.ui-treeview-icon {
 	height: var(--btn-img-size-s);
 	width: var(--btn-img-size-s);
 	margin-inline-end: 8px;
@@ -488,12 +488,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	max-height: 150px; /* only in dialogs */
 }
 
-.ui-treeview tbody {
-	overflow-y: auto;
-	max-height: inherit;
-	display: block;
-}
-
 .ui-treeview.disabled,
 .ui-treeview-entry div.disabled {
 	background-color: var(--color-background-dark) !important;
@@ -515,16 +509,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-treeview-expandable.collapsed + .ui-treeview-expanded-content {
 	display: none !important;
-}
-
-ul.ui-treeview {
-	margin: 0;
-	padding: 0;
-	overflow-y: auto;
-}
-
-ul.ui-treeview > * {
-	list-style-type: none;
 }
 
 .ui-treeview-entry {
@@ -629,23 +613,16 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	padding-right: 10px;
 }
 
-.ui-treeview .ui-listview-entry div {
-	vertical-align: middle;
-}
-
-.ui-treeview-entry.selected,
-.ui-listview-entry.selected {
+.ui-treeview-entry.selected {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 }
 
-.ui-treeview.disabled .ui-treeview-entry.selected,
-.ui-treeview.disabled .ui-listview-entry.selected {
+.ui-treeview.disabled .ui-treeview-entry.selected {
 	background-color: var(--color-background-darker) !important;
 }
 
-.ui-treeview-entry:hover,
-.ui-listview-entry:hover {
+.ui-treeview-entry:hover {
 	background-color: var(--color-background-darker);
 	color: var(--color-text-darker);
 }
@@ -1184,7 +1161,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .autofilter-container .ui-treeview {
 	border: none;
 }
-.autofilter-container #menu.ui-treeview tbody {
+.autofilter-container #menu.ui-treeview {
 	height: auto;
 	width: 100%;
 	padding: 8px 1px;
@@ -1245,8 +1222,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	line-height: normal;
 }
 
-.autofilter-container #check_tree_box.ui-treeview tbody,
-.autofilter-container #check_list_box.ui-treeview tbody {
+.autofilter-container #check_tree_box.ui-treeview,
+.autofilter-container #check_list_box.ui-treeview {
 	width: 100%;
 	min-width: 200px;
 	max-height: 150px;
@@ -1370,11 +1347,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-color: transparent;
 }
 
-#MacroSelectorDialog #categories .ui-treeview-entry div.selected, #MacroSelectorDialog #categories .ui-listview-entry, #MacroSelectorDialog #categories .ui-listview-entry.selected {
+#MacroSelectorDialog #categories .ui-treeview-entry div.selected, #MacroSelectorDialog #categories .ui-treeview-entry, #MacroSelectorDialog #categories .ui-treeview-entry.selected {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 }
-#MacroSelectorDialog #categories .ui-treeview-entry div:hover, #MacroSelectorDialog #categories .ui-treeview-entry div.selected:hover, #MacroSelectorDialog #categories .ui-listview-entry:hover, #MacroSelectorDialog #categories .ui-listview-entry.selected:hover, #MacroSelectorDialog #categories .ui-treeview-entry div.selected {
+#MacroSelectorDialog #categories .ui-treeview-entry div:hover, #MacroSelectorDialog #categories .ui-treeview-entry div.selected:hover, #MacroSelectorDialog #categories .ui-treeview-entry:hover, #MacroSelectorDialog #categories .ui-treeview-entry.selected:hover, #MacroSelectorDialog #categories .ui-treeview-entry div.selected {
 	background-color: var(--color-background-darker);
 	color: var(--color-text-darker);
 }

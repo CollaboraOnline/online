@@ -1246,17 +1246,15 @@ label.disabled {
 	align-self: stretch;
 }
 
+#contentControlList.mobile-wizard .ui-treeview-entry:not(:last-child),
+#mentionPopupList.mobile-wizard .ui-treeview-entry:not(:last-child) {
+	border-bottom: 1px solid var(--color-border-lighter);
+}
+
 #contentControlList.mobile-wizard, #mentionPopupList.mobile-wizard {
 	margin: 0;
 	border-color: transparent;
 	width: 100%;
-}
-
-#contentControlList.mobile-wizard li:not(:last-child), #mentionPopupList.mobile-wizard li:not(:last-child) {
-	border-bottom: 1px solid var(--color-border-lighter);
-}
-
-#contentControlList.mobile-wizard tbody, #mentionPopupList.mobile-wizard tbody {
 	max-height: none;
 }
 
