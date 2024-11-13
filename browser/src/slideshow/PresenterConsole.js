@@ -588,6 +588,10 @@ class PresenterConsole {
 	}
 
 	_drawClock() {
+		if (!this._proxyPresenter || !this._proxyPresenter.document) {
+			return;
+		}
+
 		let sec, min, hour, elem;
 		if (!this._pause) {
 			sec = this._ticks % 60;
