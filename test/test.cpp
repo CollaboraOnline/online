@@ -100,7 +100,7 @@ int main(int argc, char** argv)
 
     const char* loglevel = verbose ? "trace" : "warning";
     const bool withColor = isatty(fileno(stderr));
-    Log::initialize("tst", loglevel, withColor, false, {});
+    Log::initialize("tst", loglevel, withColor, false, {}, false, {});
 
     Poco::AutoPtr<Poco::Util::LayeredConfiguration> defConfig(new Poco::Util::LayeredConfiguration);
     ConfigUtil::initialize(defConfig.get());

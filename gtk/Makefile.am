@@ -43,6 +43,7 @@ cmake_list= \
             ../kit/DeltaSimd.c \
             ../kit/Kit.cpp \
             ../kit/KitQueue.cpp \
+            ../kit/LogUI.cpp \
             ../kit/KitWebSocket.cpp \
             ../net/FakeSocket.cpp \
             ../net/Socket.cpp \

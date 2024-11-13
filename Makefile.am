@@ -135,6 +135,7 @@ shared_sources = common/FileUtil.cpp \
                  common/Simd.cpp \
                  common/CoolMount.cpp \
                  kit/KitQueue.cpp \
+                 kit/LogUI.cpp \
                  net/DelaySocket.cpp \
                  net/HttpRequest.cpp \
                  net/HttpHelper.cpp \
@@ -403,6 +404,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/ThreadPool.hpp \
                  common/Watchdog.hpp \
                  kit/KitQueue.hpp \
+                 kit/LogUI.hpp \
                  net/AsyncDNS.hpp \
                  net/Buffer.hpp \
                  net/DelaySocket.hpp \
@@ -577,30 +579,35 @@ run: setup-wsd
 	fi
 	$(ENABLE_NAMESPACE) ./coolwsd $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=${OUTPUT_TO_FILE} --o:logging.level=trace \
+			--o:logging_ui_cmd.file[@enable]=${OUTPUT_TO_FILE} \
 			--o:trace_event[@enable]=true
 
 if ENABLE_DEBUG
 run-one: setup-wsd
 	$(ENABLE_NAMESPACE) ./coolwsd $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=true --o:logging.level=trace \
+			--o:logging_ui_cmd.file[@enable]=true \
 			--singlekit
 
 run-inproc: setup-wsd
 	@echo "Launching coolwsd-inproc"
 	./coolwsd-inproc $(COMMON_PARAMS) \
-			--o:logging.file[@enable]=true --o:logging.level=trace
+			--o:logging.file[@enable]=true --o:logging.level=trace \
+			--o:logging_ui_cmd.file[@enable]=true
 
 run-massif-inproc: setup-wsd
 	@echo "Launching coolwsd under valgrind for single process"
 	$(ENABLE_NAMESPACE) valgrind --tool=massif --num-callers=64 --trace-children=no -v \
 		./coolwsd-inproc $(COMMON_PARAMS) \
-			--o:logging.file[@enable]=false --o:logging.level=trace
+			--o:logging.file[@enable]=false --o:logging.level=trace \
+			--o:logging_ui_cmd.file[@enable]=false
 
 run-heaptrack-inproc: setup-wsd
 	@echo "Launching coolwsd under heaptrack for single process"
 	$(ENABLE_NAMESPACE) heaptrack \
 		./coolwsd-inproc $(COMMON_PARAMS) \
-			--o:logging.file[@enable]=false --o:logging.level=trace
+			--o:logging.file[@enable]=false --o:logging.level=trace \
+			--o:logging_ui_cmd.file[@enable]=false
 endif
 
 sync-writer:
@@ -615,6 +622,7 @@ sync-impress:
 run-trace: setup-wsd
 	$(ENABLE_NAMESPACE) ./coolwsd $(COMMON_PARAMS) \
 			--o:logging.file[@enable]=false --o:logging.level=trace \
+			--o:logging_ui_cmd.file[@enable]=false \
 			--o:trace[@enable]=true --o:trace.path=${builddir}/trace.txt.gz \
 			--o:trace.outgoing.record=false
 
@@ -622,25 +630,29 @@ run-valgrind: setup-wsd
 	@echo "Launching coolwsd under valgrind (but not forkit/coolkit, yet)"
 	$(ENABLE_NAMESPACE) valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
 		./coolwsd $(COMMON_PARAMS) \
-			--o:logging.file[@enable]=false --o:logging.level=trace
+			--o:logging.file[@enable]=false --o:logging.level=trace \
+			--o:logging_ui_cmd.file[@enable]=false
 
 run-gdb: setup-wsd
 	@echo "Launching coolwsd under gdb"
 	$(ENABLE_NAMESPACE) $(RUN_GDB) \
 		./coolwsd $(COMMON_PARAMS) \
-			--o:logging.file[@enable]=false --o:logging.level=error
+			--o:logging.file[@enable]=false --o:logging.level=error \
+			--o:logging_ui_cmd.file[@enable]=false
 
 run-callgrind: setup-wsd
 	@echo "Launching coolwsd under valgrind's callgrind"
 	$(ENABLE_NAMESPACE) valgrind --tool=callgrind --simulate-cache=yes --dump-instr=yes --num-callers=50 --error-limit=no --trace-children=yes \
 		./coolwsd $(COMMON_PARAMS) \
-			--o:logging.file[@enable]=false --o:logging.level=error
+			--o:logging.file[@enable]=false --o:logging.level=error \
+			--o:logging_ui_cmd.file[@enable]=false
 
 run-strace: setup-wsd
 	@echo "Launching coolwsd under strace"
 	$(ENABLE_NAMESPACE) strace -o strace.log -f -tt -s 256 \
 		./coolwsd $(COMMON_PARAMS) \
-			--o:logging.file[@enable]=false --o:logging.level=error
+			--o:logging.file[@enable]=false --o:logging.level=error \
+			--o:logging_ui_cmd.file[@enable]=false
 
 else
 

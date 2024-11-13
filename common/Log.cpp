@@ -423,6 +423,21 @@ namespace Log
 
     } Static;
 
+    static struct StaticUIHelper: StaticHelper
+    {
+    private:
+        bool _mergeCmd = false;
+        bool _logTimeEndOfMergedCmd = false;
+    public:
+        void setLogMergeInfo(bool mergeCmd, bool logTimeEndOfMergedCmd)
+        {
+            _mergeCmd = mergeCmd;
+            _logTimeEndOfMergedCmd = logTimeEndOfMergedCmd;
+        }
+        bool getMergeCmd() const { return _mergeCmd; }
+        bool getLogTimeEndOfMergedCmd() const { return _logTimeEndOfMergedCmd; }
+    } StaticUILog;
+
     thread_local GenericLogger* StaticHelper::_threadLocalLogger = nullptr;
 
     bool IsShutdown = false;
@@ -601,7 +616,9 @@ namespace Log
                     const std::string& logLevel,
                     const bool withColor,
                     const bool logToFile,
-                    const std::map<std::string, std::string>& config)
+                    const std::map<std::string, std::string>& config,
+                    const bool logToFileUICmd,
+                    const std::map<std::string, std::string>& configUICmd)
     {
         Static.setName(name);
         std::ostringstream oss;
@@ -669,6 +686,30 @@ namespace Log
         LOG_INF("Initializing " << name << ". Local time: "
                                 << std::put_time(localtime_r(&t, &tm), "%a %F %T %z")
                                 << ". Log level is [" << logger->getLevel() << ']');
+
+        StaticUILog.setName(name+"_ui");
+        AutoPtr<Channel> channelUILog;
+        if (logToFileUICmd)
+        {
+            channelUILog = static_cast<Poco::Channel*>(new Poco::FileChannel("coolwsd-ui-cmd.log"));
+            for (const auto& pair : configUICmd)
+            {
+                channelUILog->setProperty(pair.first, pair.second);
+            }
+
+            channelUILog = static_cast<Poco::Channel*>(new Poco::FileChannel("/tmp/coolwsd-ui-cmd.log"));
+            channelUILog->open();
+            try
+            {
+                auto& loggerUILog = GenericLogger::create(StaticUILog.getName(), std::move(channelUILog), Poco::Message::PRIO_TRACE);
+                StaticUILog.setLogger(&loggerUILog);
+            }
+            catch (ExistsException&)
+            {
+                auto loggerUILog = static_cast<GenericLogger *>(&Poco::Logger::get(StaticUILog.getName()));
+                StaticUILog.setLogger(loggerUILog);
+            }
+        }
     }
 
     GenericLogger& logger()
@@ -681,6 +722,46 @@ namespace Log
         return pLogger ? *pLogger
             : *static_cast<GenericLogger *>(
                 &GenericLogger::get(Static.getInited() ? Static.getName() : std::string()));
+    }
+
+    GenericLogger& loggerUI()
+    {
+        GenericLogger* logger = StaticUILog.getThreadLocalLogger();
+        if (logger != nullptr)
+            return *logger;
+
+        logger = StaticUILog.getLogger();
+        return logger ? *logger
+            : *static_cast<GenericLogger *>(
+                &GenericLogger::get(StaticUILog.getInited() ? StaticUILog.getName() : std::string()));
+    }
+
+    bool isLogUIEnabled()
+    {
+        if (StaticUILog.getThreadLocalLogger() || StaticUILog.getLogger())
+            return true;
+        return false;
+    }
+
+    void logUI(Level l, const std::string &text)
+    {
+        if (isLogUIEnabled())
+            Log::loggerUI().doLog(l, text);
+    }
+
+    bool isLogUIMerged()
+    {
+        return StaticUILog.getMergeCmd();
+    }
+
+    bool isLogUITimeEnd()
+    {
+        return StaticUILog.getLogTimeEndOfMergedCmd();
+    }
+
+    void setUILogMergeInfo(bool mergeCmd, bool logTimeEndOfMergedCmd)
+    {
+        StaticUILog.setLogMergeInfo(mergeCmd, logTimeEndOfMergedCmd);
     }
 
     bool isEnabled(Level l, Area a)

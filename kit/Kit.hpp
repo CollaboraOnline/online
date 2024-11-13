@@ -20,6 +20,7 @@
 #include <common/Session.hpp>
 #include <common/ThreadPool.hpp>
 #include <kit/KitQueue.hpp>
+#include <kit/LogUI.hpp>
 
 #include <wsd/TileDesc.hpp>
 
@@ -393,6 +394,8 @@ public:
 
     std::shared_ptr<KitQueue> getQueue() const { return _queue; }
 
+    LogUiCmd& getLogUiCmd() { return logUiCmd; }
+
 private:
     void postForceModifiedCommand(bool modified);
 
@@ -458,6 +461,8 @@ private:
 
     const unsigned _mobileAppDocId;
     int _duringLoad;
+
+    LogUiCmd logUiCmd;
 };
 
 /// main function of the forkit process or thread
