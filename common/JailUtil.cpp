@@ -426,7 +426,9 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
 {
     // Start with a clean slate.
     cleanupJails(childRoot);
-    createJailPath(childRoot + CHILDROOT_TMP_INCOMING_PATH);
+
+    createJailPath(childRoot + CHILDROOT_TMP_INCOMING_PATH + "/fonts");
+    createJailPath(childRoot + CHILDROOT_TMP_INCOMING_PATH + "/templates");
 
     disableBindMounting(); // Clear to avoid surprises.
 
