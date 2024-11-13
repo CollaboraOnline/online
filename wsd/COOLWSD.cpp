@@ -470,6 +470,22 @@ static void forkChildren(const int number)
     }
 }
 
+bool COOLWSD::spawnSubForKit(const std::string& id)
+{
+    if (Util::isKitInProcess())
+        return false;
+
+    LOG_TRC("Request forkit to spawn subForKit " << id);
+
+    COOLWSD::checkDiskSpaceAndWarnClients(false);
+
+    const std::string aMessage = "addforkit " + id + '\n';
+    LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
+    COOLWSD::sendMessageToForKit(aMessage);
+
+    return true;
+}
+
 /// Cleans up dead children.
 /// Returns true if removed at least one.
 static bool cleanupChildren()
