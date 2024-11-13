@@ -79,6 +79,7 @@ all_la_unit_tests = \
 	unit-cursor.la \
 	unit-render-search-result.la \
 	unit-tiff-load.la \
+	unit-save.la \
 	unit-wopi-saveas-with-encoded-file-name.la \
 	unit-storage.la \
 	unit-wopi-async-upload-modifyclose.la \
@@ -290,6 +291,8 @@ unit_wopi_httpredirect_la_SOURCES = UnitWOPIHttpRedirect.cpp
 unit_wopi_httpredirect_la_LIBADD = $(CPPUNIT_LIBS)
 unit_tiff_load_la_SOURCES = UnitTiffLoad.cpp
 unit_tiff_load_la_LIBADD = $(CPPUNIT_LIBS)
+unit_save_la_SOURCES = UnitSave.cpp
+unit_save_la_LIBADD = $(CPPUNIT_LIBS)
 unit_large_paste_la_SOURCES = UnitLargePaste.cpp
 unit_large_paste_la_LIBADD = $(CPPUNIT_LIBS)
 unit_paste_la_SOURCES = UnitPaste.cpp
