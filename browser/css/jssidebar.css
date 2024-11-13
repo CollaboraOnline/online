@@ -311,7 +311,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	padding-inline-start: 0;
 	background-color: transparent;
 }
-#NavigatorDeck .ui-listview-icon {
+#NavigatorDeck .ui-treeview-icon {
 	width: var(--btn-size-s);
 	height: var(--btn-size-s);
 }
@@ -329,7 +329,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	margin-block-end: 8px;
 }
 
-#NavigatorDeck div.selected:not(.ui-listview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
+#NavigatorDeck div.selected:not(.ui-treeview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
 	content: '–';
 	/* good to move this into css var*/
 	font-size: 17px;
