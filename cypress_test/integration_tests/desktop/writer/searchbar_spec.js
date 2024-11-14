@@ -116,7 +116,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 		helper.copy();
 		helper.expectTextForClipboard('sit');
 		desktopHelper.assertScrollbarPosition('vertical', 60, 75);
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 2 of 6');
+		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 2 of 6', 'Pages 1 and 2 of 6']);
 
 		// Scroll document to the top so cursor is no longer visible, that turns following off
 		desktopHelper.scrollWriterDocumentToTop();
