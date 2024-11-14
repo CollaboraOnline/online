@@ -132,9 +132,10 @@ interface TreeHeaderJSON {
 interface TreeWidget extends WidgetJSON {
 	text: string;
 	singleclickactivate: boolean; // activates element on single click instead of just selection
-	fireKeyEvents: boolean; // do we sent key events to core
-	hideIfEmpty: boolean; // hide the widget if no entries available
+	fireKeyEvents?: boolean; // do we sent key events to core
+	hideIfEmpty?: boolean; // hide the widget if no entries available
 	checkboxtype: string; // radio or checkbox
+	draggable?: boolean; // indicates if we can drag entries to another treeview
 	entries: Array<TreeEntryJSON>;
 	headers: Array<TreeHeaderJSON>; // header columns
 }
