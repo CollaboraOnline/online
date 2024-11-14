@@ -265,7 +265,8 @@ class PresenterConsole {
 		elem.style.justifyContent = 'center';
 		elem.style.alignItems = 'center';
 		elem.style.backgroundColor = 'transparent';
-		elem.style.color = 'white';
+		elem.style.color = slideShowColor;
+		elem.style.fontSize = '22px';
 
 		elem = this._proxyPresenter.document.querySelector(
 			'#current-slide-container',
@@ -288,10 +289,9 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.querySelector('#title-next');
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
-		elem.style.justifyContent = 'center';
-		elem.style.alignItems = 'center';
 		elem.style.backgroundColor = 'transparent';
-		elem.style.color = 'white';
+		elem.style.color = slideShowColor;
+		elem.style.fontSize = '22px';
 
 		elem = this._proxyPresenter.document.querySelector('#next-slide-container');
 		elem.style.width = '25vw';
@@ -356,19 +356,17 @@ class PresenterConsole {
 
 		elem = this._proxyPresenter.document.querySelector('#timer-container');
 		elem.style.display = 'flex';
-		elem.style.justifyContent = 'space-between';
 		elem.style.alignItems = 'center';
-		elem.style.color = 'white';
 		elem.style.width = '100%';
 
 		elem = this._proxyPresenter.document.querySelector('#today');
 		elem.style.textAlign = 'right';
-		elem.style.fontSize = 'large';
-		elem.style.fontWeight = 'bold';
+		elem.style.fontSize = '22px';
+		elem.style.color = slideShowColor;
 
 		elem = this._proxyPresenter.document.querySelector('#timer');
-		elem.style.fontSize = 'large';
-		elem.style.fontWeight = 'bold';
+		elem.style.fontSize = '22px';
+		elem.style.color = slideShowColor;
 
 		this._ticks = 0;
 		this._onTimer();
