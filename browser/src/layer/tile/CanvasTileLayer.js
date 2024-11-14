@@ -1214,7 +1214,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			current: true, // is this currently visible
 			canvas: null,  // canvas ready to render
 			imgDataCache: null, // flat byte array of canvas data
-			rawKeyframe: null, // keyframe ready to decompress
 			rawDeltas: null, // deltas ready to decompress
 			deltaCount: 0, // how many deltas on top of the keyframe
 			updateCount: 0, // how many updates did we have
@@ -1238,7 +1237,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				return !this.imgDataCache && this.hasKeyframe();
 			},
 			hasKeyframe: function() {
-				return this.rawKeyframe && this.rawKeyframe.length > 0;
+				return this.rawDeltas && this.rawDeltas.length > 0;
 			},
 			hasPendingUpdate: function() {
 				return this.hasPendingDelta > 0 || this.hasPendingKeyframe > 0;
@@ -5248,9 +5247,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._debugDeltas)
 				window.app.console.log('Restoring a tile from cached delta at ' +
 							   this._tileCoordsToKey(tile.coords));
-			this._applyCompressedDelta(tile, tile.rawKeyframe, true, false, false);
-			if (tile.rawDeltas && tile.rawDeltas.length > 0)
-				this._applyCompressedDelta(tile, tile.rawDeltas, false, false, false);
+			this._applyCompressedDelta(tile, tile.rawDeltas, true, false, false);
 		}
 	},
 
@@ -5327,7 +5324,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			// and the former case can cause visible flicker.
 			if (tile.canvas && !tile.current && tile.hasPendingDelta === 0)
 				canvasKeys.push(keys[i]);
-			totalSize += tile.rawKeyframe ? tile.rawKeyframe.length : 0;
 			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
 		}
 
@@ -5352,15 +5348,13 @@ L.CanvasTileLayer = L.Layer.extend({
 			{
 				var key = keys[i];
 				var tile = this._tiles[key];
-				if (tile.rawKeyframe && !tile.current)
+				if (tile.rawDeltas && !tile.current)
 				{
-					var tileMemory = tile.rawKeyframe.length + tile.rawDeltas.length;
-					totalSize -= tileMemory;
+					totalSize -= tile.rawDeltas.length;
 					if (this._debugDeltas)
 						window.app.console.log('Reclaim delta ' + key + ' memory: ' +
-								       tileMemory + ' bytes');
+							tile.rawDeltas.length + ' bytes');
 					this._reclaimTileCanvasMemory(tile);
-					tile.rawKeyframe = null;
 					tile.rawDeltas = null;
 					// force keyframe
 					tile.wireId = 0;
@@ -5468,7 +5462,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (keyframeDeltaSize) {
 			// Important to do this before ensuring the context, or we'll needlessly
 			// reconstitute the old keyframe from compressed data.
-			tile.rawKeyframe = null;
 			tile.rawDeltas = null;
 			tile.imgDataCache = null;
 		}
@@ -5477,7 +5470,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!ctx) // out of canvas / texture memory.
 			return;
 
-		// if re-creating a canvas from rawKeyframe/rawDeltas don't update counts
+		// if re-creating a canvas from rawDeltas, don't update counts
 		if (wireMessage) {
 			if (keyframeDeltaSize) {
 				tile.loadCount++;
@@ -5513,10 +5506,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		// better.
 		if (keyframeDeltaSize)
 		{
-			tile.rawKeyframe = rawDelta; // overwrite
-			tile.rawDeltas = new Uint8Array(0);
+			tile.rawDeltas = rawDelta; // overwrite
 		}
-		else if (!tile.rawKeyframe)
+		else if (!tile.hasKeyframe())
 		{
 			window.app.console.warn('Unusual: attempt to append a delta when we have no keyframe.');
 			return;
