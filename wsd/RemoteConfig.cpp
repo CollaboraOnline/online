@@ -16,6 +16,7 @@
 #include <config.h>
 
 #include "RemoteConfig.hpp"
+#include "FileUtil.hpp"
 
 #include <common/JsonUtil.hpp>
 #include <net/HttpRequest.hpp>
@@ -657,15 +658,37 @@ bool RemoteAssetConfigPoll::getNewAssets(const Poco::JSON::Object::Ptr& remoteJs
     return reDownloadConfig;
 }
 
+std::string RemoteAssetConfigPoll::removeTemplate(const std::string& uri)
+{
+    const Poco::URI assetUri{ uri };
+    const std::string& path = assetUri.getPath();
+    const std::string filename = path.substr(path.find_last_of('/') + 1);
+    std::string assetFile;
+    assetFile.append(COOLWSD::TmpTemplateDir);
+    assetFile.append("/");
+    assetFile.append(filename);
+    FileUtil::removeFile(assetFile);
+    return assetFile;
+}
+
 void RemoteAssetConfigPoll::reDownloadConfigFile(std::map<std::string, AssetData>& assets,
-                                                 bool restartForKit)
+                                                 const std::string& assetType)
 {
     LOG_DBG("Downloaded asset has been updated or a asset has been removed.");
+
+    // remove inactive templates
+    if (assetType == "templates")
+    {
+        for (const auto& it : assets)
+            if (!it.second.active)
+                removeTemplate(it.second.pathName);
+    }
+
     assets.clear();
     // Clear the saved ETag of the remote font configuration file so that it will be
     // re-downloaded, and all fonts mentioned in it re-downloaded and fed to ForKit.
     _eTagValue.clear();
-    if (restartForKit)
+    if (assetType == "fonts")
     {
         LOG_DBG("ForKit must be restarted.");
         COOLWSD::sendMessageToForKit("exit");
@@ -678,9 +701,9 @@ void RemoteAssetConfigPoll::handleJSON(const Poco::JSON::Object::Ptr& remoteJson
     bool reDownloadTemplateConfig = getNewAssets(remoteJson, "templates", templates);
 
     if (reDownloadFontConfig)
-        reDownloadConfigFile(fonts, true);
+        reDownloadConfigFile(fonts, "fonts");
     if (reDownloadTemplateConfig)
-        reDownloadConfigFile(templates, false);
+        reDownloadConfigFile(templates, "templates");
 }
 
 bool RemoteAssetConfigPoll::handleUnchangedAssets(std::map<std::string, AssetData>& assets)
@@ -720,9 +743,9 @@ void RemoteAssetConfigPoll::handleUnchangedJSON()
     bool reDownloadTemplateConfig = handleUnchangedAssets(templates);
 
     if (reDownloadFontConfig)
-        reDownloadConfigFile(fonts, true);
+        reDownloadConfigFile(fonts, "fonts");
     if (reDownloadTemplateConfig)
-        reDownloadConfigFile(templates, false);
+        reDownloadConfigFile(templates, "templates");
 }
 
 bool RemoteAssetConfigPoll::downloadPlain(const std::string& uri,
@@ -806,19 +829,18 @@ bool RemoteAssetConfigPoll::finishDownload(
 
     const std::string& body = httpResponse->getBody();
 
-    // We intentionally use a new file name also when an updated version of a font is
-    // downloaded. It causes trouble to rewrite the same file, in case it is in use in some Kit
-    // process at the moment.
-
-    // We don't remove the old file either as that also causes problems.
-
-    // And in reality, it is a bit unclear how likely it even is that assets downloaded through
-    // this mechanism even will be updated.
     std::string assetFile;
     if (assetType == "fonts")
-        assetFile += COOLWSD::TmpFontDir + '/' + Util::encodeId(Util::rng::getNext()) + ".ttf";
+        // We intentionally use a new file name also when an updated version of a font is
+        // downloaded. It causes trouble to rewrite the same file, in case it is in use in some Kit
+        // process at the moment.
+
+        // We don't remove the old file either as that also causes problems.
+        // And in reality, it is a bit unclear how likely it even is that assets downloaded through
+        // this mechanism even will be updated.
+        assetFile = COOLWSD::TmpFontDir + '/' + Util::encodeId(Util::rng::getNext()) + ".ttf";
     else if (assetType == "templates")
-        assetFile += COOLWSD::TmpTemplateDir + '/' + Util::encodeId(Util::rng::getNext()) + ".otp";
+        assetFile = removeTemplate(uri);
 
     std::ofstream assetStream(assetFile);
     assetStream.write(body.data(), body.size());
