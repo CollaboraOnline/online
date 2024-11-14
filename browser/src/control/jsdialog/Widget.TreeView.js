@@ -86,9 +86,11 @@ class TreeViewControl {
 		this.setupKeyEvents(data, builder);
 
 		this._isRealTree = isRealTree;
-		if (isRealTree)
+		if (isRealTree) {
 			this._container.setAttribute('role', 'treegrid');
-		else
+			if (!data.headers || data.headers.length === 0)
+				L.DomUtil.addClass(this._container, 'ui-treeview-tree');
+		} else
 			this._container.setAttribute('role', 'grid');
 	}
 
@@ -696,8 +698,6 @@ class TreeViewFactory {
 		this._implementation = new TreeViewControl(data, builder, isRealTree);
 	}
 
-	isHeaderListBox(data) { return data.headers && data.headers.length !== 0; }
-
 	isRealTree(data) {
 		let isRealTreeView = false;
 		for (var i in data.entries) {
@@ -718,6 +718,7 @@ class TreeViewFactory {
 		let dummyCells = this._implementation._columns - headers.length;
 		if (this._implementation._hasState)
 			dummyCells++;
+		this._implementation._container._thead.style.gridColumn = '1 / ' + (this._implementation._columns + dummyCells + 1);
 
 		for (let index = 0; index < dummyCells; index++) {
 			this._implementation.fillHeader({text: ''}, builder);
@@ -822,7 +823,7 @@ class TreeViewFactory {
 				const subGrid = L.DomUtil.create('div', 'ui-treeview-expanded-content', parent);
 
 				let dummyColumns = this._implementation._columns - (entries[index].columns ? entries[index].columns.length : 0);
-				if (this._hasState) dummyColumns++;
+				if (this._implementation._hasState) dummyColumns++;
 				subGrid.style.gridColumn = '1 / ' + (this._implementation._columns + dummyColumns + 1);
 
 				this.fillEntries(data, entries[index].children, builder, level + 1, subGrid);
