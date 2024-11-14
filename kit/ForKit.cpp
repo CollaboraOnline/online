@@ -418,6 +418,69 @@ void sleepForDebugger()
     Util::sleepFromEnvIfSet("Kit", "SLEEPKITFORDEBUGGER");
 }
 
+static int forkKit(const std::function<void()> &childFunc,
+                   const std::string& childProcessName,
+                   const std::function<void(pid_t)> &parentFunc)
+{
+    pid_t pid = 0;
+
+    /* We are about to fork, but not exec. After a fork the child has
+       only one thread, but a copy of the watchdog object.
+
+       Stop the watchdog thread before fork, let the child discard
+       its copy of the watchdog that is now in a discardable state,
+       and allow it to create a new one on next SocketPoll ctor */
+    const bool hasWatchDog(SocketPoll::PollWatchdog);
+    if (hasWatchDog)
+        SocketPoll::PollWatchdog->joinThread();
+
+    pid = fork();
+    if (!pid)
+    {
+        sleepForDebugger();
+
+        // Child
+        Log::postFork();
+
+        // sort out thread local variables to get logging right from
+        // as early as possible.
+        Util::setThreadName(childProcessName);
+
+        // Close the pipe from coolwsd
+        close(0);
+
+        // Close the ForKit main-loop's sockets
+        if (ForKitPoll)
+            ForKitPoll->closeAllSockets();
+        // else very first kit process spawned
+
+        SigUtil::setSigChildHandler(nullptr);
+
+        // Throw away inherited watchdog, which will let a new one for this
+        // child be created on demand
+        SocketPoll::PollWatchdog.reset();
+
+        UnitKit::get().postFork();
+
+        childFunc();
+    }
+    else
+    {
+        if (hasWatchDog)
+        {
+            // restart parent watchdog if there was one
+            SocketPoll::PollWatchdog->startThread();
+        }
+
+        // Parent
+        parentFunc(pid);
+
+        UnitKit::get().launchedKit(pid);
+    }
+
+    return pid;
+}
+
 static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& sysTemplate,
                                 const std::string& loTemplate,
@@ -437,7 +500,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
                                                       << spareKitId << '.');
     const auto startForkingTime = std::chrono::steady_clock::now();
 
-    pid_t pid = 0;
+    pid_t childPid = 0;
     if (Util::isKitInProcess())
     {
         std::thread([childRoot, jailId, sysTemplate, loTemplate, queryVersion,
@@ -451,56 +514,17 @@ static int createLibreOfficeKit(const std::string& childRoot,
     }
     else
     {
-        /* We are about to fork, but not exec. After a fork the child has
-           only one thread, but a copy of the watchdog object.
-
-           Stop the watchdog thread before fork, let the child discard
-           its copy of the watchdog that is now in a discardable state,
-           and allow it to create a new one on next SocketPoll ctor */
-        const bool hasWatchDog(SocketPoll::PollWatchdog);
-        if (hasWatchDog)
-            SocketPoll::PollWatchdog->joinThread();
-
-        pid = fork();
-        if (!pid)
+        auto childFunc = [childRoot, jailId, sysTemplate, loTemplate,
+                          useMountNamespaces, queryVersion,
+                          sysTemplateIncomplete]()
         {
-            sleepForDebugger();
-
-            // Child
-            Log::postFork();
-
-            // sort out thread local variables to get logging right from
-            // as early as possible.
-            Util::setThreadName("kit_spare_" + Util::encodeId(spareKitId, 3));
-
-            // Close the pipe from coolwsd
-            close(0);
-
-            // Close the ForKit main-loop's sockets
-            if (ForKitPoll)
-                ForKitPoll->closeAllSockets();
-            // else very first kit process spawned
-
-            SigUtil::setSigChildHandler(nullptr);
-
-            // Throw away inherited watchdog, which will let a new one for this
-            // child be created on demand
-            SocketPoll::PollWatchdog.reset();
-
-            UnitKit::get().postFork();
-
             lokit_main(childRoot, jailId, sysTemplate, loTemplate, NoCapsForKit, NoSeccomp,
                        useMountNamespaces, queryVersion, DisplayVersion,
                        sysTemplateIncomplete, spareKitId);
-        }
-        else
-        {
-            if (hasWatchDog)
-            {
-                // restart parent watchdog if there was one
-                SocketPoll::PollWatchdog->startThread();
-            }
+        };
 
+        auto parentFunc = [childRoot, jailId](int pid)
+        {
             // Parent
             if (pid < 0)
             {
@@ -511,16 +535,17 @@ static int createLibreOfficeKit(const std::string& childRoot,
                 LOG_INF("Forked kit [" << pid << ']');
                 childJails[pid] = childRoot + jailId;
             }
+        };
 
-            UnitKit::get().launchedKit(pid);
-        }
+        std::string processName = "kit_spare_" + Util::encodeId(spareKitId, 3);
+        childPid = forkKit(childFunc, processName, parentFunc);
     }
 
     const auto duration = (std::chrono::steady_clock::now() - startForkingTime);
     const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
     LOG_TRC("Forking child took " << durationMs);
 
-    return pid;
+    return childPid;
 }
 
 void forkLibreOfficeKit(const std::string& childRoot,
