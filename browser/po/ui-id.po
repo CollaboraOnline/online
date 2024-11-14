@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-31 22:53+0100\n"
-"PO-Revision-Date: 2024-10-09 12:27+0000\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"PO-Revision-Date: 2024-11-14 05:22+0000\n"
+"Last-Translator: Adrien N <adriennathaniel1999@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1083,7 +1083,7 @@ msgstr "Dokumen HTML (.html)"
 #: src/control/Control.Menubar.js:412
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:480
@@ -1132,7 +1132,7 @@ msgstr "Tilikan Induk"
 
 #: src/control/Control.Menubar.js:473
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "Mutimedia lokal..."
 
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:1108
 #: src/control/Control.PresentationBar.js:127
@@ -2367,7 +2367,7 @@ msgstr "Nomor Salindia"
 #: src/control/jsdialog/Widget.HTMLContent.ts:124
 #: src/control/jsdialog/Widget.HTMLContent.ts:132
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "Perubahan telah disimpan"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
