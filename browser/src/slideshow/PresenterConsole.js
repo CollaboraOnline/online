@@ -152,6 +152,7 @@ class PresenterConsole {
 				img.style.marginBottom = '10px';
 				img.width = 100;
 				img.height = 100;
+				img._index = index;
 				elem.append(img);
 			}
 		}
@@ -472,17 +473,10 @@ class PresenterConsole {
 		}
 	}
 
-	_onHideSlides() {
+	_onHideSlides(img) {
 		let elem = this._proxyPresenter.document.querySelector(
 			'#presentation-content',
 		);
-		let selection = this._proxyPresenter.document.getSelection();
-		if (selection && selection.rangeCount > 1) {
-			let range = selection.getRangeAt(0);
-			if (range) {
-				this._presenter.getNavigator().displaySlide(range.startOffset, true);
-			}
-		}
 
 		this._slides.remove();
 		elem.appendChild(this._first);
@@ -490,14 +484,19 @@ class PresenterConsole {
 
 		elem = this._proxyPresenter.document.querySelector('#slides');
 		this.toggleButtonState(elem, false);
+
+		if (img) {
+			requestAnimationFrame(
+				function (navigator, index) {
+					navigator.displaySlide(index, true);
+				}.bind(null, this._presenter.getNavigator(), img._index),
+			);
+		}
 	}
 
 	_onClickSlides(e) {
 		if (e.target && e.target.localName === 'img') {
-			this._proxyPresenter.document.getSelection().empty();
-			let range = document.createRange();
-			range.selectNode(e.target);
-			this._proxyPresenter.document.getSelection().addRange(range);
+			setTimeout(L.bind(this._onHideSlides, this, e.target), 0);
 		}
 
 		e.stopPropagation();
