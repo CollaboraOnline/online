@@ -1,21 +1,24 @@
+# Frank Pearson <rob@pearson.net.nz>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-31 22:53+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-11-11 05:06+0000\n"
+"Last-Translator: Frank Pearson <rob@pearson.net.nz>\n"
+"Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
+"app-store-descriptions/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.8.2\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
 msgid "Collabora Office: LibreOffice, OpenOffice & more"
-msgstr ""
+msgstr "Collabora Office: LibreOffice, OpenOffice med mere"
 
 #. Short description - 80 chars limit
 #: descriptions/google-play.html%2Bhtml.body.p:9-1
@@ -32,6 +35,10 @@ msgid ""
 "and now it's on Android, enhancing your possibilities to work on mobile and "
 "for collaboration."
 msgstr ""
+"Collabora Office er et tekstredigerings-, regnearks- og præsentationsprogram "
+"baseret på LibreOffice, verdens mest populære Open Source-kontorpakke – "
+"findes nu på Android, hvilket forbedrer dine muligheder for at arbejde på "
+"mobilen og for samarbejde."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:17-1
@@ -74,7 +81,7 @@ msgstr ""
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
 msgid "About the app:"
-msgstr ""
+msgstr "Om appen:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:44-1
