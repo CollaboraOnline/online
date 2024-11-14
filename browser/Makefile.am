@@ -163,12 +163,12 @@ $(eval $(call file_targets,$(COOL_CSS)))
 WORKER_NODE_MODULES_JS =\
 	node_modules/fzstd/umd/index.js
 
-$(DIST_FOLDER)/src/layer/tile/CanvasTileWorker.js: \
+$(DIST_FOLDER)/src/layer/tile/TileWorker.js: \
 	$(srcdir)/src/layer/tile/CanvasTileWorker.js.m4 \
 	$(srcdir)/src/layer/tile/CanvasTileWorkerSrc.js \
 	$(WORKER_NODE_MODULES_JS)
 
-	@echo "Generating CanvasTileWorker.js..."
+	@echo "Generating TileWorker.js..."
 	m4 -PE -DDEBUG=$(ENABLE_DEBUG) \
 		-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(WORKER_NODE_MODULES_JS)) \
 		-DWORKER_JS=$(srcdir)/src/layer/tile/CanvasTileWorkerSrc.js \
@@ -560,7 +560,7 @@ COOL_TS_SRC = $(filter %.ts,$(COOL_JS_WEBORDER))
 
 # beware these are not helpfully ordered
 COOL_TS_JS_DST = $(patsubst src/%.ts,$(DIST_FOLDER)/src/%.js,$(COOL_TS_SRC))
-COOL_JS_DST = $(patsubst src/%.js,$(DIST_FOLDER)/src/%.js,$(COOL_JS_SRC)) $(COOL_TS_JS_DST) $(DIST_FOLDER)/src/layer/tile/CanvasTileWorker.js
+COOL_JS_DST = $(patsubst src/%.js,$(DIST_FOLDER)/src/%.js,$(COOL_JS_SRC)) $(COOL_TS_JS_DST) $(DIST_FOLDER)/src/layer/tile/TileWorker.js
 # should be no lingering / obsolete files:
 COOL_ASSERT_INTERSECT = $(filter $(COOL_JS_SRC), $(patsubst %.ts,%.js,$(COOL_TS_SRC)))
 
