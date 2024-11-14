@@ -59,6 +59,8 @@ abstract class SlideCompositor {
 	): AnimatedShapeInfo;
 
 	public abstract getLayerRendererContext(): RenderContext;
+
+	public abstract deleteResources(): void;
 }
 
 SlideShow.SlideCompositor = SlideCompositor;

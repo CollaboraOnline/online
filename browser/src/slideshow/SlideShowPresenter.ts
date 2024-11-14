@@ -215,6 +215,7 @@ class SlideShowPresenter {
 	_stopFullScreen() {
 		if (!this._slideShowCanvas) return;
 
+		if (this._slideCompositor) this._slideCompositor.deleteResources();
 		this._slideRenderer.deleteResources();
 
 		// window.removeEventListener('keydown', this._onCanvasKeyDown.bind(this));

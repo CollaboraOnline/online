@@ -115,6 +115,10 @@ class LayerDrawing {
 		this.map.off('sliderenderingcomplete', this.onSlideRenderingComplete, this);
 	}
 
+	public deleteResources() {
+		this.layerRenderer.dispose();
+	}
+
 	private getSlideInfo(slideHash: string): SlideInfo {
 		return this.helper.getSlideInfo(slideHash);
 	}
