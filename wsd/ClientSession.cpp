@@ -293,13 +293,11 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             // Unsupported clipboard request.
             LOG_ERR("Unsupported Clipboard Request from socket #" << socket->getFD()
                                                                   << ". Terminating connection.");
-            std::ostringstream oss;
-            oss << "HTTP/1.1 403 Forbidden\r\n"
-                << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                << "Content-Length: 0\r\n"
-                << "Connection: close\r\n"
-                << "\r\n";
-            socket->send(oss.str());
+
+            http::Response httpResponse(http::StatusCode::Forbidden);
+            httpResponse.set("Content-Length", "0");
+            httpResponse.set("Connection", "close");
+            socket->send(httpResponse);
             socket->closeConnection(); // Shutdown socket.
             socket->ignoreInput();
             return;
@@ -402,13 +400,10 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             }
 
             // FIXME: work harder for error detection ?
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                << "Content-Length: 0\r\n"
-                << "Connection: close\r\n"
-                << "\r\n";
-            socket->send(oss.str());
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.set("Content-Length", "0");
+            httpResponse.set("Connection", "close");
+            socket->send(httpResponse);
             socket->shutdown();
         }
         else
@@ -2124,25 +2119,24 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             if (!socket)
                 continue;
 
-            std::ostringstream oss;
             // The custom header for the clipboard of a living document.
-            oss << "HTTP/1.1 200 OK\r\n"
-                << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-                << "Content-Length: " << (empty ? 0 : (payload->size() - header)) << "\r\n"
-                << "Content-Type: application/octet-stream\r\n"
-                << "X-Content-Type-Options: nosniff\r\n"
-                << "X-COOL-Clipboard: true\r\n"
-                << "Connection: close\r\n"
-                << "\r\n";
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+            httpResponse.set("Content-Length",
+                             std::to_string(empty ? 0 : (payload->size() - header)));
+            httpResponse.add("Content-Type", "application/octet-stream");
+            httpResponse.add("X-Content-Type-Options", "nosniff");
+            httpResponse.add("X-COOL-Clipboard", "true");
+            httpResponse.set("Connection", "close");
+            socket->send(httpResponse);
 
             if (!empty)
             {
-                oss.write(&payload->data()[header], payload->size() - header);
                 socket->setSocketBufferSize(
                     std::min(payload->size() + 256, std::size_t(Socket::MaximumSendBufferSize)));
+                socket->send(&payload->data()[header], payload->size() - header);
             }
 
-            socket->send(oss.str());
             socket->shutdown();
             LOG_INF("Queued " << (empty?"empty":"clipboard") << " response for send.");
         }

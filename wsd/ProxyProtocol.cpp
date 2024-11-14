@@ -25,10 +25,11 @@
 #include "ProxyProtocol.hpp"
 #include "Exceptions.hpp"
 #include "COOLWSD.hpp"
+#include <common/Util.hpp>
 #include <Socket.hpp>
 
-#include <atomic>
 #include <cassert>
+#include <string>
 
 void DocumentBroker::handleProxyRequest(
     const std::string& id,
@@ -56,16 +57,13 @@ void DocumentBroker::handleProxyRequest(
         const std::string &sessionId = clientSession->getOrCreateProxyAccess();
         LOG_TRC("proxy: Returning sessionId " << sessionId);
 
-        std::ostringstream oss;
-        oss << "HTTP/1.1 200 OK\r\n"
-            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            "Content-Length: " << sessionId.size() << "\r\n"
-            "Content-Type: application/json; charset=utf-8\r\n"
-            "X-Content-Type-Options: nosniff\r\n"
-            "Connection: close\r\n"
-            "\r\n" << sessionId;
+        http::Response httpResponse(http::StatusCode::OK);
+        httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+        httpResponse.add("X-Content-Type-Options", "nosniff");
+        httpResponse.set("Connection", "close");
+        httpResponse.setBody(sessionId, "application/json; charset=utf-8");
 
-        socket->send(oss.str());
+        socket->send(httpResponse);
         socket->shutdown();
         return;
     }
@@ -213,12 +211,12 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
         {
             // FIXME: we should really wait around a bit.
             LOG_TRC("Nothing to send - closing immediately");
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-                "Content-Length: " << 0 << "\r\n"
-                "\r\n";
-            streamSocket->send(oss.str());
+
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+            httpResponse.add("X-Content-Type-Options", "nosniff");
+            httpResponse.set("Content-Length", "0");
+            streamSocket->send(httpResponse);
         }
         else
             LOG_TRC("Returned a reply immediately");
@@ -340,14 +338,12 @@ bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &soc
 
     LOG_TRC("proxy: flushQueue of size " << totalSize << " to socket #" << socket->getFD() << " & close");
 
-    std::ostringstream oss;
-    oss << "HTTP/1.1 200 OK\r\n"
-        "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-        "Content-Length: " << totalSize << "\r\n"
-        "Content-Type: application/json; charset=utf-8\r\n"
-        "X-Content-Type-Options: nosniff\r\n"
-        "\r\n";
-    socket->send(oss.str());
+    http::Response httpResponse(http::StatusCode::OK);
+    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+    httpResponse.add("X-Content-Type-Options", "nosniff");
+    httpResponse.set("Content-Length", std::to_string(totalSize));
+    httpResponse.set("Content-Type", "application/json; charset=utf-8");
+    socket->send(httpResponse);
 
     for (const auto& it : _writeQueue)
         socket->send(it->data(), it->size(), false);
