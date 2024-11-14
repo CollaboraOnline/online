@@ -296,7 +296,6 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             std::ostringstream oss;
             oss << "HTTP/1.1 403 Forbidden\r\n"
                 << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                << "User-Agent: " << http::getAgentString() << "\r\n"
                 << "Content-Length: 0\r\n"
                 << "Connection: close\r\n"
                 << "\r\n";
@@ -406,7 +405,6 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
                 << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                << "User-Agent: " << http::getAgentString() << "\r\n"
                 << "Content-Length: 0\r\n"
                 << "Connection: close\r\n"
                 << "\r\n";
@@ -2130,7 +2128,6 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             // The custom header for the clipboard of a living document.
             oss << "HTTP/1.1 200 OK\r\n"
                 << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-                << "User-Agent: " << http::getAgentString() << "\r\n"
                 << "Content-Length: " << (empty ? 0 : (payload->size() - header)) << "\r\n"
                 << "Content-Type: application/octet-stream\r\n"
                 << "X-Content-Type-Options: nosniff\r\n"
