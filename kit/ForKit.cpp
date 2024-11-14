@@ -58,6 +58,8 @@ static bool NoSeccomp = false;
 static bool SingleKit = false;
 #endif
 
+static int parentPid;
+
 static std::string UserInterface;
 
 static bool DisplayVersion = false;
@@ -914,7 +916,7 @@ int forkit_main(int argc, char** argv)
         Util::forcedExit(EX_SOFTWARE);
     }
 
-    const int parentPid = getppid();
+    parentPid = getppid();
     LOG_INF("ForKit process is ready. Parent: " << parentPid);
 
     while (!SigUtil::getShutdownRequestFlag())
