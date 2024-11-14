@@ -55,15 +55,23 @@ class PresenterConsole {
                                 <main id="main-content">
                                   <div id="presentation-content">
                                      <div id="first-presentation">
-                                         <div id="title-current">${labels[0]}</div>
-										 <div id="timer-container">
-											 <div id="timer"></div>
-											 <div id="today"></div>
-										 </div>
-                                         <div id='current-slide-container'>
+										<div id="timer-container">
+											<div id="timer"></div>
+											 <div id="timer-controls">
+												<button type="button" id="pause" disabled>
+													<img src="images/presenterscreen-ButtonPauseTimerNormal.svg">
+												</button>
+												<button type="button" id="restart" disabled>
+													<img src="images/presenterscreen-ButtonRestartTimerNormal.svg">
+												</button>
+											 </div>
+											<div id="today"></div>
+										</div>
+                                        <div id='current-slide-container'>
                                             <canvas id="current-presentation"></canvas>
-                                         </div>
-                                     </div>
+                                        </div>
+										<div id="title-current">${labels[0]}</div>
+										</div>
                                      <div id="second-presentation">
                                          <div id="title-next">${labels[1]}</div>
                                          <div id='next-slide-container'>
@@ -87,15 +95,6 @@ class PresenterConsole {
 									<button type="button" id="slides" disabled>
 										<img src="images/presenterscreen-ButtonSlideSorterNormal.png">
 										<label>${labels[5]}</label>
-									</button>
-									<div id="separator"></div>
-									<button type="button" id="pause" disabled>
-										<img src="images/presenterscreen-ButtonPauseTimerNormal.png">
-										<label>${labels[6]}</label>
-									</button>
-									<button type="button" id="restart" disabled>
-										<img src="images/presenterscreen-ButtonRestartTimerNormal.png">
-										<label>${labels[7]}</label>
 									</button>
 									<div id="separator"></div>
 									<button type="button" id="help" disabled>
@@ -342,7 +341,7 @@ class PresenterConsole {
 			list[elem].style.alignItems = 'center';
 			list[elem].style.backgroundColor = 'transparent';
 			list[elem].style.border = 'none';
-			list[elem].style.color = 'white';
+			list[elem].style.color = slideShowColor;
 		}
 
 		list = this._proxyPresenter.document.querySelectorAll('[id=separator]');
@@ -358,14 +357,38 @@ class PresenterConsole {
 		elem.style.display = 'flex';
 		elem.style.alignItems = 'center';
 		elem.style.width = '100%';
+		elem.style.gap = '15px';
+
+		elem = this._proxyPresenter.document.querySelector('#timer');
+		elem.style.fontSize = '22px';
+		elem.style.color = slideShowColor;
+
+		let timeControlElem =
+			this._proxyPresenter.document.querySelector('#timer-controls');
+		timeControlElem.style.display = 'flex';
+		timeControlElem.style.alignItems = 'center';
+		timeControlElem.style.gap = '5px';
+
+		timeControlElem.addEventListener(
+			'click',
+			L.bind(this._onToolbarClick, this),
+		);
+
+		// Style buttons in slideshow control container
+		const buttons = timeControlElem.querySelectorAll('button');
+		buttons.forEach((button) => {
+			button.style.display = 'flex';
+			button.style.flexDirection = 'column';
+			button.style.alignItems = 'center';
+			button.style.justifyContent = 'center';
+			button.style.backgroundColor = 'transparent';
+			button.style.borderColor = slideShowColor;
+		});
 
 		elem = this._proxyPresenter.document.querySelector('#today');
 		elem.style.textAlign = 'right';
 		elem.style.fontSize = '22px';
-		elem.style.color = slideShowColor;
-
-		elem = this._proxyPresenter.document.querySelector('#timer');
-		elem.style.fontSize = '22px';
+		elem.style.marginLeft = 'auto';
 		elem.style.color = slideShowColor;
 
 		this._ticks = 0;
@@ -376,9 +399,12 @@ class PresenterConsole {
 	}
 
 	_pauseButton() {
-		let elem = this._proxyPresenter.document.querySelector('#pause>label');
-		if (elem) {
-			elem.innerText = this._pause ? _('Resume') : _('Pause');
+		// Update the image source
+		let imgElem = this._proxyPresenter.document.querySelector('#pause>img');
+		if (imgElem) {
+			imgElem.src = this._pause
+				? 'images/presenterscreen-ButtonResumeTimerNormal.svg'
+				: 'images/presenterscreen-ButtonPauseTimerNormal.svg';
 		}
 	}
 
