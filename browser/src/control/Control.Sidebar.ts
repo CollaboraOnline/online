@@ -93,6 +93,10 @@ class Sidebar {
 			return;
 		}
 
+		if (this.getTargetDeck() === this.commandForDeck('NavigatorDeck')) {
+			this.markNavigatorTreeView(data.control);
+		}
+
 		this.builder.updateWidget(this.container, data.control);
 	}
 
@@ -188,8 +192,16 @@ class Sidebar {
 				if (
 					sidebarData.children[i].type !== 'deck' ||
 					sidebarData.children[i].visible === false
-				)
+				) {
 					sidebarData.children.splice(i, 1);
+				}
+
+				if (
+					typeof sidebarData.children[i].id === 'string' &&
+					sidebarData.children[i].id.startsWith('Navigator')
+				) {
+					this.markNavigatorTreeView(sidebarData);
+				}
 			}
 
 			if (sidebarData.children.length) {
@@ -228,6 +240,23 @@ class Sidebar {
 				this.closeSidebar();
 			}
 		}
+	}
+
+	markNavigatorTreeView(data: WidgetJSON): boolean {
+		if (!data) return false;
+
+		if (data.type === 'treelistbox') {
+			(data as TreeWidget).draggable = false;
+			return true;
+		}
+
+		for (const i in data.children) {
+			if (this.markNavigatorTreeView(data.children[i])) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
 

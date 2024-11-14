@@ -61,7 +61,6 @@
 declare var JSDialog: any;
 
 // TODO: remove this hack
-var treeType = '';
 var lastClickHelperRow: string | number = -1;
 var lastClickHelperId = '';
 // TODO: remove this hack
@@ -406,7 +405,7 @@ class TreeViewControl {
 		builder: any,
 	) {
 		if (treeViewData.enabled !== false && entry.state == null) {
-			tr.draggable = treeType === 'navigator' ? false : true;
+			tr.draggable = treeViewData.draggable === false ? false : true;
 
 			tr.ondragstart = (ev) => {
 				ev.dataTransfer.setData('text', '' + entry.row);
@@ -1142,24 +1141,8 @@ JSDialog.treeView = function (
 	data: TreeWidget,
 	builder: any,
 ) {
-	// TODO: remove this hack
-	// var id = data.parent
-	// 	? data.parent.parent
-	// 		? data.parent.parent.parent
-	// 			? data.parent.parent.parent.id
-	// 				? data.parent.parent.parent.id
-	// 				: null
-	// 			: null
-	// 		: null
-	// 	: null;
-	// if (id && typeof id === 'string' && id.startsWith('Navigator'))
-	// 	treeType = 'navigator';
-	// TODO: remove this hack
-
 	var factory = new TreeViewFactory(data, builder);
 	factory.build(data, builder, parentContainer);
-
-	treeType = '';
 
 	return false;
 };
