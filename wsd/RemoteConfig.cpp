@@ -556,6 +556,291 @@ void RemoteConfigPoll::handleOptions(const Poco::JSON::Object::Ptr& remoteJson)
     }
 }
 
+bool RemoteAssetConfigPoll::getNewAssets(const Poco::JSON::Object::Ptr& remoteJson,
+                                         const std::string& assetJsonKey,
+                                         std::map<std::string, AssetData>& assets)
+{
+    // First mark all assets we have downloaded previously as "inactive" to be able to check if
+    // some asset gets deleted from the list in the JSON file.
+    for (auto& it : assets)
+        it.second.active = false;
+
+    bool reDownloadConfig = false;
+    auto assetsPtr = remoteJson->getArray(assetJsonKey);
+    if (!assetsPtr)
+    {
+        LOG_WRN("The [" + assetJsonKey + "] property does not exist or is not an array");
+        return reDownloadConfig;
+    }
+
+    for (std::size_t i = 0; i < assetsPtr->size(); i++)
+    {
+        if (!assetsPtr->isObject(i))
+            LOG_WRN("Element " << i << " in " << assetJsonKey << " array is not an object");
+        else
+        {
+            const auto assetPtr = assetsPtr->getObject(i);
+            const auto uriPtr = assetPtr->get("uri");
+            if (uriPtr.isEmpty() || !uriPtr.isString())
+                LOG_WRN("Element in " << assetJsonKey
+                                      << " array does not have an 'uri' property or it is not a "
+                                         "string");
+            else
+            {
+                const std::string uri = uriPtr.toString();
+                const auto stampPtr = assetPtr->get("stamp");
+
+                if (!stampPtr.isEmpty() && !stampPtr.isString())
+                    LOG_WRN("Element in "
+                            << assetJsonKey << "array with uri '" << uri
+                            << "' has a stamp property that is not a string, ignored");
+                else if (assets.count(uri) == 0)
+                {
+                    // First case: This asset has not been downloaded.
+                    if (!stampPtr.isEmpty())
+                    {
+                        if (downloadPlain(uri, assets, assetJsonKey))
+                        {
+                            assets[uri].stamp = stampPtr.toString();
+                            assets[uri].active = true;
+                        }
+                    }
+                    else
+                    {
+                        if (downloadWithETag(uri, "", assets, assetJsonKey))
+                        {
+                            assets[uri].active = true;
+                        }
+                    }
+                }
+                else if (!stampPtr.isEmpty() && stampPtr.toString() != assets[uri].stamp)
+                {
+                    // Second case: asset has been downloaded already, has a "stamp" property,
+                    // and that has been changed in the JSON since it was downloaded.
+                    reDownloadConfig = true;
+                    // restartForKitAndReDownloadConfigFile();
+                    break;
+                }
+                else if (!stampPtr.isEmpty())
+                {
+                    // Third case: asset has been downloaded already, has a "stamp" property, and
+                    // that has *not* changed in the JSON since it was downloaded.
+                    assets[uri].active = true;
+                }
+                else
+                {
+                    // Last case: Asset has been downloaded but does not have a "stamp" property.
+                    // Use ETag.
+                    if (!eTagUnchanged(uri, assets[uri].eTag))
+                    {
+                        reDownloadConfig = true;
+                        // restartForKitAndReDownloadConfigFile();
+                        break;
+                    }
+                    assets[uri].active = true;
+                }
+            }
+        }
+    }
+
+    // Any asset that has been deleted from the JSON needs to be removed on this side, too.
+    for (const auto& it : assets)
+    {
+        if (!it.second.active)
+        {
+            LOG_DBG("Asset no longer mentioned in the remote font config: " << it.first);
+            reDownloadConfig = true;
+            // restartForKitAndReDownloadConfigFile();
+            break;
+        }
+    }
+    return reDownloadConfig;
+}
+
+void RemoteAssetConfigPoll::reDownloadConfigFile(std::map<std::string, AssetData>& assets,
+                                                 bool restartForKit)
+{
+    LOG_DBG("Downloaded asset has been updated or a asset has been removed.");
+    assets.clear();
+    // Clear the saved ETag of the remote font configuration file so that it will be
+    // re-downloaded, and all fonts mentioned in it re-downloaded and fed to ForKit.
+    _eTagValue.clear();
+    if (restartForKit)
+    {
+        LOG_DBG("ForKit must be restarted.");
+        COOLWSD::sendMessageToForKit("exit");
+    }
+}
+
+void RemoteAssetConfigPoll::handleJSON(const Poco::JSON::Object::Ptr& remoteJson)
+{
+    bool reDownloadFontConfig = getNewAssets(remoteJson, "fonts", fonts);
+    bool reDownloadTemplateConfig = getNewAssets(remoteJson, "templates", templates);
+
+    if (reDownloadFontConfig)
+        reDownloadConfigFile(fonts, true);
+    if (reDownloadTemplateConfig)
+        reDownloadConfigFile(templates, false);
+}
+
+bool RemoteAssetConfigPoll::handleUnchangedAssets(std::map<std::string, AssetData>& assets)
+{
+    bool reDownloadConfig = false;
+
+    // Iterate over the assets that were mentioned in the JSON file when it was last downloaded.
+    for (auto& it : assets)
+    {
+        // If the JSON has a "stamp" for the asset, and we have already downloaded it, by
+        // definition we don't need to do anything when the JSON file has not changed.
+        if (it.second.stamp != "" && it.second.pathName != "")
+            continue;
+
+        // If the JSON has a "stamp" it must have been downloaded already. Should we even
+        // assert() that?
+        if (it.second.stamp != "" && it.second.pathName == "")
+        {
+            LOG_WRN("Asset at " << it.first << " was not downloaded, should have been");
+            continue;
+        }
+
+        // Otherwise use the ETag to check if the asset file needs re-downloading.
+        if (!eTagUnchanged(it.first, it.second.eTag))
+        {
+            reDownloadConfig = true;
+            // restartForKitAndReDownloadConfigFile();
+            break;
+        }
+    }
+    return reDownloadConfig;
+}
+
+void RemoteAssetConfigPoll::handleUnchangedJSON()
+{
+    bool reDownloadFontConfig = handleUnchangedAssets(fonts);
+    bool reDownloadTemplateConfig = handleUnchangedAssets(templates);
+
+    if (reDownloadFontConfig)
+        reDownloadConfigFile(fonts, true);
+    if (reDownloadTemplateConfig)
+        reDownloadConfigFile(templates, false);
+}
+
+bool RemoteAssetConfigPoll::downloadPlain(const std::string& uri,
+                                          std::map<std::string, AssetData>& assets,
+                                          const std::string& assetType)
+{
+    const Poco::URI assetUri{ uri };
+    std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(assetUri));
+    http::Request request(assetUri.getPathAndQuery());
+
+    request.set("User-Agent", http::getAgentString());
+
+    const std::shared_ptr<const http::Response> httpResponse = httpSession->syncRequest(request);
+
+    return finishDownload(uri, httpResponse, assets, assetType);
+}
+
+bool RemoteAssetConfigPoll::eTagUnchanged(const std::string& uri, const std::string& oldETag)
+{
+    const Poco::URI assetUri{ uri };
+    std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(assetUri));
+    http::Request request(assetUri.getPathAndQuery());
+
+    if (!oldETag.empty())
+    {
+        request.set("If-None-Match", oldETag);
+    }
+
+    request.set("User-Agent", http::getAgentString());
+
+    const std::shared_ptr<const http::Response> httpResponse = httpSession->syncRequest(request);
+
+    if (httpResponse->statusLine().statusCode() == http::StatusCode::NotModified)
+    {
+        LOG_DBG("Not modified since last time: " << uri);
+        return true;
+    }
+
+    return false;
+}
+
+bool RemoteAssetConfigPoll::downloadWithETag(const std::string& uri, const std::string& oldETag,
+                                             std::map<std::string, AssetData>& assets,
+                                             const std::string& assetType)
+{
+    const Poco::URI assetUri{ uri };
+    std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(assetUri));
+    http::Request request(assetUri.getPathAndQuery());
+
+    if (!oldETag.empty())
+    {
+        request.set("If-None-Match", oldETag);
+    }
+
+    request.set("User-Agent", http::getAgentString());
+
+    const std::shared_ptr<const http::Response> httpResponse = httpSession->syncRequest(request);
+
+    if (httpResponse->statusLine().statusCode() == http::StatusCode::NotModified)
+    {
+        LOG_DBG("Not modified since last time: " << uri);
+        return true;
+    }
+
+    if (!finishDownload(uri, httpResponse, assets, assetType))
+        return false;
+
+    assets[uri].eTag = httpResponse->get("ETag");
+    return true;
+}
+
+bool RemoteAssetConfigPoll::finishDownload(
+    const std::string& uri, const std::shared_ptr<const http::Response>& httpResponse,
+    std::map<std::string, AssetData>& assets, const std::string& assetType)
+{
+    if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+    {
+        LOG_WRN("Could not fetch " << uri);
+        return false;
+    }
+
+    const std::string& body = httpResponse->getBody();
+
+    // We intentionally use a new file name also when an updated version of a font is
+    // downloaded. It causes trouble to rewrite the same file, in case it is in use in some Kit
+    // process at the moment.
+
+    // We don't remove the old file either as that also causes problems.
+
+    // And in reality, it is a bit unclear how likely it even is that assets downloaded through
+    // this mechanism even will be updated.
+    std::string assetFile;
+    if (assetType == "fonts")
+        assetFile += COOLWSD::TmpFontDir + '/' + Util::encodeId(Util::rng::getNext()) + ".ttf";
+    else if (assetType == "templates")
+        assetFile += COOLWSD::TmpTemplateDir + '/' + Util::encodeId(Util::rng::getNext()) + ".otp";
+
+    std::ofstream assetStream(assetFile);
+    assetStream.write(body.data(), body.size());
+    if (!assetStream.good())
+    {
+        LOG_ERR("Could not write " << body.size() << " bytes to [" << assetFile << ']');
+        return false;
+    }
+
+    LOG_DBG("Got " << body.size() << " bytes from [" << uri << "] and wrote to [" << assetFile
+                   << ']');
+
+    assets[uri].pathName = assetFile;
+
+    if (assetType == "fonts")
+        COOLWSD::sendMessageToForKit("addfont " + assetFile);
+
+    COOLWSD::requestTerminateSpareKits();
+
+    return true;
+}
+
 void RemoteFontConfigPoll::handleJSON(const Poco::JSON::Object::Ptr& remoteJson)
 {
     // First mark all fonts we have downloaded previously as "inactive" to be able to check if

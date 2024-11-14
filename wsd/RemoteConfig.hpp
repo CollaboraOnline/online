@@ -22,6 +22,8 @@
 
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
+#include <Poco/JSON/Object.h>
+#include <map>
 
 #include <string>
 
@@ -112,6 +114,66 @@ public:
 private:
     // keeps track of remote config layer
     Poco::AutoPtr<AppConfigMap> _persistConfig = nullptr;
+};
+
+class RemoteAssetConfigPoll : public RemoteJSONPoll
+{
+public:
+    RemoteAssetConfigPoll(Poco::Util::LayeredConfiguration& config)
+        : RemoteJSONPoll(config, "remote_asset_config.url", "remoteassetconfig_poll",
+                         "assetconfiguration")
+    {
+    }
+
+    void handleJSON(const Poco::JSON::Object::Ptr& remoteJson) override;
+
+    void handleUnchangedJSON() override;
+
+private:
+    bool eTagUnchanged(const std::string& uri, const std::string& oldETag);
+
+    struct AssetData
+    {
+        // Each asset can have a "stamp" in the JSON that we treat just as a string. In practice it
+        // can be some timestamp, but we don't parse it. If the stamp is changed, we re-download the
+        // asset file.
+        std::string stamp;
+
+        // If the asset has no "stamp" property, we use the ETag mechanism to see if the font file
+        // needs to be re-downloaded.
+        std::string eTag;
+
+        // Where the asset has been stored
+        std::string pathName;
+
+        // Flag that tells whether the asset is mentioned in the JSON file that is being handled.
+        // Used only in handleJSON() when the JSON has been (re-)downloaded, not when the JSON was
+        // unchanged in handleUnchangedJSON().
+        bool active;
+    };
+
+    bool downloadPlain(const std::string& uri, std::map<std::string, AssetData>& assets,
+                       const std::string& assetType);
+
+    bool finishDownload(const std::string& uri,
+                        const std::shared_ptr<const http::Response>& httpResponse,
+                        std::map<std::string, AssetData>& assets, const std::string& assetType);
+
+    bool downloadWithETag(const std::string& uri, const std::string& oldETag,
+                          std::map<std::string, AssetData>& assets, const std::string& assetType);
+
+    bool getNewAssets(const Poco::JSON::Object::Ptr& remoteJson, const std::string& assetJsonKey,
+                      std::map<std::string, AssetData>& assets);
+
+    void reDownloadConfigFile(std::map<std::string, AssetData>& assets, bool restartForKit);
+
+    bool handleUnchangedAssets(std::map<std::string, AssetData>& assets);
+
+    // The key of this map is the download URI of the font.
+    std::map<std::string, AssetData> fonts;
+
+    // The key of this map is the download URI of the template.
+    std::map<std::string, AssetData> templates;
 };
 
 class RemoteFontConfigPoll : public RemoteJSONPoll

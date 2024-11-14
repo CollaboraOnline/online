@@ -3694,12 +3694,12 @@ int COOLWSD::innerMain()
         LOG_DBG("No remote_font_config");
     }
 
-    std::unique_ptr<RemoteTemplateConfigPoll> remoteTemplateConfigThread;
+    std::unique_ptr<RemoteAssetConfigPoll> remoteAssetConfigThread;
     try
     {
         // Fetch font settings from server if configured
-        remoteTemplateConfigThread = std::make_unique<RemoteTemplateConfigPoll>(config());
-        remoteTemplateConfigThread->start();
+        remoteAssetConfigThread = std::make_unique<RemoteAssetConfigPoll>(config());
+        remoteAssetConfigThread->start();
     }
     catch (const Poco::Exception&)
     {
