@@ -511,19 +511,28 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: none !important;
 }
 
-.ui-treeview-entry {
-	display: inline-flex !important;
+/* real tree requires spacing - inline-flex, headers require synchronized grid */
+.ui-treeview:not(.ui-treeview-tree) .ui-treeview-entry {
+	display: grid;
+	grid-template-columns: subgrid;
+}
+
+.ui-treeview.ui-treeview-tree .ui-treeview-entry {
+	display: inline-flex;
 	width: 100%;
 }
 
 .ui-treeview-entry,
 .ui-treeview-expanded-content {
-	display: grid;
 	grid-auto-flow: column;
 	/* grid-column: '1 / ' + (this._columns + 1) - set inside JS */
 	justify-content: stretch;
 	align-items: start;
 	white-space: nowrap;
+}
+
+.ui-treeview-expanded-content {
+	display: grid;
 }
 
 .ui-treeview-entry > div.ui-treeview-expander-column {
@@ -540,8 +549,9 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-treeview-headers {
 	white-space: nowrap;
-	display: inline-flex;
-	grid-column: 1 / 6;
+	display: grid;
+	grid-auto-flow: column;
+	/* grid-column: '1 / ' + (this._columns + 1) - set inside JS */
 }
 
 .ui-treeview-header {
