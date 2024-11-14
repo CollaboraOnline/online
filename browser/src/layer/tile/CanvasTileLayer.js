@@ -731,7 +731,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (window.Worker && !window.ThisIsAMobileApp) {
 			window.app.console.info('Creating CanvasTileWorker');
-			this._worker = new Worker('src/layer/tile/CanvasTileWorker.js');
+			this._worker = new Worker('src/layer/tile/TileWorker.js');
 			this._worker.addEventListener('message', (e) => this._onWorkerMessage(e));
 			this._worker.addEventListener('error', (e) => this._disableWorker(e));
 		}
