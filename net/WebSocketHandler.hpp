@@ -151,8 +151,6 @@ public:
         onConnect(socket);
 
         req.set("Host", hostAndPort); // Make sure the host is set.
-        req.set("Date", Util::getHttpTimeNow());
-        req.set("User-Agent", http::getAgentString());
 
         req.header().setConnectionToken(http::Header::ConnectionToken::Upgrade);
         req.set("Upgrade", "websocket");
