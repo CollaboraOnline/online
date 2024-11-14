@@ -160,6 +160,10 @@ class LayersCompositor extends SlideCompositor {
 	public isSlideShowPlaying() {
 		return this._slideShowPresenter._checkAlreadyPresenting();
 	}
+
+	public deleteResources() {
+		this.layerDrawing.deleteResources();
+	}
 }
 
 SlideShow.LayersCompositor = LayersCompositor;
