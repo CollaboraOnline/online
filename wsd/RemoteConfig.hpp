@@ -165,9 +165,12 @@ private:
     bool getNewAssets(const Poco::JSON::Object::Ptr& remoteJson, const std::string& assetJsonKey,
                       std::map<std::string, AssetData>& assets);
 
-    void reDownloadConfigFile(std::map<std::string, AssetData>& assets, bool restartForKit);
+    void reDownloadConfigFile(std::map<std::string, AssetData>& assets,
+                              const std::string& assetType);
 
     bool handleUnchangedAssets(std::map<std::string, AssetData>& assets);
+
+    std::string removeTemplate(const std::string& uri);
 
     // The key of this map is the download URI of the font.
     std::map<std::string, AssetData> fonts;
