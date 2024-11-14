@@ -104,16 +104,39 @@ interface TextWidget extends WidgetJSON {
 	text: string;
 }
 
+interface TreeColumnJSON {
+	text?: any;
+	link?: string;
+	collapsed?: string | boolean;
+	expanded?: string | boolean;
+	collapsedimage?: string;
+	expandedimage?: string;
+}
+
 interface TreeEntryJSON {
 	row: number | string; // unique id of the entry
 	text: string; // deprecated: simple text for an entry
-	columns: Array<{ text: any } | { collapsed: string }>; // entry data
+	state: boolean; // checked radio/checkbox or not
+	enabled: boolean; // enabled entry or not
+	selected: boolean; // is entry selected
+	collapsed: boolean; // is entry collapsed
+	ondemand: boolean; // has content to request
+	columns: Array<TreeColumnJSON>; // entry data
+	children: Array<TreeEntryJSON>;
 }
+
+interface TreeHeaderJSON {
+	text: string;
+}
+
 interface TreeWidget extends WidgetJSON {
 	text: string;
 	singleclickactivate: boolean; // activates element on single click instead of just selection
-	fireKeyEvents: boolean;
+	fireKeyEvents: boolean; // do we sent key events to core
+	hideIfEmpty: boolean; // hide the widget if no entries available
+	checkboxtype: string; // radio or checkbox
 	entries: Array<TreeEntryJSON>;
+	headers: Array<TreeHeaderJSON>; // header columns
 }
 
 interface IconViewEntry {

@@ -391,7 +391,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.ScrolledWindow.js \
 	src/control/jsdialog/Widget.SidebarContainers.ts \
 	src/control/jsdialog/Widget.Timefield.js \
-	src/control/jsdialog/Widget.TreeView.js \
+	src/control/jsdialog/Widget.TreeView.ts \
 	src/control/Control.JSDialog.js \
 	src/control/Control.JSDialogBuilder.js \
 	src/control/Control.MobileWizardBuilder.js \
@@ -990,7 +990,7 @@ pot:
 		src/control/jsdialog/Widget.ScrolledWindow.js \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
 		src/control/jsdialog/Widget.Timefield.js \
-		src/control/jsdialog/Widget.TreeView.js \
+		src/control/jsdialog/Widget.TreeView.ts \
 		src/slideshow/SlideCache.ts \
 		src/slideshow/SlideCompositor.ts \
 		src/slideshow/LayerRenderer.ts \
