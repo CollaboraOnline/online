@@ -174,6 +174,10 @@ class PresenterConsole {
 			return;
 		}
 
+		this._map.fire('enablecommand', {
+			controlId: 'view-presentation-in-console',
+			enable: false,
+		});
 		this._map.off('newpresentinconsole', this._onPresentInConsole, this);
 
 		this._proxyPresenter.document.open();
@@ -700,6 +704,10 @@ class PresenterConsole {
 		this._map.off('transitionend', this._onTransitionEnd, this);
 		this._map.off('tilepreview', this._onTilePreview, this);
 		this._map.on('newpresentinconsole', this._onPresentInConsole, this);
+		this._map.fire('enablecommand', {
+			controlId: 'view-presentation-in-console',
+			enable: true,
+		});
 	}
 
 	_onResize() {
