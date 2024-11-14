@@ -56,6 +56,10 @@ class PresenterConsole {
                                   <div id="presentation-content">
                                      <div id="first-presentation">
                                          <div id="title-current">${labels[0]}</div>
+										 <div id="timer-container">
+											 <div id="timer"></div>
+											 <div id="today"></div>
+										 </div>
                                          <div id='current-slide-container'>
                                             <canvas id="current-presentation"></canvas>
                                          </div>
@@ -255,7 +259,7 @@ class PresenterConsole {
 		elem.style.flexDirection = 'column';
 		elem.style.flex = '1';
 		// consistent gap between label and presentation preview
-		elem.style.gap = '2vh';
+		elem.style.gap = '1vh';
 		elem.style.marginTop = '5vw';
 		elem.style.marginLeft = '2vw';
 
@@ -282,7 +286,7 @@ class PresenterConsole {
 		elem.style.alignItems = 'center';
 		elem.style.flex = '1';
 		// consistent gap between label and presentation preview
-		elem.style.gap = '2vh';
+		elem.style.gap = '1vh';
 		elem.style.marginTop = '5vw';
 
 		elem = this._proxyPresenter.document.querySelector('#title-next');
@@ -356,9 +360,13 @@ class PresenterConsole {
 
 		elem = this._proxyPresenter.document.querySelector('#timer-container');
 		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
+		elem.style.justifyContent = 'space-between';
+		elem.style.alignItems = 'center';
+		elem.style.color = 'white';
+		elem.style.width = '100%';
 
 		elem = this._proxyPresenter.document.querySelector('#today');
+		elem.style.textAlign = 'right';
 		elem.style.fontSize = 'large';
 		elem.style.fontWeight = 'bold';
 		elem.style.color = 'white';
@@ -633,7 +641,7 @@ class PresenterConsole {
 		let dateTime = new Date();
 		elem = this._proxyPresenter.document.querySelector('#today');
 		if (elem) {
-			elem.innerText = dateTime.toLocaleDateString(String.Locale, {
+			elem.innerText = dateTime.toLocaleTimeString(String.Locale, {
 				hour: '2-digit',
 				minute: '2-digit',
 				second: '2-digit',
