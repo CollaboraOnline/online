@@ -981,7 +981,9 @@ class PresenterConsole {
 
 	_onNextFrame(e) {
 		const bitmap = e.frame;
-		if (!bitmap) return;
+		if (!bitmap) {
+			return;
+		}
 
 		// We need to resize the frame to the current slide canvas size explicitly.
 		// In fact, in Firefox transferFromImageBitmap does not resize it
@@ -993,9 +995,17 @@ class PresenterConsole {
 		createImageBitmap(bitmap, {
 			resizeWidth: this._currentSlideCanvas.width,
 			resizeHeight: this._currentSlideCanvas.height,
-		}).then((image) => {
-			this._currentSlideContext.transferFromImageBitmap(image);
-		});
+		}).then(
+			function (image) {
+				if (this._proxyPresenter) {
+					this._proxyPresenter.requestAnimationFrame(
+						function (context, image) {
+							context.transferFromImageBitmap(image);
+						}.bind(null, this._currentSlideContext, image),
+					);
+				}
+			}.bind(this),
+		);
 	}
 
 	_onTilePreview(e) {
