@@ -34,7 +34,6 @@ class PresenterConsole {
 			_('Slides'),
 			_('Pause'),
 			_('Restart'),
-			_('Exchange'),
 			_('Help'),
 			_('Exit'),
 		];
@@ -97,19 +96,14 @@ class PresenterConsole {
 										<label>${labels[7]}</label>
 									</button>
 									<div id="separator"></div>
-									<button type="button" id="exchange" disabled>
-										<img src="images/presenterscreen-ButtonSwitchMonitorNormal.png">
-										<label>${labels[8]}</label>
-									</button>
-									<div id="separator"></div>
 									<button type="button" id="help" disabled>
 										<img src="images/presenterscreen-ButtonHelpNormal.png">
-										<label>${labels[9]}</label>
+										<label>${labels[8]}</label>
 									</button>
 									<div id="separator"></div>
 									<button type="button" id="exit" disabled>
 										<img src="images/presenterscreen-ButtonExitPresenterNormal.png">
-										<label>${labels[10]}</label>
+										<label>${labels[9]}</label>
 									</button>
                                   </div>
                                 </main>
@@ -412,9 +406,6 @@ class PresenterConsole {
 			case 'pause':
 				this._pause = !this._pause;
 				this._pauseButton();
-				break;
-			case 'exchange':
-				this._presenter._slideShowWindowProxy.focus();
 				break;
 			case 'restart':
 				this._pause = false;
