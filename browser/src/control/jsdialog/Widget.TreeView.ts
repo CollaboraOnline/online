@@ -77,8 +77,8 @@ class TreeViewControl {
 	_singleClickActivate: boolean;
 	_filterTimer: ReturnType<typeof setTimeout>;
 
-	constructor(data: TreeWidget, builder: any, isRealTree: boolean) {
-		this._isRealTree = isRealTree;
+	constructor(data: TreeWidget, builder: any) {
+		this._isRealTree = this.isRealTree(data);
 		this._container = L.DomUtil.create(
 			'div',
 			builder.options.cssClass + ' ui-treeview',
@@ -96,8 +96,7 @@ class TreeViewControl {
 		this.setupDragAndDrop(data, builder);
 		this.setupKeyEvents(data, builder);
 
-		this._isRealTree = isRealTree;
-		if (isRealTree) {
+		if (this._isRealTree) {
 			this._container.setAttribute('role', 'treegrid');
 			if (!data.headers || data.headers.length === 0)
 				L.DomUtil.addClass(this._container, 'ui-treeview-tree');
@@ -925,15 +924,6 @@ class TreeViewControl {
 			event.stopPropagation();
 		}
 	}
-}
-
-class TreeViewFactory {
-	_implementation: TreeViewControl;
-
-	constructor(data: TreeWidget, builder: any) {
-		const isRealTree = this.isRealTree(data); // has expandable entries
-		this._implementation = new TreeViewControl(data, builder, isRealTree);
-	}
 
 	isRealTree(data: TreeWidget) {
 		let isRealTreeView = false;
@@ -949,33 +939,25 @@ class TreeViewFactory {
 	fillHeaders(headers: Array<TreeHeaderJSON>, builder: any) {
 		if (!headers) return;
 
-		this._implementation._thead = L.DomUtil.create(
+		this._thead = L.DomUtil.create(
 			'div',
 			'ui-treeview-headers',
-			this._implementation._container,
+			this._container,
 		);
 
-		let dummyCells = this._implementation._columns - headers.length;
-		if (this._implementation._hasState) dummyCells++;
-		this._implementation._thead.style.gridColumn =
-			'1 / ' + (this._implementation._columns + dummyCells + 1);
+		let dummyCells = this._columns - headers.length;
+		if (this._hasState) dummyCells++;
+		this._thead.style.gridColumn = '1 / ' + (this._columns + dummyCells + 1);
 
 		for (let index = 0; index < dummyCells; index++) {
-			this._implementation.fillHeader({ text: '' }, builder);
-			if (index === 0 && this._implementation._hasState)
-				L.DomUtil.addClass(
-					this._implementation._thead.lastChild,
-					'ui-treeview-state-column',
-				);
-			else
-				L.DomUtil.addClass(
-					this._implementation._thead.lastChild,
-					'ui-treeview-icon-column',
-				);
+			this.fillHeader({ text: '' }, builder);
+			if (index === 0 && this._hasState)
+				L.DomUtil.addClass(this._thead.lastChild, 'ui-treeview-state-column');
+			else L.DomUtil.addClass(this._thead.lastChild, 'ui-treeview-icon-column');
 		}
 
 		for (const index in headers) {
-			this._implementation.fillHeader(headers[index], builder);
+			this.fillHeader(headers[index], builder);
 
 			var sortByColumn = (columnIndex: number, up: boolean) => {
 				var compareFunction = (a: HTMLElement, b: HTMLElement) => {
@@ -1017,7 +999,7 @@ class TreeViewFactory {
 
 				var toSort: Array<HTMLDivElement> = [];
 
-				const container = this._implementation._container;
+				const container = this._container;
 				container
 					.querySelectorAll(
 						':not(.ui-treeview-expanded-content) .ui-treeview-entry',
@@ -1036,7 +1018,7 @@ class TreeViewFactory {
 
 			var clickFunction = (columnIndex: number, icon: HTMLSpanElement) => {
 				var clearSorting = () => {
-					var icons = this._implementation._thead.querySelectorAll(
+					var icons = this._thead.querySelectorAll(
 						'.ui-treeview-header-sort-icon',
 					);
 					icons.forEach((icon) => {
@@ -1058,7 +1040,7 @@ class TreeViewFactory {
 				};
 			};
 
-			const last = this._implementation._thead.lastChild as HTMLElement;
+			const last = this._thead.lastChild as HTMLElement;
 			last.onclick = clickFunction(
 				parseInt(index),
 				last.querySelector('.ui-treeview-header-sort-icon'),
@@ -1072,15 +1054,14 @@ class TreeViewFactory {
 			var tr = L.DomUtil.create(
 				'div',
 				builder.options.cssClass + ' ui-treview-entry',
-				this._implementation._container,
+				this._container,
 			);
 			tr.innerText = _(
 				'Headings and objects that you add to the document will appear here',
 			);
 		} else {
-			L.DomUtil.addClass(this._implementation._container, 'empty');
-			if (data.hideIfEmpty)
-				L.DomUtil.addClass(this._implementation._container, 'hidden');
+			L.DomUtil.addClass(this._container, 'empty');
+			if (data.hideIfEmpty) L.DomUtil.addClass(this._container, 'hidden');
 		}
 	}
 
@@ -1092,13 +1073,7 @@ class TreeViewFactory {
 		parent: HTMLElement,
 	) {
 		for (const index in entries) {
-			this._implementation.fillRow(
-				data,
-				entries[index],
-				builder,
-				level,
-				parent,
-			);
+			this.fillRow(data, entries[index], builder, level, parent);
 
 			if (entries[index].children && entries[index].children.length) {
 				L.DomUtil.addClass(parent.lastChild, 'ui-treeview-expandable');
@@ -1109,11 +1084,10 @@ class TreeViewFactory {
 				);
 
 				let dummyColumns =
-					this._implementation._columns -
+					this._columns -
 					(entries[index].columns ? entries[index].columns.length : 0);
-				if (this._implementation._hasState) dummyColumns++;
-				subGrid.style.gridColumn =
-					'1 / ' + (this._implementation._columns + dummyColumns + 1);
+				if (this._hasState) dummyColumns++;
+				subGrid.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
 
 				this.fillEntries(
 					data,
@@ -1129,12 +1103,10 @@ class TreeViewFactory {
 	}
 
 	build(data: TreeWidget, builder: any, parentContainer: HTMLElement) {
-		const container = this._implementation ? this._implementation._tbody : null;
-
 		this.fillHeaders(data.headers, builder);
-		this.fillEntries(data, data.entries, builder, 1, container);
+		this.fillEntries(data, data.entries, builder, 1, this._tbody);
 
-		parentContainer.appendChild(this._implementation.Container);
+		parentContainer.appendChild(this._container);
 
 		return true;
 	}
@@ -1145,8 +1117,8 @@ JSDialog.treeView = function (
 	data: TreeWidget,
 	builder: any,
 ) {
-	var factory = new TreeViewFactory(data, builder);
-	factory.build(data, builder, parentContainer);
+	var treeView = new TreeViewControl(data, builder);
+	treeView.build(data, builder, parentContainer);
 
 	return false;
 };
