@@ -540,7 +540,8 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator', id: 'fullscreen-presentation-separator'},
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
 				{name: _('Present current slide'), id: 'presentation-currentslide', type: 'action'},
-				{name: _('Present in new window'), id: 'present-in-window', type: 'action'}]
+				{name: _('Present in new window'), id: 'present-in-window', type: 'action'},
+				{name: _('Presenter Console'), id: 'presentation-in-console', type: 'action'}]
 			},
 			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellDialog'},
@@ -1394,7 +1395,7 @@ L.Control.Menubar = L.Control.extend({
 		$('#main-menu-state').after(this._menubarCont);
 
 		if (!this._map['wopi'].DisablePresentation)
-			this.options.allowedViewModeActions = this.options.allowedViewModeActions.concat(['fullscreen-presentation', 'presentation-currentslide', 'present-in-window']);
+			this.options.allowedViewModeActions = this.options.allowedViewModeActions.concat(['fullscreen-presentation', 'presentation-currentslide', 'present-in-window','presentation-in-console']);
 
 		this._initializeMenu(this.options.initial);
 
@@ -2023,6 +2024,8 @@ L.Control.Menubar = L.Control.extend({
 			app.dispatcher.dispatch('presentation-currentslide');
 		} else if (id === 'present-in-window' && this._map.getDocType() === 'presentation') {
 			app.dispatcher.dispatch('present-in-window');
+		} else if (id === 'presentation-in-console') {
+			app.dispatcher.dispatch('presenterconsole');
 		} else if (id === 'insertpage') {
 			this._map.insertPage();
 		} else if (id === 'insertshape') {
