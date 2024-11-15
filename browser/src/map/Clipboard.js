@@ -1029,6 +1029,7 @@ L.Clipboard = L.Class.extend({
 				this._clipboardSerial++;
 			}
 		} else {
+			this._unoCommandForCopyCutPaste = `.uno:${unoName}`;
 			preventDefault = this.populateClipboard(ev);
 		}
 
