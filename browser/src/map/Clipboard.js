@@ -306,7 +306,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	// Suck the data from one server to another asynchronously ...
-	_dataTransferDownloadAndPasteAsync: async function(src, dest, fallbackHtml) {
+	_dataTransferDownloadAndPasteAsync: async function(src, fallbackHtml) {
 		// FIXME: add a timestamp in the links (?) ignore old / un-responsive servers (?)
 		let response;
 
@@ -340,7 +340,7 @@ L.Clipboard = L.Class.extend({
 			formData.append('data', new Blob([data]), 'clipboard');
 			try {
 				await this._doAsyncDownload(
-					'POST', dest, formData, false,
+					'POST', this.getMetaURL(), formData, false,
 					function(progress) { return 50 + progress/2; },
 				);
 			} catch (_error) {
@@ -354,7 +354,7 @@ L.Clipboard = L.Class.extend({
 		formData.append('data', response, 'clipboard');
 
 		await this._doAsyncDownload(
-			'POST', dest, formData, false,
+			'POST', this.getMetaURL(), formData, false,
 			function(progress) { return 50 + progress/2; }
 		);
 
@@ -427,7 +427,7 @@ L.Clipboard = L.Class.extend({
 		if (meta !== '')
 		{
 			window.app.console.log('Transfer between servers\n\t"' + meta + '" vs. \n\t"' + id + '"');
-			this._dataTransferDownloadAndPasteAsync(meta, this.getMetaURL(), htmlText);
+			this._dataTransferDownloadAndPasteAsync(meta, htmlText);
 			return false; // just started async operation - did not finish yet
 		}
 
