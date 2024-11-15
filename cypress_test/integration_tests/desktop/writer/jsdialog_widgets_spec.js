@@ -37,5 +37,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 		cy.cGet('#contenttree2 .ui-treeview-header-text').contains('Column 2').click();
 		cy.cGet('#contenttree2 .ui-treeview-header-sort-icon').should('be.visible');
 		cy.cGet('#contenttree2').compareSnapshot('treeview_headers_sort', 0.12);
+
+		// use filter feature
+		cy.cGet('#contenttree2').then(
+			(trees) => {
+				trees[0].filterEntries('Row 2');
+				cy.cGet('#contenttree2').compareSnapshot('treeview_headers_filter', 0.12);
+			});
 	});
 });
