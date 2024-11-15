@@ -26,6 +26,7 @@ JSDialog.deck = function (
 		parentContainer,
 	);
 	deck.id = data.id;
+	deck.tabIndex = '-1';
 
 	for (var i = 0; i < data.children.length; i++) {
 		builder.build(deck, [data.children[i]]);

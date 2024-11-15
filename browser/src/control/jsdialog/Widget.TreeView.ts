@@ -69,7 +69,7 @@ class TreeViewControl {
 	_isRealTree: boolean;
 	_container: HTMLElement;
 	_tbody: HTMLElement;
-	_thead: HTMLElement;
+	_thead: HTMLElement = null;
 	_columns: number;
 	_hasState: boolean;
 	_hasIcon: boolean;
@@ -91,7 +91,6 @@ class TreeViewControl {
 		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
 
 		this._tbody = this._container;
-		this._thead = this._container;
 		(this._container as any).filterEntries = this.filterEntries.bind(this);
 
 		this.setupDragAndDrop(data, builder);
@@ -314,6 +313,7 @@ class TreeViewControl {
 			'1px solid var(--color-btn-border)',
 		);
 		colorPreviewButton.style.setProperty('vertical-align', 'middle');
+		colorPreviewButton.tabIndex = -1;
 
 		return colorPreviewButton;
 	}
@@ -527,6 +527,7 @@ class TreeViewControl {
 				iconName = builder._createIconURL(iconId, true);
 				L.LOUtil.setImage(icon, iconName, builder.map);
 				L.DomUtil.addClass(span, 'ui-treeview-expandable-with-icon');
+				icon.tabIndex = -1;
 			} else if (
 				entry.columns[index].link &&
 				!this.isSeparator(entry.columns[index])
@@ -730,7 +731,7 @@ class TreeViewControl {
 			}
 
 			this._container
-				.querySelectorAll('div.selected')
+				.querySelectorAll('.ui-treeview-entry.selected')
 				.forEach((item: HTMLElement) => {
 					this.unselectEntry(item);
 				});
@@ -798,9 +799,8 @@ class TreeViewControl {
 
 	setupKeyEvents(data: TreeWidget, builder: any) {
 		this._container.addEventListener('keydown', (event) => {
-			const listElements = this._container.querySelectorAll(
-				this._isRealTree ? '.ui-treeview-cell-text' : '.ui-treeview-entry',
-			);
+			const listElements =
+				this._container.querySelectorAll('.ui-treeview-entry');
 			this.handleKeyEvent(event, listElements, builder, data);
 		});
 	}
@@ -815,7 +815,9 @@ class TreeViewControl {
 		nextElement.focus();
 
 		var nextInput = Array.from(
-			listElements.at(toIndex).querySelectorAll('td input'),
+			listElements
+				.at(toIndex)
+				.querySelectorAll('.ui-treeview-entry > div > input'),
 		) as Array<HTMLElement>;
 		if (nextInput && nextInput.length)
 			nextInput.at(0).removeAttribute('tabindex');
@@ -826,7 +828,9 @@ class TreeViewControl {
 
 			oldElement.removeAttribute('tabindex');
 			var oldInput = Array.from(
-				listElements.at(fromIndex).querySelectorAll('td input'),
+				listElements
+					.at(fromIndex)
+					.querySelectorAll('.ui-treeview-entry > div > input'),
 			) as Array<HTMLElement>;
 			if (oldInput && oldInput.length) oldInput.at(0).tabIndex = -1;
 		}
@@ -844,7 +848,7 @@ class TreeViewControl {
 		// no focused entry - try with selected one
 		if (currIndex < 0) {
 			var selected = listElements.filter((o) => {
-				return o.classList.contains('.selected');
+				return o.classList.contains('selected');
 			});
 			if (selected && selected.length)
 				currIndex = listElements.indexOf(selected[0]);
