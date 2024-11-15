@@ -54,7 +54,7 @@ class PresenterConsole {
                                 </header>
                                 <main id="main-content">
                                   <div id="presentation-content">
-                                     <div id="first-presentation">
+                                    <div id="first-presentation">
 										<div id="timer-container">
 											<div id="timer"></div>
 											 <div id="timer-controls">
@@ -71,13 +71,14 @@ class PresenterConsole {
                                             <canvas id="current-presentation"></canvas>
                                         </div>
 										<div id="title-current">${labels[0]}</div>
-										</div>
-                                     <div id="second-presentation">
-                                         <div id="title-next">${labels[1]}</div>
-                                         <div id='next-slide-container'>
+									</div>
+									<div id="notes-separator"></div>
+                                    <div id="second-presentation">
+                                    	<div id="title-next">${labels[1]}</div>
+                                         <div id='container'>
                                             <img id="next-presentation"></img>
                                          </div>
-                                     </div>
+                                    </div>
                                   </div>
                                   <div id="toolbar">
 									<button type="button" id="prev" disabled>
@@ -227,7 +228,7 @@ class PresenterConsole {
 		let slideShowBGColor = window
 			.getComputedStyle(document.documentElement)
 			.getPropertyValue('--color-background-slideshow');
-		let slideShowColor = window
+		this.slideShowColor = window
 			.getComputedStyle(document.documentElement)
 			.getPropertyValue('--color-slideshow');
 		let slideShowFontFamily = window
@@ -235,7 +236,7 @@ class PresenterConsole {
 			.getPropertyValue('--cool-font');
 
 		elem.style.backgroundColor = slideShowBGColor;
-		elem.style.color = slideShowColor;
+		elem.style.color = this.slideShowColor;
 		elem.style.fontFamily = slideShowFontFamily;
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
@@ -255,7 +256,7 @@ class PresenterConsole {
 		elem.style.flex = '1';
 		// consistent gap between label and presentation preview
 		elem.style.gap = '1vh';
-		elem.style.marginTop = '5vw';
+		elem.style.marginTop = '8vh';
 		elem.style.marginLeft = '2vw';
 
 		elem = this._proxyPresenter.document.querySelector('#title-current');
@@ -264,7 +265,7 @@ class PresenterConsole {
 		elem.style.justifyContent = 'center';
 		elem.style.alignItems = 'center';
 		elem.style.backgroundColor = 'transparent';
-		elem.style.color = slideShowColor;
+		elem.style.color = this.slideShowColor;
 		elem.style.fontSize = '22px';
 
 		elem = this._proxyPresenter.document.querySelector(
@@ -274,35 +275,51 @@ class PresenterConsole {
 		elem.style.width = '56vw';
 		elem.style.height = '67vh';
 
+		let notesSeparator =
+			this._proxyPresenter.document.querySelector('#notes-separator');
+		notesSeparator.style.backgroundColor = 'transparent';
+		notesSeparator.style.color = 'transparent';
+		notesSeparator.style.border = '1px solid';
+		notesSeparator.style.margin = '8vh 0vw';
+		notesSeparator.style.height = '80vh';
+
 		this._second = elem = this._proxyPresenter.document.querySelector(
 			'#second-presentation',
 		);
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
-		elem.style.alignItems = 'center';
 		elem.style.flex = '1';
 		// consistent gap between label and presentation preview
 		elem.style.gap = '1vh';
-		elem.style.marginTop = '5vw';
+		elem.style.marginTop = '8vh';
 
 		elem = this._proxyPresenter.document.querySelector('#title-next');
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
 		elem.style.backgroundColor = 'transparent';
-		elem.style.color = slideShowColor;
+		elem.style.color = this.slideShowColor;
+		elem.style.height = '35px';
 		elem.style.fontSize = '22px';
+		elem.style.justifyContent = 'center';
 
 		elem = this._proxyPresenter.document.querySelector('#next-slide-container');
 		elem.style.width = '25vw';
 		elem.style.height = '50vh';
+		elem.style.display = 'flex';
+		elem.style.flexDirection = 'column';
+		elem.style.gap = '2vh';
 
 		this._notes = this._proxyPresenter.document.createElement('div');
-		this._notes.style.height = '80%';
-		this._notes.style.width = '100%';
+		this._notes.style.height = '50vh';
+		this._notes.style.width = '25vw';
+		this._notes.style.paddingTop = '10px';
+		this._notes.style.borderTop = '2px solid transparent';
+
 		elem = this._proxyPresenter.document.createElement('div');
 		elem.id = 'notes';
 		elem.style.height = '90%';
 		elem.style.width = '100%';
+
 		this._notes.appendChild(elem);
 		elem = this._proxyPresenter.document.createElement('div');
 		elem.style.textAlign = 'center';
@@ -341,7 +358,7 @@ class PresenterConsole {
 			list[elem].style.alignItems = 'center';
 			list[elem].style.backgroundColor = 'transparent';
 			list[elem].style.border = 'none';
-			list[elem].style.color = slideShowColor;
+			list[elem].style.color = this.slideShowColor;
 		}
 
 		list = this._proxyPresenter.document.querySelectorAll('[id=separator]');
@@ -361,7 +378,7 @@ class PresenterConsole {
 
 		elem = this._proxyPresenter.document.querySelector('#timer');
 		elem.style.fontSize = '22px';
-		elem.style.color = slideShowColor;
+		elem.style.color = this.slideShowColor;
 
 		let timeControlElem =
 			this._proxyPresenter.document.querySelector('#timer-controls');
@@ -376,20 +393,22 @@ class PresenterConsole {
 
 		// Style buttons in slideshow control container
 		const buttons = timeControlElem.querySelectorAll('button');
-		buttons.forEach((button) => {
-			button.style.display = 'flex';
-			button.style.flexDirection = 'column';
-			button.style.alignItems = 'center';
-			button.style.justifyContent = 'center';
-			button.style.backgroundColor = 'transparent';
-			button.style.borderColor = slideShowColor;
-		});
+		buttons.forEach(
+			function (button) {
+				button.style.display = 'flex';
+				button.style.flexDirection = 'column';
+				button.style.alignItems = 'center';
+				button.style.justifyContent = 'center';
+				button.style.backgroundColor = 'transparent';
+				button.style.borderColor = this.slideShowColor;
+			}.bind(this),
+		);
 
 		elem = this._proxyPresenter.document.querySelector('#today');
 		elem.style.textAlign = 'right';
 		elem.style.fontSize = '22px';
 		elem.style.marginLeft = 'auto';
-		elem.style.color = slideShowColor;
+		elem.style.color = this.slideShowColor;
 
 		this._ticks = 0;
 		this._onTimer();
@@ -484,6 +503,9 @@ class PresenterConsole {
 			autoUpdate: false,
 		});
 
+		let notesSeparator =
+			this._proxyPresenter.document.querySelector('#notes-separator');
+		notesSeparator.remove();
 		this._first.remove();
 		this._second.remove();
 
@@ -512,7 +534,10 @@ class PresenterConsole {
 		);
 
 		this._slides.remove();
+		let notesSeparator =
+			this._proxyPresenter.document.querySelector('#notes-separator');
 		elem.appendChild(this._first);
+		elem.appendChild(notesSeparator);
 		elem.appendChild(this._second);
 
 		elem = this._proxyPresenter.document.querySelector('#slides');
@@ -539,66 +564,29 @@ class PresenterConsole {
 		let elem = this._proxyPresenter.document.querySelector('#notes');
 		this.toggleButtonState(elem, true);
 
-		let title = this._proxyPresenter.document.querySelector('#title-next');
-		title.remove();
-
 		let container = this._proxyPresenter.document.querySelector(
 			'#next-slide-container',
 		);
-		container.remove();
+		this._notes.style.borderTopColor = this.slideShowColor;
 
-		elem = this._proxyPresenter.document.querySelector('#first-presentation');
-		elem.style.justifyContent = 'center';
-		elem.style.alignItems = 'center';
-		elem.style.marginTop = '1vw';
-		elem.style.width = '50vw';
+		let notesSeparator =
+			this._proxyPresenter.document.querySelector('#notes-separator');
+		notesSeparator.style.color = this.slideShowColor;
 
-		elem.appendChild(title);
-		elem.appendChild(container);
-
-		elem = this._proxyPresenter.document.querySelector(
-			'#current-slide-container',
-		);
-		// Adjust the height and width after displaying notes to improve
-		// the visibility of the current and next slide preview for the user.
-		elem.style.width = '45vw';
-		elem.style.height = '53vh';
-
-		elem = this._proxyPresenter.document.querySelector('#second-presentation');
-		elem.appendChild(this._notes);
+		container.appendChild(this._notes);
 		this._onResize();
 	}
 
 	_onHideNotes(e) {
-		let title = this._proxyPresenter.document.querySelector('#title-next');
-		title.remove();
+		let notesSeparator =
+			this._proxyPresenter.document.querySelector('#notes-separator');
+		notesSeparator.style.color = 'transparent';
 
-		let container = this._proxyPresenter.document.querySelector(
-			'#next-slide-container',
-		);
-		container.remove();
+		this._notes.style.borderTopColor = 'transparent';
 
 		this._notes.remove();
 
-		let elem = this._proxyPresenter.document.querySelector(
-			'#first-presentation',
-		);
-		elem.style.justifyContent = '';
-		elem.style.alignItems = '';
-		elem.style.marginTop = '5vw';
-		elem.style.width = '60vw';
-
-		elem = this._proxyPresenter.document.querySelector(
-			'#current-slide-container',
-		);
-		// reset to it's original value after hide notes
-		elem.style.width = '56vw';
-		elem.style.height = '67vh';
-
-		elem = this._proxyPresenter.document.querySelector('#second-presentation');
-		elem.appendChild(title);
-		elem.appendChild(container);
-		elem = this._proxyPresenter.document.querySelector('#notes');
+		let elem = this._proxyPresenter.document.querySelector('#notes');
 		this.toggleButtonState(elem, false);
 		this._onResize();
 
@@ -809,9 +797,12 @@ class PresenterConsole {
 
 		if (this._notes) {
 			let notes = this._presenter.getNotes(e.slide);
-			elem = this._notes.querySelector('#notes');
+			if (notes) elem = this._notes.querySelector('#notes');
 			if (elem) {
-				elem.innerText = notes;
+				elem.innerText =
+					notes.toLowerCase() === 'click to add notes'.toLowerCase()
+						? 'No Notes'
+						: notes;
 			}
 		}
 
