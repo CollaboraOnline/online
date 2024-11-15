@@ -591,8 +591,8 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.querySelector('#slides');
 		this.toggleButtonState(elem, false);
 
-		if (img) {
-			requestAnimationFrame(
+		if (img && this._proxyPresenter) {
+			this._proxyPresenter.requestAnimationFrame(
 				function (navigator, index) {
 					navigator.displaySlide(index, true);
 				}.bind(null, this._presenter.getNavigator(), img._index),
@@ -665,7 +665,7 @@ class PresenterConsole {
 			++this._ticks;
 		}
 
-		requestAnimationFrame(this._drawClock.bind(this));
+		this._proxyPresenter.requestAnimationFrame(this._drawClock.bind(this));
 	}
 
 	_drawClock() {
@@ -860,6 +860,10 @@ class PresenterConsole {
 	}
 
 	drawNext(elem) {
+		if (!this._proxyPresenter) {
+			return;
+		}
+
 		if (!elem) {
 			return;
 		}
@@ -870,7 +874,9 @@ class PresenterConsole {
 
 		let rect = elem.getBoundingClientRect();
 		if (rect.width === 0 && rect.height === 0) {
-			requestAnimationFrame(this.drawNext.bind(this, elem));
+			this._proxyPresenter.requestAnimationFrame(
+				this.drawNext.bind(this, elem),
+			);
 			return;
 		}
 
