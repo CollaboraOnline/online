@@ -70,33 +70,37 @@ class PresenterConsole {
                                         <div id='current-slide-container'>
                                             <canvas id="current-presentation"></canvas>
                                         </div>
-										<div id="title-current">${labels[0]}</div>
+										<div id="slideshow-control-container">
+											<div id="navigation-container">
+												<button type="button" id="prev" disabled>
+													<img src="images/presenterscreen-ButtonSlidePreviousSelected.svg">
+												</button>
+												<div id="title-current">${labels[0]}</div>
+												<button type="button" id="next" disabled>
+													<img src="images/presenterscreen-ButtonEffectNextSelected.svg">
+												</button>
+											</div>
+											<div id="action-buttons-container">
+												<button type="button" id="notes" disabled>
+													<img src="images/presenterscreen-ButtonNotesNormal.png">
+													<label>${labels[4]}</label>
+												</button>
+												<button type="button" id="slides" disabled>
+													<img src="images/presenterscreen-ButtonSlideSorterNormal.png">
+													<label>${labels[5]}</label>
+												</button>
+											</div>
+										</div>
 									</div>
 									<div id="notes-separator"></div>
-                                    <div id="second-presentation">
-                                    	<div id="title-next">${labels[1]}</div>
-                                         <div id='container'>
+                                     <div id="second-presentation">
+                                         <div id="title-next">${labels[1]}</div>
+                                         <div id='next-slide-container'>
                                             <img id="next-presentation"></img>
                                          </div>
                                     </div>
                                   </div>
                                   <div id="toolbar">
-									<button type="button" id="prev" disabled>
-										<img src="images/presenterscreen-ButtonSlidePreviousSelected.png">
-										<label>${labels[2]}</label>
-									</button>
-									<button type="button" id="next" disabled>
-										<img src="images/presenterscreen-ButtonEffectNextSelected.png">
-										<label>${labels[3]}</label>
-									</button>
-									<button type="button" id="notes" disabled>
-										<img src="images/presenterscreen-ButtonNotesNormal.png">
-										<label>${labels[4]}</label>
-									</button>
-									<button type="button" id="slides" disabled>
-										<img src="images/presenterscreen-ButtonSlideSorterNormal.png">
-										<label>${labels[5]}</label>
-									</button>
 									<div id="separator"></div>
 									<button type="button" id="help" disabled>
 										<img src="images/presenterscreen-ButtonHelpNormal.png">
@@ -259,6 +263,17 @@ class PresenterConsole {
 		elem.style.marginTop = '8vh';
 		elem.style.marginLeft = '2vw';
 
+		// Apply common button style to every button in Current slide division
+		let currentSlideActionButtons = this._first.querySelectorAll('button');
+		currentSlideActionButtons.forEach((button) => {
+			button.style.display = 'flex';
+			button.style.flexDirection = 'column';
+			button.style.alignItems = 'center';
+			button.style.backgroundColor = 'transparent';
+			button.style.color = this.slideShowColor;
+			button.style.border = 'none';
+		});
+
 		elem = this._proxyPresenter.document.querySelector('#title-current');
 		elem.style.display = 'flex';
 		elem.style.flexDirection = 'column';
@@ -274,6 +289,50 @@ class PresenterConsole {
 		// this will handle the responsiveness on resize for current-presentation window
 		elem.style.width = '56vw';
 		elem.style.height = '67vh';
+
+		// slideshow-control-container
+		let slideshowControlContainer = this._proxyPresenter.document.querySelector(
+			'#slideshow-control-container',
+		);
+		slideshowControlContainer.style.display = 'flex';
+		slideshowControlContainer.style.gap = '2vw';
+		slideshowControlContainer.style.alignItems = 'center';
+		slideshowControlContainer.style.marginTop = '1vh';
+
+		// Select the parent container by its ID
+		let navigationContainer = this._proxyPresenter.document.getElementById(
+			'navigation-container',
+		);
+
+		// Add the necessary styles to make elements appear in a row
+		navigationContainer.style.display = 'flex';
+		navigationContainer.style.width = 'max-content';
+		navigationContainer.style.alignItems = 'center';
+		navigationContainer.style.gap = '0.5vw'; // Adjust gap as needed
+
+		// Select all button elements inside #navigation-container
+		let navigationButtons = this._proxyPresenter.document.querySelectorAll(
+			'#navigation-container button',
+		);
+
+		// Apply additional style for navigation button
+		navigationButtons.forEach((button) => {
+			button.style.width = '2.5vw';
+			button.style.height = '5.5vh';
+			button.style.border = '1px solid';
+			button.style.borderColor = this.slideShowColor;
+			button.style.borderRadius = '2.5vw';
+			button.style.justifyContent = 'center';
+		});
+
+		// slideshow-control-container
+		let actionBtnContainer = this._proxyPresenter.document.querySelector(
+			'#action-buttons-container',
+		);
+		actionBtnContainer.style.display = 'flex';
+		actionBtnContainer.style.gap = '1vw';
+
+		this._first.addEventListener('click', L.bind(this._onToolbarClick, this));
 
 		let notesSeparator =
 			this._proxyPresenter.document.querySelector('#notes-separator');
@@ -357,7 +416,6 @@ class PresenterConsole {
 			list[elem].style.justifyContent = 'center';
 			list[elem].style.alignItems = 'center';
 			list[elem].style.backgroundColor = 'transparent';
-			list[elem].style.border = 'none';
 			list[elem].style.color = this.slideShowColor;
 		}
 
@@ -400,7 +458,7 @@ class PresenterConsole {
 				button.style.alignItems = 'center';
 				button.style.justifyContent = 'center';
 				button.style.backgroundColor = 'transparent';
-				button.style.borderColor = this.slideShowColor;
+				button.style.borderColor = 'none';
 			}.bind(this),
 		);
 
