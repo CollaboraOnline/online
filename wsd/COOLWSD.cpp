@@ -1503,7 +1503,16 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         const auto it = DefAppConfig.find(pair.first);
         if (it == DefAppConfig.end() || it->second != pair.second)
         {
-            ossConfig << '\t' << pair.first << ": " << pair.second << '\n';
+            if (pair.first == "admin_console.username" ||
+                pair.first == "admin_console.password" ||
+                pair.first == "admin_console.secure_password")
+            {
+                ossConfig << '\t' << pair.first << ": <redacted>" << '\n';
+            }
+            else
+            {
+                ossConfig << '\t' << pair.first << ": " << pair.second << '\n';
+            }
         }
     }
 
