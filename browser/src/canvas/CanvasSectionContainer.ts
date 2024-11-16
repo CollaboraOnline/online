@@ -217,8 +217,6 @@ class CanvasSectionContainer {
 	private frameCount: number = null; // Frame count of the current animation.
 	private duration: number = null; // Duration for the animation.
 	private elapsedTime: number = null; // Time that passed since the animation started.
-	private stoppingFunctionList: Array<EventListener>; // Event listeners need to be removed from the canvas object. So we keep track of their functions.
-	private stoppingEventTypes: Array<string>; // Events those stop the animation.
 
 	constructor (canvasDOMElement: HTMLCanvasElement, disableDrawing?: boolean) {
 		this.canvas = canvasDOMElement;
@@ -2059,10 +2057,6 @@ class CanvasSectionContainer {
 			requestAnimationFrame(this.animate.bind(this));
 		}
 		else {
-			for (var i: number = 0; i < this.stoppingFunctionList.length; i++) {
-				this.canvas.removeEventListener(this.stoppingEventTypes[i], this.stoppingFunctionList[i], true);
-			}
-
 			var section: CanvasSectionObject = this.getSectionWithName(this.getAnimatingSectionName());
 			if (section) {
 				section.isAnimating = false;
@@ -2074,12 +2068,6 @@ class CanvasSectionContainer {
 
 			this.drawSections();
 		}
-	}
-
-	private createStoppingFunction () {
-		return function () {
-			this.continueAnimating = false;
-		}.bind(this);
 	}
 
 	// Resets animation duration. Not to be called directly. Instead, use (inside section class) this.resetAnimation()
@@ -2114,13 +2102,6 @@ class CanvasSectionContainer {
 			For now, only one section can start animations at a time.
 
 			options (possible values are separated by the '|' char):
-				// Developer can specify the events those will stop animating.
-				// Important note: User shouldn't depend on the order of the events if they assign a stopping handler to an event.
-					Let's assume a stopping function is bound to 'onclick' event.
-					For now, most probably, onclick event will first be propagated to sections, then animation will stop.
-					But when Leaflet is removed, animation will stop first and then onclick event will be propagated to sections.
-
-				stoppingEvents: ['click', 'mousemove' ..etc] // Events should match the real keywords.
 				// Developer can set the duration for the animation, in milliseconds. There are also other ways to stop the animation.
 				duration: 2000 | null // 2 seconds | null.
 		*/
@@ -2133,17 +2114,6 @@ class CanvasSectionContainer {
 			this.duration = options.duration ? options.duration: null;
 			this.elapsedTime = 0;
 			this.frameCount = 0;
-
-			this.stoppingFunctionList = new Array<EventListener>(0);
-			this.stoppingEventTypes = new Array<string>(0);
-
-			if (options.stoppingEvents) {
-				for (var i: number = 0; i < options.stoppingEvents.length; i++) {
-					this.stoppingEventTypes.push(options.stoppingEvents[i]);
-					this.stoppingFunctionList.push(this.createStoppingFunction());
-					this.canvas.addEventListener(options.stoppingEvents[i], this.stoppingFunctionList[i], true);
-				}
-			}
 
 			this.animate(performance.now());
 			return true;

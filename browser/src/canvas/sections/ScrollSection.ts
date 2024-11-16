@@ -1050,6 +1050,32 @@ export class ScrollSection extends app.definitions.canvasSectionObject {
 		}
 	}
 
+	public onClick(point: Array<number>, e: MouseEvent): void {
+		if (this.isAnimating && this.sectionProperties.animatingWheelScrollVertical)
+			this.containerObject.stopAnimating();
+	}
+
+	private animateVerticalWheelScroll(delta: number): void {
+		// Cancel other animation, if there is one.
+		if (this.isAnimating && this.sectionProperties.animatingWheelScrollVertical === false)
+			this.containerObject.stopAnimating();
+
+		this.calculateYMinMax();
+
+		// If still animating, caller must be this function.
+		if (this.isAnimating) {
+			this.sectionProperties.verticalWheelScrollAnimationScrolledAmount = 0;
+			this.sectionProperties.verticalWheelScrollAnimationDelta = Math.ceil(this.sectionProperties.verticalWheelScrollAnimationDelta * 0.95) + delta;
+			this.resetAnimation(); // Acceleration is proiveded by +delta^ for consecutive wheel actions.
+		}
+		else {
+			this.sectionProperties.animatingWheelScrollVertical = true;
+			this.sectionProperties.verticalWheelScrollAnimationDelta = delta;
+			this.sectionProperties.verticalWheelScrollAnimationScrolledAmount = 0;
+			this.startAnimating({ duration: this.sectionProperties.verticalWheelScrollAnimationDuration });
+		}
+	}
+
 	public onMouseWheel (point: Array<number>, delta: Array<number>, e: MouseEvent): void {
 		if (e.ctrlKey)
 			return;
