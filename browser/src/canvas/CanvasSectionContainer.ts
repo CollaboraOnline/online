@@ -1189,6 +1189,20 @@ class CanvasSectionContainer {
 		}
 	}
 
+	public extendAnimationDuration(extendMs: number) {
+		if (this.getAnimatingSectionName()) { // Is animating.
+			this.duration += extendMs;
+		}
+	}
+
+	public getAnimationDuration(): number {
+		return this.duration;
+	}
+
+	public getScrollLineHeight() {
+		return this.scrollLineHeight;
+	}
+
 	private onMouseWheel (e: WheelEvent) {
 		var point = this.convertPositionToCanvasLocale(e);
 		var delta: Array<number>;
