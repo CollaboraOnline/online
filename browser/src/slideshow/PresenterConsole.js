@@ -840,7 +840,18 @@ class PresenterConsole {
 	_onNextFrame(e) {
 		const bitmap = e.frame;
 		if (!bitmap) return;
-		createImageBitmap(bitmap).then((image) => {
+
+		// We need to resize the frame to the current slide canvas size explicitly.
+		// In fact, in Firefox transferFromImageBitmap does not resize it
+		// automatically to the set canvas size as it occurs in Chrome.
+		// According to Firefox version we can have 2 different behavior:
+		// on older versions (like 115) the frame is cropped wrt the canvas size
+		// on newer versions (like 121) the canvas is automatically resized to
+		// frame size, the latter case can lead to worse performance.
+		createImageBitmap(bitmap, {
+			resizeWidth: this._currentSlideCanvas.width,
+			resizeHeight: this._currentSlideCanvas.height,
+		}).then((image) => {
 			this._currentSlideContext.transferFromImageBitmap(image);
 		});
 	}
