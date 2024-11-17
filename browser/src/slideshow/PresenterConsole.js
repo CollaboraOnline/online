@@ -56,11 +56,13 @@ class PresenterConsole {
                                   <div id="presentation-content">
                                      <div id="first-presentation">
                                          <div id="title-current">${labels[0]}</div>
-                                         <canvas id="current-presentation"></canvas>
+                                         <div id='current-slide-container'>
+                                            <canvas id="current-presentation"></canvas>
+                                         </div>
                                      </div>
                                      <div id="second-presentation">
                                          <div id="title-next">${labels[1]}</div>
-                                         <div id='container'>
+                                         <div id='next-slide-container'>
                                             <img id="next-presentation"></img>
                                          </div>
                                      </div>
@@ -265,7 +267,9 @@ class PresenterConsole {
 		elem.style.backgroundColor = 'transparent';
 		elem.style.color = 'white';
 
-		elem = this._proxyPresenter.document.querySelector('#current-presentation');
+		elem = this._proxyPresenter.document.querySelector(
+			'#current-slide-container',
+		);
 		// this will handle the responsiveness on resize for current-presentation window
 		elem.style.width = '56vw';
 		elem.style.height = '67vh';
@@ -289,7 +293,7 @@ class PresenterConsole {
 		elem.style.backgroundColor = 'transparent';
 		elem.style.color = 'white';
 
-		elem = this._proxyPresenter.document.querySelector('#container');
+		elem = this._proxyPresenter.document.querySelector('#next-slide-container');
 		elem.style.width = '25vw';
 		elem.style.height = '50vh';
 
@@ -513,7 +517,9 @@ class PresenterConsole {
 		let title = this._proxyPresenter.document.querySelector('#title-next');
 		title.remove();
 
-		let container = this._proxyPresenter.document.querySelector('#container');
+		let container = this._proxyPresenter.document.querySelector(
+			'#next-slide-container',
+		);
 		container.remove();
 
 		elem = this._proxyPresenter.document.querySelector('#first-presentation');
@@ -525,8 +531,11 @@ class PresenterConsole {
 		elem.appendChild(title);
 		elem.appendChild(container);
 
-		elem = this._proxyPresenter.document.querySelector('#current-presentation');
-		// Adjust the height and width after displaying notes to improve the visibility of the current and next slide preview for the user.
+		elem = this._proxyPresenter.document.querySelector(
+			'#current-slide-container',
+		);
+		// Adjust the height and width after displaying notes to improve
+		// the visibility of the current and next slide preview for the user.
 		elem.style.width = '45vw';
 		elem.style.height = '53vh';
 
@@ -539,7 +548,9 @@ class PresenterConsole {
 		let title = this._proxyPresenter.document.querySelector('#title-next');
 		title.remove();
 
-		let container = this._proxyPresenter.document.querySelector('#container');
+		let container = this._proxyPresenter.document.querySelector(
+			'#next-slide-container',
+		);
 		container.remove();
 
 		this._notes.remove();
@@ -552,7 +563,9 @@ class PresenterConsole {
 		elem.style.marginTop = '5vw';
 		elem.style.width = '60vw';
 
-		elem = this._proxyPresenter.document.querySelector('#current-presentation');
+		elem = this._proxyPresenter.document.querySelector(
+			'#current-slide-container',
+		);
 		// reset to it's original value after hide notes
 		elem.style.width = '56vw';
 		elem.style.height = '67vh';
@@ -710,8 +723,10 @@ class PresenterConsole {
 		});
 	}
 
-	_onResize() {
-		let container = this._proxyPresenter.document.querySelector('#container');
+	_resizeSlideView(viewContainerId, slideViewId) {
+		let container = this._proxyPresenter.document.querySelector(
+			'#' + viewContainerId,
+		);
 		if (!container) {
 			return;
 		}
@@ -720,12 +735,18 @@ class PresenterConsole {
 			fetchThumbnail: false,
 			autoUpdate: false,
 		});
-		let next =
-			this._proxyPresenter.document.querySelector('#next-presentation');
-		if (next) {
-			next.style.width = size.width + 'px';
-			next.style.height = size.height + 'px';
+		let slideView = this._proxyPresenter.document.querySelector(
+			'#' + slideViewId,
+		);
+		if (slideView) {
+			slideView.style.width = size.width + 'px';
+			slideView.style.height = size.height + 'px';
 		}
+	}
+
+	_onResize() {
+		this._resizeSlideView('current-slide-container', 'current-presentation');
+		this._resizeSlideView('next-slide-container', 'next-presentation');
 	}
 
 	_onTransitionStart(e) {
