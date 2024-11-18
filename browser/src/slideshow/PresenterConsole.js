@@ -53,9 +53,14 @@ class PresenterConsole {
                                 </header>
                                 <main id="main-content">
 								  <div id="toolbar">
-									<button type="button" id="exit" disabled>
-										<img src="images/presenterscreen-ButtonExitPresenterNormal.png">
+									<button type="button" id="close-slides" disabled>
+										<img src="images/presenterscreen-ArrowBack.svg">
 									</button>
+									<div id='presentation-page-actions'>
+										<button type="button" id="exit" disabled>
+											<img src="images/presenterscreen-ButtonExitPresenterNormal.svg">
+										</button>
+									</div>
                                   </div>
                                   <div id="presentation-content">
                                     <div id="first-presentation">
@@ -400,21 +405,14 @@ class PresenterConsole {
 		this._slides.appendChild(elem);
 		this._slides.addEventListener('click', L.bind(this._onClickSlides, this));
 
-		elem = this._proxyPresenter.document.createElement('div');
-		elem.style.textAlign = 'center';
-
-		elem.appendChild(this.addCloseButton());
-		this._slides.appendChild(elem);
-
 		elem = this._proxyPresenter.document.querySelector('#toolbar');
 		elem.style.display = 'flex';
 		elem.style.alignItems = 'center';
-		elem.style.justifyContent = 'end';
 		elem.style.backgroundColor = slideShowBGColor;
 		elem.style.overflow = 'hidden';
 		elem.style.width = '100%';
 		elem.style.gap = '1vw';
-		elem.style.marginTop = '1vh';
+		elem.style.margin = '1vh 0vw';
 		elem.addEventListener('click', L.bind(this._onToolbarClick, this));
 
 		let list =
@@ -426,8 +424,20 @@ class PresenterConsole {
 			list[elem].style.alignItems = 'center';
 			list[elem].style.backgroundColor = 'transparent';
 			list[elem].style.color = this.slideShowColor;
+			list[elem].style.padding = '10px';
+			list[elem].style.height = '6vh';
 			list[elem].style.border = 'none';
 		}
+
+		let presentationPageActionContainer =
+			this._proxyPresenter.document.querySelector('#presentation-page-actions');
+		presentationPageActionContainer.style.display = 'flex';
+		presentationPageActionContainer.style.marginLeft = 'auto';
+
+		// By default we will hide the Back button to jum from Slides view to normal view
+		let closeSlideButton =
+			this._proxyPresenter.document.querySelector('#close-slides');
+		closeSlideButton.style.display = 'none';
 
 		elem = this._proxyPresenter.document.querySelector('#timer-container');
 		elem.style.display = 'flex';
@@ -539,12 +549,10 @@ class PresenterConsole {
 				}
 				break;
 			case 'slides':
-				// toggle based on slides preview present or not
-				if (this._proxyPresenter.document.querySelector('#slides-preview')) {
-					this._onHideSlides();
-				} else {
-					this._onShowSlides();
-				}
+				this._onShowSlides();
+				break;
+			case 'close-slides':
+				this._onHideSlides();
 				break;
 		}
 
@@ -554,6 +562,11 @@ class PresenterConsole {
 	_onShowSlides() {
 		let elem = this._proxyPresenter.document.querySelector('#slides');
 		this.toggleButtonState(elem, true);
+
+		// Show Back button to go into previous page (Current slides page)
+		let closeSlideButton =
+			this._proxyPresenter.document.querySelector('#close-slides');
+		closeSlideButton.style.display = 'block';
 
 		elem = this._proxyPresenter.document.querySelector('#next-presentation');
 		let rect = elem.getBoundingClientRect();
@@ -602,6 +615,11 @@ class PresenterConsole {
 
 		elem = this._proxyPresenter.document.querySelector('#slides');
 		this.toggleButtonState(elem, false);
+
+		// Hide back button on normal view
+		let closeSlideButton =
+			this._proxyPresenter.document.querySelector('#close-slides');
+		closeSlideButton.style.display = 'none';
 
 		if (img && this._proxyPresenter) {
 			this._proxyPresenter.requestAnimationFrame(
@@ -950,42 +968,6 @@ class PresenterConsole {
 		ctx.fillText(_('Click to exit presentation...'), width / 2, height / 2);
 
 		return offscreen.convertToBlob({ type: 'image/png' });
-	}
-
-	addCloseButton() {
-		let slidesCloseButton =
-			this._proxyPresenter.document.createElement('button');
-		slidesCloseButton.innerText = _('Close');
-		slidesCloseButton.style.borderRadius = '5px';
-		slidesCloseButton.style.padding = '6px 18px';
-		slidesCloseButton.addEventListener(
-			'click',
-			L.bind(this._onHideSlides, this),
-		);
-
-		// Add hover effect (minimal changes)
-		slidesCloseButton.addEventListener('mouseenter', () => {
-			slidesCloseButton.style.backgroundColor = '#d2d2d2'; // Slightly darker shade
-			slidesCloseButton.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)'; // Add a soft shadow
-		});
-
-		// Remove hover effect
-		slidesCloseButton.addEventListener('mouseleave', () => {
-			slidesCloseButton.style.backgroundColor = '#f1f1f1'; // Reset to original color
-			slidesCloseButton.style.boxShadow = 'none'; // Remove shadow
-		});
-
-		// Add click effect
-		slidesCloseButton.addEventListener('mousedown', () => {
-			slidesCloseButton.style.backgroundColor = '#bebebe'; // Slightly darker on click
-		});
-
-		// Remove click effect when mouse is released
-		slidesCloseButton.addEventListener('mouseup', () => {
-			slidesCloseButton.style.backgroundColor = '#d2d2d2'; // Back to hover state color
-		});
-
-		return slidesCloseButton;
 	}
 
 	_onNextFrame(e) {
