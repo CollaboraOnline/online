@@ -1673,6 +1673,8 @@ private:
     /// Unique DocBroker ID for tracing and debugging.
     static std::atomic<unsigned> DocBrokerId;
 
+    std::string _configId;
+
     // Relevant only in the mobile apps
     const unsigned _mobileAppDocId;
 

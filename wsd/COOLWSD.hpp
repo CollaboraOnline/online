@@ -41,7 +41,8 @@ class ForKitProcess;
 class SocketPoll;
 class TraceFileWriter;
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, unsigned mobileAppDocId);
+std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, const std::string& configId,
+                                                 unsigned mobileAppDocId);
 
 /// The Server class which is responsible for all
 /// external interactions.
