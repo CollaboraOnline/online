@@ -198,10 +198,12 @@ public:
     /// @param socket is the underlying Socket to the child.
     template <typename T>
     ChildProcess(const pid_t pid, const std::string& jailId,
+                 const std::string& configId,
                  const std::shared_ptr<StreamSocket>& socket, const T& request)
         : WSProcess("ChildProcess", pid, socket,
                     std::make_shared<WebSocketHandler>(socket, request))
         , _jailId(jailId)
+        , _configId(configId)
         , _smapsFD(-1)
     {
         int urpFromKitFD = socket->getIncomingFD(SharedFDType::URPFromKit);
@@ -251,6 +253,7 @@ public:
     void setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker);
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }
     const std::string& getJailId() const { return _jailId; }
+    const std::string& getConfigId() const { return _configId; }
     void setSMapsFD(int smapsFD) { _smapsFD = smapsFD; }
     int getSMapsFD() { return _smapsFD; }
 
@@ -261,6 +264,7 @@ public:
 
 private:
     const std::string _jailId;
+    const std::string _configId;
     std::weak_ptr<DocumentBroker> _docBroker;
     std::shared_ptr<StreamSocket> _urpFromKit;
     std::shared_ptr<StreamSocket> _urpToKit;

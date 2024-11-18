@@ -2829,6 +2829,8 @@ private:
 
         try
         {
+            std::string jailId;
+            std::string configId;
 #if !MOBILEAPP
             LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getUrl())
                                                   << ']');
@@ -2860,12 +2862,12 @@ private:
             // New Child is spawned.
             const Poco::URI::QueryParameters params = requestURI.getQueryParameters();
             const int pid = socket->getPid();
-            std::string jailId;
             for (const auto& param : params)
             {
                 if (param.first == "jailid")
                     jailId = param.second;
-
+                else if (param.first == "configid")
+                    configId = param.second;
                 else if (param.first == "version")
                     COOLWSD::LOKitVersion = param.second;
             }
@@ -2887,15 +2889,15 @@ private:
             LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
             socket->getInBuffer().clear();
 
-            LOG_INF("New child [" << pid << "], jailId: " << jailId);
+            LOG_INF("New child [" << pid << "], jailId: " << jailId << ", configId: " << configId);
 #else
             pid_t pid = 100;
-            std::string jailId = "jail";
+            jailId = "jail";
             socket->getInBuffer().clear();
 #endif
             LOG_TRC("Calling make_shared<ChildProcess>, for NewChildren?");
 
-            auto child = std::make_shared<ChildProcess>(pid, jailId, socket, request);
+            auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request);
 
             if constexpr (!Util::isMobileApp())
                 UnitWSD::get().newChild(child);
