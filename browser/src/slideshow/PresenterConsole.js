@@ -420,7 +420,6 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.querySelector('#timer-container');
 		elem.style.display = 'flex';
 		elem.style.alignItems = 'center';
-		elem.style.width = '100%';
 		elem.style.gap = '15px';
 
 		elem = this._proxyPresenter.document.querySelector('#timer');
@@ -808,6 +807,11 @@ class PresenterConsole {
 	_onResize() {
 		this._resizeSlideView('current-slide-container', 'current-presentation');
 		this._resizeSlideView('next-slide-container', 'next-presentation');
+
+		// timeControlContainer should also maintain it's width based on current-slide-container width, better for responsive view
+		let timeControlContainer =
+			this._proxyPresenter.document.querySelector('#timer-container');
+		timeControlContainer.style.width = this._currentSlideCanvas.style.width;
 	}
 
 	_onTransitionStart(e) {
