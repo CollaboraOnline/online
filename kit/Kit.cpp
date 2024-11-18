@@ -3092,6 +3092,7 @@ void lokit_main(
 #if !MOBILEAPP
                 const std::string& childRoot,
                 const std::string& jailId,
+                const std::string& configId,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
                 bool noCapabilities,
@@ -3568,6 +3569,11 @@ void lokit_main(
         std::string pathAndQuery(NEW_CHILD_URI);
         pathAndQuery.append("?jailid=");
         pathAndQuery.append(jailId);
+        if (!configId.empty())
+        {
+            pathAndQuery.append("&configid=");
+            pathAndQuery.append(configId);
+        }
         if (queryVersion)
         {
             char* versionInfo = loKit->getVersionInfo();
