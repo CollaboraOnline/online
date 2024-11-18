@@ -78,8 +78,7 @@ class PresenterConsole {
 										</div>
                                         <div id='current-slide-container'>
                                             <canvas id="current-presentation"></canvas>
-                                        </div>
-										<div id="slideshow-control-container">
+											<div id="slideshow-control-container">
 											<div id="navigation-container">
 												<button type="button" id="prev" disabled>
 													<img src="images/presenterscreen-ButtonSlidePreviousSelected.svg">
@@ -100,6 +99,7 @@ class PresenterConsole {
 												</button>
 											</div>
 										</div>
+                                        </div>
 									</div>
 									<div id="notes-separator"></div>
                                      <div id="second-presentation">
