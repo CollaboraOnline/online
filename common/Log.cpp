@@ -623,7 +623,7 @@ namespace Log
         else
         {
             const auto it = config.find("flush");
-            if (it != config.end() && Util::toLower(it->second) != "false")
+            if (it == config.end() || Util::toLower(it->second) != "false")
             {
                 // Buffered logging, reduces number of write(2) syscalls.
                 channel = static_cast<Poco::Channel*>(new Log::BufferedConsoleChannel());

@@ -44,6 +44,51 @@ bool isInitialized()
     return Config;
 }
 
+/// Recursively extract the sub-keys of the given parent key.
+void extract(const std::string& parentKey, const Poco::Util::AbstractConfiguration* config,
+             std::map<std::string, std::string>& map)
+{
+    std::vector<std::string> keys;
+    config->keys(parentKey, keys);
+    for (const auto& subKey : keys)
+    {
+        const auto key = parentKey + '.' + subKey;
+        if (config->has(key))
+        {
+            map.emplace(key, config->getString(key));
+            extract(key, config, map);
+        }
+    }
+}
+
+std::map<std::string, std::string> extractAll(const Poco::Util::AbstractConfiguration* config)
+{
+    std::map<std::string, std::string> map;
+
+    std::vector<std::string> keys;
+    config->keys(keys);
+    for (const auto& key : keys)
+    {
+        if (config->has(key))
+        {
+            extract(key, config, map);
+        }
+    }
+
+    // These keys have no values, but Poco gives us the values of
+    // their children concatenated, which is worse than useless.
+    // E.g. logging.file: /tmp/coolwsd.lognevertimestamptrue10 days10truefalse
+    map.erase("admin_console.logging");
+    map.erase("logging.anonymize");
+    map.erase("logging.file");
+    map.erase("net.lok_allow");
+    map.erase("net.post_allow");
+    map.erase("per_document.cleanup");
+    map.erase("ssl.sts");
+
+    return map;
+}
+
 std::string getString(const std::string& key, const std::string& def)
 {
     assert(Config && "Config is not initialized.");

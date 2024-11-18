@@ -178,6 +178,7 @@ static std::atomic<int> OutstandingForks(0);
 std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 std::mutex DocBrokersMutex;
 static Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
+static std::string LoggableConfigEntries;
 
 extern "C"
 {
@@ -2061,10 +2062,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         { "logging.file.property[0][@name]", "path" },
         { "logging.file.property[1]", "never" },
         { "logging.file.property[1][@name]", "rotation" },
-        { "logging.file.property[2]", "true" },
-        { "logging.file.property[2][@name]", "compress" },
-        { "logging.file.property[3]", "false" },
-        { "logging.file.property[3][@name]", "flush" },
+        { "logging.file.property[2]", "false" },
+        { "logging.file.property[2][@name]", "archive" },
+        { "logging.file.property[3]", "true" },
+        { "logging.file.property[3][@name]", "compress" },
         { "logging.file.property[4]", "10 days" },
         { "logging.file.property[4][@name]", "purgeAge" },
         { "logging.file.property[5]", "10" },
@@ -2072,7 +2073,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         { "logging.file.property[6]", "true" },
         { "logging.file.property[6][@name]", "rotateOnOpen" },
         { "logging.file.property[7]", "false" },
-        { "logging.file.property[7][@name]", "archive" },
+        { "logging.file.property[7][@name]", "flush" },
         { "logging.file[@enable]", "false" },
         { "logging.level", COOLWSD_LOGLEVEL },
         { "logging.level_startup", "trace" },
@@ -2092,6 +2093,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         { "num_prespawn_children", NUM_PRESPAWN_CHILDREN },
         { "per_document.always_save_on_exit", "false" },
         { "per_document.autosave_duration_secs", "300" },
+        { "per_document.bgsave_priority", "5" },
+        { "per_document.bgsave_timeout_secs", "60" },
+        { "per_document.background_autosave", "true" },
+        { "per_document.background_manualsave", "true" },
         { "per_document.cleanup.cleanup_interval_ms", "10000" },
         { "per_document.cleanup.bad_behavior_period_secs", "60" },
         { "per_document.cleanup.idle_time_secs", "300" },
@@ -2117,7 +2122,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         { "per_view.idle_timeout_secs", "900" },
         { "per_view.out_of_focus_timeout_secs", "300" },
         { "per_view.custom_os_info", "" },
-        { "per_view.min_saved_message_timeout_secs", "0"},
+        { "per_view.min_saved_message_timeout_secs", "0" },
         { "security.capabilities", "true" },
         { "security.seccomp", "true" },
         { "security.jwt_expiry_secs", "1800" },
@@ -2231,14 +2236,11 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     // Load default configuration files, with name independent
     // of Poco's view of app-name, from local file if present.
+    // Fallback to the COOLWSD_CONFIGDIR or --config-file path.
     Poco::Path configPath("coolwsd.xml");
-    if (Poco::Util::Application::findFile(configPath))
-        loadConfiguration(configPath.toString(), PRIO_DEFAULT);
-    else
-    {
-        // Fallback to the COOLWSD_CONFIGDIR or --config-file path.
-        loadConfiguration(ConfigFile, PRIO_DEFAULT);
-    }
+    const std::string configFilePath =
+        Poco::Util::Application::findFile(configPath) ? configPath.toString() : ConfigFile;
+    loadConfiguration(configFilePath, PRIO_DEFAULT);
 
     // Load extra ("plug-in") configuration files, if present
     Poco::File dir(ConfigDir);
@@ -2362,9 +2364,24 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     // First log entry.
     ServerName = config().getString("server_name");
-    LOG_INF("Initializing coolwsd server [" << ServerName << "]. Experimental features are "
-                                            << (EnableExperimental ? "enabled." : "disabled."));
+    LOG_INF("Initializing coolwsd " << Util::getCoolVersion() << " server [" << ServerName
+                                    << "]. Experimental features are "
+                                    << (EnableExperimental ? "enabled." : "disabled."));
 
+    const std::map<std::string, std::string> allConfigs = config::extractAll(&conf);
+    std::ostringstream ossConfig;
+    ossConfig << "Loaded config file [" << configFilePath << "] (non-default values):\n";
+    for (const auto& pair : allConfigs)
+    {
+        const auto it = DefAppConfig.find(pair.first);
+        if (it == DefAppConfig.end() || it->second != pair.second)
+        {
+            ossConfig << '\t' << pair.first << ": " << pair.second << '\n';
+        }
+    }
+
+    LoggableConfigEntries = ossConfig.str();
+    LOG_INF(LoggableConfigEntries);
 
     // Initialize the UnitTest subsystem.
     if (!UnitWSD::init(UnitWSD::UnitType::Wsd, UnitTestLibrary))
@@ -4125,6 +4142,7 @@ public:
            << "\n  IsProxyPrefixEnabled: " << (COOLWSD::IsProxyPrefixEnabled ? "yes" : "no")
            << "\n  OverrideWatermark: " << COOLWSD::OverrideWatermark
            << "\n  UserInterface: " << COOLWSD::UserInterface
+           << "\n  Config: " << LoggableConfigEntries
             ;
 
         std::string smap;
