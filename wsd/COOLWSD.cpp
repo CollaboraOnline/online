@@ -786,7 +786,8 @@ std::mutex COOLWSD::lokit_main_mutex;
 #endif
 #endif
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, unsigned mobileAppDocId)
+std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, const std::string& configId,
+                                                 unsigned mobileAppDocId)
 {
     (void)mobileAppDocId;
     const auto startTime = std::chrono::steady_clock::now();
@@ -829,10 +830,21 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, unsigned 
     // If we fail fast and return, the next document will spawn more children without knowing
     // there are some on the way already. And if the system is slow already, that wouldn't help.
     LOG_TRC("Waiting for NewChildrenCV");
-    if (NewChildrenCV.wait_for(lock, timeout, []()
+    if (NewChildrenCV.wait_for(lock, timeout, [configId]()
                                {
                                    LOG_TRC("Predicate for NewChildrenCV wait: NewChildren.size()=" << NewChildren.size());
-                                   return !NewChildren.empty();
+
+                                   // find a candidate with matching configId
+                                   auto found =
+                                       std::find_if(NewChildren.begin(), NewChildren.end(), [configId](auto candidate)->bool {
+                                           return candidate->getConfigId() == configId;
+                                       });
+
+                                   const bool candidateMatch = found != NewChildren.end();
+                                   // move this candidate into the last position
+                                   if (candidateMatch)
+                                        std::swap(*found, NewChildren.back());
+                                   return candidateMatch;
                                }))
     {
         LOG_TRC("NewChildrenCV wait successful");
