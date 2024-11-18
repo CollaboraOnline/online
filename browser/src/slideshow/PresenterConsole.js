@@ -313,8 +313,15 @@ class PresenterConsole {
 			button.style.height = '5.5vh';
 			button.style.border = '1px solid';
 			button.style.borderColor = this.slideShowColor;
-			button.style.borderRadius = '2.5vw';
 			button.style.justifyContent = 'center';
+			button.style.borderRadius = '50%';
+			// Select the image inside the button
+			const img = button.querySelector('img');
+			if (img) {
+				img.style.width = '100%'; // Scale image to fit within the button
+				img.style.height = '100%'; // Maintain aspect ratio
+				img.style.objectFit = 'cover'; // Maintain aspect ratio
+			}
 		});
 
 		// slideshow-control-container
@@ -323,6 +330,12 @@ class PresenterConsole {
 		);
 		actionBtnContainer.style.display = 'flex';
 		actionBtnContainer.style.gap = '1vw';
+
+		let slideActionImages = actionBtnContainer.querySelectorAll('button img');
+		slideActionImages.forEach((image) => {
+			image.style.height = '100%';
+			image.style.width = '100%';
+		});
 
 		this._first.addEventListener('click', L.bind(this._onToolbarClick, this));
 
