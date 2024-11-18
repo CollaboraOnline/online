@@ -389,14 +389,14 @@ class StatusBar extends JSDialog.Toolbar {
 		}
 
 		var canUserWrite = window.ThisIsAMobileApp ? !app.isReadOnly() : this.map['wopi'].UserCanWrite;
-		var EditDocMode = true;
+		var NotEditDocMode = false;
 		if (app.map['stateChangeHandler'].getItemValue('EditDoc') !== undefined) {
-			EditDocMode = app.map['stateChangeHandler'].getItemValue('EditDoc') === "true";
-			if (!EditDocMode)
+			NotEditDocMode = app.map['stateChangeHandler'].getItemValue('EditDoc') === "false"; // can be true, false or disabled
+			if (NotEditDocMode)
 				app.map.uiManager.showSnackbar(_('To prevent accidental changes, the author has set this file to open as view-only'));
 		}
 
-		canUserWrite = canUserWrite && EditDocMode;
+		canUserWrite = canUserWrite && !NotEditDocMode;
 
 		var permissionContainer = document.getElementById('permissionmode-container');
 		if (permissionContainer) {
@@ -491,7 +491,7 @@ class StatusBar extends JSDialog.Toolbar {
 			}
 		}
 		else if (commandName === '.uno:EditDoc') {
-			state = state === "true";
+			state = state !== "false";
 			this.onPermissionChanged({detail : {
 				perm: state && this.map.isEditMode() ? "edit" : "readonly"
 			} });
