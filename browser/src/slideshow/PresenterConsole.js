@@ -884,9 +884,9 @@ class PresenterConsole {
 			if (notes) elem = this._notes.querySelector('#notes');
 			if (elem) {
 				elem.innerText =
-					notes.toLowerCase() === 'click to add notes'.toLowerCase()
-						? 'No Notes'
-						: notes;
+					notes && notes.toLowerCase() !== 'click to add notes'.toLowerCase()
+						? notes
+						: _('No Notes');
 			}
 		}
 
