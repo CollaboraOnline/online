@@ -55,6 +55,7 @@
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
+#include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <Poco/File.h>
 #include <Poco/Exception.h>
@@ -2858,7 +2859,7 @@ void KitSocketPoll::wakeupHook() { _pollEnd = std::chrono::steady_clock::now(); 
 
 // a LOK compatible poll function merging the functions.
 // returns the number of events signalled
-int KitSocketPoll::kitPoll(int timeoutMicroS)
+int KitSocketPoll::kitPoll(int timeoutMicroS, int idleHint)
 {
     ProfileZone profileZone("KitSocketPoll::kitPoll");
 
@@ -2915,8 +2916,10 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
     }
     else
     {
-        const bool loIdleCond = timeoutMicroS==0; // LO-Idle Timer (check, conditionally)
-        const bool loIdleLong = timeoutMicroS > 2500000; // LO-IdleHandler's SC_IDLE_MAX = 3s, allowing a 500ms lag
+        const bool loIdleCond = idleHint==LibreOfficeKitIdleHintType::LOK_IDLEHINT_COND_IDLE && timeoutMicroS==0; // LO-Idle Timer (check, conditionally)
+        const bool loIdleLong =
+            idleHint==LibreOfficeKitIdleHintType::LOK_IDLEHINT_IDLE ||
+            (idleHint==LibreOfficeKitIdleHintType::LOK_IDLEHINT_COND_IDLE && timeoutMicroS>2500000); // LO-IdleHandler's SC_IDLE_MAX = 3s, allowing a 500ms lag
         if (checkForIdle)
             timeoutMicroS = 0;
 
@@ -2952,7 +2955,7 @@ int KitSocketPoll::kitPoll(int timeoutMicroS)
             auto boolStr = [](bool v) -> const char* { return v ? "T" : "F"; };
             LOG_TRC(
                 "Poll #" << slice << "/" << eventsSignalled << "/" << maxExtraEvents
-                << " idle[" << boolStr(isIdle) << ", lo[c " << boolStr(loIdleCond) << ", l " << boolStr(loIdleLong) << "]], qp " << boolStr(quickPoll)
+                << " idle[" << boolStr(isIdle) << ", lo[" << idleHint << ", c " << boolStr(loIdleCond) << ", l " << boolStr(loIdleLong) << "]], qp " << boolStr(quickPoll)
                 << ", to[" << timeoutMicroSPre/1000 << ", " << realTimeout/1000 << "]: rc " << rc
                 << ", t[+" << (drained.tilesPre-tilesPrePoll) << " " << drained.tilesPre << "-" << drained.tilesSent << "=" << drained.tilesPost << "], msg " << drained.messages
                 << ", used " << std::chrono::duration_cast<std::chrono::milliseconds>(now - startTime).count()
@@ -3037,7 +3040,7 @@ void documentViewCallback(const int type, const char* payload, void* data)
 }
 
 /// Called by LOK main-loop the central location for data processing.
-int pollCallback(void* pData, int timeoutUs)
+int pollCallback(void* pData, int timeoutUs, int idleHint)
 {
     if (timeoutUs < 0)
         timeoutUs = SocketPoll::DefaultPollTimeoutMicroS.count();
@@ -3045,7 +3048,7 @@ int pollCallback(void* pData, int timeoutUs)
     if (!pData)
         return 0;
     else
-        return reinterpret_cast<KitSocketPoll*>(pData)->kitPoll(timeoutUs);
+        return reinterpret_cast<KitSocketPoll*>(pData)->kitPoll(timeoutUs, idleHint);
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
     std::vector<std::shared_ptr<KitSocketPoll>> v;
@@ -3066,7 +3069,7 @@ int pollCallback(void* pData, int timeoutUs)
     {
         lock.unlock();
         for (const auto &p : v)
-            p->kitPoll(timeoutUs);
+            p->kitPoll(timeoutUs, idleHint);
     }
 
     // We never want to exit the main loop

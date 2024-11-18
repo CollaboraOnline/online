@@ -163,14 +163,14 @@ public:
 
 extern "C" {
 
-    int syn_pollCallback(void* /* pData */, int timeoutUs)
+    int syn_pollCallback(void* /* pData */, int timeoutUs, int idleHint)
     {
         assert(GlobalUnitKit);
         bool finished = UnitKit::get().isFinished();
         if (!finished && timeoutUs > 1000) // post initial setup we hope
             GlobalUnitKit->doTest();
         if (GlobalUnitKit->prePollCallback(timeoutUs))
-            return GlobalUnitKit->_pollCallback(GlobalUnitKit->_pollData, timeoutUs);
+            return GlobalUnitKit->_pollCallback(GlobalUnitKit->_pollData, timeoutUs, idleHint);
         return 0;
     }
 

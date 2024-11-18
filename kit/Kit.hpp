@@ -179,7 +179,7 @@ public:
         ~ReEntrancyGuard() { _count--; }
     };
 #endif
-    int kitPoll(int timeoutMicroS);
+    int kitPoll(int timeoutMicroS, int idleHint);
     void setDocument(std::shared_ptr<Document> document) { _document = std::move(document); }
     std::shared_ptr<Document> getDocument() const { return _document; }
 
