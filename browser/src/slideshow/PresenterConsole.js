@@ -544,7 +544,13 @@ class PresenterConsole {
 			case 'restart':
 				this._pause = false;
 				this._ticks = 0;
+				this._drawClock();
 				this._pauseButton();
+				this._proxyPresenter.clearInterval(this._timer);
+				this._timer = this._proxyPresenter.setInterval(
+					L.bind(this._onTimer, this),
+					1000,
+				);
 				break;
 			case 'exit':
 				this._proxyPresenter.close();
