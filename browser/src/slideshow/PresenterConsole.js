@@ -383,11 +383,20 @@ class PresenterConsole {
 		this._slides = this._proxyPresenter.document.createElement('div');
 		this._slides.style.height = '100%';
 		this._slides.style.width = '100%';
+		this._slides.style.display = 'flex';
+		this._slides.style.flexDirection = 'column';
+		this._slides.style.gap = '2vh';
+
 		elem = this._proxyPresenter.document.createElement('div');
 		elem.id = 'slides-preview';
 		elem.style.overflow = 'auto';
-		elem.style.height = '80vh';
+		elem.style.height = '90vh';
 		elem.style.width = '100%';
+		elem.style.display = 'flex';
+		elem.style.flexWrap = 'wrap';
+		elem.style.justifyContent = 'center';
+		elem.style.columnGap = '5vw';
+
 		this._slides.appendChild(elem);
 		this._slides.addEventListener('click', L.bind(this._onClickSlides, this));
 
