@@ -34,7 +34,6 @@ class PresenterConsole {
 			_('Slides'),
 			_('Pause'),
 			_('Restart'),
-			_('Help'),
 			_('Exit'),
 		];
 		let sanitizer = document.createElement('div');
@@ -53,6 +52,11 @@ class PresenterConsole {
                                 <header>
                                 </header>
                                 <main id="main-content">
+								  <div id="toolbar">
+									<button type="button" id="exit" disabled>
+										<img src="images/presenterscreen-ButtonExitPresenterNormal.png">
+									</button>
+                                  </div>
                                   <div id="presentation-content">
                                     <div id="first-presentation">
 										<div id="timer-container">
@@ -99,18 +103,6 @@ class PresenterConsole {
                                             <img id="next-presentation"></img>
                                          </div>
                                     </div>
-                                  </div>
-                                  <div id="toolbar">
-									<div id="separator"></div>
-									<button type="button" id="help" disabled>
-										<img src="images/presenterscreen-ButtonHelpNormal.png">
-										<label>${labels[8]}</label>
-									</button>
-									<div id="separator"></div>
-									<button type="button" id="exit" disabled>
-										<img src="images/presenterscreen-ButtonExitPresenterNormal.png">
-										<label>${labels[9]}</label>
-									</button>
                                   </div>
                                 </main>
                                 <footer>
@@ -260,7 +252,7 @@ class PresenterConsole {
 		elem.style.flex = '1';
 		// consistent gap between label and presentation preview
 		elem.style.gap = '1vh';
-		elem.style.marginTop = '8vh';
+		elem.style.marginTop = '4vh';
 		elem.style.marginLeft = '2vw';
 
 		// Apply common button style to every button in Current slide division
@@ -339,7 +331,7 @@ class PresenterConsole {
 		notesSeparator.style.backgroundColor = 'transparent';
 		notesSeparator.style.color = 'transparent';
 		notesSeparator.style.border = '1px solid';
-		notesSeparator.style.margin = '8vh 0vw';
+		notesSeparator.style.margin = '4vh 0vw';
 		notesSeparator.style.height = '80vh';
 
 		this._second = elem = this._proxyPresenter.document.querySelector(
@@ -350,7 +342,7 @@ class PresenterConsole {
 		elem.style.flex = '1';
 		// consistent gap between label and presentation preview
 		elem.style.gap = '1vh';
-		elem.style.marginTop = '8vh';
+		elem.style.marginTop = '4vh';
 
 		elem = this._proxyPresenter.document.querySelector('#title-next');
 		elem.style.display = 'flex';
@@ -405,16 +397,16 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.querySelector('#toolbar');
 		elem.style.display = 'flex';
 		elem.style.alignItems = 'center';
-		elem.style.justifyContent = 'center';
+		elem.style.justifyContent = 'end';
 		elem.style.backgroundColor = slideShowBGColor;
 		elem.style.overflow = 'hidden';
-		elem.style.position = 'fixed';
-		elem.style.bottom = 0;
 		elem.style.width = '100%';
 		elem.style.gap = '1vw';
+		elem.style.marginTop = '1vh';
 		elem.addEventListener('click', L.bind(this._onToolbarClick, this));
 
-		let list = this._proxyPresenter.document.querySelectorAll('button');
+		let list =
+			this._proxyPresenter.document.querySelectorAll('#toolbar button');
 		for (elem = 0; elem < list.length; elem++) {
 			list[elem].style.display = 'flex';
 			list[elem].style.flexDirection = 'column';
@@ -422,15 +414,7 @@ class PresenterConsole {
 			list[elem].style.alignItems = 'center';
 			list[elem].style.backgroundColor = 'transparent';
 			list[elem].style.color = this.slideShowColor;
-		}
-
-		list = this._proxyPresenter.document.querySelectorAll('[id=separator]');
-		for (elem = 0; elem < list.length; elem++) {
-			list[elem].style.width = '1px';
-			list[elem].style.height = '30px';
-			list[elem].style.borderLeft = '1px';
-			list[elem].style.borderColor = 'white';
-			list[elem].style.borderStyle = 'solid';
+			list[elem].style.border = 'none';
 		}
 
 		elem = this._proxyPresenter.document.querySelector('#timer-container');
