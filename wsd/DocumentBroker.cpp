@@ -282,7 +282,7 @@ void DocumentBroker::pollThread()
     do
     {
         static constexpr std::chrono::milliseconds timeoutMs(COMMAND_TIMEOUT_MS * 5);
-        _childProcess = getNewChild_Blocks(*_poll, _mobileAppDocId);
+        _childProcess = getNewChild_Blocks(*_poll, _configId, _mobileAppDocId);
         if (_childProcess
             || std::chrono::duration_cast<std::chrono::milliseconds>(
                    std::chrono::steady_clock::now() - _threadStart)
@@ -1460,7 +1460,8 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
         // if this wopi server has some shared settings we want to have a subForKit for those settings
         // TODO, this is just for testing, create a new one each time and we don't actually make any
         // real use of this yet
-        COOLWSD::spawnSubForKit("testing-id");
+        _configId = "testing-id";
+        COOLWSD::spawnSubForKit(_configId);
 
         std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
         asyncInstallPresets(sharedSettingsUri, presetsPath);
