@@ -679,6 +679,10 @@ class PresenterConsole {
 		elem = this._proxyPresenter.document.querySelector('#presentation-content');
 		elem.appendChild(this._slides);
 
+		if (this._selectedImg) {
+			this._selectedImg.scrollIntoView();
+		}
+
 		let preview;
 		for (let index = 0; index < this._previews.length; index++) {
 			preview = this._previews[index];
@@ -695,7 +699,7 @@ class PresenterConsole {
 		}
 	}
 
-	_onHideSlides(img) {
+	_onHideSlides() {
 		let elem = this._proxyPresenter.document.querySelector(
 			'#presentation-content',
 		);
@@ -716,18 +720,32 @@ class PresenterConsole {
 			this._proxyPresenter.document.querySelector('#close-slides');
 		closeSlideButton.style.display = 'none';
 
-		if (img && this._proxyPresenter) {
+		if (this._selectedImg && this._proxyPresenter) {
 			this._proxyPresenter.requestAnimationFrame(
 				function (navigator, index) {
 					navigator.displaySlide(index, true);
-				}.bind(null, this._presenter.getNavigator(), img._index),
+				}.bind(null, this._presenter.getNavigator(), this._selectedImg._index),
 			);
+		}
+	}
+
+	_selectImg(img) {
+		if (this._selectedImg) {
+			this._selectedImg.style.border = '';
+			this._selectedImg.style.borderColor = '';
+			this._selectedImg = null;
+		}
+
+		if (img) {
+			this._selectedImg = img;
+			this._selectedImg.style.border = '2px solid';
+			this._selectedImg.style.borderColor = 'white';
 		}
 	}
 
 	_onClickSlides(e) {
 		if (e.target && e.target.localName === 'img') {
-			setTimeout(L.bind(this._onHideSlides, this, e.target), 0);
+			this._selectImg(e.target);
 		}
 
 		e.stopPropagation();
@@ -989,6 +1007,14 @@ class PresenterConsole {
 			notesContentElem.innerText = _('No Notes');
 			if (notes && notes.toLowerCase() !== 'click to add notes'.toLowerCase())
 				notesContentElem.innerText = notes;
+		}
+
+		elem = this._slides.querySelector('#slides-preview');
+		if (elem) {
+			elem = elem.children.item(this._currentIndex);
+			if (elem) {
+				this._selectImg(elem);
+			}
 		}
 
 		let next =
