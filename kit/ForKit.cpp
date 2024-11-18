@@ -491,6 +491,7 @@ static int forkKit(const std::function<void()> &childFunc,
 static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& sysTemplate,
                                 const std::string& loTemplate,
+                                const std::string& configId,
                                 bool useMountNamespaces,
                                 bool queryVersion = false)
 {
@@ -510,24 +511,24 @@ static int createLibreOfficeKit(const std::string& childRoot,
     pid_t childPid = 0;
     if (Util::isKitInProcess())
     {
-        std::thread([childRoot, jailId, sysTemplate, loTemplate, queryVersion,
-                     sysTemplateIncomplete] {
+        std::thread([childRoot, jailId, configId, sysTemplate, loTemplate,
+                     queryVersion, sysTemplateIncomplete] {
             sleepForDebugger();
-            lokit_main(childRoot, jailId, sysTemplate, loTemplate, true, true,
-                       false, queryVersion, DisplayVersion, sysTemplateIncomplete,
-                       spareKitId);
+            lokit_main(childRoot, jailId, configId, sysTemplate, loTemplate, true,
+                       true, false, queryVersion, DisplayVersion,
+                       sysTemplateIncomplete, spareKitId);
         })
             .detach();
     }
     else
     {
-        auto childFunc = [childRoot, jailId, sysTemplate, loTemplate,
-                          useMountNamespaces, queryVersion,
-                          sysTemplateIncomplete]()
+        auto childFunc = [childRoot, jailId, configId, sysTemplate,
+                          loTemplate, useMountNamespaces,
+                          queryVersion, sysTemplateIncomplete]()
         {
-            lokit_main(childRoot, jailId, sysTemplate, loTemplate, NoCapsForKit, NoSeccomp,
-                       useMountNamespaces, queryVersion, DisplayVersion,
-                       sysTemplateIncomplete, spareKitId);
+            lokit_main(childRoot, jailId, configId, sysTemplate, loTemplate,
+                       NoCapsForKit, NoSeccomp, useMountNamespaces, queryVersion,
+                       DisplayVersion, sysTemplateIncomplete, spareKitId);
         };
 
         auto parentFunc = [childRoot, jailId](int pid)
@@ -566,7 +567,8 @@ static int createSubForKit(const std::string& subForKitIdent,
 
     pid_t childPid = 0;
 
-    auto childFunc = [childRoot, sysTemplate, loTemplate, useMountNamespaces]()
+    auto childFunc = [childRoot, sysTemplate, loTemplate,
+                      subForKitIdent, useMountNamespaces]()
     {
         // TODO, here we can presumably apply settings to this forkit for
         // its coolkits to inherit
@@ -581,7 +583,8 @@ static int createSubForKit(const std::string& subForKitIdent,
 
         // launch first coolkit child of this subForKit
         const pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate,
-                                                     loTemplate, useMountNamespaces);
+                                                     loTemplate, subForKitIdent,
+                                                     useMountNamespaces);
         if (forKitPid < 0)
         {
             LOG_FTL("Failed to create a kit process.");
@@ -644,7 +647,8 @@ void forkLibreOfficeKit(const std::string& childRoot,
         const size_t retry = count * 2;
         for (size_t i = 0; ForkCounter > 0 && i < retry; ++i)
         {
-            if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate, useMountNamespaces) < 0)
+            if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate,
+                                                           "", useMountNamespaces) < 0)
             {
                 LOG_ERR("Failed to create a kit process.");
                 ++ForkCounter;
@@ -976,7 +980,8 @@ int forkit_main(int argc, char** argv)
     // We must have at least one child, more are created dynamically.
     // Ask this first child to send version information to master process and trace startup.
     ::setenv("COOL_TRACE_STARTUP", "1", 1);
-    const pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, useMountNamespaces, true);
+    const pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate,
+                                                 "", useMountNamespaces, true);
     if (forKitPid < 0)
     {
         LOG_FTL("Failed to create a kit process.");
