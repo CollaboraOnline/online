@@ -62,11 +62,7 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
         }
         else if message.name == "lok" {
             if let body = message.body as? String {
-                var subBody = String(body.prefix(100))
-                if subBody.count < body.count {
-                    subBody += "..."
-                }
-                COWrapper.LOG_DBG("To Online: \(subBody)")
+                COWrapper.LOG_DBG("To Online: \(message.body)")
 
                 if body == "HULLO" {
                     // Now we know that the JS has started completely
@@ -284,7 +280,7 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                     return
                 }
                 else {
-                    COWrapper.LOG_ERR("TODO implement sending to COOLWSD: \(message.name)")
+                    COWrapper.LOG_ERR("TODO implement sending to COOLWSD: \(message.body)")
                     /*
                     const char *buf = [message.body UTF8String];
                     p.fd = self.document->fakeClientFd;
