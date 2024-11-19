@@ -50,7 +50,6 @@
 #include <Poco/Exception.h>
 #include <Poco/URI.h>
 
-#include <iconv.h>
 #include <string>
 
 bool StorageConnectionManager::SSLAsScheme = true;
