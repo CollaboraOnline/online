@@ -50,6 +50,10 @@ namespace FileUtil
     // As open(). Returns the file descriptor. On error returns -1 and sets errno.
     int openFileAsFD(const std::string& file, int oflag, int mode = 0);
 
+    // As read() and write().
+    int readFromFD(int fd, void *buf, size_t nbytes);
+    int writeToFD(int fd, const void *buf, size_t nbytes);
+
     // As close().
     int closeFD(int fd);
 
@@ -62,8 +66,23 @@ namespace FileUtil
     // As lstat().
     int getLStatOfFile(const std::string& file, struct stat& sb);
 
+    // Wraps unlink()
+    int unlinkFile(const std::string& file);
+
+    // Wraps mkdir(dir.c_str(), S_IRWXU)
+    int makeDirectory(const std::string& dir);
+
     // Wraps std::filesystem::create_directory.
     void createDirectory(const std::string& dir);
+
+    // Wraps std::filesystem::temp_directory_path(), and if that fails, uses obvious fallbacks.
+    std::string getSysTempDirectoryPath();
+
+    /// Returns true iff the path given is writable by our *real* UID.
+    bool isWritable(const char* path);
+
+    /// Update the access-time and modified-time metadata for the given file.
+    bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified);
 
     // End of wrappers for platform-dependent API.
 
@@ -129,12 +148,7 @@ namespace FileUtil
     bool isEmptyDirectory(const char* path);
     inline bool isEmptyDirectory(const std::string& path) { return isEmptyDirectory(path.c_str()); }
 
-    /// Returns true iff the path given is writable by our *real* UID.
-    bool isWritable(const char* path);
     inline bool isWritable(const std::string& path) { return isWritable(path.c_str()); }
-
-    /// Update the access-time and modified-time metadata for the given file.
-    bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified);
 
     /// Copy the source file to the target.
     bool copy(const std::string& fromPath, const std::string& toPath, bool log,
