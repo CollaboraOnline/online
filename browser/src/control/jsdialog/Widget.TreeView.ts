@@ -588,6 +588,26 @@ class TreeViewControl {
 			expander,
 			clickFunction,
 		);
+
+		this.setupEntryContextMenuEvent(tr, entry, treeViewData, builder);
+	}
+
+	setupEntryContextMenuEvent(
+		tr: HTMLElement,
+		entry: TreeEntryJSON,
+		treeViewData: TreeWidget,
+		builder: any,
+	) {
+		tr.addEventListener('contextmenu', (e: Event) => {
+			builder.callback(
+				'treeview',
+				'contextmenu',
+				treeViewData,
+				entry.row,
+				builder,
+			);
+			e.preventDefault();
+		});
 	}
 
 	setupEntryMouseEvents(
