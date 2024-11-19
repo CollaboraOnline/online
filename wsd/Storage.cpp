@@ -13,7 +13,6 @@
 
 #include <chrono>
 #include <memory>
-#include <iconv.h>
 #include <string>
 
 #include <Poco/Exception.h>
