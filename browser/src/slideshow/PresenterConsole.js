@@ -352,8 +352,8 @@ class PresenterConsole {
 		notesSeparator.style.backgroundColor = 'transparent';
 		notesSeparator.style.color = 'transparent';
 		notesSeparator.style.border = '1px solid';
-		notesSeparator.style.margin = '4vh 0vw';
-		notesSeparator.style.height = '80vh';
+		notesSeparator.style.margin = '2vh 0vw';
+		notesSeparator.style.height = '85vh';
 
 		this._second = elem = this._proxyPresenter.document.querySelector(
 			'#second-presentation',
@@ -374,18 +374,21 @@ class PresenterConsole {
 		elem.style.fontSize = '22px';
 		elem.style.justifyContent = 'center';
 
-		elem = this._proxyPresenter.document.querySelector('#next-slide-container');
-		elem.style.width = '25vw';
-		elem.style.height = '50vh';
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
-		elem.style.gap = '2vh';
+		let nextSlideContainer = this._proxyPresenter.document.querySelector(
+			'#next-slide-container',
+		);
+		nextSlideContainer.style.width = '25vw';
+		nextSlideContainer.style.height = '80vh';
+		nextSlideContainer.style.display = 'flex';
+		nextSlideContainer.style.flexDirection = 'column';
+		nextSlideContainer.style.gap = '2vw';
 
 		this._notes = this._proxyPresenter.document.createElement('div');
-		this._notes.style.height = '50vh';
+		this._notes.style.height = 'inherit';
 		this._notes.style.width = '25vw';
 		this._notes.style.paddingTop = '10px';
 		this._notes.style.borderTop = '2px solid transparent';
+		this._notes.style.fontSize = '24px';
 
 		elem = this._proxyPresenter.document.createElement('div');
 		elem.id = 'notes';
@@ -393,10 +396,9 @@ class PresenterConsole {
 		elem.style.width = '100%';
 
 		this._notes.appendChild(elem);
-		elem = this._proxyPresenter.document.createElement('div');
-		elem.style.textAlign = 'center';
 
-		this._notes.appendChild(elem);
+		// Append the container div to the notes section
+		nextSlideContainer.appendChild(this._createTextScalerContainer());
 
 		this._slides = this._proxyPresenter.document.createElement('div');
 		this._slides.style.height = '100%';
@@ -498,6 +500,75 @@ class PresenterConsole {
 		this._onResize();
 	}
 
+	_adjustFontSize(increment) {
+		// Define the font size bounds
+		const MIN_FONT_SIZE = 12;
+		const MAX_FONT_SIZE = 64;
+
+		let currentFontSize = parseInt(this._notes.style.fontSize);
+		let newFontSize = currentFontSize + increment;
+
+		// Ensure the font size stays within bounds
+		if (newFontSize >= MIN_FONT_SIZE && newFontSize <= MAX_FONT_SIZE) {
+			this._notes.style.fontSize = `${newFontSize}px`;
+		}
+	}
+
+	_createTextScalerContainer() {
+		// Create the main container div
+		let fontChangeContainer =
+			this._proxyPresenter.document.createElement('div');
+		fontChangeContainer.id = 'textScaler';
+		fontChangeContainer.style.display = 'none';
+
+		// Create the plus button
+		let plusButton = this._proxyPresenter.document.createElement('button');
+		plusButton.id = 'increase';
+
+		// Create the image for the plus button
+		let plusImage = this._proxyPresenter.document.createElement('img');
+		plusImage.src = 'images/presenterscreen-ButtonPlusNormal.svg';
+		plusImage.alt = 'Increase Font'; // Optional: Add alt text for accessibility
+		// Add the image inside the plus button
+		plusButton.appendChild(plusImage);
+
+		// Create the minus button
+		let minusButton = this._proxyPresenter.document.createElement('button');
+		minusButton.id = 'decrease';
+		// Create the image for the minus button
+		let minusImage = this._proxyPresenter.document.createElement('img');
+		minusImage.src = 'images/presenterscreen-ButtonMinusNormal.svg';
+		minusImage.alt = 'Decrease Font'; // Optional: Add alt text for accessibility
+
+		// Add the image inside the minus button
+		minusButton.appendChild(minusImage);
+
+		// Add buttons to the container div
+		fontChangeContainer.appendChild(plusButton);
+		fontChangeContainer.appendChild(minusButton);
+
+		// common button settings
+		let fontScalerButtons = fontChangeContainer.querySelectorAll('button');
+		fontScalerButtons.forEach(
+			function (button) {
+				button.style.display = 'flex';
+				button.style.flexDirection = 'column';
+				button.style.alignItems = 'center';
+				button.style.backgroundColor = 'transparent';
+				button.style.border = 'none';
+				button.style.margin = '0 5px'; // Add some spacing between buttons
+			}.bind(this),
+		);
+
+		// font change button action listener
+		fontChangeContainer.addEventListener(
+			'click',
+			L.bind(this._onToolbarClick, this),
+		);
+
+		return fontChangeContainer;
+	}
+
 	_pauseButton() {
 		// Update the image source
 		let imgElem = this._proxyPresenter.document.querySelector('#pause>img');
@@ -571,6 +642,12 @@ class PresenterConsole {
 				break;
 			case 'close-slides':
 				this._onHideSlides();
+				break;
+			case 'increase':
+				this._adjustFontSize(2);
+				break;
+			case 'decrease':
+				this._adjustFontSize(-2);
 				break;
 		}
 
@@ -669,7 +746,12 @@ class PresenterConsole {
 			this._proxyPresenter.document.querySelector('#notes-separator');
 		notesSeparator.style.color = this.slideShowColor;
 
-		container.appendChild(this._notes);
+		// show font scaler container on show notes
+		let textScaler = this._proxyPresenter.document.querySelector('#textScaler');
+		textScaler.style.display = 'flex';
+
+		// Insert _notes before textScaler
+		container.insertBefore(this._notes, textScaler);
 		this._onResize();
 	}
 
@@ -678,6 +760,9 @@ class PresenterConsole {
 			this._proxyPresenter.document.querySelector('#notes-separator');
 		notesSeparator.style.color = 'transparent';
 
+		// hide font scaler container on hide notes
+		let textScaler = this._proxyPresenter.document.querySelector('#textScaler');
+		textScaler.style.display = 'none';
 		this._notes.style.borderTopColor = 'transparent';
 
 		this._notes.remove();
