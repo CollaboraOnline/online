@@ -119,6 +119,31 @@ class Dispatcher {
 		this.actionsMap['insertmultimedia'] = function () {
 			L.DomUtil.get('insertmultimedia').click();
 		};
+		this.actionsMap['remotemultimedia'] = function () {
+			app.map.fire('postMessage', {
+				msgId: 'UI_InsertFile',
+				args: {
+					callback: 'Action_InsertMultimedia',
+					mimeTypeFilter: [
+						'video/MP2T',
+						'video/mp4',
+						'video/mpeg',
+						'video/ogg',
+						'video/quicktime',
+						'video/webm',
+						'video/x-matroska',
+						'video/x-ms-wmv',
+						'video/x-msvideo',
+						'audio/aac',
+						'audio/flac',
+						'audio/mp4',
+						'audio/mpeg',
+						'audio/ogg',
+						'audio/x-wav',
+					],
+				},
+			});
+		};
 
 		this.actionsMap['charmapcontrol'] = function () {
 			app.map.sendUnoCommand('.uno:InsertSymbol');

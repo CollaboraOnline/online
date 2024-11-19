@@ -251,6 +251,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
     JsonUtil::findJSONValue(object, "DownloadAsPostMessage", _downloadAsPostMessage);
     JsonUtil::findJSONValue(object, "UserCanNotWriteRelative", _userCanNotWriteRelative);
     JsonUtil::findJSONValue(object, "EnableInsertRemoteImage", _enableInsertRemoteImage);
+    JsonUtil::findJSONValue(object, "EnableInsertRemoteFile", _enableInsertRemoteFile);
     JsonUtil::findJSONValue(object, "DisableInsertLocalImage", _disableInsertLocalImage);
     JsonUtil::findJSONValue(object, "EnableRemoteLinkPicker", _enableRemoteLinkPicker);
     JsonUtil::findJSONValue(object, "EnableShare", _enableShare);
