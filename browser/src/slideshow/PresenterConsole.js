@@ -325,7 +325,7 @@ class PresenterConsole {
 		navigationButtons.forEach((button) => {
 			button.style.width = '2.5vw';
 			button.style.height = '5.5vh';
-			button.style.border = '1px solid';
+			button.style.border = 'none';
 			button.style.borderColor = this.slideShowColor;
 			button.style.justifyContent = 'center';
 			button.style.borderRadius = '50%';
