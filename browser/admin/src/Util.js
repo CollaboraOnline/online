@@ -55,7 +55,7 @@ var Util = Base.extend({
             }
         }
         var unit = 1000;
-        var units = [_(''), ('k'), _('M'), _('G'), _('T'), _('P'), _('E'), _('Z'), _('Y'), _('B')];
+        var units = ['', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y', 'B'];
         for (var i = 0; Math.abs(quantity) >= unit && i < units.length; i++) {
             quantity /= unit;
         }
