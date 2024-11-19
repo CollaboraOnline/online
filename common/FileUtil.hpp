@@ -77,12 +77,15 @@ namespace FileUtil
     void createDirectory(const std::string& dir);
 
     // Wraps std::filesystem::temp_directory_path(), and if that fails, uses obvious fallbacks.
+    // Returns as UTF-8 on Windows. (And surely also on any sane Unix?)
     std::string getSysTempDirectoryPath();
 
     /// Returns true iff the path given is writable by our *real* UID.
+    /// On Windows "real UID" is meaningless.
     bool isWritable(const char* path);
 
     /// Update the access-time and modified-time metadata for the given file.
+    /// Not implemented on Windows.
     bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified);
 
     // End of wrappers for platform-dependent API.

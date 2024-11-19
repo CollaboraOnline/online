@@ -14,6 +14,7 @@
 #include <filesystem>
 #include <iostream>
 
+#include <direct.h>
 #include <io.h>
 
 #define WIN32_LEAN_AND_MEAN
@@ -145,6 +146,16 @@ namespace FileUtil
         return _wopen(string_to_wide_string(file).c_str(), oflag | O_BINARY, mode);
     }
 
+    int readFromFD(int fd, void *buf, size_t nbytes)
+    {
+        return _read(fd, buf, nbytes);
+    }
+
+    int writeToFD(int fd, const void *buf, size_t nbytes)
+    {
+        return _write(fd, buf, nbytes);
+    }
+
     int closeFD(int fd)
     {
         return _close(fd);
@@ -165,9 +176,47 @@ namespace FileUtil
         return getStatOfFile(file, sb);
     }
 
+    int unlinkFile(const std::string& file)
+    {
+        return _wunlink(string_to_wide_string(file).c_str());
+    }
+
+    int makeDirectory(const std::string& dir)
+    {
+        return _wmkdir(string_to_wide_string(dir).c_str());
+    }
+
     void createDirectory(const std::string& dir)
     {
         std::filesystem::create_directory(string_to_wide_string(dir));
+    }
+
+    std::string getSysTempDirectoryPath()
+    {
+        std::wstring path = std::filesystem::temp_directory_path().wstring();
+
+        if (!path.empty())
+            return wide_string_to_string(path);
+
+        // Try some fallbacks
+        const wchar_t *tmp = _wgetenv(L"TEMP");
+        if (!tmp)
+            tmp = _wgetenv(L"TMP");
+
+        // This folder seems to be protected somehow on modern Windows, but oh well.
+        if (!tmp)
+            tmp = L"C:/Windows/Temp";
+
+        return wide_string_to_string(tmp);
+    }
+
+    bool isWritable(const char* path)
+    {
+        if (_waccess(string_to_wide_string(path).c_str(), 0) == 0)
+            return true;
+
+        LOG_INF("No write access to path [" << path << "]: " << strerror(errno));
+        return false;
     }
 } // namespace FileUtil
 
