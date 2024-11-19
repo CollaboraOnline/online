@@ -144,9 +144,7 @@ COOLWSD *coolwsd = nullptr;
     p.events = POLLOUT;
     fakeSocketPoll(&p, 1, -1);
 
-    // This is read in the iOS-specific code in ClientRequestDispatcher::handleIncomingMessage() in COOLWSD.cpp
-    std::string message(url + " " + std::to_string(document.appDocId));
-    fakeSocketWrite(document->fakeClientFd, message.c_str(), message.size());
+    fakeSocketWrite(document->fakeClientFd, url.c_str(), url.size());
 }
 
 /**
