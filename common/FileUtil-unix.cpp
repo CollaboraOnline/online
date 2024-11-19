@@ -19,6 +19,7 @@
 #include <grp.h>
 #include <pwd.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <unistd.h>
 
 #ifdef __linux__
@@ -367,12 +368,22 @@ namespace FileUtil
 
     int openFileAsFD(const std::string& file, int oflag, int mode)
     {
-        return open(file.c_str(), oflag, mode);
+        return ::open(file.c_str(), oflag, mode);
+    }
+
+    int readFromFD(int fd, void *buf, size_t nbytes)
+    {
+        return ::read(fd, buf, nbytes);
+    }
+
+    int writeToFD(int fd, const void *buf, size_t nbytes)
+    {
+        return ::write(fd, buf, nbytes);
     }
 
     int closeFD(int fd)
     {
-        return close(fd);
+        return ::close(fd);
     }
 
     void openFileToIFStream(const std::string& file, std::ifstream& stream, std::ios_base::openmode mode)
@@ -382,12 +393,22 @@ namespace FileUtil
 
     int getStatOfFile(const std::string& file, struct stat& sb)
     {
-        return stat(file.c_str(), &sb);
+        return ::stat(file.c_str(), &sb);
     }
 
     int getLStatOfFile(const std::string& file, struct stat& sb)
     {
-        return lstat(file.c_str(), &sb);
+        return ::lstat(file.c_str(), &sb);
+    }
+
+    int unlinkFile(const std::string& file)
+    {
+        return ::unlink(file.c_str());
+    }
+
+    int makeDirectory(const std::string& dir)
+    {
+        return ::mkdir(dir.c_str(), S_IRWXU);
     }
 
     void createDirectory(const std::string& dir)
@@ -395,6 +416,62 @@ namespace FileUtil
         std::filesystem::create_directory(dir);
     }
 
+    std::string getSysTempDirectoryPath()
+    {
+        // Don't const to allow for automatic move on return.
+        std::string path = std::filesystem::temp_directory_path();
+
+        if (!path.empty())
+            return path;
+
+        // Sensible fallback, though shouldn't be needed.
+        const char *tmp = getenv("TMPDIR");
+        if (!tmp)
+            tmp = getenv("TEMP");
+        if (!tmp)
+            tmp = getenv("TMP");
+        if (!tmp)
+            tmp = "/tmp";
+        return tmp;
+    }
+
+    bool isWritable(const char* path)
+    {
+        if (access(path, W_OK) == 0)
+            return true;
+
+        LOG_INF("No write access to path [" << path << "]: " << strerror(errno));
+        return false;
+    }
+
+    bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified)
+    {
+        // The timestamp is in seconds and microseconds.
+        timeval timestamps[2]
+                          {
+                              {
+                                  tsAccess.tv_sec,
+#ifdef IOS
+                                  (__darwin_suseconds_t)
+#endif
+                                  (tsAccess.tv_nsec / 1000)
+                              },
+                              {
+                                  tsModified.tv_sec,
+#ifdef IOS
+                                  (__darwin_suseconds_t)
+#endif
+                                  (tsModified.tv_nsec / 1000)
+                              }
+                          };
+        if (utimes(filename.c_str(), timestamps) != 0)
+        {
+            LOG_SYS("Failed to update the timestamp of [" << filename << ']');
+            return false;
+        }
+
+        return true;
+    }
 } // namespace FileUtil
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

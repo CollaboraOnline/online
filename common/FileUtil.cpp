@@ -19,11 +19,7 @@
 #include <common/Util.hpp>
 
 #include <exception>
-#include <grp.h>
-#include <pwd.h>
 #include <stdexcept>
-#include <sys/time.h>
-#include <unistd.h>
 
 #include <fcntl.h>
 #include <chrono>
@@ -94,7 +90,7 @@ namespace FileUtil
             do
             {
                 ssize_t n;
-                while ((n = ::read(from, buffer, sizeof(buffer))) < 0 && errno == EINTR)
+                while ((n = readFromFD(from, buffer, sizeof(buffer))) < 0 && errno == EINTR)
                     LOG_TRC("EINTR reading from " << anonymizeUrl(fromPath));
                 if (n < 0)
                     throw std::runtime_error("Failed to read from " + anonymizeUrl(fromPath)
@@ -131,31 +127,12 @@ namespace FileUtil
             LOG_ERR(err);
             closeFD(from);
             closeFD(to);
-            unlink(toPath.c_str());
+            unlinkFile(toPath);
             if (throw_on_error)
                 throw std::runtime_error(err);
         }
 
         return false;
-    }
-
-    std::string getSysTempDirectoryPath()
-    {
-        // Don't const to allow for automatic move on return.
-        std::string path = std::filesystem::temp_directory_path();
-
-        if (!path.empty())
-            return path;
-
-        // Sensible fallback, though shouldn't be needed.
-        const char *tmp = getenv("TMPDIR");
-        if (!tmp)
-            tmp = getenv("TEMP");
-        if (!tmp)
-            tmp = getenv("TMP");
-        if (!tmp)
-            tmp = "/tmp";
-        return tmp;
     }
 
     std::string createRandomTmpDir(std::string root)
@@ -167,7 +144,7 @@ namespace FileUtil
 
         // Don't const to allow for automatic move on return.
         std::string newTmp = root + "/cool-" + Util::rng::getFilename(16);
-        if (::mkdir(newTmp.c_str(), S_IRWXU) < 0)
+        if (makeDirectory(newTmp) < 0)
         {
             LOG_SYS("Failed to create random temp directory [" << newTmp << ']');
             return root;
@@ -184,50 +161,12 @@ namespace FileUtil
 
         // Don't const to allow for automatic move on return.
         std::string newTmp = root + '/' + dirName;
-        if (::mkdir(newTmp.c_str(), S_IRWXU) < 0)
+        if (makeDirectory(newTmp) < 0)
         {
             LOG_SYS("Failed to create temp directory [" << newTmp << ']');
             return root;
         }
         return newTmp;
-    }
-
-    bool isWritable(const char* path)
-    {
-        if (access(path, W_OK) == 0)
-            return true;
-
-        LOG_INF("No write access to path [" << path << "]: " << strerror(errno));
-        return false;
-    }
-
-    bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified)
-    {
-        // The timestamp is in seconds and microseconds.
-        timeval timestamps[2]
-                          {
-                              {
-                                  tsAccess.tv_sec,
-#ifdef IOS
-                                  (__darwin_suseconds_t)
-#endif
-                                  (tsAccess.tv_nsec / 1000)
-                              },
-                              {
-                                  tsModified.tv_sec,
-#ifdef IOS
-                                  (__darwin_suseconds_t)
-#endif
-                                  (tsModified.tv_nsec / 1000)
-                              }
-                          };
-        if (utimes(filename.c_str(), timestamps) != 0)
-        {
-            LOG_SYS("Failed to update the timestamp of [" << filename << ']');
-            return false;
-        }
-
-        return true;
     }
 
     bool copyAtomic(const std::string& fromPath, const std::string& toPath, bool preserveTimestamps)
@@ -331,7 +270,7 @@ namespace FileUtil
 
         while (nbytes)
         {
-            ssize_t n = ::read(fd, p, nbytes);
+            ssize_t n = readFromFD(fd, p, nbytes);
             if (n < 0)
             {
                 if (errno == EINTR)
@@ -354,6 +293,8 @@ namespace FileUtil
     }
 
 } // namespace FileUtil
+
+#if !MOBILEAPP
 
 namespace
 {
@@ -386,6 +327,8 @@ namespace
     static std::set<fs, fsComparator> filesystems;
 
 } // anonymous namespace
+
+#endif
 
 namespace FileUtil
 {
@@ -454,14 +397,12 @@ namespace FileUtil
         }
 
         // we should be able to run just OK with 5GB for production or 1GB for development
-#if defined(__linux__) || defined(__FreeBSD__) || defined(IOS)
 #if ENABLE_DEBUG
         constexpr int64_t gb(1);
 #else
         constexpr int64_t gb(5);
 #endif
         constexpr int64_t ENOUGH_SPACE = gb*1024*1024*1024;
-#endif
 
         return platformDependentCheckDiskSpace(path, ENOUGH_SPACE);
 
