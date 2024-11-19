@@ -1072,13 +1072,18 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_initPreFetchPartTiles: function() {
+		const targetPart = this._selectedPart + this._map._partsDirection;
+
+		if (targetPart < 0 || targetPart >= this._parts)
+			return;
+
 		// check existing timeout and clear it before the new one
 		if (this._partTilePreFetcher)
 			clearTimeout(this._partTilePreFetcher);
 		this._partTilePreFetcher =
 			setTimeout(
 				L.bind(function() {
-					this._preFetchPartTiles(this._selectedPart + this._map._partsDirection, this._selectedMode);
+					this._preFetchPartTiles(targetPart, this._selectedMode);
 				},
 				this),
 				100 /*ms*/);
@@ -5779,7 +5784,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					window.app.console.warn('Tile deleted during rawDelta decompression.');
 					continue;
 				}
-				
+
 				var keyframeImage = null;
 				if (x.isKeyframe)
 					keyframeImage = new ImageData(x.keyframeBuffer, e.data.tileSize, e.data.tileSize);
