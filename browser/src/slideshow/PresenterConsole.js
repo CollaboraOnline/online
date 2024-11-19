@@ -900,13 +900,10 @@ class PresenterConsole {
 
 		if (this._notes) {
 			let notes = this._presenter.getNotes(e.slide);
-			if (notes) elem = this._notes.querySelector('#notes');
-			if (elem) {
-				elem.innerText =
-					notes && notes.toLowerCase() !== 'click to add notes'.toLowerCase()
-						? notes
-						: _('No Notes');
-			}
+			let notesContentElem = this._notes.querySelector('#notes');
+			notesContentElem.innerText = _('No Notes');
+			if (notes && notes.toLowerCase() !== 'click to add notes'.toLowerCase())
+				notesContentElem.innerText = notes;
 		}
 
 		let next =
