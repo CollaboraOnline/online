@@ -29,14 +29,10 @@
 #include <fcntl.h>
 #include <filesystem>
 #include <fstream>
-#include <grp.h>
 #include <mutex>
-#include <pwd.h>
 #include <set>
 #include <stdexcept>
 #include <string>
-#include <sys/time.h>
-#include <unistd.h>
 
 namespace FileUtil
 {
@@ -180,6 +176,7 @@ namespace FileUtil
             if (preserveTimestamps)
             {
                 const Stat st(fromPath);
+#ifndef _WINDOWS
                 updateTimestamps(randFilename,
 #if defined(IOS) || defined(MACOS)
                                  st.sb().st_atimespec, st.sb().st_mtimespec
@@ -187,6 +184,7 @@ namespace FileUtil
                                  st.sb().st_atim, st.sb().st_mtim
 #endif
                                  );
+#endif
             }
 
             // Now rename atomically, replacing any existing files with the same name.
