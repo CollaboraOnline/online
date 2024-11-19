@@ -676,7 +676,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             }
             else if (tokens[1].find(".uno:Signature") != std::string::npos)
             {
-                if (unoSignatureCommand())
+                // See if the command has parameters: if not, annotate with sign cert/key.
+                if (tokens.size() == 2 && unoSignatureCommand())
                 {
                     // .uno:Signature has been sent with parameters from user private info, done.
                     return true;
