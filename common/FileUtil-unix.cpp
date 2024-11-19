@@ -13,6 +13,7 @@
 
 #include <common/Anonymizer.hpp>
 #include <common/FileUtil.hpp>
+#include <common/Log.hpp>
 #include <dirent.h>
 #include <filesystem>
 #include <ftw.h>
@@ -60,7 +61,7 @@ namespace FileUtil
         return path;
     }
 
-#ifndef IOS // iOS-specific implementation in FileUtil-apple.cpp
+#if !defined(IOS) && !defined(MACOS) // iOS-specific implementation in FileUtil-apple.cpp
 
     bool platformDependentCheckDiskSpace(const std::string& path, int64_t enoughSpace)
     {
