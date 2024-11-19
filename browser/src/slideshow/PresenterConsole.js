@@ -973,14 +973,9 @@ class PresenterConsole {
 
 		let elem = this._proxyPresenter.document.querySelector('#title-current');
 		if (elem) {
-			elem.innerText =
-				_('Slide') +
-				' ' +
-				(e.slide + 1) +
-				' ' +
-				_('of') +
-				' ' +
-				this._previews.length;
+			elem.innerText = _('Slide {0} of {1}')
+				.replace('{0}', e.slide + 1)
+				.replace('{1}', this._previews.length);
 		}
 
 		if (this._notes) {
