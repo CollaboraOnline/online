@@ -541,8 +541,6 @@ class TreeViewControl {
 				innerText.innerText = entry.columns[index].text || entry.text;
 			}
 
-			var singleClick = this._singleClickActivate;
-
 			// row sub-elements
 			for (const i in rowElements) {
 				const element = rowElements[i];
@@ -557,7 +555,7 @@ class TreeViewControl {
 			tr,
 			selectionElement,
 			true,
-			singleClick,
+			this._singleClickActivate,
 			builder,
 			treeViewData,
 			entry,
@@ -572,9 +570,39 @@ class TreeViewControl {
 			entry,
 		);
 
+		this.setupEntryMouseEvents(
+			tr,
+			entry,
+			treeViewData,
+			builder,
+			selectionElement,
+			expander,
+			clickFunction,
+			doubleClickFunction,
+		);
+
+		this.setupEntryKeyEvent(
+			tr,
+			entry,
+			selectionElement,
+			expander,
+			clickFunction,
+		);
+	}
+
+	setupEntryMouseEvents(
+		tr: HTMLElement,
+		entry: TreeEntryJSON,
+		treeViewData: TreeWidget,
+		builder: any,
+		selectionElement: HTMLInputElement,
+		expander: HTMLElement,
+		clickFunction: any,
+		doubleClickFunction: any,
+	) {
 		tr.addEventListener('click', clickFunction as any);
 
-		if (!singleClick) {
+		if (!this._singleClickActivate) {
 			if (window.ThisIsTheiOSApp) {
 				// TODO: remove this hack
 				tr.addEventListener('click', () => {
@@ -616,14 +644,6 @@ class TreeViewControl {
 				});
 			}
 		}
-
-		this.setupEntryKeyEvent(
-			tr,
-			entry,
-			selectionElement,
-			expander,
-			clickFunction,
-		);
 	}
 
 	setupEntryKeyEvent(
