@@ -439,8 +439,8 @@ L.Map.include({
 		this.fire('insertmultimedia', {file: file});
 	},
 
-	insertURL: function (url) {
-		this.fire('inserturl', {url: url});
+	insertURL: function (url, urltype) {
+		this.fire('inserturl', {url: url, urltype: urltype});
 	},
 
 	selectBackground: function (file) {

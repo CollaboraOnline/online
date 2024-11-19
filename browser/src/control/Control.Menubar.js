@@ -1992,6 +1992,28 @@ L.Control.Menubar = L.Control.extend({
 			this._map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 		} else if (id === 'insertmultimedia') {
 			L.DomUtil.get('insertmultimedia').click();
+		} else if (id === 'remotemultimedia') {
+			this._map.fire('postMessage', {
+				msgId: 'UI_InsertFile', args: {
+					callback: 'Action_InsertMultimedia', mimeTypeFilter: [
+						'video/MP2T',
+						'video/mp4',
+						'video/mpeg',
+						'video/ogg',
+						'video/quicktime',
+						'video/webm',
+						'video/x-matroska',
+						'video/x-ms-wmv',
+						'video/x-msvideo',
+						'audio/aac',
+						'audio/flac',
+						'audio/mp4',
+						'audio/mpeg',
+						'audio/ogg',
+						'audio/x-wav',
+					]
+				}
+			});
 		} else if (id === 'selectbackground') {
 			app.dispatcher.dispatch('selectbackground');
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
@@ -2241,6 +2263,9 @@ L.Control.Menubar = L.Control.extend({
 			return false;
 
 		if (menuItem.id === 'insertmultimedia' && this._map['wopi'].DisableInsertLocalImage)
+			return false;
+
+		if (menuItem.id === 'remotemultimedia' && !this._map['wopi'].EnableInsertRemoteFile)
 			return false;
 
 		if (menuItem.id && menuItem.id.startsWith('fullscreen-presentation') && this._map['wopi'].HideExportOption)

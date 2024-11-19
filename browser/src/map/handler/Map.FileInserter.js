@@ -65,10 +65,10 @@ L.Map.FileInserter = L.Handler.extend({
 	_onInsertURL: function (e) {
 		if (!this._childId) {
 			app.socket.sendMessage('getchildid');
-			this._toInsertURL[Date.now()] = e.url;
+			this._toInsertURL[Date.now()] = e;
 		}
 		else {
-			this._sendURL(Date.now(), e.url);
+			this._sendURL(Date.now(), e);
 		}
 	},
 
@@ -202,17 +202,17 @@ L.Map.FileInserter = L.Handler.extend({
 		}
 	},
 
-	_sendURL: function (name, url) {
+	_sendURL: function (name, e) {
 		var sectionName = L.CSections.ContentControl.name;
 		var section;
 		if (app.sectionContainer.doesSectionExist(sectionName)) {
 			section = app.sectionContainer.getSectionWithName(sectionName);
 		}
 
-		if (section && section.sectionProperties.picturePicker) {
-			app.socket.sendMessage('contentcontrolevent type=pictureurl' + ' name=' + encodeURIComponent(url));
+		if (e.urltype == "graphicurl" && section && section.sectionProperties.picturePicker) {
+			app.socket.sendMessage('contentcontrolevent name=' + encodeURIComponent(e.url) + ' type=pictureurl');
 		} else {
-			app.socket.sendMessage('insertfile name=' + encodeURIComponent(url) + ' type=graphicurl');
+			app.socket.sendMessage('insertfile name=' + encodeURIComponent(e.url) + ' type=' + e.urltype);
 		}
 	}
 });

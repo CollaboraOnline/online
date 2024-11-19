@@ -24,6 +24,7 @@ L.Map.WOPI = L.Handler.extend({
 	DownloadAsPostMessage: false,
 	UserCanNotWriteRelative: true,
 	EnableInsertRemoteImage: false,
+	EnableInsertRemoteFile: false, /* Separate, because requires explicit integration support */
 	DisableInsertLocalImage: false,
 	EnableInsertRemoteLink: false,
 	EnableShare: false,
@@ -121,6 +122,7 @@ L.Map.WOPI = L.Handler.extend({
 			overridenFileInfo.DownloadAsPostMessage : !!wopiInfo['DownloadAsPostMessage'];
 		this.UserCanNotWriteRelative = !!wopiInfo['UserCanNotWriteRelative'];
 		this.EnableInsertRemoteImage = !!wopiInfo['EnableInsertRemoteImage'];
+		this.EnableInsertRemoteFile = !!wopiInfo['EnableInsertRemoteFile'];
 		this.DisableInsertLocalImage = !!wopiInfo['DisableInsertLocalImage'];
 		this.EnableRemoteLinkPicker = !!wopiInfo['EnableRemoteLinkPicker'];
 		this.SupportsRename = !!wopiInfo['SupportsRename'];
@@ -160,14 +162,21 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 
-		var menuEntries = JSDialog.MenuDefinitions.get('InsertImageMenu');
+		var menuEntriesImage = JSDialog.MenuDefinitions.get('InsertImageMenu');
+		var menuEntriesMultimedia = JSDialog.MenuDefinitions.get('InsertMultimediaMenu');
 
 		if (this.DisableInsertLocalImage) {
-			menuEntries = [];
+			menuEntriesImage = [];
+			menuEntriesMultimedia = [];
 		}
 
 		if (this.EnableInsertRemoteImage) {
-			menuEntries.push({action: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)});
+			menuEntriesImage.push({action: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)});
+		}
+
+		if (this.EnableInsertRemoteFile) {
+			/* Separate, because needs explicit integration support */
+			menuEntriesMultimedia.push({action: 'remotemultimedia', text: _UNO('.uno:InsertAVMedia', '', true)});
 		}
 
 		this._insertImageMenuSetupDone = true;
@@ -538,7 +547,12 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId == 'Action_InsertGraphic') {
 			if (msg.Values) {
-				this._map.insertURL(msg.Values.url);
+				this._map.insertURL(msg.Values.url, "graphicurl");
+			}
+		}
+		else if (msg.MessageId == 'Action_InsertMultimedia') {
+			if (msg.Values) {
+				this._map.insertURL(msg.Values.url, "multimediaurl");
 			}
 		}
 		else if (msg.MessageId == 'Action_InsertLink') {
