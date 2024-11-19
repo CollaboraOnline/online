@@ -1046,6 +1046,7 @@ pot:
         src/slideshow/engine/animationnodes/NodeContext.ts \
         src/slideshow/engine/animationnodes/PropertyAnimationNode.ts \
         src/slideshow/engine/AnimatedElement.ts \
+        src/slideshow/PresenterConsole.js \
         src/slideshow/TransitionsInfo.ts \
         src/slideshow/Transition2d.ts \
         src/slideshow/transition/ClippingTransition.ts \
