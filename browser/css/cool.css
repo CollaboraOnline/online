@@ -329,9 +329,6 @@ body {
 	overflow: hidden;
 	z-index: 990;
 }
-nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
-	bottom: 72px;
-}
 #sidebar-panel {
 	padding: 0px;
 	margin: 0px;
