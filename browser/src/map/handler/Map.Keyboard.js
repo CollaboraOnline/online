@@ -207,7 +207,7 @@ L.Map.Keyboard = L.Handler.extend({
 		Z:        90,
 		LEFTWINDOWKEY :    [91,91], // left window key	: UNKOWN  and also for MAC
 		RIGHTWINDOWKEY:    [92,93], // right window key	: UNKOWN  and also for MAC
-		CONTEXTMENU:       93, // context menu 
+		CONTEXTMENU:       93, // context menu
 		// NUM0:     96,
 		// NUM1:     97,
 		// NUM2:     98,
@@ -402,7 +402,7 @@ L.Map.Keyboard = L.Handler.extend({
 
 		// if we press F1/F2 then the keyboard event is handled twice, use that
 		// the defaultPrevented is set the first time to avoid the double dispatch
-		if (ev.defaultPrevented)
+		if (ev.defaultPrevented && ev.keyCode !== this.keyCodes.S)
 			return;
 
 		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev)) {
