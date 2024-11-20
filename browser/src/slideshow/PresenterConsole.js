@@ -25,17 +25,21 @@ class PresenterConsole {
 	}
 
 	_generateHtml(title) {
-		let labels = [
-			_('Current Slide'),
-			_('Next Slide'),
-			_('Previous'),
-			_('Next'),
-			_('Notes'),
-			_('Slides'),
-			_('Pause'),
-			_('Restart'),
-			_('Exit'),
-		];
+		this.labels = {
+			currentSlide: _('Current Slide'),
+			nextSlide: _('Next Slide'),
+			previous: _('Previous'),
+			next: _('Next'),
+			notes: _('Notes'),
+			slides: _('Slides'),
+			pause: _('Pause'),
+			restart: _('Restart'),
+			resume: _('Resume'),
+			exit: _('Exit'),
+			goBack: _('Go Back'),
+			zoomIn: _('Zoom In'),
+			zoomOut: _('Zoom Out'),
+		};
 		let sanitizer = document.createElement('div');
 		sanitizer.innerText = title;
 
@@ -53,11 +57,11 @@ class PresenterConsole {
                                 </header>
                                 <main id="main-content">
 								  <div id="toolbar">
-									<button type="button" id="close-slides" disabled>
+									<button type="button" id="close-slides" data-cooltip="${this.labels.goBack}" disabled>
 										<img src="images/presenterscreen-ArrowBack.svg">
 									</button>
 									<div id='presentation-page-actions'>
-										<button type="button" id="exit" disabled>
+										<button type="button" id="exit" data-cooltip="${this.labels.exit}" disabled>
 											<img src="images/presenterscreen-ButtonExitPresenterNormal.svg">
 										</button>
 									</div>
@@ -67,10 +71,10 @@ class PresenterConsole {
 										<div id="timer-container">
 											<div id="timer"></div>
 											 <div id="timer-controls">
-												<button type="button" id="pause" disabled>
+												<button type="button" id="pause" data-cooltip="${this.labels.pause}" disabled>
 													<img src="images/presenterscreen-ButtonPauseTimerNormal.svg">
 												</button>
-												<button type="button" id="restart" disabled>
+												<button type="button" id="restart" data-cooltip="${this.labels.restart}" disabled>
 													<img src="images/presenterscreen-ButtonRestartTimerNormal.svg">
 												</button>
 											 </div>
@@ -80,19 +84,19 @@ class PresenterConsole {
                                             <canvas id="current-presentation"></canvas>
 											<div id="slideshow-control-container">
 											<div id="navigation-container">
-												<button type="button" id="prev" disabled>
+												<button type="button" id="prev" data-cooltip="${this.labels.previous}" disabled>
 													<img src="images/presenterscreen-ButtonSlidePreviousSelected.svg">
 												</button>
-												<div id="title-current">${labels[0]}</div>
-												<button type="button" id="next" disabled>
+												<div id="title-current">${this.labels.currentSlide}</div>
+												<button type="button" id="next" data-cooltip="${this.labels.next}" disabled>
 													<img src="images/presenterscreen-ButtonEffectNextSelected.svg">
 												</button>
 											</div>
 											<div id="action-buttons-container">
-												<button type="button" id="notes" disabled>
+												<button type="button" id="notes" data-cooltip="${this.labels.notes}" disabled>
 													<img src="images/presenterscreen-ButtonNotesNormal.svg">
 												</button>
-												<button type="button" id="slides" disabled>
+												<button type="button" id="slides" data-cooltip="${this.labels.slides}" disabled>
 													<img src="images/presenterscreen-ButtonSlideSorterNormal.svg">
 												</button>
 											</div>
@@ -101,7 +105,7 @@ class PresenterConsole {
 									</div>
 									<div id="notes-separator"></div>
                                      <div id="second-presentation">
-                                         <div id="title-next">${labels[1]}</div>
+                                         <div id="title-next">${this.labels.nextSlide}</div>
                                          <div id='next-slide-container'>
                                             <img id="next-presentation"></img>
                                          </div>
@@ -229,7 +233,9 @@ class PresenterConsole {
 		this._proxyPresenter.document.body.style.minHeight = '100vh';
 		this._proxyPresenter.document.body.style.minWidth = '100vw';
 
-		let elem = this._proxyPresenter.document.querySelector('#main-content');
+		let elem;
+		let mainContentContainer =
+			this._proxyPresenter.document.querySelector('#main-content');
 		let slideShowBGColor = window
 			.getComputedStyle(document.documentElement)
 			.getPropertyValue('--color-background-slideshow');
@@ -243,13 +249,13 @@ class PresenterConsole {
 			.getComputedStyle(document.documentElement)
 			.getPropertyValue('--orange1-txt-primary-color');
 
-		elem.style.backgroundColor = slideShowBGColor;
-		elem.style.color = this.slideShowColor;
-		elem.style.fontFamily = slideShowFontFamily;
-		elem.style.display = 'flex';
-		elem.style.flexDirection = 'column';
-		elem.style.minWidth = '100vw';
-		elem.style.minHeight = '100vh';
+		mainContentContainer.style.backgroundColor = slideShowBGColor;
+		mainContentContainer.style.color = this.slideShowColor;
+		mainContentContainer.style.fontFamily = slideShowFontFamily;
+		mainContentContainer.style.display = 'flex';
+		mainContentContainer.style.flexDirection = 'column';
+		mainContentContainer.style.minWidth = '100vw';
+		mainContentContainer.style.minHeight = '100vh';
 
 		elem = this._proxyPresenter.document.querySelector('#presentation-content');
 		elem.style.display = 'flex';
@@ -483,8 +489,96 @@ class PresenterConsole {
 		this._ticks = 0;
 		this._onTimer();
 
+		// initialize tooltip division
+		this.tooltip = this._proxyPresenter.document.createElement('div');
+		this.tooltip.style.position = 'absolute';
+		this.tooltip.style.backgroundColor = '#262626';
+		this.tooltip.style.color = '#e8e8e8';
+		this.tooltip.style.padding = '7px 9px';
+		this.tooltip.style.borderRadius = '6px';
+		this.tooltip.style.fontSize = '14px';
+		this.tooltip.style.fontFamily = slideShowFontFamily;
+		this.tooltip.style.whiteSpace = 'nowrap';
+		this.tooltip.style.pointerEvents = 'none';
+		this.tooltip.style.zIndex = '2147483647';
+		this.tooltip.style.boxShadow = 'rgba(77, 77, 77, 0.5) 0px 0px 4px 0px';
+		this.tooltip.style.display = 'none'; // Initially hidden
+
+		mainContentContainer.append(this.tooltip);
+
+		let allPresenterConsoleButtons =
+			this._proxyPresenter.document.querySelectorAll('button');
+		this._attachTooltips(allPresenterConsoleButtons);
+
 		// simulate resize to Firefox
 		this._onResize();
+	}
+
+	// Show the tooltip
+	_showTooltip(button, text) {
+		// Show the tooltip
+		this.tooltip.style.display = 'block';
+
+		// Set the tooltip text
+		this.tooltip.textContent = text;
+
+		// Get the button's position and tooltip dimensions
+		const rect = button.getBoundingClientRect();
+		const tooltipRect = this.tooltip.getBoundingClientRect();
+
+		// Calculate initial position
+		let left = rect.left + window.scrollX;
+		let top = rect.bottom + window.scrollY + 5;
+
+		// Adjust if tooltip goes off the right edge of the screen
+		if (left + tooltipRect.width > window.innerWidth) {
+			left = window.innerWidth - tooltipRect.width - 10; // Add some padding
+		}
+
+		// Adjust if tooltip goes off the left edge of the screen
+		if (left < 0) {
+			left = 10; // Add some padding
+		}
+
+		// Adjust if tooltip goes off the bottom edge of the screen
+		if (top + tooltipRect.height > window.innerHeight) {
+			top = rect.top + window.scrollY - tooltipRect.height - 5; // Position above the button
+		}
+
+		// Adjust if tooltip goes off the top edge of the screen
+		if (top < 0) {
+			top = rect.bottom + window.scrollY + 5; // Revert to below the button
+		}
+
+		// Apply the adjusted position
+		this.tooltip.style.left = `${left}px`;
+		this.tooltip.style.top = `${top}px`;
+	}
+
+	// Hide the tooltip
+	_hideTooltip() {
+		this.tooltip.style.display = 'none';
+	}
+
+	// Attach tooltips to buttons
+	_attachTooltips(buttons) {
+		buttons.forEach(
+			function (button) {
+				button.addEventListener(
+					'mouseenter',
+					function () {
+						const tooltipText = button.getAttribute('data-cooltip') || 'Button'; // Default text if no attribute
+						this._showTooltip(button, tooltipText);
+					}.bind(this),
+				);
+
+				const hideTooltip = this._hideTooltip.bind(this);
+				button.addEventListener('mouseleave', hideTooltip);
+				// for slides view change element on screen to show all the slides in that case tooltip should be hidden
+				if (button.getAttribute('data-cooltip') === this.labels.slides)
+					button.addEventListener('click', hideTooltip);
+			}.bind(this),
+		);
 	}
 
 	_adjustFontSize(increment) {
@@ -511,6 +605,7 @@ class PresenterConsole {
 		// Create the plus button
 		let plusButton = this._proxyPresenter.document.createElement('button');
 		plusButton.id = 'increase';
+		plusButton.setAttribute('data-cooltip', this.labels.zoomIn); // Set the tooltip text
 
 		// Create the image for the plus button
 		let plusImage = this._proxyPresenter.document.createElement('img');
@@ -522,6 +617,7 @@ class PresenterConsole {
 		// Create the minus button
 		let minusButton = this._proxyPresenter.document.createElement('button');
 		minusButton.id = 'decrease';
+		minusButton.setAttribute('data-cooltip', this.labels.zoomOut); // Set the tooltip text
 		// Create the image for the minus button
 		let minusImage = this._proxyPresenter.document.createElement('img');
 		minusImage.src = 'images/presenterscreen-ButtonMinusNormal.svg';
@@ -558,12 +654,22 @@ class PresenterConsole {
 
 	_pauseButton() {
 		// Update the image source
+		let pauseBtn = this._proxyPresenter.document.querySelector('#pause');
 		let imgElem = this._proxyPresenter.document.querySelector('#pause>img');
-		if (imgElem) {
-			imgElem.src = this._pause
-				? 'images/presenterscreen-ButtonResumeTimerNormal.svg'
-				: 'images/presenterscreen-ButtonPauseTimerNormal.svg';
+		if (this._pause) {
+			imgElem.src = 'images/presenterscreen-ButtonResumeTimerNormal.svg';
+			pauseBtn.setAttribute('data-cooltip', this.labels.resume); // Set the tooltip text
+		} else {
+			imgElem.src = 'images/presenterscreen-ButtonPauseTimerNormal.svg';
+			pauseBtn.setAttribute('data-cooltip', this.labels.pause); // Set the tooltip text
 		}
+
+		// Kind of special case, on restart we will nor show tooltip on play/pause button
+		if (!this._timerReset) {
+			this._showTooltip(pauseBtn, pauseBtn.getAttribute('data-cooltip'));
+			return;
+		}
+		this._timerReset = false;
 	}
 
 	_onKeyDown(e) {
@@ -603,6 +709,7 @@ class PresenterConsole {
 				this._pause = false;
 				this._ticks = 0;
 				this._drawClock();
+				this._timerReset = true;
 				this._pauseButton();
 				this._proxyPresenter.clearInterval(this._timer);
 				this._timer = this._proxyPresenter.setInterval(
