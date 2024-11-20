@@ -238,10 +238,8 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
     JsonUtil::findJSONValue(object, "UserPrivateInfo", _userPrivateInfo);
     JsonUtil::findJSONValue(object, "ServerPrivateInfo", _serverPrivateInfo);
     if (auto settingsJSON = object->get("SettingsJSON").extract<Poco::JSON::Object::Ptr>())
-    {
-        JsonUtil::findJSONValue(settingsJSON, "SharedSettings", _sharedSettingsUri);
         JsonUtil::findJSONValue(settingsJSON, "UserSettings", _userSettingsUri);
-    }
+
     JsonUtil::findJSONValue(object, "WatermarkText", _watermarkText);
     JsonUtil::findJSONValue(object, "UserCanWrite", _userCanWrite);
     JsonUtil::findJSONValue(object, "PostMessageOrigin", _postMessageOrigin);
@@ -354,18 +352,6 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
         _watermarkText = overrideWatermarks;
     if (isTemplate(getFilename()))
         _disableExport = true;
-
-    if (!_sharedSettingsUri.empty())
-    {
-        // TODO for testing
-        // if this wopi server has some shared settings we want to have a subForKit for those settings
-        // TODO, this is just for testing, create a new one each time and we don't actually make any
-        // real use of this yet
-        // In reality we could download the server config around here and consider the
-        // wopi info incomplete until that is available, at which point we kick off the docbroker
-        // in the knowledge that the subForKit is populated
-        COOLWSD::spawnSubForKit("testing-id");
-    }
 }
 
 StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& auth,
