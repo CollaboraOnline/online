@@ -34,9 +34,8 @@ function setupDocument(filePath, copyCertificates = false) {
 
 		copyFile(filePath, newFilePath);
 		if (copyCertificates) {
-			for (const suffix of ['.cert.pem', '.key.pem', '.ca.pem']) {
-				copyFile(filePath + suffix, newFilePath + suffix);
-			}
+			const suffix = '.user-private-info.json';
+			copyFile(filePath + suffix, newFilePath + suffix);
 		}
 	}
 
