@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-14 15:25+0200\n"
-"PO-Revision-Date: 2024-10-27 13:30+0000\n"
-"Last-Translator: Jason Deng <chunhui-deng@cxria.com>\n"
+"PO-Revision-Date: 2024-11-20 18:10+0000\n"
+"Last-Translator: Tron Lee <472734894@qq.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/help/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -1181,7 +1181,8 @@ msgid ""
 "continuous range of data cells, in the direction of the arrow pressed. If "
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
-msgstr ""
+msgstr "从当前单元格开始，沿箭头所指方向，选择包含数据的所有单元格，直至连续数据单元"
+"格区域的末尾。如果同时选择行和列，则会选择一个矩形单元格区域。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-292
 msgid ""
@@ -1193,7 +1194,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "向左移动一张表。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-93
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
@@ -1252,7 +1253,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
 msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
-msgstr ""
+msgstr "其中（/）是数字键盘上的除法符号。选择包含光标的矩阵公式范围。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-178
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
@@ -1260,7 +1261,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-38
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "插入单元格（如在菜单中点击“插入-单元格”）"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-105
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key</kbd>"
