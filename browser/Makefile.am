@@ -968,7 +968,7 @@ pot:
 		src/dom/NotebookbarAccessibility.js \
 		src/slideshow/SlideShowPresenter.ts \
 		src/slideshow/PauseTimer.ts \
-        src/slideshow/PresenterConsole.js \
+		src/slideshow/PresenterConsole.js \
 		src/core/Socket.js \
 		src/core/Debug.js \
 		src/docstate.js \
