@@ -1069,7 +1069,9 @@ class PresenterConsole {
 		// timeControlContainer should also maintain it's width based on current-slide-container width, better for responsive view
 		let timeControlContainer =
 			this._proxyPresenter.document.querySelector('#timer-container');
-		timeControlContainer.style.width = this._currentSlideCanvas.style.width;
+		if (timeControlContainer) {
+			timeControlContainer.style.width = this._currentSlideCanvas.style.width;
+		}
 	}
 
 	_onTransitionStart(e) {
