@@ -759,6 +759,30 @@ class PresenterConsole {
 		e.stopPropagation();
 	}
 
+	_resizePreviews(width, height) {
+		let preview;
+		let previews = this._slides.querySelector('#slides-preview');
+		let size = this._map.getPreview(2000, 0, width, height, {
+			fetchThumbnail: false,
+			autoUpdate: false,
+		});
+
+		for (let index = 0; index < this._previews.length; index++) {
+			preview = previews.children.item(index);
+			if (
+				preview.width !== size.width ||
+				preview.height !== size.height ||
+				width !== size.width ||
+				height !== size.height
+			) {
+				this._map.getPreview(2000, index, size.width, size.height, {
+					autoUpdate: false,
+					slideshow: true,
+				});
+			}
+		}
+	}
+
 	_onShowSlides() {
 		let elem = this._proxyPresenter.document.querySelector('#slides');
 		this.toggleButtonState(elem, true);
@@ -770,11 +794,6 @@ class PresenterConsole {
 
 		elem = this._proxyPresenter.document.querySelector('#next-presentation');
 		let rect = elem.getBoundingClientRect();
-		let size = this._map.getPreview(2000, 0, rect.width, rect.height, {
-			fetchThumbnail: false,
-			autoUpdate: false,
-		});
-
 		let notesSeparator =
 			this._proxyPresenter.document.querySelector('#notes-separator');
 		notesSeparator.style.display = 'none';
@@ -788,20 +807,10 @@ class PresenterConsole {
 			this._selectedImg.scrollIntoView();
 		}
 
-		let preview;
-		for (let index = 0; index < this._previews.length; index++) {
-			preview = this._previews[index];
-			if (
-				!preview ||
-				rect.width !== size.width ||
-				rect.height !== size.height
-			) {
-				this._map.getPreview(2000, index, size.width, size.height, {
-					autoUpdate: false,
-					slideshow: true,
-				});
-			}
-		}
+		this._proxyPresenter.setTimeout(
+			L.bind(this._resizePreviews, this, rect.width, rect.height),
+			0,
+		);
 	}
 
 	_onHideSlides() {
@@ -824,6 +833,8 @@ class PresenterConsole {
 		let closeSlideButton =
 			this._proxyPresenter.document.querySelector('#close-slides');
 		closeSlideButton.style.display = 'none';
+
+		this._onResize();
 	}
 
 	_selectImg(img) {
@@ -967,7 +978,7 @@ class PresenterConsole {
 			typeof this._lastIndex !== 'undefined' &&
 			next
 		) {
-			setTimeout(
+			this._proxyPresenter.setTimeout(
 				L.bind(this._fetchPreview, this, this._lastIndex + 1, next),
 				0,
 			);
@@ -1063,6 +1074,11 @@ class PresenterConsole {
 	}
 
 	_onResize() {
+		if (!this._proxyPresenter) {
+			return;
+		}
+
+		this._proxyPresenter.clearTimeout(this._resizeTimeout);
 		this._resizeSlideView('current-slide-container', 'current-presentation');
 		this._resizeSlideView('next-slide-container', 'next-presentation');
 
@@ -1072,6 +1088,28 @@ class PresenterConsole {
 		if (timeControlContainer) {
 			timeControlContainer.style.width = this._currentSlideCanvas.style.width;
 		}
+
+		this._resizeTimeout = this._proxyPresenter.setTimeout(
+			function () {
+				let previews =
+					this._proxyPresenter.document.querySelector('#slides-preview');
+				if (previews && typeof this._currentIndex !== 'undefined') {
+					let preview = previews.children.item(this._currentIndex);
+					// 80vh
+					let height = this._proxyPresenter.innerHeight * 0.8;
+					// 25vw
+					let width = this._proxyPresenter.innerWidth * 0.25;
+					if (
+						preview.width >= this._proxyPresenter.innerWidth ||
+						preview.height >= this._proxyPresenter.innerHeight ||
+						preview.width < width
+					) {
+						this._resizePreviews(width, height);
+					}
+				}
+			}.bind(this),
+			800,
+		);
 	}
 
 	_onTransitionStart(e) {
