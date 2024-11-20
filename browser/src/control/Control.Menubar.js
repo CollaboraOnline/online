@@ -2149,23 +2149,10 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_createFileIcon: function() {
-		var iconClass = 'document-logo';
-		var docType = this._map.getDocType();
-		if (docType === 'text') {
-			iconClass += ' writer-icon-img';
-		} else if (docType === 'spreadsheet') {
-			iconClass += ' calc-icon-img';
-		} else if (docType === 'presentation') {
-			iconClass += ' impress-icon-img';
-		} else if (docType === 'drawing') {
-			iconClass += ' draw-icon-img';
-		}
-		$('.main-nav').addClass(docType + '-color-indicator');
-
 		var liItem = L.DomUtil.create('li', '');
 		liItem.id = 'document-header';
 		liItem.setAttribute('role', 'menuitem');
-		var aItem = L.DomUtil.create('div', iconClass, liItem);
+		var aItem = L.DomUtil.create('div', 'document-logo', liItem);
 		$(aItem).data('id', 'document-logo');
 		$(aItem).data('type', 'action');
 		aItem.setAttribute('role', 'img');

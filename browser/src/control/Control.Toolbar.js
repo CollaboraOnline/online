@@ -965,7 +965,6 @@ function onCommandStateChanged(e) {
 }
 
 function onUpdateParts(e) {
-	$('#document-container').addClass(e.docType + '-doctype');
 	if (e.docType === 'text') {
 		var current = e.currentPage;
 		var count = e.pages;

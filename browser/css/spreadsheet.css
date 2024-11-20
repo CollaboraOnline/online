@@ -200,11 +200,11 @@
 	box-shadow: 0 0 0 0 transparent, inset 0 0 1px 0 #00000015;
 }
 
-#toolbar-wrapper.spreadsheet.tablet {
+[data-docType='spreadsheet'] #toolbar-wrapper.tablet {
 	z-index: auto;
 }
 
-#toolbar-wrapper.spreadsheet.tablet.readonly {
+[data-docType='spreadsheet'] #toolbar-wrapper.tablet.readonly {
 	z-index: -1;
 }
 
@@ -212,7 +212,7 @@
    - There is no paragraph style dialog in calc
    - The style sidebar pane visible on core side is not implemented in online
 */
-.spreadsheet ~ #main-document-content #sidebar-dock-wrapper .unoEditStyle.sidebar {
+[data-docType='spreadsheet'] .unoEditStyle.sidebar {
 	display: none;
 }
 

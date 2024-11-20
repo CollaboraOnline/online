@@ -286,13 +286,16 @@
 		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--green0-txt-primary-color), 0.1);
 	}
 }
-.text-color-indicator #document-name-input.editable:focus{
+[data-docType='text'] #document-name-input.editable:focus{
 	animation: textPulse 1.5s infinite ease-in-out;
 }
-.presentation-color-indicator #document-name-input.editable:focus{
+[data-docType='presentation'] #document-name-input.editable:focus{
 	animation: presentationPulse 1.5s infinite ease-in-out;
 }
-.spreadsheet-color-indicator #document-name-input.editable:focus{
+[data-docType='drawing'] #document-name-input.editable:focus{
+	animation: presentationPulse 1.5s infinite ease-in-out;
+}
+[data-docType='spreadsheet'] #document-name-input.editable:focus{
 	animation: spreadsheetPulse 1.5s infinite ease-in-out;
 }
 

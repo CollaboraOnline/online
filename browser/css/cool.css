@@ -164,7 +164,7 @@ body {
 	position: absolute;
 	width: 1px;
 }
-#document-container.readonly.mobile.spreadsheet-doctype {
+[data-docType='spreadsheet'] #document-container.readonly.mobile {
 	top: 36px;
 	position: fixed;
 }
