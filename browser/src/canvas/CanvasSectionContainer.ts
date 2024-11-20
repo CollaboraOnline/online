@@ -1336,6 +1336,12 @@ class CanvasSectionContainer {
 		if (this.right === newWidth && this.bottom === newHeight)
 			return;
 
+		// Drawing may happen asynchronously so backup the old contents to avoid
+		// showing a blank canvas.
+		var oldImageData: ImageData = null;
+		if (this.paintedEver)
+			oldImageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+
 		this.canvas.width = newWidth;
 		this.canvas.height = newHeight;
 
@@ -1348,9 +1354,10 @@ class CanvasSectionContainer {
 		app.canvasSize.pX = newWidth;
 		app.canvasSize.pY = newHeight;
 
-		// Avoid black default background if canvas was never painted
-		// since construction.
-		if (!this.paintedEver)
+		// Avoid black default background.
+		if (oldImageData)
+			this.context.putImageData(oldImageData, 0, 0);
+		else
 			this.clearCanvas();
 
 		this.clearMousePositions();
