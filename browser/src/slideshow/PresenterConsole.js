@@ -824,14 +824,6 @@ class PresenterConsole {
 		let closeSlideButton =
 			this._proxyPresenter.document.querySelector('#close-slides');
 		closeSlideButton.style.display = 'none';
-
-		if (this._selectedImg && this._proxyPresenter) {
-			this._proxyPresenter.requestAnimationFrame(
-				function (navigator, index) {
-					navigator.displaySlide(index, true);
-				}.bind(null, this._presenter.getNavigator(), this._selectedImg._index),
-			);
-		}
 	}
 
 	_selectImg(img) {
@@ -850,6 +842,18 @@ class PresenterConsole {
 	_onClickSlides(e) {
 		if (e.target && e.target.localName === 'img') {
 			this._selectImg(e.target);
+
+			if (this._selectedImg && this._proxyPresenter) {
+				this._proxyPresenter.requestAnimationFrame(
+					function (navigator, index) {
+						navigator.displaySlide(index, true);
+					}.bind(
+						null,
+						this._presenter.getNavigator(),
+						this._selectedImg._index,
+					),
+				);
+			}
 		}
 
 		e.stopPropagation();
