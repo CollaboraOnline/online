@@ -1719,10 +1719,6 @@ private:
     /// The current lock-state update request, if any.
     std::unique_ptr<LockStateUpdateRequest> _lockStateUpdateRequest;
 
-    /// The WopiFileInfo of the initial request loading the document for the first time.
-    /// This has a single-use, and then it's reset.
-    std::unique_ptr<WopiStorage::WOPIFileInfo> _initialWopiFileInfo;
-
     std::unique_ptr<StorageBase> _storage;
 
     /// The Quarantine manager.
