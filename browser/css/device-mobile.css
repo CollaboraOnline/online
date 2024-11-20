@@ -188,9 +188,6 @@ textarea.cool-annotation-textarea {
 	background: transparent;
 	align-self: end;
 }
-nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolbar {
-	border-color: transparent;
-}
 .formulabar.unotoolbutton {
 	justify-self: center;
 }
