@@ -915,6 +915,10 @@ pot:
 		admin/src/AdminSocketSettings.js \
 		admin/src/Util.js \
 		js/global.js \
+		src/canvas/sections/CommentListSection.ts \
+		src/canvas/sections/CommentSection.ts \
+		src/canvas/sections/ShapeHandlesSection.ts \
+		src/canvas/sections/URLPopUpSection.ts \
 		src/control/ColorPicker.ts \
 		src/control/Control.AboutDialog.ts \
 		src/control/Control.AddressInputField.ts \
@@ -931,6 +935,7 @@ pot:
 		src/control/Control.LanguageDialog.js \
 		src/control/Control.Menubar.js \
 		src/control/Control.MobileBottomBar.js \
+		src/control/Control.MobileSearchBar.ts \
 		src/control/Control.MobileTopBar.ts \
 		src/control/Control.MobileWizardBuilder.js \
 		src/control/Control.Notebookbar.js \
@@ -941,10 +946,9 @@ pot:
 		src/control/Control.NotebookbarWriter.js \
 		src/control/Control.PartsPreview.js \
 		src/control/Control.PresentationBar.js \
-		src/control/Control.Scroll.Annotation.js \
-		src/control/Control.MobileSearchBar.ts \
-		src/control/Control.ServerAuditDialog.ts \
 		src/control/Control.SaveState.ts \
+		src/control/Control.Scroll.Annotation.js \
+		src/control/Control.ServerAuditDialog.ts \
 		src/control/Control.SheetsBar.js \
 		src/control/Control.StatusBar.js \
 		src/control/Control.Tabs.js \
@@ -956,32 +960,25 @@ pot:
 		src/control/Parts.js \
 		src/control/Permission.js \
 		src/control/Ruler.js \
-		src/control/VRuler.ts \
 		src/control/Signing.js \
 		src/control/Toolbar.js \
+		src/control/VRuler.ts \
 		src/control/jsdialog/Definitions.Menu.ts \
 		src/control/jsdialog/Util.SnackbarController.ts \
 		src/control/jsdialog/Widget.ColorPicker.ts \
 		src/control/jsdialog/Widget.HTMLContent.ts \
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
-		src/dom/NotebookbarAccessibility.js \
-		src/slideshow/SlideShowPresenter.ts \
-		src/slideshow/PauseTimer.ts \
-		src/slideshow/PresenterConsole.js \
-		src/core/Socket.js \
 		src/core/Debug.js \
+		src/core/Socket.js \
+		src/docdispatcher.ts \
 		src/docstate.js \
 		src/docstatefunctions.js \
-		src/docdispatcher.ts \
+		src/dom/NotebookbarAccessibility.js \
 		src/errormessages.js \
 		src/layer/marker/A11yTextInput.js \
 		src/layer/marker/TextInput.js \
 		src/layer/tile/CanvasTileLayer.js \
-		src/canvas/sections/CommentListSection.ts \
-		src/canvas/sections/CommentSection.ts \
-		src/canvas/sections/ShapeHandlesSection.ts \
-		src/canvas/sections/URLPopUpSection.ts \
 		src/main.js \
 		src/map/Clipboard.js \
 		src/map/Map.js \
@@ -990,8 +987,11 @@ pot:
 		src/map/handler/Map.Print.js \
 		src/map/handler/Map.SlideShow.js \
 		src/map/handler/Map.VersionBar.js \
+		src/map/handler/Map.WOPI.js \
 		src/map/handler/Map.Welcome.js \
-		src/map/handler/Map.WOPI.js
+		src/slideshow/PauseTimer.ts \
+		src/slideshow/PresenterConsole.js \
+		src/slideshow/SlideShowPresenter.ts
 
 	html2po --pot --input=html/cool-help.html --output=po/templates/cool-help.pot --duplicates=merge
 	html2po --pot --input=descriptions/google-play.html --output=po/templates/descriptions.pot --duplicates=merge --keepcomments
