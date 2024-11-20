@@ -184,7 +184,8 @@ public:
     BackgroundSaveWatchdog(unsigned mobileAppDocId)
         : _saveCompleted(false)
         , _watchdogThread(
-              [&]()
+            // mobileAppDocId is on the stack, so capture it by value.
+              [mobileAppDocId, this]()
               {
                   Util::setThreadName("kitbgsv_" + Util::encodeId(mobileAppDocId, 3) + "_wdg");
 
