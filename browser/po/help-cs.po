@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-14 15:25+0200\n"
-"PO-Revision-Date: 2024-10-19 22:39+0000\n"
+"PO-Revision-Date: 2024-11-15 21:00+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "help/cs/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -1684,6 +1684,12 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">Hlavní nabídka:</span> Hlavní nabídka se nachází v horní "
+"části a obsahuje množství možností, příkazů pro tisk, úpravy, zobrazení a "
+"další pokročilé činnosti. Hlavní nabídku lze skrýt klepnutím na ikonu <span "
+"class=\"w2ui-icon fold icon-size\"></span> úplně vpravo. Klepnutím na ikonu "
+"<span class=\"w2ui-icon unfold icon-size\"></span> hlavní nabídku opět "
+"zobrazíte."
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
@@ -1996,7 +2002,6 @@ msgstr ""
 "dokumentu, v němž pracujete."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
@@ -2137,14 +2142,12 @@ msgid "comment"
 msgstr "komentář"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
-#, fuzzy
 msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
-"Po klepnutí na ikonu podnabídky (<span class=\"cool-annotation-menu\" style="
-"\"height:0.6cm;width:0.6cm;\"></span>) můžete na komentáře odpovídat, "
-"přesouvat je a mazat je."
+"Po klepnutí na ikonu podnabídky (<span class=\"cool-annotation-menu icon-"
+"size\"></span>) můžete na komentáře odpovídat, přesouvat je a mazat je."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
@@ -3078,15 +3081,14 @@ msgid "Select the text with the existing format"
 msgstr "Vyberte text se stávajícím formátem"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
-"Klepněte na ikonu štětečku formátu <img style=\"height:0.6cm;width:0.6cm;\" "
-"alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Ukazatel myši se změní na "
-"kyblík s barvou."
+"Klepněte na ikonu štětečku formátu <img class=\"icon-size\" alt=\"\" src="
+"\"images/lc_formatpaintbrush.svg\" />. Ukazatel myši se změní na kyblík s "
+"barvou."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
@@ -3202,14 +3204,12 @@ msgid "Format the source cell with the font, color background and more."
 msgstr "Nastavte pro zdrojové buňky písmo, barvu pozadí a další vlastnosti."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
-"Klepněte na ikonu štětečku formátu <img style=\"height:0.6cm;width:0.6cm;\" "
-"alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Ukazatel myši se změní na "
-"kyblík s barvou."
+"Klepněte na ikonu štětečku formátu <img class=\"icon-size\" src=\"images"
+"/lc_formatpaintbrush.svg\" />. Ukazatel myši se změní na kyblík s barvou."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
