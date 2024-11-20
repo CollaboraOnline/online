@@ -445,6 +445,7 @@ class PresenterConsole {
 
 		elem = this._proxyPresenter.document.querySelector('#timer');
 		elem.style.fontSize = '22px';
+		elem.style.width = '85px';
 		elem.style.color = this.slideShowColor;
 
 		let timeControlElem =
