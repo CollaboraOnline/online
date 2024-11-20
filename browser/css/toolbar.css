@@ -334,7 +334,7 @@
 	background-color: var(--color-main-background);
 	background-image: none;
 	outline: none;
-	flex: 2;
+	flex: 0.4 1 auto;
 	text-align: left;
 }
 
