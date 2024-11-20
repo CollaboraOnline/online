@@ -933,8 +933,6 @@ pot:
 		src/control/Control.MobileBottomBar.js \
 		src/control/Control.MobileTopBar.ts \
 		src/control/Control.MobileWizardBuilder.js \
-		src/control/Control.MobileWizardWindow.js \
-		src/control/Control.MobileWizard.js \
 		src/control/Control.Notebookbar.js \
 		src/control/Control.NotebookbarBuilder.js \
 		src/control/Control.NotebookbarCalc.js \
@@ -948,7 +946,6 @@ pot:
 		src/control/Control.ServerAuditDialog.ts \
 		src/control/Control.SaveState.ts \
 		src/control/Control.SheetsBar.js \
-		src/control/Control.Sidebar.ts \
 		src/control/Control.StatusBar.js \
 		src/control/Control.Tabs.js \
 		src/control/Control.Toolbar.js \
@@ -962,158 +959,21 @@ pot:
 		src/control/VRuler.ts \
 		src/control/Signing.js \
 		src/control/Toolbar.js \
-		src/control/jsdialog/Component.Toolbar.ts \
 		src/control/jsdialog/Definitions.Menu.ts \
-		src/control/jsdialog/Util.Dropdown.js \
-		src/control/jsdialog/Util.Events.ts \
-		src/control/jsdialog/Util.KeyboardGridNavigation.ts \
-		src/control/jsdialog/Util.FocusCycle.js \
-		src/control/jsdialog/Util.MessageRouter.ts \
-		src/control/jsdialog/Util.ModalHelper.js \
-		src/control/jsdialog/Util.OnDemandRenderer.ts \
-		src/control/jsdialog/Util.ScrollableBar.ts \
 		src/control/jsdialog/Util.SnackbarController.ts \
-		src/control/jsdialog/Util.StateChange.ts \
-		src/control/jsdialog/Widget.ButtonBox.ts \
-		src/control/jsdialog/Widget.Calendar.js \
-		src/control/jsdialog/Widget.ColorPickerButton.js \
 		src/control/jsdialog/Widget.ColorPicker.ts \
-		src/control/jsdialog/Widget.Combobox.js \
-		src/control/jsdialog/Widget.Containers.ts \
-		src/control/jsdialog/Widget.DrawingArea.js \
-		src/control/jsdialog/Widget.FormulabarEdit.js \
-		src/control/jsdialog/Widget.Frame.js \
 		src/control/jsdialog/Widget.HTMLContent.ts \
-		src/control/jsdialog/Widget.IconView.ts \
-		src/control/jsdialog/Widget.MenuButton.js \
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
-		src/control/jsdialog/Widget.MobileTabControl.js \
-		src/control/jsdialog/Widget.MultilineEdit.js \
-		src/control/jsdialog/Widget.Progressbar.js \
-		src/control/jsdialog/Widget.ScrolledWindow.js \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
-		src/control/jsdialog/Widget.Timefield.js \
-		src/control/jsdialog/Widget.TreeView.ts \
 		src/dom/NotebookbarAccessibility.js \
-		src/slideshow/SlideCache.ts \
-		src/slideshow/SlideCompositor.ts \
-		src/slideshow/LayerRenderer.ts \
-		src/slideshow/LayerDrawing.ts \
-		src/slideshow/LayersCompositor.ts \
-		src/slideshow/RenderContext.ts \
-		src/slideshow/SlideRenderer.ts \
 		src/slideshow/SlideShowPresenter.ts \
-		src/slideshow/SimpleTextureRenderer.ts \
-		src/slideshow/StaticTextRenderer.ts \
 		src/slideshow/PauseTimer.ts \
-		src/slideshow/TransitionFactory.ts \
-        src/slideshow/engine/ActivityFactory.ts \
-        src/slideshow/engine/ActivityQueue.ts \
-        src/slideshow/engine/AnimationFactory.ts \
-        src/slideshow/engine/Duration.ts \
-        src/slideshow/engine/Effect.ts \
-        src/slideshow/engine/ElapsedTime.ts \
-        src/slideshow/engine/EventMultiplexer.ts \
-        src/slideshow/engine/Event.ts \
-        src/slideshow/engine/FrameSynchronization.ts \
-        src/slideshow/engine/InteractiveAnimationSequence.ts \
-        src/slideshow/engine/MetaPresentation.ts \
-        src/slideshow/engine/MetaSlide.ts \
-        src/slideshow/engine/NextEffectEventArray.ts \
-        src/slideshow/engine/SlideAnimations.ts \
-        src/slideshow/engine/SlideChangeBase.ts \
-        src/slideshow/engine/SlideShowHandler.ts \
-        src/slideshow/engine/SlideShowNavigator.ts \
-        src/slideshow/engine/SlideTransition.ts \
-        src/slideshow/engine/SourceEventElement.ts \
-        src/slideshow/engine/TimerEventQueue.ts \
-        src/slideshow/engine/Timing.ts \
-        src/slideshow/engine/tools.ts \
-        src/slideshow/engine/activities/AnimationActivity.ts \
-        src/slideshow/engine/activities/ActivityBase.ts \
-        src/slideshow/engine/activities/SimpleContinuousActivityBase.ts \
-        src/slideshow/engine/activities/ContinuousActivityBase.ts \
-        src/slideshow/engine/activities/ContinuousKeyTimeActivityBase.ts \
-        src/slideshow/engine/activities/DiscreteActivityBase.ts \
-        src/slideshow/engine/activities/FromToByActivity.ts \
-        src/slideshow/engine/activities/SetActivity.ts \
-        src/slideshow/engine/activities/SimpleActivity.ts \
-        src/slideshow/engine/activities/ValueListActivity.ts \
-        src/slideshow/engine/animationnodes/BaseNode.ts \
-        src/slideshow/engine/animationnodes/AnimationBaseNode.ts \
-        src/slideshow/engine/animationnodes/AnimationColorNode.ts \
-        src/slideshow/engine/animationnodes/AnimationNodeInfo.ts \
-        src/slideshow/engine/animationnodes/AnimationSetNode.ts \
-        src/slideshow/engine/animationnodes/AnimationTransformNode.ts \
-        src/slideshow/engine/animationnodes/AnimationTransitionFilterNode.ts \
-        src/slideshow/engine/animationnodes/BaseContainerNode.ts \
-        src/slideshow/engine/animationnodes/NodeContext.ts \
-        src/slideshow/engine/animationnodes/PropertyAnimationNode.ts \
-        src/slideshow/engine/AnimatedElement.ts \
         src/slideshow/PresenterConsole.js \
-        src/slideshow/TransitionsInfo.ts \
-        src/slideshow/Transition2d.ts \
-        src/slideshow/transition/ClippingTransition.ts \
-		src/slideshow/transition/FadeTransition.ts \
-		src/slideshow/CanvasLoader.ts \
-		src/slideshow/Transition3d.ts \
-		src/slideshow/Operation.ts \
-		src/slideshow/Primitive.ts \
-		src/slideshow/types.ts \
-		src/slideshow/transition/PlusTransition.ts \
-		src/slideshow/transition/CircleTransition.ts \
-		src/slideshow/transition/VenetianTransition.ts \
-		src/slideshow/transition/WedgeTransition.ts \
-		src/slideshow/transition/BoxTransition.ts \
-		src/slideshow/transition/OvalTransition.ts\
-		src/slideshow/transition/DiamondTransition.ts\
-		src/slideshow/transition/CheckersTransition.ts \
-		src/slideshow/transition/PushTransition.ts \
-		src/slideshow/transition/SimpleDissolveTransition.ts \
-		src/slideshow/transition/BarsTransition.ts \
-		src/slideshow/transition/CutTransition.ts \
-		src/slideshow/transition/WheelTransition.ts \
-		src/slideshow/transition/UncoverTransition.ts \
-		src/slideshow/transition/CoverTransition.ts \
-		src/slideshow/transition/SplitTransition.ts \
-		src/slideshow/transition/WipeTransition.ts \
-		src/slideshow/transition/IrisWipeTransition.ts \
-		src/slideshow/transition/EllipseWipeTransition.ts \
-		src/slideshow/transition/SlideWipeTransition.ts \
-		src/slideshow/transition/DiagonalTransition.ts \
-		src/slideshow/transition/PushWipeTransition.ts \
-		src/slideshow/transition/CombTransition.ts \
-		src/slideshow/transition/BarWipeTransition.ts \
-		src/slideshow/transition/NoTransition.ts \
-		src/slideshow/transition3d/SimpleTransition.ts \
-		src/slideshow/transition3d/CubeTransition.ts \
-		src/slideshow/transition3d/HelixTransition.ts \
-		src/slideshow/transition3d/FallTransition.ts \
-		src/slideshow/transition3d/ReflectionTransition.ts \
-		src/slideshow/transition3d/RochadeTransition.ts \
-		src/slideshow/transition3d/TurnDownTransition.ts \
-		src/slideshow/transition3d/Venetian3dTransition.ts \
-		src/slideshow/transition3d/TurnAroundTransition.ts \
-		src/slideshow/transition3d/PermTextureTransition.ts \
-		src/slideshow/transition3d/StaticNoiseTransition.ts \
-		src/slideshow/transition3d/RippleTransition.ts \
-		src/slideshow/transition3d/NewsFlashTransition.ts \
-		src/slideshow/transition3d/DissolveTransition3d.ts \
-		src/slideshow/transition3d/FlipTilesTransition.ts \
-		src/slideshow/transition3d/MicsShapeWipeTransition.ts \
-		src/slideshow/operation/RotateAndScaleDepth.ts \
-		src/slideshow/operation/SEllipseTranslate.ts \
-		src/slideshow/operation/SRotate.ts \
-		src/slideshow/operation/SScale.ts \
-		src/slideshow/operation/STranslate.ts \
 		src/core/Socket.js \
 		src/core/Debug.js \
 		src/docstate.js \
 		src/docstatefunctions.js \
 		src/docdispatcher.ts \
-		src/app/DocUtil.ts \
-		src/app/DocEvents.ts \
-		src/app/GraphicSelectionMiddleware.ts \
 		src/errormessages.js \
 		src/layer/marker/A11yTextInput.js \
 		src/layer/marker/TextInput.js \
@@ -1127,7 +987,6 @@ pot:
 		src/map/Map.js \
 		src/map/handler/Map.Feedback.js \
 		src/map/handler/Map.FileInserter.js \
-		src/map/handler/Map.Keyboard.js \
 		src/map/handler/Map.Print.js \
 		src/map/handler/Map.SlideShow.js \
 		src/map/handler/Map.VersionBar.js \
