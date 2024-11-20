@@ -148,7 +148,6 @@ test_base_sources = \
 	$(wsd_sources)
 
 common_sources = \
-	../common/Anonymizer.cpp \
 	../common/Authorization.cpp \
 	../common/ConfigUtil.cpp \
 	../common/DummyTraceEventEmitter.cpp \
