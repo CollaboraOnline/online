@@ -193,6 +193,11 @@ class LayerDrawing {
 
 	public invalidateAll(): void {
 		this.slideCache.invalidateAll();
+		this.slideTextFieldsMap.clear();
+		this.cachedTextFields.clear();
+		this.cachedBackgrounds.clear();
+		this.cachedMasterPages.clear();
+		this.cachedDrawPages.clear();
 	}
 
 	public getCanvasSize(): [number, number] {
