@@ -35,7 +35,6 @@ class PresenterConsole {
 			pause: _('Pause'),
 			restart: _('Restart'),
 			resume: _('Resume'),
-			exit: _('Exit'),
 			goBack: _('Go Back'),
 			zoomIn: _('Zoom In'),
 			zoomOut: _('Zoom Out'),
@@ -60,11 +59,6 @@ class PresenterConsole {
 									<button type="button" id="close-slides" data-cooltip="${this.labels.goBack}" disabled>
 										<img src="images/presenterscreen-ArrowBack.svg">
 									</button>
-									<div id='presentation-page-actions'>
-										<button type="button" id="exit" data-cooltip="${this.labels.exit}" disabled>
-											<img src="images/presenterscreen-ButtonExitPresenterNormal.svg">
-										</button>
-									</div>
                                   </div>
                                   <div id="presentation-content">
                                     <div id="first-presentation">
@@ -423,6 +417,7 @@ class PresenterConsole {
 		elem.style.width = '100%';
 		elem.style.gap = '1vw';
 		elem.style.margin = '1vh 0vw';
+		elem.style.height = '6vh';
 		elem.addEventListener('click', L.bind(this._onToolbarClick, this));
 
 		let list =
@@ -439,15 +434,11 @@ class PresenterConsole {
 			list[elem].style.border = 'none';
 		}
 
-		let presentationPageActionContainer =
-			this._proxyPresenter.document.querySelector('#presentation-page-actions');
-		presentationPageActionContainer.style.display = 'flex';
-		presentationPageActionContainer.style.marginLeft = 'auto';
-
 		// By default we will hide the Back button to jum from Slides view to normal view
 		let closeSlideButton =
 			this._proxyPresenter.document.querySelector('#close-slides');
 		closeSlideButton.style.display = 'none';
+		closeSlideButton.style.marginLeft = '10px';
 
 		elem = this._proxyPresenter.document.querySelector('#timer-container');
 		elem.style.display = 'flex';
@@ -718,9 +709,6 @@ class PresenterConsole {
 					L.bind(this._onTimer, this),
 					1000,
 				);
-				break;
-			case 'exit':
-				this._proxyPresenter.close();
 				break;
 			case 'help':
 				// TODO. add help.collaboraonline.com
