@@ -440,23 +440,15 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("UserFriendlyName", userNameString);
 
             Poco::JSON::Object::Ptr userPrivateInfo = new Poco::JSON::Object();
-            // If there is matching sign data next to the file to be loaded, use it.
-            std::string signatureCert = readFileToString(localPath + ".cert.pem");
-            if (!signatureCert.empty())
+            // If there is matching user private info data next to the file to be loaded, use it.
+            std::string userPrivateInfoString = readFileToString(localPath + ".user-private-info.json");
+            if (!userPrivateInfoString.empty())
             {
-                userPrivateInfo->set("SignatureCert", signatureCert);
+                if (JsonUtil::parseJSON(userPrivateInfoString, userPrivateInfo))
+                {
+                    fileInfo->set("UserPrivateInfo", userPrivateInfo);
+                }
             }
-            std::string signatureKey = readFileToString(localPath + ".key.pem");
-            if (!signatureKey.empty())
-            {
-                userPrivateInfo->set("SignatureKey", signatureKey);
-            }
-            std::string signatureCa = readFileToString(localPath + ".ca.pem");
-            if (!signatureCa.empty())
-            {
-                userPrivateInfo->set("SignatureCa", signatureCa);
-            }
-            fileInfo->set("UserPrivateInfo", userPrivateInfo);
 
             fileInfo->set("UserCanWrite", (requestDetails.getParam("permission") != "readonly") ? "true": "false");
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
