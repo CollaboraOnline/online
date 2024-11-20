@@ -34,7 +34,6 @@ L.Control.Tabs = L.Control.extend({
 
 	_initialize: function () {
 		this._initialized = true;
-		this._tabsInitialized = false;
 		this._spreadsheetTabs = {};
 		this._tabForContextMenu = 0;
 		var map = this._map;
@@ -130,12 +129,6 @@ L.Control.Tabs = L.Control.extend({
 			return;
 		}
 		if (docType === 'spreadsheet') {
-			if (!this._tabsInitialized) {
-				// make room for the preview
-				var docContainer = this._map.options.documentContainer;
-				L.DomUtil.addClass(docContainer, 'spreadsheet-document');
-				this._tabsInitialized = true;
-			}
 
 			// Save scroll position
 			var horizScrollPos = 0;
