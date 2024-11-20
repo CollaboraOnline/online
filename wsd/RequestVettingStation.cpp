@@ -36,8 +36,7 @@ extern std::pair<std::shared_ptr<DocumentBroker>, std::string>
 findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
                       const std::string& docKey, const std::string& configId,
                       const std::string& id, const Poco::URI& uriPublic,
-                      unsigned mobileAppDocId,
-                      std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
+                      unsigned mobileAppDocId);
 
 namespace
 {
@@ -430,8 +429,7 @@ bool RequestVettingStation::createDocBroker(const std::string& docKey,
     // Request a kit process for this doc.
     const auto [docBroker, error] =
         findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey,
-                              configId, _id, uriPublic,
-                              _mobileAppDocId, /*wopiFileInfo=*/nullptr);
+                              configId, _id, uriPublic, _mobileAppDocId);
 
     _docBroker = docBroker;
     if (_docBroker)
