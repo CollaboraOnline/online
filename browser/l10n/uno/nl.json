@@ -79,6 +79,7 @@
 "Cross-~reference...":"Kruisve~rwijzing...",
 "Currency":"Valuta",
 "Current ~Index":"Huidige ~index",
+"Curve":"Boog",
 "Curve Down":"Krullen naar beneden",
 "Curve Up":"Krullen naar boven",
 "Cycle Case":"Schrijfwijze wisselen",
@@ -255,7 +256,7 @@
 "Insert Slide":"Dia invoegen",
 "Insert Special Character":"Speciale tekens invoegen",
 "Insert Special Characters":"Speciale tekens",
-"Insert Text Box":"Tekstvak invoegen",
+"Insert Text Box":"Tekstvak",
 "Insert Text Box (double click for multi-selection)":"Tekstvak invoegen (dubbelklikken voor meervoudige selectie)",
 "Insert Titles...":"Namen titels en assen...",
 "Insert Tre~nd Line...":"Tre~ndlijn invoegen...",
@@ -390,6 +391,7 @@
 "Shadow":"Schaduw",
 "Sheet R~ight-To-Left":"Blad van ~rechts naar links",
 "Show":"Weergeven",
+"Show Comme~nts":"Notities ~weergeven",
 "Show Navigator Window":"Venster Navigator weergeven",
 "Show track changes":"Bijgehouden wijzigingen weergeven",
 "Sho~w Rows":"~Rij(en) weergeven",
@@ -632,7 +634,7 @@
 "~Word Joiner":"~Woordverbinder",
 "~Wrap":"Tekst~omloop",
 "~Z-test...":"~Z-toets...",
-"~Zero-width Space":"Spatie met ~geen breedte",
+"~Zero-width Space":"Spatie ~zonder breedte",
 "~lowercase":"~kleine letters",
 "~tOGGLE cASE":"Hoofd-/kleine ~letters"
 }
