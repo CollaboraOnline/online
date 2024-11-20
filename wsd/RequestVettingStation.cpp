@@ -143,12 +143,40 @@ void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
 }
 
 void RequestVettingStation::createWopiDocBroker(const std::string& docKey,
-                                                const std::string& configId,
                                                 const std::string& url,
                                                 const Poco::URI& uriPublic,
                                                 bool isReadOnly)
 {
-    assert(_checkFileInfo && "_checkFileInfo must exist");
+    assert(_checkFileInfo && _checkFileInfo->wopiInfo() && "wopiInfo must exist");
+
+    std::string configId;
+
+    std::string sharedSettingsUri;
+    if (auto settingsJSON = _checkFileInfo->wopiInfo()->get("SettingsJSON").extract<Poco::JSON::Object::Ptr>())
+        JsonUtil::findJSONValue(settingsJSON, "SharedSettings", sharedSettingsUri);
+    if (!sharedSettingsUri.empty())
+    {
+        // If this wopi server has some shared settings we want to ensure a subForKit for those
+        // settings.
+        // TODO, this is just for testing, create a new one each time and we don't actually make any
+        // real use of this yet
+        // In reality we could download the server config around here and consider the
+        // wopi info incomplete until that is available, at which point we kick off the docbroker
+        // in the knowledge that the subForKit is populated
+        configId = "testing-id";
+
+#if 0
+        // TODO for testing, just put these into the same destination autotext as
+        // user autotext for now
+
+        // if this wopi server has some shared settings we want to have a subForKit for those settings
+        // TODO, this is just for testing
+        std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
+        asyncInstallPresets(sharedSettingsUri, presetsPath);
+#endif
+
+        COOLWSD::spawnSubForKit(configId);
+    }
 
     std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
     // We have a valid CheckFileInfo result; Create the DocBroker.
@@ -265,7 +293,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                              _checkFileInfo->state() == CheckFileInfo::State::Pass &&
                              _checkFileInfo->wopiInfo())
                     {
-                        createWopiDocBroker(docKey, url, "testing-id", uriPublic, isReadOnly);
+                        createWopiDocBroker(docKey, url, uriPublic, isReadOnly);
                     }
                     else if (_checkFileInfo == nullptr ||
                              _checkFileInfo->state() == CheckFileInfo::State::None ||
