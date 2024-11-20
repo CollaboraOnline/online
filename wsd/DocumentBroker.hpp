@@ -236,15 +236,13 @@ public:
 
     DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
                    const std::string& docKey, const std::string& configId,
-                   unsigned mobileAppDocId,
-                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
+                   unsigned mobileAppDocId);
 
 protected:
     /// Used by derived classes.
     DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
                    const std::string& docKey, const std::string& configId)
-        : DocumentBroker(type, uri, uriPublic, docKey, configId,
-                         /*mobileAppDocId=*/0, /*wopiFileInfo=*/nullptr)
+        : DocumentBroker(type, uri, uriPublic, docKey, configId, /*mobileAppDocId=*/0)
     {
     }
 
