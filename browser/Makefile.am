@@ -908,6 +908,7 @@ libs:
 pot:
 	xgettext --from-code=UTF-8 --language=JavaScript --keyword=_ --output=po/templates/cool-ui.pot \
 		admin/admin.strings.js \
+		admin/src/AdminClusterOverview.js \
 		admin/src/AdminSocketAnalytics.js \
 		admin/src/AdminSocketBase.js \
 		admin/src/AdminSocketOverview.js \
@@ -916,6 +917,7 @@ pot:
 		js/global.js \
 		src/control/ColorPicker.ts \
 		src/control/Control.AboutDialog.ts \
+		src/control/Control.AddressInputField.ts \
 		src/control/Control.AlertDialog.js \
 		src/control/Control.Command.js \
 		src/control/Control.ContextMenu.js \
@@ -924,6 +926,7 @@ pot:
 		src/control/Control.DownloadProgress.js \
 		src/control/Control.FormulaBarJSDialog.js \
 		src/control/Control.IdleHandler.ts \
+		src/control/Control.JSDialog.js \
 		src/control/Control.JSDialogBuilder.js \
 		src/control/Control.LanguageDialog.js \
 		src/control/Control.Menubar.js \
@@ -991,6 +994,7 @@ pot:
 		src/control/jsdialog/Widget.SidebarContainers.ts \
 		src/control/jsdialog/Widget.Timefield.js \
 		src/control/jsdialog/Widget.TreeView.ts \
+		src/dom/NotebookbarAccessibility.js \
 		src/slideshow/SlideCache.ts \
 		src/slideshow/SlideCompositor.ts \
 		src/slideshow/LayerRenderer.ts \
@@ -1111,9 +1115,12 @@ pot:
 		src/app/DocEvents.ts \
 		src/app/GraphicSelectionMiddleware.ts \
 		src/errormessages.js \
+		src/layer/marker/A11yTextInput.js \
+		src/layer/marker/TextInput.js \
 		src/layer/tile/CanvasTileLayer.js \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
+		src/canvas/sections/ShapeHandlesSection.ts \
 		src/canvas/sections/URLPopUpSection.ts \
 		src/main.js \
 		src/map/Clipboard.js \
@@ -1121,7 +1128,10 @@ pot:
 		src/map/handler/Map.Feedback.js \
 		src/map/handler/Map.FileInserter.js \
 		src/map/handler/Map.Keyboard.js \
+		src/map/handler/Map.Print.js \
 		src/map/handler/Map.SlideShow.js \
+		src/map/handler/Map.VersionBar.js \
+		src/map/handler/Map.Welcome.js \
 		src/map/handler/Map.WOPI.js
 
 	html2po --pot --input=html/cool-help.html --output=po/templates/cool-help.pot --duplicates=merge
