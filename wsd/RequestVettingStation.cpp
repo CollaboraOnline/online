@@ -142,6 +142,33 @@ void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
                          WebSocketHandler::StatusCodes::POLICY_VIOLATION);
 }
 
+void RequestVettingStation::createWopiDocBroker(const std::string& docKey,
+                                                const std::string& configId,
+                                                const std::string& url,
+                                                const Poco::URI& uriPublic,
+                                                bool isReadOnly)
+{
+    assert(_checkFileInfo && "_checkFileInfo must exist");
+
+    std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
+    // We have a valid CheckFileInfo result; Create the DocBroker.
+    if (createDocBroker(docKey, configId, url, uriPublic))
+    {
+        assert(_docBroker && "Must have docBroker");
+        createClientSession(docKey, url, uriPublic, isReadOnly);
+        // If there is anything dubious about the ssl
+        // connection provide a warning about that.
+        if (!sslVerifyResult.empty())
+        {
+            LOG_WRN_S("SSL verification warning: '" << sslVerifyResult << "' seen on CheckFileInfo for ["
+                          << docKey << "]");
+#if !MOBILEAPP && !WASMAPP
+            _docBroker->setCertAuditWarning();
+#endif
+        }
+    }
+}
+
 void RequestVettingStation::handleRequest(const std::string& id,
                                           const RequestDetails& requestDetails,
                                           const std::shared_ptr<WebSocketHandler>& ws,
@@ -238,23 +265,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                              _checkFileInfo->state() == CheckFileInfo::State::Pass &&
                              _checkFileInfo->wopiInfo())
                     {
-                        std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
-                        // We have a valid CheckFileInfo result; Create the DocBroker.
-                        if (createDocBroker(docKey, "testing-id", url, uriPublic))
-                        {
-                            assert(_docBroker && "Must have docBroker");
-                            createClientSession(docKey, url, uriPublic, isReadOnly);
-                            // If there is anything dubious about the ssl
-                            // connection provide a warning about that.
-                            if (!sslVerifyResult.empty())
-                            {
-                                LOG_WRN_S("SSL verification warning: '" << sslVerifyResult << "' seen on CheckFileInfo for ["
-                                              << docKey << "]");
-#if !MOBILEAPP && !WASMAPP
-                                _docBroker->setCertAuditWarning();
-#endif
-                            }
-                        }
+                        createWopiDocBroker(docKey, url, "testing-id", uriPublic, isReadOnly);
                     }
                     else if (_checkFileInfo == nullptr ||
                              _checkFileInfo->state() == CheckFileInfo::State::None ||
