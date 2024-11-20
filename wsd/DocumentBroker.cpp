@@ -902,21 +902,6 @@ void DocumentBroker::stop(const std::string& reason)
     _poll->wakeup();
 }
 
-bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI& uriPublic,
-                                     std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
-{
-    ASSERT_CORRECT_THREAD();
-
-    LOG_INF("Loading [" << _docKey << "] ahead-of-time in jail [" << jailId << ']');
-
-    assert(!_docState.isMarkedToDestroy() && "MarkedToDestroy while downloading ahead-of-time");
-
-    assert(_storage == nullptr &&
-           "Unexpected to find storage created while downloading ahead-of-time");
-
-    return download(/*session=*/nullptr, jailId, uriPublic, std::move(wopiFileInfo));
-}
-
 bool DocumentBroker::download(
     const std::shared_ptr<ClientSession>& session, const std::string& jailId,
     const Poco::URI& uriPublic,
