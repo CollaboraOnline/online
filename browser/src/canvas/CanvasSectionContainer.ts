@@ -1333,6 +1333,9 @@ class CanvasSectionContainer {
 		newWidth = Math.floor(newWidth * app.dpiScale);
 		newHeight = Math.floor(newHeight * app.dpiScale);
 
+		if (this.right === newWidth && this.bottom === newHeight)
+			return;
+
 		this.canvas.width = newWidth;
 		this.canvas.height = newHeight;
 
