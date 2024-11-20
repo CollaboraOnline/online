@@ -1,9 +1,8 @@
-#include <iostream>
 
 #include "config.h"
 
-#include "ClientSession.hpp"
 #include <common/Anonymizer.hpp>
+#include "ClientSession.hpp"
 #include <fuzzer/Common.hpp>
 
 bool DoInitialization()
@@ -52,7 +51,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
     Admin::instance().poll(std::chrono::microseconds(0));
 
     // Make sure the anon map does not grow forever, leading to OOM.
-    Anonymizer::clearAnonymized();
+    Anonymizer::clear();
     return 0;
 }
 

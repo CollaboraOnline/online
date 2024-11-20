@@ -128,7 +128,7 @@ public:
     }
 
     /// Clears the shared state of mapAnonymized() / anonymize().
-    static void clearAnonymized()
+    static void clear()
     {
         if (_instance)
         {
