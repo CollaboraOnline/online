@@ -1,4 +1,4 @@
-.presentation-doctype #map, .drawing-doctype #map{
+[data-docType='presentation'] #map, [data-docType='drawing'] #map{
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later, you must set border-collapse */
 	box-shadow: rgb(223, 223, 223) 0px 0px inset, var(--color-border) 1px 0px 0px inset;
 }
