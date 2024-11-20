@@ -757,6 +757,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this.setSplitPosFromCell();
 		this.dontSendSplitPosToCore = false;
 
+		app.sectionContainer.reNewAllSections(true);
 		this._syncTileContainerSize();
 
 		this._map.fire('sheetgeometrychanged');
