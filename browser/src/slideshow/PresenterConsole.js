@@ -156,6 +156,9 @@ class PresenterConsole {
 				img.style.marginRight = '10px';
 				img.style.marginTop = '10px';
 				img.style.marginBottom = '10px';
+				img.style.border = '3px solid transparent';
+				img.style.padding = '1px';
+				img.style.borderRadius = '3px';
 				img.width = 100;
 				img.height = 100;
 				img._index = index;
@@ -238,6 +241,9 @@ class PresenterConsole {
 		let slideShowFontFamily = window
 			.getComputedStyle(document.documentElement)
 			.getPropertyValue('--cool-font');
+		this.slideSelectionColor = window
+			.getComputedStyle(document.documentElement)
+			.getPropertyValue('--orange1-txt-primary-color');
 
 		elem.style.backgroundColor = slideShowBGColor;
 		elem.style.color = this.slideShowColor;
@@ -731,15 +737,14 @@ class PresenterConsole {
 
 	_selectImg(img) {
 		if (this._selectedImg) {
-			this._selectedImg.style.border = '';
-			this._selectedImg.style.borderColor = '';
+			this._selectedImg.style.border = '3px solid transparent';
 			this._selectedImg = null;
 		}
 
 		if (img) {
 			this._selectedImg = img;
-			this._selectedImg.style.border = '2px solid';
-			this._selectedImg.style.borderColor = 'white';
+			this._selectedImg.style.border =
+				'3px solid rgb(' + this.slideSelectionColor + ')';
 		}
 	}
 
