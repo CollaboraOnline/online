@@ -226,30 +226,29 @@ L.A11yTextInput = L.TextInput.extend({
 			eventDescription += _('Out of table') + '. ';
 		}
 		for (i = 0; i < inList.length; i++) {
-			eventDescription += _('Table with') + ' ' + inList[i].rowCount + ' ' + _('rows') + ' '
-				+ _('and') + ' ' + inList[i].colCount + ' ' + _('columns') + '. ';
+			eventDescription += _('Table with {0} rows and {1} columns').replace('{0}', inList[i].rowCount).replace('{1}', inList[i].colCount) + '. ';
 		}
 		if (this._lastRowIndex !== row || this._lastRowSpan !== rowSpan) {
 			this._lastRowIndex = row;
-			eventDescription += _('Row') + ' ' + row;
-			if (this._lastRowSpan !== rowSpan) {
-				if (rowSpan > 1) {
-					eventDescription += ' ' + _('through') + ' ' + (row + rowSpan - 1) ;
-				}
-				this._lastRowSpan = rowSpan;
+			if (this._lastRowSpan !== rowSpan && rowSpan > 1) {
+				eventDescription += _('Row {0} through {1}').replace('{0}', row).replace('{1}', row + rowSpan - 1);
+			}
+			else {
+				eventDescription += _('Row {0}').replace('{0}', row);
 			}
 			eventDescription += '. ';
+			this._lastRowSpan = rowSpan;
 		}
 		if (this._lastColIndex !== col || this._lastColSpan !== colSpan) {
 			this._lastColIndex = col;
-			eventDescription += _('Column') + ' ' + col;
-			if (this._lastColSpan !== colSpan) {
-				if (colSpan > 1) {
-					eventDescription += ' ' + _('through') + ' ' + (col + colSpan - 1);
-				}
-				this._lastColSpan = colSpan;
+			if (this._lastColSpan !== colSpan && colSpan > 1) {
+				eventDescription += _('Column {0} through {1}').replace('{0}', col).replace('{1}', col + colSpan - 1);
+			}
+			else {
+				eventDescription += _('Column {0}').replace('{0}', col);
 			}
 			eventDescription += '. ';
+			this._lastColSpan = colSpan;
 		}
 		this._setDescription(eventDescription);
 
@@ -293,18 +292,18 @@ L.A11yTextInput = L.TextInput.extend({
 		var eventDescription = '';
 		if (action === 'create' || action === 'add') {
 			this._hasAnySelection = true;
-			eventDescription =  name + ' ' + _('selected') + '. ';
+			eventDescription =  _('{0} selected').replace('{0}', name) + '. ';
 			if (typeof textContent === 'string' && textContent.length > 0) {
 				eventDescription += (cell ? '' : _('Has text: ')) + textContent;
 			}
 		}
 		else if (action === 'remove') {
 			this._hasAnySelection = false;
-			eventDescription = name + ' ' + _('unselected');
+			eventDescription = _('{0} unselected').replace('{0}', name);
 		}
 		else if (action === 'delete') {
 			this._hasAnySelection = false;
-			eventDescription = name + ' ' + _('deleted');
+			eventDescription = _('{0} deleted').replace('{0}', name);
 		}
 		this._setDescription(eventDescription);
 		if (action !== 'create' && action !== 'add') {

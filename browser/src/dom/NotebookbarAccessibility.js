@@ -237,7 +237,7 @@ var NotebookbarAccessibility = function() {
 	};
 
 	this.setTabDescription = function(tabElem) {
-		var tabDescr = tabElem ? tabElem.textContent + ' ' + _('tab') + ' ' + _('selected') : '';
+		var tabDescr = tabElem ? _('{0} tab selected').replace('{0}', tabElem.textContent) : '';
 		this.accessibilityInputElement.setAttribute('aria-description', tabDescr);
 	};
 
