@@ -197,13 +197,11 @@ CheckFileInfo::wopiFileInfo(const Poco::URI& uriPublic) const
         std::string filename;
         std::string ownerId;
         std::string modifiedTime;
-        if (_wopiInfo)
-        {
-            JsonUtil::findJSONValue(_wopiInfo, "Size", size);
-            JsonUtil::findJSONValue(_wopiInfo, "OwnerId", ownerId);
-            JsonUtil::findJSONValue(_wopiInfo, "BaseFileName", filename);
-            JsonUtil::findJSONValue(_wopiInfo, "LastModifiedTime", modifiedTime);
-        }
+
+        JsonUtil::findJSONValue(_wopiInfo, "Size", size);
+        JsonUtil::findJSONValue(_wopiInfo, "OwnerId", ownerId);
+        JsonUtil::findJSONValue(_wopiInfo, "BaseFileName", filename);
+        JsonUtil::findJSONValue(_wopiInfo, "LastModifiedTime", modifiedTime);
 
         Poco::JSON::Object::Ptr wopiInfo = _wopiInfo;
         wopiFileInfo = std::make_unique<WopiStorage::WOPIFileInfo>(
