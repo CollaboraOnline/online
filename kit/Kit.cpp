@@ -3335,7 +3335,7 @@ void lokit_main(
                 }
 
                 // copy default tempates from 'common' dir to shared templates dir
-                // TODO: maybe I shouldn't copy if whole point to mounting is that we don't require copying. Maybe symlink it
+                // TODO: maybe I shouldn't copy if whole point to mounting is that we don't require copying.
                 auto defaultTemplates = FileUtil::getDirEntries(loJailDestImpressTemplatePath);
                 for (auto& name : defaultTemplates)
                 {

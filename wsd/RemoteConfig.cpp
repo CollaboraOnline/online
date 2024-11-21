@@ -621,7 +621,6 @@ bool RemoteAssetConfigPoll::getNewAssets(const Poco::JSON::Object::Ptr& remoteJs
                     // Second case: asset has been downloaded already, has a "stamp" property,
                     // and that has been changed in the JSON since it was downloaded.
                     reDownloadConfig = true;
-                    // restartForKitAndReDownloadConfigFile();
                     break;
                 }
                 else if (!stampPtr.isEmpty())
@@ -637,7 +636,6 @@ bool RemoteAssetConfigPoll::getNewAssets(const Poco::JSON::Object::Ptr& remoteJs
                     if (!eTagUnchanged(uri, assets[uri].eTag))
                     {
                         reDownloadConfig = true;
-                        // restartForKitAndReDownloadConfigFile();
                         break;
                     }
                     assets[uri].active = true;
@@ -653,7 +651,6 @@ bool RemoteAssetConfigPoll::getNewAssets(const Poco::JSON::Object::Ptr& remoteJs
         {
             LOG_DBG("Asset no longer mentioned in the remote font config: " << it.first);
             reDownloadConfig = true;
-            // restartForKitAndReDownloadConfigFile();
             break;
         }
     }
@@ -732,7 +729,6 @@ bool RemoteAssetConfigPoll::handleUnchangedAssets(std::map<std::string, AssetDat
         if (!eTagUnchanged(it.first, it.second.eTag))
         {
             reDownloadConfig = true;
-            // restartForKitAndReDownloadConfigFile();
             break;
         }
     }
