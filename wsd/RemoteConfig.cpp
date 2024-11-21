@@ -17,6 +17,7 @@
 
 #include "RemoteConfig.hpp"
 #include "FileUtil.hpp"
+#include "Util.hpp"
 
 #include <common/JsonUtil.hpp>
 #include <net/HttpRequest.hpp>
@@ -107,7 +108,8 @@ void RemoteJSONPoll::pollingThread()
                     {
                         std::string kind;
                         JsonUtil::findJSONValue(remoteJson, "kind", kind);
-                        if (kind == _expectedKind)
+                        const std::pair<std::string, std::string> expectedKinds = Util::split(_expectedKind, '|');
+                        if (kind == expectedKinds.first || kind == expectedKinds.second)
                         {
                             handleJSON(remoteJson);
                         }

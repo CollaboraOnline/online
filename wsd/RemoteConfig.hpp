@@ -121,7 +121,7 @@ class RemoteAssetConfigPoll : public RemoteJSONPoll
 public:
     RemoteAssetConfigPoll(Poco::Util::LayeredConfiguration& config)
         : RemoteJSONPoll(config, "remote_asset_config.url", "remoteassetconfig_poll",
-                         "assetconfiguration")
+                         "assetconfiguration|fontconfiguration")
     {
     }
 
