@@ -657,7 +657,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     }
 
 #if !MOBILEAPP
-    if (!ConfigUtil::isSslEnabled() && socket->sniffSSL())
+    if (!ConfigUtil::isSslEnabled() && !ConfigUtil::isSSLTermination() && socket->sniffSSL())
     {
         LOG_ERR("Looks like SSL/TLS traffic on plain http port");
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
