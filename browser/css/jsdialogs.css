@@ -1277,7 +1277,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #mobile-wizard #wordslabel2,
 #mobile-wizard #inclspaceslabel2,
 #mobile-wizard #exclspaceslabel2,
-#mobile-wizard #cjkcharsft2
+#mobile-wizard #cjkcharsft2,
+#mobile-wizard #commentslabel
 {
 	float: left !important;
 	clear: left !important;
@@ -1292,7 +1293,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #mobile-wizard #docwords,
 #mobile-wizard #docchars,
 #mobile-wizard #doccharsnospaces,
-#mobile-wizard #doccjkchars
+#mobile-wizard #doccjkchars,
+#mobile-wizard #docComments
 {
 	float: right !important;
 	clear: right !important;
