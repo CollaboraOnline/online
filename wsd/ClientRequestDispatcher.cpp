@@ -23,6 +23,7 @@
 #include <Exceptions.hpp>
 #include <FileServer.hpp>
 #include <HttpRequest.hpp>
+#include <NetUtil.hpp>
 #include <JailUtil.hpp>
 #include <ProofKey.hpp>
 #include <ProxyRequestHandler.hpp>
@@ -1196,10 +1197,13 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         ConnectionRefused,
         InvalidCertificate,
         CertificateValidation,
+        SSLHandshakeFail,
+        MissingSsl,
         NotHttps,
         NoScheme,
         Timeout,
     };
+
     const std::map<CheckStatus, std::string> checkStatusNames = {
         { CheckStatus::Ok, "Ok" },
         { CheckStatus::NotHttpSucess, "NOT_HTTP_SUCESS" },
@@ -1209,17 +1213,24 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         { CheckStatus::ConnectionAborted, "CONNECTION_ABORTED" },
         { CheckStatus::ConnectionRefused, "CONNECTION_REFUSED" },
         { CheckStatus::InvalidCertificate, "INVALID_CERTIFICATE" },
+        { CheckStatus::CertificateValidation, "CERTIFICATE_VALIDATION" },
+        { CheckStatus::SSLHandshakeFail, "SSL_HANDSHAKE_FAIL" },
+        { CheckStatus::MissingSsl, "MISSING_SSL" },
         { CheckStatus::NotHttps, "NOT_HTTPS" },
         { CheckStatus::NoScheme, "NO_SCHEME" },
         { CheckStatus::Timeout, "TIMEOUT" }
         // TODO allowed host check
     };
 
-    auto sendResult = [=, this](CheckStatus result)
+    auto sendResult = [this, checkStatusNames, socket](CheckStatus result)
     {
         Poco::JSON::Object::Ptr status = new Poco::JSON::Object;
         status->set("status", (int)result);
-        status->set("details", checkStatusNames.at(result));
+        if (checkStatusNames.contains(result)) {
+            status->set("details", checkStatusNames.at(result));
+        } else {
+            LOG_DBG("wopiAccessCheck: Missing details for status:" << (int)result);
+        }
 
         std::ostringstream ostrJSON;
         status->stringify(ostrJSON);
@@ -1254,42 +1265,90 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 
     LOG_DBG("Wopi Access Check preparing http session");
 
-    httpProbeSession->setFinishedHandler(
-        [=, this](const std::shared_ptr<http::Session>& probeSession)
-        {
-            auto httpResponse = probeSession->response();
-            LOG_DBG("Wopi Access Check: got response" << httpResponse->state()
-                                                      << httpResponse->statusCode());
+    // first case? !WopiEnabled
+    // HostUtil::allowedWopiHost(host);
 
-            CheckStatus result = CheckStatus::Ok;
+    httpProbeSession->setConnectFailHandler(
+        [=, this] (const std::shared_ptr<http::Session>& probeSession){
 
-            if (httpResponse->state() != http::Response::State::Complete)
+            CheckStatus status = CheckStatus::UnspecifiedError;
+
+            const auto result = probeSession->connectionResult();
+
+            LOG_TRC("ConnectFailHandler " << (int)result);
+
+            // const auto lastErrno = errno;
+
+            if (result == net::asyncConnectResult::UnknownHostError || result == net::asyncConnectResult::HostNameError)
             {
-                // are TLS errors here ?
-                result = CheckStatus::UnspecifiedError;
+                status = CheckStatus::HostNotFound;
             }
 
-            if (!probeSession->isConnected())
-            {
-                result = CheckStatus::ConnectionAborted;
+            if (result == net::asyncConnectResult::SSLHandShakeFailure) {
+                status = CheckStatus::SSLHandshakeFail;
             }
-
-            if (httpResponse->state() == http::Response::State::Timeout)
-            {
-                result = CheckStatus::Timeout;
-            }
-
-            // TODO complete error coverage
 
             if (!probeSession->getSslVerifyMessage().empty())
             {
-                result = CheckStatus::CertificateValidation;
+                status = CheckStatus::CertificateValidation;
 
                 LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
             }
 
-            sendResult(result);
-        });
+            sendResult(status);
+    });
+
+    auto finishHandler = [=, this](const std::shared_ptr<http::Session>& probeSession)
+    {
+        LOG_TRC("finishHandler ");
+
+        CheckStatus status = CheckStatus::Ok;
+        const auto lastErrno = errno;
+
+        const auto httpResponse = probeSession->response();
+        const auto responseState = httpResponse->state();
+        LOG_DBG("Wopi Access Check: got response" << responseState
+                                            << httpResponse->statusCode()
+                                            << lastErrno);
+
+        if (responseState != http::Response::State::Complete)
+        {
+            // are TLS errors here ?
+            status = CheckStatus::UnspecifiedError;
+        }
+
+        if (responseState == http::Response::State::Timeout)
+            status = CheckStatus::Timeout;
+
+        // TODO complete error coverage
+        // certificate errors
+        // self-signed
+        // expired
+        // SSL expected not here
+        // ssl expected but present
+
+        const auto result = probeSession->connectionResult();
+
+        if (result == net::asyncConnectResult::UnknownHostError)
+            status = CheckStatus::HostNotFound;
+
+        if (protocol == http::Session::Protocol::HttpSsl && lastErrno == ENOTCONN)
+            status = CheckStatus::MissingSsl;
+
+        if (result == net::asyncConnectResult::ConnectionError)
+            status = CheckStatus::ConnectionAborted;
+
+        if (!probeSession->getSslVerifyMessage().empty())
+        {
+            status = CheckStatus::CertificateValidation;
+
+            LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+        }
+
+        sendResult(status);
+    };
+
+    httpProbeSession->setFinishedHandler(std::move(finishHandler));
 
     LOG_DBG("Wopi Access Check requesting: " << httpRequest.getUrl());
 
