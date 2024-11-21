@@ -3681,29 +3681,40 @@ int COOLWSD::innerMain()
         LOG_ERR("Log level is set very high to '" << LogLevel << "' this will have a "
                 "significant performance impact. Do not use this in production.");
 
-    // Start the remote font downloading polling thread.
-    std::unique_ptr<RemoteFontConfigPoll> remoteFontConfigThread;
-    try
+    std::string uriConfigKey;
+    const std::string& fontConfigKey = "remote_font_config.url";
+    const std::string& assetConfigKey = "remote_asset_config.url";
+    bool remoteFontDefined = !ConfigUtil::getConfigValue<std::string>(fontConfigKey, "").empty();
+    bool remoteAssetDefined = !ConfigUtil::getConfigValue<std::string>(assetConfigKey, "").empty();
+    // Both defined: warn and use assetConfigKey
+    if (remoteFontDefined && remoteAssetDefined)
     {
-        // Fetch font settings from server if configured
-        remoteFontConfigThread = std::make_unique<RemoteFontConfigPoll>(config());
-        remoteFontConfigThread->start();
+        LOG_WRN("Both remote_font_config.url and remote_asset_config.url are defined, "
+                "remote_asset_config.url is overriden on remote_font_config.url");
+        uriConfigKey = assetConfigKey;
     }
-    catch (const Poco::Exception&)
+    // only font defined: use fontConfigKey
+    else if (remoteFontDefined && !remoteAssetDefined)
     {
-        LOG_DBG("No remote_font_config");
+        uriConfigKey = fontConfigKey;
+    }
+    // only asset defined: use assetConfigKey
+    else if (!remoteFontDefined && remoteAssetDefined)
+    {
+        uriConfigKey = assetConfigKey;
     }
 
+    // Start the remote asset downloading polling thread.
     std::unique_ptr<RemoteAssetConfigPoll> remoteAssetConfigThread;
     try
     {
-        // Fetch font settings from server if configured
-        remoteAssetConfigThread = std::make_unique<RemoteAssetConfigPoll>(config());
+        // Fetch font and/or templates settings from server if configured
+        remoteAssetConfigThread = std::make_unique<RemoteAssetConfigPoll>(config(), uriConfigKey);
         remoteAssetConfigThread->start();
     }
     catch (const Poco::Exception&)
     {
-        LOG_DBG("No remote_template_config");
+        LOG_DBG("No remote_asset_config");
     }
 #endif
 

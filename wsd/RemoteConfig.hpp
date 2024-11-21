@@ -119,8 +119,8 @@ private:
 class RemoteAssetConfigPoll : public RemoteJSONPoll
 {
 public:
-    RemoteAssetConfigPoll(Poco::Util::LayeredConfiguration& config)
-        : RemoteJSONPoll(config, "remote_asset_config.url", "remoteassetconfig_poll",
+    RemoteAssetConfigPoll(Poco::Util::LayeredConfiguration& config, const std::string& uriConfigKey)
+        : RemoteJSONPoll(config, uriConfigKey, "remoteassetconfig_poll",
                          "assetconfiguration|fontconfiguration")
     {
     }
