@@ -1061,11 +1061,17 @@ L.Control.UIManager = L.Control.extend({
 				this.map.zotero.updateUserID();
 			}
 		}
-		if (window.documentSigningEnabled && this.notebookbar) {
-			const show = userPrivateInfo.SignatureCert && userPrivateInfo.SignatureKey;
-			// Show or hide the signature button on the notebookbar depending on if we
-			// have a signing cert/key specified.
-			this.showButton('signature', show);
+		if (window.documentSigningEnabled) {
+			if (this.notebookbar) {
+				const show = userPrivateInfo.SignatureCert && userPrivateInfo.SignatureKey;
+				// Show or hide the signature button on the notebookbar depending on if we
+				// have a signing cert/key specified.
+				this.showButton('signature', show);
+			}
+			const baseUrl = userPrivateInfo.ESignatureBaseUrl;
+			if (baseUrl !== undefined && !this.map.eSignature) {
+				this.map.eSignature = L.control.eSignature();
+			}
 		}
 	},
 
