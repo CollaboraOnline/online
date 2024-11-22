@@ -543,11 +543,16 @@ public:
 #if !MOBILEAPP
     /// Start an asynchronous Installation of the user presets, e.g. autotexts etc, as
     /// described at userSettingsUri for installation into presetsPath
-    static void asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri, const std::string& presetsPath);
+    static void asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,
+                                    const std::string& presetsPath,
+                                    std::function<void(bool)> finishedCB);
 
     /// Start an asynchronous Installation of a user preset resource, e.g. an autotext
     /// file, to copy as presetFile
-    static void asyncInstallPreset(SocketPoll& poll, const std::string& presetUri, const std::string& presetFile);
+    static void asyncInstallPreset(SocketPoll& poll, const std::string& presetUri,
+                                   const std::string& presetFile,
+                                   const std::string& id,
+                                   std::function<void(const std::string&, bool)> finishedCB);
 #endif // !MOBILEAPP
 
 private:

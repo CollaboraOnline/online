@@ -189,21 +189,29 @@ void RequestVettingStation::checkSharedConfig(const std::string& docKey,
         return;
     }
 
-    // If this wopi server has some shared settings we want to ensure a subForKit for those
-    // settings.
-    // TODO, this is just for testing, create a new one each time and we don't actually make any
-    // real use of this yet
-    // In reality we could download the server config around here and consider the
-    // wopi info incomplete until that is available, at which point we kick off the docbroker
-    // in the knowledge that the subForKit is populated
     configId = "testing-id";
+
+    auto finishedCallback =
+        [this, docKey, configId, url, uriPublic, isReadOnly](bool success)
+    {
+        if (!success)
+        {
+            // TODO, should we do something else
+            sendErrorAndShutdown(_ws, "shared config install failed",
+                                 WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
+        }
+        else
+        {
+            COOLWSD::spawnSubForKit(configId);
+            // kick off the docbroker in the knowledge that the subForKit is populated
+            createWopiDocBroker(docKey, configId, url, uriPublic, isReadOnly);
+        }
+    };
 
     // if this wopi server has some shared settings we want to have a subForKit for those settings
     std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
-    DocumentBroker::asyncInstallPresets(*_poll, sharedSettingsUri, presetsPath);
-
-    COOLWSD::spawnSubForKit(configId);
-    createWopiDocBroker(docKey, configId, url, uriPublic, isReadOnly);
+    // ensure the server config is downloaded and launch docbroker when that is available
+    DocumentBroker::asyncInstallPresets(*_poll, sharedSettingsUri, presetsPath, finishedCallback);
 }
 
 void RequestVettingStation::handleRequest(const std::string& id,
