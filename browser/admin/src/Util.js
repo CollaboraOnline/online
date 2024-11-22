@@ -100,5 +100,22 @@ var Util = Base.extend({
 		}
 
 		return res;
+	},
+
+	consumeDataText: function(textInput, dataArray) {
+		textInput = textInput.split(' ')[1];
+		if (textInput.endsWith(',')) {
+			// This is the result of query, not notification
+			var i, j, data;
+			data = textInput.substring(0, textInput.length - 1).split(',');
+			for (i = dataArray.length - 1, j = data.length - 1; i >= 0 && j >= 0; i--, j--) {
+				dataArray[i].value = parseInt(data[j]);
+			}
+			return undefined;
+		}
+		else {
+			// this is a notification data; append to dataArray
+			return textInput.trim();
+		}
 	}
 });
