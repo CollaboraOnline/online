@@ -899,7 +899,6 @@ class PresenterConsole {
 
 		// Insert _notes before textScaler
 		container.insertBefore(this._notes, textScaler);
-		this._onResize();
 	}
 
 	_onHideNotes(e) {
@@ -916,7 +915,6 @@ class PresenterConsole {
 
 		let elem = this._proxyPresenter.document.querySelector('#notes');
 		this.toggleButtonState(elem, false);
-		this._onResize();
 
 		if (e) {
 			e.stopPropagation();
