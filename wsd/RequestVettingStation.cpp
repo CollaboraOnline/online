@@ -21,6 +21,7 @@
 #include <Log.hpp>
 #include <DocumentBroker.hpp>
 #include <ClientSession.hpp>
+#include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <Poco/Base64Encoder.h>
 #include <Util.hpp>
