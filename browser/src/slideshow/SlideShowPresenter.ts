@@ -377,11 +377,41 @@ class SlideShowPresenter {
 		this._canvasLoader = null;
 	}
 
+	private _stylePauseOverlay(windowDocument: HTMLElement, show: boolean) {
+		const overlay = windowDocument.querySelector(
+			'#overlay-in-window',
+		) as HTMLElement;
+
+		const display = show ? 'block' : 'none';
+
+		overlay.style.display = display;
+		overlay.style.position = 'fixed';
+
+		overlay.style.top = '0';
+		overlay.style.bottom = '0';
+		overlay.style.right = '0';
+		overlay.style.left = '0';
+
+		overlay.style.opacity = '40%';
+		overlay.style.backgroundColor = 'black';
+		overlay.style.color = 'white';
+
+		overlay.style.alignContent = 'center';
+		overlay.style.textAlign = 'center';
+		overlay.style.fontWeight = 'bolder';
+		overlay.style.fontSize = 'xxx-large';
+		overlay.style.fontFamily = 'sans';
+
+		overlay.style.userSelect = 'none';
+	}
+
 	_generateSlideWindowHtml(title: string) {
 		const sanitizer = document.createElement('div');
 		sanitizer.innerText = title;
 
 		const sanitizedTitle = sanitizer.innerHTML;
+		const pauseText = _('Presentation is paused - main window is hidden');
+
 		return `
 			<!DOCTYPE html>
 			<html lang="en">
@@ -392,6 +422,9 @@ class SlideShowPresenter {
 			</head>
 			<body>
 				<div id="root-in-window"></div>
+				<div id="overlay-in-window" style="display: none">
+					<span>${pauseText}</span>
+				</div>
 			</body>
 			</html>
 			`;
@@ -421,6 +454,17 @@ class SlideShowPresenter {
 		else return this._slideShowWindowProxy.document;
 	}
 
+	onTabSwitch() {
+		const windowDocument = this._getProxyDocumentNode().documentElement;
+
+		if (document.hidden) this._stylePauseOverlay(windowDocument, true);
+		else this._stylePauseOverlay(windowDocument, false);
+
+		requestAnimationFrame(function ab() {
+			console.debug('render after onTabSwitch handler');
+		});
+	}
+
 	_doInWindowPresentation() {
 		const popupTitle =
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
@@ -444,6 +488,9 @@ class SlideShowPresenter {
 			return;
 		}
 
+		const deactivateFunc = this.onTabSwitch.bind(this);
+		document.addEventListener('visibilitychange', deactivateFunc);
+
 		this._getProxyDocumentNode().documentElement.innerHTML = htmlContent;
 		this._getProxyDocumentNode().close();
 		this._slideShowWindowProxy.focus();
@@ -453,6 +500,11 @@ class SlideShowPresenter {
 		this._getProxyDocumentNode().body.style.padding = '0';
 		this._getProxyDocumentNode().body.style.height = '100%';
 		this._getProxyDocumentNode().body.style.overflow = 'hidden';
+
+		this._stylePauseOverlay(
+			this._getProxyDocumentNode().documentElement,
+			false,
+		);
 
 		const body = this._getProxyDocumentNode().querySelector('#root-in-window');
 		this._presenterContainer = this._createPresenterHTML(
@@ -486,6 +538,7 @@ class SlideShowPresenter {
 		this._windowCloseInterval = setInterval(
 			function () {
 				if (slideShowWindow.closed) {
+					document.removeEventListener('visibilitychange', deactivateFunc);
 					clearInterval(this._windowCloseInterval);
 					this._slideShowNavigator.quit();
 					this._map.uiManager.closeSnackbar();
