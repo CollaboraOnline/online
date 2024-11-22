@@ -253,50 +253,16 @@
 	width: 50%;
 }
 
-@keyframes textPulse {
+@keyframes docNamePulse {
 	0% {
-		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--blue1-txt-primary-color), 0.1);
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--doc-type), 0.1);
 	}
 	50% {
-		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--blue1-txt-primary-color), 0.2);
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--doc-type), 0.2);
 	}
 	100% {
-		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--blue1-txt-primary-color), 0.1);
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--doc-type), 0.1);
 	}
-}
-@keyframes presentationPulse {
-	0% {
-		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--orange1-txt-primary-color), 0.1);
-	}
-	50% {
-		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--orange1-txt-primary-color), 0.2);
-	}
-	100% {
-		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--orange1-txt-primary-color), 0.1);
-	}
-}
-@keyframes spreadsheetPulse {
-	0% {
-		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--green0-txt-primary-color), 0.1);
-	}
-	50% {
-		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--green0-txt-primary-color), 0.2);
-	}
-	100% {
-		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--green0-txt-primary-color), 0.1);
-	}
-}
-[data-docType='text'] #document-name-input.editable:focus{
-	animation: textPulse 1.5s infinite ease-in-out;
-}
-[data-docType='presentation'] #document-name-input.editable:focus{
-	animation: presentationPulse 1.5s infinite ease-in-out;
-}
-[data-docType='drawing'] #document-name-input.editable:focus{
-	animation: presentationPulse 1.5s infinite ease-in-out;
-}
-[data-docType='spreadsheet'] #document-name-input.editable:focus{
-	animation: spreadsheetPulse 1.5s infinite ease-in-out;
 }
 
 #document-name-input {
@@ -339,6 +305,7 @@
 	outline: none;
 	flex: 0.4 1 auto;
 	text-align: left;
+	animation: docNamePulse 1.5s infinite ease-in-out;
 }
 
 .readonly #document-name-input.editable:focus {

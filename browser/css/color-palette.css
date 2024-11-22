@@ -59,3 +59,8 @@
 	--color-cursor-blink-background: #000;
 	--color-background-document: #FFFFFF;
 }
+
+[data-doctype='text'] {--doc-type: 3, 105, 163;}
+[data-doctype='spreadsheet'] {--doc-type: 16, 104, 2;}
+[data-doctype='presentation'] {--doc-type: 163, 62, 3;}
+[data-doctype='drawing'] {--doc-type: 135, 105, 0;}
