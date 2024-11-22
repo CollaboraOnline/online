@@ -695,7 +695,7 @@ a.leaflet-control-zoom-in {
 	visibility: hidden;
 }
 #MergeCells > span{
-	color: rgb(var(--blue1-txt-primary-color));
+	color: rgb(var(--doc-type));
 	text-align: end;
 	vertical-align: bottom;
 }

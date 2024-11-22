@@ -1582,143 +1582,38 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	100%{transform: translateY(60px) translateX(15px); opacity: 0;}
 }
 
-[data-docType='text'] .spinner-img #spinner-box-f-right {
-	fill: rgba(var(--blue1-txt-primary-color),0.5);
+.spinner-img #spinner-box-f-right {
+	fill: rgba(var(--doc-type),0.5);
 }
-[data-docType='text'] .spinner-img #spinner-box-f-left {
-	fill: rgba(var(--blue1-txt-primary-color),0.2);
+.spinner-img #spinner-box-f-left {
+	fill: rgba(var(--doc-type),0.2);
 }
-[data-docType='text'] .spinner-img #spinner-inner-right {
-	fill: rgba(var(--blue1-txt-primary-color),0.5);
+.spinner-img #spinner-inner-right {
+	fill: rgba(var(--doc-type),0.5);
 }
-[data-docType='text'] .spinner-img #spinner-box-back {
-	fill: rgba(var(--blue1-txt-primary-color),0.4);
+.spinner-img #spinner-box-back {
+	fill: rgba(var(--doc-type),0.4);
 }
-[data-docType='text'] .spinner-img #spinner-handle {
-	stroke: rgba(var(--blue1-txt-primary-color),0.8);
+.spinner-img #spinner-handle {
+	stroke: rgba(var(--doc-type),0.8);
 }
-[data-docType='text'] .spinner-img #spinner-inner-left-linearGradient stop:first-child {
-	stop-color: rgba(var(--blue1-txt-primary-color));
+.spinner-img #spinner-inner-left-linearGradient stop:first-child {
+	stop-color: rgba(var(--doc-type));
 	stop-opacity: 0.7;
 }
-[data-docType='text'] .spinner-img #spinner-inner-left-linearGradient stop:nth-child(2) {
-	stop-color: rgba(var(--blue1-txt-primary-color));
+.spinner-img #spinner-inner-left-linearGradient stop:nth-child(2) {
+	stop-color: rgba(var(--doc-type));
 	stop-opacity: 0.5;
 }
-[data-docType='text'] .spinner-img #spinner-paper-fold {
-	fill: rgba(var(--blue1-txt-primary-color),0.8);
+.spinner-img #spinner-paper-fold {
+	fill: rgba(var(--doc-type),0.8);
 }
-[data-docType='text'] .spinner-img #spinner-paper-linearGradient stop:first-child {
-	stop-color: rgba(var(--blue1-txt-primary-color));
+.spinner-img #spinner-paper-linearGradient stop:first-child {
+	stop-color: rgba(var(--doc-type));
 	stop-opacity: 0.3;
 }
-[data-docType='text'] .spinner-img #spinner-paper-linearGradient stop:nth-child(2) {
-	stop-color: rgba(var(--blue1-txt-primary-color));
-	stop-opacity: 0.2;
-}
-
-[data-docType='spreadsheet'] .spinner-img #spinner-box-f-right {
-	fill: rgba(var(--green0-txt-primary-color),0.5);
-}
-[data-docType='spreadsheet'] .spinner-img #spinner-box-f-left {
-	fill: rgba(var(--green0-txt-primary-color),0.2);
-}
-[data-docType='spreadsheet'] .spinner-img #spinner-inner-right {
-	fill: rgba(var(--green0-txt-primary-color),0.5);
-}
-[data-docType='spreadsheet'] .spinner-img #spinner-box-back {
-	fill: rgba(var(--green0-txt-primary-color),0.4);
-}
-[data-docType='spreadsheet'] .spinner-img #spinner-handle {
-	stroke: rgba(var(--green0-txt-primary-color),0.8);
-}
-[data-docType='spreadsheet'] .spinner-img #spinner-inner-left-linearGradient stop:first-child {
-	stop-color: rgba(var(--green0-txt-primary-color));
-	stop-opacity: 0.7;
-}
-[data-docType='spreadsheet'] .spinner-img #spinner-inner-left-linearGradient stop:nth-child(2) {
-	stop-color: rgba(var(--green0-txt-primary-color));
-	stop-opacity: 0.5;
-}
-[data-docType='spreadsheet'] .spinner-img #spinner-paper-fold {
-	fill: rgba(var(--green0-txt-primary-color),0.8);
-}
-[data-docType='spreadsheet'] .spinner-img #spinner-paper-linearGradient stop:first-child {
-	stop-color: rgba(var(--green0-txt-primary-color));
-	stop-opacity: 0.3;
-}
-[data-docType='spreadsheet'] .spinner-img #spinner-paper-linearGradient stop:nth-child(2) {
-	stop-color: rgba(var(--green0-txt-primary-color));
-	stop-opacity: 0.2;
-}
-
-[data-docType='presentation'] .spinner-img #spinner-box-f-right {
-	fill: rgba(var(--orange1-txt-primary-color),0.5);
-}
-[data-docType='presentation'] .spinner-img #spinner-box-f-left {
-	fill: rgba(var(--orange1-txt-primary-color),0.2);
-}
-[data-docType='presentation'] .spinner-img #spinner-inner-right {
-	fill: rgba(var(--orange1-txt-primary-color),0.5);
-}
-[data-docType='presentation'] .spinner-img #spinner-box-back {
-	fill: rgba(var(--orange1-txt-primary-color),0.4);
-}
-[data-docType='presentation'] .spinner-img #spinner-handle {
-	stroke: rgba(var(--orange1-txt-primary-color),0.8);
-}
-[data-docType='presentation'] .spinner-img #spinner-inner-left-linearGradient stop:first-child {
-	stop-color: rgba(var(--orange1-txt-primary-color));
-	stop-opacity: 0.7;
-}
-[data-docType='presentation'] .spinner-img #spinner-inner-left-linearGradient stop:nth-child(2) {
-	stop-color: rgba(var(--orange1-txt-primary-color));
-	stop-opacity: 0.5;
-}
-[data-docType='presentation'] .spinner-img #spinner-paper-fold {
-	fill: rgba(var(--orange1-txt-primary-color),0.8);
-}
-[data-docType='presentation'] .spinner-img #spinner-paper-linearGradient stop:first-child {
-	stop-color: rgba(var(--orange1-txt-primary-color));
-	stop-opacity: 0.3;
-}
-[data-docType='presentation'] .spinner-img #spinner-paper-linearGradient stop:nth-child(2) {
-	stop-color: rgba(var(--orange1-txt-primary-color));
-	stop-opacity: 0.2;
-}
-
-[data-docType='drawing'] .spinner-img #spinner-box-f-right {
-	fill: rgba(var(--yellow0-txt-primary-color),0.5);
-}
-[data-docType='drawing'] .spinner-img #spinner-box-f-left {
-	fill: rgba(var(--yellow0-txt-primary-color),0.2);
-}
-[data-docType='drawing'] .spinner-img #spinner-inner-right {
-	fill: rgba(var(--yellow0-txt-primary-color),0.5);
-}
-[data-docType='drawing'] .spinner-img #spinner-box-back {
-	fill: rgba(var(--yellow0-txt-primary-color),0.4);
-}
-[data-docType='drawing'] .spinner-img #spinner-handle {
-	stroke: rgba(var(--yellow0-txt-primary-color),0.8);
-}
-[data-docType='drawing'] .spinner-img #spinner-inner-left-linearGradient stop:first-child {
-	stop-color: rgba(var(--yellow0-txt-primary-color));
-	stop-opacity: 0.7;
-}
-[data-docType='drawing'] .spinner-img #spinner-inner-left-linearGradient stop:nth-child(2) {
-	stop-color: rgba(var(--yellow0-txt-primary-color));
-	stop-opacity: 0.5;
-}
-[data-docType='drawing'] .spinner-img #spinner-paper-fold {
-	fill: rgba(var(--yellow0-txt-primary-color),0.8);
-}
-[data-docType='drawing'] .spinner-img #spinner-paper-linearGradient stop:first-child {
-	stop-color: rgba(var(--yellow0-txt-primary-color));
-	stop-opacity: 0.3;
-}
-[data-docType='drawing'] .spinner-img #spinner-paper-linearGradient stop:nth-child(2) {
-	stop-color: rgba(var(--yellow0-txt-primary-color));
+.spinner-img #spinner-paper-linearGradient stop:nth-child(2) {
+	stop-color: rgba(var(--doc-type));
 	stop-opacity: 0.2;
 }
 
