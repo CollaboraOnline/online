@@ -353,8 +353,7 @@ class TreeViewControl {
 		parent: HTMLElement,
 	) {
 		const tr = L.DomUtil.create('div', 'ui-treeview-entry', parent);
-		let dummyColumns =
-			this._columns - (entry.columns ? entry.columns.length : 0);
+		let dummyColumns = 0;
 		if (this._hasState) dummyColumns++;
 		tr.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
 
@@ -477,15 +476,6 @@ class TreeViewControl {
 					builder.options.cssClass + ' ui-treeview-expander',
 					td,
 				);
-		}
-
-		// dummy columns (for missing elements in current row - eg. icon)
-		let dummyColumns =
-			this._columns - (entry.columns ? entry.columns.length : 0);
-		if (this._isRealTree) dummyColumns--;
-		for (let index = dummyColumns; index > 0; index--) {
-			td = L.DomUtil.create('div', '', tr);
-			rowElements.push(td);
 		}
 
 		// regular columns
@@ -1083,9 +1073,7 @@ class TreeViewControl {
 					parent,
 				);
 
-				let dummyColumns =
-					this._columns -
-					(entries[index].columns ? entries[index].columns.length : 0);
+				let dummyColumns = 0;
 				if (this._hasState) dummyColumns++;
 				subGrid.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
 
