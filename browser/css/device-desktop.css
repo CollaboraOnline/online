@@ -22,7 +22,7 @@
    Rules not intended for touch devices */
 
 .button-secondary:hover,
-button:not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):hover {
+button:not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.notebookbar.ui-tab):hover {
 	cursor: pointer;
 	color: var(--color-text-darker) !important;
 	background-color: var(--color-background-lighter) !important;
