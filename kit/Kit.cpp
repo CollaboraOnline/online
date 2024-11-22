@@ -3083,6 +3083,17 @@ void wakeCallback(void* pData)
 namespace
 {
 #if !MOBILEAPP
+
+extern "C"
+{
+    [[maybe_unused]]
+    static void sigChildHandler(int pid)
+    {
+        // Reap the child; will log failures.
+        SigUtil::reapZombieChild(pid);
+    }
+}
+
 void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
 {
     std::string aCertificatePathString = ConfigUtil::getString("certificates.database_path", "");
@@ -3121,10 +3132,7 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
 }
 
 #endif
-}
-
-
-
+} // namespace
 
 void lokit_main(
 #if !MOBILEAPP
@@ -3680,6 +3688,15 @@ void lokit_main(
         LOG_INF("New kit client websocket inserted.");
 
 #if !MOBILEAPP
+
+        // Since we don't track the bg-save process,
+        // for example to prevent multiple parallel saves,
+        // we could, in principle, ignore SIGCHLD and avoid
+        // the problem of zombies and reaping. Unfortunately,
+        // ignoring SIGCHLD is not portable, according to
+        // man 2 sigaction. So we simply waitpid(2) on SIGCHLD.
+        SigUtil::setSigChildHandler(sigChildHandler);
+
         if (bTraceStartup && LogLevel != LogLevelStartup)
         {
             LOG_INF("Kit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
