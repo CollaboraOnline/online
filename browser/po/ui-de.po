@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-21 15:59+0100\n"
 "PO-Revision-Date: 2024-11-22 06:34+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -274,7 +274,7 @@ msgstr "Speicherverlauf"
 
 #: admin/src/AdminClusterOverview.js:127
 msgid "RouteToken"
-msgstr ""
+msgstr "Routentoken"
 
 #: admin/src/AdminClusterOverview.js:130
 msgid "ServerId"
