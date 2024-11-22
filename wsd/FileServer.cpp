@@ -1393,7 +1393,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
 
 
-    if (!config.getBool("feedback.show", true) && config.getBool("home_mode.enable", false))
+    if (config.getBool("home_mode.enable", false))
     {
         Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_FEEDBACK%"), (std::string)"false");
     }
