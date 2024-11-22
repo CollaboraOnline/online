@@ -540,6 +540,16 @@ public:
 
     StorageBase* getStorage() { return _storage.get(); }
 
+#if !MOBILEAPP
+    /// Start an asynchronous Installation of the user presets, e.g. autotexts etc, as
+    /// described at userSettingsUri for installation into presetsPath
+    static void asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri, const std::string& presetsPath);
+
+    /// Start an asynchronous Installation of a user preset resource, e.g. an autotext
+    /// file, to copy as presetFile
+    static void asyncInstallPreset(SocketPoll& poll, const std::string& presetUri, const std::string& presetFile);
+#endif // !MOBILEAPP
+
 private:
     /// Get the session that can write the document for save / locking / uploading.
     /// Note that if there is no loaded and writable session, the first will be returned.
@@ -577,15 +587,6 @@ private:
 
     /// Start an asynchronous CheckFileInfo request.
     void checkFileInfo(const std::shared_ptr<ClientSession>& uri, int redirectLimit);
-
-    /// Start an asynchronous Installation of the user presets, e.g. autotexts etc, as
-    /// described at userSettingsUri for installation into presetsPath
-    void asyncInstallPresets(const std::string& userSettingsUri, const std::string& presetsPath);
-
-    /// Start an asynchronous Installation of a user preset resource, e.g. an autotext
-    /// file, to copy as presetFile
-    void asyncInstallPreset(const std::string& presetUri, const std::string& presetFile);
-
 #endif // !MOBILEAPP
 
     bool isLoaded() const { return _docState.hadLoaded(); }
