@@ -24,7 +24,7 @@ class CalcGridSection extends app.definitions.canvasSectionObject {
         this.boundToSection = 'tiles';
         this.sectionProperties = {
             docLayer: app.map._docLayer,
-            strokeStyle: '#c0c0c0',
+            strokeStyle: getComputedStyle(document.body).getPropertyValue('--color-calc-grid'),
 			tsManager: null
         };
 	}
