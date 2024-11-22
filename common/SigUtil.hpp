@@ -119,7 +119,10 @@ namespace SigUtil
     /// after a certain (short) timeout.
     bool killChild(const int pid, const int signal);
 
-    extern "C" { typedef void (*SigChildHandler)(uint32_t); }
+    extern "C"
+    {
+        typedef void (*SigChildHandler)(int);
+    }
 
     /// Sets a child death signal handler
     void setSigChildHandler(SigChildHandler fn);
