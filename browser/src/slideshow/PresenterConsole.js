@@ -602,10 +602,20 @@ class PresenterConsole {
 
 		let currentFontSize = parseInt(this._notes.style.fontSize);
 		let newFontSize = currentFontSize + increment;
+		let zoomInBtn = this._proxyPresenter.document.querySelector('#increase');
+		let zoomOutBtn = this._proxyPresenter.document.querySelector('#decrease');
 
 		// Ensure the font size stays within bounds
 		if (newFontSize >= MIN_FONT_SIZE && newFontSize <= MAX_FONT_SIZE) {
 			this._notes.style.fontSize = `${newFontSize}px`;
+			this._enableButton(zoomInBtn);
+			this._enableButton(zoomOutBtn);
+		}
+
+		if (newFontSize <= MIN_FONT_SIZE) {
+			this._disableButton(zoomOutBtn);
+		} else if (newFontSize >= MAX_FONT_SIZE) {
+			this._disableButton(zoomInBtn);
 		}
 	}
 
@@ -911,6 +921,16 @@ class PresenterConsole {
 		if (e) {
 			e.stopPropagation();
 		}
+	}
+
+	_disableButton(elem) {
+		elem.disabled = true;
+		elem.style.opacity = '0.5';
+	}
+
+	_enableButton(elem) {
+		elem.disabled = false;
+		elem.style.opacity = '1';
 	}
 
 	toggleButtonState(elem, toggleOn) {
