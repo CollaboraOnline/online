@@ -1449,7 +1449,6 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     }
 
     const std::string userSettingsUri = wopiFileInfo->getUserSettingsUri();
-    const std::string sharedSettingsUri = wopiFileInfo->getSharedSettingsUri();
 
     // Pass the ownership to the client session.
     session->setWopiFileInfo(std::move(wopiFileInfo));
@@ -1462,22 +1461,12 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     session->setWatermarkText(watermarkText);
 
     if (!userSettingsUri.empty())
-        asyncInstallPresets(userSettingsUri, wopiStorage->getJailPresetsPath());
-
-    // TODO for testing, just put these into the same destination autotext as
-    // user autotext for now
-    if (!sharedSettingsUri.empty())
-    {
-        // if this wopi server has some shared settings we want to have a subForKit for those settings
-        // TODO, this is just for testing
-        std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
-        asyncInstallPresets(sharedSettingsUri, presetsPath);
-    }
+        asyncInstallPresets(*_poll, userSettingsUri, wopiStorage->getJailPresetsPath());
 
     return templateSource;
 }
 
-void DocumentBroker::asyncInstallPresets(const std::string& userSettingsUri, const std::string& presetsPath)
+void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri, const std::string& presetsPath)
 {
     // Download the json for settings
     const Poco::URI settingsUri{userSettingsUri};
@@ -1491,7 +1480,7 @@ void DocumentBroker::asyncInstallPresets(const std::string& userSettingsUri, con
     // When result arrives, extract uris of what we want to install to the jail's user presets
     // and async download and install those.
     http::Session::FinishedCallback finishedCallback =
-        [this, uriAnonym, presetsPath](const std::shared_ptr<http::Session>& configSession)
+        [&poll, uriAnonym, presetsPath](const std::shared_ptr<http::Session>& configSession)
     {
         if (SigUtil::getShutdownRequestFlag())
         {
@@ -1530,7 +1519,7 @@ void DocumentBroker::asyncInstallPresets(const std::string& userSettingsUri, con
                     const std::string uri = JsonUtil::getJSONValue<std::string>(autotext, "uri");
                     std::string fileName = Poco::Path(Poco::Path(presetsPath, "autotext").toString(),
                                                       Uri::getFilenameWithExtFromURL(uri)).toString();
-                    asyncInstallPreset(uri, fileName);
+                    asyncInstallPreset(poll, uri, fileName);
                 }
             }
         }
@@ -1543,10 +1532,10 @@ void DocumentBroker::asyncInstallPresets(const std::string& userSettingsUri, con
     httpSession->setFinishedHandler(std::move(finishedCallback));
 
     // Run the request on the WebServer Poll.
-    httpSession->asyncRequest(request, *_poll);
+    httpSession->asyncRequest(request, poll);
 }
 
-void DocumentBroker::asyncInstallPreset(const std::string& presetUri, const std::string& presetFile)
+void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& presetUri, const std::string& presetFile)
 {
     const Poco::URI autotextUri{presetUri};
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(autotextUri));
@@ -1557,7 +1546,7 @@ void DocumentBroker::asyncInstallPreset(const std::string& presetUri, const std:
     LOG_DBG("Getting autotext from [" << uriAnonym << ']');
 
     http::Session::FinishedCallback finishedCallback =
-        [this, uriAnonym, presetFile](const std::shared_ptr<http::Session>& autotextSession)
+        [uriAnonym, presetFile](const std::shared_ptr<http::Session>& autotextSession)
     {
         if (SigUtil::getShutdownRequestFlag())
         {
@@ -1582,7 +1571,7 @@ void DocumentBroker::asyncInstallPreset(const std::string& presetUri, const std:
     httpSession->setFinishedHandler(std::move(finishedCallback));
 
     // Run the request on the WebServer Poll.
-    httpSession->asyncRequest(request, *_poll);
+    httpSession->asyncRequest(request, poll);
 
     const std::shared_ptr<http::Response> autotextHttpResponse = httpSession->response();
     autotextHttpResponse->saveBodyToFile(presetFile);
