@@ -536,37 +536,29 @@ L.Clipboard = L.Class.extend({
 
 	// returns whether we shold stop processing the event
 	populateClipboard: function(ev) {
-		this._checkSelection();
+		// If the copy paste API is not supported, we download the content as a fallback method.
+		var text = this._getHtmlForClipboard();
 
-		// This is the codepath (_navigatorClipboardWrite) where the browser initiates the clipboard operation, e.g. the keyboard is used.
-		if (!this._navigatorClipboardWrite()) {
-			// If the copy paste API is not supported, we download the content as a fallback method.
-
-			var text = this._getHtmlForClipboard();
-
-			var plainText = DocUtil.stripHTML(text);
-			if (text == this._selectionContent && this._selectionPlainTextContent != '') {
-				plainText = this._selectionPlainTextContent;
-			}
-			if (ev.clipboardData) { // Standard
-				if (this._unoCommandForCopyCutPaste === '.uno:CopyHyperlinkLocation') {
-					var ess = 's';
-					var re = new RegExp('^(.*)(<a href=")([^"]+)(">.*</a>)(</p>\n</body>\n</html>)$', ess);
-					var match = re.exec(text);
-					if (match !== null && match.length === 6) {
-						text = match[1] + match[3] + match[5];
-						plainText = DocUtil.stripHTML(text);
-					}
-				}
-				// if copied content is graphical then plainText is null and it does not work on mobile.
-				ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
-				ev.clipboardData.setData('text/html', text);
-				window.app.console.log('Put "' + text + '" on the clipboard');
-				this._clipboardSerial++;
-			}
+		var plainText = DocUtil.stripHTML(text);
+		if (text == this._selectionContent && this._selectionPlainTextContent != '') {
+			plainText = this._selectionPlainTextContent;
 		}
-
-		return true; // prevent default
+		if (ev.clipboardData) { // Standard
+			if (this._unoCommandForCopyCutPaste === '.uno:CopyHyperlinkLocation') {
+				var ess = 's';
+				var re = new RegExp('^(.*)(<a href=")([^"]+)(">.*</a>)(</p>\n</body>\n</html>)$', ess);
+				var match = re.exec(text);
+				if (match !== null && match.length === 6) {
+					text = match[1] + match[3] + match[5];
+					plainText = DocUtil.stripHTML(text);
+				}
+			}
+			// if copied content is graphical then plainText is null and it does not work on mobile.
+			ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
+			ev.clipboardData.setData('text/html', text);
+			window.app.console.log('Put "' + text + '" on the clipboard');
+			this._clipboardSerial++;
+		}
 	},
 
 	_isAnyInputFieldSelected: function(forCopy = false) {
@@ -904,7 +896,7 @@ L.Clipboard = L.Class.extend({
 				// Prefetch selection, so next time copy will work with the keyboard.
 				app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
 			}
-			}
+		}
 	},
 
 	// Parses the result from the clipboard endpoint into HTML and plain text.
@@ -1082,10 +1074,15 @@ L.Clipboard = L.Class.extend({
 			}
 		} else {
 			this._unoCommandForCopyCutPaste = `.uno:${unoName}`;
-			preventDefault = this.populateClipboard(ev);
+			this._checkSelection();
+
+			// This is the codepath (_navigatorClipboardWrite) where the browser initiates the clipboard operation, e.g. the keyboard is used.
+			if (!this._navigatorClipboardWrite()) {
+				app.socket.sendMessage('uno .uno:' + unoName);
+				this.populateClipboard(ev);
+			}
 		}
 
-		app.socket.sendMessage('uno .uno:' + unoName);
 		if (ev.clipboardData && unoName === 'Cut') {
 			// Cut text is not removed from the editable area,
 			// so we need to request the focused paragraph.
