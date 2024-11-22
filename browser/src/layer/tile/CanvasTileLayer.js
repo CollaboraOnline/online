@@ -2815,10 +2815,10 @@ L.CanvasTileLayer = L.Layer.extend({
 					scrollX = newSelection.pX2 - app.file.viewedRectangle.pX2 + spacingX;
 				else if (newSelection.pX1 < app.file.viewedRectangle.pX1 && newSelection.pX1 < oldSelection.pX1)
 					scrollX = newSelection.pX1 - app.file.viewedRectangle.pX1 - spacingX;
-				if (newSelection.pY1 > app.file.viewedRectangle.pY1 && newSelection.pY1 > oldSelection.pY1)
-					scrollY = newSelection.pY1 - app.file.viewedRectangle.pY1 + spacingY;
-				else if (newSelection.pY2 < app.file.viewedRectangle.pY2 && newSelection.pY2 < oldSelection.pY2)
-					scrollY = newSelection.pY2 - app.file.viewedRectangle.pY2 - spacingY;
+				if (newSelection.pY2 > app.file.viewedRectangle.pY2 && newSelection.pY2 > oldSelection.pY2)
+					scrollY = newSelection.pY2 - app.file.viewedRectangle.pY2 + spacingY;
+				else if (newSelection.pY1 < app.file.viewedRectangle.pY1 && newSelection.pY1 < oldSelection.pY1)
+					scrollY = newSelection.pY1 - app.file.viewedRectangle.pY1 - spacingY;
 				if (scrollX !== 0 || scrollY !== 0) {
 					var newCenter = new app.definitions.simplePoint(app.file.viewedRectangle.center[0], app.file.viewedRectangle.center[1]);
 					newCenter.pX += scrollX;
