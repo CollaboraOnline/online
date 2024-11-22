@@ -973,11 +973,15 @@ fi
 AC_DEFINE_UNQUOTED([INFOBAR_URL],["$INFOBAR_URL"],[Infobar URL.])
 
 WELCOME_CONFIG_FRAGMENT=
+HOME_MODE_CONFIGURATION=
 ENABLE_WELCOME_MESSAGE=0
 WELCOME_URL=
 if test -n "$with_welcome_url"; then
     WELCOME_URL=$with_welcome_url
     ENABLE_WELCOME_MESSAGE=1
+    HOME_MODE_CONFIGURATION="<home_mode>
+        <enable desc=\"Home users can enable this setting, which in turn disables welcome screen and user feedback popups, but also limits concurrent open connections to 20 and concurrent open documents to 10. The default means that number of concurrent open connections and concurrent open documents are unlimited, but welcome screen and user feedback cannot be switched off.\" type=\"bool\" default=\"false\">false</enable>
+    </home_mode>"
 else
     WELCOME_CONFIG_FRAGMENT="<welcome>
       <enable type=\"bool\" desc=\"Controls whether the welcome screen should be shown to the users on new install and updates. When enabled, your custom welcome screen must be created at /usr/share/coolwsd/browser/dist/welcome/welcome.html.\" default=\"false\">false</enable>
@@ -986,6 +990,8 @@ fi
 
 AC_SUBST([WELCOME_CONFIG_FRAGMENT])
 AM_SUBST_NOTMAKE(WELCOME_CONFIG_FRAGMENT)
+AC_SUBST([HOME_MODE_CONFIGURATION])
+AM_SUBST_NOTMAKE(HOME_MODE_CONFIGURATION)
 AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE],$ENABLE_WELCOME_MESSAGE,[Should the Release notes message be shown on upgrade])
 AM_CONDITIONAL([ENABLE_WELCOME_MESSAGE], [test "$ENABLE_WELCOME_MESSAGE" = "1"])
 AC_DEFINE_UNQUOTED([WELCOME_URL],["$WELCOME_URL"],[The welcome url of the build.])

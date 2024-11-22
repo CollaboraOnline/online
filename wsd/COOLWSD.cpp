@@ -1283,7 +1283,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         { "trace[@enable]", "false" },
         { "welcome.enable", "false" },
         { "home_mode.enable", "false" },
-        { "feedback.show", "true" },
         { "overwrite_mode.enable", "false" },
 #if ENABLE_FEATURE_LOCK
         { "feature_lock.locked_hosts[@allow]", "false" },
@@ -1943,7 +1942,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     }
     else
     {
-        conf.setString("feedback.show", "true");
         conf.setString("welcome.enable", "true");
         COOLWSD::MaxConnections = MAX_CONNECTIONS;
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;

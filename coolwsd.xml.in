@@ -323,10 +323,6 @@
         <url desc="URL of optional JSON file that lists fonts to be included in Online" type="string" default=""></url>
     </remote_font_config>
 
-    <home_mode>
-        <enable desc="Enable more configuration options for home users" type="bool" default="false">false</enable>
-    </home_mode>
-
     <fonts_missing>
         <handling desc="How to handle fonts missing in a document: 'report', 'log', 'both', or 'ignore'" type="string" default="log">log</handling>
     </fonts_missing>
@@ -340,6 +336,8 @@
       </geolocation_setup>
       <server_name desc="server name to show in cluster overview admin panel" type="string" default=""></server_name>
     </indirection_endpoint>
+
+    @HOME_MODE_CONFIGURATION@
 
     @LOCK_CONFIGURATION@
 
