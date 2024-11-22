@@ -916,7 +916,7 @@ WASM_BUILDDIR="$with_wasm_fallback"
 AC_SUBST(WASM_BUILDDIR)
 
 dnl Temporary hack: We hardcode /sample.docx in a few places, so make sure that file is there
-AS_IF(["$host_os" = "emscripten"],
+AS_IF([test "$host_os" = "emscripten"],
       [AC_MSG_CHECKING([that temporarily there is a sample document with a fixed name])
       AS_IF([test -z "$with_wasm_additional_files"],
             [AC_MSG_ERROR([You must use the --with-wasm-additional-files option for now])])
