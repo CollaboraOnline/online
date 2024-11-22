@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-21 15:59+0100\n"
-"PO-Revision-Date: 2024-11-22 06:34+0000\n"
-"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
+"PO-Revision-Date: 2024-11-22 13:43+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -3323,7 +3323,7 @@ msgstr "Vorherige"
 
 #: src/slideshow/PresenterConsole.js:32
 msgid "Next"
-msgstr "Weiter"
+msgstr "Nächste"
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
