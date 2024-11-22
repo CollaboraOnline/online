@@ -52,11 +52,11 @@ msgstr "复制"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
-"/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br /"
+"><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
@@ -64,11 +64,11 @@ msgstr "粘贴未格式化的文本"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-90
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:15-38
 msgid "Paste special"
@@ -76,13 +76,13 @@ msgstr "特殊粘贴"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:15-78
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
+"span><kbd>V</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
+"span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-38
 msgid "Print (Download as PDF)"
@@ -98,11 +98,11 @@ msgstr "显示键盘快捷键帮助"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-100
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>?</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>?</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>?</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>?</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-38
 msgid "Focus to notebookbar menu"
@@ -110,11 +110,11 @@ msgstr "聚焦笔记栏菜单"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-90
 msgid ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>F1</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 msgstr ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>F1</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-38
 msgid "Focus to document from menu"
@@ -201,11 +201,11 @@ msgstr "删除线"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:192-78
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:257-78
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>5</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>5</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:32-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-38
@@ -217,11 +217,11 @@ msgstr "上标"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:193-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:258-76
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>P</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>P</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>P</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:194-38
@@ -233,11 +233,11 @@ msgstr "下标"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:194-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:259-74
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>B</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>B</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>B</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
@@ -431,11 +431,11 @@ msgstr "按单词选择至左边的单词"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:216-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:281-96
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>左箭头</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>左箭头</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:60-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:217-38
@@ -484,11 +484,11 @@ msgstr "按词选择到右边的单词"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:285-97
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>右箭头</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>右箭头</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:64-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
@@ -536,11 +536,11 @@ msgstr "选至段首"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:289-97
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>上箭头</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>上箭头</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:68-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
@@ -588,11 +588,11 @@ msgstr "选择至段落的结束位置"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-91
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>下箭头</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>下箭头</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
@@ -642,11 +642,11 @@ msgstr "选择至文档起始位置"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-103
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Home</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Home</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:76-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
@@ -696,11 +696,11 @@ msgstr "选择至文档末尾"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:236-101
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-101
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>End</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>End</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>End</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-38
 msgid "Move the view up one page"
@@ -772,11 +772,11 @@ msgstr "删除至句首"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-96
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Backspace</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>退格</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>退格</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-38
 msgid "Delete to end of sentence"
@@ -784,11 +784,11 @@ msgstr "删除至句尾"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-90
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Del</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Del</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:93-9
 msgid "Shortcut Keys for Tables"
@@ -798,7 +798,8 @@ msgstr "用于表格的快捷键"
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
-msgstr "如果活动单元格是空白的，选择整个表格；否则选择活动单元格的内容，再按一次选择"
+msgstr ""
+"如果活动单元格是空白的，选择整个表格；否则选择活动单元格的内容，再按一次选择"
 "整个表格。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:96-128
@@ -843,11 +844,11 @@ msgstr "沿着单元格的右/下边缘放大/缩小列/行"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-38
 msgid ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>方向键</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>方向键</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-181
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -855,11 +856,11 @@ msgstr "沿着单元格的左/上边缘放大/缩小列/行"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-38
 msgid ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>方向键</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>方向键</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-180
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-228
@@ -868,13 +869,13 @@ msgstr "如同Alt，但只有活动单元格被修改"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-38
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-">+</span><kbd>方向键</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
+"span><kbd>方向键</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
@@ -898,23 +899,24 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"处于删除模式 3 秒，方向键删除行或列，<kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>方向键</kbd>将单元格与相邻单元格合并"
+"处于删除模式 3 秒，方向键删除行或列，<kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>方向键</kbd>将单元格与相邻单元格合并"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
 msgid ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Del</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Del</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:105-197
 msgid ""
 "If no whole cell is selected, the text from the cursor to the end of the "
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
-msgstr "如果没有选定整个单元格，则删除从光标所在位置到当前句子结尾处的文本。如果光标"
+msgstr ""
+"如果没有选定整个单元格，则删除从光标所在位置到当前句子结尾处的文本。如果光标"
 "在单元格结尾处，并且没有选定整个单元格，则删除下一个单元格的内容。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:106-1
@@ -922,7 +924,8 @@ msgid ""
 "If no whole cell is selected and the cursor is at the end of the table, the "
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
-msgstr "如果没有选中整个单元格，并且光标在表格末尾，紧随表格的段落将被删除，除非该段"
+msgstr ""
+"如果没有选中整个单元格，并且光标在表格末尾，紧随表格的段落将被删除，除非该段"
 "落处于文档末尾。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:107-1
@@ -930,7 +933,8 @@ msgid ""
 "If one or more cells are selected, the whole rows containing the selection "
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
-msgstr "如果选定一个或多个单元格，则删除包含选择内容的整个行。如果完全或部分选定全部"
+msgstr ""
+"如果选定一个或多个单元格，则删除包含选择内容的整个行。如果完全或部分选定全部"
 "行，则删除整个表格。"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:112-9
@@ -943,11 +947,11 @@ msgstr "插入脚注"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:114-80
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>F</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>F</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>F</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>F</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-38
 msgid "Insert endnote"
@@ -955,11 +959,11 @@ msgstr "插入尾注"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-79
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>D</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>D</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>D</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-38
@@ -969,11 +973,11 @@ msgstr "插入批注"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-79
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-79
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>C</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>C</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>C</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-38
 msgid "Insert soft hyphen"
@@ -989,11 +993,11 @@ msgstr "插入不可分连字符"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-91
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>-</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>-</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>-</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-38
 msgid "Insert non-breaking space"
@@ -1001,11 +1005,11 @@ msgstr "插入不间断空格"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-90
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Space</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Space</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>空格</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>空格</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-38
 msgid "Insert line break"
@@ -1031,11 +1035,11 @@ msgstr "分栏符（在多栏文本中）"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-101
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Enter</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
 msgid ""
@@ -1108,7 +1112,8 @@ msgid ""
 "Moves the cursor to the left edge of the current data range. If the column "
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
-msgstr "将光标移动到当前的数据范围的左边缘。如果光标所在单元格的左侧列为空，光标移动"
+msgstr ""
+"将光标移动到当前的数据范围的左边缘。如果光标所在单元格的左侧列为空，光标移动"
 "至有数据的列的左侧"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-265
@@ -1120,7 +1125,8 @@ msgid ""
 "Moves the cursor to the right edge of the current data range. If the column "
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
-msgstr "将光标移动到当前的数据范围的右边缘。如果光标所在单元格的右侧列为空，光标移动"
+msgstr ""
+"将光标移动到当前的数据范围的右边缘。如果光标所在单元格的右侧列为空，光标移动"
 "至有数据的列的右侧。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-269
@@ -1132,7 +1138,8 @@ msgid ""
 "Moves the cursor to the top edge of the current data range. If the row above "
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
-msgstr "将光标移动到当前的数据范围的上边缘。如果光标所在单元格的上侧行为空，光标移动"
+msgstr ""
+"将光标移动到当前的数据范围的上边缘。如果光标所在单元格的上侧行为空，光标移动"
 "至有数据的行的上侧。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-241
@@ -1144,7 +1151,8 @@ msgid ""
 "Moves the cursor to the bottom edge of the current data range. If the row "
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
-msgstr "将光标移动到当前的数据范围的下边缘。如果光标所在单元格的下侧行为空，光标移动"
+msgstr ""
+"将光标移动到当前的数据范围的下边缘。如果光标所在单元格的下侧行为空，光标移动"
 "至有数据的行的下侧。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-246
@@ -1157,11 +1165,11 @@ msgstr "移动至下一张工作表。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-82
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
@@ -1169,11 +1177,11 @@ msgstr "移动至上一张工作表。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-86
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-38
 msgid ""
@@ -1181,16 +1189,17 @@ msgid ""
 "continuous range of data cells, in the direction of the arrow pressed. If "
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
-msgstr "从当前单元格开始，沿箭头所指方向，选择包含数据的所有单元格，直至连续数据单元"
+msgstr ""
+"从当前单元格开始，沿箭头所指方向，选择包含数据的所有单元格，直至连续数据单元"
 "格区域的末尾。如果同时选择行和列，则会选择一个矩形单元格区域。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-292
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>方向键</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>方向键</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
@@ -1217,11 +1226,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-280
 msgid ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid ""
@@ -1232,11 +1241,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-268
 msgid ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
 msgid ""
@@ -1301,11 +1310,11 @@ msgstr "两个小数位数, 千位分隔符"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-104
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>1</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>1</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>1</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
 msgid "Standard exponential format"
@@ -1313,11 +1322,11 @@ msgstr "标准指数格式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-92
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>2</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>2</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>2</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
 msgid "Standard date format"
@@ -1325,11 +1334,11 @@ msgstr "标准日期格式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-85
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>3</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>3</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid "Standard currency format"
@@ -1337,11 +1346,11 @@ msgstr "标准货币格式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-89
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>4</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>4</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "Standard percentage format (two decimal places)"
@@ -1349,11 +1358,11 @@ msgstr "标准百分比格式（保留小数点后两位）"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-112
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>5</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>5</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-38
 msgid "Standard format"
@@ -1361,11 +1370,11 @@ msgstr "标准格式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-80
 msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>6</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>6</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:205-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:270-38
@@ -1415,8 +1424,9 @@ msgstr ""
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
-msgstr "退出当前模式（从编辑模式切换到对象选择模式，或者从对象选择模式切换到查看模式"
-"）。"
+msgstr ""
+"退出当前模式（从编辑模式切换到对象选择模式，或者从对象选择模式切换到查看模"
+"式）。"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:242-186
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-186
@@ -1439,7 +1449,7 @@ msgstr "移动到幻灯片下一个文本对象"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:246-38
 msgid "Select all in slide"
-msgstr ""
+msgstr "选择幻灯片中的所有元素"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:305-9
 msgid "Draw page keyboard shortcuts"
@@ -1457,37 +1467,30 @@ msgstr "选取绘图页面所有内容"
 msgid "<span class=\"productname\">{productname}</span> Help"
 msgstr "<span class=\"productname\">{productname}</span> 帮助"
 
-#: html/cool-help.html%2Bdiv.p:318-5
-#: html/cool-help.html%2Bdiv.div.h3:354-5
+#: html/cool-help.html%2Bdiv.p:318-5 html/cool-help.html%2Bdiv.div.h3:354-5
 msgid "Collaborative editing"
 msgstr "协同编辑"
 
-#: html/cool-help.html%2Bdiv.p:319-5
-#: html/cool-help.html%2Bdiv.div.h3:365-5
+#: html/cool-help.html%2Bdiv.p:319-5 html/cool-help.html%2Bdiv.div.h3:365-5
 msgid "<span class=\"productname\">{productname}</span> user interface"
 msgstr "<span class=\"productname\">{productname}</span> 用户界面"
 
-#: html/cool-help.html%2Bdiv.p:320-5
-#: html/cool-help.html%2Bdiv.div.h3:403-5
+#: html/cool-help.html%2Bdiv.p:320-5 html/cool-help.html%2Bdiv.div.h3:403-5
 msgid "Opening, closing, saving, printing and downloading documents"
 msgstr "打开、关闭、保存、打印和下载文档"
 
-#: html/cool-help.html%2Bdiv.p:321-5
-#: html/cool-help.html%2Bdiv.div.h3:413-5
+#: html/cool-help.html%2Bdiv.p:321-5 html/cool-help.html%2Bdiv.div.h3:413-5
 msgid "Editing documents"
 msgstr "编辑文档"
 
-#: html/cool-help.html%2Bdiv.p:322-5
-#: html/cool-help.html%2Bdiv.div.p:328-9
-#: html/cool-help.html%2Bdiv.div.p:343-9
-#: html/cool-help.html%2Bdiv.div.h3:444-3
+#: html/cool-help.html%2Bdiv.p:322-5 html/cool-help.html%2Bdiv.div.p:328-9
+#: html/cool-help.html%2Bdiv.div.p:343-9 html/cool-help.html%2Bdiv.div.h3:444-3
 #: html/cool-help.html%2Bdiv.div.div.h3:509-5
 #: html/cool-help.html%2Bdiv.div.div.h3:630-5
 msgid "Advanced features"
 msgstr "高级功能"
 
-#: html/cool-help.html%2Bdiv.div.p:324-9
-#: html/cool-help.html%2Bdiv.div.h2:483-5
+#: html/cool-help.html%2Bdiv.div.p:324-9 html/cool-help.html%2Bdiv.div.h2:483-5
 msgid "<span class=\"productname\">{productname}</span> spreadsheets"
 msgstr "<span class=\"productname\">{productname}</span> 电子表格"
 
@@ -1512,8 +1515,7 @@ msgstr "为电子表格设置格式"
 msgid "Spreadsheets"
 msgstr "电子表格"
 
-#: html/cool-help.html%2Bdiv.div.p:332-9
-#: html/cool-help.html%2Bdiv.div.h2:552-5
+#: html/cool-help.html%2Bdiv.div.p:332-9 html/cool-help.html%2Bdiv.div.h2:552-5
 msgid "<span class=\"productname\">{productname}</span> text documents"
 msgstr "<span class=\"productname\">{productname}</span> 文本文档"
 
@@ -1537,8 +1539,7 @@ msgstr "高级文本文档编辑器功能"
 msgid "Text documents"
 msgstr "文本文档"
 
-#: html/cool-help.html%2Bdiv.div.p:339-9
-#: html/cool-help.html%2Bdiv.div.h2:606-5
+#: html/cool-help.html%2Bdiv.div.p:339-9 html/cool-help.html%2Bdiv.div.h2:606-5
 msgid "<span class=\"productname\">{productname}</span> presentations"
 msgstr "<span class=\"productname\">{productname}</span> 演示文稿"
 
@@ -1562,8 +1563,7 @@ msgstr "幻灯片窗格"
 msgid "Presentations"
 msgstr "演示文稿"
 
-#: html/cool-help.html%2Bdiv.p:346-5
-#: html/cool-help.html%2Bdiv.div.h2:643-5
+#: html/cool-help.html%2Bdiv.p:346-5 html/cool-help.html%2Bdiv.div.h2:643-5
 msgid "Frequently Asked Questions"
 msgstr "常见问题"
 
@@ -1597,8 +1597,8 @@ msgid ""
 "<span class=\"productname\">{productname}</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
-"在新用户进入或用户离开时，<span class=\"productname\">{productname}</span> "
-"会在页脚处显示小型通知。"
+"在新用户进入或用户离开时，<span class=\"productname\">{productname}</span> 会"
+"在页脚处显示小型通知。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:366-30
 msgid ""
@@ -1614,24 +1614,26 @@ msgstr ""
 msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
-msgstr "<span class=\"def\">文档区：</span>显示文档内容的应用区域，内容可以是电子表格"
-"、演示文稿或文本文档。"
+msgstr ""
+"<span class=\"def\">文档区：</span>显示文档内容的应用区域，内容可以是电子表"
+"格、演示文稿或文本文档。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:371-5
 msgid ""
 "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
 "and includes many options, commands for printing, editing, viewing and other "
-"advanced commands. You can hide the menu bar clicking on the <span class"
-"=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
-"<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
+"advanced commands. You can hide the menu bar clicking on the <span "
+"class=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on "
+"the <span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
 "<span class=\"def\">Context menus:</span> On clicking with the right mouse "
 "button, a menu appears with commands associated with the underlying object."
-msgstr "<span class=\"def\""
-">快捷菜单：</span>单击鼠标右键时，将会显示与所点击对象相关的命令菜单。"
+msgstr ""
+"<span class=\"def\">快捷菜单：</span>单击鼠标右键时，将会显示与所点击对象相关"
+"的命令菜单。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:377-5
 msgid ""
@@ -1646,7 +1648,8 @@ msgstr ""
 msgid ""
 "<span class=\"def\">The status bar:</span> The status bar is shown in the "
 "bottom, and contains several useful options and features."
-msgstr "<span class=\"def\">状态栏：</span>显示于底部，包含几个有用的选项和功能。"
+msgstr ""
+"<span class=\"def\">状态栏：</span>显示于底部，包含几个有用的选项和功能。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:384-5
 msgid ""
@@ -1679,15 +1682,16 @@ msgid ""
 "affected. The current level of zoom is shown in this area."
 msgstr ""
 "<span class=\"def\">缩放栏：</span>状态栏的右侧有一组缩放按钮。可用它们将文档"
-"区缩小、放大或重置为实际大小，用户界面则不受影响。当前缩放级别显示在此区域中"
-"。"
+"区缩小、放大或重置为实际大小，用户界面则不受影响。当前缩放级别显示在此区域"
+"中。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:393-5
 msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
-msgstr "放大后文本、图表、形状和 SVG 图像仍会保持清晰，只有插入的 JPG 或 PNG "
-"等图像上才能看到像素颗粒。"
+msgstr ""
+"放大后文本、图表、形状和 SVG 图像仍会保持清晰，只有插入的 JPG 或 PNG 等图像上"
+"才能看到像素颗粒。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:394-5
 msgid "Using the browser zoom affects the document and user interface areas."
@@ -1698,7 +1702,8 @@ msgid ""
 "<span class=\"def\">The information bar:</span> At the right of the search "
 "bar, a set of information on the document is displayed. The actual "
 "information depends on the nature of the document."
-msgstr "<span class=\"def\">信息栏：</span>搜索栏的右侧显示文档的相关信息。具体有哪些"
+msgstr ""
+"<span class=\"def\">信息栏：</span>搜索栏的右侧显示文档的相关信息。具体有哪些"
 "信息取决于文档类型和内容。"
 
 #: html/cool-help.html%2Bdiv.div.p:404-5
@@ -1706,46 +1711,47 @@ msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">{productname}</span>."
 msgstr ""
-"您的文档存储在集成于 <span class=\"productname\">{productname}</span> "
-"的云存储中，并由其管理。"
+"您的文档存储在集成于 <span class=\"productname\">{productname}</span> 的云存"
+"储中，并由其管理。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:405-30
 msgid ""
-"To download a document download it from the <span class=\"productname\""
-">{productname}</span> application’s <span class=\"ui\">File</span> menu. The "
-"download formats available depends on the application. All applications "
-"exports documents in PDF format."
+"To download a document download it from the <span "
+"class=\"productname\">{productname}</span> application’s <span "
+"class=\"ui\">File</span> menu. The download formats available depends on the "
+"application. All applications exports documents in PDF format."
 msgstr ""
-"要下载文档，请从 <span class=\"productname\">{productname}</span> "
-"应用程序的<span class=\"ui\""
-">文件</span>菜单中下载。可供下载的文件格式取决于应用程序。"
+"要下载文档，请从 <span class=\"productname\">{productname}</span> 应用程序的"
+"<span class=\"ui\">文件</span>菜单中下载。可供下载的文件格式取决于应用程序。"
 "所有应用程序都可导出 PDF 格式文档。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:406-30
 msgid ""
-"To open document, click on the file to open the <span class=\"productname\""
-">{productname}</span> module associated to the document format."
+"To open document, click on the file to open the <span "
+"class=\"productname\">{productname}</span> module associated to the document "
+"format."
 msgstr ""
-"要打开文档，点击文件即可用与其文档格式关联的 <span class=\"productname\""
-">{productname}</span> 模块将它打开。"
+"要打开文档，点击文件即可用与其文档格式关联的 <span "
+"class=\"productname\">{productname}</span> 模块将它打开。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:407-30
 msgid ""
 "Documents in <span class=\"productname\">{productname}</span> save "
 "automatically, but if you are concerned that a document is synchronized as "
-"quickly as possible you can also force saving using the <span class=\"ui\""
-">File</span> menu’s <span class=\"ui\">Save</span> entry."
+"quickly as possible you can also force saving using the <span "
+"class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
-"<span class=\"productname\">{productname}</span> "
-"中的文档会自动保存。如果你要令文档尽快同步，也可用<span class=\"ui\">文件</"
-"span>菜单的<span class=\"ui\">保存</span>项手动保存。"
+"<span class=\"productname\">{productname}</span> 中的文档会自动保存。如果你要"
+"令文档尽快同步，也可用<span class=\"ui\">文件</span>菜单的<span class=\"ui\">"
+"保存</span>项手动保存。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:408-30
 msgid ""
 "Depending on the capabilities of your browser the print window may appear or "
 "a “Download PDF export?” popup shows. You can print this PDF in your "
 "favorite PDF reader."
-msgstr "由于浏览器功能和设置不同，可能会出现打印窗口或弹出“下载导出的 PDF？”提示框。"
+msgstr ""
+"由于浏览器功能和设置不同，可能会出现打印窗口或弹出“下载导出的 PDF？”提示框。"
 "您可在 PDF 阅读器中打印下载的 PDF。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:409-30
@@ -1766,28 +1772,26 @@ msgstr "复制与粘贴"
 #: html/cool-help.html%2Bdiv.div.div.p:417-5
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
-"document, but also across documents on the same or different <span class="
-"\"productname\">{productname}</span>. For these internal uses, users can "
-"copy/cut content, including images and mixed content, on PC by using the "
-"keyboard shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>). For security reasons it is necessary to use "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to paste on "
-"PC, but context menus can be used for cut and copy. On Android or iOS "
-"selecting text by double tapping, and using a long-tap to access copy/cut/"
-"paste via the context menu is required."
+"document, but also across documents on the same or different <span "
+"class=\"productname\">{productname}</span>. For these internal uses, users "
+"can copy/cut content, including images and mixed content, on PC by using the "
+"keyboard shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
+"span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</"
+"kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>). For "
+"security reasons it is necessary to use <kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>V</kbd> to paste on PC, but context menus can be used "
+"for cut and copy. On Android or iOS selecting text by double tapping, and "
+"using a long-tap to access copy/cut/paste via the context menu is required."
 msgstr ""
 "您不仅能在同一文档内复制／剪切和粘贴富文本内容，也能在同一个或不同的 <span "
 "class=\"productname\">{productname}</span> 编辑的文档间进行。要进行这些应用程"
 "序内部的内容复制／剪切，包括图像和文本图像混合内容，电脑用户可以直接用快捷键"
-"操作（<kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>X</kbd>、<kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>C</kbd> 和 <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>）。由于安全原因，在电脑上必须用快捷键 <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> 粘贴，但可以用快捷菜单剪切"
-"和复制。在安卓或苹果手机上，双击文本将其选中后，再长按即可弹出快捷菜单进行复"
-"制／剪切／粘贴。"
+"操作（<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>、"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd> 和 <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>）。由于安全原因，在电脑上"
+"必须用快捷键 <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> 粘"
+"贴，但可以用快捷菜单剪切和复制。在安卓或苹果手机上，双击文本将其选中后，再长"
+"按即可弹出快捷菜单进行复制／剪切／粘贴。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:418-5
 msgid ""
@@ -1814,15 +1818,17 @@ msgid ""
 "their changes to conflict and this can cause some confusion. The Document "
 "Repair function allows users to undo other editor’s changes to the document "
 "to a previous state."
-msgstr "多人同时编辑文档时，可能会发生更改冲突而导致某些困扰。文档修复功能让用户可以"
+msgstr ""
+"多人同时编辑文档时，可能会发生更改冲突而导致某些困扰。文档修复功能让用户可以"
 "撤消其他编辑者的修改，使文档恢复到之前的状态。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:423-5
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
-msgstr "要跳回所选状态，请用鼠标选择该状态并点击<span class=\"ui\""
-">跳转到状态</span>。"
+msgstr ""
+"要跳回所选状态，请用鼠标选择该状态并点击<span class=\"ui\">跳转到状态</"
+"span>。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:424-29
 msgid "document repair"
@@ -1831,13 +1837,13 @@ msgstr "文档修复"
 #: html/cool-help.html%2Bdiv.div.div.p:425-5
 msgid ""
 "This is particularly useful – say when a colleague inadvertently selected "
-"all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>A</kbd> and proceeded to type over it destroying it – while "
-"you were concurrently editing."
+"all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
+"span><kbd>A</kbd> and proceeded to type over it destroying it – while you "
+"were concurrently editing."
 msgstr ""
 "这在多人同时编辑的情况下非常有用。例如，一起编辑的同事不小心按 <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd> "
-"选中了文档内的所有文本，之后又键入了内容，于是将它们全部覆写掉了。"
+"kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd> 选中了文档内的所有文本，之"
+"后又键入了内容，于是将它们全部覆写掉了。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:428-5
 msgid "Inactive document"
@@ -1863,7 +1869,8 @@ msgid ""
 "To continue editing, click on the document and the layover and message "
 "disappear. Any changes that may have been made by other users – while "
 "collaboratively editing the document – are re-loaded."
-msgstr "要继续编辑，请点击文档，遮罩和消息即会消失。闲置期间其他协作用户所做的更改将"
+msgstr ""
+"要继续编辑，请点击文档，遮罩和消息即会消失。闲置期间其他协作用户所做的更改将"
 "会被重新加载。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:434-5
@@ -1876,7 +1883,8 @@ msgid ""
 "elements are maintained. If you copy from another document, in another tab "
 "or browser window, or from outside of the browser, the pasted content will "
 "preserve rich text."
-msgstr "从同一文档中复制的内容，粘贴时将保留格式和元素。如果从其它文档、其它浏览器标"
+msgstr ""
+"从同一文档中复制的内容，粘贴时将保留格式和元素。如果从其它文档、其它浏览器标"
 "签页或窗口、或者浏览器外部复制，粘贴的内容将保留富文本。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:436-5
@@ -1885,15 +1893,16 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>V</kbd>"
 msgstr ""
-"您可以用快捷键粘贴为无格式文本：<kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>"
+"您可以用快捷键粘贴为无格式文本：<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
+"span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.p:437-5
 msgid ""
 "When you paste text from within the document, formatting will be respected. "
 "You can also paste objects, such as images, if they are copied from the "
 "document you are working in."
-msgstr "当您粘贴来自文档内部的文本时，将保留格式。您也可以从正在编辑的文档中直接复制"
+msgstr ""
+"当您粘贴来自文档内部的文本时，将保留格式。您也可以从正在编辑的文档中直接复制"
 "对象（如图像）并粘贴。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
@@ -1901,7 +1910,8 @@ msgstr "当您粘贴来自文档内部的文本时，将保留格式。您也可
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
-msgstr "当您粘贴来自文档外部（如其它浏览器窗口或桌面应用程序）的文本时，将作为富文本"
+msgstr ""
+"当您粘贴来自文档外部（如其它浏览器窗口或桌面应用程序）的文本时，将作为富文本"
 "粘贴。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
@@ -1918,8 +1928,9 @@ msgstr "添加图表"
 msgid ""
 "<span class=\"productname\">{productname}</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
-msgstr "<span class=\"productname\">{productname}</span> "
-"支持在文档中插入和展示图表。图表添加方式："
+msgstr ""
+"<span class=\"productname\">{productname}</span> 支持在文档中插入和展示图表。"
+"图表添加方式："
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li.p:449-11
 msgid ""
@@ -1932,8 +1943,8 @@ msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
 "Customize your chart on the sidebar:"
 msgstr ""
-"选择<span class=\"ui\">插入</span> → <span class=\"ui\""
-">图表</span>。在侧边栏中定制图表："
+"选择<span class=\"ui\">插入</span> → <span class=\"ui\">图表</span>。在侧边栏"
+"中定制图表："
 
 #: html/cool-help.html%2Bdiv.div.div.ol.div.img[alt]:453-31
 msgid "chart"
@@ -1950,25 +1961,25 @@ msgid ""
 "Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart "
 "Type</span> to edit chart data and select chart type."
 msgstr ""
-"<span class=\"def\""
-">图表编辑：</span>双击选中图表。使用快捷菜单添加标题、坐标轴等图表元素。"
-"用<span class=\"ui\">数据范围</span>编辑图表数据，用<span class=\"ui\""
-">图表类型</span>选择图表类型。"
+"<span class=\"def\">图表编辑：</span>双击选中图表。使用快捷菜单添加标题、坐标"
+"轴等图表元素。用<span class=\"ui\">数据范围</span>编辑图表数据，用<span "
+"class=\"ui\">图表类型</span>选择图表类型。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:459-28
 msgid ""
 "<span class=\"def\">Chart formatting:</span> The same context menu brings "
 "you to chart data table and chart type selection."
-msgstr "<span class=\"def\""
-">设置图表格式：</span>同一快捷菜单有图表对应数据表格和选择图表类型的选项。"
+msgstr ""
+"<span class=\"def\">设置图表格式：</span>同一快捷菜单有图表对应数据表格和选择"
+"图表类型的选项。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:460-28
 msgid ""
 "<span class=\"def\">Data series formatting:</span> Open the context menu and "
 "choose <span class=\"ui\">Format data series</span>."
 msgstr ""
-"<span class=\"def\">设置数据序列格式：</span>打开快捷菜单并选择<span class="
-"\"ui\">设置数据序列格式</span>。"
+"<span class=\"def\">设置数据序列格式：</span>打开快捷菜单并选择<span "
+"class=\"ui\">设置数据序列格式</span>。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:462-5
 msgid "Handling images"
@@ -1980,23 +1991,24 @@ msgid ""
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
-"<span class=\"productname\">{productname}</span> "
-"可以将本地计算机或云存储里的图像插入到文本文档中。插入的图像将会嵌入文档中。"
+"<span class=\"productname\">{productname}</span> 可以将本地计算机或云存储里的"
+"图像插入到文本文档中。插入的图像将会嵌入文档中。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:464-5
 msgid ""
-"<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\""
-">Insert image</span> icon allows you to choose an image from the cloud "
-"storage's folders and shares."
+"<span class=\"def\">Insert image:</span> Clicking on the <span "
+"class=\"ui\">Insert image</span> icon allows you to choose an image from the "
+"cloud storage's folders and shares."
 msgstr ""
-"<span class=\"def\">插入图像：</span>点击<span class=\"ui\""
-">插入图像</span>图标可选择云存储及共享文件夹里的图像进行插入。"
+"<span class=\"def\">插入图像：</span>点击<span class=\"ui\">插入图像</span>图"
+"标可选择云存储及共享文件夹里的图像进行插入。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:465-5
 msgid ""
 "<span class=\"def\">Insert local image:</span> opens the browser file picker "
 "to upload the image from your local computer and insert it into the document."
-msgstr "<span class=\"def\">插入本地图像：</span>打开浏览器的文件选择对话框，上传本地"
+msgstr ""
+"<span class=\"def\">插入本地图像：</span>打开浏览器的文件选择对话框，上传本地"
 "计算机中的图像并插入到文档中。"
 
 #: html/cool-help.html%2Bdiv.div.div.p:466-5
@@ -2004,7 +2016,8 @@ msgid ""
 "Images can be resized, rotated and anchored. Text can be wrapped around the "
 "image. Select the image and open the context menu. Use the images handles to "
 "resize the image with the mouse."
-msgstr "对于图像可调整尺寸、旋转及锚定。文本可围绕在图像周围。选中图像并打开快捷菜单"
+msgstr ""
+"对于图像可调整尺寸、旋转及锚定。文本可围绕在图像周围。选中图像并打开快捷菜单"
 "进行这些操作。用鼠标拖动图像控制点调整图像尺寸。"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:469-5
@@ -2026,8 +2039,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
 msgid ""
-"Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
-" icon to reply, move and delete comments."
+"Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></"
+"span>) icon to reply, move and delete comments."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
@@ -2051,11 +2064,11 @@ msgstr "拼写检查"
 
 #: html/cool-help.html%2Bdiv.div.div.p:478-5
 msgid ""
-"To systematically spell-check the whole document use the <span class=\"ui\""
-">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
+"To systematically spell-check the whole document use the <span "
+"class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
-"要系统性检查整个文档的拼写，请使用<span class=\"ui\">工具</"
-"span>菜单下的<span class=\"ui\">拼写检查</span>选项。"
+"要系统性检查整个文档的拼写，请使用<span class=\"ui\">工具</span>菜单下的"
+"<span class=\"ui\">拼写检查</span>选项。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:487-30
 msgid ""
@@ -2071,9 +2084,9 @@ msgstr ""
 "您可以像在桌面应用程序中编辑电子表格一样在线编辑电子表格。输入数据和选择行、"
 "列、区域这些操作都是相同的。对电子表格的操作可以使用键盘、菜单或工具栏进行。"
 "拖动单元格内容以向其它单元格中填充数据的操作也是支持的。快捷菜单中有复制、剪"
-"切和粘贴命令。在一个单元格输入数据完毕之后，按 "
-"<kbd>Tab</kbd>（制表键）会将光标移动至右侧相邻单元格，而 "
-"<kbd>Enter</kbd>（回车键）会将光标移动到下方相邻单元格，方便输入下一条数据。"
+"切和粘贴命令。在一个单元格输入数据完毕之后，按 <kbd>Tab</kbd>（制表键）会将光"
+"标移动至右侧相邻单元格，而 <kbd>Enter</kbd>（回车键）会将光标移动到下方相邻单"
+"元格，方便输入下一条数据。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:493-5
 msgid ""
@@ -2088,13 +2101,14 @@ msgstr ""
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
-"committees/download.php/16826/openformula-spec-20060221.html\" target="
-"\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
+"committees/download.php/16826/openformula-spec-20060221.html\" "
+"target=\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula "
+"specification</a>."
 msgstr ""
 "公式语言对任何电子表格用户应该都耳熟能详，并且在 <a href=\"https://www.oasis-"
 "open.org/committees/download.php/16826/openformula-spec-20060221.html\" "
-"target=\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula "
-"规范</a>中有详细说明。"
+"target=\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula 规范</a>中有"
+"详细说明。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:503-5
 msgid ""
@@ -2108,9 +2122,9 @@ msgid ""
 msgstr ""
 "<span class=\"def\">直接格式：</span>您可以使用菜单、工具栏或快捷菜单中的格式"
 "设置来直接设置电子表格中单元格、行、列和工作表的格式。直接格式仅应用于当前选"
-"中的对象。要设置单元格的格式，可以使用菜单或按 <kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>1</kbd> 组合键。该对话框可设置复杂的自定义数值格式"
-"，以及字体、复杂边框、背景、单元格保护等其他选项。"
+"中的对象。要设置单元格的格式，可以使用菜单或按 <kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>1</kbd> 组合键。该对话框可设置复杂的自定义数"
+"值格式，以及字体、复杂边框、背景、单元格保护等其他选项。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:510-30
 msgid ""
@@ -2120,8 +2134,8 @@ msgid ""
 "to extend the selection."
 msgstr ""
 "<span class=\"def\">数据排序：</span>您可对一组数值或文本进行升序或降序排列。"
-"<span class=\"def\">{productname}</span> "
-"会自动检测表头，也会自动检测邻近的列以扩大选中区域。"
+"<span class=\"def\">{productname}</span> 会自动检测表头，也会自动检测邻近的列"
+"以扩大选中区域。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:511-30
 msgid ""
@@ -2138,7 +2152,8 @@ msgstr ""
 msgid ""
 "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly "
 "restrict the display to records with identical entries in a data field."
-msgstr "<span class=\"ui\">自动筛选</span>功能的用途之一，是快速筛选并仅显示在某一字"
+msgstr ""
+"<span class=\"ui\">自动筛选</span>功能的用途之一，是快速筛选并仅显示在某一字"
 "段中数据相同的记录。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:515-34
@@ -2152,16 +2167,17 @@ msgid ""
 "standard filter to connect the conditions with either a logical AND or a "
 "logical OR operator."
 msgstr ""
-"在<span class=\"ui\""
-">标准筛选</span>对话框中，您可以定义特定字段中允许数据取值的范围。"
-"您也可以在标准筛选中使用逻辑与 (AND) 或者逻辑或 (OR) 运算符来连接两个条件。"
+"在<span class=\"ui\">标准筛选</span>对话框中，您可以定义特定字段中允许数据取"
+"值的范围。您也可以在标准筛选中使用逻辑与 (AND) 或者逻辑或 (OR) 运算符来连接两"
+"个条件。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:518-11
 msgid ""
 "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight "
 "filter conditions. With advanced filters you enter the conditions directly "
 "into the sheet."
-msgstr "<span class=\"ui\">高级筛选</span>允许最多八个筛选条件。在高级筛选时您需要直"
+msgstr ""
+"<span class=\"ui\">高级筛选</span>允许最多八个筛选条件。在高级筛选时您需要直"
 "接在工作表中输入筛选条件。"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:522-5
@@ -2203,14 +2219,14 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:534-9
 msgid ""
 "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error "
-"Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\""
-">OK</span> to close the dialog."
+"Alert</span> tabs to enhance the user interactions. Click <span "
+"class=\"ui\">OK</span> to close the dialog."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:537-11
 msgid ""
-"To remove the validity of the cell, open the dialog and set the <span class="
-"\"ui\">Allow</span> list to “All values”."
+"To remove the validity of the cell, open the dialog and set the <span "
+"class=\"ui\">Allow</span> list to “All values”."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
@@ -2224,11 +2240,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:545-5
 msgid ""
-"<span class=\"def\">Conditional formatting:</span> <span class=\"productname"
-"\">{productname}</span> adds symbols to each cell of a range based on cells "
-"conditions. Select the cell range and click the <span class=\"ui\""
-">Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
-"apply on the range."
+"<span class=\"def\">Conditional formatting:</span> <span "
+"class=\"productname\">{productname}</span> adds symbols to each cell of a "
+"range based on cells conditions. Select the cell range and click the <span "
+"class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the "
+"symbol set to apply on the range."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:556-30
@@ -2282,10 +2298,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:572-5
 msgid ""
-"<span class=\"def\">Style formatting:</span> <span class=\"productname\""
-">{productname}</span> supports paragraph styles. You can apply an existing "
-"paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
-"<span class=\"ui\">Edit styles</span> to change style."
+"<span class=\"def\">Style formatting:</span> <span "
+"class=\"productname\">{productname}</span> supports paragraph styles. You "
+"can apply an existing paragraph style to a paragraph. Choose menu <span "
+"class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change "
+"style."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:580-5
@@ -2303,8 +2320,9 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.p:585-5
 msgid ""
 "<span class=\"def\">Formatting cells:</span> Click in the cell or range of "
-"cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\""
-">Properties</span>. Fine tune the table with the properties dialog."
+"cells and choose menu <span class=\"ui\">Table</span> → <span "
+"class=\"ui\">Properties</span>. Fine tune the table with the properties "
+"dialog."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:588-5
@@ -2410,9 +2428,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:632-5
 msgid ""
-"<span class=\"def\">Slide layouts:</span> <span class=\"productname\""
-">{productname}</span> Impress let you change the slide layout. Select the "
-"desired slide layout in the drop-down layout list."
+"<span class=\"def\">Slide layouts:</span> <span "
+"class=\"productname\">{productname}</span> Impress let you change the slide "
+"layout. Select the desired slide layout in the drop-down layout list."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:635-30
@@ -2423,10 +2441,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:636-30
 msgid ""
-"<span class=\"def\">Slide transitions:</span> <span class=\"productname\""
-">{productname}</span> Impress provides visual effects when displaying a new "
-"slide in the slide show. Slide transitions are property of the slide, use "
-"the side bar to set the slide transition when in edit mode."
+"<span class=\"def\">Slide transitions:</span> <span "
+"class=\"productname\">{productname}</span> Impress provides visual effects "
+"when displaying a new slide in the slide show. Slide transitions are "
+"property of the slide, use the side bar to set the slide transition when in "
+"edit mode."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:637-30
@@ -2444,8 +2463,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:645-5
 msgid ""
-"What are the documents file formats supported by <span class=\"productname\""
-">{productname}</span>?"
+"What are the documents file formats supported by <span "
+"class=\"productname\">{productname}</span>?"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:646-5
@@ -2493,8 +2512,9 @@ msgstr ""
 msgid ""
 "<span class=\"productname\">{productname}</span> saves the document in the "
 "background regularly, you can't just close without saving it. To abandon "
-"your changes, you must either undo them, or use the <span class=\"ui\""
-">Revision History </span> in the <span class=\"ui\">File</span> menu."
+"your changes, you must either undo them, or use the <span "
+"class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> "
+"menu."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:666-5
@@ -2506,8 +2526,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.p:667-5
 msgid ""
 "Yes. <span class=\"productname\">{productname}</span> opens password-"
-"protected documents, but it is necessary to supply the password in the “"
-"Enter password” prompt at load time."
+"protected documents, but it is necessary to supply the password in the "
+"“Enter password” prompt at load time."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:670-5
@@ -2527,8 +2547,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:675-5
 msgid ""
-"Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\""
-">Automatic Spell Checking</span>."
+"Choose menu <span class=\"ui\">Tools</span> and uncheck <span "
+"class=\"ui\">Automatic Spell Checking</span>."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:678-5
@@ -2564,8 +2584,8 @@ msgstr ""
 msgid ""
 "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is used to "
 "help text alignment and editing and is not printed. To toggle it in the "
-"document display, choose menu <span class=\"ui\">View</span> → <span class="
-"\"ui\">Formatting mark</span>."
+"document display, choose menu <span class=\"ui\">View</span> → <span "
+"class=\"ui\">Formatting mark</span>."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:696-5
@@ -2574,9 +2594,9 @@ msgstr "如何统计文档中的字数？"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:697-5
 msgid ""
-"Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui"
-"\">Word count</span>. A dialog shows word counts for selection and for the "
-"whole document."
+"Word count is available in <span class=\"ui\">Tools</span> → <span "
+"class=\"ui\">Word count</span>. A dialog shows word counts for selection and "
+"for the whole document."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:698-29
@@ -2681,12 +2701,13 @@ msgstr ""
 msgid ""
 "Changes can be accepted or rejected. To accept or reject changes, click on "
 "the corresponding icons in the comment box on the right of the document. "
-"Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\""
-">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui"
-"\">Reject</span>. Furthermore, if you need to filter changes before "
-"accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class="
-"\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog "
-"shows a list of all tracked changes. Use the dialog buttons accordingly."
+"Alternatively, choose <span class=\"ui\">Edit</span> → <span "
+"class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or "
+"<span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes "
+"before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span "
+"class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A "
+"dialog shows a list of all tracked changes. Use the dialog buttons "
+"accordingly."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:731-5
@@ -2763,9 +2784,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
 msgid ""
-"Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
-"\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
-"bucket."
+"Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" "
+"src=\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a "
+"paint bucket."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
@@ -2796,8 +2817,8 @@ msgid ""
 "You have the AutoCorrection enabled. AutoCorrection changes the text just "
 "typed into an internal table of corresponding text. In most cases, "
 "AutoCorrection fixes typos while you are typing. If AutoCorrection is not "
-"necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\""
-">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
+"necessary, disable it in <span class=\"ui\">Tools</span> → <span "
+"class=\"ui\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:778-5
@@ -2829,10 +2850,10 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:787-9
 msgid ""
-"Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\""
-">Paste</span> or press <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> dialog "
-"opens to let you describe the precise format of the CSV data."
+"Paste from the browser <span class=\"ui\">Edit</span> → <span "
+"class=\"ui\">Paste</span> or press <kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> "
+"dialog opens to let you describe the precise format of the CSV data."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:789-31
@@ -2864,8 +2885,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
 msgid ""
-"Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
-"/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
+"Click on the clone formatting icon <img class=\"icon-size\" src=\"images/"
+"lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
@@ -2923,8 +2944,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:829-9
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or "
-"<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and "
-"Size</span>). A dialog opens."
+"<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</"
+"span>). A dialog opens."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:831-31
@@ -2936,18 +2957,19 @@ msgid "Set the properties of the element of the object."
 msgstr ""
 
 #~ msgid ""
-#~ "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
-#~ "and includes many options, commands for printing, editing, viewing and other "
-#~ "advanced commands. You can hide the menu bar clicking on the <span style="
-#~ "\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\"></span> "
-#~ "icon on the far right. Click on the <span style=\"height:0.6cm;width:0.6cm; "
-#~ "margin: 0px;\" class=\"w2ui-icon unfold\"></span> icon to show the menu."
+#~ "<span class=\"def\">The menu bar:</span> The main menu is placed on the "
+#~ "top and includes many options, commands for printing, editing, viewing "
+#~ "and other advanced commands. You can hide the menu bar clicking on the "
+#~ "<span style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "fold\"></span> icon on the far right. Click on the <span "
+#~ "style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "unfold\"></span> icon to show the menu."
 #~ msgstr ""
-#~ "<span class=\"def\">菜单栏：</span>位于顶部的主菜单包括许多选项，如打印、编辑"
-#~ "、查看和其他高级命令。你可以通过点击最右侧的<span style=\"height:0."
-#~ "6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\""
-#~ "></span>图标将其隐藏。点击<span style=\"height:0.6cm;width:0.6cm; margin: "
-#~ "0px;\" class=\"w2ui-icon unfold\"></span>图标则显示菜单。"
+#~ "<span class=\"def\">菜单栏：</span>位于顶部的主菜单包括许多选项，如打印、"
+#~ "编辑、查看和其他高级命令。你可以通过点击最右侧的<span "
+#~ "style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "fold\"></span>图标将其隐藏。点击<span style=\"height:0.6cm;width:0.6cm; "
+#~ "margin: 0px;\" class=\"w2ui-icon unfold\"></span>图标则显示菜单。"
 
 #~ msgid "General"
 #~ msgstr "常规"
@@ -2956,19 +2978,19 @@ msgstr ""
 #~ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 
 #~ msgid ""
-#~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/submenu.svg\">) icon to reply, move and delete comments."
+#~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
+#~ "src=\"images/submenu.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
-#~ "点击子菜单（<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu."
-#~ "svg\">）图标可回复、移动或删除批注。"
+#~ "点击子菜单（<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
+#~ "src=\"images/submenu.svg\">）图标可回复、移动或删除批注。"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>B"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>B"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>B"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>B"
 
 #, fuzzy
 #~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
@@ -2996,11 +3018,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>Arrow Down"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>Arrow Down"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>下箭头"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>下箭头"
 
 #, fuzzy
 #~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
