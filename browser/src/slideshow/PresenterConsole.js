@@ -535,12 +535,12 @@ class PresenterConsole {
 		const tooltipRect = this.tooltip.getBoundingClientRect();
 
 		// Calculate initial position
-		let left = rect.left + window.scrollX;
-		let top = rect.bottom + window.scrollY + 5;
+		let left = rect.left + this._proxyPresenter.scrollX;
+		let top = rect.bottom + this._proxyPresenter.scrollY + 5;
 
 		// Adjust if tooltip goes off the right edge of the screen
-		if (left + tooltipRect.width > window.innerWidth) {
-			left = window.innerWidth - tooltipRect.width - 10; // Add some padding
+		if (left + tooltipRect.width > this._proxyPresenter.innerWidth) {
+			left = this._proxyPresenter.innerWidth - tooltipRect.width - 10; // Add some padding
 		}
 
 		// Adjust if tooltip goes off the left edge of the screen
@@ -549,13 +549,13 @@ class PresenterConsole {
 		}
 
 		// Adjust if tooltip goes off the bottom edge of the screen
-		if (top + tooltipRect.height > window.innerHeight) {
-			top = rect.top + window.scrollY - tooltipRect.height - 5; // Position above the button
+		if (top + tooltipRect.height > this._proxyPresenter.innerHeight) {
+			top = rect.top + this._proxyPresenter.scrollY - tooltipRect.height - 5; // Position above the button
 		}
 
 		// Adjust if tooltip goes off the top edge of the screen
 		if (top < 0) {
-			top = rect.bottom + window.scrollY + 5; // Revert to below the button
+			top = rect.bottom + this._proxyPresenter.scrollY + 5; // Revert to below the button
 		}
 
 		// Apply the adjusted position
