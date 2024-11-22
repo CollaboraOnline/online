@@ -124,10 +124,10 @@ var AdminClusterOverview = AdminSocketBase.extend({
 
         var horizontalTile = document.createElement('div');
         horizontalTile.className = 'tile is-fullwidth';
-        var routeTokenTile = this.createTile(_('RouteToken'), server.routeToken, 'route');
+        var routeTokenTile = this.createTile('RouteToken', server.routeToken, 'route');
         horizontalTile.appendChild(routeTokenTile);
 
-        var serverIdTile = this.createTile(_('ServerId'), server.serverId, 'serverId');
+        var serverIdTile = this.createTile('ServerId', server.serverId, 'serverId');
         horizontalTile.appendChild(serverIdTile);
 
         cardContent.appendChild(mainTile);
