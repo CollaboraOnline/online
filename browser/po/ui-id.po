@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-21 15:59+0100\n"
-"PO-Revision-Date: 2024-11-14 05:22+0000\n"
-"Last-Translator: Adrien N <adriennathaniel1999@gmail.com>\n"
+"PO-Revision-Date: 2024-11-22 06:34+0000\n"
+"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -265,27 +265,27 @@ msgstr "Ihwal"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "Riwayat CPU"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "Riwayat Memori"
 
 #: admin/src/AdminClusterOverview.js:127
 msgid "RouteToken"
-msgstr ""
+msgstr "RouteToken"
 
 #: admin/src/AdminClusterOverview.js:130
 msgid "ServerId"
-msgstr ""
+msgstr "ServerId"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Memori"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Harap tunggu, klaster kubernetes sedang diskalakan..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -352,7 +352,7 @@ msgstr "Terkirim"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Koneksi"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -551,7 +551,7 @@ msgstr "Terselesaikan"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:417
 msgid "Document contains unsupported video"
-msgstr ""
+msgstr "Dokumen berisi video yang tidak didukung"
 
 #: src/canvas/sections/URLPopUpSection.ts:49
 msgid "Copy link location"
@@ -777,7 +777,7 @@ msgstr ""
 
 #: src/control/Control.JSDialog.js:272
 msgid "Close dialog"
-msgstr ""
+msgstr "Tutup dialog"
 
 #: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
@@ -1246,27 +1246,27 @@ msgstr "Shockwave Flash (.swf)"
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Salindia kini sebagai Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Salindia kini sebagai Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Salindia kini sebagai Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Salindia kini sebagai Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.js:424
 #: src/control/Control.NotebookbarBuilder.js:666
@@ -1309,7 +1309,7 @@ msgstr "Ada di jendela baru"
 #: src/control/Control.NotebookbarImpress.js:374
 #: src/slideshow/PresenterConsole.js:190
 msgid "Presenter Console"
-msgstr ""
+msgstr "Konsol Penyaji"
 
 #: src/control/Control.Menubar.js:581 src/control/Control.Menubar.js:1073
 #: src/control/Control.Menubar.js:1134
@@ -1825,11 +1825,11 @@ msgstr "Ada dalam Jendela"
 
 #: src/control/Control.NotebookbarImpress.js:486
 msgid "Show Grid"
-msgstr ""
+msgstr "Tampilkan Kisi"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Lengket ke Kisi"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -2437,7 +2437,7 @@ msgstr "Sisipkan Citra Lokal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:264
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Sisipkan Multimedia Lokal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:269
 msgid "Very Tight"
@@ -2747,11 +2747,11 @@ msgstr "Warna dokumen"
 
 #: src/docstatefunctions.js:176
 msgid ", cluster configuration error: mis-matching serverid"
-msgstr ""
+msgstr ", galat konfigurasi klaster: serverid tidak cocok"
 
 #: src/dom/NotebookbarAccessibility.js:240
 msgid "{0} tab selected"
-msgstr ""
+msgstr "{0} tab dipilih"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2992,71 +2992,71 @@ msgstr "Gagal mengunggah berkas ke server, ukuran berkas terlalu besar."
 
 #: src/layer/marker/A11yTextInput.js:226
 msgid "Out of table"
-msgstr ""
+msgstr "Kehabisan tabel"
 
 #: src/layer/marker/A11yTextInput.js:229
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "Tabel dengan {0} baris dan {1} kolom"
 
 #: src/layer/marker/A11yTextInput.js:234
 msgid "Row {0} through {1}"
-msgstr ""
+msgstr "Baris {0} sampai {1}"
 
 #: src/layer/marker/A11yTextInput.js:237
 msgid "Row {0}"
-msgstr ""
+msgstr "Baris {0}"
 
 #: src/layer/marker/A11yTextInput.js:245
 msgid "Column {0} through {1}"
-msgstr ""
+msgstr "Kolom {0} sampai {1}"
 
 #: src/layer/marker/A11yTextInput.js:248
 msgid "Column {0}"
-msgstr ""
+msgstr "Kolom {0}"
 
 #: src/layer/marker/A11yTextInput.js:276
 msgid "Editing activated. "
-msgstr ""
+msgstr "Penyuntingan diaktifkan. "
 
 #: src/layer/marker/A11yTextInput.js:295
 msgid "{0} selected"
-msgstr ""
+msgstr "{0} dipilih"
 
 #: src/layer/marker/A11yTextInput.js:297
 msgid "Has text: "
-msgstr ""
+msgstr "Punya teks: "
 
 #: src/layer/marker/A11yTextInput.js:302
 msgid "{0} unselected"
-msgstr ""
+msgstr "{0} tidak dipilih"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "{0} deleted"
-msgstr ""
+msgstr "{0} dihapus"
 
 #: src/layer/marker/TextInput.js:439
 msgid "Screen reader support for text content is disabled. "
-msgstr ""
+msgstr "Dukungan pembaca layar untuk konten teks dinonaktifkan. "
 
 #: src/layer/marker/TextInput.js:440
 msgid "You need to enable it both at server level and in the UI. "
-msgstr ""
+msgstr "Anda perlu mengaktifkannya baik di tingkat server dan di UI. "
 
 #: src/layer/marker/TextInput.js:441
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
-msgstr ""
+msgstr "Cari bagian aksesibilitas di coolwsd.xml untuk pengaturan server. "
 
 #: src/layer/marker/TextInput.js:442
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "Juga periksa penjungkitan suara baca di bawah {parentControl}."
 
 #: src/layer/marker/TextInput.js:444
 msgid "the Help tab"
-msgstr ""
+msgstr "tab Bantuan"
 
 #: src/layer/marker/TextInput.js:444
 msgid "the View menu"
-msgstr ""
+msgstr "menu Tilikan"
 
 #: src/layer/tile/CanvasTileLayer.js:1861
 msgid "Functions"
@@ -3164,7 +3164,7 @@ msgstr "Mengunggah berkas ke server gagal dengan status: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "Dialog cetak"
 
 #: src/map/handler/Map.SlideShow.js:55 src/slideshow/SlideShowPresenter.ts:569
 msgid "Empty Slide Show"
@@ -3231,7 +3231,7 @@ msgstr "Mode presentasi telah dinonaktifkan untuk dokumen ini"
 
 #: src/map/handler/Map.VersionBar.js:41
 msgid "Your Collabora Online server needs updating. Version {0} is available."
-msgstr ""
+msgstr "Server Collabora Online Anda membutuhkan pembaruan. Versi {0} tersedia."
 
 #: src/map/handler/Map.WOPI.js:153
 msgid "Creating new file from template..."
@@ -3251,7 +3251,7 @@ msgstr "Membuat salinan ..."
 
 #: src/map/handler/Map.Welcome.js:81
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Dialog Selamat Datang"
 
 #: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
@@ -3259,57 +3259,55 @@ msgstr "Jeda... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Salindia Kini"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
-msgstr "Salindia selanjutnya"
+msgstr "Salindia Selanjutnya"
 
 #: src/slideshow/PresenterConsole.js:31
 msgid "Previous"
-msgstr ""
+msgstr "Sebelumnya"
 
 #: src/slideshow/PresenterConsole.js:32
-#, fuzzy
 msgid "Next"
-msgstr "Teks"
+msgstr "Selanjutnya"
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Salindia"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Jeda"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Mulai Ulang"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Lanjutkan"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Kembali"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Perbesar"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Perkecil"
 
 #: src/slideshow/PresenterConsole.js:1098
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Salindia {0} dari {1}"
 
 #: src/slideshow/PresenterConsole.js:1106
 msgid "No Notes"
-msgstr ""
+msgstr "Tidak ada Catatan"
 
 #: src/slideshow/PresenterConsole.js:1198
 #: src/slideshow/SlideShowPresenter.ts:327
