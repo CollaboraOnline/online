@@ -437,7 +437,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 			textMsg = textMsg.split(' ');
 
 			var memStatsSize, memStatsInterval, cpuStatsSize, cpuStatsInterval;
-			var i, j, data;
+			var i;
 			memStatsSize = this._memStatsSize;
 			memStatsInterval = this._memStatsInterval;
 			cpuStatsSize = this._cpuStatsSize;
@@ -510,101 +510,52 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 
 		}
 		else if (textMsg.startsWith('mem_stats')) {
-			textMsg = textMsg.split(' ')[1];
-			if (textMsg.endsWith(',')) {
-				// This is the result of query, not notification
-				data = textMsg.substring(0, textMsg.length - 1).split(',');
-				for (i = this._memStatsData.length - 1, j = data.length - 1; i >= 0 && j >= 0; i--, j--) {
-					this._memStatsData[i].value = parseInt(data[j]);
-				}
-
+			var data = Util.consumeDataText(textMsg, this._memStatsData);
+			if (data === undefined) {
 				this._createGraph('mem');
-			}
-			else {
-				// this is a notification data; append to _memStatsData
-				data = textMsg.trim();
+			} else {
 				this._addNewData(this._memStatsData, data, 'mem');
 				this._updateMemGraph();
 			}
 		}
 		else if (textMsg.startsWith('cpu_stats')) {
-			textMsg = textMsg.split(' ')[1];
-			if (textMsg.endsWith(',')) {
-				// This is the result of query, not notification
-				data = textMsg.substring(0, textMsg.length - 1).split(',');
-
-				for (i = this._cpuStatsData.length - 1, j = data.length - 1; i >= 0 && j >= 0; i--, j--) {
-					this._cpuStatsData[i].value = parseInt(data[j]);
-				}
-
+			var data = Util.consumeDataText(textMsg, this._cpuStatsData);
+			if (data === undefined) {
 				this._createGraph('cpu');
-			}
-			else {
-				// this is a notification data; append to _cpuStatsData
-				data = textMsg.trim();
+			} else {
 				this._addNewData(this._cpuStatsData, data, 'cpu');
 				this._updateCpuGraph();
 			}
 		}
 		else if (textMsg.startsWith('sent_activity')) {
-			textMsg = textMsg.split(' ')[1];
-			if (textMsg.endsWith(',')) {
-				// This is the result of query, not notification
-				data = textMsg.substring(0, textMsg.length - 1).split(',');
-
-				for (i = this._sentStatsData.length - 1, j = data.length - 1; i >= 0 && j >= 0; i--, j--) {
-					this._sentStatsData[i].value = parseInt(data[j]);
-				}
-
+			var data = Util.consumeDataText(textMsg, this._sentStatsData);
+			if (data === undefined) {
 				if ($('#NetVisualisation').html() === '')
 					this._createGraph('net');
-			}
-			else {
-				// this is a notification data; append to _sentStatsData
-				data = textMsg.trim();
+			} else {
 				this._addNewData(this._sentStatsData, parseInt(data), 'sent');
 				this._updateNetGraph();
 			}
 		}
 		else if (textMsg.startsWith('recv_activity')) {
-			textMsg = textMsg.split(' ')[1];
-			if (textMsg.endsWith(',')) {
-				// This is the result of query, not notification
-				data = textMsg.substring(0, textMsg.length - 1).split(',');
-
-				for (i = this._recvStatsData.length - 1, j = data.length - 1; i >= 0 && j >= 0; i--, j--) {
-					this._recvStatsData[i].value = parseInt(data[j]);
-				}
-
+			var data = Util.consumeDataText(textMsg, this._recvStatsData);
+			if (data === undefined) {
 				if ($('#NetVisualisation').html() === '')
 					this._createGraph('net');
-			}
-			else {
-				// this is a notification data; append to _recvStatsData
-				data = textMsg.trim();
+			} else {
 				this._addNewData(this._recvStatsData, parseInt(data), 'recv');
 				this._updateNetGraph();
 			}
 		}
 		else if (textMsg.startsWith('connection_activity')) {
-			textMsg = textMsg.split(' ')[1];
-			if (textMsg.endsWith(',')) {
-				// This is the result of query, not notification
-				data = textMsg.substring(0, textMsg.length - 1).split(',');
-
-				for (i = this._connStatsData.length - 1, j = data.length - 1; i >= 0 && j >= 0; i--, j--) {
-					this._connStatsData[i].value = parseInt(data[j]);
-				}
-
+			var data = Util.consumeDataText(textMsg, this._connStatsData);
+			if (data === undefined) {
 				if ($('#NetVisualisation').html() === '')
 					this._createGraph('net');
-			}
-			else {
-				// this is a notification data; append to _connStatsData
-				data = textMsg.trim();
+			} else {
 				this._addNewData(this._connStatsData, parseInt(data), 'connect');
 				this._updateNetGraph();
-			}
+			};
 		}
 	},
 
