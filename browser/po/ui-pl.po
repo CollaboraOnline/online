@@ -13,18 +13,18 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-21 15:59+0100\n"
-"PO-Revision-Date: 2024-11-01 07:36+0000\n"
+"PO-Revision-Date: 2024-11-22 01:00+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Weblate 5.8.2-dev\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -266,27 +266,27 @@ msgstr "Informacje"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "Historia procesora"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "Historia pamięci"
 
 #: admin/src/AdminClusterOverview.js:127
 msgid "RouteToken"
-msgstr ""
+msgstr "TokenTrasy"
 
 #: admin/src/AdminClusterOverview.js:130
 msgid "ServerId"
-msgstr ""
+msgstr "IDSerwera"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Pamięć"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Proszę czekać, klaster Kubernetes jest skalowany..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -355,7 +355,7 @@ msgstr "Wysłano"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Połączenia"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -552,7 +552,7 @@ msgstr "Rozwiązany"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:417
 msgid "Document contains unsupported video"
-msgstr ""
+msgstr "Dokument zawiera nieobsługiwany plik wideo"
 
 #: src/canvas/sections/URLPopUpSection.ts:49
 msgid "Copy link location"
@@ -773,7 +773,7 @@ msgstr "Nieaktywny dokument - stuknij, aby przeładować i wznowić edycję"
 
 #: src/control/Control.JSDialog.js:272
 msgid "Close dialog"
-msgstr ""
+msgstr "Zamknij okno dialogowe"
 
 #: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
@@ -2435,7 +2435,7 @@ msgstr "Wstaw obraz z dysku"
 
 #: src/control/jsdialog/Definitions.Menu.ts:264
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Wstaw lokalne multimedia"
 
 #: src/control/jsdialog/Definitions.Menu.ts:269
 msgid "Very Tight"
@@ -2750,7 +2750,7 @@ msgstr ", błąd konfiguracji klastra: niezgodny identyfikator serwera"
 
 #: src/dom/NotebookbarAccessibility.js:240
 msgid "{0} tab selected"
-msgstr ""
+msgstr "Zaznaczono kartę {0}"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2995,71 +2995,75 @@ msgstr "Przesyłanie pliku na serwer nie powiodło się, plik jest za duży."
 
 #: src/layer/marker/A11yTextInput.js:226
 msgid "Out of table"
-msgstr ""
+msgstr "Poza tabelą"
 
 #: src/layer/marker/A11yTextInput.js:229
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "Tabela z {0} wierszami i {1} kolumnami"
 
 #: src/layer/marker/A11yTextInput.js:234
 msgid "Row {0} through {1}"
-msgstr ""
+msgstr "Wiersz od {0} do {1}"
 
 #: src/layer/marker/A11yTextInput.js:237
 msgid "Row {0}"
-msgstr ""
+msgstr "Wiersz {0}"
 
 #: src/layer/marker/A11yTextInput.js:245
 msgid "Column {0} through {1}"
-msgstr ""
+msgstr "Kolumna od {0} do {1}"
 
 #: src/layer/marker/A11yTextInput.js:248
 msgid "Column {0}"
-msgstr ""
+msgstr "Kolumna {0}"
 
 #: src/layer/marker/A11yTextInput.js:276
 msgid "Editing activated. "
-msgstr ""
+msgstr "Edycja aktywowana. "
 
 #: src/layer/marker/A11yTextInput.js:295
 msgid "{0} selected"
-msgstr ""
+msgstr "Zaznaczono {0}"
 
 #: src/layer/marker/A11yTextInput.js:297
 msgid "Has text: "
-msgstr ""
+msgstr "Zawiera tekst: "
 
 #: src/layer/marker/A11yTextInput.js:302
 msgid "{0} unselected"
-msgstr ""
+msgstr "Odznaczono {0}"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "{0} deleted"
-msgstr ""
+msgstr "Usunięto {0}"
 
 #: src/layer/marker/TextInput.js:439
 msgid "Screen reader support for text content is disabled. "
-msgstr ""
+msgstr "Obsługa czytnika ekranu dla treści tekstowych jest wyłączona. "
 
 #: src/layer/marker/TextInput.js:440
 msgid "You need to enable it both at server level and in the UI. "
 msgstr ""
+"Należy ją włączyć zarówno na poziomie serwera, jak i w interfejsie "
+"użytkownika. "
 
 #: src/layer/marker/TextInput.js:441
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
+"Poszukaj sekcji dotyczącej dostępności w pliku coolwsd.xml, aby zapoznać się "
+"z ustawieniami serwera. "
 
 #: src/layer/marker/TextInput.js:442
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "Sprawdź także przełącznik głosu w {parentControl}."
 
 #: src/layer/marker/TextInput.js:444
 msgid "the Help tab"
-msgstr ""
+msgstr "Karta pomocy"
 
 #: src/layer/marker/TextInput.js:444
 msgid "the View menu"
-msgstr ""
+msgstr "Menu widoku"
 
 #: src/layer/tile/CanvasTileLayer.js:1861
 msgid "Functions"
@@ -3166,7 +3170,7 @@ msgstr "Przesyłanie pliku na serwer nie powiodło się ze statusem: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "Okno dialogowe drukowania"
 
 #: src/map/handler/Map.SlideShow.js:55 src/slideshow/SlideShowPresenter.ts:569
 msgid "Empty Slide Show"
@@ -3234,6 +3238,7 @@ msgstr "Tryb prezentacji został wyłączony dla tego dokumentu"
 #: src/map/handler/Map.VersionBar.js:41
 msgid "Your Collabora Online server needs updating. Version {0} is available."
 msgstr ""
+"Twój serwer Collabora Online wymaga aktualizacji. Wersja {0} jest dostępna."
 
 #: src/map/handler/Map.WOPI.js:153
 msgid "Creating new file from template..."
@@ -3253,7 +3258,7 @@ msgstr "Tworzenie kopii..."
 
 #: src/map/handler/Map.Welcome.js:81
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Okno dialogowe powitania"
 
 #: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
@@ -3261,16 +3266,15 @@ msgstr "Wstrzymanie... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Bieżący slajd"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
 msgstr "Następny slajd"
 
 #: src/slideshow/PresenterConsole.js:31
 msgid "Previous"
-msgstr ""
+msgstr "Poprzedni"
 
 #: src/slideshow/PresenterConsole.js:32
 msgid "Next"
@@ -3278,39 +3282,39 @@ msgstr "Dalej"
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Slajdy"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Wstrzymaj"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Uruchom ponownie"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Wznów"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Wstecz"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Przybliż"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Oddal"
 
 #: src/slideshow/PresenterConsole.js:1098
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Slajd {0} z {1}"
 
 #: src/slideshow/PresenterConsole.js:1106
 msgid "No Notes"
-msgstr ""
+msgstr "Brak notatek"
 
 #: src/slideshow/PresenterConsole.js:1198
 #: src/slideshow/SlideShowPresenter.ts:327
