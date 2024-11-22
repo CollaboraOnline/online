@@ -1,3 +1,0 @@
-    <welcome>
-      <enable type="bool" desc="Controls whether the welcome screen should be shown to the users on new install and updates." default="false">false</enable>
-    </welcome>
