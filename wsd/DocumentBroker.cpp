@@ -1462,12 +1462,59 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     session->setWatermarkText(watermarkText);
 
     if (!userSettingsUri.empty())
-        asyncInstallPresets(*_poll, userSettingsUri, wopiStorage->getJailPresetsPath());
+        asyncInstallPresets(*_poll, userSettingsUri, wopiStorage->getJailPresetsPath(), nullptr);
 
     return templateSource;
 }
 
-void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri, const std::string& presetsPath)
+namespace
+{
+    class PresetsInstallTask
+    {
+    private:
+        bool _reportedStatus;
+        bool _overallSuccess;
+        std::set<std::string> _installingPresets;
+        std::function<void(bool)> _installFinishedCB;
+
+    public:
+        PresetsInstallTask(std::function<void(bool)> installFinishedCB)
+            : _reportedStatus(false)
+            , _overallSuccess(true)
+            , _installFinishedCB(installFinishedCB)
+        {
+        }
+
+        void installStarted(const std::string& id)
+        {
+            _installingPresets.insert(id);
+        }
+
+        void installFinished(const std::string& id, bool presetResult)
+        {
+            _overallSuccess &= presetResult;
+            _installingPresets.erase(id);
+            // If there are no remaining presets to fetch, or this one has
+            // failed, then we can respond. TODO could we cancel outstanding
+            // downloads?
+            if (_installingPresets.empty() && !_reportedStatus)
+            {
+                _reportedStatus = true;
+                if (_installFinishedCB)
+                    _installFinishedCB(_overallSuccess);
+            }
+        }
+
+        bool empty() const
+        {
+            return _installingPresets.empty();
+        }
+    };
+}
+
+void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,
+                                         const std::string& presetsPath,
+                                         std::function<void(bool)> installFinishedCB)
 {
     // Download the json for settings
     const Poco::URI settingsUri{userSettingsUri};
@@ -1481,7 +1528,7 @@ void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& us
     // When result arrives, extract uris of what we want to install to the jail's user presets
     // and async download and install those.
     http::Session::FinishedCallback finishedCallback =
-        [&poll, uriAnonym, presetsPath](const std::shared_ptr<http::Session>& configSession)
+        [&poll, uriAnonym, presetsPath, installFinishedCB](const std::shared_ptr<http::Session>& configSession)
     {
         if (SigUtil::getShutdownRequestFlag())
         {
@@ -1496,19 +1543,29 @@ void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& us
         if (failed)
         {
             if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
-            {
                 LOG_ERR("Access denied to [" << uriAnonym << ']');
-                return;
-            }
-
-            LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
+            else
+                LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
+            if (installFinishedCB)
+                installFinishedCB(false);
             return;
         }
+
+        bool result = false;
+
+        auto presetTasks = std::make_shared<PresetsInstallTask>(installFinishedCB);
+
+        auto presetInstallFinished = [presetTasks](const std::string& id, bool presetResult)
+        {
+            presetTasks->installFinished(id, presetResult);
+        };
 
         const std::string& body = httpResponse->getBody();
         Poco::JSON::Object::Ptr settings;
         if (JsonUtil::parseJSON(body, settings))
         {
+            result = true;
+
             if (auto autotexts = settings->get("autotext").extract<Poco::JSON::Array::Ptr>())
             {
                 for (std::size_t i = 0, count = autotexts->size(); i < count; ++i)
@@ -1520,7 +1577,9 @@ void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& us
                     const std::string uri = JsonUtil::getJSONValue<std::string>(autotext, "uri");
                     std::string fileName = Poco::Path(Poco::Path(presetsPath, "autotext").toString(),
                                                       Uri::getFilenameWithExtFromURL(uri)).toString();
-                    asyncInstallPreset(poll, uri, fileName);
+                    std::string id = std::to_string(i);
+                    presetTasks->installStarted(id);
+                    asyncInstallPreset(poll, uri, fileName, id, presetInstallFinished);
                 }
             }
         }
@@ -1528,6 +1587,11 @@ void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& us
         {
             LOG_ERR("Parse of userSettings json: " << uriAnonym << " failed");
         }
+
+        // If there are no presets to fetch then we can respond now, otherwise
+        // that happens when the last preset is installed.
+        if (installFinishedCB && presetTasks->empty())
+            installFinishedCB(result);
     };
 
     httpSession->setFinishedHandler(std::move(finishedCallback));
@@ -1536,7 +1600,9 @@ void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& us
     httpSession->asyncRequest(request, poll);
 }
 
-void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& presetUri, const std::string& presetFile)
+void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& presetUri,
+                                        const std::string& presetFile, const std::string& id,
+                                        std::function<void(const std::string&, bool)> finishedCB)
 {
     const Poco::URI autotextUri{presetUri};
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(autotextUri));
@@ -1547,7 +1613,7 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& pre
     LOG_DBG("Getting autotext from [" << uriAnonym << ']');
 
     http::Session::FinishedCallback finishedCallback =
-        [uriAnonym, presetFile](const std::shared_ptr<http::Session>& autotextSession)
+        [uriAnonym, presetFile, id, finishedCB](const std::shared_ptr<http::Session>& autotextSession)
     {
         if (SigUtil::getShutdownRequestFlag())
         {
@@ -1557,6 +1623,8 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& pre
 
         const std::shared_ptr<const http::Response> autotextHttpResponse = autotextSession->response();
 
+        bool success = false;
+
         if (autotextHttpResponse->statusLine().statusCode() != http::StatusCode::OK)
         {
             LOG_ERR("Fetch of preset uri: " << uriAnonym << " failed: " <<
@@ -1565,8 +1633,12 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& pre
         }
         else
         {
+            success = true;
             LOG_INF("Fetch of preset uri: " << uriAnonym << " succeeded");
         }
+
+        if (finishedCB)
+            finishedCB(id, success);
     };
 
     httpSession->setFinishedHandler(std::move(finishedCallback));
