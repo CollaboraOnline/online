@@ -29,6 +29,10 @@ class CalcGridSection extends app.definitions.canvasSectionObject {
         };
 	}
 
+	public resetStrokeStyle() {
+		this.sectionProperties.strokeStyle = getComputedStyle(document.body).getPropertyValue('--color-calc-grid');
+	}
+
 	// repaintArea, paneTopLeft, canvasCtx
 	onDrawArea(area?: Bounds, paneTopLeft?: any): void {
 		if (!this.sectionProperties.docLayer.sheetGeometry)

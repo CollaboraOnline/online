@@ -187,6 +187,12 @@ L.Control.UIManager = L.Control.extend({
 		if (!window.mode.isMobile())
 			this.refreshAfterThemeChange();
 
+		if (app.map._docLayer._docType === 'spreadsheet') {
+			const calcGridSection = app.sectionContainer.getSectionWithName(L.CSections.CalcGrid.name);
+			if (calcGridSection)
+				calcGridSection.resetStrokeStyle();
+		}
+
 		this.map.fire('themechanged');
 	},
 
