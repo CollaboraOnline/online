@@ -816,12 +816,13 @@ L.Clipboard = L.Class.extend({
 
 	_sendCommandAndWaitForCompletion: function(command) {
 		if (command !== '.uno:Copy' && command !== '.uno:Cut') {
-			throw `_sendCommandAndWaitForCompletion was called with '${command}', but anything except Copy or Cut will never complete`;
+			console.error(`_sendCommandAndWaitForCompletion was called with '${command}', but anything except Copy or Cut will never complete`);
+			return null;
 		}
 
 		if (this._commandCompletion.length > 0) {
-			throw 'Already have ' + this._commandCompletion.length +
-				' pending clipboard command(s)';
+			console.warn('Already have ' + this._commandCompletion.length + ' pending clipboard command(s)');
+			return null;
 		}
 
 		app.socket.sendMessage('uno ' + command);
@@ -859,7 +860,10 @@ L.Clipboard = L.Class.extend({
 
 	_asyncAttemptNavigatorClipboardWrite: async function() {
 		const command = this._unoCommandForCopyCutPaste;
-		await this._sendCommandAndWaitForCompletion(command);
+		const check_ = await this._sendCommandAndWaitForCompletion(command);
+
+		if (check_ === null)
+			return; // Either wrong command or a pending event.
 
 		// This is sent down the websocket URL which can race with the
 		// web fetch - so first step is to wait for the result of
