@@ -18,11 +18,12 @@
 #  include <execinfo.h>
 #endif
 #include <csignal>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 #include <poll.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/uio.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 #if !defined(ANDROID) && !defined(IOS) && !defined(__FreeBSD__)
@@ -159,6 +160,33 @@ void requestShutdown()
     void setUnattended()
     {
         UnattendedRun = true;
+    }
+
+    std::pair<int, int> reapZombieChild(int pid)
+    {
+        LOG_TRC("Reaping " << pid << " with (WUNTRACED | WNOHANG)");
+
+        int status = 0;
+        pid_t ret = 0;
+        if ((ret = ::waitpid(pid, &status, WUNTRACED | WNOHANG)) > 0)
+        {
+            LOG_DBG("Child " << ret << " terminated with status " << status);
+            if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGSEGV || WTERMSIG(status) == SIGBUS ||
+                                        WTERMSIG(status) == SIGABRT))
+            {
+                LOG_WRN("Zombie child " << ret << " has exited due to "
+                                        << signalName(WTERMSIG(status)));
+                return std::make_pair(ret, WTERMSIG(status));
+            }
+        }
+        else if (pid > 0)
+        {
+            // Log errno if we had a child pid we expected to reap.
+            LOG_WRN("Failed to reap child process " << pid << " (" << Util::symbolicErrno(errno)
+                                                    << ": " << std::strerror(errno) << ')');
+        }
+
+        return std::make_pair(ret, 0);
     }
 
 #if !MOBILEAPP
@@ -526,7 +554,6 @@ void requestShutdown()
         }
 
         sigaction(SIGCHLD, &action, nullptr);
-
     }
 
     void dieOnParentDeath()

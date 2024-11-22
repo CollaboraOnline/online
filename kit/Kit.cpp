@@ -1625,18 +1625,12 @@ void Document::reapZombieChildren()
     /// memory footprint, unloading the process is fast, and we reap it.
     /// For large documents, however, the process ends up a zombie.
     /// Here, we reap any zombies that might exist--at most 1.
-    int status = 0;
-    pid_t pid;
-    while ((pid = ::waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
+    for (;;)
     {
-        if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGSEGV || WTERMSIG(status) == SIGBUS ||
-                                    WTERMSIG(status) == SIGABRT))
+        const auto [ret, sig] = SigUtil::reapZombieChild(-1);
+        if (ret <= 0)
         {
-            LOG_WRN("BgSave zombie child " << pid << " has exited abnormally");
-        }
-        else
-        {
-            LOG_DBG("Reaped zombie BgSave child " << pid);
+            break;
         }
     }
 }
