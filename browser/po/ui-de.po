@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-21 15:59+0100\n"
-"PO-Revision-Date: 2024-10-23 00:25+0000\n"
+"PO-Revision-Date: 2024-11-22 06:34+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8.2-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -266,11 +266,11 @@ msgstr "Über"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "CPU-Verlauf"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "Speicherverlauf"
 
 #: admin/src/AdminClusterOverview.js:127
 msgid "RouteToken"
@@ -278,15 +278,15 @@ msgstr ""
 
 #: admin/src/AdminClusterOverview.js:130
 msgid "ServerId"
-msgstr ""
+msgstr "ServerId"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Speicher"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Bitte warten, Kubernetes-Cluster wird skaliert..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -356,7 +356,7 @@ msgstr "Gesendet"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Verbindungen"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -556,7 +556,7 @@ msgstr "Erledigt"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:417
 msgid "Document contains unsupported video"
-msgstr ""
+msgstr "Dokument enthält nicht unterstütztes Video"
 
 #: src/canvas/sections/URLPopUpSection.ts:49
 msgid "Copy link location"
@@ -786,7 +786,7 @@ msgstr ""
 
 #: src/control/Control.JSDialog.js:272
 msgid "Close dialog"
-msgstr ""
+msgstr "Dialog schließen"
 
 #: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
@@ -1255,7 +1255,7 @@ msgstr "Shockwave Flash (.swf)"
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Skalierbare Vektorgrafik (.svg)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:492
@@ -1265,17 +1265,17 @@ msgstr "Aktuelle Folie als Bitmap (.bmp)"
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Aktuelle Folie als Grafikaustausch-Format (.gif)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Aktuelle Folie als Portable Netzwerkgrafik (.png)"
 
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Aktuelle Folie als Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.js:424
 #: src/control/Control.NotebookbarBuilder.js:666
@@ -1299,7 +1299,7 @@ msgstr "Masteransicht"
 
 #: src/control/Control.Menubar.js:475
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "Lokales Multimedia..."
 
 #: src/control/Control.Menubar.js:541 src/control/Control.Menubar.js:1113
 #: src/control/Control.PresentationBar.js:127
@@ -1318,7 +1318,7 @@ msgstr "In neuem Fenster präsentieren"
 #: src/control/Control.NotebookbarImpress.js:374
 #: src/slideshow/PresenterConsole.js:190
 msgid "Presenter Console"
-msgstr ""
+msgstr "Präsentator-Konsole"
 
 #: src/control/Control.Menubar.js:581 src/control/Control.Menubar.js:1073
 #: src/control/Control.Menubar.js:1134
@@ -2448,7 +2448,7 @@ msgstr "Lokales Bild einfügen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:264
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Lokales Multimedia einfügen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:269
 msgid "Very Tight"
@@ -2543,7 +2543,7 @@ msgstr "Anzahl an Folien"
 #: src/control/jsdialog/Widget.HTMLContent.ts:124
 #: src/control/jsdialog/Widget.HTMLContent.ts:132
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "Ihre Änderungen wurden gespeichert"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -2763,11 +2763,11 @@ msgstr "Dokumentenfarben"
 
 #: src/docstatefunctions.js:176
 msgid ", cluster configuration error: mis-matching serverid"
-msgstr ""
+msgstr ", Fehler in der Clusterkonfiguration: Serverid stimmt nicht überein"
 
 #: src/dom/NotebookbarAccessibility.js:240
 msgid "{0} tab selected"
-msgstr ""
+msgstr "{0} Tab ausgewählt"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -3029,71 +3029,77 @@ msgstr ""
 
 #: src/layer/marker/A11yTextInput.js:226
 msgid "Out of table"
-msgstr ""
+msgstr "Außerhalb der Tabelle"
 
 #: src/layer/marker/A11yTextInput.js:229
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "Tabelle mit {0} Zeilen und {1} Spalten"
 
 #: src/layer/marker/A11yTextInput.js:234
 msgid "Row {0} through {1}"
-msgstr ""
+msgstr "Zeile {0} bis {1}"
 
 #: src/layer/marker/A11yTextInput.js:237
 msgid "Row {0}"
-msgstr ""
+msgstr "Zeile {0}"
 
 #: src/layer/marker/A11yTextInput.js:245
 msgid "Column {0} through {1}"
-msgstr ""
+msgstr "Spalte {0} bis {1}"
 
 #: src/layer/marker/A11yTextInput.js:248
 msgid "Column {0}"
-msgstr ""
+msgstr "Spalte {0}"
 
 #: src/layer/marker/A11yTextInput.js:276
 msgid "Editing activated. "
-msgstr ""
+msgstr "Bearbeitung aktiviert. "
 
 #: src/layer/marker/A11yTextInput.js:295
 msgid "{0} selected"
-msgstr ""
+msgstr "{0} ausgewählt"
 
 #: src/layer/marker/A11yTextInput.js:297
 msgid "Has text: "
-msgstr ""
+msgstr "Enthält Text: "
 
 #: src/layer/marker/A11yTextInput.js:302
 msgid "{0} unselected"
-msgstr ""
+msgstr "{0} nicht ausgewählt"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "{0} deleted"
-msgstr ""
+msgstr "{0} gelöscht"
 
 #: src/layer/marker/TextInput.js:439
 msgid "Screen reader support for text content is disabled. "
-msgstr ""
+msgstr "Die Bildschirmleseunterstützung für Textinhalte ist deaktiviert. "
 
 #: src/layer/marker/TextInput.js:440
 msgid "You need to enable it both at server level and in the UI. "
 msgstr ""
+"Sie müssen sie sowohl auf Serverebene als auch in der Benutzeroberfläche "
+"aktivieren. "
 
 #: src/layer/marker/TextInput.js:441
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
+"Suchen Sie in der Datei coolwsd.xml nach den Servereinstellungen für die "
+"Barrierefreiheit. "
 
 #: src/layer/marker/TextInput.js:442
 msgid "Also check the voice over toggle under {parentControl}."
 msgstr ""
+"Überprüfen Sie auch die Umschaltfunktion für die Sprachsteuerung unter "
+"{parentControl}."
 
 #: src/layer/marker/TextInput.js:444
 msgid "the Help tab"
-msgstr ""
+msgstr "der Tab Hilfe"
 
 #: src/layer/marker/TextInput.js:444
 msgid "the View menu"
-msgstr ""
+msgstr "das Menü Ansicht"
 
 #: src/layer/tile/CanvasTileLayer.js:1861
 msgid "Functions"
@@ -3208,7 +3214,7 @@ msgstr ""
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "Drucken-Dialog"
 
 #: src/map/handler/Map.SlideShow.js:55 src/slideshow/SlideShowPresenter.ts:569
 msgid "Empty Slide Show"
@@ -3276,6 +3282,8 @@ msgstr "Der Präsentationsmodus wurde für dieses Dokument deaktiviert."
 #: src/map/handler/Map.VersionBar.js:41
 msgid "Your Collabora Online server needs updating. Version {0} is available."
 msgstr ""
+"Ihr Collabora Online-Server muss aktualisiert werden. Version {0} ist "
+"verfügbar."
 
 #: src/map/handler/Map.WOPI.js:153
 msgid "Creating new file from template..."
@@ -3295,7 +3303,7 @@ msgstr "Kopie erstellen …"
 
 #: src/map/handler/Map.Welcome.js:81
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Willkommensdialog"
 
 #: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
@@ -3303,16 +3311,15 @@ msgstr "Pause... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Aktuelle Folie"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
 msgstr "Nächste Folie"
 
 #: src/slideshow/PresenterConsole.js:31
 msgid "Previous"
-msgstr ""
+msgstr "Vorherige"
 
 #: src/slideshow/PresenterConsole.js:32
 msgid "Next"
@@ -3320,39 +3327,39 @@ msgstr "Weiter"
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Folien"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Neustart"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Fortsetzen"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Zurückgehen"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Heranzoomen"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Herauszoomen"
 
 #: src/slideshow/PresenterConsole.js:1098
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Folie {0} von {1}"
 
 #: src/slideshow/PresenterConsole.js:1106
 msgid "No Notes"
-msgstr ""
+msgstr "Keine Anmerkungen"
 
 #: src/slideshow/PresenterConsole.js:1198
 #: src/slideshow/SlideShowPresenter.ts:327
