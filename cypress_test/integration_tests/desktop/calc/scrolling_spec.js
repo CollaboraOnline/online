@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require */
+/* global describe it cy beforeEach expect require */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -27,5 +27,47 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		helper.typeIntoDocument('{end}');
 		cy.wait(500);
 		desktopHelper.assertScrollbarPosition('horizontal', 250, 320);
+	});
+
+	it('Scroll while selecting vertically', function() {
+		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
+
+		// Click on a cell near the edge of the view
+		cy.cGet('#map')
+		.then(function(items) {
+			expect(items).to.have.lengthOf(1);
+			var XPos = items[0].getBoundingClientRect().right - 280;
+			var YPos = items[0].getBoundingClientRect().bottom - 60;
+			cy.cGet('body').click(XPos, YPos);
+		});
+
+		// Select cells downwards with shift + arrow
+		for (let i = 0; i < 10; ++i) {
+			helper.typeIntoDocument('{shift}{downArrow}');
+		}
+
+		// Document should scroll
+		desktopHelper.assertScrollbarPosition('vertical', 50, 60);
+	});
+
+	it('Scroll while selecting horizontally', function() {
+		desktopHelper.assertScrollbarPosition('horizontal', 48, 60);
+
+		// Click on a cell near the edge of the view
+		cy.cGet('#map')
+		.then(function(items) {
+			expect(items).to.have.lengthOf(1);
+			var XPos = items[0].getBoundingClientRect().right - 280;
+			var YPos = items[0].getBoundingClientRect().bottom - 60;
+			cy.cGet('body').click(XPos, YPos);
+		});
+
+		// Select cells to the right with shift + arrow
+		for (let i = 0; i < 10; ++i) {
+			helper.typeIntoDocument('{shift}{rightArrow}');
+		}
+
+		// Document should scroll
+		desktopHelper.assertScrollbarPosition('horizontal', 160, 170);
 	});
 });
