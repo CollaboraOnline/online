@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-21 15:59+0100\n"
+"POT-Creation-Date: 2024-11-22 14:44+0100\n"
 "PO-Revision-Date: 2024-11-22 13:43+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: sv\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -266,14 +266,6 @@ msgstr "CPU-historik"
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
 msgstr "Minnesanvändningshistorik"
-
-#: admin/src/AdminClusterOverview.js:127
-msgid "RouteToken"
-msgstr "Rutt-token"
-
-#: admin/src/AdminClusterOverview.js:130
-msgid "ServerId"
-msgstr "Server-id"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
@@ -3292,15 +3284,15 @@ msgstr "Zooma in"
 msgid "Zoom Out"
 msgstr "Zooma ut"
 
-#: src/slideshow/PresenterConsole.js:1098
+#: src/slideshow/PresenterConsole.js:1164
 msgid "Slide {0} of {1}"
 msgstr "Bild {0} av {1}"
 
-#: src/slideshow/PresenterConsole.js:1106
+#: src/slideshow/PresenterConsole.js:1172
 msgid "No Notes"
 msgstr "Inga anteckningar"
 
-#: src/slideshow/PresenterConsole.js:1198
+#: src/slideshow/PresenterConsole.js:1264
 #: src/slideshow/SlideShowPresenter.ts:327
 msgid "Click to exit presentation..."
 msgstr "Klicka för att avsluta presentationen ..."
@@ -3383,6 +3375,12 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "RouteToken"
+#~ msgstr "Rutt-token"
+
+#~ msgid "ServerId"
+#~ msgstr "Server-id"
 
 #~ msgid "Headings and objects that you add to the document will appear here"
 #~ msgstr "Rubriker och objekt som du lägger till i dokumentet visas här"

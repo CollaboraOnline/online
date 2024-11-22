@@ -11,12 +11,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-21 15:59+0100\n"
+"POT-Creation-Date: 2024-11-22 14:44+0100\n"
 "PO-Revision-Date: 2024-11-22 13:43+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: de\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -271,14 +271,6 @@ msgstr "CPU-Verlauf"
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
 msgstr "Speicherverlauf"
-
-#: admin/src/AdminClusterOverview.js:127
-msgid "RouteToken"
-msgstr "Routentoken"
-
-#: admin/src/AdminClusterOverview.js:130
-msgid "ServerId"
-msgstr "ServerId"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
@@ -3353,15 +3345,15 @@ msgstr "Heranzoomen"
 msgid "Zoom Out"
 msgstr "Herauszoomen"
 
-#: src/slideshow/PresenterConsole.js:1098
+#: src/slideshow/PresenterConsole.js:1164
 msgid "Slide {0} of {1}"
 msgstr "Folie {0} von {1}"
 
-#: src/slideshow/PresenterConsole.js:1106
+#: src/slideshow/PresenterConsole.js:1172
 msgid "No Notes"
 msgstr "Keine Anmerkungen"
 
-#: src/slideshow/PresenterConsole.js:1198
+#: src/slideshow/PresenterConsole.js:1264
 #: src/slideshow/SlideShowPresenter.ts:327
 msgid "Click to exit presentation..."
 msgstr "Klicken Sie hier, um die Präsentation zu beenden..."
@@ -3447,6 +3439,12 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "RouteToken"
+#~ msgstr "Routentoken"
+
+#~ msgid "ServerId"
+#~ msgstr "ServerId"
 
 #~ msgid "Headings and objects that you add to the document will appear here"
 #~ msgstr ""

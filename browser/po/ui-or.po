@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-21 15:59+0100\n"
+"POT-Creation-Date: 2024-11-22 14:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -261,14 +261,6 @@ msgstr ""
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
-
-#: admin/src/AdminClusterOverview.js:127
-msgid "RouteToken"
-msgstr ""
-
-#: admin/src/AdminClusterOverview.js:130
-msgid "ServerId"
 msgstr ""
 
 #: admin/src/AdminClusterOverview.js:356
@@ -3189,15 +3181,15 @@ msgstr ""
 msgid "Zoom Out"
 msgstr ""
 
-#: src/slideshow/PresenterConsole.js:1098
+#: src/slideshow/PresenterConsole.js:1164
 msgid "Slide {0} of {1}"
 msgstr ""
 
-#: src/slideshow/PresenterConsole.js:1106
+#: src/slideshow/PresenterConsole.js:1172
 msgid "No Notes"
 msgstr ""
 
-#: src/slideshow/PresenterConsole.js:1198
+#: src/slideshow/PresenterConsole.js:1264
 #: src/slideshow/SlideShowPresenter.ts:327
 msgid "Click to exit presentation..."
 msgstr ""

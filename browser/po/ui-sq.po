@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-21 15:59+0100\n"
+"POT-Creation-Date: 2024-11-22 14:44+0100\n"
 "PO-Revision-Date: 2024-11-22 13:43+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sq/>\n"
-"Language: sq\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -268,14 +268,6 @@ msgstr "Historik CPU-je"
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
 msgstr "Historik Kujtese"
-
-#: admin/src/AdminClusterOverview.js:127
-msgid "RouteToken"
-msgstr ""
-
-#: admin/src/AdminClusterOverview.js:130
-msgid "ServerId"
-msgstr ""
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
@@ -3315,15 +3307,15 @@ msgstr "Zmadhoje"
 msgid "Zoom Out"
 msgstr "Zvogëloje"
 
-#: src/slideshow/PresenterConsole.js:1098
+#: src/slideshow/PresenterConsole.js:1164
 msgid "Slide {0} of {1}"
 msgstr "Diapozitivi {0} nga {1} gjithsej"
 
-#: src/slideshow/PresenterConsole.js:1106
+#: src/slideshow/PresenterConsole.js:1172
 msgid "No Notes"
 msgstr "S’ka Shënime"
 
-#: src/slideshow/PresenterConsole.js:1198
+#: src/slideshow/PresenterConsole.js:1264
 #: src/slideshow/SlideShowPresenter.ts:327
 msgid "Click to exit presentation..."
 msgstr "Klikoni që të dilet nga paraqitja…"
