@@ -1102,7 +1102,73 @@ class TreeViewControl {
 		if (entries && entries.length === 0) this.makeEmptyList(data, builder);
 	}
 
+	getColumnType(column: TreeColumnJSON) {
+		const isString = column.link || column.text;
+		const isIcon =
+			column.collapsed ||
+			column.collapsedimage ||
+			column.expanded ||
+			column.expandedimage;
+
+		let columnType = 'unknown';
+		if (this.isSeparator(column)) columnType = 'separator';
+		else if (isString) columnType = 'string';
+		else if (isIcon) columnType = 'icon';
+
+		return columnType;
+	}
+
+	preprocessColumnData(entires: Array<TreeEntryJSON>) {
+		if (!entires || !entires.length) return;
+
+		// generate array of types for each entry
+		const columnTypes = entires
+			.map(
+				(entry: TreeEntryJSON): Array<string> => {
+					const currentTypes = new Array<string>();
+
+					entry.columns.forEach((column: TreeColumnJSON) => {
+						currentTypes.push(this.getColumnType(column));
+					});
+
+					return currentTypes;
+				},
+				// use the longest entry - naive approach
+			)
+			.reduce((prev: Array<string>, next: Array<string>): Array<string> => {
+				if (!next || prev.length > next.length) return prev;
+				return next;
+			});
+
+		// put missing dummy columns where are missing
+		entires.forEach((entry: TreeEntryJSON) => {
+			const currentColumns = entry.columns;
+			const missingColumns = columnTypes.length - currentColumns.length;
+			if (missingColumns <= 0) return;
+
+			const newColumns = Array<TreeColumnJSON>();
+			let i = 0;
+			while (i < columnTypes.length) {
+				if (currentColumns.length > i) {
+					const currentType = this.getColumnType(currentColumns[i]);
+					if (currentType === 'separator') break; // don't add new columns - full width
+
+					if (currentType !== columnTypes[i]) newColumns.push({ text: '' });
+					else {
+						newColumns.push(currentColumns[i]);
+						i++;
+					}
+				} else {
+					newColumns.push({ text: '' });
+					i++;
+				}
+			}
+			entry.columns = newColumns;
+		});
+	}
+
 	build(data: TreeWidget, builder: any, parentContainer: HTMLElement) {
+		this.preprocessColumnData(data.entries);
 		this.fillHeaders(data.headers, builder);
 		this.fillEntries(data, data.entries, builder, 1, this._tbody);
 
