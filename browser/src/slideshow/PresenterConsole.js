@@ -1119,8 +1119,14 @@ class PresenterConsole {
 
 		this._currentIndex = e.slide;
 
-		let elem =
-			this._proxyPresenter.document.querySelector('#next-presentation');
+		let elem = this._proxyPresenter.document.querySelector('#title-current');
+		if (elem) {
+			elem.innerText = _('Slide {0} of {1}')
+				.replace('{0}', e.slide + 1)
+				.replace('{1}', this._previews.length);
+		}
+
+		elem = this._proxyPresenter.document.querySelector('#next-presentation');
 		if (elem) {
 			this._fetchPreview(this._currentIndex + 1, elem);
 		}
@@ -1133,13 +1139,6 @@ class PresenterConsole {
 
 		this._currentIndex = e.slide;
 
-		let elem = this._proxyPresenter.document.querySelector('#title-current');
-		if (elem) {
-			elem.innerText = _('Slide {0} of {1}')
-				.replace('{0}', e.slide + 1)
-				.replace('{1}', this._previews.length);
-		}
-
 		if (this._notes) {
 			let notes = this._presenter.getNotes(e.slide);
 			let notesContentElem = this._notes.querySelector('#notes');
@@ -1148,7 +1147,7 @@ class PresenterConsole {
 				notesContentElem.innerText = notes;
 		}
 
-		elem = this._slides.querySelector('#slides-preview');
+		let elem = this._slides.querySelector('#slides-preview');
 		if (elem) {
 			elem = elem.children.item(this._currentIndex);
 			if (elem) {
