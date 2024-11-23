@@ -617,6 +617,7 @@ namespace FileUtil
     {
         AnonymizeUserData = anonymize;
         AnonymizationSalt = salt;
+        Anonymizer::initialize(anonymize, salt);
     }
 
     /// Anonymize the basename of filenames, preserving the path and extension.

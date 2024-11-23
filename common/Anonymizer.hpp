@@ -18,6 +18,7 @@
 #include <mutex>
 #include <string>
 #include <string_view>
+#include <memory>
 #include <unordered_map>
 
 /// Responsible for annonymizing names and URLs.
@@ -34,7 +35,7 @@ public:
     static constexpr std::uint64_t DefaultSalt = 82589933;
 
     /// Used for anonymizing URLs
-    static void setUrlAnonymization(bool anonymize, const std::uint64_t salt)
+    static void initialize(bool anonymize, const std::uint64_t salt)
     {
         _instance.reset();
         if (anonymize)
@@ -42,6 +43,9 @@ public:
             _instance.reset(new Anonymizer(salt));
         }
     }
+
+    /// Returns true iff anonimization is enabled.
+    static bool enabled() { return !!_instance; }
 
     /// Sets the anonymized version of a given plain-text string.
     /// After this, 'anonymize(plain)' will return 'anonymized'.
