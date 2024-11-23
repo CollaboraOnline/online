@@ -720,7 +720,7 @@ void WhiteBoxTests::testAnonymization()
                                        "access_token_ttl=0&permission=edit";
 
     std::uint64_t anonymizationSalt = 1111111111182589933;
-    Anonymizer::setUrlAnonymization(true, anonymizationSalt);
+    Anonymizer::initialize(true, anonymizationSalt);
 
     LOK_ASSERT_EQUAL(std::string("#0#5e45aef91248a8aa#"),
                      Anonymizer::anonymizeUrl(name, anonymizationSalt));
