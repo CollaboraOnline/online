@@ -24,6 +24,12 @@
 /// Responsible for annonymizing names and URLs.
 /// The anonymized version is always the same for
 /// a given value, provided the salt is identical.
+/// Each anonymized entry has a leading counter, which
+/// is incremented when the entry is first created.
+/// This counter is *not* unique. It's purpose is
+/// to disambiguate potential collissions. When
+/// an entry is removed and then re-created, it
+/// will have a different prefix counter.
 class Anonymizer
 {
     Anonymizer(const std::uint64_t salt)
@@ -124,9 +130,7 @@ public:
         // Prepend with count to make it unique within a single process instance,
         // in case we get collisions (which we will, eventually). N.B.: Identical
         // strings likely to have different prefixes when logged in WSD process vs. Kit.
-        static std::atomic<unsigned> AnonymizationCounter(0);
-        std::string res =
-            '#' + Util::encodeId(AnonymizationCounter++, 0) + '#' + Util::encodeId(hash, 0) + '#';
+        std::string res = '#' + Util::encodeId(_prefix++, 0) + '#' + Util::encodeId(hash, 0) + '#';
         map(text, res);
         return res;
     }
@@ -155,6 +159,9 @@ public:
 private:
     /// The only instance of the Anonymizer per process.
     static inline std::unique_ptr<Anonymizer> _instance;
+
+    /// The prefix counter.
+    std::atomic<unsigned> _prefix;
 
     /// The salt used to hash.
     const std::uint64_t _salt;
