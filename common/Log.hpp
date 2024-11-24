@@ -67,8 +67,8 @@ namespace Log
     /// Initialize the logging system.
     void initialize(const std::string& name,
                     const std::string& logLevel,
-                    const bool withColor,
-                    const bool logToFile,
+                    bool withColor,
+                    bool logToFile,
                     const std::map<std::string, std::string>& config);
 
     /// Shutdown and release the logging system.

@@ -93,14 +93,14 @@ namespace Util
         unsigned getNext();
 
         /// Generate an array of random characters.
-        std::vector<char> getBytes(const size_t length);
+        std::vector<char> getBytes(size_t length);
 
         /// Generate a string of random characters.
-        std::string getHexString(const size_t length);
+        std::string getHexString(size_t length);
 
         /// Generates a random string suitable for
         /// file/directory names.
-        std::string getFilename(const size_t length);
+        std::string getFilename(size_t length);
     }
 
     /// A utility class to track relative time from some arbitrary
@@ -341,10 +341,10 @@ namespace Util
     std::size_t getCGroupMemSoftLimit();
 
     /// Returns the process PSS in KB (works only when we have perms for /proc/pid/smaps).
-    size_t getMemoryUsagePSS(const pid_t pid);
+    size_t getMemoryUsagePSS(pid_t pid);
 
     /// Returns the process RSS in KB.
-    size_t getMemoryUsageRSS(const pid_t pid);
+    size_t getMemoryUsageRSS(pid_t pid);
 
     /// Returns the number of current threads, or zero on error
     size_t getCurrentThreadCount();
@@ -357,12 +357,12 @@ namespace Util
     /// returns them as a pair in the same order
     std::pair<size_t, size_t> getPssAndDirtyFromSMaps(FILE* file);
 
-    size_t getCpuUsage(const pid_t pid);
+    size_t getCpuUsage(pid_t pid);
 
-    size_t getStatFromPid(const pid_t pid, int ind);
+    size_t getStatFromPid(pid_t pid, int ind);
 
     /// Sets priorities for a given pid & the current thread
-    void setProcessAndThreadPriorities(const pid_t pid, int prio);
+    void setProcessAndThreadPriorities(pid_t pid, int prio);
 
     /// Replace substring @a in string @s with string @b.
     std::string replace(std::string s, const std::string& a, const std::string& b);
@@ -1245,7 +1245,7 @@ int main(int argc, char**argv)
 
     public:
         /// Produces a backtrace instance from current stack position
-        Backtrace(const int maxFrames = 50, const int skip = 1);
+        Backtrace(int maxFrames = 50, int skip = 1);
 
         /// Produces a backtrace instance from current stack position
         static Backtrace get(const int maxFrames = 50, const int skip = 2)
@@ -1386,7 +1386,7 @@ int main(int argc, char**argv)
      * Converts vector of strings to map. Strings should have formed like this: key + delimiter + value.
      * In case of a misformed string or zero length vector, passes that item and warns the developer.
      */
-    std::map<std::string, std::string> stringVectorToMap(const std::vector<std::string>& strvector, const char delimiter);
+    std::map<std::string, std::string> stringVectorToMap(const std::vector<std::string>& strvector, char delimiter);
 
     // If OS is not mobile, it must be Linux.
     std::string getLinuxVersion();
