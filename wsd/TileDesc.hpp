@@ -441,10 +441,11 @@ private:
             _tileWidth <= 0 ||
             _tileHeight <= 0)
         {
-            throw BadArgumentException("Invalid tilecombine descriptor. Elements: " +
-                    std::to_string(_part) + " " + std::to_string(_mode) + " " +
-                    std::to_string(_width) + " " + std::to_string(_height) + " " +
-                    std::to_string(_tileWidth) + " " + std::to_string(_tileHeight));
+            throw BadArgumentException(
+                "Invalid tilecombine descriptor. Elements: " + std::to_string(_part) + ' ' +
+                std::to_string(_mode) + ' ' + std::to_string(_width) + ' ' +
+                std::to_string(_height) + ' ' + std::to_string(_tileWidth) + ' ' +
+                std::to_string(_tileHeight));
         }
 
         StringVector positionXtokens(StringVector::tokenize(tilePositionsX, ','));
