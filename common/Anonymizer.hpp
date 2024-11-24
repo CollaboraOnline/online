@@ -17,6 +17,7 @@
 #include <atomic>
 #include <mutex>
 #include <string>
+#include <string_view>
 #include <unordered_map>
 
 extern std::unordered_map<std::string, std::string> AnonymizedStrings;
