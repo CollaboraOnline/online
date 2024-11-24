@@ -606,30 +606,6 @@ namespace Util
 
     size_t findInVector(const std::vector<char>& tokens, const char *cstring, std::size_t offset = 0);
 
-    /// Trim spaces from the left. Just spaces.
-    inline std::string& ltrim(std::string& s)
-    {
-        const size_t pos = s.find_first_not_of(' ');
-        if (pos != std::string::npos)
-        {
-            s = s.substr(pos);
-        }
-
-        return s;
-    }
-
-    /// Trim spaces from the left and copy. Just spaces.
-    inline std::string ltrimmed(const std::string& s)
-    {
-        const size_t pos = s.find_first_not_of(' ');
-        if (pos != std::string::npos)
-        {
-            return s.substr(pos);
-        }
-
-        return s;
-    }
-
     inline std::string& trim(std::string& s, const char ch)
     {
         const size_t last = s.find_last_not_of(ch);
@@ -1147,14 +1123,6 @@ int main(int argc, char**argv)
     /// Splits a URL into path (with protocol), filename, extension, parameters.
     /// All components are optional, depending on what the URL represents (can be a unix path).
     std::tuple<std::string, std::string, std::string, std::string> splitUrl(const std::string& url);
-
-    /// Check for the URI scheme validity.
-    /// For now just a basic sanity check, can be extended if necessary.
-    bool isValidURIScheme(const std::string& scheme);
-
-    /// Check for the URI host validity.
-    /// For now just a basic sanity check, can be extended if necessary.
-    bool isValidURIHost(const std::string& host);
 
     /// Remove all but scheme://hostname:port/ from a URI.
     std::string trimURI(const std::string& uri);
