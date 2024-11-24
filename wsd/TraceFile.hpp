@@ -274,7 +274,7 @@ private:
         if (_compress)
         {
             _deflater.write(&delim, 1);
-            _deflater << "+" << deltaT;
+            _deflater << '+' << deltaT;
             _deflater.write(&delim, 1);
             _deflater << id;
             _deflater.write(&delim, 1);
@@ -286,7 +286,7 @@ private:
         else
         {
             _stream.write(&delim, 1);
-            _stream << "+" << deltaT;
+            _stream << '+' << deltaT;
             _stream.write(&delim, 1);
             _stream << id;
             _stream.write(&delim, 1);
