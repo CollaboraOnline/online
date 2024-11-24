@@ -65,7 +65,7 @@ public:
             return;
 
         if (plain != anonymized)
-            LOG_TRC("Anonymizing [" << plain << "] -> [" << anonymized << "].");
+            LOG_TRC("Anonymizing [" << plain << "] -> [" << anonymized << ']');
 
         std::unique_lock<std::mutex> lock(_mutex);
 
@@ -82,7 +82,7 @@ public:
         if (it != _map.end())
         {
             if (text != it->second)
-                LOG_TRC("Found anonymized [" << text << "] -> [" << it->second << "].");
+                LOG_TRC("Found anonymized [" << text << "] -> [" << it->second << ']');
             return it->second;
         }
 
