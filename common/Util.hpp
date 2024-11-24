@@ -604,19 +604,16 @@ namespace Util
 
     size_t findInVector(const std::vector<char>& tokens, const char *cstring, std::size_t offset = 0);
 
-    inline std::string& trim(std::string& s, const char ch)
+    /// Trim trailing characters (on the right).
+    inline std::string_view trim(const std::string_view s, const char ch)
     {
         const size_t last = s.find_last_not_of(ch);
         if (last != std::string::npos)
         {
-            s = s.substr(0, last + 1);
-        }
-        else
-        {
-            s.clear();
+            return s.substr(0, last + 1);
         }
 
-        return s;
+        return std::string_view();
     }
 
     /// Trim spaces from both left and right. Just spaces.
