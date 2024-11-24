@@ -11,11 +11,11 @@
 
 #pragma once
 
+#include "testlog.hpp"
+
+#include <cassert>
 #include <vector>
 #include <ostream>
-
-#include "testlog.hpp"
-#include <assert.h>
 
 #include <cppunit/TestAssert.h>
 
