@@ -154,12 +154,13 @@ inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLi
 
             std::shared_ptr<http::Session> session = http::Session::create(helpers::getTestServerURI());
             sessions.push_back( session );
-            TST_LOG("Test: " << testname << "[" << sockIdx << "]: `" << documentURL << "`");
+            TST_LOG("Test: " << testname << '[' << sockIdx << "]: `" << documentURL << '`');
             http::Request request(documentURL, http::Request::VERB_GET);
             const std::shared_ptr<const http::Response> response =
                 session->syncRequest(request, UseOwnPoller ? *socketPoller : *socketPoll());
             TST_LOG("Response: " << response->header().toString());
-            TST_LOG("Response size: " << testname << "[" << sockIdx << "]: `" << documentURL << "`: " << response->header().getContentLength());
+            TST_LOG("Response size: " << testname << '[' << sockIdx << "]: `" << documentURL
+                                      << "`: " << response->header().getContentLength());
             if( session->isConnected() ) {
                 LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
                 LOK_ASSERT_EQUAL(true, session->isConnected());
@@ -242,12 +243,13 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
 
         std::shared_ptr<http::WebSocketSession> session = http::WebSocketSession::create(helpers::getTestServerURI());
         sessions.push_back( session );
-        TST_LOG("Test: " << testname << "[" << sockIdx << "]: `" << documentURL << "`");
+        TST_LOG("Test: " << testname << '[' << sockIdx << "]: `" << documentURL << '`');
         http::Request req(documentURL);
         session->asyncRequest(req, UseOwnPoller ? socketPoller : socketPoll());
         session->sendMessage("load url=" + documentURL);
 
-        TST_LOG("Test: XX0 " << testname << "[" << sockIdx << "]: connected " << session->isConnected());
+        TST_LOG("Test: XX0 " << testname << '[' << sockIdx << "]: connected "
+                             << session->isConnected());
         if( sockIdx < maxConnections ) {
             LOK_ASSERT_EQUAL(true, session->isConnected());
 
@@ -255,12 +257,14 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
             assertMessage(*session, "progress:", "connect");
             assertMessage(*session, "progress:", "ready");
 
-            TST_LOG("Test: XX1 " << testname << "[" << sockIdx << "]: connected " << session->isConnected());
+            TST_LOG("Test: XX1 " << testname << '[' << sockIdx << "]: connected "
+                                 << session->isConnected());
             LOK_ASSERT_EQUAL(true, session->isConnected());
             ++connected0;
         } else {
             // Perform actual communication attempt, required to fail (disconnect)
-            TST_LOG("Test: XX2 " << testname << "[" << sockIdx << "]: connected " << session->isConnected());
+            TST_LOG("Test: XX2 " << testname << '[' << sockIdx << "]: connected "
+                                 << session->isConnected());
             bool comRes=false;
             if( session->isConnected() )
             {
@@ -268,8 +272,9 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
                 if( session->isConnected() )
                     ++connected0;
             }
-            TST_LOG("Test: XX3 " << testname << "[" << sockIdx << "]: connected "
-                    << session->isConnected() << "/" << connected0 << ", com " << comRes);
+            TST_LOG("Test: XX3 " << testname << '[' << sockIdx << "]: connected "
+                                 << session->isConnected() << '/' << connected0 << ", com "
+                                 << comRes);
             LOK_ASSERT_EQUAL(false, comRes);
             LOK_ASSERT_EQUAL(false, session->isConnected());
         }
@@ -342,12 +347,13 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
 
         std::shared_ptr<http::WebSocketSession> session = http::WebSocketSession::create(helpers::getTestServerURI());
         sessions.push_back( session );
-        TST_LOG("Test: " << testname << "[" << sockIdx << "]: `" << documentURL << "`");
+        TST_LOG("Test: " << testname << '[' << sockIdx << "]: `" << documentURL << '`');
         http::Request req(documentURL);
         session->asyncRequest(req, UseOwnPoller ? socketPoller : socketPoll());
         session->sendMessage("load url=" + documentURL);
 
-        TST_LOG("Test: XX0 " << testname << "[" << sockIdx << "]: connected " << session->isConnected());
+        TST_LOG("Test: XX0 " << testname << '[' << sockIdx << "]: connected "
+                             << session->isConnected());
         if( sockIdx < maxConnections-1 ) {
             LOK_ASSERT_EQUAL(true, session->isConnected());
 
@@ -355,22 +361,27 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
             assertMessage(*session, "progress:", "connect");
             assertMessage(*session, "progress:", "ready");
 
-            TST_LOG("Test: XX1 " << testname << "[" << sockIdx << "]: connected " << session->isConnected());
+            TST_LOG("Test: XX1 " << testname << '[' << sockIdx << "]: connected "
+                                 << session->isConnected());
             // LOK_ASSERT_EQUAL(true, wsSession->isConnected());
         } else {
-            TST_LOG("Test: XX2 " << testname << "[" << sockIdx << "]: connected " << session->isConnected());
+            TST_LOG("Test: XX2 " << testname << '[' << sockIdx << "]: connected "
+                                 << session->isConnected());
             // LOK_ASSERT_EQUAL(false, wsSession->isConnected());
         }
     }
     for(size_t sockIdx = 0; sockIdx < connectionsCount; ++sockIdx) {
         std::shared_ptr<http::WebSocketSession> wsSession = sessions[sockIdx];
-        TST_LOG("Test: XX3a " << testname << "[" << sockIdx << "]: connected " << wsSession->isConnected());
+        TST_LOG("Test: XX3a " << testname << '[' << sockIdx << "]: connected "
+                              << wsSession->isConnected());
         if( wsSession->isConnected() )
         {
             wsSession->sendMessage("ping");
-            TST_LOG("Test: XX3b " << testname << "[" << sockIdx << "]: connected " << wsSession->isConnected());
+            TST_LOG("Test: XX3b " << testname << '[' << sockIdx << "]: connected "
+                                  << wsSession->isConnected());
             assertMessage(*wsSession, "", "pong");
-            TST_LOG("Test: XX3c " << testname << "[" << sockIdx << "]: connected " << wsSession->isConnected());
+            TST_LOG("Test: XX3c " << testname << '[' << sockIdx << "]: connected "
+                                  << wsSession->isConnected());
         }
     }
 

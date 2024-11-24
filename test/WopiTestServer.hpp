@@ -110,7 +110,7 @@ protected:
         {
             // That was a filename, set its contents.
             LOG_TST("WopiTestServer created with " << data.size() << " bytes from file ["
-                                                   << filenameOrContents << "]");
+                                                   << filenameOrContents << ']');
             _filename = filenameOrContents; // Capture the real filename.
             setFileContent(std::string(data.begin(), data.end()));
         }
