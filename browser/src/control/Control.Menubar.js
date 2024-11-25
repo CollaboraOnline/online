@@ -149,6 +149,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 					{uno: '.uno:Navigator', id: 'navigator'},
 					{type: 'separator'},
+					{name: _UNO('.uno:ShowAnnotations', 'text'), id: 'showannotations', type: 'action'},
 					{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
 					{uno: '.uno:ControlCodes'},
 				])},
@@ -1377,7 +1378,7 @@ L.Control.Menubar = L.Control.extend({
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'exportpdf' , // file menu
 			!window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
-			!(L.Browser.ie || L.Browser.edge) ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'toggledarktheme', // view menu
+			!(L.Browser.ie || L.Browser.edge) ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'showannotations', 'toggledarktheme', // view menu
 			() => app.map.eSignature ? 'insert-esignature' : undefined, // insert menu
 			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'serveraudit', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
@@ -1848,10 +1849,20 @@ L.Control.Menubar = L.Control.extend({
 						} else {
 							$(aItem).removeClass('disabled');
 						}
+					} else if (id === 'showannotations') {
+						var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+						if (section) {
+							itemState = self._map['stateChangeHandler'].getItemValue('showannotations');
+							if (itemState === 'true')
+								$(aItem).addClass(constChecked);
+							else
+								$(aItem).removeClass(constChecked);
+						}
 					} else if (id === 'showresolved') {
 						var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
 						if (section) {
-							if (section.sectionProperties.commentList.length === 0) {
+							if (section.sectionProperties.commentList.length === 0 ||
+								!section.sectionProperties.show) {
 								$(aItem).addClass('disabled');
 							} else if (section.sectionProperties.showResolved) {
 								$(aItem).removeClass('disabled');
@@ -2024,6 +2035,8 @@ L.Control.Menubar = L.Control.extend({
 			app.dispatcher.dispatch('selectbackground');
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
 			app.dispatcher.dispatch('zoomin');
+		} else if (id === 'showannotations') {
+			app.dispatcher.dispatch('showannotations');
 		} else if (id === 'showresolved') {
 			app.dispatcher.dispatch('.uno:ShowResolvedAnnotations');
 		} else if (id === 'zoomout' && this._map.getZoom() > this._map.getMinZoom()) {
