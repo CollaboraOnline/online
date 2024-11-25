@@ -1365,7 +1365,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         { "extra_export_formats.impress_png", "false" },
         { "extra_export_formats.impress_svg", "false" },
         { "extra_export_formats.impress_tiff", "false" },
-        { "remote_template_config.url", ""},
+        { "remote_asset_config.url", ""},
         { "remote_font_config.url", ""},
     };
 
@@ -3766,16 +3766,20 @@ int COOLWSD::innerMain()
 
     // Start the remote asset downloading polling thread.
     std::unique_ptr<RemoteAssetConfigPoll> remoteAssetConfigThread;
-    try
+    if (!uriConfigKey.empty())
     {
-        // Fetch font and/or templates settings from server if configured
-        remoteAssetConfigThread = std::make_unique<RemoteAssetConfigPoll>(config(), uriConfigKey);
-        remoteAssetConfigThread->start();
+        try
+        {
+            // Fetch font and/or templates settings from server if configured
+            remoteAssetConfigThread = std::make_unique<RemoteAssetConfigPoll>(config(), uriConfigKey);
+            remoteAssetConfigThread->start();
+        }
+        catch (const Poco::Exception&)
+        {
+            LOG_DBG("No remote_asset_config");
+        }
     }
-    catch (const Poco::Exception&)
-    {
-        LOG_DBG("No remote_asset_config");
-    }
+
 #endif
 
     // URI with /contents are public and we don't need to anonymize them.

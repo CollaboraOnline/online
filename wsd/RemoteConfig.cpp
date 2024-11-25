@@ -38,22 +38,18 @@ void RemoteJSONPoll::start()
 {
     Poco::URI remoteServerURI(_conf.getString(_configKey));
 
-    if (_expectedKind == "configuration")
+    if (remoteServerURI.empty())
     {
-        if (remoteServerURI.empty())
-        {
-            LOG_INF("Remote " << _expectedKind << " is not specified in coolwsd.xml");
-            return; // no remote config server setup.
-        }
-#if !ENABLE_DEBUG
-        if (Util::iequal(remoteServerURI.getScheme(), "http"))
-        {
-            LOG_ERR(
-                "Remote config url should only use HTTPS protocol: " << remoteServerURI.toString());
-            return;
-        }
-#endif
+        LOG_INF("Remote " << _expectedKind << " is not specified in coolwsd.xml");
+        return; // no remote config server setup.
     }
+#if !ENABLE_DEBUG
+    if (Util::iequal(remoteServerURI.getScheme(), "http"))
+    {
+        LOG_ERR("Remote config url should only use HTTPS protocol: " << remoteServerURI.toString());
+        return;
+    }
+#endif
 
     startThread();
 }
