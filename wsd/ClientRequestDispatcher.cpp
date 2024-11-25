@@ -17,7 +17,6 @@
 
 #include <common/Anonymizer.hpp>
 #include <common/StateEnum.hpp>
-#include <Admin.hpp>
 #include <COOLWSD.hpp>
 #include <ClientSession.hpp>
 #include <ConfigUtil.hpp>
@@ -26,7 +25,6 @@
 #include <HttpRequest.hpp>
 #include <NetUtil.hpp>
 #include <JsonUtil.hpp>
-#include <JailUtil.hpp>
 #include <ProofKey.hpp>
 #include <ProxyRequestHandler.hpp>
 #include <RequestDetails.hpp>
@@ -38,7 +36,10 @@
 #include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/RequestVettingStation.hpp>
+
 #if !MOBILEAPP
+#include <Admin.hpp>
+#include <JailUtil.hpp>
 #include <wsd/SpecialBrokers.hpp>
 #include <HostUtil.hpp>
 #endif // !MOBILEAPP

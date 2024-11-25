@@ -48,6 +48,7 @@
 #include <Socket.hpp>
 #include "Common.hpp"
 #include "Log.hpp"
+#include <test/testlog.hpp>
 
 namespace
 {
@@ -62,26 +63,27 @@ enum class RunState : char
 /// Single flag to control the current run state.
 static std::atomic<RunState> RunStateFlag(RunState::Run);
 
-[[maybe_unused]]
 static std::atomic<bool> DumpGlobalState(false);
-[[maybe_unused]]
-static std::atomic<bool> ForwardSigUsr2Flag(false); ///< Flags to forward SIG_USR2 to children.
+static std::atomic<bool> ForwardSigUsr2Flag(false); ///< Flags to forward SIGUSR2 to children.
 
 static std::atomic<size_t> ActivityStringIndex = 0;
 static std::string ActivityHeader;
 static std::array<std::atomic<char*>, 16> ActivityStrings{};
 static bool UnattendedRun = false;
-#if !MOBILEAPP
 static int SignalLogFD = STDERR_FILENO; ///< The FD where signalLogs are dumped.
 static char* VersionInfo = nullptr;
 static char FatalGdbString[256] = { '\0' };
 static SigUtil::SigChildHandler SigChildHandle;
-#endif
 
 } // namespace
 
 namespace SigUtil
 {
+void triggerDumpState(const std::string &testname)
+{
+    LOG_TST("Dumping state");
+    ::kill(getpid(), SIGUSR1);
+}
 
 void uninitialize()
 {
@@ -109,11 +111,8 @@ void setTerminationFlag()
         RunStateFlag = RunState::Terminate;
     }
 
-    if constexpr (!Util::isMobileApp())
-    {
-        // And wake-up the thread.
-        SocketPoll::wakeupWorld();
-    }
+    // And wake-up the thread.
+    SocketPoll::wakeupWorld();
 }
 
 void requestShutdown()
@@ -123,33 +122,23 @@ void requestShutdown()
         SocketPoll::wakeupWorld();
 }
 
-#if MOBILEAPP
-    void resetTerminationFlags() { RunStateFlag = RunState::Run; }
-#endif
-
-    void checkDumpGlobalState([[maybe_unused]] GlobalDumpStateFn dumpState)
+    void checkDumpGlobalState(GlobalDumpStateFn dumpState)
     {
-        if constexpr (!Util::isMobileApp())
+        assert(dumpState && "Invalid callback for checkDumpGlobalState");
+        if (DumpGlobalState)
         {
-            assert(dumpState && "Invalid callback for checkDumpGlobalState");
-            if (DumpGlobalState)
-            {
-                DumpGlobalState = false;
-                dumpState();
-            }
+            DumpGlobalState = false;
+            dumpState();
         }
     }
 
-    void checkForwardSigUsr2([[maybe_unused]] ForwardSigUsr2Fn forwardSigUsr2)
+    void checkForwardSigUsr2(ForwardSigUsr2Fn forwardSigUsr2)
     {
-        if constexpr (!Util::isMobileApp())
+        assert(forwardSigUsr2 && "Invalid callback for checkForwardSigUsr2");
+        if (ForwardSigUsr2Flag)
         {
-            assert(forwardSigUsr2 && "Invalid callback for checkForwardSigUsr2");
-            if (ForwardSigUsr2Flag)
-            {
-                ForwardSigUsr2Flag = false;
-                forwardSigUsr2();
-            }
+            ForwardSigUsr2Flag = false;
+            forwardSigUsr2();
         }
     }
 
@@ -207,8 +196,6 @@ void requestShutdown()
 
         return std::make_pair(ret, 0);
     }
-
-#if !MOBILEAPP
 
     /// Open the signalLog file.
     void signalLogOpen()
@@ -281,8 +268,6 @@ void requestShutdown()
         signalLog(buf + i + 1);
     }
 
-#endif // !MOBILEAPP
-
     const char *signalName(const int signo)
     {
         // LCOV_EXCL_START Coverage for these is not very useful.
@@ -344,8 +329,6 @@ void requestShutdown()
         }
         // LCOV_EXCL_STOP Coverage for these is not very useful.
     }
-
-#if !MOBILEAPP
 
     static
     void handleTerminationSignal(const int signal)
@@ -673,7 +656,6 @@ void requestShutdown()
 
         return false;
     }
-#endif // !MOBILEAPP
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

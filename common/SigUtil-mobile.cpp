@@ -19,6 +19,10 @@
 
 namespace SigUtil
 {
+    void triggerDumpState([[maybe_unused]] const std::string &testname)
+    {
+    }
+
     bool getShutdownRequestFlag()
     {
         return false;

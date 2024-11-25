@@ -18,8 +18,12 @@
 #include <common/Anonymizer.hpp>
 
 #include <csignal>
-#include <dlfcn.h>
 #include <limits>
+
+#if !MOBILEAPP
+#include <dlfcn.h>
+#endif
+
 #ifdef __linux__
 #include <ftw.h>
 #include <sys/vfs.h>
@@ -27,6 +31,7 @@
 #include <sys/capability.h>
 #include <sys/sysmacros.h>
 #endif
+
 #ifdef __FreeBSD__
 #include <ftw.h>
 #define FTW_CONTINUE 0
@@ -34,6 +39,7 @@
 #define FTW_SKIP_SUBTREE 0
 #define FTW_ACTIONRETVAL 0
 #endif
+
 #include <unistd.h>
 #include <utime.h>
 #include <sys/time.h>
@@ -54,6 +60,7 @@
 #include <sstream>
 #include <string>
 #include <thread>
+#include <utility>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -66,7 +73,6 @@
 #include <Common.hpp>
 #include <MobileApp.hpp>
 #include <FileUtil.hpp>
-#include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include "KitHelper.hpp"
 #include "Kit.hpp"
@@ -84,12 +90,12 @@
 #include <common/Uri.hpp>
 
 #if !MOBILEAPP
+#include <common/JailUtil.hpp>
+#include <common/security.h>
+#include <common/Seccomp.hpp>
+#include <common/SigUtil.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Watchdog.hpp>
-#include <common/security.h>
-#include <common/SigUtil.hpp>
-#include <common/Seccomp.hpp>
-#include <utility>
 #endif
 
 #if MOBILEAPP
@@ -177,6 +183,7 @@ bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *
 [[maybe_unused]]
 static LokHookFunction2* initFunction = nullptr;
 
+#if !MOBILEAPP
 class BackgroundSaveWatchdog
 {
 public:
@@ -246,6 +253,8 @@ void Document::shutdownBackgroundWatchdog()
     if (BgSaveWatchdog)
         BgSaveWatchdog->complete();
 }
+
+#endif
 
 namespace
 {
@@ -919,11 +928,13 @@ std::size_t Document::purgeSessions()
         }
 
         num_sessions = _sessions.size();
-        if (!Util::isMobileApp() && num_sessions == 0)
+#if !MOBILEAPP
+        if (num_sessions == 0)
         {
             LOG_FTL("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
             flushAndExit(EX_OK);
         }
+#endif
     }
 
     if (deadSessions.size() > 0 )
@@ -1379,6 +1390,7 @@ void Document::handleSaveMessage(const std::string &)
 {
     LOG_TRC("Check save message");
 
+#if !MOBILEAPP
     // if a bgsave process - now we can clean up.
     if (_isBgSaveProcess)
     {
@@ -1417,6 +1429,7 @@ void Document::handleSaveMessage(const std::string &)
 
         // Next step in the chain is BgSaveChildWebSocketHandler::onDisconnect
     }
+#endif
 }
 
 // need to hold a reference on session in case it exits during async save
@@ -1528,8 +1541,10 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
 
         Util::sleepFromEnvIfSet("KitBackgroundSave", "SLEEPBACKGROUNDFORDEBUGGER");
 
+#if !MOBILEAPP
         assert(!BgSaveWatchdog && "Unexpected to have BackgroundSaveWatchdog instance");
         BgSaveWatchdog = std::make_unique<BackgroundSaveWatchdog>(_mobileAppDocId, Util::getThreadId());
+#endif
 
         UnitKit::get().postBackgroundSaveFork();
 
@@ -3999,6 +4014,8 @@ std::string anonymizeUrl(const std::string& url)
 #endif
 }
 
+#if !MOBILEAPP
+
 static int receiveURPData(void* context, const signed char* buffer, size_t bytesToWrite)
 {
     const signed char *ptr = buffer;
@@ -4066,8 +4083,6 @@ bool startURP(const std::shared_ptr<lok::Office>& LOKit, void** ppURPContext)
     URPStartCount++;
     return true;
 }
-
-#if !MOBILEAPP
 
 /// Initializes LibreOfficeKit for cross-fork re-use.
 bool globalPreinit(const std::string &loTemplate)

@@ -319,6 +319,9 @@ private:
     /// Dynamically load the unit-test .so.
     static UnitBase** linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
 
+    /// Close the dynamicallu loaded unit-test .so.
+    static void closeUnit();
+
     /// Initialize the Test Suite options.
     static void initTestSuiteOptions();
 

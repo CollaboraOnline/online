@@ -18,9 +18,10 @@
 
 #include "Util.hpp"
 #include "Rectangle.hpp"
-#include "SigHandlerTrap.hpp"
 
-#include <poll.h>
+#if !MOBILEAPP
+#include "SigHandlerTrap.hpp"
+#endif
 
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
 #  include <execinfo.h>
@@ -38,8 +39,9 @@
 #import <Foundation/Foundation.h>
 #endif
 #include <sys/stat.h>
-#include <sys/uio.h>
 #include <sys/types.h>
+
+#include <sys/uio.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <fcntl.h>
@@ -124,56 +126,6 @@ namespace Util
             return _rng();
         }
 
-        int getURandom()
-        {
-            static int urandom = open("/dev/urandom", O_RDONLY);
-            if (urandom < 0)
-            {
-                LOG_SYS("Failed to source hard random numbers");
-                fprintf(stderr, "No adequate source of randomness");
-                abort();
-                // Potentially dangerous to continue without randomness
-            }
-            return urandom;
-        }
-
-        // Since we have a fd always open to /dev/urandom
-        // 'read' is hopefully no less efficient than getrandom.
-        std::vector<char> getBytes(const std::size_t length)
-        {
-            std::vector<char> v(length);
-            char* p = v.data();
-            size_t nbytes = length;
-
-            while (nbytes)
-            {
-                ssize_t b = read(getURandom(), p, nbytes);
-                if (b <= 0)
-                {
-                    if (errno == EINTR)
-                        continue;
-                    break;
-                }
-
-                assert(static_cast<size_t>(b) <= nbytes);
-
-                nbytes -= b;
-                p += b;
-            }
-
-            size_t offset = p - v.data();
-            if (offset < length)
-            {
-                fprintf(stderr, "No adequate source of randomness, "
-                        "failed to read %ld bytes: with error %s\n",
-                        (long int)length, strerror(errno));
-                // Potentially dangerous to continue without randomness
-                abort();
-            }
-
-            return v;
-        }
-
         /// Generate a string of random characters.
         std::string getHexString(const std::size_t length)
         {
@@ -207,7 +159,7 @@ namespace Util
                      s.end());
             return s.substr(0, length);
         }
-    }
+    } // namespace rng
 
     bool windowingAvailable()
     {
@@ -555,6 +507,9 @@ namespace Util
         return oss.str();
     }
 
+#if !MOBILEAPP
+    // These are used in test/WhiteBoxTests.cpp and thus not needed in a mobile app.
+
     std::string time_point_to_iso8601(std::chrono::system_clock::time_point tp)
     {
         const std::time_t tt = std::chrono::system_clock::to_time_t(tp);
@@ -616,6 +571,8 @@ namespace Util
 
         return timestamp;
     }
+
+#endif // !MOBILEAPP
 
     /// Returns the given system_clock time_point as string in the local time.
     /// Format: Thu Jan 27 03:45:27.123 2022
@@ -736,9 +693,11 @@ namespace Util
         __gcov_dump();
 #endif
 
+#if !MOBILEAPP
         /// Wait for the signal handler, if any,
         /// and prevent _Exit while collecting backtrace.
         SigUtil::SigHandlerTrap::wait();
+#endif
 
         std::_Exit(code);
     }
@@ -857,7 +816,7 @@ namespace Util
     Backtrace::Backtrace(const int maxFrames, const int skip)
         : skipFrames(skip)
     {
-#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+#if defined(__linux) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
         std::vector<void*> backtraceBuffer(maxFrames + skip, nullptr);
 
         const int numSlots = ::backtrace(backtraceBuffer.data(), backtraceBuffer.size());
@@ -951,8 +910,10 @@ namespace Util
 
 } // namespace Util
 
+#if !MOBILEAPP
 namespace SigUtil {
     std::atomic<int> SigHandlerTrap::SigHandling;
 } // end namespace SigUtil
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

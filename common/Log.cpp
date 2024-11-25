@@ -35,15 +35,6 @@ namespace
 {
 /// Tracks the number of thread-local buffers (for debugging purposes).
 std::atomic_int32_t ThreadLocalBufferCount(0);
-
-#if WASMAPP
-/// In WASM, stdout works best.
-constexpr int LOG_FILE_FD = STDOUT_FILENO;
-#else
-/// By default, write to stderr.
-constexpr int LOG_FILE_FD = STDERR_FILENO;
-#endif
-
 } // namespace
 
 /// Which log areas should be disabled
@@ -124,6 +115,14 @@ namespace Log
         /// Write the given buffer to stderr directly.
         static inline std::size_t writeRaw(const char* data, std::size_t count)
         {
+#if WASMAPP
+            // In WASM, stdout works best.
+            constexpr int LOG_FILE_FD = STDOUT_FILENO;
+#else
+            // By default, write to stderr.
+            constexpr int LOG_FILE_FD = STDERR_FILENO;
+#endif
+
             const char *ptr = data;
             while (count > 0)
             {
@@ -506,8 +505,9 @@ namespace Log
                  const char* level)
     {
 #if defined(IOS) || defined(__FreeBSD__)
-        // Don't bother with the "Source" which would be just "Mobile" always and non-informative as
-        // there is just one process in the app anyway.
+        // Don't bother with the "Source" which would be just "Mobile" always (or whatever the app
+        // process is called depending on platform and configuration) and non-informative as there
+        // is just one process in the app anyway.
 
         // FIXME: Not sure why FreeBSD is here, too. Surely on FreeBSD COOL runs just like on Linux,
         // as a set of separate processes, so it would be useful to see from which process a log

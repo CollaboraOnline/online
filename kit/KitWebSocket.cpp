@@ -16,9 +16,10 @@
 #include <config.h>
 
 #include <Poco/URI.h>
-#include <sysexits.h> // EX_OK
 
+#include <sysexits.h>
 #include <sys/wait.h>
+
 #include <sys/types.h>
 
 #include <common/Anonymizer.hpp>
