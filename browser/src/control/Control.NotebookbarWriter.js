@@ -2157,20 +2157,32 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: false, combination: 'C', de: 'N' }
 			},
 			{
-				'id': 'showannotations',
-				'class': 'unoshowannotations',
-				'type': 'bigcustomtoolitem',
-				'text': _UNO('.uno:ShowAnnotations', 'text'),
-				'command': 'showannotations',
-				'accessibility': { focusBack: true, combination: 'SA', de: null }
-			},
-			{
-				'id': 'review-show-resolved-annotations',
-				'class': 'unoshowresolvedannotations',
-				'type': 'bigcustomtoolitem',
-				'text': _UNO('.uno:ShowResolvedAnnotations', 'text'),
-				'command': '.uno:ShowResolvedAnnotations',
-				'accessibility': { focusBack: true, combination: 'SR', de: null }
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'showannotations',
+								'type': 'customtoolitem',
+								'text': _UNO('.uno:ShowAnnotations', 'text'),
+								'command': 'showannotations',
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'review-show-resolved-annotations',
+								'type': 'toolitem',
+								'text': _UNO('.uno:ShowResolvedAnnotations', 'text'),
+								'command': '.uno:ShowResolvedAnnotations',
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			},
 			{
 				'type': 'container',
