@@ -1130,26 +1130,29 @@ class TreeViewControl {
 
 		// put missing dummy columns where are missing
 		entires.forEach((entry: TreeEntryJSON) => {
-			const currentColumns = entry.columns;
-			const missingColumns = columnTypes.length - currentColumns.length;
+			const existingColumns = entry.columns;
+			const missingColumns = columnTypes.length - existingColumns.length;
 			if (missingColumns <= 0) return;
 
 			const newColumns = Array<TreeColumnJSON>();
-			let i = 0;
-			while (i < columnTypes.length) {
-				if (currentColumns.length > i) {
-					const currentType = this.getColumnType(currentColumns[i]);
-					if (currentType === 'separator') break; // don't add new columns - full width
+			let targetIndex = 0;
+			let existingIndex = 0;
+			while (targetIndex < columnTypes.length) {
+				const isExistingColumn = existingIndex < existingColumns.length;
+				const currentType = isExistingColumn
+					? this.getColumnType(existingColumns[existingIndex])
+					: 'unknown';
 
-					if (currentType !== columnTypes[i]) newColumns.push({ text: '' });
-					else {
-						newColumns.push(currentColumns[i]);
-						i++;
-					}
-				} else {
+				if (currentType === 'separator') break; // don't add new columns - full width
+
+				if (!isExistingColumn || currentType !== columnTypes[targetIndex]) {
 					newColumns.push({ text: '' });
-					i++;
+				} else {
+					newColumns.push(existingColumns[existingIndex]);
+					existingIndex++;
 				}
+
+				targetIndex++;
 			}
 			entry.columns = newColumns;
 		});
