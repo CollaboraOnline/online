@@ -500,11 +500,13 @@ L.Control.Notebookbar = L.Control.extend({
 		if (e.state === 'true')
 		{
 			$('#review-show-resolved-annotations').removeClass('disabled');
+			$('#review-show-resolved-annotations').attr('disabled', false);
 			$('#review-show-resolved-annotations-button').attr('disabled', false);
 		}
 		else
 		{
 			$('#review-show-resolved-annotations').addClass('disabled');
+			$('#review-show-resolved-annotations').attr('disabled', true);
 			$('#review-show-resolved-annotations-button').attr('disabled', true);
 		}
 	},
