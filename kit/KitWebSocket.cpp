@@ -17,8 +17,10 @@
 
 #include <Poco/URI.h>
 
+#ifndef _WINDOWS
 #include <sysexits.h>
 #include <sys/wait.h>
+#endif
 
 #include <sys/types.h>
 

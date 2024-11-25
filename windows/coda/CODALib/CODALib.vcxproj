@@ -110,6 +110,7 @@
     <ClCompile Include="..\..\..\common\SpookyV2.cpp" />
     <ClCompile Include="..\..\..\common\StringVector.cpp" />
     <ClCompile Include="..\..\..\common\TraceEvent.cpp" />
+    <ClCompile Include="..\..\..\common\Unit-mobile.cpp" />
     <ClCompile Include="..\..\..\common\Unit.cpp" />
     <ClCompile Include="..\..\..\common\Uri.cpp" />
     <ClCompile Include="..\..\..\common\Util-mobile.cpp" />
