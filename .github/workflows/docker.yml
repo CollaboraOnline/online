@@ -15,13 +15,6 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Cache Docker layers
-        uses: actions/cache@v4
-        with:
-          path: /tmp/.buildx-cache
-          key: buildx-${{ github.sha }}
-          restore-keys: |
-            buildx-
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -37,8 +30,6 @@ jobs:
           file: docker/from-source-gh-action/Dockerfile
           tags: |
             ghcr.io/collaboraonline/code-nightly:${{ github.sha }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
       - name: Push container image
         uses: docker/build-push-action@v6
         # if: github.ref == 'refs/heads/master' || github.event_name == 'release'
@@ -49,10 +40,3 @@ jobs:
           file: docker/from-source-gh-action/Dockerfile
           tags: |
             ghcr.io/collaboraonline/code-nightly:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
-      - name: Move cache
-        if: always()
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
