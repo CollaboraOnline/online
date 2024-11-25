@@ -210,7 +210,8 @@ L.Map.FileInserter = L.Handler.extend({
 		}
 
 		if (e.urltype == "graphicurl" && section && section.sectionProperties.picturePicker) {
-			app.socket.sendMessage('contentcontrolevent name=' + encodeURIComponent(e.url) + ' type=pictureurl');
+			// The order argument is important
+			app.socket.sendMessage('contentcontrolevent type=pictureurl name=' + encodeURIComponent(e.url));
 		} else {
 			app.socket.sendMessage('insertfile name=' + encodeURIComponent(e.url) + ' type=' + e.urltype);
 		}
