@@ -21,8 +21,11 @@
 #include <stdint.h>
 #if defined(MACOS)
 #  include <machine/endian.h>
-#else
+#elif !defined(_WINDOWS)
 #  include <endian.h>
+#else
+#  define __BYTE_ORDER 1
+#  define __BIG_ENDIAN 2
 #endif
 
 #include <common/HexUtil.hpp>

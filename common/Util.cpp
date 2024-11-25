@@ -23,7 +23,7 @@
 #include "SigHandlerTrap.hpp"
 #endif
 
-#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__) && !defined(_WINDOWS)
 #  include <execinfo.h>
 #  include <cxxabi.h>
 #endif
@@ -41,11 +41,13 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#ifndef _WINDOWS
 #include <sys/uio.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <fcntl.h>
 #include <spawn.h>
+#endif
 
 #if defined __GLIBC__
 #include <malloc.h>

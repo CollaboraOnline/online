@@ -17,7 +17,9 @@
 #include <sstream>
 #include <thread>
 
+#ifndef _WINDOWS
 #include <sysexits.h>
+#endif
 
 #include <Poco/Util/LayeredConfiguration.h>
 #include <Poco/Util/Application.h>

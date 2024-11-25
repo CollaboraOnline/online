@@ -11,12 +11,36 @@
 
 #include <config.h>
 
+#include <random>
+
 #include <process.h>
 
 #include <common/Util.hpp>
 
 namespace Util
 {
+    namespace rng
+    {
+        std::vector<char> getBytes(const std::size_t length)
+        {
+            std::vector<char> v(length);
+
+            static std::random_device rd;
+            size_t offset;
+            size_t byteoffset = 0;
+            std::random_device::result_type buffer;
+            for (offset = 0; offset < length; offset++)
+            {
+                if (offset % sizeof(std::random_device::result_type) == 0)
+                    buffer = rd();
+                v[offset] = (buffer >> byteoffset) & 0xFF;
+                byteoffset = (byteoffset + 8) % (8 * sizeof(std::random_device::result_type));
+            }
+
+            return v;
+        }
+    } // namespace rng
+
     long getProcessId()
     {
         return _getpid();
