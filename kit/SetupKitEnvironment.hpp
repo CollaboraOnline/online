@@ -39,11 +39,10 @@ inline void setupKitEnvironment(const std::string& userInterface)
     ::setenv("CONFIGURATION_LAYERS", layers.c_str(),
              1 /* override */);
 
-    if constexpr (!Util::isMobileApp())
-    {
-        // No-caps tracing can spawn eg. glxinfo & other oddness.
-        unsetenv("DISPLAY");
-    }
+#if !MOBILEAPP
+    // No-caps tracing can spawn eg. glxinfo & other oddness.
+    unsetenv("DISPLAY");
+#endif
 
     // Set various options we need.
     std::string options = "unipoll";

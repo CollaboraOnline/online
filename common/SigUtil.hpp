@@ -20,6 +20,9 @@ namespace SigUtil
     /// checking them always return false. There is no "signal log". The functions do exist, though,
     /// so calls don't need to be surrounded by ifdefs or bypassed using Util::isMobileApp().
 
+    /// Send the current process the SIGUSR1 signal.
+    void triggerDumpState(const std::string &testname);
+
     /// Get the flag used to commence clean shutdown.
     /// requestShutdown() is used to set the flag.
     bool getShutdownRequestFlag();

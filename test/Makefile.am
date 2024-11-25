@@ -169,6 +169,7 @@ common_sources = \
 	../common/StringVector.cpp \
 	../common/TraceEvent.cpp \
 	../common/Unit.cpp \
+	../common/Unit-server.cpp \
 	../common/Uri.cpp \
 	../common/Util-server.cpp \
 	../common/Util-unix.cpp \

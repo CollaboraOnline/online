@@ -12,13 +12,12 @@
 #include <cassert>
 #include <condition_variable>
 #include <csignal>
-#include <dlfcn.h>
 #include <iostream>
 #include <mutex>
 #include <sstream>
-#include <sysexits.h>
 #include <thread>
-#include <unistd.h>
+
+#include <sysexits.h>
 
 #include <Poco/Util/LayeredConfiguration.h>
 #include <Poco/Util/Application.h>
@@ -53,84 +52,6 @@ bool KitWorkFinished = false;
 
 /// Controls whether experimental features/behavior is enabled or not.
 bool EnableExperimental = false;
-
-UnitBase** UnitBase::linkAndCreateUnit([[maybe_unused]] UnitType type,
-                                       [[maybe_unused]] const std::string& unitLibPath)
-{
-    if constexpr (Util::isMobileApp())
-        return nullptr;
-    DlHandle = dlopen(unitLibPath.c_str(), RTLD_GLOBAL|RTLD_NOW);
-    if (!DlHandle)
-    {
-        LOG_ERR("Failed to load unit-test lib " << dlerror());
-        return nullptr;
-    }
-
-    // avoid std:string de-allocation during failure / exit.
-    UnitLibPath = strdup(unitLibPath.c_str());
-    TST_LOG_NAME("UnitBase", "Opened unit-test lib " << UnitLibPath);
-
-    const char *symbol = nullptr;
-    switch (type)
-    {
-        case UnitType::Wsd:
-        {
-            // Try the multi-test version first.
-            CreateUnitHooksFunctionMulti* createHooksMulti =
-                reinterpret_cast<CreateUnitHooksFunctionMulti*>(
-                    dlsym(DlHandle, "unit_create_wsd_multi"));
-            if (createHooksMulti)
-            {
-                UnitBase** hooks = createHooksMulti();
-                if (hooks)
-                {
-                    std::ostringstream oss;
-                    oss << "Loaded UnitTest [" << unitLibPath << "] with: ";
-                    for (int i = 0; hooks[i] != nullptr; ++i)
-                    {
-                        if (i)
-                            oss << ", ";
-                        oss << hooks[i]->getTestname();
-                    }
-
-                    LOG_INF(oss.str());
-                    return hooks;
-                }
-            }
-
-            // Fallback.
-            symbol = "unit_create_wsd";
-            break;
-        }
-        case UnitType::Kit:
-            symbol = "unit_create_kit";
-            break;
-        case UnitType::Tool:
-            symbol = "unit_create_tool";
-            break;
-    }
-
-    // Internal consistency sanity check.
-    selfTest();
-
-    CreateUnitHooksFunction* createHooks =
-        reinterpret_cast<CreateUnitHooksFunction*>(dlsym(DlHandle, symbol));
-
-    if (!createHooks)
-    {
-        LOG_ERR("No " << symbol << " symbol in " << unitLibPath);
-        return nullptr;
-    }
-    TST_LOG_NAME("UnitBase", "Hooked symbol " << symbol << " from unit-test lib " << UnitLibPath);
-
-    UnitBase* hooks = createHooks();
-    if (hooks)
-        return new UnitBase* [2] { hooks, nullptr };
-
-    LOG_ERR("No wsd unit-tests found in " << unitLibPath);
-
-    return nullptr;
-}
 
 void UnitBase::initTestSuiteOptions()
 {
@@ -391,13 +312,11 @@ int UnitBase::uninit()
     GlobalTool = nullptr;
 
     // Close the DLL last, after deleting the test instances.
-    if (DlHandle)
-        dlclose(DlHandle);
-    DlHandle = nullptr;
+    closeUnit();
 
     return GlobalResult == TestResult::Ok ? EX_OK : EX_SOFTWARE;
 #else // ENABLE_DEBUG
-    return EX_OK; // Always success in release.
+    return 0; // Always success in release.
 #endif // !ENABLE_DEBUG
 }
 
@@ -559,9 +478,7 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
 
         if (GlobalResult == TestResult::Ok)
             GlobalResult = result;
-
-        LOG_TST("Dumping state");
-        ::kill(getpid(), SIGUSR1);
+        SigUtil::triggerDumpState(__func__);
     }
 
     _result = result;

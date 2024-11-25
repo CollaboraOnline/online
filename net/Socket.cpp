@@ -1240,6 +1240,8 @@ bool ServerSocket::bind([[maybe_unused]] Type type, [[maybe_unused]] int port)
 #endif
 }
 
+#if !MOBILEAPP
+
 bool ServerSocket::isUnrecoverableAcceptError(const int cause)
 {
     constexpr const char * messagePrefix = "Failed to accept. (errno: ";
@@ -1277,6 +1279,8 @@ bool ServerSocket::isUnrecoverableAcceptError(const int cause)
     }
 }
 
+#endif
+
 std::shared_ptr<Socket> ServerSocket::accept()
 {
     // Accept a connection (if any) and set it to non-blocking.
@@ -1291,15 +1295,15 @@ std::shared_ptr<Socket> ServerSocket::accept()
     struct sockaddr_in6 clientInfo;
     socklen_t addrlen = sizeof(clientInfo);
     const int rc = ::accept4(getFD(), (struct sockaddr *)&clientInfo, &addrlen, SOCK_NONBLOCK | SOCK_CLOEXEC);
-#else
-    const int rc = fakeSocketAccept4(getFD());
-#endif
     if (rc < 0)
     {
         if (isUnrecoverableAcceptError(errno))
             Util::forcedExit(EX_SOFTWARE);
         return nullptr;
     }
+#else
+    const int rc = fakeSocketAccept4(getFD());
+#endif
     LOG_TRC("Accepted socket #" << rc << ", creating socket object.");
 
 #if !MOBILEAPP

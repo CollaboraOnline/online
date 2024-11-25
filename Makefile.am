@@ -128,6 +128,7 @@ shared_sources = common/FileUtil.cpp \
                  common/SpookyV2.cpp \
                  common/TraceEvent.cpp \
                  common/Unit.cpp \
+                 common/Unit-server.cpp \
                  common/Uri.cpp \
                  common/Util.cpp \
                  common/Util-server.cpp \
