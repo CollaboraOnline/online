@@ -1439,8 +1439,6 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
 
     const std::string mimeType = "text/html";
 
-    // Document signing: if endpoint URL is configured, whitelist that for
-    // iframe purposes.
     ContentSecurityPolicy csp;
     csp.appendDirective("default-src", "'none'");
     csp.appendDirective("frame-src", "'self'");
@@ -1451,6 +1449,14 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     csp.appendDirective("connect-src", "'self'");
     csp.appendDirectiveUrl("connect-src", "https://www.zotero.org");
     csp.appendDirectiveUrl("connect-src", "https://api.zotero.org");
+
+    if (ConfigUtil::getBool("document_signing.enable", true))
+    {
+        // Document signing: if enabled, whitelist that for iframe purposes.
+        csp.appendDirectiveUrl("connect-src", "https://id.eideasy.com");
+        csp.appendDirectiveUrl("connect-src", "https://test.eideasy.com");
+    }
+
     csp.appendDirectiveUrl("connect-src", cnxDetails.getWebSocketUrl());
     csp.appendDirectiveUrl("connect-src", cnxDetails.getWebServerUrl());
     csp.appendDirectiveUrl("connect-src", indirectionURI.getAuthority());
