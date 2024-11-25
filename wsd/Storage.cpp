@@ -54,6 +54,8 @@
 #include <macos.h>
 #elif defined(__ANDROID__)
 #include "androidapp.hpp"
+#elif defined(_WINDOWS)
+#include "windows.hpp"
 #elif defined(GTKAPP)
 #include "gtk.hpp"
 #endif // IOS

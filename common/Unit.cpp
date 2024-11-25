@@ -25,7 +25,9 @@
 #include <csignal>
 #include <iostream>
 #include <mutex>
+#ifndef _WINDOWS
 #include <sysexits.h>
+#endif
 #include <thread>
 
 std::atomic<UnitKit *>GlobalKit = nullptr;
