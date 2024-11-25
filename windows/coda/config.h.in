@@ -166,6 +166,10 @@ struct pollfd {
   short revents;
 };
 
+// I give up, let's define these here
+#define EX_OK 0
+#define EX_SOFTWARE 1
+
 #define MOBILEAPP 1
 
 #define EXTERNC extern "C"

@@ -16,6 +16,8 @@
 #include "ios.h"
 #elif defined(MACOS)
 #include "macos.h"
+#elif defined(_WINDOWS)
+#include "windows.hpp"
 #elif defined(GTKAPP)
 #include "gtk.hpp"
 #elif defined(__ANDROID__)

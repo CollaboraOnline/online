@@ -44,12 +44,14 @@
 #define FTW_ACTIONRETVAL 0
 #endif
 
+#ifndef _WINDOWS
 #include <unistd.h>
 #include <utime.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/wait.h>
 #include <sysexits.h>
+#endif
 
 #include <atomic>
 #include <cassert>
