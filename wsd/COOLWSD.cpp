@@ -33,10 +33,12 @@
 // parent process that listens on the TCP port and accepts connections from COOL clients, and a
 // number of child processes, each which handles a viewing (editing) session for one document.
 
+#ifndef _WINDOWS
 #include <unistd.h>
 #include <sysexits.h>
 #include <sys/resource.h>
 #include <sys/wait.h>
+#endif
 
 #include <sys/types.h>
 
@@ -2071,7 +2073,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         COOLWSD::MaxDocuments = COOLWSD::MaxConnections;
     }
 
-#if !WASMAPP
+#if !WASMAPP && !defined(_WINDOWS)
     struct rlimit rlim;
     ::getrlimit(RLIMIT_NOFILE, &rlim);
     LOG_INF("Maximum file descriptor supported by the system: " << rlim.rlim_cur - 1);
