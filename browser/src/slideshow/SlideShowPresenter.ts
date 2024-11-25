@@ -421,7 +421,7 @@ class SlideShowPresenter {
 		else return this._slideShowWindowProxy.document;
 	}
 
-	_doInWindowPresentation() {
+	async _doInWindowPresentation() {
 		const popupTitle =
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
 		const htmlContent = this._generateSlideWindowHtml(popupTitle);
@@ -436,7 +436,20 @@ class SlideShowPresenter {
 			this._getProxyDocumentNode().write('<html><body></body></html>');
 			this._getProxyDocumentNode().close();
 		} else {
-			this._slideShowWindowProxy = window.open('', '_blank', 'popup');
+			let options = 'popup';
+			// if the device has more than one screen.
+			if ((window.screen as any).isExtended) {
+				const details = await (window as any).getScreenDetails();
+				const secondary = details.screens.find(function (s: any) {
+					return s !== s.primaryScreen;
+				});
+				options +=
+					'left=${secondary.availLeft},' +
+					'top=${secondary.availTop},' +
+					'width=${secondary.availWidth},' +
+					'height=${secondary.availHeight}';
+			}
+			this._slideShowWindowProxy = window.open('', '_blank', options);
 		}
 
 		if (!this._slideShowWindowProxy) {
