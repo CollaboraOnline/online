@@ -676,7 +676,7 @@ namespace Log
         const std::time_t t = std::time(nullptr);
         struct tm tm;
         LOG_INF("Initializing " << name << ". Local time: "
-                                << std::put_time(localtime_r(&t, &tm), "%a %F %T %z")
+                                << std::put_time(Util::time_t_to_localtime(t, tm), "%a %F %T %z")
                                 << ". Log level is [" << logger->getLevel() << ']');
 
         StaticUILog.setName(name+"_ui");

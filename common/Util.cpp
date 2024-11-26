@@ -452,7 +452,7 @@ namespace Util
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
         std::time_t now_c = std::chrono::system_clock::to_time_t(now);
         std::tm now_tm;
-        gmtime_r(&now_c, &now_tm);
+        time_t_to_gmtime(now_c, now_tm);
         strftime(time_now, sizeof(time_now), format, &now_tm);
 
         return time_now;
@@ -468,7 +468,7 @@ namespace Util
         char http_time[64];
         std::time_t time_c = std::chrono::system_clock::to_time_t(time);
         std::tm time_tm;
-        gmtime_r(&time_c, &time_tm);
+        time_t_to_gmtime(time_c, time_tm);
         strftime(http_time, sizeof(http_time), "%a, %d %b %Y %T", &time_tm);
 
         return http_time;
@@ -492,7 +492,7 @@ namespace Util
         char time_modified[64];
         std::time_t lastModified_us_t = std::chrono::system_clock::to_time_t(time);
         std::tm lastModified_tm;
-        gmtime_r(&lastModified_us_t,&lastModified_tm);
+        time_t_to_gmtime(lastModified_us_t, lastModified_tm);
         strftime(time_modified, sizeof(time_modified), "%FT%T.", &lastModified_tm);
 
         auto lastModified_s = std::chrono::time_point_cast<std::chrono::seconds>(time);
@@ -514,7 +514,7 @@ namespace Util
     {
         const std::time_t tt = std::chrono::system_clock::to_time_t(tp);
         std::tm tm;
-        gmtime_r(&tt, &tm);
+        time_t_to_gmtime(tt, tm);
 
         std::ostringstream oss;
         oss << tm.tm_year + 1900 << '-' << std::setfill('0') << std::setw(2) << tm.tm_mon + 1 << '-'
@@ -586,7 +586,7 @@ namespace Util
             1000;
 
         std::tm tm;
-        localtime_r(&t, &tm);
+        time_t_to_localtime(t, tm);
 
         char buffer[128] = { 0 };
         std::strftime(buffer, 80, "%a %b %d %H:%M:%S", &tm);
