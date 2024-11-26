@@ -280,14 +280,8 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                     return
                 }
                 else {
-                    COWrapper.LOG_ERR("TODO implement sending to COOLWSD: \(message.body)")
-                    /*
-                    const char *buf = [message.body UTF8String];
-                    p.fd = self.document->fakeClientFd;
-                    p.events = POLLOUT;
-                    fakeSocketPoll(&p, 1, -1);
-                    fakeSocketWrite(self.document->fakeClientFd, buf, strlen(buf));
-                    */
+                    // Just send the message
+                    COWrapper.shared.handleMessage(with: document, message: body)
                 }
             }
         }
