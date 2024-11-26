@@ -380,6 +380,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.ColorPicker.ts \
 	src/control/jsdialog/Widget.Combobox.js \
 	src/control/jsdialog/Widget.Containers.ts \
+	src/control/jsdialog/Widget.DropDown.ts \
 	src/control/jsdialog/Widget.DrawingArea.js \
 	src/control/jsdialog/Widget.FormulabarEdit.js \
 	src/control/jsdialog/Widget.Frame.js \
