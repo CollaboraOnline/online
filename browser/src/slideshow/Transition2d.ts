@@ -148,6 +148,11 @@ class Transition2d extends TransitionBase {
 			gl.clear(gl.COLOR_BUFFER_BIT);
 		}
 
+		if (!this.program) {
+			console.error('Transition2d.render: this.program is missing');
+			return;
+		}
+
 		gl.useProgram(this.program);
 		gl.bindVertexArray(this.vao);
 		gl.uniform1f(gl.getUniformLocation(this.program, 'time'), nT);
