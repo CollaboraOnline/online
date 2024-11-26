@@ -392,7 +392,7 @@ class SlideShowPresenter {
 		overlay.style.right = '0';
 		overlay.style.left = '0';
 
-		overlay.style.opacity = '40%';
+		overlay.style.opacity = '65%';
 		overlay.style.backgroundColor = 'black';
 		overlay.style.color = 'white';
 
