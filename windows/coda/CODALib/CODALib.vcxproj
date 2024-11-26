@@ -64,6 +64,7 @@
       <AdditionalIncludeDirectories>..;..\..\..;..\..\..\common;..\..\..\net;..\..\..\kit;..\..\..\wsd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>-Wno-vla-cxx-extension</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -86,6 +87,7 @@
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <AdditionalIncludeDirectories>..;..\..\..;..\..\..\common;..\..\..\net;..\..\..\kit;..\..\..\wsd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
+      <AdditionalOptions>-Wno-vla-cxx-extension</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
