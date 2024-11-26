@@ -798,7 +798,8 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_w
 
    # Sanity checks
    if test "$enable_windowsapp" = "yes"; then
-      CHK_FILE_VAR(POCOLIB,PocoFoundation.lib,Poco lib)
+      CHK_FILE_VAR(POCOLIB,PocoFoundationmd.lib,Poco lib)
+      CHK_FILE_VAR(POCOLIB,PocoFoundationmdd.lib,Poco lib)
    else
       CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib)
       CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_ARM64_V8A)
