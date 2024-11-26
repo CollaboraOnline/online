@@ -263,6 +263,12 @@ L.Map.WOPI = L.Handler.extend({
 			return true;
 		}
 
+		const eSignature = this._map.eSignature;
+		if (eSignature && eSignature.url === e.origin) {
+			// The sender is our esign popup: accept it.
+			return true;
+		}
+
 		return false;
 	},
 
@@ -276,6 +282,9 @@ L.Map.WOPI = L.Handler.extend({
 
 		if (('data' in e) && Object.hasOwnProperty.call(e.data, 'MessageId')) {
 			// when e.data already contains the right props, but isn't JSON (a blob is passed for ex)
+			msg = e.data;
+		} else if (typeof e.data === 'object') {
+			// E.g. the esign popup sends us an object, no need to JSON-parse it.
 			msg = e.data;
 		} else {
 			try {
@@ -683,6 +692,13 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId === 'Action_Mention') {
 			var list = msg.Values.list;
 			this._map.mention.openMentionPopup(list);
+		}
+		else if (msg.sender === 'EIDEASY_SINGLE_METHOD_SIGNATURE') {
+			// This is produced by the esign popup.
+			const eSignature = this._map.eSignature;
+			if (eSignature) {
+				eSignature.handleSigned(msg);
+			}
 		}
 	},
 

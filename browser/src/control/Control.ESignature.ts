@@ -23,6 +23,11 @@ namespace cool {
 		doc_id: string;
 	}
 
+	export interface SignedResponse {
+		type: string;
+		error: string;
+	}
+
 	/**
 	 * Provides electronic signing with document hashes for PDF files.
 	 */
@@ -33,14 +38,23 @@ namespace cool {
 		// <https://docs.eideasy.com/guide/api-credentials.html>
 		secret: string;
 		clientId: string;
+		// This is the specific provider used by eIDEasy, e.g. 'smart-id-signature'
+		method: string;
 
 		// Timestamp of the hash extraction
 		signatureTime: number;
 
-		constructor(url: string, secret: string, clientId: string) {
+		// Identifier of the document on the eIDEasy side
+		docId: string;
+
+		// The popup window we opened.
+		popup: Window;
+
+		constructor(url: string, secret: string, clientId: string, method: string) {
 			this.url = url;
 			this.secret = secret;
 			this.clientId = clientId;
+			this.method = method;
 
 			app.map.on('commandvalues', this.onCommandValues.bind(this));
 		}
@@ -119,11 +133,38 @@ namespace cool {
 
 		// Handles the 'send hash' response JSON
 		handleSendHashJson(response: HashSendResponse): void {
-			const docId = response.doc_id;
+			this.docId = response.doc_id;
+
+			let url = this.url + '/single-method-signature';
+			url += '?client_id=' + this.clientId;
+			url += '&doc_id=' + this.docId;
+			url += '&method=' + this.method;
+
+			let features = 'popup';
+			features += ', left=' + window.screen.width / 4;
+			features += ', top=' + window.screen.height / 4;
+			features += ', width=' + window.screen.width / 2;
+			features += ', height=' + window.screen.height / 2;
+
+			// Step 3: sign the hash.
+			this.popup = window.open(url, '_blank', features);
+		}
+
+		// Handles the 'sign hash' response
+		handleSigned(response: SignedResponse): void {
+			if (response.type != 'SUCCESS') {
+				app.console.log('failed to sign: ' + response.error);
+				return;
+			}
+
+			try {
+				this.popup.close();
+			} catch (error) {
+				app.console.log('failed to close the signing popup: ' + error.message);
+			}
+
 			console.log(
-				'TODO(vmiklos) ESignature::handleSendHashJson: docId is "' +
-					docId +
-					'"',
+				'TODO(vmiklos) ESignature::handleSigned: fetch the signature',
 			);
 		}
 	}
@@ -135,6 +176,7 @@ L.control.eSignature = function (
 	url: string,
 	secret: string,
 	clientId: string,
+	method: string,
 ) {
-	return new L.Control.ESignature(url, secret, clientId);
+	return new L.Control.ESignature(url, secret, clientId, method);
 };
