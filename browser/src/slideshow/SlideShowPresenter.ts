@@ -118,6 +118,7 @@ class SlideShowPresenter {
 	_slideShowWindowProxy: ReturnType<typeof window.open> = null;
 	_windowCloseInterval: ReturnType<typeof setInterval> = null;
 	_pauseRenderTimer: number = null;
+	_pauseEnterFunc: () => void;
 	_slideRenderer: SlideRenderer = null;
 	_canvasLoader: CanvasLoader | null = null;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
@@ -475,6 +476,29 @@ class SlideShowPresenter {
 		this._requestPauseFrame();
 	}
 
+	enablePauseHandler() {
+		if (this._cypressSVGPresentationTest) return;
+
+		// allow rendering in paused mode in Firefox at least 1 per sec
+		// Chrome doesn't draw anything when main window is hidden
+		this._pauseRenderTimer = this._slideShowWindowProxy.setInterval(
+			this._requestPauseFrame.bind(this),
+			1000,
+		);
+
+		this._pauseEnterFunc = this.onTabSwitch.bind(this);
+
+		document.addEventListener('visibilitychange', this._pauseEnterFunc);
+	}
+
+	disablePauseHandler() {
+		if (this._cypressSVGPresentationTest) return;
+
+		document.removeEventListener('visibilitychange', this._pauseEnterFunc);
+		this._pauseEnterFunc = undefined;
+		this._slideShowWindowProxy.clearInterval(this._pauseRenderTimer);
+	}
+
 	_doInWindowPresentation() {
 		const popupTitle =
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
@@ -498,14 +522,7 @@ class SlideShowPresenter {
 			return;
 		}
 
-		// allow rendering in paused mode in Firefox at least 1 per sec
-		// Chrome doesn't draw anything when main window is hidden
-		this._pauseRenderTimer = this._slideShowWindowProxy.setInterval(
-			this._requestPauseFrame.bind(this),
-			1000,
-		);
-		const deactivateFunc = this.onTabSwitch.bind(this);
-		document.addEventListener('visibilitychange', deactivateFunc);
+		this.enablePauseHandler();
 
 		this._getProxyDocumentNode().documentElement.innerHTML = htmlContent;
 		this._getProxyDocumentNode().close();
@@ -554,8 +571,7 @@ class SlideShowPresenter {
 		this._windowCloseInterval = setInterval(
 			function () {
 				if (slideShowWindow.closed) {
-					document.removeEventListener('visibilitychange', deactivateFunc);
-					this._slideShowWindowProxy.clearInterval(this._pauseRenderTimer);
+					this.disablePauseHandler();
 					clearInterval(this._windowCloseInterval);
 					this._slideShowNavigator.quit();
 					this._map.uiManager.closeSnackbar();
