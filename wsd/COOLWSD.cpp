@@ -4278,6 +4278,8 @@ void dump_state()
 
 #if !MOBILEAPP
 
+// The intent is that this function can be called from a debugger. It is not used otherwise.
+
 void lslr_childroot()
 {
     std::cout << "lslr: " << COOLWSD::ChildRoot << "\n";
