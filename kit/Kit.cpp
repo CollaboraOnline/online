@@ -3935,7 +3935,7 @@ void lokit_main(
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
 #elif defined(MACOS)
-        LibreOfficeKit *kit = lok_init_2((getBundlePath() + "/Contents/lokit/Frameworks").c_str(), ("file://" + getBundlePath() + "/Contents/lokit/Resources").c_str());
+        LibreOfficeKit *kit = lok_init_2((getBundlePath() + "/Contents/lokit/Frameworks").c_str(), getAppSupportURL().c_str());
 #else
 
 #ifdef IOS // In the iOS app we call lok_init_2() just once, when the app starts

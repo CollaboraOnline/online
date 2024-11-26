@@ -10,7 +10,14 @@ Setup
     * brew install zstd
 * missing from the iOS build instructions (needed for online.git)
     * brew install libtool
-* install canvas to avoid error during build
+
+* install dependencies for the canvas@next
+    * brew install cairo
+    * brew install pango
+    * /opt/homebrew/bin/pip3 install --break-system-packages lxml
+    * /opt/homebrew/bin/pip3 install --break-system-packages polib
+
+* install canvas to avoid error during build (complains about node-pre-gyp)
     * NB. version 3.0 needed, it upgrades the API to fit the new node.js
     * npm install canvas@next
 

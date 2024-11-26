@@ -42,7 +42,12 @@ COOLWSD *coolwsd = nullptr;
 
 - (void)startServer {
     // Initialize logging
-    Log::initialize("Mobile", "trace", false, false, {});
+    // Use "debug" or potentially even "trace" for debugging
+#if DEBUG
+    Log::initialize("Mobile", "debug", false, false, {});
+#else
+    Log::initialize("Mobile", "information", false, false, {});
+#endif
     Util::setThreadName("main");
 
     // Set up the logging callback
@@ -145,6 +150,15 @@ COOLWSD *coolwsd = nullptr;
     fakeSocketPoll(&p, 1, -1);
 
     fakeSocketWrite(document->fakeClientFd, url.c_str(), url.size());
+}
+
+- (void)handleMessageWith:(CODocument *)document message:(NSString *)message {
+    const char *buf = [message UTF8String];
+    struct pollfd p;
+    p.fd = document->fakeClientFd;
+    p.events = POLLOUT;
+    fakeSocketPoll(&p, 1, -1);
+    fakeSocketWrite(document->fakeClientFd, buf, strlen(buf));
 }
 
 /**
