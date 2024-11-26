@@ -118,8 +118,8 @@ bool parseUri(std::string uri, std::string& scheme, std::string& host, std::stri
 /// Returns true if parsing was successful.
 inline bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port)
 {
-    std::string url;
-    return parseUri(std::move(uri), scheme, host, port, url);
+    std::string path;
+    return parseUri(std::move(uri), scheme, host, port, path);
 }
 
 /// Return the locator given a URI.
