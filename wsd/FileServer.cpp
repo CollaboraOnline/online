@@ -541,7 +541,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     //handle requests for settings.json contents
     void handlePresetRequest(const std::string& kind, const std::string& prefix,
                              const std::shared_ptr<StreamSocket>& socket,
-                             const std::vector<std::string> items)
+                             const std::vector<std::string> items,
+                             const std::string& xcu)
     {
         Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
         configInfo->set("kind", kind);
@@ -558,6 +559,14 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             configAutoTexts->add(configAutoTextEntry);
         }
         configInfo->set("autotext", configAutoTexts);
+
+        if (!xcu.empty())
+        {
+            Poco::JSON::Object::Ptr xcuEntry = new Poco::JSON::Object();
+            std::string uri = COOLWSD::getServerURL() + prefix + cwd + xcu;
+            xcuEntry->set("uri", Util::trim(uri));
+            configInfo->set("xcu", xcuEntry);
+        }
 
         std::ostringstream jsonStream;
         configInfo->stringify(jsonStream);
@@ -583,12 +592,14 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             if (configPath == "/userconfig.json")
             {
                 handlePresetRequest("user", prefix, socket,
-                                    { "/test/data/autotextuser.bau", "/noexist.bau" });
+                                    { "/test/data/autotextuser.bau", "/noexist.bau" },
+                                    "");
             }
             else if (configPath == "/sharedconfig.json")
             {
                 handlePresetRequest("shared", prefix, socket,
-                                    { "/test/data/autotextshared.bau" });
+                                    { "/test/data/autotextshared.bau" },
+                                    "/test/data/configshared.xcu");
             }
             else
                 throw BadRequestException("Invalid Config Request: " + configPath);
