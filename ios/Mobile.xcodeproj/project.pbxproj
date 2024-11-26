@@ -23,6 +23,7 @@
 		BE00F8B7213ED573001CE2D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE00F8B6213ED573001CE2D4 /* libz.tbd */; };
 		BE18C7DE226DE09A001AD27E /* Branding in Resources */ = {isa = PBXBuildFile; fileRef = BE18C7DD226DE09A001AD27E /* Branding */; };
 		BE512CBA2518DE6E00921C15 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE512CB92518DE6400921C15 /* libsqlite3.tbd */; };
+		BE5315372CF5C48200A384A4 /* Unit-mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5315362CF5C48200A384A4 /* Unit-mobile.cpp */; };
 		BE55E0EB2653FCCB007DDF29 /* ConfigUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE55E0E92653FCCB007DDF29 /* ConfigUtil.cpp */; };
 		BE55E0EB3653FCCB007DDF29 /* Crypto-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE55E0EC2653FCCB007DDF29 /* Crypto-stub.cpp */; };
 		BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5B9213FE29900E0826C /* Log.cpp */; };
@@ -562,6 +563,7 @@
 		BE484B842292AF97001EE76C /* lokhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lokhelper.cxx; path = "../lobuilddir-symlink/sfx2/source/view/lokhelper.cxx"; sourceTree = "<group>"; };
 		BE484B852292AF97001EE76C /* classificationhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = classificationhelper.cxx; path = "../lobuilddir-symlink/sfx2/source/view/classificationhelper.cxx"; sourceTree = "<group>"; };
 		BE512CB92518DE6400921C15 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		BE5315362CF5C48200A384A4 /* Unit-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "Unit-mobile.cpp"; sourceTree = "<group>"; };
 		BE55E0E92653FCCB007DDF29 /* ConfigUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigUtil.cpp; sourceTree = "<group>"; };
 		BE55E0EA2653FCCB007DDF29 /* ConfigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ConfigUtil.hpp; sourceTree = "<group>"; };
 		BE55E0EC2653FCCB007DDF29 /* Crypto-stub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Crypto-stub.cpp"; sourceTree = "<group>"; };
@@ -595,7 +597,7 @@
 		BE5EB5BC214FE29900E0826C /* Uri.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Uri.cpp; sourceTree = "<group>"; };
 		BE5EB5BD213FE29900E0826C /* KitQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KitQueue.cpp; sourceTree = "<group>"; };
 		BE5EB5BD214FE29900E0826C /* LogUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogUI.cpp; sourceTree = "<group>"; };
-		BE5EB5BE213FE29900E0826C /* SigUtil-mobile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SigUtil-mobile.cpp; sourceTree = "<group>"; };
+		BE5EB5BE213FE29900E0826C /* SigUtil-mobile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "SigUtil-mobile.cpp"; sourceTree = "<group>"; };
 		BE5EB5BF213FE29900E0826C /* Protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Protocol.cpp; sourceTree = "<group>"; };
 		BE5EB5C0213FE29900E0826C /* FileUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtil.cpp; sourceTree = "<group>"; };
 		BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientSession.cpp; sourceTree = "<group>"; };
@@ -2235,6 +2237,7 @@
 				BE9ADE3D265D046600BC034A /* TraceEvent.cpp */,
 				BEA283782150172600848631 /* Unit.hpp */,
 				BEA28376214FFD8C00848631 /* Unit.cpp */,
+				BE5315362CF5C48200A384A4 /* Unit-mobile.cpp */,
 				BE58E12C218F295B00249358 /* Uri.hpp */,
 				BE5EB5BC214FE29900E0826C /* Uri.cpp */,
 				BE58E12C217F295B00249358 /* Util.hpp */,
@@ -3710,6 +3713,7 @@
 				BEBF3EB0246EB1C800415E87 /* RequestDetails.cpp in Sources */,
 				BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */,
 				BE8D77402136762600AC58EA /* main.m in Sources */,
+				BE5315372CF5C48200A384A4 /* Unit-mobile.cpp in Sources */,
 				BE5EB5C8213FE29900E0826C /* FileUtil.cpp in Sources */,
 				BEABFC6824AC94C3004DE339 /* Authorization.cpp in Sources */,
 				A5C2FA5D2AC1BEC500265946 /* DeltaSimd.c in Sources */,
