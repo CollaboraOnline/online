@@ -24,6 +24,7 @@
 - (void)stopServer;
 
 - (void)handleHULLOWithDocument:(CODocument *)document;
+- (void)handleMessageWith:(CODocument *)document message:(NSString *)message;
 
 + (void)LOG_DBG:(NSString *)message NS_SWIFT_NAME(LOG_DBG(_:));
 + (void)LOG_ERR:(NSString *)message NS_SWIFT_NAME(LOG_ERR(_:));
