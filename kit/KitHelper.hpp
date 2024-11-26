@@ -55,7 +55,7 @@ namespace LOKitHelper
         std::string resultingString = "{";
         for (std::unordered_map<std::string, std::string>::iterator i = map.begin(); i != map.end(); i++)
         {
-            resultingString += "\"" + i->first + "\": " + i->second + ",";
+            resultingString += "\"" + i->first + "\": " + i->second + ',';
         }
         resultingString.pop_back();
         resultingString += "}";

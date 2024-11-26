@@ -182,7 +182,7 @@ private:
             if (_nesting != threadLocalNesting)
             {
 #ifdef TEST_TRACEEVENT_EXE
-                std::cerr << "Incorrect ProfileZone nesting for " << name() << "\n";
+                std::cerr << "Incorrect ProfileZone nesting for " << name() << '\n';
 #else
                 LOG_WRN("Incorrect ProfileZone nesting for " << name());
 #endif

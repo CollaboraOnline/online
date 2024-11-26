@@ -678,12 +678,14 @@ class DeltaGenerator {
 
     void dumpState(std::ostream& oss)
     {
-        oss << "\tdelta generator with " << _deltaEntries.size() << " entries vs. max " << _maxEntries << "\n";
+        oss << "\tdelta generator with " << _deltaEntries.size() << " entries vs. max "
+            << _maxEntries << '\n';
         size_t totalSize = 0;
         for (const auto& it : _deltaEntries)
         {
             size_t size = it->sizeBytes();
-            oss << "\t\t" << it->_loc._size << "," << it->_loc._part << "," << it->_loc._left << "," << it->_loc._top << " wid: " << it->getWid() << " size: " << size << "\n";
+            oss << "\t\t" << it->_loc._size << ',' << it->_loc._part << ',' << it->_loc._left << ','
+                << it->_loc._top << " wid: " << it->getWid() << " size: " << size << '\n';
             totalSize += size;
         }
         oss << "\tdelta generator consumes " << totalSize << " bytes\n";
