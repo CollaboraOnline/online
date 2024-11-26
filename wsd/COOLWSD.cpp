@@ -4060,6 +4060,8 @@ int COOLWSD::innerMain()
     SigUtil::addActivity("finished with status " + std::to_string(returnValue));
 
     return returnValue;
+#else // IOS
+    return 0;
 #endif
 }
 
