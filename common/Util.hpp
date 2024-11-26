@@ -1333,7 +1333,9 @@ int main(int argc, char**argv)
 
 #define N_ELEMENTS(arr)     (sizeof(Util::n_array_size(arr)))
 
-    void time_t_to_localtime(std::time_t t, std::tm& tm);
+    // Wrap localtime_r() and gmtime_t() which are not portable
+    std::tm *time_t_to_localtime(std::time_t t, std::tm& tm);
+    std::tm *time_t_to_gmtime(std::time_t t, std::tm& tm);
 
 } // end namespace Util
 
