@@ -282,6 +282,11 @@
 	height: 38px;
 }
 
+#sheets-buttons-toolbox .unotoolbutton {
+	width: var(--btn-size);
+	height: var(--btn-size);
+}
+
 .tab-drop-area {
 	height: 32px;
 	width: 4px;
