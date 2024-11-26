@@ -1559,6 +1559,8 @@ void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& us
         {
             result = true;
 
+            int idCount(0);
+
             if (auto autotexts = settings->get("autotext").extract<Poco::JSON::Array::Ptr>())
             {
                 for (std::size_t i = 0, count = autotexts->size(); i < count; ++i)
@@ -1570,10 +1572,20 @@ void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& us
                     const std::string uri = JsonUtil::getJSONValue<std::string>(autotext, "uri");
                     std::string fileName = Poco::Path(Poco::Path(presetsPath, "autotext").toString(),
                                                       Uri::getFilenameWithExtFromURL(uri)).toString();
-                    std::string id = std::to_string(i);
+                    std::string id = std::to_string(idCount++);
                     presetTasks->installStarted(id);
                     asyncInstallPreset(poll, uri, fileName, id, presetInstallFinished);
                 }
+            }
+
+            if (auto xcu = settings->get("xcu").extract<Poco::JSON::Object::Ptr>())
+            {
+                const std::string uri = JsonUtil::getJSONValue<std::string>(xcu, "uri");
+                std::string fileName = Poco::Path(Poco::Path(presetsPath, "xcu").toString(),
+                                                  "config.xcu").toString();
+                std::string id = std::to_string(idCount++);
+                presetTasks->installStarted(id);
+                asyncInstallPreset(poll, uri, fileName, id, presetInstallFinished);
             }
         }
         else
