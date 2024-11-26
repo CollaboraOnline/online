@@ -3317,32 +3317,35 @@ void lokit_main(
                     return false;
                 }
 
-                // copy default tempates from 'common' dir to shared templates dir
-                // TODO: maybe I shouldn't copy if whole point to mounting is that we don't require copying.
-                auto defaultTemplates = FileUtil::getDirEntries(loJailDestImpressTemplatePath);
-                for (auto& name : defaultTemplates)
+                if (!FileUtil::isEmptyDirectory(loJailDestImpressTemplatePath)) // make sure template directory exist
                 {
-                    std::string sourcePath = loJailDestImpressTemplatePath;
-                    sourcePath.append("/");
-                    sourcePath.append(name);
-                    std::string destPath = sharedTemplate;
-                    destPath.append("/");
-                    destPath.append(name);
-                    if (!FileUtil::copy(sourcePath, destPath, false, false))
+                    // copy default tempates from 'common' dir to shared templates dir
+                    // TODO: maybe I shouldn't copy if whole point to mounting is that we don't require copying.
+                    auto defaultTemplates = FileUtil::getDirEntries(loJailDestImpressTemplatePath);
+                    for (auto& name : defaultTemplates)
                     {
-                        LOG_WRN("Failed to copy default impress template from ["
-                                << sourcePath << "] to [" << sharedTemplate << ']');
+                        std::string sourcePath = loJailDestImpressTemplatePath;
+                        sourcePath.append("/");
+                        sourcePath.append(name);
+                        std::string destPath = sharedTemplate;
+                        destPath.append("/");
+                        destPath.append(name);
+                        if (!FileUtil::copy(sourcePath, destPath, false, false))
+                        {
+                            LOG_WRN("Failed to copy default impress template from ["
+                                    << sourcePath << "] to [" << sharedTemplate << ']');
+                        }
                     }
-                }
 
-                // mount the shared templates over the lo shared templates' 'common' dir
-                if (!JailUtil::bind(sharedTemplate, loJailDestImpressTemplatePath) ||
-                    !JailUtil::remountReadonly(sharedTemplate, loJailDestImpressTemplatePath))
-                {
-                    // TODO: actually do this link on failure
-                    LOG_WRN("Failed to mount [" << sharedTemplate << "] -> [" << sharedTemplate
-                                                << "], will link contents");
-                    return false;
+                    // mount the shared templates over the lo shared templates' 'common' dir
+                    if (!JailUtil::bind(sharedTemplate, loJailDestImpressTemplatePath) ||
+                        !JailUtil::remountReadonly(sharedTemplate, loJailDestImpressTemplatePath))
+                    {
+                        // TODO: actually do this link on failure
+                        LOG_WRN("Failed to mount [" << sharedTemplate << "] -> [" << sharedTemplate
+                                                    << "], will link contents");
+                        return false;
+                    }
                 }
 
                 // tmpdir inside the jail for added sercurity.
