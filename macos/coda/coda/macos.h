@@ -25,6 +25,11 @@ extern LibreOfficeKit *lo_kit;
 std::string getBundlePath();
 
 /**
+ * Get path of the Application Support Directory (app-specific data files that should be preserved between app launches and across updates).
+ */
+std::string getAppSupportURL();
+
+/**
  * Get URL of a resource in the bundle.
  */
 std::string getResourceURL(const char *name, const char *ext);
