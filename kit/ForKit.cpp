@@ -573,15 +573,22 @@ static int createSubForKit(const std::string& subForKitIdent,
     auto childFunc = [childRoot, sysTemplate, loTemplate,
                       subForKitIdent, useMountNamespaces]()
     {
-        // TODO, here we can presumably apply settings to this forkit for
-        // its coolkits to inherit
-
         // reset parent of this subforkit to its forkit parent, main loop
         // detects a parentPid != getppid() as a cue to exit
         parentPid = getppid();
 
         // reset this global counter for this new subForKit
         ForkCounter = 0;
+
+        // Apply core configmgr xcu settings to this forkit for its coolkits to inherit
+        {
+            std::string presetsPath = Poco::Path(childRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
+            std::string xcuPath = Poco::Path(presetsPath, "xcu").toString();
+            std::string xcuFile = Poco::Path(xcuPath, "config.xcu").toString();
+            assert(loKitPtr);
+            loKitPtr->pClass->setOption(loKitPtr, "addxcu", Poco::URI(Poco::Path(xcuFile)).toString().c_str());
+        }
+
         LOG_INF("SubForKit process is ready. Parent: " << parentPid);
 
         // launch first coolkit child of this subForKit
