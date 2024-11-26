@@ -135,7 +135,7 @@ public:
 
     void dumpState(std::ostream& os) const
     {
-        os << "Saved clipboards: " << _cache.size() << "\n";
+        os << "Saved clipboards: " << _cache.size() << '\n';
         auto now = std::chrono::steady_clock::now();
         for (auto &it : _cache)
         {

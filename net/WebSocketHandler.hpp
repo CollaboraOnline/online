@@ -862,7 +862,7 @@ protected:
                 };
                 std::cerr << "attempting to send invalid UTF-8 message '" << raw << "' "
                           << " error at offset " << std::hex << "0x" << offset << std::dec
-                          << " bytes, " << hex << "\n";
+                          << " bytes, " << hex << '\n';
                 assert("invalid utf-8 - check Message::detectType()" && false);
             }
         }

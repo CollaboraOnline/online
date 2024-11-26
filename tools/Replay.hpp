@@ -85,14 +85,15 @@ struct Histogram {
                 break;
 
         std::cout << legend << ' ' << _items << " items, max #: " << max
-                  << " too long: " << _tooLong << "\n";
+                  << " too long: " << _tooLong << '\n';
 
         const double chrsPerFreq = 60.0 / max;
         for (size_t i = firstBucket; i <= last; ++i)
         {
             int chrs = ::ceil(chrsPerFreq * _buckets[i]);
             int ms = i < 10 ? (incLowMs * (i+1)) : (maxLowMs + (i+1-10) * incHighMs);
-            std::cout << "< " << std::setw(4) << ms << " ms |" << std::string(chrs, '-') << "| " << _buckets[i] << "\n";
+            std::cout << "< " << std::setw(4) << ms << " ms |" << std::string(chrs, '-') << "| "
+                      << _buckets[i] << '\n';
         }
     }
 
@@ -229,8 +230,7 @@ struct Stats {
         std::cout << "size\tcount\tcommand\n";
         for (const auto& it : sortKeys)
         {
-            std::cout << map[it].size << "\t"
-                      << map[it].count << "\t" << it << "\n";
+            std::cout << map[it].size << '\t' << map[it].count << '\t' << it << '\n';
             if (map[it].size < (total / 100))
                 break;
         }
@@ -341,7 +341,7 @@ struct Stats {
         {
             file << "Commit Hash" << ',' << "Date" << ',' << "Test" << ',' << "Phase" << ','
                  << "Metric" << ',' << "Value";
-            file << "\n";
+            file << '\n';
         }
 
         std::string commitHash = Util::getCoolVersionHash();
@@ -357,7 +357,7 @@ struct Stats {
         {
             file << commitHash << ',' << formattedDate << ',' << _testType << ','
                  << perfData[i].phase << ',' << perfData[i].metric << ',' << perfData[i].data;
-            file << "\n";
+            file << '\n';
         }
     }
 
@@ -400,7 +400,7 @@ public:
 
         static std::atomic<int> number;
         _logPre = '[' + std::to_string(++number) + "] ";
-        std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
+        std::cerr << "Attempt connect to " << uri << " for trace " << _trace << '\n';
         getNextRecord();
         _start = std::chrono::steady_clock::now() + std::chrono::milliseconds(delayMs);
         _nextPing = _start + std::chrono::milliseconds(Util::rng::getNext() % 1000);
@@ -417,8 +417,8 @@ public:
     {
         if (_connecting)
         {
-            std::cerr << _logPre << "Waiting for outbound connection to " << _uri <<
-                " to complete for trace " << _trace << "\n";
+            std::cerr << _logPre << "Waiting for outbound connection to " << _uri
+                      << " to complete for trace " << _trace << '\n';
             return POLLOUT;
         }
 
@@ -527,7 +527,7 @@ public:
             out = "load url=" + _uri; // already encoded
             for (size_t i = 2; i < tokens.size(); ++i)
                 out += ' ' + tokens[i];
-            std::cerr << _logPre << "msg " << out << "\n";
+            std::cerr << _logPre << "msg " << out << '\n';
         }
 
         size_t currentMemoryUsage = _stats->getMemoryUsage();
@@ -550,7 +550,7 @@ public:
 
         const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
         StringVector tokens = StringVector::tokenize(firstLine);
-        std::cerr << _logPre << "Got msg: " << firstLine << "\n";
+        std::cerr << _logPre << "Got msg: " << firstLine << '\n';
 
         _stats->accumulateRecv(tokens[0], data.size());
 
@@ -564,7 +564,7 @@ public:
             TileDesc desc = TileDesc::parse(tokens);
 
             sendMessage("tileprocessed tile=" + desc.generateID());
-            std::cerr << _logPre << "Sent tileprocessed tile= " + desc.generateID() << "\n";
+            std::cerr << _logPre << "Sent tileprocessed tile= " + desc.generateID() << '\n';
         }
         else if (tokens.equals(0, "error:"))
         {
