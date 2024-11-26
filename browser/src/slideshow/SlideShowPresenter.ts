@@ -709,6 +709,8 @@ class SlideShowPresenter {
 		if (!this._onPrepareScreen(false))
 			// opens full screen, has to be on user interaction
 			return;
+		// disable slide sorter or it will receive key events
+		this._map._docLayer._preview.partsFocused = false;
 
 		this._startSlide = that?.startSlideNumber ?? 0;
 		app.socket.sendMessage('getpresentationinfo');
