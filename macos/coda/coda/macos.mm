@@ -24,6 +24,41 @@ std::string getBundlePath() {
     return bundlePath;
 }
 
+std::string getAppSupportURL() {
+    @autoreleasepool {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+
+        // Get the URLs for the Application Support directory in the user domain
+        NSArray<NSURL *> *urls = [fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask];
+        NSURL *appSupportURL = [urls firstObject];
+        if (!appSupportURL)
+            return std::string();
+
+        // Get the app's name from the bundle
+        NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+        if (!appName) {
+            // Fallback if CFBundleName is not set
+            appName = @"CODA";
+        }
+
+        // Append your app's name to create a unique directory
+        NSURL *appDirectoryURL = [appSupportURL URLByAppendingPathComponent:appName isDirectory:YES];
+
+        // Create the directory if it doesn't exist
+        if (![fileManager fileExistsAtPath:[appDirectoryURL path]]) {
+            NSError *error = nil;
+            BOOL success = [fileManager createDirectoryAtURL:appDirectoryURL withIntermediateDirectories:YES attributes:nil error:&error];
+            if (!success) {
+                NSLog(@"Error creating Application Support directory: %@", error.localizedDescription);
+                return std::string();
+            }
+        }
+
+        // Return the URL as string
+        return [[appDirectoryURL absoluteString] UTF8String];
+    }
+}
+
 std::string getResourceURL(const char *name, const char *ext) {
     NSURL *url = [[NSBundle mainBundle] URLForResource:[NSString stringWithUTF8String:name] withExtension:[NSString stringWithUTF8String:ext]];
     return std::string([[url absoluteString] UTF8String]);
