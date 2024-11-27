@@ -1339,7 +1339,7 @@ class CanvasSectionContainer {
 		// Drawing may happen asynchronously so backup the old contents to avoid
 		// showing a blank canvas.
 		var oldImageData: ImageData = null;
-		if (this.paintedEver)
+		if (this.paintedEver && this.canvas.width > 0 && this.canvas.height > 0)
 			oldImageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
 
 		this.canvas.width = newWidth;
