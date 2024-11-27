@@ -3267,7 +3267,7 @@ void lokit_main(
             const std::string jailTmpDir = Poco::Path(jailPath, "tmp").toString();
 
             const std::string tmpIncoming = Poco::Path(childRoot, JailUtil::CHILDROOT_TMP_INCOMING_PATH).toString();
-            const std::string sharedTemplate = Poco::Path(tmpIncoming, "templates").toString();
+            const std::string sharedTemplate = Poco::Path(tmpIncoming, "templates/presnt").toString();
             const std::string loJailDestImpressTemplatePath = Poco::Path(loJailDestPath, "share/template/common/presnt").toString();
 
             const std::string sysTemplateSubDir = Poco::Path(tempRoot, "systemplate-" + jailId).toString();
