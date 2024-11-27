@@ -42,21 +42,21 @@ namespace COOLProtocol
     // Negative numbers for error.
     std::tuple<int, int, std::string> ParseVersion(const std::string& version);
 
-    inline bool stringToInteger(const std::string& input, int& value)
+    inline bool stringToInteger(const std::string_view input, int& value)
     {
         bool res;
         std::tie(value, res) = Util::i32FromString(input);
         return res;
     }
 
-    inline bool stringToUInt32(const std::string& input, uint32_t& value)
+    inline bool stringToUInt32(const std::string_view input, uint32_t& value)
     {
         bool res;
         std::tie(value, res) = Util::i32FromString(input);
         return res;
     }
 
-    inline bool stringToUInt64(const std::string& input, uint64_t& value)
+    inline bool stringToUInt64(const std::string_view input, uint64_t& value)
     {
         bool res;
         std::tie(value, res) = Util::u64FromString(input);
@@ -77,11 +77,13 @@ namespace COOLProtocol
         return false;
     }
 
-    bool getTokenInteger(const std::string& token, const std::string_view name, int& value);
-    bool getTokenUInt32(const std::string& token, const std::string_view name, uint32_t& value);
-    bool getTokenUInt64(const std::string& token, const std::string_view name, uint64_t& value);
-    bool getTokenString(const std::string& token, const std::string_view name, std::string& value);
-    bool getTokenKeyword(const std::string& token, const std::string_view name, const std::map<std::string, int>& map, int& value);
+    bool getTokenInteger(const std::string_view token, const std::string_view name, int& value);
+    bool getTokenUInt32(const std::string_view token, const std::string_view name, uint32_t& value);
+    bool getTokenUInt64(const std::string_view token, const std::string_view name, uint64_t& value);
+    bool getTokenString(const std::string_view token, const std::string_view name,
+                        std::string& value);
+    bool getTokenKeyword(const std::string_view token, const std::string_view name,
+                         const std::map<std::string, int>& map, int& value);
 
     bool getTokenKeyword(const StringVector& tokens, const std::string_view name, const std::map<std::string, int>& map, int& value);
 
@@ -98,7 +100,7 @@ namespace COOLProtocol
 
     /// Literal-string token names.
     template <std::size_t N>
-    inline bool getTokenInteger(const std::string& token, const char (&name)[N], int& value)
+    inline bool getTokenInteger(const std::string_view token, const char (&name)[N], int& value)
     {
         // N includes null termination.
         static_assert(N > 1, "Token name must be at least one character long.");
@@ -115,7 +117,8 @@ namespace COOLProtocol
 
     /// Extracts a name and value from token. Returns true if value is a non-negative integer.
     template <std::size_t N>
-    inline bool getNonNegTokenInteger(const std::string& token, const char (&name)[N], int& value)
+    inline bool getNonNegTokenInteger(const std::string_view token, const char (&name)[N],
+                                      int& value)
     {
         return getTokenInteger(token, name, value) && value >= 0;
     }
@@ -135,7 +138,8 @@ namespace COOLProtocol
         return false;
     }
 
-    bool getTokenStringFromMessage(const std::string& message, const std::string_view name, std::string& value);
+    bool getTokenStringFromMessage(const std::string_view message, const std::string_view name,
+                                   std::string& value);
 
     inline
     std::vector<int> tokenizeInts(const char* data, const size_t size, const char delimiter = ',')
@@ -165,10 +169,9 @@ namespace COOLProtocol
         return tokens;
     }
 
-    inline
-    std::vector<int> tokenizeInts(const std::string& s, const char delimiter = ',')
+    inline std::vector<int> tokenizeInts(const std::string_view str, const char delimiter = ',')
     {
-        return tokenizeInts(s.data(), s.size(), delimiter);
+        return tokenizeInts(str.data(), str.size(), delimiter);
     }
 
     inline bool getTokenIntegerFromMessage(const std::string& message, const std::string_view name, int& value)
