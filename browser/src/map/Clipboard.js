@@ -901,15 +901,20 @@ L.Clipboard = L.Class.extend({
 			try {
 				await clipboard.write([clipboardItem]);
 			} catch (error) {
-				window.app.console.log('navigator.clipboard.write() failed: ' + error.message);
-
-				// Warn that the copy failed.
-				this._warnCopyPaste();
-				// Once broken, always broken.
-				L.Browser.clipboardApiAvailable = false;
-				window.prefs.set('clipboardApiAvailable', false);
-				// Prefetch selection, so next time copy will work with the keyboard.
-				app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
+				// When document is not focused, writing to clipboard is not allowed. But this error shouldn't stop the usage of clipboard API.
+				if (!document.hasFocus()) {
+					window.app.console.warn('navigator.clipboard.write() failed: ' + error.message);
+				}
+				else {
+					window.app.console.error('navigator.clipboard.write() failed: ' + error.message);
+					// Warn that the copy failed.
+					this._warnCopyPaste();
+					// Once broken, always broken.
+					L.Browser.clipboardApiAvailable = false;
+					window.prefs.set('clipboardApiAvailable', false);
+					// Prefetch selection, so next time copy will work with the keyboard.
+					app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
+				}
 			}
 		}
 	},
