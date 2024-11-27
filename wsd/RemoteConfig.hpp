@@ -162,15 +162,20 @@ private:
     bool downloadWithETag(const std::string& uri, const std::string& oldETag,
                           std::map<std::string, AssetData>& assets, const std::string& assetType);
 
-    bool getNewAssets(const Poco::JSON::Object::Ptr& remoteJson, const std::string& assetJsonKey,
+    bool getNewAssets(const Poco::JSON::Array::Ptr& assetsPtr, const std::string& assetJsonKey,
                       std::map<std::string, AssetData>& assets);
+
+    bool getTemplateAssets(const Poco::JSON::Object::Ptr& remoteJson,
+                           const std::string& templateType);
+
+    bool getFontAssets(const Poco::JSON::Object::Ptr& remoteJson, const std::string& fontJsonKey);
 
     void reDownloadConfigFile(std::map<std::string, AssetData>& assets,
                               const std::string& assetType);
 
     bool handleUnchangedAssets(std::map<std::string, AssetData>& assets);
 
-    std::string removeTemplate(const std::string& uri);
+    std::string removeTemplate(const std::string& uri, const std::string& tmpPath);
 
     // The key of this map is the download URI of the font.
     std::map<std::string, AssetData> fonts;
