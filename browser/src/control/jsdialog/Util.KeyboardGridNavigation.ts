@@ -19,18 +19,8 @@ function handleKeyboardNavigation(
 	event: KeyboardEvent,
 	currentElement: HTMLElement,
 	parentContainer: HTMLElement,
-	handleSelection?: any,
-	builder?: any,
-	widgetData?: any,
 ) {
 	switch (event.key) {
-		case 'Enter':
-		case ' ':
-			if (handleSelection && !(currentElement instanceof HTMLSelectElement)) {
-				handleSelection(currentElement, builder, widgetData);
-				event.preventDefault();
-			}
-			break;
 		case 'ArrowRight':
 			moveFocus(parentContainer, currentElement, 'next', 'horizontal');
 			event.preventDefault();
@@ -93,6 +83,16 @@ function moveFocus(
 		} else {
 			targetRow--;
 		}
+
+		// If the target column does not exist in the target row, move to the last column in the target row
+		const elementsInTargetRow = focusableElements.filter(
+			(el) => getRowColumn(el)[0] === targetRow,
+		);
+		if (elementsInTargetRow.length > 0) {
+			if (targetColumn >= elementsInTargetRow.length) {
+				targetColumn = elementsInTargetRow.length - 1;
+			}
+		}
 	}
 
 	const targetElement = focusableElements.find(
@@ -103,10 +103,10 @@ function moveFocus(
 	if (targetElement) {
 		targetElement.focus();
 	} else {
-		// Determine the element to pass to FindFocusableElement based on axis and direction
+		// Handle edge cases by moving to adjacent sibling elements if no exact match is found
 		const potentialCurrentElement =
 			axis === 'vertical' ? parentContainer : currentElement;
-		// if vertical or
+
 		const nextElement =
 			direction === 'next'
 				? JSDialog.FindFocusableElement(
@@ -130,12 +130,7 @@ function getRowColumn(element: HTMLElement): [number, number] {
 	return [row, column];
 }
 
-JSDialog.KeyboardGridNavigation = function (
-	container: HTMLElement,
-	selectionHandler?: any,
-	builder?: any,
-	widgetData?: any,
-) {
+JSDialog.KeyboardGridNavigation = function (container: HTMLElement) {
 	container.addEventListener('keydown', (event: KeyboardEvent) => {
 		const activeElement = document.activeElement as HTMLElement;
 		if (!JSDialog.IsTextInputField(activeElement)) {
@@ -143,9 +138,6 @@ JSDialog.KeyboardGridNavigation = function (
 				event,
 				activeElement,
 				activeElement.parentElement,
-				selectionHandler,
-				builder,
-				widgetData,
 			);
 		}
 	});
