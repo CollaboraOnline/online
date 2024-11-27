@@ -58,7 +58,7 @@ export class Header extends app.definitions.canvasSectionObject {
 		const baseElem = document.getElementsByTagName('body')[0];
 		const elem = L.DomUtil.create('div', className, baseElem);
 		this._textColor = L.DomUtil.getStyle(elem, 'color');
-		this._backgroundColor = getComputedStyle(document.body).getPropertyValue('--color-background-darker');
+		this._backgroundColor = L.DomUtil.getStyle(elem, 'background-color');
 		const fontFamily = L.DomUtil.getStyle(elem, 'font-family');
 		this.getFont = function() {
 			const selectedSize = this._getFontSize();
@@ -85,7 +85,7 @@ export class Header extends app.definitions.canvasSectionObject {
 	_initHeaderEntryHoverStyles (className: string): void {
 		const baseElem = document.getElementsByTagName('body')[0];
 		const elem = L.DomUtil.create('div', className, baseElem);
-		this._hoverColor = getComputedStyle(document.body).getPropertyValue('--color-background-lighter');
+		this._hoverColor = L.DomUtil.getStyle(elem, 'background-color');
 		L.DomUtil.remove(elem);
 	}
 
