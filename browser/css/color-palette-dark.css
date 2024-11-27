@@ -51,6 +51,11 @@
 	--color-hyperlink: #1d99f3;
 
 	--color-calc-grid: #474747;
+	--color-calc-header: #0a0a0a;
+	--color-calc-header-selected: #646464;
+	--color-text-calc-header-selected: #fff;
+	--color-border-calc-header: var(--color-border-dark);
+	--color-calc-header-hover: #646464;
 
 	--color-grid-helper-line-solid: #e6e6e6;
 	--color-grid-helper-line-dashed: #191919;
