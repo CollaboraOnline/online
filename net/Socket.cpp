@@ -36,6 +36,7 @@
 
 #include <cerrno>
 #include <chrono>
+#include <condition_variable>
 #include <cstring>
 #include <cctype>
 #include <iomanip>

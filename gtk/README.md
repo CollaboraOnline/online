@@ -15,10 +15,10 @@ Run autogen.sh, then configure:
 
 Obviously, adjust the path to your LibreOffice build tree as necessary.
 
-Then make.
+Then cd to this directory and run make.
 
-You will get the gtk/mobile executable. Run it for example like this:
+You will get the mobile executable. Run it for example like this:
 
-gtk/mobile $PWD/test/data/hello-world.odt
+./mobile ../test/data/hello.odt
 
 Then, if it doesn't work, debug it and fix it.
