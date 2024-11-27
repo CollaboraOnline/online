@@ -85,7 +85,16 @@ namespace COOLProtocol
 
     bool getTokenKeyword(const StringVector& tokens, const std::string_view name, const std::map<std::string, int>& map, int& value);
 
-    bool getTokenInteger(const StringVector& tokens, const std::string_view name, int& value);
+    inline bool getTokenInteger(const StringVector& tokens, const std::string_view name,
+                                int& value)
+    {
+        for (size_t i = 0; i < tokens.size(); i++)
+        {
+            if (getTokenInteger(tokens[i], name, value))
+                return true;
+        }
+        return false;
+    }
 
     /// Literal-string token names.
     template <std::size_t N>

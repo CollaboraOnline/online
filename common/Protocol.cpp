@@ -130,16 +130,6 @@ namespace COOLProtocol
         return false;
     }
 
-    bool getTokenInteger(const StringVector& tokens, const std::string_view name, int& value)
-    {
-        for (size_t i = 0; i < tokens.size(); i++)
-        {
-            if (getTokenInteger(tokens[i], name, value))
-                return true;
-        }
-        return false;
-    }
-
     bool getTokenKeyword(const StringVector& tokens, const std::string_view name, const std::map<std::string, int>& map, int& value)
     {
         for (size_t i = 0; i < tokens.size(); i++)
