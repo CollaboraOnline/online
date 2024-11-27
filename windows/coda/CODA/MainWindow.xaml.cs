@@ -91,6 +91,9 @@ namespace CODA
         [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
         public static extern long fakeSocketDumpState();
 
+        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        public static extern void initialize_cpp_things();
+
         private CoreWebView2Settings _webViewSettings;
         CoreWebView2Settings WebViewSettings
         {
@@ -134,6 +137,7 @@ namespace CODA
         {
             Loaded += MainWindow_Loaded;
             InitializeComponent();
+            initialize_cpp_things();
         }
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
