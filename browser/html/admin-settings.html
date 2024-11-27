@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Setting Iframe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        #fileControls {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        button {
+            margin: 10px 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+       
+        input[type="file"] {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Admin Setting Iframe</h2>
+    <div id="fileControls">
+        <label for="fontFile">Select Font File (TTF, OTF, WOFF):</label><br>
+        <input type="file" id="fontFile" accept=".ttf, .otf, .woff"><br>
+        <button class="upload" onclick="uploadFile()">Upload</button>
+        <button class="delete" onclick="deleteFile()">Delete</button>
+        <p id="fileStatus"></p>
+    </div>
+
+    <script>
+        function uploadFile() {
+            const fileInput = document.getElementById('fontFile');
+            const fileStatus = document.getElementById('fileStatus');
+            
+            if (!fileInput.files.length) {
+                fileStatus.textContent = "No file selected for upload.";
+                return;
+            }
+
+            const fileName = fileInput.files[0].name;
+            fileStatus.textContent = `Uploading ${fileName}...`;
+
+            setTimeout(() => {
+                fileStatus.textContent = `File "${fileName}" uploaded successfully!`;
+
+                fileInput.value = '';
+            }, 2000);
+        }
+
+        function deleteFile() {
+            const fileInput = document.getElementById('fontFile');
+            const fileStatus = document.getElementById('fileStatus');
+
+            if (!fileInput.files.length) {
+                fileStatus.textContent = "No file selected to delete.";
+                return;
+            }
+
+            const fileName = fileInput.files[0].name;
+            fileStatus.textContent = `Deleting ${fileName}...`;
+
+            setTimeout(() => {
+                fileStatus.textContent = `File "${fileName}" deleted successfully!`;
+
+                fileInput.value = '';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
