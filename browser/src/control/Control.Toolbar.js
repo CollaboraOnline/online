@@ -538,12 +538,10 @@ var onShapeKeyDownFunction = function(event) {
 		closePopup();
 		app.map.focus();
 	}
-	event.stopPropagation();
 };
 
-function insertShapes(shapeType, grid = document.getElementsByClassName('insertshape-grid')[0]) {
+function insertShapes(shapeType, grid = document.getElementsByClassName('insertshape-grid')[0], width) {
 
-	var width = 10;
 	grid.classList.add(shapeType);
 
 	if (window.mode.isDesktop() || window.mode.isTablet())
@@ -562,10 +560,10 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 
 		var rows = Math.ceil(collection[s].length / width);
 		var idx = 0;
+		const row = document.createElement('div');
+		row.className = 'row';
+		grid.appendChild(row);
 		for (let r = 0; r < rows; r++) {
-			const row = document.createElement('div');
-			row.className = 'row';
-			grid.appendChild(row);
 
 			for (let c = 0; c < width; c++) {
 				if (idx >= collection[s].length) {
@@ -578,6 +576,7 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 				col.className = 'col w2ui-icon ' + shape.img;
 				col.dataset.uno = shape.uno;
 				col.tabIndex = 0;
+				col.setAttribute('index', r + ':' + c);
 				row.appendChild(col);
 			}
 
@@ -599,7 +598,7 @@ function getShapesPopupElements(closeCallback) {
 	const container = document.createElement('div');
 	container.appendChild(grid);
 
-	insertShapes('insertshapes', container.children[0]);
+	insertShapes('insertshapes', container.children[0], 10);
 
 	const wrapperContainer = document.createElement('div');
 
@@ -610,7 +609,6 @@ function getShapesPopupElements(closeCallback) {
 
 	const popUp = document.createElement('div');
 	popUp.id = 'insertshape-popup';
-	popUp.tabIndex = 0;
 	popUp.className = 'insertshape-pop ui-widget ui-corner-all';
 
 	wrapperContainer.appendChild(popUp);
@@ -633,7 +631,7 @@ function getConnectorsPopupElements(closeCallback) {
 
 	gridContainer.appendChild(grid);
 
-	insertShapes('insertconnectors', gridContainer.children[0]);
+	insertShapes('insertconnectors', gridContainer.children[0], 2);
 
 
 	const wrapperContainer = document.createElement('div');
@@ -643,7 +641,6 @@ function getConnectorsPopupElements(closeCallback) {
 
 	const popUp = document.createElement('div');
 	popUp.id = 'insertshape-popup';
-	popUp.tabIndex = 0;
 	popUp.className = 'insertshape-pop ui-widget ui-corner-all';
 
 	wrapperContainer.appendChild(wrapper);

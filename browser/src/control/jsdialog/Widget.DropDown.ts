@@ -22,7 +22,10 @@ JSDialog.Dropdown = function (
 ) {
 	builder.build(parentContainer, data.children, data.vertical === true);
 
-	if (!data.noDefaultKeyboardNavigation)
+	if (data.gridKeyboardNavigation) {
+		JSDialog.KeyboardGridNavigation(parentContainer);
+	} else {
 		JSDialog.KeyboardListNavigation(parentContainer);
+	}
 	return false;
 };

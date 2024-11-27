@@ -28,7 +28,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		jsontype: 'dialog',
 		popupParent: popupParent,
 		popupAnchor: popupAnchor,
-		noDefaultKeyboardNavigation: false,
+		gridKeyboardNavigation: false,
 		cancellable: true,
 		children: [
 			{
@@ -65,12 +65,13 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					htmlId: entries[i].htmlId,
 					closeCallback: function () { JSDialog.CloseDropdown(id); }
 				};
+				json.gridKeyboardNavigation = true;
 			break;
 
 			case 'colorpicker':
 				entry = entries[i];
 				// for color picker we have a "KeyboardGridNavigation" function defined separately to handle custom cases
-				json.noDefaultKeyboardNavigation = true;
+				json.gridKeyboardNavigation = true;
 			break;
 
 			case 'action':

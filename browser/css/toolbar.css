@@ -1483,6 +1483,8 @@ button.leaflet-control-search-next
 	position: static;
 	text-align: left;
 	display: flex;
+	max-width: 360px;
+	flex-wrap: wrap;
 }
 
 .insertshape-grid.insertconnectors .row {
