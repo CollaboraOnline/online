@@ -117,6 +117,15 @@ function createColor(
 			widgetData, // Pass the widget data
 		);
 	});
+	color.addEventListener('keydown', (event: KeyboardEvent) => {
+		if (event.code === 'Enter') {
+			handleColorSelection(
+				event.target as HTMLElement, // The clicked element
+				builder, // Pass the builder object
+				widgetData, // Pass the widget data
+			);
+		}
+	});
 	return color;
 }
 
@@ -376,14 +385,6 @@ JSDialog.colorPicker = function (
 			recentContainer,
 		);
 	});
-
-	// Apply keyboard navigation to the color picker widget
-	JSDialog.KeyboardGridNavigation(
-		container,
-		handleColorSelection,
-		builder,
-		data,
-	);
 
 	JSDialog.MakeFocusCycle(container);
 
