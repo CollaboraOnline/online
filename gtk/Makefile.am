@@ -28,17 +28,20 @@ cmake_list= \
             ../common/CommandControl.cpp \
             ../common/Crypto-stub.cpp \
             ../common/FileUtil.cpp \
+            ../common/FileUtil-unix.cpp \
             ../common/Log.cpp \
             ../common/TraceEvent.cpp \
             ../common/Protocol.cpp \
             ../common/Simd.cpp \
             ../common/StringVector.cpp \
             ../common/Session.cpp \
-            ../common/SigUtil.cpp \
+            ../common/SigUtil-mobile.cpp \
             ../common/SpookyV2.cpp \
             ../common/Unit.cpp \
             ../common/Util.cpp \
             ../common/Util-mobile.cpp \
+            ../common/Util-unix.cpp \
+            ../common/Uri.cpp \
             ../kit/ChildSession.cpp \
             ../kit/DeltaSimd.c \
             ../kit/Kit.cpp \
