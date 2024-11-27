@@ -28,6 +28,11 @@ namespace cool {
 		error: string;
 	}
 
+	export interface ReceiveSignatureResponse {
+		status: string;
+		signed_file_contents: string;
+	}
+
 	/**
 	 * Provides electronic signing with document hashes for PDF files.
 	 */
@@ -161,10 +166,62 @@ namespace cool {
 				this.popup.close();
 			} catch (error) {
 				app.console.log('failed to close the signing popup: ' + error.message);
+				return;
+			}
+
+			// Step 4: fetch the signature.
+			const url = this.url + '/api/signatures/download-signed-file';
+			const body = {
+				secret: this.secret,
+				client_id: this.clientId,
+				doc_id: this.docId,
+			};
+			const headers = {
+				'Content-Type': 'application/json',
+			};
+			const request = new Request(url, {
+				method: 'POST',
+				body: JSON.stringify(body),
+				headers: headers,
+			});
+			window.fetch(request).then(
+				(response) => {
+					this.handleReceiveSignatureBytes(response);
+				},
+				(error) => {
+					app.console.log('failed to fetch the signature: ' + error.message);
+				},
+			);
+		}
+
+		// Handles the 'receive signature' response bytes
+		handleReceiveSignatureBytes(response: Response): void {
+			response.json().then(
+				(json) => {
+					this.handleReceiveSignatureJson(json);
+				},
+				(error) => {
+					app.console.log(
+						'failed to parse response from signature fetch as JSON: ' +
+							error.message,
+					);
+				},
+			);
+		}
+
+		// Handles the 'receive signature' response JSON
+		handleReceiveSignatureJson(response: ReceiveSignatureResponse): void {
+			if (response.status != 'OK') {
+				app.console.log(
+					'received signature status is not OK: ' + response.status,
+				);
+				return;
 			}
 
 			console.log(
-				'TODO(vmiklos) ESignature::handleSigned: fetch the signature',
+				'TODO(vmiklos) ESignature::handleReceiveSignatureJson: serialize the signature, it is "' +
+					response.signed_file_contents +
+					'"',
 			);
 		}
 	}
