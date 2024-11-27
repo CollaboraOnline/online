@@ -360,16 +360,11 @@ namespace
             if (!strcmp(dot, ".so"))
             {
                 // NSS is problematic ...
-                if (strstr(path, "libnspr4") ||
-                    strstr(path, "libplds4") ||
-                    strstr(path, "libplc4") ||
-                    strstr(path, "libnss3") ||
-                    strstr(path, "libnssckbi") ||
-                    strstr(path, "libnsutil3") ||
-                    strstr(path, "libssl3") ||
-                    strstr(path, "libsoftokn3") ||
-                    strstr(path, "libsqlite3") ||
-                    strstr(path, "libfreeblpriv3"))
+                if (strstr(path, "libnspr4") || strstr(path, "libplds4") ||
+                    strstr(path, "libplc4") || strstr(path, "libnss3") ||
+                    strstr(path, "libnssckbi") || strstr(path, "libnsutil3") ||
+                    strstr(path, "libssl3") || strstr(path, "libsoftokn3") ||
+                    strstr(path, "libsqlite3") || strstr(path, "libfreeblpriv3"))
                     return true;
 
                 // As is Python ...
@@ -3321,8 +3316,8 @@ void lokit_main(
                 if (!JailUtil::bind(sharedTemplate, loJailDestImpressTemplatePath) ||
                     !JailUtil::remountReadonly(sharedTemplate, loJailDestImpressTemplatePath))
                 {
-                    // TODO: actually do this link on failure
-                    LOG_WRN("Failed to mount [" << sharedTemplate << "] -> [" << sharedTemplate
+                    LOG_WRN("Failed to mount [" << sharedTemplate << "] -> ["
+                                                << loJailDestImpressTemplatePath
                                                 << "], will link contents");
                     return false;
                 }
@@ -3406,6 +3401,9 @@ void lokit_main(
                 linkOrCopy(sysTemplate, jailPath, linkablePath, LinkOrCopyType::All);
 
                 linkOrCopy(loTemplate, loJailDestPath, linkablePath, LinkOrCopyType::LO);
+
+                linkOrCopy(sharedTemplate, loJailDestImpressTemplatePath + "/", linkablePath,
+                           LinkOrCopyType::All);
 
 #if CODE_COVERAGE
                 // Link the .gcda files.
