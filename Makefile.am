@@ -726,13 +726,13 @@ browser/node_modules: browser/package.json browser/archived-packages
 	@cd browser && npm install
 
 eslint: browser/node_modules
-	@make -C browser eslint
+	@$(MAKE) -C browser eslint
 
 prettier: browser/node_modules
-	@make -C browser prettier
+	@$(MAKE) -C browser prettier
 
 prettier-write: browser/node_modules
-	@make -C browser prettier-write
+	@$(MAKE) -C browser prettier-write
 
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \
