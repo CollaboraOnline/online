@@ -1665,10 +1665,14 @@ private:
 
     void onDisconnect() override
     {
+
+        bool completed = false;
         // Make sure the socket is disconnected and released.
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
         {
+            completed = socket->getOutBuffer().empty() && socket->getInBuffer().empty();
+
             LOG_TRC("onDisconnect");
             socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
             socket->closeConnection(); // Immediately disconnect.
@@ -1676,8 +1680,12 @@ private:
         }
 
         _connected = false;
-        if (_response)
-            _response->finish();
+        if (_response) {
+            if (completed)
+                _response->complete();
+            else
+                _response->finish();
+        }
 
         _fd = -1; // No longer our socket fd.
     }
