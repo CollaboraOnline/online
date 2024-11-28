@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-22 14:44+0100\n"
-"PO-Revision-Date: 2024-11-14 10:51+0000\n"
+"PO-Revision-Date: 2024-11-23 01:28+0000\n"
 "Last-Translator: Cleverson Cândido <optimuspraimu@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -263,15 +263,15 @@ msgstr "Sobre"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "Histórico da CPU"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "História da memória"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Memória"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
@@ -343,7 +343,7 @@ msgstr "Enviado"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Conexões"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -542,7 +542,7 @@ msgstr "Resolvido"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:417
 msgid "Document contains unsupported video"
-msgstr ""
+msgstr "O documento contém vídeo não compatível"
 
 #: src/canvas/sections/URLPopUpSection.ts:49
 msgid "Copy link location"
@@ -767,7 +767,7 @@ msgstr "Documento inativo - toque para recarregar e continuar a edição"
 
 #: src/control/Control.JSDialog.js:272
 msgid "Close dialog"
-msgstr ""
+msgstr "Fechar caixa de diálogo"
 
 #: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
@@ -2428,7 +2428,7 @@ msgstr "Inserir imagem local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:264
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Inserir multimídia local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:269
 msgid "Very Tight"
@@ -2991,7 +2991,7 @@ msgstr ""
 
 #: src/layer/marker/A11yTextInput.js:226
 msgid "Out of table"
-msgstr ""
+msgstr "Fora da mesa"
 
 #: src/layer/marker/A11yTextInput.js:229
 msgid "Table with {0} rows and {1} columns"
@@ -3011,51 +3011,53 @@ msgstr ""
 
 #: src/layer/marker/A11yTextInput.js:248
 msgid "Column {0}"
-msgstr ""
+msgstr "Coluna {0}"
 
 #: src/layer/marker/A11yTextInput.js:276
 msgid "Editing activated. "
-msgstr ""
+msgstr "Edição ativada. "
 
 #: src/layer/marker/A11yTextInput.js:295
 msgid "{0} selected"
-msgstr ""
+msgstr "{0} selecionado"
 
 #: src/layer/marker/A11yTextInput.js:297
 msgid "Has text: "
-msgstr ""
+msgstr "Possui texto: "
 
 #: src/layer/marker/A11yTextInput.js:302
 msgid "{0} unselected"
-msgstr ""
+msgstr "{0} desmarcado"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "{0} deleted"
-msgstr ""
+msgstr "{0} excluído"
 
 #: src/layer/marker/TextInput.js:439
 msgid "Screen reader support for text content is disabled. "
-msgstr ""
+msgstr "O suporte do leitor de tela para conteúdo de texto está desativado. "
 
 #: src/layer/marker/TextInput.js:440
 msgid "You need to enable it both at server level and in the UI. "
-msgstr ""
+msgstr "Você precisa habilitá-lo no nível do servidor e na UI. "
 
 #: src/layer/marker/TextInput.js:441
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
+"Procure a seção de acessibilidade em coolwsd.xml para configuração do "
+"servidor. "
 
 #: src/layer/marker/TextInput.js:442
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "Verifique também a alternância de voz em {parentControl}."
 
 #: src/layer/marker/TextInput.js:444
 msgid "the Help tab"
-msgstr ""
+msgstr "a guia Ajuda"
 
 #: src/layer/marker/TextInput.js:444
 msgid "the View menu"
-msgstr ""
+msgstr "o menu Exibir"
 
 #: src/layer/tile/CanvasTileLayer.js:1861
 msgid "Functions"
@@ -3168,7 +3170,7 @@ msgstr "Não foi possível enviar para o servidor. código de estado: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "Caixa de diálogo Imprimir"
 
 #: src/map/handler/Map.SlideShow.js:55 src/slideshow/SlideShowPresenter.ts:569
 msgid "Empty Slide Show"
@@ -3236,6 +3238,8 @@ msgstr "O modo de apresentação foi desativado para este documento"
 #: src/map/handler/Map.VersionBar.js:41
 msgid "Your Collabora Online server needs updating. Version {0} is available."
 msgstr ""
+"Seu servidor Collabora Online precisa de atualização. A versão {0} está "
+"disponível."
 
 #: src/map/handler/Map.WOPI.js:153
 msgid "Creating new file from template..."
@@ -3255,7 +3259,7 @@ msgstr "Criar uma cópia..."
 
 #: src/map/handler/Map.Welcome.js:81
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Diálogo de boas-vindas"
 
 #: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
@@ -3263,16 +3267,15 @@ msgstr "Pausa... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Slide atual"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
-msgstr "Diapositivo seguinte"
+msgstr "Próximo slide"
 
 #: src/slideshow/PresenterConsole.js:31
 msgid "Previous"
-msgstr ""
+msgstr "Anterior"
 
 #: src/slideshow/PresenterConsole.js:32
 msgid "Next"
@@ -3280,31 +3283,31 @@ msgstr "Próximo"
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Apresentações"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Pausa"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Reiniciar"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Retomar"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Volte"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Ampliar"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Diminuir zoom"
 
 #: src/slideshow/PresenterConsole.js:1164
 msgid "Slide {0} of {1}"
@@ -3312,7 +3315,7 @@ msgstr ""
 
 #: src/slideshow/PresenterConsole.js:1172
 msgid "No Notes"
-msgstr ""
+msgstr "Sem notas"
 
 #: src/slideshow/PresenterConsole.js:1264
 #: src/slideshow/SlideShowPresenter.ts:327
