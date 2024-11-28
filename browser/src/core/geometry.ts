@@ -128,7 +128,7 @@ export class SimpleRectangle {
 	public set x1 (x1: number) { this._x1 = Math.round(x1); }
 
 	public get y1(): number { return this._y1; }
-	public set y1 (y1: number) { this._y1 += Math.round(y1); }
+	public set y1 (y1: number) { this._y1 = Math.round(y1); }
 
 	public get x2(): number { return (this._x1 + this._width); }
 	public set x2 (x2: number) { this._width = Math.round(x2) - this._x1; }
