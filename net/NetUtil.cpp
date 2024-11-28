@@ -577,7 +577,7 @@ connect(std::string uri, const std::shared_ptr<ProtocolHandlerInterface>& protoc
 }
 
 bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port,
-              std::string& path)
+              std::string& pathAndQuery)
 {
     const auto itScheme = uri.find("://");
     if (itScheme != uri.npos)
@@ -594,12 +594,12 @@ bool parseUri(std::string uri, std::string& scheme, std::string& host, std::stri
     const auto itUrl = uri.find('/');
     if (itUrl != uri.npos)
     {
-        path = uri.substr(itUrl); // Including the first foreslash.
+        pathAndQuery = uri.substr(itUrl); // Including the first foreslash.
         uri = uri.substr(0, itUrl);
     }
     else
     {
-        path.clear();
+        pathAndQuery.clear();
     }
 
     const auto itPort = uri.find(':');

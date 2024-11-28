@@ -112,7 +112,7 @@ connect(std::string uri, const std::shared_ptr<ProtocolHandlerInterface>& protoc
 /// Decomposes a URI into its components.
 /// Returns true if parsing was successful.
 bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port,
-              std::string& url);
+              std::string& pathAndQuery);
 
 /// Decomposes a URI into its components.
 /// Returns true if parsing was successful.

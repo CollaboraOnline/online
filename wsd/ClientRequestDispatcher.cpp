@@ -16,6 +16,7 @@
 #endif
 
 #include <common/Anonymizer.hpp>
+#include <common/StateEnum.hpp>
 #include <Admin.hpp>
 #include <COOLWSD.hpp>
 #include <ClientSession.hpp>
@@ -1093,6 +1094,23 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     return true;
 }
 
+STATE_ENUM(CheckStatus,
+    Ok,
+    NotHttpSucess,
+    HostNotFound,
+    HostUnReachable,
+    UnspecifiedError,
+    ConnectionAborted,
+    ConnectionRefused,
+    InvalidCertificate,
+    CertificateValidation,
+    SSLHandshakeFail,
+    MissingSsl,
+    NotHttps,
+    NoScheme,
+    Timeout,
+);
+
 bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTPRequest& request,
                                                            Poco::MemoryInputStream& message,
                                                            const std::shared_ptr<StreamSocket>& socket)
@@ -1143,8 +1161,8 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 
     LOG_DBG("Wopi Access Check request callbackUrlStr: " << callbackUrlStr);
 
-    std::string scheme, host, portStr, url;
-    if (!net::parseUri(callbackUrlStr, scheme, host, portStr, url)) {
+    std::string scheme, host, portStr, pathAndQuery;
+    if (!net::parseUri(callbackUrlStr, scheme, host, portStr, pathAndQuery)) {
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         return false;
     }
@@ -1186,51 +1204,11 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 
     LOG_DBG("Wopi Access Check request scheme: " << scheme << port << portStr);
 
-    enum class CheckStatus
-    {
-        Ok = 0,
-        NotHttpSucess,
-        HostNotFound,
-        HostUnReachable,
-        UnspecifiedError,
-        ConnectionAborted,
-        ConnectionRefused,
-        InvalidCertificate,
-        CertificateValidation,
-        SSLHandshakeFail,
-        MissingSsl,
-        NotHttps,
-        NoScheme,
-        Timeout,
-    };
-
-    const std::map<CheckStatus, std::string> checkStatusNames = {
-        { CheckStatus::Ok, "Ok" },
-        { CheckStatus::NotHttpSucess, "NOT_HTTP_SUCESS" },
-        { CheckStatus::HostNotFound, "HOST_NOT_FOUND" },
-        { CheckStatus::HostUnReachable, "HOST_UNREACHABLE" },
-        { CheckStatus::UnspecifiedError, "UNSPECIFIED_ERROR" },
-        { CheckStatus::ConnectionAborted, "CONNECTION_ABORTED" },
-        { CheckStatus::ConnectionRefused, "CONNECTION_REFUSED" },
-        { CheckStatus::InvalidCertificate, "INVALID_CERTIFICATE" },
-        { CheckStatus::CertificateValidation, "CERTIFICATE_VALIDATION" },
-        { CheckStatus::SSLHandshakeFail, "SSL_HANDSHAKE_FAIL" },
-        { CheckStatus::MissingSsl, "MISSING_SSL" },
-        { CheckStatus::NotHttps, "NOT_HTTPS" },
-        { CheckStatus::NoScheme, "NO_SCHEME" },
-        { CheckStatus::Timeout, "TIMEOUT" }
-        // TODO allowed host check
-    };
-
-    auto sendResult = [this, checkStatusNames, socket](CheckStatus result)
+    auto sendResult = [this, socket](CheckStatus result)
     {
         Poco::JSON::Object::Ptr status = new Poco::JSON::Object;
         status->set("status", (int)result);
-        if (checkStatusNames.contains(result)) {
-            status->set("details", checkStatusNames.at(result));
-        } else {
-            LOG_DBG("wopiAccessCheck: Missing details for status:" << (int)result);
-        }
+        status->set("details", name(result));
 
         std::ostringstream ostrJSON;
         status->stringify(ostrJSON);
@@ -1259,7 +1237,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 
     LOG_DBG("Wopi Access Check about to prepare http session");
 
-    http::Request httpRequest(url);
+    http::Request httpRequest(pathAndQuery.empty() ? "/" : pathAndQuery);
     auto httpProbeSession = http::Session::create(host, protocol, port);
     httpProbeSession->setTimeout(std::chrono::seconds(2));
 
