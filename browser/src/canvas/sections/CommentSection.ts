@@ -436,7 +436,7 @@ export class Comment extends CanvasSectionObject {
 	private textAreaKeyDown (ev: any): void {
 		if (ev && ev.ctrlKey && ev.key === "Enter") {
 			ev.preventDefault();
-			this.map.mention.closeMentionPopup(false);
+			this.map.mention?.closeMentionPopup(false);
 			this.onSaveComment(ev);
 			return;
 		}
