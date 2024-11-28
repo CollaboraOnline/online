@@ -1051,24 +1051,25 @@ int main(int argc, char**argv)
     }
 
     /// Split a string in two at the delimiter, removing it.
-    inline
-    std::pair<std::string, std::string> split(const char* s, const int length, const char delimiter = ' ', bool removeDelim = true)
+    inline std::pair<std::string_view, std::string_view>
+    split(const char* s, const int length, const char delimiter = ' ', bool removeDelim = true)
     {
         const size_t size = getDelimiterPosition(s, length, delimiter);
 
-        std::string after;
-        int after_pos = size + (removeDelim? 1: 0);
+        std::string_view after;
+        const int after_pos = size + (removeDelim ? 1 : 0);
         if (after_pos < length)
-            after = std::string(s + after_pos, length - after_pos);
+            after = std::string_view(s + after_pos, length - after_pos);
 
-        return std::make_pair(std::string(s, size), after);
+        return std::make_pair(std::string_view(s, size), after);
     }
 
     /// Split a string in two at the delimiter, removing it.
-    inline
-    std::pair<std::string, std::string> split(const std::string& s, const char delimiter = ' ', bool removeDelim = true)
+    inline std::pair<std::string, std::string>
+    split(const std::string& str, const char delimiter = ' ', bool removeDelim = true)
     {
-        return split(s.c_str(), s.size(), delimiter, removeDelim);
+        const auto& pair = split(str.data(), str.size(), delimiter, removeDelim);
+        return std::make_pair(std::string(pair.first), std::string(pair.second));
     }
 
     /// Split a string in two at the delimiter.
