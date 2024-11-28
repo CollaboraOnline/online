@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-22 14:44+0100\n"
-"PO-Revision-Date: 2024-09-02 13:58+0000\n"
+"PO-Revision-Date: 2024-11-23 10:40+0000\n"
 "Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
-"Language: \n"
+"Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:15
@@ -68,7 +68,7 @@ msgstr "Isemliyen"
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
-msgstr ""
+msgstr " iseqdacen."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
@@ -99,9 +99,8 @@ msgid "Document"
 msgstr "Iemli"
 
 #: admin/admin.strings.js:34
-#, fuzzy
 msgid "Views"
-msgstr "Tamuɣli"
+msgstr "Timezriyin"
 
 #: admin/admin.strings.js:35
 msgid "Elapsed time"
@@ -188,13 +187,12 @@ msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
 
 #: admin/admin.strings.js:54
-#, fuzzy
 msgid "Documents:"
-msgstr "Iemli"
+msgstr "Isemliyen:"
 
 #: admin/admin.strings.js:55
 msgid "Expired:"
-msgstr ""
+msgstr "Yemmut:"
 
 #: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
 #: src/control/Control.Zotero.js:209
@@ -367,7 +365,7 @@ msgstr ""
 
 #: admin/src/Util.js:26
 msgid "kB"
-msgstr ""
+msgstr "kAṬ"
 
 #: admin/src/Util.js:26
 msgid "MB"
@@ -403,7 +401,7 @@ msgstr ""
 
 #: admin/src/Util.js:86 admin/src/Util.js:88
 msgid " hrs"
-msgstr ""
+msgstr " srg"
 
 #: admin/src/Util.js:92 admin/src/Util.js:94
 msgid " mins"
@@ -819,9 +817,8 @@ msgid "Style"
 msgstr "Aɣanib"
 
 #: src/control/Control.JSDialogBuilder.js:1922
-#, fuzzy
 msgid "reply"
-msgstr "Err"
+msgstr "tiririt"
 
 #: src/control/Control.JSDialogBuilder.js:1925
 msgid "replies"
@@ -980,7 +977,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:294
 #: src/control/Control.NotebookbarWriter.js:294
 msgid "Repair"
-msgstr ""
+msgstr "Seggem"
 
 #: src/control/Control.Menubar.js:134 src/control/Control.Menubar.js:140
 #: src/control/Control.Menubar.js:444 src/control/Control.Menubar.js:450
@@ -1648,9 +1645,8 @@ msgid "Percent"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:610
-#, fuzzy
 msgid "Currency"
-msgstr "Amiran"
+msgstr "Tadrimt"
 
 #: src/control/Control.NotebookbarCalc.js:611
 #: src/control/Control.NotebookbarWriter.js:1381
@@ -1668,7 +1664,7 @@ msgstr "Ussnan"
 
 #: src/control/Control.NotebookbarCalc.js:614
 msgid "Fraction"
-msgstr ""
+msgstr "Taẓunt"
 
 #: src/control/Control.NotebookbarCalc.js:615
 msgid "Boolean Value"
@@ -1779,13 +1775,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1072
 #: src/control/Control.NotebookbarWriter.js:2853
 msgid "Shapes"
-msgstr ""
+msgstr "Talɣiwin"
 
 #: src/control/Control.NotebookbarDraw.js:99
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:85
 msgid "Table"
-msgstr ""
+msgstr "Tafelwit"
 
 #: src/control/Control.NotebookbarDraw.js:257
 msgid "PDF Document (.pdf) - Expert"
@@ -2174,7 +2170,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:283 src/control/Control.Zotero.js:407
 msgid "Fields"
-msgstr ""
+msgstr "Urtiyen"
 
 #: src/control/Control.Zotero.js:284 src/control/Control.Zotero.js:407
 msgid "Bookmarks"
@@ -2213,9 +2209,8 @@ msgid "Citation Style"
 msgstr ""
 
 #: src/control/Control.Zotero.js:755
-#, fuzzy
 msgid "Styles"
-msgstr "Aɣanib"
+msgstr "Iɣunab"
 
 #: src/control/Control.Zotero.js:755
 msgid "An error occurred while fetching style list"
@@ -2377,7 +2372,7 @@ msgstr "Police"
 
 #: src/control/Toolbar.js:251 src/control/Toolbar.js:264
 msgid "Downloading..."
-msgstr ""
+msgstr "Asider..."
 
 #: src/control/Toolbar.js:280 src/control/jsdialog/Widget.HTMLContent.ts:128
 msgid "Saving..."
@@ -2385,7 +2380,7 @@ msgstr "Asekles..."
 
 #: src/control/Toolbar.js:299
 msgid "Renaming..."
-msgstr ""
+msgstr "Asnifel n yisem…"
 
 #: src/control/Toolbar.js:783
 msgid "Insert hyperlink"
@@ -2470,7 +2465,7 @@ msgstr ""
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
-msgstr ""
+msgstr "Taɣuri kan"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:53
 msgid "Edit"
@@ -2632,7 +2627,7 @@ msgstr ""
 
 #: src/core/Socket.js:1235
 msgid "Someone"
-msgstr ""
+msgstr "Walbɛaḍ"
 
 #: src/core/Socket.js:1236
 msgid "{username} saved this document as {filename}. Do you want to join?"
@@ -3184,9 +3179,8 @@ msgid "Previous"
 msgstr ""
 
 #: src/slideshow/PresenterConsole.js:32
-#, fuzzy
 msgid "Next"
-msgstr "Texte"
+msgstr "Uḍfir"
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
