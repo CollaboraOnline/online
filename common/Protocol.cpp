@@ -162,11 +162,6 @@ namespace COOLProtocol
 
         return false;
     }
-
-    bool getTokenKeywordFromMessage(const std::string& message, const std::string_view name, const std::map<std::string, int>& map, int& value)
-    {
-        return getTokenKeyword(StringVector::tokenize(message), name, map, value);
-    }
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
