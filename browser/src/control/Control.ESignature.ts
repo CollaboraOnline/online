@@ -163,7 +163,9 @@ namespace cool {
 			}
 
 			try {
-				this.popup.close();
+				if (this.popup) {
+					this.popup.close();
+				}
 			} catch (error) {
 				app.console.log('failed to close the signing popup: ' + error.message);
 				return;
@@ -218,11 +220,18 @@ namespace cool {
 				return;
 			}
 
-			console.log(
-				'TODO(vmiklos) ESignature::handleReceiveSignatureJson: serialize the signature, it is "' +
-					response.signed_file_contents +
-					'"',
-			);
+			// Step 5: serialize the signature.
+			const args = {
+				SignatureTime: {
+					type: 'string',
+					value: String(this.signatureTime),
+				},
+				SignatureValue: {
+					type: 'string',
+					value: response.signed_file_contents,
+				},
+			};
+			app.map.sendUnoCommand('.uno:Signature', args);
 		}
 	}
 }
