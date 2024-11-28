@@ -18,6 +18,13 @@ declare var app: any;
 namespace cool {
 
 export class ScrollSection extends CanvasSectionObject {
+	// Scrolling animation constants. Unlabelled units are fractions of the line
+	// height, so that they're somewhat DPI-independent.
+	static readonly scrollAnimationAcceleration: number = 0.2;
+	static readonly scrollAnimationMaxVelocity: number = 2.5;
+	static readonly scrollAnimationMaxDelta: number = 75;
+	static readonly scrollDirectTimeoutMs: number = 100;
+
 	name: string = L.CSections.Scroll.name;
 	processingOrder: number = L.CSections.Scroll.processingOrder
 	drawingOrder: number = L.CSections.Scroll.drawingOrder;
@@ -98,15 +105,12 @@ export class ScrollSection extends CanvasSectionObject {
 
 		this.sectionProperties.animatingVerticalScrollBar = false;
 		this.sectionProperties.animatingHorizontalScrollBar = false;
-		this.sectionProperties.animatingWheelScrollVertical = false;
+		this.sectionProperties.animatingScroll = false;
 
-		this.sectionProperties.animateWheelScrollVertical = (<any>window).mode.isDesktop();
-		this.sectionProperties.verticalWheelScrollAnimationDuration = 50;
-		this.sectionProperties.verticalWheelScrollAnimationDelta = null;
-		this.sectionProperties.verticalWheelScrollAnimationScrolledAmount = null;
-		// When we receive a wheel deltaY smaller than the line height: We don't animate and we wait for some time before starting a vertical scroll animation.
-		this.sectionProperties.avoidAnimationDuration = 50;
-		this.sectionProperties.postponeAnimation = false;
+		this.sectionProperties.animateWheelScroll = (<any>window).mode.isDesktop();
+		this.sectionProperties.scrollAnimationDelta = [0, 0];
+		this.sectionProperties.scrollAnimationVelocity = [0, 0];
+		this.sectionProperties.scrollAnimationDisableTimeout = null;
 
 		this.sectionProperties.pointerSyncWithVerticalScrollBar = true;
 		this.sectionProperties.pointerSyncWithHorizontalScrollBar = true;
@@ -525,26 +529,50 @@ export class ScrollSection extends CanvasSectionObject {
 			this.drawHorizontalScrollBar();
 		}
 
-		if (this.sectionProperties.animatingWheelScrollVertical) {
-			const percent = elapsedTime / this.containerObject.getAnimationDuration();
-			let delta = Math.ceil(percent * this.sectionProperties.verticalWheelScrollAnimationDelta) - this.sectionProperties.verticalWheelScrollAnimationScrolledAmount;
-			if ((this.sectionProperties.verticalWheelScrollAnimationDelta < 0 && delta > 0) || (this.sectionProperties.verticalWheelScrollAnimationDelta > 0 && delta < 0))
-				delta = 0;
+		if (this.sectionProperties.animatingScroll) {
+			const lineHeight = this.containerObject.getScrollLineHeight();
+			const accel = lineHeight * ScrollSection.scrollAnimationAcceleration;
+			const maxDelta = lineHeight * ScrollSection.scrollAnimationMaxVelocity;
 
-			this.sectionProperties.verticalWheelScrollAnimationScrolledAmount += delta;
+			// Calculate horizontal and vertical scroll deltas for this animation step
+			const deltas = [0, 0];
+			for (let i = 0; i < 2; ++i) {
+				const sign = this.sectionProperties.scrollAnimationDelta[i] > 0 ? 1 : -1;
 
-			app.console.log("Wheel delta. Time: " + Date.now() + ", Position: " + this.documentTopLeft[1] + ", Delta: " + String(delta));
+				this.sectionProperties.scrollAnimationVelocity[i] += accel * sign;
+				if (Math.abs(this.sectionProperties.scrollAnimationVelocity[i]) > maxDelta)
+					this.sectionProperties.scrollAnimationVelocity[i] = sign * maxDelta;
 
-			this.scrollVerticalWithOffset(delta);
+				deltas[i] = this.sectionProperties.scrollAnimationVelocity[i];
+				if (Math.abs(deltas[i]) >= Math.abs(this.sectionProperties.scrollAnimationDelta[i])) {
+					deltas[i] = this.sectionProperties.scrollAnimationDelta[i];
+					this.sectionProperties.scrollAnimationDelta[i] = 0;
+					this.sectionProperties.scrollAnimationVelocity[i] = 0;
+				} else
+					this.sectionProperties.scrollAnimationDelta[i] -= deltas[i];
+			}
+
+			// Perform scrolling, if necessary
+			if (deltas[0] !== 0)
+				this.scrollHorizontalWithOffset(deltas[0]);
+			if (deltas[1] !== 0)
+				this.scrollVerticalWithOffset(deltas[1]);
+
+			if (this.sectionProperties.scrollAnimationDelta.reduce((a: number, x: number) => a + x, 0) === 0) {
+				// Animated scroll is an endless animation, so if no other animations
+				// are running, make sure to stop animating.
+				this.containerObject.stopAnimating();
+				this.sectionProperties.animatingScroll = false;
+			}
 		}
 	}
 
 	public onAnimationEnded (frameCount: number, elapsedTime: number): void {
 		this.sectionProperties.animatingVerticalScrollBar = false;
 		this.sectionProperties.animatingHorizontalScrollBar = false;
-		this.sectionProperties.animatingWheelScrollVertical = false;
-		this.sectionProperties.verticalWheelScrollAnimationDelta = null;
-		this.sectionProperties.verticalWheelScrollAnimationScrolledAmount = null;
+		this.sectionProperties.animatingScroll = false;
+		this.sectionProperties.scrollAnimationDelta = [0, 0];
+		this.sectionProperties.scrollAnimationVelocity = [0, 0];
 	}
 
 	private fadeOutHorizontalScrollBar (): void {
@@ -1079,47 +1107,68 @@ export class ScrollSection extends CanvasSectionObject {
 			this.containerObject.stopAnimating();
 	}
 
-	private animateVerticalWheelScroll(delta: number): void {
-		// Cancel other animation, if there is one.
-		if (this.isAnimating && this.sectionProperties.animatingWheelScrollVertical === false)
-			this.containerObject.stopAnimating();
+	private animateScroll(delta: [number, number]): void {
+		const maxDelta = ScrollSection.scrollAnimationMaxDelta * this.containerObject.getScrollLineHeight();
+		for (let i = 0; i < 2; ++i) {
+			if ((delta[i] > 0) !== (this.sectionProperties.scrollAnimationDelta[i] > 0)) {
+				// Stop animation on scroll change direction
+				this.sectionProperties.scrollAnimationVelocity[i] = 0;
+				this.sectionProperties.scrollAnimationDelta[i] = 0;
+			}
 
-		this.calculateYMinMax();
+			this.sectionProperties.scrollAnimationDelta[i] += delta[i];
 
-		// If still animating, caller must be this function.
-		if (this.isAnimating) {
-			this.sectionProperties.verticalWheelScrollAnimationDelta += delta;
-			this.containerObject.extendAnimationDuration(this.sectionProperties.verticalWheelScrollAnimationDuration);
+			// Don't let the delta get too big, or the user will be able to
+			// accumulate a long scrolling animation and it'd feel weird.
+			if (Math.abs(this.sectionProperties.scrollAnimationDelta[i]) > maxDelta) {
+				this.sectionProperties.scrollAnimationDelta[i] = delta[i] > 0 ?
+					maxDelta : -maxDelta;
+			}
 		}
-		else {
-			this.sectionProperties.animatingWheelScrollVertical = true;
-			this.sectionProperties.verticalWheelScrollAnimationDelta = delta;
-			this.sectionProperties.verticalWheelScrollAnimationScrolledAmount = 0;
-			this.startAnimating({ duration: this.sectionProperties.verticalWheelScrollAnimationDuration });
+
+		if (!this.sectionProperties.animatingScroll) {
+			// We're about to start a duration-less animation, so we need to
+			// make sure the animation is reset first.
+			this.resetAnimation();
+			this.startAnimating({});
+			this.sectionProperties.animatingScroll = true;
 		}
 	}
 
 	public onMouseWheel (point: Array<number>, delta: Array<number>, e: MouseEvent): void {
 		if (e.ctrlKey) return;
 
+		let hscroll = 0, vscroll = 0;
 		if (Math.abs(delta[1]) > Math.abs(delta[0])) {
-			if (!e.shiftKey){
-				const shouldAnimate = !this.sectionProperties.postponeAnimation && this.sectionProperties.animateWheelScrollVertical
-										&& Math.abs(delta[1]) > this.containerObject.getScrollLineHeight() * 0.5;
-				if (shouldAnimate)
-					this.animateVerticalWheelScroll(delta[1]);
-				else {
-					this.containerObject.stopAnimating();
-					this.sectionProperties.postponeAnimation = true;
-					setTimeout(() => { this.sectionProperties.postponeAnimation = false; }, this.sectionProperties.avoidAnimationDuration);
-					this.performVerticalScroll(delta[1]);
-				}
-			}
+			if (e.shiftKey)
+				hscroll = delta[1];
 			else
-				this.performHorizontalScroll(delta[1]);
-		}
+				vscroll = delta[1];
+		} else
+			hscroll = delta[0];
+
+		// We don't want to animate in the case of touchpad events. If the
+		// incoming delta has a fractional component, we stop animating. This
+		// is only true in the case of trackpad events.
+		// FIXME: It would be good to properly confirm this across different
+		// browsers, OS's and window managers/compositors.
+		const shouldAnimate =
+			this.sectionProperties.animateWheelScroll
+			&& !this.sectionProperties.scrollAnimationDisableTimeout
+			&& Math.max(Math.abs(hscroll), Math.abs(vscroll)) % 1 === 0;
+
+		if (shouldAnimate)
+			this.animateScroll([hscroll, vscroll]);
 		else {
-			this.performHorizontalScroll(delta[0]);
+			this.containerObject.stopAnimating();
+			if (this.sectionProperties.scrollAnimationDisableTimeout)
+				clearTimeout(this.sectionProperties.scrollAnimationDisableTimeout);
+			this.sectionProperties.scrollAnimationDisableTimeout =
+				setTimeout(() => { this.sectionProperties.scrollAnimationDisableTimeout = null; },
+					ScrollSection.scrollDirectTimeoutMs);
+
+			if (hscroll !== 0) this.performHorizontalScroll(hscroll);
+			if (vscroll !== 0) this.performVerticalScroll(vscroll);
 		}
 	}
 }
