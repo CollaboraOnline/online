@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-22 14:44+0100\n"
-"PO-Revision-Date: 2024-10-28 14:02+0000\n"
+"PO-Revision-Date: 2024-11-25 04:00+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.8.2-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -260,19 +260,19 @@ msgstr "על אודות"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "היסטוריית מעבד"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "היסטוריית זיכרון"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "זיכרון"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "נא להמתין להיערכות של צביר ה־kubernetes מחדש…"
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -339,7 +339,7 @@ msgstr "נשלח"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "חיבורים"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -534,7 +534,7 @@ msgstr "נפתר"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:417
 msgid "Document contains unsupported video"
-msgstr ""
+msgstr "המסמך מכיל סרטון לא נתמך"
 
 #: src/canvas/sections/URLPopUpSection.ts:49
 msgid "Copy link location"
@@ -750,7 +750,7 @@ msgstr "מסמך מושהה - יש לגעת כדי לטעון מחדש ולהמ�
 
 #: src/control/Control.JSDialog.js:272
 msgid "Close dialog"
-msgstr ""
+msgstr "סגירת חלונית"
 
 #: src/control/Control.JSDialogBuilder.js:495
 msgid "Solid"
@@ -2399,7 +2399,7 @@ msgstr "הוספת תמונה מקומית"
 
 #: src/control/jsdialog/Definitions.Menu.ts:264
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "הוספת מולטימדיה מקומית"
 
 #: src/control/jsdialog/Definitions.Menu.ts:269
 msgid "Very Tight"
@@ -2698,11 +2698,11 @@ msgstr "צבעי מסמך"
 
 #: src/docstatefunctions.js:176
 msgid ", cluster configuration error: mis-matching serverid"
-msgstr ""
+msgstr ", שגיאת הגדרות צביר: מזהה שרת לא תואם"
 
 #: src/dom/NotebookbarAccessibility.js:240
 msgid "{0} tab selected"
-msgstr ""
+msgstr "לשונית {0} נבחרה"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -2924,59 +2924,59 @@ msgstr "העלאת הקובץ לשרת נכשלה, הקובץ גדול מדי."
 
 #: src/layer/marker/A11yTextInput.js:226
 msgid "Out of table"
-msgstr ""
+msgstr "מחוץ לטבלה"
 
 #: src/layer/marker/A11yTextInput.js:229
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "טבלה עם {0} שורות ו־{1} עמודות"
 
 #: src/layer/marker/A11yTextInput.js:234
 msgid "Row {0} through {1}"
-msgstr ""
+msgstr "שורות {0} עד {1}"
 
 #: src/layer/marker/A11yTextInput.js:237
 msgid "Row {0}"
-msgstr ""
+msgstr "שורה {0}"
 
 #: src/layer/marker/A11yTextInput.js:245
 msgid "Column {0} through {1}"
-msgstr ""
+msgstr "עמודות {0} עד {1}"
 
 #: src/layer/marker/A11yTextInput.js:248
 msgid "Column {0}"
-msgstr ""
+msgstr "עמודה {0}"
 
 #: src/layer/marker/A11yTextInput.js:276
 msgid "Editing activated. "
-msgstr ""
+msgstr "עריכה הופעלה. "
 
 #: src/layer/marker/A11yTextInput.js:295
 msgid "{0} selected"
-msgstr ""
+msgstr "{0} נבחרו"
 
 #: src/layer/marker/A11yTextInput.js:297
 msgid "Has text: "
-msgstr ""
+msgstr "עם הטקסט: "
 
 #: src/layer/marker/A11yTextInput.js:302
 msgid "{0} unselected"
-msgstr ""
+msgstr "{0} לא נבחרו"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "{0} deleted"
-msgstr ""
+msgstr "{0} נמחקו"
 
 #: src/layer/marker/TextInput.js:439
 msgid "Screen reader support for text content is disabled. "
-msgstr ""
+msgstr "תמיכה בקורא מסך לטקסט תוכן מושבתת. "
 
 #: src/layer/marker/TextInput.js:440
 msgid "You need to enable it both at server level and in the UI. "
-msgstr ""
+msgstr "יש להפעיל את זה גם בשרת וגם במנשק המשתמש. "
 
 #: src/layer/marker/TextInput.js:441
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
-msgstr ""
+msgstr "לחפש אחר סעיף הנגישות/accessibility ב־coolwsd.xml אחר הגדרות השרת. "
 
 #: src/layer/marker/TextInput.js:442
 msgid "Also check the voice over toggle under {parentControl}."
@@ -3233,11 +3233,11 @@ msgstr ""
 
 #: src/slideshow/PresenterConsole.js:1164
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "שקופית {0} מתוך {1}"
 
 #: src/slideshow/PresenterConsole.js:1172
 msgid "No Notes"
-msgstr ""
+msgstr "אין פתקיות"
 
 #: src/slideshow/PresenterConsole.js:1264
 #: src/slideshow/SlideShowPresenter.ts:327
