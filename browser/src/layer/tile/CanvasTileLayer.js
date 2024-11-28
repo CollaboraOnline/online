@@ -2816,13 +2816,14 @@ L.CanvasTileLayer = L.Layer.extend({
 				else if (newSelection.pY1 < app.file.viewedRectangle.pY1 && newSelection.pY1 < oldSelection.pY1)
 					scrollY = newSelection.pY1 - app.file.viewedRectangle.pY1 - spacingY;
 				if (scrollX !== 0 || scrollY !== 0) {
-					var newCenter = new app.definitions.simplePoint(app.file.viewedRectangle.center[0], app.file.viewedRectangle.center[1]);
-					newCenter.pX += scrollX;
-					newCenter.pY += scrollY;
 					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
 						var address = document.querySelector('#addressInput input').value;
-						if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address))
-							this.scrollToPos(newCenter);
+						if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address)) {
+							let scroll = new app.definitions.simplePoint(0,0);
+							scroll.pX = scrollX;
+							scroll.pY = scrollY;
+							this.scrollByPoint(scroll);
+						}
 					}
 				}
 			}
@@ -3200,6 +3201,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		center.x = Math.round(center.x < 0 ? 0 : center.x);
 		center.y = Math.round(center.y < 0 ? 0 : center.y);
 		this._map.fire('scrollto', {x: center.x, y: center.y});
+	},
+
+	// Scroll the view by an amount given by a simplePoint
+	scrollByPoint: function(offset) {
+		this._map.fire('scrollby', {x: offset.cX, y: offset.cY});
 	},
 
 	// Update cursor layer (blinking cursor).
