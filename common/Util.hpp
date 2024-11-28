@@ -206,8 +206,7 @@ namespace Util
     }
 
     /// Hex to unsigned char
-    template <typename T>
-    bool dataFromHexString(const std::string& hexString, T& data)
+    template <typename T> bool dataFromHexString(const std::string_view hexString, T& data)
     {
         if (hexString.length() % 2 != 0)
         {
@@ -289,7 +288,7 @@ namespace Util
     }
 
     /// Decode the hex-string into an ID. The reverse of encodeId().
-    inline std::uint64_t decodeId(const std::string& str)
+    inline std::uint64_t decodeId(const std::string_view str)
     {
         std::uint64_t id = 0;
         std::stringstream ss;
@@ -424,9 +423,9 @@ namespace Util
         return bytesToHexString(reinterpret_cast<const uint8_t*>(data), size);
     }
 
-    inline std::string bytesToHexString(const std::string& s)
+    inline std::string bytesToHexString(const std::string_view str)
     {
-        return bytesToHexString(s.c_str(), s.size());
+        return bytesToHexString(str.data(), str.size());
     }
 
     inline int hexDigitFromChar(char c)
@@ -468,9 +467,9 @@ namespace Util
     }
 
     // for debugging validation only.
-    inline bool isValidUtf8(const std::string& s)
+    inline bool isValidUtf8(const std::string_view str)
     {
-        return Util::isValidUtf8((unsigned char *)s.c_str(), s.size()) > s.size();
+        return Util::isValidUtf8((unsigned char*)str.data(), str.size()) > str.size();
     }
 #endif
 
@@ -498,9 +497,9 @@ namespace Util
         return hexStringToBytes(reinterpret_cast<const uint8_t*>(data), size);
     }
 
-    inline std::string hexStringToBytes(const std::string& s)
+    inline std::string hexStringToBytes(const std::string_view str)
     {
-        return hexStringToBytes(s.c_str(), s.size());
+        return hexStringToBytes(str.data(), str.size());
     }
 
     /// Dump a line of data as hex.
@@ -1393,7 +1392,7 @@ int main(int argc, char**argv)
 
     /// Convert a string to 32-bit signed int.
     /// Returns the parsed value and a boolean indicating success or failure.
-    inline std::pair<std::int32_t, bool> i32FromString(const std::string& input)
+    inline std::pair<std::int32_t, bool> i32FromString(const std::string_view input)
     {
         const char* str = input.data();
         char* endptr = nullptr;
@@ -1404,7 +1403,7 @@ int main(int argc, char**argv)
 
     /// Convert a string to 32-bit signed int. On failure, returns the default
     /// value, and sets the bool to false (to signify that parsing had failed).
-    inline std::pair<std::int32_t, bool> i32FromString(const std::string& input,
+    inline std::pair<std::int32_t, bool> i32FromString(const std::string_view input,
                                                        const std::int32_t def)
     {
         const auto pair = i32FromString(input);
@@ -1413,7 +1412,7 @@ int main(int argc, char**argv)
 
     /// Convert a string to 64-bit unsigned int.
     /// Returns the parsed value and a boolean indicating success or failure.
-    inline std::pair<std::uint64_t, bool> u64FromString(const std::string& input)
+    inline std::pair<std::uint64_t, bool> u64FromString(const std::string_view input)
     {
         const char* str = input.data();
         char* endptr = nullptr;
@@ -1424,7 +1423,7 @@ int main(int argc, char**argv)
 
     /// Convert a string to 64-bit unsigned int. On failure, returns the default
     /// value, and sets the bool to false (to signify that parsing had failed).
-    inline std::pair<std::uint64_t, bool> u64FromString(const std::string& input,
+    inline std::pair<std::uint64_t, bool> u64FromString(const std::string_view input,
                                                         const std::uint64_t def)
     {
         const auto pair = u64FromString(input);
@@ -1449,15 +1448,15 @@ int main(int argc, char**argv)
     }
 
     /// Case insensitive comparison of two strings.
-    template <std::size_t N> inline bool iequal(const std::string& lhs, const char (&rhs)[N])
+    template <std::size_t N> inline bool iequal(const std::string_view lhs, const char (&rhs)[N])
     {
-        return iequal(lhs.c_str(), lhs.size(), rhs, N - 1); // Minus null termination.
+        return iequal(lhs.data(), lhs.size(), rhs, N - 1); // Minus null termination.
     }
 
     /// Case insensitive comparison of two strings.
-    inline bool iequal(const std::string& lhs, const std::string& rhs)
+    inline bool iequal(const std::string_view lhs, const std::string_view rhs)
     {
-        return iequal(lhs.c_str(), lhs.size(), rhs.c_str(), rhs.size());
+        return iequal(lhs.data(), lhs.size(), rhs.data(), rhs.size());
     }
 
     /// Convert a vector to a string. Useful for conversion in templates.
