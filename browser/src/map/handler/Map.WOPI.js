@@ -375,6 +375,20 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.uiManager.extendNotebookbar();
 			return;
 		}
+		else if (msg.MessageId === 'Show_NotebookTab' || msg.MessageId === 'Hide_NotebookTab') {
+			if (!msg.Values) {
+				window.app.console.error('Property "Values" not set');
+				return;
+			}
+			if (!msg.Values.id) {
+				window.app.console.error('Property "Values.id" not set');
+				return;
+			}
+
+			let show = msg.MessageId === 'Show_NotebookTab';
+			this._map.uiManager.showNotebookTab(msg.Values.id, show);
+			return;
+		}
 		else if (msg.MessageId === 'Show_Sidebar') {
 			/* id is optional */
                         if (msg.Values) {
