@@ -138,9 +138,6 @@ void WhiteBoxTests::testCOOLProtocolFunctions()
     LOK_ASSERT(COOLProtocol::getTokenStringFromMessage(message, "bar", bar));
     LOK_ASSERT_EQUAL(std::string("hello-sailor"), bar);
 
-    LOK_ASSERT(COOLProtocol::getTokenKeywordFromMessage(message, "mumble", map, mumble));
-    LOK_ASSERT_EQUAL(2, mumble);
-
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trimmed("A").size());
     LOK_ASSERT_EQUAL(std::string("A"), Util::trimmed("A"));
 

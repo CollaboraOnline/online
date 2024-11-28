@@ -136,7 +136,6 @@ namespace COOLProtocol
     }
 
     bool getTokenStringFromMessage(const std::string& message, const std::string_view name, std::string& value);
-    bool getTokenKeywordFromMessage(const std::string& message, const std::string_view name, const std::map<std::string, int>& map, int& value);
 
     inline
     std::vector<int> tokenizeInts(const char* data, const size_t size, const char delimiter = ',')
