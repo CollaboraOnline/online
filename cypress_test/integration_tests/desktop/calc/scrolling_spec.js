@@ -31,6 +31,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 
 	it('Scroll while selecting vertically', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
+		desktopHelper.assertScrollbarPosition('horizontal', 48, 50);
 
 		// Click on a cell near the edge of the view
 		cy.cGet('#map')
@@ -48,6 +49,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 
 		// Document should scroll
 		desktopHelper.assertScrollbarPosition('vertical', 50, 60);
+		// Document should not scroll horizontally
+		desktopHelper.assertScrollbarPosition('horizontal', 48, 50);
 	});
 
 	it('Scroll while selecting horizontally', function() {
