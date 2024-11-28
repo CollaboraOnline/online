@@ -1,0 +1,6 @@
+{
+    "ESignatureBaseUrl": "https://test.eideasy.com",
+    "ESignatureSecret": "56RkLgZREDi1H0HZAvzOSAVlxu1Flx41",
+    "ESignatureClientId": "2IaeiZXbcKzlP1KvjZH9ghty2IJKM8Lg",
+    "ESignatureMethod": "smart-id-signature"
+}
