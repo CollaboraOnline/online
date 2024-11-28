@@ -19,6 +19,7 @@ L.Control.Notebookbar = L.Control.extend({
 	_currentScrollPosition: 0,
 	_showNotebookbar: false,
 	_RTL: false,
+	_lastContext: null,
 
 	container: null,
 	builder: null,
@@ -238,6 +239,14 @@ L.Control.Notebookbar = L.Control.extend({
 	setTabs: function(tabs) {
 		var container = L.DomUtil.create('div', 'notebookbar-tabs-container');
 		container.appendChild(tabs);
+		for (let tab of tabs.children) {
+			if (tab.id.endsWith('-tab-label')) {
+				let name = tab.id.substring(0, tab.id.length - 10);
+				if (!this.map.uiManager.isTabVisible(name)) {
+					$(tab).hide();
+				}
+			}
+		}
 		$('#document-titlebar').before(container);
 		this.createShortcutsBar();
 	},
@@ -397,6 +406,54 @@ L.Control.Notebookbar = L.Control.extend({
 		return false;
 	},
 
+	refreshContextTabsVisibility: function() {
+		this.updateTabsVisibilityForContext(this._lastContext);
+	},
+
+	updateTabsVisibilityForContext: function(requestedContext) {
+		var tabs = this.getTabs();
+		var contextTab = null;
+		var defaultTab = null;
+		let alreadySelected = false;
+		for (var tab in tabs) {
+			var tabElement = $('#' + tabs[tab].name + '-tab-label');
+			if (tabs[tab].context) {
+				tabElement.hide();
+				var contexts = tabs[tab].context.split('|');
+				for (var context in contexts) {
+					// Check the tab isn't hidden.
+					if (!this.map.uiManager.isTabVisible(tabs[tab].name)) {
+						continue;
+					}
+					if (contexts[context] === requestedContext) {
+						tabElement.show();
+						tabElement.removeClass('hidden');
+						if (!tabElement.hasClass('selected'))
+							contextTab = tabElement;
+						else
+							alreadySelected = true;
+					} else if (contexts[context] === 'default') {
+						tabElement.show();
+						if (!tabElement.hasClass('selected'))
+							defaultTab = tabElement;
+					}
+				}
+			} else if (!this.map.uiManager.isTabVisible(tabs[tab].name)) {
+				// There is no context, but we check if the tab is hidden
+				tabElement.hide();
+			} else {
+				tabElement.show();
+			}
+		}
+
+		if (contextTab)
+			contextTab.click();
+		else if (alreadySelected)
+			return;
+		else if (defaultTab)
+			defaultTab.click();
+	},
+
 	onContextChange: function(event) {
 		const detail = event.detail;
 		if (detail.appId !== detail.oldAppId) {
@@ -423,38 +480,8 @@ L.Control.Notebookbar = L.Control.extend({
 		if (this.shouldIgnoreContextChange([detail.context, detail.oldContext]))
 			return;
 
-		var tabs = this.getTabs();
-		var contextTab = null;
-		var defaultTab = null;
-		let alreadySelected = false;
-		for (var tab in tabs) {
-			if (tabs[tab].context) {
-				var tabElement = $('#' + tabs[tab].name + '-tab-label');
-				tabElement.hide();
-				var contexts = tabs[tab].context.split('|');
-				for (var context in contexts) {
-					if (contexts[context] === detail.context) {
-						tabElement.show();
-						tabElement.removeClass('hidden');
-						if (!tabElement.hasClass('selected'))
-							contextTab = tabElement;
-						else
-							alreadySelected = true;
-					} else if (contexts[context] === 'default') {
-						tabElement.show();
-						if (!tabElement.hasClass('selected'))
-							defaultTab = tabElement;
-					}
-				}
-			}
-		}
-
-		if (contextTab)
-			contextTab.click();
-		else if (alreadySelected)
-			return;
-		else if (defaultTab)
-			defaultTab.click();
+		this.updateTabsVisibilityForContext(detail.context);
+		this._lastContext = detail.context;
 	},
 
 	onSlideHideToggle: function() {
