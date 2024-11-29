@@ -1589,8 +1589,9 @@ void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& us
             if (auto xcu = settings->get("xcu").extract<Poco::JSON::Object::Ptr>())
             {
                 const std::string uri = JsonUtil::getJSONValue<std::string>(xcu, "uri");
-                std::string fileName = Poco::Path(Poco::Path(presetsPath, "xcu").toString(),
-                                                  "config.xcu").toString();
+                Poco::Path destDir(presetsPath, "xcu");
+                Poco::File(destDir).createDirectories();
+                std::string fileName = Poco::Path(destDir, "config.xcu").toString();
                 std::string id = std::to_string(idCount++);
                 presetTasks->installStarted(id);
                 asyncInstallPreset(poll, uri, fileName, id, presetInstallFinished);
@@ -1647,7 +1648,7 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& pre
         else
         {
             success = true;
-            LOG_INF("Fetch of preset uri: " << uriAnonym << " succeeded");
+            LOG_INF("Fetch of preset uri: " << uriAnonym << " to " << presetFile << " succeeded");
         }
 
         if (finishedCB)
