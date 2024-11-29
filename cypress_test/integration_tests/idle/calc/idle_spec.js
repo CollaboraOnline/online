@@ -2,6 +2,16 @@
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
+var desktopHelper = require('../../common/desktop_helper');
+
+function checkIfIsInteractiveAgain() {
+	calcHelper.dblClickOnFirstCell();
+
+	const content = 'New content';
+	helper.typeIntoDocument(content + '{enter}');
+
+	calcHelper.assertSheetContents(['C' + content + 'ypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail'], true);
+}
 
 describe(['tagdesktop'], 'Idle', function() {
 	var dimDialogSelector = '#modal-dialog-inactive_user_message-overlay';
@@ -9,15 +19,6 @@ describe(['tagdesktop'], 'Idle', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/idle.ods');
 	});
-
-	function checkIfIsInteractiveAgain() {
-		calcHelper.dblClickOnFirstCell();
-
-		const content = 'New content';
-		helper.typeIntoDocument(content + '{enter}');
-
-		calcHelper.assertSheetContents(['C' + content + 'ypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail'], true);
-	}
 
 	it('Check idle out of focus', function() {
 		helper.setDummyClipboardForCopy();
@@ -63,5 +64,38 @@ describe(['tagdesktop'], 'Idle', function() {
 
 		// Make sure the sidebar dropdown is closed after document again become interactive
 		cy.cGet('.jsdialog-window.modalpopup').should('not.exist');
+	});
+});
+
+describe(['tagdesktop'], 'Idle recover with comment', function() {
+	var dimDialogSelector = '#modal-dialog-inactive_user_message-overlay';
+
+	beforeEach(function() {
+		helper.setupAndLoadDocument('calc/far_comment.ods');
+	});
+
+	it('Check if we jump to comment on activation', function() {
+		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
+
+		helper.setDummyClipboardForCopy();
+		cy.getFrameWindow()
+			.its('L')
+			.then(function(L) {
+				L.Map.THIS._onLostFocus();
+			});
+
+		cy.cGet(dimDialogSelector, { timeout: 1000 }).should('not.exist');
+		cy.wait(1100); // out of focus timeout is 1s
+		cy.cGet(dimDialogSelector, { timeout: 1000 }).should('exist');
+
+		cy.getFrameWindow()
+			.its('app')
+			.then(function(app) {
+				app.idleHandler._activate();
+
+				cy.wait(500);
+
+				desktopHelper.assertScrollbarPosition('vertical', 10, 30);
+			});
 	});
 });
