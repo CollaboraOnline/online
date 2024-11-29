@@ -583,13 +583,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             {
                 handlePresetRequest("user", prefix, socket,
                                     { "/test/data/autotextuser.bau", "/noexist.bau" },
-                                    "");
+                                      "/test/data/configuser.xcu");
             }
             else if (configPath == "/sharedconfig.json")
             {
                 handlePresetRequest("shared", prefix, socket,
                                     { "/test/data/autotextshared.bau" },
-                                    "/test/data/configshared.xcu");
+                                      "/test/data/configshared.xcu");
             }
             else
                 throw BadRequestException("Invalid Config Request: " + configPath);
