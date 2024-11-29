@@ -360,6 +360,7 @@ COOL_JS_LST =\
 	src/control/Control.AlertDialog.js \
 	src/control/Control.Tooltip.js \
 	src/control/Control.ESignature.ts \
+	src/control/Control.ESignatureDialog.ts \
 	src/control/ColorPicker.ts \
 	src/control/jsdialog/Component.Toolbar.ts \
 	src/control/jsdialog/Definitions.Menu.ts \
