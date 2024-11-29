@@ -330,7 +330,7 @@
 	width: var(--btn-size);
 	height: var(--btn-size);
 	background-color: transparent;
-	/* same margin as sidebar buttons */
+	/* same margin as main-nav padding-inline-start */
 	margin-inline-end: 5px;
 }
 
@@ -338,8 +338,8 @@
 	background: var(--color-background-darker);
 	width: 1px;
 	height: 14px;
-	/* same margin as sidebar buttons */
-	margin-inline-end: 5px;
+	/* same margin as sidebar buttons' padding */
+	margin-inline: 4px;
 }
 
 .main-nav:not(.hasnotebookbar) ~ #closebuttonwrapper {
