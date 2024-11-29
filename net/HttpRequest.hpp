@@ -959,6 +959,8 @@ public:
     void saveBodyToFile(const std::string& path)
     {
         _bodyFile.open(path, std::ios_base::out | std::ios_base::binary);
+        if (!_bodyFile.good())
+            LOG_ERR("Unable to open [" << path << "] for saveBodyToFile");
         _onBodyWriteCb = [this](const char* p, int64_t len)
         {
             LOG_TRC("Writing " << len << " bytes");
