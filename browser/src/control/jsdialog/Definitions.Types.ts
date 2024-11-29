@@ -24,6 +24,7 @@ interface WidgetJSON {
 	top?: string; // placement in the grid - row
 	left?: string; // placement in the grid - column
 	width?: string; // inside grid - width in number of columns
+	labelledBy?: string;
 }
 
 interface DialogResponse {
@@ -100,8 +101,26 @@ interface PanelWidgetJSON extends WidgetJSON {
 
 type ExpanderWidgetJSON = any;
 
+// type: 'fixedtext'
 interface TextWidget extends WidgetJSON {
 	text: string;
+	labelFor?: string;
+}
+
+// type: 'pushbutton'
+interface PushButtonWidget extends WidgetJSON {
+	symbol?: string;
+	text?: string;
+}
+
+// type: 'buttonbox'
+interface ButtonBoxWidget extends WidgetJSON {
+	layoutstyle: string;
+}
+
+// type: 'listbox'
+interface ListBoxWidget extends WidgetJSON {
+	entries: Array<string>;
 }
 
 interface TreeColumnJSON {
