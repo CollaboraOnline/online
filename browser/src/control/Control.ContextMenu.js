@@ -204,7 +204,11 @@ L.Control.ContextMenu = L.Control.extend({
 						var $menu = opt.$menu;
 						$menu.attr('tabindex', 0); // Make the context menu focusable
 					},
-					hide: function() { map.focus(); }
+					hide: function() {
+						if(autoFillContextMenu)
+							app.map._docLayer._resetReferencesMarks();
+						map.focus();
+					}
 				}
 			});
 			if (autoFillContextMenu)
