@@ -254,20 +254,14 @@ L.Control.ContextMenu = L.Control.extend({
 				item.menu = undefined;
 			}
 
-			if (item.type === 'command' && item.text && item.text.replace('~', '') === 'Copy Cells'
-				&& item.menu && item.menu.length) {
+			if (item.type === 'command' && item.text && item.text.replace('~', '') === 'Copy Cells') {
 				item.text = _('Copy Cells');
 				item.command = '.uno:AutoFill?Copy:bool=true';
-				item.type = item.menu[0].type;
-				item.menu = undefined;
 			}
 
-			if (item.type === 'command' && item.text && item.text.replace('~', '') === 'Fill Series'
-				&& item.menu && item.menu.length) {
+			if (item.type === 'command' && item.text && item.text.replace('~', '') === 'Fill Series') {
 				item.text = _('Fill Series');
 				item.command = '.uno:AutoFill?Copy:bool=false';
-				item.type = item.menu[0].type;
-				item.menu = undefined;
 			}
 
 			if (item.type === 'separator') {
