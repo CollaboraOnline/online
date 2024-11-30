@@ -42,7 +42,7 @@ public:
             {
                 LOG_TRC("Merging CSP directive [" << token << ']');
                 const auto parts = Util::split(token);
-                appendDirective(parts.first, parts.second);
+                appendDirective(std::string(parts.first), std::string(parts.second));
             }
         }
     }

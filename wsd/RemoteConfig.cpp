@@ -105,7 +105,8 @@ void RemoteJSONPoll::pollingThread()
                     {
                         std::string kind;
                         JsonUtil::findJSONValue(remoteJson, "kind", kind);
-                        const std::pair<std::string, std::string> expectedKinds = Util::split(_expectedKind, '|');
+                        const std::pair<std::string_view, std::string_view> expectedKinds =
+                            Util::split(_expectedKind, '|');
                         if (kind == expectedKinds.first || kind == expectedKinds.second)
                         {
                             handleJSON(remoteJson);
