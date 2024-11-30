@@ -1069,10 +1069,17 @@ int main(int argc, char**argv)
 
     /// Split a string in two at the delimiter, removing it.
     inline std::pair<std::string, std::string>
-    split(const std::string& str, const char delimiter = ' ', bool removeDelim = true)
+    split(const std::string&& str, const char delimiter = ' ', bool removeDelim = true)
     {
         const auto& pair = split(str.data(), str.size(), delimiter, removeDelim);
         return std::make_pair(std::string(pair.first), std::string(pair.second));
+    }
+
+    /// Split a string in two at the delimiter, removing it.
+    inline std::pair<std::string_view, std::string_view>
+    split(const std::string& s, const char delimiter = ' ', bool removeDelim = true)
+    {
+        return split(s.c_str(), s.size(), delimiter, removeDelim);
     }
 
     /// Split a string in two at the delimiter.
