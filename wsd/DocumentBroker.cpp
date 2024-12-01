@@ -1440,7 +1440,14 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
         _serverAudit.disable();
     }
 
-    const std::string userSettingsUri = wopiFileInfo->getUserSettingsUri();
+    std::string userSettingsUri = wopiFileInfo->getUserSettingsUri();
+    if (_sessions.empty() && !userSettingsUri.empty())
+    {
+        std::string jailPresetsPath = FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
+                                                                     getJailRoot(),
+                                                                     JAILED_CONFIG_ROOT);
+        asyncInstallPresets(session, userSettingsUri, jailPresetsPath);
+    }
 
     // Pass the ownership to the client session.
     session->setWopiFileInfo(std::move(wopiFileInfo));
@@ -1452,61 +1459,82 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     session->setServerPrivateInfo(serverPrivateInfo);
     session->setWatermarkText(watermarkText);
 
-    if (!userSettingsUri.empty())
-        asyncInstallPresets(*_poll, userSettingsUri, wopiStorage->getJailPresetsPath(), nullptr);
-
     return templateSource;
 }
 
-namespace
+class PresetsInstallTask
 {
-    class PresetsInstallTask
+private:
+    bool _reportedStatus;
+    bool _overallSuccess;
+    std::set<std::string> _installingPresets;
+    std::vector<std::function<void(bool)>> _installFinishedCBs;
+
+public:
+    PresetsInstallTask(std::function<void(bool)> installFinishedCB)
+        : _reportedStatus(false)
+        , _overallSuccess(true)
     {
-    private:
-        bool _reportedStatus;
-        bool _overallSuccess;
-        std::set<std::string> _installingPresets;
-        std::function<void(bool)> _installFinishedCB;
+        appendCallback(installFinishedCB);
+    }
 
-    public:
-        PresetsInstallTask(std::function<void(bool)> installFinishedCB)
-            : _reportedStatus(false)
-            , _overallSuccess(true)
-            , _installFinishedCB(installFinishedCB)
+    void installStarted(const std::string& id)
+    {
+        _installingPresets.insert(id);
+    }
+
+    void installFinished(const std::string& id, bool presetResult)
+    {
+        _overallSuccess &= presetResult;
+        _installingPresets.erase(id);
+        // If there are no remaining presets to fetch, or this one has
+        // failed, then we can respond. TODO could we cancel outstanding
+        // downloads?
+        if (_installingPresets.empty() && !_reportedStatus)
         {
+            _reportedStatus = true;
+            for (const auto& cb : _installFinishedCBs)
+                cb(_overallSuccess);
         }
+    }
 
-        void installStarted(const std::string& id)
-        {
-            _installingPresets.insert(id);
-        }
+    bool empty() const
+    {
+        return _installingPresets.empty();
+    }
 
-        void installFinished(const std::string& id, bool presetResult)
-        {
-            _overallSuccess &= presetResult;
-            _installingPresets.erase(id);
-            // If there are no remaining presets to fetch, or this one has
-            // failed, then we can respond. TODO could we cancel outstanding
-            // downloads?
-            if (_installingPresets.empty() && !_reportedStatus)
-            {
-                _reportedStatus = true;
-                if (_installFinishedCB)
-                    _installFinishedCB(_overallSuccess);
-            }
-        }
+    void appendCallback(std::function<void(bool)> installFinishedCB)
+    {
+        _installFinishedCBs.emplace_back(installFinishedCB);
+    }
+};
 
-        bool empty() const
+void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession> session,
+                                         const std::string& userSettingsUri,
+                                         const std::string& presetsPath)
+{
+    auto installFinishedCB = [this, session, userSettingsUri](bool success){
+        if (success)
+            forwardToChild(session, "addxcu");
+        else
         {
-            return _installingPresets.empty();
+            const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
+            LOG_ERR("Failed to load all settings from [" << uriAnonym << ']');
+            stop("configfailed");
         }
     };
+    _asyncInstallTask = asyncInstallPresets(*_poll, userSettingsUri, presetsPath, installFinishedCB);
+    _asyncInstallTask->appendCallback([this](bool){ _asyncInstallTask.reset(); });
 }
 
-void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,
-                                         const std::string& presetsPath,
-                                         std::function<void(bool)> installFinishedCB)
+std::shared_ptr<PresetsInstallTask>
+DocumentBroker::asyncInstallPresets(SocketPoll& poll,
+    const std::string& userSettingsUri,
+    const std::string& presetsPath,
+    const std::function<void(bool)>& installFinishedCB)
 {
+    auto presetTasks = std::make_shared<PresetsInstallTask>(installFinishedCB);
+
     // Download the json for settings
     const Poco::URI settingsUri{userSettingsUri};
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(settingsUri));
@@ -1519,7 +1547,7 @@ void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& us
     // When result arrives, extract uris of what we want to install to the jail's user presets
     // and async download and install those.
     http::Session::FinishedCallback finishedCallback =
-        [&poll, uriAnonym, presetsPath, installFinishedCB](const std::shared_ptr<http::Session>& configSession)
+        [&poll, uriAnonym, presetsPath, presetTasks, installFinishedCB](const std::shared_ptr<http::Session>& configSession)
     {
         if (SigUtil::getShutdownRequestFlag())
         {
@@ -1545,8 +1573,6 @@ void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& us
         }
 
         bool result = false;
-
-        auto presetTasks = std::make_shared<PresetsInstallTask>(installFinishedCB);
 
         auto presetInstallFinished = [presetTasks](const std::string& id, bool presetResult)
         {
@@ -1604,11 +1630,13 @@ void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& us
 
     // Run the request on the WebServer Poll.
     httpSession->asyncRequest(request, poll);
+
+    return presetTasks;
 }
 
 void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& presetUri,
                                         const std::string& presetFile, const std::string& id,
-                                        std::function<void(const std::string&, bool)> finishedCB)
+                                        const std::function<void(const std::string&, bool)>& finishedCB)
 {
     const Poco::URI autotextUri{presetUri};
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(autotextUri));
@@ -4437,6 +4465,16 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
             msg += " jail=" + _uriJailed;
             msg += " xjail=" + _uriJailedAnonym;
             msg += ' ' + tokens.cat(' ', 2);
+            if (_asyncInstallTask)
+            {
+                auto sendLoad = [this, msg, binary](bool success) {
+                    if (!success)
+                        return;
+                    _childProcess->sendFrame(msg, binary);
+                };
+                _asyncInstallTask->appendCallback(sendLoad);
+                return true;
+            }
             return _childProcess->sendFrame(msg, binary);
         }
     }
