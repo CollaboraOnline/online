@@ -48,6 +48,7 @@ class PrisonerRequestDispatcher;
 class CheckFileInfo;
 class DocumentBroker;
 class LockContext;
+class PresetsInstallTask;
 class TileCache;
 class Message;
 
@@ -541,18 +542,22 @@ public:
     StorageBase* getStorage() { return _storage.get(); }
 
 #if !MOBILEAPP
+    void asyncInstallPresets(const std::shared_ptr<ClientSession> session,
+                             const std::string& userSettingsUri,
+                             const std::string& presetsPath);
+
     /// Start an asynchronous Installation of the user presets, e.g. autotexts etc, as
     /// described at userSettingsUri for installation into presetsPath
-    static void asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,
+    static std::shared_ptr<PresetsInstallTask> asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,
                                     const std::string& presetsPath,
-                                    std::function<void(bool)> finishedCB);
+                                    const std::function<void(bool)>& finishedCB);
 
     /// Start an asynchronous Installation of a user preset resource, e.g. an autotext
     /// file, to copy as presetFile
     static void asyncInstallPreset(SocketPoll& poll, const std::string& presetUri,
                                    const std::string& presetFile,
                                    const std::string& id,
-                                   std::function<void(const std::string&, bool)> finishedCB);
+                                   const std::function<void(const std::string&, bool)>& finishedCB);
 #endif // !MOBILEAPP
 
 private:
@@ -1655,6 +1660,7 @@ private:
     std::atomic<bool> _stop;
     std::string _closeReason;
     std::unique_ptr<LockContext> _lockCtx;
+    std::shared_ptr<PresetsInstallTask> _asyncInstallTask;
     std::string _renameFilename; ///< The new filename to rename to.
     std::string _renameSessionId; ///< The sessionId used for renaming.
     std::string _lastEditingSessionId; ///< The last session edited, for auto-saving.
