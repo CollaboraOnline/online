@@ -1730,7 +1730,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-items: center;
 }
 
-#toolbar-down .has-dropdown > .ui-content.unobutton {
+#toolbar-wrapper:not(.mobile) ~ #toolbar-down .has-dropdown > .ui-content.unobutton {
 	width: max-content;
 }
 
