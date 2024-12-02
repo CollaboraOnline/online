@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-22 14:44+0100\n"
-"PO-Revision-Date: 2024-11-22 06:34+0000\n"
+"PO-Revision-Date: 2024-12-02 12:01+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ta/>\n"
-"Language: \n"
+"Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2045,7 +2045,7 @@ msgstr "நகல் தாள் ..."
 
 #: src/control/Control.Tabs.js:383
 msgid "Are you sure you want to delete sheet, {sheet}?"
-msgstr "நீங்கள் தாளை நீக்க விரும்புகிறீர்களா, {தாள்}?"
+msgstr "நீங்கள் தாளை நீக்க விரும்புகிறீர்களா, {sheet}?"
 
 #: src/control/Control.Tabs.js:394
 msgid "Rename sheet"
@@ -2097,15 +2097,15 @@ msgstr "மெனுவைக் காட்டு"
 
 #: src/control/Control.UserList.ts:54
 msgid "{user} has joined"
-msgstr "{பயனர்} இணைந்தார்"
+msgstr "{user} இணைந்தார்"
 
 #: src/control/Control.UserList.ts:55
 msgid "{user} has left"
-msgstr "{பயனர்} வெளியேறிவிட்டார்"
+msgstr "{user} வெளியேறிவிட்டார்"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following {user}"
-msgstr "பின்வரும் {பயனர்}"
+msgstr "பின்வரும் {user}"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
@@ -2544,7 +2544,7 @@ msgstr "CTRL+SHIFT+ALT+D வெளியேற"
 
 #: src/core/Socket.js:67
 msgid "Oops, there is a problem connecting to {productname}: "
-msgstr "அச்சச்சோ, {தயாரிப்பு பெயர்} உடன் இணைக்கும் சிக்கல் உள்ளது: "
+msgstr "அச்சச்சோ, {productname} உடன் இணைக்கும் சிக்கல் உள்ளது: "
 
 #: src/core/Socket.js:685
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2766,10 +2766,9 @@ msgid ""
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"இது {தயாரிப்பு பெயர் of இன் ஆதரிக்கப்படாத பதிப்பாகும். நிறுவனங்களில் "
-"வரிசைப்படுத்துவதற்கு இது ஏற்றது என்ற எண்ணத்தைத் தவிர்க்க, {டாக்ச்} ஆவணங்கள் "
-"அல்லது {இணைப்புகள்} இணைப்புகள் ஒரே நேரத்தில் பயன்பாட்டில் இருக்கும்போது இந்த "
-"செய்தி தோன்றும்."
+"இது {தயாரிப்பு பெயர் of இன் ஆதரிக்கப்படாத பதிப்பாகும். நிறுவனங்களில் வரிசைப்படுத்துவதற்கு இது ஏற்றது என்ற "
+"எண்ணத்தைத் தவிர்க்க, {productname} ஆவணங்கள் அல்லது {docs} இணைப்புகள் ஒரே நேரத்தில் பயன்பாட்டில் "
+"இருக்கும்போது இந்த செய்தி தோன்றும்."
 
 #: src/errormessages.js:25
 msgid "More information and support"
@@ -2801,7 +2800,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr "அங்கீகார பிழை: '{Errormessage}'."
+msgstr "அங்கீகார பிழை: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -2814,9 +2813,8 @@ msgid ""
 "Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"உங்கள் அமர்வு {நேரம்} இல் காலாவதியாகும். தொடர உங்கள் வேலையைச் சேமித்து, தொடர "
-"அமர்வை (அல்லது வலைப்பக்கத்தை) புதுப்பிக்கவும். நீங்கள் மீண்டும் உள்நுழைய "
-"வேண்டியிருக்கலாம்."
+"உங்கள் அமர்வு {time} இல் காலாவதியாகும். தொடர உங்கள் வேலையைச் சேமித்து, தொடர அமர்வை (அல்லது வலைப்பக்கத்தை) "
+"புதுப்பிக்கவும். நீங்கள் மீண்டும் உள்நுழைய வேண்டியிருக்கலாம்."
 
 #: src/errormessages.js:32
 msgid ""
@@ -2876,12 +2874,10 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId {0} for routeToken "
 "{1} but connected to serverId {2}"
 msgstr ""
-"உங்கள் {தயாரிப்பு பெயர்} கிளச்டர் தவறாக கட்டமைக்கப்பட்டதாகவோ அல்லது விரைவாக "
-"அளவிடப்படுவதாகவோ தோன்றுகிறது - தயவுசெய்து உங்கள் கணினி நிர்வாகியை தொடர்பு "
-"கொள்ளவும். திருத்துதல் தொடர்வது பல பயனர்கள் ஒருவருக்கொருவர் பார்க்கவில்லை, "
-"ஆவண சேமிப்பகத்தில் மோதல்கள் மற்றும்/அல்லது சிக்கல்களை நகலெடுக்கலாம். ரூட் "
-"டோகன் {1} க்கு எதிர்பார்க்கப்படும் சேவையகம் {0} ஆனால் சேவையகத்துடன் "
-"இணைக்கப்பட்டுள்ளது {2}"
+"உங்கள் {productname} கிளச்டர் தவறாக கட்டமைக்கப்பட்டதாகவோ அல்லது விரைவாக அளவிடப்படுவதாகவோ தோன்றுகிறது - "
+"தயவுசெய்து உங்கள் கணினி நிர்வாகியை தொடர்பு கொள்ளவும். திருத்துதல் தொடர்வது பல பயனர்கள் ஒருவருக்கொருவர் பார்க்கவில்லை, "
+"ஆவண சேமிப்பகத்தில் மோதல்கள் மற்றும்/அல்லது சிக்கல்களை நகலெடுக்கலாம். ரூட் டோகன் {1} க்கு எதிர்பார்க்கப்படும் சேவையகம்"
+" {0} ஆனால் சேவையகத்துடன் இணைக்கப்பட்டுள்ளது {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -3081,8 +3077,7 @@ msgstr "எச்சரிக்கை! நீங்கள் பயன்பட
 msgid ""
 "To paste outside {productname}, please first click the 'download' button"
 msgstr ""
-"{தயாரிப்பு பெயர்} க்கு வெளியே ஒட்ட, முதலில் 'பதிவிறக்கு' பொத்தானைக் சொடுக்கு "
-"செய்க"
+"{productname} க்கு வெளியே ஒட்ட, முதலில் 'பதிவிறக்கு' பொத்தானைக் சொடுக்கு செய்க"
 
 #: src/map/Clipboard.js:183
 msgid "Copying from the document disabled"
@@ -3327,7 +3322,7 @@ msgstr "ஆன்லைனில் வரவேற்பு"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
-msgstr "புதிய {குளிரூட்டல்} ஐ ஆராயுங்கள்"
+msgstr "புதிய {coolversion} ஐ ஆராயுங்கள்"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
