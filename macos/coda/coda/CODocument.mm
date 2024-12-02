@@ -76,7 +76,7 @@ static std::atomic<unsigned> appDocIdCounter(1);
 }
 
 - (void)send2JS:(const char *)buffer length:(size_t)length {
-    //LOG_DBG("To JS: " << COOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
+    LOG_TRC("To JS: " << COOLProtocol::getAbbreviatedMessage(buffer, static_cast<int>(length)).c_str());
 
     bool binaryMessage = (isMessageOfType(buffer, "tile:", length) ||
                           isMessageOfType(buffer, "tilecombine:", length) ||
@@ -129,7 +129,7 @@ static std::atomic<unsigned> appDocIdCounter(1);
         char outBuf[length + 1];
         memcpy(outBuf, buffer, length);
         outBuf[length] = '\0';
-        //LOG_ERR("Couldn't create NSString with message: " << outBuf);
+        LOG_ERR("Couldn't create NSString with message: " << outBuf);
         return;
     }
 
@@ -137,17 +137,17 @@ static std::atomic<unsigned> appDocIdCounter(1);
     if (subjs.length < js.length)
         subjs = [subjs stringByAppendingString:@"..."];
 
-    // LOG_TRC("Evaluating JavaScript: " << [subjs UTF8String]);
+    LOG_TRC("Evaluating JavaScript: " << [subjs UTF8String]);
 
     dispatch_async(dispatch_get_main_queue(), ^{
             [self.webView evaluateJavaScript:js
                                           completionHandler:^(id _Nullable obj, NSError * _Nullable error)
                  {
                      if (error) {
-                         //LOG_ERR("Error after " << [subjs UTF8String] << ": " << [[error localizedDescription] UTF8String]);
+                         LOG_ERR("Error after " << [subjs UTF8String] << ": " << [[error localizedDescription] UTF8String]);
                          NSString *jsException = error.userInfo[@"WKJavaScriptExceptionMessage"];
-                         //if (jsException != nil)
-                         //    LOG_ERR("JavaScript exception: " << [jsException UTF8String]);
+                         if (jsException != nil)
+                             LOG_ERR("JavaScript exception: " << [jsException UTF8String]);
                      }
                  }
              ];
