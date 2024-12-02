@@ -21,6 +21,7 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 		cy.cGet('#menu-insert').click();
 		cy.cGet('#menu-insert-esignature').click();
 		cy.wait(['@sendHash']);
+		cy.cGet('#ESignatureDialog button#ok').click();
 		cy.get('@windowOpen').should('be.called');
 		const response = {
 			type: "SUCCESS",

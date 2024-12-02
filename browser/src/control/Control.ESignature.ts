@@ -21,6 +21,7 @@ namespace cool {
 
 	export interface HashSendResponse {
 		doc_id: string;
+		available_methods: Array<string>;
 	}
 
 	export interface SignedResponse {
@@ -43,8 +44,6 @@ namespace cool {
 		// <https://docs.eideasy.com/guide/api-credentials.html>
 		secret: string;
 		clientId: string;
-		// This is the specific provider used by eIDEasy, e.g. 'smart-id-signature'
-		method: string;
 
 		// Timestamp of the hash extraction
 		signatureTime: number;
@@ -55,11 +54,46 @@ namespace cool {
 		// The popup window we opened.
 		popup: Window;
 
-		constructor(url: string, secret: string, clientId: string, method: string) {
+		availableProviderIDs: Array<string>;
+
+		// Provider ID to name map.
+		static providerNames: { [name: string]: string } = {
+			// The /api/client-config API would provide this, but having the data here
+			// saves us from fetching the same data every time for every user.
+			'id-signature': 'Estonian ID card',
+			'mid-signature': 'Estonian Mobile-ID',
+			'lt-mid-signature': 'Lithuanian Mobile-ID',
+			'smart-id-signature': 'Smart-ID',
+			'be-id-signature': 'Belgian ID card',
+			'lt-id-signature': 'Lithuanian ID card',
+			'lv-id-signature': 'Latvian ID card',
+			'lv-eparaksts-mobile-signature': 'Latvian eParaksts Mobile',
+			'fi-id-signature': 'Finnish ID card',
+			'at-handy-signatur-signature': 'Austrian Handy-Signatur',
+			'evrotrust-signature': 'Evrotrust',
+			'd-trust-sign-me-qes-signature': 'D-Trust sign-me',
+			'certeurope-usb-token-signature': 'CertEurope USB token',
+			'certsign-usb-token-signature': 'certSIGN USB token',
+			'zealid-signature': 'ZealID app',
+			'audkenni-qes-signature': 'Audkenni',
+			'simply-sign-qes-signature': 'SimplySign',
+			'halcom-qes-signature': 'Halcom',
+			'hr-id-signature': 'Croatian ID Card',
+			'uanataca-qes-signature': 'Uanataca',
+			'itsme-qes-signature': 'Itsme',
+			'harica-qes-signature': 'Harica',
+			'lt-id-qes-signature': 'LT ID',
+			'trust-asia-signature': 'TrustAsia',
+			'buypass-qes-signature': 'Buypass',
+			'cert-store-qes-signature': 'Local Certificate',
+			'fi-ftn-intesi-adv-signature':
+				'Finnish Trust Network / Luottamusverkosto',
+		};
+
+		constructor(url: string, secret: string, clientId: string) {
 			this.url = url;
 			this.secret = secret;
 			this.clientId = clientId;
-			this.method = method;
 
 			app.map.on('commandvalues', this.onCommandValues.bind(this));
 		}
@@ -139,11 +173,20 @@ namespace cool {
 		// Handles the 'send hash' response JSON
 		handleSendHashJson(response: HashSendResponse): void {
 			this.docId = response.doc_id;
+			this.availableProviderIDs = response.available_methods;
+			const providers = this.createProviders(this.availableProviderIDs);
+			const dialog = JSDialog.eSignatureDialog(providers);
+			dialog.open();
+		}
+
+		// Handles the selected provider from the dialog
+		handleSelectedProvider(providerIndex: number): void {
+			const provider = this.availableProviderIDs[providerIndex];
 
 			let url = this.url + '/single-method-signature';
 			url += '?client_id=' + this.clientId;
 			url += '&doc_id=' + this.docId;
-			url += '&method=' + this.method;
+			url += '&method=' + provider;
 
 			let features = 'popup';
 			features += ', left=' + window.screen.width / 4;
@@ -233,6 +276,28 @@ namespace cool {
 			};
 			app.map.sendUnoCommand('.uno:Signature', args);
 		}
+
+		// Turns a list of provider IDs into a list of signature providers
+		createProviders(providerIds: Array<string>): Array<cool.SignatureProvider> {
+			// Set the only tested provider as preferred.
+			const preferred = 'smart-id-signature';
+			const index = providerIds.indexOf(preferred);
+			if (index != -1) {
+				providerIds.splice(index, /*deleteCount=*/ 1);
+				providerIds.splice(/*start=*/ 0, /*deleteCount=*/ 0, preferred);
+			}
+
+			return providerIds.map((id) => {
+				const providerName = ESignature.providerNames[id];
+				if (providerName) {
+					return { action_type: id, name: providerName };
+				}
+				app.console.log(
+					'failed to find a human-readable name for provider "' + id + '"',
+				);
+				return { action_type: id, name: id };
+			});
+		}
 	}
 }
 
@@ -242,7 +307,6 @@ L.control.eSignature = function (
 	url: string,
 	secret: string,
 	clientId: string,
-	method: string,
 ) {
-	return new L.Control.ESignature(url, secret, clientId, method);
+	return new L.Control.ESignature(url, secret, clientId);
 };
