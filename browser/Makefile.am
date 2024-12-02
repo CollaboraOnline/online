@@ -751,7 +751,11 @@ $(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
 	@mkdir -p $(dir $@)
 	$(call global_file)
 
-$(INTERMEDIATE_DIR)/COOL_JS.m4: $(COOL_JS_DST)
+$(INTERMEDIATE_DIR)/COOL_JS.m4.jslist: $(COOL_JS_DST)
+	echo $(COOL_JS_DST) > $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp
+	if cmp -s $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist; then rm $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp; else mv $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist; fi
+
+$(INTERMEDIATE_DIR)/COOL_JS.m4: $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist
 	@rm -f COOL_JS.m4
 	$(foreach file,$(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4))
 # remove last ","
@@ -762,8 +766,8 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 	$(COOL_WELCOME_DST) \
 	$(DIST_FOLDER)/bundle.css \
 	$(DIST_FOLDER)/global.js \
-	$(DIST_FOLDER)/bundle.js \
-	$(INTERMEDIATE_DIR)/COOL_JS.m4
+	$(INTERMEDIATE_DIR)/COOL_JS.m4 \
+	| $(DIST_FOLDER)/bundle.js
 
 	@echo "Generating cool.html..."
 	m4 -PE -I $(INTERMEDIATE_DIR) \
