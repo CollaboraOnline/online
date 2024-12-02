@@ -89,7 +89,7 @@
 #define COOLWSD_VERSION_HASH "@COOLWSD_VERSION_HASH@"
 
 /* Path to LibreOffice installation */
-#define LO_PATH "."
+#define LO_PATH "@LO_PATH@"
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR

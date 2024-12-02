@@ -257,7 +257,7 @@ AC_ARG_WITH([lokit-path],
 
 AC_ARG_WITH([lo-path],
             AS_HELP_STRING([--with-lo-path=<path>],
-                           [Path to a working installation directory or instdir of LibreOffice]))
+                           [Path to a working installation directory or instdir of LibreOffice, to be used at runtime]))
 
 AC_ARG_WITH([lo-sourcedir],
             AS_HELP_STRING([--with-lo-sourcedir=<path>],
@@ -1373,11 +1373,20 @@ AS_IF([test -n "$LOKIT_PATH"],
       [CPPFLAGS="$CPPFLAGS -I${LOKIT_PATH}"])
 lokit_msg="$LOKIT_PATH"
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
       [AC_MSG_CHECKING([for LibreOffice path])
       if test -n "$with_lo_path"; then
           # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
-          LO_PATH=`readlink -f ${with_lo_path%/}`
+          if test "$ENABLE_WINDOWSAPP" != "true"; then
+              LO_PATH=`readlink -f ${with_lo_path%/}`
+          else
+              # LO_PATH is the path used at run-time to find the
+              # LibreOffice shared libraries. When running configure
+              # for the CODA-W app it is not used at configure or
+              # build time. Thus it should be a Windows path and not a
+              # WSL one.
+              LO_PATH="$with_lo_path"
+          fi
           AC_MSG_RESULT([found])
       else
           AC_MSG_RESULT([not found])
@@ -2105,6 +2114,11 @@ if test "$enable_macosapp" = "yes"; then
 fi
 
 if test "$enable_windowsapp" = "yes"; then
+    # Don't use AC_CONFIG_HEADERS for windows/coda/config.h because we
+    # don't want to set random stuff that the configure script thinks
+    # it has detected, as that is very misleading because it is run on
+    # WSL. Ideally we shouldn't need to run the configure script when
+    # building CODA-W at all. Later.
     AC_CONFIG_FILES([windows/coda/config.h
                      windows/coda/config.props])
 fi
