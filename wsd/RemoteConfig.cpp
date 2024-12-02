@@ -31,6 +31,7 @@
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
 #include <Poco/Util/MapConfiguration.h>
+#include <Poco/Dynamic/Var.h>
 
 #include <string>
 
@@ -612,12 +613,18 @@ bool RemoteAssetConfigPoll::getNewAssets(const Poco::JSON::Array::Ptr& assetsPtr
             else
             {
                 const std::string uri = uriPtr.toString();
-                const auto stampPtr = assetPtr->get("stamp");
+                Poco::Dynamic::Var stampPtr;
+                // stamp and version are same in terms of functionality but stamp was not clear name so use version instead in json
+                // for backwardcompatibility keep the stamp as well
+                if (assetPtr->has("version"))
+                    stampPtr = assetPtr->get("version");
+                else if (assetPtr->has("stamp"))
+                    stampPtr = assetPtr->get("stamp");
 
                 if (!stampPtr.isEmpty() && !stampPtr.isString())
                     LOG_WRN("Element in "
                             << assetJsonKey << "array with uri '" << uri
-                            << "' has a stamp property that is not a string, ignored");
+                            << "' has a stamp/version property that is not a string, ignored");
                 else if (assets.count(uri) == 0)
                 {
                     // First case: This asset has not been downloaded.
