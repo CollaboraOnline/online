@@ -32,6 +32,11 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
         webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
 
+#if DEBUG
+        // Enable possibility to debug the webview from Safari
+        webView.isInspectable = true
+#endif
+
         // Add it to the view controller's view
         self.view.addSubview(webView)
 
