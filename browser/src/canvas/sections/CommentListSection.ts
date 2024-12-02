@@ -521,8 +521,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				else if (eventType === 'select' || eventType === 'activate') {
 					const item = mention.getMentionUserData(index);
 					const replacement = '@' + mention.getPartialMention();
-					if (item.username !== '' && item.profile !== '')
-						comment.autoCompleteMention(item.username, item.profile, replacement)
+					const uid = item.label ?? item.username
+					if (uid !== '' && item.profile !== '')
+						comment.autoCompleteMention(uid, item.profile, replacement)
 					mention.closeMentionPopup(false);
 				}
 		}.bind(this);
