@@ -315,10 +315,7 @@ menuDefinitions.set('ConditionalFormatMenu', [
 				uno: '.uno:ConditionalFormatEasy?FormatRule:short=23',
 			},
 			{ type: 'separator' },
-			{
-				text: _('More highlights...'),
-				uno: '.uno:ConditionalFormatManagerDialog',
-			},
+			{ text: _('More highlights...'), uno: '.uno:ConditionalFormatDialog' },
 		],
 	},
 	{
@@ -349,10 +346,7 @@ menuDefinitions.set('ConditionalFormatMenu', [
 				uno: '.uno:ConditionalFormatEasy?FormatRule:short=16',
 			},
 			{ type: 'separator' },
-			{
-				text: _('More highlights...'),
-				uno: '.uno:ConditionalFormatManagerDialog',
-			},
+			{ text: _('More highlights...'), uno: '.uno:ConditionalFormatDialog' },
 		],
 	},
 	{ type: 'separator' },
