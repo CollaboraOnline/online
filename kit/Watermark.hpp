@@ -169,8 +169,8 @@ private:
                 const double fy = y - y0;
                 const int rX = (fx * cos) - (fy * sin) + x0;
                 const int rY = (fx * sin) + (fy * cos) + y0;
-                const unsigned int pPos = 4 * (rY * width + rX);
-                if (rX >= 0 && rX <= width && rY >= 0 && rY <= height && pPos < text.size())
+                const unsigned int pos = 4 * (rY * width + rX);
+                if (rX >= 0 && rX <= width && rY >= 0 && rY <= height && pos < text.size())
                 {
                     unsigned char* p = text.data() + 4 * (rY * width + rX);
                     _rotatedText[4 * (y * width + x) + 0] = p[0];

@@ -913,9 +913,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         if (!_isTextDocument)
         {
-            int nPosition;
+            int position;
             if (tokens.size() != 2 ||
-                !getTokenInteger(tokens[1], "position", nPosition))
+                !getTokenInteger(tokens[1], "position", position))
             {
                 sendTextFrameAndLogError("error: cmd=moveselectedclientparts kind=syntax");
                 return false;
@@ -1773,8 +1773,8 @@ bool ClientSession::handlePresentationInfo(const std::shared_ptr<Message>& paylo
 
                             if (!id.empty() && !url.empty())
                             {
-                                std::string aOriginal = "{ \"id\" : \"" + id + "\", \"url\" : \"" + url + "\" }";
-                                docBroker->addEmbeddedMedia(id, aOriginal); // Capture the original message with internal URL.
+                                std::string original = "{ \"id\" : \"" + id + "\", \"url\" : \"" + url + "\" }";
+                                docBroker->addEmbeddedMedia(id, original); // Capture the original message with internal URL.
 
                                 const std::string mediaUrl =
                                     Uri::encode(createPublicURI("media", id, false), "&");

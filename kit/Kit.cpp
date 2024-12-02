@@ -1076,7 +1076,7 @@ void Document::trimAfterInactivity()
         return;
 
     // unusual LOK event from another thread,
-    // pData - is Document with process' lifetime.
+    // data - is Document with process' lifetime.
     if (pushToMainThread(GlobalCallback, type, p, data))
         return;
 
@@ -1142,7 +1142,7 @@ void Document::trimAfterInactivity()
         return;
 
     // unusual LOK event from another thread.
-    // pData - is CallbackDescriptors which share process' lifetime.
+    // data - is CallbackDescriptors which share process' lifetime.
     if (pushToMainThread(ViewCallback, type, p, data))
         return;
 
@@ -2996,15 +2996,15 @@ void documentViewCallback(const int type, const char* payload, void* data)
 }
 
 /// Called by LOK main-loop the central location for data processing.
-int pollCallback(void* pData, int timeoutUs)
+int pollCallback(void* data, int timeoutUs)
 {
     if (timeoutUs < 0)
         timeoutUs = SocketPoll::DefaultPollTimeoutMicroS.count();
 #ifndef IOS
-    if (!pData)
+    if (!data)
         return 0;
     else
-        return reinterpret_cast<KitSocketPoll*>(pData)->kitPoll(timeoutUs);
+        return reinterpret_cast<KitSocketPoll*>(data)->kitPoll(timeoutUs);
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
     std::vector<std::shared_ptr<KitSocketPoll>> v;
@@ -3064,13 +3064,13 @@ bool anyInputCallback(void* data)
 }
 
 /// Called by LOK main-loop
-void wakeCallback(void* pData)
+void wakeCallback(void* data)
 {
 #ifndef IOS
-    if (!pData)
+    if (!data)
         return;
     else
-        return reinterpret_cast<KitSocketPoll*>(pData)->wakeup();
+        return reinterpret_cast<KitSocketPoll*>(data)->wakeup();
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
     if (KitSocketPoll::KSPolls.empty())
@@ -3107,37 +3107,37 @@ extern "C"
 
 void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
 {
-    std::string aCertificatePathString = ConfigUtil::getString("certificates.database_path", "");
-    if (!aCertificatePathString.empty())
+    std::string certificatePathString = ConfigUtil::getString("certificates.database_path", "");
+    if (!certificatePathString.empty())
     {
-        auto aFileStat = FileUtil::Stat(aCertificatePathString);
+        auto fileStat = FileUtil::Stat(certificatePathString);
 
-        if (!aFileStat.exists() || !aFileStat.isDirectory())
+        if (!fileStat.exists() || !fileStat.isDirectory())
         {
-            LOG_WRN("Certificate database wasn't copied into the jail as path '" << aCertificatePathString << "' doesn't exist");
+            LOG_WRN("Certificate database wasn't copied into the jail as path '" << certificatePathString << "' doesn't exist");
             return;
         }
 
-        Poco::Path aCertificatePath(aCertificatePathString);
+        Poco::Path certificatePath(certificatePathString);
 
-        Poco::Path aJailedCertDBPath(jailPath, "/tmp/certdb");
-        Poco::File(aJailedCertDBPath).createDirectories();
+        Poco::Path jailedCertDBPath(jailPath, "/tmp/certdb");
+        Poco::File(jailedCertDBPath).createDirectories();
 
         bool bCopied = false;
-        for (const char* pFilename : { "cert8.db", "cert9.db", "secmod.db", "key3.db", "key4.db" })
+        for (const char* filename : { "cert8.db", "cert9.db", "secmod.db", "key3.db", "key4.db" })
         {
-            bool bResult = FileUtil::copy(Poco::Path(aCertificatePath, pFilename).toString(),
-                                Poco::Path(aJailedCertDBPath, pFilename).toString(), false, false);
+            bool bResult = FileUtil::copy(Poco::Path(certificatePath, filename).toString(),
+                                Poco::Path(jailedCertDBPath, filename).toString(), false, false);
             bCopied |= bResult;
         }
         if (bCopied)
         {
-            LOG_INF("Certificate database files found in '" << aCertificatePathString << "' and were copied to the jail");
+            LOG_INF("Certificate database files found in '" << certificatePathString << "' and were copied to the jail");
             ::setenv("LO_CERTIFICATE_DATABASE_PATH", "/tmp/certdb", 1);
         }
         else
         {
-            LOG_WRN("No Certificate database files could be found in path '" << aCertificatePathString << "'");
+            LOG_WRN("No Certificate database files could be found in path '" << certificatePathString << "'");
         }
     }
 }
@@ -3211,17 +3211,16 @@ void lokit_main(
     }
     const std::string LogDisabledAreas = logDisabledAreas ? logDisabledAreas : "";
 
-    const char* pAnonymizationSalt = std::getenv("COOL_ANONYMIZATION_SALT");
-    if (pAnonymizationSalt)
+    if (const char* anonymizationSalt = std::getenv("COOL_ANONYMIZATION_SALT"))
     {
-        AnonymizationSalt = std::stoull(std::string(pAnonymizationSalt));
+        AnonymizationSalt = std::stoull(anonymizationSalt);
         AnonymizeUserData = true;
     }
 
     LOG_INF("User-data anonymization is " << (AnonymizeUserData ? "enabled." : "disabled."));
 
-    const char* pEnableWebsocketURP = std::getenv("ENABLE_WEBSOCKET_URP");
-    EnableWebsocketURP = pEnableWebsocketURP && std::string(pEnableWebsocketURP) == "true";
+    const char* enableWebsocketURP = std::getenv("ENABLE_WEBSOCKET_URP");
+    EnableWebsocketURP = enableWebsocketURP && std::string(enableWebsocketURP) == "true";
 
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
@@ -3851,12 +3850,12 @@ std::string anonymizeUrl(const std::string& url)
 #endif
 }
 
-static int receiveURPFromLO(void* pContext, const signed char* pBuffer, int bytesToWrite)
+static int receiveURPFromLO(void* context, const signed char* buffer, int bytesToWrite)
 {
     int bytesWritten = 0;
     while (bytesToWrite > 0)
     {
-        int bytes = ::write(reinterpret_cast<intptr_t>(pContext), pBuffer + bytesWritten, bytesToWrite);
+        int bytes = ::write(reinterpret_cast<intptr_t>(context), buffer + bytesWritten, bytesToWrite);
         if (bytes <= 0)
             break;
         bytesToWrite -= bytes;
@@ -3865,12 +3864,12 @@ static int receiveURPFromLO(void* pContext, const signed char* pBuffer, int byte
     return bytesWritten;
 }
 
-static int sendURPToLO(void* pContext, signed char* pBuffer, int bytesToRead)
+static int sendURPToLO(void* context, signed char* buffer, int bytesToRead)
 {
     int bytesRead = 0;
     while (bytesToRead > 0)
     {
-        int bytes = ::read(reinterpret_cast<intptr_t>(pContext), pBuffer + bytesRead, bytesToRead);
+        int bytes = ::read(reinterpret_cast<intptr_t>(context), buffer + bytesRead, bytesToRead);
         if (bytes <= 0)
             break;
         bytesToRead -= bytes;

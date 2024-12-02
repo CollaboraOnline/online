@@ -159,14 +159,14 @@ private:
 
 class RenderSearchResultBroker final : public StatelessBatchBroker
 {
-    std::shared_ptr<std::vector<char>> _pSearchResultContent;
-    std::vector<char> _aResposeData;
+    std::shared_ptr<std::vector<char>> _searchResultContent;
+    std::vector<char> _responseData;
     std::shared_ptr<StreamSocket> _socket;
 
 public:
     RenderSearchResultBroker(std::string const& uri, Poco::URI const& uriPublic,
                              std::string const& docKey,
-                             std::shared_ptr<std::vector<char>> const& pSearchResultContent);
+                             std::shared_ptr<std::vector<char>> const& searchResultContent);
 
     virtual ~RenderSearchResultBroker();
 

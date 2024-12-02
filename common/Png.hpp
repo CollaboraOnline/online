@@ -244,10 +244,10 @@ inline bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t st
             = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
         static std::chrono::milliseconds totalDuration;
-        static int nCalls = 0;
+        static int calls = 0;
 
         totalDuration += duration;
-        ++nCalls;
+        ++calls;
 
         static uint64_t totalPixelBytes = 0;
         static uint64_t totalOutputBytes = 0;
@@ -256,9 +256,9 @@ inline bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t st
         totalOutputBytes += output.size();
 
         LOG_TRC("PNG compression took "
-                << duration << " (" << output.size() << " bytes from " << (width * height * 4) << "). Average after " << nCalls
-                << " calls: " << (totalDuration.count() / static_cast<double>(nCalls)) << "ms, "
-                << (totalOutputBytes / static_cast<double>(nCalls)) << " bytes, "
+                << duration << " (" << output.size() << " bytes from " << (width * height * 4) << "). Average after " << calls
+                << " calls: " << (totalDuration.count() / static_cast<double>(calls)) << "ms, "
+                << (totalOutputBytes / static_cast<double>(calls)) << " bytes, "
                 << std::setprecision(2) << (100. * totalOutputBytes / totalPixelBytes) << "% compression.");
     }
 

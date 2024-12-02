@@ -46,7 +46,7 @@ public:
 
     /// Anonymize a sensitive string to avoid leaking it.
     /// Called on strings to be logged or exposed.
-    static std::string anonymize(const std::string& text, const std::uint64_t nAnonymizationSalt)
+    static std::string anonymize(const std::string& text, const std::uint64_t anonymizationSalt)
     {
         {
             std::unique_lock<std::mutex> lock(AnonymizedMutex);
@@ -63,7 +63,7 @@ public:
         // Modified 64-bit FNV-1a to add salting.
         // For the algorithm and the magic numbers, see http://isthe.com/chongo/tech/comp/fnv/
         std::uint64_t hash = 0xCBF29CE484222325LL;
-        hash ^= nAnonymizationSalt;
+        hash ^= anonymizationSalt;
         hash *= 0x100000001b3ULL;
         for (const char c : text)
         {
@@ -71,7 +71,7 @@ public:
             hash *= 0x100000001b3ULL;
         }
 
-        hash ^= nAnonymizationSalt;
+        hash ^= anonymizationSalt;
         hash *= 0x100000001b3ULL;
 
         // Generate the anonymized string. The '#' is to hint that it's anonymized.
@@ -89,7 +89,7 @@ public:
     static void clearAnonymized() { AnonymizedStrings.clear(); }
 
     /// Anonymize the basename of filenames only, preserving the path and extension.
-    static std::string anonymizeUrl(const std::string& url, const std::uint64_t nAnonymizationSalt)
+    static std::string anonymizeUrl(const std::string& url, const std::uint64_t anonymizationSalt)
     {
         std::string base;
         std::string filename;
@@ -97,6 +97,6 @@ public:
         std::string params;
         std::tie(base, filename, ext, params) = Util::splitUrl(url);
 
-        return base + anonymize(filename, nAnonymizationSalt) + ext + params;
+        return base + anonymize(filename, anonymizationSalt) + ext + params;
     }
 };

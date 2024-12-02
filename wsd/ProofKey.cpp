@@ -212,8 +212,8 @@ std::vector<unsigned char> Proof::RSA2CapiBlob(const std::vector<unsigned char>&
 int64_t Proof::DotNetTicks(const std::chrono::system_clock::time_point& utc)
 {
     // Get time point for Unix epoch; unfortunately from_time_t isn't constexpr
-    const auto aUnxEpoch(std::chrono::system_clock::from_time_t(0));
-    const auto duration_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(utc - aUnxEpoch);
+    const auto unxEpoch(std::chrono::system_clock::from_time_t(0));
+    const auto duration_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(utc - unxEpoch);
     return duration_ns.count() / 100 + 621355968000000000;
 }
 

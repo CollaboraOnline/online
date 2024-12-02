@@ -228,20 +228,20 @@ std::string removeProtocolAndPort(const std::string& host)
     std::string result;
 
     // protocol
-    size_t nPos = host.find("//");
-    if (nPos != std::string::npos)
-        result = host.substr(nPos + 2);
+    size_t pos = host.find("//");
+    if (pos != std::string::npos)
+        result = host.substr(pos + 2);
     else
         result = host;
 
     // port
-    nPos = result.find(":");
-    if (nPos != std::string::npos)
+    pos = result.find(":");
+    if (pos != std::string::npos)
     {
-        if (nPos == 0)
+        if (pos == 0)
             return "";
 
-        result = result.substr(0, nPos);
+        result = result.substr(0, pos);
     }
 
     return result;
@@ -464,9 +464,9 @@ static int forkChildren(const int number)
     {
         COOLWSD::checkDiskSpaceAndWarnClients(false);
 
-        const std::string aMessage = "spawn " + std::to_string(number) + '\n';
-        LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
-        COOLWSD::sendMessageToForKit(aMessage);
+        const std::string message = "spawn " + std::to_string(number) + '\n';
+        LOG_DBG("MasterToForKit: " << message.substr(0, message.length() - 1));
+        COOLWSD::sendMessageToForKit(message);
         OutstandingForks += number;
         LastForkRequestTime = std::chrono::steady_clock::now();
         return number;
@@ -1938,7 +1938,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     FileUtil::registerFileSystemForDiskSpaceChecks(ChildRoot);
 
-    int nThreads = std::max<int>(std::thread::hardware_concurrency(), 1);
+    int threads = std::max<int>(std::thread::hardware_concurrency(), 1);
     int maxConcurrency = ConfigUtil::getConfigValue<int>(conf, "per_document.max_concurrency", 4);
 
     if (maxConcurrency > 16)
@@ -1947,12 +1947,12 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
                 "the scheduler, and consumes memory, while providing marginal gains "
                 "consider lowering max_concurrency from " << maxConcurrency);
     }
-    if (maxConcurrency > nThreads)
+    if (maxConcurrency > threads)
     {
         LOG_ERR("Setting concurrency above the number of physical "
                 "threads yields extra latency and memory usage for no benefit. "
-                "Clamping " << maxConcurrency << " to " << nThreads << " threads.");
-        maxConcurrency = nThreads;
+                "Clamping " << maxConcurrency << " to " << threads << " threads.");
+        maxConcurrency = threads;
     }
     if (maxConcurrency > 0)
     {
@@ -1962,7 +1962,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     // It is worth avoiding configuring with a large number of under-weight
     // containers / VMs - better to have fewer, stronger ones.
-    if (nThreads < 4)
+    if (threads < 4)
     {
         LOG_WRN("Fewer threads than recommended. Having at least four threads for "
                 "provides significant parallelism that can be used for burst "

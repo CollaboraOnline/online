@@ -550,12 +550,12 @@ public:
     std::vector<TileDesc>& getTiles() { return _tiles; }
     void setHasOldWireId() { _hasOldWids = true; }
 
-    void setNormalizedViewId(int nViewId)
+    void setNormalizedViewId(int viewId)
     {
         for (auto& tile : _tiles)
-            tile.setNormalizedViewId(nViewId);
+            tile.setNormalizedViewId(viewId);
 
-        _normalizedViewId = nViewId;
+        _normalizedViewId = viewId;
     }
 
     bool hasDuplicates() const

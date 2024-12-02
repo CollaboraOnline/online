@@ -326,7 +326,7 @@ namespace Util
     }
 
     /// Print given number of bytes in human-understandable form (KB,MB, etc.)
-    std::string getHumanizedBytes(unsigned long nBytes);
+    std::string getHumanizedBytes(unsigned long bytes);
 
     /// Returns the total physical memory (in kB) available in the system
     size_t getTotalSystemMemoryKb();

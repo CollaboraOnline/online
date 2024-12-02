@@ -99,11 +99,11 @@ static const char* startsWith(const char* line, const char* tag, std::size_t tag
     return nullptr;
 }
 
-std::string getHumanizedBytes(unsigned long nBytes)
+std::string getHumanizedBytes(unsigned long bytes)
 {
     constexpr unsigned factor = 1024;
     short count = 0;
-    float val = nBytes;
+    float val = bytes;
     while (val >= factor && count < 4)
     {
         val /= factor;
