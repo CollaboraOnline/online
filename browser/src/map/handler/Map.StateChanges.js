@@ -47,7 +47,9 @@ L.Map.StateChangeHandler = L.Handler.extend({
 		this._items[commandName] = state;
 		if (e.commandName === '.uno:CurrentTrackedChangeId') {
 			var redlineId = 'change-' + state;
-			this._map._docLayer._annotations.selectById(redlineId);
+			const annotations = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+			if (annotations) annotations.selectById(redlineId);
+			else console.error('_onStateChanged: section "CommentList" missing');
 		}
 
 		if (e.commandName === '.uno:SlideMasterPage') {
