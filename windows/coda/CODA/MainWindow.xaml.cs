@@ -42,9 +42,7 @@ namespace CODA
 
         private bool _isNavigating = false;
 
-        private int _fakeClientFd;
-
-        private int[] _closeNotificationPipeForForwardingThread = new int[2];
+        public delegate void Send2JSDelegate(IntPtr buffer, int length);
 
         [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
         public static extern int get_coolwsd_server_socket_fd();
@@ -94,6 +92,12 @@ namespace CODA
         [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
         public static extern void initialize_cpp_things();
 
+        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        public static extern void set_send2JS_function(Send2JSDelegate f);
+
+        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        public static extern void do_hullo_handling_things();
+
         private CoreWebView2Settings _webViewSettings;
         CoreWebView2Settings WebViewSettings
         {
@@ -133,10 +137,18 @@ namespace CODA
             }
         }
 
+        // Keep a static reference so that the delegate doesn't get garbage collected. Or something
+        // like that.
+        // private static Send2JSDelegate _reference;
+        private static GCHandle _gch;
+
         public MainWindow()
         {
             Loaded += MainWindow_Loaded;
             InitializeComponent();
+            Send2JSDelegate fp = new Send2JSDelegate(send2JS);
+            _gch = GCHandle.Alloc(fp);
+            set_send2JS_function(fp);
             initialize_cpp_things();
         }
 
@@ -153,64 +165,7 @@ namespace CODA
 
             if (args.WebMessageAsJson == "\"HULLO\"")
             {
-                Debug.Assert(get_coolwsd_server_socket_fd() != -1);
-                _fakeClientFd = fakeSocketSocket();
-
-                int rc = fakeSocketConnect(_fakeClientFd, get_coolwsd_server_socket_fd());
-                Debug.Assert(rc != -1);
-
-                fakeSocketPipe2(_closeNotificationPipeForForwardingThread);
-
-                // Start a thread to read responses and forward them to the JavaScript.
-
-                Task.Run(() =>
-                {
-                    while (true)
-                    {
-                        var p = new pollfd[2];
-                        p[0].fd = _fakeClientFd;
-                        p[0].events = POLLIN;
-                        p[1].fd = _closeNotificationPipeForForwardingThread[1];
-                        p[1].events = POLLIN;
-                        if (fakeSocketPoll(p, 2, -1) > 0)
-                        {
-                            if (p[1].revents == POLLIN)
-                            {
-                                // The code below handling the "BYE" fake Websocket message has
-                                // closed the other end of the
-                                // closeNotificationPipeForForwardingThread. Let's close the
-                                // other end too just for cleanliness, even if a FakeSocket as
-                                // such is not a system resource so nothing is saved by closing
-                                // it.
-                                fakeSocketClose(_closeNotificationPipeForForwardingThread[1]);
-
-                                // Close our end of the fake socket connection to the
-                                // ClientSession thread, so that it terminates
-                                fakeSocketClose(_fakeClientFd);
-
-                                return;
-                            }
-                            if (p[0].revents == POLLIN)
-                            {
-                                long n = fakeSocketAvailableDataLength(_fakeClientFd);
-                                // I don't want to check for n being -1 here, even if that will
-                                // lead to a crash, as n being -1 is a sign of something being
-                                // wrong elsewhere anyway, and I prefer to fix the root cause.
-                                // Let's see how well this works out.
-                                if (n == 0)
-                                    return;
-                                var buf = new byte[n];
-                                n = fakeSocketRead(_fakeClientFd, buf, n);
-                                send2JS(buf, n);
-                            }
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    Debug.Assert(false);
-                });
+                do_hullo_handling_things();
             }
         }
 
@@ -259,7 +214,7 @@ namespace CODA
             {
                 // FIXME: Temporarily when running from <repo>/windows/coda/CODA/bin/Debug.
                 webView.CoreWebView2.SetVirtualHostNameToFolderMapping("appassets", "..\\..\\..\\..\\..\\browser\\dist", CoreWebView2HostResourceAccessKind.DenyCors);
-                webView.CoreWebView2.Navigate("https://appassets/cool.html?file_path=file:///C:/Users/tml/Sailing%20Yacht.odt&closebutton=1&permission=edit&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
+                webView.CoreWebView2.Navigate("https://appassets/cool.html?file_path=file:///C:/Users/tml/Sailing%20Yacht.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
 
                 OnWebViewFirstInitialized?.Invoke();
 
@@ -281,27 +236,29 @@ namespace CODA
             MessageBox.Show($"WebView2 creation failed with exception = {e.InitializationException}");
         }
 
-        private bool _isMessageOfType(byte[] message, string type, long lengthOfMessage)
+        private bool _isMessageOfType(byte[] message, string type, int lengthOfMessage)
         {
             int typeLen = type.Length;
             return message.SequenceEqual(System.Text.Encoding.UTF8.GetBytes(type));
         }
 
-        void send2JS(byte[] buffer, long length)
+        void send2JS(IntPtr buffer, int length)
         {
-            bool binaryMessage = (_isMessageOfType(buffer, "tile:", length) ||
-                                           _isMessageOfType(buffer, "tilecombine:", length) ||
-                                           _isMessageOfType(buffer, "delta:", length) ||
-                                           _isMessageOfType(buffer, "renderfont:", length) ||
-                                           _isMessageOfType(buffer, "rendersearchlist:", length) ||
-                                           _isMessageOfType(buffer, "windowpaint:", length));
+            byte[] s = new byte[length];
+            Marshal.Copy(buffer, s, 0, length);
+            bool binaryMessage = (_isMessageOfType(s, "tile:", length) ||
+                                  _isMessageOfType(s, "tilecombine:", length) ||
+                                  _isMessageOfType(s, "delta:", length) ||
+                                  _isMessageOfType(s, "renderfont:", length) ||
+                                  _isMessageOfType(s, "rendersearchlist:", length) ||
+                                  _isMessageOfType(s, "windowpaint:", length));
 
             string pretext = binaryMessage
                 ? "window.TheFakeWebSocket.onmessage({'data': window.atob('"
                 : "window.TheFakeWebSocket.onmessage({'data': window.b64d('";
             const string posttext = "')});";
 
-            string js = pretext + System.Convert.ToBase64String(buffer) + posttext;
+            string js = pretext + System.Convert.ToBase64String(s) + posttext;
 
             _iWebView2.ExecuteScriptAsync(js);
         }
