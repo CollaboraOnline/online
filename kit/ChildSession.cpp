@@ -2124,8 +2124,7 @@ bool ChildSession::renderSearchResult(const char* buffer, int length, const Stri
         sendTextFrameAndLogError("error: cmd=rendersearchresult kind=failure");
     }
 
-    if (bitmapBuffer)
-        free(bitmapBuffer);
+    free(bitmapBuffer);
 
     return true;
 }
