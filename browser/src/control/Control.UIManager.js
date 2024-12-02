@@ -1077,9 +1077,8 @@ L.Control.UIManager = L.Control.extend({
 			const baseUrl = userPrivateInfo.ESignatureBaseUrl;
 			const secret = userPrivateInfo.ESignatureSecret;
 			const clientId = userPrivateInfo.ESignatureClientId;
-			const method = userPrivateInfo.ESignatureMethod;
 			if (baseUrl !== undefined && !this.map.eSignature) {
-				this.map.eSignature = L.control.eSignature(baseUrl, secret, clientId, method);
+				this.map.eSignature = L.control.eSignature(baseUrl, secret, clientId);
 			}
 		}
 	},

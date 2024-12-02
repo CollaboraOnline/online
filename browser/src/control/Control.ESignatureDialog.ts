@@ -79,8 +79,8 @@ namespace cool {
 				id: this.id,
 				dialogid: this.id,
 				type: 'dialog',
-				text: _('Select provider'),
-				title: _('Select provider'),
+				text: _('Insert Electronic Signature'),
+				title: _('Insert Electronic Signature'),
 				jsontype: 'dialog',
 				responses: [
 					{
@@ -116,7 +116,14 @@ namespace cool {
 			data: any,
 			builder: any,
 		) {
-			if (eventType === 'response' || object.id === 'ok') this.close();
+			if (eventType === 'response' || object.id === 'ok') {
+				const providers = <HTMLSelectElement>(
+					document.querySelector('#ESignatureDialog select#providerlb-input')
+				);
+				const providerIndex = providers.selectedIndex;
+				this.close();
+				app.map.eSignature.handleSelectedProvider(providerIndex);
+			}
 		}
 
 		open(): void {
