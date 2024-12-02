@@ -3940,7 +3940,12 @@ void lokit_main(
 
 #ifdef IOS // In the iOS app we call lok_init_2() just once, when the app starts
         static LibreOfficeKit *kit = lo_kit;
+#elif defined(_WINDOWS)
+        // LO_PATH is a Windows path starting with a drive letter. For the second parameter to
+        // lok_init_2() turn it into a file: URI.
+        LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", "file:///" LO_PATH);
 #else
+        // FIXME: I wonder for which platform this is supposed to be? Android?
         static LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
 #endif
 
