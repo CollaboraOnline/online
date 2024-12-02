@@ -623,14 +623,14 @@ namespace FileUtil
     /// Anonymize the basename of filenames, preserving the path and extension.
     std::string anonymizeUrl(const std::string& url)
     {
-        return AnonymizeUserData ? Anonymizer::anonymizeUrl(url, AnonymizationSalt) : url;
+        return AnonymizeUserData ? Anonymizer::anonymizeUrl(url) : url;
     }
 
     /// Anonymize user names and IDs.
     /// Will use the Obfuscated User ID if one is provided via WOPI.
     std::string anonymizeUsername(const std::string& username)
     {
-        return AnonymizeUserData ? Anonymizer::anonymize(username, AnonymizationSalt) : username;
+        return AnonymizeUserData ? Anonymizer::anonymize(username) : username;
     }
 
     std::string extractFileExtension(const std::string& path)

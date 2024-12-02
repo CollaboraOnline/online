@@ -97,14 +97,14 @@ public:
 
     /// Anonymize a sensitive string to avoid leaking it.
     /// Called on strings to be logged or exposed.
-    static std::string anonymize(const std::string& text, const std::uint64_t)
+    static std::string anonymize(const std::string& text)
     {
-        return _instance ? _instance->anonymize(text) : text;
+        return _instance ? _instance->anonymizeImpl(text) : text;
     }
 
     /// Anonymize a sensitive string to avoid leaking it.
     /// Called on strings to be logged or exposed.
-    std::string anonymize(const std::string& text)
+    std::string anonymizeImpl(const std::string& text)
     {
         const std::string_view anonymized = lookup(text);
         if (!anonymized.empty())
@@ -145,7 +145,7 @@ public:
     }
 
     /// Anonymize the basename of filenames only, preserving the path and extension.
-    static std::string anonymizeUrl(const std::string& url, const std::uint64_t anonymizationSalt)
+    static std::string anonymizeUrl(const std::string& url)
     {
         std::string base;
         std::string filename;
@@ -153,7 +153,7 @@ public:
         std::string params;
         std::tie(base, filename, ext, params) = Util::splitUrl(url);
 
-        return base + anonymize(filename, anonymizationSalt) + ext + params;
+        return base + anonymize(filename) + ext + params;
     }
 
 private:

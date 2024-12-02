@@ -3804,7 +3804,7 @@ TileWireId getCurrentWireId(bool increment)
 std::string anonymizeUrl(const std::string& url)
 {
 #ifndef BUILDING_TESTS
-    return AnonymizeUserData ? Anonymizer::anonymizeUrl(url, AnonymizationSalt) : url;
+    return AnonymizeUserData ? Anonymizer::anonymizeUrl(url) : url;
 #else
     return url;
 #endif
@@ -3956,7 +3956,7 @@ bool globalPreinit(const std::string &loTemplate)
 std::string anonymizeUsername(const std::string& username)
 {
 #ifndef BUILDING_TESTS
-    return AnonymizeUserData ? Anonymizer::anonymize(username, AnonymizationSalt) : username;
+    return AnonymizeUserData ? Anonymizer::anonymize(username) : username;
 #else
     return username;
 #endif
