@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-22 14:44+0200\n"
+"POT-Creation-Date: 2024-12-02 13:03+0200\n"
 "PO-Revision-Date: 2020-11-26 10:28+0000\n"
 "Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -71,9 +71,9 @@ msgstr ""
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:35-1
 msgid ""
-"Use the bugtracker and attach any files that caused problems via <a "
-"href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
-"that anything you enter in the bugtracker will be public."
+"Use the bugtracker and attach any files that caused problems via <a href="
+"\"https://col.la/android\"> https://col.la/android</a>. Please note that "
+"anything you enter in the bugtracker will be public."
 msgstr ""
 
 #. Long description
