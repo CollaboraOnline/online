@@ -19,7 +19,7 @@ DirectoryCounter::~DirectoryCounter() {}
 int DirectoryCounter::count() { return 0; }
 int spawnProcess(const std::string& cmd, const StringVector& args) { return 0; }
 
-std::string getHumanizedBytes(unsigned long nBytes) { return std::string(); }
+std::string getHumanizedBytes(unsigned long bytes) { return std::string(); }
 size_t getTotalSystemMemoryKb() { return 0; }
 std::size_t getFromFile(const char* path) { return 0; }
 std::size_t getCGroupMemLimit() { return 0; }

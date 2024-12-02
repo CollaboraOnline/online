@@ -1455,12 +1455,12 @@ bool ChildSession::getTextSelection(const StringVector& tokens)
 bool ChildSession::getClipboard(const StringVector& tokens)
 {
     std::vector<std::string> specifics;
-    const char **pMimeTypes = nullptr; // fetch all for now.
+    const char **mimeTypes = nullptr; // fetch all for now.
     std::vector<const char*> inMimeTypes;
-    size_t       nOutCount = 0;
-    char       **pOutMimeTypes = nullptr;
-    size_t      *pOutSizes = nullptr;
-    char       **pOutStreams = nullptr;
+    size_t       outCount = 0;
+    char       **outMimeTypes = nullptr;
+    size_t      *outSizes = nullptr;
+    char       **outStreams = nullptr;
 
     bool hasMimeRequest = tokens.size() > 1;
     if (hasMimeRequest)
@@ -1471,7 +1471,7 @@ bool ChildSession::getClipboard(const StringVector& tokens)
             inMimeTypes.push_back(specific.c_str());
         }
         inMimeTypes.push_back(nullptr);
-        pMimeTypes = inMimeTypes.data();
+        mimeTypes = inMimeTypes.data();
     }
 
     SigUtil::addActivity(getId(), "getClipboard");
@@ -1479,10 +1479,10 @@ bool ChildSession::getClipboard(const StringVector& tokens)
     bool success = false;
     getLOKitDocument()->setView(_viewId);
 
-    success = getLOKitDocument()->getClipboard(pMimeTypes, &nOutCount, &pOutMimeTypes,
-                                               &pOutSizes, &pOutStreams);
+    success = getLOKitDocument()->getClipboard(mimeTypes, &outCount, &outMimeTypes,
+                                               &outSizes, &outStreams);
 
-    if (!success || nOutCount == 0)
+    if (!success || outCount == 0)
     {
         LOG_WRN("Get clipboard failed " << getLOKitLastError());
         sendTextFrame("clipboardcontent: error");
@@ -1490,8 +1490,8 @@ bool ChildSession::getClipboard(const StringVector& tokens)
     }
 
     size_t outGuess = 32;
-    for (size_t i = 0; i < nOutCount; ++i)
-        outGuess += pOutSizes[i] + strlen(pOutMimeTypes[i]) + 10;
+    for (size_t i = 0; i < outCount; ++i)
+        outGuess += outSizes[i] + strlen(outMimeTypes[i]) + 10;
 
     std::vector<char> output;
     output.reserve(outGuess);
@@ -1500,30 +1500,30 @@ bool ChildSession::getClipboard(const StringVector& tokens)
     Util::vectorAppend(output, "clipboardcontent: content\n");
     bool json = !specifics.empty();
     Poco::JSON::Object selectionObject;
-    LOG_TRC("Building clipboardcontent: " << nOutCount << " items");
-    for (size_t i = 0; i < nOutCount; ++i)
+    LOG_TRC("Building clipboardcontent: " << outCount << " items");
+    for (size_t i = 0; i < outCount; ++i)
     {
-        LOG_TRC("\t[" << i << " - type " << pOutMimeTypes[i] << " size " << pOutSizes[i]);
+        LOG_TRC("\t[" << i << " - type " << outMimeTypes[i] << " size " << outSizes[i]);
         if (json)
         {
-            std::string selection(pOutStreams[i], pOutSizes[i]);
-            selectionObject.set(pOutMimeTypes[i], selection);
+            std::string selection(outStreams[i], outSizes[i]);
+            selectionObject.set(outMimeTypes[i], selection);
         }
         else
         {
-            Util::vectorAppend(output, pOutMimeTypes[i]);
+            Util::vectorAppend(output, outMimeTypes[i]);
             Util::vectorAppend(output, "\n", 1);
-            Util::vectorAppendHex(output, pOutSizes[i]);
+            Util::vectorAppendHex(output, outSizes[i]);
             Util::vectorAppend(output, "\n", 1);
-            Util::vectorAppend(output, pOutStreams[i], pOutSizes[i]);
+            Util::vectorAppend(output, outStreams[i], outSizes[i]);
             Util::vectorAppend(output, "\n", 1);
         }
-        free(pOutMimeTypes[i]);
-        free(pOutStreams[i]);
+        free(outMimeTypes[i]);
+        free(outStreams[i]);
     }
-    free(pOutSizes);
-    free(pOutMimeTypes);
-    free(pOutStreams);
+    free(outSizes);
+    free(outMimeTypes);
+    free(outStreams);
     if (json)
     {
         std::stringstream selectionStream;
@@ -1568,31 +1568,31 @@ bool ChildSession::setClipboard(const char* buffer, int length, const StringVect
         }
 //        data.dumpState(std::cerr);
 
-        const size_t nInCount = html.empty() ? data.size() : 1;
-        std::vector<size_t> pInSizes(nInCount);
-        std::vector<const char*> pInMimeTypes(nInCount);
-        std::vector<const char*> pInStreams(nInCount);
+        const size_t inCount = html.empty() ? data.size() : 1;
+        std::vector<size_t> inSizes(inCount);
+        std::vector<const char*> inMimeTypes(inCount);
+        std::vector<const char*> inStreams(inCount);
 
         if (html.empty())
         {
-            for (size_t i = 0; i < nInCount; ++i)
+            for (size_t i = 0; i < inCount; ++i)
             {
-                pInSizes[i] = data._content[i].length();
-                pInStreams[i] = data._content[i].c_str();
-                pInMimeTypes[i] = data._mimeTypes[i].c_str();
+                inSizes[i] = data._content[i].length();
+                inStreams[i] = data._content[i].c_str();
+                inMimeTypes[i] = data._mimeTypes[i].c_str();
             }
         }
         else
         {
-            pInSizes[0] = html.size();
-            pInStreams[0] = html.data();
-            pInMimeTypes[0] = "text/html";
+            inSizes[0] = html.size();
+            inStreams[0] = html.data();
+            inMimeTypes[0] = "text/html";
         }
 
         getLOKitDocument()->setView(_viewId);
 
-        if (!getLOKitDocument()->setClipboard(nInCount, pInMimeTypes.data(), pInSizes.data(),
-                                              pInStreams.data()))
+        if (!getLOKitDocument()->setClipboard(inCount, inMimeTypes.data(), inSizes.data(),
+                                              inStreams.data()))
             LOG_ERR("set clipboard returned failure");
         else
             LOG_TRC("set clipboard succeeded");
@@ -1984,11 +1984,11 @@ bool ChildSession::dialogEvent(const StringVector& tokens)
         return false;
     }
 
-    unsigned long long int nLOKWindowId = 0;
+    unsigned long long int lokWindowId = 0;
 
     try
     {
-        nLOKWindowId = std::stoull(tokens[1]);
+        lokWindowId = std::stoull(tokens[1]);
     }
     catch (const std::exception&)
     {
@@ -1999,12 +1999,12 @@ bool ChildSession::dialogEvent(const StringVector& tokens)
     if (_isDocLoaded)
     {
         getLOKitDocument()->setView(_viewId);
-        getLOKitDocument()->sendDialogEvent(nLOKWindowId,
+        getLOKitDocument()->sendDialogEvent(lokWindowId,
                                             tokens.cat(' ', 2).c_str());
     }
     else
     {
-        getLOKit()->sendDialogEvent(nLOKWindowId, tokens.cat(' ', 2).c_str());
+        getLOKit()->sendDialogEvent(lokWindowId, tokens.cat(' ', 2).c_str());
     }
 
     return true;
@@ -2092,27 +2092,27 @@ bool ChildSession::renderSearchResult(const char* buffer, int length, const Stri
 
     const auto eTileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
 
-    unsigned char* pBitmapBuffer = nullptr;
+    unsigned char* bitmapBuffer = nullptr;
 
-    int nWidth = 0;
-    int nHeight = 0;
-    size_t nByteSize = 0;
+    int width = 0;
+    int height = 0;
+    size_t byteSize = 0;
 
-    bool bSuccess = getLOKitDocument()->renderSearchResult(sArguments.c_str(), &pBitmapBuffer, &nWidth, &nHeight, &nByteSize);
+    bool bSuccess = getLOKitDocument()->renderSearchResult(sArguments.c_str(), &bitmapBuffer, &width, &height, &byteSize);
 
-    if (bSuccess && nByteSize > 0)
+    if (bSuccess && byteSize > 0)
     {
-        std::vector<char> aOutput;
-        aOutput.reserve(nByteSize * 3 / 4); // reserve 75% of original size
+        std::vector<char> output;
+        output.reserve(byteSize * 3 / 4); // reserve 75% of original size
 
-        if (Png::encodeBufferToPNG(pBitmapBuffer, nWidth, nHeight, aOutput, eTileMode))
+        if (Png::encodeBufferToPNG(bitmapBuffer, width, height, output, eTileMode))
         {
-            static const std::string aHeader = "rendersearchresult:\n";
-            size_t nResponseSize = aHeader.size() + aOutput.size();
-            std::vector<char> aResponse(nResponseSize);
-            std::copy(aHeader.begin(), aHeader.end(), aResponse.begin());
-            std::copy(aOutput.begin(), aOutput.end(), aResponse.begin() + aHeader.size());
-            sendBinaryFrame(aResponse.data(), aResponse.size());
+            static const std::string header = "rendersearchresult:\n";
+            size_t responseSize = header.size() + output.size();
+            std::vector<char> response(responseSize);
+            std::copy(header.begin(), header.end(), response.begin());
+            std::copy(output.begin(), output.end(), response.begin() + header.size());
+            sendBinaryFrame(response.data(), response.size());
         }
         else
         {
@@ -2124,8 +2124,8 @@ bool ChildSession::renderSearchResult(const char* buffer, int length, const Stri
         sendTextFrameAndLogError("error: cmd=rendersearchresult kind=failure");
     }
 
-    if (pBitmapBuffer)
-        free(pBitmapBuffer);
+    if (bitmapBuffer)
+        free(bitmapBuffer);
 
     return true;
 }
@@ -2699,9 +2699,9 @@ bool ChildSession::askSignatureStatus(const char* buffer, int length, const Stri
         }
     }
 
-    int nStatus = getLOKitDocument()->getSignatureState();
+    int status = getLOKitDocument()->getSignatureState();
 
-    sendTextFrame("signaturestatus: " + std::to_string(nStatus));
+    sendTextFrame("signaturestatus: " + std::to_string(status));
     return true;
 }
 
@@ -2973,11 +2973,11 @@ bool ChildSession::setClientPart(const StringVector& tokens)
 
 bool ChildSession::selectClientPart(const StringVector& tokens)
 {
-    int nPart = 0;
-    int nSelect = 0;
+    int part = 0;
+    int select = 0;
     if (tokens.size() < 3 ||
-        !getTokenInteger(tokens[1], "part", nPart) ||
-        !getTokenInteger(tokens[2], "how", nSelect))
+        !getTokenInteger(tokens[1], "part", part) ||
+        !getTokenInteger(tokens[2], "how", select))
     {
         sendTextFrameAndLogError("error: cmd=selectclientpart kind=invalid");
         return false;
@@ -2987,9 +2987,9 @@ bool ChildSession::selectClientPart(const StringVector& tokens)
 
     if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
     {
-        if (nPart != getLOKitDocument()->getPart())
+        if (part != getLOKitDocument()->getPart())
         {
-            getLOKitDocument()->selectPart(nPart, nSelect);
+            getLOKitDocument()->selectPart(part, select);
 
             // Notify the client of the selection update.
             const std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
@@ -3007,9 +3007,9 @@ bool ChildSession::selectClientPart(const StringVector& tokens)
 
 bool ChildSession::moveSelectedClientParts(const StringVector& tokens)
 {
-    int nPosition = 0;
+    int position = 0;
     if (tokens.size() < 2 ||
-        !getTokenInteger(tokens[1], "position", nPosition))
+        !getTokenInteger(tokens[1], "position", position))
     {
         sendTextFrameAndLogError("error: cmd=moveselectedclientparts kind=invalid");
         return false;
@@ -3019,7 +3019,7 @@ bool ChildSession::moveSelectedClientParts(const StringVector& tokens)
 
     if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
     {
-        getLOKitDocument()->moveSelectedParts(nPosition, false); // Move, don't duplicate.
+        getLOKitDocument()->moveSelectedParts(position, false); // Move, don't duplicate.
 
         // Get the status to notify clients of the reordering and selection change.
         const std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
@@ -3063,16 +3063,16 @@ bool ChildSession::renderShapeSelection(const StringVector& tokens)
 
     getLOKitDocument()->setView(_viewId);
 
-    char* pOutput = nullptr;
-    const std::size_t nOutputSize = getLOKitDocument()->renderShapeSelection(&pOutput);
-    if (pOutput != nullptr && nOutputSize > 0)
+    char* output = nullptr;
+    const std::size_t outputSize = getLOKitDocument()->renderShapeSelection(&output);
+    if (output != nullptr && outputSize > 0)
     {
         static const std::string header = "shapeselectioncontent:\n";
-        size_t responseSize = header.size() + nOutputSize;
+        size_t responseSize = header.size() + outputSize;
         std::unique_ptr<char[]> response(new char[responseSize]);
         std::memcpy(response.get(), header.data(), header.size());
-        std::memcpy(response.get() + header.size(), pOutput, nOutputSize);
-        free(pOutput);
+        std::memcpy(response.get() + header.size(), output, outputSize);
+        free(output);
 
         LOG_TRC("Sending response (" << responseSize << " bytes) for shapeselectioncontent on view #" << _viewId);
         sendBinaryFrame(response.get(), responseSize);

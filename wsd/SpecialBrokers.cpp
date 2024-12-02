@@ -222,9 +222,9 @@ std::size_t RenderSearchResultBroker::getInstanceCount()
 
 RenderSearchResultBroker::RenderSearchResultBroker(
     std::string const& uri, Poco::URI const& uriPublic, std::string const& docKey,
-    std::shared_ptr<std::vector<char>> const& pSearchResultContent)
+    std::shared_ptr<std::vector<char>> const& searchResultContent)
     : StatelessBatchBroker(uri, uriPublic, docKey)
-    , _pSearchResultContent(pSearchResultContent)
+    , _searchResultContent(searchResultContent)
 {
     LOG_TRC("Created RenderSearchResultBroker: uri: ["
             << uri << "], uriPublic: [" << uriPublic.toString() << "], docKey: [" << docKey
@@ -276,8 +276,8 @@ void RenderSearchResultBroker::setLoaded()
     const std::string renderSearchResultCmd = "rendersearchresult ";
     std::vector<char> renderSearchResultRequest(renderSearchResultCmd.begin(),
                                                 renderSearchResultCmd.end());
-    renderSearchResultRequest.resize(renderSearchResultCmd.size() + _pSearchResultContent->size());
-    std::copy(_pSearchResultContent->begin(), _pSearchResultContent->end(),
+    renderSearchResultRequest.resize(renderSearchResultCmd.size() + _searchResultContent->size());
+    std::copy(_searchResultContent->begin(), _searchResultContent->end(),
               renderSearchResultRequest.begin() + renderSearchResultCmd.size());
     _clientSession->handleMessage(renderSearchResultRequest);
 }
@@ -309,14 +309,14 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
                                       messageData.begin());
             if (bEquals)
             {
-                _aResposeData.resize(messageData.size() - commandStringVector.size());
+                _responseData.resize(messageData.size() - commandStringVector.size());
                 std::copy(messageData.begin() + commandStringVector.size(), messageData.end(),
-                          _aResposeData.begin());
+                          _responseData.begin());
 
                 http::Response httpResponse(http::StatusCode::OK);
                 FileServerRequestHandler::hstsHeaders(httpResponse);
                 // really not ideal that the response works only with std::string
-                httpResponse.setBody(std::string(_aResposeData.data(), _aResposeData.size()),
+                httpResponse.setBody(std::string(_responseData.data(), _responseData.size()),
                                      "image/png");
                 httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Close);
                 _socket->sendAndShutdown(httpResponse);

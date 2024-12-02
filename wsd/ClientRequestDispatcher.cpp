@@ -1332,7 +1332,7 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
 
 std::string ClientRequestDispatcher::getContentType(const std::string& fileName)
 {
-    static std::unordered_map<std::string, std::string> aContentTypes{
+    static std::unordered_map<std::string, std::string> contentTypes{
         { "svg", "image/svg+xml" },
         { "pot", "application/vnd.ms-powerpoint" },
         { "xla", "application/vnd.ms-excel" },
@@ -1474,8 +1474,8 @@ std::string ClientRequestDispatcher::getContentType(const std::string& fileName)
 
     const std::string sExt = Poco::Path(fileName).getExtension();
 
-    const auto it = aContentTypes.find(sExt);
-    if (it != aContentTypes.end())
+    const auto it = contentTypes.find(sExt);
+    if (it != contentTypes.end())
         return it->second;
 
     return "application/octet-stream";

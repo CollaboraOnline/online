@@ -722,57 +722,57 @@ void WhiteBoxTests::testAnonymization()
                                        "secret.odt?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&"
                                        "access_token_ttl=0&permission=edit";
 
-    std::uint64_t nAnonymizationSalt = 1111111111182589933;
+    std::uint64_t anonymizationSalt = 1111111111182589933;
 
     LOK_ASSERT_EQUAL(std::string("#0#5e45aef91248a8aa#"),
-                     Anonymizer::anonymizeUrl(name, nAnonymizationSalt));
+                     Anonymizer::anonymizeUrl(name, anonymizationSalt));
     LOK_ASSERT_EQUAL(std::string("#1#8f8d95bd2a202d00#.odt"),
-                     Anonymizer::anonymizeUrl(filenameTestx, nAnonymizationSalt));
+                     Anonymizer::anonymizeUrl(filenameTestx, anonymizationSalt));
     LOK_ASSERT_EQUAL(std::string("/path/to/#2#5c872b2d82ecc8a0#.ext"),
-                     Anonymizer::anonymizeUrl(path, nAnonymizationSalt));
+                     Anonymizer::anonymizeUrl(path, anonymizationSalt));
     LOK_ASSERT_EQUAL(
         std::string("http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
                     "#3#22c6f0caad277666#?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_"
                     "token_ttl=0&permission=edit"),
-        Anonymizer::anonymizeUrl(plainUrl, nAnonymizationSalt));
+        Anonymizer::anonymizeUrl(plainUrl, anonymizationSalt));
     LOK_ASSERT_EQUAL(
         std::string("http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
                     "736_ocgdpzbkm39u/"
                     "#4#294f0dfb18f6a80b#.odt?access_token=Hn0zttjbwkvGWb5BHbDa5ArgTykJAyBl&access_"
                     "token_ttl=0&permission=edit"),
-        Anonymizer::anonymizeUrl(fileUrl, nAnonymizationSalt));
+        Anonymizer::anonymizeUrl(fileUrl, anonymizationSalt));
 
-    nAnonymizationSalt = 0;
+    anonymizationSalt = 0;
 
     LOK_ASSERT_EQUAL(std::string("#0#5e45aef91248a8aa#"),
-                     Anonymizer::anonymizeUrl(name, nAnonymizationSalt));
+                     Anonymizer::anonymizeUrl(name, anonymizationSalt));
     Anonymizer::mapAnonymized(name, name);
-    LOK_ASSERT_EQUAL(name, Anonymizer::anonymizeUrl(name, nAnonymizationSalt));
+    LOK_ASSERT_EQUAL(name, Anonymizer::anonymizeUrl(name, anonymizationSalt));
 
     LOK_ASSERT_EQUAL(std::string("#2#5c872b2d82ecc8a0#.ext"),
-                     Anonymizer::anonymizeUrl(filename, nAnonymizationSalt));
+                     Anonymizer::anonymizeUrl(filename, anonymizationSalt));
     Anonymizer::mapAnonymized("filename",
                               "filename"); // Identity map of the filename without extension.
-    LOK_ASSERT_EQUAL(filename, Anonymizer::anonymizeUrl(filename, nAnonymizationSalt));
+    LOK_ASSERT_EQUAL(filename, Anonymizer::anonymizeUrl(filename, anonymizationSalt));
 
     LOK_ASSERT_EQUAL(std::string("#1#8f8d95bd2a202d00#.odt"),
-                     Anonymizer::anonymizeUrl(filenameTestx, nAnonymizationSalt));
+                     Anonymizer::anonymizeUrl(filenameTestx, anonymizationSalt));
     Anonymizer::mapAnonymized("testx (6)",
                               "testx (6)"); // Identity map of the filename without extension.
-    LOK_ASSERT_EQUAL(filenameTestx, Anonymizer::anonymizeUrl(filenameTestx, nAnonymizationSalt));
+    LOK_ASSERT_EQUAL(filenameTestx, Anonymizer::anonymizeUrl(filenameTestx, anonymizationSalt));
 
-    LOK_ASSERT_EQUAL(path, Anonymizer::anonymizeUrl(path, nAnonymizationSalt));
+    LOK_ASSERT_EQUAL(path, Anonymizer::anonymizeUrl(path, anonymizationSalt));
 
     const std::string urlAnonymized = Util::replace(plainUrl, "736_ocgdpzbkm39u", "#3#22c6f0caad277666#");
-    LOK_ASSERT_EQUAL(urlAnonymized, Anonymizer::anonymizeUrl(plainUrl, nAnonymizationSalt));
+    LOK_ASSERT_EQUAL(urlAnonymized, Anonymizer::anonymizeUrl(plainUrl, anonymizationSalt));
     Anonymizer::mapAnonymized("736_ocgdpzbkm39u", "736_ocgdpzbkm39u");
-    LOK_ASSERT_EQUAL(plainUrl, Anonymizer::anonymizeUrl(plainUrl, nAnonymizationSalt));
+    LOK_ASSERT_EQUAL(plainUrl, Anonymizer::anonymizeUrl(plainUrl, anonymizationSalt));
 
     const std::string urlAnonymized2 = Util::replace(fileUrl, "secret", "#4#294f0dfb18f6a80b#");
-    LOK_ASSERT_EQUAL(urlAnonymized2, Anonymizer::anonymizeUrl(fileUrl, nAnonymizationSalt));
+    LOK_ASSERT_EQUAL(urlAnonymized2, Anonymizer::anonymizeUrl(fileUrl, anonymizationSalt));
     Anonymizer::mapAnonymized("secret", "736_ocgdpzbkm39u");
     const std::string urlAnonymized3 = Util::replace(fileUrl, "secret", "736_ocgdpzbkm39u");
-    LOK_ASSERT_EQUAL(urlAnonymized3, Anonymizer::anonymizeUrl(fileUrl, nAnonymizationSalt));
+    LOK_ASSERT_EQUAL(urlAnonymized3, Anonymizer::anonymizeUrl(fileUrl, anonymizationSalt));
 }
 
 void WhiteBoxTests::testIso8601Time()

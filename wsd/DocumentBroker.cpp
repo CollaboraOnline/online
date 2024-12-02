@@ -3198,8 +3198,8 @@ DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session
     const std::string id = session->getId();
 
     // Request a new session from the child kit.
-    const std::string aMessage = "session " + id + ' ' + _docKey + ' ' + _docId;
-    _childProcess->sendTextFrame(aMessage);
+    const std::string message = "session " + id + ' ' + _docKey + ' ' + _docId;
+    _childProcess->sendTextFrame(message);
 
 #if !MOBILEAPP
     // Tell the admin console about this new doc
@@ -3545,18 +3545,18 @@ void DocumentBroker::setKitLogLevel(const std::string& level)
 
 std::string DocumentBroker::getDownloadURL(const std::string& downloadId)
 {
-    auto aFound = _registeredDownloadLinks.find(downloadId);
-    if (aFound != _registeredDownloadLinks.end())
-        return aFound->second;
+    auto found = _registeredDownloadLinks.find(downloadId);
+    if (found != _registeredDownloadLinks.end())
+        return found->second;
 
     return "";
 }
 
 void DocumentBroker::unregisterDownloadId(const std::string& downloadId)
 {
-    auto aFound = _registeredDownloadLinks.find(downloadId);
-    if (aFound != _registeredDownloadLinks.end())
-        _registeredDownloadLinks.erase(aFound);
+    auto found = _registeredDownloadLinks.find(downloadId);
+    if (found != _registeredDownloadLinks.end())
+        _registeredDownloadLinks.erase(found);
 }
 
 /// Handles input from the prisoner / child kit process
