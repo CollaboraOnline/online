@@ -864,7 +864,7 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('Values duplicate...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=8'},
 						{name: _('Containing text...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=23'},
 						{type: 'separator'},
-						{name: _('More highlights...'), uno: '.uno:ConditionalFormatManagerDialog'},
+						{name: _('More highlights...'), uno: '.uno:ConditionalFormatDialog'},
 					]},
 					{name: _('Top/Bottom Rules...'), type: 'menu', menu: [
 						{name: _('Top N elements...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=11'},
@@ -874,7 +874,7 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('Above Average...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=15'},
 						{name: _('Below Average...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=16'},
 						{type: 'separator'},
-						{name: _('More highlights...'), uno: '.uno:ConditionalFormatManagerDialog'},
+						{name: _('More highlights...'), uno: '.uno:ConditionalFormatDialog'},
 					]},
 					{uno: '.uno:ColorScaleFormatDialog'},
 					{uno: '.uno:DataBarFormatDialog'},
