@@ -134,7 +134,7 @@ private:
 
     struct AssetData
     {
-        // Each asset can have a "stamp" in the JSON that we treat just as a string. In practice it
+        // Each asset can have a "stamp" or "version" in the JSON that we treat just as a string. In practice it
         // can be some timestamp, but we don't parse it. If the stamp is changed, we re-download the
         // asset file.
         std::string stamp;
