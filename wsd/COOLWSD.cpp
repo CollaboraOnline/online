@@ -1697,8 +1697,12 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
 #endif // !MOBILEAPP
 
-#if defined(MACOS) && defined(DEBUG)
-    setenv("SAL_LOG", "+INFO+WARN", 0);
+#if defined(DEBUG)
+    // Enable if you need more logging from core
+    //setenv("SAL_LOG", "+INFO+WARN", 0);
+
+    // Enable if you need to see the top left corner of tile that was rendered
+    //setenv("LOK_DEBUG_TILES", "1", 0);
 #endif
 
     int pdfResolution =
