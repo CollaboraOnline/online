@@ -1083,7 +1083,7 @@ fi
 AC_MSG_CHECKING([whether code-coverage is enabled])
 if test "x$with_coverage" != "x"; then
 
-    AC_DEFUN(AC_PROG_LCOV, [AC_CHECK_PROG(LCOV,lcov,yes)])
+    AC_DEFUN([AC_PROG_LCOV], [AC_CHECK_PROG(LCOV,lcov,yes)])
     AC_PROG_LCOV
     if test x"${LCOV}" == x"yes" ; then
         AC_MSG_RESULT([yes ($with_coverage)])
