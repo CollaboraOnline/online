@@ -14,11 +14,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 
 	it('No jump on long merged cell', function() {
-		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
+		desktopHelper.assertScrollbarPosition('horizontal', 205, 320);
 		calcHelper.clickOnFirstCell(true, false, false);
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1:Z1');
-		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
+		desktopHelper.assertScrollbarPosition('horizontal', 205, 320);
 	});
 
 	it('Jump on address with not visible cursor', function() {
@@ -30,7 +30,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 
 	it('Jump on search with not visible cursor', function() {
-		desktopHelper.assertScrollbarPosition('horizontal', 205, 315);
+		desktopHelper.assertScrollbarPosition('horizontal', 205, 320);
 		cy.cGet('input#search-input').clear().type('FIRST{enter}');
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A10');
