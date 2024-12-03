@@ -321,20 +321,20 @@ int main(int argc, char* argv[])
                                  });
 
     std::thread([]
-                {
-                    assert(coolwsd == nullptr);
-                    char *argv[2];
-                    argv[0] = strdup("mobile");
-                    argv[1] = nullptr;
-                    Util::setThreadName("app");
-                    while (true)
-                    {
-                        coolwsd = new COOLWSD();
-                        coolwsd->run(1, argv);
-                        delete coolwsd;
-                        LOG_TRC("One run of COOLWSD completed");
-                    }
-                }).detach();
+    {
+        assert(coolwsd == nullptr);
+        char *argv[2];
+        argv[0] = strdup("mobile");
+        argv[1] = nullptr;
+        Util::setThreadName("app");
+        while (true)
+        {
+            coolwsd = new COOLWSD();
+            coolwsd->run(1, argv);
+            delete coolwsd;
+            LOG_TRC("One run of COOLWSD completed");
+        }
+    }).detach();
 
     fakeClientFd = fakeSocketSocket();
 
