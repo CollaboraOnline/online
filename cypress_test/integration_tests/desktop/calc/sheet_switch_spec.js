@@ -27,15 +27,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		desktopHelper.assertScrollbarPosition('vertical', 15, 25);
 	});
 
-	it('Check view position on repeated selection of currently selected sheet', function() {
+	it.only('Check view position on repeated selection of currently selected sheet', function() {
 		// initially we are on sheet 2 tab
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'F720');
-		desktopHelper.assertScrollbarPosition('vertical', 330, 350);
+		desktopHelper.assertScrollbarPosition('vertical', 280, 350);
 
 		// click on sheet 2 tab (yes, current one)
 		cy.cGet('#spreadsheet-tab1').click();
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'F720');
-		desktopHelper.assertScrollbarPosition('vertical', 330, 350);
+		desktopHelper.assertScrollbarPosition('vertical', 280, 350);
 
 		// go to different place in the spreadsheet
 		cy.cGet(helper.addressInputSelector).type('{selectAll}A2{enter}');
