@@ -23,6 +23,7 @@
 
 #include <Poco/URI.h>
 
+#include <cctype>
 #include <sstream>
 #include <stdexcept>
 #include <utility>
@@ -281,6 +282,11 @@ Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
     {
         // TODO: Validate and limit access to local paths!
         uriPublic.normalize();
+#ifdef _WINDOWS
+        std::string p = uriPublic.getPath();
+        if (p.length() > 4 && p[0] == '/' && std::isalpha(p[1]) && p[2] == ':' && p[3] == '/')
+            uriPublic.setPath(p.substr(1));
+#endif
     }
 
     if (uriPublic.getPath().empty())
