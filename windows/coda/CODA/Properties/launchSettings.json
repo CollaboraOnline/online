@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "CODA": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "SAL_LOG": "+INFO+WARN"
+      },
+      "nativeDebugging": true
+    }
+  }
+}
