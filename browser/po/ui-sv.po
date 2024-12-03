@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-02 13:03+0100\n"
-"PO-Revision-Date: 2024-11-22 13:43+0000\n"
-"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"PO-Revision-Date: 2024-12-03 21:30+0000\n"
+"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1305,7 +1305,7 @@ msgstr "ODF Ritning (.odg)"
 
 #: src/control/Control.Menubar.js:646
 msgid "Electronic signature..."
-msgstr ""
+msgstr "Elektronisk signatur..."
 
 #: src/control/Control.Menubar.js:708 src/control/Control.Menubar.js:720
 #: src/control/Control.Menubar.js:1194
@@ -3303,7 +3303,7 @@ msgstr "Klicka för att avsluta presentationen ..."
 
 #: src/slideshow/SlideShowPresenter.ts:415
 msgid "Presentation is paused - main window is hidden"
-msgstr ""
+msgstr "Presentationen är pausad - huvudfönstret är dolt"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
