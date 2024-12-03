@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-02 13:03+0100\n"
-"PO-Revision-Date: 2024-11-25 04:00+0000\n"
+"PO-Revision-Date: 2024-12-03 21:30+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.9-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -275,7 +275,7 @@ msgstr "Pomnilnik"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Počakajte, gruča Kubernetes se umerja ..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -1308,7 +1308,7 @@ msgstr "Risba ODF (.odg)"
 
 #: src/control/Control.Menubar.js:646
 msgid "Electronic signature..."
-msgstr ""
+msgstr "E-podpis ..."
 
 #: src/control/Control.Menubar.js:708 src/control/Control.Menubar.js:720
 #: src/control/Control.Menubar.js:1194
@@ -3041,7 +3041,7 @@ msgstr "Poiščite razdelek accessibility v coolwsd.xml za nastavitev strežnika
 
 #: src/layer/marker/TextInput.js:442
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "Preverite tudi preklop funkcije nareka pod {parentControl}."
 
 #: src/layer/marker/TextInput.js:444
 msgid "the Help tab"
@@ -3314,7 +3314,7 @@ msgstr "Kliknite za izhod iz predstavitve ..."
 
 #: src/slideshow/SlideShowPresenter.ts:415
 msgid "Presentation is paused - main window is hidden"
-msgstr ""
+msgstr "Predstavitev je ustavljena - glavno okno je skrito"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
