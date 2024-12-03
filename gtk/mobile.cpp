@@ -182,48 +182,46 @@ static void handle_cool_message(WebKitUserContentManager *manager,
 
             // Start another thread to read responses and forward them to the JavaScript
             std::thread([]
+            {
+                Util::setThreadName("app2js");
+                while (true)
+                {
+                    struct pollfd pollfd[2];
+                    pollfd[0].fd = fakeClientFd;
+                    pollfd[0].events = POLLIN;
+                    pollfd[1].fd = closeNotificationPipeForForwardingThread[1];
+                    pollfd[1].events = POLLIN;
+                    if (fakeSocketPoll(pollfd, 2, -1) > 0)
+                    {
+                        if (pollfd[1].revents == POLLIN)
                         {
-                            Util::setThreadName("app2js");
-                            while (true)
-                            {
-                               struct pollfd pollfd[2];
-                               pollfd[0].fd = fakeClientFd;
-                               pollfd[0].events = POLLIN;
-                               pollfd[1].fd = closeNotificationPipeForForwardingThread[1];
-                               pollfd[1].events = POLLIN;
-                               if (fakeSocketPoll(pollfd, 2, -1) > 0)
-                               {
-                                   if (pollfd[1].revents == POLLIN)
-                                   {
-                                       // The code below handling the "BYE" fake Websocket
-                                       // message has closed the other end of the
-                                       // closeNotificationPipeForForwardingThread. Let's close
-                                       // the other end too just for cleanliness, even if a
-                                       // FakeSocket as such is not a system resource so nothing
-                                       // is saved by closing it.
-                                       fakeSocketClose(closeNotificationPipeForForwardingThread[1]);
+                            // The code below handling the "BYE" fake Websocket message has closed
+                            // the other end of the closeNotificationPipeForForwardingThread. Let's
+                            // close the other end too just for cleanliness, even if a FakeSocket as
+                            // such is not a system resource so nothing is saved by closing it.
+                            fakeSocketClose(closeNotificationPipeForForwardingThread[1]);
 
-                                       // Close our end of the fake socket connection to the
-                                       // ClientSession thread, so that it terminates
-                                       fakeSocketClose(fakeClientFd);
+                            // Close our end of the fake socket connection to the
+                            // ClientSession thread, so that it terminates
+                            fakeSocketClose(fakeClientFd);
 
-                                       return;
-                                   }
-                                   if (pollfd[0].revents == POLLIN)
-                                   {
-                                       int n = fakeSocketAvailableDataLength(fakeClientFd);
-                                       if (n == 0)
-                                           return;
-                                       std::vector<char> buf(n);
-                                       n = fakeSocketRead(fakeClientFd, buf.data(), n);
-                                       send2JS(buf);
-                                   }
-                               }
-                               else
-                                   break;
-                           }
-                           assert(false);
-                        }).detach();
+                            return;
+                        }
+                        if (pollfd[0].revents == POLLIN)
+                        {
+                            int n = fakeSocketAvailableDataLength(fakeClientFd);
+                            if (n == 0)
+                                return;
+                            std::vector<char> buf(n);
+                            n = fakeSocketRead(fakeClientFd, buf.data(), n);
+                            send2JS(buf);
+                        }
+                    }
+                    else
+                        break;
+                }
+                assert(false);
+            }).detach();
 
             // First we simply send it the URL. This corresponds to the GET request with Upgrade to
             // WebSocket.
@@ -231,13 +229,13 @@ static void handle_cool_message(WebKitUserContentManager *manager,
 
             // Must do this in a thread, too, so that we can return to the GTK+ main loop
             std::thread([]
-                        {
-                            struct pollfd pollfd;
-                            pollfd.fd = fakeClientFd;
-                            pollfd.events = POLLOUT;
-                            fakeSocketPoll(&pollfd, 1, -1);
-                            fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
-                        }).detach();
+            {
+                struct pollfd pollfd;
+                pollfd.fd = fakeClientFd;
+                pollfd.events = POLLOUT;
+                fakeSocketPoll(&pollfd, 1, -1);
+                fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
+            }).detach();
         }
         else if (strcmp(string_value, "BYE") == 0)
         {
@@ -253,14 +251,14 @@ static void handle_cool_message(WebKitUserContentManager *manager,
             // As above
             char *string_copy = strdup(string_value);
             std::thread([=]
-                        {
-                            struct pollfd pollfd;
-                            pollfd.fd = fakeClientFd;
-                            pollfd.events = POLLOUT;
-                            fakeSocketPoll(&pollfd, 1, -1);
-                            fakeSocketWrite(fakeClientFd, string_copy, strlen(string_copy));
-                            free(string_copy);
-                        }).detach();
+            {
+                struct pollfd pollfd;
+                pollfd.fd = fakeClientFd;
+                pollfd.events = POLLOUT;
+                fakeSocketPoll(&pollfd, 1, -1);
+                fakeSocketWrite(fakeClientFd, string_copy, strlen(string_copy));
+                free(string_copy);
+            }).detach();
         }
         g_free(string_value);
     }
