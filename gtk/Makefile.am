@@ -38,6 +38,7 @@ cmake_list= \
             ../common/SigUtil-mobile.cpp \
             ../common/SpookyV2.cpp \
             ../common/Unit.cpp \
+            ../common/Unit-mobile.cpp \
             ../common/Util.cpp \
             ../common/Util-mobile.cpp \
             ../common/Util-unix.cpp \
