@@ -49,7 +49,7 @@ void initialize_cpp_things()
 {
     // FIXME: Code snippet shared with gtk/mobile.cpp, factor out into separate file.
 
-    Log::initialize("Mobile", "trace", false, false, {});
+    Log::initialize("Mobile", "trace", false, false, {}, false, {});
     Util::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line)
@@ -92,8 +92,7 @@ void do_hullo_handling_things()
 
     // Now we know that the JS has started completely
 
-    // Contact the permanently (during app lifetime) listening COOLWSD server
-    // "public" socket
+    // Contact the permanently (during app lifetime) listening COOLWSD server "public" socket
     assert(coolwsd_server_socket_fd != -1);
     int rc = fakeSocketConnect(fakeClientFd, coolwsd_server_socket_fd);
     assert(rc != -1);
@@ -161,6 +160,33 @@ void do_hullo_handling_things()
         pollfd.events = POLLOUT;
         fakeSocketPoll(&pollfd, 1, -1);
         fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
+    }).detach();
+}
+
+EXPORT
+void do_bye_handling_things()
+{
+    LOG_TRC_NOFILE("Document window terminating on JavaScript side. Closing our end of the socket.");
+
+    // Close one end of the socket pair, that will wake up the forwarding thread above
+    fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+}
+
+EXPORT
+void do_other_message_handling_things(const char *message)
+{
+    LOG_TRC_NOFILE("Handling other message:'" << message << "'");
+
+    char *string_copy = _strdup(message);
+    // As above, must do this in a thread
+    std::thread([=]
+    {
+        struct pollfd pollfd;
+        pollfd.fd = fakeClientFd;
+        pollfd.events = POLLOUT;
+        fakeSocketPoll(&pollfd, 1, -1);
+        fakeSocketWrite(fakeClientFd, string_copy, strlen(string_copy));
+        free(string_copy);
     }).detach();
 }
 
