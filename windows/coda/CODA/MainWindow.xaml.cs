@@ -1,21 +1,12 @@
 ﻿// -*- tab-width: 4; indent-tabs-mode: nil; fill-column: 100 -*-
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 
@@ -44,59 +35,65 @@ namespace CODA
 
         public delegate void Send2JSDelegate(IntPtr buffer, int length);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern int get_coolwsd_server_socket_fd();
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern int set_coolwsd_server_socket_fd(int fd);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern int fakeSocketSocket();
         
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern int fakeSocketPipe2(int[] pipefds);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern int fakeSocketPoll(pollfd[] fds, int nfds, int timeout);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern int fakeSocketListen(int fd);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern int fakeSocketConnect(int fd1, int fd2);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern int fakeSocketAccept4(int fd);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern int fakeSocketPeer(int fd);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern long fakeSocketAvailableDataLength(int fd);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern long fakeSocketRead(int fd, byte[] buf, long nbytes);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern long fakeSocketWrite(int fd, byte[] buf, long nbytes);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern long fakeSocketShutdown(int fd);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern long fakeSocketClose(int fd);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern long fakeSocketDumpState();
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern void initialize_cpp_things();
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern void set_send2JS_function(Send2JSDelegate f);
 
-        [DllImport("CODALib.dll", CharSet = CharSet.Unicode)]
+        [DllImport("CODALib.dll")]
         public static extern void do_hullo_handling_things();
+
+        [DllImport("CODALib.dll")]
+        public static extern void do_bye_handling_things();
+
+        [DllImport("CODALib.dll")]
+        public static extern void do_other_message_handling_things([MarshalAs(UnmanagedType.LPStr)] string message);
 
         private CoreWebView2Settings _webViewSettings;
         CoreWebView2Settings WebViewSettings
@@ -144,6 +141,7 @@ namespace CODA
 
         public MainWindow()
         {
+            Environment.SetEnvironmentVariable("SAL_LOG", "+WARN+INFO");
             Loaded += MainWindow_Loaded;
             InitializeComponent();
             Send2JSDelegate fp = new Send2JSDelegate(send2JS);
@@ -166,6 +164,15 @@ namespace CODA
             if (args.WebMessageAsJson == "\"HULLO\"")
             {
                 do_hullo_handling_things();
+            }
+            else if (args.WebMessageAsJson == "\"BYE\"")
+            {
+                do_bye_handling_things();
+            }
+            else
+            {
+                string message = JsonSerializer.Deserialize<string>(args.WebMessageAsJson);
+                do_other_message_handling_things(message);
             }
         }
 
