@@ -68,12 +68,12 @@ void initialize_cpp_things()
         argv[1] = nullptr;
         Util::setThreadName("app");
         while (true)
-            {
-                coolwsd = new COOLWSD();
-                coolwsd->run(1, argv);
-                delete coolwsd;
-                LOG_TRC("One run of COOLWSD completed");
-            }
+        {
+            coolwsd = new COOLWSD();
+            coolwsd->run(1, argv);
+            delete coolwsd;
+            LOG_TRC("One run of COOLWSD completed");
+        }
     }).detach();
 
     fakeClientFd = fakeSocketSocket();
