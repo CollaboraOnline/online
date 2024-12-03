@@ -22,6 +22,7 @@ namespace cool {
 	export interface HashSendResponse {
 		doc_id: string;
 		available_methods: Array<string>;
+		message: string;
 	}
 
 	export interface SignedResponse {
@@ -159,7 +160,7 @@ namespace cool {
 		handleSendHashBytes(response: Response): void {
 			response.json().then(
 				(json) => {
-					this.handleSendHashJson(json);
+					this.handleSendHashJson(response.ok, json);
 				},
 				(error) => {
 					app.console.log(
@@ -171,7 +172,15 @@ namespace cool {
 		}
 
 		// Handles the 'send hash' response JSON
-		handleSendHashJson(response: HashSendResponse): void {
+		handleSendHashJson(ok: boolean, response: HashSendResponse): void {
+			if (!ok) {
+				app.console.log(
+					'/api/signatures/prepare-files-for-signing failed: ' +
+						response.message,
+				);
+				return;
+			}
+
 			this.docId = response.doc_id;
 			this.availableProviderIDs = response.available_methods;
 			const providers = this.createProviders(this.availableProviderIDs);
