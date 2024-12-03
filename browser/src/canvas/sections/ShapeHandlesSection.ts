@@ -897,7 +897,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	onMouseMove(position: number[], dragDistance: number[]) {
-		if (this.containerObject.isDraggingSomething() && this.sectionProperties.svg) {
+		if (this.containerObject.isDraggingSomething() && this.sectionProperties.svg && !app.file.textCursor.visible) {
 			(window as any).IgnorePanning = true;
 
 			this.sectionProperties.svg.style.left = String((this.myTopLeft[0] + dragDistance[0]) / app.dpiScale) + 'px';
