@@ -1,9 +1,10 @@
-﻿// -*- tab-width: 4; indent-tabs-mode: nil; fill-column: 100 -*-
+// -*- tab-width: 4; indent-tabs-mode: nil; fill-column: 100 -*-
 
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
@@ -219,8 +220,8 @@ namespace CODA
             IWebView2 webView = sender as IWebView2;
             if (e.IsSuccess)
             {
-                // FIXME: Temporarily when running from <repo>/windows/coda/CODA/bin/Debug.
-                webView.CoreWebView2.SetVirtualHostNameToFolderMapping("appassets", "..\\..\\..\\..\\..\\browser\\dist", CoreWebView2HostResourceAccessKind.DenyCors);
+                // FIXME: Temporarily when running from <repo>/windows/coda/CODA/bin/Debug/net8.0-windows.
+                webView.CoreWebView2.SetVirtualHostNameToFolderMapping("appassets", "..\\..\\..\\..\\..\\..\\browser\\dist", CoreWebView2HostResourceAccessKind.DenyCors);
                 webView.CoreWebView2.Navigate("https://appassets/cool.html?file_path=file:///C:/Users/tml/Sailing%20Yacht.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
 
                 OnWebViewFirstInitialized?.Invoke();
@@ -265,7 +266,39 @@ namespace CODA
                 : "window.TheFakeWebSocket.onmessage({'data': window.b64d('";
             const string posttext = "')});";
 
+            if (!binaryMessage)
+            {
+                StringBuilder sb = new StringBuilder(s.Length*2);
+
+                for (int i = 0; i < (s.Length > 100 ? 100 : s.Length); i++)
+                {
+                    if (s[i] >= ' ' && s[i] < 127 && s[i] != '\\')
+                        sb.Append((Char)s[i]);
+                    else if (s[i] == '\\')
+                        sb.Append("\\\\");
+                    else if (s[i] == '\n')
+                        sb.Append("\\n");
+                    else
+                    {
+                        string hex = "0123456789abcdef";
+                        sb.Append("\\" + hex[s[i] >> 4] + hex[s[i] & 0x0F]);
+                    }
+                }
+                string subs = sb.ToString();
+                if (sb.Length > 100)
+                    subs += "...";
+                Debug.WriteLine("Evaluating JavaScript: " + subs);
+            }
+
             string js = pretext + System.Convert.ToBase64String(s) + posttext;
+
+            if (binaryMessage)
+            {
+                string subjs = js.Substring(0, (js.Length > 100 ? 100 : js.Length));
+                if (js.Length > 100)
+                    subjs += "...";
+                Debug.WriteLine("Evaluating JavaScript: " + subjs);
+            }
 
             _iWebView2.ExecuteScriptAsync(js);
         }
