@@ -1061,7 +1061,7 @@ L.Clipboard = L.Class.extend({
 			this._execCopyCutPaste('paste', cmd);
 		} else if (cmd === '.uno:PasteSpecial') {
 			if (this._navigatorClipboardRead(true)) {
-				return;
+				return true;
 			}
 			this._openPasteSpecialPopup();
 		} else {
