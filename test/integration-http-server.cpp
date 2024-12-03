@@ -265,6 +265,8 @@ void HTTPServerTest::testCoolPost()
     LOK_ASSERT(html.find("data-coolwsd-version = \"" + Util::getCoolVersion() + '"') !=
                std::string::npos);
     LOK_ASSERT(html.find("choMXq0rSMcsm0RoZZWDWsrgAcE5AHwc") != std::string::npos);
+    LOK_ASSERT(html.find("data-access-token = \"choMXq0rSMcsm0RoZZWDWsrgAcE5AHwc\"") !=
+               std::string::npos);
     LOK_ASSERT(html.find("data-access-token-ttl = \"0\"") != std::string::npos);
     LOK_ASSERT(html.find("data-access-header = \"\"") != std::string::npos);
     LOK_ASSERT(html.find("data-post-message-origin-ext = \"https://www.example.com:8080\"") != std::string::npos);
