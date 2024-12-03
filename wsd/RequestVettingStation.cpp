@@ -180,8 +180,8 @@ void RequestVettingStation::checkSharedConfig(const std::string& docKey,
     std::string configId;
 
     std::string sharedSettingsUri;
-    if (auto settingsJSON = _checkFileInfo->wopiInfo()->get("SettingsJSON").extract<Poco::JSON::Object::Ptr>())
-        JsonUtil::findJSONValue(settingsJSON, "SharedSettings", sharedSettingsUri);
+    if (auto settingsJSON = _checkFileInfo->wopiInfo()->getObject("SharedSettings"))
+        JsonUtil::findJSONValue(settingsJSON, "uri", sharedSettingsUri);
     if (sharedSettingsUri.empty())
     {
         // there is none, can immediately call createWopiDocBroker

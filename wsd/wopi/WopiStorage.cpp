@@ -236,8 +236,8 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
 
     JsonUtil::findJSONValue(object, "UserExtraInfo", _userExtraInfo);
     JsonUtil::findJSONValue(object, "UserPrivateInfo", _userPrivateInfo);
-    if (auto settingsJSON = object->get("SettingsJSON").extract<Poco::JSON::Object::Ptr>())
-        JsonUtil::findJSONValue(settingsJSON, "UserSettings", _userSettingsUri);
+    if (auto settingsJSON = object->getObject("UserSettings"))
+        JsonUtil::findJSONValue(settingsJSON, "uri", _userSettingsUri);
 
     JsonUtil::findJSONValue(object, "WatermarkText", _watermarkText);
     JsonUtil::findJSONValue(object, "UserCanWrite", _userCanWrite);
