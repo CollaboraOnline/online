@@ -53,8 +53,7 @@ inline bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
 inline
 int getLevenshteinDist(const std::string& string1, const std::string& string2)
 {
-    int matrix[string1.size() + 1][string2.size() + 1];
-    std::memset(matrix, 0, sizeof(matrix[0][0]) * (string1.size() + 1) * (string2.size() + 1));
+    std::vector<std::vector<int>> matrix(string1.size() + 1, std::vector<int>(string2.size() + 1));
 
     for (std::size_t i = 0; i < string1.size() + 1; i++)
     {
