@@ -482,6 +482,13 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         return success;
     }
+    else if (tokens.equals(0, "addxcu"))
+    {
+        std::string presetsPath = Poco::Path(JAILED_CONFIG_ROOT).toString();
+        std::string xcuPath = Poco::Path(presetsPath, "xcu").toString();
+        std::string xcuFile = Poco::URI(Poco::Path(xcuPath, "config.xcu")).toString();
+        getLOKit()->setOption("addxcu", xcuFile.c_str());
+    }
     else if (!_isDocLoaded)
     {
         sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=nodocloaded");
