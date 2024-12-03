@@ -453,13 +453,26 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("UserId", userId);
             fileInfo->set("UserFriendlyName", userNameString);
 
-            Poco::JSON::Object::Ptr configStoreSettingsInfo = new Poco::JSON::Object();
-            std::string uri = COOLWSD::getServerURL() + "/wopi/settings/sharedconfig.json";
-            configStoreSettingsInfo->set("SharedSettings", Util::trim(uri));
-            uri = COOLWSD::getServerURL() + "/wopi/settings/userconfig.json";
-            configStoreSettingsInfo->set("UserSettings", Util::trim(uri));
-            // authentication token to get them ??
-            fileInfo->set("SettingsJSON", configStoreSettingsInfo);
+            const auto& config = Application::instance().config();
+            static std::string etagString = "\"" COOLWSD_VERSION_HASH +
+                config.getString("ver_suffix", "") + "\"";
+
+            // authentication token to get these settings??
+            {
+                Poco::JSON::Object::Ptr sharedSettings = new Poco::JSON::Object();
+                std::string uri = COOLWSD::getServerURL() + "/wopi/settings/sharedconfig.json";
+                sharedSettings->set("uri", Util::trim(uri));
+                sharedSettings->set("stamp", etagString);
+                fileInfo->set("SharedSettings", sharedSettings);
+            }
+
+            {
+                Poco::JSON::Object::Ptr userSettings = new Poco::JSON::Object();
+                std::string uri = COOLWSD::getServerURL() + "/wopi/settings/userconfig.json";
+                userSettings->set("uri", Util::trim(uri));
+                userSettings->set("stamp", etagString);
+                fileInfo->set("UserSettings", userSettings);
+            }
 
             fileInfo->set("UserCanWrite", (requestDetails.getParam("permission") != "readonly") ? "true": "false");
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
