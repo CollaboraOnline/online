@@ -53,6 +53,10 @@ html[dir='rtl'] .sub-menu-arrow {
 	background-color: transparent;
 	color: var(--color-text-lighter);
 }
+.status-edit-mode {
+	display: none;
+}
+
 
 /* No ruler on mobile phones. */
 .cool-ruler {
