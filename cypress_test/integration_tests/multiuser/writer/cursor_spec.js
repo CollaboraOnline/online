@@ -16,7 +16,7 @@ describe(['tagmultiuser'], 'Check cursor and view behavior', function() {
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('#userListHeader').click();
 		cy.cGet('.user-list-item').eq(1).click();
-		cy.cGet('.jsdialog-overlay').click({force: true});
+		cy.cGet('.jsdialog-overlay').should('not.exist');
 		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 
 		// first view goes somewhere down
