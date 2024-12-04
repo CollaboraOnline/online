@@ -1,5 +1,3 @@
-if ENABLE_CYPRESS
-
 export NODE_PATH=$(abs_builddir)/node_modules
 
 V = $(if $(verbose),,@)
@@ -789,5 +787,4 @@ else
 check-local:
 	$(error CypressError: Can't find LibreOffice core installation!)
 
-endif
 endif
