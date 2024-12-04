@@ -1540,7 +1540,7 @@ bool StreamSocket::parseHeader(const char *clientName,
         const std::streamsize available = _inBuffer.size() - offset;
 
         LOG_INF("parseHeader: " << clientName << " HTTP Request: " << request.getMethod()
-                                << ", uri `" << request.getURI() << "` " << request.getVersion()
+                                << ", uri: [" << request.getURI() << "] " << request.getVersion()
                                 << ", sz[header " << map._headerSize << ", content "
                                 << contentLength << "], offset " << offset << ", chunked "
                                 << request.getChunkedTransferEncoding() << ", "
