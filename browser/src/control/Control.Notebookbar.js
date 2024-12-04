@@ -62,7 +62,6 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('darkmodechanged', this.onDarkModeToggleChange, this);
 		this.map.on('showannotationschanged', this.onShowAnnotationsChange, this);
 		this.map.on('a11ystatechanged', this.onAccessibilityToggleChange, this);
-		this.map.on('enablecommand', this.disableNotebookbarControl, this);
 		if (docType === 'presentation') {
 			this.map.on('updateparts', this.onSlideHideToggle, this);
 			this.map.on('toggleslidehide', this.onSlideHideToggle, this);
@@ -347,14 +346,6 @@ L.Control.Notebookbar = L.Control.extend({
 		);
 
 		this.reloadShortcutsBar();
-	},
-
-	disableNotebookbarControl: function(e) {
-		var toolbar = L.DomUtil.get('toolbar-up');
-		this.builder.executeAction(toolbar, {
-			control_id: e.controlId,
-			action_type: e.enable ? 'enable' : 'disable',
-		});
 	},
 
 	showNotebookbarButton: function(buttonId, show) {
