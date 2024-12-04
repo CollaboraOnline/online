@@ -810,53 +810,53 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             }
         }
 
-        if (endPoint == "admin-settings.html")
-        {
-                try
-                {
-                    std::string templatePath = COOLWSD::FileServerRoot + "/browser/dist/admin-settings.html";
+        // if (endPoint == "admin-settings.html")
+        // {
+        //         try
+        //         {
+        //             std::string templatePath = COOLWSD::FileServerRoot + "/browser/dist/admin-settings.html";
 
-                    std::string htmlContent = readFileToString(templatePath);
-                    if (htmlContent.empty())
-                    {
-                        throw std::runtime_error("HTML file is empty or could not be read");
-                    }
+        //             std::string htmlContent = readFileToString(templatePath);
+        //             if (htmlContent.empty())
+        //             {
+        //                 throw std::runtime_error("HTML file is empty or could not be read");
+        //             }
 
-                    Poco::Net::HTTPResponse httpResponse(Poco::Net::HTTPResponse::HTTP_OK);
-                    httpResponse.setContentType("text/html");
-                    httpResponse.setContentLength(htmlContent.size());
+        //             Poco::Net::HTTPResponse httpResponse(Poco::Net::HTTPResponse::HTTP_OK);
+        //             httpResponse.setContentType("text/html");
+        //             httpResponse.setContentLength(htmlContent.size());
 
-                    std::ostringstream headerStream;
-                    headerStream << "HTTP/1.1 " << httpResponse.getStatus() << " " << httpResponse.getReason()
-                                << "\r\nContent-Type: " << httpResponse.getContentType()
-                                << "\r\nContent-Length: " << httpResponse.getContentLength() << "\r\n\r\n";
-                    std::string headers = headerStream.str();
+        //             std::ostringstream headerStream;
+        //             headerStream << "HTTP/1.1 " << httpResponse.getStatus() << " " << httpResponse.getReason()
+        //                         << "\r\nContent-Type: " << httpResponse.getContentType()
+        //                         << "\r\nContent-Length: " << httpResponse.getContentLength() << "\r\n\r\n";
+        //             std::string headers = headerStream.str();
 
-                    socket->send(headers.data(), headers.size());
+        //             socket->send(headers.data(), headers.size());
 
-                    socket->send(htmlContent.data(), htmlContent.size());
-                }
-                catch (const std::exception& e)
-                {
-                    Poco::Net::HTTPResponse errorResponse(Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR);
-                    errorResponse.setContentType("text/plain");
+        //             socket->send(htmlContent.data(), htmlContent.size());
+        //         }
+        //         catch (const std::exception& e)
+        //         {
+        //             Poco::Net::HTTPResponse errorResponse(Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR);
+        //             errorResponse.setContentType("text/plain");
 
-                    std::string errorMessage = "Error: " + std::string(e.what());
-                    errorResponse.setContentLength(errorMessage.size());
+        //             std::string errorMessage = "Error: " + std::string(e.what());
+        //             errorResponse.setContentLength(errorMessage.size());
 
-                    std::ostringstream errorHeaderStream;
-                    errorHeaderStream << "HTTP/1.1 " << errorResponse.getStatus() << " " << errorResponse.getReason()
-                                    << "\r\nContent-Type: " << errorResponse.getContentType()
-                                    << "\r\nContent-Length: " << errorResponse.getContentLength() << "\r\n\r\n";
-                    std::string errorHeaders = errorHeaderStream.str();
+        //             std::ostringstream errorHeaderStream;
+        //             errorHeaderStream << "HTTP/1.1 " << errorResponse.getStatus() << " " << errorResponse.getReason()
+        //                             << "\r\nContent-Type: " << errorResponse.getContentType()
+        //                             << "\r\nContent-Length: " << errorResponse.getContentLength() << "\r\n\r\n";
+        //             std::string errorHeaders = errorHeaderStream.str();
 
-                    socket->send(errorHeaders.data(), errorHeaders.size());
+        //             socket->send(errorHeaders.data(), errorHeaders.size());
 
-                    socket->send(errorMessage.data(), errorMessage.size());
-                }
+        //             socket->send(errorMessage.data(), errorMessage.size());
+        //         }
 
-            return;
-        }
+        //     return;
+        // }
 
         // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end() &&
@@ -877,7 +877,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             endPoint == "localizations.json" ||
             endPoint == "locore-localizations.json" ||
             endPoint == "uno-localizations.json" ||
-            endPoint == "uno-localizations-override.json")
+            endPoint == "uno-localizations-override.json" ||
+            endPoint == "admin-settings.html")
         {
             accessDetails = preprocessFile(request, response, requestDetails, message, socket);
             return;
@@ -1817,7 +1818,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     csp.merge(config.getString("net.content_security_policy", ""));
 
     // Append CSP to response headers too
-    httpResponse.add("Content-Security-Policy", csp.generate());
+    // httpResponse.add("Content-Security-Policy", csp.generate());
 
     // Setup HTTP Public key pinning
     if ((ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination()) &&
