@@ -46,6 +46,18 @@ describe(['tagdesktop'], 'Presenter Console.', function() {
 					return 2;
 				}
 
+				getVisibleSlidesCount() {
+					this._getSlidesCount();
+				}
+
+				isSlideHidden() {
+					return false;
+				}
+
+				getNextVisibleSlide(slideNumber) {
+					return slideNumber + 1;
+				}
+
 				getNotes() {
 					return "test notes";
 				}
