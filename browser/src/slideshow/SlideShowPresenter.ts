@@ -189,6 +189,38 @@ class SlideShowPresenter {
 		return this._presentationInfo ? this._presentationInfo.slides.length : 0;
 	}
 
+	public isSlideHidden(slideNumber: number) {
+		const slideInfo = this.getSlideInfo(slideNumber);
+		return slideInfo ? slideInfo.hidden : true;
+	}
+
+	public getVisibleSlidesCount() {
+		let count = 0;
+		const slideCount = this._getSlidesCount();
+		for (let i = 0; i < slideCount; ++i) {
+			if (this.isSlideHidden(i)) continue;
+			++count;
+		}
+		return count;
+	}
+
+	public getNextVisibleSlide(slideNumber: number) {
+		let next = slideNumber;
+		while (next < this._getSlidesCount()) {
+			++next;
+			if (!this.isSlideHidden(next)) break;
+		}
+		return next;
+	}
+
+	public getVisibleIndex(slideNumber: number) {
+		let index = slideNumber;
+		for (let i = 0; i < slideNumber; ++i) {
+			if (this.isSlideHidden(i)) --index;
+		}
+		return index;
+	}
+
 	public isFullscreen() {
 		if (this._cypressSVGPresentationTest) return false;
 		return !!this._fullscreen;
