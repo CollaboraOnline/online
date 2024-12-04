@@ -113,6 +113,22 @@ class PresenterConsole {
 			`;
 	}
 
+	_getSlidesCount() {
+		return this._presenter._getSlidesCount();
+	}
+
+	_isSlideHidden(slideNumber) {
+		return this._presenter.isSlideHidden(slideNumber);
+	}
+
+	_getNextVisibleSlide(slideNumber) {
+		return this._presenter.getNextVisibleSlide(slideNumber);
+	}
+
+	_getVisibleIndex(slideNumber) {
+		return this._presenter.getVisibleIndex(slideNumber);
+	}
+
 	_onPresentationInfo() {
 		if (!this._proxyPresenter) {
 			return;
@@ -136,7 +152,8 @@ class PresenterConsole {
 		this._ticks = 0;
 		this._pause = false;
 
-		this._previews = new Array(this._presenter._getSlidesCount());
+		this._visibleSlidesCount = this._presenter.getVisibleSlidesCount();
+		this._previews = new Array(this._getSlidesCount());
 		if (this._previews.length > 1) {
 			let list = this._proxyPresenter.document.querySelectorAll('button');
 			for (let index = 0; index < list.length; index++) {
@@ -147,8 +164,10 @@ class PresenterConsole {
 		if (this._slides) {
 			let img;
 			let elem = this._slides.querySelector('#slides-preview');
-			for (let index = 0; index < this._previews.length; index++) {
+			for (let index = 0; index < this._getSlidesCount(); index++) {
+				if (this._isSlideHidden(index)) continue;
 				img = this._proxyPresenter.document.createElement('img');
+				img.id = `preview-slide-${index}`;
 				img.src = document.querySelector('meta[name="previewImg"]').content;
 				img.style.marginLeft = '10px';
 				img.style.marginRight = '10px';
@@ -781,7 +800,7 @@ class PresenterConsole {
 			autoUpdate: false,
 		});
 
-		for (let index = 0; index < this._previews.length; index++) {
+		for (let index = 0; index < this._visibleSlidesCount; index++) {
 			preview = previews.children.item(index);
 			if (
 				preview.width !== size.width ||
@@ -789,7 +808,7 @@ class PresenterConsole {
 				width !== size.width ||
 				height !== size.height
 			) {
-				this._map.getPreview(2000, index, size.width, size.height, {
+				this._map.getPreview(2000, preview._index, size.width, size.height, {
 					autoUpdate: false,
 					slideshow: true,
 				});
@@ -996,19 +1015,20 @@ class PresenterConsole {
 		let next =
 			this._proxyPresenter.document.querySelector('#next-presentation');
 		if (
-			this._ticks % 2 == 0 &&
+			this._ticks % 2 === 0 &&
 			typeof this._lastIndex !== 'undefined' &&
 			next
 		) {
+			const nextIndex = this._getNextVisibleSlide(this._lastIndex);
 			this._proxyPresenter.setTimeout(
-				L.bind(this._fetchPreview, this, this._lastIndex + 1, next),
+				L.bind(this._fetchPreview, this, nextIndex, next),
 				0,
 			);
 		}
 	}
 
 	_fetchPreview(index, elem) {
-		if (index >= this._presenter._getSlidesCount()) {
+		if (index >= this._getSlidesCount()) {
 			return;
 		}
 
@@ -1112,7 +1132,9 @@ class PresenterConsole {
 				let previews =
 					this._proxyPresenter.document.querySelector('#slides-preview');
 				if (previews && typeof this._currentIndex !== 'undefined') {
-					let preview = previews.children.item(this._currentIndex);
+					let preview = this._proxyPresenter.document.querySelector(
+						`#preview-slide-${this._currentIndex}`,
+					);
 					// 80vh
 					let height = this._proxyPresenter.innerHeight * 0.8;
 					// 25vw
@@ -1140,13 +1162,14 @@ class PresenterConsole {
 		let elem = this._proxyPresenter.document.querySelector('#title-current');
 		if (elem) {
 			elem.innerText = _('Slide {0} of {1}')
-				.replace('{0}', e.slide + 1)
-				.replace('{1}', this._previews.length);
+				.replace('{0}', this._getVisibleIndex(e.slide) + 1)
+				.replace('{1}', this._visibleSlidesCount);
 		}
 
 		elem = this._proxyPresenter.document.querySelector('#next-presentation');
 		if (elem) {
-			this._fetchPreview(this._currentIndex + 1, elem);
+			const nextIndex = this._getNextVisibleSlide(this._currentIndex);
+			this._fetchPreview(nextIndex, elem);
 		}
 	}
 
@@ -1165,12 +1188,11 @@ class PresenterConsole {
 				notesContentElem.innerText = notes;
 		}
 
-		let elem = this._slides.querySelector('#slides-preview');
-		if (elem) {
-			elem = elem.children.item(this._currentIndex);
-			if (elem) {
-				this._selectImg(elem);
-			}
+		let img = this._slides.querySelector(
+			`#preview-slide-${this._currentIndex}`,
+		);
+		if (img) {
+			this._selectImg(img);
 		}
 
 		let next =
@@ -1204,7 +1226,8 @@ class PresenterConsole {
 			autoUpdate: false,
 		});
 
-		if (this._currentIndex + 1 >= this._presenter._getSlidesCount()) {
+		const nextSlideIndex = this._getNextVisibleSlide(this._currentIndex);
+		if (nextSlideIndex >= this._getSlidesCount()) {
 			this.drawEnd(size).then(function (blob) {
 				var reader = new FileReader();
 				reader.onload = function (e) {
@@ -1215,7 +1238,7 @@ class PresenterConsole {
 			return;
 		}
 
-		let preview = this._previews[this._currentIndex + 1];
+		let preview = this._previews[nextSlideIndex];
 		if (!preview) {
 			elem.src = document.querySelector('meta[name="previewImg"]').content;
 		} else {
@@ -1223,16 +1246,10 @@ class PresenterConsole {
 		}
 
 		if (!preview || rect.width !== size.width || rect.height !== size.height) {
-			this._map.getPreview(
-				2000,
-				this._currentIndex + 1,
-				size.width,
-				size.height,
-				{
-					autoUpdate: false,
-					slideshow: true,
-				},
-			);
+			this._map.getPreview(2000, nextSlideIndex, size.width, size.height, {
+				autoUpdate: false,
+				slideshow: true,
+			});
 			elem.style.width = size.width + 'px';
 			elem.style.height = size.height + 'px';
 		}
@@ -1299,7 +1316,8 @@ class PresenterConsole {
 			return;
 		}
 
-		if (this._currentIndex + 1 === e.part) {
+		const nextSlideIndex = this._getNextVisibleSlide(this._currentIndex);
+		if (nextSlideIndex === e.part) {
 			let next =
 				this._proxyPresenter.document.querySelector('#next-presentation');
 			if (next) {
@@ -1310,8 +1328,7 @@ class PresenterConsole {
 		this._previews[e.part] = e.tile.src;
 		this._lastIndex = e.part;
 
-		let elem = this._slides.querySelector('#slides-preview');
-		let img = elem.children.item(e.part);
+		let img = this._slides.querySelector(`#preview-slide-${e.part}`);
 		if (img) {
 			img.src = e.tile.src;
 			img.width = e.width;
