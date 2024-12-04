@@ -278,7 +278,7 @@ void DocumentBroker::pollThread()
 {
     _threadStart = std::chrono::steady_clock::now();
 
-    LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << ']');
+    LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << ']' << " and configId [" << _configId << ']');
 
     // Request a kit process for this doc.
     do
@@ -4475,7 +4475,10 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
             msg += ' ' + tokens.cat(' ', 2);
             if (_asyncInstallTask)
             {
-                auto sendLoad = [this, msg, binary](bool success) {
+                auto sendLoad = [selfWeak = weak_from_this(), this, msg, binary](bool success) {
+                    std::shared_ptr<DocumentBroker> selfLifecycle = selfWeak.lock();
+                    if (!selfLifecycle)
+                        return;
                     if (!success)
                         return;
                     _childProcess->sendFrame(msg, binary);
