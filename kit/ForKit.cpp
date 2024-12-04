@@ -60,6 +60,8 @@ static bool SingleKit = false;
 
 static int parentPid;
 
+static std::string ForKitIdent;
+
 static std::string UserInterface;
 
 static bool DisplayVersion = false;
@@ -74,6 +76,10 @@ static std::vector<std::string> SubForKitRequests;
 static std::map<pid_t, std::string> childJails;
 /// The jails that need cleaning up. This should be small.
 static std::vector<std::string> cleanupJailPaths;
+/// The [subforkit pid -> subforkit id] map.
+static std::map<pid_t, std::string> subForKitPids;
+/// The [subforkit id -> subforkit pid] map.
+static std::map<std::string, pid_t> subForKitIdents;
 
 /// The Main polling main-loop of this (single threaded) process
 static std::unique_ptr<SocketPoll> ForKitPoll;
@@ -162,8 +168,14 @@ protected:
         else if (tokens.size() == 2 && tokens.equals(0, "addforkit"))
         {
             std::string ident = tokens[1];
-            LOG_INF("Setting to spawn additional forkit with ident [" << ident << "] per request.");
-            SubForKitRequests.emplace_back(ident);
+            if (subForKitIdents.contains(ident))
+                LOG_DBG("subForKit with ident [" << ident << "] already available.");
+            else
+            {
+                LOG_INF("Setting to spawn subForKit with ident [" << ident << "] per request.");
+                subForKitIdents[ident] = -1; // Placeholder pid_t until it is created
+                SubForKitRequests.emplace_back(ident);
+            }
         }
         else if (tokens.size() == 2 && tokens.equals(0, "setloglevel"))
         {
@@ -309,8 +321,7 @@ static void cleanupChildren()
         exitedChildPid = info.si_pid;
         status = info.si_status;
 
-        const auto it = childJails.find(exitedChildPid);
-        if (it != childJails.end())
+        if (const auto it = childJails.find(exitedChildPid); it != childJails.end())
         {
             if (WIFSIGNALED(status))
             {
@@ -358,6 +369,13 @@ static void cleanupChildren()
                 // We ran out of kits and we aren't terminating.
                 LOG_WRN("No live Kits exist, and we are not terminating yet.");
             }
+        }
+        else if (const auto subit = subForKitPids.find(exitedChildPid); subit != subForKitPids.end())
+        {
+            LOG_INF("SubForKit " << exitedChildPid << " [" << subit->second
+                    << "] has exited with status " << status << ".");
+            subForKitIdents.erase(subit->second);
+            subForKitPids.erase(subit);
         }
         else
         {
@@ -577,8 +595,10 @@ static int createSubForKit(const std::string& subForKitIdent,
         // detects a parentPid != getppid() as a cue to exit
         parentPid = getppid();
 
+        ForKitIdent = subForKitIdent;
+
         // reset this global counter for this new subForKit
-        ForkCounter = 0;
+        ForkCounter = 10; // <- TODO, spawn & rebalance wrt SubForKits
 
         // Apply core configmgr xcu settings to this forkit for its coolkits to inherit
         {
@@ -593,7 +613,7 @@ static int createSubForKit(const std::string& subForKitIdent,
 
         // launch first coolkit child of this subForKit
         const pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate,
-                                                     loTemplate, subForKitIdent,
+                                                     loTemplate, ForKitIdent,
                                                      useMountNamespaces);
         if (forKitPid < 0)
         {
@@ -602,7 +622,7 @@ static int createSubForKit(const std::string& subForKitIdent,
         }
     };
 
-    auto parentFunc = [](int pid)
+    auto parentFunc = [subForKitIdent](int pid)
     {
         // Parent
         if (pid < 0)
@@ -612,6 +632,9 @@ static int createSubForKit(const std::string& subForKitIdent,
         else
         {
             LOG_INF("Forked subForKit [" << pid << ']');
+            LOG_INF("Forked kit [" << pid << ']');
+            subForKitPids[pid] = subForKitIdent;
+            subForKitIdents[subForKitIdent] = pid;
         }
     };
 
@@ -658,7 +681,7 @@ void forkLibreOfficeKit(const std::string& childRoot,
         for (size_t i = 0; ForkCounter > 0 && i < retry; ++i)
         {
             if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate,
-                                                           "", useMountNamespaces) < 0)
+                                                           ForKitIdent, useMountNamespaces) < 0)
             {
                 LOG_ERR("Failed to create a kit process.");
                 ++ForkCounter;
@@ -991,7 +1014,7 @@ int forkit_main(int argc, char** argv)
     // Ask this first child to send version information to master process and trace startup.
     ::setenv("COOL_TRACE_STARTUP", "1", 1);
     const pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate,
-                                                 "", useMountNamespaces, true);
+                                                 ForKitIdent, useMountNamespaces, true);
     if (forKitPid < 0)
     {
         LOG_FTL("Failed to create a kit process.");
