@@ -562,7 +562,10 @@ static int createSubForKit(const std::string& subForKitIdent,
                            const std::string& loTemplate,
                            bool useMountNamespaces)
 {
-    LOG_DBG("Forking a subForKit with ident " << subForKitIdent << '.');
+    static size_t subForKitId = 0;
+    ++subForKitId;
+    LOG_DBG("Forking a forkit process with subForKitId: " << subForKitIdent <<
+            " as subForKit #" << subForKitId << ".");
     const auto startForkingTime = std::chrono::steady_clock::now();
 
     pid_t childPid = 0;
@@ -612,7 +615,7 @@ static int createSubForKit(const std::string& subForKitIdent,
         }
     };
 
-    std::string processName = "forkit_" + subForKitIdent;
+    std::string processName = "subforkit_" + Util::encodeId(subForKitId, 3);
     childPid = forkKit(childFunc, processName, parentFunc);
 
     const auto duration = (std::chrono::steady_clock::now() - startForkingTime);
