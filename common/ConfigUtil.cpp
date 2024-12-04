@@ -239,6 +239,7 @@ static const std::map<std::string, std::string> DefAppConfig = {
     { "security.seccomp", "true" },
     { "security.server_signature", "false" },
     { "server_name", "" },
+    { "serverside_config.idle_timeout_secs", "3600" },
     { "ssl.ca_file_path", COOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
     { "ssl.cert_file_path", COOLWSD_CONFIGDIR "/cert.pem" },
     { "ssl.cipher_list", "" },

@@ -92,6 +92,8 @@ private:
                                      WebSocketHandler::StatusCodes statusCode);
 
 #if !MOBILEAPP
+    void launchInstallPresets();
+
     void checkFileInfo(const Poco::URI& uri, bool isReadOnly, int redirectionLimit);
     std::shared_ptr<CheckFileInfo> _checkFileInfo;
 #endif // !MOBILEAPP
