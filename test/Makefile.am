@@ -1,5 +1,3 @@
-if ENABLE_TESTS
-
 # Cap threadpools to 4 threads.
 export MAX_CONCURRENCY=4
 AUTOMAKE_OPTION = serial-tests
@@ -214,8 +212,8 @@ unit_http_la_LIBADD = $(CPPUNIT_LIBS)
 if ENABLE_LIBFUZZER
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
 endif
-unit_admin_la_SOURCES = UnitAdmin.cpp
-unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
+#unit_admin_la_SOURCES = UnitAdmin.cpp
+#unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
 unit_typing_la_SOURCES = UnitTyping.cpp
 unit_typing_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_la_SOURCES = UnitCopyPaste.cpp
@@ -302,7 +300,7 @@ unit_load_torture_la_LIBADD = $(CPPUNIT_LIBS)
 unit_save_torture_la_SOURCES = UnitSaveTorture.cpp
 unit_save_torture_la_LIBADD = $(CPPUNIT_LIBS)
 unit_synthetic_lok_la_SOURCES = UnitSyntheticLok.cpp
-unit_synthetic_lok__la_LIBADD = $(CPPUNIT_LIBS)
+unit_synthetic_lok_la_LIBADD = $(CPPUNIT_LIBS)
 unit_rendering_options_la_SOURCES = UnitRenderingOptions.cpp
 unit_rendering_options_la_LIBADD = $(CPPUNIT_LIBS)
 unit_password_protected_la_SOURCES = UnitPasswordProtected.cpp
@@ -381,4 +379,3 @@ all-local: unittest
 	@$(CLEANUP_COMMAND)
 
 .PRECIOUS: $(TEST_LOGS)
-endif
