@@ -148,6 +148,8 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
                 {
                     const Poco::URI aUri(aliasUri.getScheme() + "://" + x + ':' +
                                          std::to_string(aliasUri.getPort()));
+                    LOG_DBG("Mapped URI alias [" << aUri.getAuthority() << "] to canonical URI ["
+                                                 << realUri.getAuthority() << ']');
                     AliasHosts.emplace(aUri.getAuthority(), realUri.getAuthority());
 #if ENABLE_FEATURE_LOCK
                     CommandControl::LockManager::mapUnlockLink(aUri.getHost(), path);
@@ -185,6 +187,8 @@ std::string HostUtil::getNewUri(const Poco::URI& uri)
         // the pair in AliasHosts
         if (val.compare(newUri.getHost()) != 0)
         {
+            LOG_DBG("Mapped URI alias [" << val << "] to canonical URI [" << newUri.getHost()
+                                         << ']');
             AliasHosts.emplace(val, newUri.getHost());
         }
     }
@@ -206,7 +210,7 @@ const Poco::URI HostUtil::getNewLockedUri(const Poco::URI& uri)
     {
         newUri.setAuthority(value);
         LOG_WRN("The locked_host: " << uri.getAuthority() << " is alias of "
-                                    << newUri.getAuthority() << ",Applying "
+                                    << newUri.getAuthority() << ", Applying "
                                     << newUri.getAuthority() << " locked_host settings.");
     }
 
