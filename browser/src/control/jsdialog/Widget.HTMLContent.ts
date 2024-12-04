@@ -50,7 +50,7 @@ function getPermissionModeElements(
 	} else {
 		permissionModeDiv.classList.add('status-edit-mode');
 		permissionModeDiv.title = _('Permission Mode');
-		permissionModeDiv.textContent = _('Edit');
+		permissionModeDiv.textContent = _('Edit mode');
 	}
 
 	return permissionModeDiv;
