@@ -16,7 +16,7 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('#userListHeader').click();
 		cy.cGet('.user-list-item').eq(1).click();
-		cy.cGet('.jsdialog-overlay').click({force: true});
+		cy.cGet('.jsdialog-overlay').should('not.exist');
 
 		// first view goes somewhere in the middle of a sheet: A400
 		cy.cSetActiveFrame('#iframe1');
@@ -53,7 +53,7 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('#userListHeader').click();
 		cy.cGet('.user-list-item').eq(1).click();
-		cy.cGet('.jsdialog-overlay').click({force: true});
+		cy.cGet('.jsdialog-overlay').should('not.exist');
 
 		// first view goes somewhere in the middle of a sheet
 		cy.cSetActiveFrame('#iframe1');
