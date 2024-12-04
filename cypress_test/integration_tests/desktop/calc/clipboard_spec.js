@@ -187,4 +187,36 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 		cy.cGet('#copy-paste-container').should('have.text', url);
 	});
+
+	it('Paste-Special', function () {
+		helper.setDummyClipboardForCopy();
+
+		calcHelper.clickOnFirstCell();
+		helper.typeIntoDocument('Something to copy paste.');
+		helper.typeIntoDocument('{enter}');
+		calcHelper.clickOnFirstCell();
+
+		cy.cGet('#map').rightclick(15, 15, { force: true });
+		cy.cGet('.on-the-fly-context-menu').should('be.visible');
+		cy.cGet('body').contains('.on-the-fly-context-menu .context-menu-item', 'Copy').should('be.visible');
+		cy.cGet('body').contains('.on-the-fly-context-menu .context-menu-item', 'Copy').click();
+
+		helper.typeIntoDocument('{rightArrow}');
+		helper.typeIntoDocument('{rightArrow}');
+
+		cy.cGet('#map').rightclick(210, 15, { force: true });
+		cy.cGet('.on-the-fly-context-menu').should('be.visible');
+		cy.cGet('body').contains('.on-the-fly-context-menu .context-menu-item', 'Paste Special').should('be.visible');
+		cy.cGet('body').contains('.on-the-fly-context-menu .context-menu-item', 'Paste Special').click();
+
+		cy.cGet('#modal-dialog-paste_special_dialog-box').should('be.visible');
+
+		cy.cGet('#modal-dialog-paste_special_dialog-box-yesbutton').should('be.visible');
+		cy.cGet('#modal-dialog-paste_special_dialog-box-yesbutton').click();
+
+		cy.cGet('#PasteSpecial').should('be.visible');
+		cy.cGet('#ok').click();
+
+		cy.cGet('#formulabar').should('contain.text', 'Something to copy paste.');
+	});
 });
