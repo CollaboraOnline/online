@@ -78,6 +78,10 @@ private:
                                        const std::shared_ptr<StreamSocket>& socket);
 
     /// @return true if request has been handled synchronously and response sent, otherwise false
+    static bool handleSignatureRequest(const Poco::Net::HTTPRequest& request,
+                                       const std::shared_ptr<StreamSocket>& socket);
+
+    /// @return true if request has been handled synchronously and response sent, otherwise false
     static bool handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request,
                                        const std::shared_ptr<StreamSocket>& socket);
 

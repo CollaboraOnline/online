@@ -883,6 +883,11 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             //              Util::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
             servedSync = handleClipboardRequest(request, message, disposition, socket);
         }
+        else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
+                 requestDetails.equals(1, "signature"))
+        {
+            servedSync = handleSignatureRequest(request, socket);
+        }
 
         else if (requestDetails.isProxy() && requestDetails.equals(2, "ws"))
             servedSync = handleClientProxyRequest(request, requestDetails, message, disposition);
@@ -1213,19 +1218,22 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
     return false;
 }
 
-bool ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request,
-                                                     const std::shared_ptr<StreamSocket>& socket)
+namespace
+{
+bool handleStaticRequest(const Poco::Net::HTTPRequest& request,
+                         const std::shared_ptr<StreamSocket>& socket,
+                         const std::string& responseString,
+                         const std::string& contentType)
 {
     assert(socket && "Must have a valid socket");
 
     LOG_DBG_S("HTTP request: " << request.getURI());
-    const std::string responseString = "User-agent: *\nDisallow: /\n";
 
     http::Response httpResponse(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(httpResponse);
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     httpResponse.set("Content-Length", std::to_string(responseString.size()));
-    httpResponse.set("Content-Type", "text/plain");
+    httpResponse.set("Content-Type", contentType);
     if( !request.getKeepAlive() )
         httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Close);
     httpResponse.writeData(socket->getOutBuffer());
@@ -1235,8 +1243,41 @@ bool ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPReques
         socket->send(responseString);
     }
     socket->flush();
-    LOG_INF_S("Sent robots.txt response successfully");
+    LOG_INF_S("Sent the response successfully");
     return true;
+}
+}
+
+bool ClientRequestDispatcher::handleSignatureRequest(const Poco::Net::HTTPRequest& request,
+                                                     const std::shared_ptr<StreamSocket>& socket)
+{
+    const std::string responseString = R"html(
+<!doctype html>
+<html>
+    <head>
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function() {
+                window.opener.postMessage({
+                    sender: 'EIDEASY_SINGLE_METHOD_SIGNATURE',
+                    type: 'SUCCESS',
+                });
+            });
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
+)html";
+    const std::string contentType = "text/html";
+    return handleStaticRequest(request, socket, responseString, contentType);
+}
+
+bool ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request,
+                                                     const std::shared_ptr<StreamSocket>& socket)
+{
+    const std::string responseString = "User-agent: *\nDisallow: /\n";
+    const std::string contentType = "text/plain";
+    return handleStaticRequest(request, socket, responseString, contentType);
 }
 
 bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& request,
