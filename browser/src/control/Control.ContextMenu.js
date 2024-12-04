@@ -179,7 +179,7 @@ L.Control.ContextMenu = L.Control.extend({
 		} else {
 			L.installContextMenu({
 				selector: '.leaflet-layer',
-				className: 'cool-font',
+				className: 'cool-font on-the-fly-context-menu',
 				trigger: 'none',
 				zIndex: 1500,
 				build: function() {
