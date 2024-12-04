@@ -156,6 +156,7 @@ void RequestVettingStation::createWopiDocBroker(const std::string& docKey,
     if (createDocBroker(docKey, configId, url, uriPublic))
     {
         assert(_docBroker && "Must have docBroker");
+        launchInstallPresets();
         createClientSession(docKey, url, uriPublic, isReadOnly);
         // If there is anything dubious about the ssl
         // connection provide a warning about that.
@@ -203,18 +204,20 @@ void RequestVettingStation::checkSharedConfig(const std::string& docKey,
     assert(_checkFileInfo && _checkFileInfo->wopiInfo() && "wopiInfo must exist");
 
     SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
+    std::string configId = sharedSettings.getConfigId();
+    // there is none, can immediately call createWopiDocBroker
+    createWopiDocBroker(docKey, configId, url, uriPublic, isReadOnly);
+}
 
+void RequestVettingStation::launchInstallPresets()
+{
+    SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
     if (sharedSettings._uri.empty())
-    {
-        // there is none, can immediately call createWopiDocBroker
-        createWopiDocBroker(docKey, "", url, uriPublic, isReadOnly);
         return;
-    }
 
     std::string configId = sharedSettings.getConfigId();
 
-    auto finishedCallback =
-        [this, docKey, configId, url, uriPublic, isReadOnly](bool success)
+    auto finishedCallback = [this, configId](bool success)
     {
         if (!success)
         {
@@ -224,9 +227,7 @@ void RequestVettingStation::checkSharedConfig(const std::string& docKey,
         }
         else
         {
-            COOLWSD::spawnSubForKit(configId);
-            // kick off the docbroker in the knowledge that the subForKit is populated
-            createWopiDocBroker(docKey, configId, url, uriPublic, isReadOnly);
+            COOLWSD::ensureSubForKit(configId);
         }
     };
 
@@ -377,11 +378,11 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
             const auto docKey = RequestDetails::getDocKey(uriPublic);
             LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
                     << docKey << "] now with URL: [" << url << ']');
-            //TODO, this looks like it should be merged with checkSharedConfig/createWopiDocBroker
             SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
             if (createDocBroker(docKey, sharedSettings.getConfigId(), url, uriPublic))
             {
                 assert(_docBroker && "Must have docBroker");
+                launchInstallPresets();
                 if (_ws)
                 {
                     // If we don't have the WebSocket, defer creating the client session.

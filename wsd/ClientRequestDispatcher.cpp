@@ -119,7 +119,8 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
 {
     LOG_INF("Find or create DocBroker for docKey ["
             << docKey << "] for session [" << id << "] on url ["
-            << COOLWSD::anonymizeUrl(uriPublic.toString()) << ']');
+            << COOLWSD::anonymizeUrl(uriPublic.toString()) << ']'
+            << " with configid " << configId);
 
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 

@@ -278,7 +278,7 @@ void DocumentBroker::pollThread()
 {
     _threadStart = std::chrono::steady_clock::now();
 
-    LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << ']');
+    LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << ']' << " and configId [" << _configId << ']');
 
     // Request a kit process for this doc.
     do
@@ -696,6 +696,8 @@ void DocumentBroker::pollThread()
 #endif
     }
 
+    fprintf(stderr, "FINISHED HERE\n");
+
     LOG_INF("Finished polling doc ["
             << _docKey << "]. stop: " << _stop << ", continuePolling: " << _poll->continuePolling()
             << ", CloseReason: [" << _closeReason << ']'
@@ -706,6 +708,7 @@ void DocumentBroker::pollThread()
     {
         LOG_INF("Requesting termination of child [" << getPid() << "] for doc [" << _docKey
                                                     << "] as there are no sessions");
+        fprintf(stderr, "requestTermination\n");
         _childProcess->requestTermination();
     }
 
@@ -808,6 +811,7 @@ void DocumentBroker::pollThread()
     terminateChild(_closeReason);
 
     // Stop to mark it done and cleanup.
+    fprintf(stderr, "ask it to stop\n");
     _poll->stop();
 
 #if !MOBILEAPP
@@ -847,6 +851,7 @@ void DocumentBroker::pollThread()
     }
 
     // Async cleanup.
+    fprintf(stderr, "do house keeping\n");
     COOLWSD::doHousekeeping();
 #endif
 
@@ -858,6 +863,8 @@ void DocumentBroker::pollThread()
 
 bool DocumentBroker::isAlive() const
 {
+    fprintf(stderr, "at isAlive child status is %d stop is %d poll itself is %d\n", _childProcess && _childProcess->isAlive(),
+        _stop.load(), _poll->isAlive());
     if (!_stop || _poll->isAlive())
         return true; // Polling thread not started or still running.
 
@@ -4478,7 +4485,10 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
             msg += ' ' + tokens.cat(' ', 2);
             if (_asyncInstallTask)
             {
-                auto sendLoad = [this, msg, binary](bool success) {
+                auto sendLoad = [selfWeak = weak_from_this(), this, msg, binary](bool success) {
+                    std::shared_ptr<DocumentBroker> selfLifecycle = selfWeak.lock();
+                    if (!selfLifecycle)
+                        return;
                     if (!success)
                         return;
                     _childProcess->sendFrame(msg, binary);
