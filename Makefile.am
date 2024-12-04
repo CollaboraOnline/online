@@ -14,7 +14,15 @@ endif
 
 else
 
-SUBDIRS = . browser test cypress_test
+SUBDIRS = . browser
+
+if ENABLE_TESTS
+SUBDIRS += test
+endif
+
+if ENABLE_CYPRESS
+SUBDIRS += cypress_test
+endif
 
 export ENABLE_DEBUG
 
