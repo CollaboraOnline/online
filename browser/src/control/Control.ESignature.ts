@@ -89,6 +89,9 @@ namespace cool {
 			'cert-store-qes-signature': 'Local Certificate',
 			'fi-ftn-intesi-adv-signature':
 				'Finnish Trust Network / Luottamusverkosto',
+			'cz-id-signature': 'Czech ID Card',
+			'es-lleida-advanced-signature': 'Lleida',
+			'serpro-id-advanced-signature': 'SerproID',
 		};
 
 		constructor(url: string, secret: string, clientId: string) {
