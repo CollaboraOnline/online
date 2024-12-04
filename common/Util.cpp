@@ -773,9 +773,9 @@ namespace Util
 
     std::string getValue(const std::map<std::string, std::string>& map, const std::string& subject)
     {
-        if (map.find(subject) != map.end())
+        if (const auto& it = map.find(subject); it != map.end())
         {
-            return map.at(subject);
+            return it->second;
         }
 
         // Not a perfect match, try regex.
