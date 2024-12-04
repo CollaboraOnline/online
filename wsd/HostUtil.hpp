@@ -35,7 +35,7 @@ private:
 
 public:
     /// parse wopi.storage.host
-    static void parseWopiHost(Poco::Util::LayeredConfiguration& conf);
+    static void parseWopiHost(const Poco::Util::LayeredConfiguration& conf);
 
     /// parse wopi.storage.alias_groups.group
     static void parseAliases(Poco::Util::LayeredConfiguration& conf);
