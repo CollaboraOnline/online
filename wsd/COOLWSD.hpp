@@ -206,14 +206,14 @@ public:
     /// Return true when successful.
     static bool createForKit();
 
-    /// Sends a message to ForKit through PrisonerPoll.
-    static void sendMessageToForKit(const std::string& message);
+    /// Sends a message to ForKit through PrisonerPoll. An empty configId is the primordial forkit.
+    static bool sendMessageToForKit(const std::string& message, const std::string& configId=std::string());
 
     /// Terminates spare kits that aren't assigned a document yet.
     static void requestTerminateSpareKits();
 
-    // Request creation of a subForKit
-    static bool spawnSubForKit(const std::string& id);
+    // Request creation of a subForKit if it doesn't already exist
+    static bool ensureSubForKit(const std::string& id);
 
     /// Checks forkit (and respawns), rebalances
     /// child kit processes and cleans up DocBrokers.

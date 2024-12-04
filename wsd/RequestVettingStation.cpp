@@ -143,6 +143,62 @@ void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
                          WebSocketHandler::StatusCodes::POLICY_VIOLATION);
 }
 
+namespace
+{
+
+struct SharedSettings
+{
+    SharedSettings(const Poco::JSON::Object::Ptr wopiInfo)
+    {
+        if (auto settingsJSON = wopiInfo->getObject("SharedSettings"))
+        {
+            JsonUtil::findJSONValue(settingsJSON, "uri", _uri);
+            JsonUtil::findJSONValue(settingsJSON, "stamp", _stamp);
+        }
+    }
+
+    std::string _uri;
+    std::string _stamp;
+
+    std::string getConfigId() const
+    {
+        return _stamp + "-" + _uri;
+    }
+};
+
+}
+
+void RequestVettingStation::launchInstallPresets()
+{
+    SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
+    if (sharedSettings._uri.empty())
+        return;
+
+    std::string configId = sharedSettings.getConfigId();
+
+    auto finishedCallback = [this, configId](bool success)
+    {
+        if (!success)
+        {
+            LOG_ERR("Failed to install config [" << configId << "]");
+            if (_ws)
+            {
+                sendErrorAndShutdown(_ws, "shared config install failed",
+                                     WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
+            }
+        }
+        else
+        {
+            COOLWSD::ensureSubForKit(configId);
+        }
+    };
+
+    // if this wopi server has some shared settings we want to have a subForKit for those settings
+    std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
+    // ensure the server config is downloaded and populate a subforkit when config is available
+    DocumentBroker::asyncInstallPresets(*_poll, sharedSettings._uri, presetsPath, finishedCallback);
+}
+
 void RequestVettingStation::handleRequest(const std::string& id,
                                           const RequestDetails& requestDetails,
                                           const std::shared_ptr<WebSocketHandler>& ws,
@@ -241,7 +297,8 @@ void RequestVettingStation::handleRequest(const std::string& id,
                     {
                         std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
                         // We have a valid CheckFileInfo result; Create the DocBroker.
-                        if (createDocBroker(docKey, "", url, uriPublic))
+                        SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
+                        if (createDocBroker(docKey, sharedSettings.getConfigId(), url, uriPublic))
                         {
                             assert(_docBroker && "Must have docBroker");
                             createClientSession(docKey, url, uriPublic, isReadOnly);
@@ -300,10 +357,11 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
             const auto docKey = RequestDetails::getDocKey(uriPublic);
             LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
                     << docKey << "] now with URL: [" << url << ']');
-
-            if (createDocBroker(docKey, "", url, uriPublic))
+            SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
+            if (createDocBroker(docKey, sharedSettings.getConfigId(), url, uriPublic))
             {
                 assert(_docBroker && "Must have docBroker");
+                launchInstallPresets();
                 if (_ws)
                 {
                     // If we don't have the WebSocket, defer creating the client session.
