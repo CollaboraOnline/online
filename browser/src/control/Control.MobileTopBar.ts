@@ -116,6 +116,12 @@ class MobileTopBar extends JSDialog.Toolbar {
 				this.enableItem(id, false);
 			}
 		}
+		if (commandName === '.uno:EditDoc') {
+			if (state === 'false')
+				this.map.setPermission('view');
+			else
+				this.map.setPermission('edit');
+		}
 	}
 
 	_generateHtmlItem(id: string) {

@@ -68,7 +68,9 @@ L.Map.include({
 				button.on('click', function () {
 					that._requestFileCopy();
 				});
-			} else if ((!window.ThisIsAMobileApp && !this['wopi'].UserCanWrite) || (!this.options.canTryLock && (window.mode.isMobile() || window.mode.isTablet()))) {
+			} else if ((!window.ThisIsAMobileApp && !this['wopi'].UserCanWrite)
+				|| (!this.options.canTryLock && (window.mode.isMobile() || window.mode.isTablet()))
+				|| (app.map['stateChangeHandler'].getItemValue('EditDoc') === 'false')) {
 				$('#mobile-edit-button').hide();
 			}
 
