@@ -170,6 +170,31 @@ void RequestVettingStation::createWopiDocBroker(const std::string& docKey,
     }
 }
 
+namespace
+{
+
+struct SharedSettings
+{
+    SharedSettings(const Poco::JSON::Object::Ptr wopiInfo)
+    {
+        if (auto settingsJSON = wopiInfo->getObject("SharedSettings"))
+        {
+            JsonUtil::findJSONValue(settingsJSON, "uri", _uri);
+            JsonUtil::findJSONValue(settingsJSON, "stamp", _stamp);
+        }
+    }
+
+    std::string _uri;
+    std::string _stamp;
+
+    std::string getConfigId() const
+    {
+        return _stamp + "-" + _uri;
+    }
+};
+
+}
+
 void RequestVettingStation::checkSharedConfig(const std::string& docKey,
                                               const std::string& url,
                                               const Poco::URI& uriPublic,
@@ -177,19 +202,16 @@ void RequestVettingStation::checkSharedConfig(const std::string& docKey,
 {
     assert(_checkFileInfo && _checkFileInfo->wopiInfo() && "wopiInfo must exist");
 
-    std::string configId;
+    SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
 
-    std::string sharedSettingsUri;
-    if (auto settingsJSON = _checkFileInfo->wopiInfo()->getObject("SharedSettings"))
-        JsonUtil::findJSONValue(settingsJSON, "uri", sharedSettingsUri);
-    if (sharedSettingsUri.empty())
+    if (sharedSettings._uri.empty())
     {
         // there is none, can immediately call createWopiDocBroker
         createWopiDocBroker(docKey, "", url, uriPublic, isReadOnly);
         return;
     }
 
-    configId = "testing-id";
+    std::string configId = sharedSettings.getConfigId();
 
     auto finishedCallback =
         [this, docKey, configId, url, uriPublic, isReadOnly](bool success)
@@ -211,7 +233,7 @@ void RequestVettingStation::checkSharedConfig(const std::string& docKey,
     // if this wopi server has some shared settings we want to have a subForKit for those settings
     std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
     // ensure the server config is downloaded and launch docbroker when that is available
-    DocumentBroker::asyncInstallPresets(*_poll, sharedSettingsUri, presetsPath, finishedCallback);
+    DocumentBroker::asyncInstallPresets(*_poll, sharedSettings._uri, presetsPath, finishedCallback);
 }
 
 void RequestVettingStation::handleRequest(const std::string& id,
@@ -355,8 +377,9 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
             const auto docKey = RequestDetails::getDocKey(uriPublic);
             LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
                     << docKey << "] now with URL: [" << url << ']');
-
-            if (createDocBroker(docKey, "testing-id", url, uriPublic))
+            //TODO, this looks like it should be merged with checkSharedConfig/createWopiDocBroker
+            SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
+            if (createDocBroker(docKey, sharedSettings.getConfigId(), url, uriPublic))
             {
                 assert(_docBroker && "Must have docBroker");
                 if (_ws)
