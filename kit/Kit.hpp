@@ -336,6 +336,11 @@ public:
     /// A new message from wsd for the queue
     void queueMessage(const std::string &msg) { _queue->put(msg); }
     bool hasQueueItems() const { return _queue && !_queue->isEmpty(); }
+    bool canRenderTiles() const {
+        return processInputEnabled() && !isLoadOngoing() &&
+            !isBackgroundSaveProcess() && _queue &&
+            _queue->getTileQueueSize() > 0;
+    }
     bool hasCallbacks() const { return _queue && _queue->callbackSize() > 0; }
 
     /// Should we get through the SocketPoll fast to process queus ?
@@ -343,7 +348,10 @@ public:
     {
         if (hasCallbacks())
             return true;
-        if (hasQueueItems() && processInputEnabled())
+        // not processing input messages or tile renders
+        if (!processInputEnabled())
+            return false;
+        if (hasQueueItems() || canRenderTiles())
             return true;
         return false;
     }
