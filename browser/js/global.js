@@ -872,6 +872,10 @@ function getInitializerClass() {
 				return !e.isMouseEvent;
 			}
 
+			if (e.guessEmulatedFromTouch) {
+				return true;
+			}
+
 			return !(e instanceof MouseEvent);
 		},
 
@@ -914,6 +918,11 @@ function getInitializerClass() {
 		///   most other event processing takes place
 		lastEventWasTouch: null,
 
+		/// a timestamp to indicate when lastEventWasTouch was last set
+		/// internally used to determine if hover (mouseover/out/enter/leave) events are likely from a mouse or from a
+		/// touch event
+		lastEventTime: null,
+
 		/// detect if the last event was a touch event, or if no events have yet occured whether we have a touchscreen
 		///   available to us. Should be able to replace uses of hasAnyTouchscreen for uses where we are OK with the
 		///   result being less stable
@@ -928,6 +937,13 @@ function getInitializerClass() {
 
 	const registerTapOrClick = (e) => {
 		global.touch.lastEventWasTouch = global.touch.isTouchEvent(e);
+		global.touch.lastEventTime = Date.now();
+	};
+	const registerGuessEmulatedFromTouch = (e) => {
+		// on some touchscreens (e.g. iPads) these MouseEvents are emulated for the movement caused by touch events,
+		// leading to tooltips erroneously triggering ... these are all movement events so don't necessarily need a click,
+		// but for touch events they will happen around other touch events so we can still tell what they are
+		e.guessEmulatedFromTouch = global.touch.lastEventWasTouch && Date.now() - global.touch.lastEventTime < 50;
 	};
 	document.addEventListener('touchstart', registerTapOrClick, { capture: true });
 	document.addEventListener('touchend', registerTapOrClick, { capture: true });
@@ -935,6 +951,10 @@ function getInitializerClass() {
 	document.addEventListener('mouseup', registerTapOrClick, { capture: true });
 	document.addEventListener('pointerdown', registerTapOrClick, { capture: true });
 	document.addEventListener('pointerup', registerTapOrClick, { capture: true });
+	document.addEventListener('mouseenter', registerGuessEmulatedFromTouch, { capture: true });
+	document.addEventListener('mouseleave', registerGuessEmulatedFromTouch, { capture: true });
+	document.addEventListener('mouseover', registerGuessEmulatedFromTouch, { capture: true });
+	document.addEventListener('mouseout', registerGuessEmulatedFromTouch, { capture: true });
 
 	if (!global.prefs.getBoolean('clipboardApiAvailable', true)) {
 		// navigator.clipboard.write failed on us once, don't even try it.
