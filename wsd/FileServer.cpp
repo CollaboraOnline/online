@@ -542,10 +542,12 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         }
     }
 
+    // pair consist of type and path of the item which ususally resides test/data folder
+    typedef std::pair<std::string, std::string> asset;
+
     //handle requests for settings.json contents
     void handlePresetRequest(const std::string& kind, const std::string& prefix,
-                             const std::shared_ptr<StreamSocket>& socket,
-                             const std::vector<std::string> items,
+                             const std::shared_ptr<StreamSocket>& socket, std::vector<asset>& items,
                              const std::string& xcu)
     {
         Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
@@ -554,15 +556,20 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         std::string cwd = std::filesystem::current_path();
 
         Poco::JSON::Array::Ptr configAutoTexts = new Poco::JSON::Array();
-        for (std::string autotext : items)
+        Poco::JSON::Array::Ptr configDictionaries = new Poco::JSON::Array();
+        for (const auto& item : items)
         {
-            Poco::JSON::Object::Ptr configAutoTextEntry = new Poco::JSON::Object();
-            std::string uri = COOLWSD::getServerURL() + prefix + cwd + autotext;
+            Poco::JSON::Object::Ptr configEntry = new Poco::JSON::Object();
+            std::string uri = COOLWSD::getServerURL().append(prefix + cwd + item.second);
             //COOLWSD::getServerURL tediously includes spaces at the start
-            configAutoTextEntry->set("uri", Util::trim(uri));
-            configAutoTexts->add(configAutoTextEntry);
+            configEntry->set("uri", Util::trim(uri));
+            if (item.first == "autotext")
+                configAutoTexts->add(configEntry);
+            else if (item.first == "dictionary")
+                configDictionaries->add(configEntry);
         }
         configInfo->set("autotext", configAutoTexts);
+        configInfo->set("dictionary", configDictionaries);
 
         if (!xcu.empty())
         {
@@ -595,15 +602,16 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         {
             if (configPath == "/userconfig.json")
             {
-                handlePresetRequest("user", prefix, socket,
-                                    { "/test/data/autotextuser.bau" },
-                                      "/test/data/configuser.xcu");
+                std::vector<asset> items = { { "autotext", "/test/data/autotextuser.bau" },
+                                             { "dictionary", "/test/data/dictionaryuser.dic" } };
+                handlePresetRequest("user", prefix, socket, items, "/test/data/configuser.xcu");
             }
             else if (configPath == "/sharedconfig.json")
             {
-                handlePresetRequest("shared", prefix, socket,
-                                    { "/test/data/autotextshared.bau" },
-                                      "/test/data/configshared.xcu");
+                std::vector<asset> items = { { "autotext", "/test/data/autotextshared.bau" },
+                                             { "dictionary", "/test/data/dictionaryshared.dic" } };
+
+                handlePresetRequest("shared", prefix, socket, items, "/test/data/configshared.xcu");
             }
             else
                 throw BadRequestException("Invalid Config Request: " + configPath);
