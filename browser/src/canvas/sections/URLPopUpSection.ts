@@ -8,6 +8,7 @@ class URLPopUpSection extends HTMLObjectSection {
 	copyButtonId = 'hyperlink-pop-up-copy';
 	editButtonId = 'hyperlink-pop-up-edit';
 	removeButtonId = 'hyperlink-pop-up-remove';
+	arrowDiv: HTMLDivElement;
 
 	constructor(url: string, documentPosition: cool.SimplePoint, linkPosition?: cool.SimplePoint) {
         super(URLPopUpSection.sectionName, null, null, documentPosition, URLPopUpSection.cssClass);
@@ -35,6 +36,10 @@ class URLPopUpSection extends HTMLObjectSection {
 
 	getPopUpHeight(): number {
 		return this.getHTMLObject().getBoundingClientRect().height;
+	}
+
+	getPopUpBoundingRectangle() {
+		return this.getHTMLObject().getBoundingClientRect();
 	}
 
 	createUIElements(url: string) {
@@ -74,9 +79,9 @@ class URLPopUpSection extends HTMLObjectSection {
 		imgRemoveBtn.setAttribute('height', 18);
 		imgRemoveBtn.style.padding = '4px';
 
-		const arrowDiv = document.createElement('div');
-		arrowDiv.className = 'arrow-div';
-		parent.appendChild(arrowDiv);
+		this.arrowDiv = document.createElement('div');
+		this.arrowDiv.className = 'arrow-div';
+		parent.appendChild(this.arrowDiv);
 	}
 
 	setUpCallbacks(linkPosition?: cool.SimplePoint) {
@@ -118,15 +123,43 @@ class URLPopUpSection extends HTMLObjectSection {
 		};
 	}
 
+	reLocateArrow(arrowAtTop: boolean) {
+		if (arrowAtTop) this.arrowDiv.classList.add('reverse');
+		else this.arrowDiv.classList.remove('reverse');
+
+		/*
+			Normally, the documentPosition sent from the core side nicely positions the arrow.
+			We will check if we reposition the popup.
+			If the arrow position falls outside of the popup, we will put it on the edge.
+		*/
+		const clientRect = this.getPopUpBoundingRectangle();
+		const arrowHalfWidth = 10;
+		let arrowCSSLeft = this.sectionProperties.documentPosition.pX - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0] - arrowHalfWidth;
+		arrowCSSLeft /= app.dpiScale;
+		arrowCSSLeft += document.getElementById('canvas-container').getBoundingClientRect().left; // Add this in case there is something on its left.
+		arrowCSSLeft -= clientRect.left;
+		this.arrowDiv.style.left = (arrowCSSLeft > 6 ? arrowCSSLeft : 6) + 'px'; // 6: padding of the popup.
+	}
+
 	public static resetPosition(section: URLPopUpSection) {
 		if (!section)
 			section = app.sectionContainer.getSectionWithName(URLPopUpSection.sectionName);
 
-		const left = section.sectionProperties.documentPosition.pX - section.getPopUpWidth() * 0.5 * app.dpiScale;
-		const top = section.sectionProperties.documentPosition.pY - (section.getPopUpHeight() + 20) * app.dpiScale;
+		let left = section.sectionProperties.documentPosition.pX - section.getPopUpWidth() * 0.5 * app.dpiScale;
+		let top = section.sectionProperties.documentPosition.pY - (section.getPopUpHeight() + 20) * app.dpiScale;
 
 		if (section) {
-			section.setPosition((left >= 0 ? left : 10), (top >= 0 ? top : 10));
+			let arrowAtTop = false;
+			if (top < 0) {
+				top = section.sectionProperties.documentPosition.pY + (40 * app.dpiScale);
+				arrowAtTop = true;
+			}
+
+			if (left < 0) left = 0;
+
+			section.setPosition(left, top);
+			section.adjustHTMLObjectPosition();
+			section.reLocateArrow(arrowAtTop);
 			section.containerObject.requestReDraw();
 		}
 	}
