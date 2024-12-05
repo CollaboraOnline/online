@@ -542,12 +542,12 @@ static int rebalanceChildren(int balance)
 
 /// Proactively spawn children processes
 /// to load documents with alacrity.
-/// Returns true only if at least one child was requested to spawn.
-static bool prespawnChildren()
+static void prespawnChildren()
 {
     // Rebalance if not forking already.
     std::unique_lock<std::mutex> lock(NewChildrenMutex, std::defer_lock);
-    return lock.try_lock() && (rebalanceChildren(COOLWSD::NumPreSpawnedChildren) > 0);
+    if (lock.try_lock())
+        rebalanceChildren(COOLWSD::NumPreSpawnedChildren);
 }
 
 #endif
