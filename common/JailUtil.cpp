@@ -429,8 +429,9 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
 
     createJailPath(childRoot + CHILDROOT_TMP_INCOMING_PATH + "/fonts");
     createJailPath(childRoot + CHILDROOT_TMP_INCOMING_PATH + "/templates/presnt");
-    createJailPath(childRoot + CHILDROOT_TMP_SHARED_PRESETS_PATH + "/autotext");
-    createJailPath(childRoot + CHILDROOT_TMP_SHARED_PRESETS_PATH + "/xcu");
+    createJailPath(Poco::Path(childRoot + CHILDROOT_TMP_SHARED_PRESETS_PATH, "autotext").toString());
+    createJailPath(Poco::Path(childRoot + CHILDROOT_TMP_SHARED_PRESETS_PATH, "xcu").toString());
+    createJailPath(Poco::Path(childRoot + CHILDROOT_TMP_SHARED_PRESETS_PATH, "wordbook").toString());
 
     disableBindMounting(); // Clear to avoid surprises.
 
