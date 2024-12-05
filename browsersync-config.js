@@ -16,7 +16,7 @@ module.exports = {
     "ui": {
         "port": 3001
     },
-    "files": ["browser/dist/**/*.css", "browser/dist/**/*.js", "browser/dist/*.html"],
+    "files": ["browser/dist/*.css", "browser/dist/*.js", "browser/dist/*.html"],
     "watchEvents": [
         "change"
     ],
@@ -27,7 +27,7 @@ module.exports = {
         "ignoreInitial": true
     },
     "server": false,
-    "proxy": "http://localhost:9980/",
+    "proxy": "https://localhost:9980/",
     "port": 3000,
     "middleware": false,
     "serveStatic": [],
@@ -64,7 +64,7 @@ module.exports = {
     "reloadThrottle": 0,
     "plugins": [],
     "injectChanges": true,
-    "startPath": "browser/04597b4ec/cool.html?file_path=./test/data/hello-world.odt",
+    "startPath": "browser/04597b4ec/debug.html?file_path=./test/samples/writer-edit.fodt",
     "minify": true,
     "host": null,
     "localOnly": false,

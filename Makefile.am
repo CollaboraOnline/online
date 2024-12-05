@@ -611,13 +611,13 @@ run-heaptrack-inproc: setup-wsd
 endif
 
 sync-writer:
-	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
+	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/debug.html?file_path=/$(abs_top_srcdir)/test/samples/writer-edit.fodt"
 
 sync-calc:
-	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.ods"
+	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/debug.html?file_path=/$(abs_top_srcdir)/test/samples/calc-edit.ods"
 
 sync-impress:
-	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odp"
+	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/debug.html?file_path=/$(abs_top_srcdir)/test/samples/impress-edit.fodp"
 
 run-trace: setup-wsd
 	$(ENABLE_NAMESPACE) ./coolwsd $(COMMON_PARAMS) \
