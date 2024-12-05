@@ -148,6 +148,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['htmlcontent'] = JSDialog.htmlContent;
 		this._controlHandlers['colorpicker'] = JSDialog.colorPicker;
 		this._controlHandlers['dropdown'] = JSDialog.Dropdown;
+		this._controlHandlers['menu'] = JSDialog.treeView;
 
 		this._controlHandlers['mainmenu'] = JSDialog.container;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
