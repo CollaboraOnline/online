@@ -1604,6 +1604,28 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
                 }
             }
 
+            // TODO: both autotexts and dictionary are extracted the same way. create new method to extract preset and de-duplicate the code
+            if (auto dictionaries = settings->get("dictionary").extract<Poco::JSON::Array::Ptr>())
+            {
+                for (std::size_t i = 0, count = dictionaries->size(); i < count; ++i)
+                {
+                    auto dictionary = dictionaries->get(i).extract<Poco::JSON::Object::Ptr>();
+                    if (!dictionary)
+                        continue;
+                    // TODO worry that we are potentially spamming here
+                    const std::string uri = JsonUtil::getJSONValue<std::string>(dictionary, "uri");
+                    Poco::Path destDir(presetsPath, "wordbook");
+                    Poco::File(destDir).createDirectories();
+                    std::string fileName =
+                        Poco::Path(destDir.toString(),
+                                   Uri::getFilenameWithExtFromURL(uri))
+                            .toString();
+                    std::string id = std::to_string(idCount++);
+                    presetTasks->installStarted(id);
+                    asyncInstallPreset(poll, uri, fileName, id, presetInstallFinished);
+                }
+            }
+
             if (auto xcu = settings->get("xcu").extract<Poco::JSON::Object::Ptr>())
             {
                 const std::string uri = JsonUtil::getJSONValue<std::string>(xcu, "uri");
@@ -1638,16 +1660,16 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& pre
                                         const std::string& presetFile, const std::string& id,
                                         const std::function<void(const std::string&, bool)>& finishedCB)
 {
-    const Poco::URI autotextUri{presetUri};
-    std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(autotextUri));
-    http::Request request(autotextUri.getPathAndQuery());
+    const Poco::URI uri{presetUri};
+    std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(uri));
+    http::Request request(uri.getPathAndQuery());
     request.set("User-Agent", http::getAgentString());
 
     const std::string uriAnonym = COOLWSD::anonymizeUrl(presetUri);
-    LOG_DBG("Getting autotext from [" << uriAnonym << ']');
+    LOG_DBG("Getting preset from [" << uriAnonym << ']');
 
     http::Session::FinishedCallback finishedCallback =
-        [uriAnonym, presetFile, id, finishedCB](const std::shared_ptr<http::Session>& autotextSession)
+        [uriAnonym, presetFile, id, finishedCB](const std::shared_ptr<http::Session>& presetSession)
     {
         if (SigUtil::getShutdownRequestFlag())
         {
@@ -1655,14 +1677,14 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& pre
             return;
         }
 
-        const std::shared_ptr<const http::Response> autotextHttpResponse = autotextSession->response();
+        const std::shared_ptr<const http::Response> presetHttpResponse = presetSession->response();
 
         bool success = false;
 
-        if (autotextHttpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        if (presetHttpResponse->statusLine().statusCode() != http::StatusCode::OK)
         {
             LOG_ERR("Fetch of preset uri: " << uriAnonym << " failed: " <<
-                    autotextHttpResponse->statusLine().statusCode());
+                    presetHttpResponse->statusLine().statusCode());
             FileUtil::removeFile(presetFile);
         }
         else
@@ -1680,9 +1702,10 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& pre
     // Run the request on the WebServer Poll.
     httpSession->asyncRequest(request, poll);
 
-    const std::shared_ptr<http::Response> autotextHttpResponse = httpSession->response();
+    const std::shared_ptr<http::Response> presetHttpResponse = httpSession->response();
     // TODO: Might be a tad late, might need to tweak things to get this set earlier before launch
-    autotextHttpResponse->saveBodyToFile(presetFile);
+    std::cerr << "presetFile: " << presetFile;
+    presetHttpResponse->saveBodyToFile(presetFile);
 }
 
 bool DocumentBroker::processPlugins(std::string& localPath)

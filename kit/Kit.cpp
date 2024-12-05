@@ -3268,6 +3268,9 @@ void lokit_main(
             const std::string sharedAutotext = Poco::Path(sharedPresets, "autotext").toString();
             const std::string loJailDestAutotextPath = Poco::Path(loJailDestPath, "share/autotext/common").toString();
 
+            const std::string sharedWordbook = Poco::Path(sharedPresets, "wordbook").toString();
+            const std::string loJailDestWordbookPath = Poco::Path(loJailDestPath, "share/wordbook").toString();
+
             const std::string sysTemplateSubDir = Poco::Path(tempRoot, "systemplate-" + jailId).toString();
             const std::string jailEtcDir = Poco::Path(jailPath, "etc").toString();
 
@@ -3348,7 +3351,18 @@ void lokit_main(
                     return false;
                 }
 
-                // tmpdir inside the jail for added sercurity.
+                // TODO: both autotext and wordbook needs to mounted can create a separate method to de-duplicate the code
+                // mount the shared wordbook over the lo shared wordbook
+                if (!JailUtil::bind(sharedWordbook, loJailDestWordbookPath)
+                    || !JailUtil::remountReadonly(sharedWordbook, loJailDestWordbookPath))
+                {
+                    // TODO: actually do this link on failure
+                    LOG_WRN("Failed to mount [" << sharedWordbook << "] -> [" << loJailDestWordbookPath
+                                                << "], will link contents");
+                    return false;
+                }
+
+                // tmpdir inside the jail for added security.
                 Poco::File(tmpSubDir).createDirectories();
                 LOG_INF("Mounting random temp dir " << tmpSubDir << " -> " << jailTmpDir);
                 if (!JailUtil::bind(tmpSubDir, jailTmpDir))
