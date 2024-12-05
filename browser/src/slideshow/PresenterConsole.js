@@ -222,6 +222,10 @@ class PresenterConsole {
 				'unload',
 				L.bind(this._onWindowClose, this),
 			);
+			window.addEventListener(
+				'beforeunload',
+				L.bind(this._onWindowClose, this),
+			);
 		}
 		this._proxyPresenter.addEventListener(
 			'unload',
@@ -1058,6 +1062,11 @@ class PresenterConsole {
 		if (this._proxyPresenter && !this._proxyPresenter.closed)
 			this._proxyPresenter.close();
 
+		window.removeEventListener(
+			'beforeunload',
+			L.bind(this._onWindowClose, this),
+		);
+
 		this._presenter._stopFullScreen();
 	}
 
@@ -1066,7 +1075,7 @@ class PresenterConsole {
 			this._presenter._slideShowWindowProxy &&
 			!this._presenter._slideShowWindowProxy.closed
 		)
-			this._presenter._slideShowWindowProxy.close();
+			this._presenter.slideshowWindowCleanUp();
 
 		this._proxyPresenter.removeEventListener(
 			'resize',

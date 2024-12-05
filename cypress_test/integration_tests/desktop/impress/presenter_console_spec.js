@@ -61,7 +61,12 @@ describe(['tagdesktop'], 'Presenter Console.', function() {
 				getNotes() {
 					return "test notes";
 				}
-			};
+
+				slideshowWindowCleanUp() {
+					// empty body
+				}
+
+			}
 
 			var fakePresenter = new FakePresenter();
 			var fakeConsole = new win.SlideShow.PresenterConsole(map, fakePresenter);
