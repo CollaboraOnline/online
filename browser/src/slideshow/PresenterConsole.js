@@ -811,8 +811,8 @@ class PresenterConsole {
 		let notesSeparator =
 			this._proxyPresenter.document.querySelector('#notes-separator');
 		notesSeparator.style.display = 'none';
-		this._first.remove();
-		this._second.remove();
+		this._first.style.display = 'none';
+		this._second.style.display = 'none';
 
 		elem = this._proxyPresenter.document.querySelector('#presentation-content');
 		elem.appendChild(this._slides);
@@ -836,9 +836,9 @@ class PresenterConsole {
 		let notesSeparator =
 			this._proxyPresenter.document.querySelector('#notes-separator');
 		notesSeparator.style.display = 'block';
-		// Insert `this._first` before `notesSeparator`
-		elem.insertBefore(this._first, notesSeparator);
-		elem.appendChild(this._second);
+
+		this._first.style.display = 'flex';
+		this._second.style.display = 'flex';
 
 		elem = this._proxyPresenter.document.querySelector('#slides');
 		this.toggleButtonState(elem, false);
