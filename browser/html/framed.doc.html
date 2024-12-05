@@ -63,6 +63,16 @@
           margin: 0px;
       }
 
+      #messages {
+          height: 5vh;
+          overflow: scroll;
+      }
+
+      #messages > p {
+              margin: 0;
+              font-family: monospace;
+      }
+
     </style>
 
     <script>
@@ -290,6 +300,14 @@
           display.querySelector("#UserState_Elapsed").textContent = msg.Values.Elapsed;
       }
 
+      function ClearMessages() {
+        let messageOut = document.getElementById("messages");
+        let child;
+        while (child = messageOut.firstChild) {
+          child.remove();
+        }
+      }
+
       // This function is invoked when the iframe posts a message back.
 
       function receiveMessage(event) {
@@ -300,7 +318,9 @@
         }
 
         let messageOut = document.getElementById("messages");
-        messageOut.textContent = messageOut.textContent + JSON.stringify(msg) + "\n";
+        let line = document.createElement("p");
+        line.textContent = JSON.stringify(msg);
+        messageOut.append(line);
 
         if (msg.MessageId == 'App_LoadingStatus') {
           if (msg.Values) {
@@ -588,9 +608,9 @@
 
     <div class="framed hbox">
       <div class="vbox">
-        <h3>Messages from editor</h3>
+        <h3>Messages from editor <button onclick="ClearMessages();">Clear</button></h3>
 
-        <pre id="messages"></pre>
+        <div id="messages"></div>
       </div>
     </div>
 
