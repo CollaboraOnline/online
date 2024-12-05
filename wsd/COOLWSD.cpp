@@ -2722,6 +2722,8 @@ public:
         , _socketFD(0)
         , _associatedWithDoc(false)
     {
+        fprintf(stderr, "PrisonerRequestDispatcher ctor %p\n", this);
+
         LOG_TRC_S("PrisonerRequestDispatcher");
     }
     ~PrisonerRequestDispatcher()
@@ -2779,7 +2781,10 @@ private:
             std::unique_lock<std::mutex> lock(NewChildrenMutex);
             auto it = std::find(NewChildren.begin(), NewChildren.end(), child);
             if (it != NewChildren.end())
+            {
+                fprintf(stderr, "loosing one for %s\n", (*it)->getConfigId().c_str());
                 NewChildren.erase(it);
+            }
             else
                 LOG_WRN("Unknown Kit process closed with pid " << (child ? child->getPid() : -1));
 #if !MOBILEAPP
@@ -2843,22 +2848,39 @@ private:
         {
             std::string jailId;
             std::string configId;
+            fprintf(stderr, "child connection of %s\n", request.getUrl().c_str());
 #if !MOBILEAPP
             LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getUrl())
                                                   << ']');
             Poco::URI requestURI(request.getUrl());
             if (requestURI.getPath() == FORKIT_URI)
             {
-                if (socket->getPid() != COOLWSD::ForKitProcId)
+                // New ForKit is spawned.
+                const Poco::URI::QueryParameters params = requestURI.getQueryParameters();
+                const int pid = socket->getPid();
+                for (const auto& param : params)
                 {
-                    LOG_WRN("Connection request received on "
-                            << FORKIT_URI << " endpoint from unexpected ForKit process. Skipped");
-                    return;
+                    if (param.first == "configid")
+                        configId = param.second;
                 }
-                COOLWSD::ForKitProc = std::make_shared<ForKitProcess>(COOLWSD::ForKitProcId, socket, request);
-                LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
-                socket->getInBuffer().clear();
-                PrisonerPoll->setForKitProcess(COOLWSD::ForKitProc);
+
+                if (configId.empty()) // primordial forkit
+                {
+                    if (pid != COOLWSD::ForKitProcId)
+                    {
+                        LOG_WRN("Connection request received on "
+                                << FORKIT_URI << " endpoint from unexpected ForKit process. Skipped");
+                        return;
+                    }
+                    COOLWSD::ForKitProc = std::make_shared<ForKitProcess>(COOLWSD::ForKitProcId, socket, request);
+                    LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
+                    socket->getInBuffer().clear();
+                    PrisonerPoll->setForKitProcess(COOLWSD::ForKitProc);
+                }
+                else
+                {
+                    fprintf(stderr, "subforkit seen as created, remember me to explicitly tell to rebalance\n");
+                }
                 return;
             }
             if (requestURI.getPath() != NEW_CHILD_URI)

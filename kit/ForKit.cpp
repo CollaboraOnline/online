@@ -154,6 +154,7 @@ protected:
         }
         else if (tokens.size() == 2 && tokens.equals(0, "spawn"))
         {
+            fprintf(stderr, "spawn seen with %s\n", tokens[1].c_str());
             const int count = std::stoi(tokens[1]);
             if (count > 0)
             {
@@ -618,6 +619,18 @@ static int createSubForKit(const std::string& subForKitIdent,
         if (forKitPid < 0)
         {
             LOG_FTL("Failed to create a kit process.");
+            Util::forcedExit(EX_SOFTWARE);
+        }
+
+        std::string pathAndQuery(FORKIT_URI);
+        pathAndQuery.append("?configid=");
+        pathAndQuery.append(ForKitIdent);
+
+        ForKitPoll->createWakeups();
+
+        if (!ForKitPoll->insertNewUnixSocket(MasterLocation, pathAndQuery, WSHandler))
+        {
+            LOG_SFL("Failed to connect to WSD. Will exit.");
             Util::forcedExit(EX_SOFTWARE);
         }
     };
