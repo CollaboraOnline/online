@@ -2469,10 +2469,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			e.stopPropagation();
 		};
 
-		var mouseEnterFunction = function () {
+		var mouseEnterFunction = window.touch.mouseOnly(function () {
 			if (builder.map.tooltip)
 				builder.map.tooltip.beginShow(div);
-		};
+		});
 
 		var mouseLeaveFunction = function () {
 			if (builder.map.tooltip)
@@ -2512,10 +2512,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_handleCutomTooltip: function(elem, builder) {
 		switch (elem.id) {
 			case 'save':
-				$(elem).on('mouseenter', function() {
+				$(elem).on('mouseenter', window.touch.mouseOnly(function() {
 					if (builder.map.tooltip)
 						builder.map.tooltip.show(elem, builder.map.getLastModDateValue()); // Show the tooltip with the correct content
-				});
+				}));
 	
 				$(elem).on('mouseleave', function() {
 					if (builder.map.tooltip)
