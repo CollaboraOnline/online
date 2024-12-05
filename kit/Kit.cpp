@@ -2446,8 +2446,7 @@ void Document::drainQueue()
             }
         }
 
-        if (processInputEnabled() && !isLoadOngoing() &&
-            !isBackgroundSaveProcess() && _queue->getTileQueueSize() > 0)
+        if (canRenderTiles())
         {
             std::vector<TileCombined> tileRequests = _queue->popWholeTileQueue();
 
