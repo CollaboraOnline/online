@@ -605,16 +605,29 @@ class SlideShowPresenter {
 		this._windowCloseInterval = setInterval(
 			function () {
 				if (slideShowWindow.closed) {
-					this.disablePauseHandler();
-					clearInterval(this._windowCloseInterval);
-					this._slideShowNavigator.quit();
-					this._map.uiManager.closeSnackbar();
-					this._slideShowCanvas = null;
-					this._presenterContainer = null;
-					this._slideShowWindowProxy = null;
+					this.slideshowWindowCleanUp();
 				}
 			}.bind(this),
 			500,
+		);
+
+		window.addEventListener(
+			'beforeunload',
+			this.slideshowWindowCleanUp.bind(this),
+		);
+	}
+
+	slideshowWindowCleanUp() {
+		this.disablePauseHandler();
+		clearInterval(this._windowCloseInterval);
+		this._slideShowNavigator.quit();
+		this._map.uiManager.closeSnackbar();
+		this._slideShowCanvas = null;
+		this._presenterContainer = null;
+		this._slideShowWindowProxy = null;
+		window.removeEventListener(
+			'beforeunload',
+			this.slideshowWindowCleanUp.bind(this),
 		);
 	}
 
