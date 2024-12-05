@@ -16,8 +16,10 @@
 
 declare var app: any;
 declare var SlideShow: any;
+// These are defined in browser/js/global.js
 declare var ThisIsTheAndroidApp: any;
 declare var ThisIsTheiOSApp: any;
+declare var makeHttpUrl: any;
 
 type LayerContentType =
 	| ImageInfo

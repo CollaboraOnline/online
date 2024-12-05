@@ -1,4 +1,4 @@
-/* global describe it cy require */
+/* global describe it cy expect require */
 
 var helper = require('../../common/helper');
 
@@ -20,7 +20,9 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 		// When signing that document:
 		cy.cGet('#menu-insert').click();
 		cy.cGet('#menu-insert-esignature').click();
-		cy.wait(['@sendHash']);
+		cy.wait(['@sendHash']).then(interception => {
+			expect(interception.request.body.signature_redirect).to.satisfy(url => url.endsWith('/cool/signature'));
+		});
 		cy.cGet('#ESignatureDialog button#ok').click();
 		cy.get('@windowOpen').should('be.called');
 		const response = {
