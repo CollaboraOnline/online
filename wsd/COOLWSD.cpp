@@ -450,11 +450,10 @@ void cleanupDocBrokers()
 #if !MOBILEAPP
 
 /// Forks as many children as requested.
-/// Returns the number of children requested to spawn,
-static int forkChildren(const int number)
+static void forkChildren(const int number)
 {
     if (Util::isKitInProcess())
-        return 0;
+        return;
 
     LOG_TRC("Request forkit to spawn " << number << " new child(ren)");
     Util::assertIsLocked(NewChildrenMutex);
@@ -468,10 +467,7 @@ static int forkChildren(const int number)
         COOLWSD::sendMessageToForKit(message);
         OutstandingForks += number;
         LastForkRequestTime = std::chrono::steady_clock::now();
-        return number;
     }
-
-    return 0;
 }
 
 /// Cleans up dead children.
@@ -501,9 +497,7 @@ static bool cleanupChildren()
 }
 
 /// Decides how many children need spawning and spawns.
-/// Returns the number of children requested to spawn,
-/// -1 for error.
-static int rebalanceChildren(int balance)
+static void rebalanceChildren(int balance)
 {
     Util::assertIsLocked(NewChildrenMutex);
 
@@ -534,10 +528,8 @@ static int rebalanceChildren(int balance)
                                           << (available == 1 ? "child" : "children") << ", and "
                                           << OutstandingForks << " outstanding, forking " << balance
                                           << " more. Time since last request: " << durationMs);
-        return forkChildren(balance);
+        forkChildren(balance);
     }
-
-    return 0;
 }
 
 /// Proactively spawn children processes
