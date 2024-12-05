@@ -191,13 +191,13 @@ private:
     int priority(const TileDesc &desc);
 
 private:
-    /// The incoming underlying queue
+    /// Queue of incoming messages from coolwsd
     std::vector<Payload> _queue;
 
-    /// Incoming tile request queue
+    /// Queue of incoming tile requests from coolwsd
     std::vector<TileDesc> _tileQueue;
 
-    /// Outgoing queued callbacks
+    /// Queue of callbacks from Kit to send out to coolwsd
     std::vector<Callback> _callbacks;
 
     std::map<int, CursorPosition> _cursorPositions;
