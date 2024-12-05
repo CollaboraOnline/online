@@ -451,7 +451,6 @@ void cleanupDocBrokers()
 
 /// Forks as many children as requested.
 /// Returns the number of children requested to spawn,
-/// -1 for error.
 static int forkChildren(const int number)
 {
     if (Util::isKitInProcess())
