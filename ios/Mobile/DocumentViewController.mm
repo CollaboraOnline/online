@@ -295,7 +295,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 }
 
 // This is the same method as Java_org_libreoffice_androidlib_LOActivity_getClipboardContent, with minimal editing to work with objective C
-- (bool)getClipboardWithTypesPlain:(out NSString ** _Nullable)plain HTML:(out NSString ** _Nullable)html {
+- (bool)getClipboardContent:(out NSMutableDictionary *)content {
     const char** mimeTypes = nullptr;
     size_t outCount = 0;
     char  **outMimeTypes = nullptr;
@@ -313,12 +313,18 @@ static IMP standardImpOfInputAccessoryView = nil;
 
         for (size_t i = 0; i < outCount; ++i)
         {
-            // Create new LokClipboardEntry instance
-            
-            if (strcmp(outMimeTypes[i], "text/html") == 0) {
-                *html = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
-            } else {
-                *plain = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
+            NSString * identifier = [NSString stringWithUTF8String:outMimeTypes[i]];
+
+            // For interop with other apps, if this mime-type is known we can export it
+            UTType * uti = [UTType typeWithMIMEType:identifier];
+            if (uti != nil && !uti.dynamic) {
+                if ([uti conformsToType:UTTypePlainText]) {
+                    [content setValue:outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]] forKey:uti.identifier];
+                } else if (uti != nil && [uti conformsToType:UTTypeImage]) {
+                    [content setValue:[UIImage imageWithData:[NSData dataWithBytes:outStreams[i] length:outSizes[i]]] forKey:uti.identifier];
+                } else {
+                    [content setValue:[NSData dataWithBytes:outStreams[i] length:outSizes[i]] forKey:uti.identifier];
+                }
             }
         }
         bResult = true;
@@ -338,12 +344,18 @@ static IMP standardImpOfInputAccessoryView = nil;
 
         for (size_t i = 0; i < outCount; ++i)
         {
-            // Create new LokClipboardEntry instance
-            
-            if (strcmp(outMimeTypes[i], "text/html") == 0) {
-                *html = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
-            } else {
-                *plain = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
+            NSString * identifier = [NSString stringWithUTF8String:outMimeTypes[i]];
+
+            // For interop with other apps, if this mime-type is known we can export it
+            UTType * uti = [UTType typeWithMIMEType:identifier];
+            if (uti != nil && !uti.dynamic) {
+                if ([uti conformsToType:UTTypePlainText]) {
+                    [content setValue:outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]] forKey:uti.identifier];
+                } else if (uti != nil && [uti conformsToType:UTTypeImage]) {
+                    [content setValue:[UIImage imageWithData:[NSData dataWithBytes:outStreams[i] length:outSizes[i]]] forKey:uti.identifier];
+                } else {
+                    [content setValue:[NSData dataWithBytes:outStreams[i] length:outSizes[i]] forKey:uti.identifier];
+                }
             }
         }
         bResult = true;
@@ -370,10 +382,8 @@ static IMP standardImpOfInputAccessoryView = nil;
             
             replyHandler([NSString stringWithFormat:@"%@ %@", encodedPlainPayload, encodedHtmlPayload], nil);
         } else if ([message.body isEqualToString:@"write"]) {
-            NSString * _Nullable plain;
-            NSString * _Nullable html;
-
-            bool success = [self getClipboardWithTypesPlain:&plain HTML:&html];
+            NSMutableDictionary * pasteboardItem = [NSMutableDictionary dictionaryWithCapacity:2];
+            bool success = [self getClipboardContent:pasteboardItem];
             
             if (!success) {
                 replyHandler(nil, @"Failed to get clipboard contents...");
@@ -381,10 +391,6 @@ static IMP standardImpOfInputAccessoryView = nil;
             }
             
             UIPasteboard * pasteboard = [UIPasteboard generalPasteboard];
-            
-            NSMutableDictionary * pasteboardItem = [NSMutableDictionary dictionaryWithCapacity:2];
-            [pasteboardItem setValue:plain forKey:UTTypeUTF8PlainText.identifier];
-            [pasteboardItem setValue:html forKey:UTTypeHTML.identifier];
 
             [pasteboard setItems:[NSArray arrayWithObject:pasteboardItem]];
             
