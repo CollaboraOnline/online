@@ -52,6 +52,8 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 				cy.cGet('body').click(XPos, YPos);
 		});
 
+	cy.wait(300);
+
 	if (firstClick && !dblClick) {
 		cy.cGet('#test-div-OwnCellCursor').should('exist');
 	} else {
@@ -59,9 +61,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	}
 
 	if (isA1)
-		cy.cGet(helper.addressInputSelector)
-				.invoke('val')
-				.should('equal', 'A1');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
 
 	cy.log('<< clickOnFirstCell - end');
 }
