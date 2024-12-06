@@ -46,12 +46,14 @@ class LayerRendererGl implements LayerRenderer {
 	private imageBitmapIdCounter = 0;
 	private textureCache: Map<string, WebGLTexture> = new Map();
 	private imageBitmapIdMap = new WeakMap<ImageBitmap, number>();
+	private isDisposed: boolean;
 
 	constructor(offscreenCanvas: OffscreenCanvas) {
 		this.offscreenCanvas = offscreenCanvas;
 		this.glContext = new RenderContextGl(this.offscreenCanvas);
 		this.gl = this.glContext.getGl();
 		this.initializeWebGL();
+		this.isDisposed = false;
 	}
 
 	initialize(): void {
@@ -162,15 +164,21 @@ class LayerRendererGl implements LayerRenderer {
 	}
 
 	clearCanvas(): void {
-		const gl = this.gl;
-		gl.clearColor(1.0, 1.0, 1.0, 1.0); // Clear to white
-		gl.clear(gl.COLOR_BUFFER_BIT);
+		if (!this.isDisposed) {
+			const gl = this.gl;
+			gl.clearColor(1.0, 1.0, 1.0, 1.0); // Clear to white
+			gl.clear(gl.COLOR_BUFFER_BIT);
+		}
 	}
 
 	drawBitmap(
 		imageInfo: ImageInfo | ImageBitmap,
 		properties?: AnimatedElementRenderProperties,
 	): void {
+		if (this.isDisposed) {
+			console.log('LayerRenderer is disposed');
+			return;
+		}
 		if (!imageInfo) {
 			console.log('LayerRenderer.drawBitmap: no image');
 			return;
@@ -257,6 +265,7 @@ class LayerRendererGl implements LayerRenderer {
 	dispose(): void {
 		this.gl = null;
 		this.offscreenCanvas = null;
+		this.isDisposed = true;
 	}
 
 	hexToRgb(hex: string): { r: number; g: number; b: number } | null {
