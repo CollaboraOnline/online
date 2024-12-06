@@ -315,9 +315,13 @@ L.Control.ContextMenu = L.Control.extend({
 					itemName = _UNO(item.command, docType, true);
 				}
 
+				var toSnakeCase = function (text) {
+					return text.replace(/[ _]/gi, '-').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+				};
+
 				contextMenu[item.command] = {
 					// Using 'click' and <a href='#' is vital for copy/paste security context.
-					name: (window.mode.isMobile() ? _(itemName) : '<a href="#" class="context-menu-link">' +  _(itemName) + '</a'),
+					name: (window.mode.isMobile() ? _(itemName) : '<a href="#" class="context-menu-link ' + toSnakeCase(commandName) + '">' + _(itemName) + '</a'),
 					isHtmlName: true,
 				};
 
