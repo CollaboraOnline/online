@@ -422,14 +422,14 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it.skip('Insert Page Break', function() {
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 1');
+		desktopHelper.assertVisiblePage(1, 1, 1);
 		helper.selectAllText();
 		helper.expectTextForClipboard('text text1');
 		helper.typeIntoDocument('{end}');
 		helper.typeIntoDocument('{ctrl}{leftarrow}');
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container-row .unoInsertPagebreak').click();
-		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 2 of 2', 'Pages 1 and 2 of 2']);
+		desktopHelper.assertVisiblePage(1, 2, 2);
 		helper.selectAllText();
 
 		//var data = [];
