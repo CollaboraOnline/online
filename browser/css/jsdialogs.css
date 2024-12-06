@@ -887,6 +887,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	width: 100%;
 }
 
+.jsdialog .ui-combobox {
+	line-height: 22px;
+}
+
 .ui-listbox option {
 	font-weight: normal;
 	display: block;
