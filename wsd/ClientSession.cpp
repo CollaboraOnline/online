@@ -428,6 +428,90 @@ void ClientSession::onTileProcessed(TileWireId wireId)
         LOG_INF("Tileprocessed message with an unknown wire-id '" << wireId << "' from session " << getId());
 }
 
+#if !MOBILEAPP
+namespace
+{
+std::shared_ptr<http::Session> makePrepareSignatureSession(const std::shared_ptr<ClientSession> clientSession, const std::string& requestUrl)
+{
+    // Create the session and set a finished callback
+    std::shared_ptr<http::Session> httpSession = http::Session::create(requestUrl);
+    if (!httpSession)
+    {
+        LOG_WRN("PrepareSignature: failed to create HTTP session");
+        return nullptr;
+    }
+
+    http::Session::FinishedCallback finishedCallback = [clientSession](const std::shared_ptr<http::Session>& session)
+    {
+        const std::shared_ptr<const http::Response> httpResponse = session->response();
+        Poco::JSON::Object::Ptr resultArguments = new Poco::JSON::Object();
+        resultArguments->set("commandName", ".uno:PrepareSignature");
+
+        bool ok = httpResponse->statusLine().statusCode() == http::StatusCode::OK;
+        resultArguments->set("success", ok);
+
+        const std::string& responseBody = httpResponse->getBody();
+        Poco::JSON::Object::Ptr responseBodyObject = new Poco::JSON::Object();
+        if (!JsonUtil::parseJSON(responseBody, responseBodyObject))
+        {
+            LOG_WRN("PrepareSignature: failed to parse response body as JSON");
+            return;
+        }
+        resultArguments->set("result", responseBodyObject);
+
+        std::ostringstream oss;
+        resultArguments->stringify(oss);
+        std::string result = "unocommandresult: " + oss.str();
+        clientSession->sendTextFrame(result);
+    };
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    return httpSession;
+}
+}
+
+bool ClientSession::handlePrepareSignature(const StringVector& tokens)
+{
+    // Make the HTTP session: this requires an URL
+    Poco::JSON::Object::Ptr userPrivateInfoObject = new Poco::JSON::Object();
+    if (!JsonUtil::parseJSON(getUserPrivateInfo(), userPrivateInfoObject))
+    {
+        LOG_WRN("PrepareSignature: failed to parse user private info as JSON");
+        return false;
+    }
+    std::string requestUrl;
+    JsonUtil::findJSONValue(userPrivateInfoObject, "ESignatureBaseUrl", requestUrl);
+    requestUrl += "/api/signatures/prepare-files-for-signing";
+    std::shared_ptr<http::Session> httpSession = makePrepareSignatureSession(client_from_this(), requestUrl);
+    if (!httpSession)
+    {
+        return false;
+    }
+
+    // Make the request: this requires a JSON body, where we set the secret
+    std::string commandArguments = tokens.cat(' ', 2);
+    Poco::JSON::Object::Ptr commandArgumentsObject;
+    if (!JsonUtil::parseJSON(commandArguments, commandArgumentsObject))
+    {
+        LOG_WRN("PrepareSignature: failed to parse arguments as JSON");
+        return false;
+    }
+    auto requestBodyObject = commandArgumentsObject->get("body").extract<Poco::JSON::Object::Ptr>();
+    std::string secret;
+    JsonUtil::findJSONValue(userPrivateInfoObject, "ESignatureSecret", secret);
+    requestBodyObject->set("secret", secret);
+    std::string requestBody;
+    std::stringstream oss;
+    requestBodyObject->stringify(oss);
+    requestBody = oss.str();
+    http::Request httpRequest(Poco::URI(requestUrl).getPathAndQuery());
+    httpRequest.setVerb(http::Request::VERB_POST);
+    httpRequest.setBody(requestBody, "application/json");
+    std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
+    httpSession->asyncRequest(httpRequest, docBroker->getPoll());
+    return true;
+}
+#endif
+
 bool ClientSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC("handling incoming [" << getAbbreviatedMessage(buffer, length) << ']');
@@ -1200,6 +1284,13 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens.equals(0, "geta11ycaretposition") ||
              tokens.equals(0, "getpresentationinfo"))
     {
+#if !MOBILEAPP
+        if (tokens.equals(0, "uno") && tokens.equals(1, ".uno:PrepareSignature"))
+        {
+            return handlePrepareSignature(tokens);
+        }
+#endif
+
         if (tokens.equals(0, "key"))
             _keyEvents++;
 

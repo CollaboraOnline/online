@@ -8,8 +8,21 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 		// Given a document that can be signed:
 		helper.setupAndLoadDocument('draw/esign.pdf', /*isMultiUser=*/false, /*copyCertificates=*/true);
 
-		cy.intercept('POST', 'https://test.eideasy.com/api/signatures/prepare-files-for-signing',
-			{fixture : 'fixtures/eideasy-send-hash.json'}).as('sendHash');
+		let sendHashResult;
+		cy.fixture('fixtures/eideasy-send-hash.json').then((result) => {
+			sendHashResult = result;
+		});
+		cy.getFrameWindow().then(function(win) {
+			const sendUnoCommand = cy.stub(win.app.map, 'sendUnoCommand');
+			sendUnoCommand.withArgs('.uno:PrepareSignature').as('sendHash').callsFake((commandName, args) => {
+				expect(args.body.signature_redirect).to.satisfy(url => url.endsWith('/cool/signature'));
+				// File name is like esign-Create-an-electronic-signature--0wvs9.pdf
+				expect(args.body.files[0].fileName).to.match(/^esign.*pdf$/i);
+				win.app.map.fire('commandresult', {commandName: '.uno:PrepareSignature', success: true, result: sendHashResult});
+			});
+			// Call the original sendUnoCommand() for other commands
+			sendUnoCommand.callThrough();
+		});
 		cy.getFrameWindow()
 			.then(function(win) {
 				cy.stub(win, 'open').as('windowOpen');
@@ -20,11 +33,7 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 		// When signing that document:
 		cy.cGet('#menu-insert').click();
 		cy.cGet('#menu-insert-esignature').click();
-		cy.wait(['@sendHash']).then(interception => {
-			expect(interception.request.body.signature_redirect).to.satisfy(url => url.endsWith('/cool/signature'));
-			// File name is like esign-Create-an-electronic-signature--0wvs9.pdf
-			expect(interception.request.body.files[0].fileName).to.match(/^esign.*pdf$/i);
-		});
+		cy.get('@sendHash').should('be.called');
 		cy.cGet('#ESignatureDialog button#ok').click();
 		cy.get('@windowOpen').should('be.called');
 		const response = {
