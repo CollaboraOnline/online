@@ -426,7 +426,7 @@ private:
                     const auto now = std::chrono::steady_clock::now();
                     _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
                                             (now - _lastPingSentTime).count();
-                    sendPong(now, &ctrlPayload[0], payloadLen, socket);
+                    sendPong(now, ctrlPayload.data(), payloadLen, socket);
                     gotPing(code, _pingTimeUs);
                 }
                 break;
