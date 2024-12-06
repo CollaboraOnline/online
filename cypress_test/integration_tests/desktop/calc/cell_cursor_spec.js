@@ -25,7 +25,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 		cy.cGet(helper.addressInputSelector).should('have.value', 'Z11');
 
-		cy.cGet(helper.addressInputSelector).type('{selectAll}A110{enter}');
+		helper.typeIntoInputField(helper.addressInputSelector, 'A110');
 		desktopHelper.assertScrollbarPosition('vertical', 205, 315);
 	});
 
