@@ -21,14 +21,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 	});
 
 	it('Switching page.', function() {
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 1');
+		desktopHelper.assertVisiblePage(1, 1, 1);
 		cy.cGet('#menu-insert').click();
 		cy.cGet('body').contains('#menu-insert li a', 'Page Break').click();
-		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 2 of 2', 'Pages 1 and 2 of 2']);
+		desktopHelper.assertVisiblePage(1, 2, 2);
 		cy.cGet('#toolbar-down #prev').click();
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 2');
+		desktopHelper.assertVisiblePage(1, 1, 2);
 		cy.cGet('#toolbar-down #next').click();
-		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 2 of 2', 'Pages 1 and 2 of 2']);
+		desktopHelper.assertVisiblePage(1, 2, 2);
 	});
 
 	it('Text entering mode.', function() {

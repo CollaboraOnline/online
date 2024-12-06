@@ -559,6 +559,20 @@ function updateFollowingUsers() {
 		});
 }
 
+function assertVisiblePage(min, max, allPages) {
+	const expectedArray = [];
+
+	if (min === max) {
+		expectedArray.push('Page ' + min + ' of ' + allPages);
+	} else {
+		expectedArray.push('Page ' + min + ' of ' + allPages);
+		expectedArray.push('Pages ' + min + ' and ' + max + ' of ' + allPages);
+		expectedArray.push('Page ' + max + ' of ' + allPages);
+	}
+
+	cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', expectedArray);
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.hideSidebarImpress = hideSidebarImpress;
@@ -590,3 +604,4 @@ module.exports.checkAccessibilityEnabledToBe = checkAccessibilityEnabledToBe;
 module.exports.setAccessibilityState = setAccessibilityState;
 module.exports.scrollWriterDocumentToTop = scrollWriterDocumentToTop;
 module.exports.updateFollowingUsers = updateFollowingUsers;
+module.exports.assertVisiblePage = assertVisiblePage;
