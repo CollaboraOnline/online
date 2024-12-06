@@ -369,7 +369,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                         {
                             httpSession->setFinishedHandler(std::move(finishedCallback));
 
-                            http::Session::ConnectFailCallback connectFailCallback = [this, url]()
+                            http::Session::ConnectFailCallback connectFailCallback = [this, url](const std::shared_ptr<http::Session>& /* session */)
                             {
                                 LOG_ERR(
                                     "Failed to start an async clipboard download request with URL ["

@@ -141,7 +141,7 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
                 {
                     continue;
                 }
-                const std::string host = aliasUri.getHost();
+                const std::string &host = aliasUri.getHost();
 
                 std::vector<std::string> strVec = Util::splitStringToVector(host, '|');
                 const Poco::URI realUri(uri);
