@@ -69,14 +69,14 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		// cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 	});
 
-	it.skip('Insert', function() {
+	it('Insert', function() {
 		desktopHelper.insertComment();
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 	});
 
-	it.skip('Modify', function() {
+	it('Modify', function() {
 		desktopHelper.insertComment();
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
@@ -90,7 +90,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('contain','some other text, some text0');
 	});
 
-	it.skip('Reply', function() {
+	it('Reply', function() {
 		desktopHelper.insertComment();
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
@@ -103,7 +103,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('#annotation-content-area-2').should('contain','some reply text');
 	});
 
-	it.skip('Remove', function() {
+	it('Remove', function() {
 		desktopHelper.insertComment();
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
@@ -114,7 +114,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('.cool-annotation-content-wrapper').should('not.exist');
 	});
 
-	it.skip('Autosave Collapse', function() {
+	it('Autosave Collapse', function() {
 		desktopHelper.insertComment(undefined, false);
 		cy.cGet('#map').focus();
 		helper.typeIntoDocument('{home}');
