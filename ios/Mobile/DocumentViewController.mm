@@ -294,8 +294,59 @@ static IMP standardImpOfInputAccessoryView = nil;
     LOG_ERR("WebContent process terminated! Is closing the document enough?");
 }
 
+static NSDictionary *mimeTypesToUTITypes = @{
+    @"text/html": @{
+        @"format": (NSString*)kUTTypeHTML,
+        @"type": @"text",
+    },
+    @"text/plain": @{
+        @"format": (NSString*)kUTTypeUTF8PlainText,
+        @"type": @"text",
+    },
+    @"text/plain;charset=utf-8": @{
+        @"format": (NSString*)kUTTypeUTF8PlainText,
+        @"type": @"text",
+    },
+    @"text/rtf": @{
+        @"format": (NSString*)kUTTypeRTF,
+        @"type": @"text",
+    },
+    @"image/png": @{
+        @"format": (NSString*)kUTTypePNG,
+        @"type": @"image",
+    },
+    @"image/bmp": @{
+        @"format": (NSString*)kUTTypeBMP,
+        @"type": @"image",
+    },
+    @"application/x-openoffice-bitmap;windows_formatname=\"Bitmap\"": @{
+        @"format": (NSString*)kUTTypeBMP,
+        @"type": @"image",
+    },
+    @"application/x-libreoffice-tsvc": @{
+        @"format": (NSString*)kUTTypeUTF8TabSeparatedText,
+        @"type": @"text",
+    },
+    @"application/x-openoffice-emf;windows_formatname=\"Image EMF\"": @{
+        @"format": @"com.microsoft.emf",
+        @"type": @"text",
+    },
+    @"application/x-openoffice-wmf;windows_formatname=\"Image WMF\"": @{
+        @"format": @"com.microsoft.wmf",
+        @"type": @"text",
+    },
+    @"application/x-openoffice-gdimetafile;windows_formatname=\"GDIMetaFile\"": @{
+        @"format": @"com.collabora.office.uti.svm", // See core/vcl/README.md for why this is .svm; I couldn't find an existing UTI so I defined one under our namespace, but feel free to change this if a different one crops up under something like org.libreoffice... this isn't some sacred different format
+        @"type": @"text",
+    },
+    @"application/vnd.oasis.opendocument.text-flat-xml": @{
+        @"format": (NSString*)kUTTypeXML,
+        @"type": @"text",
+    },
+};
+
 // This is the same method as Java_org_libreoffice_androidlib_LOActivity_getClipboardContent, with minimal editing to work with objective C
-- (bool)getClipboardWithTypesPlain:(out NSString ** _Nullable)plain HTML:(out NSString ** _Nullable)html {
+- (bool)getClipboardContent:(out NSMutableDictionary *)content {
     const char** mimeTypes = nullptr;
     size_t outCount = 0;
     char  **outMimeTypes = nullptr;
@@ -315,10 +366,19 @@ static IMP standardImpOfInputAccessoryView = nil;
         {
             // Create new LokClipboardEntry instance
             
-            if (strcmp(outMimeTypes[i], "text/html") == 0) {
-                *html = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
+            NSDictionary * UTIType = [mimeTypesToUTITypes objectForKey:[NSString stringWithUTF8String:outMimeTypes[i]]];
+            
+            if (UTIType == nil) {
+                LOG_WRN("Mime type " << outMimeTypes[i] << " lost in clipboard copy");
+                continue;
+            }
+            
+            if ([UTIType[@"type"] isEqualToString:@"text"]) {
+                [content setValue:outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]] forKey:UTIType[@"format"]];
+            } else if ([UTIType[@"type"] isEqualToString:@"image"]) {
+                [content setValue:[UIImage imageWithData:[NSData dataWithBytes:outStreams[i] length:outSizes[i]]] forKey:UTIType[@"format"]];
             } else {
-                *plain = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
+                [content setValue:[NSData dataWithBytes:outStreams[i] length:outSizes[i]] forKey:UTIType[@"format"]];
             }
         }
         bResult = true;
@@ -340,10 +400,19 @@ static IMP standardImpOfInputAccessoryView = nil;
         {
             // Create new LokClipboardEntry instance
             
-            if (strcmp(outMimeTypes[i], "text/html") == 0) {
-                *html = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
+            NSDictionary * UTIType = [mimeTypesToUTITypes objectForKey:[NSString stringWithUTF8String:outMimeTypes[i]]];
+            
+            if (UTIType == nil) {
+                LOG_WRN("Mime type " << outMimeTypes[i] << " lost in clipboard copy");
+                continue;
+            }
+            
+            if ([UTIType[@"type"] isEqualToString:@"text"]) {
+                [content setValue:outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]] forKey:UTIType[@"format"]];
+            } else if ([UTIType[@"type"] isEqualToString:@"image"]) {
+                [content setValue:[UIImage imageWithData:[NSData dataWithBytes:outStreams[i] length:outSizes[i]]] forKey:UTIType[@"format"]];
             } else {
-                *plain = outStreams[i] == NULL ? @"" : [NSString stringWithUTF8String:outStreams[i]];
+                [content setValue:[NSData dataWithBytes:outStreams[i] length:outSizes[i]] forKey:UTIType[@"format"]];
             }
         }
         bResult = true;
@@ -370,10 +439,8 @@ static IMP standardImpOfInputAccessoryView = nil;
             
             replyHandler([NSString stringWithFormat:@"%@ %@", encodedPlainPayload, encodedHtmlPayload], nil);
         } else if ([message.body isEqualToString:@"write"]) {
-            NSString * _Nullable plain;
-            NSString * _Nullable html;
-
-            bool success = [self getClipboardWithTypesPlain:&plain HTML:&html];
+            NSMutableDictionary * pasteboardItem = [NSMutableDictionary dictionaryWithCapacity:2];
+            bool success = [self getClipboardContent:pasteboardItem];
             
             if (!success) {
                 replyHandler(nil, @"Failed to get clipboard contents...");
@@ -381,10 +448,6 @@ static IMP standardImpOfInputAccessoryView = nil;
             }
             
             UIPasteboard * pasteboard = [UIPasteboard generalPasteboard];
-            
-            NSMutableDictionary * pasteboardItem = [NSMutableDictionary dictionaryWithCapacity:2];
-            [pasteboardItem setValue:plain forKey:(NSString*)kUTTypeUTF8PlainText];
-            [pasteboardItem setValue:html forKey:(NSString*)kUTTypeHTML];
 
             [pasteboard setItems:[NSArray arrayWithObject:pasteboardItem]];
             

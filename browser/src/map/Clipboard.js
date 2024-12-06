@@ -958,6 +958,11 @@ L.Clipboard = L.Class.extend({
 
 	_iOSReadClipboard: async function() {
 		const encodedClipboardData = await window.webkit.messageHandlers.clipboard.postMessage('read');
+
+		if (encodedClipboardData === "(internal)") {
+			return null;
+		}
+
 		const clipboardData = Array.from(
 			encodedClipboardData.split(' '),
 		).map((encoded) =>
@@ -991,6 +996,10 @@ L.Clipboard = L.Class.extend({
 			clipboardContents = window.ThisIsTheiOSApp
 				? await this._iOSReadClipboard()
 				: await clipboard.read();
+
+			if (clipboardContents === null) {
+				return; // Internal paste, skip the rest of the browser paste code
+			}
 		} catch (error) {
 			window.app.console.log('navigator.clipboard.read() failed: ' + error.message);
 			if (isSpecial) {
