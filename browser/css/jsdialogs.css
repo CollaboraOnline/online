@@ -946,6 +946,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-left: 1px solid var(--color-border);
 }
 
+.ui-combobox-button:hover {
+	cursor: pointer;
+	border-left-color: transparent;
+	background-color: var(--color-background-darker);
+}
+
 .ui-combobox-dropdown {
 	position: absolute;
 	z-index: 2001;
