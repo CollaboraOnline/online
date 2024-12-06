@@ -139,9 +139,11 @@ class PresenterConsole {
 		this._map.on('transitionend', this._onTransitionEnd, this);
 		this._map.on('tilepreview', this._onTilePreview, this);
 
-		this._computeCanvas(
-			this._proxyPresenter.document.querySelector('#current-presentation'),
-		);
+		// safe check for current-presentation element
+		const currentPresentationCanvas =
+			this._proxyPresenter.document.querySelector('#current-presentation');
+		if (!currentPresentationCanvas) return;
+		this._computeCanvas(currentPresentationCanvas);
 
 		this._timer = this._proxyPresenter.setInterval(
 			L.bind(this._onTimer, this),
@@ -1084,6 +1086,7 @@ class PresenterConsole {
 			L.bind(this._onKeyDown, this),
 		);
 		this._proxyPresenter.clearInterval(this._timer);
+		this._proxyPresenter.close();
 
 		delete this._proxyPresenter;
 		delete this._currentIndex;
