@@ -22,6 +22,8 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 		cy.cGet('#menu-insert-esignature').click();
 		cy.wait(['@sendHash']).then(interception => {
 			expect(interception.request.body.signature_redirect).to.satisfy(url => url.endsWith('/cool/signature'));
+			// File name is like esign-Create-an-electronic-signature--0wvs9.pdf
+			expect(interception.request.body.files[0].fileName).to.match(/^esign.*pdf$/i);
 		});
 		cy.cGet('#ESignatureDialog button#ok').click();
 		cy.get('@windowOpen').should('be.called');

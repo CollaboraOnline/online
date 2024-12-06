@@ -123,6 +123,10 @@ namespace cool {
 			// Step 2: send the hash, get a document ID.
 			const url = this.url + '/api/signatures/prepare-files-for-signing';
 			const redirectUrl = window.makeHttpUrl('/cool/signature');
+			const documentName = <HTMLInputElement>(
+				document.querySelector('#document-name-input')
+			);
+			const fileName = documentName.value;
 			const body = {
 				secret: this.secret,
 				client_id: this.clientId,
@@ -130,8 +134,8 @@ namespace cool {
 				container_type: 'cades',
 				files: [
 					{
-						// Actual file name doesn't seem to matter
-						fileName: 'document.pdf',
+						// Actual file name appears during 2FA
+						fileName: fileName,
 						mimeType: 'application/pdf',
 						fileContent: digest,
 					},
