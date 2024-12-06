@@ -928,10 +928,10 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             std::string compressedFile;
             const long unsigned int compSize = compressBound(size);
             compressedFile.resize(compSize);
-            strm.next_in = (unsigned char*)&uncompressedFile[0];
+            strm.next_in = (unsigned char*)uncompressedFile.data();
             strm.avail_in = size;
             strm.avail_out = compSize;
-            strm.next_out = (unsigned char*)&compressedFile[0];
+            strm.next_out = (unsigned char*)compressedFile.data();
             strm.total_out = strm.total_in = 0;
 
             const int deflateResult = deflate(&strm, Z_FINISH);

@@ -59,7 +59,7 @@ public:
         std::size_t in_left = source.size();
 
         std::vector<char> buffer(8 * source.size());
-        char* out = &buffer[0];
+        char* out = buffer.data();
         std::size_t out_left = buffer.size();
 
         // Convert.

@@ -73,7 +73,7 @@ struct ClipboardData
             {
                 uint64_t len = strtoll( hexLen.c_str(), nullptr, 16 );
                 std::string content(len, ' ');
-                inStream.read(&content[0], len);
+                inStream.read(content.data(), len);
                 if (inStream.fail())
                     throw ParseError("error during reading the stream");
                 std::getline(inStream, newline, '\n');

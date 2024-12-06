@@ -92,7 +92,7 @@ public:
     /// Find a subarray in the raw message.
     int find(const char* sub, const std::size_t subLen) const
     {
-        return Util::findSubArray(&_data[0], _data.size(), sub, subLen);
+        return Util::findSubArray(_data.data(), _data.size(), sub, subLen);
     }
 
     /// Returns true iff the subarray exists in the raw message.
