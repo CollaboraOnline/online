@@ -425,14 +425,14 @@ void DeltaTests::testDeltaSequence()
 
     // Stash it in the cache
     LOK_ASSERT(gen.createDelta(
-                       reinterpret_cast<unsigned char *>(&text[0]),
+                       reinterpret_cast<unsigned char *>(text.data()),
                        0, 0, width, height, width, height,
                        TileLocation(1, 2, 3, 0, 1, 0), delta, textWid, false, LOK_TILEMODE_RGBA, rleData) == false);
     LOK_ASSERT(delta.empty());
 
     // Build a delta between text2 & textWid
     LOK_ASSERT(gen.createDelta(
-                       reinterpret_cast<unsigned char *>(&text2[0]),
+                       reinterpret_cast<unsigned char *>(text2.data()),
                        0, 0, width, height, width, height,
                        TileLocation(1, 2, 3, 0, 1, 0), delta, text2Wid, false, LOK_TILEMODE_RGBA, rleData) == true);
     LOK_ASSERT(delta.size() > 0);
@@ -445,7 +445,7 @@ void DeltaTests::testDeltaSequence()
     // Build a delta between text & text2Wid
     std::vector<char> two2one;
     LOK_ASSERT(gen.createDelta(
-                       reinterpret_cast<unsigned char *>(&text[0]),
+                       reinterpret_cast<unsigned char *>(text.data()),
                        0, 0, width, height, width, height,
                        TileLocation(1, 2, 3, 0, 1, 0), two2one, textWid, false, LOK_TILEMODE_RGBA, rleData) == true);
     LOK_ASSERT(two2one.size() > 0);
@@ -484,14 +484,14 @@ void DeltaTests::testDeltaCopyOutOfBounds()
 
     // Stash it in the cache
     LOK_ASSERT(gen.createDelta(
-                       reinterpret_cast<unsigned char *>(&text[0]),
+                       reinterpret_cast<unsigned char *>(text.data()),
                        0, 0, width, height, width, height,
                        TileLocation(1, 2, 3, 0, 1, 0), delta, textWid, false, LOK_TILEMODE_RGBA, rleData) == false);
     LOK_ASSERT(delta.empty());
 
     // Build a delta between the two frames
     LOK_ASSERT(gen.createDelta(
-                       reinterpret_cast<unsigned char *>(&text2[0]),
+                       reinterpret_cast<unsigned char *>(text2.data()),
                        0, 0, width, height, width, height,
                        TileLocation(1, 2, 3, 0, 1, 0), delta, text2Wid, false, LOK_TILEMODE_RGBA, rleData) == true);
     LOK_ASSERT(delta.size() > 0);
