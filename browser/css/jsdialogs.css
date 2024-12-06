@@ -475,6 +475,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	max-width: 1000px;
 	min-width: 150px;
 	min-height: 100px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 	padding: 1px;
 	padding-inline-end: 3px;
 	color: var(--color-main-text);

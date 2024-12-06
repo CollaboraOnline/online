@@ -458,6 +458,7 @@ var unoCommandsArray = {
 	'Shrink':{global:{context:_('Decrease Font Size'),menu:_('Decrease Size'),},},
 	'Sidebar':{global:{menu:_('Sidebar'),},},
 	'SidebarDeck.ElementsDeck':{global:{menu:_('Open the Elements Deck'),},},
+	'SidebarDeck.StyleListDeck':{global:{menu:_('Open the Styles Deck'),},},
 	'Signature':{global:{menu:_('Digital Signatu~res...'),},},
 	'SlideChangeWindow':{presentation:{menu:_('Slide Transition'),},},
 	'SlideMenu':{presentation:{menu:_('S~lide'),},},
