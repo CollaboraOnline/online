@@ -1833,7 +1833,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'table-table-dialog',
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:TableDialog', 'presentation'),
+				'text': _UNO('.uno:TableDialog', 'presentation', true),
 				'command': '.uno:TableDialog',
 				'accessibility': { focusBack: false, combination: 'SD', de: null }
 			},

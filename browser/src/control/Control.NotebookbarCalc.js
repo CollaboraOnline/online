@@ -697,14 +697,14 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							{
 								'id': 'home-insert-rows-before',
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertRowsBefore', 'spreadsheet'),
+								'text': _UNO('.uno:InsertRowsBefore', 'spreadsheet', true),
 								'command': '.uno:InsertRowsBefore',
 								'accessibility': { focusBack: true,	combination: 'RB', de: null }
 							},
 							{
 								'id': 'home-insert-rows-after',
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertRowsAfter', 'spreadsheet'),
+								'text': _UNO('.uno:InsertRowsAfter', 'spreadsheet', true),
 								'command': '.uno:InsertRowsAfter',
 								'accessibility': { focusBack: true,	combination: 'RA', de: null }
 							},
@@ -730,14 +730,14 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							{
 								'id': 'home-insert-columns-before',
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertColumnsBefore', 'spreadsheet'),
+								'text': _UNO('.uno:InsertColumnsBefore', 'spreadsheet', true),
 								'command': '.uno:InsertColumnsBefore',
 								'accessibility': { focusBack: true,	combination: 'UB', de: null }
 							},
 							{
 								'id': 'home-insert-columns-after',
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertColumnsAfter', 'spreadsheet'),
+								'text': _UNO('.uno:InsertColumnsAfter', 'spreadsheet', true),
 								'command': '.uno:InsertColumnsAfter',
 								'accessibility': { focusBack: true,	combination: 'UA', de: null }
 							},
