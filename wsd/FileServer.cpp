@@ -180,7 +180,7 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
             return false;
         }
 
-        unsigned char userProvidedPwdHash[tokens[4].size() / 2];
+        auto userProvidedPwdHash = static_cast<unsigned char*>(alloca(tokens[4].size() / 2));
         PKCS5_PBKDF2_HMAC(userProvidedPwd.c_str(), -1,
                           saltData.data(), saltData.size(),
                           std::stoi(tokens[2]),
