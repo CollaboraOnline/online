@@ -326,6 +326,9 @@ static IMP standardImpOfInputAccessoryView = nil;
                     [content setValue:[NSData dataWithBytes:outStreams[i] length:outSizes[i]] forKey:uti.identifier];
                 }
             }
+            
+            // But to preserve the data we need, we'll always also export the raw, unaltered bytes
+            [content setValue:[NSData dataWithBytes:outStreams[i] length:outSizes[i]] forKey:identifier];
         }
         bResult = true;
     }
@@ -357,6 +360,9 @@ static IMP standardImpOfInputAccessoryView = nil;
                     [content setValue:[NSData dataWithBytes:outStreams[i] length:outSizes[i]] forKey:uti.identifier];
                 }
             }
+            
+            // But to preserve the data we need, we'll always also export the raw, unaltered bytes
+            [content setValue:[NSData dataWithBytes:outStreams[i] length:outSizes[i]] forKey:identifier];
         }
         bResult = true;
     }
@@ -366,21 +372,62 @@ static IMP standardImpOfInputAccessoryView = nil;
     return bResult;
 }
 
+- (void)setClipboardContent:(UIPasteboard *)pasteboard {
+    NSMutableDictionary * pasteboardItems = [NSMutableDictionary new];
+    
+    if (pasteboard.numberOfItems != 0) {
+        for (NSString * identifier in pasteboard.items[0])
+        {
+            UTType * uti = [UTType typeWithIdentifier:identifier];
+            NSString * mime = identifier;
+            
+            if (uti != nil) {
+                mime = uti.preferredMIMEType;
+            }
+            
+            if (mime == nil) {
+                LOG_WRN("UTI " << [identifier UTF8String] << " did not have associated mime type when deserializing clipboard, skipping...");
+                continue;
+            }
+            
+            NSData * value = [pasteboard dataForPasteboardType:identifier];
+            
+            if (uti != nil && [pasteboardItems objectForKey:mime] != nil) {
+                // We export both mime and UTI keys, don't overwrite the mime-type ones with the UTI ones
+                continue;
+            }
+            
+            if (value != nil) {
+                [pasteboardItems setObject:value forKey:mime];
+            }
+        }
+    }
+    
+    const char * pInMimeTypes[pasteboardItems.count];
+    size_t pInSizes[pasteboardItems.count];
+    const char * pInStreams[pasteboardItems.count];
+    
+    size_t i = 0;
+    
+    for (NSString * mime in pasteboardItems) {
+        pInMimeTypes[i] = [mime UTF8String];
+        pInStreams[i] = (const char*)[pasteboardItems[mime] bytes];
+        pInSizes[i] = [pasteboardItems[mime] length];
+        i++;
+    }
+    
+    DocumentData::get(self.document->appDocId).loKitDocument->setClipboard(pasteboardItems.count, pInMimeTypes, pInSizes, pInStreams);
+}
+
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message replyHandler:(nonnull void (^)(id _Nullable, NSString * _Nullable))replyHandler {
 
     if ([message.name isEqualToString:@"clipboard"]) {
         if ([message.body isEqualToString:@"read"]) {
             UIPasteboard * pasteboard = [UIPasteboard generalPasteboard];
             
-            NSString * _Nullable plain = [pasteboard string];
-            NSData * htmlPayload = [pasteboard dataForPasteboardType:UTTypeHTML.identifier];
-                        
-            NSData * plainPayload = [plain dataUsingEncoding:NSUTF8StringEncoding];
-
-            NSString * encodedPlainPayload = [plainPayload base64EncodedStringWithOptions:0];
-            NSString * encodedHtmlPayload = [htmlPayload base64EncodedStringWithOptions:0];
+            [self setClipboardContent:pasteboard];
             
-            replyHandler([NSString stringWithFormat:@"%@ %@", encodedPlainPayload, encodedHtmlPayload], nil);
+            replyHandler(@"(internal)", nil);
         } else if ([message.body isEqualToString:@"write"]) {
             NSMutableDictionary * pasteboardItem = [NSMutableDictionary dictionaryWithCapacity:2];
             bool success = [self getClipboardContent:pasteboardItem];
