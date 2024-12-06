@@ -378,7 +378,7 @@ L.Map.include({
 
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog',
-			'.uno:Signature', '.uno:ShowResolvedAnnotations',
+			'.uno:Signature', '.uno:PrepareSignature', '.uno:ShowResolvedAnnotations',
 			'.uno:ToolbarMode?Mode:string=notebookbar_online.ui', '.uno:ToolbarMode?Mode:string=Default',
 			'.uno:ExportToEPUB', '.uno:ExportToPDF', '.uno:ExportDirectToPDF', '.uno:MoveKeepInsertMode', '.uno:ShowRuler'];
 		if (app.isCommentEditingAllowed()) {

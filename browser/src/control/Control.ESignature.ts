@@ -19,6 +19,13 @@ namespace cool {
 		commandValues: SignatureResponse;
 	}
 
+	export interface CommandResultResponse {
+		commandName: string;
+		success: boolean;
+		// Depends on the value of commandName
+		result: any;
+	}
+
 	export interface HashSendResponse {
 		doc_id: string;
 		available_methods: Array<string>;
@@ -100,11 +107,20 @@ namespace cool {
 			this.clientId = clientId;
 
 			app.map.on('commandvalues', this.onCommandValues.bind(this));
+			app.map.on('commandresult', this.onCommandResult.bind(this));
 		}
 
 		insert(): void {
 			// Step 1: extract the document hash.
 			app.socket.sendMessage('commandvalues command=.uno:Signature');
+		}
+
+		// Handles the result of dispatched UNO commands
+		onCommandResult(event: CommandResultResponse): void {
+			if (event.commandName == '.uno:PrepareSignature') {
+				const response = <HashSendResponse>event.result;
+				this.handleSendHashResponse(event.success, response);
+			}
 		}
 
 		// Handles the command values response for .uno:Signature
@@ -121,14 +137,12 @@ namespace cool {
 			const digest = signatureResponse.digest;
 
 			// Step 2: send the hash, get a document ID.
-			const url = this.url + '/api/signatures/prepare-files-for-signing';
 			const redirectUrl = window.makeHttpUrl('/cool/signature');
 			const documentName = <HTMLInputElement>(
 				document.querySelector('#document-name-input')
 			);
 			const fileName = documentName.value;
 			const body = {
-				secret: this.secret,
 				client_id: this.clientId,
 				// Create a PKCS#7 binary signature
 				container_type: 'cades',
@@ -146,44 +160,14 @@ namespace cool {
 				// Automatic file download will not happen after signing
 				nodownload: true,
 			};
-			const headers = {
-				'Content-Type': 'application/json',
+			const args = {
+				body: body,
 			};
-			const request = new Request(url, {
-				method: 'POST',
-				body: JSON.stringify(body),
-				headers: headers,
-			});
-			window.fetch(request).then(
-				(response) => {
-					this.handleSendHashBytes(response);
-				},
-				(error) => {
-					app.console.log(
-						'failed to fetch /api/signatures/prepare-files-for-signing: ' +
-							error.message,
-					);
-				},
-			);
-		}
-
-		// Handles the 'send hash' response bytes
-		handleSendHashBytes(response: Response): void {
-			response.json().then(
-				(json) => {
-					this.handleSendHashJson(response.ok, json);
-				},
-				(error) => {
-					app.console.log(
-						'failed to parse response from /api/signatures/prepare-files-for-signing as JSON: ' +
-							error.message,
-					);
-				},
-			);
+			app.map.sendUnoCommand('.uno:PrepareSignature', args);
 		}
 
 		// Handles the 'send hash' response JSON
-		handleSendHashJson(ok: boolean, response: HashSendResponse): void {
+		handleSendHashResponse(ok: boolean, response: HashSendResponse): void {
 			if (!ok) {
 				app.console.log(
 					'/api/signatures/prepare-files-for-signing failed: ' +
