@@ -109,7 +109,7 @@ SslContext::SslContext(const std::string& certFilePath, const std::string& keyFi
     , _verification(verification)
 {
     const std::vector<char> rand = Util::rng::getBytes(512);
-    RAND_seed(&rand[0], rand.size());
+    RAND_seed(rand.data(), rand.size());
 
 #if OPENSSL_VERSION_NUMBER >= 0x0907000L && OPENSSL_VERSION_NUMBER < 0x10100003L
     OPENSSL_config(nullptr);

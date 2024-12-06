@@ -198,7 +198,7 @@ struct Client : public Poco::Util::Application
         std::shared_ptr<WebSocket> ws = session.getWebSocket();
 
         std::string send = "hello there";
-        ws->sendFrame(&send[0], send.length(),
+        ws->sendFrame(send.data(), send.length(),
                       WebSocket::SendFlags::FRAME_TEXT);
 
         for (size_t i = 0; i < 10; i++)
