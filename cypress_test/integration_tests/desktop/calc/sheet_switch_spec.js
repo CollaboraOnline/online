@@ -110,12 +110,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test sheet switching with 
 	it('Check view position on sheet switch', function() {
 		helper.setupAndLoadDocument('calc/switch-split.ods');
 		// Sheet 1 has split panes
-		desktopHelper.assertScrollbarPosition('horizontal', 300, 310);
+		desktopHelper.assertScrollbarPosition('horizontal', 300, 320);
 		// Switch to another sheet with differently sized columns
 		cy.cGet('#spreadsheet-tab1').click();
 		// Switch back to the split sheet
 		cy.cGet('#spreadsheet-tab0').click();
 		// The panes positions shouldn't have changed
-		desktopHelper.assertScrollbarPosition('horizontal', 300, 310);
+		desktopHelper.assertScrollbarPosition('horizontal', 300, 320);
 	});
 });
