@@ -116,7 +116,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 		helper.copy();
 		helper.expectTextForClipboard('sit');
 		desktopHelper.assertScrollbarPosition('vertical', 60, 75);
-		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 2 of 6', 'Pages 1 and 2 of 6']);
+		desktopHelper.assertVisiblePage(1, 2, 6);
 
 		// Scroll document to the top so cursor is no longer visible, that turns following off
 		desktopHelper.scrollWriterDocumentToTop();
@@ -124,10 +124,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 
 		cy.cGet('#searchnext').click();
 		desktopHelper.assertScrollbarPosition('vertical', 135, 150);
-		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 3 of 6', 'Pages 2 and 3 of 6']);
+		desktopHelper.assertVisiblePage(2, 3, 6);
 
 		cy.cGet('#searchnext').click();
 		desktopHelper.assertScrollbarPosition('vertical', 215, 230);
-		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 3 of 6', 'Pages 3 and 4 of 6']);
+		desktopHelper.assertVisiblePage(3, 4, 6);
 	});
 });
