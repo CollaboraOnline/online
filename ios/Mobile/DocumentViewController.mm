@@ -32,7 +32,7 @@
 
 #import "DocumentViewController.h"
 
-#import <MobileCoreServices/UTCoreTypes.h>
+#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #import <Poco/MemoryStream.h>
 
 @interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, WKScriptMessageHandlerWithReply, UIScrollViewDelegate, UIDocumentPickerDelegate, UIFontPickerViewControllerDelegate> {
@@ -361,7 +361,7 @@ static IMP standardImpOfInputAccessoryView = nil;
             UIPasteboard * pasteboard = [UIPasteboard generalPasteboard];
             
             NSString * _Nullable plain = [pasteboard string];
-            NSData * htmlPayload = [pasteboard dataForPasteboardType:(NSString*)kUTTypeHTML];
+            NSData * htmlPayload = [pasteboard dataForPasteboardType:UTTypeHTML.identifier];
                         
             NSData * plainPayload = [plain dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -383,8 +383,8 @@ static IMP standardImpOfInputAccessoryView = nil;
             UIPasteboard * pasteboard = [UIPasteboard generalPasteboard];
             
             NSMutableDictionary * pasteboardItem = [NSMutableDictionary dictionaryWithCapacity:2];
-            [pasteboardItem setValue:plain forKey:(NSString*)kUTTypeUTF8PlainText];
-            [pasteboardItem setValue:html forKey:(NSString*)kUTTypeHTML];
+            [pasteboardItem setValue:plain forKey:UTTypeUTF8PlainText.identifier];
+            [pasteboardItem setValue:html forKey:UTTypeHTML.identifier];
 
             [pasteboard setItems:[NSArray arrayWithObject:pasteboardItem]];
             
