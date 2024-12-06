@@ -19,7 +19,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		helper.typeIntoDocument('{ctrl+enter}');
 
 		cy.wait(500);
-		cy.cGet('#StatePageNumber').should('have.text', 'Pages 2 and 3 of 6');
+		desktopHelper.assertVisiblePage(2, 3, 6);
 
 		desktopHelper.assertScrollbarPosition('vertical', 140, 160);
 	});
@@ -28,20 +28,20 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		desktopHelper.selectZoomLevel('40');
 		helper.typeIntoDocument('{ctrl}{home}');
 		//scroll to bottom
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 4');
+		desktopHelper.assertVisiblePage(1, 1, 4);
 		desktopHelper.pressKey(2, 'pagedown');
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 2 of 4');
+		desktopHelper.assertVisiblePage(2, 2, 4);
 		desktopHelper.pressKey(1, 'pagedown');
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 3 of 4');
+		desktopHelper.assertVisiblePage(3, 3, 4);
 		desktopHelper.pressKey(1, 'pagedown');
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 4 of 4');
+		desktopHelper.assertVisiblePage(4, 4, 4);
 		//scroll to top
 		desktopHelper.pressKey(1, 'pageup');
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 3 of 4');
+		desktopHelper.assertVisiblePage(3, 3, 4);
 		desktopHelper.pressKey(1, 'pageup');
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 2 of 4');
+		desktopHelper.assertVisiblePage(2, 2, 4);
 		desktopHelper.pressKey(2, 'pageup');
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 4');
+		desktopHelper.assertVisiblePage(1, 1, 4);
 	});
 
 	it('Scrolling to left/right', function() {

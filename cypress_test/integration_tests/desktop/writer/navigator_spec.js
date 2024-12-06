@@ -38,28 +38,28 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 
 		// Doubleclick several items, and check if the document is scrolled to the right page
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Feedback').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 2 of 8');
+		desktopHelper.assertVisiblePage(2, 2, 8);
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Text').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Pages 5 and 6 of 8');
+		desktopHelper.assertVisiblePage(5, 6, 8);
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Replacing').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 7 of 8');
+		desktopHelper.assertVisiblePage(7, 7, 8);
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Table15').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 2 of 8');
+		desktopHelper.assertVisiblePage(2, 2, 8);
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Frame39').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 4 of 8');
+		desktopHelper.assertVisiblePage(4, 4, 8);
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Frame27').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 6 of 8');
+		desktopHelper.assertVisiblePage(6, 6, 8);
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'graphics3').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 8');
+		desktopHelper.assertVisiblePage(1, 1, 8);
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'graphics10').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 5 of 8');
+		desktopHelper.assertVisiblePage(5, 5, 8);
 	});
 
 	it('Jump to element even when cursor not visible', function() {
@@ -74,7 +74,7 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 
 		// Doubleclick several items, and check if the document is scrolled to the right page
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Feedback').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 2 of 8');
+		desktopHelper.assertVisiblePage(2, 2, 8);
 
 		desktopHelper.assertScrollbarPosition('vertical', 55, 65);
 
@@ -83,12 +83,12 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		desktopHelper.updateFollowingUsers();
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Text').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Pages 5 and 6 of 8');
+		desktopHelper.assertVisiblePage(5, 6, 8);
 
 		desktopHelper.assertScrollbarPosition('vertical', 235, 250);
 
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Replacing').dblclick();
-		cy.cGet('#StatePageNumber').should('have.text', 'Page 7 of 8');
+		desktopHelper.assertVisiblePage(7, 7, 8);
 
 		desktopHelper.assertScrollbarPosition('vertical', 335, 355);
 	});
