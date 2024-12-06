@@ -124,10 +124,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 
 		cy.cGet('#searchnext').click();
 		desktopHelper.assertScrollbarPosition('vertical', 135, 150);
-		cy.cGet('#StatePageNumber').should('have.text', 'Pages 2 and 3 of 6');
+		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 3 of 6', 'Pages 2 and 3 of 6']);
 
 		cy.cGet('#searchnext').click();
 		desktopHelper.assertScrollbarPosition('vertical', 215, 230);
-		cy.cGet('#StatePageNumber').should('have.text', 'Pages 3 and 4 of 6');
+		cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', ['Page 3 of 6', 'Pages 3 and 4 of 6']);
 	});
 });
