@@ -109,6 +109,7 @@ ChildSession::ChildSession(const std::shared_ptr<ProtocolHandlerInterface>& prot
     , _jailRoot(jailRoot)
     , _docManager(&docManager)
     , _viewId(-1)
+    , _currentPart(-1)
     , _isDocLoaded(false)
     , _copyToClipboard(false)
     , _canonicalViewId(-1)
@@ -981,6 +982,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     if (_docType != "text" && part != -1)
     {
         getLOKitDocument()->setPart(part);
+        _currentPart = part;
     }
 
     // Respond by the document status
@@ -2973,6 +2975,7 @@ bool ChildSession::setClientPart(const StringVector& tokens)
     if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT && part != getLOKitDocument()->getPart())
     {
         getLOKitDocument()->setPart(part);
+        _currentPart = part;
     }
 
     return true;
@@ -3054,6 +3057,7 @@ bool ChildSession::setPage(const StringVector& tokens)
     getLOKitDocument()->setView(_viewId);
 
     getLOKitDocument()->setPart(page);
+    _currentPart = page;
     return true;
 }
 
@@ -3412,6 +3416,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("graphicinnertextarea: " + payload);
         break;
     case LOK_CALLBACK_CELL_CURSOR:
+        updateCursorPosition(payload);
         sendTextFrame("cellcursor: " + payload);
         break;
     case LOK_CALLBACK_CELL_FORMULA:
@@ -3450,8 +3455,15 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         getStatus();
         break;
     case LOK_CALLBACK_SET_PART:
+    {
+        int part;
+        StringVector tokens(StringVector::tokenize(payload, ','));
+        if(getTokenInteger(tokens[1], "part", part))
+            _currentPart = part;
+
         sendTextFrame("setpart: " + payload);
         break;
+    }
     case LOK_CALLBACK_UNO_COMMAND_RESULT:
     {
         Parser parser;

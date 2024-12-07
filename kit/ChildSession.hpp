@@ -261,6 +261,8 @@ public:
         Session::dumpState(oss);
 
         oss << "\n\tviewId: " << _viewId
+            << "\n\tpart: " << _currentPart
+            << "\n\tcursor: " << _cursorPosition
             << "\n\tcanonicalViewId: " << _canonicalViewId
             << "\n\tisDocLoaded: " << _isDocLoaded
             << "\n\tdocType: " << _docType
@@ -290,6 +292,12 @@ private:
 
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
+
+    /// Currently visible part
+    int _currentPart;
+
+    /// Last known position of a cursor for prioritizing rendering
+    Util::Rectangle _cursorPosition;
 
     /// Whether document has been opened successfully
     bool _isDocLoaded;
