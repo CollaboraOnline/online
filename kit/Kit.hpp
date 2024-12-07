@@ -187,7 +187,6 @@ public:
 #endif
 };
 
-class KitQueue;
 class ChildSession;
 
 /// A document container.
@@ -197,7 +196,7 @@ class ChildSession;
 /// per process. But for security reasons don't.
 /// However, we could have a coolkit instance
 /// per user or group of users (a trusted circle).
-class Document final : public std::enable_shared_from_this<Document>
+class Document final : public std::enable_shared_from_this<Document>, private TilePrioritizer
 {
 public:
     Document(const std::shared_ptr<lok::Office>& loKit, const std::string& jailId,
@@ -267,6 +266,9 @@ private:
 
     /// Cleanup bgSave child processes.
     static void reapZombieChildren();
+
+    /// Calculate tile rendering priority from a TileDesc
+    virtual float getTilePriority(const TileDesc &desc) const override;
 
 public:
     /// Request loading a document, or a new view, if one exists,
