@@ -748,7 +748,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
     , _docId(docId)
     , _url(url)
     , _obfuscatedFileId(Uri::getFilenameFromURL(docKey))
-    , _queue(std::make_shared<KitQueue>())
+    , _queue(new KitQueue())
     , _websocketHandler(websocketHandler)
     , _modified(ModifiedState::UnModified)
     , _isBgSaveProcess(false)
@@ -1145,7 +1145,7 @@ void Document::trimAfterInactivity()
     assert(descriptor && "Null callback data.");
     assert(descriptor->getDoc() && "Null Document instance.");
 
-    std::shared_ptr<KitQueue> queue = descriptor->getDoc()->_queue;
+    std::unique_ptr<KitQueue> &queue = descriptor->getDoc()->_queue;
     assert(queue && "Null KitQueue.");
 
     const std::string payload = p ? p : "(nil)";
