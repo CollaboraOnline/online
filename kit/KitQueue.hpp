@@ -79,8 +79,9 @@ public:
     void clearTileQueue() { _tileQueue.clear(); }
     void pushTileQueue(const Payload &value);
     void pushTileCombineRequest(const Payload &value);
-    TileCombined popTileQueue();
-    std::vector<TileCombined> popWholeTileQueue();
+    /// Pops the highest priority TileCombined from the
+    /// render queue, with it's priority.
+    TileCombined popTileQueue(float &priority);
     size_t getTileQueueSize() const { return _tileQueue.size(); }
 
     /// Obtain the next callback
@@ -192,11 +193,6 @@ private:
     /// De-prioritize the previews (tiles with 'id') - move them to the end of
     /// the queue.
     void deprioritizePreviews();
-
-    /// Priority of the given tile message.
-    /// -1 means the lowest prio (the tile does not intersect any of the cursors),
-    /// the higher the number, the bigger is priority [up to _viewOrder.size()-1].
-    int priority(const TileDesc &desc);
 
 private:
     /// Queue of incoming messages from coolwsd
