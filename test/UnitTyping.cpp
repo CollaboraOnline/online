@@ -132,7 +132,8 @@ public:
 
     TestResult testKitQueueMerging()
     {
-        KitQueue queue;
+        TilePrioritizer dummy;
+        KitQueue queue(dummy);
 
         queue.put("child-foo textinput id=0 text=a");
         queue.put("child-foo textinput id=0 text=b");

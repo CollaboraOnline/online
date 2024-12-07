@@ -22,15 +22,23 @@
 #include "TileDesc.hpp"
 #include "Protocol.hpp"
 
+class TilePrioritizer
+{
+public:
+    virtual ~TilePrioritizer() {}
+    virtual float getTilePriority(const TileDesc &) const { return 0.0; }
+};
+
 /// Queue for handling the Kit's messaging needs
 class KitQueue
 {
     friend class KitQueueTests;
 
+    const TilePrioritizer &_prio;
 public:
     typedef std::vector<char> Payload;
 
-    KitQueue() { }
+    KitQueue(const TilePrioritizer &prio) : _prio(prio) { }
     ~KitQueue() { }
 
     KitQueue(const KitQueue&) = delete;
