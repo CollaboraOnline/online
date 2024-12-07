@@ -1001,6 +1001,22 @@ namespace Util
         return s;
     }
 
+    Rectangle::Rectangle(const std::string &rectangle)
+    {
+        StringVector tokens(StringVector::tokenize(rectangle, ','));
+        if (tokens.size() == 4)
+        {
+            _x = std::stoi(tokens[0]);
+            _y = std::stoi(tokens[1]);
+            _width = std::stoi(tokens[2]);
+            _height = std::stoi(tokens[3]);
+        }
+        else
+        {
+            _x = _y = _width = _height = 0;
+        }
+    }
+
 } // namespace Util
 
 namespace SigUtil {
