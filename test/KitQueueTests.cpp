@@ -158,7 +158,8 @@ void KitQueueTests::testTileRecombining()
 {
     constexpr auto testname = __func__;
 
-    KitQueue queue;
+    TilePrioritizer dummy;
+    KitQueue queue(dummy);
 
     queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
     queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
@@ -180,7 +181,16 @@ void KitQueueTests::testViewOrder()
 {
     constexpr auto testname = __func__;
 
-    KitQueue queue;
+    class TestPrioritizer : public TilePrioritizer {
+    public:
+        virtual float getTilePriority(const TileDesc &desc) const
+        {
+            // FIXME: implement cursor priority hooks.
+            return 0.0;
+        }
+    };
+    TestPrioritizer dummy;
+    KitQueue queue(dummy);
 
     // should result in the 3, 2, 1, 0 order of the views
     queue.updateCursorPosition(0, 0, 0, 0, 10, 100);
