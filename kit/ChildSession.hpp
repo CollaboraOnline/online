@@ -144,7 +144,7 @@ public:
     // Only called by kit.
     void setCanonicalViewId(int viewId) { _canonicalViewId = viewId; }
 
-    int  getCanonicalViewId() { return _canonicalViewId; }
+    int  getCanonicalViewId() const { return _canonicalViewId; }
 
     void setViewRenderState(const std::string& state) { _viewRenderState = state; }
 
