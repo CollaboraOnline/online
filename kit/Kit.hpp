@@ -334,6 +334,7 @@ public:
 
     /// A new message from wsd for the queue
     void queueMessage(const std::string &msg) { _queue->put(msg); }
+    /// Do we have incoming messages from wsd ?
     bool hasQueueItems() const { return _queue && !_queue->isEmpty(); }
     bool canRenderTiles() const {
         return processInputEnabled() && !isLoadOngoing() &&
