@@ -444,20 +444,8 @@ TileCombined KitQueue::popTileQueue()
 
     TileDesc msg = _tileQueue.front();
 
+    // vector of tiles we will render
     std::vector<TileDesc> tiles;
-
-    if (msg.isPreview())
-    {
-        // Don't combine non-tiles or tiles with id.
-        LOG_TRC("KitQueue res: " << msg.serialize());
-        _tileQueue.erase(_tileQueue.begin());
-
-        // de-prioritize the other tiles with id - usually the previews in
-        // Impress
-        deprioritizePreviews();
-
-        return TileCombined(msg);
-    }
 
     // We are handling a tile; first try to find one that is at the cursor's
     // position, otherwise handle the one that is at the front
@@ -466,14 +454,6 @@ TileCombined KitQueue::popTileQueue()
     for (size_t i = 0; i < _tileQueue.size(); ++i)
     {
         auto& prio = _tileQueue[i];
-
-        // FIXME: does this make any sense ?
-        //
-        // avoid starving - stop the search when we reach a non-tile,
-        // otherwise we may keep growing the queue of unhandled stuff (both
-        // tiles and non-tiles)
-        if (prio.isPreview())
-            break;
 
         const int p = priority(prio);
         if (p > prioritySoFar)
@@ -498,12 +478,6 @@ TileCombined KitQueue::popTileQueue()
     for (size_t i = 0; i < _tileQueue.size(); )
     {
         auto& it = _tileQueue[i];
-        if (it.isPreview())
-        {
-            // Don't combine non-tiles or tiles with id.
-            ++i;
-            continue;
-        }
 
         LOG_TRC("Combining candidate: " << it.serialize());
 
