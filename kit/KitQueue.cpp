@@ -382,18 +382,6 @@ bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &pay
     return false;
 }
 
-int KitQueue::priority(const TileDesc &tile)
-{
-    for (int i = static_cast<int>(_viewOrder.size()) - 1; i >= 0; --i)
-    {
-        auto& cursor = _cursorPositions[_viewOrder[i]];
-        if (tile.intersects(cursor.toAABBox()))
-            return i;
-    }
-
-    return -1;
-}
-
 // FIXME: it's not that clear what good this does for us ...
 // we process all previews in the same batch of rendering
 void KitQueue::deprioritizePreviews()
@@ -426,19 +414,11 @@ KitQueue::Payload KitQueue::pop()
     return front;
 }
 
-std::vector<TileCombined> KitQueue::popWholeTileQueue()
-{
-    std::vector<TileCombined> result;
-
-    while (!_tileQueue.empty())
-        result.emplace_back(popTileQueue());
-
-    return result;
-}
-
-TileCombined KitQueue::popTileQueue()
+TileCombined KitQueue::popTileQueue(float &priority)
 {
     assert(!_tileQueue.empty());
+
+    const auto now = std::chrono::steady_clock::now();
 
     LOG_TRC("KitQueue depth: " << _tileQueue.size());
 
@@ -450,31 +430,28 @@ TileCombined KitQueue::popTileQueue()
     // We are handling a tile; first try to find one that is at the cursor's
     // position, otherwise handle the one that is at the front
     int prioritized = 0;
-    int prioritySoFar = -1;
+    float prioritySoFar = -1000.0;
     for (size_t i = 0; i < _tileQueue.size(); ++i)
     {
         auto& prio = _tileQueue[i];
 
-        const int p = priority(prio);
+        const float p = _prio.getTilePriority(prio);
         if (p > prioritySoFar)
         {
             prioritySoFar = p;
             prioritized = i;
             msg = prio;
-
-            // found the highest priority already?
-            if (prioritySoFar == static_cast<int>(_viewOrder.size()) - 1)
-            {
-                break;
-            }
         }
     }
 
+    // remove highest priority tile from the queue
     _tileQueue.erase(_tileQueue.begin() + prioritized);
+    priority = prioritySoFar;
 
+    // and add it to the render list
     tiles.emplace_back(msg);
 
-    // Combine as many tiles as possible with the top one.
+    // Combine as many tiles as possible with this tile.
     for (size_t i = 0; i < _tileQueue.size(); )
     {
         auto& it = _tileQueue[i];
@@ -488,9 +465,7 @@ TileCombined KitQueue::popTileQueue()
             _tileQueue.erase(_tileQueue.begin() + i);
         }
         else
-        {
             ++i;
-        }
     }
 
     LOG_TRC("Combined " << tiles.size() << " tiles, leaving " << _tileQueue.size() << " in queue.");
@@ -499,32 +474,6 @@ TileCombined KitQueue::popTileQueue()
     {
         LOG_TRC("KitQueue res: " << tiles[0].serialize());
         return TileCombined(tiles[0]);
-    }
-
-    // n^2 but lists are short.
-    for (size_t i = 0; i < tiles.size() - 1; ++i)
-    {
-        const auto &a = tiles[i];
-        for (size_t j = i + 1; j < tiles.size();)
-        {
-            const auto &b = tiles[j];
-            assert(a.getPart() == b.getPart());
-            assert(a.getEditMode() == b.getEditMode());
-            assert(a.getWidth() == b.getWidth());
-            assert(a.getHeight() == b.getHeight());
-            assert(a.getTileWidth() == b.getTileWidth());
-            assert(a.getTileHeight() == b.getTileHeight());
-            if (a.getTilePosX() == b.getTilePosX() &&
-                a.getTilePosY() == b.getTilePosY())
-            {
-                LOG_TRC("KitQueue: dropping duplicate tile: " <<
-                        j << " vs. " << i << " at: " <<
-                        a.getTilePosX() << "," << b.getTilePosY());
-                tiles.erase(tiles.begin() + j);
-            }
-            else
-                j++;
-        }
     }
 
     TileCombined combined = TileCombined::create(tiles);
