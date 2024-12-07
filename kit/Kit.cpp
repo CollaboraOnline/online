@@ -748,7 +748,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
     , _docId(docId)
     , _url(url)
     , _obfuscatedFileId(Uri::getFilenameFromURL(docKey))
-    , _queue(std::make_shared<KitQueue>())
+    , _queue(new KitQueue(*this))
     , _websocketHandler(websocketHandler)
     , _modified(ModifiedState::UnModified)
     , _isBgSaveProcess(false)
@@ -1145,7 +1145,7 @@ void Document::trimAfterInactivity()
     assert(descriptor && "Null callback data.");
     assert(descriptor->getDoc() && "Null Document instance.");
 
-    std::shared_ptr<KitQueue> queue = descriptor->getDoc()->_queue;
+    std::unique_ptr<KitQueue> &queue = descriptor->getDoc()->_queue;
     assert(queue && "Null KitQueue.");
 
     const std::string payload = p ? p : "(nil)";
@@ -1153,63 +1153,7 @@ void Document::trimAfterInactivity()
             "] [" << lokCallbackTypeToString(type) <<
             "] [" << payload << "].");
 
-    // when we examine the content of the JSON
-    std::string targetViewId;
-
-    if (type == LOK_CALLBACK_CELL_CURSOR)
-    {
-        StringVector tokens(StringVector::tokenize(payload, ','));
-        // Payload may be 'EMPTY'.
-        if (tokens.size() == 4)
-        {
-            int cursorX = std::stoi(tokens[0]);
-            int cursorY = std::stoi(tokens[1]);
-            int cursorWidth = std::stoi(tokens[2]);
-            int cursorHeight = std::stoi(tokens[3]);
-
-            queue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
-        }
-    }
-    else if (type == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR)
-    {
-        Poco::JSON::Parser parser;
-        const Poco::Dynamic::Var result = parser.parse(payload);
-        const auto& command = result.extract<Poco::JSON::Object::Ptr>();
-        std::string rectangle = command->get("rectangle").toString();
-        StringVector tokens(StringVector::tokenize(rectangle, ','));
-        // Payload may be 'EMPTY'.
-        if (tokens.size() == 4)
-        {
-            int cursorX = std::stoi(tokens[0]);
-            int cursorY = std::stoi(tokens[1]);
-            int cursorWidth = std::stoi(tokens[2]);
-            int cursorHeight = std::stoi(tokens[3]);
-
-            queue->updateCursorPosition(0, 0, cursorX, cursorY, cursorWidth, cursorHeight);
-        }
-    }
-    else if (type == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
-             type == LOK_CALLBACK_CELL_VIEW_CURSOR)
-    {
-        Poco::JSON::Parser parser;
-        const Poco::Dynamic::Var result = parser.parse(payload);
-        const auto& command = result.extract<Poco::JSON::Object::Ptr>();
-        targetViewId = command->get("viewId").toString();
-        std::string part = command->get("part").toString();
-        std::string text = command->get("rectangle").toString();
-        StringVector tokens(StringVector::tokenize(text, ','));
-        // Payload may be 'EMPTY'.
-        if (tokens.size() == 4)
-        {
-            int cursorX = std::stoi(tokens[0]);
-            int cursorY = std::stoi(tokens[1]);
-            int cursorWidth = std::stoi(tokens[2]);
-            int cursorHeight = std::stoi(tokens[3]);
-
-            queue->updateCursorPosition(std::stoi(targetViewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
-        }
-    }
-    else if (type == LOK_CALLBACK_DOCUMENT_PASSWORD_RESET)
+    if (type == LOK_CALLBACK_DOCUMENT_PASSWORD_RESET)
     {
         Document* document = dynamic_cast<Document*>(descriptor->getDoc());
         Poco::JSON::Object::Ptr object;
@@ -1349,7 +1293,6 @@ void Document::onUnload(const ChildSession& session)
     }
 
     const int viewId = session.getViewId();
-    _queue->removeCursorPosition(viewId);
 
     // Unload the view.
     _loKitDocument->setView(viewId);
@@ -2290,12 +2233,25 @@ bool Document::forwardToChild(const std::string& prefix, const std::vector<char>
     return std::string();
 }
 
-bool Document::isTileRequestInsideVisibleArea(const TileCombined& tileCombined) const
+float Document::getTilePriority(const TileDesc &desc) const
 {
-    const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
-    if (!session)
-        return false;
-    return session->isTileInsideVisibleArea(tileCombined);
+    float maxPrio = std::numeric_limits<float>::min();
+
+    assert(_sessions.size() > 0);
+    for (auto it : _sessions)
+    {
+        const std::shared_ptr<ChildSession> &session = it.second;
+
+        // only interested in sessions that match our viewId
+        if (session->getCanonicalViewId() != desc.getNormalizedViewId())
+            continue;
+
+        maxPrio = std::max<int>(maxPrio, session->getTilePriority(desc));
+    }
+    if (maxPrio == std::numeric_limits<float>::min())
+        LOG_WRN("No sessions match this viewId " << desc.getNormalizedViewId());
+    LOG_TRC("Priority for tile " << desc.generateID() << " is " << maxPrio);
+    return maxPrio;
 }
 
 // poll is idle, are we ?
@@ -2446,16 +2402,16 @@ void Document::drainQueue()
             }
         }
 
-        if (processInputEnabled() && !isLoadOngoing() &&
-            !isBackgroundSaveProcess() && _queue->getTileQueueSize() > 0)
+        if (canRenderTiles())
         {
-            std::vector<TileCombined> tileRequests = _queue->popWholeTileQueue();
+            float prio = 0;
+            while (_queue->getTileQueueSize() > 0 && prio >= 0)
+            {
+                TileCombined tileCombined = _queue->popTileQueue(prio);
 
-            // Put requests that include tiles in the visible area to the front to handle those first
-            std::partition(tileRequests.begin(), tileRequests.end(), [this](const TileCombined& req) {
-                return isTileRequestInsideVisibleArea(req); });
-            for (auto& tileCombined : tileRequests)
                 renderTiles(tileCombined);
+            }
+            // if priority is low - do one render, then process more events.
         }
     }
     catch (const std::exception& exc)
@@ -3028,34 +2984,14 @@ int pollCallback(void* data, int timeoutUs)
 #endif
 }
 
+// Do we have any pending input events from coolwsd ?
+// FIXME: we could helpfully poll our incoming socket too here.
 bool anyInputCallback(void* data)
 {
     auto kitSocketPoll = reinterpret_cast<KitSocketPoll*>(data);
     std::shared_ptr<Document> document = kitSocketPoll->getDocument();
-    if (!document)
-    {
-        return false;
-    }
 
-    if (document->hasCallbacks())
-    {
-        return true;
-    }
-
-    std::shared_ptr<KitQueue> queue = document->getQueue();
-    if (!queue)
-    {
-        return false;
-    }
-
-    if (queue->getTileQueueSize() > 0)
-    {
-        return true;
-    }
-
-    // Have no pending callbacks and the tile queue is also empty, report that we have no
-    // pending input events.
-    return false;
+    return document && document->hasQueueItems();
 }
 
 /// Called by LOK main-loop

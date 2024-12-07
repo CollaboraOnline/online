@@ -144,7 +144,7 @@ public:
     // Only called by kit.
     void setCanonicalViewId(int viewId) { _canonicalViewId = viewId; }
 
-    int  getCanonicalViewId() { return _canonicalViewId; }
+    int  getCanonicalViewId() const { return _canonicalViewId; }
 
     void setViewRenderState(const std::string& state) { _viewRenderState = state; }
 
@@ -154,8 +154,7 @@ public:
 
     std::string getViewRenderState() { return _viewRenderState; }
 
-    bool isTileInsideVisibleArea(const TileDesc& tile) const;
-    bool isTileInsideVisibleArea(const TileCombined& tileCombined) const;
+    float getTilePriority(const TileDesc &desc) const;
 
 private:
     bool loadDocument(const StringVector& tokens);
@@ -242,6 +241,9 @@ private:
         return ret;
     }
 
+    void updateCursorPosition(const std::string &rect);
+    void updateCursorPositionJSON(const std::string &payload);
+
 public:
     // simple one line for priming
     std::string getActivityState()
@@ -262,6 +264,8 @@ public:
         Session::dumpState(oss);
 
         oss << "\n\tviewId: " << _viewId
+            << "\n\tpart: " << _currentPart
+            << "\n\tcursor: " << _cursorPosition.toString()
             << "\n\tcanonicalViewId: " << _canonicalViewId
             << "\n\tisDocLoaded: " << _isDocLoaded
             << "\n\tdocType: " << _docType
@@ -291,6 +295,12 @@ private:
 
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
+
+    /// Currently visible part
+    int _currentPart;
+
+    /// Last known position of a cursor for prioritizing rendering
+    Util::Rectangle _cursorPosition;
 
     /// Whether document has been opened successfully
     bool _isDocLoaded;
