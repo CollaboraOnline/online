@@ -393,8 +393,6 @@ public:
     /// Are we currently performing a load ?
     bool isLoadOngoing() const { return _duringLoad > 0; }
 
-    std::shared_ptr<KitQueue> getQueue() const { return _queue; }
-
     LogUiCmd& getLogUiCmd() { return logUiCmd; }
 
 private:
@@ -419,7 +417,7 @@ private:
 #ifdef __ANDROID__
     static std::shared_ptr<lok::Document> _loKitDocumentForAndroidOnly;
 #endif
-    std::shared_ptr<KitQueue> _queue;
+    std::unique_ptr<KitQueue> _queue;
 
     // Connection to the coolwsd process
     std::shared_ptr<WebSocketHandler> _websocketHandler;

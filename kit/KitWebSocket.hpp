@@ -21,7 +21,6 @@ class KitSocketPoll;
 
 class KitWebSocketHandler final : public WebSocketHandler
 {
-    std::shared_ptr<KitQueue> _queue;
     std::string _socketName;
     std::shared_ptr<lok::Office> _loKit;
     std::string _jailId;
