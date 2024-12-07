@@ -2311,14 +2311,6 @@ float Document::getTilePriority(const TileDesc &desc) const
     return maxPrio;
 }
 
-bool Document::isTileRequestInsideVisibleArea(const TileCombined& tileCombined) const
-{
-    const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
-    if (!session)
-        return false;
-    return session->isTileInsideVisibleArea(tileCombined);
-}
-
 // poll is idle, are we ?
 void Document::checkIdle()
 {
@@ -2469,13 +2461,14 @@ void Document::drainQueue()
 
         if (canRenderTiles())
         {
-            std::vector<TileCombined> tileRequests = _queue->popWholeTileQueue();
+            float prio = 0;
+            while (_queue->getTileQueueSize() > 0 && prio >= 0)
+            {
+                TileCombined tileCombined = _queue->popTileQueue(prio);
 
-            // Put requests that include tiles in the visible area to the front to handle those first
-            std::partition(tileRequests.begin(), tileRequests.end(), [this](const TileCombined& req) {
-                return isTileRequestInsideVisibleArea(req); });
-            for (auto& tileCombined : tileRequests)
                 renderTiles(tileCombined);
+            }
+            // if priority is low - do one render, then process more events.
         }
     }
     catch (const std::exception& exc)
