@@ -748,7 +748,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
     , _docId(docId)
     , _url(url)
     , _obfuscatedFileId(Uri::getFilenameFromURL(docKey))
-    , _queue(new KitQueue())
+    , _queue(new KitQueue(*this))
     , _websocketHandler(websocketHandler)
     , _modified(ModifiedState::UnModified)
     , _isBgSaveProcess(false)
@@ -2285,6 +2285,27 @@ bool Document::forwardToChild(const std::string& prefix, const std::vector<char>
     }
 
     return std::string();
+}
+
+float Document::getTilePriority(const TileDesc &desc) const
+{
+    float maxPrio = std::numeric_limits<float>::min();
+
+    assert(_sessions.size() > 0);
+    for (auto it : _sessions)
+    {
+        const std::shared_ptr<ChildSession> &session = it.second;
+
+        // only interested in sessions that match our viewId
+        if (session->getCanonicalViewId() != desc.getNormalizedViewId())
+            continue;
+
+        maxPrio = std::max<int>(maxPrio, session->getTilePriority(desc));
+    }
+    if (maxPrio == std::numeric_limits<float>::min())
+        LOG_WRN("No sessions match this viewId " << desc.getNormalizedViewId());
+    LOG_TRC("Priority for tile " << desc.generateID() << " is " << maxPrio);
+    return maxPrio;
 }
 
 bool Document::isTileRequestInsideVisibleArea(const TileCombined& tileCombined) const

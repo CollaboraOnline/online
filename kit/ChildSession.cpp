@@ -1247,6 +1247,14 @@ bool ChildSession::clientVisibleArea(const StringVector& tokens)
     return true;
 }
 
+float ChildSession::getTilePriority(const TileDesc& tile) const
+{
+    // FIXME: recent interactivity - should bump priority
+    // FIXME: proximity to an editing cursor should bump priority
+    // FIXME: proximity to a viewing area should bump priority
+    return tile.intersects(_clientVisibleArea) ? 1.0 : 0.0;
+}
+
 bool ChildSession::isTileInsideVisibleArea(const TileDesc& tile) const
 {
     return tile.intersects( _clientVisibleArea );
