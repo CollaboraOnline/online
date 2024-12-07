@@ -17,6 +17,7 @@
 #endif
 
 #include "Util.hpp"
+#include "Rectangle.hpp"
 #include "SigHandlerTrap.hpp"
 
 #include <poll.h>
@@ -1006,14 +1007,14 @@ namespace Util
         StringVector tokens(StringVector::tokenize(rectangle, ','));
         if (tokens.size() == 4)
         {
-            _x = std::stoi(tokens[0]);
-            _y = std::stoi(tokens[1]);
-            _width = std::stoi(tokens[2]);
-            _height = std::stoi(tokens[3]);
+            _x1 = std::stoi(tokens[0]);
+            _y1 = std::stoi(tokens[1]);
+            _x2 = _x1 + std::stoi(tokens[2]);
+            _y2 = _y1 + std::stoi(tokens[3]);
         }
         else
         {
-            _x = _y = _width = _height = 0;
+            _x1 = _y1 = _x2 = _y2 = 0;
         }
     }
 

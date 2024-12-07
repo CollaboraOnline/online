@@ -1254,12 +1254,17 @@ bool ChildSession::clientVisibleArea(const StringVector& tokens)
 float ChildSession::getTilePriority(const TileDesc& tile) const
 {
     // FIXME: recent interactivity - should bump priority
-    // FIXME: proximity to an editing cursor should bump priority
     // FIXME: proximity to a viewing area should bump priority
 
     // FIXME: if tile.isPreview() -> lower priority ...
 
-    return tile.intersects(_clientVisibleArea) ? 1.0 : 0.0;
+    float score = tile.intersects(_clientVisibleArea) ? 1.0 : 0.0;
+
+    // most important to render things close to the cursor fast
+    if (tile.getPart() == _currentPart && tile.intersects(_cursorPosition))
+        score *= 2.0;
+
+    return score;
 }
 
 bool ChildSession::outlineState(const StringVector& tokens)
@@ -3399,6 +3404,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
         updateSpeed();
+        updateCursorPositionJSON(payload);
         sendTextFrame("invalidatecursor: " + payload);
         break;
     case LOK_CALLBACK_TEXT_SELECTION:
@@ -3549,12 +3555,14 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendProgressFrame("finish", "");
         break;
     case LOK_CALLBACK_INVALIDATE_VIEW_CURSOR:
+        updateCursorPositionJSON(payload);
         sendTextFrame("invalidateviewcursor: " + payload);
         break;
     case LOK_CALLBACK_TEXT_VIEW_SELECTION:
         sendTextFrame("textviewselection: " + payload);
         break;
     case LOK_CALLBACK_CELL_VIEW_CURSOR:
+        updateCursorPositionJSON(payload);
         sendTextFrame("cellviewcursor: " + payload);
         break;
     case LOK_CALLBACK_GRAPHIC_VIEW_SELECTION:
@@ -4016,6 +4024,23 @@ LogUiCommands::~LogUiCommands()
             }
         }
     }
+}
+
+
+void ChildSession::updateCursorPosition(const std::string &rect)
+{
+    Util::Rectangle r(rect);
+    if (r.getWidth() != 0 && r.getHeight() != 0)
+        _cursorPosition = r;
+    // else 'EMPTY' eg.
+}
+
+void ChildSession::updateCursorPositionJSON(const std::string &rect)
+{
+    Poco::JSON::Parser parser;
+    const Poco::Dynamic::Var result = parser.parse(rect);
+    const auto& command = result.extract<Poco::JSON::Object::Ptr>();
+    updateCursorPosition(command->get("rectangle").toString());
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
