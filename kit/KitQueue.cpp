@@ -619,66 +619,17 @@ std::string KitQueue::combineRemoveText(const StringVector& tokens)
     return std::string();
 }
 
-void KitQueue::updateCursorPosition(int viewId, int part, int x, int y, int width, int height)
-{
-    const KitQueue::CursorPosition cursorPosition = CursorPosition(part, x, y, width, height);
-
-    auto it = _cursorPositions.lower_bound(viewId);
-    if (it != _cursorPositions.end() && it->first == viewId)
-    {
-        it->second = cursorPosition;
-    }
-    else
-    {
-        _cursorPositions.insert(it, std::make_pair(viewId, cursorPosition));
-    }
-
-    // Move to front, so the current front view
-    // becomes the second.
-    const auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
-    if (view != _viewOrder.end())
-        _viewOrder.erase(view);
-
-    _viewOrder.push_back(viewId);
-}
-
-void KitQueue::removeCursorPosition(int viewId)
-{
-    const auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
-    if (view != _viewOrder.end())
-        _viewOrder.erase(view);
-
-    _cursorPositions.erase(viewId);
-}
-
 void KitQueue::dumpState(std::ostream& oss)
 {
-    oss << "\ttileQueue:"
-        << "\n\t\tcursorPositions:";
-    for (const auto &it : _cursorPositions)
-    {
-        oss << "\n\t\t\tviewId: "
-            << it.first
-            << " part: " << it.second.getPart()
-            << " x: " << it.second.getX()
-            << " y: " << it.second.getY()
-            << " width: " << it.second.getWidth()
-            << " height: " << it.second.getHeight();
-    }
-
-    oss << "\n\t\tviewOrder: [";
-    std::string separator;
-    for (const auto& viewId : _viewOrder)
-    {
-        oss << separator << viewId;
-        separator = ", ";
-    }
-    oss << "]\n";
-
-    oss << "\tQueue size: " << _queue.size() << "\n";
+    oss << "\tIncoming Queue size: " << _queue.size() << "\n";
     size_t i = 0;
     for (Payload &it : _queue)
         oss << "\t\t" << i++ << ": " << COOLProtocol::getFirstLine(it) << "\n";
+
+    oss << "\tTile Queue size: " << _tileQueue.size() << "\n";
+    i = 0;
+    for (TileDesc &it : _tileQueue)
+        oss << "\t\t" << i++ << ": " << it.serialize() << "\n";
 
     oss << "\tCallbacks size: " << _callbacks.size() << "\n";
     i = 0;
