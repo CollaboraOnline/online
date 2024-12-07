@@ -241,6 +241,9 @@ private:
         return ret;
     }
 
+    void updateCursorPosition(const std::string &rect);
+    void updateCursorPositionJSON(const std::string &payload);
+
 public:
     // simple one line for priming
     std::string getActivityState()
@@ -262,7 +265,7 @@ public:
 
         oss << "\n\tviewId: " << _viewId
             << "\n\tpart: " << _currentPart
-            << "\n\tcursor: " << _cursorPosition
+            << "\n\tcursor: " << _cursorPosition.toString()
             << "\n\tcanonicalViewId: " << _canonicalViewId
             << "\n\tisDocLoaded: " << _isDocLoaded
             << "\n\tdocType: " << _docType

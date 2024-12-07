@@ -145,40 +145,6 @@ protected:
     std::string combineRemoveText(const StringVector& tokens);
 
 private:
-    class CursorPosition
-    {
-    public:
-        CursorPosition() {}
-        CursorPosition(int part, int x, int y, int width, int height)
-            : _part(part)
-            , _x(x)
-            , _y(y)
-            , _width(width)
-            , _height(height)
-        {
-        }
-
-        int getPart() const { return _part; }
-        int getX() const { return _x; }
-        int getY() const { return _y; }
-        int getWidth() const { return _width; }
-        int getHeight() const { return _height; }
-        /// Returns the cursor's AABBox, i.e. cursor-position + cursor-extend
-        Util::Rectangle toAABBox() const { return Util::Rectangle::create(_x, _y, _x+_width, _y+_height); }
-
-    private:
-        int _part = 0;
-        int _x = 0;
-        int _y = 0;
-        int _width = 0;
-        int _height = 0;
-    };
-
-public:
-    void updateCursorPosition(int viewId, int part, int x, int y, int width, int height);
-    void removeCursorPosition(int viewId);
-
-private:
     /// Search the queue for a duplicate tile and remove it (if present).
     void removeTileDuplicate(const TileDesc &desc);
 
@@ -203,12 +169,6 @@ private:
 
     /// Queue of callbacks from Kit to send out to coolwsd
     std::vector<Callback> _callbacks;
-
-    std::map<int, CursorPosition> _cursorPositions;
-
-    /// Check the views in the order of how the editing (cursor movement) has
-    /// been happening (0 == oldest, size() - 1 == newest).
-    std::vector<int> _viewOrder;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const KitQueue::Callback &c)
