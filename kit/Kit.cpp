@@ -3024,34 +3024,14 @@ int pollCallback(void* data, int timeoutUs)
 #endif
 }
 
+// Do we have any pending input events from coolwsd ?
+// FIXME: we could helpfully poll our incoming socket too here.
 bool anyInputCallback(void* data)
 {
     auto kitSocketPoll = reinterpret_cast<KitSocketPoll*>(data);
     std::shared_ptr<Document> document = kitSocketPoll->getDocument();
-    if (!document)
-    {
-        return false;
-    }
 
-    if (document->hasCallbacks())
-    {
-        return true;
-    }
-
-    std::shared_ptr<KitQueue> queue = document->getQueue();
-    if (!queue)
-    {
-        return false;
-    }
-
-    if (queue->getTileQueueSize() > 0)
-    {
-        return true;
-    }
-
-    // Have no pending callbacks and the tile queue is also empty, report that we have no
-    // pending input events.
-    return false;
+    return document && document->hasQueueItems();
 }
 
 /// Called by LOK main-loop
