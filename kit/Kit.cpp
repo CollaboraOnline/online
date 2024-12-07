@@ -748,7 +748,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
     , _docId(docId)
     , _url(url)
     , _obfuscatedFileId(Uri::getFilenameFromURL(docKey))
-    , _queue(std::make_shared<KitQueue>())
+    , _queue(new KitQueue())
     , _websocketHandler(websocketHandler)
     , _modified(ModifiedState::UnModified)
     , _isBgSaveProcess(false)
@@ -1145,7 +1145,7 @@ void Document::trimAfterInactivity()
     assert(descriptor && "Null callback data.");
     assert(descriptor->getDoc() && "Null Document instance.");
 
-    std::shared_ptr<KitQueue> queue = descriptor->getDoc()->_queue;
+    std::unique_ptr<KitQueue> &queue = descriptor->getDoc()->_queue;
     assert(queue && "Null KitQueue.");
 
     const std::string payload = p ? p : "(nil)";
@@ -3028,34 +3028,14 @@ int pollCallback(void* data, int timeoutUs)
 #endif
 }
 
+// Do we have any pending input events from coolwsd ?
+// FIXME: we could helpfully poll our incoming socket too here.
 bool anyInputCallback(void* data)
 {
     auto kitSocketPoll = reinterpret_cast<KitSocketPoll*>(data);
     std::shared_ptr<Document> document = kitSocketPoll->getDocument();
-    if (!document)
-    {
-        return false;
-    }
 
-    if (document->hasCallbacks())
-    {
-        return true;
-    }
-
-    std::shared_ptr<KitQueue> queue = document->getQueue();
-    if (!queue)
-    {
-        return false;
-    }
-
-    if (queue->getTileQueueSize() > 0)
-    {
-        return true;
-    }
-
-    // Have no pending callbacks and the tile queue is also empty, report that we have no
-    // pending input events.
-    return false;
+    return document && document->hasQueueItems();
 }
 
 /// Called by LOK main-loop
