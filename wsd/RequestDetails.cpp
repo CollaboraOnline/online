@@ -309,6 +309,10 @@ std::string RequestDetails::getDocKey(const Poco::URI& uri)
     // resolve aliases
 #if !MOBILEAPP
     const std::string newUri = HostUtil::getNewUri(uri);
+    if (newUri != uri.toString())
+    {
+        LOG_TRC("Canonicalized URI [" << uri.toString() << "] to [" << newUri << ']');
+    }
 #else
     const std::string& newUri = uri.getPath();
 #endif
