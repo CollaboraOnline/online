@@ -694,7 +694,7 @@ L.Clipboard = L.Class.extend({
 
 		this._unoCommandForCopyCutPaste = cmd;
 
-		if (operation !== 'paste' && this._navigatorClipboardWrite()) {
+		if (operation !== 'paste' && this._navigatorClipboardWrite() && cmd) {
 			// This is the codepath where an UNO command initiates the clipboard
 			// operation.
 			return;
