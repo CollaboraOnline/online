@@ -180,7 +180,7 @@ public:
                 {
                     ssize_t len;
                     do {
-                        len = ::write(getFD(), &chunk->getData()[0], chunk->getData().size());
+                        len = ::write(getFD(), chunk->getData().data(), chunk->getData().size());
                     } while (len < 0 && errno == EINTR);
 
                     if (len < 0)

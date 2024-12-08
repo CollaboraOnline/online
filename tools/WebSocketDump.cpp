@@ -97,7 +97,7 @@ private:
         // Skip the marker.
         itBody += marker.size();
 
-        Poco::MemoryInputStream message(&in[0], in.size());
+        Poco::MemoryInputStream message(in.data(), in.size());
         Poco::Net::HTTPRequest request;
         try
         {
