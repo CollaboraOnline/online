@@ -501,7 +501,7 @@ public:
                 remove(CONNECTION);
                 return;
         }
-        set(CONNECTION, value);
+        set(CONNECTION, std::move(value));
     }
 
     /// Adds a new "Cookie" header entry with the given content.
