@@ -289,6 +289,8 @@ private:
 
     virtual bool _handleInput(const char* buffer, int length) override;
 
+    bool handlePrepareSignature(const StringVector& tokens);
+
     bool loadDocument(const char* buffer, int length, const StringVector& tokens,
                       const std::shared_ptr<DocumentBroker>& docBroker);
     bool getStatus(const char* buffer, int length,
