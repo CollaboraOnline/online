@@ -70,6 +70,7 @@ public:
     /// Tiles are special manage a separate queue of them
     void clearTileQueue() { _tileQueue.clear(); }
     void pushTileQueue(const Payload &value);
+    void pushTileQueue(const std::vector<TileDesc>& tiles);
     void pushTileCombineRequest(const Payload &value);
     TileCombined popTileQueue();
     std::vector<TileCombined> popWholeTileQueue();
