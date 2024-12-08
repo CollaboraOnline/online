@@ -728,11 +728,10 @@ namespace Util
             malloc_info(0, f);
             fclose(f);
 
-            if (p && size)
-            {
+            if (size)
                 info = std::string(p, size);
-                free(p);
-            }
+
+            free(p);
         }
 #endif // __GLIBC__
 
