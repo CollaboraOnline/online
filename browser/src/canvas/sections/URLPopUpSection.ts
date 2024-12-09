@@ -102,7 +102,11 @@ class URLPopUpSection extends HTMLObjectSection {
 		}
 
 		document.getElementById(this.copyButtonId).onclick = () => {
-			app.map.sendUnoCommand('.uno:CopyHyperlinkLocation', params);
+			// If _navigatorClipboardWrite is available, use it.
+			if (L.Browser.clipboardApiAvailable || window.ThisIsTheiOSApp)
+				app.map._clip.filterExecCopyPaste('.uno:CopyHyperlinkLocation', params);
+			else // Or use previous method.
+				app.map.sendUnoCommand('.uno:CopyHyperlinkLocation', params);
 		};
 
 		document.getElementById(this.editButtonId).onclick = () => {
