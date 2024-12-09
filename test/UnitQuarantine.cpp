@@ -341,8 +341,6 @@ public:
     {
         LOG_TST("Kit killed");
         LOK_ASSERT(static_cast<std::size_t>(count) <= _kitsPids.size());
-
-        // This supresses the default handler which fails the test.
     }
 
     // Called when we have modified document data at exit.
