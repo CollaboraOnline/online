@@ -14,6 +14,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 		searchHelper.typeIntoSearchField('a');
 
 		searchHelper.searchNext();
+		cy.wait(1000);
 
 		// First cell should be selected
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
@@ -47,7 +48,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search prev instance
+		cy.wait(2000);
 		searchHelper.searchPrev();
+		cy.wait(2000);
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 		helper.copy();
