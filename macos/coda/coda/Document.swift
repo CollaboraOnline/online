@@ -17,8 +17,8 @@ class Document: NSDocument {
 
     // MARK: - Properties
 
-    /// The content of the document, e.g., HTML data.
-    var documentData: Data?
+    /// The location of the document.
+    var url: URL?
 
     // MARK: - Initialization
 
@@ -47,24 +47,27 @@ class Document: NSDocument {
             fatalError("Unable to find DocumentWindowController in storyboard.")
         }
         self.addWindowController(windowController)
+
+        if let viewController = windowController.contentViewController as? ViewController {
+            viewController.loadDocument(documentURL: url)
+        }
     }
 
     /**
      * Returns the document data to be saved.
      */
-    override func data(ofType typeName: String) throws -> Data {
+    /*override func data(ofType typeName: String) throws -> Data {
         // Save the document's data.
         guard let data = documentData else {
             throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
         }
         return data
-    }
+    }*/
 
     /**
-     * Loads the document from data.
+     * Just remember the document URL here, will be loaded when the ViewController is created.
      */
-    override func read(from data: Data, ofType typeName: String) throws {
-        // Load the document's data.
-        self.documentData = data
+    override func read(from url: URL, ofType typeName: String) throws {
+        self.url = url
     }
 }
