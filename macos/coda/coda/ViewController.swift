@@ -47,13 +47,20 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
             webView.topAnchor.constraint(equalTo: self.view.topAnchor),
             webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
-
-        // Load the HTML, and the document itself via that
-        let testFileURL = Bundle.main.url(forResource: "hello", withExtension: "odt")!
-        document = CODocument(webView: webView, fileURL: testFileURL, readOnly: false)
     }
 
-    // Receive message from JavaScript
+    /**
+     * Load the the document; to be called from the Document (NSDocument) instance.
+     */
+    func loadDocument(documentURL: URL?) {
+        // FIXME: Defaults to the hello.odt if not provided (which happens eg. when created from File -> New)
+        let fileURL = documentURL ?? Bundle.main.url(forResource: "hello", withExtension: "odt")!
+        document = CODocument(webView: webView, fileURL: fileURL, readOnly: false)
+    }
+
+    /**
+     * Receive message from JavaScript
+     */
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "error" {
             if let body = message.body as? String {
