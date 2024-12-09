@@ -12,6 +12,10 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 		cy.fixture('fixtures/eideasy-send-hash.json').then((result) => {
 			sendHashResult = result;
 		});
+		let getSignatureResult;
+		cy.fixture('fixtures/eideasy-get-signature.json').then((result) => {
+			getSignatureResult = result;
+		});
 		cy.getFrameWindow().then(function(win) {
 			const sendUnoCommand = cy.stub(win.app.map, 'sendUnoCommand');
 			sendUnoCommand.withArgs('.uno:PrepareSignature').as('sendHash').callsFake((commandName, args) => {
@@ -20,6 +24,9 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 				expect(args.body.files[0].fileName).to.match(/^esign.*pdf$/i);
 				win.app.map.fire('commandresult', {commandName: '.uno:PrepareSignature', success: true, result: sendHashResult});
 			});
+			sendUnoCommand.withArgs('.uno:DownloadSignature').as('getSignature').callsFake(() => {
+				win.app.map.fire('commandresult', {commandName: '.uno:DownloadSignature', success: true, result: getSignatureResult});
+			});
 			// Call the original sendUnoCommand() for other commands
 			sendUnoCommand.callThrough();
 		});
@@ -27,8 +34,6 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 			.then(function(win) {
 				cy.stub(win, 'open').as('windowOpen');
 			});
-		cy.intercept('POST', 'https://test.eideasy.com/api/signatures/download-signed-file',
-			{fixture : 'fixtures/eideasy-get-signature.json'}).as('getSignature');
 
 		// When signing that document:
 		cy.cGet('#menu-insert').click();
@@ -44,7 +49,7 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 			const eSignature = app.map.eSignature;
 			eSignature.handleSigned(response);
 		});
-		cy.wait(['@getSignature']);
+		cy.get('@getSignature').should('be.called');
 
 		// Then make sure the document now has a (test / "not OK") signature:
 		cy.cGet('#signstatus-button div').should('have.class', 'sign_not_ok');

@@ -431,21 +431,23 @@ void ClientSession::onTileProcessed(TileWireId wireId)
 #if !MOBILEAPP
 namespace
 {
-std::shared_ptr<http::Session> makePrepareSignatureSession(const std::shared_ptr<ClientSession> clientSession, const std::string& requestUrl)
+std::shared_ptr<http::Session>
+makeSignatureActionSession(const std::shared_ptr<ClientSession> clientSession,
+                           const std::string& commandName, const std::string& requestUrl)
 {
     // Create the session and set a finished callback
     std::shared_ptr<http::Session> httpSession = http::Session::create(requestUrl);
     if (!httpSession)
     {
-        LOG_WRN("PrepareSignature: failed to create HTTP session");
+        LOG_WRN("SignatureAction: failed to create HTTP session");
         return nullptr;
     }
 
-    http::Session::FinishedCallback finishedCallback = [clientSession](const std::shared_ptr<http::Session>& session)
+    http::Session::FinishedCallback finishedCallback = [clientSession, commandName](const std::shared_ptr<http::Session>& session)
     {
         const std::shared_ptr<const http::Response> httpResponse = session->response();
         Poco::JSON::Object::Ptr resultArguments = new Poco::JSON::Object();
-        resultArguments->set("commandName", ".uno:PrepareSignature");
+        resultArguments->set("commandName", commandName);
 
         bool ok = httpResponse->statusLine().statusCode() == http::StatusCode::OK;
         resultArguments->set("success", ok);
@@ -454,7 +456,7 @@ std::shared_ptr<http::Session> makePrepareSignatureSession(const std::shared_ptr
         Poco::JSON::Object::Ptr responseBodyObject = new Poco::JSON::Object();
         if (!JsonUtil::parseJSON(responseBody, responseBodyObject))
         {
-            LOG_WRN("PrepareSignature: failed to parse response body as JSON");
+            LOG_WRN("SignatureAction: failed to parse response body as JSON");
             return;
         }
         resultArguments->set("result", responseBodyObject);
@@ -469,19 +471,27 @@ std::shared_ptr<http::Session> makePrepareSignatureSession(const std::shared_ptr
 }
 }
 
-bool ClientSession::handlePrepareSignature(const StringVector& tokens)
+bool ClientSession::handleSignatureAction(const StringVector& tokens)
 {
+    const std::string commandName = tokens[1];
     // Make the HTTP session: this requires an URL
     Poco::JSON::Object::Ptr userPrivateInfoObject = new Poco::JSON::Object();
     if (!JsonUtil::parseJSON(getUserPrivateInfo(), userPrivateInfoObject))
     {
-        LOG_WRN("PrepareSignature: failed to parse user private info as JSON");
+        LOG_WRN("SignatureAction: failed to parse user private info as JSON");
         return false;
     }
     std::string requestUrl;
     JsonUtil::findJSONValue(userPrivateInfoObject, "ESignatureBaseUrl", requestUrl);
-    requestUrl += "/api/signatures/prepare-files-for-signing";
-    std::shared_ptr<http::Session> httpSession = makePrepareSignatureSession(client_from_this(), requestUrl);
+    if (commandName == ".uno:PrepareSignature")
+    {
+        requestUrl += "/api/signatures/prepare-files-for-signing";
+    }
+    else if (commandName == ".uno:DownloadSignature")
+    {
+        requestUrl += "/api/signatures/download-signed-file";
+    }
+    std::shared_ptr<http::Session> httpSession = makeSignatureActionSession(client_from_this(), commandName, requestUrl);
     if (!httpSession)
     {
         return false;
@@ -492,10 +502,15 @@ bool ClientSession::handlePrepareSignature(const StringVector& tokens)
     Poco::JSON::Object::Ptr commandArgumentsObject;
     if (!JsonUtil::parseJSON(commandArguments, commandArgumentsObject))
     {
-        LOG_WRN("PrepareSignature: failed to parse arguments as JSON");
+        LOG_WRN("SignatureAction: failed to parse arguments as JSON");
         return false;
     }
-    auto requestBodyObject = commandArgumentsObject->get("body").extract<Poco::JSON::Object::Ptr>();
+    Poco::JSON::Object::Ptr requestBodyObject = commandArgumentsObject->getObject("body");
+    if (!requestBodyObject)
+    {
+        LOG_WRN("SignatureAction: no body in arguments");
+        return false;
+    }
     std::string secret;
     JsonUtil::findJSONValue(userPrivateInfoObject, "ESignatureSecret", secret);
     requestBodyObject->set("secret", secret);
@@ -1285,9 +1300,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens.equals(0, "getpresentationinfo"))
     {
 #if !MOBILEAPP
-        if (tokens.equals(0, "uno") && tokens.equals(1, ".uno:PrepareSignature"))
+        if (tokens.equals(0, "uno"))
         {
-            return handlePrepareSignature(tokens);
+            if (tokens.equals(1, ".uno:PrepareSignature") || tokens.equals(1, ".uno:DownloadSignature"))
+            {
+                return handleSignatureAction(tokens);
+            }
         }
 #endif
 
