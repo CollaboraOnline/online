@@ -126,10 +126,16 @@ function createAnimationNode(
 				return null;
 			}
 		case AnimationNodeType.AnimateMotion:
-			window.app.console.log(
-				'createAnimationNode: AnimateMotion not implemented',
+			aCreatedNode = new AnimationPathMotionNode(
+				aNodeInfo,
+				aParentNode,
+				aNodeContext,
 			);
-			return null;
+			// window.app.console.log(
+			// 	'createAnimationNode: AnimateMotion not implemented',
+			// );
+			//return null;
+			break;
 		case AnimationNodeType.AnimateColor:
 			aCreatedNode = new AnimationColorNode(
 				aNodeInfo,
