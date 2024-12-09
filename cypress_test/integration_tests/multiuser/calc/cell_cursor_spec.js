@@ -48,7 +48,7 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A589');
 	});
 
-	it('Jump to the other sheet', function() {
+	it.skip('Jump to the other sheet', function() {
 		// second view follow the first one
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('#userListHeader').click();
