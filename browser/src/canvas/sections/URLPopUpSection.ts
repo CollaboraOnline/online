@@ -116,6 +116,7 @@ class URLPopUpSection extends HTMLObjectSection {
 
 		document.getElementById(this.removeButtonId).onclick = () => {
 			app.map.sendUnoCommand('.uno:RemoveHyperlink', params);
+			URLPopUpSection.closeURLPopUp();
 		};
 	}
 
