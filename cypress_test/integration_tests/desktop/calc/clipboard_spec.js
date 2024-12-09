@@ -218,5 +218,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		cy.cGet('#ok').click();
 
 		cy.cGet('#formulabar').should('contain.text', 'Something to copy paste.');
+
+		cy.cGet('#PasteSpecial').should('not.exist');
 	});
 });
