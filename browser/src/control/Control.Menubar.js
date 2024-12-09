@@ -190,6 +190,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{name: _('Smart Picker'), id: 'remotelink', type: 'action'},
+				{name: _('AI Assistant'), id: 'remoteaicontent', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:InsertQrCode'},
 				{uno: '.uno:InsertSymbol'},
@@ -484,6 +485,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{name: _('Smart Picker'), id: 'remotelink', type: 'action'},
+				{name: _('AI Assistant'), id: 'remoteaicontent', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
 				{type: 'separator'},
@@ -631,6 +633,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{name: _('Smart Picker'), id: 'remotelink', type: 'action'},
+				{name: _('AI Assistant'), id: 'remoteaicontent', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
 				{type: 'separator'},
@@ -785,6 +788,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), uno: '.uno:HyperlinkDialog'},
 				{name: _('Smart Picker'), id: 'remotelink', type: 'action'},
+				{name: _('AI Assistant'), id: 'remoteaicontent', type: 'action'},
 				{uno: '.uno:InsertSymbol'},
 				{type: 'separator'},
 				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
@@ -1929,6 +1933,13 @@ L.Control.Menubar = L.Control.extend({
 				else
 					$(aItem).hide();
 			}
+
+			if (id === 'remoteaicontent') {
+				if (self._map['wopi'].EnableRemoteAIContent)
+					$(aItem).show();
+				else
+					$(aItem).hide();
+			}
 		});
 	},
 
@@ -1991,6 +2002,7 @@ L.Control.Menubar = L.Control.extend({
 			|| id.startsWith('zotero')
 			|| id === 'deletepage'
 			|| id === 'remotelink'
+			|| id === 'remoteaicontent'
 			|| id === 'toggledarktheme'
 			|| id === 'invertbackground'
 			|| id === 'home-search'
