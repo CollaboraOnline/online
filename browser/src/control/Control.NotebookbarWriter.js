@@ -1141,7 +1141,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'class': 'unoremotelink',
 				'type': 'bigcustomtoolitem',
 				'text': _('Assistant'),
-				'command': 'remotelink',
+				'command': 'remoteaicontent',
 				'accessibility': { focusBack: true, combination: 'RL', de: null }
 			},
 			{
