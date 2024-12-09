@@ -340,6 +340,84 @@ class TransitionFilterAnimation extends AnimationBase {
 	}
 }
 
+class PathAnimation extends AnimationBase {
+	private path: string;
+	private eAdditive: AdditiveMode;
+	private slideWidth: number;
+	private slideHeight: number;
+	private aAnimatableElement: AnimatedElement;
+	private bAnimationStarted: boolean;
+	private centerX: number;
+	private centerY: number;
+	private svgPath: SVGPathElement;
+	private pathLength: number;
+
+	constructor(
+		path: string,
+		eAdditive: AdditiveMode,
+		slideWidth: number,
+		slideHeight: number,
+	) {
+		super();
+		this.path = path;
+		this.eAdditive = eAdditive;
+		this.slideWidth = slideWidth;
+		this.slideHeight = slideHeight;
+
+		this.svgPath = this.createSvgPath(path);
+		this.pathLength = this.svgPath.getTotalLength();
+	}
+
+	start(aAnimatableElement: AnimatedElement): void {
+		assert(
+			aAnimatableElement,
+			'GenericAnimation.start: animatable element is not valid',
+		);
+
+		this.aAnimatableElement = aAnimatableElement;
+		this.centerX = this.aAnimatableElement.getBaseCenterX();
+		this.centerY = this.aAnimatableElement.getBaseCenterY();
+
+		this.aAnimatableElement.notifyAnimationStart();
+
+		if (!this.bAnimationStarted) this.bAnimationStarted = true;
+	}
+
+	end(): void {
+		if (this.bAnimationStarted) {
+			this.bAnimationStarted = false;
+			this.aAnimatableElement.notifyAnimationEnd();
+		}
+	}
+
+	perform(nT: number): void {
+		let aOutPos = this.parametricPath(nT);
+		aOutPos = [aOutPos[0] * this.slideWidth, aOutPos[1] * this.slideHeight];
+		aOutPos = [aOutPos[0] + this.centerX, aOutPos[1] + this.centerY];
+
+		this.aAnimatableElement.setPos(aOutPos);
+	}
+
+	getUnderlyingValue(): any {
+		return 0.0;
+	}
+
+	private createSvgPath(path: string): SVGPathElement {
+		const svgPath = document.createElementNS(
+			'http://www.w3.org/2000/svg',
+			'path',
+		);
+		svgPath.setAttribute('d', path);
+		return svgPath;
+	}
+
+	private parametricPath(nT: number): [number, number] {
+		const distance = this.pathLength * nT;
+		const point = this.svgPath.getPointAtLength(distance);
+		return [point.x, point.y];
+	}
+}
+
 function createShapeTransition(
 	aActivityParamSet: ActivityParamSet,
 	aAnimatedElement: AnimatedElement,
