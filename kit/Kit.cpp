@@ -103,9 +103,6 @@
 #include "ios.h"
 #endif
 
-#define LIB_SOFFICEAPP  "lib" "sofficeapp" ".so"
-#define LIB_MERGED      "lib" "mergedlo" ".so"
-
 using Poco::Exception;
 using Poco::File;
 using Poco::JSON::Object;
@@ -3873,8 +3870,8 @@ bool startURP(std::shared_ptr<lok::Office> LOKit, void** ppURPContext)
 /// Initializes LibreOfficeKit for cross-fork re-use.
 bool globalPreinit(const std::string &loTemplate)
 {
-    const std::string libSofficeapp = loTemplate + "/program/" LIB_SOFFICEAPP;
-    const std::string libMerged = loTemplate + "/program/" LIB_MERGED;
+    const std::string libSofficeapp = loTemplate + "/program/libsofficeapp.so";
+    const std::string libMerged = loTemplate + "/program/libmergedlo.so";
 
     std::string loadedLibrary;
     // we deliberately don't dlclose handle on success, make it
