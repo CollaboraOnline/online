@@ -72,7 +72,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 			cy.cGet('body').click(XPos, YPos);
 		});
 
-		cy.cGet(helper.addressInputSelector).invoke('val').should('equal', 'B2:AA2');
+		cy.cGet(helper.addressInputSelector).should('have.value', 'B2:AA2');
 		desktopHelper.assertScrollbarPosition('horizontal', 270, 390);
 	});
 });
