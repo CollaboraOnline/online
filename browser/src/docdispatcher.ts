@@ -762,6 +762,7 @@ class Dispatcher {
 			action === '.uno:PasteSpecial'
 		) {
 			app.map._clip.filterExecCopyPaste(action);
+			return;
 		}
 
 		if (this.actionsMap[action] !== undefined) {
