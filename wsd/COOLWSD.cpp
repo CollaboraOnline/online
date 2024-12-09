@@ -171,7 +171,8 @@ static std::condition_variable NewChildrenCV;
 static std::vector<std::shared_ptr<ChildProcess> > NewChildren;
 
 static std::chrono::steady_clock::time_point LastForkRequestTime = std::chrono::steady_clock::now();
-static int OutstandingForks(0);
+static std::atomic<int> TotalOutstandingForks(0);
+std::map<std::string, int> OutstandingForks;
 std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 std::mutex DocBrokersMutex;
 static Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
@@ -449,7 +450,7 @@ void cleanupDocBrokers()
 #if !MOBILEAPP
 
 /// Forks as many children as requested.
-static void forkChildren(const int number)
+static void forkChildren(const std::string& configId, const int number)
 {
     if (Util::isKitInProcess())
         return;
@@ -464,7 +465,8 @@ static void forkChildren(const int number)
         const std::string message = "spawn " + std::to_string(number) + '\n';
         LOG_DBG("MasterToForKit: " << message.substr(0, message.length() - 1));
         COOLWSD::sendMessageToForKit(message);
-        OutstandingForks += number;
+        TotalOutstandingForks += number;
+        OutstandingForks[configId] += number;
         LastForkRequestTime = std::chrono::steady_clock::now();
     }
 }
@@ -512,38 +514,39 @@ static bool cleanupChildren()
 }
 
 /// Decides how many children need spawning and spawns.
-static void rebalanceChildren(int balance)
+static void rebalanceChildren(const std::string& configId, int balance)
 {
     Util::assertIsLocked(NewChildrenMutex);
 
     const size_t available = NewChildren.size();
     LOG_TRC("Rebalance children to " << balance << ", have " << available << " and "
-                                     << OutstandingForks << " outstanding requests");
+                                     << OutstandingForks[configId] << " outstanding requests");
 
     // Do the cleanup first.
     const bool rebalance = cleanupChildren();
 
     const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTime);
     const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-    if (OutstandingForks != 0 && durationMs >= std::chrono::milliseconds(ChildSpawnTimeoutMs))
+    if (OutstandingForks[configId] != 0 && durationMs >= std::chrono::milliseconds(ChildSpawnTimeoutMs))
     {
         // Children taking too long to spawn.
         // Forget we had requested any, and request anew.
-        LOG_WRN("ForKit not responsive for " << durationMs << " forking " << OutstandingForks
+        LOG_WRN("ForKit not responsive for " << durationMs << " forking " << OutstandingForks[configId]
                                              << " children. Resetting.");
-        OutstandingForks = 0;
+        TotalOutstandingForks -= OutstandingForks[configId];
+        OutstandingForks[configId] = 0;
     }
 
     balance -= available;
-    balance -= OutstandingForks;
+    balance -= OutstandingForks[configId];
 
-    if (balance > 0 && (rebalance || OutstandingForks == 0))
+    if (balance > 0 && (rebalance || OutstandingForks[configId] == 0))
     {
         LOG_DBG("prespawnChildren: Have " << available << " spare "
                                           << (available == 1 ? "child" : "children") << ", and "
-                                          << OutstandingForks << " outstanding, forking " << balance
+                                          << OutstandingForks[configId] << " outstanding, forking " << balance
                                           << " more. Time since last request: " << durationMs);
-        forkChildren(balance);
+        forkChildren(configId, balance);
     }
 }
 
@@ -554,7 +557,9 @@ static void prespawnChildren()
     // Rebalance if not forking already.
     std::unique_lock<std::mutex> lock(NewChildrenMutex, std::defer_lock);
     if (lock.try_lock())
-        rebalanceChildren(COOLWSD::NumPreSpawnedChildren);
+    {
+        rebalanceChildren("" /*TODO*/, COOLWSD::NumPreSpawnedChildren);
+    }
 }
 
 #endif
@@ -563,13 +568,18 @@ static size_t addNewChild(std::shared_ptr<ChildProcess> child)
 {
     assert(child && "Adding null child");
     const auto pid = child->getPid();
+    const std::string& configId = child->getConfigId();
 
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
-    --OutstandingForks;
+    --TotalOutstandingForks;
+    --OutstandingForks[configId];
     // Prevent from going -ve if we have unexpected children.
-    if (OutstandingForks < 0)
-        ++OutstandingForks;
+    if (OutstandingForks[configId] < 0)
+    {
+        ++TotalOutstandingForks;
+        ++OutstandingForks[configId];
+    }
 
     if (COOLWSD::IsBindMountingEnabled)
     {
@@ -578,7 +588,7 @@ static size_t addNewChild(std::shared_ptr<ChildProcess> child)
         ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS;
     }
 
-    LOG_TRC("Adding a new child " << pid << " to NewChildren, have " << OutstandingForks
+    LOG_TRC("Adding a new child " << pid << " to NewChildren, have " << OutstandingForks[configId]
                                   << " outstanding requests");
     SigUtil::addActivity("added child " + std::to_string(pid));
     NewChildren.emplace_back(std::move(child));
@@ -800,7 +810,7 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, const std
     int numPreSpawn = COOLWSD::NumPreSpawnedChildren;
     ++numPreSpawn; // Replace the one we'll dispatch just now.
     LOG_DBG("getNewChild: Rebalancing children to " << numPreSpawn);
-    rebalanceChildren(numPreSpawn);
+    rebalanceChildren(configId, numPreSpawn);
 
     const auto timeout = std::chrono::milliseconds(ChildSpawnTimeoutMs / 2);
     LOG_TRC("Waiting for a new child for a max of " << timeout);
@@ -2541,7 +2551,7 @@ void PrisonPoll::wakeupHook()
 #if !MOBILEAPP
     LOG_TRC("PrisonerPoll - wakes up with " << NewChildren.size() <<
             " new children and " << DocBrokers.size() << " brokers and " <<
-            OutstandingForks << " kits forking");
+            TotalOutstandingForks << " kits forking");
 
     if (!COOLWSD::checkAndRestoreForKit())
     {
@@ -2676,8 +2686,11 @@ bool COOLWSD::createForKit()
     ForKitProc = nullptr;
     PrisonerPoll->setForKitProcess(ForKitProc);
 
+    const std::string defaultConfigId;
+
     // ForKit always spawns one.
-    ++OutstandingForks;
+    ++TotalOutstandingForks;
+    ++OutstandingForks[defaultConfigId];
 
     LOG_INF("Launching forkit process: " << forKitPath << ' ' << args.cat(' ', 0));
 
@@ -2690,9 +2703,9 @@ bool COOLWSD::createForKit()
     // Init the Admin manager
     Admin::instance().setForKitPid(ForKitProcId);
 
-    const int balance = COOLWSD::NumPreSpawnedChildren - OutstandingForks;
+    const int balance = COOLWSD::NumPreSpawnedChildren - OutstandingForks[defaultConfigId];
     if (balance > 0)
-        rebalanceChildren(balance);
+        rebalanceChildren(defaultConfigId, balance);
 
     return ForKitProcId != -1;
 }
@@ -2778,17 +2791,19 @@ private:
         {
             LOG_WRN("Unassociated Kit (" << _pid << ") disconnected unexpectedly");
 
+            std::string configId;
             std::unique_lock<std::mutex> lock(NewChildrenMutex);
             auto it = std::find(NewChildren.begin(), NewChildren.end(), child);
             if (it != NewChildren.end())
             {
-                fprintf(stderr, "loosing one for %s\n", (*it)->getConfigId().c_str());
+                configId = (*it)->getConfigId();
+                fprintf(stderr, "loosing one for %s\n", configId.c_str());
                 NewChildren.erase(it);
             }
             else
                 LOG_WRN("Unknown Kit process closed with pid " << (child ? child->getPid() : -1));
 #if !MOBILEAPP
-            rebalanceChildren(COOLWSD::NumPreSpawnedChildren);
+            rebalanceChildren(configId, COOLWSD::NumPreSpawnedChildren);
 #endif
         }
     }
@@ -3149,7 +3164,7 @@ public:
            << "\n  TerminationFlag: " << SigUtil::getTerminationFlag()
            << "\n  isShuttingDown: " << SigUtil::getShutdownRequestFlag()
            << "\n  NewChildren: " << NewChildren.size() << " (" << NewChildren.capacity() << ')'
-           << "\n  OutstandingForks: " << OutstandingForks
+           << "\n  OutstandingForks: " << TotalOutstandingForks
            << "\n  NumPreSpawnedChildren: " << COOLWSD::NumPreSpawnedChildren
            << "\n  ChildSpawnTimeoutMs: " << ChildSpawnTimeoutMs
            << "\n  Document Brokers: " << DocBrokers.size()
