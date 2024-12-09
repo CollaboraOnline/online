@@ -10,6 +10,9 @@
 
 #include <config.h>
 
+#import "WebKit/WebKit.h"
+
+#import "coda-Swift.h"
 #import "COWrapper.h"
 #import "macos.h"
 
@@ -24,6 +27,8 @@
 // Declare the coolwsd pointer at global scope
 COOLWSD *coolwsd = nullptr;
 
+static int closeNotificationPipeForForwardingThread[2];
+
 /**
  * Wrapper to be able to call the C++ code from Swift.
  *
@@ -31,16 +36,7 @@ COOLWSD *coolwsd = nullptr;
  */
 @implementation COWrapper
 
-+ (instancetype)shared {
-    static COWrapper *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    return sharedInstance;
-}
-
-- (void)startServer {
++ (void)startServer {
     // Initialize logging
     // Use "debug" or potentially even "trace" for debugging
 #if DEBUG
@@ -77,18 +73,18 @@ COOLWSD *coolwsd = nullptr;
     }).detach();
 }
 
-- (void)stopServer {
++ (void)stopServer {
     if (coolwsd) {
         delete coolwsd;
         coolwsd = nullptr;
     }
 }
 
-- (void)handleHULLOWithDocument:(CODocument *)document {
++ (void)handleHULLOWithDocument:(Document *)document {
     // Contact the permanently (during app lifetime) listening COOLWSD server
     // "public" socket
     assert(coolwsd_server_socket_fd != -1);
-    int rc = fakeSocketConnect(document->fakeClientFd, coolwsd_server_socket_fd);
+    int rc = fakeSocketConnect(document.fakeClientFd, coolwsd_server_socket_fd);
     assert(rc != -1);
 
     // Create a socket pair to notify the below thread when the document has been closed
@@ -100,9 +96,9 @@ COOLWSD *coolwsd = nullptr;
                        Util::setThreadName("app2js");
                        while (true) {
                            struct pollfd p[2];
-                           p[0].fd = document->fakeClientFd;
+                           p[0].fd = document.fakeClientFd;
                            p[0].events = POLLIN;
-                           p[1].fd = self->closeNotificationPipeForForwardingThread[1];
+                           p[1].fd = closeNotificationPipeForForwardingThread[1];
                            p[1].events = POLLIN;
                            if (fakeSocketPoll(p, 2, -1) > 0) {
                                if (p[1].revents == POLLIN) {
@@ -112,16 +108,16 @@ COOLWSD *coolwsd = nullptr;
                                    // the other end too just for cleanliness, even if a
                                    // FakeSocket as such is not a system resource so nothing
                                    // is saved by closing it.
-                                   fakeSocketClose(self->closeNotificationPipeForForwardingThread[1]);
+                                   fakeSocketClose(closeNotificationPipeForForwardingThread[1]);
 
                                    // Close our end of the fake socket connection to the
                                    // ClientSession thread, so that it terminates
-                                   fakeSocketClose(document->fakeClientFd);
+                                   fakeSocketClose(document.fakeClientFd);
 
                                    return;
                                }
                                if (p[0].revents == POLLIN) {
-                                   size_t n = fakeSocketAvailableDataLength(document->fakeClientFd);
+                                   size_t n = fakeSocketAvailableDataLength(document.fakeClientFd);
                                    // I don't want to check for n being -1 here, even if
                                    // that will lead to a crash (std::length_error from the
                                    // below std::vector constructor), as n being -1 is a
@@ -131,7 +127,7 @@ COOLWSD *coolwsd = nullptr;
                                    if (n == 0)
                                        return;
                                    std::vector<char> buf(n);
-                                   n = fakeSocketRead(document->fakeClientFd, buf.data(), n);
+                                   n = fakeSocketRead(document.fakeClientFd, buf.data(), n);
                                    [document send2JS:buf.data() length:n];
                                }
                            }
@@ -143,22 +139,26 @@ COOLWSD *coolwsd = nullptr;
 
     // First we simply send the Online C++ parts the URL and the appDocId. This corresponds
     // to the GET request with Upgrade to WebSocket.
-    std::string url([[document.fileURL absoluteString] UTF8String]);
+    std::string url([[document.tempFileURL absoluteString] UTF8String]);
     struct pollfd p;
-    p.fd = document->fakeClientFd;
+    p.fd = document.fakeClientFd;
     p.events = POLLOUT;
     fakeSocketPoll(&p, 1, -1);
 
-    fakeSocketWrite(document->fakeClientFd, url.c_str(), url.size());
+    fakeSocketWrite(document.fakeClientFd, url.c_str(), url.size());
 }
 
-- (void)handleMessageWith:(CODocument *)document message:(NSString *)message {
++ (void)handleMessageWith:(Document *)document message:(NSString *)message {
     const char *buf = [message UTF8String];
     struct pollfd p;
-    p.fd = document->fakeClientFd;
+    p.fd = document.fakeClientFd;
     p.events = POLLOUT;
     fakeSocketPoll(&p, 1, -1);
-    fakeSocketWrite(document->fakeClientFd, buf, strlen(buf));
+    fakeSocketWrite(document.fakeClientFd, buf, strlen(buf));
+}
+
++ (int)fakeSocketSocket {
+    return fakeSocketSocket();
 }
 
 /**

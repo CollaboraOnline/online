@@ -9,22 +9,20 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import <WebKit/WebKit.h>
 
-#import "CODocument.h"
+@class Document;
 
 @interface COWrapper : NSObject {
-
-    int closeNotificationPipeForForwardingThread[2];
-
 }
 
-@property (class, nonatomic, readonly) COWrapper *shared;
++ (void)startServer;
++ (void)stopServer;
 
-- (void)startServer;
-- (void)stopServer;
++ (void)handleHULLOWithDocument:(Document *)document;
++ (void)handleMessageWith:(Document *)document message:(NSString *)message;
 
-- (void)handleHULLOWithDocument:(CODocument *)document;
-- (void)handleMessageWith:(CODocument *)document message:(NSString *)message;
++ (int)fakeSocketSocket;
 
 + (void)LOG_DBG:(NSString *)message NS_SWIFT_NAME(LOG_DBG(_:));
 + (void)LOG_ERR:(NSString *)message NS_SWIFT_NAME(LOG_ERR(_:));

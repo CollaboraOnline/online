@@ -9,6 +9,7 @@
  */
 
 import Cocoa
+import WebKit
 
 /**
  * Represents a document in the application.
@@ -17,8 +18,37 @@ class Document: NSDocument {
 
     // MARK: - Properties
 
-    /// The location of the document.
-    var url: URL?
+    /// For the COWrapper to send the messages to the right file descriptor.
+    @objc
+    var fakeClientFd: Int32 = -1
+
+    /// Currently unused
+    private var appDocId: Int = -1
+
+    /// Is this a read-only document?
+    private var readOnly: Bool = false
+
+    /// The webview that contains the document.
+    var webView: WKWebView!
+
+    /// The URL of the temporary directory where the document's working files are stored.
+    private var tempDirectoryURL: URL?
+
+    /// The URL of the temporary file that represents the "live" version of the document.
+    @objc
+    var tempFileURL: URL?
+
+    /**
+     * Modified status mirrored from the core.
+     * Triggers the saving operation when it was previously marked as modified, but changes to non-modified.
+     */
+    var isModified: Bool = false {
+        didSet {
+            if (oldValue && !isModified) {
+                updateChangeCount(.changeDone)
+            }
+        }
+    }
 
     // MARK: - Initialization
 
@@ -49,25 +79,163 @@ class Document: NSDocument {
         self.addWindowController(windowController)
 
         if let viewController = windowController.contentViewController as? ViewController {
-            viewController.loadDocument(documentURL: url)
+            viewController.loadDocument(self)
         }
     }
 
     /**
-     * Returns the document data to be saved.
+     * Called by the system when it wants to save or autosave the document.
      */
-    /*override func data(ofType typeName: String) throws -> Data {
-        // Save the document's data.
-        guard let data = documentData else {
-            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+    override func data(ofType typeName: String) throws -> Data {
+        guard let tempFileURL = self.tempFileURL else {
+            // FIXME: handle error?
+            return Data()
         }
+
+        // Read the latest data from the temp file
+        let data = try Data(contentsOf: tempFileURL)
         return data
-    }*/
+    }
 
     /**
-     * Just remember the document URL here, will be loaded when the ViewController is created.
+     * Called by the system when the document is opened. The system provides the file contents as `Data`.
+     * We create a non-predictable temporary directory using a UUID, and store the `data` there.
      */
-    override func read(from url: URL, ofType typeName: String) throws {
-        self.url = url
+    override func read(from data: Data, ofType typeName: String) throws {
+        // Create a unique temp directory
+        let tempDirBase = FileManager.default.temporaryDirectory
+        let uniqueDirName = UUID().uuidString
+        let tempDir = tempDirBase.appendingPathComponent(uniqueDirName, isDirectory: true)
+
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true, attributes: nil)
+
+        self.tempDirectoryURL = tempDir
+
+        // If fileURL is available (document opened from a file), preserve the original filename.
+        // If not available, use a generic name.
+        let fileName: String
+        if let fileURL = self.fileURL {
+            fileName = fileURL.lastPathComponent
+        }
+        else {
+            fileName = "Document-\(UUID().uuidString)"
+        }
+
+        let tempFile = tempDir.appendingPathComponent(fileName)
+        try data.write(to: tempFile, options: .atomic)
+
+        self.tempFileURL = tempFile
+    }
+
+    /**
+     * Clean up the temporary directory when the document closes.
+     */
+    override func close() {
+        super.close()
+        if let tempDir = self.tempDirectoryURL {
+            try? FileManager.default.removeItem(at: tempDir)
+        }
+    }
+
+    /**
+     * Initiate loading of cool.html, which also triggers loading of the document via lokit.
+     */
+    func loadDocumentInWebView(webView: WKWebView, readOnly: Bool) {
+        self.webView = webView
+        self.readOnly = readOnly
+
+        self.appDocId = 1
+
+        self.fakeClientFd = COWrapper.fakeSocketSocket()
+
+        guard let url = Bundle.main.url(forResource: "cool", withExtension: "html") else {
+            fatalError("Resource 'cool.html' not found in the main bundle.")
+        }
+
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+        let permission = readOnly ? "readonly" : "edit"
+
+        components.queryItems = [
+            URLQueryItem(name: "file_path", value: tempFileURL!.absoluteString),
+            URLQueryItem(name: "closebutton", value: "1"),
+            URLQueryItem(name: "permission", value: permission),
+            // TODO: add "lang" if needed
+            URLQueryItem(name: "appdocid", value: "\(self.appDocId)"),
+            URLQueryItem(name: "userinterfacemode", value: "notebookbar"),
+            // TODO: add "dir" if needed
+        ]
+
+        let finalURL = components.url!
+        let request = URLRequest(url: finalURL)
+        let urlDir = url.deletingLastPathComponent()
+
+        // If you need read access to a local file, use loadFileURL(_:allowingReadAccessTo:):
+        // If `finalURL` is a file URL, do:
+        if finalURL.isFileURL {
+            webView.loadFileURL(finalURL, allowingReadAccessTo: urlDir)
+        } else {
+            // If it's not a file URL, just load the request normally
+            webView.load(request)
+        }
+    }
+
+    /**
+     * Abbreviated message for debugging.
+     */
+    private func abbreviatedMessage(buffer: UnsafePointer<CChar>, length: Int) -> String {
+        // Implement your logic or return a placeholder:
+        let msgData = Data(bytes: buffer, count: length)
+        let msgStr = String(data: msgData, encoding: .utf8) ?? "<non-UTF8 message>"
+        return msgStr.prefix(100) + (msgStr.count > 100 ? "..." : "")
+    }
+
+    /**
+     * Check if the message is of the given type.
+     */
+    private func isMessageOfType(_ buffer: UnsafePointer<CChar>, _ prefix: String, length: Int) -> Bool {
+        let msgData = Data(bytes: buffer, count: min(length, prefix.count))
+        guard let msgStr = String(data: msgData, encoding: .utf8) else { return false }
+        return msgStr == prefix
+    }
+
+    @objc
+    func send2JS(_ buffer: UnsafePointer<CChar>, length: Int) {
+        let abbrMsg = abbreviatedMessage(buffer: buffer, length: length)
+        COWrapper.LOG_TRC("To JS: \(abbrMsg)")
+
+        let binaryMessage = (isMessageOfType(buffer, "tile:", length: length) ||
+                             isMessageOfType(buffer, "tilecombine:", length: length) ||
+                             isMessageOfType(buffer, "delta:", length: length) ||
+                             isMessageOfType(buffer, "renderfont:", length: length) ||
+                             isMessageOfType(buffer, "rendersearchlist:", length: length) ||
+                             isMessageOfType(buffer, "windowpaint:", length: length))
+
+        let pretext = binaryMessage
+            ? "window.TheFakeWebSocket.onmessage({'data': window.atob('"
+            : "window.TheFakeWebSocket.onmessage({'data': window.b64d('"
+        let posttext = "')});"
+
+        // Convert the buffer to Data
+        let payloadData = Data(bytes: buffer, count: length)
+        let encodedPayload = payloadData.base64EncodedString(options: [])
+
+        // Construct the full JavaScript string
+        let js = pretext + encodedPayload + posttext
+
+        // Truncate for logging
+        let truncatedJS = js.count > 100 ? (js.prefix(100) + "...") : js[...]
+        COWrapper.LOG_TRC("Evaluating JavaScript: \(truncatedJS)")
+
+        // Evaluate on main queue
+        DispatchQueue.main.async {
+            self.webView.evaluateJavaScript(js) { (obj, error) in
+                if let error = error as NSError? {
+                    COWrapper.LOG_ERR("Error after \(truncatedJS): \(error.localizedDescription)")
+                    if let jsException = error.userInfo["WKJavaScriptExceptionMessage"] as? String {
+                        COWrapper.LOG_ERR("JavaScript exception: \(jsException)")
+                    }
+                }
+            }
+        }
     }
 }

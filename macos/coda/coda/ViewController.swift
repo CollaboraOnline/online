@@ -13,7 +13,10 @@ import WebKit
 
 class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDelegate {
 
-    var document: CODocument!
+    /// Access to the NSDocument (document loading & saving infrastructure).
+    var document: Document!
+
+    /// The actual webview holding the document.
     var webView: WKWebView!
 
     override func viewDidLoad() {
@@ -52,10 +55,11 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
     /**
      * Load the the document; to be called from the Document (NSDocument) instance.
      */
-    func loadDocument(documentURL: URL?) {
+    func loadDocument(_ document: Document) {
         // FIXME: Defaults to the hello.odt if not provided (which happens eg. when created from File -> New)
-        let fileURL = documentURL ?? Bundle.main.url(forResource: "hello", withExtension: "odt")!
-        document = CODocument(webView: webView, fileURL: fileURL, readOnly: false)
+        let fileURL = document.tempFileURL ?? Bundle.main.url(forResource: "hello", withExtension: "odt")!
+        self.document = document
+        self.document.loadDocumentInWebView(webView: webView, readOnly: false)
     }
 
     /**
@@ -78,12 +82,16 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
 
                 if body == "HULLO" {
                     // Now we know that the JS has started completely
-                    COWrapper.shared.handleHULLO(with: document)
+                    COWrapper.handleHULLO(with: document)
                     return
                 }
                 else if body == "BYE" {
                     COWrapper.LOG_TRC("Document window terminating on JavaScript side. Closing our end of the socket.")
                     //self.bye()
+                    return
+                }
+                else if body.starts(with: "MODIFIED ") {
+                    document?.isModified = body.hasSuffix("true")
                     return
                 }
                 else if body == "SLIDESHOW" {
@@ -293,7 +301,7 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                 }
                 else {
                     // Just send the message
-                    COWrapper.shared.handleMessage(with: document, message: body)
+                    COWrapper.handleMessage(with: document, message: body)
                 }
             }
         }
