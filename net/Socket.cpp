@@ -1714,7 +1714,7 @@ bool StreamSocket::compactChunks(MessageMap& map)
     LOG_CHUNK("Pre-compact " << map._spans.size() << " chunks: \n" <<
               Util::dumpHex("", "", _inBuffer.begin(), _inBuffer.end(), false));
 
-    char *first = &_inBuffer[0];
+    char *first = _inBuffer.data();
     char *dest = first;
     for (const auto &span : map._spans)
     {

@@ -970,8 +970,8 @@ static std::unique_ptr<COOLWSDServer> Server;
 
 void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
 {
-    LOG_TRC("ForKitProcWSHandler: handling incoming [" << COOLProtocol::getAbbreviatedMessage(&data[0], data.size()) << "].");
-    const std::string firstLine = COOLProtocol::getFirstLine(&data[0], data.size());
+    LOG_TRC("ForKitProcWSHandler: handling incoming [" << COOLProtocol::getAbbreviatedMessage(data.data(), data.size()) << "].");
+    const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
     const StringVector tokens = StringVector::tokenize(firstLine.data(), firstLine.size());
 
     if (tokens.startsWith(0, "segfaultcount"))

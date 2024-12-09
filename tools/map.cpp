@@ -417,12 +417,12 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
 
         if (lseek(mem_fd, page, SEEK_SET) < 0)
             error(EXIT_FAILURE, errno, "Failed to seek in /proc/<pid>/mem to %lld", page);
-        if (read(mem_fd, &pageData[0], 0x1000) != 0x1000)
+        if (read(mem_fd, pageData.data(), 0x1000) != 0x1000)
             error(EXIT_FAILURE, errno, "Failed to read page %lld from /proc/<pid>/mem", page);
 
         if (lseek(parent_fd, page, SEEK_SET) < 0)
             parentData.resize(0);
-        else if (read(parent_fd, &parentData[0], 0x1000) != 0x1000)
+        else if (read(parent_fd, parentData.data(), 0x1000) != 0x1000)
             parentData.resize(0); // missing equivalent page.
 
         int touched = 0;
@@ -567,7 +567,7 @@ static void dump_unshared(unsigned proc_id, unsigned parent_id,
     printf ("\tunshared %5lld (%lldkB)\n", numOwn, numOwn * 4);
 
     std::vector<char> compressed = compressBitmap(bitmap);
-    printf ("\tRLE sharing bitmap:\n%s\n", &compressed[0]);
+    printf ("\tRLE sharing bitmap:\n%s\n", compressed.data());
 
     dumpPages(proc_id, parent_id, type, vunshared, space);
 

@@ -664,7 +664,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
-    Poco::MemoryInputStream startmessage(&socket->getInBuffer()[0], socket->getInBuffer().size());
+    Poco::MemoryInputStream startmessage(socket->getInBuffer().data(), socket->getInBuffer().size());
 
 #if 0 // debug a specific command's payload
         if (Util::findInVector(socket->getInBuffer(), "insertfile") != std::string::npos)
@@ -693,7 +693,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     {
         // We may need to re-write the chunks moving the inBuffer.
         socket->compactChunks(map);
-        Poco::MemoryInputStream message(&socket->getInBuffer()[0], socket->getInBuffer().size());
+        Poco::MemoryInputStream message(socket->getInBuffer().data(), socket->getInBuffer().size());
         // update the read cursor - headers are not altered by chunks.
         message.seekg(startmessage.tellg(), std::ios::beg);
 

@@ -315,7 +315,7 @@ private:
             return false;
         }
 
-        unsigned char *p = reinterpret_cast<unsigned char*>(&socket->getInBuffer()[0]);
+        unsigned char *p = reinterpret_cast<unsigned char*>(socket->getInBuffer().data());
         _lastFlags = p[0];
         const bool fin = _lastFlags & 0x80;
         const WSOpCode code = static_cast<WSOpCode>(_lastFlags & 0x0f);
@@ -483,7 +483,7 @@ private:
         //Process data frame
         readPayload(data, payloadLen, mask, _wsPayload);
 #else
-        unsigned char * const p = reinterpret_cast<unsigned char*>(&socket->getInBuffer()[0]);
+        unsigned char * const p = reinterpret_cast<unsigned char*>(socket->getInBuffer().data());
         _wsPayload.insert(_wsPayload.end(), p, p + len);
         const size_t headerLen = 0;
         const size_t payloadLen = len;
