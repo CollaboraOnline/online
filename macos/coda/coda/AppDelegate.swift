@@ -15,12 +15,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Initialize the COOLWSD
-        COWrapper.shared.startServer()
+        COWrapper.startServer()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
-        COWrapper.shared.stopServer()
+        COWrapper.stopServer()
     }
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
