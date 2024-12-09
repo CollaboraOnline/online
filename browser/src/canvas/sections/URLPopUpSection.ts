@@ -10,6 +10,10 @@ class URLPopUpSection extends HTMLObjectSection {
 	removeButtonId = 'hyperlink-pop-up-remove';
 	arrowDiv: HTMLDivElement;
 
+	static arrowHalfWidth = 10;
+	static horizontalPadding = 6;
+	static popupVerticalMargin = 20;
+
 	constructor(url: string, documentPosition: cool.SimplePoint, linkPosition?: cool.SimplePoint) {
         super(URLPopUpSection.sectionName, null, null, documentPosition, URLPopUpSection.cssClass);
 
@@ -116,6 +120,7 @@ class URLPopUpSection extends HTMLObjectSection {
 
 		document.getElementById(this.removeButtonId).onclick = () => {
 			app.map.sendUnoCommand('.uno:RemoveHyperlink', params);
+			URLPopUpSection.closeURLPopUp();
 		};
 	}
 
@@ -129,12 +134,11 @@ class URLPopUpSection extends HTMLObjectSection {
 			If the arrow position falls outside of the popup, we will put it on the edge.
 		*/
 		const clientRect = this.getPopUpBoundingRectangle();
-		const arrowHalfWidth = 10;
-		let arrowCSSLeft = this.sectionProperties.documentPosition.pX - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0] - arrowHalfWidth;
+		let arrowCSSLeft = this.sectionProperties.documentPosition.pX - this.documentTopLeft[0] + this.containerObject.getDocumentAnchor()[0] - URLPopUpSection.arrowHalfWidth;
 		arrowCSSLeft /= app.dpiScale;
 		arrowCSSLeft += document.getElementById('canvas-container').getBoundingClientRect().left; // Add this in case there is something on its left.
 		arrowCSSLeft -= clientRect.left;
-		this.arrowDiv.style.left = (arrowCSSLeft > 6 ? arrowCSSLeft : 6) + 'px'; // 6: padding of the popup.
+		this.arrowDiv.style.left = (arrowCSSLeft > URLPopUpSection.horizontalPadding ? arrowCSSLeft : URLPopUpSection.horizontalPadding) + 'px';
 	}
 
 	public static resetPosition(section: URLPopUpSection) {
@@ -142,12 +146,12 @@ class URLPopUpSection extends HTMLObjectSection {
 			section = app.sectionContainer.getSectionWithName(URLPopUpSection.sectionName);
 
 		let left = section.sectionProperties.documentPosition.pX - section.getPopUpWidth() * 0.5 * app.dpiScale;
-		let top = section.sectionProperties.documentPosition.pY - (section.getPopUpHeight() + 20) * app.dpiScale;
+		let top = section.sectionProperties.documentPosition.pY - (section.getPopUpHeight() + URLPopUpSection.popupVerticalMargin) * app.dpiScale;
 
 		if (section) {
 			let arrowAtTop = false;
 			if (top < 0) {
-				top = section.sectionProperties.documentPosition.pY + (40 * app.dpiScale);
+				top = section.sectionProperties.documentPosition.pY + (URLPopUpSection.popupVerticalMargin * 2 * app.dpiScale);
 				arrowAtTop = true;
 			}
 
