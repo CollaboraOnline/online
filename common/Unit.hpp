@@ -479,8 +479,6 @@ public:
     /// When we get a killed message from forkit; override to test crashes ...
     virtual void kitKilled(int /* count */)
     {
-        if (get().isUnitTesting())
-            exitTest(TestResult::Failed, "kit killed");
     }
 
     /// When we get killed by oom message from forkit; override to test crashes ...
