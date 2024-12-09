@@ -1130,6 +1130,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: false,	combination: 'ZL',	de:	'8' }
 			},
 			{
+				'id': 'insert-insert-remote-link',
+				'class': 'unoremotelink',
+				'type': 'bigcustomtoolitem',
+				'text': _('Assistant'),
+				'command': 'remotelink',
+				'accessibility': { focusBack: true, combination: 'RL', de: null }
+			},
+			{
 				'id': 'insert-insert-annotation',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertAnnotation', 'text'),
