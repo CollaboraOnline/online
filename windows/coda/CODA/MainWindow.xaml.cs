@@ -15,15 +15,6 @@ namespace CODA
 {
     public partial class MainWindow : Window
     {
-        // FIXME: Is there some clever way to not have to duplicate the POLL* and struct pollfd
-        // definitions for the C# and C++ parts of CODA-W?
-        const int POLLIN = 0x001;
-        const int POLLPRI = 0x002;
-        const int POLLOUT = 0x004;
-        const int POLLERR = 0x008;
-        const int POLLHUP = 0x010;
-        const int POLLNVAL = 0x020;
-
         public struct pollfd {
             public int fd;
             public short events;
@@ -142,7 +133,6 @@ namespace CODA
 
         public MainWindow()
         {
-            Environment.SetEnvironmentVariable("SAL_LOG", "+WARN+INFO");
             Loaded += MainWindow_Loaded;
             InitializeComponent();
             Send2JSDelegate fp = new Send2JSDelegate(send2JS);
@@ -222,7 +212,7 @@ namespace CODA
             {
                 // FIXME: Temporarily when running from <repo>/windows/coda/CODA/bin/Debug/net8.0-windows.
                 webView.CoreWebView2.SetVirtualHostNameToFolderMapping("appassets", "..\\..\\..\\..\\..\\..\\browser\\dist", CoreWebView2HostResourceAccessKind.DenyCors);
-                webView.CoreWebView2.Navigate("https://appassets/cool.html?file_path=file:///C:/Users/tml/Sailing%20Yacht.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
+                webView.CoreWebView2.Navigate("https://appassets/cool.html?file_path=file:///C:/Users/tml/sailing.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
 
                 OnWebViewFirstInitialized?.Invoke();
 

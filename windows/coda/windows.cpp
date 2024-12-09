@@ -22,7 +22,7 @@ int coolwsd_server_socket_fd = -1;
 
 LibreOfficeKit *lo_kit;
 
-static std::string fileURL = "file:///C:/Users/tml/Sailing%20Yacht.odt";
+static std::string fileURL = "file:///C:/Users/tml/sailing.odt";
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2];
