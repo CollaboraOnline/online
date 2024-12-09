@@ -1413,7 +1413,12 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			if (jMessage.mimeType === 'text/plain') {
 				this._map._clip.setTextSelectionHTML(jMessage.content);
-				this._map._clip._execCopyCutPaste('copy');
+
+				// If _navigatorClipboardWrite is available, use it.
+				if (L.Browser.clipboardApiAvailable || window.ThisIsTheiOSApp)
+					this._map.fire('clipboardchanged', { commandName: '.uno:CopyHyperlinkLocation' });
+				else // Or use previous method.
+					this._map._clip._execCopyCutPaste('copy');
 			}
 		}
 		else if (textMsg.startsWith('textselectionend:')) {
