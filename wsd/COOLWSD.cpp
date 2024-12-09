@@ -171,7 +171,7 @@ static std::condition_variable NewChildrenCV;
 static std::vector<std::shared_ptr<ChildProcess> > NewChildren;
 
 static std::chrono::steady_clock::time_point LastForkRequestTime = std::chrono::steady_clock::now();
-static std::atomic<int> OutstandingForks(0);
+static int OutstandingForks(0);
 std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 std::mutex DocBrokersMutex;
 static Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
