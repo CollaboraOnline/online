@@ -322,22 +322,22 @@ static void cleanupChildren()
                 else if (WTERMSIG(status) == SIGKILL)
                 {
                     // TODO differentiate with docker
-                    int si_code = info.si_code;
-                    if (si_code == SI_KERNEL)
+                    if (info.si_code == SI_KERNEL)
                     {
                         ++oomKilledCount;
-                        LOG_WRN("Child " << exitedChildPid << " was killed by OOM, with status"
+                        LOG_WRN("Child " << exitedChildPid << " was killed by OOM, with status "
                                          << status);
                     }
                     else
                     {
                         ++killedCount;
-                        LOG_WRN("Child " << exitedChildPid << " was killed, with status" << status);
+                        LOG_WRN("Child " << exitedChildPid << " was killed, with status "
+                                         << status);
                     }
                 }
                 else
                 {
-                    LOG_ERR("Child " << exitedChildPid << " has exited, with status" << status);
+                    LOG_ERR("Child " << exitedChildPid << " has exited, with status " << status);
                 }
             }
 
@@ -352,7 +352,7 @@ static void cleanupChildren()
         }
         else
         {
-            LOG_ERR("Unknown child " << exitedChildPid << " has exited, with status" << status);
+            LOG_ERR("Unknown child " << exitedChildPid << " has exited, with status " << status);
         }
     }
 
