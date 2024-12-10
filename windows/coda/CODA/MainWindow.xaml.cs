@@ -150,20 +150,38 @@ namespace CODA
 
         void WebView_WebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
-            Debug.WriteLine($"WebView_WebMessageReceived: {args.WebMessageAsJson}");
+            string s = args.WebMessageAsJson;
+            Debug.WriteLine($"WebView_WebMessageReceived: {s}");
 
-            if (args.WebMessageAsJson == "\"HULLO\"")
+            if (s.StartsWith("\"MSG "))
             {
-                do_hullo_handling_things();
+                s = s.Substring(5);
+                if (s == "HULLO\"")
+                {
+                   do_hullo_handling_things();
+                }
+                else if (s == "BYE\"")
+                {
+                    do_bye_handling_things();
+                }
+                else
+                {
+                    string message = JsonSerializer.Deserialize<string>(args.WebMessageAsJson);
+                    message = message.Substring(4);
+                    do_other_message_handling_things(message);
+                }
             }
-            else if (args.WebMessageAsJson == "\"BYE\"")
-            {
-                do_bye_handling_things();
-            }
-            else
+            else if (s.StartsWith("\"ERR "))
             {
                 string message = JsonSerializer.Deserialize<string>(args.WebMessageAsJson);
-                do_other_message_handling_things(message);
+                message = message.Substring(4);
+                Debug.WriteLine("Error: message");
+            }
+            else if (s.StartsWith("\"DBG "))
+            {
+                string message = JsonSerializer.Deserialize<string>(args.WebMessageAsJson);
+                message = message.Substring(4);
+                Debug.WriteLine("Debug: message");
             }
         }
 
