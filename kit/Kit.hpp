@@ -187,7 +187,6 @@ public:
 #endif
 };
 
-class KitQueue;
 class ChildSession;
 
 /// A document container.
@@ -197,7 +196,7 @@ class ChildSession;
 /// per process. But for security reasons don't.
 /// However, we could have a coolkit instance
 /// per user or group of users (a trusted circle).
-class Document final : public std::enable_shared_from_this<Document>
+class Document final : public std::enable_shared_from_this<Document>, private TilePrioritizer
 {
 public:
     Document(const std::shared_ptr<lok::Office>& loKit, const std::string& jailId,
@@ -268,6 +267,9 @@ private:
     /// Cleanup bgSave child processes.
     static void reapZombieChildren();
 
+    /// Calculate tile rendering priority from a TileDesc
+    virtual float getTilePriority(const TileDesc &desc) const override;
+
 public:
     /// Request loading a document, or a new view, if one exists,
     /// and register callbacks.
@@ -328,13 +330,13 @@ private:
                                         const std::string& spellOnline, const std::string& theme,
                                         const std::string& backgroundTheme,
                                         const std::string& userPrivateInfo);
-    bool isTileRequestInsideVisibleArea(const TileCombined& tileCombined) const;
 
 public:
     bool processInputEnabled() const;
 
     /// A new message from wsd for the queue
     void queueMessage(const std::string &msg) { _queue->put(msg); }
+    /// Do we have incoming messages from wsd ?
     bool hasQueueItems() const { return _queue && !_queue->isEmpty(); }
     bool canRenderTiles() const {
         return processInputEnabled() && !isLoadOngoing() &&
@@ -400,8 +402,6 @@ public:
     /// Are we currently performing a load ?
     bool isLoadOngoing() const { return _duringLoad > 0; }
 
-    std::shared_ptr<KitQueue> getQueue() const { return _queue; }
-
     LogUiCmd& getLogUiCmd() { return logUiCmd; }
 
 private:
@@ -426,7 +426,7 @@ private:
 #ifdef __ANDROID__
     static std::shared_ptr<lok::Document> _loKitDocumentForAndroidOnly;
 #endif
-    std::shared_ptr<KitQueue> _queue;
+    std::unique_ptr<KitQueue> _queue;
 
     // Connection to the coolwsd process
     std::shared_ptr<WebSocketHandler> _websocketHandler;

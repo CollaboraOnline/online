@@ -243,6 +243,9 @@ public:
 
     bool canCombine(const TileDesc& other) const
     {
+        if (isPreview() || other.isPreview())
+            return false;
+
         if (!onSameRow(other))
             return false;
 
