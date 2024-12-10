@@ -48,6 +48,9 @@ abstract class TransitionBase extends SlideChangeGl {
 	}
 
 	private releaseResources(): void {
+		if (this.context.isDisposed())
+			return;
+
 		// Clean up vertex array
 		this.gl.bindVertexArray(null);
 		if (this.vao) {
@@ -137,6 +140,9 @@ class Transition2d extends TransitionBase {
 	}
 
 	public render(nT: number, properties?: AnimatedElementRenderProperties) {
+		if (this.context.isDisposed())
+			return;
+
 		const isSlideTransition: boolean = !!this.leavingSlide;
 
 		console.debug(`Transition2d.render: nT: ${nT}`);
