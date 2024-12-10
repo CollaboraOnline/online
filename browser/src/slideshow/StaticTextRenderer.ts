@@ -25,6 +25,9 @@ class StaticTextRenderer extends TextureAnimationBase {
 	}
 
 	public display(displayText: string) {
+		if (this.context.isDisposed())
+			return;
+
 		this.textTexture = this.createTextTexture(displayText);
 		this.prepareTransition();
 		requestAnimationFrame(this.animate.bind(this));
@@ -41,6 +44,9 @@ class StaticTextRenderer extends TextureAnimationBase {
 
 	// Create an off-screen 2D canvas with text centered
 	public create2DCanvasWithText(displayText: string): HTMLCanvasElement {
+		if (this.context.isDisposed())
+			return null;
+
 		const canvas = document.createElement('canvas');
 		canvas.width = this.context.canvas.width;
 		canvas.height = this.context.canvas.height;
@@ -62,6 +68,9 @@ class StaticTextRenderer extends TextureAnimationBase {
 	}
 
 	public load2dCanvasToGlCanvas(canvas: HTMLCanvasElement): WebGLTexture {
+		if (this.context.isDisposed())
+			return null;
+
 		const texture = this.gl.createTexture();
 		if (!texture) {
 			throw new Error('Failed to create texture');
@@ -100,6 +109,9 @@ class StaticTextRenderer extends TextureAnimationBase {
 	}
 
 	public render(): void {
+		if (this.context.isDisposed())
+			return;
+
 		this.gl.viewport(
 			0,
 			0,

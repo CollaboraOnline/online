@@ -21,6 +21,8 @@ class TransitionParameters3D extends TransitionParameters {
 class Transition3d extends TransitionBase {
 	constructor(transitionParameters: TransitionParameters3D) {
 		super(transitionParameters);
+		if (this.context.isDisposed())
+			return;
 		this.gl.enable(this.gl.BLEND);
 		this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
 	}
@@ -165,6 +167,9 @@ class Transition3d extends TransitionBase {
 	}
 
 	public initUniforms(): void {
+		if (this.context.isDisposed())
+			return;
+
 		this.gl.useProgram(this.program);
 
 		const modelViewMatrix = this.calculateModelViewMatrix();
@@ -229,6 +234,9 @@ class Transition3d extends TransitionBase {
 	public otherUniformsInitialization(): void {}
 
 	public render(nT: number): void {
+		if (this.context.isDisposed())
+			return;
+
 		this.gl.viewport(
 			0,
 			0,

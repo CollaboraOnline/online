@@ -57,6 +57,10 @@ abstract class SlideRenderer {
 		this._canvas = canvas;
 	}
 
+	public isDisposed() {
+		return this._context && this._context.isDisposed();
+	}
+
 	public get lastRenderedSlideIndex() {
 		return this._renderedSlideIndex;
 	}
@@ -244,6 +248,9 @@ class SlideRenderer2d extends SlideRenderer {
 	}
 
 	protected render() {
+		if (this.isDisposed())
+			return;
+
 		const gl = this._context.get2dGl();
 		gl.clearRect(0, 0, gl.canvas.width, gl.canvas.height);
 
@@ -340,6 +347,9 @@ class SlideRendererGl extends SlideRenderer {
 		yMin: number,
 		yMax: number,
 	): WebGLVertexArrayObject {
+		if (this.isDisposed())
+			return null;
+
 		if (this._context.is2dGl()) return;
 
 		const gl = this._context.getGl();
@@ -400,6 +410,9 @@ class SlideRendererGl extends SlideRenderer {
 	}
 
 	public deleteResources(): void {
+		if (this.isDisposed())
+			return;
+
 		this.pauseVideos();
 		for (var videoRenderInfo of this._videos) {
 			videoRenderInfo.deleteResources(this._context);
@@ -438,6 +451,9 @@ class SlideRendererGl extends SlideRenderer {
 		docWidth: number,
 		docHeight: number,
 	) {
+		if (this.isDisposed())
+			return;
+
 		this.pauseVideos();
 		this._videos = [];
 		if (slideInfo.videos !== undefined) {
@@ -487,6 +503,9 @@ class SlideRendererGl extends SlideRenderer {
 	}
 
 	protected render() {
+		if (this.isDisposed())
+			return;
+
 		console.debug('SlideRendererGl.render');
 		const gl = this._context.getGl();
 		gl.viewport(0, 0, this._canvas.width, this._canvas.height);

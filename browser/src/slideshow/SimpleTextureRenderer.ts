@@ -28,6 +28,9 @@ abstract class SimpleTextureRenderer {
 	protected initProgramTemplateParams(): void {}
 
 	protected createProgram() {
+		if (this.context.isDisposed())
+			return;
+
 		this.initProgramTemplateParams();
 
 		const vertexShaderSource = this.getVertexShader();
@@ -56,11 +59,17 @@ abstract class SimpleTextureRenderer {
 	protected abstract getFragmentShader(): string;
 
 	protected prepareTransition(): void {
+		if (this.context.isDisposed())
+			return;
+
 		this.initBuffers();
 		this.initUniforms();
 	}
 
 	protected initUniforms(): void {
+		if (this.context.isDisposed())
+			return;
+
 		this.gl.useProgram(this.program);
 		// Add more uniform here if needed.
 	}

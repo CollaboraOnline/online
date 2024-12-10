@@ -19,6 +19,8 @@ abstract class RenderContext {
 		| CanvasRenderingContext2D
 		| OffscreenCanvasRenderingContext2D;
 
+	protected disposed = false;
+
 	constructor(canvas: HTMLCanvasElement | OffscreenCanvas) {
 		this.canvas = canvas;
 	}
@@ -35,6 +37,10 @@ abstract class RenderContext {
 		return this.gl instanceof OffscreenCanvasRenderingContext2D
 			? this.gl
 			: null;
+	}
+
+	public isDisposed() {
+		return this.disposed;
 	}
 
 	public createTextureWithColor(color: RGBAArray): WebGLTexture | ImageBitmap {
@@ -89,6 +95,7 @@ class RenderContextGl extends RenderContext {
 	}
 
 	public clear() {
+		this.disposed  = true;
 		this.gl = null;
 	}
 
@@ -96,6 +103,9 @@ class RenderContextGl extends RenderContext {
 		image: HTMLImageElement | ImageBitmap,
 		isMipMapEnable: boolean = false,
 	): WebGLTexture | ImageBitmap {
+		if (this.isDisposed())
+			return null;
+
 		const gl = this.getGl();
 
 		const texture = gl.createTexture();
@@ -126,16 +136,25 @@ class RenderContextGl extends RenderContext {
 	}
 
 	public deleteTexture(texture: WebGLTexture | ImageBitmap): void {
+		if (this.isDisposed())
+			return;
+
 		const gl = this.getGl();
 		gl.deleteTexture(texture);
 	}
 
 	public deleteVertexArray(vao: WebGLVertexArrayObject): void {
+		if (this.isDisposed())
+			return;
+
 		const gl = this.getGl();
 		gl.deleteVertexArray(vao);
 	}
 
 	public createTextureWithColor(color: RGBAArray): WebGLTexture | ImageBitmap {
+		if (this.isDisposed())
+			return null;
+
 		const gl = this.getGl();
 		const texture = gl.createTexture();
 		if (!texture) {
@@ -182,6 +201,9 @@ class RenderContextGl extends RenderContext {
 	}
 
 	public createShader(type: number, source: string): WebGLShader {
+		if (this.isDisposed())
+			return null;
+
 		const gl = this.getGl();
 		const shader = gl.createShader(type);
 		if (!shader) {
@@ -205,6 +227,9 @@ class RenderContextGl extends RenderContext {
 		vertexShader: WebGLShader,
 		fragmentShader: WebGLShader,
 	): WebGLProgram {
+		if (this.isDisposed())
+			return null;
+
 		const gl = this.getGl();
 		const program = gl.createProgram();
 		if (!program) {
@@ -239,6 +264,7 @@ class RenderContext2d extends RenderContext {
 	}
 
 	public clear() {
+		this.disposed  = true;
 		this.gl = null;
 	}
 

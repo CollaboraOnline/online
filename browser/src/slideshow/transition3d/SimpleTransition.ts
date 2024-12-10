@@ -32,6 +32,9 @@ class SimpleTransition extends SlideShow.Transition3d {
 	}
 
 	public initWebglFlags(): void {
+		if (this.context.isDisposed())
+			return;
+
 		this.gl.disable(this.gl.DEPTH_TEST);
 		this.gl.disable(this.gl.CULL_FACE);
 
@@ -187,6 +190,9 @@ class SimpleTransition extends SlideShow.Transition3d {
 	}
 
 	public render(nT: number): void {
+		if (this.context.isDisposed())
+			return;
+
 		this.gl.viewport(
 			0,
 			0,

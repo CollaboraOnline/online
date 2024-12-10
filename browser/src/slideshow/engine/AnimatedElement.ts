@@ -677,6 +677,9 @@ class AnimatedElement {
 	}
 
 	renderLayer2d(renderer: LayerRenderer2d) {
+		if (renderer.isDisposed())
+			return;
+
 		const renderContext = renderer.getRenderContext();
 		const renderingContext = renderContext.get2dOffscreen();
 
@@ -736,6 +739,9 @@ class AnimatedElement {
 	}
 
 	renderLayerGl(renderer: LayerRendererGl) {
+		if (renderer.isDisposed())
+			return;
+
 		const T = this.aTMatrix;
 
 		console.debug(
