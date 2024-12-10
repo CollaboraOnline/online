@@ -224,7 +224,7 @@ void RequestVettingStation::checkSharedConfig(const std::string& docKey,
         }
         else
         {
-            COOLWSD::spawnSubForKit(configId);
+            COOLWSD::ensureSubForKit(configId);
             // kick off the docbroker in the knowledge that the subForKit is populated
             createWopiDocBroker(docKey, configId, url, uriPublic, isReadOnly);
         }

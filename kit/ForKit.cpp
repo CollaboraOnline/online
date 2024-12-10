@@ -156,8 +156,8 @@ protected:
         }
         else if (tokens.size() == 2 && tokens.equals(0, "spawn"))
         {
-            fprintf(stderr, "spawn seen with %s\n", tokens[1].c_str());
             const int count = std::stoi(tokens[1]);
+            fprintf(stderr, "spawn seen in %d of %d\n", getpid(), count);
             if (count > 0)
             {
                 LOG_INF("Setting to spawn " << tokens[1] << " child" << (count == 1 ? "" : "ren") << " per request.");
@@ -601,7 +601,7 @@ static int createSubForKit(const std::string& subForKitIdent,
         ForKitIdent = subForKitIdent;
 
         // reset this global counter for this new subForKit
-        ForkCounter = 10; // <- TODO, spawn & rebalance wrt SubForKits
+        ForkCounter = 0;
 
         // Apply core configmgr xcu settings to this forkit for its coolkits to inherit
         {
