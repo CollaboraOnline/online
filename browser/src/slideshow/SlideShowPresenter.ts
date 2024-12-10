@@ -530,7 +530,9 @@ class SlideShowPresenter {
 
 		document.removeEventListener('visibilitychange', this._pauseEnterFunc);
 		this._pauseEnterFunc = undefined;
-		this._slideShowWindowProxy.clearInterval(this._pauseRenderTimer);
+		if (this._slideShowWindowProxy) {
+			this._slideShowWindowProxy.clearInterval(this._pauseRenderTimer);
+		}
 	}
 
 	_doInWindowPresentation() {
