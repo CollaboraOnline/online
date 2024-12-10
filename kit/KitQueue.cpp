@@ -382,18 +382,6 @@ bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &pay
     return false;
 }
 
-int KitQueue::priority(const TileDesc &tile)
-{
-    for (int i = static_cast<int>(_viewOrder.size()) - 1; i >= 0; --i)
-    {
-        auto& cursor = _cursorPositions[_viewOrder[i]];
-        if (tile.intersects(cursor.toAABBox()))
-            return i;
-    }
-
-    return -1;
-}
-
 // FIXME: it's not that clear what good this does for us ...
 // we process all previews in the same batch of rendering
 void KitQueue::deprioritizePreviews()
@@ -426,84 +414,46 @@ KitQueue::Payload KitQueue::pop()
     return front;
 }
 
-std::vector<TileCombined> KitQueue::popWholeTileQueue()
-{
-    std::vector<TileCombined> result;
-
-    while (!_tileQueue.empty())
-        result.emplace_back(popTileQueue());
-
-    return result;
-}
-
-TileCombined KitQueue::popTileQueue()
+TileCombined KitQueue::popTileQueue(float &nextPriority)
 {
     assert(!_tileQueue.empty());
+
+    nextPriority = 0.0;
 
     LOG_TRC("KitQueue depth: " << _tileQueue.size());
 
     TileDesc msg = _tileQueue.front();
 
+    // vector of tiles we will render
     std::vector<TileDesc> tiles;
-
-    if (msg.isPreview())
-    {
-        // Don't combine non-tiles or tiles with id.
-        LOG_TRC("KitQueue res: " << msg.serialize());
-        _tileQueue.erase(_tileQueue.begin());
-
-        // de-prioritize the other tiles with id - usually the previews in
-        // Impress
-        deprioritizePreviews();
-
-        return TileCombined(msg);
-    }
 
     // We are handling a tile; first try to find one that is at the cursor's
     // position, otherwise handle the one that is at the front
     int prioritized = 0;
-    int prioritySoFar = -1;
+    float prioritySoFar = -1000.0;
     for (size_t i = 0; i < _tileQueue.size(); ++i)
     {
         auto& prio = _tileQueue[i];
 
-        // FIXME: does this make any sense ?
-        //
-        // avoid starving - stop the search when we reach a non-tile,
-        // otherwise we may keep growing the queue of unhandled stuff (both
-        // tiles and non-tiles)
-        if (prio.isPreview())
-            break;
-
-        const int p = priority(prio);
+        const float p = _prio.getTilePriority(prio);
         if (p > prioritySoFar)
         {
             prioritySoFar = p;
             prioritized = i;
             msg = prio;
-
-            // found the highest priority already?
-            if (prioritySoFar == static_cast<int>(_viewOrder.size()) - 1)
-            {
-                break;
-            }
         }
     }
 
+    // remove highest priority tile from the queue
     _tileQueue.erase(_tileQueue.begin() + prioritized);
 
+    // and add it to the render list
     tiles.emplace_back(msg);
 
-    // Combine as many tiles as possible with the top one.
+    // Combine as many tiles as possible with this tile.
     for (size_t i = 0; i < _tileQueue.size(); )
     {
         auto& it = _tileQueue[i];
-        if (it.isPreview())
-        {
-            // Don't combine non-tiles or tiles with id.
-            ++i;
-            continue;
-        }
 
         LOG_TRC("Combining candidate: " << it.serialize());
 
@@ -514,9 +464,7 @@ TileCombined KitQueue::popTileQueue()
             _tileQueue.erase(_tileQueue.begin() + i);
         }
         else
-        {
             ++i;
-        }
     }
 
     LOG_TRC("Combined " << tiles.size() << " tiles, leaving " << _tileQueue.size() << " in queue.");
@@ -525,32 +473,6 @@ TileCombined KitQueue::popTileQueue()
     {
         LOG_TRC("KitQueue res: " << tiles[0].serialize());
         return TileCombined(tiles[0]);
-    }
-
-    // n^2 but lists are short.
-    for (size_t i = 0; i < tiles.size() - 1; ++i)
-    {
-        const auto &a = tiles[i];
-        for (size_t j = i + 1; j < tiles.size();)
-        {
-            const auto &b = tiles[j];
-            assert(a.getPart() == b.getPart());
-            assert(a.getEditMode() == b.getEditMode());
-            assert(a.getWidth() == b.getWidth());
-            assert(a.getHeight() == b.getHeight());
-            assert(a.getTileWidth() == b.getTileWidth());
-            assert(a.getTileHeight() == b.getTileHeight());
-            if (a.getTilePosX() == b.getTilePosX() &&
-                a.getTilePosY() == b.getTilePosY())
-            {
-                LOG_TRC("KitQueue: dropping duplicate tile: " <<
-                        j << " vs. " << i << " at: " <<
-                        a.getTilePosX() << "," << b.getTilePosY());
-                tiles.erase(tiles.begin() + j);
-            }
-            else
-                j++;
-        }
     }
 
     TileCombined combined = TileCombined::create(tiles);
@@ -696,66 +618,17 @@ std::string KitQueue::combineRemoveText(const StringVector& tokens)
     return std::string();
 }
 
-void KitQueue::updateCursorPosition(int viewId, int part, int x, int y, int width, int height)
-{
-    const KitQueue::CursorPosition cursorPosition = CursorPosition(part, x, y, width, height);
-
-    auto it = _cursorPositions.lower_bound(viewId);
-    if (it != _cursorPositions.end() && it->first == viewId)
-    {
-        it->second = cursorPosition;
-    }
-    else
-    {
-        _cursorPositions.insert(it, std::make_pair(viewId, cursorPosition));
-    }
-
-    // Move to front, so the current front view
-    // becomes the second.
-    const auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
-    if (view != _viewOrder.end())
-        _viewOrder.erase(view);
-
-    _viewOrder.push_back(viewId);
-}
-
-void KitQueue::removeCursorPosition(int viewId)
-{
-    const auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
-    if (view != _viewOrder.end())
-        _viewOrder.erase(view);
-
-    _cursorPositions.erase(viewId);
-}
-
 void KitQueue::dumpState(std::ostream& oss)
 {
-    oss << "\ttileQueue:"
-        << "\n\t\tcursorPositions:";
-    for (const auto &it : _cursorPositions)
-    {
-        oss << "\n\t\t\tviewId: "
-            << it.first
-            << " part: " << it.second.getPart()
-            << " x: " << it.second.getX()
-            << " y: " << it.second.getY()
-            << " width: " << it.second.getWidth()
-            << " height: " << it.second.getHeight();
-    }
-
-    oss << "\n\t\tviewOrder: [";
-    std::string separator;
-    for (const auto& viewId : _viewOrder)
-    {
-        oss << separator << viewId;
-        separator = ", ";
-    }
-    oss << "]\n";
-
-    oss << "\tQueue size: " << _queue.size() << "\n";
+    oss << "\tIncoming Queue size: " << _queue.size() << "\n";
     size_t i = 0;
     for (Payload &it : _queue)
         oss << "\t\t" << i++ << ": " << COOLProtocol::getFirstLine(it) << "\n";
+
+    oss << "\tTile Queue size: " << _tileQueue.size() << "\n";
+    i = 0;
+    for (TileDesc &it : _tileQueue)
+        oss << "\t\t" << i++ << ": " << it.serialize() << "\n";
 
     oss << "\tCallbacks size: " << _callbacks.size() << "\n";
     i = 0;

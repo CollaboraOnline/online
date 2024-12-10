@@ -109,6 +109,7 @@ ChildSession::ChildSession(const std::shared_ptr<ProtocolHandlerInterface>& prot
     , _jailRoot(jailRoot)
     , _docManager(&docManager)
     , _viewId(-1)
+    , _currentPart(-1)
     , _isDocLoaded(false)
     , _copyToClipboard(false)
     , _canonicalViewId(-1)
@@ -981,6 +982,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     if (_docType != "text" && part != -1)
     {
         getLOKitDocument()->setPart(part);
+        _currentPart = part;
     }
 
     // Respond by the document status
@@ -1247,14 +1249,20 @@ bool ChildSession::clientVisibleArea(const StringVector& tokens)
     return true;
 }
 
-bool ChildSession::isTileInsideVisibleArea(const TileDesc& tile) const
+float ChildSession::getTilePriority(const TileDesc& tile) const
 {
-    return tile.intersects( _clientVisibleArea );
-}
+    // FIXME: recent interactivity - should bump priority
+    // FIXME: proximity to a viewing area should bump priority
 
-bool ChildSession::isTileInsideVisibleArea(const TileCombined& tileCombined) const
-{
-    return tileCombined.toAABBox().intersects( _clientVisibleArea );
+    // FIXME: if tile.isPreview() -> lower priority ...
+
+    float score = tile.intersects(_clientVisibleArea) ? 1.0 : 0.0;
+
+    // most important to render things close to the cursor fast
+    if (tile.getPart() == _currentPart && tile.intersects(_cursorPosition))
+        score *= 2.0;
+
+    return score;
 }
 
 bool ChildSession::outlineState(const StringVector& tokens)
@@ -2972,6 +2980,7 @@ bool ChildSession::setClientPart(const StringVector& tokens)
     if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT && part != getLOKitDocument()->getPart())
     {
         getLOKitDocument()->setPart(part);
+        _currentPart = part;
     }
 
     return true;
@@ -3053,6 +3062,7 @@ bool ChildSession::setPage(const StringVector& tokens)
     getLOKitDocument()->setView(_viewId);
 
     getLOKitDocument()->setPart(page);
+    _currentPart = page;
     return true;
 }
 
@@ -3390,6 +3400,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR:
         updateSpeed();
+        updateCursorPositionJSON(payload);
         sendTextFrame("invalidatecursor: " + payload);
         break;
     case LOK_CALLBACK_TEXT_SELECTION:
@@ -3411,6 +3422,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("graphicinnertextarea: " + payload);
         break;
     case LOK_CALLBACK_CELL_CURSOR:
+        updateCursorPosition(payload);
         sendTextFrame("cellcursor: " + payload);
         break;
     case LOK_CALLBACK_CELL_FORMULA:
@@ -3449,8 +3461,15 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         getStatus();
         break;
     case LOK_CALLBACK_SET_PART:
+    {
+        int part;
+        StringVector tokens(StringVector::tokenize(payload, ','));
+        if(getTokenInteger(tokens[1], "part", part))
+            _currentPart = part;
+
         sendTextFrame("setpart: " + payload);
         break;
+    }
     case LOK_CALLBACK_UNO_COMMAND_RESULT:
     {
         Parser parser;
@@ -3531,12 +3550,14 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendProgressFrame("finish", "");
         break;
     case LOK_CALLBACK_INVALIDATE_VIEW_CURSOR:
+        updateCursorPositionJSON(payload);
         sendTextFrame("invalidateviewcursor: " + payload);
         break;
     case LOK_CALLBACK_TEXT_VIEW_SELECTION:
         sendTextFrame("textviewselection: " + payload);
         break;
     case LOK_CALLBACK_CELL_VIEW_CURSOR:
+        updateCursorPositionJSON(payload);
         sendTextFrame("cellviewcursor: " + payload);
         break;
     case LOK_CALLBACK_GRAPHIC_VIEW_SELECTION:
@@ -3998,6 +4019,23 @@ LogUiCommands::~LogUiCommands()
             }
         }
     }
+}
+
+
+void ChildSession::updateCursorPosition(const std::string &rect)
+{
+    Util::Rectangle r(rect);
+    if (r.getWidth() != 0 && r.getHeight() != 0)
+        _cursorPosition = r;
+    // else 'EMPTY' eg.
+}
+
+void ChildSession::updateCursorPositionJSON(const std::string &rect)
+{
+    Poco::JSON::Parser parser;
+    const Poco::Dynamic::Var result = parser.parse(rect);
+    const auto& command = result.extract<Poco::JSON::Object::Ptr>();
+    updateCursorPosition(command->get("rectangle").toString());
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

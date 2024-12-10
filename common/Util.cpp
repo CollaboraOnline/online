@@ -17,6 +17,7 @@
 #endif
 
 #include "Util.hpp"
+#include "Rectangle.hpp"
 #include "SigHandlerTrap.hpp"
 
 #include <poll.h>
@@ -1000,6 +1001,22 @@ namespace Util
             }
         }
         return s;
+    }
+
+    Rectangle::Rectangle(const std::string &rectangle)
+    {
+        StringVector tokens(StringVector::tokenize(rectangle, ','));
+        if (tokens.size() == 4)
+        {
+            _x1 = std::stoi(tokens[0]);
+            _y1 = std::stoi(tokens[1]);
+            _x2 = _x1 + std::stoi(tokens[2]);
+            _y2 = _y1 + std::stoi(tokens[3]);
+        }
+        else
+        {
+            _x1 = _y1 = _x2 = _y2 = 0;
+        }
     }
 
 } // namespace Util
