@@ -1711,23 +1711,20 @@ void Document::notifyViewInfo()
                         Parser parser;
                         Poco::Dynamic::Var var = parser.parse(userPrivateInfo);
                         Object::Ptr userPrivateInfoObj = var.extract<Object::Ptr>();
-                        std::string signatureCert;
-                        JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCert", signatureCert);
-                        if (!signatureCert.empty())
+                        std::initializer_list<std::string> keys = {
+                            "SignatureCert",
+                            "SignatureKey",
+                            "SignatureCa",
+                            "ESignatureSecret",
+                        };
+                        for (const auto& key : keys)
                         {
-                            userPrivateInfoObj->set("SignatureCert", " ");
-                        }
-                        std::string signatureKey;
-                        JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureKey", signatureKey);
-                        if (!signatureKey.empty())
-                        {
-                            userPrivateInfoObj->set("SignatureKey", " ");
-                        }
-                        std::string signatureCa;
-                        JsonUtil::findJSONValue(userPrivateInfoObj, "SignatureCa", signatureCa);
-                        if (!signatureCa.empty())
-                        {
-                            userPrivateInfoObj->set("SignatureCa", " ");
+                            std::string value;
+                            JsonUtil::findJSONValue(userPrivateInfoObj, key, value);
+                            if (!value.empty())
+                            {
+                                userPrivateInfoObj->set(key, " ");
+                            }
                         }
                         std::ostringstream userPrivateStream;
                         userPrivateInfoObj->stringify(userPrivateStream);

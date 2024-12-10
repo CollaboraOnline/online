@@ -1092,10 +1092,9 @@ L.Control.UIManager = L.Control.extend({
 				this.showButton('signature', show);
 			}
 			const baseUrl = userPrivateInfo.ESignatureBaseUrl;
-			const secret = userPrivateInfo.ESignatureSecret;
 			const clientId = userPrivateInfo.ESignatureClientId;
 			if (baseUrl !== undefined && !this.map.eSignature) {
-				this.map.eSignature = L.control.eSignature(baseUrl, secret, clientId);
+				this.map.eSignature = L.control.eSignature(baseUrl, clientId);
 			}
 		}
 	},

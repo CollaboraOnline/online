@@ -48,9 +48,8 @@ namespace cool {
 	export class ESignature {
 		// Base url, e.g. https://id.eideasy.com or https://test.eideasy.com
 		url: string;
-		// These are kind of API tokens, see
+		// This is a partial API token, see
 		// <https://docs.eideasy.com/guide/api-credentials.html>
-		secret: string;
 		clientId: string;
 
 		// Timestamp of the hash extraction
@@ -101,9 +100,8 @@ namespace cool {
 			'serpro-id-advanced-signature': 'SerproID',
 		};
 
-		constructor(url: string, secret: string, clientId: string) {
+		constructor(url: string, clientId: string) {
 			this.url = url;
-			this.secret = secret;
 			this.clientId = clientId;
 
 			app.map.on('commandvalues', this.onCommandValues.bind(this));
@@ -120,6 +118,9 @@ namespace cool {
 			if (event.commandName == '.uno:PrepareSignature') {
 				const response = <HashSendResponse>event.result;
 				this.handleSendHashResponse(event.success, response);
+			} else if (event.commandName == '.uno:DownloadSignature') {
+				const response = <ReceiveSignatureResponse>event.result;
+				this.handleReceiveSignatureResponse(response);
 			}
 		}
 
@@ -222,47 +223,18 @@ namespace cool {
 			}
 
 			// Step 4: fetch the signature.
-			const url = this.url + '/api/signatures/download-signed-file';
 			const body = {
-				secret: this.secret,
 				client_id: this.clientId,
 				doc_id: this.docId,
 			};
-			const headers = {
-				'Content-Type': 'application/json',
+			const args = {
+				body: body,
 			};
-			const request = new Request(url, {
-				method: 'POST',
-				body: JSON.stringify(body),
-				headers: headers,
-			});
-			window.fetch(request).then(
-				(response) => {
-					this.handleReceiveSignatureBytes(response);
-				},
-				(error) => {
-					app.console.log('failed to fetch the signature: ' + error.message);
-				},
-			);
-		}
-
-		// Handles the 'receive signature' response bytes
-		handleReceiveSignatureBytes(response: Response): void {
-			response.json().then(
-				(json) => {
-					this.handleReceiveSignatureJson(json);
-				},
-				(error) => {
-					app.console.log(
-						'failed to parse response from signature fetch as JSON: ' +
-							error.message,
-					);
-				},
-			);
+			app.map.sendUnoCommand('.uno:DownloadSignature', args);
 		}
 
 		// Handles the 'receive signature' response JSON
-		handleReceiveSignatureJson(response: ReceiveSignatureResponse): void {
+		handleReceiveSignatureResponse(response: ReceiveSignatureResponse): void {
 			if (response.status != 'OK') {
 				app.console.log(
 					'received signature status is not OK: ' + response.status,
@@ -310,10 +282,6 @@ namespace cool {
 
 L.Control.ESignature = cool.ESignature;
 
-L.control.eSignature = function (
-	url: string,
-	secret: string,
-	clientId: string,
-) {
-	return new L.Control.ESignature(url, secret, clientId);
+L.control.eSignature = function (url: string, clientId: string) {
+	return new L.Control.ESignature(url, clientId);
 };
