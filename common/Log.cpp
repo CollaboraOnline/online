@@ -25,6 +25,8 @@
 #ifndef _WINDOWS
 #include <unistd.h>
 #else
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 #include <cstdio>
 #endif
 
@@ -165,7 +167,16 @@ namespace Log
             }
             return ptr - data;
 #else // _WINDOWS
-            fwrite(data, size, 1, stderr);
+            if (!IsDebuggerPresent())
+                fwrite(data, size, 1, stderr);
+            else
+            {
+                char *s = (char *)malloc(size + 1);
+                memcpy(s, data, size);
+                s[size] = 0;
+                OutputDebugStringA(s);
+                free(s);
+            }
             return size;
 #endif
         }
