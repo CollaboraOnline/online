@@ -430,11 +430,6 @@ textarea.cool-annotation-textarea {
 	overflow-y: auto !important;
 }
 
-/* Disable tooltips when on touch devices */
-.w2ui-tag .w2ui-tag-top {
-	display: none !important;
-}
-
 .impress-comment-highlight {
 	filter: grayscale(1);
 }
