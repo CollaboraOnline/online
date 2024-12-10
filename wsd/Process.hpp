@@ -86,6 +86,8 @@ public:
     /// Request graceful termination.
     void requestTermination()
     {
+        fprintf(stderr, "want to kill %d\n", _pid.load());
+
         // Request the child to exit
         if (isAlive())
         {
