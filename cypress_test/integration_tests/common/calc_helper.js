@@ -47,7 +47,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 			var XPos = items[0].getBoundingClientRect().left + 10;
 			var YPos = items[0].getBoundingClientRect().top + 10;
 			if (dblClick)
-				cy.cGet('body').dblclick(XPos, YPos);
+				cy.cGet('body').click(XPos, YPos).dblclick(XPos, YPos);
 			else
 				cy.cGet('body').click(XPos, YPos);
 		});
