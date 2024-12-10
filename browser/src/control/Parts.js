@@ -487,9 +487,26 @@ L.Map.include({
 				}
 			};
 
-			this.uiManager.showInfoModal('show-sheets-modal', '', ' ', ' ', _('Close'), callback, true, 'show-sheets-modal-response');
+			this.uiManager.showInfoModal('show-sheets-modal', _('Show sheets'), ' ', ' ', _('OK'), callback, true, 'show-sheets-modal-response');
 			const modal = document.getElementById('show-sheets-modal');
 			modal.insertBefore(container, modal.children[0]);
+
+			var okButton = document.getElementById('show-sheets-modal-response');
+			var checkboxes = document.querySelectorAll('#show-sheets-modal input[type="checkbox"]');
+
+			okButton.disabled = true;
+
+			checkboxes.forEach(function(checkbox) {
+				checkbox.addEventListener('change', function() {
+					var anyChecked = false;
+					checkboxes.forEach(function(checkbox) {
+						if (checkbox.checked) {
+							anyChecked = true;
+						}
+					});
+					okButton.disabled = !anyChecked;
+				});
+			});
 		}
 	},
 
