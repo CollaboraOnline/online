@@ -24,6 +24,7 @@ interface LayerRenderer {
 		properties?: AnimatedElementRenderProperties,
 	): void;
 	dispose(): void;
+	isDisposed(): boolean;
 	fillColor(slideInfo: SlideInfo): boolean;
 	isGlRenderer(): boolean;
 	getRenderContext(): RenderContext;
@@ -46,14 +47,14 @@ class LayerRendererGl implements LayerRenderer {
 	private imageBitmapIdCounter = 0;
 	private textureCache: Map<string, WebGLTexture> = new Map();
 	private imageBitmapIdMap = new WeakMap<ImageBitmap, number>();
-	private isDisposed: boolean;
+	private disposed: boolean;
 
 	constructor(offscreenCanvas: OffscreenCanvas) {
 		this.offscreenCanvas = offscreenCanvas;
 		this.glContext = new RenderContextGl(this.offscreenCanvas);
 		this.gl = this.glContext.getGl();
 		this.initializeWebGL();
-		this.isDisposed = false;
+		this.disposed = false;
 	}
 
 	initialize(): void {
@@ -62,6 +63,10 @@ class LayerRendererGl implements LayerRenderer {
 
 	isGlRenderer(): boolean {
 		return true;
+	}
+
+	isDisposed(): boolean {
+		return this.disposed;
 	}
 
 	public getRenderContext(): RenderContextGl {
@@ -164,7 +169,7 @@ class LayerRendererGl implements LayerRenderer {
 	}
 
 	clearCanvas(): void {
-		if (!this.isDisposed) {
+		if (!this.disposed) {
 			const gl = this.gl;
 			gl.clearColor(1.0, 1.0, 1.0, 1.0); // Clear to white
 			gl.clear(gl.COLOR_BUFFER_BIT);
@@ -175,7 +180,7 @@ class LayerRendererGl implements LayerRenderer {
 		imageInfo: ImageInfo | ImageBitmap,
 		properties?: AnimatedElementRenderProperties,
 	): void {
-		if (this.isDisposed) {
+		if (this.disposed) {
 			console.log('LayerRenderer is disposed');
 			return;
 		}
@@ -265,7 +270,7 @@ class LayerRendererGl implements LayerRenderer {
 	dispose(): void {
 		this.gl = null;
 		this.offscreenCanvas = null;
-		this.isDisposed = true;
+		this.disposed = true;
 	}
 
 	hexToRgb(hex: string): { r: number; g: number; b: number } | null {
@@ -288,6 +293,8 @@ class LayerRendererGl implements LayerRenderer {
 	}
 
 	fillColor(slideInfo: SlideInfo): boolean {
+		if (this.disposed) return true; // done
+
 		if (slideInfo.background && slideInfo.background.fillColor) {
 			const fillColor = slideInfo.background.fillColor;
 			const rgb = this.hexToRgb(fillColor);
@@ -311,6 +318,7 @@ class LayerRenderer2d implements LayerRenderer {
 	private offscreenCanvas: OffscreenCanvas;
 	private offscreenContext: OffscreenCanvasRenderingContext2D;
 	private context2d: RenderContext2d;
+	private disposed: boolean;
 
 	constructor(offscreenCanvas: OffscreenCanvas) {
 		this.offscreenCanvas = offscreenCanvas;
@@ -319,6 +327,7 @@ class LayerRenderer2d implements LayerRenderer {
 		if (!this.offscreenContext) {
 			throw new Error('2D Canvas context not available');
 		}
+		this.disposed = false;
 	}
 
 	initialize(): void {
@@ -329,11 +338,16 @@ class LayerRenderer2d implements LayerRenderer {
 		return false;
 	}
 
+	isDisposed(): boolean {
+		return this.disposed;
+	}
+
 	getRenderContext(): RenderContext {
 		return this.context2d;
 	}
 
 	clearCanvas(): void {
+		if (this.disposed) return;
 		this.offscreenContext.clearRect(
 			0,
 			0,
@@ -353,6 +367,7 @@ class LayerRenderer2d implements LayerRenderer {
 		imageInfo: ImageInfo | ImageBitmap,
 		properties?: AnimatedElementRenderProperties,
 	): void {
+		if (this.disposed) return;
 		if (!imageInfo) {
 			console.log('Canvas2DRenderer.drawBitmap: no image');
 			return;
@@ -366,11 +381,14 @@ class LayerRenderer2d implements LayerRenderer {
 
 	dispose(): void {
 		// Cleanup references
+		this.disposed = true;
 		this.offscreenContext = null;
 		this.offscreenCanvas = null;
 	}
 
 	fillColor(slideInfo: SlideInfo): boolean {
+		if (this.disposed) return;
+
 		// always draw a solid white rectangle behind the background
 		this.offscreenContext.fillStyle = '#FFFFFF';
 		this.offscreenContext.fillRect(
