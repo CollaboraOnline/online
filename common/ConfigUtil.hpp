@@ -26,6 +26,8 @@
 #include <string>
 #include <map>
 
+namespace ConfigUtil
+{
 /// Helper class to hold default configuration entries.
 class AppConfigMap final : public Poco::Util::MapConfiguration
 {
@@ -48,8 +50,6 @@ public:
     }
 };
 
-namespace ConfigUtil
-{
 /// A logical constant that is allowed to initialize
 /// exactly once and checks usage before initialization.
 template <typename T> class RuntimeConstant
