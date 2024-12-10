@@ -422,7 +422,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
         failureReason = std::string("Internal error: ") + exc.what();
     }
 
-    return LockUpdateResult(LockUpdateResult::Status::FAILED, lock, failureReason);
+    return LockUpdateResult(LockUpdateResult::Status::FAILED, lock, std::move(failureReason));
 }
 
 void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& lockCtx,
@@ -532,7 +532,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
             LockUpdateResult(LockUpdateResult::Status::UNAUTHORIZED, lock, failureReason)));
     };
 
-    _lockHttpSession->setFinishedHandler(finishedCallback);
+    _lockHttpSession->setFinishedHandler(std::move(finishedCallback));
 
     LOG_DBG("Async " << wopiLog << " request: " << httpRequest.header().toString());
 
