@@ -1163,7 +1163,6 @@ function setupToolbar(e) {
 				// Coordinates contains a list of numbers, 0-1 top-left of the cell with the hyperlink
 				// 2-3 size of the cell, 4-5 number of th cell, 6-7 are the position of the click
 				var strTwips = e.coordinates.match(/\d+/g);
-				app.definitions.urlPopUpSection.closeURLPopUp();
 				var linkPosition;
 				if (strTwips.length > 7) {
 					linkPosition = new app.definitions.simplePoint(parseInt(strTwips[6]), parseInt(strTwips[7]));

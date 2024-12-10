@@ -1216,12 +1216,18 @@ body {
 	height: 20px;
 	transform: rotate(45deg);
 	display: inline-block;
-	position: relative;
-	top: 27px;
-	left: calc(-50% + 10px);
+	position: absolute;
+	top: calc(100% - 10px);
 	background-color: inherit;
 	border-right: 1px solid var(--color-border-darker);
 	border-bottom: 1px solid var(--color-border-darker);
+}
+
+.hyperlink-pop-up-container .arrow-div.reverse {
+	top: -11px;
+	border: none;
+	border-top: 1px solid var(--color-border-darker);
+	border-left: 1px solid var(--color-border-darker);
 }
 
 #hyperlink-pop-up-preview:not(.no-preview) {
