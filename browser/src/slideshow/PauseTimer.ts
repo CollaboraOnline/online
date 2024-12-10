@@ -56,6 +56,8 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 		this.pauseTimeRemaining = pauseDuration;
 		this.onComplete = onComplete;
 
+		if (this.context.isDisposed()) return;
+
 		this.textCanvas = document.createElement('canvas');
 		this.textCanvas.width = this.context.canvas.width;
 		this.textCanvas.height = this.context.canvas.height;
@@ -66,6 +68,8 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 	}
 
 	public startTimer(): void {
+		if (this.context.isDisposed()) return;
+
 		this.startTime = performance.now();
 		requestAnimationFrame(this.animate.bind(this));
 	}
@@ -76,6 +80,8 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 	}
 
 	public animate(): void {
+		if (this.context.isDisposed()) return;
+
 		if (!this.textCanvas || !this.ctx) return;
 		const currentTime = performance.now();
 		const elapsedTime = (currentTime - this.startTime) / 1000;
@@ -94,6 +100,8 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 	}
 
 	public createTextTexture(displayText: string): WebGLTexture {
+		if (this.context.isDisposed()) return null;
+
 		this.clearCanvas();
 		this.drawText(displayText);
 		return this.load2dCanvasToGlCanvas(this.textCanvas);
@@ -107,6 +115,8 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 
 	// add text on off screen canvas...
 	private drawText(displayText: string): void {
+		if (this.context.isDisposed()) return;
+
 		this.ctx.fillStyle = 'white';
 		this.ctx.font = '20px sans-serif';
 		this.ctx.textAlign = 'center';
