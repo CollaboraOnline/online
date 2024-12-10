@@ -1129,14 +1129,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': 'hyperlinkdialog',
 				'accessibility': { focusBack: false,	combination: 'ZL',	de:	'8' }
 			},
-			{
-				'id': 'insert-insert-remote-link',
+			(this._map['wopi'].EnableRemoteAIContent) ? {
+				'id': 'insert-insert-remote-ai-content',
 				'class': 'unoremotelink',
 				'type': 'bigcustomtoolitem',
 				'text': _('Assistant'),
 				'command': 'remoteaicontent',
 				'accessibility': { focusBack: true, combination: 'RL', de: null }
-			},
+			} : {},
 			{
 				'id': 'insert-insert-annotation',
 				'type': 'bigtoolitem',
