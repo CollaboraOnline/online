@@ -38,6 +38,8 @@ class CanvasLoaderGl extends TextureAnimationBase implements CanvasLoader {
 	}
 
 	public renderUniformValue(): void {
+		if (this.context.isDisposed()) return;
+
 		this.gl.uniform2f(
 			this.gl.getUniformLocation(this.program, 'u_resolution'),
 			this.context.canvas.width,
@@ -50,6 +52,8 @@ class CanvasLoaderGl extends TextureAnimationBase implements CanvasLoader {
 	}
 
 	public startLoader(): void {
+		if (this.context.isDisposed()) return;
+
 		if (this.animationId === null) {
 			this.startTime = performance.now();
 			this.animate();
@@ -57,6 +61,8 @@ class CanvasLoaderGl extends TextureAnimationBase implements CanvasLoader {
 	}
 
 	public stopLoader(): void {
+		if (this.context.isDisposed()) return;
+
 		if (this.animationId !== null) {
 			cancelAnimationFrame(this.animationId);
 			this.animationId = null;
@@ -104,6 +110,8 @@ class CanvasLoaderGl extends TextureAnimationBase implements CanvasLoader {
 	};
 
 	public render(): void {
+		if (this.context.isDisposed()) return;
+
 		this.gl.viewport(
 			0,
 			0,
