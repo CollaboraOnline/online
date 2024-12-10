@@ -1587,10 +1587,14 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	justify-content: end;
 }
 
+#userListHeader .avatar-img {
+	box-sizing: border-box;
+}
+
 #userListHeader .avatar-img,
 #userlist-dropdown .avatar-img {
-	width: var(--btn-size);
-	height: var(--btn-size);
+	width: var(--btn-img-size);
+	height: var(--btn-img-size);
 	background-color: var(--color-background-lighter);
 	background-position: center;
 	background-size: cover;
