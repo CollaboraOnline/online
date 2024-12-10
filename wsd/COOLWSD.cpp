@@ -1353,7 +1353,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     };
 
     // Set default values, in case they are missing from the config file.
-    Poco::AutoPtr<AppConfigMap> defConfig(new AppConfigMap(DefAppConfig));
+    Poco::AutoPtr<ConfigUtil::AppConfigMap> defConfig(new ConfigUtil::AppConfigMap(DefAppConfig));
     conf.addWriteable(defConfig, PRIO_SYSTEM); // Lowest priority
 
 #if !MOBILEAPP
@@ -1369,7 +1369,8 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     // Override any settings passed on the command-line or via environment variables
     if (UseEnvVarOptions)
         initializeEnvOptions();
-    Poco::AutoPtr<AppConfigMap> overrideConfig(new AppConfigMap(_overrideSettings));
+    Poco::AutoPtr<ConfigUtil::AppConfigMap> overrideConfig(
+        new ConfigUtil::AppConfigMap(_overrideSettings));
     conf.addWriteable(overrideConfig, PRIO_APPLICATION); // Highest priority
 
     // This caches some oft-used settings and must come after overriding.
