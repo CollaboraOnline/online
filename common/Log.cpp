@@ -613,13 +613,13 @@ namespace Log
             const auto it = config.find("flush");
             if (it == config.end() || Util::toLower(it->second) != "false")
             {
-                // Buffered logging, reduces number of write(2) syscalls.
-                channel = static_cast<Poco::Channel*>(new Log::BufferedConsoleChannel());
+                // Unbuffered (flushed) logging, directly writes each entry (to stderr).
+                channel = static_cast<Poco::Channel*>(new Log::ConsoleChannel());
             }
             else
             {
-                // Unbuffered logging, directly writes each entry (to stderr).
-                channel = static_cast<Poco::Channel*>(new Log::ConsoleChannel());
+                // Buffered logging, reduces number of write(2) syscalls.
+                channel = static_cast<Poco::Channel*>(new Log::BufferedConsoleChannel());
             }
         }
 
