@@ -3,7 +3,7 @@
     "CODA": {
       "commandName": "Project",
       "environmentVariables": {
-        "SAL_LOG": "+INFO+WARN"
+        "SAL_LOG": "+INFO+WARN-INFO.sal.bootstrap-INFO.i18nlangtag-INFO.vcl.fonts"
       },
       "nativeDebugging": true
     }
