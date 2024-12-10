@@ -1688,6 +1688,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === false) {
 			container.disabled = true;
 			listbox.disabled = true;
+			container.setAttribute('disabled', '');
 		}
 
 		$(listbox).change(() => {
@@ -2516,7 +2517,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					if (builder.map.tooltip)
 						builder.map.tooltip.show(elem, builder.map.getLastModDateValue()); // Show the tooltip with the correct content
 				});
-	
+
 				$(elem).on('mouseleave', function() {
 					if (builder.map.tooltip)
 						builder.map.tooltip.hide(elem);
