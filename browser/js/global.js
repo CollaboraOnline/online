@@ -509,14 +509,14 @@ class WindowsAppInitializer extends MobileAppInitializer {
 		super();
 
 		window.ThisIsTheWindowsApp = true;
-		window.postMobileMessage = function(msg) { window.chrome.webview.postMessage(msg); };
+		window.postMobileMessage = function(msg) { window.chrome.webview.postMessage('MSG ' + msg); };
 
 		// FIXME: No registration of separate handlers in Windows WebView2, so just log
 		// errors and debug messages? Maybe instead send a JSON object with separate name
 		// and body? But then we would have to parse that JSON object from the string in C#
 		// anyway.
-		window.postMobileError   = function(msg) { console.log('COOL Error: ' + msg); };
-		window.postMobileDebug   = function(msg) { console.log('COOL Debug: ' + msg); };
+		window.postMobileError   = function(msg) { window.chrome.webview.postMessage('ERR ' + msg); };
+		window.postMobileDebug   = function(msg) { window.chrome.webview.postMessage('DBG ' + msg); };
 	}
 }
 
