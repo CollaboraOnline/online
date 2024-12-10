@@ -78,8 +78,6 @@ static std::map<pid_t, std::string> childJails;
 static std::vector<std::string> cleanupJailPaths;
 /// The [subforkit pid -> subforkit id] map.
 static std::map<pid_t, std::string> subForKitPids;
-/// The [subforkit id -> subforkit pid] map.
-static std::map<std::string, pid_t> subForKitIdents;
 
 /// The Main polling main-loop of this (single threaded) process
 static std::unique_ptr<SocketPoll> ForKitPoll;
@@ -168,14 +166,8 @@ protected:
         else if (tokens.size() == 2 && tokens.equals(0, "addforkit"))
         {
             std::string ident = tokens[1];
-            if (subForKitIdents.contains(ident))
-                LOG_DBG("subForKit with ident [" << ident << "] already available.");
-            else
-            {
-                LOG_INF("Setting to spawn subForKit with ident [" << ident << "] per request.");
-                subForKitIdents[ident] = -1; // Placeholder pid_t until it is created
-                SubForKitRequests.emplace_back(ident);
-            }
+            LOG_INF("Setting to spawn subForKit with ident [" << ident << "] per request.");
+            SubForKitRequests.emplace_back(ident);
         }
         else if (tokens.size() == 2 && tokens.equals(0, "setloglevel"))
         {
@@ -374,7 +366,6 @@ static void cleanupChildren()
         {
             LOG_INF("SubForKit " << exitedChildPid << " [" << subit->second
                     << "] has exited with status " << status << ".");
-            subForKitIdents.erase(subit->second);
             subForKitPids.erase(subit);
         }
         else
@@ -644,9 +635,7 @@ static int createSubForKit(const std::string& subForKitIdent,
         else
         {
             LOG_INF("Forked subForKit [" << pid << ']');
-            LOG_INF("Forked kit [" << pid << ']');
             subForKitPids[pid] = subForKitIdent;
-            subForKitIdents[subForKitIdent] = pid;
         }
     };
 
