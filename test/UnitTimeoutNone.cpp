@@ -31,9 +31,12 @@ static constexpr size_t ConnectionCount = 9;
 /// Base test suite class for connection limit (no limits) using HTTP and WS sessions.
 class UnitTimeoutNone : public UnitTimeoutBase1
 {
-    void configure(Poco::Util::LayeredConfiguration& /* config */) override
+    void configure(Poco::Util::LayeredConfiguration& config) override
     {
         // Keep original values -> No timeout
+
+        // Disable `net::Defaults.maxExtConnections` instrument, i.e. setting it to zero (skipping system default)
+        config.setInt64("net.max_ext_connections", -1);
     }
 
 public:
