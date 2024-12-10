@@ -174,6 +174,7 @@ static std::atomic<int> TotalOutstandingForks(0);
 std::map<std::string, int> OutstandingForks;
 std::map<std::string, std::chrono::steady_clock::time_point> LastForkRequestTimes;
 std::map<std::string, std::shared_ptr<ForKitProcess>> SubForKitProcs;
+std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBrokerExitTimes;
 std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 std::mutex DocBrokersMutex;
 static Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
@@ -411,6 +412,11 @@ void cleanupDocBrokers()
     Util::assertIsLocked(DocBrokersMutex);
 
     const size_t count = DocBrokers.size();
+
+    std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+
+    std::set<std::string> activeConfigs;
+
     for (auto it = DocBrokers.begin(); it != DocBrokers.end(); )
     {
         std::shared_ptr<DocumentBroker> docBroker = it->second;
@@ -418,11 +424,13 @@ void cleanupDocBrokers()
         // Remove only when not alive.
         if (!docBroker->isAlive())
         {
+            LastSubForKitBrokerExitTimes[docBroker->getConfigId()] = now;
             LOG_INF("Removing DocumentBroker for docKey [" << it->first << "].");
             docBroker->dispose();
             it = DocBrokers.erase(it);
             continue;
         } else {
+            activeConfigs.insert(docBroker->getConfigId());
             ++it;
         }
     }
@@ -437,6 +445,31 @@ void cleanupDocBrokers()
                         log << "\nDocumentBroker [" << pair.first << ']';
                     }
                 });
+
+        // consider shutting down unused subforkits
+        for (auto it = SubForKitProcs.begin(); it != SubForKitProcs.end(); )
+        {
+            const std::string& configId = it->first;
+            if (configId.empty()) {
+                // ignore primordial forkit
+                ++it;
+            } else if (activeConfigs.contains(configId)) {
+                LOG_DBG("subforkit " << configId << " has active document, keep it");
+                ++it;
+            } else if (OutstandingForks[configId] > 0) {
+                LOG_DBG("subforkit " << configId << " has a pending fork underway, keep it");
+                ++it;
+            } else if (now - LastSubForKitBrokerExitTimes[configId] < std::chrono::seconds(5)) {
+                // TODO ^^^ add to config instead of 5s
+                LOG_DBG("subforkit " << configId << " recently used, keep it");
+                ++it;
+            } else {
+                LOG_DBG("subforkit " << configId << " is unused, dropping it");
+                LastSubForKitBrokerExitTimes.erase(configId);
+                OutstandingForks.erase(configId);
+                it = SubForKitProcs.erase(it);
+            }
+        }
 
 #if !MOBILEAPP && ENABLE_DEBUG
         if (COOLWSD::SingleKit && DocBrokers.empty())
