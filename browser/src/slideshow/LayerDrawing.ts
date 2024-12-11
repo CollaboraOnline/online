@@ -20,6 +20,7 @@ declare var SlideShow: any;
 declare var ThisIsTheAndroidApp: any;
 declare var ThisIsTheiOSApp: any;
 declare var makeHttpUrl: any;
+declare var coolParams: any;
 
 type LayerContentType =
 	| ImageInfo
