@@ -53,7 +53,7 @@ COOL_IMAGES_SRC = $(shell find $(srcdir)/images -name '*.*')
 COOL_IMAGES_DST = $(patsubst $(srcdir)/%,$(DIST_FOLDER)/%,$(COOL_IMAGES_SRC))
 COOL_IMAGES_CUSTOM_SRC = $(shell if test -n "$(CUSTOM_ICONS_DIRECTORY)"; then find $(CUSTOM_ICONS_DIRECTORY) -name '*.*'; fi)
 COOL_IMAGES_CUSTOM_DST = $(patsubst $(CUSTOM_ICONS_DIRECTORY)/%,$(DIST_FOLDER)/images/%,$(COOL_IMAGES_CUSTOM_SRC))
-COOL_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.*')
+COOL_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.json')
 if !ENABLE_MOBILEAPP
 COOL_L10N_DST =  $(patsubst $(srcdir)/l10n/%,$(DIST_FOLDER)/l10n/%,$(COOL_L10N_SRC))
 endif
