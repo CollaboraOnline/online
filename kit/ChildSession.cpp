@@ -1251,18 +1251,27 @@ bool ChildSession::clientVisibleArea(const StringVector& tokens)
     return true;
 }
 
-float ChildSession::getTilePriority(const TileDesc& tile) const
+float ChildSession::getTilePriority(const std::chrono::steady_clock::time_point &now, const TileDesc &tile) const
 {
-    // FIXME: recent interactivity - should bump priority
-    // FIXME: proximity to a viewing area should bump priority
-
-    // FIXME: if tile.isPreview() -> lower priority ...
-
     float score = tile.intersects(_clientVisibleArea) ? 1.0 : 0.0;
 
     // most important to render things close to the cursor fast
     if (tile.getPart() == _currentPart && tile.intersects(_cursorPosition))
         score *= 2.0;
+
+    // previews are less interesting
+    if (tile.isPreview())
+        score /= 3.0;
+
+    // interacted the keyboard recently ?
+    score *= 2000 / std::clamp<float>(getInactivityMS(now), 250, 4000);
+
+    // readonly viewers are less high priority
+    if (isReadOnly())
+        score /= 2;
+
+    // FIXME: proximity to the center of a viewing area should bump priority
+    // for smarter pre-loading / rendering around the view.
 
     return score;
 }

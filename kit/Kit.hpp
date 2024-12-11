@@ -268,7 +268,7 @@ private:
     static void reapZombieChildren();
 
     /// Calculate tile rendering priority from a TileDesc
-    virtual float getTilePriority(const TileDesc &desc) const override;
+    virtual float getTilePriority(const std::chrono::steady_clock::time_point &now, const TileDesc &desc) const override;
 
 public:
     /// Request loading a document, or a new view, if one exists,
