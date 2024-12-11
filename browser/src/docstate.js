@@ -75,7 +75,6 @@ window.app = {
 		exportFormats: [] // possible output formats
 	},
 	view: {
-		commentHasFocus: false,
 		size: {
 			pixels: [0, 0] // This can be larger than the document's size.
 		}
