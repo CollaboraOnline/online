@@ -124,6 +124,8 @@
         <disable_server_audit type="bool" desc="Disabled server audit dialog and notification. Admin will no longer see warnings in the application user interface. This doesn't affect log file." default="false">false</disable_server_audit>
     </logging>
 
+    <canvas_slideshow_enabled type="bool" desc="If true, WebGl presentation rendered on the client side is enabled, otherwise interactive SVG is used." default="true">true</canvas_slideshow_enabled>
+
     <!--
          Note to developers: When you do "make run", the trace_event[@enable] will be set on the
          coolwsd command line, so if you want to change it for your testing, do it in Makefile.am,

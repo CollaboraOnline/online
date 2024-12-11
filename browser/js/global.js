@@ -259,6 +259,7 @@ class InitializerBase {
 		window.wasmEnabled = false;
 		window.indirectionUrl = "";
 		window.geolocationSetup = false;
+		window.canvasSlideshowEnabled = false;
 
 		window.tileSize = 256;
 
@@ -391,6 +392,7 @@ class BrowserInitializer extends InitializerBase {
 		window.wasmEnabled = element.dataset.wasmEnabled.toLowerCase().trim() === "true";
 		window.indirectionUrl = element.dataset.indirectionUrl;
 		window.geolocationSetup = element.dataset.geolocationSetup.toLowerCase().trim() === "true";
+		window.canvasSlideshowEnabled = element.dataset.canvasSlideshowEnabled.toLowerCase().trim() === "true";
 	}
 
 	postMessageHandler(e) {
