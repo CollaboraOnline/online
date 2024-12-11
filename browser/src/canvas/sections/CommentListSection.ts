@@ -547,7 +547,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		multilineEditDiv.addEventListener('input', function(ev: any){
 			if (ev && comment.sectionProperties.docLayer._docType === 'text') {
 				// special handling for mentions
-				this.map.mention.handleMentionInput(ev);
+				this.map?.mention.handleMentionInput(ev, comment.isNewPara());
 			}
 		}.bind(this));
 

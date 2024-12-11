@@ -406,21 +406,24 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
-	private textAreaInput (ev: any): void {
+	private isNewPara(): boolean {
+		const selection = window.getSelection();
+		if (!selection.rangeCount) return;
+
+		const range = selection.getRangeAt(0);
+		const cursorPosition = range.startOffset;
+		const node = range.startContainer;
+
+		const beforeCursor = node.textContent.slice(0, cursorPosition);
+		return /^\s*$/.test(beforeCursor.slice(0, -1));
+	}
+
+	private textAreaInput(ev: any): void {
 		this.sectionProperties.autoSave.innerText = '';
 
 		if (ev && this.sectionProperties.docLayer._docType === 'text') {
 			// special handling for mentions
-			const selection = window.getSelection();
-			if (!selection.rangeCount) return;
-
-			const range = selection.getRangeAt(0);
-			const cursorPosition = range.startOffset;
-			const node = range.startContainer;
-
-			const beforeCursor = node.textContent.slice(0, cursorPosition);
-			const newPara = /^\s*$/.test(beforeCursor.slice(0, -1));
-			this.map.mention.handleMentionInput(ev, newPara);
+			this.map?.mention.handleMentionInput(ev, this.isNewPara());
 		}
 	}
 
