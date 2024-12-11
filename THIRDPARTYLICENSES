@@ -281,6 +281,10 @@ fzstd – High performance Zstandard decompression in a pure JavaScript
 Copyright (c) 2020 Arjun Barrett
 MIT License
 
+gl-matrix - High performance matrix and vector operations
+Copyright (c) 2015-2021, Brandon Jones, Colin MacKenzie IV.
+MIT License
+
 hammer.js – A javascript library for multi-touch gestures
 Copyright (C) 2011-2017 by Jorik Tangelder (Eight Media)
 MIT License
@@ -288,6 +292,11 @@ MIT License
 DOMPurify - XSS sanitizer for HTML, MathML and SVG
 Copyright (C) 2024 by Dr.-Ing. Mario Heiderich, Cure53
 MPL-2.0 or Apache-2.0
+
+l10n.js
+By Eli Grey, http://eligrey.com
+Copyright (c) 2016 OFTN Inc.
+MIT License
 
 jQuery JavaScript Library
 Includes Sizzle.js https://sizzlejs.com/
