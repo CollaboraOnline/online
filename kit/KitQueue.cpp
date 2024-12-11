@@ -435,7 +435,7 @@ TileCombined KitQueue::popTileQueue(float &priority)
     {
         auto& prio = _tileQueue[i];
 
-        const float p = _prio.getTilePriority(prio);
+        const float p = _prio.getTilePriority(now, prio);
         if (p > prioritySoFar)
         {
             prioritySoFar = p;

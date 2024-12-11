@@ -203,10 +203,16 @@ public:
     void setIsActive(bool active) { _isActive = active; }
 
     /// Returns the inactivity time of the client in milliseconds.
+    double getInactivityMS(const std::chrono::steady_clock::time_point &now) const
+    {
+        const auto duration = now - _lastActivityTime;
+        return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+    }
+
+    /// Returns the inactivity time of the client in milliseconds.
     double getInactivityMS() const
     {
-        const auto duration = (std::chrono::steady_clock::now() - _lastActivityTime);
-        return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+        return getInactivityMS(std::chrono::steady_clock::now());
     }
 
     void closeFrame() { _isCloseFrame = true; };

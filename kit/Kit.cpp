@@ -2246,7 +2246,7 @@ bool Document::forwardToChild(const std::string& prefix, const std::vector<char>
     return std::string();
 }
 
-float Document::getTilePriority(const TileDesc &desc) const
+float Document::getTilePriority(const std::chrono::steady_clock::time_point &now, const TileDesc &desc) const
 {
     float maxPrio = std::numeric_limits<float>::min();
 
@@ -2259,7 +2259,7 @@ float Document::getTilePriority(const TileDesc &desc) const
         if (session->getCanonicalViewId() != desc.getNormalizedViewId())
             continue;
 
-        maxPrio = std::max<int>(maxPrio, session->getTilePriority(desc));
+        maxPrio = std::max<int>(maxPrio, session->getTilePriority(now, desc));
     }
     if (maxPrio == std::numeric_limits<float>::min())
         LOG_WRN("No sessions match this viewId " << desc.getNormalizedViewId());

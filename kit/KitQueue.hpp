@@ -26,7 +26,7 @@ class TilePrioritizer
 {
 public:
     virtual ~TilePrioritizer() {}
-    virtual float getTilePriority(const TileDesc &) const { return 0.0; }
+    virtual float getTilePriority(const std::chrono::steady_clock::time_point &, const TileDesc &) const { return 0.0; }
 };
 
 /// Queue for handling the Kit's messaging needs
