@@ -1068,16 +1068,16 @@ class AnimatedElement {
 		ANIMDBG.print('AnimatedElement.setX(' + nNewCenterX + ')');
 		if (nNewCenterX === this.nCenterX) return;
 
-		this.aTMatrix.translateSelf(nNewCenterX - this.nCenterX, 0);
 		this.nCenterX = nNewCenterX;
+		this.updateTransformationMatrix();
 	}
 
 	setY(nNewCenterY: number) {
 		ANIMDBG.print('AnimatedElement.setY(' + nNewCenterY + ')');
 		if (nNewCenterY === this.nCenterY) return;
 
-		this.aTMatrix.translateSelf(0, nNewCenterY - this.nCenterY);
 		this.nCenterY = nNewCenterY;
+		this.updateTransformationMatrix();
 	}
 
 	setPos(aNewPos: [number, number]) {
@@ -1089,12 +1089,9 @@ class AnimatedElement {
 
 		if (nNewCenterX === this.nCenterX && nNewCenterY === this.nCenterY) return;
 
-		this.aTMatrix.translateSelf(
-			nNewCenterX - this.nCenterX,
-			nNewCenterY - this.nCenterY,
-		);
 		this.nCenterX = nNewCenterX;
 		this.nCenterY = nNewCenterY;
+		this.updateTransformationMatrix();
 	}
 
 	setWidth(nNewWidth: number) {
