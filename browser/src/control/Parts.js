@@ -13,6 +13,7 @@
  */
 
 /* global app _ cool */
+/* global _ $ JSDialog app */
 
 L.Map.include({
 	/*
@@ -487,9 +488,30 @@ L.Map.include({
 				}
 			};
 
-			this.uiManager.showInfoModal('show-sheets-modal', '', ' ', ' ', _('Close'), callback, true, 'show-sheets-modal-response');
+			this.uiManager.showInfoModal('show-sheets-modal', _('Show sheets'), ' ', ' ', _('OK'), callback, true, 'show-sheets-modal-response');
 			const modal = document.getElementById('show-sheets-modal');
 			modal.insertBefore(container, modal.children[0]);
+			
+			this.callback('checkbox', 'change', modal);
+		}
+	},
+
+	callback(objectType, eventType, object, data, builder) {
+		if(object.id === 'show-sheets-modal' && eventType === 'change') {
+			JSDialog.enableButtonInModal(object.id, object.id + '-response', false);
+
+			var checkboxes = document.querySelectorAll('#show-sheets-modal input[type="checkbox"]');
+			checkboxes.forEach(function(checkbox) {
+				checkbox.addEventListener(eventType, function() {
+					var anyChecked = false;
+					checkboxes.forEach(function(checkbox) {
+						if (checkbox.checked) {
+							anyChecked = true;
+						}
+					});
+					JSDialog.enableButtonInModal(object.id, object.id + '-response', anyChecked);
+				});
+			});
 		}
 	},
 
