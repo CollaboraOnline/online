@@ -444,9 +444,12 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("UserId", userId);
             fileInfo->set("UserFriendlyName", userNameString);
 
+            // just files into two seperate config etags based on basename
+            char configSuffix = (localFile->fileName.empty() || toupper(localFile->fileName[0]) <= 'M') ?
+                '1' : '2';
             const auto& config = Application::instance().config();
-            static std::string etagString = "\"" COOLWSD_VERSION_HASH +
-                config.getString("ver_suffix", "") + "\"";
+            std::string etagString = "\"" COOLWSD_VERSION_HASH +
+                config.getString("ver_suffix", "") + '-' + configSuffix + "\"";
 
             // authentication token to get these settings??
             {
