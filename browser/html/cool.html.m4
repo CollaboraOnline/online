@@ -269,6 +269,7 @@ m4_ifelse(MOBILEAPP, [true],
       data-wasm-enabled = "%WASM_ENABLED%"
       data-indirection-url = "%INDIRECTION_URL%"
       data-geolocation-setup = "%GEOLOCATION_SETUP%"
+      data-canvas-slideshow-enabled = "%CANVAS_SLIDESHOW_ENABLED%"
       />
     ])
 

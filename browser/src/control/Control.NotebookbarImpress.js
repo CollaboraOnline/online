@@ -13,7 +13,7 @@
  * L.Control.NotebookbarImpress - definition of notebookbar content in Impress
  */
 
-/* global _ _UNO app */
+/* global _ _UNO */
 
 L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 
@@ -367,7 +367,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'command': 'presentinwindow',
 					'accessibility': { focusBack: true, combination: 'PW', de: null }
 				} : {},
-			!window.ThisIsAMobileApp && app.isExperimentalMode() ?
+			!window.ThisIsAMobileApp && window.canvasSlideshowEnabled ?
 			        {
 					'id': 'view-presentation-in-console',
 					'type': 'bigcustomtoolitem',

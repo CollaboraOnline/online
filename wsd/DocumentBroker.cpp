@@ -1400,8 +1400,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
 
     bool disablePresentation = wopiFileInfo->getDisableExport() || wopiFileInfo->getHideExportOption();
     // the new slideshow supports watermarking, anyway it's still an experimental features
-    // TODO remove the following line when the new slideshow is no more experimental
-    disablePresentation = disablePresentation || (!ConfigUtil::getBool("experimental_features", false) && !watermarkText.empty());
+    disablePresentation = disablePresentation || (!ConfigUtil::getBool("canvas_slideshow_enabled", true) && !watermarkText.empty());
     wopiInfo->set("DisablePresentation", disablePresentation);
 
     std::ostringstream ossWopiInfo;
