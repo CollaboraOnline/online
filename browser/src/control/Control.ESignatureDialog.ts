@@ -14,20 +14,64 @@ namespace cool {
 		name: string;
 	}
 
+	export interface Country {
+		// ISO 3166-1 alpha-2 code
+		code: string;
+		name: string;
+	}
+
 	/**
 	 * Provides a dialog to select an electronic signing provider.
 	 */
 	export class ESignatureDialog {
 		id: string = 'ESignatureDialog';
 
+		countries: Array<Country>;
+
 		providers: Array<SignatureProvider>;
 
-		constructor(providers: Array<SignatureProvider>) {
+		constructor(
+			countries: Array<Country>,
+			providers: Array<SignatureProvider>,
+		) {
+			this.countries = countries;
 			this.providers = providers;
 		}
 
-		getChildrenJSON(entries: Array<string>): Array<WidgetJSON> {
+		getChildrenJSON(
+			countries: Array<string>,
+			providers: Array<string>,
+		): Array<WidgetJSON> {
 			return [
+				{
+					id: 'countryft',
+					type: 'fixedtext',
+					text: _('Country:'),
+					enabled: true,
+					labelFor: 'countrylb',
+				} as TextWidget,
+				{
+					id: 'countrylb',
+					type: 'listbox',
+					enabled: true,
+					children: [
+						{
+							id: '',
+							type: 'control',
+							enabled: true,
+							children: [],
+						},
+						{
+							type: 'pushbutton',
+							enabled: true,
+							symbol: 'SPIN_DOWN',
+						} as PushButtonWidget,
+					],
+					labelledBy: 'countryft',
+					entries: countries,
+					selectedCount: 1,
+					selectedEntries: ['0'],
+				} as ListBoxWidget,
 				{
 					id: 'providerft',
 					type: 'fixedtext',
@@ -53,7 +97,7 @@ namespace cool {
 						} as PushButtonWidget,
 					],
 					labelledBy: 'providerft',
-					entries: entries,
+					entries: providers,
 					selectedCount: 1,
 					selectedEntries: ['0'],
 				} as ListBoxWidget,
@@ -73,8 +117,9 @@ namespace cool {
 		}
 
 		getJSON(): JSDialogJSON {
-			const entries = this.providers.map((entry) => entry.name);
-			const children = this.getChildrenJSON(entries);
+			const countries = this.countries.map((entry) => entry.name);
+			const providers = this.providers.map((entry) => entry.name);
+			const children = this.getChildrenJSON(countries, providers);
 			return {
 				id: this.id,
 				dialogid: this.id,
@@ -136,6 +181,9 @@ namespace cool {
 	}
 }
 
-JSDialog.eSignatureDialog = (providers: Array<cool.SignatureProvider>) => {
-	return new cool.ESignatureDialog(providers);
+JSDialog.eSignatureDialog = (
+	countries: Array<cool.Country>,
+	providers: Array<cool.SignatureProvider>,
+) => {
+	return new cool.ESignatureDialog(countries, providers);
 };

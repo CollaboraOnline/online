@@ -2,6 +2,27 @@
     "status": "OK",
     "doc_id": "DIz9ew5cmWRc7Zvq4i3fNqeppA2hw8hhxHa33t2k",
     "signing_page_url": "https://test.eideasy.com/sign_contract_external?client_id=2IaeiZXbcKzlP1KvjZH9ghty2IJKM8Lg&doc_id=DIz9ew5cmWRc7Zvq4i3fNqeppA2hw8hhxHa33t2k",
+    "method_configs": [
+        {
+            "action_type": "smart-id-signature",
+            "supported_countries": [
+                "EE"
+            ]
+        },
+        {
+            "action_type": "evrotrust-signature",
+            "supported_countries": [
+                "DE",
+                "GB"
+            ]
+        },
+        {
+            "action_type": "d-trust-sign-me-qes-signature",
+            "supported_countries": [
+                "DE"
+            ]
+        }
+    ],
     "available_methods": [
         "smart-id-signature",
         "evrotrust-signature",
