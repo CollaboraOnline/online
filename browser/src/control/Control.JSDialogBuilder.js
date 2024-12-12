@@ -2084,6 +2084,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'scalignmentpropertypanel': 'aligntop',
 			'hyperlinkdialog': 'inserthyperlink',
 			'remotelink': 'inserthyperlink',
+			'remoteaicontent': 'sdrespageobjs',
 			'openhyperlinkoncursor': 'inserthyperlink',
 			'pageformatdialog': 'pagedialog',
 			'backgroundcolor': 'fillcolor',
