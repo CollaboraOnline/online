@@ -332,14 +332,6 @@ Print:
         map.on('print', function (e) {}) where
             + e.url = file download url
 
-Contributing
-------------
-
-Code conventions:
-
-    * files should have unix line terminators (LF)
-    * tools to convert files: dos2unix or fromdos
-
 Implementation details
 ----------------------
 
