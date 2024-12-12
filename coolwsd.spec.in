@@ -74,7 +74,6 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 /usr/share/doc/coolwsd/README.vars
 /usr/share/doc/coolwsd/metrics.txt
 /usr/share/doc/coolwsd/protocol.txt
-/usr/share/doc/coolwsd/reference.md
 /usr/share/doc/coolwsd/THIRDPARTYLICENSES
 /usr/share/man/man1/coolwsd.1.gz
 /usr/share/man/man1/coolforkit-ns.1.gz
