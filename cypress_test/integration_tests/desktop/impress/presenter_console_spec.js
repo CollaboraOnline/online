@@ -50,6 +50,10 @@ describe(['tagdesktop'], 'Presenter Console.', function() {
 					this._getSlidesCount();
 				}
 
+				_getRepeatDuration() {
+					return 0;
+				}
+
 				isSlideHidden() {
 					return false;
 				}
