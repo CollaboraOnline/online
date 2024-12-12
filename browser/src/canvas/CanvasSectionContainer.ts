@@ -1203,7 +1203,7 @@ class CanvasSectionContainer {
 		return this.scrollLineHeight;
 	}
 
-	private onMouseWheel (e: WheelEvent) {
+	public onMouseWheel (e: WheelEvent) {
 		var point = this.convertPositionToCanvasLocale(e);
 		var delta: Array<number>;
 
