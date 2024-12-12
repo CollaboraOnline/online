@@ -1551,20 +1551,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         const auto it = DefAppConfig.find(pair.first);
         if (it == DefAppConfig.end() || it->second != pair.second)
         {
-            if (pair.first == "admin_console.username" ||
-                pair.first == "admin_console.password" ||
-                pair.first == "admin_console.secure_password" ||
-                pair.first == "languagetool.api_key" ||
-                pair.first == "deepl.auth_key" ||
-                pair.first == "logging.anonymize.anonymization_salt" ||
-                pair.first == "support_key")
-            {
-                ossConfig << '\t' << pair.first << ": <redacted>" << '\n';
-            }
-            else
-            {
-                ossConfig << '\t' << pair.first << ": " << pair.second << '\n';
-            }
+            ossConfig << '\t' << pair.first << ": " << pair.second << '\n';
         }
     }
 

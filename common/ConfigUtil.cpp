@@ -97,6 +97,21 @@ std::map<std::string, std::string> extractAll(const Poco::Util::AbstractConfigur
     map.erase("per_document.cleanup");
     map.erase("ssl.sts");
 
+    // Redact sensitive entries.
+    for (auto& pair : map)
+    {
+        if (pair.first == "admin_console.username" ||
+            pair.first == "admin_console.password" ||
+            pair.first == "admin_console.secure_password" ||
+            pair.first == "languagetool.api_key" ||
+            pair.first == "deepl.auth_key" ||
+            pair.first == "logging.anonymize.anonymization_salt" ||
+            pair.first == "support_key")
+        {
+            pair.second = "<redacted>";
+        }
+    }
+
     return map;
 }
 
