@@ -706,18 +706,19 @@ class Dispatcher {
 		// }
 	}
 
-	constructor() {
+	/// optional docType specifies which commands should we load
+	constructor(docType: string = undefined) {
+		docType = docType ? docType : app.map._docLayer._docType;
+
 		this.addGeneralCommands();
 		this.addExportCommands();
 
-		if (app.map._docLayer._docType === 'text') {
+		if (docType === 'text') {
 			this.addWriterCommands();
 			this.addZoteroCommands();
-		} else if (app.map._docLayer._docType === 'spreadsheet') {
+		} else if (docType === 'spreadsheet') {
 			this.addCalcCommands();
-		} else if (
-			['presentation', 'drawing'].includes(app.map._docLayer._docType)
-		) {
+		} else if (['presentation', 'drawing'].includes(docType)) {
 			this.addImpressAndDrawCommands();
 		}
 
