@@ -29,9 +29,9 @@ By making a contribution to this project, I certify that:
 
 When submitting a patch, to make this certification add a line that
 states:
-
+```
 Signed-off-by: Random J Developer <random@developer.example.org>
-
+```
 using your real name and the email address (sorry, no pseudonyms
 or anonymous contributions.)
 
@@ -64,3 +64,68 @@ When reviewing a patch, we look for the following information in the commit mess
 
 An alternative is to have much of this information in a (public) issue, refer to that issue and have
 a short commit message. That works better e.g. when using images to demonstrate the problem.
+
+## Coding style
+
+There is not really any serious rationale why the code ended up being
+written in the style it is... but unless you plan to change some style
+detail completely and consistently all over, please keep to the style
+of the existing code when editing.
+
+The style is roughly as follows, in rough order of importance:
+
+- Source code files should have unix line terminators (LF)
+
+### C++
+
+- As in LibreOffice, no hard TABs in source files. Only spaces.
+  Indentation step is four columns.
+
+- As in LibreOffice, the braces `{` and `}` of the block of `if`, `switch`,
+  and `while` statements go on separate lines.
+
+- Following Poco conventions, non-static member variables are prefixed
+  with an underscore. Static members have a CamelCase name.
+
+- Do use C++20. When writing new code, prefer C++ Standard Library
+  over Poco classes and functions.
+
+- Always prefer the C++ wrapped version of a C library
+  API. I.e. include `<cstring>` instead of `<string.h>`, use `std::memcpy()`
+  instead of `memcpy()`, etc.
+
+- Use std:: prefix for all std API, i.e. don't ever do `using
+  std;`. But it's OK to use `using Poco::Foo;` all over. Maybe that is
+  not a good idea? But please no `using` in headers.
+
+- Member functions use `camelCaseWithInitialLowerCase` instead of
+  `CamelCaseWithInitialUpperCase`.
+
+- No kind of Hungarian prefixes.
+
+- `return` - is not a function; but a statement - it doesn't need extra ()
+
+- Use `auto` in the following cases only:
+
+  - iterators
+
+  - range-based for loops
+
+  - the type is spelled out in the same line already (e.g. initializing from a
+    cast or a function that has a single type parameter)
+
+  In other cases it makes the code more readable to still spell out the type
+  explicitly.
+
+### JavaScript
+
+- Indent code with TABs.
+
+- For new code, use TypeScript.
+
+## Security credential related changes
+
+- Instead of the usual one, two reviews are needed.
+
+- Instead of just choosing the 'approve' option on GitHub, please add your
+  explicit sign-off to the commit message when you review.
