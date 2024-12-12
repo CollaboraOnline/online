@@ -40,15 +40,6 @@ If you have self-built Poco, add the following to ./configure:
 
 where <POCOINST> means the Poco installation location.
 
-If you have the Poco debugging libraries (eg. you have a self-built
-Poco), you can add --enable-debug to the configure options for
-additional debugging.
-
-For Windows, a proper VS2013 project is needed.
-
-There is still unconditional debugging output etc. This is a work in
-progress.
-
 ## Running
 
 You can just do:
