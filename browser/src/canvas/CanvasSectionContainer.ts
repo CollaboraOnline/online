@@ -1191,7 +1191,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private onMouseWheel (e: WheelEvent) {
+	public onMouseWheel (e: WheelEvent) {
 		var point = this.convertPositionToCanvasLocale(e);
 		var delta: Array<number>;
 

@@ -170,8 +170,14 @@ export class Comment extends CanvasSectionObject {
 		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'touchstart', 'touchmove', 'touchend'];
 		L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
 		L.DomEvent.on(this.sectionProperties.container, 'keydown', this.onEscKey, this);
-		L.DomEvent.on(this.sectionProperties.container, 'wheel', app.sectionContainer.onMouseWheel, app.sectionContainer);
-		L.DomEvent.on(this.sectionProperties.contentNode, 'wheel', this.onMouseWheel, this);
+
+		this.sectionProperties.container.onwheel = function(e: WheelEvent) {
+			// Don't scroll the document if mouse is over comment content. Scrolling the comment content is priority.
+			if (!this.sectionProperties.contentNode.matches(':hover')) {
+				e.preventDefault();
+				app.sectionContainer.onMouseWheel(e);
+			}
+		}.bind(this);
 
 		for (var it = 0; it < events.length; it++) {
 			L.DomEvent.on(this.sectionProperties.container, events[it], L.DomEvent.stopPropagation, this);
@@ -188,18 +194,6 @@ export class Comment extends CanvasSectionObject {
 		this.update();
 
 		this.pendingInit = false;
-	}
-
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	onMouseWheel(point: Array<number>, delta: Array<number>, e: MouseEvent): void {
-		if ((e as any).currentTarget.clientHeight === (e as any).currentTarget.scrollHeight)
-			return;
-
-		var _scrollTop = (e as any).currentTarget.scrollTop;
-		if ((e as any).deltaY < 0 && _scrollTop > 0)
-			e.stopPropagation();
-		else if ((e as any).deltaY > 0 && _scrollTop + $(e.currentTarget).height() < (e as any).target.scrollHeight)
-			e.stopPropagation();
 	}
 
 	public onInitialize (): void {
