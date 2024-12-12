@@ -24,6 +24,7 @@
 
 * [📋 Forum](https://forum.collaboraonline.com/)
 * [👥 Facebook](https://www.facebook.com/collaboraoffice/)
+* [🅾 Instagram](https://www.instagram.com/collaboraoffice/)
 * [🐣 𝕏(Twitter)](https://twitter.com/CollaboraOffice)
 * [🦋 Bluesky](https://bsky.app/profile/collaboraonline.com)
 * [🐘 Mastodon](https://mastodon.social/@CollaboraOffice)
