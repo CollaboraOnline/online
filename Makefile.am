@@ -316,7 +316,8 @@ coolbench_LDADD = libsimd.a
 coolconvert_SOURCES = tools/Tool.cpp
 
 coolstress_TDOC_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\"
-coolstress_CPPFLAGS = ${coolstress_TDOC_CPPFLAGS} ${include_paths}
+coolstress_CPPFLAGS = ${coolstress_TDOC_CPPFLAGS} ${include_paths} \
+			$(AM_CPPFLAGS)
 coolstress_SOURCES = tools/Stress.cpp \
                      common/DummyTraceEventEmitter.cpp \
                      $(shared_sources)

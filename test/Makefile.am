@@ -19,7 +19,9 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\
 	-I${top_srcdir} -I${top_srcdir}/test \
 	-pthread -DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
 	-DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
+	-DCOOLWSD_LOGLEVEL='"@COOLWSD_LOGLEVEL@"' \
 	-DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
+	-DNUM_PRESPAWN_CHILDREN='"@NUM_PRESPAWN_CHILDREN@"' \
 	${include_paths}
 
 # These are ordered by how long each takes to run.
