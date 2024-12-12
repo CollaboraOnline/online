@@ -113,6 +113,9 @@ const std::map<std::string, std::string>& getDefaultAppConfig();
 /// Extract all entries as key-value pairs. We use map to have the entries sorted.
 std::map<std::string, std::string> extractAll(const Poco::Util::AbstractConfiguration* config);
 
+/// Returns the config in a loggable string form.
+std::string getLoggableConfig(const Poco::Util::AbstractConfiguration* config);
+
 /// Returns the value of an entry as string or @def if it is not found.
 std::string getString(const std::string& key, const std::string& def);
 

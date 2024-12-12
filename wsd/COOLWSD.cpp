@@ -1335,17 +1335,9 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
                                     << "]. Experimental features are "
                                     << (EnableExperimental ? "enabled." : "disabled."));
 
-    const std::map<std::string, std::string> allConfigs = ConfigUtil::extractAll(&conf);
     std::ostringstream ossConfig;
     ossConfig << "Loaded config file [" << configFilePath << "] (non-default values):\n";
-    for (const auto& pair : allConfigs)
-    {
-        const auto it = DefAppConfig.find(pair.first);
-        if (it == DefAppConfig.end() || it->second != pair.second)
-        {
-            ossConfig << '\t' << pair.first << ": " << pair.second << '\n';
-        }
-    }
+    ossConfig << ConfigUtil::getLoggableConfig(&conf);
 
     LoggableConfigEntries = ossConfig.str();
     LOG_INF(LoggableConfigEntries);

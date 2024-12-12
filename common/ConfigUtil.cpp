@@ -327,6 +327,22 @@ std::map<std::string, std::string> extractAll(const Poco::Util::AbstractConfigur
     return map;
 }
 
+std::string getLoggableConfig(const Poco::Util::AbstractConfiguration* config)
+{
+    const std::map<std::string, std::string> allConfigs = extractAll(config);
+    std::ostringstream ossConfig;
+    for (const auto& pair : allConfigs)
+    {
+        const auto it = DefAppConfig.find(pair.first);
+        if (it == DefAppConfig.end() || it->second != pair.second)
+        {
+            ossConfig << '\t' << pair.first << ": " << pair.second << '\n';
+        }
+    }
+
+    return ossConfig.str();
+}
+
 std::string getString(const std::string& key, const std::string& def)
 {
     assert(Config && "Config is not initialized.");
