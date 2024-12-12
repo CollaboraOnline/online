@@ -56,7 +56,6 @@ man_MANS = man/coolwsd.1 \
 dist_doc_DATA = wsd/README.md \
                 wsd/README.vars \
                 wsd/protocol.txt \
-                wsd/reference.md \
                 wsd/metrics.txt \
                 THIRDPARTYLICENSES
 
