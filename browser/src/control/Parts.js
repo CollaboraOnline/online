@@ -13,7 +13,7 @@
  */
 
 /* global app _ cool */
-/* global _ $ JSDialog app */
+/* global _ JSDialog app */
 
 L.Map.include({
 	/*
@@ -477,7 +477,9 @@ L.Map.include({
 				}
 			}
 
-			var callback = function() {
+			const dialogId = 'show-sheets-modal';
+
+			const buttonCallback = function() {
 				var checkboxList = document.querySelectorAll('input[id^="hidden-part-checkbox"]');
 				for (var i = 0; i < checkboxList.length; i++) {
 					if (checkboxList[i].checked === true) {
@@ -488,28 +490,22 @@ L.Map.include({
 				}
 			};
 
-			this.uiManager.showInfoModal('show-sheets-modal', _('Show sheets'), ' ', ' ', _('OK'), callback, true, 'show-sheets-modal-response');
-			const modal = document.getElementById('show-sheets-modal');
+			this.uiManager.showInfoModal(dialogId, _('Show sheets'), ' ', ' ', _('OK'), buttonCallback, true, dialogId + '-response');
+			const modal = document.getElementById(dialogId);
 			modal.insertBefore(container, modal.children[0]);
-			
-			this.callback('checkbox', 'change', modal);
-		}
-	},
 
-	callback(objectType, eventType, object, data, builder) {
-		if(object.id === 'show-sheets-modal' && eventType === 'change') {
-			JSDialog.enableButtonInModal(object.id, object.id + '-response', false);
+			JSDialog.enableButtonInModal(dialogId, dialogId + '-response', false);
 
 			var checkboxes = document.querySelectorAll('#show-sheets-modal input[type="checkbox"]');
 			checkboxes.forEach(function(checkbox) {
-				checkbox.addEventListener(eventType, function() {
+				checkbox.addEventListener('change', function() {
 					var anyChecked = false;
 					checkboxes.forEach(function(checkbox) {
 						if (checkbox.checked) {
 							anyChecked = true;
 						}
 					});
-					JSDialog.enableButtonInModal(object.id, object.id + '-response', anyChecked);
+					JSDialog.enableButtonInModal(dialogId, dialogId + '-response', anyChecked);
 				});
 			});
 		}
