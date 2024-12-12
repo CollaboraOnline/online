@@ -942,6 +942,8 @@ pot:
 		src/control/Control.DocumentNameInput.js \
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.DownloadProgress.js \
+		src/control/Control.ESignature.ts \
+		src/control/Control.ESignatureDialog.ts \
 		src/control/Control.FormulaBarJSDialog.js \
 		src/control/Control.IdleHandler.ts \
 		src/control/Control.JSDialog.js \
