@@ -107,6 +107,9 @@ void initialize(const Poco::Util::AbstractConfiguration* config);
 /// Check if the config has been initialized
 bool isInitialized();
 
+/// Returns the default config.
+const std::map<std::string, std::string>& getDefaultAppConfig();
+
 /// Extract all entries as key-value pairs. We use map to have the entries sorted.
 std::map<std::string, std::string> extractAll(const Poco::Util::AbstractConfiguration* config);
 
