@@ -26,9 +26,17 @@ namespace cool {
 		result: any;
 	}
 
+	// Describes one provider
+	export interface MethodConfig {
+		// Name of the provider
+		action_type: string;
+		supported_countries: Array<string>;
+	}
+
 	export interface HashSendResponse {
 		doc_id: string;
 		available_methods: Array<string>;
+		method_configs: Array<MethodConfig>;
 		message: string;
 	}
 
@@ -62,6 +70,8 @@ namespace cool {
 		popup: Window;
 
 		availableProviderIDs: Array<string>;
+
+		availableProviderConfigs: Array<MethodConfig>;
 
 		// Provider ID to name map.
 		static providerNames: { [name: string]: string } = {
@@ -100,12 +110,21 @@ namespace cool {
 			'serpro-id-advanced-signature': 'SerproID',
 		};
 
+		// Country code to name map
+		static countryNames: { [name: string]: string } = undefined;
+
 		constructor(url: string, clientId: string) {
 			this.url = url;
 			this.clientId = clientId;
 
 			app.map.on('commandvalues', this.onCommandValues.bind(this));
 			app.map.on('commandresult', this.onCommandResult.bind(this));
+
+			if (!ESignature.countryNames) {
+				ESignature.countryNames = {
+					DE: _('Germany'),
+				};
+			}
 		}
 
 		insert(): void {
@@ -157,6 +176,8 @@ namespace cool {
 				],
 				// Learn about possible providers
 				return_available_methods: true,
+				// Learn about which provider is available in which country
+				return_method_configs: true,
 				signature_redirect: redirectUrl,
 				// Automatic file download will not happen after signing
 				nodownload: true,
@@ -179,8 +200,10 @@ namespace cool {
 
 			this.docId = response.doc_id;
 			this.availableProviderIDs = response.available_methods;
+			this.availableProviderConfigs = response.method_configs;
+			const countries = this.createCountryList();
 			const providers = this.createProviders(this.availableProviderIDs);
-			const dialog = JSDialog.eSignatureDialog(providers);
+			const dialog = JSDialog.eSignatureDialog(countries, providers);
 			dialog.open();
 		}
 
@@ -282,6 +305,26 @@ namespace cool {
 					'failed to find a human-readable name for provider "' + id + '"',
 				);
 				return { action_type: id, name: id };
+			});
+		}
+
+		createCountryList(): Array<cool.Country> {
+			let codes = new Array<string>();
+			for (const config of this.availableProviderConfigs) {
+				for (const code of config.supported_countries) {
+					codes.push(code);
+				}
+			}
+			codes = [...new Set(codes)].sort();
+			return codes.map((code) => {
+				const countryName = ESignature.countryNames[code];
+				if (countryName) {
+					return { code: code, name: countryName };
+				}
+				app.console.log(
+					'failed to find a human-readable name for country "' + code + '"',
+				);
+				return { code: code, name: code };
 			});
 		}
 	}
