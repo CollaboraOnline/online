@@ -6,19 +6,14 @@ Collabora Online WebSocket server has the following dependencies:
 
 - libpng
 - Poco library: https://pocoproject.org/
+- OpenSSL (when configured with --enable-ssl)
+- libzstd
 - libcap-dev (Debian/Ubuntu) / libcap-progs (SUSE/openSUSE) / libcap-devel (RedHat/CentOS)
 - libpam-dev (Debian/Ubuntu) / pam-devel (RedHat/CentOS/SUSE/openSUSE)
 
 If your Linux distro doesn't provide a Poco package (versions 1.7.5 and
 newer should work), you can build it yourself and install in a
 location of your choice.
-
-On openSUSE Leap 15.1, you can use:
-
-    zypper ar http://download.opensuse.org/repositories/devel:/libraries:/c_c++/openSUSE_Leap_15.1/devel:libraries:c_c++.repo
-    zypper in poco-devel libcap-progs python3-polib libcap-devel npm
-
-Similar repos exist for other openSUSE and SLE releases.
 
 ## Building
 
