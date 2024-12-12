@@ -71,7 +71,7 @@ namespace cool {
 
 		availableProviderIDs: Array<string>;
 
-		availableProviderConfigs: Array<MethodConfig>;
+		availableCountryCodes: Array<string>;
 
 		// Provider ID to name map.
 		static providerNames: { [name: string]: string } = {
@@ -275,15 +275,16 @@ namespace cool {
 
 			this.docId = response.doc_id;
 			this.availableProviderIDs = response.available_methods;
-			this.availableProviderConfigs = response.method_configs;
-			const countries = this.createCountryList();
+			const availableProviderConfigs = response.method_configs;
+			const countries = this.createCountryList(availableProviderConfigs);
 			const providers = this.createProviders(this.availableProviderIDs);
 			const dialog = JSDialog.eSignatureDialog(countries, providers);
 			dialog.open();
 		}
 
 		// Handles the selected provider from the dialog
-		handleSelectedProvider(providerIndex: number): void {
+		handleSelectedProvider(countryIndex: number, providerIndex: number): void {
+			const country = this.availableCountryCodes[countryIndex];
 			const provider = this.availableProviderIDs[providerIndex];
 			app.console.log(
 				'attempting to esign using the "' + provider + '" provider',
@@ -293,6 +294,7 @@ namespace cool {
 			url += '?client_id=' + this.clientId;
 			url += '&doc_id=' + this.docId;
 			url += '&method=' + provider;
+			url += '&country=' + country;
 
 			const lang = window.coolParams.get('lang');
 			if (lang) {
@@ -383,14 +385,17 @@ namespace cool {
 			});
 		}
 
-		createCountryList(): Array<cool.Country> {
+		createCountryList(
+			availableProviderConfigs: Array<MethodConfig>,
+		): Array<cool.Country> {
 			let codes = new Array<string>();
-			for (const config of this.availableProviderConfigs) {
+			for (const config of availableProviderConfigs) {
 				for (const code of config.supported_countries) {
 					codes.push(code);
 				}
 			}
 			codes = [...new Set(codes)].sort();
+			this.availableCountryCodes = codes;
 			return codes.map((code) => {
 				const countryName = ESignature.countryNames[code];
 				if (countryName) {
