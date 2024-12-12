@@ -117,6 +117,10 @@ class PresenterConsole {
 		return this._presenter._getSlidesCount();
 	}
 
+	_getRepeatDuration() {
+		return this._presenter._getRepeatDuration();
+	}
+
 	_isSlideHidden(slideNumber) {
 		return this._presenter.isSlideHidden(slideNumber);
 	}
@@ -1237,7 +1241,7 @@ class PresenterConsole {
 
 		const nextSlideIndex = this._getNextVisibleSlide(this._currentIndex);
 		if (nextSlideIndex >= this._getSlidesCount()) {
-			this.drawEnd(size).then(function (blob) {
+			this.drawEnd(size, this._getRepeatDuration()).then(function (blob) {
 				var reader = new FileReader();
 				reader.onload = function (e) {
 					elem.src = e.target.result;
@@ -1264,7 +1268,7 @@ class PresenterConsole {
 		}
 	}
 
-	drawEnd(size) {
+	drawEnd(size, repeat) {
 		const width = size.width;
 		const height = size.height;
 		const offscreen = new OffscreenCanvas(width, height);
@@ -1278,7 +1282,15 @@ class PresenterConsole {
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
 
-		ctx.fillText(_('Click to exit presentation...'), width / 2, height / 2);
+		if (repeat > 0) {
+			ctx.fillText(
+				_('Repeat in {0} seconds').replace('{0}', repeat),
+				width / 2,
+				height / 2,
+			);
+		} else {
+			ctx.fillText(_('Click to exit presentation...'), width / 2, height / 2);
+		}
 
 		return offscreen.convertToBlob({ type: 'image/png' });
 	}
