@@ -122,7 +122,7 @@ to replace those with your own files.
 To generate the new self-signed certificate, you can do the following. Maybe
 there is a less verbose way, but this worked for me:
 
-    # create tha ca-chain.cert.pem
+    # create the ca-chain.cert.pem
 
     mkdir private
 
@@ -221,9 +221,9 @@ interested in. Note that simply attaching gdb via `gdb -p` is not meant to work,
 - `sudo gdb -p <PID>`, which is easy to remember or
 
 - `gdb -iex "set sysroot /" -p <PID>`, which can run as an unprivileged user, since we switched from
-  capabilities to unpriviliged namespaces.
+  capabilities to unprivileged namespaces.
 
-You can make tha later an alias as well:
+You can make the later an alias as well:
 
 ```
 alias cool-gdb='gdb -iex "set sysroot /"'
