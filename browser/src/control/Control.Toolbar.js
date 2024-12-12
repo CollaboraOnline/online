@@ -1191,7 +1191,11 @@ function setupToolbar(e) {
 	}
 
 	$('#closebutton').click(function () {
-		global.app.dispatcher.dispatch('closeapp');
+		let dispatcher = global.app.dispatcher;
+		if (!dispatcher)
+			dispatcher = new app.definitions['dispatcher']('global');
+
+		dispatcher.dispatch('closeapp');
 	});
 }
 
