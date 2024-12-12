@@ -25,7 +25,9 @@
 * [📋 Forum](https://forum.collaboraonline.com/)
 * [👥 Facebook](https://www.facebook.com/collaboraoffice/)
 * [🐣 𝕏(Twitter)](https://twitter.com/CollaboraOffice)
+* [🦋 Bluesky](https://bsky.app/profile/collaboraonline.com)
 * [🐘 Mastodon](https://mastodon.social/@CollaboraOffice)
+* [💼 LinkedIn](https://www.linkedin.com/products/collaboraproductivity-collabora-online/)
 
 ## Key features
 * View and edit text documents, spreadsheets, presentations & more
