@@ -73,9 +73,9 @@ Please consult the README files in the component's directory for more details:
 
 ### Building
 
-See the corresponding READMEs:
-* **[ios/README](ios/README)**
-* **[android/README](android/README)**
+See the corresponding web pages:
+* **[Build for iOS](https://collaboraonline.github.io/post/build-code-ios/)**
+* **[Build for Android](https://collaboraonline.github.io/post/build-code-android/)**
 
 ### Releases and pre-releases
 
