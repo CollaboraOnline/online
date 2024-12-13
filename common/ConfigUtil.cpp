@@ -50,6 +50,7 @@ static const std::map<std::string, std::string> DefAppConfig = {
     { "admin_console.logging.monitor_connect", "true" },
     { "allowed_languages", "de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru" },
     { "browser_logging", "false" },
+    { "cache_root_path", "cache" },
     { "certificates.database_path", "" },
     { "child_root_path", "jails" },
     { "deepl.api_url", "" },

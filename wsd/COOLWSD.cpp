@@ -72,6 +72,7 @@
 
 #include "Admin.hpp"
 #include "Auth.hpp"
+#include "CacheUtil.hpp"
 #include "FileServer.hpp"
 #include "UserMessages.hpp"
 #include <wsd/RemoteConfig.hpp>
@@ -1789,6 +1790,36 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     else
     {
         LOG_INF("Quarantine is disabled in config");
+    }
+
+    {
+        // creating cache directory
+        std::string path = Util::trimmed(ConfigUtil::getPathFromConfig("cache_root_path"));
+        LOG_INF("Cache path is set to [" << path << "] in config");
+        if (path.empty())
+        {
+            path = "cache";
+            LOG_WRN("No cache path is set in cache_root_path. Using default of: " << path);
+        }
+
+        Poco::File p(path);
+        try
+        {
+            LOG_TRC("Creating cache directory [" + path << ']');
+            p.createDirectories();
+
+            LOG_DBG("Created cache directory [" + path << ']');
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_WRN("Failed to create cache directory [" << path << "]");
+        }
+
+        if (FileUtil::Stat(path).exists())
+        {
+            LOG_INF("Initializing cache at [" + path << ']');
+            Cache::initialize(path);
+        }
     }
 
     NumPreSpawnedChildren = ConfigUtil::getConfigValue<int>(conf, "num_prespawn_children", 1);
