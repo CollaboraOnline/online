@@ -552,6 +552,10 @@ L.Control.JSDialog = L.Control.extend({
 			return;
 		}
 		this.parentAutofilter = instance.form;
+		const devicePixelRatio = app.dpiScale;
+		// Convert the server-provided px values to screen coordinates
+		instance.posx = instance.posx / devicePixelRatio;
+		instance.posy = instance.posy / devicePixelRatio;
 		var left = parseInt(instance.posx) * scale;
 		var top = parseInt(instance.posy) * scale;
 
@@ -572,20 +576,22 @@ L.Control.JSDialog = L.Control.extend({
 		if (isSpreadsheetRTL)
 			left = this.map._size.x - left;
 
-		instance.posx = left + offsetX;
-		instance.posy = top + offsetY;
+		var canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
+
+		instance.posx = left + offsetX + canvasEl.left; // adding canvasEl.left in case we change sidebar to left of the screen
+		// make margin from canvas top and not from window top
+		instance.posy = top + offsetY + canvasEl.top;
 
 		var width = instance.form.getBoundingClientRect().width;
-		var canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
-		var autoFilterBottom = instance.posy + canvasEl.top + instance.form.getBoundingClientRect().height;
-		var canvasBottom = canvasEl.bottom;
+		var autoFilterBottom = instance.posy + instance.form.getBoundingClientRect().height;
+		var windowBottom = window.innerHeight;
 		if (instance.posx + width > window.innerWidth)
 			instance.posx = window.innerWidth - width;
 
 		// at this point we have un updated potion of autofilter instance.
 		// so to handle overlapping case of autofiler and toolbar we need some complex calculation
-		if (autoFilterBottom > canvasBottom)
-			instance.posy = instance.posy - (autoFilterBottom - canvasBottom);
+		if (autoFilterBottom > windowBottom)
+			instance.posy = instance.posy - (autoFilterBottom - windowBottom + 10);
 
 		this.updatePosition(instance.container, instance.posx, instance.posy);
 	},
@@ -603,7 +609,7 @@ L.Control.JSDialog = L.Control.extend({
 	calculateSubmenuAutoFilterPosition: function(instance, parentAutofilter) {
 		var parentAutofilter = parentAutofilter.getBoundingClientRect();
 		instance.posx = parentAutofilter.right;
-		instance.posy = parentAutofilter.top - this.map._docLayer._canvas.getBoundingClientRect().top;
+		instance.posy = parentAutofilter.top;
 
 		// set marding start for child popup in rtl mode
 		var isSpreadsheetRTL = this.map._docLayer.isCalcRTL();
@@ -669,8 +675,8 @@ L.Control.JSDialog = L.Control.extend({
 		instance.canHaveFocus = !instance.isSnackbar && instance.id !== 'busypopup' && !instance.isAutoCompletePopup;
 		instance.isDocumentAreaPopup = instance.popupParent === '_POPOVER_' && instance.posx !== undefined && instance.posy !== undefined;
 		instance.isPopup = instance.isModalPopUp || instance.isDocumentAreaPopup || instance.isSnackbar;
-		instance.containerParent = instance.isDocumentAreaPopup ? document.getElementById('document-container'): document.body;
 		instance.isAutofilter = instance.isDocumentAreaPopup && this.map._docLayer.isCalc();
+		instance.containerParent = (instance.isDocumentAreaPopup && !instance.isAutofilter) ? document.getElementById('document-container'): document.body;
 		instance.haveTitlebar = (!instance.isModalPopUp && !instance.isSnackbar) || (instance.hasClose && instance.title && instance.title !== '');
 		instance.nonModal = !instance.isModalPopUp && !instance.isDocumentAreaPopup && !instance.isSnackbar;
 
