@@ -150,6 +150,7 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/Admin.cpp \
                   wsd/AdminModel.cpp \
                   wsd/Auth.cpp \
+                  wsd/CacheUtil.cpp \
                   wsd/COOLWSD.cpp \
                   wsd/ClientRequestDispatcher.cpp \
                   wsd/ClientSession.cpp \
@@ -340,6 +341,7 @@ coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
 wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \
               wsd/Auth.hpp \
+              wsd/CacheUtil.hpp \
               wsd/COOLWSD.hpp \
               wsd/ClientRequestDispatcher.hpp \
               wsd/ClientSession.hpp \
