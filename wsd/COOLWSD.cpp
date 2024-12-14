@@ -1300,7 +1300,8 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
             std::cerr << "\nLogging UI Commands to file: " << it->second.c_str() << std::endl;
         }
         const bool merge = ConfigUtil::getConfigValue<bool>(conf, "logging_ui_cmd.merge", true);
-        const bool logEndtime = ConfigUtil::getConfigValue<bool>(conf, "logging_ui_cmd.merge_display_end_time", true);
+        const bool logEndtime =
+            ConfigUtil::getConfigValue<bool>(conf, "logging_ui_cmd.merge_display_end_time", false);
         if (merge)
         {
             setenv("COOL_LOG_UICMD_MERGE", "1", true);
