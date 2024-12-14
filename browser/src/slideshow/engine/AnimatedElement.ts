@@ -266,6 +266,12 @@ const aPropertyGetterSetterMap = {
 		get: 'getFontColor',
 		set: 'setFontColor',
 	},
+
+	dimcolor: {
+		type: PropertyValueType.Color,
+		get: 'getDimColor',
+		set: 'setDimColor',
+	},
 };
 
 type PropertyGetterSetterMapKeyType = keyof typeof aPropertyGetterSetterMap;
@@ -395,6 +401,7 @@ class AnimatedElement {
 		'fillcolor',
 		'linecolor',
 		'charcolor',
+		'dimcolor',
 	]);
 
 	public static readonly SupportedTransformations = new Set<string>([
@@ -439,6 +446,7 @@ class AnimatedElement {
 	private aLineColor = AnimatedElement.DefaultColor;
 	private aBaseFontColor = AnimatedElement.DefaultColor;
 	private aFontColor = AnimatedElement.DefaultColor;
+	private aDimColor = AnimatedElement.DefaultColor;
 	private bVisible: boolean;
 	private aClipPath: SVGPathElement = null;
 	private runningAnimations: number = 0;
@@ -1228,6 +1236,28 @@ class AnimatedElement {
 		window.app.console.log(
 			'AnimatedElement.setFontColor(' + aRGBValue.toString() + ')',
 		);
+		this.aFontColor = aRGBValue;
+	}
+
+	setDefaultDimColor(aRGBValue: RGBColor) {
+		window.app.console.log(
+			'AnimatedElement.setDefaultDimColor(' + aRGBValue.toString() + ')',
+		);
+
+		this.aDimColor = aRGBValue;
+	}
+
+	getDimColor(): RGBColor {
+		return this.aDimColor;
+	}
+
+	setDimColor(aRGBValue: RGBColor) {
+		window.app.console.log(
+			'AnimatedElement.setDimColor(' + aRGBValue.toString() + ')',
+		);
+		this.aDimColor = aRGBValue;
+		this.aLineColor = aRGBValue;
+		this.aFillColor = aRGBValue;
 		this.aFontColor = aRGBValue;
 	}
 

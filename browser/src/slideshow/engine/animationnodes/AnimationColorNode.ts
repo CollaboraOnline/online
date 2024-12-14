@@ -64,6 +64,17 @@ class AnimationColorNode extends AnimationBaseNode3 {
 	public createActivity(): AnimationActivity {
 		const aActivityParamSet = this.fillActivityParams();
 
+		// initialize object dim color
+		if (
+			this.getAnimatedElement() &&
+			this.getToValue() &&
+			this.getAttributeName() === 'dimcolor'
+		) {
+			this.getAnimatedElement().setDefaultDimColor(
+				colorParser(this.getToValue()) as RGBColor,
+			);
+		}
+
 		const aAnimation = createPropertyAnimation(
 			this.getAttributeName(),
 			this.getAnimatedElement(),
