@@ -8,4 +8,18 @@
     <string name="cannot_open_file_chooser">கோப்பு தேர்வை திறக்க இயலவில்லை</string>
     <string name="preparing_for_the_first_start_after_an_update">புதுப்பித்தலுக்குப் பிறகு முதல் தொடக்கத்திற்குத் தயாராகிறது.</string>
     <string name="rate_now">மதிப்பிடு</string>
+    <string name="rate_our_app_title">%1$s ஐப் பயன்படுத்தியதற்கு நன்றி!</string>
+    <string name="ask_for_copy">இந்த ஆவணம் படிக்க மட்டுமே. திருத்துதல் செய்ய ஒரு நகலை உருவாக்க விரும்புகிறீர்களா?</string>
+    <string name="use_text">உரை வடிவமைப்பைப் பயன்படுத்தவும்</string>
+    <string name="file_chromeos_read_only">இந்த கோப்பை இந்த இடத்தில் சேமிக்க முடியாது, அதை படிக்க மட்டும் திறக்கவும். முழு வாசிப்பு/எழுத அணுகலுக்காக அதை பிளே கோப்புகளுக்கு நகர்த்தவும்.</string>
+    <string name="rate_our_app_text">நீங்கள் விரும்பினால், கூகிள் பிளேயில் எங்களுக்கு 5 நட்சத்திரங்களை கொடுங்கள். உங்கள் நல்ல மதிப்புரைகள் எங்கள் சிறந்த உந்துதல்.</string>
+    <string name="loading">ஏற்றுகிறது ...</string>
+    <string name="exiting">வெளியேறுதல் ...</string>
+    <string name="restarting">மறுதொடக்கம் ...</string>
+    <string name="cant_open_the_document">ஆவணத்தைத் திறக்க முடியவில்லை</string>
+    <string name="view_only">பார்க்க மட்டுமே</string>
+    <string name="edit_copy">நகலைத் திருத்தவும்</string>
+    <string name="use_odf">வடிவமைப்பின் பயன்பாடு</string>
+    <string name="ask_for_convert_odf">கோப்பு வடிவமைப்பை உறுதிப்படுத்தவும்</string>
+    <string name="convert_odf_message">இந்த ஆவணத்தில் தற்போது தேர்ந்தெடுக்கப்பட்ட கோப்பு வடிவத்தில் \"உரை\" சேமிக்க முடியாத வடிவமைப்பு அல்லது உள்ளடக்கம் இருக்கலாம்.</string>
 </resources>
