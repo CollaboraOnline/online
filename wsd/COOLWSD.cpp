@@ -1381,9 +1381,8 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     }
 
     // Check deprecated settings.
-    bool reuseCookies = false;
-    if (ConfigUtil::getRawConfig(conf, "storage.wopi.reuse_cookies", reuseCookies))
-        LOG_WRN("NOTE: Deprecated config option storage.wopi.reuse_cookies - no longer supported.");
+    if (ConfigUtil::hasProperty("storage.wopi.reuse_cookies"))
+        LOG_WRN("NOTE: Deprecated config option storage.wopi.reuse_cookies is no longer supported");
 
 #if !MOBILEAPP
     COOLWSD::WASMState = ConfigUtil::getConfigValue<bool>(conf, "wasm.enable", false)
@@ -1413,9 +1412,8 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     LOG_INF("Anonymization of user-data is permanently enabled.");
 #else
     LOG_INF("Anonymization of user-data is configurable.");
-    bool haveAnonymizeUserDataConfig = false;
-    if (ConfigUtil::getRawConfig(conf, "logging.anonymize.anonymize_user_data", AnonymizeUserData))
-        haveAnonymizeUserDataConfig = true;
+    const bool haveAnonymizeUserDataConfig =
+        ConfigUtil::getRawConfig(conf, "logging.anonymize.anonymize_user_data", AnonymizeUserData);
 
     bool anonymizeFilenames = false;
     bool anonymizeUsernames = false;
