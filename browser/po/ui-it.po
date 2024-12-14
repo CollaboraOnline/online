@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-02 13:03+0100\n"
-"PO-Revision-Date: 2023-10-17 18:07+0000\n"
-"Last-Translator: Frankie McEyes <mceyes@protonmail.com>\n"
+"PO-Revision-Date: 2024-12-14 09:00+0000\n"
+"Last-Translator: Giovanni Montini <service@giovannimontini.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.1\n"
+"X-Generator: Weblate 5.9-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -256,7 +256,7 @@ msgstr "Informazioni sulla versione"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Licenza"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:388
 #: src/control/Control.Menubar.js:563 src/control/Control.Menubar.js:699
@@ -269,19 +269,19 @@ msgstr "Informazioni su"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "CPU nel tempo"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "Memoria nel tempo"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Memoria"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Attendere... Il cluster Kubernetes si sta ridimensionando..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -350,7 +350,7 @@ msgstr "Inviato"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Connessioni"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -422,23 +422,23 @@ msgstr " s"
 
 #: js/global.js:1410
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Il cluster si sta ridimensionando, riprovo..."
 
 #: js/global.js:1412
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Il documento sta venendo migrato su un nuovo server, riprovo..."
 
 #: js/global.js:1414
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Impossibile recuperare RouteToken dal controller"
 
 #: src/canvas/sections/CommentListSection.ts:157
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Un commento è stato modificato"
 
 #: src/canvas/sections/CommentListSection.ts:158
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Salvare o scartare il commento appena modificato."
 
 #: src/canvas/sections/CommentListSection.ts:1151
 msgid "Modify"
@@ -475,15 +475,15 @@ msgstr "Risolvi il thread"
 
 #: src/canvas/sections/CommentListSection.ts:1187
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Promuovi come miglior commento"
 
 #: src/canvas/sections/CommentListSection.ts:1193
 msgid "Show on the side"
-msgstr ""
+msgstr "Mostra lateralmente"
 
 #: src/canvas/sections/CommentListSection.ts:1193
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Aumenta la dimensione del commento"
 
 #: src/canvas/sections/CommentListSection.ts:1221
 #: src/control/Control.JSDialogBuilder.js:1937
@@ -496,17 +496,19 @@ msgstr "Commento"
 #: src/canvas/sections/CommentListSection.ts:1446
 #: src/canvas/sections/CommentListSection.ts:2321
 msgid "Comments Updated"
-msgstr ""
+msgstr "Commenti Aggiornati"
 
 #: src/canvas/sections/CommentListSection.ts:1434
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Questo commento è stato rimosso da un altro utente."
 
 #: src/canvas/sections/CommentListSection.ts:1447
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Questo commento è stato aggiornato da un altro utente. Vuoi sovrascrivere "
+"tali modifiche?"
 
 #: src/canvas/sections/CommentListSection.ts:1448 src/core/Socket.js:1415
 msgid "Overwrite"
@@ -514,16 +516,18 @@ msgstr "Sovrascrivi"
 
 #: src/canvas/sections/CommentListSection.ts:1449
 msgid "Update"
-msgstr ""
+msgstr "Aggiorna"
 
 #: src/canvas/sections/CommentListSection.ts:1520
 #: src/canvas/sections/CommentListSection.ts:1592
 msgid "Autosaved"
-msgstr ""
+msgstr "Autosalvataggio"
 
 #: src/canvas/sections/CommentListSection.ts:2322
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Dei commenti sono stati modificati da un altro utente. Vuoi proseguire con "
+"la modifica?"
 
 #: src/canvas/sections/CommentSection.ts:315
 msgid "Open menu"
@@ -545,7 +549,7 @@ msgstr "Risolto"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:417
 msgid "Document contains unsupported video"
-msgstr ""
+msgstr "Il documento contiene un formato video non supportato"
 
 #: src/canvas/sections/URLPopUpSection.ts:49
 msgid "Copy link location"
@@ -593,11 +597,11 @@ msgstr "Apri collegamento"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Non è permesso incollare contenuti copiati esternamente"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Sembra che tu abbia copiato una sezione che contiene immagini esterne."
 
 #: src/control/Control.AlertDialog.js:68
 msgid ""
@@ -605,14 +609,17 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Non è possibile scaricare risorse esterne, tuttavia è possibile incollare "
+"immagini. Fai tasto destro sull'immagine, scegli \"Copia Immagine\" ed "
+"incolla nel documento."
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Non sono permesse fonti esterne"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Sembra che tu abbia provato ad inserire dati provenienti dall'esterno."
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
@@ -622,7 +629,7 @@ msgstr ""
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
-msgstr ""
+msgstr "Non mostrare ancora"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a {0} error while parsing the {1} command."
@@ -643,11 +650,11 @@ msgstr "Incolla speciale"
 
 #: src/control/Control.ContextMenu.js:258
 msgid "Copy Cells"
-msgstr ""
+msgstr "Copia Celle"
 
 #: src/control/Control.ContextMenu.js:263
 msgid "Fill Series"
-msgstr ""
+msgstr "Riempi Serie"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -693,13 +700,15 @@ msgstr "Annulla"
 
 #: src/control/Control.DownloadProgress.js:42
 msgid "Download Selection"
-msgstr ""
+msgstr "Scarica la selezione"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
+"Se vuoi condividere grandi elementi al di fuori di {productname}, è prima "
+"necessario scaricarli."
 
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
@@ -711,7 +720,7 @@ msgstr "Scarica"
 
 #: src/control/Control.DownloadProgress.js:79
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Scarica il contenuto copiato"
 
 #: src/control/Control.DownloadProgress.js:86
 #: src/control/Control.DownloadProgress.js:111
@@ -721,20 +730,22 @@ msgstr "Copia"
 
 #: src/control/Control.DownloadProgress.js:109
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Scaricamento completato e pronto per essere copiato."
 
 #: src/control/Control.DownloadProgress.js:110
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"D'ora in avanti le notifiche relative alla copia di contenuti appariranno in "
+"basso."
 
 #: src/control/Control.DownloadProgress.js:270
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Contenuto copiato"
 
 #: src/control/Control.DownloadProgress.js:300
 msgid "Download failed"
-msgstr ""
+msgstr "Scaricamento fallito"
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -760,7 +771,7 @@ msgstr "Documento inattivo - tocca per ricaricare e riprendere le modifiche"
 
 #: src/control/Control.JSDialog.js:275
 msgid "Close dialog"
-msgstr ""
+msgstr "Chiudi la finestra di dialogo"
 
 #: src/control/Control.JSDialogBuilder.js:496
 msgid "Solid"
