@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-02 13:03+0100\n"
-"PO-Revision-Date: 2024-11-25 04:00+0000\n"
+"PO-Revision-Date: 2024-12-09 13:00+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1293,7 +1293,7 @@ msgstr "ציור ODF‏ (‎.odg)"
 
 #: src/control/Control.Menubar.js:646
 msgid "Electronic signature..."
-msgstr ""
+msgstr "חתימה אלקטרונית…"
 
 #: src/control/Control.Menubar.js:708 src/control/Control.Menubar.js:720
 #: src/control/Control.Menubar.js:1194
@@ -2984,15 +2984,15 @@ msgstr "לחפש אחר סעיף הנגישות/accessibility ב־coolwsd.xml א
 
 #: src/layer/marker/TextInput.js:442
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "לבדוק גם את מתג הכיסוי הקולי תחת {parentControl}."
 
 #: src/layer/marker/TextInput.js:444
 msgid "the Help tab"
-msgstr ""
+msgstr "לשונית העזרה"
 
 #: src/layer/marker/TextInput.js:444
 msgid "the View menu"
-msgstr ""
+msgstr "תפריט התצוגה"
 
 #: src/layer/tile/CanvasTileLayer.js:1863
 msgid "Functions"
@@ -3098,7 +3098,7 @@ msgstr "העלאת הקובץ לשרת נכשלה עם מצב השגיאה: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "חלונית הדפסה"
 
 #: src/map/handler/Map.SlideShow.js:55 src/slideshow/SlideShowPresenter.ts:653
 msgid "Empty Slide Show"
@@ -3164,7 +3164,7 @@ msgstr "מצב מצגת הושבת למסמך הזה"
 
 #: src/map/handler/Map.VersionBar.js:41
 msgid "Your Collabora Online server needs updating. Version {0} is available."
-msgstr ""
+msgstr "שרת ה־Collabora Online שלך דורש עדכון. גרסה {0} זמינה."
 
 #: src/map/handler/Map.WOPI.js:153
 msgid "Creating new file from template..."
@@ -3184,7 +3184,7 @@ msgstr "נוצר עותק…"
 
 #: src/map/handler/Map.Welcome.js:81
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "חלונית קבלת פנים"
 
 #: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
@@ -3192,16 +3192,15 @@ msgstr "השהייה… ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "שקופית נוכחית"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
 msgstr "השקופית הבאה"
 
 #: src/slideshow/PresenterConsole.js:31
 msgid "Previous"
-msgstr ""
+msgstr "הקודמת"
 
 #: src/slideshow/PresenterConsole.js:32
 msgid "Next"
@@ -3209,31 +3208,31 @@ msgstr "הבא"
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "שקופיות"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "השהיה"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "התחלה מחדש"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "המשך"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "חזרה"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "התקרבות"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "התרחקות"
 
 #: src/slideshow/PresenterConsole.js:1150
 msgid "Slide {0} of {1}"
@@ -3250,7 +3249,7 @@ msgstr "לחיצה תסגור את המצגת…"
 
 #: src/slideshow/SlideShowPresenter.ts:415
 msgid "Presentation is paused - main window is hidden"
-msgstr ""
+msgstr "המצגת מושהית - החלון הראשי מוסתר"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
