@@ -282,9 +282,10 @@ void extract(const std::string& parentKey, const Poco::Util::AbstractConfigurati
 {
     std::vector<std::string> keys;
     config->keys(parentKey, keys);
-    for (const auto& subKey : keys)
+    const std::string parentKeyDot = parentKey + '.';
+    for (const std::string& subKey : keys)
     {
-        const auto key = parentKey + '.' + subKey;
+        const auto key = parentKeyDot + subKey;
         if (config->has(key))
         {
             map.emplace(key, config->getString(key));
