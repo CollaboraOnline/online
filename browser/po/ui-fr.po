@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-02 13:03+0100\n"
-"PO-Revision-Date: 2024-11-28 22:10+0000\n"
-"Last-Translator: Méven Car <meven.car@collabora.com>\n"
+"PO-Revision-Date: 2024-12-11 14:15+0000\n"
+"Last-Translator: \"David D.\" <david.ducassou@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -265,15 +265,15 @@ msgstr "À propos"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "Historique CPU"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "Historique mémoire"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Mémoire"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
@@ -1241,7 +1241,7 @@ msgstr "Shockwave Flash (.swf)"
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:492
@@ -1315,7 +1315,7 @@ msgstr "Dessin ODF (.odg)"
 
 #: src/control/Control.Menubar.js:646
 msgid "Electronic signature..."
-msgstr ""
+msgstr "Signature électronique ..."
 
 #: src/control/Control.Menubar.js:708 src/control/Control.Menubar.js:720
 #: src/control/Control.Menubar.js:1194
@@ -1875,9 +1875,8 @@ msgid "Saving"
 msgstr "Sauvegarde en cours"
 
 #: src/control/Control.SaveState.ts:52
-#, fuzzy
 msgid "Saved"
-msgstr "Enregistrer"
+msgstr "Sauvegardé"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -2009,6 +2008,8 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Pour éviter des modifications accidentelles, l’auteur a défini ce fichier "
+"afin qu'il s'ouvre en mode lecture seule"
 
 #: src/control/Control.StatusBar.js:446
 msgid "Select multiple cells"
@@ -2752,7 +2753,7 @@ msgstr "Couleurs du document"
 
 #: src/docstatefunctions.js:176
 msgid ", cluster configuration error: mis-matching serverid"
-msgstr ""
+msgstr ", erreur de configuration du cluster : incohérence serverid"
 
 #: src/dom/NotebookbarAccessibility.js:240
 msgid "{0} tab selected"
@@ -3006,16 +3007,15 @@ msgstr ""
 
 #: src/layer/marker/A11yTextInput.js:226
 msgid "Out of table"
-msgstr ""
+msgstr "Hors de la table"
 
 #: src/layer/marker/A11yTextInput.js:229
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "Table avec {0} lignes et {1} colonnes"
 
 #: src/layer/marker/A11yTextInput.js:234
-#, fuzzy
 msgid "Row {0} through {1}"
-msgstr "Colonne {0} à {1}"
+msgstr "Rangée {0} à {1}"
 
 #: src/layer/marker/A11yTextInput.js:237
 msgid "Row {0}"
@@ -3031,7 +3031,7 @@ msgstr "Colonne {0}"
 
 #: src/layer/marker/A11yTextInput.js:276
 msgid "Editing activated. "
-msgstr ""
+msgstr "Édition activée. "
 
 #: src/layer/marker/A11yTextInput.js:295
 msgid "{0} selected"
@@ -3039,7 +3039,7 @@ msgstr "{0} sélectionné"
 
 #: src/layer/marker/A11yTextInput.js:297
 msgid "Has text: "
-msgstr ""
+msgstr "Contient le texte : "
 
 #: src/layer/marker/A11yTextInput.js:302
 msgid "{0} unselected"
@@ -3052,18 +3052,22 @@ msgstr "{0} supprimé"
 #: src/layer/marker/TextInput.js:439
 msgid "Screen reader support for text content is disabled. "
 msgstr ""
+"La prise en charge du lecteur d’écran pour le contenu texte est désactivée. "
 
 #: src/layer/marker/TextInput.js:440
 msgid "You need to enable it both at server level and in the UI. "
 msgstr ""
+"Vous devez l’activer au niveau du serveur et dans l’interface utilisateur. "
 
 #: src/layer/marker/TextInput.js:441
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
+"Recherchez la section d’accessibilité dans coolwsd.xml pour le paramètre du "
+"serveur. "
 
 #: src/layer/marker/TextInput.js:442
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "Vérifiez également le bouton de commande vocale sous {parentControl}."
 
 #: src/layer/marker/TextInput.js:444
 msgid "the Help tab"
@@ -3071,7 +3075,7 @@ msgstr "l'onglet Aide"
 
 #: src/layer/marker/TextInput.js:444
 msgid "the View menu"
-msgstr ""
+msgstr "le menu Affichage"
 
 #: src/layer/tile/CanvasTileLayer.js:1863
 msgid "Functions"
@@ -3109,20 +3113,18 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "Échec au téléchargement du presse-papiers, veuillez copier à nouveau"
 
 #: src/map/Clipboard.js:1264
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr ""
-"<p>Veuillez utiliser les boutons copier/coller du clavier à l'écran.</p>"
+"Veuillez utiliser les boutons copier/coller du clavier affiché à l'écran."
 
 #: src/map/Clipboard.js:1320
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>Un téléchargement en raison d'une opération de copier/coller volumineuse "
-"a déjà commencé. Veuillez attendre la fin du téléchargement ou l'annuler "
-"avant d'en démarrer un nouveau</p>"
+"Un téléchargement en raison d'une opération de copier/coller volumineuse a "
+"déjà commencé. Veuillez attendre la fin du téléchargement ou l'annuler avant "
+"d'en démarrer un nouveau"
 
 #: src/map/Clipboard.js:1342
 msgid "Paste from this document"
@@ -3134,15 +3136,15 @@ msgstr "Annuler collage spécial"
 
 #: src/map/Clipboard.js:1352
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Votre navigateur a un accès très limité au presse-papiers"
 
 #: src/map/Clipboard.js:1357
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Veuillez utiliser la combinaison suivante pour voir plus d’options :"
 
 #: src/map/Clipboard.js:1375
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Fermer la fenêtre contextuelle pour ignorer le collage spécial"
 
 #: src/map/Map.js:216
 msgid "Initializing..."
@@ -3187,7 +3189,7 @@ msgstr "Le téléversement sur le serveur a échoué avec le statut : {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "Fenêtre concernant l'impression"
 
 #: src/map/handler/Map.SlideShow.js:55 src/slideshow/SlideShowPresenter.ts:653
 msgid "Empty Slide Show"
@@ -3255,6 +3257,8 @@ msgstr "Le mode présentation a été désactivé pour ce document"
 #: src/map/handler/Map.VersionBar.js:41
 msgid "Your Collabora Online server needs updating. Version {0} is available."
 msgstr ""
+"Votre serveur Collabora Online a besoin d’être mis à jour. La version {0} "
+"est disponible."
 
 #: src/map/handler/Map.WOPI.js:153
 msgid "Creating new file from template..."
@@ -3274,7 +3278,7 @@ msgstr "Création d'une copie..."
 
 #: src/map/handler/Map.Welcome.js:81
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Boîte de dialogue de bienvenue"
 
 #: src/slideshow/PauseTimer.ts:130
 msgid "Pause... ( %SECONDS% )"
@@ -3282,7 +3286,7 @@ msgstr "Pause … ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Diapositive actuelle"
 
 #: src/slideshow/PresenterConsole.js:30
 #, fuzzy
@@ -3291,7 +3295,7 @@ msgstr "Diapositive suivante"
 
 #: src/slideshow/PresenterConsole.js:31
 msgid "Previous"
-msgstr ""
+msgstr "Précédente"
 
 #: src/slideshow/PresenterConsole.js:32
 msgid "Next"
@@ -3299,39 +3303,39 @@ msgstr "Suivant"
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Diapositives"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Redémarrer"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Résumer"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Revenir"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Zoom avant"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Zoom arrière"
 
 #: src/slideshow/PresenterConsole.js:1150
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Diapositive {0} de {1}"
 
 #: src/slideshow/PresenterConsole.js:1171
 msgid "No Notes"
-msgstr ""
+msgstr "Pas de notes"
 
 #: src/slideshow/PresenterConsole.js:1263
 #: src/slideshow/SlideShowPresenter.ts:327
@@ -3340,7 +3344,7 @@ msgstr "Cliquez pour quitter la présentation …"
 
 #: src/slideshow/SlideShowPresenter.ts:415
 msgid "Presentation is paused - main window is hidden"
-msgstr ""
+msgstr "La présentation est en pause - la fenêtre principale est masquée"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
