@@ -23,7 +23,7 @@
 
 namespace ConfigUtil
 {
-static const Poco::Util::AbstractConfiguration* Config{ 0 };
+static const Poco::Util::AbstractConfiguration* Config = nullptr;
 
 #if ENABLE_SSL
 RuntimeConstant<bool> SslEnabled;
@@ -272,10 +272,7 @@ void initialize(const std::string& xml)
     initialize(XmlConfig);
 }
 
-bool isInitialized()
-{
-    return Config;
-}
+bool isInitialized() { return Config != nullptr; }
 
 const std::map<std::string, std::string>& getDefaultAppConfig() { return DefAppConfig; }
 
@@ -363,25 +360,25 @@ std::string getLoggableConfig(const Poco::Util::AbstractConfiguration* config)
 std::string getString(const std::string& key, const std::string& def)
 {
     assert(Config && "Config is not initialized.");
-    return Config ? Config->getString(key, def) : def;
+    return (Config != nullptr) ? Config->getString(key, def) : def;
 }
 
 bool getBool(const std::string& key, const bool def)
 {
     assert(Config && "Config is not initialized.");
-    return Config ? Config->getBool(key, def) : def;
+    return (Config != nullptr) ? Config->getBool(key, def) : def;
 }
 
 int getInt(const std::string& key, const int def)
 {
     assert(Config && "Config is not initialized.");
-    return Config ? Config->getInt(key, def) : def;
+    return (Config != nullptr) ? Config->getInt(key, def) : def;
 }
 
 bool has(const std::string& key)
 {
     assert(Config && "Config is not initialized.");
-    return Config ? Config->has(key) : false;
+    return (Config != nullptr) ? Config->has(key) : false;
 }
 
 } // namespace ConfigUtil
