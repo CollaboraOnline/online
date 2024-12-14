@@ -163,24 +163,41 @@ inline constexpr bool isSupportKeyEnabled()
 #endif
 }
 
-class ConfigValueGetter
+class ConfigRawValueGetter
 {
-    Poco::Util::LayeredConfiguration& _config;
-    const std::string& _name;
+    const Poco::Util::LayeredConfiguration* _config;
+
+    ConfigRawValueGetter(const ConfigRawValueGetter&) = default;
+    ConfigRawValueGetter(ConfigRawValueGetter&&) = default;
+    ConfigRawValueGetter& operator=(const ConfigRawValueGetter&) = default;
+    ConfigRawValueGetter& operator=(ConfigRawValueGetter&&) = default;
 
 public:
-    ConfigValueGetter(Poco::Util::LayeredConfiguration& config, const std::string& name)
-        : _config(config)
-        , _name(name)
+    explicit ConfigRawValueGetter(Poco::Util::LayeredConfiguration& config)
+        : _config(&config)
     {
     }
 
-    void operator()(int& value) { value = _config.getInt(_name); }
-    void operator()(unsigned int& value) { value = _config.getUInt(_name); }
-    void operator()(uint64_t& value) { value = _config.getUInt64(_name); }
-    void operator()(bool& value) { value = _config.getBool(_name); }
-    void operator()(std::string& value) { value = _config.getString(_name); }
-    void operator()(double& value) { value = _config.getDouble(_name); }
+    ~ConfigRawValueGetter() = default;
+
+    void operator()(const std::string& name, int& value) const { value = _config->getInt(name); }
+    void operator()(const std::string& name, unsigned int& value) const
+    {
+        value = _config->getUInt(name);
+    }
+    void operator()(const std::string& name, uint64_t& value) const
+    {
+        value = _config->getUInt64(name);
+    }
+    void operator()(const std::string& name, bool& value) const { value = _config->getBool(name); }
+    void operator()(const std::string& name, std::string& value) const
+    {
+        value = _config->getString(name);
+    }
+    void operator()(const std::string& name, double& value) const
+    {
+        value = _config->getDouble(name);
+    }
 };
 
 template <typename T>
@@ -189,7 +206,7 @@ static bool getSafeConfig(Poco::Util::LayeredConfiguration& config, const std::s
 {
     try
     {
-        ConfigValueGetter(config, name)(value);
+        ConfigRawValueGetter{ config }(name, value);
         return true;
     }
     catch (...)
