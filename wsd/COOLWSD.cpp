@@ -1382,7 +1382,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     // Check deprecated settings.
     bool reuseCookies = false;
-    if (ConfigUtil::getSafeConfig(conf, "storage.wopi.reuse_cookies", reuseCookies))
+    if (ConfigUtil::getRawConfig(conf, "storage.wopi.reuse_cookies", reuseCookies))
         LOG_WRN("NOTE: Deprecated config option storage.wopi.reuse_cookies - no longer supported.");
 
 #if !MOBILEAPP
@@ -1414,13 +1414,13 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 #else
     LOG_INF("Anonymization of user-data is configurable.");
     bool haveAnonymizeUserDataConfig = false;
-    if (ConfigUtil::getSafeConfig(conf, "logging.anonymize.anonymize_user_data", AnonymizeUserData))
+    if (ConfigUtil::getRawConfig(conf, "logging.anonymize.anonymize_user_data", AnonymizeUserData))
         haveAnonymizeUserDataConfig = true;
 
     bool anonymizeFilenames = false;
     bool anonymizeUsernames = false;
-    if (ConfigUtil::getSafeConfig(conf, "logging.anonymize.usernames", anonymizeFilenames) ||
-        ConfigUtil::getSafeConfig(conf, "logging.anonymize.filenames", anonymizeUsernames))
+    if (ConfigUtil::getRawConfig(conf, "logging.anonymize.usernames", anonymizeFilenames) ||
+        ConfigUtil::getRawConfig(conf, "logging.anonymize.filenames", anonymizeUsernames))
     {
         LOG_WRN("NOTE: both logging.anonymize.usernames and logging.anonymize.filenames are deprecated and superseded by "
                 "logging.anonymize.anonymize_user_data. Please remove username and filename entries from the config and use only anonymize_user_data.");
