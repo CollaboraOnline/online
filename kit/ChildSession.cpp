@@ -1253,25 +1253,35 @@ bool ChildSession::clientVisibleArea(const StringVector& tokens)
 
 float ChildSession::getTilePriority(const std::chrono::steady_clock::time_point &now, const TileDesc &tile) const
 {
-    float score = tile.intersects(_clientVisibleArea) ? 1.0 : 0.0;
+    float score = tile.intersects(_clientVisibleArea) ? 2.0 : 1.0;
 
     // most important to render things close to the cursor fast
-    if (tile.getPart() == _currentPart && tile.intersects(_cursorPosition))
-        score *= 2.0;
+    if (tile.getPart() == _currentPart)
+    {
+        if (tile.intersects(_cursorPosition))
+            score *= 2.0;
+
+        // interacted with the keyboard/mouse recently ?
+        if (getInactivityMS(now) < 200 /* ms */) // typing etc.
+            score *= 2.0;
+
+        // pre-loading near the viewing area is also more important than far away
+        Util::Rectangle r = tile.toAABBox();
+        // grow in each direction
+        Util::Rectangle enlarged =
+            Util::Rectangle::create(r.getLeft() - r.getWidth(), r.getTop() - r.getHeight(),
+                                    r.getRight() + r.getWidth(), r.getBottom() + r.getHeight());
+        if (enlarged.intersects(_clientVisibleArea))
+            score *= 2.0;
+    }
 
     // previews are less interesting
     if (tile.isPreview())
-        score /= 3.0;
+        score /= 2.0;
 
-    // interacted the keyboard recently ?
-    score *= 2000 / std::clamp<float>(getInactivityMS(now), 250, 4000);
-
-    // readonly viewers are less high priority
-    if (isReadOnly())
+    // readonly viewers are also less high priority
+    else if (isReadOnly())
         score /= 2;
-
-    // FIXME: proximity to the center of a viewing area should bump priority
-    // for smarter pre-loading / rendering around the view.
 
     return score;
 }
