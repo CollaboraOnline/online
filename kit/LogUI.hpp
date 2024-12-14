@@ -20,7 +20,7 @@ class LogUiCmd
 {
 public:
     void createTmpFile();
-    void logUiCmdLine(int userId, std::string line);
+    void logUiCmdLine(int userId, const std::string& line);
     void saveLogFile();
     std::chrono::steady_clock::time_point getKitStartTimeSec();
 

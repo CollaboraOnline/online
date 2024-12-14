@@ -13,7 +13,7 @@
 #include <kit/LogUI.hpp>
 #include <Log.hpp>
 
-void LogUiCmd::logUiCmdLine(int userId, std::string line)
+void LogUiCmd::logUiCmdLine(int userId, const std::string& line)
 {
     _fileStreamUICommands.write(line.c_str(), line.length());
     _fileStreamUICommands.write("\n", 1);
@@ -23,7 +23,7 @@ void LogUiCmd::logUiCmdLine(int userId, std::string line)
 void LogUiCmd::saveLogFile()
 {
     std::string timeLog = "log-start-time: " + _kitStartTimeStr + " user-count:" + std::to_string(_usersLogged.size());
-    Log::logUI(Log::WRN, timeLog.c_str());
+    Log::logUI(Log::WRN, timeLog);
     _fileStreamUICommands.seekg(0, std::ios::beg);
     std::string line;
     while (std::getline(_fileStreamUICommands, line))
@@ -34,7 +34,7 @@ void LogUiCmd::saveLogFile()
     _fileStreamUICommands.close();
     timeLog = "log-end-time: ";
     timeLog.append(Util::getTimeNow("%Y-%m-%d %T"));
-    Log::logUI(Log::WRN, timeLog.c_str());
+    Log::logUI(Log::WRN, timeLog);
 }
 
 void LogUiCmd::createTmpFile()
