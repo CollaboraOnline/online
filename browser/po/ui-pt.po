@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-02 13:03+0100\n"
-"PO-Revision-Date: 2024-11-23 01:28+0000\n"
-"Last-Translator: Cleverson Cândido <optimuspraimu@gmail.com>\n"
+"PO-Revision-Date: 2024-12-04 15:06+0000\n"
+"Last-Translator: João Azevedo <jazevedo@collabora.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1311,7 +1311,7 @@ msgstr "Desenho ODF (.odg)"
 
 #: src/control/Control.Menubar.js:646
 msgid "Electronic signature..."
-msgstr ""
+msgstr "Assinatura Digital.."
 
 #: src/control/Control.Menubar.js:708 src/control/Control.Menubar.js:720
 #: src/control/Control.Menubar.js:1194
@@ -3329,7 +3329,7 @@ msgstr "Clique para sair da apresentação..."
 
 #: src/slideshow/SlideShowPresenter.ts:415
 msgid "Presentation is paused - main window is hidden"
-msgstr ""
+msgstr "A apresentação está pausada - a janela principal está oculta"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
