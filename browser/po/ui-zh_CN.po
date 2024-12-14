@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-02 13:03+0100\n"
+"POT-Creation-Date: 2024-12-14 13:17+0100\n"
 "PO-Revision-Date: 2024-11-20 18:10+0000\n"
 "Last-Translator: Tron Lee <472734894@qq.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -142,7 +142,7 @@ msgstr "网络图"
 
 #: admin/admin.strings.js:45 src/canvas/sections/CommentListSection.ts:504
 #: src/canvas/sections/CommentSection.ts:157
-#: src/control/Control.Notebookbar.js:264
+#: src/control/Control.Notebookbar.js:272
 #: src/control/Control.NotebookbarCalc.js:112
 #: src/control/Control.NotebookbarDraw.js:29
 #: src/control/Control.NotebookbarDraw.js:153
@@ -230,8 +230,7 @@ msgstr "日志级别"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
-#: src/control/Parts.js:490 src/core/Socket.js:427 src/core/Socket.js:1198
-#: src/core/Socket.js:1203
+#: src/core/Socket.js:427 src/core/Socket.js:1198 src/core/Socket.js:1203
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "关闭"
@@ -288,27 +287,29 @@ msgstr "注意"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: src/canvas/sections/CommentListSection.ts:1435
-#: src/canvas/sections/CommentListSection.ts:2323
+#: src/canvas/sections/CommentListSection.ts:1436
+#: src/canvas/sections/CommentListSection.ts:2324
 #: src/control/Control.AboutDialog.ts:154
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
+#: src/control/Control.ESignatureDialog.ts:111
 #: src/control/Control.LanguageDialog.js:119
 #: src/control/Control.ServerAuditDialog.ts:222
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
-#: src/control/Permission.js:89 src/control/Permission.js:99
-#: src/control/Permission.js:149 src/control/Toolbar.js:731
-#: src/control/Toolbar.js:828 src/core/Socket.js:704 src/core/Socket.js:1168
-#: src/core/Socket.js:1238 src/core/Socket.js:1386 src/core/Socket.js:1390
-#: src/docdispatcher.ts:493 src/main.js:84 src/main.js:87 src/main.js:140
-#: src/map/Clipboard.js:1257 src/map/handler/Map.Feedback.js:87
-#: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:165
-#: src/map/handler/Map.SlideShow.js:293 src/map/handler/Map.SlideShow.js:304
-#: src/map/handler/Map.WOPI.js:651 src/slideshow/SlideShowPresenter.ts:656
-#: src/slideshow/SlideShowPresenter.ts:671
-#: src/slideshow/SlideShowPresenter.ts:685
-#: src/slideshow/SlideShowPresenter.ts:701
+#: src/control/Parts.js:493 src/control/Permission.js:89
+#: src/control/Permission.js:99 src/control/Permission.js:149
+#: src/control/Toolbar.js:731 src/control/Toolbar.js:828
+#: src/core/Socket.js:704 src/core/Socket.js:1168 src/core/Socket.js:1238
+#: src/core/Socket.js:1386 src/core/Socket.js:1390 src/docdispatcher.ts:493
+#: src/main.js:84 src/main.js:87 src/main.js:140 src/map/Clipboard.js:1259
+#: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
+#: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
+#: src/map/handler/Map.SlideShow.js:304 src/map/handler/Map.WOPI.js:665
+#: src/slideshow/SlideShowPresenter.ts:714
+#: src/slideshow/SlideShowPresenter.ts:729
+#: src/slideshow/SlideShowPresenter.ts:744
+#: src/slideshow/SlideShowPresenter.ts:767
 msgid "OK"
 msgstr "确定"
 
@@ -321,8 +322,8 @@ msgstr "确定"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1330 src/control/Control.UIManager.js:1397
-#: src/control/Control.UIManager.js:1532 src/control/Control.UIManager.js:1691
+#: src/control/Control.UIManager.js:1346 src/control/Control.UIManager.js:1413
+#: src/control/Control.UIManager.js:1548 src/control/Control.UIManager.js:1707
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:823
 #: src/core/Socket.js:1411
 msgid "Cancel"
@@ -408,15 +409,15 @@ msgstr " 分钟"
 msgid " s"
 msgstr " 秒"
 
-#: js/global.js:1410
+#: js/global.js:1430
 msgid "Cluster is scaling, retrying..."
 msgstr "集群缩放中，正在重试…"
 
-#: js/global.js:1412
+#: js/global.js:1432
 msgid "Document is migrating to new server, retrying..."
 msgstr "文档正在迁移到新服务器，正在重试..."
 
-#: js/global.js:1414
+#: js/global.js:1434
 msgid "Failed to get RouteToken from controller"
 msgstr "无法从控制器获取 RouteToken"
 
@@ -428,106 +429,106 @@ msgstr "正在编辑批注"
 msgid "Please save or discard the comment currently being edited."
 msgstr "请保存或舍弃当前正在编辑的批注。"
 
-#: src/canvas/sections/CommentListSection.ts:1151
+#: src/canvas/sections/CommentListSection.ts:1152
 msgid "Modify"
 msgstr "修改"
 
-#: src/canvas/sections/CommentListSection.ts:1157
+#: src/canvas/sections/CommentListSection.ts:1158
 #: src/canvas/sections/CommentSection.ts:160
 msgid "Reply"
 msgstr "回复"
 
-#: src/canvas/sections/CommentListSection.ts:1163
+#: src/canvas/sections/CommentListSection.ts:1164
 msgid "Remove"
 msgstr "删除"
 
-#: src/canvas/sections/CommentListSection.ts:1169
+#: src/canvas/sections/CommentListSection.ts:1170
 msgid "Remove Thread"
 msgstr "移除主题"
 
-#: src/canvas/sections/CommentListSection.ts:1175
+#: src/canvas/sections/CommentListSection.ts:1176
 msgid "Resolve"
 msgstr "解决"
 
-#: src/canvas/sections/CommentListSection.ts:1175
+#: src/canvas/sections/CommentListSection.ts:1176
 msgid "Unresolve"
 msgstr "未解决"
 
-#: src/canvas/sections/CommentListSection.ts:1181
+#: src/canvas/sections/CommentListSection.ts:1182
 msgid "Unresolve Thread"
 msgstr "未解决主题"
 
-#: src/canvas/sections/CommentListSection.ts:1181
+#: src/canvas/sections/CommentListSection.ts:1182
 msgid "Resolve Thread"
 msgstr "解决主题"
 
-#: src/canvas/sections/CommentListSection.ts:1187
+#: src/canvas/sections/CommentListSection.ts:1188
 msgid "Promote to top comment"
 msgstr "置顶批注"
 
-#: src/canvas/sections/CommentListSection.ts:1193
+#: src/canvas/sections/CommentListSection.ts:1194
 msgid "Show on the side"
 msgstr "在侧边显示"
 
-#: src/canvas/sections/CommentListSection.ts:1193
+#: src/canvas/sections/CommentListSection.ts:1194
 msgid "Show comment bigger"
 msgstr "更大地显示批注"
 
-#: src/canvas/sections/CommentListSection.ts:1221
+#: src/canvas/sections/CommentListSection.ts:1222
 #: src/control/Control.JSDialogBuilder.js:1937
-#: src/layer/tile/CanvasTileLayer.js:3797
-#: src/layer/tile/CanvasTileLayer.js:3808
+#: src/layer/tile/CanvasTileLayer.js:3814
+#: src/layer/tile/CanvasTileLayer.js:3825
 msgid "Comment"
 msgstr "批注"
 
-#: src/canvas/sections/CommentListSection.ts:1433
-#: src/canvas/sections/CommentListSection.ts:1446
-#: src/canvas/sections/CommentListSection.ts:2321
+#: src/canvas/sections/CommentListSection.ts:1434
+#: src/canvas/sections/CommentListSection.ts:1447
+#: src/canvas/sections/CommentListSection.ts:2322
 msgid "Comments Updated"
 msgstr "批注已更新"
 
-#: src/canvas/sections/CommentListSection.ts:1434
+#: src/canvas/sections/CommentListSection.ts:1435
 msgid "Another user has removed this comment."
 msgstr "其他用户已经移除该批注。"
 
-#: src/canvas/sections/CommentListSection.ts:1447
+#: src/canvas/sections/CommentListSection.ts:1448
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr "其他用户已经更新该批注。您想要覆盖这些修改吗？"
 
-#: src/canvas/sections/CommentListSection.ts:1448 src/core/Socket.js:1415
+#: src/canvas/sections/CommentListSection.ts:1449 src/core/Socket.js:1415
 msgid "Overwrite"
 msgstr "覆盖"
 
-#: src/canvas/sections/CommentListSection.ts:1449
+#: src/canvas/sections/CommentListSection.ts:1450
 msgid "Update"
 msgstr "更新"
 
-#: src/canvas/sections/CommentListSection.ts:1520
-#: src/canvas/sections/CommentListSection.ts:1592
+#: src/canvas/sections/CommentListSection.ts:1521
+#: src/canvas/sections/CommentListSection.ts:1593
 msgid "Autosaved"
 msgstr "已自动保存"
 
-#: src/canvas/sections/CommentListSection.ts:2322
+#: src/canvas/sections/CommentListSection.ts:2323
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr "其他用户已经更新批注。您想要继续更新吗？"
 
-#: src/canvas/sections/CommentSection.ts:315
+#: src/canvas/sections/CommentSection.ts:299
 msgid "Open menu"
 msgstr "打开菜单"
 
-#: src/canvas/sections/CommentSection.ts:375
-#: src/canvas/sections/CommentSection.ts:376
+#: src/canvas/sections/CommentSection.ts:359
+#: src/canvas/sections/CommentSection.ts:360
 msgid "Accept change"
 msgstr "接受更改"
 
-#: src/canvas/sections/CommentSection.ts:382
-#: src/canvas/sections/CommentSection.ts:383
+#: src/canvas/sections/CommentSection.ts:366
+#: src/canvas/sections/CommentSection.ts:367
 msgid "Reject change"
 msgstr "拒绝更改"
 
-#: src/canvas/sections/CommentSection.ts:406
+#: src/canvas/sections/CommentSection.ts:390
 msgid "Resolved"
 msgstr "已解决"
 
@@ -535,15 +536,15 @@ msgstr "已解决"
 msgid "Document contains unsupported video"
 msgstr ""
 
-#: src/canvas/sections/URLPopUpSection.ts:49
+#: src/canvas/sections/URLPopUpSection.ts:58
 msgid "Copy link location"
 msgstr "复制链接"
 
-#: src/canvas/sections/URLPopUpSection.ts:59
+#: src/canvas/sections/URLPopUpSection.ts:68
 msgid "Edit link"
 msgstr "修改链接"
 
-#: src/canvas/sections/URLPopUpSection.ts:69
+#: src/canvas/sections/URLPopUpSection.ts:78
 msgid "Remove link"
 msgstr "移除链接"
 
@@ -621,19 +622,19 @@ msgstr "服务器在处理 {1} 命令时遇到了 {0} 错误。"
 msgid "Unlock"
 msgstr "解锁"
 
-#: src/control/Control.ContextMenu.js:231 src/docdispatcher.ts:490
+#: src/control/Control.ContextMenu.js:235 src/docdispatcher.ts:490
 msgid "Delete"
 msgstr "删除"
 
-#: src/control/Control.ContextMenu.js:251
+#: src/control/Control.ContextMenu.js:255
 msgid "Paste Special"
 msgstr "选择性粘贴"
 
-#: src/control/Control.ContextMenu.js:258
+#: src/control/Control.ContextMenu.js:262
 msgid "Copy Cells"
 msgstr "复制单元格"
 
-#: src/control/Control.ContextMenu.js:263
+#: src/control/Control.ContextMenu.js:267
 msgid "Fill Series"
 msgstr "填充序列"
 
@@ -723,6 +724,319 @@ msgstr "内容已拷贝至剪切板"
 #: src/control/Control.DownloadProgress.js:300
 msgid "Download failed"
 msgstr "下载失败"
+
+#: src/control/Control.ESignature.ts:126
+msgid "Andorra"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:127
+msgid "United Arab Emirates"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:128
+msgid "Albania"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:129
+msgid "Armenia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:130
+msgid "Argentina"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:131
+msgid "Austria"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:132
+msgid "Australia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:133
+msgid "Åland Islands"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:134
+msgid "Azerbaijan"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:135
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:136
+msgid "Belgium"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:137
+msgid "Bulgaria"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:138
+msgid "Brazil"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:139
+msgid "Belarus"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:140
+msgid "Canada"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:141
+msgid "Switzerland"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:142
+msgid "Chile"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:143
+msgid "China"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:144
+msgid "Cyprus"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:145
+msgid "Czech Republic"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:146
+msgid "Germany"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:147
+msgid "Denmark"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:148
+msgid "Estonia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:149
+msgid "Spain"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:150
+msgid "Finland"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:151
+msgid "France"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:152
+msgid "United Kingdom"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:153
+msgid "Georgia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:154
+msgid "Guernsey"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:155
+msgid "Greece"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:156
+msgid "Croatia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:157
+msgid "Hungary"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:158
+msgid "Indonesia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:159
+msgid "Ireland"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:160
+msgid "Israel"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:161
+msgid "India"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:162
+msgid "Iceland"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:163
+msgid "Italy"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:164
+msgid "Japan"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:165
+msgid "Kenya"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:166
+msgid "South Korea"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:167
+msgid "Kazakhstan"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:168
+msgid "Liechtenstein"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:169
+msgid "Lithuania"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:170
+msgid "Luxembourg"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:171
+msgid "Latvia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:172
+msgid "Monaco"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:173
+msgid "Moldova, Republic of"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:174
+msgid "Montenegro"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:175
+msgid "North Macedonia, Republic of"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:176
+msgid "Malta"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:177
+msgid "Mexico"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:178
+msgid "Netherlands"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:179
+msgid "Norway"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:180
+msgid "New Zealand"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:181
+msgid "Philippines"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:182
+msgid "Poland"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:183
+msgid "Portugal"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:184
+msgid "Qatar"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:185
+msgid "Romania"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:186
+msgid "Serbia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:187
+msgid "Russian Federation"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:188
+msgid "Saudi Arabia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:189
+msgid "Sweden"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:190
+msgid "Singapore"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:191
+msgid "Slovenia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:192
+msgid "Slovakia"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:193
+msgid "San Marino"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:194
+msgid "Turkey"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:195
+msgid "Taiwan, Province of China"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:196
+msgid "Ukraine"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:197
+msgid "United States of America"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:198
+msgid "Holy See (Vatican City State)"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:199
+msgid "Kosovo"
+msgstr ""
+
+#: src/control/Control.ESignature.ts:200
+msgid "South Africa"
+msgstr ""
+
+#: src/control/Control.ESignatureDialog.ts:49
+msgid "Country:"
+msgstr ""
+
+#: src/control/Control.ESignatureDialog.ts:78
+msgid "Provider:"
+msgstr ""
+
+#: src/control/Control.ESignatureDialog.ts:127
+#: src/control/Control.ESignatureDialog.ts:128
+msgid "Insert Electronic Signature"
+msgstr ""
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -918,7 +1232,7 @@ msgstr "PDF 文档（.pdf）"
 msgid "EPUB (.epub)"
 msgstr "电子出版物（.epub）"
 
-#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:221
+#: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:223
 msgid "Rename Document"
 msgstr "重新命名文档"
 
@@ -959,7 +1273,7 @@ msgstr "HTML 文件（.html）"
 
 #: src/control/Control.Menubar.js:101 src/control/Control.Menubar.js:428
 #: src/control/Control.Menubar.js:587 src/control/Control.Menubar.js:732
-#: src/control/Control.Toolbar.js:1185
+#: src/control/Control.Toolbar.js:1184
 msgid "Close document"
 msgstr "关闭文档"
 
@@ -1278,7 +1592,7 @@ msgstr "在新窗口中显示"
 
 #: src/control/Control.Menubar.js:545
 #: src/control/Control.NotebookbarImpress.js:374
-#: src/slideshow/PresenterConsole.js:190
+#: src/slideshow/PresenterConsole.js:209
 msgid "Presenter Console"
 msgstr "演示者控制台"
 
@@ -1364,43 +1678,43 @@ msgid "Containing text..."
 msgstr "包含文本…"
 
 #: src/control/Control.Menubar.js:867 src/control/Control.Menubar.js:877
-#: src/control/jsdialog/Definitions.Menu.ts:319
-#: src/control/jsdialog/Definitions.Menu.ts:353
+#: src/control/jsdialog/Definitions.Menu.ts:318
+#: src/control/jsdialog/Definitions.Menu.ts:349
 msgid "More highlights..."
 msgstr "更多高亮条件…"
 
 #: src/control/Control.Menubar.js:869
-#: src/control/jsdialog/Definitions.Menu.ts:325
+#: src/control/jsdialog/Definitions.Menu.ts:322
 msgid "Top/Bottom Rules..."
 msgstr "顶部/底部规则…"
 
 #: src/control/Control.Menubar.js:870
-#: src/control/jsdialog/Definitions.Menu.ts:328
+#: src/control/jsdialog/Definitions.Menu.ts:325
 msgid "Top N elements..."
 msgstr "顶部 N 个元素…"
 
 #: src/control/Control.Menubar.js:871
-#: src/control/jsdialog/Definitions.Menu.ts:332
+#: src/control/jsdialog/Definitions.Menu.ts:329
 msgid "Top N percent..."
 msgstr "顶部 N 百分比…"
 
 #: src/control/Control.Menubar.js:872
-#: src/control/jsdialog/Definitions.Menu.ts:336
+#: src/control/jsdialog/Definitions.Menu.ts:333
 msgid "Bottom N elements..."
 msgstr "底部 N 个元素…"
 
 #: src/control/Control.Menubar.js:873
-#: src/control/jsdialog/Definitions.Menu.ts:340
+#: src/control/jsdialog/Definitions.Menu.ts:337
 msgid "Bottom N percent..."
 msgstr "底部 N 百分比…"
 
 #: src/control/Control.Menubar.js:874
-#: src/control/jsdialog/Definitions.Menu.ts:344
+#: src/control/jsdialog/Definitions.Menu.ts:341
 msgid "Above Average..."
 msgstr "超出平均…"
 
 #: src/control/Control.Menubar.js:875
-#: src/control/jsdialog/Definitions.Menu.ts:348
+#: src/control/jsdialog/Definitions.Menu.ts:345
 msgid "Below Average..."
 msgstr "低于平均…"
 
@@ -1619,7 +1933,7 @@ msgstr "签名"
 #: src/control/Control.NotebookbarDraw.js:320
 #: src/control/Control.NotebookbarImpress.js:336
 #: src/control/Control.NotebookbarWriter.js:337
-#: src/control/Control.UIManager.js:221
+#: src/control/Control.UIManager.js:223
 msgid "Rename"
 msgstr "重命名"
 
@@ -2061,15 +2375,15 @@ msgstr "插入形状"
 msgid "Insert connectors"
 msgstr "插入连接器"
 
-#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:839
+#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:841
 msgid "Hide Menu"
 msgstr "隐藏菜单"
 
-#: src/control/Control.UIManager.js:221
+#: src/control/Control.UIManager.js:223
 msgid "Enter new name"
 msgstr "输入新名称"
 
-#: src/control/Control.UIManager.js:862
+#: src/control/Control.UIManager.js:864
 msgid "Show Menu"
 msgstr "显示菜单"
 
@@ -2117,7 +2431,7 @@ msgstr "用户列表概览"
 msgid "Following"
 msgstr "跟随中"
 
-#: src/control/Control.UserList.ts:549
+#: src/control/Control.UserList.ts:550
 msgid "Always follow the editor"
 msgstr "总是跟随编辑器"
 
@@ -2263,6 +2577,10 @@ msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr "取消引用链接将阻止 Collabora Online 更新本文档中的引用和参考书目。"
+
+#: src/control/Parts.js:493
+msgid "Show sheets"
+msgstr ""
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
@@ -2416,11 +2734,11 @@ msgstr "宽松"
 msgid "Very Loose"
 msgstr "非常宽松"
 
-#: src/control/jsdialog/Definitions.Menu.ts:423
+#: src/control/jsdialog/Definitions.Menu.ts:417
 msgid "From Beginning"
 msgstr "从头"
 
-#: src/control/jsdialog/Definitions.Menu.ts:427
+#: src/control/jsdialog/Definitions.Menu.ts:421
 msgid "From Current Slide"
 msgstr "从当前幻灯片"
 
@@ -2450,8 +2768,8 @@ msgid "Read-only"
 msgstr "只读"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:53
-msgid "Edit"
-msgstr "编辑"
+msgid "Edit mode"
+msgstr ""
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:72
 #: src/control/jsdialog/Widget.HTMLContent.ts:118
@@ -2679,15 +2997,15 @@ msgstr "您确定要删除这张幻灯片吗？"
 msgid "Are you sure you want to delete this page?"
 msgstr "您确定要删除该页面吗？"
 
-#: src/docstate.js:100
+#: src/docstate.js:99
 msgid "Standard"
 msgstr "标准"
 
-#: src/docstate.js:113
+#: src/docstate.js:112
 msgid "Theme colors"
 msgstr "主题颜色"
 
-#: src/docstate.js:114
+#: src/docstate.js:113
 msgid "Document colors"
 msgstr "文档颜色"
 
@@ -2968,15 +3286,15 @@ msgstr ""
 msgid "the View menu"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:1863
+#: src/layer/tile/CanvasTileLayer.js:1868
 msgid "Functions"
 msgstr "函数"
 
-#: src/layer/tile/CanvasTileLayer.js:2128
+#: src/layer/tile/CanvasTileLayer.js:2133
 msgid "Named Range"
 msgstr "命名范围"
 
-#: src/layer/tile/CanvasTileLayer.js:3825
+#: src/layer/tile/CanvasTileLayer.js:3842
 msgid "No Comments"
 msgstr "暂无批注"
 
@@ -2984,51 +3302,51 @@ msgstr "暂无批注"
 msgid "Warning! The browser you are using is not supported."
 msgstr "警告！您的浏览器不受支持。"
 
-#: src/map/Clipboard.js:175
+#: src/map/Clipboard.js:176
 msgid ""
 "To paste outside {productname}, please first click the 'download' button"
 msgstr "想要向 {productname} 以外粘贴，请先点击“下载”按钮"
 
-#: src/map/Clipboard.js:183
+#: src/map/Clipboard.js:184
 msgid "Copying from the document disabled"
 msgstr "禁止从文档内复制"
 
-#: src/map/Clipboard.js:284
+#: src/map/Clipboard.js:285
 msgid "warning: copy/paste request timed out"
 msgstr "警告：复制/粘贴请求超时"
 
-#: src/map/Clipboard.js:328
+#: src/map/Clipboard.js:329
 msgid "Failed to download clipboard, please re-copy"
 msgstr "下载剪切板失败，请重新复制"
 
-#: src/map/Clipboard.js:1264
+#: src/map/Clipboard.js:1266
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "请使用屏幕键盘上的粘贴按钮。"
 
-#: src/map/Clipboard.js:1320
+#: src/map/Clipboard.js:1322
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr "由于大规模复制/粘贴操作而导致的下载已经开始。请等待当前下载，或在开始新下载之"
 "前取消它"
 
-#: src/map/Clipboard.js:1342
+#: src/map/Clipboard.js:1344
 msgid "Paste from this document"
 msgstr "从本文档粘贴"
 
-#: src/map/Clipboard.js:1342
+#: src/map/Clipboard.js:1344
 msgid "Cancel paste special"
 msgstr "取消选择性粘贴"
 
-#: src/map/Clipboard.js:1352
+#: src/map/Clipboard.js:1354
 msgid "Your browser has very limited access to the clipboard"
 msgstr "您的浏览器对剪贴板的访问权限非常有限"
 
-#: src/map/Clipboard.js:1357
+#: src/map/Clipboard.js:1359
 msgid "Please use following combination to see more options:"
 msgstr "请使用以下组合以查看更多选项："
 
-#: src/map/Clipboard.js:1375
+#: src/map/Clipboard.js:1377
 msgid "Close popup to ignore paste special"
 msgstr "关闭弹出窗口以忽略选择性粘贴"
 
@@ -3073,17 +3391,17 @@ msgstr "文件上传失败，状态为 {0}"
 msgid "Print dialog"
 msgstr ""
 
-#: src/map/handler/Map.SlideShow.js:55 src/slideshow/SlideShowPresenter.ts:653
+#: src/map/handler/Map.SlideShow.js:55 src/slideshow/SlideShowPresenter.ts:711
 msgid "Empty Slide Show"
 msgstr "空白演示文稿"
 
 #: src/map/handler/Map.SlideShow.js:163
-#: src/slideshow/SlideShowPresenter.ts:680
+#: src/slideshow/SlideShowPresenter.ts:739
 msgid "Windowed Presentation Blocked"
 msgstr "演示窗口被阻止"
 
 #: src/map/handler/Map.SlideShow.js:164
-#: src/slideshow/SlideShowPresenter.ts:682
+#: src/slideshow/SlideShowPresenter.ts:741
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
@@ -3092,17 +3410,17 @@ msgstr "演示被阻止。请在浏览器中允许弹出窗口。这让幻灯片
 "幕分享。"
 
 #: src/map/handler/Map.SlideShow.js:168
-#: src/slideshow/SlideShowPresenter.ts:504
+#: src/slideshow/SlideShowPresenter.ts:546
 msgid "Windowed Presentation: "
 msgstr "演示窗口： "
 
 #: src/map/handler/Map.SlideShow.js:198
-#: src/slideshow/SlideShowPresenter.ts:561
+#: src/slideshow/SlideShowPresenter.ts:606
 msgid "Presenting in window"
 msgstr "窗口演示中"
 
 #: src/map/handler/Map.SlideShow.js:199
-#: src/slideshow/SlideShowPresenter.ts:562
+#: src/slideshow/SlideShowPresenter.ts:607
 msgid "Close Presentation"
 msgstr "关闭演示"
 
@@ -3115,22 +3433,22 @@ msgid "End Presentation"
 msgstr "结束演示"
 
 #: src/map/handler/Map.SlideShow.js:291
-#: src/slideshow/SlideShowPresenter.ts:668
+#: src/slideshow/SlideShowPresenter.ts:726
 msgid "Already presenting"
 msgstr "已在演示中"
 
 #: src/map/handler/Map.SlideShow.js:292
-#: src/slideshow/SlideShowPresenter.ts:669
+#: src/slideshow/SlideShowPresenter.ts:727
 msgid "You are already presenting this document"
 msgstr "您已经在演示此文档"
 
 #: src/map/handler/Map.SlideShow.js:302
-#: src/slideshow/SlideShowPresenter.ts:698
+#: src/slideshow/SlideShowPresenter.ts:764
 msgid "Presentation disabled"
 msgstr "演示已禁用"
 
 #: src/map/handler/Map.SlideShow.js:303
-#: src/slideshow/SlideShowPresenter.ts:699
+#: src/slideshow/SlideShowPresenter.ts:765
 msgid "Presentation mode has been disabled for this document"
 msgstr "该文档演示模式已被禁用"
 
@@ -3142,15 +3460,15 @@ msgstr ""
 msgid "Creating new file from template..."
 msgstr "使用模版创建新文件…"
 
-#: src/map/handler/Map.WOPI.js:651
+#: src/map/handler/Map.WOPI.js:665
 msgid "Error"
 msgstr "错误"
 
-#: src/map/handler/Map.WOPI.js:651
+#: src/map/handler/Map.WOPI.js:665
 msgid "File name should contain an extension."
 msgstr "文件名应当包含扩展名。"
 
-#: src/map/handler/Map.WOPI.js:659
+#: src/map/handler/Map.WOPI.js:673
 msgid "Creating copy..."
 msgstr "正在创建副本…"
 
@@ -3158,7 +3476,7 @@ msgstr "正在创建副本…"
 msgid "Welcome Dialog"
 msgstr ""
 
-#: src/slideshow/PauseTimer.ts:130
+#: src/slideshow/PauseTimer.ts:140
 msgid "Pause... ( %SECONDS% )"
 msgstr "暂停…（%SECONDS%）"
 
@@ -3207,20 +3525,24 @@ msgstr ""
 msgid "Zoom Out"
 msgstr ""
 
-#: src/slideshow/PresenterConsole.js:1150
+#: src/slideshow/PresenterConsole.js:1177
 msgid "Slide {0} of {1}"
 msgstr ""
 
-#: src/slideshow/PresenterConsole.js:1171
+#: src/slideshow/PresenterConsole.js:1199
 msgid "No Notes"
 msgstr ""
 
-#: src/slideshow/PresenterConsole.js:1263
-#: src/slideshow/SlideShowPresenter.ts:327
+#: src/slideshow/PresenterConsole.js:1287
+msgid "Repeat in {0} seconds"
+msgstr ""
+
+#: src/slideshow/PresenterConsole.js:1292
+#: src/slideshow/SlideShowPresenter.ts:365
 msgid "Click to exit presentation..."
 msgstr "点击以退出演示…"
 
-#: src/slideshow/SlideShowPresenter.ts:415
+#: src/slideshow/SlideShowPresenter.ts:453
 msgid "Presentation is paused - main window is hidden"
 msgstr ""
 
@@ -3300,6 +3622,9 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Edit"
+#~ msgstr "编辑"
 
 #~ msgid "Headings and objects that you add to the document will appear here"
 #~ msgstr "您添加到文档中的标题和对象将显示在此处"
