@@ -707,7 +707,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             if (!COOLWSD::IsProxyPrefixEnabled)
                 throw BadRequestException(
                     "ProxyPrefix present but net.proxy_prefix is not enabled");
-            else if (!socket->isLocal())
+
+            if (!socket->isLocal())
                 throw BadRequestException("ProxyPrefix request from non-local socket");
         }
 
