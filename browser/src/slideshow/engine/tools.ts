@@ -484,6 +484,47 @@ class PriorityQueue {
 	}
 }
 
+namespace GlHelpers {
+	export const nearestPointOnSegment = `
+		float nearestPointOnSegment(vec4 CF, vec4 CT, vec4 C) {
+
+			// Compute the vector along the segment (CT - CF)
+			vec4 segment = CT - CF;
+
+			// Compute the vector from the endpoint CF to the point C
+			vec4 toC = C - CF;
+
+			float length2 = dot(segment, segment);
+
+			// Project C onto the segment, finding the scalar 't'
+			float t = dot(toC, segment) / length2;
+
+			// Clamp 't' to [0, 1] range to ensure the nearest point lies on the segment
+			t = clamp(t, 0.0, 1.0);
+			return t;
+		}
+`;
+
+	export const computeColor = `
+		vec4 computeColor(vec4 color) {
+			if (fromLineColor != toLineColor || fromFillColor != toFillColor) {
+				vec4 colorSegment = fromFillColor - fromLineColor;
+				float length2 = dot(colorSegment, colorSegment);
+				if (length2 < 1e-6) {
+				 	return toFillColor;
+				}
+				else {
+					float t = nearestPointOnSegment(fromLineColor, fromFillColor, color);
+					vec4 fromColor = fromLineColor + t * colorSegment;
+					vec4 toColor = toLineColor + t * (toFillColor - toLineColor);
+					return mix(color, toColor, float(distance(color, fromColor) < 0.01));
+				}
+			}
+			return color;
+		}
+`;
+}
+
 /** class PriorityEntry
  *  It provides an entry type for priority queues.
  *  Higher is the value of nPriority higher is the priority of the created entry.
