@@ -209,14 +209,14 @@
         <enable type="bool" desc="Controls whether SSL encryption between coolwsd and the network is enabled (do not disable for production deployment). If default is false, must first be compiled with SSL support to enable." default="@ENABLE_SSL@">@ENABLE_SSL@</enable>
         <!-- SSL off-load can be done in a proxy, if so disable SSL, and enable termination below in production -->
         <termination desc="Connection via proxy where coolwsd acts as working via https, but actually uses http." type="bool" default="false">false</termination>
-        <cert_file_path desc="Path to the cert file" relative="false">@COOLWSD_CONFIGDIR@/cert.pem</cert_file_path>
-        <key_file_path desc="Path to the key file" relative="false">@COOLWSD_CONFIGDIR@/key.pem</key_file_path>
-        <ca_file_path desc="Path to the ca file" relative="false">@COOLWSD_CONFIGDIR@/ca-chain.cert.pem</ca_file_path>
+        <cert_file_path desc="Path to the cert file" type="path" relative="false">@COOLWSD_CONFIGDIR@/cert.pem</cert_file_path>
+        <key_file_path desc="Path to the key file" type="path" relative="false">@COOLWSD_CONFIGDIR@/key.pem</key_file_path>
+        <ca_file_path desc="Path to the ca file" type="path" relative="false">@COOLWSD_CONFIGDIR@/ca-chain.cert.pem</ca_file_path>
         <ssl_verification desc="Enable or disable SSL verification of hosts remote to coolwsd. If true SSL verification will be strict, otherwise certs of hosts will not be verified. You may have to disable it in test environments with self-signed certificates." type="string" default="@SSL_VERIFY@">@SSL_VERIFY@</ssl_verification>
-        <cipher_list desc="List of OpenSSL ciphers to accept" default="ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"></cipher_list>
+        <cipher_list desc="List of OpenSSL ciphers to accept" type="string" default="ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"></cipher_list>
         <hpkp desc="Enable HTTP Public key pinning" enable="false" report_only="false">
-            <max_age desc="HPKP's max-age directive - time in seconds browser should remember the pins" enable="true">1000</max_age>
-            <report_uri desc="HPKP's report-uri directive - pin validation failure are reported at this URL" enable="false"></report_uri>
+            <max_age desc="HPKP's max-age directive - time in seconds browser should remember the pins" enable="true" type="uint" default="1000">1000</max_age>
+            <report_uri desc="HPKP's report-uri directive - pin validation failure are reported at this URL" enable="false" type="string"></report_uri>
             <pins desc="Base64 encoded SPKI fingerprints of keys to be pinned">
             <pin></pin>
             </pins>
@@ -285,9 +285,9 @@
         <ssl desc="SSL settings">
             <as_scheme type="bool" default="true" desc="When set we exclusively use the WOPI URI's scheme to enable SSL for storage">true</as_scheme>
             <enable type="bool" desc="If as_scheme is false or not set, this can be set to force SSL encryption between storage and coolwsd. When empty this defaults to following the ssl.enable setting"></enable>
-            <cert_file_path desc="Path to the cert file. When empty this defaults to following the ssl.cert_file_path setting" relative="false"></cert_file_path>
-            <key_file_path desc="Path to the key file. When empty this defaults to following the ssl.key_file_path setting" relative="false"></key_file_path>
-            <ca_file_path desc="Path to the ca file. When empty this defaults to following the ssl.ca_file_path setting" relative="false"></ca_file_path>
+            <cert_file_path desc="Path to the cert file. When empty this defaults to following the ssl.cert_file_path setting" type="path" relative="false"></cert_file_path>
+            <key_file_path desc="Path to the key file. When empty this defaults to following the ssl.key_file_path setting" type="path" relative="false"></key_file_path>
+            <ca_file_path desc="Path to the ca file. When empty this defaults to following the ssl.ca_file_path setting" type="path" relative="false"></ca_file_path>
             <cipher_list desc="List of OpenSSL ciphers to accept. If empty the defaults are used. These can be overridden only if absolutely needed."></cipher_list>
         </ssl>
     </storage>
@@ -344,11 +344,11 @@
     </fonts_missing>
 
     <indirection_endpoint>
-      <url desc="URL endpoint to server which servers routeToken in json format" default=""></url>
+      <url desc="URL endpoint to server which servers routeToken in json format" type="string" default=""></url>
       <migration_timeout_secs desc="The maximum number of seconds waiting for shutdown migration message from indirection server before unloading an document. Defaults to 180 second." type="uint" default="180">180</migration_timeout_secs>
       <geolocation_setup>
         <enable desc="Enable geolocation_setup when using indirection server with geolocation configuration" type="bool" default="false">false</enable>
-        <timezone desc="IANA timezone of server. For example: Europe/Berlin "></timezone>
+        <timezone desc="IANA timezone of server. For example: Europe/Berlin" type="string"></timezone>
       </geolocation_setup>
       <server_name desc="server name to show in cluster overview admin panel" type="string" default=""></server_name>
     </indirection_endpoint>
