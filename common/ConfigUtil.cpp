@@ -277,32 +277,32 @@ bool isInitialized() { return Config != nullptr; }
 const std::map<std::string, std::string>& getDefaultAppConfig() { return DefAppConfig; }
 
 /// Recursively extract the sub-keys of the given parent key.
-void extract(const std::string& parentKey, const Poco::Util::AbstractConfiguration* config,
+void extract(const std::string& parentKey, const Poco::Util::AbstractConfiguration& config,
              std::map<std::string, std::string>& map)
 {
     std::vector<std::string> keys;
-    config->keys(parentKey, keys);
+    config.keys(parentKey, keys);
     const std::string parentKeyDot = parentKey + '.';
     for (const std::string& subKey : keys)
     {
         const auto key = parentKeyDot + subKey;
-        if (config->has(key))
+        if (config.has(key))
         {
-            map.emplace(key, getConfigValue(*config, key, std::string()));
+            map.emplace(key, getConfigValue(config, key, std::string()));
             extract(key, config, map);
         }
     }
 }
 
-std::map<std::string, std::string> extractAll(const Poco::Util::AbstractConfiguration* config)
+std::map<std::string, std::string> extractAll(const Poco::Util::AbstractConfiguration& config)
 {
     std::map<std::string, std::string> map;
 
     std::vector<std::string> keys;
-    config->keys(keys);
+    config.keys(keys);
     for (const auto& key : keys)
     {
-        if (config->has(key))
+        if (config.has(key))
         {
             extract(key, config, map);
         }
@@ -342,7 +342,7 @@ std::map<std::string, std::string> extractAll(const Poco::Util::AbstractConfigur
     return map;
 }
 
-std::string getLoggableConfig(const Poco::Util::AbstractConfiguration* config)
+std::string getLoggableConfig(const Poco::Util::AbstractConfiguration& config)
 {
     const std::map<std::string, std::string> allConfigs = extractAll(config);
     std::ostringstream ossConfig;
