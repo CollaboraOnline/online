@@ -20,11 +20,11 @@
         document e.g. the text part of it will be sent to the cloud API. Please read the respective privacy policies, e.g. https://languagetool.org/legal/privacy.
     -->
     <languagetool desc="Remote API settings for spell and grammar checking">
-        <enabled desc="Enable Remote Spell and Grammar Checker" type="bool" default="false"></enabled>
+        <enabled desc="Enable Remote Spell and Grammar Checker" type="bool" default="false">false</enabled>
         <base_url desc="HTTP endpoint for the API server, without /check or /languages postfix at the end." type="string" default=""></base_url>
         <user_name desc="LanguageTool or Duden account username for premium usage." type="string" default=""></user_name>
         <api_key desc="API key provided by LanguageTool or Duden account for premium usage." type="string" default=""></api_key>
-        <ssl_verification desc="Enable or disable SSL verification. You may have to disable it in test environments with self-signed certificates." type="string" default="true"></ssl_verification>
+        <ssl_verification desc="Enable or disable SSL verification. You may have to disable it in test environments with self-signed certificates." type="string" default="true">true</ssl_verification>
         <rest_protocol desc="REST API protocol. For LanguageTool leave it blank, for Duden Korrekturserver use the string 'duden'." type="string" default=""></rest_protocol>
     </languagetool>
 
@@ -36,11 +36,11 @@
 
     <sys_template_path desc="Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes." type="path" relative="true" default="systemplate"></sys_template_path>
     <child_root_path desc="Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate. Must be an empty directory." type="path" relative="true" default="jails"></child_root_path>
-    <mount_jail_tree desc="Controls whether the systemplate and lotemplate contents are mounted or not, which is much faster than the default of linking/copying each file." type="bool" default="true"></mount_jail_tree>
+    <mount_jail_tree desc="Controls whether the systemplate and lotemplate contents are mounted or not, which is much faster than the default of linking/copying each file." type="bool" default="true">true</mount_jail_tree>
 
     <server_name desc="External hostname:port of the server running coolwsd. If empty, it's derived from the request (please set it if this doesn't work). May be specified when behind a reverse-proxy or when the hostname is not reachable directly." type="string" default=""></server_name>
     <file_server_root_path desc="Path to the directory that should be considered root for the file server. This should be the directory containing cool." type="path" relative="true" default="browser/../"></file_server_root_path>
-    <hexify_embedded_urls desc="Enable to protect encoded URLs from getting decoded by intermediate hops. Particularly useful on Azure deployments" type="bool" default="false"></hexify_embedded_urls>
+    <hexify_embedded_urls desc="Enable to protect encoded URLs from getting decoded by intermediate hops. Particularly useful on Azure deployments" type="bool" default="false">false</hexify_embedded_urls>
     <experimental_features desc="Enable/Disable experimental features" type="bool" default="@ENABLE_EXPERIMENTAL@">@ENABLE_EXPERIMENTAL@</experimental_features>
 
     <memproportion desc="The maximum percentage of available memory consumed by all of the @APP_NAME@ processes, after which we start cleaning up idle documents. If cgroup memory limits are set, this is the maximum percentage of that limit to consume." type="double" default="80.0"></memproportion>
@@ -201,7 +201,7 @@
       <connection_timeout_secs desc="Specifies the connection, send, recv timeout in seconds for connections initiated by coolwsd (such as WOPI connections)." type="int" default="30"></connection_timeout_secs>
 
       <!-- this setting radically changes how online works, it should not be used in a production environment -->
-      <proxy_prefix type="bool" default="false" desc="Enable a ProxyPrefix to be passed int through which to redirect requests"></proxy_prefix>
+      <proxy_prefix type="bool" default="false" desc="Enable a ProxyPrefix to be passed int through which to redirect requests">false</proxy_prefix>
     </net>
 
     <ssl desc="SSL settings">
@@ -280,7 +280,7 @@
             <!-- More "group"s possible here -->
             </alias_groups>
 
-            <is_legacy_server desc="Set to true for legacy server that need deprecated headers." type="bool" default="false"></is_legacy_server>
+            <is_legacy_server desc="Set to true for legacy server that need deprecated headers." type="bool" default="false">false</is_legacy_server>
         </wopi>
         <ssl desc="SSL settings">
             <as_scheme type="bool" default="true" desc="When set we exclusively use the WOPI URI's scheme to enable SSL for storage">true</as_scheme>
@@ -370,8 +370,8 @@
     </overwrite_mode>
 
     <wasm desc="WASM-specific settings">
-        <enable desc="Enable WASM support" type="bool" default="false"></enable>
-        <force desc="When enabled, all requests are redirected to WASM." type="bool" default="false"></force>
+        <enable desc="Enable WASM support" type="bool" default="false">false</enable>
+        <force desc="When enabled, all requests are redirected to WASM." type="bool" default="false">false</force>
     </wasm>
 
     <document_signing desc="Document signing settings">
