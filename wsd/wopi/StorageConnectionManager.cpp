@@ -169,7 +169,7 @@ void StorageConnectionManager::initialize()
 
 #if ENABLE_DEBUG
     char* StorageSSLEnabled = getenv("STORAGE_SSL_ENABLE");
-    if (StorageSSLEnabled != NULL)
+    if (StorageSSLEnabled != nullptr)
     {
         if (!strcasecmp(StorageSSLEnabled, "true"))
             SSLEnabled = true;
