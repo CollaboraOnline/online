@@ -32,8 +32,8 @@ interface LayerRenderer {
 
 class LayerRendererGl implements LayerRenderer {
 	private static readonly DefaultVertices = [-1, -1, 1, -1, -1, 1, 1, 1];
-	private static readonly InvalidColor = new Float32Array([-1, -1, -1, -1]);
-	private static readonly ErrorColor = new Float32Array([1, 0, 0, 1]);
+	private static readonly DefaultFromColor = new Float32Array([0, 0, 0, 0]);
+	private static readonly DefaultToColor = new Float32Array([0, 0, 0, 0]);
 	private offscreenCanvas: OffscreenCanvas;
 	private glContext: RenderContextGl;
 	private gl: WebGL2RenderingContext;
@@ -93,11 +93,12 @@ class LayerRendererGl implements LayerRenderer {
 		varying vec2 v_texCoord;
 		uniform sampler2D u_sampler;
 
+		${GlHelpers.nearestPointOnSegment}
+		${GlHelpers.computeColor}
+
 		void main() {
 			vec4 color = texture2D(u_sampler, v_texCoord);
-			color = mix(mix(color, toLineColor, float(distance(color, fromLineColor) < 0.03)),
-			            toFillColor,
-			            float(distance(color, fromFillColor) < 0.03));
+			color = computeColor(color);
 			color = color * alpha;
 			gl_FragColor = color;
 		}
@@ -191,10 +192,10 @@ class LayerRendererGl implements LayerRenderer {
 
 		let bounds: BoundsType = null;
 		let alpha = 1.0;
-		let fromFillColor = LayerRendererGl.InvalidColor;
-		let toFillColor = LayerRendererGl.ErrorColor;
-		let fromLineColor = LayerRendererGl.InvalidColor;
-		let toLineColor = LayerRendererGl.ErrorColor;
+		let fromFillColor = LayerRendererGl.DefaultFromColor;
+		let toFillColor = LayerRendererGl.DefaultToColor;
+		let fromLineColor = LayerRendererGl.DefaultFromColor;
+		let toLineColor = LayerRendererGl.DefaultToColor;
 		if (properties) {
 			bounds = properties.bounds;
 			alpha = properties.alpha;

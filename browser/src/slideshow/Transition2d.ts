@@ -80,8 +80,8 @@ abstract class TransitionBase extends SlideChangeGl {
 }
 
 class Transition2d extends TransitionBase {
-	private static readonly InvalidColor = new Float32Array([-1, -1, -1, -1]);
-	private static readonly ErrorColor = new Float32Array([1, 0, 0, 1]);
+	private static readonly DefaultFromColor = new Float32Array([0, 0, 0, 0]);
+	private static readonly DefaultToColor = new Float32Array([0, 0, 0, 0]);
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
@@ -172,10 +172,10 @@ class Transition2d extends TransitionBase {
 			// jscpd:ignore-start
 			let bounds: BoundsType = null;
 			let alpha = 1.0;
-			let fromFillColor = Transition2d.InvalidColor;
-			let toFillColor = Transition2d.ErrorColor;
-			let fromLineColor = Transition2d.InvalidColor;
-			let toLineColor = Transition2d.ErrorColor;
+			let fromFillColor = Transition2d.DefaultFromColor;
+			let toFillColor = Transition2d.DefaultToColor;
+			let fromLineColor = Transition2d.DefaultFromColor;
+			let toLineColor = Transition2d.DefaultToColor;
 			if (properties) {
 				bounds = properties.bounds;
 				alpha = properties.alpha;

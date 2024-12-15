@@ -138,6 +138,13 @@ class ClippingTransition extends Transition2d {
 		                return (c - 0.5) * s + 0.5;
 		            }
 
+                ${!isSlideTransition
+                      ? `
+                          ${GlHelpers.nearestPointOnSegment}
+                          ${GlHelpers.computeColor}
+                          `
+                      : ''}
+
                 void main() {
                     // reverse direction / mode out ?
                     float progress = ${
@@ -162,9 +169,7 @@ class ClippingTransition extends Transition2d {
                     vec4 color2 = texture(enteringSlideTexture, v_texCoord);
                     ${!isSlideTransition
                           ? `
-                              color2 = mix(mix(color2, toLineColor, float(distance(color2, fromLineColor) < 0.03)),
-                                          toFillColor,
-                                          float(distance(color2, fromFillColor) < 0.03));
+                              color2 = computeColor(color2);
                               color2 *= alpha;
                               `
                           : ''}

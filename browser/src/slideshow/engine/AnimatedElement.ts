@@ -789,15 +789,14 @@ class AnimatedElement {
 				colorMap.fromFillColor = this.aBaseFontColor;
 				colorMap.toFillColor = this.aFontColor;
 			}
-		} else {
-			if (!this.aFillColor.equal(this.aBaseFillColor)) {
-				colorMap.fromFillColor = this.aBaseFillColor;
-				colorMap.toFillColor = this.aFillColor;
-			}
-			if (!this.aLineColor.equal(this.aBaseLineColor)) {
-				colorMap.fromLineColor = this.aBaseLineColor;
-				colorMap.toLineColor = this.aLineColor;
-			}
+		} else if (
+			!this.aFillColor.equal(this.aBaseFillColor) ||
+			!this.aLineColor.equal(this.aBaseLineColor)
+		) {
+			colorMap.fromFillColor = this.aBaseFillColor;
+			colorMap.toFillColor = this.aFillColor;
+			colorMap.fromLineColor = this.aBaseLineColor;
+			colorMap.toLineColor = this.aLineColor;
 		}
 
 		const properties: AnimatedElementRenderProperties = {
