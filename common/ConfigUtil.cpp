@@ -324,21 +324,6 @@ std::map<std::string, std::string> extractAll(const Poco::Util::AbstractConfigur
     map.erase("trace.filter");
     map.erase("trace.outgoing");
 
-    // Redact sensitive entries.
-    for (auto& pair : map)
-    {
-        if (pair.first == "admin_console.username" ||
-            pair.first == "admin_console.password" ||
-            pair.first == "admin_console.secure_password" ||
-            pair.first == "languagetool.api_key" ||
-            pair.first == "deepl.auth_key" ||
-            pair.first == "logging.anonymize.anonymization_salt" ||
-            pair.first == "support_key")
-        {
-            pair.second = "<redacted>";
-        }
-    }
-
     return map;
 }
 
@@ -351,7 +336,18 @@ std::string getLoggableConfig(const Poco::Util::AbstractConfiguration& config)
         const auto it = DefAppConfig.find(pair.first);
         if (it == DefAppConfig.end() || it->second != pair.second)
         {
-            ossConfig << '\t' << pair.first << ": " << pair.second << '\n';
+            if (pair.first == "admin_console.username" || pair.first == "admin_console.password" ||
+                pair.first == "admin_console.secure_password" ||
+                pair.first == "languagetool.api_key" || pair.first == "deepl.auth_key" ||
+                pair.first == "logging.anonymize.anonymization_salt" || pair.first == "support_key")
+            {
+                // Redact sensitive entries.
+                ossConfig << '\t' << pair.first << ": <redacted>\n";
+            }
+            else
+            {
+                ossConfig << '\t' << pair.first << ": " << pair.second << '\n';
+            }
         }
     }
 
