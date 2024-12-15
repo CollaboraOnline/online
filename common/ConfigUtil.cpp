@@ -352,14 +352,21 @@ std::map<std::string, std::string> extractAll(const Poco::Util::AbstractConfigur
     // E.g. logging.file: /tmp/coolwsd.lognevertimestamptrue10 days10truefalse
     map.erase("admin_console.logging");
     map.erase("feature_lock.locked_hosts");
+    map.erase("indirection_endpoint.geolocation_setup");
     map.erase("logging.anonymize");
     map.erase("logging.file");
+    map.erase("logging_ui_cmd.file");
     map.erase("net.lok_allow");
     map.erase("net.post_allow");
     map.erase("per_document.cleanup");
+    map.erase("ssl.hpkp");
+    map.erase("ssl.hpkp.pins");
     map.erase("ssl.sts");
     map.erase("storage.filesystem");
+    map.erase("storage.ssl");
     map.erase("storage.wopi");
+    map.erase("storage.wopi.alias_groups");
+    map.erase("storage.wopi.locking");
     map.erase("trace.filter");
     map.erase("trace.outgoing");
 
