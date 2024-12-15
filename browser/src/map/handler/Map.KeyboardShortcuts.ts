@@ -171,7 +171,7 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL | Mod.SHIFT, 'PageUp', undefined, undefined),
     new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL | Mod.SHIFT, 'PageDown', undefined, undefined),
     new ShortcutDescriptor('spreadsheet', 'keydown', 0, 'F5', null, null, null),
-
+    new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL, ' ', '.uno:SelectColumn', null, null),
 
     new ShortcutDescriptor('text', 'keydown', 0, 'F2', null, null, null),
     new ShortcutDescriptor('text', 'keydown', 0, 'F5', null, null, null),
