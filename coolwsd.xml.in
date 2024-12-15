@@ -97,7 +97,7 @@
         -->
         <level type="string" desc="Can be 0-8 (with the lowest numbers being the least verbose), or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="@COOLWSD_LOGLEVEL@">@COOLWSD_LOGLEVEL@</level>
         <level_startup type="string" desc="As for level - but for the initial startup phase which is most problematic, logging reverts to level configured above when startup is complete" default="trace">trace</level_startup>
-        <disabled_areas type="string" desc="High verbosity logging ie. info to trace are disable-able, comma separated: Generic, Pixel, Socket, WebSocket, Http, WebServer, Storage, WOPI, Admin, Javascript" default="Socket,WebSocket,Admin">Socket,WebSocket,Admin,Pixel</disabled_areas>
+        <disabled_areas type="string" desc="High verbosity logging ie. info to trace are disable-able, comma separated: Generic, Pixel, Socket, WebSocket, Http, WebServer, Storage, WOPI, Admin, Javascript" default="Socket,WebSocket,Admin,Pixel">Socket,WebSocket,Admin,Pixel</disabled_areas>
         <most_verbose_level_settable_from_client type="string" desc="A loggingleveloverride message from the client can not set a more verbose log level than this" default="notice">notice</most_verbose_level_settable_from_client>
         <least_verbose_level_settable_from_client type="string" desc="A loggingleveloverride message from a client can not set a less verbose log level than this" default="fatal">fatal</least_verbose_level_settable_from_client>
         <protocol type="bool" desc="Enable minimal client-site JS protocol logging from the start">@ENABLE_DEBUG_PROTOCOL@</protocol>
@@ -198,7 +198,7 @@
       </lok_allow>
       <content_security_policy desc="Customize the CSP header by specifying one or more policy-directive, separated by semicolons. See w3.org/TR/CSP2"></content_security_policy>
       <frame_ancestors desc="OBSOLETE: Use content_security_policy. Specify who is allowed to embed the Collabora Online iframe (coolwsd and WOPI host are always allowed). Separate multiple hosts by space."></frame_ancestors>
-      <connection_timeout_secs desc="Specifies the connection, send, recv timeout in seconds for connections initiated by coolwsd (such as WOPI connections)." type="int" default="30"></connection_timeout_secs>
+      <connection_timeout_secs desc="Specifies the connection, send, recv timeout in seconds for connections initiated by coolwsd (such as WOPI connections)." type="int" default="30">30</connection_timeout_secs>
 
       <!-- this setting radically changes how online works, it should not be used in a production environment -->
       <proxy_prefix type="bool" default="false" desc="Enable a ProxyPrefix to be passed int through which to redirect requests">false</proxy_prefix>
@@ -247,7 +247,7 @@
     </certificates>
 
     <watermark>
-      <opacity desc="Opacity of on-screen watermark from 0.0 to 1.0" type="double" default="0.2"></opacity>
+      <opacity desc="Opacity of on-screen watermark from 0.0 to 1.0" type="double" default="0.2">0.2</opacity>
       <text desc="Watermark text to be displayed on the document if entered" type="string"></text>
     </watermark>
 
@@ -310,10 +310,10 @@
     </monitors>
 
     <quarantine_files desc="Files are stored here to be examined later in cases of crashes or similar situation." default="false" enable="false">
-        <limit_dir_size_mb desc="Maximum directory size, in MBs. On exceeding the specified limit, older files will be deleted." default="250" type="uint"></limit_dir_size_mb>
-        <max_versions_to_maintain desc="How many versions of the same file to keep." default="5" type="uint"></max_versions_to_maintain>
+        <limit_dir_size_mb desc="Maximum directory size, in MBs. On exceeding the specified limit, older files will be deleted." default="250" type="uint">250</limit_dir_size_mb>
+        <max_versions_to_maintain desc="How many versions of the same file to keep." default="5" type="uint">5</max_versions_to_maintain>
         <path desc="Absolute path of the directory under which quarantined files will be stored. Do not use a relative path." type="path" relative="false"></path>
-        <expiry_min desc="Time in mins after quarantined files will be deleted." type="int" default="3000"></expiry_min>
+        <expiry_min desc="Time in mins after quarantined files will be deleted." type="int" default="3000">3000</expiry_min>
     </quarantine_files>
 
     <extra_export_formats desc="Enable various extra export formats for additional compatibility. Note that disabling options here *only* disables them visually: these are all 'safe' to export, it might just be undesirable to show them, so you can't disable exporting these server-side">
@@ -345,7 +345,7 @@
 
     <indirection_endpoint>
       <url desc="URL endpoint to server which servers routeToken in json format" default=""></url>
-      <migration_timeout_secs desc="The maximum number of seconds waiting for shutdown migration message from indirection server before unloading an document. Defaults to 180 second." type="uint" default="180"></migration_timeout_secs>
+      <migration_timeout_secs desc="The maximum number of seconds waiting for shutdown migration message from indirection server before unloading an document. Defaults to 180 second." type="uint" default="180">180</migration_timeout_secs>
       <geolocation_setup>
         <enable desc="Enable geolocation_setup when using indirection server with geolocation configuration" type="bool" default="false">false</enable>
         <timezone desc="IANA timezone of server. For example: Europe/Berlin "></timezone>
