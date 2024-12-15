@@ -201,7 +201,7 @@
       <connection_timeout_secs desc="Specifies the connection, send, recv timeout in seconds for connections initiated by coolwsd (such as WOPI connections)." type="int" default="30">30</connection_timeout_secs>
 
       <!-- this setting radically changes how online works, it should not be used in a production environment -->
-      <proxy_prefix type="bool" default="false" desc="Enable a ProxyPrefix to be passed int through which to redirect requests">false</proxy_prefix>
+      <proxy_prefix type="bool" default="false" desc="Enable a ProxyPrefix to be passed-in through which to redirect requests">false</proxy_prefix>
     </net>
 
     <ssl desc="SSL settings">
