@@ -17,8 +17,8 @@
 #pragma once
 
 #include <Poco/Path.h>
+#include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/Application.h>
-#include <Poco/Util/LayeredConfiguration.h>
 #include <Poco/Util/MapConfiguration.h>
 
 #include <Util.hpp>
@@ -165,7 +165,7 @@ inline constexpr bool isSupportKeyEnabled()
 
 class ConfigRawValueGetter
 {
-    const Poco::Util::LayeredConfiguration* _config;
+    const Poco::Util::AbstractConfiguration* _config;
 
     ConfigRawValueGetter(const ConfigRawValueGetter&) = default;
     ConfigRawValueGetter(ConfigRawValueGetter&&) = default;
@@ -173,7 +173,7 @@ class ConfigRawValueGetter
     ConfigRawValueGetter& operator=(ConfigRawValueGetter&&) = default;
 
 public:
-    explicit ConfigRawValueGetter(Poco::Util::LayeredConfiguration& config)
+    explicit ConfigRawValueGetter(const Poco::Util::AbstractConfiguration& config)
         : _config(&config)
     {
     }
@@ -201,7 +201,7 @@ public:
 };
 
 template <typename T>
-static bool getRawConfig(Poco::Util::LayeredConfiguration& config, const std::string& name,
+static bool getRawConfig(const Poco::Util::AbstractConfiguration& config, const std::string& name,
                          T& value)
 {
     try
@@ -217,7 +217,7 @@ static bool getRawConfig(Poco::Util::LayeredConfiguration& config, const std::st
 }
 
 template <typename T>
-static T getConfigValue(Poco::Util::LayeredConfiguration& config, const std::string& name,
+static T getConfigValue(const Poco::Util::AbstractConfiguration& config, const std::string& name,
                         const T def)
 {
     T value = def;
@@ -232,7 +232,7 @@ static T getConfigValue(Poco::Util::LayeredConfiguration& config, const std::str
 /// Reads and processes path entries with the given property
 /// from the configuration.
 /// Converts relative paths to absolute.
-static std::string getPathFromConfig(Poco::Util::LayeredConfiguration& config,
+static std::string getPathFromConfig(const Poco::Util::AbstractConfiguration& config,
                                      const std::string& property)
 {
     std::string path = config.getString(property);
