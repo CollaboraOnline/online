@@ -288,7 +288,7 @@ void extract(const std::string& parentKey, const Poco::Util::AbstractConfigurati
         const auto key = parentKeyDot + subKey;
         if (config->has(key))
         {
-            map.emplace(key, config->getString(key));
+            map.emplace(key, getConfigValue(*config, key, std::string()));
             extract(key, config, map);
         }
     }
