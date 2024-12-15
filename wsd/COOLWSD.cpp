@@ -1338,7 +1338,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     std::ostringstream ossConfig;
     ossConfig << "Loaded config file [" << configFilePath << "] (non-default values):\n";
-    ossConfig << ConfigUtil::getLoggableConfig(&conf);
+    ossConfig << ConfigUtil::getLoggableConfig(conf);
 
     LoggableConfigEntries = ossConfig.str();
     LOG_INF(LoggableConfigEntries);
