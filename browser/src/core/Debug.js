@@ -242,6 +242,18 @@ L.DebugManager = L.Class.extend({
 			},
 		});
 
+		this._addDebugTool({
+			name: 'Tile preload map',
+			category: 'Display',
+			startsOn: false,
+			onAdd: function () {
+				self._painter._addPreloadMap();
+			},
+			onRemove: function () {
+				self._painter._removePreloadMap();
+			},
+		});
+
 		if (this._docLayer.isCalc()) {
 			this._addDebugTool({
 				name: 'Splits section',
