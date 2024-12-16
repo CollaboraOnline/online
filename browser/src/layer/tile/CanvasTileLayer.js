@@ -379,6 +379,16 @@ L.TileSectionManager = L.Class.extend({
 		app.sectionContainer.reNewAllSections(true);
 	},
 
+	_addPreloadMap: function () {
+		app.sectionContainer.addSection(new app.definitions.preloadMapSection());
+		app.sectionContainer.reNewAllSections(true);
+	},
+
+	_removePreloadMap: function () {
+		app.sectionContainer.removeSection(L.CSections.Debug.PreloadMap.name);
+		app.sectionContainer.reNewAllSections(true);
+	},
+
 	_updateWithRAF: function () {
 		// update-loop with requestAnimationFrame
 		this._canvasRAF = L.Util.requestAnimFrame(this._updateWithRAF, this, false /* immediate */);

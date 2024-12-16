@@ -254,6 +254,7 @@ COOL_JS_LST =\
 	src/canvas/sections/CalcGridSection.ts \
 	src/canvas/sections/SplitSection.ts \
 	src/canvas/sections/PixelGridSection.ts \
+	src/canvas/sections/PreloadMapSection.ts \
 	src/canvas/sections/TilesSection.ts \
 	src/canvas/sections/AutoFillMarkerSection.ts \
 	src/canvas/sections/HTMLObjectSection.ts \
