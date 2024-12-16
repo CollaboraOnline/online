@@ -162,8 +162,21 @@ abstract class AutoCompletePopup {
 		data.children[0].children[0] = control;
 		(data.children[0].children[0] as TreeWidget).entries = entries;
 
-		data.posx = cursorPos.x;
-		data.posy = cursorPos.y;
+		const isSpreadsheetRTL = this.map._docLayer.isCalcRTL();
+		const canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
+		const offsetX = isSpreadsheetRTL
+			? 0
+			: app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)
+					.size[0];
+		const offsetY = app.sectionContainer.getSectionWithName(
+			L.CSections.ColumnHeader.name,
+		).size[1];
+
+		if (isSpreadsheetRTL) cursorPos.x = this.map._size.x - cursorPos.x;
+
+		data.posx = cursorPos.x + offsetX + canvasEl.left;
+		data.posy = cursorPos.y + offsetY + canvasEl.top;
+
 		this.sendJSON(data);
 	}
 
