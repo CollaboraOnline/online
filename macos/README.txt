@@ -54,7 +54,7 @@ Configure Collabora Online
     --with-poco-libs=/opt/homebrew/opt/poco/lib \
     --with-zstd-includes=/opt/homebrew/include \
     --with-zstd-libs=/opt/homebrew/lib \
-    --with-lo-path=/Users/kendy/Projects/lo/core/instdir \
+    --with-lo-path=/Users/kendy/Projects/lo/core/instdir/CollaboraOffice.app \
     --with-lokit-path=/Users/kendy/Projects/lo/core/include
 
 Build Collabora Online

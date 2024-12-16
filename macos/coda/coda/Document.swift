@@ -38,15 +38,33 @@ class Document: NSDocument {
     @objc
     var tempFileURL: URL?
 
+    /// Make sure the isModified access can be atomic.
+    private var modifiedLock = NSLock()
+    private var _isModified: Bool = false
+
     /**
      * Modified status mirrored from the core.
-     * Triggers the saving operation when it was previously marked as modified, but changes to non-modified.
      */
-    var isModified: Bool = false {
-        didSet {
-            if (oldValue && !isModified) {
+    var isModified: Bool {
+        get {
+            modifiedLock.lock()
+            let value = _isModified
+            modifiedLock.unlock()
+
+            return value
+        }
+        set {
+            modifiedLock.lock()
+
+            let oldValue = _isModified
+            _isModified = newValue
+
+            // trigger the saving operation when the document was previously marked as modified, but changes to non-modified
+            if oldValue && !newValue {
                 updateChangeCount(.changeDone)
             }
+
+            modifiedLock.unlock()
         }
     }
 
@@ -95,6 +113,34 @@ class Document: NSDocument {
         // Read the latest data from the temp file
         let data = try Data(contentsOf: tempFileURL)
         return data
+    }
+
+    /**
+     * We save asynchronously, so that COOL can first write the file, and we can then copy it to the right location.
+     */
+    override func canAsynchronouslyWrite(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) -> Bool {
+        return true
+    }
+
+    /**
+     * Make sure that we first save by COOL when the user chooses to Save, and only then copy the content to the resulting place.
+     */
+    override func save(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, completionHandler: @escaping ((any Error)?) -> Void) {
+
+        if isModified {
+            // we have to wait for COOL to save first
+            DispatchQueue.main.async {
+                COWrapper.handleMessage(with: self, message: "save dontTerminateEdit=1 dontSaveIfUnmodified=1")
+            }
+        }
+        else {
+            // all is good, we can proceed with copying the data from COOL
+            super.save(to: url, ofType: typeName, for: saveOperation, completionHandler: completionHandler)
+        }
+
+        DispatchQueue.main.async {
+            completionHandler(nil)
+        }
     }
 
     /**
