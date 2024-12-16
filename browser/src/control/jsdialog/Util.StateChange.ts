@@ -21,7 +21,8 @@ function onStateChange(element: Element, callback: StateChangeCallback) {
 	var enabledCallback = function (mutations: Array<MutationRecord>) {
 		for (var i in mutations) {
 			if (mutations[i].attributeName === 'disabled') {
-				var enable = mutations[i].oldValue !== null;
+				const htmlElement = mutations[i].target as HTMLElement;
+				var enable = htmlElement.getAttribute('disabled') !== 'true';
 				callback(enable);
 			}
 		}

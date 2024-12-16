@@ -197,7 +197,10 @@ function htmlContent(
 		setTimeout(() => builder.map.userList.renderAll(), 0);
 
 	if (data.enabled === false && parentContainer.firstChild)
-		(parentContainer.firstChild as HTMLElement).setAttribute('disabled', '');
+		(parentContainer.firstChild as HTMLElement).setAttribute(
+			'disabled',
+			'true',
+		);
 }
 
 JSDialog.htmlContent = htmlContent;
