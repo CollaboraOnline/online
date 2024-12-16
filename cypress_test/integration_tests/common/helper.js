@@ -34,7 +34,7 @@ function setupDocument(filePath, copyCertificates = false) {
 
 		copyFile(filePath, newFilePath);
 		if (copyCertificates) {
-			const suffix = '.user-private-info.json';
+			const suffix = '.wopi.json';
 			copyFile(filePath + suffix, newFilePath + suffix);
 		}
 	}
