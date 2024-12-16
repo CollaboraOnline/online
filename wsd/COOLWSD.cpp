@@ -641,7 +641,9 @@ static size_t addNewChild(std::shared_ptr<ChildProcess> child)
         ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS;
     }
 
-    LOG_TRC("Adding a new child " << pid << " to NewChildren, have " << OutstandingForks[configId]
+    LOG_TRC("Adding a new child " << pid << " with config " << configId
+                                  << " to NewChildren, have "
+                                  << OutstandingForks[configId]
                                   << " outstanding requests");
     SigUtil::addActivity("added child " + std::to_string(pid));
     NewChildren.emplace_back(std::move(child));
