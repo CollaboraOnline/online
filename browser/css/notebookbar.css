@@ -408,6 +408,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 #stylesview .ui-iconview-entry {
 	box-sizing: border-box;
 	padding-top: 0px;
+	align-self: start;
 }
 
 #stylesview .icon-view-item-container {
