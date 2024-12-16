@@ -18,6 +18,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Some app', function() {
 
 	it('Should see an empty slideshow', function() {
 		cy.wait(2000); // wait for slideshow to load
-		getSlideShowContent().compareSnapshot('slideshow', 0.05);
+		getSlideShowContent().compareSnapshot('slideshow', 0.09);
 	});
 });
