@@ -394,6 +394,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	scrollbar-width: none;
 	background-color: var(--color-stylesview-background);
 	filter: brightness(var(--brightness-stylesview));
+	box-sizing: border-box;
 }
 
 #stylesview:hover {
