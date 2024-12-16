@@ -115,10 +115,8 @@ class SlideShowPresenter {
 	_fullscreen: Element = null;
 	_presenterContainer: HTMLDivElement = null;
 	_slideShowCanvas: HTMLCanvasElement = null;
-	_slideShowWindowProxy: ReturnType<typeof window.open> = null;
+	_slideShowWindowProxy: HTMLIFrameElement = null;
 	_windowCloseInterval: ReturnType<typeof setInterval> = null;
-	_pauseRenderTimer: number = null;
-	_pauseEnterFunc: () => void;
 	_slideRenderer: SlideRenderer = null;
 	_canvasLoader: CanvasLoader | null = null;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
@@ -259,7 +257,6 @@ class SlideShowPresenter {
 		if (this._slideCompositor) this._slideCompositor.deleteResources();
 		this._slideRenderer.deleteResources();
 
-		// window.removeEventListener('keydown', this._onCanvasKeyDown.bind(this));
 		window.removeEventListener('keydown', this._onKeyDownHandler);
 
 		L.DomUtil.remove(this._slideShowCanvas);
@@ -278,9 +275,9 @@ class SlideShowPresenter {
 		if (!this._slideShowCanvas) return;
 		let winWidth = 0;
 		let winHeight = 0;
-		if (this._slideShowWindowProxy && !this._slideShowWindowProxy.closed) {
-			winWidth = this._slideShowWindowProxy.innerWidth;
-			winHeight = this._slideShowWindowProxy.innerHeight;
+		if (this._slideShowWindowProxy) {
+			winWidth = this._slideShowWindowProxy.clientWidth;
+			winHeight = this._slideShowWindowProxy.clientHeight;
 		} else if (this.isFullscreen()) {
 			winWidth = window.screen.width;
 			winHeight = window.screen.height;
@@ -393,8 +390,8 @@ class SlideShowPresenter {
 			if (!force && this.exitSlideshowWithWarning()) {
 				return;
 			}
-			this._closeSlideShowWindow();
 			this._stopFullScreen();
+			this._closeSlideShowWindow();
 			return;
 		}
 		this.startTimer(settings.loopAndRepeatDuration);
@@ -417,40 +414,11 @@ class SlideShowPresenter {
 		this._canvasLoader = null;
 	}
 
-	private _stylePauseOverlay(windowDocument: HTMLElement, show: boolean) {
-		const overlay = windowDocument.querySelector(
-			'#overlay-in-window',
-		) as HTMLElement;
-
-		const display = show ? 'block' : 'none';
-
-		overlay.style.display = display;
-		overlay.style.position = 'fixed';
-
-		overlay.style.top = '0';
-		overlay.style.bottom = '0';
-		overlay.style.right = '0';
-		overlay.style.left = '0';
-
-		overlay.style.opacity = '65%';
-		overlay.style.backgroundColor = 'black';
-		overlay.style.color = 'white';
-
-		overlay.style.alignContent = 'center';
-		overlay.style.textAlign = 'center';
-		overlay.style.fontWeight = 'bolder';
-		overlay.style.fontSize = 'xxx-large';
-		overlay.style.fontFamily = 'sans';
-
-		overlay.style.userSelect = 'none';
-	}
-
 	_generateSlideWindowHtml(title: string) {
 		const sanitizer = document.createElement('div');
 		sanitizer.innerText = title;
 
 		const sanitizedTitle = sanitizer.innerHTML;
-		const pauseText = _('Presentation is paused - main window is hidden');
 
 		return `
 			<!DOCTYPE html>
@@ -462,26 +430,24 @@ class SlideShowPresenter {
 			</head>
 			<body>
 				<div id="root-in-window"></div>
-				<div id="overlay-in-window">
-					<span>${pauseText}</span>
-				</div>
 			</body>
 			</html>
 			`;
 	}
 
 	_closeSlideShowWindow() {
-		if (
-			this._slideShowWindowProxy == null ||
-			this._slideShowWindowProxy.closed
-		) {
+		if (!this._slideShowWindowProxy) {
 			// enable present in console on closeSlideShowWindow
 			this._enablePresenterConsole(false);
 			return;
+		} else {
+			this._slideShowWindowProxy.parentElement.removeChild(
+				this._slideShowWindowProxy,
+			);
+			this._slideShowWindowProxy = null;
 		}
-		this._slideShowWindowProxy.opener.focus();
-		this._slideShowWindowProxy.close();
 		this._map.uiManager.closeSnackbar();
+		this._map.focus();
 	}
 
 	_doFallbackPresentation() {
@@ -490,55 +456,7 @@ class SlideShowPresenter {
 	}
 
 	_getProxyDocumentNode() {
-		if (this._cypressSVGPresentationTest)
-			return (this._slideShowWindowProxy as any as HTMLIFrameElement)
-				.contentWindow.document;
-		else return this._slideShowWindowProxy.document;
-	}
-
-	_requestPauseFrame() {
-		if (!document.hidden) return;
-
-		const logRefresh = function () {
-			console.debug(
-				'_requestPauseFrame: after onTabSwitch pause was activated',
-			);
-		};
-		requestAnimationFrame(logRefresh);
-	}
-
-	onTabSwitch() {
-		const windowDocument = this._getProxyDocumentNode().documentElement;
-
-		if (document.hidden) this._stylePauseOverlay(windowDocument, true);
-		else this._stylePauseOverlay(windowDocument, false);
-
-		this._requestPauseFrame();
-	}
-
-	enablePauseHandler() {
-		if (this._cypressSVGPresentationTest) return;
-
-		// allow rendering in paused mode in Firefox at least 1 per sec
-		// Chrome doesn't draw anything when main window is hidden
-		this._pauseRenderTimer = this._slideShowWindowProxy.setInterval(
-			this._requestPauseFrame.bind(this),
-			1000,
-		);
-
-		this._pauseEnterFunc = this.onTabSwitch.bind(this);
-
-		document.addEventListener('visibilitychange', this._pauseEnterFunc);
-	}
-
-	disablePauseHandler() {
-		if (this._cypressSVGPresentationTest) return;
-
-		document.removeEventListener('visibilitychange', this._pauseEnterFunc);
-		this._pauseEnterFunc = undefined;
-		if (this._slideShowWindowProxy) {
-			this._slideShowWindowProxy.clearInterval(this._pauseRenderTimer);
-		}
+		return this._slideShowWindowProxy.contentWindow.document;
 	}
 
 	_doInWindowPresentation() {
@@ -546,28 +464,19 @@ class SlideShowPresenter {
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
 		const htmlContent = this._generateSlideWindowHtml(popupTitle);
 
-		if (this._cypressSVGPresentationTest) {
-			this._slideShowWindowProxy = L.DomUtil.createWithId(
-				'iframe',
-				'slideshow-cypress-iframe',
-				document.body,
-			);
-			this._getProxyDocumentNode().open();
-			this._getProxyDocumentNode().write('<html><body></body></html>');
-			this._getProxyDocumentNode().close();
-		} else {
-			this._slideShowWindowProxy = window.open('', '_blank', 'popup');
-		}
+		this._slideShowWindowProxy = L.DomUtil.createWithId(
+			'iframe',
+			'slideshow-cypress-iframe',
+			document.body,
+		);
+		this._getProxyDocumentNode().open();
+		this._getProxyDocumentNode().write(htmlContent);
 
 		if (!this._slideShowWindowProxy) {
 			this._notifyBlockedPresenting();
 			return;
 		}
 
-		this.enablePauseHandler();
-
-		this._getProxyDocumentNode().documentElement.innerHTML = htmlContent;
-		this._getProxyDocumentNode().close();
 		this._slideShowWindowProxy.focus();
 
 		// set body styles
@@ -575,11 +484,6 @@ class SlideShowPresenter {
 		this._getProxyDocumentNode().body.style.padding = '0';
 		this._getProxyDocumentNode().body.style.height = '100%';
 		this._getProxyDocumentNode().body.style.overflow = 'hidden';
-
-		this._stylePauseOverlay(
-			this._getProxyDocumentNode().documentElement,
-			false,
-		);
 
 		const body = this._getProxyDocumentNode().querySelector('#root-in-window');
 		this._presenterContainer = this._createPresenterHTML(
@@ -593,7 +497,7 @@ class SlideShowPresenter {
 			'resize',
 			this.onSlideWindowResize.bind(this),
 		);
-		this._slideShowWindowProxy.addEventListener(
+		this._getProxyDocumentNode().addEventListener(
 			'keydown',
 			this._onKeyDownHandler,
 		);
@@ -605,9 +509,7 @@ class SlideShowPresenter {
 		this._map.uiManager.showSnackbar(
 			_('Presenting in window'),
 			_('Close Presentation'),
-			function () {
-				slideShowWindow.close();
-			},
+			L.bind(this._closeSlideShowWindow, this),
 			-1,
 			false,
 			true,
@@ -615,9 +517,7 @@ class SlideShowPresenter {
 
 		this._windowCloseInterval = setInterval(
 			function () {
-				if (slideShowWindow.closed) {
-					this.slideshowWindowCleanUp();
-				}
+				if (!slideShowWindow.isConnected) this.slideshowWindowCleanUp();
 			}.bind(this),
 			500,
 		);
@@ -629,7 +529,6 @@ class SlideShowPresenter {
 	}
 
 	slideshowWindowCleanUp() {
-		this.disablePauseHandler();
 		clearInterval(this._windowCloseInterval);
 		this._slideShowNavigator.quit();
 		this._map.uiManager.closeSnackbar();
