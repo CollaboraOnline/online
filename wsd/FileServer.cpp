@@ -427,6 +427,17 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             std::string userNameString = "LocalUser#" + userId;
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
 
+            Poco::JSON::Object::Ptr wopi = new Poco::JSON::Object();
+            // If there is matching WOPI data next to the file to be loaded, use it.
+            std::string wopiString = readFileToString(localPath + ".wopi.json");
+            if (!wopiString.empty())
+            {
+                if (JsonUtil::parseJSON(wopiString, wopi))
+                {
+                    fileInfo = wopi;
+                }
+            }
+
             std::string postMessageOrigin;
             ConfigUtil::isSslEnabled() ? postMessageOrigin = "https://"
                                        : postMessageOrigin = "http://";
@@ -438,18 +449,6 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("OwnerId", "test");
             fileInfo->set("UserId", userId);
             fileInfo->set("UserFriendlyName", userNameString);
-
-            Poco::JSON::Object::Ptr userPrivateInfo = new Poco::JSON::Object();
-            // If there is matching user private info data next to the file to be loaded, use it.
-            std::string userPrivateInfoString = readFileToString(localPath + ".user-private-info.json");
-            if (!userPrivateInfoString.empty())
-            {
-                if (JsonUtil::parseJSON(userPrivateInfoString, userPrivateInfo))
-                {
-                    fileInfo->set("UserPrivateInfo", userPrivateInfo);
-                }
-            }
-
             fileInfo->set("UserCanWrite", (requestDetails.getParam("permission") != "readonly") ? "true": "false");
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
             fileInfo->set("LastModifiedTime", localFile->getLastModifiedTime());
