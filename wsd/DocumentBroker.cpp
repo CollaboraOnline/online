@@ -57,6 +57,7 @@
 #include <common/FileUtil.hpp>
 #include <common/Uri.hpp>
 #include <CommandControl.hpp>
+#include <wsd/CacheUtil.hpp>
 #include <wsd/Process.hpp>
 
 #if !MOBILEAPP
@@ -1542,6 +1543,13 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession> se
     _asyncInstallTask->appendCallback([this](bool){ _asyncInstallTask.reset(); });
 }
 
+struct PresetRequest
+{
+    std::string _uri;
+    std::string _fileName;
+    std::string _id;
+};
+
 std::shared_ptr<PresetsInstallTask>
 DocumentBroker::asyncInstallPresets(SocketPoll& poll,
     const std::string& userSettingsUri,
@@ -1559,10 +1567,13 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
     const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
     LOG_DBG("Getting settings from [" << uriAnonym << ']');
 
+    std::string configId = Cache::getConfigId(userSettingsUri);
+
     // When result arrives, extract uris of what we want to install to the jail's user presets
     // and async download and install those.
     http::Session::FinishedCallback finishedCallback =
-        [&poll, uriAnonym, presetsPath, presetTasks, installFinishedCB](const std::shared_ptr<http::Session>& configSession)
+        [&poll, configId, uriAnonym,
+         presetsPath, presetTasks, installFinishedCB](const std::shared_ptr<http::Session>& configSession)
     {
         if (SigUtil::getShutdownRequestFlag())
         {
@@ -1602,6 +1613,8 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
 
             int idCount(0);
 
+            std::vector<PresetRequest> requests;
+
             if (auto autotexts = settings->get("autotext").extract<Poco::JSON::Array::Ptr>())
             {
                 for (std::size_t i = 0, count = autotexts->size(); i < count; ++i)
@@ -1615,7 +1628,7 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
                                                       Uri::getFilenameWithExtFromURL(uri)).toString();
                     std::string id = std::to_string(idCount++);
                     presetTasks->installStarted(id);
-                    asyncInstallPreset(poll, uri, fileName, id, presetInstallFinished);
+                    requests.emplace_back(uri, fileName, id);
                 }
             }
 
@@ -1637,7 +1650,7 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
                             .toString();
                     std::string id = std::to_string(idCount++);
                     presetTasks->installStarted(id);
-                    asyncInstallPreset(poll, uri, fileName, id, presetInstallFinished);
+                    requests.emplace_back(uri, fileName, id);
                 }
             }
 
@@ -1649,7 +1662,13 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
                 std::string fileName = Poco::Path(destDir, "config.xcu").toString();
                 std::string id = std::to_string(idCount++);
                 presetTasks->installStarted(id);
-                asyncInstallPreset(poll, uri, fileName, id, presetInstallFinished);
+                requests.emplace_back(uri, fileName, id);
+            }
+
+            for (const auto& req : requests)
+            {
+                asyncInstallPreset(poll, configId, req._uri, req._fileName, req._id,
+                                   presetInstallFinished);
             }
         }
         else
@@ -1671,20 +1690,29 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
     return presetTasks;
 }
 
-void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& presetUri,
+void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& configId,
+                                        const std::string& presetUri,
                                         const std::string& presetFile, const std::string& id,
                                         const std::function<void(const std::string&, bool)>& finishedCB)
 {
+    const std::string uriAnonym = COOLWSD::anonymizeUrl(presetUri);
+    LOG_DBG("Getting preset from [" << uriAnonym << ']');
+
+    if (Cache::supplyConfigFile(configId, presetUri, presetFile))
+    {
+        LOG_INF("Cache check for preset uri: " << uriAnonym << " to " << presetFile << " succeeded");
+        poll.addCallback([id, finishedCB]() { finishedCB(id, true); });
+        return;
+    }
+
     const Poco::URI uri{presetUri};
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(uri));
     http::Request request(uri.getPathAndQuery());
     request.set("User-Agent", http::getAgentString());
 
-    const std::string uriAnonym = COOLWSD::anonymizeUrl(presetUri);
-    LOG_DBG("Getting preset from [" << uriAnonym << ']');
-
     http::Session::FinishedCallback finishedCallback =
-        [uriAnonym, presetFile, id, finishedCB](const std::shared_ptr<http::Session>& presetSession)
+        [configId, presetUri, uriAnonym,
+         presetFile, id, finishedCB](const std::shared_ptr<http::Session>& presetSession)
     {
         if (SigUtil::getShutdownRequestFlag())
         {
@@ -1706,6 +1734,8 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& pre
         {
             success = true;
             LOG_INF("Fetch of preset uri: " << uriAnonym << " to " << presetFile << " succeeded");
+
+            Cache::cacheConfigFile(configId, presetUri, presetFile);
         }
 
         if (finishedCB)

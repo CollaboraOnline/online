@@ -24,6 +24,7 @@
 #include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <Poco/Base64Encoder.h>
+#include <CacheUtil.hpp>
 #include <Util.hpp>
 #include <ServerAuditUtil.hpp>
 
@@ -181,12 +182,7 @@ struct SharedSettings
         {
             JsonUtil::findJSONValue(settingsJSON, "uri", _uri);
             JsonUtil::findJSONValue(settingsJSON, "stamp", _stamp);
-
-            Poco::URI settingsUri(_uri);
-            std::string sourcePrefix = settingsUri.getScheme() +
-                                       '_' + settingsUri.getAuthority();
-            std::string sourcePathEtc = settingsUri.getPathEtc();
-            _configId = sourcePrefix + sourcePathEtc;
+            _configId = Cache::getConfigId(_uri);
         }
     }
 
