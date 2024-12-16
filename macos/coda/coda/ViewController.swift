@@ -56,8 +56,6 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
      * Load the the document; to be called from the Document (NSDocument) instance.
      */
     func loadDocument(_ document: Document) {
-        // FIXME: Defaults to the hello.odt if not provided (which happens eg. when created from File -> New)
-        let fileURL = document.tempFileURL ?? Bundle.main.url(forResource: "hello", withExtension: "odt")!
         self.document = document
         self.document.loadDocumentInWebView(webView: webView, readOnly: false)
     }
