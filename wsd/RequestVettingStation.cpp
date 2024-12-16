@@ -181,15 +181,22 @@ struct SharedSettings
         {
             JsonUtil::findJSONValue(settingsJSON, "uri", _uri);
             JsonUtil::findJSONValue(settingsJSON, "stamp", _stamp);
+
+            Poco::URI settingsUri(_uri);
+            std::string sourcePrefix = settingsUri.getScheme() +
+                                       '_' + settingsUri.getAuthority();
+            std::string sourcePathEtc = settingsUri.getPathEtc();
+            _configId = sourcePrefix + sourcePathEtc;
         }
     }
 
     std::string _uri;
     std::string _stamp;
+    std::string _configId;
 
     std::string getConfigId() const
     {
-        return _stamp + "-" + _uri;
+        return _configId;
     }
 };
 
