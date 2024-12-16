@@ -1071,11 +1071,7 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		var userPrivateInfo = myViewData.userprivateinfo;
-		if (userPrivateInfo === undefined)
-		{
-			return;
-		}
-		if (window.zoteroEnabled) {
+		if (userPrivateInfo && window.zoteroEnabled) {
 			var apiKey = userPrivateInfo.ZoteroAPIKey;
 			if (apiKey !== undefined && !this.map.zotero) {
 				this.map.zotero = L.control.zotero(this.map);
@@ -1085,16 +1081,19 @@ L.Control.UIManager = L.Control.extend({
 			}
 		}
 		if (window.documentSigningEnabled) {
-			if (this.notebookbar) {
+			if (userPrivateInfo && this.notebookbar) {
 				const show = userPrivateInfo.SignatureCert && userPrivateInfo.SignatureKey;
 				// Show or hide the signature button on the notebookbar depending on if we
 				// have a signing cert/key specified.
 				this.showButton('signature', show);
 			}
-			const baseUrl = userPrivateInfo.ESignatureBaseUrl;
-			const clientId = userPrivateInfo.ESignatureClientId;
-			if (baseUrl !== undefined && !this.map.eSignature) {
-				this.map.eSignature = L.control.eSignature(baseUrl, clientId);
+			const serverPrivateInfo = myViewData.serverprivateinfo;
+			if (serverPrivateInfo) {
+				const baseUrl = serverPrivateInfo.ESignatureBaseUrl;
+				const clientId = serverPrivateInfo.ESignatureClientId;
+				if (baseUrl !== undefined && !this.map.eSignature) {
+					this.map.eSignature = L.control.eSignature(baseUrl, clientId);
+				}
 			}
 		}
 	},

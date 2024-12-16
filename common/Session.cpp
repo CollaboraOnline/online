@@ -145,6 +145,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _userPrivateInfo = Uri::decode(value);
             ++offset;
         }
+        else if (name == "serverprivateinfo")
+        {
+            _serverPrivateInfo = Uri::decode(value);
+            ++offset;
+        }
         else if (name == "readonly")
         {
             _isReadOnly = value != "0";

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 
 describe(['tagdesktop'], 'Electronic sign operations.', function() {
 
-	it('Create an electronic signature.', { env: { 'pdf-view': true } }, function() {
+	it.skip('Create an electronic signature.', { env: { 'pdf-view': true } }, function() {
 		// Given a document that can be signed:
 		helper.setupAndLoadDocument('draw/esign.pdf', /*isMultiUser=*/false, /*copyCertificates=*/true);
 

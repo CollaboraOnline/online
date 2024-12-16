@@ -1641,6 +1641,40 @@ void Document::reapZombieChildren()
     }
 }
 
+namespace
+{
+// No need to actually send the values of some keys to the client, it's enough to know if these are
+// provided or not. Replace the actual content with a placeholder.
+void replaceKeysWithPlaceholder(std::string& json, std::initializer_list<std::string>& keys)
+{
+    try
+    {
+        if (!json.empty())
+        {
+            Parser parser;
+            Poco::Dynamic::Var var = parser.parse(json);
+            Object::Ptr jsonObj = var.extract<Object::Ptr>();
+            for (const auto& key : keys)
+            {
+                std::string value;
+                JsonUtil::findJSONValue(jsonObj, key, value);
+                if (!value.empty())
+                {
+                    jsonObj->set(key, " ");
+                }
+            }
+            std::ostringstream jsonStream;
+            jsonObj->stringify(jsonStream);
+            json = jsonStream.str();
+        }
+    }
+    catch(const Poco::BadCastException& exception)
+    {
+        LOG_DBG("user private data is not a dictionary: " << exception.what());
+    }
+}
+}
+
 void Document::notifyViewInfo()
 {
     // Get the list of view ids from the core
@@ -1697,49 +1731,31 @@ void Document::notifyViewInfo()
 
         for (const auto& viewId : viewIds)
         {
-            if (viewId == it.second->getViewId() && !it.second->getUserPrivateInfo().empty())
+            oss << "{" << viewStrings[viewId];
+            if (viewId == it.second->getViewId())
             {
-                oss << "{" << viewStrings[viewId];
-                std::string userPrivateInfo = it.second->getUserPrivateInfo();
-                try
+                if (!it.second->getUserPrivateInfo().empty())
                 {
-                    if (!userPrivateInfo.empty())
-                    {
-                        // No need to actually send the signing certs/keys to the client, it's
-                        // enough to know if these are provided or not. Replace the actual content
-                        // with a placeholder.
-                        Parser parser;
-                        Poco::Dynamic::Var var = parser.parse(userPrivateInfo);
-                        Object::Ptr userPrivateInfoObj = var.extract<Object::Ptr>();
-                        std::initializer_list<std::string> keys = {
-                            "SignatureCert",
-                            "SignatureKey",
-                            "SignatureCa",
-                            "ESignatureSecret",
-                        };
-                        for (const auto& key : keys)
-                        {
-                            std::string value;
-                            JsonUtil::findJSONValue(userPrivateInfoObj, key, value);
-                            if (!value.empty())
-                            {
-                                userPrivateInfoObj->set(key, " ");
-                            }
-                        }
-                        std::ostringstream userPrivateStream;
-                        userPrivateInfoObj->stringify(userPrivateStream);
-                        userPrivateInfo = userPrivateStream.str();
-                    }
+                    std::string userPrivateInfo = it.second->getUserPrivateInfo();
+                    std::initializer_list<std::string> keys = {
+                        "SignatureCert",
+                        "SignatureKey",
+                        "SignatureCa",
+                    };
+                    replaceKeysWithPlaceholder(userPrivateInfo, keys);
+                    oss << ",\"userprivateinfo\":" << userPrivateInfo;
                 }
-                catch(const Poco::BadCastException& exception)
+                if (!it.second->getServerPrivateInfo().empty())
                 {
-                    LOG_DBG("user private data is not a dictionary: " << exception.what());
+                    std::string serverPrivateInfo = it.second->getServerPrivateInfo();
+                    std::initializer_list<std::string> keys = {
+                        "ESignatureSecret",
+                    };
+                    replaceKeysWithPlaceholder(serverPrivateInfo, keys);
+                    oss << ",\"serverprivateinfo\":" << serverPrivateInfo;
                 }
-                oss << ",\"userprivateinfo\":" << userPrivateInfo;
-                oss << "},";
             }
-            else
-                oss << "{" << viewStrings[viewId] << "},";
+            oss << "},";
         }
 
         if (viewCount > 0)
