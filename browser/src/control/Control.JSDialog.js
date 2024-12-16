@@ -299,7 +299,7 @@ L.Control.JSDialog = L.Control.extend({
 				windowId: instance.id,
 				mobileWizard: this,
 				map: this.map,
-				cssClass: 'jsdialog' + (instance.isAutofilter ? ' autofilter' : '') + (instance.isOnlyChild ? ' one-child-popup' : ''),
+				cssClass: 'jsdialog' + (instance.isAutoPopup ? ' autofilter' : '') + (instance.isOnlyChild ? ' one-child-popup' : ''),
 				callback: instance.callback
 			});
 
@@ -458,7 +458,7 @@ L.Control.JSDialog = L.Control.extend({
 
 			if (!parent && instance.popupParent === '_POPOVER_') {
 				// popup was trigerred not by toolbar or menu button, probably on tile area
-				if (instance.isAutofilter) {
+				if (instance.isAutoPopup) {
 					// we are already done
 					return;
 				}
@@ -582,17 +582,6 @@ L.Control.JSDialog = L.Control.extend({
 		// make margin from canvas top and not from window top
 		instance.posy = top + offsetY + canvasEl.top;
 
-		var width = instance.form.getBoundingClientRect().width;
-		var autoFilterBottom = instance.posy + instance.form.getBoundingClientRect().height;
-		var windowBottom = window.innerHeight;
-		if (instance.posx + width > window.innerWidth)
-			instance.posx = window.innerWidth - width;
-
-		// at this point we have un updated potion of autofilter instance.
-		// so to handle overlapping case of autofiler and toolbar we need some complex calculation
-		if (autoFilterBottom > windowBottom)
-			instance.posy = instance.posy - (autoFilterBottom - windowBottom + 10);
-
 		this.updatePosition(instance.container, instance.posx, instance.posy);
 	},
 
@@ -638,12 +627,19 @@ L.Control.JSDialog = L.Control.extend({
 			var autoFilterDialogId = dialogKeys[i];
 			var dialog = this.dialogs[autoFilterDialogId];
 
-			// Check if the current dialog has the isAutofilter property set to true
-			if (dialog.isAutofilter) {
+			// Check if the current dialog has the isAutoPopup (Autofilter or AutoPopup) property set to true
+			if (dialog.isAutoPopup) {
 				// Call this.close(key, true) for the current dialog
 				this.close(autoFilterDialogId, true);
 			}
 		}
+	},
+
+	getAutoPopupParentContainer(instance) {
+		// Parent container will 
+		if (instance.isAutofilter || instance.isAutoCompletePopup || !instance.isDocumentAreaPopup)
+			return document.body
+		return document.getElementById('document-container');
 	},
 
 	onJSDialog: function(e) {
@@ -675,8 +671,9 @@ L.Control.JSDialog = L.Control.extend({
 		instance.canHaveFocus = !instance.isSnackbar && instance.id !== 'busypopup' && !instance.isAutoCompletePopup;
 		instance.isDocumentAreaPopup = instance.popupParent === '_POPOVER_' && instance.posx !== undefined && instance.posy !== undefined;
 		instance.isPopup = instance.isModalPopUp || instance.isDocumentAreaPopup || instance.isSnackbar;
-		instance.isAutofilter = instance.isDocumentAreaPopup && this.map._docLayer.isCalc();
-		instance.containerParent = (instance.isDocumentAreaPopup && !instance.isAutofilter) ? document.getElementById('document-container'): document.body;
+		instance.isAutoPopup = instance.isDocumentAreaPopup && this.map._docLayer.isCalc();
+		instance.isAutofilter = instance.isAutoPopup && !instance.isAutoFillPreviewTooltip && !instance.isAutoCompletePopup;// separate the autofilter case
+		instance.containerParent = this.getAutoPopupParentContainer(instance);
 		instance.haveTitlebar = (!instance.isModalPopUp && !instance.isSnackbar) || (instance.hasClose && instance.title && instance.title !== '');
 		instance.nonModal = !instance.isModalPopUp && !instance.isDocumentAreaPopup && !instance.isSnackbar;
 
@@ -742,9 +739,11 @@ L.Control.JSDialog = L.Control.extend({
 			} else {
 				instance.updatePos();
 			}
+
+			// AutoPopup  will calculate poup position for Autofilter Popup
 			if (instance.isAutofilter && !instance.isAutoFillPreviewTooltip)
 				this.calculateAutoFilterPosition(instance);
-			else if (instance.isAutoFillPreviewTooltip)
+			else if (instance.isAutoFillPreviewTooltip || instance.isAutoCompletePopup)
 				this.updatePosition(instance.container, instance.posx, instance.posy);
 
 			this.dialogs[instance.id] = instance;
@@ -856,6 +855,17 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	updatePosition: function (target, newX, newY) {
+		var width = target.getBoundingClientRect().width;
+		var dialogBottom = newY + target.getBoundingClientRect().height;
+		var windowBottom = window.innerHeight;
+		if (newX + width > window.innerWidth)
+			newX = window.innerWidth - width;
+
+		// at this point we have un updated potion of autofilter instance.
+		// so to handle overlapping case of autofiler and toolbar we need some complex calculation
+		if (dialogBottom > windowBottom)
+			newY = newY - (dialogBottom - windowBottom + 10);
+
 		target.style.marginInlineStart = newX + 'px';
 		target.style.marginTop = newY + 'px';
 	},
