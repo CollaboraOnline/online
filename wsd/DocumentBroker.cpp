@@ -1287,6 +1287,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     const std::string username = wopiFileInfo->getUsername();
     const std::string userExtraInfo = wopiFileInfo->getUserExtraInfo();
     const std::string userPrivateInfo = wopiFileInfo->getUserPrivateInfo();
+    const std::string serverPrivateInfo = wopiFileInfo->getServerPrivateInfo();
     const std::string watermarkText =
         (ConfigUtil::isSupportKeyEnabled() && !COOLWSD::OverrideWatermark.empty())
             ? COOLWSD::OverrideWatermark
@@ -1442,6 +1443,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     session->setUserExtraInfo(userExtraInfo);
     session->setIsAdminUser(isAdminUser);
     session->setUserPrivateInfo(userPrivateInfo);
+    session->setServerPrivateInfo(serverPrivateInfo);
     session->setWatermarkText(watermarkText);
 
     return templateSource;

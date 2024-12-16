@@ -475,14 +475,14 @@ bool ClientSession::handleSignatureAction(const StringVector& tokens)
 {
     const std::string commandName = tokens[1];
     // Make the HTTP session: this requires an URL
-    Poco::JSON::Object::Ptr userPrivateInfoObject = new Poco::JSON::Object();
-    if (!JsonUtil::parseJSON(getUserPrivateInfo(), userPrivateInfoObject))
+    Poco::JSON::Object::Ptr serverPrivateInfoObject = new Poco::JSON::Object();
+    if (!JsonUtil::parseJSON(getServerPrivateInfo(), serverPrivateInfoObject))
     {
-        LOG_WRN("SignatureAction: failed to parse user private info as JSON");
+        LOG_WRN("SignatureAction: failed to parse server private info as JSON");
         return false;
     }
     std::string requestUrl;
-    JsonUtil::findJSONValue(userPrivateInfoObject, "ESignatureBaseUrl", requestUrl);
+    JsonUtil::findJSONValue(serverPrivateInfoObject, "ESignatureBaseUrl", requestUrl);
     if (commandName == ".uno:PrepareSignature")
     {
         requestUrl += "/api/signatures/prepare-files-for-signing";
@@ -512,7 +512,7 @@ bool ClientSession::handleSignatureAction(const StringVector& tokens)
         return false;
     }
     std::string secret;
-    JsonUtil::findJSONValue(userPrivateInfoObject, "ESignatureSecret", secret);
+    JsonUtil::findJSONValue(serverPrivateInfoObject, "ESignatureSecret", secret);
     requestBodyObject->set("secret", secret);
     std::string requestBody;
     std::stringstream oss;
@@ -1412,6 +1412,13 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             std::string encodedUserPrivateInfo;
             Poco::URI::encode(getUserPrivateInfo(), "", encodedUserPrivateInfo);
             oss << " authorprivateinfo=" << encodedUserPrivateInfo;
+        }
+
+        if (!getServerPrivateInfo().empty())
+        {
+            std::string encodedServerPrivateInfo;
+            Poco::URI::encode(getServerPrivateInfo(), "", encodedServerPrivateInfo);
+            oss << " serverprivateinfo=" << encodedServerPrivateInfo;
         }
 
         oss << " readonly=" << isReadOnly();
