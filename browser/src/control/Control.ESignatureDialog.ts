@@ -28,6 +28,10 @@ namespace cool {
 
 		countries: Array<Country>;
 
+		defaultCountryCode: string;
+
+		defaultProviderId: string;
+
 		providers: Array<SignatureProvider>;
 
 		constructor(
@@ -40,7 +44,9 @@ namespace cool {
 
 		getChildrenJSON(
 			countries: Array<string>,
+			defaultCountryIndex: number,
 			providers: Array<string>,
+			defaultProviderIndex: number,
 		): Array<WidgetJSON> {
 			return [
 				{
@@ -70,7 +76,7 @@ namespace cool {
 					labelledBy: 'countryft',
 					entries: countries,
 					selectedCount: 1,
-					selectedEntries: ['0'],
+					selectedEntries: [String(defaultCountryIndex)],
 				} as ListBoxWidget,
 				{
 					id: 'providerft',
@@ -99,7 +105,7 @@ namespace cool {
 					labelledBy: 'providerft',
 					entries: providers,
 					selectedCount: 1,
-					selectedEntries: ['0'],
+					selectedEntries: [String(defaultProviderIndex)],
 				} as ListBoxWidget,
 				{
 					id: this.id + '-buttonbox',
@@ -118,8 +124,25 @@ namespace cool {
 
 		getJSON(): JSDialogJSON {
 			const countries = this.countries.map((entry) => entry.name);
+			let defaultCountryIndex = this.countries
+				.map((entry) => entry.code)
+				.indexOf(this.defaultCountryCode);
+			if (defaultCountryIndex == -1) {
+				defaultCountryIndex = 0;
+			}
 			const providers = this.providers.map((entry) => entry.name);
-			const children = this.getChildrenJSON(countries, providers);
+			let defaultProviderIndex = this.providers
+				.map((entry) => entry.action_type)
+				.indexOf(this.defaultProviderId);
+			if (defaultProviderIndex == -1) {
+				defaultProviderIndex = 0;
+			}
+			const children = this.getChildrenJSON(
+				countries,
+				defaultCountryIndex,
+				providers,
+				defaultProviderIndex,
+			);
 			return {
 				id: this.id,
 				dialogid: this.id,
@@ -181,6 +204,14 @@ namespace cool {
 				callback: this.callback.bind(this) as JSDialogCallback,
 			};
 			app.map.fire('jsdialog', dialogBuildEvent);
+		}
+
+		setDefaultCountryCode(countryCode: string): void {
+			this.defaultCountryCode = countryCode;
+		}
+
+		setDefaultProviderId(providerId: string): void {
+			this.defaultProviderId = providerId;
 		}
 	}
 }
