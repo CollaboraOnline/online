@@ -26,20 +26,20 @@ namespace cool {
 	export class ESignatureDialog {
 		id: string = 'ESignatureDialog';
 
-		countries: Array<Country>;
+		availableCountries: Array<Country>;
 
 		defaultCountryCode: string;
 
 		defaultProviderId: string;
 
-		providers: Array<SignatureProvider>;
+		availableProviders: Array<SignatureProvider>;
 
 		constructor(
 			countries: Array<Country>,
 			providers: Array<SignatureProvider>,
 		) {
-			this.countries = countries;
-			this.providers = providers;
+			this.availableCountries = countries;
+			this.availableProviders = providers;
 		}
 
 		getChildrenJSON(
@@ -123,15 +123,15 @@ namespace cool {
 		}
 
 		getJSON(): JSDialogJSON {
-			const countries = this.countries.map((entry) => entry.name);
-			let defaultCountryIndex = this.countries
+			const countries = this.availableCountries.map((entry) => entry.name);
+			let defaultCountryIndex = this.availableCountries
 				.map((entry) => entry.code)
 				.indexOf(this.defaultCountryCode);
 			if (defaultCountryIndex == -1) {
 				defaultCountryIndex = 0;
 			}
-			const providers = this.providers.map((entry) => entry.name);
-			let defaultProviderIndex = this.providers
+			const providers = this.availableProviders.map((entry) => entry.name);
+			let defaultProviderIndex = this.availableProviders
 				.map((entry) => entry.action_type)
 				.indexOf(this.defaultProviderId);
 			if (defaultProviderIndex == -1) {
@@ -188,13 +188,15 @@ namespace cool {
 				const providers = <HTMLSelectElement>(
 					document.querySelector('#ESignatureDialog select#providerlb-input')
 				);
-				const providerIndex = providers.selectedIndex;
+				const providerId =
+					this.availableProviders[providers.selectedIndex].action_type;
 				const countries = <HTMLSelectElement>(
 					document.querySelector('#ESignatureDialog select#countrylb-input')
 				);
-				const countryIndex = countries.selectedIndex;
+				const countryCode =
+					this.availableCountries[countries.selectedIndex].code;
 				this.close();
-				app.map.eSignature.handleSelectedProvider(countryIndex, providerIndex);
+				app.map.eSignature.handleSelectedProvider(countryCode, providerId);
 			}
 		}
 

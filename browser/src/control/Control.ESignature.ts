@@ -289,18 +289,16 @@ namespace cool {
 		}
 
 		// Handles the selected provider from the dialog
-		handleSelectedProvider(countryIndex: number, providerIndex: number): void {
-			const country = this.availableCountryCodes[countryIndex];
-			const provider = this.availableProviderIDs[providerIndex];
+		handleSelectedProvider(countryCode: string, providerId: string): void {
 			app.console.log(
-				'attempting to esign using the "' + provider + '" provider',
+				'attempting to esign using the "' + providerId + '" provider',
 			);
 
 			let url = this.url + '/single-method-signature';
 			url += '?client_id=' + this.clientId;
 			url += '&doc_id=' + this.docId;
-			url += '&method=' + provider;
-			url += '&country=' + country;
+			url += '&method=' + providerId;
+			url += '&country=' + countryCode;
 
 			const lang = window.coolParams.get('lang');
 			if (lang) {
