@@ -25,13 +25,13 @@ public:
 
     static std::string getConfigId(const std::string& uri);
 
-    static void cacheConfigFile(const std::string& configId, const std::string& uri, const std::string& filename);
+    static void cacheConfigFile(const std::string& configId, const std::string& uri,
+                                const std::string& stamp, const std::string& filename);
 
-    static bool supplyConfigFile(const std::string& configId, const std::string& uri, const std::string& filename);
+    static bool supplyConfigFile(const std::string& configId, const std::string& uri,
+                                 const std::string& stamp, const std::string& filename);
 
 private:
-    static std::string CachePath;
-
     static std::string locateConfigFile(const std::string& configId, const std::string& uri);
 };
 
