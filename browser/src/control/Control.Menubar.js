@@ -279,6 +279,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:FontDialog'},
 				{uno: '.uno:ParagraphDialog'},
+				{uno: '.uno:SidebarDeck.StyleListDeck'},
 				{uno: '.uno:OutlineBullet'},
 				{uno: '.uno:ThemeDialog'},
 				{type: 'separator'},

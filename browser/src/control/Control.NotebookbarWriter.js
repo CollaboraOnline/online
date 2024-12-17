@@ -934,6 +934,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: false, combination: 'B', de: null }
 			},
 			{
+				'id': 'format-style-dialog',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:SidebarDeck.StyleListDeck'),
+				'command': '.uno:SidebarDeck.StyleListDeck',
+				'accessibility': { focusBack: false, combination: 'SD', de: null }
+			},
+			{
 				'id': 'format-FormatBulletsMenu',
 				'type': 'menubutton',
 				'text': _UNO('.uno:FormatBulletsMenu', 'text'),
