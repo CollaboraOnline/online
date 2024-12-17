@@ -5958,17 +5958,26 @@ L.TilesPreFetcher = L.Class.extend({
 			this._hasEditPerm = hasEditPerm;
 		}
 
-		var maxTilesToFetch = 10;
-		// don't search on a border wider than 5 tiles because it will freeze the UI
-		var maxBorderWidth = 5;
-
-		if (hasEditPerm) {
-			maxTilesToFetch = 5;
-			maxBorderWidth = 3;
-		}
-
 		var tileSize = this._docLayer._tileSize;
 		var pixelBounds = this._map.getPixelBoundsCore(center, zoom);
+
+		var viewTileWidth = Math.floor((pixelBounds.getSize().x + tileSize - 1) / tileSize);
+		var viewTileHeight = Math.floor((pixelBounds.getSize().y + tileSize - 1) / tileSize);
+
+		var maxTilesToFetch = viewTileWidth * viewTileHeight / 4;
+		var maxBorderWidth = 10;
+
+		// Read-only views can much more agressively pre-load
+		if (!hasEditPerm) {
+			maxTilesToFetch *= 4;
+			maxBorderWidth *= 4;
+		}
+
+		// FIXME: when we are actually editing we should pre-load much less until we stop
+/*		if (isActiveEditing()) {
+			maxTilesToFetch = 5;
+			maxBorderWidth = 2;
+		} */
 
 		if (this._pixelBounds === undefined) {
 			this._pixelBounds = pixelBounds;
@@ -6189,8 +6198,8 @@ L.TilesPreFetcher = L.Class.extend({
 			this._borders = undefined;
 		}
 
-		var interval = 750;
-		var idleTime = 5000;
+		var interval = 250;
+		var idleTime = 750;
 		this._preFetchPart = this._docLayer._selectedPart;
 		this._preFetchMode = this._docLayer._selectedMode;
 		this._preFetchIdle = setTimeout(L.bind(function () {
