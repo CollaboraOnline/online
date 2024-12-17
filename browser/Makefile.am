@@ -911,6 +911,9 @@ install-data-hook:
 		--exclude='multidocs.html' \
 		--exclude='tsconfig.tsbuildinfo' \
 		dist $(DESTDIR)$(pkgdatadir)/browser/;
+	mkdir -p $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile;
+	cp -a dist/src/layer/tile/CanvasTileUtils.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile/CanvasTileUtils.js;
+	cp -a dist/src/layer/tile/TileWorker.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile/TileWorker.js;
 if ENABLE_WASM
 	find $(DESTDIR)$(pkgdatadir)/browser/dist -type f ! -iname "*.png" -exec brotli --force {} \;
 endif
