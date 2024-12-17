@@ -1472,17 +1472,30 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
 class PresetsInstallTask
 {
 private:
+    SocketPoll& _poll;
     bool _reportedStatus;
     bool _overallSuccess;
+    int _idCount;
+    std::string _configId;
+    std::string _presetsPath;
     std::set<std::string> _installingPresets;
     std::vector<std::function<void(bool)>> _installFinishedCBs;
 
-public:
-    PresetsInstallTask(std::function<void(bool)> installFinishedCB)
-        : _reportedStatus(false)
-        , _overallSuccess(true)
+    void asyncInstall(const std::string& uri, const std::string& fileName)
     {
-        appendCallback(installFinishedCB);
+        auto presetInstallFinished = [this](const std::string& id, bool presetResult)
+        {
+            installFinished(id, presetResult);
+        };
+
+        // just something unique for this resource
+        std::string id = std::to_string(_idCount++);
+
+        installStarted(id);
+
+        DocumentBroker::asyncInstallPreset(_poll, _configId,
+                                           uri, fileName, id,
+                                           presetInstallFinished);
     }
 
     void installStarted(const std::string& id)
@@ -1505,6 +1518,20 @@ public:
         }
     }
 
+public:
+    PresetsInstallTask(SocketPoll& poll, const std::string& configId,
+                       const std::string& presetsPath,
+                       std::function<void(bool)> installFinishedCB)
+        : _poll(poll)
+        , _reportedStatus(false)
+        , _overallSuccess(true)
+        , _idCount(0)
+        , _configId(configId)
+        , _presetsPath(presetsPath)
+    {
+        appendCallback(installFinishedCB);
+    }
+
     bool empty() const
     {
         return _installingPresets.empty();
@@ -1513,6 +1540,43 @@ public:
     void appendCallback(std::function<void(bool)> installFinishedCB)
     {
         _installFinishedCBs.emplace_back(installFinishedCB);
+    }
+
+    void installGroup(Poco::JSON::Object::Ptr settings, const std::string& groupName)
+    {
+        if (auto group = settings->get(groupName).extract<Poco::JSON::Array::Ptr>())
+        {
+            for (std::size_t i = 0, count = group->size(); i < count; ++i)
+            {
+                auto elem = group->get(i).extract<Poco::JSON::Object::Ptr>();
+                if (!elem)
+                    continue;
+
+                // TODO Are we potentially spamming here?
+                const std::string uri = JsonUtil::getJSONValue<std::string>(elem, "uri");
+                Poco::Path destDir(_presetsPath, groupName);
+                Poco::File(destDir).createDirectories();
+                std::string fileName =
+                    Poco::Path(destDir.toString(),
+                               Uri::getFilenameWithExtFromURL(uri))
+                        .toString();
+
+                asyncInstall(uri, fileName);
+            }
+        }
+    }
+
+    void installXcu(Poco::JSON::Object::Ptr settings)
+    {
+        if (auto xcu = settings->get("xcu").extract<Poco::JSON::Object::Ptr>())
+        {
+            const std::string uri = JsonUtil::getJSONValue<std::string>(xcu, "uri");
+            Poco::Path destDir(_presetsPath, "xcu");
+            Poco::File(destDir).createDirectories();
+            std::string fileName = Poco::Path(destDir, "config.xcu").toString();
+
+            asyncInstall(uri, fileName);
+        }
     }
 };
 
@@ -1547,8 +1611,6 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
     const std::string& presetsPath,
     const std::function<void(bool)>& installFinishedCB)
 {
-    auto presetTasks = std::make_shared<PresetsInstallTask>(installFinishedCB);
-
     // Download the json for settings
     const Poco::URI settingsUri{userSettingsUri};
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(settingsUri));
@@ -1559,6 +1621,9 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
     LOG_DBG("Getting settings from [" << uriAnonym << ']');
 
     std::string configId = Cache::getConfigId(userSettingsUri);
+
+    auto presetTasks = std::make_shared<PresetsInstallTask>(poll, configId, presetsPath,
+                                                            installFinishedCB);
 
     // When result arrives, extract uris of what we want to install to the jail's user presets
     // and async download and install those.
@@ -1591,76 +1656,15 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
 
         bool result = false;
 
-        auto presetInstallFinished = [presetTasks](const std::string& id, bool presetResult)
-        {
-            presetTasks->installFinished(id, presetResult);
-        };
-
         const std::string& body = httpResponse->getBody();
         Poco::JSON::Object::Ptr settings;
         if (JsonUtil::parseJSON(body, settings))
         {
             result = true;
 
-            int idCount(0);
-
-            std::vector<PresetRequest> requests;
-
-            if (auto autotexts = settings->get("autotext").extract<Poco::JSON::Array::Ptr>())
-            {
-                for (std::size_t i = 0, count = autotexts->size(); i < count; ++i)
-                {
-                    auto autotext = autotexts->get(i).extract<Poco::JSON::Object::Ptr>();
-                    if (!autotext)
-                        continue;
-                    // TODO worry that we are potentially spamming here
-                    const std::string uri = JsonUtil::getJSONValue<std::string>(autotext, "uri");
-                    std::string fileName = Poco::Path(Poco::Path(presetsPath, "autotext").toString(),
-                                                      Uri::getFilenameWithExtFromURL(uri)).toString();
-                    std::string id = std::to_string(idCount++);
-                    presetTasks->installStarted(id);
-                    requests.emplace_back(uri, fileName, id);
-                }
-            }
-
-            // TODO: both autotexts and wordbooks are extracted the same way. create new method to extract preset and de-duplicate the code
-            if (auto wordbooks = settings->get("wordbook").extract<Poco::JSON::Array::Ptr>())
-            {
-                for (std::size_t i = 0, count = wordbooks->size(); i < count; ++i)
-                {
-                    auto wordbook = wordbooks->get(i).extract<Poco::JSON::Object::Ptr>();
-                    if (!wordbook)
-                        continue;
-                    // TODO worry that we are potentially spamming here
-                    const std::string uri = JsonUtil::getJSONValue<std::string>(wordbook, "uri");
-                    Poco::Path destDir(presetsPath, "wordbook");
-                    Poco::File(destDir).createDirectories();
-                    std::string fileName =
-                        Poco::Path(destDir.toString(),
-                                   Uri::getFilenameWithExtFromURL(uri))
-                            .toString();
-                    std::string id = std::to_string(idCount++);
-                    presetTasks->installStarted(id);
-                    requests.emplace_back(uri, fileName, id);
-                }
-            }
-
-            if (auto xcu = settings->get("xcu").extract<Poco::JSON::Object::Ptr>())
-            {
-                const std::string uri = JsonUtil::getJSONValue<std::string>(xcu, "uri");
-                Poco::Path destDir(presetsPath, "xcu");
-                Poco::File(destDir).createDirectories();
-                std::string fileName = Poco::Path(destDir, "config.xcu").toString();
-                std::string id = std::to_string(idCount++);
-                presetTasks->installStarted(id);
-                requests.emplace_back(uri, fileName, id);
-            }
-
-            for (const auto& req : requests)
-            {
-                asyncInstallPreset(poll, configId, req._uri, req._fileName, req._id,
-                                   presetInstallFinished);
-            }
+            presetTasks->installGroup(settings, "autotext");
+            presetTasks->installGroup(settings, "wordbook");
+            presetTasks->installXcu(settings);
         }
         else
         {
