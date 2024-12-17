@@ -563,11 +563,6 @@ L.Control.Notebookbar = L.Control.extend({
 			},
 			{
 				'type': 'toolitem',
-				'text': _UNO('.uno:SidebarDeck.StyleListDeck'),
-				'command': '.uno:SidebarDeck.StyleListDeck'
-			},
-			{
-				'type': 'toolitem',
 				'text': _UNO('.uno:Navigator'),
 				'command': '.uno:Navigator'
 			},
