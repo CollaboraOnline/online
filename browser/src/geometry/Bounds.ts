@@ -105,6 +105,13 @@ export class Bounds {
 		this.max.y = Math.round(this.max.y);
 	}
 
+	public translate(x: number, y: number): void {
+		this.min.x += x;
+		this.min.y += y;
+		this.max.x += x;
+		this.max.y += y;
+	}
+
 	public getBottomLeft(): Point {
 		return PointConstruct(this.min.x, this.max.y);
 	}
