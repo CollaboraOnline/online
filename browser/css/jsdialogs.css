@@ -545,6 +545,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	width: 30px; /* in table with headers has to be 100% */
 }
 
+.ui-treeview div.ui-treeview-icon-column img {
+	max-width: 30px;
+}
+
 .ui-treeview div.ui-treeview-state-column {
 	width: 38px;
 }
