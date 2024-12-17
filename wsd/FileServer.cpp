@@ -577,11 +577,11 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             configEntry->set("uri", Util::trim(uri));
             if (item.first == "autotext")
                 configAutoTexts->add(configEntry);
-            else if (item.first == "dictionary")
+            else if (item.first == "wordbook")
                 configDictionaries->add(configEntry);
         }
         configInfo->set("autotext", configAutoTexts);
-        configInfo->set("dictionary", configDictionaries);
+        configInfo->set("wordbook", configDictionaries);
 
         if (!xcu.empty())
         {
@@ -615,13 +615,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             if (configPath == "/userconfig.json")
             {
                 std::vector<asset> items = { { "autotext", "/test/data/autotextuser.bau" },
-                                             { "dictionary", "/test/data/dictionaryuser.dic" } };
+                                             { "wordbook", "/test/data/dictionaryuser.dic" } };
                 handlePresetRequest("user", prefix, socket, items, "/test/data/configuser.xcu");
             }
             else if (configPath == "/sharedconfig.json")
             {
                 std::vector<asset> items = { { "autotext", "/test/data/autotextshared.bau" },
-                                             { "dictionary", "/test/data/dictionaryshared.dic" } };
+                                             { "wordbook", "/test/data/dictionaryshared.dic" } };
 
                 handlePresetRequest("shared", prefix, socket, items, "/test/data/configshared.xcu");
             }
