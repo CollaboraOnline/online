@@ -184,7 +184,7 @@ private:
     bool unoSignatureCommand();
     bool selectText(const StringVector& tokens, const LokEventTargetEnum target);
     bool selectGraphic(const StringVector& tokens);
-    bool renderNextSlideLayer(const unsigned width, const unsigned height, bool& done);
+    bool renderNextSlideLayer(const unsigned width, const unsigned height, double dDevicePixelRatio, bool& done);
     bool renderSlide(const StringVector& tokens);
     bool renderWindow(const StringVector& tokens);
     bool resizeWindow(const StringVector& tokens);

@@ -2362,12 +2362,12 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
 }
 }
 
-bool ChildSession::renderNextSlideLayer(const unsigned width, const unsigned height, bool& done)
+bool ChildSession::renderNextSlideLayer(const unsigned width, const unsigned height, double dDevicePixelRatio, bool& done)
 {
     std::vector<unsigned char> pixmap(static_cast<size_t>(4) * width * height);
     bool bIsBitmapLayer = false;
     char* msg = nullptr;
-    done = getLOKitDocument()->renderNextSlideLayer(pixmap.data(), &bIsBitmapLayer, &msg);
+    done = getLOKitDocument()->renderNextSlideLayer(pixmap.data(), &bIsBitmapLayer, &dDevicePixelRatio, &msg);
     std::string jsonMsg(msg);
     free(msg);
 
@@ -2471,6 +2471,11 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     if (tokens.size() > 6 && getTokenString(tokens[6], "renderMasterPage", renderMasterPageString))
         renderMasterPage = std::stoi(renderMasterPageString) > 0;
 
+    double devicePixelRatio = 1.0;
+    std::string devicePixelRatioString;
+    if (tokens.size() > 7 && getTokenString(tokens[7], "devicePixelRatio", devicePixelRatioString))
+        devicePixelRatio = std::stod(devicePixelRatioString);
+
     unsigned bufferWidth = suggestedWidth;
     unsigned bufferHeight = suggestedHeight;
     bool success = getLOKitDocument()->createSlideRenderer(hash.c_str(), part,
@@ -2487,7 +2492,7 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     bool done = false;
     while (!done)
     {
-        success = renderNextSlideLayer(bufferWidth, bufferHeight, done);
+        success = renderNextSlideLayer(bufferWidth, bufferHeight, devicePixelRatio, done);
         if (!success)
             break;
     }
