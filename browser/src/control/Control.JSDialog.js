@@ -75,7 +75,7 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	close: function(id, sendCloseEvent) {
-		if (id && this.dialogs[id]) {
+		if (id !== undefined && this.dialogs[id]) {
 			if (!sendCloseEvent && this.dialogs[id].overlay && !this.dialogs[id].isSubmenu)
 				L.DomUtil.remove(this.dialogs[id].overlay);
 
@@ -110,7 +110,7 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	closeDialog: function(id, sendCloseEvent) {
-		if (!id || !this.dialogs[id]) {
+		if (id === undefined || !this.dialogs[id]) {
 			console.warn('missing dialog data');
 			return;
 		}
@@ -125,7 +125,7 @@ L.Control.JSDialog = L.Control.extend({
 	// sendCloseEvent means that we only send a command to the server
 	// we want to kill HTML popup when we receive feedback from the server
 	closePopover: function(id, sendCloseEvent) {
-		if (!id || !this.dialogs[id]) {
+		if (id === undefined || !this.dialogs[id]) {
 			console.warn('missing popover data');
 			return;
 		}
