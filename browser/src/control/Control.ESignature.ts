@@ -277,7 +277,10 @@ namespace cool {
 			this.availableProviderIDs = response.available_methods;
 			const availableProviderConfigs = response.method_configs;
 			const countries = this.createCountryList(availableProviderConfigs);
-			const providers = this.createProviders(this.availableProviderIDs);
+			const providers = this.createProviders(
+				this.availableProviderIDs,
+				availableProviderConfigs,
+			);
 			const dialog = JSDialog.eSignatureDialog(countries, providers);
 			// Providers can be in-context or redirect-based.  Most real-world providers
 			// are redirect-based, set the only tested non-in-context provider as
@@ -368,16 +371,28 @@ namespace cool {
 		}
 
 		// Turns a list of provider IDs into a list of signature providers
-		createProviders(providerIds: Array<string>): Array<cool.SignatureProvider> {
+		createProviders(
+			providerIds: Array<string>,
+			providerConfigs: Array<MethodConfig>,
+		): Array<cool.SignatureProvider> {
 			return providerIds.map((id) => {
-				const providerName = ESignature.providerNames[id];
-				if (providerName) {
-					return { action_type: id, name: providerName };
+				let providerName = ESignature.providerNames[id];
+				if (!providerName) {
+					app.console.log(
+						'failed to find a human-readable name for provider "' + id + '"',
+					);
+					providerName = id;
 				}
-				app.console.log(
-					'failed to find a human-readable name for provider "' + id + '"',
-				);
-				return { action_type: id, name: id };
+				const providerConfig = providerConfigs.find((i) => i.action_type == id);
+				let countryCodes: Array<string> = [];
+				if (providerConfig) {
+					countryCodes = providerConfig.supported_countries;
+				}
+				return {
+					action_type: id,
+					name: providerName,
+					countryCodes: countryCodes,
+				};
 			});
 		}
 

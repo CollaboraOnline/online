@@ -12,6 +12,7 @@ namespace cool {
 	export interface SignatureProvider {
 		action_type: string;
 		name: string;
+		countryCodes: Array<string>;
 	}
 
 	export interface Country {
@@ -34,12 +35,44 @@ namespace cool {
 
 		availableProviders: Array<SignatureProvider>;
 
+		// Providers available in the selected country
+		filteredProviders: Array<SignatureProvider>;
+
 		constructor(
 			countries: Array<Country>,
 			providers: Array<SignatureProvider>,
 		) {
 			this.availableCountries = countries;
 			this.availableProviders = providers;
+		}
+
+		// Produces the JSDialog JSON for the provider listbox
+		getProviderLbJSON(
+			providers: Array<string>,
+			defaultProviderIndex: number,
+		): ListBoxWidget {
+			return {
+				id: 'providerlb',
+				type: 'listbox',
+				enabled: true,
+				children: [
+					{
+						id: '',
+						type: 'control',
+						enabled: true,
+						children: [],
+					},
+					{
+						type: 'pushbutton',
+						enabled: true,
+						symbol: 'SPIN_DOWN',
+					} as PushButtonWidget,
+				],
+				labelledBy: 'providerft',
+				entries: providers,
+				selectedCount: 1,
+				selectedEntries: [String(defaultProviderIndex)],
+			} as ListBoxWidget;
 		}
 
 		getChildrenJSON(
@@ -85,28 +118,7 @@ namespace cool {
 					enabled: true,
 					labelFor: 'providerlb',
 				} as TextWidget,
-				{
-					id: 'providerlb',
-					type: 'listbox',
-					enabled: true,
-					children: [
-						{
-							id: '',
-							type: 'control',
-							enabled: true,
-							children: [],
-						},
-						{
-							type: 'pushbutton',
-							enabled: true,
-							symbol: 'SPIN_DOWN',
-						} as PushButtonWidget,
-					],
-					labelledBy: 'providerft',
-					entries: providers,
-					selectedCount: 1,
-					selectedEntries: [String(defaultProviderIndex)],
-				} as ListBoxWidget,
+				this.getProviderLbJSON(providers, defaultProviderIndex),
 				{
 					id: this.id + '-buttonbox',
 					type: 'buttonbox',
@@ -122,6 +134,21 @@ namespace cool {
 			];
 		}
 
+		// Updates the filtered provider list based on a country code and gets a default
+		// provider index.
+		getDefaultProviderIndex(): number {
+			this.filteredProviders = this.availableProviders.filter((provider) =>
+				provider.countryCodes.includes(this.defaultCountryCode),
+			);
+			let defaultProviderIndex = this.filteredProviders
+				.map((entry) => entry.action_type)
+				.indexOf(this.defaultProviderId);
+			if (defaultProviderIndex == -1) {
+				defaultProviderIndex = 0;
+			}
+			return defaultProviderIndex;
+		}
+
 		getJSON(): JSDialogJSON {
 			const countries = this.availableCountries.map((entry) => entry.name);
 			let defaultCountryIndex = this.availableCountries
@@ -130,13 +157,8 @@ namespace cool {
 			if (defaultCountryIndex == -1) {
 				defaultCountryIndex = 0;
 			}
-			const providers = this.availableProviders.map((entry) => entry.name);
-			let defaultProviderIndex = this.availableProviders
-				.map((entry) => entry.action_type)
-				.indexOf(this.defaultProviderId);
-			if (defaultProviderIndex == -1) {
-				defaultProviderIndex = 0;
-			}
+			const defaultProviderIndex = this.getDefaultProviderIndex();
+			const providers = this.filteredProviders.map((entry) => entry.name);
 			const children = this.getChildrenJSON(
 				countries,
 				defaultCountryIndex,
@@ -189,7 +211,7 @@ namespace cool {
 					document.querySelector('#ESignatureDialog select#providerlb-input')
 				);
 				const providerId =
-					this.availableProviders[providers.selectedIndex].action_type;
+					this.filteredProviders[providers.selectedIndex].action_type;
 				const countries = <HTMLSelectElement>(
 					document.querySelector('#ESignatureDialog select#countrylb-input')
 				);
@@ -197,6 +219,27 @@ namespace cool {
 					this.availableCountries[countries.selectedIndex].code;
 				this.close();
 				app.map.eSignature.handleSelectedProvider(countryCode, providerId);
+			} else if (eventType === 'selected' && object.id === 'countrylb') {
+				// The selected country changed, update the list of providers
+				// accordingly
+				// Index-label pair
+				const countryIndex = parseInt(data.split(';')[0]);
+				this.defaultCountryCode = this.availableCountries[countryIndex].code;
+				const defaultProviderIndex = this.getDefaultProviderIndex();
+				const providers = this.filteredProviders.map((entry) => entry.name);
+				const providerLbJSON = this.getProviderLbJSON(
+					providers,
+					defaultProviderIndex,
+				);
+				app.map.fire('jsdialogupdate', {
+					data: {
+						jsontype: 'dialog',
+						action: 'update',
+						id: 'ESignatureDialog',
+						control: providerLbJSON,
+					},
+					callback: this.callback.bind(this) as JSDialogCallback,
+				});
 			}
 		}
 
