@@ -433,7 +433,7 @@ TileCombined KitQueue::popTileQueue(float &priority)
     float prioritySoFar = -1000.0;
     for (size_t i = 0; i < _tileQueue.size(); ++i)
     {
-        auto& prio = _tileQueue[i];
+        const auto& prio = _tileQueue[i];
 
         const float p = _prio.getTilePriority(now, prio);
         if (p > prioritySoFar)
@@ -454,12 +454,23 @@ TileCombined KitQueue::popTileQueue(float &priority)
     // Combine as many tiles as possible with this tile.
     for (size_t i = 0; i < _tileQueue.size(); )
     {
-        auto& it = _tileQueue[i];
+        const auto& it = _tileQueue[i];
 
         LOG_TRC("Combining candidate: " << it.serialize());
 
-        // Check if it's on the same row.
+        bool bCombine = false;
+
+        // Check if it's on the same row
         if (tiles[0].canCombine(it))
+            bCombine = true;
+        else if (!tiles[0].isPreview() && !it.isPreview())
+        {
+            // Check if it can be part of the tilecombine and has the same priority
+            bCombine = tiles[0].sameTileCombineParams(it) &&
+                       _prio.getTilePriority(now, it) == priority;
+        }
+
+        if (bCombine)
         {
             tiles.emplace_back(it);
             _tileQueue.erase(_tileQueue.begin() + i);
