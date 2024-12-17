@@ -16,6 +16,17 @@ L.PosAnimation = L.Class.extend({
 
 		this.fire('start');
 
+		// Skip some work if the duration is zero
+		if (duration <= 0) {
+			el.style[L.DomUtil.TRANSITION] = '';
+			L.DomUtil.setPosition(el, newPos);
+			this._el._leaflet_pos = newPos;
+			this._inProgress = false;
+			this.fire('step').fire('end');
+			this._el.dataset.transitioning = false;
+			return;
+		}
+
 		el.style[L.DomUtil.TRANSITION] = 'all ' + (isNaN(duration) ? 0.25 : 0) +
 		        's cubic-bezier(0,0,' + (easeLinearity || 0.5) + ',1)';
 
