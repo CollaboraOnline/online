@@ -166,6 +166,7 @@ class CanvasSectionContainer {
 	*/
 
 	private sections: Array<any> = new Array(0);
+	private lastDocumentTopLeft: Array<number> = [0, -1];
 	private documentTopLeft: Array<number> = [0, 0];
 	private documentBottomRight: Array<number> = [0, 0];
 	private canvas: HTMLCanvasElement;
@@ -290,6 +291,12 @@ class CanvasSectionContainer {
 
 	public getViewSize (): Array<number> {
 		return [this.canvas.width, this.canvas.height];
+	}
+
+	public getLastPanDirection() : Array<number> {
+		var dx : number = this.documentTopLeft[0] - this.lastDocumentTopLeft[0];
+		var dy : number = this.documentTopLeft[1] - this.lastDocumentTopLeft[1];
+		return [ Math.sign(dx), Math.sign(dy) ];
 	}
 
 	public setBackgroundColorMode(useCSSVars: boolean = true) {
@@ -566,8 +573,18 @@ class CanvasSectionContainer {
 	}
 
 	public setDocumentBounds (points: Array<number>) {
-		this.documentTopLeft[0] = Math.round(points[0]);
-		this.documentTopLeft[1] = Math.round(points[1]);
+		var x: number = Math.round(points[0]);
+		var y: number = Math.round(points[1]);
+
+		// maintain a view of where we're panning to.
+		if (this.documentTopLeft[0] != x ||
+		    this.documentTopLeft[1] != y) {
+			this.lastDocumentTopLeft[0] = this.documentTopLeft[0];
+			this.lastDocumentTopLeft[1] = this.documentTopLeft[1];
+		}
+
+		this.documentTopLeft[0] = x;
+		this.documentTopLeft[1] = y;
 
 		this.documentBottomRight[0] = Math.round(points[2]);
 		this.documentBottomRight[1] = Math.round(points[3]);
