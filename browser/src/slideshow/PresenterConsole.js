@@ -142,6 +142,7 @@ class PresenterConsole {
 		this._map.on('transitionstart', this._onTransitionStart, this);
 		this._map.on('transitionend', this._onTransitionEnd, this);
 		this._map.on('tilepreview', this._onTilePreview, this);
+		this._map.on('presentinwindowclose', this._onWindowClose, this);
 
 		// safe check for current-presentation element
 		const currentPresentationCanvas =
