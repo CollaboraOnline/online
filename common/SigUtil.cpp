@@ -179,7 +179,7 @@ void requestShutdown()
                 return std::make_pair(ret, WTERMSIG(status));
             }
         }
-        else if (pid > 0)
+        else if (pid > 0 && errno != 0) // Don't complain if the process is reaped already.
         {
             // Log errno if we had a child pid we expected to reap.
             LOG_WRN("Failed to reap child process " << pid << " (" << Util::symbolicErrno(errno)
