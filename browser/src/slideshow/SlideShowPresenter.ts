@@ -436,16 +436,14 @@ class SlideShowPresenter {
 	}
 
 	_closeSlideShowWindow() {
-		if (!this._slideShowWindowProxy) {
-			// enable present in console on closeSlideShowWindow
-			this._enablePresenterConsole(false);
-			return;
-		} else {
+		if (this._slideShowWindowProxy) {
 			this._slideShowWindowProxy.parentElement.removeChild(
 				this._slideShowWindowProxy,
 			);
 			this._slideShowWindowProxy = null;
 		}
+		// enable present in console on closeSlideShowWindow
+		this._enablePresenterConsole(false);
 		this._map.uiManager.closeSnackbar();
 		this._map.focus();
 	}
