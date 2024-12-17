@@ -5964,7 +5964,7 @@ L.TilesPreFetcher = L.Class.extend({
 		var viewTileWidth = Math.floor((pixelBounds.getSize().x + tileSize - 1) / tileSize);
 		var viewTileHeight = Math.floor((pixelBounds.getSize().y + tileSize - 1) / tileSize);
 
-		var maxTilesToFetch = viewTileWidth * viewTileHeight / 4;
+		var maxTilesToFetch = Math.ceil(viewTileWidth * viewTileHeight / 4);
 		var maxBorderWidth = 10;
 
 		// Read-only views can much more agressively pre-load
