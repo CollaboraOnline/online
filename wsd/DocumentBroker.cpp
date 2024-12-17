@@ -1610,16 +1610,16 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
                 }
             }
 
-            // TODO: both autotexts and dictionary are extracted the same way. create new method to extract preset and de-duplicate the code
-            if (auto dictionaries = settings->get("dictionary").extract<Poco::JSON::Array::Ptr>())
+            // TODO: both autotexts and wordbooks are extracted the same way. create new method to extract preset and de-duplicate the code
+            if (auto wordbooks = settings->get("wordbook").extract<Poco::JSON::Array::Ptr>())
             {
-                for (std::size_t i = 0, count = dictionaries->size(); i < count; ++i)
+                for (std::size_t i = 0, count = wordbooks->size(); i < count; ++i)
                 {
-                    auto dictionary = dictionaries->get(i).extract<Poco::JSON::Object::Ptr>();
-                    if (!dictionary)
+                    auto wordbook = wordbooks->get(i).extract<Poco::JSON::Object::Ptr>();
+                    if (!wordbook)
                         continue;
                     // TODO worry that we are potentially spamming here
-                    const std::string uri = JsonUtil::getJSONValue<std::string>(dictionary, "uri");
+                    const std::string uri = JsonUtil::getJSONValue<std::string>(wordbook, "uri");
                     Poco::Path destDir(presetsPath, "wordbook");
                     Poco::File(destDir).createDirectories();
                     std::string fileName =
