@@ -3124,6 +3124,7 @@ public:
            << "\n  IsProxyPrefixEnabled: " << (COOLWSD::IsProxyPrefixEnabled ? "yes" : "no")
            << "\n  OverrideWatermark: " << COOLWSD::OverrideWatermark
            << "\n  UserInterface: " << COOLWSD::UserInterface
+           << "\n  Total PSS: " << Util::getProcessTreePss(getpid()) << " KB"
            << "\n  Config: " << LoggableConfigEntries
             ;
 
