@@ -558,8 +558,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     typedef std::pair<std::string, std::string> asset;
 
     //handle requests for settings.json contents
-    void handlePresetRequest(const std::string& kind, const std::string& prefix,
-                             const std::shared_ptr<StreamSocket>& socket, std::vector<asset>& items,
+    void handlePresetRequest(const std::string& kind, const std::string& etagString,
+                             const std::string& prefix,
+                             const std::shared_ptr<StreamSocket>& socket,
+                             std::vector<asset>& items,
                              const std::string& xcu)
     {
         Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
@@ -575,6 +577,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             std::string uri = COOLWSD::getServerURL().append(prefix + cwd + item.second);
             //COOLWSD::getServerURL tediously includes spaces at the start
             configEntry->set("uri", Util::trim(uri));
+            configEntry->set("stamp", etagString);
             if (item.first == "autotext")
                 configAutoTexts->add(configEntry);
             else if (item.first == "wordbook")
@@ -603,6 +606,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
     //handles request starts with /wopi/settings
     void handleSettingsRequest(const HTTPRequest& request,
+                               const std::string& etagString,
                                const std::shared_ptr<StreamSocket>& socket)
     {
         Poco::URI requestUri(request.getURI());
@@ -616,14 +620,16 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             {
                 std::vector<asset> items = { { "autotext", "/test/data/autotextuser.bau" },
                                              { "wordbook", "/test/data/dictionaryuser.dic" } };
-                handlePresetRequest("user", prefix, socket, items, "/test/data/configuser.xcu");
+                handlePresetRequest("user", etagString, prefix, socket, items,
+                                    "/test/data/configuser.xcu");
             }
             else if (configPath == "/sharedconfig.json")
             {
                 std::vector<asset> items = { { "autotext", "/test/data/autotextshared.bau" },
                                              { "wordbook", "/test/data/dictionaryshared.dic" } };
 
-                handlePresetRequest("shared", prefix, socket, items, "/test/data/configshared.xcu");
+                handlePresetRequest("shared", etagString, prefix, socket, items,
+                                    "/test/data/configshared.xcu");
             }
             else
                 throw BadRequestException("Invalid Config Request: " + configPath);
@@ -700,7 +706,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             handleWopiRequest(request, requestDetails, message, socket);
             return;
         } else if (relPath.starts_with("/wopi/settings")) {
-            handleSettingsRequest(request, socket);
+            handleSettingsRequest(request, etagString, socket);
             return;
         }
 
