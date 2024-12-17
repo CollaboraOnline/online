@@ -449,6 +449,8 @@ int Config::main(const std::vector<std::string>& args)
             std::cout << "Anonymization Salt: [" << AnonymizationSalt << "]." << std::endl;
         }
 
+        Anonymizer::initialize(true, AnonymizationSalt);
+
         for (std::size_t i = 1; i < args.size(); ++i)
         {
             std::cout << '[' << args[i] << "]: " << Anonymizer::anonymizeUrl(args[i]) << std::endl;
