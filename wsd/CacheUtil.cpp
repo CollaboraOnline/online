@@ -26,7 +26,8 @@
 #include <common/Log.hpp>
 #include <mutex>
 
-std::string Cache::CachePath;
+std::mutex CacheMutex;
+std::string CachePath;
 
 void Cache::initialize(const std::string& path)
 {
@@ -69,21 +70,60 @@ std::string Cache::locateConfigFile(const std::string& configId, const std::stri
     cachePath.makeDirectory();
 
     Poco::File(cachePath).createDirectories();
-    Poco::Path destPath(cachePath, "contents");
-    return destPath.toString();
+    return cachePath.toString();
 }
 
-void Cache::cacheConfigFile(const std::string& configId, const std::string& uri, const std::string& filename)
+void Cache::cacheConfigFile(const std::string& configId, const std::string& uri,
+                            const std::string& stamp, const std::string& filename)
 {
-    FileUtil::copyFileTo(filename, locateConfigFile(configId, uri));
+    std::unique_lock<std::mutex> lock(CacheMutex);
+
+    std::string cacheFileDir = locateConfigFile(configId, uri);
+    std::string cacheFile = Poco::Path(cacheFileDir, "contents").toString();
+
+    FileUtil::copyFileTo(filename, cacheFile);
+
+    std::ofstream cacheStamp(Poco::Path(cacheFileDir, "stamp").toString());
+    cacheStamp << stamp << '\n';
+    cacheStamp.close();
+
+    std::ofstream cacheLastUsed(Poco::Path(cacheFileDir, "lastused").toString());
+    cacheLastUsed << std::chrono::system_clock::now() << '\n';
+    cacheLastUsed.close();
 }
 
-bool Cache::supplyConfigFile(const std::string& configId, const std::string& uri, const std::string& filename)
+bool Cache::supplyConfigFile(const std::string& configId, const std::string& uri,
+                             const std::string& stamp, const std::string& filename)
 {
-    std::string cacheFile = locateConfigFile(configId, uri);
+    std::unique_lock<std::mutex> lock(CacheMutex);
+
+    std::string cacheFileDir = locateConfigFile(configId, uri);
+    std::string cacheFile = Poco::Path(cacheFileDir, "contents").toString();
     bool exists = FileUtil::Stat(cacheFile).exists();
     if (exists)
-        FileUtil::copyFileTo(cacheFile, filename);
+    {
+        std::string cacheStampFile = Poco::Path(cacheFileDir, "stamp").toString();
+        std::string cacheLastUsed = Poco::Path(cacheFileDir, "lastused").toString();
+        std::string cacheStamp;
+        if (FileUtil::readFile(cacheStampFile, cacheStamp) == -1)
+            LOG_WRN("cacheFile: " << cacheStampFile << " without stamp");
+        if (stamp == cacheStamp)
+        {
+            FileUtil::copyFileTo(cacheFile, filename);
+
+            std::ofstream of(cacheLastUsed);
+            of << std::chrono::system_clock::now() << '\n';
+            of.close();
+        }
+        else
+        {
+            LOG_DBG("Removing cache entry with out of date stamp [" << cacheFile << "]");
+            FileUtil::removeFile(cacheFile);
+            FileUtil::removeFile(cacheStampFile);
+            FileUtil::removeFile(cacheLastUsed);
+            exists = false;
+        }
+    }
     return exists;
 }
 

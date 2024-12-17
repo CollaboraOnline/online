@@ -558,6 +558,7 @@ public:
     /// file, to copy as presetFile
     static void asyncInstallPreset(SocketPoll& poll, const std::string& configId,
                                    const std::string& presetUri,
+                                   const std::string& presetStamp,
                                    const std::string& presetFile,
                                    const std::string& id,
                                    const std::function<void(const std::string&, bool)>& finishedCB);
