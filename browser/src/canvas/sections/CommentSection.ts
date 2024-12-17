@@ -337,9 +337,10 @@ export class Comment extends CanvasSectionObject {
 			lastPosY = childPositions[i].posY + 24;
 		}
 		if (i < this.sectionProperties.childLines.length) {
-			for (let j = i; j < this.sectionProperties.childLines.length; j++)
+			for (let j = i; j < this.sectionProperties.childLines.length; j++) {
 				this.sectionProperties.childLinesNode.removeChild(this.sectionProperties.childLines[i]);
-			this.sectionProperties.childLines.splice(i);
+				this.sectionProperties.childLines.splice(i);
+			}
 		}
 
 	}
