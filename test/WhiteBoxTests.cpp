@@ -740,17 +740,18 @@ void WhiteBoxTests::testAnonymization()
         Anonymizer::anonymizeUrl(fileUrl));
 
     anonymizationSalt = 0;
+    Anonymizer::initialize(true, anonymizationSalt);
 
-    LOK_ASSERT_EQUAL(std::string("#0#5e45aef91248a8aa#"), Anonymizer::anonymizeUrl(name));
+    LOK_ASSERT_EQUAL(std::string("#0#42027f9b6df09510#"), Anonymizer::anonymizeUrl(name));
     Anonymizer::mapAnonymized(name, name);
     LOK_ASSERT_EQUAL(name, Anonymizer::anonymizeUrl(name));
 
-    LOK_ASSERT_EQUAL(std::string("#2#5c872b2d82ecc8a0#.ext"), Anonymizer::anonymizeUrl(filename));
+    LOK_ASSERT_EQUAL(std::string("#1#366ab9ebe19ea09e#.ext"), Anonymizer::anonymizeUrl(filename));
     Anonymizer::mapAnonymized("filename",
                               "filename"); // Identity map of the filename without extension.
     LOK_ASSERT_EQUAL(filename, Anonymizer::anonymizeUrl(filename));
 
-    LOK_ASSERT_EQUAL(std::string("#1#8f8d95bd2a202d00#.odt"),
+    LOK_ASSERT_EQUAL(std::string("#2#eac31ed57854de54#.odt"),
                      Anonymizer::anonymizeUrl(filenameTestx));
     Anonymizer::mapAnonymized("testx (6)",
                               "testx (6)"); // Identity map of the filename without extension.
@@ -758,12 +759,13 @@ void WhiteBoxTests::testAnonymization()
 
     LOK_ASSERT_EQUAL(path, Anonymizer::anonymizeUrl(path));
 
-    const std::string urlAnonymized = Util::replace(plainUrl, "736_ocgdpzbkm39u", "#3#22c6f0caad277666#");
+    const std::string urlAnonymized =
+        Util::replace(plainUrl, "736_ocgdpzbkm39u", "#3#f64fbe55134cd5f0#");
     LOK_ASSERT_EQUAL(urlAnonymized, Anonymizer::anonymizeUrl(plainUrl));
     Anonymizer::mapAnonymized("736_ocgdpzbkm39u", "736_ocgdpzbkm39u");
     LOK_ASSERT_EQUAL(plainUrl, Anonymizer::anonymizeUrl(plainUrl));
 
-    const std::string urlAnonymized2 = Util::replace(fileUrl, "secret", "#4#294f0dfb18f6a80b#");
+    const std::string urlAnonymized2 = Util::replace(fileUrl, "secret", "#4#dcac6c9cae1b3b95#");
     LOK_ASSERT_EQUAL(urlAnonymized2, Anonymizer::anonymizeUrl(fileUrl));
     Anonymizer::mapAnonymized("secret", "736_ocgdpzbkm39u");
     const std::string urlAnonymized3 = Util::replace(fileUrl, "secret", "736_ocgdpzbkm39u");
