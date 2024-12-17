@@ -81,7 +81,7 @@ public:
 
     // call func on each token until func returns true or we run out of tokens
     template <class UnaryFunction>
-    static void tokenize_foreach(UnaryFunction& func, const char* data, const std::size_t size, const char delimiter = ' ')
+    static void tokenize_foreach(UnaryFunction&& func, const char* data, const std::size_t size, const char delimiter = ' ')
     {
         if (size == 0 || data == nullptr || *data == '\0')
             return;

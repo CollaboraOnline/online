@@ -29,6 +29,7 @@ size_t getMemoryUsageRSS(const pid_t pid) { return 0; }
 size_t getCurrentThreadCount() { return 0; }
 std::string getMemoryStats(FILE* file) { return std::string(); }
 std::pair<size_t, size_t> getPssAndDirtyFromSMaps(FILE* file) { return std::make_pair(0, 0); }
+std::size_t getProcessTreePss(pid_t pid) { return 0; }
 size_t getCpuUsage(const pid_t pid) { return 0; }
 size_t getStatFromPid(const pid_t pid, int ind) { return 0; }
 void setProcessAndThreadPriorities(const pid_t pid, int prio) {}
