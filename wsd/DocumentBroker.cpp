@@ -1490,7 +1490,8 @@ private:
     std::set<std::string> _installingPresets;
     std::vector<std::function<void(bool)>> _installFinishedCBs;
 
-    void asyncInstall(const std::string& uri, const std::string& fileName)
+    void asyncInstall(const std::string& uri, const std::string& stamp,
+                      const std::string& fileName)
     {
         auto presetInstallFinished = [this](const std::string& id, bool presetResult)
         {
@@ -1503,7 +1504,7 @@ private:
         installStarted(id);
 
         DocumentBroker::asyncInstallPreset(_poll, _configId,
-                                           uri, fileName, id,
+                                           uri, stamp, fileName, id,
                                            presetInstallFinished);
     }
 
@@ -1561,8 +1562,9 @@ public:
                 if (!elem)
                     continue;
 
-                // TODO Are we potentially spamming here?
                 const std::string uri = JsonUtil::getJSONValue<std::string>(elem, "uri");
+                const std::string stamp = JsonUtil::getJSONValue<std::string>(elem, "stamp");
+
                 Poco::Path destDir(_presetsPath, groupName);
                 Poco::File(destDir).createDirectories();
                 std::string fileName =
@@ -1570,7 +1572,7 @@ public:
                                Uri::getFilenameWithExtFromURL(uri))
                         .toString();
 
-                asyncInstall(uri, fileName);
+                asyncInstall(uri, stamp, fileName);
             }
         }
     }
@@ -1580,11 +1582,13 @@ public:
         if (auto xcu = settings->get("xcu").extract<Poco::JSON::Object::Ptr>())
         {
             const std::string uri = JsonUtil::getJSONValue<std::string>(xcu, "uri");
+            const std::string stamp = JsonUtil::getJSONValue<std::string>(xcu, "stamp");
+
             Poco::Path destDir(_presetsPath, "xcu");
             Poco::File(destDir).createDirectories();
             std::string fileName = Poco::Path(destDir, "config.xcu").toString();
 
-            asyncInstall(uri, fileName);
+            asyncInstall(uri, stamp, fileName);
         }
     }
 };
@@ -1695,14 +1699,14 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
 }
 
 void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& configId,
-                                        const std::string& presetUri,
+                                        const std::string& presetUri, const std::string& presetStamp,
                                         const std::string& presetFile, const std::string& id,
                                         const std::function<void(const std::string&, bool)>& finishedCB)
 {
     const std::string uriAnonym = COOLWSD::anonymizeUrl(presetUri);
     LOG_DBG("Getting preset from [" << uriAnonym << ']');
 
-    if (Cache::supplyConfigFile(configId, presetUri, presetFile))
+    if (Cache::supplyConfigFile(configId, presetUri, presetStamp, presetFile))
     {
         LOG_INF("Cache check for preset uri: " << uriAnonym << " to " << presetFile << " succeeded");
         poll.addCallback([id, finishedCB]() { finishedCB(id, true); });
@@ -1715,7 +1719,7 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& con
     request.set("User-Agent", http::getAgentString());
 
     http::Session::FinishedCallback finishedCallback =
-        [configId, presetUri, uriAnonym,
+        [configId, presetUri, presetStamp, uriAnonym,
          presetFile, id, finishedCB](const std::shared_ptr<http::Session>& presetSession)
     {
         if (SigUtil::getShutdownRequestFlag())
@@ -1739,7 +1743,7 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& con
             success = true;
             LOG_INF("Fetch of preset uri: " << uriAnonym << " to " << presetFile << " succeeded");
 
-            Cache::cacheConfigFile(configId, presetUri, presetFile);
+            Cache::cacheConfigFile(configId, presetUri, presetStamp, presetFile);
         }
 
         if (finishedCB)
