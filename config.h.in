@@ -61,6 +61,9 @@
 /* Define to 1 if you have the `ppoll' function. */
 #define HAVE_PPOLL 0
 
+/* Define to 1 if you have the `memrchr' function. */
+#define HAVE_MEMRCHR 0
+
 /* Default value of help root URL */
 #undef HELP_URL
 
