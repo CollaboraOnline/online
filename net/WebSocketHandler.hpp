@@ -817,7 +817,7 @@ protected:
             ssize_t i = 0, toSend;
             while (true)
             {
-                toSend = std::min(sizeof(copy), len - i);
+                toSend = std::min(static_cast<uint64_t>(sizeof(copy)), len - i);
                 if (toSend == 0)
                     break;
                 for (ssize_t j = 0; j < toSend; ++j, ++i)
