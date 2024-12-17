@@ -356,6 +356,9 @@ namespace Util
     /// returns them as a pair in the same order
     std::pair<size_t, size_t> getPssAndDirtyFromSMaps(FILE* file);
 
+    /// Returns the total PSS usage of the process and all its children.
+    std::size_t getProcessTreePss(pid_t pid);
+
     size_t getCpuUsage(pid_t pid);
 
     size_t getStatFromPid(pid_t pid, int ind);

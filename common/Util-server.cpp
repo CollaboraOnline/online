@@ -10,6 +10,9 @@
  */
 #include <config.h>
 
+#include "FileUtil.hpp"
+#include "Log.hpp"
+#include "StringVector.hpp"
 #include "Util.hpp"
 
 #ifdef __linux__
@@ -26,7 +29,6 @@
 #include <iomanip>
 
 #include <Poco/Exception.h>
-#include "Log.hpp"
 
 namespace Util
 {
@@ -276,6 +278,40 @@ std::size_t getMemoryUsagePSS(const pid_t pid)
             fclose(fp);
             return pss;
         }
+    }
+
+    return 0;
+}
+
+std::size_t getProcessTreePss(pid_t pid)
+{
+    try
+    {
+        std::size_t pss = getMemoryUsagePSS(pid);
+
+        const std::string root = "/proc/" + std::to_string(pid) + "/task/";
+
+        std::vector<std::string> tids;
+        Poco::File(root).list(tids);
+
+        for (const std::string& tid : tids)
+        {
+            std::ifstream children(root + tid + "/children");
+            std::string child;
+            while (children >> child)
+            {
+                const auto pair = Util::i32FromString(child);
+                if (pair.second)
+                {
+                    pss += getProcessTreePss(pair.first);
+                }
+            }
+        }
+
+        return pss;
+    }
+    catch (const std::exception&)
+    {
     }
 
     return 0;
