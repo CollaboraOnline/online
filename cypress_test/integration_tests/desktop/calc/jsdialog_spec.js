@@ -117,4 +117,15 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		cy.cGet('#watermarkentry-input').should('not.be.disabled');
 
 	});
+
+	it('JSDialog check data validity options', function() {
+		cy.cGet('#Data-tab-label').click();
+		cy.cGet('#data-validation').click();
+
+		// On changing options other fields should toggle enable and disable
+		cy.cGet('#data-input').should('be.disabled');
+		cy.cGet('#allow-input').select("1");
+
+		cy.cGet('#data-input').should('not.be.disabled');
+	});
 });
