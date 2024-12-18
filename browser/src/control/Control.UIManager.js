@@ -398,7 +398,9 @@ L.Control.UIManager = L.Control.extend({
 			var showResolved = this.getBooleanDocTypePref('ShowResolved', true);
 			if (showResolved === false || showResolved === 'false')
 				this.map.sendUnoCommand('.uno:ShowResolvedAnnotations');
-
+			// Notify the inital status of comments
+			var initialCommentState = this.map['stateChangeHandler'].getItemValue('showannotations');
+			this._map.fire('commandstatechanged', {commandName : 'showannotations', state : initialCommentState});
 			this.map.mention = L.control.mention(this.map);
 		}
 
