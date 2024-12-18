@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-14 13:17+0100\n"
-"PO-Revision-Date: 2024-12-14 09:00+0000\n"
+"PO-Revision-Date: 2024-12-14 23:48+0000\n"
 "Last-Translator: Giovanni Montini <service@giovannimontini.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -627,6 +627,8 @@ msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Non è consentito utilizzare la sorgente dati esterna selezionata. Si prega "
+"di contattare l'amministratore di sistema."
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
@@ -750,307 +752,307 @@ msgstr "Scaricamento fallito"
 
 #: src/control/Control.ESignature.ts:126
 msgid "Andorra"
-msgstr ""
+msgstr "Andorra"
 
 #: src/control/Control.ESignature.ts:127
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Emirati Arabi Uniti"
 
 #: src/control/Control.ESignature.ts:128
 msgid "Albania"
-msgstr ""
+msgstr "Albania"
 
 #: src/control/Control.ESignature.ts:129
 msgid "Armenia"
-msgstr ""
+msgstr "Armenia"
 
 #: src/control/Control.ESignature.ts:130
 msgid "Argentina"
-msgstr ""
+msgstr "Argentina"
 
 #: src/control/Control.ESignature.ts:131
 msgid "Austria"
-msgstr ""
+msgstr "Austria"
 
 #: src/control/Control.ESignature.ts:132
 msgid "Australia"
-msgstr ""
+msgstr "Australia"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Åland Islands"
-msgstr ""
+msgstr "Isole Åland"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbaijan"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnia ed Erzegovina"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Belgium"
-msgstr ""
+msgstr "Belgio"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulgaria"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Brazil"
-msgstr ""
+msgstr "Brasile"
 
 #: src/control/Control.ESignature.ts:139
 msgid "Belarus"
-msgstr ""
+msgstr "Bielorussia"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Canada"
-msgstr ""
+msgstr "Canada"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Switzerland"
-msgstr ""
+msgstr "Svizzera"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Chile"
-msgstr ""
+msgstr "Cile"
 
 #: src/control/Control.ESignature.ts:143
 msgid "China"
-msgstr ""
+msgstr "Cina"
 
 #: src/control/Control.ESignature.ts:144
 msgid "Cyprus"
-msgstr ""
+msgstr "Cipro"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Czech Republic"
-msgstr ""
+msgstr "Repubblica Ceca"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Germany"
-msgstr ""
+msgstr "Germania"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Denmark"
-msgstr ""
+msgstr "Danimarca"
 
 #: src/control/Control.ESignature.ts:148
 msgid "Estonia"
-msgstr ""
+msgstr "Estonia"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Spain"
-msgstr ""
+msgstr "Spagna"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Finland"
-msgstr ""
+msgstr "Finlandia"
 
 #: src/control/Control.ESignature.ts:151
 msgid "France"
-msgstr ""
+msgstr "Francia"
 
 #: src/control/Control.ESignature.ts:152
 msgid "United Kingdom"
-msgstr ""
+msgstr "Regno Unito"
 
 #: src/control/Control.ESignature.ts:153
 msgid "Georgia"
-msgstr ""
+msgstr "Georgia"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Guernsey"
-msgstr ""
+msgstr "Guernsey"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Greece"
-msgstr ""
+msgstr "Grecia"
 
 #: src/control/Control.ESignature.ts:156
 msgid "Croatia"
-msgstr ""
+msgstr "Croazia"
 
 #: src/control/Control.ESignature.ts:157
 msgid "Hungary"
-msgstr ""
+msgstr "Ungheria"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Indonesia"
-msgstr ""
+msgstr "Indonesia"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Ireland"
-msgstr ""
+msgstr "Irlanda"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Israel"
-msgstr ""
+msgstr "Israele"
 
 #: src/control/Control.ESignature.ts:161
 msgid "India"
-msgstr ""
+msgstr "India"
 
 #: src/control/Control.ESignature.ts:162
 msgid "Iceland"
-msgstr ""
+msgstr "Islanda"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Italy"
-msgstr ""
+msgstr "Italia"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Japan"
-msgstr ""
+msgstr "Giappone"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Kenya"
-msgstr ""
+msgstr "Kenya"
 
 #: src/control/Control.ESignature.ts:166
 msgid "South Korea"
-msgstr ""
+msgstr "Corea del Sud"
 
 #: src/control/Control.ESignature.ts:167
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Kazakistan"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Liechtenstein"
 
 #: src/control/Control.ESignature.ts:169
 msgid "Lithuania"
-msgstr ""
+msgstr "Lituania"
 
 #: src/control/Control.ESignature.ts:170
 msgid "Luxembourg"
-msgstr ""
+msgstr "Lussemburgo"
 
 #: src/control/Control.ESignature.ts:171
 msgid "Latvia"
-msgstr ""
+msgstr "Lettonia"
 
 #: src/control/Control.ESignature.ts:172
 msgid "Monaco"
-msgstr ""
+msgstr "Monaco"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "Moldavia, Repubblica di"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Montenegro"
-msgstr ""
+msgstr "Montenegro"
 
 #: src/control/Control.ESignature.ts:175
 msgid "North Macedonia, Republic of"
-msgstr ""
+msgstr "Macedonia del Nor, Repubblica della"
 
 #: src/control/Control.ESignature.ts:176
 msgid "Malta"
-msgstr ""
+msgstr "Malta"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Mexico"
-msgstr ""
+msgstr "Messico"
 
 #: src/control/Control.ESignature.ts:178
 msgid "Netherlands"
-msgstr ""
+msgstr "Paesi Bassi"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Norway"
-msgstr ""
+msgstr "Norvegia"
 
 #: src/control/Control.ESignature.ts:180
 msgid "New Zealand"
-msgstr ""
+msgstr "Nuova Zelanda"
 
 #: src/control/Control.ESignature.ts:181
 msgid "Philippines"
-msgstr ""
+msgstr "Filippine"
 
 #: src/control/Control.ESignature.ts:182
 msgid "Poland"
-msgstr ""
+msgstr "Polonia"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Portugal"
-msgstr ""
+msgstr "Portogallo"
 
 #: src/control/Control.ESignature.ts:184
 msgid "Qatar"
-msgstr ""
+msgstr "Qatar"
 
 #: src/control/Control.ESignature.ts:185
 msgid "Romania"
-msgstr ""
+msgstr "Romania"
 
 #: src/control/Control.ESignature.ts:186
 msgid "Serbia"
-msgstr ""
+msgstr "Serbia"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Russian Federation"
-msgstr ""
+msgstr "Russia"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Arabia Saudita"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Sweden"
-msgstr ""
+msgstr "Svezia"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Singapore"
-msgstr ""
+msgstr "Singapore"
 
 #: src/control/Control.ESignature.ts:191
 msgid "Slovenia"
-msgstr ""
+msgstr "Slovenia"
 
 #: src/control/Control.ESignature.ts:192
 msgid "Slovakia"
-msgstr ""
+msgstr "Slovacchia"
 
 #: src/control/Control.ESignature.ts:193
 msgid "San Marino"
-msgstr ""
+msgstr "San Marino"
 
 #: src/control/Control.ESignature.ts:194
 msgid "Turkey"
-msgstr ""
+msgstr "Turchia"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Taiwan"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Ukraine"
-msgstr ""
+msgstr "Ucraina"
 
 #: src/control/Control.ESignature.ts:197
 msgid "United States of America"
-msgstr ""
+msgstr "Stati Uniti d'America"
 
 #: src/control/Control.ESignature.ts:198
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Stato del Vaticano"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovo"
 
 #: src/control/Control.ESignature.ts:200
 msgid "South Africa"
-msgstr ""
+msgstr "Sud Africa"
 
 #: src/control/Control.ESignatureDialog.ts:49
 msgid "Country:"
-msgstr ""
+msgstr "Paese:"
 
 #: src/control/Control.ESignatureDialog.ts:78
 msgid "Provider:"
@@ -1059,7 +1061,7 @@ msgstr ""
 #: src/control/Control.ESignatureDialog.ts:127
 #: src/control/Control.ESignatureDialog.ts:128
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Inserisci Firma Elettronica"
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -1292,7 +1294,7 @@ msgstr "Documento PDF (.pdf) come..."
 
 #: src/control/Control.Menubar.js:96 src/control/Control.Menubar.js:724
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "file HTML (.html)"
 
 #: src/control/Control.Menubar.js:101 src/control/Control.Menubar.js:428
 #: src/control/Control.Menubar.js:587 src/control/Control.Menubar.js:732
@@ -1362,7 +1364,7 @@ msgstr "Modalità scura"
 #: src/control/Control.NotebookbarImpress.js:511
 #: src/control/Control.NotebookbarWriter.js:1512
 msgid "Invert Background"
-msgstr ""
+msgstr "Inverti colore di sfondo"
 
 #: src/control/Control.Menubar.js:157 src/control/Control.Menubar.js:474
 #: src/control/Control.Menubar.js:625 src/control/Control.Menubar.js:774
@@ -1462,7 +1464,7 @@ msgstr "Proprietà"
 #: src/control/Control.Menubar.js:368 src/control/Control.Menubar.js:1042
 #: src/control/Control.NotebookbarWriter.js:414
 msgid "Screen Reading"
-msgstr ""
+msgstr "Lettura dello Schermo"
 
 #: src/control/Control.Menubar.js:381
 #: src/control/Control.NotebookbarWriter.js:380
@@ -1544,42 +1546,42 @@ msgstr "Salva commenti"
 #: src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarBuilder.js:437
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "Documento HTML (.html)"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Diapositiva corrente come Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Diapositiva corrente come Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Diapositiva corrente come Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.js:419
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Diapositiva corrente come Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.js:425
 #: src/control/Control.NotebookbarBuilder.js:666
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Diapositiva a pagina intera"
 
 #: src/control/Control.Menubar.js:426
 #: src/control/Control.NotebookbarBuilder.js:670
@@ -1611,7 +1613,7 @@ msgstr "Proietta la diapositiva attiva"
 
 #: src/control/Control.Menubar.js:544
 msgid "Present in new window"
-msgstr ""
+msgstr "Proietta in una nuova finestra"
 
 #: src/control/Control.Menubar.js:545
 #: src/control/Control.NotebookbarImpress.js:374
@@ -1628,7 +1630,7 @@ msgstr "Disegno ODF (.odg)"
 
 #: src/control/Control.Menubar.js:646
 msgid "Electronic signature..."
-msgstr ""
+msgstr "Firma elettronica..."
 
 #: src/control/Control.Menubar.js:708 src/control/Control.Menubar.js:720
 #: src/control/Control.Menubar.js:1194
@@ -1668,37 +1670,37 @@ msgstr "Tutti i fogli"
 #: src/control/Control.Menubar.js:859
 #: src/control/jsdialog/Definitions.Menu.ts:291
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Evidenzia celle con..."
 
 #: src/control/Control.Menubar.js:860
 #: src/control/jsdialog/Definitions.Menu.ts:294
 msgid "Values greater than..."
-msgstr ""
+msgstr "Valori maggiori di..."
 
 #: src/control/Control.Menubar.js:861
 #: src/control/jsdialog/Definitions.Menu.ts:298
 msgid "Values less than..."
-msgstr ""
+msgstr "Valori minori di..."
 
 #: src/control/Control.Menubar.js:862
 #: src/control/jsdialog/Definitions.Menu.ts:302
 msgid "Values equal to..."
-msgstr ""
+msgstr "Valori uguali a..."
 
 #: src/control/Control.Menubar.js:863
 #: src/control/jsdialog/Definitions.Menu.ts:306
 msgid "Values between..."
-msgstr ""
+msgstr "Valori compresi..."
 
 #: src/control/Control.Menubar.js:864
 #: src/control/jsdialog/Definitions.Menu.ts:310
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Valori duplicati..."
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:314
 msgid "Containing text..."
-msgstr ""
+msgstr "Contenenti testo..."
 
 #: src/control/Control.Menubar.js:867 src/control/Control.Menubar.js:877
 #: src/control/jsdialog/Definitions.Menu.ts:318
@@ -1714,7 +1716,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:870
 #: src/control/jsdialog/Definitions.Menu.ts:325
 msgid "Top N elements..."
-msgstr ""
+msgstr "Primi N elementi..."
 
 #: src/control/Control.Menubar.js:871
 #: src/control/jsdialog/Definitions.Menu.ts:329
@@ -1724,7 +1726,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:872
 #: src/control/jsdialog/Definitions.Menu.ts:333
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Ultimi N elementi..."
 
 #: src/control/Control.Menubar.js:873
 #: src/control/jsdialog/Definitions.Menu.ts:337
@@ -1734,12 +1736,12 @@ msgstr ""
 #: src/control/Control.Menubar.js:874
 #: src/control/jsdialog/Definitions.Menu.ts:341
 msgid "Above Average..."
-msgstr ""
+msgstr "Superiori alla media..."
 
 #: src/control/Control.Menubar.js:875
 #: src/control/jsdialog/Definitions.Menu.ts:345
 msgid "Below Average..."
-msgstr ""
+msgstr "Inferiori alla media..."
 
 #: src/control/Control.Menubar.js:991 src/control/Control.Menubar.js:1057
 #: src/control/Control.Menubar.js:1122 src/control/Control.Menubar.js:1177
@@ -1950,7 +1952,7 @@ msgstr "Vedi la cronologia"
 #: src/control/Control.NotebookbarImpress.js:321
 #: src/control/Control.NotebookbarWriter.js:322
 msgid "Signature"
-msgstr ""
+msgstr "Firma"
 
 #: src/control/Control.NotebookbarCalc.js:268
 #: src/control/Control.NotebookbarDraw.js:320
@@ -2134,15 +2136,15 @@ msgstr "Presentazione"
 
 #: src/control/Control.NotebookbarImpress.js:366
 msgid "Present in Window"
-msgstr ""
+msgstr "Presenta nella Finestra"
 
 #: src/control/Control.NotebookbarImpress.js:486
 msgid "Show Grid"
-msgstr ""
+msgstr "Mostra Griglia"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Aggancia alla Griglia"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -2150,11 +2152,11 @@ msgstr "Modulo"
 
 #: src/control/Control.NotebookbarWriter.js:351
 msgid "Go Online"
-msgstr ""
+msgstr "Vai Online"
 
 #: src/control/Control.NotebookbarWriter.js:351
 msgid "Go Offline"
-msgstr ""
+msgstr "Vai Offline"
 
 #: src/control/Control.NotebookbarWriter.js:1353
 msgid "Rich Text"
@@ -2186,12 +2188,11 @@ msgstr "Incolla"
 
 #: src/control/Control.SaveState.ts:37
 msgid "Saving"
-msgstr ""
+msgstr "Salvataggio in corso"
 
 #: src/control/Control.SaveState.ts:52
-#, fuzzy
 msgid "Saved"
-msgstr "Salva"
+msgstr "Salvato"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -2210,45 +2211,48 @@ msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"È stato usato il campo is_admin ma risulta obsoleto. Per l'integrazione "
+"andrebbe utilizzata la proprietà IsAdminUser"
 
 #: src/control/Control.ServerAuditDialog.ts:62
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "L'attributo utente IsAdminUser è impostato per integrazione"
 
 #: src/control/Control.ServerAuditDialog.ts:69
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Il tuo server WOPI non è sicuro: Verifica SSL fallita"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Non sono riscontrati problemi nella verifica SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:81
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "L'API PostMessage è stato inizializzato"
 
 #: src/control/Control.ServerAuditDialog.ts:86
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "L'integratore non è pronto per chiamate PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:94
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Il tuo server non soddisfa i requisiti hardware, pertanto le performance "
+"possono risultare insoddisfacenti."
 
 #: src/control/Control.ServerAuditDialog.ts:100
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Le risorse hardware sono sufficienti per delle prestazioni ottimali"
 
 #: src/control/Control.ServerAuditDialog.ts:205
 msgid "No issues found"
-msgstr ""
+msgstr "Nessun problema trovato"
 
 #: src/control/Control.ServerAuditDialog.ts:211
-#, fuzzy
 msgid "Status"
-msgstr "Stato:"
+msgstr "Stato"
 
 #: src/control/Control.ServerAuditDialog.ts:259
 msgid "Check security warnings of your server"
