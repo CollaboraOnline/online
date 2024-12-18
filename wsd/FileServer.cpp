@@ -477,6 +477,14 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                 fileInfo->set("UserSettings", userSettings);
             }
 
+            {
+                Poco::JSON::Object::Ptr browserSettings = new Poco::JSON::Object();
+                std::string uri = COOLWSD::getServerURL() + "/wopi/settings/browserconfig.json";
+                browserSettings->set("uri", Util::trim(uri));
+                browserSettings->set("stamp", etagString);
+                fileInfo->set("BrowserSettings", browserSettings);
+            }
+
             fileInfo->set("UserCanWrite", (requestDetails.getParam("permission") != "readonly") ? "true": "false");
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
             fileInfo->set("LastModifiedTime", localFile->getLastModifiedTime());
