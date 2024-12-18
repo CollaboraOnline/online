@@ -56,17 +56,10 @@ std::string Cache::getConfigId(const std::string& uri)
 
 std::string Cache::locateConfigFile(const std::string& configId, const std::string& uri)
 {
-    Poco::URI sourceUri(uri);
-    std::string sourcePrefix = sourceUri.getScheme() + '_' + sourceUri.getAuthority();
-    std::string sourcePathEtc = sourceUri.getPathEtc();
-
-    Poco::Path rootPath(CachePath, configId);
+    Poco::Path rootPath(CachePath, Uri::encode(configId));
     rootPath.makeDirectory();
 
-    Poco::Path source(sourcePrefix, sourcePathEtc);
-    source.makeDirectory();
-
-    Poco::Path cachePath(rootPath, source);
+    Poco::Path cachePath(rootPath, Uri::encode(uri));
     cachePath.makeDirectory();
 
     Poco::File(cachePath).createDirectories();
