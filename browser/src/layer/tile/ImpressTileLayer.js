@@ -315,6 +315,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			}
 
 			this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : (statusJSON.parts.length > 0 && statusJSON.parts[0].mode !== undefined ? statusJSON.parts[0].mode : 0);
+			this._map.fire('impressmodechanged', {mode: this._selectedMode});
 
 			if (statusJSON.gridSnapEnabled === true)
 				app.map.stateChangeHandler.setItemValue('.uno:GridUse', 'true');
