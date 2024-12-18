@@ -25,6 +25,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		cy.cGet('#menu-insert').click();
 		cy.cGet('body').contains('#menu-insert li a', 'Page Break').click();
 		desktopHelper.assertVisiblePage(1, 2, 2);
+		desktopHelper.makeZoomItemsVisible(); // make visible next and prev page buttons
 		cy.cGet('#toolbar-down #prev').click();
 		desktopHelper.assertVisiblePage(1, 1, 2);
 		cy.cGet('#toolbar-down #next').click();
