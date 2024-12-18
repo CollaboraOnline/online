@@ -897,12 +897,14 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	onMouseMove(position: number[], dragDistance: number[]) {
-		if (this.containerObject.isDraggingSomething() && this.sectionProperties.svg && !app.file.textCursor.visible) {
+		if (this.containerObject.isDraggingSomething() && !app.file.textCursor.visible) {
 			(window as any).IgnorePanning = true;
 
-			this.sectionProperties.svg.style.left = String((this.myTopLeft[0] + dragDistance[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.opacity = 0.5;
+			if (this.sectionProperties.svg) {
+				this.sectionProperties.svg.style.left = String((this.myTopLeft[0] + dragDistance[0]) / app.dpiScale) + 'px';
+				this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
+				this.sectionProperties.svg.style.opacity = 0.5;
+			}
 			this.sectionProperties.lastDragDistance = [dragDistance[0], dragDistance[1]];
 			this.checkHelperLinesAndSnapPoints(this.size, this.position, dragDistance);
 
