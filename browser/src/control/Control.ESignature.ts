@@ -23,7 +23,7 @@ namespace cool {
 		commandName: string;
 		success: boolean;
 		// Depends on the value of commandName
-		result: any;
+		result: HashSendResponse | ReceiveSignatureResponse;
 	}
 
 	// Describes one provider
@@ -405,7 +405,7 @@ namespace cool {
 					codes.push(code);
 				}
 			}
-			codes = [...new Set(codes)].sort();
+			codes = [...new Set(codes)];
 			this.availableCountryCodes = codes;
 
 			return codes.map((code) => {
