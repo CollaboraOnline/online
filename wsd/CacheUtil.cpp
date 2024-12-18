@@ -54,8 +54,11 @@ std::string Cache::getConfigId(const std::string& uri)
     return sourcePrefix + sourcePathEtc;
 }
 
-std::string Cache::locateConfigFile(const std::string& configId, const std::string& uri)
+void Cache::cacheConfigFile(const std::string& configId, const std::string& uri,
+                            const std::string& stamp, const std::string& filename)
 {
+    std::unique_lock<std::mutex> lock(CacheMutex);
+
     Poco::Path rootPath(CachePath, Uri::encode(configId));
     rootPath.makeDirectory();
 
@@ -63,15 +66,8 @@ std::string Cache::locateConfigFile(const std::string& configId, const std::stri
     cachePath.makeDirectory();
 
     Poco::File(cachePath).createDirectories();
-    return cachePath.toString();
-}
 
-void Cache::cacheConfigFile(const std::string& configId, const std::string& uri,
-                            const std::string& stamp, const std::string& filename)
-{
-    std::unique_lock<std::mutex> lock(CacheMutex);
-
-    std::string cacheFileDir = locateConfigFile(configId, uri);
+    std::string cacheFileDir = cachePath.toString();
     std::string cacheFile = Poco::Path(cacheFileDir, "contents").toString();
 
     FileUtil::copyFileTo(filename, cacheFile);
@@ -80,44 +76,86 @@ void Cache::cacheConfigFile(const std::string& configId, const std::string& uri,
     cacheStamp << stamp << '\n';
     cacheStamp.close();
 
-    std::ofstream cacheLastUsed(Poco::Path(cacheFileDir, "lastused").toString());
-    cacheLastUsed << std::chrono::system_clock::now() << '\n';
-    cacheLastUsed.close();
+    updateLastUsed(rootPath.toString());
 }
 
-bool Cache::supplyConfigFile(const std::string& configId, const std::string& uri,
-                             const std::string& stamp, const std::string& filename)
+void Cache::updateLastUsed(const std::string& path)
+{
+    std::string cacheLastUsed = Poco::Path(path, "lastused").toString();
+    std::ofstream of(cacheLastUsed);
+    of << std::chrono::system_clock::now() << '\n';
+    of.close();
+}
+
+bool Cache::supplyConfigFile(const std::string& cacheDir, const std::string& stamp,
+                             const std::string& dest)
+{
+    std::string cacheContentsFile = Poco::Path(cacheDir, "contents").toString();
+    if (!FileUtil::Stat(cacheContentsFile).exists())
+    {
+        LOG_DBG("cacheFile: " << cacheContentsFile << " cache miss.");
+        return false;
+    }
+
+    std::string cacheStampFile = Poco::Path(cacheDir, "stamp").toString();
+    std::string cacheStamp;
+    std::ifstream ifs(cacheStampFile);
+    std::getline(ifs, cacheStamp);
+    if (cacheStamp.empty() || stamp != cacheStamp)
+    {
+        LOG_DBG("cacheFile: " << cacheStampFile << " with obsolete stamp: " << cacheStamp << " vs: " << stamp);
+        return false;
+    }
+    if (!FileUtil::copy(cacheContentsFile, dest, false, false))
+    {
+        LOG_WRN("cacheFile: " << cacheContentsFile << " couldn't be copied");
+        return false;
+    }
+    LOG_DBG("cacheFile: " << cacheContentsFile << " supplied");
+    return true;
+}
+
+void Cache::supplyConfigFiles(const std::string& configId, std::vector<CacheQuery>& queries)
 {
     std::unique_lock<std::mutex> lock(CacheMutex);
 
-    std::string cacheFileDir = locateConfigFile(configId, uri);
-    std::string cacheFile = Poco::Path(cacheFileDir, "contents").toString();
-    bool exists = FileUtil::Stat(cacheFile).exists();
-    if (exists)
-    {
-        std::string cacheStampFile = Poco::Path(cacheFileDir, "stamp").toString();
-        std::string cacheLastUsed = Poco::Path(cacheFileDir, "lastused").toString();
-        std::string cacheStamp;
-        if (FileUtil::readFile(cacheStampFile, cacheStamp) == -1)
-            LOG_WRN("cacheFile: " << cacheStampFile << " without stamp");
-        if (stamp == cacheStamp)
-        {
-            FileUtil::copyFileTo(cacheFile, filename);
+    Poco::Path rootPath(CachePath, Uri::encode(configId));
+    rootPath.makeDirectory();
+    Poco::File(rootPath).createDirectories();
 
-            std::ofstream of(cacheLastUsed);
-            of << std::chrono::system_clock::now() << '\n';
-            of.close();
+    std::set<std::string> cacheHits;
+
+    auto it = queries.begin();
+    while (it != queries.end())
+    {
+        std::string cachename = Uri::encode(it->_uri);
+
+        Poco::Path cacheDir(rootPath, cachename);
+
+        if (supplyConfigFile(cacheDir.toString(), it->_stamp, it->_dest))
+        {
+            it = queries.erase(it);
+            cacheHits.insert(cachename);
         }
         else
+            ++it;
+    }
+
+    auto names = FileUtil::getDirEntries(rootPath.toString());
+    for (const auto& name : names)
+    {
+        if (name == "lastused")
+            continue;
+        if (cacheHits.find(name) == cacheHits.end())
         {
-            LOG_DBG("Removing cache entry with out of date stamp [" << cacheFile << "]");
-            FileUtil::removeFile(cacheFile);
-            FileUtil::removeFile(cacheStampFile);
-            FileUtil::removeFile(cacheLastUsed);
-            exists = false;
+            LOG_WRN("cacheFile: " << "removing stale cache file: " << name);
+            Poco::Path cacheDir(rootPath, name);
+            FileUtil::removeFile(cacheDir.toString(), true);
         }
     }
-    return exists;
+
+    if (!cacheHits.empty())
+        updateLastUsed(rootPath.toString());
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
