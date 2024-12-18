@@ -42,8 +42,11 @@ namespace cool {
 			countries: Array<Country>,
 			providers: Array<SignatureProvider>,
 		) {
+			// Sort the lists based on the UI name.
 			this.availableCountries = countries;
+			this.availableCountries.sort((a, b) => a.name.localeCompare(b.name));
 			this.availableProviders = providers;
+			this.availableProviders.sort((a, b) => a.name.localeCompare(b.name));
 		}
 
 		// Produces the JSDialog JSON for the provider listbox
