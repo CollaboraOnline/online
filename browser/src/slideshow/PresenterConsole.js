@@ -14,7 +14,7 @@
  * PresenterConsole
  */
 
-/* global SlideShow _ */
+/* global app SlideShow _ */
 
 class PresenterConsole {
 	constructor(map, presenter) {
@@ -189,7 +189,30 @@ class PresenterConsole {
 		}
 	}
 
+	_onImpressModeChanged(e) {
+		if (this._waitForExitingNotesMode && e.mode === 0) {
+			this._waitForExitingNotesMode = false;
+			this._map.off('impressmodechanged', this._onImpressModeChanged, this);
+			this._onPresentInConsole();
+		}
+	}
+
 	_onPresentInConsole() {
+		if (app.impress.notesMode) {
+			console.debug(
+				'PresenterConsole._onPresentInConsole: notes mode is enabled, exiting',
+			);
+			// exit notes view mode and wait for status update notification
+			// so we're sure that impress mode is changed
+			// finally skip next partsupdate event,
+			// since it's only due to the mode change
+			this._presenter._skipNextSlideShowInfoChangedMsg = true;
+			this._waitForExitingNotesMode = true;
+			this._map.on('impressmodechanged', this._onImpressModeChanged, this);
+			app.map.sendUnoCommand('.uno:NormalMultiPaneGUI');
+			return;
+		}
+
 		this._map.fire('newpresentinwindow');
 		if (!this._presenter._slideShowWindowProxy) {
 			return;
