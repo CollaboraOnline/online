@@ -37,6 +37,51 @@ class User:
     undoChgStack = []       # list of commands that made changes
     lastCmd = ""
 
+class FileLine:
+    def __init__(self, kit, lineString):
+        self.kit = kit
+        self.lineString = lineString
+    kit = 0
+    lineString = ""
+
+def reorderLogFile(oldFilename):
+    newFileName = oldFilename + ".reordered"
+    f = open(oldFilename, 'r')
+
+    fileLines = []
+    kitStartLine = {}
+    kitEndLine = {}
+    i = 0
+
+    for line in f:
+        numbKit = line.find("kit=")
+        if numbKit >= 0:
+            endOfKit = line[numbKit:].find(" ")
+            if endOfKit >= 0:
+                endOfKit += numbKit
+                kit = int(line[numbKit+4:endOfKit])
+            else:
+                kit = int(line[numbKit+4:])
+
+            fileLines.append(FileLine(kit,line))
+
+            if kit not in kitStartLine:
+                kitStartLine[kit] = i
+            kitEndLine[kit] = i
+            i += 1
+
+    fOut = open(newFileName, "w")
+
+    for kit in kitEndLine.keys():
+        for i in range(kitStartLine[kit], kitEndLine[kit]+1):
+            if fileLines[i].kit == kit:
+                fOut.write(fileLines[i].lineString)
+
+    fOut.close()
+    f.close()
+
+    return newFileName
+
 if __name__ == "__main__":
 
     if len(sys.argv) != 2:
@@ -49,8 +94,11 @@ if __name__ == "__main__":
     undoedCommands = {}
     totalUndoedCommands = {}
 
+    # Check if the file has kit order problem, and fix it
+    newFileName = reorderLogFile(sys.argv[1])
+
     # Process all Document related, and undo related calculations
-    f = open(sys.argv[1], 'r')
+    f = open(newFileName, 'r')
     for line in f:
         if line.startswith("log-start-time:"):
             pass
@@ -108,7 +156,7 @@ if __name__ == "__main__":
         totalUndoedCommands[cmd] = 0
 
     actIndex=-1
-    f = open(sys.argv[1], 'r')
+    f = open(newFileName, 'r')
     for line in f:
         if line.startswith("time="):
             numbrep = line.find("rep=")

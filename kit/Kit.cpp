@@ -775,7 +775,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
     // Open file for UI Logging
     if (Log::isLogUIEnabled())
     {
-        logUiCmd.createTmpFile();
+        logUiCmd.createTmpFile(_docId);
     }
 }
 

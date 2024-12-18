@@ -22,7 +22,7 @@ void LogUiCmd::logUiCmdLine(int userId, const std::string& line)
 
 void LogUiCmd::saveLogFile()
 {
-    std::string timeLog = "log-start-time: " + _kitStartTimeStr + " user-count:" + std::to_string(_usersLogged.size());
+    std::string timeLog = "log-start-time: " + _kitStartTimeStr + " kit=" + _docId + " user-count:" + std::to_string(_usersLogged.size());
     Log::logUI(Log::WRN, timeLog);
     _fileStreamUICommands.seekg(0, std::ios::beg);
     std::string line;
@@ -34,15 +34,17 @@ void LogUiCmd::saveLogFile()
     _fileStreamUICommands.close();
     timeLog = "log-end-time: ";
     timeLog.append(Util::getTimeNow("%Y-%m-%d %T"));
+    timeLog += " kit=" + _docId;
     Log::logUI(Log::WRN, timeLog);
 }
 
-void LogUiCmd::createTmpFile()
+void LogUiCmd::createTmpFile(std::string docId)
 {
     const std::string tempFile = "/tmp/kit-ui-cmd.log";
     _fileStreamUICommands.open(tempFile, std::fstream::in | std::fstream::out | std::fstream::trunc);
     _kitStartTimeSec = std::chrono::steady_clock::now();
     _kitStartTimeStr = Util::getTimeNow("%Y-%m-%d %T");
+    _docId = docId;
 }
 
 std::chrono::steady_clock::time_point LogUiCmd::getKitStartTimeSec()
