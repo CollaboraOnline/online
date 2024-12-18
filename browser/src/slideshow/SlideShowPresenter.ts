@@ -125,8 +125,10 @@ class SlideShowPresenter {
 	private _metaPresentation: MetaPresentation;
 	private _startSlide: number;
 	private _presentationInfoChanged: boolean = false;
+	_skipNextSlideShowInfoChangedMsg: boolean = false;
 	private _cypressSVGPresentationTest: boolean = false;
 	private _onKeyDownHandler: (e: KeyboardEvent) => void;
+	private _onImpressModeChanged: any = null;
 
 	constructor(map: any) {
 		this._cypressSVGPresentationTest =
@@ -538,6 +540,17 @@ class SlideShowPresenter {
 		);
 	}
 
+	_onImpressModeChangedImpl(e: any, inWindow: boolean) {
+		if (this._onImpressModeChanged && e.mode === 0) {
+			this._map.off('impressmodechanged', this._onImpressModeChanged, this);
+			this._onImpressModeChanged = null;
+			const startSlide = {
+				startSlideNumber: this._startSlide,
+			};
+			inWindow ? this._onStartInWindow(startSlide) : this._onStart(startSlide);
+		}
+	}
+
 	/// returns true on success
 	_onPrepareScreen(inWindow: boolean) {
 		if (this._checkPresentationDisabled()) {
@@ -555,6 +568,23 @@ class SlideShowPresenter {
 			(window as any).ThisIsTheAndroidApp
 		) {
 			window.postMobileMessage('SLIDESHOW');
+			return false;
+		}
+
+		if (app.impress.notesMode) {
+			console.debug(
+				'SlideShowPresenter._onPrepareScreen: notes mode is enabled, exiting',
+			);
+			// exit notes view mode and wait for status update notification
+			// so we're sure that impress mode is changed
+			// finally skip next partsupdate event,
+			// since it's only due to the mode change
+			this._skipNextSlideShowInfoChangedMsg = true;
+			this._onImpressModeChanged = function (e: any) {
+				this._onImpressModeChangedImpl(e, inWindow);
+			};
+			this._map.on('impressmodechanged', this._onImpressModeChanged, this);
+			app.map.sendUnoCommand('.uno:NormalMultiPaneGUI');
 			return false;
 		}
 
@@ -668,24 +698,24 @@ class SlideShowPresenter {
 
 	/// called when user triggers the presentation using UI
 	_onStart(that: any) {
+		this._startSlide = that?.startSlideNumber ?? 0;
 		if (!this._onPrepareScreen(false))
 			// opens full screen, has to be on user interaction
 			return;
 		// disable slide sorter or it will receive key events
 		this._map._docLayer._preview.partsFocused = false;
 
-		this._startSlide = that?.startSlideNumber ?? 0;
 		app.socket.sendMessage('getpresentationinfo');
 	}
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow(that: any) {
+		this._startSlide = that?.startSlideNumber ?? 0;
 		if (!this._onPrepareScreen(true))
 			// opens full screen, has to be on user interaction
 			return;
 		// disable present in console onStartInWindow
 		this._enablePresenterConsole(true);
-		this._startSlide = that?.startSlideNumber ?? 0;
 		app.socket.sendMessage('getpresentationinfo');
 	}
 
@@ -776,6 +806,10 @@ class SlideShowPresenter {
 
 	onSlideShowInfoChanged() {
 		if (this._presentationInfoChanged) return;
+		if (this._skipNextSlideShowInfoChangedMsg) {
+			this._skipNextSlideShowInfoChangedMsg = false;
+			return;
+		}
 
 		this._presentationInfoChanged = true;
 		app.socket.sendMessage('getpresentationinfo');
