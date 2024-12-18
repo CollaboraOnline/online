@@ -604,6 +604,37 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         socket->send(httpResponse);
     }
 
+    // handle requests for browserconfig.json
+    void handleBrowserConfigRequest(const std::shared_ptr<StreamSocket>& socket)
+    {
+        Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
+        configInfo->set("kind", "browser");
+
+        Poco::JSON::Object::Ptr textEntry = new Poco::JSON::Object();
+        textEntry->set("ShowResolved", true);
+        textEntry->set("ShowStatusBar", false);
+
+        Poco::JSON::Object::Ptr presentationEntry = new Poco::JSON::Object();
+        presentationEntry->set("ShowSidebar", false);
+        presentationEntry->set("ShowStatusBar", false);
+
+        Poco::JSON::Object::Ptr spreadsheetEntry = new Poco::JSON::Object();
+        spreadsheetEntry->set("ShowStatusBar", false);
+
+        configInfo->set("text", textEntry);
+        configInfo->set("presentation", presentationEntry);
+        configInfo->set("spreadsheet", spreadsheetEntry);
+
+        std::ostringstream jsonStream;
+        configInfo->stringify(jsonStream);
+
+        http::Response httpResponse(http::StatusCode::OK);
+        FileServerRequestHandler::hstsHeaders(httpResponse);
+        httpResponse.set("Last-Modified", Util::getHttpTime(std::chrono::system_clock::now()));
+        httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
+        socket->send(httpResponse);
+    }
+
     //handles request starts with /wopi/settings
     void handleSettingsRequest(const HTTPRequest& request,
                                const std::string& etagString,
@@ -630,6 +661,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
                 handlePresetRequest("shared", etagString, prefix, socket, items,
                                     "/test/data/configshared.xcu");
+            }
+            else if (configPath == "/browserconfig.json")
+            {
+                handleBrowserConfigRequest(socket);
             }
             else
                 throw BadRequestException("Invalid Config Request: " + configPath);
