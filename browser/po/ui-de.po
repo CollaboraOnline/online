@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-14 13:17+0100\n"
 "PO-Revision-Date: 2024-12-16 03:24+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"Last-Translator: m4skedbyte <weblate@m4skedbyte.xyz>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -2395,7 +2395,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:108
 msgid "Active Sheet"
-msgstr "Aktive Tabelle"
+msgstr "Aktive Seite"
 
 #: src/control/Control.TopToolbar.js:120
 msgid "Default Style"
