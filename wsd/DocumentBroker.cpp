@@ -697,8 +697,6 @@ void DocumentBroker::pollThread()
 #endif
     }
 
-    fprintf(stderr, "FINISHED HERE\n");
-
     LOG_INF("Finished polling doc ["
             << _docKey << "]. stop: " << _stop << ", continuePolling: " << _poll->continuePolling()
             << ", CloseReason: [" << _closeReason << ']'
@@ -709,7 +707,6 @@ void DocumentBroker::pollThread()
     {
         LOG_INF("Requesting termination of child [" << getPid() << "] for doc [" << _docKey
                                                     << "] as there are no sessions");
-        fprintf(stderr, "requestTermination\n");
         _childProcess->requestTermination();
     }
 
@@ -812,7 +809,6 @@ void DocumentBroker::pollThread()
     terminateChild(_closeReason);
 
     // Stop to mark it done and cleanup.
-    fprintf(stderr, "ask it to stop\n");
     _poll->stop();
 
 #if !MOBILEAPP
@@ -852,7 +848,6 @@ void DocumentBroker::pollThread()
     }
 
     // Async cleanup.
-    fprintf(stderr, "do house keeping\n");
     COOLWSD::doHousekeeping();
 #endif
 
@@ -864,8 +859,6 @@ void DocumentBroker::pollThread()
 
 bool DocumentBroker::isAlive() const
 {
-    fprintf(stderr, "at isAlive child status is %d stop is %d poll itself is %d\n", _childProcess && _childProcess->isAlive(),
-        _stop.load(), _poll->isAlive());
     if (!_stop || _poll->isAlive())
         return true; // Polling thread not started or still running.
 
@@ -1492,25 +1485,25 @@ private:
     {
         auto presetInstallFinished = [this](const std::string& id, bool presetResult)
         {
-            installFinished(id, presetResult);
+            installPresetFinished(id, presetResult);
         };
 
         // just something unique for this resource
         std::string id = std::to_string(_idCount++);
 
-        installStarted(id);
+        installPresetStarted(id);
 
-        DocumentBroker::asyncInstallPreset(_poll, _configId,
-                                           uri, stamp, fileName, id,
+        DocumentBroker::asyncInstallPreset(_poll, _configId, uri,
+                                           stamp, fileName, id,
                                            presetInstallFinished);
     }
 
-    void installStarted(const std::string& id)
+    void installPresetStarted(const std::string& id)
     {
         _installingPresets.insert(id);
     }
 
-    void installFinished(const std::string& id, bool presetResult)
+    void installPresetFinished(const std::string& id, bool presetResult)
     {
         _overallSuccess &= presetResult;
         _installingPresets.erase(id);
@@ -1519,12 +1512,57 @@ private:
         // downloads?
         if (_installingPresets.empty() && !_reportedStatus)
         {
-            _reportedStatus = true;
-            for (const auto& cb : _installFinishedCBs)
-                cb(_overallSuccess);
+            LOG_INF("Async fetch of presets for " << _configId << " completed. Success: " << _overallSuccess);
+            completed();
         }
     }
 
+    void completed()
+    {
+        _reportedStatus = true;
+        for (const auto& cb : _installFinishedCBs)
+            cb(_overallSuccess);
+    }
+
+    void addGroup(Poco::JSON::Object::Ptr settings, const std::string& groupName, std::vector<CacheQuery>& queries)
+    {
+        if (auto group = settings->get(groupName).extract<Poco::JSON::Array::Ptr>())
+        {
+            for (std::size_t i = 0, count = group->size(); i < count; ++i)
+            {
+                auto elem = group->get(i).extract<Poco::JSON::Object::Ptr>();
+                if (!elem)
+                    continue;
+
+                const std::string uri = JsonUtil::getJSONValue<std::string>(elem, "uri");
+                const std::string stamp = JsonUtil::getJSONValue<std::string>(elem, "stamp");
+
+                Poco::Path destDir(_presetsPath, groupName);
+                Poco::File(destDir).createDirectories();
+                std::string fileName =
+                    Poco::Path(destDir.toString(),
+                               Uri::getFilenameWithExtFromURL(uri))
+                        .toString();
+
+                queries.emplace_back(uri, stamp, fileName);
+            }
+        }
+    }
+
+    void addXcu(Poco::JSON::Object::Ptr settings, std::vector<CacheQuery>& queries)
+    {
+        if (auto xcu = settings->get("xcu").extract<Poco::JSON::Object::Ptr>())
+        {
+            const std::string uri = JsonUtil::getJSONValue<std::string>(xcu, "uri");
+            const std::string stamp = JsonUtil::getJSONValue<std::string>(xcu, "stamp");
+
+            Poco::Path destDir(_presetsPath, "xcu");
+            Poco::File(destDir).createDirectories();
+            std::string fileName = Poco::Path(destDir, "config.xcu").toString();
+
+            queries.emplace_back(uri, stamp, fileName);
+        }
+    }
 public:
     PresetsInstallTask(SocketPoll& poll, const std::string& configId,
                        const std::string& presetsPath,
@@ -1549,43 +1587,32 @@ public:
         _installFinishedCBs.emplace_back(installFinishedCB);
     }
 
-    void installGroup(Poco::JSON::Object::Ptr settings, const std::string& groupName)
+    void install(Poco::JSON::Object::Ptr settings)
     {
-        if (auto group = settings->get(groupName).extract<Poco::JSON::Array::Ptr>())
+        std::vector<CacheQuery> presets;
+        if (!settings)
+            _overallSuccess = false;
+        else
         {
-            for (std::size_t i = 0, count = group->size(); i < count; ++i)
-            {
-                auto elem = group->get(i).extract<Poco::JSON::Object::Ptr>();
-                if (!elem)
-                    continue;
-
-                const std::string uri = JsonUtil::getJSONValue<std::string>(elem, "uri");
-                const std::string stamp = JsonUtil::getJSONValue<std::string>(elem, "stamp");
-
-                Poco::Path destDir(_presetsPath, groupName);
-                Poco::File(destDir).createDirectories();
-                std::string fileName =
-                    Poco::Path(destDir.toString(),
-                               Uri::getFilenameWithExtFromURL(uri))
-                        .toString();
-
-                asyncInstall(uri, stamp, fileName);
-            }
+            addGroup(settings, "autotext", presets);
+            addGroup(settings, "wordbook", presets);
+            addXcu(settings, presets);
         }
-    }
 
-    void installXcu(Poco::JSON::Object::Ptr settings)
-    {
-        if (auto xcu = settings->get("xcu").extract<Poco::JSON::Object::Ptr>())
+        Cache::supplyConfigFiles(_configId, presets);
+
+        // If there are no presets to fetch then we can respond now, otherwise
+        // that happens when the last preset is installed.
+        if (!presets.empty())
         {
-            const std::string uri = JsonUtil::getJSONValue<std::string>(xcu, "uri");
-            const std::string stamp = JsonUtil::getJSONValue<std::string>(xcu, "stamp");
-
-            Poco::Path destDir(_presetsPath, "xcu");
-            Poco::File(destDir).createDirectories();
-            std::string fileName = Poco::Path(destDir, "config.xcu").toString();
-
-            asyncInstall(uri, stamp, fileName);
+            LOG_INF("Async fetch of presets for " << _configId << " launched");
+            for (const auto& preset : presets)
+                asyncInstall(preset._uri, preset._stamp, preset._dest);
+        }
+        else
+        {
+            LOG_INF("Fetch of presets for " << _configId << " completed immediately. Success: " << _overallSuccess);
+            completed();
         }
     }
 };
@@ -1693,11 +1720,12 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
     // and async download and install those.
     http::Session::FinishedCallback finishedCallback =
         [&poll, configId, uriAnonym,
-         presetsPath, presetTasks, installFinishedCB](const std::shared_ptr<http::Session>& configSession)
+         presetsPath, presetTasks](const std::shared_ptr<http::Session>& configSession)
     {
         if (SigUtil::getShutdownRequestFlag())
         {
             LOG_DBG("Shutdown flagged, giving up on in-flight requests");
+            presetTasks->install(nullptr);
             return;
         }
 
@@ -1713,32 +1741,20 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
                 LOG_ERR("Access denied to [" << uriAnonym << ']');
             else
                 LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
-            if (installFinishedCB)
-                installFinishedCB(false);
+            presetTasks->install(nullptr);
             return;
         }
 
-        bool result = false;
-
         const std::string& body = httpResponse->getBody();
         Poco::JSON::Object::Ptr settings;
-        if (JsonUtil::parseJSON(body, settings))
-        {
-            result = true;
-
-            presetTasks->installGroup(settings, "autotext");
-            presetTasks->installGroup(settings, "wordbook");
-            presetTasks->installXcu(settings);
-        }
-        else
+        if (!JsonUtil::parseJSON(body, settings))
         {
             LOG_ERR("Parse of userSettings json: " << uriAnonym << " failed");
+            presetTasks->install(nullptr);
+            return;
         }
 
-        // If there are no presets to fetch then we can respond now, otherwise
-        // that happens when the last preset is installed.
-        if (installFinishedCB && presetTasks->empty())
-            installFinishedCB(result);
+        presetTasks->install(settings);
     };
 
     httpSession->setFinishedHandler(std::move(finishedCallback));
@@ -1756,13 +1772,6 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& con
 {
     const std::string uriAnonym = COOLWSD::anonymizeUrl(presetUri);
     LOG_DBG("Getting preset from [" << uriAnonym << ']');
-
-    if (Cache::supplyConfigFile(configId, presetUri, presetStamp, presetFile))
-    {
-        LOG_INF("Cache check for preset uri: " << uriAnonym << " to " << presetFile << " succeeded");
-        poll.addCallback([id, finishedCB]() { finishedCB(id, true); });
-        return;
-    }
 
     const Poco::URI uri{presetUri};
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(uri));
