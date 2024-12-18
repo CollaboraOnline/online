@@ -54,6 +54,7 @@ public:
         const std::string& getUserPrivateInfo() const { return _userPrivateInfo; }
         const std::string& getServerPrivateInfo() const { return _serverPrivateInfo; }
         const std::string& getUserSettingsUri() const { return _userSettingsUri; }
+        const std::string& getBrowserSettingsUri() const { return _browserSettingsUri; }
         const std::string& getWatermarkText() const { return _watermarkText; }
         const std::string& getTemplateSaveAs() const { return _templateSaveAs; }
         const std::string& getTemplateSource() const { return _templateSource; }
@@ -109,6 +110,8 @@ public:
         std::string _serverPrivateInfo;
         /// Uri to get settings json for this user, for autotext location, etc.
         std::string _userSettingsUri;
+        /// Uri to get browser settings json for this user
+        std::string _browserSettingsUri;
         /// In case a watermark has to be rendered on each tile.
         std::string _watermarkText;
         /// In case we want to use this file as a template, it should be first re-saved under this name (using PutRelativeFile).
