@@ -13,7 +13,7 @@
  * L.Control.NotebookbarWriter - definition of notebookbar content in Writer
  */
 
-/* global _ _UNO */
+/* global _ _UNO app */
 
 var fileTabName = 'File';
 var homeTabName = 'Home';
@@ -933,13 +933,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:ParagraphDialog',
 				'accessibility': { focusBack: false, combination: 'B', de: null }
 			},
-			{
+			app.isExperimentalMode() ? {
 				'id': 'format-style-dialog',
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:SidebarDeck.StyleListDeck'),
+				'text': _('Style list'),
 				'command': '.uno:SidebarDeck.StyleListDeck',
 				'accessibility': { focusBack: false, combination: 'SD', de: null }
-			},
+			} : {},
 			{
 				'id': 'format-FormatBulletsMenu',
 				'type': 'menubutton',
