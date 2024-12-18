@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 
@@ -308,7 +309,9 @@ namespace CODA
                 Debug.WriteLine("Evaluating JavaScript: " + subjs);
             }
 
-            _iWebView2.ExecuteScriptAsync(js);
+            Application.Current.Dispatcher.Invoke(new Action(() => {
+                _iWebView2.ExecuteScriptAsync(js);
+            }));
         }
 
         void UpdateTitle()
