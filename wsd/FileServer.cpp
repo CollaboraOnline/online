@@ -605,7 +605,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     }
 
     // handle requests for browserconfig.json
-    void handleBrowserConfigRequest(const std::shared_ptr<StreamSocket>& socket)
+    void handleBrowserConfigRequest(const std::shared_ptr<StreamSocket>& socket,
+                                    const std::string& etagString)
     {
         Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
         configInfo->set("kind", "browser");
@@ -624,6 +625,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         configInfo->set("text", textEntry);
         configInfo->set("presentation", presentationEntry);
         configInfo->set("spreadsheet", spreadsheetEntry);
+        configInfo->set("stamp", etagString);
 
         std::ostringstream jsonStream;
         configInfo->stringify(jsonStream);
@@ -664,7 +666,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             }
             else if (configPath == "/browserconfig.json")
             {
-                handleBrowserConfigRequest(socket);
+                handleBrowserConfigRequest(socket, etagString);
             }
             else
                 throw BadRequestException("Invalid Config Request: " + configPath);
