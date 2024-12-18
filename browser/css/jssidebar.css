@@ -7,7 +7,6 @@
 }
 
 div.ui-grid-cell.sidebar.jsdialog {
-	display: inline-grid;
 	row-gap: 5px;
 }
 
@@ -378,7 +377,40 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	visibility: hidden;
 }
 
-/* Styles Deck */
 #StyleListPanelPanelExpander #TemplatePanel #filter select {
 	width: 100%;
+}
+
+/* required to dynamically resize treeviews or lists inside sidebar */
+.sidebar-container,
+.sidebar-container > .root-container.jsdialog.sidebar,
+.sidebar-container > .root-container.jsdialog.sidebar > .vertical.jsdialog.sidebar {
+	height: 100%;
+}
+
+#StyleListDeck,
+#StyleListDeck .root-container.jsdialog.sidebar,
+#StyleListDeck .vertical.jsdialog.sidebar,
+#StyleListPanelPanelExpander,
+#StyleListPanelPanelExpander #content,
+#StyleListPanelPanelExpander #TemplatePanel {
+	height: 100%;
+}
+
+#StyleListPanelPanelExpander .ui-expander-content.jsdialog.sidebar.expanded {
+	height: calc(100% - 45px);
+}
+
+#TemplatePanel {
+	display: flex;
+	flex-direction: column;
+}
+
+#TemplatePanel > div {
+	flex-grow: 0;
+}
+
+#TemplatePanel > div:nth-child(3),
+#TemplatePanel > div:nth-child(4) {
+	flex-grow: 1;
 }
