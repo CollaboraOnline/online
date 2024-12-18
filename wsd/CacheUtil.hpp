@@ -18,6 +18,13 @@
 #include <unordered_map>
 #include <vector>
 
+struct CacheQuery
+{
+    std::string _uri;
+    std::string _stamp;
+    std::string _dest;
+};
+
 class Cache
 {
 public:
@@ -28,11 +35,13 @@ public:
     static void cacheConfigFile(const std::string& configId, const std::string& uri,
                                 const std::string& stamp, const std::string& filename);
 
-    static bool supplyConfigFile(const std::string& configId, const std::string& uri,
-                                 const std::string& stamp, const std::string& filename);
+    static void supplyConfigFiles(const std::string& configId, std::vector<CacheQuery>& queries);
 
 private:
-    static std::string locateConfigFile(const std::string& configId, const std::string& uri);
+    static void updateLastUsed(const std::string& path);
+
+    static bool supplyConfigFile(const std::string& cacheDir, const std::string& stamp,
+                                 const std::string& dest);
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
