@@ -132,17 +132,17 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_updateToolbarItemStateByClose: function() {
-		var toolbar = app.map.mobileTopBar;
-		if (toolbar)
-		{
-			//if (window.mobileWizard === false && toolbar.get('mobile_wizard').checked)
-			//	toolbar.uncheck('mobile_wizard');
+		const mobileWizard = document.getElementById('mobile_wizard');
+		if (window.mobileWizard === false && mobileWizard && mobileWizard.classList.contains('selected'))
+			mobileWizard.classList.remove('selected');
 
-			//if (window.insertionMobileWizard === false && toolbar.get('insertion_mobile_wizard').checked)
-			//	toolbar.uncheck('insertion_mobile_wizard');
-			//if (window.commentWizard === false && toolbar.get('comment_wizard').checked)
-			//	toolbar.uncheck('comment_wizard');
-		}
+		const insertionMobileWizard = document.getElementById('insertion_mobile_wizard');
+		if (window.insertionMobileWizard === false && insertionMobileWizard && insertionMobileWizard.classList.contains('selected'))
+			insertionMobileWizard.classList.remove('selected');
+
+		const commentWizard = document.getElementById('comment_wizard');
+		if (window.commentWizard === false && commentWizard && commentWizard.classList.contains('selected'))
+			commentWizard.classList.remove('selected');
 	},
 
 	goLevelDown: function(contentToShow, options) {
