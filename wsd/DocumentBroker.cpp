@@ -1650,6 +1650,7 @@ void DocumentBroker::asyncSendBrowserSetting(const std::shared_ptr<ClientSession
         {
             std::ostringstream jsonStream;
             settings->stringify(jsonStream);
+            session->sendTextFrame("browsersetting: " + jsonStream.str());
         }
         else
         {
