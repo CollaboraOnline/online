@@ -37,6 +37,10 @@ QUIET_ESLINT = $(QUIET_ESLINT_$(V))
 QUIET_ESLINT_ = $(QUIET_ESLINT_$(AM_DEFAULT_VERBOSITY))
 QUIET_ESLINT_0 = @echo "  ESLINT  " $@;
 
+QUIET_PRETTIER = $(QUIET_PRETTIER_$(V))
+QUIET_PRETTIER_ = $(QUIET_PRETTIER_$(AM_DEFAULT_VERBOSITY))
+QUIET_PRETTIER_0 = @echo "  PRETTIER" $@;
+
 MOCHA_DIR = $(srcdir)/mocha_tests
 MOCHA_TS_FILES = $(wildcard $(MOCHA_DIR)/*.ts)
 MOCHA_TS_JS_FILES := $(MOCHA_TS_FILES:.ts=.js)
@@ -654,9 +658,10 @@ define run_eslint_check
 endef
 
 define run_prettier_check
-	@$(NODE) node_modules/.bin/prettier \
+	$(QUIET_PRETTIER) $(NODE) node_modules/.bin/prettier \
 		--ignore-path $(srcdir)/.prettierignore \
 		--ignore-path $(srcdir)/.beforeprettier \
+		--log-level warn \
 		$(1)
 endef
 
