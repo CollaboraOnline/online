@@ -1459,6 +1459,12 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
         asyncInstallPresets(session, userSettingsUri, jailPresetsPath);
     }
 
+    std::string browserSettingUri = wopiFileInfo->getBrowserSettingsUri();
+    if (_sessions.empty() && !browserSettingUri.empty())
+    {
+        asyncSendBrowserSetting(session, browserSettingUri);
+    }
+
     // Pass the ownership to the client session.
     session->setWopiFileInfo(std::move(wopiFileInfo));
     session->setUserId(userId);
@@ -1637,6 +1643,59 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession> se
     };
     _asyncInstallTask = asyncInstallPresets(*_poll, userSettingsUri, presetsPath, installFinishedCB);
     _asyncInstallTask->appendCallback([this](bool){ _asyncInstallTask.reset(); });
+}
+
+void DocumentBroker::asyncSendBrowserSetting(const std::shared_ptr<ClientSession>& session,
+                                             const std::string& browserSettingUri)
+{
+    // Download the json for browser settings
+    const Poco::URI settingsUri{ browserSettingUri };
+    std::shared_ptr<http::Session> httpSession(
+        StorageConnectionManager::getHttpSession(settingsUri));
+    http::Request request(settingsUri.getPathAndQuery());
+    request.set("User-Agent", http::getAgentString());
+
+    const std::string uriAnonym = COOLWSD::anonymizeUrl(browserSettingUri);
+    LOG_DBG("Getting settings from [" << uriAnonym << ']');
+
+    http::Session::FinishedCallback finishedCallback =
+        [uriAnonym, session](const std::shared_ptr<http::Session>& configSession)
+    {
+        if (SigUtil::getShutdownRequestFlag())
+        {
+            LOG_DBG("Shutdown flagged, giving up on in-flight requests");
+            return;
+        }
+
+        const std::shared_ptr<const http::Response> httpResponse = configSession->response();
+        LOG_TRC("DocumentBroker::asyncSendBrowserSetting returned "
+                << httpResponse->statusLine().statusCode());
+
+        const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
+        if (failed)
+        {
+            if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
+                LOG_ERR("Access denied to [" << uriAnonym << ']');
+            else
+                LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
+            return;
+        }
+
+        const std::string& body = httpResponse->getBody();
+        Poco::JSON::Object::Ptr settings;
+        if (JsonUtil::parseJSON(body, settings))
+        {
+            std::ostringstream jsonStream;
+            settings->stringify(jsonStream);
+        }
+        else
+        {
+            LOG_ERR("Parse of browserSetting json: " << uriAnonym << " failed");
+        }
+    };
+
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    httpSession->asyncRequest(request, *_poll);
 }
 
 struct PresetRequest

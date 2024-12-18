@@ -548,6 +548,9 @@ public:
                              const std::string& userSettingsUri,
                              const std::string& presetsPath);
 
+    void asyncSendBrowserSetting(const std::shared_ptr<ClientSession>& session,
+                                 const std::string& browserSettingUri);
+
     /// Start an asynchronous Installation of the user presets, e.g. autotexts etc, as
     /// described at userSettingsUri for installation into presetsPath
     static std::shared_ptr<PresetsInstallTask> asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,
