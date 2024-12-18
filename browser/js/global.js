@@ -511,6 +511,8 @@ class WindowsAppInitializer extends MobileAppInitializer {
 		// anyway.
 		window.postMobileError   = function(msg) { window.chrome.webview.postMessage('ERR ' + msg); };
 		window.postMobileDebug   = function(msg) { window.chrome.webview.postMessage('DBG ' + msg); };
+
+		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
 	}
 }
 
