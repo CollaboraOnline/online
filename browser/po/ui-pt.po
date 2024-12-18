@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-14 13:17+0100\n"
-"PO-Revision-Date: 2024-12-04 15:06+0000\n"
-"Last-Translator: João Azevedo <jazevedo@collabora.com>\n"
+"PO-Revision-Date: 2024-12-18 02:38+0000\n"
+"Last-Translator: SC <larcansal@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.9.2-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -274,12 +274,12 @@ msgstr "Memória"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Aguarde, o cluster Kubernetes está a ser dimensionado..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr ""
-"Falha ao definir o cookie de autenticação jwt através de uma ligação insegura"
+"Falha ao definir o cookie de autenticação jwt através de uma conexão insegura"
 
 #: admin/src/AdminClusterOverview.js:553 admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol {0}"
@@ -543,7 +543,7 @@ msgstr "Resolvido"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:417
 msgid "Document contains unsupported video"
-msgstr "O documento contém vídeo não compatível"
+msgstr "O documento contém um vídeo não suportado"
 
 #: src/canvas/sections/URLPopUpSection.ts:58
 msgid "Copy link location"
@@ -746,316 +746,316 @@ msgstr "Falha ao descarregar"
 
 #: src/control/Control.ESignature.ts:126
 msgid "Andorra"
-msgstr ""
+msgstr "Andorra"
 
 #: src/control/Control.ESignature.ts:127
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Emirados Árabes Unidos"
 
 #: src/control/Control.ESignature.ts:128
 msgid "Albania"
-msgstr ""
+msgstr "Albânia"
 
 #: src/control/Control.ESignature.ts:129
 msgid "Armenia"
-msgstr ""
+msgstr "Arménia"
 
 #: src/control/Control.ESignature.ts:130
 msgid "Argentina"
-msgstr ""
+msgstr "Argentina"
 
 #: src/control/Control.ESignature.ts:131
 msgid "Austria"
-msgstr ""
+msgstr "Áustria"
 
 #: src/control/Control.ESignature.ts:132
 msgid "Australia"
-msgstr ""
+msgstr "Austrália"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Åland Islands"
-msgstr ""
+msgstr "Ilhas Åland"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbaijão"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bósnia e Herzegovina"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Belgium"
-msgstr ""
+msgstr "Bélgica"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulgária"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Brazil"
-msgstr ""
+msgstr "Brasil"
 
 #: src/control/Control.ESignature.ts:139
 msgid "Belarus"
-msgstr ""
+msgstr "Bielorrússia"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Canada"
-msgstr ""
+msgstr "Canadá"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Switzerland"
-msgstr ""
+msgstr "Suíça"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Chile"
-msgstr ""
+msgstr "Chile"
 
 #: src/control/Control.ESignature.ts:143
 msgid "China"
-msgstr ""
+msgstr "China"
 
 #: src/control/Control.ESignature.ts:144
 msgid "Cyprus"
-msgstr ""
+msgstr "Chipre"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Czech Republic"
-msgstr ""
+msgstr "República Checa"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Germany"
-msgstr ""
+msgstr "Alemanha"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Denmark"
-msgstr ""
+msgstr "Dinamarca"
 
 #: src/control/Control.ESignature.ts:148
 msgid "Estonia"
-msgstr ""
+msgstr "Estónia"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Spain"
-msgstr ""
+msgstr "Espanha"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Finland"
-msgstr ""
+msgstr "Finlândia"
 
 #: src/control/Control.ESignature.ts:151
 msgid "France"
-msgstr ""
+msgstr "França"
 
 #: src/control/Control.ESignature.ts:152
 msgid "United Kingdom"
-msgstr ""
+msgstr "Reino Unido"
 
 #: src/control/Control.ESignature.ts:153
 msgid "Georgia"
-msgstr ""
+msgstr "Geórgia"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Guernsey"
-msgstr ""
+msgstr "Guernsey"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Greece"
-msgstr ""
+msgstr "Grécia"
 
 #: src/control/Control.ESignature.ts:156
 msgid "Croatia"
-msgstr ""
+msgstr "Croácia"
 
 #: src/control/Control.ESignature.ts:157
 msgid "Hungary"
-msgstr ""
+msgstr "Hungria"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Indonesia"
-msgstr ""
+msgstr "Indonésia"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Ireland"
-msgstr ""
+msgstr "Irlanda"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Israel"
-msgstr ""
+msgstr "Israel"
 
 #: src/control/Control.ESignature.ts:161
 msgid "India"
-msgstr ""
+msgstr "Índia"
 
 #: src/control/Control.ESignature.ts:162
 msgid "Iceland"
-msgstr ""
+msgstr "Islândia"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Italy"
-msgstr ""
+msgstr "Itália"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Japan"
-msgstr ""
+msgstr "Japão"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Kenya"
-msgstr ""
+msgstr "Quénia"
 
 #: src/control/Control.ESignature.ts:166
 msgid "South Korea"
-msgstr ""
+msgstr "Coreia do Sul"
 
 #: src/control/Control.ESignature.ts:167
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Cazaquistão"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Liechtenstein"
 
 #: src/control/Control.ESignature.ts:169
 msgid "Lithuania"
-msgstr ""
+msgstr "Lituânia"
 
 #: src/control/Control.ESignature.ts:170
 msgid "Luxembourg"
-msgstr ""
+msgstr "Luxemburgo"
 
 #: src/control/Control.ESignature.ts:171
 msgid "Latvia"
-msgstr ""
+msgstr "Letónia"
 
 #: src/control/Control.ESignature.ts:172
 msgid "Monaco"
-msgstr ""
+msgstr "Mónaco"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "Moldávia, República da"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Montenegro"
-msgstr ""
+msgstr "Montenegro"
 
 #: src/control/Control.ESignature.ts:175
 msgid "North Macedonia, Republic of"
-msgstr ""
+msgstr "Macedónia do Norte, República da"
 
 #: src/control/Control.ESignature.ts:176
 msgid "Malta"
-msgstr ""
+msgstr "Malta"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Mexico"
-msgstr ""
+msgstr "México"
 
 #: src/control/Control.ESignature.ts:178
 msgid "Netherlands"
-msgstr ""
+msgstr "Países Baixos"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Norway"
-msgstr ""
+msgstr "Noruega"
 
 #: src/control/Control.ESignature.ts:180
 msgid "New Zealand"
-msgstr ""
+msgstr "Nova Zelândia"
 
 #: src/control/Control.ESignature.ts:181
 msgid "Philippines"
-msgstr ""
+msgstr "Filipinas"
 
 #: src/control/Control.ESignature.ts:182
 msgid "Poland"
-msgstr ""
+msgstr "Polónia"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Portugal"
-msgstr ""
+msgstr "Portugal"
 
 #: src/control/Control.ESignature.ts:184
 msgid "Qatar"
-msgstr ""
+msgstr "Catar"
 
 #: src/control/Control.ESignature.ts:185
 msgid "Romania"
-msgstr ""
+msgstr "Roménia"
 
 #: src/control/Control.ESignature.ts:186
 msgid "Serbia"
-msgstr ""
+msgstr "Sérvia"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Russian Federation"
-msgstr ""
+msgstr "Federação Russa"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Arábia Saudita"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Sweden"
-msgstr ""
+msgstr "Suécia"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Singapore"
-msgstr ""
+msgstr "Singapura"
 
 #: src/control/Control.ESignature.ts:191
 msgid "Slovenia"
-msgstr ""
+msgstr "Eslovénia"
 
 #: src/control/Control.ESignature.ts:192
 msgid "Slovakia"
-msgstr ""
+msgstr "Eslováquia"
 
 #: src/control/Control.ESignature.ts:193
 msgid "San Marino"
-msgstr ""
+msgstr "São Marinho"
 
 #: src/control/Control.ESignature.ts:194
 msgid "Turkey"
-msgstr ""
+msgstr "Turquia"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Taiwan, Província da China"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Ukraine"
-msgstr ""
+msgstr "Ucrânia"
 
 #: src/control/Control.ESignature.ts:197
 msgid "United States of America"
-msgstr ""
+msgstr "Estados Unidos da América"
 
 #: src/control/Control.ESignature.ts:198
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Santa Sé (Estado da Cidade do Vaticano)"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovo"
 
 #: src/control/Control.ESignature.ts:200
 msgid "South Africa"
-msgstr ""
+msgstr "África do Sul"
 
 #: src/control/Control.ESignatureDialog.ts:49
 msgid "Country:"
-msgstr ""
+msgstr "País:"
 
 #: src/control/Control.ESignatureDialog.ts:78
 msgid "Provider:"
-msgstr ""
+msgstr "Fornecedor:"
 
 #: src/control/Control.ESignatureDialog.ts:127
 #: src/control/Control.ESignatureDialog.ts:128
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Inserir assinatura eletrónica"
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -1544,7 +1544,6 @@ msgstr "Documento HTML (.html)"
 
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:468
-#, fuzzy
 msgid "Shockwave Flash (.swf)"
 msgstr "Shockwave Flash (.swf)"
 
@@ -1556,22 +1555,22 @@ msgstr "Gráficos vetoriais escaláveis (.svg)"
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr "Slide atual como Bitmap (.bmp)"
+msgstr "Diapositivo atual como Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr "Slide atual como formato de intercâmbio gráfico (.gif)"
+msgstr "Diapositivo atual como Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr "Slide atual como Portable Network Graphics (.png)"
+msgstr "Diapositivo atual como Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.js:419
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr "Slide atual como formato de arquivo de imagem de tag (.tiff)"
+msgstr "Diapositivo atual como Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.js:425
 #: src/control/Control.NotebookbarBuilder.js:666
@@ -1595,7 +1594,7 @@ msgstr "Vista principal"
 
 #: src/control/Control.Menubar.js:476
 msgid "Local Multimedia..."
-msgstr "Multimídia Local..."
+msgstr "Multimédia local..."
 
 #: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:1115
 #: src/control/Control.PresentationBar.js:127
@@ -1614,7 +1613,7 @@ msgstr "Apresentar numa janela nova"
 #: src/control/Control.NotebookbarImpress.js:374
 #: src/slideshow/PresenterConsole.js:209
 msgid "Presenter Console"
-msgstr "Console do apresentador"
+msgstr "Consola do apresentador"
 
 #: src/control/Control.Menubar.js:582 src/control/Control.Menubar.js:1075
 #: src/control/Control.Menubar.js:1136
@@ -1625,7 +1624,7 @@ msgstr "Desenho ODF (.odg)"
 
 #: src/control/Control.Menubar.js:646
 msgid "Electronic signature..."
-msgstr "Assinatura Digital.."
+msgstr "Assinatura digital..."
 
 #: src/control/Control.Menubar.js:708 src/control/Control.Menubar.js:720
 #: src/control/Control.Menubar.js:1194
@@ -2134,11 +2133,11 @@ msgstr "Apresentar em janela"
 
 #: src/control/Control.NotebookbarImpress.js:486
 msgid "Show Grid"
-msgstr "Mostrar grade"
+msgstr "Mostrar grelha"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Snap to Grid"
-msgstr "Ajustar à grade"
+msgstr "Ajustar à grelha"
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
@@ -2614,7 +2613,7 @@ msgstr ""
 
 #: src/control/Parts.js:493
 msgid "Show sheets"
-msgstr ""
+msgstr "Mostrar folhas"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
@@ -2750,7 +2749,7 @@ msgstr "Inserir imagem local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:264
 msgid "Insert Local Multimedia"
-msgstr "Inserir multimídia local"
+msgstr "Inserir multimédia local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:269
 msgid "Very Tight"
@@ -2807,7 +2806,7 @@ msgstr "Apenas leitura"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:53
 msgid "Edit mode"
-msgstr ""
+msgstr "Modo de edição"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:72
 #: src/control/jsdialog/Widget.HTMLContent.ts:118
@@ -2845,11 +2844,11 @@ msgstr "Número de diapositivos"
 #: src/control/jsdialog/Widget.HTMLContent.ts:124
 #: src/control/jsdialog/Widget.HTMLContent.ts:132
 msgid "Your changes have been saved"
-msgstr "Suas alterações foram salvas"
+msgstr "As suas alterações foram guardadas"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
-msgstr "Contornos da célula"
+msgstr "Bordas da célula"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:73
 msgid "More options for {name}"
@@ -3062,9 +3061,8 @@ msgid ", cluster configuration error: mis-matching serverid"
 msgstr ", erro de configuração do cluster: serverid incompatível"
 
 #: src/dom/NotebookbarAccessibility.js:240
-#, fuzzy
 msgid "{0} tab selected"
-msgstr "{0} selecionado"
+msgstr "{0} separador selecionado"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -3318,19 +3316,19 @@ msgstr "Fora da mesa"
 
 #: src/layer/marker/A11yTextInput.js:229
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "Tabela com {0} linhas e {1} colunas"
 
 #: src/layer/marker/A11yTextInput.js:234
 msgid "Row {0} through {1}"
-msgstr ""
+msgstr "Linha {0} até {1}"
 
 #: src/layer/marker/A11yTextInput.js:237
 msgid "Row {0}"
-msgstr ""
+msgstr "Linha {0}"
 
 #: src/layer/marker/A11yTextInput.js:245
 msgid "Column {0} through {1}"
-msgstr ""
+msgstr "Coluna {0} até {1}"
 
 #: src/layer/marker/A11yTextInput.js:248
 msgid "Column {0}"
@@ -3346,28 +3344,28 @@ msgstr "{0} selecionado"
 
 #: src/layer/marker/A11yTextInput.js:297
 msgid "Has text: "
-msgstr "Possui texto: "
+msgstr "Tem texto: "
 
 #: src/layer/marker/A11yTextInput.js:302
 msgid "{0} unselected"
-msgstr "{0} desmarcado"
+msgstr "{0} não selecionado"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "{0} deleted"
-msgstr "{0} excluído"
+msgstr "{0} eliminado"
 
 #: src/layer/marker/TextInput.js:439
 msgid "Screen reader support for text content is disabled. "
-msgstr "O suporte do leitor de tela para conteúdo de texto está desativado. "
+msgstr "O suporte do leitor de ecrã para conteúdo de texto está desativado. "
 
 #: src/layer/marker/TextInput.js:440
 msgid "You need to enable it both at server level and in the UI. "
-msgstr "Você precisa habilitá-lo no nível do servidor e na UI. "
+msgstr "Tem de o ativar ao nível do servidor e na interface. "
 
 #: src/layer/marker/TextInput.js:441
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
-"Procure a seção de acessibilidade em coolwsd.xml para configuração do "
+"Procure a secção de acessibilidade em coolwsd.xml para a definição do "
 "servidor. "
 
 #: src/layer/marker/TextInput.js:442
@@ -3376,11 +3374,11 @@ msgstr "Verifique também a alternância de voz em {parentControl}."
 
 #: src/layer/marker/TextInput.js:444
 msgid "the Help tab"
-msgstr "a guia Ajuda"
+msgstr "o separador Ajuda"
 
 #: src/layer/marker/TextInput.js:444
 msgid "the View menu"
-msgstr "o menu Exibir"
+msgstr "o menu Ver"
 
 #: src/layer/tile/CanvasTileLayer.js:1868
 msgid "Functions"
@@ -3493,7 +3491,7 @@ msgstr "Não foi possível enviar para o servidor. código de estado: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr "Caixa de diálogo Imprimir"
+msgstr "Caixa de diálogo de impressão"
 
 #: src/map/handler/Map.SlideShow.js:55 src/slideshow/SlideShowPresenter.ts:711
 msgid "Empty Slide Show"
@@ -3561,12 +3559,12 @@ msgstr "O modo de apresentação foi desativado para este documento"
 #: src/map/handler/Map.VersionBar.js:41
 msgid "Your Collabora Online server needs updating. Version {0} is available."
 msgstr ""
-"Seu servidor Collabora Online precisa de atualização. A versão {0} está "
+"O seu servidor Collabora Online precisa de ser atualizado. A versão {0} está "
 "disponível."
 
 #: src/map/handler/Map.WOPI.js:153
 msgid "Creating new file from template..."
-msgstr "A criar um novo ficheiro com base em modelo..."
+msgstr "Criar um novo ficheiro a partir de um modelo..."
 
 #: src/map/handler/Map.WOPI.js:665
 msgid "Error"
@@ -3594,7 +3592,7 @@ msgstr "Slide atual"
 
 #: src/slideshow/PresenterConsole.js:30
 msgid "Next Slide"
-msgstr "Próximo slide"
+msgstr "Próximo diapositivo"
 
 #: src/slideshow/PresenterConsole.js:31
 msgid "Previous"
@@ -3618,11 +3616,11 @@ msgstr "Reiniciar"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr "Retomar"
+msgstr "Continuar"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr "Volte"
+msgstr "Voltar"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
@@ -3630,11 +3628,11 @@ msgstr "Ampliar"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr "Diminuir zoom"
+msgstr "Diminuir ampliação"
 
 #: src/slideshow/PresenterConsole.js:1177
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Diapositivo {0} de {1}"
 
 #: src/slideshow/PresenterConsole.js:1199
 msgid "No Notes"
@@ -3642,7 +3640,7 @@ msgstr "Sem notas"
 
 #: src/slideshow/PresenterConsole.js:1287
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "Repetir em {0} segundos"
 
 #: src/slideshow/PresenterConsole.js:1292
 #: src/slideshow/SlideShowPresenter.ts:365
