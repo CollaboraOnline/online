@@ -697,7 +697,6 @@ namespace Log
                 channelUILog->setProperty(pair.first, pair.second);
             }
 
-            channelUILog = static_cast<Poco::Channel*>(new Poco::FileChannel("/tmp/coolwsd-ui-cmd.log"));
             channelUILog->open();
             try
             {

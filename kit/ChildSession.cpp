@@ -3852,7 +3852,8 @@ void LogUiCommands::logLine(LogUiCommandsLine &line, bool isUndoChange)
     // log command
     double timeDiffStart = std::chrono::duration<double>(line._timeStart - _session->_docManager->getLogUiCmd().getKitStartTimeSec()).count();
     std::stringstream strToLog;
-    strToLog << "time=" << std::fixed << std::setprecision(3) << timeDiffStart;
+    strToLog << "kit=" << _session->_docManager->getDocId();
+    strToLog << " time=" << std::fixed << std::setprecision(3) << timeDiffStart;
     if (Log::isLogUITimeEnd())
     {
         double timeDiffEnd = std::chrono::duration<double>(line._timeEnd - line._timeStart).count();
@@ -3952,6 +3953,7 @@ LogUiCommands::~LogUiCommands()
 
                     // If it is a buttonup and we have a saved buttondown, than exchange it to click
                     if (actSubCmd == "buttonup" && lineCount > 0
+                        && _session->_lastUiCmdLinesLogged[lineCount - 1]._cmd == "mouse"
                         && _session->_lastUiCmdLinesLogged[lineCount - 1]._subCmd == "buttondown")
                     {
                         if (lineCount == 1)
@@ -3994,7 +3996,7 @@ LogUiCommands::~LogUiCommands()
                 else
                     undoChg = -1;
             }
-            if (commandHandled && undoChg != 0)
+            if (commandHandled)
             {
                 // Now, possible only if a buttonup become click
                 line0._undoChange += undoChg;
@@ -4008,7 +4010,7 @@ LogUiCommands::~LogUiCommands()
             if (lineCount >= 2)
             {
                 // Possible only if, the stored commands are: mouse click + mouse button down
-                // but it the actual is not a mouse up .. that was handled before
+                // but the actual is not a mouse up .. that was handled before
                 // We have to log the 1. line, and copy the 2. to the first.
                 logLine(line1);
                 line0 = line1;
@@ -4025,20 +4027,28 @@ LogUiCommands::~LogUiCommands()
                     line0._undoChange += undoChg;
                     return;
                 }
+                else if (line0._cmd == "mouse" && line0._subCmd == "click"
+                         && actCmd == "mouse" && actSubCmd == "buttondown")
+                {
+                    // mouse button down after a click, may become 2x click later, do not log it yet
+                    // Nothing to do here now. (lineCount == 1)
+                }
                 else
                 {
                     // We can not merge. We log the last stored command, and continue to store the actual command
                     logLine(line0);
+                    lineCount = 0;
                 }
             }
             // Store new command
-            line0._cmd = actCmd;
-            line0._subCmd = actSubCmd;
-            line0._repeat = 1;
-            line0._undoChange = undoChg;
-            line0._timeStart = actTime;
-            line0._timeEnd = actTime;
-            lineCount = 1;
+            LogUiCommandsLine& lineAct = _session->_lastUiCmdLinesLogged[lineCount];
+            lineAct._cmd = actCmd;
+            lineAct._subCmd = actSubCmd;
+            lineAct._repeat = 1;
+            lineAct._undoChange = undoChg;
+            lineAct._timeStart = actTime;
+            lineAct._timeEnd = actTime;
+            lineCount++;
 
             if (!Log::isLogUIMerged())
             {
