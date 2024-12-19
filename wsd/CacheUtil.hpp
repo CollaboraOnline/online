@@ -37,6 +37,8 @@ public:
 
     static void supplyConfigFiles(const std::string& configId, std::vector<CacheQuery>& queries);
 
+    static void clearOutdatedConfigs();
+
 private:
     static void updateLastUsed(const std::string& path);
 
