@@ -514,21 +514,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
-	public onDraw (frameCount: number, elapsedTime: number): void {
-		if (this.isAnimating && frameCount >= 0)
-			this.calculateCurrentAlpha(elapsedTime);
-
-		if ((this.sectionProperties.drawVerticalScrollBar || this.sectionProperties.animatingVerticalScrollBar)) {
-			if ((<any>window).mode.isMobile())
-				this.DrawVerticalScrollBarMobile();
-			else
-				this.drawVerticalScrollBar();
-		}
-
-		if ((this.sectionProperties.drawHorizontalScrollBar || this.sectionProperties.animatingHorizontalScrollBar)) {
-			this.drawHorizontalScrollBar();
-		}
-
+	public onAnimationStep (frameCount: number, elapsedTime: number): void {
 		if (this.sectionProperties.animatingScroll) {
 			const lineHeight = this.containerObject.getScrollLineHeight();
 			const accel = lineHeight * ScrollSection.scrollAnimationAcceleration;
@@ -564,6 +550,22 @@ export class ScrollSection extends CanvasSectionObject {
 				this.containerObject.stopAnimating();
 				this.sectionProperties.animatingScroll = false;
 			}
+		}
+	}
+
+	public onDraw (frameCount: number, elapsedTime: number): void {
+		if (this.isAnimating && frameCount >= 0)
+			this.calculateCurrentAlpha(elapsedTime);
+
+		if ((this.sectionProperties.drawVerticalScrollBar || this.sectionProperties.animatingVerticalScrollBar)) {
+			if ((<any>window).mode.isMobile())
+				this.DrawVerticalScrollBarMobile();
+			else
+				this.drawVerticalScrollBar();
+		}
+
+		if ((this.sectionProperties.drawHorizontalScrollBar || this.sectionProperties.animatingHorizontalScrollBar)) {
+			this.drawHorizontalScrollBar();
 		}
 	}
 
