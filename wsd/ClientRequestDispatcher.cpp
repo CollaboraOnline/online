@@ -16,6 +16,7 @@
 #endif
 
 #include <common/Anonymizer.hpp>
+#include <common/StateEnum.hpp>
 #include <Admin.hpp>
 #include <COOLWSD.hpp>
 #include <ClientSession.hpp>
@@ -870,6 +871,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                 servedSync = handleWopiDiscoveryRequest(requestDetails, socket);
             else if (requestDetails.equals(1, "capabilities"))
                 servedSync = handleCapabilitiesRequest(request, socket);
+            else if (requestDetails.equals(1, "wopiAccessCheck"))
+                handleWopiAccessCheckRequest(request, message, socket);
             else
                 HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
@@ -1095,6 +1098,245 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     LOG_TRC("Sending back discovery.xml: " << xml);
     socket->send(httpResponse);
     LOG_INF("Sent discovery.xml successfully.");
+    return true;
+}
+
+
+// NB: these names are part of the published API, and should not be renamed or altered but can be expanded
+STATE_ENUM(CheckStatus,
+    Ok,
+    NotHttpSucess,
+    HostNotFound,
+    WopiHostNotAllowed,
+    HostUnReachable,
+    UnspecifiedError,
+    ConnectionAborted,
+    ConnectionRefused,
+    CertificateValidation,
+    SSLHandshakeFail,
+    MissingSsl,
+    NotHttps,
+    NoScheme,
+    Timeout,
+);
+
+bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTPRequest& request,
+                                                           Poco::MemoryInputStream& message,
+                                                           const std::shared_ptr<StreamSocket>& socket)
+{
+    assert(socket && "Must have a valid socket");
+
+    LOG_DBG("Wopi Access Check request: " << request.getURI());
+
+    Poco::MemoryInputStream startmessage(&socket->getInBuffer()[0], socket->getInBuffer().size());
+    StreamSocket::MessageMap map;
+
+    Poco::JSON::Object::Ptr jsonObject;
+
+    std::string text(std::istreambuf_iterator<char>(message), {});
+    LOG_TRC("Wopi Access Check request text: " << text);
+
+    std::string callbackUrlStr;
+
+    if (!JsonUtil::parseJSON(text, jsonObject))
+    {
+        LOG_WRN_S("Wopi Access Check request error, json object expected got ["
+                  << text << "] on request to URL: " << request.getURI());
+
+        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+        return false;
+    }
+
+    if (!JsonUtil::findJSONValue(jsonObject, "callbackUrl", callbackUrlStr))
+    {
+        LOG_WRN_S("Wopi Access Check request error, missing key callbackUrl expected got ["
+                  << text << "] on request to URL: " << request.getURI());
+
+        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+        return false;
+    }
+
+    LOG_TRC("Wopi Access Check request callbackUrlStr: " << callbackUrlStr);
+
+    std::string scheme, host, portStr, pathAndQuery;
+    if (!net::parseUri(callbackUrlStr, scheme, host, portStr, pathAndQuery)) {
+        LOG_WRN_S("Wopi Access Check request error, invalid url ["
+                  << callbackUrlStr << "] on request to URL: " << request.getURI() << scheme);
+
+        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+        return false;
+    }
+    http::Session::Protocol protocol = http::Session::Protocol::HttpSsl;
+    ulong port = 443;
+    if (scheme == "https://" || scheme.empty()) {
+        // empty scheme assumes https
+    } else if (scheme == "http://") {
+        protocol = http::Session::Protocol::HttpUnencrypted;
+        port = 80;
+    } else {
+        LOG_WRN_S("Wopi Access Check request error, bad request protocol ["
+                  << text << "] on request to URL: " << request.getURI() << scheme);
+
+        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+        return false;
+    }
+
+    if (!portStr.empty()) {
+        try {
+            port = std::stoul(portStr);
+
+        } catch(std::invalid_argument &exception) {
+            LOG_WRN("Wopi Access Check error parsing invalid_argument portStr:" << portStr);
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+            return false;
+        } catch(std::exception &exception) {
+
+            LOG_WRN_S("Wopi Access Check request error, bad request invalid porl ["
+                  << text << "] on request to URL: " << request.getURI());
+
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+            return false;
+        }
+    }
+
+    LOG_TRC("Wopi Access Check request scheme: " << scheme << " " << port);
+
+    const auto sendResult = [this, socket](CheckStatus result)
+    {
+        const auto output = "{\"status\": \"" + JsonUtil::escapeJSONValue(name(result)) + "\"}\n";
+
+        http::Response jsonResponse(http::StatusCode::OK);
+        FileServerRequestHandler::hstsHeaders(jsonResponse);
+        jsonResponse.set("Last-Modified", Util::getHttpTimeNow());
+        jsonResponse.setBody(output, "application/json");
+        jsonResponse.set("X-Content-Type-Options", "nosniff");
+
+        socket->sendAndShutdown(jsonResponse);
+        LOG_INF("Wopi Access Check request, result" << name(result));
+    };
+
+    if (scheme.empty())
+    {
+        sendResult(CheckStatus::NoScheme);
+        return true;
+    }
+    // if the wopi hosts uses https, so must cool or it will have Mixed Content errors
+    if (protocol == http::Session::Protocol::HttpSsl &&
+#if ENABLE_SSL
+        !(ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination())
+#else
+        false
+#endif
+    )
+    {
+        sendResult(CheckStatus::NotHttps);
+        return true;
+    }
+
+    if (HostUtil::isWopiHostsEmpty())
+        // make sure the wopi hosts settings are loaded
+        StorageBase::initialize();
+
+    bool wopiHostAllowed = false;
+    if (Util::iequal(ConfigUtil::getString("storage.wopi.alias_groups[@mode]", "first"), "first"))
+        // if first mode was selected and wopi Hosts are empty
+        // the domain is allowed, as it will be the effective "first" host
+        wopiHostAllowed = HostUtil::isWopiHostsEmpty();
+
+    if (!wopiHostAllowed) {
+        // port and scheme from wopi host config are currently ignored by HostUtil
+        LOG_TRC("Wopi Access Check, matching allowed wopi host for host " << host);
+        wopiHostAllowed = HostUtil::allowedWopiHost(host);
+    }
+    if (!wopiHostAllowed)
+    {
+        LOG_TRC("Wopi Access Check, wopi host not allowed " << host);
+        sendResult(CheckStatus::WopiHostNotAllowed);
+        return true;
+    }
+
+    http::Request httpRequest(pathAndQuery.empty() ? "/" : pathAndQuery);
+    auto httpProbeSession = http::Session::create(host, protocol, port);
+    httpProbeSession->setTimeout(std::chrono::seconds(2));
+
+    httpProbeSession->setConnectFailHandler(
+        [=, this] (const std::shared_ptr<http::Session>& probeSession){
+
+            CheckStatus status = CheckStatus::UnspecifiedError;
+
+            const auto result = probeSession->connectionResult();
+
+            if (result == net::AsyncConnectResult::UnknownHostError || result == net::AsyncConnectResult::HostNameError)
+            {
+                status = CheckStatus::HostNotFound;
+            }
+
+            if (result == net::AsyncConnectResult::SSLHandShakeFailure) {
+                status = CheckStatus::SSLHandshakeFail;
+            }
+
+            if (!probeSession->getSslVerifyMessage().empty())
+            {
+                status = CheckStatus::CertificateValidation;
+
+                LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+            }
+
+            sendResult(status);
+    });
+
+    auto finishHandler = [=, this](const std::shared_ptr<http::Session>& probeSession)
+    {
+        LOG_TRC("finishHandler ");
+
+        CheckStatus status = CheckStatus::Ok;
+        const auto lastErrno = errno;
+
+        const auto httpResponse = probeSession->response();
+        const auto responseState = httpResponse->state();
+        LOG_DBG("Wopi Access Check: got response state: " << responseState << " "
+                                            << ", response status code: " <<httpResponse->statusCode() << " "
+                                            << ", last errno: " << lastErrno);
+
+        if (responseState != http::Response::State::Complete)
+        {
+            // are TLS errors here ?
+            status = CheckStatus::UnspecifiedError;
+        }
+
+        if (responseState == http::Response::State::Timeout)
+            status = CheckStatus::Timeout;
+
+
+        const auto result = probeSession->connectionResult();
+
+        if (result == net::AsyncConnectResult::UnknownHostError)
+            status = CheckStatus::HostNotFound;
+
+        if (protocol == http::Session::Protocol::HttpSsl && lastErrno == ENOTCONN)
+            status = CheckStatus::MissingSsl;
+
+        if (result == net::AsyncConnectResult::ConnectionError)
+            status = CheckStatus::ConnectionAborted;
+
+        // TODO complete error coverage
+        // certificate errors
+        // self-signed
+        // expired
+
+        if (!probeSession->getSslVerifyMessage().empty())
+        {
+            status = CheckStatus::CertificateValidation;
+
+            LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+        }
+
+        sendResult(status);
+    };
+
+    httpProbeSession->setFinishedHandler(std::move(finishHandler));
+    httpProbeSession->asyncRequest(httpRequest, *COOLWSD::getWebServerPoll());
+
     return true;
 }
 
