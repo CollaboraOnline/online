@@ -145,7 +145,7 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
     _httpSession->setFinishedHandler(std::move(finishedCallback));
 
     http::Session::ConnectFailCallback connectFailCallback =
-        [this]()
+        [this](const std::shared_ptr<http::Session>& /* httpSession */)
     {
         _state = State::Fail;
         LOG_ERR("Failed to start an async CheckFileInfo request");
