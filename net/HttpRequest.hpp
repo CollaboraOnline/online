@@ -1236,7 +1236,7 @@ public:
     void setFinishedHandler(FinishedCallback onFinished) { _onFinished = std::move(onFinished); }
 
     /// The onConnectFail callback handler signature.
-    using ConnectFailCallback = std::function<void()>;
+    using ConnectFailCallback = std::function<void(const std::shared_ptr<Session>& session)>;
 
     void setConnectFailHandler(ConnectFailCallback onConnectFail) { _onConnectFail = std::move(onConnectFail); }
 
@@ -1378,6 +1378,11 @@ public:
         {
             socket->closeConnection();
         }
+    }
+
+    net::AsyncConnectResult connectionResult()
+    {
+        return _result;
     }
 
     /// Returns the socket FD, for logging/informational purposes.
@@ -1609,8 +1614,37 @@ private:
 
             if (!socket->send(_request))
             {
+                _result = net::AsyncConnectResult::SocketError;
                 LOG_ERR("Error while writing to socket");
             }
+        }
+    }
+
+    std::shared_ptr<Session> shared_from_this()
+    {
+        return std::static_pointer_cast<Session>(ProtocolHandlerInterface::shared_from_this());
+    }
+
+    void callOnConnectFail()
+    {
+        if (!_onConnectFail)
+            return;
+
+        std::shared_ptr<Session> self = shared_from_this();
+        try
+        {
+            [[maybe_unused]] const long references = self.use_count();
+            assert(references > 1 && "Expected more than 1 reference to http::Session.");
+
+            _onConnectFail(self);
+
+            assert(self.use_count() > 1 &&
+                    "Erroneously onConnectFail reset 'this'. Use 'addCallback()' on the "
+                    "SocketPoll to reset on idle instead.");
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Error while invoking onConnectFail client callback: " << exc.what());
         }
     }
 
@@ -1623,7 +1657,10 @@ private:
         {
             LOG_TRC("onHandshakeFail");
             _handshakeSslVerifyFailure = socket->getSslVerifyResult();
+            _result = net::AsyncConnectResult::SSLHandShakeFailure;
         }
+
+        callOnConnectFail();
     }
 
     void onDisconnect() override
@@ -1659,7 +1696,7 @@ private:
         return socket; // Return the shared pointer.
     }
 
-    void asyncConnectCompleted(SocketPoll& poll, std::shared_ptr<StreamSocket> socket)
+    void asyncConnectCompleted(SocketPoll& poll, const std::shared_ptr<StreamSocket> &socket, net::AsyncConnectResult result)
     {
         assert((!socket || _fd == socket->getFD()) &&
                "The socket FD must have been set in onConnect");
@@ -1667,14 +1704,12 @@ private:
         // When used with proxy.php we may indeed get nullptr here.
         // assert(socket && "Unexpected nullptr returned from net::connect");
         _socket = socket; // Hold a weak pointer to it.
+        _result = result;
 
         if (!socket)
         {
             LOG_ERR("Failed to connect to " << _host << ':' << _port);
-
-            if (_onConnectFail)
-                _onConnectFail();
-
+            callOnConnectFail();
             return;
         }
 
@@ -1689,9 +1724,9 @@ private:
     {
         _socket.reset(); // Reset to make sure we are disconnected.
 
-        auto pushConnectCompleteToPoll = [this, &poll](std::shared_ptr<StreamSocket> socket) {
-            poll.addCallback([selfLifecycle = shared_from_this(), this, &poll, socket=std::move(socket)]() {
-                asyncConnectCompleted(poll, socket);
+        auto pushConnectCompleteToPoll = [this, &poll](std::shared_ptr<StreamSocket> socket, net::AsyncConnectResult result ) {
+            poll.addCallback([selfLifecycle = shared_from_this(), this, &poll, socket=std::move(socket), &result]() {
+                asyncConnectCompleted(poll, socket, result);
             });
         };
 
@@ -1744,6 +1779,7 @@ private:
     ConnectFailCallback _onConnectFail;
     std::shared_ptr<Response> _response;
     std::weak_ptr<StreamSocket> _socket; ///< Must be the last member.
+    net::AsyncConnectResult _result; // last connection tentative result
 };
 
 /// HTTP Get a URL synchronously.
