@@ -55,6 +55,8 @@ public:
 
     static void setFirstHost(const Poco::URI& uri);
 
+    static bool isWopiHostsEmpty();
+
 private:
     /// add host to WopiHosts
     static void addWopiHost(const std::string& host, bool allow);

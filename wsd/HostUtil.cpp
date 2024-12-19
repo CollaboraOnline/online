@@ -240,6 +240,11 @@ void HostUtil::setFirstHost(const Poco::URI& uri)
     }
 }
 
+bool HostUtil::isWopiHostsEmpty()
+{
+    return WopiHosts.empty();
+}
+
 #endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
