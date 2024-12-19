@@ -28,13 +28,12 @@
 
 std::mutex CacheMutex;
 std::string CachePath;
+std::chrono::minutes MaxAgeMins;
 
 void Cache::initialize(const std::string& path)
 {
     if (!CachePath.empty())
-    {
         return;
-    }
 
     LOG_INF("Initializing Cache at [" << path << "]");
 
@@ -43,6 +42,10 @@ void Cache::initialize(const std::string& path)
 
     // We are initialized at this point.
     CachePath = path;
+
+    MaxAgeMins = std::chrono::minutes(ConfigUtil::getConfigValue<std::size_t>("cache_files.expiry_min", 3000));
+
+    clearOutdatedConfigs();
 }
 
 std::string Cache::getConfigId(const std::string& uri)
@@ -77,6 +80,8 @@ void Cache::cacheConfigFile(const std::string& configId, const std::string& uri,
     cacheStamp.close();
 
     updateLastUsed(rootPath.toString());
+
+    clearOutdatedConfigs();
 }
 
 void Cache::updateLastUsed(const std::string& path)
@@ -148,7 +153,7 @@ void Cache::supplyConfigFiles(const std::string& configId, std::vector<CacheQuer
             continue;
         if (cacheHits.find(name) == cacheHits.end())
         {
-            LOG_WRN("cacheFile: " << "removing stale cache file: " << name);
+            LOG_INF("cacheFile: " << "removing stale cache file: " << name);
             Poco::Path cacheDir(rootPath, name);
             FileUtil::removeFile(cacheDir.toString(), true);
         }
@@ -156,6 +161,37 @@ void Cache::supplyConfigFiles(const std::string& configId, std::vector<CacheQuer
 
     if (!cacheHits.empty())
         updateLastUsed(rootPath.toString());
+
+    clearOutdatedConfigs();
+}
+
+void Cache::clearOutdatedConfigs()
+{
+    auto now = std::chrono::system_clock::now();
+
+    auto names = FileUtil::getDirEntries(CachePath);
+    for (const auto& name : names)
+    {
+        Poco::Path rootPath(CachePath, name);
+        rootPath.makeDirectory();
+
+        std::string timeStampFile = Poco::Path(rootPath, "lastused").toString();
+
+        std::string timeStamp;
+        std::ifstream ifs(timeStampFile);
+        std::getline(ifs, timeStamp);
+
+        if (!timeStamp.empty())
+        {
+            auto t = Util::iso8601ToTimestamp(timeStamp, "cacheFile: ");
+            auto age = now - t;
+            if (age < MaxAgeMins)
+                continue;
+        }
+
+        LOG_INF("cacheFile: " << "removing stale cache dir: " << rootPath.toString());
+        FileUtil::removeFile(rootPath.toString(), true);
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
