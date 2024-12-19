@@ -379,7 +379,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
     if (host.empty() || port.empty())
     {
         LOG_ERR("Invalid host/port " << host << ':' << port);
-        asyncCb(nullptr);
+        asyncCb(nullptr, asyncConnectResult::HostNameError);
         return;
     }
 
@@ -389,7 +389,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
     if (isSSL)
     {
         LOG_ERR("Error: isSSL socket requested but SSL is not compiled in.");
-        asyncCb(nullptr);
+        asyncCb(nullptr, asyncConnectResult::MissingSSLError);
         return;
     }
 #endif
@@ -398,6 +398,8 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
                                            asyncCb](const HostEntry& hostEntry)
     {
         std::shared_ptr<StreamSocket> socket;
+
+        asyncConnectResult result = asyncConnectResult::UnknownHostError;
 
         if (const addrinfo* ainfo = hostEntry.getAddrInfo())
         {
@@ -408,6 +410,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
                     int fd = ::socket(ai->ai_addr->sa_family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
                     if (fd < 0)
                     {
+                        result = asyncConnectResult::SocketError;
                         LOG_SYS("Failed to create socket");
                         continue;
                     }
@@ -415,6 +418,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
                     int res = ::connect(fd, ai->ai_addr, ai->ai_addrlen);
                     if (res < 0 && errno != EINPROGRESS)
                     {
+                        result = asyncConnectResult::ConnectionError;
                         LOG_SYS("Failed to connect to " << host);
                         ::close(fd);
                     }
@@ -439,8 +443,11 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
                         {
                             LOG_DBG('#' << fd << " New socket connected to " << host << ':' << port
                                         << " (" << (isSSL ? "SSL)" : "Unencrypted)"));
+                            result = asyncConnectResult::Ok;
                             break;
                         }
+
+                        result = asyncConnectResult::SocketError;
 
                         LOG_ERR("Failed to allocate socket for client websocket " << host);
                         ::close(fd);
@@ -452,7 +459,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
         else
             LOG_SYS("Failed to lookup host [" << host << "]. Skipping");
 
-        asyncCb(std::move(socket));
+        asyncCb(std::move(socket), result);
     };
 
     net::AsyncDNS::DNSThreadDumpStateFn dumpState = [host, port]() -> std::string
@@ -570,7 +577,7 @@ connect(std::string uri, const std::shared_ptr<ProtocolHandlerInterface>& protoc
 }
 
 bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port,
-              std::string& url)
+              std::string& pathAndQuery)
 {
     const auto itScheme = uri.find("://");
     if (itScheme != uri.npos)
@@ -587,12 +594,12 @@ bool parseUri(std::string uri, std::string& scheme, std::string& host, std::stri
     const auto itUrl = uri.find('/');
     if (itUrl != uri.npos)
     {
-        url = uri.substr(itUrl); // Including the first foreslash.
+        pathAndQuery = uri.substr(itUrl); // Including the first foreslash.
         uri = uri.substr(0, itUrl);
     }
     else
     {
-        url.clear();
+        pathAndQuery.clear();
     }
 
     const auto itPort = uri.find(':');
