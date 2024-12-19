@@ -2082,13 +2082,16 @@ class CanvasSectionContainer {
 			this.continueAnimating = false;
 		}
 
+		const section: CanvasSectionObject = this.getSectionWithName(this.getAnimatingSectionName());
+		if (section)
+			section.onAnimationStep(this.frameCount, this.elapsedTime);
+
 		if (this.continueAnimating) {
 			this.drawSections(this.frameCount, this.elapsedTime);
 			this.frameCount++;
 			requestAnimationFrame(this.animate.bind(this));
 		}
 		else {
-			var section: CanvasSectionObject = this.getSectionWithName(this.getAnimatingSectionName());
 			if (section) {
 				section.isAnimating = false;
 				section.onAnimationEnded(this.frameCount, this.elapsedTime);
