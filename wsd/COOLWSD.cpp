@@ -3459,9 +3459,9 @@ private:
         }
 #endif
 #else
-        constexpr int DEFAULT_MASTER_PORT_NUMBER = 9981;
+        constexpr int UNUSED_PORT_NUMBER = 0;
         std::shared_ptr<ServerSocket> socket
-            = ServerSocket::create(ServerSocket::Type::Public, DEFAULT_MASTER_PORT_NUMBER,
+            = ServerSocket::create(ServerSocket::Type::Public, UNUSED_PORT_NUMBER,
                                    ClientPortProto, std::chrono::steady_clock::now(), *PrisonerPoll, factory);
 
         COOLWSD::prisonerServerSocketFD = socket->getFD();
