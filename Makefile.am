@@ -306,7 +306,7 @@ coolmap_SOURCES = tools/map.cpp
 
 coolbench_SOURCES = tools/Benchmark.cpp \
                     common/DummyTraceEventEmitter.cpp \
-		    common/Log.cpp \
+                    common/Log.cpp \
                     common/StringVector.cpp \
                     common/Util.cpp \
                     common/Util-server.cpp \
@@ -323,14 +323,14 @@ coolstress_SOURCES = tools/Stress.cpp \
                      $(shared_sources)
 
 coolconfig_SOURCES = tools/Config.cpp \
-		     tools/ConfigMigrationAssistant.cpp \
-		     common/DummyTraceEventEmitter.cpp \
-		     common/ConfigUtil.cpp \
-		     common/Crypto.cpp \
-		     common/Log.cpp \
-		     common/StringVector.cpp \
-		     common/Util.cpp \
-		     common/Util-server.cpp
+                    tools/ConfigMigrationAssistant.cpp \
+                    common/ConfigUtil.cpp \
+                    common/Crypto.cpp \
+                    common/DummyTraceEventEmitter.cpp \
+                    common/Log.cpp \
+                    common/StringVector.cpp \
+                    common/Util-server.cpp \
+                    common/Util.cpp
 
 coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
 			 common/DummyTraceEventEmitter.cpp \
