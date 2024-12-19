@@ -4084,7 +4084,7 @@ void forwardSignal(const int signum)
     for (const auto& pair : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = pair.second;
-        if (docBroker)
+        if (docBroker && docBroker->getPid() > 0)
         {
             LOG_INF("Sending " << name << " to docBroker " << docBroker->getPid());
             ::kill(docBroker->getPid(), signum);
