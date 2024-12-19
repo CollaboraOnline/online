@@ -23,6 +23,8 @@
 #include <Exceptions.hpp>
 #include <FileServer.hpp>
 #include <HttpRequest.hpp>
+#include <NetUtil.hpp>
+#include <JsonUtil.hpp>
 #include <JailUtil.hpp>
 #include <ProofKey.hpp>
 #include <ProxyRequestHandler.hpp>

@@ -89,7 +89,16 @@ std::shared_ptr<StreamSocket>
 connect(const std::string& host, const std::string& port, const bool isSSL,
         const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler);
 
-typedef std::function<void(std::shared_ptr<StreamSocket>)> asyncConnectCB;
+enum class AsyncConnectResult{
+    Ok = 0,
+    SocketError,
+    ConnectionError,
+    HostNameError,
+    UnknownHostError,
+    SSLHandShakeFailure,
+};
+
+typedef std::function<void(std::shared_ptr<StreamSocket>, AsyncConnectResult result)> asyncConnectCB;
 
 void
 asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
