@@ -68,6 +68,7 @@ L.Control.UIManager = L.Control.extend({
 		});
 
 		this.map.on('updateviewslist', this.onUpdateViews, this);
+		this.map.on('browsersetting', this.onBrowserSetting, this);
 
 		this.map['stateChangeHandler'].setItemValue('toggledarktheme', 'false');
 		this.map['stateChangeHandler'].setItemValue('invertbackground', 'false');
@@ -78,6 +79,34 @@ L.Control.UIManager = L.Control.extend({
 
 	getCurrentMode: function() {
 		return this.shouldUseNotebookbarMode() ? 'notebookbar' : 'classic';
+	},
+
+	onBrowserSetting: function(e) {
+		let settingJSON = JSON.parse(e.msg.substring('browsersetting:'.length + 1));;
+
+		if (!settingJSON || settingJSON.kind !== 'browser')
+			return;
+
+		console.log("xxx onBrowserSetting: ", settingJSON);
+		let textSetting = settingJSON.text;
+		if (textSetting)
+		{
+			let darkTheme = window.prefs.get('darkTheme');
+			if (textSetting.darkTheme !== undefined)
+			{
+				darkTheme = textSetting.darkTheme;
+				window.prefs.set("darkTheme", darkTheme);
+			}
+
+			if (textSetting.darkBackgroundForTheme !== undefined)
+			{
+				let darkBackgroundPrefName = 'darkBackgroundForTheme.' + (darkTheme ? 'dark' : 'light');
+				window.prefs.set(darkBackgroundPrefName, textSetting.darkBackgroundForTheme);
+			}
+
+			if (textSetting.showStatusBar !== undefined)
+				window.prefs.set('text.ShowStatusbar', textSetting.showStatusBar);
+		}
 	},
 
 	shouldUseNotebookbarMode: function() {
