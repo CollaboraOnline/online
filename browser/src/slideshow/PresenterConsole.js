@@ -193,7 +193,7 @@ class PresenterConsole {
 		if (this._waitForExitingNotesMode && e.mode === 0) {
 			this._waitForExitingNotesMode = false;
 			this._map.off('impressmodechanged', this._onImpressModeChanged, this);
-			this._onPresentInConsole();
+			setTimeout(this._onPresentInConsole.bind(this), 500);
 		}
 	}
 
