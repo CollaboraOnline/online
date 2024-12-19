@@ -394,6 +394,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	scrollbar-width: none;
 	background-color: var(--color-stylesview-background);
 	filter: brightness(var(--brightness-stylesview));
+	box-sizing: border-box;
 }
 
 #stylesview:hover {
@@ -408,6 +409,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 #stylesview .ui-iconview-entry {
 	box-sizing: border-box;
 	padding-top: 0px;
+	align-self: start;
 }
 
 #stylesview .icon-view-item-container {
