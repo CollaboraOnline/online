@@ -158,8 +158,7 @@ public:
 std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 
 DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
-                               const std::string& docKey, unsigned mobileAppDocId,
-                               std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
+                               const std::string& docKey, unsigned mobileAppDocId)
     : _limitLifeSeconds(std::chrono::seconds::zero())
     , _uriOrig(uri)
     , _type(type)
@@ -220,13 +219,6 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     if (_unitWsd)
     {
         _unitWsd->onDocBrokerCreate(_docKey);
-    }
-
-    _initialWopiFileInfo = std::move(wopiFileInfo);
-    if (_initialWopiFileInfo)
-    {
-        LOG_DBG("Starting DocBrokerPoll thread");
-        _poll->startThread();
     }
 }
 
@@ -321,30 +313,6 @@ void DocumentBroker::pollThread()
     LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
 
     setupPriorities();
-
-    // Download and load the document.
-    if (_initialWopiFileInfo)
-    {
-        try
-        {
-            downloadAdvance(_childProcess->getJailId(), _uriPublic, std::move(_initialWopiFileInfo));
-        }
-        catch (const std::exception& exc)
-        {
-            LOG_ERR("Failed to advance download [" << _docKey << "]: " << exc.what());
-
-            stop("advance download failed");
-
-            // Stop to mark it done and cleanup.
-            _poll->stop();
-
-            // Async cleanup.
-            COOLWSD::doHousekeeping();
-
-            return;
-        }
-    }
-
 
 #if !MOBILEAPP
     CONFIG_STATIC const std::size_t IdleDocTimeoutSecs =
@@ -918,21 +886,6 @@ void DocumentBroker::stop(const std::string& reason)
 
     _stop = true;
     _poll->wakeup();
-}
-
-bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI& uriPublic,
-                                     std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
-{
-    ASSERT_CORRECT_THREAD();
-
-    LOG_INF("Loading [" << _docKey << "] ahead-of-time in jail [" << jailId << ']');
-
-    assert(!_docState.isMarkedToDestroy() && "MarkedToDestroy while downloading ahead-of-time");
-
-    assert(_storage == nullptr &&
-           "Unexpected to find storage created while downloading ahead-of-time");
-
-    return download(/*session=*/nullptr, jailId, uriPublic, std::move(wopiFileInfo));
 }
 
 bool DocumentBroker::download(
