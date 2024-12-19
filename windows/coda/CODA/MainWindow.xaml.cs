@@ -176,13 +176,13 @@ namespace CODA
             {
                 string message = JsonSerializer.Deserialize<string>(args.WebMessageAsJson);
                 message = message.Substring(4);
-                Debug.WriteLine("Error: message");
+                Debug.WriteLine($"Error: {message}");
             }
             else if (s.StartsWith("\"DBG "))
             {
                 string message = JsonSerializer.Deserialize<string>(args.WebMessageAsJson);
                 message = message.Substring(4);
-                Debug.WriteLine("Debug: message");
+                Debug.WriteLine($"Debug: {message}");
             }
         }
 
@@ -230,8 +230,17 @@ namespace CODA
             if (e.IsSuccess)
             {
                 // FIXME: Temporarily when running from <repo>/windows/coda/CODA/bin/Debug/net8.0-windows.
-                webView.CoreWebView2.SetVirtualHostNameToFolderMapping("appassets", "..\\..\\..\\..\\..\\..\\browser\\dist", CoreWebView2HostResourceAccessKind.DenyCors);
-                webView.CoreWebView2.Navigate("https://appassets/cool.html?file_path=file:///C:/Users/tml/sailing.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
+
+                // FIXME: Even more temporarily, just use hardcoded pathnames on tml's machine to make debugging the JS easier.
+                if (true)
+                {
+                    webView.CoreWebView2.SetVirtualHostNameToFolderMapping("appassets", "..\\..\\..\\..\\..\\..\\browser\\dist", CoreWebView2HostResourceAccessKind.DenyCors);
+                    webView.CoreWebView2.Navigate("https://appassets/cool.html?file_path=file:///C:/Users/tml/sailing.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
+                }
+                else
+                {
+                    webView.CoreWebView2.Navigate("file:///C:/Users/tml/lo/online-gitlab-coda/browser/dist//cool.html?file_path=file:///C:/Users/tml/sailing.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
+                }
 
                 OnWebViewFirstInitialized?.Invoke();
 
@@ -296,7 +305,7 @@ namespace CODA
                 string subs = sb.ToString();
                 if (sb.Length > 100)
                     subs += "...";
-                Debug.WriteLine("Evaluating JavaScript: " + subs);
+                Debug.WriteLine($"Evaluating JavaScript: {subs}");
             }
 
             string js = pretext + System.Convert.ToBase64String(s) + posttext;
@@ -306,7 +315,7 @@ namespace CODA
                 string subjs = js.Substring(0, (js.Length > 100 ? 100 : js.Length));
                 if (js.Length > 100)
                     subjs += "...";
-                Debug.WriteLine("Evaluating JavaScript: " + subjs);
+                Debug.WriteLine($"Evaluating JavaScript: {subjs}");
             }
 
             Application.Current.Dispatcher.Invoke(new Action(() => {
