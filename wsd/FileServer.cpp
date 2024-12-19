@@ -612,15 +612,17 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         configInfo->set("kind", "browser");
 
         Poco::JSON::Object::Ptr textEntry = new Poco::JSON::Object();
-        textEntry->set("ShowResolved", true);
-        textEntry->set("ShowStatusBar", false);
+        textEntry->set("showResolved", true);
+        textEntry->set("showStatusBar", true);
+        textEntry->set("darkTheme", true);
+        textEntry->set("darkBackgroundForTheme", true);
 
         Poco::JSON::Object::Ptr presentationEntry = new Poco::JSON::Object();
-        presentationEntry->set("ShowSidebar", false);
-        presentationEntry->set("ShowStatusBar", false);
+        presentationEntry->set("showSidebar", false);
+        presentationEntry->set("showStatusBar", false);
 
         Poco::JSON::Object::Ptr spreadsheetEntry = new Poco::JSON::Object();
-        spreadsheetEntry->set("ShowStatusBar", false);
+        spreadsheetEntry->set("showStatusBar", false);
 
         configInfo->set("text", textEntry);
         configInfo->set("presentation", presentationEntry);
