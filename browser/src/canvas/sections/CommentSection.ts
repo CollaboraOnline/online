@@ -44,6 +44,9 @@ export class Comment extends CanvasSectionObject {
 	map: any;
 	pendingInit: boolean = true;
 
+	cachedCommentHeight: number | null = null;
+	hidden: boolean = true;
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	constructor (data: any, options: any, commentListSectionPointer: cool.CommentSection) {
 		super();
@@ -321,7 +324,7 @@ export class Comment extends CanvasSectionObject {
 									posY: this.sectionProperties.children[i].sectionProperties.container._leaflet_pos.y});
 		}
 		childPositions.sort((a, b) => { return a.posY - b.posY; });
-		let lastPosY = this.sectionProperties.container._leaflet_pos.y + this.getCommentHeight();
+		let lastPosY = this.sectionProperties.container._leaflet_pos.y + this.getCommentHeight(false);
 		let i = 0;
 		for (; i < childPositions.length; i++) {
 			if (this.sectionProperties.childLines[i] === undefined) {
@@ -844,6 +847,9 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public show(): void {
+		if (!this.hidden) return;
+		this.hidden = false;
+
 		this.doPendingInitializationInView(true /* force */);
 		this.showMarker();
 
@@ -908,9 +914,10 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public hide (): void {
-		if (this.isEdit()) {
+		if (this.hidden || this.isEdit()) {
 			return;
 		}
+		this.hidden = true;
 
 		if (this.sectionProperties.data.id === 'new') {
 			this.sectionProperties.commentListSection.removeItem(this.sectionProperties.data.id);
@@ -1511,8 +1518,13 @@ export class Comment extends CanvasSectionObject {
 		return 1; // Comment list not fully initialized but we know we are not root
 	}
 
-	public getCommentHeight(): number {
-		return this.sectionProperties.container.getBoundingClientRect().height  - this.sectionProperties.childLinesNode.getBoundingClientRect().height;
+	public getCommentHeight(invalidateCache: boolean = true): number {
+		if (invalidateCache)
+			this.cachedCommentHeight = null;
+		if (this.cachedCommentHeight === null)
+			this.cachedCommentHeight = this.sectionProperties.container.getBoundingClientRect().height
+			- this.sectionProperties.childLinesNode.getBoundingClientRect().height;
+		return this.cachedCommentHeight;
 	}
 
 	public setCollapsed(): void {
