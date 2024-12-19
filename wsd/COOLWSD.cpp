@@ -1784,12 +1784,12 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     {
         // creating cache directory
-        std::string path = Util::trimmed(ConfigUtil::getPathFromConfig("cache_root_path"));
+        std::string path = Util::trimmed(ConfigUtil::getPathFromConfig("cache_files.path"));
         LOG_INF("Cache path is set to [" << path << "] in config");
         if (path.empty())
         {
             path = "cache";
-            LOG_WRN("No cache path is set in cache_root_path. Using default of: " << path);
+            LOG_WRN("No cache path is set in cache_files.path. Using default of: " << path);
         }
 
         Poco::File p(path);
@@ -1806,10 +1806,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         }
 
         if (FileUtil::Stat(path).exists())
-        {
-            LOG_INF("Initializing cache at [" + path << ']');
             Cache::initialize(path);
-        }
     }
 
     NumPreSpawnedChildren = ConfigUtil::getConfigValue<int>(conf, "num_prespawn_children", 1);
