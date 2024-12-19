@@ -262,6 +262,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
     JsonUtil::findJSONValue(object, "UserCanRename", _userCanRename);
     JsonUtil::findJSONValue(object, "BreadcrumbDocName", _breadcrumbDocName);
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
+    JsonUtil::findJSONValue(object, "UserCanOnlyComment", _userCanOnlyComment);
 
     // check if user is admin on the integrator side
     bool isAdminUser = false;
