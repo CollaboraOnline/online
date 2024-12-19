@@ -27,6 +27,7 @@ L.Map.WOPI = L.Handler.extend({
 	EnableInsertRemoteFile: false, /* Separate, because requires explicit integration support */
 	DisableInsertLocalImage: false,
 	EnableInsertRemoteLink: false,
+	EnableRemoteAIContent: false,
 	EnableShare: false,
 	HideUserList: null,
 	CallPythonScriptSource: null,
@@ -125,6 +126,7 @@ L.Map.WOPI = L.Handler.extend({
 		this.EnableInsertRemoteFile = !!wopiInfo['EnableInsertRemoteFile'];
 		this.DisableInsertLocalImage = !!wopiInfo['DisableInsertLocalImage'];
 		this.EnableRemoteLinkPicker = !!wopiInfo['EnableRemoteLinkPicker'];
+		this.EnableRemoteAIContent = !!wopiInfo['EnableRemoteAIContent'];
 		this.SupportsRename = !!wopiInfo['SupportsRename'];
 		this.UserCanRename = !!wopiInfo['UserCanRename'];
 		this.EnableShare = !!wopiInfo['EnableShare'];
