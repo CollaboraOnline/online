@@ -5,7 +5,8 @@
       "environmentVariables": {
         "SAL_LOG": "+INFO+WARN-INFO.sal.bootstrap-INFO.i18nlangtag-INFO.vcl.fonts"
       },
-      "nativeDebugging": true
+      "nativeDebugging": true,
+      "jsWebView2Debugging": false
     }
   }
 }
