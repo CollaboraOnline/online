@@ -3414,9 +3414,13 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             else if (tokens.size() == 3 && tokens.equals(0, "EMPTY"))
             {
                 // with mode:    "EMPTY, <part>, <mode>"
-                const std::string part = (_docType != "text" ? tokens[1].c_str() : "0"); // Writer renders everything as part 0.
-                const std::string mode = (_docType != "text" ? tokens[2].c_str() : "0"); // Writer is not using mode.
-                sendTextFrame("invalidatetiles: EMPTY, " + part + ", " + mode +
+                std::string part = (_docType != "text" ? tokens[1].c_str() : "0"); // Writer renders everything as part 0.
+                std::string mode = (_docType != "text" ? tokens[2].c_str() : "0"); // Writer is not using mode.
+
+                int part_ = getLOKitDocument()->getPart();
+                int mode_ = getLOKitDocument()->getEditMode();
+
+                sendTextFrame("invalidatetiles: EMPTY, " + std::to_string(part_) + ", " + std::to_string(mode_) +
                               " wid=" + std::to_string(getCurrentWireId()));
             }
             else
