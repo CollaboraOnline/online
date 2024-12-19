@@ -1306,7 +1306,16 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     // but this is more readily comprehensible and easier to reason about.
     session->setWritePermission(wopiFileInfo->getUserCanWrite());
 
-    if (!wopiFileInfo->getUserCanWrite())
+    if (wopiFileInfo->getUserCanOnlyComment())
+    {
+        LOG_DBG("Setting session ["
+                << sessionId << "] to readonly for UserCanOnlyComment=true and allowing comments");
+        session->setWritePermission(true);
+        session->setWritable(true);
+        session->setReadOnly(true);
+        session->setAllowChangeComments(true);
+    }
+    else if (!wopiFileInfo->getUserCanWrite())
     {
         // We can't write in the storage, so we can't even add comments.
         LOG_DBG("Setting session [" << sessionId << "] to readonly for UserCanWrite=false");
