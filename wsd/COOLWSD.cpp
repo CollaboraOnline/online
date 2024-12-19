@@ -1468,7 +1468,8 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         const std::string anonymizationSaltStr = std::to_string(anonymizationSalt);
         setenv("COOL_ANONYMIZATION_SALT", anonymizationSaltStr.c_str(), true);
     }
-    FileUtil::setUrlAnonymization(AnonymizeUserData, anonymizationSalt);
+
+    Anonymizer::initialize(AnonymizeUserData, anonymizationSalt);
 
     {
         bool enableWebsocketURP =
