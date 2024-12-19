@@ -170,6 +170,16 @@ class StatusBar extends JSDialog.Toolbar {
 		this.updateHtmlItem('StatePageNumber', state ? state : ' ');
 	}
 
+	onShowCommentsChange(e) {
+		var state = e.state;
+		var statemsg;
+		if (state === 'true')
+			statemsg = _UNO('.uno:ShowAnnotations') +': ' + _('On');
+		else if (state === 'false')
+			statemsg = _UNO('.uno:ShowAnnotations') +': ' + _('Off');
+		this.updateHtmlItem('ShowComments', state ? statemsg : ' ');
+	}
+
 	_generateHtmlItem(id) {
 		var isReadOnlyMode = app.map ? app.map.isReadOnlyMode() : true;
 		var canUserWrite = !app.isReadOnly();
@@ -237,6 +247,7 @@ class StatusBar extends JSDialog.Toolbar {
 			this._generateHtmlItem('statepagenumber'), 					// text
 			this._generateHtmlItem('statewordcount'), 					// text
 			this._generateHtmlItem('insertmode'),						// spreadsheet, text
+			this._generateHtmlItem('showcomments'),					    // text
 			this._generateHtmlItem('statusselectionmode'),				// text
 			this._generateHtmlItem('slidestatus'),						// presentation
 			this._generateHtmlItem('pagestatus'),						// drawing
@@ -312,6 +323,7 @@ class StatusBar extends JSDialog.Toolbar {
 				this.showItem('languagestatus', !app.map.isReadOnlyMode());
 				this.showItem('languagestatusbreak', !app.map.isReadOnlyMode());
 				this.showItem('permissionmode-container', true);
+				this.showItem('showcomments-container', true);
 				this.showItem('documentstatus-container', true);
 			}
 			break;
@@ -475,6 +487,10 @@ class StatusBar extends JSDialog.Toolbar {
 		}
 		else if (commandName === '.uno:StatePageNumber') {
 			this.onPageChange(e);
+			return;
+		}
+		else if (commandName === 'showannotations') {
+			this.onShowCommentsChange(e);
 			return;
 		}
 		else if (commandName === '.uno:StateWordCount') {
