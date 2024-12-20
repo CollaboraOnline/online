@@ -64,7 +64,8 @@ L.Control.ContextMenu = L.Control.extend({
 				   'UpdateCurIndex','RemoveTableOf',
 				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes',
 				   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph', 'TableDialog',
-				   'SpellCheckIgnore', 'FrameDialog', 'UnfloatFrame', 'ContentControlProperties', 'DeleteContentControl'],
+				   'SpellCheckIgnore', 'FrameDialog', 'UnfloatFrame', 'ContentControlProperties', 'DeleteContentControl',
+				   'AddToWordbook'],
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'InsertCell', 'DeleteCell',
 				      'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable',
