@@ -127,29 +127,37 @@ def substitute(queue, var):
             queue.writeLine('<text:p>' + v + '</text:p>')
             queue.writeLine('</table:table-cell>')
 
+            # date
             dt = str(rng.randint(2000, 2025)) + '-' + str(rng.randint(10, 12)) + '-' + str(rng.randint(10, 28))
             queue.writeLine('<table:table-cell office:value-type="string" calcext:value-type="string">')
             queue.writeLine('<text:p>' + dt + '</text:p>')
             queue.writeLine('</table:table-cell>')
 
-            v = str(rng.randint(-100000, 100000)/100.0)
-            queue.writeLine('<table:table-cell office:value-type="float" office:value="' + v +
-                            '" calcext:value-type="float">')
-            queue.writeLine('<text:p>' + v + '</text:p>')
-            queue.writeLine('</table:table-cell>')
+            # id - sparse
+            if (rng.randint(0,100) > 10):
+                v = str(rng.randint(-100000, 100000)/100.0)
+                queue.writeLine('<table:table-cell office:value-type="float" office:value="' + v +
+                                '" calcext:value-type="float">')
+                queue.writeLine('<text:p>' + v + '</text:p>')
+                queue.writeLine('</table:table-cell>')
+            else: # empty
+                queue.writeLine('<table:table-cell/>')
 
+            # Percentage
             v = str(rng.randint(-2000, 5000)/10.0)
             queue.writeLine('<table:table-cell office:value-type="percentage" office:value="' + v +
                             '" calcext:value-type="percentage">')
             queue.writeLine('<text:p>' + v + '</text:p>')
             queue.writeLine('</table:table-cell>')
 
+            # USD
             v = rng.randint(-100000, 100000)/100.0
             queue.writeLine('<table:table-cell office:value-type="currency" office:currency="USD" office:value="' + str(v) +
                             '" calcext:value-type="currency">')
             queue.writeLine('<text:p>$' + str(v) + '</text:p>')
             queue.writeLine('</table:table-cell>')
 
+            # GBP
             cellRef = 'J' + str(i + 2)
             queue.writeLine('<table:table-cell table:formula="of:=[.' + cellRef + ']*0.8" ' +
                             'office:value-type="currency" office:currency="GBP" office:value="' +
@@ -157,6 +165,7 @@ def substitute(queue, var):
             queue.writeLine('<text:p>£' + str(v*0.8) + '</text:p>')
             queue.writeLine('</table:table-cell>')
 
+            # EUR
             cellRef = 'K' + str(i + 2)
             queue.writeLine('<table:table-cell table:formula="of:=[.' + cellRef + ']*0.8" ' +
                             'office:value-type="percentage" office:value="' +
