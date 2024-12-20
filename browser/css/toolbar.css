@@ -1727,11 +1727,13 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 
 #follow-editor {
 	padding: 8px;
+	display: flex;
+	align-items: center;
 }
 
 #follow-editor .follow-editor-checkbox {
-	margin-right: 12px;
-	margin-left: 7px;
+	margin-inline-end: 11px;
+	margin-inline-start: 6px;
 	border-radius: 1px;
 	height: 16px;
 	width: 16px;
