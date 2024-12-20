@@ -565,6 +565,8 @@ class PresenterConsole {
 			this._proxyPresenter.document.querySelectorAll('button');
 		this._attachTooltips(allPresenterConsoleButtons);
 
+		// enable notes by default on start of present console
+		this._onShowNotes();
 		// simulate resize to Firefox
 		this._onResize();
 	}
