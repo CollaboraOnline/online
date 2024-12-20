@@ -105,7 +105,7 @@ L.Control.UIManager = L.Control.extend({
 			}
 
 			if (textSetting.showStatusBar !== undefined)
-				this.setDocTypePref('ShowStatusbar', textSetting.showStatusBar);
+				window.prefs.set('text.ShowStatusbar', textSetting.showStatusBar);
 		}
 	},
 
