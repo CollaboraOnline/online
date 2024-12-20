@@ -794,7 +794,9 @@ L.Map = L.Evented.extend({
 		return this.panTo(newCenter, options);
 	},
 
-	invalidateSize: function (options) {
+	// If map size has already been updated, invalidateSize needs the oldSize to work properly
+	// (e.g. if getSize() has already been called whith _sizeChanged === true)
+	invalidateSize: function (options, oldSize) {
 		if (!this._loaded) { return this; }
 
 		options = L.extend({
@@ -802,7 +804,9 @@ L.Map = L.Evented.extend({
 			pan: false
 		}, options === true ? {animate: true} : options);
 
-		var oldSize = this.getSize();
+		if (!oldSize) {
+			oldSize = this.getSize();
+		}
 		this._sizeChanged = true;
 
 		var newSize = this.getSize(),
