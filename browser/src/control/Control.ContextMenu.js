@@ -211,8 +211,16 @@ L.Control.ContextMenu = L.Control.extend({
 					}
 				}
 			});
-			if (autoFillContextMenu)
+			if (autoFillContextMenu) {
 				$('.leaflet-layer').contextMenu(this._currMousePos);
+
+				// remove context-menu-layer so that user can activate a cell after the first click.
+				// otherwise, first click on a cell will close the autofill context-menu,
+				// second click will activate the cell.
+				// we should avoid this behavior only for autofill context-menu.
+				var contextMenuLayer = document.getElementById('context-menu-layer');
+				L.DomUtil.remove(contextMenuLayer);
+			}
 			else
 				$('.leaflet-layer').contextMenu(this._prevMousePos);
 			$('.context-menu-root').focus();
