@@ -204,6 +204,12 @@ L.Control.ContextMenu = L.Control.extend({
 						var $menu = opt.$menu;
 						$menu.attr('tabindex', 0); // Make the context menu focusable
 					},
+					activated: function (opt) {
+						if (autoFillContextMenu) {
+							var $layer = opt.$layer;
+							$layer.css('pointer-events', 'none'); // disable mouse clicks for the layer
+						}
+					},
 					hide: function() {
 						if(autoFillContextMenu)
 							app.map._docLayer._resetReferencesMarks();
