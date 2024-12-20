@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <common/StateEnum.hpp>
 #include <RequestVettingStation.hpp>
 #include <RequestDetails.hpp>
 #include <Socket.hpp>
@@ -24,6 +25,24 @@
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher final : public SimpleSocketHandler
 {
+    // NB: these names are part of the published API, and should not be renamed or altered but can be expanded
+    STATE_ENUM(CheckStatus,
+        Ok,
+        NotHttpSucess,
+        HostNotFound,
+        WopiHostNotAllowed,
+        HostUnReachable,
+        UnspecifiedError,
+        ConnectionAborted,
+        ConnectionRefused,
+        CertificateValidation,
+        SSLHandshakeFail,
+        MissingSsl,
+        NotHttps,
+        NoScheme,
+        Timeout,
+    );
+
 public:
     ClientRequestDispatcher() {}
 

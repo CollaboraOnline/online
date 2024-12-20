@@ -16,7 +16,6 @@
 #endif
 
 #include <common/Anonymizer.hpp>
-#include <common/StateEnum.hpp>
 #include <Admin.hpp>
 #include <COOLWSD.hpp>
 #include <ClientSession.hpp>
@@ -1100,25 +1099,6 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     LOG_INF("Sent discovery.xml successfully.");
     return true;
 }
-
-
-// NB: these names are part of the published API, and should not be renamed or altered but can be expanded
-STATE_ENUM(CheckStatus,
-    Ok,
-    NotHttpSucess,
-    HostNotFound,
-    WopiHostNotAllowed,
-    HostUnReachable,
-    UnspecifiedError,
-    ConnectionAborted,
-    ConnectionRefused,
-    CertificateValidation,
-    SSLHandshakeFail,
-    MissingSsl,
-    NotHttps,
-    NoScheme,
-    Timeout,
-);
 
 bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTPRequest& request,
                                                            Poco::MemoryInputStream& message,
