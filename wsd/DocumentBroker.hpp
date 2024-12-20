@@ -232,15 +232,13 @@ public:
     };
 
     DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
-                   const std::string& docKey, unsigned mobileAppDocId,
-                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
+                   const std::string& docKey, unsigned mobileAppDocId);
 
 protected:
     /// Used by derived classes.
     DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
                    const std::string& docKey)
-        : DocumentBroker(type, uri, uriPublic, docKey, /*mobileAppDocId=*/0,
-                         /*wopiFileInfo=*/nullptr)
+        : DocumentBroker(type, uri, uriPublic, docKey, /*mobileAppDocId=*/0)
     {
     }
 
@@ -548,10 +546,6 @@ private:
     std::shared_ptr<ClientSession> getFirstAuthorizedSession() const;
 
     void refreshLock();
-
-    /// Downloads the document ahead-of-time.
-    bool downloadAdvance(const std::string& jailId, const Poco::URI& uriPublic,
-                         std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
@@ -1407,10 +1401,6 @@ private:
     std::string _jailId;
     std::string _filename;
     std::atomic<bool> _migrateMsgReceived = false;
-
-    /// The WopiFileInfo of the initial request loading the document for the first time.
-    /// This has a single-use, and then it's reset.
-    std::unique_ptr<WopiStorage::WOPIFileInfo> _initialWopiFileInfo;
 
     /// The state of the document.
     /// This regulates all other primary operations.
