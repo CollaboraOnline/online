@@ -15,6 +15,14 @@
  * So we have this file, to manage their orders easily. Define them here, globally. Then you can use from everywhere.
  * Refer to CanvasSectionContainer.ts for definitions of processingOrder, drawingOrder and zIndex.
  */
+
+/*
+    z-index        : Higher zIndex will be drawn on top.
+    Processing and drawing orders are meaningful between sections with the same zIndex.
+    Processing order	: Important for locations and sizes of sections. Lowest processing order will be processed first.
+    Drawing order	: Highest with the same zIndex will be drawn on top.
+*/
+
 /* global L */
 
 L.CSections = {};
@@ -26,32 +34,32 @@ L.CSections.Tiles = 				{ name: 'tiles'				, zIndex: 5 };
 L.CSections.Overlays =				{ name: 'overlay'			, zIndex: 5 };
 L.CSections.CalcGrid = 				{ name: 'calc grid'			, zIndex: 5 };
 L.CSections.Debug.Splits = 			{ name: 'splits'			, zIndex: 5 };
-L.CSections.Debug.TilePixelGrid = 	        { name: 'tile pixel grid'	, zIndex: 5 };
-L.CSections.Debug.PreloadMap = 	                { name: 'preload map'	        , zIndex: 5 };
-
+L.CSections.Debug.TilePixelGrid = 	{ name: 'tile pixel grid'	, zIndex: 5 };
+L.CSections.Debug.PreloadMap = 	    { name: 'preload map'	    , zIndex: 5 };
 L.CSections.ColumnHeader = 			{ name: 'column header'		, zIndex: 5 };
 L.CSections.RowHeader = 			{ name: 'row header'		, zIndex: 5 };
 L.CSections.CornerHeader = 			{ name: 'corner header'		, zIndex: 5 };
 L.CSections.OtherViewCellCursor =   { zIndex: 5 };
-
 L.CSections.ColumnGroup = 			{ name: 'column group'		, zIndex: 5 };
 L.CSections.RowGroup = 				{ name: 'row group'			, zIndex: 5 };
 L.CSections.CornerGroup = 			{ name: 'corner group'		, zIndex: 5 };
 
-L.CSections.Scroll =				{ name: 'scroll'			, zIndex: 8};
+L.CSections.Comment =				{ name: 'comment'			, zIndex: 7	}; // This class is for comment markers. It is a document object. One should change instance's name after initializing (there may be many instances of this class).
 
-L.CSections.Comment =				{ name: 'comment'			, zIndex: 9	}; // This class is for comment markers. It is a document object. One should change instance's name after initializing (there may be many instances of this class).
-
-L.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 10};
-L.CSections.DefaultForDocumentObjects = { zIndex: 10 };
-L.CSections.HTMLObject     =        { zIndex: 10 };
+L.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 9 };
+L.CSections.DefaultForDocumentObjects = {                         zIndex: 9 };
+L.CSections.HTMLObject     =        {                             zIndex: 9 };
 
 L.CSections.ContentControl =        { name: 'content control'   , zIndex: 11 };
-/* Processing and drawing orders are meaningful between sections with the same zIndex. */
-/* Processing order	: Important for locations and sizes of sections. */
-/* Drawing order	: Highest with the same zIndex will be drawn on top. */
 
-/* zIndex = 5 */
+L.CSections.Scroll =				{ name: 'scroll'			, zIndex: 13 };
+
+/*
+    zIndex = 5. z-index of tiles.
+    These are sections either:
+        * Bound to tiles section.
+        * At the same level with tiles section - so they share the available canvas space.
+*/
 
 L.CSections.CommentList.processingOrder = 			24; // Writer & Impress. Before tiles section, because tiles section will be expanded into the empty area.
 L.CSections.CornerGroup.processingOrder =			25; // Calc.
@@ -86,17 +94,12 @@ L.CSections.ColumnHeader.drawingOrder = 			150; // Calc.
 
 /* zIndex = 6 and goes on. */
 
-/* zIndex = 8 */
-L.CSections.Scroll.processingOrder = 				1; // Writer & Impress & Calc.
-
-L.CSections.Scroll.drawingOrder = 					1; // Writer & Impress & Calc.
-
-/* zIndex = 9 */
+/* zIndex = 7 */
 L.CSections.Comment.processingOrder =				1; // Since this is a document object, processing order is not very important. But it should be higher than tiles's processing order. Because tiles section is the document anchor.
 
 L.CSections.Comment.drawingOrder =					1; // Writer & Imnpress & Calc.
 
-/* zIndex = 10  */
+/* zIndex = 9  */
 L.CSections.AutoFillMarker.processingOrder =		1; // Calc.
 L.CSections.AutoFillMarker.drawingOrder =			1; // Calc.
 L.CSections.HTMLObject.drawingOrder     =           55; // Calc.
@@ -108,3 +111,8 @@ L.CSections.DefaultForDocumentObjects.drawingOrder = 10;
 L.CSections.ContentControl.processingOrder =		1; // Writer.
 
 L.CSections.ContentControl.drawingOrder =			1; // Writer.
+
+/* zIndex = 13 */
+L.CSections.Scroll.processingOrder = 				1; // Writer & Impress & Calc.
+
+L.CSections.Scroll.drawingOrder = 					1; // Writer & Impress & Calc.
