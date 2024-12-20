@@ -154,6 +154,9 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		};
 	};
 	L.Map.THIS.fire('jsdialog', {data: json, callback: generateCallback(entries)});
+
+	L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
+	L.Map.THIS._docLayer._resetReferencesMarks();
 };
 
 JSDialog.CloseDropdown = function (id) {
