@@ -60,7 +60,7 @@
         return NAME##_names[static_cast<int>(e)];                                                  \
     }                                                                                              \
     /* Returns the state name only, without the namespace, as a std::string. */                    \
-    static inline std::string toStringShort(NAME e)                                                \
+    [[maybe_unused]] static inline std::string toStringShort(NAME e)                                                \
     {                                                                                              \
         return nameShort(e);                                                                       \
     }                                                                                              \
@@ -73,11 +73,11 @@
         return NAME##_names[static_cast<int>(e)];                                                  \
     }                                                                                              \
     /* Returns the state name, with the namespace, as a std::string. */                            \
-    static inline std::string toString(NAME e)                                                     \
+    [[maybe_unused]] static inline std::string toString(NAME e)                                                     \
     {                                                                                              \
         return name(e);                                                                            \
     }                                                                                              \
-    static const size_t NAME##Max = COUNT_ARGS(__VA_ARGS__);                                       \
+    [[maybe_unused]] static const size_t NAME##Max = COUNT_ARGS(__VA_ARGS__);                                       \
     enum class NAME : char                                                                         \
     {                                                                                              \
         __VA_ARGS__                                                                                \
