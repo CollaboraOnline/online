@@ -397,22 +397,25 @@ L.Control.JSDialog = L.Control.extend({
 		// this will only search in current instance and not in whole docuemnt
 		const tabControlWidget = this.findTabControl(instance);
 
-		let focusWidget ;
+		let focusWidget, firstFocusableElement ;
 
 		if (tabControlWidget) {
 			// get DOM element of tabControl from current instance
 			focusWidget = instance.content.querySelector('[id="' + tabControlWidget.id + '"]');
+			firstFocusableElement = JSDialog.GetFocusableElements(focusWidget);
+
 		} else {
-			focusWidget = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : null;
+			// will directly set element of focusable element based on init focus id
+			firstFocusableElement = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : null;
 		}
 
-		if (focusWidget && document.activeElement !== focusWidget && instance.canHaveFocus) {
-			var firstFocusable = JSDialog.GetFocusableElements(focusWidget);
-			if (firstFocusable && firstFocusable.length)
-				firstFocusable[0].focus();
-			else
-				console.error('cannot get focus for widget: "' + instance.init_focus_id + '"');
+		if (firstFocusableElement && document.activeElement !== firstFocusableElement && instance.canHaveFocus) {
+			// for tab control case we have more then 1 element that can be focusable so select the first tab for the list
+			firstFocusableElement = firstFocusableElement.length > 0 ? firstFocusableElement[0] : firstFocusableElement;
+			firstFocusableElement.focus();
 		}
+		else
+			console.error('cannot get focus for widget: "' + instance.init_focus_id + '"');
 
 		if (instance.isDropdown && instance.isSubmenu) {
 			instance.container.addEventListener('mouseleave', function () {
