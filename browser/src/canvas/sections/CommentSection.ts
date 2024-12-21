@@ -1338,15 +1338,17 @@ export class Comment extends CanvasSectionObject {
 					// For calc comments (aka postits) draw the same sort of square as ScOutputData::DrawNoteMarks
 					// does for offline
 					var margin = cellSize[0] * 0.06;
-					var squareDim = 6;
-					// this.size may currently have an artifically wide size if mouseEnter without moveLeave seen
-					// so fetch the real size
-					var x = this.isCalcRTL() ? margin : cellSize[0] - (margin + squareDim);
+					var verticalMargin = cellSize[1] * 0.06; // Vertical margin (to move it below the top border)
+					var triangleLength = cellSize[0] * 0.15; // Consistent ratio for triangle size
+
+					var x = this.isCalcRTL() ? margin : cellSize[0] - margin - triangleLength; // Adjusted for right-to-left or left-to-right layouts
+					var y = verticalMargin; // Starting y position for the triangle (offset below top border)
+
 					this.context.fillStyle = '#BF819E';
 					var region = new Path2D();
-					region.moveTo(x, 0);
-					region.lineTo(cellSize[0], 0);
-					region.lineTo(cellSize[0], cellSize[1]/2);
+					region.moveTo(x, y);
+					region.lineTo(x + triangleLength, y);
+					region.lineTo(x + triangleLength, y + triangleLength);
 					region.closePath();
 					this.context.fill(region);
 				}
