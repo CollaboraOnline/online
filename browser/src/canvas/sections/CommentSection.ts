@@ -44,6 +44,9 @@ export class Comment extends CanvasSectionObject {
 	map: any;
 	pendingInit: boolean = true;
 
+	cachedCommentHeight: number | null = null;
+	hidden: boolean | null = null;
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	constructor (data: any, options: any, commentListSectionPointer: cool.CommentSection) {
 		super();
@@ -321,7 +324,7 @@ export class Comment extends CanvasSectionObject {
 									posY: this.sectionProperties.children[i].sectionProperties.container._leaflet_pos.y});
 		}
 		childPositions.sort((a, b) => { return a.posY - b.posY; });
-		let lastPosY = this.sectionProperties.container._leaflet_pos.y + this.getCommentHeight();
+		let lastPosY = this.sectionProperties.container._leaflet_pos.y + this.getCommentHeight(false);
 		let i = 0;
 		for (; i < childPositions.length; i++) {
 			if (this.sectionProperties.childLines[i] === undefined) {
@@ -337,9 +340,10 @@ export class Comment extends CanvasSectionObject {
 			lastPosY = childPositions[i].posY + 24;
 		}
 		if (i < this.sectionProperties.childLines.length) {
-			for (let j = i; j < this.sectionProperties.childLines.length; j++)
+			for (let j = i; j < this.sectionProperties.childLines.length; j++) {
 				this.sectionProperties.childLinesNode.removeChild(this.sectionProperties.childLines[i]);
-			this.sectionProperties.childLines.splice(i);
+				this.sectionProperties.childLines.splice(i);
+			}
 		}
 
 	}
@@ -843,6 +847,8 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public show(): void {
+		if (this.hidden === false) return;
+
 		this.doPendingInitializationInView(true /* force */);
 		this.showMarker();
 
@@ -852,11 +858,16 @@ export class Comment extends CanvasSectionObject {
 
 		if (cool.CommentSection.commentWasAutoAdded)
 			return;
-		if (this.sectionProperties.docLayer._docType === 'text')
+
+		// We don't cache the hidden state for spreadsheets. Only one comment can be
+		// visible and they're hidden when scrolling, so it's easier this way.
+		if (this.sectionProperties.docLayer._docType === 'text') {
 			this.showWriter();
-		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing')
+			this.hidden = false;
+		} else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			this.showImpressDraw();
-		else if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+			this.hidden = false;
+		} else if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 			this.showCalc();
 
 		this.setLayoutClass();
@@ -868,6 +879,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.nodeReply.style.display = 'none';
 		this.sectionProperties.showSelectedCoordinate = false;
 		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+		this.hidden = true;
 	}
 
 	private hideCalc() {
@@ -893,6 +905,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.nodeReply.style.display = 'none';
 		}
 		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
+		this.hidden = true;
 	}
 
 	// check if this is "our" autosaved comment
@@ -907,7 +920,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public hide (): void {
-		if (this.isEdit()) {
+		if (this.hidden === true || this.isEdit()) {
 			return;
 		}
 
@@ -1510,8 +1523,13 @@ export class Comment extends CanvasSectionObject {
 		return 1; // Comment list not fully initialized but we know we are not root
 	}
 
-	public getCommentHeight(): number {
-		return this.sectionProperties.container.getBoundingClientRect().height  - this.sectionProperties.childLinesNode.getBoundingClientRect().height;
+	public getCommentHeight(invalidateCache: boolean = true): number {
+		if (invalidateCache)
+			this.cachedCommentHeight = null;
+		if (this.cachedCommentHeight === null)
+			this.cachedCommentHeight = this.sectionProperties.container.getBoundingClientRect().height
+			- this.sectionProperties.childLinesNode.getBoundingClientRect().height;
+		return this.cachedCommentHeight;
 	}
 
 	public setCollapsed(): void {
