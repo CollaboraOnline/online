@@ -1570,6 +1570,9 @@ L.Control.UIManager = L.Control.extend({
 				that.closeModal(dialogId);
 			}}
 		]);
+
+		// focus on input modal on show
+		document.getElementById('input-modal-input').focus();
 	},
 
 	/// Shows an info bar at the bottom right of the view.
