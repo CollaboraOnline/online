@@ -2357,7 +2357,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(div).addClass('no-label');
 			}
 
-			if (buttonImage !== false) {
+			// for Accessibility : graphic elements are located within buttons, the img should receive an empty alt
+			if(button.getAttribute('aria-label')){ // if we already set the aria-label then do not go for image alt attr
+				buttonImage.alt = '';
+			}
+			else if (buttonImage !== false) {
 				if(data.aria) {
 					buttonImage.alt = data.aria.label;
 				} else {
