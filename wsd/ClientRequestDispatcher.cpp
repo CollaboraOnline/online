@@ -1105,7 +1105,7 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
 // NB: these names are part of the published API, and should not be renamed or altered but can be expanded
 STATE_ENUM(CheckStatus,
     Ok,
-    NotHttpSucess,
+    NotHttpSuccess,
     HostNotFound,
     WopiHostNotAllowed,
     HostUnReachable,
