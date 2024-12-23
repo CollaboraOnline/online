@@ -389,7 +389,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
     if (isSSL)
     {
         LOG_ERR("Error: isSSL socket requested but SSL is not compiled in.");
-        asyncCb(nullptr, asyncConnectResult::MissingSSLError);
+        asyncCb(nullptr, AsyncConnectResult::MissingSSLError);
         return;
     }
 #endif
