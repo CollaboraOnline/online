@@ -1437,6 +1437,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.onACKComment(obj);
 	}
 
+
 	public handleCommentConflict(obj: any, editComment: Comment) {
 		if (document.getElementById(this.map.uiManager.generateModalId('comments-update')))
 			return;
@@ -1468,10 +1469,32 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		);
 	}
 
+	public checkIfOnlyAnchorPosChanged(obj: any, editComment: Comment): boolean {
+		if (obj.comment.action !== 'Modify')
+			return false;
+
+		var newComment = obj.comment;
+		var editCommentData = editComment.sectionProperties.data;
+
+		if (newComment.author !== editCommentData.author
+		|| newComment.dateTime !== editCommentData.dateTime
+		|| newComment.html !== editCommentData.html
+		|| newComment.layoutStatus !== editCommentData.layoutStatus.toString()
+		|| newComment.parentId !== editCommentData.parentId
+		|| newComment.resolved !== editCommentData.resolved
+		|| newComment.textRange !== editCommentData.textRange)
+			return false;
+
+		if (newComment.anchorPos.replaceAll(" ", '') !== editCommentData.anchorPos.toString())
+			return true;
+		return false;
+	}
+
 	public onACKComment (obj: any): void {
 		var id;
 		const anyEdit = Comment.isAnyEdit();
 		if (anyEdit
+			&& !this.checkIfOnlyAnchorPosChanged(obj, anyEdit)
 			&& !anyEdit.sectionProperties.selfRemoved
 			&& anyEdit.sectionProperties.data.id === obj.comment.id
 			&& CommentSection.autoSavedComment !== anyEdit) {
