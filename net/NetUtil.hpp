@@ -96,6 +96,7 @@ enum class AsyncConnectResult{
     HostNameError,
     UnknownHostError,
     SSLHandShakeFailure,
+    MissingSSLError
 };
 
 typedef std::function<void(std::shared_ptr<StreamSocket>, AsyncConnectResult result)> asyncConnectCB;
