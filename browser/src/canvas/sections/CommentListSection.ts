@@ -1424,7 +1424,6 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.onACKComment(obj);
 	}
 
-
 	public handleCommentConflict(obj: any, editComment: Comment) {
 		if (document.getElementById(this.map.uiManager.generateModalId('comments-update')))
 			return;
@@ -1477,6 +1476,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		return false;
 	}
 
+	private actionPerformedByCurrentUser(obj: any): boolean {
+		return obj.comment.author === this.map._viewInfo[this.map._docLayer._editorId].username;
+	}
+
 	public onACKComment (obj: any): void {
 		var id;
 		const anyEdit = Comment.isAnyEdit();
@@ -1484,7 +1487,8 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			&& !this.checkIfOnlyAnchorPosChanged(obj, anyEdit)
 			&& !anyEdit.sectionProperties.selfRemoved
 			&& anyEdit.sectionProperties.data.id === obj.comment.id
-			&& CommentSection.autoSavedComment !== anyEdit) {
+			&& CommentSection.autoSavedComment !== anyEdit
+			&& !this.actionPerformedByCurrentUser(obj)) {
 			this.handleCommentConflict(obj, anyEdit);
 			return;
 		}
