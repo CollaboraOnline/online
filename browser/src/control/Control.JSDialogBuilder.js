@@ -1546,6 +1546,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			pushbutton.innerText = pushbuttonText;
 			builder._stressAccessKey(pushbutton, pushbutton.accessKey);
 		}
+		if (image)
+			image.alt = '';
+
 		if (data.enabled === 'false' || data.enabled === false)
 			$(pushbutton).prop('disabled', true);
 
@@ -1555,8 +1558,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			pushbutton.onclick = builder.callback.bind(builder, 'responsebutton', 'click', { id: pushbutton.id }, builder._responses[pushbutton.id], builder);
 		else
 			pushbutton.onclick = builder.callback.bind(builder, 'pushbutton', data.isToggle ? 'toggle' : 'click', pushbutton, data.command, builder);
-	
-		builder._addAriaLabel(pushbutton, data, builder);
+
+
+		if (data.labelledBy) {
+			pushbutton.setAttribute('aria-labelledby', data.labelledBy);
+		} else {
+			builder._addAriaLabel(pushbutton, data, builder);
+		}
 
 		builder.map.hideRestrictedItems(data, wrapper, pushbutton);
 		builder.map.disableLockedItem(data, wrapper, pushbutton);
