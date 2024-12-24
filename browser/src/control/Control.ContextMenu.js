@@ -249,6 +249,11 @@ L.Control.ContextMenu = L.Control.extend({
 				continue;
 			}
 
+			// If the command was hidden with the Hide_Command postmessage...
+			if (this._map.uiManager.hiddenCommands[item.command]) {
+				continue;
+			}
+
 			// reduce Paste Special submenu
 			if (item.type === 'menu' && item.text && item.text.replace('~', '') === 'Paste Special'
 				&& item.menu && item.menu.length) {
