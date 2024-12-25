@@ -503,7 +503,7 @@ extern _LibreOfficeKit* loKitPtr;
 bool isURPEnabled();
 
 /// Start a URP connection, checking if URP is enabled and there is not already an active URP session
-bool startURP(std::shared_ptr<lok::Office> LOKit, void** ppURPContext);
+bool startURP(const std::shared_ptr<lok::Office>& LOKit, void** ppURPContext);
 
 /// Ensure all recorded traces hit the disk
 void flushTraceEventRecordings();
