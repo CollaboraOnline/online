@@ -180,15 +180,15 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
             return false;
         }
 
-        auto userProvidedPwdHash = static_cast<unsigned char*>(alloca(tokens[4].size() / 2));
+        std::vector<unsigned char> userProvidedPwdHash(tokens[4].size() / 2);
         PKCS5_PBKDF2_HMAC(userProvidedPwd.c_str(), -1,
                           saltData.data(), saltData.size(),
                           std::stoi(tokens[2]),
                           EVP_sha512(),
-                          sizeof userProvidedPwdHash, userProvidedPwdHash);
+                          userProvidedPwdHash.size(), userProvidedPwdHash.data());
 
         std::stringstream stream;
-        for (unsigned long j = 0; j < sizeof userProvidedPwdHash; ++j)
+        for (unsigned long j = 0; j < userProvidedPwdHash.size(); ++j)
             stream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(userProvidedPwdHash[j]);
 
         // now compare the hashed user-provided pwd against the stored hash
