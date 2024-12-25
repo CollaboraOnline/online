@@ -3832,7 +3832,7 @@ static int sendURPToLO(void* context, signed char* buffer, int bytesToRead)
     return bytesRead;
 }
 
-bool startURP(std::shared_ptr<lok::Office> LOKit, void** ppURPContext)
+bool startURP(const std::shared_ptr<lok::Office>& LOKit, void** ppURPContext)
 {
     if (!isURPEnabled())
     {
