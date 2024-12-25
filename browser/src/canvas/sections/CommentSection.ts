@@ -1133,6 +1133,17 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.container.classList.add('annotation-active');
 		this.sectionProperties.nodeModifyText.focus();
 		this.sectionProperties.nodeReplyText.focus();
+
+		// set cursor at the last position on refocus after autosave
+		if (this.isModifying() && this.sectionProperties.nodeModifyText.childNodes.length > 0) {
+			var range = document.createRange()
+			var sel = document.getSelection()
+			range.setStartAfter(this.sectionProperties.nodeModifyText.lastChild)
+			range.collapse(true)
+			sel.removeAllRanges()
+			sel.addRange(range)
+		}
+
 	}
 
 	public reply (): Comment {
@@ -1157,6 +1168,10 @@ export class Comment extends CanvasSectionObject {
 	public isEdit (): boolean {
 		return !this.pendingInit && ((this.sectionProperties.nodeModify && this.sectionProperties.nodeModify.style.display !== 'none') ||
 		       (this.sectionProperties.nodeReply && this.sectionProperties.nodeReply.style.display !== 'none'));
+	}
+
+	public isModifying(): boolean {
+		return !this.pendingInit && this.sectionProperties.nodeModify && this.sectionProperties.nodeModify.style.display !== 'none';
 	}
 
 	public static isAnyEdit (): Comment {
