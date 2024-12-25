@@ -1124,6 +1124,8 @@ export class Comment extends CanvasSectionObject {
 			this.removeLastBRTag(this.sectionProperties.nodeModifyText);
 			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.innerText ||
 			    this.sectionProperties.contentText.origHTML !== this.sectionProperties.nodeModifyText.innerHTML) {
+				if(!document.hasFocus())
+					app.definitions.CommentSection.needFocus = this;
 				if (!this.sectionProperties.contentText.uneditedHTML)
 					this.sectionProperties.contentText.uneditedHTML = this.sectionProperties.contentText.origHTML;
 				if (!this.sectionProperties.contentText.uneditedText)
@@ -1148,6 +1150,8 @@ export class Comment extends CanvasSectionObject {
 			return;
 		}
 		if (this.sectionProperties.nodeReplyText.innerText !== '') {
+			if(!document.hasFocus())
+				app.definitions.CommentSection.needFocus = this;
 			if (!this.sectionProperties.contentText.uneditedHTML)
 				this.sectionProperties.contentText.uneditedHTML = this.sectionProperties.contentText.origHTML;
 			if (!this.sectionProperties.contentText.uneditedText)
@@ -1164,8 +1168,8 @@ export class Comment extends CanvasSectionObject {
 
 	public focus (): void {
 		this.sectionProperties.container.classList.add('annotation-active');
-		this.sectionProperties.nodeModifyText.focus();
-		this.sectionProperties.nodeReplyText.focus();
+		this.sectionProperties.nodeModifyText.focus({ focusVisible: true });
+		this.sectionProperties.nodeReplyText.focus({ focusVisible: true });
 
 		// set cursor at the last position on refocus after autosave
 		if (this.isModifying() && this.sectionProperties.nodeModifyText.childNodes.length > 0) {
