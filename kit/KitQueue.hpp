@@ -60,7 +60,7 @@ public:
         Callback(int view, int type, const std::string payload) :
             _view(view), _type(type), _payload(payload) { }
 
-        static std::string toString(int view, int type, const std::string payload);
+        static std::string toString(int view, int type, const std::string& payload);
     };
 
     /// Queue a LibreOfficeKit callback for later emission
