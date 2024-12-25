@@ -173,11 +173,11 @@ class StatusBar extends JSDialog.Toolbar {
 	onShowCommentsChange(e) {
 		var state = e.state;
 		var statemsg;
-		if (state === 'true')
+		if (state === 'true' || state === true)
 			statemsg = _UNO('.uno:ShowAnnotations') +': ' + _('On');
-		else if (state === 'false')
+		else if (state === 'false' || state === false)
 			statemsg = _UNO('.uno:ShowAnnotations') +': ' + _('Off');
-		this.updateHtmlItem('ShowComments', state ? statemsg : ' ');
+		this.updateHtmlItem('ShowComments', statemsg);
 	}
 
 	_generateHtmlItem(id) {

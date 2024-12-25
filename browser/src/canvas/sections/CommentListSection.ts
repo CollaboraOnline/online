@@ -2359,9 +2359,8 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			this.checkSize();
 			this.update();
 		}
-
-		var show = this.map.stateChangeHandler.getItemValue('showannotations');
-		this.setView(show === true || show === 'true');
+		var initalShowAnnotations = commentList.length > 0;
+		app.map.showComments(initalShowAnnotations);
 
 		var showResolved = this.map.stateChangeHandler.getItemValue('ShowResolvedAnnotations');
 		this.setViewResolved(showResolved === true || showResolved === 'true');
