@@ -1442,6 +1442,13 @@ L.Map = L.Evented.extend({
 		}
 
 		app.idleHandler._activate();
+
+		if (app.definitions.CommentSection.needFocus)
+		{
+			app.definitions.CommentSection.needFocus.focus();
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).select(app.needFocus)
+			app.definitions.CommentSection.needFocus = null;
+		}
 	},
 
 	// Event to change the focus to dialog or editor.
