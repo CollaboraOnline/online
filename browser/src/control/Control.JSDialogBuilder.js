@@ -988,7 +988,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				tab.id = Number.isInteger(parseInt(item.id)) ? data.id + '-' + item.id : item.id;
 				tab.textContent = title;
 				tab.setAttribute('role', 'tab');
-				tab.setAttribute('aria-label', title);
+				builder._addAriaLabel(tab, item, builder);
 				builder._setAccessKey(tab, builder._getAccessKeyFromText(item.text));
 				builder._stressAccessKey(tab, tab.accessKey);
 
@@ -1597,6 +1597,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			pushbutton.onclick = builder.callback.bind(builder, 'responsebutton', 'click', { id: pushbutton.id }, builder._responses[pushbutton.id], builder);
 		else
 			pushbutton.onclick = builder.callback.bind(builder, 'pushbutton', data.isToggle ? 'toggle' : 'click', pushbutton, data.command, builder);
+	
+		builder._addAriaLabel(pushbutton, data, builder);
 
 		builder.map.hideRestrictedItems(data, wrapper, pushbutton);
 		builder.map.disableLockedItem(data, wrapper, pushbutton);
@@ -2224,6 +2226,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return '';
 	},
 
+	_addAriaLabel(element, data, builder) {
+		if (data.aria)
+			element.setAttribute('aria-label', data.aria.label);
+		else if(data.text)
+			element.setAttribute('aria-label', builder._cleanText(data.text));
+	},
+
 	// Create a DOM node with an identifiable parent class
 	_createIdentifiable : function(type, classNames, parentContainer, data) {
 		return L.DomUtil.create(
@@ -2308,10 +2317,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			JSDialog.SynchronizeDisabledState(div, [button]);
 
-			if(data.text)
-				button.setAttribute('aria-label', data.text);
-			else if (data.aria)
-				button.setAttribute('aria-label', data.aria.label);
+			builder._addAriaLabel(button, data, builder);
 
 			if (!data.accessKey)
 				builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
