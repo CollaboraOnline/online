@@ -1093,6 +1093,8 @@ export class Comment extends CanvasSectionObject {
 			this.removeBRTag(this.sectionProperties.nodeModifyText);
 			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.textContent ||
 			    this.sectionProperties.contentText.origHTML !== this.sectionProperties.nodeModifyText.innerHTML) {
+if(!document.hasFocus())
+					app.definitions.CommentSection.needFocus = this;
 				if (!this.sectionProperties.contentText.uneditedHTML)
 					this.sectionProperties.contentText.uneditedHTML = this.sectionProperties.contentText.origHTML;
 				if (!this.sectionProperties.contentText.uneditedText)
@@ -1117,6 +1119,8 @@ export class Comment extends CanvasSectionObject {
 			return;
 		}
 		if (this.sectionProperties.nodeReplyText.textContent !== '') {
+			if(!document.hasFocus())
+				app.definitions.CommentSection.needFocus = this;
 			if (!this.sectionProperties.contentText.uneditedHTML)
 				this.sectionProperties.contentText.uneditedHTML = this.sectionProperties.contentText.origHTML;
 			if (!this.sectionProperties.contentText.uneditedText)
@@ -1131,8 +1135,8 @@ export class Comment extends CanvasSectionObject {
 
 	public focus (): void {
 		this.sectionProperties.container.classList.add('annotation-active');
-		this.sectionProperties.nodeModifyText.focus();
-		this.sectionProperties.nodeReplyText.focus();
+		this.sectionProperties.nodeModifyText.focus({ focusVisible: true });
+		this.sectionProperties.nodeReplyText.focus({ focusVisible: true });
 	}
 
 	public reply (): Comment {
