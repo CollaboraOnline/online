@@ -22,10 +22,11 @@
 
 #include "JsonUtil.hpp"
 
-/* static */ std::string KitQueue::Callback::toString(int view, int type, const std::string payload)
+/* static */ std::string KitQueue::Callback::toString(int view, int type,
+                                                      const std::string& payload)
 {
     std::ostringstream str;
-    str << view << " " << lokCallbackTypeToString(type) << " "
+    str << view << ' ' << lokCallbackTypeToString(type) << ' '
         << COOLProtocol::getAbbreviatedMessage(payload);
     return str.str();
 }
