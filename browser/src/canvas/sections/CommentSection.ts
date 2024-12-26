@@ -1350,18 +1350,25 @@ export class Comment extends CanvasSectionObject {
 
 				var cellSize = this.calcCellSize();
 				if (cellSize[0] !== 0 && cellSize[1] !== 0) { // don't draw notes in hidden cells
-					// For calc comments (aka postits) draw the same sort of square as ScOutputData::DrawNoteMarks
-					// does for offline
-					var margin = cellSize[0] * 0.06;
-					var squareDim = 6;
+					// `zoom` represents the current zoom level of the map, retrieved from `this.map.getZoom()`.
+					// `baseSize` is a constant that defines the base size of the square at the initial zoom level.
+					// `squareDim` calculates the dimension of the square, which dynamically adjusts based on the current zoom level.
+					// The dimension increases proportionally to the zoom level by adding `zoom` to `baseSize`.
+					var margin = 1;
+					var baseSize = 2;
+					var zoom = this.map.getZoom();
+					var squareDim = baseSize + zoom;
+
+					const isRTL = this.isCalcRTL();
+
 					// this.size may currently have an artifically wide size if mouseEnter without moveLeave seen
 					// so fetch the real size
-					var x = this.isCalcRTL() ? margin : cellSize[0] - (margin + squareDim);
+					var x = isRTL ? margin : cellSize[0] - squareDim - margin;
 					this.context.fillStyle = '#BF819E';
 					var region = new Path2D();
 					region.moveTo(x, 0);
-					region.lineTo(cellSize[0], 0);
-					region.lineTo(cellSize[0], cellSize[1]/2);
+					region.lineTo(x + squareDim, 0);
+					region.lineTo(x + (isRTL ? 0 : squareDim), squareDim);
 					region.closePath();
 					this.context.fill(region);
 				}
