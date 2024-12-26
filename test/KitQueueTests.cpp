@@ -183,7 +183,7 @@ void KitQueueTests::testViewOrder()
 
     class TestPrioritizer : public TilePrioritizer {
     public:
-        virtual float getTilePriority(const TileDesc &desc) const
+        virtual float getTilePriority(const std::chrono::steady_clock::time_point &, const TileDesc &) const
         {
             // FIXME: implement cursor priority hooks.
             return 0.0;
