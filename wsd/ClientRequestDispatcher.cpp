@@ -1203,7 +1203,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 
     const auto sendResult = [this, socket](CheckStatus result)
     {
-        const auto output = "{\"status\": \"" + JsonUtil::escapeJSONValue(name(result)) + "\"}\n";
+        const auto output = "{\"status\": \"" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
 
         http::Response jsonResponse(http::StatusCode::OK);
         FileServerRequestHandler::hstsHeaders(jsonResponse);
@@ -1212,7 +1212,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         jsonResponse.set("X-Content-Type-Options", "nosniff");
 
         socket->sendAndShutdown(jsonResponse);
-        LOG_INF("Wopi Access Check request, result" << name(result));
+        LOG_INF("Wopi Access Check request, result" << nameShort(result));
     };
 
     if (scheme.empty())
