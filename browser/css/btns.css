@@ -170,6 +170,11 @@ button.has-img {
 	min-width: auto !important;
 }
 
+/* Thesaurus <- button */
+button#left.has-img > img {
+	width: 16px;
+}
+
 /* Calc Auto-Filter buttons coming from core */
 [data-theme='dark'] button#select_current.has-img > img {
 	filter: invert(.9)
