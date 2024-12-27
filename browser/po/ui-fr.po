@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-14 13:17+0100\n"
-"PO-Revision-Date: 2024-12-11 14:15+0000\n"
-"Last-Translator: \"David D.\" <david.ducassou@free.fr>\n"
+"PO-Revision-Date: 2024-12-27 20:19+0000\n"
+"Last-Translator: Zefut <zefut.pro@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -749,15 +749,15 @@ msgstr "Téléchargement échoué"
 
 #: src/control/Control.ESignature.ts:126
 msgid "Andorra"
-msgstr ""
+msgstr "Andorre"
 
 #: src/control/Control.ESignature.ts:127
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Émirats arabes unis"
 
 #: src/control/Control.ESignature.ts:128
 msgid "Albania"
-msgstr ""
+msgstr "Albanie"
 
 #: src/control/Control.ESignature.ts:129
 msgid "Armenia"
@@ -1049,16 +1049,17 @@ msgstr ""
 
 #: src/control/Control.ESignatureDialog.ts:49
 msgid "Country:"
-msgstr ""
+msgstr "Pays :"
 
 #: src/control/Control.ESignatureDialog.ts:78
+#, fuzzy
 msgid "Provider:"
-msgstr ""
+msgstr "Fournisseur :"
 
 #: src/control/Control.ESignatureDialog.ts:127
 #: src/control/Control.ESignatureDialog.ts:128
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Insérer une signature électronique"
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -1086,7 +1087,7 @@ msgstr ""
 
 #: src/control/Control.JSDialog.js:275
 msgid "Close dialog"
-msgstr ""
+msgstr "Fermer la discussion"
 
 #: src/control/Control.JSDialogBuilder.js:496
 msgid "Solid"
@@ -2233,13 +2234,12 @@ msgid "Integrator is not ready for PostMessage calls"
 msgstr "L’intégrateur n’est pas prêt pour les appels PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:94
-#, fuzzy
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
-"Votre serveur est configuré avec des resources de hardware insuffisants, ce "
-"qui peut résulter dans une mauvaise performance"
+"Votre serveur est configuré avec des ressources matérielles insuffisantes, "
+"ce qui peut entraîner de faibles performances."
 
 #: src/control/Control.ServerAuditDialog.ts:100
 msgid "Hardware resources are sufficient for optimal performance"
@@ -2620,7 +2620,7 @@ msgstr ""
 
 #: src/control/Parts.js:493
 msgid "Show sheets"
-msgstr ""
+msgstr "Afficher les feuilles"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
@@ -2815,7 +2815,7 @@ msgstr "Lecture seule"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:53
 msgid "Edit mode"
-msgstr ""
+msgstr "Mode édition"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:72
 #: src/control/jsdialog/Widget.HTMLContent.ts:118
@@ -3657,7 +3657,7 @@ msgstr "Pas de notes"
 
 #: src/slideshow/PresenterConsole.js:1287
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "Répéter dans {0} secondes"
 
 #: src/slideshow/PresenterConsole.js:1292
 #: src/slideshow/SlideShowPresenter.ts:365
