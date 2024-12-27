@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-14 13:17+0100\n"
-"PO-Revision-Date: 2024-12-18 14:36+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2024-12-20 08:38+0000\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -744,316 +744,316 @@ msgstr "Falló la descarga"
 
 #: src/control/Control.ESignature.ts:126
 msgid "Andorra"
-msgstr ""
+msgstr "Andorra"
 
 #: src/control/Control.ESignature.ts:127
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Emiratos Árabes Unidos"
 
 #: src/control/Control.ESignature.ts:128
 msgid "Albania"
-msgstr ""
+msgstr "Albania"
 
 #: src/control/Control.ESignature.ts:129
 msgid "Armenia"
-msgstr ""
+msgstr "Armenia"
 
 #: src/control/Control.ESignature.ts:130
 msgid "Argentina"
-msgstr ""
+msgstr "Argentina"
 
 #: src/control/Control.ESignature.ts:131
 msgid "Austria"
-msgstr ""
+msgstr "Austria"
 
 #: src/control/Control.ESignature.ts:132
 msgid "Australia"
-msgstr ""
+msgstr "Australia"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Åland Islands"
-msgstr ""
+msgstr "Islas Aland"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbaiyán"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnia y Herzegovina"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Belgium"
-msgstr ""
+msgstr "Bélgica"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulgaria"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Brazil"
-msgstr ""
+msgstr "Brasil"
 
 #: src/control/Control.ESignature.ts:139
 msgid "Belarus"
-msgstr ""
+msgstr "Bielorrusia"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Canada"
-msgstr ""
+msgstr "Canadá"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Switzerland"
-msgstr ""
+msgstr "Suiza"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Chile"
-msgstr ""
+msgstr "Chile"
 
 #: src/control/Control.ESignature.ts:143
 msgid "China"
-msgstr ""
+msgstr "China"
 
 #: src/control/Control.ESignature.ts:144
 msgid "Cyprus"
-msgstr ""
+msgstr "Chipre"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Czech Republic"
-msgstr ""
+msgstr "República Checa"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Germany"
-msgstr ""
+msgstr "Alemania"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Denmark"
-msgstr ""
+msgstr "Dinamarca"
 
 #: src/control/Control.ESignature.ts:148
 msgid "Estonia"
-msgstr ""
+msgstr "Estonia"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Spain"
-msgstr ""
+msgstr "España"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Finland"
-msgstr ""
+msgstr "Finlandia"
 
 #: src/control/Control.ESignature.ts:151
 msgid "France"
-msgstr ""
+msgstr "Francia"
 
 #: src/control/Control.ESignature.ts:152
 msgid "United Kingdom"
-msgstr ""
+msgstr "Reino unido"
 
 #: src/control/Control.ESignature.ts:153
 msgid "Georgia"
-msgstr ""
+msgstr "Georgia"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Guernsey"
-msgstr ""
+msgstr "Guernsey"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Greece"
-msgstr ""
+msgstr "Grecia"
 
 #: src/control/Control.ESignature.ts:156
 msgid "Croatia"
-msgstr ""
+msgstr "Croacia"
 
 #: src/control/Control.ESignature.ts:157
 msgid "Hungary"
-msgstr ""
+msgstr "Hungría"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Indonesia"
-msgstr ""
+msgstr "Indonesia"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Ireland"
-msgstr ""
+msgstr "Irlanda"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Israel"
-msgstr ""
+msgstr "Israel"
 
 #: src/control/Control.ESignature.ts:161
 msgid "India"
-msgstr ""
+msgstr "India"
 
 #: src/control/Control.ESignature.ts:162
 msgid "Iceland"
-msgstr ""
+msgstr "Islandia"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Italy"
-msgstr ""
+msgstr "Italia"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Japan"
-msgstr ""
+msgstr "Japón"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Kenya"
-msgstr ""
+msgstr "Kenia"
 
 #: src/control/Control.ESignature.ts:166
 msgid "South Korea"
-msgstr ""
+msgstr "Corea del Sur"
 
 #: src/control/Control.ESignature.ts:167
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Kazajstán"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Liechtenstein"
 
 #: src/control/Control.ESignature.ts:169
 msgid "Lithuania"
-msgstr ""
+msgstr "Lituania"
 
 #: src/control/Control.ESignature.ts:170
 msgid "Luxembourg"
-msgstr ""
+msgstr "Luxemburgo"
 
 #: src/control/Control.ESignature.ts:171
 msgid "Latvia"
-msgstr ""
+msgstr "Letonia"
 
 #: src/control/Control.ESignature.ts:172
 msgid "Monaco"
-msgstr ""
+msgstr "Mónaco"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "República de Moldavia"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Montenegro"
-msgstr ""
+msgstr "Montenegro"
 
 #: src/control/Control.ESignature.ts:175
 msgid "North Macedonia, Republic of"
-msgstr ""
+msgstr "Macedonia del Norte, República de"
 
 #: src/control/Control.ESignature.ts:176
 msgid "Malta"
-msgstr ""
+msgstr "Malta"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Mexico"
-msgstr ""
+msgstr "México"
 
 #: src/control/Control.ESignature.ts:178
 msgid "Netherlands"
-msgstr ""
+msgstr "Países Bajos"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Norway"
-msgstr ""
+msgstr "Noruega"
 
 #: src/control/Control.ESignature.ts:180
 msgid "New Zealand"
-msgstr ""
+msgstr "Nueva Zelanda"
 
 #: src/control/Control.ESignature.ts:181
 msgid "Philippines"
-msgstr ""
+msgstr "Filipinas"
 
 #: src/control/Control.ESignature.ts:182
 msgid "Poland"
-msgstr ""
+msgstr "Polonia"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Portugal"
-msgstr ""
+msgstr "Portugal"
 
 #: src/control/Control.ESignature.ts:184
 msgid "Qatar"
-msgstr ""
+msgstr "Katar"
 
 #: src/control/Control.ESignature.ts:185
 msgid "Romania"
-msgstr ""
+msgstr "Rumania"
 
 #: src/control/Control.ESignature.ts:186
 msgid "Serbia"
-msgstr ""
+msgstr "Serbia"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Russian Federation"
-msgstr ""
+msgstr "Federación Rusa"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Arabia Saudita"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Sweden"
-msgstr ""
+msgstr "Suecia"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Singapore"
-msgstr ""
+msgstr "Singapur"
 
 #: src/control/Control.ESignature.ts:191
 msgid "Slovenia"
-msgstr ""
+msgstr "Eslovenia"
 
 #: src/control/Control.ESignature.ts:192
 msgid "Slovakia"
-msgstr ""
+msgstr "Eslovaquia"
 
 #: src/control/Control.ESignature.ts:193
 msgid "San Marino"
-msgstr ""
+msgstr "San Marino"
 
 #: src/control/Control.ESignature.ts:194
 msgid "Turkey"
-msgstr ""
+msgstr "Turquía"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Taiwán"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Ukraine"
-msgstr ""
+msgstr "Ucrania"
 
 #: src/control/Control.ESignature.ts:197
 msgid "United States of America"
-msgstr ""
+msgstr "Estados Unidos de América"
 
 #: src/control/Control.ESignature.ts:198
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Ciudad del Vaticano"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovo"
 
 #: src/control/Control.ESignature.ts:200
 msgid "South Africa"
-msgstr ""
+msgstr "Sudáfrica"
 
 #: src/control/Control.ESignatureDialog.ts:49
 msgid "Country:"
-msgstr ""
+msgstr "País:"
 
 #: src/control/Control.ESignatureDialog.ts:78
 msgid "Provider:"
-msgstr ""
+msgstr "Proveedor:"
 
 #: src/control/Control.ESignatureDialog.ts:127
 #: src/control/Control.ESignatureDialog.ts:128
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Insertar firma electrónica"
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -2611,7 +2611,7 @@ msgstr ""
 
 #: src/control/Parts.js:493
 msgid "Show sheets"
-msgstr ""
+msgstr "Mostrar hojas"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
@@ -3640,7 +3640,7 @@ msgstr "Sin notas"
 
 #: src/slideshow/PresenterConsole.js:1287
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "Repetir en {0} segundos"
 
 #: src/slideshow/PresenterConsole.js:1292
 #: src/slideshow/SlideShowPresenter.ts:365
