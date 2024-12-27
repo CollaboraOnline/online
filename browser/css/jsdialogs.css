@@ -605,6 +605,7 @@ input[type='checkbox'].autofilter, .jsdialog input[type='checkbox'] {
 	appearance: none;
 	width: 20px;
 	height: 20px;
+	vertical-align: middle;
 	background: url('images/lc_checkboxoff.svg') no-repeat center;
 	margin: 1px 8px;
 }
