@@ -643,6 +643,15 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
+	_setAnchor: function(name, section, value) {
+		if (!section) {
+			console.debug('_setAnchor: no section found: "' + name + '"');
+			return;
+		}
+
+		section.anchor = value;
+	},
+
 	_adjustCanvasSectionsForLayoutChange: function () {
 		var sheetIsRTL = app.calc.isRTL();
 		if (sheetIsRTL && this._layoutIsRTL !== true) {
@@ -658,26 +667,26 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			var cornerGroupSection = sectionContainer.getSectionWithName(L.CSections.CornerGroup.name);
 			// Scroll section covers the entire document area, and needs RTL adjustments internally.
 
-			if (cornerGroupSection) {
-				cornerGroupSection.anchor = ['top', 'right'];
-			}
+			this._setAnchor('cornerGroupSection', cornerGroupSection, ['top', 'right']);
 
-			if (rowGroupSection) {
-				rowGroupSection.anchor = [[L.CSections.CornerGroup.name, 'bottom', 'top'], 'right'];
-			}
+			this._setAnchor('rowGroupSection', rowGroupSection,
+				[[L.CSections.CornerGroup.name, 'bottom', 'top'], 'right']);
 
-			if (columnGroupSection) {
-				columnGroupSection.anchor = ['top', [L.CSections.CornerGroup.name, '-left', 'right']];
-			}
+			this._setAnchor('columnGroupSection', columnGroupSection,
+				['top', [L.CSections.CornerGroup.name, '-left', 'right']]);
 
-			cornerHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, '-left', 'right']];
+			this._setAnchor('cornerHeaderSection', cornerHeaderSection,
+				[[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, '-left', 'right']]);
 
-			rowHeaderSection.anchor = [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, '-left', 'right']];
+			this._setAnchor('rowHeaderSection', rowHeaderSection,
+				[[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, '-left', 'right']]);
 
-			columnHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, '-left', 'right']];
-			columnHeaderSection.expand = ['left'];
+			this._setAnchor('columnHeaderSection', columnHeaderSection,
+				[[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, '-left', 'right']]);
+			if (columnHeaderSection) columnHeaderSection.expand = ['left'];
 
-			tilesSection.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, '-left', 'right']];
+			this._setAnchor('tilesSection', tilesSection,
+				[[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, '-left', 'right']]);
 
 			this._layoutIsRTL = true;
 
@@ -1140,7 +1149,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		if (contained)
 			return new L.LatLng(0, 0); // No scroll needed.
 
-		var noSplit = this._splitPanesContext.getSplitPos().equals(new L.Point(0, 0));
+		var noSplit = !this._splitPanesContext || this._splitPanesContext.getSplitPos().equals(new L.Point(0, 0));
 
 		// No split panes. Check if target cell is bigger than screen but partially visible.
 		if (noSplit && app.calc.cellCursorRectangle.intersectsRectangle(paneRectangles[0].toArray())) {
