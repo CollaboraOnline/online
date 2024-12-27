@@ -1108,10 +1108,8 @@ STATE_ENUM(CheckStatus,
     NotHttpSuccess,
     HostNotFound,
     WopiHostNotAllowed,
-    HostUnReachable,
     UnspecifiedError,
     ConnectionAborted,
-    ConnectionRefused,
     CertificateValidation,
     SSLHandshakeFail,
     MissingSsl,
@@ -1289,14 +1287,16 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
     {
         LOG_TRC("finishHandler ");
 
-        CheckStatus status = CheckStatus::Ok;
         const auto lastErrno = errno;
 
-        const auto httpResponse = probeSession->response();
-        const auto responseState = httpResponse->state();
+        const std::shared_ptr<http::Response> httpResponse = probeSession->response();
+        const http::Response::State responseState = httpResponse->state();
+        const http::StatusCode statusCode = httpResponse->statusCode();
         LOG_DBG("Wopi Access Check: got response state: " << responseState << " "
-                                            << ", response status code: " <<httpResponse->statusCode() << " "
+                                            << ", response status code: " << statusCode << " "
                                             << ", last errno: " << lastErrno);
+
+        CheckStatus status = statusCode == http::StatusCode::OK ? CheckStatus::Ok: CheckStatus::NotHttpSuccess;
 
         if (responseState != http::Response::State::Complete)
         {
