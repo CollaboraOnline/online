@@ -272,6 +272,13 @@ public:
 
     int  getCanonicalViewId() const { return _canonicalViewId; }
 
+    bool getSentBrowserSetting() const { return _sentBrowserSetting; }
+
+    void setSentBrowserSetting(const bool sentBrowserSetting)
+    {
+        _sentBrowserSetting = sentBrowserSetting;
+    }
+
 private:
     std::shared_ptr<ClientSession> client_from_this()
     {
@@ -429,6 +436,9 @@ private:
 
     /// If server audit was already sent
     bool _sentAudit;
+
+    /// If browser setting was already sent
+    bool _sentBrowserSetting;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

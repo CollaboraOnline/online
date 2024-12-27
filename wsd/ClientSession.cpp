@@ -93,7 +93,8 @@ ClientSession::ClientSession(
     _isTextDocument(false),
     _thumbnailSession(false),
     _canonicalViewId(0),
-    _sentAudit(false)
+    _sentAudit(false),
+    _sentBrowserSetting(false)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
