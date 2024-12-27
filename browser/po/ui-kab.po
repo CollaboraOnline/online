@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-14 13:17+0100\n"
-"PO-Revision-Date: 2024-11-23 10:40+0000\n"
+"PO-Revision-Date: 2024-12-27 06:17+0000\n"
 "Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
-"Language: \n"
+"Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:15
@@ -25,7 +25,7 @@ msgstr ""
 
 #: admin/admin.strings.js:16
 msgid "Settings"
-msgstr "Iγewwaṛen"
+msgstr "Iɣewwaṛen"
 
 #: admin/admin.strings.js:17
 msgid "Overview"
@@ -257,7 +257,7 @@ msgstr "Turagt"
 #: src/control/Control.Menubar.js:1248
 #: src/control/Control.NotebookbarWriter.js:476
 msgid "About"
-msgstr "Awal ɣef..."
+msgstr "Ɣef"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
@@ -269,7 +269,7 @@ msgstr ""
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Takatut"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
@@ -506,12 +506,12 @@ msgstr "Sfeɛj"
 
 #: src/canvas/sections/CommentListSection.ts:1450
 msgid "Update"
-msgstr ""
+msgstr "Leqqem"
 
 #: src/canvas/sections/CommentListSection.ts:1521
 #: src/canvas/sections/CommentListSection.ts:1593
 msgid "Autosaved"
-msgstr ""
+msgstr "Asekles awurman"
 
 #: src/canvas/sections/CommentListSection.ts:2323
 msgid "Another user has updated comments. Would you like to proceed updating?"
@@ -678,7 +678,7 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:169
 msgid "Redo"
-msgstr ""
+msgstr "Err-d"
 
 #: src/control/Control.DocumentRepair.js:170
 msgid "Undo"
@@ -739,23 +739,23 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:128
 msgid "Albania"
-msgstr ""
+msgstr "Albanya"
 
 #: src/control/Control.ESignature.ts:129
 msgid "Armenia"
-msgstr ""
+msgstr "Arminya"
 
 #: src/control/Control.ESignature.ts:130
 msgid "Argentina"
-msgstr ""
+msgstr "Tarjentint"
 
 #: src/control/Control.ESignature.ts:131
 msgid "Austria"
-msgstr ""
+msgstr "Tutrict"
 
 #: src/control/Control.ESignature.ts:132
 msgid "Australia"
-msgstr ""
+msgstr "Usṭralya"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Åland Islands"
@@ -771,15 +771,15 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:136
 msgid "Belgium"
-msgstr ""
+msgstr "Biljik"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulgarya"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Brazil"
-msgstr ""
+msgstr "Brazil"
 
 #: src/control/Control.ESignature.ts:139
 msgid "Belarus"
@@ -787,15 +787,15 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:140
 msgid "Canada"
-msgstr ""
+msgstr "Kanada"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Switzerland"
-msgstr ""
+msgstr "Sswis"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Chile"
-msgstr ""
+msgstr "Cili"
 
 #: src/control/Control.ESignature.ts:143
 msgid "China"
@@ -803,7 +803,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:144
 msgid "Cyprus"
-msgstr ""
+msgstr "Qubrus"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Czech Republic"
@@ -811,27 +811,27 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:146
 msgid "Germany"
-msgstr ""
+msgstr "Lalman"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Denmark"
-msgstr ""
+msgstr "Danmark"
 
 #: src/control/Control.ESignature.ts:148
 msgid "Estonia"
-msgstr ""
+msgstr "Istunya"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Spain"
-msgstr ""
+msgstr "Spanya"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Finland"
-msgstr ""
+msgstr "Finland"
 
 #: src/control/Control.ESignature.ts:151
 msgid "France"
-msgstr ""
+msgstr "Fransa"
 
 #: src/control/Control.ESignature.ts:152
 msgid "United Kingdom"
@@ -839,7 +839,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:153
 msgid "Georgia"
-msgstr ""
+msgstr "Jurjya"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Guernsey"
@@ -847,23 +847,23 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:155
 msgid "Greece"
-msgstr ""
+msgstr "Legrig"
 
 #: src/control/Control.ESignature.ts:156
 msgid "Croatia"
-msgstr ""
+msgstr "Kruwatya"
 
 #: src/control/Control.ESignature.ts:157
 msgid "Hungary"
-msgstr ""
+msgstr "Hungri"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Indonesia"
-msgstr ""
+msgstr "Indunisya"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Ireland"
-msgstr ""
+msgstr "Irland"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Israel"
@@ -871,23 +871,23 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:161
 msgid "India"
-msgstr ""
+msgstr "Lhend"
 
 #: src/control/Control.ESignature.ts:162
 msgid "Iceland"
-msgstr ""
+msgstr "Island"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Italy"
-msgstr ""
+msgstr "Ṭelyan"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Japan"
-msgstr ""
+msgstr "Japun"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Kenya"
-msgstr ""
+msgstr "Kinya"
 
 #: src/control/Control.ESignature.ts:166
 msgid "South Korea"
@@ -895,19 +895,19 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:167
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Kazaxistan"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Lictencṭayn"
 
 #: src/control/Control.ESignature.ts:169
 msgid "Lithuania"
-msgstr ""
+msgstr "Litwanya"
 
 #: src/control/Control.ESignature.ts:170
 msgid "Luxembourg"
-msgstr ""
+msgstr "Luksumburg"
 
 #: src/control/Control.ESignature.ts:171
 msgid "Latvia"
@@ -915,7 +915,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:172
 msgid "Monaco"
-msgstr ""
+msgstr "Munaku"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Moldova, Republic of"
@@ -923,7 +923,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:174
 msgid "Montenegro"
-msgstr ""
+msgstr "Muntinigru"
 
 #: src/control/Control.ESignature.ts:175
 msgid "North Macedonia, Republic of"
@@ -931,11 +931,11 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:176
 msgid "Malta"
-msgstr ""
+msgstr "Malṭa"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Mexico"
-msgstr ""
+msgstr "Meksik"
 
 #: src/control/Control.ESignature.ts:178
 msgid "Netherlands"
@@ -943,7 +943,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:179
 msgid "Norway"
-msgstr ""
+msgstr "Nurvij"
 
 #: src/control/Control.ESignature.ts:180
 msgid "New Zealand"
@@ -951,23 +951,23 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:181
 msgid "Philippines"
-msgstr ""
+msgstr "Filippin"
 
 #: src/control/Control.ESignature.ts:182
 msgid "Poland"
-msgstr ""
+msgstr "Pulunya"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Portugal"
-msgstr ""
+msgstr "Purtugal"
 
 #: src/control/Control.ESignature.ts:184
 msgid "Qatar"
-msgstr ""
+msgstr "Qaṭar"
 
 #: src/control/Control.ESignature.ts:185
 msgid "Romania"
-msgstr ""
+msgstr "Rumanya"
 
 #: src/control/Control.ESignature.ts:186
 msgid "Serbia"
@@ -983,19 +983,19 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:189
 msgid "Sweden"
-msgstr ""
+msgstr "Sswid"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Singapore"
-msgstr ""
+msgstr "Singapur"
 
 #: src/control/Control.ESignature.ts:191
 msgid "Slovenia"
-msgstr ""
+msgstr "Sluvinya"
 
 #: src/control/Control.ESignature.ts:192
 msgid "Slovakia"
-msgstr ""
+msgstr "Sluvakya"
 
 #: src/control/Control.ESignature.ts:193
 msgid "San Marino"
@@ -1003,7 +1003,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:194
 msgid "Turkey"
-msgstr ""
+msgstr "Ṭurk"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Taiwan, Province of China"
@@ -1011,7 +1011,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:196
 msgid "Ukraine"
-msgstr ""
+msgstr "Ukrayin"
 
 #: src/control/Control.ESignature.ts:197
 msgid "United States of America"
@@ -1023,7 +1023,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:199
 msgid "Kosovo"
-msgstr ""
+msgstr "Kusuvu"
 
 #: src/control/Control.ESignature.ts:200
 msgid "South Africa"
@@ -1031,11 +1031,11 @@ msgstr ""
 
 #: src/control/Control.ESignatureDialog.ts:49
 msgid "Country:"
-msgstr ""
+msgstr "Tamurt:"
 
 #: src/control/Control.ESignatureDialog.ts:78
 msgid "Provider:"
-msgstr ""
+msgstr "Asaǧǧaw:"
 
 #: src/control/Control.ESignatureDialog.ts:127
 #: src/control/Control.ESignatureDialog.ts:128
@@ -1940,7 +1940,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:321
 #: src/control/Control.NotebookbarWriter.js:322
 msgid "Signature"
-msgstr ""
+msgstr "Azmul"
 
 #: src/control/Control.NotebookbarCalc.js:268
 #: src/control/Control.NotebookbarDraw.js:320
@@ -2081,7 +2081,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1335
 msgid "Sparkline"
-msgstr ""
+msgstr "Sparkline"
 
 #: src/control/Control.NotebookbarCalc.js:1469
 #: src/control/Control.NotebookbarCalc.js:2361
@@ -2179,7 +2179,7 @@ msgstr "Senṭeḍ"
 
 #: src/control/Control.SaveState.ts:37
 msgid "Saving"
-msgstr ""
+msgstr "Asekles"
 
 #: src/control/Control.SaveState.ts:52
 #, fuzzy
@@ -2239,9 +2239,8 @@ msgid "No issues found"
 msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:211
-#, fuzzy
 msgid "Status"
-msgstr "Addad:"
+msgstr "Addad"
 
 #: src/control/Control.ServerAuditDialog.ts:259
 msgid "Check security warnings of your server"
@@ -2450,7 +2449,7 @@ msgstr ""
 
 #: src/control/Control.UserList.ts:493
 msgid "Following"
-msgstr ""
+msgstr "Teṭṭafareḍ"
 
 #: src/control/Control.UserList.ts:550
 msgid "Always follow the editor"
@@ -3022,7 +3021,7 @@ msgstr ""
 
 #: src/docstate.js:99
 msgid "Standard"
-msgstr ""
+msgstr "Aslugan"
 
 #: src/docstate.js:112
 msgid "Theme colors"
@@ -3388,9 +3387,8 @@ msgid ""
 msgstr ""
 
 #: src/map/handler/Map.FileInserter.js:156
-#, fuzzy
 msgid "Uploading..."
-msgstr "Yettali-d"
+msgstr "Yessalay..."
 
 #: src/map/handler/Map.FileInserter.js:179
 msgid "Uploading file to server failed with status: {0}"
@@ -3510,11 +3508,11 @@ msgstr ""
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Seṛǧu"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Ales asekker"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
