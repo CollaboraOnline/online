@@ -184,6 +184,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	container.id = data.id;
 
 	var content = L.DomUtil.create('input', 'ui-combobox-content ' + builder.options.cssClass, container);
+	content.id = data.id + '-input';
 	content.value = data.text;
 	content.role = 'combobox';
 
