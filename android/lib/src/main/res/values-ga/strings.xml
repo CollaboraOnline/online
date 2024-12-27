@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="failed_to_load_file">Theip ar chinneadh an chomhaid le luchtú</string>
+    <string name="convert_odf_message">Seans go bhfuil formáidiú nó ábhar sa doiciméad seo nach féidir a shábháil san fhormáid comhaid atá roghnaithe faoi láthair \text</string>
+    <string name="temp_file_saving_disabled">Tá an comhad seo inléite amháin, díchumasaítear sábháil.</string>
+    <string name="file_chromeos_read_only">Ní féidir an comhad seo a shábháil sa suíomh seo, é a oscailt inléite amháin. Bog go dtí na Comhaid Súgartha é chun rochtain iomlán léite/scríofa a fháil.</string>
+    <string name="storage_permission_required">Tá cead stórála ag teastáil</string>
+    <string name="failed_to_insert_image">Theip ar an íomhá a chur isteach</string>
+    <string name="cannot_open_file_chooser">Ní féidir roghnóir comhaid a oscailt</string>
+    <string name="preparing_for_the_first_start_after_an_update">Ag ullmhú don chéad tosaithe tar éis nuashonrú.</string>
+    <string name="rate_now">Ráta anois</string>
+    <string name="later">Níos déanaí</string>
+    <string name="rate_our_app_title">Go raibh maith agat as %1$s a úsáid!</string>
+    <string name="rate_our_app_text">Más maith leat é, tabhair 5 réalta dúinn in Google Play. Is iad do chuid athbhreithnithe maithe ár spreagadh is fearr.</string>
+    <string name="loading">Á lódáil...</string>
+    <string name="exiting">Ag éirí as...</string>
+    <string name="restarting">Á atosú...</string>
+    <string name="cant_open_the_document">Níorbh fhéidir an doiciméad a oscailt</string>
+    <string name="view_only">Amharc amháin</string>
+    <string name="edit_copy">Cuir cóip in eagar</string>
+    <string name="ask_for_copy">Tá an doiciméad seo inléite amháin. Ar mhaith leat cóip a dhéanamh le haghaidh eagarthóireacht?</string>
+    <string name="use_text">Úsáid Formáid Téacs</string>
+    <string name="use_odf">Úsáid ODF Formáid</string>
+    <string name="ask_for_convert_odf">Deimhnigh Formáid Comhaid</string>
+</resources>
