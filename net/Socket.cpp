@@ -1468,24 +1468,26 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
     if (!isIPType())
         return false;
 
-    // Forced removal on outside-facing IPv[46] network connections only
+    // Forced removal on outside-facing IPv{4,6} network connections only.
     const auto durLast =
         std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
-    /// Timeout criteria: Violate maximum inactivity (default 3600s)
+
+    // Timeout criteria: Violate maximum inactivity (default 3600s).
     const bool isInactive = net::Defaults.inactivityTimeout > std::chrono::microseconds::zero() &&
         durLast > net::Defaults.inactivityTimeout;
-    /// Timeout criteria: Shall terminate?
+
+    // Timeout criteria: Shall terminate?
     const bool isTermination = SigUtil::getTerminationFlag();
-    if (isInactive || isTermination )
+    if (isInactive || isTermination)
     {
-        LOG_WRN("CheckRemoval: Timeout: {Inactive " << isInactive
-                << ", Termination " << isTermination << "}, "
-                << getStatsString(now) << ", "
-                << *this);
+        LOG_WRN("CheckRemoval: Timeout: {Inactive " << isInactive << ", Termination "
+                                                    << isTermination << "}, " << getStatsString(now)
+                                                    << ", " << *this);
         if (_socketHandler)
         {
             _socketHandler->onDisconnect();
-            if (!isClosed()) {
+            if (!isClosed())
+            {
                 // Note: Ensure proper semantics of onDisconnect()
                 LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
                 shutdown(); // signal
@@ -1497,9 +1499,11 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
             shutdown(); // signal
             closeConnection(); // real -> setClosed()
         }
+
         assert(isClosed()); // should have issued shutdown
         return true;
     }
+
     return false;
 }
 
