@@ -139,7 +139,7 @@ public:
     static std::atomic<bool> InhibitThreadChecks;
 
     enum class Type : uint8_t { IPv4, IPv6, All, Unix };
-    static std::string toString(Type t);
+    static constexpr std::string_view toString(Type t);
 
     // NB. see other Socket::Socket by init below.
     Socket(Type type,

@@ -76,7 +76,7 @@ net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
-std::string Socket::toString(Type t)
+constexpr std::string_view Socket::toString(Type t)
 {
     switch (t)
     {
@@ -89,6 +89,7 @@ std::string Socket::toString(Type t)
         case Type::Unix:
             return "Unix";
     }
+
     return "Unknown";
 }
 
