@@ -149,18 +149,9 @@ std::string Socket::getStatsString(const std::chrono::steady_clock::time_point &
 
 std::ostream& Socket::streamImpl(std::ostream& os) const
 {
-    os << "Socket[#" << getFD()
-       << ", " << toString(type())
-       << " @ ";
-    if (Type::IPv6 == type())
-    {
-        os << "[" << clientAddress() << "]:" << clientPort();
-    }
-    else
-    {
-        os << clientAddress() << ":" << clientPort();
-    }
-    return os << "]";
+    os << "Socket[#" << getFD() << ", " << toString(type()) << " @ " << clientAddress() << ":"
+       << clientPort() << ']';
+    return os;
 }
 
 std::string Socket::toStringImpl() const
