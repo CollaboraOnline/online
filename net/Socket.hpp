@@ -454,7 +454,8 @@ private:
         _noShutdown = false;
         _sendBufferSize = DefaultSendBufferSize;
         _owner = std::this_thread::get_id();
-        LOG_TRC("Created socket. Thread affinity set to " << Log::to_string(_owner) << ", " << toStringImpl());
+        LOG_DBG("Created socket. Thread affinity set to " << Log::to_string(_owner) << ", "
+                                                          << toStringImpl());
 
         if constexpr (!Util::isMobileApp())
         {

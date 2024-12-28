@@ -1234,6 +1234,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
         ::close(rc);
         return nullptr;
     }
+
     try
     {
         // Create a socket object using the factory.
