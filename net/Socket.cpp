@@ -1170,12 +1170,14 @@ bool ServerSocket::isUnrecoverableAcceptError(const int cause)
         case ENOMEM:
         case ENOBUFS:
         {
-            LOG_DBG(messagePrefix << std::to_string(cause) << ", " << std::strerror(cause) << ')');
+            LOG_DBG(messagePrefix << Util::symbolicErrno(cause) << ", " << std::strerror(cause)
+                                  << ')');
             return false;
         }
         default:
         {
-            LOG_FTL(messagePrefix << std::to_string(cause) << ", " << std::strerror(cause) << ')');
+            LOG_FTL(messagePrefix << Util::symbolicErrno(cause) << ", " << std::strerror(cause)
+                                  << ')');
             return true;
         }
     }
