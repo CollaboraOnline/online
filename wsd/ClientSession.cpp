@@ -682,6 +682,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         LOG_TRC("UNO remote protocol message (from client): " << firstLine);
         return forwardToChild(std::string(buffer, length), docBroker);
     }
+
     if (tokens.equals(0, "coolclient"))
     {
         if (tokens.size() < 2)
@@ -1130,6 +1131,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 // Child will handle this case
             }
         }
+
         return forwardToChild(firstLine, docBroker);
     }
     else if (tokens.equals(0, "formfieldevent") ||
@@ -1310,7 +1312,17 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 #endif
 
         if (tokens.equals(0, "key"))
+        {
             _keyEvents++;
+
+            // Suppress Ctrl+q, which exits Core immediately.
+            // key type=input char=0 key=8720
+            if (tokens.size() == 4 && tokens.equals(2, "char=0") && tokens.equals(3, "key=8720"))
+            {
+                LOG_DBG("Suppressing Ctrl+q");
+                return true;
+            }
+        }
 
         if (isEditable() && COOLProtocol::tokenIndicatesDocumentModification(tokens))
         {
