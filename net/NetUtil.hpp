@@ -35,7 +35,8 @@ public:
     /// StreamSocket inactivity timeout in us (3600s default). Zero disables instrument.
     std::chrono::microseconds inactivityTimeout;
 
-    /// Maximum number of concurrent external TCP connections. Zero disables instrument.
+    /// Maximum number of concurrent external TCP connections. Zero disables instrument,
+    /// limiting the maximum number of connections by the available sockets to the system.
     size_t maxExtConnections;
 };
 extern DefaultValues Defaults;
