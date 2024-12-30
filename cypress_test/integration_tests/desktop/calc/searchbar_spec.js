@@ -10,11 +10,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 	});
 
 	it('Search existing word.', function() {
+		cy.wait(3000);
+
+		cy.cGet(helper.addressInputSelector).should('have.value', 'A2');
+
 		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 
 		searchHelper.searchNext();
-		cy.wait(1000);
 
 		// First cell should be selected
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
@@ -32,6 +35,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 	});
 
 	it('Search next / prev instance.', function() {
+		cy.cGet(helper.addressInputSelector).should('have.value', 'A2');
+
 		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 		searchHelper.searchNext();
@@ -48,9 +53,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search prev instance
-		cy.wait(2000);
 		searchHelper.searchPrev();
-		cy.wait(2000);
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 		helper.copy();
@@ -58,6 +61,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 	});
 
 	it('Search wrap at document end', function() {
+		cy.cGet(helper.addressInputSelector).should('have.value', 'A2');
+
 		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 
@@ -76,7 +81,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 
 		// Search next instance, which is in the beginning of the document.
 		searchHelper.searchNext();
-		cy.wait(500);
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 		helper.copy();
@@ -84,6 +88,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 	});
 
 	it('Cancel search.', function() {
+		cy.cGet(helper.addressInputSelector).should('have.value', 'A2');
+
 		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('a');
 
