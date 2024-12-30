@@ -232,10 +232,11 @@ L.Control.JSDialog = L.Control.extend({
 	createContainer: function(instance, parentContainer) {
 		// it has to be form to handle default button
 		instance.container = L.DomUtil.create('div', 'jsdialog-window', parentContainer);
-		instance.container.setAttribute('role', 'dialog');
 		instance.container.id = instance.id;
 
 		instance.form = L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', instance.container);
+		instance.form.setAttribute('role', 'dialog');
+		instance.form.setAttribute('aria-labelledby', instance.title);
 
 		// Prevent overlay from getting the click, except if we want click to dismiss
 		// Like in the case of the inactivity message.
