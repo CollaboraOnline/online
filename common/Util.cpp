@@ -60,6 +60,10 @@
 #include <emscripten/console.h>
 #endif
 
+#ifdef _WINDOWS
+#include <processthreadsapi.h>
+#endif
+
 #include <atomic>
 #include <cassert>
 #include <chrono>
@@ -316,6 +320,9 @@ namespace Util
         LOG_INF("Thread " << getThreadId() << ") is now called [" << s << ']');
 #elif defined __EMSCRIPTEN__
         emscripten_console_logf("COOL thread name: \"%s\"", s.c_str());
+#elif defined _WINDOWS
+        SetThreadDescription(GetCurrentThread(), string_to_wide_string(s).c_str());
+        LOG_INF("Thread " << getThreadId() << ") is now called [" << s << ']');
 #endif
 
         // Emit a metadata Trace Event identifying this thread. This will invoke a different function
