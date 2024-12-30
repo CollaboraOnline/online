@@ -1179,14 +1179,15 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			if (app.calc.cellCursorRectangle.height > freePane.height)
 				return new L.LatLng(0, 0); // no scroll needed.
 
-			var spacingY = app.calc.cellCursorRectangle.height / 4.0;
-			var halfSize = (freePane.y2 - freePane.y1) / 2;
-			if (app.calc.cellCursorRectangle.y1 < freePane.y1) {
-				scroll.y = app.calc.cellCursorRectangle.y1 - freePane.y1 - halfSize - spacingY;
-			}
-			else if (app.calc.cellCursorRectangle.y2 > freePane.y2) {
-				scroll.y = app.calc.cellCursorRectangle.y2 - freePane.y2 + halfSize + spacingY;
-			}
+			var spacingY = 100; // twips margin
+
+			// try to center in free pane the top of a cell
+			if (app.calc.cellCursorRectangle.y1 < freePane.y1)
+				scroll.y = app.calc.cellCursorRectangle.y1 - freePane.y1 - spacingY;
+
+			// then check if end of a cell is visible
+			if (app.calc.cellCursorRectangle.y2 > freePane.y2 + scroll.y)
+				scroll.y = scroll.y + (app.calc.cellCursorRectangle.y2 - freePane.y2 + spacingY);
 		}
 
 		scroll = this._twipsToLatLng(scroll, this._map.getZoom()); // Simple point is also converted to L.Point by the converter.
