@@ -1449,6 +1449,10 @@ int main(int argc, char**argv)
 
     std::string base64Encode(std::string_view input);
 
+#ifdef _WINDOWS
+    std::wstring string_to_wide_string(const std::string& string);
+    std::string wide_string_to_string(const std::wstring& wide_string);
+#endif
 } // end namespace Util
 
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_clock::time_point& ts)
