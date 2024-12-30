@@ -13,11 +13,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	});
 
 	it('Scrolling to bottom/top', function() {
-		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
+		desktopHelper.assertScrollbarPosition('vertical', 25, 40);
 		desktopHelper.pressKey(3,'pagedown');
 		desktopHelper.assertScrollbarPosition('vertical', 110, 130);
 		desktopHelper.pressKey(3,'pageup');
-		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
+		desktopHelper.assertScrollbarPosition('vertical', 50, 70);
+		desktopHelper.pressKey(3,'downArrow');
+		desktopHelper.assertScrollbarPosition('vertical', 25, 40);
 	});
 
 	it('Scrolling to left/right', function() {
@@ -30,7 +32,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	});
 
 	it('Scroll while selecting vertically', function() {
-		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
+		desktopHelper.assertScrollbarPosition('vertical', 25, 40);
 		desktopHelper.assertScrollbarPosition('horizontal', 48, 50);
 
 		// Click on a cell near the edge of the view
