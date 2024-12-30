@@ -21,48 +21,7 @@
 #include <Windows.h>
 
 #include <common/FileUtil.hpp>
-
-namespace
-{
-    std::wstring string_to_wide_string(const std::string& string)
-    {
-        if (string.empty())
-        {
-            return L"";
-        }
-
-        const auto size_needed = MultiByteToWideChar(CP_UTF8, 0, string.data(), (int)string.size(), nullptr, 0);
-        if (size_needed <= 0)
-        {
-            throw std::runtime_error("MultiByteToWideChar() failed: " + std::to_string(size_needed));
-        }
-
-        std::wstring result(size_needed, 0);
-        MultiByteToWideChar(CP_UTF8, 0, string.data(), (int)string.size(), result.data(), size_needed);
-
-        return result;
-    }
-
-    std::string wide_string_to_string(const std::wstring& wide_string)
-    {
-        if (wide_string.empty())
-        {
-            return "";
-        }
-
-        const auto size_needed = WideCharToMultiByte(CP_UTF8, 0, wide_string.data(), (int)wide_string.size(), nullptr, 0, nullptr, nullptr);
-        if (size_needed <= 0)
-        {
-            throw std::runtime_error("WideCharToMultiByte() failed: " + std::to_string(size_needed));
-        }
-
-        std::string result(size_needed, 0);
-        WideCharToMultiByte(CP_UTF8, 0, wide_string.data(), (int)wide_string.size(), result.data(), size_needed, nullptr, nullptr);
-
-        return result;
-    }
-
-} // anonymous namespace
+#include <common/Util.hpp>
 
 namespace FileUtil
 {
@@ -73,9 +32,9 @@ namespace FileUtil
         try
         {
             if (recursive)
-                std::filesystem::remove_all(string_to_wide_string(path));
+                std::filesystem::remove_all(Util::string_to_wide_string(path));
             else
-                std::filesystem::remove(string_to_wide_string(path));
+                std::filesystem::remove(Util::string_to_wide_string(path));
         }
         catch (const std::filesystem::filesystem_error& e)
         {
@@ -108,14 +67,14 @@ namespace FileUtil
     {
         LOG_DBG("Removing empty directories at [" << path << "] recursively");
 
-        removeEmptyDirTreeTakingPath(std::filesystem::path(string_to_wide_string(path)));
+        removeEmptyDirTreeTakingPath(std::filesystem::path(Util::string_to_wide_string(path)));
     }
 
     bool isEmptyDirectory(const char* path)
     {
         bool empty = true;
         for (auto const& dirent :
-                 std::filesystem::directory_iterator{std::filesystem::path(string_to_wide_string(path)),
+                 std::filesystem::directory_iterator{std::filesystem::path(Util::string_to_wide_string(path)),
                                                      std::filesystem::directory_options::skip_permission_denied})
         {
             (void) dirent;
@@ -143,7 +102,7 @@ namespace FileUtil
 
     int openFileAsFD(const std::string& file, int oflag, int mode)
     {
-        return _wopen(string_to_wide_string(file).c_str(), oflag | O_BINARY, mode);
+        return _wopen(Util::string_to_wide_string(file).c_str(), oflag | O_BINARY, mode);
     }
 
     int readFromFD(int fd, void *buf, size_t nbytes)
@@ -163,12 +122,12 @@ namespace FileUtil
 
     void openFileToIFStream(const std::string& file, std::ifstream& stream, std::ios_base::openmode mode)
     {
-        stream.open(string_to_wide_string(file), mode | std::ios_base::binary);
+        stream.open(Util::string_to_wide_string(file), mode | std::ios_base::binary);
     }
 
     int getStatOfFile(const std::string& file, struct stat& sb)
     {
-        return _wstat64i32(string_to_wide_string(file).c_str(), (struct _stat64i32*) &sb);
+        return _wstat64i32(Util::string_to_wide_string(file).c_str(), (struct _stat64i32*) &sb);
     }
 
     int getLStatOfFile(const std::string& file, struct stat& sb)
@@ -178,17 +137,17 @@ namespace FileUtil
 
     int unlinkFile(const std::string& file)
     {
-        return _wunlink(string_to_wide_string(file).c_str());
+        return _wunlink(Util::string_to_wide_string(file).c_str());
     }
 
     int makeDirectory(const std::string& dir)
     {
-        return _wmkdir(string_to_wide_string(dir).c_str());
+        return _wmkdir(Util::string_to_wide_string(dir).c_str());
     }
 
     void createDirectory(const std::string& dir)
     {
-        std::filesystem::create_directory(string_to_wide_string(dir));
+        std::filesystem::create_directory(Util::string_to_wide_string(dir));
     }
 
     std::string getSysTempDirectoryPath()
@@ -196,7 +155,7 @@ namespace FileUtil
         std::wstring path = std::filesystem::temp_directory_path().wstring();
 
         if (!path.empty())
-            return wide_string_to_string(path);
+            return Util::wide_string_to_string(path);
 
         // Try some fallbacks
         const wchar_t *tmp = _wgetenv(L"TEMP");
@@ -207,12 +166,12 @@ namespace FileUtil
         if (!tmp)
             tmp = L"C:/Windows/Temp";
 
-        return wide_string_to_string(tmp);
+        return Util::wide_string_to_string(tmp);
     }
 
     bool isWritable(const char* path)
     {
-        if (_waccess(string_to_wide_string(path).c_str(), 0) == 0)
+        if (_waccess(Util::string_to_wide_string(path).c_str(), 0) == 0)
             return true;
 
         LOG_INF("No write access to path [" << path << "]: " << strerror(errno));
