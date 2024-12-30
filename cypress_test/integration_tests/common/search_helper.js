@@ -36,7 +36,9 @@ function typeIntoSearchField(text) {
 function searchNext() {
 	cy.log('>> searchNext - start');
 
+	cy.wait(1000);
 	cy.cGet('#searchnext').click();
+	cy.wait(2500); // TODO: test search result arrived
 
 	cy.log('<< searchNext - end');
 }
@@ -45,7 +47,9 @@ function searchNext() {
 function searchPrev() {
 	cy.log('>> searchPrev - start');
 
+	cy.wait(1000);
 	cy.cGet('#searchprev').click();
+	cy.wait(2500); // TODO: test search result arrived
 
 	cy.log('<< searchPrev - end');
 }
