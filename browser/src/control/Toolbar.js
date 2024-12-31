@@ -418,7 +418,7 @@ L.Map.include({
 			app.socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 			// user interaction turns off the following of other users
 			if (map.userList && map._docLayer && map._docLayer._viewId)
-				map.userList.followUser(map._docLayer._viewId);
+				map.userList.followUser(map._docLayer._viewId, /* do instant scroll */ false);
 		}
 	},
 
