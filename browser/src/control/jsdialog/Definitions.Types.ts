@@ -168,8 +168,17 @@ interface IconViewEntry {
 	tooltip: string; // tooltip of an entry
 	ondemand: boolean; // if true then we ignore image property and request it on demand (when shown)
 }
+
 interface IconViewJSON extends WidgetJSON {
 	entries: Array<IconViewEntry>;
 	singleclickactivate: boolean; // activates element on single click instead of just selection
 	textWithIconEnabled: boolean; // To identify if we should add text below the icon or not.
+}
+
+interface EditWidgetJSON extends WidgetJSON {
+	placeholder: string; // show when empty
+	text: string; // text value
+	password: boolean; // is password field
+	hidden: boolean; // is hidden, TODO: duplicate?
+	changedCallback: any; // callback  for 'change' event
 }
