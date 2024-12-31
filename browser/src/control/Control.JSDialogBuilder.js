@@ -92,7 +92,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['metricfield'] = this._metricfieldControl;
 		this._controlHandlers['time'] = JSDialog.timeField;
 		this._controlHandlers['formattedfield'] = this._formattedfieldControl;
-		this._controlHandlers['edit'] = this._editControl;
+		this._controlHandlers['edit'] = JSDialog.edit;
 		this._controlHandlers['formulabaredit'] = JSDialog.formulabarEdit;
 		this._controlHandlers['multilineedit'] = JSDialog.multilineEdit;
 		this._controlHandlers['pushbutton'] = this._pushbuttonControl;
@@ -1504,49 +1504,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		value = parseFloat(data.value);
 		$(controls.spinfield).val(value);
-
-		return false;
-	},
-
-	_editControl: function(parentContainer, data, builder, callback) {
-		var container = L.DomUtil.create('div', 'ui-edit-container ' + builder.options.cssClass, parentContainer);
-		container.id = data.id;
-
-		var edit = L.DomUtil.create('input', 'ui-edit ' + builder.options.cssClass, container);
-		edit.value = data.text;
-		edit.id = data.id + '-input';
-		edit.dir = 'auto';
-
-		if (data.password === true)
-			edit.type = 'password';
-
-		if (data.enabled === 'false' || data.enabled === false) {
-			container.setAttribute('disabled', 'true');
-			edit.disabled = true;
-		}
-
-		JSDialog.SynchronizeDisabledState(container, [edit]);
-
-		edit.addEventListener('keyup', function(e) {
-			var callbackToUse =
-				(e.key === 'Enter' && data.changedCallback) ? data.changedCallback : null;
-			if (callback)
-				callbackToUse = callback;
-			if (typeof callbackToUse === 'function')
-				callbackToUse(this.value);
-			else
-				builder.callback('edit', 'change', container, this.value, builder);
-		});
-
-		edit.addEventListener('click', function(e) {
-			e.stopPropagation();
-		});
-
-		if (data.hidden)
-			$(edit).hide();
-
-		if (data.placeholder)
-			$(edit).attr('placeholder', data.placeholder);
 
 		return false;
 	},
