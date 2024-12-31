@@ -56,4 +56,24 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		helper.typeIntoDocument('{end}{home}{end}');
 		desktopHelper.assertScrollbarPosition('horizontal', 430, 653);
 	});
+
+	it('Check if we jump the view on change of formatting mark', function() {
+		desktopHelper.switchUIToNotebookbar();
+
+		desktopHelper.selectZoomLevel('40');
+		helper.typeIntoDocument('{ctrl}{home}');
+		desktopHelper.pressKey(2, 'pagedown');
+		desktopHelper.pressKey(1, 'pagedown');
+		desktopHelper.assertScrollbarPosition('vertical', 220, 240);
+
+		// cursor on the bottom, scroll to top
+		desktopHelper.scrollWriterDocumentToTop();
+		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
+
+		cy.cGet('.notebookbar #View-tab-label').click();
+		cy.cGet('.notebookbar #View-container .unoControlCodes').click();
+
+		cy.cGet('.notebookbar #View-container .unoControlCodes').should('have.class', 'selected');
+		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
+	});
 });
