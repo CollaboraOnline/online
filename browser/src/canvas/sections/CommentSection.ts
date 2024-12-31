@@ -1349,7 +1349,8 @@ export class Comment extends CanvasSectionObject {
 					// this.size may currently have an artifically wide size if mouseEnter without moveLeave seen
 					// so fetch the real size
 					var x = isRTL ? margin : cellSize[0] - squareDim - margin;
-					this.context.fillStyle = '#BF819E';
+					var commentColor = getComputedStyle(document.body).getPropertyValue('--color-calc-comment');
+					this.context.fillStyle = commentColor;
 					var region = new Path2D();
 					region.moveTo(x, 0);
 					region.lineTo(x + squareDim, 0);
