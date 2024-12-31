@@ -93,6 +93,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['time'] = JSDialog.timeField;
 		this._controlHandlers['formattedfield'] = this._formattedfieldControl;
 		this._controlHandlers['edit'] = JSDialog.edit;
+		this._controlHandlers['searchedit'] = JSDialog.searchEdit;
 		this._controlHandlers['formulabaredit'] = JSDialog.formulabarEdit;
 		this._controlHandlers['multilineedit'] = JSDialog.multilineEdit;
 		this._controlHandlers['pushbutton'] = this._pushbuttonControl;

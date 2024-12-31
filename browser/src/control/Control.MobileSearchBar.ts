@@ -26,7 +26,7 @@ class MobileSearchBar extends Toolbar {
 				w2icon: 'unfold',
 				text: _('Hide the search bar'),
 			},
-			{ type: 'edit', id: 'search', placeholder: _('Search'), text: '' },
+			{ type: 'searchedit', id: 'search', placeholder: _('Search'), text: '' },
 			{
 				type: 'customtoolitem',
 				id: 'searchprev',
@@ -54,7 +54,6 @@ class MobileSearchBar extends Toolbar {
 	create() {
 		var items = this.getToolItems();
 		this.builder.build(this.parentContainer, items);
-		(window as any).setupSearchInput();
 	}
 }
 

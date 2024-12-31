@@ -688,13 +688,6 @@ function getColorPickerData(type) {
 	return data;
 }
 
-function setupSearchInput() {
-	$('#search-input').off('input', onSearchInput).on('input', onSearchInput);
-	$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
-	$('#search-input').off('focus', onSearchFocus).on('focus', onSearchFocus);
-	$('#search-input').off('blur', onSearchBlur).on('blur', onSearchBlur);
-}
-
 function unoCmdToToolbarId(commandname)
 {
 	var id = commandname.toLowerCase().substr(5);
@@ -747,62 +740,6 @@ function unoCmdToToolbarId(commandname)
 		id = 'link';
 
 	return id;
-}
-
-function updateSearchButtons() {
-	var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;
-	if (!toolbar) {
-		console.debug('Cannot find search bar');
-		return;
-	}
-
-	// conditionally disabling until, we find a solution for tdf#108577
-	if (L.DomUtil.get('search-input').value === '') {
-		toolbar.enableItem('searchprev', false);
-		toolbar.enableItem('searchnext', false);
-		toolbar.showItem('cancelsearch', false);
-	} else {
-		toolbar.enableItem('searchprev', true);
-		toolbar.enableItem('searchnext', true);
-		toolbar.showItem('cancelsearch', true);
-	}
-}
-
-function onSearchInput() {
-	updateSearchButtons();
-	if (map.getDocType() === 'text') {
-		// perform the immediate search in Writer
-		map.search(L.DomUtil.get('search-input').value, false, '', 0, true /* expand search */);
-	}
-}
-
-function onSearchKeyDown(e) {
-	var entry = L.DomUtil.get('search-input');
-	if ((e.keyCode === 71 && e.ctrlKey) || e.keyCode === 114 || e.keyCode === 13) {
-		if (e.shiftKey) {
-			map.search(entry.value, true);
-		} else {
-			map.search(entry.value);
-		}
-		e.preventDefault();
-	} else if (e.ctrlKey && e.keyCode === 70) {
-		entry.focus();
-		entry.select();
-		e.originalEvent.preventDefault();
-	} else if (e.keyCode === 27) {
-		map.cancelSearch();
-	}
-}
-
-function onSearchFocus() {
-	// Start searching.
-	map.fire('searchstart');
-
-	updateSearchButtons();
-}
-
-function onSearchBlur() {
-	map._onGotFocus();
 }
 
 function onInsertGraphic() {
@@ -1211,7 +1148,6 @@ global.onShapeKeyUpFunction = onShapeKeyUpFunction;
 global.onShapeKeyDownFunction = onShapeKeyDownFunction;
 global.createShapesPanel = createShapesPanel;
 global.onUpdatePermission = onUpdatePermission;
-global.setupSearchInput = setupSearchInput;
 global.getUNOCommand = getUNOCommand;
 global.unoCmdToToolbarId = unoCmdToToolbarId;
 global.onCommandStateChanged = onCommandStateChanged;
