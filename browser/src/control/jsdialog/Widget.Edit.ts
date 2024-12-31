@@ -26,11 +26,17 @@
 
 declare var JSDialog: any;
 
+type EditWidgetControl = {
+	container: HTMLElement;
+	input: HTMLInputElement;
+};
+
 class EditWidget {
-	parentContainer: HTMLElement;
-	data: EditWidgetJSON;
-	builder: any;
-	callback: JSDialogCallback;
+	protected parentContainer: HTMLElement;
+	protected data: EditWidgetJSON;
+	protected builder: any;
+	protected callback: JSDialogCallback;
+	protected edit: EditWidgetControl;
 
 	constructor(
 		parentContainer: HTMLElement,
@@ -44,18 +50,20 @@ class EditWidget {
 		this.callback = callback;
 	}
 
-	static buildImpl(
+	protected static buildImpl(
 		parentContainer: HTMLElement,
 		data: EditWidgetJSON,
 		builder: any,
-		callback: JSDialogCallback,
-	) {
+	): EditWidgetControl {
+		const result: EditWidgetControl = { container: null, input: null };
+
 		var container = L.DomUtil.create(
 			'div',
 			'ui-edit-container ' + builder.options.cssClass,
 			parentContainer,
 		);
 		container.id = data.id;
+		result.container = container;
 
 		var edit = L.DomUtil.create(
 			'input',
@@ -66,6 +74,8 @@ class EditWidget {
 		edit.id = data.id + '-input';
 		edit.dir = 'auto';
 
+		result.input = edit;
+
 		if (data.password === true) edit.type = 'password';
 
 		if (data.enabled === false) {
@@ -75,30 +85,49 @@ class EditWidget {
 
 		JSDialog.SynchronizeDisabledState(container, [edit]);
 
-		edit.addEventListener('keyup', function (e: KeyboardEvent) {
-			var callbackToUse =
-				e.key === 'Enter' && data.changedCallback ? data.changedCallback : null;
-			if (callback) callbackToUse = callback;
-			if (typeof callbackToUse === 'function') callbackToUse(this.value);
-			else builder.callback('edit', 'change', container, this.value, builder);
-		});
-
-		edit.addEventListener('click', function (e: MouseEvent) {
-			e.stopPropagation();
-		});
-
 		if (data.hidden) $(edit).hide();
 
 		if (data.placeholder) $(edit).attr('placeholder', data.placeholder);
+
+		return result;
 	}
 
-	build(): boolean {
-		EditWidget.buildImpl(
+	protected onKeyUp(e: KeyboardEvent) {
+		var callbackToUse =
+			e.key === 'Enter' && this.data.changedCallback
+				? this.data.changedCallback
+				: null;
+		if (this.callback) callbackToUse = this.callback;
+		if (typeof callbackToUse === 'function')
+			callbackToUse(this.edit.input.value);
+		else
+			this.builder.callback(
+				'edit',
+				'change',
+				this.edit.container,
+				this.edit.input.value,
+				this.builder,
+			);
+	}
+
+	protected onClick(e: MouseEvent) {
+		e.stopPropagation();
+	}
+
+	protected setupEventListeners() {
+		this.edit.input.addEventListener('keyup', this.onKeyUp.bind(this));
+		this.edit.input.addEventListener('click', this.onClick.bind(this));
+	}
+
+	public build(): boolean {
+		this.edit = EditWidget.buildImpl(
 			this.parentContainer,
 			this.data,
 			this.builder,
-			this.callback,
 		);
+
+		this.setupEventListeners();
+
 		return false;
 	}
 }

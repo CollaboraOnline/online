@@ -304,6 +304,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		return false;
 	},
 
+	// TODO: remove
 	_editControl: function(parentContainer, data, builder, callback) {
 		var container = L.DomUtil.create('div', 'ui-edit-container ' + builder.options.cssClass, parentContainer);
 		container.id = data.id;
@@ -318,6 +319,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		if (data.enabled === 'false' || data.enabled === false)
 			$(edit).prop('disabled', true);
 
+		// TODO: below is not true anymore
 		// we still use non welded sidebar where don't have partial updates
 		// kayup can be used only in welded dialogs
 		edit.addEventListener('change', function() {

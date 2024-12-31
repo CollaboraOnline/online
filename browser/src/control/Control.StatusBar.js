@@ -73,7 +73,7 @@ class StatusBar extends JSDialog.Toolbar {
 
 	callback(objectType, eventType, object, data, builder) {
 		if (object.id === 'search-input' || object.id === 'search') {
-			// its handled by window.setupSearchInput
+			// its handled by widget itself
 			return;
 		} else if (object.id === 'zoom') {
 			var selected = this._generateZoomItems().filter((item) => { return item.id === data; });
@@ -237,7 +237,7 @@ class StatusBar extends JSDialog.Toolbar {
 
 	getToolItems() {
 		return [
-			{type: 'edit',  id: 'search', placeholder: _('Search'), text: ''},
+			{type: 'searchedit',  id: 'search', placeholder: _('Search'), text: ''},
 			{type: 'customtoolitem',  id: 'searchprev', command: 'searchprev', text: _UNO('.uno:UpSearch'), enabled: false, pressAndHold: true},
 			{type: 'customtoolitem',  id: 'searchnext', command: 'searchnext', text: _UNO('.uno:DownSearch'), enabled: false, pressAndHold: true},
 			{type: 'customtoolitem',  id: 'cancelsearch', command: 'cancelsearch', text: _('Cancel the search'), visible: false},
@@ -279,7 +279,6 @@ class StatusBar extends JSDialog.Toolbar {
 		this.builder.build(this.parentContainer, this.getToolItems());
 
 		this.onLanguagesUpdated();
-		window.setupSearchInput();
 		JSDialog.MakeScrollable(this.parentContainer, this.parentContainer.querySelector('div'));
 		JSDialog.RefreshScrollables();
 	}
