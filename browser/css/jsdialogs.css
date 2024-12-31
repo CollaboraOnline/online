@@ -54,6 +54,7 @@
 .jsdialog.one-child-popup {
 	border: 0;
 	margin: 0 !important;
+	padding: 0 !important;
 }
 
 div#autoFillPreviewTooltip {
@@ -487,6 +488,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	line-height: var(--default-height);
 	align-content: start;
 	justify-content: stretch;
+}
+
+.ui-treeview * {
+	border-radius: initial;
 }
 
 .jsdialog:not(.sidebar).ui-treeview {
