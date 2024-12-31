@@ -229,6 +229,14 @@ L.Control.JSDialog = L.Control.extend({
 		instance.overlay = overlay;
 	},
 
+	isOnlyChild: function(instance) {
+		const isMenu = instance.children && instance.children.length
+			&& instance.children[0].id === '__MENU__';
+		const isOnlyChild = instance.children && instance.children.length &&
+			instance.children[0].children && instance.children[0].children.length === 1;
+		return isMenu || isOnlyChild;
+	},
+
 	createContainer: function(instance, parentContainer) {
 		// it has to be form to handle default button
 		instance.container = L.DomUtil.create('div', 'jsdialog-window', parentContainer);
@@ -252,8 +260,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		instance.defaultButtonId = this._getDefaultButtonId(instance.children);
 
-		if (instance.children && instance.children.length &&
-			instance.children[0].children && instance.children[0].children.length === 1)
+		if (this.isOnlyChild(instance))
 			instance.isOnlyChild = true;
 
 		// it has to be first button in the form
@@ -288,7 +295,7 @@ L.Control.JSDialog = L.Control.extend({
 			L.DomUtil.addClass(instance.form, 'snackbar');
 		}
 
-		instance.content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', instance.form);
+		instance.content = L.DomUtil.create('div', 'jsdialog lokdialog ui-dialog-content ui-widget-content' + (instance.isOnlyChild ? ' one-child-popup' : ''), instance.form);
 
 		this.dialogs[instance.id] = {};
 	},
