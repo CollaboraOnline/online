@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-14 13:17+0200\n"
-"PO-Revision-Date: 2024-08-10 00:51+0000\n"
+"PO-Revision-Date: 2025-01-01 11:58+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "help/eu/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -48,16 +48,15 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
-msgstr ""
+msgstr "Kopiatu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
 "/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Sartu</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
+"/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
@@ -1703,6 +1702,12 @@ msgid ""
 "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
 "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
 msgstr ""
+"<span class=\"def\">Menu-barra:</span> Menu nagusia goiko aldean kokatzen da "
+"eta inprimatzeko, editatzeko, ikusteko aukera asko, eta beste komando "
+"aurreratu batzuk biltzen ditu. Menu-barra ezkutatu dezakezu eskuineko "
+"muturreko <span class=\"w2ui-icon fold icon-size\"></span> ikonoan klik "
+"eginez. Egin klik <span class=\"w2ui-icon unfold icon-size\"></span> ikonoan "
+"menua erakusteko."
 
 #: html/cool-help.html%2Bdiv.div.div.p:374-5
 msgid ""
@@ -2020,13 +2025,12 @@ msgstr ""
 "dokumentutik kopiatzen badira."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application), it will be pasted as rich text."
 msgstr ""
 "Testua dokumentu kanpotik kopiatzen bada (nabigatzailearen beste leiho "
-"batetik edo mahaigaineko aplikazio batetik), testu aberats modura kopiatuko "
+"batetik edo mahaigaineko aplikazio batetik) testu aberats modura kopiatuko "
 "da."
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
@@ -2168,14 +2172,12 @@ msgid "comment"
 msgstr "iruzkina"
 
 #: html/cool-help.html%2Bdiv.div.div.p:472-5
-#, fuzzy
 msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
-"Egin klik azpimenuan (<span class=\"cool-annotation-menu\" style=\"height:0."
-"6cm;width:0.6cm;\"></span>) ikonoan iruzkinak erantzuteko, mugitu eta "
-"ezabatzeko."
+"Egin klik azpimenuan (<span class=\"cool-annotation-menu icon-size\"></span>)"
+" ikonoan iruzkinak erantzuteko, mugitu eta ezabatzeko."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:475-5
 msgid "Spellchecking"
@@ -3144,15 +3146,14 @@ msgid "Select the text with the existing format"
 msgstr "Hautatu dagoeneko formatua duen testua"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:756-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
 "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
 "bucket."
 msgstr ""
-"Egin klik formatua klonatzeko ikonoan <img style=\"height:0.6cm;width:0.6cm;"
-"\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Saguaren erakuslea "
-"pintura-ontzi bihurtuko da."
+"Egin klik formatua klonatzeko ikonoan  <img class=\"icon-size\" alt=\""
+"\" src=\"images/lc_formatpaintbrush.svg\" />. Saguaren erakuslea pintura-"
+"ontzi bihurtuko da."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:757-11
 msgid "Select the text you want to apply the new format."
@@ -3276,14 +3277,13 @@ msgstr ""
 "planoko kolorearekin eta beste edozein formaturekin."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:799-11
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
 "/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
 msgstr ""
-"Egin klik formatua klonatzeko ikonoan <img style=\"height:0.6cm;width:0.6cm;"
-"\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Saguaren erakuslea "
-"pintura-ontzi bihurtuko da."
+"Egin klik formatua klonatzeko ikonoan  <img class=\"icon-size\" src="
+"\"images/lc_formatpaintbrush.svg\" />. Saguaren erakuslea pintura-ontzi "
+"bihurtuko da."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.p:800-11
 msgid "Select the cells you want to format. Release the mouse button."
