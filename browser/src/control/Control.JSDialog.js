@@ -406,8 +406,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		} else {
 			// will directly set element of focusable element based on init focus id
-			// If init_id is not defined, select the first focusable element from the container
-			firstFocusableElement = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : JSDialog.GetFocusableElements(instance.container);
+			firstFocusableElement = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : null;
 		}
 
 		if (firstFocusableElement && document.activeElement !== firstFocusableElement && instance.canHaveFocus) {
