@@ -56,6 +56,7 @@
 	--color-text-calc-header-selected: var(--color-text-darker);
 	--color-border-calc-header: #c0c0c0;
 	--color-calc-header-hover: #fff;
+	--color-calc-comment: #BF819E;
 
 	--color-grid-helper-line-solid: #e6e6e6;
 	--color-grid-helper-line-dashed: #191919;
