@@ -636,6 +636,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         configInfo->set("text", textEntry);
         configInfo->set("presentation", presentationEntry);
         configInfo->set("spreadsheet", spreadsheetEntry);
+        configInfo->set("recentColor", recentColorArray);
+        configInfo->set("darkTheme", true);
+        configInfo->set("darkBackgroundForTheme", darkBackgroundForThemeEntry);
+        configInfo->set("spellOnline", false);
         configInfo->set("stamp", etagString);
 
         std::ostringstream jsonStream;
