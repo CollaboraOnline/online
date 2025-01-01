@@ -279,6 +279,22 @@ public:
         _sentBrowserSetting = sentBrowserSetting;
     }
 
+    struct BrowserSetting
+    {
+        std::string darkTheme;
+        std::string darkThemeBackground;
+        std::string spellOnline;
+    };
+
+    void setBrowserSetting(const BrowserSetting& browserSetting)
+    {
+        _browserSetting = browserSetting;
+    }
+
+    /// Override parsedDocOption from values we get from browser setting json
+    /// Because when client sends `load url` it doesn't have information about browser setting json
+    void overrideDocOption();
+
 private:
     std::shared_ptr<ClientSession> client_from_this()
     {
@@ -439,6 +455,8 @@ private:
 
     /// If browser setting was already sent
     bool _sentBrowserSetting;
+
+    BrowserSetting _browserSetting;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

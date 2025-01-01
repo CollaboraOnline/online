@@ -1362,6 +1362,33 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     return false;
 }
 
+void ClientSession::overrideDocOption()
+{
+    if (!_sentBrowserSetting)
+    {
+        LOG_DBG("Browser settings not fetched, skipping DocOption override.");
+        return;
+    }
+
+    if (!_browserSetting.darkTheme.empty())
+    {
+        setDarkTheme(_browserSetting.darkTheme);
+        LOG_DBG("Overriding parsed docOption darkTheme[" << _browserSetting.darkTheme << ']');
+    }
+
+    if (!_browserSetting.darkThemeBackground.empty())
+    {
+        setDarkBackground(_browserSetting.darkThemeBackground);
+        LOG_DBG("Overriding parsed docOption darkBackgroundForTheme[" << _browserSetting.darkThemeBackground << ']');
+    }
+
+    if (!_browserSetting.spellOnline.empty())
+    {
+        setSpellOnline(_browserSetting.spellOnline);
+        LOG_DBG("Overriding parsed docOption spellOnline[" << _browserSetting.spellOnline<< ']');
+    }
+}
+
 bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
                                  const StringVector& tokens,
                                  const std::shared_ptr<DocumentBroker>& docBroker)
@@ -1380,6 +1407,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         std::string timestamp, doctemplate;
         int loadPart = -1;
         parseDocOptions(tokens, loadPart, timestamp, doctemplate);
+        overrideDocOption();
 
         std::ostringstream oss;
         oss << "load url=" << docBroker->getPublicUri().toString();

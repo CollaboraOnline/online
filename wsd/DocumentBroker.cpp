@@ -1695,6 +1695,24 @@ void DocumentBroker::sendBrowserSetting(const std::shared_ptr<ClientSession>& se
             std::ostringstream jsonStream;
             settings->stringify(jsonStream);
             session->sendTextFrame("browsersetting: " + jsonStream.str());
+
+            std::string spellOnline, darkTheme, darkBackgroundForTheme;
+            JsonUtil::findJSONValue(settings, "spellOnline", spellOnline);
+            JsonUtil::findJSONValue(settings, "darkTheme", darkTheme);
+            Poco::JSON::Object::Ptr darkBackgroundObj =
+                settings->getObject("darkBackgroundForTheme");
+            if (!darkBackgroundObj.isNull())
+            {
+                std::ostringstream dbgStream;
+                darkBackgroundObj->stringify(dbgStream);
+
+                JsonUtil::findJSONValue(
+                    darkBackgroundObj, darkTheme == "true" ? "dark" : "light", darkBackgroundForTheme);
+            }
+
+            ClientSession::BrowserSetting browserSetting{ darkTheme, darkBackgroundForTheme,
+                                                          spellOnline };
+            session->setBrowserSetting(browserSetting);
         }
         else
         {
