@@ -47,4 +47,10 @@ describe(['tagdesktop'], 'Calc focus tests', function() {
 		helper.expectTextForClipboard(text1+text2);
 		calcHelper.typeIntoFormulabar('{enter}');
 	});
+
+	it('On Rename-sheet modal dialog open', function() {
+		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').dblclick();
+		cy.cGet('#input-modal-input').should('have.focus');
+	});
+
 });
