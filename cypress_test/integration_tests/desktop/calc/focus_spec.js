@@ -53,4 +53,11 @@ describe(['tagdesktop'], 'Calc focus tests', function() {
 		cy.cGet('#input-modal-input').should('have.focus');
 	});
 
+	it('On color palette dialog open', function() {
+		cy.cGet('#Home').click();
+		cy.cGet('#Home-container .unoBackgroundColor .arrowbackground').click();
+		// focus should be on first element which is Automatic color button
+		cy.cGet('#transparent-color-button').should('have.focus');
+	});
+
 });
