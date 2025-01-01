@@ -280,9 +280,15 @@ public:
 
     const std::string& getSpellOnline() const { return _spellOnline; }
 
+    void setSpellOnline(const std::string& val) { _spellOnline = val; }
+
     const std::string& getDarkTheme() const { return _darkTheme; }
 
+    void setDarkTheme(const std::string& val) { _darkTheme = val; }
+
     const std::string& getDarkBackground() const { return _darkBackground; }
+
+    void setDarkBackground(const std::string& val) { _darkBackground = val; }
 
     const std::string& getBatchMode() const { return _batch; }
 
