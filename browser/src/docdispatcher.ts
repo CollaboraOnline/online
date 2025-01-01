@@ -91,6 +91,9 @@ class Dispatcher {
 		this.actionsMap['remotelink'] = function () {
 			app.map.fire('postMessage', { msgId: 'UI_PickLink' });
 		};
+		this.actionsMap['remoteaicontent'] = function () {
+			app.map.fire('postMessage', { msgId: 'UI_InsertAIContent' });
+		};
 		// TODO: deduplicate
 		this.actionsMap['hyperlinkdialog'] = function () {
 			app.map.showHyperlinkDialog();
