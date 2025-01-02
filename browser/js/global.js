@@ -603,6 +603,8 @@ function getInitializerClass() {
 
 	global.prefs = {
 		_localStorageCache: {}, // TODO: change this to new Map() when JS version allows
+		_userBrowserSetting: new Map(),
+		useBrowserSetting: false,
 		canPersist: (function() {
 			var str = 'localstorage_test';
 			try {
@@ -613,6 +615,34 @@ function getInitializerClass() {
 				return false;
 			}
 		})(),
+
+		_initializeBrowserSetting: function (msg) {
+			let settingJSON = JSON.parse(msg.substring('browsersetting:'.length + 1));;
+
+			if (!settingJSON || settingJSON.kind !== 'browser')
+				return;
+
+			const processObject = (object, parentKey = '') => {
+				Object.keys(object).forEach((key) => {
+					const fullKey = parentKey ? `${parentKey}.${key.charAt(0).toUpperCase() + key.slice(1)}` : key;
+					const value = object[key];
+
+					if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
+						processObject(value, fullKey);
+					} else if (Array.isArray(value)) {
+						global.prefs._userBrowserSetting[fullKey] = JSON.stringify(value);
+					} else {
+						global.prefs._userBrowserSetting[fullKey] =
+							typeof value === 'boolean' ? (value ? "true" : "false") : value;
+					}
+				});
+			};
+			
+			processObject(settingJSON);
+
+			global.prefs._localStorageCache = {};
+			global.prefs.useBrowserSetting = true;
+		},
 
 		_renameLocalStoragePref: function(oldName, newName) {
 			if (!global.prefs.canPersist) {
@@ -668,6 +698,12 @@ function getInitializerClass() {
 				return uiDefault;
 			}
 
+			if (global.prefs.useBrowserSetting && Object.prototype.hasOwnProperty.call(global.prefs._userBrowserSetting, key)) {
+				const val = global.prefs._userBrowserSetting[key];
+				global.prefs._localStorageCache[key] = val;
+				return val;
+			}
+
 			if (global.prefs.canPersist) {
 				const localStorageItem = global.localStorage.getItem(key);
 
@@ -688,6 +724,9 @@ function getInitializerClass() {
 
 		set: function(key, value) {
 			value = String(value); // NOT "new String(...)". We cannot use .toString here because value could be null/undefined
+			if (global.prefs.useBrowserSetting) {
+				global.prefs._userBrowserSetting[key] = value;
+			}
 			if (global.prefs.canPersist) {
 				global.localStorage.setItem(key, value);
 			}
@@ -695,6 +734,9 @@ function getInitializerClass() {
 		},
 
 		remove: function(key) {
+			if (global.prefs.useBrowserSetting) {
+				global.prefs._userBrowserSetting.delete(key);
+			}
 			if (global.prefs.canPersist) {
 				global.localStorage.removeItem(key);
 			}
@@ -1758,6 +1800,13 @@ function getInitializerClass() {
 		};
 
 		global.socket.onmessage = function (event) {
+			if (event.data.startsWith('browsersetting:')) {
+				try {
+					global.prefs._initializeBrowserSetting(event.data);
+				} catch (e) {
+					global.app.console.error('Failed to initialize browser settings: ', e.message)
+				}
+			}
 			if (typeof global.socket._onMessage === 'function') {
 				global.socket._emptyQueue();
 				global.socket._onMessage(event);
