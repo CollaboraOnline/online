@@ -1731,7 +1731,7 @@ private:
         _socket.reset(); // Reset to make sure we are disconnected.
 
         auto pushConnectCompleteToPoll = [this, &poll](std::shared_ptr<StreamSocket> socket, net::AsyncConnectResult result ) {
-            poll.addCallback([selfLifecycle = shared_from_this(), this, &poll, socket=std::move(socket), &result]() {
+            poll.addCallback([selfLifecycle = shared_from_this(), this, &poll, socket=std::move(socket), result]() {
                 asyncConnectCompleted(poll, socket, result);
             });
         };
