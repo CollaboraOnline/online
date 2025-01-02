@@ -787,8 +787,6 @@ class TreeViewControl {
 					entry.row,
 					builder,
 				);
-
-			if (e) e.preventDefault();
 		};
 	}
 
