@@ -15,6 +15,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 		cy.cGet('#combo_box_disable').compareSnapshot('combobox_disable', 0.1);
 	});
 
+	it('Edit field', function() {
+		cy.cGet('#entry_box_1').compareSnapshot('edit_enabled', 0.1);
+		cy.cGet('#entry_box_2').compareSnapshot('edit_disabled', 0.1);
+	});
+
 	it('Checkbox', function() {
 		cy.cGet('#check_btn_1').compareSnapshot('checkbox_checked', 0.1);
 		cy.cGet('#check_btn_2').compareSnapshot('checkbox', 0.1);
