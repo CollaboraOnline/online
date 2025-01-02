@@ -47,6 +47,33 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('#comment-container-1').should('exist');
 	});
 
+	it('Modify and Save using shortcut Ctrl+Enter',function() {
+		// Given an open comment edit dialog
+		desktopHelper.insertComment();
+		cy.cGet('#comment-container-1').should('exist');
+		cy.cGet('#comment-container-1').then(function (element) {
+			element[0].style.visibility = '';
+			element[0].style.display = '';
+		});
+		cy.cGet('#comment-container-1').trigger('mouseover');
+		cy.cGet('#annotation-content-area-1').should('contain','some text');
+		cy.cGet('#comment-annotation-menu-1').click();
+		cy.cGet('body').contains('.context-menu-item','Modify').click();
+		cy.cGet('#annotation-modify-textarea-1').type('some other text, ');
+
+		// When Ctrl+Enter is hit
+		cy.cGet('annotation-modify-textarea-1').type('{ctrl}{enter}');
+
+		// Then, the dialog is closed and the comment content is updated
+		cy.cGet('#comment-container-1').then(function (element) {
+			element[0].style.visibility = '';
+			element[0].style.display = '';
+		});
+		cy.cGet('#annotation-content-area-1').trigger('mouseover');
+		cy.cGet('#annotation-content-area-1').should('contain','some other text, some text');
+		cy.cGet('#comment-container-1').should('exist');
+	});
+
 	it('Reply should not be possible', function() {
 		desktopHelper.insertComment();
 
