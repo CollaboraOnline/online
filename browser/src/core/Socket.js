@@ -1362,9 +1362,6 @@ app.definitions.Socket = L.Class.extend({
 		else if (textMsg.startsWith('hyperlinkclicked:')) {
 			this._onHyperlinkClickedMsg(textMsg);
 		}
-		else if (textMsg.startsWith('browsersetting:')) {
-			this._map.fire('browsersetting', {msg: textMsg})
-		}
 
 		if (textMsg.startsWith('downloadas:')) {
 			var postMessageObj = {

@@ -613,24 +613,57 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
         Poco::JSON::Object::Ptr textEntry = new Poco::JSON::Object();
         textEntry->set("showResolved", true);
-        textEntry->set("showStatusBar", true);
-        textEntry->set("darkTheme", true);
-        textEntry->set("darkBackgroundForTheme", true);
+        textEntry->set("showStatusbar", true);
+        textEntry->set("showToolbar", true);
 
         Poco::JSON::Object::Ptr presentationEntry = new Poco::JSON::Object();
         presentationEntry->set("showSidebar", false);
-        presentationEntry->set("showStatusBar", false);
+        presentationEntry->set("showStatusbar", false);
+        presentationEntry->set("showToolbar", true);
 
         Poco::JSON::Object::Ptr spreadsheetEntry = new Poco::JSON::Object();
-        spreadsheetEntry->set("showStatusBar", false);
+        spreadsheetEntry->set("showStatusbar", false);
+        spreadsheetEntry->set("showToolbar", true);
+
+        Poco::JSON::Object::Ptr darkBackgroundForThemeEntry = new Poco::JSON::Object();
+        darkBackgroundForThemeEntry->set("light", true);
+        darkBackgroundForThemeEntry->set("dark", false);
+
+        Poco::JSON::Array::Ptr recentColorArray = new Poco::JSON::Array();
+        recentColorArray->add("DDE8CB");
+        recentColorArray->add("780373");
+        recentColorArray->add("355269");
+        recentColorArray->add("BF819E");
+        recentColorArray->add("000000");
+
+        Poco::JSON::Array::Ptr customColorArray = new Poco::JSON::Array();
+        customColorArray->add("222222");
+        customColorArray->add("8811F6");
+        customColorArray->add("8800F0");
+        customColorArray->add("8800F7");
 
         configInfo->set("text", textEntry);
         configInfo->set("presentation", presentationEntry);
         configInfo->set("spreadsheet", spreadsheetEntry);
         configInfo->set("recentColor", recentColorArray);
         configInfo->set("darkTheme", true);
+        configInfo->set("customColor", customColorArray);
         configInfo->set("darkBackgroundForTheme", darkBackgroundForThemeEntry);
         configInfo->set("spellOnline", false);
+        configInfo->set("compactMode", false);
+        configInfo->set("saveAsMode", "groups");
+
+        configInfo->set("WSDFeedbackEnabled", true);
+        configInfo->set("WSDFeedbackCount", 10);
+        configInfo->set("WSDFeedbackLaterDate",1735826583776);
+        configInfo->set("InfoBarLaterDate", 1735826583776);
+
+        configInfo->set("Zotero_LastUsedStyle", "Zotero_StyleName");
+
+        configInfo->set("WSDWelcomeDisabled", false);
+        configInfo->set("WSDWelcomeDisabledDate", "Thu Jan 02 2025");
+        configInfo->set("WSDWelcomeVersion", "24.04.11.1");
+
         configInfo->set("stamp", etagString);
 
         std::ostringstream jsonStream;
