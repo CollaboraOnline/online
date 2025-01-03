@@ -11,9 +11,16 @@ Collabora Online WebSocket server has the following dependencies:
 - libcap-dev (Debian/Ubuntu) / libcap-progs (SUSE/openSUSE) / libcap-devel (RedHat/CentOS)
 - libpam-dev (Debian/Ubuntu) / pam-devel (RedHat/CentOS/SUSE/openSUSE)
 
+On Debian distros, this boils down to:
+apt install libssl-dev libpng-dev libcap-dev libzstd-dev libpam-dev libcppunit libcppunit-dev
+
 If your Linux distro doesn't provide a Poco package (versions 1.7.5 and
 newer should work), you can build it yourself and install in a
 location of your choice.
+
+To build it, the following can be used:
+./configure --no-tests --no-samples --omit=Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF --prefix=/usr
+make install
 
 ## Building
 

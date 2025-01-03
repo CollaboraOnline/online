@@ -7,6 +7,9 @@ This is the client part of Collabora Online.  For the server part, see the
 Build dependencies
 ------------------
 
+NodeJS is required. On Debian distros it can be installed through:
+apt install nodejs npm
+
 npm is provided by the nodejs package.
 
 npm should be at least 2.14, if not 3.x. Use `npm -v` to find the current version.
@@ -19,6 +22,21 @@ you have write access. If you want that, you need to have an ~/.npmrc with the
 line e.g.
 
     prefix=/opt/npm
+
+You may need to install prettier:
+npm install --save-dev --save-exact prettier
+
+Python3 and polib are needed by some translation and other scripts.
+In addition lxml is needed.
+
+If you have a venv setup, you can install polib in it using pip3:
+apt install python3-pip
+pip3 install polib
+pip3 install lxml
+
+Alternatively, you can install it to the system:
+apt install python3-polib
+apt install python3-lxml
 
 All of the dependency tree is locked in the repository, so there is no need to fetch
 data from npm registry at all. An npm install will use the tarballs in node_shrinkwrap/
