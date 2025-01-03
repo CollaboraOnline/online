@@ -757,10 +757,9 @@ $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist: $(COOL_JS_DST)
 	if cmp -s $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist; then rm $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp; else mv $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist; fi
 
 $(INTERMEDIATE_DIR)/COOL_JS.m4: $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist
-	@rm -f COOL_JS.m4
-	$(foreach file,$(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4))
-# remove last ","
-	@truncate -s -1 $(INTERMEDIATE_DIR)/COOL_JS.m4
+	$(foreach file,$(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
+	@truncate -s -1 $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp
+	@mv $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4
 
 $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 	$(COOL_HTML_DST) \
