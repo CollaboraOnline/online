@@ -94,6 +94,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	// To associate comment id with its index in commentList array.
 	private idIndexMap: Map<any, number>;
 
+	private annotationMinSize: number;
+	private annotationMaxSize: number;
+
 	constructor () {
 		super();
 
@@ -119,6 +122,8 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.sectionProperties.commentsAreListed = (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') && !(<any>window).mode.isMobile();
 		this.idIndexMap = new Map<any, number>();
 		this.mobileCommentModalId = this.map.uiManager.generateModalId(this.mobileCommentId);
+		this.annotationMinSize = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-min-size'));
+		this.annotationMaxSize = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-max-size'));
 	}
 
 	public onInitialize (): void {
@@ -1250,7 +1255,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 				this.sectionProperties.selectedComment.hide();
 		}
 
-		this.update();
+		var previousAnimationState = this.disableLayoutAnimation;
+		this.disableLayoutAnimation = true;
+		this.update(true, false);
+		this.disableLayoutAnimation = previousAnimationState;
 	}
 
 	private showHideComments (): void {
@@ -1798,10 +1806,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		return this.disableLayoutAnimation ? 0 : undefined; // undefined means it will use default value
 	}
 
-	private layoutUp (subList: any, actualPosition: Array<number>, lastY: number): number {
+	private layoutUp (subList: any, actualPosition: Array<number>, lastY: number, relayout: boolean = true): number {
 		var height: number;
 		for (var i = 0; i < subList.length; i++) {
-			height = subList[i].getCommentHeight();
+			height = subList[i].getCommentHeight(relayout);
 			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY - (height * app.dpiScale);
 			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
 			if (!subList[i].isEdit())
@@ -1810,7 +1818,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		return lastY;
 	}
 
-	private loopUp (startIndex: number, x: number, startY: number): number {
+	private loopUp (startIndex: number, x: number, startY: number, relayout: boolean = true): number {
 		var tmpIdx = 0;
 		var checkSelectedPart: boolean = this.mustCheckSelectedPart();
 		startY -= this.sectionProperties.marginY;
@@ -1831,7 +1839,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			} while (tmpIdx > -1 && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent === this.sectionProperties.commentList[tmpIdx + 1].sectionProperties.data.id);
 
 			if (subList.length > 0) {
-				startY = this.layoutUp(subList, [x, subList[0].sectionProperties.data.anchorPix[1]], startY);
+				startY = this.layoutUp(subList, [x, subList[0].sectionProperties.data.anchorPix[1]], startY, relayout);
 				i = i - subList.length;
 			} else {
 				i = tmpIdx;
@@ -1841,7 +1849,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		return startY;
 	}
 
-	private layoutDown (subList: any, actualPosition: Array<number>, lastY: number): number {
+	private layoutDown (subList: any, actualPosition: Array<number>, lastY: number, relayout: boolean = true): number {
 		var selectedComment = subList[0] === this.sectionProperties.selectedComment;
 		for (var i = 0; i < subList.length; i++) {
 			lastY = subList[i].sectionProperties.data.anchorPix[1] > lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY;
@@ -1849,6 +1857,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			var isRTL = document.documentElement.dir === 'rtl';
 
 			if (selectedComment) {
+				// FIXME: getBoundingClientRect is expensive and this is a hot path (called continuously during animations and scrolling)
 				const posX = (this.sectionProperties.showSelectedBigger ?
 								Math.round((document.getElementById('document-container').getBoundingClientRect().width - subList[i].sectionProperties.container.getBoundingClientRect().width)/2) :
 								Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1));
@@ -1857,14 +1866,14 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			else
 				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
 
-			lastY += (subList[i].getCommentHeight() * app.dpiScale);
+			lastY += (subList[i].getCommentHeight(relayout) * app.dpiScale);
 			if (!subList[i].isEdit())
 				subList[i].show();
 		}
 		return lastY;
 	}
 
-	private loopDown (startIndex: number, x: number, startY: number): number {
+	private loopDown (startIndex: number, x: number, startY: number, relayout: boolean = true): number {
 		var tmpIdx = 0;
 		var checkSelectedPart: boolean = this.mustCheckSelectedPart();
 		// Pass over all comments present
@@ -1884,7 +1893,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			} while (tmpIdx < this.sectionProperties.commentList.length && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent !== '0');
 
 			if (subList.length > 0) {
-				startY = this.layoutDown(subList, [x, subList[0].sectionProperties.data.anchorPix[1]], startY);
+				startY = this.layoutDown(subList, [x, subList[0].sectionProperties.data.anchorPix[1]], startY, relayout);
 				i = i + subList.length;
 			} else {
 				i = tmpIdx;
@@ -1898,6 +1907,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		if (this.sectionProperties.arrow) {
 			document.getElementById('document-container').removeChild(this.sectionProperties.arrow);
 			this.sectionProperties.arrow = null;
+			app.sectionContainer.requestReDraw();
 		}
 	}
 
@@ -1913,7 +1923,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		endPoint[1] = Math.floor(endPoint[1] / app.dpiScale);
 
 		if (this.sectionProperties.arrow !== null) {
-			var line: SVGLineElement = <SVGLineElement>(<any>document.getElementById('comment-arrow-line'));
+			var line: SVGLineElement = <SVGLineElement>(this.sectionProperties.arrow.firstElementChild);
 			line.setAttribute('x1', String(startPoint[0]));
 			line.setAttribute('y1', String(startPoint[1]));
 			line.setAttribute('x2', String(endPoint[0]));
@@ -1942,7 +1952,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		}
 	}
 
-	private doLayout (): void {
+	private doLayout (relayout: boolean = true): void {
 		if ((<any>window).mode.isMobile() || this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			if (this.sectionProperties.commentList.length > 0)
 				this.orderCommentList();
@@ -1951,7 +1961,8 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 
 		if (this.sectionProperties.commentList.length > 0) {
 			this.orderCommentList();
-			this.resetCommentsSize();
+			if (relayout)
+				this.resetCommentsSize();
 
 			var isRTL = document.documentElement.dir === 'rtl';
 
@@ -1983,21 +1994,20 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 					this.showArrow([tempCrd[0], tempCrd[1]], [posX, tempCrd[1]]);
 				}
 			}
-			else {
+			else
 				this.hideArrow();
-				app.sectionContainer.requestReDraw();
-			}
 
 			var lastY = 0;
 			if (selectedIndex) {
-				this.loopUp(selectedIndex - 1, x, yOrigin);
-				lastY = this.loopDown(selectedIndex, x, yOrigin);
+				this.loopUp(selectedIndex - 1, x, yOrigin, relayout);
+				lastY = this.loopDown(selectedIndex, x, yOrigin, relayout);
 			}
 			else {
-				lastY = this.loopDown(0, x, topRight[1]);
+				lastY = this.loopDown(0, x, topRight[1], relayout);
 			}
 		}
-		this.resizeComments();
+		if (relayout)
+			this.resizeComments();
 
 		lastY += this.containerObject.getDocumentTopLeft()[1];
 		if (lastY > app.file.size.pixels[1]) {
@@ -2010,21 +2020,21 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.disableLayoutAnimation = false;
 	}
 
-	private layout (zoom: any = null): void {
-		if (zoom)
-			this.doLayout();
+	private layout (immediate: any = null, relayout: boolean = true): void {
+		if (immediate)
+			this.doLayout(relayout);
 		else if (!this.sectionProperties.layoutTimer) {
-			this.sectionProperties.layoutTimer = setTimeout(function() {
+			this.sectionProperties.layoutTimer = setTimeout(() => {
 				delete this.sectionProperties.layoutTimer;
-				this.doLayout();
-			}.bind(this), 10 /* ms */);
+				this.doLayout(relayout);
+			}, 10 /* ms */);
 		} // else - avoid excessive re-layout
 	}
 
-	private update (): void {
-		if (this.sectionProperties.docLayer._docType === 'text')
+	private update (immediate: boolean = false, relayout: boolean = true): void {
+		if (relayout && this.sectionProperties.docLayer._docType === 'text')
 			this.updateThreadInfoIndicator();
-		this.layout();
+		this.layout(immediate, relayout);
 	}
 
 	private updateThreadInfoIndicator(): void {
@@ -2140,15 +2150,11 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	// reset theis size to default (100px text)
 	private resetCommentsSize (): void {
 		if (this.sectionProperties.docLayer._docType === 'text') {
-			const minMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-min-size'));
 			for (var i = 0; i < this.sectionProperties.commentList.length;i++) {
-				if (this.sectionProperties.commentList[i].sectionProperties.contentNode.style.display !== 'none')
-					this.sectionProperties.commentList[i].sectionProperties.contentNode.style.maxHeight = minMaxHeight + 'px';
-			}
-			if (this.sectionProperties.selectedComment) {
-				if (this.sectionProperties.selectedComment.sectionProperties.contentNode.style.display !== 'none') {
-					const maxMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-max-size'));
-					this.sectionProperties.selectedComment.sectionProperties.contentNode.style.maxHeight = maxMaxHeight + 'px';
+				if (this.sectionProperties.commentList[i].sectionProperties.contentNode.style.display !== 'none') {
+					const maxHeight = (this.sectionProperties.commentList[i] === this.sectionProperties.selectedComment) ?
+						this.annotationMaxSize : this.annotationMinSize;
+					this.sectionProperties.commentList[i].sectionProperties.contentNode.style.maxHeight = maxHeight + 'px';
 				}
 			}
 		}
