@@ -109,6 +109,8 @@ SslContext::SslContext(const std::string& certFilePath, const std::string& keyFi
     : _ctx(nullptr)
     , _verification(verification)
 {
+    LOG_INF("Initializing " << OPENSSL_VERSION_TEXT);
+
     const std::vector<char> rand = Util::rng::getBytes(512);
     RAND_seed(rand.data(), rand.size());
 
