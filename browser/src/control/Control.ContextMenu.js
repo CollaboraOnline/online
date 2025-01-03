@@ -109,6 +109,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 	onAdd: function (map) {
 		this._prevMousePos = null;
+		this._autoFillContextMenu = false;
 
 		map._contextMenu = this;
 		map.on('locontextmenu', this._onContextMenu, this);
@@ -131,6 +132,17 @@ L.Control.ContextMenu = L.Control.extend({
 
 	_onMouseUp: function (e) {
 		this._currMousePos = { x: e.originalEvent.pageX, y: e.originalEvent.pageY };
+		if (this._autoFillContextMenu) {
+			this._autoFillContextMenu = false;
+
+			var latlng = e.latlng;
+			var mousePos = this._map._docLayer._latLngToTwips(latlng);
+
+			// generate a left mouse click so that a single click can select a cell
+			// after closing the autofill context menu
+			this._map._docLayer._postMouseEvent('buttondown', mousePos.x, mousePos.y, 1, 1, 0);
+			this._map._docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
+		}
 	},
 
 	_onKeyDown: function(e) {
@@ -168,7 +180,7 @@ L.Control.ContextMenu = L.Control.extend({
 			} else if (menuItem.indexOf('.uno:AutoFill') !== -1) {
 				// we should close the autofill preview popup before open autofill context menu
 				map.fire('closeautofillpreviewpopup');
-				autoFillContextMenu = true;
+				this._autoFillContextMenu = autoFillContextMenu = true;
 				break;
 			}
 		}
