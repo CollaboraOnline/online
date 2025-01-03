@@ -139,7 +139,7 @@ public:
     static std::atomic<bool> InhibitThreadChecks;
 
     enum class Type : uint8_t { IPv4, IPv6, All, Unix };
-    static std::string toString(Type t);
+    static constexpr std::string_view toString(Type t);
 
     // NB. see other Socket::Socket by init below.
     Socket(Type type,
@@ -177,7 +177,12 @@ public:
 
     constexpr Type type() const { return _type; }
     constexpr bool isIPType() const { return Type::IPv4 == _type || Type::IPv6 == _type; }
-    void setClientAddress(const std::string& address, unsigned int port=0) { _clientAddress = address; _clientPort=port; }
+    void setClientAddress(std::string address, unsigned int port = 0)
+    {
+        _clientAddress = std::move(address);
+        _clientPort = port;
+    }
+
     const std::string& clientAddress() const { return _clientAddress; }
     unsigned int clientPort() const { return _clientPort; }
 

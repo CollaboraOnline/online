@@ -427,13 +427,12 @@ void cleanupDocBrokers()
 
     if (count != DocBrokers.size())
     {
-        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after cleanup.\n"
-                        <<
+        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after cleanup" <<
                 [&](auto& log)
                 {
                     for (auto& pair : DocBrokers)
                     {
-                        log << "DocumentBroker [" << pair.first << "].\n";
+                        log << "\nDocumentBroker [" << pair.first << ']';
                     }
                 });
 

@@ -20,7 +20,6 @@
 #include <unistd.h>
 
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
 
 #include "Admin.hpp"
 #include "AdminModel.hpp"
@@ -46,7 +45,6 @@
 
 using namespace COOLProtocol;
 
-using Poco::Net::HTTPResponse;
 using Poco::Util::Application;
 
 const int Admin::MinStatsIntervalMs = 50;

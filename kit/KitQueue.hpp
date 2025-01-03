@@ -57,10 +57,18 @@ public:
         std::string _payload;
 
         Callback() : _view(-1), _type(-1) { }
-        Callback(int view, int type, const std::string payload) :
-            _view(view), _type(type), _payload(payload) { }
+        Callback(const Callback&) = default;
+        Callback(Callback&&) = default;
+        Callback& operator=(const Callback&) = default;
+        Callback& operator=(Callback&&) = default;
+        Callback(int view, int type, std::string payload)
+            : _view(view)
+            , _type(type)
+            , _payload(std::move(payload))
+        {
+        }
 
-        static std::string toString(int view, int type, const std::string payload);
+        static std::string toString(int view, int type, const std::string& payload);
     };
 
     /// Queue a LibreOfficeKit callback for later emission

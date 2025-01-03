@@ -76,7 +76,7 @@ net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
-std::string Socket::toString(Type t)
+constexpr std::string_view Socket::toString(Type t)
 {
     switch (t)
     {
@@ -89,6 +89,7 @@ std::string Socket::toString(Type t)
         case Type::Unix:
             return "Unix";
     }
+
     return "Unknown";
 }
 
@@ -1170,12 +1171,14 @@ bool ServerSocket::isUnrecoverableAcceptError(const int cause)
         case ENOMEM:
         case ENOBUFS:
         {
-            LOG_DBG(messagePrefix << std::to_string(cause) << ", " << std::strerror(cause) << ')');
+            LOG_DBG(messagePrefix << Util::symbolicErrno(cause) << ", " << std::strerror(cause)
+                                  << ')');
             return false;
         }
         default:
         {
-            LOG_FTL(messagePrefix << std::to_string(cause) << ", " << std::strerror(cause) << ')');
+            LOG_FTL(messagePrefix << Util::symbolicErrno(cause) << ", " << std::strerror(cause)
+                                  << ')');
             return true;
         }
     }
@@ -1466,24 +1469,26 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
     if (!isIPType())
         return false;
 
-    // Forced removal on outside-facing IPv[46] network connections only
+    // Forced removal on outside-facing IPv{4,6} network connections only.
     const auto durLast =
         std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
-    /// Timeout criteria: Violate maximum inactivity (default 3600s)
+
+    // Timeout criteria: Violate maximum inactivity (default 3600s).
     const bool isInactive = net::Defaults.inactivityTimeout > std::chrono::microseconds::zero() &&
         durLast > net::Defaults.inactivityTimeout;
-    /// Timeout criteria: Shall terminate?
+
+    // Timeout criteria: Shall terminate?
     const bool isTermination = SigUtil::getTerminationFlag();
-    if (isInactive || isTermination )
+    if (isInactive || isTermination)
     {
-        LOG_WRN("CheckRemoval: Timeout: {Inactive " << isInactive
-                << ", Termination " << isTermination << "}, "
-                << getStatsString(now) << ", "
-                << *this);
+        LOG_WRN("CheckRemoval: Timeout: {Inactive " << isInactive << ", Termination "
+                                                    << isTermination << "}, " << getStatsString(now)
+                                                    << ", " << *this);
         if (_socketHandler)
         {
             _socketHandler->onDisconnect();
-            if (!isClosed()) {
+            if (!isClosed())
+            {
                 // Note: Ensure proper semantics of onDisconnect()
                 LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
                 shutdown(); // signal
@@ -1495,9 +1500,11 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
             shutdown(); // signal
             closeConnection(); // real -> setClosed()
         }
+
         assert(isClosed()); // should have issued shutdown
         return true;
     }
+
     return false;
 }
 
