@@ -2427,6 +2427,9 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
     capabilities->set("hasDocumentSigningSupport",
                       ConfigUtil::getBool("document_signing.enable", true));
 
+    // Advertise wopiAccessCheck endpoint availability
+    capabilities->set("hasWopiAccessCheck", true);
+
     const std::string serverName = ConfigUtil::getString("indirection_endpoint.server_name", "");
     if (const char* podName = std::getenv("POD_NAME"))
         capabilities->set("podName", podName);
