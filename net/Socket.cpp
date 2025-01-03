@@ -231,7 +231,7 @@ bool SslStreamSocket::verifyCertificate()
     }
 
     LOG_TRC("Verifying certificate of [" << hostname() << ']');
-    X509* x509 = SSL_get_peer_certificate(_ssl);
+    X509* x509 = SSL_get1_peer_certificate(_ssl);
     if (x509)
     {
         // Dump cert info, for debugging only.
@@ -273,7 +273,7 @@ bool SslStreamSocket::verifyCertificate()
 std::string SslStreamSocket::getSslCert(std::string& subjectHash)
 {
     std::ostringstream strstream;
-    if (X509* x509 = SSL_get_peer_certificate(_ssl))
+    if (X509* x509 = SSL_get1_peer_certificate(_ssl))
     {
         Poco::Net::X509Certificate cert(x509);
         cert.save(strstream);
