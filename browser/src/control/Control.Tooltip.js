@@ -19,11 +19,9 @@ class Tooltip {
 	constructor(options) {
 		this._options = L.extend({ timeout: 150 }, options);
 		let win = this._options.window ? this._options.window : window;
-		this._container = L.DomUtil.create(
-			'div',
-			'cooltip-text',
-			win.document.body,
-		);
+		this._container = this._options.container
+			? this._options.container
+			: L.DomUtil.create('div', 'cooltip-text', win.document.body);
 		this._container.id = 'cooltip';
 		this._container.addEventListener(
 			'mouseenter',
