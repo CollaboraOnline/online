@@ -417,8 +417,14 @@ export class ScrollSection extends CanvasSectionObject {
 
 	private drawVerticalScrollBar (): void {
 		var scrollProps: any = this.getVerticalScrollProperties();
+		const isDarkBackground = this.map.uiManager.isBackgroundDark();
+		const docType = this.sectionProperties.docLayer._docType;
 
 		var startX = this.isRTL() ? this.sectionProperties.edgeOffset : this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
+
+		if (isDarkBackground && (docType === 'text' || docType === 'drawing')) {
+			this.sectionProperties.scrollBarRailwayColor = 'transparent';
+		}
 
 		if (this.sectionProperties.drawScrollBarRailway) {
 			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayAlpha;
