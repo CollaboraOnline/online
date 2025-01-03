@@ -84,6 +84,7 @@ public:
         bool getSupportsRename() const { return _supportsRename; }
         bool getSupportsLocks() const { return _supportsLocks; }
         bool getUserCanRename() const { return _userCanRename; }
+        bool getUserCanOnlyComment() const { return _userCanOnlyComment; }
 
         const std::optional<bool> getIsAdminUser() const { return _isAdminUser; }
         const std::string& getIsAdminUserError() const { return _isAdminUserError; }
@@ -171,6 +172,8 @@ public:
         bool _userCanRename = false;
         /// If user is considered as admin on the integrator side
         std::optional<bool> _isAdminUser = std::nullopt;
+        /// If user is limited to only writing/modifiyng comments
+        bool _userCanOnlyComment = false;
 
         /// error code if integration does not use isAdminUser field properly
         std::string _isAdminUserError;

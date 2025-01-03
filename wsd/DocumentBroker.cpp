@@ -1312,6 +1312,14 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
         LOG_DBG("Setting session [" << sessionId << "] to readonly for UserCanWrite=false");
         session->setWritePermission(false); // Disable editing and commenting.
     }
+    else if (wopiFileInfo->getUserCanOnlyComment())
+    {
+        LOG_DBG("Setting session ["
+                << sessionId << "] to readonly for UserCanOnlyComment=true and allowing comments");
+        session->setWritable(true);
+        session->setReadOnly(true);
+        session->setAllowChangeComments(true);
+    }
     else if (session->isReadOnly()) // Readonly. Checks for URL "permission=readonly".
     {
         LOG_DBG("Setting session [" << sessionId << "] to readonly for permission=readonly");
