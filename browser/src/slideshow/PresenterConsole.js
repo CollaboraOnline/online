@@ -561,6 +561,11 @@ class PresenterConsole {
 
 		mainContentContainer.append(this.tooltip);
 
+		this._tooltip = L.control.tooltip({
+			window: this._proxyPresenter,
+			container: this.tooltip,
+		});
+
 		let allPresenterConsoleButtons =
 			this._proxyPresenter.document.querySelectorAll('button');
 		this._attachTooltips(allPresenterConsoleButtons);
