@@ -199,8 +199,12 @@ SslContext::SslContext(const std::string& certFilePath, const std::string& keyFi
         SSL_CTX_set_verify_depth(_ctx, 9);
 
         // The write buffer may re-allocate, and we don't mind partial writes.
-        SSL_CTX_set_mode(_ctx, SSL_MODE_ENABLE_PARTIAL_WRITE |
-                               SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER);
+        // Without auto-retry, when SSL_read processes non-application data,
+        // it would return with WANT_READ even when there is application data to
+        // process. This is reasonable for blocking sockets, but inefficient for
+        // non-blocking ones, wich we use. So we enable auto-retry.
+        SSL_CTX_set_mode(_ctx, SSL_MODE_ENABLE_PARTIAL_WRITE | SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER |
+                                   SSL_MODE_AUTO_RETRY);
         SSL_CTX_set_session_cache_mode(_ctx, SSL_SESS_CACHE_OFF);
 
         initDH();
