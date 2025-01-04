@@ -314,8 +314,14 @@ private:
         // Last operation failed. Find out if SSL was trying
         // to do something different that failed, or not.
         const int sslError = SSL_get_error(_ssl, rc);
+        LOG_ASSERT_MSG(sslError != SSL_ERROR_NONE, "Expected an SSL error to handle but have none");
         switch (sslError)
         {
+            case SSL_ERROR_NONE:
+                LOG_TRC("SSL error (" << context << "): ERROR_NONE (" << sslError
+                                      << "): " << getBioError(rc));
+                return rc;
+
             case SSL_ERROR_ZERO_RETURN:
                 // Shutdown complete, we're disconnected.
                 LOG_TRC("SSL error (" << context << "): ZERO_RETURN (" << sslError
