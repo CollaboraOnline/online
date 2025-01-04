@@ -11,16 +11,17 @@
 
 #include <config.h>
 
-#include <unistd.h>
 #include "Ssl.hpp"
+
+#include <common/Log.hpp>
+#include <Util.hpp>
+
+#include <sys/syscall.h>
+#include <unistd.h>
 
 #ifdef __FreeBSD__
 #include <pthread_np.h>
 #endif
-
-#include <sys/syscall.h>
-#include <common/Log.hpp>
-#include <Util.hpp>
 
 extern "C"
 {
