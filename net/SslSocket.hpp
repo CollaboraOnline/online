@@ -300,6 +300,17 @@ private:
             return rc;
         }
 
+        // Handle errors in the error-queue.
+        const int ret = handleSslError(rc, last_errno, context);
+
+        return ret;
+    }
+
+    /// Handle SSL errors after read or write. Called from handleSslState().
+    int handleSslError(const int rc, const int last_errno, const char* context)
+    {
+        assert(rc <= 0 && "Expected SSL failure to handle but have success");
+
         // Last operation failed. Find out if SSL was trying
         // to do something different that failed, or not.
         const int sslError = SSL_get_error(_ssl, rc);
