@@ -52,9 +52,6 @@
 /* User feedback URL. */
 #undef FEEDBACK_URL
 
-/* Whether OpenSSL has PKCS5_PBKDF2_HMAC() */
-#undef HAVE_PKCS5_PBKDF2_HMAC
-
 /* Define to 1 if you have the `ppoll' function. */
 #define HAVE_PPOLL 0
 

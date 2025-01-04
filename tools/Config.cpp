@@ -291,7 +291,6 @@ int Config::main(const std::vector<std::string>& args)
 
     if (args[0] == "set-admin-password")
     {
-#if HAVE_PKCS5_PBKDF2_HMAC
         std::vector<unsigned char> pwdhash(_adminConfig.getPwdHashLength());
         std::vector<unsigned char> salt(_adminConfig.getPwdSaltLength());
         RAND_bytes(salt.data(), _adminConfig.getPwdSaltLength());
@@ -364,10 +363,6 @@ int Config::main(const std::vector<std::string>& args)
         _coolConfig.setString("admin_console.secure_password", pwdConfigValue.str());
 
         changed = true;
-#else
-        std::cerr << "This application was compiled with old OpenSSL. Operation not supported. You can use plain text password in /etc/coolwsd/coolwsd.xml." << std::endl;
-        return EX_UNAVAILABLE;
-#endif
     }
     else if (ConfigUtil::isSupportKeyEnabled() && args[0] == "set-support-key")
     {

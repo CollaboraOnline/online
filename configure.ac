@@ -1447,18 +1447,17 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$ho
        fi
 
        PKG_CHECK_MODULES([OPENSSL], [openssl])
-       AC_MSG_CHECKING([Whether OpenSSL has PKCS5_PBKDF2_HMAC()])
+       AC_MSG_CHECKING([Whether OpenSSL is recent enough])
        AC_COMPILE_IFELSE([AC_LANG_SOURCE([
        #include <openssl/opensslv.h>
-       #if OPENSSL_VERSION_NUMBER < 0x10001000L
-       #error PKCS5_PBKDF2_HMAC() is in OpenSSL 1.0.1 or newer
+
+       /* OpenSSL 3.0.0 is the current mainline. */
+       #if OPENSSL_VERSION_NUMBER < 0x30000000
+       #error OpenSSL 3.0.0 or newer is required, override at your own risk
        #endif
        ])],
-                         [AC_MSG_RESULT([yes])
-                          AC_DEFINE([HAVE_PKCS5_PBKDF2_HMAC],1,[whether OpenSSL has PKCS5_PBKDF2_HMAC()])],
-                         [AC_MSG_RESULT([no])
-                          AC_MSG_WARN([OpenSSL is too old. Secure password storage for Admin Console is not supported.])
-                          AC_DEFINE([HAVE_PKCS5_PBKDF2_HMAC],0,[Whether OpenSSL has PKCS5_PBKDF2_HMAC()])])
+                         AC_MSG_RESULT([yes]),
+                         [AC_MSG_ERROR([OpenSSL is too old. Please use a more recent version.])])
 
        AC_MSG_CHECKING([POCO version])
        AC_COMPILE_IFELSE([AC_LANG_SOURCE([

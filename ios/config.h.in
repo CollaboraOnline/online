@@ -49,9 +49,6 @@
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
 
-/* Whether OpenSSL has PKCS5_PBKDF2_HMAC() */
-#define HAVE_PKCS5_PBKDF2_HMAC 0
-
 /* Define to 1 if you have the <Poco/Net/WebSocket.h> header file. */
 #define HAVE_POCO_NET_WEBSOCKET_H 1
 
