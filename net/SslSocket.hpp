@@ -305,6 +305,16 @@ private:
 
         if (rc > 0)
         {
+            const unsigned long bioError = ERR_peek_error();
+            if (bioError != 0)
+            {
+                LOG_DBG("Unexpected SSL error ("
+                        << bioError
+                        << ") after success implies uncleared earlier errors or "
+                           "a bug in the SSL library");
+                ERR_clear_error();
+            }
+
             // Success: Reset so we can do either.
             _sslWantsTo = SslWantsTo::Neither;
             return rc;
