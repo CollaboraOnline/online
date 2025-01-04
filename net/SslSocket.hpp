@@ -11,11 +11,10 @@
 
 #pragma once
 
-#include "Ssl.hpp"
-#include "Socket.hpp"
+#include <net/Ssl.hpp>
+#include <net/Socket.hpp>
 
 #include <cerrno>
-#include <memory>
 #include <sstream>
 #include <string>
 
