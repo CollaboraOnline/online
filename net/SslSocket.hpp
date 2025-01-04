@@ -314,17 +314,19 @@ private:
         // to do something different that failed, or not.
         const int sslError = SSL_get_error(_ssl, rc);
         LOG_ASSERT_MSG(sslError != SSL_ERROR_NONE, "Expected an SSL error to handle but have none");
+
+        const std::string bioErrStr = getBioError(rc);
         switch (sslError)
         {
             case SSL_ERROR_NONE:
                 LOG_TRC("SSL error (" << context << "): ERROR_NONE (" << sslError
-                                      << "): " << getBioError(rc));
+                                      << "): " << bioErrStr);
                 return rc;
 
             case SSL_ERROR_ZERO_RETURN:
                 // Shutdown complete, we're disconnected.
                 LOG_TRC("SSL error (" << context << "): ZERO_RETURN (" << sslError
-                                      << "): " << getBioError(rc));
+                                      << "): " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return 0;
 
@@ -333,7 +335,7 @@ private:
                 LOG_TRC("SSL error (" << context << "): WANT_READ (" << sslError << ") has "
                                       << (SSL_has_pending(_ssl) ? "" : "no")
                                       << " pending data to read: " << SSL_pending(_ssl) << ". "
-                                      << getBioError(rc));
+                                      << bioErrStr);
 #else
                 LOG_TRC("SSL error (" << context << "): WANT_READ (" << sslError << ").");
 #endif
@@ -346,7 +348,7 @@ private:
                 LOG_TRC("SSL error (" << context << "): WANT_WRITE (" << sslError << ") has "
                                       << (SSL_has_pending(_ssl) ? "" : "no")
                                       << " pending data to read: " << SSL_pending(_ssl) << ". "
-                                      << getBioError(rc));
+                                      << bioErrStr);
 #else
                 LOG_TRC("SSL error: WANT_WRITE (" << sslError << ").");
 #endif
@@ -356,20 +358,20 @@ private:
 
             case SSL_ERROR_WANT_CONNECT:
                 LOG_TRC("SSL error (" << context << "): WANT_CONNECT (" << sslError
-                                      << "): " << getBioError(rc));
+                                      << "): " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
             case SSL_ERROR_WANT_ACCEPT:
                 LOG_TRC("SSL error (" << context << "): WANT_ACCEPT (" << sslError
-                                      << "): " << getBioError(rc));
+                                      << "): " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
             case SSL_ERROR_WANT_X509_LOOKUP:
                 // Unexpected.
                 LOG_TRC("SSL error (" << context << "): WANT_X509_LOOKUP (" << sslError
-                                      << "): " << getBioError(rc));
+                                      << "): " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
@@ -379,7 +381,7 @@ private:
                     // Posix API error, let the caller handle.
                     LOG_TRC("SSL error (" << context << "): SYSCALL error " << sslError << " ("
                                           << Util::symbolicErrno(last_errno) << ": "
-                                          << std::strerror(last_errno) << "): " << getBioError(rc));
+                                          << std::strerror(last_errno) << "): " << bioErrStr);
                     errno = last_errno; // Restore errno.
                     return rc;
                 }
@@ -394,10 +396,10 @@ private:
                     LOG_TRC("BIO asks for retry - underlying EAGAIN? ("
                             << context << "): " << SSL_get_error(_ssl, rc) << " has_pending "
                             << SSL_has_pending(_ssl) << " bytes: " << SSL_pending(_ssl) << ". "
-                            << getBioError(rc));
+                            << bioErrStr);
 #else
                     LOG_TRC("BIO asks for retry - underlying EAGAIN? " << SSL_get_error(_ssl, rc)
-                                                                       << ". " << getBioError(rc));
+                                                                       << ". " << bioErrStr);
 #endif
                     errno = last_errno ? last_errno : EAGAIN; // Restore errno.
                     return -1; // poll is used to detect real errors.
@@ -405,21 +407,21 @@ private:
 
                 if (sslError == SSL_ERROR_SSL)
                     LOG_TRC("SSL error (" << context << "): SSL (" << sslError << ") "
-                                          << getBioError(rc));
+                                          << bioErrStr);
                 else if (sslError == SSL_ERROR_SYSCALL)
                     LOG_TRC("SSL error (" << context << "): SYSCALL (" << sslError << ") "
-                                          << getBioError(rc));
+                                          << bioErrStr);
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
                 else if (sslError == SSL_ERROR_WANT_ASYNC)
                     LOG_TRC("SSL error (" << context << "): WANT_ASYNC (" << sslError << ") "
-                                          << getBioError(rc));
+                                          << bioErrStr);
                 else if (sslError == SSL_ERROR_WANT_ASYNC_JOB)
                     LOG_TRC("SSL error (" << context << "): WANT_ASYNC_JOB (" << sslError << ") "
-                                          << getBioError(rc));
+                                          << bioErrStr);
 #endif
                 else
                     LOG_TRC("SSL error (" << context << "): UNKNOWN (" << sslError << ") "
-                                          << getBioError(rc));
+                                          << bioErrStr);
 
                 // The error is coming from BIO. Find out what happened.
                 const long bioError = ERR_peek_error();
@@ -432,7 +434,7 @@ private:
                     if (rc == 0)
                     {
                         // Socket closed. Not an error.
-                        oss << " (" << context << "): closed. " << getBioError(rc);
+                        oss << " (" << context << "): closed. " << bioErrStr;
                         LOG_INF(oss.str());
                         errno = last_errno; // Restore errno.
                         return 0;
@@ -451,7 +453,7 @@ private:
                     oss << " (" << context << "): unknown. ";
                 }
 
-                oss << getBioError(rc);
+                oss << bioErrStr;
                 const std::string msg = oss.str();
                 LOG_TRC("Throwing SSL Error ("
                         << context << "): " << msg); // Locate the source of the exception.
