@@ -413,11 +413,19 @@ private:
                                           << bioErrStr);
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
                 else if (sslError == SSL_ERROR_WANT_ASYNC)
-                    LOG_TRC("SSL error (" << context << "): WANT_ASYNC (" << sslError << ") "
+                {
+                    LOG_WRN("SSL error (" << context << "): WANT_ASYNC (" << sslError << ") "
                                           << bioErrStr);
+                    LOG_ASSERT_MSG(sslError != SSL_ERROR_WANT_ASYNC,
+                                   "Unexpected WANT_ASYNC; SSL_MODE_ASYNC is unsupported");
+                }
                 else if (sslError == SSL_ERROR_WANT_ASYNC_JOB)
-                    LOG_TRC("SSL error (" << context << "): WANT_ASYNC_JOB (" << sslError << ") "
+                {
+                    LOG_WRN("SSL error (" << context << "): WANT_ASYNC_JOB (" << sslError << ") "
                                           << bioErrStr);
+                    LOG_ASSERT_MSG(sslError != SSL_ERROR_WANT_ASYNC_JOB,
+                                   "Unexpected WANT_ASYNC_JOB; SSL_MODE_ASYNC is unsupported");
+                }
 #endif
                 else
                     LOG_TRC("SSL error (" << context << "): UNKNOWN (" << sslError << ") "
