@@ -167,7 +167,6 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
             return false;
         }
 
-#if HAVE_PKCS5_PBKDF2_HMAC
         // Extract the salt from the config
         std::vector<unsigned char> saltData;
         StringVector tokens = StringVector::tokenize(securePass, '.');
@@ -193,14 +192,6 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
 
         // now compare the hashed user-provided pwd against the stored hash
         return tokens.equals(4, stream.str());
-#else
-        const std::string pass = config.getString("admin_console.password", "");
-        LOG_ERR("The config file has admin_console.secure_password setting, "
-                << "but this application was compiled with old OpenSSL version, "
-                << "and this setting cannot be used." << (!pass.empty()? " Falling back to plain text password.": ""));
-
-        // careful, a fall-through!
-#endif
     }
 
     const std::string pass = config.getString("admin_console.password", "");
