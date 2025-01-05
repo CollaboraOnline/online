@@ -305,6 +305,42 @@ private:
         return ret;
     }
 
+    /// Maps SSL Error codes to their respective string form.
+    constexpr std::string_view sslErrorToName(int sslError)
+    {
+        switch (sslError)
+        {
+            case SSL_ERROR_NONE:
+                return "NONE";
+            case SSL_ERROR_SSL:
+                return "SSL";
+            case SSL_ERROR_WANT_READ:
+                return "WANT_READ";
+            case SSL_ERROR_WANT_WRITE:
+                return "WANT_WRITE";
+            case SSL_ERROR_WANT_X509_LOOKUP:
+                return "WANT_X509_LOOKUP";
+            case SSL_ERROR_SYSCALL:
+                return "SYSCALL";
+            case SSL_ERROR_ZERO_RETURN:
+                return "ZERO_RETURN";
+            case SSL_ERROR_WANT_CONNECT:
+                return "WANT_CONNECT";
+            case SSL_ERROR_WANT_ACCEPT:
+                return "WANT_ACCEPT";
+            case SSL_ERROR_WANT_ASYNC:
+                return "WANT_ASYNC";
+            case SSL_ERROR_WANT_ASYNC_JOB:
+                return "WANT_ASYNC_JOB";
+            case SSL_ERROR_WANT_CLIENT_HELLO_CB:
+                return "WANT_CLIENT_HELLO_CB";
+            case SSL_ERROR_WANT_RETRY_VERIFY:
+                return "WANT_RETRY_VERIFY";
+        }
+
+        return "UNKNOWN";
+    }
+
     /// Handle SSL errors after read or write. Called from handleSslState().
     int handleSslError(const int rc, const int last_errno, const char* context)
     {
@@ -315,33 +351,35 @@ private:
         const int sslError = SSL_get_error(_ssl, rc);
         LOG_ASSERT_MSG(sslError != SSL_ERROR_NONE, "Expected an SSL error to handle but have none");
 
+#define SSL_LOG_PREFIX(CONTEXT, SSL_ERR, RC, ERRNO)                                                \
+    "SSL error (" << CONTEXT << "): " << sslErrorToName(SSL_ERR) << " (" << SSL_ERR                \
+                  << "), rc: " << RC << ", errno: " << ERRNO << " ("                               \
+                  << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno) << ")"
+
         // Handle non-fatal cases first.
         const std::string bioErrStr = getBioError(rc);
         switch (sslError)
         {
             // Not an error; should be handled elsewhere.
             case SSL_ERROR_NONE: // 0
-                LOG_TRC("SSL error (" << context << "): ERROR_NONE (" << sslError
-                                      << "): " << bioErrStr);
+                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 return rc;
 
             // Peer stopped writing. We have nothing more to read, but can write.
             case SSL_ERROR_ZERO_RETURN: // 6
                 // Shutdown complete, we're disconnected.
-                LOG_TRC("SSL error (" << context << "): ZERO_RETURN (" << sslError
-                                      << "): " << bioErrStr);
+                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return 0;
 
             // Retry: Need to read data.
             case SSL_ERROR_WANT_READ: // 2
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
-                LOG_TRC("SSL error (" << context << "): WANT_READ (" << sslError << ") has "
-                                      << (SSL_has_pending(_ssl) ? "" : "no")
-                                      << " pending data to read: " << SSL_pending(_ssl) << ". "
-                                      << bioErrStr);
+                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno)
+                        << " has " << (SSL_has_pending(_ssl) ? "" : "no")
+                        << " pending data to read: " << SSL_pending(_ssl) << ". " << bioErrStr);
 #else
-                LOG_TRC("SSL error (" << context << "): WANT_READ (" << sslError << ").");
+                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
 #endif
                 _sslWantsTo = SslWantsTo::Read;
                 errno = last_errno; // Restore errno.
@@ -350,12 +388,11 @@ private:
             // Retry: Need to write data.
             case SSL_ERROR_WANT_WRITE: // 3
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
-                LOG_TRC("SSL error (" << context << "): WANT_WRITE (" << sslError << ") has "
-                                      << (SSL_has_pending(_ssl) ? "" : "no")
-                                      << " pending data to read: " << SSL_pending(_ssl) << ". "
-                                      << bioErrStr);
+                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno)
+                        << " has " << (SSL_has_pending(_ssl) ? "" : "no")
+                        << " pending data to read: " << SSL_pending(_ssl) << ". " << bioErrStr);
 #else
-                LOG_TRC("SSL error: WANT_WRITE (" << sslError << ").");
+                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
 #endif
                 _sslWantsTo = SslWantsTo::Write;
                 errno = last_errno; // Restore errno.
@@ -363,29 +400,25 @@ private:
 
             // Retry.
             case SSL_ERROR_WANT_CONNECT: // 7
-                LOG_TRC("SSL error (" << context << "): WANT_CONNECT (" << sslError
-                                      << "): " << bioErrStr);
+                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
             // Retry.
             case SSL_ERROR_WANT_ACCEPT: // 8
-                LOG_TRC("SSL error (" << context << "): WANT_ACCEPT (" << sslError
-                                      << "): " << bioErrStr);
+                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
             // Unexpected: happens only with SSL_CTX_set_client_cert_cb().
             case SSL_ERROR_WANT_X509_LOOKUP: // 4
-                LOG_TRC("SSL error (" << context << "): WANT_X509_LOOKUP (" << sslError
-                                      << "): " << bioErrStr);
+                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
             // Unexpected: happens only with SSL_CTX_set_client_cert_cb().
             case SSL_ERROR_WANT_CLIENT_HELLO_CB: // 11
-                LOG_TRC("SSL error (" << context << "): WANT_X509_LOOKUP (" << sslError
-                                      << "): " << bioErrStr);
+                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
@@ -395,9 +428,7 @@ private:
                 if (last_errno != 0)
                 {
                     // Posix API error, let the caller handle.
-                    LOG_TRC("SSL error (" << context << "): SYSCALL error " << sslError << " ("
-                                          << Util::symbolicErrno(last_errno) << ": "
-                                          << std::strerror(last_errno) << "): " << bioErrStr);
+                    LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                     errno = last_errno; // Restore errno.
                     return rc;
                 }
@@ -424,30 +455,25 @@ private:
                 // Non-recoverable, fatal I/O error occurred.
                 // SSL_shutdown() must not be called.
                 if (sslError == SSL_ERROR_SSL) // 1
-                    LOG_TRC("SSL error (" << context << "): SSL (" << sslError << ") "
-                                          << bioErrStr);
+                    LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 else if (sslError == SSL_ERROR_SYSCALL) // 5
-                    LOG_TRC("SSL error (" << context << "): SYSCALL (" << sslError << ") "
-                                          << bioErrStr);
+                    LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
                 else if (sslError == SSL_ERROR_WANT_ASYNC) // 9
                 {
-                    LOG_WRN("SSL error (" << context << "): WANT_ASYNC (" << sslError << ") "
-                                          << bioErrStr);
+                    LOG_WRN(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                     LOG_ASSERT_MSG(sslError != SSL_ERROR_WANT_ASYNC,
                                    "Unexpected WANT_ASYNC; SSL_MODE_ASYNC is unsupported");
                 }
                 else if (sslError == SSL_ERROR_WANT_ASYNC_JOB) // 10
                 {
-                    LOG_WRN("SSL error (" << context << "): WANT_ASYNC_JOB (" << sslError << ") "
-                                          << bioErrStr);
+                    LOG_WRN(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                     LOG_ASSERT_MSG(sslError != SSL_ERROR_WANT_ASYNC_JOB,
                                    "Unexpected WANT_ASYNC_JOB; SSL_MODE_ASYNC is unsupported");
                 }
 #endif
                 else
-                    LOG_TRC("SSL error (" << context << "): UNKNOWN (" << sslError << ") "
-                                          << bioErrStr);
+                    LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
 
                 // The error is coming from BIO. Find out what happened.
                 const long bioError = ERR_peek_error();
@@ -496,6 +522,8 @@ private:
             }
             break;
         }
+
+#undef SSL_LOG_PREFIX
 
         errno = last_errno; // Restore errno.
         return rc;
