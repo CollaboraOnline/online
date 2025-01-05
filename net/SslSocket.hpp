@@ -358,7 +358,7 @@ private:
                   << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno) << ")"
 
         // Handle non-fatal cases first.
-        const std::string bioErrStr = getBioError(rc);
+        const std::string bioErrStr = getBioError();
         switch (sslError)
         {
             // Not an error; should be handled elsewhere.
@@ -530,13 +530,13 @@ private:
         return rc;
     }
 
-    std::string getBioError(const int rc) const
+    std::string getBioError() const
     {
         // The error is coming from BIO. Find out what happened.
         const long bioError = ERR_peek_error();
 
         std::ostringstream oss;
-        oss << "BIO error: " << bioError << ", rc: " << rc;
+        oss << "BIO error: " << bioError;
 
         char buf[512];
         ERR_error_string_n(bioError, buf, sizeof(buf));
