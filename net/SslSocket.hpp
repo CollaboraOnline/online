@@ -315,22 +315,26 @@ private:
         const int sslError = SSL_get_error(_ssl, rc);
         LOG_ASSERT_MSG(sslError != SSL_ERROR_NONE, "Expected an SSL error to handle but have none");
 
+        // Handle non-fatal cases first.
         const std::string bioErrStr = getBioError(rc);
         switch (sslError)
         {
-            case SSL_ERROR_NONE:
+            // Not an error; should be handled elsewhere.
+            case SSL_ERROR_NONE: // 0
                 LOG_TRC("SSL error (" << context << "): ERROR_NONE (" << sslError
                                       << "): " << bioErrStr);
                 return rc;
 
-            case SSL_ERROR_ZERO_RETURN:
+            // Peer stopped writing. We have nothing more to read, but can write.
+            case SSL_ERROR_ZERO_RETURN: // 6
                 // Shutdown complete, we're disconnected.
                 LOG_TRC("SSL error (" << context << "): ZERO_RETURN (" << sslError
                                       << "): " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return 0;
 
-            case SSL_ERROR_WANT_READ:
+            // Retry: Need to read data.
+            case SSL_ERROR_WANT_READ: // 2
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
                 LOG_TRC("SSL error (" << context << "): WANT_READ (" << sslError << ") has "
                                       << (SSL_has_pending(_ssl) ? "" : "no")
@@ -343,7 +347,8 @@ private:
                 errno = last_errno; // Restore errno.
                 return rc;
 
-            case SSL_ERROR_WANT_WRITE:
+            // Retry: Need to write data.
+            case SSL_ERROR_WANT_WRITE: // 3
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
                 LOG_TRC("SSL error (" << context << "): WANT_WRITE (" << sslError << ") has "
                                       << (SSL_has_pending(_ssl) ? "" : "no")
@@ -356,26 +361,37 @@ private:
                 errno = last_errno; // Restore errno.
                 return rc;
 
-            case SSL_ERROR_WANT_CONNECT:
+            // Retry.
+            case SSL_ERROR_WANT_CONNECT: // 7
                 LOG_TRC("SSL error (" << context << "): WANT_CONNECT (" << sslError
                                       << "): " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
-            case SSL_ERROR_WANT_ACCEPT:
+            // Retry.
+            case SSL_ERROR_WANT_ACCEPT: // 8
                 LOG_TRC("SSL error (" << context << "): WANT_ACCEPT (" << sslError
                                       << "): " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
-            case SSL_ERROR_WANT_X509_LOOKUP:
-                // Unexpected.
+            // Unexpected: happens only with SSL_CTX_set_client_cert_cb().
+            case SSL_ERROR_WANT_X509_LOOKUP: // 4
                 LOG_TRC("SSL error (" << context << "): WANT_X509_LOOKUP (" << sslError
                                       << "): " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
-            case SSL_ERROR_SYSCALL:
+            // Unexpected: happens only with SSL_CTX_set_client_cert_cb().
+            case SSL_ERROR_WANT_CLIENT_HELLO_CB: // 11
+                LOG_TRC("SSL error (" << context << "): WANT_X509_LOOKUP (" << sslError
+                                      << "): " << bioErrStr);
+                errno = last_errno; // Restore errno.
+                return rc;
+
+            // Non-recoverable, fatal I/O error occurred.
+            // Check errno *and* the error queue.
+            case SSL_ERROR_SYSCALL: // 5
                 if (last_errno != 0)
                 {
                     // Posix API error, let the caller handle.
@@ -405,21 +421,23 @@ private:
                     return -1; // poll is used to detect real errors.
                 }
 
-                if (sslError == SSL_ERROR_SSL)
+                // Non-recoverable, fatal I/O error occurred.
+                // SSL_shutdown() must not be called.
+                if (sslError == SSL_ERROR_SSL) // 1
                     LOG_TRC("SSL error (" << context << "): SSL (" << sslError << ") "
                                           << bioErrStr);
-                else if (sslError == SSL_ERROR_SYSCALL)
+                else if (sslError == SSL_ERROR_SYSCALL) // 5
                     LOG_TRC("SSL error (" << context << "): SYSCALL (" << sslError << ") "
                                           << bioErrStr);
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
-                else if (sslError == SSL_ERROR_WANT_ASYNC)
+                else if (sslError == SSL_ERROR_WANT_ASYNC) // 9
                 {
                     LOG_WRN("SSL error (" << context << "): WANT_ASYNC (" << sslError << ") "
                                           << bioErrStr);
                     LOG_ASSERT_MSG(sslError != SSL_ERROR_WANT_ASYNC,
                                    "Unexpected WANT_ASYNC; SSL_MODE_ASYNC is unsupported");
                 }
-                else if (sslError == SSL_ERROR_WANT_ASYNC_JOB)
+                else if (sslError == SSL_ERROR_WANT_ASYNC_JOB) // 10
                 {
                     LOG_WRN("SSL error (" << context << "): WANT_ASYNC_JOB (" << sslError << ") "
                                           << bioErrStr);
