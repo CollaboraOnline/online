@@ -217,7 +217,7 @@ namespace Util
         return result;
     }
 
-    std::string replaceAllOf(const std::string &str, const std::string& match, const std::string& repl)
+    std::string replaceAllOf(std::string_view str, std::string_view match, std::string_view repl)
     {
         std::ostringstream os;
 
@@ -240,8 +240,8 @@ namespace Util
 
     std::string cleanupFilename(const std::string &filename)
     {
-        static const std::string mtch(",/?:@&=+$#'\"");
-        static const std::string repl("------------");
+        constexpr std::string_view mtch(",/?:@&=+$#'\"");
+        constexpr std::string_view repl("------------");
         return replaceAllOf(filename, mtch, repl);
     }
 

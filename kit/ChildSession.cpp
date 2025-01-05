@@ -22,6 +22,7 @@
 #include <fstream>
 #include <memory>
 #include <sstream>
+#include <string_view>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -2143,8 +2144,8 @@ bool ChildSession::renderSearchResult(const char* buffer, int length, const Stri
 
         if (Png::encodeBufferToPNG(bitmapBuffer, width, height, output, eTileMode))
         {
-            static const std::string header = "rendersearchresult:\n";
-            size_t responseSize = header.size() + output.size();
+            constexpr std::string_view header = "rendersearchresult:\n";
+            const size_t responseSize = header.size() + output.size();
             std::vector<char> response(responseSize);
             std::copy(header.begin(), header.end(), response.begin());
             std::copy(output.begin(), output.end(), response.begin() + header.size());
@@ -3111,8 +3112,8 @@ bool ChildSession::renderShapeSelection(const StringVector& tokens)
     const std::size_t outputSize = getLOKitDocument()->renderShapeSelection(&output);
     if (output != nullptr && outputSize > 0)
     {
-        static const std::string header = "shapeselectioncontent:\n";
-        size_t responseSize = header.size() + outputSize;
+        constexpr std::string_view header = "shapeselectioncontent:\n";
+        const size_t responseSize = header.size() + outputSize;
         std::unique_ptr<char[]> response(new char[responseSize]);
         std::memcpy(response.get(), header.data(), header.size());
         std::memcpy(response.get() + header.size(), output, outputSize);

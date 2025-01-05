@@ -4677,8 +4677,8 @@ void DocumentBroker::onUrpMessage(const char* data, size_t len)
     const auto session = getWriteableSession();
     if (session)
     {
-        static const std::string header = "urp: ";
-        size_t responseSize = header.size() + len;
+        constexpr std::string_view header = "urp: ";
+        const size_t responseSize = header.size() + len;
         std::vector<char> response(responseSize);
         std::memcpy(response.data(), header.data(), header.size());
         std::memcpy(response.data() + header.size(), data, len);

@@ -2103,7 +2103,7 @@ bool Document::forwardToChild(const std::string& prefix, const std::vector<char>
         {
             std::shared_ptr<ChildSession> session = it->second;
 
-            static const std::string disconnect("disconnect");
+            constexpr std::string_view disconnect("disconnect");
             if (size == disconnect.size() &&
                 strncmp(data, disconnect.data(), disconnect.size()) == 0)
             {

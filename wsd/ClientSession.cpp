@@ -3151,7 +3151,7 @@ std::string ClientSession::processSVGContent(const std::string& svg)
     std::string::size_type pos = 0;
     for (;;)
     {
-        static const std::string prefix = "src=\"file:///tmp/";
+        constexpr std::string_view prefix = "src=\"file:///tmp/";
         const auto start = svg.find(prefix, pos);
         if (start == std::string::npos)
         {
