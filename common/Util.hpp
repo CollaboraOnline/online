@@ -370,7 +370,7 @@ namespace Util
     std::string replace(std::string s, const std::string& a, const std::string& b);
 
     /// Replace any characters in @a matching characters in @b with replacement chars in @c and return
-    std::string replaceAllOf(const std::string &str, const std::string& match, const std::string& repl);
+    std::string replaceAllOf(std::string_view str, std::string_view match, std::string_view repl);
 
     std::string formatLinesForLog(const std::string& s);
 
