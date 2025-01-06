@@ -346,6 +346,7 @@ void cleanupChildren(const std::string& childRoot)
                 }
                 else if (status == SIGKILL)
                 {
+#if !defined(MACOS)
                     // TODO differentiate with docker
                     if (info.si_code == SI_KERNEL)
                     {
@@ -354,6 +355,7 @@ void cleanupChildren(const std::string& childRoot)
                                          << status);
                     }
                     else
+#endif
                     {
                         ++killedCount;
                         LOG_WRN("Child " << exitedChildPid << " was killed, with status "
