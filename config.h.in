@@ -132,6 +132,9 @@
 /* Define to 1 if this is the WASM app build. */
 #undef WASMAPP
 
+/* Define to 1 if building for macOS */
+#undef MACOS
+
 /* Makes config variables conditionally static, only in non-debug builds, to allow for overriding them in unit-tests. */
 #undef CONFIG_STATIC_TYPE
 
