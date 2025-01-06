@@ -19,7 +19,6 @@
 #include <zlib.h>
 #include <zstd.h>
 #include <stdint.h>
-#include <endian.h>
 
 #include <common/HexUtil.hpp>
 #include <Log.hpp>
@@ -167,7 +166,7 @@ class DeltaGenerator {
             output[0] = _rleSize & 0xff;
             output[1] = _rleSize >> 8;
 
-#if __BYTE_ORDER != __BIG_ENDIAN || defined(IOS)
+#if __BYTE_ORDER__ != __ORDER_BIG_ENDIAN__
             memcpy(output + 2, _rleMask, sizeof(_rleMask));
 #else
             // rare machine: little-endianize the bitmask if necessary:
