@@ -28,11 +28,14 @@
 #include <ftw.h>
 #include <sys/vfs.h>
 #include <linux/magic.h>
-#include <sys/capability.h>
 #include <sys/sysmacros.h>
 #endif
 
-#ifdef __FreeBSD__
+#if HAVE_LIBCAP
+#include <sys/capability.h>
+#endif
+
+#if defined(__FreeBSD__)
 #include <ftw.h>
 #define FTW_CONTINUE 0
 #define FTW_STOP (-1)
@@ -723,7 +726,7 @@ namespace
     }
 #endif
 
-#ifndef __FreeBSD__
+#if HAVE_LIBCAP
     void dropCapability(cap_value_t capability)
     {
         cap_t caps;
@@ -3641,7 +3644,7 @@ void lokit_main(
                 Util::forcedExit(EX_SOFTWARE);
             }
 
-#ifndef __FreeBSD__
+#if HAVE_LIBCAP
             if (usingMountNamespace)
             {
                 // We have a full set of capabilities in the namespace so drop
@@ -3655,10 +3658,11 @@ void lokit_main(
                 dropCapability(CAP_FOWNER);
                 dropCapability(CAP_CHOWN);
             }
-#endif
+
             char *capText = cap_to_text(cap_get_proc(), nullptr);
             LOG_DBG("Initialized jail nodes, dropped caps. Final caps are: " << capText);
             cap_free(capText);
+#endif
         }
         else // noCapabilities set
         {

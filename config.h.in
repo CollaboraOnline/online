@@ -58,6 +58,9 @@
 /* User feedback URL. */
 #undef FEEDBACK_URL
 
+/* Define to 1 libcap (cap_get_proc) is available, otherwise 0 */
+#undef HAVE_LIBCAP
+
 /* Define to 1 if you have the `ppoll' function. */
 #define HAVE_PPOLL 0
 
