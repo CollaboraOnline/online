@@ -85,6 +85,7 @@
 		BE2249302CC79BAE00385A9C /* device-desktop.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "device-desktop.css"; path = "../../../browser/dist/device-desktop.css"; sourceTree = "<group>"; };
 		BE2249312CC79BAE00385A9C /* global.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = global.js; path = ../../../browser/dist/global.js; sourceTree = "<group>"; };
 		BE22AA9B2CC7AE7400385A9C /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../browser/dist/images; sourceTree = "<group>"; };
+		BE5A7A282D2BE28200FE7D60 /* FileUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FileUtil.hpp; path = ../../../../common/FileUtil.hpp; sourceTree = "<group>"; };
 		BE9115A92CECBCB200C597B2 /* SigUtil-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "SigUtil-mobile.cpp"; path = "../../../../common/SigUtil-mobile.cpp"; sourceTree = "<group>"; };
 		BE9115AB2CECBD0100C597B2 /* FileUtil-apple.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "FileUtil-apple.mm"; path = "../../../../common/FileUtil-apple.mm"; sourceTree = "<group>"; };
 		BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "FileUtil-unix.cpp"; path = "../../../../common/FileUtil-unix.cpp"; sourceTree = "<group>"; };
@@ -217,6 +218,7 @@
 				BEA263542CBE38E20007435A /* ConfigUtil.hpp */,
 				BEA263552CBE38E20007435A /* ConfigUtil.cpp */,
 				BE2231B72CC679DE00385A9C /* Crypto-stub.cpp */,
+				BE5A7A282D2BE28200FE7D60 /* FileUtil.hpp */,
 				BEA263562CBE38E20007435A /* FileUtil.cpp */,
 				BE9115AB2CECBD0100C597B2 /* FileUtil-apple.mm */,
 				BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */,
@@ -625,7 +627,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
-					"MACOS=MACOS",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -708,7 +709,6 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					"MACOS=MACOS",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
