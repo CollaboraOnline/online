@@ -608,7 +608,7 @@ namespace Util
     size_t findInVector(const std::vector<char>& tokens, const char *cstring, std::size_t offset = 0);
 
     /// Trim trailing characters (on the right).
-    inline std::string_view trim(const std::string_view s, const char ch)
+    inline std::string_view rtrim(const std::string_view s, const char ch)
     {
         const size_t last = s.find_last_not_of(ch);
         if (last != std::string::npos)
