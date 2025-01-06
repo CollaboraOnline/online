@@ -1843,6 +1843,7 @@ AC_SUBST(IOSAPP_FONTS)
 
 AC_CHECK_FUNCS(ppoll)
 AC_CHECK_FUNCS([memrchr])
+AC_CHECK_FUNCS([pipe2])
 
 ENABLE_CYPRESS=false
 if test "$enable_cypress" = "yes"; then
