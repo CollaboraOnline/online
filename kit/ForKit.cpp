@@ -15,7 +15,7 @@
 
 #include <config.h>
 
-#ifndef __FreeBSD__
+#if HAVE_LIBCAP
 #include <sys/capability.h>
 #endif
 #include <sys/types.h>
@@ -216,7 +216,7 @@ protected:
     }
 };
 
-#ifndef __FreeBSD__
+#if HAVE_LIBCAP
 static bool haveCapability(cap_value_t capability)
 {
     using ScopedCaps = std::unique_ptr<std::remove_pointer<cap_t>::type, int (*)(void*)>;
@@ -291,7 +291,7 @@ static bool haveCorrectCapabilities()
     // chroot() can only be called by root
     return getuid() == 0;
 }
-#endif // __FreeBSD__
+#endif // HAVE_LIBCAP
 
 /// Check if some previously forked kids have died.
 static void cleanupChildren(const std::string& childRoot)
