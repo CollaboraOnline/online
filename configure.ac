@@ -1040,6 +1040,16 @@ AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
 AC_SUBST(IOSAPP_BUNDLE_SHORT_VERSION)
 AC_SUBST(IOSAPP_BUNDLE_VERSION)
 
+# Check if we are on macOS (darwin) to define "MACOS" in config.h
+# We want this to be general, regardless of using --enable-macosapp, and it
+# could be potentially extended to handle the other defines like IOS, WASMAPP
+# or _WINDOWS (but at least iOS and Windows are using their own config.h)
+case "$host_os" in
+    darwin*)
+        AC_DEFINE([MACOS], [1], [Define to 1 if building for macOS])
+        ;;
+esac
+
 ENABLE_MACOSAPP=
 #MACOSAPP_BUNDLE_VERSION=
 
