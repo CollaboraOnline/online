@@ -358,18 +358,18 @@ private:
 
         // Handle non-fatal cases first.
         const std::string bioErrStr = getBioError();
+        LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
+
         switch (sslError)
         {
             // Not an error; should be handled elsewhere.
             case SSL_ERROR_NONE: // 0
-                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
             // Peer stopped writing. We have nothing more to read, but can write.
+            // This doesn't necessarily signify that we are disconnected.
             case SSL_ERROR_ZERO_RETURN: // 6
-                // Shutdown complete, we're disconnected.
-                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return 0;
 
@@ -377,11 +377,9 @@ private:
             case SSL_ERROR_WANT_READ: // 2
             case SSL_ERROR_WANT_WRITE: // 3
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
-                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno)
-                        << " has " << (SSL_has_pending(_ssl) ? "" : "no")
-                        << " pending data to read: " << SSL_pending(_ssl) << ". " << bioErrStr);
-#else
-                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
+                LOG_TRC(sslErrorToName(sslError)
+                        << " with " << (SSL_has_pending(_ssl) ? "(" : "no(") << SSL_pending(_ssl)
+                        << ") pending data to read");
 #endif
                 _sslWantsTo =
                     sslError == SSL_ERROR_WANT_READ ? SslWantsTo::Read : SslWantsTo::Write;
@@ -391,20 +389,17 @@ private:
             // Retry.
             case SSL_ERROR_WANT_CONNECT: // 7
             case SSL_ERROR_WANT_ACCEPT: // 8
-                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
             // Unexpected: happens only with SSL_CTX_set_client_cert_cb().
             case SSL_ERROR_WANT_X509_LOOKUP: // 4
             case SSL_ERROR_WANT_CLIENT_HELLO_CB: // 11
-                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
             case SSL_ERROR_WANT_ASYNC: // 9
             case SSL_ERROR_WANT_ASYNC_JOB: // 10
-                LOG_WRN(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 LOG_ASSERT(!"SSL_MODE_ASYNC is unsupported");
                 errno = last_errno; // Restore errno.
                 return rc;
@@ -415,7 +410,6 @@ private:
                 if (last_errno != 0)
                 {
                     // Posix API error, let the caller handle.
-                    LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                     errno = last_errno; // Restore errno.
                     return rc;
                 }
@@ -427,19 +421,15 @@ private:
             case SSL_ERROR_SSL: // 1
             default:
             {
-                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
-
                 // Effectively an EAGAIN error at the BIO layer
                 if (BIO_should_retry(_bio))
                 {
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
-                    LOG_TRC("BIO asks for retry - underlying EAGAIN? ("
-                            << context << "): " << SSL_get_error(_ssl, rc) << " has_pending "
-                            << SSL_has_pending(_ssl) << " bytes: " << SSL_pending(_ssl) << ". "
-                            << bioErrStr);
+                    LOG_TRC("BIO asks for retry - underlying EAGAIN? with "
+                            << (SSL_has_pending(_ssl) ? "(" : "no(") << SSL_pending(_ssl)
+                            << ") pending data to read");
 #else
-                    LOG_TRC("BIO asks for retry - underlying EAGAIN? " << SSL_get_error(_ssl, rc)
-                                                                       << ". " << bioErrStr);
+                    LOG_TRC("BIO asks for retry - underlying EAGAIN?");
 #endif
                     errno = last_errno ? last_errno : EAGAIN; // Restore errno.
                     return -1; // poll is used to detect real errors.
