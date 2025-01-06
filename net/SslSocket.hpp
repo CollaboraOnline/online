@@ -351,14 +351,12 @@ private:
         const int sslError = SSL_get_error(_ssl, rc);
         LOG_ASSERT_MSG(sslError != SSL_ERROR_NONE, "Expected an SSL error to handle but have none");
 
-#define SSL_LOG_PREFIX(CONTEXT, SSL_ERR, RC, ERRNO)                                                \
-    "SSL error (" << CONTEXT << "): " << sslErrorToName(SSL_ERR) << " (" << SSL_ERR                \
-                  << "), rc: " << RC << ", errno: " << ERRNO << " ("                               \
-                  << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno) << ")"
-
         // Handle non-fatal cases first.
         const std::string bioErrStr = getBioError();
-        LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
+        LOG_TRC("SSL error (" << context << "): " << sslErrorToName(sslError) << " (" << sslError
+                              << "), rc: " << rc << ", errno: " << last_errno << " ("
+                              << Util::symbolicErrno(last_errno) << ": "
+                              << std::strerror(last_errno) << ")" << ": " << bioErrStr);
 
         switch (sslError)
         {
@@ -482,8 +480,6 @@ private:
             }
             break;
         }
-
-#undef SSL_LOG_PREFIX
 
         errno = last_errno; // Restore errno.
         return rc;
