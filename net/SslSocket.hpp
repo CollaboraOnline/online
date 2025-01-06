@@ -363,6 +363,7 @@ private:
             // Not an error; should be handled elsewhere.
             case SSL_ERROR_NONE: // 0
                 LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
+                errno = last_errno; // Restore errno.
                 return rc;
 
             // Peer stopped writing. We have nothing more to read, but can write.
@@ -372,20 +373,8 @@ private:
                 errno = last_errno; // Restore errno.
                 return 0;
 
-            // Retry: Need to read data.
+            // Retry: Need to read/write data. Effectively, EAGAIN but for a specific operation.
             case SSL_ERROR_WANT_READ: // 2
-#if OPENSSL_VERSION_NUMBER > 0x10100000L
-                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno)
-                        << " has " << (SSL_has_pending(_ssl) ? "" : "no")
-                        << " pending data to read: " << SSL_pending(_ssl) << ". " << bioErrStr);
-#else
-                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
-#endif
-                _sslWantsTo = SslWantsTo::Read;
-                errno = last_errno; // Restore errno.
-                return rc;
-
-            // Retry: Need to write data.
             case SSL_ERROR_WANT_WRITE: // 3
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
                 LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno)
@@ -394,17 +383,13 @@ private:
 #else
                 LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
 #endif
-                _sslWantsTo = SslWantsTo::Write;
+                _sslWantsTo =
+                    sslError == SSL_ERROR_WANT_READ ? SslWantsTo::Read : SslWantsTo::Write;
                 errno = last_errno; // Restore errno.
                 return rc;
 
             // Retry.
             case SSL_ERROR_WANT_CONNECT: // 7
-                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
-                errno = last_errno; // Restore errno.
-                return rc;
-
-            // Retry.
             case SSL_ERROR_WANT_ACCEPT: // 8
                 LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 errno = last_errno; // Restore errno.
@@ -412,13 +397,15 @@ private:
 
             // Unexpected: happens only with SSL_CTX_set_client_cert_cb().
             case SSL_ERROR_WANT_X509_LOOKUP: // 4
+            case SSL_ERROR_WANT_CLIENT_HELLO_CB: // 11
                 LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
                 errno = last_errno; // Restore errno.
                 return rc;
 
-            // Unexpected: happens only with SSL_CTX_set_client_cert_cb().
-            case SSL_ERROR_WANT_CLIENT_HELLO_CB: // 11
-                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
+            case SSL_ERROR_WANT_ASYNC: // 9
+            case SSL_ERROR_WANT_ASYNC_JOB: // 10
+                LOG_WRN(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
+                LOG_ASSERT(!"SSL_MODE_ASYNC is unsupported");
                 errno = last_errno; // Restore errno.
                 return rc;
 
@@ -434,8 +421,14 @@ private:
                 }
 
                 [[fallthrough]];
+
+            // Non-recoverable, fatal I/O error occurred.
+            // SSL_shutdown() must not be called.
+            case SSL_ERROR_SSL: // 1
             default:
             {
+                LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
+
                 // Effectively an EAGAIN error at the BIO layer
                 if (BIO_should_retry(_bio))
                 {
@@ -451,29 +444,6 @@ private:
                     errno = last_errno ? last_errno : EAGAIN; // Restore errno.
                     return -1; // poll is used to detect real errors.
                 }
-
-                // Non-recoverable, fatal I/O error occurred.
-                // SSL_shutdown() must not be called.
-                if (sslError == SSL_ERROR_SSL) // 1
-                    LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
-                else if (sslError == SSL_ERROR_SYSCALL) // 5
-                    LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
-#if OPENSSL_VERSION_NUMBER > 0x10100000L
-                else if (sslError == SSL_ERROR_WANT_ASYNC) // 9
-                {
-                    LOG_WRN(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
-                    LOG_ASSERT_MSG(sslError != SSL_ERROR_WANT_ASYNC,
-                                   "Unexpected WANT_ASYNC; SSL_MODE_ASYNC is unsupported");
-                }
-                else if (sslError == SSL_ERROR_WANT_ASYNC_JOB) // 10
-                {
-                    LOG_WRN(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
-                    LOG_ASSERT_MSG(sslError != SSL_ERROR_WANT_ASYNC_JOB,
-                                   "Unexpected WANT_ASYNC_JOB; SSL_MODE_ASYNC is unsupported");
-                }
-#endif
-                else
-                    LOG_TRC(SSL_LOG_PREFIX(context, sslError, rc, last_errno) << ": " << bioErrStr);
 
                 // The error is coming from BIO. Find out what happened.
                 const long bioError = ERR_peek_error();
