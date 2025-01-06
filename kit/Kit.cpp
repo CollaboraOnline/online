@@ -36,7 +36,7 @@
 #include <sys/capability.h>
 #endif
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(MACOS)
 #include <ftw.h>
 #define FTW_CONTINUE 0
 #define FTW_STOP (-1)
