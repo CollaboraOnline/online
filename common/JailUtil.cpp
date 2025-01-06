@@ -43,6 +43,7 @@ namespace
 
 static const std::string CoolTestMountpoint = "cool_test_mount";
 
+#ifdef __linux__
 static void setdeny()
 {
     std::ofstream of("/proc/self/setgroups");
@@ -61,6 +62,8 @@ static void mapuser(uid_t origuid, uid_t newuid, gid_t origgid, gid_t newgid)
         of << newgid << " " << origgid << " 1";
     }
 }
+#endif // __linux__
+
 } // namespace
 
 bool enterMountingNS(uid_t uid, gid_t gid)
