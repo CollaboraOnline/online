@@ -31,7 +31,9 @@
 #if !HAVE_PIPE2
 #include <cstdio>
 #include <fcntl.h>
+#ifndef _WINDOWS
 #include <unistd.h>
+#endif
 #endif
 
 #include <memory.h>
@@ -1470,7 +1472,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_cloc
 
 inline std::ostream& operator<<(std::ostream& os, const Util::Backtrace& bt) { return bt.send(os); }
 
-#if !HAVE_PIPE2
+#if !MOBILEAPP && !HAVE_PIPE2
 /// Implementation of pipe2() for platforms that don't have it (like macOS)
 inline int pipe2(int pipefd[2], int flags)
 {
