@@ -22,7 +22,7 @@
 #include <string>
 #include <unordered_map>
 
-#ifndef _WINDOWS
+#ifndef _WIN32
 #include <unistd.h>
 #else
 #define WIN32_LEAN_AND_MEAN
@@ -140,7 +140,7 @@ namespace Log
         /// Write the given buffer to stderr directly.
         static inline std::size_t writeRaw(const char* data, std::size_t count)
         {
-#ifndef _WINDOWS
+#ifndef _WIN32
 #if WASMAPP
             // In WASM, stdout works best.
             constexpr int LOG_FILE_FD = STDOUT_FILENO;
@@ -166,7 +166,7 @@ namespace Log
                 count -= wrote;
             }
             return ptr - data;
-#else // _WINDOWS
+#else // _WIN32
             if (!IsDebuggerPresent())
                 fwrite(data, size, 1, stderr);
             else
@@ -489,7 +489,7 @@ namespace Log
                  char* buffer,
                  const char* level)
     {
-#if defined(IOS) || defined(__FreeBSD__) || defined(_WINDOWS)
+#if defined(IOS) || defined(__FreeBSD__) || defined(_WIN32)
         // Don't bother with the "Source" which would be just "Mobile" always (or whatever the app
         // process is called depending on platform and configuration) and non-informative as there
         // is just one process in the app anyway.

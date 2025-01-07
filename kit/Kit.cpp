@@ -43,7 +43,7 @@
 #define FTW_ACTIONRETVAL 0
 #endif
 
-#ifndef _WINDOWS
+#ifndef _WIN32
 #include <unistd.h>
 #include <utime.h>
 #include <sys/time.h>
@@ -3940,7 +3940,7 @@ void lokit_main(
 
 #ifdef IOS // In the iOS app we call lok_init_2() just once, when the app starts
         static LibreOfficeKit *kit = lo_kit;
-#elif defined(_WINDOWS)
+#elif defined(_WIN32)
         // LO_PATH is a Windows path starting with a drive letter. For the second parameter to
         // lok_init_2() turn it into a file: URI.
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", "file:///" LO_PATH);

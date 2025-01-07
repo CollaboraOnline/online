@@ -275,7 +275,7 @@ namespace FileUtil
         {
 #if defined(IOS) || defined(MACOS)
             return _sb.st_mtimespec;
-#elif defined(_WINDOWS)
+#elif defined(_WIN32)
             timespec result{ _sb.st_mtime, 0 };
             return result;
 #else

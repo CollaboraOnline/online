@@ -177,7 +177,7 @@ namespace FileUtil
             if (preserveTimestamps)
             {
                 const Stat st(fromPath);
-#ifndef _WINDOWS
+#ifndef _WIN32
                 updateTimestamps(randFilename,
 #if defined(IOS) || defined(MACOS)
                                  st.sb().st_atimespec, st.sb().st_mtimespec
