@@ -271,6 +271,14 @@ namespace Util
         if (!ThreadTid)
             thr_self(&ThreadTid);
         return ThreadTid;
+#elif defined __APPLE__
+        if (!ThreadTid)
+        {
+            uint64_t tid;
+            if (pthread_threadid_np(NULL, &tid) == 0)
+                ThreadTid = tid;
+        }
+        return ThreadTid;
 #else
         static long threadCounter = 1;
         if (!ThreadTid)
@@ -284,6 +292,7 @@ namespace Util
 #if defined __linux__
         ::syscall(SYS_tgkill, getpid(), tid, signal);
 #else
+        (void) signal;
         LOG_WRN("No tgkill for thread " << tid);
 #endif
     }
@@ -953,6 +962,8 @@ namespace Util
                 free(rawSymbols);
             }
         }
+#else
+        (void) maxFrames;
 #endif
         if (0 == _frames.size())
         {
