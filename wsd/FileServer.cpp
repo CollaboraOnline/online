@@ -28,6 +28,7 @@
 #include <Util.hpp>
 #include <JsonUtil.hpp>
 #include <common/ConfigUtil.hpp>
+#include <Poco/Net/HTTPClientSession.h>
 #include <common/LangUtil.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
@@ -53,6 +54,11 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
+#include <Poco/Net/PartHandler.h>
+#include <Poco/Net/MessageHeader.h>
+#include <sstream>
+
+
 
 #include <chrono>
 #if ENABLE_DEBUG
@@ -777,6 +783,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         static std::string etagString = "\"" COOLWSD_VERSION_HASH +
             config.getString("ver_suffix", "") + "\"";
 
+        // handle here:
+
 #if ENABLE_DEBUG
         if (relPath.starts_with("/wopi/files")) {
             handleWopiRequest(request, requestDetails, message, socket);
@@ -810,53 +818,13 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             }
         }
 
-        // if (endPoint == "admin-settings.html")
-        // {
-        //         try
-        //         {
-        //             std::string templatePath = COOLWSD::FileServerRoot + "/browser/dist/admin-settings.html";
+        if (endPoint == "upload-settings")
+        {
+            LOG_INF("Processing upload-settings request.");
+            uploadFileToNextcloud(request, requestDetails, message, socket);
+            return;
+        }
 
-        //             std::string htmlContent = readFileToString(templatePath);
-        //             if (htmlContent.empty())
-        //             {
-        //                 throw std::runtime_error("HTML file is empty or could not be read");
-        //             }
-
-        //             Poco::Net::HTTPResponse httpResponse(Poco::Net::HTTPResponse::HTTP_OK);
-        //             httpResponse.setContentType("text/html");
-        //             httpResponse.setContentLength(htmlContent.size());
-
-        //             std::ostringstream headerStream;
-        //             headerStream << "HTTP/1.1 " << httpResponse.getStatus() << " " << httpResponse.getReason()
-        //                         << "\r\nContent-Type: " << httpResponse.getContentType()
-        //                         << "\r\nContent-Length: " << httpResponse.getContentLength() << "\r\n\r\n";
-        //             std::string headers = headerStream.str();
-
-        //             socket->send(headers.data(), headers.size());
-
-        //             socket->send(htmlContent.data(), htmlContent.size());
-        //         }
-        //         catch (const std::exception& e)
-        //         {
-        //             Poco::Net::HTTPResponse errorResponse(Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR);
-        //             errorResponse.setContentType("text/plain");
-
-        //             std::string errorMessage = "Error: " + std::string(e.what());
-        //             errorResponse.setContentLength(errorMessage.size());
-
-        //             std::ostringstream errorHeaderStream;
-        //             errorHeaderStream << "HTTP/1.1 " << errorResponse.getStatus() << " " << errorResponse.getReason()
-        //                             << "\r\nContent-Type: " << errorResponse.getContentType()
-        //                             << "\r\nContent-Length: " << errorResponse.getContentLength() << "\r\n\r\n";
-        //             std::string errorHeaders = errorHeaderStream.str();
-
-        //             socket->send(errorHeaders.data(), errorHeaders.size());
-
-        //             socket->send(errorMessage.data(), errorMessage.size());
-        //         }
-
-        //     return;
-        // }
 
         // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end() &&
@@ -1818,7 +1786,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     csp.merge(config.getString("net.content_security_policy", ""));
 
     // Append CSP to response headers too
-    // httpResponse.add("Content-Security-Policy", csp.generate());
+    httpResponse.add("Content-Security-Policy", csp.generate());
 
     // Setup HTTP Public key pinning
     if ((ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination()) &&
@@ -1912,6 +1880,111 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
 
     LOG_TRC("Sent file: " << relPath);
 }
+
+class FilePartHandler : public Poco::Net::PartHandler
+{
+public:
+    void handlePart(const Poco::Net::MessageHeader& header, std::istream& stream) override
+    {
+        if (header.has("Content-Disposition"))
+        {
+            const std::string disposition = header.get("Content-Disposition");
+            const std::string prefix = "filename=\"";
+
+            auto pos = disposition.find(prefix);
+            if (pos != std::string::npos)
+            {
+                _fileName = disposition.substr(pos + prefix.size());
+                auto endPos = _fileName.find("\"");
+                if (endPos != std::string::npos)
+                    _fileName = _fileName.substr(0, endPos);
+
+                std::ostringstream oss;
+                Poco::StreamCopier::copyStream(stream, oss);
+                _fileContent = oss.str();
+            }
+        }
+    }
+
+    const std::string& getFileName() const { return _fileName; }
+    const std::string& getFileContent() const { return _fileContent; }
+
+private:
+    std::string _fileName;
+    std::string _fileContent;
+};
+
+void FileServerRequestHandler::uploadFileToNextcloud(const Poco::Net::HTTPRequest& request,
+                                                     const RequestDetails& /*requestDetails*/,
+                                                     Poco::MemoryInputStream& message,
+                                                     const std::shared_ptr<StreamSocket>& socket)
+{
+    try
+    {
+        FilePartHandler partHandler;
+
+        Poco::Net::HTMLForm form(request, message, partHandler);
+
+        const std::string& fileName = partHandler.getFileName();
+        const std::string& fileContent = partHandler.getFileContent();
+
+        if (fileName.empty() || fileContent.empty())
+        {
+            throw BadRequestException("No valid file uploaded.");
+        }
+
+        LOG_INF("File uploaded: " << fileName << ", Size: " << fileContent.size() << " bytes");
+
+        const std::string accessToken = request.get("Authorization", "");
+        if (accessToken.empty())
+        {
+            throw std::runtime_error("Missing access token in request.");
+        }
+
+        const std::string wopiUrl = COOLWSD::getServerURL() + "/wopi/settings/upload";
+
+
+        Poco::Net::HTTPRequest wopiRequest(Poco::Net::HTTPRequest::HTTP_POST, wopiUrl);
+        wopiRequest.set("Authorization", "Bearer " + accessToken);
+        wopiRequest.setContentType("application/octet-stream");
+        wopiRequest.setContentLength(fileContent.size());
+
+        Poco::Net::HTTPClientSession session(COOLWSD::getServerURL(), 443);
+        session.setTimeout(Poco::Timespan(30, 0));
+
+        std::ostream& requestStream = session.sendRequest(wopiRequest);
+        requestStream.write(fileContent.data(), fileContent.size());
+
+        Poco::Net::HTTPResponse wopiResponse;
+        std::istream& responseStream = session.receiveResponse(wopiResponse);
+
+        if (wopiResponse.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
+        {
+            std::ostringstream responseContent;
+            Poco::StreamCopier::copyStream(responseStream, responseContent);
+            throw std::runtime_error("WOPI call failed: " + wopiResponse.getReason() + 
+                                      ". Response: " + responseContent.str());
+        }
+
+        LOG_INF("File successfully uploaded to Nextcloud: " << fileName);
+
+
+
+        LOG_INF("File successfully uploaded to Nextcloud: " << fileName);
+
+        http::Response httpResponse(http::StatusCode::OK);
+        httpResponse.setBody("File uploaded successfully to Nextcloud.");
+        socket->send(httpResponse);
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("File upload failed: " << ex.what());
+        sendError(http::StatusCode::InternalServerError, request, socket, "Upload Error", ex.what());
+    }
+}
+
+
+
 
 void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
                                                    http::Response& response,
