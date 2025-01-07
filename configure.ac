@@ -1338,7 +1338,6 @@ AS_IF([test "x$have_capability_h" = xyes], [
     ])
 ], [
     AC_MSG_WARN([sys/capability.h not found; skipping capabilities.])
-    AC_DEFINE([HAVE_LIBCAP], [0], [Define to 0 if libcap (cap_get_proc) is not available])
 ])
 
 dnl NB. this is a gtk3 frontend.

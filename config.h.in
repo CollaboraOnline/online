@@ -58,13 +58,13 @@
 /* User feedback URL. */
 #undef FEEDBACK_URL
 
-/* Define to 1 libcap (cap_get_proc) is available, otherwise 0 */
-#undef HAVE_LIBCAP
+/* Define to 1 if libcap (cap_get_proc) is available, otherwise 0 */
+#define HAVE_LIBCAP 0
 
-/* Define to 1 if you have the `ppoll' function. */
+/* Define to 1 if the `ppoll' function is available, otherwise 0. */
 #define HAVE_PPOLL 0
 
-/* Define to 1 if you have the `memrchr' function. */
+/* Define to 1 if the `memrchr' function is available, otherwise 0. */
 #define HAVE_MEMRCHR 0
 
 /* Default value of help root URL */
