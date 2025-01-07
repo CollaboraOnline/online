@@ -81,7 +81,7 @@
 /* Define to 1 if the `memrchr' function is available, otherwise 0. */
 #define HAVE_MEMRCHR 0
 
-/* Define to 1 if you have the `pipe2' function. */
+/* Define to 1 if the `pipe2' function is available, otherwise 0. */
 #define HAVE_PIPE2 0
 
 /* Default value of help root URL */
