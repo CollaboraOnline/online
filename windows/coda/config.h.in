@@ -52,6 +52,9 @@
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
 
+/* Define to 1 libcap (cap_get_proc) is available, otherwise 0 */
+#define HAVE_LIBCAP 0
+
 /* Whether OpenSSL has PKCS5_PBKDF2_HMAC() */
 #define HAVE_PKCS5_PBKDF2_HMAC 0
 
@@ -84,6 +87,9 @@
 
 /* Define to 1 if you have the `memrchr' function. */
 #define HAVE_MEMRCHR 0
+
+/* Define to 1 if you have the `pipe2' function. */
+#define HAVE_PIPE2 0
 
 /* Collabora Online WebSocket server version */
 #define COOLWSD_VERSION "@COOLWSD_VERSION@"
@@ -129,6 +135,9 @@
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
+
+/* Define to 1 if building for macOS */
+#undef MACOS
 
 /* Makes config variables conditionally static, only in non-debug builds, to allow for overriding them in unit-tests. */
 #ifdef ENABLE_DEBUG
