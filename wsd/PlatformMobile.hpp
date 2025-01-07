@@ -16,7 +16,7 @@
 #include "ios.h"
 #elif defined(MACOS)
 #include "macos.h"
-#elif defined(_WINDOWS)
+#elif defined(_WIN32)
 #include "windows.hpp"
 #elif defined(GTKAPP)
 #include "gtk.hpp"
