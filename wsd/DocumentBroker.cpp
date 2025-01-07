@@ -1747,7 +1747,7 @@ void DocumentBroker::sendBrowserSetting(const std::shared_ptr<ClientSession>& se
     else
     {
         const std::shared_ptr<const http::Response> httpResponse =
-            httpSession->syncRequest(request, *_poll);
+            httpSession->syncRequest(request);
 
         LOG_TRC("DocumentBroker::sendBrowserSetting with "
                 << requestType << " returned " << httpResponse->statusLine().statusCode());
