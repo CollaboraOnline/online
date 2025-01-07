@@ -298,7 +298,7 @@ private:
     /// Handles the state of SSL after read or write.
     int handleSslState(const int rc, const char* context)
     {
-        const auto last_errno = errno;
+        int last_errno = errno; // Capture first thing.
 
         ASSERT_CORRECT_SOCKET_THREAD(this);
 
@@ -311,6 +311,7 @@ private:
 
         // Handle errors in the error-queue.
         const int ret = handleSslError(rc, last_errno, context);
+        errno = last_errno; // Restore errno.
 
         return ret;
     }
@@ -354,7 +355,7 @@ private:
     }
 
     /// Handle SSL errors after read or write. Called from handleSslState().
-    int handleSslError(const int rc, const int last_errno, const char* context)
+    int handleSslError(const int rc, int& last_errno, const char* context)
     {
         assert(rc <= 0 && "Expected SSL failure to handle but have success");
 
@@ -377,13 +378,11 @@ private:
         {
             // Not an error; should be handled elsewhere.
             case SSL_ERROR_NONE: // 0
-                errno = last_errno; // Restore errno.
                 return rc;
 
             // Peer stopped writing. We have nothing more to read, but can write.
             // This doesn't necessarily signify that we are disconnected.
             case SSL_ERROR_ZERO_RETURN: // 6
-                errno = last_errno; // Restore errno.
                 return 0;
 
             // Retry: Need to read/write data. Effectively, EAGAIN but for a specific operation.
@@ -397,13 +396,11 @@ private:
 #endif
                 _sslWantsTo =
                     sslError == SSL_ERROR_WANT_READ ? SslWantsTo::Read : SslWantsTo::Write;
-                errno = last_errno; // Restore errno.
                 return rc;
 
             // Retry.
             case SSL_ERROR_WANT_CONNECT: // 7
             case SSL_ERROR_WANT_ACCEPT: // 8
-                errno = last_errno; // Restore errno.
                 return rc;
 
             // Unexpected: happens only with SSL_CTX_set_client_cert_cb().
@@ -412,14 +409,12 @@ private:
                 LOG_ASSERT_MSG(!"Unhandled use of SSL_CTX_set_client_cert_cb()",
                                "Unhandled " << sslErrorToName(sslError)
                                             << " with SSL_CTX_set_client_cert_cb()");
-                errno = last_errno; // Restore errno.
                 return rc;
 
             case SSL_ERROR_WANT_ASYNC: // 9
             case SSL_ERROR_WANT_ASYNC_JOB: // 10
                 LOG_ASSERT_MSG(!"Unhandled use of SSL_MODE_ASYNC",
                                "Unhandled " << sslErrorToName(sslError) << " with SSL_MODE_ASYNC");
-                errno = last_errno; // Restore errno.
                 return rc;
 
             // Non-recoverable, fatal I/O error occurred.
@@ -428,7 +423,6 @@ private:
                 if (last_errno != 0)
                 {
                     // Posix API error, let the caller handle.
-                    errno = last_errno; // Restore errno.
                     return rc;
                 }
 
@@ -454,7 +448,7 @@ private:
 #else
                     LOG_TRC("BIO asks for retry - underlying EAGAIN?");
 #endif
-                    errno = last_errno ? last_errno : EAGAIN; // Restore errno.
+                    last_errno = last_errno ? last_errno : EAGAIN; // Set errno if unset.
                     return -1; // poll is used to detect real errors.
                 }
 
@@ -468,7 +462,6 @@ private:
                         // Socket closed. Not an error.
                         oss << " (" << context << "): closed. " << bioErrStr;
                         LOG_INF(oss.str());
-                        errno = last_errno; // Restore errno.
                         return 0;
                     }
                     else if (rc == -1)
@@ -489,7 +482,6 @@ private:
                 const std::string msg = oss.str();
                 LOG_TRC("Throwing SSL Error ("
                         << context << "): " << msg); // Locate the source of the exception.
-                errno = last_errno; // Restore errno.
 
                 handshakeFail();
 
@@ -498,6 +490,7 @@ private:
                 if (!sslVerifyResult.empty())
                     LOG_ERR("SSL verification warning (" << context << "): " << sslVerifyResult);
 
+                errno = last_errno; // Restore errno before throwing.
                 throw std::runtime_error(msg);
             }
             break;
