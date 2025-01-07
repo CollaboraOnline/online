@@ -31,7 +31,7 @@
 #if !HAVE_PIPE2
 #include <cstdio>
 #include <fcntl.h>
-#ifndef _WINDOWS
+#ifndef _WIN32
 #include <unistd.h>
 #endif
 #endif
@@ -1458,7 +1458,7 @@ int main(int argc, char**argv)
 
     std::string base64Encode(std::string_view input);
 
-#ifdef _WINDOWS
+#ifdef _WIN32
     std::wstring string_to_wide_string(const std::string& string);
     std::string wide_string_to_string(const std::wstring& wide_string);
 #endif
