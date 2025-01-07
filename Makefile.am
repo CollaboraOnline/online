@@ -110,7 +110,7 @@ coolwsd_LDADD = ${OPENSSL_LIBS}
 coolconfig_LDADD = ${OPENSSL_LIBS}
 endif
 
-AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=browser *
+AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=browser/node_modules --exclude=browser/dist *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
 shared_sources = common/FileUtil.cpp \

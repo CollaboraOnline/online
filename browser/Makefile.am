@@ -1041,10 +1041,6 @@ clean-local:
 
 CLEANFILES = tscompile.done $(INTERMEDIATE_DIR)/cool-src.js $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js $(INTERMEDIATE_DIR)/cool-src.js
 
-ctags:
-	@$(CTAGS) --language-force=JavaScript $(COOL_JS_SRC) $(srcdir)/js/global.js
-	@$(CTAGS) --language-force=TypeScript --extra=+q --append=yes $(COOL_TS_SRC)
-
 $(abs_srcdir)/jsconfig.json:
 	@printf "{\n \
 	\"compilerOptions\" : {},\n \
