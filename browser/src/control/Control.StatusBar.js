@@ -196,19 +196,25 @@ class StatusBar extends JSDialog.Toolbar {
 		};
 	}
 
-	_generateStateTableCellMenuItem(value, visible) {
+	_generateStateMenuEntry(id, text, selection) {
+		return {id: id, text: text, selected: !!(selection & parseInt(id))};
+	}
+
+	_generateStateTableCellMenuItem(selection, visible) {
 		var submenu = [
-			{id: '2', text: _('Average')},
-			{id: '8', text: _('CountA')},
-			{id: '4', text: _('Count')},
-			{id: '16', text: _('Maximum')},
-			{id: '32', text: _('Minimum')},
-			{id: '512', text: _('Sum')},
-			{id: '8192', text: _('Selection count')},
-			{id: '1', text: _('None')}
+			this._generateStateMenuEntry('2', _('Average'), selection),
+			this._generateStateMenuEntry('8', _('CountA'), selection),
+			this._generateStateMenuEntry('4', _('Count'), selection),
+			this._generateStateMenuEntry('16', _('Maximum'), selection),
+			this._generateStateMenuEntry('32', _('Minimum'), selection),
+			this._generateStateMenuEntry('512', _('Sum'), selection),
+			this._generateStateMenuEntry('8192', _('Selection count'), selection),
+			this._generateStateMenuEntry('1', _('None'), selection)
 		];
-		var selected = submenu.filter((item) => { return item.id === value; });
-		var text = selected.length ? selected[0].text : _('None');
+		var selected = submenu
+			.filter((item) => { return item.selected; })
+			.map((item) => { return item.text; });
+		var text = selected.length ? selected.join('; ') : _('None');
 		return {type: 'menubutton', id: 'StateTableCellMenu', text: text, image: false, menu: submenu, visible: visible};
 	}
 
@@ -254,7 +260,7 @@ class StatusBar extends JSDialog.Toolbar {
 			{type: 'menubutton', id: 'languagestatus:LanguageStatusMenu'},	// spreadsheet, text, presentation
 			{type: 'separator', id: 'languagestatusbreak', orientation: 'vertical', visible: false}, // spreadsheet
 			this._generateHtmlItem('statetablecell'),					// spreadsheet
-			this._generateStateTableCellMenuItem('2', false),			// spreadsheet
+			this._generateStateTableCellMenuItem(2, false),			// spreadsheet
 			{type: 'separator', id: 'statetablebreak', orientation: 'vertical', visible: false}, // spreadsheet
 			this._generateHtmlItem('permissionmode'),					// spreadsheet, text, presentation
 			{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', w2icon: '', text: _UNO('.uno:Signature'), visible: false},
@@ -480,6 +486,10 @@ class StatusBar extends JSDialog.Toolbar {
 			// Check 'None' even when state is 0
 			if (state === '0')
 				state = '1';
+
+			try {
+				state = parseInt(state);
+			} catch (e) { console.error(e); state = 1; }
 
 			this.builder.updateWidget(this.parentContainer, this._generateStateTableCellMenuItem(state, true));
 			JSDialog.RefreshScrollables();

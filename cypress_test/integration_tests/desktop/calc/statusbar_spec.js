@@ -12,6 +12,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden();
 		}
+
+		cy.cGet(helper.addressInputSelector).should('have.value', 'A3');
+		cy.wait(100);
 	});
 
 	it('Selected sheet.', function() {
@@ -44,6 +47,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		cy.cGet('#StateTableCell').should('have.text', 'Average: 15.5; Sum: 31');
 		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
 		cy.cGet('#StateTableCell').should('have.text', 'Average: 10; Sum: 10');
+
+		desktopHelper.makeZoomItemsVisible();
+		cy.cGet('#StateTableCellMenu .unolabel').contains('Average; Sum');
+		cy.cGet('#StateTableCellMenu .arrowbackground').click();
+		cy.cGet('.jsdialog-overlay').should('exist');
+		cy.cGet('.ui-combobox-entry.selected').contains(/Average|Sum/g);
 	});
 
 	it('Change zoom level.', function() {
