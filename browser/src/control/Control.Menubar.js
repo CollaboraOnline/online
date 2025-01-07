@@ -644,6 +644,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:InsertPageTitleField', 'presentation'), uno: '.uno:InsertPageTitleField'},
 					{name: _UNO('.uno:InsertPagesField', 'presentation'), uno: '.uno:InsertPagesField'},
 				]},
+				{uno: '.uno:InsertSignatureLine', id: 'insert-signatureline'},
 				{name: _('Electronic signature...'), id: 'insert-esignature', type: 'action'},
 			]},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', type: 'menu', menu: [
@@ -1370,6 +1371,7 @@ L.Control.Menubar = L.Control.extend({
 		// Only these UNO commands will be enabled in readonly mode
 		allowedViewModeCommands: [
 			'.uno:Signature',
+			'.uno:InsertSignatureLine',
 		],
 
 		allowedViewModeActions: [

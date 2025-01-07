@@ -309,6 +309,7 @@ var unoCommandsArray = {
 	'InsertRowsBefore':{presentation:{menu:_('Insert Row Above'),},spreadsheet:{context:_('Insert Rows ~Above'),menu:_('Rows ~Above'),},text:{context:_('Insert rows above'),menu:_('Rows ~Above'),},},
 	'InsertRowsMenu':{spreadsheet:{menu:_('Insert ~Rows'),},},
 	'InsertSection':{text:{menu:_('Se~ction...'),},},
+	'InsertSignatureLine':{global:{menu:_('Signat~ure Line...'),},},
 	'InsertSlide':{presentation:{menu:_('~New Slide'),},},
 	'InsertSlideField':{presentation:{menu:_('~Slide Number'),},},
 	'InsertSlideTitleField':{presentation:{menu:_('Slide Tit~le'),},},
