@@ -11,8 +11,11 @@
 
 #pragma once
 
+#include <common/Log.hpp>
 #include <net/Ssl.hpp>
 #include <net/Socket.hpp>
+
+#include <openssl/ssl.h>
 
 #include <cerrno>
 #include <sstream>
@@ -429,6 +432,10 @@ private:
             case SSL_ERROR_SSL: // 1
             default:
             {
+                // We should know what errors we handle here.
+                LOG_ASSERT_MSG(sslError == SSL_ERROR_SYSCALL || sslError == SSL_ERROR_SSL,
+                               "Unexpected SSL error " << sslErrorToName(sslError));
+
                 // Effectively an EAGAIN error at the BIO layer
                 if (BIO_should_retry(_bio))
                 {
