@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Setting Iframe</title>
+    <title>Admin Settings Iframe</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,19 +24,18 @@
             border-radius: 4px;
             cursor: pointer;
         }
-       
         input[type="file"] {
             margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h2>Admin Setting Iframe</h2>
+    <h2>Admin Settings Iframe</h2>
+    <h3>Access Token: %ACCESS_TOKEN%</h3>
     <div id="fileControls">
-        <label for="fontFile">Select Font File (TTF, OTF, WOFF):</label><br>
-        <input type="file" id="fontFile" accept=".ttf, .otf, .woff"><br>
+        <label for="dictionaryFile">Select Dictionary File (.dic):</label><br>
+        <input type="file" id="dictionaryFile" accept=".dic"><br>
         <button class="upload" onclick="uploadFile()">Upload</button>
-        <button class="delete" onclick="deleteFile()">Delete</button>
         <p id="fileStatus"></p>
         <input type="hidden" id="initial-variables"
             data-host = "%HOST%"
@@ -79,42 +78,43 @@
     </div>
 
     <script>
-        function uploadFile() {
-            const fileInput = document.getElementById('fontFile');
+        async function uploadFile() {
+            const fileInput = document.getElementById('dictionaryFile');
             const fileStatus = document.getElementById('fileStatus');
-            
+            const accessToken = "%ACCESS_TOKEN%";
+            const apiUrl = "/browser/dist/upload-settings"; // COOL backend endpoint
+
             if (!fileInput.files.length) {
                 fileStatus.textContent = "No file selected for upload.";
                 return;
             }
 
-            const fileName = fileInput.files[0].name;
-            fileStatus.textContent = `Uploading ${fileName}...`;
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
 
-            setTimeout(() => {
-                fileStatus.textContent = `File "${fileName}" uploaded successfully!`;
+            fileStatus.textContent = `Uploading "${file.name}"...`;
 
-                fileInput.value = '';
-            }, 2000);
-        }
+            try {
+                // Send the file to the coolwsd backend
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    body: formData,
+                });
 
-        function deleteFile() {
-            const fileInput = document.getElementById('fontFile');
-            const fileStatus = document.getElementById('fileStatus');
+                if (!response.ok) {
+                    throw new Error(`Upload failed: ${response.statusText}`);
+                }
 
-            if (!fileInput.files.length) {
-                fileStatus.textContent = "No file selected to delete.";
-                return;
+                fileStatus.textContent = `File "${file.name}" uploaded successfully!`;
+            } catch (error) {
+                fileStatus.textContent = `Error: ${error.message}`;
             }
 
-            const fileName = fileInput.files[0].name;
-            fileStatus.textContent = `Deleting ${fileName}...`;
-
-            setTimeout(() => {
-                fileStatus.textContent = `File "${fileName}" deleted successfully!`;
-
-                fileInput.value = '';
-            }, 2000);
+            fileInput.value = '';
         }
     </script>
 </body>
