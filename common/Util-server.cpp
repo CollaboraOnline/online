@@ -24,6 +24,12 @@
 extern char** environ;
 #endif
 
+// 'environ' is not directly available on macOS, but using _NSGetEnviron() should be good enough
+#ifdef __APPLE__
+#  include <crt_externs.h>
+#  define environ (*_NSGetEnviron())
+#endif
+
 #include <dirent.h>
 #include <spawn.h>
 
