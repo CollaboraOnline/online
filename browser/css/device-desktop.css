@@ -32,4 +32,5 @@ button:not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-
 .button-primary:hover {
 	background-color: var(--color-primary-lighter);
 	color: var(--color-primary-dark);
+	cursor: pointer;
 }
