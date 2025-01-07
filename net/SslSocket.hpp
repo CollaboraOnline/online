@@ -363,13 +363,16 @@ private:
         const int sslError = SSL_get_error(_ssl, rc);
         LOG_ASSERT_MSG(sslError != SSL_ERROR_NONE, "Expected an SSL error to handle but have none");
 
-        // Handle non-fatal cases first.
-        const std::string bioErrStr = getBioError();
+        // If the error is coming from BIO, get the code and text.
+        const unsigned long bioError = ERR_peek_error();
+        const std::string bioErrStr = getBioError(bioError);
+
         LOG_TRC("SSL error (" << context << "): " << sslErrorToName(sslError) << " (" << sslError
                               << "), rc: " << rc << ", errno: " << last_errno << " ("
                               << Util::symbolicErrno(last_errno) << ": "
                               << std::strerror(last_errno) << ")" << ": " << bioErrStr);
 
+        // Handle non-fatal cases first.
         switch (sslError)
         {
             // Not an error; should be handled elsewhere.
@@ -451,9 +454,6 @@ private:
                     return -1; // poll is used to detect real errors.
                 }
 
-                // The error is coming from BIO. Find out what happened.
-                const long bioError = ERR_peek_error();
-
                 std::ostringstream oss;
                 oss << '#' << getFD();
 
@@ -503,11 +503,9 @@ private:
         return rc;
     }
 
-    std::string getBioError() const
+    /// Get the error string for the given error code from OpenSSL.
+    std::string getBioError(const unsigned long bioError) const
     {
-        // The error is coming from BIO. Find out what happened.
-        const long bioError = ERR_peek_error();
-
         std::ostringstream oss;
         oss << "BIO error: " << bioError;
 
