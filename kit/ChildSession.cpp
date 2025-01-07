@@ -681,12 +681,12 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                     }
                 }
             }
-            else if (tokens[1].find(".uno:Signature") != std::string::npos)
+            else if (tokens[1] == ".uno:Signature" || tokens[1] == ".uno:InsertSignatureLine")
             {
                 // See if the command has parameters: if not, annotate with sign cert/key.
-                if (tokens.size() == 2 && unoSignatureCommand())
+                if (tokens.size() == 2 && unoSignatureCommand(tokens[1]))
                 {
-                    // .uno:Signature has been sent with parameters from user private info, done.
+                    // The command has been sent with parameters from user private info, done.
                     return true;
                 }
             }
@@ -2185,7 +2185,7 @@ bool ChildSession::completeFunction(const StringVector& tokens)
     return true;
 }
 
-bool ChildSession::unoSignatureCommand()
+bool ChildSession::unoSignatureCommand(const std::string& commandName)
 {
     // See if user private info has a signing key/cert: if so, annotate the UNO command with those
     // parameters before sending.
@@ -2230,7 +2230,9 @@ bool ChildSession::unoSignatureCommand()
     argumentsObj->set("SignatureKey", JsonUtil::makePropertyValue("string", signatureKey));
 
     std::ostringstream oss;
-    oss << "uno .uno:Signature ";
+    oss << "uno ";
+    oss << commandName;
+    oss << " ";
     argumentsObj->stringify(oss);
     std::string str = oss.str();
     StringVector tokens = StringVector::tokenize(str.data(), str.size());
