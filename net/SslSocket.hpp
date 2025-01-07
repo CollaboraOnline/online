@@ -18,6 +18,13 @@
 #include <sstream>
 #include <string>
 
+/// Create an OpenSSL version number from its components
+/// that is comparable to OPENSSL_VERSION_NUMBER.
+/// The layout is 0xMNN00PPS where M is major, n is minor,
+/// P is patch-level, and S is 1 for pre-release.
+#define MAKE_OPENSSL_VERSION_NUMBER(MAJOR, MINOR, PATCH)                                           \
+    ((MAJOR << 28) | (MINOR << 20) | (PATCH << 4))
+
 /// An SSL/TSL, non-blocking, data streaming socket.
 class SslStreamSocket final : public StreamSocket
 {
@@ -334,8 +341,10 @@ private:
                 return "WANT_ASYNC_JOB";
             case SSL_ERROR_WANT_CLIENT_HELLO_CB:
                 return "WANT_CLIENT_HELLO_CB";
+#if OPENSSL_VERSION_NUMBER > MAKE_OPENSSL_VERSION_NUMBER(3, 0, 0)
             case SSL_ERROR_WANT_RETRY_VERIFY:
                 return "WANT_RETRY_VERIFY";
+#endif
         }
 
         return "UNKNOWN";
@@ -374,7 +383,8 @@ private:
             // Retry: Need to read/write data. Effectively, EAGAIN but for a specific operation.
             case SSL_ERROR_WANT_READ: // 2
             case SSL_ERROR_WANT_WRITE: // 3
-#if OPENSSL_VERSION_NUMBER > 0x10100000L
+                static_assert(MAKE_OPENSSL_VERSION_NUMBER(1, 1, 0) == 0x10100000L);
+#if OPENSSL_VERSION_NUMBER > MAKE_OPENSSL_VERSION_NUMBER(1, 1, 0)
                 LOG_TRC(sslErrorToName(sslError)
                         << " with " << (SSL_has_pending(_ssl) ? "(" : "no(") << SSL_pending(_ssl)
                         << ") pending data to read");
@@ -422,7 +432,8 @@ private:
                 // Effectively an EAGAIN error at the BIO layer
                 if (BIO_should_retry(_bio))
                 {
-#if OPENSSL_VERSION_NUMBER > 0x10100000L
+                    static_assert(MAKE_OPENSSL_VERSION_NUMBER(1, 1, 0) == 0x10100000L);
+#if OPENSSL_VERSION_NUMBER > MAKE_OPENSSL_VERSION_NUMBER(1, 1, 0)
                     LOG_TRC("BIO asks for retry - underlying EAGAIN? with "
                             << (SSL_has_pending(_ssl) ? "(" : "no(") << SSL_pending(_ssl)
                             << ") pending data to read");
