@@ -23,6 +23,7 @@
 
 #include <Util.hpp>
 
+#include <atomic>
 #include <string>
 #include <map>
 
