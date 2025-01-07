@@ -589,7 +589,7 @@ void resetTerminationFlags()
 
     void dieOnParentDeath()
     {
-#if !defined(ANDROID) && !defined(__FreeBSD__)
+#if defined(__linux__) && !defined(ANDROID)
         prctl(PR_SET_PDEATHSIG, SIGKILL);
 #endif
 #if defined(__FreeBSD__)
