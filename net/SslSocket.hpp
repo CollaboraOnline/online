@@ -409,12 +409,16 @@ private:
             // Unexpected: happens only with SSL_CTX_set_client_cert_cb().
             case SSL_ERROR_WANT_X509_LOOKUP: // 4
             case SSL_ERROR_WANT_CLIENT_HELLO_CB: // 11
+                LOG_ASSERT_MSG(!"Unhandled use of SSL_CTX_set_client_cert_cb()",
+                               "Unhandled " << sslErrorToName(sslError)
+                                            << " with SSL_CTX_set_client_cert_cb()");
                 errno = last_errno; // Restore errno.
                 return rc;
 
             case SSL_ERROR_WANT_ASYNC: // 9
             case SSL_ERROR_WANT_ASYNC_JOB: // 10
-                LOG_ASSERT(!"SSL_MODE_ASYNC is unsupported");
+                LOG_ASSERT_MSG(!"Unhandled use of SSL_MODE_ASYNC",
+                               "Unhandled " << sslErrorToName(sslError) << " with SSL_MODE_ASYNC");
                 errno = last_errno; // Restore errno.
                 return rc;
 
