@@ -745,6 +745,17 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             httpResponse.setBody(ss.str(), "text/plain; charset=utf-8");
             socket->send(httpResponse);
         }
+        else if (request.getMethod() == "POST")
+        {
+            std::string timestamp = Util::getIso8601FracformatTime(std::chrono::system_clock::now());
+            const std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
+            http::Response httpResponse(http::StatusCode::OK);
+            FileServerRequestHandler::hstsHeaders(httpResponse);
+            httpResponse.setBody(body, "application/json; charset=utf-8");
+            socket->send(httpResponse);
+
+            LOG_WRN("some setting uploaded, TODO save this content");
+        }
     }
 
 #endif
