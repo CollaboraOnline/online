@@ -355,7 +355,11 @@ class TreeViewControl {
 		level: number,
 		parent: HTMLElement,
 	) {
-		const tr = L.DomUtil.create('div', 'ui-treeview-entry', parent);
+		const tr = L.DomUtil.create(
+			'div',
+			builder.options.cssClass + ' ui-treeview-entry',
+			parent,
+		);
 		let dummyColumns = 0;
 		if (this._hasState) dummyColumns++;
 		tr.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
