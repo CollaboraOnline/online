@@ -1086,7 +1086,7 @@ function setupToolbar(e) {
 			toolbar.showItem('cancelsearch', false);
 			L.DomUtil.addClass(searchInput, 'search-not-found');
 			$('#findthis').addClass('search-not-found');
-			map.resetSelection();
+			app.searchService.resetSelection();
 			setTimeout(function () {
 				$('#findthis').removeClass('search-not-found');
 				L.DomUtil.removeClass(searchInput, 'search-not-found');

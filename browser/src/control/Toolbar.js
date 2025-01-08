@@ -901,7 +901,7 @@ L.Map.include({
 	cancelSearch: function() {
 		var toolbar = window.mode.isMobile() ? app.map.mobileSearchBar: app.map.statusBar;
 		var searchInput = L.DomUtil.get('search-input');
-		this.resetSelection();
+		app.searchService.resetSelection();
 		if (toolbar) {
 			toolbar.showItem('cancelsearch', false);
 			toolbar.enableItem('searchprev', false);

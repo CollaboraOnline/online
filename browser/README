@@ -159,9 +159,6 @@ API & events
 #######################################################################
 
 Search:
-    - API:
-        map.search(text, [backward])
-        map.highlightAll(text)
     - events:
         map.on('search', function (e) {}) (currently only fired when no search result is found) where:
             + e.originalPhrase = the phrase that has been searched for
