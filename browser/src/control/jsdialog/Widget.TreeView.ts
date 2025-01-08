@@ -992,6 +992,76 @@ class TreeViewControl {
 		return isRealTreeView;
 	}
 
+	getSortComparator(columnIndex: number, up: boolean) {
+		return (a: HTMLElement, b: HTMLElement) => {
+			if (!a || !b) return 0;
+
+			var tda = a.querySelectorAll('div').item(columnIndex);
+			var tdb = b.querySelectorAll('div').item(columnIndex);
+
+			if (tda.querySelector('input')) {
+				if (
+					tda.querySelector('input').checked ===
+					tdb.querySelector('input').checked
+				)
+					return 0;
+				if (up) {
+					if (
+						tda.querySelector('input').checked >
+						tdb.querySelector('input').checked
+					)
+						return 1;
+					else return -1;
+				} else if (
+					tdb.querySelector('input').checked >
+					tda.querySelector('input').checked
+				)
+					return 1;
+				else return -1;
+			}
+
+			if (up)
+				return tdb.innerText
+					.toLowerCase()
+					.localeCompare(tda.innerText.toLowerCase());
+			else
+				return tda.innerText
+					.toLowerCase()
+					.localeCompare(tdb.innerText.toLowerCase());
+		};
+	}
+
+	sortByColumn(icon: HTMLSpanElement, columnIndex: number, up: boolean) {
+		this.clearSorting();
+		L.DomUtil.addClass(icon, up ? 'up' : 'down');
+
+		var toSort: Array<HTMLDivElement> = [];
+
+		const container = this._container;
+		container
+			.querySelectorAll(
+				':not(.ui-treeview-expanded-content) .ui-treeview-entry',
+			)
+			.forEach((item: HTMLDivElement) => {
+				toSort.push(item);
+				container.removeChild(item);
+			});
+
+		toSort.sort(this.getSortComparator(columnIndex, up));
+
+		toSort.forEach((item) => {
+			container.insertBefore(item, container.lastChild.nextSibling);
+		});
+	}
+
+	clearSorting() {
+		var icons = this._thead.querySelectorAll('.ui-treeview-header-sort-icon');
+		icons.forEach((icon) => {
+			L.DomUtil.removeClass(icon, 'down');
+			L.DomUtil.removeClass(icon, 'up');
+		});
+	}
+
 	fillHeaders(headers: Array<TreeHeaderJSON>, builder: any) {
 		if (!headers) return;
 
@@ -1015,84 +1085,11 @@ class TreeViewControl {
 		for (const index in headers) {
 			this.fillHeader(headers[index], builder);
 
-			var sortByColumn = (columnIndex: number, up: boolean) => {
-				var compareFunction = (a: HTMLElement, b: HTMLElement) => {
-					if (!a || !b) return 0;
-
-					var tda = a.querySelectorAll('div').item(columnIndex);
-					var tdb = b.querySelectorAll('div').item(columnIndex);
-
-					if (tda.querySelector('input')) {
-						if (
-							tda.querySelector('input').checked ===
-							tdb.querySelector('input').checked
-						)
-							return 0;
-						if (up) {
-							if (
-								tda.querySelector('input').checked >
-								tdb.querySelector('input').checked
-							)
-								return 1;
-							else return -1;
-						} else if (
-							tdb.querySelector('input').checked >
-							tda.querySelector('input').checked
-						)
-							return 1;
-						else return -1;
-					}
-
-					if (up)
-						return tdb.innerText
-							.toLowerCase()
-							.localeCompare(tda.innerText.toLowerCase());
-					else
-						return tda.innerText
-							.toLowerCase()
-							.localeCompare(tdb.innerText.toLowerCase());
-				};
-
-				var toSort: Array<HTMLDivElement> = [];
-
-				const container = this._container;
-				container
-					.querySelectorAll(
-						':not(.ui-treeview-expanded-content) .ui-treeview-entry',
-					)
-					.forEach((item: HTMLDivElement) => {
-						toSort.push(item);
-						container.removeChild(item);
-					});
-
-				toSort.sort(compareFunction);
-
-				toSort.forEach((item) => {
-					container.insertBefore(item, container.lastChild.nextSibling);
-				});
-			};
-
 			var clickFunction = (columnIndex: number, icon: HTMLSpanElement) => {
-				var clearSorting = () => {
-					var icons = this._thead.querySelectorAll(
-						'.ui-treeview-header-sort-icon',
-					);
-					icons.forEach((icon) => {
-						L.DomUtil.removeClass(icon, 'down');
-						L.DomUtil.removeClass(icon, 'up');
-					});
-				};
-
 				return () => {
-					if (L.DomUtil.hasClass(icon, 'down')) {
-						clearSorting();
-						L.DomUtil.addClass(icon, 'up');
-						sortByColumn(columnIndex + dummyCells, true);
-					} else {
-						clearSorting();
-						L.DomUtil.addClass(icon, 'down');
-						sortByColumn(columnIndex + dummyCells, false);
-					}
+					if (L.DomUtil.hasClass(icon, 'down'))
+						this.sortByColumn(icon, columnIndex + dummyCells, true);
+					else this.sortByColumn(icon, columnIndex + dummyCells, false);
 				};
 			};
 
