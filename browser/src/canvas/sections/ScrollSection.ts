@@ -1148,6 +1148,8 @@ export class ScrollSection extends CanvasSectionObject {
 	public onMouseWheel (point: Array<number>, delta: Array<number>, e: MouseEvent): void {
 		if (e.ctrlKey) return;
 
+		this.map.fire('closepopups'); // close all popups when scrolling
+
 		let hscroll = 0, vscroll = 0;
 		if (Math.abs(delta[1]) > Math.abs(delta[0])) {
 			if (e.shiftKey)
