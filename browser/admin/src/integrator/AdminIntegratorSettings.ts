@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -8,11 +9,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/* eslint-disable */
+interface Window {
+	accessToken?: string;
+	accessTokenTTL?: string;
+}
 
 const uploadBtn = document.getElementById('uploadButton');
 if (uploadBtn) {
 	uploadBtn.addEventListener('click', uploadFile);
+}
+
+const element = document.getElementById('initial-variables');
+if (element) {
+	window.accessToken = element.dataset.accessToken;
+	window.accessTokenTTL = element.dataset.accessTokenTtl;
 }
 
 async function uploadFile() {
@@ -27,7 +37,6 @@ async function uploadFile() {
 		return;
 	}
 
-	const accessToken = '%ACCESS_TOKEN%';
 	const apiUrl = '/browser/dist/upload-settings'; // COOL backend endpoint
 
 	if (!fileInput.files || fileInput.files.length === 0) {
@@ -46,7 +55,7 @@ async function uploadFile() {
 		const response = await fetch(apiUrl, {
 			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${accessToken}`,
+				Authorization: `Bearer ${window.accessToken}`,
 			},
 			body: formData,
 		});
