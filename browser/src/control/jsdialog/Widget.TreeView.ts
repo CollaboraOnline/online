@@ -449,6 +449,54 @@ class TreeViewControl {
 		}
 	}
 
+	createExpandableIconCell(
+		parent: HTMLElement,
+		entry: TreeEntryJSON,
+		index: any,
+		builder: any,
+	) {
+		const icon = L.DomUtil.create('img', 'ui-treeview-icon', parent);
+
+		if (this._isNavigator) icon.draggable = false;
+
+		const iconId = this.getCellIconId(entry.columns[index]);
+		L.DomUtil.addClass(icon, iconId + 'img');
+		const iconName = builder._createIconURL(iconId, true);
+		L.LOUtil.setImage(icon, iconName, builder.map);
+		icon.tabIndex = -1;
+		icon.alt = ''; //In this case, it is advisable to use an empty alt tag for the icons, as the information of the function is available in text form
+	}
+
+	createTextCell(
+		parent: HTMLElement,
+		entry: TreeEntryJSON,
+		index: any,
+		builder: any,
+	) {
+		const cell = L.DomUtil.create(
+			'span',
+			builder.options.cssClass + ' ui-treeview-cell-text',
+			parent,
+		);
+		cell.innerText = entry.columns[index].text || entry.text;
+	}
+
+	createLinkCell(
+		parent: HTMLElement,
+		entry: TreeEntryJSON,
+		index: any,
+		builder: any,
+	) {
+		const cell = L.DomUtil.create(
+			'span',
+			builder.options.cssClass + ' ui-treeview-cell-text',
+			parent,
+		);
+		const link = L.DomUtil.create('a', '', cell);
+		link.href = entry.columns[index].link || entry.columns[index].text;
+		link.innerText = entry.columns[index].text || entry.text;
+	}
+
 	fillCells(
 		entry: TreeEntryJSON,
 		builder: any,
@@ -507,39 +555,18 @@ class TreeViewControl {
 				entry.columns[index].expanded
 			) {
 				L.DomUtil.addClass(td, 'ui-treeview-icon-column');
-				icon = L.DomUtil.create('img', 'ui-treeview-icon', text);
-
-				if (this._isNavigator) icon.draggable = false;
-
-				iconId = this.getCellIconId(entry.columns[index]);
-				L.DomUtil.addClass(icon, iconId + 'img');
-				iconName = builder._createIconURL(iconId, true);
-				L.LOUtil.setImage(icon, iconName, builder.map);
 				L.DomUtil.addClass(span, 'ui-treeview-expandable-with-icon');
-				icon.tabIndex = -1;
-				icon.alt = ''; //In this case, it is advisable to use an empty alt tag for the icons, as the information of the function is available in text form
+				this.createExpandableIconCell(text, entry, index, builder);
 			} else if (
 				entry.columns[index].link &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				innerText = L.DomUtil.create(
-					'span',
-					builder.options.cssClass + ' ui-treeview-cell-text',
-					text,
-				);
-				link = L.DomUtil.create('a', '', innerText);
-				link.href = entry.columns[index].link || entry.columns[index].text;
-				link.innerText = entry.columns[index].text || entry.text;
+				this.createLinkCell(text, entry, index, builder);
 			} else if (
 				entry.columns[index].text &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				innerText = L.DomUtil.create(
-					'span',
-					builder.options.cssClass + ' ui-treeview-cell-text',
-					text,
-				);
-				innerText.innerText = entry.columns[index].text || entry.text;
+				this.createTextCell(text, entry, index, builder);
 			}
 
 			// row sub-elements
