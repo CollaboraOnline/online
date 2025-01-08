@@ -72,7 +72,6 @@ L.Map.include({
 		searchCmd['SearchItem.SearchStartPointX'].value = searchStartPointX;
 		searchCmd['SearchItem.SearchStartPointY'].value = searchStartPointY;
 		searchCmd['SearchItem.Command'].value = command;
-		this._docLayer._searchRequested = true;
 		app.socket.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
 	},
 
