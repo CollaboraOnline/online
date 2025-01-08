@@ -234,10 +234,10 @@ class Dispatcher {
 		};
 
 		this.actionsMap['searchprev'] = () => {
-			app.map.search(L.DomUtil.get('search-input').value, true);
+			app.searchService.searchPrevious();
 		};
 		this.actionsMap['searchnext'] = () => {
-			app.map.search(L.DomUtil.get('search-input').value);
+			app.searchService.searchNext();
 		};
 		this.actionsMap['cancelsearch'] = () => {
 			app.map.cancelSearch();
