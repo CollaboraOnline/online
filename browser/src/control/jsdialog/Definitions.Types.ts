@@ -146,9 +146,10 @@ interface TreeEntryJSON {
 
 interface TreeHeaderJSON {
 	text: string;
+	sortable: boolean; // can be sorted by column
 }
 
-interface TreeWidget extends WidgetJSON {
+interface TreeWidgetJSON extends WidgetJSON {
 	text: string;
 	singleclickactivate: boolean; // activates element on single click instead of just selection
 	fireKeyEvents?: boolean; // do we sent key events to core
