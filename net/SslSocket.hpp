@@ -368,7 +368,7 @@ private:
         const unsigned long bioError = ERR_peek_error();
         const std::string bioErrStr = getBioError(bioError);
 
-        LOG_TRC("SSL error (" << context << "): " << sslErrorToName(sslError) << " (" << sslError
+        LOG_DBG("SSL error (" << context << "): " << sslErrorToName(sslError) << " (" << sslError
                               << "), rc: " << rc << ", errno: " << last_errno << " ("
                               << Util::symbolicErrno(last_errno) << ": "
                               << std::strerror(last_errno) << ")" << ": " << bioErrStr);
