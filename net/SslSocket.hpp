@@ -461,8 +461,6 @@ private:
                     {
                         // Socket closed. Not an error.
                         oss << " (" << context << "): closed. " << bioErrStr;
-                        LOG_INF(oss.str());
-                        return 0;
                     }
                     else if (rc == -1)
                     {
@@ -479,9 +477,7 @@ private:
                 }
 
                 oss << bioErrStr;
-                const std::string msg = oss.str();
-                LOG_TRC("Throwing SSL Error ("
-                        << context << "): " << msg); // Locate the source of the exception.
+                LOG_DBG("SSL Error (" << context << "): " << oss.str());
 
                 handshakeFail();
 
@@ -490,13 +486,12 @@ private:
                 if (!sslVerifyResult.empty())
                     LOG_ERR("SSL verification warning (" << context << "): " << sslVerifyResult);
 
-                errno = last_errno; // Restore errno before throwing.
-                throw std::runtime_error(msg);
+                last_errno = last_errno ? last_errno : EPIPE; // Set errno if unset.
+                return 0; // EOF.
             }
             break;
         }
 
-        errno = last_errno; // Restore errno.
         return rc;
     }
 
