@@ -88,7 +88,7 @@ abstract class AutoCompletePopup {
 		} as any as PopupData;
 	}
 
-	getTreeJSON(): TreeWidget {
+	getTreeJSON(): TreeWidgetJSON {
 		return {
 			id: this.popupId + 'List',
 			type: 'treelistbox',
@@ -97,7 +97,7 @@ abstract class AutoCompletePopup {
 			singleclickactivate: false,
 			fireKeyEvents: true,
 			entries: [] as Array<TreeEntryJSON>,
-		} as TreeWidget;
+		} as TreeWidgetJSON;
 	}
 
 	sendUpdate(data: any): void {
@@ -151,7 +151,7 @@ abstract class AutoCompletePopup {
 		const control = this.getTreeJSON();
 		if (L.DomUtil.get(this.popupId + 'List')) {
 			const data = this.getPopupJSON(control, cursorPos);
-			(data.control as TreeWidget).entries = entries;
+			(data.control as TreeWidgetJSON).entries = entries;
 			this.sendUpdate(data);
 			return;
 		}
@@ -160,7 +160,7 @@ abstract class AutoCompletePopup {
 
 		const data = this.newPopupData;
 		data.children[0].children[0] = control;
-		(data.children[0].children[0] as TreeWidget).entries = entries;
+		(data.children[0].children[0] as TreeWidgetJSON).entries = entries;
 
 		const isSpreadsheetRTL = this.map._docLayer.isCalcRTL();
 		const canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
