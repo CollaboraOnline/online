@@ -136,6 +136,12 @@ private:
                                     const RequestDetails& requestDetails,
                                     const std::shared_ptr<StreamSocket>& socket);
 
+    static void preprocessIntegratorAdminFile(const Poco::Net::HTTPRequest& request,
+                                              http::Response& httpResponse,
+                                              const RequestDetails& requestDetails,
+                                              Poco::MemoryInputStream& message,
+                                              const std::shared_ptr<StreamSocket>& socket);
+
     /// Construct a JSON to be accepted by the cool.html from a list like
     /// UIMode=classic;TextRuler=true;PresentationStatusbar=false
     /// that is passed as "ui_defaults" hidden input during the iframe setup.

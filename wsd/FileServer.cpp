@@ -854,10 +854,16 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             endPoint == "localizations.json" ||
             endPoint == "locore-localizations.json" ||
             endPoint == "uno-localizations.json" ||
-            endPoint == "uno-localizations-override.json" ||
-            endPoint == "admin-settings.html")
+            endPoint == "uno-localizations-override.json")
         {
             accessDetails = preprocessFile(request, response, requestDetails, message, socket);
+            return;
+        }
+
+        // TODO: Only respond to authenticated POST request, needs to implement authentication
+        if (endPoint == "adminIntegratorSettings.html")
+        {
+            preprocessIntegratorAdminFile(request, response, requestDetails, message, socket);
             return;
         }
 
@@ -880,8 +886,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 if (!COOLWSD::AdminEnabled)
                     throw Poco::FileAccessDeniedException("Admin console disabled");
 
-                if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
-                    throw Poco::Net::NotAuthenticatedException("Invalid admin login");
+                // TODO: Do we need to make sure admin is authenticated for JS files ?
+                // if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
+                //     throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
                 // Ask UAs to block if they detect any XSS attempt
                 response.add("X-XSS-Protection", "1; mode=block");
@@ -1992,7 +1999,86 @@ void FileServerRequestHandler::uploadFileToNextcloud(const Poco::Net::HTTPReques
     }
 }
 
+void FileServerRequestHandler::preprocessIntegratorAdminFile(
+    const HTTPRequest& request, http::Response& response, const RequestDetails& requestDetails,
+    Poco::MemoryInputStream& message,
+    const std::shared_ptr<StreamSocket>& socket)
+{
+    const ServerURL cnxDetails(requestDetails);
+    const std::string responseRoot = cnxDetails.getResponseRoot();
 
+    static const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/%s.js\"></script>");
+    static const std::string footerPage("<footer class=\"footer has-text-centered\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</footer>");
+
+    const std::string relPath = getRequestPathname(request, requestDetails);
+    LOG_DBG("Preprocessing file: " << relPath);
+    std::string adminFile = *getUncompressedFile(relPath);
+
+    // We need to pass certain parameters from the cool html GET URI
+    // to the embedded document URI. Here we extract those params
+    // from the GET URI and set them in the generated html (see cool.html.m4).
+    HTMLForm form(request, message);
+    const UserRequestVars urv(request, form);
+
+    Poco::replaceInPlace(adminFile, ACCESS_TOKEN, urv[ACCESS_TOKEN]);
+    Poco::replaceInPlace(adminFile, ACCESS_TOKEN_TTL, urv[ACCESS_TOKEN_TTL]);
+    Poco::replaceInPlace(adminFile, ACCESS_HEADER, urv[ACCESS_HEADER]);
+
+    std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
+    std::string brandFooter;
+
+    if constexpr (ConfigUtil::isSupportKeyEnabled())
+    {
+        const auto& config = Application::instance().config();
+        const std::string keyString = config.getString("support_key", "");
+        SupportKey key(keyString);
+
+        if (!key.verify() || key.validDaysRemaining() <= 0)
+        {
+            brandJS = Poco::format(scriptJS, std::string(SUPPORT_KEY_BRANDING_UNSUPPORTED));
+            brandFooter = Poco::format(footerPage, key.data(), Poco::DateTimeFormatter::format(key.expiry(), Poco::DateTimeFormat::RFC822_FORMAT));
+        }
+    }
+
+    Poco::replaceInPlace(adminFile, std::string("<!--%BRANDING_JS%-->"), brandJS);
+    Poco::replaceInPlace(adminFile, std::string("<!--%FOOTER%-->"), brandFooter);
+    Poco::replaceInPlace(adminFile, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
+    Poco::replaceInPlace(adminFile, std::string("%SERVICE_ROOT%"), responseRoot);
+
+    ContentSecurityPolicy csp;
+    csp.appendDirective("frame-src", "'self'");
+    csp.appendDirective("frame-src", "blob:"); // Equivalent to unsafe-eval!
+    csp.appendDirective("connect-src", "'self'");
+    // TODO: we have inline script tag and css in admin panel. can't have following CSPs
+    // csp.appendDirective("default-src", "'none'");
+    // csp.appendDirective("script-src", "'self'");
+    // csp.appendDirective("script-src", "'unsafe-eval'");
+    // csp.appendDirective("style-src", "'self'");
+    csp.appendDirective("font-src", "'self'");
+    csp.appendDirective("object-src", "'self'");
+    csp.appendDirective("media-src", "'self'");
+    csp.appendDirectiveUrl("media-src", cnxDetails.getWebServerUrl());
+    csp.appendDirectiveUrl("connect-src", cnxDetails.getWebServerUrl());
+    csp.appendDirective("img-src", "'self'");
+    csp.appendDirective("img-src", "data:"); // Equivalent to unsafe-inline!
+
+    const auto& config = Application::instance().config();
+    csp.merge(config.getString("net.content_security_policy", ""));
+
+    response.add("Content-Security-Policy", csp.generate());
+
+    response.set("Last-Modified", Util::getHttpTimeNow());
+    response.set("Cache-Control", "max-age=11059200");
+    response.set("ETag", COOLWSD_VERSION_HASH);
+
+    response.add("X-Content-Type-Options", "nosniff");
+    response.add("X-XSS-Protection", "1; mode=block");
+    response.add("Referrer-Policy", "no-referrer");
+
+    response.setBody(std::move(adminFile));
+    socket->send(response);
+    LOG_TRC("Sent file: " << relPath << ": " << adminFile);
+}
 
 
 void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
