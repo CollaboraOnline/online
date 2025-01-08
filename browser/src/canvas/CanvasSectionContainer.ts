@@ -1867,7 +1867,7 @@ class CanvasSectionContainer {
 	private checkNewSectionName (options: any) {
 		if (options.name !== undefined && typeof options.name === 'string' && options.name.trim() !== '') {
 			if (this.doesSectionExist(options.name)) {
-				console.error('There is a section with the same name. Use doesSectionExist for existancy checks.');
+				console.error('There is a section with the same name: ' + options.name + '. Use doesSectionExist for existancy checks.');
 				return false;
 			}
 			else if (this.arrayIncludes(['top', 'left', 'bottom', 'right'], options.name.trim())) {
