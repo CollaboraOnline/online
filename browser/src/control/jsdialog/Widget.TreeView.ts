@@ -147,31 +147,17 @@ class TreeViewControl {
 		return false;
 	}
 
-	findEntryWithRow(
-		entries: Array<TreeEntryJSON>,
-		row: number | string,
-	): TreeEntryJSON {
-		for (const i in entries) {
-			if (i == row) return entries[i];
-			else if (entries[i].children) {
-				var found = this.findEntryWithRow(entries[i].children, row);
-				if (found) return found;
-			}
-		}
-
-		return null;
-	}
-
 	changeCheckboxStateOnClick(
-		checkbox: HTMLInputElement,
+		checkbox: any,
 		treeViewData: TreeWidgetJSON,
 		builder: any,
 		entry: TreeEntryJSON,
 	) {
-		let foundEntry: TreeEntryJSON;
 		if (checkbox.checked) {
-			foundEntry = this.findEntryWithRow(treeViewData.entries, entry.row);
-			if (foundEntry) checkbox.checked = foundEntry.state = true;
+			if (typeof checkbox._state !== 'undefined') {
+				checkbox.checked = checkbox._state = true;
+			}
+
 			builder.callback(
 				'treeview',
 				'change',
@@ -180,8 +166,10 @@ class TreeViewControl {
 				builder,
 			);
 		} else {
-			foundEntry = this.findEntryWithRow(treeViewData.entries, entry.row);
-			if (foundEntry) checkbox.checked = foundEntry.state = false;
+			if (typeof checkbox._state !== 'undefined') {
+				checkbox.checked = checkbox._state = false;
+			}
+
 			builder.callback(
 				'treeview',
 				'change',
@@ -236,7 +224,7 @@ class TreeViewControl {
 		entry: TreeEntryJSON,
 		builder: any,
 	) {
-		let selectionElement: HTMLInputElement;
+		let selectionElement: any;
 		const checkboxtype = treeViewData.checkboxtype;
 		if (checkboxtype == 'radio') {
 			selectionElement = this.createRadioButton(
@@ -253,6 +241,7 @@ class TreeViewControl {
 				entry,
 			);
 		}
+		selectionElement._state = entry.state;
 
 		if (entry.enabled === false) selectionElement.disabled = true;
 
