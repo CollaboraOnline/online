@@ -11,25 +11,7 @@
 /* global app */
 
 L.Map.include({
-	_onSearch: function() {
-		this.off('search', this._onSearch, this);
-		if (this._pendingSearch) {
-			this.search.bind(this, ...this._pendingSearch)();
-			this._pendingSearch = null;
-		}
-	},
-
 	search: function (text, backward, replaceString,  command, expand) {
-		if (this._docLayer._searchRequested) {
-			// If we're waiting for a search result, wait for the response before
-			// sending a new one.
-			// This reduces traffic and also avoids the bug where fast successive
-			// searches can skip over results.
-			this.on('search', this._onSearch, this);
-			this._pendingSearch = arguments;
-			return;
-		}
-
 		if (backward === undefined) {
 			backward = false;
 		}
