@@ -127,7 +127,9 @@ class Mention extends L.Control.AutoCompletePopup {
 			cursorPos = currentPos;
 			this.cursorPosAtStart = currentPos;
 		}
-
+		// popup mention should have total top margin of navigation bar + if toolbar present then toolbar height
+		var canvasEl = this.map._docLayer._canvas.getBoundingClientRect();
+		cursorPos.y += canvasEl.top;
 		if (entries.length === 0) {
 			// If the key pressed was a space, and there are no matches, then just
 			// dismiss the popup.
