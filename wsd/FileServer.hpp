@@ -14,6 +14,7 @@
 #include <COOLWSD.hpp>
 #include <ConfigUtil.hpp>
 #include <HttpRequest.hpp>
+#include <Poco/Net/PartHandler.h>
 #include <Socket.hpp>
 
 #include <string>
@@ -204,6 +205,18 @@ private:
                           const std::shared_ptr<StreamSocket>& socket,
                           const std::string& shortMessage, const std::string& longMessage,
                           const std::string& extraHeader = std::string());
+};
+
+class FilePartHandler : public Poco::Net::PartHandler
+{
+public:
+    void handlePart(const Poco::Net::MessageHeader& header, std::istream& stream) override;
+    const std::string& getFileName() const { return _fileName; }
+    const std::string& getFileContent() const { return _fileContent; }
+
+private:
+    std::string _fileName;
+    std::string _fileContent;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -694,6 +694,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     //handles request starts with /wopi/settings
     void handleSettingsRequest(const HTTPRequest& request,
                                const std::string& etagString,
+                               Poco::MemoryInputStream& message,
                                const std::shared_ptr<StreamSocket>& socket)
     {
         Poco::URI requestUri(request.getURI());
@@ -747,14 +748,36 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         }
         else if (request.getMethod() == "POST")
         {
-            std::string timestamp = Util::getIso8601FracformatTime(std::chrono::system_clock::now());
+            FilePartHandler partHandler;
+
+            Poco::Net::HTMLForm form(request, message, partHandler);
+
+            const std::string& fileName = partHandler.getFileName();
+            const std::string& fileContent = partHandler.getFileContent();
+
+            if (fileName.empty() || fileContent.empty())
+            {
+                http::Response httpResponse(http::StatusCode::BadRequest);
+                socket->send(httpResponse);
+                LOG_ERR("No valid file uploaded.");
+            }
+
+            LOG_INF("File uploaded: " << fileName << ", Size: " << fileContent.size() << " bytes");
+
+            std::streamsize size = fileContent.size();
+
+            std::ofstream outfile;
+            outfile.open("test/data/uploaded/" + fileName, std::ofstream::binary);
+            outfile.write(fileContent.data(), size);
+            outfile.close();
+
+            std::string timestamp =
+                Util::getIso8601FracformatTime(std::chrono::system_clock::now());
             const std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
             http::Response httpResponse(http::StatusCode::OK);
             FileServerRequestHandler::hstsHeaders(httpResponse);
             httpResponse.setBody(body, "application/json; charset=utf-8");
             socket->send(httpResponse);
-
-            LOG_WRN("some setting uploaded, TODO save this content");
         }
     }
 
@@ -809,8 +832,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (relPath.starts_with("/wopi/files")) {
             handleWopiRequest(request, requestDetails, message, socket);
             return;
-        } else if (relPath.starts_with("/wopi/settings")) {
-            handleSettingsRequest(request, etagString, socket);
+        } else if (relPath.starts_with("/wopi/settings") || relPath.ends_with("/wopi/settings/upload")) {
+            handleSettingsRequest(request, etagString, message, socket);
             return;
         }
 
@@ -844,7 +867,6 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             uploadFileToNextcloud(request, requestDetails, message, socket);
             return;
         }
-
 
         // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end() &&
@@ -1908,38 +1930,27 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
     LOG_TRC("Sent file: " << relPath);
 }
 
-class FilePartHandler : public Poco::Net::PartHandler
+void FilePartHandler::handlePart(const Poco::Net::MessageHeader& header, std::istream& stream)
 {
-public:
-    void handlePart(const Poco::Net::MessageHeader& header, std::istream& stream) override
+    if (header.has("Content-Disposition"))
     {
-        if (header.has("Content-Disposition"))
+        const std::string disposition = header.get("Content-Disposition");
+        const std::string prefix = "filename=\"";
+
+        auto pos = disposition.find(prefix);
+        if (pos != std::string::npos)
         {
-            const std::string disposition = header.get("Content-Disposition");
-            const std::string prefix = "filename=\"";
+            _fileName = disposition.substr(pos + prefix.size());
+            auto endPos = _fileName.find('\"');
+            if (endPos != std::string::npos)
+                _fileName = _fileName.substr(0, endPos);
 
-            auto pos = disposition.find(prefix);
-            if (pos != std::string::npos)
-            {
-                _fileName = disposition.substr(pos + prefix.size());
-                auto endPos = _fileName.find("\"");
-                if (endPos != std::string::npos)
-                    _fileName = _fileName.substr(0, endPos);
-
-                std::ostringstream oss;
-                Poco::StreamCopier::copyStream(stream, oss);
-                _fileContent = oss.str();
-            }
+            std::ostringstream oss;
+            Poco::StreamCopier::copyStream(stream, oss);
+            _fileContent = oss.str();
         }
     }
-
-    const std::string& getFileName() const { return _fileName; }
-    const std::string& getFileContent() const { return _fileContent; }
-
-private:
-    std::string _fileName;
-    std::string _fileContent;
-};
+}
 
 void FileServerRequestHandler::uploadFileToNextcloud(const Poco::Net::HTTPRequest& request,
                                                      const RequestDetails& /*requestDetails*/,
@@ -2025,15 +2036,18 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(
     LOG_DBG("Preprocessing file: " << relPath);
     std::string adminFile = *getUncompressedFile(relPath);
 
-    // We need to pass certain parameters from the cool html GET URI
-    // to the embedded document URI. Here we extract those params
-    // from the GET URI and set them in the generated html (see cool.html.m4).
     HTMLForm form(request, message);
     const UserRequestVars urv(request, form);
 
     Poco::replaceInPlace(adminFile, ACCESS_TOKEN, urv[ACCESS_TOKEN]);
     Poco::replaceInPlace(adminFile, ACCESS_TOKEN_TTL, urv[ACCESS_TOKEN_TTL]);
     Poco::replaceInPlace(adminFile, ACCESS_HEADER, urv[ACCESS_HEADER]);
+    bool enableDebug = false;
+#if ENABLE_DEBUG
+    enableDebug = true;
+#endif
+    Poco::replaceInPlace(adminFile, std::string("%ENABLE_DEBUG%"),
+                         std::string(enableDebug ? "true" : "false"));
 
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
     std::string brandFooter;
