@@ -425,27 +425,28 @@ L.TileSectionManager = L.Class.extend({
 	 * Center is included iff findFreePaneCenter is true
 	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
 	 **/
-	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, _paneBounds, freezePane, splitPos, scale, findFreePaneCenter) {
+	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, _paneBounds, freezePane, _splitPos, scale, findFreePaneCenter) {
 		let pinchCenter = Coordinate.fromCorePixel(_pinchCenter.x, _pinchCenter.y, this._map.getZoom());
 		const pinchStartCenter = Coordinate.fromCorePixel(_pinchStartCenter.x, _pinchStartCenter.y, this._map.getZoom());
 		const paneBounds = new CoordinateBounds(
 			Coordinate.fromCorePixel(_paneBounds.min.x, _paneBounds.min.y),
 			Coordinate.fromCorePixel(_paneBounds.max.x, _paneBounds.max.y)
 		);
+		const splitPos = Coordinate.fromCorePixel(_splitPos.x, _splitPos.y, this._map.getZoom());
 
 		let xMin = 0;
 		const hasXMargin = !this._layer.isCalc();
 		if (hasXMargin) {
 			xMin = -Infinity;
 		} else if (paneBounds.min.corePixel().x > 0) {
-			xMin = splitPos.x;
+			xMin = splitPos.corePixel().x;
 		}
 
 		let yMin = 0;
 		if (paneBounds.min.corePixel().y < 0) {
 			yMin = -Infinity;
 		} else if (paneBounds.min.corePixel().y > 0) {
-			yMin = splitPos.y;
+			yMin = splitPos.corePixel().y;
 		}
 
 		const minTopLeft = new L.Point(xMin, yMin);
@@ -511,11 +512,11 @@ L.TileSectionManager = L.Class.extend({
 
 		const newPaneCenter = new L.Point(
 			docTopLeft.x -
-				splitPos.x +
-				((paneSize.corePixel().x + splitPos.x) * 0.5) / scale,
+				splitPos.corePixel().x +
+				((paneSize.corePixel().x + splitPos.corePixel().x) * 0.5) / scale,
 			docTopLeft.y -
-				splitPos.y +
-				((paneSize.corePixel().y + splitPos.y) * 0.5) / scale,
+				splitPos.corePixel().y +
+				((paneSize.corePixel().y + splitPos.corePixel().y) * 0.5) / scale,
 		);
 
 		return {
