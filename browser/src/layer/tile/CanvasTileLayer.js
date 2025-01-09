@@ -426,21 +426,22 @@ L.TileSectionManager = L.Class.extend({
 	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
 	 **/
 	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, _paneBounds, freezePane, _splitPos, scale, findFreePaneCenter) {
-		let pinchCenter = Coordinate.fromCorePixel(_pinchCenter.x, _pinchCenter.y, this._map.getZoom());
-		const pinchStartCenter = Coordinate.fromCorePixel(_pinchStartCenter.x, _pinchStartCenter.y, this._map.getZoom());
+		const oldZoom = this._map.getZoom();
+		let pinchCenter = Coordinate.fromCorePixel(_pinchCenter.x, _pinchCenter.y, oldZoom);
+		const pinchStartCenter = Coordinate.fromCorePixel(_pinchStartCenter.x, _pinchStartCenter.y, oldZoom);
 		const paneBounds = new CoordinateBounds(
 			Coordinate.fromCorePixel(
 				_paneBounds.min.x,
 				_paneBounds.min.y,
-				this._map.getZoom(),
+				oldZoom,
 			),
 			Coordinate.fromCorePixel(
 				_paneBounds.max.x,
 				_paneBounds.max.y,
-				this._map.getZoom(),
+				oldZoom,
 			),
 		);
-		const splitPos = Coordinate.fromCorePixel(_splitPos.x, _splitPos.y, this._map.getZoom());
+		const splitPos = Coordinate.fromCorePixel(_splitPos.x, _splitPos.y, oldZoom);
 
 		let xMin = 0;
 		const hasXMargin = !this._layer.isCalc();
@@ -457,14 +458,14 @@ L.TileSectionManager = L.Class.extend({
 			yMin = splitPos.corePixel().y;
 		}
 
-		const minTopLeft = new L.Point(xMin, yMin);
+		const minTopLeft = Coordinate.fromCorePixel(xMin, yMin, oldZoom);
 
 		const paneSize = paneBounds.size();
 
 		pinchCenter = Coordinate.fromCorePixel(
 			pinchCenter.corePixel().x - this._offset.x,
 			pinchCenter.corePixel().y - this._offset.y,
-			this._map.getZoom()
+			oldZoom
 		);
 
 		let centerOffset = pinchCenter.subtract(pinchStartCenter);
@@ -475,29 +476,29 @@ L.TileSectionManager = L.Class.extend({
 				(pinchStartCenter.corePixel().x -
 					this._offset.x -
 					paneBounds.min.corePixel().x) /
-				paneSize.corePixel(this._map.getZoom()).x,
+				paneSize.corePixel(oldZoom).x,
 			y:
 				(pinchStartCenter.corePixel().y -
 					this._offset.y -
 					paneBounds.min.corePixel().y) /
-				paneSize.corePixel(this._map.getZoom()).y,
+				paneSize.corePixel(oldZoom).y,
 		};
 
 		let docTopLeft = new L.Point(
 			pinchStartCenter.corePixel().x +
-				(centerOffset.corePixel(this._map.getZoom()).x -
-					paneSize.corePixel(this._map.getZoom()).x * panePortion.x) /
+				(centerOffset.corePixel(oldZoom).x -
+					paneSize.corePixel(oldZoom).x * panePortion.x) /
 					scale,
 			pinchStartCenter.corePixel().y +
-				(centerOffset.corePixel(this._map.getZoom()).y -
-					paneSize.corePixel(this._map.getZoom()).y * panePortion.y) /
+				(centerOffset.corePixel(oldZoom).y -
+					paneSize.corePixel(oldZoom).y * panePortion.y) /
 					scale,
 		);
 
 		// Top left in document coordinates.
 		const clampedDocTopLeft = new L.Point(
-			Math.max(minTopLeft.x, docTopLeft.x),
-			Math.max(minTopLeft.y, docTopLeft.y)
+			Math.max(minTopLeft.corePixel().x, docTopLeft.x),
+			Math.max(minTopLeft.corePixel().y, docTopLeft.y)
 		);
 
 		const offset = clampedDocTopLeft.subtract(docTopLeft);
@@ -523,12 +524,12 @@ L.TileSectionManager = L.Class.extend({
 		const newPaneCenter = new L.Point(
 			docTopLeft.x -
 				splitPos.corePixel().x +
-				((paneSize.corePixel(this._map.getZoom()).x + splitPos.corePixel().x) *
+				((paneSize.corePixel(oldZoom).x + splitPos.corePixel().x) *
 					0.5) /
 					scale,
 			docTopLeft.y -
 				splitPos.corePixel().y +
-				((paneSize.corePixel(this._map.getZoom()).y + splitPos.corePixel().y) *
+				((paneSize.corePixel(oldZoom).y + splitPos.corePixel().y) *
 					0.5) /
 					scale,
 		);
@@ -536,7 +537,7 @@ L.TileSectionManager = L.Class.extend({
 		return {
 			offset: this._offset,
 			topLeft: docTopLeft.add(this._offset),
-			center: this._map.project(this._map.unproject(newPaneCenter, this._map.getZoom()), this._map.getScaleZoom(scale))
+			center: this._map.project(this._map.unproject(newPaneCenter, oldZoom), this._map.getScaleZoom(scale))
 		};
 	},
 
