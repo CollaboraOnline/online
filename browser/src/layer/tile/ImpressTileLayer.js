@@ -197,7 +197,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (values.comments) {
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		} else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);

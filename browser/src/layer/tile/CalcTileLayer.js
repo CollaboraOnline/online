@@ -687,9 +687,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 			this._setAnchor('tilesSection', tilesSection,
 				[[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, '-left', 'right']]);
-			
-			// Do not set layoutIsRtl to true prematurely. If set before all sections are defined 
-			// (e.g., during load with onStatusMsg), some sections may not update to their correct positions. 
+
+			// Do not set layoutIsRtl to true prematurely. If set before all sections are defined
+			// (e.g., during load with onStatusMsg), some sections may not update to their correct positions.
 			// Ensure all sections are adjusted first, then set layoutIsRtl to true to show that they have moved.
 			if (rowHeaderSection)
 				this._layoutIsRTL = true;
@@ -967,7 +967,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._handleSheetGeometryDataMsg(values, differentSheet);
 
 		} else if (values.comments) {
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		} else if (values.commentsPos) {
 			var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
