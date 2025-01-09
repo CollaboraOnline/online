@@ -111,6 +111,10 @@ bool lockdown(Type type)
         BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, __NR_##name, 0, 1), \
         BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
+    #define REJECT_SYSCALL(name, err) \
+        BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, __NR_##name, 0, 1), \
+        BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ERRNO | (err & SECCOMP_RET_DATA))
+
     #define KILL_SYSCALL_FULL(fullname) \
         BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, fullname, 0, 1), \
         BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_TRAP)
@@ -159,6 +163,10 @@ bool lockdown(Type type)
         KILL_SYSCALL(shmget),
         KILL_SYSCALL(shmat),
         KILL_SYSCALL(shmctl),
+#endif
+        REJECT_SYSCALL(execve, EPERM),
+#ifdef __NR_execveat
+        REJECT_SYSCALL(execveat, EPERM),
 #endif
         KILL_SYSCALL(getitimer),
         KILL_SYSCALL(setitimer),
