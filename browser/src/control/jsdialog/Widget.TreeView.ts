@@ -155,39 +155,6 @@ class TreeViewControl {
 		return false;
 	}
 
-	changeCheckboxStateOnClick(
-		checkbox: any,
-		treeViewData: TreeWidgetJSON,
-		builder: any,
-		entry: TreeEntryJSON,
-	) {
-		if (checkbox.checked) {
-			if (typeof checkbox._state !== 'undefined') {
-				checkbox.checked = checkbox._state = true;
-			}
-
-			builder.callback(
-				'treeview',
-				'change',
-				treeViewData,
-				{ row: entry.row, value: true },
-				builder,
-			);
-		} else {
-			if (typeof checkbox._state !== 'undefined') {
-				checkbox.checked = checkbox._state = false;
-			}
-
-			builder.callback(
-				'treeview',
-				'change',
-				treeViewData,
-				{ row: entry.row, value: false },
-				builder,
-			);
-		}
-	}
-
 	createCheckbox(
 		parent: HTMLElement,
 		treeViewData: TreeWidgetJSON,
@@ -250,19 +217,9 @@ class TreeViewControl {
 			);
 		}
 		selectionElement._state = entry.state;
+		selectionElement._row = entry.row;
 
 		if (entry.enabled === false) selectionElement.disabled = true;
-
-		if (treeViewData.enabled !== false) {
-			selectionElement.addEventListener('change', () => {
-				this.changeCheckboxStateOnClick(
-					selectionElement,
-					treeViewData,
-					builder,
-					entry,
-				);
-			});
-		}
 
 		return selectionElement;
 	}
@@ -801,8 +758,8 @@ class TreeViewControl {
 				});
 
 			this.selectEntry(parentContainer, checkbox);
-			if (checkbox)
-				this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);
+			/*if (checkbox)
+				this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);*/
 
 			if (select)
 				builder.callback(
@@ -1254,7 +1211,40 @@ class TreeViewControl {
 
 	// --------- Event Handlers
 	//
-	onClick() {
+	onClick(e: any) {
+		let target = e.target;
+		if (target.localName === 'input') {
+			this.onCheckBoxClick(target);
+			return;
+		}
+	}
+
+	onCheckBoxClick(checkbox: any) {
+		if (checkbox.checked) {
+			if (typeof checkbox._state !== 'undefined') {
+				checkbox.checked = checkbox._state = true;
+			}
+
+			this._builder.callback(
+				'treeview',
+				'change',
+				this._data,
+				{ row: checkbox._row, value: true },
+				this._builder,
+			);
+		} else {
+			if (typeof checkbox._state !== 'undefined') {
+				checkbox.checked = checkbox._state = false;
+			}
+
+			this._builder.callback(
+				'treeview',
+				'change',
+				this._data,
+				{ row: checkbox._row, value: false },
+				this._builder,
+			);
+		}
 	}
 }
 
