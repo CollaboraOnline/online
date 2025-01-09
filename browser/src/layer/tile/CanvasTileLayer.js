@@ -447,14 +447,14 @@ L.TileSectionManager = L.Class.extend({
 
 		const paneSize = paneBounds.getSize();
 
-		pinchCenter = {
-			x: pinchCenter.corePixel().x - this._offset.x,
-			y: pinchCenter.corePixel().y - this._offset.y,
-		};
+		pinchCenter = Coordinate.fromCorePixel(
+			pinchCenter.corePixel().x - this._offset.x,
+			pinchCenter.corePixel().y - this._offset.y,
+		);
 
 		let centerOffset = {
-			x: pinchCenter.x - pinchStartCenter.x,
-			y: pinchCenter.y - pinchStartCenter.y,
+			x: pinchCenter.corePixel().x - pinchStartCenter.x,
+			y: pinchCenter.corePixel().y - pinchStartCenter.y,
 		};
 
 		// Portion of the pane away that our pinchStart (which should be where we zoom round) is
