@@ -467,10 +467,7 @@ L.TileSectionManager = L.Class.extend({
 			this._map.getZoom()
 		);
 
-		let centerOffset = {
-			x: pinchCenter.corePixel().x - pinchStartCenter.corePixel().x,
-			y: pinchCenter.corePixel().y - pinchStartCenter.corePixel().y,
-		};
+		let centerOffset = pinchCenter.subtract(pinchStartCenter);
 
 		// Portion of the pane away that our pinchStart (which should be where we zoom round) is
 		const panePortion = {
@@ -488,11 +485,11 @@ L.TileSectionManager = L.Class.extend({
 
 		let docTopLeft = new L.Point(
 			pinchStartCenter.corePixel().x +
-				(centerOffset.x -
+				(centerOffset.corePixel(this._map.getZoom()).x -
 					paneSize.corePixel(this._map.getZoom()).x * panePortion.x) /
 					scale,
 			pinchStartCenter.corePixel().y +
-				(centerOffset.y -
+				(centerOffset.corePixel(this._map.getZoom()).y -
 					paneSize.corePixel(this._map.getZoom()).y * panePortion.y) /
 					scale,
 		);
