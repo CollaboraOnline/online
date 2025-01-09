@@ -12,6 +12,7 @@
 interface Window {
 	accessToken?: string;
 	accessTokenTTL?: string;
+	enableDebug?: string;
 }
 
 const uploadBtn = document.getElementById('uploadButton');
@@ -23,6 +24,7 @@ const element = document.getElementById('initial-variables');
 if (element) {
 	window.accessToken = element.dataset.accessToken;
 	window.accessTokenTTL = element.dataset.accessTokenTtl;
+	window.enableDebug = element.dataset.enableDebug;
 }
 
 async function uploadFile() {
@@ -37,7 +39,8 @@ async function uploadFile() {
 		return;
 	}
 
-	const apiUrl = '/browser/dist/upload-settings'; // COOL backend endpoint
+	let apiUrl = '/browser/dist/upload-settings';
+	if (window.enableDebug) apiUrl = '/wopi/settings/upload';
 
 	if (!fileInput.files || fileInput.files.length === 0) {
 		fileStatus.textContent = 'No file selected for upload.';

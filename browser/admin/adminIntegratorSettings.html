@@ -61,7 +61,7 @@
 <body>
   <!--%BRANDING_JS%-->
   <div class="is-fullwidth has-text-white" style="background-color:#17191E;line-height:50px;">
-    <a style="margin-left:12px;color:#9D998D;">
+    <a id="productName" style="margin-left:12px;color:#9D998D;">
       <script>document.write(l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole)</script>
     </a>
   </div>
@@ -75,6 +75,7 @@
             data-access-token = "%ACCESS_TOKEN%"
             data-access-token-ttl = "%ACCESS_TOKEN_TTL%"
             data-access-header = "%ACCESS_HEADER%"
+            data-enable-debug = "%ENABLE_DEBUG%"
             />
     </div>
     <!--%FOOTER%-->
