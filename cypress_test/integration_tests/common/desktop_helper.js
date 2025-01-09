@@ -551,6 +551,15 @@ function scrollWriterDocumentToTop() {
 	assertScrollbarPosition('vertical', 0, 10);
 }
 
+function scrollViewDown() {
+	cy.getFrameWindow()
+		.its('L')
+		.then(function(L) {
+			L.Map.THIS.panBy({x: 0, y: 4000});
+			updateFollowingUsers();
+		});
+}
+
 function updateFollowingUsers() {
 	cy.getFrameWindow()
 		.its('app')
@@ -603,5 +612,6 @@ module.exports.switchUIToCompact = switchUIToCompact;
 module.exports.checkAccessibilityEnabledToBe = checkAccessibilityEnabledToBe;
 module.exports.setAccessibilityState = setAccessibilityState;
 module.exports.scrollWriterDocumentToTop = scrollWriterDocumentToTop;
+module.exports.scrollViewDown = scrollViewDown;
 module.exports.updateFollowingUsers = updateFollowingUsers;
 module.exports.assertVisiblePage = assertVisiblePage;
