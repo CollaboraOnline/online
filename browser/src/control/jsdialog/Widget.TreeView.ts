@@ -76,6 +76,8 @@ class TreeViewControl {
 	_isNavigator: boolean;
 	_singleClickActivate: boolean;
 	_filterTimer: ReturnType<typeof setTimeout>;
+	_data: TreeWidgetJSON;
+	_builder: any;
 
 	constructor(data: TreeWidgetJSON, builder: any) {
 		this._isRealTree = this.isRealTree(data);
@@ -89,6 +91,8 @@ class TreeViewControl {
 		this._hasIcon = TreeViewControl.hasIcon(data);
 		this._isNavigator = this.isNavigator(data);
 		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
+		this._data = data;
+		this._builder = builder;
 
 		this._tbody = this._container;
 		(this._container as any).filterEntries = this.filterEntries.bind(this);
@@ -101,6 +105,10 @@ class TreeViewControl {
 			if (!data.headers || data.headers.length === 0)
 				L.DomUtil.addClass(this._container, 'ui-treeview-tree');
 		} else this._container.setAttribute('role', 'grid');
+
+		if (data.enabled !== false) {
+			this._container.addEventListener('click', this.onClick.bind(this));
+		}
 	}
 
 	get Container() {
@@ -1242,6 +1250,11 @@ class TreeViewControl {
 		parentContainer.appendChild(this._container);
 
 		return true;
+	}
+
+	// --------- Event Handlers
+	//
+	onClick() {
 	}
 }
 
