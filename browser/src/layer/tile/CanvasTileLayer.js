@@ -2507,6 +2507,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			{
 				var _fillColor = '#CCCCCC';
 				var strTwips = result.twipsRectangles.match(/\d+/g);
+
+				if (!strTwips || !strTwips.length)
+					continue;
+
 				var rectangles = [];
 				for (var i = 0; i < strTwips.length; i += 4) {
 					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
