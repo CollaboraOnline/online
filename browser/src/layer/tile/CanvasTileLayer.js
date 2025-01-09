@@ -425,28 +425,32 @@ L.TileSectionManager = L.Class.extend({
 	 * Center is included iff findFreePaneCenter is true
 	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
 	 **/
-	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, paneBounds, freezePane, splitPos, scale, findFreePaneCenter) {
+	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, _paneBounds, freezePane, splitPos, scale, findFreePaneCenter) {
 		let pinchCenter = Coordinate.fromCorePixel(_pinchCenter.x, _pinchCenter.y, this._map.getZoom());
 		const pinchStartCenter = Coordinate.fromCorePixel(_pinchStartCenter.x, _pinchStartCenter.y, this._map.getZoom());
+		const paneBounds = new CoordinateBounds(
+			Coordinate.fromCorePixel(_paneBounds.min.x, _paneBounds.min.y),
+			Coordinate.fromCorePixel(_paneBounds.max.x, _paneBounds.max.y)
+		);
 
 		let xMin = 0;
 		const hasXMargin = !this._layer.isCalc();
 		if (hasXMargin) {
 			xMin = -Infinity;
-		} else if (paneBounds.min.x > 0) {
+		} else if (paneBounds.min.corePixel().x > 0) {
 			xMin = splitPos.x;
 		}
 
 		let yMin = 0;
-		if (paneBounds.min.y < 0) {
+		if (paneBounds.min.corePixel().y < 0) {
 			yMin = -Infinity;
-		} else if (paneBounds.min.y > 0) {
+		} else if (paneBounds.min.corePixel().y > 0) {
 			yMin = splitPos.y;
 		}
 
 		const minTopLeft = new L.Point(xMin, yMin);
 
-		const paneSize = paneBounds.getSize();
+		const paneSize = paneBounds.size().corePixel();
 
 		pinchCenter = Coordinate.fromCorePixel(
 			pinchCenter.corePixel().x - this._offset.x,
@@ -460,8 +464,8 @@ L.TileSectionManager = L.Class.extend({
 
 		// Portion of the pane away that our pinchStart (which should be where we zoom round) is
 		const panePortion = {
-			x: (pinchStartCenter.corePixel().x - this._offset.x - paneBounds.min.x) / paneSize.x,
-			y: (pinchStartCenter.corePixel().y - this._offset.y - paneBounds.min.y) / paneSize.y,
+			x: (pinchStartCenter.corePixel().x - this._offset.x - paneBounds.min.corePixel().x) / paneSize.x,
+			y: (pinchStartCenter.corePixel().y - this._offset.y - paneBounds.min.corePixel().y) / paneSize.y,
 		};
 
 		let docTopLeft = new L.Point(
@@ -478,14 +482,14 @@ L.TileSectionManager = L.Class.extend({
 		const offset = clampedDocTopLeft.subtract(docTopLeft);
 
 		if (freezePane.freezeX) {
-			docTopLeft.x = paneBounds.min.x;
+			docTopLeft.x = paneBounds.min.corePixel().x;
 		} else {
 			this._offset.x = Math.round(Math.max(this._offset.x, offset.x));
 			docTopLeft.x += this._offset.x;
 		}
 
 		if (freezePane.freezeY) {
-			docTopLeft.y = paneBounds.min.y;
+			docTopLeft.y = paneBounds.min.corePixel().y;
 		} else {
 			this._offset.y = Math.round(Math.max(this._offset.y, offset.y));
 			docTopLeft.y += this._offset.y;
