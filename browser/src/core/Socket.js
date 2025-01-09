@@ -1675,10 +1675,8 @@ app.definitions.Socket = L.Class.extend({
 		if (this._map._docLayer) {
 			this._map._docLayer.removeAllViews();
 			this._map._docLayer._resetClientVisArea();
-			if (GraphicSelection.hasActiveSelection()) {
+			if (GraphicSelection.hasActiveSelection())
 				GraphicSelection.rectangle = null;
-				this._map._docLayer._onUpdateGraphicSelection();
-			}
 			if (this._map._docLayer._docType === 'presentation')
 				app.file.textCursor.visible = false;
 
