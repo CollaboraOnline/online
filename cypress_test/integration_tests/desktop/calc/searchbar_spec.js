@@ -1,6 +1,7 @@
-/* global describe it cy beforeEach require*/
+/* global describe it cy beforeEach expect require*/
 
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 var searchHelper = require('../../common/search_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.', function() {
@@ -33,6 +34,38 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.'
 
 		searchHelper.searchNext();
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A301');
+	});
+
+	it('Search existing word when not following own view', function() {
+		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
+
+		cy.getFrameWindow().its('app').then((app) => {
+			expect(app.isFollowingOff()).to.be.false;
+		});
+
+		desktopHelper.scrollViewDown();
+
+		desktopHelper.assertScrollbarPosition('vertical', 175, 205);
+
+		cy.getFrameWindow().its('app').then((app) => {
+			expect(app.isFollowingOff()).to.be.true;
+		});
+
+		helper.setDummyClipboardForCopy();
+		searchHelper.typeIntoSearchField('a');
+
+		searchHelper.searchNext();
+
+		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
+		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
+
+		desktopHelper.scrollViewDown();
+
+		searchHelper.typeIntoSearchField('c');
+		searchHelper.searchNext();
+
+		cy.cGet(helper.addressInputSelector).should('have.value', 'C1');
+		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
 	});
 
 	it('Search not existing word.', function() {
