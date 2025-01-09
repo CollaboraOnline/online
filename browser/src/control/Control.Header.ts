@@ -635,6 +635,8 @@ export class Header extends app.definitions.canvasSectionObject {
 		L.DomUtil.enableImageDrag();
 		L.DomUtil.enableTextSelection();
 
+		this._map.fire('closepopups'); // close all popups if a row/column header is selected
+
 		if (this.containerObject.isDraggingSomething() && this._dragEntry) {
 			this.onDragEnd(this.containerObject.getDragDistance());
 			this._dragEntry = null;
