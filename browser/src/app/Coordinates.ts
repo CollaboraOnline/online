@@ -360,6 +360,10 @@ class CoordinateBounds {
 	}
 
 	center(): Coordinate {
-		return this.min.add(this.max.subtract(this.min).divide(2));
+		return this.min.add(this.size().divide(2));
+	}
+
+	size(): CoordinateDelta {
+		return this.max.subtract(this.min);
 	}
 }

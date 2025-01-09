@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Coordinate CoordinateBounds */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -425,7 +425,9 @@ L.TileSectionManager = L.Class.extend({
 	 * Center is included iff findFreePaneCenter is true
 	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
 	 **/
-	_getZoomDocPos: function (pinchCenter, pinchStartCenter, paneBounds, freezePane, splitPos, scale, findFreePaneCenter) {
+	_getZoomDocPos: function (_pinchCenter, pinchStartCenter, paneBounds, freezePane, splitPos, scale, findFreePaneCenter) {
+		let pinchCenter = Coordinate.fromCorePixel(_pinchCenter.x, _pinchCenter.y, this._map.getZoom());
+
 		let xMin = 0;
 		const hasXMargin = !this._layer.isCalc();
 		if (hasXMargin) {
@@ -445,7 +447,10 @@ L.TileSectionManager = L.Class.extend({
 
 		const paneSize = paneBounds.getSize();
 
-		pinchCenter = pinchCenter.subtract(this._offset);
+		pinchCenter = {
+			x: pinchCenter.corePixel().x - this._offset.x,
+			y: pinchCenter.corePixel().y - this._offset.y,
+		};
 
 		let centerOffset = {
 			x: pinchCenter.x - pinchStartCenter.x,
