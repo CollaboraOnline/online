@@ -691,6 +691,56 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         socket->send(httpResponse);
     }
 
+    enum PresetType
+    {
+        Shared,
+        User,
+    };
+
+    // search for presets file in test/data/presets directory
+    std::vector<asset> getAssetVec(PresetType type)
+    {
+        std::string searchDir = "test/data/presets";
+        std::vector<asset> assetVec;
+        if (!FileUtil::Stat(searchDir).exists())
+        {
+            LOG_ERR("preset directory[" << searchDir << "] doesn't exist");
+            return assetVec;
+        }
+
+        if (type == PresetType::Shared)
+            searchDir.append("/shared");
+        else if (type == PresetType::User)
+            searchDir.append("/user");
+
+        auto searchInDir = [&assetVec](const std::string& directory)
+        {
+            const auto fileNames = FileUtil::getDirEntries(directory);
+            for (const auto& fileName : fileNames)
+            {
+                const std::string ext = FileUtil::extractFileExtension(fileName);
+                if (ext.empty())
+                    continue;
+                std::string filePath = '/' + directory + '/';
+                filePath.append(fileName);
+                if (ext == "bau")
+                    assetVec.push_back(asset("autotext", filePath));
+                else if (ext == "dic")
+                    assetVec.push_back(asset("wordbook", filePath));
+                LOG_TRC("Found preset file[" << filePath << ']');
+            }
+        };
+
+        LOG_DBG("Looking for preset files in directory[" << searchDir << ']');
+        searchInDir(searchDir);
+
+        // check for uploaded files
+        searchDir.append("/upload");
+        LOG_DBG("Looking for preset files in directory[" << searchDir << ']');
+        searchInDir(searchDir);
+        return assetVec;
+    }
+
     //handles request starts with /wopi/settings
     void handleSettingsRequest(const HTTPRequest& request,
                                const std::string& etagString,
@@ -706,16 +756,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         {
             if (configPath == "/userconfig.json")
             {
-                std::vector<asset> items = { { "autotext", "/test/data/autotextuser.bau" },
-                                             { "wordbook", "/test/data/dictionaryuser.dic" } };
+                auto items = getAssetVec(PresetType::User);
                 handlePresetRequest("user", etagString, prefix, socket, items,
                                     "/test/data/configuser.xcu");
             }
             else if (configPath == "/sharedconfig.json")
             {
-                std::vector<asset> items = { { "autotext", "/test/data/autotextshared.bau" },
-                                             { "wordbook", "/test/data/dictionaryshared.dic" } };
-
+                auto items = getAssetVec(PresetType::Shared);
                 handlePresetRequest("shared", etagString, prefix, socket, items,
                                     "/test/data/configshared.xcu");
             }
@@ -767,8 +814,12 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             std::streamsize size = fileContent.size();
 
             std::ofstream outfile;
-            const std::string testSharedDir = "test/data/presets/shared/uploaded/";
-            outfile.open(testSharedDir + fileName, std::ofstream::binary);
+            const std::string testSharedDir = "test/data/presets/shared/upload";
+            Poco::File(testSharedDir).createDirectories();
+            LOG_DBG("Saving uploaded file[" << fileName << "] to directory[" << testSharedDir
+                                            << ']');
+
+            outfile.open(testSharedDir + '/' + fileName, std::ofstream::binary);
             outfile.write(fileContent.data(), size);
             outfile.close();
 
