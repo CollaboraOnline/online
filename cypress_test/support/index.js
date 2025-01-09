@@ -3,6 +3,7 @@
 
 require('cypress-wait-until');
 require('cypress-file-upload');
+require('cypress-real-events');
 import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector';
 const { addCompareSnapshotCommand } = require('cypress-visual-regression/dist/command');
 

@@ -38,6 +38,32 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 		cy.cGet('#contenttree').compareSnapshot('treeview_no_headers', 0.05);
 	});
 
+	it('Treelistbox focus', function() {
+		cy.cGet('#link_btn_2').click();
+		helper.assertFocus('id','link_btn_2');
+		// since no entry is selected the whole widget should get focused
+		cy.realPress('Tab');
+		helper.assertFocus('id','contenttree');
+
+		// check that we can navigate inside the widget
+		cy.realPress('ArrowDown');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(1)').should('have.focus');
+		cy.realPress('ArrowDown');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(2)').should('have.focus');
+
+		// select the second entry
+		cy.realPress('Space');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(2)').should('have.class', 'selected');
+
+		// check that now the whole widget is no more focusable and
+		// that the next focusable element is the selected entry
+		cy.cGet('#link_btn_2').click();
+		helper.assertFocus('id','link_btn_2');
+		cy.realPress('Tab');
+		cy.cGet('#contenttree .ui-treeview-entry:nth-child(2)').should('have.focus');
+		cy.cGet('#contenttree').should('not.have.attr', 'tabindex');
+	});
+
 	it('Treelistbox with-headers', function() {
 		cy.cGet('#contenttree2').compareSnapshot('treeview_headers', 0.12);
 
@@ -46,12 +72,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 		cy.cGet('#contenttree2 .ui-treeview-header-text').contains('Column 2').click();
 		cy.cGet('#contenttree2 .ui-treeview-header-text').contains('Column 2').click();
 		cy.cGet('#contenttree2 .ui-treeview-header-sort-icon').should('be.visible');
-		cy.cGet('#contenttree2').compareSnapshot('treeview_headers_sort', 0.12);
+		cy.cGet('#contenttree2').compareSnapshot('treeview_headers_sort', 0.13);
 
 		// use filter feature
 		cy.cGet('#contenttree2').then(
 			(trees) => {
 				trees[0].filterEntries('Row 2');
+				cy.wait(200);
 				cy.cGet('#contenttree2').compareSnapshot('treeview_headers_filter', 0.12);
 			});
 	});

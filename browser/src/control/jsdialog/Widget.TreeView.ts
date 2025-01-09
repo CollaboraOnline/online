@@ -763,6 +763,8 @@ class TreeViewControl {
 	}
 
 	selectEntry(span: HTMLElement, checkbox: HTMLInputElement) {
+		this.makeTreeViewFocusable(false);
+
 		L.DomUtil.addClass(span, 'selected');
 		span.setAttribute('aria-selected', 'true');
 		span.tabIndex = 0;
@@ -1128,6 +1130,11 @@ class TreeViewControl {
 		}
 	}
 
+	makeTreeViewFocusable(enable: boolean) {
+		if (enable) this._container.tabIndex = 0;
+		else this._container.removeAttribute('tabindex');
+	}
+
 	fillEntries(
 		data: TreeWidgetJSON,
 		entries: Array<TreeEntryJSON>,
@@ -1135,8 +1142,11 @@ class TreeViewControl {
 		level: number,
 		parent: HTMLElement,
 	) {
+		let hasSelectedEntry = false;
 		for (const index in entries) {
 			this.fillRow(data, entries[index], builder, level, parent);
+
+			hasSelectedEntry = hasSelectedEntry || entries[index].selected;
 
 			if (entries[index].children && entries[index].children.length) {
 				L.DomUtil.addClass(parent.lastChild, 'ui-treeview-expandable');
@@ -1161,6 +1171,10 @@ class TreeViewControl {
 		}
 
 		if (entries && entries.length === 0) this.makeEmptyList(data, builder);
+
+		// we need to provide a way for making the treeview control focusable
+		// when no entry is selected
+		if (level === 1 && !hasSelectedEntry) this.makeTreeViewFocusable(true);
 	}
 
 	getColumnType(column: TreeColumnJSON) {
