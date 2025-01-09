@@ -115,6 +115,13 @@ class TreeViewControl {
 		return this._container;
 	}
 
+	static getElement(elem: any, role: any) {
+		while (elem && elem.getAttribute('role') !== role) {
+			elem = elem.parentElement;
+		}
+		return elem;
+	}
+
 	static countColumns(data: TreeWidgetJSON) {
 		if (!data.entries || !data.entries.length)
 			return data.headers ? data.headers.length : 1;
@@ -389,11 +396,14 @@ class TreeViewControl {
 	}
 
 	setupRowProperties(
-		tr: HTMLElement,
+		tr: any,
 		entry: TreeEntryJSON,
 		level: number,
 		selectionElement: HTMLInputElement,
 	) {
+		tr.setAttribute('role', 'row');
+		tr._row = entry.row;
+
 		if (entry.children) tr.setAttribute('aria-expanded', 'true');
 
 		if (level !== undefined && this._isRealTree)
@@ -539,17 +549,7 @@ class TreeViewControl {
 			}
 		}
 
-		// setup callbacks
-		var clickFunction = this.createClickFunction(
-			tr,
-			selectionElement,
-			true,
-			this._singleClickActivate,
-			builder,
-			treeViewData,
-			entry,
-		);
-		var doubleClickFunction = this.createClickFunction(
+		/*var doubleClickFunction = this.createClickFunction(
 			tr,
 			selectionElement,
 			false,
@@ -576,7 +576,7 @@ class TreeViewControl {
 			selectionElement,
 			expander,
 			clickFunction,
-		);
+		); */
 
 		this.setupEntryContextMenuEvent(tr, entry, treeViewData, builder);
 	}
@@ -734,53 +734,6 @@ class TreeViewControl {
 		item.removeAttribute('tabindex');
 		var itemCheckbox = item.querySelector('input');
 		if (itemCheckbox) itemCheckbox.tabIndex = -1;
-	}
-
-	createClickFunction(
-		parentContainer: HTMLElement,
-		checkbox: HTMLInputElement,
-		select: boolean,
-		activate: boolean,
-		builder: any,
-		treeViewData: TreeWidgetJSON,
-		entry: TreeEntryJSON,
-	) {
-		return (e: MouseEvent) => {
-			if (e && e.target === checkbox) return; // allow default handler to trigger change event
-
-			if (e && L.DomUtil.hasClass(parentContainer, 'disabled')) {
-				e.preventDefault();
-				return;
-			}
-
-			this._container
-				.querySelectorAll('.ui-treeview-entry.selected')
-				.forEach((item: HTMLElement) => {
-					this.unselectEntry(item);
-				});
-
-			this.selectEntry(parentContainer);
-			/*if (checkbox)
-				this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);*/
-
-			if (select)
-				builder.callback(
-					'treeview',
-					'select',
-					treeViewData,
-					entry.row,
-					builder,
-				);
-
-			if (activate)
-				builder.callback(
-					'treeview',
-					'activate',
-					treeViewData,
-					entry.row,
-					builder,
-				);
-		};
 	}
 
 	filterEntries(filter: string) {
@@ -1215,9 +1168,46 @@ class TreeViewControl {
 	//
 	onClick(e: any) {
 		let target = e.target;
+		let row = TreeViewControl.getElement(target, 'row');
+		if (row) {
+			this.onRowClick(row);
+		}
+
 		if (target.localName === 'input') {
 			this.onCheckBoxClick(target);
 			return;
+		}
+	}
+
+	onRowClick(row: any) {
+		if (L.DomUtil.hasClass(row, 'disabled')) {
+			return;
+		}
+
+		this._container
+			.querySelectorAll('.ui-treeview-entry.selected')
+			.forEach((item: HTMLElement) => {
+				this.unselectEntry(item);
+			});
+
+		this.selectEntry(row);
+
+		this._builder.callback(
+			'treeview',
+			'select',
+			this._data,
+			row._row,
+			this._builder,
+		);
+
+		if (this._singleClickActivate) {
+			this._builder.callback(
+				'treeview',
+				'activate',
+				this._data,
+				row._row,
+				this._builder,
+			);
 		}
 	}
 
