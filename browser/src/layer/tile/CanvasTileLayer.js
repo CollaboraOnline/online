@@ -484,7 +484,7 @@ L.TileSectionManager = L.Class.extend({
 				paneSize.corePixel(oldZoom).y,
 		};
 
-		let docTopLeft = new L.Point(
+		let docTopLeft = Coordinate.fromCorePixel(
 			pinchStartCenter.corePixel().x +
 				(centerOffset.corePixel(oldZoom).x -
 					paneSize.corePixel(oldZoom).x * panePortion.x) /
@@ -493,49 +493,66 @@ L.TileSectionManager = L.Class.extend({
 				(centerOffset.corePixel(oldZoom).y -
 					paneSize.corePixel(oldZoom).y * panePortion.y) /
 					scale,
+			oldZoom
 		);
 
 		// Top left in document coordinates.
 		const clampedDocTopLeft = new L.Point(
-			Math.max(minTopLeft.corePixel().x, docTopLeft.x),
-			Math.max(minTopLeft.corePixel().y, docTopLeft.y)
+			Math.max(minTopLeft.corePixel().x, docTopLeft.corePixel().x),
+			Math.max(minTopLeft.corePixel().y, docTopLeft.corePixel().y)
 		);
 
-		const offset = clampedDocTopLeft.subtract(docTopLeft);
+		const offset = clampedDocTopLeft.subtract(docTopLeft.corePixel());
 
 		if (freezePane.freezeX) {
-			docTopLeft.x = paneBounds.min.corePixel().x;
+			docTopLeft = Coordinate.fromCorePixel(
+				paneBounds.min.corePixel().x,
+				docTopLeft.corePixel().y,
+				oldZoom,
+			);
 		} else {
 			this._offset = CoordinateDelta.fromCorePixel(
 				Math.round(Math.max(this._offset.corePixel(oldZoom).x, offset.x)),
 				this._offset.corePixel(oldZoom).y,
 				oldZoom
 			);
-			docTopLeft.x += this._offset.corePixel(oldZoom).x;
+			docTopLeft = Coordinate.fromCorePixel(
+				docTopLeft.corePixel().x + this._offset.corePixel(oldZoom).x,
+				docTopLeft.corePixel().y,
+				oldZoom,
+			);
 		}
 
 		if (freezePane.freezeY) {
-			docTopLeft.y = paneBounds.min.corePixel().y;
+			docTopLeft = Coordinate.fromCorePixel(
+				docTopLeft.corePixel().x,
+				paneBounds.min.corePixel().y,
+				oldZoom,
+			);
 		} else {
 			this._offset = CoordinateDelta.fromCorePixel(
 				this._offset.corePixel(oldZoom).x,
 				Math.round(Math.max(this._offset.corePixel(oldZoom).y, offset.y)),
 				oldZoom
 			);
-			docTopLeft.y += this._offset.corePixel(oldZoom).y;
+			docTopLeft = Coordinate.fromCorePixel(
+				docTopLeft.corePixel().x,
+				docTopLeft.corePixel().y + this._offset.corePixel(oldZoom).y,
+				oldZoom,
+			);
 		}
 
 		if (!findFreePaneCenter) {
-			return { offset: L.point(this._offset.corePixel(oldZoom)), topLeft: docTopLeft };
+			return { offset: L.point(this._offset.corePixel(oldZoom)), topLeft: L.point(docTopLeft.corePixel()) };
 		}
 
 		const newPaneCenter = new L.Point(
-			docTopLeft.x -
+			docTopLeft.corePixel().x -
 				splitPos.corePixel().x +
 				((paneSize.corePixel(oldZoom).x + splitPos.corePixel().x) *
 					0.5) /
 					scale,
-			docTopLeft.y -
+			docTopLeft.corePixel().y -
 				splitPos.corePixel().y +
 				((paneSize.corePixel(oldZoom).y + splitPos.corePixel().y) *
 					0.5) /
@@ -544,7 +561,7 @@ L.TileSectionManager = L.Class.extend({
 
 		return {
 			offset: this._offset,
-			topLeft: docTopLeft.add(this._offset.corePixel(oldZoom)),
+			topLeft: L.point(docTopLeft.add(this._offset).corePixel()),
 			center: this._map.project(this._map.unproject(newPaneCenter, oldZoom), this._map.getScaleZoom(scale))
 		};
 	},

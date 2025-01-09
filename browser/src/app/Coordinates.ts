@@ -26,7 +26,7 @@ class Coordinate {
 	}
 
 	asDelta(): CoordinateDelta {
-		if (this._zoom) {
+		if (this._cssPixelOrigin) {
 			throw Error(
 				'Cannot convert coordinate with an origin to a CoordinateDelta',
 			);
