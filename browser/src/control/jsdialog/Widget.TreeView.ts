@@ -399,7 +399,7 @@ class TreeViewControl {
 		if (level !== undefined && this._isRealTree)
 			tr.setAttribute('aria-level', '' + level);
 
-		if (entry.selected === true) this.selectEntry(tr, selectionElement);
+		if (entry.selected === true) this.selectEntry(tr);
 
 		const disabled = entry.enabled === false;
 		if (disabled) L.DomUtil.addClass(tr, 'disabled');
@@ -716,13 +716,15 @@ class TreeViewControl {
 		$(span).toggleClass('collapsed');
 	}
 
-	selectEntry(span: HTMLElement, checkbox: HTMLInputElement) {
+	selectEntry(span: HTMLElement) {
 		this.makeTreeViewFocusable(false);
 
 		L.DomUtil.addClass(span, 'selected');
 		span.setAttribute('aria-selected', 'true');
 		span.tabIndex = 0;
 		span.focus();
+
+		var checkbox = span.querySelector('input');
 		if (checkbox) checkbox.removeAttribute('tabindex');
 	}
 
@@ -757,7 +759,7 @@ class TreeViewControl {
 					this.unselectEntry(item);
 				});
 
-			this.selectEntry(parentContainer, checkbox);
+			this.selectEntry(parentContainer);
 			/*if (checkbox)
 				this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);*/
 
