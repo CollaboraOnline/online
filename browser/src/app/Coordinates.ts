@@ -14,6 +14,12 @@ class Coordinate {
 	private readonly _zoom: number;
 
 	constructor(latLng: LatLng, cssPixelOrigin: Point, zoom: number) {
+		if (zoom === undefined) {
+			throw new Error(
+				'You must provide a zoom level when initializing the Coordinate',
+			);
+		}
+
 		this._latLng = latLng;
 		this._cssPixelOrigin = cssPixelOrigin;
 		this._zoom = zoom;
@@ -223,6 +229,12 @@ class CoordinateDelta {
 	}
 
 	asAbsolute(atZoom: number): Coordinate {
+		if (atZoom === undefined) {
+			throw new Error(
+				'You must provide a zoom level to convert a CoordinateDelta to a Coordinate',
+			);
+		}
+
 		return new Coordinate(
 			this._latLng,
 			/* cssPixelOrigin */ { x: 0, y: 0 },
@@ -252,11 +264,23 @@ class CoordinateDelta {
 	 * @returns A CoordinateDelta which represents the same distance as your CSS pixel distance when at the same zoom level
 	 */
 	static fromCSSPixel(x: number, y: number, zoom: number): CoordinateDelta {
+		if (zoom === undefined) {
+			throw new Error(
+				'You must provide a zoom level to convert a CSS Pixel to a CoordinateDelta',
+			);
+		}
+
 		const latLng = L.CRS.pointToLatLng(L.point(x, y), zoom);
 		return new CoordinateDelta(latLng);
 	}
 
 	cssPixel(zoom: number) {
+		if (zoom === undefined) {
+			throw new Error(
+				'You must provide a zoom level to convert a CoordinateDelta to a CSS Pixel',
+			);
+		}
+
 		return L.CRS.latLngToPoint(L.latLng(this._latLng), zoom);
 	}
 
@@ -268,6 +292,12 @@ class CoordinateDelta {
 	 * @returns A CoordinateDelta which represents the same distance as your Core pixel distance when at the same zoom level
 	 */
 	static fromCorePixel(x: number, y: number, zoom: number): CoordinateDelta {
+		if (zoom === undefined) {
+			throw new Error(
+				'You must provide a zoom level to convert a Core Pixel to a CoordinateDelta',
+			);
+		}
+
 		const cssPixel = {
 			x: x / app.dpiScale,
 			y: y / app.dpiScale,
@@ -276,6 +306,12 @@ class CoordinateDelta {
 	}
 
 	corePixel(zoom: number) {
+		if (zoom === undefined) {
+			throw new Error(
+				'You must provide a zoom level to convert a CoordinateDelta to a Core Pixel',
+			);
+		}
+
 		return this.cssPixel(zoom).multiplyBy(app.dpiScale);
 	}
 
@@ -293,6 +329,12 @@ class CoordinateDelta {
 	}
 
 	twip(zoom: number, docLayer: any) {
+		if (zoom === undefined) {
+			throw new Error(
+				'You must provide a zoom level to convert a CoordinateDelta to a Twip',
+			);
+		}
+
 		const corePixel = this.corePixel(zoom);
 		return {
 			x: (corePixel.x / docLayer._tileSize) * docLayer._tileWidthTwips,

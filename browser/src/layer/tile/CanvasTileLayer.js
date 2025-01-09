@@ -429,8 +429,16 @@ L.TileSectionManager = L.Class.extend({
 		let pinchCenter = Coordinate.fromCorePixel(_pinchCenter.x, _pinchCenter.y, this._map.getZoom());
 		const pinchStartCenter = Coordinate.fromCorePixel(_pinchStartCenter.x, _pinchStartCenter.y, this._map.getZoom());
 		const paneBounds = new CoordinateBounds(
-			Coordinate.fromCorePixel(_paneBounds.min.x, _paneBounds.min.y),
-			Coordinate.fromCorePixel(_paneBounds.max.x, _paneBounds.max.y)
+			Coordinate.fromCorePixel(
+				_paneBounds.min.x,
+				_paneBounds.min.y,
+				this._map.getZoom(),
+			),
+			Coordinate.fromCorePixel(
+				_paneBounds.max.x,
+				_paneBounds.max.y,
+				this._map.getZoom(),
+			),
 		);
 		const splitPos = Coordinate.fromCorePixel(_splitPos.x, _splitPos.y, this._map.getZoom());
 
@@ -456,6 +464,7 @@ L.TileSectionManager = L.Class.extend({
 		pinchCenter = Coordinate.fromCorePixel(
 			pinchCenter.corePixel().x - this._offset.x,
 			pinchCenter.corePixel().y - this._offset.y,
+			this._map.getZoom()
 		);
 
 		let centerOffset = {
@@ -469,19 +478,23 @@ L.TileSectionManager = L.Class.extend({
 				(pinchStartCenter.corePixel().x -
 					this._offset.x -
 					paneBounds.min.corePixel().x) /
-				paneSize.corePixel().x,
+				paneSize.corePixel(this._map.getZoom()).x,
 			y:
 				(pinchStartCenter.corePixel().y -
 					this._offset.y -
 					paneBounds.min.corePixel().y) /
-				paneSize.corePixel().y,
+				paneSize.corePixel(this._map.getZoom()).y,
 		};
 
 		let docTopLeft = new L.Point(
 			pinchStartCenter.corePixel().x +
-				(centerOffset.x - paneSize.corePixel().x * panePortion.x) / scale,
+				(centerOffset.x -
+					paneSize.corePixel(this._map.getZoom()).x * panePortion.x) /
+					scale,
 			pinchStartCenter.corePixel().y +
-				(centerOffset.y - paneSize.corePixel().y * panePortion.y) / scale,
+				(centerOffset.y -
+					paneSize.corePixel(this._map.getZoom()).y * panePortion.y) /
+					scale,
 		);
 
 		// Top left in document coordinates.
@@ -513,10 +526,14 @@ L.TileSectionManager = L.Class.extend({
 		const newPaneCenter = new L.Point(
 			docTopLeft.x -
 				splitPos.corePixel().x +
-				((paneSize.corePixel().x + splitPos.corePixel().x) * 0.5) / scale,
+				((paneSize.corePixel(this._map.getZoom()).x + splitPos.corePixel().x) *
+					0.5) /
+					scale,
 			docTopLeft.y -
 				splitPos.corePixel().y +
-				((paneSize.corePixel().y + splitPos.corePixel().y) * 0.5) / scale,
+				((paneSize.corePixel(this._map.getZoom()).y + splitPos.corePixel().y) *
+					0.5) /
+					scale,
 		);
 
 		return {
