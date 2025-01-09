@@ -425,8 +425,9 @@ L.TileSectionManager = L.Class.extend({
 	 * Center is included iff findFreePaneCenter is true
 	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
 	 **/
-	_getZoomDocPos: function (_pinchCenter, pinchStartCenter, paneBounds, freezePane, splitPos, scale, findFreePaneCenter) {
+	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, paneBounds, freezePane, splitPos, scale, findFreePaneCenter) {
 		let pinchCenter = Coordinate.fromCorePixel(_pinchCenter.x, _pinchCenter.y, this._map.getZoom());
+		const pinchStartCenter = Coordinate.fromCorePixel(_pinchStartCenter.x, _pinchStartCenter.y, this._map.getZoom());
 
 		let xMin = 0;
 		const hasXMargin = !this._layer.isCalc();
@@ -453,19 +454,19 @@ L.TileSectionManager = L.Class.extend({
 		);
 
 		let centerOffset = {
-			x: pinchCenter.corePixel().x - pinchStartCenter.x,
-			y: pinchCenter.corePixel().y - pinchStartCenter.y,
+			x: pinchCenter.corePixel().x - pinchStartCenter.corePixel().x,
+			y: pinchCenter.corePixel().y - pinchStartCenter.corePixel().y,
 		};
 
 		// Portion of the pane away that our pinchStart (which should be where we zoom round) is
 		const panePortion = {
-			x: (pinchStartCenter.x - this._offset.x - paneBounds.min.x) / paneSize.x,
-			y: (pinchStartCenter.y - this._offset.y - paneBounds.min.y) / paneSize.y,
+			x: (pinchStartCenter.corePixel().x - this._offset.x - paneBounds.min.x) / paneSize.x,
+			y: (pinchStartCenter.corePixel().y - this._offset.y - paneBounds.min.y) / paneSize.y,
 		};
 
 		let docTopLeft = new L.Point(
-			pinchStartCenter.x + (centerOffset.x - paneSize.x * panePortion.x) / scale,
-			pinchStartCenter.y + (centerOffset.y - paneSize.y * panePortion.y) / scale
+			pinchStartCenter.corePixel().x + (centerOffset.x - paneSize.x * panePortion.x) / scale,
+			pinchStartCenter.corePixel().y + (centerOffset.y - paneSize.y * panePortion.y) / scale
 		);
 
 		// Top left in document coordinates.
