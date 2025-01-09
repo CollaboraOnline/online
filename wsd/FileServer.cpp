@@ -767,7 +767,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             std::streamsize size = fileContent.size();
 
             std::ofstream outfile;
-            outfile.open("test/data/uploaded/" + fileName, std::ofstream::binary);
+            const std::string testSharedDir = "test/data/presets/shared/uploaded/";
+            outfile.open(testSharedDir + fileName, std::ofstream::binary);
             outfile.write(fileContent.data(), size);
             outfile.close();
 
