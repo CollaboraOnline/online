@@ -3,7 +3,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global app _ Cursor JSDialog */
+/* global app _ Cursor JSDialog CoordinateDelta */
 
 L.Map = L.Evented.extend({
 
@@ -564,7 +564,7 @@ L.Map = L.Evented.extend({
 
 		const zoomCenter = docLayer._twipsToCorePixels(this.getDesktopCalcZoomCenter());
 
-		tsManager._offset = new L.Point(0, 0);
+		tsManager._offset = CoordinateDelta.fromLatLng(0, 0);
 		const docPos = docLayer._painter._getZoomDocPos(
 			zoomCenter,
 			zoomCenter,

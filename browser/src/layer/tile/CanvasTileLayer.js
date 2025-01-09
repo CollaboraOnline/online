@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Coordinate CoordinateBounds */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Coordinate CoordinateBounds CoordinateDelta */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -463,8 +463,8 @@ L.TileSectionManager = L.Class.extend({
 		const paneSize = paneBounds.size();
 
 		pinchCenter = Coordinate.fromCorePixel(
-			pinchCenter.corePixel().x - this._offset.x,
-			pinchCenter.corePixel().y - this._offset.y,
+			pinchCenter.corePixel().x - this._offset.corePixel(oldZoom).x,
+			pinchCenter.corePixel().y - this._offset.corePixel(oldZoom).y,
 			oldZoom
 		);
 
@@ -474,12 +474,12 @@ L.TileSectionManager = L.Class.extend({
 		const panePortion = {
 			x:
 				(pinchStartCenter.corePixel().x -
-					this._offset.x -
+					this._offset.corePixel(oldZoom).x -
 					paneBounds.min.corePixel().x) /
 				paneSize.corePixel(oldZoom).x,
 			y:
 				(pinchStartCenter.corePixel().y -
-					this._offset.y -
+					this._offset.corePixel(oldZoom).y -
 					paneBounds.min.corePixel().y) /
 				paneSize.corePixel(oldZoom).y,
 		};
@@ -506,19 +506,27 @@ L.TileSectionManager = L.Class.extend({
 		if (freezePane.freezeX) {
 			docTopLeft.x = paneBounds.min.corePixel().x;
 		} else {
-			this._offset.x = Math.round(Math.max(this._offset.x, offset.x));
-			docTopLeft.x += this._offset.x;
+			this._offset = CoordinateDelta.fromCorePixel(
+				Math.round(Math.max(this._offset.corePixel(oldZoom).x, offset.x)),
+				this._offset.corePixel(oldZoom).y,
+				oldZoom
+			);
+			docTopLeft.x += this._offset.corePixel(oldZoom).x;
 		}
 
 		if (freezePane.freezeY) {
 			docTopLeft.y = paneBounds.min.corePixel().y;
 		} else {
-			this._offset.y = Math.round(Math.max(this._offset.y, offset.y));
-			docTopLeft.y += this._offset.y;
+			this._offset = CoordinateDelta.fromCorePixel(
+				this._offset.corePixel(oldZoom).x,
+				Math.round(Math.max(this._offset.corePixel(oldZoom).y, offset.y)),
+				oldZoom
+			);
+			docTopLeft.y += this._offset.corePixel(oldZoom).y;
 		}
 
 		if (!findFreePaneCenter) {
-			return { offset: this._offset, topLeft: docTopLeft };
+			return { offset: L.point(this._offset.corePixel(oldZoom)), topLeft: docTopLeft };
 		}
 
 		const newPaneCenter = new L.Point(
@@ -536,7 +544,7 @@ L.TileSectionManager = L.Class.extend({
 
 		return {
 			offset: this._offset,
-			topLeft: docTopLeft.add(this._offset),
+			topLeft: docTopLeft.add(this._offset.corePixel(oldZoom)),
 			center: this._map.project(this._map.unproject(newPaneCenter, oldZoom), this._map.getScaleZoom(scale))
 		};
 	},
@@ -4426,7 +4434,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	preZoomAnimation: function (pinchStartCenter) {
 		this._pinchStartCenter = this._map.project(pinchStartCenter).multiplyBy(app.dpiScale); // in core pixels
-		this._painter._offset = new L.Point(0, 0);
+		this._painter._offset = CoordinateDelta.fromLatLng(0, 0);
 
 		if (this._cursorMarker && app.file.textCursor.visible) {
 			this._cursorMarker.setOpacity(0);
