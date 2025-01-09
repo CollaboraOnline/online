@@ -29,6 +29,8 @@
 #include <JsonUtil.hpp>
 #include <common/ConfigUtil.hpp>
 #include <Poco/Net/HTTPClientSession.h>
+#include <wopi/StorageConnectionManager.hpp>
+#include <common/Authorization.hpp>
 #include <common/LangUtil.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
@@ -2006,59 +2008,59 @@ void FileServerRequestHandler::uploadFileToNextcloud(const Poco::Net::HTTPReques
     try
     {
         FilePartHandler partHandler;
-
         Poco::Net::HTMLForm form(request, message, partHandler);
 
         const std::string& fileName = partHandler.getFileName();
         const std::string& fileContent = partHandler.getFileContent();
-
         if (fileName.empty() || fileContent.empty())
-        {
             throw BadRequestException("No valid file uploaded.");
-        }
 
-        LOG_INF("File uploaded: " << fileName << ", Size: " << fileContent.size() << " bytes");
+        const std::string authorizationHeader = request.get("Authorization", "");
+        if (authorizationHeader.rfind("Bearer ", 0) != 0)
+            throw std::runtime_error("Missing or invalid Authorization header.");
 
-        const std::string accessToken = request.get("Authorization", "");
-        if (accessToken.empty())
-        {
-            throw std::runtime_error("Missing access token in request.");
-        }
+        std::string token = authorizationHeader.substr(7);
 
-        const std::string wopiUrl = COOLWSD::getServerURL() + "/wopi/settings/upload";
+        // TODO : Handle nextcloud wopi url dynamically
+        // TODO : Extract nextcloud wopi fileupload stuff so we can re-use it
+        Poco::URI wopiUri("http://nextcloud.local/index.php/apps/richdocuments/wopi/settings/upload");
+        wopiUri.addQueryParameter("fileId", "-1");
+        wopiUri.addQueryParameter("access_token", token);
 
+        Authorization auth(Authorization::Type::Token, token);
+        auto httpRequest = StorageConnectionManager::createHttpRequest(wopiUri, auth);
+        httpRequest.setVerb(http::Request::VERB_POST);
 
-        Poco::Net::HTTPRequest wopiRequest(Poco::Net::HTTPRequest::HTTP_POST, wopiUrl);
-        wopiRequest.set("Authorization", "Bearer " + accessToken);
-        wopiRequest.setContentType("application/octet-stream");
-        wopiRequest.setContentLength(fileContent.size());
+        const std::string boundary = "------BOUNDARY_STR";
+        std::ostringstream bodyStream;
+        bodyStream << boundary << "\r\n"
+                   << "Content-Disposition: form-data; name=\"file\"; filename=\"" << fileName << "\"\r\n"
+                   << "Content-Type: application/octet-stream\r\n\r\n"
+                   << fileContent << "\r\n"
+                   << boundary << "--\r\n";
 
-        Poco::Net::HTTPClientSession session(COOLWSD::getServerURL(), 443);
-        session.setTimeout(Poco::Timespan(30, 0));
+        httpRequest.header().set("Content-Type", "multipart/form-data; boundary=" + boundary.substr(2));
+        httpRequest.setBody(bodyStream.str());
 
-        std::ostream& requestStream = session.sendRequest(wopiRequest);
-        requestStream.write(fileContent.data(), fileContent.size());
+        LOG_DBG("uploadFileToNextcloud: WOPI URI: " << wopiUri.toString());
+        for (const auto& kv : httpRequest.header())
+            LOG_DBG("uploadFileToNextcloud: Request header: " << kv.first << " = " << kv.second);
 
-        Poco::Net::HTTPResponse wopiResponse;
-        std::istream& responseStream = session.receiveResponse(wopiResponse);
+        auto httpSession = StorageConnectionManager::getHttpSession(wopiUri);
+        auto httpResponse = httpSession->syncRequest(httpRequest);
 
-        if (wopiResponse.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
+        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
         {
             std::ostringstream responseContent;
-            Poco::StreamCopier::copyStream(responseStream, responseContent);
-            throw std::runtime_error("WOPI call failed: " + wopiResponse.getReason() + 
-                                      ". Response: " + responseContent.str());
+            responseContent << httpResponse->getBody();
+            throw std::runtime_error("WOPI call failed: "
+                                     + httpResponse->statusLine().reasonPhrase()
+                                     + ". Response: " + responseContent.str());
         }
 
-        LOG_INF("File successfully uploaded to Nextcloud: " << fileName);
-
-
-
-        LOG_INF("File successfully uploaded to Nextcloud: " << fileName);
-
-        http::Response httpResponse(http::StatusCode::OK);
-        httpResponse.setBody("File uploaded successfully to Nextcloud.");
-        socket->send(httpResponse);
+        http::Response httpResponseToClient(http::StatusCode::OK);
+        httpResponseToClient.setBody("File uploaded successfully to Nextcloud.");
+        socket->send(httpResponseToClient);
     }
     catch (const std::exception& ex)
     {
