@@ -450,7 +450,7 @@ L.TileSectionManager = L.Class.extend({
 
 		const minTopLeft = new L.Point(xMin, yMin);
 
-		const paneSize = paneBounds.size().corePixel();
+		const paneSize = paneBounds.size();
 
 		pinchCenter = Coordinate.fromCorePixel(
 			pinchCenter.corePixel().x - this._offset.x,
@@ -464,13 +464,23 @@ L.TileSectionManager = L.Class.extend({
 
 		// Portion of the pane away that our pinchStart (which should be where we zoom round) is
 		const panePortion = {
-			x: (pinchStartCenter.corePixel().x - this._offset.x - paneBounds.min.corePixel().x) / paneSize.x,
-			y: (pinchStartCenter.corePixel().y - this._offset.y - paneBounds.min.corePixel().y) / paneSize.y,
+			x:
+				(pinchStartCenter.corePixel().x -
+					this._offset.x -
+					paneBounds.min.corePixel().x) /
+				paneSize.corePixel().x,
+			y:
+				(pinchStartCenter.corePixel().y -
+					this._offset.y -
+					paneBounds.min.corePixel().y) /
+				paneSize.corePixel().y,
 		};
 
 		let docTopLeft = new L.Point(
-			pinchStartCenter.corePixel().x + (centerOffset.x - paneSize.x * panePortion.x) / scale,
-			pinchStartCenter.corePixel().y + (centerOffset.y - paneSize.y * panePortion.y) / scale
+			pinchStartCenter.corePixel().x +
+				(centerOffset.x - paneSize.corePixel().x * panePortion.x) / scale,
+			pinchStartCenter.corePixel().y +
+				(centerOffset.y - paneSize.corePixel().y * panePortion.y) / scale,
 		);
 
 		// Top left in document coordinates.
@@ -500,8 +510,13 @@ L.TileSectionManager = L.Class.extend({
 		}
 
 		const newPaneCenter = new L.Point(
-			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) * 0.5 / scale),
-			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) * 0.5 / scale));
+			docTopLeft.x -
+				splitPos.x +
+				((paneSize.corePixel().x + splitPos.x) * 0.5) / scale,
+			docTopLeft.y -
+				splitPos.y +
+				((paneSize.corePixel().y + splitPos.y) * 0.5) / scale,
+		);
 
 		return {
 			offset: this._offset,
