@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require */
+/* global describe it cy beforeEach expect require */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -105,7 +105,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 	});
 
 	it('Search when cursor not visible', function() {
+		cy.wait(3000);
+
 		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
+
+		cy.getFrameWindow().its('app').then((app) => {
+			expect(app.isFollowingOff()).to.be.false;
+		});
 
 		helper.setDummyClipboardForCopy();
 		searchHelper.typeIntoSearchField('sit');
@@ -115,19 +121,25 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 
 		helper.copy();
 		helper.expectTextForClipboard('sit');
-		desktopHelper.assertScrollbarPosition('vertical', 60, 75);
+		desktopHelper.assertScrollbarPosition('vertical', 55, 155);
 		desktopHelper.assertVisiblePage(1, 2, 6);
 
 		// Scroll document to the top so cursor is no longer visible, that turns following off
 		desktopHelper.scrollWriterDocumentToTop();
 		desktopHelper.updateFollowingUsers();
 
-		cy.cGet('#searchnext').click();
-		desktopHelper.assertScrollbarPosition('vertical', 135, 150);
-		desktopHelper.assertVisiblePage(2, 3, 6);
+		cy.getFrameWindow().its('app').then((app) => {
+			expect(app.isFollowingOff()).to.be.true;
+		});
+
+		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 
 		cy.cGet('#searchnext').click();
-		desktopHelper.assertScrollbarPosition('vertical', 215, 230);
+		desktopHelper.assertScrollbarPosition('vertical', 130, 230);
+		desktopHelper.assertVisiblePage(3, 4, 6);
+
+		cy.cGet('#searchnext').click();
+		desktopHelper.assertScrollbarPosition('vertical', 200, 300);
 		desktopHelper.assertVisiblePage(3, 4, 6);
 	});
 });
