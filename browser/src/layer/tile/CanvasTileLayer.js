@@ -427,6 +427,8 @@ L.TileSectionManager = L.Class.extend({
 	 **/
 	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, _paneBounds, freezePane, _splitPos, scale, findFreePaneCenter) {
 		const oldZoom = this._map.getZoom();
+		const newZoom = this._map.getScaleZoom(scale);
+
 		let pinchCenter = Coordinate.fromCorePixel(_pinchCenter.x, _pinchCenter.y, oldZoom);
 		const pinchStartCenter = Coordinate.fromCorePixel(_pinchStartCenter.x, _pinchStartCenter.y, oldZoom);
 		const paneBounds = new CoordinateBounds(
@@ -542,7 +544,7 @@ L.TileSectionManager = L.Class.extend({
 			);
 		}
 
-		const newPaneCenter = new L.Point(
+		const newPaneCenter = Coordinate.fromCorePixel(
 			docTopLeft.corePixel().x -
 				splitPos.corePixel().x +
 				((paneSize.corePixel(oldZoom).x + splitPos.corePixel().x) *
@@ -553,12 +555,13 @@ L.TileSectionManager = L.Class.extend({
 				((paneSize.corePixel(oldZoom).y + splitPos.corePixel().y) *
 					0.5) /
 					scale,
+			oldZoom
 		);
 
 		return {
 			offset: this._offset,
 			topLeft: L.point(docTopLeft.corePixel()),
-			center: this._map.project(this._map.unproject(newPaneCenter, oldZoom), this._map.getScaleZoom(scale))
+			center: newPaneCenter.zoomTo(newZoom),
 		};
 	},
 
@@ -654,8 +657,7 @@ L.TileSectionManager = L.Class.extend({
 		var map = this._map;
 
 		// Calculate the final center at final zoom in advance.
-		var newMapCenter = this._getZoomMapCenter(zoom).divideBy(app.dpiScale);
-		var newMapCenterLatLng = map.unproject(newMapCenter, zoom);
+		var newMapCenterLatLng = this._getZoomMapCenter(zoom).latLng();
 		app.sectionContainer.setZoomChanged(true);
 
 		var stopAnimation = noGap ? true : false;

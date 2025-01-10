@@ -575,7 +575,7 @@ L.Map = L.Evented.extend({
 			true
 		);
 
-		const newCenterLatLng = this.unproject(docPos.center.divideBy(app.dpiScale), zoom);
+		const newCenterLatLng = L.latLng(docPos.center.latLng());
 
 		this._ignoreCursorUpdate = true;
 
