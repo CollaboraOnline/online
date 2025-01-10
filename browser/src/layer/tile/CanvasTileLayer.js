@@ -559,7 +559,6 @@ L.TileSectionManager = L.Class.extend({
 		);
 
 		return {
-			offset: this._offset,
 			topLeft: L.point(docTopLeft.corePixel()),
 			center: newPaneCenter.zoomTo(newZoom),
 		};
