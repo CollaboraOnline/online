@@ -74,22 +74,9 @@ class SearchService {
 		};
 
 		L.Map.THIS.fire('clearselection');
-		var viewTopLeftpx = L.Map.THIS.project(
-			L.Map.THIS.getBounds().getNorthWest(),
-		);
-		var docBoundsTopLeft = L.Map.THIS.project(
-			L.Map.THIS.options.maxBounds.getNorthWest(),
-		);
-		var topLeft = L.Map.THIS.unproject(
-			new L.Point(
-				Math.max(viewTopLeftpx.x, docBoundsTopLeft.x),
-				Math.max(viewTopLeftpx.y, docBoundsTopLeft.y),
-			),
-		);
-		var topLeftTwips = L.Map.THIS._docLayer._latLngToTwips(topLeft);
 
-		var searchStartPointX = topLeftTwips.x;
-		var searchStartPointY = topLeftTwips.y;
+		var searchStartPointX = app.file.viewedRectangle.x1;
+		var searchStartPointY = app.file.viewedRectangle.y1;
 		if (
 			L.Map.THIS._docLayer &&
 			L.Map.THIS._docLayer._lastSearchResult &&
