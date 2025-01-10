@@ -184,8 +184,8 @@ class Coordinate {
 	add(other: CoordinateDelta): Coordinate {
 		return new Coordinate(
 			{
-				lat: this._latLng.lat - other.latLng().lat,
-				lng: this._latLng.lng - other.latLng().lng,
+				lat: this._latLng.lat + other.latLng().lat,
+				lng: this._latLng.lng + other.latLng().lng,
 			},
 			this._cssPixelOrigin,
 			this._zoom,
@@ -351,8 +351,8 @@ class CoordinateDelta {
 
 	add(other: CoordinateDelta): CoordinateDelta {
 		return new CoordinateDelta({
-			lat: this._latLng.lat - other.latLng().lat,
-			lng: this._latLng.lng - other.latLng().lng,
+			lat: this._latLng.lat + other.latLng().lat,
+			lng: this._latLng.lng + other.latLng().lng,
 		});
 	}
 

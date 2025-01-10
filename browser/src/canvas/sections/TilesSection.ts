@@ -802,14 +802,17 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 			);
 
 			if (!freezeX) {
-				tsManager._zoomAtDocEdgeX = docPos.topLeft.x == splitPos.x;
+				tsManager._zoomAtDocEdgeX = docPos.min.corePixel().x == splitPos.x;
 			}
 
 			if (!freezeY) {
-				tsManager._zoomAtDocEdgeY = docPos.topLeft.y == splitPos.y;
+				tsManager._zoomAtDocEdgeY = docPos.min.corePixel().y == splitPos.y;
 			}
 
-			var docRange = new L.Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
+			var docRange = new L.Bounds(
+				L.point(docPos.min.corePixel()),
+				L.point(docPos.min.corePixel()).add(docAreaSize),
+			);
 			if (tsManager._calcGridSection) {
 				tsManager._calcGridSection.onDrawArea(docRange, docRange.min.subtract(destPos), this.context);
 			}

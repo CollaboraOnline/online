@@ -554,10 +554,14 @@ L.TileSectionManager = L.Class.extend({
 			oldZoom
 		);
 
-		return {
-			topLeft: L.point(docTopLeft.zoomTo(newZoom, docTopLeft).corePixel()),
-			center: newPaneCenter.zoomTo(newZoom),
-		};
+		const center = newPaneCenter.zoomTo(newZoom, docTopLeft);
+		const topLeft = docTopLeft.zoomTo(newZoom, docTopLeft);
+		const bottomRight = center.add(center.subtract(topLeft));
+
+		return new CoordinateBounds(
+			topLeft,
+			bottomRight,
+		);
 	},
 
 	_getZoomMapCenter: function (zoom) {
@@ -574,7 +578,7 @@ L.TileSectionManager = L.Class.extend({
 			{ freezeX: false, freezeY: false },
 			splitPos,
 			scale,
-		).center;
+		).center();
 	},
 
 	_zoomAnimation: function () {

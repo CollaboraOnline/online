@@ -574,7 +574,7 @@ L.Map = L.Evented.extend({
 			this.getZoomScale(zoom),
 		);
 
-		const newCenterLatLng = L.latLng(docPos.center.latLng());
+		const newCenterLatLng = L.latLng(docPos.center().latLng());
 
 		this._ignoreCursorUpdate = true;
 

@@ -748,9 +748,9 @@ export class HeaderInfo {
 				scale,
 			);
 
-			startPx = this._isColumn ?
-				zoomPos.topLeft.x
-				: zoomPos.topLeft.y;
+			startPx = this._isColumn
+				? zoomPos.min.corePixel().x
+				: zoomPos.min.corePixel().y;
 		} else {
 			startPx = this._isColumn ?
 				section.documentTopLeft[0] + splitPos

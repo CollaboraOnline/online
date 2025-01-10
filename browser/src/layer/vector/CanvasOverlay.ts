@@ -339,19 +339,22 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 				scale,
 			);
 
-			const clipTopLeft = new cool.Point(docPos.topLeft.x, docPos.topLeft.y);
+			const clipTopLeft = new cool.Point(
+				docPos.min.corePixel().x,
+				docPos.min.corePixel().y,
+			);
 
 			// Original pane size.
 			var paneSize = paneBounds.getSize();
 			var clipSize = paneSize.clone();
-			if (!freezeX) {
+			if (false && !freezeX) { // TODO
 				// Pane's "free" size will shrink(expand) as we zoom in(out)
 				// respectively because fixed pane size expand(shrink).
 				clipSize.x = (paneSize.x - splitPos.x * (scale - 1)) / scale;
 
 				docPos.topLeft.x -= splitPos.x;
 			}
-			if (!freezeY) {
+			if (false && !freezeY) {
 				// See comment regarding pane width above.
 				clipSize.y = (paneSize.y - splitPos.y * (scale - 1)) / scale;
 
@@ -363,7 +366,10 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 				clipTopLeft.add(clipSize));
 
 			transform.scale(scale, scale);
-			transform.translate(scale * docPos.topLeft.x, scale * docPos.topLeft.y);
+			transform.translate(
+				scale * docPos.min.corePixel().x,
+				scale * docPos.min.corePixel().y,
+			);
 
 		} else if (this.tsManager._inZoomAnim && fixed) {
 
