@@ -204,24 +204,22 @@ class TreeViewControl {
 
 	createSelectionElement(
 		parent: HTMLElement,
-		treeViewData: TreeWidgetJSON,
 		entry: TreeEntryJSON,
-		builder: any,
 	) {
 		let selectionElement: any;
-		const checkboxtype = treeViewData.checkboxtype;
+		const checkboxtype = this._data.checkboxtype;
 		if (checkboxtype == 'radio') {
 			selectionElement = this.createRadioButton(
 				parent,
-				treeViewData,
-				builder,
+				this._data,
+				this._builder,
 				entry,
 			);
 		} else {
 			selectionElement = this.createCheckbox(
 				parent,
-				treeViewData,
-				builder,
+				this._data,
+				this._builder,
 				entry,
 			);
 		}
@@ -286,17 +284,17 @@ class TreeViewControl {
 		return false;
 	}
 
-	fillHeader(header: TreeHeaderJSON, builder: any) {
+	fillHeader(header: TreeHeaderJSON) {
 		if (!header) return;
 
 		const th = L.DomUtil.create(
 			'div',
-			builder.options.cssClass + ' ui-treeview-header',
+			this._builder.options.cssClass + ' ui-treeview-header',
 			this._thead,
 		);
 		const span = L.DomUtil.create(
 			'span',
-			builder.options.cssClass + ' ui-treeview-header-text',
+			this._builder.options.cssClass + ' ui-treeview-header-text',
 			th,
 		);
 
@@ -305,22 +303,20 @@ class TreeViewControl {
 		if (header.sortable !== false) {
 			L.DomUtil.create(
 				'span',
-				builder.options.cssClass + ' ui-treeview-header-sort-icon',
+				this._builder.options.cssClass + ' ui-treeview-header-sort-icon',
 				span,
 			);
 		}
 	}
 
 	fillRow(
-		data: TreeWidgetJSON,
 		entry: TreeEntryJSON,
-		builder: any,
 		level: number,
 		parent: HTMLElement,
 	) {
 		const tr = L.DomUtil.create(
 			'div',
-			builder.options.cssClass + ' ui-treeview-entry',
+			this._builder.options.cssClass + ' ui-treeview-entry',
 			parent,
 		);
 		let dummyColumns = 0;
@@ -330,14 +326,14 @@ class TreeViewControl {
 		let selectionElement;
 		if (this._hasState) {
 			const td = L.DomUtil.create('div', '', tr);
-			selectionElement = this.createSelectionElement(td, data, entry, builder);
+			selectionElement = this.createSelectionElement(td, entry);
 			if (this._isRealTree) td.setAttribute('aria-level', level);
 		}
 
-		this.fillCells(entry, builder, data, tr, level, selectionElement);
+		this.fillCells(entry, tr, level, selectionElement);
 
 		this.setupRowProperties(tr, entry, level, selectionElement);
-		this.setupRowDragAndDrop(tr, data, entry, builder);
+		this.setupRowDragAndDrop(tr, this._data, entry, this._builder);
 	}
 
 	highlightAllTreeViews(highlight: boolean) {
@@ -472,8 +468,6 @@ class TreeViewControl {
 
 	fillCells(
 		entry: TreeEntryJSON,
-		builder: any,
-		treeViewData: TreeWidgetJSON,
 		tr: HTMLElement,
 		level: number,
 		selectionElement: HTMLInputElement,
@@ -494,7 +488,7 @@ class TreeViewControl {
 			if (entry.children && entry.children.length) {
 				expander = L.DomUtil.create(
 					'div',
-					builder.options.cssClass + ' ui-treeview-expander',
+					this._builder.options.cssClass + ' ui-treeview-expander',
 					td,
 				);
 				expander._ondemand = entry.ondemand;
@@ -509,12 +503,12 @@ class TreeViewControl {
 
 			span = L.DomUtil.create(
 				'span',
-				builder.options.cssClass + ' ui-treeview-cell',
+				this._builder.options.cssClass + ' ui-treeview-cell',
 				td,
 			);
 			text = L.DomUtil.create(
 				'span',
-				builder.options.cssClass + ' ui-treeview-cell-text',
+				this._builder.options.cssClass + ' ui-treeview-cell-text',
 				span,
 			);
 
@@ -525,24 +519,24 @@ class TreeViewControl {
 				: entry.columns[index].expandedimage;
 			if (img) {
 				L.DomUtil.addClass(td, 'ui-treeview-icon-column');
-				this.createImageColumn(text, builder, img);
+				this.createImageColumn(text, this._builder, img);
 			} else if (
 				entry.columns[index].collapsed ||
 				entry.columns[index].expanded
 			) {
 				L.DomUtil.addClass(td, 'ui-treeview-icon-column');
 				L.DomUtil.addClass(span, 'ui-treeview-expandable-with-icon');
-				this.createExpandableIconCell(text, entry, index, builder);
+				this.createExpandableIconCell(text, entry, index, this._builder);
 			} else if (
 				entry.columns[index].link &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				this.createLinkCell(text, entry, index, builder);
+				this.createLinkCell(text, entry, index, this._builder);
 			} else if (
 				entry.columns[index].text &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				this.createTextCell(text, entry, index, builder);
+				this.createTextCell(text, entry, index, this._builder);
 			}
 
 			// row sub-elements
@@ -787,7 +781,7 @@ class TreeViewControl {
 		});
 	}
 
-	fillHeaders(headers: Array<TreeHeaderJSON>, builder: any) {
+	fillHeaders(headers: Array<TreeHeaderJSON>) {
 		if (!headers) return;
 
 		this._thead = L.DomUtil.create(
@@ -801,14 +795,14 @@ class TreeViewControl {
 		this._thead.style.gridColumn = '1 / ' + (this._columns + dummyCells + 1);
 
 		for (let index = 0; index < dummyCells; index++) {
-			this.fillHeader({ text: '', sortable: false }, builder);
+			this.fillHeader({ text: '', sortable: false });
 			if (index === 0 && this._hasState)
 				L.DomUtil.addClass(this._thead.lastChild, 'ui-treeview-state-column');
 			else L.DomUtil.addClass(this._thead.lastChild, 'ui-treeview-icon-column');
 		}
 
 		for (const index in headers) {
-			this.fillHeader(headers[index], builder);
+			this.fillHeader(headers[index]);
 
 			if (headers[index].sortable === false) continue;
 
@@ -828,12 +822,12 @@ class TreeViewControl {
 		}
 	}
 
-	makeEmptyList(data: TreeWidgetJSON, builder: any) {
+	makeEmptyList() {
 		// contentbox and tree can never be empty, 1 page or 1 sheet always exists
-		if (data.id === 'contenttree') {
+		if (this._data.id === 'contenttree') {
 			var tr = L.DomUtil.create(
 				'div',
-				builder.options.cssClass + ' ui-treview-entry',
+				this._builder.options.cssClass + ' ui-treview-entry',
 				this._container,
 			);
 			tr.innerText = _(
@@ -841,7 +835,7 @@ class TreeViewControl {
 			);
 		} else {
 			L.DomUtil.addClass(this._container, 'empty');
-			if (data.hideIfEmpty) L.DomUtil.addClass(this._container, 'hidden');
+			if (this._data.hideIfEmpty) L.DomUtil.addClass(this._container, 'hidden');
 		}
 	}
 
@@ -851,15 +845,13 @@ class TreeViewControl {
 	}
 
 	fillEntries(
-		data: TreeWidgetJSON,
 		entries: Array<TreeEntryJSON>,
-		builder: any,
 		level: number,
 		parent: HTMLElement,
 	) {
 		let hasSelectedEntry = false;
 		for (const index in entries) {
-			this.fillRow(data, entries[index], builder, level, parent);
+			this.fillRow(entries[index], level, parent);
 
 			hasSelectedEntry = hasSelectedEntry || entries[index].selected;
 
@@ -876,16 +868,14 @@ class TreeViewControl {
 				subGrid.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
 
 				this.fillEntries(
-					data,
 					entries[index].children,
-					builder,
 					level + 1,
 					subGrid,
 				);
 			}
 		}
 
-		if (entries && entries.length === 0) this.makeEmptyList(data, builder);
+		if (entries && entries.length === 0) this.makeEmptyList();
 
 		// we need to provide a way for making the treeview control focusable
 		// when no entry is selected
@@ -962,8 +952,8 @@ class TreeViewControl {
 
 	build(data: TreeWidgetJSON, builder: any, parentContainer: HTMLElement) {
 		this.preprocessColumnData(data.entries);
-		this.fillHeaders(data.headers, builder);
-		this.fillEntries(data, data.entries, builder, 1, this._tbody);
+		this.fillHeaders(data.headers);
+		this.fillEntries(data.entries, 1, this._tbody);
 
 		parentContainer.appendChild(this._container);
 
