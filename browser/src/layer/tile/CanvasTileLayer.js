@@ -4436,7 +4436,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	preZoomAnimation: function (pinchStartCenter) {
-		this._pinchStartCenter = Coordinate.fromLatLng(pinchStartCenter.lat, pinchStartCenter.lng, this._map.getZoom());
+		this._pinchStartCenter = pinchStartCenter;
 		this._painter._offset = CoordinateDelta.fromLatLng(0, 0);
 
 		if (this._cursorMarker && app.file.textCursor.visible) {
@@ -4486,11 +4486,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// Meant for desktop case, where the ending zoom and centers are all known in advance.
 	runZoomAnimation: function (zoomEnd, pinchCenter, mapUpdater, runAtFinish) {
-		const pinchCenterCoord = Coordinate.fromLatLng(pinchCenter.lat, pinchCenter.lng, this._map.getZoom());
 		this.preZoomAnimation(pinchCenter);
-		this.zoomStep(this._map.getZoom(), pinchCenterCoord);
+		this.zoomStep(this._map.getZoom(), pinchCenter);
 		var thisObj = this;
-		this.zoomStepEnd(zoomEnd, pinchCenterCoord,
+		this.zoomStepEnd(zoomEnd, pinchCenter,
 			mapUpdater,
 			// runAtFinish
 			function () {

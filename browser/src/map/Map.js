@@ -597,7 +597,7 @@ L.Map = L.Evented.extend({
 		if (animate) {
 			this._docLayer.runZoomAnimation(
 				zoom,
-				L.latLng(zoomCenter.latLng()),
+				zoomCenter,
 				mapUpdater,
 				runAtFinish);
 			return;
@@ -687,11 +687,12 @@ L.Map = L.Evented.extend({
 			if (animate) {
 				this._docLayer.runZoomAnimation(zoom,
 					// pinchCenter
-					new L.LatLng(
+					Coordinate.fromLatLng(
 						// Use the current y-center if there is a top margin.
 						cssBounds.min.y < 0 ? curCenter.lat : caretPos.lat,
 						// Use the current x-center if there is a left margin.
-						cssBounds.min.x < 0 ? curCenter.lng : caretPos.lng),
+						cssBounds.min.x < 0 ? curCenter.lng : caretPos.lng,
+						this._zoom),
 					mapUpdater,
 					runAtFinish);
 			} else {
@@ -713,7 +714,10 @@ L.Map = L.Evented.extend({
 		if (animate) {
 			this._docLayer.runZoomAnimation(zoom,
 				// pinchCenter
-				curCenter,
+				Coordinate.fromLatLng(
+					curCenter.lat,
+					curCenter.lng,
+					this._zoom),
 				mapUpdater,
 				runAtFinish);
 		} else {

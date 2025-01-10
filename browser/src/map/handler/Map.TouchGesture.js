@@ -535,7 +535,7 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		this._pinchStartCenter = { x: e.center.x, y: e.center.y };
 		const _pinchStartLatLng = this._map.mouseEventToLatLng({ clientX: e.center.x, clientY: e.center.y });
-		this._map._docLayer.preZoomAnimation(_pinchStartLatLng);
+		this._map._docLayer.preZoomAnimation(Coordinate.fromLatLng(_pinchStartLatLng.lat, _pinchStartLatLng.lng, this._map.getZoom()));
 	},
 
 	_onPinch: function (e) {
