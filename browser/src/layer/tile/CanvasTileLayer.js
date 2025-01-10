@@ -601,7 +601,7 @@ L.TileSectionManager = L.Class.extend({
 
 	_calcZoomFrameParams: function (zoom, newCenter) {
 		this._zoomFrameScale = this._calcZoomFrameScale(zoom);
-		this._newCenter = Coordinate.fromCSSPixel(newCenter.x, newCenter.y, this._map.getZoom());
+		this._newCenter = Coordinate.fromLatLng(newCenter.lat, newCenter.lng, this._map.getZoom());
 	},
 
 	setWaitForTiles: function (wait) {
@@ -4436,7 +4436,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	preZoomAnimation: function (pinchStartCenter) {
-		this._pinchStartCenter = Coordinate.fromCSSPixel(pinchStartCenter.x, pinchStartCenter.y, this._map.getZoom());
+		this._pinchStartCenter = Coordinate.fromLatLng(pinchStartCenter.lat, pinchStartCenter.lng, this._map.getZoom());
 		this._painter._offset = CoordinateDelta.fromLatLng(0, 0);
 
 		if (this._cursorMarker && app.file.textCursor.visible) {

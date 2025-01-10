@@ -597,7 +597,7 @@ L.Map = L.Evented.extend({
 		if (animate) {
 			this._docLayer.runZoomAnimation(
 				zoom,
-				L.point(zoomCenter.cssPixel()),
+				L.latLng(zoomCenter.latLng()),
 				mapUpdater,
 				runAtFinish);
 			return;
