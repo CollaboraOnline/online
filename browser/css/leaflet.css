@@ -897,7 +897,8 @@ input.clipboard {
 	align-items: center;
 }
 
-.cool-ruler-tabstopcontainer {
+.cool-ruler-tabstopcontainer,
+.cool-ruler-horizontal-tabstopcontainer {
 	height: 100%;
 	position: absolute;
 }
