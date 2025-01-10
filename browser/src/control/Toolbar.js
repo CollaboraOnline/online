@@ -13,7 +13,7 @@
  * Toolbar handler
  */
 
-/* global app $ window brandProductName DocUtil _ */
+/* global app $ window brandProductName DocUtil GraphicSelection _ */
 
 L.Map.include({
 
@@ -387,6 +387,14 @@ L.Map.include({
 				'.uno:DeleteComment', '.uno:ReplyComment', '.uno:ReplyToAnnotation', '.uno:PromoteComment', '.uno:ResolveComment',
 				'.uno:ResolveCommentThread', '.uno:ResolveComment', '.uno:EditAnnotation', '.uno:ExportToEPUB', '.uno:ExportToPDF',
 				'.uno:ExportDirectToPDF');
+
+			const graphicInfo = GraphicSelection.extraInfo;
+			if (graphicInfo && graphicInfo.isSignature)
+			{
+				// If the just added signature line shape is selected, allow
+				// moving/resizing it.
+				allowedCommands.push('.uno:TransformDialog', '.uno:MoveShapeHandle');
+			}
 		}
 
 		for (var i in allowedCommands) {
