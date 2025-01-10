@@ -98,7 +98,7 @@ class TreeViewControl {
 		(this._container as any).filterEntries = this.filterEntries.bind(this);
 
 		this.setupDragAndDrop(data, builder);
-		this.setupKeyEvents(data, builder);
+		/*this.setupKeyEvents(data, builder);*/
 
 		if (this._isRealTree) {
 			this._container.setAttribute('role', 'treegrid');
@@ -109,6 +109,7 @@ class TreeViewControl {
 		if (data.enabled !== false) {
 			this._container.addEventListener('click', this.onClick.bind(this));
 			this._container.addEventListener('dblclick', this.onDoubleClick.bind(this));
+			this._container.addEventListener('keydown', this.onKeyDown.bind(this));
 		}
 	}
 
@@ -553,14 +554,6 @@ class TreeViewControl {
 			}
 		}
 
-		/*this.setupEntryKeyEvent(
-			tr,
-			entry,
-			selectionElement,
-			expander,
-			clickFunction,
-		);*/
-
 		this.setupEntryContextMenuEvent(tr, entry, treeViewData, builder);
 	}
 
@@ -579,33 +572,6 @@ class TreeViewControl {
 				builder,
 			);
 			e.preventDefault();
-		});
-	}
-
-	setupEntryKeyEvent(
-		tr: HTMLElement,
-		entry: TreeEntryJSON,
-		selectionElement: HTMLInputElement,
-		expander: HTMLElement,
-		clickFunction: any,
-	) {
-		if (entry.enabled === false) return;
-
-		tr.addEventListener('keydown', (event) => {
-			if (event.key === ' ' && expander) {
-				expander.click();
-				tr.focus();
-				event.preventDefault();
-				event.stopPropagation();
-			} else if (event.key === 'Enter' || event.key === ' ') {
-				clickFunction();
-				if (selectionElement) selectionElement.click();
-				tr.focus();
-				event.preventDefault();
-				event.stopPropagation();
-			} else if (event.key === 'Tab') {
-				if (!L.DomUtil.hasClass(tr, 'selected')) this.unselectEntry(tr); // remove tabIndex
-			}
 		});
 	}
 
@@ -1187,6 +1153,37 @@ class TreeViewControl {
 				row._row,
 				this._builder,
 			);
+		}
+	}
+
+	onKeyDown(e: any) {
+		let target = e.target;
+		if (target.getAttribute('role') === 'row' && !L.DomUtil.hasClass(target, 'disabled')) {
+			this.onRowKeyDown(target, e);
+			return;
+		}
+	}
+
+	onRowKeyDown(row: any, e: any) {
+		let expander = row.querySelector('.ui-treeview-expander');
+		if (e.key === ' ' && expander) {
+			expander.click();
+			row.focus();
+			e.preventDefault();
+			e.stopPropagation();
+		} else if (e.key === 'Enter' || e.key === ' ') {
+			this.onRowClick(row);
+			let checkbox = row.querySelector('input');
+			if (checkbox) {
+				checkbox.click();
+			}
+			row.focus();
+			e.preventDefault();
+			e.stopPropagation();
+		} else if (e.key === 'Tab') {
+			if (!L.DomUtil.hasClass(row, 'selected')) {
+				this.unselectEntry(row); // remove tabIndex
+			}
 		}
 	}
 }
