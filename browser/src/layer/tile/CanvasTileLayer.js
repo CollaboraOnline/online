@@ -419,13 +419,9 @@ L.TileSectionManager = L.Class.extend({
 	 * @param scale {number} The scale, relative to the initial size, of the document currently
 	 * Or rather this is equivalent to: old_width / new_width
 	 *
-	 * @param findFreePaneCenter {boolean} Wether to return a center point
-	 *
-	 * @returns {{topLeft: {x: number, y: number}, center?: {x: number, y: number}}} An object with a top left point in core-pixels and optionally a center point
-	 * Center is included iff findFreePaneCenter is true
-	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
+	 * @returns {{topLeft: {x: number, y: number}, center: {x: number, y: number}}} An object with a top left point in core-pixels and a center point
 	 **/
-	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, _paneBounds, freezePane, _splitPos, scale, findFreePaneCenter) {
+	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, _paneBounds, freezePane, _splitPos, scale) {
 		const oldZoom = this._map.getZoom();
 		const newZoom = this._map.getScaleZoom(scale);
 
@@ -578,7 +574,6 @@ L.TileSectionManager = L.Class.extend({
 			{ freezeX: false, freezeY: false },
 			splitPos,
 			scale,
-			true /* findFreePaneCenter */
 		).center;
 	},
 

@@ -799,7 +799,6 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 				{ freezeX, freezeY },
 				splitPos,
 				scale,
-				false /* findFreePaneCenter? */
 			);
 
 			if (!freezeX) {

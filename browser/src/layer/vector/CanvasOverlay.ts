@@ -337,7 +337,6 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 				{ freezeX, freezeY },
 				splitPos,
 				scale,
-				false /* findFreePaneCenter? */
 			);
 
 			const clipTopLeft = new cool.Point(docPos.topLeft.x, docPos.topLeft.y);

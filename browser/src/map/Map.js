@@ -572,7 +572,6 @@ L.Map = L.Evented.extend({
 			{ freezeX: false, freezeY: false },
 			splitPos,
 			this.getZoomScale(zoom),
-			true
 		);
 
 		const newCenterLatLng = L.latLng(docPos.center.latLng());

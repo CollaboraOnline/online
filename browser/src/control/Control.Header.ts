@@ -746,7 +746,6 @@ export class HeaderInfo {
 				{ freezeX: false, freezeY: false },
 				ctx.splitPos,
 				scale,
-				false
 			);
 
 			startPx = this._isColumn ?
