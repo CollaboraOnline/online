@@ -452,9 +452,17 @@ if __name__ == "__main__":
             usageAndExit()
 
         onlineDir = sys.argv[2]
-        lofficeDir = sys.argv[3]
+        lofficeDir = os.path.abspath(sys.argv[3])
+        if not os.path.isdir(lofficeDir):
+            sys.stderr.write("ERROR: invalid loffice parameter '{}' is not a dir\n".format(sys.argv[3]))
+            exit(1)
     else:
         usageAndExit()
+
+    onlineDir = os.path.abspath(onlineDir)
+    if not os.path.isdir(onlineDir):
+        sys.stderr.write("ERROR: invalid online_dir parameter '{}' is not a dir\n".format(sys.argv[2]))
+        exit(1)
 
     menuCommands = extractMenuCommands(onlineDir)
     contextCommands = extractContextCommands(onlineDir)
