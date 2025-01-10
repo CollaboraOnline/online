@@ -108,6 +108,7 @@ class TreeViewControl {
 
 		if (data.enabled !== false) {
 			this._container.addEventListener('click', this.onClick.bind(this));
+			this._container.addEventListener('dblclick', this.onDoubleClick.bind(this));
 		}
 	}
 
@@ -552,34 +553,13 @@ class TreeViewControl {
 			}
 		}
 
-		/*var doubleClickFunction = this.createClickFunction(
-			tr,
-			selectionElement,
-			false,
-			true,
-			builder,
-			treeViewData,
-			entry,
-		);
-
-		this.setupEntryMouseEvents(
-			tr,
-			entry,
-			treeViewData,
-			builder,
-			selectionElement,
-			expander,
-			clickFunction,
-			doubleClickFunction,
-		);
-
-		this.setupEntryKeyEvent(
+		/*this.setupEntryKeyEvent(
 			tr,
 			entry,
 			selectionElement,
 			expander,
 			clickFunction,
-		); */
+		);*/
 
 		this.setupEntryContextMenuEvent(tr, entry, treeViewData, builder);
 	}
@@ -600,44 +580,6 @@ class TreeViewControl {
 			);
 			e.preventDefault();
 		});
-	}
-
-	setupEntryMouseEvents(
-		tr: HTMLElement,
-		entry: TreeEntryJSON,
-		treeViewData: TreeWidgetJSON,
-		builder: any,
-		selectionElement: HTMLInputElement,
-		expander: HTMLElement,
-		clickFunction: any,
-		doubleClickFunction: any,
-	) {
-		tr.addEventListener('click', clickFunction as any);
-
-		if (!this._singleClickActivate) {
-			if (window.ThisIsTheiOSApp) {
-				// TODO: remove this hack
-				tr.addEventListener('click', () => {
-					if (L.DomUtil.hasClass(tr, 'disabled')) return;
-
-					if (
-						entry.row == lastClickHelperRow &&
-						treeViewData.id == lastClickHelperId
-					)
-						doubleClickFunction(undefined);
-					else {
-						lastClickHelperRow = entry.row;
-						lastClickHelperId = treeViewData.id;
-						setTimeout(() => {
-							lastClickHelperRow = -1;
-						}, 300);
-					}
-				});
-				// TODO: remove this hack
-			} else {
-				$(tr).dblclick(doubleClickFunction as any);
-			}
-		}
 	}
 
 	setupEntryKeyEvent(
@@ -1225,6 +1167,26 @@ class TreeViewControl {
 			this.expandEntry(expander, this._data, expander._row, this._builder);
 		} else {
 			this.toggleEntry(expander, this._data, expander._row, this._builder);
+		}
+	}
+
+	onDoubleClick(e: any) {
+		let target = e.target;
+		let row = TreeViewControl.getElement(target, 'row');
+		if (row && !L.DomUtil.hasClass(row, 'disabled')) {
+			this.onRowDoubleClick(row);
+		}
+	}
+
+	onRowDoubleClick(row: any) {
+		if (!this._singleClickActivate) {
+			this._builder.callback(
+				'treeview',
+				'activate',
+				this._data,
+				row._row,
+				this._builder,
+			);
 		}
 	}
 }
