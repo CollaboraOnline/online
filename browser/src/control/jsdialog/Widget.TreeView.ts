@@ -1169,21 +1169,16 @@ class TreeViewControl {
 	onClick(e: any) {
 		let target = e.target;
 		let row = TreeViewControl.getElement(target, 'row');
-		if (row) {
-			this.onRowClick(row);
-		}
+		if (row && !L.DomUtil.hasClass(row, 'disabled')) {
+			if (target.localName === 'input') {
+				this.onCheckBoxClick(target);
+			}
 
-		if (target.localName === 'input') {
-			this.onCheckBoxClick(target);
-			return;
+			this.onRowClick(row);
 		}
 	}
 
 	onRowClick(row: any) {
-		if (L.DomUtil.hasClass(row, 'disabled')) {
-			return;
-		}
-
 		this._container
 			.querySelectorAll('.ui-treeview-entry.selected')
 			.forEach((item: HTMLElement) => {
