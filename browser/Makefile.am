@@ -460,8 +460,9 @@ COOL_JS_LST =\
 	src/control/Parts.js \
 	src/control/Scroll.js \
 	src/control/Styles.js \
-	src/control/Ruler.js \
+	src/control/Ruler.ts \
 	src/control/VRuler.ts \
+	src/control/HRuler.ts \
 	src/slideshow/SlideCache.ts \
 	src/slideshow/SlideCompositor.ts \
 	src/slideshow/LayerRenderer.ts \
@@ -992,10 +993,11 @@ pot:
 		src/control/Control.Zotero.js \
 		src/control/Parts.js \
 		src/control/Permission.js \
-		src/control/Ruler.js \
 		src/control/Signing.js \
 		src/control/Toolbar.js \
+		src/control/Ruler.ts \
 		src/control/VRuler.ts \
+		src/control/HRuler.ts \
 		src/control/jsdialog/Definitions.Menu.ts \
 		src/control/jsdialog/Util.SnackbarController.ts \
 		src/control/jsdialog/Widget.ColorPicker.ts \
