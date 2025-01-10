@@ -26,9 +26,10 @@ class Coordinate {
 	}
 
 	asDelta(): CoordinateDelta {
-		if (this._cssPixelOrigin) {
+		if (this._cssPixelOrigin.x != 0
+			|| this._cssPixelOrigin.y != 0) {
 			throw Error(
-				'Cannot convert coordinate with an origin to a CoordinateDelta',
+				'Cannot convert coordinate with a nonzero origin to a CoordinateDelta',
 			);
 		}
 

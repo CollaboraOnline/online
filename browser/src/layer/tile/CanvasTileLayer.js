@@ -540,19 +540,13 @@ L.TileSectionManager = L.Class.extend({
 			);
 		}
 
-		const newPaneCenter = Coordinate.fromCorePixel(
-			docTopLeft.corePixel().x -
-				splitPos.corePixel().x +
-				((paneSize.corePixel(oldZoom).x + splitPos.corePixel().x) *
-					0.5) /
-					scale,
-			docTopLeft.corePixel().y -
-				splitPos.corePixel().y +
-				((paneSize.corePixel(oldZoom).y + splitPos.corePixel().y) *
-					0.5) /
-					scale,
-			oldZoom
-		);
+		const newPaneCenter =
+			docTopLeft
+				.subtract(splitPos.asDelta())
+				.add(paneSize
+					.add(splitPos.asDelta())
+					.multiply(0.5)
+					.divide(scale));
 
 		const center = newPaneCenter.zoomTo(newZoom, docTopLeft);
 		const topLeft = docTopLeft.zoomTo(newZoom, docTopLeft);
