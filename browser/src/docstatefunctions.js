@@ -141,18 +141,23 @@ app.updateFollowingUsers = function () {
 	console.debug('user following: update');
 	var isCellCursorVisible = app.calc.cellCursorVisible;
 	var isTextCursorVisible = app.file.textCursor.visible;
+
 	if (isCellCursorVisible || isTextCursorVisible) {
+		let twipsArray = [];
 		if (isCellCursorVisible)
-			var cursorPos = app.map._docLayer._twipsToLatLng({
-				x: app.calc.cellCursorRectangle.x2,
-				y: app.calc.cellCursorRectangle.y2,
-			});
+			twipsArray = [
+				app.calc.cellCursorRectangle.x2,
+				app.calc.cellCursorRectangle.y2,
+			];
 		else
-			cursorPos = app.map._docLayer._twipsToLatLng({
-				x: app.file.textCursor.rectangle.x2,
-				y: app.file.textCursor.rectangle.y2,
-			});
-		var cursorPositionInView = app.map._docLayer._isLatLngInView(cursorPos);
+			twipsArray = [
+				app.file.textCursor.rectangle.x2,
+				app.file.textCursor.rectangle.y2,
+			];
+
+		const cursorPositionInView =
+			app.isPointVisibleInTheDisplayedArea(twipsArray);
+
 		if (
 			parseInt(app.getFollowedViewId()) ===
 				parseInt(app.map._docLayer._viewId) &&
