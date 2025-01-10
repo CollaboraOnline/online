@@ -2015,23 +2015,15 @@ void FileServerRequestHandler::uploadFileToNextcloud(const Poco::Net::HTTPReques
         // TODO : Handle nextcloud wopi url dynamically
         // TODO : Extract nextcloud wopi fileupload stuff so we can re-use it
         Poco::URI wopiUri("http://nextcloud.local/index.php/apps/richdocuments/wopi/settings/upload");
-        wopiUri.addQueryParameter("fileId", "-1");
+        wopiUri.addQueryParameter("fileId", fileName);
         wopiUri.addQueryParameter("access_token", token);
 
         Authorization auth(Authorization::Type::Token, token);
         auto httpRequest = StorageConnectionManager::createHttpRequest(wopiUri, auth);
         httpRequest.setVerb(http::Request::VERB_POST);
 
-        const std::string boundary = "------BOUNDARY_STR";
-        std::ostringstream bodyStream;
-        bodyStream << boundary << "\r\n"
-                   << "Content-Disposition: form-data; name=\"file\"; filename=\"" << fileName << "\"\r\n"
-                   << "Content-Type: application/octet-stream\r\n\r\n"
-                   << fileContent << "\r\n"
-                   << boundary << "--\r\n";
-
-        httpRequest.header().set("Content-Type", "multipart/form-data; boundary=" + boundary.substr(2));
-        httpRequest.setBody(bodyStream.str());
+        httpRequest.header().set("Content-Type", "application/octet-stream");
+        httpRequest.setBody(fileContent);
 
         LOG_DBG("uploadFileToNextcloud: WOPI URI: " << wopiUri.toString());
         for (const auto& kv : httpRequest.header())
