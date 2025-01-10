@@ -98,7 +98,6 @@ class TreeViewControl {
 		(this._container as any).filterEntries = this.filterEntries.bind(this);
 
 		this.setupDragAndDrop(data, builder);
-		/*this.setupKeyEvents(data, builder);*/
 
 		if (this._isRealTree) {
 			this._container.setAttribute('role', 'treegrid');
@@ -660,14 +659,6 @@ class TreeViewControl {
 		}, 100);
 	}
 
-	setupKeyEvents(data: TreeWidgetJSON, builder: any) {
-		this._container.addEventListener('keydown', (event) => {
-			const listElements =
-				this._container.querySelectorAll('.ui-treeview-entry');
-			this.handleKeyEvent(event, listElements, builder, data);
-		});
-	}
-
 	changeFocusedRow(
 		listElements: Array<HTMLElement>,
 		fromIndex: number,
@@ -733,61 +724,6 @@ class TreeViewControl {
 		return currIndex;
 	}
 
-	handleKeyEvent(
-		event: KeyboardEvent,
-		nodeList: NodeList,
-		builder: any,
-		data: TreeWidgetJSON,
-	) {
-		var preventDef = false;
-		var listElements = Array.from(nodeList) as Array<HTMLElement>; // querySelector returns NodeList not array
-		var treeLength = listElements.length;
-		var currIndex = this.getCurrentEntry(listElements);
-
-		if (event.key === 'ArrowDown') {
-			if (currIndex < 0) this.changeFocusedRow(listElements, currIndex, 0);
-			else {
-				var nextIndex = currIndex + 1;
-				while (
-					nextIndex < treeLength - 1 &&
-					listElements[nextIndex].clientHeight <= 0
-				)
-					nextIndex++;
-				if (nextIndex < treeLength)
-					this.changeFocusedRow(listElements, currIndex, nextIndex);
-			}
-			preventDef = true;
-		} else if (event.key === 'ArrowUp') {
-			if (currIndex < 0)
-				this.changeFocusedRow(listElements, currIndex, treeLength - 1);
-			else {
-				var nextIndex = currIndex - 1;
-				while (nextIndex >= 0 && listElements[nextIndex].clientHeight <= 0)
-					nextIndex--;
-				if (nextIndex >= 0)
-					this.changeFocusedRow(listElements, currIndex, nextIndex);
-			}
-
-			preventDef = true;
-		} else if (
-			data.fireKeyEvents &&
-			builder.callback(
-				'treeview',
-				'keydown',
-				{ id: data.id, key: event.key },
-				currIndex,
-				builder,
-			)
-		) {
-			// used in mentions
-			preventDef = true;
-		}
-
-		if (preventDef) {
-			event.preventDefault();
-			event.stopPropagation();
-		}
-	}
 
 	isRealTree(data: TreeWidgetJSON) {
 		let isRealTreeView = false;
@@ -1161,6 +1097,64 @@ class TreeViewControl {
 		if (target.getAttribute('role') === 'row' && !L.DomUtil.hasClass(target, 'disabled')) {
 			this.onRowKeyDown(target, e);
 			return;
+		}
+
+		const listElements =
+				this._container.querySelectorAll('.ui-treeview-entry');
+		this.onHandleKeyDown(e, listElements);
+	}
+
+	onHandleKeyDown(
+		event: KeyboardEvent,
+		nodeList: NodeList,
+	) {
+		var preventDef = false;
+		var listElements = Array.from(nodeList) as Array<HTMLElement>; // querySelector returns NodeList not array
+		var treeLength = listElements.length;
+		var currIndex = this.getCurrentEntry(listElements);
+
+		if (event.key === 'ArrowDown') {
+			if (currIndex < 0) this.changeFocusedRow(listElements, currIndex, 0);
+			else {
+				var nextIndex = currIndex + 1;
+				while (
+					nextIndex < treeLength - 1 &&
+					listElements[nextIndex].clientHeight <= 0
+				)
+					nextIndex++;
+				if (nextIndex < treeLength)
+					this.changeFocusedRow(listElements, currIndex, nextIndex);
+			}
+			preventDef = true;
+		} else if (event.key === 'ArrowUp') {
+			if (currIndex < 0)
+				this.changeFocusedRow(listElements, currIndex, treeLength - 1);
+			else {
+				var nextIndex = currIndex - 1;
+				while (nextIndex >= 0 && listElements[nextIndex].clientHeight <= 0)
+					nextIndex--;
+				if (nextIndex >= 0)
+					this.changeFocusedRow(listElements, currIndex, nextIndex);
+			}
+
+			preventDef = true;
+		} else if (
+			this._data.fireKeyEvents &&
+			this._builder.callback(
+				'treeview',
+				'keydown',
+				{ id: this._data.id, key: event.key },
+				currIndex,
+				this._builder,
+			)
+		) {
+			// used in mentions
+			preventDef = true;
+		}
+
+		if (preventDef) {
+			event.preventDefault();
+			event.stopPropagation();
 		}
 	}
 
