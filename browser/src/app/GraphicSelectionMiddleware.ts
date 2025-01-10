@@ -156,7 +156,13 @@ class GraphicSelection {
 			if (!JSDialog.IsAnyInputFocused())
 				app.map.focus(app.file.textCursor.visible);
 
-			if (!app.map.isEditMode()) {
+			let editMode = app.map.isEditMode();
+			if (!editMode) {
+				// If the just added signature line shape is selected, show the
+				// graphic selection.
+				editMode = this.extraInfo && this.extraInfo.isSignature;
+			}
+			if (!editMode) {
 				return;
 			}
 
