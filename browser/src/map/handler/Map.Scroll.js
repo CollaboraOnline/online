@@ -3,7 +3,7 @@
  * L.Handler.Scroll is used by L.Map to enable mouse scroll wheel zoom on the map.
  */
 
-/* global app */
+/* global app Coordinate */
 L.Map.mergeOptions({
 	scrollHandler: true,
 	wheelDebounceTime: 40,
@@ -133,7 +133,7 @@ L.Map.Scroll = L.Handler.extend({
 			Math.min(toZoom, lastZoom + step);
 
 		if (frameZoom !== toZoom)
-			this._map._docLayer.zoomStep(frameZoom, this._zoomCenter);
+			this._map._docLayer.zoomStep(frameZoom, Coordinate.fromLatLng(this._zoomCenter.lat, this._zoomCenter.lng, this._map.getZoom()));
 
 		this._lastFrameZoom = frameZoom;
 		var now = (new Date()).valueOf();
@@ -146,18 +146,25 @@ L.Map.Scroll = L.Handler.extend({
 	_stopZoomAnimation: function () {
 		cancelAnimationFrame(this._zoomInterpolateRAF); // Already cancelled by now ?
 		var zoom = this._zoom;
-		var lastCenter = new L.LatLng(this._zoomCenter.lat, this._zoomCenter.lng);
+		var lastCenter = Coordinate.fromLatLng(
+			this._zoomCenter.lat,
+			this._zoomCenter.lng,
+			this._map.getZoom(),
+		);
 		var map = this._map;
-		map._docLayer.zoomStepEnd(zoom, lastCenter,
+		map._docLayer.zoomStepEnd(
+			zoom,
+			lastCenter,
 			// mapUpdater
 			function (newMapCenter) {
-				map.setView(newMapCenter || lastCenter, zoom);
+				map.setView(newMapCenter || L.latLng(lastCenter.latLng()), zoom);
 			},
 			// showMarkers
 			function () {
 				map._docLayer.postZoomAnimation();
 				this._inZoomAnimation = false;
 			}.bind(this),
-			true /* noGap */);
+			true /* noGap */,
+		);
 	},
 });

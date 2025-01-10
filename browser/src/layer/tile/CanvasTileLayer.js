@@ -601,7 +601,7 @@ L.TileSectionManager = L.Class.extend({
 
 	_calcZoomFrameParams: function (zoom, newCenter) {
 		this._zoomFrameScale = this._calcZoomFrameScale(zoom);
-		this._newCenter = Coordinate.fromLatLng(newCenter.lat, newCenter.lng, this._map.getZoom());
+		this._newCenter = newCenter;
 	},
 
 	setWaitForTiles: function (wait) {
@@ -4486,11 +4486,11 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	// Meant for desktop case, where the ending zoom and centers are all known in advance.
 	runZoomAnimation: function (zoomEnd, pinchCenter, mapUpdater, runAtFinish) {
-
+		const pinchCenterCoord = Coordinate.fromLatLng(pinchCenter.lat, pinchCenter.lng, this._map.getZoom());
 		this.preZoomAnimation(pinchCenter);
-		this.zoomStep(this._map.getZoom(), pinchCenter);
+		this.zoomStep(this._map.getZoom(), pinchCenterCoord);
 		var thisObj = this;
-		this.zoomStepEnd(zoomEnd, pinchCenter,
+		this.zoomStepEnd(zoomEnd, pinchCenterCoord,
 			mapUpdater,
 			// runAtFinish
 			function () {

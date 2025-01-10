@@ -7,7 +7,7 @@ L.Map.mergeOptions({
 	touchGesture: true,
 });
 
-/* global Hammer app $ GraphicSelection */
+/* global Hammer app $ GraphicSelection Coordinate */
 L.Map.TouchGesture = L.Handler.extend({
 	statics: {
 		MAP: 1,
@@ -549,8 +549,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		var offset = {x: e.center.x - this._pinchStartCenter.x, y: e.center.y - this._pinchStartCenter.y};
 		var center = {x: this._pinchStartCenter.x - offset.x, y: this._pinchStartCenter.y - offset.y};
 		this._zoom = this._map._limitZoom(this._map.getScaleZoom(e.scale));
-		this._origCenter = this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y});
-
+		const _origCenterLatLng = this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y});
+		this._origCenter = Coordinate.fromLatLng(_origCenterLatLng.lat, _origCenterLatLng.lng, this._map.getZoom());
 
 		if (this._map._docLayer.zoomStep) {
 			this._map._docLayer.zoomStep(this._zoom, this._origCenter);
