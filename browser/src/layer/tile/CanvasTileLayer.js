@@ -555,7 +555,7 @@ L.TileSectionManager = L.Class.extend({
 		);
 
 		return {
-			topLeft: L.point(docTopLeft.corePixel()),
+			topLeft: L.point(docTopLeft.zoomTo(newZoom, docTopLeft).corePixel()),
 			center: newPaneCenter.zoomTo(newZoom),
 		};
 	},
