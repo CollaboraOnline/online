@@ -403,11 +403,9 @@ L.TileSectionManager = L.Class.extend({
 	 * Everything in this doc comment is speculation: I didn't write the code that supplies it and I'm guessing to
 	 * have something to work on for this function. That said, given my observations, they seem incredibly likely to be correct
 	 *
-	 * @param pinchCenter {{x: number, y: number}} The current pinch center in doc core-pixels
-	 * Normally expressed as an L.Point instance
+	 * @param pinchCenter {Coordinate} The current pinch center, relative to the old zoom
 	 *
-	 * @param pinchStartCenter {{x: number, y: number}} The pinch center at the start of the pinch in doc core-pixels
-	 * Normally expressed as an L.Point instance
+	 * @param pinchStartCenter {Coordinate} The pinch center at the start of the pinch
 	 *
 	 * @param paneBounds {{min: {x: number, y: number}, max: {x: number, y: number}}} The edges of the current pane
 	 * Traditionally this is the map border at the start of the pinch
@@ -421,12 +419,10 @@ L.TileSectionManager = L.Class.extend({
 	 *
 	 * @returns {{topLeft: {x: number, y: number}, center: {x: number, y: number}}} An object with a top left point in core-pixels and a center point
 	 **/
-	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, _paneBounds, freezePane, _splitPos, scale) {
+	_getZoomDocPos: function (pinchCenter, pinchStartCenter, _paneBounds, freezePane, _splitPos, scale) {
 		const oldZoom = this._map.getZoom();
 		const newZoom = this._map.getScaleZoom(scale);
 
-		let pinchCenter = Coordinate.fromCorePixel(_pinchCenter.x, _pinchCenter.y, oldZoom);
-		const pinchStartCenter = Coordinate.fromCorePixel(_pinchStartCenter.x, _pinchStartCenter.y, oldZoom);
 		const paneBounds = new CoordinateBounds(
 			Coordinate.fromCorePixel(
 				_paneBounds.min.x,
@@ -605,7 +601,7 @@ L.TileSectionManager = L.Class.extend({
 
 	_calcZoomFrameParams: function (zoom, newCenter) {
 		this._zoomFrameScale = this._calcZoomFrameScale(zoom);
-		this._newCenter = this._layer._map.project(newCenter).multiplyBy(app.dpiScale); // in core pixels
+		this._newCenter = Coordinate.fromCSSPixel(newCenter.x, newCenter.y, this._map.getZoom());
 	},
 
 	setWaitForTiles: function (wait) {
@@ -4440,7 +4436,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	preZoomAnimation: function (pinchStartCenter) {
-		this._pinchStartCenter = this._map.project(pinchStartCenter).multiplyBy(app.dpiScale); // in core pixels
+		this._pinchStartCenter = Coordinate.fromCSSPixel(pinchStartCenter.x, pinchStartCenter.y, this._map.getZoom());
 		this._painter._offset = CoordinateDelta.fromLatLng(0, 0);
 
 		if (this._cursorMarker && app.file.textCursor.visible) {
