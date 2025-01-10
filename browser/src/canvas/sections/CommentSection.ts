@@ -449,7 +449,7 @@ export class Comment extends CanvasSectionObject {
 		// Original unlinked text
 		this.sectionProperties.contentText.origText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		this.sectionProperties.contentText.origHTML = this.sectionProperties.data.html;
-		this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		this.sectionProperties.nodeModifyText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		if (this.sectionProperties.data.html) {
 			this.sectionProperties.nodeModifyText.innerHTML = this.sanitize(this.sectionProperties.data.html);
 		}
@@ -990,12 +990,12 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.commentListSection.saveReply(this);
 		} else {
 			this.removeBRTag(this.sectionProperties.nodeReplyText);
-			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.textContent;
+			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.innerText;
 			this.sectionProperties.data.html = this.sectionProperties.nodeReplyText.innerHTML;
 			// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
 			// While in browsers like Chrome and Firefox, a null value is automatically converted to ''
 			// Better to assign '' here instead of null to keep the behavior same for all
-			this.sectionProperties.nodeReplyText.textContent = '';
+			this.sectionProperties.nodeReplyText.innerText = '';
 			this.show();
 			this.sectionProperties.commentListSection.saveReply(this);
 		}
@@ -1022,9 +1022,9 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.nodeModifyText.innerHTML = this.sanitize(this.sectionProperties.contentText.origHTML);
 		}
 		else {
-			this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.contentText.origText;
+			this.sectionProperties.nodeModifyText.innerText = this.sectionProperties.contentText.origText;
 		}
-		this.sectionProperties.nodeReplyText.textContent = '';
+		this.sectionProperties.nodeReplyText.innerText = '';
 
 		if (cool.CommentSection.autoSavedComment)
 			this.handleSaveCommentButton(e);
@@ -1044,9 +1044,9 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.nodeModifyText.innerHTML = this.sanitize(this.sectionProperties.contentText.origHTML);
 		}
 		else {
-			this.sectionProperties.nodeModifyText.textContent = this.sectionProperties.contentText.origText;
+			this.sectionProperties.nodeModifyText.innerText = this.sectionProperties.contentText.origText;
 		}
-		this.sectionProperties.nodeReplyText.textContent = '';
+		this.sectionProperties.nodeReplyText.innerText = '';
 		if (this.sectionProperties.docLayer._docType !== 'spreadsheet')
 			this.show();
 		this.sectionProperties.commentListSection.cancel(this);
@@ -1066,7 +1066,7 @@ export class Comment extends CanvasSectionObject {
 	public onSaveComment (e: any): void {
 		L.DomEvent.stopPropagation(e);
 		this.removeBRTag(this.sectionProperties.nodeModifyText);
-		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.textContent;
+		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.innerText;
 		this.sectionProperties.data.html = this.sectionProperties.nodeModifyText.innerHTML;
 		this.updateContent();
 		if (!cool.CommentSection.autoSavedComment)
@@ -1091,7 +1091,7 @@ export class Comment extends CanvasSectionObject {
 		if (!this.sectionProperties.isRemoved) {
 			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
 			this.removeBRTag(this.sectionProperties.nodeModifyText);
-			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.textContent ||
+			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.innerText ||
 			    this.sectionProperties.contentText.origHTML !== this.sectionProperties.nodeModifyText.innerHTML) {
 				if (!this.sectionProperties.contentText.uneditedHTML)
 					this.sectionProperties.contentText.uneditedHTML = this.sectionProperties.contentText.origHTML;
@@ -1116,7 +1116,7 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.docLayer._docType === 'text' && this.map.mention?.isTypingMention()) {
 			return;
 		}
-		if (this.sectionProperties.nodeReplyText.textContent !== '') {
+		if (this.sectionProperties.nodeReplyText.innerText !== '') {
 			if (!this.sectionProperties.contentText.uneditedHTML)
 				this.sectionProperties.contentText.uneditedHTML = this.sectionProperties.contentText.origHTML;
 			if (!this.sectionProperties.contentText.uneditedText)
