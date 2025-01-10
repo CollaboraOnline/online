@@ -109,6 +109,7 @@ class TreeViewControl {
 			this._container.addEventListener('click', this.onClick.bind(this));
 			this._container.addEventListener('dblclick', this.onDoubleClick.bind(this));
 			this._container.addEventListener('keydown', this.onKeyDown.bind(this));
+			this._container.addEventListener('contextmenu', this.onContextMenu.bind(this));
 		}
 	}
 
@@ -552,26 +553,6 @@ class TreeViewControl {
 				element.setAttribute('role', 'gridcell');
 			}
 		}
-
-		this.setupEntryContextMenuEvent(tr, entry, treeViewData, builder);
-	}
-
-	setupEntryContextMenuEvent(
-		tr: HTMLElement,
-		entry: TreeEntryJSON,
-		treeViewData: TreeWidgetJSON,
-		builder: any,
-	) {
-		tr.addEventListener('contextmenu', (e: Event) => {
-			builder.callback(
-				'treeview',
-				'contextmenu',
-				treeViewData,
-				entry.row,
-				builder,
-			);
-			e.preventDefault();
-		});
 	}
 
 	toggleEntry(
@@ -1178,6 +1159,21 @@ class TreeViewControl {
 			if (!L.DomUtil.hasClass(row, 'selected')) {
 				this.unselectEntry(row); // remove tabIndex
 			}
+		}
+	}
+
+	onContextMenu(e: any) {
+		const target = e.target;
+		const row = TreeViewControl.getElement(target, 'row');
+		if (row) {
+			this._builder.callback(
+				'treeview',
+				'contextmenu',
+				this._data,
+				row._row,
+				this._builder,
+			);
+			e.preventDefault();
 		}
 	}
 }
