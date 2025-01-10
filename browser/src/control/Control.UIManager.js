@@ -476,11 +476,11 @@ L.Control.UIManager = L.Control.extend({
 		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
 			var showRuler = this.getBooleanDocTypePref('ShowRuler');
 			var interactiveRuler = this.map.isEditMode();
-			var isRTL = document.documentElement.dir === 'rtl';
-			L.control.ruler({position: (isRTL ? 'topright' : 'topleft'), interactive:interactiveRuler, showruler: showRuler}).addTo(this.map);
-			if (!this.map.isPresentationOrDrawing())
-				L.control.vruler(this.map, {position: (isRTL ? 'topright' : 'topleft'), interactive:interactiveRuler, showruler: showRuler});
-			this.map.fire('rulerchanged');
+			// Call the static method from the Ruler class
+			app.definitions.ruler.initializeRuler(this.map, {
+				interactive: interactiveRuler,
+				showruler: showRuler
+			});
 		}
 	},
 

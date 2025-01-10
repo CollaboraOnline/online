@@ -10,39 +10,16 @@
  */
 /*
  * Ruler Handler
+
+ * HRuler.ts
+/**
+ * VRuler.ts
+ * 
+ * Manages the vertical ruler for displaying measurements and positioning. 
+ * Handles user interactions like scrolling and renders grid lines/ticks.
  */
 
-/* global L _ */
-
-interface Params {
-	[key: string]: {
-		type: string;
-		value: any;
-	};
-}
-
-interface Options {
-	interactive: boolean;
-	marginSet: boolean;
-	displayNumber: boolean;
-	tileMargin: number;
-	margin1: number | null;
-	margin2: number | null;
-	leftOffset: number | null;
-	pageOffset: number | null;
-	pageWidth: number | null;
-	pageTopMargin: number | null;
-	pageBottomMargin: number | null;
-	tabs: any[];
-	unit: string | null;
-	DraggableConvertRatio: number | null;
-	timer: ReturnType<typeof setTimeout>;
-	showruler: boolean;
-	position: string;
-	disableMarker: boolean;
-}
-
-class VRuler {
+class VRuler extends Ruler {
 	_pVerticalStartMarker: HTMLDivElement;
 	_pVerticalEndMarker: HTMLDivElement;
 	_rFace: HTMLDivElement;
@@ -60,33 +37,15 @@ class VRuler {
 	_indentationElementId: string;
 	_initialposition: number;
 	_lastposition: number;
+
 	_map: ReturnType<typeof L.map>;
+	options: Options;
 
-	options: Options = {
-		interactive: true,
-		marginSet: false,
-		displayNumber: true,
-		tileMargin: 20, // No idea what this means and where it comes from
-		margin1: null,
-		margin2: null,
-		leftOffset: null,
-		pageOffset: null,
-		pageWidth: null,
-		pageTopMargin: null,
-		pageBottomMargin: null,
-		tabs: [],
-		unit: null,
-		DraggableConvertRatio: null,
-		timer: null,
-		showruler: true,
-		position: 'topleft',
-		disableMarker: false,
-	};
-
-	constructor(map: ReturnType<typeof L.map>, options: Options) {
-		this._map = map;
+	constructor(map: ReturnType<typeof L.map>, options: Partial<Options>) {
+		super(options);
 		Object.assign(this.options, options);
-		this.onAdd();
+		this._map = map;
+		this.onAdd(); // VRuler created
 	}
 
 	onAdd() {
@@ -116,19 +75,10 @@ class VRuler {
 		}
 	}
 
-	_updatePaintTimer() {
-		clearTimeout(this.options.timer);
-		this.options.timer = setTimeout(L.bind(this._updateBreakPoints, this), 300);
-	}
-
 	_resetTopBottomPageSpacing(e?: any) {
 		this.options.pageTopMargin = undefined;
 		this.options.pageBottomMargin = undefined;
 		if (e) this.options.disableMarker = e.disableMarker;
-	}
-
-	getWindowProperty<T>(propertyName: string): T | undefined {
-		return (window as any)[propertyName];
 	}
 
 	onCommandStateChanged(e: any) {
@@ -573,7 +523,3 @@ class VRuler {
 		this._markerHorizontalLine.style.left = this._lastposition + 'px';
 	}
 }
-
-L.control.vruler = function (map: ReturnType<typeof L.map>, options: any) {
-	return new VRuler(map, options);
-};
