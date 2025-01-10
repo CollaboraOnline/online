@@ -489,12 +489,15 @@ class TreeViewControl {
 			td = L.DomUtil.create('div', 'ui-treeview-expander-column', tr);
 			rowElements.push(td);
 
-			if (entry.children && entry.children.length)
+			if (entry.children && entry.children.length) {
 				expander = L.DomUtil.create(
 					'div',
 					builder.options.cssClass + ' ui-treeview-expander',
 					td,
 				);
+				expander._ondemand = entry.ondemand;
+				expander._row = entry.row;
+			}
 		}
 
 		// regular columns
@@ -635,24 +638,6 @@ class TreeViewControl {
 				$(tr).dblclick(doubleClickFunction as any);
 			}
 		}
-
-		const toggleFunction = () => {
-			this.toggleEntry(tr, treeViewData, entry, builder);
-		};
-		const expandFunction = () => {
-			this.expandEntry(tr, treeViewData, entry, builder);
-		};
-
-		if (expander && entry.children && entry.children.length) {
-			if (entry.ondemand) {
-				L.DomEvent.on(expander, 'click', expandFunction);
-			} else {
-				$(expander).click((e) => {
-					if (entry.state && e.target === selectionElement) e.preventDefault(); // do not toggle on checkbox
-					toggleFunction();
-				});
-			}
-		}
 	}
 
 	setupEntryKeyEvent(
@@ -685,34 +670,30 @@ class TreeViewControl {
 	toggleEntry(
 		span: HTMLElement,
 		treeViewData: TreeWidgetJSON,
-		entry: TreeEntryJSON,
+		row: any,
 		builder: any,
 	) {
-		if (entry.enabled === false) return;
-
 		if (L.DomUtil.hasClass(span, 'collapsed'))
-			builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
+			builder.callback('treeview', 'expand', treeViewData, row, builder);
 		else
 			builder.callback(
 				'treeview',
 				'collapse',
 				treeViewData,
-				entry.row,
+				row,
 				builder,
 			);
 		$(span).toggleClass('collapsed');
 	}
 
 	expandEntry(
-		span: HTMLElement,
+		span: any,
 		treeViewData: TreeWidgetJSON,
-		entry: TreeEntryJSON,
+		row: any,
 		builder: any,
 	) {
-		if (entry.enabled === false) return;
-
-		if (entry.ondemand && L.DomUtil.hasClass(span, 'collapsed'))
-			builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
+		if (span._ondemand && L.DomUtil.hasClass(span, 'collapsed'))
+			builder.callback('treeview', 'expand', treeViewData, row, builder);
 		$(span).toggleClass('collapsed');
 	}
 
@@ -1170,6 +1151,11 @@ class TreeViewControl {
 		let target = e.target;
 		let row = TreeViewControl.getElement(target, 'row');
 		if (row && !L.DomUtil.hasClass(row, 'disabled')) {
+			if (L.DomUtil.hasClass(target, 'ui-treeview-expander')) {
+				this.onExpanderClick(target);
+				return;
+			}
+
 			if (target.localName === 'input') {
 				this.onCheckBoxClick(target);
 			}
@@ -1231,6 +1217,14 @@ class TreeViewControl {
 				{ row: checkbox._row, value: false },
 				this._builder,
 			);
+		}
+	}
+
+	onExpanderClick(expander: any) {
+		if (expander._ondemand) {
+			this.expandEntry(expander, this._data, expander._row, this._builder);
+		} else {
+			this.toggleEntry(expander, this._data, expander._row, this._builder);
 		}
 	}
 }
