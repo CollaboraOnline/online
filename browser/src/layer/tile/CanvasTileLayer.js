@@ -542,10 +542,6 @@ L.TileSectionManager = L.Class.extend({
 			);
 		}
 
-		if (!findFreePaneCenter) {
-			return { offset: L.point(this._offset.corePixel(oldZoom)), topLeft: L.point(docTopLeft.corePixel()) };
-		}
-
 		const newPaneCenter = new L.Point(
 			docTopLeft.corePixel().x -
 				splitPos.corePixel().x +
@@ -561,7 +557,7 @@ L.TileSectionManager = L.Class.extend({
 
 		return {
 			offset: this._offset,
-			topLeft: L.point(docTopLeft.add(this._offset).corePixel()),
+			topLeft: L.point(docTopLeft.corePixel()),
 			center: this._map.project(this._map.unproject(newPaneCenter, oldZoom), this._map.getScaleZoom(scale))
 		};
 	},
