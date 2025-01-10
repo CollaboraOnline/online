@@ -2255,7 +2255,7 @@ float Document::getTilePriority(const std::chrono::steady_clock::time_point &now
     }
     if (maxPrio == std::numeric_limits<float>::min())
         LOG_WRN("No sessions match this viewId " << desc.getNormalizedViewId());
-    LOG_TRC("Priority for tile " << desc.generateID() << " is " << maxPrio);
+    // LOG_TRC("Priority for tile " << desc.generateID() << " is " << maxPrio);
     return maxPrio;
 }
 
