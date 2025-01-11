@@ -125,7 +125,7 @@ export class Comment extends CanvasSectionObject {
 
 		this.name = data.id === 'new' ? 'new comment': 'comment ' + data.id;
 
-		this.sectionProperties.isRemoved = false;
+		this.sectionProperties.commentContainerRemoved = false;
 		this.sectionProperties.children = []; // This is used for Writer comments. There is parent / child relationship between comments in Writer files.
 		this.sectionProperties.childLinesNode = null;
 		this.sectionProperties.childLines = [];
@@ -989,7 +989,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.data.reply = this.sectionProperties.data.text;
 			this.sectionProperties.commentListSection.saveReply(this);
 		} else {
-			this.removeBRTag(this.sectionProperties.nodeReplyText);
+			this.removeLastBRTag(this.sectionProperties.nodeReplyText);
 			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.innerText;
 			this.sectionProperties.data.html = this.sectionProperties.nodeReplyText.innerHTML;
 			// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
@@ -1064,8 +1064,9 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onSaveComment (e: any): void {
+		this.sectionProperties.commentContainerRemoved = true;
 		L.DomEvent.stopPropagation(e);
-		this.removeBRTag(this.sectionProperties.nodeModifyText);
+		this.removeLastBRTag(this.sectionProperties.nodeModifyText);
 		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.innerText;
 		this.sectionProperties.data.html = this.sectionProperties.nodeModifyText.innerHTML;
 		this.updateContent();
@@ -1076,11 +1077,12 @@ export class Comment extends CanvasSectionObject {
 
 	// for some reason firefox adds <br> at of the end of text in contenteditable div
 	// there have been similar reports: https://bugzilla.mozilla.org/show_bug.cgi?id=1615852
-	private removeBRTag(element: HTMLElement) {
+	private removeLastBRTag(element: HTMLElement) {
 		if (!L.Browser.gecko)
 			return;
 		const brElements = element.querySelectorAll('br');
-		brElements.forEach(br => br.remove());
+		if (brElements.length > 0)
+			brElements[brElements.length-1].remove();
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -1088,9 +1090,9 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.docLayer._docType === 'text' && this.map.mention?.isTypingMention()) {
 			return;
 		}
-		if (!this.sectionProperties.isRemoved) {
+		if (!this.sectionProperties.commentContainerRemoved) {
 			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
-			this.removeBRTag(this.sectionProperties.nodeModifyText);
+			this.removeLastBRTag(this.sectionProperties.nodeModifyText);
 			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.innerText ||
 			    this.sectionProperties.contentText.origHTML !== this.sectionProperties.nodeModifyText.innerHTML) {
 				if (!this.sectionProperties.contentText.uneditedHTML)
@@ -1467,7 +1469,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public onRemove (): void {
-		this.sectionProperties.isRemoved = true;
+		this.sectionProperties.commentContainerRemoved = true;
 
 		if (this.sectionProperties.commentListSection.sectionProperties.selectedComment === this)
 			this.sectionProperties.commentListSection.sectionProperties.selectedComment = null;
