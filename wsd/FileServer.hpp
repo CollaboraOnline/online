@@ -127,7 +127,7 @@ private:
                                       Poco::MemoryInputStream& message,
                                       const std::shared_ptr<StreamSocket>& socket);
 
-    static void uploadFileToNextcloud(const Poco::Net::HTTPRequest& request,
+    static void uploadFileToIntegrator(const Poco::Net::HTTPRequest& request,
                                       const RequestDetails& requestDetails,
                                       Poco::MemoryInputStream& message,
                                       const std::shared_ptr<StreamSocket>& socket);

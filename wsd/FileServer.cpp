@@ -903,7 +903,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (endPoint == "upload-settings")
         {
             LOG_INF("Processing upload-settings request.");
-            uploadFileToNextcloud(request, requestDetails, message, socket);
+            uploadFileToIntegrator(request, requestDetails, message, socket);
             return;
         }
 
@@ -1991,7 +1991,7 @@ void FilePartHandler::handlePart(const Poco::Net::MessageHeader& header, std::is
     }
 }
 
-void FileServerRequestHandler::uploadFileToNextcloud(const Poco::Net::HTTPRequest& request,
+void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPRequest& request,
                                                      const RequestDetails& /*requestDetails*/,
                                                      Poco::MemoryInputStream& message,
                                                      const std::shared_ptr<StreamSocket>& socket)
@@ -2012,10 +2012,12 @@ void FileServerRequestHandler::uploadFileToNextcloud(const Poco::Net::HTTPReques
 
         std::string token = authorizationHeader.substr(7);
 
-        // TODO : Handle nextcloud wopi url dynamically
-        // TODO : Extract nextcloud wopi fileupload stuff so we can re-use it
+        std::string fileId = "/settings/userconfig/wordbook/" + fileName;
+
+        // TODO : Handle integrator wopi url dynamically
+        // TODO : Extract integrator wopi fileupload stuff so we can re-use it
         Poco::URI wopiUri("http://nextcloud.local/index.php/apps/richdocuments/wopi/settings/upload");
-        wopiUri.addQueryParameter("fileId", fileName);
+        wopiUri.addQueryParameter("fileId", fileId);
         wopiUri.addQueryParameter("access_token", token);
 
         Authorization auth(Authorization::Type::Token, token);
@@ -2025,9 +2027,9 @@ void FileServerRequestHandler::uploadFileToNextcloud(const Poco::Net::HTTPReques
         httpRequest.header().set("Content-Type", "application/octet-stream");
         httpRequest.setBody(fileContent);
 
-        LOG_DBG("uploadFileToNextcloud: WOPI URI: " << wopiUri.toString());
+        LOG_DBG("uploadFileToIntegrator: WOPI URI: " << wopiUri.toString());
         for (const auto& kv : httpRequest.header())
-            LOG_DBG("uploadFileToNextcloud: Request header: " << kv.first << " = " << kv.second);
+            LOG_DBG("uploadFileToIntegrator: Request header: " << kv.first << " = " << kv.second);
 
         auto httpSession = StorageConnectionManager::getHttpSession(wopiUri);
         auto httpResponse = httpSession->syncRequest(httpRequest);
