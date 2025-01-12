@@ -2243,7 +2243,7 @@ float Document::getTilePriority(const std::chrono::steady_clock::time_point &now
     float maxPrio = std::numeric_limits<float>::min();
 
     assert(_sessions.size() > 0);
-    for (auto it : _sessions)
+    for (const auto& it : _sessions)
     {
         const std::shared_ptr<ChildSession> &session = it.second;
 
