@@ -574,7 +574,7 @@ bool ClientRequestDispatcher::allowConvertTo(const std::string& address,
             if (!allowPostFrom(addressToCheck))
             {
                 // postpone resolving addresses until later
-                addressesToResolve.push_back(addressToCheck);
+                addressesToResolve.push_back(std::move(addressToCheck));
                 continue;
             }
 

@@ -79,8 +79,8 @@ struct ClipboardData
                 std::getline(inStream, newline, '\n');
                 if (mime.length() > 0)
                 {
-                    _mimeTypes.push_back(mime);
-                    _content.push_back(content);
+                    _mimeTypes.push_back(std::move(mime));
+                    _content.push_back(std::move(content));
                 }
             }
         }

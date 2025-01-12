@@ -1439,8 +1439,6 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         Poco::replaceInPlace(preprocess, std::string("%GEOLOCATION_SETUP%"),
                              boolToString(geoLocationSetup));
 
-    const std::string mimeType = "text/html";
-
     ContentSecurityPolicy csp;
     csp.appendDirective("default-src", "'none'");
     csp.appendDirective("frame-src", "'self'");
@@ -1620,7 +1618,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         }
     }
 
-    httpResponse.setBody(preprocess, mimeType);
+    httpResponse.setBody(preprocess, "text/html");
 
     socket->send(httpResponse);
     LOG_TRC("Sent file: " << relPath << ": " << preprocess);
