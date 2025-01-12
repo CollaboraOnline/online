@@ -914,6 +914,8 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
                 // Add the uncompressed version; it's better to serve uncompressed than nothing at all.
                 FileHash.emplace(prefix + relPath,
                                  std::make_pair(std::move(uncompressedFile), std::string()));
+
+                deflateEnd(&strm);
                 continue;
             }
 
