@@ -887,7 +887,7 @@ input.clipboard {
 	width: 100vw;
 	margin: 0px !important;
 	position: fixed;
-	overflow: hidden;
+	overflow-x: clip;
 }
 
 .cool-ruler-breakcontainer {
