@@ -38,7 +38,7 @@ void LogUiCmd::saveLogFile()
     Log::logUI(Log::WRN, timeLog);
 }
 
-void LogUiCmd::createTmpFile(std::string docId)
+void LogUiCmd::createTmpFile(const std::string& docId)
 {
     const std::string tempFile = "/tmp/kit-ui-cmd.log";
     _fileStreamUICommands.open(tempFile, std::fstream::in | std::fstream::out | std::fstream::trunc);

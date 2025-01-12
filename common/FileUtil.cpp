@@ -699,7 +699,7 @@ namespace FileUtil
             entries.emplace_back(statbuf.st_mode, statbuf.st_nlink, uid, gid, statbuf.st_size, statbuf.st_mtime, f->d_name);
 
             if (strcmp(f->d_name, ".") != 0 && strcmp(f->d_name, "..") != 0 && (statbuf.st_mode & S_IFMT) == S_IFDIR)
-                subdirs.push_back(fullpath);
+                subdirs.push_back(std::move(fullpath));
 
             blocks += statbuf.st_blocks;
         }

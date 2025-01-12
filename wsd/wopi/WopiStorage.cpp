@@ -531,7 +531,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
 
         return asyncLockStateCallback(AsyncLockUpdate(
             AsyncLockUpdate::State::Error,
-            LockUpdateResult(LockUpdateResult::Status::UNAUTHORIZED, lock, failureReason)));
+            LockUpdateResult(LockUpdateResult::Status::UNAUTHORIZED, lock, std::move(failureReason))));
     };
 
     _lockHttpSession->setFinishedHandler(std::move(finishedCallback));
