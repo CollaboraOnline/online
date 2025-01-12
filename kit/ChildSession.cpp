@@ -2703,7 +2703,7 @@ std::string extractCertificate(const std::string & certificate)
     if (pos2 == std::string::npos)
         return result;
 
-    pos1 = pos1 + std::string(header).length();
+    pos1 = pos1 + header.length();
     pos2 = pos2 - pos1;
 
     return certificate.substr(pos1, pos2);
