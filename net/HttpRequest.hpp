@@ -1116,6 +1116,7 @@ private:
         , _handshakeSslVerifyFailure(0)
         , _timeout(getDefaultTimeout())
         , _connected(false)
+        , _result(net::AsyncConnectResult::Ok)
     {
         assert(!_host.empty() && portNumber > 0 && !_port.empty() &&
                "Invalid hostname and portNumber for http::Sesssion");
