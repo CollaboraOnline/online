@@ -22,14 +22,29 @@ class StreamSocket;
 namespace HttpHelper
 {
 /// Write headers and body for an error response.
-void sendError(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& socket,
-               std::string_view body = std::string_view(),
-               std::string_view extraHeader = std::string_view());
+inline void sendError(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& socket,
+                      std::string_view body = std::string_view(),
+                      std::string_view extraHeader = std::string_view())
+{
+    std::ostringstream oss;
+    oss << "HTTP/1.1 " << errorCode << "\r\n"
+        << "Date: " << Util::getHttpTimeNow() << "\r\n"
+        << "Content-Length: " << body.size() << "\r\n"
+        << extraHeader << "\r\n"
+        << body;
+    socket->send(oss.str());
+}
 
 /// Write headers and body for an error response. Afterwards, shutdown the socket.
-void sendErrorAndShutdown(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& socket,
-                          std::string_view body = std::string_view(),
-                          const std::string& extraHeader = std::string());
+inline void sendErrorAndShutdown(http::StatusCode errorCode,
+                                 const std::shared_ptr<StreamSocket>& socket,
+                                 std::string_view body = std::string_view(),
+                                 const std::string& extraHeader = std::string())
+{
+    sendError(errorCode, socket, body, extraHeader + "Connection: close\r\n");
+    socket->shutdown();
+    socket->ignoreInput();
+}
 
 /// Sends file as HTTP response and shutdown the socket.
 void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
