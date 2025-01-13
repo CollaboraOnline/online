@@ -1624,6 +1624,7 @@ private:
 #if !MOBILEAPP
     /// The current CheckFileInfo request, if any.
     std::shared_ptr<CheckFileInfo> _checkFileInfo;
+    std::shared_ptr<PresetsInstallTask> _asyncInstallTask;
 #endif
 
     /// Manage uploading to Storage.
@@ -1667,7 +1668,6 @@ private:
     std::atomic<bool> _stop;
     std::string _closeReason;
     std::unique_ptr<LockContext> _lockCtx;
-    std::shared_ptr<PresetsInstallTask> _asyncInstallTask;
     std::string _renameFilename; ///< The new filename to rename to.
     std::string _renameSessionId; ///< The sessionId used for renaming.
     std::string _lastEditingSessionId; ///< The last session edited, for auto-saving.
