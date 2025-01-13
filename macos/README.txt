@@ -20,6 +20,8 @@ Setup
 * install canvas to avoid error during build (complains about node-pre-gyp)
     * NB. version 3.0 needed, it upgrades the API to fit the new node.js
     * npm install canvas@next
+        * It might be that you should run the above in the browser subdirectory
+	  of your online directory: (cd browser && npm install canvas@next)
 
 * Install and/or update the Command Line Tools for Xcode:
     * xcode-select --install
@@ -28,15 +30,24 @@ Setup
 
 Build LO
 
+You need the 'coda' branch for that, and have to use the following
+autogen.input.
+
+NOTE: I build with stuff installed via 'brew', and not via 'lode'; if you have
+too many things installed via 'brew', compilation may fail for you due to
+incompatible stuff.
+
 autogen.input:
 
     # Distro
     --with-distro=CPMacOS-LOKit
-    
+    --enable-headless
+    --disable-mergelibs
+
     # Overrides for the debug builds
     --enable-debug
     #--enable-dbgutil
-    
+
     --enable-werror
     --enable-symbols
     --without-lang
@@ -57,7 +68,13 @@ Configure Collabora Online
     --with-lo-path=/Users/kendy/Projects/lo/core/instdir/CollaboraOffice.app \
     --with-lokit-path=/Users/kendy/Projects/lo/core/include
 
-Build Collabora Online
+Obbiously you need to change the /Users/kendy/etc above to match what
+you have. Also, in some cases (perhaps on Intel Macs?) homebrew gets
+installed in /usr/local, not /opt/homebrew.
+
+You also need to edit the macos/coda/coda.xcodeproj/project.pbxproj accordingly. Look for /Users/kendy and /opt/homebrew.
+
+Then you can build CODA-M:
 
 * ( cd browser ; make )
 * open Xcode's project macos/coda/coda.xcodeproj & build from there
