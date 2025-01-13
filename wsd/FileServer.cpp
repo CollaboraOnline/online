@@ -63,9 +63,6 @@
 
 
 #include <chrono>
-#if ENABLE_DEBUG
-#include <filesystem>
-#endif
 #include <iomanip>
 #include <string>
 #include <vector>
@@ -573,14 +570,14 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
         configInfo->set("kind", kind);
 
-        std::string cwd = std::filesystem::current_path();
+        std::string fwd = COOLWSD::FileServerRoot;
 
         Poco::JSON::Array::Ptr configAutoTexts = new Poco::JSON::Array();
         Poco::JSON::Array::Ptr configDictionaries = new Poco::JSON::Array();
         for (const auto& item : items)
         {
             Poco::JSON::Object::Ptr configEntry = new Poco::JSON::Object();
-            std::string uri = COOLWSD::getServerURL().append(prefix + cwd + item.second);
+            std::string uri = COOLWSD::getServerURL().append(prefix + fwd + item.second);
             //COOLWSD::getServerURL tediously includes spaces at the start
             configEntry->set("uri", Util::trim(uri));
             configEntry->set("stamp", etagString);
@@ -687,7 +684,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     {
         std::string searchDir = "test/data/presets";
         std::vector<asset> assetVec;
-        if (!FileUtil::Stat(searchDir).exists())
+        if (!FileUtil::Stat(Poco::Path(COOLWSD::FileServerRoot, searchDir).toString()).exists())
         {
             LOG_ERR("preset directory[" << searchDir << "] doesn't exist");
             return assetVec;
@@ -700,7 +697,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
         auto searchInDir = [&assetVec](const std::string& directory)
         {
-            const auto fileNames = FileUtil::getDirEntries(directory);
+            const auto fileNames = FileUtil::getDirEntries(Poco::Path(COOLWSD::FileServerRoot, directory).toString());
             for (const auto& fileName : fileNames)
             {
                 const std::string ext = FileUtil::extractFileExtension(fileName);
