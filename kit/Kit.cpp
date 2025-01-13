@@ -113,7 +113,7 @@
 #ifdef IOS
 #include "ios.h"
 #include "DocumentBroker.hpp"
-#elif defined(MACOS)
+#elif defined(MACOS) && MOBILEAPP
 #include "macos.h"
 #include "DocumentBroker.hpp"
 #endif
@@ -3934,7 +3934,7 @@ void lokit_main(
 #if (defined(__linux__) && !defined(__ANDROID__)) || defined(__FreeBSD__)
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
-#elif defined(MACOS)
+#elif defined(MACOS) && MOBILEAPP
         LibreOfficeKit *kit = lok_init_2((getBundlePath() + "/Contents/lokit/Frameworks").c_str(), getAppSupportURL().c_str());
 #else
 
