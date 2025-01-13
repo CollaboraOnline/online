@@ -2407,11 +2407,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(div).addClass('has-dropdown');
 			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
 			L.DomUtil.create('i', 'unoarrow', arrowbackground);
+			arrowbackground.tabIndex = '0';
 			controls['arrow'] = arrowbackground;
-			$(arrowbackground).click(function (event) {
-				if (!div.hasAttribute('disabled')) {
-					builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
-					event.stopPropagation();
+
+			// Attach event listeners for both 'click' and 'keydown'
+			arrowbackground.addEventListener('click', function (event) {
+				openToolBoxMenu(event, div);
+			});
+			arrowbackground.addEventListener('keydown', function (event) {
+				switch (event.key) {
+					case 'Enter':
+						openToolBoxMenu(event, div);
+						break;
 				}
 			});
 
@@ -2419,6 +2426,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
 			};
 		}
+
+		var openToolBoxMenu = function(event, div) {
+			if (!div.hasAttribute('disabled')) {
+				builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
+				event.stopPropagation();
+			}
+		};
 
 		var clickFunction = function (e) {
 			if (!div.hasAttribute('disabled')) {
