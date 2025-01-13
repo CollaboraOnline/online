@@ -27,26 +27,6 @@
 
 namespace HttpHelper
 {
-void sendError(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& socket,
-               std::string_view body, std::string_view extraHeader)
-{
-    std::ostringstream oss;
-    oss << "HTTP/1.1 " << errorCode << "\r\n"
-        << "Date: " << Util::getHttpTimeNow() << "\r\n"
-        << "Content-Length: " << body.size() << "\r\n"
-        << extraHeader << "\r\n"
-        << body;
-    socket->send(oss.str());
-}
-
-void sendErrorAndShutdown(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& socket,
-                          std::string_view body, const std::string& extraHeader)
-{
-    sendError(errorCode, socket, body, extraHeader + "Connection: close\r\n");
-    socket->shutdown();
-    socket->ignoreInput();
-}
-
 void sendUncompressedFileContent(const std::shared_ptr<StreamSocket>& socket,
                                  const std::string& path, const int bufferSize)
 {
