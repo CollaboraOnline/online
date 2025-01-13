@@ -1797,10 +1797,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         {
             LOG_WRN(
                 "Conversion requests not allowed from this address: " << socket->clientAddress());
-            http::Response httpResponse(http::StatusCode::Forbidden);
-            httpResponse.set("Content-Length", "0");
-            socket->sendAndShutdown(httpResponse);
-            socket->ignoreInput();
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, socket);
             return true;
         }
 

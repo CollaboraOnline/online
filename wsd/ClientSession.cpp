@@ -294,12 +294,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             LOG_ERR("Unsupported Clipboard Request from socket #" << socket->getFD()
                                                                   << ". Terminating connection.");
 
-            http::Response httpResponse(http::StatusCode::Forbidden);
-            httpResponse.set("Content-Length", "0");
-            httpResponse.set("Connection", "close");
-            socket->send(httpResponse);
-            socket->closeConnection(); // Shutdown socket.
-            socket->ignoreInput();
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, socket);
             return;
         }
 
