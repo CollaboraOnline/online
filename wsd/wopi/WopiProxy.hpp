@@ -49,5 +49,5 @@ private:
     const RequestDetails _requestDetails;
     const std::shared_ptr<StreamSocket> _socket;
     std::shared_ptr<http::Session> _httpSession;
-    std::unique_ptr<CheckFileInfo> _checkFileInfo;
+    std::shared_ptr<CheckFileInfo> _checkFileInfo;
 };

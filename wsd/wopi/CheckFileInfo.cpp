@@ -39,8 +39,12 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
                                                            << httpRequest.header());
 
     http::Session::FinishedCallback finishedCallback =
-        [this, startTime, uriAnonym, redirectLimit](const std::shared_ptr<http::Session>& session)
+        [selfWeak = weak_from_this(), this, startTime, uriAnonym, redirectLimit](const std::shared_ptr<http::Session>& session)
     {
+        std::shared_ptr<CheckFileInfo> selfLifecycle = selfWeak.lock();
+        if (!selfLifecycle)
+            return;
+
         _profileZone.end(); // Finish profiling.
 
         if (SigUtil::getShutdownRequestFlag())
@@ -145,8 +149,12 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
     _httpSession->setFinishedHandler(std::move(finishedCallback));
 
     http::Session::ConnectFailCallback connectFailCallback =
-        [this](const std::shared_ptr<http::Session>& /* httpSession */)
+        [selfWeak = weak_from_this(), this](const std::shared_ptr<http::Session>& /* httpSession */)
     {
+        std::shared_ptr<CheckFileInfo> selfLifecycle = selfWeak.lock();
+        if (!selfLifecycle)
+            return;
+
         _state = State::Fail;
         LOG_ERR("Failed to start an async CheckFileInfo request");
 

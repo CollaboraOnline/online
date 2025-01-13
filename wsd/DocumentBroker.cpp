@@ -4520,7 +4520,7 @@ void DocumentBroker::checkFileInfo(const std::shared_ptr<ClientSession>& session
     // CheckFileInfo asynchronously.
     assert(!_checkFileInfo && "Unexpected CheckFileInfo in progress");
     _checkFileInfo =
-        std::make_unique<CheckFileInfo>(_poll, session->getPublicUri(), std::move(cfiContinuation));
+        std::make_shared<CheckFileInfo>(_poll, session->getPublicUri(), std::move(cfiContinuation));
     _checkFileInfo->checkFileInfo(redirectLimit);
 }
 #endif // !MOBILEAPP

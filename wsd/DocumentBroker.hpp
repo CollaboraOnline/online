@@ -1596,7 +1596,7 @@ private:
 
 #if !MOBILEAPP
     /// The current CheckFileInfo request, if any.
-    std::unique_ptr<CheckFileInfo> _checkFileInfo;
+    std::shared_ptr<CheckFileInfo> _checkFileInfo;
 #endif
 
     /// Manage uploading to Storage.
