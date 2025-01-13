@@ -138,6 +138,7 @@ shared_sources = common/FileUtil.cpp \
                  common/RegexUtil.cpp \
                  common/SigUtil-server.cpp \
                  common/SpookyV2.cpp \
+                 common/Syscall.cpp \
                  common/TraceEvent.cpp \
                  common/Unit.cpp \
                  common/Unit-server.cpp \
@@ -453,6 +454,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/StringVector.hpp \
                  common/Seccomp.hpp \
                  common/Session.hpp \
+                 common/Syscall.hpp \
                  common/Unit.hpp \
                  common/Uri.hpp \
                  common/Util.hpp \
