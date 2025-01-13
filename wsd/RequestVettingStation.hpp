@@ -93,7 +93,7 @@ private:
 
 #if !MOBILEAPP
     void checkFileInfo(const Poco::URI& uri, bool isReadOnly, int redirectionLimit);
-    std::unique_ptr<CheckFileInfo> _checkFileInfo;
+    std::shared_ptr<CheckFileInfo> _checkFileInfo;
 #endif // !MOBILEAPP
 
     Util::Stopwatch _birthday;
