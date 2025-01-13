@@ -38,6 +38,16 @@ L.CRS = {
 		return Math.pow(1.2, zoom);
 	},
 
+	// equivalent to doing an unproject with oldZoom then a project with newZoom
+	// except that unproject is technically invalid (so possibly confusing) for any non-css-pixel
+	// but this function will work with any scaling (including twips or core pixels)
+	rescale: function (point, oldZoom, newZoom) {
+		return L.point(
+			point.x * this.scale(newZoom - oldZoom),
+			point.y * this.scale(newZoom - oldZoom),
+		);
+	},
+
 	distance: function (latlng1, latlng2) {
 		var dx = latlng2.lng - latlng1.lng,
 		    dy = latlng2.lat - latlng1.lat;
