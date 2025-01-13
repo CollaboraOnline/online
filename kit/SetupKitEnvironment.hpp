@@ -16,7 +16,7 @@
 
 #include <Log.hpp>
 
-#if defined(MACOS)
+#if defined(MACOS) && MOBILEAPP
 #include <macos.h>
 #endif
 
@@ -37,7 +37,7 @@ inline void setupKitEnvironment(const std::string& userInterface)
         );
 #ifdef IOS
     layers += "user:*${BRAND_BASE_DIR}/coolkitconfig.xcu ";
-#elif defined(MACOS)
+#elif defined(MACOS) && MOBILEAPP
     layers += "user:*" + getResourceURL("coolkitconfig", "xcu");
 #elif ENABLE_DEBUG && !defined(ANDROID) // '*' denotes non-writable.
     layers += "user:*file://" DEBUG_ABSSRCDIR "/coolkitconfig.xcu ";
