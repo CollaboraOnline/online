@@ -945,8 +945,8 @@ class TreeViewControl {
 	// --------- Event Handlers
 	//
 	onClick(e: any) {
-		let target = e.target;
-		let row = TreeViewControl.getElement(target, 'row');
+		const target = e.target;
+		const row = TreeViewControl.getElement(target, 'row');
 		if (row && !L.DomUtil.hasClass(row, 'disabled')) {
 			if (L.DomUtil.hasClass(target, 'ui-treeview-expander')) {
 				this.onExpanderClick(target);
@@ -1026,8 +1026,8 @@ class TreeViewControl {
 	}
 
 	onDoubleClick(e: any) {
-		let target = e.target;
-		let row = TreeViewControl.getElement(target, 'row');
+		const target = e.target;
+		const row = TreeViewControl.getElement(target, 'row');
 		if (row && !L.DomUtil.hasClass(row, 'disabled')) {
 			this.onRowDoubleClick(row);
 		}
@@ -1046,7 +1046,7 @@ class TreeViewControl {
 	}
 
 	onKeyDown(e: any) {
-		let target = e.target;
+		const target = e.target;
 		if (
 			target.getAttribute('role') === 'row' &&
 			!L.DomUtil.hasClass(target, 'disabled')
@@ -1111,7 +1111,7 @@ class TreeViewControl {
 	}
 
 	onRowKeyDown(row: any, e: any) {
-		let expander = row.querySelector('.ui-treeview-expander');
+		const expander = row.querySelector('.ui-treeview-expander');
 		if (e.key === ' ' && expander) {
 			expander.click();
 			row.focus();
@@ -1119,7 +1119,7 @@ class TreeViewControl {
 			e.stopPropagation();
 		} else if (e.key === 'Enter' || e.key === ' ') {
 			this.onRowClick(row);
-			let checkbox = row.querySelector('input');
+			const checkbox = row.querySelector('input');
 			if (checkbox) {
 				checkbox.click();
 			}
