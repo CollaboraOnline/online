@@ -13,21 +13,63 @@ interface Window {
 	accessToken?: string;
 	accessTokenTTL?: string;
 	enableDebug?: string;
+	wopiSettingBaseUrl?: string;
 }
 
-const uploadBtn = document.getElementById('uploadButton');
-if (uploadBtn) {
-	uploadBtn.addEventListener('click', uploadFile);
+interface SharedConfigItem {
+	stamp: string;
+	uri: string;
 }
 
-const element = document.getElementById('initial-variables');
-if (element) {
+interface SharedConfigData {
+	kind: 'shared';
+	autotext: SharedConfigItem[];
+	wordbook: SharedConfigItem[];
+}
+
+const API_ENDPOINTS = {
+	uploadSettings: window.enableDebug
+		? '/wopi/settings/upload'
+		: '/browser/dist/upload-settings',
+	fetchSharedConfig: '/browser/dist/fetch-shared-config',
+};
+
+function init(): void {
+	initWindowVariables();
+	bindEventListeners();
+	void fetchAndPopulateSharedConfigs();
+}
+
+function bindEventListeners(): void {
+	const uploadAutotextButton = document.getElementById('uploadAutotextButton');
+	if (uploadAutotextButton) {
+		uploadAutotextButton.addEventListener('click', () => {
+			console.log('Upload Autotext clicked.');
+			uploadFile('/settings/systemconfig/autotext/');
+		});
+	}
+
+	const uploadWordbookButton = document.getElementById('uploadWordbookButton');
+	if (uploadWordbookButton) {
+		uploadWordbookButton.addEventListener('click', () => {
+			console.log('Upload Wordbook clicked.');
+			uploadFile('/settings/systemconfig/wordbook/');
+		});
+	}
+}
+
+function initWindowVariables(): void {
+	const element = document.getElementById('initial-variables');
+	if (!element) return;
+
 	window.accessToken = element.dataset.accessToken;
 	window.accessTokenTTL = element.dataset.accessTokenTtl;
 	window.enableDebug = element.dataset.enableDebug;
+	window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
 }
 
-async function uploadFile() {
+async function uploadFile(filePath: string): Promise<void> {
+	// TODO: use wopiSettingBaseUrl for request url..
 	const fileInput = document.getElementById(
 		'dictionaryFile',
 	) as HTMLInputElement | null;
@@ -39,9 +81,6 @@ async function uploadFile() {
 		return;
 	}
 
-	let apiUrl = '/browser/dist/upload-settings';
-	if (window.enableDebug) apiUrl = '/wopi/settings/upload';
-
 	if (!fileInput.files || fileInput.files.length === 0) {
 		fileStatus.textContent = 'No file selected for upload.';
 		return;
@@ -50,11 +89,17 @@ async function uploadFile() {
 	const file = fileInput.files[0];
 	const formData = new FormData();
 	formData.append('file', file);
+	formData.append('filePath', filePath);
+	if (window.wopiSettingBaseUrl) {
+		formData.append('wopiSettingBaseUrl', window.wopiSettingBaseUrl);
+	}
 
 	fileStatus.textContent = `Uploading "${file.name}"...`;
 
 	try {
-		// Send the file to the coolwsd backend
+		const apiUrl = API_ENDPOINTS.uploadSettings;
+
+		console.log('Shared config file: ', window.wopiSettingBaseUrl);
 		const response = await fetch(apiUrl, {
 			method: 'POST',
 			headers: {
@@ -68,9 +113,74 @@ async function uploadFile() {
 		}
 
 		fileStatus.textContent = `File "${file.name}" uploaded successfully!`;
-	} catch (error) {
-		fileStatus.textContent = `Error: ${error.message}`;
+	} catch (error: unknown) {
+		const message = error instanceof Error ? error.message : 'Unknown error';
+		fileStatus.textContent = `Error: ${message}`;
+	} finally {
+		fileInput.value = '';
+	}
+}
+
+async function fetchAndPopulateSharedConfigs(): Promise<void> {
+	if (!window.wopiSettingBaseUrl) {
+		console.error('Shared Config URL is missing in initial variables.');
+		return;
 	}
 
-	fileInput.value = '';
+	if (!window.accessToken) {
+		console.error('Access token is missing in initial variables.');
+		return;
+	}
+
+	const formData = new FormData();
+	formData.append('sharedConfigUrl', window.wopiSettingBaseUrl);
+	formData.append('accessToken', window.accessToken);
+
+	try {
+		const response = await fetch(API_ENDPOINTS.fetchSharedConfig, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${window.accessToken}`,
+			},
+			body: formData,
+		});
+
+		if (!response.ok) {
+			throw new Error(`Could not fetch shared config: ${response.statusText}`);
+		}
+
+		const data: SharedConfigData = await response.json();
+		populateSharedConfigUI(data);
+		console.log('Shared config data: ', data);
+	} catch (error: unknown) {
+		console.error('Error fetching shared config:', error);
+	}
 }
+
+function getFilename(uri: string, removeExtension = true): string {
+	let filename = uri.substring(uri.lastIndexOf('/') + 1);
+	if (removeExtension) {
+		filename = filename.replace(/\.[^.]+$/, '');
+	}
+	return filename;
+}
+
+function populateList(listId: string, items: SharedConfigItem[]): void {
+	const listEl = document.getElementById(listId);
+	if (!listEl) return;
+
+	listEl.innerHTML = '';
+
+	items.forEach((item) => {
+		const li = document.createElement('li');
+		li.textContent = getFilename(item.uri);
+		listEl.appendChild(li);
+	});
+}
+
+function populateSharedConfigUI(data: SharedConfigData): void {
+	populateList('autotextList', data.autotext);
+	populateList('wordbookList', data.wordbook);
+}
+
+document.addEventListener('DOMContentLoaded', init);

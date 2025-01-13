@@ -132,6 +132,10 @@ private:
                                       Poco::MemoryInputStream& message,
                                       const std::shared_ptr<StreamSocket>& socket);
 
+    static void fetchWopiSettingConfigs(const Poco::Net::HTTPRequest& request,
+                                        Poco::MemoryInputStream& message,
+                                        const std::shared_ptr<StreamSocket>& socket);
+
     static void preprocessAdminFile(const Poco::Net::HTTPRequest& request,
                                     http::Response& httpResponse,
                                     const RequestDetails& requestDetails,
