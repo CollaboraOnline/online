@@ -28,7 +28,7 @@
 namespace HttpHelper
 {
 void sendError(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& socket,
-               const std::string& body, const std::string& extraHeader)
+               std::string_view body, std::string_view extraHeader)
 {
     std::ostringstream oss;
     oss << "HTTP/1.1 " << errorCode << "\r\n"
@@ -40,7 +40,7 @@ void sendError(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& 
 }
 
 void sendErrorAndShutdown(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& socket,
-                          const std::string& body, const std::string& extraHeader)
+                          std::string_view body, const std::string& extraHeader)
 {
     sendError(errorCode, socket, body, extraHeader + "Connection: close\r\n");
     socket->shutdown();

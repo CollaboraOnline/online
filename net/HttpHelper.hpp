@@ -23,12 +23,12 @@ namespace HttpHelper
 {
 /// Write headers and body for an error response.
 void sendError(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& socket,
-               const std::string& body = std::string(),
-               const std::string& extraHeader = std::string());
+               std::string_view body = std::string_view(),
+               std::string_view extraHeader = std::string_view());
 
 /// Write headers and body for an error response. Afterwards, shutdown the socket.
 void sendErrorAndShutdown(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& socket,
-                          const std::string& body = std::string(),
+                          std::string_view body = std::string_view(),
                           const std::string& extraHeader = std::string());
 
 /// Sends file as HTTP response and shutdown the socket.
