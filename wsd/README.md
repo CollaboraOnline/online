@@ -85,6 +85,7 @@ Improvements to that script are very likely needed on various distros.
 The ${ROOTFORJAILS} directory above is a presumably initially empty
 directory under which coolwsd will create chroot jails for editing
 each specific document.
+Warning: the jails directory and its contents are deleted by coolwsd.
 
 As coolwsd uses hardlinks to "copy" the contents of both
 ${SYSTEMPLATE} and the ${MASTER}/instdir directories into each chroot
@@ -176,6 +177,10 @@ Then in the build tree, edit the generated coolwsd.xml and set ssl setting to
 false. You can run make run, and test coolwsd with the ownCloud or Nextcloud
 integration.
 
+Note: if SSL is enabled in either Online or the integration, both must
+have SSL enabled. That is, you must access NC/OC using https:// as well
+as configure the Collabora Online endpoint in NC/OC as https://localhost:9980.
+
 ## Admin Panel
 
 You can access the admin panel by directly accessing the admin.html file
@@ -196,10 +201,10 @@ be obtained as described above.
 
 ## Debugging
 
-When debugging, you want to add `--o:num_prespawn_children=1` to the coolwsd parameters to
-limit the amount of concurrently running processes.
+When debugging, you want to pass `--o:num_prespawn_children=1` to coolwsd
+to limit the number of concurrently running processes.
 
-When the crash happens too early, you also want to
+When a crash happens too early, you also want to
 
     export SLEEPFORDEBUGGER=<number of seconds>
 
@@ -250,94 +255,4 @@ websocket.
 
 ## Architecture
 
-There are three processes: CoolWSD, CoolForKit, and CoolKit.
-
-WSD is the top-level server and is intended to run as a service.
-It is responsible for spawning ForKit and listening on public
-port for client connections.
-
-The ForKit is only responsible for forking Kit instances. There is
-only one ForKit per WSD instance and there is one Kit instance per
-document.
-
-WSD listens on a public port and using internal pipes requests
-the ForKit to fire a child (Kit) instance to host documents.
-The ForKit then has to find an existing Kit that hosts that
-document, based on the public URI as unique key, and forward
-the request to this existing Kit, which then loads a new
-view to the document.
-
-There is a singleton Admin class that gets notified of all the
-important changes and update the AdminModel object accordingly.
-AdminModel object has subscribers which corresponds to admin
-panel sessions. Subscriber can subscribe to specific commands
-to get live notifications about, and to update the UI accordingly.
-
-Whether a document is loaded for the first time, or this is
-a new view on an existing one, the Kit connects via a socket
-to WSD on an internal port. WSD acts as a bridge between
-the client and Kit by tunnelling the traffic between the two
-sockets (that which is between the client and WSD and the one
-between WSD and Kit).
-
-## File System
-
-WSD is given childroot argument on the command line. This is
-the root directory of jailed FS. This path can be anywhere, but
-here we'll designate it as:
-
-`/childroot`
-
-Before spawning a ForKit instance, WSD needs to generate a random
-Jail-ID to use as the jail directory name. This JailID is then
-passed to ForKit as argument jailid.
-
-Note: for security reasons, this directory name is randomly generated
-and should not be given out to the client. Since there is only one
-ForKit per WSD instance, there is also one JailID between them.
-
-The ForKit creates a chroot in this directory (the jail directory):
-
-`/childroot/jailid/`
-
-ForKit copies the LO instdir (essentially installs LO in the chroot),
-then copies the Kit binary into the jail directory upon startup.
-Once done, it chroot-s and drops caps.
-
-ForKit then waits on a read pipe to which WSD writes when a new
-request from a client is received. ForKit is responsible for spawning
-(or forking) Kit instances. For our purposes, it doesn't matter
-whether Kit is spawned or forked.
-
-Every document is hosted by a Kit instance. Each document is stored
-in a dedicated directory within the jail directory. The document
-root within the jail is /user/docs. The absolute path on the system
-(which isn't accessible to the Kit process as it's jailed) is:
-
-`/childroot/jailid/user/docs`
-
-Within this path, each document gets its own sub-directory based on
-another random Child-ID (which could be the Process ID of the Kit).
-This ChildId will be given out to clients to facilitate the insertion
-and downloading of documents. (Although strictly speaking the client
-can use the main document URI as key, this is the current design.)
-
-`/childroot/jailid/user/docs/childid`
-
-A request from a client to load a document will trigger the following
-chain of events.
-
-- WSD public socket will receive the connection request followed
-  by a "load" command.
-- WSD creates MasterProcessSession (ToClient) to handle the client traffic.
-- MasterProcessSession requests ForKit to find or spawn Kit for
-  the given URI.
-- ForKit sends Kit request to host URI via pipe.
-- Kit connects to WSD on an internal port.
-- WSD creates another MasterProcessSession (ToPrisoner) to service Kit.
-- MasterProcessSession (ToClient) is linked to the ToPrisoner instance,
-  copies the document into jail (first load only) and sends
-  (via ToPrisoner) the load request to Kit.
-- Kit loads the document and sets up callbacks with LOKit.
-- MasterProcessSession (ToClient) and MasterProcessSession (ToPrisoner)
-  tunnel the traffic between client and Kit both ways.
+Please refer to https://sdk.collaboraonline.com/docs/architecture.html
