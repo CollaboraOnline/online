@@ -212,4 +212,13 @@ CheckFileInfo::wopiFileInfo(const Poco::URI& uriPublic) const
     return wopiFileInfo;
 }
 
+CheckFileInfo::~CheckFileInfo()
+{
+    if (_httpSession)
+    {
+        _httpSession->setConnectFailHandler(nullptr);
+        _httpSession->setFinishedHandler(nullptr);
+    }
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

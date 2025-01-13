@@ -73,6 +73,8 @@ public:
     /// In some scenarios we can't proceed without CheckFileInfo results.
     void checkFileInfoSync(int redirectionLimit);
 
+    ~CheckFileInfo();
+
     std::string getSslVerifyMessage()
     {
         if (_httpSession)
