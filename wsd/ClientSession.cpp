@@ -40,6 +40,7 @@
 #include <common/CommandControl.hpp>
 #include <wsd/TileDesc.hpp>
 #include <net/HttpHelper.hpp>
+#include <wopi/StorageConnectionManager.hpp>
 
 using namespace COOLProtocol;
 
@@ -2896,6 +2897,66 @@ void ClientSession::onDisconnect()
     catch (const std::exception& exc)
     {
         LOG_ERR("Exception while closing socket for docKey [" << docKey << "]: " << exc.what());
+    }
+}
+
+// TODO: replace fileId with filePath
+// TODO: make uploadPresets async similar to asyncInstallPreset(?)
+// wopihost/wopi/settings/upload?fileId=userconfig/wordbook/filename.dic
+void ClientSession::uploadPresetsToWopiHost(const std::string& jailPresetsPath,
+                                            const std::string& docKey)
+{
+    Poco::URI uriObject(docKey);
+
+    // extract base wopiUri from docKey
+    std::string path = uriObject.getPath();
+    size_t pos = path.find("/files/");
+    if (pos != std::string::npos)
+        path = path.substr(0, pos);
+    path.append("/settings/upload");
+    uriObject.setPath(path);
+
+    LOG_DBG("Uploading presets from jailPath[" << jailPresetsPath << "] to wopiHost["
+                                               << uriObject.toString() << ']');
+
+    const auto directoryNames = FileUtil::getDirEntries(jailPresetsPath);
+    for (auto& directoryName : directoryNames)
+    {
+        if (directoryName != "wordbook" && directoryName != "autotext")
+            continue;
+        std::string searchDir = jailPresetsPath;
+        searchDir.append("/");
+        searchDir.append(directoryName);
+        const auto fileNames = FileUtil::getDirEntries(searchDir);
+        for (auto& fileName : fileNames)
+        {
+            std::string filePath = "userconfig/";
+            filePath.append(directoryName);
+            filePath.append("/");
+            filePath.append(fileName);
+            uriObject.addQueryParameter("fileId", filePath);
+            auto httpRequest = StorageConnectionManager::createHttpRequest(uriObject, _auth);
+            httpRequest.setVerb(http::Request::VERB_POST);
+
+            std::string fileJailPath = searchDir;
+            fileJailPath.append("/");
+            fileJailPath.append(fileName);
+
+            LOG_TRC("Uploading file from jailPath[" << fileJailPath << "] to wopiHost["
+                                                    << uriObject.toString() << ']');
+
+            httpRequest.setBodyFile(fileJailPath);
+            httpRequest.header().set("Content-Type", "application/octet-stream");
+
+            auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
+            auto httpResponse = httpSession->syncRequest(httpRequest);
+
+            if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+            {
+                LOG_ERR("Failed to upload file[" << fileName << "] to wopiHost["
+                                                 << uriObject.getAuthority() << ']');
+            }
+        }
     }
 }
 

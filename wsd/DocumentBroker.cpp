@@ -3720,6 +3720,10 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
                                      << ", DontSaveIfUnmodified: " << dontSaveIfUnmodified
                                      << ", IsPossiblyModified: " << isPossiblyModified());
 
+        /// make sure to upload preset to WOPIHost
+        const std::string& jailPresetsPath = FileUtil::buildLocalPathToJail(
+        COOLWSD::EnableMountNamespaces, getJailRoot(), JAILED_CONFIG_ROOT);
+        session->uploadPresetsToWopiHost(jailPresetsPath, Uri::decode(getDocKey()));
 #ifndef IOS
         if (activeSessionCount <= 1)
         {
