@@ -780,10 +780,73 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         }
         else if (request.getMethod() == "POST")
         {
+            const Poco::URI::QueryParameters params = requestUri.getQueryParameters();
+            std::string filePath;
+            for (const auto& param : params)
+            {
+                // TODO: replace fileId with filePath
+                if (param.first == "fileId")
+                    filePath = param.second;
+            }
+
+            // executed when file uploaded from ClientSession
+            if (!filePath.empty())
+            {
+                std::streamsize size = request.getContentLength();
+                if (size == 0)
+                {
+                    http::Response httpResponse(http::StatusCode::BadRequest);
+                    socket->send(httpResponse);
+                    LOG_ERR("Failed to save the file, file content doesn't exist");
+                    return;
+                }
+
+                std::vector<std::string> splitStr = Util::splitStringToVector(filePath, '/');
+                if (splitStr.size() != 3)
+                {
+                    http::Response httpResponse(http::StatusCode::BadRequest);
+                    socket->send(httpResponse);
+                    LOG_ERR("Failed to save the file, invalid filPath[" << filePath << ']');
+                    return;
+                }
+                // ignoring category for local wopiserver
+                const std::string& type = splitStr[0];
+                const std::string& fileName = splitStr[2];
+
+                std::vector<char> buffer(size);
+                message.read(buffer.data(), size);
+
+                std::string dirPath = "test/data/presets/";
+                if (type == "userconfig")
+                    dirPath.append("user");
+                else if (type == "systemconfig")
+                    dirPath.append("shared");
+
+                dirPath.append("/upload/");
+                Poco::File(dirPath).createDirectories();
+
+                LOG_DBG("Saving uploaded file[" << fileName << "] to directory[" << dirPath << ']');
+                std::ofstream outfile;
+                dirPath.append("/");
+                dirPath.append(fileName);
+                outfile.open(dirPath, std::ofstream::binary);
+                outfile.write(buffer.data(), size);
+                outfile.close();
+
+                std::string timestamp =
+                    Util::getIso8601FracformatTime(std::chrono::system_clock::now());
+                const std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
+                http::Response httpResponse(http::StatusCode::OK);
+                FileServerRequestHandler::hstsHeaders(httpResponse);
+                httpResponse.setBody(body, "application/json; charset=utf-8");
+                socket->send(httpResponse);
+                return;
+            }
+
+            // executed when file uploaded from admin panel
+            // TODO: we don't need the following code once we fix the requesting to own server stuck problem
             FilePartHandler partHandler;
-
             Poco::Net::HTMLForm form(request, message, partHandler);
-
             const std::string& fileName = partHandler.getFileName();
             const std::string& fileContent = partHandler.getFileContent();
 
