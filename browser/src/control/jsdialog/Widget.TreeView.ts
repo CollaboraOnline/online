@@ -107,9 +107,15 @@ class TreeViewControl {
 
 		if (data.enabled !== false) {
 			this._container.addEventListener('click', this.onClick.bind(this));
-			this._container.addEventListener('dblclick', this.onDoubleClick.bind(this));
+			this._container.addEventListener(
+				'dblclick',
+				this.onDoubleClick.bind(this),
+			);
 			this._container.addEventListener('keydown', this.onKeyDown.bind(this));
-			this._container.addEventListener('contextmenu', this.onContextMenu.bind(this));
+			this._container.addEventListener(
+				'contextmenu',
+				this.onContextMenu.bind(this),
+			);
 		}
 	}
 
@@ -202,10 +208,7 @@ class TreeViewControl {
 		return radioButton;
 	}
 
-	createSelectionElement(
-		parent: HTMLElement,
-		entry: TreeEntryJSON,
-	) {
+	createSelectionElement(parent: HTMLElement, entry: TreeEntryJSON) {
 		let selectionElement: any;
 		const checkboxtype = this._data.checkboxtype;
 		if (checkboxtype == 'radio') {
@@ -309,11 +312,7 @@ class TreeViewControl {
 		}
 	}
 
-	fillRow(
-		entry: TreeEntryJSON,
-		level: number,
-		parent: HTMLElement,
-	) {
+	fillRow(entry: TreeEntryJSON, level: number, parent: HTMLElement) {
 		const tr = L.DomUtil.create(
 			'div',
 			this._builder.options.cssClass + ' ui-treeview-entry',
@@ -557,23 +556,11 @@ class TreeViewControl {
 	) {
 		if (L.DomUtil.hasClass(span, 'collapsed'))
 			builder.callback('treeview', 'expand', treeViewData, row, builder);
-		else
-			builder.callback(
-				'treeview',
-				'collapse',
-				treeViewData,
-				row,
-				builder,
-			);
+		else builder.callback('treeview', 'collapse', treeViewData, row, builder);
 		$(span).toggleClass('collapsed');
 	}
 
-	expandEntry(
-		span: any,
-		treeViewData: TreeWidgetJSON,
-		row: any,
-		builder: any,
-	) {
+	expandEntry(span: any, treeViewData: TreeWidgetJSON, row: any, builder: any) {
 		if (span._ondemand && L.DomUtil.hasClass(span, 'collapsed'))
 			builder.callback('treeview', 'expand', treeViewData, row, builder);
 		$(span).toggleClass('collapsed');
@@ -698,7 +685,6 @@ class TreeViewControl {
 
 		return currIndex;
 	}
-
 
 	isRealTree(data: TreeWidgetJSON) {
 		let isRealTreeView = false;
@@ -867,11 +853,7 @@ class TreeViewControl {
 				if (this._hasState) dummyColumns++;
 				subGrid.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
 
-				this.fillEntries(
-					entries[index].children,
-					level + 1,
-					subGrid,
-				);
+				this.fillEntries(entries[index].children, level + 1, subGrid);
 			}
 		}
 
@@ -1065,20 +1047,19 @@ class TreeViewControl {
 
 	onKeyDown(e: any) {
 		let target = e.target;
-		if (target.getAttribute('role') === 'row' && !L.DomUtil.hasClass(target, 'disabled')) {
+		if (
+			target.getAttribute('role') === 'row' &&
+			!L.DomUtil.hasClass(target, 'disabled')
+		) {
 			this.onRowKeyDown(target, e);
 			return;
 		}
 
-		const listElements =
-				this._container.querySelectorAll('.ui-treeview-entry');
+		const listElements = this._container.querySelectorAll('.ui-treeview-entry');
 		this.onHandleKeyDown(e, listElements);
 	}
 
-	onHandleKeyDown(
-		event: KeyboardEvent,
-		nodeList: NodeList,
-	) {
+	onHandleKeyDown(event: KeyboardEvent, nodeList: NodeList) {
 		var preventDef = false;
 		var listElements = Array.from(nodeList) as Array<HTMLElement>; // querySelector returns NodeList not array
 		var treeLength = listElements.length;
