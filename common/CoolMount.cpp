@@ -36,7 +36,19 @@
 #define MS_REMOUNT 4
 #define MS_NOSUID 16
 #define MS_RDONLY 32
+#elif defined(__APPLE__)
+#define MOUNT mount_wrapper
+#define MS_MGC_VAL 0         // ignored, no mapping to macOS
+#define MS_NODEV MNT_NODEV
+#define MS_UNBINDABLE 0      // ignored, no mapping to macOS
+#define MS_BIND 0            // ignored, no mapping to macOS
+#define MS_REC 0             // ignored, no mapping to macOS
+#define MS_REMOUNT 0         // ignored, no mapping to macOS
+#define MS_NOSUID MNT_NOSUID
+#define MS_RDONLY MNT_RDONLY
+#endif
 
+#ifdef __FreeBSD__
 void
 build_iovec(struct iovec **iov, int *iovlen, const char *name, const void *val,
         size_t len)
@@ -94,7 +106,32 @@ int mount_wrapper(const char *source, const char *target,
 
     return nmount(iov, iovlen, freebsd_flags);
 }
+#elif defined(__APPLE__)
+int mount_wrapper(const char *source, const char *target,
+          const char *filesystemtype, unsigned long mountflags,
+          const void *data)
+{
+    // Build some "data" for mount(2) if it's suspected that the FS needs a device=SOURCE string:
+    char fallback_data[1024];
+    if (source && *source) {
+        // e.g. "device=/dev/disk2s1" or "device=/path/to/something"
+        snprintf(fallback_data, sizeof(fallback_data), "device=%s", source);
+    } else {
+        fallback_data[0] = '\0';
+    }
 
+    const char *fs = (filesystemtype ? filesystemtype : "hfs");
+
+    // It's expected that the mountflags are built using the above defines,
+    // ie. no translation is needed
+    return mount(fs, target, mountflags,
+                 fallback_data[0] ? (void*)fallback_data : (void*)data);
+}
+#else
+#define MOUNT mount
+#endif
+
+#ifndef __linux__
 #define MNT_DETACH 1
 
 int umount2(const char *target, int flags)
@@ -123,8 +160,6 @@ int umount2(const char *target, int flags)
 
     return unmount(target, flags);
 }
-#else
-#define MOUNT mount
 #endif
 
 void usage(const char* program)
