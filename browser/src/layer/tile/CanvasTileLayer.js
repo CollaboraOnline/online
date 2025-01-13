@@ -496,7 +496,7 @@ L.TileSectionManager = L.Class.extend({
 		return {
 			offset: this._offset,
 			topLeft: docTopLeft.add(this._offset),
-			center: this._map.project(this._map.unproject(newPaneCenter, this._map.getZoom()), this._map.getScaleZoom(scale))
+			center: this._map.rescale(newPaneCenter, this._map.getZoom(), this._map.getScaleZoom(scale)),
 		};
 	},
 
