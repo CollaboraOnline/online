@@ -2375,7 +2375,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 			this.hideAllComments(); // Apply drawing orders.
 
-		if (!(<any>window).mode.isMobile() && (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing'))
+		if ((this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing'))
 			this.showHideComments();
 
 		CommentSection.importingComments = false;

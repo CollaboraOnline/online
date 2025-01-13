@@ -342,21 +342,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			this._updateFileBasedView();
 	},
 
-	_addHighlightSelectedWizardComment: function(annotation) {
-		if (this.lastWizardCommentHighlight) {
-			this.lastWizardCommentHighlight.removeClass('impress-comment-highlight');
-		}
-		if (annotation._annotationMarker) {
-			this.lastWizardCommentHighlight = $(this._map._layers[annotation._annotationMarker._leaflet_id]._icon);
-			this.lastWizardCommentHighlight.addClass('impress-comment-highlight');
-		}
-	},
-
-	_removeHighlightSelectedWizardComment: function() {
-		if (this.lastWizardCommentHighlight)
-			this.lastWizardCommentHighlight.removeClass('impress-comment-highlight');
-	},
-
 	_invalidateAllPreviews: function () {
 		L.CanvasTileLayer.prototype._invalidateAllPreviews.call(this);
 		this._map.fire('invalidateparts');
