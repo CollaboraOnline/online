@@ -3858,6 +3858,7 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
                 << "Content-Type: application/octet-stream\r\n"
                 << "X-Content-Type-Options: nosniff\r\n"
                 << "X-COOL-Clipboard: true\r\n"
+                << "Cache-Control: no-cache\r\n"
                 << "Connection: close\r\n"
                 << "\r\n";
             oss.write(saved->c_str(), saved->length());
@@ -3888,7 +3889,7 @@ void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::s
                                             const std::string &viewId, const std::string &tag,
                                             const std::shared_ptr<std::string> &data)
 {
-    for (auto& it : _sessions)
+    for (const auto& it : _sessions)
     {
         if (it.second->matchesClipboardKeys(viewId, tag))
         {
