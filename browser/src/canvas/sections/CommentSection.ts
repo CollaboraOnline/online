@@ -93,7 +93,6 @@ export class Comment extends CanvasSectionObject {
 				* We will check child comment to see if its parent has also been revived.
 		*/
 		this.sectionProperties.possibleParentCommentId = null;
-		this.sectionProperties.annotationMarker = null;
 		this.sectionProperties.wrapper = null;
 		this.sectionProperties.container = null;
 		this.sectionProperties.author = null;
@@ -134,6 +133,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.childLinesNode = null;
 		this.sectionProperties.childLines = [];
 		this.sectionProperties.childCommentOffset = 8;
+		this.sectionProperties.commentMarkerSubSection = null; // For Impress and Draw documents.
 
 		this.convertRectanglesToCoreCoordinates(); // Convert rectangle coordiantes into core pixels on initialization.
 
@@ -232,6 +232,9 @@ export class Comment extends CanvasSectionObject {
 		this.createChildLinesNode();
 
 		this.sectionProperties.container.style.visibility = 'hidden';
+
+		if (this.sectionProperties.commentMarkerSubSection === null)
+			this.createMarkerSubSection();
 
 		this.doPendingInitializationInView();
 	}
@@ -718,32 +721,35 @@ export class Comment extends CanvasSectionObject {
 		this.setPositionAndSize();
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 			this.positionCalcComment();
+		else if (this.sectionProperties.docLayer._docType === "presentation" || this.sectionProperties.docLayer._docType === "drawing") {
+			if (this.sectionProperties.commentMarkerSubSection !== null) {
+				this.sectionProperties.commentMarkerSubSection.sectionProperties.data = this.sectionProperties.data;
+				this.sectionProperties.commentMarkerSubSection.setPosition(
+					this.sectionProperties.data.anchorPos[0] * app.twipsToPixels,
+					this.sectionProperties.data.anchorPos[1] * app.twipsToPixels
+				);
+			}
+		}
 	}
 
-	private updateAnnotationMarker (): void {
-		// Make sure to place the markers only for presentations and draw documents
-		if (this.sectionProperties.docLayer._docType !== 'presentation' && this.sectionProperties.docLayer._docType !== 'drawing')
+	private createMarkerSubSection() {
+		if (this.sectionProperties.data.rectangle === null)
 			return;
 
-		if (this.sectionProperties.data == null)
-			return;
+		const showMarker = app.impress.partList[this.sectionProperties.docLayer._selectedPart].hash === parseInt(this.sectionProperties.data.parthash) ||
+							app.file.fileBasedView;
 
-		if (this.sectionProperties.annotationMarker === null) {
-			this.sectionProperties.annotationMarker = L.marker(new L.LatLng(0, 0), {
-				icon: L.divIcon({
-					className: 'annotation-marker',
-					iconSize: null
-				}),
-				draggable: true
-			});
-			if (app.impress.partList[this.sectionProperties.docLayer._selectedPart].hash === parseInt(this.sectionProperties.data.parthash) || app.file.fileBasedView)
-				this.map.addLayer(this.sectionProperties.annotationMarker);
-		}
-		if (this.sectionProperties.data.rectangle != null) {
-			this.sectionProperties.annotationMarker.setLatLng(this.sectionProperties.docLayer._twipsToLatLng(new L.Point(this.sectionProperties.data.rectangle[0], this.sectionProperties.data.rectangle[1])));
-			this.sectionProperties.annotationMarker.on('dragstart drag dragend', this.onMarkerDrag, this);
-			//this.sectionProperties.annotationMarker.on('click', this.onMarkerClick, this);
-		}
+		this.sectionProperties.commentMarkerSubSection = new CommentMarkerSubSection(
+			this.name + this.sectionProperties.data.id + String(Math.random()), // Section name - only as a placeholder.
+			28, 28, // Width and height.
+			new SimplePoint(this.sectionProperties.data.anchorPos[0], this.sectionProperties.data.anchorPos[1]), // Document position.
+			'annotation-marker', // Extra class.
+			showMarker, // Show section.
+			this, // Parent section.
+			this.sectionProperties.data
+		);
+
+		app.sectionContainer.addSection(this.sectionProperties.commentMarkerSubSection);
 	}
 
 	public isContainerVisible (): boolean {
@@ -759,18 +765,19 @@ export class Comment extends CanvasSectionObject {
 		this.updateContent();
 		this.updateLayout();
 		this.updatePosition();
-		this.updateAnnotationMarker();
 	}
 
 	private showMarker (): void {
-		if (this.sectionProperties.annotationMarker != null) {
-			this.map.addLayer(this.sectionProperties.annotationMarker);
+		if (this.sectionProperties.commentMarkerSubSection != null) {
+			this.sectionProperties.commentMarkerSubSection.showSection = true;
+			this.sectionProperties.commentMarkerSubSection.onSectionShowStatusChange();
 		}
 	}
 
 	private hideMarker (): void {
-		if (this.sectionProperties.annotationMarker != null) {
-			this.map.removeLayer(this.sectionProperties.annotationMarker);
+		if (this.sectionProperties.commentMarkerSubSection != null) {
+			this.sectionProperties.commentMarkerSubSection.showSection = false;
+			this.sectionProperties.commentMarkerSubSection.onSectionShowStatusChange();
 		}
 	}
 
@@ -1230,44 +1237,6 @@ export class Comment extends CanvasSectionObject {
 		return false;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	private sendAnnotationPositionChange (newPosition: any): void {
-		if (app.file.fileBasedView) {
-			this.map.setPart(this.sectionProperties.docLayer._selectedPart, false);
-			newPosition.y -= this.sectionProperties.data.yAddition;
-		}
-
-		var comment = {
-			Id: {
-				type: 'string',
-				value: this.sectionProperties.data.id
-			},
-			PositionX: {
-				type: 'int32',
-				value: newPosition.x
-			},
-			PositionY: {
-				type: 'int32',
-				value: newPosition.y
-			}
-		};
-		this.map.sendUnoCommand('.uno:EditAnnotation', comment);
-
-		if (app.file.fileBasedView)
-			this.map.setPart(0, false);
-	}
-
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	private onMarkerDrag (event: any): void {
-		if (this.sectionProperties.annotationMarker == null)
-			return;
-
-		if (event.type === 'dragend') {
-			var pointTwip = this.sectionProperties.docLayer._latLngToTwips(this.sectionProperties.annotationMarker.getLatLng());
-			this.sendAnnotationPositionChange(pointTwip);
-		}
-	}
-
 	public isDisplayed (): boolean {
 		return (this.sectionProperties.container.style && this.sectionProperties.container.style.visibility === '');
 	}
@@ -1501,7 +1470,10 @@ export class Comment extends CanvasSectionObject {
 
 		this.sectionProperties.commentListSection.hideArrow();
 		var container = this.sectionProperties.container;
-		this.hideMarker();
+
+		if (this.sectionProperties.commentMarkerSubSection !== null)
+			app.sectionContainer.removeSection(this.sectionProperties.commentMarkerSubSection.name);
+
 		if (container && container.parentElement) {
 			var c: number = 0;
 			while (c < 10) {
