@@ -29,7 +29,7 @@
 #include <memory>
 #include <string>
 
-class CheckFileInfo
+class CheckFileInfo : public std::enable_shared_from_this<CheckFileInfo>
 {
 public:
     /// The CheckFileInfo State.

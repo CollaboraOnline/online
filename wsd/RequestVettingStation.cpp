@@ -330,7 +330,7 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
 
     // CheckFileInfo asynchronously.
     assert(_checkFileInfo == nullptr);
-    _checkFileInfo = std::make_unique<CheckFileInfo>(_poll, uri, std::move(cfiContinuation));
+    _checkFileInfo = std::make_shared<CheckFileInfo>(_poll, uri, std::move(cfiContinuation));
     _checkFileInfo->checkFileInfo(redirectLimit);
 }
 #endif //!MOBILEAPP
