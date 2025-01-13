@@ -68,11 +68,13 @@ Configure Collabora Online
     --with-lo-path=/Users/kendy/Projects/lo/core/instdir/CollaboraOffice.app \
     --with-lokit-path=/Users/kendy/Projects/lo/core/include
 
-Obbiously you need to change the /Users/kendy/etc above to match what
-you have. Also, in some cases (perhaps on Intel Macs?) homebrew gets
-installed in /usr/local, not /opt/homebrew.
+Obbiously you need to change the /Users/kendy/... above to match what
+you have. Also, on Intel Macs homebrew gets installed in /usr/local,
+not /opt/homebrew.
 
-You also need to edit the macos/coda/coda.xcodeproj/project.pbxproj accordingly. Look for /Users/kendy and /opt/homebrew.
+You may need to edit the macos/coda/coda.xcodeproj/project.pbxproj too,
+particularly look for /opt/homebrew. If you also find an instance of
+/Users/kendy, please report that, it's a mistake and should be fixed.
 
 Then you can build CODA-M:
 
