@@ -99,6 +99,7 @@
 #include <common/security.h>
 #include <common/Seccomp.hpp>
 #include <common/SigUtil.hpp>
+#include <common/Syscall.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Watchdog.hpp>
 #endif
@@ -3977,7 +3978,7 @@ void lokit_main(
 
         if (isURPEnabled())
         {
-            if (pipe2(URPtoLoFDs, O_CLOEXEC) != 0 || pipe2(URPfromLoFDs, O_CLOEXEC | O_NONBLOCK) != 0)
+            if (Syscall::pipe2(URPtoLoFDs, O_CLOEXEC) != 0 || Syscall::pipe2(URPfromLoFDs, O_CLOEXEC | O_NONBLOCK) != 0)
                 LOG_ERR("Failed to create urp pipe " << strerror(errno));
             else
             {

@@ -35,6 +35,7 @@ extern char** environ;
 
 #include <fstream>
 #include <iomanip>
+#include <unistd.h>
 
 #include <Poco/Exception.h>
 
