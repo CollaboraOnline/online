@@ -2250,6 +2250,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             httpResponse.add("Content-Type", "application/octet-stream");
             httpResponse.add("X-Content-Type-Options", "nosniff");
             httpResponse.add("X-COOL-Clipboard", "true");
+            httpResponse.add("Cache-Control", "no-cache");
             httpResponse.set("Connection", "close");
             socket->send(httpResponse);
 
