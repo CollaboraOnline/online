@@ -507,7 +507,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nLO_PATH=/Users/kendy/Projects/lo/core/instdir/CollaboraOffice.app\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${TARGET_NAME}.app/Contents/lokit/\"\nrsync -avz $LO_PATH/Contents/ ${CONFIGURATION_BUILD_DIR}/${TARGET_NAME}.app/Contents/lokit/\n\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${TARGET_NAME}.app/Contents/lokit/\"\nrsync -avz $LO_PATH/Contents/ ${CONFIGURATION_BUILD_DIR}/${TARGET_NAME}.app/Contents/lokit/\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
