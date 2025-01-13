@@ -59,9 +59,9 @@ def reorderLogFile(oldFilename):
             endOfKit = line[numbKit:].find(" ")
             if endOfKit >= 0:
                 endOfKit += numbKit
-                kit = int(line[numbKit+4:endOfKit])
+                kit = int(line[numbKit+4:endOfKit],16)
             else:
-                kit = int(line[numbKit+4:])
+                kit = int(line[numbKit+4:],16)
 
             fileLines.append(FileLine(kit,line))
 
@@ -158,7 +158,7 @@ if __name__ == "__main__":
     actIndex=-1
     f = open(newFileName, 'r')
     for line in f:
-        if line.startswith("time="):
+        if line.startswith("kit="):
             numbrep = line.find("rep=")
             cmdStart = line[numbrep:].find(" ")+numbrep+1
             repeat = int(line[numbrep+4:cmdStart])
