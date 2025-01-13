@@ -196,7 +196,9 @@ JSDialog.iconView = function (
 	};
 
 	container.updateRenders = (pos: number) => {
-		const dropdown = container.querySelectorAll('.ui-iconview-entry');
+		const dropdown = container.querySelectorAll(
+			'.ui-iconview-entry, .ui-iconview-separator',
+		);
 		if (dropdown[pos]) {
 			let container = dropdown[pos];
 			const entry = data.entries[pos];
