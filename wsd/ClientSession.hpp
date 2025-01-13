@@ -291,9 +291,13 @@ public:
         _browserSetting = browserSetting;
     }
 
-    /// Override parsedDocOption from values we get from browser setting json
+    /// Override parsedDocOption values we get from browser setting json
     /// Because when client sends `load url` it doesn't have information about browser setting json
     void overrideDocOption();
+
+#if !MOBILEAPP
+    void uploadPresetsToWopiHost(const std::string& jailPresetPath, const std::string& docKey);
+#endif
 
 private:
     std::shared_ptr<ClientSession> client_from_this()
