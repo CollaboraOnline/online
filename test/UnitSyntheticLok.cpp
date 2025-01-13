@@ -33,7 +33,8 @@ namespace {
     }
 }
 
-/// Save torture testcase.
+bool testCompletedSuccess = false;
+
 class UnitSyntheticLok : public UnitWSD
 {
     void loadAndSynthesize(const std::string& name, const std::string& docName);
@@ -41,6 +42,7 @@ class UnitSyntheticLok : public UnitWSD
 public:
     UnitSyntheticLok();
     void invokeWSDTest() override;
+    void endTest(const std::string& reason) override;
 };
 
 void UnitSyntheticLok::loadAndSynthesize(
@@ -57,7 +59,11 @@ void UnitSyntheticLok::loadAndSynthesize(
     poll->startThread();
 
     Poco::URI uri(helpers::getTestServerURI());
-    auto wsSession = helpers::loadDocAndGetSession(poll, docName, uri, testname);
+    auto wsSession = helpers::loadDocAndGetSession(poll, docName, uri, testname, true, false);
+
+    // If we have already exitTest successfully when this returns, then that's fine.
+    if (testCompletedSuccess)
+        return;
 
     std::vector<char> message
         = wsSession->waitForMessage("status:", timeout, name);
@@ -86,6 +92,12 @@ void UnitSyntheticLok::invokeWSDTest()
         loadAndSynthesize(name, "empty.ods");
     }
     // wait for result from the Kit process
+}
+
+void UnitSyntheticLok::endTest(const std::string& reason)
+{
+    UnitWSD::endTest(reason);
+    testCompletedSuccess = !failed();
 }
 
 class UnitKitSyntheticLok;
