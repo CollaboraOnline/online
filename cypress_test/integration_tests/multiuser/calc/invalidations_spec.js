@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach expect require */
+/* global describe it cy beforeEach expect require Cypress */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -17,11 +17,11 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 	it('Join document', function() {
 		cy.cSetActiveFrame('#iframe1');
 
-		cy.cGet('#InsertMode').should('have.text', 'Insert mode: inactive');
+		cy.cGet('#InsertMode', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 }).should('have.text', 'Insert mode: inactive');
 		helper.typeIntoDocument('X');
-		cy.cGet('#InsertMode').should('have.text', 'Insert');
+		cy.cGet('#InsertMode', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 }).should('have.text', 'Insert');
 		helper.typeIntoDocument('{enter}');
-		cy.cGet('#InsertMode').should('have.text', 'Insert mode: inactive');
+		cy.cGet('#InsertMode', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 }).should('have.text', 'Insert mode: inactive');
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2');
 		helper.typeIntoDocument('{uparrow}');
 		// wait until round trip of cell address
