@@ -33,8 +33,6 @@
 #  include <SslSocket.hpp>
 #endif
 
-SocketPoll DumpSocketPoll("websocket");
-
 // Dumps incoming websocket messages and doesn't respond.
 class DumpSocketHandler : public WebSocketHandler
 {
@@ -223,6 +221,8 @@ public:
 int main (int argc, char **argv)
 {
     (void) argc; (void) argv;
+
+    SocketPoll DumpSocketPoll("websocket");
 
     if (!UnitWSD::init(UnitWSD::UnitType::Wsd, ""))
     {
