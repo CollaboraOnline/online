@@ -2926,7 +2926,7 @@ private:
                 }
                 else
                 {
-                    fprintf(stderr, "subforkit %s seen as created, remember me to explicitly tell to rebalance\n", configId.c_str());
+                    LOG_INF("subforkit [" << configId << "], seen as created.");
                     SubForKitProcs[configId] = std::make_shared<ForKitProcess>(pid, socket, request);
                     LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
                     socket->getInBuffer().clear();
