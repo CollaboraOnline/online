@@ -96,15 +96,26 @@ int Syscall::pipe2(int pipefd[2], int flags)
 #endif
 }
 
+int Syscall::socket_cloexec_nonblock(int domain, int type, int protocol) {
+#ifdef __linux__
+    return ::socket(domain, type | SOCK_NONBLOCK | SOCK_CLOEXEC, protocol);
+#else
+    int fd = ::socket(domain, type, protocol);
+    if (fd < 0)
+        return fd;
+
+    return set_fd_cloexec_nonblock(fd, true, true);
+#endif
+}
+
 int Syscall::socketpair_cloexec_nonblock(int domain, int type, int protocol, int socket_vector[2])
 {
 #ifdef __linux__
     return ::socketpair(domain, type | SOCK_NONBLOCK | SOCK_CLOEXEC, protocol, socket_vector);
 #else
     int rc = ::socketpair(domain, type, protocol, socket_vector);
-    if (rc < 0) {
-        return -1;
-    }
+    if (rc < 0)
+        return rc;
 
     return set_fds_cloexec_nonblock(socket_vector, true, true);
 #endif
