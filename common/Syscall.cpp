@@ -31,8 +31,10 @@ namespace {
 
 /**
  * Set FD_CLOEXEC and O_NONBLOCK on one file descriptor.
+ *
+ * Called "unsafe" because it keeps the file descriptor open on error, possibly leading to leaks.
  */
-int set_fd_cloexec_nonblock(int fd, bool cloexec, bool nonblock) {
+int unsafe_set_fd_cloexec_nonblock(int fd, bool cloexec, bool nonblock) {
     // Set FD_CLOEXEC if the user wants it
     if (cloexec)
     {
@@ -61,11 +63,25 @@ int set_fd_cloexec_nonblock(int fd, bool cloexec, bool nonblock) {
 }
 
 /**
+ * Set FD_CLOEXEC and O_NONBLOCK on one file descriptor.
+ */
+int set_fd_cloexec_nonblock(int fd, bool cloexec, bool nonblock) {
+    int ret = unsafe_set_fd_cloexec_nonblock(fd, cloexec, nonblock);
+    if (ret < 0) {
+        int saved_errno = errno;
+        close(fd);
+        errno = saved_errno;
+    }
+
+    return ret;
+}
+
+/**
  * Set CLOEXEC or NONBLOCK on both sides of the pipe/socket/...
  */
 int set_fds_cloexec_nonblock(int fds[2], bool cloexec, bool nonblock) {
     for (int i = 0; i < 2; i++) {
-        int ret = set_fd_cloexec_nonblock(fds[i], cloexec, nonblock);
+        int ret = unsafe_set_fd_cloexec_nonblock(fds[i], cloexec, nonblock);
         if (ret < 0) {
             int saved_errno = errno;
             close(fds[0]);
@@ -81,6 +97,19 @@ int set_fds_cloexec_nonblock(int fds[2], bool cloexec, bool nonblock) {
 
 #endif
 
+}
+
+int Syscall::accept_cloexec_nonblock(int socket, struct sockaddr *address, socklen_t *address_len)
+{
+#if defined(__linux__)
+    return accept4(socket, address, address_len, SOCK_CLOEXEC | SOCK_NONBLOCK);
+#else
+    int fd = ::accept(socket, address, address_len);
+    if (fd < 0)
+        return fd;
+
+    return set_fd_cloexec_nonblock(fd, true, true);
+#endif
 }
 
 /// Implementation of pipe2() for platforms that don't have it (like macOS)

@@ -11,10 +11,17 @@
 
 #pragma once
 
+#include <sys/socket.h>
+
 /**
  * This is a place for platform-dependent syscalls, to be able to extend them conveniently.
  */
 namespace Syscall {
+
+    /**
+     * Implement an equivalent of accept4() with CLOEXEC and NONBLOCK set.
+     */
+    int accept_cloexec_nonblock(int socket, struct sockaddr *address, socklen_t *address_len);
 
     /**
      * Implement pipe2() on platforms that don't have it.
