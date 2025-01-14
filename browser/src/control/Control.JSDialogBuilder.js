@@ -1832,26 +1832,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_createComment: function(container, data, isRoot) {
+	_createComment: function(container, data) {
 		// Create annotation copy and add it into the container.
+		container.appendChild(data.annotation.sectionProperties.container);
 
-		var annotation = new app.definitions.Comment(data.data, data.id === 'new' ? {noMenu: true} : {}, this);
-		annotation.context = data.annotation.containerObject.context;
-		annotation.documentTopLeft = data.annotation.containerObject.documentTopLeft;
-		annotation.containerObject = data.annotation.containerObject;
-		annotation.sectionProperties.section = annotation;
-		annotation.sectionProperties.commentListSection = data.annotation.sectionProperties.commentListSection;
-		annotation.onInitialize();
-
-		if (app.isCommentEditingAllowed())
-			annotation.sectionProperties.menu.isRoot = isRoot;
-
-		container.appendChild(annotation.sectionProperties.container);
-
-		annotation.show();
-		annotation.update();
-		annotation.setExpanded();
-		annotation.hideMarker();
+		data.annotation.show();
+		data.annotation.update();
+		data.annotation.setExpanded();
 	},
 
 	_rootCommentControl: function(parentContainer, data, builder) {
@@ -1873,7 +1860,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		container.annotation = data.annotation;
 		container.id = data.id;
-		builder._createComment(container, data, true);
+		builder._createComment(container, data);
 		if (data.children.length > 1 && mainContainer.id !== 'comment-thread' + data.id)
 		{
 			var numberOfReplies = data.children.length - 1;

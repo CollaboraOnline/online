@@ -36,7 +36,7 @@ L.Map.include({
 			isTheSamePart =
 				app.calc.partHashes[docLayer._prevSelectedPart] === app.calc.partHashes[part];
 		} else if ((docType === 'presentation' || docType === 'drawing')) {
-			if (docLayer._prevSelectedPart !== undefined && part < app.impress.partList.length)
+			if (docLayer._prevSelectedPart !== undefined && part < app.impress.partList.length && app.impress.partList[docLayer._prevSelectedPart])
 				isTheSamePart = app.impress.partList[docLayer._prevSelectedPart].hash === app.impress.partList[part].hash;
 		} else if (docType !== 'text') {
 			console.error('Unknown docType: ' + docType);

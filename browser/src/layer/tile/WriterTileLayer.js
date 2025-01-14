@@ -12,19 +12,21 @@
  * Writer tile layer is used to display a text document
  */
 
-/* global app GraphicSelection */
+/* global app GraphicSelection cool */
 L.WriterTileLayer = L.CanvasTileLayer.extend({
 
-	newAnnotation: function (comment) {
+	newAnnotation: function (commentData) {
+		const comment = new cool.Comment(commentData, {}, app.sectionContainer.getSectionWithName(L.CSections.CommentList.name));
+
 		if (app.file.textCursor.visible) {
-			comment.anchorPos = [app.file.textCursor.rectangle.x2, app.file.textCursor.rectangle.y1];
+			comment.sectionProperties.data.anchorPos = [app.file.textCursor.rectangle.x2, app.file.textCursor.rectangle.y1];
 		} else if (GraphicSelection.hasActiveSelection()) {
 			// An image is selected, then guess the anchor based on the graphic selection.
-			comment.anchorPos = [GraphicSelection.rectangle.x1, GraphicSelection.rectangle.y2];
+			comment.sectionProperties.data.anchorPos = [GraphicSelection.rectangle.x1, GraphicSelection.rectangle.y2];
 		}
 
-		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(annotation);
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(comment);
 	},
 
 	beforeAdd: function (map) {
