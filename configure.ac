@@ -2121,6 +2121,15 @@ if test "$enable_iosapp" = "yes"; then
 fi
 
 if test "$enable_macosapp" = "yes"; then
+    # Homebrew uses different paths on Intel and Apple Silicon macOS.
+    # Having a separate /opt/homebrew makes more sense, but I guess
+    # backward compatibility keeps it as /usr/local on Intel Macs.
+    if test `uname -m` = "x86_64"; then
+        HOMEBREW_PATH=/usr/local
+    else
+        HOMEBREW_PATH=/opt/homebrew
+    fi
+    AC_SUBST(HOMEBREW_PATH)
     AC_CONFIG_FILES([macos/coda/Config.xcconfig])
 fi
 

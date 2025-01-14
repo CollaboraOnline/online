@@ -72,9 +72,8 @@ Obbiously you need to change the /Users/kendy/... above to match what
 you have. Also, on Intel Macs homebrew gets installed in /usr/local,
 not /opt/homebrew.
 
-You may need to edit the macos/coda/coda.xcodeproj/project.pbxproj too,
-particularly look for /opt/homebrew. If you also find an instance of
-/Users/kendy, please report that, it's a mistake and should be fixed.
+If you find an instance of /Users/kendy hardcoded somewhere, please
+report that, it's a mistake and should be fixed.
 
 Then you can build CODA-M:
 
