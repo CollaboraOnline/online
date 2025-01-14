@@ -571,7 +571,7 @@ void DocumentBroker::pollThread()
                         LOG_ERR(
                             "Failed to store the document and reached maximum retry count of "
                             << limStoreFailures
-                            << "Save failures: " << _saveManager.saveFailureCount()
+                            << " Save failures: " << _saveManager.saveFailureCount()
                             << ", Upload failures: " << _storageManager.uploadFailureCount()
 #if !MOBILEAPP
                             << ". Giving up"
