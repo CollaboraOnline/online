@@ -178,6 +178,7 @@ struct Stats {
                 std::stringstream ss(line);
                 std::string key;
                 size_t value;
+                // coverity[tainted_data_argument : FALSE] - we trust the kernel-provided data
                 ss >> key >> value;
                 totalDirtyPss += value;
             }
