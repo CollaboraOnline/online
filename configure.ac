@@ -10,9 +10,6 @@ AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
 
 AC_CONFIG_MACRO_DIR([m4])
 
-# We don't want to require pkg-config and PKG_CHECK_MODULES on macOS
-m4_if(m4_esyscmd_s([uname -s]),Darwin,[m4_define([PKG_CHECK_MODULES],[])],[])
-
 COOLWSD_VERSION_MAJOR=`echo $VERSION | awk -F. '{print $1}'`
 COOLWSD_VERSION_MINOR=`echo $VERSION | awk -F. '{print $2}'`
 COOLWSD_VERSION_MICRO=`echo $VERSION | awk -F. '{print $3}'`
@@ -1747,7 +1744,9 @@ AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darw
        ])
 
 AS_IF([test `uname -s` = "FreeBSD"],
-      AC_CHECK_LIB(iconv, libiconv_open, [], [AC_MSG_ERROR([No. Install 3rd-party libiconv.])]))
+      [AC_CHECK_LIB(iconv, libiconv_open, [], [AC_MSG_ERROR([No. Install 3rd-party libiconv.])])],
+      [AS_IF([test `uname -s` = "Darwin"],
+             [AC_CHECK_LIB(iconv, iconv_open, [], [AC_MSG_ERROR([No, please install libiconv.])])])])
 
 AS_IF([test `uname -s` = "FreeBSD"],
       [LIBS="$LIBS -lexecinfo -lz -liconv"])
