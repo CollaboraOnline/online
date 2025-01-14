@@ -649,9 +649,9 @@
 					"$(SRCROOT)/../../kit",
 					"$(SRCROOT)/../../net",
 					"$(SRCROOT)/../../wsd",
-					/opt/homebrew/include,
+					"$(HOMEBREW_PATH)/include",
 				);
-				LIBRARY_SEARCH_PATHS = /opt/homebrew/lib;
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PATH)/lib";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -729,9 +729,9 @@
 					"$(SRCROOT)/../../kit",
 					"$(SRCROOT)/../../net",
 					"$(SRCROOT)/../../wsd",
-					/opt/homebrew/include,
+					"$(HOMEBREW_PATH)/include",
 				);
-				LIBRARY_SEARCH_PATHS = /opt/homebrew/lib;
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PATH)/lib";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
