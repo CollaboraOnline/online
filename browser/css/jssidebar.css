@@ -345,6 +345,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 #NavigatorDeck .ui-treeview-cell-text {
 	/* good to move this into css var*/
 	font-size: 14px;
+	white-space: break-spaces;
 }
 #NavigatorDeck .ui-treeview-cell {
 	/* Move this whole block away and fix in the main control */
