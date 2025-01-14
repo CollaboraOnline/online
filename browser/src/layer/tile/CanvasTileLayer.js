@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array cool */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -400,32 +400,34 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	/**
-	 * Everything in this doc comment is speculation: I didn't write the code that supplies it and I'm guessing to
-	 * have something to work on for this function. That said, given my observations, they seem incredibly likely to be correct
+	 * @param pinchCenter {SimplePoint} The current pinch center
 	 *
-	 * @param pinchCenter {{x: number, y: number}} The current pinch center in doc core-pixels
-	 * Normally expressed as an L.Point instance
+	 * @param pinchStartCenter {SimplePoint} The pinch center at the start of the pinch
 	 *
-	 * @param pinchStartCenter {{x: number, y: number}} The pinch center at the start of the pinch in doc core-pixels
-	 * Normally expressed as an L.Point instance
-	 *
-	 * @param paneBounds {{min: {x: number, y: number}, max: {x: number, y: number}}} The edges of the current pane
-	 * Traditionally this is the map border at the start of the pinch
+	 * @param paneBounds {SimpleRectangle} The edges of the current pane
 	 *
 	 * @param freezePane {{freezeX: boolean, freezeY: boolean}} Whether the pane is frozen in the x or y directions
 	 *
-	 * @param splitPos {{x: number, y: number}} The inset in core-pixels into the document caused by any splits (e.g. a frozen row at the start of the document)
+	 * @param splitPos {SimplePoint} The top left corner of the free document pane (i.e. after any split panes are handled)
 	 *
 	 * @param scale {number} The scale, relative to the initial size, of the document currently
 	 * Or rather this is equivalent to: old_width / new_width
 	 *
 	 * @param findFreePaneCenter {boolean} Wether to return a center point
 	 *
-	 * @returns {{topLeft: {x: number, y: number}, center?: {x: number, y: number}}} An object with a top left point in core-pixels and optionally a center point
+	 * @returns {{topLeft: SimplePoint, center?: SimplePoint}} An object with a top left point in core-pixels and optionally a center point
 	 * Center is included iff findFreePaneCenter is true
 	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
 	 **/
-	_getZoomDocPos: function (pinchCenter, pinchStartCenter, paneBounds, freezePane, splitPos, scale, findFreePaneCenter) {
+	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, _paneBounds, freezePane, _splitPos, scale, findFreePaneCenter) {
+		let pinchCenter = L.point(_pinchCenter.pX, _pinchCenter.pY);
+		const pinchStartCenter = L.point(_pinchCenter.pX, _pinchCenter.pY);
+		const paneBounds = L.bounds(
+			L.point(_paneBounds.pX1, _paneBounds.pY1),
+			L.point(_paneBounds.pX2, _paneBounds.pY2),
+		);
+		const splitPos = L.point(_splitPos.pX, _splitPos.pY);
+
 		let xMin = 0;
 		const hasXMargin = !this._layer.isCalc();
 		if (hasXMargin) {
@@ -486,17 +488,33 @@ L.TileSectionManager = L.Class.extend({
 		}
 
 		if (!findFreePaneCenter) {
+			docTopLeft = new cool.SimplePoint(
+				docTopLeft.x * app.pixelsToTwips,
+				docTopLeft.y * app.pixelsToTwips
+			);
 			return { offset: this._offset, topLeft: docTopLeft };
 		}
 
-		const newPaneCenter = new L.Point(
+		let newPaneCenter = new L.Point(
 			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) * 0.5 / scale),
 			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) * 0.5 / scale));
 
+		docTopLeft = docTopLeft.add(this._offset) // TODO @minion3665: why is this added here but not in the `if (!findFreePaneCenter)` clause?
+		docTopLeft = new cool.SimplePoint(
+			docTopLeft.x * app.pixelsToTwips,
+			docTopLeft.y * app.pixelsToTwips,
+		);
+
+		newPaneCenter = this._map.rescale(newPaneCenter, this._map.getZoom(), this._map.getScaleZoom(scale));
+		newPaneCenter = new cool.SimplePoint(
+			newPaneCenter.x * app.pixelsToTwips,
+			newPaneCenter.y * app.pixelsToTwips
+		);
+
 		return {
 			offset: this._offset,
-			topLeft: docTopLeft.add(this._offset),
-			center: this._map.rescale(newPaneCenter, this._map.getZoom(), this._map.getScaleZoom(scale)),
+			topLeft: docTopLeft,
+			center: newPaneCenter,
 		};
 	},
 
@@ -508,13 +526,18 @@ L.TileSectionManager = L.Class.extend({
 		var freePaneBounds = new L.Bounds(viewBounds.min.add(splitPos), viewBounds.max);
 
 		return this._getZoomDocPos(
-			this._newCenter,
-			this._layer._pinchStartCenter,
-			freePaneBounds,
+			cool.SimplePoint.newp(...this._newCenter.toArray()),
+			cool.SimplePoint.newp(...this._layer._pinchStartCenter.toArray()),
+			new cool.SimpleRectangle(
+				...cool.SimplePoint.newp(...freePaneBounds.min.toArray()).toArray(),
+				...cool.SimplePoint.newp(
+					...freePaneBounds.max.subtract(freePaneBounds.min).toArray(),
+				).toArray(),
+			),
 			{ freezeX: false, freezeY: false },
-			splitPos,
+			cool.SimplePoint.newp(...splitPos.toArray()),
 			scale,
-			true /* findFreePaneCenter */
+			true /* findFreePaneCenter */,
 		).center;
 	},
 
@@ -592,8 +615,8 @@ L.TileSectionManager = L.Class.extend({
 		var map = this._map;
 
 		// Calculate the final center at final zoom in advance.
-		var newMapCenter = this._getZoomMapCenter(zoom).divideBy(app.dpiScale);
-		var newMapCenterLatLng = map.unproject(newMapCenter, zoom);
+		var newMapCenter = this._getZoomMapCenter(zoom);
+		var newMapCenterLatLng = map.unproject(L.point(newMapCenter.cX, newMapCenter.cY), zoom);
 		app.sectionContainer.setZoomChanged(true);
 
 		var stopAnimation = noGap ? true : false;

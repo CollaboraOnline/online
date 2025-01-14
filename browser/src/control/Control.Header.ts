@@ -742,18 +742,35 @@ export class HeaderInfo {
 			scale = tsManager._zoomFrameScale;
 
 			const zoomPos = tsManager._getZoomDocPos(
-				tsManager._newCenter,
-				tsManager._layer._pinchStartCenter,
-				freePaneBounds,
+				cool.SimplePoint.newp(
+					...(<[number, number]>tsManager._newCenter.toArray()),
+				),
+				cool.SimplePoint.newp(
+					...(<[number, number]>tsManager._layer._pinchStartCenter.toArray()),
+				),
+				new cool.SimpleRectangle(
+					...(<[number, number]>(
+						cool.SimplePoint.newp(
+							...(<[number, number]>freePaneBounds.min.toArray()),
+						).toArray()
+					)),
+					...(<[number, number]>(
+						cool.SimplePoint.newp(
+							...(<[number, number]>(
+								freePaneBounds.max.subtract(freePaneBounds.min).toArray()
+							)),
+						).toArray()
+					)),
+				),
 				{ freezeX: false, freezeY: false },
-				ctx.splitPos,
+				cool.SimplePoint.newp(...(<[number, number]>ctx.splitPos.toArray())),
 				scale,
-				false
+				false,
 			);
 
 			startPx = this._isColumn ?
-				zoomPos.topLeft.x
-				: zoomPos.topLeft.y;
+				zoomPos.topLeft.pX
+				: zoomPos.topLeft.pY;
 		} else {
 			startPx = this._isColumn ?
 				section.documentTopLeft[0] + splitPos

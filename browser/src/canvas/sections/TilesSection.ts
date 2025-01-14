@@ -793,24 +793,45 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 
 			// Calculate top-left in doc core-pixels for the frame.
 			var docPos = tsManager._getZoomDocPos(
-				tsManager._newCenter,
-				tsManager._layer._pinchStartCenter,
-				paneBounds,
+				cool.SimplePoint.newp(
+					...(<[number, number]>tsManager._newCenter.toArray()),
+				),
+				cool.SimplePoint.newp(
+					...(<[number, number]>tsManager._layer._pinchStartCenter.toArray()),
+				),
+				new cool.SimpleRectangle(
+					...(<[number, number]>(
+						cool.SimplePoint.newp(
+							...(<[number, number]>paneBounds.min.toArray()),
+						).toArray()
+					)),
+					...(<[number, number]>(
+						cool.SimplePoint.newp(
+							...(<[number, number]>paneBounds.max.subtract(paneBounds.min).toArray()),
+						).toArray()
+					)),
+				),
 				{ freezeX, freezeY },
-				splitPos,
+				cool.SimplePoint.newp(...(<[number, number]>splitPos.toArray())),
 				scale,
 				false /* findFreePaneCenter? */
 			);
 
 			if (!freezeX) {
-				tsManager._zoomAtDocEdgeX = docPos.topLeft.x == splitPos.x;
+				tsManager._zoomAtDocEdgeX = docPos.topLeft.pX == splitPos.x;
 			}
 
 			if (!freezeY) {
-				tsManager._zoomAtDocEdgeY = docPos.topLeft.y == splitPos.y;
+				tsManager._zoomAtDocEdgeY = docPos.topLeft.pY == splitPos.y;
 			}
 
-			var docRange = new L.Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
+			var docRange = L.bounds(
+				L.point(docPos.topLeft.pX, docPos.topLeft.pY),
+				L.point(
+					docPos.topLeft.pX + docAreaSize.x,
+					docPos.topLeft.pY + docAreaSize.y,
+				),
+			);
 			if (tsManager._calcGridSection) {
 				tsManager._calcGridSection.onDrawArea(docRange, docRange.min.subtract(destPos), this.context);
 			}

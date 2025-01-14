@@ -3,7 +3,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global app _ Cursor JSDialog */
+/* global app _ Cursor JSDialog cool */
 
 L.Map = L.Evented.extend({
 
@@ -565,17 +565,23 @@ L.Map = L.Evented.extend({
 		const zoomCenter = docLayer._twipsToCorePixels(this.getDesktopCalcZoomCenter());
 
 		tsManager._offset = new L.Point(0, 0);
-		const docPos = docLayer._painter._getZoomDocPos(
-			zoomCenter,
-			zoomCenter,
-			freePaneBounds,
+
+		const docPos = tsManager._getZoomDocPos(
+			cool.SimplePoint.newp(...zoomCenter.toArray()),
+			cool.SimplePoint.newp(...zoomCenter.toArray()),
+			new cool.SimpleRectangle(
+				...cool.SimplePoint.newp(...freePaneBounds.min.toArray()).toArray(),
+				...cool.SimplePoint.newp(
+					...freePaneBounds.max.subtract(freePaneBounds.min).toArray(),
+				).toArray(),
+			),
 			{ freezeX: false, freezeY: false },
-			splitPos,
+			cool.SimplePoint.newp(...splitPos.toArray()),
 			this.getZoomScale(zoom),
-			true
+			true,
 		);
 
-		const newCenterLatLng = this.unproject(docPos.center.divideBy(app.dpiScale), zoom);
+		const newCenterLatLng = this.unproject(L.point(docPos.center.cX, docPos.center.cY), zoom);
 
 		this._ignoreCursorUpdate = true;
 

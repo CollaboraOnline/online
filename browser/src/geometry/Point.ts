@@ -167,6 +167,13 @@ export class Point {
 			Point.formatNum(this.y) + ')';
 	}
 
+	/// Returns [x, y]
+	/// Mostly useful when passing into other functions
+	/// (e.g. with a twips point you could SimplePoint(...somePoint.toArray()))
+	public toArray(): [number, number] {
+		return [this.x, this.y];
+	}
+
 	public static toPoint(x: PointConvertable | number, y?: number, round?: boolean): Point {
 		if (x instanceof Point) {
 			return x;

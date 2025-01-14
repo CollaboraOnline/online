@@ -331,16 +331,33 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 			var scale = this.tsManager._zoomFrameScale;
 
 			const docPos = this.tsManager._getZoomDocPos(
-				this.tsManager._newCenter,
-				this.tsManager._layer._pinchStartCenter,
-				paneBounds,
+				cool.SimplePoint.newp(
+					...(<[number, number]>this.tsManager._newCenter.toArray()),
+				),
+				cool.SimplePoint.newp(
+					...(<[number, number]>(
+						this.tsManager._layer._pinchStartCenter.toArray()
+					)),
+				),
+				new cool.SimpleRectangle(
+					...(<[number, number]>(
+						cool.SimplePoint.newp(
+							...(<[number, number]>paneBounds.min.toArray()),
+						).toArray()
+					)),
+					...(<[number, number]>(
+						cool.SimplePoint.newp(
+							...(<[number, number]>paneBounds.max.subtract(paneBounds.min).toArray()),
+						).toArray()
+					)),
+				),
 				{ freezeX, freezeY },
-				splitPos,
+				cool.SimplePoint.newp(...(<[number, number]>splitPos.toArray())),
 				scale,
 				false /* findFreePaneCenter? */
 			);
 
-			const clipTopLeft = new cool.Point(docPos.topLeft.x, docPos.topLeft.y);
+			const clipTopLeft = new cool.Point(docPos.topLeft.pX, docPos.topLeft.pX);
 
 			// Original pane size.
 			var paneSize = paneBounds.getSize();
@@ -350,13 +367,13 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 				// respectively because fixed pane size expand(shrink).
 				clipSize.x = (paneSize.x - splitPos.x * (scale - 1)) / scale;
 
-				docPos.topLeft.x -= splitPos.x;
+				docPos.topLeft.pX -= splitPos.x;
 			}
 			if (!freezeY) {
 				// See comment regarding pane width above.
 				clipSize.y = (paneSize.y - splitPos.y * (scale - 1)) / scale;
 
-				docPos.topLeft.y -= splitPos.y;
+				docPos.topLeft.pY -= splitPos.y;
 			}
 			// Force clip area to the zoom frame area of the pane specified.
 			clipArea = new cool.Bounds(
@@ -364,7 +381,7 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 				clipTopLeft.add(clipSize));
 
 			transform.scale(scale, scale);
-			transform.translate(scale * docPos.topLeft.x, scale * docPos.topLeft.y);
+			transform.translate(scale * docPos.topLeft.pX, scale * docPos.topLeft.pY);
 
 		} else if (this.tsManager._inZoomAnim && fixed) {
 

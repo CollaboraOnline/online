@@ -68,6 +68,21 @@ export class SimplePoint {
 		this._y = Math.round(y);
 	}
 
+	// Alternate constructors that use core or css pixels
+	static newp(x: number, y: number): SimplePoint {
+		return new SimplePoint(
+			x * app.pixelsToTwips,
+			y * app.pixelsToTwips
+		);
+	}
+
+	static newc(x: number, y: number): SimplePoint {
+		return new SimplePoint(
+			x * app.dpiScale * app.pixelsToTwips,
+			y * app.dpiScale * app.pixelsToTwips
+		);
+	}
+
 	// twips.
 	public get x(): number { return this._x; }
 	public set x(x: number) { this._x = Math.round(x); }
