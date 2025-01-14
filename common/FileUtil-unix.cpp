@@ -95,6 +95,13 @@ namespace FileUtil
 
         return true;
     }
+#elif defined(MACOS) && !MOBILEAPP
+
+    bool platformDependentCheckDiskSpace(const std::string&, int64_t)
+    {
+        // FIXME Use the FileUtil-apple.mm instead
+        return true;
+    }
 #endif
 
     static int nftw_cb(const char *fpath, const struct stat*, int type, struct FTW*)
