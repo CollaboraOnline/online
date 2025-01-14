@@ -2900,6 +2900,7 @@ void ClientSession::onDisconnect()
     }
 }
 
+#if !MOBILEAPP
 // TODO: replace fileId with filePath
 // TODO: make uploadPresets async similar to asyncInstallPreset(?)
 // wopihost/wopi/settings/upload?fileId=userconfig/wordbook/filename.dic
@@ -2950,6 +2951,7 @@ void ClientSession::uploadPresetsToWopiHost(const std::string& jailPresetsPath,
         }
     }
 }
+#endif
 
 void ClientSession::dumpState(std::ostream& os)
 {

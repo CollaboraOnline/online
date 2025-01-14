@@ -144,6 +144,8 @@ void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
                          WebSocketHandler::StatusCodes::POLICY_VIOLATION);
 }
 
+#if !MOBILEAPP
+
 void RequestVettingStation::createWopiDocBroker(const std::string& docKey,
                                                 const std::string& configId,
                                                 const std::string& url,
@@ -238,6 +240,8 @@ void RequestVettingStation::checkSharedConfig(const std::string& docKey,
     // ensure the server config is downloaded and launch docbroker when that is available
     DocumentBroker::asyncInstallPresets(*_poll, sharedSettings._uri, presetsPath, finishedCallback);
 }
+
+#endif
 
 void RequestVettingStation::handleRequest(const std::string& id,
                                           const RequestDetails& requestDetails,
