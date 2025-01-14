@@ -22,6 +22,11 @@ namespace Syscall {
     int pipe2(int pipefd[2], int flags);
 
     /**
+     * Implement socket() with CLOEXEC and NONBLOCK on platforms that don't have those flags.
+     */
+    int socket_cloexec_nonblock(int domain, int type, int protocol);
+
+    /**
      * Implement socket_pair() with CLOEXEC and NONBLOCK on platforms that don't have those flags.
      */
     int socketpair_cloexec_nonblock(int domain, int type, int protocol, int socket_vector[2]);
