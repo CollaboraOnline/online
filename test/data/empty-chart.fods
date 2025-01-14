@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<office:document xmlns:presentation="urn:oasis:names:tc:opendocument:xmlns:presentation:1.0" xmlns:css3t="http://www.w3.org/TR/css3-text/" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:drawooo="http://openoffice.org/2010/draw" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:rpt="http://openoffice.org/2005/report" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" office:version="1.3" office:mimetype="application/vnd.oasis.opendocument.spreadsheet">
+ <office:meta><meta:creation-date>2009-04-16T11:32:48.39</meta:creation-date><meta:editing-duration>PT10M6S</meta:editing-duration><meta:editing-cycles>6</meta:editing-cycles><meta:generator>LibreOffice/7.4.7.2$Linux_X86_64 LibreOffice_project/40$Build-2</meta:generator><dc:date>2025-01-13T10:07:50.882712430</dc:date><meta:document-statistic meta:table-count="1" meta:cell-count="12" meta:object-count="1"/><meta:user-defined meta:name="Info 1"/><meta:user-defined meta:name="Info 2"/><meta:user-defined meta:name="Info 3"/><meta:user-defined meta:name="Info 4"/></office:meta>
+ <office:settings>
+  <config:config-item-set config:name="ooo:view-settings">
+   <config:config-item config:name="VisibleAreaTop" config:type="int">453</config:config-item>
+   <config:config-item config:name="VisibleAreaLeft" config:type="int">0</config:config-item>
+   <config:config-item config:name="VisibleAreaWidth" config:type="int">24844</config:config-item>
+   <config:config-item config:name="VisibleAreaHeight" config:type="int">9483</config:config-item>
+   <config:config-item-map-indexed config:name="Views">
+    <config:config-item-map-entry>
+     <config:config-item config:name="ViewId" config:type="string">view1</config:config-item>
+     <config:config-item-map-named config:name="Tables">
+      <config:config-item-map-entry config:name="Sheet1">
+       <config:config-item config:name="CursorPositionX" config:type="int">11</config:config-item>
+       <config:config-item config:name="CursorPositionY" config:type="int">4</config:config-item>
+       <config:config-item config:name="ActiveSplitRange" config:type="short">2</config:config-item>
+       <config:config-item config:name="PositionLeft" config:type="int">0</config:config-item>
+       <config:config-item config:name="PositionRight" config:type="int">0</config:config-item>
+       <config:config-item config:name="PositionTop" config:type="int">0</config:config-item>
+       <config:config-item config:name="PositionBottom" config:type="int">0</config:config-item>
+       <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
+       <config:config-item config:name="ZoomValue" config:type="int">100</config:config-item>
+       <config:config-item config:name="PageViewZoomValue" config:type="int">60</config:config-item>
+       <config:config-item config:name="ShowGrid" config:type="boolean">true</config:config-item>
+       <config:config-item config:name="AnchoredTextOverflowLegacy" config:type="boolean">false</config:config-item>
+      </config:config-item-map-entry>
+     </config:config-item-map-named>
+     <config:config-item config:name="ActiveTable" config:type="string">Sheet1</config:config-item>
+     <config:config-item config:name="HorizontalScrollbarWidth" config:type="int">1847</config:config-item>
+     <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
+     <config:config-item config:name="ZoomValue" config:type="int">100</config:config-item>
+     <config:config-item config:name="PageViewZoomValue" config:type="int">60</config:config-item>
+     <config:config-item config:name="ShowPageBreakPreview" config:type="boolean">false</config:config-item>
+     <config:config-item config:name="ShowZeroValues" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="ShowNotes" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="ShowGrid" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="GridColor" config:type="int">12632256</config:config-item>
+     <config:config-item config:name="ShowPageBreaks" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="HasColumnRowHeaders" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="FormulaBarHeight" config:type="short">1</config:config-item>
+     <config:config-item config:name="IsOutlineSymbolsSet" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="IsValueHighlightingEnabled" config:type="boolean">false</config:config-item>
+     <config:config-item config:name="IsSnapToRaster" config:type="boolean">false</config:config-item>
+     <config:config-item config:name="RasterIsVisible" config:type="boolean">false</config:config-item>
+     <config:config-item config:name="RasterResolutionX" config:type="int">1000</config:config-item>
+     <config:config-item config:name="RasterResolutionY" config:type="int">1000</config:config-item>
+     <config:config-item config:name="RasterSubdivisionX" config:type="int">1</config:config-item>
+     <config:config-item config:name="RasterSubdivisionY" config:type="int">1</config:config-item>
+     <config:config-item config:name="IsRasterAxisSynchronized" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="AnchoredTextOverflowLegacy" config:type="boolean">false</config:config-item>
+    </config:config-item-map-entry>
+   </config:config-item-map-indexed>
+  </config:config-item-set>
+  <config:config-item-set config:name="ooo:configuration-settings">
+   <config:config-item config:name="AllowPrintJobCancel" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="ApplyUserData" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="AutoCalculate" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="CharacterCompressionType" config:type="short">0</config:config-item>
+   <config:config-item config:name="EmbedAsianScriptFonts" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="EmbedComplexScriptFonts" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="EmbedFonts" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="EmbedLatinScriptFonts" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="EmbedOnlyUsedFonts" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="GridColor" config:type="int">12632256</config:config-item>
+   <config:config-item config:name="HasColumnRowHeaders" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="HasSheetTabs" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="ImagePreferredDPI" config:type="int">0</config:config-item>
+   <config:config-item config:name="IsDocumentShared" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="IsKernAsianPunctuation" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="IsOutlineSymbolsSet" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="IsRasterAxisSynchronized" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="IsSnapToRaster" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="LinkUpdateMode" config:type="short">3</config:config-item>
+   <config:config-item config:name="LoadReadonly" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrinterName" config:type="string">Generic Printer</config:config-item>
+   <config:config-item config:name="PrinterPaperFromSetup" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="PrinterSetup" config:type="base64Binary">oAH+/0dlbmVyaWMgUHJpbnRlcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU0dFTlBSVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAMAwQAAAAAAAAAEAAhSAAAEdAAASm9iRGF0YSAxCnByaW50ZXI9R2VuZXJpYyBQcmludGVyCm9yaWVudGF0aW9uPVBvcnRyYWl0CmNvcGllcz0xCmNvbGxhdGU9ZmFsc2UKbWFyZ2luYWRqdXN0bWVudD0wLDAsMCwwCmNvbG9yZGVwdGg9MjQKcHNsZXZlbD0wCnBkZmRldmljZT0xCmNvbG9yZGV2aWNlPTAKUFBEQ29udGV4dERhdGEKUGFnZVNpemU6QTQARHVwbGV4Ok5vbmUAABIAQ09NUEFUX0RVUExFWF9NT0RFDwBEdXBsZXhNb2RlOjpPZmY=</config:config-item>
+   <config:config-item config:name="RasterIsVisible" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="RasterResolutionX" config:type="int">1000</config:config-item>
+   <config:config-item config:name="RasterResolutionY" config:type="int">1000</config:config-item>
+   <config:config-item config:name="RasterSubdivisionX" config:type="int">1</config:config-item>
+   <config:config-item config:name="RasterSubdivisionY" config:type="int">1</config:config-item>
+   <config:config-item config:name="SaveThumbnail" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="SaveVersionOnClose" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="ShowGrid" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="ShowNotes" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="ShowPageBreaks" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="ShowZeroValues" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="SyntaxStringRef" config:type="short">7</config:config-item>
+   <config:config-item config:name="UpdateFromTemplate" config:type="boolean">true</config:config-item>
+   <config:config-item-map-named config:name="ScriptConfiguration">
+    <config:config-item-map-entry config:name="Sheet1">
+     <config:config-item config:name="CodeName" config:type="string">Sheet1</config:config-item>
+    </config:config-item-map-entry>
+   </config:config-item-map-named>
+  </config:config-item-set>
+ </office:settings>
+ <office:scripts>
+  <office:script script:language="ooo:Basic">
+   <ooo:libraries xmlns:ooo="http://openoffice.org/2004/office" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+  </office:script>
+ </office:scripts>
+ <office:font-face-decls>
+  <style:font-face style:name="Andale Sans UI" svg:font-family="&apos;Andale Sans UI&apos;" style:font-family-generic="system" style:font-pitch="variable"/>
+  <style:font-face style:name="Arial" svg:font-family="Arial" style:font-family-generic="swiss" style:font-pitch="variable"/>
+  <style:font-face style:name="DejaVu Sans" svg:font-family="&apos;DejaVu Sans&apos;" style:font-family-generic="system" style:font-pitch="variable"/>
+  <style:font-face style:name="Liberation Sans" svg:font-family="&apos;Liberation Sans&apos;" style:font-family-generic="swiss" style:font-pitch="variable"/>
+  <style:font-face style:name="Tahoma" svg:font-family="Tahoma" style:font-family-generic="system" style:font-pitch="variable"/>
+ </office:font-face-decls>
+ <office:styles>
+  <style:default-style style:family="table-cell">
+   <style:table-cell-properties style:decimal-places="2"/>
+   <style:paragraph-properties style:tab-stop-distance="0.4921in"/>
+   <style:text-properties style:font-name="Arial" fo:font-size="10pt" fo:language="en" fo:country="US" style:font-name-asian="Andale Sans UI" style:font-size-asian="10pt" style:language-asian="zh" style:country-asian="CN" style:font-name-complex="Tahoma" style:font-size-complex="10pt" style:language-complex="hi" style:country-complex="IN"/>
+  </style:default-style>
+  <style:default-style style:family="graphic">
+   <style:graphic-properties svg:stroke-color="#3465a4" draw:fill-color="#729fcf" fo:wrap-option="no-wrap" draw:shadow-offset-x="0.1181in" draw:shadow-offset-y="0.1181in"/>
+   <style:paragraph-properties style:text-autospace="ideograph-alpha" style:punctuation-wrap="simple" style:line-break="strict" style:writing-mode="page" style:font-independent-line-spacing="false">
+    <style:tab-stops/>
+   </style:paragraph-properties>
+   <style:text-properties style:use-window-font-color="true" loext:opacity="0%" loext:color-lum-mod="100%" loext:color-lum-off="0%" fo:font-family="&apos;Liberation Serif&apos;" style:font-family-generic="roman" style:font-pitch="variable" fo:font-size="12pt" fo:language="en" fo:country="US" style:letter-kerning="true" style:font-name-asian="DejaVu Sans" style:font-size-asian="12pt" style:language-asian="zh" style:country-asian="CN" style:font-name-complex="DejaVu Sans" style:font-size-complex="12pt" style:language-complex="hi" style:country-complex="IN"/>
+  </style:default-style>
+  <number:number-style style:name="N0">
+   <number:number number:min-integer-digits="1"/>
+  </number:number-style>
+  <number:currency-style style:name="N122P0" style:volatile="true">
+   <number:number number:decimal-places="2" number:min-decimal-places="2" number:min-integer-digits="1" number:grouping="true"/>
+   <number:text> </number:text>
+   <number:currency-symbol number:language="de" number:country="DE">€</number:currency-symbol>
+  </number:currency-style>
+  <number:currency-style style:name="N122">
+   <style:text-properties fo:color="#ff0000"/>
+   <number:text>-</number:text>
+   <number:number number:decimal-places="2" number:min-decimal-places="2" number:min-integer-digits="1" number:grouping="true"/>
+   <number:text> </number:text>
+   <number:currency-symbol number:language="de" number:country="DE">€</number:currency-symbol>
+   <style:map style:condition="value()&gt;=0" style:apply-style-name="N122P0"/>
+  </number:currency-style>
+  <style:style style:name="Default" style:family="table-cell">
+   <style:text-properties fo:language="zxx" fo:country="none" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
+  </style:style>
+  <style:style style:name="Heading" style:family="table-cell" style:parent-style-name="Default">
+   <style:table-cell-properties style:text-align-source="fix" style:repeat-content="false"/>
+   <style:paragraph-properties fo:text-align="center"/>
+   <style:text-properties fo:font-size="16pt" fo:font-style="italic" fo:font-weight="bold"/>
+  </style:style>
+  <style:style style:name="Heading_20_1" style:display-name="Heading 1" style:family="table-cell" style:parent-style-name="Heading">
+   <style:table-cell-properties style:rotation-angle="90"/>
+  </style:style>
+  <style:style style:name="Heading_20_2" style:display-name="Heading 2" style:family="table-cell" style:parent-style-name="Heading">
+   <style:text-properties fo:font-size="12pt" style:font-size-asian="12pt" style:font-size-complex="12pt"/>
+  </style:style>
+  <style:style style:name="Text" style:family="table-cell" style:parent-style-name="Default"/>
+  <style:style style:name="Note" style:family="table-cell" style:parent-style-name="Text">
+   <style:table-cell-properties fo:background-color="#ffffcc" style:diagonal-bl-tr="none" style:diagonal-tl-br="none" fo:border="0.74pt solid #808080"/>
+   <style:text-properties fo:color="#333333"/>
+  </style:style>
+  <style:style style:name="Footnote" style:family="table-cell" style:parent-style-name="Text">
+   <style:text-properties fo:color="#808080" fo:font-style="italic" style:font-style-asian="italic" style:font-style-complex="italic"/>
+  </style:style>
+  <style:style style:name="Hyperlink" style:family="table-cell" style:parent-style-name="Text">
+   <style:text-properties fo:color="#0000ee" style:text-underline-style="solid" style:text-underline-width="auto" style:text-underline-color="#0000ee"/>
+  </style:style>
+  <style:style style:name="Status" style:family="table-cell" style:parent-style-name="Default"/>
+  <style:style style:name="Good" style:family="table-cell" style:parent-style-name="Status">
+   <style:table-cell-properties fo:background-color="#ccffcc"/>
+   <style:text-properties fo:color="#006600"/>
+  </style:style>
+  <style:style style:name="Neutral" style:family="table-cell" style:parent-style-name="Status">
+   <style:table-cell-properties fo:background-color="#ffffcc"/>
+   <style:text-properties fo:color="#996600"/>
+  </style:style>
+  <style:style style:name="Bad" style:family="table-cell" style:parent-style-name="Status">
+   <style:table-cell-properties fo:background-color="#ffcccc"/>
+   <style:text-properties fo:color="#cc0000"/>
+  </style:style>
+  <style:style style:name="Warning" style:family="table-cell" style:parent-style-name="Status">
+   <style:text-properties fo:color="#cc0000"/>
+  </style:style>
+  <style:style style:name="Error" style:family="table-cell" style:parent-style-name="Status">
+   <style:table-cell-properties fo:background-color="#cc0000"/>
+   <style:text-properties fo:color="#ffffff" fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
+  </style:style>
+  <style:style style:name="Accent" style:family="table-cell" style:parent-style-name="Default">
+   <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
+  </style:style>
+  <style:style style:name="Accent_20_1" style:display-name="Accent 1" style:family="table-cell" style:parent-style-name="Accent">
+   <style:table-cell-properties fo:background-color="#000000"/>
+   <style:text-properties fo:color="#ffffff"/>
+  </style:style>
+  <style:style style:name="Accent_20_2" style:display-name="Accent 2" style:family="table-cell" style:parent-style-name="Accent">
+   <style:table-cell-properties fo:background-color="#808080"/>
+   <style:text-properties fo:color="#ffffff"/>
+  </style:style>
+  <style:style style:name="Accent_20_3" style:display-name="Accent 3" style:family="table-cell" style:parent-style-name="Accent">
+   <style:table-cell-properties fo:background-color="#dddddd"/>
+  </style:style>
+  <style:style style:name="Result" style:family="table-cell" style:parent-style-name="Default">
+   <style:text-properties fo:font-style="italic" style:text-underline-style="solid" style:text-underline-width="auto" style:text-underline-color="font-color" fo:font-weight="bold"/>
+  </style:style>
+  <style:style style:name="Result2" style:family="table-cell" style:parent-style-name="Result" style:data-style-name="N122"/>
+ </office:styles>
+ <office:automatic-styles>
+  <style:style style:name="co1" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="2in"/>
+  </style:style>
+  <style:style style:name="co2" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="2in"/>
+  </style:style>
+  <style:style style:name="ro1" style:family="table-row">
+   <style:table-row-properties style:row-height="0.1783in" fo:break-before="auto" style:use-optimal-row-height="true"/>
+  </style:style>
+  <style:style style:name="ro2" style:family="table-row">
+   <style:table-row-properties style:row-height="0.178in" fo:break-before="auto" style:use-optimal-row-height="true"/>
+  </style:style>
+  <style:style style:name="ta1" style:family="table" style:master-page-name="Default">
+   <style:table-properties table:display="true" style:writing-mode="lr-tb"/>
+  </style:style>
+  <style:style style:name="gr1" style:family="graphic">
+   <style:graphic-properties draw:stroke="none" draw:fill="none" draw:textarea-horizontal-align="center" draw:textarea-vertical-align="middle" draw:ole-draw-aspect="1"/>
+   <style:paragraph-properties fo:text-align="center"/>
+  </style:style>
+  <style:page-layout style:name="pm1">
+   <style:page-layout-properties style:writing-mode="lr-tb"/>
+   <style:header-style>
+    <style:header-footer-properties fo:min-height="0.2957in" fo:margin-left="0in" fo:margin-right="0in" fo:margin-bottom="0.0984in"/>
+   </style:header-style>
+   <style:footer-style>
+    <style:header-footer-properties fo:min-height="0.2957in" fo:margin-left="0in" fo:margin-right="0in" fo:margin-top="0.0984in"/>
+   </style:footer-style>
+  </style:page-layout>
+  <style:style style:name="P1" style:family="paragraph">
+   <loext:graphic-properties draw:fill="none"/>
+   <style:paragraph-properties fo:text-align="center"/>
+  </style:style>
+ </office:automatic-styles>
+ <office:master-styles>
+  <style:master-page style:name="Default" style:page-layout-name="pm1">
+   <style:header>
+    <text:p><text:sheet-name>???</text:sheet-name></text:p>
+   </style:header>
+   <style:header-left style:display="false"/>
+   <style:header-first style:display="false"/>
+   <style:footer>
+    <text:p>Page <text:page-number>1</text:page-number></text:p>
+   </style:footer>
+   <style:footer-left style:display="false"/>
+   <style:footer-first style:display="false"/>
+  </style:master-page>
+ </office:master-styles>
+ <office:body>
+  <office:spreadsheet>
+   <table:table table:name="Sheet1" table:style-name="ta1" table:print="false">
+    <table:shapes>
+     <draw:frame draw:z-index="0" draw:style-name="gr1" draw:text-style-name="P1" svg:width="6.2988in" svg:height="3.5429in" svg:x="10.098in" svg:y="2.177in">
+      <draw:object draw:notify-on-update-of-ranges="Sheet1.A3:Sheet1.A5 Sheet1.B2:Sheet1.B2 Sheet1.B3:Sheet1.B5 Sheet1.C2:Sheet1.C2 Sheet1.C3:Sheet1.C5">
+       <loext:p/>
+       <office:document xmlns:css3t="http://www.w3.org/TR/css3-text/" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:chartooo="http://openoffice.org/2010/chart" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:drawooo="http://openoffice.org/2010/draw" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:rpt="http://openoffice.org/2005/report" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" office:version="1.3" office:mimetype="application/vnd.oasis.opendocument.chart">
+        <office:meta><meta:generator>LibreOffice/7.4.7.2$Linux_X86_64 LibreOffice_project/40$Build-2</meta:generator></office:meta>
+        <office:styles/>
+        <office:automatic-styles>
+         <number:number-style style:name="N0">
+          <number:number number:min-integer-digits="1"/>
+         </number:number-style>
+         <style:style style:name="ch1" style:family="chart">
+          <style:graphic-properties draw:stroke="none"/>
+         </style:style>
+         <style:style style:name="ch2" style:family="chart">
+          <style:chart-properties chart:auto-position="true"/>
+          <style:graphic-properties draw:stroke="none" svg:stroke-color="#b3b3b3" draw:fill="none" draw:fill-color="#e6e6e6"/>
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+         </style:style>
+         <style:style style:name="ch3" style:family="chart">
+          <style:chart-properties chart:include-hidden-cells="false" chart:auto-position="true" chart:auto-size="true" chart:treat-empty-cells="leave-gap" chart:right-angled-axes="true"/>
+         </style:style>
+         <style:style style:name="ch4" style:family="chart" style:data-style-name="N0">
+          <style:chart-properties chart:display-label="true" chart:logarithmic="false" chart:reverse-direction="false" text:line-break="false" loext:try-staggering-first="false" chart:link-data-style-to-source="true" chart:axis-position="0"/>
+          <style:graphic-properties svg:stroke-color="#b3b3b3"/>
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+         </style:style>
+         <style:style style:name="ch5" style:family="chart" style:data-style-name="N0">
+          <style:chart-properties chart:display-label="true" chart:logarithmic="false" chart:reverse-direction="false" text:line-break="false" loext:try-staggering-first="false" chart:link-data-style-to-source="true" chart:axis-position="0"/>
+          <style:graphic-properties svg:stroke-color="#b3b3b3"/>
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+         </style:style>
+         <style:style style:name="ch6" style:family="chart">
+          <style:graphic-properties svg:stroke-color="#b3b3b3"/>
+         </style:style>
+         <style:style style:name="ch7" style:family="chart" style:data-style-name="N0">
+          <style:chart-properties chart:link-data-style-to-source="true"/>
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#004586" dr3d:edge-rounding="5%"/>
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+         </style:style>
+         <style:style style:name="ch8" style:family="chart" style:data-style-name="N0">
+          <style:chart-properties chart:link-data-style-to-source="true"/>
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#ff420e" dr3d:edge-rounding="5%"/>
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+         </style:style>
+         <style:style style:name="ch9" style:family="chart">
+          <style:graphic-properties draw:stroke="solid" svg:stroke-color="#b3b3b3" draw:fill="none" draw:fill-color="#e6e6e6"/>
+         </style:style>
+         <style:style style:name="ch10" style:family="chart">
+          <style:graphic-properties svg:stroke-color="#b3b3b3" draw:fill-color="#cccccc"/>
+         </style:style>
+         <style:style style:name="ch11" style:family="chart">
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#004586" dr3d:edge-rounding="5%"/> <!-- Dark Blue -->
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+        </style:style>
+        <style:style style:name="ch12" style:family="chart">
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#ff420e" dr3d:edge-rounding="5%"/> <!-- Red -->
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+        </style:style>
+        <style:style style:name="ch13" style:family="chart">
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#00b300" dr3d:edge-rounding="5%"/> <!-- Green -->
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+        </style:style>
+        <style:style style:name="ch14" style:family="chart">
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#ffcc00" dr3d:edge-rounding="5%"/> <!-- Yellow -->
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+        </style:style>
+        <style:style style:name="ch15" style:family="chart">
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#ff66b2" dr3d:edge-rounding="5%"/> <!-- Pink -->
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+        </style:style>
+        <style:style style:name="ch16" style:family="chart">
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#66b3ff" dr3d:edge-rounding="5%"/> <!-- Light Blue -->
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+        </style:style>
+        <style:style style:name="ch17" style:family="chart">
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#cc66ff" dr3d:edge-rounding="5%"/> <!-- Purple -->
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+        </style:style>
+        <style:style style:name="ch18" style:family="chart">
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#f7a800" dr3d:edge-rounding="5%"/> <!-- Orange -->
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+        </style:style>
+        <style:style style:name="ch19" style:family="chart">
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#800080" dr3d:edge-rounding="5%"/> <!-- Dark Purple -->
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+        </style:style>
+        <style:style style:name="ch20" style:family="chart">
+          <style:graphic-properties draw:stroke="none" draw:fill-color="#ff4d4d" dr3d:edge-rounding="5%"/> <!-- Red -->
+          <style:text-properties fo:font-size="10pt" style:font-size-asian="10pt" style:font-size-complex="10pt"/>
+        </style:style>
+        </office:automatic-styles>
+        <office:body>
+         <office:chart>
+          <chart:chart svg:width="16cm" svg:height="9cm" xlink:href=".." xlink:type="simple" chart:class="chart:bar" chart:style-name="ch1">
+           <chart:legend chart:legend-position="end" svg:x="14.822cm" svg:y="3.952cm" style:legend-expansion="high" chart:style-name="ch2"/>
+           <chart:plot-area chart:style-name="ch3" table:cell-range-address="Sheet1.A2:Sheet1.C5" chart:data-source-has-labels="both" svg:x="0.32cm" svg:y="0.18cm" svg:width="14.182cm" svg:height="8.64cm">
+            <chart:coordinate-region svg:x="1.047cm" svg:y="0.38cm" svg:width="13.455cm" svg:height="7.793cm"/>
+            <chart:axis chart:dimension="x" chart:name="primary-x" chart:style-name="ch4" chartooo:axis-type="auto">
+             <chartooo:date-scale/>
+             <chart:categories table:cell-range-address="Sheet1.A3:Sheet1.A5"/>
+            </chart:axis>
+            <chart:axis chart:dimension="y" chart:name="primary-y" chart:style-name="ch5">
+             <chart:grid chart:style-name="ch6" chart:class="major"/>
+            </chart:axis>
+            <chart:series chart:style-name="ch7" chart:values-cell-range-address="Sheet1.B3:Sheet1.B5" chart:label-cell-address="Sheet1.B2:Sheet1.B2" chart:class="chart:bar">
+             <chart:data-point chart:repeated="3"/>
+            </chart:series>
+            <chart:series chart:style-name="ch8" chart:values-cell-range-address="Sheet1.C3:Sheet1.C5" chart:label-cell-address="Sheet1.C2:Sheet1.C2" chart:class="chart:bar">
+             <chart:data-point chart:repeated="3"/>
+            </chart:series>
+            <chart:wall chart:style-name="ch9"/>
+            <chart:floor chart:style-name="ch10"/>
+           </chart:plot-area>
+           <table:table table:name="local-table">
+            <table:table-header-columns>
+             <table:table-column/>
+            </table:table-header-columns>
+            <table:table-columns>
+             <table:table-column table:number-columns-repeated="2"/>
+            </table:table-columns>
+            <table:table-header-rows>
+             <table:table-row>
+              <table:table-cell>
+               <text:p/>
+              </table:table-cell>
+              <table:table-cell office:value-type="string">
+               <text:p>X1</text:p>
+               <draw:g>
+                <svg:desc>Sheet1.B2:Sheet1.B2</svg:desc></draw:g>
+              </table:table-cell>
+              <table:table-cell office:value-type="string">
+               <text:p>X2</text:p>
+               <draw:g>
+                <svg:desc>Sheet1.C2:Sheet1.C2</svg:desc></draw:g>
+              </table:table-cell>
+             </table:table-row>
+            </table:table-header-rows>
+            <table:table-rows>
+             <table:table-row>
+              <table:table-cell office:value-type="string">
+               <text:p>Y1</text:p>
+               <draw:g>
+                <svg:desc>Sheet1.A3:Sheet1.A5</svg:desc></draw:g>
+              </table:table-cell>
+              <table:table-cell office:value-type="float" office:value="1">
+               <text:p>1</text:p>
+               <draw:g>
+                <svg:desc>Sheet1.B3:Sheet1.B5</svg:desc></draw:g>
+              </table:table-cell>
+              <table:table-cell office:value-type="float" office:value="1">
+               <text:p>1</text:p>
+               <draw:g>
+                <svg:desc>Sheet1.C3:Sheet1.C5</svg:desc></draw:g>
+              </table:table-cell>
+             </table:table-row>
+             <table:table-row>
+              <table:table-cell office:value-type="string">
+               <text:p>Y2</text:p>
+              </table:table-cell>
+              <table:table-cell office:value-type="float" office:value="1">
+               <text:p>1</text:p>
+              </table:table-cell>
+              <table:table-cell office:value-type="float" office:value="1">
+               <text:p>1</text:p>
+              </table:table-cell>
+             </table:table-row>
+             <table:table-row>
+              <table:table-cell office:value-type="string">
+               <text:p>Y3</text:p>
+              </table:table-cell>
+              <table:table-cell office:value-type="float" office:value="1">
+               <text:p>1</text:p>
+              </table:table-cell>
+              <table:table-cell office:value-type="float" office:value="1">
+               <text:p>1</text:p>
+              </table:table-cell>
+             </table:table-row>
+            </table:table-rows>
+           </table:table>
+          </chart:chart>
+         </office:chart>
+        </office:body>
+       </office:document>
+      </draw:object><draw:image>
+      </draw:image>
+     </draw:frame></table:shapes>
+    <table:table-column table:style-name="co1" table:default-cell-style-name="Default"/>
+    <table:table-column table:style-name="co2" table:number-columns-repeated="2" table:default-cell-style-name="Default"/>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell table:number-columns-repeated="3"/>
+    </table:table-row>
+    <table:table-row table:style-name="ro2">
+     <table:table-cell office:value-type="string" calcext:value-type="string">
+      <text:p/>
+     </table:table-cell>
+     <table:table-cell office:value-type="string" calcext:value-type="string">
+      <text:p>X1</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="string" calcext:value-type="string">
+      <text:p>X2</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro2">
+     <table:table-cell office:value-type="string" calcext:value-type="string">
+      <text:p>Y1</text:p>
+     </table:table-cell>
+     <table:table-cell table:number-columns-repeated="2" office:value-type="float" office:value="1" calcext:value-type="float">
+      <text:p>1</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro2">
+     <table:table-cell office:value-type="string" calcext:value-type="string">
+      <text:p>Y2</text:p>
+     </table:table-cell>
+     <table:table-cell table:number-columns-repeated="2" office:value-type="float" office:value="1" calcext:value-type="float">
+      <text:p>1</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro2">
+     <table:table-cell office:value-type="string" calcext:value-type="string">
+      <text:p>Y3</text:p>
+     </table:table-cell>
+     <table:table-cell table:number-columns-repeated="2" office:value-type="float" office:value="1" calcext:value-type="float">
+      <text:p>1</text:p>
+     </table:table-cell>
+    </table:table-row>
+   </table:table>
+   <table:named-expressions/>
+  </office:spreadsheet>
+ </office:body>
+</office:document>
