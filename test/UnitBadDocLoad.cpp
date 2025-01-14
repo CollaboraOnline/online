@@ -73,7 +73,7 @@ UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
 
         // Extract all json entries into a map.
         items = JsonUtil::jsonToMap(dialog.substr(sizeof("jsdialog:")));
-        auto firstId = items["id"];
+        const std::string firstId = items["id"];
 
         // Click "Yes" in a dialog
         helpers::sendTextFrame(socket, "dialogevent " + firstId + " {\"id\":\"yes\", \"cmd\": \"click\", \"data\": \"2\", \"type\": \"responsebutton\"}", testname);
