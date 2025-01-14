@@ -1254,7 +1254,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
     }
 
     http::Request httpRequest(pathAndQuery.empty() ? "/" : pathAndQuery);
-    auto httpProbeSession = http::Session::create(host, protocol, port);
+    auto httpProbeSession = http::Session::create(std::move(host), protocol, port);
     httpProbeSession->setTimeout(std::chrono::seconds(2));
 
     httpProbeSession->setConnectFailHandler(
