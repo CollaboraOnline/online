@@ -17,6 +17,7 @@
 #include <common/HexUtil.hpp>
 #include <common/Log.hpp>
 #include <common/SigUtil.hpp>
+#include <common/Syscall.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
@@ -126,7 +127,7 @@ int Socket::createSocket([[maybe_unused]] Socket::Type type)
     default: assert(!"Unknown Socket::Type"); break;
     }
 
-    return ::socket(domain, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
+    return Syscall::socket_cloexec_nonblock(domain, SOCK_STREAM /*| SOCK_NONBLOCK | SOCK_CLOEXEC*/, 0);
 #else
     return fakeSocketSocket();
 #endif
@@ -189,7 +190,7 @@ bool StreamSocket::socketpair(const std::chrono::steady_clock::time_point creati
                               std::shared_ptr<StreamSocket>& child)
 {
     int pair[2];
-    int rc = ::socketpair(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0, pair);
+    int rc = Syscall::socketpair_cloexec_nonblock(AF_UNIX, SOCK_STREAM /*| SOCK_NONBLOCK | SOCK_CLOEXEC*/, 0, pair);
     if (rc != 0)
         return false;
     child = std::make_shared<StreamSocket>("save-child", pair[0], Socket::Type::Unix, true, HostType::Other, ReadType::NormalRead, creationTime);
@@ -863,7 +864,7 @@ void SocketPoll::createWakeups()
     // Create the wakeup fd.
     if (
 #if !MOBILEAPP
-        ::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1
+        Syscall::pipe2(_wakeup, O_CLOEXEC | O_NONBLOCK) == -1
 #else
         fakeSocketPipe2(_wakeup) == -1
 #endif
@@ -949,7 +950,7 @@ bool SocketPoll::insertNewUnixSocket(
     const std::vector<int>* shareFDs)
 {
     LOG_DBG("Connecting to local UDS " << location);
-    const int fd = socket(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
+    const int fd = Syscall::socket_cloexec_nonblock(AF_UNIX, SOCK_STREAM /*| SOCK_NONBLOCK | SOCK_CLOEXEC*/, 0);
     if (fd < 0)
     {
         LOG_SYS("Failed to connect to unix socket at " << location);

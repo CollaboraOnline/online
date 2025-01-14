@@ -173,6 +173,7 @@ common_sources = \
 	../common/SigUtil-server.cpp \
 	../common/Simd.cpp \
 	../common/SpookyV2.cpp \
+	../common/Syscall.cpp \
 	../common/StringVector.cpp \
 	../common/TraceEvent.cpp \
 	../common/Unit.cpp \
