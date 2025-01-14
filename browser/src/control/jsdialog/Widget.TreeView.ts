@@ -97,8 +97,6 @@ class TreeViewControl {
 		this._tbody = this._container;
 		(this._container as any).filterEntries = this.filterEntries.bind(this);
 
-		this.setupDragAndDrop(data, builder);
-
 		if (this._isRealTree) {
 			this._container.setAttribute('role', 'treegrid');
 			if (!data.headers || data.headers.length === 0)
@@ -116,6 +114,8 @@ class TreeViewControl {
 				'contextmenu',
 				this.onContextMenu.bind(this),
 			);
+			this._container.addEventListener('dragover', this.onDragOver.bind(this));
+			this._container.addEventListener('drop', this.onDrop.bind(this));
 		}
 	}
 
@@ -344,20 +344,6 @@ class TreeViewControl {
 			document.querySelectorAll('.ui-treeview').forEach((item) => {
 				L.DomUtil.removeClass(item, 'droptarget');
 			});
-		}
-	}
-
-	setupDragAndDrop(treeViewData: TreeWidgetJSON, builder: any) {
-		if (treeViewData.enabled !== false) {
-			this._container.ondrop = (ev) => {
-				ev.preventDefault();
-				var row = ev.dataTransfer.getData('text');
-				builder.callback('treeview', 'dragend', treeViewData, row, builder);
-				this.highlightAllTreeViews(false);
-			};
-			this._container.ondragover = (event) => {
-				event.preventDefault();
-			};
 		}
 	}
 
@@ -1146,6 +1132,23 @@ class TreeViewControl {
 			);
 			e.preventDefault();
 		}
+	}
+
+	onDragOver(e: any) {
+		e.preventDefault();
+	}
+
+	onDrop(e: any) {
+		e.preventDefault();
+		const row = e.dataTransfer.getData('text');
+		this._builder.callback(
+			'treeview',
+			'dragend',
+			this._data,
+			row,
+			this._builder,
+		);
+		this.highlightAllTreeViews(false);
 	}
 }
 
