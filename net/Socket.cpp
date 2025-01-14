@@ -1378,27 +1378,11 @@ std::shared_ptr<Socket> ServerSocket::accept()
 
 int Socket::getPid() const
 {
-#ifdef __linux__
-    struct ucred creds;
-    socklen_t credSize = sizeof(struct ucred);
-    if (getsockopt(_fd, SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
-    {
+    int pid = Syscall::get_peer_pid(_fd);
+    if (pid < 0)
         LOG_SYS("Failed to get pid via peer creds on " << _fd);
-        return -1;
-    }
-    return creds.pid;
-#elif defined(__FreeBSD__)
-    struct xucred creds;
-    socklen_t credSize = sizeof(struct xucred);
-    if (getsockopt(_fd, SOL_LOCAL, LOCAL_PEERCRED, &creds, &credSize) < 0)
-    {
-        LOG_SYS("Failed to get pid via peer creds on " << _fd);
-        return -1;
-    }
-    return creds.cr_pid;
-#else
-#error Implement for your platform
-#endif
+
+    return pid;
 }
 
 // Does this socket come from the localhost ?
@@ -1429,7 +1413,7 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
 
         std::shared_ptr<Socket> _socket = createSocketFromAccept(rc, Socket::Type::Unix);
         // Sanity check this incoming socket
-#ifndef __FreeBSD__
+#ifdef __linux__
 #define CREDS_UID(c) c.uid
 #define CREDS_GID(c) c.gid
 #define CREDS_PID(c) c.pid
@@ -1441,7 +1425,7 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
             ::close(rc);
             return std::shared_ptr<Socket>(nullptr);
         }
-#else
+#elif defined(__FreeBSD__)
 #define CREDS_UID(c) c.cr_uid
 #define CREDS_GID(c) c.cr_groups[0]
 #define CREDS_PID(c) c.cr_pid
@@ -1453,6 +1437,39 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
             ::close(rc);
             return std::shared_ptr<Socket>(nullptr);
         }
+#elif defined(__APPLE__)
+
+        // On macOS, there's no single struct for all three,
+        // so define our own 'apple_creds' combining UID/GID/PID.
+        struct apple_creds {
+            uid_t uid;
+            gid_t gid;
+            pid_t pid;
+        } creds;
+
+        // Macros to unify usage in the rest of the code:
+        #define CREDS_UID(c)  ((c).uid)
+        #define CREDS_GID(c)  ((c).gid)
+        #define CREDS_PID(c)  ((c).pid)
+
+        // Get the effective UID/GID via getpeereid():
+        if (getpeereid(rc, &creds.uid, &creds.gid) != 0)
+        {
+            LOG_SYS("Failed to get peer creds (uid/gid) on " << rc);
+            ::close(rc);
+            return std::shared_ptr<Socket>(nullptr);
+        }
+
+        // Get the peer PID via LOCAL_PEERPID:
+        socklen_t pidLen = sizeof(creds.pid);
+        if (getsockopt(rc, SOL_LOCAL, LOCAL_PEERPID, &creds.pid, &pidLen) < 0)
+        {
+            LOG_SYS("Failed to get peer pid on " << rc);
+            ::close(rc);
+            return std::shared_ptr<Socket>(nullptr);
+        }
+#else
+#error Implement for your platform
 #endif
 
         uid_t uid = getuid();

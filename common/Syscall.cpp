@@ -15,6 +15,9 @@
 
 #include <cerrno>
 #include <sys/socket.h>
+#ifndef _WIN32
+#include <sys/un.h>
+#endif
 
 #if !HAVE_PIPE2
 #include <fcntl.h>
@@ -109,6 +112,35 @@ int Syscall::accept_cloexec_nonblock(int socket, struct sockaddr *address, sockl
         return fd;
 
     return set_fd_cloexec_nonblock(fd, true, true);
+#endif
+}
+
+int Syscall::get_peer_pid(int socket) {
+#ifdef __linux__
+    struct ucred creds;
+    socklen_t credSize = sizeof(struct ucred);
+    if (getsockopt(socket, SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
+        return -1;
+
+    return creds.pid;
+#elif defined(__FreeBSD__)
+    struct xucred creds;
+    socklen_t credSize = sizeof(struct xucred);
+    if (getsockopt(socket, SOL_LOCAL, LOCAL_PEERCRED, &creds, &credSize) < 0)
+        return -1;
+
+    return creds.cr_pid;
+#elif defined(__APPLE__)
+    int pid = -1;
+    socklen_t pidLen = sizeof(pid);
+
+    // Retrieve the PID of the peer connected on this Unix-domain socket
+    if (getsockopt(socket, SOL_LOCAL, LOCAL_PEERPID, &pid, &pidLen) < 0)
+        return -1;
+
+    return pid;
+#else
+#error Implement for your platform
 #endif
 }
 
