@@ -292,7 +292,7 @@ class TreeViewControl {
 		return false;
 	}
 
-	fillHeader(header: TreeHeaderJSON) {
+	fillHeader(header: TreeHeaderJSON, index: any) {
 		if (!header) return;
 
 		const th = L.DomUtil.create(
@@ -307,6 +307,8 @@ class TreeViewControl {
 		);
 
 		span.innerText = header.text;
+		th.setAttribute('role', 'columnheader');
+		th._columnIndex = index;
 
 		if (header.sortable !== false) {
 			L.DomUtil.create(
@@ -744,30 +746,16 @@ class TreeViewControl {
 		this._thead.style.gridColumn = '1 / ' + (this._columns + dummyCells + 1);
 
 		for (let index = 0; index < dummyCells; index++) {
-			this.fillHeader({ text: '', sortable: false });
+			this.fillHeader({ text: '', sortable: false }, null);
 			if (index === 0 && this._hasState)
 				L.DomUtil.addClass(this._thead.lastChild, 'ui-treeview-state-column');
 			else L.DomUtil.addClass(this._thead.lastChild, 'ui-treeview-icon-column');
 		}
 
 		for (const index in headers) {
-			this.fillHeader(headers[index]);
+			this.fillHeader(headers[index], parseInt(index) + dummyCells);
 
 			if (headers[index].sortable === false) continue;
-
-			var clickFunction = (columnIndex: number, icon: HTMLSpanElement) => {
-				return () => {
-					if (L.DomUtil.hasClass(icon, 'down'))
-						this.sortByColumn(icon, columnIndex + dummyCells, true);
-					else this.sortByColumn(icon, columnIndex + dummyCells, false);
-				};
-			};
-
-			const last = this._thead.lastChild as HTMLElement;
-			last.onclick = clickFunction(
-				parseInt(index),
-				last.querySelector('.ui-treeview-header-sort-icon'),
-			);
 		}
 	}
 
@@ -921,7 +909,22 @@ class TreeViewControl {
 			}
 
 			this.onRowClick(row);
+			return;
 		}
+
+		const header = TreeViewControl.getElement(target, 'columnheader');
+		if (header && header === this._thead.lastChild) {
+			this.onHeaderClick(
+				header,
+				header.querySelector('.ui-treeview-header-sort-icon'),
+			);
+		}
+	}
+
+	onHeaderClick(header: any, icon: any) {
+		if (L.DomUtil.hasClass(icon, 'down'))
+			this.sortByColumn(icon, header._columnIndex, true);
+		else this.sortByColumn(icon, header._columnIndex, false);
 	}
 
 	onRowClick(row: any) {
