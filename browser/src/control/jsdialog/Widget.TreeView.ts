@@ -114,8 +114,13 @@ class TreeViewControl {
 				'contextmenu',
 				this.onContextMenu.bind(this),
 			);
+			this._container.addEventListener(
+				'dragstart',
+				this.onDragStart.bind(this),
+			);
 			this._container.addEventListener('dragover', this.onDragOver.bind(this));
 			this._container.addEventListener('drop', this.onDrop.bind(this));
+			this._container.addEventListener('dragend', this.onDragEnd.bind(this));
 		}
 	}
 
@@ -332,7 +337,6 @@ class TreeViewControl {
 		this.fillCells(entry, tr, level, selectionElement);
 
 		this.setupRowProperties(tr, entry, level, selectionElement);
-		this.setupRowDragAndDrop(tr, this._data, entry, this._builder);
 	}
 
 	highlightAllTreeViews(highlight: boolean) {
@@ -344,37 +348,6 @@ class TreeViewControl {
 			document.querySelectorAll('.ui-treeview').forEach((item) => {
 				L.DomUtil.removeClass(item, 'droptarget');
 			});
-		}
-	}
-
-	setupRowDragAndDrop(
-		tr: HTMLElement,
-		treeViewData: TreeWidgetJSON,
-		entry: TreeEntryJSON,
-		builder: any,
-	) {
-		if (treeViewData.enabled !== false && entry.state == null) {
-			tr.draggable = treeViewData.draggable === false ? false : true;
-
-			tr.ondragstart = (ev) => {
-				ev.dataTransfer.setData('text', '' + entry.row);
-				builder.callback(
-					'treeview',
-					'dragstart',
-					treeViewData,
-					entry.row,
-					builder,
-				);
-
-				this.highlightAllTreeViews(true);
-			};
-
-			tr.ondragend = () => {
-				this.highlightAllTreeViews(false);
-			};
-			tr.ondragover = (event) => {
-				event.preventDefault();
-			};
 		}
 	}
 
@@ -400,6 +373,10 @@ class TreeViewControl {
 		if (entry.ondemand || entry.collapsed) {
 			L.DomUtil.addClass(tr, 'collapsed');
 			tr.setAttribute('aria-expanded', 'false');
+		}
+
+		if (entry.state == null) {
+			tr.draggable = this._data.draggable === false ? false : true;
 		}
 	}
 
@@ -1134,6 +1111,25 @@ class TreeViewControl {
 		}
 	}
 
+	// Drag & Drop
+	//
+	onDragStart(e: any) {
+		const target = e.target;
+		const row = TreeViewControl.getElement(target, 'row');
+		if (row && row.draggable) {
+			e.dataTransfer.setData('text', '' + row._row);
+			this._builder.callback(
+				'treeview',
+				'dragstart',
+				this._data,
+				row._row,
+				this._builder,
+			);
+
+			this.highlightAllTreeViews(true);
+		}
+	}
+
 	onDragOver(e: any) {
 		e.preventDefault();
 	}
@@ -1148,6 +1144,10 @@ class TreeViewControl {
 			row,
 			this._builder,
 		);
+		this.highlightAllTreeViews(false);
+	}
+
+	onDragEnd() {
 		this.highlightAllTreeViews(false);
 	}
 }
