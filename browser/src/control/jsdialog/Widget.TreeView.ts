@@ -175,15 +175,10 @@ class TreeViewControl {
 		return false;
 	}
 
-	createCheckbox(
-		parent: HTMLElement,
-		treeViewData: TreeWidgetJSON,
-		builder: any,
-		entry: TreeEntryJSON,
-	) {
+	createCheckbox(parent: HTMLElement, entry: TreeEntryJSON) {
 		const checkbox = L.DomUtil.create(
 			'input',
-			builder.options.cssClass + ' ui-treeview-checkbox',
+			this._builder.options.cssClass + ' ui-treeview-checkbox',
 			parent,
 		);
 		checkbox.type = 'checkbox';
@@ -194,15 +189,10 @@ class TreeViewControl {
 		return checkbox;
 	}
 
-	createRadioButton(
-		parent: HTMLElement,
-		treeViewData: TreeWidgetJSON,
-		builder: any,
-		entry: TreeEntryJSON,
-	) {
+	createRadioButton(parent: HTMLElement, entry: TreeEntryJSON) {
 		const radioButton = L.DomUtil.create(
 			'input',
-			builder.options.cssClass + ' ui-treeview-checkbox',
+			this._builder.options.cssClass + ' ui-treeview-checkbox',
 			parent,
 		);
 		radioButton.type = 'radio';
@@ -217,19 +207,9 @@ class TreeViewControl {
 		let selectionElement: any;
 		const checkboxtype = this._data.checkboxtype;
 		if (checkboxtype == 'radio') {
-			selectionElement = this.createRadioButton(
-				parent,
-				this._data,
-				this._builder,
-				entry,
-			);
+			selectionElement = this.createRadioButton(parent, entry);
 		} else {
-			selectionElement = this.createCheckbox(
-				parent,
-				this._data,
-				this._builder,
-				entry,
-			);
+			selectionElement = this.createCheckbox(parent, entry);
 		}
 		selectionElement._state = entry.state;
 		selectionElement._row = entry.row;
@@ -265,14 +245,10 @@ class TreeViewControl {
 		return iconId;
 	}
 
-	createImageColumn(
-		parentContainer: HTMLElement,
-		builder: any,
-		imageUrl: string,
-	) {
+	createImageColumn(parentContainer: HTMLElement, imageUrl: string) {
 		const colorPreviewButton = L.DomUtil.create(
 			'img',
-			builder.options.cssClass + ' ui-treeview-checkbox',
+			this._builder.options.cssClass + ' ui-treeview-checkbox',
 			parentContainer,
 		);
 		colorPreviewButton.src = imageUrl;
@@ -386,7 +362,6 @@ class TreeViewControl {
 		parent: HTMLElement,
 		entry: TreeEntryJSON,
 		index: any,
-		builder: any,
 	) {
 		const icon = L.DomUtil.create('img', 'ui-treeview-icon', parent);
 
@@ -394,35 +369,25 @@ class TreeViewControl {
 
 		const iconId = this.getCellIconId(entry.columns[index]);
 		L.DomUtil.addClass(icon, iconId + 'img');
-		const iconName = builder._createIconURL(iconId, true);
-		L.LOUtil.setImage(icon, iconName, builder.map);
+		const iconName = this._builder._createIconURL(iconId, true);
+		L.LOUtil.setImage(icon, iconName, this._builder.map);
 		icon.tabIndex = -1;
 		icon.alt = ''; //In this case, it is advisable to use an empty alt tag for the icons, as the information of the function is available in text form
 	}
 
-	createTextCell(
-		parent: HTMLElement,
-		entry: TreeEntryJSON,
-		index: any,
-		builder: any,
-	) {
+	createTextCell(parent: HTMLElement, entry: TreeEntryJSON, index: any) {
 		const cell = L.DomUtil.create(
 			'span',
-			builder.options.cssClass + ' ui-treeview-cell-text',
+			this._builder.options.cssClass + ' ui-treeview-cell-text',
 			parent,
 		);
 		cell.innerText = entry.columns[index].text || entry.text;
 	}
 
-	createLinkCell(
-		parent: HTMLElement,
-		entry: TreeEntryJSON,
-		index: any,
-		builder: any,
-	) {
+	createLinkCell(parent: HTMLElement, entry: TreeEntryJSON, index: any) {
 		const cell = L.DomUtil.create(
 			'span',
-			builder.options.cssClass + ' ui-treeview-cell-text',
+			this._builder.options.cssClass + ' ui-treeview-cell-text',
 			parent,
 		);
 		const link = L.DomUtil.create('a', '', cell);
@@ -483,24 +448,24 @@ class TreeViewControl {
 				: entry.columns[index].expandedimage;
 			if (img) {
 				L.DomUtil.addClass(td, 'ui-treeview-icon-column');
-				this.createImageColumn(text, this._builder, img);
+				this.createImageColumn(text, img);
 			} else if (
 				entry.columns[index].collapsed ||
 				entry.columns[index].expanded
 			) {
 				L.DomUtil.addClass(td, 'ui-treeview-icon-column');
 				L.DomUtil.addClass(span, 'ui-treeview-expandable-with-icon');
-				this.createExpandableIconCell(text, entry, index, this._builder);
+				this.createExpandableIconCell(text, entry, index);
 			} else if (
 				entry.columns[index].link &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				this.createLinkCell(text, entry, index, this._builder);
+				this.createLinkCell(text, entry, index);
 			} else if (
 				entry.columns[index].text &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				this.createTextCell(text, entry, index, this._builder);
+				this.createTextCell(text, entry, index);
 			}
 
 			// row sub-elements
@@ -513,21 +478,35 @@ class TreeViewControl {
 		}
 	}
 
-	toggleEntry(
-		span: HTMLElement,
-		treeViewData: TreeWidgetJSON,
-		row: any,
-		builder: any,
-	) {
+	toggleEntry(span: HTMLElement, row: any) {
 		if (L.DomUtil.hasClass(span, 'collapsed'))
-			builder.callback('treeview', 'expand', treeViewData, row, builder);
-		else builder.callback('treeview', 'collapse', treeViewData, row, builder);
+			this._builder.callback(
+				'treeview',
+				'expand',
+				this._data,
+				row,
+				this._builder,
+			);
+		else
+			this._builder.callback(
+				'treeview',
+				'collapse',
+				this._data,
+				row,
+				this._builder,
+			);
 		$(span).toggleClass('collapsed');
 	}
 
-	expandEntry(span: any, treeViewData: TreeWidgetJSON, row: any, builder: any) {
+	expandEntry(span: any, row: any) {
 		if (span._ondemand && L.DomUtil.hasClass(span, 'collapsed'))
-			builder.callback('treeview', 'expand', treeViewData, row, builder);
+			this._builder.callback(
+				'treeview',
+				'expand',
+				this._data,
+				row,
+				this._builder,
+			);
 		$(span).toggleClass('collapsed');
 	}
 
@@ -883,10 +862,10 @@ class TreeViewControl {
 		});
 	}
 
-	build(data: TreeWidgetJSON, builder: any, parentContainer: HTMLElement) {
-		this.preprocessColumnData(data.entries);
-		this.fillHeaders(data.headers);
-		this.fillEntries(data.entries, 1, this._tbody);
+	build(parentContainer: HTMLElement) {
+		this.preprocessColumnData(this._data.entries);
+		this.fillHeaders(this._data.headers);
+		this.fillEntries(this._data.entries, 1, this._tbody);
 
 		parentContainer.appendChild(this._container);
 
@@ -985,9 +964,9 @@ class TreeViewControl {
 
 	onExpanderClick(expander: any) {
 		if (expander._ondemand) {
-			this.expandEntry(expander, this._data, expander._row, this._builder);
+			this.expandEntry(expander, expander._row);
 		} else {
-			this.toggleEntry(expander, this._data, expander._row, this._builder);
+			this.toggleEntry(expander, expander._row);
 		}
 	}
 
@@ -1161,7 +1140,7 @@ JSDialog.treeView = function (
 	builder: any,
 ) {
 	var treeView = new TreeViewControl(data, builder);
-	treeView.build(data, builder, parentContainer);
+	treeView.build(parentContainer);
 
 	return false;
 };
