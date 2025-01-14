@@ -106,7 +106,12 @@ if !ENABLE_DEBUG
 AM_CPPFLAGS += -DNDEBUG
 endif
 
-AM_LDFLAGS = -Wl,-E -lpam $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
+AM_LDFLAGS = -lpam $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
+if !ENABLE_MACOS
+AM_LDFLAGS += -Wl,-E
+else
+AM_LDFLAGS += -lzstd -lpng
+endif
 
 # Clang's linker doesn't like -pthread.
 if !HAVE_CLANG

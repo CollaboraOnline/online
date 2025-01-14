@@ -1044,11 +1044,17 @@ AC_SUBST(IOSAPP_BUNDLE_VERSION)
 # We want this to be general, regardless of using --enable-macosapp, and it
 # could be potentially extended to handle the other defines like IOS, WASMAPP
 # or _WINDOWS (but at least iOS and Windows are using their own config.h)
+ENABLE_MACOS=
 case "$host_os" in
     darwin*)
+        ENABLE_MACOS=true
         AC_DEFINE([MACOS], [1], [Define to 1 if building for macOS])
         ;;
 esac
+
+# Are we building on macOS at all, but eg. only the coolwsd?
+AC_SUBST(ENABLE_MACOS)
+AM_CONDITIONAL([ENABLE_MACOS], [test "$ENABLE_MACOS" = "true"])
 
 ENABLE_MACOSAPP=
 #MACOSAPP_BUNDLE_VERSION=
@@ -1064,6 +1070,7 @@ if test "$enable_macosapp" = "yes"; then
    #echo $MACOSAPP_BUNDLE_VERSION >BUNDLE-VERSION
 fi
 
+# Are we building the macOS CODA?
 AC_SUBST(ENABLE_MACOSAPP)
 AM_CONDITIONAL([ENABLE_MACOSAPP], [test "$ENABLE_MACOSAPP" = "true"])
 #AC_SUBST(MACOSAPP_BUNDLE_VERSION)
@@ -1467,7 +1474,7 @@ AS_IF([test `uname -s` != Darwin],
                       [],
                       [AC_MSG_ERROR([dlopen not found])])])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_MACOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
       [PKG_CHECK_MODULES([PNG], [libpng])
 dnl    deflated HTTP / web-page serving
        PKG_CHECK_MODULES([ZLIB], [zlib])
