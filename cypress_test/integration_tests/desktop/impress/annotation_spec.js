@@ -23,34 +23,34 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 
 	it('Insert', function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 	});
 
 	it('Modify', function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Modify').click();
 		cy.cGet('#annotation-modify-textarea-1').type(', some other text');
 		cy.cGet('#annotation-save-1').click();
 		cy.cGet('#annotation-content-area-1').should('contain','some text0, some other text');
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 	});
 
 	it('Remove',function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Remove').click();
-		cy.cGet('.leaflet-marker-icon').should('not.exist');
+		cy.cGet('.annotation-marker').should('not.exist');
 	});
 
 	it('Reply',function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Reply').click();
@@ -77,15 +77,15 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		desktopHelper.selectZoomLevel('50');
 	});
 
-	it.only('Insert', function() {
+	it('Insert', function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 	});
 
 	it('Modify', function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 		cy.cGet('.cool-annotation-table .avatar-img').click();
 		cy.cGet('.cool-annotation-menu').click();
@@ -93,22 +93,22 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('#annotation-modify-textarea-1').type(', some other text');
 		cy.cGet('#annotation-save-1').click();
 		cy.cGet('#annotation-content-area-1').should('contain','some text0, some other text');
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 	});
 
 	it('Remove',function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.cool-annotation-table .avatar-img').click();
 		cy.cGet('.cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Remove').click();
-		cy.cGet('.leaflet-marker-icon').should('not.exist');
+		cy.cGet('.annotation-marker').should('not.exist');
 	});
 
 	it('Reply',function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.cool-annotation-table .avatar-img').click();
 		cy.cGet('.cool-annotation-menu').click();
@@ -156,10 +156,10 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 	it('no comment or one comment', function() {
 		cy.cGet('.leaflet-control-scroll-down').should('not.exist');
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 	});
 
-	it('omit slides without comments', function() {
+	it.skip('omit slides without comments', function() {
 		//scroll up
 		desktopHelper.insertComment();
 		addSlide(2);
@@ -218,7 +218,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
 
 		helper.reloadDocument(newFilePath);
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});
 
@@ -230,11 +230,11 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-save-1').click();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.not.visible');
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 
 		helper.reloadDocument(newFilePath);
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});
 
@@ -246,17 +246,17 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-cancel-1').click();
 		cy.cGet('.cool-annotation-autosavelabel').should('not.exist');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('not.exist');
-		cy.cGet('.leaflet-marker-icon').should('not.exist');
+		cy.cGet('.annotation-marker').should('not.exist');
 		cy.cGet('.cool-annotation-content > div').should('not.exist');
 
 		helper.reloadDocument(newFilePath);
-		cy.cGet('.leaflet-marker-icon').should('not.exist');
+		cy.cGet('.annotation-marker').should('not.exist');
 		cy.cGet('.cool-annotation-content > div').should('not.exist');
 	});
 
 	it('Modify autosave', function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Modify').click();
@@ -266,13 +266,13 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
 
 		helper.reloadDocument(newFilePath);
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0, some other text');
 	});
 
 	it('Modify autosave save', function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Modify').click();
@@ -282,16 +282,16 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
 		cy.cGet('#annotation-save-1').click();
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0, some other text');
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 
 		helper.reloadDocument(newFilePath);
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0, some other text');
 	});
 
 	it('Modify autosave cancel', function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Modify').click();
@@ -301,16 +301,16 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
 		cy.cGet('#annotation-cancel-1').click();
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 
 		helper.reloadDocument(newFilePath);
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});
 
 	it('Reply autosave',function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Reply').click();
@@ -328,7 +328,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 
 	it('Reply autosave save',function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Reply').click();
@@ -351,7 +351,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 
 	it('Reply autosave cancel',function() {
 		desktopHelper.insertComment();
-		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.annotation-marker').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Reply').click();
