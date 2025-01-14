@@ -297,12 +297,12 @@ protected:
 
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
-            const std::string json = jsonStream.str();
+            std::string json = jsonStream.str();
             LOG_TST("FakeWOPIHost: Response to CheckFileInfo "
                     << Poco::URI(request.getURI()).getPath() << ": 200 OK: " << json);
 
             httpResponse->set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            httpResponse->setBody(json, "application/json; charset=utf-8");
+            httpResponse->setBody(std::move(json), "application/json; charset=utf-8");
         }
         else
         {
@@ -509,13 +509,13 @@ protected:
         else
         {
             // By default we return success.
-            const std::string body = "{\"LastModifiedTime\": \"" +
-                                     Util::getIso8601FracformatTime(getFileLastModifiedTime()) +
-                                     "\" }";
+            std::string body = "{\"LastModifiedTime\": \"" +
+                               Util::getIso8601FracformatTime(getFileLastModifiedTime()) +
+                               "\" }";
             LOG_TST("FakeWOPIHost: Response (default) to POST " << uriReq.getPath() << ": 200 OK "
                                                                 << body);
             http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.setBody(body, "application/json; charset=utf-8");
+            httpResponse.setBody(std::move(body), "application/json; charset=utf-8");
             socket->sendAndShutdown(httpResponse);
         }
 
