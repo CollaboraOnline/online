@@ -12,7 +12,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global app $ L */
+/* global app $ L cool */
 
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
@@ -108,14 +108,17 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	newAnnotation: function (comment) {
+	newAnnotation: function (commentData) {
 		var ratio = this._tileWidthTwips / this._tileSize;
 		var docTopLeft = app.sectionContainer.getDocumentTopLeft();
 		docTopLeft = [docTopLeft[0] * ratio, docTopLeft[1] * ratio];
-		comment.anchorPos = [docTopLeft[0], docTopLeft[1]];
-		comment.rectangle = [docTopLeft[0], docTopLeft[1], 566, 566];
+		commentData.anchorPos = [docTopLeft[0], docTopLeft[1]];
+		commentData.rectangle = [docTopLeft[0], docTopLeft[1], 566, 566];
 
-		comment.parthash = app.impress.partList[this._selectedPart].hash;
+		commentData.parthash = app.impress.partList[this._selectedPart].hash;
+
+		const comment = new cool.Comment(commentData, {}, app.sectionContainer.getSectionWithName(L.CSections.CommentList.name));
+
 		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(annotation);
 	},

@@ -60,8 +60,8 @@ export class Comment extends CanvasSectionObject {
 			options = {};
 
 		this.sectionProperties.commentListSection = commentListSectionPointer;
-
 		this.sectionProperties.docLayer = this.map._docLayer;
+
 		this.sectionProperties.selectedAreaPoint = null;
 		this.sectionProperties.cellCursorPoint = null;
 
@@ -119,7 +119,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.usedTextColor = this.sectionProperties.data.color; // Writer.
 		this.sectionProperties.showSelectedCoordinate = true; // Writer.
 
-		if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+		if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			this.sectionProperties.parthash = this.sectionProperties.data.parthash;
 			this.sectionProperties.partIndex = app.impress.getIndexFromSlideHash(this.sectionProperties.parthash);
 		}
@@ -165,7 +165,7 @@ export class Comment extends CanvasSectionObject {
 		L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
 
 		// Since this is a late called function, if the width is enough, we shouldn't collapse the comments.
-		if (this.sectionProperties.docLayer._docType !== 'text' || this.sectionProperties.commentListSection.isCollapsed === true)
+		if (app.map._docLayer._docType !== 'text' || this.sectionProperties.commentListSection.isCollapsed === true)
 			this.sectionProperties.container.style.visibility = 'hidden';
 
 		this.sectionProperties.nodeModify.style.display = 'none';
@@ -233,7 +233,7 @@ export class Comment extends CanvasSectionObject {
 
 		this.sectionProperties.container.style.visibility = 'hidden';
 
-		if (this.sectionProperties.commentMarkerSubSection === null)
+		if (this.sectionProperties.commentMarkerSubSection === null && app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing')
 			this.createMarkerSubSection();
 
 		this.doPendingInitializationInView();
@@ -284,7 +284,7 @@ export class Comment extends CanvasSectionObject {
 		imgAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
 		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 
-		if (this.sectionProperties.docLayer._docType !== 'spreadsheet') {
+		if (app.map._docLayer._docType !== 'spreadsheet') {
 			this.sectionProperties.collapsedInfoNode = L.DomUtil.create('div', 'cool-annotation-info-collapsed', tdImg);
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';
 		}
@@ -413,7 +413,7 @@ export class Comment extends CanvasSectionObject {
 	private textAreaInput(ev: any): void {
 		this.sectionProperties.autoSave.innerText = '';
 
-		if (ev && this.sectionProperties.docLayer._docType === 'text') {
+		if (ev && app.map._docLayer._docType === 'text') {
 			// special handling for mentions
 			this.map?.mention.handleMentionInput(ev, this.isNewPara());
 		}
@@ -495,7 +495,7 @@ export class Comment extends CanvasSectionObject {
 
 	private setPositionAndSize (): void {
 		var rectangles = this.sectionProperties.data.rectanglesOriginal;
-		if (rectangles && this.sectionProperties.docLayer._docType === 'text') {
+		if (rectangles && app.map._docLayer._docType === 'text') {
 			var xMin: number = Infinity, yMin: number = Infinity, xMax: number = 0, yMax: number = 0;
 			for (var i = 0; i < rectangles.length; i++) {
 				if (rectangles[i][0] < xMin)
@@ -522,10 +522,10 @@ export class Comment extends CanvasSectionObject {
 			if (this.size[0] < 5)
 				this.size[0] = 5;
 		}
-		else if (this.sectionProperties.data.cellRange && this.sectionProperties.docLayer._docType === 'spreadsheet') {
+		else if (this.sectionProperties.data.cellRange && app.map._docLayer._docType === 'spreadsheet') {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			this.size = this.calcCellSize();
-			var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
+			var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 			let startX = cellPos[0];
 			if (this.isCalcRTL()) { // Mirroring is done in setPosition
 				const sizeX = cellPos[2];
@@ -534,8 +534,8 @@ export class Comment extends CanvasSectionObject {
 			this.setShowSection(true);
 			var position: Array<number> = [Math.round(cellPos[0] * ratio), Math.round(cellPos[1] * ratio)];
 			var splitPosCore = {x: 0, y: 0};
-			if (this.map._docLayer.getSplitPanesContext())
-				splitPosCore = this.map._docLayer.getSplitPanesContext().getSplitPos();
+			if (app.map._docLayer.getSplitPanesContext())
+				splitPosCore = app.map._docLayer.getSplitPanesContext().getSplitPos();
 
 			splitPosCore.x *= app.dpiScale;
 			splitPosCore.y *= app.dpiScale;
@@ -552,7 +552,7 @@ export class Comment extends CanvasSectionObject {
 
 			this.setPosition(position[0], position[1]);
 		}
-		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+		else if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			this.size = [Math.round(this.sectionProperties.imgSize[0] * app.dpiScale), Math.round(this.sectionProperties.imgSize[1] * app.dpiScale)];
 			this.setPosition(Math.round(this.sectionProperties.data.rectangle[0] * ratio), Math.round(this.sectionProperties.data.rectangle[1] * ratio));
@@ -560,26 +560,26 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public removeHighlight (): void {
-		if (this.sectionProperties.docLayer._docType === 'text') {
+		if (app.map._docLayer._docType === 'text') {
 			this.sectionProperties.usedTextColor = this.sectionProperties.data.color;
 
 			this.sectionProperties.isHighlighted = false;
 		}
-		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+		else if (app.map._docLayer._docType === 'spreadsheet') {
 			this.backgroundColor = null;
 			this.backgroundOpacity = 1;
 		}
 	}
 
 	public highlight (): void {
-		if (this.sectionProperties.docLayer._docType === 'text') {
+		if (app.map._docLayer._docType === 'text') {
 			this.sectionProperties.usedTextColor = this.sectionProperties.highlightedTextColor;
 
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
 			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
-		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+		else if (app.map._docLayer._docType === 'spreadsheet') {
 			this.backgroundColor = '#777777'; //background: rgba(119, 119, 119, 0.25);
 			this.backgroundOpacity = 0.25;
 
@@ -587,7 +587,7 @@ export class Comment extends CanvasSectionObject {
 			var y: number = Math.round(this.position[1] / app.dpiScale);
 			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
 		}
-		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+		else if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			var x: number = Math.round(this.position[0] / app.dpiScale);
 			var y: number = Math.round(this.position[1] / app.dpiScale);
 			(this.containerObject.getSectionWithName(L.CSections.Scroll.name) as any as cool.ScrollSection).onScrollTo({x: x, y: y});
@@ -719,9 +719,9 @@ export class Comment extends CanvasSectionObject {
 		this.convertRectanglesToViewCoordinates();
 		this.convertRectanglesToCoreCoordinates();
 		this.setPositionAndSize();
-		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+		if (app.map._docLayer._docType === 'spreadsheet')
 			this.positionCalcComment();
-		else if (this.sectionProperties.docLayer._docType === "presentation" || this.sectionProperties.docLayer._docType === "drawing") {
+		else if (app.map._docLayer._docType === "presentation" || app.map._docLayer._docType === "drawing") {
 			if (this.sectionProperties.commentMarkerSubSection !== null) {
 				this.sectionProperties.commentMarkerSubSection.sectionProperties.data = this.sectionProperties.data;
 				this.sectionProperties.commentMarkerSubSection.setPosition(
@@ -736,7 +736,7 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.data.rectangle === null)
 			return;
 
-		const showMarker = app.impress.partList[this.sectionProperties.docLayer._selectedPart].hash === parseInt(this.sectionProperties.data.parthash) ||
+		const showMarker = app.impress.partList[app.map._docLayer._selectedPart].hash === parseInt(this.sectionProperties.data.parthash) ||
 							app.file.fileBasedView;
 
 		this.sectionProperties.commentMarkerSubSection = new CommentMarkerSubSection(
@@ -819,7 +819,7 @@ export class Comment extends CanvasSectionObject {
 	public positionCalcComment(): void {
 		if (!(<any>window).mode.isMobile()) {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-			var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
+			var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 			var originalSize = [Math.round((cellPos[2]) * ratio), Math.round((cellPos[3]) * ratio)];
 
 			const startX = this.isCalcRTL() ? this.myTopLeft[0] - this.getCommentWidth() : this.myTopLeft[0] + originalSize[0] - 3;
@@ -873,13 +873,13 @@ export class Comment extends CanvasSectionObject {
 
 		// We don't cache the hidden state for spreadsheets. Only one comment can be
 		// visible and they're hidden when scrolling, so it's easier this way.
-		if (this.sectionProperties.docLayer._docType === 'text') {
+		if (app.map._docLayer._docType === 'text') {
 			this.showWriter();
 			this.hidden = false;
-		} else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+		} else if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			this.showImpressDraw();
 			this.hidden = false;
-		} else if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+		} else if (app.map._docLayer._docType === 'spreadsheet')
 			this.showCalc();
 
 		this.setLayoutClass();
@@ -930,7 +930,7 @@ export class Comment extends CanvasSectionObject {
 		if (!autoSavedComment)
 			return false;
 
-		var authorMatch = this.sectionProperties.data.author === this.map.getViewName(this.sectionProperties.docLayer._viewId);
+		var authorMatch = this.sectionProperties.data.author === this.map.getViewName(app.map._docLayer._viewId);
 		return authorMatch;
 	}
 
@@ -944,17 +944,17 @@ export class Comment extends CanvasSectionObject {
 			return;
 		}
 
-		if (this.sectionProperties.docLayer._docType === 'text')
+		if (app.map._docLayer._docType === 'text')
 			this.hideWriter();
-		else if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+		else if (app.map._docLayer._docType === 'spreadsheet')
 			this.hideCalc();
-		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing')
+		else if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing')
 			this.hideImpressDraw();
 	}
 
 	private isInsideActivePart() {
 		// Impress and Draw only.
-		return this.sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart;
+		return this.sectionProperties.partIndex === app.map._docLayer._selectedPart;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -1058,7 +1058,7 @@ export class Comment extends CanvasSectionObject {
 			this.handleSaveCommentButton(e);
 
 		this.onCancelClick(e);
-		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+		if (app.map._docLayer._docType === 'spreadsheet')
 			this.hideCalc();
 		cool.CommentSection.commentWasAutoAdded = false;
 		cool.CommentSection.autoSavedComment = null;
@@ -1075,7 +1075,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.nodeModifyText.innerText = this.sectionProperties.contentText.origText;
 		}
 		this.sectionProperties.nodeReplyText.innerText = '';
-		if (this.sectionProperties.docLayer._docType !== 'spreadsheet')
+		if (app.map._docLayer._docType !== 'spreadsheet')
 			this.show();
 		this.sectionProperties.commentListSection.cancel(this);
 	}
@@ -1115,7 +1115,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
-		if (this.sectionProperties.docLayer._docType === 'text' && this.map.mention?.isTypingMention()) {
+		if (app.map._docLayer._docType === 'text' && this.map.mention?.isTypingMention()) {
 			return;
 		}
 		if (!this.sectionProperties.commentContainerRemoved) {
@@ -1144,7 +1144,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocusReply (e: any): void {
-		if (this.sectionProperties.docLayer._docType === 'text' && this.map.mention?.isTypingMention()) {
+		if (app.map._docLayer._docType === 'text' && this.map.mention?.isTypingMention()) {
 			return;
 		}
 		if (this.sectionProperties.nodeReplyText.innerText !== '') {
@@ -1314,7 +1314,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public onClick (point: Array<number>, e: MouseEvent): void {
-		if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+		if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
 			e.stopPropagation();
 			this.stopPropagating();
@@ -1323,7 +1323,7 @@ export class Comment extends CanvasSectionObject {
 
 	public onDraw (): void {
 		if (this.sectionProperties.showSelectedCoordinate) {
-			if (this.sectionProperties.docLayer._docType === 'text') {
+			if (app.map._docLayer._docType === 'text') {
 				var rectangles: Array<any> = this.sectionProperties.data.rectangles;
 				if (rectangles) {
 					this.context.fillStyle = this.sectionProperties.usedTextColor;
@@ -1341,8 +1341,8 @@ export class Comment extends CanvasSectionObject {
 					this.context.globalAlpha = 1;
 				}
 			}
-			else if (this.sectionProperties.docLayer._docType === 'spreadsheet' &&
-				 parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
+			else if (app.map._docLayer._docType === 'spreadsheet' &&
+				 parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart) {
 
 				var cellSize = this.calcCellSize();
 				if (cellSize[0] !== 0 && cellSize[1] !== 0) { // don't draw notes in hidden cells
@@ -1383,8 +1383,8 @@ export class Comment extends CanvasSectionObject {
 		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
 		// Control.ColumnHeader.js file is not affected by this situation, because map element (so Hammer.js) doesn't cover headers.
 		if (!this.containerObject.isDraggingSomething() && (<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
-			if (this.sectionProperties.docLayer._docType === 'presentataion' || this.sectionProperties.docLayer._docType === 'drawing')
-				this.sectionProperties.docLayer._openCommentWizard(this);
+			if (app.map._docLayer._docType === 'presentataion' || app.map._docLayer._docType === 'drawing')
+				app.map._docLayer._openCommentWizard(this);
 			this.onMouseEnter();
 			this.onClick(point, e);
 		}
@@ -1395,7 +1395,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private calcContinueWithMouseEvent (): boolean {
-		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+		if (app.map._docLayer._docType === 'spreadsheet') {
 			var conditions: boolean = !this.isEdit();
 			if (conditions) {
 				var sc = this.sectionProperties.commentListSection.sectionProperties.selectedComment;
@@ -1411,7 +1411,7 @@ export class Comment extends CanvasSectionObject {
 
 	public calcCellSize (): number[] {
 		var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-		var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
+		var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 		return [Math.round((cellPos[2]) * ratio), Math.round((cellPos[3]) * ratio)];
 	}
 
@@ -1421,7 +1421,7 @@ export class Comment extends CanvasSectionObject {
 			// If mouse pointer goes to HTML element, onMouseLeave event shouldn't be fired.
 			// But mouse pointer will have left the borders of this section and onMouseLeave event will be fired.
 			// Let's do it properly, when mouse is above this section, we will make this section's size bigger and onMouseLeave event will not be fired.
-			if (parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
+			if (parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart) {
 				var sc = this.sectionProperties.commentListSection.sectionProperties.selectedComment;
 				if (sc) {
 					if (!sc.isEdit())
@@ -1432,7 +1432,7 @@ export class Comment extends CanvasSectionObject {
 
 				var containerWidth: number = this.sectionProperties.container.getBoundingClientRect().width;
 				var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-				var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
+				var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 				this.size = [Math.round((cellPos[2]) * ratio + containerWidth), Math.round((cellPos[3]) * ratio)];
 				this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
 				this.show();
@@ -1442,7 +1442,7 @@ export class Comment extends CanvasSectionObject {
 
 	public onMouseLeave (point: Array<number>): void {
 		if (this.calcContinueWithMouseEvent()) {
-			if (parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
+			if (parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart) {
 				// Revert the changes we did on "onMouseEnter" event.
 				this.size = this.calcCellSize();
 				if (point) {
@@ -1494,7 +1494,7 @@ export class Comment extends CanvasSectionObject {
 
 	public setAsRootComment(): void {
 		this.sectionProperties.data.parent = '0';
-		if (this.sectionProperties.docLayer._docType === 'text')
+		if (app.map._docLayer._docType === 'text')
 			this.sectionProperties.data.parentId = '0';
 	}
 
@@ -1547,20 +1547,20 @@ export class Comment extends CanvasSectionObject {
 		if (!this.isEdit())
 			this.show();
 
-		if (this.isRootComment() || this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+		if (this.isRootComment() || app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			this.sectionProperties.container.style.display = '';
 			this.sectionProperties.container.style.visibility = 'hidden';
 		}
 		this.updateThreadInfoIndicator();
 		if (this.sectionProperties.data.resolved === 'false'
 		|| this.sectionProperties.commentListSection.sectionProperties.showResolved
-		|| this.sectionProperties.docLayer._docType === 'presentation'
-		|| this.sectionProperties.docLayer._docType === 'drawing')
+		|| app.map._docLayer._docType === 'presentation'
+		|| app.map._docLayer._docType === 'drawing')
 			L.DomUtil.addClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 	}
 
 	public updateThreadInfoIndicator(replycount:number | string = -1): void {
-		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+		if (app.map._docLayer._docType === 'spreadsheet')
 			return;
 
 		var innerText;
@@ -1588,7 +1588,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.container.style.display = '';
 			this.sectionProperties.container.style.visibility = '';
 		}
-		if (this.sectionProperties.docLayer._docType === 'text')
+		if (app.map._docLayer._docType === 'text')
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';
 		L.DomUtil.removeClass(this.sectionProperties.container, 'cool-annotation-collapsed-show');
 	}
