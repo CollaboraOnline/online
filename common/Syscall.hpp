@@ -24,6 +24,11 @@ namespace Syscall {
     int accept_cloexec_nonblock(int socket, struct sockaddr *address, socklen_t *address_len);
 
     /**
+     * Retrieve the PID of the peer connected on this Unix-domain socket.
+     */
+    int get_peer_pid(int socket);
+
+    /**
      * Implement pipe2() on platforms that don't have it.
      */
     int pipe2(int pipefd[2], int flags);
