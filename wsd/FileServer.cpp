@@ -465,9 +465,16 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                 fileInfo->set("SharedSettings", sharedSettings);
             }
 
+            // Cypress tests both assume that tests start in the default config, e.g.
+            // spell checking and sidebar enabled, and some tests assume they can override
+            // features by changing localStorage before loading a document.
+            bool cypressUserConfig = localPath.find("cypress_test") != std::string::npos;
+
             {
                 Poco::JSON::Object::Ptr userSettings = new Poco::JSON::Object();
-                std::string uri = COOLWSD::getServerURL() + "/wopi/settings/userconfig.json";
+                std::string userConfig = !cypressUserConfig ? "/wopi/settings/userconfig.json"
+                                                            : "/wopi/settings/cypressuserconfig.json";
+                std::string uri = COOLWSD::getServerURL() + userConfig;
                 userSettings->set("uri", Util::trim(uri));
                 userSettings->set("stamp", etagString);
                 fileInfo->set("UserSettings", userSettings);
@@ -617,7 +624,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     void handlePresetRequest(const std::string& kind, const std::string& etagString,
                              const std::string& prefix,
                              const std::shared_ptr<StreamSocket>& socket,
-                             std::vector<asset>& items)
+                             const std::vector<asset>& items,
+                             bool serveBrowserSetttings)
     {
         Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
         configInfo->set("kind", kind);
@@ -643,8 +651,11 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         configInfo->set("autotext", configAutoTexts);
         configInfo->set("wordbook", configDictionaries);
 
-        if (kind == "user")
+        if (serveBrowserSetttings)
+        {
+            assert(kind == "user");
             configInfo->set("browserSettings", getBrowserSettingJSON());
+        }
 
         std::ostringstream jsonStream;
         configInfo->stringify(jsonStream);
@@ -716,15 +727,16 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
         if (request.getMethod() == "GET" && configPath.ends_with("config.json"))
         {
-            if (configPath == "/userconfig.json")
+            if (configPath == "/userconfig.json" || configPath == "/cypressuserconfig.json")
             {
                 auto items = getAssetVec(PresetType::User);
-                handlePresetRequest("user", etagString, prefix, socket, items);
+                bool serveBrowerSettings = configPath != "/cypressuserconfig.json";
+                handlePresetRequest("user", etagString, prefix, socket, items, serveBrowerSettings);
             }
             else if (configPath == "/sharedconfig.json")
             {
                 auto items = getAssetVec(PresetType::Shared);
-                handlePresetRequest("shared", etagString, prefix, socket, items);
+                handlePresetRequest("shared", etagString, prefix, socket, items, false);
             }
             else
                 throw BadRequestException("Invalid Config Request: " + configPath);
