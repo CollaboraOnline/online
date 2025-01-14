@@ -38,7 +38,7 @@
 #include <common/HexUtil.hpp>
 #include <Util.hpp>
 
-#ifdef __FreeBSD__
+#ifndef __linux__
 void error(int status, int errnum, const char *format, ...)
 {
     va_list args;
@@ -517,7 +517,7 @@ static std::vector<char> compressBitmap(const std::vector<char> &bitmap)
         {
             char num[16];
             output.push_back('[');
-            sprintf(num, "%d", cnt);
+            snprintf(num, sizeof(num), "%d", cnt);
             for (int cpy = 0; num[cpy] != '\0'; ++cpy)
                 output.push_back(num[cpy]);
             output.push_back(']');
