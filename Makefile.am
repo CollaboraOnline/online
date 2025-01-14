@@ -110,7 +110,7 @@ AM_LDFLAGS = -lpam $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
 if !ENABLE_MACOS
 AM_LDFLAGS += -Wl,-E
 else
-AM_LDFLAGS += -lz -lzstd -lpng
+AM_LDFLAGS += -lz -lzstd -lpng -liconv
 endif
 
 # Clang's linker doesn't like -pthread.
