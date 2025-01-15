@@ -197,7 +197,7 @@ void RequestVettingStation::launchInstallPresets()
     // if this wopi server has some shared settings we want to have a subForKit for those settings
     std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
     // ensure the server config is downloaded and launch docbroker when that is available
-    DocumentBroker::asyncInstallPresets(*_poll, sharedSettings._uri, presetsPath, finishedCallback);
+    DocumentBroker::asyncInstallPresets(*_poll, sharedSettings._uri, presetsPath, nullptr, finishedCallback);
 }
 
 #endif
