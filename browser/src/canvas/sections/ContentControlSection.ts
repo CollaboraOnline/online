@@ -31,6 +31,7 @@ export class ContentControlSection extends app.definitions.canvasSectionObject {
 		this.sectionProperties.json = null;
 		this.sectionProperties.datePicker = null;
 		this.sectionProperties.picturePicker = null;
+		this.sectionProperties.polygon = null;
 	}
 
 	public onInitialize(): void {
@@ -88,10 +89,9 @@ export class ContentControlSection extends app.definitions.canvasSectionObject {
 		}
 
 		if (json.action === 'show')	{
-			this.drawPolygon();
+			this.preparePolygon();
 		} else if (json.action === 'hide') {
-			if (this.sectionProperties.frame)
-				this.sectionProperties.frame.setPointSet(new CPointSet());
+			this.sectionProperties.polygon = null;
 		} else if (json.action === 'change-picture') {
 			this.sectionProperties.picturePicker = true;
 			if (!this.map.wopi.EnableInsertRemoteImage)
@@ -141,31 +141,36 @@ export class ContentControlSection extends app.definitions.canvasSectionObject {
 		this.setPositionAndSize();
 	}
 
-	public drawPolygon(): void {
-		var rectArray = cool.Bounds.parseArray(this.sectionProperties.json.rectangles);
-		var rectangles = rectArray.map(function (rect: cool.Bounds) {
-			return rect.getPointArray();
-		});
+	public preparePolygon(): void {
+		if (!this.sectionProperties.json.rectangles)
+			return;
 
-		var docLayer = this.map._docLayer;
-		this.sectionProperties.pointSet = CPolyUtil.rectanglesToPointSet(rectangles,
-			function (twipsPoint) {
-				var corePxPt = docLayer._twipsToCorePixels(twipsPoint);
-				corePxPt.round();
-				return corePxPt;
-			});
+		// Parse rectangles first.
+		const rectangleArray = this.getRectangles(this.sectionProperties.json.rectangles);
 
-		if (!this.sectionProperties.frame) {
-			this.sectionProperties.frame = new CPolygon(this.sectionProperties.pointSet, this.sectionProperties.polyAttri);
-			this.changeBorderStyle();
-			this.map._docLayer._canvasOverlay.initPath(this.sectionProperties.frame);
+		this.sectionProperties.polygon = cool.rectanglesToPolygon(rectangleArray, app.twipsToPixels);
+
+		this.changeBorderStyle();
+	}
+
+	private drawPolygon(): void {
+		this.context.strokeStyle = this.sectionProperties.polygonColor;
+		this.context.beginPath();
+		this.context.moveTo(this.sectionProperties.polygon[0] - this.position[0], this.sectionProperties.polygon[0 + 1] - this.position[1]);
+		for (let i = 0; i < this.sectionProperties.polygon.length - 1; i++) {
+			this.context.lineTo(this.sectionProperties.polygon[i] - this.position[0], this.sectionProperties.polygon[i + 1] - this.position[1]);
+			i += 1;
 		}
-		this.sectionProperties.frame.setPointSet(this.sectionProperties.pointSet);
+		this.context.closePath();
+		this.context.stroke();
 	}
 
 	public onDraw(): void {
 		if (!this.sectionProperties.json)
 			return;
+
+		if (this.sectionProperties.polygon)
+			this.drawPolygon();
 
 		var text:string = this.sectionProperties.json.alias;
 		if (text) {
@@ -368,8 +373,9 @@ export class ContentControlSection extends app.definitions.canvasSectionObject {
 	}
 
 	private changeBorderStyle(): void {
-		var borderColor = (<any>window).prefs.getBoolean('darkTheme') ? 'white' : 'black';
-		this.sectionProperties.frame.color = borderColor;
+		const polygonColor = (<any>window).prefs.getBoolean('darkTheme') ? 'white' : 'black';
+		if (this.sectionProperties.polygonColor !== polygonColor)
+			this.sectionProperties.polygonColor = polygonColor;
 	}
 }
 
