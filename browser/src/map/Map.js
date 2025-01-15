@@ -564,7 +564,7 @@ L.Map = L.Evented.extend({
 
 		const zoomCenter = docLayer._twipsToCorePixels(this.getDesktopCalcZoomCenter());
 
-		tsManager._offset = new L.Point(0, 0);
+		tsManager._offset = new cool.SimplePoint(0, 0);
 
 		const docPos = tsManager._getZoomDocPos(
 			cool.SimplePoint.newp(...zoomCenter.toArray()),

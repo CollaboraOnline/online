@@ -419,96 +419,91 @@ L.TileSectionManager = L.Class.extend({
 	 * Center is included iff findFreePaneCenter is true
 	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
 	 **/
-	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, _paneBounds, freezePane, _splitPos, scale, findFreePaneCenter) {
-		let pinchCenter = L.point(_pinchCenter.x, _pinchCenter.y);
-		const pinchStartCenter = L.point(_pinchCenter.x, _pinchCenter.y);
-		const paneBounds = L.bounds(
-			L.point(_paneBounds.x1, _paneBounds.y1),
-			L.point(_paneBounds.x2, _paneBounds.y2),
-		);
-		const splitPos = L.point(_splitPos.x, _splitPos.y);
-
+	_getZoomDocPos: function (pinchCenter, pinchStartCenter, paneBounds, freezePane, splitPos, scale, findFreePaneCenter) {
 		let xMin = 0;
 		const hasXMargin = !this._layer.isCalc();
 		if (hasXMargin) {
 			xMin = -Infinity;
-		} else if (paneBounds.min.x > 0) {
+		} else if (paneBounds.x1 > 0) {
 			xMin = splitPos.x;
 		}
 
 		let yMin = 0;
-		if (paneBounds.min.y < 0) {
+		if (paneBounds.y1 < 0) {
 			yMin = -Infinity;
-		} else if (paneBounds.min.y > 0) {
+		} else if (paneBounds.y1 > 0) {
 			yMin = splitPos.y;
 		}
 
-		const minTopLeft = new L.Point(xMin, yMin);
+		const minTopLeft = new cool.SimplePoint(xMin, yMin);
 
-		const paneSize = paneBounds.getSize();
+		pinchCenter.x -= this._offset.x;
+		pinchCenter.y -= this._offset.y;
 
-		pinchCenter = pinchCenter.subtract(this._offset);
-
-		let centerOffset = {
-			x: pinchCenter.x - pinchStartCenter.x,
-			y: pinchCenter.y - pinchStartCenter.y,
-		};
+		const centerOffset = new cool.SimplePoint(
+			pinchCenter.x - pinchStartCenter.x,
+			pinchCenter.y - pinchStartCenter.y,
+		);
 
 		// Portion of the pane away that our pinchStart (which should be where we zoom round) is
 		const panePortion = {
-			x: (pinchStartCenter.x - this._offset.x - paneBounds.min.x) / paneSize.x,
-			y: (pinchStartCenter.y - this._offset.y - paneBounds.min.y) / paneSize.y,
+			x: (pinchStartCenter.x - this._offset.x - paneBounds.x1) / paneBounds.width,
+			y: (pinchStartCenter.y - this._offset.y - paneBounds.y1) / paneBounds.height,
 		};
+		// As this isn't a point, we don't store it as a simple point - both because conversions wouldn't make sense and because simple points must be integers
 
-		let docTopLeft = new L.Point(
-			pinchStartCenter.x + (centerOffset.x - paneSize.x * panePortion.x) / scale,
-			pinchStartCenter.y + (centerOffset.y - paneSize.y * panePortion.y) / scale
+		let docTopLeft = new cool.SimplePoint(
+			pinchStartCenter.x +
+				(centerOffset.x - paneBounds.width * panePortion.x) / scale,
+			pinchStartCenter.y +
+				(centerOffset.y - paneBounds.height * panePortion.y) / scale,
 		);
 
 		// Top left in document coordinates.
-		const clampedDocTopLeft = new L.Point(
+		const clampedDocTopLeft = new cool.SimplePoint(
 			Math.max(minTopLeft.x, docTopLeft.x),
-			Math.max(minTopLeft.y, docTopLeft.y)
+			Math.max(minTopLeft.y, docTopLeft.y),
 		);
 
-		const offset = clampedDocTopLeft.subtract(docTopLeft);
+		const offset = new cool.SimplePoint(
+			clampedDocTopLeft.x - docTopLeft.x,
+			clampedDocTopLeft.y - docTopLeft.y,
+		);
 
 		if (freezePane.freezeX) {
-			docTopLeft.x = paneBounds.min.x;
+			docTopLeft.x = paneBounds.x1;
 		} else {
 			this._offset.x = Math.round(Math.max(this._offset.x, offset.x));
 			docTopLeft.x += this._offset.x;
 		}
 
 		if (freezePane.freezeY) {
-			docTopLeft.y = paneBounds.min.y;
+			docTopLeft.y = paneBounds.y1;
 		} else {
 			this._offset.y = Math.round(Math.max(this._offset.y, offset.y));
 			docTopLeft.y += this._offset.y;
 		}
 
 		if (!findFreePaneCenter) {
-			docTopLeft = new cool.SimplePoint(
-				docTopLeft.x,
-				docTopLeft.y
-			);
 			return { offset: this._offset, topLeft: docTopLeft };
 		}
 
-		let newPaneCenter = new L.Point(
-			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) * 0.5 / scale),
-			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) * 0.5 / scale));
-
-		docTopLeft = new cool.SimplePoint(
-			docTopLeft.x,
-			docTopLeft.y,
+		const newPaneCenter = new cool.SimplePoint(
+			docTopLeft.x -
+				splitPos.x +
+				((paneBounds.width + splitPos.x) * 0.5) / scale,
+			docTopLeft.y -
+				splitPos.y +
+				((paneBounds.height + splitPos.y) * 0.5) / scale,
 		);
 
-		newPaneCenter = this._map.rescale(newPaneCenter, this._map.getZoom(), this._map.getScaleZoom(scale));
-		newPaneCenter = new cool.SimplePoint(
-			newPaneCenter.x,
-			newPaneCenter.y
+		const rescaledPaneCenterTwips = this._map.rescale(
+			L.point(newPaneCenter.x, newPaneCenter.y),
+			this._map.getZoom(),
+			this._map.getScaleZoom(scale),
 		);
+		newPaneCenter.x = rescaledPaneCenterTwips.x;
+		newPaneCenter.y = rescaledPaneCenterTwips.y;
 
 		return {
 			offset: this._offset,
@@ -4417,7 +4412,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	preZoomAnimation: function (pinchStartCenter) {
 		this._pinchStartCenter = this._map.project(pinchStartCenter).multiplyBy(app.dpiScale); // in core pixels
-		this._painter._offset = new L.Point(0, 0);
+		this._painter._offset = new cool.SimplePoint(0, 0);
 
 		if (this._cursorMarker && app.file.textCursor.visible) {
 			this._cursorMarker.setOpacity(0);
