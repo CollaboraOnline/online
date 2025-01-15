@@ -3915,7 +3915,7 @@ LogUiCommands::~LogUiCommands()
                 if (_tokens->equals(2, "char=0"))
                 {
                     uint32_t keyCode=0;
-                    _tokens->getUInt32(3,"key",keyCode);
+                    (void)_tokens->getUInt32(3,"key",keyCode);
                     actSubCmd = "";
                     if (keyCode & 8192)
                         actSubCmd += "ctrl-";
