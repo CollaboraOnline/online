@@ -19,10 +19,11 @@ def update_fods_data(input_file, output_file):
         "table": "urn:oasis:names:tc:opendocument:xmlns:table:1.0",
         "text": "urn:oasis:names:tc:opendocument:xmlns:text:1.0",
         "chart": "urn:oasis:names:tc:opendocument:xmlns:chart:1.0",
+        "draw": "urn:oasis:names:tc:opendocument:xmlns:drawing:1.0",
     }
 
     SHEET_CHART_MAPPING = {
-        "Command_Transitions": "bar",
+        "Command_Transitions": "none",
         "Viewer_Editor_Stats": "bar",
         "Undo_Command_Stats": "bar",
         "Total_Users_Per_Document": "bar",
@@ -39,6 +40,9 @@ def update_fods_data(input_file, output_file):
             continue
 
         chart_type = SHEET_CHART_MAPPING.get(sheet_name, "bar")
+        if chart_type == "none":
+            removeDrawFrameForSheet(root, sheet_name, NSMAP)
+            continue
 
         rows = sheet.findall("table:table-row", namespaces=NSMAP)
 
@@ -123,6 +127,11 @@ def update_chart_references(root, sheet_name, num_rows, num_cols, NSMAP, chart_t
         data_point = etree.SubElement(series, f"{{{NSMAP['chart']}}}data-point")
         data_point.set(f"{{{NSMAP['chart']}}}repeated", str(num_rows))
 
+def removeDrawFrameForSheet(root, sheet_name, NSMAP):
+    sheet = root.find(f".//table:table[@table:name='{sheet_name}']", namespaces=NSMAP)
+
+    for draw_frame in sheet.findall(".//draw:frame", namespaces=NSMAP):
+        draw_frame.getparent().remove(draw_frame)
 
 if __name__ == "__main__":
   update_fods_data(

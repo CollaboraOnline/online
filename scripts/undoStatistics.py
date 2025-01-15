@@ -233,7 +233,7 @@ if __name__ == "__main__":
                 users[userId] = User()
 
             if lineCmd.startswith("cmd:"):
-                key = f"{lineCmd[4:-1]}-{users[userId].lastCmd}"
+                key = f"{lineCmd[4:-1]}|{users[userId].lastCmd}"
                 currentCommandPreviousCommand[key] = currentCommandPreviousCommand.get(key, 0) + 1
 
                 users[userId].lastCmd = lineCmd[4:-1]
@@ -315,7 +315,7 @@ if __name__ == "__main__":
 
         totalUsersPerDoc[actDoc.users] = totalUsersPerDoc.get(actDoc.users, 0) + 1
 
-        key = f"{actDoc.activeUsers}-{actDoc.users - actDoc.activeUsers}"
+        key = f"{actDoc.activeUsers}|{actDoc.users - actDoc.activeUsers}"
         passiveActivePerDoc[key] = passiveActivePerDoc.get(key, 0) + 1
 
     print("Documents opened: %d Documents edited: %d (=%4.2f%%)" % (documentsOpened, documentsEdited, 100.0*documentsEdited/documentsOpened))
@@ -335,7 +335,7 @@ if __name__ == "__main__":
 
     viewer_editor_data = [["Editors", "Viewers", "Documents"]]
     viewer_editor_data.extend(
-        [[int(key.split("-")[0]), int(key.split("-")[1]), count] for key, count in passiveActivePerDoc.items()]
+        [[int(key.split("|")[0]), int(key.split("|")[1]), count] for key, count in passiveActivePerDoc.items()]
     )
 
     total_users_per_doc = [["Users", "Documents",]]
@@ -347,7 +347,7 @@ if __name__ == "__main__":
     current_previous_data = (
         [[current, previous, count]
         for key, count in currentCommandPreviousCommand.items()
-        for current, previous in [key.split("-")]
+        for current, previous in [key.split("|")]
     ])
     current_previous_matrix = createCommandTransitionMatrix(current_previous_data)
 
