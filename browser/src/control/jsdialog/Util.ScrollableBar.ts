@@ -48,26 +48,28 @@ function showArrow(arrow: HTMLElement, show: boolean) {
 function setupResizeHandler(container: Element, scrollable: Element) {
 	const left = container.querySelector('.ui-scroll-left') as HTMLElement;
 	const right = container.querySelector('.ui-scroll-right') as HTMLElement;
+	var isRTL = document.documentElement.dir === 'rtl';
+
 	const handler = function () {
 		const rootContainer = scrollable.querySelector('div');
 		if (!rootContainer) return;
 
 		if (rootContainer.scrollWidth > window.innerWidth) {
 			// we have overflowed content
-			const direction = this._RTL ? -1 : 1;
+			const direction = isRTL ? -1 : 1;
 			if (direction * scrollable.scrollLeft > 0) {
-				if (this._RTL) showArrow(right, true);
+				if (isRTL) showArrow(right, true);
 				else showArrow(left, true);
-			} else if (this._RTL) showArrow(right, false);
+			} else if (isRTL) showArrow(right, false);
 			else showArrow(left, false);
 
 			if (
 				direction * scrollable.scrollLeft <
 				rootContainer.scrollWidth - window.innerWidth - 1
 			) {
-				if (this._RTL) showArrow(left, true);
+				if (isRTL) showArrow(left, true);
 				else showArrow(right, true);
-			} else if (this._RTL) showArrow(left, false);
+			} else if (isRTL) showArrow(left, false);
 			else showArrow(right, false);
 		} else {
 			showArrow(left, false);
