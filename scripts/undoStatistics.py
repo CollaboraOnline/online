@@ -205,6 +205,12 @@ if __name__ == "__main__":
     # dict of (edtitors and viewers - documents)
     passiveActivePerDoc = {}
 
+    documentCategories = {
+        "Convert/Thumbnail": 0,
+        "Viewer-Only": 0,
+        "Edit": 0,
+    }
+
     # Check if the file has kit order problem, and fix it
     newFileName = reorderLogFile(sys.argv[1])
 
@@ -298,6 +304,12 @@ if __name__ == "__main__":
         if actDoc.activeUsers > 0:
             documentsEdited += 1
             totalUsersWhenDocEdited += actDoc.users
+            documentCategories["Edit"] += 1
+        else:
+            if actDoc.users - actDoc.activeUsers > 0:
+                documentCategories["Viewer-Only"] += 1
+            else:
+                documentCategories["Convert/Thumbnail"] += 1
         totalUsers += actDoc.users
         totalActiveUsers += actDoc.activeUsers
         if usersPerDocMin > actDoc.users:
@@ -351,11 +363,15 @@ if __name__ == "__main__":
     ])
     current_previous_matrix = createCommandTransitionMatrix(current_previous_data)
 
+    convert_viewer_data = [["", "Count"]]
+    convert_viewer_data.extend([[category, count] for category, count in documentCategories.items()])
+
     data_sets = {
-        "Viewer_Editor_Stats": viewer_editor_data,
-        "Undo_Command_Stats": undo_command_data,
+        "Viewer_Editor": viewer_editor_data,
+        "Undo_Command": undo_command_data,
         "Command_Transitions": current_previous_matrix,
         "Total_Users_Per_Document": total_users_per_doc,
+        "Convert_Thumbnail_Viewer_Edit": convert_viewer_data,
     }
 
     addSheetWithData("../test/data/empty-chart.fods", "../test/data/updated-chart.fods", data_sets)

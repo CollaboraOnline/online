@@ -24,9 +24,10 @@ def update_fods_data(input_file, output_file):
 
     SHEET_CHART_MAPPING = {
         "Command_Transitions": "none",
-        "Viewer_Editor_Stats": "bar",
-        "Undo_Command_Stats": "bar",
+        "Viewer_Editor": "bar",
+        "Undo_Command": "bar",
         "Total_Users_Per_Document": "bar",
+        "Convert_Thumbnail_Viewer_Edit": "bar",
     }
 
     tree = etree.parse(input_file)
@@ -118,7 +119,7 @@ def update_chart_references(root, sheet_name, num_rows, num_cols, NSMAP, chart_t
 
         # Create new series element
         series = etree.SubElement(plot_area, f"{{{NSMAP['chart']}}}series")
-        series.set(f"{{{NSMAP['chart']}}}style-name", f"ch{str(cols + 10)}")
+        series.set(f"{{{NSMAP['chart']}}}style-name", f"ch{str(cols + 11)}")
         series.set(f"{{{NSMAP['chart']}}}values-cell-range-address", series_range)
         series.set(f"{{{NSMAP['chart']}}}label-cell-address", labels_range)
         series.set(f"{{{NSMAP['chart']}}}class", f"chart:{chart_type}")
