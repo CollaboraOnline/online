@@ -183,13 +183,16 @@ struct SharedSettings
         if (auto settingsJSON = wopiInfo->getObject("SharedSettings"))
         {
             JsonUtil::findJSONValue(settingsJSON, "uri", _uri);
-            JsonUtil::findJSONValue(settingsJSON, "stamp", _stamp);
             _configId = Cache::getConfigId(_uri);
+
+            std::string stamp;
+            JsonUtil::findJSONValue(settingsJSON, "stamp", stamp);
+            if (!stamp.empty())
+                _configId.append("-").append(stamp);
         }
     }
 
     std::string _uri;
-    std::string _stamp;
     std::string _configId;
 
     std::string getConfigId() const
