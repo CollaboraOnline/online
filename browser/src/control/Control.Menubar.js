@@ -1366,7 +1366,7 @@ L.Control.Menubar = L.Control.extend({
 		commandStates: {},
 
 		// Only these menu options will be visible in readonly mode
-		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'insert', 'slide', 'help'],
+		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'insert', 'slide', 'help', 'print'],
 
 		// Only these UNO commands will be enabled in readonly mode
 		allowedViewModeCommands: [
@@ -1376,7 +1376,8 @@ L.Control.Menubar = L.Control.extend({
 
 		allowedViewModeActions: [
 			() => app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hasAnyComments() ? 'savecomments' : undefined,
-			'shareas', 'print', // file menu
+			'shareas', //file menu
+			'print','print-active-sheet', 'print-all-sheets', 'print-notespages', // file menu
 			'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', // file menu
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'exportpdf' , // file menu
 			!window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', // file menu
