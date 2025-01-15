@@ -1179,7 +1179,7 @@ public:
         const bool secure = (scheme == "https://" || scheme == "wss://");
         const auto protocol = secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted;
         if (portString.empty())
-            return create(hostname, protocol, getDefaultPort(protocol));
+            return create(std::move(hostname), protocol, getDefaultPort(protocol));
 
         const std::pair<std::int32_t, bool> portPair = Util::i32FromString(portString);
         if (portPair.second && portPair.first > 0)
