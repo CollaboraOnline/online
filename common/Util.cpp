@@ -132,16 +132,17 @@ namespace Util
         {
             std::vector<char> v(length);
 
-            size_t offset;
-            for (offset = 0; offset < length; )
+            size_t offset = 0;
+            while (offset < length)
             {
-                int b = read(getURandom(), v.data() + offset, length - offset);
+                ssize_t b = read(getURandom(), v.data() + offset, length - offset);
                 if (b <= 0)
                 {
                     if (errno == EINTR)
                         continue;
                     break;
                 }
+                assert(static_cast<size_t>(b) <= length - offset);
                 offset += b;
             }
             if (offset < length)
