@@ -1019,7 +1019,7 @@ bool DocumentBroker::download(
     // Call the storage specific fileinfo functions
     std::string templateSource;
 
-    std::string browserSettingUri;
+    std::string userSettingsUri;
 
 #if !MOBILEAPP
     std::chrono::milliseconds checkFileInfoCallDurationMs = std::chrono::milliseconds::zero();
@@ -1051,7 +1051,7 @@ bool DocumentBroker::download(
 
         if (session)
         {
-            browserSettingUri = wopiFileInfo->getBrowserSettingsUri();
+            userSettingsUri = wopiFileInfo->getUserSettingsUri();
             templateSource =
                 updateSessionWithWopiInfo(session, wopiStorage, std::move(wopiFileInfo));
         }
@@ -1176,17 +1176,17 @@ bool DocumentBroker::download(
 
     // if async browsersetting json request is not downlaoded even after document download is complete
     // we do sync request to make sure the browser setting json sent before document starts to load
-    if (session && !browserSettingUri.empty())
+    if (session && !userSettingsUri.empty())
     {
         LOG_DBG("BrowserSetting for docKey ["
                 << _docKey << "] for session #" << session->getId()
                 << (session->getSentBrowserSetting() ? " already exists" : " is missing"));
         if (!session->getSentBrowserSetting())
         {
-            sendBrowserSetting(session, browserSettingUri, /** async **/ false);
+            sendBrowserSetting(session, userSettingsUri, /** async **/ false);
             if (!session->getSentBrowserSetting())
             {
-                const std::string uriAnonym = COOLWSD::anonymizeUrl(browserSettingUri);
+                const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
                 LOG_ERR("Request to uri["
                         << uriAnonym
                         << "] failed or timedout while adding session #" + session->getId());
@@ -1483,12 +1483,6 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
         asyncInstallPresets(session, userSettingsUri, jailPresetsPath);
     }
 
-    std::string browserSettingUri = wopiFileInfo->getBrowserSettingsUri();
-    if (_sessions.empty() && !browserSettingUri.empty())
-    {
-        sendBrowserSetting(session, browserSettingUri);
-    }
-
     // Pass the ownership to the client session.
     session->setWopiFileInfo(std::move(wopiFileInfo));
     session->setUserId(userId);
@@ -1651,7 +1645,7 @@ public:
     }
 };
 
-void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession> session,
+void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& session,
                                          const std::string& userSettingsUri,
                                          const std::string& presetsPath)
 {
@@ -1665,7 +1659,7 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession> se
             stop("configfailed");
         }
     };
-    _asyncInstallTask = asyncInstallPresets(*_poll, userSettingsUri, presetsPath, installFinishedCB);
+    _asyncInstallTask = asyncInstallPresets(*_poll, userSettingsUri, presetsPath, session, installFinishedCB);
     _asyncInstallTask->appendCallback([this](bool){ _asyncInstallTask.reset(); });
 }
 
@@ -1686,39 +1680,40 @@ void DocumentBroker::sendBrowserSetting(const std::shared_ptr<ClientSession>& se
     auto parseResponse =
         [session, uriAnonym](const std::shared_ptr<const http::Response>& httpResponse)
     {
-        if (session->getSentBrowserSetting())
+        if (session == nullptr || session->getSentBrowserSetting())
             return;
 
         const std::string& body = httpResponse->getBody();
         Poco::JSON::Object::Ptr settings;
-        if (JsonUtil::parseJSON(body, settings))
+
+        if (!JsonUtil::parseJSON(body, settings))
         {
-            std::ostringstream jsonStream;
-            settings->stringify(jsonStream);
-            session->sendTextFrame("browsersetting: " + jsonStream.str());
-
-            std::string spellOnline, darkTheme, darkBackgroundForTheme;
-            JsonUtil::findJSONValue(settings, "spellOnline", spellOnline);
-            JsonUtil::findJSONValue(settings, "darkTheme", darkTheme);
-            Poco::JSON::Object::Ptr darkBackgroundObj =
-                settings->getObject("darkBackgroundForTheme");
-            if (!darkBackgroundObj.isNull())
-            {
-                std::ostringstream dbgStream;
-                darkBackgroundObj->stringify(dbgStream);
-
-                JsonUtil::findJSONValue(
-                    darkBackgroundObj, darkTheme == "true" ? "dark" : "light", darkBackgroundForTheme);
-            }
-
-            ClientSession::BrowserSetting browserSetting{ darkTheme, darkBackgroundForTheme,
-                                                          spellOnline };
-            session->setBrowserSetting(browserSetting);
+            LOG_ERR("Parse of userconfig json: " << uriAnonym << " failed");
+            return;
         }
-        else
+
+        Poco::JSON::Object::Ptr browserSettings = settings->getObject("browserSettings");
+        if (browserSettings.isNull())
         {
-            LOG_ERR("Parse of browserSetting json: " << uriAnonym << " failed");
+            LOG_WRN("json key[browserSettings] doesn't exist in user config json");
+            return;
         }
+        std::ostringstream jsonStream;
+        browserSettings->stringify(jsonStream);
+        session->sendTextFrame("browsersetting: " + jsonStream.str());
+        std::string spellOnline, darkTheme, darkBackgroundForTheme;
+        JsonUtil::findJSONValue(browserSettings, "spellOnline", spellOnline);
+        JsonUtil::findJSONValue(browserSettings, "darkTheme", darkTheme);
+        Poco::JSON::Object::Ptr darkBackgroundObj = browserSettings->getObject("darkBackgroundForTheme");
+        if (!darkBackgroundObj.isNull())
+        {
+            JsonUtil::findJSONValue(darkBackgroundObj, darkTheme == "true" ? "dark" : "light",
+                                    darkBackgroundForTheme);
+        }
+
+        ClientSession::BrowserSetting browserSetting{ darkTheme, darkBackgroundForTheme,
+                                                      spellOnline };
+        session->setBrowserSetting(browserSetting);
         session->setSentBrowserSetting(true);
     };
 
@@ -1784,10 +1779,10 @@ struct PresetRequest
 };
 
 std::shared_ptr<PresetsInstallTask>
-DocumentBroker::asyncInstallPresets(SocketPoll& poll,
-    const std::string& userSettingsUri,
-    const std::string& presetsPath,
-    const std::function<void(bool)>& installFinishedCB)
+DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,
+                                    const std::string& presetsPath,
+                                    const std::shared_ptr<ClientSession>& session,
+                                    const std::function<void(bool)>& installFinishedCB)
 {
     // Download the json for settings
     const Poco::URI settingsUri{userSettingsUri};
@@ -1806,8 +1801,8 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
     // When result arrives, extract uris of what we want to install to the jail's user presets
     // and async download and install those.
     http::Session::FinishedCallback finishedCallback =
-        [&poll, configId, uriAnonym,
-         presetsPath, presetTasks](const std::shared_ptr<http::Session>& configSession)
+        [configId, uriAnonym, presetsPath, presetTasks,
+         session](const std::shared_ptr<http::Session>& configSession)
     {
         if (SigUtil::getShutdownRequestFlag())
         {
@@ -1837,6 +1832,30 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll,
             LOG_ERR("Parse of userSettings json: " << uriAnonym << " failed");
             presetTasks->install(nullptr);
             return;
+        }
+
+        Poco::JSON::Object::Ptr browserSettings = settings->getObject("browserSettings");
+        if (!browserSettings.isNull() && session != nullptr)
+        {
+            std::ostringstream jsonStream;
+            browserSettings->stringify(jsonStream);
+            session->sendTextFrame("browsersetting: " + jsonStream.str());
+
+            std::string spellOnline, darkTheme, darkBackgroundForTheme;
+            JsonUtil::findJSONValue(browserSettings, "spellOnline", spellOnline);
+            JsonUtil::findJSONValue(browserSettings, "darkTheme", darkTheme);
+            Poco::JSON::Object::Ptr darkBackgroundObj =
+                browserSettings->getObject("darkBackgroundForTheme");
+            if (!darkBackgroundObj.isNull())
+            {
+                JsonUtil::findJSONValue(darkBackgroundObj, darkTheme == "true" ? "dark" : "light",
+                                        darkBackgroundForTheme);
+            }
+
+            ClientSession::BrowserSetting browserSetting{ darkTheme, darkBackgroundForTheme,
+                                                          spellOnline };
+            session->setBrowserSetting(browserSetting);
+            session->setSentBrowserSetting(true);
         }
 
         presetTasks->install(settings);
