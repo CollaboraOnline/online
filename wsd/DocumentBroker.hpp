@@ -544,7 +544,7 @@ public:
     StorageBase* getStorage() { return _storage.get(); }
 
 #if !MOBILEAPP
-    void asyncInstallPresets(const std::shared_ptr<ClientSession> session,
+    void asyncInstallPresets(const std::shared_ptr<ClientSession>& session,
                              const std::string& userSettingsUri,
                              const std::string& presetsPath);
 
@@ -555,6 +555,7 @@ public:
     /// described at userSettingsUri for installation into presetsPath
     static std::shared_ptr<PresetsInstallTask> asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,
                                     const std::string& presetsPath,
+                                    const std::shared_ptr<ClientSession>& session,
                                     const std::function<void(bool)>& finishedCB);
 
     /// Start an asynchronous Installation of a user preset resource, e.g. an autotext

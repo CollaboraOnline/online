@@ -243,7 +243,6 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
         JsonUtil::findJSONValue(browserSettingsJSON, "uri", _browserSettingsUri);
 
     JsonUtil::findJSONValue(object, "UserSettingsUri", _userSettingsUri);
-    LOG_DBG("vivek:  UserSettingsUri" << wopiResponse.str());
 
     JsonUtil::findJSONValue(object, "WatermarkText", _watermarkText);
     JsonUtil::findJSONValue(object, "UserCanWrite", _userCanWrite);
