@@ -11,26 +11,26 @@
 
 #include <config.h>
 
+#if MOBILEAPP
+#error This file is not supposed to be compiled in the MOBILEAPP case
+#endif
+
 #include "Syscall.hpp"
 
 #include <cerrno>
-#include <sys/socket.h>
-#ifndef _WIN32
-#include <sys/un.h>
-#endif
 
-#if !HAVE_PIPE2
 #include <fcntl.h>
-#else
 #include <unistd.h>
-#endif
+#include <sys/socket.h>
+#include <sys/un.h>
+
 
 /**
  * Internal helper functions.
  */
+#if !defined(__linux__)
 namespace {
 
-#if !HAVE_PIPE2
 
 /**
  * Set FD_CLOEXEC and O_NONBLOCK on one file descriptor.
@@ -98,9 +98,8 @@ int set_fds_cloexec_nonblock(int fds[2], bool cloexec, bool nonblock) {
     return 0;
 }
 
-#endif
-
 }
+#endif
 
 int Syscall::accept_cloexec_nonblock(int socket, struct sockaddr *address, socklen_t *address_len)
 {
