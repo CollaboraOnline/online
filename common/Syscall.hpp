@@ -11,6 +11,10 @@
 
 #pragma once
 
+#if MOBILEAPP
+#error This file is not supposed to be compiled in the MOBILEAPP case
+#endif
+
 #include <sys/socket.h>
 
 /**
