@@ -23,6 +23,7 @@
 
 #include <Poco/SharedPtr.h>
 #include <Poco/URI.h>
+#include <Poco/JSON/Object.h>
 
 #include "Log.hpp"
 #include "QuarantineUtil.hpp"
@@ -548,9 +549,11 @@ public:
                              const std::string& userSettingsUri,
                              const std::string& presetsPath);
 
-    void sendBrowserSetting(const std::shared_ptr<ClientSession>& session,
-                            const std::string& settingUri, bool async = true);
+    void sendBrowserSettingsSync(const std::shared_ptr<ClientSession>& session,
+                                const std::string& userSettingsUri);
 
+    static void parseBrowserSettings(const std::shared_ptr<ClientSession>& session,
+                                     const Poco::JSON::Object::Ptr& settings);
     /// Start an asynchronous Installation of the user presets, e.g. autotexts etc, as
     /// described at userSettingsUri for installation into presetsPath
     static std::shared_ptr<PresetsInstallTask> asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,

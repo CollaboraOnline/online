@@ -1183,7 +1183,7 @@ bool DocumentBroker::download(
                 << (session->getSentBrowserSetting() ? " already exists" : " is missing"));
         if (!session->getSentBrowserSetting())
         {
-            sendBrowserSetting(session, userSettingsUri, /** async **/ false);
+            sendBrowserSettingsSync(session, userSettingsUri);
             if (!session->getSentBrowserSetting())
             {
                 const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
@@ -1662,112 +1662,46 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
     _asyncInstallTask->appendCallback([this](bool){ _asyncInstallTask.reset(); });
 }
 
-void DocumentBroker::sendBrowserSetting(const std::shared_ptr<ClientSession>& session,
-                                        const std::string& browserSettingUri, bool async)
+void DocumentBroker::sendBrowserSettingsSync(const std::shared_ptr<ClientSession>& session,
+                                            const std::string& userSettingsUri)
 {
+    if (session == nullptr || session->getSentBrowserSetting())
+        return;
+
     // Download the json for browser settings
-    const Poco::URI settingsUri{ browserSettingUri };
+    const Poco::URI settingsUri{ userSettingsUri };
     std::shared_ptr<http::Session> httpSession(
         StorageConnectionManager::getHttpSession(settingsUri));
     http::Request request(settingsUri.getPathAndQuery());
     request.set("User-Agent", http::getAgentString());
 
-    const std::string uriAnonym = COOLWSD::anonymizeUrl(browserSettingUri);
-    const std::string requestType = async ? "asyncRequest" : "syncRequest";
-    LOG_DBG("Getting settings from [" << uriAnonym << "] using " << requestType);
+    const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
+    LOG_DBG("Getting settings from [" << uriAnonym << "] using sync request");
 
-    auto parseResponse =
-        [session, uriAnonym](const std::shared_ptr<const http::Response>& httpResponse)
+    const std::shared_ptr<const http::Response> httpResponse = httpSession->syncRequest(request);
+
+    LOG_TRC("DocumentBroker::sendBrowserSettingSync returned "
+            << httpResponse->statusLine().statusCode());
+
+    const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
+    if (failed)
     {
-        if (session == nullptr || session->getSentBrowserSetting())
-            return;
-
-        const std::string& body = httpResponse->getBody();
-        Poco::JSON::Object::Ptr settings;
-
-        if (!JsonUtil::parseJSON(body, settings))
-        {
-            LOG_ERR("Parse of userconfig json: " << uriAnonym << " failed");
-            return;
-        }
-
-        Poco::JSON::Object::Ptr browserSettings = settings->getObject("browserSettings");
-        if (browserSettings.isNull())
-        {
-            LOG_WRN("json key[browserSettings] doesn't exist in user config json");
-            return;
-        }
-        std::ostringstream jsonStream;
-        browserSettings->stringify(jsonStream);
-        session->sendTextFrame("browsersetting: " + jsonStream.str());
-        std::string spellOnline, darkTheme, darkBackgroundForTheme;
-        JsonUtil::findJSONValue(browserSettings, "spellOnline", spellOnline);
-        JsonUtil::findJSONValue(browserSettings, "darkTheme", darkTheme);
-        Poco::JSON::Object::Ptr darkBackgroundObj = browserSettings->getObject("darkBackgroundForTheme");
-        if (!darkBackgroundObj.isNull())
-        {
-            JsonUtil::findJSONValue(darkBackgroundObj, darkTheme == "true" ? "dark" : "light",
-                                    darkBackgroundForTheme);
-        }
-
-        ClientSession::BrowserSetting browserSetting{ darkTheme, darkBackgroundForTheme,
-                                                      spellOnline };
-        session->setBrowserSetting(browserSetting);
-        session->setSentBrowserSetting(true);
-    };
-
-    if (async)
-    {
-        http::Session::FinishedCallback finishedCallback =
-            [uriAnonym, session, requestType,
-             parseResponse](const std::shared_ptr<http::Session>& configSession)
-        {
-            if (SigUtil::getShutdownRequestFlag())
-            {
-                LOG_DBG("Shutdown flagged, giving up on in-flight requests");
-                return;
-            }
-
-            const std::shared_ptr<const http::Response> httpResponse = configSession->response();
-            LOG_TRC("DocumentBroker::sendBrowserSetting with "
-                    << requestType << " returned " << httpResponse->statusLine().statusCode());
-
-            const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
-            if (failed)
-            {
-                if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
-                    LOG_ERR("Access denied to [" << uriAnonym << ']');
-                else
-                    LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
-                return;
-            }
-
-            parseResponse(httpResponse);
-        };
-
-        httpSession->setFinishedHandler(std::move(finishedCallback));
-        httpSession->asyncRequest(request, *_poll);
+        if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
+            LOG_ERR("Access denied to [" << uriAnonym << ']');
+        else
+            LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
+        return;
     }
-    else
+
+    const std::string& body = httpResponse->getBody();
+    Poco::JSON::Object::Ptr settings;
+
+    if (!JsonUtil::parseJSON(body, settings))
     {
-        const std::shared_ptr<const http::Response> httpResponse =
-            httpSession->syncRequest(request);
-
-        LOG_TRC("DocumentBroker::sendBrowserSetting with "
-                << requestType << " returned " << httpResponse->statusLine().statusCode());
-
-        const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
-        if (failed)
-        {
-            if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
-                LOG_ERR("Access denied to [" << uriAnonym << ']');
-            else
-                LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
-            return;
-        }
-
-        parseResponse(httpResponse);
+        LOG_ERR("Parse of userconfig json: " << uriAnonym << " failed");
+        return;
     }
+    DocumentBroker::parseBrowserSettings(session, settings);
 }
 
 struct PresetRequest
@@ -1825,6 +1759,7 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& userSet
         }
 
         const std::string& body = httpResponse->getBody();
+
         Poco::JSON::Object::Ptr settings;
         if (!JsonUtil::parseJSON(body, settings))
         {
@@ -1832,30 +1767,8 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& userSet
             presetTasks->install(nullptr);
             return;
         }
-
-        Poco::JSON::Object::Ptr browserSettings = settings->getObject("browserSettings");
-        if (!browserSettings.isNull() && session != nullptr)
-        {
-            std::ostringstream jsonStream;
-            browserSettings->stringify(jsonStream);
-            session->sendTextFrame("browsersetting: " + jsonStream.str());
-
-            std::string spellOnline, darkTheme, darkBackgroundForTheme;
-            JsonUtil::findJSONValue(browserSettings, "spellOnline", spellOnline);
-            JsonUtil::findJSONValue(browserSettings, "darkTheme", darkTheme);
-            Poco::JSON::Object::Ptr darkBackgroundObj =
-                browserSettings->getObject("darkBackgroundForTheme");
-            if (!darkBackgroundObj.isNull())
-            {
-                JsonUtil::findJSONValue(darkBackgroundObj, darkTheme == "true" ? "dark" : "light",
-                                        darkBackgroundForTheme);
-            }
-
-            ClientSession::BrowserSetting browserSetting{ darkTheme, darkBackgroundForTheme,
-                                                          spellOnline };
-            session->setBrowserSetting(browserSetting);
-            session->setSentBrowserSetting(true);
-        }
+        if (session != nullptr)
+            DocumentBroker::parseBrowserSettings(session, settings);
 
         presetTasks->install(settings);
     };
@@ -1920,6 +1833,34 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& con
 
     const std::shared_ptr<http::Response> presetHttpResponse = httpSession->response();
     presetHttpResponse->saveBodyToFile(presetFile);
+}
+
+void DocumentBroker::parseBrowserSettings(const std::shared_ptr<ClientSession>& session,
+                                          const Poco::JSON::Object::Ptr& settings)
+{
+    Poco::JSON::Object::Ptr browserSettings = settings->getObject("browserSettings");
+    if (browserSettings.isNull())
+    {
+        LOG_WRN("json key[browserSettings] doesn't exist in user config json");
+        return;
+    }
+    std::ostringstream jsonStream;
+    browserSettings->stringify(jsonStream);
+    session->sendTextFrame("browsersetting: " + jsonStream.str());
+    std::string spellOnline, darkTheme, darkBackgroundForTheme;
+    JsonUtil::findJSONValue(browserSettings, "spellOnline", spellOnline);
+    JsonUtil::findJSONValue(browserSettings, "darkTheme", darkTheme);
+    Poco::JSON::Object::Ptr darkBackgroundObj =
+        browserSettings->getObject("darkBackgroundForTheme");
+    if (!darkBackgroundObj.isNull())
+    {
+        JsonUtil::findJSONValue(darkBackgroundObj, darkTheme == "true" ? "dark" : "light",
+                                darkBackgroundForTheme);
+    }
+
+    ClientSession::BrowserSetting browserSetting{ darkTheme, darkBackgroundForTheme, spellOnline };
+    session->setBrowserSetting(browserSetting);
+    session->setSentBrowserSetting(true);
 }
 
 bool DocumentBroker::processPlugins(std::string& localPath)
