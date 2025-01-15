@@ -231,6 +231,145 @@ export class SimpleRectangle {
 	public clone(): SimpleRectangle { return new SimpleRectangle(this.x1, this.y1, this.width, this.height); }
 }
 
+/*
+	We have rectangle arrays in some places. We mostly combine these arrays in order to shape the border of a selection.
+	The merged result is a polygon. See ASCII art below for an example.
+
+	Rectangles (2):
+	___________________
+	|_________________|______
+	|________________________|
+
+	^ Combined result of above rectangles is (a polygon):
+	________________
+	|              |_______
+	|_____________________|
+
+	Give rectangles as array of rectangle arrays (x, y, width, height).
+	Converter constant is used to convert the result into CSS pixels/ Core pixels or twips.
+	Tolerance is used to determine if the rectangles are in the same row.
+*/
+export function rectanglesToPolygon(rectangles: Array<number[]>, converterConstant: number = 1, tolerance: number = 5): number[] {
+	/*
+		Here we can create a geometric function that handles all the edge cases.
+		But we don't need to.
+		Conditions:
+			* If the rectangles are in the same row:
+				* They should have same height.
+				* They can't have spaces between them.
+			* This code doesn't take holes in the polygon into account.
+		These conditions will ease our work.
+		In the future, we can expand our approach if we need to.
+	*/
+
+	/*
+		First, determine the rows.
+		Array of array of rectangles.
+	*/
+	const rowArray: Array<Array<number[]>> = [];
+	for (let i = 0; i < rectangles.length; i++) {
+		const rectangle = rectangles[i];
+		let found = false;
+		for (let j = 0; j < rowArray.length; j++) {
+			const row = rowArray[j];
+			if (Math.abs(row[0][1] - rectangle[1]) <= tolerance) {
+				row.push(rectangle);
+				found = true;
+				break;
+			}
+		}
+
+		if (!found) {
+			rowArray.push([rectangle]);
+		}
+	}
+
+	const finalRows: Array<number[]> = [];
+	// Now we have rows. We will find the leftmost and rightmost points of each row and push them as rectangles.
+	for (let i = 0; i < rowArray.length; i++) {
+		let leftmost: number = rowArray[i][0][0];
+		let rightmost: number = rowArray[i][0][0] + rowArray[i][0][2];
+
+		for (let j = 1; j < rowArray[i].length; j++) {
+			const rectangle = rowArray[i][j];
+			if (rectangle[0] < leftmost) {
+				leftmost = rectangle[0];
+			}
+
+			if (rectangle[0] + rectangle[2] > rightmost) {
+				rightmost = rectangle[0] + rectangle[2];
+			}
+		}
+
+		finalRows.push([leftmost, rowArray[i][0][1], rightmost - leftmost, rowArray[i][0][3]]);
+	}
+
+	// Now we need to sort the rows by y.
+	for (let i = 0; i < finalRows.length; i++) {
+		for (let j = i + 1; j < finalRows.length; j++) {
+			if (finalRows[i][1] > finalRows[j][1]) {
+				const temp = finalRows[i];
+				finalRows[i] = finalRows[j];
+				finalRows[j] = temp;
+			}
+		}
+	}
+
+	// Now we need to merge the rows (the polygon).
+	const polygon: number[] = [];
+	for (let i = 0; i < finalRows.length; i++) { // From leftmost to bottom.
+		if (i === 0) {
+			// Draw top line, then continue from left to bottom.
+			polygon.push(finalRows[i][0] + finalRows[i][2]);
+			polygon.push(finalRows[i][1]);
+
+			polygon.push(finalRows[i][0]);
+			polygon.push(finalRows[i][1]);
+
+			polygon.push(finalRows[i][0]);
+			polygon.push(finalRows[i][1] + finalRows[i][3]);
+		}
+		else {
+			if (finalRows[i][0] !== polygon[polygon.length - 2] || finalRows[i][1] !== polygon[polygon.length - 1]) {
+				polygon.push(finalRows[i][0]);
+				polygon.push(finalRows[i][1]);
+			}
+
+			polygon.push(finalRows[i][0]);
+			polygon.push(finalRows[i][1] + finalRows[i][3]);
+		}
+
+		if (i === finalRows.length - 1) {
+			// Draw bottom line.
+			polygon.push(finalRows[i][0] + finalRows[i][2]);
+			polygon.push(finalRows[i][1] + finalRows[i][3]);
+		}
+	}
+
+	// Now we will draw from rightmost bottom to top.
+	for (let i = finalRows.length - 1; i >= 0; i--) {
+		if (finalRows[i][0] + finalRows[i][2] !== polygon[polygon.length - 2] || finalRows[i][1] + finalRows[i][3] !== polygon[polygon.length - 1]) {
+			polygon.push(finalRows[i][0] + finalRows[i][2]);
+			polygon.push(finalRows[i][1] + finalRows[i][3]);
+		}
+
+		polygon.push(finalRows[i][0] + finalRows[i][2]);
+		polygon.push(finalRows[i][1]);
+	}
+
+	// That's it. We should have drawn the polygon.
+
+	if (converterConstant !== 1) {
+		for (let i = 0; i < polygon.length; i++) {
+			polygon[i] = Math.round(converterConstant * polygon[i]);
+		}
+	}
+
+	//return [100, 100, 200, 100, 200, 200, 100, 200]; // Test polygon (to see if caller function draws it correctly).;
+
+	return polygon;
+}
+
 }
 
 app.definitions.simpleRectangle = cool.SimpleRectangle;
