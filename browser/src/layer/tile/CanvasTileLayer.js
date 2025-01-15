@@ -420,13 +420,13 @@ L.TileSectionManager = L.Class.extend({
 	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
 	 **/
 	_getZoomDocPos: function (_pinchCenter, _pinchStartCenter, _paneBounds, freezePane, _splitPos, scale, findFreePaneCenter) {
-		let pinchCenter = L.point(_pinchCenter.pX, _pinchCenter.pY);
-		const pinchStartCenter = L.point(_pinchCenter.pX, _pinchCenter.pY);
+		let pinchCenter = L.point(_pinchCenter.x, _pinchCenter.y);
+		const pinchStartCenter = L.point(_pinchCenter.x, _pinchCenter.y);
 		const paneBounds = L.bounds(
-			L.point(_paneBounds.pX1, _paneBounds.pY1),
-			L.point(_paneBounds.pX2, _paneBounds.pY2),
+			L.point(_paneBounds.x1, _paneBounds.y1),
+			L.point(_paneBounds.x2, _paneBounds.y2),
 		);
-		const splitPos = L.point(_splitPos.pX, _splitPos.pY);
+		const splitPos = L.point(_splitPos.x, _splitPos.y);
 
 		let xMin = 0;
 		const hasXMargin = !this._layer.isCalc();
@@ -489,8 +489,8 @@ L.TileSectionManager = L.Class.extend({
 
 		if (!findFreePaneCenter) {
 			docTopLeft = new cool.SimplePoint(
-				docTopLeft.x * app.pixelsToTwips,
-				docTopLeft.y * app.pixelsToTwips
+				docTopLeft.x,
+				docTopLeft.y
 			);
 			return { offset: this._offset, topLeft: docTopLeft };
 		}
@@ -501,14 +501,14 @@ L.TileSectionManager = L.Class.extend({
 
 		docTopLeft = docTopLeft.add(this._offset) // TODO @minion3665: why is this added here but not in the `if (!findFreePaneCenter)` clause?
 		docTopLeft = new cool.SimplePoint(
-			docTopLeft.x * app.pixelsToTwips,
-			docTopLeft.y * app.pixelsToTwips,
+			docTopLeft.x,
+			docTopLeft.y,
 		);
 
 		newPaneCenter = this._map.rescale(newPaneCenter, this._map.getZoom(), this._map.getScaleZoom(scale));
 		newPaneCenter = new cool.SimplePoint(
-			newPaneCenter.x * app.pixelsToTwips,
-			newPaneCenter.y * app.pixelsToTwips
+			newPaneCenter.x,
+			newPaneCenter.y
 		);
 
 		return {
