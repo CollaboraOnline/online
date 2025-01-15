@@ -499,7 +499,6 @@ L.TileSectionManager = L.Class.extend({
 			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) * 0.5 / scale),
 			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) * 0.5 / scale));
 
-		docTopLeft = docTopLeft.add(this._offset) // TODO @minion3665: why is this added here but not in the `if (!findFreePaneCenter)` clause?
 		docTopLeft = new cool.SimplePoint(
 			docTopLeft.x,
 			docTopLeft.y,
