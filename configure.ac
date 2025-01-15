@@ -108,8 +108,8 @@ AC_LINK_IFELSE([AC_LANG_SOURCE([
       return v;
     }
     ])],
-               [AC_MSG_RESULT([No])],
-               [AC_MSG_RESULT([Yes])
+               [AC_MSG_RESULT([no])],
+               [AC_MSG_RESULT([yes])
                 LIBS="$LIBS -latomic"])
 
 # Declare options
@@ -1313,14 +1313,14 @@ AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
 mobile_app=
 ENABLE_MOBILEAPP=
 MOBILEAPP=0
-AC_MSG_CHECKING([Is this a mobile app])
+AC_MSG_CHECKING([if this is a mobile app])
 if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
-     AC_MSG_RESULT([Yes])
+     AC_MSG_RESULT([yes])
      mobile_app=true;
      MOBILEAPP=1
      ENABLE_MOBILEAPP=true
 else
-     AC_MSG_RESULT([No])
+     AC_MSG_RESULT([no])
 fi
 AC_DEFINE_UNQUOTED([MOBILEAPP],[$MOBILEAPP],[Define to 1 if this is a mobileapp (eg. Android) build.])
 AC_SUBST(ENABLE_MOBILEAPP)
@@ -1447,7 +1447,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$ho
        fi
 
        PKG_CHECK_MODULES([OPENSSL], [openssl])
-       AC_MSG_CHECKING([Whether OpenSSL is recent enough])
+       AC_MSG_CHECKING([whether OpenSSL is recent enough])
        AC_COMPILE_IFELSE([AC_LANG_SOURCE([
        #include <openssl/opensslv.h>
 
@@ -1470,7 +1470,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$ho
                          [AC_MSG_ERROR([The POCO version is too old])])
 
        # If poco is built with --unbundled, it uses the system pcre library
-       AC_MSG_CHECKING([If we need to link with -lpcre])
+       AC_MSG_CHECKING([if we need to link with -lpcre])
        AC_LINK_IFELSE([AC_LANG_SOURCE([
        #include <Poco/RegularExpression.h>
        int main(int argc, char **argv)
@@ -1481,8 +1481,8 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$ho
            return e.match(argv[[1]], m);
        }
        ])],
-                      [AC_MSG_RESULT([No])],
-                      [AC_MSG_RESULT([Yes])
+                      [AC_MSG_RESULT([no])],
+                      [AC_MSG_RESULT([yes])
                        LIBS="$LIBS -lpcre"])
 
        ])
