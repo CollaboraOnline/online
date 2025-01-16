@@ -14,7 +14,7 @@ declare var app: any;
 
 namespace cool {
 
-export class ContentControlSection extends app.definitions.canvasSectionObject {
+export class ContentControlSection extends CanvasSectionObject {
 	name: string = L.CSections.ContentControl.name;
 	processingOrder: number = L.CSections.ContentControl.processingOrder;
 	drawingOrder: number = L.CSections.ContentControl.drawingOrder;
