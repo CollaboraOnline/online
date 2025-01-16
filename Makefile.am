@@ -533,6 +533,10 @@ $(SYSTEM_STAMP): ${top_srcdir}/coolwsd-systemplate-setup $(CLEANUP_DEPS)
 	@$(CLEANUP_COMMAND)
 	mkdir -p $@
 
+@CACHE_PATH@:
+	@$(CLEANUP_COMMAND)
+	mkdir -p $@
+
 cleanup:
 	$(CLEANUP_COMMAND)
 
@@ -544,6 +548,7 @@ clean-local:
 	$(CLEANUP_COMMAND)
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@" || echo "WARNING: failed to remove the systemplate"; fi
 	if test "z@JAILS_PATH@" != "z"; then rm -rf "@JAILS_PATH@" || echo "WARNING: failed to remove all jails cleanly"; fi
+	if test "z@CACHE_PATH@" != "z"; then rm -rf "@CACHE_PATH@" || echo "WARNING: failed to remove all cache cleanly"; fi
 	rm -rf "${top_srcdir}/loleaflet"
 	rm -rf loolconfig loolconvert loolforkit loolmap loolmount # kill old binaries
 	rm -rf loolwsd loolwsd_fuzzer coolwsd_fuzzer loolstress loolsocketdump
@@ -557,7 +562,7 @@ else
   OUTPUT_TO_FILE=false
 endif
 
-setup-wsd: all @JAILS_PATH@
+setup-wsd: all @JAILS_PATH@ @CACHE_PATH@
 	@echo "Launching coolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@mkdir -p $(abs_top_builddir)/test/samples
@@ -567,7 +572,9 @@ setup-wsd: all @JAILS_PATH@
 COMMON_PARAMS = \
 	$(if $(TEST_APPARMOR),--disable-cool-user-checking) \
 	--o:sys_template_path="@SYSTEMPLATE_PATH@" \
-	--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+	--o:child_root_path="@JAILS_PATH@" \
+	--o:cache_files.path="@CACHE_PATH@" \
+	--o:storage.filesystem[@allow]=true \
 	--o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 	--o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 	--o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
@@ -670,7 +677,7 @@ else
 ALL_LOCAL_DEPS=coolwsd
 endif
 
-all-local: $(ALL_LOCAL_DEPS) @JAILS_PATH@ $(SYSTEM_STAMP)
+all-local: $(ALL_LOCAL_DEPS) @JAILS_PATH@ @CACHE_PATH@ $(SYSTEM_STAMP)
 	@$(abs_top_srcdir)/scripts/refresh-git-hooks
 
 # just run the build without any tests

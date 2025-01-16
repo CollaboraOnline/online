@@ -131,9 +131,10 @@ lokitroot=/opt/collaboraoffice
 coolparent=`cd ${lokitroot} && cd .. && /bin/pwd`
 
 rm -rf ${coolparent}/cool
-mkdir -p ${coolparent}/cool/child-roots
+mkdir -p ${coolparent}/cool/child-roots ${coolparent}/cool/cache
 chown cool:cool ${coolparent}/cool
 chown cool:cool ${coolparent}/cool/child-roots
+chown cool:cool ${coolparent}/cool/cache
 
 fc-cache ${lokitroot}/share/fonts/truetype
 coolwsd-systemplate-setup ${coolparent}/cool/systemplate ${lokitroot} >/dev/null 2>&1

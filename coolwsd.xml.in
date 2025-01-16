@@ -316,9 +316,10 @@
         <max_versions_to_maintain desc="How many versions of the same file to keep." default="5" type="uint">5</max_versions_to_maintain>
         <path desc="Absolute path of the directory under which quarantined files will be stored. Do not use a relative path." type="path" relative="false"></path>
         <expiry_min desc="Time in mins after quarantined files will be deleted." type="int" default="3000">3000</expiry_min>
-</quarantine_files>
+    </quarantine_files>
 
     <cache_files desc="Files are cached here to speed up config support.">
+        <path desc="Absolute path of the directory under which cached files will be stored. Do not use a relative path." type="path" relative="false"></path>
         <expiry_min desc="Time in mins after disuse at which cache files will be deleted." type="int" default="3000">1000</expiry_min>
     </cache_files>
 

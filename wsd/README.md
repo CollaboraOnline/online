@@ -66,15 +66,17 @@ chroot system, and directory for the jails:
 
     SYSTEMPLATE=`pwd`/systemplate  # or tweak for your system
     ROOTFORJAILS=`pwd`/jails       # or tweak for your system
+    ROOTFORCACHE=`pwd`/cache       # or tweak for your system
 
     rm -Rf ${SYSTEMPLATE} # clean
     ./coolwsd-systemplate-setup ${SYSTEMPLATE} ${MASTER}/instdir # build template
     mkdir -p ${ROOTFORJAILS} # create location for transient jails.
+    mkdir -p ${ROOTFORCACHE} # create location for persistent cache.
 
 To run coolwsd the way it is supposed to eventually be run "for real", you can
 now do:
 
-    ./coolwsd --o:sys_template_path=${SYSTEMPLATE} --o:child_root_path=${ROOTFORJAILS}
+    ./coolwsd --o:sys_template_path=${SYSTEMPLATE} --o:child_root_path=${ROOTFORJAILS} --o:cache_files.path=${ROOTFORCACHE}
 
 The ${SYSTEMPLATE} is a directory tree set up using the
 coolwsd-systemplate-setup script here. (It should not exist before
