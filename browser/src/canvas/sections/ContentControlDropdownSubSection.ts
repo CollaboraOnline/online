@@ -60,8 +60,9 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 			$('#datepicker').hide();
 		} else {
 			var datePicker = document.getElementById('datepicker');
-			datePicker.style.left = this.position[0] + this.size[0] + 'px';
-			datePicker.style.top = this.position[1] + this.size[1] + 'px';
+			datePicker.style.left = String(this.myTopLeft[0] / app.dpiScale) + 'px';
+			datePicker.style.top =
+				String((this.myTopLeft[1] + this.size[1]) / app.dpiScale) + 'px';
 			$('#datepicker').show();
 		}
 	}
@@ -116,8 +117,8 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 		json.children[0].children[0].entries = entries;
 
 		//add position
-		json.posx = this.position[0] + this.size[0];
-		json.posy = this.position[1] + this.size[1];
+		json.posx = this.position[0] / app.dpiScale;
+		json.posy = (this.position[1] + this.size[1]) / app.dpiScale;
 
 		return json;
 	}
@@ -130,9 +131,26 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 		app.map.dontHandleMouse = false;
 	}
 
+	public containsPoint(point: number[]) {
+		if (
+			this.position[0] <= point[0] &&
+			this.position[0] + this.size[0] >= point[0]
+		) {
+			if (
+				this.position[1] <= point[1] &&
+				this.position[1] + this.size[1] >= point[1]
+			)
+				return true;
+		}
+
+		return false;
+	}
+
 	onClick(point: number[], e: MouseEvent): void {
-		e.preventDefault();
-		e.stopPropagation();
+		if (e) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
 		this.stopPropagating();
 
 		if (this.sectionProperties.datePicker) {
