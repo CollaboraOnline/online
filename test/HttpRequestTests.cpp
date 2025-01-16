@@ -320,7 +320,7 @@ void HttpRequestTests::testSimpleGet()
         // Use Poco to get the same URL in parallel.
         const auto pocoResponse = helpers::pocoGetRetry(Poco::URI(_localUri + URL));
 
-        cv.wait_for(lock, DefTimeoutSeconds);
+        cv.wait_for(lock, DefTimeoutSeconds, [&]() { return timedout == false; });
 
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
@@ -634,7 +634,7 @@ void HttpRequestTests::testSimplePost_External()
 
     httpSession->asyncRequest(httpRequest, pollThread);
 
-    cv.wait_for(lock, DefTimeoutSeconds);
+    cv.wait_for(lock, DefTimeoutSeconds, [&]() { return timedout == false; });
 
     const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
     LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
