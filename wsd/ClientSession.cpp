@@ -19,6 +19,7 @@
 #include <string_view>
 #include <memory>
 #include <unordered_map>
+#include <cctype>
 
 #include <Poco/Base64Decoder.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -95,7 +96,8 @@ ClientSession::ClientSession(
     _thumbnailSession(false),
     _canonicalViewId(0),
     _sentAudit(false),
-    _sentBrowserSetting(false)
+    _sentBrowserSetting(false),
+    _browserSettingsJSON(new Poco::JSON::Object)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -1353,6 +1355,44 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         Admin::instance().routeTokenSanityCheck();
     }
+    else if (tokens.equals(0, "browsersetting") && tokens.size() >= 3)
+    {
+        std::string action;
+        std::string json;
+        getTokenString(tokens[1], "action", action);
+        if (action == "update")
+        {
+            std::string key;
+            std::string value;
+            getTokenString(tokens[2], "key", key);
+            getTokenString(tokens[3], "value", value);
+            std::cerr << "key: " << key << "\n";
+            std::cerr << "value: " << value << "\n";
+            std::vector<std::string> vec = Util::splitStringToVector(key, '.');
+            if (vec.size() == 2)
+            {
+                const std::string& parentKey = vec[0];
+                std::string& childKey = vec[1];
+                if (!childKey.empty() && !parentKey.empty())
+                {
+                    Poco::JSON::Object::Ptr jsonObject;
+                    if (_browserSettingsJSON->has(parentKey))
+                        jsonObject = _browserSettingsJSON->getObject(parentKey);
+                    else
+                        jsonObject = new Poco::JSON::Object;
+
+                    childKey[0] = std::tolower(childKey[0]);
+                    jsonObject->set(childKey, value);
+                    _browserSettingsJSON->set(parentKey, jsonObject);
+                }
+            }
+            else
+            {
+                _browserSettingsJSON->set(key, value);
+            }
+            sendBrowserSettingUpdate(Uri::decode(docBroker->getDocKey()));
+        }
+    }
 #endif
     else
     {
@@ -1361,6 +1401,39 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
 
     return false;
+}
+
+// TODO: make this async
+void ClientSession::sendBrowserSettingUpdate(const std::string& docKey)
+{
+    Poco::URI uriObject(docKey);
+
+    // extract base wopiUri from docKey
+    std::string path = uriObject.getPath();
+    size_t pos = path.find("/files/");
+    if (pos != std::string::npos)
+        path = path.substr(0, pos);
+    path.append("/settings/update");
+    uriObject.setPath(path);
+
+    uriObject.addQueryParameter("key", "browsersettings");
+    const std::string& uriAnonym = COOLWSD::anonymizeUrl(uriObject.toString());
+
+    LOG_DBG("Uploading updated browserSettings to wopiHost[" << uriAnonym << ']');
+    auto httpRequest = StorageConnectionManager::createHttpRequest(uriObject, _auth);
+    httpRequest.setVerb(http::Request::VERB_POST);
+
+    std::ostringstream jsonStream;
+    _browserSettingsJSON->stringify(jsonStream, 2);
+    httpRequest.setBody(jsonStream.str(), "application/json; charset=utf-8");
+
+    auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
+    auto httpResponse = httpSession->syncRequest(httpRequest);
+
+    if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+    {
+        LOG_ERR("Failed to upload updated browser settings to wopiHost[" << uriAnonym << ']');
+    }
 }
 
 void ClientSession::overrideDocOption()

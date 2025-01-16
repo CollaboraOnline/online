@@ -16,7 +16,11 @@
 #include "SenderQueue.hpp"
 #include "ServerURL.hpp"
 #include "DocumentBroker.hpp"
+
+#include <Poco/JSON/Object.h>
+#include <Poco/SharedPtr.h>
 #include <Poco/URI.h>
+
 #include <Rectangle.hpp>
 #include <deque>
 #include <utility>
@@ -291,6 +295,11 @@ public:
         _browserSetting = browserSetting;
     }
 
+    void setBrowserSettingsJSON(Poco::SharedPtr<Poco::JSON::Object>& jsonObject)
+    {
+        _browserSettingsJSON = std::move(jsonObject);
+    }
+
     /// Override parsedDocOption values we get from browser setting json
     /// Because when client sends `load url` it doesn't have information about browser setting json
     void overrideDocOption();
@@ -354,6 +363,7 @@ private:
 
     std::string getIsAdminUserStatus() const;
 
+    void sendBrowserSettingUpdate(const std::string& docKey);
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 
@@ -459,6 +469,8 @@ private:
 
     /// If browser setting was already sent
     bool _sentBrowserSetting;
+
+    Poco::SharedPtr<Poco::JSON::Object> _browserSettingsJSON;
 
     BrowserSetting _browserSetting;
 };
