@@ -319,14 +319,24 @@ L.Map.TouchGesture = L.Handler.extend({
 		// The validity and content control dropdown marker icon (exists in calc and writer) needs to be notified of tap events if it is the target.
 		var dropDownMarkers;
 		if (this._map._docLayer.isWriter()) {
-			dropDownMarkers = document.getElementsByClassName('leaflet-marker-icon writer-drop-down-marker');
+			dropDownMarkers = document.getElementsByClassName('html-object-section writer-drop-down-marker');
 		} else if (this._map._docLayer.isCalc()) {
 			dropDownMarkers = document.getElementsByClassName('leaflet-marker-icon spreadsheet-drop-down-marker');
 		}
-		if (dropDownMarkers && dropDownMarkers.length == 1 && dropDownMarkers[0] && e.target && e.target == dropDownMarkers[0]) {
-			this._map.fire('dropdownmarkertapped');
-			// don't send the mouse-event to core
-			return;
+		if (dropDownMarkers && dropDownMarkers.length == 1 && dropDownMarkers[0] && e.target) {
+			if (e.target == dropDownMarkers[0])
+				return; // don't send the mouse-event to core
+			else {
+				let section = app.sectionContainer.getSectionWithName(L.CSections.ContentControl.name);
+
+				if (section) {
+					section = section.sectionProperties.dropdownSection;
+					if (section && section.containsPoint(posInTwips.pToArray())) {
+						section.onClick();
+						return; // don't send the mouse-event to core
+					}
+				}
+			}
 		}
 
 		this._map.fire('closepopups');
