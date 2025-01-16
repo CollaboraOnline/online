@@ -1,0 +1,46 @@
+{
+  "InfoBarLaterDate": 1735826583776,
+  "WSDFeedbackCount": 10,
+  "WSDFeedbackEnabled": true,
+  "WSDFeedbackLaterDate": 1735826583776,
+  "WSDWelcomeDisabled": false,
+  "WSDWelcomeDisabledDate": "Thu Jan 02 2025",
+  "WSDWelcomeVersion": "24.04.11.1",
+  "Zotero_LastUsedStyle": "Zotero_StyleName",
+  "compactMode": false,
+  "customColor": [
+    "222222",
+    "8811F6",
+    "8800F0",
+    "8800F7"
+  ],
+  "darkBackgroundForTheme": {
+    "dark": false,
+    "light": true
+  },
+  "darkTheme": true,
+  "kind": "browser",
+  "presentation": {
+    "showSidebar": false,
+    "showStatusbar": false,
+    "showToolbar": true
+  },
+  "recentColor": [
+    "DDE8CB",
+    "780373",
+    "355269",
+    "BF819E",
+    "000000"
+  ],
+  "saveAsMode": "groups",
+  "spellOnline": false,
+  "spreadsheet": {
+    "showStatusbar": false,
+    "showToolbar": true
+  },
+  "text": {
+    "showResolved": true,
+    "showStatusbar": true,
+    "showToolbar": true
+  }
+}
