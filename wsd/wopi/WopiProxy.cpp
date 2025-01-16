@@ -76,7 +76,7 @@ void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<Terminating
 
             // Remove from the current poll and transfer.
             disposition.setMove(
-                [this, docKey, url, uriPublic](const std::shared_ptr<Socket>& moveSocket)
+                [this, docKey, url=std::move(url), uriPublic](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
                                   << ": Dissociating client socket from "
