@@ -91,10 +91,12 @@ public:
     public:
         ResourceAccessDetails() = default;
 
-        ResourceAccessDetails(std::string wopiSrc, std::string accessToken, std::string permission)
+        ResourceAccessDetails(std::string wopiSrc, std::string accessToken,
+                              std::string permission, std::string wopiConfigId)
             : _wopiSrc(std::move(wopiSrc))
             , _accessToken(std::move(accessToken))
             , _permission(std::move(permission))
+            , _wopiConfigId(std::move(wopiConfigId))
         {
         }
 
@@ -103,11 +105,15 @@ public:
         const std::string wopiSrc() const { return _wopiSrc; }
         const std::string accessToken() const { return _accessToken; }
         const std::string permission() const { return _permission; }
+        // only exists in debugging mode, so built-in wopi debuging server
+        // can support multiple 'shared' configs depending on configid=something
+        const std::string wopiConfigId() const { return _wopiConfigId; }
 
     private:
         std::string _wopiSrc;
         std::string _accessToken;
         std::string _permission;
+        std::string _wopiConfigId;
     };
 
 private:

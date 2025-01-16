@@ -626,6 +626,11 @@ void launchAsyncCheckFileInfo(
     if (!accessDetails.permission().empty())
         options.push_back("permission=" + accessDetails.permission());
 
+#if ENABLE_DEBUG
+    if (!accessDetails.wopiConfigId().empty())
+        options.push_back("configid=" + accessDetails.wopiConfigId());
+#endif
+
     const RequestDetails fullRequestDetails =
         RequestDetails(accessDetails.wopiSrc(), options, /*compat=*/std::string());
 
@@ -733,7 +738,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                     auto accessDetails = FileServerRequestHandler::ResourceAccessDetails(
                         mapAccessDetails.at("wopiSrc"),
                         mapAccessDetails.at("accessToken"),
-                        mapAccessDetails.at("permission"));
+                        mapAccessDetails.at("permission"),
+                        mapAccessDetails.at("configid"));
                     launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations,
                                              RvsHighWatermark);
                 }
