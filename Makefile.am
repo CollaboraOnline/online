@@ -567,6 +567,8 @@ setup-wsd: all @JAILS_PATH@ @CACHE_PATH@
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@mkdir -p $(abs_top_builddir)/test/samples
 	@$(abs_top_srcdir)/scripts/build-samples.py $(abs_top_srcdir)/test/samples $(abs_top_srcdir)/test/samples
+	@rm -rf $(abs_top_srcdir)/test/data/presets
+	@cp -r $(abs_top_srcdir)/test/data/presets-default $(abs_top_srcdir)/test/data/presets
 	@echo
 
 COMMON_PARAMS = \
