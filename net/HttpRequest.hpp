@@ -1903,10 +1903,10 @@ public:
     bool asyncUpload(std::string fromFile, std::string mimeType, std::string rangeHeader)
     {
         size_t equalsPos = rangeHeader.find("=");
-        if (equalsPos == std::string::npos) return asyncUpload(fromFile, mimeType);
+        if (equalsPos == std::string::npos) return asyncUpload(std::move(fromFile), std::move(mimeType));
 
         std::string unit = rangeHeader.substr(0, equalsPos);
-        if (unit != "bytes") return asyncUpload(fromFile, mimeType);
+        if (unit != "bytes") return asyncUpload(std::move(fromFile), std::move(mimeType));
 
         std::string range = rangeHeader.substr(equalsPos + 1);
 
