@@ -1083,7 +1083,8 @@ L.TextInput = L.Layer.extend({
 			if (this._map['stateChangeHandler'].getItemValue('.uno:ContentControlProperties') === 'enabled') {
 				if (app.sectionContainer.doesSectionExist(L.CSections.ContentControl.name)) {
 					var section = app.sectionContainer.getSectionWithName(L.CSections.ContentControl.name);
-					section.onClickDropdown(ev);
+					if (section.sectionProperties.dropdownSection)
+						section.sectionProperties.dropdownSection.onClick(null, ev);
 				}
 			}
 		}
