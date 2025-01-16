@@ -363,7 +363,9 @@ private:
 
     std::string getIsAdminUserStatus() const;
 
+#if !MOBILEAPP
     void sendBrowserSettingUpdate(const std::string& docKey);
+#endif
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 

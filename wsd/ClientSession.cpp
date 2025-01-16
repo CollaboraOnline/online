@@ -1403,6 +1403,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     return false;
 }
 
+#if !MOBILEAPP
 // TODO: make this async
 void ClientSession::sendBrowserSettingUpdate(const std::string& docKey)
 {
@@ -1435,6 +1436,7 @@ void ClientSession::sendBrowserSettingUpdate(const std::string& docKey)
         LOG_ERR("Failed to upload updated browser settings to wopiHost[" << uriAnonym << ']');
     }
 }
+#endif
 
 void ClientSession::overrideDocOption()
 {
