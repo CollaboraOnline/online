@@ -27,4 +27,4 @@ mv -f certs/ca/root.crt.pem /etc/coolwsd/ca-chain.cert.pem
 fi
 
 # Start coolwsd
-exec /usr/bin/coolwsd --version --use-env-vars --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/coolwsd --o:logging.color=false --o:stop_on_config_change=true ${extra_params}
+exec /usr/bin/coolwsd --version --use-env-vars --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/coolwsd --o:cache_files.path=/opt/cool/cache --o:logging.color=false --o:stop_on_config_change=true ${extra_params}
