@@ -26,6 +26,7 @@ const port = '9999';
 let args = [
 	`--o:sys_template_path=${top_builddir}/systemplate`,
 	`--o:child_root_path=${top_builddir}/jails`,
+	`--o:cache_files.path=${top_builddir}/cache`,
 	'--o:storage.filesystem[@allow]=true',
 	'--o:admin_console.username=admin',
 	'--o:admin_console.password=admin',
