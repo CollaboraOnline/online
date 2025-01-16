@@ -60,6 +60,9 @@ std::string Cache::getConfigId(const std::string& uri)
 void Cache::cacheConfigFile(const std::string& configId, const std::string& uri,
                             const std::string& stamp, const std::string& filename)
 {
+    if (CachePath.empty())
+        return;
+
     std::unique_lock<std::mutex> lock(CacheMutex);
 
     Poco::Path rootPath(CachePath, Uri::encode(configId));
@@ -122,6 +125,9 @@ bool Cache::supplyConfigFile(const std::string& cacheDir, const std::string& sta
 
 void Cache::supplyConfigFiles(const std::string& configId, std::vector<CacheQuery>& queries)
 {
+    if (CachePath.empty())
+        return;
+
     std::unique_lock<std::mutex> lock(CacheMutex);
 
     Poco::Path rootPath(CachePath, Uri::encode(configId));
@@ -167,6 +173,9 @@ void Cache::supplyConfigFiles(const std::string& configId, std::vector<CacheQuer
 
 void Cache::clearOutdatedConfigs()
 {
+    if (CachePath.empty())
+        return;
+
     auto now = std::chrono::system_clock::now();
 
     auto names = FileUtil::getDirEntries(CachePath);
