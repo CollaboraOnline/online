@@ -764,8 +764,7 @@ export class HeaderInfo {
 				),
 				{ freezeX: false, freezeY: false },
 				cool.SimplePoint.newp(...(<[number, number]>ctx.splitPos.toArray())),
-				scale,
-				false,
+				scale
 			);
 
 			startPx = this._isColumn ?

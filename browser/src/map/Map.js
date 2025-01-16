@@ -577,8 +577,7 @@ L.Map = L.Evented.extend({
 			),
 			{ freezeX: false, freezeY: false },
 			cool.SimplePoint.newp(...splitPos.toArray()),
-			this.getZoomScale(zoom),
-			true,
+			this.getZoomScale(zoom)
 		);
 
 		const newCenterLatLng = this.unproject(L.point(docPos.center.cX, docPos.center.cY), zoom);

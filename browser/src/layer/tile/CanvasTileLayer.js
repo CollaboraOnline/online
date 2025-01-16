@@ -413,13 +413,11 @@ L.TileSectionManager = L.Class.extend({
 	 * @param scale {number} The scale, relative to the initial size, of the document currently
 	 * Or rather this is equivalent to: old_width / new_width
 	 *
-	 * @param findFreePaneCenter {boolean} Wether to return a center point
-	 *
-	 * @returns {{topLeft: SimplePoint, center?: SimplePoint}} An object with a top left point in core-pixels and optionally a center point
-	 * Center is included iff findFreePaneCenter is true
-	 * (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
+	 * @returns {{topLeft: SimplePoint, center: SimplePoint}} An object with a top left point in core-pixels and a center point
+
+	* (probably this should be encoded into the type, e.g. with an overload when this is converted to TypeScript)
 	 **/
-	_getZoomDocPos: function (pinchCenter, pinchStartCenter, paneBounds, freezePane, splitPos, scale, findFreePaneCenter) {
+	_getZoomDocPos: function (pinchCenter, pinchStartCenter, paneBounds, freezePane, splitPos, scale) {
 		let xMin = 0;
 		const hasXMargin = !this._layer.isCalc();
 		if (hasXMargin) {
@@ -484,10 +482,6 @@ L.TileSectionManager = L.Class.extend({
 			docTopLeft.y += this._offset.y;
 		}
 
-		if (!findFreePaneCenter) {
-			return { offset: this._offset, topLeft: docTopLeft };
-		}
-
 		const newPaneCenter = new cool.SimplePoint(
 			docTopLeft.x -
 				splitPos.x +
@@ -530,8 +524,7 @@ L.TileSectionManager = L.Class.extend({
 			),
 			{ freezeX: false, freezeY: false },
 			cool.SimplePoint.newp(...splitPos.toArray()),
-			scale,
-			true /* findFreePaneCenter */,
+			scale
 		).center;
 	},
 

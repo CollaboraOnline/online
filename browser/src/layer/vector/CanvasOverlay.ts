@@ -353,8 +353,7 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 				),
 				{ freezeX, freezeY },
 				cool.SimplePoint.newp(...(<[number, number]>splitPos.toArray())),
-				scale,
-				false /* findFreePaneCenter? */
+				scale
 			);
 
 			const clipTopLeft = new cool.Point(docPos.topLeft.pX, docPos.topLeft.pX);
