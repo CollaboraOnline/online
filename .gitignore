@@ -55,6 +55,7 @@ test/data/hello-world.odt
 test/data/hello-world.ods
 test/data/hello-world.odp
 test/data/hello-world.odg
+test/data/presets
 test/samples/calc-edit.fods
 test/samples/writer-edit.fodt
 test/samples/impress-edit.fodp

@@ -233,6 +233,8 @@ define cleanup_before_run
 	$(V)rm -f $(PID_FILE)
 	$(V)rm -rf cypress
 	$(V)rm -rf integration_tests/snapshots/actual
+	$(V)rm -rf $(abs_top_srcdir)/test/data/presets
+	$(V)cp -r $(abs_top_srcdir)/test/data/presets-default $(abs_top_srcdir)/test/data/presets
 endef
 
 NODE_BINS = \
