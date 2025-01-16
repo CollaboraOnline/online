@@ -269,8 +269,8 @@ void AsyncDNS::joinThread()
 void AsyncDNS::dumpQueueState(std::ostream& os) const
 {
     // NOT thread-safe
-    auto activeLookup = _activeLookup;
-    auto lookups = _lookups;
+    Lookup activeLookup = _activeLookup;
+    std::queue<Lookup> lookups = _lookups;
     os << "  active lookup: " << (activeLookup.cb ? "true" : "false") << '\n';
     if (activeLookup.cb)
     {
