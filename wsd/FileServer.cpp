@@ -449,12 +449,14 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("UserId", userId);
             fileInfo->set("UserFriendlyName", userNameString);
 
-            // just files into two seperate config etags based on basename
-            char configSuffix = (localFile->fileName.empty() || toupper(localFile->fileName[0]) <= 'M') ?
-                '1' : '2';
+            //allow &configid to override etag to force another subforkit
+            std::string configId = requestDetails.getParam("configid");
+            if (configId.empty())
+                configId = "default";
+
             const auto& config = Application::instance().config();
             std::string etagString = "\"" COOLWSD_VERSION_HASH +
-                config.getString("ver_suffix", "") + '-' + configSuffix + "\"";
+                config.getString("ver_suffix", "") + '-' + configId + "\"";
 
             // authentication token to get these settings??
             {
@@ -1461,6 +1463,7 @@ static const std::string CSS_VARS = "<!--%CSS_VARIABLES%-->";
 static const std::string POSTMESSAGE_ORIGIN = "%POSTMESSAGE_ORIGIN%";
 static const std::string BRANDING_THEME = "%BRANDING_THEME%";
 static const std::string CHECK_FILE_INFO_OVERRIDE = "%CHECK_FILE_INFO_OVERRIDE%";
+static const std::string DEBUG_WOPI_CONFIG_ID = "%DEBUG_WOPI_CONFIG_ID%";
 static const std::string BUYPRODUCT_URL = "%BUYPRODUCT_URL%";
 static const std::string PERMISSION = "%PERMISSION%";
 static const std::string WOPI_SETTING_BASE_URL = "%WOPI_SETTING_BASE_URL%";
@@ -1554,6 +1557,10 @@ public:
         extractVariable(form, "buy_product", BUYPRODUCT_URL);
 
         extractVariable(form, "permission", PERMISSION);
+
+#if ENABLE_DEBUG
+        extractVariable(form, "configid", DEBUG_WOPI_CONFIG_ID);
+#endif
 
         extractVariable(form, "wopi_setting_base_url", WOPI_SETTING_BASE_URL);
 
@@ -1993,7 +2000,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     socket->send(httpResponse);
     LOG_TRC("Sent file: " << relPath << ": " << preprocess);
 
-    return ResourceAccessDetails(std::move(wopiSrc), urv[ACCESS_TOKEN], urv[PERMISSION]);
+    return ResourceAccessDetails(std::move(wopiSrc), urv[ACCESS_TOKEN], urv[PERMISSION], urv[DEBUG_WOPI_CONFIG_ID]);
 }
 
 void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
