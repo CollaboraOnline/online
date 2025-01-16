@@ -184,8 +184,12 @@ void RequestVettingStation::launchInstallPresets()
 
     std::string configId = sharedSettings.getConfigId();
 
-    auto finishedCallback = [this, configId](bool success)
+    auto finishedCallback = [selfWeak = weak_from_this(), this, configId](bool success)
     {
+        std::shared_ptr<RequestVettingStation> selfLifecycle = selfWeak.lock();
+        if (!selfLifecycle)
+            return;
+
         if (!success)
         {
             sendErrorAndShutdown(_ws, "shared config install failed",

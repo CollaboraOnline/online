@@ -1648,7 +1648,11 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
                                          const std::string& userSettingsUri,
                                          const std::string& presetsPath)
 {
-    auto installFinishedCB = [this, session, userSettingsUri](bool success){
+    auto installFinishedCB = [selfWeak = weak_from_this(), this, session, userSettingsUri](bool success){
+        std::shared_ptr<DocumentBroker> selfLifecycle = selfWeak.lock();
+        if (!selfLifecycle)
+            return;
+
         if (success)
             forwardToChild(session, "addconfig");
         else
@@ -1659,7 +1663,13 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
         }
     };
     _asyncInstallTask = asyncInstallPresets(*_poll, userSettingsUri, presetsPath, session, installFinishedCB);
-    _asyncInstallTask->appendCallback([this](bool){ _asyncInstallTask.reset(); });
+    _asyncInstallTask->appendCallback([selfWeak = weak_from_this(), this](bool){
+        std::shared_ptr<DocumentBroker> selfLifecycle = selfWeak.lock();
+        if (!selfLifecycle)
+            return;
+
+        _asyncInstallTask.reset();
+    });
 }
 
 void DocumentBroker::sendBrowserSettingsSync(const std::shared_ptr<ClientSession>& session,
