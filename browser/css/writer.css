@@ -1,7 +1,5 @@
 .writer-drop-down-marker {
 	cursor: pointer;
-	margin-left: 3px !important;
-	margin-top: 1px !important;
 	min-width: 22px;
 	min-height: 22px;
 	background: url('images/unfold.svg') center/16px var(--color-background-lighter) no-repeat;
