@@ -537,6 +537,10 @@ $(SYSTEM_STAMP): ${top_srcdir}/coolwsd-systemplate-setup $(CLEANUP_DEPS)
 	@$(CLEANUP_COMMAND)
 	mkdir -p $@
 
+presets-dir:
+	@rm -rf $(abs_top_srcdir)/test/data/presets
+	@cp -r $(abs_top_srcdir)/test/data/presets-default $(abs_top_srcdir)/test/data/presets
+
 cleanup:
 	$(CLEANUP_COMMAND)
 
@@ -562,7 +566,7 @@ else
   OUTPUT_TO_FILE=false
 endif
 
-setup-wsd: all @JAILS_PATH@ @CACHE_PATH@
+setup-wsd: all @JAILS_PATH@ @CACHE_PATH@ presets-dir
 	@echo "Launching coolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@mkdir -p $(abs_top_builddir)/test/samples
@@ -806,7 +810,7 @@ check-for-system-nss:
 
 check-recursive: eslint
 
-check: check-for-system-nss prettier eslint check-recursive
+check: check-for-system-nss prettier eslint presets-dir check-recursive
 	$(GEN_COVERAGE_COMMAND)
 
 coverage-report:
