@@ -227,6 +227,7 @@
 }
 .ui-scroll-right::after {
 	rotate: 270deg;
+	left: 0px;
 }
 .ui-scroll-left:hover,
 .ui-scroll-right:hover {
