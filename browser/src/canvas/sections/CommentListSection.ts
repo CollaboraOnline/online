@@ -264,6 +264,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
 			if (this.sectionProperties.commentList[i].sectionProperties.data.id !== 'new')
 				this.sectionProperties.commentList[i].setCollapsed();
+				$(this.sectionProperties.commentList[i].sectionProperties.container).addClass('collapsed-comment');
 			if (this.sectionProperties.commentList[i].isRootComment())
 				this.collapseReplies(i, this.sectionProperties.commentList[i].sectionProperties.data.id);
 		}
@@ -273,6 +274,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.isCollapsed = false;
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
 			this.sectionProperties.commentList[i].setExpanded();
+			$(this.sectionProperties.commentList[i].sectionProperties.container).removeClass('collapsed-comment');
 		}
 	}
 
@@ -789,6 +791,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		while (rootIndex <= lastIndex) {
 			this.sectionProperties.commentList[rootIndex].sectionProperties.container.style.display = '';
 			this.sectionProperties.commentList[rootIndex].sectionProperties.container.style.visibility = '';
+			$(this.sectionProperties.commentList[rootIndex].sectionProperties.container).removeClass('collapsed-comment');
 			rootIndex++;
 		}
 		rootComment.updateThreadInfoIndicator();
@@ -797,8 +800,10 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	private collapseReplies(rootIndex: number, rootId: number) {
 		var lastChild = this.getLastChildIndexOf(rootId);
 
+		$(this.sectionProperties.commentList[rootIndex].sectionProperties.container).addClass('collapsed-comment');
 		for (var i = lastChild; i > rootIndex; i--) {
 			this.sectionProperties.commentList[i].sectionProperties.container.style.display = 'none';
+			$(this.sectionProperties.commentList[i].sectionProperties.container).addClass('collapsed-comment');
 		}
 		this.sectionProperties.commentList[i].updateThreadInfoIndicator();
 	}
