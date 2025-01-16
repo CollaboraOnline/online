@@ -222,8 +222,12 @@ void RequestVettingStation::checkSharedConfig(const std::string& docKey,
     std::string configId = sharedSettings.getConfigId();
 
     auto finishedCallback =
-        [this, docKey, configId, url, uriPublic, isReadOnly](bool success)
+        [selfWeak = weak_from_this(), this, docKey, configId, url, uriPublic, isReadOnly](bool success)
     {
+        std::shared_ptr<RequestVettingStation> selfLifecycle = selfWeak.lock();
+        if (!selfLifecycle)
+            return;
+
         if (!success)
         {
             // TODO, should we do something else
