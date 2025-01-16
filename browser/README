@@ -95,7 +95,7 @@ To see an example:
 
 * run coolwsd, like:
 
-    ./coolwsd --o:sys_template_path=${SYSTEMPLATE} --o:child_root_path=${ROOTFORJAILS}
+    ./coolwsd --o:sys_template_path=${SYSTEMPLATE} --o:child_root_path=${ROOTFORJAILS} --o:cache_files.path=${ROOTFORCACHE}
 
 Note that this will, by default, set the coolwsd's file server's root to the parent directory of coolwsd,
 which means you can access all the files in browser using /browser/ path. It is advised to set
