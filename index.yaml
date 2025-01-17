@@ -4,6 +4,46 @@ entries:
   - annotations:
       artifacthub.io/images: |
         - name: collabora
+          image: docker.io/collabora/code:24.04.11.3.1
+        - name: nginx
+          image: docker.io/nginx:1.25
+        - name: twostoryrobot/simple-file-upload
+          image: docker.io/twostoryrobot/simple-file-upload@sha256:547fc4360b31d8604b7a26202914e87cd13609cc938fd83f412c77eb44aa1cc4
+    apiVersion: v2
+    appVersion: 24.04.11.3.1
+    created: "2025-01-17T06:14:39.011753416Z"
+    description: Collabora Online helm chart
+    digest: 7debe02a7a252a774a0c916b54d4f0b12eb54c426e98c198d002f91288eccbf2
+    home: https://www.collaboraonline.com/code/
+    icon: https://avatars0.githubusercontent.com/u/22418908?s=200&v=4
+    keywords:
+    - collabora-online
+    - collabora
+    - code
+    - nextcloud
+    - office
+    maintainers:
+    - email: k.erber@erber-freelance.de
+      name: Klaus Erber
+      url: https://www.erber-freelance.de/
+    - email: martin.mueller@dataport.de
+      name: Martin Müller
+      url: https://dphoenixsuite.de
+    - email: geno+dev@fireorbit.de
+      name: Geno
+      url: https://fireorbit.de
+    name: collabora-online
+    sources:
+    - https://github.com/CollaboraOnline/online
+    - https://github.com/CollaboraOnline/online/tree/master/docker
+    - https://github.com/CollaboraOnline/online/tree/master/kubernetes/helm/collabora-online
+    type: application
+    urls:
+    - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.1.30/collabora-online-1.1.30.tgz
+    version: 1.1.30
+  - annotations:
+      artifacthub.io/images: |
+        - name: collabora
           image: docker.io/collabora/code:24.04.11.2.1
         - name: nginx
           image: docker.io/nginx:1.25
@@ -1271,4 +1311,4 @@ entries:
     urls:
     - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.0.1/collabora-online-1.0.1.tgz
     version: 1.0.1
-generated: "2025-01-09T14:30:43.571794749Z"
+generated: "2025-01-17T06:14:39.012288324Z"
