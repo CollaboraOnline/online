@@ -99,7 +99,9 @@ static std::string hexifyStd(const std::uint64_t number, int width, std::size_t 
     std::ostringstream oss;
     oss << std::hex << std::setw(width) << std::setfill('0') << number;
     std::string str = oss.str();
-    return size < str.size() ? str.substr(str.size() - size) : str;
+    if (size < str.size())
+       return str.substr(str.size() - size);
+    return str;
 }
 
 void UtilTests::testNumberToHex()

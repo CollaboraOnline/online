@@ -69,9 +69,8 @@ int main (int argc, char **argv)
     for (int i = 1; i < argc; i++)
     {
         uint32_t height, width, rowBytes;
-        Pixmap img = Png::loadPng(argv[i], height, width, rowBytes);
+        pixmaps.push_back(Png::loadPng(argv[i], height, width, rowBytes));
 //        std::cout << "Loaded: " << argv[i] << " " << width << "x" << height << "\n";
-        pixmaps.push_back(img);
     }
 
     DeltaTests::timeRLE("CPU");

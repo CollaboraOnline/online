@@ -4045,8 +4045,8 @@ LogUiCommands::~LogUiCommands()
             }
             // Store new command
             LogUiCommandsLine& lineAct = _session->_lastUiCmdLinesLogged[lineCount];
-            lineAct._cmd = actCmd;
-            lineAct._subCmd = actSubCmd;
+            lineAct._cmd = std::move(actCmd);
+            lineAct._subCmd = std::move(actSubCmd);
             lineAct._repeat = 1;
             lineAct._undoChange = undoChg;
             lineAct._timeStart = actTime;
