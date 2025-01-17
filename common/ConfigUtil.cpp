@@ -103,6 +103,7 @@ static const std::map<std::string, std::string> DefAppConfig = {
     { "languagetool.rest_protocol", "" },
     { "languagetool.ssl_verification", "true" },
     { "languagetool.user_name", "" },
+#if !MOBILEAPP
     // { "logging.anonymize.anonymize_user_data", "false" }, // Do not set to fallback on filename/username.
     { "logging.anonymize.anonymization_salt", "82589933" },
     { "logging.color", "true" },
@@ -144,6 +145,7 @@ static const std::map<std::string, std::string> DefAppConfig = {
     { "logging_ui_cmd.file[@enable]", "false" },
     { "logging_ui_cmd.merge", "true" },
     { "logging_ui_cmd.merge_display_end_time", "false" },
+#endif
     { "mount_jail_tree", "true" },
     { "net.connection_timeout_secs", "30" },
     { "net.content_security_policy", "" },
@@ -273,8 +275,10 @@ static const std::map<std::string, std::string> DefAppConfig = {
     { "trace.path[@compress]", "true" },
     { "trace.path[@snapshot]", "false" },
     { "trace[@enable]", "false" },
+#if !MOBILEAPP
     { "trace_event.path", COOLWSD_TRACEEVENTFILE },
     { "trace_event[@enable]", "false" },
+#endif
     { "user_interface.mode", "default" },
     { "user_interface.statusbar_save_indicator", "true" },
     { "user_interface.use_integration_theme", "true" },
