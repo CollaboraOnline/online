@@ -73,6 +73,8 @@ namespace cool {
 
 		availableCountryCodes: Array<string>;
 
+		showSignaturesOnNextUpdate = false;
+
 		// Provider ID to name map.
 		static providerNames: { [name: string]: string } = {
 			// The /api/client-config API would provide this, but having the data here
@@ -357,6 +359,7 @@ namespace cool {
 			}
 
 			// Step 5: serialize the signature.
+			this.showSignaturesOnNextUpdate = true;
 			const args = {
 				SignatureTime: {
 					type: 'string',
