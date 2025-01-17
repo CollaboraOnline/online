@@ -26,10 +26,6 @@
    */
 #define ENABLE_WELCOME_MESSAGE 0
 
-/* Should the Release notes message on startup have a dismiss button instead of an x button to close by default?
-   */
-#define ENABLE_WELCOME_MESSAGE_BUTTON "false"
-
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 0
 
