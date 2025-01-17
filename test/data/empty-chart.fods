@@ -203,6 +203,9 @@
   <style:style style:name="Result2" style:family="table-cell" style:parent-style-name="Result" style:data-style-name="N122"/>
  </office:styles>
  <office:automatic-styles>
+   <style:style style:name="ce1" style:family="table-cell" style:parent-style-name="Default">
+    <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
+  </style:style>
   <style:style style:name="co1" style:family="table-column">
    <style:table-column-properties fo:break-before="auto" style:column-width="2in"/>
   </style:style>
