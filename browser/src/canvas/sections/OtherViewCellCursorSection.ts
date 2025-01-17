@@ -107,6 +107,11 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     }
 
     showUsernamePopUp() {
+        const textCursorSectionName = CursorHeaderSection.namePrefix + this.sectionProperties.viewId;
+
+        if (app.sectionContainer.doesSectionExist(textCursorSectionName))
+            return; // Don't show the popup if the cursor header is shown.
+
         if (this.sectionProperties.popUpContainer) {
             this.adjustPopUpPosition();
 
