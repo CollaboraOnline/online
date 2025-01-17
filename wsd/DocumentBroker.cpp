@@ -1767,7 +1767,7 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& userSet
             presetTasks->install(nullptr);
             return;
         }
-        if (session != nullptr)
+        if (session != nullptr && !session->getSentBrowserSetting())
             DocumentBroker::parseBrowserSettings(session, settings);
 
         presetTasks->install(settings);
