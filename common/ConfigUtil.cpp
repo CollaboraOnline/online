@@ -217,7 +217,7 @@ static const std::map<std::string, std::string> DefAppConfig = {
     { "quarantine_files.expiry_min", "3000" },
     { "quarantine_files.limit_dir_size_mb", "250" },
     { "quarantine_files.max_versions_to_maintain", "5" },
-    { "quarantine_files.path", "quarantine" },
+    { "quarantine_files.path", "" },
     { "quarantine_files[@enable]", "false" },
     { "remote_asset_config.url", "" },
     { "remote_config.remote_url", "" },
