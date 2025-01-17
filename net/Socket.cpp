@@ -1063,7 +1063,7 @@ bool StreamSocket::sendAndShutdown(http::Response& response)
 void SocketPoll::dumpState(std::ostream& os) const
 {
     // FIXME: NOT thread-safe! _pollSockets is modified from the polling thread!
-    const auto pollSockets = _pollSockets;
+    const std::vector<std::shared_ptr<Socket>> pollSockets = _pollSockets;
 
     os << "\n  SocketPoll [" << name() << "] with " << pollSockets.size() << " socket"
        << (pollSockets.size() == 1 ? "" : "s") << " - wakeup rfd: " << _wakeup[0]
