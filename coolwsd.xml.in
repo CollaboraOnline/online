@@ -105,7 +105,7 @@
              See also: https://docs.libreoffice.org/sal/html/sal_log.html -->
         <lokit_sal_log type="string" desc="Fine tune log messages from LOKit. Default is to suppress log messages from LOKit." default="-INFO-WARN">-INFO-WARN</lokit_sal_log>
         <file enable="@COOLWSD_LOG_TO_FILE@">
-            <!-- If you use other path than /var/log and you run coolwsd from systemd, make sure that you enable that path in coolwsd.service (ReadWritePaths). -->
+            <!-- If you use other path than /var/log and you run coolwsd from systemd, make sure that you enable that path in coolwsd.service (ReadWritePaths). Also the log file path must be writable by the 'cool' user. -->
             <property name="path" desc="Log file path.">@COOLWSD_LOGFILE@</property>
             <property name="rotation" desc="Log file rotation strategy. See Poco FileChannel.">never</property>
             <property name="archive" desc="Append either timestamp or number to the archived log filename.">timestamp</property>
@@ -130,7 +130,7 @@
         <merge type="bool" desc="If true, repeated commands after each other will be merged into 1 line. If false, every command will be 1 new line." default="true">true</merge>
         <merge_display_end_time type="bool" desc="If true, the duration of the merged command will also be logged." default="false">false</merge_display_end_time>
         <file enable="@COOLWSD_LOG_UICMD_TO_FILE@">
-            <!-- If you use other path than /var/log and you run coolwsd from systemd, make sure that you enable that path in coolwsd.service (ReadWritePaths). -->
+            <!-- If you use other path than /var/log and you run coolwsd from systemd, make sure that you enable that path in coolwsd.service (ReadWritePaths). Also the log file path must be writable by the 'cool' user. -->
             <property name="path" desc="Log file path.">@COOLWSD_LOGFILE_UICMD@</property>
             <property name="purgeCount" desc="The maximum number of log archives to preserve. Use 'none' to disable purging. See Poco FileChannel.">10</property>
             <property name="rotateOnOpen" desc="Enable/disable log file rotation on opening.">true</property>
