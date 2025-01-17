@@ -283,18 +283,6 @@ public:
         _sentBrowserSetting = sentBrowserSetting;
     }
 
-    struct BrowserSetting
-    {
-        std::string darkTheme;
-        std::string darkThemeBackground;
-        std::string spellOnline;
-    };
-
-    void setBrowserSetting(const BrowserSetting& browserSetting)
-    {
-        _browserSetting = browserSetting;
-    }
-
     void setBrowserSettingsJSON(Poco::SharedPtr<Poco::JSON::Object>& jsonObject)
     {
         _browserSettingsJSON = std::move(jsonObject);
@@ -478,8 +466,6 @@ private:
     bool _sentBrowserSetting;
 
     Poco::SharedPtr<Poco::JSON::Object> _browserSettingsJSON;
-
-    BrowserSetting _browserSetting;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
