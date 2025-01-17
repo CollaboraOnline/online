@@ -154,16 +154,16 @@ def addSheetWithData(templateFile, outputFile, dataSets, NSMAP):
         titleElementText.text = title
 
     def calculateHeatMapColour(value, maxValue):
-        if maxValue == 0:
-            return (255, 255, 255)
-
-        normalizedValue = value / maxValue
-
-        red = int(255 * normalizedValue)
-        green = int(255 * (1 - normalizedValue))
-        blue = 0
-
-        return (red, green, blue)
+        if value <= 0:
+            return (128, 128, 128)  # Gray for 0 or negative values
+        elif value < 5:
+            return (0, 255, 0)  # Green
+        elif value < 100:
+            return (255, 255, 0)  # Yellow
+        elif value < 200:
+            return (255, 165, 0)  # Orange
+        else:
+            return (255, 0, 0)  # Red
 
     def rgbToHex(rgb):
         return "#{:02x}{:02x}{:02x}".format(*rgb)
@@ -194,7 +194,7 @@ def addSheetWithData(templateFile, outputFile, dataSets, NSMAP):
 
         return styleName
 
-    def createRow(sheet, rowData, styleCounter=None, maxValue=None):
+    def createRow(sheet, rowData, rotateText, styleCounter, maxValue):
         row = etree.SubElement(sheet, f"{{{NSMAP['table']}}}table-row")
         for cellValue in rowData:
             cell = etree.SubElement(row, f"{{{NSMAP['table']}}}table-cell")
@@ -207,7 +207,10 @@ def addSheetWithData(templateFile, outputFile, dataSets, NSMAP):
                     styleName = createHeatMapStyle(sheet.getroottree().getroot(), next(styleCounter), colorHex)
                     cell.set(f"{{{NSMAP['table']}}}style-name", styleName)
             else:
-                cell.set(f"{{{NSMAP['table']}}}style-name", "ce1")
+                if rotateText:
+                    cell.set(f"{{{NSMAP['table']}}}style-name", "ce3")
+                else:
+                    cell.set(f"{{{NSMAP['table']}}}style-name", "ce1")
             textP = etree.SubElement(cell, f"{{{NSMAP['text']}}}p")
             textP.text = str(cellValue)
         return row
@@ -224,7 +227,7 @@ def addSheetWithData(templateFile, outputFile, dataSets, NSMAP):
         spreadsheet = root.find(".//office:spreadsheet", namespaces=NSMAP)
         spreadsheet.append(newTable)
 
-    def duplicateAndPrepareSheet(root, template, sheetName, data, title, heatMap):
+    def duplicateAndPrepareSheet(root, template, sheetName, data, title, heatMap, shouldRotate):
         copyTableStructure(root, "Sheet1", sheetName)
         newSheet = tree.find(f".//table:table[@table:name='{sheetName}']", namespaces=NSMAP)
         if newSheet is None:
@@ -242,6 +245,8 @@ def addSheetWithData(templateFile, outputFile, dataSets, NSMAP):
         column.set(f"{{{NSMAP['table']}}}style-name", "co1")
         column.set(f"{{{NSMAP['table']}}}number-columns-repeated", str(columnCount))
 
+        styleCounter = None
+        maxValue = None
         if heatMap:
             maxValue = max(
                 cell for row in data[1:]
@@ -249,18 +254,18 @@ def addSheetWithData(templateFile, outputFile, dataSets, NSMAP):
                 if isinstance(cell, (int, float))
             )
             styleCounter = iter(range(1, len(data) * len(data[0]) + 1))
-            print(maxValue)
-            for rowData in data:
-                createRow(newSheet, rowData, styleCounter, maxValue)
-        else:
-            for rowData in data:
-                createRow(newSheet, rowData)
+
+        for rowIndx, rowData in enumerate(data):
+            if rowIndx == 0 and shouldRotate:
+                createRow(newSheet, rowData, True, styleCounter, maxValue)
+            else:
+                createRow(newSheet, rowData, False, styleCounter, maxValue)
         return newSheet
 
     tree, root, spreadsheet, template = parseTemplate(templateFile)
 
     for sheetName, data in dataSets.items():
-        duplicateAndPrepareSheet(root, template, sheetName, data[0], data[1], data[2])
+        duplicateAndPrepareSheet(root, template, sheetName, data[0], data[1], data[2], data[3])
 
     # Remove template sheet
     spreadsheet.remove(template)
@@ -277,7 +282,7 @@ def chartStatistics(inputFile, NSMAP):
             "Editor-Viewer_Per_Doc": "bar",
             "Convert_Thumbnail_Viewer_Edit": "bar",
             "Undo_Command": "bar",
-            "Sub_Command_Transitions": "bar",
+            "Sub_Command_Transitions": "none",
             "Command_Transitions": "none",
         }
 
@@ -632,22 +637,22 @@ if __name__ == "__main__":
     currentPreviousMatrix = createCommandTransitionMatrix(currentPreviousDataTable)
 
     # Slices out a n x n amount from the matrix and creates new sheet. Easier to view important data
-    maxRows = 11
-    maxCols = 11
+    maxRows = 15
+    maxCols = 15
     sortedSubMatrix = [
         [currentPreviousMatrix[row][col] for col in range(maxCols)]
         for row in range(min(maxRows, len(currentPreviousMatrix)))
     ]
 
-    dataSets = { # Sheet name, data set (data, x axis title, heat map effect)
-        "Total_Users_Per_Document": [sortedTotalUserPerDocTable, "USERS", False],
-        "Total_Viewers_Per_Doc": [sortedTotalViewerPerDocTable, "VIEWERS", False],
-        "Total_Editors_Per_Doc": [sortedTotalEditorPerDocTable, "EDITORS", False],
-        "Editor-Viewer_Per_Doc": [sortedEditorViewerDataTable, "EDITORS | VIEWERS", False],
-        "Convert_Thumbnail_Viewer_Edit": [convertViewerData, "DOC TYPE", False],
-        "Undo_Command": [undoCommandDataTable, "COMMAND", False],
-        "Command_Transitions": [currentPreviousMatrix, None, False], # Change to true for heatmap effect
-        "Sub_Command_Transitions": [sortedSubMatrix, None, True], # Change to false for no heatmap effect
+    dataSets = { # Sheet name, data set (data, x axis title, heat map effect, rotate top row of text 90 degrees)
+        "Total_Users_Per_Document": [sortedTotalUserPerDocTable, "USERS", False, False],
+        "Total_Viewers_Per_Doc": [sortedTotalViewerPerDocTable, "VIEWERS", False, False],
+        "Total_Editors_Per_Doc": [sortedTotalEditorPerDocTable, "EDITORS", False, False],
+        "Editor-Viewer_Per_Doc": [sortedEditorViewerDataTable, "EDITORS | VIEWERS", False, False],
+        "Convert_Thumbnail_Viewer_Edit": [convertViewerData, "DOC TYPE", False, False],
+        "Undo_Command": [undoCommandDataTable, "COMMAND", False, False],
+        "Command_Transitions": [currentPreviousMatrix, None, True, False], # Change to true for heatmap effect
+        "Sub_Command_Transitions": [sortedSubMatrix, None, True, False], # Change to false for no heatmap effect
     }
 
     NSMAP = {

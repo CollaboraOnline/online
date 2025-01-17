@@ -206,11 +206,15 @@
    <style:style style:name="ce1" style:family="table-cell" style:parent-style-name="Default">
     <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
   </style:style>
+   <style:style style:name="ce3" style:family="table-cell" style:parent-style-name="Default">
+   <style:table-cell-properties style:rotation-angle="90" fo:wrap-option="wrap" style:max-height="2in"/>
+   <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
+  </style:style>
   <style:style style:name="co1" style:family="table-column">
-   <style:table-column-properties fo:break-before="auto" style:column-width="2in"/>
+   <style:table-column-properties fo:break-before="auto" style:column-width="1.3in"/>
   </style:style>
   <style:style style:name="co2" style:family="table-column">
-   <style:table-column-properties fo:break-before="auto" style:column-width="2in"/>
+   <style:table-column-properties fo:break-before="auto" style:column-width="1.3in"/>
   </style:style>
   <style:style style:name="ro1" style:family="table-row">
    <style:table-row-properties style:row-height="0.1783in" fo:break-before="auto" style:use-optimal-row-height="true"/>
