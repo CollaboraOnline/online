@@ -269,6 +269,7 @@ static const std::map<std::string, std::string> DefAppConfig = {
     { "sys_template_path", "systemplate" },
     { "trace.filter.message", "" },
     { "trace.outgoing.record", "false" },
+    { "trace.path", "" },
     { "trace.path[@compress]", "true" },
     { "trace.path[@snapshot]", "false" },
     { "trace[@enable]", "false" },
