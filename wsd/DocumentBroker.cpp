@@ -1843,7 +1843,7 @@ void DocumentBroker::parseBrowserSettings(const std::shared_ptr<ClientSession>& 
     if (browserSettings.isNull())
     {
         LOG_WRN("json key[browserSettings] doesn't exist in user config json");
-        return;
+        browserSettings = session->getSentBrowserSettingJSON();
     }
     std::ostringstream jsonStream;
     browserSettings->stringify(jsonStream, 2);

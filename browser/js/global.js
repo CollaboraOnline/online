@@ -624,7 +624,7 @@ function getInitializerClass() {
 
 			const processObject = (object, parentKey = '') => {
 				Object.keys(object).forEach((key) => {
-					const fullKey = parentKey ? `${parentKey}.${key.charAt(0).toUpperCase() + key.slice(1)}` : key;
+					const fullKey = parentKey ? `${parentKey}.${key}` : key;
 					const value = object[key];
 
 					if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
