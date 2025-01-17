@@ -610,7 +610,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             }
             else
             {
-                LOG_ERR("preset file[" << browserSettingPath << "] doesn't exist");
+                LOG_WRN("preset file[" << browserSettingPath << "] doesn't exist");
             }
         }
 

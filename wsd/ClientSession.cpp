@@ -96,8 +96,7 @@ ClientSession::ClientSession(
     _thumbnailSession(false),
     _canonicalViewId(0),
     _sentAudit(false),
-    _sentBrowserSetting(false),
-    _browserSettingsJSON(new Poco::JSON::Object)
+    _sentBrowserSetting(false)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -117,6 +116,9 @@ ClientSession::ClientSession(
     TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"thread_name\",\"ph\":\"M\",\"args\":{\"name\":\"JS\"},\"pid\":"
                                           + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
                                           + ",\"tid\":1},\n");
+
+    _browserSettingsJSON = new Poco::JSON::Object;
+    _browserSettingsJSON->set("kind", "browser");
 }
 
 // Can't take a reference in the constructor.
@@ -1372,7 +1374,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             if (vec.size() == 2)
             {
                 const std::string& parentKey = vec[0];
-                std::string& childKey = vec[1];
+                const std::string& childKey = vec[1];
                 if (!childKey.empty() && !parentKey.empty())
                 {
                     Poco::JSON::Object::Ptr jsonObject;
@@ -1381,7 +1383,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     else
                         jsonObject = new Poco::JSON::Object;
 
-                    childKey[0] = std::tolower(childKey[0]);
                     jsonObject->set(childKey, value);
                     _browserSettingsJSON->set(parentKey, jsonObject);
                 }

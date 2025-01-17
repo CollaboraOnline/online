@@ -300,6 +300,11 @@ public:
         _browserSettingsJSON = std::move(jsonObject);
     }
 
+    Poco::SharedPtr<Poco::JSON::Object> getSentBrowserSettingJSON()
+    {
+        return _browserSettingsJSON;
+    }
+
     /// Override parsedDocOption values we get from browser setting json
     /// Because when client sends `load url` it doesn't have information about browser setting json
     void overrideDocOption();
