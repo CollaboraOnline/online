@@ -128,7 +128,7 @@ UnitBase::TestResult UnitSession::testHandshake()
     auto assertMessage = [&wsSession, this](const std::string expectedId)
     {
         wsSession->poll(
-            [&](const std::vector<char>& message)
+            [this, expectedId](const std::vector<char>& message)
             {
                 const std::string msg(std::string(message.begin(), message.end()));
                 if (!msg.starts_with("error:"))
