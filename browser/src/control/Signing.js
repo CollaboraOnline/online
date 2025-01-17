@@ -63,9 +63,17 @@ L.Map.include({
 		}
 
 		if (statusText) {
-			if (!window.mode.isMobile())
+			if (!window.mode.isMobile()) {
 				app.map.statusBar.showSigningItem(statusIcon, statusText);
-			else if (app.map.mobileTopBar.showSigningItem)
+
+				// If requested, show the signatures, now that the sign status
+				// changed.
+				const eSignature = app.map.eSignature;
+				if (eSignature && eSignature.showSignaturesOnNextUpdate) {
+					eSignature.showSignaturesOnNextUpdate = false;
+					app.map.sendUnoCommand('.uno:Signature');
+				}
+			} else if (app.map.mobileTopBar.showSigningItem)
 				app.map.mobileTopBar.showSigningItem(statusIcon, statusText);
 		}
 	}

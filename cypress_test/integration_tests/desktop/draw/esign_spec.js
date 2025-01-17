@@ -53,6 +53,8 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 			eSignature.handleSigned(response);
 		});
 		cy.get('@getSignature').should('be.called');
+		// Close the dialog showing the just created signature:
+		cy.cGet('#DigitalSignaturesDialog button#close').click();
 
 		// Then make sure the document now has a (test / "not OK") signature:
 		cy.cGet('#signstatus-button div').should('have.class', 'sign_not_ok');
