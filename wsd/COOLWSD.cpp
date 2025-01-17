@@ -1384,7 +1384,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     if (ConfigUtil::hasProperty("storage.wopi.reuse_cookies"))
         LOG_WRN("NOTE: Deprecated config option storage.wopi.reuse_cookies is no longer supported");
 
-#if !MOBILEAPP
     COOLWSD::WASMState = ConfigUtil::getConfigValue<bool>(conf, "wasm.enable", false)
                              ? COOLWSD::WASMActivationState::Enabled
                              : COOLWSD::WASMActivationState::Disabled;
@@ -1404,7 +1403,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         COOLWSD::WASMState = COOLWSD::WASMActivationState::Forced;
     }
 #endif
-#endif // !MOBILEAPP
 
     // Get anonymization settings.
 #if COOLWSD_ANONYMIZE_USER_DATA
@@ -1515,7 +1513,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     // Core >= 7.1.
     setenv("LOK_ALLOWLIST_LANGUAGES", allowedLanguages.c_str(), 1);
 
-#endif
+#endif // !MOBILEAPP
 
     int pdfResolution =
         ConfigUtil::getConfigValue<int>(conf, "per_document.pdf_resolution_dpi", 96);
