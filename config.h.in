@@ -15,6 +15,12 @@
 /* Options passed to configure script */
 #undef COOLWSD_BUILDCONFIG
 
+/* Default location of coolwsd log file */
+#undef COOLWSD_LOGFILE
+
+/* Default location of coolwsd UI command log file */
+#undef COOLWSD_LOGFILE_UICMD
+
 /* Destination for Trace Event output */
 #undef COOLWSD_TRACEEVENTFILE
 
