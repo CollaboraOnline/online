@@ -1447,22 +1447,34 @@ void ClientSession::overrideDocOption()
         return;
     }
 
-    if (!_browserSetting.darkTheme.empty())
+    std::string spellOnline, darkTheme, darkBackgroundForTheme;
+    JsonUtil::findJSONValue(_browserSettingsJSON, "spellOnline", spellOnline);
+    JsonUtil::findJSONValue(_browserSettingsJSON, "darkTheme", darkTheme);
+    Poco::JSON::Object::Ptr darkBackgroundObj =
+        _browserSettingsJSON->getObject("darkBackgroundForTheme");
+    if (!darkBackgroundObj.isNull())
     {
-        setDarkTheme(_browserSetting.darkTheme);
-        LOG_DBG("Overriding parsed docOption darkTheme[" << _browserSetting.darkTheme << ']');
+        JsonUtil::findJSONValue(darkBackgroundObj, darkTheme == "true" ? "dark" : "light",
+                                darkBackgroundForTheme);
     }
 
-    if (!_browserSetting.darkThemeBackground.empty())
+    if (!darkTheme.empty())
     {
-        setDarkBackground(_browserSetting.darkThemeBackground);
-        LOG_DBG("Overriding parsed docOption darkBackgroundForTheme[" << _browserSetting.darkThemeBackground << ']');
+        setDarkTheme(darkTheme);
+        LOG_DBG("Overriding parsed docOption darkTheme[" << darkTheme << ']');
     }
 
-    if (!_browserSetting.spellOnline.empty())
+    if (!darkBackgroundForTheme.empty())
     {
-        setSpellOnline(_browserSetting.spellOnline);
-        LOG_DBG("Overriding parsed docOption spellOnline[" << _browserSetting.spellOnline<< ']');
+        setDarkBackground(darkBackgroundForTheme);
+        LOG_DBG("Overriding parsed docOption darkBackgroundForTheme[" << darkBackgroundForTheme
+                                                                      << ']');
+    }
+
+    if (!spellOnline.empty())
+    {
+        setSpellOnline(spellOnline);
+        LOG_DBG("Overriding parsed docOption spellOnline[" << spellOnline << ']');
     }
 }
 
