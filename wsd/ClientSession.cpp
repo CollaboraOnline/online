@@ -117,8 +117,7 @@ ClientSession::ClientSession(
                                           + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
                                           + ",\"tid\":1},\n");
 
-    _browserSettingsJSON = new Poco::JSON::Object;
-    _browserSettingsJSON->set("kind", "browser");
+    _browserSettingsJSON = new Poco::JSON::Object();
 }
 
 // Can't take a reference in the constructor.
