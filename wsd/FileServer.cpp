@@ -973,6 +973,12 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             return;
         }
 
+        if (endPoint == "delete-shared-config")
+        {
+            deleteWopiSettingConfigs(request, message, socket);
+            return;
+        }
+
         // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end() &&
             FileHash.find(relPath + ".br") == FileHash.end())
@@ -2125,6 +2131,77 @@ void FileServerRequestHandler::fetchWopiSettingConfigs( const Poco::Net::HTTPReq
         // Log the error and send back an error response.
         LOG_ERR("Error in fetchWopiSettingConfigs: " << ex.what());
         sendError(http::StatusCode::InternalServerError, request, socket, "Fetch Shared Config Error", ex.what());
+    }
+}
+
+
+void FileServerRequestHandler::deleteWopiSettingConfigs(const Poco::Net::HTTPRequest& request,
+                                                        Poco::MemoryInputStream& message,
+                                                        const std::shared_ptr<StreamSocket>& socket)
+{
+    try
+    {
+        Poco::Net::HTMLForm form(request, message);
+
+        if (!form.has("sharedConfigUrl"))
+            throw std::runtime_error("sharedConfigUrl missing in payload");
+        if (!form.has("accessToken"))
+            throw std::runtime_error("accessToken missing in payload");
+        if (!form.has("fileId"))
+            throw std::runtime_error("fileId missing in payload");
+
+        // Extract needed fields
+        std::string sharedConfigUrl = form.get("sharedConfigUrl");
+        std::string token           = form.get("accessToken");
+        std::string fileId          = form.get("fileId");
+
+        LOG_INF("Deleting WOPI setting config at URL: " << sharedConfigUrl << ", fileId: " << fileId);
+
+        Poco::URI sharedUri(sharedConfigUrl);
+        sharedUri.addQueryParameter("access_token", token);
+        sharedUri.addQueryParameter("fileId", fileId);
+
+        Authorization auth(Authorization::Type::Token, token);
+        auto httpRequest = StorageConnectionManager::createHttpRequest(sharedUri, auth);
+
+        httpRequest.setVerb("DELETE");
+        httpRequest.header().set("Content-Type", "application/json");
+
+        LOG_DBG("deleteWopiSettingConfigs: Sending DELETE to URI: " << sharedUri.toString());
+
+        auto httpSession = StorageConnectionManager::getHttpSession(sharedUri);
+        auto httpResponse = httpSession->syncRequest(httpRequest);
+
+        auto status = httpResponse->statusLine().statusCode();
+        if (status != http::StatusCode::OK && status != http::StatusCode::NoContent)
+        {
+            std::ostringstream responseContent;
+            responseContent << httpResponse->getBody();
+            throw std::runtime_error(
+                "Integrator WOPI call failed: " + httpResponse->statusLine().reasonPhrase() +
+                ". Response: " + responseContent.str()
+            );
+        }
+
+        http::Response clientResponse(http::StatusCode::OK);
+        clientResponse.set("Content-Type", "application/json; charset=utf-8");
+        clientResponse.set("Cache-Control", "no-cache");
+
+        std::string reqResponse = httpResponse->getBody();
+        clientResponse.setBody(reqResponse);
+
+        socket->send(clientResponse);
+
+        LOG_INF("File (fileId=" << fileId << ") deleted successfully at URL: " << sharedConfigUrl);
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Error in deleteWopiSettingConfigs: " << ex.what());
+        sendError(http::StatusCode::InternalServerError,
+                  request,
+                  socket,
+                  "Delete Shared Config Error",
+                  ex.what());
     }
 }
 
