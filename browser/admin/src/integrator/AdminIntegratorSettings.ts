@@ -32,6 +32,7 @@ const API_ENDPOINTS = {
 		? '/wopi/settings/upload'
 		: '/browser/dist/upload-settings',
 	fetchSharedConfig: '/browser/dist/fetch-shared-config',
+	deleteSharedConfig: '/browser/dist/delete-shared-config',
 };
 
 function init(): void {
@@ -165,7 +166,11 @@ function getFilename(uri: string, removeExtension = true): string {
 	return filename;
 }
 
-function populateList(listId: string, items: SharedConfigItem[]): void {
+function populateList(
+	listId: string,
+	items: SharedConfigItem[],
+	category: string,
+): void {
 	const listEl = document.getElementById(listId);
 	if (!listEl) return;
 
@@ -173,14 +178,74 @@ function populateList(listId: string, items: SharedConfigItem[]): void {
 
 	items.forEach((item) => {
 		const li = document.createElement('li');
-		li.textContent = getFilename(item.uri);
+		const fileName = getFilename(item.uri);
+
+		// Create the "Download" button
+		const downloadBtn = document.createElement('button');
+		downloadBtn.textContent = 'Download';
+		downloadBtn.classList.add('download-button');
+
+		downloadBtn.addEventListener('click', () => {
+			window.open(item.uri, '_blank');
+		});
+
+		// Create the "Delete" button
+		const deleteBtn = document.createElement('button');
+		deleteBtn.textContent = 'Delete';
+		deleteBtn.classList.add('delete-button');
+
+		deleteBtn.addEventListener('click', async () => {
+			try {
+				if (!window.accessToken) {
+					throw new Error('Access token is missing.');
+				}
+
+				if (!window.wopiSettingBaseUrl) {
+					throw new Error('wopiSettingBaseUrl is missing.');
+				}
+				// TODO: systemconfig to some central place??
+				const fileId =
+					'/settings/systemconfig/' +
+					category +
+					'/' +
+					getFilename(item.uri, false);
+
+				const formData = new FormData();
+				formData.append('fileId', fileId);
+				formData.append('sharedConfigUrl', window.wopiSettingBaseUrl);
+				formData.append('accessToken', window.accessToken);
+
+				const response = await fetch(API_ENDPOINTS.deleteSharedConfig, {
+					method: 'POST',
+					headers: {
+						Authorization: `Bearer ${window.accessToken}`,
+					},
+					body: formData,
+				});
+
+				if (!response.ok) {
+					throw new Error(`Delete failed: ${response.statusText}`);
+				}
+
+				// On success - remove the list item from the UI
+				listEl.removeChild(li);
+			} catch (error: unknown) {
+				console.error('Error deleting file:', error);
+			}
+		});
+
+		li.textContent = `File: ${fileName} | `;
+		li.appendChild(downloadBtn);
+		li.appendChild(document.createTextNode(' | '));
+		li.appendChild(deleteBtn);
+
 		listEl.appendChild(li);
 	});
 }
 
 function populateSharedConfigUI(data: SharedConfigData): void {
-	populateList('autotextList', data.autotext);
-	populateList('wordbookList', data.wordbook);
+	populateList('autotextList', data.autotext, 'autotext');
+	populateList('wordbookList', data.wordbook, 'wordbook');
 }
 
 document.addEventListener('DOMContentLoaded', init);
