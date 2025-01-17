@@ -497,7 +497,9 @@ if test -n "$with_logfile" ; then
    COOLWSD_LOGFILE="$with_logfile"
 fi
 AC_SUBST(COOLWSD_LOGFILE)
+AC_DEFINE_UNQUOTED([COOLWSD_LOGFILE],["$COOLWSD_LOGFILE"],[Default location of coolwsd log file])
 AC_SUBST(COOLWSD_LOGFILE_UICMD)
+AC_DEFINE_UNQUOTED([COOLWSD_LOGFILE_UICMD],["$COOLWSD_LOGFILE_UICMD"],[Default location of coolwsd UI command log file])
 
 if test -n "$with_trace_event_file" ; then
    COOLWSD_TRACEEVENTFILE="$with_trace_event_file"
