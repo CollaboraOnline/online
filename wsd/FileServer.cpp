@@ -567,7 +567,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                              const std::string& prefix,
                              const std::shared_ptr<StreamSocket>& socket,
                              const std::vector<asset>& items,
-                             bool serveBrowserSetttings)
+                             bool serveBrowserSetttings,
+                             const std::string& unittest)
     {
         Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
         configInfo->set("kind", kind);
@@ -581,7 +582,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             Poco::JSON::Object::Ptr configEntry = new Poco::JSON::Object();
             std::string uri = COOLWSD::getServerURL().append(prefix + fwd + item.second);
             //COOLWSD::getServerURL tediously includes spaces at the start
-            configEntry->set("uri", Util::trim(uri));
+            Util::trim(uri);
+            if (!unittest.empty())
+                uri += "?testname=" + unittest;
+            configEntry->set("uri", uri);
             configEntry->set("stamp", etagString);
             if (item.first == "autotext")
                 configAutoTexts->add(configEntry);
@@ -684,16 +688,25 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
         if (request.getMethod() == "GET" && configPath.ends_with("config.json"))
         {
+            // For unittests ensure there is a testname="whatever" on these responses
+            std::string unittest;
+            const auto params = requestUri.getQueryParameters();
+            const auto testnameIt = std::find_if(params.begin(), params.end(),
+                                                 [](const std::pair<std::string, std::string>& pair)
+                                                 { return pair.first == "testname"; });
+            if (testnameIt != params.end())
+                unittest = testnameIt->second;
+
             if (configPath == "/userconfig.json" || configPath == "/cypressuserconfig.json")
             {
                 auto items = getAssetVec(PresetType::User);
                 bool serveBrowerSettings = configPath != "/cypressuserconfig.json";
-                handlePresetRequest("user", etagString, prefix, socket, items, serveBrowerSettings);
+                handlePresetRequest("user", etagString, prefix, socket, items, serveBrowerSettings, unittest);
             }
             else if (configPath == "/sharedconfig.json")
             {
                 auto items = getAssetVec(PresetType::Shared);
-                handlePresetRequest("shared", etagString, prefix, socket, items, false);
+                handlePresetRequest("shared", etagString, prefix, socket, items, false, unittest);
             }
             else
                 throw BadRequestException("Invalid Config Request: " + configPath);
