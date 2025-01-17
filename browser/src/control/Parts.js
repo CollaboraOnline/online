@@ -13,7 +13,7 @@
  */
 
 /* global app _ cool */
-/* global _ JSDialog app */
+/* global _ JSDialog app OtherViewCellCursorSection */
 
 L.Map.include({
 	/*
@@ -109,7 +109,7 @@ L.Map.include({
 			docType: docLayer._docType
 		});
 
-		app.definitions.otherViewCellCursorSection.updateVisibilities();
+		OtherViewCellCursorSection.updateVisibilities();
 		app.definitions.otherViewCursorSection.updateVisibilities();
 		app.definitions.otherViewGraphicSelectionSection.updateVisibilities();
 		docLayer.eachView(docLayer._viewSelections, docLayer._onUpdateTextViewSelection, docLayer);
