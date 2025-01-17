@@ -405,7 +405,7 @@ KitQueue::Payload KitQueue::pop()
     if (_queue.empty())
         return Payload();
 
-    const Payload front = _queue.front();
+    Payload front = _queue.front();
 
     LOG_TRC("KitQueue(" << _queue.size() << ") - pop " <<
             COOLProtocol::getAbbreviatedMessage(front));

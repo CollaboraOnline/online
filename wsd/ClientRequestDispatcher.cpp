@@ -2008,8 +2008,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             // Instruct browsers to download the file, not display it
             // with the exception of SVG where we need the browser to
             // actually show it.
-            const std::string contentType = getContentType(fileName);
-            response.setContentType(contentType);
+            response.setContentType(getContentType(fileName));
             if (serveAsAttachment)
                 response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
