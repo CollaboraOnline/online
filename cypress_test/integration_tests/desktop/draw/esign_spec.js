@@ -36,12 +36,11 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 			});
 
 		// When signing that document:
-		// Insert visual signature:
+		// Start signing:
 		cy.cGet('#menu-insert').click();
 		cy.cGet('#menu-insert-signatureline').click();
 		// Finish electronic signing:
-		cy.cGet('#menu-insert').click();
-		cy.cGet('#menu-insert-esignature').click();
+		cy.cGet('#snackbar-container #button').click();
 		cy.get('@sendHash').should('be.called');
 		cy.cGet('#ESignatureDialog button#ok').click();
 		cy.get('@windowOpen').should('be.called');
