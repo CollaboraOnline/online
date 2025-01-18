@@ -666,7 +666,7 @@ inline std::shared_ptr<http::WebSocketSession> loadDocAndGetSession(
 }
 
 inline std::shared_ptr<http::WebSocketSession>
-loadDocAndGetSession(std::shared_ptr<SocketPoll> socketPoll, const std::string& docFilename,
+loadDocAndGetSession(const std::shared_ptr<SocketPoll>& socketPoll, const std::string& docFilename,
                      const Poco::URI& uri, const std::string& testname, bool isView = true,
                      bool isAssert = true)
 {
@@ -674,7 +674,7 @@ loadDocAndGetSession(std::shared_ptr<SocketPoll> socketPoll, const std::string& 
     {
         std::string documentPath, documentURL;
         getDocumentPathAndURL(docFilename, documentPath, documentURL, testname);
-        return loadDocAndGetSession(std::move(socketPoll), uri, documentURL, testname, isView, isAssert);
+        return loadDocAndGetSession(socketPoll, uri, documentURL, testname, isView, isAssert);
     }
     catch (const std::exception& ex)
     {
