@@ -432,37 +432,30 @@ namespace FileUtil
 
     ssize_t read(int fd, void* buf, size_t nbytes)
     {
-        ssize_t off = 0;
         char* p = static_cast<char*>(buf);
-        for (;;)
+
+        while (nbytes)
         {
-            if (static_cast<ssize_t>(nbytes) <= 0)
+            ssize_t n = ::read(fd, p, nbytes);
+            if (n < 0)
             {
-                // Nothing to read.
-                break;
-            }
-
-            ssize_t n;
-            while ((n = ::read(fd, p, nbytes)) < 0 && errno == EINTR)
-            {
-            }
-
-            if (n <= 0)
-            {
-                if (n == 0) // EOF.
-                    break;
+                if (errno == EINTR)
+                    continue;
 
                 return -1; // Error.
             }
 
+            if (n == 0) // EOF.
+                break;
+
             assert(n >= 0 && "Expected a positive read byte-count");
-            p += n;
-            off += n;
             assert(static_cast<size_t>(n) <= nbytes && "Unexpectedly read more than requested");
+
             nbytes -= n;
+            p += n;
         }
 
-        return off;
+        return p - static_cast<char*>(buf);
     }
 
 } // namespace FileUtil
