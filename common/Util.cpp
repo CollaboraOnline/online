@@ -131,20 +131,26 @@ namespace Util
         std::vector<char> getBytes(const std::size_t length)
         {
             std::vector<char> v(length);
+            char* p = v.data();
+            size_t nbytes = length;
 
-            size_t offset = 0;
-            while (offset < length)
+            while (nbytes)
             {
-                ssize_t b = read(getURandom(), v.data() + offset, length - offset);
+                ssize_t b = read(getURandom(), p, nbytes);
                 if (b <= 0)
                 {
                     if (errno == EINTR)
                         continue;
                     break;
                 }
-                assert(static_cast<size_t>(b) <= length - offset);
-                offset += b;
+
+                assert(static_cast<size_t>(b) <= nbytes);
+
+                nbytes -= b;
+                p += b;
             }
+
+            size_t offset = p - v.data();
             if (offset < length)
             {
                 fprintf(stderr, "No adequate source of randomness, "
