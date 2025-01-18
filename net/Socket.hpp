@@ -470,7 +470,7 @@ private:
         if constexpr (!Util::isMobileApp())
         {
 #if ENABLE_DEBUG
-            if (std::getenv("COOL_ZERO_BUFFER_SIZE"))
+            if (std::getenv("COOL_ZERO_BUFFER_SIZE") && _fd >= 0)
             {
                 const int oldSize = getSocketBufferSize();
                 setSocketBufferSize(0);
