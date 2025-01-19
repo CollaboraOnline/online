@@ -134,6 +134,7 @@ async function uploadFile(filePath: string): Promise<void> {
 		}
 
 		fileStatus.textContent = `File "${file.name}" uploaded successfully!`;
+		await fetchAndPopulateSharedConfigs();
 	} catch (error: unknown) {
 		const message = error instanceof Error ? error.message : 'Unknown error';
 		fileStatus.textContent = `Error: ${message}`;
