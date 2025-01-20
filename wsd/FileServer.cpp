@@ -796,7 +796,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                 }
 
                 std::vector<std::string> splitStr = Util::splitStringToVector(filePath, '/');
-                if (splitStr.size() != 3)
+                if (splitStr.size() != 4)
                 {
                     http::Response httpResponse(http::StatusCode::BadRequest);
                     socket->send(httpResponse);
@@ -804,8 +804,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                     return;
                 }
                 // ignoring category for local wopiserver
-                const std::string& type = splitStr[0];
-                const std::string& fileName = splitStr[2];
+                const std::string& type = splitStr[1];
+                const std::string& fileName = splitStr[3];
 
                 std::vector<char> buffer(size);
                 message.read(buffer.data(), size);
