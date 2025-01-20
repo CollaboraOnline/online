@@ -109,7 +109,7 @@ do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(IDLE_TEST_FILES
 	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(if $(wildcard $(ERROR_LOG)),$(V)cat $(ERROR_LOG))
 
-$(PID_FILE): @JAILS_PATH@ $(NODE_BINS)
+$(PID_FILE): @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
@@ -121,7 +121,7 @@ setup_short_idle:
 setup_regular_idle:
 	$(eval SHORT_IDLE=)
 
-start_short_idle_coolwsd: @JAILS_PATH@ $(NODE_BINS) setup_short_idle
+start_short_idle_coolwsd: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS) setup_short_idle
 	$(V)$(KILL_COMMAND) || true
 	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(call cleanup_before_run)
@@ -166,6 +166,9 @@ $(IDLE_TEST_FILES_DONE): start_short_idle_coolwsd $(PID_FILE)
 @JAILS_PATH@:
 	mkdir -p $@
 
+@CACHE_PATH@:
+	mkdir -p $@
+
 define run_JS_error_check
 	$(V)echo "Checking for JS errors in test code..."
 	$(V)echo
@@ -192,7 +195,9 @@ define start_coolwsd_instance
 	$(V)echo
 	$(V)mkdir -p $(dir $(COOLWSD_OUTPUT))
 	../coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
-			--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			--o:child_root_path="@JAILS_PATH@" \
+			--o:cache_files.path="@CACHE_PATH@" \
+			--o:storage.filesystem[@allow]=true \
 			--disable-ssl --forcecaching \
 			--o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			--o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
@@ -228,6 +233,8 @@ define cleanup_before_run
 	$(V)rm -f $(PID_FILE)
 	$(V)rm -rf cypress
 	$(V)rm -rf integration_tests/snapshots/actual
+	$(V)rm -rf $(abs_top_srcdir)/test/data/presets
+	$(V)cp -r $(abs_top_srcdir)/test/data/presets-default $(abs_top_srcdir)/test/data/presets
 endef
 
 NODE_BINS = \
@@ -258,7 +265,7 @@ clean-local:
 # Mobile tests.
 ###############
 
-check-mobile: @JAILS_PATH@ $(NODE_BINS)
+check-mobile: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
@@ -267,7 +274,7 @@ check-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(V)$(KILL_COMMAND) || true
 
-run-mobile: @JAILS_PATH@ $(NODE_BINS)
+run-mobile: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_coolwsd)
@@ -319,7 +326,7 @@ endef
 # Desktop tests.
 ################
 
-check-desktop: @JAILS_PATH@ $(NODE_BINS)
+check-desktop: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
@@ -328,7 +335,7 @@ check-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(V)$(KILL_COMMAND) || true
 
-run-desktop: @JAILS_PATH@ $(NODE_BINS)
+run-desktop: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_coolwsd)
@@ -391,12 +398,12 @@ endef
 # Idle tests.
 ################
 
-check-idle: @JAILS_PATH@ $(NODE_BINS) start_short_idle_coolwsd $(PID_FILE)
+check-idle: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS) start_short_idle_coolwsd $(PID_FILE)
 	$(call run_idle_tests,$(spec))
 	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(V)$(KILL_COMMAND) || true
 
-run-idle: @JAILS_PATH@ $(NODE_BINS) start_short_idle_coolwsd $(PID_FILE)
+run-idle: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS) start_short_idle_coolwsd $(PID_FILE)
 	$(call run_interactive_idle,$(spec)) || true
 	$(V)$(KILL_COMMAND) || true
 
@@ -455,7 +462,7 @@ endef
 ###################
 # Multi-user tests.
 ###################
-check-multi: @JAILS_PATH@ $(NODE_BINS)
+check-multi: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
@@ -466,7 +473,7 @@ check-multi: @JAILS_PATH@ $(NODE_BINS)
 	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(V)$(KILL_COMMAND) || true
 
-run-multi: @JAILS_PATH@ $(NODE_BINS)
+run-multi: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_coolwsd)
@@ -525,7 +532,7 @@ check-interfer-mobile: do-interfer-mobile-check-log
 do-interfer-mobile-check-log: do-interfer-mobile-check
 	$(if $(wildcard $(ERROR_LOG)),$(V)cat $(ERROR_LOG))
 
-do-interfer-mobile-check: @JAILS_PATH@ $(NODE_BINS)
+do-interfer-mobile-check: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_coolwsd)
@@ -534,7 +541,7 @@ do-interfer-mobile-check: @JAILS_PATH@ $(NODE_BINS)
 		$(call run_mobile_interference_tests))
 	$(V)$(KILL_COMMAND) || true
 
-run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
+run-interfer-mobile: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_coolwsd)
@@ -598,7 +605,7 @@ check-interfer-desktop: do-interfer-desktop-check-log
 do-interfer-desktop-check-log: do-interfer-desktop-check
 	$(if $(wildcard $(ERROR_LOG)),$(V)cat $(ERROR_LOG))
 
-do-interfer-desktop-check: @JAILS_PATH@ $(NODE_BINS)
+do-interfer-desktop-check: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_coolwsd)
@@ -607,7 +614,7 @@ do-interfer-desktop-check: @JAILS_PATH@ $(NODE_BINS)
 		$(call run_desktop_interference_tests))
 	$(V)$(KILL_COMMAND) || true
 
-run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
+run-interfer-desktop: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_coolwsd)
@@ -668,7 +675,7 @@ endef
 run-cov: do-run-cov
 	$(if $(wildcard $(ERROR_LOG)),$(V)cat $(ERROR_LOG))
 
-do-run-cov: @JAILS_PATH@ $(NODE_BINS)
+do-run-cov: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(V)echo
 	$(V)echo "Setup coverage tools..."
 	$(V)echo

@@ -19,6 +19,7 @@
 #include <string_view>
 #include <memory>
 #include <unordered_map>
+#include <cctype>
 
 #include <Poco/Base64Decoder.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -40,6 +41,7 @@
 #include <common/CommandControl.hpp>
 #include <wsd/TileDesc.hpp>
 #include <net/HttpHelper.hpp>
+#include <wopi/StorageConnectionManager.hpp>
 
 using namespace COOLProtocol;
 
@@ -93,7 +95,8 @@ ClientSession::ClientSession(
     _isTextDocument(false),
     _thumbnailSession(false),
     _canonicalViewId(0),
-    _sentAudit(false)
+    _sentAudit(false),
+    _sentBrowserSetting(false)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -113,6 +116,8 @@ ClientSession::ClientSession(
     TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"thread_name\",\"ph\":\"M\",\"args\":{\"name\":\"JS\"},\"pid\":"
                                           + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
                                           + ",\"tid\":1},\n");
+
+    _browserSettingsJSON = new Poco::JSON::Object();
 }
 
 // Can't take a reference in the constructor.
@@ -1351,6 +1356,20 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         Admin::instance().routeTokenSanityCheck();
     }
+    else if (tokens.equals(0, "browsersetting") && tokens.size() >= 3)
+    {
+        std::string action;
+        std::string json;
+        getTokenString(tokens[1], "action", action);
+        if (action == "update")
+        {
+            std::string key;
+            std::string value;
+            getTokenString(tokens[2], "key", key);
+            getTokenString(tokens[3], "value", value);
+            COOLWSD::syncUsersBrowserSettings(getUserId(), key, value);
+        }
+    }
 #endif
     else
     {
@@ -1359,6 +1378,108 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
 
     return false;
+}
+
+#if !MOBILEAPP
+// TODO: make this async
+void ClientSession::uploadBrowserSettingsToWopiHost(const std::string& docKey)
+{
+    Poco::URI uriObject(docKey);
+
+    // extract base wopiUri from docKey
+    std::string path = uriObject.getPath();
+    size_t pos = path.find("/files/");
+    if (pos != std::string::npos)
+        path = path.substr(0, pos);
+    path.append("/settings/upload");
+    uriObject.setPath(path);
+
+    const std::string& filePath = "settings/userconfig/browsersettings/browsersettings.json";
+    uriObject.addQueryParameter("fileId", filePath);
+
+    const std::string& uriAnonym = COOLWSD::anonymizeUrl(uriObject.toString());
+
+    LOG_DBG("Uploading updated browserSettings to wopiHost[" << uriAnonym << ']');
+    auto httpRequest = StorageConnectionManager::createHttpRequest(uriObject, _auth);
+    httpRequest.setVerb(http::Request::VERB_POST);
+
+    std::ostringstream jsonStream;
+    _browserSettingsJSON->stringify(jsonStream, 2);
+    httpRequest.setBody(jsonStream.str(), "application/json; charset=utf-8");
+
+    auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
+    auto httpResponse = httpSession->syncRequest(httpRequest);
+
+    if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+    {
+        LOG_ERR("Failed to upload updated browser settings to wopiHost[" << uriAnonym << ']');
+    }
+}
+
+void ClientSession::updateBrowserSettingsJSON(const std::string& key, const std::string& value)
+{
+    std::vector<std::string> vec = Util::splitStringToVector(key, '.');
+    if (vec.size() == 2)
+    {
+        const std::string& parentKey = vec[0];
+        const std::string& childKey = vec[1];
+        if (!childKey.empty() && !parentKey.empty())
+        {
+            Poco::JSON::Object::Ptr jsonObject;
+            if (_browserSettingsJSON->has(parentKey))
+                jsonObject = _browserSettingsJSON->getObject(parentKey);
+            else
+                jsonObject = new Poco::JSON::Object();
+
+            jsonObject->set(childKey, value);
+            _browserSettingsJSON->set(parentKey, jsonObject);
+        }
+    }
+    else
+    {
+        _browserSettingsJSON->set(key, value);
+    }
+}
+
+#endif
+
+void ClientSession::overrideDocOption()
+{
+    if (!_sentBrowserSetting)
+    {
+        LOG_DBG("Browser settings not fetched, skipping DocOption override.");
+        return;
+    }
+
+    std::string spellOnline, darkTheme, darkBackgroundForTheme;
+    JsonUtil::findJSONValue(_browserSettingsJSON, "spellOnline", spellOnline);
+    JsonUtil::findJSONValue(_browserSettingsJSON, "darkTheme", darkTheme);
+    Poco::JSON::Object::Ptr darkBackgroundObj =
+        _browserSettingsJSON->getObject("darkBackgroundForTheme");
+    if (!darkBackgroundObj.isNull())
+    {
+        JsonUtil::findJSONValue(darkBackgroundObj, darkTheme == "true" ? "dark" : "light",
+                                darkBackgroundForTheme);
+    }
+
+    if (!darkTheme.empty())
+    {
+        setDarkTheme(darkTheme);
+        LOG_DBG("Overriding parsed docOption darkTheme[" << darkTheme << ']');
+    }
+
+    if (!darkBackgroundForTheme.empty())
+    {
+        setDarkBackground(darkBackgroundForTheme);
+        LOG_DBG("Overriding parsed docOption darkBackgroundForTheme[" << darkBackgroundForTheme
+                                                                      << ']');
+    }
+
+    if (!spellOnline.empty())
+    {
+        setSpellOnline(spellOnline);
+        LOG_DBG("Overriding parsed docOption spellOnline[" << spellOnline << ']');
+    }
 }
 
 bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
@@ -1379,6 +1500,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         std::string timestamp, doctemplate;
         int loadPart = -1;
         parseDocOptions(tokens, loadPart, timestamp, doctemplate);
+        overrideDocOption();
 
         std::ostringstream oss;
         oss << "load url=" << docBroker->getPublicUri().toString();
@@ -2869,6 +2991,58 @@ void ClientSession::onDisconnect()
         LOG_ERR("Exception while closing socket for docKey [" << docKey << "]: " << exc.what());
     }
 }
+
+#if !MOBILEAPP
+// TODO: replace fileId with filePath
+// TODO: make uploadPresets async similar to asyncInstallPreset(?)
+void ClientSession::uploadPresetsToWopiHost(const std::string& jailPresetsPath,
+                                            const std::string& docKey)
+{
+    Poco::URI uriObject(docKey);
+
+    // extract base wopiUri from docKey
+    std::string path = uriObject.getPath();
+    size_t pos = path.find("/files/");
+    if (pos != std::string::npos)
+        path = path.substr(0, pos);
+    path.append("/settings/upload");
+    uriObject.setPath(path);
+
+    LOG_DBG("Uploading presets from jailPath[" << jailPresetsPath << "] to wopiHost["
+                                               << uriObject.toString() << ']');
+
+    std::string searchDir = jailPresetsPath;
+    searchDir.append("wordbook");
+    const auto fileNames = FileUtil::getDirEntries(searchDir);
+    for (auto& fileName : fileNames)
+    {
+        std::string filePath = "settings/userconfig/wordbook/";
+        filePath.append(fileName);
+        uriObject.addQueryParameter("fileId", filePath);
+        auto httpRequest = StorageConnectionManager::createHttpRequest(uriObject, _auth);
+        httpRequest.setVerb(http::Request::VERB_POST);
+
+        std::string fileJailPath = searchDir;
+        fileJailPath.append("/");
+        fileJailPath.append(fileName);
+
+        LOG_TRC("Uploading file from jailPath[" << fileJailPath << "] to wopiHost["
+                                                << uriObject.toString() << ']');
+
+        httpRequest.setBodyFile(fileJailPath);
+        httpRequest.header().set("Content-Type", "application/octet-stream");
+
+        auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
+        auto httpResponse = httpSession->syncRequest(httpRequest);
+
+        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        {
+            LOG_ERR("Failed to upload file[" << fileName << "] to wopiHost["
+                                             << uriObject.getAuthority() << ']');
+        }
+    }
+}
+#endif
 
 void ClientSession::dumpState(std::ostream& os)
 {

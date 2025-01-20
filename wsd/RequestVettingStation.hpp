@@ -76,8 +76,8 @@ public:
     }
 
 private:
-    bool createDocBroker(const std::string& docKey, const std::string& url,
-                         const Poco::URI& uriPublic);
+    bool createDocBroker(const std::string& docKey, const std::string& configId,
+                         const std::string& url, const Poco::URI& uriPublic);
 
     void createClientSession(const std::string& docKey, const std::string& url,
                              const Poco::URI& uriPublic, const bool isReadOnly);
@@ -92,6 +92,17 @@ private:
                                      WebSocketHandler::StatusCodes statusCode);
 
 #if !MOBILEAPP
+    void launchInstallPresets();
+
+    // ensure shared config for this document is available before calling
+    // createWopiDocBroker for it.
+    void checkSharedConfig(const std::string& docKey, const std::string& url,
+                           const Poco::URI& uriPublic, bool isReadOnly);
+
+    void createWopiDocBroker(const std::string& docKey, const std::string& url,
+                             const std::string& configId, const Poco::URI& uriPublic,
+                             bool isReadOnly);
+
     void checkFileInfo(const Poco::URI& uri, bool isReadOnly, int redirectionLimit);
     std::shared_ptr<CheckFileInfo> _checkFileInfo;
 #endif // !MOBILEAPP

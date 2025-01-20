@@ -112,13 +112,15 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
 /// Returns the error message, if any, when no DocBroker is created/found.
 std::pair<std::shared_ptr<DocumentBroker>, std::string>
 findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
-                      const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
+                      const std::string& docKey, const std::string& configId,
+                      const std::string& id, const Poco::URI& uriPublic,
                       unsigned mobileAppDocId,
                       std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
 {
     LOG_INF("Find or create DocBroker for docKey ["
             << docKey << "] for session [" << id << "] on url ["
-            << COOLWSD::anonymizeUrl(uriPublic.toString()) << ']');
+            << COOLWSD::anonymizeUrl(uriPublic.toString()) << ']'
+            << " with configid " << configId);
 
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
@@ -186,7 +188,8 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
 
         // Set the one we just created.
         LOG_DBG("New DocumentBroker for docKey [" << docKey << ']');
-        docBroker = std::make_shared<DocumentBroker>(type, uri, uriPublic, docKey, mobileAppDocId,
+        docBroker = std::make_shared<DocumentBroker>(type, uri, uriPublic, docKey,
+                                                     configId, mobileAppDocId,
                                                      std::move(wopiFileInfo));
         DocBrokers.emplace(docKey, docBroker);
         LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << ']');
@@ -624,6 +627,11 @@ void launchAsyncCheckFileInfo(
     if (!accessDetails.permission().empty())
         options.push_back("permission=" + accessDetails.permission());
 
+#if ENABLE_DEBUG
+    if (!accessDetails.wopiConfigId().empty())
+        options.push_back("configid=" + accessDetails.wopiConfigId());
+#endif
+
     const RequestDetails fullRequestDetails =
         RequestDetails(accessDetails.wopiSrc(), options, /*compat=*/std::string());
 
@@ -731,7 +739,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                     auto accessDetails = FileServerRequestHandler::ResourceAccessDetails(
                         mapAccessDetails.at("wopiSrc"),
                         mapAccessDetails.at("accessToken"),
-                        mapAccessDetails.at("permission"));
+                        mapAccessDetails.at("permission"),
+                        mapAccessDetails.at("configid"));
                     launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations,
                                              RvsHighWatermark);
                 }
@@ -2119,8 +2128,8 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
 
     // Request a kit process for this doc.
     std::pair<std::shared_ptr<DocumentBroker>, std::string> pair
-        = findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic,
-                              /*mobileAppDocId=*/0, /*wopiFileInfo=*/nullptr);
+        = findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, /*TODO*/ "",
+                              _id, uriPublic, /*mobileAppDocId=*/0, /*wopiFileInfo=*/nullptr);
     auto docBroker = pair.first;
 
     if (!docBroker)

@@ -28,6 +28,9 @@
 #include <Util.hpp>
 #include <JsonUtil.hpp>
 #include <common/ConfigUtil.hpp>
+#include <Poco/Net/HTTPClientSession.h>
+#include <wopi/StorageConnectionManager.hpp>
+#include <common/Authorization.hpp>
 #include <common/LangUtil.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
@@ -53,6 +56,11 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
+#include <Poco/Net/PartHandler.h>
+#include <Poco/Net/MessageHeader.h>
+#include <sstream>
+
+
 
 #include <chrono>
 #include <iomanip>
@@ -438,8 +446,42 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("Size", localFile->size);
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
-            fileInfo->set("UserId", userId);
+            fileInfo->set("UserId", "0");
             fileInfo->set("UserFriendlyName", userNameString);
+
+            //allow &configid to override etag to force another subforkit
+            std::string configId = requestDetails.getParam("configid");
+            if (configId.empty())
+                configId = "default";
+
+            const auto& config = Application::instance().config();
+            std::string etagString = "\"" COOLWSD_VERSION_HASH +
+                config.getString("ver_suffix", "") + '-' + configId + "\"";
+
+            // authentication token to get these settings??
+            {
+                Poco::JSON::Object::Ptr sharedSettings = new Poco::JSON::Object();
+                std::string uri = COOLWSD::getServerURL() + "/wopi/settings/sharedconfig.json";
+                sharedSettings->set("uri", Util::trim(uri));
+                sharedSettings->set("stamp", etagString);
+                fileInfo->set("SharedSettings", sharedSettings);
+            }
+
+            // Cypress tests both assume that tests start in the default config, e.g.
+            // spell checking and sidebar enabled, and some tests assume they can override
+            // features by changing localStorage before loading a document.
+            bool cypressUserConfig = localPath.find("cypress_test") != std::string::npos;
+
+            {
+                Poco::JSON::Object::Ptr userSettings = new Poco::JSON::Object();
+                std::string userConfig = !cypressUserConfig ? "/wopi/settings/userconfig.json"
+                                                            : "/wopi/settings/cypressuserconfig.json";
+                std::string uri = COOLWSD::getServerURL() + userConfig;
+                userSettings->set("uri", Util::trim(uri));
+                userSettings->set("stamp", etagString);
+                fileInfo->set("UserSettings", userSettings);
+            }
+
             fileInfo->set("UserCanWrite", (requestDetails.getParam("permission") != "readonly") ? "true": "false");
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
             fileInfo->set("LastModifiedTime", localFile->getLastModifiedTime());
@@ -516,6 +558,283 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             return;
         }
     }
+
+    // pair consist of type and path of the item which ususally resides test/data folder
+    typedef std::pair<std::string, std::string> asset;
+
+    //handle requests for settings.json contents
+    void handlePresetRequest(const std::string& kind, const std::string& etagString,
+                             const std::string& prefix,
+                             const std::shared_ptr<StreamSocket>& socket,
+                             const std::vector<asset>& items,
+                             bool serveBrowserSetttings,
+                             const std::string& unittest)
+    {
+        Poco::JSON::Object::Ptr configInfo = new Poco::JSON::Object();
+        configInfo->set("kind", kind);
+
+        std::string fwd = COOLWSD::FileServerRoot;
+
+        Poco::JSON::Array::Ptr configAutoTexts = new Poco::JSON::Array();
+        Poco::JSON::Array::Ptr configDictionaries = new Poco::JSON::Array();
+        for (const auto& item : items)
+        {
+            Poco::JSON::Object::Ptr configEntry = new Poco::JSON::Object();
+            std::string uri = COOLWSD::getServerURL().append(prefix + fwd + item.second);
+            //COOLWSD::getServerURL tediously includes spaces at the start
+            Util::trim(uri);
+            if (!unittest.empty())
+                uri += "?testname=" + unittest;
+            configEntry->set("uri", uri);
+            configEntry->set("stamp", etagString);
+            if (item.first == "autotext")
+                configAutoTexts->add(configEntry);
+            else if (item.first == "wordbook")
+                configDictionaries->add(configEntry);
+            else if (item.first == "xcu")
+                configInfo->set("xcu", configEntry);
+        }
+        configInfo->set("autotext", configAutoTexts);
+        configInfo->set("wordbook", configDictionaries);
+
+        if (serveBrowserSetttings)
+        {
+            assert(kind == "user");
+            const std::string& browserSettingPath = "test/data/presets/user/browsersettings.json";
+            if (FileUtil::Stat(Poco::Path(COOLWSD::FileServerRoot, browserSettingPath).toString())
+                    .exists())
+            {
+                auto ss = std::ostringstream{};
+                std::ifstream inputFile(browserSettingPath);
+                ss << inputFile.rdbuf();
+
+                Poco::JSON::Parser parser;
+                auto result = parser.parse(ss.str());
+                configInfo->set("browserSettings", result.extract<Poco::JSON::Object::Ptr>());
+            }
+            else
+            {
+                LOG_WRN("preset file[" << browserSettingPath << "] doesn't exist");
+            }
+        }
+
+        std::ostringstream jsonStream;
+        configInfo->stringify(jsonStream);
+
+        http::Response httpResponse(http::StatusCode::OK);
+        FileServerRequestHandler::hstsHeaders(httpResponse);
+        httpResponse.set("Last-Modified", Util::getHttpTime(std::chrono::system_clock::now()));
+        httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
+        socket->send(httpResponse);
+    }
+
+    enum PresetType
+    {
+        Shared,
+        User,
+    };
+
+    // search for presets file in test/data/presets directory
+    std::vector<asset> getAssetVec(PresetType type)
+    {
+        std::string searchDir = "test/data/presets";
+        std::vector<asset> assetVec;
+        if (!FileUtil::Stat(Poco::Path(COOLWSD::FileServerRoot, searchDir).toString()).exists())
+        {
+            LOG_ERR("preset directory[" << searchDir << "] doesn't exist");
+            return assetVec;
+        }
+
+        if (type == PresetType::Shared)
+            searchDir.append("/shared");
+        else if (type == PresetType::User)
+            searchDir.append("/user");
+
+        auto searchInDir = [&assetVec](const std::string& directory)
+        {
+            const auto fileNames = FileUtil::getDirEntries(Poco::Path(COOLWSD::FileServerRoot, directory).toString());
+            for (const auto& fileName : fileNames)
+            {
+                const std::string ext = FileUtil::extractFileExtension(fileName);
+                if (ext.empty())
+                    continue;
+                std::string filePath = '/' + directory + '/';
+                filePath.append(fileName);
+                if (ext == "bau")
+                    assetVec.push_back(asset("autotext", filePath));
+                else if (ext == "dic")
+                    assetVec.push_back(asset("wordbook", filePath));
+                else if (ext == "xcu")
+                    assetVec.push_back(asset("xcu", filePath));
+                LOG_TRC("Found preset file[" << filePath << ']');
+            }
+        };
+
+        LOG_DBG("Looking for preset files in directory[" << searchDir << ']');
+        searchInDir(searchDir);
+        return assetVec;
+    }
+
+    //handles request starts with /wopi/settings
+    void handleSettingsRequest(const HTTPRequest& request,
+                               const std::string& etagString,
+                               Poco::MemoryInputStream& message,
+                               const std::shared_ptr<StreamSocket>& socket)
+    {
+        Poco::URI requestUri(request.getURI());
+        const Poco::Path path = requestUri.getPath();
+        const std::string prefix = "/wopi/settings";
+        std::string configPath = path.toString().substr(prefix.length());
+
+        if (request.getMethod() == "GET" && configPath.ends_with("config.json"))
+        {
+            // For unittests ensure there is a testname="whatever" on these responses
+            std::string unittest;
+            const auto params = requestUri.getQueryParameters();
+            const auto testnameIt = std::find_if(params.begin(), params.end(),
+                                                 [](const std::pair<std::string, std::string>& pair)
+                                                 { return pair.first == "testname"; });
+            if (testnameIt != params.end())
+                unittest = testnameIt->second;
+
+            if (configPath == "/userconfig.json" || configPath == "/cypressuserconfig.json")
+            {
+                auto items = getAssetVec(PresetType::User);
+                bool serveBrowerSettings = configPath != "/cypressuserconfig.json";
+                handlePresetRequest("user", etagString, prefix, socket, items, serveBrowerSettings, unittest);
+            }
+            else if (configPath == "/sharedconfig.json")
+            {
+                auto items = getAssetVec(PresetType::Shared);
+                handlePresetRequest("shared", etagString, prefix, socket, items, false, unittest);
+            }
+            else
+                throw BadRequestException("Invalid Config Request: " + configPath);
+        }
+        else if(request.getMethod() == "GET")
+        {
+            if (!FileUtil::Stat(configPath).exists())
+            {
+                LOG_ERR("Local file URI [" << configPath << "] invalid or doesn't exist.");
+                throw BadRequestException("Invalid URI: " + configPath);
+            }
+
+            std::shared_ptr<LocalFileInfo> localFile =
+                LocalFileInfo::getOrCreateFile(configPath, path.getFileName());
+            auto ss = std::ostringstream{};
+            std::ifstream inputFile(localFile->localPath);
+            ss << inputFile.rdbuf();
+
+            http::Response httpResponse(http::StatusCode::OK);
+            FileServerRequestHandler::hstsHeaders(httpResponse);
+            httpResponse.set("Last-Modified", Util::getHttpTime(localFile->fileLastModifiedTime));
+            httpResponse.setBody(ss.str(), "text/plain; charset=utf-8");
+            socket->send(httpResponse);
+        }
+        else if (request.getMethod() == "POST")
+        {
+            const Poco::URI::QueryParameters params = requestUri.getQueryParameters();
+            std::string filePath;
+            for (const auto& param : params)
+            {
+                // TODO: replace fileId with filePath
+                if (param.first == "fileId")
+                    filePath = param.second;
+            }
+
+            // executed when file uploaded from ClientSession
+            if (!filePath.empty())
+            {
+                std::streamsize size = request.getContentLength();
+                if (size == 0)
+                {
+                    http::Response httpResponse(http::StatusCode::BadRequest);
+                    socket->send(httpResponse);
+                    LOG_ERR("Failed to save the file, file content doesn't exist");
+                    return;
+                }
+
+                std::vector<std::string> splitStr = Util::splitStringToVector(filePath, '/');
+                if (splitStr.size() != 4)
+                {
+                    http::Response httpResponse(http::StatusCode::BadRequest);
+                    socket->send(httpResponse);
+                    LOG_ERR("Failed to save the file, invalid filPath[" << filePath << ']');
+                    return;
+                }
+                // ignoring category for local wopiserver
+                const std::string& type = splitStr[1];
+                const std::string& fileName = splitStr[3];
+
+                std::vector<char> buffer(size);
+                message.read(buffer.data(), size);
+
+                std::string dirPath = "test/data/presets/";
+                if (type == "userconfig")
+                    dirPath.append("user");
+                else if (type == "systemconfig")
+                    dirPath.append("shared");
+
+                Poco::File(dirPath).createDirectories();
+
+                LOG_DBG("Saving uploaded file[" << fileName << "] to directory[" << dirPath << ']');
+                std::ofstream outfile;
+                dirPath.append("/");
+                dirPath.append(fileName);
+                outfile.open(dirPath, std::ofstream::binary);
+                outfile.write(buffer.data(), size);
+                outfile.close();
+
+                std::string timestamp =
+                    Util::getIso8601FracformatTime(std::chrono::system_clock::now());
+                const std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
+                http::Response httpResponse(http::StatusCode::OK);
+                FileServerRequestHandler::hstsHeaders(httpResponse);
+                httpResponse.setBody(body, "application/json; charset=utf-8");
+                socket->send(httpResponse);
+                return;
+            }
+
+            // executed when file uploaded from admin panel
+            // TODO: we don't need the following code once we fix the requesting to own server stuck problem
+            FilePartHandler partHandler;
+            Poco::Net::HTMLForm form(request, message, partHandler);
+            const std::string& fileName = partHandler.getFileName();
+            const std::string& fileContent = partHandler.getFileContent();
+
+            if (fileName.empty() || fileContent.empty())
+            {
+                http::Response httpResponse(http::StatusCode::BadRequest);
+                socket->send(httpResponse);
+                LOG_ERR("No valid file uploaded.");
+            }
+
+            LOG_INF("File uploaded: " << fileName << ", Size: " << fileContent.size() << " bytes");
+
+            std::streamsize size = fileContent.size();
+
+            std::ofstream outfile;
+            // TODO: hardcoded save to shared directory, add support for user directory
+            // when adminIntegratorSettings allow it
+            const std::string testSharedDir = "test/data/presets/shared";
+            Poco::File(testSharedDir).createDirectories();
+            LOG_DBG("Saving uploaded file[" << fileName << "] to directory[" << testSharedDir
+                                            << ']');
+
+            outfile.open(testSharedDir + '/' + fileName, std::ofstream::binary);
+            outfile.write(fileContent.data(), size);
+            outfile.close();
+
+            std::string timestamp =
+                Util::getIso8601FracformatTime(std::chrono::system_clock::now());
+            const std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
+            http::Response httpResponse(http::StatusCode::OK);
+            FileServerRequestHandler::hstsHeaders(httpResponse);
+            httpResponse.setBody(body, "application/json; charset=utf-8");
+            socket->send(httpResponse);
+        }
+    }
+
 #endif
 
 void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
@@ -561,11 +880,20 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         static std::string etagString = "\"" COOLWSD_VERSION_HASH +
             config.getString("ver_suffix", "") + "\"";
 
+        // handle here:
+
 #if ENABLE_DEBUG
         if (relPath.starts_with("/wopi/files")) {
             handleWopiRequest(request, requestDetails, message, socket);
             return;
         }
+        else if (relPath.starts_with("/wopi/settings") ||
+                 relPath.ends_with("/wopi/settings/upload"))
+        {
+            handleSettingsRequest(request, etagString, message, socket);
+            return;
+        }
+
 #endif
         if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "logging.html")
         {
@@ -588,6 +916,25 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                     return;
                 }
             }
+        }
+
+        if (endPoint == "upload-settings")
+        {
+            LOG_INF("Processing upload-settings request.");
+            uploadFileToIntegrator(request, requestDetails, message, socket);
+            return;
+        }
+
+        if (endPoint == "fetch-shared-config")
+        {
+            fetchWopiSettingConfigs(request, message, socket);
+            return;
+        }
+
+        if (endPoint == "delete-shared-config")
+        {
+            deleteWopiSettingConfigs(request, message, socket);
+            return;
         }
 
         // Is this a file we read at startup - if not; it's not for serving.
@@ -615,6 +962,13 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             return;
         }
 
+        // TODO: Only respond to authenticated POST request, needs to implement authentication
+        if (endPoint == "adminIntegratorSettings.html")
+        {
+            preprocessIntegratorAdminFile(request, response, requestDetails, message, socket);
+            return;
+        }
+
         if (request.getMethod() == HTTPRequest::HTTP_GET)
         {
             if (endPoint == "admin.html" || endPoint == "adminSettings.html" ||
@@ -634,8 +988,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 if (!COOLWSD::AdminEnabled)
                     throw Poco::FileAccessDeniedException("Admin console disabled");
 
-                if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
-                    throw Poco::Net::NotAuthenticatedException("Invalid admin login");
+                // TODO: Do we need to make sure admin is authenticated for JS files ?
+                // if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
+                //     throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
                 // Ask UAs to block if they detect any XSS attempt
                 response.add("X-XSS-Protection", "1; mode=block");
@@ -1085,8 +1440,11 @@ static const std::string CSS_VARS = "<!--%CSS_VARIABLES%-->";
 static const std::string POSTMESSAGE_ORIGIN = "%POSTMESSAGE_ORIGIN%";
 static const std::string BRANDING_THEME = "%BRANDING_THEME%";
 static const std::string CHECK_FILE_INFO_OVERRIDE = "%CHECK_FILE_INFO_OVERRIDE%";
+static const std::string DEBUG_WOPI_CONFIG_ID = "%DEBUG_WOPI_CONFIG_ID%";
 static const std::string BUYPRODUCT_URL = "%BUYPRODUCT_URL%";
 static const std::string PERMISSION = "%PERMISSION%";
+static const std::string WOPI_SETTING_BASE_URL = "%WOPI_SETTING_BASE_URL%";
+static const std::string IFRAME_TYPE = "%IFRAME_TYPE%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1177,6 +1535,14 @@ public:
         extractVariable(form, "buy_product", BUYPRODUCT_URL);
 
         extractVariable(form, "permission", PERMISSION);
+
+#if ENABLE_DEBUG
+        extractVariable(form, "configid", DEBUG_WOPI_CONFIG_ID);
+#endif
+
+        extractVariable(form, "wopi_setting_base_url", WOPI_SETTING_BASE_URL);
+
+        extractVariable(form, "iframe_type", IFRAME_TYPE);
 
         std::string buyProduct;
         {
@@ -1614,7 +1980,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     socket->send(httpResponse);
     LOG_TRC("Sent file: " << relPath << ": " << preprocess);
 
-    return ResourceAccessDetails(std::move(wopiSrc), urv[ACCESS_TOKEN], urv[PERMISSION]);
+    return ResourceAccessDetails(std::move(wopiSrc), urv[ACCESS_TOKEN], urv[PERMISSION], urv[DEBUG_WOPI_CONFIG_ID]);
 }
 
 void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
@@ -1643,6 +2009,328 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
 
     LOG_TRC("Sent file: " << relPath);
 }
+
+void FilePartHandler::handlePart(const Poco::Net::MessageHeader& header, std::istream& stream)
+{
+    if (header.has("Content-Disposition"))
+    {
+        const std::string disposition = header.get("Content-Disposition");
+        const std::string prefix = "filename=\"";
+
+        auto pos = disposition.find(prefix);
+        if (pos != std::string::npos)
+        {
+            _fileName = disposition.substr(pos + prefix.size());
+            auto endPos = _fileName.find('\"');
+            if (endPos != std::string::npos)
+                _fileName = _fileName.substr(0, endPos);
+
+            std::ostringstream oss;
+            Poco::StreamCopier::copyStream(stream, oss);
+            _fileContent = oss.str();
+        }
+    }
+}
+
+void FileServerRequestHandler::fetchWopiSettingConfigs( const Poco::Net::HTTPRequest& request,
+                                                        Poco::MemoryInputStream& message,
+                                                        const std::shared_ptr<StreamSocket>& socket)
+{
+    try
+    {
+        Poco::Net::HTMLForm form(request, message);
+
+        // todo: better to return request with some kind of response
+        if (!form.has("sharedConfigUrl"))
+            throw std::runtime_error("sharedConfigUrl missing in payload");
+        if (!form.has("accessToken"))
+            throw std::runtime_error("accessToken missing in payload");
+        if (!form.has("type"))
+            throw std::runtime_error("type missing in payload");
+
+        std::string sharedConfigUrl = form.get("sharedConfigUrl");
+        std::string token = form.get("accessToken");
+        std::string type = form.get("type");
+
+        LOG_INF("Fetching shared config from URL: " << sharedConfigUrl);
+
+        Poco::URI sharedUri(sharedConfigUrl);
+        sharedUri.addQueryParameter("fileId", "-1");
+        sharedUri.addQueryParameter("type", type);
+        sharedUri.addQueryParameter("access_token", token);
+
+
+        Authorization auth(Authorization::Type::Token, token);
+        auto httpRequest = StorageConnectionManager::createHttpRequest(sharedUri, auth);
+        httpRequest.setVerb(http::Request::VERB_GET);
+        httpRequest.header().set("Content-Type", "application/json");
+
+        LOG_DBG("fetchWopiSettingConfigs: Fetching shared config URL: " << sharedUri.toString());
+        auto httpSession = StorageConnectionManager::getHttpSession(sharedUri);
+        auto httpResponse = httpSession->syncRequest(httpRequest);
+
+        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        {
+            std::ostringstream responseContent;
+            responseContent << httpResponse->getBody();
+            throw std::runtime_error("Integrator wopi call failed: " +
+                                     httpResponse->statusLine().reasonPhrase() +
+                                     ". Response: " + responseContent.str());
+        }
+
+        std::string sharedConfigJson = httpResponse->getBody();
+
+        http::Response clientResponse(http::StatusCode::OK);
+        clientResponse.set("Content-Type", "application/json; charset=utf-8");
+
+        clientResponse.set("Cache-Control", "no-cache");
+        clientResponse.setBody(sharedConfigJson);
+
+        socket->send(clientResponse);
+        LOG_INF("Shared config fetched and returned successfully.");
+    }
+    catch (const std::exception& ex)
+    {
+        // Log the error and send back an error response.
+        LOG_ERR("Error in fetchWopiSettingConfigs: " << ex.what());
+        sendError(http::StatusCode::InternalServerError, request, socket, "Fetch Shared Config Error", ex.what());
+    }
+}
+
+
+void FileServerRequestHandler::deleteWopiSettingConfigs(const Poco::Net::HTTPRequest& request,
+                                                        Poco::MemoryInputStream& message,
+                                                        const std::shared_ptr<StreamSocket>& socket)
+{
+    try
+    {
+        Poco::Net::HTMLForm form(request, message);
+
+        if (!form.has("sharedConfigUrl"))
+            throw std::runtime_error("sharedConfigUrl missing in payload");
+        if (!form.has("accessToken"))
+            throw std::runtime_error("accessToken missing in payload");
+        if (!form.has("fileId"))
+            throw std::runtime_error("fileId missing in payload");
+
+        // Extract needed fields
+        std::string sharedConfigUrl = form.get("sharedConfigUrl");
+        std::string token           = form.get("accessToken");
+        std::string fileId          = form.get("fileId");
+
+        LOG_INF("Deleting WOPI setting config at URL: " << sharedConfigUrl << ", fileId: " << fileId);
+
+        Poco::URI sharedUri(sharedConfigUrl);
+        sharedUri.addQueryParameter("access_token", token);
+        sharedUri.addQueryParameter("fileId", fileId);
+
+        Authorization auth(Authorization::Type::Token, token);
+        auto httpRequest = StorageConnectionManager::createHttpRequest(sharedUri, auth);
+
+        httpRequest.setVerb("DELETE");
+        httpRequest.header().set("Content-Type", "application/json");
+
+        LOG_DBG("deleteWopiSettingConfigs: Sending DELETE to URI: " << sharedUri.toString());
+
+        auto httpSession = StorageConnectionManager::getHttpSession(sharedUri);
+        auto httpResponse = httpSession->syncRequest(httpRequest);
+
+        auto status = httpResponse->statusLine().statusCode();
+        if (status != http::StatusCode::OK && status != http::StatusCode::NoContent)
+        {
+            std::ostringstream responseContent;
+            responseContent << httpResponse->getBody();
+            throw std::runtime_error(
+                "Integrator WOPI call failed: " + httpResponse->statusLine().reasonPhrase() +
+                ". Response: " + responseContent.str()
+            );
+        }
+
+        http::Response clientResponse(http::StatusCode::OK);
+        clientResponse.set("Content-Type", "application/json; charset=utf-8");
+        clientResponse.set("Cache-Control", "no-cache");
+
+        std::string reqResponse = httpResponse->getBody();
+        clientResponse.setBody(reqResponse);
+
+        socket->send(clientResponse);
+
+        LOG_INF("File (fileId=" << fileId << ") deleted successfully at URL: " << sharedConfigUrl);
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Error in deleteWopiSettingConfigs: " << ex.what());
+        sendError(http::StatusCode::InternalServerError,
+                  request,
+                  socket,
+                  "Delete Shared Config Error",
+                  ex.what());
+    }
+}
+
+
+void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPRequest& request,
+                                                     const RequestDetails& /*requestDetails*/,
+                                                     Poco::MemoryInputStream& message,
+                                                     const std::shared_ptr<StreamSocket>& socket)
+{
+    try
+    {
+        FilePartHandler partHandler;
+        Poco::Net::HTMLForm form(request, message, partHandler);
+
+        const std::string& fileName = partHandler.getFileName();
+        const std::string& fileContent = partHandler.getFileContent();
+        if (fileName.empty() || fileContent.empty())
+            throw BadRequestException("No valid file uploaded.");
+
+        const std::string authorizationHeader = request.get("Authorization", "");
+        if (authorizationHeader.rfind("Bearer ", 0) != 0)
+            throw std::runtime_error("Missing or invalid Authorization header.");
+
+        std::string token = authorizationHeader.substr(7);
+
+        if (!form.has("filePath")) {
+            throw BadRequestException("Missing required field: filePath.");
+        }
+        std::string filePath = form.get("filePath");
+
+        // Check for the required "wopiSettingBaseUrl" field.
+        if (!form.has("wopiSettingBaseUrl")) {
+            throw BadRequestException("Missing required field: wopiSettingBaseUrl.");
+        }
+        std::string wopiSettingBaseUrl = form.get("wopiSettingBaseUrl");
+
+
+        std::string fileId = filePath + fileName;
+
+        // TODO : Handle integrator wopi url dynamically
+        // TODO : Extract integrator wopi fileupload stuff so we can re-use it
+        Poco::URI wopiUri(wopiSettingBaseUrl + "/upload");
+        wopiUri.addQueryParameter("fileId", fileId);
+        wopiUri.addQueryParameter("access_token", token);
+
+        Authorization auth(Authorization::Type::Token, token);
+        auto httpRequest = StorageConnectionManager::createHttpRequest(wopiUri, auth);
+        httpRequest.setVerb(http::Request::VERB_POST);
+
+        httpRequest.header().set("Content-Type", "application/octet-stream");
+        httpRequest.setBody(fileContent);
+
+        LOG_DBG("uploadFileToIntegrator: WOPI URI: " << wopiUri.toString());
+        for (const auto& kv : httpRequest.header())
+            LOG_DBG("uploadFileToIntegrator: Request header: " << kv.first << " = " << kv.second);
+
+        auto httpSession = StorageConnectionManager::getHttpSession(wopiUri);
+        auto httpResponse = httpSession->syncRequest(httpRequest);
+
+        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        {
+            std::ostringstream responseContent;
+            responseContent << httpResponse->getBody();
+            throw std::runtime_error("WOPI call failed: "
+                                     + httpResponse->statusLine().reasonPhrase()
+                                     + ". Response: " + responseContent.str());
+        }
+
+        http::Response httpResponseToClient(http::StatusCode::OK);
+        httpResponseToClient.setBody("File uploaded successfully to Integrator.");
+        socket->send(httpResponseToClient);
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("File upload failed: " << ex.what());
+        sendError(http::StatusCode::InternalServerError, request, socket, "Upload Error", ex.what());
+    }
+}
+
+void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& request,
+                                                            http::Response& response,
+                                                            const RequestDetails& requestDetails,
+                                                            Poco::MemoryInputStream& message,
+                                                            const std::shared_ptr<StreamSocket>& socket)
+{
+    const ServerURL cnxDetails(requestDetails);
+    const std::string responseRoot = cnxDetails.getResponseRoot();
+
+    static const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/%s.js\"></script>");
+    static const std::string footerPage("<footer class=\"footer has-text-centered\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</footer>");
+
+    const std::string relPath = getRequestPathname(request, requestDetails);
+    LOG_DBG("Preprocessing file: " << relPath);
+    std::string adminFile = *getUncompressedFile(relPath);
+
+    HTMLForm form(request, message);
+    const UserRequestVars urv(request, form);
+
+    Poco::replaceInPlace(adminFile, ACCESS_TOKEN, urv[ACCESS_TOKEN]);
+    Poco::replaceInPlace(adminFile, ACCESS_TOKEN_TTL, urv[ACCESS_TOKEN_TTL]);
+    Poco::replaceInPlace(adminFile, WOPI_SETTING_BASE_URL, urv[WOPI_SETTING_BASE_URL]);
+    Poco::replaceInPlace(adminFile, ACCESS_HEADER, urv[ACCESS_HEADER]);
+    Poco::replaceInPlace(adminFile, IFRAME_TYPE, urv[IFRAME_TYPE]);
+    bool enableDebug = false;
+#if ENABLE_DEBUG
+    enableDebug = true;
+#endif
+    Poco::replaceInPlace(adminFile, std::string("%ENABLE_DEBUG%"),
+                         std::string(enableDebug ? "true" : "false"));
+
+    std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
+    std::string brandFooter;
+
+    if constexpr (ConfigUtil::isSupportKeyEnabled())
+    {
+        const auto& config = Application::instance().config();
+        const std::string keyString = config.getString("support_key", "");
+        SupportKey key(keyString);
+
+        if (!key.verify() || key.validDaysRemaining() <= 0)
+        {
+            brandJS = Poco::format(scriptJS, std::string(SUPPORT_KEY_BRANDING_UNSUPPORTED));
+            brandFooter = Poco::format(footerPage, key.data(), Poco::DateTimeFormatter::format(key.expiry(), Poco::DateTimeFormat::RFC822_FORMAT));
+        }
+    }
+
+    Poco::replaceInPlace(adminFile, std::string("<!--%BRANDING_JS%-->"), brandJS);
+    Poco::replaceInPlace(adminFile, std::string("<!--%FOOTER%-->"), brandFooter);
+    Poco::replaceInPlace(adminFile, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
+    Poco::replaceInPlace(adminFile, std::string("%SERVICE_ROOT%"), responseRoot);
+
+    ContentSecurityPolicy csp;
+    csp.appendDirective("frame-src", "'self'");
+    csp.appendDirective("frame-src", "blob:"); // Equivalent to unsafe-eval!
+    csp.appendDirective("connect-src", "'self'");
+    // TODO: we have inline script tag and css in admin panel. can't have following CSPs
+    // csp.appendDirective("default-src", "'none'");
+    // csp.appendDirective("script-src", "'self'");
+    // csp.appendDirective("script-src", "'unsafe-eval'");
+    // csp.appendDirective("style-src", "'self'");
+    csp.appendDirective("font-src", "'self'");
+    csp.appendDirective("object-src", "'self'");
+    csp.appendDirective("media-src", "'self'");
+    csp.appendDirectiveUrl("media-src", cnxDetails.getWebServerUrl());
+    csp.appendDirectiveUrl("connect-src", cnxDetails.getWebServerUrl());
+    csp.appendDirective("img-src", "'self'");
+    csp.appendDirective("img-src", "data:"); // Equivalent to unsafe-inline!
+
+    const auto& config = Application::instance().config();
+    csp.merge(config.getString("net.content_security_policy", ""));
+
+    response.add("Content-Security-Policy", csp.generate());
+
+    response.set("Last-Modified", Util::getHttpTimeNow());
+    response.set("Cache-Control", "max-age=11059200");
+    response.set("ETag", COOLWSD_VERSION_HASH);
+
+    response.add("X-Content-Type-Options", "nosniff");
+    response.add("X-XSS-Protection", "1; mode=block");
+    response.add("Referrer-Policy", "no-referrer");
+
+    response.setBody(std::move(adminFile));
+    socket->send(response);
+    LOG_TRC("Sent file: " << relPath << ": " << adminFile);
+}
+
 
 void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
                                                    http::Response& response,

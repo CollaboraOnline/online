@@ -318,6 +318,11 @@
         <expiry_min desc="Time in mins after quarantined files will be deleted." type="int" default="3000">3000</expiry_min>
     </quarantine_files>
 
+    <cache_files desc="Files are cached here to speed up config support.">
+        <path desc="Absolute path of the directory under which cached files will be stored. Do not use a relative path." type="path" relative="false"></path>
+        <expiry_min desc="Time in mins after disuse at which cache files will be deleted." type="int" default="3000">1000</expiry_min>
+    </cache_files>
+
     <extra_export_formats desc="Enable various extra export formats for additional compatibility. Note that disabling options here *only* disables them visually: these are all 'safe' to export, it might just be undesirable to show them, so you can't disable exporting these server-side">
         <impress_swf desc="Enable exporting Adobe flash .swf files from presentations" type="bool" default="false">false</impress_swf>
         <impress_bmp desc="Enable exporting .bmp bitmap files from presentation slides" type="bool" default="false">false</impress_bmp>
@@ -326,6 +331,10 @@
         <impress_svg desc="Enable exporting interactive .svg image files from presentations" type="bool" default="false">false</impress_svg>
         <impress_tiff desc="Enable exporting .tiff image files from presentation slides" type="bool" default="false">false</impress_tiff>
     </extra_export_formats>
+
+    <serverside_config>
+        <idle_timeout_secs desc="The maximum number of seconds before unloading an idle sub forkit. Defaults to 1 hour." type="uint" default="3600">3600</idle_timeout_secs>
+    </serverside_config>
 
     <remote_config>
         <remote_url desc="remote server to which you will send request to get remote config in response" type="string" default=""></remote_url>

@@ -174,6 +174,7 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
 
 
     new ShortcutDescriptor('text', 'keydown', 0, 'F2', null, null, null),
+    new ShortcutDescriptor('text', 'keydown', 0, 'F3', '.uno:ExpandGlossary', null, null),
     new ShortcutDescriptor('text', 'keydown', 0, 'F5', null, null, null),
 
 

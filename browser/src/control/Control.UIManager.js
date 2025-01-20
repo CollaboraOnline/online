@@ -200,6 +200,7 @@ L.Control.UIManager = L.Control.extend({
 
 	initDarkModeFromSettings: function() {
 		var inDarkTheme = window.prefs.getBoolean('darkTheme');
+		console.log("xxx initDarkTheme: ", inDarkTheme);
 
 		if (inDarkTheme) {
 			this.loadDarkMode();

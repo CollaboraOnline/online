@@ -41,7 +41,8 @@ class ForKitProcess;
 class SocketPoll;
 class TraceFileWriter;
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, unsigned mobileAppDocId);
+std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, const std::string& configId,
+                                                 unsigned mobileAppDocId);
 
 /// The Server class which is responsible for all
 /// external interactions.
@@ -205,11 +206,14 @@ public:
     /// Return true when successful.
     static bool createForKit();
 
-    /// Sends a message to ForKit through PrisonerPoll.
-    static void sendMessageToForKit(const std::string& message);
+    /// Sends a message a to ForKit through PrisonerPoll. empty configId is primordial forkit
+    static bool sendMessageToForKit(const std::string& message, const std::string& configId=std::string());
 
     /// Terminates spare kits that aren't assigned a document yet.
     static void requestTerminateSpareKits();
+
+    // Request creation of a subForKit if it doesn't already exist
+    static bool ensureSubForKit(const std::string& id);
 
     /// Checks forkit (and respawns), rebalances
     /// child kit processes and cleans up DocBrokers.
@@ -244,6 +248,10 @@ public:
     static void alertUserInternal(const std::string& dockey, const std::string& msg);
     static void setMigrationMsgReceived(const std::string& docKey);
     static void setAllMigrationMsgReceived();
+#if !MOBILEAPP
+    static void syncUsersBrowserSettings(const std::string& userId, const std::string& key,
+                                             const std::string& value);
+#endif
 
 #if ENABLE_DEBUG
     /// get correct server URL with protocol + port number for this running server

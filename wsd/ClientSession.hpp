@@ -16,7 +16,11 @@
 #include "SenderQueue.hpp"
 #include "ServerURL.hpp"
 #include "DocumentBroker.hpp"
+
+#include <Poco/JSON/Object.h>
+#include <Poco/SharedPtr.h>
 #include <Poco/URI.h>
+
 #include <Rectangle.hpp>
 #include <deque>
 #include <utility>
@@ -272,6 +276,33 @@ public:
 
     int  getCanonicalViewId() const { return _canonicalViewId; }
 
+    bool getSentBrowserSetting() const { return _sentBrowserSetting; }
+
+    void setSentBrowserSetting(const bool sentBrowserSetting)
+    {
+        _sentBrowserSetting = sentBrowserSetting;
+    }
+
+    void setBrowserSettingsJSON(Poco::SharedPtr<Poco::JSON::Object>& jsonObject)
+    {
+        _browserSettingsJSON = std::move(jsonObject);
+    }
+
+    Poco::SharedPtr<Poco::JSON::Object> getSentBrowserSettingJSON()
+    {
+        return _browserSettingsJSON;
+    }
+
+    /// Override parsedDocOption values we get from browser setting json
+    /// Because when client sends `load url` it doesn't have information about browser setting json
+    void overrideDocOption();
+
+#if !MOBILEAPP
+    void updateBrowserSettingsJSON(const std::string& key, const std::string& value);
+    void uploadPresetsToWopiHost(const std::string& jailPresetPath, const std::string& docKey);
+    void uploadBrowserSettingsToWopiHost(const std::string& docKey);
+#endif
+
 private:
     std::shared_ptr<ClientSession> client_from_this()
     {
@@ -429,6 +460,11 @@ private:
 
     /// If server audit was already sent
     bool _sentAudit;
+
+    /// If browser setting was already sent
+    bool _sentBrowserSetting;
+
+    Poco::SharedPtr<Poco::JSON::Object> _browserSettingsJSON;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

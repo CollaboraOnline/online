@@ -28,6 +28,7 @@ class UnitKit;
 class UnitTimeout;
 
 class ChildProcess;
+class ForKitProcess;
 class WebSocketHandler;
 class ClientSession;
 class Message;
@@ -468,6 +469,12 @@ public:
 
     /// When a new child kit process reports
     virtual void newChild(const std::shared_ptr<ChildProcess>& /*child*/) {}
+
+    /// When a new subforkit process reports
+    virtual void newSubForKit(const std::shared_ptr<ForKitProcess>& /*subforkit*/, const std::string& /*configId*/) {}
+
+    /// When a subforkit process is killed
+    virtual void killSubForKit(const std::string& /*configId*/) {}
 
     /// When we get a segfault message from forkit; override to test crashes ...
     virtual void kitSegfault(int /* count */)

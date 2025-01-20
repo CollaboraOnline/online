@@ -11,6 +11,7 @@ abs_top_builddir="${DIR}/.."
 systemplate_path="@SYSTEMPLATE_PATH@"
 enable_debug="@ENABLE_DEBUG@"
 jails_path="@JAILS_PATH@"
+cache_path="@CACHE_PATH@"
 lo_path="@LO_PATH@"
 valgrind_cmd="valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes"
 verbose=''
@@ -71,6 +72,7 @@ echo > $tst_log
 if ${trace} \
        ${abs_top_builddir}/coolwsd --o:sys_template_path="$systemplate_path" \
 				   --o:child_root_path="$jails_path" \
+				   --o:cache_files.path="$cache_path" \
 				   --o:storage.filesystem[@allow]=true \
 				   --o:logging.level=trace \
 				   --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
@@ -95,6 +97,7 @@ else
 	echo "Test failed on $tst after ${SECONDS}s. Re-run with (remove --unattended to run without gdb and get prompted):"
 	echo "   $ gdb --args ${abs_top_builddir}/coolwsd --o:sys_template_path=\"$systemplate_path\" \\"
 	echo "         --o:child_root_path=\"$jails_path\" \\"
+	echo "         --o:cache_files.path\"$cache_path\" \\"
 	echo "         --o:storage.filesystem[@allow]=true \\"
 	echo "         --o:logging.level=error\\" # logs and gdb don't go well together
 	echo "         --o:ssl.key_file_path=\"${abs_top_builddir}/etc/key.pem\" \\"

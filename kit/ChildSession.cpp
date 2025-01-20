@@ -484,6 +484,11 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         return success;
     }
+    else if (tokens.equals(0, "addconfig"))
+    {
+        Poco::Path presetsPath(JAILED_CONFIG_ROOT);
+        getLOKit()->setOption("addconfig", Poco::URI(presetsPath).toString().c_str());
+    }
     else if (!_isDocLoaded)
     {
         sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=nodocloaded");
