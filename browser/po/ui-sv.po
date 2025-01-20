@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-13 13:29+0100\n"
-"PO-Revision-Date: 2024-12-21 00:33+0000\n"
-"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"PO-Revision-Date: 2025-01-13 14:11+0000\n"
+"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2148,7 +2148,7 @@ msgstr "Gå Offline"
 
 #: src/control/Control.NotebookbarWriter.js:939
 msgid "Style list"
-msgstr ""
+msgstr "Stillista"
 
 #: src/control/Control.NotebookbarWriter.js:1360
 msgid "Rich Text"
@@ -2276,11 +2276,11 @@ msgstr "Infoga blad"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "På"
 
 #: src/control/Control.StatusBar.js:179
 msgid "Off"
-msgstr ""
+msgstr "Av"
 
 #: src/control/Control.StatusBar.js:205
 #: src/control/jsdialog/Definitions.Menu.ts:23
@@ -2853,9 +2853,8 @@ msgid "Your changes have been saved"
 msgstr "Dina ändringar har sparats"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:141
-#, fuzzy
 msgid "Show Comments"
-msgstr "Inga kommentarer"
+msgstr "Visa kommentarer"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
