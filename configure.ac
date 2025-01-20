@@ -441,8 +441,9 @@ AC_ARG_ENABLE([experimental],
               AS_HELP_STRING([--enable-experimental],
                              [Enable experimental features and behavior]))
 
-# Handle options
-AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
+# Debug POCO libraries are named like 'PocoNetSSLd' instead of just 'PocoNetSSL',
+# but Homebrew does not have those, so avoid this suffix for macOS
+AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs" -a `uname -s` != Darwin],
       [POCO_DEBUG_SUFFIX=d],
       [POCO_DEBUG_SUFFIX=])
 
