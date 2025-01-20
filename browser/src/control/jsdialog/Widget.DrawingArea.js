@@ -147,7 +147,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 
 	var modifier = 0;
 
-	container.addEventListener('keydown', function(event) {
+	image.addEventListener('keydown', function(event) {
 		if (event.key === 'Enter') {
 			builder.callback('drawingarea', 'keypress', container, UNOKey.RETURN | modifier, builder);
 			event.preventDefault();
@@ -194,7 +194,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		}
 	});
 
-	container.addEventListener('keyup', function(event) {
+	image.addEventListener('keyup', function(event) {
 		if (event.key === 'Shift') {
 			modifier = modifier & (~UNOModifier.SHIFT);
 			event.preventDefault();
@@ -204,11 +204,11 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		}
 	});
 
-	container.addEventListener('blur', function() {
+	image.addEventListener('blur', function() {
 		modifier = 0;
 	});
 
-	container.addEventListener('keypress', function(event) {
+	image.addEventListener('keypress', function(event) {
 		if (event.key === 'Enter' ||
 			event.key === 'Escape' ||
 			event.key === 'Esc' ||
