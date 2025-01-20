@@ -154,9 +154,13 @@ m4_ifelse(MOBILEAPP,[true],
     </dialog>
 
     <div id="main-document-content">
+    <!-- todo: combine presentation controls and navigator panel into one div -->
       <div id="presentation-controls-wrapper" class="readonly">
         <div id="slide-sorter"></div>
         <div id="presentation-toolbar"></div>
+      </div>
+      <div id="navigator-dock-wrapper">
+        <div id="navigator-panel"></div>
       </div>
       <div id="document-container" class="readonly" dir="ltr">
         <div id="map"></div>

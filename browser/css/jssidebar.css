@@ -30,12 +30,16 @@ img.sidebar.ui-drawing-area {
 	margin: 0;
 }
 
-#document-container:not(.mobile) + #sidebar-dock-wrapper {
+#document-container:not(.mobile) + #sidebar-dock-wrapper,
+#document-container:not(.mobile) + #navigator-dock-wrapper {
 	padding: 0;
 	box-sizing: border-box;
 }
+
 [data-userinterfacemode='classic'] #document-container:not(.mobile) + #sidebar-dock-wrapper,
-[data-docType='spreadsheet'] #document-container:not(.mobile) + #sidebar-dock-wrapper {
+[data-userinterfacemode='classic'] #document-container:not(.mobile) + #navigator-dock-wrapper,
+[data-docType='spreadsheet'] #document-container:not(.mobile) + #sidebar-dock-wrapper,
+[data-docType='spreadsheet'] #document-container:not(.mobile) + #navigator-dock-wrapper {
 	border-inline-start: 1px solid var(--color-border);
 }
 .sidebar .menu-entry-icon {
@@ -298,42 +302,42 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 
 /* Navigator */
 
-#NavigatorDeck #contentbox,
-#NavigatorDeck #contenttree,
-#NavigatorDeck #tree {
-	position: absolute;
+#NavigatorPanel #contentbox,
+#NavigatorPanel #contenttree,
+#NavigatorPanel #tree {
+	position: relative;
 	top: 0;
 	bottom: 10px;
-	left: 10px;
+	left: 15px;
 	right: 10px;
 	border: none;
 }
-#NavigatorDeck .ui-expander-content > .root-container.jsdialog {
+#NavigatorPanel .ui-expander-content > .root-container.jsdialog {
 	margin: 0;
 }
-#NavigatorDeck div {
-	padding-inline-start: 0;
+#NavigatorPanel div {
+	padding-inline-start: 2px;
 	background-color: transparent;
 }
-#NavigatorDeck .ui-treeview-icon {
+#NavigatorPanel .ui-treeview-icon {
 	width: var(--btn-size-s);
 	height: var(--btn-size-s);
 }
-#NavigatorDeck div.selected {
+#NavigatorPanel div.selected {
 	background-color: var(--color-background-dark);
 	color: var(--color-primary);
 }
-[data-theme='dark'] #NavigatorDeck div.selected {
+[data-theme='dark'] #NavigatorPanel div.selected {
 	background-color: transparent;
 	color: var(--color-text-lighter);
 }
 
-#NavigatorDeck .ui-treeview-entry,
-#NavigatorDeck .ui-treeview-expanded-content {
+#NavigatorPanel .ui-treeview-entry,
+#NavigatorPanel .ui-treeview-expanded-content {
 	margin-block-end: 8px;
 }
 
-#NavigatorDeck div.selected:not(.ui-treeview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
+#NavigatorPanel div.selected:not(.ui-treeview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
 	content: '–';
 	/* good to move this into css var*/
 	font-size: 17px;
@@ -342,12 +346,12 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	left: -20px;
 	width: 0px;
 }
-#NavigatorDeck .ui-treeview-cell-text {
+#NavigatorPanel .ui-treeview-cell-text {
 	/* good to move this into css var*/
 	font-size: 14px;
 	white-space: break-spaces;
 }
-#NavigatorDeck .ui-treeview-cell {
+#NavigatorPanel .ui-treeview-cell {
 	/* Move this whole block away and fix in the main control */
 	display: flex;
 	align-items: center;
@@ -358,7 +362,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	margin-left: 15px;
 }
 
-#NavigatorDeck .ui-expander {
+#NavigatorPanel .ui-expander {
 	display: none;
 }
 
@@ -383,9 +387,9 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 }
 
 /* required to dynamically resize treeviews or lists inside sidebar */
-.sidebar-container,
-.sidebar-container > .root-container.jsdialog.sidebar,
-.sidebar-container > .root-container.jsdialog.sidebar > .vertical.jsdialog.sidebar {
+.sidebar-container, .navigator-container
+.sidebar-container > .root-container.jsdialog.sidebar,.navigator-container > .root-container.jsdialog.sidebar > .root-container.jsdialog.sidebar
+.sidebar-container > .root-container.jsdialog.sidebar > .vertical.jsdialog.sidebar , .navigator-container > .root-container.jsdialog.sidebar > .vertical.jsdialog.sidebar{
 	height: 100%;
 }
 
