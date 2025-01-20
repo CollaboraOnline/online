@@ -1416,11 +1416,9 @@ void ClientSession::uploadBrowserSettingsToWopiHost(const std::string& docKey)
     }
 }
 
-void ClientSession::updateBrowserSettingsJSON(const std::string& key, const std::string& value,
-                                              const std::string& docKey)
+void ClientSession::updateBrowserSettingsJSON(const std::string& key, const std::string& value)
 {
     std::vector<std::string> vec = Util::splitStringToVector(key, '.');
-
     if (vec.size() == 2)
     {
         const std::string& parentKey = vec[0];
@@ -1441,13 +1439,6 @@ void ClientSession::updateBrowserSettingsJSON(const std::string& key, const std:
     {
         _browserSettingsJSON->set(key, value);
     }
-
-    {
-        std::ostringstream jsonStream;
-        _browserSettingsJSON->stringify(jsonStream, 2);
-    }
-
-    uploadBrowserSettingsToWopiHost(Uri::decode(docKey));
 }
 
 #endif
