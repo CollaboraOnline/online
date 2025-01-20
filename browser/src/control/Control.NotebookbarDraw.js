@@ -1278,6 +1278,14 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': 'remotelink',
 				'accessibility': { focusBack: true, combination: 'RL', de: null }
 			} : {},
+			(this._map['wopi'].EnableRemoteAIContent) ? {
+				'id': 'insert-insert-remote-ai-content',
+				'class': 'unoremoteaicontent',
+				'type': 'bigcustomtoolitem',
+				'text': _('Assistant'),
+				'command': 'remoteaicontent',
+				'accessibility': { focusBack: true, combination: 'RL', de: null }
+			} : {},
 			{
 				'type': 'container',
 				'children': [
