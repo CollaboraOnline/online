@@ -76,6 +76,8 @@ class TreeViewControl {
 	_isNavigator: boolean;
 	_singleClickActivate: boolean;
 	_filterTimer: ReturnType<typeof setTimeout>;
+	_data: TreeWidgetJSON;
+	_builder: any;
 
 	constructor(data: TreeWidgetJSON, builder: any) {
 		this._isRealTree = this.isRealTree(data);
@@ -89,22 +91,48 @@ class TreeViewControl {
 		this._hasIcon = TreeViewControl.hasIcon(data);
 		this._isNavigator = this.isNavigator(data);
 		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
+		this._data = data;
+		this._builder = builder;
 
 		this._tbody = this._container;
 		(this._container as any).filterEntries = this.filterEntries.bind(this);
-
-		this.setupDragAndDrop(data, builder);
-		this.setupKeyEvents(data, builder);
 
 		if (this._isRealTree) {
 			this._container.setAttribute('role', 'treegrid');
 			if (!data.headers || data.headers.length === 0)
 				L.DomUtil.addClass(this._container, 'ui-treeview-tree');
 		} else this._container.setAttribute('role', 'grid');
+
+		if (data.enabled !== false) {
+			this._container.addEventListener('click', this.onClick.bind(this));
+			this._container.addEventListener(
+				'dblclick',
+				this.onDoubleClick.bind(this),
+			);
+			this._container.addEventListener('keydown', this.onKeyDown.bind(this));
+			this._container.addEventListener(
+				'contextmenu',
+				this.onContextMenu.bind(this),
+			);
+			this._container.addEventListener(
+				'dragstart',
+				this.onDragStart.bind(this),
+			);
+			this._container.addEventListener('dragover', this.onDragOver.bind(this));
+			this._container.addEventListener('drop', this.onDrop.bind(this));
+			this._container.addEventListener('dragend', this.onDragEnd.bind(this));
+		}
 	}
 
 	get Container() {
 		return this._container;
+	}
+
+	static getElement(elem: any, role: any) {
+		while (elem && elem.getAttribute('role') !== role) {
+			elem = elem.parentElement;
+		}
+		return elem;
 	}
 
 	static countColumns(data: TreeWidgetJSON) {
@@ -147,60 +175,10 @@ class TreeViewControl {
 		return false;
 	}
 
-	findEntryWithRow(
-		entries: Array<TreeEntryJSON>,
-		row: number | string,
-	): TreeEntryJSON {
-		for (const i in entries) {
-			if (i == row) return entries[i];
-			else if (entries[i].children) {
-				var found = this.findEntryWithRow(entries[i].children, row);
-				if (found) return found;
-			}
-		}
-
-		return null;
-	}
-
-	changeCheckboxStateOnClick(
-		checkbox: HTMLInputElement,
-		treeViewData: TreeWidgetJSON,
-		builder: any,
-		entry: TreeEntryJSON,
-	) {
-		let foundEntry: TreeEntryJSON;
-		if (checkbox.checked) {
-			foundEntry = this.findEntryWithRow(treeViewData.entries, entry.row);
-			if (foundEntry) checkbox.checked = foundEntry.state = true;
-			builder.callback(
-				'treeview',
-				'change',
-				treeViewData,
-				{ row: entry.row, value: true },
-				builder,
-			);
-		} else {
-			foundEntry = this.findEntryWithRow(treeViewData.entries, entry.row);
-			if (foundEntry) checkbox.checked = foundEntry.state = false;
-			builder.callback(
-				'treeview',
-				'change',
-				treeViewData,
-				{ row: entry.row, value: false },
-				builder,
-			);
-		}
-	}
-
-	createCheckbox(
-		parent: HTMLElement,
-		treeViewData: TreeWidgetJSON,
-		builder: any,
-		entry: TreeEntryJSON,
-	) {
+	createCheckbox(parent: HTMLElement, entry: TreeEntryJSON) {
 		const checkbox = L.DomUtil.create(
 			'input',
-			builder.options.cssClass + ' ui-treeview-checkbox',
+			this._builder.options.cssClass + ' ui-treeview-checkbox',
 			parent,
 		);
 		checkbox.type = 'checkbox';
@@ -211,15 +189,10 @@ class TreeViewControl {
 		return checkbox;
 	}
 
-	createRadioButton(
-		parent: HTMLElement,
-		treeViewData: TreeWidgetJSON,
-		builder: any,
-		entry: TreeEntryJSON,
-	) {
+	createRadioButton(parent: HTMLElement, entry: TreeEntryJSON) {
 		const radioButton = L.DomUtil.create(
 			'input',
-			builder.options.cssClass + ' ui-treeview-checkbox',
+			this._builder.options.cssClass + ' ui-treeview-checkbox',
 			parent,
 		);
 		radioButton.type = 'radio';
@@ -230,42 +203,18 @@ class TreeViewControl {
 		return radioButton;
 	}
 
-	createSelectionElement(
-		parent: HTMLElement,
-		treeViewData: TreeWidgetJSON,
-		entry: TreeEntryJSON,
-		builder: any,
-	) {
-		let selectionElement: HTMLInputElement;
-		const checkboxtype = treeViewData.checkboxtype;
+	createSelectionElement(parent: HTMLElement, entry: TreeEntryJSON) {
+		let selectionElement: any;
+		const checkboxtype = this._data.checkboxtype;
 		if (checkboxtype == 'radio') {
-			selectionElement = this.createRadioButton(
-				parent,
-				treeViewData,
-				builder,
-				entry,
-			);
+			selectionElement = this.createRadioButton(parent, entry);
 		} else {
-			selectionElement = this.createCheckbox(
-				parent,
-				treeViewData,
-				builder,
-				entry,
-			);
+			selectionElement = this.createCheckbox(parent, entry);
 		}
+		selectionElement._state = entry.state;
+		selectionElement._row = entry.row;
 
 		if (entry.enabled === false) selectionElement.disabled = true;
-
-		if (treeViewData.enabled !== false) {
-			selectionElement.addEventListener('change', () => {
-				this.changeCheckboxStateOnClick(
-					selectionElement,
-					treeViewData,
-					builder,
-					entry,
-				);
-			});
-		}
 
 		return selectionElement;
 	}
@@ -296,14 +245,10 @@ class TreeViewControl {
 		return iconId;
 	}
 
-	createImageColumn(
-		parentContainer: HTMLElement,
-		builder: any,
-		imageUrl: string,
-	) {
+	createImageColumn(parentContainer: HTMLElement, imageUrl: string) {
 		const colorPreviewButton = L.DomUtil.create(
 			'img',
-			builder.options.cssClass + ' ui-treeview-checkbox',
+			this._builder.options.cssClass + ' ui-treeview-checkbox',
 			parentContainer,
 		);
 		colorPreviewButton.src = imageUrl;
@@ -323,41 +268,37 @@ class TreeViewControl {
 		return false;
 	}
 
-	fillHeader(header: TreeHeaderJSON, builder: any) {
+	fillHeader(header: TreeHeaderJSON, index: any) {
 		if (!header) return;
 
 		const th = L.DomUtil.create(
 			'div',
-			builder.options.cssClass + ' ui-treeview-header',
+			this._builder.options.cssClass + ' ui-treeview-header',
 			this._thead,
 		);
 		const span = L.DomUtil.create(
 			'span',
-			builder.options.cssClass + ' ui-treeview-header-text',
+			this._builder.options.cssClass + ' ui-treeview-header-text',
 			th,
 		);
 
 		span.innerText = header.text;
+		th.setAttribute('role', 'columnheader');
+		th._columnIndex = index;
 
 		if (header.sortable !== false) {
 			L.DomUtil.create(
 				'span',
-				builder.options.cssClass + ' ui-treeview-header-sort-icon',
+				this._builder.options.cssClass + ' ui-treeview-header-sort-icon',
 				span,
 			);
 		}
 	}
 
-	fillRow(
-		data: TreeWidgetJSON,
-		entry: TreeEntryJSON,
-		builder: any,
-		level: number,
-		parent: HTMLElement,
-	) {
+	fillRow(entry: TreeEntryJSON, level: number, parent: HTMLElement) {
 		const tr = L.DomUtil.create(
 			'div',
-			builder.options.cssClass + ' ui-treeview-entry',
+			this._builder.options.cssClass + ' ui-treeview-entry',
 			parent,
 		);
 		let dummyColumns = 0;
@@ -367,14 +308,13 @@ class TreeViewControl {
 		let selectionElement;
 		if (this._hasState) {
 			const td = L.DomUtil.create('div', '', tr);
-			selectionElement = this.createSelectionElement(td, data, entry, builder);
+			selectionElement = this.createSelectionElement(td, entry);
 			if (this._isRealTree) td.setAttribute('aria-level', level);
 		}
 
-		this.fillCells(entry, builder, data, tr, level, selectionElement);
+		this.fillCells(entry, tr, level, selectionElement);
 
 		this.setupRowProperties(tr, entry, level, selectionElement);
-		this.setupRowDragAndDrop(tr, data, entry, builder);
 	}
 
 	highlightAllTreeViews(highlight: boolean) {
@@ -389,63 +329,21 @@ class TreeViewControl {
 		}
 	}
 
-	setupDragAndDrop(treeViewData: TreeWidgetJSON, builder: any) {
-		if (treeViewData.enabled !== false) {
-			this._container.ondrop = (ev) => {
-				ev.preventDefault();
-				var row = ev.dataTransfer.getData('text');
-				builder.callback('treeview', 'dragend', treeViewData, row, builder);
-				this.highlightAllTreeViews(false);
-			};
-			this._container.ondragover = (event) => {
-				event.preventDefault();
-			};
-		}
-	}
-
-	setupRowDragAndDrop(
-		tr: HTMLElement,
-		treeViewData: TreeWidgetJSON,
-		entry: TreeEntryJSON,
-		builder: any,
-	) {
-		if (treeViewData.enabled !== false && entry.state == null) {
-			tr.draggable = treeViewData.draggable === false ? false : true;
-
-			tr.ondragstart = (ev) => {
-				ev.dataTransfer.setData('text', '' + entry.row);
-				builder.callback(
-					'treeview',
-					'dragstart',
-					treeViewData,
-					entry.row,
-					builder,
-				);
-
-				this.highlightAllTreeViews(true);
-			};
-
-			tr.ondragend = () => {
-				this.highlightAllTreeViews(false);
-			};
-			tr.ondragover = (event) => {
-				event.preventDefault();
-			};
-		}
-	}
-
 	setupRowProperties(
-		tr: HTMLElement,
+		tr: any,
 		entry: TreeEntryJSON,
 		level: number,
 		selectionElement: HTMLInputElement,
 	) {
+		tr.setAttribute('role', 'row');
+		tr._row = entry.row;
+
 		if (entry.children) tr.setAttribute('aria-expanded', 'true');
 
 		if (level !== undefined && this._isRealTree)
 			tr.setAttribute('aria-level', '' + level);
 
-		if (entry.selected === true) this.selectEntry(tr, selectionElement);
+		if (entry.selected === true) this.selectEntry(tr);
 
 		const disabled = entry.enabled === false;
 		if (disabled) L.DomUtil.addClass(tr, 'disabled');
@@ -454,13 +352,16 @@ class TreeViewControl {
 			L.DomUtil.addClass(tr, 'collapsed');
 			tr.setAttribute('aria-expanded', 'false');
 		}
+
+		if (entry.state == null) {
+			tr.draggable = this._data.draggable === false ? false : true;
+		}
 	}
 
 	createExpandableIconCell(
 		parent: HTMLElement,
 		entry: TreeEntryJSON,
 		index: any,
-		builder: any,
 	) {
 		const icon = L.DomUtil.create('img', 'ui-treeview-icon', parent);
 
@@ -468,35 +369,25 @@ class TreeViewControl {
 
 		const iconId = this.getCellIconId(entry.columns[index]);
 		L.DomUtil.addClass(icon, iconId + 'img');
-		const iconName = builder._createIconURL(iconId, true);
-		L.LOUtil.setImage(icon, iconName, builder.map);
+		const iconName = this._builder._createIconURL(iconId, true);
+		L.LOUtil.setImage(icon, iconName, this._builder.map);
 		icon.tabIndex = -1;
 		icon.alt = ''; //In this case, it is advisable to use an empty alt tag for the icons, as the information of the function is available in text form
 	}
 
-	createTextCell(
-		parent: HTMLElement,
-		entry: TreeEntryJSON,
-		index: any,
-		builder: any,
-	) {
+	createTextCell(parent: HTMLElement, entry: TreeEntryJSON, index: any) {
 		const cell = L.DomUtil.create(
 			'span',
-			builder.options.cssClass + ' ui-treeview-cell-text',
+			this._builder.options.cssClass + ' ui-treeview-cell-text',
 			parent,
 		);
 		cell.innerText = entry.columns[index].text || entry.text;
 	}
 
-	createLinkCell(
-		parent: HTMLElement,
-		entry: TreeEntryJSON,
-		index: any,
-		builder: any,
-	) {
+	createLinkCell(parent: HTMLElement, entry: TreeEntryJSON, index: any) {
 		const cell = L.DomUtil.create(
 			'span',
-			builder.options.cssClass + ' ui-treeview-cell-text',
+			this._builder.options.cssClass + ' ui-treeview-cell-text',
 			parent,
 		);
 		const link = L.DomUtil.create('a', '', cell);
@@ -506,8 +397,6 @@ class TreeViewControl {
 
 	fillCells(
 		entry: TreeEntryJSON,
-		builder: any,
-		treeViewData: TreeWidgetJSON,
 		tr: HTMLElement,
 		level: number,
 		selectionElement: HTMLInputElement,
@@ -525,12 +414,15 @@ class TreeViewControl {
 			td = L.DomUtil.create('div', 'ui-treeview-expander-column', tr);
 			rowElements.push(td);
 
-			if (entry.children && entry.children.length)
+			if (entry.children && entry.children.length) {
 				expander = L.DomUtil.create(
 					'div',
-					builder.options.cssClass + ' ui-treeview-expander',
+					this._builder.options.cssClass + ' ui-treeview-expander',
 					td,
 				);
+				expander._ondemand = entry.ondemand;
+				expander._row = entry.row;
+			}
 		}
 
 		// regular columns
@@ -540,12 +432,12 @@ class TreeViewControl {
 
 			span = L.DomUtil.create(
 				'span',
-				builder.options.cssClass + ' ui-treeview-cell',
+				this._builder.options.cssClass + ' ui-treeview-cell',
 				td,
 			);
 			text = L.DomUtil.create(
 				'span',
-				builder.options.cssClass + ' ui-treeview-cell-text',
+				this._builder.options.cssClass + ' ui-treeview-cell-text',
 				span,
 			);
 
@@ -556,24 +448,24 @@ class TreeViewControl {
 				: entry.columns[index].expandedimage;
 			if (img) {
 				L.DomUtil.addClass(td, 'ui-treeview-icon-column');
-				this.createImageColumn(text, builder, img);
+				this.createImageColumn(text, img);
 			} else if (
 				entry.columns[index].collapsed ||
 				entry.columns[index].expanded
 			) {
 				L.DomUtil.addClass(td, 'ui-treeview-icon-column');
 				L.DomUtil.addClass(span, 'ui-treeview-expandable-with-icon');
-				this.createExpandableIconCell(text, entry, index, builder);
+				this.createExpandableIconCell(text, entry, index);
 			} else if (
 				entry.columns[index].link &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				this.createLinkCell(text, entry, index, builder);
+				this.createLinkCell(text, entry, index);
 			} else if (
 				entry.columns[index].text &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				this.createTextCell(text, entry, index, builder);
+				this.createTextCell(text, entry, index);
 			}
 
 			// row sub-elements
@@ -584,191 +476,49 @@ class TreeViewControl {
 				element.setAttribute('role', 'gridcell');
 			}
 		}
-
-		// setup callbacks
-		var clickFunction = this.createClickFunction(
-			tr,
-			selectionElement,
-			true,
-			this._singleClickActivate,
-			builder,
-			treeViewData,
-			entry,
-		);
-		var doubleClickFunction = this.createClickFunction(
-			tr,
-			selectionElement,
-			false,
-			true,
-			builder,
-			treeViewData,
-			entry,
-		);
-
-		this.setupEntryMouseEvents(
-			tr,
-			entry,
-			treeViewData,
-			builder,
-			selectionElement,
-			expander,
-			clickFunction,
-			doubleClickFunction,
-		);
-
-		this.setupEntryKeyEvent(
-			tr,
-			entry,
-			selectionElement,
-			expander,
-			clickFunction,
-		);
-
-		this.setupEntryContextMenuEvent(tr, entry, treeViewData, builder);
 	}
 
-	setupEntryContextMenuEvent(
-		tr: HTMLElement,
-		entry: TreeEntryJSON,
-		treeViewData: TreeWidgetJSON,
-		builder: any,
-	) {
-		tr.addEventListener('contextmenu', (e: Event) => {
-			builder.callback(
-				'treeview',
-				'contextmenu',
-				treeViewData,
-				entry.row,
-				builder,
-			);
-			e.preventDefault();
-		});
-	}
-
-	setupEntryMouseEvents(
-		tr: HTMLElement,
-		entry: TreeEntryJSON,
-		treeViewData: TreeWidgetJSON,
-		builder: any,
-		selectionElement: HTMLInputElement,
-		expander: HTMLElement,
-		clickFunction: any,
-		doubleClickFunction: any,
-	) {
-		tr.addEventListener('click', clickFunction as any);
-
-		if (!this._singleClickActivate) {
-			if (window.ThisIsTheiOSApp) {
-				// TODO: remove this hack
-				tr.addEventListener('click', () => {
-					if (L.DomUtil.hasClass(tr, 'disabled')) return;
-
-					if (
-						entry.row == lastClickHelperRow &&
-						treeViewData.id == lastClickHelperId
-					)
-						doubleClickFunction(undefined);
-					else {
-						lastClickHelperRow = entry.row;
-						lastClickHelperId = treeViewData.id;
-						setTimeout(() => {
-							lastClickHelperRow = -1;
-						}, 300);
-					}
-				});
-				// TODO: remove this hack
-			} else {
-				$(tr).dblclick(doubleClickFunction as any);
-			}
-		}
-
-		const toggleFunction = () => {
-			this.toggleEntry(tr, treeViewData, entry, builder);
-		};
-		const expandFunction = () => {
-			this.expandEntry(tr, treeViewData, entry, builder);
-		};
-
-		if (expander && entry.children && entry.children.length) {
-			if (entry.ondemand) {
-				L.DomEvent.on(expander, 'click', expandFunction);
-			} else {
-				$(expander).click((e) => {
-					if (entry.state && e.target === selectionElement) e.preventDefault(); // do not toggle on checkbox
-					toggleFunction();
-				});
-			}
-		}
-	}
-
-	setupEntryKeyEvent(
-		tr: HTMLElement,
-		entry: TreeEntryJSON,
-		selectionElement: HTMLInputElement,
-		expander: HTMLElement,
-		clickFunction: any,
-	) {
-		if (entry.enabled === false) return;
-
-		tr.addEventListener('keydown', (event) => {
-			if (event.key === ' ' && expander) {
-				expander.click();
-				tr.focus();
-				event.preventDefault();
-				event.stopPropagation();
-			} else if (event.key === 'Enter' || event.key === ' ') {
-				clickFunction();
-				if (selectionElement) selectionElement.click();
-				tr.focus();
-				event.preventDefault();
-				event.stopPropagation();
-			} else if (event.key === 'Tab') {
-				if (!L.DomUtil.hasClass(tr, 'selected')) this.unselectEntry(tr); // remove tabIndex
-			}
-		});
-	}
-
-	toggleEntry(
-		span: HTMLElement,
-		treeViewData: TreeWidgetJSON,
-		entry: TreeEntryJSON,
-		builder: any,
-	) {
-		if (entry.enabled === false) return;
-
+	toggleEntry(span: HTMLElement, row: any) {
 		if (L.DomUtil.hasClass(span, 'collapsed'))
-			builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
+			this._builder.callback(
+				'treeview',
+				'expand',
+				this._data,
+				row,
+				this._builder,
+			);
 		else
-			builder.callback(
+			this._builder.callback(
 				'treeview',
 				'collapse',
-				treeViewData,
-				entry.row,
-				builder,
+				this._data,
+				row,
+				this._builder,
 			);
 		$(span).toggleClass('collapsed');
 	}
 
-	expandEntry(
-		span: HTMLElement,
-		treeViewData: TreeWidgetJSON,
-		entry: TreeEntryJSON,
-		builder: any,
-	) {
-		if (entry.enabled === false) return;
-
-		if (entry.ondemand && L.DomUtil.hasClass(span, 'collapsed'))
-			builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
+	expandEntry(span: any, row: any) {
+		if (span._ondemand && L.DomUtil.hasClass(span, 'collapsed'))
+			this._builder.callback(
+				'treeview',
+				'expand',
+				this._data,
+				row,
+				this._builder,
+			);
 		$(span).toggleClass('collapsed');
 	}
 
-	selectEntry(span: HTMLElement, checkbox: HTMLInputElement) {
+	selectEntry(span: HTMLElement) {
 		this.makeTreeViewFocusable(false);
 
 		L.DomUtil.addClass(span, 'selected');
 		span.setAttribute('aria-selected', 'true');
 		span.tabIndex = 0;
 		span.focus();
+
+		var checkbox = span.querySelector('input');
 		if (checkbox) checkbox.removeAttribute('tabindex');
 	}
 
@@ -778,53 +528,6 @@ class TreeViewControl {
 		item.removeAttribute('tabindex');
 		var itemCheckbox = item.querySelector('input');
 		if (itemCheckbox) itemCheckbox.tabIndex = -1;
-	}
-
-	createClickFunction(
-		parentContainer: HTMLElement,
-		checkbox: HTMLInputElement,
-		select: boolean,
-		activate: boolean,
-		builder: any,
-		treeViewData: TreeWidgetJSON,
-		entry: TreeEntryJSON,
-	) {
-		return (e: MouseEvent) => {
-			if (e && e.target === checkbox) return; // allow default handler to trigger change event
-
-			if (e && L.DomUtil.hasClass(parentContainer, 'disabled')) {
-				e.preventDefault();
-				return;
-			}
-
-			this._container
-				.querySelectorAll('.ui-treeview-entry.selected')
-				.forEach((item: HTMLElement) => {
-					this.unselectEntry(item);
-				});
-
-			this.selectEntry(parentContainer, checkbox);
-			if (checkbox)
-				this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);
-
-			if (select)
-				builder.callback(
-					'treeview',
-					'select',
-					treeViewData,
-					entry.row,
-					builder,
-				);
-
-			if (activate)
-				builder.callback(
-					'treeview',
-					'activate',
-					treeViewData,
-					entry.row,
-					builder,
-				);
-		};
 	}
 
 	filterEntries(filter: string) {
@@ -860,14 +563,6 @@ class TreeViewControl {
 				L.DomUtil.addClass(entry, 'hidden');
 			});
 		}, 100);
-	}
-
-	setupKeyEvents(data: TreeWidgetJSON, builder: any) {
-		this._container.addEventListener('keydown', (event) => {
-			const listElements =
-				this._container.querySelectorAll('.ui-treeview-entry');
-			this.handleKeyEvent(event, listElements, builder, data);
-		});
 	}
 
 	changeFocusedRow(
@@ -933,62 +628,6 @@ class TreeViewControl {
 		}
 
 		return currIndex;
-	}
-
-	handleKeyEvent(
-		event: KeyboardEvent,
-		nodeList: NodeList,
-		builder: any,
-		data: TreeWidgetJSON,
-	) {
-		var preventDef = false;
-		var listElements = Array.from(nodeList) as Array<HTMLElement>; // querySelector returns NodeList not array
-		var treeLength = listElements.length;
-		var currIndex = this.getCurrentEntry(listElements);
-
-		if (event.key === 'ArrowDown') {
-			if (currIndex < 0) this.changeFocusedRow(listElements, currIndex, 0);
-			else {
-				var nextIndex = currIndex + 1;
-				while (
-					nextIndex < treeLength - 1 &&
-					listElements[nextIndex].clientHeight <= 0
-				)
-					nextIndex++;
-				if (nextIndex < treeLength)
-					this.changeFocusedRow(listElements, currIndex, nextIndex);
-			}
-			preventDef = true;
-		} else if (event.key === 'ArrowUp') {
-			if (currIndex < 0)
-				this.changeFocusedRow(listElements, currIndex, treeLength - 1);
-			else {
-				var nextIndex = currIndex - 1;
-				while (nextIndex >= 0 && listElements[nextIndex].clientHeight <= 0)
-					nextIndex--;
-				if (nextIndex >= 0)
-					this.changeFocusedRow(listElements, currIndex, nextIndex);
-			}
-
-			preventDef = true;
-		} else if (
-			data.fireKeyEvents &&
-			builder.callback(
-				'treeview',
-				'keydown',
-				{ id: data.id, key: event.key },
-				currIndex,
-				builder,
-			)
-		) {
-			// used in mentions
-			preventDef = true;
-		}
-
-		if (preventDef) {
-			event.preventDefault();
-			event.stopPropagation();
-		}
 	}
 
 	isRealTree(data: TreeWidgetJSON) {
@@ -1072,7 +711,7 @@ class TreeViewControl {
 		});
 	}
 
-	fillHeaders(headers: Array<TreeHeaderJSON>, builder: any) {
+	fillHeaders(headers: Array<TreeHeaderJSON>) {
 		if (!headers) return;
 
 		this._thead = L.DomUtil.create(
@@ -1086,39 +725,25 @@ class TreeViewControl {
 		this._thead.style.gridColumn = '1 / ' + (this._columns + dummyCells + 1);
 
 		for (let index = 0; index < dummyCells; index++) {
-			this.fillHeader({ text: '', sortable: false }, builder);
+			this.fillHeader({ text: '', sortable: false }, null);
 			if (index === 0 && this._hasState)
 				L.DomUtil.addClass(this._thead.lastChild, 'ui-treeview-state-column');
 			else L.DomUtil.addClass(this._thead.lastChild, 'ui-treeview-icon-column');
 		}
 
 		for (const index in headers) {
-			this.fillHeader(headers[index], builder);
+			this.fillHeader(headers[index], parseInt(index) + dummyCells);
 
 			if (headers[index].sortable === false) continue;
-
-			var clickFunction = (columnIndex: number, icon: HTMLSpanElement) => {
-				return () => {
-					if (L.DomUtil.hasClass(icon, 'down'))
-						this.sortByColumn(icon, columnIndex + dummyCells, true);
-					else this.sortByColumn(icon, columnIndex + dummyCells, false);
-				};
-			};
-
-			const last = this._thead.lastChild as HTMLElement;
-			last.onclick = clickFunction(
-				parseInt(index),
-				last.querySelector('.ui-treeview-header-sort-icon'),
-			);
 		}
 	}
 
-	makeEmptyList(data: TreeWidgetJSON, builder: any) {
+	makeEmptyList() {
 		// contentbox and tree can never be empty, 1 page or 1 sheet always exists
-		if (data.id === 'contenttree') {
+		if (this._data.id === 'contenttree') {
 			var tr = L.DomUtil.create(
 				'div',
-				builder.options.cssClass + ' ui-treview-entry',
+				this._builder.options.cssClass + ' ui-treview-entry',
 				this._container,
 			);
 			tr.innerText = _(
@@ -1126,7 +751,7 @@ class TreeViewControl {
 			);
 		} else {
 			L.DomUtil.addClass(this._container, 'empty');
-			if (data.hideIfEmpty) L.DomUtil.addClass(this._container, 'hidden');
+			if (this._data.hideIfEmpty) L.DomUtil.addClass(this._container, 'hidden');
 		}
 	}
 
@@ -1136,15 +761,13 @@ class TreeViewControl {
 	}
 
 	fillEntries(
-		data: TreeWidgetJSON,
 		entries: Array<TreeEntryJSON>,
-		builder: any,
 		level: number,
 		parent: HTMLElement,
 	) {
 		let hasSelectedEntry = false;
 		for (const index in entries) {
-			this.fillRow(data, entries[index], builder, level, parent);
+			this.fillRow(entries[index], level, parent);
 
 			hasSelectedEntry = hasSelectedEntry || entries[index].selected;
 
@@ -1160,17 +783,11 @@ class TreeViewControl {
 				if (this._hasState) dummyColumns++;
 				subGrid.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
 
-				this.fillEntries(
-					data,
-					entries[index].children,
-					builder,
-					level + 1,
-					subGrid,
-				);
+				this.fillEntries(entries[index].children, level + 1, subGrid);
 			}
 		}
 
-		if (entries && entries.length === 0) this.makeEmptyList(data, builder);
+		if (entries && entries.length === 0) this.makeEmptyList();
 
 		// we need to provide a way for making the treeview control focusable
 		// when no entry is selected
@@ -1245,14 +862,275 @@ class TreeViewControl {
 		});
 	}
 
-	build(data: TreeWidgetJSON, builder: any, parentContainer: HTMLElement) {
-		this.preprocessColumnData(data.entries);
-		this.fillHeaders(data.headers, builder);
-		this.fillEntries(data, data.entries, builder, 1, this._tbody);
+	build(parentContainer: HTMLElement) {
+		this.preprocessColumnData(this._data.entries);
+		this.fillHeaders(this._data.headers);
+		this.fillEntries(this._data.entries, 1, this._tbody);
 
 		parentContainer.appendChild(this._container);
 
 		return true;
+	}
+
+	// --------- Event Handlers
+	//
+	onClick(e: any) {
+		const target = e.target;
+		const row = TreeViewControl.getElement(target, 'row');
+		if (row && !L.DomUtil.hasClass(row, 'disabled')) {
+			if (L.DomUtil.hasClass(target, 'ui-treeview-expander')) {
+				this.onExpanderClick(target);
+				return;
+			}
+
+			if (target.localName === 'input') {
+				this.onCheckBoxClick(target);
+			}
+
+			this.onRowClick(row);
+			return;
+		}
+
+		const header = TreeViewControl.getElement(target, 'columnheader');
+		if (header && header === this._thead.lastChild) {
+			this.onHeaderClick(
+				header,
+				header.querySelector('.ui-treeview-header-sort-icon'),
+			);
+		}
+	}
+
+	onHeaderClick(header: any, icon: any) {
+		if (L.DomUtil.hasClass(icon, 'down'))
+			this.sortByColumn(icon, header._columnIndex, true);
+		else this.sortByColumn(icon, header._columnIndex, false);
+	}
+
+	onRowClick(row: any) {
+		this._container
+			.querySelectorAll('.ui-treeview-entry.selected')
+			.forEach((item: HTMLElement) => {
+				this.unselectEntry(item);
+			});
+
+		this.selectEntry(row);
+
+		this._builder.callback(
+			'treeview',
+			'select',
+			this._data,
+			row._row,
+			this._builder,
+		);
+
+		if (this._singleClickActivate) {
+			this._builder.callback(
+				'treeview',
+				'activate',
+				this._data,
+				row._row,
+				this._builder,
+			);
+		}
+	}
+
+	onCheckBoxClick(checkbox: any) {
+		if (checkbox.checked) {
+			if (typeof checkbox._state !== 'undefined') {
+				checkbox.checked = checkbox._state = true;
+			}
+
+			this._builder.callback(
+				'treeview',
+				'change',
+				this._data,
+				{ row: checkbox._row, value: true },
+				this._builder,
+			);
+		} else {
+			if (typeof checkbox._state !== 'undefined') {
+				checkbox.checked = checkbox._state = false;
+			}
+
+			this._builder.callback(
+				'treeview',
+				'change',
+				this._data,
+				{ row: checkbox._row, value: false },
+				this._builder,
+			);
+		}
+	}
+
+	onExpanderClick(expander: any) {
+		if (expander._ondemand) {
+			this.expandEntry(expander, expander._row);
+		} else {
+			this.toggleEntry(expander, expander._row);
+		}
+	}
+
+	onDoubleClick(e: any) {
+		const target = e.target;
+		const row = TreeViewControl.getElement(target, 'row');
+		if (row && !L.DomUtil.hasClass(row, 'disabled')) {
+			this.onRowDoubleClick(row);
+		}
+	}
+
+	onRowDoubleClick(row: any) {
+		if (!this._singleClickActivate) {
+			this._builder.callback(
+				'treeview',
+				'activate',
+				this._data,
+				row._row,
+				this._builder,
+			);
+		}
+	}
+
+	onKeyDown(e: any) {
+		const target = e.target;
+		if (
+			target.getAttribute('role') === 'row' &&
+			!L.DomUtil.hasClass(target, 'disabled')
+		) {
+			this.onRowKeyDown(target, e);
+			return;
+		}
+
+		const listElements = this._container.querySelectorAll('.ui-treeview-entry');
+		this.onHandleKeyDown(e, listElements);
+	}
+
+	onHandleKeyDown(event: KeyboardEvent, nodeList: NodeList) {
+		var preventDef = false;
+		var listElements = Array.from(nodeList) as Array<HTMLElement>; // querySelector returns NodeList not array
+		var treeLength = listElements.length;
+		var currIndex = this.getCurrentEntry(listElements);
+
+		if (event.key === 'ArrowDown') {
+			if (currIndex < 0) this.changeFocusedRow(listElements, currIndex, 0);
+			else {
+				var nextIndex = currIndex + 1;
+				while (
+					nextIndex < treeLength - 1 &&
+					listElements[nextIndex].clientHeight <= 0
+				)
+					nextIndex++;
+				if (nextIndex < treeLength)
+					this.changeFocusedRow(listElements, currIndex, nextIndex);
+			}
+			preventDef = true;
+		} else if (event.key === 'ArrowUp') {
+			if (currIndex < 0)
+				this.changeFocusedRow(listElements, currIndex, treeLength - 1);
+			else {
+				var nextIndex = currIndex - 1;
+				while (nextIndex >= 0 && listElements[nextIndex].clientHeight <= 0)
+					nextIndex--;
+				if (nextIndex >= 0)
+					this.changeFocusedRow(listElements, currIndex, nextIndex);
+			}
+
+			preventDef = true;
+		} else if (
+			this._data.fireKeyEvents &&
+			this._builder.callback(
+				'treeview',
+				'keydown',
+				{ id: this._data.id, key: event.key },
+				currIndex,
+				this._builder,
+			)
+		) {
+			// used in mentions
+			preventDef = true;
+		}
+
+		if (preventDef) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	}
+
+	onRowKeyDown(row: any, e: any) {
+		const expander = row.querySelector('.ui-treeview-expander');
+		if (e.key === ' ' && expander) {
+			expander.click();
+			row.focus();
+			e.preventDefault();
+			e.stopPropagation();
+		} else if (e.key === 'Enter' || e.key === ' ') {
+			this.onRowClick(row);
+			const checkbox = row.querySelector('input');
+			if (checkbox) {
+				checkbox.click();
+			}
+			row.focus();
+			e.preventDefault();
+			e.stopPropagation();
+		} else if (e.key === 'Tab') {
+			if (!L.DomUtil.hasClass(row, 'selected')) {
+				this.unselectEntry(row); // remove tabIndex
+			}
+		}
+	}
+
+	onContextMenu(e: any) {
+		const target = e.target;
+		const row = TreeViewControl.getElement(target, 'row');
+		if (row) {
+			this._builder.callback(
+				'treeview',
+				'contextmenu',
+				this._data,
+				row._row,
+				this._builder,
+			);
+			e.preventDefault();
+		}
+	}
+
+	// Drag & Drop
+	//
+	onDragStart(e: any) {
+		const target = e.target;
+		const row = TreeViewControl.getElement(target, 'row');
+		if (row && row.draggable) {
+			e.dataTransfer.setData('text', '' + row._row);
+			this._builder.callback(
+				'treeview',
+				'dragstart',
+				this._data,
+				row._row,
+				this._builder,
+			);
+
+			this.highlightAllTreeViews(true);
+		}
+	}
+
+	onDragOver(e: any) {
+		e.preventDefault();
+	}
+
+	onDrop(e: any) {
+		e.preventDefault();
+		const row = e.dataTransfer.getData('text');
+		this._builder.callback(
+			'treeview',
+			'dragend',
+			this._data,
+			row,
+			this._builder,
+		);
+		this.highlightAllTreeViews(false);
+	}
+
+	onDragEnd() {
+		this.highlightAllTreeViews(false);
 	}
 }
 
@@ -1262,7 +1140,7 @@ JSDialog.treeView = function (
 	builder: any,
 ) {
 	var treeView = new TreeViewControl(data, builder);
-	treeView.build(data, builder, parentContainer);
+	treeView.build(parentContainer);
 
 	return false;
 };
