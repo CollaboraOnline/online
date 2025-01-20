@@ -298,6 +298,9 @@ public:
     void overrideDocOption();
 
 #if !MOBILEAPP
+    void updateBrowserSettingsJSON(const std::string& key, const std::string& value,
+                                   const std::string& docKey);
+
     void uploadPresetsToWopiHost(const std::string& jailPresetPath, const std::string& docKey);
 #endif
 
