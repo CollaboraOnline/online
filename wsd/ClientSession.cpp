@@ -1367,30 +1367,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             std::string value;
             getTokenString(tokens[2], "key", key);
             getTokenString(tokens[3], "value", value);
-            std::cerr << "key: " << key << "\n";
-            std::cerr << "value: " << value << "\n";
-            std::vector<std::string> vec = Util::splitStringToVector(key, '.');
-            if (vec.size() == 2)
-            {
-                const std::string& parentKey = vec[0];
-                const std::string& childKey = vec[1];
-                if (!childKey.empty() && !parentKey.empty())
-                {
-                    Poco::JSON::Object::Ptr jsonObject;
-                    if (_browserSettingsJSON->has(parentKey))
-                        jsonObject = _browserSettingsJSON->getObject(parentKey);
-                    else
-                        jsonObject = new Poco::JSON::Object;
-
-                    jsonObject->set(childKey, value);
-                    _browserSettingsJSON->set(parentKey, jsonObject);
-                }
-            }
-            else
-            {
-                _browserSettingsJSON->set(key, value);
-            }
-            sendBrowserSettingUpdate(Uri::decode(docBroker->getDocKey()));
+            COOLWSD::syncUsersBrowserSettings(getUserId(), key, value);
         }
     }
 #endif
@@ -1436,6 +1413,40 @@ void ClientSession::sendBrowserSettingUpdate(const std::string& docKey)
         LOG_ERR("Failed to upload updated browser settings to wopiHost[" << uriAnonym << ']');
     }
 }
+
+void ClientSession::updateBrowserSettingsJSON(const std::string& key, const std::string& value,
+                                              const std::string& docKey)
+{
+    std::vector<std::string> vec = Util::splitStringToVector(key, '.');
+
+    if (vec.size() == 2)
+    {
+        const std::string& parentKey = vec[0];
+        const std::string& childKey = vec[1];
+        if (!childKey.empty() && !parentKey.empty())
+        {
+            Poco::JSON::Object::Ptr jsonObject;
+            if (_browserSettingsJSON->has(parentKey))
+                jsonObject = _browserSettingsJSON->getObject(parentKey);
+            else
+                jsonObject = new Poco::JSON::Object();
+
+            jsonObject->set(childKey, value);
+            _browserSettingsJSON->set(parentKey, jsonObject);
+        }
+    }
+    else
+    {
+        _browserSettingsJSON->set(key, value);
+    }
+
+    {
+        std::ostringstream jsonStream;
+        _browserSettingsJSON->stringify(jsonStream, 2);
+    }
+    sendBrowserSettingUpdate(Uri::decode(docKey));
+}
+
 #endif
 
 void ClientSession::overrideDocOption()
