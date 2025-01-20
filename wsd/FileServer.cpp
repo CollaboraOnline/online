@@ -446,7 +446,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("Size", localFile->size);
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
-            fileInfo->set("UserId", userId);
+            fileInfo->set("UserId", "0");
             fileInfo->set("UserFriendlyName", userNameString);
 
             //allow &configid to override etag to force another subforkit

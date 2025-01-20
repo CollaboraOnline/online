@@ -381,6 +381,11 @@ public:
 
     void alertAllUsers(const std::string& msg);
 
+#if !MOBILEAPP
+    void syncBrowserSettings(const std::string& userId, const std::string& key,
+                             const std::string& value);
+#endif
+
     void alertAllUsers(const std::string& cmd, const std::string& kind)
     {
         alertAllUsers("error: cmd=" + cmd + " kind=" + kind);
