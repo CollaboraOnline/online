@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-13 13:29+0100\n"
-"PO-Revision-Date: 2024-12-17 03:14+0000\n"
+"PO-Revision-Date: 2025-01-16 05:00+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2153,7 +2153,7 @@ msgstr "Ga Offline"
 
 #: src/control/Control.NotebookbarWriter.js:939
 msgid "Style list"
-msgstr ""
+msgstr "Opmaakprofielen"
 
 #: src/control/Control.NotebookbarWriter.js:1360
 msgid "Rich Text"
@@ -2281,11 +2281,11 @@ msgstr "Blad invoegen"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "Aan"
 
 #: src/control/Control.StatusBar.js:179
 msgid "Off"
-msgstr ""
+msgstr "Uit"
 
 #: src/control/Control.StatusBar.js:205
 #: src/control/jsdialog/Definitions.Menu.ts:23
@@ -2861,9 +2861,8 @@ msgid "Your changes have been saved"
 msgstr "Uw aanpassingen zijn opgeslagen"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:141
-#, fuzzy
 msgid "Show Comments"
-msgstr "Geen notities"
+msgstr "Opmerkingen tonen"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
