@@ -718,60 +718,6 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             httpResponse.setBody(ss.str(), "text/plain; charset=utf-8");
             socket->send(httpResponse);
         }
-        else if (request.getMethod() == "POST" &&
-                 configPath.ends_with("update")) // /wopi/settings/update?key={category}
-        {
-            const std::string& fileName = "browsersettings.json";
-            std::streamsize size = request.getContentLength();
-            if (size == 0)
-            {
-                http::Response httpResponse(http::StatusCode::BadRequest);
-                socket->send(httpResponse);
-                LOG_ERR("Failed to save the " << fileName << " file content doesn't exist");
-                return;
-            }
-
-            const Poco::URI::QueryParameters params = requestUri.getQueryParameters();
-            std::string category;
-            for (const auto& param : params)
-            {
-                if (param.first == "key")
-                    category = param.second;
-            }
-
-            if (category != "browsersettings")
-            {
-                http::Response httpResponse(http::StatusCode::BadRequest);
-                socket->send(httpResponse);
-                LOG_ERR("Failed to save the file, category[" << category << "] doesn't exist");
-                return;
-            }
-            std::string dirPath = "test/data/presets/user";
-
-            Poco::File(dirPath).createDirectories();
-
-            LOG_DBG("Saving updated file[" << fileName << "] to directory[" << dirPath << ']');
-            std::vector<char> buffer(size);
-            message.read(buffer.data(), size);
-
-            LOG_TRC("Updated browsersettings json: " << std::string(buffer.data()));
-
-            std::ofstream outfile;
-            dirPath.append("/");
-            dirPath.append(fileName);
-            outfile.open(dirPath, std::ofstream::binary);
-            outfile.write(buffer.data(), size);
-            outfile.close();
-
-            std::string timestamp =
-                Util::getIso8601FracformatTime(std::chrono::system_clock::now());
-            const std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
-            http::Response httpResponse(http::StatusCode::OK);
-            FileServerRequestHandler::hstsHeaders(httpResponse);
-            httpResponse.setBody(body, "application/json; charset=utf-8");
-            socket->send(httpResponse);
-            return;
-        }
         else if (request.getMethod() == "POST")
         {
             const Poco::URI::QueryParameters params = requestUri.getQueryParameters();
@@ -929,8 +875,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             return;
         }
         else if (relPath.starts_with("/wopi/settings") ||
-                 relPath.ends_with("/wopi/settings/upload") ||
-                 relPath.ends_with("/wopi/settings/update"))
+                 relPath.ends_with("/wopi/settings/upload"))
         {
             handleSettingsRequest(request, etagString, message, socket);
             return;
