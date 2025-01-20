@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-13 13:29+0100\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2025-01-15 04:46+0000\n"
+"Last-Translator: Sergey Klim <sergeyklim01@gmail.com>\n"
 "Language-Team: Kazakh <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kk/>\n"
-"Language: \n"
+"Language: kk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -45,7 +45,7 @@ msgstr "Тарихы"
 
 #: admin/admin.strings.js:21
 msgid "Log"
-msgstr ""
+msgstr "Журнал"
 
 #: admin/admin.strings.js:22
 msgid "Dashboard"
@@ -57,7 +57,7 @@ msgstr "Желідегі пайдаланушылар"
 
 #: admin/admin.strings.js:24
 msgid "User Name"
-msgstr ""
+msgstr "Пайдаланушы аты"
 
 #: admin/admin.strings.js:25
 #, fuzzy
@@ -67,16 +67,15 @@ msgstr "Ашылған құжаттар"
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
-msgstr ""
+msgstr " пайдаланушылар."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
-#, fuzzy
 msgid " document(s) open."
-msgstr "Ашылған құжаттар"
+msgstr " құжат(тар) ашық."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
-msgstr ""
+msgstr "Құжаттар саны"
 
 #: admin/admin.strings.js:29
 msgid "Memory consumed"
@@ -84,11 +83,11 @@ msgstr "Қолданыстағы жады"
 
 #: admin/admin.strings.js:30
 msgid "Bytes sent"
-msgstr ""
+msgstr "Жіберілген байттар"
 
 #: admin/admin.strings.js:31
 msgid "Bytes received"
-msgstr ""
+msgstr "Қабылданған байттар"
 
 #: admin/admin.strings.js:32
 msgid "PID"
@@ -100,7 +99,7 @@ msgstr "Құжат"
 
 #: admin/admin.strings.js:34
 msgid "Views"
-msgstr ""
+msgstr "Көрулер"
 
 #: admin/admin.strings.js:35
 msgid "Elapsed time"
@@ -108,19 +107,19 @@ msgstr "Өткен уақыт"
 
 #: admin/admin.strings.js:36
 msgid "Idle time"
-msgstr ""
+msgstr "Тыныштық уақыты"
 
 #: admin/admin.strings.js:37
 msgid "Modified"
-msgstr ""
+msgstr "Өзгертілген"
 
 #: admin/admin.strings.js:38
 msgid "Uploaded"
-msgstr ""
+msgstr "Жүктелді"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI хосты"
 
 #: admin/admin.strings.js:40
 msgid "Kill"
@@ -132,15 +131,15 @@ msgstr "Графиктер"
 
 #: admin/admin.strings.js:42
 msgid "Memory Graph"
-msgstr ""
+msgstr "Жады графигі"
 
 #: admin/admin.strings.js:43
 msgid "CPU Graph"
-msgstr ""
+msgstr "ЦП графигі"
 
 #: admin/admin.strings.js:44
 msgid "Network Graph"
-msgstr ""
+msgstr "Желі графигі"
 
 #: admin/admin.strings.js:45 src/canvas/sections/CommentListSection.ts:504
 #: src/canvas/sections/CommentSection.ts:157
@@ -172,62 +171,62 @@ msgstr "Процессор статистикасының уақыт аралы�
 
 #: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
-msgstr ""
+msgstr "Сессияны жою."
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
+"Құжаттарды өңдеу үшін максималды виртуалды жады көлемі (Мб) — тек азайту"
 
 #: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Құжаттарды өңдеу үшін максималды стек жады көлемі (кб) — тек азайту"
 
 #: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Дискке жазуға рұқсат етілген максималды файл өлшемі (Мб) - тек азайту"
 
 #: admin/admin.strings.js:54
-#, fuzzy
 msgid "Documents:"
-msgstr "Құжат"
+msgstr "Құжаттар:"
 
 #: admin/admin.strings.js:55
 msgid "Expired:"
-msgstr ""
+msgstr "Мерзімі өткен:"
 
 #: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
 #: src/control/Control.Zotero.js:209
 msgid "Refresh"
-msgstr ""
+msgstr "Жаңарту"
 
 #: admin/admin.strings.js:57
 msgid "Shutdown Server"
-msgstr ""
+msgstr "Серверді өшіру"
 
 #: admin/admin.strings.js:58
 msgid "Server uptime"
-msgstr ""
+msgstr "Сервердің жұмыс уақыты"
 
 #: admin/admin.strings.js:59
 msgid "Refresh Log"
-msgstr ""
+msgstr "Журналды жаңарту"
 
 #: admin/admin.strings.js:60
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Арна сүзгісі:"
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:495
 #: src/control/Control.StatusBar.js:212 src/control/Control.StatusBar.js:217
 msgid "None"
-msgstr ""
+msgstr "Жоқ"
 
 #: admin/admin.strings.js:62
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Журнал деңгейлерін орнату"
 
 #: admin/admin.strings.js:63
 msgid "Log Levels"
-msgstr ""
+msgstr "Журнал деңгейлері"
 
 #: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:158
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
@@ -236,19 +235,19 @@ msgstr ""
 #: src/core/Socket.js:427 src/core/Socket.js:1198 src/core/Socket.js:1203
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
-msgstr ""
+msgstr "Жабу"
 
 #: admin/admin.strings.js:65
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Журнал деңгейлерін жаңарту"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
-msgstr ""
+msgstr "Нұсқа туралы ақпарат"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Лицензиялық келісім"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:389
 #: src/control/Control.Menubar.js:564 src/control/Control.Menubar.js:701
@@ -261,7 +260,7 @@ msgstr "Осы туралы"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "ЦП Тарих"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
@@ -269,7 +268,7 @@ msgstr ""
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Жады"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
@@ -278,14 +277,16 @@ msgstr ""
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr ""
+"JWT аутентификация cookie орнату сәтсіз аяқталды қауіпсіз емес байланыс "
+"арқылы"
 
 #: admin/src/AdminClusterOverview.js:553 admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol {0}"
-msgstr ""
+msgstr "Бұл сессияны {0} протоколы арқылы тексеру мүмкін болмады"
 
 #: admin/src/AdminClusterOverview.js:558 admin/src/AdminSocketOverview.js:429
 msgid "Warning"
-msgstr ""
+msgstr "Ескерту"
 
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
@@ -314,7 +315,7 @@ msgstr ""
 #: src/slideshow/SlideShowPresenter.ts:671
 #: src/slideshow/SlideShowPresenter.ts:694
 msgid "OK"
-msgstr ""
+msgstr "ЖАРАЙДЫ"
 
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
@@ -334,11 +335,11 @@ msgstr "Болдырмау"
 
 #: admin/src/AdminSocketAnalytics.js:247
 msgid "Received"
-msgstr ""
+msgstr "Қабылданған"
 
 #: admin/src/AdminSocketAnalytics.js:251
 msgid "Sent"
-msgstr ""
+msgstr "Жіберілді"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
@@ -346,7 +347,7 @@ msgstr ""
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "Сервер сөндірілді; бетті қайта жүктеңіз."
 
 #: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
@@ -354,7 +355,7 @@ msgstr "Байланысу қатесі"
 
 #: admin/src/AdminSocketOverview.js:106 admin/src/AdminSocketSettings.js:45
 msgid "Confirmation"
-msgstr ""
+msgstr "Растау"
 
 #: admin/src/AdminSocketOverview.js:107
 msgid "Are you sure you want to terminate this session?"
@@ -362,7 +363,7 @@ msgstr "Сессияны аяқтауды шынымен қалайсыз ба?"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "Серверді өшіруге сенімдісіз бе?"
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -382,23 +383,23 @@ msgstr "ТБ"
 
 #: admin/src/Util.js:26
 msgid "PB"
-msgstr ""
+msgstr "ПБ"
 
 #: admin/src/Util.js:26
 msgid "EB"
-msgstr ""
+msgstr "ЭБ"
 
 #: admin/src/Util.js:26
 msgid "ZB"
-msgstr ""
+msgstr "ЗБ"
 
 #: admin/src/Util.js:26
 msgid "YB"
-msgstr ""
+msgstr "ЙБ"
 
 #: admin/src/Util.js:26
 msgid "BB"
-msgstr ""
+msgstr "ББ"
 
 #: admin/src/Util.js:86 admin/src/Util.js:88
 msgid " hrs"
@@ -414,40 +415,40 @@ msgstr " секунд"
 
 #: js/global.js:1432
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Кластер масштабталып жатыр, қайтадан әрекет жасау..."
 
 #: js/global.js:1434
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Құжат жаңа серверге көшуде, қайта әрекет жасау..."
 
 #: js/global.js:1436
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Контроллерден RouteToken алуға қате орын алды"
 
 #: src/canvas/sections/CommentListSection.ts:157
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Пікір өңделуде"
 
 #: src/canvas/sections/CommentListSection.ts:158
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Қазіргі уақытта өңделіп жатқан пікірді сақтап немесе жойыңыз."
 
 #: src/canvas/sections/CommentListSection.ts:1152
 msgid "Modify"
-msgstr ""
+msgstr "Құжатты өзгерту үшін құпиясөз қажет."
 
 #: src/canvas/sections/CommentListSection.ts:1158
 #: src/canvas/sections/CommentSection.ts:160
 msgid "Reply"
-msgstr ""
+msgstr "Жауап беру"
 
 #: src/canvas/sections/CommentListSection.ts:1164
 msgid "Remove"
-msgstr ""
+msgstr "Жою"
 
 #: src/canvas/sections/CommentListSection.ts:1170
 msgid "Remove Thread"
-msgstr ""
+msgstr "Тақырыпты жою"
 
 #: src/canvas/sections/CommentListSection.ts:1176
 #, fuzzy
@@ -456,27 +457,27 @@ msgstr "Шешілген"
 
 #: src/canvas/sections/CommentListSection.ts:1176
 msgid "Unresolve"
-msgstr ""
+msgstr "\"Шешілді\" белгісін алып тастау"
 
 #: src/canvas/sections/CommentListSection.ts:1182
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "\"Шешілді\" белгісін алып тастау тақырыптан"
 
 #: src/canvas/sections/CommentListSection.ts:1182
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Тізбекті шешу"
 
 #: src/canvas/sections/CommentListSection.ts:1188
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Жоғарғы деңгейдегі пікірге жылжыту"
 
 #: src/canvas/sections/CommentListSection.ts:1194
 msgid "Show on the side"
-msgstr ""
+msgstr "Жан жағында көрсету"
 
 #: src/canvas/sections/CommentListSection.ts:1194
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Пікірді үлкен етіп көрсету"
 
 #: src/canvas/sections/CommentListSection.ts:1222
 #: src/control/Control.JSDialogBuilder.js:1907
@@ -489,48 +490,51 @@ msgstr "Түсіндірме"
 #: src/canvas/sections/CommentListSection.ts:1447
 #: src/canvas/sections/CommentListSection.ts:2322
 msgid "Comments Updated"
-msgstr ""
+msgstr "Пікірлер жаңартылды"
 
 #: src/canvas/sections/CommentListSection.ts:1435
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Басқа пайдаланушы осы пікірді жойды."
 
 #: src/canvas/sections/CommentListSection.ts:1448
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Басқа пайдаланушы пікірді жаңартты. Олардың өзгерістерін жазып алғыңыз келе "
+"ме?"
 
 #: src/canvas/sections/CommentListSection.ts:1449 src/core/Socket.js:1415
 msgid "Overwrite"
-msgstr ""
+msgstr "Жазып тастау"
 
 #: src/canvas/sections/CommentListSection.ts:1450
 msgid "Update"
-msgstr ""
+msgstr "Жаңарту"
 
 #: src/canvas/sections/CommentListSection.ts:1521
 #: src/canvas/sections/CommentListSection.ts:1593
 msgid "Autosaved"
-msgstr ""
+msgstr "Автоматты сақталған"
 
 #: src/canvas/sections/CommentListSection.ts:2323
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Басқа пайдаланушы пікірлерді жаңартты. Жаңартуды жалғастырғыңыз келе ме?"
 
 #: src/canvas/sections/CommentSection.ts:299
 msgid "Open menu"
-msgstr ""
+msgstr "Мәзірді ашу"
 
 #: src/canvas/sections/CommentSection.ts:359
 #: src/canvas/sections/CommentSection.ts:360
 msgid "Accept change"
-msgstr ""
+msgstr "Өзгерісті қабылдау"
 
 #: src/canvas/sections/CommentSection.ts:366
 #: src/canvas/sections/CommentSection.ts:367
 msgid "Reject change"
-msgstr ""
+msgstr "Өзгерісті қабылдамау"
 
 #: src/canvas/sections/CommentSection.ts:390
 msgid "Resolved"
@@ -542,23 +546,23 @@ msgstr ""
 
 #: src/canvas/sections/URLPopUpSection.ts:58
 msgid "Copy link location"
-msgstr ""
+msgstr "Сілтемені көшіру"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
 msgid "Edit link"
-msgstr ""
+msgstr "Сілтемені өңдеу"
 
 #: src/canvas/sections/URLPopUpSection.ts:78
 msgid "Remove link"
-msgstr ""
+msgstr "Сілтемені жою"
 
 #: src/control/ColorPicker.ts:269
 msgid "No color"
-msgstr ""
+msgstr "Түс жоқ"
 
 #: src/control/ColorPicker.ts:274
 msgid "Automatic color"
-msgstr ""
+msgstr "Автоматты түс"
 
 #: src/control/Control.AboutDialog.ts:111
 msgid "This version of {productname} is powered by"
@@ -566,31 +570,31 @@ msgstr "{productname} бұл нұсқасын ұсынған"
 
 #: src/control/Control.AboutDialog.ts:134
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "\"Баяу прокси\""
 
 #: src/control/Control.AboutDialog.ts:178
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Барлық нұсқа ақпаратын ағылшынша көшіру"
 
 #: src/control/Control.AddressInputField.ts:66
 msgid "cell address"
-msgstr ""
+msgstr "ұяшық мекенжайы"
 
 #: src/control/Control.AlertDialog.js:53
 msgid "External link"
-msgstr ""
+msgstr "Сыртқы сілтеме"
 
 #: src/control/Control.AlertDialog.js:54
 msgid "Open link"
-msgstr ""
+msgstr "Сілтемені ашу"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Көшірілген сыртқы көздерге рұқсат жоқ"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Сыртқы кескіндер кіретін таңдалғанды көшірдіңіз."
 
 #: src/control/Control.AlertDialog.js:68
 msgid ""
@@ -598,36 +602,41 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Сыртқы ресурстарды жүктеуге тыйым салынған, бірақ суреттерді қоюға болады. "
+"Суретке оң жақ батырманы басып, \"Суретті көшіру\" дегенді таңдап, құжатқа "
+"қоюға болады."
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Сыртқы деректер көзіне рұқсат жоқ"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Сыртқы деректерді қосқыңыз келді."
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Таңдалған сыртқы дереккөзге кіруге болмайды. Пожалуйста, жүйе әкімшісіне "
+"хабарласыңыз."
 
 #: src/control/Control.AlertDialog.js:86
 msgid "Don't show this again"
-msgstr ""
+msgstr "Бұлды қайталамаңыз"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a {0} error while parsing the {1} command."
-msgstr ""
+msgstr "Сервер {1} командасын талдау кезінде {0} қатесін тапты."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Бұғаттан шығару"
 
 #: src/control/Control.ContextMenu.js:248 src/docdispatcher.ts:489
 msgid "Delete"
-msgstr ""
+msgstr "Жою"
 
 #: src/control/Control.ContextMenu.js:273
 msgid "Paste Special"
@@ -635,63 +644,65 @@ msgstr "Арнайы кiрiстiру"
 
 #: src/control/Control.ContextMenu.js:280
 msgid "Copy Cells"
-msgstr ""
+msgstr "Ұяшықтарды көшіру"
 
 #: src/control/Control.ContextMenu.js:285
 msgid "Fill Series"
-msgstr ""
+msgstr "Ретті толтыру"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
-msgstr ""
+msgstr "Жол"
 
 #: src/control/Control.DocumentRepair.js:27
 #: src/control/Control.DocumentRepair.js:28
 msgid "Repair Document"
-msgstr ""
+msgstr "Құжатты қалпына келтіру"
 
 #: src/control/Control.DocumentRepair.js:124
 #: src/control/Control.UserList.ts:385
 msgid "You"
-msgstr ""
+msgstr "Сіз"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "What?"
-msgstr ""
+msgstr "Не?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "Who?"
-msgstr ""
+msgstr "Кім?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "When?"
-msgstr ""
+msgstr "Қашан?"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "Әзірге кері қайтару үшін ештеңе жасалмады..."
 
 #: src/control/Control.DocumentRepair.js:169
 msgid "Redo"
-msgstr ""
+msgstr "Қайта жасау"
 
 #: src/control/Control.DocumentRepair.js:170
 msgid "Undo"
-msgstr ""
+msgstr "Артқа қайтару"
 
 #: src/control/Control.DownloadProgress.js:42
 msgid "Download Selection"
-msgstr ""
+msgstr "Таңдалғанды жүктеу"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
+"{productname} сыртындағы үлкен элементтерді бөлісу үшін, алдымен оларды "
+"жүктеп алуыңыз қажет."
 
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:212
@@ -699,34 +710,34 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:281
 #: src/control/Control.NotebookbarWriter.js:281
 msgid "Download"
-msgstr ""
+msgstr "Жүктеу"
 
 #: src/control/Control.DownloadProgress.js:79
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Буфер мазмұнын жүктеу"
 
 #: src/control/Control.DownloadProgress.js:86
 #: src/control/Control.DownloadProgress.js:111
 #: src/control/Control.PartsPreview.js:288
 msgid "Copy"
-msgstr ""
+msgstr "Көшіру"
 
 #: src/control/Control.DownloadProgress.js:109
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Жүктеу аяқталды және буферге көшіруге дайын."
 
 #: src/control/Control.DownloadProgress.js:110
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
-msgstr ""
+msgstr "Енді көшірме ескертуі төменгі жағында байқалады."
 
 #: src/control/Control.DownloadProgress.js:270
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Мазмұн буферге көшірілді"
 
 #: src/control/Control.DownloadProgress.js:300
 msgid "Download failed"
-msgstr ""
+msgstr "Жүктеу қатесі"
 
 #: src/control/Control.ESignature.ts:126
 msgid "Andorra"
@@ -1043,13 +1054,12 @@ msgstr ""
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
-#, fuzzy
 msgid "Function Wizard"
-msgstr "Функция"
+msgstr "Функция шебері"
 
 #: src/control/Control.FormulaBarJSDialog.js:75
 msgid "Formula"
-msgstr ""
+msgstr "Формула"
 
 #: src/control/Control.FormulaBarJSDialog.js:81
 #: src/control/Control.MobileTopBar.ts:42
@@ -1058,11 +1068,11 @@ msgstr "Қабылдау"
 
 #: src/control/Control.IdleHandler.ts:42
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "Әзірлеу тоқтап қалды - құжатты қайта жүктеп, өңдеуді жалғастырыңыз"
 
 #: src/control/Control.IdleHandler.ts:44
 msgid "Idle document - please tap to reload and resume editing"
-msgstr ""
+msgstr "Әзірлеу тоқтап қалды - құжатты қайта жүктеп, өңдеуді жалғастырыңыз"
 
 #: src/control/Control.JSDialog.js:283
 msgid "Close dialog"
@@ -1070,62 +1080,60 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:498
 msgid "Solid"
-msgstr ""
+msgstr "Біртұтас"
 
 #: src/control/Control.JSDialogBuilder.js:501
 msgid "Linear"
-msgstr ""
+msgstr "Түзу"
 
 #: src/control/Control.JSDialogBuilder.js:504
 msgid "Axial"
-msgstr ""
+msgstr "Осьтік"
 
 #: src/control/Control.JSDialogBuilder.js:507
 msgid "Radial"
-msgstr ""
+msgstr "Радиалды"
 
 #: src/control/Control.JSDialogBuilder.js:510
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Эллипсоид"
 
 #: src/control/Control.JSDialogBuilder.js:514
 msgid "Quadratic"
-msgstr ""
+msgstr "Квадраттық"
 
 #: src/control/Control.JSDialogBuilder.js:517
 msgid "Square"
-msgstr ""
+msgstr "Квадрат"
 
 #: src/control/Control.JSDialogBuilder.js:520
 msgid "Fixed size"
-msgstr ""
+msgstr "Бекітілген өлшем"
 
 #: src/control/Control.JSDialogBuilder.js:1432
 msgid "From"
-msgstr ""
+msgstr "Бастап"
 
 #: src/control/Control.JSDialogBuilder.js:1435
 msgid "To"
-msgstr ""
+msgstr "Құжатта"
 
 #: src/control/Control.JSDialogBuilder.js:1438
 msgid "Color"
-msgstr ""
+msgstr "Түс"
 
 #: src/control/Control.JSDialogBuilder.js:1514
 msgid "Select range"
-msgstr ""
+msgstr "Диапазонды таңдау"
 
 #: src/control/Control.JSDialogBuilder.js:1624
 #: src/control/Control.NotebookbarBuilder.js:156
-#, fuzzy
 msgid "Font Name"
-msgstr "Қаріп"
+msgstr "Шрифт атауы"
 
 #: src/control/Control.JSDialogBuilder.js:1626 src/control/Toolbar.js:134
-#, fuzzy
 msgid "Font Size"
-msgstr "Қаріп"
+msgstr "Шрифт өлшемі"
 
 #: src/control/Control.JSDialogBuilder.js:1628
 #: src/control/Control.TopToolbar.js:460
@@ -1134,45 +1142,44 @@ msgstr "Стилі"
 
 #: src/control/Control.JSDialogBuilder.js:1893
 msgid "reply"
-msgstr ""
+msgstr "жауап беру"
 
 #: src/control/Control.JSDialogBuilder.js:1896
 msgid "replies"
-msgstr ""
+msgstr "жауаптар"
 
 #: src/control/Control.JSDialogBuilder.js:1971
 msgid "Insert Comment"
-msgstr ""
+msgstr "Пікір қосу"
 
 #: src/control/Control.JSDialogBuilder.js:2728
 #: src/control/Control.Menubar.js:889
 msgid "Rows"
-msgstr ""
+msgstr "Қатарлар"
 
 #: src/control/Control.JSDialogBuilder.js:2729
 #: src/control/Control.Menubar.js:892
 msgid "Columns"
-msgstr ""
+msgstr "Бағаналар"
 
 #: src/control/Control.JSDialogBuilder.js:2749
-#, fuzzy
 msgid "Insert Table"
-msgstr "Кестені кірістіру"
+msgstr "Үстел қосу"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:361
 #: src/control/Control.Menubar.js:363 src/control/Control.Menubar.js:365
 #: src/control/Control.Menubar.js:552 src/control/Control.Menubar.js:692
 #: src/control/Control.Menubar.js:974 src/control/Control.StatusBar.js:538
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Жоқ (орфографияны тексермеу)"
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
-msgstr ""
+msgstr "Тілді таңдау"
 
 #: src/control/Control.LanguageDialog.js:103
 msgid "Language"
-msgstr ""
+msgstr "Тіл"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:91
 #: src/control/Control.Menubar.js:1009
@@ -1186,21 +1193,21 @@ msgstr "ODF мәтіндік құжаты (.odt)"
 #: src/control/Control.NotebookbarBuilder.js:360
 #: src/control/Control.NotebookbarBuilder.js:573
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Word 2003 құжаты (.doc)"
 
 #: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:93
 #: src/control/Control.Menubar.js:1011
 #: src/control/Control.NotebookbarBuilder.js:356
 #: src/control/Control.NotebookbarBuilder.js:569
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Word құжаты (.docx)"
 
 #: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:1012
 #: src/control/Control.NotebookbarBuilder.js:352
 #: src/control/Control.NotebookbarBuilder.js:565
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Форматталған мәтін (.rtf)"
 
 #: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:88
 #: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:408
@@ -1211,7 +1218,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:1128 src/control/Control.Menubar.js:1135
 #: src/control/Control.Menubar.js:1183 src/control/Control.Menubar.js:1193
 msgid "Export as"
-msgstr ""
+msgstr "Экспорттау ретінде"
 
 #: src/control/Control.Menubar.js:82 src/control/Control.Menubar.js:89
 #: src/control/Control.Menubar.js:403 src/control/Control.Menubar.js:409
@@ -1237,25 +1244,25 @@ msgstr "PDF құжаты (.pdf)"
 #: src/control/Control.NotebookbarBuilder.js:364
 #: src/control/Control.NotebookbarBuilder.js:626
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:85 src/control/Control.UIManager.js:223
 msgid "Rename Document"
-msgstr ""
+msgstr "Құжаттың атын өзгерту"
 
 #: src/control/Control.Menubar.js:86 src/control/Control.Menubar.js:406
 #: src/control/Control.Menubar.js:577 src/control/Control.Menubar.js:717
 #: src/control/Control.Menubar.js:1001 src/control/Control.Menubar.js:1066
 #: src/control/Control.Menubar.js:1131 src/control/Control.Menubar.js:1186
 msgid "Share..."
-msgstr ""
+msgstr "Бөлісу..."
 
 #: src/control/Control.Menubar.js:87 src/control/Control.Menubar.js:407
 #: src/control/Control.Menubar.js:579 src/control/Control.Menubar.js:718
 #: src/control/Control.Menubar.js:1002 src/control/Control.Menubar.js:1067
 #: src/control/Control.Menubar.js:1133 src/control/Control.Menubar.js:1187
 msgid "See revision history"
-msgstr ""
+msgstr "Редакция тарихын көру"
 
 #: src/control/Control.Menubar.js:88 src/control/Control.Menubar.js:408
 #: src/control/Control.Menubar.js:580 src/control/Control.Menubar.js:719
@@ -1277,7 +1284,7 @@ msgstr "PDF құжаты (.pdf)"
 
 #: src/control/Control.Menubar.js:96 src/control/Control.Menubar.js:726
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "HTML файлы (.html)"
 
 #: src/control/Control.Menubar.js:101 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:588 src/control/Control.Menubar.js:734
@@ -1294,7 +1301,7 @@ msgstr "Құжатты жабу"
 #: src/control/Control.NotebookbarImpress.js:294
 #: src/control/Control.NotebookbarWriter.js:294
 msgid "Repair"
-msgstr ""
+msgstr "Қалпына келтіру"
 
 #: src/control/Control.Menubar.js:134 src/control/Control.Menubar.js:140
 #: src/control/Control.Menubar.js:446 src/control/Control.Menubar.js:452
@@ -1311,21 +1318,21 @@ msgstr "Масштабты тастау"
 #: src/control/Control.Menubar.js:143 src/control/Control.Menubar.js:458
 #: src/control/Control.Menubar.js:617 src/control/Control.Menubar.js:760
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "UI режимін ауыстыру"
 
 #: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:459
 msgid "Show Ruler"
-msgstr ""
+msgstr "Сызғышты көрсету"
 
 #: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:460
 #: src/control/Control.Menubar.js:622 src/control/Control.Menubar.js:761
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Статус жолын көрсету"
 
 #: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:462
 #: src/control/Control.Menubar.js:623 src/control/Control.Menubar.js:762
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Мәзір жолақтарын жасыру"
 
 #: src/control/Control.Menubar.js:147 src/control/Control.Menubar.js:463
 #: src/control/Control.Menubar.js:618 src/control/Control.Menubar.js:763
@@ -1336,7 +1343,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:504
 #: src/control/Control.NotebookbarWriter.js:1512
 msgid "Dark Mode"
-msgstr ""
+msgstr "Қараңғы режим"
 
 #: src/control/Control.Menubar.js:148 src/control/Control.Menubar.js:464
 #: src/control/Control.Menubar.js:619 src/control/Control.Menubar.js:764
@@ -1347,19 +1354,19 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:511
 #: src/control/Control.NotebookbarWriter.js:1519
 msgid "Invert Background"
-msgstr ""
+msgstr "Фонды кері айналдыру"
 
 #: src/control/Control.Menubar.js:157 src/control/Control.Menubar.js:475
 #: src/control/Control.Menubar.js:626 src/control/Control.Menubar.js:776
 #: src/control/Control.Menubar.js:1256 src/control/Control.Menubar.js:1306
 #: src/control/Control.Menubar.js:1320 src/control/Control.Menubar.js:1343
 msgid "Local Image..."
-msgstr ""
+msgstr "Жергілікті кескін..."
 
 #: src/control/Control.Menubar.js:181 src/control/Control.Menubar.js:183
 #: src/control/Control.Menubar.js:1273 src/control/Control.Menubar.js:1275
 msgid "All"
-msgstr ""
+msgstr "Барлық"
 
 #: src/control/Control.Menubar.js:192 src/control/Control.Menubar.js:486
 #: src/control/Control.Menubar.js:633 src/control/Control.Menubar.js:788
@@ -1368,73 +1375,72 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1277
 #: src/control/Control.NotebookbarWriter.js:1123
 msgid "Smart Picker"
-msgstr ""
+msgstr "Ақылды таңдағыш"
 
 #: src/control/Control.Menubar.js:233
 msgid "Text orientation"
-msgstr ""
+msgstr "Мәтіннің бағыты"
 
 #: src/control/Control.Menubar.js:298
 #: src/control/Control.NotebookbarWriter.js:61
 msgid "References"
-msgstr ""
+msgstr "Сілтемелер"
 
 #: src/control/Control.Menubar.js:301
 #: src/control/Control.NotebookbarWriter.js:1879
 msgid "Update Index"
-msgstr ""
+msgstr "Индекс жаңарту"
 
 #: src/control/Control.Menubar.js:310
 #: src/control/Control.NotebookbarWriter.js:1975
 msgid "Add Citation"
-msgstr ""
+msgstr "Цитатаны қосу"
 
 #: src/control/Control.Menubar.js:311
 #: src/control/Control.NotebookbarWriter.js:1987
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Цитата ескертпесін қосу"
 
 #: src/control/Control.Menubar.js:312
 #: src/control/Control.NotebookbarWriter.js:1962
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Әдебиеттер тізімін қосу"
 
 #: src/control/Control.Menubar.js:314
 #: src/control/Control.NotebookbarWriter.js:2005
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Цитаталарды жаңарту"
 
 #: src/control/Control.Menubar.js:315
 #: src/control/Control.NotebookbarWriter.js:2017
 #: src/control/Control.Zotero.js:1445
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Цитаталарды ажырату"
 
 #: src/control/Control.Menubar.js:316
 #: src/control/Control.NotebookbarWriter.js:2029
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Цитата параметрлері"
 
 #: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:1295
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Қосымша форматты мәтін қосу"
 
 #: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:1296
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Тоқсан белгісін қосу"
 
 #: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:1297
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Жартылай түймені қосу"
 
 #: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:1298
 msgid "Insert Picture"
-msgstr ""
+msgstr "Кескін қосу"
 
 #: src/control/Control.Menubar.js:348 src/control/Control.Menubar.js:1299
-#, fuzzy
 msgid "Insert Date"
-msgstr "Кестені кірістіру"
+msgstr "Күн қосу"
 
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:1300
 #: src/control/Control.NotebookbarCalc.js:240
@@ -1443,23 +1449,23 @@ msgstr "Кестені кірістіру"
 #: src/control/Control.NotebookbarWriter.js:309
 #: src/control/Control.NotebookbarWriter.js:1395
 msgid "Properties"
-msgstr ""
+msgstr "Сипаттар"
 
 #: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:1044
 #: src/control/Control.NotebookbarWriter.js:414
 msgid "Screen Reading"
-msgstr ""
+msgstr "Экраннан оқу"
 
 #: src/control/Control.Menubar.js:382
 #: src/control/Control.NotebookbarWriter.js:380
 msgid "Forum"
-msgstr ""
+msgstr "Форум"
 
 #: src/control/Control.Menubar.js:383 src/control/Control.Menubar.js:558
 #: src/control/Control.Menubar.js:695 src/control/Control.Menubar.js:981
 #: src/control/Control.NotebookbarWriter.js:392
 msgid "Online Help"
-msgstr ""
+msgstr "Интернет көмек"
 
 #: src/control/Control.Menubar.js:384 src/control/Control.Menubar.js:559
 #: src/control/Control.Menubar.js:696 src/control/Control.Menubar.js:982
@@ -1471,7 +1477,7 @@ msgstr "Пернетақта жарлықтары"
 #: src/control/Control.Menubar.js:697 src/control/Control.Menubar.js:983
 #: src/control/Control.NotebookbarWriter.js:439
 msgid "Report an issue"
-msgstr ""
+msgstr "Мәселе туралы хабарлау"
 
 #: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:561
 #: src/control/Control.Menubar.js:698 src/control/Control.Menubar.js:984
@@ -1479,7 +1485,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:1173 src/control/Control.Menubar.js:1248
 #: src/control/Control.NotebookbarWriter.js:452
 msgid "Latest Updates"
-msgstr ""
+msgstr "Соңғы жаңартулар"
 
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:562
 #: src/control/Control.Menubar.js:699 src/control/Control.Menubar.js:985
@@ -1487,7 +1493,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:1174 src/control/Control.Menubar.js:1249
 #: src/control/Control.NotebookbarWriter.js:464
 msgid "Send Feedback"
-msgstr ""
+msgstr "Кері байланыс жіберу"
 
 #: src/control/Control.Menubar.js:388 src/control/Control.Menubar.js:563
 #: src/control/Control.Menubar.js:700 src/control/Control.Menubar.js:986
@@ -1495,12 +1501,12 @@ msgstr ""
 #: src/control/Control.ServerAuditDialog.ts:186
 #: src/control/Control.ServerAuditDialog.ts:187
 msgid "Server audit"
-msgstr ""
+msgstr "Сервердің аудиті"
 
 #: src/control/Control.Menubar.js:391 src/control/Control.Menubar.js:566
 #: src/control/Control.Menubar.js:703 src/control/Control.Menubar.js:989
 msgid "Last modification"
-msgstr ""
+msgstr "Соңғы өзгерту"
 
 #: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:411
 #: src/control/Control.Menubar.js:1074
@@ -1514,14 +1520,14 @@ msgstr "ODF презентациясы (.odp)"
 #: src/control/Control.NotebookbarBuilder.js:433
 #: src/control/Control.NotebookbarBuilder.js:603
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "PowerPoint 2003 презентациясы (.ppt)"
 
 #: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:413
 #: src/control/Control.Menubar.js:1076
 #: src/control/Control.NotebookbarBuilder.js:429
 #: src/control/Control.NotebookbarBuilder.js:599
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "PowerPoint презентациясы (.pptx)"
 
 #: src/control/Control.Menubar.js:405 src/control/Control.Menubar.js:576
 #, fuzzy
@@ -1531,7 +1537,7 @@ msgstr "Түсіндірме"
 #: src/control/Control.Menubar.js:414
 #: src/control/Control.NotebookbarBuilder.js:437
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "HTML құжаты (.html)"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:468
@@ -1566,22 +1572,22 @@ msgstr ""
 #: src/control/Control.Menubar.js:426
 #: src/control/Control.NotebookbarBuilder.js:666
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Бетпен толыққан слайдтар"
 
 #: src/control/Control.Menubar.js:427
 #: src/control/Control.NotebookbarBuilder.js:670
 msgid "Notes Pages"
-msgstr ""
+msgstr "Ескертпелер беттері"
 
 #: src/control/Control.Menubar.js:461
 #: src/control/Control.NotebookbarImpress.js:470
 msgid "Notes View"
-msgstr ""
+msgstr "Ескертпелер көрінісі"
 
 #: src/control/Control.Menubar.js:465
 #: src/control/Control.NotebookbarImpress.js:476
 msgid "Master View"
-msgstr ""
+msgstr "Мастер-көрініс"
 
 #: src/control/Control.Menubar.js:477
 msgid "Local Multimedia..."
@@ -1594,11 +1600,11 @@ msgstr "Толық экранды презентация"
 
 #: src/control/Control.Menubar.js:544
 msgid "Present current slide"
-msgstr ""
+msgstr "Ағымдағы слайдты көрсету"
 
 #: src/control/Control.Menubar.js:545
 msgid "Present in new window"
-msgstr ""
+msgstr "Жаңа терезеде көрсету"
 
 #: src/control/Control.Menubar.js:546
 #: src/control/Control.NotebookbarImpress.js:374
@@ -1630,104 +1636,104 @@ msgstr "ODF эл. кестесі (.ods)"
 #: src/control/Control.NotebookbarBuilder.js:395
 #: src/control/Control.NotebookbarBuilder.js:588
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "Excel 2003 кестесі (.xls)"
 
 #: src/control/Control.Menubar.js:712 src/control/Control.Menubar.js:724
 #: src/control/Control.Menubar.js:1198
 #: src/control/Control.NotebookbarBuilder.js:391
 #: src/control/Control.NotebookbarBuilder.js:584
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "Excel кестесі (.xlsx)"
 
 #: src/control/Control.Menubar.js:725
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "CSV файлы (.csv)"
 
 #: src/control/Control.Menubar.js:731
 #: src/control/jsdialog/Definitions.Menu.ts:111
 msgid "Active sheet"
-msgstr ""
+msgstr "Белсенді парақ"
 
 #: src/control/Control.Menubar.js:732 src/control/Control.TopToolbar.js:109
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "All Sheets"
-msgstr ""
+msgstr "Барлық парақтар"
 
 #: src/control/Control.Menubar.js:861
 #: src/control/jsdialog/Definitions.Menu.ts:291
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Ұяшықтарды келесімен көрсету..."
 
 #: src/control/Control.Menubar.js:862
 #: src/control/jsdialog/Definitions.Menu.ts:294
 msgid "Values greater than..."
-msgstr ""
+msgstr "Мәндер үлкен..."
 
 #: src/control/Control.Menubar.js:863
 #: src/control/jsdialog/Definitions.Menu.ts:298
 msgid "Values less than..."
-msgstr ""
+msgstr "Мәндер аз..."
 
 #: src/control/Control.Menubar.js:864
 #: src/control/jsdialog/Definitions.Menu.ts:302
 msgid "Values equal to..."
-msgstr ""
+msgstr "Мәндер тең..."
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:306
 msgid "Values between..."
-msgstr ""
+msgstr "Мәндер арасында..."
 
 #: src/control/Control.Menubar.js:866
 #: src/control/jsdialog/Definitions.Menu.ts:310
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Қайталанатын мәндер..."
 
 #: src/control/Control.Menubar.js:867
 #: src/control/jsdialog/Definitions.Menu.ts:314
 msgid "Containing text..."
-msgstr ""
+msgstr "Мазмұны мәтінмен..."
 
 #: src/control/Control.Menubar.js:869 src/control/Control.Menubar.js:879
 #: src/control/jsdialog/Definitions.Menu.ts:318
 #: src/control/jsdialog/Definitions.Menu.ts:349
 msgid "More highlights..."
-msgstr ""
+msgstr "Қосымша ерекшелеулер..."
 
 #: src/control/Control.Menubar.js:871
 #: src/control/jsdialog/Definitions.Menu.ts:322
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Жоғарғы/Төменгі ережелер..."
 
 #: src/control/Control.Menubar.js:872
 #: src/control/jsdialog/Definitions.Menu.ts:325
 msgid "Top N elements..."
-msgstr ""
+msgstr "Жоғарғы N элементтер..."
 
 #: src/control/Control.Menubar.js:873
 #: src/control/jsdialog/Definitions.Menu.ts:329
 msgid "Top N percent..."
-msgstr ""
+msgstr "Жоғарғы N пайыз..."
 
 #: src/control/Control.Menubar.js:874
 #: src/control/jsdialog/Definitions.Menu.ts:333
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Төменгі N элементтер..."
 
 #: src/control/Control.Menubar.js:875
 #: src/control/jsdialog/Definitions.Menu.ts:337
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Төменгі N пайыз..."
 
 #: src/control/Control.Menubar.js:876
 #: src/control/jsdialog/Definitions.Menu.ts:341
 msgid "Above Average..."
-msgstr ""
+msgstr "Орташа деңгейден жоғары..."
 
 #: src/control/Control.Menubar.js:877
 #: src/control/jsdialog/Definitions.Menu.ts:345
 msgid "Below Average..."
-msgstr ""
+msgstr "Орташа деңгейден төмен..."
 
 #: src/control/Control.Menubar.js:993 src/control/Control.Menubar.js:1059
 #: src/control/Control.Menubar.js:1124 src/control/Control.Menubar.js:1179
@@ -1744,46 +1750,45 @@ msgstr "Іздеу:"
 
 #: src/control/Control.Menubar.js:1046
 msgid "Page Setup"
-msgstr ""
+msgstr "Бет параметрлері"
 
 #: src/control/Control.Menubar.js:1190
 msgid "Define print area"
-msgstr ""
+msgstr "Басып шығару аймағын анықтау"
 
 #: src/control/Control.Menubar.js:1191
 msgid "Remove print area"
-msgstr ""
+msgstr "Баспа аймағын жою"
 
 #: src/control/Control.Menubar.js:1481 src/control/Control.StatusBar.js:537
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Әдепкі тілге қайтару"
 
 #: src/control/Control.Menubar.js:1512 src/control/Control.Menubar.js:1513
 #: src/control/Control.Menubar.js:1514 src/control/Control.Toolbar.js:140
 #: src/control/Control.Toolbar.js:206
 msgid "More..."
-msgstr ""
+msgstr "Тағы..."
 
 #: src/control/Control.Menubar.js:1821
 msgid "Use Compact view"
-msgstr ""
+msgstr "Компакт көрінісін пайдалану"
 
 #: src/control/Control.Menubar.js:1823
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Қойынды көрінісін пайдалану"
 
 #: src/control/Control.Menubar.js:1904
 msgid "Read-only mode"
-msgstr ""
+msgstr "Тек оқу режимі"
 
 #: src/control/Control.Menubar.js:1942
-#, fuzzy
 msgid "Insert Shape"
-msgstr "Кестені кірістіру"
+msgstr "Фигура қосу"
 
 #: src/control/Control.Menubar.js:2181
 msgid "file type icon"
-msgstr ""
+msgstr "файл түрінің белгішесі"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:129
@@ -1795,84 +1800,81 @@ msgstr "Іздеуді тоқтату"
 #: src/control/Control.MobileBottomBar.js:37
 #: src/control/Control.TopToolbar.js:139
 msgid "Borders"
-msgstr ""
+msgstr "Шекаралар"
 
 #: src/control/Control.MobileSearchBar.ts:27
-#, fuzzy
 msgid "Hide the search bar"
-msgstr "Іздеуді тоқтату"
+msgstr "Іздеу жолақтарын жасыру"
 
 #: src/control/Control.MobileSearchBar.ts:47
-#, fuzzy
 msgid "Clear the search field"
-msgstr "Іздеуді тоқтату"
+msgstr "Іздеу өрісін тазалау"
 
 #: src/control/Control.MobileWizardBuilder.js:538
 msgid "Background Color"
-msgstr ""
+msgstr "Фон түсі"
 
 #: src/control/Control.MobileWizardBuilder.js:540
 msgid "Gradient Start"
-msgstr ""
+msgstr "Градиенттің басы"
 
 #: src/control/Control.MobileWizardBuilder.js:542
 msgid "Gradient End"
-msgstr ""
+msgstr "Градиенттің соңы"
 
 #: src/control/Control.NotebookbarBuilder.js:226
 msgid "Tap to expand"
-msgstr ""
+msgstr "Кеңейту үшін түртіңіз"
 
 #: src/control/Control.NotebookbarBuilder.js:227
 #: src/control/Control.NotebookbarBuilder.js:272
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Қысу үшін түртіңіз"
 
 #: src/control/Control.NotebookbarBuilder.js:374
 #: src/control/Control.NotebookbarBuilder.js:403
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "HTML файлы (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:399
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "CSV Файлы (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:542
 msgid "Image (.png)"
-msgstr ""
+msgstr "Кескін (.png)"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:62
 #: src/control/Control.NotebookbarImpress.js:78
 #: src/control/Control.NotebookbarWriter.js:36
 msgid "File"
-msgstr ""
+msgstr "Файл"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:68
 #: src/control/Control.NotebookbarImpress.js:84
 #: src/control/Control.NotebookbarWriter.js:42
 msgid "Home"
-msgstr ""
+msgstr "Басты бет"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:75
 #: src/control/Control.NotebookbarImpress.js:91
 #: src/control/Control.NotebookbarWriter.js:49
-#, fuzzy
 msgid "Insert"
-msgstr "Кестені кірістіру"
+msgstr "Қосу"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarImpress.js:97
 #: src/control/Control.NotebookbarWriter.js:55
 msgid "Layout"
-msgstr ""
+msgstr "Орналастыру"
 
 #: src/control/Control.NotebookbarCalc.js:48
 msgid "Data"
-msgstr ""
+msgstr "Деректер"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
@@ -1887,20 +1889,20 @@ msgstr "Шолу"
 #: src/control/Control.NotebookbarImpress.js:109
 #: src/control/Control.NotebookbarWriter.js:73
 msgid "Format"
-msgstr ""
+msgstr "Формат"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:106
 #: src/control/Control.NotebookbarWriter.js:92
 msgid "Draw"
-msgstr ""
+msgstr "Салу"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:113
 #: src/control/Control.NotebookbarImpress.js:136
 #: src/control/Control.NotebookbarWriter.js:99
 msgid "View"
-msgstr ""
+msgstr "Көрініс"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:119
@@ -1908,21 +1910,21 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:105
 #: src/control/Control.ServerAuditDialog.ts:213
 msgid "Help"
-msgstr ""
+msgstr "Жәрдем"
 
 #: src/control/Control.NotebookbarCalc.js:127
 #: src/control/Control.NotebookbarImpress.js:193
 #: src/control/Control.NotebookbarWriter.js:169
 #: src/control/Control.NotebookbarWriter.js:281
 msgid "Save As"
-msgstr ""
+msgstr "Әрекет ретінде сақтау"
 
 #: src/control/Control.NotebookbarCalc.js:146
 #: src/control/Control.NotebookbarDraw.js:180
 #: src/control/Control.NotebookbarImpress.js:213
 #: src/control/Control.NotebookbarWriter.js:189
 msgid "Export As"
-msgstr ""
+msgstr "Экспорттау ретінде"
 
 #: src/control/Control.NotebookbarCalc.js:161
 #: src/control/Control.NotebookbarDraw.js:196
@@ -1930,7 +1932,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:203
 #: src/control/Control.NotebookbarWriter.js:227
 msgid "Share"
-msgstr ""
+msgstr "Бөлісу"
 
 #: src/control/Control.NotebookbarCalc.js:171
 #: src/control/Control.NotebookbarDraw.js:206
@@ -1938,7 +1940,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:211
 #: src/control/Control.NotebookbarWriter.js:241
 msgid "See history"
-msgstr ""
+msgstr "Тарихты көру"
 
 #: src/control/Control.NotebookbarCalc.js:253
 #: src/control/Control.NotebookbarDraw.js:304
@@ -1953,109 +1955,105 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:337
 #: src/control/Control.UIManager.js:223
 msgid "Rename"
-msgstr ""
+msgstr "Атын өзгерту"
 
 #: src/control/Control.NotebookbarCalc.js:607
 msgid "General"
-msgstr ""
+msgstr "Жалпы"
 
 #: src/control/Control.NotebookbarCalc.js:608
 msgid "Number"
-msgstr ""
+msgstr "Сандық"
 
 #: src/control/Control.NotebookbarCalc.js:609
 msgid "Percent"
-msgstr ""
+msgstr "Проценттік"
 
 #: src/control/Control.NotebookbarCalc.js:610
 msgid "Currency"
-msgstr ""
+msgstr "Валюта"
 
 #: src/control/Control.NotebookbarCalc.js:611
 #: src/control/Control.NotebookbarWriter.js:1388
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
 msgid "Date"
-msgstr ""
+msgstr "Күні"
 
 #: src/control/Control.NotebookbarCalc.js:612
 msgid "Time"
-msgstr ""
+msgstr "Уақыт"
 
 #: src/control/Control.NotebookbarCalc.js:613
 msgid "Scientific"
-msgstr ""
+msgstr "Ғылыми"
 
 #: src/control/Control.NotebookbarCalc.js:614
 msgid "Fraction"
-msgstr ""
+msgstr "Фракция"
 
 #: src/control/Control.NotebookbarCalc.js:615
 msgid "Boolean Value"
-msgstr ""
+msgstr "Логикалық мән"
 
 #: src/control/Control.NotebookbarCalc.js:616 src/control/Toolbar.js:804
 msgid "Text"
-msgstr ""
+msgstr "Мәтін"
 
 #: src/control/Control.NotebookbarCalc.js:780
 msgid "Default"
-msgstr ""
+msgstr "Әдепкі"
 
 #: src/control/Control.NotebookbarCalc.js:787
 msgid "Heading 1"
-msgstr ""
+msgstr "Басты тақырып 1"
 
 #: src/control/Control.NotebookbarCalc.js:794
 msgid "Heading 2"
-msgstr ""
+msgstr "Басты тақырып 2"
 
 #: src/control/Control.NotebookbarCalc.js:807
 msgid "Good"
-msgstr ""
+msgstr "Жақсы"
 
 #: src/control/Control.NotebookbarCalc.js:814
 msgid "Neutral"
-msgstr ""
+msgstr "Нейтралды"
 
 #: src/control/Control.NotebookbarCalc.js:821
 msgid "Bad"
-msgstr ""
+msgstr "Жаман"
 
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
-msgstr ""
+msgstr "Қатар биіктігі"
 
 #: src/control/Control.NotebookbarCalc.js:934
 msgid "Column Width"
-msgstr ""
+msgstr "Бағананың ені"
 
 #: src/control/Control.NotebookbarCalc.js:947
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "Кестені кірістіру"
+msgstr "Жоғарыдағы жолдарды қосу"
 
 #: src/control/Control.NotebookbarCalc.js:954
-#, fuzzy
 msgid "Insert Columns Before"
-msgstr "Алдынан парақты кірістіру"
+msgstr "Бұрынғы бағандарды қосу"
 
 #: src/control/Control.NotebookbarCalc.js:961
-#, fuzzy
 msgid "Delete Rows"
-msgstr "Кестені кірістіру"
+msgstr "Жолдарды жою"
 
 #: src/control/Control.NotebookbarCalc.js:973
 msgid "Insert Rows Below"
-msgstr ""
+msgstr "Төмендегі жолдарды қосу"
 
 #: src/control/Control.NotebookbarCalc.js:980
-#, fuzzy
 msgid "Insert Columns After"
-msgstr "Артынан парақты кірістіру"
+msgstr "Бұдан кейінгі бағандарды қосу"
 
 #: src/control/Control.NotebookbarCalc.js:987
 msgid "Delete Columns"
-msgstr ""
+msgstr "Бағаналарды жою"
 
 #: src/control/Control.NotebookbarCalc.js:1166
 #: src/control/Control.NotebookbarDraw.js:335
@@ -2069,25 +2067,25 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:426
 #: src/control/Control.NotebookbarWriter.js:1469
 msgid "Compact view"
-msgstr ""
+msgstr "Қысқартылған көрініс"
 
 #: src/control/Control.NotebookbarCalc.js:1230
 #: src/control/Control.NotebookbarDraw.js:423
 #: src/control/Control.NotebookbarImpress.js:463
 #: src/control/Control.NotebookbarWriter.js:1506
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Вкладкаларды жабу"
 
 #: src/control/Control.NotebookbarCalc.js:1242
 #: src/control/Control.NotebookbarDraw.js:411
 #: src/control/Control.NotebookbarImpress.js:451
 #: src/control/Control.NotebookbarWriter.js:1494
 msgid "Status Bar"
-msgstr ""
+msgstr "Жағдай жолы"
 
 #: src/control/Control.NotebookbarCalc.js:1335
 msgid "Sparkline"
-msgstr ""
+msgstr "Спарклайн"
 
 #: src/control/Control.NotebookbarCalc.js:1469
 #: src/control/Control.NotebookbarCalc.js:2361
@@ -2099,40 +2097,40 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1079
 #: src/control/Control.NotebookbarWriter.js:2872
 msgid "Shapes"
-msgstr ""
+msgstr "Фигуралар"
 
 #: src/control/Control.NotebookbarDraw.js:99
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:85
 msgid "Table"
-msgstr ""
+msgstr "Кесте"
 
 #: src/control/Control.NotebookbarDraw.js:257
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF құжаты (.pdf) - сарапшы режимі"
 
 #: src/control/Control.NotebookbarDraw.js:399
 #: src/control/Control.NotebookbarImpress.js:439
 #: src/control/Control.NotebookbarWriter.js:1482
 msgid "Ruler"
-msgstr ""
+msgstr "Сызғыш"
 
 #: src/control/Control.NotebookbarDraw.js:1070
 msgid "Page Layout"
-msgstr ""
+msgstr "Бет үлгісі"
 
 #: src/control/Control.NotebookbarImpress.js:129
 msgid "Master"
-msgstr ""
+msgstr "Мастер"
 
 #: src/control/Control.NotebookbarImpress.js:358
 #: src/control/Control.NotebookbarImpress.js:1039
 msgid "Presentation"
-msgstr ""
+msgstr "Презентация"
 
 #: src/control/Control.NotebookbarImpress.js:366
 msgid "Present in Window"
-msgstr ""
+msgstr "Терезеде көрсету"
 
 #: src/control/Control.NotebookbarImpress.js:486
 msgid "Show Grid"
@@ -2144,15 +2142,15 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:79
 msgid "Form"
-msgstr ""
+msgstr "Форма"
 
 #: src/control/Control.NotebookbarWriter.js:351
 msgid "Go Online"
-msgstr ""
+msgstr "Онлайн режиміне өту"
 
 #: src/control/Control.NotebookbarWriter.js:351
 msgid "Go Offline"
-msgstr ""
+msgstr "Оффлайн режиміне өту"
 
 #: src/control/Control.NotebookbarWriter.js:939
 msgid "Style list"
@@ -2160,35 +2158,35 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:1360
 msgid "Rich Text"
-msgstr ""
+msgstr "Форматталған мәтін"
 
 #: src/control/Control.NotebookbarWriter.js:1367
 msgid "Checkbox"
-msgstr ""
+msgstr "Таңдау тізімі"
 
 #: src/control/Control.NotebookbarWriter.js:1374
 msgid "Dropdown"
-msgstr ""
+msgstr "Таңдау тізімі"
 
 #: src/control/Control.NotebookbarWriter.js:1381
 msgid "Picture"
-msgstr ""
+msgstr "Сурет"
 
 #: src/control/Control.PartsPreview.js:189
 msgid "preview of page "
-msgstr ""
+msgstr "бет алдын ала қарауы "
 
 #: src/control/Control.PartsPreview.js:254
 msgid "Paste Slide"
-msgstr ""
+msgstr "Слайд қою"
 
 #: src/control/Control.PartsPreview.js:297
 msgid "Paste"
-msgstr ""
+msgstr "Қою"
 
 #: src/control/Control.SaveState.ts:37
 msgid "Saving"
-msgstr ""
+msgstr "Сақталып жатыр"
 
 #: src/control/Control.SaveState.ts:52
 #, fuzzy
@@ -2197,88 +2195,91 @@ msgstr "Сақтау"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Аннотацияларды жоғары қарай айналдыру"
 
 #: src/control/Control.Scroll.Annotation.js:21
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Аннотацияларды төмен қарай айналдыру"
 
 #: src/control/Control.ServerAuditDialog.ts:50
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "IsAdminUser қасиеті интеграция арқылы орнатылмаған"
 
 #: src/control/Control.ServerAuditDialog.ts:56
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Ескірген is_admin өрісі қолданылды, интеграция IsAdminUser қасиетін қолдануы "
+"тиіс"
 
 #: src/control/Control.ServerAuditDialog.ts:62
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "IsAdminUser пайдаланушы қасиеті интеграция арқылы орнатылған"
 
 #: src/control/Control.ServerAuditDialog.ts:69
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Сіздің WOPI серверіңіз қауіпсіз емес: SSL тексеруі сәтсіз аяқталды"
 
 #: src/control/Control.ServerAuditDialog.ts:74
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "SSL тексерісінде ешқандай мәселе табылған жоқ"
 
 #: src/control/Control.ServerAuditDialog.ts:81
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "PostMessage API іске қосылды"
 
 #: src/control/Control.ServerAuditDialog.ts:86
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Интегратор PostMessage шақырулары үшін дайын емес"
 
 #: src/control/Control.ServerAuditDialog.ts:94
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Сіздің серверіңіз жеткіліксіз аппараттық ресурстармен конфигурацияланған, "
+"бұл төмен өнімділікке әкелуі мүмкін."
 
 #: src/control/Control.ServerAuditDialog.ts:100
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Аппараттық ресурстар оптималды өнімділік үшін жеткілікті"
 
 #: src/control/Control.ServerAuditDialog.ts:205
 msgid "No issues found"
-msgstr ""
+msgstr "Мәселелер табылған жоқ"
 
 #: src/control/Control.ServerAuditDialog.ts:212
 msgid "Status"
-msgstr ""
+msgstr "Жағдай"
 
 #: src/control/Control.ServerAuditDialog.ts:262
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Серверіңіздің қауіпсіздік ескертпелерін тексеріңіз"
 
 #: src/control/Control.ServerAuditDialog.ts:263
 msgid "OPEN"
-msgstr ""
+msgstr "АШУ"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Бірінші параққа айналдыру"
 
 #: src/control/Control.SheetsBar.js:55
 msgid "Scroll left"
-msgstr ""
+msgstr "Солға айналдыру"
 
 #: src/control/Control.SheetsBar.js:63
 msgid "Scroll right"
-msgstr ""
+msgstr "Оңға айналдыру"
 
 #: src/control/Control.SheetsBar.js:71
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Соңғы параққа айналдыру"
 
 #: src/control/Control.SheetsBar.js:78
-#, fuzzy
 msgid "Insert sheet"
-msgstr "Кестені кірістіру"
+msgstr "Бетті қосу"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
@@ -2291,24 +2292,24 @@ msgstr ""
 #: src/control/Control.StatusBar.js:205
 #: src/control/jsdialog/Definitions.Menu.ts:23
 msgid "Average"
-msgstr ""
+msgstr "Орташа"
 
 #: src/control/Control.StatusBar.js:206
 msgid "CountA"
-msgstr ""
+msgstr "СанауА"
 
 #: src/control/Control.StatusBar.js:207
 #: src/control/jsdialog/Definitions.Menu.ts:26
 msgid "Count"
-msgstr ""
+msgstr "Санау"
 
 #: src/control/Control.StatusBar.js:208
 msgid "Maximum"
-msgstr ""
+msgstr "Максимум"
 
 #: src/control/Control.StatusBar.js:209
 msgid "Minimum"
-msgstr ""
+msgstr "Ең аз"
 
 #: src/control/Control.StatusBar.js:210
 #: src/control/jsdialog/Definitions.Menu.ts:22
@@ -2317,7 +2318,7 @@ msgstr "Қосынды"
 
 #: src/control/Control.StatusBar.js:211
 msgid "Selection count"
-msgstr ""
+msgstr "Таңдау саны"
 
 #: src/control/Control.StatusBar.js:249
 msgid "Cancel the search"
@@ -2328,30 +2329,32 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Кездейсоқ өзгерістердің алдын алу үшін автор бұл файлды тек көруге ашылған "
+"күйде орнатты"
 
 #: src/control/Control.StatusBar.js:463
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Бірнеше ұяшықты таңдау"
 
 #: src/control/Control.StatusBar.js:466
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Қосу режимі: ажыратылды"
 
 #: src/control/Control.StatusBar.js:477
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Таңдау режимі: белсенді емес"
 
 #: src/control/Control.StatusBar.js:554
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Барлық мәтін үшін тіл орнату"
 
 #: src/control/Control.StatusBar.js:557
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Абзац үшін тіл орнату"
 
 #: src/control/Control.StatusBar.js:558
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Таңдау үшін тіл орнату"
 
 #: src/control/Control.Tabs.js:52
 msgid "Insert sheet before this"
@@ -2363,15 +2366,15 @@ msgstr "Артынан парақты кірістіру"
 
 #: src/control/Control.Tabs.js:88
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Парақты солға жылжыту"
 
 #: src/control/Control.Tabs.js:93
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Парақты оңға жылжыту"
 
 #: src/control/Control.Tabs.js:103
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Парақты көшіру..."
 
 #: src/control/Control.Tabs.js:383
 #, fuzzy
@@ -2380,7 +2383,7 @@ msgstr "{sheet} парағын шынымен өшіру керек пе ?"
 
 #: src/control/Control.Tabs.js:394
 msgid "Rename sheet"
-msgstr ""
+msgstr "Парақты қайта атау"
 
 #: src/control/Control.Tabs.js:394
 msgid "Enter new sheet name"
@@ -2391,105 +2394,108 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
 msgstr ""
+"Көп пайдаланушылармен қайтару/қайта жасау қақтығысы. Қақтығысты шешу үшін "
+"құжатты қалпына келтіруді қолданыңыз"
 
 #: src/control/Control.TopToolbar.js:108
 msgid "Active Sheet"
-msgstr ""
+msgstr "Белсенді парақ"
 
 #: src/control/Control.TopToolbar.js:120
 msgid "Default Style"
-msgstr ""
+msgstr "Әдепкі стиль"
 
 #: src/control/Control.TopToolbar.js:182
 msgid "Insert table"
 msgstr "Кестені кірістіру"
 
 #: src/control/Control.TopToolbar.js:185
-#, fuzzy
 msgid "Insert shapes"
-msgstr "Кестені кірістіру"
+msgstr "Фигураларды қосу"
 
 #: src/control/Control.TopToolbar.js:187
 msgid "Insert connectors"
-msgstr ""
+msgstr "Желілерді қосу"
 
 #: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:843
 msgid "Hide Menu"
-msgstr ""
+msgstr "Мәзірді жасыру"
 
 #: src/control/Control.UIManager.js:223
 msgid "Enter new name"
-msgstr ""
+msgstr "Жаңа ат енгізіңіз"
 
 #: src/control/Control.UIManager.js:866
 msgid "Show Menu"
-msgstr ""
+msgstr "Мәзірді көрсету"
 
 #: src/control/Control.UserList.ts:54
 msgid "{user} has joined"
-msgstr ""
+msgstr "{user} қосылды"
 
 #: src/control/Control.UserList.ts:55
 msgid "{user} has left"
-msgstr ""
+msgstr "{user} шықты"
 
 #: src/control/Control.UserList.ts:56
 msgid "Following {user}"
-msgstr ""
+msgstr "{user}-ды еріп жүру"
 
 #: src/control/Control.UserList.ts:57
 msgid "Following the editor"
-msgstr ""
+msgstr "Редакторға еріп жүру"
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Қадағалауды тоқтату"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for {user}"
-msgstr ""
+msgstr "{user} үшін аватар"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
-msgstr ""
+msgstr "Пайдаланушылар: %n"
 
 #: src/control/Control.UserList.ts:80
 msgid "1 user"
-msgstr ""
+msgstr "1 пайдаланушы"
 
 #: src/control/Control.UserList.ts:81
 msgid "0 users"
-msgstr ""
+msgstr "0 пайдаланушы"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "Пайдаланушылар тізімі бойынша қорытынды"
 
 #: src/control/Control.UserList.ts:493
 msgid "Following"
-msgstr ""
+msgstr "{user}-ды еріп жүру"
 
 #: src/control/Control.UserList.ts:550
 msgid "Always follow the editor"
-msgstr ""
+msgstr "Әрқашан редакторды қадағалаңыз"
 
 #: src/control/Control.Zotero.js:139
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Zotero API кілті орнатылмаған"
 
 #: src/control/Control.Zotero.js:160
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Zotero API кілті дұрыс емес"
 
 #: src/control/Control.Zotero.js:187
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Zotero ескертуі"
 
 #: src/control/Control.Zotero.js:188
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Құжатта веб API арқылы қол жеткізуге болмайтын бірнеше сілтеме бар. Бұл "
+"сілтемелерді немесе библиографияны өңдеу кезінде қиындықтар тудыруы мүмкін."
 
 #: src/control/Control.Zotero.js:244 src/core/Socket.js:1338
 msgid "Loading..."
@@ -2497,51 +2503,51 @@ msgstr "Жүктелуде..."
 
 #: src/control/Control.Zotero.js:262
 msgid "Language:"
-msgstr ""
+msgstr "Тіл:"
 
 #: src/control/Control.Zotero.js:277
 msgid "Store as:"
-msgstr ""
+msgstr "Сақтау ретінде:"
 
 #: src/control/Control.Zotero.js:283 src/control/Control.Zotero.js:407
 msgid "Fields"
-msgstr ""
+msgstr "Өлшемдер"
 
 #: src/control/Control.Zotero.js:284 src/control/Control.Zotero.js:407
 msgid "Bookmarks"
-msgstr ""
+msgstr "Таңдаулар"
 
 #: src/control/Control.Zotero.js:405
 msgid "Footnotes"
-msgstr ""
+msgstr "Анықтама"
 
 #: src/control/Control.Zotero.js:405
 msgid "Endnotes"
-msgstr ""
+msgstr "Аяқтамалар"
 
 #: src/control/Control.Zotero.js:469
 msgid "My Publications"
-msgstr ""
+msgstr "Менің жарияланымдарым"
 
 #: src/control/Control.Zotero.js:475 src/control/Control.Zotero.js:702
 msgid "My Library"
-msgstr ""
+msgstr "Менің кітапханам"
 
 #: src/control/Control.Zotero.js:476
 msgid "Group Libraries"
-msgstr ""
+msgstr "Топ кітапханалары"
 
 #: src/control/Control.Zotero.js:718
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Топтарды жүктеу мүмкін болмады"
 
 #: src/control/Control.Zotero.js:736 src/control/Control.Zotero.js:1052
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Жинақтарды жүктеу мүмкін болмады"
 
 #: src/control/Control.Zotero.js:750
 msgid "Citation Style"
-msgstr ""
+msgstr "Цитата стилі"
 
 #: src/control/Control.Zotero.js:755
 #, fuzzy
@@ -2550,71 +2556,75 @@ msgstr "Стилі"
 
 #: src/control/Control.Zotero.js:755
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Стиль тізімін алу кезінде қате орын алды"
 
 #: src/control/Control.Zotero.js:763
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Стильдерді жүктеу мүмкін болмады"
 
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
 msgid "Title"
-msgstr ""
+msgstr "Атау"
 
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
 msgid "Creator(s)"
-msgstr ""
+msgstr "Жасақшылар"
 
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
 msgid "Your library is empty"
-msgstr ""
+msgstr "Сіздің кітапханаңыз бос"
 
 #: src/control/Control.Zotero.js:1091
 msgid "Failed to load items"
-msgstr ""
+msgstr "Элементтерді жүктеу мүмкін болмады"
 
 #: src/control/Control.Zotero.js:1143
 msgid "Citation warning"
-msgstr ""
+msgstr "Цитата ескертпесі"
 
 #: src/control/Control.Zotero.js:1144
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Цитаталар енгізілгеннен кейін олардың сақтау орны мен көрсету түрін өзгерту "
+"мүмкін емес."
 
 #: src/control/Control.Zotero.js:1145 src/control/Control.Zotero.js:1447
 msgid "Confirm"
-msgstr ""
+msgstr "Растау"
 
 #: src/control/Control.Zotero.js:1251
 msgid "Add Note"
-msgstr ""
+msgstr "Ескертпе қосу"
 
 #: src/control/Control.Zotero.js:1254 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
-msgstr ""
+msgstr "Ескертпелер"
 
 #: src/control/Control.Zotero.js:1254
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "Ескертпелерді алу кезінде қате орын алды"
 
 #: src/control/Control.Zotero.js:1385
 msgid "Updated citations"
-msgstr ""
+msgstr "Цитаталар жаңартылды"
 
 #: src/control/Control.Zotero.js:1387
 msgid "Citations update failed"
-msgstr ""
+msgstr "Цитаталарды жаңарту сәтсіз аяқталды"
 
 #: src/control/Control.Zotero.js:1391
 msgid "Updating citations"
-msgstr ""
+msgstr "Цитаталарды жаңарту"
 
 #: src/control/Control.Zotero.js:1446
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Цитаталарды ажырату Collabora Online жүйесіне бұл құжаттағы цитаталарды және "
+"библиографияны жаңартуға мүмкіндік бермейді."
 
 #: src/control/Parts.js:491
 msgid "Show sheets"
@@ -2622,89 +2632,91 @@ msgstr ""
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
-msgstr ""
+msgstr "Құжатты өңдеу"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "Құжатты құлыптау мүмкін болмады, ол тек оқу режимінде ашылды."
 
 #: src/control/Permission.js:87 src/control/Permission.js:97
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "Сервер келесі себепті қайтарды:"
 
 #: src/control/Permission.js:95
 msgid "The document could not be locked."
-msgstr ""
+msgstr "Құжат құлыпталмады."
 
 #: src/control/Permission.js:149
 msgid "Enter a file name"
-msgstr ""
+msgstr "Файл атын енгізіңіз"
 
 #: src/control/Permission.js:168
 msgid "Save as ODF format"
-msgstr ""
+msgstr "ODF форматында сақтау"
 
 #: src/control/Permission.js:169
 msgid "Continue editing"
-msgstr ""
+msgstr "Өңдеуді жалғастыру"
 
 #: src/control/Permission.js:169
 msgid "Continue read only"
-msgstr ""
+msgstr "Тек оқуға жалғастыру"
 
 #: src/control/Permission.js:182
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Бұл құжатта ағымдағы файл форматына сақталмайтын форматтау немесе мазмұн "
+"болуы мүмкін."
 
 #: src/control/Ruler.js:390
 msgid "Left Margin"
-msgstr ""
+msgstr "Сол жақ өріс"
 
 #: src/control/Ruler.js:391
 msgid "Right Margin"
-msgstr ""
+msgstr "Оң жағы"
 
 #: src/control/Ruler.js:630
-#, fuzzy
 msgid "Insert tabstop"
-msgstr "Кестені кірістіру"
+msgstr "Табуляция орнын қосу"
 
 #: src/control/Ruler.js:637
-#, fuzzy
 msgid "Delete tabstop"
-msgstr "Кестені кірістіру"
+msgstr "Табуляция орнын жою"
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Құжатқа қол қойылмаған."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
-msgstr ""
+msgstr "Бұл құжат цифрлық қолтаңбамен расталған және қолтаңба жарамды."
 
 #: src/control/Signing.js:36
 msgid "This document has an invalid signature."
-msgstr ""
+msgstr "Бұл құжаттың қолтаңбасы жарамсыз."
 
 #: src/control/Signing.js:40
 msgid "The signature was valid, but the document has been modified."
-msgstr ""
+msgstr "Қолтаңба дұрыс болды, бірақ құжат өзгертілді."
 
 #: src/control/Signing.js:44
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
+msgstr "Қолтаңба дұрыс, бірақ сертификатты тексеру мүмкін емес."
 
 #: src/control/Signing.js:48
 msgid "The signature is OK, but the document is only partially signed."
-msgstr ""
+msgstr "Қолтаңба дұрыс, бірақ құжат тек жартылай қолтаңбамен расталған."
 
 #: src/control/Signing.js:52
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"Қолтаңба дұрыс, бірақ сертификатты тексеру мүмкін емес және құжат тек "
+"жартылай қолтаңбамен расталған."
 
 #: src/control/Toolbar.js:56
 msgid "Font"
@@ -2720,35 +2732,35 @@ msgstr "Сақтау..."
 
 #: src/control/Toolbar.js:299
 msgid "Renaming..."
-msgstr ""
+msgstr "Қайта атау..."
 
 #: src/control/Toolbar.js:792
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Гиперсілтеме қосу"
 
 #: src/control/Toolbar.js:816
 msgid "Link"
-msgstr ""
+msgstr "Сілтеме"
 
 #: src/control/VRuler.ts:393
 msgid "Top Margin"
-msgstr ""
+msgstr "Жоғарғы өріс"
 
 #: src/control/VRuler.ts:394
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Төменгі жиек"
 
 #: src/control/jsdialog/Definitions.Menu.ts:24
 msgid "Min"
-msgstr ""
+msgstr "Мин"
 
 #: src/control/jsdialog/Definitions.Menu.ts:25
 msgid "Max"
-msgstr ""
+msgstr "Максимум"
 
 #: src/control/jsdialog/Definitions.Menu.ts:259
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Компьютерден кескін қосу"
 
 #: src/control/jsdialog/Definitions.Menu.ts:264
 msgid "Insert Local Multimedia"
@@ -2776,36 +2788,36 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:417
 msgid "From Beginning"
-msgstr ""
+msgstr "Бастапқыдан"
 
 #: src/control/jsdialog/Definitions.Menu.ts:421
 msgid "From Current Slide"
-msgstr ""
+msgstr "Қазіргі слайдтан"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
-msgstr ""
+msgstr "Жабу"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:182
 msgid "No fill"
-msgstr ""
+msgstr "Толтыру жоқ"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:182
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматты"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:358
 msgid "Recent"
-msgstr ""
+msgstr "Жақында"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:45
 #: src/control/jsdialog/Widget.HTMLContent.ts:52
 msgid "Permission Mode"
-msgstr ""
+msgstr "Рұқсат беру режимі"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
-msgstr ""
+msgstr "Тек оқу"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:53
 msgid "Edit mode"
@@ -2813,39 +2825,36 @@ msgstr ""
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:72
 #: src/control/jsdialog/Widget.HTMLContent.ts:118
-#, fuzzy
 msgid "Number of Pages"
-msgstr "Көрулер саны"
+msgstr "Беттер саны"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:78
 msgid "Word Counter"
-msgstr ""
+msgstr "Сөз Санағыш"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:82
-#, fuzzy
 msgid "Number of Sheets"
-msgstr "Көрулер саны"
+msgstr "Парақтар саны"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:86
 msgid "Entering text mode"
-msgstr ""
+msgstr "Мәтін режиміне кіру"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:92
 msgid "Selection Mode"
-msgstr ""
+msgstr "Таңдау Режимі"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:100
 msgid "Selected range of cells"
-msgstr ""
+msgstr "Таңдалған ұяшықтар диапазоны"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:108
 msgid "Choice of functions"
-msgstr ""
+msgstr "Функцияларды таңдау"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:114
-#, fuzzy
 msgid "Number of Slides"
-msgstr "Көрулер саны"
+msgstr "Слайдтар саны"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:124
 #: src/control/jsdialog/Widget.HTMLContent.ts:132
@@ -2859,19 +2868,19 @@ msgstr "Түсіндірме"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
-msgstr ""
+msgstr "Ұяшықтардың шекаралары"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:73
 msgid "More options for {name}"
-msgstr ""
+msgstr "{name} үшін қосымша параметрлер"
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
-msgstr ""
+msgstr "Түзету құралдары"
 
 #: src/core/Debug.js:56
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Шығу үшін Ctrl+Shift+Alt+D пернелерін басыңыз"
 
 #: src/core/Socket.js:67
 #, fuzzy
@@ -2880,31 +2889,31 @@ msgstr "Қап, Collabora Online жүйесіне байланысу қатес�
 
 #: src/core/Socket.js:685
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr ""
+msgstr "Сервер қол жетімді болды. Енді бетті жаңарту қажет."
 
 #: src/core/Socket.js:687
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Сервер қол жетімді болды..."
 
 #: src/core/Socket.js:691
 msgid "RELOAD"
-msgstr ""
+msgstr "ҚАЙТАН ЖҮКТЕУ"
 
 #: src/core/Socket.js:704
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Кластер конфигурациясы ескертпесі"
 
 #: src/core/Socket.js:707
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Қате сервер, қайта қосылуда..."
 
 #: src/core/Socket.js:716
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "COOLWSD нұсқасы:"
 
 #: src/core/Socket.js:741
 msgid "Served by:"
-msgstr ""
+msgstr "Қызмет көрсететін:"
 
 #: src/core/Socket.js:747
 msgid "Unsupported server version."
@@ -2912,19 +2921,19 @@ msgstr "Сервердің нұсқасына қолдау жоқ."
 
 #: src/core/Socket.js:751
 msgid "LOKit version:"
-msgstr ""
+msgstr "LOKit нұсқасы:"
 
 #: src/core/Socket.js:875
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "Құжат көшіруде"
 
 #: src/core/Socket.js:902
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "Сессия құжат иесімен тоқтатылды"
 
 #: src/core/Socket.js:913
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "Сервер техникалық қызмет көрсету үшін сөндірілуде (Автоматты сақтау)"
 
 #: src/core/Socket.js:919
 #, fuzzy
@@ -2934,22 +2943,28 @@ msgstr "Қап, Collabora Online жүйесіне байланысу қатес�
 #: src/core/Socket.js:923
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
+"Сервер қол жетімсіз, автоматты түрде қайта іске қосылуда. Қарсы алмай "
+"күтіңіз."
 
 #: src/core/Socket.js:950
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Құжат сақтау құрылысында өзгерді. Жаңа құжат жүктелуде. Сіздің нұсқаңыз "
+"нұсқалық ретінде сақталған."
 
 #: src/core/Socket.js:956
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
+"Ескі нұсқаны қалпына келтіру. Сақталмаған өзгерістер нұсқалар тарихында қол "
+"жетімді болады"
 
 #: src/core/Socket.js:962
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Құжатты қайта жүктеу аты өзгертілгеннен кейін"
 
 #: src/core/Socket.js:1120
 msgid "Document requires password to view."
@@ -2969,61 +2984,63 @@ msgstr "Көрсетілген пароль қате. Қайтадан көрі�
 
 #: src/core/Socket.js:1167
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Тек құжаттың иесі ғана құпиясөзді өзгерте алады."
 
 #: src/core/Socket.js:1198 src/core/Socket.js:1203
 msgid "Missing Fonts"
-msgstr ""
+msgstr "Шрифттер жоқ"
 
 #: src/core/Socket.js:1235
 msgid "Someone"
-msgstr ""
+msgstr "Біреу"
 
 #: src/core/Socket.js:1236
 msgid "{username} saved this document as {filename}. Do you want to join?"
-msgstr ""
+msgstr "{username} осы құжатты {filename} ретінде сақтады. Қосылғыңыз келе ме?"
 
 #: src/core/Socket.js:1253
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Құжат қайта аталып жатыр, және жақын арада қайта жүктеледі"
 
 #: src/core/Socket.js:1256
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "Құжат оффлайн режиміне өтуде, және жақын арада қайта жүктеледі"
 
 #: src/core/Socket.js:1338
 msgid "Connecting..."
-msgstr ""
+msgstr "Қосылуда..."
 
 #: src/core/Socket.js:1353
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Сервер сөндірілуде"
 
 #: src/core/Socket.js:1386
 msgid "Exported to storage"
-msgstr ""
+msgstr "Қоймаға экспортталды"
 
 #: src/core/Socket.js:1386
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Сәтті экспортталды: "
 
 #: src/core/Socket.js:1414
 msgid "Discard"
-msgstr ""
+msgstr "Қабылдамау"
 
 #: src/core/Socket.js:1426
 msgid "Save to new file"
-msgstr ""
+msgstr "Жаңа файлға сақтау"
 
 #: src/core/Socket.js:1436
 msgid "Document has been changed"
-msgstr ""
+msgstr "Құжат өзгертілді"
 
 #: src/core/Socket.js:1437
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
+"Құжат сақтау құрылғысындағы өзгертілді. Сақталмаған өзгерістермен не істеу "
+"керек?"
 
 #: src/core/Socket.js:1690
 msgid ""
@@ -3033,11 +3050,11 @@ msgstr "Құжатқа байланысу сәтсіз аяқталды. Қай�
 
 #: src/core/Socket.js:1707
 msgid "Reconnecting..."
-msgstr ""
+msgstr "Қате сервер, қайта қосылуда..."
 
 #: src/core/Socket.js:1717
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Сервер ажыратылды."
 
 #: src/docdispatcher.ts:482
 msgid "Are you sure you want to delete this slide?"
@@ -3049,15 +3066,15 @@ msgstr "Бұл бетті шынымен өшіру керек пе?"
 
 #: src/docstate.js:99
 msgid "Standard"
-msgstr ""
+msgstr "Стандартты"
 
 #: src/docstate.js:112
 msgid "Theme colors"
-msgstr ""
+msgstr "Тақырыптың түстері"
 
 #: src/docstate.js:113
 msgid "Document colors"
-msgstr ""
+msgstr "Құжат түстері"
 
 #: src/docstatefunctions.js:176
 msgid ", cluster configuration error: mis-matching serverid"
@@ -3069,7 +3086,7 @@ msgstr ""
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Серверде орын қалмады."
 
 #: src/errormessages.js:23
 msgid ""
@@ -3086,42 +3103,54 @@ msgid ""
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
+"Бұл {productname} бағдарламасының қолдау көрсетілмейтін нұсқасы. Бұл "
+"хабарлама {docs} құжаттарынан немесе {connections} қосылымдарынан көп "
+"қолданылғанда пайда болады, бұл оның кәсіпорындарда орнатуға жарамды "
+"екендігін көрсетпейді."
 
 #: src/errormessages.js:25
 msgid "More information and support"
-msgstr ""
+msgstr "Қосымша ақпарат және көмек"
 
 #: src/errormessages.js:26
 msgid ""
 "This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
+"Бұл қызмет администратор тарапынан {0} құжаттарымен және {1} қосылымымен "
+"шектелген. Бұл шектеу жетті. Кешіріңіз, кейінірек тағы бір рет көріп көріңіз."
 
 #: src/errormessages.js:27
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"Қызмет қол жетімсіз. Кейінірек қайта көруге тырысыңыз және мәселе жалғасса, "
+"әкімшіңізге хабарласыңыз."
 
 #: src/errormessages.js:28
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"Авторизацияланбаған WOPI хосты. Кейінірек қайта көріп, мәселе жалғасса "
+"әкімшіңізге хабарласыңыз."
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Авторизация қатесі: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
+msgstr "Қате немесе жоқ WOPISrc параметрі, қолдау қызметіне хабарласыңыз."
 
 #: src/errormessages.js:31
 msgid ""
 "Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
+"Сіздің сессияңыз {time} уақытта аяқталады. Жұмысыңызды сақтап, сессияны ("
+"немесе веб-бетті) жаңартып, жалғастырыңыз. Қайта кіру қажет болуы мүмкін."
 
 #: src/errormessages.js:32
 msgid ""
@@ -3129,38 +3158,47 @@ msgid ""
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
+"Сіздің сессияңыз аяқталды. Құжаттағы келесі өзгерістер сақталмауы мүмкін. "
+"Жұмысты жалғастыру үшін сессияны (немесе веб-бетті) жаңартыңыз. Қайта кіру "
+"қажет болуы мүмкін."
 
 #: src/errormessages.js:33
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
+"Документ жүктеу сәтсіз аяқталды. Файл түрі қолдау көрсетілетінін және "
+"зақымдалмағанын тексеріп, қайтадан салыңыз."
 
 #: src/errormessages.js:34
 msgid "Invalid link: '{url}'"
-msgstr ""
+msgstr "Қате сілтеме: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
-msgstr ""
+msgstr "Сіз құжаттан кетіп барасыз. Келесі веб-бет жаңа қойындыда ашылады: "
 
 #: src/errormessages.js:36
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
+"Документті жүктеу сәтсіз аяқталды. Бұл құжат бүлінген немесе рұқсат "
+"етілгеннен көп ресурстарды қажет етеді. Әкімшімен хабарласыңыз."
 
 #: src/errormessages.js:37
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Соңғы сессиядан кейін құжатты тазалау."
 
 #: src/errormessages.js:38
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"Біз соңғы сеанстан кейін бұл құжатты тазалаудамыз, кейінірек қайта көріп "
+"көріңіз."
 
 #: src/errormessages.js:39
 msgid ""
@@ -3170,6 +3208,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId {0} for routeToken "
 "{1} but connected to serverId {2}"
 msgstr ""
+"{productname} кластеріңіз дұрыс конфигурацияланбаған немесе тез өсіп жатқан "
+"сияқты - жүйе әкімшісімен байланысыңыз. Редакциялауды жалғастыру бірнеше "
+"пайдаланушылардың бір-бірін көрмеуіне, құжатты сақтау кезінде қайшылықтарға "
+"және/немесе көшіру/қосу мәселелеріне әкелуі мүмкін. routeToken {1} үшін "
+"күтілетін serverId {0}, бірақ serverId {2} серверімен қосылған."
 
 #: src/errormessages.js:40
 msgid ""
@@ -3178,51 +3221,66 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Сокет байланысын орнату мүмкін болмады немесе сокет байланысы күтпеген "
+"жерден жабылды. Обратный прокси дұрыс конфигурацияланбаған болуы мүмкін, "
+"әкімшіден көмек сұраңыз. Прокси конфигурациясы туралы қосымша ақпаратты мына "
+"жерден таба аласыз: https://sdk.collaboraonline.com/docs/installation/"
+"Proxy_settings.html"
 
 #: src/errormessages.js:41
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Сокет байланысын орнату мүмкін болмады немесе сокет байланысы күтпеген "
+"жерден жабылды."
 
 #: src/errormessages.js:44
 msgid "Failed to load document."
-msgstr ""
+msgstr "Құжатты жүктеу мүмкін болмады."
 
 #: src/errormessages.js:45
 msgid "Save failed due to no disk space left. Document will now be read-only."
 msgstr ""
+"Диск кеңістігі болмауы себебінен сақтау сәтсіз болды. Құжат тек оқуға "
+"арналған болады."
 
 #: src/errormessages.js:46
 msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
-msgstr ""
+msgstr "Құжат тым үлкен немесе сақтауға орын жоқ. Құжат тек оқу үшін болады."
 
 #: src/errormessages.js:47
 msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Құжат сақталмады, сессияның мерзімі өтіп кеткен, жалғастыру үшін құжатты "
+"қайта ашыңыз."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "Құжат сақталмады."
 
 #: src/errormessages.js:49
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "Құжатты қайта атауға болмайды."
 
 #: src/errormessages.js:53
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Документті сақтау қоймасынан оқу мүмкін болмады, құжатты қайта жүктеп "
+"көріңіз."
 
 #: src/errormessages.js:54
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Сақтау мүмкін болмады, себебі сақтау кеңістігі таусылды. Құжат тек оқуға "
+"арналған болады. Қайта сақтау үшін дискте орын бар екеніне көз жеткізіңіз."
 
 #: src/errormessages.js:55
 msgid ""
@@ -3230,32 +3288,36 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Құжат тым үлкен немесе бос орын таусылды. Құжат тек оқуға арналған болады, "
+"бірақ сіз оны қазір жүктеп алып, жергілікті көшірмесін сақтай аласыз."
 
 #: src/errormessages.js:56
 msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Құжат сақталмады, сессияның мерзімі өтіп кеткен, жалғастыру үшін бетті қайта "
+"жүктеңіз."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Құжат сақталмады, рұқсаттарыңызды тексеріңіз."
 
 #: src/errormessages.js:58
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Құжатты қайта атауға болмайды, рұқсаттарыңызды тексеріңіз."
 
 #: src/errormessages.js:59
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Құжатты экспорттауға болмайды. Қайтадан көріңіз."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Файлды серверге жүктеу сәтсіз аяқталды, файл табылмады."
 
 #: src/errormessages.js:65
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Файлды серверге жүктеу сәтсіз аяқталды, файл тым үлкен."
 
 #: src/layer/marker/A11yTextInput.js:226
 msgid "Out of table"
@@ -3332,62 +3394,64 @@ msgstr "Функция"
 
 #: src/layer/tile/CanvasTileLayer.js:2143
 msgid "Named Range"
-msgstr ""
+msgstr "Аты бар ауқым"
 
 #: src/layer/tile/CanvasTileLayer.js:3862
 msgid "No Comments"
-msgstr ""
+msgstr "Пікірлер жоқ"
 
 #: src/main.js:139
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Ескерту! Қолданылатын браузер қолдау көрсетілмейді."
 
 #: src/map/Clipboard.js:176
 msgid ""
 "To paste outside {productname}, please first click the 'download' button"
-msgstr ""
+msgstr "{productname}-дан тыс қою үшін алдымен 'жүктеу' батырмасын басыңыз"
 
 #: src/map/Clipboard.js:184
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Құжаттан көшіру өшірілді"
 
 #: src/map/Clipboard.js:285
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "ескерту: көшіру/қосу сұрауының күту уақыты аяқталды"
 
 #: src/map/Clipboard.js:329
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
+msgstr "Буферді жүктеу мүмкін болмады, қайта көшіруді сұраймыз"
 
 #: src/map/Clipboard.js:1276
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr ""
+msgstr "Экрандық пернетақтадағы қою батырмаларын қолданыңыз."
 
 #: src/map/Clipboard.js:1332
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
+"Үлкен көшіріп қою операциясы үшін жүктеу басталды. Қазіргі жүктеуді күтіңіз "
+"немесе жаңа жүктеуді бастамас бұрын оны болдырмаңыз"
 
 #: src/map/Clipboard.js:1354
 msgid "Paste from this document"
-msgstr ""
+msgstr "Осы құжаттан қою"
 
 #: src/map/Clipboard.js:1354
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Арнайы қоюды болдырмау"
 
 #: src/map/Clipboard.js:1364
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Сіздің браузеріңізде буферге өте шектеулі қолжетімділік бар"
 
 #: src/map/Clipboard.js:1369
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Қосымша параметрлерді көру үшін келесі комбинацияны қолданыңыз:"
 
 #: src/map/Clipboard.js:1387
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Арнайы қоюды елемеу үшін қалқымалы терезені жабыңыз"
 
 #: src/map/Map.js:216
 msgid "Initializing..."
@@ -3395,26 +3459,26 @@ msgstr "Инициализация..."
 
 #: src/map/Map.js:461 src/map/Map.js:464 src/map/Map.js:467 src/map/Map.js:470
 msgid "Last saved:"
-msgstr ""
+msgstr "Соңғы сақтау:"
 
 #: src/map/Map.js:1479
 msgid "Please wait!"
-msgstr ""
+msgstr "Күте тұрыңыз!"
 
 #: src/map/handler/Map.Feedback.js:86
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Өз пікіріңізді жіберіңізші"
 
 #: src/map/handler/Map.FileInserter.js:123
 msgid ""
 "The file of type: {0} cannot be uploaded to server since the file has no "
 "name"
-msgstr ""
+msgstr "Типтегі файл: {0} серверге жүктелмейді, себебі файлда атау жоқ"
 
 #: src/map/handler/Map.FileInserter.js:125
 msgid ""
 "The file of type: {0} cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Типтегі файл: {0} серверге жүктелмейді, себебі файл бос"
 
 #: src/map/handler/Map.FileInserter.js:156
 #, fuzzy
@@ -3423,7 +3487,7 @@ msgstr "Жүктелуде..."
 
 #: src/map/handler/Map.FileInserter.js:179
 msgid "Uploading file to server failed with status: {0}"
-msgstr ""
+msgstr "Файлды серверге жүктеу сәтсіз аяқталды, мәртебе: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -3431,12 +3495,12 @@ msgstr ""
 
 #: src/map/handler/Map.SlideShow.js:55 src/slideshow/SlideShowPresenter.ts:638
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Бос слайд-шоу"
 
 #: src/map/handler/Map.SlideShow.js:163
 #: src/slideshow/SlideShowPresenter.ts:666
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Терезелі презентация бұғатталды"
 
 #: src/map/handler/Map.SlideShow.js:164
 #: src/slideshow/SlideShowPresenter.ts:668
@@ -3445,49 +3509,52 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Презентация бұғатталды. Браузеріңізде қалқымалы терезелерді қосыңыз. Бұл "
+"слайдтар көрсетілімін бөлек терезелерде көрсетуге мүмкіндік береді, бұл "
+"экранды оңай бөлісуге мүмкіндік береді."
 
 #: src/map/handler/Map.SlideShow.js:168
 #: src/slideshow/SlideShowPresenter.ts:465
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Терезелі презентация: "
 
 #: src/map/handler/Map.SlideShow.js:198
 #: src/slideshow/SlideShowPresenter.ts:508
 msgid "Presenting in window"
-msgstr ""
+msgstr "Терезеде презентация"
 
 #: src/map/handler/Map.SlideShow.js:199
 #: src/slideshow/SlideShowPresenter.ts:509
 msgid "Close Presentation"
-msgstr ""
+msgstr "Презентацияны жабу"
 
 #: src/map/handler/Map.SlideShow.js:226
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Толық экранды презентация"
 
 #: src/map/handler/Map.SlideShow.js:227
 msgid "End Presentation"
-msgstr ""
+msgstr "Презентацияны аяқтау"
 
 #: src/map/handler/Map.SlideShow.js:291
 #: src/slideshow/SlideShowPresenter.ts:653
 msgid "Already presenting"
-msgstr ""
+msgstr "Презентация басталды"
 
 #: src/map/handler/Map.SlideShow.js:292
 #: src/slideshow/SlideShowPresenter.ts:654
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Сіз осы құжатты көрсетуге бастадыңыз"
 
 #: src/map/handler/Map.SlideShow.js:302
 #: src/slideshow/SlideShowPresenter.ts:691
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Презентация өшірілген"
 
 #: src/map/handler/Map.SlideShow.js:303
 #: src/slideshow/SlideShowPresenter.ts:692
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Бұл құжат үшін презентация режимі өшірілген"
 
 #: src/map/handler/Map.VersionBar.js:41
 msgid "Your Collabora Online server needs updating. Version {0} is available."
@@ -3495,19 +3562,19 @@ msgstr ""
 
 #: src/map/handler/Map.WOPI.js:153
 msgid "Creating new file from template..."
-msgstr ""
+msgstr "Шаблоннан жаңа файл жасау..."
 
 #: src/map/handler/Map.WOPI.js:665
 msgid "Error"
-msgstr ""
+msgstr "Қате"
 
 #: src/map/handler/Map.WOPI.js:665
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Файл атауы кеңейтуі бар болу керек."
 
 #: src/map/handler/Map.WOPI.js:673
 msgid "Creating copy..."
-msgstr ""
+msgstr "Көшіру жасалуда..."
 
 #: src/map/handler/Map.Welcome.js:81
 msgid "Welcome Dialog"
@@ -3515,7 +3582,7 @@ msgstr ""
 
 #: src/slideshow/PauseTimer.ts:140
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Пауза... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
@@ -3532,7 +3599,7 @@ msgstr ""
 
 #: src/slideshow/PresenterConsole.js:32
 msgid "Next"
-msgstr ""
+msgstr "Келесi"
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
@@ -3540,7 +3607,7 @@ msgstr ""
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Пауза"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
@@ -3577,20 +3644,20 @@ msgstr ""
 #: src/slideshow/PresenterConsole.js:1323
 #: src/slideshow/SlideShowPresenter.ts:364
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Презентациядан шығу үшін басыңыз..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Collabora Online-ға қош келдіңіз"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
-msgstr ""
+msgstr "Жаңа {coolversion} туралы білу"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online әзірлеушілер нұсқасы"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
@@ -3599,10 +3666,15 @@ msgid ""
 "target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
 "collabora-office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Онлайн өнімділіктің соңғы жетістіктерін пайдаланыңыз, оларды зерттеу үшін "
+"және басқа пайдаланушылармен бірге браузерде қолдану үшін тегін. Әртүрлі <a "
+"target=\"_blank\" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\""
+">қолданбалар</a> мобильді құрылғыларға да қолжетімді."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "Барлық өзгерістерді білу"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -3611,14 +3683,19 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"<a target=\"_blank\" href="
+"\"https://www.collaboraonline.com/code-24-04-release-notes/\"> шығару "
+"ескертпелері</a>-мен танысып, үй пайдаланушылары мен шағын командаларға "
+"арналған ең соңғы Collabora Online Development Edition туралы біліңіз."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Қатысу"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
+#, fuzzy
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -3631,6 +3708,13 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Сіз үлес қосқыңыз келе ме, бірақ қайдан бастау керектігін білмейсіз бе? <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
+">қадамдық нұсқаулыққа</a> өтіп, CODE-ды нөлден құрастырыңыз. Сондай-ақ, сіз "
+"<a target=\"_blank\" href="
+"\"https://collaboraonline.github.io/post/translate/\">аударма</a> немесе <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\""
+">қателер туралы есеп беру</a> арқылы көмек көрсете аласыз."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
