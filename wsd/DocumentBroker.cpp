@@ -3957,14 +3957,22 @@ void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::s
                                          const std::string& value)
 {
     ASSERT_CORRECT_THREAD();
-    LOG_DBG("Updating browser setting with key["
-            << key << "] and value[" << value << "] for all sessions with userId [" << userId << ']');
+    LOG_DBG("Updating browser setting with key[" << key << "] and value[" << value
+                                                 << "] for all sessions with userId [" << userId
+                                                 << ']');
+
+    bool upload = false;
     for (auto& it : _sessions)
     {
         if (it.second->getUserId() != userId)
             continue;
 
-        it.second->updateBrowserSettingsJSON(key, value, _docKey);
+        it.second->updateBrowserSettingsJSON(key, value);
+        if (!upload)
+        {
+            it.second->uploadBrowserSettingsToWopiHost(Uri::decode(_docKey));
+            upload = true;
+        }
     }
 }
 #endif

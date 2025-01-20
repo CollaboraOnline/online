@@ -298,10 +298,9 @@ public:
     void overrideDocOption();
 
 #if !MOBILEAPP
-    void updateBrowserSettingsJSON(const std::string& key, const std::string& value,
-                                   const std::string& docKey);
-
+    void updateBrowserSettingsJSON(const std::string& key, const std::string& value);
     void uploadPresetsToWopiHost(const std::string& jailPresetPath, const std::string& docKey);
+    void uploadBrowserSettingsToWopiHost(const std::string& docKey);
 #endif
 
 private:
@@ -359,9 +358,6 @@ private:
 
     std::string getIsAdminUserStatus() const;
 
-#if !MOBILEAPP
-    void uploadBrowserSettingsToWopiHost(const std::string& docKey);
-#endif
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 
