@@ -1192,7 +1192,7 @@ bool ServerSocket::bind([[maybe_unused]] Type type, [[maybe_unused]] int port)
     const int reuseAddress = 1;
     constexpr unsigned int len = sizeof(reuseAddress);
     if (::setsockopt(getFD(), SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len) == -1)
-        LOG_SYS("Failed setsockopt SO_REUSEADDR: " << strerror(errno));
+        LOG_SYS("Failed setsockopt SO_REUSEADDR on socket fd " << getFD() << ": " << strerror(errno));
 
     int rc;
 
