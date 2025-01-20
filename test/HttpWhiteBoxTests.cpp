@@ -180,7 +180,7 @@ void HttpWhiteBoxTests::testHeader()
     http::Header header;
 
     const std::string data = "\r\na=\r\n\r\n";
-    LOK_ASSERT_EQUAL(8L, header.parse(data.c_str(), data.size()));
+    LOK_ASSERT_EQUAL(static_cast<std::int64_t>(8), header.parse(data.c_str(), data.size()));
     LOK_ASSERT_EQUAL(0UL, header.size());
 }
 
@@ -248,7 +248,7 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     for (std::size_t i = 0; i < 33; ++i)
     {
         // Should return 0 to signify that data is incomplete.
-        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, static_cast<std::int64_t>(0),
                                  req.readData(data.c_str(), i));
     }
 
@@ -264,7 +264,7 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     for (std::size_t i = off; i < data.size(); ++i)
     {
         // Should return 0 to signify that data is incomplete.
-        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, static_cast<std::int64_t>(0),
                                  req.readData(data.c_str() + off, i - off));
     }
 
