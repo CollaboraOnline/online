@@ -2977,9 +2977,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			control.style.gridColumn = 'span ' + parseInt(data.width);
 		}
 
-
 		// natural tab-order when using keyboard navigation
 		if (control && !control.hasAttribute('tabIndex')
+			&& control.querySelectorAll('[tabindex]').length === 0
 			&& data.type !== 'container'
 			&& data.type !== 'tabpage'
 			&& data.type !== 'tabcontrol'
