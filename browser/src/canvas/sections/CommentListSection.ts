@@ -769,7 +769,8 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			// Make sure that comment is not transitioning and comment menu is not open.
 			var tempFunction = function() {
 				setTimeout(function() {
-					if (String(annotation.sectionProperties.container.dataset.transitioning) === 'true' || annotation.sectionProperties.contextMenu === true) {
+					if (annotation.sectionProperties.container && annotation.sectionProperties.contextMenu === true
+					) {
 						tempFunction();
 					}
 					else {
@@ -1305,8 +1306,11 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	}
 
 	public add (comment: any): cool.Comment {
-		if (!comment.sectionProperties)
-			comment = new cool.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
+		if (!comment.sectionProperties) {
+			const temp = new cool.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
+			temp.sectionProperties.data = comment;
+			comment = temp;
+		}
 
 		comment.sectionProperties.noMenu  = comment.sectionProperties.data.id === 'new' ? true : false;
 
@@ -1751,7 +1755,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	private adjustCommentFileBasedView (comment: any): void {
 		// Below calculations are the same with the ones we do while drawing tiles in fileBasedView.
 		var partHeightTwips = app.map._docLayer._partHeightTwips + app.map._docLayer._spaceBetweenParts;
-		var index = app.impress.getIndexFromSlideHash(comment.parthash);
+		var index = app.impress.getIndexFromSlideHash(parseInt(comment.parthash));
 		var yAddition = index * partHeightTwips;
 		comment.yAddition = yAddition; // We'll use this while we save the new position of the comment.
 
