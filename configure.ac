@@ -1419,9 +1419,16 @@ SYSTEMPLATE_PATH=not-set
 have_lo_path=false
 AC_MSG_CHECKING([whether to run tests against a LibreOffice])
 version_file="$with_lo_path/program/versionrc"
+version_file_macos="$with_lo_path/Contents/Resources/versionrc"
 if test -f $version_file; then
     JAILS_PATH="\${abs_top_builddir}/jails"
     CACHE_PATH="\${abs_top_builddir}/cache"
+    SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
+    have_lo_path=true
+    lo_msg="test against $LO_PATH"
+    AC_MSG_RESULT([yes])
+elif test `uname -s` = Darwin -a -f "$version_file_macos"; then
+    JAILS_PATH="\${abs_top_builddir}/jails"
     SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
     have_lo_path=true
     lo_msg="test against $LO_PATH"
