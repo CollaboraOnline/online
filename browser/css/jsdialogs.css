@@ -541,6 +541,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	white-space: nowrap;
 }
 
+#ServerAuditDialog .ui-treeview-entry {
+	display: flex;
+}
+
 .ui-treeview-expanded-content {
 	display: grid;
 }
@@ -567,6 +571,24 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	grid-auto-flow: column;
 	/* grid-column: '1 / ' + (this._columns + 1) - set inside JS */
 }
+
+#ServerAuditDialog .ui-treeview-headers {
+	display: flex;
+}
+
+#ServerAuditDialog .ui-treeview-icon {
+	margin-inline-end: 5px;
+}
+
+#ServerAuditDialog .ui-treeview-headers div.ui-treeview-icon-column {
+	margin-inline-end: 4px;
+	width: 0px /* prevent display of ui-treeview-icon-column in ui-treeview-header */
+}
+
+#ServerAuditDialog .ui-treeview-headers > div:nth-child(2) {
+	width: calc(100% - 95px);
+}
+
 
 .ui-treeview-header {
 	display: inline-block;
