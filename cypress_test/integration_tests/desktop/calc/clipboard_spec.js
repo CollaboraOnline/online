@@ -183,6 +183,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		helper.typeIntoDocument('{leftArrow}');
 
 		calcHelper.clickOnFirstCell();
+		cy.cGet('.arrow-div.reverse').should('be.visible'); // Ensure that hyperlink doesn't overlap with the cell.
 		cy.cGet('#hyperlink-pop-up-copy').click();
 
 		cy.cGet('#copy-paste-container').should('contain.text', url); // TODO: There is an extra \n here.
