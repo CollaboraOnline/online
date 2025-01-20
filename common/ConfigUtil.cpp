@@ -53,6 +53,7 @@ static const std::map<std::string, std::string> DefAppConfig = {
     { "admin_console.password", "" },
     { "admin_console.username", "" },
     { "allowed_languages", "de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru" },
+    { "allow_update_popup", "true" },
     { "browser_logging", "false" },
     { "certificates.database_path", "" },
     { "child_root_path", "jails" },
@@ -85,6 +86,7 @@ static const std::map<std::string, std::string> DefAppConfig = {
     { "feature_lock.unlock_title", UNLOCK_TITLE },
     { "feature_lock.writer_unlock_highlights", WRITER_UNLOCK_HIGHLIGHTS },
 #endif
+    { "fetch_update_check", "10" },
     { "fonts_missing.handling", "log" },
     { "file_server_root_path", "browser/.." },
 #if !MOBILEAPP

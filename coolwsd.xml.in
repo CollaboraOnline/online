@@ -45,8 +45,8 @@
 
     <memproportion desc="The maximum percentage of available memory consumed by all of the @APP_NAME@ processes, after which we start cleaning up idle documents. If cgroup memory limits are set, this is the maximum percentage of that limit to consume." type="double" default="80.0"></memproportion>
     <num_prespawn_children desc="Number of child processes to keep started in advance and waiting for new clients." type="uint" default="@NUM_PRESPAWN_CHILDREN@">@NUM_PRESPAWN_CHILDREN@</num_prespawn_children>
-    <!-- <fetch_update_check desc="Every number of hours will fetch latest version data. Defaults to 10 hours." type="uint" default="10">10</fetch_update_check> -->
-    <!-- <allow_update_popup desc="Allows notification about an update in the editor" type="bool" default="true">true</allow_update_popup> -->
+    <fetch_update_check desc="Every number of hours will fetch latest version data. Defaults to 10 hours." type="uint" default="10">10</fetch_update_check>
+    <allow_update_popup desc="Allows notification about an update in the editor" type="bool" default="true">true</allow_update_popup>
     <per_document desc="Document-specific settings, including LO Core settings.">
         <max_concurrency desc="The maximum number of threads to use while processing a document." type="uint" default="4">4</max_concurrency>
         <batch_priority desc="A (lower) priority for use by batch eg. convert-to processes to avoid starving interactive ones" type="uint" default="5">5</batch_priority>
