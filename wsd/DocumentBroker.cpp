@@ -1848,6 +1848,8 @@ void DocumentBroker::parseBrowserSettings(const std::shared_ptr<ClientSession>& 
     browserSettings->stringify(jsonStream, 2);
     session->sendTextFrame("browsersetting: " + jsonStream.str());
     session->setSentBrowserSetting(true);
+
+    LOG_DBG("Setting _browserSettingsJSON for clientsession[" << session->getId() << ']');
     session->setBrowserSettingsJSON(browserSettings);
 }
 
@@ -3948,6 +3950,23 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
             it.second->enqueueSendMessage(payload);
     }
 }
+
+#if !MOBILEAPP
+void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::string& key,
+                                         const std::string& value)
+{
+    ASSERT_CORRECT_THREAD();
+    LOG_DBG("Updating browser setting with key["
+            << key << "] and value[" << value << "] for all sessions with userId [" << userId << ']');
+    for (auto& it : _sessions)
+    {
+        if (it.second->getUserId() != userId)
+            continue;
+
+        it.second->updateBrowserSettingsJSON(key, value, _docKey);
+    }
+}
+#endif
 
 void DocumentBroker::setKitLogLevel(const std::string& level)
 {

@@ -248,6 +248,10 @@ public:
     static void alertUserInternal(const std::string& dockey, const std::string& msg);
     static void setMigrationMsgReceived(const std::string& docKey);
     static void setAllMigrationMsgReceived();
+#if !MOBILEAPP
+    static void syncUsersBrowserSettings(const std::string& userId, const std::string& key,
+                                             const std::string& value);
+#endif
 
 #if ENABLE_DEBUG
     /// get correct server URL with protocol + port number for this running server
