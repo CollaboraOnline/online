@@ -391,7 +391,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	border: 1px solid var(--color-stylesview-border);
 	border-radius: var(--border-radius);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
-	scrollbar-width: none;
+	scrollbar-width: thin;
 	background-color: var(--color-stylesview-background);
 	filter: brightness(var(--brightness-stylesview));
 	box-sizing: border-box;
@@ -401,10 +401,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	filter: none;
 }
 
-#stylesview::-webkit-scrollbar {
-	width: 0;
-	height: 0;
-}
 
 #stylesview .ui-iconview-entry {
 	box-sizing: border-box;
