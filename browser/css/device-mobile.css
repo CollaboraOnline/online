@@ -330,7 +330,7 @@ textarea.cool-annotation-textarea {
 }
 
 /* Show sidebar beyond 768px only */
-#sidebar-dock-wrapper {
+#sidebar-dock-wrapper, #navigator-dock-wrapper {
 	display: none !important;
 }
 
