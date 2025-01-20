@@ -34,6 +34,23 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('contain','some text0, some other text');
 	});
 
+	it('Modify and Save using shortcut Ctrl+Enter', function() {
+		// Given an open comment edit dialog
+		desktopHelper.insertComment();
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#annotation-content-area-1').should('contain','some text0');
+		cy.cGet('#comment-annotation-menu-1').click();
+		cy.cGet('body').contains('.context-menu-item', 'Modify').click();
+		cy.cGet('#annotation-modify-textarea-1').type('some other text, ');
+
+		// When Ctrl+Enter is hit
+		cy.cGet('annotation-modify-textarea-1').type('{ctrl}{enter}');
+
+		// Then, the dialog is closed and the comment content is updated
+		cy.cGet('.cool-annotation-content-wrapper').should('not.exist');
+		cy.cGet('#annotation-content-area-1').should('contain','some other text, some text0');
+	});
+
 	it('Reply', function() {
 		desktopHelper.insertComment();
 
