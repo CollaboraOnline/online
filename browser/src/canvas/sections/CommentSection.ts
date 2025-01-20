@@ -120,7 +120,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.showSelectedCoordinate = true; // Writer.
 
 		if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
-			this.sectionProperties.parthash = this.sectionProperties.data.parthash;
+			this.sectionProperties.parthash = parseInt(this.sectionProperties.data.parthash);
 			this.sectionProperties.partIndex = app.impress.getIndexFromSlideHash(this.sectionProperties.parthash);
 		}
 
@@ -735,7 +735,7 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.data.rectangle === null)
 			return;
 
-		const showMarker = app.impress.partList[app.map._docLayer._selectedPart].hash === parseInt(this.sectionProperties.data.parthash) ||
+		const showMarker = app.impress.partList[app.map._docLayer._selectedPart].hash === this.sectionProperties.data.parthash ||
 							app.file.fileBasedView;
 
 		this.sectionProperties.commentMarkerSubSection = new CommentMarkerSubSection(
