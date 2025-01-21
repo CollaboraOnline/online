@@ -68,6 +68,12 @@ L.Map.WOPI = L.Handler.extend({
 			var that = this;
 			window.open = function (open) {
 				return function (url, name, features) {
+					const eSignature = that._map.eSignature;
+					const eSignInProgress = eSignature && eSignature.signInProgress;
+					if (eSignInProgress) {
+						return open.call(window, url, name, features);
+					}
+
 					that._map.fire('postMessage', {
 						msgId: 'UI_Hyperlink',
 						args: {
