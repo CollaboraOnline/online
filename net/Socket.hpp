@@ -147,6 +147,7 @@ public:
         : _type(type)
         , _clientPort(0)
         , _fd(createSocket(type))
+        , _closed(_fd < 0)
         , _creationTime(creationTime)
         , _lastSeenTime(_creationTime)
         , _bytesSent(0)
@@ -171,8 +172,8 @@ public:
         }
     }
 
-    /// Returns true iff this socket has been closed or is invalid.
-    bool isClosed() const { return _fd < 0; }
+    /// Returns true if this socket has been closed, i.e. rejected from polling and potentially shutdown
+    bool isClosed() const { return _closed; }
 
     constexpr Type type() const { return _type; }
     constexpr bool isIPType() const { return Type::IPv4 == _type || Type::IPv6 == _type; }
@@ -220,11 +221,11 @@ public:
         if (!_noShutdown)
         {
             LOG_TRC("Socket shutdown RDWR. " << *this);
+            setClosed();
             if constexpr (!Util::isMobileApp())
                 ::shutdown(_fd, SHUT_RDWR);
             else
                 fakeSocketShutdown(_fd);
-            setClosed(); // Invalidate the FD.
         }
     }
 
@@ -417,6 +418,7 @@ protected:
         : _type(type)
         , _clientPort(0)
         , _fd(fd)
+        , _closed(_fd < 0)
         , _creationTime(creationTime)
         , _lastSeenTime(_creationTime)
         , _bytesSent(0)
@@ -436,7 +438,7 @@ protected:
     void setNoShutdown() { _noShutdown = true; }
 
     /// Explicitly marks this socket closed, i.e. rejected from polling and potentially shutdown
-    void setClosed() { _fd = -1; }
+    void setClosed() { _closed = true; }
 
     /// Explicitly marks this socket and the given SocketDisposition closed
     void setClosed(SocketDisposition &disposition) { setClosed(); disposition.setClosed(); }
@@ -476,7 +478,9 @@ private:
     std::string _clientAddress;
     const Type _type;
     unsigned int _clientPort;
-    int _fd; ///< The socket file-descriptor. Invalid/closed if < 0.
+    const int _fd;
+    /// True if this socket is closed.
+    bool _closed;
 
     const std::chrono::steady_clock::time_point _creationTime;
     std::chrono::steady_clock::time_point _lastSeenTime;
