@@ -48,7 +48,8 @@ function showArrow(arrow: HTMLElement, show: boolean) {
 function setupResizeHandler(container: Element, scrollable: Element) {
 	const left = container.querySelector('.ui-scroll-left') as HTMLElement;
 	const right = container.querySelector('.ui-scroll-right') as HTMLElement;
-	var isRTL = document.documentElement.dir === 'rtl';
+	var isRTL: boolean = document.documentElement.dir === 'rtl';
+	var timer: any; // for shift + mouse wheel up/down
 
 	const handler = function () {
 		const rootContainer = scrollable.querySelector('div');
@@ -77,8 +78,24 @@ function setupResizeHandler(container: Element, scrollable: Element) {
 		}
 	}.bind(this);
 
+	// handler for toolbar and statusbar
+	// runs if shift + mouse wheel up/down are used
+	const shiftHandler = function (e: MouseEvent) {
+		const rootContainer = scrollable.querySelector('div');
+		if (!rootContainer || !e.shiftKey) return;
+
+		clearTimeout(timer);
+		// wait until mouse wheel stops scrolling
+		timer = setTimeout(function () {
+			JSDialog.RefreshScrollables();
+		}, 350);
+	}.bind(this);
+
 	window.addEventListener('resize', handler);
 	window.addEventListener('scroll', handler);
+	document
+		.querySelector('.ui-scrollable-content')
+		.addEventListener('wheel', shiftHandler);
 }
 
 JSDialog.MakeScrollable = function (parent: Element, scrollable: Element) {
