@@ -335,6 +335,25 @@ namespace cool {
 				'The document is being signed and will be availably shortly',
 			);
 			app.map.fire('showbusy', { label: message });
+
+			// If our window would be closed before the popup, then close the popup as
+			// well.
+			window.addEventListener('beforeunload', this.closePopup.bind(this));
+		}
+
+		closePopup(): boolean {
+			try {
+				window.removeEventListener('beforeunload', this.closePopup.bind(this));
+
+				if (this.popup) {
+					this.popup.close();
+				}
+			} catch (error) {
+				app.console.log('failed to close the signing popup: ' + error.message);
+				return false;
+			}
+
+			return true;
 		}
 
 		// Handles the 'sign hash' response
@@ -346,12 +365,7 @@ namespace cool {
 				return;
 			}
 
-			try {
-				if (this.popup) {
-					this.popup.close();
-				}
-			} catch (error) {
-				app.console.log('failed to close the signing popup: ' + error.message);
+			if (!this.closePopup()) {
 				return;
 			}
 
