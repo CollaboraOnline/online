@@ -224,6 +224,7 @@ export class ContentControlSection extends CanvasSectionObject {
 		this.sectionProperties.dropdownSection.size[0] = this.sectionProperties.dropdownMarkerWidth * app.dpiScale;
 		this.sectionProperties.dropdownSection.size[1] = this.size[1];
 		this.sectionProperties.dropdownSection.sectionProperties.json = this.sectionProperties.json;
+		this.sectionProperties.dropdownSection.sectionProperties.parent = this;
 		app.sectionContainer.addSection(this.sectionProperties.dropdownSection);
 		this.sectionProperties.dropdownSection.adjustHTMLObjectPosition();
 		this.sectionProperties.dropdownSection.setShowSection(true);

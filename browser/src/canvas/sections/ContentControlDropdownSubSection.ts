@@ -117,8 +117,10 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 		json.children[0].children[0].entries = entries;
 
 		//add position
-		json.posx = this.position[0] / app.dpiScale;
-		json.posy = (this.position[1] + this.size[1]) / app.dpiScale;
+		json.posx =
+			(this.myTopLeft[0] - this.sectionProperties.parent.size[0]) /
+			app.dpiScale;
+		json.posy = (this.myTopLeft[1] + this.size[1]) / app.dpiScale;
 
 		return json;
 	}
