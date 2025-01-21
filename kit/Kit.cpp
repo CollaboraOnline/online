@@ -3432,7 +3432,11 @@ void lokit_main(
                 = std::chrono::steady_clock::now();
 
             userdir_url = "file:///tmp/user";
+#ifndef __APPLE__
             instdir_path = '/' + std::string(JailUtil::LO_JAIL_SUBPATH) + "/program";
+#else
+            instdir_path = '/' + std::string(JailUtil::LO_JAIL_SUBPATH) + "/Contents/Frameworks";
+#endif
             allowedPaths += ":r:/" + std::string(JailUtil::LO_JAIL_SUBPATH);
 
             Poco::Path jailLOInstallation(jailPath, JailUtil::LO_JAIL_SUBPATH);
@@ -3763,7 +3767,11 @@ void lokit_main(
             LOG_INF("Using template ["
                     << loTemplate << "] as install subpath directly, without chroot jail setup.");
             userdir_url = "file://" + jailPathStr + "tmp/user";
+#ifndef __APPLE__
             instdir_path = '/' + loTemplate + "/program";
+#else
+            instdir_path = '/' + loTemplate + "/Contents/Frameworks";
+#endif
             allowedPaths += ":r:" + loTemplate;
             JailRoot = jailPathStr;
 
@@ -3937,11 +3945,10 @@ void lokit_main(
 #if (defined(__linux__) && !defined(__ANDROID__)) || defined(__FreeBSD__)
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
-#elif defined(MACOS) && MOBILEAPP
+#elif defined(MACOS)
+        // this is the MACOS MOBILEAPP case
         LibreOfficeKit *kit = lok_init_2((getBundlePath() + "/Contents/lokit/Frameworks").c_str(), getAppSupportURL().c_str());
-#else
-
-#ifdef IOS // In the iOS app we call lok_init_2() just once, when the app starts
+#elif defined(IOS) // In the iOS app we call lok_init_2() just once, when the app starts
         static LibreOfficeKit *kit = lo_kit;
 #elif defined(_WIN32)
         // LO_PATH is a Windows path starting with a drive letter. For the second parameter to
@@ -3950,8 +3957,6 @@ void lokit_main(
 #else
         // FIXME: I wonder for which platform this is supposed to be? Android?
         static LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
-#endif
-
 #endif
 
         assert(kit);
@@ -4109,7 +4114,11 @@ void consistencyCheckJail()
         if ((failedTmp = (!tmp.good() || !tmp.isDirectory())))
             LOG_ERR("Fatal system error: Kit jail is missing its /tmp directory");
 
+#ifndef __APPLE__
         FileUtil::Stat lo(InstDirPath + "/unorc");
+#else
+        FileUtil::Stat lo(InstDirPath + "/../Resources/ure/etc/unorc");
+#endif
         if ((failedLo = (!lo.good() || !lo.isFile())))
             LOG_ERR("Fatal system error: Kit jail is missing its LibreOfficeKit directory at '" << InstDirPath << "'");
 
@@ -4224,7 +4233,11 @@ bool globalPreinit(const std::string &loTemplate)
     // we deliberately don't dlclose handle on success, make it
     // static so static analysis doesn't see this as a leak
     static void *handle;
+#ifndef __APPLE__
     std::string libMerged = loTemplate + "/program/libmergedlo.so";
+#else
+    std::string libMerged = loTemplate + "/Contents/Frameworks/libmergedlo.dylib";
+#endif
     if (File(libMerged).exists())
     {
         LOG_TRC("dlopen(" << libMerged << ", RTLD_GLOBAL|RTLD_NOW)");
@@ -4238,7 +4251,11 @@ bool globalPreinit(const std::string &loTemplate)
     }
     else
     {
+#ifndef __APPLE__
         std::string libSofficeapp = loTemplate + "/program/libsofficeapp.so";
+#else
+        std::string libSofficeapp = loTemplate + "/Contents/Frameworks/libsofficeapp.dylib";
+#endif
         if (File(libSofficeapp).exists())
         {
             LOG_TRC("dlopen(" << libSofficeapp << ", RTLD_GLOBAL|RTLD_NOW)");
@@ -4283,9 +4300,15 @@ bool globalPreinit(const std::string &loTemplate)
              "javaloader javavm jdbc rpt rptui rptxml ",
              0 /* no overwrite */);
 
-    LOG_TRC("Invoking lok_preinit_2(" << loTemplate << "/program\", \"file:///tmp/user\")");
+#ifndef __APPLE__
+    const std::string lokProgramDir = loTemplate + "/program";
+#else
+    const std::string lokProgramDir = loTemplate + "/Contents/Frameworks";
+#endif
+
+    LOG_TRC("Invoking lok_preinit_2(" << lokProgramDir << ", \"file:///tmp/user\")");
     const auto start = std::chrono::steady_clock::now();
-    if (preInit((loTemplate + "/program").c_str(), "file:///tmp/user", &loKitPtr) != 0)
+    if (preInit(lokProgramDir.c_str(), "file:///tmp/user", &loKitPtr) != 0)
     {
         LOG_FTL("lok_preinit() in " << loadedLibrary << " failed");
         dlclose(handle);
@@ -4294,7 +4317,7 @@ bool globalPreinit(const std::string &loTemplate)
 
     LOG_DBG("After lok_preinit_2: loKitPtr=" << loKitPtr);
 
-    LOG_TRC("Finished lok_preinit(" << loTemplate << "/program\", \"file:///tmp/user\") in "
+    LOG_TRC("Finished lok_preinit(" << lokProgramDir << ", \"file:///tmp/user\") in "
                                     << std::chrono::duration_cast<std::chrono::milliseconds>(
                                            std::chrono::steady_clock::now() - start));
     return true;
