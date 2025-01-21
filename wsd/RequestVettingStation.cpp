@@ -240,7 +240,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                     {
                         std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
                         // We have a valid CheckFileInfo result; Create the DocBroker.
-                        if (createDocBroker(docKey, "testing-id", url, uriPublic))
+                        if (createDocBroker(docKey, "", url, uriPublic))
                         {
                             assert(_docBroker && "Must have docBroker");
                             createClientSession(docKey, url, uriPublic, isReadOnly);
@@ -300,7 +300,7 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
             LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
                     << docKey << "] now with URL: [" << url << ']');
 
-            if (createDocBroker(docKey, "testing-id", url, uriPublic))
+            if (createDocBroker(docKey, "", url, uriPublic))
             {
                 assert(_docBroker && "Must have docBroker");
                 if (_ws)
