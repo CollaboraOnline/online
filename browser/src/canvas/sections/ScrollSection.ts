@@ -191,7 +191,7 @@ export class ScrollSection extends CanvasSectionObject {
 				&& (<any>window).mode.isDesktop()
 				&& this.containerObject.isDraggingSomething()
 				&& L.Map.THIS._docLayer._docType === 'spreadsheet') {
-					var temp = this.containerObject.positionOnMouseDown;
+					var temp = [e.pos.x, e.pos.y];
 					var tempPos = [(this.isRTL() ? this.map._size.x - temp[0] : temp[0]) * app.dpiScale, temp[1] * app.dpiScale];
 					var docTopLeft = app.sectionContainer.getDocumentTopLeft();
 					tempPos = [tempPos[0] + docTopLeft[0], tempPos[1] + docTopLeft[1]];
@@ -221,7 +221,7 @@ export class ScrollSection extends CanvasSectionObject {
 			vx = -50;
 		}
 
-		this.onScrollVelocity({vx: vx, vy: vy});
+		this.onScrollVelocity({ vx: vx, vy: vy, pos: e.pos });
 	}
 
 	private getVerticalScrollLength (): number {
