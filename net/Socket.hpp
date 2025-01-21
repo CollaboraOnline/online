@@ -217,7 +217,7 @@ public:
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
     {
-        if (!_noShutdown && !isClosed())
+        if (!_noShutdown)
         {
             LOG_TRC("Socket shutdown RDWR. " << *this);
             if constexpr (!Util::isMobileApp())
@@ -436,14 +436,7 @@ protected:
     void setNoShutdown() { _noShutdown = true; }
 
     /// Explicitly marks this socket closed, i.e. rejected from polling and potentially shutdown
-    /// Note: to preserve the original FD post closing (f.e. in logs and debugger), we negate it.
-    void setClosed()
-    {
-        if (_fd > 0)
-            _fd = -_fd;
-        else if (_fd == 0) // Unlikely, but technically possible.
-            _fd = -1;
-    }
+    void setClosed() { _fd = -1; }
 
     /// Explicitly marks this socket and the given SocketDisposition closed
     void setClosed(SocketDisposition &disposition) { setClosed(); disposition.setClosed(); }

@@ -619,7 +619,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
                 // re-entrancy hazard
                 LOG_DBG("Unexpected socket poll resize");
             }
-            else if (!_pollSockets[i] || _pollSockets[i]->getFD() < 0)
+            else if (!_pollSockets[i])
             {
                 // removed in a callback
                 ++itemsErased;
@@ -673,10 +673,11 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             LOG_TRC("Scanning to removing " << itemsErased << " defunct sockets from "
                     << _pollSockets.size() << " sockets");
 
-            _pollSockets.erase(std::remove_if(_pollSockets.begin(), _pollSockets.end(),
-                                              [](const std::shared_ptr<Socket>& s) -> bool
-                                              { return !s || s->getFD() < 0; }),
-                               _pollSockets.end());
+            _pollSockets.erase(
+                std::remove_if(_pollSockets.begin(), _pollSockets.end(),
+                    [](const std::shared_ptr<Socket>& s)->bool
+                    { return !s; }),
+                _pollSockets.end());
         }
     }
 
