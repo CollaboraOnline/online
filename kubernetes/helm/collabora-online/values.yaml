@@ -398,3 +398,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# Optionally specify an extra list of additional volumes.
+extraVolumes: []
+
+# Optionally specify an extra list of additional volumeMounts.
+extraVolumeMounts: []
