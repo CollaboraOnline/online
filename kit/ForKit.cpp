@@ -810,6 +810,15 @@ int forkit_main(int argc, char** argv)
             if (UserInterface != "classic" && UserInterface != "notebookbar")
                 UserInterface = "notebookbar";
         }
+
+        else if (std::strstr(cmd, "--libversions") == cmd)
+        {
+            std::cout << Util::getVersionJSON(false, "") << std::endl;
+            std::cerr << "Note: Library versions are compile-time versions, so they are accurate "
+                         "when these libraries are statically linked (as in production builds)."
+                      << std::endl;
+            std::exit(EX_OK);
+        }
     }
 
     if (sysTemplate.empty() || loTemplate.empty() || childRoot.empty())

@@ -75,7 +75,17 @@
 #include <Poco/TemporaryFile.h>
 #include <Poco/Util/Application.h>
 #include <Poco/URI.h>
+
+// for version info
 #include <Poco/Version.h>
+#if ENABLE_SSL
+#include <openssl/opensslv.h>
+#endif
+#include <zstd.h>
+#define PNG_VERSION_INFO_ONLY
+#include <png.h>
+#undef PNG_VERSION_INFO_ONLY
+
 
 #include "Log.hpp"
 #include "Protocol.hpp"
@@ -388,6 +398,10 @@ namespace Util
         pocoVersion += std::to_string((POCO_VERSION & 0xff000000) >> 24) + ".";
         pocoVersion += std::to_string((POCO_VERSION & 0x00ff0000) >> 16) + ".";
         pocoVersion += std::to_string((POCO_VERSION & 0x0000ff00) >> 8);
+        std::string zstdVersion;
+        zstdVersion += std::to_string(ZSTD_VERSION_MAJOR) + ".";
+        zstdVersion += std::to_string(ZSTD_VERSION_MINOR) + ".";
+        zstdVersion += std::to_string(ZSTD_VERSION_RELEASE);
 
         std::string json = "{ \"Version\":     \"" + version +
                            "\", "
@@ -399,6 +413,17 @@ namespace Util
                            "\", "
                            "\"PocoVersion\": \"" +
                            pocoVersion +
+                           "\", "
+#if ENABLE_SSL
+                           "\"OpenSSLVersion\": \"" +
+                           std::string(OPENSSL_VERSION_STR) +
+                           "\", "
+#endif
+                           "\"ZstdVersion\": \"" +
+                           zstdVersion +
+                           "\", "
+                           "\"LibPngVersion\": \"" +
+                           std::string(PNG_LIBPNG_VER_STRING) +
                            "\", "
                            "\"Protocol\":    \"" +
                            COOLProtocol::GetProtocolVersion() +
