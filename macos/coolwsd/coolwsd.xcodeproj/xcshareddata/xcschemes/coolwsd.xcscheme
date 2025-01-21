@@ -43,7 +43,7 @@
       <PathRunnable
          runnableDebuggingMode = "0"
          Location = "workspace"
-         FilePath = "../../coolwsd">
+         FilePath = "../../coolwsd-inproc">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
