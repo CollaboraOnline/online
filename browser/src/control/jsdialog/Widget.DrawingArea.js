@@ -41,7 +41,10 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	image.tabIndex = 0;
 	image.draggable = false;
 	image.ondragstart = function() { return false; };
-	builder.map.uiManager.enableTooltip(image);
+
+	if (builder.map) {
+		builder.map.uiManager.enableTooltip(image);
+	}
 
 	// Line width dialog is affected from delay on image render.
 	// So If the image render is delayed, use width and height of the data
