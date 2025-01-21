@@ -1,0 +1,587 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXFileReference section */
+		BE74B1B52D3F963F009786DF /* Anonymizer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Anonymizer.hpp; path = ../../../common/Anonymizer.hpp; sourceTree = "<group>"; };
+		BE74B1B62D3F963F009786DF /* Authorization.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Authorization.hpp; path = ../../../common/Authorization.hpp; sourceTree = "<group>"; };
+		BE74B1B72D3F963F009786DF /* Authorization.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Authorization.cpp; path = ../../../common/Authorization.cpp; sourceTree = "<group>"; };
+		BE74B1B82D3F963F009786DF /* Clipboard.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Clipboard.hpp; path = ../../../common/Clipboard.hpp; sourceTree = "<group>"; };
+		BE74B1B92D3F963F009786DF /* CommandControl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CommandControl.hpp; path = ../../../common/CommandControl.hpp; sourceTree = "<group>"; };
+		BE74B1BA2D3F963F009786DF /* CommandControl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandControl.cpp; path = ../../../common/CommandControl.cpp; sourceTree = "<group>"; };
+		BE74B1BB2D3F963F009786DF /* Common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Common.hpp; path = ../../../common/Common.hpp; sourceTree = "<group>"; };
+		BE74B1BC2D3F963F009786DF /* ConfigUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ConfigUtil.hpp; path = ../../../common/ConfigUtil.hpp; sourceTree = "<group>"; };
+		BE74B1BD2D3F963F009786DF /* ConfigUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigUtil.cpp; path = ../../../common/ConfigUtil.cpp; sourceTree = "<group>"; };
+		BE74B1BE2D3F963F009786DF /* CoolMount.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CoolMount.cpp; path = ../../../common/CoolMount.cpp; sourceTree = "<group>"; };
+		BE74B1BF2D3F963F009786DF /* Crypto.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Crypto.hpp; path = ../../../common/Crypto.hpp; sourceTree = "<group>"; };
+		BE74B1C02D3F963F009786DF /* Crypto.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Crypto.cpp; path = ../../../common/Crypto.cpp; sourceTree = "<group>"; };
+		BE74B1C12D3F963F009786DF /* Crypto-stub.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Crypto-stub.cpp"; path = "../../../common/Crypto-stub.cpp"; sourceTree = "<group>"; };
+		BE74B1C22D3F963F009786DF /* DummyTraceEventEmitter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DummyTraceEventEmitter.cpp; path = ../../../common/DummyTraceEventEmitter.cpp; sourceTree = "<group>"; };
+		BE74B1C32D3F963F009786DF /* FileUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FileUtil.hpp; path = ../../../common/FileUtil.hpp; sourceTree = "<group>"; };
+		BE74B1C42D3F963F009786DF /* FileUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FileUtil.cpp; path = ../../../common/FileUtil.cpp; sourceTree = "<group>"; };
+		BE74B1C52D3F963F009786DF /* FileUtil-apple.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "FileUtil-apple.mm"; path = "../../../common/FileUtil-apple.mm"; sourceTree = "<group>"; };
+		BE74B1C62D3F963F009786DF /* FileUtil-unix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "FileUtil-unix.cpp"; path = "../../../common/FileUtil-unix.cpp"; sourceTree = "<group>"; };
+		BE74B1C72D3F963F009786DF /* FileUtil-windows.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "FileUtil-windows.cpp"; path = "../../../common/FileUtil-windows.cpp"; sourceTree = "<group>"; };
+		BE74B1C82D3F963F009786DF /* CharacterConverter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CharacterConverter.hpp; path = ../../../common/CharacterConverter.hpp; sourceTree = "<group>"; };
+		BE74B1C92D3F963F009786DF /* JailUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = JailUtil.hpp; path = ../../../common/JailUtil.hpp; sourceTree = "<group>"; };
+		BE74B1CA2D3F963F009786DF /* JailUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JailUtil.cpp; path = ../../../common/JailUtil.cpp; sourceTree = "<group>"; };
+		BE74B1CB2D3F963F009786DF /* JsonUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = JsonUtil.hpp; path = ../../../common/JsonUtil.hpp; sourceTree = "<group>"; };
+		BE74B1CC2D3F963F009786DF /* LangUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = LangUtil.hpp; path = ../../../common/LangUtil.hpp; sourceTree = "<group>"; };
+		BE74B1CD2D3F963F009786DF /* Log.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Log.hpp; path = ../../../common/Log.hpp; sourceTree = "<group>"; };
+		BE74B1CE2D3F963F009786DF /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = ../../../common/Log.cpp; sourceTree = "<group>"; };
+		BE74B1CF2D3F963F009786DF /* Message.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Message.hpp; path = ../../../common/Message.hpp; sourceTree = "<group>"; };
+		BE74B1D02D3F963F009786DF /* MobileApp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MobileApp.hpp; path = ../../../common/MobileApp.hpp; sourceTree = "<group>"; };
+		BE74B1D12D3F963F009786DF /* MobileApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MobileApp.cpp; path = ../../../common/MobileApp.cpp; sourceTree = "<group>"; };
+		BE74B1D22D3F963F009786DF /* Png.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Png.hpp; path = ../../../common/Png.hpp; sourceTree = "<group>"; };
+		BE74B1D32D3F963F009786DF /* Protocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Protocol.hpp; path = ../../../common/Protocol.hpp; sourceTree = "<group>"; };
+		BE74B1D42D3F963F009786DF /* Protocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Protocol.cpp; path = ../../../common/Protocol.cpp; sourceTree = "<group>"; };
+		BE74B1D52D3F963F009786DF /* Rectangle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Rectangle.hpp; path = ../../../common/Rectangle.hpp; sourceTree = "<group>"; };
+		BE74B1D62D3F963F009786DF /* RenderTiles.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RenderTiles.hpp; path = ../../../common/RenderTiles.hpp; sourceTree = "<group>"; };
+		BE74B1D72D3F963F009786DF /* Seccomp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Seccomp.hpp; path = ../../../common/Seccomp.hpp; sourceTree = "<group>"; };
+		BE74B1D82D3F963F009786DF /* Seccomp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Seccomp.cpp; path = ../../../common/Seccomp.cpp; sourceTree = "<group>"; };
+		BE74B1D92D3F963F009786DF /* security.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = security.h; path = ../../../common/security.h; sourceTree = "<group>"; };
+		BE74B1DA2D3F963F009786DF /* Session.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Session.hpp; path = ../../../common/Session.hpp; sourceTree = "<group>"; };
+		BE74B1DB2D3F963F009786DF /* Session.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Session.cpp; path = ../../../common/Session.cpp; sourceTree = "<group>"; };
+		BE74B1DC2D3F963F009786DF /* SigHandlerTrap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SigHandlerTrap.hpp; path = ../../../common/SigHandlerTrap.hpp; sourceTree = "<group>"; };
+		BE74B1DD2D3F963F009786DF /* SigUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SigUtil.hpp; path = ../../../common/SigUtil.hpp; sourceTree = "<group>"; };
+		BE74B1DE2D3F963F009786DF /* SigUtil-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "SigUtil-mobile.cpp"; path = "../../../common/SigUtil-mobile.cpp"; sourceTree = "<group>"; };
+		BE74B1DF2D3F963F009786DF /* SigUtil-server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "SigUtil-server.cpp"; path = "../../../common/SigUtil-server.cpp"; sourceTree = "<group>"; };
+		BE74B1E02D3F963F009786DF /* Simd.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Simd.hpp; path = ../../../common/Simd.hpp; sourceTree = "<group>"; };
+		BE74B1E12D3F963F009786DF /* Simd.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Simd.cpp; path = ../../../common/Simd.cpp; sourceTree = "<group>"; };
+		BE74B1E22D3F963F009786DF /* SpookyV2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SpookyV2.h; path = ../../../common/SpookyV2.h; sourceTree = "<group>"; };
+		BE74B1E32D3F963F009786DF /* SpookyV2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpookyV2.cpp; path = ../../../common/SpookyV2.cpp; sourceTree = "<group>"; };
+		BE74B1E42D3F963F009786DF /* StateEnum.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = StateEnum.hpp; path = ../../../common/StateEnum.hpp; sourceTree = "<group>"; };
+		BE74B1E52D3F963F009786DF /* StringVector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = StringVector.hpp; path = ../../../common/StringVector.hpp; sourceTree = "<group>"; };
+		BE74B1E62D3F963F009786DF /* StringVector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StringVector.cpp; path = ../../../common/StringVector.cpp; sourceTree = "<group>"; };
+		BE74B1E72D3F963F009786DF /* Syscall.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Syscall.hpp; path = ../../../common/Syscall.hpp; sourceTree = "<group>"; };
+		BE74B1E82D3F963F009786DF /* Syscall.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Syscall.cpp; path = ../../../common/Syscall.cpp; sourceTree = "<group>"; };
+		BE74B1E92D3F963F009786DF /* ThreadPool.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ThreadPool.hpp; path = ../../../common/ThreadPool.hpp; sourceTree = "<group>"; };
+		BE74B1EA2D3F963F009786DF /* TraceEvent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TraceEvent.hpp; path = ../../../common/TraceEvent.hpp; sourceTree = "<group>"; };
+		BE74B1EB2D3F963F009786DF /* TraceEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TraceEvent.cpp; path = ../../../common/TraceEvent.cpp; sourceTree = "<group>"; };
+		BE74B1EC2D3F963F009786DF /* Unit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Unit.hpp; path = ../../../common/Unit.hpp; sourceTree = "<group>"; };
+		BE74B1ED2D3F963F009786DF /* Unit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Unit.cpp; path = ../../../common/Unit.cpp; sourceTree = "<group>"; };
+		BE74B1EE2D3F963F009786DF /* Unit-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Unit-mobile.cpp"; path = "../../../common/Unit-mobile.cpp"; sourceTree = "<group>"; };
+		BE74B1EF2D3F963F009786DF /* Unit-server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Unit-server.cpp"; path = "../../../common/Unit-server.cpp"; sourceTree = "<group>"; };
+		BE74B1F02D3F963F009786DF /* Uri.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Uri.hpp; path = ../../../common/Uri.hpp; sourceTree = "<group>"; };
+		BE74B1F12D3F963F009786DF /* Uri.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Uri.cpp; path = ../../../common/Uri.cpp; sourceTree = "<group>"; };
+		BE74B1F22D3F963F009786DF /* Util.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Util.hpp; path = ../../../common/Util.hpp; sourceTree = "<group>"; };
+		BE74B1F32D3F963F009786DF /* Util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = ../../../common/Util.cpp; sourceTree = "<group>"; };
+		BE74B1F42D3F963F009786DF /* Util-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-mobile.cpp"; path = "../../../common/Util-mobile.cpp"; sourceTree = "<group>"; };
+		BE74B1F52D3F963F009786DF /* Util-server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-server.cpp"; path = "../../../common/Util-server.cpp"; sourceTree = "<group>"; };
+		BE74B1F62D3F963F009786DF /* Util-unix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-unix.cpp"; path = "../../../common/Util-unix.cpp"; sourceTree = "<group>"; };
+		BE74B1F72D3F963F009786DF /* Util-windows.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-windows.cpp"; path = "../../../common/Util-windows.cpp"; sourceTree = "<group>"; };
+		BE74B1F82D3F963F009786DF /* Watchdog.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Watchdog.hpp; path = ../../../common/Watchdog.hpp; sourceTree = "<group>"; };
+		BE74B1F92D3F96CB009786DF /* Delta.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Delta.hpp; path = ../../../kit/Delta.hpp; sourceTree = "<group>"; };
+		BE74B1FA2D3F96CB009786DF /* DeltaSimd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeltaSimd.h; path = ../../../kit/DeltaSimd.h; sourceTree = "<group>"; };
+		BE74B1FB2D3F96CB009786DF /* DeltaSimd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = DeltaSimd.c; path = ../../../kit/DeltaSimd.c; sourceTree = "<group>"; };
+		BE74B1FC2D3F96CB009786DF /* DummyLibreOfficeKit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DummyLibreOfficeKit.hpp; path = ../../../kit/DummyLibreOfficeKit.hpp; sourceTree = "<group>"; };
+		BE74B1FD2D3F96CB009786DF /* DummyLibreOfficeKit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DummyLibreOfficeKit.cpp; path = ../../../kit/DummyLibreOfficeKit.cpp; sourceTree = "<group>"; };
+		BE74B1FE2D3F96CB009786DF /* ForKit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ForKit.cpp; path = ../../../kit/ForKit.cpp; sourceTree = "<group>"; };
+		BE74B1FF2D3F96CB009786DF /* forkit-main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "forkit-main.cpp"; path = "../../../kit/forkit-main.cpp"; sourceTree = "<group>"; };
+		BE74B2002D3F96CB009786DF /* ChildSession.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ChildSession.hpp; path = ../../../kit/ChildSession.hpp; sourceTree = "<group>"; };
+		BE74B2012D3F96CB009786DF /* ChildSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChildSession.cpp; path = ../../../kit/ChildSession.cpp; sourceTree = "<group>"; };
+		BE74B2022D3F96CB009786DF /* Kit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Kit.hpp; path = ../../../kit/Kit.hpp; sourceTree = "<group>"; };
+		BE74B2032D3F96CB009786DF /* Kit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Kit.cpp; path = ../../../kit/Kit.cpp; sourceTree = "<group>"; };
+		BE74B2042D3F96CB009786DF /* KitHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = KitHelper.hpp; path = ../../../kit/KitHelper.hpp; sourceTree = "<group>"; };
+		BE74B2052D3F96CB009786DF /* KitQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = KitQueue.hpp; path = ../../../kit/KitQueue.hpp; sourceTree = "<group>"; };
+		BE74B2062D3F96CB009786DF /* KitQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KitQueue.cpp; path = ../../../kit/KitQueue.cpp; sourceTree = "<group>"; };
+		BE74B2072D3F96CB009786DF /* KitWebSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = KitWebSocket.hpp; path = ../../../kit/KitWebSocket.hpp; sourceTree = "<group>"; };
+		BE74B2082D3F96CB009786DF /* KitWebSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KitWebSocket.cpp; path = ../../../kit/KitWebSocket.cpp; sourceTree = "<group>"; };
+		BE74B2092D3F96CB009786DF /* SetupKitEnvironment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SetupKitEnvironment.hpp; path = ../../../kit/SetupKitEnvironment.hpp; sourceTree = "<group>"; };
+		BE74B20A2D3F96CB009786DF /* StateRecorder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = StateRecorder.hpp; path = ../../../kit/StateRecorder.hpp; sourceTree = "<group>"; };
+		BE74B20B2D3F96CB009786DF /* TestStubs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TestStubs.cpp; path = ../../../kit/TestStubs.cpp; sourceTree = "<group>"; };
+		BE74B20C2D3F96CB009786DF /* Watermark.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Watermark.hpp; path = ../../../kit/Watermark.hpp; sourceTree = "<group>"; };
+		BE74B20D2D3F971C009786DF /* AsyncDNS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = AsyncDNS.hpp; path = ../../../net/AsyncDNS.hpp; sourceTree = "<group>"; };
+		BE74B20E2D3F971C009786DF /* Buffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Buffer.hpp; path = ../../../net/Buffer.hpp; sourceTree = "<group>"; };
+		BE74B20F2D3F971C009786DF /* clientnb.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clientnb.cpp; path = ../../../net/clientnb.cpp; sourceTree = "<group>"; };
+		BE74B2102D3F971C009786DF /* DelaySocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DelaySocket.hpp; path = ../../../net/DelaySocket.hpp; sourceTree = "<group>"; };
+		BE74B2112D3F971C009786DF /* DelaySocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DelaySocket.cpp; path = ../../../net/DelaySocket.cpp; sourceTree = "<group>"; };
+		BE74B2122D3F971C009786DF /* FakeSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FakeSocket.hpp; path = ../../../net/FakeSocket.hpp; sourceTree = "<group>"; };
+		BE74B2132D3F971C009786DF /* FakeSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FakeSocket.cpp; path = ../../../net/FakeSocket.cpp; sourceTree = "<group>"; };
+		BE74B2142D3F971C009786DF /* HttpHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = HttpHelper.hpp; path = ../../../net/HttpHelper.hpp; sourceTree = "<group>"; };
+		BE74B2152D3F971C009786DF /* HttpHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HttpHelper.cpp; path = ../../../net/HttpHelper.cpp; sourceTree = "<group>"; };
+		BE74B2162D3F971C009786DF /* HttpRequest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = HttpRequest.hpp; path = ../../../net/HttpRequest.hpp; sourceTree = "<group>"; };
+		BE74B2172D3F971C009786DF /* HttpRequest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HttpRequest.cpp; path = ../../../net/HttpRequest.cpp; sourceTree = "<group>"; };
+		BE74B2182D3F971C009786DF /* NetUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = NetUtil.hpp; path = ../../../net/NetUtil.hpp; sourceTree = "<group>"; };
+		BE74B2192D3F971C009786DF /* NetUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NetUtil.cpp; path = ../../../net/NetUtil.cpp; sourceTree = "<group>"; };
+		BE74B21A2D3F971C009786DF /* ServerSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ServerSocket.hpp; path = ../../../net/ServerSocket.hpp; sourceTree = "<group>"; };
+		BE74B21B2D3F971C009786DF /* Socket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Socket.hpp; path = ../../../net/Socket.hpp; sourceTree = "<group>"; };
+		BE74B21C2D3F971C009786DF /* Socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Socket.cpp; path = ../../../net/Socket.cpp; sourceTree = "<group>"; };
+		BE74B21D2D3F971C009786DF /* Ssl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Ssl.hpp; path = ../../../net/Ssl.hpp; sourceTree = "<group>"; };
+		BE74B21E2D3F971C009786DF /* Ssl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Ssl.cpp; path = ../../../net/Ssl.cpp; sourceTree = "<group>"; };
+		BE74B21F2D3F971C009786DF /* SslSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SslSocket.hpp; path = ../../../net/SslSocket.hpp; sourceTree = "<group>"; };
+		BE74B2202D3F971C009786DF /* WebSocketHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = WebSocketHandler.hpp; path = ../../../net/WebSocketHandler.hpp; sourceTree = "<group>"; };
+		BE74B2212D3F97AB009786DF /* Admin.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Admin.hpp; path = ../../../wsd/Admin.hpp; sourceTree = "<group>"; };
+		BE74B2222D3F97AB009786DF /* Admin.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Admin.cpp; path = ../../../wsd/Admin.cpp; sourceTree = "<group>"; };
+		BE74B2232D3F97AB009786DF /* AdminModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = AdminModel.hpp; path = ../../../wsd/AdminModel.hpp; sourceTree = "<group>"; };
+		BE74B2242D3F97AB009786DF /* AdminModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AdminModel.cpp; path = ../../../wsd/AdminModel.cpp; sourceTree = "<group>"; };
+		BE74B2252D3F97AB009786DF /* Auth.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Auth.hpp; path = ../../../wsd/Auth.hpp; sourceTree = "<group>"; };
+		BE74B2262D3F97AB009786DF /* Auth.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Auth.cpp; path = ../../../wsd/Auth.cpp; sourceTree = "<group>"; };
+		BE74B2272D3F97AB009786DF /* ClientRequestDispatcher.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ClientRequestDispatcher.hpp; path = ../../../wsd/ClientRequestDispatcher.hpp; sourceTree = "<group>"; };
+		BE74B2282D3F97AB009786DF /* ClientRequestDispatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ClientRequestDispatcher.cpp; path = ../../../wsd/ClientRequestDispatcher.cpp; sourceTree = "<group>"; };
+		BE74B2292D3F97AB009786DF /* ClientSession.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ClientSession.hpp; path = ../../../wsd/ClientSession.hpp; sourceTree = "<group>"; };
+		BE74B22A2D3F97AB009786DF /* ClientSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ClientSession.cpp; path = ../../../wsd/ClientSession.cpp; sourceTree = "<group>"; };
+		BE74B22B2D3F97AB009786DF /* ContentSecurityPolicy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ContentSecurityPolicy.hpp; path = ../../../wsd/ContentSecurityPolicy.hpp; sourceTree = "<group>"; };
+		BE74B22C2D3F97AB009786DF /* COOLWSD.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = COOLWSD.hpp; path = ../../../wsd/COOLWSD.hpp; sourceTree = "<group>"; };
+		BE74B22D2D3F97AB009786DF /* COOLWSD.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = COOLWSD.cpp; path = ../../../wsd/COOLWSD.cpp; sourceTree = "<group>"; };
+		BE74B22E2D3F97AB009786DF /* coolwsd-fork.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "coolwsd-fork.cpp"; path = "../../../wsd/coolwsd-fork.cpp"; sourceTree = "<group>"; };
+		BE74B22F2D3F97AB009786DF /* coolwsd-inproc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "coolwsd-inproc.cpp"; path = "../../../wsd/coolwsd-inproc.cpp"; sourceTree = "<group>"; };
+		BE74B2302D3F97AB009786DF /* DocumentBroker.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DocumentBroker.hpp; path = ../../../wsd/DocumentBroker.hpp; sourceTree = "<group>"; };
+		BE74B2312D3F97AB009786DF /* DocumentBroker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DocumentBroker.cpp; path = ../../../wsd/DocumentBroker.cpp; sourceTree = "<group>"; };
+		BE74B2322D3F97AB009786DF /* Exceptions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Exceptions.hpp; path = ../../../wsd/Exceptions.hpp; sourceTree = "<group>"; };
+		BE74B2332D3F97AB009786DF /* Exceptions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Exceptions.cpp; path = ../../../wsd/Exceptions.cpp; sourceTree = "<group>"; };
+		BE74B2342D3F97AB009786DF /* FileServer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FileServer.hpp; path = ../../../wsd/FileServer.hpp; sourceTree = "<group>"; };
+		BE74B2352D3F97AB009786DF /* FileServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FileServer.cpp; path = ../../../wsd/FileServer.cpp; sourceTree = "<group>"; };
+		BE74B2362D3F97AB009786DF /* FileServerUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FileServerUtil.cpp; path = ../../../wsd/FileServerUtil.cpp; sourceTree = "<group>"; };
+		BE74B2372D3F97AB009786DF /* HostUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = HostUtil.hpp; path = ../../../wsd/HostUtil.hpp; sourceTree = "<group>"; };
+		BE74B2382D3F97AB009786DF /* HostUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HostUtil.cpp; path = ../../../wsd/HostUtil.cpp; sourceTree = "<group>"; };
+		BE74B2392D3F97AB009786DF /* Process.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Process.hpp; path = ../../../wsd/Process.hpp; sourceTree = "<group>"; };
+		BE74B23A2D3F97AB009786DF /* ProofKey.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ProofKey.hpp; path = ../../../wsd/ProofKey.hpp; sourceTree = "<group>"; };
+		BE74B23B2D3F97AB009786DF /* ProofKey.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProofKey.cpp; path = ../../../wsd/ProofKey.cpp; sourceTree = "<group>"; };
+		BE74B23C2D3F97AB009786DF /* ProxyProtocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ProxyProtocol.hpp; path = ../../../wsd/ProxyProtocol.hpp; sourceTree = "<group>"; };
+		BE74B23D2D3F97AB009786DF /* ProxyProtocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProxyProtocol.cpp; path = ../../../wsd/ProxyProtocol.cpp; sourceTree = "<group>"; };
+		BE74B23E2D3F97AB009786DF /* ProxyRequestHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ProxyRequestHandler.hpp; path = ../../../wsd/ProxyRequestHandler.hpp; sourceTree = "<group>"; };
+		BE74B23F2D3F97AB009786DF /* ProxyRequestHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProxyRequestHandler.cpp; path = ../../../wsd/ProxyRequestHandler.cpp; sourceTree = "<group>"; };
+		BE74B2402D3F97AB009786DF /* QuarantineUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = QuarantineUtil.hpp; path = ../../../wsd/QuarantineUtil.hpp; sourceTree = "<group>"; };
+		BE74B2412D3F97AB009786DF /* QuarantineUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = QuarantineUtil.cpp; path = ../../../wsd/QuarantineUtil.cpp; sourceTree = "<group>"; };
+		BE74B2422D3F97AB009786DF /* RemoteConfig.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RemoteConfig.hpp; path = ../../../wsd/RemoteConfig.hpp; sourceTree = "<group>"; };
+		BE74B2432D3F97AB009786DF /* RemoteConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RemoteConfig.cpp; path = ../../../wsd/RemoteConfig.cpp; sourceTree = "<group>"; };
+		BE74B2442D3F97AB009786DF /* RequestDetails.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RequestDetails.hpp; path = ../../../wsd/RequestDetails.hpp; sourceTree = "<group>"; };
+		BE74B2452D3F97AB009786DF /* RequestDetails.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RequestDetails.cpp; path = ../../../wsd/RequestDetails.cpp; sourceTree = "<group>"; };
+		BE74B2462D3F97AB009786DF /* RequestVettingStation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RequestVettingStation.hpp; path = ../../../wsd/RequestVettingStation.hpp; sourceTree = "<group>"; };
+		BE74B2472D3F97AB009786DF /* RequestVettingStation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RequestVettingStation.cpp; path = ../../../wsd/RequestVettingStation.cpp; sourceTree = "<group>"; };
+		BE74B2482D3F97AB009786DF /* SenderQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SenderQueue.hpp; path = ../../../wsd/SenderQueue.hpp; sourceTree = "<group>"; };
+		BE74B2492D3F97AB009786DF /* ServerAuditUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ServerAuditUtil.hpp; path = ../../../wsd/ServerAuditUtil.hpp; sourceTree = "<group>"; };
+		BE74B24A2D3F97AB009786DF /* ServerAuditUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ServerAuditUtil.cpp; path = ../../../wsd/ServerAuditUtil.cpp; sourceTree = "<group>"; };
+		BE74B24B2D3F97AB009786DF /* ServerURL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ServerURL.hpp; path = ../../../wsd/ServerURL.hpp; sourceTree = "<group>"; };
+		BE74B24C2D3F97AB009786DF /* SpecialBrokers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SpecialBrokers.hpp; path = ../../../wsd/SpecialBrokers.hpp; sourceTree = "<group>"; };
+		BE74B24D2D3F97AB009786DF /* SpecialBrokers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpecialBrokers.cpp; path = ../../../wsd/SpecialBrokers.cpp; sourceTree = "<group>"; };
+		BE74B24E2D3F97AB009786DF /* Storage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Storage.hpp; path = ../../../wsd/Storage.hpp; sourceTree = "<group>"; };
+		BE74B24F2D3F97AB009786DF /* Storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Storage.cpp; path = ../../../wsd/Storage.cpp; sourceTree = "<group>"; };
+		BE74B2502D3F97AB009786DF /* TestStubs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TestStubs.cpp; path = ../../../wsd/TestStubs.cpp; sourceTree = "<group>"; };
+		BE74B2512D3F97AB009786DF /* TileCache.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TileCache.hpp; path = ../../../wsd/TileCache.hpp; sourceTree = "<group>"; };
+		BE74B2522D3F97AB009786DF /* TileCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TileCache.cpp; path = ../../../wsd/TileCache.cpp; sourceTree = "<group>"; };
+		BE74B2532D3F97AB009786DF /* TileDesc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TileDesc.hpp; path = ../../../wsd/TileDesc.hpp; sourceTree = "<group>"; };
+		BE74B2542D3F97AB009786DF /* TraceFile.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TraceFile.hpp; path = ../../../wsd/TraceFile.hpp; sourceTree = "<group>"; };
+		BE74B2552D3F97AB009786DF /* UserMessages.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = UserMessages.hpp; path = ../../../wsd/UserMessages.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		BE74B1A52D3F80AA009786DF = {
+			isa = PBXGroup;
+			children = (
+				BE74B1B02D3F950A009786DF /* common */,
+				BE74B1B22D3F953B009786DF /* kit */,
+				BE74B1B32D3F9541009786DF /* net */,
+				BE74B1B42D3F9546009786DF /* wsd */,
+			);
+			sourceTree = "<group>";
+		};
+		BE74B1B02D3F950A009786DF /* common */ = {
+			isa = PBXGroup;
+			children = (
+				BE74B1B52D3F963F009786DF /* Anonymizer.hpp */,
+				BE74B1B62D3F963F009786DF /* Authorization.hpp */,
+				BE74B1B72D3F963F009786DF /* Authorization.cpp */,
+				BE74B1B82D3F963F009786DF /* Clipboard.hpp */,
+				BE74B1B92D3F963F009786DF /* CommandControl.hpp */,
+				BE74B1BA2D3F963F009786DF /* CommandControl.cpp */,
+				BE74B1BB2D3F963F009786DF /* Common.hpp */,
+				BE74B1BC2D3F963F009786DF /* ConfigUtil.hpp */,
+				BE74B1BD2D3F963F009786DF /* ConfigUtil.cpp */,
+				BE74B1BE2D3F963F009786DF /* CoolMount.cpp */,
+				BE74B1BF2D3F963F009786DF /* Crypto.hpp */,
+				BE74B1C02D3F963F009786DF /* Crypto.cpp */,
+				BE74B1C12D3F963F009786DF /* Crypto-stub.cpp */,
+				BE74B1C22D3F963F009786DF /* DummyTraceEventEmitter.cpp */,
+				BE74B1C32D3F963F009786DF /* FileUtil.hpp */,
+				BE74B1C42D3F963F009786DF /* FileUtil.cpp */,
+				BE74B1C52D3F963F009786DF /* FileUtil-apple.mm */,
+				BE74B1C62D3F963F009786DF /* FileUtil-unix.cpp */,
+				BE74B1C72D3F963F009786DF /* FileUtil-windows.cpp */,
+				BE74B1C82D3F963F009786DF /* CharacterConverter.hpp */,
+				BE74B1C92D3F963F009786DF /* JailUtil.hpp */,
+				BE74B1CA2D3F963F009786DF /* JailUtil.cpp */,
+				BE74B1CB2D3F963F009786DF /* JsonUtil.hpp */,
+				BE74B1CC2D3F963F009786DF /* LangUtil.hpp */,
+				BE74B1CD2D3F963F009786DF /* Log.hpp */,
+				BE74B1CE2D3F963F009786DF /* Log.cpp */,
+				BE74B1CF2D3F963F009786DF /* Message.hpp */,
+				BE74B1D02D3F963F009786DF /* MobileApp.hpp */,
+				BE74B1D12D3F963F009786DF /* MobileApp.cpp */,
+				BE74B1D22D3F963F009786DF /* Png.hpp */,
+				BE74B1D32D3F963F009786DF /* Protocol.hpp */,
+				BE74B1D42D3F963F009786DF /* Protocol.cpp */,
+				BE74B1D52D3F963F009786DF /* Rectangle.hpp */,
+				BE74B1D62D3F963F009786DF /* RenderTiles.hpp */,
+				BE74B1D72D3F963F009786DF /* Seccomp.hpp */,
+				BE74B1D82D3F963F009786DF /* Seccomp.cpp */,
+				BE74B1D92D3F963F009786DF /* security.h */,
+				BE74B1DA2D3F963F009786DF /* Session.hpp */,
+				BE74B1DB2D3F963F009786DF /* Session.cpp */,
+				BE74B1DC2D3F963F009786DF /* SigHandlerTrap.hpp */,
+				BE74B1DD2D3F963F009786DF /* SigUtil.hpp */,
+				BE74B1DE2D3F963F009786DF /* SigUtil-mobile.cpp */,
+				BE74B1DF2D3F963F009786DF /* SigUtil-server.cpp */,
+				BE74B1E02D3F963F009786DF /* Simd.hpp */,
+				BE74B1E12D3F963F009786DF /* Simd.cpp */,
+				BE74B1E22D3F963F009786DF /* SpookyV2.h */,
+				BE74B1E32D3F963F009786DF /* SpookyV2.cpp */,
+				BE74B1E42D3F963F009786DF /* StateEnum.hpp */,
+				BE74B1E52D3F963F009786DF /* StringVector.hpp */,
+				BE74B1E62D3F963F009786DF /* StringVector.cpp */,
+				BE74B1E72D3F963F009786DF /* Syscall.hpp */,
+				BE74B1E82D3F963F009786DF /* Syscall.cpp */,
+				BE74B1E92D3F963F009786DF /* ThreadPool.hpp */,
+				BE74B1EA2D3F963F009786DF /* TraceEvent.hpp */,
+				BE74B1EB2D3F963F009786DF /* TraceEvent.cpp */,
+				BE74B1EC2D3F963F009786DF /* Unit.hpp */,
+				BE74B1ED2D3F963F009786DF /* Unit.cpp */,
+				BE74B1EE2D3F963F009786DF /* Unit-mobile.cpp */,
+				BE74B1EF2D3F963F009786DF /* Unit-server.cpp */,
+				BE74B1F02D3F963F009786DF /* Uri.hpp */,
+				BE74B1F12D3F963F009786DF /* Uri.cpp */,
+				BE74B1F22D3F963F009786DF /* Util.hpp */,
+				BE74B1F32D3F963F009786DF /* Util.cpp */,
+				BE74B1F42D3F963F009786DF /* Util-mobile.cpp */,
+				BE74B1F52D3F963F009786DF /* Util-server.cpp */,
+				BE74B1F62D3F963F009786DF /* Util-unix.cpp */,
+				BE74B1F72D3F963F009786DF /* Util-windows.cpp */,
+				BE74B1F82D3F963F009786DF /* Watchdog.hpp */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		BE74B1B22D3F953B009786DF /* kit */ = {
+			isa = PBXGroup;
+			children = (
+				BE74B1F92D3F96CB009786DF /* Delta.hpp */,
+				BE74B1FA2D3F96CB009786DF /* DeltaSimd.h */,
+				BE74B1FB2D3F96CB009786DF /* DeltaSimd.c */,
+				BE74B1FC2D3F96CB009786DF /* DummyLibreOfficeKit.hpp */,
+				BE74B1FD2D3F96CB009786DF /* DummyLibreOfficeKit.cpp */,
+				BE74B1FE2D3F96CB009786DF /* ForKit.cpp */,
+				BE74B1FF2D3F96CB009786DF /* forkit-main.cpp */,
+				BE74B2002D3F96CB009786DF /* ChildSession.hpp */,
+				BE74B2012D3F96CB009786DF /* ChildSession.cpp */,
+				BE74B2022D3F96CB009786DF /* Kit.hpp */,
+				BE74B2032D3F96CB009786DF /* Kit.cpp */,
+				BE74B2042D3F96CB009786DF /* KitHelper.hpp */,
+				BE74B2052D3F96CB009786DF /* KitQueue.hpp */,
+				BE74B2062D3F96CB009786DF /* KitQueue.cpp */,
+				BE74B2072D3F96CB009786DF /* KitWebSocket.hpp */,
+				BE74B2082D3F96CB009786DF /* KitWebSocket.cpp */,
+				BE74B2092D3F96CB009786DF /* SetupKitEnvironment.hpp */,
+				BE74B20A2D3F96CB009786DF /* StateRecorder.hpp */,
+				BE74B20B2D3F96CB009786DF /* TestStubs.cpp */,
+				BE74B20C2D3F96CB009786DF /* Watermark.hpp */,
+			);
+			path = kit;
+			sourceTree = "<group>";
+		};
+		BE74B1B32D3F9541009786DF /* net */ = {
+			isa = PBXGroup;
+			children = (
+				BE74B20D2D3F971C009786DF /* AsyncDNS.hpp */,
+				BE74B20E2D3F971C009786DF /* Buffer.hpp */,
+				BE74B20F2D3F971C009786DF /* clientnb.cpp */,
+				BE74B2102D3F971C009786DF /* DelaySocket.hpp */,
+				BE74B2112D3F971C009786DF /* DelaySocket.cpp */,
+				BE74B2122D3F971C009786DF /* FakeSocket.hpp */,
+				BE74B2132D3F971C009786DF /* FakeSocket.cpp */,
+				BE74B2142D3F971C009786DF /* HttpHelper.hpp */,
+				BE74B2152D3F971C009786DF /* HttpHelper.cpp */,
+				BE74B2162D3F971C009786DF /* HttpRequest.hpp */,
+				BE74B2172D3F971C009786DF /* HttpRequest.cpp */,
+				BE74B2182D3F971C009786DF /* NetUtil.hpp */,
+				BE74B2192D3F971C009786DF /* NetUtil.cpp */,
+				BE74B21A2D3F971C009786DF /* ServerSocket.hpp */,
+				BE74B21B2D3F971C009786DF /* Socket.hpp */,
+				BE74B21C2D3F971C009786DF /* Socket.cpp */,
+				BE74B21D2D3F971C009786DF /* Ssl.hpp */,
+				BE74B21E2D3F971C009786DF /* Ssl.cpp */,
+				BE74B21F2D3F971C009786DF /* SslSocket.hpp */,
+				BE74B2202D3F971C009786DF /* WebSocketHandler.hpp */,
+			);
+			path = net;
+			sourceTree = "<group>";
+		};
+		BE74B1B42D3F9546009786DF /* wsd */ = {
+			isa = PBXGroup;
+			children = (
+				BE74B2212D3F97AB009786DF /* Admin.hpp */,
+				BE74B2222D3F97AB009786DF /* Admin.cpp */,
+				BE74B2232D3F97AB009786DF /* AdminModel.hpp */,
+				BE74B2242D3F97AB009786DF /* AdminModel.cpp */,
+				BE74B2252D3F97AB009786DF /* Auth.hpp */,
+				BE74B2262D3F97AB009786DF /* Auth.cpp */,
+				BE74B2272D3F97AB009786DF /* ClientRequestDispatcher.hpp */,
+				BE74B2282D3F97AB009786DF /* ClientRequestDispatcher.cpp */,
+				BE74B2292D3F97AB009786DF /* ClientSession.hpp */,
+				BE74B22A2D3F97AB009786DF /* ClientSession.cpp */,
+				BE74B22B2D3F97AB009786DF /* ContentSecurityPolicy.hpp */,
+				BE74B22C2D3F97AB009786DF /* COOLWSD.hpp */,
+				BE74B22D2D3F97AB009786DF /* COOLWSD.cpp */,
+				BE74B22E2D3F97AB009786DF /* coolwsd-fork.cpp */,
+				BE74B22F2D3F97AB009786DF /* coolwsd-inproc.cpp */,
+				BE74B2302D3F97AB009786DF /* DocumentBroker.hpp */,
+				BE74B2312D3F97AB009786DF /* DocumentBroker.cpp */,
+				BE74B2322D3F97AB009786DF /* Exceptions.hpp */,
+				BE74B2332D3F97AB009786DF /* Exceptions.cpp */,
+				BE74B2342D3F97AB009786DF /* FileServer.hpp */,
+				BE74B2352D3F97AB009786DF /* FileServer.cpp */,
+				BE74B2362D3F97AB009786DF /* FileServerUtil.cpp */,
+				BE74B2372D3F97AB009786DF /* HostUtil.hpp */,
+				BE74B2382D3F97AB009786DF /* HostUtil.cpp */,
+				BE74B2392D3F97AB009786DF /* Process.hpp */,
+				BE74B23A2D3F97AB009786DF /* ProofKey.hpp */,
+				BE74B23B2D3F97AB009786DF /* ProofKey.cpp */,
+				BE74B23C2D3F97AB009786DF /* ProxyProtocol.hpp */,
+				BE74B23D2D3F97AB009786DF /* ProxyProtocol.cpp */,
+				BE74B23E2D3F97AB009786DF /* ProxyRequestHandler.hpp */,
+				BE74B23F2D3F97AB009786DF /* ProxyRequestHandler.cpp */,
+				BE74B2402D3F97AB009786DF /* QuarantineUtil.hpp */,
+				BE74B2412D3F97AB009786DF /* QuarantineUtil.cpp */,
+				BE74B2422D3F97AB009786DF /* RemoteConfig.hpp */,
+				BE74B2432D3F97AB009786DF /* RemoteConfig.cpp */,
+				BE74B2442D3F97AB009786DF /* RequestDetails.hpp */,
+				BE74B2452D3F97AB009786DF /* RequestDetails.cpp */,
+				BE74B2462D3F97AB009786DF /* RequestVettingStation.hpp */,
+				BE74B2472D3F97AB009786DF /* RequestVettingStation.cpp */,
+				BE74B2482D3F97AB009786DF /* SenderQueue.hpp */,
+				BE74B2492D3F97AB009786DF /* ServerAuditUtil.hpp */,
+				BE74B24A2D3F97AB009786DF /* ServerAuditUtil.cpp */,
+				BE74B24B2D3F97AB009786DF /* ServerURL.hpp */,
+				BE74B24C2D3F97AB009786DF /* SpecialBrokers.hpp */,
+				BE74B24D2D3F97AB009786DF /* SpecialBrokers.cpp */,
+				BE74B24E2D3F97AB009786DF /* Storage.hpp */,
+				BE74B24F2D3F97AB009786DF /* Storage.cpp */,
+				BE74B2502D3F97AB009786DF /* TestStubs.cpp */,
+				BE74B2512D3F97AB009786DF /* TileCache.hpp */,
+				BE74B2522D3F97AB009786DF /* TileCache.cpp */,
+				BE74B2532D3F97AB009786DF /* TileDesc.hpp */,
+				BE74B2542D3F97AB009786DF /* TraceFile.hpp */,
+				BE74B2552D3F97AB009786DF /* UserMessages.hpp */,
+			);
+			path = wsd;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		BE74B1AA2D3F80AA009786DF /* coolwsd */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "-j $(ACTION)";
+			buildConfigurationList = BE74B1AD2D3F80AA009786DF /* Build configuration list for PBXLegacyTarget "coolwsd" */;
+			buildPhases = (
+			);
+			buildToolPath = "$(PROJECT_DIR)/gmake-wrapper.sh";
+			buildWorkingDirectory = "$(PROJECT_DIR)/../..";
+			dependencies = (
+			);
+			name = coolwsd;
+			packageProductDependencies = (
+			);
+			passBuildSettingsInEnvironment = 1;
+			productName = coolwsd;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		BE74B1A62D3F80AA009786DF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					BE74B1AA2D3F80AA009786DF = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = BE74B1A92D3F80AA009786DF /* Build configuration list for PBXProject "coolwsd" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BE74B1A52D3F80AA009786DF;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BE74B1AA2D3F80AA009786DF /* coolwsd */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		BE74B1AB2D3F80AA009786DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		BE74B1AC2D3F80AA009786DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+			};
+			name = Release;
+		};
+		BE74B1AE2D3F80AA009786DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = J4FQ687VJK;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BE74B1AF2D3F80AA009786DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = J4FQ687VJK;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BE74B1A92D3F80AA009786DF /* Build configuration list for PBXProject "coolwsd" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE74B1AB2D3F80AA009786DF /* Debug */,
+				BE74B1AC2D3F80AA009786DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE74B1AD2D3F80AA009786DF /* Build configuration list for PBXLegacyTarget "coolwsd" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE74B1AE2D3F80AA009786DF /* Debug */,
+				BE74B1AF2D3F80AA009786DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BE74B1A62D3F80AA009786DF /* Project object */;
+}
