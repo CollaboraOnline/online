@@ -50,11 +50,12 @@ QUIET_ECHO_ = $(QUIET_ECHO_$(AM_DEFAULT_VERBOSITY))
 QUIET_ECHO_0 = @echo "  ECHO    " $@;
 
 MOCHA_DIR = $(srcdir)/mocha_tests
+MOCHA_JS_DIR = $(MOCHA_DIR)/workdir
 MOCHA_TS_FILES = $(wildcard $(MOCHA_DIR)/*.ts)
-MOCHA_TS_JS_FILES := $(MOCHA_TS_FILES:.ts=.js)
+MOCHA_TS_JS_FILES = $(patsubst $(MOCHA_DIR)/%.ts,$(MOCHA_JS_DIR)/%.js,$(MOCHA_TS_FILES))
 # tsc can report a failure, but still create a .js and a second make attempt will succeed,
 # so if this returns an error then delete the target
-$(MOCHA_TS_JS_FILES): %.js: %.ts
+$(MOCHA_JS_DIR)/%.js: $(MOCHA_DIR)/%.ts
 	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5 || (rm -f $@ && false)
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness

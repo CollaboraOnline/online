@@ -9,7 +9,7 @@ bower.json
 component.json
 
 mocha.log
-mocha_tests/*.js
+mocha_tests/workdir/
 tscompile.done
 duplication.log
 
