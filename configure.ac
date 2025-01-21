@@ -2139,7 +2139,7 @@ if test "$enable_iosapp" = "yes"; then
                  ios/Mobile/Resources/Settings.bundle/Root.plist])
 fi
 
-if test "$enable_macosapp" = "yes"; then
+if test `uname -s` = "Darwin"; then
     # Homebrew uses different paths on Intel and Apple Silicon macOS.
     # Having a separate /opt/homebrew makes more sense, but I guess
     # backward compatibility keeps it as /usr/local on Intel Macs.
@@ -2149,7 +2149,9 @@ if test "$enable_macosapp" = "yes"; then
         HOMEBREW_PATH=/opt/homebrew
     fi
     AC_SUBST(HOMEBREW_PATH)
-    AC_CONFIG_FILES([macos/coda/Config.xcconfig])
+    AC_CONFIG_FILES([macos/coda/Config.xcconfig
+                     macos/coolwsd/gmake-wrapper.sh],
+                    [chmod +x macos/coolwsd/gmake-wrapper.sh])
 fi
 
 if test "$enable_windowsapp" = "yes"; then
