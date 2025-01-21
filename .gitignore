@@ -47,6 +47,7 @@ compile_commands.json
 **/gdb.txt
 macos/coda/config.h
 macos/coda/Config.xcconfig
+macos/coolwsd/gmake-wrapper.sh
 
 # Test stuff
 systemplate
@@ -106,7 +107,7 @@ coolforkit-nocaps
 coolforkit-ns
 connect
 lokitclient
-coolwsd
+./coolwsd
 loolwsd
 coolmount
 coolmap

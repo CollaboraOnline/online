@@ -1,6 +1,6 @@
-Building the CODA-M
+# Building the CODA-M
 
-Setup
+## Setup
 
 * Instal node.js
     * brew install node
@@ -28,7 +28,7 @@ Setup
     * After that you might need to update them in System Settings > General > Software Updates
         * For some reason for me it lists both 15.3 and 16.0 there. As I have Xcode 16.0, I choose just that one.
 
-Build LO
+## Build LO
 
 You need the 'coda' branch for that, and have to use the following
 autogen.input.
@@ -75,12 +75,34 @@ not /opt/homebrew.
 If you find an instance of /Users/kendy hardcoded somewhere, please
 report that, it's a mistake and should be fixed.
 
-Then you can build CODA-M:
+## Then you can build CODA-M:
 
 * ( cd browser ; make )
 * open Xcode's project macos/coda/coda.xcodeproj & build from there
 
-TODO
+# Building and debugging coolwsd directly in Xcode
+
+There is an additional Xcode project for easy building and debugging of
+coolwsd on macOS directly in Xcode. Configure everything as above, but use
+a slightly different ./configure (particularly notice the
+missing --enable-macosapp):
+
+    ./autogen.sh && ./configure \
+    --with-app-name="Collabora Office" \
+    --enable-experimental \
+    --enable-debug \
+    --with-vendor="Collabora Productivity" \
+    --with-poco-includes=/opt/homebrew/opt/poco/include \
+    --with-poco-libs=/opt/homebrew/opt/poco/lib \
+    --with-zstd-includes=/opt/homebrew/include \
+    --with-zstd-libs=/opt/homebrew/lib \
+    --with-lo-path=/Users/kendy/Projects/lo/core/instdir/CollaboraOffice.app \
+    --with-lokit-path=/Users/kendy/Projects/lo/core/include
+
+Then open the macos/coolwsd.xcodeproj project in Xcode and you can build, run
+and debug directly from Xcode.
+
+# TODO
 
 * configure.ac
     * add sanity check for the lo builddir when configuring with —enable-macosapp
