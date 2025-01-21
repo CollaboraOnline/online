@@ -494,7 +494,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	border-radius: initial;
 }
 
-.jsdialog:not(.sidebar).ui-treeview {
+.jsdialog:not(.sidebar).ui-treeview:not([id='auditlist']) {
 	max-height: 150px; /* only in dialogs */
 }
 
@@ -541,6 +541,17 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	white-space: nowrap;
 }
 
+.ui-treeview-headers,
+.ui-treeview-entry {
+	column-gap: 8px;
+}
+
+#ServerAuditDialog .ui-treeview-entry {
+	display: grid;
+	grid-template-columns: var(--btn-img-size-s) 6fr 3fr;
+	white-space: normal;
+}
+
 .ui-treeview-expanded-content {
 	display: grid;
 }
@@ -567,6 +578,21 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	grid-auto-flow: column;
 	/* grid-column: '1 / ' + (this._columns + 1) - set inside JS */
 }
+
+#ServerAuditDialog .ui-treeview-headers {
+	display: grid;
+	grid-template-columns: var(--btn-img-size-s) 6fr 3fr;
+	grid-column-end: 4 !important;
+}
+
+#ServerAuditDialog .ui-treeview-icon {
+	margin-inline-end: 2px;
+}
+
+#ServerAuditDialog .ui-treeview-headers div.ui-treeview-icon-column {
+	width: 0px /* prevent display of ui-treeview-icon-column in ui-treeview-header */
+}
+
 
 .ui-treeview-header {
 	display: inline-block;
@@ -2209,7 +2235,7 @@ kbd,
 }
 
 #ServerAuditDialog #ServerAuditDialog-mainbox {
-	min-width: calc(min(800px, 80vw));
+	min-width: calc(min(600px, 80vw));
 }
 
 #ServerAuditDialog .ui-treeview {
