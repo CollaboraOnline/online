@@ -36,6 +36,60 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 			});
 	});
 
+	it('JSDialog child focus', function() {
+		cy.getFrameWindow().then(function(win) {
+			var smile = win.document.querySelector('meta[name="previewSmile"]').content;
+			var jsonDialog = {
+				id: 'testfocus',
+				type: 'dialog',
+				text: 'Focus test',
+				children: [{
+					id: 'tabcontrol',
+					type: 'tabcontrol',
+					selected: 1,
+					tabs: [{
+						text: 'Test Focus',
+						id: 1,
+						name: 'testfocus'}],
+					children: [{
+						id: 'tabpage',
+						type: 'tabpage',
+						enabled: true,
+						text: 'Focus',
+						children: [{
+							id: 'container',
+							type: 'container',
+							children: [{
+								id: 'colorsetwin',
+								type: 'scrollwindow',
+								children: [{
+									id: 'colorset',
+									type: 'drawingarea',
+									imagewidth: 216,
+									imageheight: 180,
+									image: smile }]}, {
+								id: 'testcheck',
+								type: 'checkbox',
+								text: 'checkbox' }]
+						}]
+					}]
+				}]};
+
+			var dialog = win.L.control.jsDialog();
+			dialog.onJSDialog({data: jsonDialog, callback: function() {}});
+			expect(Object.keys(dialog.dialogs)).to.have.length(1);
+
+			var current = win.document.activeElement;
+			expect(current.id).to.equal('tabcontrol-1');
+
+			cy.realPress('Tab').then(function() {
+				var next = win.document.activeElement;
+				expect(next.id).to.equal('colorset-img');
+				dialog.closeAll(false);
+			});
+		});
+	});
+
 	it('JSDialog dropdown', function() {
 		// Open conditional format menu
 		cy.cGet('#toolbar-up .ui-scroll-right').click();
