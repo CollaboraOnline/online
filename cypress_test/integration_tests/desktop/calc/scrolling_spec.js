@@ -75,4 +75,27 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		// Document should scroll
 		desktopHelper.assertScrollbarPosition('horizontal', 80, 110);
 	});
+
+	it('Scroll while selecting with mouse', function () {
+		cy.cGet(helper.addressInputSelector).should('have.value', 'A2');
+
+		// Click on the bottom left cell and hold
+		cy.cGet('.leaflet-layer')
+			.then(function (items) {
+				expect(items).to.have.lengthOf(1);
+				var yPos = items[0].getBoundingClientRect().height - 60;
+				cy.cGet('.leaflet-layer').realMouseDown({ pointer: 'mouse', button: 'left', x: 30, y: yPos, scrollBehavior: false });
+			});
+		// Drag some cells to the right
+		cy.cGet('.leaflet-layer').realMouseMove(-280, -60, { position: 'bottomRight', scrollBehavior: false });
+		// Drag to the bottom edge
+		cy.cGet('.leaflet-layer').realMouseMove(-280, 0, { position: 'bottomRight', scrollBehavior: false });
+		// Wait for autoscroll and lift the button
+		cy.wait(500);
+		cy.cGet('.leaflet-layer').realMouseUp({ pointer: 'mouse', button: 'left' });
+
+		// Wihtout the fix, the selected range is of the form A17:A22, instead of A17:D22
+		// It's better not to check the exact range beacuse it can easily change in different executions
+		cy.cGet(helper.addressInputSelector).invoke('val').should('contain', 'D');
+	});
 });
