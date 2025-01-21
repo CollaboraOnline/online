@@ -52,6 +52,7 @@ def reorderLogFile(oldFilename):
     fileLines = []
     kitStartLine = {}
     kitEndLine = {}
+    kitCount = {}
     i = 0
 
     for line in f:
@@ -60,16 +61,24 @@ def reorderLogFile(oldFilename):
             endOfKit = line[numbKit:].find(" ")
             if endOfKit >= 0:
                 endOfKit += numbKit
-                kit = int(line[numbKit+4:endOfKit],16)
+                kit = line[numbKit+4:endOfKit]
             else:
-                kit = int(line[numbKit+4:],16)
+                kit = line[numbKit+4:-1]
 
-            fileLines.append(FileLine(kit,line))
+            if kit not in kitCount:
+                kitCount[kit] = 0
 
-            if kit not in kitStartLine:
-                kitStartLine[kit] = i
-            kitEndLine[kit] = i
+            kit2 = kit + "/" + str(kitCount[kit])
+
+            fileLines.append(FileLine(kit2,line))
+
+            if kit2 not in kitStartLine:
+                kitStartLine[kit2] = i
+            kitEndLine[kit2] = i
             i += 1
+
+            if line.startswith("log-end-time:"):
+                kitCount[kit] += 1
 
     fOut = open(newFileName, "w")
 
