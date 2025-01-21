@@ -159,7 +159,16 @@ public:
     {
         LOG_TRC("Socket dtor");
 
-        setClosed();
+        // Doesn't block on sockets; no error handling needed.
+        if constexpr (!Util::isMobileApp())
+        {
+            ::close(_fd);
+            LOG_DBG("Closed socket " << toStringImpl());
+        }
+        else
+        {
+            fakeSocketClose(_fd);
+        }
     }
 
     /// Returns true iff this socket has been closed or is invalid.
@@ -208,7 +217,15 @@ public:
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
     {
-        setClosed(); // Shutdown and close if not closed.
+        if (!_noShutdown && !isClosed())
+        {
+            LOG_TRC("Socket shutdown RDWR. " << *this);
+            if constexpr (!Util::isMobileApp())
+                ::shutdown(_fd, SHUT_RDWR);
+            else
+                fakeSocketShutdown(_fd);
+            setClosed(); // Invalidate the FD.
+        }
     }
 
     /// Prepare our poll record; adjust @timeoutMaxMs downwards
@@ -418,42 +435,18 @@ protected:
     /// avoid doing a shutdown before close
     void setNoShutdown() { _noShutdown = true; }
 
-    /// Shutdown (if not flagged with no-shutdown) and close the socket.
+    /// Explicitly marks this socket closed, i.e. rejected from polling and potentially shutdown
     /// Note: to preserve the original FD post closing (f.e. in logs and debugger), we negate it.
     void setClosed()
     {
-        if (!isClosed())
-        {
-            // Copy to invalidate immediately as fakeSocket can throw.
-            const int fd = _fd;
-
-            // Invalidate the FD by negating to preserve the original value.
-            if (_fd > 0)
-                _fd = -_fd;
-            else if (_fd == 0) // Unlikely, but technically possible.
-                _fd = -1;
-
-            if (!_noShutdown)
-            {
-                LOG_TRC("Socket shutdown RDWR. " << *this);
-                if constexpr (!Util::isMobileApp())
-                    ::shutdown(fd, SHUT_RDWR);
-                else
-                    fakeSocketShutdown(fd);
-            }
-
-            // Doesn't block on sockets; no error handling needed.
-            if constexpr (!Util::isMobileApp())
-            {
-                ::close(fd);
-                LOG_DBG("Closed socket " << toStringImpl());
-            }
-            else
-            {
-                fakeSocketClose(fd);
-            }
-        }
+        if (_fd > 0)
+            _fd = -_fd;
+        else if (_fd == 0) // Unlikely, but technically possible.
+            _fd = -1;
     }
+
+    /// Explicitly marks this socket and the given SocketDisposition closed
+    void setClosed(SocketDisposition &disposition) { setClosed(); disposition.setClosed(); }
 
 private:
     /// Create socket of the given type.
@@ -1590,8 +1583,7 @@ public:
         {
             LOG_TRC("Closed. Firing onDisconnect.");
             _socketHandler->onDisconnect();
-            setClosed();
-            disposition.setClosed();
+            setClosed(disposition);
         }
         else if (isClosed())
             disposition.setClosed();
