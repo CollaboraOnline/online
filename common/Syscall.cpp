@@ -37,17 +37,17 @@ namespace {
  *
  * Called "unsafe" because it keeps the file descriptor open on error, possibly leading to leaks.
  */
-int unsafe_set_fd_cloexec_nonblock(int fd, bool cloexec, bool nonblock) {
+bool unsafe_set_fd_cloexec_nonblock(int fd, bool cloexec, bool nonblock) {
     // Set FD_CLOEXEC if the user wants it
     if (cloexec)
     {
         int fd_flags = fcntl(fd, F_GETFD);
         if (fd_flags == -1)
-            return -1;
+            return false;
 
         fd_flags |= FD_CLOEXEC;
         if (fcntl(fd, F_SETFD, fd_flags) == -1)
-            return -1;
+            return false;
     }
 
     // Set O_NONBLOCK if the user wants it
@@ -55,22 +55,22 @@ int unsafe_set_fd_cloexec_nonblock(int fd, bool cloexec, bool nonblock) {
     {
         int fl_flags = fcntl(fd, F_GETFL);
         if (fl_flags == -1)
-            return -1;
+            return false;
 
         fl_flags |= O_NONBLOCK;
         if (fcntl(fd, F_SETFL, fl_flags) == -1)
-            return -1;
+            return false;
     }
 
-    return 0;
+    return true;
 }
 
 /**
  * Set FD_CLOEXEC and O_NONBLOCK on one file descriptor.
  */
-int set_fd_cloexec_nonblock(int fd, bool cloexec, bool nonblock) {
-    int ret = unsafe_set_fd_cloexec_nonblock(fd, cloexec, nonblock);
-    if (ret < 0) {
+bool set_fd_cloexec_nonblock(int fd, bool cloexec, bool nonblock) {
+    bool ret = unsafe_set_fd_cloexec_nonblock(fd, cloexec, nonblock);
+    if (!ret) {
         int saved_errno = errno;
         close(fd);
         errno = saved_errno;
@@ -82,20 +82,20 @@ int set_fd_cloexec_nonblock(int fd, bool cloexec, bool nonblock) {
 /**
  * Set CLOEXEC or NONBLOCK on both sides of the pipe/socket/...
  */
-int set_fds_cloexec_nonblock(int fds[2], bool cloexec, bool nonblock) {
+bool set_fds_cloexec_nonblock(int fds[2], bool cloexec, bool nonblock) {
     for (int i = 0; i < 2; i++) {
-        int ret = unsafe_set_fd_cloexec_nonblock(fds[i], cloexec, nonblock);
-        if (ret < 0) {
+        bool ret = unsafe_set_fd_cloexec_nonblock(fds[i], cloexec, nonblock);
+        if (!ret) {
             int saved_errno = errno;
             close(fds[0]);
             close(fds[1]);
             errno = saved_errno;
 
-            return -1;
+            return false;
         }
     }
 
-    return 0;
+    return true;
 }
 
 }
@@ -110,7 +110,7 @@ int Syscall::accept_cloexec_nonblock(int socket, struct sockaddr *address, sockl
     if (fd < 0)
         return fd;
 
-    return set_fd_cloexec_nonblock(fd, true, true);
+    return set_fd_cloexec_nonblock(fd, true, true)? fd: -1;
 #endif
 }
 
@@ -152,7 +152,7 @@ int Syscall::pipe2(int pipefd[2], int flags)
     if (pipe(pipefd) < 0)
         return -1;
 
-    return set_fds_cloexec_nonblock(pipefd, flags & O_CLOEXEC, flags & O_NONBLOCK);
+    return set_fds_cloexec_nonblock(pipefd, flags & O_CLOEXEC, flags & O_NONBLOCK)? 0: -1;
 #endif
 }
 
@@ -164,7 +164,7 @@ int Syscall::socket_cloexec_nonblock(int domain, int type, int protocol) {
     if (fd < 0)
         return fd;
 
-    return set_fd_cloexec_nonblock(fd, true, true);
+    return set_fd_cloexec_nonblock(fd, true, true)? fd: -1;
 #endif
 }
 
@@ -177,7 +177,7 @@ int Syscall::socketpair_cloexec_nonblock(int domain, int type, int protocol, int
     if (rc < 0)
         return rc;
 
-    return set_fds_cloexec_nonblock(socket_vector, true, true);
+    return set_fds_cloexec_nonblock(socket_vector, true, true)? 0: -1;
 #endif
 }
 
