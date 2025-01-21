@@ -1381,7 +1381,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 }
 
 #if !MOBILEAPP
-// TODO: make this async
 void ClientSession::uploadBrowserSettingsToWopiHost(const std::string& docKey)
 {
     Poco::URI uriObject(docKey);
@@ -1399,21 +1398,29 @@ void ClientSession::uploadBrowserSettingsToWopiHost(const std::string& docKey)
 
     const std::string& uriAnonym = COOLWSD::anonymizeUrl(uriObject.toString());
 
-    LOG_DBG("Uploading updated browserSettings to wopiHost[" << uriAnonym << ']');
     auto httpRequest = StorageConnectionManager::createHttpRequest(uriObject, _auth);
     httpRequest.setVerb(http::Request::VERB_POST);
+    auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
 
     std::ostringstream jsonStream;
     _browserSettingsJSON->stringify(jsonStream, 2);
     httpRequest.setBody(jsonStream.str(), "application/json; charset=utf-8");
 
-    auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
-    auto httpResponse = httpSession->syncRequest(httpRequest);
-
-    if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+    http::Session::FinishedCallback finishedCallback =
+        [uriAnonym, this](const std::shared_ptr<http::Session>& wopiSession)
     {
-        LOG_ERR("Failed to upload updated browser settings to wopiHost[" << uriAnonym << ']');
-    }
+        const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
+        const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
+        if (failed)
+        {
+            LOG_ERR("Failed to upload updated browser settings to wopiHost[" << uriAnonym << ']');
+            return;
+        }
+    };
+
+    LOG_DBG("Uploading updated browserSettings to wopiHost[" << uriAnonym << ']');
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    httpSession->asyncRequest(httpRequest, *COOLWSD::getWebServerPoll());
 }
 
 void ClientSession::updateBrowserSettingsJSON(const std::string& key, const std::string& value)
