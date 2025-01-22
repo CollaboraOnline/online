@@ -2086,11 +2086,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			controls['button'] = button;
 			if (builder.options.noLabelsForUnoButtons !== true) {
-				var label = L.DomUtil.create('label', 'ui-content unolabel', button);
-				label.htmlFor = buttonId;
-				label.textContent = builder._cleanText(data.text);
-				builder._stressAccessKey(label, button.accessKey);
-				controls['label'] = label;
+				var span = L.DomUtil.create('span', 'ui-content unolabel', button);
+				span.textContent = builder._cleanText(data.text);
+				builder._stressAccessKey(span, button.accessKey);
+				controls['label'] = span;
 				$(div).addClass('has-label');
 			} else if (builder.options.useInLineLabelsForUnoButtons === true) {
 				$(div).addClass('no-label');
@@ -2115,11 +2114,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
 				$(div).addClass('inline');
-				label = L.DomUtil.create('span', 'ui-content unolabel', div);
-				label.htmlFor = buttonId;
-				label.textContent = builder._cleanText(data.text);
+				span = L.DomUtil.create('span', 'ui-content unolabel', div);
+				span.textContent = builder._cleanText(data.text);
 
-				controls['label'] = label;
+				controls['label'] = span;
 			}
 			var isDisabled = data.enabled === false;
 			if (data.command) {
@@ -2184,10 +2182,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (data.selected === true)
 				selectFn();
 		} else {
-			var label = L.DomUtil.create('label', 'ui-content unolabel', div);
-			label.textContent = builder._cleanText(data.text);
+			var span = L.DomUtil.create('span', 'ui-content unolabel', div);
+			span.textContent = builder._cleanText(data.text);
 			controls['button'] = button;
-			controls['label'] = label;
+			controls['label'] = span;
 		}
 
 		if (options && options.hasDropdownArrow) {
