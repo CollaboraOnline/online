@@ -57,6 +57,7 @@ dist_doc_DATA = wsd/README.md \
                 wsd/README.vars \
                 wsd/protocol.txt \
                 wsd/metrics.txt \
+                collabora-online-sbom.spdx.json \
                 THIRDPARTYLICENSES
 
 coolwsddatadir = @COOLWSD_DATADIR@
@@ -462,6 +463,7 @@ dist-hook:
 
 EXTRA_DIST = discovery.xml \
              favicon.ico \
+             cool-sbom-template.spdx.json \
              coolkitconfig.xcu \
              coolwsd.spec \
              coolwsd.xml.in \
@@ -485,6 +487,7 @@ EXTRA_DIST = discovery.xml \
              etc/ca-chain.cert.pem \
              etc/apache2/coolwsd.conf \
              etc/nginx/coolwsd.conf \
+             scripts/create-sbom.py \
              scripts/unocommands.py \
              scripts/refresh-git-hooks \
              README.md \
@@ -545,6 +548,7 @@ clean-local:
 	rm -rf "${top_srcdir}/loleaflet"
 	rm -rf loolconfig loolconvert loolforkit loolmap loolmount # kill old binaries
 	rm -rf loolwsd loolwsd_fuzzer coolwsd_fuzzer loolstress loolsocketdump
+	rm -rf collabora-online-sbom.spdx.json
 	$(CLEANUP_COVERAGE)
 
 if ENABLE_DEBUG
@@ -808,3 +812,6 @@ coverage-clean:
 
 czech: check
 	@echo "This should do something much cooler"
+
+collabora-online-sbom.spdx.json: coolforkit-ns
+	python3 scripts/create-sbom.py

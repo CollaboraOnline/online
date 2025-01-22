@@ -183,3 +183,6 @@ autogen.input
 
 # MacOS file manager metadata
 .DS_Store
+
+# SBOM
+collabora-online-sbom.spdx.json
