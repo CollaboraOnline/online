@@ -541,6 +541,12 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	white-space: nowrap;
 }
 
+#ServerAuditDialog .ui-treeview-entry {
+	display: grid;
+	grid-template-columns: var(--btn-img-size-m) 6fr 3fr;
+	white-space: normal;
+}
+
 .ui-treeview-expanded-content {
 	display: grid;
 }
@@ -566,6 +572,21 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: grid;
 	grid-auto-flow: column;
 	/* grid-column: '1 / ' + (this._columns + 1) - set inside JS */
+}
+
+#ServerAuditDialog .ui-treeview-headers {
+	display: grid;
+	grid-column-end: 4 !important;
+	grid-template-columns: 0fr 6fr 3fr;
+	margin-inline-start: 4px;
+}
+
+#ServerAuditDialog .ui-treeview-headers div.ui-treeview-icon-column {
+	width: 0px /* prevent display of ui-treeview-icon-column in ui-treeview-header */
+}
+
+#ServerAuditDialog .ui-treeview-headers > div:nth-last-child(1) {
+	margin-inline-start: 7px;
 }
 
 .ui-treeview-header {
@@ -2209,11 +2230,12 @@ kbd,
 }
 
 #ServerAuditDialog #ServerAuditDialog-mainbox {
-	min-width: calc(min(800px, 80vw));
+	min-width: calc(min(600px, 80vw));
 }
 
 #ServerAuditDialog .ui-treeview {
 	border-color: transparent;
+	max-height: max-content;
 }
 #ServerAuditDialog .ui-treeview td[role='gridcell'] {
 	padding-inline-start: 0;
