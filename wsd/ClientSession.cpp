@@ -13,7 +13,9 @@
 
 #include "ClientSession.hpp"
 
+#include <filesystem>
 #include <ios>
+#include <map>
 #include <sstream>
 #include <string>
 #include <string_view>
@@ -3002,8 +3004,9 @@ void ClientSession::onDisconnect()
 #if !MOBILEAPP
 // TODO: replace fileId with filePath
 // TODO: make uploadPresets async similar to asyncInstallPreset(?)
-void ClientSession::uploadPresetsToWopiHost(const std::string& jailPresetsPath,
-                                            const std::string& docKey)
+void ClientSession::uploadPresetsToWopiHost(
+    const std::string& jailPresetsPath, const std::string& docKey,
+    std::map<std::string, std::filesystem::file_time_type>& presetMap)
 {
     Poco::URI uriObject(docKey);
 
@@ -3023,15 +3026,23 @@ void ClientSession::uploadPresetsToWopiHost(const std::string& jailPresetsPath,
     const auto fileNames = FileUtil::getDirEntries(searchDir);
     for (auto& fileName : fileNames)
     {
+        std::string fileJailPath = searchDir;
+        fileJailPath.append("/");
+        fileJailPath.append(fileName);
+        std::filesystem::file_time_type currentTimestamp =
+            FileUtil::getLastModificationTimestamp(fileJailPath);
+        if (currentTimestamp <= presetMap[fileName])
+        {
+            LOG_TRC("Skip uploading preset file [" << fileJailPath << "] to wopiHost["
+                                                   << uriObject.toString() << "], no modification");
+            continue;
+        }
+
         std::string filePath = "settings/userconfig/wordbook/";
         filePath.append(fileName);
         uriObject.addQueryParameter("fileId", filePath);
         auto httpRequest = StorageConnectionManager::createHttpRequest(uriObject, _auth);
         httpRequest.setVerb(http::Request::VERB_POST);
-
-        std::string fileJailPath = searchDir;
-        fileJailPath.append("/");
-        fileJailPath.append(fileName);
 
         LOG_TRC("Uploading file from jailPath[" << fileJailPath << "] to wopiHost["
                                                 << uriObject.toString() << ']');
