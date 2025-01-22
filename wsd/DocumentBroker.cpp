@@ -1648,13 +1648,27 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
                                          const std::string& userSettingsUri,
                                          const std::string& presetsPath)
 {
-    auto installFinishedCB = [selfWeak = weak_from_this(), this, session, userSettingsUri](bool success){
+    auto installFinishedCB =
+        [selfWeak = weak_from_this(), this, session, userSettingsUri, presetsPath](bool success)
+    {
         std::shared_ptr<DocumentBroker> selfLifecycle = selfWeak.lock();
         if (!selfLifecycle)
             return;
 
         if (success)
+        {
+            std::string searchDir = presetsPath;
+            searchDir.append("wordbook");
+            const auto fileNames = FileUtil::getDirEntries(searchDir);
+            for (auto& fileName : fileNames)
+            {
+                std::string filePath = searchDir;
+                filePath.append("/");
+                filePath.append(fileName);
+                _presetTimestamp[fileName] = FileUtil::getLastModificationTimestamp(filePath);
+            }
             forwardToChild(session, "addconfig");
+        }
         else
         {
             const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
@@ -1851,7 +1865,7 @@ void DocumentBroker::parseBrowserSettings(const std::shared_ptr<ClientSession>& 
     Poco::JSON::Object::Ptr browserSettings = settings->getObject("browserSettings");
     if (browserSettings.isNull())
     {
-        LOG_WRN("json key[browserSettings] doesn't exist in user config json");
+        LOG_INF("json key[browserSettings] doesn't exist in user config json");
         browserSettings = session->getSentBrowserSettingJSON();
     }
     std::ostringstream jsonStream;
@@ -3680,7 +3694,7 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
         /// make sure to upload preset to WOPIHost
         const std::string& jailPresetsPath = FileUtil::buildLocalPathToJail(
         COOLWSD::EnableMountNamespaces, getJailRoot(), JAILED_CONFIG_ROOT);
-        session->uploadPresetsToWopiHost(jailPresetsPath, Uri::decode(getDocKey()));
+        session->uploadPresetsToWopiHost(jailPresetsPath, Uri::decode(getDocKey()), _presetTimestamp);
 #endif
 #ifndef IOS
         if (activeSessionCount <= 1)

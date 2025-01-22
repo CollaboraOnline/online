@@ -14,6 +14,7 @@
 #include <cerrno>
 #include <chrono>
 #include <fcntl.h>
+#include <filesystem>
 #include <string>
 #include <sys/stat.h>
 
@@ -89,6 +90,9 @@ namespace FileUtil
 
     /// Update the access-time and modified-time metadata for the given file.
     bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified);
+
+    /// Returns timestamp of the file
+    std::filesystem::file_time_type getLastModificationTimestamp(const std::string& filePath);
 
     /// Copy the source file to the target.
     bool copy(const std::string& fromPath, const std::string& toPath, bool log,
