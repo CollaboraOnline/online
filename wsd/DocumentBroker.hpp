@@ -25,6 +25,7 @@
 #include <Poco/URI.h>
 #include <Poco/JSON/Object.h>
 
+#include "Authorization.hpp"
 #include "Log.hpp"
 #include "QuarantineUtil.hpp"
 #include "TileDesc.hpp"
@@ -384,6 +385,10 @@ public:
 #if !MOBILEAPP
     void syncBrowserSettings(const std::string& userId, const std::string& key,
                              const std::string& value);
+
+    void uploadBrowserSettingsToWopiHost(const std::shared_ptr<ClientSession>& session);
+
+    void uploadPresetsToWopiHost(const Authorization& auth);
 #endif
 
     void alertAllUsers(const std::string& cmd, const std::string& kind)
@@ -560,6 +565,7 @@ public:
 
     static void parseBrowserSettings(const std::shared_ptr<ClientSession>& session,
                                      const Poco::JSON::Object::Ptr& settings);
+
     /// Start an asynchronous Installation of the user presets, e.g. autotexts etc, as
     /// described at userSettingsUri for installation into presetsPath
     static std::shared_ptr<PresetsInstallTask> asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,
@@ -575,6 +581,7 @@ public:
                                    const std::string& presetFile,
                                    const std::string& id,
                                    const std::function<void(const std::string&, bool)>& finishedCB);
+
 #endif // !MOBILEAPP
 
 private:
