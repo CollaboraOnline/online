@@ -113,8 +113,7 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
 std::pair<std::shared_ptr<DocumentBroker>, std::string>
 findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
                       const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
-                      unsigned mobileAppDocId,
-                      std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
+                      unsigned mobileAppDocId)
 {
     LOG_INF("Find or create DocBroker for docKey ["
             << docKey << "] for session [" << id << "] on url ["
@@ -186,8 +185,7 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
 
         // Set the one we just created.
         LOG_DBG("New DocumentBroker for docKey [" << docKey << ']');
-        docBroker = std::make_shared<DocumentBroker>(type, uri, uriPublic, docKey, mobileAppDocId,
-                                                     std::move(wopiFileInfo));
+        docBroker = std::make_shared<DocumentBroker>(type, uri, uriPublic, docKey, mobileAppDocId);
         DocBrokers.emplace(docKey, docBroker);
         LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << ']');
     }
@@ -2120,7 +2118,7 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     // Request a kit process for this doc.
     std::pair<std::shared_ptr<DocumentBroker>, std::string> pair
         = findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic,
-                              /*mobileAppDocId=*/0, /*wopiFileInfo=*/nullptr);
+                              /*mobileAppDocId=*/0);
     auto docBroker = pair.first;
 
     if (!docBroker)
