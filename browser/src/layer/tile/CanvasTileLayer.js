@@ -372,14 +372,26 @@ window.L.TileSectionManager = window.L.Class.extend({
 			return { offset: this._offset, topLeft: docTopLeft };
 		}
 
-		const newPaneCenter = new cool.Point(
-			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) * 0.5 / scale),
-			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) * 0.5 / scale));
+		let newCenter;
+
+		const newZoom = this._map.getScaleZoom(scale);
+		if (this._layer.isCalc()) {
+			const zoomScaleAbs = this._map.zoomToFactor(newZoom);
+
+			const newTopLeftP = this._layer.sheetGeometry
+				.getCorePixelsAtZoom(docTopLeft, zoomScaleAbs);
+			newCenter = newTopLeftP.multiplyBy(app.dpiScale).add(paneBounds.getSize().subtract(splitPos).divideBy(2));
+		} else {
+			const newPaneCenter = new cool.Point(
+				(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) * 0.5 / scale),
+				(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) * 0.5 / scale));
+			newCenter = this._map.rescale(newPaneCenter, this._map.getZoom(), newZoom);
+		}
 
 		return {
 			offset: this._offset,
-			topLeft: docTopLeft.add(this._offset),
-			center: this._map.rescale(newPaneCenter, this._map.getZoom(), this._map.getScaleZoom(scale)),
+			topLeft: docTopLeft,
+			center: newCenter,
 		};
 	},
 
