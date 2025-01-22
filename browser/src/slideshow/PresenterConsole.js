@@ -56,7 +56,7 @@ class PresenterConsole {
                                 </header>
                                 <main id="main-content">
 								  <div id="toolbar">
-									<button type="button" id="close-slides" data-cooltip="${this.labels.goBack}" disabled>
+									<button type="button" id="close-slides" data-cooltip="${this.labels.goBack}">
 										<img src="images/presenterscreen-ArrowBack.svg">
 									</button>
                                   </div>
@@ -65,10 +65,10 @@ class PresenterConsole {
 										<div id="timer-container">
 											<div id="timer"></div>
 											 <div id="timer-controls">
-												<button type="button" id="pause" data-cooltip="${this.labels.pause}" disabled>
+												<button type="button" id="pause" data-cooltip="${this.labels.pause}">
 													<img src="images/presenterscreen-ButtonPauseTimerNormal.svg">
 												</button>
-												<button type="button" id="restart" data-cooltip="${this.labels.restart}" disabled>
+												<button type="button" id="restart" data-cooltip="${this.labels.restart}">
 													<img src="images/presenterscreen-ButtonRestartTimerNormal.svg">
 												</button>
 											 </div>
@@ -78,19 +78,19 @@ class PresenterConsole {
                                             <canvas id="current-presentation"></canvas>
 											<div id="slideshow-control-container">
 											<div id="navigation-container">
-												<button type="button" id="prev" data-cooltip="${this.labels.previous}" disabled>
+												<button type="button" id="prev" data-cooltip="${this.labels.previous}">
 													<img src="images/presenterscreen-ButtonSlidePreviousSelected.svg">
 												</button>
 												<div id="title-current">${this.labels.currentSlide}</div>
-												<button type="button" id="next" data-cooltip="${this.labels.next}" disabled>
+												<button type="button" id="next" data-cooltip="${this.labels.next}">
 													<img src="images/presenterscreen-ButtonEffectNextSelected.svg">
 												</button>
 											</div>
 											<div id="action-buttons-container">
-												<button type="button" id="notes" data-cooltip="${this.labels.notes}" disabled>
+												<button type="button" id="notes" data-cooltip="${this.labels.notes}">
 													<img src="images/presenterscreen-ButtonNotesNormal.svg">
 												</button>
-												<button type="button" id="slides" data-cooltip="${this.labels.slides}" disabled>
+												<button type="button" id="slides" data-cooltip="${this.labels.slides}">
 													<img src="images/presenterscreen-ButtonSlideSorterNormal.svg">
 												</button>
 											</div>
@@ -159,12 +159,6 @@ class PresenterConsole {
 
 		this._visibleSlidesCount = this._presenter.getVisibleSlidesCount();
 		this._previews = new Array(this._getSlidesCount());
-		if (this._previews.length > 1) {
-			let list = this._proxyPresenter.document.querySelectorAll('button');
-			for (let index = 0; index < list.length; index++) {
-				list[index].disabled = false;
-			}
-		}
 
 		if (this._slides) {
 			let img;
