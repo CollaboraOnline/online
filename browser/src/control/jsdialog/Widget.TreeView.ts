@@ -152,7 +152,7 @@ class TreeViewControl {
 		row: number | string,
 	): TreeEntryJSON {
 		for (const i in entries) {
-			if (i == row) return entries[i];
+			if (entries[i].row == row) return entries[i];
 			else if (entries[i].children) {
 				var found = this.findEntryWithRow(entries[i].children, row);
 				if (found) return found;
@@ -207,6 +207,7 @@ class TreeViewControl {
 		checkbox.tabIndex = -1;
 
 		if (entry.state === true) checkbox.checked = true;
+		else checkbox.checked = false;
 
 		return checkbox;
 	}
@@ -226,6 +227,7 @@ class TreeViewControl {
 		radioButton.tabIndex = -1;
 
 		if (entry.state === true) radioButton.checked = true;
+		else radioButton.checked = false;
 
 		return radioButton;
 	}
@@ -682,11 +684,13 @@ class TreeViewControl {
 			}
 		}
 
-		const toggleFunction = () => {
+		const toggleFunction = (e: MouseEvent) => {
 			this.toggleEntry(tr, treeViewData, entry, builder);
+			e.preventDefault();
 		};
-		const expandFunction = () => {
+		const expandFunction = (e: MouseEvent) => {
 			this.expandEntry(tr, treeViewData, entry, builder);
+			e.preventDefault();
 		};
 
 		if (expander && entry.children && entry.children.length) {
@@ -695,7 +699,7 @@ class TreeViewControl {
 			} else {
 				$(expander).click((e) => {
 					if (entry.state && e.target === selectionElement) e.preventDefault(); // do not toggle on checkbox
-					toggleFunction();
+					toggleFunction(e.originalEvent);
 				});
 			}
 		}
@@ -789,7 +793,7 @@ class TreeViewControl {
 		treeViewData: TreeWidgetJSON,
 		entry: TreeEntryJSON,
 	) {
-		return (e: MouseEvent) => {
+		return (e: MouseEvent | KeyboardEvent) => {
 			if (e && e.target === checkbox) return; // allow default handler to trigger change event
 
 			if (e && L.DomUtil.hasClass(parentContainer, 'disabled')) {
@@ -804,7 +808,7 @@ class TreeViewControl {
 				});
 
 			this.selectEntry(parentContainer, checkbox);
-			if (checkbox)
+			if (checkbox && (!e || e.target === checkbox))
 				this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);
 
 			if (select)

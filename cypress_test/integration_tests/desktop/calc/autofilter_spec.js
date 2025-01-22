@@ -4,6 +4,45 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
+function toggleAutofilter() {
+	//enable/disable autofilter
+	cy.cGet('#menu-data').click();
+	cy.cGet('body').contains('#menu-data li', 'AutoFilter').click();
+}
+
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter Complex', function() {
+
+	beforeEach(function() {
+		helper.setupAndLoadDocument('calc/autofilter-complex.ods');
+		desktopHelper.switchUIToCompact();
+
+		// make deterministic jump, so in retry we have similar scrollbar values
+		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
+		cy.wait(1000);
+
+		helper.typeIntoInputField(helper.addressInputSelector, 'U125');
+		cy.cGet('#map').focus();
+		cy.wait(1000);
+
+		desktopHelper.assertScrollbarPosition('vertical', 240, 260);
+		desktopHelper.assertScrollbarPosition('horizontal', 210, 230);
+	});
+
+	it('Check checkbox status in the date tree', function() {
+		calcHelper.openAutoFilterMenu(true);
+
+		cy.cGet('.autofilter .vertical').should('be.visible');
+		cy.cGet('#toggle_all-input').should('not.be.checked');
+
+		cy.cGet('.autofilter .ui-treeview-expander-column').eq(0).click(); // open 2022
+		cy.cGet('.autofilter .ui-treeview-expander-column').eq(1).click(); // open January
+
+		cy.cGet('#toggle_all-input').should('not.be.checked');
+		cy.cGet('.autofilter input[type="checkbox"]').eq(3).should('not.be.checked');
+	});
+});
+
+
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 	beforeEach(function() {
@@ -13,12 +52,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		helper.setDummyClipboardForCopy();
 		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail'], true);
 	});
-
-	function toggleAutofilter() {
-		//enable/disable autofilter
-		cy.cGet('#menu-data').click();
-		cy.cGet('body').contains('#menu-data li', 'AutoFilter').click();
-	}
 
 	it.skip('Enable/Disable autofilter', function() {
 		//filter by pass
