@@ -582,6 +582,7 @@ public:
                                    const std::string& id,
                                    const std::function<void(const std::string&, bool)>& finishedCB);
 
+    static Poco::URI getPresetUploadBaseUrl(const std::string& docKey);
 #endif // !MOBILEAPP
 
 private:
