@@ -174,6 +174,7 @@ interface TreeColumnJSON {
 	link?: string;
 	collapsed?: string | boolean;
 	expanded?: string | boolean;
+	customEntryRenderer?: boolean; // has custome rendering enabled
 	collapsedimage?: string;
 	expandedimage?: string;
 	editable?: boolean;

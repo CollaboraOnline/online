@@ -77,31 +77,15 @@ class TreeViewControl {
 	_isNavigator: boolean;
 	_singleClickActivate: boolean;
 	_filterTimer: ReturnType<typeof setTimeout>;
+	_rows: Map<string, HTMLElement>;
 
 	constructor(data: TreeWidgetJSON, builder: JSBuilder) {
-		this._isRealTree = this.isRealTree(data);
 		this._container = L.DomUtil.create(
 			'div',
 			builder.options.cssClass + ' ui-treeview',
 		);
 		this._container.id = data.id;
-		this._columns = TreeViewControl.countColumns(data);
-		this._hasState = TreeViewControl.hasState(data);
-		this._hasIcon = TreeViewControl.hasIcon(data);
-		this._isNavigator = this.isNavigator(data);
-		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
-
-		this._tbody = this._container;
-		(this._container as any).filterEntries = this.filterEntries.bind(this);
-
-		this.setupDragAndDrop(data, builder);
-		this.setupKeyEvents(data, builder);
-
-		if (this._isRealTree) {
-			this._container.setAttribute('role', 'treegrid');
-			if (!data.headers || data.headers.length === 0)
-				L.DomUtil.addClass(this._container, 'ui-treeview-tree');
-		} else this._container.setAttribute('role', 'grid');
+		this._rows = new Map<string, HTMLElement>();
 	}
 
 	get Container() {
@@ -358,16 +342,19 @@ class TreeViewControl {
 		builder: JSBuilder,
 		level: number,
 		parent: HTMLElement,
-	) {
-		const tr = L.DomUtil.create(
+	): HTMLElement {
+		const tr: HTMLElement = L.DomUtil.create(
 			'div',
 			builder.options.cssClass + ' ui-treeview-entry',
 			parent,
 		);
+		this._rows.set(String(entry.row), tr);
+		tr.setAttribute('level', String(level));
+
 		let dummyColumns = 0;
 		if (this._hasState) dummyColumns++;
 		tr.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
-		tr.setAttribute('tabindex', 0);
+		tr.setAttribute('tabindex', '0');
 
 		let selectionElement;
 		if (this._hasState) {
@@ -380,6 +367,8 @@ class TreeViewControl {
 
 		this.setupRowProperties(tr, entry, level, selectionElement);
 		this.setupRowDragAndDrop(tr, data, entry, builder);
+
+		return tr;
 	}
 
 	highlightAllTreeViews(highlight: boolean) {
@@ -480,20 +469,50 @@ class TreeViewControl {
 	}
 
 	createTextCell(
+		treeViewData: TreeWidgetJSON,
 		parent: HTMLElement,
 		entry: TreeEntryJSON,
 		index: any,
 		builder: JSBuilder,
 	) {
-		const cell = L.DomUtil.create(
-			'span',
-			builder.options.cssClass +
-				` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
-			parent,
-		);
-		cell.innerText =
-			builder._cleanText(entry.columns[index].text) ||
-			builder._cleanText(entry.text);
+		const hasRenderer = entry.columns[index].customEntryRenderer;
+		const hasCache = hasRenderer && builder.rendersCache[treeViewData.id];
+		const hasCachedImage =
+			hasCache && builder.rendersCache[treeViewData.id].images[entry.row];
+
+		if (hasCachedImage) {
+			const image = builder.rendersCache[treeViewData.id].images[entry.row];
+			const cell = L.DomUtil.create(
+				'span',
+				builder.options.cssClass +
+					` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
+				parent,
+			);
+			const img = L.DomUtil.create('img', '', cell);
+			img.src = image;
+		} else {
+			const cell = L.DomUtil.create(
+				'span',
+				builder.options.cssClass +
+					` ui-treeview-cell-text ui-treeview-cell-text-content ui-treeview-${entry.row}-${index}`,
+				parent,
+			);
+			cell.innerText =
+				builder._cleanText(entry.columns[index].text) ||
+				builder._cleanText(entry.text);
+
+			if (hasRenderer) {
+				JSDialog.OnDemandRenderer(
+					builder,
+					treeViewData.id,
+					'treeview',
+					entry.row,
+					cell,
+					parent,
+					entry.text,
+				);
+			}
+		}
 	}
 
 	createLinkCell(
@@ -583,7 +602,7 @@ class TreeViewControl {
 				entry.columns[index].text &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				this.createTextCell(text, entry, index, builder);
+				this.createTextCell(treeViewData, text, entry, index, builder);
 			}
 
 			// row sub-elements
@@ -1334,30 +1353,8 @@ class TreeViewControl {
 	) {
 		let hasSelectedEntry = false;
 		for (const index in entries) {
-			this.fillRow(data, entries[index], builder, level, parent);
-
 			hasSelectedEntry = hasSelectedEntry || entries[index].selected;
-
-			if (entries[index].children && entries[index].children.length) {
-				L.DomUtil.addClass(parent.lastChild, 'ui-treeview-expandable');
-				const subGrid = L.DomUtil.create(
-					'div',
-					'ui-treeview-expanded-content',
-					parent,
-				);
-
-				let dummyColumns = 0;
-				if (this._hasState) dummyColumns++;
-				subGrid.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
-
-				this.fillEntries(
-					data,
-					entries[index].children,
-					builder,
-					level + 1,
-					subGrid,
-				);
-			}
+			this.fillEntry(data, entries[index], builder, level, parent);
 		}
 
 		if (entries && entries.length === 0) this.makeEmptyList(data, builder);
@@ -1365,6 +1362,36 @@ class TreeViewControl {
 		// we need to provide a way for making the treeview control focusable
 		// when no entry is selected
 		if (level === 1 && !hasSelectedEntry) this.makeTreeViewFocusable(true);
+	}
+
+	fillEntry(
+		data: TreeWidgetJSON,
+		entry: TreeEntryJSON,
+		builder: JSBuilder,
+		level: number,
+		parent: HTMLElement,
+	): Array<HTMLElement> {
+		const entryElements = new Array<HTMLElement>();
+		const row: HTMLElement = this.fillRow(data, entry, builder, level, parent);
+		entryElements.push(row);
+
+		if (entry.children && entry.children.length) {
+			L.DomUtil.addClass(row, 'ui-treeview-expandable');
+			const subGrid = L.DomUtil.create(
+				'div',
+				'ui-treeview-expanded-content',
+				parent,
+			);
+			entryElements.push(subGrid);
+
+			let dummyColumns = 0;
+			if (this._hasState) dummyColumns++;
+			subGrid.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
+
+			this.fillEntries(data, entry.children, builder, level + 1, subGrid);
+		}
+
+		return entryElements;
 	}
 
 	getColumnType(column: TreeColumnJSON) {
@@ -1440,11 +1467,28 @@ class TreeViewControl {
 		builder: JSBuilder,
 		parentContainer: HTMLElement,
 	) {
+		this._isRealTree = this.isRealTree(data);
+		this._columns = TreeViewControl.countColumns(data);
+		this._hasState = TreeViewControl.hasState(data);
+		this._hasIcon = TreeViewControl.hasIcon(data);
+		this._isNavigator = this.isNavigator(data);
+		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
+
+		this._tbody = this._container;
+		(this._container as any).filterEntries = this.filterEntries.bind(this);
+
+		this.setupDragAndDrop(data, builder);
+		this.setupKeyEvents(data, builder);
+
+		if (this._isRealTree) {
+			this._container.setAttribute('role', 'treegrid');
+			if (!data.headers || data.headers.length === 0)
+				L.DomUtil.addClass(this._container, 'ui-treeview-tree');
+		} else this._container.setAttribute('role', 'grid');
+
 		this.preprocessColumnData(data.entries);
 		this.fillHeaders(data.headers, builder);
 		this.fillEntries(data, data.entries, builder, 1, this._tbody);
-
-		parentContainer.appendChild(this._container);
 
 		return true;
 	}
@@ -1457,6 +1501,41 @@ JSDialog.treeView = function (
 ) {
 	var treeView = new TreeViewControl(data, builder);
 	treeView.build(data, builder, parentContainer);
+	parentContainer.appendChild(treeView._container);
+
+	(treeView._container as any).updateRenders = (pos: number | string) => {
+		const row = treeView.findEntryWithRow(data.entries, pos);
+		if (!row) {
+			console.error('treeview updateRenders: row "' + pos + '" not found');
+			return;
+		}
+
+		const originalRow = treeView._rows.get(String(pos));
+		if (!originalRow) {
+			console.error('treeview updateRenders: missing original row');
+			return;
+		}
+
+		const level = parseInt(originalRow.getAttribute('level'));
+		const dummyParent = document.createElement('div');
+		const newRow: Array<HTMLElement> = treeView.fillEntry(
+			data,
+			row,
+			builder,
+			level,
+			dummyParent,
+		);
+
+		if (originalRow.classList.contains('ui-treeview-expandable')) {
+			// we need to remove also sub nodes
+			originalRow.nextSibling.replaceWith(newRow[1]);
+			originalRow.replaceWith(newRow[0]);
+		} else {
+			originalRow.replaceWith(newRow[0]);
+		}
+
+		treeView._rows.set(String(pos), newRow[0]);
+	};
 
 	return false;
 };

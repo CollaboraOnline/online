@@ -2800,6 +2800,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (typeof control.updateRenders == 'function')
 				control.updateRenders(data.pos);
+			else
+				console.error('widget doesn\'t support custom entries');
 
 			break;
 
