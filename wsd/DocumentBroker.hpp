@@ -1731,6 +1731,7 @@ private:
 
 #if !MOBILEAPP
     Admin& _admin;
+    /// stores timestamps of preset files when they get installed to compare later to check if they are modified
     std::map<std::string, std::filesystem::file_time_type> _presetTimestamp;
 #endif
 
