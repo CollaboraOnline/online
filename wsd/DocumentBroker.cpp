@@ -1551,45 +1551,50 @@ private:
             cb(_overallSuccess);
     }
 
-    void addGroup(Poco::JSON::Object::Ptr settings, const std::string& groupName, std::vector<CacheQuery>& queries)
+    void addGroup(Poco::JSON::Object::Ptr settings, const std::string& groupName,
+                  std::vector<CacheQuery>& queries)
     {
-        if (auto group = settings->get(groupName).extract<Poco::JSON::Array::Ptr>())
+        if (!settings->has(groupName))
+            return;
+
+        auto group = settings->get(groupName).extract<Poco::JSON::Array::Ptr>();
+        for (std::size_t i = 0, count = group->size(); i < count; ++i)
         {
-            for (std::size_t i = 0, count = group->size(); i < count; ++i)
-            {
-                auto elem = group->get(i).extract<Poco::JSON::Object::Ptr>();
-                if (!elem)
-                    continue;
+            auto elem = group->get(i).extract<Poco::JSON::Object::Ptr>();
+            if (!elem)
+                continue;
 
-                const std::string uri = JsonUtil::getJSONValue<std::string>(elem, "uri");
-                const std::string stamp = JsonUtil::getJSONValue<std::string>(elem, "stamp");
+            const std::string uri = JsonUtil::getJSONValue<std::string>(elem, "uri");
+            const std::string stamp = JsonUtil::getJSONValue<std::string>(elem, "stamp");
 
-                Poco::Path destDir(_presetsPath, groupName);
-                Poco::File(destDir).createDirectories();
-                std::string fileName =
-                    Poco::Path(destDir.toString(),
-                               Uri::getFilenameWithExtFromURL(uri))
-                        .toString();
+            Poco::Path destDir(_presetsPath, groupName);
+            Poco::File(destDir).createDirectories();
+            std::string fileName =
+                Poco::Path(destDir.toString(), Uri::getFilenameWithExtFromURL(uri)).toString();
 
-                queries.emplace_back(uri, stamp, fileName);
-            }
+            queries.emplace_back(uri, stamp, fileName);
         }
     }
 
     void addXcu(Poco::JSON::Object::Ptr settings, std::vector<CacheQuery>& queries)
     {
-        if (auto xcu = settings->get("xcu").extract<Poco::JSON::Object::Ptr>())
-        {
-            const std::string uri = JsonUtil::getJSONValue<std::string>(xcu, "uri");
-            const std::string stamp = JsonUtil::getJSONValue<std::string>(xcu, "stamp");
+        if (!settings->has("xcu"))
+            return;
 
-            Poco::Path destDir(_presetsPath, "xcu");
-            Poco::File(destDir).createDirectories();
-            std::string fileName = Poco::Path(destDir, "config.xcu").toString();
+        auto xcu = settings->get("xcu").extract<Poco::JSON::Object::Ptr>();
+        if (xcu.isNull())
+            return;
 
-            queries.emplace_back(uri, stamp, fileName);
-        }
+        const std::string uri = JsonUtil::getJSONValue<std::string>(xcu, "uri");
+        const std::string stamp = JsonUtil::getJSONValue<std::string>(xcu, "stamp");
+
+        Poco::Path destDir(_presetsPath, "xcu");
+        Poco::File(destDir).createDirectories();
+        std::string fileName = Poco::Path(destDir, "config.xcu").toString();
+
+        queries.emplace_back(uri, stamp, fileName);
     }
+
 public:
     PresetsInstallTask(SocketPoll& poll, const std::string& configId,
                        const std::string& presetsPath,
