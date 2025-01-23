@@ -1,99 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/admin-localizations.json" type="application/vnd.oftn.l10n+json"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/admin-localizations.json"
+        type="application/vnd.oftn.l10n+json" />
 
     <title>Collabora Online - Admin console</title>
-    <link rel=StyleSheet href="%SERVICE_ROOT%/browser/%VERSION%/admin/css/bulma.min.css" type="text/css" />
-    <script>
-        var params = new URLSearchParams(window.location.search);
-        var routeToken = params.get('RouteToken');
-        var adminBundleSrc = '%SERVICE_ROOT%/browser/%VERSION%/admin-bundle.js';
-        if (routeToken) {
-            adminBundleSrc += '?RouteToken=' + routeToken
-        }
-        document.write('<script src="' + adminBundleSrc + '" defer><\/script>');
-    </script>
-
-    <style>
-        @font-face {
-        font-family: "Montserrat";
-            src: url("%SERVICE_ROOT%/browser/%VERSION%/admin/font/Montserrat-Regular.ttf") format("truetype");
-        }
-
-        html, body {
-            font-family: 'Montserrat', sans-serif;
-		}
-
-		/* These classes are for tab views without javascipt. */
-        div:target.mtabs {
-           display: block;
-        }
-        div.mtabs {
-            display: none
-		}
-
-		/* These classes are for collapsable elements without javascript. */
-		input[type=checkbox].mcollapsable + ul {
-			display: block;
-			visibility: hidden;
-			height: 0;
-			opacity: 0;
-			transition-property: opacity, visibility;
-			transition-duration: 500ms, 500ms;
-		}
-		input[type=checkbox].mcollapsable:checked + ul {
-			visibility: visible;
-			height: auto;
-			opacity: 1;
-			transition-property: opacity, visibility;
-			transition-duration: 500ms, 500ms;
-		}
-
-    </style>
+    <link rel=StyleSheet href="%SERVICE_ROOT%/browser/%VERSION%/admin/css/admin.css" type="text/css" />
+    <script src="%SERVICE_ROOT%/browser/%VERSION%/admin-bundle.js" defer></script>
 </head>
-<body>
-  <!--%BRANDING_JS%-->
-  <div class="is-fullwidth has-text-white" style="background-color:#17191E;line-height:50px;">
-    <a id="productName" style="margin-left:12px;color:#9D998D;">
-      <script>document.write(l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole)</script>
-    </a>
-  </div>
-    <h3>Access Token: %ACCESS_TOKEN%</h3>
-    <h3>WOPI Setting Base URL: %WOPI_SETTING_BASE_URL%</h3>
-    <h3>Iframe Type: %IFRAME_TYPE%</h3>
 
+<body>
+    <!--%BRANDING_JS%-->
     <div id="fileControls">
-        <label for="dictionaryFile">Select Dictionary File (.dic):</label><br>
-        <input type="file" id="dictionaryFile" accept=".dic,.bau"><br>
-        <p id="fileStatus"></p>
-        <input type="hidden" id="initial-variables"
-            data-access-token = "%ACCESS_TOKEN%"
-            data-access-token-ttl = "%ACCESS_TOKEN_TTL%"
-            data-access-header = "%ACCESS_HEADER%"
-            data-enable-debug = "%ENABLE_DEBUG%"
-            data-wopi-setting-base-url="%WOPI_SETTING_BASE_URL%"
-            data-iframe-type="%IFRAME_TYPE%"
-        />
         <div id="sharedConfigs">
-            <h1>Autotext</h1>
-            <ul id="autotextList">
-            </ul>
+            <h4>Autotext</h4>
+            <ul id="autotextList"></ul>
+            <input type="file" class="hidden" id="autotextFile" accept=".bua">
             <button id="uploadAutotextButton" class="upload">Upload Autotext</button>
-              
-            <h1>Wordbook</h1>
-            <ul id="wordbookList">
-            </ul>
+            <h4>Wordbook</h4>
+            <input type="file" class="hidden" id="dictionaryFile" accept=".dic">
+            <ul id="wordbookList"></ul>
             <button id="uploadWordbookButton" class="upload">Upload Wordbook</button>
         </div>
-              
+        <p id="fileStatus"></p>
+        <input type="hidden" id="initial-variables" data-access-token="%ACCESS_TOKEN%"
+            data-access-token-ttl="%ACCESS_TOKEN_TTL%" data-access-header="%ACCESS_HEADER%"
+            data-enable-debug="%ENABLE_DEBUG%" data-wopi-setting-base-url="%WOPI_SETTING_BASE_URL%"
+            data-iframe-type="%IFRAME_TYPE%" />
     </div>
-    <!--%FOOTER%-->
 </body>
 </html>
