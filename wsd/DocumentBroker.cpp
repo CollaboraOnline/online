@@ -4813,10 +4813,10 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
             if (_asyncInstallTask)
             {
                 auto sendLoad = [selfWeak = weak_from_this(), this, msg, binary](bool success) {
+                    if (!success)
+                        return;
                     std::shared_ptr<DocumentBroker> selfLifecycle = selfWeak.lock();
                     if (!selfLifecycle)
-                        return;
-                    if (!success)
                         return;
                     _childProcess->sendFrame(msg, binary);
                 };
