@@ -1710,7 +1710,6 @@ void DocumentBroker::sendBrowserSettingsSync(const std::shared_ptr<ClientSession
     std::shared_ptr<http::Session> httpSession(
         StorageConnectionManager::getHttpSession(settingsUri));
     http::Request request(settingsUri.getPathAndQuery());
-    request.set("User-Agent", http::getAgentString());
 
     const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
     LOG_DBG("Getting settings from [" << uriAnonym << "] using sync request");
@@ -1758,7 +1757,6 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& userSet
     const Poco::URI settingsUri{userSettingsUri};
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(settingsUri));
     http::Request request(settingsUri.getPathAndQuery());
-    request.set("User-Agent", http::getAgentString());
 
     const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
     LOG_DBG("Getting settings from [" << uriAnonym << ']');
@@ -1829,7 +1827,6 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& con
     const Poco::URI uri{presetUri};
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(uri));
     http::Request request(uri.getPathAndQuery());
-    request.set("User-Agent", http::getAgentString());
 
     http::Session::FinishedCallback finishedCallback =
         [configId, presetUri, presetStamp, uriAnonym,
