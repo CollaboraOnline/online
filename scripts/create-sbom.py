@@ -10,6 +10,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 
+import sys
+import os
 import json
 import subprocess
 from datetime import datetime
@@ -53,7 +55,7 @@ def update_document_namespace():
 def update_date():
     sbom_data["creationInfo"]["created"] = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
 
-file_path = "cool-sbom-template.spdx.json"
+file_path = os.path.dirname(os.path.dirname(__file__)) + "/cool-sbom-template.spdx.json"
 with open(file_path, "r") as file:
     sbom_data = json.load(file)
 
@@ -62,7 +64,6 @@ update_versions(lib_versions)
 update_document_namespace()
 update_date()
 
-output_file_path = "collabora-online-sbom.spdx.json"
+output_file_path = sys.argv[1] + "/collabora-online-sbom.spdx.json"
 with open(output_file_path, "w") as file:
     json.dump(sbom_data, file, indent=2)
-

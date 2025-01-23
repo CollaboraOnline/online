@@ -814,4 +814,4 @@ czech: check
 	@echo "This should do something much cooler"
 
 collabora-online-sbom.spdx.json: coolforkit-ns
-	python3 scripts/create-sbom.py
+	python3 $(abs_top_srcdir)/scripts/create-sbom.py $(abs_top_builddir)
