@@ -61,17 +61,26 @@ function init(): void {
 
 function bindEventListeners(): void {
 	const uploadAutotextButton = document.getElementById('uploadAutotextButton');
-	if (uploadAutotextButton) {
+	const uploadAutotextInput = document.getElementById('autotextFile');
+	if (uploadAutotextButton && uploadAutotextInput) {
 		uploadAutotextButton.addEventListener('click', () => {
 			console.debug('Upload Autotext clicked.');
+			uploadAutotextInput.click();
+		});
+		uploadAutotextInput.addEventListener('change', () => {
 			uploadFile(PATH.autoTextUpload());
 		});
 	}
 
 	const uploadWordbookButton = document.getElementById('uploadWordbookButton');
-	if (uploadWordbookButton) {
+	const uploadWordbookInput = document.getElementById('dictionaryFile');
+	if (uploadWordbookButton && uploadWordbookInput) {
 		uploadWordbookButton.addEventListener('click', () => {
 			console.debug('Upload Wordbook clicked.');
+			uploadWordbookInput.click();
+		});
+
+		uploadWordbookInput.addEventListener('change', () => {
 			uploadFile(PATH.wordBookUpload());
 		});
 	}
@@ -86,13 +95,44 @@ function initWindowVariables(): void {
 	window.enableDebug = element.dataset.enableDebug;
 	window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
 	window.iframeType = element.dataset.iframeType;
+
+	if (window.enableDebug) {
+		const debugInfoList = document.createElement('ul');
+		const debugInfoEle1 = document.createElement('li');
+		debugInfoEle1.textContent = 'AccessToken: ' + window.accessToken;
+		debugInfoList.append(debugInfoEle1);
+
+		const debugInfoEle2 = document.createElement('li');
+		debugInfoEle2.textContent = 'WOPI Base URL: ' + window.wopiSettingBaseUrl;
+		debugInfoList.append(debugInfoEle2);
+
+		const debugInfoEle3 = document.createElement('li');
+		debugInfoEle3.textContent = 'IFrameType: ' + window.iframeType;
+		debugInfoList.append(debugInfoEle3);
+
+		const debugInfo = document.createElement('div');
+		const debugInfoHeading = document.createElement('h4');
+		debugInfoHeading.textContent = 'DebugInfo: ';
+		debugInfo.append(debugInfoHeading);
+		debugInfo.append(debugInfoList);
+
+		const fileControls = document.getElementById('fileControls');
+		fileControls?.append(debugInfo);
+	}
 }
 
 async function uploadFile(filePath: string): Promise<void> {
-	// TODO: use wopiSettingBaseUrl for request url..
-	const fileInput = document.getElementById(
-		'dictionaryFile',
-	) as HTMLInputElement | null;
+	let fileInput: HTMLInputElement | null = null;
+	if (filePath.includes('wordbook')) {
+		fileInput = document.getElementById(
+			'dictionaryFile',
+		) as HTMLInputElement | null;
+	} else if (filePath.includes('autotext')) {
+		fileInput = document.getElementById(
+			'autotextFile',
+		) as HTMLInputElement | null;
+	}
+
 	const fileStatus = document.getElementById(
 		'fileStatus',
 	) as HTMLParagraphElement | null;
@@ -256,7 +296,7 @@ function populateList(
 			}
 		});
 
-		li.textContent = `File: ${fileName} | `;
+		li.textContent = `${fileName} | `;
 		li.appendChild(downloadBtn);
 		li.appendChild(document.createTextNode(' | '));
 		li.appendChild(deleteBtn);
