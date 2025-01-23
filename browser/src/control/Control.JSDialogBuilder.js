@@ -714,11 +714,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					L.DomUtil.addClass(label, 'hidden');
 				builder.postProcess(expander, data.children[0]);
 
+				var state = data.children.length > 1 && expanded;
+				$(label).addClass('expanded', state);
+				label.setAttribute('aria-expanded', state);
+
 				var toggleFunction = function () {
 					if (customCallback)
 						customCallback();
 					else
 						builder.callback('expander', 'toggle', data, null, builder);
+
+					var state = Boolean(label.getAttribute('aria-expanded'));
+					label.setAttribute('aria-expanded', !state);
 					$(label).toggleClass('expanded');
 					$(expander).siblings().toggleClass('expanded');
 
@@ -737,7 +744,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			var expanderChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
-		
+
 			if (expanded) {
 				if (data.children.length > 1) {
 					label.classList.add('expanded');
