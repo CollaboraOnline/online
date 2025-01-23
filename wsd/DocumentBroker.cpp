@@ -4040,18 +4040,20 @@ void DocumentBroker::uploadPresetsToWopiHost(const Authorization& auth)
             FileUtil::getLastModificationTimestamp(fileJailPath);
         if (currentTimestamp <= _presetTimestamp[fileName])
         {
-            LOG_TRC("Skip uploading preset file [" << fileJailPath << "] to wopiHost["
+            LOG_TRC("Skip uploading preset file [" << fileName << "] to wopiHost["
                                                    << uriObject.toString() << "], no modification");
             continue;
         }
 
-        std::string filePath = "settings/userconfig/wordbook/";
+        std::string filePath = "/settings/userconfig/wordbook/";
         filePath.append(fileName);
         uriObject.addQueryParameter("fileId", filePath);
+        auth.authorizeURI(uriObject);
+
         auto httpRequest = StorageConnectionManager::createHttpRequest(uriObject, auth);
         httpRequest.setVerb(http::Request::VERB_POST);
 
-        LOG_TRC("Uploading file from jailPath[" << fileJailPath << "] to wopiHost["
+        LOG_TRC("Uploading file from jailPath[" << filePath << "] to wopiHost["
                                                 << uriObject.toString() << ']');
 
         httpRequest.setBodyFile(fileJailPath);
@@ -4060,11 +4062,15 @@ void DocumentBroker::uploadPresetsToWopiHost(const Authorization& auth)
         auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
         auto httpResponse = httpSession->syncRequest(httpRequest);
 
-        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        auto statusCode = httpResponse->statusLine().statusCode();
+        if (statusCode != http::StatusCode::OK)
         {
             LOG_ERR("Failed to upload file[" << fileName << "] to wopiHost["
-                                             << uriObject.getAuthority() << ']');
+                                             << uriObject.getAuthority() << " with statusCode["
+                                             << statusCode << ']');
         }
+
+        LOG_DBG("Successfully uploaded presetFile[" << fileName << ']');
     }
 }
 
@@ -4073,8 +4079,9 @@ void DocumentBroker::uploadBrowserSettingsToWopiHost(const std::shared_ptr<Clien
     const Authorization& auth = session->getAuthorization();
     Poco::URI uriObject = DocumentBroker::getPresetUploadBaseUrl(_docKey);
 
-    const std::string& filePath = "settings/userconfig/browsersettings/browsersettings.json";
+    const std::string& filePath = "/settings/userconfig/browsersettings/browsersettings.json";
     uriObject.addQueryParameter("fileId", filePath);
+    auth.authorizeURI(uriObject);
 
     const std::string& uriAnonym = COOLWSD::anonymizeUrl(uriObject.toString());
 
