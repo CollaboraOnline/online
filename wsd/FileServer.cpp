@@ -468,10 +468,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                 fileInfo->set("SharedSettings", sharedSettings);
             }
 
+            bool cypressUserConfig(false);
+#if defined(BUILDING_TESTS)
             // Cypress tests both assume that tests start in the default config, e.g.
             // spell checking and sidebar enabled, and some tests assume they can override
             // features by changing localStorage before loading a document.
-            bool cypressUserConfig = localPath.find("cypress_test") != std::string::npos;
+            cypressUserConfig = localPath.find("cypress_test") != std::string::npos;
+#endif
 
             {
                 Poco::JSON::Object::Ptr userSettings = new Poco::JSON::Object();
