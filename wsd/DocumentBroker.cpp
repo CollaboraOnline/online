@@ -1780,15 +1780,14 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& userSet
         }
 
         const std::shared_ptr<const http::Response> httpResponse = configSession->response();
-        LOG_TRC("DocumentBroker::asyncInstallPresets returned " << httpResponse->statusLine().statusCode());
+        const http::StatusLine statusLine = httpResponse->statusLine();
 
-        const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
+        LOG_TRC("DocumentBroker::asyncInstallPresets returned " << statusLine.statusCode());
+        const bool failed = (statusLine.statusCode() != http::StatusCode::OK);
         if (failed)
         {
-            if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
-                LOG_ERR("Access denied to [" << uriAnonym << ']');
-            else
-                LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
+            LOG_ERR("Failed to get settings json from [" << uriAnonym << "] with status["
+                                                         << statusLine.reasonPhrase() << ']');
             presetTasks->install(nullptr);
             return;
         }
@@ -1841,17 +1840,17 @@ void DocumentBroker::asyncInstallPreset(SocketPoll& poll, const std::string& con
         const std::shared_ptr<const http::Response> presetHttpResponse = presetSession->response();
 
         bool success = false;
-
-        if (presetHttpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        const http::StatusLine statusLine = presetHttpResponse->statusLine();
+        if (statusLine.statusCode() != http::StatusCode::OK)
         {
-            LOG_ERR("Fetch of preset uri: " << uriAnonym << " failed: " <<
-                    presetHttpResponse->statusLine().statusCode());
+            LOG_ERR("Failed to fetch preset uri[" << uriAnonym << "] with status["
+                                                  << statusLine.reasonPhrase() << ']');
             FileUtil::removeFile(presetFile);
         }
         else
         {
             success = true;
-            LOG_INF("Fetch of preset uri: " << uriAnonym << " to " << presetFile << " succeeded");
+            LOG_INF("Fetch of preset uri[" << uriAnonym << "] to " << presetFile << " succeeded");
 
             Cache::cacheConfigFile(configId, presetUri, presetStamp, presetFile);
         }
@@ -3701,7 +3700,6 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
                                      << ", IsPossiblyModified: " << isPossiblyModified());
 
 #if !MOBILEAPP
-
         /// make sure to upload preset to WOPIHost
         uploadPresetsToWopiHost(session->getAuthorization());
 #endif
@@ -4068,12 +4066,12 @@ void DocumentBroker::uploadPresetsToWopiHost(const Authorization& auth)
         auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
         auto httpResponse = httpSession->syncRequest(httpRequest);
 
-        auto statusCode = httpResponse->statusLine().statusCode();
-        if (statusCode != http::StatusCode::OK)
+        http::StatusLine statusLine = httpResponse->statusLine();
+        if (statusLine.statusCode() != http::StatusCode::OK)
         {
             LOG_ERR("Failed to upload file[" << fileName << "] to wopiHost["
-                                             << uriObject.getAuthority() << " with statusCode["
-                                             << statusCode << ']');
+                                             << uriObject.getAuthority() << " with status["
+                                             << statusLine.reasonPhrase() << ']');
         }
 
         LOG_DBG("Successfully uploaded presetFile[" << fileName << ']');
@@ -4104,12 +4102,14 @@ void DocumentBroker::uploadBrowserSettingsToWopiHost(const std::shared_ptr<Clien
         [uriAnonym](const std::shared_ptr<http::Session>& wopiSession)
     {
         const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
-        const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
-        if (failed)
+        const http::StatusLine statusLine = httpResponse->statusLine();
+        if (statusLine.statusCode() != http::StatusCode::OK)
         {
-            LOG_ERR("Failed to upload updated browser settings to wopiHost[" << uriAnonym << ']');
+            LOG_ERR("Failed to upload updated browser settings to wopiHost["
+                    << uriAnonym << "] with status[" << statusLine.reasonPhrase() << ']');
             return;
         }
+        LOG_TRC("Successfully uploaded browsersettings to WopiHost");
     };
 
     LOG_DBG("Uploading updated browserSettings to wopiHost[" << uriAnonym << ']');
