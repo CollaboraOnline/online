@@ -311,6 +311,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
 
 		this._map.fire('scrolllimits', newSizePx.clone());
+		this._syncTileContainerSize();
 
 		if (limitWidth || limitHeight || extendedLimit)
 			app.sectionContainer.requestReDraw();
