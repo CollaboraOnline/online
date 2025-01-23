@@ -3024,17 +3024,19 @@ void ClientSession::uploadPresetsToWopiHost(
     std::string searchDir = jailPresetsPath;
     searchDir.append("wordbook");
     const auto fileNames = FileUtil::getDirEntries(searchDir);
-    for (auto& fileName : fileNames)
+    std::error_code ec;
+    for (const auto& fileName : fileNames)
     {
         std::string fileJailPath = searchDir;
         fileJailPath.append("/");
         fileJailPath.append(fileName);
         std::filesystem::file_time_type currentTimestamp =
-            FileUtil::getLastModificationTimestamp(fileJailPath);
-        if (currentTimestamp <= presetMap[fileName])
+            std::filesystem::last_write_time(fileJailPath, ec);
+        if (ec || currentTimestamp <= presetMap[fileName])
         {
             LOG_TRC("Skip uploading preset file [" << fileJailPath << "] to wopiHost["
-                                                   << uriObject.toString() << "], no modification");
+                                                   << uriObject.toString() << "], "
+                                                   << (ec ? "missing" : "no modification"));
             continue;
         }
 

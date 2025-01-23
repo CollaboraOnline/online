@@ -1665,12 +1665,19 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
             std::string searchDir = presetsPath;
             searchDir.append("wordbook");
             const auto fileNames = FileUtil::getDirEntries(searchDir);
-            for (auto& fileName : fileNames)
+            std::error_code ec;
+            for (const auto& fileName : fileNames)
             {
                 std::string filePath = searchDir;
                 filePath.append("/");
                 filePath.append(fileName);
-                _presetTimestamp[fileName] = FileUtil::getLastModificationTimestamp(filePath);
+                std::filesystem::file_time_type ts = std::filesystem::last_write_time(filePath, ec);
+                if (ec)
+                {
+                    LOG_ERR("File[" << fileName << "] doesn't exist");
+                    continue;
+                }
+                _presetTimestamp[fileName] = ts;
             }
             forwardToChild(session, "addconfig");
         }
@@ -4030,17 +4037,19 @@ void DocumentBroker::uploadPresetsToWopiHost(const Authorization& auth)
     std::string searchDir = jailPresetsPath;
     searchDir.append("wordbook");
     const auto fileNames = FileUtil::getDirEntries(searchDir);
-    for (auto& fileName : fileNames)
+    std::error_code ec;
+    for (const auto& fileName : fileNames)
     {
         std::string fileJailPath = searchDir;
         fileJailPath.append("/");
         fileJailPath.append(fileName);
         std::filesystem::file_time_type currentTimestamp =
-            FileUtil::getLastModificationTimestamp(fileJailPath);
-        if (currentTimestamp <= _presetTimestamp[fileName])
+            std::filesystem::last_write_time(fileJailPath, ec);
+        if (ec || currentTimestamp <= _presetTimestamp[fileName])
         {
             LOG_TRC("Skip uploading preset file [" << fileName << "] to wopiHost["
-                                                   << uriObject.toString() << "], no modification");
+                                                   << uriObject.toString() << "], "
+                                                   << (ec ? "missing" : "no modification"));
             continue;
         }
 

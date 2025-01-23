@@ -337,17 +337,6 @@ namespace FileUtil
         return true;
     }
 
-    std::filesystem::file_time_type getLastModificationTimestamp(const std::string& filePath)
-    {
-        Stat fileStat(filePath);
-        if (!fileStat.exists())
-        {
-            LOG_ERR("File[" << filePath << "] doesn't exist");
-            return std::filesystem::file_time_type();
-        }
-        return std::filesystem::last_write_time(filePath);
-    }
-
     bool copyAtomic(const std::string& fromPath, const std::string& toPath, bool preserveTimestamps)
     {
         const std::string randFilename = toPath + Util::rng::getFilename(12);
