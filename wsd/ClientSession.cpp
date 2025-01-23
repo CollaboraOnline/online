@@ -1383,48 +1383,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 }
 
 #if !MOBILEAPP
-void ClientSession::uploadBrowserSettingsToWopiHost(const std::string& docKey)
-{
-    Poco::URI uriObject(docKey);
-
-    // extract base wopiUri from docKey
-    std::string path = uriObject.getPath();
-    size_t pos = path.find("/files/");
-    if (pos != std::string::npos)
-        path = path.substr(0, pos);
-    path.append("/settings/upload");
-    uriObject.setPath(path);
-
-    const std::string& filePath = "settings/userconfig/browsersettings/browsersettings.json";
-    uriObject.addQueryParameter("fileId", filePath);
-
-    const std::string& uriAnonym = COOLWSD::anonymizeUrl(uriObject.toString());
-
-    auto httpRequest = StorageConnectionManager::createHttpRequest(uriObject, _auth);
-    httpRequest.setVerb(http::Request::VERB_POST);
-    auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
-
-    std::ostringstream jsonStream;
-    _browserSettingsJSON->stringify(jsonStream, 2);
-    httpRequest.setBody(jsonStream.str(), "application/json; charset=utf-8");
-
-    http::Session::FinishedCallback finishedCallback =
-        [uriAnonym, this](const std::shared_ptr<http::Session>& wopiSession)
-    {
-        const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
-        const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
-        if (failed)
-        {
-            LOG_ERR("Failed to upload updated browser settings to wopiHost[" << uriAnonym << ']');
-            return;
-        }
-    };
-
-    LOG_DBG("Uploading updated browserSettings to wopiHost[" << uriAnonym << ']');
-    httpSession->setFinishedHandler(std::move(finishedCallback));
-    httpSession->asyncRequest(httpRequest, *COOLWSD::getWebServerPoll());
-}
-
 void ClientSession::updateBrowserSettingsJSON(const std::string& key, const std::string& value)
 {
     std::vector<std::string> vec = Util::splitStringToVector(key, '.');
@@ -1449,7 +1407,6 @@ void ClientSession::updateBrowserSettingsJSON(const std::string& key, const std:
         _browserSettingsJSON->set(key, value);
     }
 }
-
 #endif
 
 void ClientSession::overrideDocOption()
@@ -3000,69 +2957,6 @@ void ClientSession::onDisconnect()
         LOG_ERR("Exception while closing socket for docKey [" << docKey << "]: " << exc.what());
     }
 }
-
-#if !MOBILEAPP
-// TODO: replace fileId with filePath
-// TODO: make uploadPresets async similar to asyncInstallPreset(?)
-void ClientSession::uploadPresetsToWopiHost(
-    const std::string& jailPresetsPath, const std::string& docKey,
-    std::map<std::string, std::filesystem::file_time_type>& presetMap)
-{
-    Poco::URI uriObject(docKey);
-
-    // extract base wopiUri from docKey
-    std::string path = uriObject.getPath();
-    size_t pos = path.find("/files/");
-    if (pos != std::string::npos)
-        path = path.substr(0, pos);
-    path.append("/settings/upload");
-    uriObject.setPath(path);
-
-    LOG_DBG("Uploading presets from jailPath[" << jailPresetsPath << "] to wopiHost["
-                                               << uriObject.toString() << ']');
-
-    std::string searchDir = jailPresetsPath;
-    searchDir.append("wordbook");
-    const auto fileNames = FileUtil::getDirEntries(searchDir);
-    std::error_code ec;
-    for (const auto& fileName : fileNames)
-    {
-        std::string fileJailPath = searchDir;
-        fileJailPath.append("/");
-        fileJailPath.append(fileName);
-        std::filesystem::file_time_type currentTimestamp =
-            std::filesystem::last_write_time(fileJailPath, ec);
-        if (ec || currentTimestamp <= presetMap[fileName])
-        {
-            LOG_TRC("Skip uploading preset file [" << fileJailPath << "] to wopiHost["
-                                                   << uriObject.toString() << "], "
-                                                   << (ec ? "missing" : "no modification"));
-            continue;
-        }
-
-        std::string filePath = "settings/userconfig/wordbook/";
-        filePath.append(fileName);
-        uriObject.addQueryParameter("fileId", filePath);
-        auto httpRequest = StorageConnectionManager::createHttpRequest(uriObject, _auth);
-        httpRequest.setVerb(http::Request::VERB_POST);
-
-        LOG_TRC("Uploading file from jailPath[" << fileJailPath << "] to wopiHost["
-                                                << uriObject.toString() << ']');
-
-        httpRequest.setBodyFile(fileJailPath);
-        httpRequest.header().set("Content-Type", "application/octet-stream");
-
-        auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
-        auto httpResponse = httpSession->syncRequest(httpRequest);
-
-        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
-        {
-            LOG_ERR("Failed to upload file[" << fileName << "] to wopiHost["
-                                             << uriObject.getAuthority() << ']');
-        }
-    }
-}
-#endif
 
 void ClientSession::dumpState(std::ostream& os)
 {
