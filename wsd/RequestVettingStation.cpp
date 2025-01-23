@@ -149,8 +149,9 @@ void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
 namespace
 {
 
-struct SharedSettings
+class SharedSettings
 {
+public:
     SharedSettings(const Poco::JSON::Object::Ptr wopiInfo)
     {
         if (auto settingsJSON = wopiInfo->getObject("SharedSettings"))
@@ -165,13 +166,19 @@ struct SharedSettings
         }
     }
 
-    std::string _uri;
-    std::string _configId;
-
-    std::string getConfigId() const
+    const std::string& getConfigId() const
     {
         return _configId;
     }
+
+    const std::string& getUri() const
+    {
+        return _uri;
+    }
+
+private:
+    std::string _uri;
+    std::string _configId;
 };
 
 }
@@ -179,7 +186,7 @@ struct SharedSettings
 void RequestVettingStation::launchInstallPresets()
 {
     SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
-    if (sharedSettings._uri.empty())
+    if (sharedSettings.getUri().empty())
         return;
 
     std::string configId = sharedSettings.getConfigId();
@@ -208,7 +215,7 @@ void RequestVettingStation::launchInstallPresets()
     // if this wopi server has some shared settings we want to have a subForKit for those settings
     std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
     // ensure the server config is downloaded and populate a subforkit when config is available
-    DocumentBroker::asyncInstallPresets(*_poll, sharedSettings._uri, presetsPath, nullptr, finishedCallback);
+    DocumentBroker::asyncInstallPresets(*_poll, sharedSettings.getUri(), presetsPath, nullptr, finishedCallback);
 }
 
 #endif
