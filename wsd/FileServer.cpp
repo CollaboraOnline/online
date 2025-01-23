@@ -601,9 +601,9 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         if (serveBrowserSetttings)
         {
             assert(kind == "user");
-            const std::string& browserSettingPath = "test/data/presets/user/browsersettings.json";
-            if (FileUtil::Stat(Poco::Path(COOLWSD::FileServerRoot, browserSettingPath).toString())
-                    .exists())
+            const std::string& browserSettingPath =
+                COOLWSD::FileServerRoot + "test/data/presets/user/browsersettings.json";
+            if (FileUtil::Stat(browserSettingPath).exists())
             {
                 std::ostringstream ss;
                 std::ifstream inputFile(browserSettingPath);
