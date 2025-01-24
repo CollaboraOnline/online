@@ -1169,6 +1169,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:ToggleSheetGrid',
 				'accessibility': { focusBack: true,	combination: 'SG', de: null }
 			},
+			{
+				'id': 'colrowhighlight',
+				'type': 'bigcustomtoolitem',
+				'text': _UNO('.uno:ViewColumnRowHighlighting', 'spreadsheet', true),
+				'command': 'columnrowhighlight',
+				'accessibility': { focusBack: true,	combination: 'HL', de: null }
+			},
 			(window.mode.isTablet()) ?
 				{
 					'id': 'closemobile',
