@@ -559,12 +559,13 @@ public:
                              const std::string& userSettingsUri,
                              const std::string& presetsPath);
 
-    void sendBrowserSettingsSync(const std::shared_ptr<ClientSession>& session,
-                                 const std::string& userSettingsUri);
+    static void getBrowserSettingSync(const std::shared_ptr<ClientSession>& session,
+                                      const std::string& userSettingsUri);
 
+    static void sendBrowserSetting(const std::shared_ptr<ClientSession>& session);
 
     static void parseBrowserSettings(const std::shared_ptr<ClientSession>& session,
-                                     const Poco::JSON::Object::Ptr& settings);
+                                     const std::string& responseBody);
 
     /// Start an asynchronous Installation of the user presets, e.g. autotexts etc, as
     /// described at userSettingsUri for installation into presetsPath
@@ -576,13 +577,15 @@ public:
     /// Start an asynchronous Installation of a user preset resource, e.g. an autotext
     /// file, to copy as presetFile
     static void asyncInstallPreset(SocketPoll& poll, const std::string& configId,
-                                   const std::string& presetUri,
-                                   const std::string& presetStamp,
-                                   const std::string& presetFile,
-                                   const std::string& id,
-                                   const std::function<void(const std::string&, bool)>& finishedCB);
+                                   const std::string& presetUri, const std::string& presetStamp,
+                                   const std::string& presetFile, const std::string& id,
+                                   const std::function<void(const std::string&, bool)>& finishedCB,
+                                   const std::shared_ptr<ClientSession>& session);
 
     static Poco::URI getPresetUploadBaseUrl(const std::string& docKey);
+
+    static std::shared_ptr<const http::Response> sendHttpSyncRequest(const std::string& url,
+                                                                     const std::string& logContext);
 #endif // !MOBILEAPP
 
 private:
