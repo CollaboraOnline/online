@@ -459,7 +459,7 @@ TileCombined KitQueue::popTileQueue(float &priority)
 
         LOG_TRC("Combining candidate: " << it.serialize());
 
-        // Check if it's on the same row.
+        // Check if it's on the same row or column.
         if (tiles[0].canCombine(it))
         {
             tiles.emplace_back(it);
