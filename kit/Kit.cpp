@@ -1375,6 +1375,16 @@ void Document::handleSaveMessage(const std::string &)
         if (_queue)
             _queue->clear();
 
+        // unregister the view callbacks
+        const int viewCount = getLOKitDocument()->getViewsCount();
+        std::vector<int> viewIds(viewCount);
+        getLOKitDocument()->getViewIds(viewIds.data(), viewCount);
+        for (const auto viewId : viewIds)
+        {
+            _loKitDocument->setView(viewId);
+            _loKitDocument->registerCallback(nullptr, nullptr);
+        }
+
         // cleanup any lingering file-system pieces
         _loKitDocument.reset();
 
