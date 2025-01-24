@@ -456,6 +456,10 @@ class Dispatcher {
 			// https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft
 			L.DomUtil.get('spreadsheet-tab-scroll').scrollLeft = 100000;
 		};
+		this.actionsMap['columnrowhighlight'] = function () {
+			var newState = !app.map.uiManager.getHighlightMode();
+			app.map.uiManager.setHighlightMode(newState);
+		};
 	}
 
 	private addImpressAndDrawCommands() {

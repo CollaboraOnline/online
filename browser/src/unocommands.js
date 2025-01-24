@@ -519,6 +519,7 @@ var unoCommandsArray = {
 	'Validation':{spreadsheet:{menu:_('~Validity...'),},},
 	'VerticalText':{global:{context:_('Insert Vertical Text'),menu:_('Vertical Text'),},},
 	'View3D':{global:{menu:_('~3D View...'),},},
+	'ViewColumnRowHighlighting':{spreadsheet:{menu:_('Column/Row Highlighting'),},},
 	'ViewMenu':{global:{menu:_('~View'),},},
 	'Watermark':{text:{menu:_('Watermark...'),},},
 	'WordCountDialog':{text:{menu:_('~Word Count...'),},},

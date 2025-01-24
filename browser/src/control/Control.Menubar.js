@@ -768,6 +768,7 @@ L.Control.Menubar = L.Control.extend({
 				   {uno: '.uno:Navigator', id: 'navigator'},
 				   {type: 'separator'},
 				   {name: _UNO('.uno:ToggleSheetGrid', 'spreadsheet', true), uno: '.uno:ToggleSheetGrid', id: 'sheetgrid'},
+				   {name: _UNO('.uno:ViewColumnRowHighlighting', 'spreadsheet', true), type:'action', id: 'columnrowhighlight'},
 				   {name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes'},
 				   {name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', menu: [
 					   {name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', type: 'action', uno: '.uno:FreezePanesColumn'},
@@ -1888,6 +1889,10 @@ L.Control.Menubar = L.Control.extend({
 						}
 					} else if (id === 'serveraudit' && (app.isAdminUser === false || !self._map.serverAuditDialog)) {
 						$(aItem).css('display', 'none');
+					} else if (id === 'columnrowhighlight') {
+						itemState = app.map.uiManager.getHighlightMode();
+						if (itemState) $(aItem).addClass(constChecked);
+						else $(aItem).removeClass(constChecked);
 					} else {
 						$(aItem).removeClass('disabled');
 					}
@@ -2149,6 +2154,8 @@ L.Control.Menubar = L.Control.extend({
 			app.dispatcher.dispatch('.uno:AcceptAllTrackedChanges');
 		} else if (id === 'rejectalltrackedchanges') {
 			app.dispatcher.dispatch('.uno:RejectAllTrackedChanges');
+		} else if (id === 'columnrowhighlight') {
+			app.dispatcher.dispatch('columnrowhighlight');
 		}
 		// Inform the host if asked
 		if (postmessage)

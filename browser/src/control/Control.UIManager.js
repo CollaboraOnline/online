@@ -80,6 +80,17 @@ L.Control.UIManager = L.Control.extend({
 		return this.shouldUseNotebookbarMode() ? 'notebookbar' : 'classic';
 	},
 
+	getHighlightMode: function() {
+		return window.prefs.getBoolean('ColumnRowHighlightEnabled', false);
+	},
+
+	setHighlightMode: function( newState ) {
+		window.prefs.set('ColumnRowHighlightEnabled', newState);
+		let highlightState = newState? 'true' : 'false';
+		this.map['stateChangeHandler'].setItemValue('columnrowhighlight', highlightState);
+		this._map.fire('commandstatechanged', {commandName : 'columnrowhighlight', state : highlightState});
+	},
+
 	shouldUseNotebookbarMode: function() {
 		let forceCompact = window.prefs.getBoolean('compactMode', null);
 		// all other cases should default to notebookbar
@@ -376,6 +387,10 @@ L.Control.UIManager = L.Control.extend({
 			// remove unused elements
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 			document.getElementById('selectbackground').parentNode.removeChild(document.getElementById('selectbackground'));
+
+			let highlightState = this.getHighlightMode()? 'true' : 'false';
+			this.map['stateChangeHandler'].setItemValue('columnrowhighlight', highlightState);
+			this._map.fire('commandstatechanged', {commandName : 'columnrowhighlight', state : highlightState});
 		}
 
 		if (this.map.isPresentationOrDrawing()) {
