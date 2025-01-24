@@ -78,29 +78,11 @@ class TreeViewControl {
 	_filterTimer: ReturnType<typeof setTimeout>;
 
 	constructor(data: TreeWidgetJSON, builder: any) {
-		this._isRealTree = this.isRealTree(data);
 		this._container = L.DomUtil.create(
 			'div',
 			builder.options.cssClass + ' ui-treeview',
 		);
 		this._container.id = data.id;
-		this._columns = TreeViewControl.countColumns(data);
-		this._hasState = TreeViewControl.hasState(data);
-		this._hasIcon = TreeViewControl.hasIcon(data);
-		this._isNavigator = this.isNavigator(data);
-		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
-
-		this._tbody = this._container;
-		(this._container as any).filterEntries = this.filterEntries.bind(this);
-
-		this.setupDragAndDrop(data, builder);
-		this.setupKeyEvents(data, builder);
-
-		if (this._isRealTree) {
-			this._container.setAttribute('role', 'treegrid');
-			if (!data.headers || data.headers.length === 0)
-				L.DomUtil.addClass(this._container, 'ui-treeview-tree');
-		} else this._container.setAttribute('role', 'grid');
 	}
 
 	get Container() {
@@ -475,6 +457,7 @@ class TreeViewControl {
 	}
 
 	createTextCell(
+		treeViewData: TreeWidgetJSON,
 		parent: HTMLElement,
 		entry: TreeEntryJSON,
 		index: any,
@@ -486,6 +469,18 @@ class TreeViewControl {
 			parent,
 		);
 		cell.innerText = entry.columns[index].text || entry.text;
+
+		if (entry.columns[index].customEntryRenderer) {
+			JSDialog.OnDemandRenderer(
+				builder,
+				treeViewData.id,
+				'treeview',
+				entry.row,
+				cell,
+				parent,
+				entry.text,
+			);
+		}
 	}
 
 	createLinkCell(
@@ -573,7 +568,7 @@ class TreeViewControl {
 				entry.columns[index].text &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				this.createTextCell(text, entry, index, builder);
+				this.createTextCell(treeViewData, text, entry, index, builder);
 			}
 
 			// row sub-elements
@@ -1246,11 +1241,28 @@ class TreeViewControl {
 	}
 
 	build(data: TreeWidgetJSON, builder: any, parentContainer: HTMLElement) {
+		this._isRealTree = this.isRealTree(data);
+		this._columns = TreeViewControl.countColumns(data);
+		this._hasState = TreeViewControl.hasState(data);
+		this._hasIcon = TreeViewControl.hasIcon(data);
+		this._isNavigator = this.isNavigator(data);
+		this._singleClickActivate = TreeViewControl.isSingleClickActivate(data);
+
+		this._tbody = this._container;
+		(this._container as any).filterEntries = this.filterEntries.bind(this);
+
+		this.setupDragAndDrop(data, builder);
+		this.setupKeyEvents(data, builder);
+
+		if (this._isRealTree) {
+			this._container.setAttribute('role', 'treegrid');
+			if (!data.headers || data.headers.length === 0)
+				L.DomUtil.addClass(this._container, 'ui-treeview-tree');
+		} else this._container.setAttribute('role', 'grid');
+
 		this.preprocessColumnData(data.entries);
 		this.fillHeaders(data.headers, builder);
 		this.fillEntries(data, data.entries, builder, 1, this._tbody);
-
-		parentContainer.appendChild(this._container);
 
 		return true;
 	}
@@ -1263,6 +1275,31 @@ JSDialog.treeView = function (
 ) {
 	var treeView = new TreeViewControl(data, builder);
 	treeView.build(data, builder, parentContainer);
+	parentContainer.appendChild(treeView._container);
+
+	const updateRenders: CustomEntryRenderCallback = (pos: number | string) => {
+		const row = treeView.findEntryWithRow(data.entries, pos);
+		if (!row) {
+			console.error('treeview updateRenders: row "' + pos + '" not found');
+			return;
+		}
+
+		const image = builder.rendersCache[data.id].images[pos];
+		if (!image) {
+			console.error(
+				'treeview updateRenders: image for row "' + pos + '" not found',
+			);
+			return;
+		}
+
+		row.columns[row.columns.length > 1 ? 1 : 0].collapsedimage = image;
+		row.columns[row.columns.length > 1 ? 1 : 0].expandedimage = image;
+
+		treeView._container.innerHTML = '';
+		treeView.build(data, builder, parentContainer);
+	};
+
+	(treeView._container as any).updateRenders = updateRenders;
 
 	return false;
 };
