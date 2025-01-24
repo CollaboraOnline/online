@@ -509,6 +509,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-undoredo-break', orientation: 'vertical' },
 			{
 				'id': 'home-paste:PasteMenu',
 				'type': 'menubutton',
@@ -560,6 +561,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-resertattributes-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -693,6 +695,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-fontcombobox-break', orientation: 'vertical' },
 			{
 				'id': 'home-insert-annotation',
 				'type': 'bigtoolitem',
@@ -700,6 +703,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertAnnotation',
 				'accessibility': { focusBack: false, combination: 'ZC', de: 'ZC' }
 			},
+			{ type: 'separator', id: 'home-insertannotation-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -828,6 +832,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'entries': [],
 				'vertical': 'false'
 			},
+			{ type: 'separator', id: 'home-stylesview-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
@@ -875,6 +880,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
+			{ type: 'separator', id: 'home-charmapcontrol-break', orientation: 'vertical' },
 			{
 				'type': 'container',
 				'children': [
