@@ -2,7 +2,7 @@
 name: Easy Project (GSoC)
 about: Create an Easy Project with code pointers and a mentor
 title: 'GSoC: '
-labels: Easy Project, GSoC
+labels: Easy Project, GSoC, 24.04
 assignees: ''
 
 ---

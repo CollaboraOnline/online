@@ -2,7 +2,7 @@
 name: Bug report (smoke test)
 about: Create a report to help us improve
 title: ''
-labels: smoke bug, unconfirmed
+labels: smoke bug, unconfirmed, 24.04
 assignees: ''
 
 ---
