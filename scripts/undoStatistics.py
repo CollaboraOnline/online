@@ -18,7 +18,7 @@ def usageAndExit():
     message = """usage: {program} logfile_path
 
 Reads the logfile and make a statisctics about what commands was undo-ed most times and other UI related commands.
-And how many times  was a command like that was undoed. It will also chart these statistics into a file located at /test/data/updated-chart.fods
+And how many times was a command like that was undoed. It will also chart these statistics into a file located at /test/data/updated-chart.fods
 
     {program} /path/to/logfile
 
@@ -34,9 +34,15 @@ class Document:
     activeUsers = 0
 
 class User:
+    def __init__(self):
+        self.edited = False
+        self.undoChgStack = []
+        self.lastCmd = ""
+        self.typeSpeed = []
     edited = False
     undoChgStack = []       # list of commands that made changes
     lastCmd = ""
+    typeSpeed = []          # list of char/sec,charCount
 
 class FileLine:
     def __init__(self, kit, lineString):
@@ -69,6 +75,15 @@ def reorderLogFile(oldFilename):
                 kitCount[kit] = 0
 
             kit2 = kit + "/" + str(kitCount[kit])
+
+            # chop unocCommand lines after ?
+            numbrep = line.find("rep=")
+            if numbrep > 0:
+                cmdStart = line[numbrep:].find(" ")+numbrep+1
+                if line[cmdStart:].startswith("cmd:uno .uno:"):
+                    paramStart = line[cmdStart:].find("?")
+                    if paramStart > 0:
+                        line = line[0:cmdStart+paramStart] + "\n"
 
             fileLines.append(FileLine(kit2,line))
 
@@ -283,7 +298,7 @@ def addSheetWithData(templateFile, outputFile, dataSets, NSMAP):
 
     print(f"\nFile '{outputFile}' successfully created with {len(dataSets)} sheets.")
 
-def chartStatistics(inputFile, NSMAP):
+def chartStatistics(inputFile, NSMAP, sheetsToLogarithmic):
         SHEET_CHART_MAPPING = { # Add sheet name and none, if you wish to not chart  the data in that sheet
             "Total_Users_Per_Document": "bar",
             "Total_Viewers_Per_Doc": "bar",
@@ -313,7 +328,7 @@ def chartStatistics(inputFile, NSMAP):
                 columnNumber = columnNumber // 26
             return result
 
-        def updateChartReferences(root, sheetName, numRows, numCols, chartType):
+        def updateChartReferences(root, sheetName, numRows, numCols, chartType, sheetsToLogarithmic):
             # Find table/sheet by name
             table = root.find(f".//table:table[@table:name='{sheetName}']", namespaces=NSMAP)
             if table is None:
@@ -327,9 +342,10 @@ def chartStatistics(inputFile, NSMAP):
             if firstRow is not None and firstCell is not None:
                 firstValue = firstCell.find(".//text:p", namespaces=NSMAP)
 
-            if firstValue is not None and firstValue.text:
-                categoriesRange = None
-                numCols += 1
+            # Commented out For now, let Col-A be a header column, even if A0 has text
+            #if firstValue is not None and firstValue.text:
+            #    categoriesRange = None
+            #    numCols += 1
 
             endColumn = getColumnLetter(numCols + 1)
             dataRange = f"{sheetName}.A1:{endColumn}{numRows + 1}"
@@ -337,6 +353,12 @@ def chartStatistics(inputFile, NSMAP):
             chart = table.find(".//office:chart", namespaces=NSMAP)
             if chart is None:
                 raise ValueError(f"Could not find chart for sheet '{sheetName}'")
+
+            if sheetName in sheetsToLogarithmic:
+                axis = chart.findall(".//chart:axis", namespaces=NSMAP)
+                if len(axis) < 2:
+                    raise ValueError(f"Could not find y-axis in the chart for sheet '{sheetName}'")
+                axis[1].set(f"{{{NSMAP['chart']}}}style-name", "ch5log") # The XML file has different colour bars ranging from ch11-ch20
 
             plotArea = chart.find(".//chart:plot-area", namespaces=NSMAP)
             if plotArea is None:
@@ -383,7 +405,7 @@ def chartStatistics(inputFile, NSMAP):
             for drawFrame in sheet.findall(".//draw:frame", namespaces=NSMAP):
                 drawFrame.getparent().remove(drawFrame)
 
-        def processSheets(root):
+        def processSheets(root, sheetsToLogarithmic):
             for sheet in root.findall(".//table:table", namespaces=NSMAP):
                 sheetName = sheet.get(f"{{{NSMAP['table']}}}name")
                 if sheetName is None:
@@ -405,11 +427,11 @@ def chartStatistics(inputFile, NSMAP):
                 numRows = len(rows) - 1
                 numCols = len(firstRowCells) - 1
 
-                updateChartReferences(root, sheetName, numRows, numCols, chartType)
+                updateChartReferences(root, sheetName, numRows, numCols, chartType, sheetsToLogarithmic)
 
 
         tree, root = parseInput(inputFile)
-        processSheets(root)
+        processSheets(root, sheetsToLogarithmic)
 
         # Write updated tree to output file
         with open(inputFile, "wb") as f:
@@ -444,10 +466,15 @@ if __name__ == "__main__":
     # dict of (edtitors and viewers - documents)
     passiveActivePerDoc = {}
 
+    # list of (fastest, usual) type speed in char/sec
+    userCharPerSec = []
+
     documentCategories = {
         "Convert/Thumbnail": 0,
         "Viewer-Only": 0,
+        "Single Viewer": 0,
         "Edit": 0,
+        "Single Editor": 0,
     }
 
     # Check if the file has kit order problem, and fix it
@@ -463,6 +490,18 @@ if __name__ == "__main__":
             for user in users.values():
                 if user.edited:
                     active += 1
+                # get the user fastest and median char/sec value
+                if len(user.typeSpeed) > 0:
+                    user.typeSpeed.sort(key=lambda x: x[0], reverse=True)
+                    charCount = sum(i for _,i in user.typeSpeed)
+                    charCountTemp = 0
+                    medianSpeed = 0
+                    for i,j in user.typeSpeed:
+                        charCountTemp += j
+                        if charCountTemp >= charCount / 2:
+                            medianSpeed = i
+                            break
+                    userCharPerSec.append((user.typeSpeed[0][0],medianSpeed))
             documents.append(Document(len(users), active))
             users = {}
         else:
@@ -484,6 +523,12 @@ if __name__ == "__main__":
                 users[userId].lastCmd = lineCmd[4:-1]
                 if lineCmd.startswith("cmd:textinput") or lineCmd.startswith("cmd:removetextcontext"):
                     users[userId].edited = True
+                if lineCmd.startswith("cmd:textinput") and repeat > 1:
+                    # we may have a duration to calculate chars per sec
+                    numbDur = line.find("dur=")
+                    if numbDur >= 0 and numbDur < numbUser:
+                        duration = float(line[numbDur+4:numbUser])
+                        users[userId].typeSpeed.append(((repeat-1)/duration, repeat-1))
 
             elif lineCmd.startswith("undo-count-change:"):
                 if lineCmd[18] == "+":
@@ -493,22 +538,33 @@ if __name__ == "__main__":
                     while toDelete > 0:
                         deleted = 0
                         stackLen = len(users[userId].undoChgStack) - 1
-                        cmd = users[userId].undoChgStack[stackLen][1]
-                        if users[userId].undoChgStack[stackLen][0] > toDelete:
-                            users[userId].undoChgStack[stackLen][0] -= toDelete
-                            deleted = toDelete
-                            toDelete = 0
+                        if stackLen >= 0:
+                            cmd = users[userId].undoChgStack[stackLen][1]
+                            if users[userId].undoChgStack[stackLen][0] > toDelete:
+                                users[userId].undoChgStack[stackLen][0] -= toDelete
+                                deleted = toDelete
+                                toDelete = 0
+                            else:
+                                deleted = users[userId].undoChgStack[stackLen][0]
+                                toDelete -= users[userId].undoChgStack[stackLen][0]
+                                users[userId].undoChgStack.pop()
+
+                            actValue = 0
+                            if cmd in undoedCommands:
+                                actValue = undoedCommands[cmd]
+
+                            actValue += deleted
+                            undoedCommands[cmd] = actValue
                         else:
-                            deleted = users[userId].undoChgStack[stackLen][0]
-                            toDelete -= users[userId].undoChgStack[stackLen][0]
-                            users[userId].undoChgStack.pop()
-
-                        actValue = 0
-                        if cmd in undoedCommands:
-                            actValue = undoedCommands[cmd]
-
-                        actValue += deleted
-                        undoedCommands[cmd] = actValue
+                            # There is a problem.. undo without undoable change
+                            # Now calculate them to unknown command
+                            # Or we could simply skip them
+                            cmd = "unknown"
+                            if cmd in undoedCommands:
+                                actValue = undoedCommands[cmd]
+                            actValue += toDelete
+                            undoedCommands[cmd] = actValue
+                            toDelete = 0
 
     # re-check undoed commands, how many times they are used, to calculate how many % of it undoed.
     for cmd in undoedCommands.keys():
@@ -544,9 +600,13 @@ if __name__ == "__main__":
             documentsEdited += 1
             totalUsersWhenDocEdited += actDoc.users
             documentCategories["Edit"] += 1
+            if actDoc.users == 1 and actDoc.activeUsers == 1:
+                documentCategories["Single Editor"] += 1
         else:
-            if actDoc.users - actDoc.activeUsers > 0:
+            if actDoc.users > 0:
                 documentCategories["Viewer-Only"] += 1
+                if actDoc.users == 1:
+                    documentCategories["Single Viewer"] += 1
             else:
                 documentCategories["Convert/Thumbnail"] += 1
         totalUsers += actDoc.users
@@ -585,7 +645,7 @@ if __name__ == "__main__":
     for cmd,count in sortedUndoedCommands:
         print(count, totalUndoedCommands[cmd], cmd)
 
-    editorViewerDataTable = [["", "Documents"]]
+    editorViewerDataTable = [["Editor | Viewer", "Documents"]]
     editorViewerDataTable.extend(
         [[key, count] for key, count in passiveActivePerDoc.items()]
     )
@@ -598,7 +658,7 @@ if __name__ == "__main__":
     )
     sortedEditorViewerDataTable.insert(0, editorViewerDataTable[0])
 
-    totalUserPerDocTable = [["", "Documents",]]
+    totalUserPerDocTable = [["Users", "Documents",]]
     totalUserPerDocTable.extend(totalUsersPerDoc.items())
     sortedTotalUserPerDocTable = sorted(
         totalUserPerDocTable[1:],
@@ -606,7 +666,7 @@ if __name__ == "__main__":
     )
     sortedTotalUserPerDocTable.insert(0, totalUserPerDocTable[0])
 
-    totalViewersPerDocTable = [["", "Documents"]]
+    totalViewersPerDocTable = [["Viewers", "Documents"]]
     totalViewersPerDocTable.extend(totalViewersPerDoc.items())
     sortedTotalViewerPerDocTable = sorted(
         totalViewersPerDocTable[1:],
@@ -614,7 +674,7 @@ if __name__ == "__main__":
     )
     sortedTotalViewerPerDocTable.insert(0, totalViewersPerDocTable[0])
 
-    totalEditorsPerDocTable = [["", "Documents"]]
+    totalEditorsPerDocTable = [["Editors", "Documents"]]
     totalEditorsPerDocTable.extend(totalEditorsPerDoc.items())
     sortedTotalEditorPerDocTable = sorted(
         totalEditorsPerDocTable[1:],
@@ -622,14 +682,14 @@ if __name__ == "__main__":
     )
     sortedTotalEditorPerDocTable.insert(0, totalEditorsPerDocTable[0])
 
-    undoCommandDataTable = [["", "Total Commands", "Undo count"]]
+    undoCommandDataTable = [["Command", "Total\nCommands", "Undo count"]]
     undoCommandDataTable.extend([[cmd, totalUndoedCommands.get(cmd, 0), count] for cmd, count in sortedUndoedCommands])
     sortedUndoCommandDataTable = sorted(
         undoCommandDataTable[1:],
         key=lambda x: -x[2]
     )
 
-    convertViewerData = [["", "Count"]]
+    convertViewerData = [["Usage", "Count"]]
     convertViewerData.extend([[category, count] for category, count in documentCategories.items()])
     sortedConvertViewerData = sorted(
         convertViewerData[1:],
@@ -653,15 +713,38 @@ if __name__ == "__main__":
         for row in range(min(maxRows, len(currentPreviousMatrix)))
     ]
 
+    userCharPerSecDataTable = [["type speed", "count of\nfastest", "count of\nusual"]]
+    maxSpeed = 20
+    tempTable = [ [ 0 for y in range( 2 ) ] for x in range( maxSpeed+1 ) ]
+    for fast, usual in userCharPerSec:
+        if fast >= maxSpeed:
+            tempTable[maxSpeed][0] += 1
+        else:
+            tempTable[int(fast)][0] += 1
+        if usual >= maxSpeed:
+            tempTable[maxSpeed][1] += 1
+        else:
+            tempTable[int(usual)][1] += 1
+    userCharPerSecDataTable.extend([["20+", tempTable[maxSpeed][0], tempTable[maxSpeed][1]]])
+    userCharPerSecDataTable.extend([[str(maxSpeed-i-1)+"-"+str(maxSpeed-i), tempTable[maxSpeed-i-1][0], tempTable[maxSpeed-i-1][1]] for i in range(maxSpeed)])
+    if len(userCharPerSec) > 2:
+        userCharPerSec.sort(key=lambda x: x[0], reverse=True)
+        userCharPerSecDataTable[1].extend(["","Fastest speeds:"])
+        for i in range(3):
+            userCharPerSecDataTable[i+2].extend(["",round(userCharPerSec[i][0],2)])
+
+
+
     dataSets = { # Sheet name, data set (data, x axis title, heat map effect, rotate top row of text 90 degrees)
         "Total_Users_Per_Document": [sortedTotalUserPerDocTable, "USERS", False, False],
         "Total_Viewers_Per_Doc": [sortedTotalViewerPerDocTable, "VIEWERS", False, False],
         "Total_Editors_Per_Doc": [sortedTotalEditorPerDocTable, "EDITORS", False, False],
-        "Editor-Viewer_Per_Doc": [sortedEditorViewerDataTable, "EDITORS | VIEWERS", False, False],
+        "Editor_Viewer_Per_Doc": [sortedEditorViewerDataTable, "EDITORS | VIEWERS", False, False],
         "Convert_Thumbnail_Viewer_Edit": [convertViewerData, "DOC TYPE", False, False],
         "Undo_Command": [undoCommandDataTable, "COMMAND", False, False],
-        "Command_Transitions": [currentPreviousMatrix, None, True, False], # Change to true for heatmap effect
-        "Sub_Command_Transitions": [sortedSubMatrix, None, True, False], # Change to false for no heatmap effect
+        "Command_Transitions": [currentPreviousMatrix, None, True, True], # Change to true for heatmap effect
+        "Sub_Command_Transitions": [sortedSubMatrix, None, True, True], # Change to false for no heatmap effect
+        "Char_Per_Sec": [userCharPerSecDataTable, "CHARACTERS / SEC", False, False],
     }
 
     NSMAP = {
@@ -674,8 +757,12 @@ if __name__ == "__main__":
         "fo": "urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
     }
 
+    sheetsToLogarithmic = [
+        "Undo_Command"
+    ]
+
     templateFile = "../test/data/empty-chart.fods"
     fileDest = "../test/data/updated-chart.fods"
     addSheetWithData(templateFile, fileDest, dataSets, NSMAP)
-    chartStatistics(fileDest, NSMAP)
+    chartStatistics(fileDest, NSMAP, sheetsToLogarithmic)
 # vim: set shiftwidth=4 softtabstop=4 expandtab:

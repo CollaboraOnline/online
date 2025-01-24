@@ -3946,6 +3946,10 @@ LogUiCommands::~LogUiCommands()
                     return;
                 actCmd = (*_tokens)[0];
                 actSubCmd = (*_tokens)[1];
+                std::size_t pos = actSubCmd.find_first_of ('?');
+                if (pos != std::string::npos) {
+                    actSubCmd = actSubCmd.substr (0,pos);
+                }
             }
             else if (_tokens->equals(0, "mouse"))
             {
