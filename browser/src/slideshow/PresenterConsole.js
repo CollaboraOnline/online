@@ -788,7 +788,8 @@ class PresenterConsole {
 			}
 			case 'next': {
 				this._presenter.getNavigator().dispatchEffect();
-				if (isLastSlide) {
+				// if repeat after sec is set then do not close on last slide
+				if (isLastSlide && !this._presenter._presentationInfo.isEndless) {
 					this._onWindowClose();
 					break;
 				}
