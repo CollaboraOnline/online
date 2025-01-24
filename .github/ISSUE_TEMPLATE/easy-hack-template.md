@@ -2,7 +2,7 @@
 name: Easy Hack
 about: Create an Easy Hack with code pointers and a mentor
 title: ''
-labels: Easy Hack
+labels: Easy Hack, 24.04
 assignees: ''
 
 ---
