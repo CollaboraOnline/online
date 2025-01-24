@@ -1569,8 +1569,11 @@ private:
 
             Poco::Path destDir(_presetsPath, groupName);
             Poco::File(destDir).createDirectories();
-            std::string fileName =
-                Poco::Path(destDir.toString(), Uri::getFilenameWithExtFromURL(uri)).toString();
+            std::string fileName;
+            if (groupName == "xcu")
+                fileName = Poco::Path(destDir.toString(), "config.xcu").toString();
+            else
+                fileName = Poco::Path(destDir.toString(), Uri::getFilenameWithExtFromURL(uri)).toString();
 
             queries.emplace_back(uri, stamp, fileName);
         }
@@ -1593,25 +1596,6 @@ private:
         const std::string stamp = JsonUtil::getJSONValue<std::string>(firstElem, "stamp");
 
         queries.emplace_back(uri, stamp, "browsersetting.json");
-    }
-
-    void addXcu(Poco::JSON::Object::Ptr settings, std::vector<CacheQuery>& queries)
-    {
-        if (!settings->has("xcu"))
-            return;
-
-        auto xcu = settings->get("xcu").extract<Poco::JSON::Object::Ptr>();
-        if (xcu.isNull())
-            return;
-
-        const std::string uri = JsonUtil::getJSONValue<std::string>(xcu, "uri");
-        const std::string stamp = JsonUtil::getJSONValue<std::string>(xcu, "stamp");
-
-        Poco::Path destDir(_presetsPath, "xcu");
-        Poco::File(destDir).createDirectories();
-        std::string fileName = Poco::Path(destDir, "config.xcu").toString();
-
-        queries.emplace_back(uri, stamp, fileName);
     }
 
 public:
@@ -1649,7 +1633,7 @@ public:
             addBrowserSetting(settings, presets);
             addGroup(settings, "autotext", presets);
             addGroup(settings, "wordbook", presets);
-            addXcu(settings, presets);
+            addGroup(settings, "xcu", presets);
         }
 
         Cache::supplyConfigFiles(_configId, presets);

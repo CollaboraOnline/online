@@ -581,6 +581,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
         Poco::JSON::Array::Ptr configAutoTexts = new Poco::JSON::Array();
         Poco::JSON::Array::Ptr configDictionaries = new Poco::JSON::Array();
+        Poco::JSON::Array::Ptr configXcu = new Poco::JSON::Array();
         for (const auto& item : items)
         {
             Poco::JSON::Object::Ptr configEntry = new Poco::JSON::Object();
@@ -596,10 +597,11 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             else if (item.first == "wordbook")
                 configDictionaries->add(configEntry);
             else if (item.first == "xcu")
-                configInfo->set("xcu", configEntry);
+                configXcu->add(configEntry);
         }
         configInfo->set("autotext", configAutoTexts);
         configInfo->set("wordbook", configDictionaries);
+        configInfo->set("xcu", configXcu);
 
         if (serveBrowserSetttings)
         {
