@@ -270,5 +270,28 @@ namespace cool {
 			}
 			return result;
 		}
+
+		export function requestAnimFrame(
+			fn: () => void,
+			// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+			context: any,
+			immediate?: boolean,
+		): number {
+			if (immediate) {
+				fn.call(context);
+				return 0;
+			}
+
+			return window.requestAnimationFrame(fn.bind(context));
+		}
+
+		export function cancelAnimFrame(id: number): void {
+			if (id) {
+				window.cancelAnimationFrame(id);
+			}
+		}
+
+		export const MAX_SAFE_INTEGER = Math.pow(2, 3) - 1;
+		export const MIN_SAFE_INTEGER = -cool.Util.MAX_SAFE_INTEGER;
 	}
 }
