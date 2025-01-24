@@ -1,35 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/admin-localizations.json"
-        type="application/vnd.oftn.l10n+json" />
+    <link
+      rel="localizations"
+      href="%SERVICE_ROOT%/browser/%VERSION%/l10n/admin-localizations.json"
+      type="application/vnd.oftn.l10n+json"
+    />
 
     <title>Collabora Online - Admin console</title>
-    <link rel=StyleSheet href="%SERVICE_ROOT%/browser/%VERSION%/admin/css/admin.css" type="text/css" />
-    <script src="%SERVICE_ROOT%/browser/%VERSION%/admin-bundle.js" defer></script>
-</head>
-
-<body>
-    <!--%BRANDING_JS%-->
+    <link
+      rel="StyleSheet"
+      href="%SERVICE_ROOT%/browser/%VERSION%/admin/css/admin.css"
+      type="text/css"
+    />
+    <!-- <link rel="stylesheet" href="%SERVICE_ROOT%/browser/%VERSION%/color-palette.css" /> -->
+    <!-- <link rel="stylesheet" href="%SERVICE_ROOT%/browser/%VERSION%/color-palette-dark.css" /> -->
+    <link
+      rel="stylesheet"
+      href="%SERVICE_ROOT%/browser/%VERSION%/admin/css/adminIntegratorSettings.css"
+    />
+    <script
+      src="%SERVICE_ROOT%/browser/%VERSION%/admin-bundle.js"
+      defer
+    ></script>
+  </head>
+  <body>
     <div id="fileControls">
-        <div id="sharedConfigs">
-            <h4>Autotext</h4>
-            <ul id="autotextList"></ul>
-            <input type="file" class="hidden" id="autotextFile" accept=".bua">
-            <button id="uploadAutotextButton" class="upload">Upload Autotext</button>
-            <h4>Wordbook</h4>
-            <input type="file" class="hidden" id="dictionaryFile" accept=".dic">
-            <ul id="wordbookList"></ul>
-            <button id="uploadWordbookButton" class="upload">Upload Wordbook</button>
+      <div id="sharedConfigs">
+        <div class="section">
+          <h3>Autotext</h3>
+          <ul id="autotextList"></ul>
+          <input type="file" class="hidden" id="autotextFile" accept=".bau" />
+          <button
+            id="uploadAutotextButton"
+            type="submit"
+            class="inline-button button button--size-normal button--text-only button--vue-secondary"
+          >
+            <span class="button__wrapper">
+              <span class="button__text"> Upload Autotext </span>
+            </span>
+          </button>
         </div>
-        <p id="fileStatus"></p>
-        <input type="hidden" id="initial-variables" data-access-token="%ACCESS_TOKEN%"
-            data-access-token-ttl="%ACCESS_TOKEN_TTL%" data-access-header="%ACCESS_HEADER%"
-            data-enable-debug="%ENABLE_DEBUG%" data-wopi-setting-base-url="%WOPI_SETTING_BASE_URL%"
-            data-iframe-type="%IFRAME_TYPE%" />
+        <div class="section">
+          <h3>Wordbook</h3>
+          <input type="file" class="hidden" id="wordbookFile" accept=".dic" />
+          <ul id="wordbookList"></ul>
+          <button
+            id="uploadWordbookButton"
+            type="submit"
+            class="inline-button button button--size-normal button--text-only button--vue-secondary"
+          >
+            <span class="button__wrapper">
+              <span class="button__text">   Upload Wordbook </span>
+            </span>
+          </button>
+        </div>
+      </div>
+      <input
+        type="hidden"
+        id="initial-variables"
+        data-access-token="%ACCESS_TOKEN%"
+        data-access-token-ttl="%ACCESS_TOKEN_TTL%"
+        data-access-header="%ACCESS_HEADER%"
+        data-enable-debug="%ENABLE_DEBUG%"
+        data-wopi-setting-base-url="%WOPI_SETTING_BASE_URL%"
+        data-iframe-type="%IFRAME_TYPE%"
+        data-css-vars="<!--%CSS_VARIABLES%-->"
+      />
     </div>
-</body>
+  </body>
 </html>

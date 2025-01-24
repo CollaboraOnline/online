@@ -15,6 +15,7 @@ interface Window {
 	enableDebug?: string;
 	wopiSettingBaseUrl?: string;
 	iframeType?: string;
+	cssVars?: string;
 }
 
 interface ConfigItem {
@@ -61,27 +62,36 @@ function init(): void {
 
 function bindEventListeners(): void {
 	const uploadAutotextButton = document.getElementById('uploadAutotextButton');
-	const uploadAutotextInput = document.getElementById('autotextFile');
-	if (uploadAutotextButton && uploadAutotextInput) {
+	const autotextFileInput = document.getElementById(
+		'autotextFile',
+	) as HTMLInputElement;
+
+	const uploadWordbookButton = document.getElementById('uploadWordbookButton');
+	const wordbookFileInput = document.getElementById(
+		'wordbookFile',
+	) as HTMLInputElement;
+
+	if (uploadAutotextButton && autotextFileInput) {
 		uploadAutotextButton.addEventListener('click', () => {
-			console.debug('Upload Autotext clicked.');
-			uploadAutotextInput.click();
+			autotextFileInput.click();
 		});
-		uploadAutotextInput.addEventListener('change', () => {
-			uploadFile(PATH.autoTextUpload());
+
+		autotextFileInput.addEventListener('change', () => {
+			if (autotextFileInput.files?.length) {
+				uploadFile(PATH.autoTextUpload(), autotextFileInput.files[0]);
+			}
 		});
 	}
 
-	const uploadWordbookButton = document.getElementById('uploadWordbookButton');
-	const uploadWordbookInput = document.getElementById('dictionaryFile');
-	if (uploadWordbookButton && uploadWordbookInput) {
+	if (uploadWordbookButton && wordbookFileInput) {
 		uploadWordbookButton.addEventListener('click', () => {
-			console.debug('Upload Wordbook clicked.');
-			uploadWordbookInput.click();
+			wordbookFileInput.click();
 		});
 
-		uploadWordbookInput.addEventListener('change', () => {
-			uploadFile(PATH.wordBookUpload());
+		wordbookFileInput.addEventListener('change', () => {
+			if (wordbookFileInput.files?.length) {
+				uploadFile(PATH.wordBookUpload(), wordbookFileInput.files[0]);
+			}
 		});
 	}
 }
@@ -95,6 +105,15 @@ function initWindowVariables(): void {
 	window.enableDebug = element.dataset.enableDebug;
 	window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
 	window.iframeType = element.dataset.iframeType;
+	window.cssVars = element.dataset.cssVars;
+	if (window.cssVars) {
+		window.cssVars = atob(window.cssVars);
+		console.log('cssVars: ' + window.cssVars);
+		const styleEl = document.createElement('style');
+		styleEl.setAttribute('id', 'dynamic-css-vars');
+		styleEl.textContent = window.cssVars;
+		document.head.appendChild(styleEl);
+	}
 
 	if (window.enableDebug) {
 		const debugInfoList = document.createElement('ul');
@@ -121,33 +140,7 @@ function initWindowVariables(): void {
 	}
 }
 
-async function uploadFile(filePath: string): Promise<void> {
-	let fileInput: HTMLInputElement | null = null;
-	if (filePath.includes('wordbook')) {
-		fileInput = document.getElementById(
-			'dictionaryFile',
-		) as HTMLInputElement | null;
-	} else if (filePath.includes('autotext')) {
-		fileInput = document.getElementById(
-			'autotextFile',
-		) as HTMLInputElement | null;
-	}
-
-	const fileStatus = document.getElementById(
-		'fileStatus',
-	) as HTMLParagraphElement | null;
-	if (!fileInput || !fileStatus) {
-		console.error('Required DOM elements are missing.');
-		return;
-	}
-
-	if (!fileInput.files || fileInput.files.length === 0) {
-		fileStatus.textContent = 'No file selected for upload.';
-		return;
-	}
-	console.debug('filepath for', window.iframeType, filePath);
-
-	const file = fileInput.files[0];
+async function uploadFile(filePath: string, file: File): Promise<void> {
 	const formData = new FormData();
 	formData.append('file', file);
 	formData.append('filePath', filePath);
@@ -155,12 +148,9 @@ async function uploadFile(filePath: string): Promise<void> {
 		formData.append('wopiSettingBaseUrl', window.wopiSettingBaseUrl);
 	}
 
-	fileStatus.textContent = `Uploading "${file.name}"...`;
-
 	try {
 		const apiUrl = API_ENDPOINTS.uploadSettings;
 
-		console.debug('Shared config file: ', window.wopiSettingBaseUrl);
 		const response = await fetch(apiUrl, {
 			method: 'POST',
 			headers: {
@@ -173,13 +163,10 @@ async function uploadFile(filePath: string): Promise<void> {
 			throw new Error(`Upload failed: ${response.statusText}`);
 		}
 
-		fileStatus.textContent = `File "${file.name}" uploaded successfully!`;
 		await fetchAndPopulateSharedConfigs();
 	} catch (error: unknown) {
 		const message = error instanceof Error ? error.message : 'Unknown error';
-		fileStatus.textContent = `Error: ${message}`;
-	} finally {
-		fileInput.value = '';
+		console.error(`Error uploading file: ${message}`);
 	}
 }
 
@@ -240,32 +227,91 @@ function populateList(
 	listEl.innerHTML = '';
 
 	items.forEach((item) => {
+		const fileName = getFilename(item.uri, false);
+
 		const li = document.createElement('li');
-		const fileName = getFilename(item.uri);
+		li.classList.add('list-item__wrapper');
 
-		// Create the "Download" button
+		const listItemDiv = document.createElement('div');
+		listItemDiv.classList.add('list-item');
+
+		const anchor = document.createElement('div');
+		anchor.classList.add('list-item__anchor');
+
+		const listItemContentDiv = document.createElement('div');
+		listItemContentDiv.classList.add('list-item-content');
+
+		const listItemContentMainDiv = document.createElement('div');
+		listItemContentMainDiv.classList.add('list-item-content__main');
+
+		const listItemContentNameDiv = document.createElement('div');
+		listItemContentNameDiv.classList.add('list-item-content__name');
+		listItemContentNameDiv.textContent = fileName;
+
+		listItemContentMainDiv.appendChild(listItemContentNameDiv);
+		listItemContentDiv.appendChild(listItemContentMainDiv);
+		anchor.appendChild(listItemContentDiv);
+
+		const extraActionsDiv = document.createElement('div');
+		extraActionsDiv.classList.add('list-item-content__extra-actions');
+
 		const downloadBtn = document.createElement('button');
-		downloadBtn.textContent = 'Download';
-		downloadBtn.classList.add('download-button');
+		downloadBtn.type = 'button';
+		downloadBtn.classList.add(
+			'button',
+			'button--size-normal',
+			'button--icon-only',
+			'button--vue-secondary',
+			'download-icon',
+		);
 
+		// todo : replace svg to css class?
+		downloadBtn.innerHTML = `
+			<span class="button__wrapper">
+				<span aria-hidden="true" class="button__icon">
+					<span aria-hidden="true" role="img" class="material-design-icon">
+						<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24" class="material-design-icon__svg">
+							<path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"></path>
+						</svg>
+					</span>
+				</span>
+			</span>
+		`;
 		downloadBtn.addEventListener('click', () => {
 			window.open(item.uri, '_blank');
 		});
 
-		// Create the "Delete" button
 		const deleteBtn = document.createElement('button');
-		deleteBtn.textContent = 'Delete';
-		deleteBtn.classList.add('delete-button');
-
+		deleteBtn.type = 'button';
+		deleteBtn.classList.add(
+			'button',
+			'button--size-normal',
+			'button--icon-only',
+			'button--vue-secondary',
+			'delete-icon',
+		);
+		deleteBtn.innerHTML = `
+			<span class="button__wrapper">
+				<span aria-hidden="true" class="button__icon">
+					<span aria-hidden="true" role="img" class="material-design-icon">
+						<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24" class="material-design-icon__svg">
+							<path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19
+								A2,2 0 0,0 8,21H16
+								A2,2 0 0,0 18,19V7H6V19Z"></path>
+						</svg>
+					</span>
+				</span>
+			</span>
+		`;
 		deleteBtn.addEventListener('click', async () => {
 			try {
 				if (!window.accessToken) {
 					throw new Error('Access token is missing.');
 				}
-
 				if (!window.wopiSettingBaseUrl) {
 					throw new Error('wopiSettingBaseUrl is missing.');
 				}
+
 				const fileId =
 					settingConfigBasePath() +
 					category +
@@ -289,18 +335,17 @@ function populateList(
 					throw new Error(`Delete failed: ${response.statusText}`);
 				}
 
-				// On success - remove the list item from the UI
+				// On success - remove li
 				listEl.removeChild(li);
 			} catch (error: unknown) {
 				console.error('Error deleting file:', error);
 			}
 		});
 
-		li.textContent = `${fileName} | `;
-		li.appendChild(downloadBtn);
-		li.appendChild(document.createTextNode(' | '));
-		li.appendChild(deleteBtn);
+		extraActionsDiv.append(downloadBtn, deleteBtn);
 
+		listItemDiv.append(anchor, extraActionsDiv);
+		li.appendChild(listItemDiv);
 		listEl.appendChild(li);
 	});
 }
