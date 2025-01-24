@@ -63,6 +63,8 @@ namespace TileParse
 /// Represents a tile's coordinates and dimensions.
 class TileDesc final
 {
+    static constexpr int AdjacentTilesToCombine = 4;
+
 public:
     TileDesc(int normalizedViewId, int part, int mode, int width, int height, int tilePosX, int tilePosY, int tileWidth,
              int tileHeight, int ver, int imgSize, int id)
@@ -234,8 +236,8 @@ public:
 
     bool onSameColumn(const TileDesc& other) const
     {
-        return other.getTilePosX() + other.getTileWidth() >= getTilePosX() &&
-               other.getTilePosX() <= getTilePosX() + getTileWidth();
+        return other.getTilePosX() + (TileDesc::AdjacentTilesToCombine * other.getTileWidth()) >= getTilePosX() &&
+               other.getTilePosX() <= getTilePosX() + (TileDesc::AdjacentTilesToCombine * getTileWidth());
     }
 
     bool onSameRow(const TileDesc& other) const
