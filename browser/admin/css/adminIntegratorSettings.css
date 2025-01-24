@@ -1,0 +1,337 @@
+/* Todo: make branding working  */
+html,
+body {
+  --color-main-background: #ffffff;
+  --color-main-background-rgb: 255, 255, 255;
+  --color-main-background-translucent: rgba(
+    var(--color-main-background-rgb),
+    0.97
+  );
+  --color-main-background-blur: rgba(var(--color-main-background-rgb), 0.8);
+  --filter-background-blur: none;
+  --gradient-main-background: var(--color-main-background) 0%,
+    var(--color-main-background-translucent) 85%, transparent 100%;
+  --color-background-hover: #f5f5f5;
+  --color-background-dark: #ededed;
+  --color-background-darker: #dbdbdb;
+  --color-placeholder-light: #e6e6e6;
+  --color-placeholder-dark: #cccccc;
+  --color-main-text: #222222;
+  --color-text-maxcontrast: #6b6b6b;
+  --color-text-maxcontrast-default: #6b6b6b;
+  --color-text-maxcontrast-background-blur: #595959;
+  --color-text-light: var(--color-main-text);
+  --color-text-lighter: var(--color-text-maxcontrast);
+  --color-scrollbar: var(--color-border-maxcontrast) transparent;
+  --color-error: #db0606;
+  --color-error-rgb: 219, 6, 6;
+  --color-error-hover: #df2525;
+  --color-error-text: #c20505;
+  --color-warning: #a37200;
+  --color-warning-rgb: 163, 114, 0;
+  --color-warning-hover: #8a6000;
+  --color-warning-text: #7f5900;
+  --color-success: #2d7b41;
+  --color-success-rgb: 45, 123, 65;
+  --color-success-hover: #428854;
+  --color-success-text: #286c39;
+  --color-info: #0071ad;
+  --color-info-rgb: 0, 113, 173;
+  --color-info-hover: #197fb5;
+  --color-info-text: #006499;
+  --color-favorite: #a37200;
+  --color-loading-light: #cccccc;
+  --color-loading-dark: #444444;
+  --color-box-shadow-rgb: 77, 77, 77;
+  --color-box-shadow: rgba(var(--color-box-shadow-rgb), 0.5);
+  --color-border: #ededed;
+  --color-border-dark: #dbdbdb;
+  --color-border-maxcontrast: #7d7d7d;
+  --font-face: system-ui, -apple-system, 'Segoe UI', Roboto, Oxygen-Sans,
+    Cantarell, Ubuntu, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  --default-font-size: 15px;
+  --font-size-small: 13px;
+  --default-line-height: 1.5;
+  --animation-quick: 100ms;
+  --animation-slow: 300ms;
+  --border-width-input: 1px;
+  --border-width-input-focused: 2px;
+  --border-radius-small: 4px;
+  --border-radius-element: 8px;
+  --border-radius-container: 12px;
+  --border-radius-container-large: 16px;
+  --border-radius: var(--border-radius-small);
+  --border-radius-large: var(--border-radius-element);
+  --border-radius-rounded: 28px;
+  --border-radius-pill: 100px;
+  --default-clickable-area: 34px;
+  --clickable-area-large: 48px;
+  --clickable-area-small: 24px;
+  --default-grid-baseline: 4px;
+  --header-height: 50px;
+  --header-menu-item-height: 44px;
+  --navigation-width: 300px;
+  --sidebar-min-width: 300px;
+  --sidebar-max-width: 500px;
+  --body-container-radius: var(--border-radius-container-large);
+  --body-container-margin: calc(var(--default-grid-baseline) * 2);
+  --body-height: calc(
+    100% - env(safe-area-inset-bottom) - var(--header-height) -
+      var(--body-container-margin)
+  );
+  --breakpoint-mobile: 1024px;
+  --background-invert-if-dark: no;
+  --background-invert-if-bright: invert(100%);
+  --background-image-invert-if-bright: no;
+  --primary-invert-if-bright: no;
+  --primary-invert-if-dark: invert(100%);
+  --color-primary: #00679e;
+  --color-primary-text: #ffffff;
+  --color-primary-hover: #3285b1;
+  --color-primary-light: #e5eff5;
+  --color-primary-light-text: #00293f;
+  --color-primary-light-hover: #dbe4ea;
+  --color-primary-element: #00679e;
+  --color-primary-element-hover: #005a8a;
+  --color-primary-element-text: #ffffff;
+  --color-primary-element-text-dark: #f5f5f5;
+  --color-primary-element-light: #e5eff5;
+  --color-primary-element-light-hover: #dbe4ea;
+  --color-primary-element-light-text: #00293f;
+  --gradient-primary-background: linear-gradient(
+    40deg,
+    var(--color-primary) 0%,
+    var(--color-primary-hover) 100%
+  );
+  --color-background-plain: #00679e;
+  --color-background-plain-text: #ffffff;
+  --image-background: url('/apps/theming/img/background/jenna-kim-the-globe.webp');
+  --default-grid-baseline: 4px;
+
+  /* other  */
+
+  padding-left: 0px;
+  margin-left: 0px;
+  overflow: hidden;
+  display: block;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  cursor: default;
+  scrollbar-color: var(--color-scrollbar);
+}
+
+a {
+  color: #3273dc;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+ul {
+  padding: 0px;
+}
+.section {
+  display: block;
+  padding: 30px;
+  margin-bottom: 24px;
+  padding-left: 0px;
+}
+
+.section {
+  margin-bottom: 0;
+}
+
+.section:not(:last-child) {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.section h3 {
+  margin-bottom: 16px;
+}
+
+.button {
+  --button-size: var(--default-clickable-area);
+  --button-radius: var(--border-radius-element, calc(var(--button-size) / 2));
+  --button-padding: clamp(
+    var(--default-grid-baseline),
+    var(--button-radius),
+    calc(var(--default-grid-baseline) * 4)
+  );
+  position: relative;
+  width: fit-content;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  font-size: var(--default-font-size);
+  font-weight: bold;
+  min-height: var(--button-size);
+  min-width: var(--button-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: var(--button-radius);
+  transition-property: color, border-color, background-color;
+  transition-duration: 0.1s;
+  transition-timing-function: linear;
+  color: var(--color-primary-element-light-text);
+  background-color: var(--color-primary-element-light);
+}
+
+.button--icon-and-text {
+  --button-padding: min(
+    calc(var(--default-grid-baseline) + var(--button-radius)),
+    calc(var(--default-grid-baseline) * 4)
+  );
+  padding-block: 0;
+  padding-inline: var(--default-grid-baseline) var(--button-padding);
+}
+
+.button--vue-secondary {
+  color: var(--color-primary-element-light-text);
+  background-color: var(--color-primary-element-light);
+}
+
+.button__wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.button__text {
+  font-weight: bold;
+  margin-bottom: 1px;
+  padding: 2px 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.button__icon {
+  height: var(--button-size);
+  width: var(--button-size);
+  min-height: var(--button-size);
+  min-width: var(--button-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.material-design-icon {
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.button--vue-secondary {
+  color: var(--color-primary-element-light-text);
+  background-color: var(--color-primary-element-light);
+}
+
+.button--text-only {
+  padding: 0 var(--button-padding);
+}
+
+.button--vue-tertiary {
+  color: var(--color-main-text);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.button--icon-only {
+  line-height: 1;
+  width: var(--button-size) !important;
+}
+
+.list-item {
+  --list-item-padding: var(--default-grid-baseline);
+  --list-item-height: 2lh;
+  --list-item-border-radius: var(--border-radius-element, 32px);
+  box-sizing: border-box;
+  display: flex;
+  position: relative;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  padding: var(--list-item-padding);
+  width: 100%;
+  border-radius: var(--border-radius-element, 32px);
+  cursor: pointer;
+  transition: background-color var(--animation-quick) ease-in-out;
+  list-style: none;
+  border: 0.5px solid var(--color-border);
+}
+
+.list-item__wrapper {
+  display: flex;
+  position: relative;
+  width: 100%;
+  padding: 2px 4px;
+}
+
+.list-item__wrapper:last-of-type {
+  padding-block-end: 4px;
+}
+
+.list-item__anchor {
+  color: inherit;
+  display: flex;
+  flex: 1 0 auto;
+  align-items: center;
+  height: var(--list-item-height);
+  min-width: 0;
+}
+
+.list-item-content {
+  display: flex;
+  flex: 1 0;
+  justify-content: space-between;
+  padding-inline-start: calc(2 * var(--default-grid-baseline));
+  min-width: 0;
+}
+
+.list-item-content__main {
+  flex: 1 0;
+  width: 0;
+  margin: auto 0;
+}
+
+.list-item-content__name {
+  min-width: 100px;
+  flex: 1 1 10%;
+  font-weight: 500;
+}
+
+.list-item__wrapper .list-item-content__name,
+.list-item__wrapper .list-item-content__subname,
+.list-item__wrapper .list-item-content__details,
+.list-item__wrapper .list-item-details__details {
+  white-space: nowrap;
+  margin-block: 0;
+  margin-inline: 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-item-content__extra-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--default-grid-baseline);
+}
+
+.list-item-content__actions,
+.list-item-content__extra-actions {
+  flex: 0 0 auto;
+  align-self: center;
+  justify-content: center;
+  margin-inline-start: var(--default-grid-baseline);
+}

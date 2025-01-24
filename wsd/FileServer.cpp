@@ -2268,6 +2268,7 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     Poco::replaceInPlace(adminFile, WOPI_SETTING_BASE_URL, urv[WOPI_SETTING_BASE_URL]);
     Poco::replaceInPlace(adminFile, ACCESS_HEADER, urv[ACCESS_HEADER]);
     Poco::replaceInPlace(adminFile, IFRAME_TYPE, urv[IFRAME_TYPE]);
+    Poco::replaceInPlace(adminFile, CSS_VARS, cssVarsToStyle(urv[CSS_VARS]));
     bool enableDebug = false;
 #if ENABLE_DEBUG
     enableDebug = true;
