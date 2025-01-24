@@ -602,16 +602,17 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         {
             assert(kind == "user");
             const std::string& browserSettingPath =
-                COOLWSD::FileServerRoot + "test/data/presets/user/browsersettings.json";
+                COOLWSD::FileServerRoot + "test/data/presets/user/browsersetting.json";
             if (FileUtil::Stat(browserSettingPath).exists())
             {
-                std::ostringstream ss;
-                std::ifstream inputFile(browserSettingPath);
-                ss << inputFile.rdbuf();
-
-                Poco::JSON::Parser parser;
-                auto result = parser.parse(ss.str());
-                configInfo->set("browserSettings", result.extract<Poco::JSON::Object::Ptr>());
+                Poco::JSON::Array::Ptr browsersettingArray = new Poco::JSON::Array();
+                Poco::JSON::Object::Ptr configEntry = new Poco::JSON::Object();
+                std::string uri = COOLWSD::getServerURL().append(prefix + browserSettingPath);
+                Util::trim(uri);
+                configEntry->set("uri", uri);
+                configEntry->set("stamp", etagString);
+                browsersettingArray->add(configEntry);
+                configInfo->set("browsersetting", browsersettingArray);
             }
             else
             {
