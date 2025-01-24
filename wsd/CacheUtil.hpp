@@ -23,6 +23,13 @@ struct CacheQuery
     std::string _uri;
     std::string _stamp;
     std::string _dest;
+
+    CacheQuery(const std::string& uri, const std::string& stamp, const std::string& dest)
+        : _uri(uri)
+        , _stamp(stamp)
+        , _dest(dest)
+    {
+    }
 };
 
 class Cache
