@@ -151,8 +151,6 @@ export class Comment extends CanvasSectionObject {
 			return;
 
 		var button = L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
-		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.onLostFocus, this);
-		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
 		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'input', this.textAreaInput, this);
 		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'input', this.textAreaInput, this);
 		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'keydown', this.textAreaKeyDown, this);
@@ -243,6 +241,7 @@ export class Comment extends CanvasSectionObject {
 		var isRTL = document.documentElement.dir === 'rtl';
 		this.sectionProperties.container = L.DomUtil.create('div', 'cool-annotation' + (isRTL ? ' rtl' : ''));
 		this.sectionProperties.container.id = 'comment-container-' + this.sectionProperties.data.id;
+		L.DomEvent.on(this.sectionProperties.container, 'focusout', this.onLostFocus, this);
 
 		var mobileClass = (<any>window).mode.isMobile() ? ' wizard-comment-box': '';
 
@@ -1115,6 +1114,14 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onLostFocus (e: any): void {
+
+		if (!this.isEdit() || this.sectionProperties.container.contains(e.relatedTarget))
+			return;
+		if (this.sectionProperties.nodeReply.contains(e.target)) {
+			this.onLostFocusReply(e);
+			return;
+		}
+
 		if (app.map._docLayer._docType === 'text' && this.map.mention?.isTypingMention()) {
 			return;
 		}
