@@ -1251,7 +1251,7 @@ void AdminModel::getMetrics(std::ostringstream &oss)
         oss << "doc_views" << suffix << doc.getViews().size() << "\n";
         oss << "doc_views_active" << suffix << doc.getActiveViews() << "\n";
         oss << "doc_is_modified" << suffix << doc.getModifiedStatus() << "\n";
-        oss << "doc_memory_used_bytes" << suffix << doc.getMemoryDirty() << "\n";
+        oss << "doc_memory_used_bytes" << suffix << doc.getMemoryDirty() * 1024 << "\n";
         oss << "doc_cpu_used_seconds" << suffix << ((double)doc.getLastJiffies()/tick_per_sec) << "\n";
         oss << "doc_open_time_seconds" << suffix << doc.getOpenTime() << "\n";
         oss << "doc_idle_time_seconds" << suffix << doc.getIdleTime() << "\n";
