@@ -71,7 +71,7 @@ public:
         : RemoteJSONPoll(config, "remote_config.remote_url", "remoteconfig_poll", "configuration")
     {
         constexpr int PRIO_JSON = -200; // highest priority
-        _persistConfig = new ConfigUtil::AppConfigMap(std::map<std::string, std::string>{});
+        _persistConfig = new ConfigUtil::AppConfigMap();
         _conf.addWriteable(_persistConfig, PRIO_JSON);
     }
 

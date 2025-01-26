@@ -12,11 +12,13 @@
 #include <config.h>
 
 #include <ConfigUtil.hpp>
+
 #include <Util.hpp>
 
 #include <cassert>
 #include <string>
 #include <sstream>
+#include <unordered_map>
 
 #include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/XMLConfiguration.h>
@@ -42,7 +44,7 @@ RuntimeConstant<bool> SslTermination;
 // NOTE: This is sorted, please keep it sorted as it's friendlier to readers,
 //       except for properties, which are sorted before the value, e.g.
 //       "setting[@name]" before "setting", which is more readable.
-static const std::map<std::string, std::string> DefAppConfig = {
+static const std::unordered_map<std::string, std::string> DefAppConfig = {
     { "accessibility.enable", "false" },
     { "admin_console.enable", "true" },
     { "admin_console.enable_pam", "false" },
@@ -319,7 +321,7 @@ void initialize(const std::string& xml)
 
 bool isInitialized() { return Config != nullptr; }
 
-const std::map<std::string, std::string>& getDefaultAppConfig() { return DefAppConfig; }
+const std::unordered_map<std::string, std::string>& getDefaultAppConfig() { return DefAppConfig; }
 
 /// Recursively extract the sub-keys of the given parent key.
 void extract(const std::string& parentKey, const Poco::Util::AbstractConfiguration& config,

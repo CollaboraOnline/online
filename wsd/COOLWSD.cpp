@@ -1274,10 +1274,11 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     // Initialize the config subsystem.
     LayeredConfiguration& conf = config();
 
-    const std::map<std::string, std::string> DefAppConfig = ConfigUtil::getDefaultAppConfig();
+    const std::unordered_map<std::string, std::string> defAppConfig =
+        ConfigUtil::getDefaultAppConfig();
 
     // Set default values, in case they are missing from the config file.
-    Poco::AutoPtr<ConfigUtil::AppConfigMap> defConfig(new ConfigUtil::AppConfigMap(DefAppConfig));
+    Poco::AutoPtr<ConfigUtil::AppConfigMap> defConfig(new ConfigUtil::AppConfigMap(defAppConfig));
     conf.addWriteable(defConfig, PRIO_SYSTEM); // Lowest priority
 
 #if !MOBILEAPP
@@ -1712,7 +1713,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     // Copy and serialize the config into XML to pass to forkit.
     KitXmlConfig.reset(new Poco::Util::XMLConfiguration);
-    for (const auto& pair : DefAppConfig)
+    for (const auto& pair : defAppConfig)
     {
         try
         {
