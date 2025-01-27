@@ -888,6 +888,8 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, const std
 #if !MOBILEAPP
     assert(mobileAppDocId == 0 && "Unexpected to have mobileAppDocId in the non-mobile build");
 
+    int spawnTimeoutMs = ChildSpawnTimeoutMs / 2;
+
     if (configId.empty() || SubForKitProcs.contains(configId))
     {
         int numPreSpawn = COOLWSD::NumPreSpawnedChildren;
@@ -895,8 +897,14 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, const std
         LOG_DBG("getNewChild: Rebalancing children of config[" << configId << "] to " << numPreSpawn);
         rebalanceChildren(configId, numPreSpawn);
     }
+    else
+    {
+        // configId exists, and no SubForKitProcs for it seen yet, be more generous for startup time.
+        spawnTimeoutMs = CHILD_SPAWN_TIMEOUT_MS;
+        LOG_DBG("getNewChild: awaiting subforkit[" << configId << "], timeout of " << spawnTimeoutMs << "ms");
+    }
 
-    const auto timeout = std::chrono::milliseconds(ChildSpawnTimeoutMs / 2);
+    const auto timeout = std::chrono::milliseconds(spawnTimeoutMs);
     LOG_TRC("Waiting for a new child for a max of " << timeout);
 #else // MOBILEAPP
     const auto timeout = std::chrono::hours(100);
