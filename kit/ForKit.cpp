@@ -406,16 +406,16 @@ static void cleanupChildren()
 
     // Now delete the jails.
     auto i = cleanupJailPaths.size();
-    while (i-- > 0)
+    while (i > 0)
     {
+        --i;
         const std::string path = cleanupJailPaths[i];
 
-        // don't delete jails where there was a crash until it ~3 minutes old
-        std::string noteCrashFile(path + "/tmp/kit-crashed");
-        auto noteStat = FileUtil::Stat(noteCrashFile);
+        // Don't delete jails where there was a crash until it's ~3 minutes old.
+        const FileUtil::Stat noteStat(path + "/tmp/kit-crashed");
         if (noteStat.good())
         {
-            time_t modifiedTimeSec = noteStat.modifiedTimeMs() / 1000;
+            const time_t modifiedTimeSec = noteStat.modifiedTimeMs() / 1000;
             if (time(nullptr) < modifiedTimeSec + 180)
                 continue;
         }
