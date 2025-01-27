@@ -189,10 +189,10 @@ namespace FileUtil
     {
     public:
         /// Stat the given path. Symbolic links are stat'ed when @link is true.
-        Stat(const std::string& file, bool link = false)
-            : _path(file)
+        Stat(std::string file, bool link = false)
+            : _path(std::move(file))
             , _sb{}
-            , _res(link ? lstat(file.c_str(), &_sb) : stat(file.c_str(), &_sb))
+            , _res(link ? lstat(_path.c_str(), &_sb) : stat(_path.c_str(), &_sb))
             , _stat_errno(errno)
         {
         }
@@ -201,7 +201,7 @@ namespace FileUtil
         bool bad() const { return !good(); }
         const struct ::stat& sb() const { return _sb; }
 
-        const std::string path() const { return _path; }
+        const std::string& path() const { return _path; }
 
         bool isDirectory() const { return S_ISDIR(_sb.st_mode); }
         bool isFile() const { return S_ISREG(_sb.st_mode); }
