@@ -281,6 +281,9 @@ class InitializerBase {
 			document.getElementById('content-keeper').remove();
 		}, false);
 
+		window.brandProductName = document.getElementById("init-product-branding-name").value;
+		window.brandProductURL = document.getElementById("init-product-branding-url").value;
+
 		this.initiateCoolParams();
 	}
 

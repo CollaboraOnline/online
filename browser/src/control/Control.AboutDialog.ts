@@ -87,12 +87,12 @@ class AboutDialog {
 			productName = windowAny.MobileAppName;
 		} else {
 			productName =
-				typeof brandProductName !== 'undefined'
+				typeof brandProductName === 'string' && brandProductName.length > 0
 					? brandProductName
 					: 'Collabora Online Development Edition (unbranded)';
 		}
 		var productURL =
-			typeof brandProductURL !== 'undefined'
+			typeof brandProductURL === 'string' && brandProductURL.length > 0
 				? brandProductURL
 				: 'https://collaboraonline.github.io/';
 
