@@ -84,6 +84,10 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--o:ssl.enable=false"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "--o:ssl.cert_file_path=&quot;$(PROJECT_DIR)/../../etc/cert.pem&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
