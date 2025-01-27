@@ -40,7 +40,7 @@
 	--color-btn-border: #b6b6b6;
 	--color-btn-border-dis: #c0bfbc;
 
-	--color-stylesview-border: var(--color-border);
+	--color-stylesview-border: var(--color-toolbar-border);
 	--color-toolbar-border: #e1dfdd;
 
 	--color-error: #e9322d;
