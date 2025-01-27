@@ -29,6 +29,16 @@ interface ConfigData {
 	wordbook: ConfigItem[] | null;
 }
 
+interface SectionConfig {
+	sectionTitle: string;
+	listId: string;
+	inputId: string;
+	buttonId: string;
+	fileAccept: string;
+	buttonText: string;
+	uploadPath: string;
+}
+
 const API_ENDPOINTS = {
 	uploadSettings: window.enableDebug
 		? '/wopi/settings/upload'
@@ -56,44 +66,99 @@ function isAdmin(): boolean {
 
 function init(): void {
 	initWindowVariables();
-	bindEventListeners();
+	insertConfigSections();
 	void fetchAndPopulateSharedConfigs();
 }
 
-function bindEventListeners(): void {
-	const uploadAutotextButton = document.getElementById('uploadAutotextButton');
-	const autotextFileInput = document.getElementById(
-		'autotextFile',
-	) as HTMLInputElement;
+function createConfigSection(config: SectionConfig): HTMLDivElement {
+	const sectionEl = document.createElement('div');
+	sectionEl.classList.add('section');
 
-	const uploadWordbookButton = document.getElementById('uploadWordbookButton');
-	const wordbookFileInput = document.getElementById(
-		'wordbookFile',
-	) as HTMLInputElement;
+	const headingEl = document.createElement('h3');
+	headingEl.textContent = config.sectionTitle;
 
-	if (uploadAutotextButton && autotextFileInput) {
-		uploadAutotextButton.addEventListener('click', () => {
-			autotextFileInput.click();
-		});
+	const ulEl = document.createElement('ul');
+	ulEl.id = config.listId;
 
-		autotextFileInput.addEventListener('change', () => {
-			if (autotextFileInput.files?.length) {
-				uploadFile(PATH.autoTextUpload(), autotextFileInput.files[0]);
-			}
-		});
-	}
+	const inputEl = document.createElement('input');
+	inputEl.type = 'file';
+	inputEl.classList.add('hidden');
+	inputEl.id = config.inputId;
+	inputEl.accept = config.fileAccept;
 
-	if (uploadWordbookButton && wordbookFileInput) {
-		uploadWordbookButton.addEventListener('click', () => {
-			wordbookFileInput.click();
-		});
+	const buttonEl = document.createElement('button');
+	buttonEl.id = config.buttonId;
+	buttonEl.type = 'button';
+	buttonEl.classList.add(
+		'inline-button',
+		'button',
+		'button--size-normal',
+		'button--text-only',
+		'button--vue-secondary',
+	);
+	buttonEl.innerHTML = `
+	  <span class="button__wrapper">
+		<span class="button__text">${config.buttonText}</span>
+	  </span>
+	`;
 
-		wordbookFileInput.addEventListener('change', () => {
-			if (wordbookFileInput.files?.length) {
-				uploadFile(PATH.wordBookUpload(), wordbookFileInput.files[0]);
-			}
-		});
-	}
+	sectionEl.appendChild(headingEl);
+	sectionEl.appendChild(ulEl);
+	sectionEl.appendChild(inputEl);
+	sectionEl.appendChild(buttonEl);
+
+	return sectionEl;
+}
+
+function insertConfigSections(): void {
+	const sharedConfigsContainer = document.getElementById('allConfigSection');
+	if (!sharedConfigsContainer) return;
+
+	const configSections: SectionConfig[] = [
+		{
+			sectionTitle: 'Autotext',
+			listId: 'autotextList',
+			inputId: 'autotextFile',
+			buttonId: 'uploadAutotextButton',
+			fileAccept: '.bau',
+			buttonText: 'Upload Autotext',
+			uploadPath: PATH.autoTextUpload(),
+		},
+		{
+			sectionTitle: 'Wordbook',
+			listId: 'wordbookList',
+			inputId: 'wordbookFile',
+			buttonId: 'uploadWordbookButton',
+			fileAccept: '.dic',
+			buttonText: 'Upload Wordbook',
+			uploadPath: PATH.wordBookUpload(),
+		},
+	];
+
+	configSections.forEach((cfg) => {
+		const sectionEl = createConfigSection(cfg);
+
+		const fileInput = sectionEl.querySelector<HTMLInputElement>(
+			`#${cfg.inputId}`,
+		);
+		const button = sectionEl.querySelector<HTMLButtonElement>(
+			`#${cfg.buttonId}`,
+		);
+
+		if (fileInput && button) {
+			button.addEventListener('click', () => {
+				fileInput.click();
+			});
+
+			fileInput.addEventListener('change', () => {
+				if (fileInput.files?.length) {
+					uploadFile(cfg.uploadPath, fileInput.files[0]);
+				}
+			});
+		}
+
+		sharedConfigsContainer.appendChild(sectionEl);
+	});
 }
 
 function initWindowVariables(): void {
