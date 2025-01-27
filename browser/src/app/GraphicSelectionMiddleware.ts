@@ -151,14 +151,8 @@ class GraphicSelection {
 
 	/// Push down the graphic selection on non-first pages of scrolling PDF view.
 	static transformGraphicSelection(messageJSON: any) {
-		if (!app.file.fileBasedView) {
-			return;
-		}
-
 		const docLayer = app.map._docLayer;
-		const additionPerPart =
-			docLayer._partHeightTwips + docLayer._spaceBetweenParts;
-		const verticalOffset = additionPerPart * docLayer._selectedPart;
+		const verticalOffset = docLayer.getFiledBasedViewVerticalOffset();
 		if (!verticalOffset) {
 			return;
 		}
