@@ -2028,6 +2028,14 @@ L.Control.Menubar = L.Control.extend({
 			} else {
 				app.map.sendUnoCommand('.uno:InsertSignatureLine');
 			}
+
+			if (app.file.fileBasedView) {
+				// The file based view is primarily to view multi-page PDF files, so
+				// it doesn't seem to have precise tracking of invalidations, just
+				// request new tiles for now.
+				app.map._docLayer._requestNewTiles();
+				app.map._docLayer.redraw();
+			}
 		} else if (id === 'insertgraphic') {
 			L.DomUtil.get('insertgraphic').click();
 		} else if (id === 'insertgraphicremote') {
