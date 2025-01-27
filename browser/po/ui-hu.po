@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-21 21:34+0100\n"
-"PO-Revision-Date: 2025-01-13 12:36+0000\n"
+"PO-Revision-Date: 2025-01-27 10:15+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1043,7 +1043,7 @@ msgstr "Dél-afrikai Köztársaság"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "A dokumentum aláírásra kerül, és hamarosan elérhető lesz"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1387,7 +1387,7 @@ msgstr "Intelligens választó"
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:791
 msgid "AI Assistant"
-msgstr ""
+msgstr "AI asszisztens"
 
 #: src/control/Control.Menubar.js:234
 msgid "Text orientation"
@@ -1794,10 +1794,12 @@ msgstr "Alakzat beszúrása"
 #: src/control/Control.Menubar.js:2025
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"Az aláírás sorát most szükség szerint át lehet helyezni vagy át lehet "
+"méretezni."
 
 #: src/control/Control.Menubar.js:2027
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Elektronikus aláírás befejezése"
 
 #: src/control/Control.Menubar.js:2203
 msgid "file type icon"
@@ -2103,7 +2105,7 @@ msgstr "Értékgörbe"
 #: src/control/Control.NotebookbarImpress.js:1297
 #: src/control/Control.NotebookbarWriter.js:1143
 msgid "Assistant"
-msgstr ""
+msgstr "Asszisztens"
 
 #: src/control/Control.NotebookbarCalc.js:1477
 #: src/control/Control.NotebookbarCalc.js:2376
