@@ -902,7 +902,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								{
 									'id': 'home-search-dialog',
 									'type': 'toolitem',
-									'text': _UNO('.uno:SearchDialog'),
+									'text': _('Replace'),
 									'command': '.uno:SearchDialog',
 									'accessibility': { focusBack: false, 	combination: 'FD',	de: 'US' }
 								}
