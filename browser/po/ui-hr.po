@@ -10,14 +10,14 @@ msgstr ""
 "POT-Creation-Date: 2025-01-21 21:34+0100\n"
 "PO-Revision-Date: 2024-12-20 08:38+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
-"Language-Team: Croatian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/hr/>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/hr/>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.9.2-dev\n"
 
 #: admin/admin.strings.js:15
@@ -151,6 +151,8 @@ msgstr "Grafikon mreže"
 #: src/control/Control.NotebookbarImpress.js:30
 #: src/control/Control.NotebookbarImpress.js:177
 #: src/control/Control.NotebookbarWriter.js:155
+#: src/canvas/sections/CommentListSection.ts:504
+#: src/canvas/sections/CommentSection.ts:157
 msgid "Save"
 msgstr "Spremi"
 
@@ -181,7 +183,8 @@ msgstr ""
 
 #: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "Maksimalna količina skupne memorije za dokument (u MB) – samo smanjenje"
+msgstr ""
+"Maksimalna količina skupne memorije za dokument (u MB) – samo smanjenje"
 
 #: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
@@ -237,6 +240,7 @@ msgstr "Razine dnevnika"
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
 #: src/core/Socket.js:427 src/core/Socket.js:1198 src/core/Socket.js:1203
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
+#: src/canvas/sections/CommentListSection.ts:158
 msgid "Close"
 msgstr "Zatvori"
 
@@ -258,6 +262,10 @@ msgstr "Licenca"
 #: src/control/Control.Menubar.js:1123 src/control/Control.Menubar.js:1178
 #: src/control/Control.Menubar.js:1253
 #: src/control/Control.NotebookbarWriter.js:476
+#: src/control/Control.Menubar.js:389 src/control/Control.Menubar.js:564
+#: src/control/Control.Menubar.js:701 src/control/Control.Menubar.js:987
+#: src/control/Control.Menubar.js:1055 src/control/Control.Menubar.js:1120
+#: src/control/Control.Menubar.js:1175 src/control/Control.Menubar.js:1250
 msgid "About"
 msgstr "Informacije"
 
@@ -295,27 +303,31 @@ msgstr "Upozorenje"
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: src/canvas/sections/CommentListSection.ts:1453
 #: src/canvas/sections/CommentListSection.ts:2369
-#: src/control/Control.AboutDialog.ts:154
-#: src/control/Control.AlertDialog.js:54
+#: src/control/Control.AboutDialog.ts:154 src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.ESignatureDialog.ts:132
 #: src/control/Control.LanguageDialog.js:119
-#: src/control/Control.ServerAuditDialog.ts:225
-#: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
-#: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
-#: src/control/Parts.js:491 src/control/Permission.js:89
-#: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Socket.js:704 src/core/Socket.js:1168 src/core/Socket.js:1238
-#: src/core/Socket.js:1386 src/core/Socket.js:1390 src/docdispatcher.ts:495
-#: src/main.js:84 src/main.js:87 src/main.js:140 src/map/Clipboard.js:1269
-#: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
-#: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
-#: src/map/handler/Map.SlideShow.js:304 src/map/handler/Map.WOPI.js:673
-#: src/slideshow/SlideShowPresenter.ts:644
+#: src/control/Control.ServerAuditDialog.ts:225 src/control/Control.Tabs.js:385
+#: src/control/Control.Tabs.js:394 src/control/Control.Zotero.js:335
+#: src/control/Control.Zotero.js:373 src/control/Parts.js:491
+#: src/control/Permission.js:89 src/control/Permission.js:99
+#: src/control/Permission.js:149 src/control/Toolbar.js:740
+#: src/control/Toolbar.js:837 src/core/Socket.js:704 src/core/Socket.js:1168
+#: src/core/Socket.js:1238 src/core/Socket.js:1386 src/core/Socket.js:1390
+#: src/docdispatcher.ts:495 src/main.js:84 src/main.js:87 src/main.js:140
+#: src/map/Clipboard.js:1269 src/map/handler/Map.Feedback.js:87
+#: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:165
+#: src/map/handler/Map.SlideShow.js:293 src/map/handler/Map.SlideShow.js:304
+#: src/map/handler/Map.WOPI.js:673 src/slideshow/SlideShowPresenter.ts:644
 #: src/slideshow/SlideShowPresenter.ts:659
 #: src/slideshow/SlideShowPresenter.ts:674
 #: src/slideshow/SlideShowPresenter.ts:697
+#: src/canvas/sections/CommentListSection.ts:1436
+#: src/canvas/sections/CommentListSection.ts:2324 src/docdispatcher.ts:492
+#: src/map/handler/Map.WOPI.js:665 src/slideshow/SlideShowPresenter.ts:641
+#: src/slideshow/SlideShowPresenter.ts:656
+#: src/slideshow/SlideShowPresenter.ts:671
+#: src/slideshow/SlideShowPresenter.ts:694
 msgid "OK"
 msgstr "U redu"
 
@@ -327,11 +339,15 @@ msgstr "U redu"
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
-#: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1313 src/control/Control.UIManager.js:1380
-#: src/control/Control.UIManager.js:1515 src/control/Control.UIManager.js:1674
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:832
-#: src/core/Socket.js:1411
+#: src/control/Control.MobileTopBar.ts:43 src/control/Control.UIManager.js:1313
+#: src/control/Control.UIManager.js:1380 src/control/Control.UIManager.js:1515
+#: src/control/Control.UIManager.js:1674 src/control/Control.Zotero.js:330
+#: src/control/Toolbar.js:832 src/core/Socket.js:1411
+#: src/canvas/sections/CommentListSection.ts:499
+#: src/canvas/sections/CommentSection.ts:156
+#: src/canvas/sections/CommentSection.ts:159
+#: src/control/Control.UIManager.js:1347 src/control/Control.UIManager.js:1414
+#: src/control/Control.UIManager.js:1549 src/control/Control.UIManager.js:1708
 msgid "Cancel"
 msgstr "Odustani"
 
@@ -428,55 +444,69 @@ msgid "Failed to get RouteToken from controller"
 msgstr "Neuspjelo dohvaćanje RouteTokena od kontrolera"
 
 #: src/canvas/sections/CommentListSection.ts:163
+#: src/canvas/sections/CommentListSection.ts:157
 msgid "A comment is being edited"
 msgstr "Jedan se komentar uređuje"
 
 #: src/canvas/sections/CommentListSection.ts:164
+#: src/canvas/sections/CommentListSection.ts:158
 msgid "Please save or discard the comment currently being edited."
 msgstr "Spremi ili odbaci komentar koji se trenutačno uređuje."
 
 #: src/canvas/sections/CommentListSection.ts:1163
+#: src/canvas/sections/CommentListSection.ts:1152
 msgid "Modify"
 msgstr "Promijeni"
 
 #: src/canvas/sections/CommentListSection.ts:1169
 #: src/canvas/sections/CommentSection.ts:164
+#: src/canvas/sections/CommentListSection.ts:1158
+#: src/canvas/sections/CommentSection.ts:160
 msgid "Reply"
 msgstr "Odgovori"
 
 #: src/canvas/sections/CommentListSection.ts:1175
+#: src/canvas/sections/CommentListSection.ts:1164
 msgid "Remove"
 msgstr "Ukloni"
 
 #: src/canvas/sections/CommentListSection.ts:1181
+#: src/canvas/sections/CommentListSection.ts:1170
 msgid "Remove Thread"
 msgstr "Ukloni raspravu"
 
 #: src/canvas/sections/CommentListSection.ts:1187
+#: src/canvas/sections/CommentListSection.ts:1176
 msgid "Resolve"
 msgstr "Riješi"
 
 #: src/canvas/sections/CommentListSection.ts:1187
+#: src/canvas/sections/CommentListSection.ts:1176
 msgid "Unresolve"
 msgstr "Postavi kao neriješeno"
 
 #: src/canvas/sections/CommentListSection.ts:1193
+#: src/canvas/sections/CommentListSection.ts:1182
 msgid "Unresolve Thread"
 msgstr "Postavi raspravu kao neriješenu"
 
 #: src/canvas/sections/CommentListSection.ts:1193
+#: src/canvas/sections/CommentListSection.ts:1182
 msgid "Resolve Thread"
 msgstr "Riješi raspravu"
 
 #: src/canvas/sections/CommentListSection.ts:1199
+#: src/canvas/sections/CommentListSection.ts:1188
 msgid "Promote to top comment"
 msgstr "Promakni u glavni komentar"
 
 #: src/canvas/sections/CommentListSection.ts:1205
+#: src/canvas/sections/CommentListSection.ts:1194
 msgid "Show on the side"
 msgstr "Prikaži na strani"
 
 #: src/canvas/sections/CommentListSection.ts:1205
+#: src/canvas/sections/CommentListSection.ts:1194
 msgid "Show comment bigger"
 msgstr "Prikaži komentar veće"
 
@@ -484,20 +514,27 @@ msgstr "Prikaži komentar veće"
 #: src/control/Control.JSDialogBuilder.js:1893
 #: src/layer/tile/CanvasTileLayer.js:3834
 #: src/layer/tile/CanvasTileLayer.js:3845
+#: src/canvas/sections/CommentListSection.ts:1222
+#: src/control/Control.JSDialogBuilder.js:1907
 msgid "Comment"
 msgstr "Komentar"
 
 #: src/canvas/sections/CommentListSection.ts:1451
 #: src/canvas/sections/CommentListSection.ts:1464
 #: src/canvas/sections/CommentListSection.ts:2367
+#: src/canvas/sections/CommentListSection.ts:1434
+#: src/canvas/sections/CommentListSection.ts:1447
+#: src/canvas/sections/CommentListSection.ts:2322
 msgid "Comments Updated"
 msgstr "Aktualizirani komentari"
 
 #: src/canvas/sections/CommentListSection.ts:1452
+#: src/canvas/sections/CommentListSection.ts:1435
 msgid "Another user has removed this comment."
 msgstr "Jedan drugi korisnik je uklonio ovaj komentar."
 
 #: src/canvas/sections/CommentListSection.ts:1465
+#: src/canvas/sections/CommentListSection.ts:1448
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
@@ -506,39 +543,50 @@ msgstr ""
 "promjene?"
 
 #: src/canvas/sections/CommentListSection.ts:1466 src/core/Socket.js:1415
+#: src/canvas/sections/CommentListSection.ts:1449
 msgid "Overwrite"
 msgstr "Prepiši"
 
 #: src/canvas/sections/CommentListSection.ts:1467
+#: src/canvas/sections/CommentListSection.ts:1450
 msgid "Update"
 msgstr "Aktualiziraj"
 
 #: src/canvas/sections/CommentListSection.ts:1568
 #: src/canvas/sections/CommentListSection.ts:1640
+#: src/canvas/sections/CommentListSection.ts:1521
+#: src/canvas/sections/CommentListSection.ts:1593
 msgid "Autosaved"
 msgstr "Automatski spremljeno"
 
 #: src/canvas/sections/CommentListSection.ts:2368
+#: src/canvas/sections/CommentListSection.ts:2323
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 "Jedan drugi korisnik je aktualizirao komentare. Želiš li nastaviti s "
 "aktualiziranjem?"
 
 #: src/canvas/sections/CommentSection.ts:306
+#: src/canvas/sections/CommentSection.ts:299
 msgid "Open menu"
 msgstr "Otvori izbornik"
 
 #: src/canvas/sections/CommentSection.ts:367
 #: src/canvas/sections/CommentSection.ts:368
+#: src/canvas/sections/CommentSection.ts:359
+#: src/canvas/sections/CommentSection.ts:360
 msgid "Accept change"
 msgstr "Prihvati promjenu"
 
 #: src/canvas/sections/CommentSection.ts:374
 #: src/canvas/sections/CommentSection.ts:375
+#: src/canvas/sections/CommentSection.ts:366
+#: src/canvas/sections/CommentSection.ts:367
 msgid "Reject change"
 msgstr "Odbaci promjenu"
 
 #: src/canvas/sections/CommentSection.ts:398
+#: src/canvas/sections/CommentSection.ts:390
 msgid "Resolved"
 msgstr "Riješeno"
 
@@ -637,6 +685,7 @@ msgid "Unlock"
 msgstr "Otključaj"
 
 #: src/control/Control.ContextMenu.js:248 src/docdispatcher.ts:492
+#: src/docdispatcher.ts:489
 msgid "Delete"
 msgstr "Izbriši"
 
@@ -741,303 +790,303 @@ msgstr "Sadržaj je kopiran u međuspremnik"
 msgid "Download failed"
 msgstr "Preuzimanje nije uspjelo"
 
-#: src/control/Control.ESignature.ts:131
+#: src/control/Control.ESignature.ts:131 src/control/Control.ESignature.ts:126
 msgid "Andorra"
 msgstr "Andora"
 
-#: src/control/Control.ESignature.ts:132
+#: src/control/Control.ESignature.ts:132 src/control/Control.ESignature.ts:127
 msgid "United Arab Emirates"
 msgstr "Ujedinjeni Arapski Emirati"
 
-#: src/control/Control.ESignature.ts:133
+#: src/control/Control.ESignature.ts:133 src/control/Control.ESignature.ts:128
 msgid "Albania"
 msgstr "Albanija"
 
-#: src/control/Control.ESignature.ts:134
+#: src/control/Control.ESignature.ts:134 src/control/Control.ESignature.ts:129
 msgid "Armenia"
 msgstr "Armenija"
 
-#: src/control/Control.ESignature.ts:135
+#: src/control/Control.ESignature.ts:135 src/control/Control.ESignature.ts:130
 msgid "Argentina"
 msgstr "Argentina"
 
-#: src/control/Control.ESignature.ts:136
+#: src/control/Control.ESignature.ts:136 src/control/Control.ESignature.ts:131
 msgid "Austria"
 msgstr "Austrija"
 
-#: src/control/Control.ESignature.ts:137
+#: src/control/Control.ESignature.ts:137 src/control/Control.ESignature.ts:132
 msgid "Australia"
 msgstr "Australija"
 
-#: src/control/Control.ESignature.ts:138
+#: src/control/Control.ESignature.ts:138 src/control/Control.ESignature.ts:133
 msgid "Åland Islands"
 msgstr "Åland Otočje"
 
-#: src/control/Control.ESignature.ts:139
+#: src/control/Control.ESignature.ts:139 src/control/Control.ESignature.ts:134
 msgid "Azerbaijan"
 msgstr "Azerbajdžan"
 
-#: src/control/Control.ESignature.ts:140
+#: src/control/Control.ESignature.ts:140 src/control/Control.ESignature.ts:135
 msgid "Bosnia and Herzegovina"
 msgstr "Bosna i Hercegovina"
 
-#: src/control/Control.ESignature.ts:141
+#: src/control/Control.ESignature.ts:141 src/control/Control.ESignature.ts:136
 msgid "Belgium"
 msgstr "Belgija"
 
-#: src/control/Control.ESignature.ts:142
+#: src/control/Control.ESignature.ts:142 src/control/Control.ESignature.ts:137
 msgid "Bulgaria"
 msgstr "Bugarska"
 
-#: src/control/Control.ESignature.ts:143
+#: src/control/Control.ESignature.ts:143 src/control/Control.ESignature.ts:138
 msgid "Brazil"
 msgstr "Brazil"
 
-#: src/control/Control.ESignature.ts:144
+#: src/control/Control.ESignature.ts:144 src/control/Control.ESignature.ts:139
 msgid "Belarus"
 msgstr "Bjelorusija"
 
-#: src/control/Control.ESignature.ts:145
+#: src/control/Control.ESignature.ts:145 src/control/Control.ESignature.ts:140
 msgid "Canada"
 msgstr "Kanada"
 
-#: src/control/Control.ESignature.ts:146
+#: src/control/Control.ESignature.ts:146 src/control/Control.ESignature.ts:141
 msgid "Switzerland"
 msgstr "Švicarska"
 
-#: src/control/Control.ESignature.ts:147
+#: src/control/Control.ESignature.ts:147 src/control/Control.ESignature.ts:142
 msgid "Chile"
 msgstr "Čile"
 
-#: src/control/Control.ESignature.ts:148
+#: src/control/Control.ESignature.ts:148 src/control/Control.ESignature.ts:143
 msgid "China"
 msgstr "Kina"
 
-#: src/control/Control.ESignature.ts:149
+#: src/control/Control.ESignature.ts:149 src/control/Control.ESignature.ts:144
 msgid "Cyprus"
 msgstr "Cipar"
 
-#: src/control/Control.ESignature.ts:150
+#: src/control/Control.ESignature.ts:150 src/control/Control.ESignature.ts:145
 msgid "Czech Republic"
 msgstr "Češka Republika"
 
-#: src/control/Control.ESignature.ts:151
+#: src/control/Control.ESignature.ts:151 src/control/Control.ESignature.ts:146
 msgid "Germany"
 msgstr "Njemačka"
 
-#: src/control/Control.ESignature.ts:152
+#: src/control/Control.ESignature.ts:152 src/control/Control.ESignature.ts:147
 msgid "Denmark"
 msgstr "Danska"
 
-#: src/control/Control.ESignature.ts:153
+#: src/control/Control.ESignature.ts:153 src/control/Control.ESignature.ts:148
 msgid "Estonia"
 msgstr "Estonija"
 
-#: src/control/Control.ESignature.ts:154
+#: src/control/Control.ESignature.ts:154 src/control/Control.ESignature.ts:149
 msgid "Spain"
 msgstr "Španjolska"
 
-#: src/control/Control.ESignature.ts:155
+#: src/control/Control.ESignature.ts:155 src/control/Control.ESignature.ts:150
 msgid "Finland"
 msgstr "Finska"
 
-#: src/control/Control.ESignature.ts:156
+#: src/control/Control.ESignature.ts:156 src/control/Control.ESignature.ts:151
 msgid "France"
 msgstr "Francuska"
 
-#: src/control/Control.ESignature.ts:157
+#: src/control/Control.ESignature.ts:157 src/control/Control.ESignature.ts:152
 msgid "United Kingdom"
 msgstr "Ujedinjeno Kraljevstvo"
 
-#: src/control/Control.ESignature.ts:158
+#: src/control/Control.ESignature.ts:158 src/control/Control.ESignature.ts:153
 msgid "Georgia"
 msgstr "Gruzija"
 
-#: src/control/Control.ESignature.ts:159
+#: src/control/Control.ESignature.ts:159 src/control/Control.ESignature.ts:154
 msgid "Guernsey"
 msgstr "Guernsey"
 
-#: src/control/Control.ESignature.ts:160
+#: src/control/Control.ESignature.ts:160 src/control/Control.ESignature.ts:155
 msgid "Greece"
 msgstr "Grčka"
 
-#: src/control/Control.ESignature.ts:161
+#: src/control/Control.ESignature.ts:161 src/control/Control.ESignature.ts:156
 msgid "Croatia"
 msgstr "Hrvatska"
 
-#: src/control/Control.ESignature.ts:162
+#: src/control/Control.ESignature.ts:162 src/control/Control.ESignature.ts:157
 msgid "Hungary"
 msgstr "Madžarska"
 
-#: src/control/Control.ESignature.ts:163
+#: src/control/Control.ESignature.ts:163 src/control/Control.ESignature.ts:158
 msgid "Indonesia"
 msgstr "Indonezija"
 
-#: src/control/Control.ESignature.ts:164
+#: src/control/Control.ESignature.ts:164 src/control/Control.ESignature.ts:159
 msgid "Ireland"
 msgstr "Irska"
 
-#: src/control/Control.ESignature.ts:165
+#: src/control/Control.ESignature.ts:165 src/control/Control.ESignature.ts:160
 msgid "Israel"
 msgstr "Izrael"
 
-#: src/control/Control.ESignature.ts:166
+#: src/control/Control.ESignature.ts:166 src/control/Control.ESignature.ts:161
 msgid "India"
 msgstr "Indija"
 
-#: src/control/Control.ESignature.ts:167
+#: src/control/Control.ESignature.ts:167 src/control/Control.ESignature.ts:162
 msgid "Iceland"
 msgstr "Island"
 
-#: src/control/Control.ESignature.ts:168
+#: src/control/Control.ESignature.ts:168 src/control/Control.ESignature.ts:163
 msgid "Italy"
 msgstr "Italija"
 
-#: src/control/Control.ESignature.ts:169
+#: src/control/Control.ESignature.ts:169 src/control/Control.ESignature.ts:164
 msgid "Japan"
 msgstr "Japan"
 
-#: src/control/Control.ESignature.ts:170
+#: src/control/Control.ESignature.ts:170 src/control/Control.ESignature.ts:165
 msgid "Kenya"
 msgstr "Kenija"
 
-#: src/control/Control.ESignature.ts:171
+#: src/control/Control.ESignature.ts:171 src/control/Control.ESignature.ts:166
 msgid "South Korea"
 msgstr "Južna Koreja"
 
-#: src/control/Control.ESignature.ts:172
+#: src/control/Control.ESignature.ts:172 src/control/Control.ESignature.ts:167
 msgid "Kazakhstan"
 msgstr "Kazakhstan"
 
-#: src/control/Control.ESignature.ts:173
+#: src/control/Control.ESignature.ts:173 src/control/Control.ESignature.ts:168
 msgid "Liechtenstein"
 msgstr "Lihtenštajn"
 
-#: src/control/Control.ESignature.ts:174
+#: src/control/Control.ESignature.ts:174 src/control/Control.ESignature.ts:169
 msgid "Lithuania"
 msgstr "Litva"
 
-#: src/control/Control.ESignature.ts:175
+#: src/control/Control.ESignature.ts:175 src/control/Control.ESignature.ts:170
 msgid "Luxembourg"
 msgstr "Luksemburg"
 
-#: src/control/Control.ESignature.ts:176
+#: src/control/Control.ESignature.ts:176 src/control/Control.ESignature.ts:171
 msgid "Latvia"
 msgstr "Latvija"
 
-#: src/control/Control.ESignature.ts:177
+#: src/control/Control.ESignature.ts:177 src/control/Control.ESignature.ts:172
 msgid "Monaco"
 msgstr "Monako"
 
-#: src/control/Control.ESignature.ts:178
+#: src/control/Control.ESignature.ts:178 src/control/Control.ESignature.ts:173
 msgid "Moldova, Republic of"
 msgstr "Moldavija, Repubika"
 
-#: src/control/Control.ESignature.ts:179
+#: src/control/Control.ESignature.ts:179 src/control/Control.ESignature.ts:174
 msgid "Montenegro"
 msgstr "Crna Gora"
 
-#: src/control/Control.ESignature.ts:180
+#: src/control/Control.ESignature.ts:180 src/control/Control.ESignature.ts:175
 msgid "North Macedonia, Republic of"
 msgstr "Sjeverna Makedonija, Republika"
 
-#: src/control/Control.ESignature.ts:181
+#: src/control/Control.ESignature.ts:181 src/control/Control.ESignature.ts:176
 msgid "Malta"
 msgstr "Malta"
 
-#: src/control/Control.ESignature.ts:182
+#: src/control/Control.ESignature.ts:182 src/control/Control.ESignature.ts:177
 msgid "Mexico"
 msgstr "Meksiko"
 
-#: src/control/Control.ESignature.ts:183
+#: src/control/Control.ESignature.ts:183 src/control/Control.ESignature.ts:178
 msgid "Netherlands"
 msgstr "Nizozemska"
 
-#: src/control/Control.ESignature.ts:184
+#: src/control/Control.ESignature.ts:184 src/control/Control.ESignature.ts:179
 msgid "Norway"
 msgstr "Norveška"
 
-#: src/control/Control.ESignature.ts:185
+#: src/control/Control.ESignature.ts:185 src/control/Control.ESignature.ts:180
 msgid "New Zealand"
 msgstr "Novi Zeland"
 
-#: src/control/Control.ESignature.ts:186
+#: src/control/Control.ESignature.ts:186 src/control/Control.ESignature.ts:181
 msgid "Philippines"
 msgstr "Filipini"
 
-#: src/control/Control.ESignature.ts:187
+#: src/control/Control.ESignature.ts:187 src/control/Control.ESignature.ts:182
 msgid "Poland"
 msgstr "Poljska"
 
-#: src/control/Control.ESignature.ts:188
+#: src/control/Control.ESignature.ts:188 src/control/Control.ESignature.ts:183
 msgid "Portugal"
 msgstr "Portugal"
 
-#: src/control/Control.ESignature.ts:189
+#: src/control/Control.ESignature.ts:189 src/control/Control.ESignature.ts:184
 msgid "Qatar"
 msgstr "Katar"
 
-#: src/control/Control.ESignature.ts:190
+#: src/control/Control.ESignature.ts:190 src/control/Control.ESignature.ts:185
 msgid "Romania"
 msgstr "Rumunjska"
 
-#: src/control/Control.ESignature.ts:191
+#: src/control/Control.ESignature.ts:191 src/control/Control.ESignature.ts:186
 msgid "Serbia"
 msgstr "Srbija"
 
-#: src/control/Control.ESignature.ts:192
+#: src/control/Control.ESignature.ts:192 src/control/Control.ESignature.ts:187
 msgid "Russian Federation"
 msgstr "Ruska Federacija"
 
-#: src/control/Control.ESignature.ts:193
+#: src/control/Control.ESignature.ts:193 src/control/Control.ESignature.ts:188
 msgid "Saudi Arabia"
 msgstr "Saudijska Arabija"
 
-#: src/control/Control.ESignature.ts:194
+#: src/control/Control.ESignature.ts:194 src/control/Control.ESignature.ts:189
 msgid "Sweden"
 msgstr "Švedska"
 
-#: src/control/Control.ESignature.ts:195
+#: src/control/Control.ESignature.ts:195 src/control/Control.ESignature.ts:190
 msgid "Singapore"
 msgstr "Singapur"
 
-#: src/control/Control.ESignature.ts:196
+#: src/control/Control.ESignature.ts:196 src/control/Control.ESignature.ts:191
 msgid "Slovenia"
 msgstr "Slovenija"
 
-#: src/control/Control.ESignature.ts:197
+#: src/control/Control.ESignature.ts:197 src/control/Control.ESignature.ts:192
 msgid "Slovakia"
 msgstr "Slovačka"
 
-#: src/control/Control.ESignature.ts:198
+#: src/control/Control.ESignature.ts:198 src/control/Control.ESignature.ts:193
 msgid "San Marino"
 msgstr "San Marino"
 
-#: src/control/Control.ESignature.ts:199
+#: src/control/Control.ESignature.ts:199 src/control/Control.ESignature.ts:194
 msgid "Turkey"
 msgstr "Turska"
 
-#: src/control/Control.ESignature.ts:200
+#: src/control/Control.ESignature.ts:200 src/control/Control.ESignature.ts:195
 msgid "Taiwan, Province of China"
 msgstr "Tajvan, Kineska pokrajina"
 
-#: src/control/Control.ESignature.ts:201
+#: src/control/Control.ESignature.ts:201 src/control/Control.ESignature.ts:196
 msgid "Ukraine"
 msgstr "Ukrajina"
 
-#: src/control/Control.ESignature.ts:202
+#: src/control/Control.ESignature.ts:202 src/control/Control.ESignature.ts:197
 msgid "United States of America"
 msgstr "Sjedinjene Američke Države"
 
-#: src/control/Control.ESignature.ts:203
+#: src/control/Control.ESignature.ts:203 src/control/Control.ESignature.ts:198
 msgid "Holy See (Vatican City State)"
 msgstr "Sveta Stolica (Vatikan)"
 
-#: src/control/Control.ESignature.ts:204
+#: src/control/Control.ESignature.ts:204 src/control/Control.ESignature.ts:199
 msgid "Kosovo"
 msgstr "Kosovo"
 
-#: src/control/Control.ESignature.ts:205
+#: src/control/Control.ESignature.ts:205 src/control/Control.ESignature.ts:200
 msgid "South Africa"
 msgstr "Južna Afrika"
 
@@ -1151,28 +1200,36 @@ msgid "Style"
 msgstr "Stil"
 
 #: src/control/Control.JSDialogBuilder.js:1879
+#: src/control/Control.JSDialogBuilder.js:1893
 msgid "reply"
 msgstr "odgovor"
 
 #: src/control/Control.JSDialogBuilder.js:1882
+#: src/control/Control.JSDialogBuilder.js:1896
 msgid "replies"
 msgstr "odgovori"
 
 #: src/control/Control.JSDialogBuilder.js:1957
+#: src/control/Control.JSDialogBuilder.js:1971
 msgid "Insert Comment"
 msgstr "Umetni komentar"
 
 #: src/control/Control.JSDialogBuilder.js:2729
 #: src/control/Control.Menubar.js:892
+#: src/control/Control.JSDialogBuilder.js:2728
+#: src/control/Control.Menubar.js:889
 msgid "Rows"
 msgstr "Redci"
 
 #: src/control/Control.JSDialogBuilder.js:2730
 #: src/control/Control.Menubar.js:895
+#: src/control/Control.JSDialogBuilder.js:2729
+#: src/control/Control.Menubar.js:892
 msgid "Columns"
 msgstr "Stupci"
 
 #: src/control/Control.JSDialogBuilder.js:2750
+#: src/control/Control.JSDialogBuilder.js:2749
 msgid "Insert Table"
 msgstr "Umetni tablicu"
 
@@ -1180,6 +1237,9 @@ msgstr "Umetni tablicu"
 #: src/control/Control.Menubar.js:364 src/control/Control.Menubar.js:366
 #: src/control/Control.Menubar.js:554 src/control/Control.Menubar.js:694
 #: src/control/Control.Menubar.js:977 src/control/Control.StatusBar.js:538
+#: src/control/Control.Menubar.js:361 src/control/Control.Menubar.js:363
+#: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:552
+#: src/control/Control.Menubar.js:692 src/control/Control.Menubar.js:974
 msgid "None (Do not check spelling)"
 msgstr "Ništa (bez provjere pravopisa)"
 
@@ -1195,6 +1255,7 @@ msgstr "Jezik"
 #: src/control/Control.Menubar.js:1012
 #: src/control/Control.NotebookbarBuilder.js:348
 #: src/control/Control.NotebookbarBuilder.js:561
+#: src/control/Control.Menubar.js:1009
 msgid "ODF text document (.odt)"
 msgstr "ODF tekstualni dokument (.odt)"
 
@@ -1202,6 +1263,7 @@ msgstr "ODF tekstualni dokument (.odt)"
 #: src/control/Control.Menubar.js:1013
 #: src/control/Control.NotebookbarBuilder.js:360
 #: src/control/Control.NotebookbarBuilder.js:573
+#: src/control/Control.Menubar.js:1010
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 dokument (.doc)"
 
@@ -1209,6 +1271,7 @@ msgstr "Word 2003 dokument (.doc)"
 #: src/control/Control.Menubar.js:1014
 #: src/control/Control.NotebookbarBuilder.js:356
 #: src/control/Control.NotebookbarBuilder.js:569
+#: src/control/Control.Menubar.js:1011
 msgid "Word Document (.docx)"
 msgstr "Word dokument (.docx)"
 
@@ -1216,6 +1279,7 @@ msgstr "Word dokument (.docx)"
 #: src/control/Control.Menubar.js:1015
 #: src/control/Control.NotebookbarBuilder.js:352
 #: src/control/Control.NotebookbarBuilder.js:565
+#: src/control/Control.Menubar.js:1012
 msgid "Rich Text (.rtf)"
 msgstr "Formatirani tekst (.rtf)"
 
@@ -1227,6 +1291,13 @@ msgstr "Formatirani tekst (.rtf)"
 #: src/control/Control.Menubar.js:1066 src/control/Control.Menubar.js:1074
 #: src/control/Control.Menubar.js:1131 src/control/Control.Menubar.js:1138
 #: src/control/Control.Menubar.js:1186 src/control/Control.Menubar.js:1196
+#: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:408
+#: src/control/Control.Menubar.js:573 src/control/Control.Menubar.js:580
+#: src/control/Control.Menubar.js:714 src/control/Control.Menubar.js:719
+#: src/control/Control.Menubar.js:997 src/control/Control.Menubar.js:1006
+#: src/control/Control.Menubar.js:1063 src/control/Control.Menubar.js:1071
+#: src/control/Control.Menubar.js:1128 src/control/Control.Menubar.js:1135
+#: src/control/Control.Menubar.js:1183 src/control/Control.Menubar.js:1193
 msgid "Export as"
 msgstr "Izvezi kao"
 
@@ -1246,6 +1317,13 @@ msgstr "Izvezi kao"
 #: src/control/Control.NotebookbarBuilder.js:640
 #: src/control/Control.NotebookbarBuilder.js:647
 #: src/control/Control.NotebookbarDraw.js:248
+#: src/control/Control.Menubar.js:403 src/control/Control.Menubar.js:409
+#: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:581
+#: src/control/Control.Menubar.js:715 src/control/Control.Menubar.js:720
+#: src/control/Control.Menubar.js:998 src/control/Control.Menubar.js:1007
+#: src/control/Control.Menubar.js:1064 src/control/Control.Menubar.js:1072
+#: src/control/Control.Menubar.js:1129 src/control/Control.Menubar.js:1136
+#: src/control/Control.Menubar.js:1184 src/control/Control.Menubar.js:1194
 msgid "PDF Document (.pdf)"
 msgstr "PDF dokument (.pdf)"
 
@@ -1253,6 +1331,7 @@ msgstr "PDF dokument (.pdf)"
 #: src/control/Control.Menubar.js:1002 src/control/Control.Menubar.js:1016
 #: src/control/Control.NotebookbarBuilder.js:364
 #: src/control/Control.NotebookbarBuilder.js:626
+#: src/control/Control.Menubar.js:999 src/control/Control.Menubar.js:1013
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
@@ -1264,6 +1343,10 @@ msgstr "Preimenuj dokument"
 #: src/control/Control.Menubar.js:579 src/control/Control.Menubar.js:719
 #: src/control/Control.Menubar.js:1004 src/control/Control.Menubar.js:1069
 #: src/control/Control.Menubar.js:1134 src/control/Control.Menubar.js:1189
+#: src/control/Control.Menubar.js:406 src/control/Control.Menubar.js:577
+#: src/control/Control.Menubar.js:717 src/control/Control.Menubar.js:1001
+#: src/control/Control.Menubar.js:1066 src/control/Control.Menubar.js:1131
+#: src/control/Control.Menubar.js:1186
 msgid "Share..."
 msgstr "Dijeli …"
 
@@ -1271,6 +1354,10 @@ msgstr "Dijeli …"
 #: src/control/Control.Menubar.js:581 src/control/Control.Menubar.js:720
 #: src/control/Control.Menubar.js:1005 src/control/Control.Menubar.js:1070
 #: src/control/Control.Menubar.js:1136 src/control/Control.Menubar.js:1190
+#: src/control/Control.Menubar.js:407 src/control/Control.Menubar.js:579
+#: src/control/Control.Menubar.js:718 src/control/Control.Menubar.js:1002
+#: src/control/Control.Menubar.js:1067 src/control/Control.Menubar.js:1133
+#: src/control/Control.Menubar.js:1187
 msgid "See revision history"
 msgstr "Prikaži povijest izmjena"
 
@@ -1278,6 +1365,10 @@ msgstr "Prikaži povijest izmjena"
 #: src/control/Control.Menubar.js:582 src/control/Control.Menubar.js:721
 #: src/control/Control.Menubar.js:1009 src/control/Control.Menubar.js:1074
 #: src/control/Control.Menubar.js:1138 src/control/Control.Menubar.js:1196
+#: src/control/Control.Menubar.js:408 src/control/Control.Menubar.js:580
+#: src/control/Control.Menubar.js:719 src/control/Control.Menubar.js:1006
+#: src/control/Control.Menubar.js:1071 src/control/Control.Menubar.js:1135
+#: src/control/Control.Menubar.js:1193
 msgid "Download as"
 msgstr "Preuzmi kao"
 
@@ -1288,16 +1379,22 @@ msgstr "Preuzmi kao"
 #: src/control/Control.NotebookbarBuilder.js:379
 #: src/control/Control.NotebookbarBuilder.js:413
 #: src/control/Control.NotebookbarBuilder.js:455
+#: src/control/Control.Menubar.js:410 src/control/Control.Menubar.js:582
+#: src/control/Control.Menubar.js:721 src/control/Control.Menubar.js:1008
+#: src/control/Control.Menubar.js:1073 src/control/Control.Menubar.js:1137
+#: src/control/Control.Menubar.js:1195
 msgid "PDF Document (.pdf) as..."
 msgstr "PDF dokument (.pdf) kao …"
 
 #: src/control/Control.Menubar.js:96 src/control/Control.Menubar.js:728
+#: src/control/Control.Menubar.js:726
 msgid "HTML file (.html)"
 msgstr "HTML datoteka (.html)"
 
 #: src/control/Control.Menubar.js:101 src/control/Control.Menubar.js:430
 #: src/control/Control.Menubar.js:590 src/control/Control.Menubar.js:736
-#: src/control/Control.Toolbar.js:1121
+#: src/control/Control.Toolbar.js:1121 src/control/Control.Menubar.js:429
+#: src/control/Control.Menubar.js:588 src/control/Control.Menubar.js:734
 msgid "Close document"
 msgstr "Zatvori dokument"
 
@@ -1309,6 +1406,10 @@ msgstr "Zatvori dokument"
 #: src/control/Control.NotebookbarDraw.js:276
 #: src/control/Control.NotebookbarImpress.js:294
 #: src/control/Control.NotebookbarWriter.js:294
+#: src/control/Control.Menubar.js:434 src/control/Control.Menubar.js:593
+#: src/control/Control.Menubar.js:739 src/control/Control.Menubar.js:1018
+#: src/control/Control.Menubar.js:1082 src/control/Control.Menubar.js:1143
+#: src/control/Control.Menubar.js:1203
 msgid "Repair"
 msgstr "Popravi"
 
@@ -1320,26 +1421,37 @@ msgstr "Popravi"
 #: src/control/Control.NotebookbarDraw.js:349
 #: src/control/Control.NotebookbarImpress.js:389
 #: src/control/Control.NotebookbarWriter.js:1440
-#: src/control/Control.StatusBar.js:273
+#: src/control/Control.StatusBar.js:273 src/control/Control.Menubar.js:446
+#: src/control/Control.Menubar.js:452 src/control/Control.Menubar.js:605
+#: src/control/Control.Menubar.js:611 src/control/Control.Menubar.js:751
+#: src/control/Control.Menubar.js:757
+#: src/control/Control.NotebookbarWriter.js:1432
 msgid "Reset zoom"
 msgstr "Početna vrijednost uvećanja"
 
 #: src/control/Control.Menubar.js:143 src/control/Control.Menubar.js:459
 #: src/control/Control.Menubar.js:619 src/control/Control.Menubar.js:762
+#: src/control/Control.Menubar.js:458 src/control/Control.Menubar.js:617
+#: src/control/Control.Menubar.js:760
 msgid "Toggle UI Mode"
 msgstr "Uklj./Isklj. modus korisničkog sučelja"
 
 #: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:460
+#: src/control/Control.Menubar.js:459
 msgid "Show Ruler"
 msgstr "Prikaži ravnalo"
 
 #: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:461
 #: src/control/Control.Menubar.js:624 src/control/Control.Menubar.js:763
+#: src/control/Control.Menubar.js:460 src/control/Control.Menubar.js:622
+#: src/control/Control.Menubar.js:761
 msgid "Show Status Bar"
 msgstr "Prikaži traku stanja"
 
 #: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:463
 #: src/control/Control.Menubar.js:625 src/control/Control.Menubar.js:764
+#: src/control/Control.Menubar.js:462 src/control/Control.Menubar.js:623
+#: src/control/Control.Menubar.js:762
 msgid "Hide Menu Bar"
 msgstr "Sakrij traku izbornika"
 
@@ -1351,6 +1463,11 @@ msgstr "Sakrij traku izbornika"
 #: src/control/Control.NotebookbarDraw.js:449
 #: src/control/Control.NotebookbarImpress.js:504
 #: src/control/Control.NotebookbarWriter.js:1520
+#: src/control/Control.Menubar.js:463 src/control/Control.Menubar.js:618
+#: src/control/Control.Menubar.js:763 src/control/Control.Menubar.js:1039
+#: src/control/Control.Menubar.js:1092 src/control/Control.Menubar.js:1153
+#: src/control/Control.Menubar.js:1213
+#: src/control/Control.NotebookbarWriter.js:1512
 msgid "Dark Mode"
 msgstr "Tamni modus"
 
@@ -1362,6 +1479,11 @@ msgstr "Tamni modus"
 #: src/control/Control.NotebookbarDraw.js:456
 #: src/control/Control.NotebookbarImpress.js:511
 #: src/control/Control.NotebookbarWriter.js:1527
+#: src/control/Control.Menubar.js:464 src/control/Control.Menubar.js:619
+#: src/control/Control.Menubar.js:764 src/control/Control.Menubar.js:1040
+#: src/control/Control.Menubar.js:1093 src/control/Control.Menubar.js:1154
+#: src/control/Control.Menubar.js:1214
+#: src/control/Control.NotebookbarWriter.js:1519
 msgid "Invert Background"
 msgstr "Invertiraj pozadinu"
 
@@ -1369,11 +1491,16 @@ msgstr "Invertiraj pozadinu"
 #: src/control/Control.Menubar.js:628 src/control/Control.Menubar.js:778
 #: src/control/Control.Menubar.js:1259 src/control/Control.Menubar.js:1309
 #: src/control/Control.Menubar.js:1323 src/control/Control.Menubar.js:1346
+#: src/control/Control.Menubar.js:475 src/control/Control.Menubar.js:626
+#: src/control/Control.Menubar.js:776 src/control/Control.Menubar.js:1256
+#: src/control/Control.Menubar.js:1306 src/control/Control.Menubar.js:1320
+#: src/control/Control.Menubar.js:1343
 msgid "Local Image..."
 msgstr "Lokalna slika …"
 
 #: src/control/Control.Menubar.js:181 src/control/Control.Menubar.js:183
 #: src/control/Control.Menubar.js:1276 src/control/Control.Menubar.js:1278
+#: src/control/Control.Menubar.js:1273 src/control/Control.Menubar.js:1275
 msgid "All"
 msgstr "Sve"
 
@@ -1383,6 +1510,8 @@ msgstr "Sve"
 #: src/control/Control.NotebookbarDraw.js:1277
 #: src/control/Control.NotebookbarImpress.js:1277
 #: src/control/Control.NotebookbarWriter.js:1123
+#: src/control/Control.Menubar.js:486 src/control/Control.Menubar.js:633
+#: src/control/Control.Menubar.js:788
 msgid "Smart Picker"
 msgstr "Pametni birač"
 
@@ -1391,68 +1520,87 @@ msgstr "Pametni birač"
 msgid "AI Assistant"
 msgstr ""
 
-#: src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:234 src/control/Control.Menubar.js:233
 msgid "Text orientation"
 msgstr "Smjer teksta"
 
 #: src/control/Control.Menubar.js:299
 #: src/control/Control.NotebookbarWriter.js:61
+#: src/control/Control.Menubar.js:298
 msgid "References"
 msgstr "Reference"
 
 #: src/control/Control.Menubar.js:302
 #: src/control/Control.NotebookbarWriter.js:1887
+#: src/control/Control.Menubar.js:301
+#: src/control/Control.NotebookbarWriter.js:1879
 msgid "Update Index"
 msgstr "Aktualiziraj indeks"
 
 #: src/control/Control.Menubar.js:311
 #: src/control/Control.NotebookbarWriter.js:1983
+#: src/control/Control.Menubar.js:310
+#: src/control/Control.NotebookbarWriter.js:1975
 msgid "Add Citation"
 msgstr "Dodaj citat"
 
 #: src/control/Control.Menubar.js:312
 #: src/control/Control.NotebookbarWriter.js:1995
+#: src/control/Control.Menubar.js:311
+#: src/control/Control.NotebookbarWriter.js:1987
 msgid "Add Citation Note"
 msgstr "Dodaj napomenu uz citat"
 
 #: src/control/Control.Menubar.js:313
 #: src/control/Control.NotebookbarWriter.js:1970
+#: src/control/Control.Menubar.js:312
+#: src/control/Control.NotebookbarWriter.js:1962
 msgid "Add Bibliography"
 msgstr "Dodaj bibliografiju"
 
 #: src/control/Control.Menubar.js:315
 #: src/control/Control.NotebookbarWriter.js:2013
+#: src/control/Control.Menubar.js:314
+#: src/control/Control.NotebookbarWriter.js:2005
 msgid "Refresh Citations"
 msgstr "Aktualiziraj citate"
 
 #: src/control/Control.Menubar.js:316
 #: src/control/Control.NotebookbarWriter.js:2025
-#: src/control/Control.Zotero.js:1445
+#: src/control/Control.Zotero.js:1445 src/control/Control.Menubar.js:315
+#: src/control/Control.NotebookbarWriter.js:2017
 msgid "Unlink Citations"
 msgstr "Odspoji citate"
 
 #: src/control/Control.Menubar.js:317
 #: src/control/Control.NotebookbarWriter.js:2037
+#: src/control/Control.Menubar.js:316
+#: src/control/Control.NotebookbarWriter.js:2029
 msgid "Citation Preferences"
 msgstr "Postavke za citate"
 
 #: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:1298
+#: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:1295
 msgid "Insert Rich Text"
 msgstr "Umetni formatirani tekst"
 
 #: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:1299
+#: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:1296
 msgid "Insert Checkbox"
 msgstr "Umetni označivo polje"
 
 #: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:1300
+#: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:1297
 msgid "Insert Dropdown"
 msgstr "Umetni rasklopiv izbornik"
 
 #: src/control/Control.Menubar.js:348 src/control/Control.Menubar.js:1301
+#: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:1298
 msgid "Insert Picture"
 msgstr "Umetni sliku"
 
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:1302
+#: src/control/Control.Menubar.js:348 src/control/Control.Menubar.js:1299
 msgid "Insert Date"
 msgstr "Umetni datum"
 
@@ -1462,34 +1610,44 @@ msgstr "Umetni datum"
 #: src/control/Control.NotebookbarImpress.js:309
 #: src/control/Control.NotebookbarWriter.js:309
 #: src/control/Control.NotebookbarWriter.js:1403
+#: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:1300
+#: src/control/Control.NotebookbarWriter.js:1395
 msgid "Properties"
 msgstr "Svojstva"
 
 #: src/control/Control.Menubar.js:370 src/control/Control.Menubar.js:1047
 #: src/control/Control.NotebookbarWriter.js:414
+#: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:1044
 msgid "Screen Reading"
 msgstr "Glas pripovjedača"
 
 #: src/control/Control.Menubar.js:383
 #: src/control/Control.NotebookbarWriter.js:380
+#: src/control/Control.Menubar.js:382
 msgid "Forum"
 msgstr "Forum"
 
 #: src/control/Control.Menubar.js:384 src/control/Control.Menubar.js:560
 #: src/control/Control.Menubar.js:697 src/control/Control.Menubar.js:984
 #: src/control/Control.NotebookbarWriter.js:392
+#: src/control/Control.Menubar.js:383 src/control/Control.Menubar.js:558
+#: src/control/Control.Menubar.js:695 src/control/Control.Menubar.js:981
 msgid "Online Help"
 msgstr "Pomoć na internetu"
 
 #: src/control/Control.Menubar.js:385 src/control/Control.Menubar.js:561
 #: src/control/Control.Menubar.js:698 src/control/Control.Menubar.js:985
 #: src/control/Control.NotebookbarWriter.js:404
+#: src/control/Control.Menubar.js:384 src/control/Control.Menubar.js:559
+#: src/control/Control.Menubar.js:696 src/control/Control.Menubar.js:982
 msgid "Keyboard shortcuts"
 msgstr "Tipkovnički prečaci"
 
 #: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:562
 #: src/control/Control.Menubar.js:699 src/control/Control.Menubar.js:986
 #: src/control/Control.NotebookbarWriter.js:439
+#: src/control/Control.Menubar.js:385 src/control/Control.Menubar.js:560
+#: src/control/Control.Menubar.js:697 src/control/Control.Menubar.js:983
 msgid "Report an issue"
 msgstr "Prijavi problem"
 
@@ -1498,6 +1656,10 @@ msgstr "Prijavi problem"
 #: src/control/Control.Menubar.js:1056 src/control/Control.Menubar.js:1121
 #: src/control/Control.Menubar.js:1176 src/control/Control.Menubar.js:1251
 #: src/control/Control.NotebookbarWriter.js:452
+#: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:561
+#: src/control/Control.Menubar.js:698 src/control/Control.Menubar.js:984
+#: src/control/Control.Menubar.js:1053 src/control/Control.Menubar.js:1118
+#: src/control/Control.Menubar.js:1173 src/control/Control.Menubar.js:1248
 msgid "Latest Updates"
 msgstr "Najnovije verzije"
 
@@ -1506,6 +1668,10 @@ msgstr "Najnovije verzije"
 #: src/control/Control.Menubar.js:1057 src/control/Control.Menubar.js:1122
 #: src/control/Control.Menubar.js:1177 src/control/Control.Menubar.js:1252
 #: src/control/Control.NotebookbarWriter.js:464
+#: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:562
+#: src/control/Control.Menubar.js:699 src/control/Control.Menubar.js:985
+#: src/control/Control.Menubar.js:1054 src/control/Control.Menubar.js:1119
+#: src/control/Control.Menubar.js:1174 src/control/Control.Menubar.js:1249
 msgid "Send Feedback"
 msgstr "Pošalji povratne informacije"
 
@@ -1514,11 +1680,15 @@ msgstr "Pošalji povratne informacije"
 #: src/control/Control.NotebookbarWriter.js:429
 #: src/control/Control.ServerAuditDialog.ts:186
 #: src/control/Control.ServerAuditDialog.ts:187
+#: src/control/Control.Menubar.js:388 src/control/Control.Menubar.js:563
+#: src/control/Control.Menubar.js:700 src/control/Control.Menubar.js:986
 msgid "Server audit"
 msgstr "Revizija servera"
 
 #: src/control/Control.Menubar.js:392 src/control/Control.Menubar.js:568
 #: src/control/Control.Menubar.js:705 src/control/Control.Menubar.js:992
+#: src/control/Control.Menubar.js:391 src/control/Control.Menubar.js:566
+#: src/control/Control.Menubar.js:703 src/control/Control.Menubar.js:989
 msgid "Last modification"
 msgstr "Zadnja promjena"
 
@@ -1526,6 +1696,8 @@ msgstr "Zadnja promjena"
 #: src/control/Control.Menubar.js:1077
 #: src/control/Control.NotebookbarBuilder.js:421
 #: src/control/Control.NotebookbarBuilder.js:595
+#: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:411
+#: src/control/Control.Menubar.js:1074
 msgid "ODF presentation (.odp)"
 msgstr "ODF prezentacija (.odp)"
 
@@ -1533,6 +1705,8 @@ msgstr "ODF prezentacija (.odp)"
 #: src/control/Control.Menubar.js:1078
 #: src/control/Control.NotebookbarBuilder.js:433
 #: src/control/Control.NotebookbarBuilder.js:603
+#: src/control/Control.Menubar.js:399 src/control/Control.Menubar.js:412
+#: src/control/Control.Menubar.js:1075
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 prezentacija (.ppt)"
 
@@ -1540,88 +1714,103 @@ msgstr "PowerPoint 2003 prezentacija (.ppt)"
 #: src/control/Control.Menubar.js:1079
 #: src/control/Control.NotebookbarBuilder.js:429
 #: src/control/Control.NotebookbarBuilder.js:599
+#: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:413
+#: src/control/Control.Menubar.js:1076
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint prezentacija (.pptx)"
 
 #: src/control/Control.Menubar.js:406 src/control/Control.Menubar.js:578
+#: src/control/Control.Menubar.js:405 src/control/Control.Menubar.js:576
 msgid "Save Comments"
 msgstr "Spremi komentar"
 
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:437
+#: src/control/Control.Menubar.js:414
 msgid "HTML Document (.html)"
 msgstr "HTML dokument (.html)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:468
+#: src/control/Control.Menubar.js:415
 msgid "Shockwave Flash (.swf)"
 msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:480
+#: src/control/Control.Menubar.js:416
 msgid "Scalable Vector Graphics (.svg)"
 msgstr "Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarBuilder.js:492
+#: src/control/Control.Menubar.js:417
 msgid "Current slide as Bitmap (.bmp)"
 msgstr "Trenutačni slajd kao Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.js:419
 #: src/control/Control.NotebookbarBuilder.js:504
+#: src/control/Control.Menubar.js:418
 msgid "Current slide as Graphics Interchange Format (.gif)"
 msgstr "Trenutačni slajd kao Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.js:420
 #: src/control/Control.NotebookbarBuilder.js:516
+#: src/control/Control.Menubar.js:419
 msgid "Current slide as Portable Network Graphics (.png)"
 msgstr "Trenutačni slajd kao Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.js:421
 #: src/control/Control.NotebookbarBuilder.js:528
+#: src/control/Control.Menubar.js:420
 msgid "Current slide as Tag Image File Format (.tiff)"
 msgstr "Trenutačni slajd kao Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.js:427
 #: src/control/Control.NotebookbarBuilder.js:666
+#: src/control/Control.Menubar.js:426
 msgid "Full Page Slides"
 msgstr "Slajdovi preko cijele stranice"
 
 #: src/control/Control.Menubar.js:428
 #: src/control/Control.NotebookbarBuilder.js:670
+#: src/control/Control.Menubar.js:427
 msgid "Notes Pages"
 msgstr "Stranice s napomenama"
 
 #: src/control/Control.Menubar.js:462
 #: src/control/Control.NotebookbarImpress.js:470
+#: src/control/Control.Menubar.js:461
 msgid "Notes View"
 msgstr "Prikaz napomena"
 
 #: src/control/Control.Menubar.js:466
 #: src/control/Control.NotebookbarImpress.js:476
+#: src/control/Control.Menubar.js:465
 msgid "Master View"
 msgstr "Prikaz „Master” stranice"
 
-#: src/control/Control.Menubar.js:478
+#: src/control/Control.Menubar.js:478 src/control/Control.Menubar.js:477
 msgid "Local Multimedia..."
 msgstr "Lokalna multimedija..."
 
 #: src/control/Control.Menubar.js:545 src/control/Control.Menubar.js:1120
 #: src/control/Control.PresentationBar.js:127
+#: src/control/Control.Menubar.js:543 src/control/Control.Menubar.js:1117
 msgid "Fullscreen presentation"
 msgstr "Prezentacija preko cijelog ekrana"
 
-#: src/control/Control.Menubar.js:546
+#: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:544
 msgid "Present current slide"
 msgstr "Prikaži trenutačni slajd"
 
-#: src/control/Control.Menubar.js:547
+#: src/control/Control.Menubar.js:547 src/control/Control.Menubar.js:545
 msgid "Present in new window"
 msgstr "Prikaži u novom prozoru"
 
 #: src/control/Control.Menubar.js:548
 #: src/control/Control.NotebookbarImpress.js:374
-#: src/slideshow/PresenterConsole.js:233
+#: src/slideshow/PresenterConsole.js:233 src/control/Control.Menubar.js:546
 msgid "Presenter Console"
 msgstr "Konzola izlagača"
 
@@ -1629,6 +1818,8 @@ msgstr "Konzola izlagača"
 #: src/control/Control.Menubar.js:1141
 #: src/control/Control.NotebookbarBuilder.js:425
 #: src/control/Control.NotebookbarBuilder.js:538
+#: src/control/Control.Menubar.js:583 src/control/Control.Menubar.js:1077
+#: src/control/Control.Menubar.js:1138
 msgid "ODF Drawing (.odg)"
 msgstr "ODF crtež (.odg)"
 
@@ -1636,6 +1827,8 @@ msgstr "ODF crtež (.odg)"
 #: src/control/Control.Menubar.js:1199
 #: src/control/Control.NotebookbarBuilder.js:387
 #: src/control/Control.NotebookbarBuilder.js:580
+#: src/control/Control.Menubar.js:710 src/control/Control.Menubar.js:722
+#: src/control/Control.Menubar.js:1196
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF proračunska tablica (.ods)"
 
@@ -1643,6 +1836,8 @@ msgstr "ODF proračunska tablica (.ods)"
 #: src/control/Control.Menubar.js:1200
 #: src/control/Control.NotebookbarBuilder.js:395
 #: src/control/Control.NotebookbarBuilder.js:588
+#: src/control/Control.Menubar.js:711 src/control/Control.Menubar.js:723
+#: src/control/Control.Menubar.js:1197
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 proračunska tablica (.xls)"
 
@@ -1650,96 +1845,115 @@ msgstr "Excel 2003 proračunska tablica (.xls)"
 #: src/control/Control.Menubar.js:1201
 #: src/control/Control.NotebookbarBuilder.js:391
 #: src/control/Control.NotebookbarBuilder.js:584
+#: src/control/Control.Menubar.js:712 src/control/Control.Menubar.js:724
+#: src/control/Control.Menubar.js:1198
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel proračunska tablica (.xlsx)"
 
-#: src/control/Control.Menubar.js:727
+#: src/control/Control.Menubar.js:727 src/control/Control.Menubar.js:725
 msgid "CSV file (.csv)"
 msgstr "CSV datoteka (.csv)"
 
 #: src/control/Control.Menubar.js:733
 #: src/control/jsdialog/Definitions.Menu.ts:111
+#: src/control/Control.Menubar.js:731
 msgid "Active sheet"
 msgstr "Aktivni list"
 
 #: src/control/Control.Menubar.js:734 src/control/Control.TopToolbar.js:109
 #: src/control/jsdialog/Definitions.Menu.ts:112
+#: src/control/Control.Menubar.js:732
 msgid "All Sheets"
 msgstr "Svi listovi"
 
 #: src/control/Control.Menubar.js:864
 #: src/control/jsdialog/Definitions.Menu.ts:291
+#: src/control/Control.Menubar.js:861
 msgid "Highlight cells with..."
 msgstr "Istakni polja sa …"
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:294
+#: src/control/Control.Menubar.js:862
 msgid "Values greater than..."
 msgstr "Vrijednosti veća od …"
 
 #: src/control/Control.Menubar.js:866
 #: src/control/jsdialog/Definitions.Menu.ts:298
+#: src/control/Control.Menubar.js:863
 msgid "Values less than..."
 msgstr "Vrijednosti manja od …"
 
 #: src/control/Control.Menubar.js:867
 #: src/control/jsdialog/Definitions.Menu.ts:302
+#: src/control/Control.Menubar.js:864
 msgid "Values equal to..."
 msgstr "Vrijednosti jednaka …"
 
 #: src/control/Control.Menubar.js:868
 #: src/control/jsdialog/Definitions.Menu.ts:306
+#: src/control/Control.Menubar.js:865
 msgid "Values between..."
 msgstr "Vrijednosti između …"
 
 #: src/control/Control.Menubar.js:869
 #: src/control/jsdialog/Definitions.Menu.ts:310
+#: src/control/Control.Menubar.js:866
 msgid "Values duplicate..."
 msgstr "Duple vrijednosti …"
 
 #: src/control/Control.Menubar.js:870
 #: src/control/jsdialog/Definitions.Menu.ts:314
+#: src/control/Control.Menubar.js:867
 msgid "Containing text..."
 msgstr "Sadrži tekst …"
 
 #: src/control/Control.Menubar.js:872 src/control/Control.Menubar.js:882
 #: src/control/jsdialog/Definitions.Menu.ts:318
 #: src/control/jsdialog/Definitions.Menu.ts:349
+#: src/control/Control.Menubar.js:869 src/control/Control.Menubar.js:879
 msgid "More highlights..."
 msgstr "Još više isticanja …"
 
 #: src/control/Control.Menubar.js:874
 #: src/control/jsdialog/Definitions.Menu.ts:322
+#: src/control/Control.Menubar.js:871
 msgid "Top/Bottom Rules..."
 msgstr "Pravila gornjih/donjih …"
 
 #: src/control/Control.Menubar.js:875
 #: src/control/jsdialog/Definitions.Menu.ts:325
+#: src/control/Control.Menubar.js:872
 msgid "Top N elements..."
 msgstr "Gornjih N elemenata …"
 
 #: src/control/Control.Menubar.js:876
 #: src/control/jsdialog/Definitions.Menu.ts:329
+#: src/control/Control.Menubar.js:873
 msgid "Top N percent..."
 msgstr "Gornjih N posto …"
 
 #: src/control/Control.Menubar.js:877
 #: src/control/jsdialog/Definitions.Menu.ts:333
+#: src/control/Control.Menubar.js:874
 msgid "Bottom N elements..."
 msgstr "Doljnih N elemenata …"
 
 #: src/control/Control.Menubar.js:878
 #: src/control/jsdialog/Definitions.Menu.ts:337
+#: src/control/Control.Menubar.js:875
 msgid "Bottom N percent..."
 msgstr "Doljnih N posto …"
 
 #: src/control/Control.Menubar.js:879
 #: src/control/jsdialog/Definitions.Menu.ts:341
+#: src/control/Control.Menubar.js:876
 msgid "Above Average..."
 msgstr "Iznad prosjeka …"
 
 #: src/control/Control.Menubar.js:880
 #: src/control/jsdialog/Definitions.Menu.ts:345
+#: src/control/Control.Menubar.js:877
 msgid "Below Average..."
 msgstr "Ispod prosjeka …"
 
@@ -1751,45 +1965,49 @@ msgstr "Ispod prosjeka …"
 #: src/control/Control.NotebookbarImpress.js:1053
 #: src/control/Control.NotebookbarWriter.js:888
 #: src/control/Control.StatusBar.js:246 src/control/Control.Zotero.js:218
-#: src/control/Toolbar.js:575
+#: src/control/Toolbar.js:575 src/control/Control.Menubar.js:993
+#: src/control/Control.Menubar.js:1059 src/control/Control.Menubar.js:1124
+#: src/control/Control.Menubar.js:1179
 msgid "Search"
 msgstr "Traži"
 
-#: src/control/Control.Menubar.js:1049
+#: src/control/Control.Menubar.js:1049 src/control/Control.Menubar.js:1046
 msgid "Page Setup"
 msgstr "Postavke stranice"
 
-#: src/control/Control.Menubar.js:1193
+#: src/control/Control.Menubar.js:1193 src/control/Control.Menubar.js:1190
 msgid "Define print area"
 msgstr "Odredi područje ispisa"
 
-#: src/control/Control.Menubar.js:1194
+#: src/control/Control.Menubar.js:1194 src/control/Control.Menubar.js:1191
 msgid "Remove print area"
 msgstr "Ukloni područje ispisa"
 
 #: src/control/Control.Menubar.js:1484 src/control/Control.StatusBar.js:537
+#: src/control/Control.Menubar.js:1481
 msgid "Reset to Default Language"
 msgstr "Vrati na standardni jezik"
 
 #: src/control/Control.Menubar.js:1515 src/control/Control.Menubar.js:1516
 #: src/control/Control.Menubar.js:1517 src/control/Control.Toolbar.js:140
-#: src/control/Control.Toolbar.js:206
+#: src/control/Control.Toolbar.js:206 src/control/Control.Menubar.js:1512
+#: src/control/Control.Menubar.js:1513 src/control/Control.Menubar.js:1514
 msgid "More..."
 msgstr "Više …"
 
-#: src/control/Control.Menubar.js:1824
+#: src/control/Control.Menubar.js:1824 src/control/Control.Menubar.js:1821
 msgid "Use Compact view"
 msgstr "Koristi kompaktni prikaz"
 
-#: src/control/Control.Menubar.js:1826
+#: src/control/Control.Menubar.js:1826 src/control/Control.Menubar.js:1823
 msgid "Use Tabbed view"
 msgstr "Koristi prikaz kartica"
 
-#: src/control/Control.Menubar.js:1907
+#: src/control/Control.Menubar.js:1907 src/control/Control.Menubar.js:1904
 msgid "Read-only mode"
 msgstr "Modus samo-za-čitanje"
 
-#: src/control/Control.Menubar.js:1952
+#: src/control/Control.Menubar.js:1952 src/control/Control.Menubar.js:1942
 msgid "Insert Shape"
 msgstr "Umetni oblik"
 
@@ -1801,7 +2019,7 @@ msgstr ""
 msgid "Finish electronic signing"
 msgstr ""
 
-#: src/control/Control.Menubar.js:2203
+#: src/control/Control.Menubar.js:2203 src/control/Control.Menubar.js:2181
 msgid "file type icon"
 msgstr "ikona vrste datoteke"
 
@@ -1989,6 +2207,7 @@ msgstr "Valuta"
 #: src/control/Control.NotebookbarCalc.js:611
 #: src/control/Control.NotebookbarWriter.js:1396
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.NotebookbarWriter.js:1388
 msgid "Date"
 msgstr "Datum"
 
@@ -2072,6 +2291,7 @@ msgstr "Izbriši stupce"
 #: src/control/Control.NotebookbarDraw.js:335
 #: src/control/Control.NotebookbarImpress.js:351
 #: src/control/Control.NotebookbarWriter.js:1419
+#: src/control/Control.NotebookbarWriter.js:1411
 msgid "Read mode"
 msgstr "Modus čitanja"
 
@@ -2079,6 +2299,7 @@ msgstr "Modus čitanja"
 #: src/control/Control.NotebookbarDraw.js:386
 #: src/control/Control.NotebookbarImpress.js:426
 #: src/control/Control.NotebookbarWriter.js:1477
+#: src/control/Control.NotebookbarWriter.js:1469
 msgid "Compact view"
 msgstr "Kompaktni prikaz"
 
@@ -2086,6 +2307,7 @@ msgstr "Kompaktni prikaz"
 #: src/control/Control.NotebookbarDraw.js:423
 #: src/control/Control.NotebookbarImpress.js:463
 #: src/control/Control.NotebookbarWriter.js:1514
+#: src/control/Control.NotebookbarWriter.js:1506
 msgid "Collapse Tabs"
 msgstr "Sklopi kartice"
 
@@ -2093,6 +2315,7 @@ msgstr "Sklopi kartice"
 #: src/control/Control.NotebookbarDraw.js:411
 #: src/control/Control.NotebookbarImpress.js:451
 #: src/control/Control.NotebookbarWriter.js:1502
+#: src/control/Control.NotebookbarWriter.js:1494
 msgid "Status Bar"
 msgstr "Traka stanja"
 
@@ -2116,13 +2339,18 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:2449
 #: src/control/Control.NotebookbarWriter.js:1079
 #: src/control/Control.NotebookbarWriter.js:2880
+#: src/control/Control.NotebookbarCalc.js:1469
+#: src/control/Control.NotebookbarCalc.js:2361
+#: src/control/Control.NotebookbarDraw.js:1363
+#: src/control/Control.NotebookbarImpress.js:1382
+#: src/control/Control.NotebookbarImpress.js:2441
+#: src/control/Control.NotebookbarWriter.js:2872
 msgid "Shapes"
 msgstr "Oblici"
 
-#: src/control/Control.NotebookbarCalc.js:2024
 #: src/control/Control.NotebookbarWriter.js:939
 msgid "Style list"
-msgstr ""
+msgstr "Popis stilova"
 
 #: src/control/Control.NotebookbarDraw.js:99
 #: src/control/Control.NotebookbarImpress.js:115
@@ -2137,6 +2365,7 @@ msgstr "PDF dokument (.pdf) – profesionalno"
 #: src/control/Control.NotebookbarDraw.js:399
 #: src/control/Control.NotebookbarImpress.js:439
 #: src/control/Control.NotebookbarWriter.js:1490
+#: src/control/Control.NotebookbarWriter.js:1482
 msgid "Ruler"
 msgstr "Ravnalo"
 
@@ -2178,18 +2407,22 @@ msgid "Go Offline"
 msgstr "Prebaci na izvanmrežni način rada"
 
 #: src/control/Control.NotebookbarWriter.js:1368
+#: src/control/Control.NotebookbarWriter.js:1360
 msgid "Rich Text"
 msgstr "Formatiran tekst"
 
 #: src/control/Control.NotebookbarWriter.js:1375
+#: src/control/Control.NotebookbarWriter.js:1367
 msgid "Checkbox"
 msgstr "Označivo polje"
 
 #: src/control/Control.NotebookbarWriter.js:1382
+#: src/control/Control.NotebookbarWriter.js:1374
 msgid "Dropdown"
 msgstr "Rasklopiv izbornik"
 
 #: src/control/Control.NotebookbarWriter.js:1389
+#: src/control/Control.NotebookbarWriter.js:1381
 msgid "Picture"
 msgstr "Slika"
 
@@ -2303,11 +2536,11 @@ msgstr "Umetnuti list"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "Uključeno"
 
 #: src/control/Control.StatusBar.js:179
 msgid "Off"
-msgstr ""
+msgstr "Isključeno"
 
 #: src/control/Control.StatusBar.js:205
 #: src/control/jsdialog/Definitions.Menu.ts:23
@@ -2410,8 +2643,7 @@ msgstr "Upiši ime novog lista"
 
 #: src/control/Control.Toolbar.js:983
 msgid ""
-"Conflict Undo/Redo with multiple users. Please use document repair to "
-"resolve"
+"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Problem funkcija Poništi/Ponovi s višestrukim korisnicima. Koristi "
 "popravljanje dokumenata za rješavanje problema"
@@ -2602,8 +2834,7 @@ msgstr "Upozorenje citiranja"
 
 #: src/control/Control.Zotero.js:1144
 msgid ""
-"Once citations are entered their storage and display type can not be "
-"changed."
+"Once citations are entered their storage and display type can not be changed."
 msgstr ""
 "Nakon što se citati unesu, njihovo spremište i vrsta prikaza se ne mogu "
 "promijeniti."
@@ -2744,27 +2975,27 @@ msgstr "Umetni hiper-poveznicu"
 msgid "Link"
 msgstr "Poveznica"
 
-#: src/control/VRuler.ts:343
+#: src/control/VRuler.ts:343 src/control/VRuler.ts:393
 msgid "Top Margin"
 msgstr "Gornja margina"
 
-#: src/control/VRuler.ts:344
+#: src/control/VRuler.ts:344 src/control/VRuler.ts:394
 msgid "Bottom Margin"
 msgstr "Doljna margina"
 
-#: src/control/HRuler.ts:590
+#: src/control/HRuler.ts:590 src/control/Ruler.js:390
 msgid "Left Margin"
 msgstr "Lijeva margina"
 
-#: src/control/HRuler.ts:591
+#: src/control/HRuler.ts:591 src/control/Ruler.js:391
 msgid "Right Margin"
 msgstr "Desna margina"
 
-#: src/control/HRuler.ts:876
+#: src/control/HRuler.ts:876 src/control/Ruler.js:630
 msgid "Insert tabstop"
 msgstr "Umetni tabulator"
 
-#: src/control/HRuler.ts:883
+#: src/control/HRuler.ts:883 src/control/Ruler.js:637
 msgid "Delete tabstop"
 msgstr "Izbriši tabulator"
 
@@ -2880,9 +3111,8 @@ msgid "Your changes have been saved"
 msgstr "Tvoje su promjene spremljene"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:141
-#, fuzzy
 msgid "Show Comments"
-msgstr "Bez komentara"
+msgstr "Prikaži komentare"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -3075,11 +3305,11 @@ msgstr "Ponovno povezivanje …"
 msgid "The server has been disconnected."
 msgstr "Server je odspojen."
 
-#: src/docdispatcher.ts:485
+#: src/docdispatcher.ts:485 src/docdispatcher.ts:482
 msgid "Are you sure you want to delete this slide?"
 msgstr "Stvarno želiš izbrisati ovaj slajd?"
 
-#: src/docdispatcher.ts:488
+#: src/docdispatcher.ts:488 src/docdispatcher.ts:485
 msgid "Are you sure you want to delete this page?"
 msgstr "Stvarno želiš izbrisati ovu stranicu?"
 
@@ -3095,7 +3325,7 @@ msgstr "Boje tema"
 msgid "Document colors"
 msgstr "Boje dokumenta"
 
-#: src/docstatefunctions.js:181
+#: src/docstatefunctions.js:181 src/docstatefunctions.js:176
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr ", greška konfiguracije klastera: nepoklapanje ID-a servera"
 
@@ -3118,8 +3348,8 @@ msgstr ""
 #: src/errormessages.js:24
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
-"that it is suitable for deployment in enterprises, this message appears "
-"when more than {docs} documents or {connections} connections are in use "
+"that it is suitable for deployment in enterprises, this message appears when "
+"more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
 "Ovo je nepodržana verzija za {productname}. Kako bi se izbjegao dojam da je "
@@ -3195,8 +3425,7 @@ msgstr "Neispravna poveznica: „{url}”"
 
 #: src/errormessages.js:35
 msgid ""
-"You are leaving the document. The following web page will open in a new "
-"tab: "
+"You are leaving the document. The following web page will open in a new tab: "
 msgstr ""
 "Napuštaš dokument. Sljedeća web stranica će se otvoriti u novoj kartici: "
 
@@ -3223,10 +3452,10 @@ msgstr ""
 #: src/errormessages.js:39
 msgid ""
 "Your {productname} cluster appear to be mis-configured or scaling rapidly - "
-"please contact your system administrator. Continuing with editing may "
-"result in multiple users not seeing each other, conflicts in the document "
-"storage and/or copy/paste problems. Expected serverId {0} for routeToken "
-"{1} but connected to serverId {2}"
+"please contact your system administrator. Continuing with editing may result "
+"in multiple users not seeing each other, conflicts in the document storage "
+"and/or copy/paste problems. Expected serverId {0} for routeToken {1} but "
+"connected to serverId {2}"
 msgstr ""
 "Čini se da je tvoj {productname} klaster pogrešno konfiguriran ili se brzo "
 "skalira – obrati se svom administratoru sustava. Nastavljanje s uređivanjem "
@@ -3305,8 +3534,8 @@ msgstr ""
 #: src/errormessages.js:55
 msgid ""
 "Save failed because the document is too large or exceeds the remaining "
-"storage space. The document will now be read-only but you may still "
-"download it now to preserve a copy locally."
+"storage space. The document will now be read-only but you may still download "
+"it now to preserve a copy locally."
 msgstr ""
 "Spremanje nije uspjelo jer je dokument prevelik ili premašuje preostalu "
 "količinu memorije. Dokument ćeš sada moći samo čitati, ali ga još uvijek "
@@ -3481,7 +3710,7 @@ msgstr "Inicijaliziranje …"
 msgid "Last saved:"
 msgstr "Zadnji put spremljeno:"
 
-#: src/map/Map.js:1495
+#: src/map/Map.js:1495 src/map/Map.js:1479
 msgid "Please wait!"
 msgstr "Pričekaj!"
 
@@ -3492,8 +3721,7 @@ msgstr "Pošalji nam povratne inormacije"
 #: src/map/handler/Map.FileInserter.js:123
 #, javascript-format
 msgid ""
-"The file of type: {0} cannot be uploaded to server since the file has no "
-"name"
+"The file of type: {0} cannot be uploaded to server since the file has no name"
 msgstr ""
 "Vrsta datoteke: {0} se ne može prenijeti na server jer datoteka nema ime"
 
@@ -3517,16 +3745,17 @@ msgid "Print dialog"
 msgstr "Dijalog za ispis"
 
 #: src/map/handler/Map.SlideShow.js:55 src/slideshow/SlideShowPresenter.ts:641
+#: src/slideshow/SlideShowPresenter.ts:638
 msgid "Empty Slide Show"
 msgstr "Prazna dijaprojekcija"
 
-#: src/map/handler/Map.SlideShow.js:163
-#: src/slideshow/SlideShowPresenter.ts:669
+#: src/map/handler/Map.SlideShow.js:163 src/slideshow/SlideShowPresenter.ts:669
+#: src/slideshow/SlideShowPresenter.ts:666
 msgid "Windowed Presentation Blocked"
 msgstr "Prezentacija u prozoru je blokirana"
 
-#: src/map/handler/Map.SlideShow.js:164
-#: src/slideshow/SlideShowPresenter.ts:671
+#: src/map/handler/Map.SlideShow.js:164 src/slideshow/SlideShowPresenter.ts:671
+#: src/slideshow/SlideShowPresenter.ts:668
 msgid ""
 "Presentation was blocked. Please allow pop-ups in your browser. This lets "
 "slide shows to be displayed in separated windows, allowing for easy screen "
@@ -3536,18 +3765,18 @@ msgstr ""
 "omogućuje prikaz dijaprojekcija u zasebnim prozorima, što omogućuje "
 "jednostavno dijeljenje ekrana."
 
-#: src/map/handler/Map.SlideShow.js:168
-#: src/slideshow/SlideShowPresenter.ts:468
+#: src/map/handler/Map.SlideShow.js:168 src/slideshow/SlideShowPresenter.ts:468
+#: src/slideshow/SlideShowPresenter.ts:465
 msgid "Windowed Presentation: "
 msgstr "Prezentacija u prozoru: "
 
-#: src/map/handler/Map.SlideShow.js:198
-#: src/slideshow/SlideShowPresenter.ts:511
+#: src/map/handler/Map.SlideShow.js:198 src/slideshow/SlideShowPresenter.ts:511
+#: src/slideshow/SlideShowPresenter.ts:508
 msgid "Presenting in window"
 msgstr "Prezentiranje u prozoru"
 
-#: src/map/handler/Map.SlideShow.js:199
-#: src/slideshow/SlideShowPresenter.ts:512
+#: src/map/handler/Map.SlideShow.js:199 src/slideshow/SlideShowPresenter.ts:512
+#: src/slideshow/SlideShowPresenter.ts:509
 msgid "Close Presentation"
 msgstr "Zatvori prezentaciju"
 
@@ -3559,23 +3788,23 @@ msgstr "Prikazivanje u cjeloekranskom prikazu"
 msgid "End Presentation"
 msgstr "Završi prezentaciju"
 
-#: src/map/handler/Map.SlideShow.js:291
-#: src/slideshow/SlideShowPresenter.ts:656
+#: src/map/handler/Map.SlideShow.js:291 src/slideshow/SlideShowPresenter.ts:656
+#: src/slideshow/SlideShowPresenter.ts:653
 msgid "Already presenting"
 msgstr "Već se prikazuje"
 
-#: src/map/handler/Map.SlideShow.js:292
-#: src/slideshow/SlideShowPresenter.ts:657
+#: src/map/handler/Map.SlideShow.js:292 src/slideshow/SlideShowPresenter.ts:657
+#: src/slideshow/SlideShowPresenter.ts:654
 msgid "You are already presenting this document"
 msgstr "Već prikazuješ ovaj dokument"
 
-#: src/map/handler/Map.SlideShow.js:302
-#: src/slideshow/SlideShowPresenter.ts:694
+#: src/map/handler/Map.SlideShow.js:302 src/slideshow/SlideShowPresenter.ts:694
+#: src/slideshow/SlideShowPresenter.ts:691
 msgid "Presentation disabled"
 msgstr "Prezentacija deaktivirana"
 
-#: src/map/handler/Map.SlideShow.js:303
-#: src/slideshow/SlideShowPresenter.ts:695
+#: src/map/handler/Map.SlideShow.js:303 src/slideshow/SlideShowPresenter.ts:695
+#: src/slideshow/SlideShowPresenter.ts:692
 msgid "Presentation mode has been disabled for this document"
 msgstr "Modus prezentacije je deaktiviran za ovaj dokument"
 
@@ -3584,19 +3813,19 @@ msgid "Your Collabora Online server needs updating. Version {0} is available."
 msgstr ""
 "Tvoj se Collabora Online server treba aktualizirati. Dostupna je verzija {0}."
 
-#: src/map/handler/Map.WOPI.js:161
+#: src/map/handler/Map.WOPI.js:161 src/map/handler/Map.WOPI.js:153
 msgid "Creating new file from template..."
 msgstr "Stvaranje nove datoteke iz predloška …"
 
-#: src/map/handler/Map.WOPI.js:673
+#: src/map/handler/Map.WOPI.js:673 src/map/handler/Map.WOPI.js:665
 msgid "Error"
 msgstr "Greška"
 
-#: src/map/handler/Map.WOPI.js:673
+#: src/map/handler/Map.WOPI.js:673 src/map/handler/Map.WOPI.js:665
 msgid "File name should contain an extension."
 msgstr "Ime datoteke mora sadržati ekstenziju."
 
-#: src/map/handler/Map.WOPI.js:681
+#: src/map/handler/Map.WOPI.js:681 src/map/handler/Map.WOPI.js:673
 msgid "Creating copy..."
 msgstr "Stvaranje kopije …"
 
@@ -3666,6 +3895,7 @@ msgstr "Ponovi za {0} s"
 
 #: src/slideshow/PresenterConsole.js:1323
 #: src/slideshow/SlideShowPresenter.ts:366
+#: src/slideshow/SlideShowPresenter.ts:364
 msgid "Click to exit presentation..."
 msgstr "Pritisni za izlaz iz prezentacije …"
 
@@ -3686,8 +3916,8 @@ msgstr "Collabora Online izdanje za razvoj"
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
-"target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
-"collabora-office-android-ios/\">apps</a> are also available for mobile."
+"target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/collabora-"
+"office-android-ios/\">apps</a> are also available for mobile."
 msgstr ""
 "Uživaj u najnovijim dostignućima u online produktivnosti, koje možeš "
 "besplatno koristiti, istraživati i koristiti s drugima u pregledniku. Razni "
@@ -3723,16 +3953,15 @@ msgstr "https://collaboraonline.github.io/"
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
-"You can also help out with <a target=\"_blank\" href=\"https://"
-"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">filing a bug report</a> with all the essential steps on how to reproduce "
-"it."
+"build-code/\">step-by-step instructions</a> and build CODE from scratch. You "
+"can also help out with <a target=\"_blank\" href=\"https://collaboraonline."
+"github.io/post/translate/\">translations</a> or by <a target=\"_blank\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
+"report</a> with all the essential steps on how to reproduce it."
 msgstr ""
-"Želiš doprinijeti, ali ne znaš gdje početi? Prijeđi na stranicu s <a target="
-"\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
-">uputama</a> i programiraj KOD od nule. Možeš pomoći <a target=\"_blank\" "
+"Želiš doprinijeti, ali ne znaš gdje početi? Prijeđi na stranicu s <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/"
+"\">uputama</a> i programiraj KOD od nule. Možeš pomoći <a target=\"_blank\" "
 "href=\"https://collaboraonline.github.io/post/translate/\">prevoditi</a> ili "
 "<a target=\"_blank\" href=\"https ://collaboraonline.github.io/post/filebugs/"
 "\">slati izvještaje o greškama</a> sa svim bitnim koracima za reproduciranje "
@@ -3750,8 +3979,9 @@ msgstr ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 
-#~ msgid "Electronic signature..."
-#~ msgstr "Elektronski potpis …"
+#: src/control/Control.Menubar.js:648
+msgid "Electronic signature..."
+msgstr "Elektronski potpis …"
 
 #~ msgid "Presentation is paused - main window is hidden"
 #~ msgstr "Prezentacija je pauzirana – glavni prozor je skriven"
@@ -3764,28 +3994,28 @@ msgstr ""
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
-#~ "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
-#~ "td><td>Cut</td><td>Paste</td></tr></table>"
+#~ "keyboard shortcuts:</p><table class=\"warn-copy-"
+#~ "paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</"
+#~ "kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</"
+#~ "kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
+#~ "kbd></td></tr><tr><td>Copy</td><td>Cut</td><td>Paste</td></tr></table>"
 #~ msgstr ""
-#~ "<p>Tvoj preglednik ima vrlo ograničen pristup međuspremniku, stoga koristi "
-#~ "ove tipkovničke prečace:</p><table class=\"warn-copy-paste\""
-#~ "><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
-#~ "n><kbd>V</kbd></td></tr><tr><td>Kopiraj</td><td>Izreži</td><td>Umetni</td></t"
-#~ "r></table>"
+#~ "<p>Tvoj preglednik ima vrlo ograničen pristup međuspremniku, stoga "
+#~ "koristi ove tipkovničke prečace:</p><table class=\"warn-copy-"
+#~ "paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</"
+#~ "kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</"
+#~ "kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
+#~ "kbd></td></tr><tr><td>Kopiraj</td><td>Izreži</td><td>Umetni</td></tr></"
+#~ "table>"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
-#~ "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to "
-#~ "see more options</p><p>Close popup to ignore paste special</p>"
+#~ "press</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> "
+#~ "to see more options</p><p>Close popup to ignore paste special</p>"
 #~ msgstr ""
-#~ "<p>Tvoj preglednik ima vrlo ograničen pristup "
-#~ "međuspremniku</p><p><b>Pritisni</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd> V</kbd> za prikaz više opcija</p><p>Zatvori skočni prozor za "
+#~ "<p>Tvoj preglednik ima vrlo ograničen pristup međuspremniku</"
+#~ "p><p><b>Pritisni</b> <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
+#~ "span><kbd> V</kbd> za prikaz više opcija</p><p>Zatvori skočni prozor za "
 #~ "zanemarivanje posebnog umetanja</p>"
 
 #~ msgid "Normal View"
@@ -3793,7 +4023,8 @@ msgstr ""
 
 #~ msgid "Document cannot be saved due to expired or invalid access token."
 #~ msgstr ""
-#~ "Dokument se ne može spremiti, jer je token za pristup istekao ili neispravan."
+#~ "Dokument se ne može spremiti, jer je token za pristup istekao ili "
+#~ "neispravan."
 
 #~ msgid "Condition..."
 #~ msgstr "Uvjet …"
@@ -3824,9 +4055,9 @@ msgstr ""
 #~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
 #~ "indicator\" href=\"#slide-3\">3</a>"
 #~ msgstr ""
-#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
-#~ "\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
-#~ "href=\"#slide-3\">3</a>"
+#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
+#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
+#~ "indicator\" href=\"#slide-3\">3</a>"
 
 #~ msgid "ODF Spreadsheet (.ods)"
 #~ msgstr "ODF proračunska tablica (.ods)"
@@ -3863,16 +4094,16 @@ msgstr ""
 
 #~ msgid ""
 #~ "<p>If you would like to share larger elements of your document with other "
-#~ "applications it is necessary to first download them onto your device. To do "
-#~ "that press the \"Start download\" button below, and when complete click "
-#~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
-#~ "documents inside {productname}, there is no need to download.</p>"
+#~ "applications it is necessary to first download them onto your device. To "
+#~ "do that press the \"Start download\" button below, and when complete "
+#~ "click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting "
+#~ "between documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Ako želiš dijeliti veće elemente svog dokumenta s drugim programima, "
 #~ "najprije ih moraš preuzeti na svoj uređaj. Pritisni gumb „Započni "
-#~ "preuzimanje”, a kad dovrši, pritisni „Potvrdi kopiranje u "
-#~ "međuspremnik”.</p><p>Ako kopiraš i umećeš među dokumentima unutar %"
-#~ "productNamea, nema potrebe za preuzimanjem.</p>"
+#~ "preuzimanje”, a kad dovrši, pritisni „Potvrdi kopiranje u međuspremnik”.</"
+#~ "p><p>Ako kopiraš i umećeš među dokumentima unutar %productNamea, nema "
+#~ "potrebe za preuzimanjem.</p>"
 
 #~ msgid "Collapse Notebook Bar"
 #~ msgstr "Sklopi traku bilježnica"
@@ -3892,7 +4123,8 @@ msgstr ""
 #~ msgid ""
 #~ "No disk space left on server, please contact the server administrator to "
 #~ "continue."
-#~ msgstr "Na poslužitelju više nema slobodnog mjesta, obrati se administratoru."
+#~ msgstr ""
+#~ "Na poslužitelju više nema slobodnog mjesta, obrati se administratoru."
 
 #, javascript-format
 #~ msgid ""
@@ -3911,8 +4143,8 @@ msgstr ""
 #~ msgstr ""
 #~ "Spremanje nije uspjelo jer je dokument prevelik ili je premašena kvota "
 #~ "diska. Dokument će se sada moći samo čitati, ali ga još uvijek možeš sada "
-#~ "preuzeti i kopiju dokumenta spremiti lokalno. Za rješavanje problema obrati "
-#~ "se administratoru poslužitelja (%storageserver)."
+#~ "preuzeti i kopiju dokumenta spremiti lokalno. Za rješavanje problema "
+#~ "obrati se administratoru poslužitelja (%storageserver)."
 
 #~ msgid ""
 #~ "Document cannot be saved. Check your permissions or contact the storage "
@@ -3940,9 +4172,9 @@ msgstr ""
 
 #, javascript-format
 #~ msgid ""
-#~ "Save failed due to no disk space left on storage server. Document will now "
-#~ "be read-only. Please contact the server (%storageserver) administrator to "
-#~ "continue editing."
+#~ "Save failed due to no disk space left on storage server. Document will "
+#~ "now be read-only. Please contact the server (%storageserver) "
+#~ "administrator to continue editing."
 #~ msgstr ""
 #~ "Spremanje nije uspjelo, jer na poslužitelju spremišta više nema mjesta. "
 #~ "Dokument će se sada moći samo čitati. Kontaktiraj administratora "
@@ -4105,15 +4337,15 @@ msgstr ""
 #~ msgstr "prije %d min"
 
 #~ msgid ""
-#~ "IE11 has reached its maximum number of connections. Please see this document "
-#~ "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
-#~ "versions/windows/internet-explorer/ie-developer/general-info/"
+#~ "IE11 has reached its maximum number of connections. Please see this "
+#~ "document to increase this limit if needed: https://docs.microsoft.com/en-"
+#~ "us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
 #~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
 #~ msgstr ""
-#~ "IE11 je dostigao maksimalni broj veza. Pogledaj sljedeći dokument, gdje se "
-#~ "ovo ograničenje po potrebi može promijeniti: https://docs.microsoft.com/"
-#~ "en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
-#~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
+#~ "IE11 je dostigao maksimalni broj veza. Pogledaj sljedeći dokument, gdje "
+#~ "se ovo ograničenje po potrebi može promijeniti: https://docs.microsoft."
+#~ "com/en-us/previous-versions/windows/internet-explorer/ie-developer/"
+#~ "general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #~ msgid "Start upload"
 #~ msgstr "Započni prijenos"
@@ -4151,16 +4383,16 @@ msgstr ""
 #~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 #~ msgstr ""
 #~ "<p>Tvoj preglednik ima vrlo ograničen pristup međuspremniku, pa stoga "
-#~ "koristi ove tipkovničke prečace:<ul><li><b>Ctrl+C</b>: za "
-#~ "kopiranje.</li><li><b>Ctrl+X</b>: za izrezivanje.</li><li><b>Ctrl+P</b>: za "
-#~ "umetanje.</li></ul></p>"
+#~ "koristi ove tipkovničke prečace:<ul><li><b>Ctrl+C</b>: za kopiranje.</"
+#~ "li><li><b>Ctrl+X</b>: za izrezivanje.</li><li><b>Ctrl+P</b>: za umetanje."
+#~ "</li></ul></p>"
 
 #~ msgid "Subtitle"
 #~ msgstr "Podnaslov"
 
 #~ msgid ""
-#~ "The Personal edition is supported by volunteers and intended for individual "
-#~ "use."
+#~ "The Personal edition is supported by volunteers and intended for "
+#~ "individual use."
 #~ msgstr ""
 #~ "Osobno izdanje podržavaju volonteri i namijenjeno je za individualnu "
 #~ "upotrebu."
@@ -4205,6 +4437,5 @@ msgstr ""
 #~ msgstr "Polegnuto"
 
 #, fuzzy
-#~| msgid "Text orientation"
 #~ msgid "Toggle Page Orientation"
 #~ msgstr "Orijentacija teksta"
