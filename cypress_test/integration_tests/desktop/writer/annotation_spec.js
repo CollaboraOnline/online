@@ -56,6 +56,22 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('.cool-annotation-content-wrapper').should('not.exist');
 	});
 
+	it('Tab Nevigation', function() {
+		desktopHelper.insertComment(undefined, false);
+
+		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
+		cy.realPress('Tab');
+		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
+		cy.cGet('#annotation-cancel-new:focus-visible');
+
+		cy.realPress('Tab');
+		cy.cGet('#annotation-save-new:focus-visible');
+		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
+
+		cy.realPress('Tab');
+		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
+	});
+
 });
 
 describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
