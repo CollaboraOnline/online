@@ -27,6 +27,7 @@ interface ConfigData {
 	kind: 'shared' | 'user';
 	autotext: ConfigItem[] | null;
 	wordbook: ConfigItem[] | null;
+	browsersetting: ConfigItem[] | null;
 }
 
 interface SectionConfig {
@@ -37,6 +38,7 @@ interface SectionConfig {
 	fileAccept: string;
 	buttonText: string;
 	uploadPath: string;
+	enabledFor?: string;
 }
 
 const API_ENDPOINTS = {
@@ -50,6 +52,7 @@ const API_ENDPOINTS = {
 const PATH = {
 	autoTextUpload: () => settingConfigBasePath() + '/autotext/',
 	wordBookUpload: () => settingConfigBasePath() + '/wordbook/',
+	browserSettingsUpload: () => settingConfigBasePath() + '/browsersetting/',
 };
 
 function settingConfigBasePath(): string {
@@ -133,9 +136,23 @@ function insertConfigSections(): void {
 			buttonText: 'Upload Wordbook',
 			uploadPath: PATH.wordBookUpload(),
 		},
+		{
+			sectionTitle: 'Browser Settings',
+			listId: 'BrowserSettingsList',
+			inputId: 'BrowserSettingsFile',
+			buttonId: 'uploadBrowserSettingsButton',
+			fileAccept: '.json',
+			buttonText: 'Upload Browser Setting',
+			uploadPath: PATH.browserSettingsUpload(),
+			enabledFor: 'userconfig',
+		},
 	];
 
 	configSections.forEach((cfg) => {
+		if (cfg.enabledFor && cfg.enabledFor !== getConfigType()) {
+			return;
+		}
+
 		const sectionEl = createConfigSection(cfg);
 
 		const fileInput = sectionEl.querySelector<HTMLInputElement>(
@@ -416,8 +433,19 @@ function populateList(
 }
 
 function populateSharedConfigUI(data: ConfigData): void {
+	// todo: dynamically generate this list too from configSections
 	if (data.autotext) populateList('autotextList', data.autotext, '/autotext');
 	if (data.wordbook) populateList('wordbookList', data.wordbook, '/wordbook');
+	if (data.browsersetting && data.browsersetting.length > 0) {
+		const button = document.getElementById(
+			'uploadBrowserSettingsButton',
+		) as HTMLButtonElement | null;
+		if (button) {
+			button.disabled = true;
+		}
+
+		populateList('BrowserSettingsList', data.browsersetting, '/browsersetting');
+	}
 }
 
 document.addEventListener('DOMContentLoaded', init);
