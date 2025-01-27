@@ -164,6 +164,14 @@ class LayersCompositor extends SlideCompositor {
 	public deleteResources() {
 		this.layerDrawing.deleteResources();
 	}
+
+	public pauseVideos(slideHash: string) {
+		this.layerDrawing.pauseVideos(slideHash);
+	}
+
+	public notifyTransitionEnd(slideHash: string) {
+		this.layerDrawing.notifyTransitionEnd(slideHash);
+	}
 }
 
 SlideShow.LayersCompositor = LayersCompositor;

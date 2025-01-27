@@ -755,9 +755,8 @@ class SlideShowPresenter {
 				// presentation is changed and presentation info has been updated
 				this._presentationInfoChanged = false;
 				// clean
-				if (this._slideRenderer.isAnyVideoPlaying) {
-					this._slideRenderer.pauseVideos();
-				}
+				if (currentSlideHash)
+					this._slideCompositor.pauseVideos(currentSlideHash);
 				this._slideShowHandler.skipAllEffects();
 				this._slideShowHandler.cleanLeavingSlideStatus(
 					this._slideShowNavigator.currentSlideIndex,

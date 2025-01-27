@@ -381,7 +381,9 @@ class SlideShowHandler {
 			return;
 		}
 
-		// this.theMetaPres.setCurrentSlide(nNewSlide);
+		const sCurSlideHash = this.theMetaPres.getCurrentSlideHash();
+		this.slideCompositor.notifyTransitionEnd(sCurSlideHash);
+
 		try {
 			this.presentSlide(nNewSlide);
 		} catch (message) {
@@ -397,7 +399,6 @@ class SlideShowHandler {
 			// clear all queues
 			this.dispose();
 
-			const sCurSlideHash = this.theMetaPres.getCurrentSlideHash();
 			const aCurrentSlide = this.theMetaPres.getMetaSlide(sCurSlideHash);
 			if (
 				aCurrentSlide &&
@@ -753,6 +754,8 @@ class SlideShowHandler {
 	cleanLeavingSlideStatus(nOldSlide: number, bSkipSlideTransition: boolean) {
 		const aMetaDoc = this.theMetaPres;
 		if (nOldSlide !== undefined) {
+			this.slideCompositor.pauseVideos(aMetaDoc.getSlideHash(nOldSlide));
+
 			const oldMetaSlide = aMetaDoc.getMetaSlideByIndex(nOldSlide);
 			if (this.isEnabled()) {
 				if (
@@ -798,10 +801,6 @@ class SlideShowHandler {
 
 		if (this.isFirstAutoEffectRunning()) {
 			this.skipFirstAutoEffect();
-		}
-
-		if (this.slideRenderer.isAnyVideoPlaying) {
-			this.slideRenderer.pauseVideos();
 		}
 
 		// handle current slide
@@ -962,8 +961,6 @@ class SlideShowHandler {
 		this.slideRenderer.renderSlide(
 			slideTexture,
 			this.getSlideInfo(nSlideIndex),
-			this.theMetaPres.slideWidth,
-			this.theMetaPres.slideHeight,
 		);
 		this.presenter.stopLoader();
 	}
