@@ -417,8 +417,7 @@ function populateList(
 					throw new Error(`Delete failed: ${response.statusText}`);
 				}
 
-				// On success - remove li
-				listEl.removeChild(li);
+				await fetchAndPopulateSharedConfigs();
 			} catch (error: unknown) {
 				console.error('Error deleting file:', error);
 			}
@@ -436,16 +435,23 @@ function populateSharedConfigUI(data: ConfigData): void {
 	// todo: dynamically generate this list too from configSections
 	if (data.autotext) populateList('autotextList', data.autotext, '/autotext');
 	if (data.wordbook) populateList('wordbookList', data.wordbook, '/wordbook');
-	if (data.browsersetting && data.browsersetting.length > 0) {
-		const button = document.getElementById(
-			'uploadBrowserSettingsButton',
-		) as HTMLButtonElement | null;
-		if (button) {
-			button.disabled = true;
-		}
 
-		populateList('BrowserSettingsList', data.browsersetting, '/browsersetting');
+	const browserSettingButton = document.getElementById(
+		'uploadBrowserSettingsButton',
+	) as HTMLButtonElement | null;
+
+	if (!browserSettingButton) {
+		console.error('Something went wrong');
+		return;
 	}
+
+	if (data.browsersetting && data.browsersetting.length > 0) {
+		browserSettingButton.style.display = 'none';
+	} else {
+		browserSettingButton.style.removeProperty('display');
+	}
+	if (data.browsersetting)
+		populateList('BrowserSettingsList', data.browsersetting, '/browsersetting');
 }
 
 document.addEventListener('DOMContentLoaded', init);
