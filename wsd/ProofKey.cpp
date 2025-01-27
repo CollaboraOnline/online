@@ -92,7 +92,7 @@ std::vector<unsigned char> Proof::Base64ToBytes(const std::string &str)
     char c = 0;
     std::vector<unsigned char> vec;
     while (decoder.get(c))
-        vec.push_back(c);
+        vec.push_back(static_cast<unsigned char>(c));
 
     return vec;
 }
