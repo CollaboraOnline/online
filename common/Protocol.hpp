@@ -311,8 +311,8 @@ namespace COOLProtocol
         std::string ret(message, abbrevLen);
         for (size_t i = abbrevLen; i < messageLen; ++i)
         {
-            const uint8_t unit = message[i];
-            const bool continuation = (unit & 0xC0) == 0x80;
+            const char unit = message[i];
+            const bool continuation = (static_cast<uint8_t>(unit) & 0xC0) == 0x80;
             if (!continuation) // likely
                 break;
             ret.push_back(unit);
