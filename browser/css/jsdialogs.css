@@ -748,6 +748,15 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 /* checkbox */
 
+#box1 #buttonbox1.jsdialog {
+	display: flex !important;
+}
+
+#box1 .d-flex.justify-content-center:has(.ui-pushbutton.hidden),
+#box1 .d-flex.justify-content-center:has(.ui-pushbutton[disabled]) {
+	display: none;
+}
+
 .jsdialog.checkbutton {
 	white-space: nowrap;
 	display: flex;
