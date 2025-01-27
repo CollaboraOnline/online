@@ -749,22 +749,22 @@ protected:
         char scratch[16];
 
         // All unfragmented frames must have the Fin bit.
-        scratch[slen++] = WSFrameMask::Fin | flags;
+        scratch[slen++] = static_cast<char>(WSFrameMask::Fin | flags);
 
         int maskFlag = _isMasking ? 0x80 : 0;
         if (len < 126)
         {
-            scratch[slen++] = (char)(len | maskFlag);
+            scratch[slen++] = static_cast<char>(len | maskFlag);
         }
         else if (len <= 0xffff)
         {
-            scratch[slen++] = (char)(126 | maskFlag);
+            scratch[slen++] = static_cast<char>(126 | maskFlag);
             scratch[slen++] = static_cast<char>((len >> 8) & 0xff);
             scratch[slen++] = static_cast<char>((len >> 0) & 0xff);
         }
         else
         {
-            scratch[slen++] = (char)(127 | maskFlag);
+            scratch[slen++] = static_cast<char>(127 | maskFlag);
             scratch[slen++] = static_cast<char>((len >> 56) & 0xff);
             scratch[slen++] = static_cast<char>((len >> 48) & 0xff);
             scratch[slen++] = static_cast<char>((len >> 40) & 0xff);
