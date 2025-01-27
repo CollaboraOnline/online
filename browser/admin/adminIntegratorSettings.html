@@ -28,36 +28,7 @@
   </head>
   <body>
     <div id="fileControls">
-      <div id="sharedConfigs">
-        <div class="section">
-          <h3>Autotext</h3>
-          <ul id="autotextList"></ul>
-          <input type="file" class="hidden" id="autotextFile" accept=".bau" />
-          <button
-            id="uploadAutotextButton"
-            type="submit"
-            class="inline-button button button--size-normal button--text-only button--vue-secondary"
-          >
-            <span class="button__wrapper">
-              <span class="button__text"> Upload Autotext </span>
-            </span>
-          </button>
-        </div>
-        <div class="section">
-          <h3>Wordbook</h3>
-          <input type="file" class="hidden" id="wordbookFile" accept=".dic" />
-          <ul id="wordbookList"></ul>
-          <button
-            id="uploadWordbookButton"
-            type="submit"
-            class="inline-button button button--size-normal button--text-only button--vue-secondary"
-          >
-            <span class="button__wrapper">
-              <span class="button__text">   Upload Wordbook </span>
-            </span>
-          </button>
-        </div>
-      </div>
+      <div id="allConfigSection"></div>
       <input
         type="hidden"
         id="initial-variables"
