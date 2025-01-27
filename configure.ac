@@ -989,6 +989,7 @@ WELCOME_CONFIG_FRAGMENT=
 HOME_MODE_CONFIGURATION=
 ENABLE_WELCOME_MESSAGE=0
 WELCOME_URL=
+CONFIG_INTERFACE_FRAGMENT=
 if test -n "$with_welcome_url"; then
     WELCOME_URL=$with_welcome_url
     ENABLE_WELCOME_MESSAGE=1
@@ -999,12 +1000,16 @@ else
     WELCOME_CONFIG_FRAGMENT="<welcome>
       <enable type=\"bool\" desc=\"Controls whether the welcome screen should be shown to the users on new install and updates. When enabled, your custom welcome screen must be created at /usr/share/coolwsd/browser/dist/welcome/welcome.html.\" default=\"false\">false</enable>
     </welcome>"
+    CONFIG_INTERFACE_FRAGMENT="<brandProductName desc=\"Change the displayed name the application will have for the user.\" type=\"string\"></brandProductName>
+    <brandProductURL desc=\"Change the product URL, empty makes disable the link\" type=\"string\">https://www.collaboraonline.com</brandProductURL>"
 fi
 
 AC_SUBST([WELCOME_CONFIG_FRAGMENT])
 AM_SUBST_NOTMAKE(WELCOME_CONFIG_FRAGMENT)
 AC_SUBST([HOME_MODE_CONFIGURATION])
 AM_SUBST_NOTMAKE(HOME_MODE_CONFIGURATION)
+AC_SUBST([CONFIG_INTERFACE_FRAGMENT])
+AM_SUBST_NOTMAKE(CONFIG_INTERFACE_FRAGMENT)
 AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE],$ENABLE_WELCOME_MESSAGE,[Should the Release notes message be shown on upgrade])
 AM_CONDITIONAL([ENABLE_WELCOME_MESSAGE], [test "$ENABLE_WELCOME_MESSAGE" = "1"])
 AC_DEFINE_UNQUOTED([WELCOME_URL],["$WELCOME_URL"],[The welcome url of the build.])

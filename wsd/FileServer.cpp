@@ -1718,6 +1718,11 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     #else // configurable
         std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
         std::string autoShowWelcome = stringifyBoolFromConfig(config, "welcome.enable", false);
+
+        std::string brandProductURL = ConfigUtil::getConfigValue<std::string>(config, "user_interface.brandProductURL", "");
+        std::string brandProductName = ConfigUtil::getConfigValue<std::string>(config, "user_interface.brandProductName", "");
+        Poco::replaceInPlace(preprocess, std::string("%PRODUCT_BRANDING_NAME%"), brandProductName);
+        Poco::replaceInPlace(preprocess, std::string("%PRODUCT_BRANDING_URL%"), brandProductURL);
     #endif
 
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);

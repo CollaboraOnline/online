@@ -259,6 +259,9 @@
       <mode type="string" desc="Controls the user interface style. The 'default' means: Take the value from ui_defaults, or decide for one of compact or tabbed (default|compact|tabbed)" default="default">default</mode>
       <use_integration_theme desc="Use theme from the integrator" type="bool" default="true">true</use_integration_theme>
       <statusbar_save_indicator desc="Show saving status indicator in the statusbar" type="bool" default="true">true</statusbar_save_indicator>
+
+      @CONFIG_INTERFACE_FRAGMENT@
+
     </user_interface>
 
     <storage desc="Backend storage">
