@@ -28,6 +28,7 @@ interface ConfigData {
 	autotext: ConfigItem[] | null;
 	wordbook: ConfigItem[] | null;
 	browsersetting: ConfigItem[] | null;
+	xcu: ConfigItem[] | null;
 }
 
 interface SectionConfig {
@@ -53,6 +54,7 @@ const PATH = {
 	autoTextUpload: () => settingConfigBasePath() + '/autotext/',
 	wordBookUpload: () => settingConfigBasePath() + '/wordbook/',
 	browserSettingsUpload: () => settingConfigBasePath() + '/browsersetting/',
+	XcuUpload: () => settingConfigBasePath() + '/xcu/',
 };
 
 function settingConfigBasePath(): string {
@@ -145,6 +147,15 @@ function insertConfigSections(): void {
 			buttonText: 'Upload Browser Setting',
 			uploadPath: PATH.browserSettingsUpload(),
 			enabledFor: 'userconfig',
+		},
+		{
+			sectionTitle: 'Xcu',
+			listId: 'XcuList',
+			inputId: 'XcuFile',
+			buttonId: 'uploadXcuButton',
+			fileAccept: '.xcu',
+			buttonText: 'Upload Xcu',
+			uploadPath: PATH.XcuUpload(),
 		},
 	];
 
@@ -432,26 +443,36 @@ function populateList(
 }
 
 function populateSharedConfigUI(data: ConfigData): void {
-	// todo: dynamically generate this list too from configSections
-	if (data.autotext) populateList('autotextList', data.autotext, '/autotext');
-	if (data.wordbook) populateList('wordbookList', data.wordbook, '/wordbook');
-
 	const browserSettingButton = document.getElementById(
 		'uploadBrowserSettingsButton',
 	) as HTMLButtonElement | null;
 
-	if (!browserSettingButton) {
-		console.error('Something went wrong');
-		return;
+	if (browserSettingButton) {
+		if (data.browsersetting && data.browsersetting.length > 0) {
+			browserSettingButton.style.display = 'none';
+		} else {
+			browserSettingButton.style.removeProperty('display');
+		}
 	}
 
-	if (data.browsersetting && data.browsersetting.length > 0) {
-		browserSettingButton.style.display = 'none';
-	} else {
-		browserSettingButton.style.removeProperty('display');
+	const xcuSettingButton = document.getElementById(
+		'uploadXcuButton',
+	) as HTMLButtonElement | null;
+
+	if (xcuSettingButton) {
+		if (data.xcu && data.xcu.length > 0) {
+			xcuSettingButton.style.display = 'none';
+		} else {
+			xcuSettingButton.style.removeProperty('display');
+		}
 	}
+
+	// todo: dynamically generate this list too from configSections
+	if (data.autotext) populateList('autotextList', data.autotext, '/autotext');
+	if (data.wordbook) populateList('wordbookList', data.wordbook, '/wordbook');
 	if (data.browsersetting)
 		populateList('BrowserSettingsList', data.browsersetting, '/browsersetting');
+	if (data.xcu) populateList('XcuList', data.xcu, '/xcu');
 }
 
 document.addEventListener('DOMContentLoaded', init);
