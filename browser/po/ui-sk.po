@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 11:16+0100\n"
-"PO-Revision-Date: 2024-07-13 21:09+0000\n"
+"PO-Revision-Date: 2025-01-28 15:02+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sk/>\n"
-"Language: \n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -260,19 +260,19 @@ msgstr "O programe"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "História CPU"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "História pamäte"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Pamäť"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Počkajte, klaster Kubernetes sa škáluje..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -342,7 +342,7 @@ msgstr "Odoslané"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Spojenia"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -422,15 +422,15 @@ msgstr "Dokument je migrovaný na nový server, skúša sa znova..."
 
 #: js/global.js:1480
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Z controllera sa nepodarilo získať RouteToken"
 
 #: src/canvas/sections/CommentListSection.ts:163
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Komentár je práve upravovaný"
 
 #: src/canvas/sections/CommentListSection.ts:164
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Uložte alebo zrušte aktuálne upravovaný komentár."
 
 #: src/canvas/sections/CommentListSection.ts:1163
 msgid "Modify"
@@ -467,15 +467,15 @@ msgstr "Vyriešiť vlákno"
 
 #: src/canvas/sections/CommentListSection.ts:1199
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Komentár na základnú úroveň"
 
 #: src/canvas/sections/CommentListSection.ts:1205
 msgid "Show on the side"
-msgstr ""
+msgstr "Zobraziť na strane"
 
 #: src/canvas/sections/CommentListSection.ts:1205
 msgid "Show comment bigger"
-msgstr ""
+msgstr "Komentár zobraziť zväčšený"
 
 #: src/canvas/sections/CommentListSection.ts:1233
 #: src/control/Control.JSDialogBuilder.js:1893
@@ -488,17 +488,18 @@ msgstr "Poznámka"
 #: src/canvas/sections/CommentListSection.ts:1464
 #: src/canvas/sections/CommentListSection.ts:2367
 msgid "Comments Updated"
-msgstr ""
+msgstr "Komentáre aktualizované"
 
 #: src/canvas/sections/CommentListSection.ts:1452
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Tento komentár bol odstránený iným používateľom."
 
 #: src/canvas/sections/CommentListSection.ts:1465
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Komentár bol aktualizovaný iným používateľom. Chcete prepísať jeho zmeny?"
 
 #: src/canvas/sections/CommentListSection.ts:1466 src/core/Socket.js:1419
 msgid "Overwrite"
@@ -506,16 +507,17 @@ msgstr "Prepísať"
 
 #: src/canvas/sections/CommentListSection.ts:1467
 msgid "Update"
-msgstr ""
+msgstr "Aktualizovať"
 
 #: src/canvas/sections/CommentListSection.ts:1568
 #: src/canvas/sections/CommentListSection.ts:1640
 msgid "Autosaved"
-msgstr ""
+msgstr "Automaticky uložené"
 
 #: src/canvas/sections/CommentListSection.ts:2368
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"Iný používateľ aktualizoval komentáre. Chcete pokračovať v aktualizácii?"
 
 #: src/canvas/sections/CommentSection.ts:306
 msgid "Open menu"
@@ -537,19 +539,19 @@ msgstr "Vyriešené"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:417
 msgid "Document contains unsupported video"
-msgstr ""
+msgstr "Dokument obsahuje nepodporované video"
 
 #: src/canvas/sections/URLPopUpSection.ts:58
 msgid "Copy link location"
-msgstr ""
+msgstr "Skopírovať umiestnenie odkazu"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
 msgid "Edit link"
-msgstr ""
+msgstr "Upraviť odkaz"
 
 #: src/canvas/sections/URLPopUpSection.ts:78
 msgid "Remove link"
-msgstr ""
+msgstr "Odstrániť odkaz"
 
 #: src/control/ColorPicker.ts:269
 msgid "No color"
@@ -569,7 +571,7 @@ msgstr "\"Pomalé proxy\""
 
 #: src/control/Control.AboutDialog.ts:178
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Kopírovať všetky informácie o verzii v angličtine"
 
 #: src/control/Control.AddressInputField.ts:66
 msgid "cell address"
@@ -585,11 +587,11 @@ msgstr "Otvoriť odkaz"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Kopírovanie externých zdrojov nie je povolené"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Zrejme ste skopírovali výber, ktorý obsahuje externé obrázky."
 
 #: src/control/Control.AlertDialog.js:68
 msgid ""
@@ -597,6 +599,9 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Sťahovanie externých zdrojov je zakázané, ale obrázky je stále možné "
+"vkladať. Kliknite pravým tlačidlom na obrázok, zvoľte „Skopírovať obrázok“ a "
+"vložte ho do dokumentu."
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
@@ -732,320 +737,320 @@ msgstr "Preberanie zlyhalo"
 
 #: src/control/Control.ESignature.ts:131
 msgid "Andorra"
-msgstr ""
+msgstr "Andora"
 
 #: src/control/Control.ESignature.ts:132
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Spojené arabské emiráty"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Albania"
-msgstr ""
+msgstr "Albánsko"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Armenia"
-msgstr ""
+msgstr "Arménsko"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Argentina"
-msgstr ""
+msgstr "Argentína"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Austria"
-msgstr ""
+msgstr "Rakúsko"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Australia"
-msgstr ""
+msgstr "Austrália"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Åland Islands"
-msgstr ""
+msgstr "Ålandské ostrovy"
 
 #: src/control/Control.ESignature.ts:139
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbajdžan"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosna a Hercegovina"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Belgium"
-msgstr ""
+msgstr "Belgicko"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulharsko"
 
 #: src/control/Control.ESignature.ts:143
 msgid "Brazil"
-msgstr ""
+msgstr "Brazília"
 
 #: src/control/Control.ESignature.ts:144
 msgid "Belarus"
-msgstr ""
+msgstr "Bielorusko"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Canada"
-msgstr ""
+msgstr "Kanada"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Switzerland"
-msgstr ""
+msgstr "Švajčiarsko"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Chile"
-msgstr ""
+msgstr "Čile"
 
 #: src/control/Control.ESignature.ts:148
 msgid "China"
-msgstr ""
+msgstr "Čína"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Cyprus"
-msgstr ""
+msgstr "Cyprus"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Czech Republic"
-msgstr ""
+msgstr "Česko"
 
 #: src/control/Control.ESignature.ts:151
 msgid "Germany"
-msgstr ""
+msgstr "Nemecko"
 
 #: src/control/Control.ESignature.ts:152
 msgid "Denmark"
-msgstr ""
+msgstr "Dánsko"
 
 #: src/control/Control.ESignature.ts:153
 msgid "Estonia"
-msgstr ""
+msgstr "Estónsko"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Spain"
-msgstr ""
+msgstr "Španielsko"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Finland"
-msgstr ""
+msgstr "Fínsko"
 
 #: src/control/Control.ESignature.ts:156
 msgid "France"
-msgstr ""
+msgstr "Francúzsko"
 
 #: src/control/Control.ESignature.ts:157
 msgid "United Kingdom"
-msgstr ""
+msgstr "Spojené kráľovstvo"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Georgia"
-msgstr ""
+msgstr "Gruzínsko"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Guernsey"
-msgstr ""
+msgstr "Guernsey"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Greece"
-msgstr ""
+msgstr "Grécko"
 
 #: src/control/Control.ESignature.ts:161
 msgid "Croatia"
-msgstr ""
+msgstr "Chorvátsko"
 
 #: src/control/Control.ESignature.ts:162
 msgid "Hungary"
-msgstr ""
+msgstr "Maďarsko"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Indonesia"
-msgstr ""
+msgstr "Indonézia"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Ireland"
-msgstr ""
+msgstr "Írsko"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Israel"
-msgstr ""
+msgstr "Izrael"
 
 #: src/control/Control.ESignature.ts:166
 msgid "India"
-msgstr ""
+msgstr "India"
 
 #: src/control/Control.ESignature.ts:167
 msgid "Iceland"
-msgstr ""
+msgstr "Island"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Italy"
-msgstr ""
+msgstr "Taliansko"
 
 #: src/control/Control.ESignature.ts:169
 msgid "Japan"
-msgstr ""
+msgstr "Japonsko"
 
 #: src/control/Control.ESignature.ts:170
 msgid "Kenya"
-msgstr ""
+msgstr "Keňa"
 
 #: src/control/Control.ESignature.ts:171
 msgid "South Korea"
-msgstr ""
+msgstr "Južná Kórea"
 
 #: src/control/Control.ESignature.ts:172
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Kazachstan"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Lichtenštajnsko"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Lithuania"
-msgstr ""
+msgstr "Litva"
 
 #: src/control/Control.ESignature.ts:175
 msgid "Luxembourg"
-msgstr ""
+msgstr "Luxembursko"
 
 #: src/control/Control.ESignature.ts:176
 msgid "Latvia"
-msgstr ""
+msgstr "Lotyšsko"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Monaco"
-msgstr ""
+msgstr "Slovenčina"
 
 #: src/control/Control.ESignature.ts:178
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "Moldavsko"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Montenegro"
-msgstr ""
+msgstr "Čierna Hora"
 
 #: src/control/Control.ESignature.ts:180
 msgid "North Macedonia, Republic of"
-msgstr ""
+msgstr "Severné Macedónsko"
 
 #: src/control/Control.ESignature.ts:181
 msgid "Malta"
-msgstr ""
+msgstr "Malta"
 
 #: src/control/Control.ESignature.ts:182
 msgid "Mexico"
-msgstr ""
+msgstr "Mexiko"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Netherlands"
-msgstr ""
+msgstr "Holandsko"
 
 #: src/control/Control.ESignature.ts:184
 msgid "Norway"
-msgstr ""
+msgstr "Nórsko"
 
 #: src/control/Control.ESignature.ts:185
 msgid "New Zealand"
-msgstr ""
+msgstr "Nový Zéland"
 
 #: src/control/Control.ESignature.ts:186
 msgid "Philippines"
-msgstr ""
+msgstr "Filipíny"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Poland"
-msgstr ""
+msgstr "Poľsko"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Portugal"
-msgstr ""
+msgstr "Portugalsko"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Qatar"
-msgstr ""
+msgstr "Katar"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Romania"
-msgstr ""
+msgstr "Rumunsko"
 
 #: src/control/Control.ESignature.ts:191
 msgid "Serbia"
-msgstr ""
+msgstr "Srbsko"
 
 #: src/control/Control.ESignature.ts:192
 msgid "Russian Federation"
-msgstr ""
+msgstr "Ruská federácia"
 
 #: src/control/Control.ESignature.ts:193
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Saudská Arábia"
 
 #: src/control/Control.ESignature.ts:194
 msgid "Sweden"
-msgstr ""
+msgstr "Švédsko"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Singapore"
-msgstr ""
+msgstr "Singapur"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Slovenia"
-msgstr ""
+msgstr "Slovinsko"
 
 #: src/control/Control.ESignature.ts:197
 msgid "Slovakia"
-msgstr ""
+msgstr "Slovensko"
 
 #: src/control/Control.ESignature.ts:198
 msgid "San Marino"
-msgstr ""
+msgstr "San Maríno"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Turkey"
-msgstr ""
+msgstr "Turecko"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Taiwan"
 
 #: src/control/Control.ESignature.ts:201
 msgid "Ukraine"
-msgstr ""
+msgstr "Ukrajina"
 
 #: src/control/Control.ESignature.ts:202
 msgid "United States of America"
-msgstr ""
+msgstr "Spojené štáty americké"
 
 #: src/control/Control.ESignature.ts:203
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Vatikán"
 
 #: src/control/Control.ESignature.ts:204
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovo"
 
 #: src/control/Control.ESignature.ts:205
 msgid "South Africa"
-msgstr ""
+msgstr "Južná Afrika"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Dokument sa podpisuje a bude dostupný v krátkom čase"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
-msgstr ""
+msgstr "Štát:"
 
 #: src/control/Control.ESignatureDialog.ts:120
 msgid "Provider:"
-msgstr ""
+msgstr "Poskytovateľ:"
 
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Vložiť elektronický podpis"
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -1075,7 +1080,7 @@ msgstr ""
 
 #: src/control/Control.JSDialog.js:283
 msgid "Close dialog"
-msgstr ""
+msgstr "Zavrieť dialógové okno"
 
 #: src/control/Control.JSDialogBuilder.js:498
 msgid "Solid"
@@ -1284,7 +1289,7 @@ msgstr "PDF dokument (.pdf)"
 
 #: src/control/Control.Menubar.js:96 src/control/Control.Menubar.js:728
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "HTML súbor (.html)"
 
 #: src/control/Control.Menubar.js:101 src/control/Control.Menubar.js:430
 #: src/control/Control.Menubar.js:590 src/control/Control.Menubar.js:736
@@ -1332,7 +1337,7 @@ msgstr "Zobrazovať stavový riadok"
 #: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:463
 #: src/control/Control.Menubar.js:625 src/control/Control.Menubar.js:764
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Skryť hlavné menu"
 
 #: src/control/Control.Menubar.js:147 src/control/Control.Menubar.js:464
 #: src/control/Control.Menubar.js:620 src/control/Control.Menubar.js:765
@@ -1343,7 +1348,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:504
 #: src/control/Control.NotebookbarWriter.js:1526
 msgid "Dark Mode"
-msgstr ""
+msgstr "Tmavý mód"
 
 #: src/control/Control.Menubar.js:148 src/control/Control.Menubar.js:465
 #: src/control/Control.Menubar.js:621 src/control/Control.Menubar.js:766
@@ -1354,7 +1359,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:511
 #: src/control/Control.NotebookbarWriter.js:1533
 msgid "Invert Background"
-msgstr ""
+msgstr "Invertovať pozadie"
 
 #: src/control/Control.Menubar.js:157 src/control/Control.Menubar.js:476
 #: src/control/Control.Menubar.js:628 src/control/Control.Menubar.js:778
@@ -1375,12 +1380,12 @@ msgstr "Všetko"
 #: src/control/Control.NotebookbarImpress.js:1277
 #: src/control/Control.NotebookbarWriter.js:1129
 msgid "Smart Picker"
-msgstr ""
+msgstr "Chytrý výber"
 
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:791
 msgid "AI Assistant"
-msgstr ""
+msgstr "AI Asistent"
 
 #: src/control/Control.Menubar.js:234
 msgid "Text orientation"
@@ -1459,7 +1464,7 @@ msgstr "Vlastnosti"
 #: src/control/Control.Menubar.js:370 src/control/Control.Menubar.js:1047
 #: src/control/Control.NotebookbarWriter.js:414
 msgid "Screen Reading"
-msgstr ""
+msgstr "Čítanie obrazovky"
 
 #: src/control/Control.Menubar.js:383
 #: src/control/Control.NotebookbarWriter.js:380
@@ -1506,7 +1511,7 @@ msgstr "Odoslať spätnú väzbu"
 #: src/control/Control.ServerAuditDialog.ts:186
 #: src/control/Control.ServerAuditDialog.ts:187
 msgid "Server audit"
-msgstr ""
+msgstr "Audit serveru"
 
 #: src/control/Control.Menubar.js:392 src/control/Control.Menubar.js:568
 #: src/control/Control.Menubar.js:705 src/control/Control.Menubar.js:992
@@ -1541,42 +1546,42 @@ msgstr "Uložiť poznámky"
 #: src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarBuilder.js:437
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "HTML Dokument (.html)"
 
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:468
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:480
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarBuilder.js:492
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Aktuálnu snímku ako raster (.bmp)"
 
 #: src/control/Control.Menubar.js:419
 #: src/control/Control.NotebookbarBuilder.js:504
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Aktuálnu snímku ako Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.js:420
 #: src/control/Control.NotebookbarBuilder.js:516
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Aktuálnu snímku ako Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.js:421
 #: src/control/Control.NotebookbarBuilder.js:528
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Aktuálnu snímku ako Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.js:427
 #: src/control/Control.NotebookbarBuilder.js:666
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Celostránkové snímky"
 
 #: src/control/Control.Menubar.js:428
 #: src/control/Control.NotebookbarBuilder.js:670
