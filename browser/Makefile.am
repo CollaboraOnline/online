@@ -235,12 +235,12 @@ COOL_JS_LST =\
 	src/app/DocEvents.ts \
 	src/app/GraphicSelectionMiddleware.ts \
 	src/app/SearchService.ts \
+	src/app/Util.ts \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
 	src/UNO/Key.js \
 	src/core/Log.js \
-	src/core/CoolUtil.ts \
 	src/core/Util.js \
 	src/core/LOUtil.js \
 	src/core/geometry.ts \
