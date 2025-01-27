@@ -674,18 +674,22 @@ void Admin::pollingThread()
             lastNet = now;
         }
 
-        int cleanupWait = _cleanupIntervalMs;
+        std::chrono::milliseconds cleanupWait(_cleanupIntervalMs);
         if (_defDocProcSettings.getCleanupSettings().getEnable())
         {
-            cleanupWait
-                -= std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCleanup).count();
-            if (cleanupWait <= MinStatsIntervalMs / 2) // Close enough
+            if (now > lastCleanup)
+            {
+                cleanupWait -=
+                    std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCleanup);
+            }
+
+            if (cleanupWait <= std::chrono::milliseconds(MinStatsIntervalMs / 2)) // Close enough
             {
                 cleanupResourceConsumingDocs();
                 if (_defDocProcSettings.getCleanupSettings().getLostKitGracePeriod())
                     cleanupLostKits();
 
-                cleanupWait += _cleanupIntervalMs;
+                cleanupWait += std::chrono::milliseconds(_cleanupIntervalMs);
                 lastCleanup = now;
             }
         }
@@ -714,7 +718,7 @@ void Admin::pollingThread()
 
         // Handle websockets & other work.
         const auto timeout = std::chrono::milliseconds(capAndRoundInterval(
-            std::min(std::min(std::min(cpuWait, memWait), netWait), cleanupWait)));
+            std::min<int>(std::min(std::min(cpuWait, memWait), netWait), cleanupWait.count())));
         LOGA_TRC(Admin, "Admin poll for " << timeout);
         poll(timeout); // continue with ms for admin, settings etc.
     }
