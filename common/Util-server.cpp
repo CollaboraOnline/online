@@ -144,34 +144,51 @@ std::size_t getFromCGroupV2(const std::string& key)
 
 namespace Util
 {
-DirectoryCounter::DirectoryCounter(const char* procPath)
-    : _tasks(opendir(procPath))
-{
-    if (!_tasks)
-        LOG_ERR("No proc mounted, can't count threads");
-}
 
-DirectoryCounter::~DirectoryCounter() { closedir(reinterpret_cast<DIR*>(_tasks)); }
+class CounterImpl {
+private:
+    DIR* _dir = nullptr;
 
-int DirectoryCounter::count()
-{
-    auto dir = reinterpret_cast<DIR*>(_tasks);
-
-    if (!dir)
-        return -1;
-
-    rewinddir(dir);
-
-    int tasks = 0;
-    struct dirent* i;
-    while ((i = readdir(dir)))
+public:
+    CounterImpl(const char* procPath)
+        : _dir(opendir(procPath))
     {
-        if (i->d_name[0] != '.')
-            tasks++;
+        if (!_dir)
+            LOG_ERR("No proc mounted for procPath " << procPath << ", can't count threads");
     }
 
-    return tasks;
-}
+    ~CounterImpl() { closedir(_dir); }
+
+    int count()
+    {
+        if (!_dir)
+            return -1;
+
+        rewinddir(_dir);
+
+        int tasks = 0;
+        struct dirent* i;
+        while ((i = readdir(_dir)))
+        {
+            if (i->d_name[0] != '.')
+                tasks++;
+        }
+
+        return tasks;
+    }
+};
+
+ThreadCounter::ThreadCounter() : _impl(new CounterImpl("/proc/self/task")) {}
+
+ThreadCounter::~ThreadCounter() = default;
+
+int ThreadCounter::count() { return _impl->count(); }
+
+FDCounter::FDCounter() : _impl(new CounterImpl("/proc/self/fd")) {}
+
+FDCounter::~FDCounter() = default;
+
+int FDCounter::count() { return _impl->count(); }
 
 #ifdef __FreeBSD__
 ThreadCounter::ThreadCounter() { pid = getpid(); }
