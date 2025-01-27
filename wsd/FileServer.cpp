@@ -509,10 +509,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                 fileInfo->set("UserSettings", userSettings);
             }
 
-            fileInfo->set("UserCanWrite", (requestDetails.getParam("permission") != "readonly") ? "true": "false");
+            fileInfo->set("UserCanWrite", (requestDetails.getParam("permission") != "readonly") ? true: false);
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
             fileInfo->set("LastModifiedTime", localFile->getLastModifiedTime());
-            fileInfo->set("EnableOwnerTermination", "true");
+            fileInfo->set("EnableOwnerTermination", true);
 
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
