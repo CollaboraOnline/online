@@ -717,6 +717,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		};
 
 		app.map.sendUnoCommand('.uno:TransformDialog', parameters);
+
+		docLayer.requestNewFiledBasedViewTiles();
 	}
 
 	onMouseUp(point: number[], e: MouseEvent): void {

@@ -3106,6 +3106,18 @@ L.CanvasTileLayer = L.Layer.extend({
 		return verticalOffset;
 	},
 
+	// If viewing multi-page PDF files, no precise tracking of invalidations is implemented yet,
+	// so this allows requesting new tiles when we know a viewed PDF changes for some special
+	// reason.
+	requestNewFiledBasedViewTiles: function() {
+		if (!app.file.fileBasedView) {
+			return;
+		}
+
+		this._requestNewTiles();
+		this.redraw();
+	},
+
 	// Given a character code and a UNO keycode, send a "key" message to coolwsd.
 	//
 	// "type" is either "input" for key presses (akin to the DOM "keypress"
