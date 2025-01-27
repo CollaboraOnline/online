@@ -126,6 +126,12 @@ coolwsd_LDADD += ${OPENSSL_LIBS}
 coolconfig_LDADD += ${OPENSSL_LIBS}
 endif
 
+if ENABLE_MACOS
+util_platform_cpp = common/Util-macos.cpp
+else
+util_platform_cpp = common/Util-linux.cpp
+endif
+
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=browser/node_modules --exclude=browser/dist *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
@@ -148,6 +154,7 @@ shared_sources = common/FileUtil.cpp \
                  common/Uri.cpp \
                  common/Util.cpp \
                  common/Util-server.cpp \
+                 $(util_platform_cpp) \
                  common/Util-unix.cpp \
                  common/ConfigUtil.cpp \
                  common/Authorization.cpp \
@@ -224,6 +231,7 @@ connect_SOURCES = tools/Connect.cpp \
                   common/StringVector.cpp \
                   common/Util.cpp \
                   common/Util-server.cpp \
+                  $(util_platform_cpp) \
                   common/Util-unix.cpp
 
 connect_LDADD = libglobals.a
@@ -236,6 +244,7 @@ lokitclient_SOURCES = common/Log.cpp \
                       common/TraceEvent.cpp \
                       common/Util.cpp \
                       common/Util-server.cpp \
+                      $(util_platform_cpp) \
                       common/Util-unix.cpp
 
 lokitclient_LDADD = libglobals.a
@@ -342,6 +351,7 @@ clientnb_SOURCES = net/clientnb.cpp \
                    common/StringVector.cpp \
                    common/Util.cpp \
                    common/Util-server.cpp \
+                   $(util_platform_cpp) \
                    common/Util-unix.cpp
 
 clientnb_LDADD = libsimd.a libglobals.a
@@ -357,6 +367,7 @@ coolbench_SOURCES = tools/Benchmark.cpp \
                     common/StringVector.cpp \
                     common/Util.cpp \
                     common/Util-server.cpp \
+                    $(util_platform_cpp) \
                     common/Util-unix.cpp \
                     common/Simd.cpp
 
