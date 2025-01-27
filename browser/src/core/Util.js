@@ -3,7 +3,7 @@
  * L.Util contains various utility functions used throughout Leaflet code.
  */
 
-/* global cool */
+/* global Util */
 
 L.Util = {
 	// extend an object with properties of one or more other objects
@@ -44,33 +44,33 @@ L.Util = {
 	},
 
 	// return unique ID of an object
-	stamp: cool.Util.stamp,
+	stamp: Util.stamp,
 
 	// return a function that won't be called more often than the given interval
-	throttle: cool.Util.throttle,
+	throttle: Util.throttle,
 
 	// wrap the given number to lie within a certain range (used for wrapping longitude)
-	wrapNum: cool.Util.wrapNum,
+	wrapNum: Util.wrapNum,
 
 	// do nothing (used as a noop throughout the code)
-	falseFn: cool.Util.falseFn,
+	falseFn: Util.falseFn,
 
 	// round a given number to a given precision
-	formatNum: cool.Util.formatNum,
+	formatNum: Util.formatNum,
 
 	// removes given prefix and suffix from the string if exists
 	// if suffix is not specified prefix is trimmed from both end of string
 	// trim whitespace from both sides of a string if prefix and suffix are not given
-	trim: cool.Util.trim,
+	trim: Util.trim,
 
 	// removes prefix from string if string starts with that prefix
-	trimStart: cool.Util.trimStart,
+	trimStart: Util.trimStart,
 
 	// removes suffix from string if string ends with that suffix
-	trimEnd: cool.Util.trimEnd,
+	trimEnd: Util.trimEnd,
 
 	// split a string into words
-	splitWords: cool.Util.splitWords,
+	splitWords: Util.splitWords,
 
 	// set options to an object, inheriting parent's options as well
 	setOptions: function (obj, options) {
@@ -83,37 +83,37 @@ L.Util = {
 		return obj.options;
 	},
 
-	round: cool.Util.round,
+	round: Util.round,
 
 	// super-simple templating facility, used for TileLayer URLs
-	template: cool.Util.template,
+	template: Util.template,
 
-	isArray: cool.Util.isArray,
+	isArray: Util.isArray,
 
 	// minimal image URI, set to an image when disposing to flush memory
-	emptyImageUrl: cool.Util.emptyImageUrl,
+	emptyImageUrl: Util.emptyImageUrl,
 
-	toggleFullScreen: cool.Util.toggleFullScreen,
+	toggleFullScreen: Util.toggleFullScreen,
 
-	isEmpty: cool.Util.isEmpty,
+	isEmpty: Util.isEmpty,
 
-	mm100thToInch: cool.Util.mm100thToInch,
+	mm100thToInch: Util.mm100thToInch,
 
-	getTextWidth: cool.Util.getTextWidth,
+	getTextWidth: Util.getTextWidth,
 
-	getProduct: cool.Util.getProduct,
+	getProduct: Util.getProduct,
 
-	replaceCtrlAltInMac: cool.Util.replaceCtrlAltInMac,
+	replaceCtrlAltInMac: Util.replaceCtrlAltInMac,
 
-	randomString: cool.Util.randomString,
+	randomString: Util.randomString,
 
-	requestAnimFrame: cool.Util.requestAnimFrame,
-	cancelAnimFrame: cool.Util.cancelAnimFrame,
+	requestAnimFrame: Util.requestAnimFrame,
+	cancelAnimFrame: Util.cancelAnimFrame,
 
 
 	// on IE11 Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER are not supported
-	MAX_SAFE_INTEGER: cool.Util.MAX_SAFE_INTEGER,
-	MIN_SAFE_INTEGER: cool.Util.MIN_SAFE_INTEGER,
+	MAX_SAFE_INTEGER: Util.MAX_SAFE_INTEGER,
+	MIN_SAFE_INTEGER: Util.MIN_SAFE_INTEGER,
 
 };
 
