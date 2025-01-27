@@ -168,6 +168,7 @@
 		BE74B2532D3F97AB009786DF /* TileDesc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TileDesc.hpp; path = ../../../wsd/TileDesc.hpp; sourceTree = "<group>"; };
 		BE74B2542D3F97AB009786DF /* TraceFile.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TraceFile.hpp; path = ../../../wsd/TraceFile.hpp; sourceTree = "<group>"; };
 		BE74B2552D3F97AB009786DF /* UserMessages.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = UserMessages.hpp; path = ../../../wsd/UserMessages.hpp; sourceTree = "<group>"; };
+		BEF9E2022D47D312004FCEB5 /* Util-macos.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-macos.cpp"; path = "../../../common/Util-macos.cpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -247,6 +248,7 @@
 				BE74B1F12D3F963F009786DF /* Uri.cpp */,
 				BE74B1F22D3F963F009786DF /* Util.hpp */,
 				BE74B1F32D3F963F009786DF /* Util.cpp */,
+				BEF9E2022D47D312004FCEB5 /* Util-macos.cpp */,
 				BE74B1F42D3F963F009786DF /* Util-mobile.cpp */,
 				BE74B1F52D3F963F009786DF /* Util-server.cpp */,
 				BE74B1F62D3F963F009786DF /* Util-unix.cpp */,
