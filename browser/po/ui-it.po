@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 11:16+0100\n"
-"PO-Revision-Date: 2024-12-14 23:48+0000\n"
+"PO-Revision-Date: 2025-01-28 15:02+0000\n"
 "Last-Translator: Giovanni Montini <service@giovannimontini.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9-rc\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1052,7 +1052,7 @@ msgstr "Sud Africa"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Il documento sta venendo firmato e a breve sarà disponibile"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1060,7 +1060,7 @@ msgstr "Paese:"
 
 #: src/control/Control.ESignatureDialog.ts:120
 msgid "Provider:"
-msgstr ""
+msgstr "Fornitore:"
 
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
@@ -1394,7 +1394,7 @@ msgstr "Raccoglitore intelligente"
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:791
 msgid "AI Assistant"
-msgstr ""
+msgstr "Assistente AI"
 
 #: src/control/Control.Menubar.js:234
 msgid "Text orientation"
@@ -1595,12 +1595,12 @@ msgstr "Diapositiva a pagina intera"
 #: src/control/Control.Menubar.js:428
 #: src/control/Control.NotebookbarBuilder.js:670
 msgid "Notes Pages"
-msgstr ""
+msgstr "Pagine delle annotazioni"
 
 #: src/control/Control.Menubar.js:462
 #: src/control/Control.NotebookbarImpress.js:470
 msgid "Notes View"
-msgstr ""
+msgstr "Vista annotazioni"
 
 #: src/control/Control.Menubar.js:466
 #: src/control/Control.NotebookbarImpress.js:476
@@ -1628,7 +1628,7 @@ msgstr "Proietta in una nuova finestra"
 #: src/control/Control.NotebookbarImpress.js:374
 #: src/slideshow/PresenterConsole.js:229
 msgid "Presenter Console"
-msgstr ""
+msgstr "Console del presentatore"
 
 #: src/control/Control.Menubar.js:585 src/control/Control.Menubar.js:1080
 #: src/control/Control.Menubar.js:1141
@@ -1801,11 +1801,11 @@ msgstr "Inserisci forma"
 
 #: src/control/Control.Menubar.js:2025
 msgid "The signature line can now be moved or resized as needed."
-msgstr ""
+msgstr "La riga per la firma può ora venire spostata o ridimensionata."
 
 #: src/control/Control.Menubar.js:2027
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Termina firma elettronica"
 
 #: src/control/Control.Menubar.js:2203
 msgid "file type icon"
@@ -2048,7 +2048,7 @@ msgstr "Cattivo"
 #: src/control/Control.NotebookbarImpress.js:1064
 #: src/control/Control.NotebookbarWriter.js:905
 msgid "Replace"
-msgstr ""
+msgstr "Sostituisci"
 
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
@@ -2119,7 +2119,7 @@ msgstr "Grafico sparkline"
 #: src/control/Control.NotebookbarImpress.js:1297
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
-msgstr ""
+msgstr "Assistente"
 
 #: src/control/Control.NotebookbarCalc.js:1477
 #: src/control/Control.NotebookbarCalc.js:2376
@@ -2136,7 +2136,7 @@ msgstr "Forme"
 #: src/control/Control.NotebookbarCalc.js:2024
 #: src/control/Control.NotebookbarWriter.js:945
 msgid "Style list"
-msgstr ""
+msgstr "Lista degli stili"
 
 #: src/control/Control.NotebookbarDraw.js:99
 #: src/control/Control.NotebookbarImpress.js:115
@@ -2291,11 +2291,11 @@ msgstr "Stato"
 
 #: src/control/Control.ServerAuditDialog.ts:262
 msgid "Check security warnings of your server"
-msgstr ""
+msgstr "Verifica gli avvisi di sicurezza del tuo server"
 
 #: src/control/Control.ServerAuditDialog.ts:263
 msgid "OPEN"
-msgstr ""
+msgstr "APERTO"
 
 #: src/control/Control.SheetsBar.js:48
 msgid "Scroll to the first sheet"
@@ -2318,12 +2318,14 @@ msgid "Insert sheet"
 msgstr "Inserisci foglio"
 
 #: src/control/Control.StatusBar.js:177
+#, fuzzy
 msgid "On"
-msgstr ""
+msgstr "On"
 
 #: src/control/Control.StatusBar.js:179
+#, fuzzy
 msgid "Off"
-msgstr ""
+msgstr "Off"
 
 #: src/control/Control.StatusBar.js:205
 #: src/control/jsdialog/Definitions.Menu.ts:23
@@ -2365,6 +2367,8 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Per prevenire modifiche accidentali, il file è stato aperto in sola lettura "
+"su indicazione dell'autore"
 
 #: src/control/Control.StatusBar.js:463
 msgid "Select multiple cells"
@@ -2456,11 +2460,11 @@ msgstr "Nascondi menu"
 
 #: src/control/Control.UIManager.js:223
 msgid "Enter new name"
-msgstr ""
+msgstr "Inserisci nuovo nome"
 
 #: src/control/Control.UIManager.js:866
 msgid "Show Menu"
-msgstr ""
+msgstr "Mostra il Menu"
 
 #: src/control/Control.UserList.ts:54
 msgid "{user} has joined"
@@ -2480,11 +2484,11 @@ msgstr ""
 
 #: src/control/Control.UserList.ts:58
 msgid "Stop following"
-msgstr ""
+msgstr "Smetti di seguire"
 
 #: src/control/Control.UserList.ts:59
 msgid "Avatar for {user}"
-msgstr ""
+msgstr "Avatar per {user}"
 
 #: src/control/Control.UserList.ts:79
 msgid "%n users"
@@ -2500,7 +2504,7 @@ msgstr "0 utenti"
 
 #: src/control/Control.UserList.ts:85
 msgid "User List Summary"
-msgstr ""
+msgstr "Lista riassuntiva degli utenti"
 
 #: src/control/Control.UserList.ts:493
 msgid "Following"
@@ -2661,7 +2665,7 @@ msgstr ""
 
 #: src/control/Parts.js:491
 msgid "Show sheets"
-msgstr ""
+msgstr "Mostra i fogli"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
@@ -2707,7 +2711,7 @@ msgstr ""
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Il documento non è stato firmato."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -2763,11 +2767,11 @@ msgstr "Collegamento"
 
 #: src/control/VRuler.ts:343
 msgid "Top Margin"
-msgstr ""
+msgstr "Margine superiore"
 
 #: src/control/VRuler.ts:344
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Margine inferiore"
 
 #: src/control/HRuler.ts:590
 msgid "Left Margin"
@@ -2799,7 +2803,7 @@ msgstr "Inserisci immagine locale"
 
 #: src/control/jsdialog/Definitions.Menu.ts:264
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Inserisci file multimediale locale"
 
 #: src/control/jsdialog/Definitions.Menu.ts:269
 msgid "Very Tight"
@@ -2823,11 +2827,11 @@ msgstr "Molto sciolto"
 
 #: src/control/jsdialog/Definitions.Menu.ts:417
 msgid "From Beginning"
-msgstr ""
+msgstr "Dall'inizio"
 
 #: src/control/jsdialog/Definitions.Menu.ts:421
 msgid "From Current Slide"
-msgstr ""
+msgstr "Dalla diapositiva corrente"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:118
 msgid "Dismiss"
@@ -2835,7 +2839,7 @@ msgstr "Abbandona"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:182
 msgid "No fill"
-msgstr ""
+msgstr "Nessun riempimento"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:182
 msgid "Automatic"
@@ -2856,7 +2860,7 @@ msgstr "Sola lettura"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:53
 msgid "Edit mode"
-msgstr ""
+msgstr "Modalità modifica"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:72
 #: src/control/jsdialog/Widget.HTMLContent.ts:118
@@ -2894,7 +2898,7 @@ msgstr "Numero di diapositive"
 #: src/control/jsdialog/Widget.HTMLContent.ts:124
 #: src/control/jsdialog/Widget.HTMLContent.ts:132
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "Le tue modifiche sono state salvate"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:141
 #, fuzzy
@@ -2907,15 +2911,15 @@ msgstr "Bordi delle celle"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:73
 msgid "More options for {name}"
-msgstr ""
+msgstr "Altre opzioni per {name}"
 
 #: src/core/Debug.js:54
 msgid "Debug Tools"
-msgstr ""
+msgstr "Strumenti di sviluppo"
 
 #: src/core/Debug.js:56
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D per uscire"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -3015,7 +3019,7 @@ msgstr "La password è errata. Riprova."
 
 #: src/core/Socket.js:1168
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "La password può essere modificata solo dal proprietario."
 
 #: src/core/Socket.js:1199 src/core/Socket.js:1204
 msgid "Missing Fonts"
@@ -3036,6 +3040,7 @@ msgstr "Il documento è stato rinominato e verrà ricaricato a breve"
 #: src/core/Socket.js:1257
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
+"Il documento si sta aprendo in modalità Offline e verrà visualizzato a breve"
 
 #: src/core/Socket.js:1339
 msgid "Connecting..."
@@ -3043,7 +3048,7 @@ msgstr "Connessione..."
 
 #: src/core/Socket.js:1354
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Il server è in fase di spegnimento"
 
 #: src/core/Socket.js:1390
 msgid "Exported to storage"
@@ -3096,28 +3101,29 @@ msgid "Are you sure you want to delete this page?"
 msgstr "Eliminare veramente questa pagina?"
 
 #: src/docstate.js:99
+#, fuzzy
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: src/docstate.js:112
 msgid "Theme colors"
-msgstr ""
+msgstr "Colori del tema"
 
 #: src/docstate.js:113
 msgid "Document colors"
-msgstr ""
+msgstr "Colori del documento"
 
 #: src/docstatefunctions.js:181
 msgid ", cluster configuration error: mis-matching serverid"
-msgstr ""
+msgstr ", errore di configurazione del cluster: serverid discrepanti"
 
 #: src/dom/NotebookbarAccessibility.js:240
 msgid "{0} tab selected"
-msgstr ""
+msgstr "{0} scheda selezionata"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Spazio esaurito sul server."
 
 #: src/errormessages.js:23
 msgid ""
@@ -3169,7 +3175,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "L'errore di autorizzazione era: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -3243,6 +3249,12 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId {0} for routeToken "
 "{1} but connected to serverId {2}"
 msgstr ""
+"Il cluster {productname} sembra essere malconfigurato - si prega di "
+"contattare l'amministratore di sistema. Proseguendo con la modifica si potrà "
+"incorrere in svariati errori, come: utenti che non si vedono, conflitti "
+"nell'archiviazione dei documenti e/o problemi nelle operazioni di copia-"
+"incolla. Per il routeToken {1} mi aspettavo serverId {0}, ma sono connesso a "
+"serverId {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -3251,12 +3263,19 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Impossibile stabilire connessione socket oppure la connessione si è chiusa "
+"inaspettatamente. Il reverse proxy potrebbe essere malconfigurato, si prega "
+"di contattare l'amministratore di sistema. Per maggiori informazioni sulla "
+"configurazione del proxy, visionare https://sdk.collaboraonline.com/docs/"
+"installation/Proxy_settings.html"
 
 #: src/errormessages.js:41
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Impossibile stabilire connessione socket oppure la connessione si è chiusa "
+"inaspettatamente."
 
 #: src/errormessages.js:44
 msgid "Failed to load document."
@@ -3281,6 +3300,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Sessione scaduta, impossibile salvare il documento. Si prega di riaprire il "
+"documento per continuare."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -3294,12 +3315,17 @@ msgstr "Impossibile rinominare il documento."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Impossibile leggere il documento dal server, si prega di ricaricare il "
+"documento."
 
 #: src/errormessages.js:54
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Impossibile salvare il documento a causa di spazio su disco esaurito. Il "
+"documento è aperto in sola lettura. Assicurarsi che sia disponibile spazio a "
+"sufficienza e riprovare."
 
 #: src/errormessages.js:55
 msgid ""
