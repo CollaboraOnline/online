@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-21 21:34+0100\n"
+"POT-Creation-Date: 2025-01-27 11:16+0100\n"
 "PO-Revision-Date: 2025-01-18 11:43+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
@@ -230,7 +230,7 @@ msgstr "Log Levels"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
-#: src/core/Socket.js:427 src/core/Socket.js:1198 src/core/Socket.js:1203
+#: src/core/Socket.js:428 src/core/Socket.js:1199 src/core/Socket.js:1204
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Close"
@@ -300,8 +300,8 @@ msgstr "Warning"
 #: src/control/Parts.js:491 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Socket.js:704 src/core/Socket.js:1168 src/core/Socket.js:1238
-#: src/core/Socket.js:1386 src/core/Socket.js:1390 src/docdispatcher.ts:495
+#: src/core/Socket.js:705 src/core/Socket.js:1169 src/core/Socket.js:1239
+#: src/core/Socket.js:1390 src/core/Socket.js:1394 src/docdispatcher.ts:495
 #: src/main.js:84 src/main.js:87 src/main.js:140 src/map/Clipboard.js:1269
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
@@ -325,7 +325,7 @@ msgstr "OK"
 #: src/control/Control.UIManager.js:1313 src/control/Control.UIManager.js:1380
 #: src/control/Control.UIManager.js:1515 src/control/Control.UIManager.js:1674
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:832
-#: src/core/Socket.js:1411
+#: src/core/Socket.js:1415
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -409,15 +409,15 @@ msgstr " mins"
 msgid " s"
 msgstr " s"
 
-#: js/global.js:1432
+#: js/global.js:1476
 msgid "Cluster is scaling, retrying..."
 msgstr "Cluster is scaling, retrying..."
 
-#: js/global.js:1434
+#: js/global.js:1478
 msgid "Document is migrating to new server, retrying..."
 msgstr "Document is migrating to new server, retrying..."
 
-#: js/global.js:1436
+#: js/global.js:1480
 msgid "Failed to get RouteToken from controller"
 msgstr "Failed to get RouteToken from controller"
 
@@ -499,7 +499,7 @@ msgstr ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 
-#: src/canvas/sections/CommentListSection.ts:1466 src/core/Socket.js:1415
+#: src/canvas/sections/CommentListSection.ts:1466 src/core/Socket.js:1419
 msgid "Overwrite"
 msgstr "Overwrite"
 
@@ -628,19 +628,19 @@ msgstr "The server encountered a {0} error while parsing the {1} command."
 msgid "Unlock"
 msgstr "Unlock"
 
-#: src/control/Control.ContextMenu.js:248 src/docdispatcher.ts:492
+#: src/control/Control.ContextMenu.js:249 src/docdispatcher.ts:492
 msgid "Delete"
 msgstr "Delete"
 
-#: src/control/Control.ContextMenu.js:273
+#: src/control/Control.ContextMenu.js:274
 msgid "Paste Special"
 msgstr "Paste Special"
 
-#: src/control/Control.ContextMenu.js:280
+#: src/control/Control.ContextMenu.js:281
 msgid "Copy Cells"
 msgstr "Copy Cells"
 
-#: src/control/Control.ContextMenu.js:285
+#: src/control/Control.ContextMenu.js:286
 msgid "Fill Series"
 msgstr "Fill Series"
 
@@ -1308,7 +1308,7 @@ msgstr "Repair"
 #: src/control/Control.NotebookbarCalc.js:1180
 #: src/control/Control.NotebookbarDraw.js:349
 #: src/control/Control.NotebookbarImpress.js:389
-#: src/control/Control.NotebookbarWriter.js:1440
+#: src/control/Control.NotebookbarWriter.js:1446
 #: src/control/Control.StatusBar.js:273
 msgid "Reset zoom"
 msgstr "Reset zoom"
@@ -1339,7 +1339,7 @@ msgstr "Hide Menu Bar"
 #: src/control/Control.NotebookbarCalc.js:1254
 #: src/control/Control.NotebookbarDraw.js:449
 #: src/control/Control.NotebookbarImpress.js:504
-#: src/control/Control.NotebookbarWriter.js:1520
+#: src/control/Control.NotebookbarWriter.js:1526
 msgid "Dark Mode"
 msgstr "Dark Mode"
 
@@ -1350,7 +1350,7 @@ msgstr "Dark Mode"
 #: src/control/Control.NotebookbarCalc.js:1261
 #: src/control/Control.NotebookbarDraw.js:456
 #: src/control/Control.NotebookbarImpress.js:511
-#: src/control/Control.NotebookbarWriter.js:1527
+#: src/control/Control.NotebookbarWriter.js:1533
 msgid "Invert Background"
 msgstr "Invert Background"
 
@@ -1371,7 +1371,7 @@ msgstr "All"
 #: src/control/Control.NotebookbarCalc.js:1385
 #: src/control/Control.NotebookbarDraw.js:1277
 #: src/control/Control.NotebookbarImpress.js:1277
-#: src/control/Control.NotebookbarWriter.js:1123
+#: src/control/Control.NotebookbarWriter.js:1129
 msgid "Smart Picker"
 msgstr "Smart Picker"
 
@@ -1390,38 +1390,38 @@ msgid "References"
 msgstr "References"
 
 #: src/control/Control.Menubar.js:302
-#: src/control/Control.NotebookbarWriter.js:1887
+#: src/control/Control.NotebookbarWriter.js:1893
 msgid "Update Index"
 msgstr "Update Index"
 
 #: src/control/Control.Menubar.js:311
-#: src/control/Control.NotebookbarWriter.js:1983
+#: src/control/Control.NotebookbarWriter.js:1989
 msgid "Add Citation"
 msgstr "Add Citation"
 
 #: src/control/Control.Menubar.js:312
-#: src/control/Control.NotebookbarWriter.js:1995
+#: src/control/Control.NotebookbarWriter.js:2001
 msgid "Add Citation Note"
 msgstr "Add Citation Note"
 
 #: src/control/Control.Menubar.js:313
-#: src/control/Control.NotebookbarWriter.js:1970
+#: src/control/Control.NotebookbarWriter.js:1976
 msgid "Add Bibliography"
 msgstr "Add Bibliography"
 
 #: src/control/Control.Menubar.js:315
-#: src/control/Control.NotebookbarWriter.js:2013
+#: src/control/Control.NotebookbarWriter.js:2019
 msgid "Refresh Citations"
 msgstr "Refresh Citations"
 
 #: src/control/Control.Menubar.js:316
-#: src/control/Control.NotebookbarWriter.js:2025
+#: src/control/Control.NotebookbarWriter.js:2031
 #: src/control/Control.Zotero.js:1445
 msgid "Unlink Citations"
 msgstr "Unlink Citations"
 
 #: src/control/Control.Menubar.js:317
-#: src/control/Control.NotebookbarWriter.js:2037
+#: src/control/Control.NotebookbarWriter.js:2043
 msgid "Citation Preferences"
 msgstr "Citation Preferences"
 
@@ -1450,7 +1450,7 @@ msgstr "Insert Date"
 #: src/control/Control.NotebookbarDraw.js:290
 #: src/control/Control.NotebookbarImpress.js:309
 #: src/control/Control.NotebookbarWriter.js:309
-#: src/control/Control.NotebookbarWriter.js:1403
+#: src/control/Control.NotebookbarWriter.js:1409
 msgid "Properties"
 msgstr "Properties"
 
@@ -1610,7 +1610,7 @@ msgstr "Present in new window"
 
 #: src/control/Control.Menubar.js:548
 #: src/control/Control.NotebookbarImpress.js:374
-#: src/slideshow/PresenterConsole.js:233
+#: src/slideshow/PresenterConsole.js:229
 msgid "Presenter Console"
 msgstr "Presenter Console"
 
@@ -1738,7 +1738,7 @@ msgstr "Below Average..."
 #: src/control/Control.NotebookbarCalc.js:840
 #: src/control/Control.NotebookbarDraw.js:989
 #: src/control/Control.NotebookbarImpress.js:1053
-#: src/control/Control.NotebookbarWriter.js:888
+#: src/control/Control.NotebookbarWriter.js:894
 #: src/control/Control.StatusBar.js:246 src/control/Control.Zotero.js:218
 #: src/control/Toolbar.js:575
 msgid "Search"
@@ -1976,7 +1976,7 @@ msgid "Currency"
 msgstr "Currency"
 
 #: src/control/Control.NotebookbarCalc.js:611
-#: src/control/Control.NotebookbarWriter.js:1396
+#: src/control/Control.NotebookbarWriter.js:1402
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
 msgid "Date"
 msgstr "Date"
@@ -2025,6 +2025,13 @@ msgstr "Neutral"
 msgid "Bad"
 msgstr "Bad"
 
+#: src/control/Control.NotebookbarCalc.js:851
+#: src/control/Control.NotebookbarDraw.js:1000
+#: src/control/Control.NotebookbarImpress.js:1064
+#: src/control/Control.NotebookbarWriter.js:905
+msgid "Replace"
+msgstr ""
+
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
 msgstr "Row Height"
@@ -2060,28 +2067,28 @@ msgstr "Delete Columns"
 #: src/control/Control.NotebookbarCalc.js:1166
 #: src/control/Control.NotebookbarDraw.js:335
 #: src/control/Control.NotebookbarImpress.js:351
-#: src/control/Control.NotebookbarWriter.js:1419
+#: src/control/Control.NotebookbarWriter.js:1425
 msgid "Read mode"
 msgstr "Read mode"
 
 #: src/control/Control.NotebookbarCalc.js:1217
 #: src/control/Control.NotebookbarDraw.js:386
 #: src/control/Control.NotebookbarImpress.js:426
-#: src/control/Control.NotebookbarWriter.js:1477
+#: src/control/Control.NotebookbarWriter.js:1483
 msgid "Compact view"
 msgstr "Compact view"
 
 #: src/control/Control.NotebookbarCalc.js:1230
 #: src/control/Control.NotebookbarDraw.js:423
 #: src/control/Control.NotebookbarImpress.js:463
-#: src/control/Control.NotebookbarWriter.js:1514
+#: src/control/Control.NotebookbarWriter.js:1520
 msgid "Collapse Tabs"
 msgstr "Collapse Tabs"
 
 #: src/control/Control.NotebookbarCalc.js:1242
 #: src/control/Control.NotebookbarDraw.js:411
 #: src/control/Control.NotebookbarImpress.js:451
-#: src/control/Control.NotebookbarWriter.js:1502
+#: src/control/Control.NotebookbarWriter.js:1508
 msgid "Status Bar"
 msgstr "Status Bar"
 
@@ -2092,7 +2099,7 @@ msgstr "Sparkline"
 #: src/control/Control.NotebookbarCalc.js:1393
 #: src/control/Control.NotebookbarDraw.js:1285
 #: src/control/Control.NotebookbarImpress.js:1297
-#: src/control/Control.NotebookbarWriter.js:1143
+#: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
 msgstr ""
 
@@ -2103,13 +2110,13 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:925
 #: src/control/Control.NotebookbarImpress.js:1390
 #: src/control/Control.NotebookbarImpress.js:2449
-#: src/control/Control.NotebookbarWriter.js:1079
-#: src/control/Control.NotebookbarWriter.js:2880
+#: src/control/Control.NotebookbarWriter.js:1085
+#: src/control/Control.NotebookbarWriter.js:2886
 msgid "Shapes"
 msgstr "Shapes"
 
 #: src/control/Control.NotebookbarCalc.js:2024
-#: src/control/Control.NotebookbarWriter.js:939
+#: src/control/Control.NotebookbarWriter.js:945
 msgid "Style list"
 msgstr "Style list"
 
@@ -2125,7 +2132,7 @@ msgstr "PDF Document (.pdf) - Expert"
 
 #: src/control/Control.NotebookbarDraw.js:399
 #: src/control/Control.NotebookbarImpress.js:439
-#: src/control/Control.NotebookbarWriter.js:1490
+#: src/control/Control.NotebookbarWriter.js:1496
 msgid "Ruler"
 msgstr "Ruler"
 
@@ -2166,19 +2173,19 @@ msgstr "Go Online"
 msgid "Go Offline"
 msgstr "Go Offline"
 
-#: src/control/Control.NotebookbarWriter.js:1368
+#: src/control/Control.NotebookbarWriter.js:1374
 msgid "Rich Text"
 msgstr "Rich Text"
 
-#: src/control/Control.NotebookbarWriter.js:1375
+#: src/control/Control.NotebookbarWriter.js:1381
 msgid "Checkbox"
 msgstr "Checkbox"
 
-#: src/control/Control.NotebookbarWriter.js:1382
+#: src/control/Control.NotebookbarWriter.js:1388
 msgid "Dropdown"
 msgstr "Dropdown"
 
-#: src/control/Control.NotebookbarWriter.js:1389
+#: src/control/Control.NotebookbarWriter.js:1395
 msgid "Picture"
 msgstr "Picture"
 
@@ -2504,7 +2511,7 @@ msgstr ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 
-#: src/control/Control.Zotero.js:244 src/core/Socket.js:1338
+#: src/control/Control.Zotero.js:244 src/core/Socket.js:1339
 msgid "Loading..."
 msgstr "Loading…"
 
@@ -2886,67 +2893,67 @@ msgstr "Debug Tools"
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "Ctrl+Shift+Alt+D to exit"
 
-#: src/core/Socket.js:67
+#: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Oops, there is a problem connecting to {productname}: "
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:686
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Server has been restarted. We have to refresh the page now."
 
-#: src/core/Socket.js:687
+#: src/core/Socket.js:688
 msgid "Server is now reachable..."
 msgstr "Server is now reachable..."
 
-#: src/core/Socket.js:691
+#: src/core/Socket.js:692
 msgid "RELOAD"
 msgstr "RELOAD"
 
-#: src/core/Socket.js:704
+#: src/core/Socket.js:705
 msgid "Cluster configuration warning"
 msgstr "Cluster configuration warning"
 
-#: src/core/Socket.js:707
+#: src/core/Socket.js:708
 msgid "Wrong server, reconnecting..."
 msgstr "Wrong server, reconnecting..."
 
-#: src/core/Socket.js:716
+#: src/core/Socket.js:717
 msgid "COOLWSD version:"
 msgstr "COOLWSD version:"
 
-#: src/core/Socket.js:741
+#: src/core/Socket.js:742
 msgid "Served by:"
 msgstr "Served by:"
 
-#: src/core/Socket.js:747
+#: src/core/Socket.js:748
 msgid "Unsupported server version."
 msgstr "Unsupported server version."
 
-#: src/core/Socket.js:751
+#: src/core/Socket.js:752
 msgid "LOKit version:"
 msgstr "LOKit version:"
 
-#: src/core/Socket.js:875
+#: src/core/Socket.js:876
 msgid "Document is getting migrated"
 msgstr "Document is getting migrated"
 
-#: src/core/Socket.js:902
+#: src/core/Socket.js:903
 msgid "Session terminated by document owner"
 msgstr "Session terminated by document owner"
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:914
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server is shutting down for maintenance (auto-saving)"
 
-#: src/core/Socket.js:919
+#: src/core/Socket.js:920
 msgid "Oops, there is a problem connecting the document"
 msgstr "Oops, there is a problem connecting the document"
 
-#: src/core/Socket.js:923
+#: src/core/Socket.js:924
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Server is down, restarting automatically. Please wait."
 
-#: src/core/Socket.js:950
+#: src/core/Socket.js:951
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -2954,7 +2961,7 @@ msgstr ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 
-#: src/core/Socket.js:956
+#: src/core/Socket.js:957
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -2962,79 +2969,79 @@ msgstr ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 
-#: src/core/Socket.js:962
+#: src/core/Socket.js:963
 msgid "Reloading the document after rename"
 msgstr "Reloading the document after rename"
 
-#: src/core/Socket.js:1120
+#: src/core/Socket.js:1121
 msgid "Document requires password to view."
 msgstr "Document requires password to view."
 
-#: src/core/Socket.js:1123
+#: src/core/Socket.js:1124
 msgid "Document requires password to modify."
 msgstr "Document requires password to modify."
 
-#: src/core/Socket.js:1125
+#: src/core/Socket.js:1126
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Hit Cancel to open in view-only mode."
 
-#: src/core/Socket.js:1129
+#: src/core/Socket.js:1130
 msgid "Wrong password provided. Please try again."
 msgstr "Wrong password provided. Please try again."
 
-#: src/core/Socket.js:1167
+#: src/core/Socket.js:1168
 msgid "Only the document owner can change the password."
 msgstr "Only the document owner can change the password."
 
-#: src/core/Socket.js:1198 src/core/Socket.js:1203
+#: src/core/Socket.js:1199 src/core/Socket.js:1204
 msgid "Missing Fonts"
 msgstr "Missing Fonts"
 
-#: src/core/Socket.js:1235
+#: src/core/Socket.js:1236
 msgid "Someone"
 msgstr "Someone"
 
-#: src/core/Socket.js:1236
+#: src/core/Socket.js:1237
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "{username} saved this document as {filename}. Do you want to join?"
 
-#: src/core/Socket.js:1253
+#: src/core/Socket.js:1254
 msgid "The document is being renamed and will reload shortly"
 msgstr "The document is being renamed and will reload shortly"
 
-#: src/core/Socket.js:1256
+#: src/core/Socket.js:1257
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "The document is switching to Offline mode and will reload shortly"
 
-#: src/core/Socket.js:1338
+#: src/core/Socket.js:1339
 msgid "Connecting..."
 msgstr "Connecting..."
 
-#: src/core/Socket.js:1353
+#: src/core/Socket.js:1354
 msgid "Server is shutting down"
 msgstr "Server is shutting down"
 
-#: src/core/Socket.js:1386
+#: src/core/Socket.js:1390
 msgid "Exported to storage"
 msgstr "Exported to storage"
 
-#: src/core/Socket.js:1386
+#: src/core/Socket.js:1390
 msgid "Successfully exported: "
 msgstr "Successfully exported: "
 
-#: src/core/Socket.js:1414
+#: src/core/Socket.js:1418
 msgid "Discard"
 msgstr "Discard"
 
-#: src/core/Socket.js:1426
+#: src/core/Socket.js:1430
 msgid "Save to new file"
 msgstr "Save to new file"
 
-#: src/core/Socket.js:1436
+#: src/core/Socket.js:1440
 msgid "Document has been changed"
 msgstr "Document has been changed"
 
-#: src/core/Socket.js:1437
+#: src/core/Socket.js:1441
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -3042,7 +3049,7 @@ msgstr ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 
-#: src/core/Socket.js:1690
+#: src/core/Socket.js:1694
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -3050,11 +3057,11 @@ msgstr ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 
-#: src/core/Socket.js:1707
+#: src/core/Socket.js:1711
 msgid "Reconnecting..."
 msgstr "Reconnecting..."
 
-#: src/core/Socket.js:1717
+#: src/core/Socket.js:1721
 msgid "The server has been disconnected."
 msgstr "The server has been disconnected."
 
@@ -3633,19 +3640,19 @@ msgstr "Zoom In"
 msgid "Zoom Out"
 msgstr "Zoom Out"
 
-#: src/slideshow/PresenterConsole.js:1208
+#: src/slideshow/PresenterConsole.js:1215
 msgid "Slide {0} of {1}"
 msgstr "Slide {0} of {1}"
 
-#: src/slideshow/PresenterConsole.js:1230
+#: src/slideshow/PresenterConsole.js:1239
 msgid "No Notes"
 msgstr "No Notes"
 
-#: src/slideshow/PresenterConsole.js:1318
+#: src/slideshow/PresenterConsole.js:1327
 msgid "Repeat in {0} seconds"
 msgstr "Repeat in {0} seconds"
 
-#: src/slideshow/PresenterConsole.js:1323
+#: src/slideshow/PresenterConsole.js:1332
 #: src/slideshow/SlideShowPresenter.ts:366
 msgid "Click to exit presentation..."
 msgstr "Click to exit presentation..."

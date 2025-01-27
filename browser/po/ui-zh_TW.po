@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-21 21:34+0100\n"
+"POT-Creation-Date: 2025-01-27 11:16+0100\n"
 "PO-Revision-Date: 2025-01-15 04:46+0000\n"
 "Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
@@ -230,7 +230,7 @@ msgstr "紀錄層級"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
-#: src/core/Socket.js:427 src/core/Socket.js:1198 src/core/Socket.js:1203
+#: src/core/Socket.js:428 src/core/Socket.js:1199 src/core/Socket.js:1204
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "關閉"
@@ -300,8 +300,8 @@ msgstr "警告"
 #: src/control/Parts.js:491 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Socket.js:704 src/core/Socket.js:1168 src/core/Socket.js:1238
-#: src/core/Socket.js:1386 src/core/Socket.js:1390 src/docdispatcher.ts:495
+#: src/core/Socket.js:705 src/core/Socket.js:1169 src/core/Socket.js:1239
+#: src/core/Socket.js:1390 src/core/Socket.js:1394 src/docdispatcher.ts:495
 #: src/main.js:84 src/main.js:87 src/main.js:140 src/map/Clipboard.js:1269
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
@@ -325,7 +325,7 @@ msgstr "確定"
 #: src/control/Control.UIManager.js:1313 src/control/Control.UIManager.js:1380
 #: src/control/Control.UIManager.js:1515 src/control/Control.UIManager.js:1674
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:832
-#: src/core/Socket.js:1411
+#: src/core/Socket.js:1415
 msgid "Cancel"
 msgstr "取消"
 
@@ -409,15 +409,15 @@ msgstr " 分鐘"
 msgid " s"
 msgstr " 秒"
 
-#: js/global.js:1432
+#: js/global.js:1476
 msgid "Cluster is scaling, retrying..."
 msgstr "叢集擴大, 正在重試..."
 
-#: js/global.js:1434
+#: js/global.js:1478
 msgid "Document is migrating to new server, retrying..."
 msgstr "文件正在遷移到新伺服器,重試中..."
 
-#: js/global.js:1436
+#: js/global.js:1480
 msgid "Failed to get RouteToken from controller"
 msgstr "無法從控制器取得 RouteToken"
 
@@ -497,7 +497,7 @@ msgid ""
 "changes?"
 msgstr "其他使用者更新了評註。您想要覆寫那些變更嗎？"
 
-#: src/canvas/sections/CommentListSection.ts:1466 src/core/Socket.js:1415
+#: src/canvas/sections/CommentListSection.ts:1466 src/core/Socket.js:1419
 msgid "Overwrite"
 msgstr "覆蓋"
 
@@ -622,19 +622,19 @@ msgstr "伺服器在解析 {1} 指令時遭遇 {0} 錯誤。"
 msgid "Unlock"
 msgstr "解鎖"
 
-#: src/control/Control.ContextMenu.js:248 src/docdispatcher.ts:492
+#: src/control/Control.ContextMenu.js:249 src/docdispatcher.ts:492
 msgid "Delete"
 msgstr "刪除"
 
-#: src/control/Control.ContextMenu.js:273
+#: src/control/Control.ContextMenu.js:274
 msgid "Paste Special"
 msgstr "選擇性貼上"
 
-#: src/control/Control.ContextMenu.js:280
+#: src/control/Control.ContextMenu.js:281
 msgid "Copy Cells"
 msgstr "複製儲存格"
 
-#: src/control/Control.ContextMenu.js:285
+#: src/control/Control.ContextMenu.js:286
 msgid "Fill Series"
 msgstr "填入系列"
 
@@ -1299,7 +1299,7 @@ msgstr "修復"
 #: src/control/Control.NotebookbarCalc.js:1180
 #: src/control/Control.NotebookbarDraw.js:349
 #: src/control/Control.NotebookbarImpress.js:389
-#: src/control/Control.NotebookbarWriter.js:1440
+#: src/control/Control.NotebookbarWriter.js:1446
 #: src/control/Control.StatusBar.js:273
 msgid "Reset zoom"
 msgstr "重設遠近"
@@ -1330,7 +1330,7 @@ msgstr "隱藏選項欄"
 #: src/control/Control.NotebookbarCalc.js:1254
 #: src/control/Control.NotebookbarDraw.js:449
 #: src/control/Control.NotebookbarImpress.js:504
-#: src/control/Control.NotebookbarWriter.js:1520
+#: src/control/Control.NotebookbarWriter.js:1526
 msgid "Dark Mode"
 msgstr "深色模式"
 
@@ -1341,7 +1341,7 @@ msgstr "深色模式"
 #: src/control/Control.NotebookbarCalc.js:1261
 #: src/control/Control.NotebookbarDraw.js:456
 #: src/control/Control.NotebookbarImpress.js:511
-#: src/control/Control.NotebookbarWriter.js:1527
+#: src/control/Control.NotebookbarWriter.js:1533
 msgid "Invert Background"
 msgstr "反轉背景"
 
@@ -1362,7 +1362,7 @@ msgstr "所有"
 #: src/control/Control.NotebookbarCalc.js:1385
 #: src/control/Control.NotebookbarDraw.js:1277
 #: src/control/Control.NotebookbarImpress.js:1277
-#: src/control/Control.NotebookbarWriter.js:1123
+#: src/control/Control.NotebookbarWriter.js:1129
 msgid "Smart Picker"
 msgstr "聰明揀選器"
 
@@ -1381,38 +1381,38 @@ msgid "References"
 msgstr "參照"
 
 #: src/control/Control.Menubar.js:302
-#: src/control/Control.NotebookbarWriter.js:1887
+#: src/control/Control.NotebookbarWriter.js:1893
 msgid "Update Index"
 msgstr "更新索引"
 
 #: src/control/Control.Menubar.js:311
-#: src/control/Control.NotebookbarWriter.js:1983
+#: src/control/Control.NotebookbarWriter.js:1989
 msgid "Add Citation"
 msgstr "添加引文"
 
 #: src/control/Control.Menubar.js:312
-#: src/control/Control.NotebookbarWriter.js:1995
+#: src/control/Control.NotebookbarWriter.js:2001
 msgid "Add Citation Note"
 msgstr "添加引文註釋"
 
 #: src/control/Control.Menubar.js:313
-#: src/control/Control.NotebookbarWriter.js:1970
+#: src/control/Control.NotebookbarWriter.js:1976
 msgid "Add Bibliography"
 msgstr "添加參考書目"
 
 #: src/control/Control.Menubar.js:315
-#: src/control/Control.NotebookbarWriter.js:2013
+#: src/control/Control.NotebookbarWriter.js:2019
 msgid "Refresh Citations"
 msgstr "刷新引文"
 
 #: src/control/Control.Menubar.js:316
-#: src/control/Control.NotebookbarWriter.js:2025
+#: src/control/Control.NotebookbarWriter.js:2031
 #: src/control/Control.Zotero.js:1445
 msgid "Unlink Citations"
 msgstr "取消引文"
 
 #: src/control/Control.Menubar.js:317
-#: src/control/Control.NotebookbarWriter.js:2037
+#: src/control/Control.NotebookbarWriter.js:2043
 msgid "Citation Preferences"
 msgstr "引文偏好"
 
@@ -1441,7 +1441,7 @@ msgstr "插入日期"
 #: src/control/Control.NotebookbarDraw.js:290
 #: src/control/Control.NotebookbarImpress.js:309
 #: src/control/Control.NotebookbarWriter.js:309
-#: src/control/Control.NotebookbarWriter.js:1403
+#: src/control/Control.NotebookbarWriter.js:1409
 msgid "Properties"
 msgstr "屬性"
 
@@ -1601,7 +1601,7 @@ msgstr "在新視窗展示"
 
 #: src/control/Control.Menubar.js:548
 #: src/control/Control.NotebookbarImpress.js:374
-#: src/slideshow/PresenterConsole.js:233
+#: src/slideshow/PresenterConsole.js:229
 msgid "Presenter Console"
 msgstr "演講者主控台"
 
@@ -1729,7 +1729,7 @@ msgstr "低於平均水平..."
 #: src/control/Control.NotebookbarCalc.js:840
 #: src/control/Control.NotebookbarDraw.js:989
 #: src/control/Control.NotebookbarImpress.js:1053
-#: src/control/Control.NotebookbarWriter.js:888
+#: src/control/Control.NotebookbarWriter.js:894
 #: src/control/Control.StatusBar.js:246 src/control/Control.Zotero.js:218
 #: src/control/Toolbar.js:575
 msgid "Search"
@@ -1967,7 +1967,7 @@ msgid "Currency"
 msgstr "貨幣"
 
 #: src/control/Control.NotebookbarCalc.js:611
-#: src/control/Control.NotebookbarWriter.js:1396
+#: src/control/Control.NotebookbarWriter.js:1402
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
 msgid "Date"
 msgstr "日期"
@@ -2016,6 +2016,13 @@ msgstr "中等"
 msgid "Bad"
 msgstr "不佳"
 
+#: src/control/Control.NotebookbarCalc.js:851
+#: src/control/Control.NotebookbarDraw.js:1000
+#: src/control/Control.NotebookbarImpress.js:1064
+#: src/control/Control.NotebookbarWriter.js:905
+msgid "Replace"
+msgstr ""
+
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
 msgstr "列高"
@@ -2051,28 +2058,28 @@ msgstr "刪除欄"
 #: src/control/Control.NotebookbarCalc.js:1166
 #: src/control/Control.NotebookbarDraw.js:335
 #: src/control/Control.NotebookbarImpress.js:351
-#: src/control/Control.NotebookbarWriter.js:1419
+#: src/control/Control.NotebookbarWriter.js:1425
 msgid "Read mode"
 msgstr "閱讀模式"
 
 #: src/control/Control.NotebookbarCalc.js:1217
 #: src/control/Control.NotebookbarDraw.js:386
 #: src/control/Control.NotebookbarImpress.js:426
-#: src/control/Control.NotebookbarWriter.js:1477
+#: src/control/Control.NotebookbarWriter.js:1483
 msgid "Compact view"
 msgstr "緊湊式顯示"
 
 #: src/control/Control.NotebookbarCalc.js:1230
 #: src/control/Control.NotebookbarDraw.js:423
 #: src/control/Control.NotebookbarImpress.js:463
-#: src/control/Control.NotebookbarWriter.js:1514
+#: src/control/Control.NotebookbarWriter.js:1520
 msgid "Collapse Tabs"
 msgstr "折疊頁面"
 
 #: src/control/Control.NotebookbarCalc.js:1242
 #: src/control/Control.NotebookbarDraw.js:411
 #: src/control/Control.NotebookbarImpress.js:451
-#: src/control/Control.NotebookbarWriter.js:1502
+#: src/control/Control.NotebookbarWriter.js:1508
 msgid "Status Bar"
 msgstr "狀態列"
 
@@ -2083,7 +2090,7 @@ msgstr "迷你圖"
 #: src/control/Control.NotebookbarCalc.js:1393
 #: src/control/Control.NotebookbarDraw.js:1285
 #: src/control/Control.NotebookbarImpress.js:1297
-#: src/control/Control.NotebookbarWriter.js:1143
+#: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
 msgstr ""
 
@@ -2094,13 +2101,13 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:925
 #: src/control/Control.NotebookbarImpress.js:1390
 #: src/control/Control.NotebookbarImpress.js:2449
-#: src/control/Control.NotebookbarWriter.js:1079
-#: src/control/Control.NotebookbarWriter.js:2880
+#: src/control/Control.NotebookbarWriter.js:1085
+#: src/control/Control.NotebookbarWriter.js:2886
 msgid "Shapes"
 msgstr "形狀"
 
 #: src/control/Control.NotebookbarCalc.js:2024
-#: src/control/Control.NotebookbarWriter.js:939
+#: src/control/Control.NotebookbarWriter.js:945
 msgid "Style list"
 msgstr "樣式清單"
 
@@ -2116,7 +2123,7 @@ msgstr "PDF 文件 (.pdf) - 專業"
 
 #: src/control/Control.NotebookbarDraw.js:399
 #: src/control/Control.NotebookbarImpress.js:439
-#: src/control/Control.NotebookbarWriter.js:1490
+#: src/control/Control.NotebookbarWriter.js:1496
 msgid "Ruler"
 msgstr "尺規"
 
@@ -2157,19 +2164,19 @@ msgstr "連接在線"
 msgid "Go Offline"
 msgstr "離線使用"
 
-#: src/control/Control.NotebookbarWriter.js:1368
+#: src/control/Control.NotebookbarWriter.js:1374
 msgid "Rich Text"
 msgstr "格式文本"
 
-#: src/control/Control.NotebookbarWriter.js:1375
+#: src/control/Control.NotebookbarWriter.js:1381
 msgid "Checkbox"
 msgstr "複選框"
 
-#: src/control/Control.NotebookbarWriter.js:1382
+#: src/control/Control.NotebookbarWriter.js:1388
 msgid "Dropdown"
 msgstr "下拉框"
 
-#: src/control/Control.NotebookbarWriter.js:1389
+#: src/control/Control.NotebookbarWriter.js:1395
 msgid "Picture"
 msgstr "圖片"
 
@@ -2487,7 +2494,7 @@ msgid ""
 msgstr "該文件包含一些可能無法透過 Web API "
 "存取的引用。編輯引用或參考書目時可能會出現一些問題。"
 
-#: src/control/Control.Zotero.js:244 src/core/Socket.js:1338
+#: src/control/Control.Zotero.js:244 src/core/Socket.js:1339
 msgid "Loading..."
 msgstr "正在載入..."
 
@@ -2862,167 +2869,167 @@ msgstr "偵錯工具"
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "Ctrl+Shift+Alt+D 退出"
 
-#: src/core/Socket.js:67
+#: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "糟糕，連線到 {productname} 時發生了一點問題： "
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:686
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "可以連線到伺服器了。現在我們會重新整理頁面。"
 
-#: src/core/Socket.js:687
+#: src/core/Socket.js:688
 msgid "Server is now reachable..."
 msgstr "可以連線到伺服器了……"
 
-#: src/core/Socket.js:691
+#: src/core/Socket.js:692
 msgid "RELOAD"
 msgstr "重新載入"
 
-#: src/core/Socket.js:704
+#: src/core/Socket.js:705
 msgid "Cluster configuration warning"
 msgstr "叢集設定警告"
 
-#: src/core/Socket.js:707
+#: src/core/Socket.js:708
 msgid "Wrong server, reconnecting..."
 msgstr "錯誤的伺服器，正在重新連線……"
 
-#: src/core/Socket.js:716
+#: src/core/Socket.js:717
 msgid "COOLWSD version:"
 msgstr "COOLWSD 版本："
 
-#: src/core/Socket.js:741
+#: src/core/Socket.js:742
 msgid "Served by:"
 msgstr "服務提供者："
 
-#: src/core/Socket.js:747
+#: src/core/Socket.js:748
 msgid "Unsupported server version."
 msgstr "未支援的伺服器版本。"
 
-#: src/core/Socket.js:751
+#: src/core/Socket.js:752
 msgid "LOKit version:"
 msgstr "LOKit 版本："
 
-#: src/core/Socket.js:875
+#: src/core/Socket.js:876
 msgid "Document is getting migrated"
 msgstr "文件正在遷移"
 
-#: src/core/Socket.js:902
+#: src/core/Socket.js:903
 msgid "Session terminated by document owner"
 msgstr "作業階段由文件擁有者終止"
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:914
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "伺服器正在關機作維護（自動存檔中）"
 
-#: src/core/Socket.js:919
+#: src/core/Socket.js:920
 msgid "Oops, there is a problem connecting the document"
 msgstr "糟糕…連接文件時發生了問題"
 
-#: src/core/Socket.js:923
+#: src/core/Socket.js:924
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "伺服器關閉，自動重啟中，請稍候。"
 
-#: src/core/Socket.js:950
+#: src/core/Socket.js:951
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr "儲存空間內的文件已經變更。載入新文件中。您的版本會以修訂形式存在。"
 
-#: src/core/Socket.js:956
+#: src/core/Socket.js:957
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr "還原舊的版本。任何尚未儲存的變更都會放在版本歷史中"
 
-#: src/core/Socket.js:962
+#: src/core/Socket.js:963
 msgid "Reloading the document after rename"
 msgstr "重新命名後載入文件"
 
-#: src/core/Socket.js:1120
+#: src/core/Socket.js:1121
 msgid "Document requires password to view."
 msgstr "文件需要密碼才能檢視。"
 
-#: src/core/Socket.js:1123
+#: src/core/Socket.js:1124
 msgid "Document requires password to modify."
 msgstr "文件需要密碼才能修改。"
 
-#: src/core/Socket.js:1125
+#: src/core/Socket.js:1126
 msgid "Hit Cancel to open in view-only mode."
 msgstr "點按「取消」以唯讀模式開啟。"
 
-#: src/core/Socket.js:1129
+#: src/core/Socket.js:1130
 msgid "Wrong password provided. Please try again."
 msgstr "提供的密碼錯誤。請重試。"
 
-#: src/core/Socket.js:1167
+#: src/core/Socket.js:1168
 msgid "Only the document owner can change the password."
 msgstr "只有文檔所有者才能更改密碼。"
 
-#: src/core/Socket.js:1198 src/core/Socket.js:1203
+#: src/core/Socket.js:1199 src/core/Socket.js:1204
 msgid "Missing Fonts"
 msgstr "缺少字體"
 
-#: src/core/Socket.js:1235
+#: src/core/Socket.js:1236
 msgid "Someone"
 msgstr "有人"
 
-#: src/core/Socket.js:1236
+#: src/core/Socket.js:1237
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "{username} 將此文件另存為 {filename}. 你想要加入嗎？"
 
-#: src/core/Socket.js:1253
+#: src/core/Socket.js:1254
 msgid "The document is being renamed and will reload shortly"
 msgstr "該文檔正在重新命名並將很快重新加載"
 
-#: src/core/Socket.js:1256
+#: src/core/Socket.js:1257
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "該文件正在切換到離線模式並將很快重新載入"
 
-#: src/core/Socket.js:1338
+#: src/core/Socket.js:1339
 msgid "Connecting..."
 msgstr "連接中..."
 
-#: src/core/Socket.js:1353
+#: src/core/Socket.js:1354
 msgid "Server is shutting down"
 msgstr "伺服器正在關閉"
 
-#: src/core/Socket.js:1386
+#: src/core/Socket.js:1390
 msgid "Exported to storage"
 msgstr "匯出到存儲"
 
-#: src/core/Socket.js:1386
+#: src/core/Socket.js:1390
 msgid "Successfully exported: "
 msgstr "成功匯出： "
 
-#: src/core/Socket.js:1414
+#: src/core/Socket.js:1418
 msgid "Discard"
 msgstr "放棄"
 
-#: src/core/Socket.js:1426
+#: src/core/Socket.js:1430
 msgid "Save to new file"
 msgstr "儲存為新檔案"
 
-#: src/core/Socket.js:1436
+#: src/core/Socket.js:1440
 msgid "Document has been changed"
 msgstr "文件已更改"
 
-#: src/core/Socket.js:1437
+#: src/core/Socket.js:1441
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "儲存位置中的文件已經變更。對於您尚未儲存的變更，您希望怎麼處理？"
 
-#: src/core/Socket.js:1690
+#: src/core/Socket.js:1694
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "啊，這尷尬了... 我們沒辦法連接您的文件。請重試一次。"
 
-#: src/core/Socket.js:1707
+#: src/core/Socket.js:1711
 msgid "Reconnecting..."
 msgstr "連接中..."
 
-#: src/core/Socket.js:1717
+#: src/core/Socket.js:1721
 msgid "The server has been disconnected."
 msgstr "伺服器已斷開連線。"
 
@@ -3561,19 +3568,19 @@ msgstr "放大"
 msgid "Zoom Out"
 msgstr "縮小"
 
-#: src/slideshow/PresenterConsole.js:1208
+#: src/slideshow/PresenterConsole.js:1215
 msgid "Slide {0} of {1}"
 msgstr "第 {0} 張投影片，共 {1} 張"
 
-#: src/slideshow/PresenterConsole.js:1230
+#: src/slideshow/PresenterConsole.js:1239
 msgid "No Notes"
 msgstr "沒有備註"
 
-#: src/slideshow/PresenterConsole.js:1318
+#: src/slideshow/PresenterConsole.js:1327
 msgid "Repeat in {0} seconds"
 msgstr "在 {0} 秒內重複"
 
-#: src/slideshow/PresenterConsole.js:1323
+#: src/slideshow/PresenterConsole.js:1332
 #: src/slideshow/SlideShowPresenter.ts:366
 msgid "Click to exit presentation..."
 msgstr "點擊以退出簡報..."

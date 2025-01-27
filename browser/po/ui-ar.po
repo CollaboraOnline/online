@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-21 21:34+0100\n"
+"POT-Creation-Date: 2025-01-27 11:16+0100\n"
 "PO-Revision-Date: 2024-11-25 04:00+0000\n"
 "Last-Translator: meshari alnaim <malnaim@safedecision.com.sa>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
@@ -234,7 +234,7 @@ msgstr "مستويات السجل"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
-#: src/core/Socket.js:427 src/core/Socket.js:1198 src/core/Socket.js:1203
+#: src/core/Socket.js:428 src/core/Socket.js:1199 src/core/Socket.js:1204
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "إغلاق"
@@ -304,8 +304,8 @@ msgstr "تحذير"
 #: src/control/Parts.js:491 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Socket.js:704 src/core/Socket.js:1168 src/core/Socket.js:1238
-#: src/core/Socket.js:1386 src/core/Socket.js:1390 src/docdispatcher.ts:495
+#: src/core/Socket.js:705 src/core/Socket.js:1169 src/core/Socket.js:1239
+#: src/core/Socket.js:1390 src/core/Socket.js:1394 src/docdispatcher.ts:495
 #: src/main.js:84 src/main.js:87 src/main.js:140 src/map/Clipboard.js:1269
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
@@ -329,7 +329,7 @@ msgstr "موافق"
 #: src/control/Control.UIManager.js:1313 src/control/Control.UIManager.js:1380
 #: src/control/Control.UIManager.js:1515 src/control/Control.UIManager.js:1674
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:832
-#: src/core/Socket.js:1411
+#: src/core/Socket.js:1415
 msgid "Cancel"
 msgstr "ألغِ"
 
@@ -413,15 +413,15 @@ msgstr " دقائق"
 msgid " s"
 msgstr " س"
 
-#: js/global.js:1432
+#: js/global.js:1476
 msgid "Cluster is scaling, retrying..."
 msgstr "جارٍ الآن إعادة المحاولة بعد تعديل السِّعَة ..."
 
-#: js/global.js:1434
+#: js/global.js:1478
 msgid "Document is migrating to new server, retrying..."
 msgstr "المستند يتمّ ترحيله إلى خادوم جديد. جارٍ الآن إعادة المحاولة ..."
 
-#: js/global.js:1436
+#: js/global.js:1480
 msgid "Failed to get RouteToken from controller"
 msgstr "فشل في الحصول على أَمَارَة المسار RouteToken من الحاكمة controller"
 
@@ -501,7 +501,7 @@ msgid ""
 "changes?"
 msgstr "قام مستخدِم آخر بتعديل الملاحظة. هل ترغب في تجاوز تعديلاته؟"
 
-#: src/canvas/sections/CommentListSection.ts:1466 src/core/Socket.js:1415
+#: src/canvas/sections/CommentListSection.ts:1466 src/core/Socket.js:1419
 msgid "Overwrite"
 msgstr "اكتبها فوق التخزين"
 
@@ -628,19 +628,19 @@ msgstr "واجه الخادوم خطأ {0} أثناء تحليل الأمر {1}.
 msgid "Unlock"
 msgstr "الغاء القفل"
 
-#: src/control/Control.ContextMenu.js:248 src/docdispatcher.ts:492
+#: src/control/Control.ContextMenu.js:249 src/docdispatcher.ts:492
 msgid "Delete"
 msgstr "حذف"
 
-#: src/control/Control.ContextMenu.js:273
+#: src/control/Control.ContextMenu.js:274
 msgid "Paste Special"
 msgstr "لصقٌ خاصّ"
 
-#: src/control/Control.ContextMenu.js:280
+#: src/control/Control.ContextMenu.js:281
 msgid "Copy Cells"
 msgstr "نسخ الخلايا"
 
-#: src/control/Control.ContextMenu.js:285
+#: src/control/Control.ContextMenu.js:286
 msgid "Fill Series"
 msgstr "ملء السلسلة"
 
@@ -1307,7 +1307,7 @@ msgstr "أصلح"
 #: src/control/Control.NotebookbarCalc.js:1180
 #: src/control/Control.NotebookbarDraw.js:349
 #: src/control/Control.NotebookbarImpress.js:389
-#: src/control/Control.NotebookbarWriter.js:1440
+#: src/control/Control.NotebookbarWriter.js:1446
 #: src/control/Control.StatusBar.js:273
 msgid "Reset zoom"
 msgstr "صفّر مستوى التكبير"
@@ -1338,7 +1338,7 @@ msgstr "إخفاء شريط القوائم"
 #: src/control/Control.NotebookbarCalc.js:1254
 #: src/control/Control.NotebookbarDraw.js:449
 #: src/control/Control.NotebookbarImpress.js:504
-#: src/control/Control.NotebookbarWriter.js:1520
+#: src/control/Control.NotebookbarWriter.js:1526
 msgid "Dark Mode"
 msgstr "الوضع المظلم"
 
@@ -1349,7 +1349,7 @@ msgstr "الوضع المظلم"
 #: src/control/Control.NotebookbarCalc.js:1261
 #: src/control/Control.NotebookbarDraw.js:456
 #: src/control/Control.NotebookbarImpress.js:511
-#: src/control/Control.NotebookbarWriter.js:1527
+#: src/control/Control.NotebookbarWriter.js:1533
 msgid "Invert Background"
 msgstr "عكس الخلفية"
 
@@ -1370,7 +1370,7 @@ msgstr "الكل"
 #: src/control/Control.NotebookbarCalc.js:1385
 #: src/control/Control.NotebookbarDraw.js:1277
 #: src/control/Control.NotebookbarImpress.js:1277
-#: src/control/Control.NotebookbarWriter.js:1123
+#: src/control/Control.NotebookbarWriter.js:1129
 msgid "Smart Picker"
 msgstr "المنتقى الذكي"
 
@@ -1389,38 +1389,38 @@ msgid "References"
 msgstr "مراجع"
 
 #: src/control/Control.Menubar.js:302
-#: src/control/Control.NotebookbarWriter.js:1887
+#: src/control/Control.NotebookbarWriter.js:1893
 msgid "Update Index"
 msgstr "تحديث الفهرس"
 
 #: src/control/Control.Menubar.js:311
-#: src/control/Control.NotebookbarWriter.js:1983
+#: src/control/Control.NotebookbarWriter.js:1989
 msgid "Add Citation"
 msgstr "إضافة الاقتباس"
 
 #: src/control/Control.Menubar.js:312
-#: src/control/Control.NotebookbarWriter.js:1995
+#: src/control/Control.NotebookbarWriter.js:2001
 msgid "Add Citation Note"
 msgstr "إضافة ملاحظة الاقتباس"
 
 #: src/control/Control.Menubar.js:313
-#: src/control/Control.NotebookbarWriter.js:1970
+#: src/control/Control.NotebookbarWriter.js:1976
 msgid "Add Bibliography"
 msgstr "إضافة فهرس"
 
 #: src/control/Control.Menubar.js:315
-#: src/control/Control.NotebookbarWriter.js:2013
+#: src/control/Control.NotebookbarWriter.js:2019
 msgid "Refresh Citations"
 msgstr "تحديث الاقتباسات"
 
 #: src/control/Control.Menubar.js:316
-#: src/control/Control.NotebookbarWriter.js:2025
+#: src/control/Control.NotebookbarWriter.js:2031
 #: src/control/Control.Zotero.js:1445
 msgid "Unlink Citations"
 msgstr "إلغاء ربط الاقتباسات"
 
 #: src/control/Control.Menubar.js:317
-#: src/control/Control.NotebookbarWriter.js:2037
+#: src/control/Control.NotebookbarWriter.js:2043
 msgid "Citation Preferences"
 msgstr "تفضيلات الاقتباس"
 
@@ -1449,7 +1449,7 @@ msgstr "أدخل جدول"
 #: src/control/Control.NotebookbarDraw.js:290
 #: src/control/Control.NotebookbarImpress.js:309
 #: src/control/Control.NotebookbarWriter.js:309
-#: src/control/Control.NotebookbarWriter.js:1403
+#: src/control/Control.NotebookbarWriter.js:1409
 msgid "Properties"
 msgstr "الخصائص"
 
@@ -1609,7 +1609,7 @@ msgstr "موجود في النافذة الجديدة"
 
 #: src/control/Control.Menubar.js:548
 #: src/control/Control.NotebookbarImpress.js:374
-#: src/slideshow/PresenterConsole.js:233
+#: src/slideshow/PresenterConsole.js:229
 msgid "Presenter Console"
 msgstr "شاشة تحكم مقدم العرض"
 
@@ -1737,7 +1737,7 @@ msgstr "تحت المتوسط ..."
 #: src/control/Control.NotebookbarCalc.js:840
 #: src/control/Control.NotebookbarDraw.js:989
 #: src/control/Control.NotebookbarImpress.js:1053
-#: src/control/Control.NotebookbarWriter.js:888
+#: src/control/Control.NotebookbarWriter.js:894
 #: src/control/Control.StatusBar.js:246 src/control/Control.Zotero.js:218
 #: src/control/Toolbar.js:575
 msgid "Search"
@@ -1975,7 +1975,7 @@ msgid "Currency"
 msgstr "عملة"
 
 #: src/control/Control.NotebookbarCalc.js:611
-#: src/control/Control.NotebookbarWriter.js:1396
+#: src/control/Control.NotebookbarWriter.js:1402
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
 msgid "Date"
 msgstr "تاريخ"
@@ -2024,6 +2024,13 @@ msgstr "محايد"
 msgid "Bad"
 msgstr "سيئ"
 
+#: src/control/Control.NotebookbarCalc.js:851
+#: src/control/Control.NotebookbarDraw.js:1000
+#: src/control/Control.NotebookbarImpress.js:1064
+#: src/control/Control.NotebookbarWriter.js:905
+msgid "Replace"
+msgstr ""
+
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
 msgstr "ارتفاع الصف"
@@ -2059,28 +2066,28 @@ msgstr "حذف أعمدة"
 #: src/control/Control.NotebookbarCalc.js:1166
 #: src/control/Control.NotebookbarDraw.js:335
 #: src/control/Control.NotebookbarImpress.js:351
-#: src/control/Control.NotebookbarWriter.js:1419
+#: src/control/Control.NotebookbarWriter.js:1425
 msgid "Read mode"
 msgstr "وضع القراءة"
 
 #: src/control/Control.NotebookbarCalc.js:1217
 #: src/control/Control.NotebookbarDraw.js:386
 #: src/control/Control.NotebookbarImpress.js:426
-#: src/control/Control.NotebookbarWriter.js:1477
+#: src/control/Control.NotebookbarWriter.js:1483
 msgid "Compact view"
 msgstr "عرض مُدمَج"
 
 #: src/control/Control.NotebookbarCalc.js:1230
 #: src/control/Control.NotebookbarDraw.js:423
 #: src/control/Control.NotebookbarImpress.js:463
-#: src/control/Control.NotebookbarWriter.js:1514
+#: src/control/Control.NotebookbarWriter.js:1520
 msgid "Collapse Tabs"
 msgstr "طي علامات التبويب"
 
 #: src/control/Control.NotebookbarCalc.js:1242
 #: src/control/Control.NotebookbarDraw.js:411
 #: src/control/Control.NotebookbarImpress.js:451
-#: src/control/Control.NotebookbarWriter.js:1502
+#: src/control/Control.NotebookbarWriter.js:1508
 msgid "Status Bar"
 msgstr "شريط الحالة"
 
@@ -2091,7 +2098,7 @@ msgstr "خط التألق"
 #: src/control/Control.NotebookbarCalc.js:1393
 #: src/control/Control.NotebookbarDraw.js:1285
 #: src/control/Control.NotebookbarImpress.js:1297
-#: src/control/Control.NotebookbarWriter.js:1143
+#: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
 msgstr ""
 
@@ -2102,13 +2109,13 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:925
 #: src/control/Control.NotebookbarImpress.js:1390
 #: src/control/Control.NotebookbarImpress.js:2449
-#: src/control/Control.NotebookbarWriter.js:1079
-#: src/control/Control.NotebookbarWriter.js:2880
+#: src/control/Control.NotebookbarWriter.js:1085
+#: src/control/Control.NotebookbarWriter.js:2886
 msgid "Shapes"
 msgstr "الأشكال"
 
 #: src/control/Control.NotebookbarCalc.js:2024
-#: src/control/Control.NotebookbarWriter.js:939
+#: src/control/Control.NotebookbarWriter.js:945
 msgid "Style list"
 msgstr ""
 
@@ -2124,7 +2131,7 @@ msgstr "مستند PDF (.pdf) - خبير"
 
 #: src/control/Control.NotebookbarDraw.js:399
 #: src/control/Control.NotebookbarImpress.js:439
-#: src/control/Control.NotebookbarWriter.js:1490
+#: src/control/Control.NotebookbarWriter.js:1496
 msgid "Ruler"
 msgstr "مسطرة"
 
@@ -2165,19 +2172,19 @@ msgstr "الاتصال بالإنترنت"
 msgid "Go Offline"
 msgstr "قطع الاتصال بالإنترنت"
 
-#: src/control/Control.NotebookbarWriter.js:1368
+#: src/control/Control.NotebookbarWriter.js:1374
 msgid "Rich Text"
 msgstr "نص منسق"
 
-#: src/control/Control.NotebookbarWriter.js:1375
+#: src/control/Control.NotebookbarWriter.js:1381
 msgid "Checkbox"
 msgstr "خانة الاختيار"
 
-#: src/control/Control.NotebookbarWriter.js:1382
+#: src/control/Control.NotebookbarWriter.js:1388
 msgid "Dropdown"
 msgstr "قائمة منسدلة"
 
-#: src/control/Control.NotebookbarWriter.js:1389
+#: src/control/Control.NotebookbarWriter.js:1395
 msgid "Picture"
 msgstr "صورة"
 
@@ -2502,7 +2509,7 @@ msgstr ""
 "يحتوي المستند على بعض الاستشهادات التي قد لا يمكن الوصول إليها من خلال واجهة "
 "برمجة تطبيقات الويب. قد يسبب بعض المشاكل أثناء تحرير الاستشهادات أو المراجع."
 
-#: src/control/Control.Zotero.js:244 src/core/Socket.js:1338
+#: src/control/Control.Zotero.js:244 src/core/Socket.js:1339
 msgid "Loading..."
 msgstr "يحمّل..."
 
@@ -2882,168 +2889,168 @@ msgstr "أدوات التنقيح"
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "إضغط Ctrl+Shift+Alt+D للخروج"
 
-#: src/core/Socket.js:67
+#: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "عفواً؛ حدثت مشكلة في الاتصال مع {productname}: "
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:686
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "يمكننا الوصول إلى الخادم الآن. علينا الآن تحديث الصفحة."
 
-#: src/core/Socket.js:687
+#: src/core/Socket.js:688
 msgid "Server is now reachable..."
 msgstr "يمكننا الآن الوصول إلى الخادم ..."
 
-#: src/core/Socket.js:691
+#: src/core/Socket.js:692
 msgid "RELOAD"
 msgstr "إعادة التحميل"
 
-#: src/core/Socket.js:704
+#: src/core/Socket.js:705
 msgid "Cluster configuration warning"
 msgstr "تحذير تكوين الكتلة"
 
-#: src/core/Socket.js:707
+#: src/core/Socket.js:708
 msgid "Wrong server, reconnecting..."
 msgstr "خطأ في الخادم، جارٍ إعادة الاتصال..."
 
-#: src/core/Socket.js:716
+#: src/core/Socket.js:717
 msgid "COOLWSD version:"
 msgstr "إصدار COOLWSD:"
 
-#: src/core/Socket.js:741
+#: src/core/Socket.js:742
 msgid "Served by:"
 msgstr "قدم بواسطة:"
 
-#: src/core/Socket.js:747
+#: src/core/Socket.js:748
 msgid "Unsupported server version."
 msgstr "إصدار الخادم غير مدعوم."
 
-#: src/core/Socket.js:751
+#: src/core/Socket.js:752
 msgid "LOKit version:"
 msgstr "إصدار LOKit:"
 
-#: src/core/Socket.js:875
+#: src/core/Socket.js:876
 msgid "Document is getting migrated"
 msgstr "جارٍ ترحيل المستند"
 
-#: src/core/Socket.js:902
+#: src/core/Socket.js:903
 msgid "Session terminated by document owner"
 msgstr "أنهى مالك المستند الجلسة"
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:914
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "الخادوم يُطفأ للصيانة (يحفظ آليًّا)"
 
-#: src/core/Socket.js:919
+#: src/core/Socket.js:920
 msgid "Oops, there is a problem connecting the document"
 msgstr "آخ، حدثت مشكلة في الاتصال بالمستند"
 
-#: src/core/Socket.js:923
+#: src/core/Socket.js:924
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "الخادم معطل، تتم إعادة التشغيل تلقائيًا. الرجاء الإنتظار."
 
-#: src/core/Socket.js:950
+#: src/core/Socket.js:951
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
 "تغيّر المستند في التخزين. يُحمِّل المستند الجديد. إصدارتك متاحة كمراجعة."
 
-#: src/core/Socket.js:956
+#: src/core/Socket.js:957
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr "استعادة النسخة القديمة. ستتوفر أي تغييرات غير محفوظة في محفوظات الإصدار"
 
-#: src/core/Socket.js:962
+#: src/core/Socket.js:963
 msgid "Reloading the document after rename"
 msgstr "إعادة تحميل المستند بعد إعادة تسميته"
 
-#: src/core/Socket.js:1120
+#: src/core/Socket.js:1121
 msgid "Document requires password to view."
 msgstr "تلزم كلمة مرور لعرض المستند."
 
-#: src/core/Socket.js:1123
+#: src/core/Socket.js:1124
 msgid "Document requires password to modify."
 msgstr "يتطلب المستند كلمة سر لتعديله."
 
-#: src/core/Socket.js:1125
+#: src/core/Socket.js:1126
 msgid "Hit Cancel to open in view-only mode."
 msgstr "أنقُر ”ألغِ“ للفتح في وضع العرض فقط."
 
-#: src/core/Socket.js:1129
+#: src/core/Socket.js:1130
 msgid "Wrong password provided. Please try again."
 msgstr "وُفّرت كلمة سر خاطئة. رجاءً أعد المحاولة."
 
-#: src/core/Socket.js:1167
+#: src/core/Socket.js:1168
 msgid "Only the document owner can change the password."
 msgstr "يمكن لمالك المستند فقط تغيير كلمة المرور."
 
-#: src/core/Socket.js:1198 src/core/Socket.js:1203
+#: src/core/Socket.js:1199 src/core/Socket.js:1204
 msgid "Missing Fonts"
 msgstr "الخطوط المفقودة"
 
-#: src/core/Socket.js:1235
+#: src/core/Socket.js:1236
 msgid "Someone"
 msgstr "شخصا ما"
 
-#: src/core/Socket.js:1236
+#: src/core/Socket.js:1237
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "قام {username} بحفظ هذا المستند باسم {filename}. هل تود الانضمام؟"
 
-#: src/core/Socket.js:1253
+#: src/core/Socket.js:1254
 msgid "The document is being renamed and will reload shortly"
 msgstr "تتم الآن إعادة تسمية المستند وسيعاد تحميله بعدها"
 
-#: src/core/Socket.js:1256
+#: src/core/Socket.js:1257
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "يتمّ تحويل المستند الآن إلى وضع عدم الاتصال؛ و سوف يُعاد تحميله قريباً"
 
-#: src/core/Socket.js:1338
+#: src/core/Socket.js:1339
 msgid "Connecting..."
 msgstr "يتصل..."
 
-#: src/core/Socket.js:1353
+#: src/core/Socket.js:1354
 msgid "Server is shutting down"
 msgstr "يتم الآن إطفاء الخادوم"
 
-#: src/core/Socket.js:1386
+#: src/core/Socket.js:1390
 msgid "Exported to storage"
 msgstr "تصديرها إلى المخزن"
 
-#: src/core/Socket.js:1386
+#: src/core/Socket.js:1390
 msgid "Successfully exported: "
 msgstr "تم التصدير بنجاح: "
 
-#: src/core/Socket.js:1414
+#: src/core/Socket.js:1418
 msgid "Discard"
 msgstr "أهمِلها"
 
-#: src/core/Socket.js:1426
+#: src/core/Socket.js:1430
 msgid "Save to new file"
 msgstr "حفظ في ملف جديد"
 
-#: src/core/Socket.js:1436
+#: src/core/Socket.js:1440
 msgid "Document has been changed"
 msgstr "تم تغيير المستند"
 
-#: src/core/Socket.js:1437
+#: src/core/Socket.js:1441
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "تغيّر المستند في التخزين. ما الذي تريد فعله حيال تغييراتك غير المحفوظة؟"
 
-#: src/core/Socket.js:1690
+#: src/core/Socket.js:1694
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "هذا محرج. تعذر الاتصال بالمستند. رجاءً أعد المحاولة لاحقًا."
 
-#: src/core/Socket.js:1707
+#: src/core/Socket.js:1711
 msgid "Reconnecting..."
 msgstr "جاري إعادة الاتصال ..."
 
-#: src/core/Socket.js:1717
+#: src/core/Socket.js:1721
 msgid "The server has been disconnected."
 msgstr "تم قطع اتصال الخادم."
 
@@ -3618,19 +3625,19 @@ msgstr "تكبير"
 msgid "Zoom Out"
 msgstr "التصغير"
 
-#: src/slideshow/PresenterConsole.js:1208
+#: src/slideshow/PresenterConsole.js:1215
 msgid "Slide {0} of {1}"
 msgstr "شريحة {0} من {1}"
 
-#: src/slideshow/PresenterConsole.js:1230
+#: src/slideshow/PresenterConsole.js:1239
 msgid "No Notes"
 msgstr "لا ملاحظات"
 
-#: src/slideshow/PresenterConsole.js:1318
+#: src/slideshow/PresenterConsole.js:1327
 msgid "Repeat in {0} seconds"
 msgstr ""
 
-#: src/slideshow/PresenterConsole.js:1323
+#: src/slideshow/PresenterConsole.js:1332
 #: src/slideshow/SlideShowPresenter.ts:366
 msgid "Click to exit presentation..."
 msgstr "إضغَط للخروج من العرض ..."

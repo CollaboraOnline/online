@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-21 21:34+0100\n"
+"POT-Creation-Date: 2025-01-27 11:16+0100\n"
 "PO-Revision-Date: 2024-12-17 09:59+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
@@ -231,7 +231,7 @@ msgstr "רמות תיעוד ביומן"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
-#: src/core/Socket.js:427 src/core/Socket.js:1198 src/core/Socket.js:1203
+#: src/core/Socket.js:428 src/core/Socket.js:1199 src/core/Socket.js:1204
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "סגירה"
@@ -301,8 +301,8 @@ msgstr "אזהרה"
 #: src/control/Parts.js:491 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Socket.js:704 src/core/Socket.js:1168 src/core/Socket.js:1238
-#: src/core/Socket.js:1386 src/core/Socket.js:1390 src/docdispatcher.ts:495
+#: src/core/Socket.js:705 src/core/Socket.js:1169 src/core/Socket.js:1239
+#: src/core/Socket.js:1390 src/core/Socket.js:1394 src/docdispatcher.ts:495
 #: src/main.js:84 src/main.js:87 src/main.js:140 src/map/Clipboard.js:1269
 #: src/map/handler/Map.Feedback.js:87 src/map/handler/Map.SlideShow.js:56
 #: src/map/handler/Map.SlideShow.js:165 src/map/handler/Map.SlideShow.js:293
@@ -326,7 +326,7 @@ msgstr "אישור"
 #: src/control/Control.UIManager.js:1313 src/control/Control.UIManager.js:1380
 #: src/control/Control.UIManager.js:1515 src/control/Control.UIManager.js:1674
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:832
-#: src/core/Socket.js:1411
+#: src/core/Socket.js:1415
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -410,15 +410,15 @@ msgstr " דקות"
 msgid " s"
 msgstr " שניות"
 
-#: js/global.js:1432
+#: js/global.js:1476
 msgid "Cluster is scaling, retrying..."
 msgstr "הקלאסטר עובר שינוי, ננסה שוב…"
 
-#: js/global.js:1434
+#: js/global.js:1478
 msgid "Document is migrating to new server, retrying..."
 msgstr "המסמך מועבר לשרת חדש, ננסה שוב…"
 
-#: js/global.js:1436
+#: js/global.js:1480
 msgid "Failed to get RouteToken from controller"
 msgstr "קבלת RouteToken (אסימון נתיב) מהבקר נכשלה"
 
@@ -498,7 +498,7 @@ msgid ""
 "changes?"
 msgstr "משתמש אחר עדכן את ההערה הזאת. לדרוס את השינויים האלה?"
 
-#: src/canvas/sections/CommentListSection.ts:1466 src/core/Socket.js:1415
+#: src/canvas/sections/CommentListSection.ts:1466 src/core/Socket.js:1419
 msgid "Overwrite"
 msgstr "דריסה"
 
@@ -624,19 +624,19 @@ msgstr "השרת נתקל בשגיאת {0} בעת פענוח הפקודה {1}."
 msgid "Unlock"
 msgstr "שחרור"
 
-#: src/control/Control.ContextMenu.js:248 src/docdispatcher.ts:492
+#: src/control/Control.ContextMenu.js:249 src/docdispatcher.ts:492
 msgid "Delete"
 msgstr "מחיקה"
 
-#: src/control/Control.ContextMenu.js:273
+#: src/control/Control.ContextMenu.js:274
 msgid "Paste Special"
 msgstr "הדבקה מיוחדת"
 
-#: src/control/Control.ContextMenu.js:280
+#: src/control/Control.ContextMenu.js:281
 msgid "Copy Cells"
 msgstr "העתקת תאים"
 
-#: src/control/Control.ContextMenu.js:285
+#: src/control/Control.ContextMenu.js:286
 msgid "Fill Series"
 msgstr "מילוי סדרה"
 
@@ -1301,7 +1301,7 @@ msgstr "תיקון"
 #: src/control/Control.NotebookbarCalc.js:1180
 #: src/control/Control.NotebookbarDraw.js:349
 #: src/control/Control.NotebookbarImpress.js:389
-#: src/control/Control.NotebookbarWriter.js:1440
+#: src/control/Control.NotebookbarWriter.js:1446
 #: src/control/Control.StatusBar.js:273
 msgid "Reset zoom"
 msgstr "איפוס מרחק מתצוגה"
@@ -1332,7 +1332,7 @@ msgstr "הסתרת סרגל תפריטים"
 #: src/control/Control.NotebookbarCalc.js:1254
 #: src/control/Control.NotebookbarDraw.js:449
 #: src/control/Control.NotebookbarImpress.js:504
-#: src/control/Control.NotebookbarWriter.js:1520
+#: src/control/Control.NotebookbarWriter.js:1526
 msgid "Dark Mode"
 msgstr "מצב כהה"
 
@@ -1343,7 +1343,7 @@ msgstr "מצב כהה"
 #: src/control/Control.NotebookbarCalc.js:1261
 #: src/control/Control.NotebookbarDraw.js:456
 #: src/control/Control.NotebookbarImpress.js:511
-#: src/control/Control.NotebookbarWriter.js:1527
+#: src/control/Control.NotebookbarWriter.js:1533
 msgid "Invert Background"
 msgstr "היפוך הרקע"
 
@@ -1364,7 +1364,7 @@ msgstr "הכול"
 #: src/control/Control.NotebookbarCalc.js:1385
 #: src/control/Control.NotebookbarDraw.js:1277
 #: src/control/Control.NotebookbarImpress.js:1277
-#: src/control/Control.NotebookbarWriter.js:1123
+#: src/control/Control.NotebookbarWriter.js:1129
 msgid "Smart Picker"
 msgstr "בורר חכם"
 
@@ -1383,38 +1383,38 @@ msgid "References"
 msgstr "סימוכין"
 
 #: src/control/Control.Menubar.js:302
-#: src/control/Control.NotebookbarWriter.js:1887
+#: src/control/Control.NotebookbarWriter.js:1893
 msgid "Update Index"
 msgstr "עדכון מפתח"
 
 #: src/control/Control.Menubar.js:311
-#: src/control/Control.NotebookbarWriter.js:1983
+#: src/control/Control.NotebookbarWriter.js:1989
 msgid "Add Citation"
 msgstr "הוספת ציטוט"
 
 #: src/control/Control.Menubar.js:312
-#: src/control/Control.NotebookbarWriter.js:1995
+#: src/control/Control.NotebookbarWriter.js:2001
 msgid "Add Citation Note"
 msgstr "הוספת הערת ציטוט"
 
 #: src/control/Control.Menubar.js:313
-#: src/control/Control.NotebookbarWriter.js:1970
+#: src/control/Control.NotebookbarWriter.js:1976
 msgid "Add Bibliography"
 msgstr "הוספת ביבליוגרפיה"
 
 #: src/control/Control.Menubar.js:315
-#: src/control/Control.NotebookbarWriter.js:2013
+#: src/control/Control.NotebookbarWriter.js:2019
 msgid "Refresh Citations"
 msgstr "רענון ציטוטים"
 
 #: src/control/Control.Menubar.js:316
-#: src/control/Control.NotebookbarWriter.js:2025
+#: src/control/Control.NotebookbarWriter.js:2031
 #: src/control/Control.Zotero.js:1445
 msgid "Unlink Citations"
 msgstr "ניתוק ציטוטים"
 
 #: src/control/Control.Menubar.js:317
-#: src/control/Control.NotebookbarWriter.js:2037
+#: src/control/Control.NotebookbarWriter.js:2043
 msgid "Citation Preferences"
 msgstr "העדפות ציטוטים"
 
@@ -1443,7 +1443,7 @@ msgstr "הוספת תאריך"
 #: src/control/Control.NotebookbarDraw.js:290
 #: src/control/Control.NotebookbarImpress.js:309
 #: src/control/Control.NotebookbarWriter.js:309
-#: src/control/Control.NotebookbarWriter.js:1403
+#: src/control/Control.NotebookbarWriter.js:1409
 msgid "Properties"
 msgstr "מאפיינים"
 
@@ -1603,7 +1603,7 @@ msgstr "הצגה בחלון חדש"
 
 #: src/control/Control.Menubar.js:548
 #: src/control/Control.NotebookbarImpress.js:374
-#: src/slideshow/PresenterConsole.js:233
+#: src/slideshow/PresenterConsole.js:229
 msgid "Presenter Console"
 msgstr "מסוף מציג"
 
@@ -1731,7 +1731,7 @@ msgstr "מתחת לממוצע…"
 #: src/control/Control.NotebookbarCalc.js:840
 #: src/control/Control.NotebookbarDraw.js:989
 #: src/control/Control.NotebookbarImpress.js:1053
-#: src/control/Control.NotebookbarWriter.js:888
+#: src/control/Control.NotebookbarWriter.js:894
 #: src/control/Control.StatusBar.js:246 src/control/Control.Zotero.js:218
 #: src/control/Toolbar.js:575
 msgid "Search"
@@ -1969,7 +1969,7 @@ msgid "Currency"
 msgstr "מטבע"
 
 #: src/control/Control.NotebookbarCalc.js:611
-#: src/control/Control.NotebookbarWriter.js:1396
+#: src/control/Control.NotebookbarWriter.js:1402
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
 msgid "Date"
 msgstr "תאריך"
@@ -2018,6 +2018,13 @@ msgstr "נייטרלי"
 msgid "Bad"
 msgstr "רע"
 
+#: src/control/Control.NotebookbarCalc.js:851
+#: src/control/Control.NotebookbarDraw.js:1000
+#: src/control/Control.NotebookbarImpress.js:1064
+#: src/control/Control.NotebookbarWriter.js:905
+msgid "Replace"
+msgstr ""
+
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
 msgstr "גובה שורה"
@@ -2053,28 +2060,28 @@ msgstr "מחיקת עמודות"
 #: src/control/Control.NotebookbarCalc.js:1166
 #: src/control/Control.NotebookbarDraw.js:335
 #: src/control/Control.NotebookbarImpress.js:351
-#: src/control/Control.NotebookbarWriter.js:1419
+#: src/control/Control.NotebookbarWriter.js:1425
 msgid "Read mode"
 msgstr "מצב קריאה"
 
 #: src/control/Control.NotebookbarCalc.js:1217
 #: src/control/Control.NotebookbarDraw.js:386
 #: src/control/Control.NotebookbarImpress.js:426
-#: src/control/Control.NotebookbarWriter.js:1477
+#: src/control/Control.NotebookbarWriter.js:1483
 msgid "Compact view"
 msgstr "תצוגה מצומצמת"
 
 #: src/control/Control.NotebookbarCalc.js:1230
 #: src/control/Control.NotebookbarDraw.js:423
 #: src/control/Control.NotebookbarImpress.js:463
-#: src/control/Control.NotebookbarWriter.js:1514
+#: src/control/Control.NotebookbarWriter.js:1520
 msgid "Collapse Tabs"
 msgstr "צמצום לשוניות"
 
 #: src/control/Control.NotebookbarCalc.js:1242
 #: src/control/Control.NotebookbarDraw.js:411
 #: src/control/Control.NotebookbarImpress.js:451
-#: src/control/Control.NotebookbarWriter.js:1502
+#: src/control/Control.NotebookbarWriter.js:1508
 msgid "Status Bar"
 msgstr "שורת מצב"
 
@@ -2085,7 +2092,7 @@ msgstr "תרשים מזערי"
 #: src/control/Control.NotebookbarCalc.js:1393
 #: src/control/Control.NotebookbarDraw.js:1285
 #: src/control/Control.NotebookbarImpress.js:1297
-#: src/control/Control.NotebookbarWriter.js:1143
+#: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
 msgstr ""
 
@@ -2096,13 +2103,13 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:925
 #: src/control/Control.NotebookbarImpress.js:1390
 #: src/control/Control.NotebookbarImpress.js:2449
-#: src/control/Control.NotebookbarWriter.js:1079
-#: src/control/Control.NotebookbarWriter.js:2880
+#: src/control/Control.NotebookbarWriter.js:1085
+#: src/control/Control.NotebookbarWriter.js:2886
 msgid "Shapes"
 msgstr "צורות"
 
 #: src/control/Control.NotebookbarCalc.js:2024
-#: src/control/Control.NotebookbarWriter.js:939
+#: src/control/Control.NotebookbarWriter.js:945
 msgid "Style list"
 msgstr ""
 
@@ -2118,7 +2125,7 @@ msgstr "מסמך PDF‏ (‎.pdf) - מומחה"
 
 #: src/control/Control.NotebookbarDraw.js:399
 #: src/control/Control.NotebookbarImpress.js:439
-#: src/control/Control.NotebookbarWriter.js:1490
+#: src/control/Control.NotebookbarWriter.js:1496
 msgid "Ruler"
 msgstr "סרגל"
 
@@ -2159,19 +2166,19 @@ msgstr "חיבור לאינטרנט"
 msgid "Go Offline"
 msgstr "ניתוק מהאינטרנט"
 
-#: src/control/Control.NotebookbarWriter.js:1368
+#: src/control/Control.NotebookbarWriter.js:1374
 msgid "Rich Text"
 msgstr "טקסט עשיר"
 
-#: src/control/Control.NotebookbarWriter.js:1375
+#: src/control/Control.NotebookbarWriter.js:1381
 msgid "Checkbox"
 msgstr "תיבת סימון"
 
-#: src/control/Control.NotebookbarWriter.js:1382
+#: src/control/Control.NotebookbarWriter.js:1388
 msgid "Dropdown"
 msgstr "רשימה נגללת"
 
-#: src/control/Control.NotebookbarWriter.js:1389
+#: src/control/Control.NotebookbarWriter.js:1395
 msgid "Picture"
 msgstr "תמונה"
 
@@ -2494,7 +2501,7 @@ msgstr ""
 "המסמך מכיל ציטוטים שעשויים לא להיות נגישים דרך API מקוון. עשוי לגרום לבעיות "
 "בעריכת ציטוטים או ביבליוגרפיה."
 
-#: src/control/Control.Zotero.js:244 src/core/Socket.js:1338
+#: src/control/Control.Zotero.js:244 src/core/Socket.js:1339
 msgid "Loading..."
 msgstr "בטעינה…"
 
@@ -2872,167 +2879,167 @@ msgstr "כלי ניפוי תקלות"
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "Ctrl+Shift+Alt+D ליציאה"
 
-#: src/core/Socket.js:67
+#: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "אופס, אירעה תקלה בעת התחברות אל {productname}: "
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:686
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "השרת זמין כעת. עלינו לרענן את העמוד."
 
-#: src/core/Socket.js:687
+#: src/core/Socket.js:688
 msgid "Server is now reachable..."
 msgstr "השרת נגיש כרגע…"
 
-#: src/core/Socket.js:691
+#: src/core/Socket.js:692
 msgid "RELOAD"
 msgstr "טעינה מחדש"
 
-#: src/core/Socket.js:704
+#: src/core/Socket.js:705
 msgid "Cluster configuration warning"
 msgstr "אזהרת הגדרת צביר"
 
-#: src/core/Socket.js:707
+#: src/core/Socket.js:708
 msgid "Wrong server, reconnecting..."
 msgstr "שרת שגוי, התחברות חוזרת…"
 
-#: src/core/Socket.js:716
+#: src/core/Socket.js:717
 msgid "COOLWSD version:"
 msgstr "גרסת COOLWSD:"
 
-#: src/core/Socket.js:741
+#: src/core/Socket.js:742
 msgid "Served by:"
 msgstr "מוגש על ידי:"
 
-#: src/core/Socket.js:747
+#: src/core/Socket.js:748
 msgid "Unsupported server version."
 msgstr "גרסת השרת אינה נתמכת."
 
-#: src/core/Socket.js:751
+#: src/core/Socket.js:752
 msgid "LOKit version:"
 msgstr "גרסת LOKit:"
 
-#: src/core/Socket.js:875
+#: src/core/Socket.js:876
 msgid "Document is getting migrated"
 msgstr "המסמך מיובא"
 
-#: src/core/Socket.js:902
+#: src/core/Socket.js:903
 msgid "Session terminated by document owner"
 msgstr "ההפעלה נסגרה על ידי בעלי המסמך"
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:914
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "השרת נכבה לצורכי תחזוקה (מתבצעת שמירה אוטומטית)"
 
-#: src/core/Socket.js:919
+#: src/core/Socket.js:920
 msgid "Oops, there is a problem connecting the document"
 msgstr "אופס, אירעה תקלה בעת התחברות למסמך"
 
-#: src/core/Socket.js:923
+#: src/core/Socket.js:924
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "השרת מושבת, תתבצע הפעלה אוטומטית מחדש. נא להמתין."
 
-#: src/core/Socket.js:950
+#: src/core/Socket.js:951
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr "המסמך השתנה באחסון. המסמך החדש נטען. הגרסה שלך זמינה לסקירה."
 
-#: src/core/Socket.js:956
+#: src/core/Socket.js:957
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr "מהדורה ישנה משוחזרת. שינויים שלא יישמרו יהיו זמינים בהיסטוריית הגרסאות"
 
-#: src/core/Socket.js:962
+#: src/core/Socket.js:963
 msgid "Reloading the document after rename"
 msgstr "רענון המסמך אחרי שינוי שם"
 
-#: src/core/Socket.js:1120
+#: src/core/Socket.js:1121
 msgid "Document requires password to view."
 msgstr "נדרשת ססמה כדי לצפות במסמך."
 
-#: src/core/Socket.js:1123
+#: src/core/Socket.js:1124
 msgid "Document requires password to modify."
 msgstr "נדרשת ססמה כדי לערוך את המסמך."
 
-#: src/core/Socket.js:1125
+#: src/core/Socket.js:1126
 msgid "Hit Cancel to open in view-only mode."
 msgstr "יש ללחוץ על ביטול כדי לפתוח במצב צפייה בלבד."
 
-#: src/core/Socket.js:1129
+#: src/core/Socket.js:1130
 msgid "Wrong password provided. Please try again."
 msgstr "הססמה שסופקה שגויה. נא לנסות שוב."
 
-#: src/core/Socket.js:1167
+#: src/core/Socket.js:1168
 msgid "Only the document owner can change the password."
 msgstr "רק בעלי המסמך יכולים לשנות את הסיסמה."
 
-#: src/core/Socket.js:1198 src/core/Socket.js:1203
+#: src/core/Socket.js:1199 src/core/Socket.js:1204
 msgid "Missing Fonts"
 msgstr "גופנים חסרים"
 
-#: src/core/Socket.js:1235
+#: src/core/Socket.js:1236
 msgid "Someone"
 msgstr "מישהו"
 
-#: src/core/Socket.js:1236
+#: src/core/Socket.js:1237
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "המסמך הזה נשמר על ידי {username} בשם {filename}. אפשר להציע לך להצטרף?"
 
-#: src/core/Socket.js:1253
+#: src/core/Socket.js:1254
 msgid "The document is being renamed and will reload shortly"
 msgstr "שם המסמך נערך והוא ירוענן בעוד זמן קצר"
 
-#: src/core/Socket.js:1256
+#: src/core/Socket.js:1257
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "המסמך עובר למצב בלתי־מקוון והוא ייטען מחדש תכף"
 
-#: src/core/Socket.js:1338
+#: src/core/Socket.js:1339
 msgid "Connecting..."
 msgstr "מתבצעת התחברות…"
 
-#: src/core/Socket.js:1353
+#: src/core/Socket.js:1354
 msgid "Server is shutting down"
 msgstr "השרת נכבה"
 
-#: src/core/Socket.js:1386
+#: src/core/Socket.js:1390
 msgid "Exported to storage"
 msgstr "ייוצא לאחסון"
 
-#: src/core/Socket.js:1386
+#: src/core/Socket.js:1390
 msgid "Successfully exported: "
 msgstr "ייוצא בהצלחה: "
 
-#: src/core/Socket.js:1414
+#: src/core/Socket.js:1418
 msgid "Discard"
 msgstr "התעלמות"
 
-#: src/core/Socket.js:1426
+#: src/core/Socket.js:1430
 msgid "Save to new file"
 msgstr "שמירה לקובץ חדש"
 
-#: src/core/Socket.js:1436
+#: src/core/Socket.js:1440
 msgid "Document has been changed"
 msgstr "המסמך נערך"
 
-#: src/core/Socket.js:1437
+#: src/core/Socket.js:1441
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "המסמך נערך באחסון. מה ברצונך לעשות בנוגע לשינויים שלא שמרת?"
 
-#: src/core/Socket.js:1690
+#: src/core/Socket.js:1694
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "ובכן, לא נעים, לא הצלחנו להתחבר למסמך שלך. נא לנסות שוב מאוחר יותר."
 
-#: src/core/Socket.js:1707
+#: src/core/Socket.js:1711
 msgid "Reconnecting..."
 msgstr "התחברות מחדש…"
 
-#: src/core/Socket.js:1717
+#: src/core/Socket.js:1721
 msgid "The server has been disconnected."
 msgstr "השרת התנתק."
 
@@ -3590,19 +3597,19 @@ msgstr "התקרבות"
 msgid "Zoom Out"
 msgstr "התרחקות"
 
-#: src/slideshow/PresenterConsole.js:1208
+#: src/slideshow/PresenterConsole.js:1215
 msgid "Slide {0} of {1}"
 msgstr "שקופית {0} מתוך {1}"
 
-#: src/slideshow/PresenterConsole.js:1230
+#: src/slideshow/PresenterConsole.js:1239
 msgid "No Notes"
 msgstr "אין פתקיות"
 
-#: src/slideshow/PresenterConsole.js:1318
+#: src/slideshow/PresenterConsole.js:1327
 msgid "Repeat in {0} seconds"
 msgstr "לחזור עוד {0} שניות"
 
-#: src/slideshow/PresenterConsole.js:1323
+#: src/slideshow/PresenterConsole.js:1332
 #: src/slideshow/SlideShowPresenter.ts:366
 msgid "Click to exit presentation..."
 msgstr "לחיצה תסגור את המצגת…"
