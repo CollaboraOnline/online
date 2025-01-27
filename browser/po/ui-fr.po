@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 11:16+0100\n"
-"PO-Revision-Date: 2024-12-27 20:19+0000\n"
-"Last-Translator: Zefut <zefut.pro@gmail.com>\n"
+"PO-Revision-Date: 2025-01-28 15:02+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2046,7 +2046,7 @@ msgstr "Mauvais"
 #: src/control/Control.NotebookbarImpress.js:1064
 #: src/control/Control.NotebookbarWriter.js:905
 msgid "Replace"
-msgstr ""
+msgstr "Remplacer"
 
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
