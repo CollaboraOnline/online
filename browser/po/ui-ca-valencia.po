@@ -3563,9 +3563,8 @@ msgid "Previous"
 msgstr ""
 
 #: src/slideshow/PresenterConsole.js:32
-#, fuzzy
 msgid "Next"
-msgstr "Text"
+msgstr ""
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"

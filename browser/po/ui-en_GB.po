@@ -3566,7 +3566,7 @@ msgstr "Previous"
 
 #: src/slideshow/PresenterConsole.js:32
 msgid "Next"
-msgstr "Text"
+msgstr "Next"
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
