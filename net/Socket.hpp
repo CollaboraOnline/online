@@ -1312,7 +1312,7 @@ public:
                     _inBuffer.append(&buf[0], len);
                 }
                 // else poll will handle errors.
-            } while (len == (sizeof(buf)));
+            } while (len == static_cast<ssize_t>(sizeof(buf)));
 
             // Restore errno from the read call.
             errno = last_errno;
