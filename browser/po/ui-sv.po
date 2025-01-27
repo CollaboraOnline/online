@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 11:16+0100\n"
-"PO-Revision-Date: 2025-01-13 14:11+0000\n"
-"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
+"PO-Revision-Date: 2025-01-28 15:02+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1039,7 +1039,7 @@ msgstr "Sydafrika"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Dokumentet signeras och kommer snart vara tillgängligt igen"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1383,7 +1383,7 @@ msgstr "Smart väljare"
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:791
 msgid "AI Assistant"
-msgstr ""
+msgstr "AI-assistent"
 
 #: src/control/Control.Menubar.js:234
 msgid "Text orientation"
@@ -1789,11 +1789,11 @@ msgstr "Infoga form"
 
 #: src/control/Control.Menubar.js:2025
 msgid "The signature line can now be moved or resized as needed."
-msgstr ""
+msgstr "Signaturraden kan nu flyttas och ändras efter behov."
 
 #: src/control/Control.Menubar.js:2027
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Avsluta elektronisk signering"
 
 #: src/control/Control.Menubar.js:2203
 msgid "file type icon"
@@ -2035,7 +2035,7 @@ msgstr "Dålig"
 #: src/control/Control.NotebookbarImpress.js:1064
 #: src/control/Control.NotebookbarWriter.js:905
 msgid "Replace"
-msgstr ""
+msgstr "Ersätt"
 
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
@@ -2106,7 +2106,7 @@ msgstr "Miniatyrdiagram"
 #: src/control/Control.NotebookbarImpress.js:1297
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
-msgstr ""
+msgstr "Assistent"
 
 #: src/control/Control.NotebookbarCalc.js:1477
 #: src/control/Control.NotebookbarCalc.js:2376
