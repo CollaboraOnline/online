@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 11:16+0100\n"
-"PO-Revision-Date: 2025-01-15 04:46+0000\n"
-"Last-Translator: Sergey Klim <sergeyklim01@gmail.com>\n"
+"PO-Revision-Date: 2025-01-28 15:02+0000\n"
+"Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1045,7 +1045,7 @@ msgstr "Южно-Африканская Республика"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Идёт создание подписи; документ скоро будет доступен"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1391,7 +1391,7 @@ msgstr "Умный подбор"
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:791
 msgid "AI Assistant"
-msgstr ""
+msgstr "ИИ ассистент"
 
 #: src/control/Control.Menubar.js:234
 msgid "Text orientation"
@@ -1797,11 +1797,11 @@ msgstr "Вставить фигуру"
 
 #: src/control/Control.Menubar.js:2025
 msgid "The signature line can now be moved or resized as needed."
-msgstr ""
+msgstr "Теперь можно перемещать строку подписи и изменять её размер."
 
 #: src/control/Control.Menubar.js:2027
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Завершить создание электронной подписи"
 
 #: src/control/Control.Menubar.js:2203
 msgid "file type icon"
@@ -2043,7 +2043,7 @@ msgstr "Плохо"
 #: src/control/Control.NotebookbarImpress.js:1064
 #: src/control/Control.NotebookbarWriter.js:905
 msgid "Replace"
-msgstr ""
+msgstr "Заменить"
 
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
@@ -2114,7 +2114,7 @@ msgstr "Спарклайн"
 #: src/control/Control.NotebookbarImpress.js:1297
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
-msgstr ""
+msgstr "Ассистент"
 
 #: src/control/Control.NotebookbarCalc.js:1477
 #: src/control/Control.NotebookbarCalc.js:2376
