@@ -102,6 +102,7 @@ class LayerDrawing {
 	private offscreenCanvas: OffscreenCanvas = null;
 	private onSlideRenderingCompleteCallback: VoidFunction = null;
 	private layerRenderer: LayerRenderer;
+	private videoRenderers: Map<string, Array<VideoRenderer>> = new Map();
 
 	constructor(mapObj: any, helper: LayersCompositor) {
 		this.map = mapObj;
@@ -126,6 +127,7 @@ class LayerDrawing {
 		this.prefetchedSlideHash = null;
 		this.nextRequestedSlideHash = null;
 		this.nextPrefetchedSlideHash = null;
+		this.deleteVideosResources();
 		this.layerRenderer.dispose();
 	}
 
@@ -169,6 +171,75 @@ class LayerDrawing {
 		this.drawBackground(slideHash);
 		this.drawMasterPage(slideHash);
 		this.drawDrawPage(slideHash);
+		this.drawVideos(slideHash);
+	}
+
+	private handleVideos(slideHash: string) {
+		const slideInfo = this.getSlideInfo(slideHash);
+		const videosInfo = slideInfo.videos;
+		if (!videosInfo || videosInfo.length === 0) return;
+		this.videoRenderers.set(slideHash, []);
+
+		for (let i = 0; i < videosInfo.length; ++i) {
+			const videoInfo = videosInfo[i];
+			this.handleVideo(i, slideHash, videoInfo);
+		}
+	}
+
+	private handleVideo(index: number, slideHash: string, videoInfo: VideoInfo) {
+		const slideShowPresenter = app.map.slideShowPresenter;
+		const slideRenderer = slideShowPresenter._slideRenderer;
+		const metaPres = slideShowPresenter._metaPresentation;
+
+		const videoId = slideHash + index;
+		const videoRenderer = makeVideoRenderer(
+			videoId,
+			this.layerRenderer.getRenderContext(),
+			slideRenderer,
+		);
+		videoRenderer.prepareVideo(
+			videoInfo,
+			metaPres.docWidth,
+			metaPres.docHeight,
+		);
+
+		this.videoRenderers.get(slideHash).push(videoRenderer);
+	}
+
+	private drawVideos(slideHash: string) {
+		const videoRenderers = this.videoRenderers.get(slideHash);
+		if (!videoRenderers) return;
+
+		for (const videoRenderer of videoRenderers) {
+			videoRenderer.render();
+		}
+	}
+
+	public playVideos(slideHash: string) {
+		const videoRenderers = this.videoRenderers.get(slideHash);
+		if (!videoRenderers) return;
+
+		for (const videoRenderer of videoRenderers) {
+			videoRenderer.playVideo();
+		}
+	}
+
+	public pauseVideos(slideHash: string) {
+		const videoRenderers = this.videoRenderers.get(slideHash);
+		if (!videoRenderers) return;
+
+		for (const videoRenderer of videoRenderers) {
+			videoRenderer.pauseVideo();
+		}
+	}
+
+	private deleteVideosResources() {
+		this.videoRenderers.forEach((videoRenderers) => {
+			for (const videoRenderer of videoRenderers) {
+				videoRenderer.deleteResources();
+			}
+		});
+		VideoRendererGl.deleteProgram(this.layerRenderer.getRenderContext());
 	}
 
 	public getAnimatedLayerInfo(
@@ -210,6 +281,7 @@ class LayerDrawing {
 		this.cachedBackgrounds.clear();
 		this.cachedMasterPages.clear();
 		this.cachedDrawPages.clear();
+		this.videoRenderers.clear();
 	}
 
 	public getCanvasSize(): [number, number] {
@@ -241,6 +313,7 @@ class LayerDrawing {
 
 		try {
 			this.layerRenderer = new SlideShow.LayerRendererGl(this.offscreenCanvas);
+			VideoRendererGl.createProgram(this.layerRenderer.getRenderContext());
 		} catch (error) {
 			console.log('LayerDrawing: WebGl offscreen rendering not supported');
 			this.layerRenderer = new SlideShow.LayerRenderer2d(this.offscreenCanvas);
@@ -668,6 +741,13 @@ class LayerDrawing {
 
 	public getLayerRendererContext(): RenderContext {
 		return this.layerRenderer.getRenderContext();
+	}
+
+	public notifyTransitionEnd(slideHash: string) {
+		this.handleVideos(slideHash);
+		if (this.videoRenderers.has(slideHash)) {
+			this.playVideos(slideHash);
+		}
 	}
 }
 

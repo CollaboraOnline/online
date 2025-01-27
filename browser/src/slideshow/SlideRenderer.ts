@@ -12,48 +12,16 @@
 
 declare var SlideShow: any;
 
-class VideoRenderInfo {
-	private texture: WebGLTexture | ImageBitmap = null;
-	public videoElement: HTMLVideoElement;
-	private vao: WebGLVertexArrayObject = null;
-	public pos2d: number[];
-	public playing: boolean;
-
-	public getTexture(): WebGLTexture {
-		return this.texture;
-	}
-
-	public replaceTexture(context: RenderContext, newtexture: WebGLTexture) {
-		context.deleteTexture(this.texture);
-		this.texture = newtexture;
-	}
-
-	public getVao(): WebGLVertexArrayObject {
-		return this.vao;
-	}
-
-	public replaceVao(context: RenderContext, newVao: WebGLVertexArrayObject) {
-		context.deleteVertexArray(this.vao);
-		this.vao = newVao;
-	}
-
-	public deleteResources(context: RenderContext) {
-		this.replaceTexture(context, null);
-		this.replaceVao(context, null);
-	}
-}
-
 abstract class SlideRenderer {
 	public _context: RenderContext = null;
 	protected _slideTexture: WebGLTexture | ImageBitmap;
-	protected _videos: VideoRenderInfo[] = [];
 	protected _canvas: HTMLCanvasElement;
 	protected _renderedSlideIndex: number = undefined;
 	protected _requestAnimationFrameId: number = null;
-	protected _isAnyVideoPlaying: boolean = false;
 	private _activeLayers: Set<string> = new Set();
+	private _playingVideos: Set<string> = new Set();
 
-	constructor(canvas: HTMLCanvasElement) {
+	protected constructor(canvas: HTMLCanvasElement) {
 		this._canvas = canvas;
 	}
 
@@ -69,10 +37,6 @@ abstract class SlideRenderer {
 		return this._slideTexture;
 	}
 
-	public getSlideImage(): ImageBitmap {
-		return this._slideTexture as ImageBitmap;
-	}
-
 	public getAnimatedSlideImage(): ImageBitmap {
 		const presenter: SlideShowPresenter = app.map.slideShowPresenter;
 		return presenter._slideCompositor.getAnimatedSlide(
@@ -82,85 +46,15 @@ abstract class SlideRenderer {
 
 	public abstract deleteResources(): void;
 
-	public get isAnyVideoPlaying(): boolean {
-		return this._isAnyVideoPlaying;
-	}
-	protected setupVideo(
-		videoRenderInfo: VideoRenderInfo,
-		url: string,
-	): HTMLVideoElement {
-		const video = document.createElement('video');
-
-		video.playsInline = true;
-		video.loop = true;
-
-		video.addEventListener(
-			'playing',
-			() => {
-				videoRenderInfo.playing = true;
-				if (!this._isAnyVideoPlaying) {
-					this._isAnyVideoPlaying = true;
-					this._requestAnimationFrameId = requestAnimationFrame(
-						this.render.bind(this),
-					);
-				}
-			},
-			true,
-		);
-
-		video.addEventListener(
-			'pause',
-			() => {
-				videoRenderInfo.playing = false;
-				for (const videoInfo of this._videos) {
-					if (videoInfo.playing) return;
-				}
-				cancelAnimationFrame(this._requestAnimationFrameId);
-				this._isAnyVideoPlaying = false;
-			},
-			true,
-		);
-
-		video.src = url;
-		video.play();
-		return video;
-	}
-
 	public renderSlide(
 		currentSlideTexture: WebGLTexture | ImageBitmap,
 		slideInfo: SlideInfo,
-		docWidth: number,
-		docHeight: number,
 	) {
 		this.deleteCurrentSlideTexture();
 		this._activeLayers.clear();
 		this._renderedSlideIndex = slideInfo.indexInSlideShow;
 		this._slideTexture = currentSlideTexture;
-		this.prepareVideos(slideInfo, docWidth, docHeight);
 		requestAnimationFrame(this.render.bind(this));
-	}
-
-	public pauseVideos() {
-		for (var videoRenderInfo of this._videos) {
-			videoRenderInfo.videoElement.pause();
-		}
-	}
-
-	protected getDocumentPositions(
-		x: number,
-		y: number,
-		width: number,
-		height: number,
-		docWidth: number,
-		docHeight: number,
-	): number[] {
-		var xMin = x / docWidth;
-		var xMax = (x + width) / docWidth;
-
-		var yMin = y / docHeight;
-		var yMax = (y + height) / docHeight;
-
-		return [xMin, xMax, yMin, yMax];
 	}
 
 	public abstract createTexture(
@@ -170,19 +64,9 @@ abstract class SlideRenderer {
 
 	public abstract deleteCurrentSlideTexture(): void;
 
-	protected abstract prepareVideos(
-		slideInfo: SlideInfo,
-		docWidth: number,
-		docHeight: number,
-	): void;
-
 	protected abstract render(): void;
 
 	public createEmptyTexture(): WebGLTexture | ImageBitmap {
-		return null;
-	}
-
-	public createTransparentTexture(): WebGLTexture | ImageBitmap {
 		return null;
 	}
 
@@ -203,6 +87,24 @@ abstract class SlideRenderer {
 	public isAnyLayerActive(): boolean {
 		return this._activeLayers.size > 0;
 	}
+
+	public notifyVideoStarted(sId: string) {
+		const isAnyVideoAlreadyPlaying = this.isAnyVideoPlaying;
+		this._playingVideos.add(sId);
+		if (!isAnyVideoAlreadyPlaying) {
+			this._requestAnimationFrameId = requestAnimationFrame(
+				this.render.bind(this),
+			);
+		}
+	}
+
+	public notifyVideoEnded(sId: string) {
+		this._playingVideos.delete(sId);
+	}
+
+	public get isAnyVideoPlaying(): boolean {
+		return this._playingVideos.size > 0;
+	}
 }
 
 class SlideRenderer2d extends SlideRenderer {
@@ -211,7 +113,7 @@ class SlideRenderer2d extends SlideRenderer {
 		this._context = new RenderContext2d(canvas);
 	}
 
-	public createTexture(image: ImageBitmap, isMipMapsEnable: boolean = false) {
+	public createTexture(image: ImageBitmap, _isMipMapsEnable?: boolean) {
 		return image;
 	}
 
@@ -221,30 +123,6 @@ class SlideRenderer2d extends SlideRenderer {
 
 	public deleteResources(): void {
 		return;
-	}
-
-	protected prepareVideos(
-		slideInfo: SlideInfo,
-		docWidth: number,
-		docHeight: number,
-	) {
-		this.pauseVideos();
-		this._videos = [];
-		if (slideInfo?.videos !== undefined) {
-			for (var videoInfo of slideInfo.videos) {
-				const video = new VideoRenderInfo();
-				video.videoElement = this.setupVideo(video, videoInfo.url);
-				video.pos2d = this.getDocumentPositions(
-					videoInfo.x,
-					videoInfo.y,
-					videoInfo.width,
-					videoInfo.height,
-					docWidth,
-					docHeight,
-				);
-				this._videos.push(video);
-			}
-		}
 	}
 
 	protected render() {
@@ -257,24 +135,12 @@ class SlideRenderer2d extends SlideRenderer {
 		app.map.fire('newslideshowframe', {
 			frame: slideImage,
 		});
-		const width = slideImage.width;
-		const height = slideImage.height;
 
 		gl.drawImage(slideImage, 0, 0);
 
-		for (var video of this._videos) {
-			gl.drawImage(
-				video.videoElement,
-				video.pos2d[0] * width,
-				video.pos2d[2] * height,
-				video.pos2d[1] * width - video.pos2d[0] * width,
-				video.pos2d[3] * height - video.pos2d[2] * height,
-			);
-		}
-
 		gl.setTransform(1, 0, 0, 1, 0, 0);
 
-		if (this.isAnyLayerActive() || this._isAnyVideoPlaying) {
+		if (this.isAnyLayerActive() || this.isAnyVideoPlaying) {
 			this._requestAnimationFrameId = requestAnimationFrame(
 				this.render.bind(this),
 			);
@@ -283,8 +149,8 @@ class SlideRenderer2d extends SlideRenderer {
 }
 
 class SlideRendererGl extends SlideRenderer {
-	private _program: WebGLProgram = null;
-	private _vao: WebGLVertexArrayObject = null;
+	private readonly _program: WebGLProgram = null;
+	private readonly _vao: WebGLVertexArrayObject = null;
 
 	constructor(canvas: HTMLCanvasElement) {
 		super(canvas);
@@ -398,10 +264,6 @@ class SlideRendererGl extends SlideRenderer {
 		return this._context.createEmptySlide();
 	}
 
-	public createTransparentTexture(): WebGLTexture | ImageBitmap {
-		return this._context.createTransparentTexture();
-	}
-
 	public deleteCurrentSlideTexture(): void {
 		this._context.deleteTexture(this._slideTexture);
 		this._slideTexture = null;
@@ -410,98 +272,13 @@ class SlideRendererGl extends SlideRenderer {
 	public deleteResources(): void {
 		if (this.isDisposed()) return;
 
-		this.pauseVideos();
-		for (var videoRenderInfo of this._videos) {
-			videoRenderInfo.deleteResources(this._context);
-		}
 		this.deleteCurrentSlideTexture();
 		if (this._context) this._context.clear();
-	}
-
-	private initTexture() {
-		const gl = this._context.getGl();
-		const texture = gl.createTexture();
-		gl.bindTexture(gl.TEXTURE_2D, texture);
-
-		const pixel = new Uint8Array([0, 0, 255, 255]); // opaque blue
-		gl.texImage2D(
-			gl.TEXTURE_2D,
-			0,
-			gl.RGBA,
-			1,
-			1,
-			0,
-			gl.RGBA,
-			gl.UNSIGNED_BYTE,
-			pixel,
-		);
-
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-
-		return texture;
-	}
-
-	public prepareVideos(
-		slideInfo: SlideInfo,
-		docWidth: number,
-		docHeight: number,
-	) {
-		if (this.isDisposed()) return;
-
-		this.pauseVideos();
-		this._videos = [];
-		if (slideInfo.videos !== undefined) {
-			for (var videoInfo of slideInfo.videos) {
-				const video = new VideoRenderInfo();
-				video.videoElement = this.setupVideo(video, videoInfo.url);
-
-				video.replaceTexture(this._context, this.initTexture());
-				video.replaceVao(
-					this._context,
-					this.setupRectangleInDocumentPositions(
-						videoInfo.x,
-						videoInfo.y,
-						videoInfo.width,
-						videoInfo.height,
-						docWidth,
-						docHeight,
-					),
-				);
-				this._videos.push(video);
-			}
-		}
-	}
-
-	setupRectangleInDocumentPositions(
-		x: number,
-		y: number,
-		width: number,
-		height: number,
-		docWidth: number,
-		docHeight: number,
-	): WebGLVertexArrayObject {
-		const positions = this.getDocumentPositions(
-			x,
-			y,
-			width,
-			height,
-			docWidth,
-			docHeight,
-		);
-		return this.setupPositions(
-			positions[0] * 2.0 - 1.0,
-			positions[1] * 2.0 - 1.0,
-			positions[2] * 2.0 - 1.0,
-			positions[3] * 2.0 - 1.0,
-		);
 	}
 
 	protected render() {
 		if (this.isDisposed()) return;
 
-		console.debug('SlideRendererGl.render');
 		const gl = this._context.getGl();
 		gl.viewport(0, 0, this._canvas.width, this._canvas.height);
 		gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -516,17 +293,7 @@ class SlideRendererGl extends SlideRenderer {
 		gl.bindVertexArray(this._vao);
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-		for (var video of this._videos) {
-			if (video.playing && video.videoElement.currentTime > 0) {
-				gl.bindVertexArray(video.getVao());
-				gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-				this.updateTexture(video.getTexture(), video.videoElement);
-				gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-				gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
-			}
-		}
-
-		if (this.isAnyLayerActive() || this._isAnyVideoPlaying)
+		if (this.isAnyLayerActive() || this.isAnyVideoPlaying)
 			this._requestAnimationFrameId = requestAnimationFrame(
 				this.render.bind(this),
 			);
