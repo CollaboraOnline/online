@@ -15,9 +15,6 @@
 namespace Util
 {
 /// No-op implementation of desktop only functions
-DirectoryCounter::DirectoryCounter(const char*) { (void)_tasks; }
-DirectoryCounter::~DirectoryCounter() {}
-int DirectoryCounter::count() { return 0; }
 int spawnProcess(const std::string&, const StringVector&) { return 0; }
 
 std::string getHumanizedBytes(unsigned long) { return std::string(); }
