@@ -3614,7 +3614,11 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
 std::string DocumentBroker::getJailRoot() const
 {
 #if !MOBILEAPP
-    assert(!_jailId.empty());
+    if (_jailId.empty())
+    {
+        LOG_WRN("Trying to get the jail root of a not yet downloaded document.");
+        return std::string();
+    }
     return Poco::Path(COOLWSD::ChildRoot, _jailId).toString();
 #else
     return std::string();
