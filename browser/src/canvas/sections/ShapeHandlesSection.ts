@@ -697,6 +697,14 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		if (!y) y = this.sectionProperties.lastDragDistance[1] + this.position[1];
 		else y = this.adjustSnapTransformCoordinate(null, y);
 
+		let yTwips = y * app.pixelsToTwips;
+		const docLayer = app.map._docLayer;
+		const verticalOffset = docLayer.getFiledBasedViewVerticalOffset();
+		if (verticalOffset) {
+			// Transform from canvas twips to core twips.
+			yTwips -= verticalOffset;
+		}
+
 		const parameters = {
 			'TransformPosX': {
 				'type': 'long',
@@ -704,7 +712,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			},
 			'TransformPosY': {
 				'type': 'long',
-				'value': Math.round(y * app.pixelsToTwips)
+				'value': Math.round(yTwips)
 			}
 		};
 
