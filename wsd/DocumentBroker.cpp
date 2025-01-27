@@ -1572,30 +1572,13 @@ private:
             std::string fileName;
             if (groupName == "xcu")
                 fileName = Poco::Path(destDir.toString(), "config.xcu").toString();
+            else if (groupName == "browsersetting")
+                fileName = Poco::Path(destDir.toString(), "browsersetting.json").toString();
             else
                 fileName = Poco::Path(destDir.toString(), Uri::getFilenameWithExtFromURL(uri)).toString();
 
             queries.emplace_back(uri, stamp, fileName);
         }
-    }
-
-    void addBrowserSetting(Poco::JSON::Object::Ptr settings, std::vector<CacheQuery>& queries)
-    {
-        if (!settings->has("browsersetting"))
-            return;
-
-        auto browsersetting = settings->get("browsersetting").extract<Poco::JSON::Array::Ptr>();
-        if (browsersetting->empty())
-            return;
-
-        auto firstElem = browsersetting->get(0).extract<Poco::JSON::Object::Ptr>();
-        if (!firstElem)
-            return;
-
-        const std::string uri = JsonUtil::getJSONValue<std::string>(firstElem, "uri");
-        const std::string stamp = JsonUtil::getJSONValue<std::string>(firstElem, "stamp");
-
-        queries.emplace_back(uri, stamp, "browsersetting.json");
     }
 
 public:
@@ -1630,7 +1613,7 @@ public:
             _overallSuccess = false;
         else
         {
-            addBrowserSetting(settings, presets);
+            addGroup(settings, "browsersetting", presets);
             addGroup(settings, "autotext", presets);
             addGroup(settings, "wordbook", presets);
             addGroup(settings, "xcu", presets);
@@ -1734,9 +1717,10 @@ void DocumentBroker::sendBrowserSetting(const std::shared_ptr<ClientSession>& se
     std::ostringstream jsonStream;
     browsersetting->stringify(jsonStream, 2);
     const std::string& jsonStr = jsonStream.str();
-    LOG_TRC("Sending browsersetting json[" << jsonStr << ']');
     session->sendTextFrame("browsersetting: " + jsonStr);
     session->setSentBrowserSetting(true);
+    LOG_TRC("Sent browsersetting json[" << jsonStr << "] to client with sessionId["
+                                        << session->getId() << ']');
 }
 
 void DocumentBroker::getBrowserSettingSync(const std::shared_ptr<ClientSession>& session,
@@ -1895,8 +1879,12 @@ void DocumentBroker::asyncInstallPreset(
         {
             success = true;
             LOG_INF("Fetch of preset uri[" << uriAnonym << "] to " << presetFile << " succeeded");
-
             Cache::cacheConfigFile(configId, presetUri, presetStamp, presetFile);
+
+            // delete the browsersetting json from jail
+            // we only saved it to make sure cache util can copy it
+            if (presetFile.ends_with("browsersetting.json"))
+                FileUtil::removeFile(presetFile);
         }
 
         if (finishedCB)
@@ -1917,7 +1905,6 @@ void DocumentBroker::asyncInstallPreset(
         const std::string& body = presetHttpResponse->getBody();
         DocumentBroker::parseBrowserSettings(session, body);
         DocumentBroker::sendBrowserSetting(session);
-        return;
     }
     presetHttpResponse->saveBodyToFile(presetFile);
 }
