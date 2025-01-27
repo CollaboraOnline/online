@@ -55,6 +55,7 @@
 		BEA264B32CBE99340007435A /* DocumentBroker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264A72CBE99340007435A /* DocumentBroker.cpp */; };
 		BEA264B42CBE99340007435A /* RequestVettingStation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264AA2CBE99340007435A /* RequestVettingStation.cpp */; };
 		BEEF3F862CE2139E00ABE785 /* coolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BEEF3F852CE2139E00ABE785 /* coolkitconfig.xcu */; };
+		BEF9E17F2D47C709004FCEB5 /* Unit-mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEF9E17E2D47C709004FCEB5 /* Unit-mobile.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +153,7 @@
 		BECC4BC62CBD3FA400A120B3 /* codaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEEF3F822CE20BDD00ABE785 /* SetupKitEnvironment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SetupKitEnvironment.hpp; path = ../../../../kit/SetupKitEnvironment.hpp; sourceTree = "<group>"; };
 		BEEF3F852CE2139E00ABE785 /* coolkitconfig.xcu */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = coolkitconfig.xcu; path = ../../../coolkitconfig.xcu; sourceTree = "<group>"; };
+		BEF9E17E2D47C709004FCEB5 /* Unit-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Unit-mobile.cpp"; path = "../../../../common/Unit-mobile.cpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -245,6 +247,7 @@
 				BEA263662CBE38E20007435A /* TraceEvent.cpp */,
 				BEA263672CBE38E20007435A /* Unit.hpp */,
 				BEA263682CBE38E20007435A /* Unit.cpp */,
+				BEF9E17E2D47C709004FCEB5 /* Unit-mobile.cpp */,
 				BEA263692CBE38E20007435A /* Uri.hpp */,
 				BEA2636A2CBE38E20007435A /* Uri.cpp */,
 				BEA2636B2CBE38E20007435A /* Util.hpp */,
@@ -541,6 +544,7 @@
 				BEA263762CBE38E20007435A /* SpookyV2.cpp in Sources */,
 				BEA264AD2CBE99340007435A /* Storage.cpp in Sources */,
 				BEA264AE2CBE99340007435A /* TileCache.cpp in Sources */,
+				BEF9E17F2D47C709004FCEB5 /* Unit-mobile.cpp in Sources */,
 				BEA264AF2CBE99340007435A /* COOLWSD.cpp in Sources */,
 				BEA264B02CBE99340007435A /* ClientSession.cpp in Sources */,
 				BEA264B12CBE99340007435A /* RequestDetails.cpp in Sources */,
