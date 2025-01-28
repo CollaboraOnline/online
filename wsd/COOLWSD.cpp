@@ -472,7 +472,9 @@ void cleanupDocBrokers()
         // consider shutting down unused subforkits
         for (auto it = SubForKitProcs.begin(); it != SubForKitProcs.end(); )
         {
-            const std::string& configId = it->first;
+            // copy as it will be used after erase()
+            std::string configId = it->first;
+
             if (configId.empty()) {
                 // ignore primordial forkit
                 ++it;
