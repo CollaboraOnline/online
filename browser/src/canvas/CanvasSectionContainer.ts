@@ -1362,7 +1362,7 @@ class CanvasSectionContainer {
 		newWidth = Math.floor(newWidth * app.dpiScale);
 		newHeight = Math.floor(newHeight * app.dpiScale);
 
-		if (this.right === newWidth && this.bottom === newHeight)
+		if (this.right === newWidth && this.bottom === newHeight && this.documentAnchor)
 			return;
 
 		// Drawing may happen asynchronously so backup the old contents to avoid
