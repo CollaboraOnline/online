@@ -715,8 +715,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.postProcess(expander, data.children[0]);
 
 				var state = data.children.length > 1 && expanded;
-				$(label).addClass('expanded', state);
-				label.setAttribute('aria-expanded', state);
+				if (state) {
+					L.DomUtil.addClass(label, 'expanded');
+				}
+				expander.setAttribute('aria-expanded', state);
 
 				var toggleFunction = function () {
 					if (customCallback)
@@ -724,8 +726,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					else
 						builder.callback('expander', 'toggle', data, null, builder);
 
-					var state = Boolean(label.getAttribute('aria-expanded'));
-					label.setAttribute('aria-expanded', !state);
+					var state = Boolean(expander.getAttribute('aria-expanded'));
+					expander.setAttribute('aria-expanded', !state);
 					$(label).toggleClass('expanded');
 					$(expander).siblings().toggleClass('expanded');
 
