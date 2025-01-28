@@ -705,7 +705,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var expanded = data.expanded === true || (data.children[0] && data.children[0].checked === true);
 			if (data.children[0].text && data.children[0].text !== '') {
-				var expander = L.DomUtil.create('div', 'ui-expander ' + builder.options.cssClass, container);
+				var expander = L.DomUtil.create('button', 'ui-expander ' + builder.options.cssClass, container);
 				expander.tabIndex = '0';
 				var label = L.DomUtil.create('span', 'ui-expander-label ' + builder.options.cssClass, expander);
 				label.innerText = builder._cleanText(data.children[0].text);
