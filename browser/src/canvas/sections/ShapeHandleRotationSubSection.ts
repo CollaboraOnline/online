@@ -30,6 +30,19 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 		this.sectionProperties.previousCursorStyle = null;
 		this.sectionProperties.cursorStyle = 'pointer';
+
+		app.events.on('TextCursorVisibility', this.onTextCursorVisibility.bind(this));
+	}
+
+	onTextCursorVisibility(event: any): void {
+		if (event.detail.visible) {
+			this.setShowSection(false);
+			this.interactable = false;
+		}
+		else {
+			this.setShowSection(true);
+			this.interactable = true;
+		}
 	}
 
 	calculateAngle(center: cool.SimplePoint, target: cool.SimplePoint): number {

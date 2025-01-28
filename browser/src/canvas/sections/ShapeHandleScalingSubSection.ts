@@ -37,10 +37,23 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 
 		this.setMousePointerType();
+
+		app.events.on('TextCursorVisibility', this.onTextCursorVisibility.bind(this));
 	}
 
 	onInitialize(): void {
 		this.setPosition(this.sectionProperties.position.pX, this.sectionProperties.position.pY);
+	}
+
+	onTextCursorVisibility(event: any): void {
+		if (event.detail.visible) {
+			this.setShowSection(false);
+			this.interactable = false;
+		}
+		else {
+			this.setShowSection(true);
+			this.interactable = true;
+		}
 	}
 
 	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds): void {
