@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 11:16+0100\n"
-"PO-Revision-Date: 2024-12-20 08:38+0000\n"
+"PO-Revision-Date: 2025-01-28 20:40+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 5.9.2-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:15
@@ -1042,7 +1042,7 @@ msgstr "Južna Afrika"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Dokument se podpisuje in bo v kratkem na voljo"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1386,7 +1386,7 @@ msgstr "Pametni izbirnik"
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:791
 msgid "AI Assistant"
-msgstr ""
+msgstr "Pomočnik UI"
 
 #: src/control/Control.Menubar.js:234
 msgid "Text orientation"
@@ -1793,10 +1793,11 @@ msgstr "Vstavi lik"
 #: src/control/Control.Menubar.js:2025
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"Črto za podpis lahko zdaj po želji premaknete ali ji spremenite velikost."
 
 #: src/control/Control.Menubar.js:2027
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Dokončaj e-podpisovanje"
 
 #: src/control/Control.Menubar.js:2203
 msgid "file type icon"
@@ -2038,7 +2039,7 @@ msgstr "Slabo"
 #: src/control/Control.NotebookbarImpress.js:1064
 #: src/control/Control.NotebookbarWriter.js:905
 msgid "Replace"
-msgstr ""
+msgstr "Zamenjaj"
 
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
@@ -2109,7 +2110,7 @@ msgstr "Mini grafikon"
 #: src/control/Control.NotebookbarImpress.js:1297
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
-msgstr ""
+msgstr "Pomočnik"
 
 #: src/control/Control.NotebookbarCalc.js:1477
 #: src/control/Control.NotebookbarCalc.js:2376
@@ -2126,7 +2127,7 @@ msgstr "Liki"
 #: src/control/Control.NotebookbarCalc.js:2024
 #: src/control/Control.NotebookbarWriter.js:945
 msgid "Style list"
-msgstr ""
+msgstr "Seznam slogov"
 
 #: src/control/Control.NotebookbarDraw.js:99
 #: src/control/Control.NotebookbarImpress.js:115
@@ -2307,11 +2308,11 @@ msgstr "Vstavi delovni list"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "Vključeno"
 
 #: src/control/Control.StatusBar.js:179
 msgid "Off"
-msgstr ""
+msgstr "Izključeno"
 
 #: src/control/Control.StatusBar.js:205
 #: src/control/jsdialog/Definitions.Menu.ts:23
@@ -2885,9 +2886,8 @@ msgid "Your changes have been saved"
 msgstr "Vaše spremembe so shranjene"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:141
-#, fuzzy
 msgid "Show Comments"
-msgstr "Ni komentarjev"
+msgstr "Pokaži komentarje"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
