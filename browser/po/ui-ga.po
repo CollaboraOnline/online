@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 11:16+0100\n"
-"PO-Revision-Date: 2025-01-16 05:00+0000\n"
+"PO-Revision-Date: 2025-01-28 15:02+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1043,7 +1043,7 @@ msgstr "An Afraic Theas"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Tá an doiciméad á shíniú agus beidh sé ar fáil go luath"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1389,7 +1389,7 @@ msgstr "Roghnóir Cliste"
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:791
 msgid "AI Assistant"
-msgstr ""
+msgstr "Cúntóir AI"
 
 #: src/control/Control.Menubar.js:234
 msgid "Text orientation"
@@ -1795,11 +1795,11 @@ msgstr "Ionsáigh Cruth"
 
 #: src/control/Control.Menubar.js:2025
 msgid "The signature line can now be moved or resized as needed."
-msgstr ""
+msgstr "Is féidir an líne sínithe a bhogadh nó a athrú de réir mar is gá anois."
 
 #: src/control/Control.Menubar.js:2027
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Críochnaigh síniú leictreonach"
 
 #: src/control/Control.Menubar.js:2203
 msgid "file type icon"
@@ -2041,7 +2041,7 @@ msgstr "Go dona"
 #: src/control/Control.NotebookbarImpress.js:1064
 #: src/control/Control.NotebookbarWriter.js:905
 msgid "Replace"
-msgstr ""
+msgstr "Ionadaigh"
 
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
@@ -2112,7 +2112,7 @@ msgstr "SparklineName"
 #: src/control/Control.NotebookbarImpress.js:1297
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
-msgstr ""
+msgstr "Cúntóir"
 
 #: src/control/Control.NotebookbarCalc.js:1477
 #: src/control/Control.NotebookbarCalc.js:2376
