@@ -80,7 +80,7 @@ function setupResizeHandler(container: Element, scrollable: Element) {
 
 	// handler for toolbar and statusbar
 	// runs if shift + mouse wheel up/down are used
-	const shiftHandler = function (e: MouseEvent) {
+	const shiftHandler = (e: MouseEvent) => {
 		const rootContainer = scrollable.querySelector('div');
 		if (!rootContainer || !e.shiftKey) return;
 
@@ -89,13 +89,11 @@ function setupResizeHandler(container: Element, scrollable: Element) {
 		timer = setTimeout(function () {
 			JSDialog.RefreshScrollables();
 		}, 350);
-	}.bind(this);
+	};
 
 	window.addEventListener('resize', handler);
 	window.addEventListener('scroll', handler);
-	document
-		.querySelector('.ui-scrollable-content')
-		.addEventListener('wheel', shiftHandler);
+	scrollable.addEventListener('wheel', shiftHandler);
 }
 
 JSDialog.MakeScrollable = function (parent: Element, scrollable: Element) {
