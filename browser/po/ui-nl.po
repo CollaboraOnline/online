@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 11:16+0100\n"
-"PO-Revision-Date: 2025-01-16 05:00+0000\n"
+"PO-Revision-Date: 2025-01-28 15:02+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1047,6 +1047,7 @@ msgstr "Zuid-Afrika"
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
 msgstr ""
+"Het document wordt momenteel ondertekend en zal binnenkort beschikbaar zijn"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1388,7 +1389,7 @@ msgstr "Slim selecteren"
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:791
 msgid "AI Assistant"
-msgstr ""
+msgstr "AI-assistent"
 
 #: src/control/Control.Menubar.js:234
 msgid "Text orientation"
@@ -1795,10 +1796,12 @@ msgstr "Vorm invoegen"
 #: src/control/Control.Menubar.js:2025
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"De handtekeningregel kan nu worden verplaatst of het formaat gewijzigd als "
+"dat nodig is."
 
 #: src/control/Control.Menubar.js:2027
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Elektronische ondertekening afronden"
 
 #: src/control/Control.Menubar.js:2203
 msgid "file type icon"
@@ -2040,7 +2043,7 @@ msgstr "Fout"
 #: src/control/Control.NotebookbarImpress.js:1064
 #: src/control/Control.NotebookbarWriter.js:905
 msgid "Replace"
-msgstr ""
+msgstr "Vervangen"
 
 #: src/control/Control.NotebookbarCalc.js:926
 msgid "Row Height"
@@ -2111,7 +2114,7 @@ msgstr "Vonklijn"
 #: src/control/Control.NotebookbarImpress.js:1297
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
-msgstr ""
+msgstr "Assistent"
 
 #: src/control/Control.NotebookbarCalc.js:1477
 #: src/control/Control.NotebookbarCalc.js:2376
