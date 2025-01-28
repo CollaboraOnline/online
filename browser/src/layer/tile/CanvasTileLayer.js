@@ -1959,6 +1959,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		app.file.textCursor.visible = command ? true : false;
 		this._removeSelection();
 		this._onUpdateCursor();
+		app.events.fire('TextCursorVisibility', { visible: app.file.textCursor.visible });
 	},
 
 	_setCursorVisible: function() {
