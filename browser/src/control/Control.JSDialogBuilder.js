@@ -705,11 +705,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var expanded = data.expanded === true || (data.children[0] && data.children[0].checked === true);
 			if (data.children[0].text && data.children[0].text !== '') {
+				var prefix = data.children[0].id ? data.children[0].id : data.id;
 				var expander = L.DomUtil.create('button', 'ui-expander ' + builder.options.cssClass, container);
 				expander.tabIndex = '0';
+				expander.setAttribute('aria-controls', prefix + '-children');
 				var label = L.DomUtil.create('span', 'ui-expander-label ' + builder.options.cssClass, expander);
 				label.innerText = builder._cleanText(data.children[0].text);
-				label.id = data.children[0].id ? data.children[0].id : data.id + '-label';
+				label.id = prefix + '-label';
 				if (data.children[0].visible === false)
 					L.DomUtil.addClass(label, 'hidden');
 				builder.postProcess(expander, data.children[0]);
@@ -746,6 +748,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			var expanderChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
+			expanderChildren.id = prefix + '-children';
 
 			if (expanded) {
 				if (data.children.length > 1) {
