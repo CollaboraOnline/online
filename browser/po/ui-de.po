@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 11:16+0100\n"
-"PO-Revision-Date: 2024-12-16 03:24+0000\n"
-"Last-Translator: m4skedbyte <weblate@m4skedbyte.xyz>\n"
+"PO-Revision-Date: 2025-01-28 15:02+0000\n"
+"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9-rc\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1030,7 +1030,7 @@ msgstr "Türkei"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Taiwan, Provinz von China"
 
 #: src/control/Control.ESignature.ts:201
 msgid "Ukraine"
@@ -1054,7 +1054,7 @@ msgstr "Südafrika"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Das Dokument wird gerade unterzeichnet und steht in Kürze zur Verfügung"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1399,7 +1399,7 @@ msgstr "Smart Picker"
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:791
 msgid "AI Assistant"
-msgstr ""
+msgstr "KI-Assistent"
 
 #: src/control/Control.Menubar.js:234
 msgid "Text orientation"
@@ -1806,10 +1806,12 @@ msgstr "Form einfügen"
 #: src/control/Control.Menubar.js:2025
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"Die Signaturzeile kann nun nach Bedarf verschoben oder in der Größe "
+"angepasst werden."
 
 #: src/control/Control.Menubar.js:2027
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Elektronische Signatur abschließen"
 
 #: src/control/Control.Menubar.js:2203
 msgid "file type icon"
@@ -2122,7 +2124,7 @@ msgstr "Sparkline"
 #: src/control/Control.NotebookbarImpress.js:1297
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
-msgstr ""
+msgstr "Assistent"
 
 #: src/control/Control.NotebookbarCalc.js:1477
 #: src/control/Control.NotebookbarCalc.js:2376
@@ -2139,7 +2141,7 @@ msgstr "Formen"
 #: src/control/Control.NotebookbarCalc.js:2024
 #: src/control/Control.NotebookbarWriter.js:945
 msgid "Style list"
-msgstr ""
+msgstr "Stil-Liste"
 
 #: src/control/Control.NotebookbarDraw.js:99
 #: src/control/Control.NotebookbarImpress.js:115
@@ -2320,11 +2322,11 @@ msgstr "Tabelle einfügen"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "An"
 
 #: src/control/Control.StatusBar.js:179
 msgid "Off"
-msgstr ""
+msgstr "Aus"
 
 #: src/control/Control.StatusBar.js:205
 #: src/control/jsdialog/Definitions.Menu.ts:23
@@ -2900,9 +2902,8 @@ msgid "Your changes have been saved"
 msgstr "Ihre Änderungen wurden gespeichert"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:141
-#, fuzzy
 msgid "Show Comments"
-msgstr "Keine Kommentare"
+msgstr "Kommentare anzeigen"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
