@@ -121,7 +121,7 @@ class Util {
 		return Util.trim(str).split(/\s+/);
 	}
 
-	public static round(x: number, e: number): number {
+	public static round(x: number, e?: number): number {
 		if (!e) {
 			return Math.round(x);
 		}
