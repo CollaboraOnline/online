@@ -229,11 +229,12 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	container.addEventListener('click', function () { content.focus(); });
 
 	content.addEventListener('keyup', function (event) {
-		if (data.changeOnEnterOnly) {
-				if (event.key === 'Enter')
-					builder.callback('combobox', 'change', data, this.value, builder);
-		} else {
+		const shouldTriggerChange = data.changeOnEnterOnly ? event.key === 'Enter' : true;
+		if (shouldTriggerChange) {
 			builder.callback('combobox', 'change', data, this.value, builder);
+			if (data.focusMapOnEnter && event.key === 'Enter') {
+				builder.map.focus();
+			}
 		}
 
 		resetSelection();
