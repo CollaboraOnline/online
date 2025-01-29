@@ -63,11 +63,11 @@ class Sidebar {
 	}
 
 	isVisible(): boolean {
-		return $('#sidebar-dock-wrapper').is(':visible');
+		return $('#sidebar-dock-wrapper').hasClass('visible');
 	}
 
 	closeSidebar() {
-		$('#sidebar-dock-wrapper').hide();
+		$('#sidebar-dock-wrapper').removeClass('visible');
 		this.map._onResize();
 
 		if (!this.map.editorHasFocus()) {
@@ -236,8 +236,7 @@ class Sidebar {
 				}
 
 				this.builder.build(this.container, [sidebarData]);
-				if (!this.isVisible())
-					$('#sidebar-dock-wrapper').show(this.options.animSpeed);
+				if (!this.isVisible()) $('#sidebar-dock-wrapper').addClass('visible');
 
 				this.map.uiManager.setDocTypePref('ShowSidebar', true);
 			} else {
