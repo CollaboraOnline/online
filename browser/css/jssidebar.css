@@ -72,10 +72,6 @@ img.sidebar.ui-drawing-area {
 	padding: 0;
 }
 
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right img {
-	filter: brightness(2);
-}
-
 .ui-expander.jsdialog.sidebar .ui-expander-icon-right:hover img {
 	filter: none;
 }
