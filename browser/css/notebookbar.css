@@ -403,6 +403,36 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	background-color: var(--color-stylesview-background);
 	filter: brightness(var(--brightness-stylesview));
 	box-sizing: border-box;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+#stylesview-btn {
+	border: 1px solid var(--color-stylesview-border);
+	border-top-right-radius: var(--border-radius);
+	border-bottom-right-radius: var(--border-radius);
+	height: 64px;
+	margin-inline-start: -5px;
+	box-sizing: border-box;
+}
+
+#stylesview-btn.vertical {
+	gap: 0;
+}
+
+#stylesview-btn div{
+	border: none;
+}
+
+#stylesview-btn button img {
+	width: var(--btn-img-size-s) !important;
+	height: var(--btn-img-size-s) !important;
+	box-sizing: border-box;
+}
+
+#stylesview-btn button {
+	width: var(--btn-size-s) !important;
+	height: var(--btn-size-s) !important;
 }
 
 #stylesview:hover {

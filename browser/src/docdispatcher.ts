@@ -312,6 +312,22 @@ class Dispatcher {
 		this.actionsMap['collapsenotebookbar'] = () => {
 			app.map.uiManager.collapseNotebookbar();
 		};
+
+		this.actionsMap['scrollpreviewup'] = () => {
+			const stylePreview = document.getElementById('stylesview');
+			stylePreview.scrollBy({
+				top: -stylePreview.offsetHeight,
+				behavior: 'smooth',
+			}); // Scroll up based on stylepreview height
+		};
+
+		this.actionsMap['scrollpreviewdown'] = () => {
+			const stylePreview = document.getElementById('stylesview');
+			stylePreview.scrollBy({
+				top: stylePreview.offsetHeight,
+				behavior: 'smooth',
+			}); // Scroll up based on stylepreview height
+		};
 	}
 
 	private addExportCommands() {
