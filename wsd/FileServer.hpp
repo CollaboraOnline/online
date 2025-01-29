@@ -142,8 +142,8 @@ private:
                                         const std::shared_ptr<StreamSocket>& socket);
 
     static void deleteWopiSettingConfigs(const Poco::Net::HTTPRequest& request,
-                                        Poco::MemoryInputStream& message,
-                                        const std::shared_ptr<StreamSocket>& socket);
+                                         Poco::MemoryInputStream& message,
+                                         const std::shared_ptr<StreamSocket>& socket);
 
     static void preprocessAdminFile(const Poco::Net::HTTPRequest& request,
                                     http::Response& httpResponse,
