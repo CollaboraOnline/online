@@ -439,17 +439,18 @@ kit_headers = kit/ChildSession.hpp \
 
 noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  tools/COOLWebSocket.hpp \
-                 test/UnitHTTP.hpp \
                  test/HttpTestServer.hpp \
-                 test/WopiTestServer.hpp \
                  test/KitPidHelpers.hpp \
+                 test/UnitHTTP.hpp \
+                 test/UnitTimeoutBase.hpp \
+                 test/UnitWSDClient.hpp \
+                 test/WOPIUploadConflictCommon.hpp \
+                 test/WebSocketSession.hpp \
+                 test/WopiTestServer.hpp \
+                 test/helpers.hpp \
                  test/lokassert.hpp \
                  test/test.hpp \
-                 test/testlog.hpp \
-                 test/HttpTestServer.hpp \
-                 test/WOPIUploadConflictCommon.hpp \
-                 test/UnitWSDClient.hpp \
-                 test/helpers.hpp
+                 test/testlog.hpp
 
 GIT_BRANCH := $(shell git symbolic-ref --short HEAD)
 GIT_HASH := $(shell git log -1 --format=%h --abbrev=10)
