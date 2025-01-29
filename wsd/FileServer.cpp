@@ -928,7 +928,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (endPoint == "upload-settings")
         {
             LOG_INF("Processing upload-settings request.");
-            uploadFileToIntegrator(request, requestDetails, message, socket);
+            uploadFileToIntegrator(request, message, socket);
             return;
         }
 
@@ -2174,80 +2174,80 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(const Poco::Net::HTTPReq
     }
 }
 
-
 void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPRequest& request,
-                                                     const RequestDetails& /*requestDetails*/,
-                                                     Poco::MemoryInputStream& message,
-                                                     const std::shared_ptr<StreamSocket>& socket)
+                                                      Poco::MemoryInputStream& message,
+                                                      const std::shared_ptr<StreamSocket>& socket)
 {
-    try
+    FilePartHandler partHandler;
+    Poco::Net::HTMLForm form(request, message, partHandler);
+
+    const std::string& shortMessage = "Failed to upload preset file.";
+    const std::string& fileName = partHandler.getFileName();
+    const std::string& fileContent = partHandler.getFileContent();
+    if (fileName.empty() || fileContent.empty())
     {
-        FilePartHandler partHandler;
-        Poco::Net::HTMLForm form(request, message, partHandler);
+        sendError(http::StatusCode::BadRequest, request, socket, shortMessage,
+                  "No valid file uploaded.");
+        return;
+    }
+    const std::string& authorizationHeader = request.get("Authorization", "");
+    if (authorizationHeader.rfind("Bearer ", 0) != 0)
+    {
+        sendError(http::StatusCode::BadRequest, request, socket, shortMessage,
+                  "Missing or invalid Authorization header.");
+        return;
+    }
 
-        const std::string& fileName = partHandler.getFileName();
-        const std::string& fileContent = partHandler.getFileContent();
-        if (fileName.empty() || fileContent.empty())
-            throw BadRequestException("No valid file uploaded.");
+    const std::string& token = authorizationHeader.substr(7);
+    const std::string& filePath = form.get("filePath", std::string());
+    const std::string& wopiSettingBaseUrl = form.get("wopiSettingBaseUrl", std::string());
+    if (filePath.empty() || wopiSettingBaseUrl.empty())
+    {
+        sendError(http::StatusCode::BadRequest, request, socket, shortMessage,
+                  "Missing required field filePath or wopiSettingBaseUrl");
+        return;
+    }
 
-        const std::string authorizationHeader = request.get("Authorization", "");
-        if (authorizationHeader.rfind("Bearer ", 0) != 0)
-            throw std::runtime_error("Missing or invalid Authorization header.");
+    Poco::URI wopiUri(wopiSettingBaseUrl + "/upload");
+    const std::string& fileId = filePath + fileName;
+    wopiUri.addQueryParameter("fileId", fileId);
+    wopiUri.addQueryParameter("access_token", token);
+    const std::string& uriAnonym = COOLWSD::anonymizeUrl(wopiUri.toString());
 
-        std::string token = authorizationHeader.substr(7);
+    Authorization auth(Authorization::Type::Token, token);
+    auto httpRequest = StorageConnectionManager::createHttpRequest(wopiUri, auth);
+    httpRequest.setVerb(http::Request::VERB_POST);
 
-        if (!form.has("filePath")) {
-            throw BadRequestException("Missing required field: filePath.");
-        }
-        std::string filePath = form.get("filePath");
+    httpRequest.header().set("Content-Type", "application/octet-stream");
+    httpRequest.setBody(fileContent);
 
-        // Check for the required "wopiSettingBaseUrl" field.
-        if (!form.has("wopiSettingBaseUrl")) {
-            throw BadRequestException("Missing required field: wopiSettingBaseUrl.");
-        }
-        std::string wopiSettingBaseUrl = form.get("wopiSettingBaseUrl");
+    auto httpSession = StorageConnectionManager::getHttpSession(wopiUri);
 
-
-        std::string fileId = filePath + fileName;
-
-        // TODO : Handle integrator wopi url dynamically
-        // TODO : Extract integrator wopi fileupload stuff so we can re-use it
-        Poco::URI wopiUri(wopiSettingBaseUrl + "/upload");
-        wopiUri.addQueryParameter("fileId", fileId);
-        wopiUri.addQueryParameter("access_token", token);
-
-        Authorization auth(Authorization::Type::Token, token);
-        auto httpRequest = StorageConnectionManager::createHttpRequest(wopiUri, auth);
-        httpRequest.setVerb(http::Request::VERB_POST);
-
-        httpRequest.header().set("Content-Type", "application/octet-stream");
-        httpRequest.setBody(fileContent);
-
-        LOG_DBG("uploadFileToIntegrator: WOPI URI: " << wopiUri.toString());
-        for (const auto& kv : httpRequest.header())
-            LOG_DBG("uploadFileToIntegrator: Request header: " << kv.first << " = " << kv.second);
-
-        auto httpSession = StorageConnectionManager::getHttpSession(wopiUri);
-        auto httpResponse = httpSession->syncRequest(httpRequest);
-
-        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+    http::Session::FinishedCallback finishedCallback =
+        [fileName, uriAnonym, socket, request,
+         shortMessage](const std::shared_ptr<http::Session>& wopiSession)
+    {
+        const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
+        const http::StatusLine statusLine = httpResponse->statusLine();
+        if (statusLine.statusCode() != http::StatusCode::OK)
         {
-            std::ostringstream responseContent;
-            responseContent << httpResponse->getBody();
-            throw std::runtime_error("WOPI call failed: "
-                                     + httpResponse->statusLine().reasonPhrase()
-                                     + ". Response: " + responseContent.str());
-        }
+            LOG_ERR("Failed to upload preset file to wopiHost["
+                    << uriAnonym << "] with status[" << statusLine.reasonPhrase() << ']');
 
+            sendError(statusLine.statusCode(), request, socket, shortMessage,
+                      statusLine.reasonPhrase());
+            return;
+        }
         http::Response httpResponseToClient(http::StatusCode::OK);
-        httpResponseToClient.setBody("File uploaded successfully to Integrator.");
+        httpResponseToClient.setBody("File uploaded successfully to WopiHost.");
         socket->send(httpResponseToClient);
-    }
-    catch (const std::exception& ex)
-    {
-        LOG_ERR("File upload failed: " << ex.what());
-        sendError(http::StatusCode::InternalServerError, request, socket, "Upload Error", ex.what());
-    }
+        LOG_TRC("Successfully uploaded presetfile[" << fileName << "] to wopiHost[" << uriAnonym
+                                                    << ']');
+    };
+
+    LOG_DBG("Uploading presetfile[" << fileName << "] to wopiHost[" << uriAnonym << ']');
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    httpSession->asyncRequest(httpRequest, *COOLWSD::getWebServerPoll());
 }
 
 void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& request,
