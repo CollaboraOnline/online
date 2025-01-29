@@ -455,7 +455,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.contentText.innerHTML = this.sanitize(linkedText);
 		// Original unlinked text
 		this.sectionProperties.contentText.origText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
-		this.sectionProperties.contentText.origHTML = this.sectionProperties.data.html;
+		this.sectionProperties.contentText.origHTML = this.sectionProperties.data.html ? this.sectionProperties.data.html: '';
 		this.sectionProperties.nodeModifyText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		if (this.sectionProperties.data.html) {
 			this.sectionProperties.nodeModifyText.innerHTML = this.sanitize(this.sectionProperties.data.html);
