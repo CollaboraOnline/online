@@ -2038,69 +2038,67 @@ void FilePartHandler::handlePart(const Poco::Net::MessageHeader& header, std::is
     }
 }
 
-void FileServerRequestHandler::fetchWopiSettingConfigs( const Poco::Net::HTTPRequest& request,
-                                                        Poco::MemoryInputStream& message,
-                                                        const std::shared_ptr<StreamSocket>& socket)
+void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequest& request,
+                                                       Poco::MemoryInputStream& message,
+                                                       const std::shared_ptr<StreamSocket>& socket)
 {
-    try
+    Poco::Net::HTMLForm form(request, message);
+
+    const std::string& sharedConfigUrl = form.get("sharedConfigUrl", std::string());
+    const std::string& accessToken = form.get("accessToken", std::string());
+    const std::string& type = form.get("type", std::string());
+
+    const std::string& shortMessage = "Failed to fetch wopi setting config";
+    if (sharedConfigUrl.empty() || accessToken.empty() || type.empty())
     {
-        Poco::Net::HTMLForm form(request, message);
+        sendError(http::StatusCode::BadRequest, request, socket, shortMessage,
+                  "Missing sharedConfigUrl or accessToken or type in the payload");
+        return;
+    }
 
-        // todo: better to return request with some kind of response
-        if (!form.has("sharedConfigUrl"))
-            throw std::runtime_error("sharedConfigUrl missing in payload");
-        if (!form.has("accessToken"))
-            throw std::runtime_error("accessToken missing in payload");
-        if (!form.has("type"))
-            throw std::runtime_error("type missing in payload");
+    Poco::URI sharedUri(sharedConfigUrl);
+    sharedUri.addQueryParameter("access_token", accessToken);
+    sharedUri.addQueryParameter("fileId", "-1");
+    sharedUri.addQueryParameter("type", type);
 
-        std::string sharedConfigUrl = form.get("sharedConfigUrl");
-        std::string token = form.get("accessToken");
-        std::string type = form.get("type");
+    const std::string& uriAnonym = COOLWSD::anonymizeUrl(sharedUri.toString());
 
-        LOG_INF("Fetching shared config from URL: " << sharedConfigUrl);
+    Authorization auth(Authorization::Type::Token, accessToken);
+    auto httpRequest = StorageConnectionManager::createHttpRequest(sharedUri, auth);
+    httpRequest.setVerb(http::Request::VERB_GET);
+    httpRequest.header().set("Content-Type", "application/json");
 
-        Poco::URI sharedUri(sharedConfigUrl);
-        sharedUri.addQueryParameter("fileId", "-1");
-        sharedUri.addQueryParameter("type", type);
-        sharedUri.addQueryParameter("access_token", token);
-
-
-        Authorization auth(Authorization::Type::Token, token);
-        auto httpRequest = StorageConnectionManager::createHttpRequest(sharedUri, auth);
-        httpRequest.setVerb(http::Request::VERB_GET);
-        httpRequest.header().set("Content-Type", "application/json");
-
-        LOG_DBG("fetchWopiSettingConfigs: Fetching shared config URL: " << sharedUri.toString());
-        auto httpSession = StorageConnectionManager::getHttpSession(sharedUri);
-        auto httpResponse = httpSession->syncRequest(httpRequest);
-
-        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+    http::Session::FinishedCallback finishedCallback =
+        [uriAnonym, socket, request,
+         shortMessage](const std::shared_ptr<http::Session>& wopiSession)
+    {
+        const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
+        const http::StatusLine statusLine = httpResponse->statusLine();
+        const http::StatusCode statusCode = statusLine.statusCode();
+        if (statusCode != http::StatusCode::OK && statusCode != http::StatusCode::NoContent)
         {
-            std::ostringstream responseContent;
-            responseContent << httpResponse->getBody();
-            throw std::runtime_error("Integrator wopi call failed: " +
-                                     httpResponse->statusLine().reasonPhrase() +
-                                     ". Response: " + responseContent.str());
+            LOG_ERR("Failed to fetch wopi settings config from WopiHost["
+                    << uriAnonym << "] with status[" << statusLine.reasonPhrase() << ']');
+
+            const std::string& body = httpResponse->getBody();
+            sendError(statusCode, request, socket, shortMessage,
+                      statusLine.reasonPhrase() + ". Response: " + body);
+            return;
         }
-
-        std::string sharedConfigJson = httpResponse->getBody();
-
         http::Response clientResponse(http::StatusCode::OK);
         clientResponse.set("Content-Type", "application/json; charset=utf-8");
-
         clientResponse.set("Cache-Control", "no-cache");
-        clientResponse.setBody(sharedConfigJson);
+
+        clientResponse.setBody(httpResponse->getBody());
 
         socket->send(clientResponse);
-        LOG_INF("Shared config fetched and returned successfully.");
-    }
-    catch (const std::exception& ex)
-    {
-        // Log the error and send back an error response.
-        LOG_ERR("Error in fetchWopiSettingConfigs: " << ex.what());
-        sendError(http::StatusCode::InternalServerError, request, socket, "Fetch Shared Config Error", ex.what());
-    }
+        LOG_DBG("Successfully fetched wopi settings config from wopiHost[" << uriAnonym << ']');
+    };
+
+    LOG_DBG("Fetching wopi setting config from WopiHost[" << uriAnonym << ']');
+    auto httpSession = StorageConnectionManager::getHttpSession(sharedUri);
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    httpSession->asyncRequest(httpRequest, *COOLWSD::getWebServerPoll());
 }
 
 void FileServerRequestHandler::deleteWopiSettingConfigs(
