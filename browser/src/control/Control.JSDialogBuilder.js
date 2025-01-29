@@ -2215,12 +2215,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 
 			div.closeDropdown = function() {
+				div.setAttribute('aria-expanded', false);
 				builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
 			};
 		}
 
+		if (arrowbackground) {
+			div.setAttribute('aria-expanded', false);
+		}
+
 		var openToolBoxMenu = function(event, div) {
 			if (!div.hasAttribute('disabled')) {
+				div.setAttribute('aria-expanded', true);
 				builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
 				event.stopPropagation();
 			}
@@ -2233,8 +2239,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					builder.map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: data.id} });
 				else if (isRealUnoCommand && data.dropdown !== true)
 					builder.callback('toolbutton', 'click', button, data.command, builder);
-				else
+				else {
 					builder.callback('toolbox', 'click', parentContainer, data.command, builder);
+					button.setAttribute('aria-expanded', true);
+				}
 			}
 			e.preventDefault();
 			e.stopPropagation();
