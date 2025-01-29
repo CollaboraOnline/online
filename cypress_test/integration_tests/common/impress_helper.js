@@ -199,13 +199,12 @@ function editTextInShape() {
 function dblclickOnSelectedShape() {
 	cy.log('>> dblclickOnSelectedShape - start');
 
-	cy.cGet('#test-div-shape-handle-rotation')
+	cy.cGet('#document-container')
 		.then(function(items) {
 			expect(items).to.have.length(1);
-			var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-			var YPos = items[0].getBoundingClientRect().bottom + 50;
-			cy.cGet('body')
-				.dblclick(XPos, YPos);
+			var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().width) / 2;
+			var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().height) / 2;
+			cy.cGet('body').dblclick(XPos, YPos);
 		});
 
 	cy.cGet('.leaflet-cursor.blinking-cursor')
