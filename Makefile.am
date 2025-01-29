@@ -57,8 +57,9 @@ dist_doc_DATA = wsd/README.md \
                 wsd/README.vars \
                 wsd/protocol.txt \
                 wsd/metrics.txt \
-                collabora-online-sbom.spdx.json \
                 THIRDPARTYLICENSES
+
+doc_DATA = collabora-online-sbom.spdx.json
 
 coolwsddatadir = @COOLWSD_DATADIR@
 
