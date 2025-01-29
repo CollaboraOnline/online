@@ -73,7 +73,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		}
 
 		// Document should scroll
-		desktopHelper.assertScrollbarPosition('horizontal', 80, 110);
+		desktopHelper.assertScrollbarPosition('horizontal', 115, 145);
 	});
 
 	it('Scroll while selecting with mouse', function () {

@@ -1106,7 +1106,7 @@ function getBlinkingCursorPosition(aliasName) {
 	var cursorSelector = '.cursor-overlay .blinking-cursor';
 	cy.cGet(cursorSelector).then(function(cursor) {
 		var boundRect = cursor[0].getBoundingClientRect();
-		var xPos = boundRect.right;
+		var xPos = (boundRect.left + boundRect.right) / 2;
 		var yPos = (boundRect.top + boundRect.bottom) / 2;
 		cy.wrap({x: xPos, y: yPos}).as(aliasName);
 	});

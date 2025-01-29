@@ -329,6 +329,21 @@ body {
 	overflow: hidden;
 	z-index: 990;
 }
+
+#sidebar-dock-wrapper.visible {
+	display: block;
+	animation: 200ms ease-out appear-from-right;
+}
+
+@keyframes appear-from-right {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
 #sidebar-panel {
 	padding: 0px;
 	margin: 0px;

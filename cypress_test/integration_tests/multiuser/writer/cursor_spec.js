@@ -23,11 +23,11 @@ describe(['tagmultiuser'], 'Check cursor and view behavior', function() {
 		cy.cSetActiveFrame('#iframe1');
 		searchHelper.typeIntoSearchField('P'); // avoid focus loss
 		searchHelper.typeIntoSearchField('Pellentesque porttitor');
-		desktopHelper.assertScrollbarPosition('vertical', 375, 385);
+		desktopHelper.assertScrollbarPosition('vertical', 380, 390);
 
 		// verify that second view is scrolled to the editor
 		cy.cSetActiveFrame('#iframe2');
-		desktopHelper.assertScrollbarPosition('vertical', 375, 385);
+		desktopHelper.assertScrollbarPosition('vertical', 380, 390);
 
 		// now move cursor a bit in the first view
 		cy.cSetActiveFrame('#iframe1');
@@ -35,6 +35,6 @@ describe(['tagmultiuser'], 'Check cursor and view behavior', function() {
 
 		// verify that second view is still at the same position (no jump)
 		cy.cSetActiveFrame('#iframe2');
-		desktopHelper.assertScrollbarPosition('vertical', 375, 385);
+		desktopHelper.assertScrollbarPosition('vertical', 380, 390);
 	});
 });
