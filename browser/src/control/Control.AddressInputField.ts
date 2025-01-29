@@ -66,6 +66,7 @@ class AddressInputField {
 				text: _('cell address'),
 				enabled: true,
 				changeOnEnterOnly: true,
+				focusMapOnEnter: true,
 				children: [
 					{
 						id: 'expand',
@@ -110,6 +111,7 @@ class AddressInputField {
 		// otherwise core will keep on adding new named range on every keypress.
 		// we want to create a named range only when user presses the 'Enter' key.
 		data.control.changeOnEnterOnly = true;
+		data.control.focusMapOnEnter = true;
 		this.builder.updateWidget(this.parentContainer, data.control);
 	}
 
