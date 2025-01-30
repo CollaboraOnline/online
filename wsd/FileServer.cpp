@@ -931,13 +931,13 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             return;
         }
 
-        if (endPoint == "fetch-shared-config")
+        if (endPoint == "fetch-settings-config")
         {
             fetchWopiSettingConfigs(request, message, socket);
             return;
         }
 
-        if (endPoint == "delete-shared-config")
+        if (endPoint == "delete-settings-config")
         {
             deleteWopiSettingConfigs(request, message, socket);
             return;
