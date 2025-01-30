@@ -334,6 +334,7 @@ class PresenterConsole {
 			button.style.backgroundColor = 'transparent';
 			button.style.color = this.slideShowColor;
 			button.style.border = 'none';
+			button.style.borderRadius = this.PresenterConsoleBtnRadius;
 		});
 
 		elem = this._proxyPresenter.document.querySelector('#title-current');
