@@ -41,6 +41,13 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		]
 	};
 
+	if (!popupParent._onClose) {
+		popupParent._onClose = function () {
+			this.setAttribute('aria-expanded', false);
+		}.bind(popupParent);
+	}
+	popupParent.setAttribute('aria-expanded', true);
+
 	var isChecked = function (unoCommand) {
 		var items = L.Map.THIS['stateChangeHandler'];
 		var val = items.getItemValue(unoCommand);
@@ -158,6 +165,11 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 };
 
 JSDialog.CloseDropdown = function (id) {
+	var popupParent = L.DomUtil.get(id.replace('-dropdown', ''));
+	if (popupParent && popupParent._onClose) {
+		popupParent._onClose();
+	}
+
 	L.Map.THIS.fire('jsdialog', {data: {
 		id: _createDropdownId(id),
 		jsontype: 'dialog',
