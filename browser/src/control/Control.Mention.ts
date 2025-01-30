@@ -122,7 +122,7 @@ class Mention extends L.Control.AutoCompletePopup {
 		// It happens when user is typing mention at the end where there is no
 		// horizontal space and whole '@mention' goes to new line
 		const currentPos = this.getCursorPosition();
-		let cursorPos = this.cursorPosAtStart;
+		let cursorPos = { ...this.cursorPosAtStart }; // Make a copy so changes to cursorPos don’t affect the original position
 		if (this.cursorPosAtStart.y !== currentPos.y) {
 			cursorPos = currentPos;
 			this.cursorPosAtStart = currentPos;
