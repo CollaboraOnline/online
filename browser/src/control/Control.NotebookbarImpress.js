@@ -743,25 +743,46 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'type': 'toolbox',
 								'children': [
 									{
-										'id': 'home-cell-vertical-top',
+										'id': 'home-default-bullet',
 										'type': 'toolitem',
-										'text': _UNO('.uno:CellVertTop'),
-										'command': '.uno:CellVertTop',
-										'accessibility': { focusBack: true, combination: 'LT', de: null }
+										'text': _UNO('.uno:DefaultBullet'),
+										'command': '.uno:DefaultBullet',
+										'accessibility': { focusBack: true, combination: 'DB', de: null }
 									},
 									{
-										'id': 'home-cell-vertical-center',
+										'id': 'home-default-numbering',
 										'type': 'toolitem',
-										'text': _UNO('.uno:CellVertCenter'),
-										'command': '.uno:CellVertCenter',
-										'accessibility': { focusBack: true, combination: 'LC', de: null }
+										'text': _UNO('.uno:DefaultNumbering'),
+										'command': '.uno:DefaultNumbering',
+										'accessibility': { focusBack: true, combination: 'DN', de: null }
 									},
 									{
-										'id': 'home-cell-vertical-bottom',
+										'id': 'home-increment-indent',
 										'type': 'toolitem',
-										'text': _UNO('.uno:CellVertBottom'),
-										'command': '.uno:CellVertBottom',
-										'accessibility': { focusBack: true, combination: 'LB', de: null }
+										'text': _UNO('.uno:IncrementIndent'),
+										'command': '.uno:IncrementIndent',
+										'accessibility': { focusBack: true, combination: 'AI', de: null }
+									},
+									{
+										'id': 'home-decrement-indent',
+										'type': 'toolitem',
+										'text': _UNO('.uno:DecrementIndent'),
+										'command': '.uno:DecrementIndent',
+										'accessibility': { focusBack: true, combination: 'AO', de: null }
+									},
+									{
+										'id': 'home-para-left-to-right',
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaLeftToRight'),
+										'command': '.uno:ParaLeftToRight',
+										'accessibility': { focusBack: true, combination: 'TR', de: null }
+									},
+									{
+										'id': 'home-para-right-to-left',
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaRightToLeft'),
+										'command': '.uno:ParaRightToLeft',
+										'accessibility': { focusBack: true, combination: 'TL', de: null }
 									}
 								]
 							},
@@ -802,7 +823,15 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 										'text': _UNO('.uno:JustifyPara'),
 										'command': '.uno:JustifyPara',
 										'accessibility': { focusBack: true, combination: 'PJ', de: null }
-									}
+									},
+									{
+										'id': 'home-line-spacing:LineSpacingMenu',
+										'type': 'menubutton',
+										'noLabel': true,
+										'text': _UNO('.uno:LineSpacing'),
+										'command': '.uno:LineSpacing',
+										'accessibility': { focusBack: false, combination: 'SL', de: null }
+									},
 								]
 							},
 						],
@@ -821,39 +850,25 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'type': 'toolbox',
 								'children': [
 									{
-										'id': 'home-default-bullet',
+										'id': 'home-cell-vertical-top',
 										'type': 'toolitem',
-										'text': _UNO('.uno:DefaultBullet'),
-										'command': '.uno:DefaultBullet',
-										'accessibility': { focusBack: true, combination: 'DB', de: null }
+										'text': _UNO('.uno:CellVertTop'),
+										'command': '.uno:CellVertTop',
+										'accessibility': { focusBack: true, combination: 'LT', de: null }
 									},
 									{
-										'id': 'home-default-numbering',
+										'id': 'home-cell-vertical-center',
 										'type': 'toolitem',
-										'text': _UNO('.uno:DefaultNumbering'),
-										'command': '.uno:DefaultNumbering',
-										'accessibility': { focusBack: true, combination: 'DN', de: null }
+										'text': _UNO('.uno:CellVertCenter'),
+										'command': '.uno:CellVertCenter',
+										'accessibility': { focusBack: true, combination: 'LC', de: null }
 									},
 									{
-										'id': 'home-increment-indent',
+										'id': 'home-cell-vertical-bottom',
 										'type': 'toolitem',
-										'text': _UNO('.uno:IncrementIndent'),
-										'command': '.uno:IncrementIndent',
-										'accessibility': { focusBack: true, combination: 'AI', de: null }
-									},
-									{
-										'id': 'home-decrement-indent',
-										'type': 'toolitem',
-										'text': _UNO('.uno:DecrementIndent'),
-										'command': '.uno:DecrementIndent',
-										'accessibility': { focusBack: true, combination: 'AO', de: null }
-									},
-									{
-										'id': 'home-para-left-to-right',
-										'type': 'toolitem',
-										'text': _UNO('.uno:ParaLeftToRight'),
-										'command': '.uno:ParaLeftToRight',
-										'accessibility': { focusBack: true, combination: 'TR', de: null }
+										'text': _UNO('.uno:CellVertBottom'),
+										'command': '.uno:CellVertBottom',
+										'accessibility': { focusBack: true, combination: 'LB', de: null }
 									}
 								]
 							},
@@ -861,45 +876,27 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'vertical': 'false'
 					},
 					{
-						'type': 'container',
+						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'SectionBottom13',
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'home-para-space-increase',
-										'type': 'toolitem',
-										'text': _UNO('.uno:ParaspaceIncrease'),
-										'command': '.uno:ParaspaceIncrease',
-										'accessibility': { focusBack: true, combination: 'SI', de: null }
-									},
-									{
-										'id': 'home-para-space-decrease',
-										'type': 'toolitem',
-										'text': _UNO('.uno:ParaspaceDecrease'),
-										'command': '.uno:ParaspaceDecrease',
-										'accessibility': { focusBack: true, combination: 'SR', de: null }
-									},
-									{
-										'id': 'home-line-spacing:LineSpacingMenu',
-										'type': 'menubutton',
-										'noLabel': true,
-										'text': _UNO('.uno:LineSpacing'),
-										'command': '.uno:LineSpacing',
-										'accessibility': { focusBack: false, combination: 'SL', de: null }
-									},
-									{
-										'id': 'home-para-right-to-left',
-										'type': 'toolitem',
-										'text': _UNO('.uno:ParaRightToLeft'),
-										'command': '.uno:ParaRightToLeft',
-										'accessibility': { focusBack: true, combination: 'TL', de: null }
-									}
-								]
+								'id': 'home-xline-color:ColorPickerMenu',
+								'noLabel': true,
+								'class': 'unospan-XLineColor',
+								'type': 'toolitem',
+								'text': _UNO('.uno:XLineColor'),
+								'command': '.uno:XLineColor',
+								'accessibility': { focusBack: true, combination: 'LR', de: null }
 							},
-						],
-						'vertical': 'false'
+							{
+								'id': 'home-fill-color:ColorPickerMenu',
+								'noLabel': true,
+								'class': 'unospan-FillColor',
+								'type': 'toolitem',
+								'text': _UNO('.uno:FillColor'),
+								'command': '.uno:FillColor',
+								'accessibility': { focusBack: true, combination: 'BC', de: null }
+							}
+						]
 					}
 				],
 				'vertical': 'true'
@@ -939,40 +936,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'text': _UNO('.uno:ConnectorToolbox', 'presentation'),
 								'command': '.uno:ConnectorToolbox',
 								'accessibility': { focusBack: true, combination: 'TC', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'home-xline-color:ColorPickerMenu',
-								'noLabel': true,
-								'class': 'unospan-XLineColor',
-								'type': 'toolitem',
-								'text': _UNO('.uno:XLineColor'),
-								'command': '.uno:XLineColor',
-								'accessibility': { focusBack: true, combination: 'LR', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'home-fill-color:ColorPickerMenu',
-								'noLabel': true,
-								'class': 'unospan-FillColor',
-								'type': 'toolitem',
-								'text': _UNO('.uno:FillColor'),
-								'command': '.uno:FillColor',
-								'accessibility': { focusBack: true, combination: 'BC', de: null }
 							}
 						]
 					}
