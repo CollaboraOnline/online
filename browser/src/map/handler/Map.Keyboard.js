@@ -671,6 +671,11 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
+		// Control + F3, ignore Autotext dialog
+		if (this._isCtrlKey(e) && e.keyCode === this.keyCodes.F3) {
+			return true;
+		}
+
 		// Control + Shift + I, open browser developper tools
 		if (this._isCtrlKey(e) && e.shiftKey && e.keyCode === this.keyCodes.I) {
 			return true;
