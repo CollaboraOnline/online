@@ -2209,8 +2209,6 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
 
         std::string fileId = filePath + fileName;
 
-        // TODO : Handle integrator wopi url dynamically
-        // TODO : Extract integrator wopi fileupload stuff so we can re-use it
         Poco::URI wopiUri(wopiSettingBaseUrl + "/upload");
         wopiUri.addQueryParameter("fileId", fileId);
         wopiUri.addQueryParameter("access_token", token);
