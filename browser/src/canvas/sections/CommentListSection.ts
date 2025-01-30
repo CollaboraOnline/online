@@ -1202,7 +1202,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 							}.bind(this)
 						},
 						showBigger: docLayer._docType !== 'text' || (<any>window).mode.isMobile() ? undefined : {
-							name: isShownBig ? _('Show on the side') : _('Show comment bigger'),
+							name: isShownBig ? _('Show on the side') : _('Open in full view'),
 							callback: function (key: any, options: any) {
 								this.toggleShowBigger.call(this, options.$trigger[0].annotation);
 							}.bind(this)
