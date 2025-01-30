@@ -1558,6 +1558,13 @@ app.definitions.Socket = L.Class.extend({
 
 			this._map._docLayer = docLayer;
 			this._map.addLayer(docLayer);
+
+			// Reinitialize the menubar and top toolbar if browser settings are enabled.
+			// During the initial `initializeBasicUI` call, we don't know if compact mode is enabled.
+			// Before `doclayerinit`, we recheck the compact mode setting and if conditions are met,
+			// add the top toolbar and menubar controls to the map.
+			if (window.prefs.useBrowserSetting)
+				this._map.uiManager.initializeMenubarAndTopToolbar();
 			this._map.fire('doclayerinit');
 		}
 		else if (this._reconnecting) {
