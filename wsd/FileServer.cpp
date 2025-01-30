@@ -928,7 +928,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (endPoint == "upload-settings")
         {
             LOG_INF("Processing upload-settings request.");
-            uploadFileToIntegrator(request, requestDetails, message, socket);
+            uploadFileToIntegrator(request, message, socket);
             return;
         }
 
@@ -2176,7 +2176,6 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(const Poco::Net::HTTPReq
 
 
 void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPRequest& request,
-                                                     const RequestDetails& /*requestDetails*/,
                                                      Poco::MemoryInputStream& message,
                                                      const std::shared_ptr<StreamSocket>& socket)
 {

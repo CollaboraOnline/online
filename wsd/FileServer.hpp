@@ -134,7 +134,6 @@ private:
                                       const std::shared_ptr<StreamSocket>& socket);
 
     static void uploadFileToIntegrator(const Poco::Net::HTTPRequest& request,
-                                      const RequestDetails& requestDetails,
                                       Poco::MemoryInputStream& message,
                                       const std::shared_ptr<StreamSocket>& socket);
 
