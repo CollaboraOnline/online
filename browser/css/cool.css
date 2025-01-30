@@ -321,15 +321,16 @@ body {
 	display: none;
 }
 
-#sidebar-dock-wrapper {
+#sidebar-dock-wrapper, #navigator-dock-wrapper {
 	display: none;
 	background: var(--color-background-lighter);
 	position: relative;
 	border-inline-start: 1px solid var(--color-border);
 	overflow: hidden;
 	z-index: 990;
+	max-width: 350px;
 }
-#sidebar-panel {
+#sidebar-panel, #navigator-panel {
 	padding: 0px;
 	margin: 0px;
 	position: relative;
@@ -342,11 +343,11 @@ body {
 	scrollbar-color: var(--color-border) transparent;
 }
 
-#sidebar-panel::-webkit-scrollbar {
+#sidebar-panel::-webkit-scrollbar, #navigator-panel::-webkit-scrollbar {
 	width: 8px;
 }
 
-#sidebar-panel::-webkit-scrollbar-thumb {
+#sidebar-panel::-webkit-scrollbar-thumb, #navigator-panel::-webkit-scrollbar-thumb {
 	background-color: var(--color-border);
 }
 
