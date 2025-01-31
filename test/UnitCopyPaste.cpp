@@ -381,7 +381,7 @@ public:
         if (!fetchClipboardAssert(_clipURI, "text/html", html))
             return;
 
-        // Setup state that will be also asserte in postCloseTest():
+        // Setup state that will be also asserted in postCloseTest():
         LOG_TST("Setup clipboards:");
         if (!setClipboard(_clipURI2, buildClipboardText("kippers"), HTTPResponse::HTTP_OK))
             return;

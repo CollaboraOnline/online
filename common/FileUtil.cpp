@@ -241,7 +241,7 @@ namespace FileUtil
         }
         catch (const std::exception& e)
         {
-            // Don't complain if already non-existant.
+            // Don't complain if already non-existent.
             if (FileUtil::Stat(path).exists())
             {
                 // Error only if it still exists.

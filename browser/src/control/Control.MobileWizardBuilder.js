@@ -321,7 +321,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 		// TODO: below is not true anymore
 		// we still use non welded sidebar where don't have partial updates
-		// kayup can be used only in welded dialogs
+		// keyup can be used only in welded dialogs
 		edit.addEventListener('change', function() {
 			if (callback)
 				callback(this.value);

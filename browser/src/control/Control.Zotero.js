@@ -892,9 +892,9 @@ L.Control.Zotero = L.Control.extend({
 		var locale = styleNode.getAttribute('locale');
 		if (locale)
 			this.settings.locale = locale;
-		var filedTypeNode = value.getElementsByName('fieldType');
-		if (filedTypeNode && filedTypeNode[0])
-			this.settings.fieldType = filedTypeNode[0].getAttribute('value');
+		var fieldTypeNode = value.getElementsByName('fieldType');
+		if (fieldTypeNode && fieldTypeNode[0])
+			this.settings.fieldType = fieldTypeNode[0].getAttribute('value');
 		else
 			this.settings.fieldType = this.getFieldType();
 
@@ -1704,7 +1704,7 @@ L.Control.Zotero = L.Control.extend({
 
 	getBibParameters: function(html) {
 		var field = {};
-		// TODO: support uncited ommited(citation) and custom sources in bibliography
+		// TODO: support uncited omitted (citation) and custom sources in bibliography
 		if (this.getFieldType() === 'Field') {
 			field['FieldType'] = {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'};
 			field['FieldCommand'] = {type: 'string', value: 'ADDIN ZOTERO_BIBL ' + JSON.stringify(this.settings.bib) + ' CSL_BIBLIOGRAPHY'};

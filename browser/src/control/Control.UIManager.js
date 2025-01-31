@@ -398,7 +398,7 @@ L.Control.UIManager = L.Control.extend({
 			var showResolved = this.getBooleanDocTypePref('ShowResolved', true);
 			if (showResolved === false || showResolved === 'false')
 				this.map.sendUnoCommand('.uno:ShowResolvedAnnotations');
-			// Notify the inital status of comments
+			// Notify the initial status of comments
 			var initialCommentState = this.map['stateChangeHandler'].getItemValue('showannotations');
 			this._map.fire('commandstatechanged', {commandName : 'showannotations', state : initialCommentState});
 			this.map.mention = L.control.mention(this.map);
@@ -1282,7 +1282,7 @@ L.Control.UIManager = L.Control.extend({
 	/// message2 - 2nd line of message
 	/// buttonText - text inside button
 	/// callback - callback on button press
-	/// withCancel - specifies if needs cancal button also
+	/// withCancel - specifies if needs cancel button also
 	showInfoModal: function(id, title, message1, message2, buttonText, callback, withCancel, focusId) {
 		var dialogId = this.generateModalId(id);
 		var responseButtonId = id + '-response';

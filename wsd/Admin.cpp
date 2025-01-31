@@ -1310,7 +1310,7 @@ void Admin::updateMonitors(std::vector<std::pair<std::string,int>>& oldMonitors)
         currentMonitorMap[monitor.first] = true;
     }
 
-    // shutdown monitors which doesnot not exist in currentMonitorMap
+    // shutdown monitors which does not not exist in currentMonitorMap
     for (const auto& monitor : oldMonitors)
     {
         if (!currentMonitorMap[monitor.first])

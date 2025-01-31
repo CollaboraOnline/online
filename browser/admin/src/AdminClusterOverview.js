@@ -88,7 +88,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
         if (server.podname) {
             cardTitle.textContent = server.podname;
         } else {
-            console.warn('podname doesnot exist, using serverId instead of podname on card title');
+            console.warn('podname does not exist, using serverId instead of podname on card title');
             cardTitle.textContent = server.serverId;
         }
         cardHeader.appendChild(cardTitle);
@@ -406,7 +406,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
         if (server.podname) {
             anchor.textContent = server.podname;
         } else {
-            console.warn('podname doesnot exist, using serverId instead of podname on anchor tag');
+            console.warn('podname does not exist, using serverId instead of podname on anchor tag');
             anchor.textContent = server.serverId;
         }
         return anchor;

@@ -1368,7 +1368,7 @@ export class Comment extends CanvasSectionObject {
 
 					const isRTL = this.isCalcRTL();
 
-					// this.size may currently have an artifically wide size if mouseEnter without moveLeave seen
+					// this.size may currently have an artificially wide size if mouseEnter without moveLeave seen
 					// so fetch the real size
 					var x = isRTL ? margin : cellSize[0] - squareDim - margin;
 					var commentColor = getComputedStyle(document.body).getPropertyValue('--color-calc-comment');

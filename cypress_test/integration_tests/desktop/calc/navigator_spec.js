@@ -13,7 +13,7 @@ describe.skip(['tagdesktop'], 'Navigator tests.', function () {
 	});
 
 	it('Jump to element. Navigator -> Document', function() {
-		// Doubleclick several items, and check if the view is jumed to there
+		// Doubleclick several items, and check if the view is jumped to there
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Comment1').dblclick();
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'O81');
 		cy.cGet('#StatusDocPos').should('have.text', 'Sheet 3 of 24');
@@ -63,8 +63,9 @@ describe.skip(['tagdesktop'], 'Navigator tests.', function () {
 		cy.cGet('#menu-insert').click();
 		cy.cGet('#menu-insertcomment').click();
 		cy.cGet('#comment-container-new').type('commentNew');
-		// We should click Save, but i could not check its name because clickin in ispector remove the dialog-rename-calc-sheet
-		// But any cind of click will result the same
+		// We should click Save, but I could not check its name, because clicking
+		// in inspector removes the dialog-rename-calc-sheet.
+		// But any kind of click will result the same.
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'rName2').dblclick();
 		// Check if the commentNew is in the Navigator
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'commentNew').should('exist');

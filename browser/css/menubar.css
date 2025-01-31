@@ -23,7 +23,7 @@
 	display: none;
 }
 
-/* hide documen-header to free up space when using narrow windows */
+/* hide document-header to free up space when using narrow windows */
 @media screen and (max-width: 800px) {
 	.main-nav.hasnotebookbar:not(.readonly) #document-header {
 		display: none !important;

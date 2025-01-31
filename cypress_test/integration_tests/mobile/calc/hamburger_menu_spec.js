@@ -359,7 +359,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// Hide details
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Hide Details']);
 
-		// Frist column is hidden -> no content
+		// First column is hidden -> no content
 		calcHelper.selectEntireSheet();
 
 		cy.cGet('#copy-paste-container table').should('not.exist');
@@ -367,7 +367,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		// Show details
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Show Details']);
 
-		// Frist column is visible again -> we have content again
+		// First column is visible again -> we have content again
 		calcHelper.selectEntireSheet();
 
 		cy.cGet('#copy-paste-container table').should('exist');

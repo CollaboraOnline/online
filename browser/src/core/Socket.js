@@ -1349,7 +1349,7 @@ app.definitions.Socket = L.Class.extend({
 				this._map.fire('statusindicator', info);
 				this._map._fireInitComplete('statusindicatorfinish');
 				// show shutting down popup after saving is finished
-				// if we show the popup just after the shuttingdown messsage, it will be overwitten by save popup
+				// if we show the popup just after the shuttingdown message, it will be overwitten by save popup
 				if (app.idleHandler._serverRecycling) {
 					this._map.showBusy(_('Server is shutting down'), false);
 				}

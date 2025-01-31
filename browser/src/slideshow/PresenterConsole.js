@@ -495,7 +495,7 @@ class PresenterConsole {
 			list[elem].style.border = 'none';
 		}
 
-		// By default we will hide the Back button to jum from Slides view to normal view
+		// By default we will hide the Back button to jump from Slides view to Normal view
 		let closeSlideButton =
 			this._proxyPresenter.document.querySelector('#close-slides');
 		closeSlideButton.style.display = 'none';
@@ -1346,7 +1346,7 @@ class PresenterConsole {
 		// In fact, in Firefox transferFromImageBitmap does not resize it
 		// automatically to the set canvas size as it occurs in Chrome.
 		// According to Firefox version we can have 2 different behavior:
-		// on older versions (like 115) the frame is cropped wrt the canvas size
+		// on older versions (like 115) the frame is cropped wrt. the canvas size
 		// on newer versions (like 121) the canvas is automatically resized to
 		// frame size, the latter case can lead to worse performance.
 		createImageBitmap(bitmap, {

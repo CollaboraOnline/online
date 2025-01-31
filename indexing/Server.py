@@ -37,7 +37,7 @@ def transformToSolrFormat(xmlContent, filename):
 
             builder.start("field", {"name" : "filename"})
             builder.data(filename)
-            builder.end("filed")
+            builder.end("field")
 
             builder.start("field", {"name" : "type"})
             builder.data(entry.tag)

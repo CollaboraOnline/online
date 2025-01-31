@@ -483,7 +483,7 @@ L.Control.PartsPreview = L.Control.extend({
 				//deselect all slides
 				this._map.deselectAll();
 
-				//reselect the first origianl selection
+				//reselect the first original selection
 				this._map.setPart(this.firstSelection);
 				this._map.selectPart(this.firstSelection, 1, false);
 

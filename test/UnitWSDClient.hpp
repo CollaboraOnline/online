@@ -58,7 +58,7 @@ public:
 /// A WSD unit-test base class with support
 /// to manage client connections.
 /// This cannot be in UnitWSD or UnitBase because
-/// we use test code that isn't availabe in COOLWSD.
+/// we use test code that isn't available in COOLWSD.
 class UnitWSDClient : public UnitWSD
 {
 public:

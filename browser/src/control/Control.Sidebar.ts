@@ -224,7 +224,7 @@ class Sidebar {
 						var isCurrent = stateHandler
 							? stateHandler.getItemValue(this.targetDeckCommand)
 							: false;
-						// just to be sure chack with other method
+						// just to be sure check with other method
 						if (isCurrent === 'false' || !isCurrent)
 							isCurrent =
 								this.targetDeckCommand === this.commandForDeck(currentDeck);

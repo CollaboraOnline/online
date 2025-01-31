@@ -49,7 +49,7 @@ L.Map.Scroll = L.Handler.extend({
 		} else if (docLayer && docLayer.isWriter()) {
 			// Preserve the y coordinate position of the document where the mouse is.
 			// Also preserve x coordinate if the current view does not have margins.
-			//  If view has margins, we cannot center w.r.t arbitary position in the page because
+			//  If view has margins, we cannot center w.r.t arbitrary position in the page because
 			//  writer will eventually re-adjust page to the view's center after setting map zoom.
 			var part = docLayer._currentPage;
 			var rectangle = app.file.writer.pageRectangleList[part];

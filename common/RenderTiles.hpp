@@ -265,7 +265,7 @@ namespace RenderTiles
             }
         }
 
-        // Should we do this more frequently? and/orshould we defer it?
+        // Should we do this more frequently? and/or should we defer it?
         deltaGen.rebalanceDeltas();
         return true;
     }

@@ -264,7 +264,7 @@ public:
             '/');
         LOG_TRC("Created temporary convert-to/insert path: " << tempPath.toString());
 
-        // Prevent user inputing anything funny here.
+        // Prevent user inputting anything funny here.
         std::string fileParam = params.get("filename");
         std::string cleanFilename = Util::cleanupFilename(fileParam);
         if (fileParam != cleanFilename)

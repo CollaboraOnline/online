@@ -113,7 +113,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 	// the bounding box of this set of tiles
 	public getSubsetBounds(canvasCtx: CanvasRenderingContext2D, tileSubset: Set<any>): cool.Bounds {
 
-		// don't do anything for this atypical varient
+		// don't do anything for this atypical variant
 		if (app.file.fileBasedView)
 			return null;
 
@@ -400,7 +400,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 		var part = this.sectionProperties.docLayer._selectedPart;
 		var mode = this.sectionProperties.docLayer._selectedMode;
 
-		// Calculate all this here intead of doing it per tile.
+		// Calculate all this here instead of doing it per tile.
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
 		if (this.sectionProperties.tsManager.waitForTiles()) {

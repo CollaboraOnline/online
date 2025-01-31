@@ -24,7 +24,7 @@ var NotebookbarAccessibility = function() {
 	this.tabInfoList = null; // This is to be fetched from NotebookbarAccessibilityDefinitions class at initialization.
 	this.combination = null;
 	this.filteredItem = null;
-	this.state = 0; // 0: User needs to select a tab. 1: User needs to either select an acccess key of tab content or navigate by arrow keys.
+	this.state = 0; // 0: User needs to select a tab. 1: User needs to either select an access key of tab content, or navigate by arrow keys.
 
 	this.addInfoBox = function(anchorElement) {
 		var visible = anchorElement.id.replace('-button', '');

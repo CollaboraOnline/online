@@ -202,7 +202,7 @@ void RemoteConfigPoll::fetchLockedHostPatterns(std::map<std::string, std::string
             return;
         }
 
-        //use feature_lock.locked_hosts[@allow] entry from coolwsd.xml if feature_lock.locked_hosts.allow key doesnot exist in json
+        //use feature_lock.locked_hosts[@allow] entry from coolwsd.xml if feature_lock.locked_hosts.allow key does not exist in json
         Poco::Dynamic::Var allow =
             !lockedHost->has("allow")
                 ? Poco::Dynamic::Var(_conf.getBool("feature_lock.locked_hosts[@allow]"))

@@ -403,7 +403,7 @@ L.Control.JSDialog = L.Control.extend({
 			initialFocusElement[0].focus();
 
 		// pass the current instance and get the tabcontrol object if it exist
-		// this will only search in current instance and not in whole docuemnt
+		// this will only search in current instance and not in whole document
 		const tabControlWidget = this.findTabControl(instance);
 
 		let focusWidget, firstFocusableElement ;
@@ -448,7 +448,7 @@ L.Control.JSDialog = L.Control.extend({
 		return null; // Return null if tabcontrol is not found
 	},
 
-	/// if you use updatePos - instance param is binded automatically
+	/// if you use updatePos - instance param is bound automatically
 	setPosition: function(instance, updatedPos) {
 		var calculated = false;
 		var isRTL = document.documentElement.dir === 'rtl';
@@ -608,7 +608,7 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	isChildAutoFilter: function(instance) {
-		// JSON structure suggest that if children array's first element has id='menu' and widgetType = 'treelistbox' then it will definatly a child autofilter popup
+		// JSON structure suggests that if children array's first element has id='menu' and widgetType = 'treelistbox' then it will definitely be a child autofilter popup
 		var rootChild = instance.children[0];
 		if (rootChild) {
 			var firstWidget = rootChild.children[0];
@@ -622,7 +622,7 @@ L.Control.JSDialog = L.Control.extend({
 		instance.posx = parentAutofilter.right;
 		instance.posy = parentAutofilter.top;
 
-		// set marding start for child popup in rtl mode
+		// set margin start for child popup in rtl mode
 		var isSpreadsheetRTL = this.map._docLayer.isCalcRTL();
 		if (isSpreadsheetRTL) {
 			var rtlPosx = parentAutofilter.left - instance.form.getBoundingClientRect().width;
@@ -658,7 +658,7 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	getAutoPopupParentContainer(instance) {
-		// Parent container will 
+		// Parent container will
 		if (instance.isAutofilter || instance.isAutoCompletePopup || !instance.isDocumentAreaPopup)
 			return document.body
 		return document.getElementById('document-container');
@@ -752,7 +752,7 @@ L.Control.JSDialog = L.Control.extend({
 			this.createDialog(instance);
 			this.addHandlers(instance);
 
-			// FIXME: remove this auto-binded instance so it will be clear what is passed
+			// FIXME: remove this auto-bound instance so it will be clear what is passed
 			instance.updatePos = this.setPosition.bind(this, instance);
 
 			// Special case for nonModal dialogues. Core side doesn't send their initial coordinates. We need to center them.
@@ -762,7 +762,7 @@ L.Control.JSDialog = L.Control.extend({
 				instance.updatePos();
 			}
 
-			// AutoPopup  will calculate poup position for Autofilter Popup
+			// AutoPopup  will calculate popup position for Autofilter Popup
 			if (instance.isAutofilter && !instance.isAutoFillPreviewTooltip)
 				this.calculateAutoFilterPosition(instance);
 			else if (instance.isAutoFillPreviewTooltip || instance.isAutoCompletePopup){
@@ -885,7 +885,7 @@ L.Control.JSDialog = L.Control.extend({
 			newX = window.innerWidth - width;
 
 		// at this point we have un updated potion of autofilter instance.
-		// so to handle overlapping case of autofiler and toolbar we need some complex calculation
+		// so to handle overlapping case of autofilter and toolbar we need some complex calculation
 		if (dialogBottom > windowBottom)
 			newY = newY - (dialogBottom - windowBottom + 10);
 

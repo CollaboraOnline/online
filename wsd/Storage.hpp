@@ -329,7 +329,7 @@ public:
         : _localStorePath(localStorePath)
         , _jailPath(jailPath)
         , _fileInfo(/*size=*/0, /*filename=*/std::string(), /*ownerId=*/"cool",
-                    /*modifiledTime=*/std::string())
+                    /*modifiedTime=*/std::string())
         , _isDownloaded(false)
     {
         setUri(uri);

@@ -40,7 +40,7 @@ interface DialogJSON extends WidgetJSON {
 // JSDialog message (full, update or action)
 interface JSDialogJSON extends DialogJSON {
 	id: string; // unique windowId
-	jsontype: string; // specifies target componenet, on root level only
+	jsontype: string; // specifies target component, on root level only
 	action?: string; // optional name of an action
 	control?: WidgetJSON;
 }

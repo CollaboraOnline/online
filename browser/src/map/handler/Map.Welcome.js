@@ -52,7 +52,7 @@ L.Map.Welcome = L.Handler.extend({
 		var isWelcomeDisabled = false;
 
 		if (welcomeDisabledCookie && welcomeDisabledDate) {
-			// Check if we are stil in the same day
+			// Check if we are still in the same day
 			var currentDate = new Date();
 			if (welcomeDisabledDate === currentDate.toDateString())
 				isWelcomeDisabled = true;
