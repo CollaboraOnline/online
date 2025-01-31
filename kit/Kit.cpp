@@ -3016,13 +3016,33 @@ int pollCallback(void* data, int timeoutUs)
 }
 
 // Do we have any pending input events from coolwsd ?
-// FIXME: we could helpfully poll our incoming socket too here.
 bool anyInputCallback(void* data)
 {
     auto kitSocketPoll = reinterpret_cast<KitSocketPoll*>(data);
     const std::shared_ptr<Document>& document = kitSocketPoll->getDocument();
 
-    return document && document->hasQueueItems();
+    if (document)
+    {
+        if (document->hasCallbacks())
+        {
+            // Have pending LOK callbacks from core.
+            return true;
+        }
+
+        // Poll our incoming socket from wsd.
+        int ret = kitSocketPoll->poll(std::chrono::microseconds(0), /*justPoll=*/true);
+        if (ret)
+        {
+            return true;
+        }
+
+        if (document->hasQueueItems())
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /// Called by LOK main-loop

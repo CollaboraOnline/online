@@ -475,7 +475,7 @@ void SocketPoll::enableWatchdog()
     _watchdogTime = Watchdog::getTimestamp();
 }
 
-int SocketPoll::poll(int64_t timeoutMaxMicroS)
+int SocketPoll::poll(int64_t timeoutMaxMicroS, bool justPoll)
 {
     if (_runOnClientThread)
         checkAndReThread();
@@ -525,6 +525,14 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
     // from now we want to race back to sleep.
     enableWatchdog();
+
+    if (justPoll && size > 0)
+    {
+        // Done with the poll(), don't process anything.
+        // At the moment this is only used for the kit process's wsd socket, where we know it's the
+        // first in the list.
+        return _pollFds[0].revents;
+    }
 
     // First process the wakeup pipe (always the last entry).
     if (_pollFds[size].revents)
