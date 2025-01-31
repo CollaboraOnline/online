@@ -1360,7 +1360,14 @@ int main(int argc, char**argv)
      * Avoid using the configuration layer and rely on defaults which is only useful for special
      * test tool targets (typically fuzzing) where start-up speed is critical.
      */
-    bool isFuzzing();
+    constexpr bool isFuzzing()
+    {
+#if LIBFUZZER
+        return true;
+#else
+        return false;
+#endif
+    }
 
     constexpr bool isMobileApp()
     {
