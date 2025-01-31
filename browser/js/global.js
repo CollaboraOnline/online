@@ -645,6 +645,9 @@ function getInitializerClass() {
 
 			global.prefs._localStorageCache = {};
 			global.prefs.useBrowserSetting = true;
+
+			// make sure set accessibilityState for cypress
+			global.getAccessibilityState();
 		},
 
 		_renameLocalStoragePref: function(oldName, newName) {
