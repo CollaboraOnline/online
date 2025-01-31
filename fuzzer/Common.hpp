@@ -8,6 +8,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <cassert>
+#include <cstdio>
+
+#define CHECK(X)                                                                                   \
+    do                                                                                             \
+    {                                                                                              \
+        if (!(X))                                                                                  \
+        {                                                                                          \
+            fprintf(stderr, "Assertion: %s\n", #X);                                                \
+            assert(!(X));                                                                          \
+            __builtin_trap();                                                                      \
+        }                                                                                          \
+    } while (0)
+
 namespace fuzzer
 {
 bool DoInitialization();
