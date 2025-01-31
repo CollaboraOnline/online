@@ -473,8 +473,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 /* Home tab */
 
-#numbertype {
-	width: 170px !important;
+#numbertype select {
+	flex: 1 0;
 }
 
 /* Review Tab */
