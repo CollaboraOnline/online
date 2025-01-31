@@ -110,17 +110,6 @@ public:
     };
 };
 
-#define CHECK(X)                                                                                   \
-    do                                                                                             \
-    {                                                                                              \
-        if (!(X))                                                                                  \
-        {                                                                                          \
-            fprintf(stderr, "Assertion: %s\n", #X);                                                \
-            assert(!(X));                                                                          \
-            __builtin_trap();                                                                      \
-        }                                                                                          \
-    } while (0)
-
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
 {
     static bool initialized = fuzzer::DoInitialization();
