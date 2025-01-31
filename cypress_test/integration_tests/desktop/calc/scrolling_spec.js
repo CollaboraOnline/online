@@ -94,8 +94,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		cy.wait(500);
 		cy.cGet('.leaflet-layer').realMouseUp({ pointer: 'mouse', button: 'left' });
 
-		// Wihtout the fix, the selected range is of the form A17:A22, instead of A17:D22
-		// It's better not to check the exact range beacuse it can easily change in different executions
+		// Without the fix, the selected range is of the form A17:A22, instead of A17:D22
+		// It's better not to check the exact range because it can easily change in different executions
 		cy.cGet(helper.addressInputSelector).invoke('val').should('contain', 'D');
 	});
 });

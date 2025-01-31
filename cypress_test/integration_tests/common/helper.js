@@ -245,7 +245,7 @@ function hideNCFirstRunWizard() {
 	cy.log('<< hideNCFirstRunWizard - end');
 }
 
-// Upload a test document into Nexcloud and open it.
+// Upload a test document into Nextcloud and open it.
 // Parameters:
 // filePath - test document file path
 // subsequentLoad - whether we load a test document for the first time in the
@@ -809,7 +809,7 @@ function doIfOnDesktop(callback) {
 // Move the cursor in the given direction and wait until it moves.
 // Parameters:
 // direction - the direction the cursor should be moved.
-//			   possible valude: up, down, left, right, home, end
+//			   possible values: up, down, left, right, home, end
 // modifier - a modifier to the cursor movement keys (e.g. 'shift' or 'ctrl').
 // checkCursorVis - whether to check the cursor visibility after movement.
 // cursorSelector - selector for the cursor DOM element (document cursor is the default).

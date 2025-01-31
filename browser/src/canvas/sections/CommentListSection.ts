@@ -821,7 +821,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			// Select the root comment
 			var idx = this.getRootIndexOf(annotation.sectionProperties.data.id);
 
-			// no need to reselect comment, it will cuase to scroll to root comment unnecessarily
+			// no need to reselect comment, it will cause to scroll to root comment unnecessarily
 			if (this.sectionProperties.selectedComment === this.sectionProperties.commentList[idx]) {
 				this.update();
 				return;
@@ -2219,7 +2219,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 						if (actHeight > maxMaxHeight) {
 							actHeight = maxMaxHeight;
 						}
-						// if _leaflet_pos are not calculated (undefined) then dont do it (leave the comment at default size)
+						// if _leaflet_pos are not calculated (undefined) then don't do it (leave the comment at default size)
 						if (typeof this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos !== 'undefined'
 							 && (i+1 >= this.sectionProperties.commentList.length
 							 || typeof this.sectionProperties.commentList[i+1].sectionProperties.container._leaflet_pos !== 'undefined'))

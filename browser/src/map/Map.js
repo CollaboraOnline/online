@@ -1189,7 +1189,7 @@ L.Map = L.Evented.extend({
 	},
 
 	// just set the keyboard state for mobile
-	// we dont want to change the focus, we know that keyboard is closed
+	// we don't want to change the focus, we know that keyboard is closed
 	// and we are just setting the state here
 	setAcceptInput: function (acceptInput) {
 		this._textInput._setAcceptInput(acceptInput);

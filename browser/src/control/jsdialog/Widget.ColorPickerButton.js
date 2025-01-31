@@ -208,7 +208,7 @@ JSDialog.colorPickerButton = function (parentContainer, data, builder) {
 						: selectedColor;
 
 				// Make sure the border around the color indicator is not too bright
-				// when the color is black so to avoid weird contast artifacts
+				// when the color is black so to avoid weird contrast artifacts
 				if (
 					valueNode.style.backgroundColor == '#000000' ||
 					valueNode.style.backgroundColor == 'rgb(0, 0, 0)'

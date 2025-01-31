@@ -29,7 +29,7 @@ function clickFormulaBar() {
 // start of the sheet.
 // Parameters:
 // firstClick - this is the first click on the cell. It matters on mobile only,
-//              becasue on mobile, the first click/tap selects the cell, the second
+//              because on mobile, the first click/tap selects the cell, the second
 //              one makes the document to step in cell editing.
 // dblClick - to do a double click or not. The result of double click is that the cell
 //            editing it triggered both on desktop and mobile.
@@ -76,7 +76,7 @@ function dblClickOnFirstCell() {
 
 // Type some text into the formula bar.
 // Parameters:
-// text - the text the method type into the formula bar's intput field.
+// text - the text the method type into the formula bar's input field.
 function typeIntoFormulabar(text) {
 	cy.log('>> typeIntoFormulabar - start');
 
@@ -134,12 +134,12 @@ function removeTextSelection() {
 	cy.log('<< removeTextSelection - end');
 }
 
-// Select the enitre sheet, using the select all button
+// Select the entire sheet using the "Select All" button
 // at the corner of the row and column headers.
-// An additional thing, what this method do is remove
-// preexisitng text selection. Otherwise with having the
-// text selection, select all would select only the content
-// of the currently edited cell instead of the whole table.
+// Additionally, this method removes any preexisting text selection.
+// Without this step, if there is an active text selection,
+// the "Select All" command would only select the content
+// of the currently edited cell instead of the entire table.
 function selectEntireSheet() {
 	cy.log('>> selectEntireSheet - start');
 

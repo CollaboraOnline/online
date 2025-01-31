@@ -1,4 +1,4 @@
-// This spec file doesnot test anything and it is use to update
+// This spec file does not test anything and it is use to update
 // help dialog screenshots. You can run this spec using:
 // make UPDATE_SCREENSHOT=true check-desktop spec=writer/help_dialog_update_spec.js
 // UPDATE_SCREENSHOT needs to be true otherwise cypress will not run the spec file and

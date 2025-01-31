@@ -304,7 +304,7 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
            - "default"
    ```
 
-   * `dedot`: usefull if the Logging has an [global filter](https://kube-logging.dev/4.0/docs/configuration/crds/v1beta1/logging_types/#loggingspec-globalfilters) for dedot an correction for selector is possible.
+   * `dedot`: useful if the Logging has an [global filter](https://kube-logging.dev/4.0/docs/configuration/crds/v1beta1/logging_types/#loggingspec-globalfilters) for dedot an correction for selector is possible.
    * `ecs`: Therefore the fields are remapped to filter to the [ElasticCommonSchema](https://www.elastic.co/guide/en/ecs/current/index.html).
    * `additionalFilters`: Add more filter of the logging-operator
 

@@ -501,7 +501,7 @@ class CanvasOverlay extends app.definitions.canvasSectionObject {
 		// Create a linear gradient based on the extracted color stops
 		// get raw data from sheet geometry. use index = 1
 		const deafultRowSize = rowData.data.sizecore;
-		// gradient width shoulb be half a default row hight.
+		// gradient width should be half a default row hight.
 		const gradientWidth: number = Math.ceil(deafultRowSize / 2);
 		const isVertSplitter = path.name === 'vert-pane-splitter' ? true : false;
 		//adjust horizontal position for RTL mode

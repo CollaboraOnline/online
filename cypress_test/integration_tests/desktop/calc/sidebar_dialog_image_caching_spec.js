@@ -12,7 +12,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc sidebar dialog image 
 
 		// Just go through the cells A1:30. Each cell has a
 		// different font size. This will exercise the caching
-		// of the tunnelled dialog images for the siderbar.
+		// of the tunnelled dialog images for the sidebar.
 		// Each cell has a different font size so no image
 		// will be found in the cache.
 		// The document has the cell cursor at A1 after load.

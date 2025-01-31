@@ -37,7 +37,7 @@
 	--tb-min-fs-u: 11;
 	/* tab max font-size */
 	--tb-max-fs: 16px;
-	/* tab max font-size wihtout units*/
+	/* tab max font-size without units*/
 	--tb-max-fs-u: 16;
 	/* tab font-size preferred value or scaler */
 	--tb-fs-s: 1vw;

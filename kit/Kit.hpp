@@ -347,7 +347,7 @@ public:
     }
     bool hasCallbacks() const { return _queue && _queue->callbackSize() > 0; }
 
-    /// Should we get through the SocketPoll fast to process queus ?
+    /// Should we get through the SocketPoll fast to process queues ?
     bool needsQuickPoll() const
     {
         if (hasCallbacks())
@@ -392,13 +392,13 @@ public:
     /// Restore the Document's 'modified' state if necessary
     void updateModifiedOnFailedBgSave();
 
-    /// Let WSD know our true modified state affter bg save success.
+    /// Let WSD know our true modified state after bg save success.
     void notifySyntheticUnmodifiedState();
 
     /// Snoop document modified, and return true if filtering notification
     bool trackDocModifiedState(const std::string &stateChanged);
 
-    /// Permanantly disable background save for this process
+    /// Permanently disable background save for this process
     void disableBgSave(const std::string &reason);
 
     /// Are we currently performing a load ?
@@ -490,7 +490,7 @@ void consistencyCheckJail();
 /// check how many theads we have currently
 int getCurrentThreadCount();
 
-/// Fetch the latest montonically incrementing wire-id
+/// Fetch the latest monotonically incrementing wire-id
 TileWireId getCurrentWireId(bool increment = false);
 
 #ifdef __ANDROID__

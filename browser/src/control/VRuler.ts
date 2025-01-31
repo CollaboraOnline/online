@@ -14,8 +14,8 @@
  * HRuler.ts
 /**
  * VRuler.ts
- * 
- * Manages the vertical ruler for displaying measurements and positioning. 
+ *
+ * Manages the vertical ruler for displaying measurements and positioning.
  * Handles user interactions like scrolling and renders grid lines/ticks.
  */
 
@@ -100,7 +100,7 @@ class VRuler extends Ruler {
 	}
 
 	_initiateIndentationMarkers() {
-		// Paragraph indentation..
+		// Paragraph indentation
 		this._pVerticalStartMarker = document.createElement('div');
 		this._pVerticalStartMarker.id = 'lo-vertical-pstart-marker';
 		this._pVerticalStartMarker.classList.add(
@@ -108,13 +108,13 @@ class VRuler extends Ruler {
 		);
 		this._rFace.appendChild(this._pVerticalStartMarker);
 
-		// Paragraph end..
+		// Paragraph end
 		this._pVerticalEndMarker = document.createElement('div');
 		this._pVerticalEndMarker.id = 'lo-vertical-pend-marker';
 		this._pVerticalEndMarker.classList.add('cool-ruler-indentation-marker-up');
 		this._rFace.appendChild(this._pVerticalEndMarker);
 
-		// While one of the markers is being dragged, a howrizontal line should be visible in order to indicate the new position of the marker..
+		// While one of the markers is being dragged, a horizontal line should be visible in order to indicate the new position of the marker.
 		this._markerHorizontalLine = L.DomUtil.create(
 			'div',
 			'cool-ruler-horizontal-indentation-marker-center',
@@ -230,7 +230,7 @@ class VRuler extends Ruler {
 	_updateParagraphIndentations() {
 		// if ruler is hidden no need to calculate the indentation of the para
 		if (!this.options.showruler) return;
-		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrraper
+		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrapper
 		const documentTop: number = document
 			.getElementById('document-container')
 			.getBoundingClientRect().top;
@@ -407,7 +407,7 @@ class VRuler extends Ruler {
 		const element: HTMLElement = document.getElementById(
 			this._indentationElementId,
 		);
-		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrraper
+		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrapper
 		const documentTop = document
 			.getElementById('document-container')
 			.getBoundingClientRect().top;
@@ -513,7 +513,7 @@ class VRuler extends Ruler {
 		} else {
 			e.clientX = e.center.x;
 		}
-		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrraper
+		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrapper
 		const documentTop: number = document
 			.getElementById('document-container')
 			.getBoundingClientRect().top;

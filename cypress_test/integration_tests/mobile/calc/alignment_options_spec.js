@@ -43,7 +43,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 	it('Apply left/right alignment', function() {
 		openAlignmentPaneForFirstCell();
 
-		// Set right aligment first
+		// Set right alignment first
 		cy.cGet('.unoAlignRight').click();
 
 		calcHelper.selectEntireSheet();

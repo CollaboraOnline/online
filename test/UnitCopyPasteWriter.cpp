@@ -72,7 +72,7 @@ public:
             socketPoll(), Poco::URI(helpers::getTestServerURI()), documentURL, testname);
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
 
-        // When copying the cnotent of the document:
+        // When copying the content of the document:
         helpers::sendAndDrain(socket, testname, "uno .uno:Copy", "statechanged:");
 
         // Then make sure asking for multiple, specific formats results in a JSON answer, it's what

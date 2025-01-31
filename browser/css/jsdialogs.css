@@ -1005,7 +1005,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .modalpopup[id$='-dropdown'] {
-	/* submenu is inserted into the same overlay, dont make it relative to parent */
+	/* submenu is inserted into the same overlay, don't make it relative to parent */
 	position: absolute !important;
 }
 
@@ -1350,7 +1350,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	color: #636363 !important;
 }
 
-/* Dialog-specific excelptions*/
+/* Dialog-specific exceptions */
 #DefineNameDialog .cell.jsdialog,
 #ManageNamesDialog .cell.jsdialog {
 	padding-left: 0px;
@@ -1378,7 +1378,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: none;
 }
 
-/* Macros dialos */
+/* Macros dialog */
 
 #MacroWarnMedium label {
 	max-width: 400px;

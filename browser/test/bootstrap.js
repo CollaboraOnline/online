@@ -21,7 +21,7 @@ const recordStats = process.argv[8];
 // verbose console output
 const debug = false;
 
-/* dont use the default port (9980)*/
+/* don't use the default port (9980) */
 const port = '9999';
 let args = [
 	`--o:sys_template_path=${top_builddir}/systemplate`,

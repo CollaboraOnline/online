@@ -111,9 +111,9 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		// open "PDF options JsDialog"
 		cy.cGet('.exportpdf-submenu-icon').click();
 
-		// check water marker checkbox to enable water mark entry input
+		// check watermark checkbox to enable watermark entry input
 		cy.cGet('#watermark-input').check();
-		// after enable eatermark checkbox the input filed beside should also be in enabled state
+		// after enable watermark checkbox the input field beside should also be in enabled state
 		cy.cGet('#watermarkentry-input').should('not.be.disabled');
 
 	});

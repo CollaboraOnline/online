@@ -614,7 +614,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		return fakeEvt;
 	},
 
-	// Code and maths for the ergonomic scrolling is inspired formul
+	// Code and maths for the ergonomic scrolling is inspired by formulas at
 	// https://ariya.io/2013/11/javascript-kinetic-scrolling-part-2
 	// Some constants are changed based on the testing/experimenting/trial-error
 

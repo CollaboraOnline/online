@@ -1174,7 +1174,7 @@ bool DocumentBroker::download(
         }
     }
 
-    // if async browsersetting json request is not downlaoded even after document download is complete
+    // if async browsersetting json request is not downloaded even after document download is complete
     // we do sync request to make sure the browser setting json sent before document starts to load
     if (session && !userSettingsUri.empty())
     {
@@ -3026,7 +3026,7 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
         LOG_DBG("Last upload failed: " << uploadResult.getReason());
 
         // Since we've failed to get a response, we cannot know if the
-        // Storage has been updated. As such, we need to re-sycn the
+        // Storage has been updated. As such, we need to re-sync the
         // document's last modified timestamp.
         startActivity(DocumentState::Activity::SyncFileTimestamp);
 
@@ -3884,7 +3884,7 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
                 // If we send disconnect, we risk hanging because we flag Core for
                 // quiting via unipoll, but Core would still continue loading.
                 // If at the end of loading it shows a dialog (such as the macro or
-                // csv import dialogs), it will wait for their dismissal indefinetely.
+                // csv import dialogs), it will wait for their dismissal indefinitely.
                 // Neither would our load-timeout kick in, since we would be gone.
                 LOG_INF("Session [" << session->getName() << "] disconnected but DocKey ["
                                     << _docKey

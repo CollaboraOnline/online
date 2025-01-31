@@ -270,7 +270,7 @@ class SlideShowPresenter {
 			this._presenterContainer = null;
 		}
 		// #7102 on exit from fullscreen we don't get a 'focus' event
-		// in chome so a later second attempt at launching a presentation
+		// in Chrome so a later second attempt at launching a presentation
 		// fails
 		this._map.focus();
 	}

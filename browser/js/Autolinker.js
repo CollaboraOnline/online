@@ -1808,8 +1808,8 @@
     // import CliTable from 'cli-table';
     // RegExp objects which are shared by all instances of EmailMatcher. These are
     // here to avoid re-instantiating the RegExp objects if `Autolinker.link()` is
-    // called multiple times, thus instantiating EmailMatcher and its RegExp 
-    // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314). 
+    // called multiple times, thus instantiating EmailMatcher and its RegExp
+    // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314).
     // See descriptions of the properties where they are used for details about them
     var localPartCharRegex = new RegExp("[" + alphaNumericAndMarksCharsStr + "!#$%&'*+/=?^_`{|}~-]");
     var strictTldRegex = new RegExp("^" + tldRegex.source + "$");
@@ -1859,8 +1859,8 @@
             while (charIdx < len) {
                 var char = text.charAt(charIdx);
                 // For debugging: search for other "For debugging" lines
-                // table.push( 
-                // 	[ charIdx, char, State[ state ], charIdx, currentEmailAddress.idx, currentEmailAddress.hasDomainDot ] 
+                // table.push(
+                // 	[ charIdx, char, State[ state ], charIdx, currentEmailAddress.idx, currentEmailAddress.hasDomainDot ]
                 // );
                 switch (state) {
                     case 0 /* NonEmailMatch */:
@@ -1891,8 +1891,8 @@
                         throwUnhandledCaseError(state);
                 }
                 // For debugging: search for other "For debugging" lines
-                // table.push( 
-                // 	[ charIdx, char, State[ state ], charIdx, currentEmailAddress.idx, currentEmailAddress.hasDomainDot ] 
+                // table.push(
+                // 	[ charIdx, char, State[ state ], charIdx, currentEmailAddress.idx, currentEmailAddress.hasDomainDot ]
                 // );
                 charIdx++;
             }
@@ -1920,7 +1920,7 @@
                     }
                     else {
                         // we've matched 'mailto:' but didn't get anything meaningful
-                        // immediately afterwards (for example, we encountered a 
+                        // immediately afterwards (for example, we encountered a
                         // space character, or an '@' character which formed 'mailto:@'
                         resetToNonEmailMatchState();
                     }
@@ -1946,7 +1946,7 @@
                     resetToNonEmailMatchState();
                 }
             }
-            // Handles the state when we're currently in the "local part" of an 
+            // Handles the state when we're currently in the "local part" of an
             // email address (as opposed to the "domain part")
             function stateLocalPart(char) {
                 if (char === '.') {
@@ -1961,15 +1961,15 @@
                     resetToNonEmailMatchState();
                 }
             }
-            // Handles the state where we've read 
+            // Handles the state where we've read
             function stateLocalPartDot(char) {
                 if (char === '.') {
-                    // We read a second '.' in a row, not a valid email address 
+                    // We read a second '.' in a row, not a valid email address
                     // local part
                     resetToNonEmailMatchState();
                 }
                 else if (char === '@') {
-                    // We read the '@' character immediately after a dot ('.'), not 
+                    // We read the '@' character immediately after a dot ('.'), not
                     // an email address
                     resetToNonEmailMatchState();
                 }
@@ -2006,7 +2006,7 @@
             }
             function stateDomainHyphen(char) {
                 if (char === '-' || char === '.') {
-                    // Not valid to have two hyphens ("--") or hypen+dot ("-.")
+                    // Not valid to have two hyphens ("--") or hyphen+dot ("-.")
                     captureMatchIfValidAndReset();
                 }
                 else if (domainNameCharRegex.test(char)) {
@@ -2019,7 +2019,7 @@
             }
             function stateDomainDot(char) {
                 if (char === '.' || char === '-') {
-                    // not valid to have two dots ("..") or dot+hypen (".-")
+                    // not valid to have two dots ("..") or dot+hyphen (".-")
                     captureMatchIfValidAndReset();
                 }
                 else if (domainNameCharRegex.test(char)) {
@@ -2053,7 +2053,7 @@
                     var matchedText = text.slice(currentEmailMatch.idx, charIdx);
                     // If we read a '.' or '-' char that ended the email address
                     // (valid domain name characters, but only valid email address
-                    // characters if they are followed by something else), strip 
+                    // characters if they are followed by something else), strip
                     // it off now
                     if (/[-.]$/.test(matchedText)) {
                         matchedText = matchedText.slice(0, -1);
@@ -2261,8 +2261,8 @@
 
     // RegExp objects which are shared by all instances of UrlMatcher. These are
     // here to avoid re-instantiating the RegExp objects if `Autolinker.link()` is
-    // called multiple times, thus instantiating UrlMatcher and its RegExp 
-    // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314). 
+    // called multiple times, thus instantiating UrlMatcher and its RegExp
+    // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314).
     // See descriptions of the properties where they are used for details about them
     var matcherRegex = (function () {
         var schemeRegex = /(?:[A-Za-z][-.+A-Za-z0-9]{0,63}:(?![A-Za-z][-.+A-Za-z0-9]{0,63}:\/\/)(?!\d+\/?)(?:\/\/)?)/, // match protocol, allow in format "http://" or "mailto:". However, do not match the first part of something like 'link:http://www.google.com' (i.e. don't match "link:"). Also, make sure we don't interpret 'google.com:8000' as if 'google.com' was a protocol here (i.e. ignore a trailing port number in this regex)
@@ -2388,7 +2388,7 @@
         UrlMatcher.prototype.parseMatches = function (text) {
             var matcherRegex = this.matcherRegex, stripPrefix = this.stripPrefix, stripTrailingSlash = this.stripTrailingSlash, decodePercentEncoding = this.decodePercentEncoding, tagBuilder = this.tagBuilder, matches = [], match;
             var _loop_1 = function () {
-                var matchStr = match[0], schemeUrlMatch = match[1], wwwUrlMatch = match[4], wwwProtocolRelativeMatch = match[5], 
+                var matchStr = match[0], schemeUrlMatch = match[1], wwwUrlMatch = match[4], wwwProtocolRelativeMatch = match[5],
                 //tldUrlMatch = match[ 8 ],  -- not needed at the moment
                 tldProtocolRelativeMatch = match[9], offset = match.index, protocolRelativeMatch = wwwProtocolRelativeMatch || tldProtocolRelativeMatch, prevChar = text.charAt(offset - 1);
                 if (!UrlMatchValidator.isValid(matchStr, schemeUrlMatch)) {
@@ -2412,8 +2412,8 @@
                 if (/\?$/.test(matchStr)) {
                     matchStr = matchStr.substr(0, matchStr.length - 1);
                 }
-                // Handle a closing parenthesis or square bracket at the end of the 
-                // match, and exclude it if there is not a matching open parenthesis 
+                // Handle a closing parenthesis or square bracket at the end of the
+                // match, and exclude it if there is not a matching open parenthesis
                 // or square bracket in the match itself.
                 if (this_1.matchHasUnbalancedClosingParen(matchStr)) {
                     matchStr = matchStr.substr(0, matchStr.length - 1); // remove the trailing ")"
@@ -2428,8 +2428,8 @@
                 // The autolinker accepts many characters in a url's scheme (like `fake://test.com`).
                 // However, in cases where a URL is missing whitespace before an obvious link,
                 // (for example: `nowhitespacehttp://www.test.com`), we only want the match to start
-                // at the http:// part. We will check if the match contains a common scheme and then 
-                // shift the match to start from there. 		
+                // at the http:// part. We will check if the match contains a common scheme and then
+                // shift the match to start from there.
                 var foundCommonScheme = ['http://', 'https://'].find(function (commonScheme) { return !!schemeUrlMatch && schemeUrlMatch.indexOf(commonScheme) !== -1; });
                 if (foundCommonScheme) {
                     // If we found an overmatched URL, we want to find the index
@@ -2502,7 +2502,7 @@
                 return false; // not a close parenthesis or square bracket
             }
             // Find if there are the same number of open braces as close braces in
-            // the URL string, minus the last character (which we have already 
+            // the URL string, minus the last character (which we have already
             // determined to be either ')', ']' or '}'
             var numOpenBraces = 0;
             for (var i = 0, len = matchStr.length - 1; i < len; i++) {
@@ -2565,8 +2565,8 @@
 
     // RegExp objects which are shared by all instances of HashtagMatcher. These are
     // here to avoid re-instantiating the RegExp objects if `Autolinker.link()` is
-    // called multiple times, thus instantiating HashtagMatcher and its RegExp 
-    // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314). 
+    // called multiple times, thus instantiating HashtagMatcher and its RegExp
+    // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314).
     // See descriptions of the properties where they are used for details about them
     var matcherRegex$1 = new RegExp("#[_" + alphaNumericAndMarksCharsStr + "]{1,139}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 139 characters
     var nonWordCharRegex = new RegExp('[^' + alphaNumericAndMarksCharsStr + ']');
@@ -2642,8 +2642,8 @@
 
     // RegExp objects which are shared by all instances of PhoneMatcher. These are
     // here to avoid re-instantiating the RegExp objects if `Autolinker.link()` is
-    // called multiple times, thus instantiating PhoneMatcher and its RegExp 
-    // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314). 
+    // called multiple times, thus instantiating PhoneMatcher and its RegExp
+    // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314).
     // See descriptions of the properties where they are used for details about them
     var phoneMatcherRegex = /(?:(?:(?:(\+)?\d{1,3}[-\040.]?)?\(?\d{3}\)?[-\040.]?\d{3}[-\040.]?\d{4})|(?:(\+)(?:9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)[-\040.]?(?:\d[-\040.]?){6,12}\d+))([,;]+[0-9]+#?)*/g;
     /**
@@ -2710,8 +2710,8 @@
 
     // RegExp objects which are shared by all instances of MentionMatcher. These are
     // here to avoid re-instantiating the RegExp objects if `Autolinker.link()` is
-    // called multiple times, thus instantiating MentionMatcher and its RegExp 
-    // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314). 
+    // called multiple times, thus instantiating MentionMatcher and its RegExp
+    // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314).
     // See descriptions of the properties where they are used for details about them
     var twitterRegex = new RegExp("@[_" + alphaNumericAndMarksCharsStr + "]{1,50}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 50 characters
     var instagramRegex = new RegExp("@[_." + alphaNumericAndMarksCharsStr + "]{1,30}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 30 characters
@@ -2862,8 +2862,8 @@
             var char = html.charAt(charIdx);
             // For debugging: search for other "For debugging" lines
             // ALSO: Temporarily remove the 'const' keyword on the State enum
-            // table.push( 
-            // 	[ charIdx, char, State[ state ], currentDataIdx, currentTag.idx, currentTag.idx === -1 ? '' : currentTag.type ] 
+            // table.push(
+            // 	[ charIdx, char, State[ state ], currentDataIdx, currentTag.idx, currentTag.idx === -1 ? '' : currentTag.type ]
             // );
             switch (state) {
                 case 0 /* Data */:
@@ -2934,8 +2934,8 @@
             }
             // For debugging: search for other "For debugging" lines
             // ALSO: Temporarily remove the 'const' keyword on the State enum
-            // table.push( 
-            // 	[ charIdx, char, State[ state ], currentDataIdx, currentTag.idx, currentTag.idx === -1 ? '' : currentTag.type ] 
+            // table.push(
+            // 	[ charIdx, char, State[ state ], currentDataIdx, currentTag.idx, currentTag.idx === -1 ? '' : currentTag.type ]
             // );
             charIdx++;
         }
@@ -2944,7 +2944,7 @@
         }
         // For debugging: search for other "For debugging" lines
         // console.log( '\n' + table.toString() );
-        // Called when non-tags are being read (i.e. the text around HTML †ags)
+        // Called when non-tags are being read (i.e. the text around HTML tags)
         // https://www.w3.org/TR/html51/syntax.html#data-state
         function stateData(char) {
             if (char === '<') {
@@ -2971,12 +2971,12 @@
                 currentTag = new CurrentTag(__assign({}, currentTag, { isOpening: true }));
             }
             else {
-                // Any other 
+                // Any other
                 state = 0 /* Data */;
                 currentTag = noCurrentTag;
             }
         }
-        // After a '<x', '</x' sequence is read (where 'x' is a letter character), 
+        // After a '<x', '</x' sequence is read (where 'x' is a letter character),
         // this is to continue reading the tag name
         // https://www.w3.org/TR/html51/syntax.html#tag-name-state
         function stateTagName(char) {
@@ -2997,7 +2997,7 @@
                 emitTagAndPreviousTextNode(); // resets to Data state as well
             }
             else if (!letterRe.test(char) && !digitRe.test(char) && char !== ':') {
-                // Anything else that does not form an html tag. Note: the colon 
+                // Anything else that does not form an html tag. Note: the colon
                 // character is accepted for XML namespaced tags
                 resetToDataState();
             }
@@ -3102,7 +3102,7 @@
                 state = 9 /* AttributeValueSingleQuoted */;
             }
             else if (/[>=`]/.test(char)) {
-                // Invalid chars after an '=' for an attribute value, don't count 
+                // Invalid chars after an '=' for an attribute value, don't count
                 // the current tag as an HTML tag
                 resetToDataState();
             }
@@ -3163,7 +3163,7 @@
                 reconsumeCurrentCharacter();
             }
         }
-        // A '/' has just been read in the current tag (presumably for '/>'), and 
+        // A '/' has just been read in the current tag (presumably for '/>'), and
         // this handles the next character
         // https://www.w3.org/TR/html51/syntax.html#self-closing-start-tag-state
         function stateSelfClosingStartTag(char) {
@@ -3190,7 +3190,7 @@
             }
             else {
                 // At this point, the spec specifies that the state machine should
-                // enter the "bogus comment" state, in which case any character(s) 
+                // enter the "bogus comment" state, in which case any character(s)
                 // after the '<!' that were read should become an HTML comment up
                 // until the first '>' that is read (or EOF). Instead, we'll assume
                 // that a user just typed '<!' as part of text data
@@ -3206,7 +3206,7 @@
             }
             else if (char === '>') {
                 // At this point, we'll assume the comment wasn't a real comment
-                // so we'll just emit it as data. We basically read the sequence 
+                // so we'll just emit it as data. We basically read the sequence
                 // '<!-->'
                 resetToDataState();
             }
@@ -3224,7 +3224,7 @@
             }
             else if (char === '>') {
                 // At this point, we'll assume the comment wasn't a real comment
-                // so we'll just emit it as data. We basically read the sequence 
+                // so we'll just emit it as data. We basically read the sequence
                 // '<!--->'
                 resetToDataState();
             }
@@ -3252,7 +3252,7 @@
                 state = 16 /* Comment */;
             }
         }
-        // After we've read two dashes inside a comment, it may signal the end of 
+        // After we've read two dashes inside a comment, it may signal the end of
         // the comment if we then read a '>' char
         // https://www.w3.org/TR/html51/syntax.html#comment-end-state
         function stateCommentEnd(char) {
@@ -3282,7 +3282,7 @@
                 emitTagAndPreviousTextNode();
             }
             else {
-                // The '--!' was not followed by a '>', continue reading the 
+                // The '--!' was not followed by a '>', continue reading the
                 // comment's text
                 state = 16 /* Comment */;
             }
@@ -3335,8 +3335,8 @@
         function emitTagAndPreviousTextNode() {
             var textBeforeTag = html.slice(currentDataIdx, currentTag.idx);
             if (textBeforeTag) {
-                // the html tag was the first element in the html string, or two 
-                // tags next to each other, in which case we should not emit a text 
+                // the html tag was the first element in the html string, or two
+                // tags next to each other, in which case we should not emit a text
                 // node
                 onText(textBeforeTag, currentDataIdx);
             }
@@ -3977,7 +3977,7 @@
                     // Only process text nodes that are not within an <a>, <style> or <script> tag
                     if (skipTagsStackCount === 0) {
                         // "Walk around" common HTML entities. An '&nbsp;' (for example)
-                        // could be at the end of a URL, but we don't want to 
+                        // could be at the end of a URL, but we don't want to
                         // include the trailing '&' in the URL. See issue #76
                         // TODO: Handle HTML entities separately in parseHtml() and
                         // don't emit them as "text" except for &amp; entities

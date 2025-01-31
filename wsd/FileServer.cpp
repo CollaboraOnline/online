@@ -563,7 +563,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         }
     }
 
-    // pair consist of type and path of the item which ususally resides test/data folder
+    // pair consist of type and path of the item which usually resides test/data folder
     typedef std::pair<std::string, std::string> asset;
 
     //handle requests for settings.json contents

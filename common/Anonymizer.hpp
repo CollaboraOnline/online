@@ -21,7 +21,7 @@
 #include <memory>
 #include <unordered_map>
 
-/// Responsible for annonymizing names and URLs.
+/// Responsible for anonymizing names and URLs.
 /// The anonymized version is always the same for
 /// a given value, provided the salt is identical.
 /// Each anonymized entry has a leading counter, which
@@ -50,7 +50,7 @@ public:
         }
     }
 
-    /// Returns true iff anonimization is enabled.
+    /// Returns true iff anonymization is enabled.
     static bool enabled() { return !!_instance; }
 
     /// Sets the anonymized version of a given plain-text string.
@@ -169,6 +169,6 @@ private:
     /// The mutex protecting the map.
     mutable std::mutex _mutex;
 
-    /// The map of plain to annonymized strings.
+    /// The map of plain to anonymized strings.
     std::unordered_map<std::string, std::string> _map;
 };

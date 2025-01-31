@@ -205,7 +205,7 @@ if (typeof ResizeObserver === 'undefined') {
                     // Schedule new call to be in invoked when the pending one is resolved.
                     // This is important for "transitions" which never actually start
                     // immediately so there is a chance that we might miss one if change
-                    // happens amids the pending invocation.
+                    // happens amidst the pending invocation.
                     trailingCall = true;
                 }
                 else {

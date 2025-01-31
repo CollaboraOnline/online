@@ -2159,7 +2159,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		// tells who trigerred cursor invalidation, but recCursors is stil "our"
+		// tells who trigerred cursor invalidation, but recCursors is still "ours"
 		var modifierViewId = parseInt(obj.viewId);
 		var weAreModifier = (modifierViewId === this._viewId);
 		if (weAreModifier && app.isFollowingOff())
@@ -3340,8 +3340,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._replayPrintTwipsMsg('invalidatecursor');
 	},
 
-	// enable or disable blinking cursor and  the cursor overlay depending on
-	// the state of the document (if the falgs are set)
+	// enable or disable blinking cursor and the cursor overlay depending on
+	// the state of the document (if the flags are set)
 	_updateCursorAndOverlay: function (/*update*/) {
 		if (app.file.textCursor.visible   // only when LOK has told us it is ok
 			&& this._map.editorHasFocus()   // not when document is not focused
@@ -3482,7 +3482,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onValidityListButtonMsg: function(textMsg) {
 		var strXY = textMsg.match(/\d+/g);
-		var validatedCellAddress = new app.definitions.simplePoint(parseInt(strXY[0]), parseInt(strXY[1])); // Cell address of the validility list.
+		var validatedCellAddress = new app.definitions.simplePoint(parseInt(strXY[0]), parseInt(strXY[1])); // Cell address of the validity list.
 		var show = parseInt(strXY[2]) === 1;
 		if (show) {
 			if (this._validatedCellAddress && !validatedCellAddress.equals(this._validatedCellAddress.toArray())) {
@@ -3902,7 +3902,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var menuData = this._map._docLayer.getCommentWizardStructure();
 		this._map.fire('mobilewizard', {data: menuData});
 
-		// if annotation is provided we can select perticular comment
+		// if annotation is provided we can select particular comment
 		if (annotation) {
 			$('#comment' + annotation.sectionProperties.data.id).click();
 		}

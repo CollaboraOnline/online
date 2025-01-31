@@ -836,7 +836,7 @@ public:
     }
 
     /// Parses a Status Line.
-    /// Returns the state and clobbers the len on succcess to the number of bytes read.
+    /// Returns the state and clobbers the len on success to the number of bytes read.
     FieldParseState parse(const char* p, int64_t& len);
 
     bool writeData(Buffer& out) const

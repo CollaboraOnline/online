@@ -126,7 +126,7 @@ then
     cat tmp.txt | tr -d '\n' > "$OUTPUT_FILE"
 fi
 
-# thanks for service tmp.txt, but we dont need you anymore
+# thanks for service tmp.txt, but we don't need you anymore
 rm 'tmp.txt'
 
 # vim:set shiftwidth=4 softtabstop=4 expandtab:

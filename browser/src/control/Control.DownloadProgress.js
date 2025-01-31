@@ -90,7 +90,7 @@ L.Control.DownloadProgress = L.Control.extend({
 
 			JSDialog.enableButtonInModal(modalId, modalId + '-response', false);
 		} else {
-			// downloading for paste, next: dialog will dissapear
+			// downloading for paste, next: dialog will disappear
 			this._map.uiManager.showProgressBarDialog(modalId, this._getDialogTitle(), msg,
 				'', this._onClose.bind(this), 0, this._onClose.bind(this));
 		}

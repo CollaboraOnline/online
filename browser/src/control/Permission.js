@@ -27,7 +27,7 @@ L.Map.include({
 		button.attr('title', _('Edit document'));
 		button.attr('aria-label', _('Edit document'));
 		// app.file.fileBasedView is new view that has continuous scrolling
-		// used for PDF and we dont permit editing for PDFs
+		// used for PDF and we don't permit editing for PDFs
 		// this._shouldStartReadOnly() is a check for files that should start in readonly mode and even on desktop browser
 		// we warn the user about loosing the rich formatting and offer an option to
 		// save as ODF instead of the current format

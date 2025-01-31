@@ -255,7 +255,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Apply left/right alignment', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		// Set right aligment first
+		// Set right alignment first
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Right').click();
 		calcHelper.selectEntireSheet();

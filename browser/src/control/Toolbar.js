@@ -628,7 +628,7 @@ L.Map.include({
 		var docType = this.getDocType() === 'drawing' ? 'presentation' : this.getDocType();
 		mainSectionsQuery += ', div.' + docType + ' .section';
 
-		// Select nain sections elements within the mainDiv
+		// Select main sections elements within the mainDiv
 		var mainSections = mainDiv.querySelectorAll(mainSectionsQuery);
 		isAnyMatchingContent = false;
 

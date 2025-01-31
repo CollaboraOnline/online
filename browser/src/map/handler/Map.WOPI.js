@@ -309,7 +309,7 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 
-		// Exception: UI modification can be done before WOPIPostmessageReady was fullfiled
+		// Exception: UI modification can be done before WOPIPostmessageReady was fulfilled
 		if (msg.MessageId === 'Show_Button' || msg.MessageId === 'Hide_Button' || msg.MessageId === 'Remove_Button') {
 			if (!msg.Values) {
 				window.app.console.error('Property "Values" not set');

@@ -25,7 +25,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		}
 
 		// Check also that the shape is fully visible
-		// TODO: shapes are hungs out of the slide after insertion
+		// TODO: after insertion, some parts of the shapes extend beyond the slide.
 		/*cy.get('svg g .leaflet-interactive')
 			.should(function(items) {
 				expect(items.offset().top).to.be.greaterThan(0);
@@ -119,7 +119,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		cy.cGet('#hyperlink-link-box-input').type('www.something.com');
 		// Insert
 		cy.cGet('#response-ok').click();
-		// TODO: we have some wierd shape here instead of a text shape with the link
+		// TODO: we have some weird shape here instead of a text shape with the link
 		cy.cGet('#document-container svg g').should('exist');
 	});
 

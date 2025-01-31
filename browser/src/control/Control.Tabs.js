@@ -326,7 +326,7 @@ L.Control.Tabs = L.Control.extend({
 	_moveSheet: function (newIndex) {
 		var currentTab = this._map.getCurrentPartNumber();
 		// odd but true: the base index changes according to the tab is dragged
-		// on the left or on the right wrt the current tab position
+		// on the left or on the right wrt. the current tab position
 		var newIndexZeroBased = newIndex > currentTab ? newIndex - 2 : newIndex - 1;
 		this._map._docLayer._sheetSwitch.updateOnSheetMoved(currentTab, newIndexZeroBased);
 		this._map.sendUnoCommand('.uno:Move?Copy:bool=false&UseCurrentDocument:bool=true&Index=' + newIndex);

@@ -87,7 +87,7 @@ describe(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
 		var text = '999';
 		helper.typeText('body', text, 500);
 
-		// Font size combobox sould retain focus
+		// Font size combobox should retain focus
 		helper.assertFocus('tagName', 'INPUT');
 		helper.assertFocus('parentElement.id', 'fontsizecombobox');
 	});

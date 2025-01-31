@@ -46,11 +46,11 @@ function getFocusableElements(container) {
 }
 
 // Utility function to check if an element is focusable
-// This function diffrent from getFocusableElements. This only checkes the current element is focusable or not.
+// This function different from getFocusableElements. This only checks, if the current element is focusable or not.
 function isFocusable(element) {
 	if (!element) return false;
 
-	// Check if element is focusable (e.g., input, button, link, etc.)
+	// Check if element is focusable (e.g. input, button, link etc.)
 	const focusableElements = [
 		'a[href]',
 		'button',
