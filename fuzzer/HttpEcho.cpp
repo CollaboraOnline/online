@@ -8,18 +8,14 @@
 #include <config.h>
 
 #include <cstdlib>
-#include <iostream>
 
-#include "ConfigUtil.hpp"
 #include "Socket.hpp"
 #include <test/HttpTestServer.hpp>
 
 #include <Poco/URI.h>
 
 #include <chrono>
-#include <condition_variable>
 #include <memory>
-#include <mutex>
 #include <stdexcept>
 #include <string>
 #include <test/lokassert.hpp>
