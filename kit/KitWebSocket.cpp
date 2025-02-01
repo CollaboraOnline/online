@@ -30,6 +30,7 @@
 #include "Kit.hpp"
 #include "ChildSession.hpp"
 #include "SigUtil.hpp"
+#include "Util.hpp"
 #include "KitWebSocket.hpp"
 
 using Poco::Exception;
@@ -156,7 +157,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
     {
         Log::setLevel(tokens[1]);
     }
-    else
+    else if (!Util::isFuzzing())
     {
         LOG_ERR("Bad or unknown token [" << tokens[0] << ']');
     }
