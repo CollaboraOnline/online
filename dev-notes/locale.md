@@ -15,3 +15,6 @@ For the sidebar, which uses native HTML elements, the Core may send the input fi
 ```
 Currently, there is no way to override the chrome language setting to render numbers in our preferred language.
 ```
+
+## Keyboard shortcuts specific for user locale
+See dev-notes/keyboard-shortcuts.md
