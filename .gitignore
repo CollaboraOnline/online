@@ -67,6 +67,7 @@ test/unithttplib
 test/*.csv
 test/data/presets/user/browsersettings.json
 jsstress
+browser/mocha_tests/*.test.js
 
 *.o
 *.exe
