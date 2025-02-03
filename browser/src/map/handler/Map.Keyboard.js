@@ -374,7 +374,7 @@ L.Map.Keyboard = L.Handler.extend({
 	// printable characters. Those are handled by TextInput.js.
 	_onKeyDown: function (ev) {
 		if (this._map.uiManager.isUIBlocked()
-			|| ((this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') && this._map._docLayer._preview.partsFocused === true)
+			|| (this._map._docLayer && (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') && this._map._docLayer._preview.partsFocused === true)
 		)
 			return;
 
