@@ -43,7 +43,7 @@
       <PathRunnable
          runnableDebuggingMode = "0"
          Location = "workspace"
-         FilePath = "../../coolwsd">
+         FilePath = "../../coolwsd-inproc">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
@@ -89,15 +89,15 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--o:ssl.cert_file_path=&quot;$(PROJECT_DIR)/../../etc/cert.pem&quot;"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--o:ssl.key_file_path=&quot;$(PROJECT_DIR)/../../etc/key.pem&quot;"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--o:ssl.ca_file_path=&quot;$(PROJECT_DIR)/../../etc/ca-chain.cert.pem&quot;"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--o:admin_console.username=admin"
