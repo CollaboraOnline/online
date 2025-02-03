@@ -306,6 +306,8 @@ static void cleanupChildren(const std::string& childRoot)
     int oomKilledCount = 0;
 
     siginfo_t info;
+    memset(&info, 0, sizeof(info)); // Make sure no stale fields remain
+
     // Reap quickly without doing slow cleanup so WSD can spawn more rapidly.
     while (waitid(P_ALL, -1, &info, WEXITED | WUNTRACED | WNOHANG) == 0)
     {
@@ -381,7 +383,7 @@ static void cleanupChildren(const std::string& childRoot)
         }
         else
         {
-            LOG_ERR("Unknown child " << exitedChildPid << " has exited, with status " << status);
+            LOG_ERR("Unknown child " << exitedChildPid << " has exited, with status: " << status);
         }
     }
 
