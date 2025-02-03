@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-27 11:16+0100\n"
+"POT-Creation-Date: 2025-02-03 11:48+0100\n"
 "PO-Revision-Date: 2024-10-31 02:43+0000\n"
 "Last-Translator: Bernat Romagosa <bernat@romagosa.work>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
@@ -141,7 +141,7 @@ msgid "Network Graph"
 msgstr "Gràfic de xarxa"
 
 #: admin/admin.strings.js:45 src/canvas/sections/CommentListSection.ts:512
-#: src/canvas/sections/CommentSection.ts:161
+#: src/canvas/sections/CommentSection.ts:159
 #: src/control/Control.Notebookbar.js:272
 #: src/control/Control.NotebookbarCalc.js:112
 #: src/control/Control.NotebookbarDraw.js:29
@@ -322,14 +322,14 @@ msgstr "D'acord"
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: src/canvas/sections/CommentListSection.ts:507
-#: src/canvas/sections/CommentSection.ts:160
-#: src/canvas/sections/CommentSection.ts:163
+#: src/canvas/sections/CommentSection.ts:158
+#: src/canvas/sections/CommentSection.ts:161
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1313 src/control/Control.UIManager.js:1380
-#: src/control/Control.UIManager.js:1515 src/control/Control.UIManager.js:1674
+#: src/control/Control.UIManager.js:1319 src/control/Control.UIManager.js:1386
+#: src/control/Control.UIManager.js:1521 src/control/Control.UIManager.js:1680
 #: src/control/Control.Zotero.js:330 src/control/Toolbar.js:832
 #: src/core/Socket.js:1415
 msgid "Cancel"
@@ -440,7 +440,7 @@ msgid "Modify"
 msgstr "Modifica"
 
 #: src/canvas/sections/CommentListSection.ts:1169
-#: src/canvas/sections/CommentSection.ts:164
+#: src/canvas/sections/CommentSection.ts:162
 msgid "Reply"
 msgstr "Respon"
 
@@ -477,13 +477,13 @@ msgid "Show on the side"
 msgstr "Mostra al costat"
 
 #: src/canvas/sections/CommentListSection.ts:1205
-msgid "Show comment bigger"
+msgid "Open in full view"
 msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1233
 #: src/control/Control.JSDialogBuilder.js:1893
-#: src/layer/tile/CanvasTileLayer.js:3834
-#: src/layer/tile/CanvasTileLayer.js:3845
+#: src/layer/tile/CanvasTileLayer.js:3864
+#: src/layer/tile/CanvasTileLayer.js:3875
 msgid "Comment"
 msgstr "Comentari"
 
@@ -520,21 +520,21 @@ msgstr "Desat automàticament"
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 
-#: src/canvas/sections/CommentSection.ts:306
+#: src/canvas/sections/CommentSection.ts:305
 msgid "Open menu"
 msgstr "Obre el menú"
 
+#: src/canvas/sections/CommentSection.ts:366
 #: src/canvas/sections/CommentSection.ts:367
-#: src/canvas/sections/CommentSection.ts:368
 msgid "Accept change"
 msgstr "Accepta el canvi"
 
+#: src/canvas/sections/CommentSection.ts:373
 #: src/canvas/sections/CommentSection.ts:374
-#: src/canvas/sections/CommentSection.ts:375
 msgid "Reject change"
 msgstr "Rebutja el canvi"
 
-#: src/canvas/sections/CommentSection.ts:398
+#: src/canvas/sections/CommentSection.ts:397
 msgid "Resolved"
 msgstr "Resolt"
 
@@ -1313,7 +1313,7 @@ msgstr "Repara"
 #: src/control/Control.Menubar.js:447 src/control/Control.Menubar.js:453
 #: src/control/Control.Menubar.js:607 src/control/Control.Menubar.js:613
 #: src/control/Control.Menubar.js:753 src/control/Control.Menubar.js:759
-#: src/control/Control.NotebookbarCalc.js:1180
+#: src/control/Control.NotebookbarCalc.js:1190
 #: src/control/Control.NotebookbarDraw.js:349
 #: src/control/Control.NotebookbarImpress.js:389
 #: src/control/Control.NotebookbarWriter.js:1446
@@ -1344,7 +1344,7 @@ msgstr "Amaga la barra de menús"
 #: src/control/Control.Menubar.js:620 src/control/Control.Menubar.js:765
 #: src/control/Control.Menubar.js:1042 src/control/Control.Menubar.js:1095
 #: src/control/Control.Menubar.js:1156 src/control/Control.Menubar.js:1216
-#: src/control/Control.NotebookbarCalc.js:1254
+#: src/control/Control.NotebookbarCalc.js:1264
 #: src/control/Control.NotebookbarDraw.js:449
 #: src/control/Control.NotebookbarImpress.js:504
 #: src/control/Control.NotebookbarWriter.js:1526
@@ -1355,7 +1355,7 @@ msgstr "Mode nocturn"
 #: src/control/Control.Menubar.js:621 src/control/Control.Menubar.js:766
 #: src/control/Control.Menubar.js:1043 src/control/Control.Menubar.js:1096
 #: src/control/Control.Menubar.js:1157 src/control/Control.Menubar.js:1217
-#: src/control/Control.NotebookbarCalc.js:1261
+#: src/control/Control.NotebookbarCalc.js:1271
 #: src/control/Control.NotebookbarDraw.js:456
 #: src/control/Control.NotebookbarImpress.js:511
 #: src/control/Control.NotebookbarWriter.js:1533
@@ -1376,9 +1376,9 @@ msgstr "Tot"
 
 #: src/control/Control.Menubar.js:192 src/control/Control.Menubar.js:487
 #: src/control/Control.Menubar.js:635 src/control/Control.Menubar.js:790
-#: src/control/Control.NotebookbarCalc.js:1385
+#: src/control/Control.NotebookbarCalc.js:1395
 #: src/control/Control.NotebookbarDraw.js:1277
-#: src/control/Control.NotebookbarImpress.js:1277
+#: src/control/Control.NotebookbarImpress.js:1249
 #: src/control/Control.NotebookbarWriter.js:1129
 msgid "Smart Picker"
 msgstr "Selector intel·ligent"
@@ -1743,9 +1743,9 @@ msgstr "Per davall de la mitjana..."
 #: src/control/Control.Menubar.js:996 src/control/Control.Menubar.js:1062
 #: src/control/Control.Menubar.js:1127 src/control/Control.Menubar.js:1182
 #: src/control/Control.MobileSearchBar.ts:29
-#: src/control/Control.NotebookbarCalc.js:840
+#: src/control/Control.NotebookbarCalc.js:849
 #: src/control/Control.NotebookbarDraw.js:989
-#: src/control/Control.NotebookbarImpress.js:1053
+#: src/control/Control.NotebookbarImpress.js:1025
 #: src/control/Control.NotebookbarWriter.js:894
 #: src/control/Control.StatusBar.js:246 src/control/Control.Zotero.js:218
 #: src/control/Toolbar.js:575
@@ -1798,7 +1798,7 @@ msgstr ""
 msgid "Finish electronic signing"
 msgstr ""
 
-#: src/control/Control.Menubar.js:2203
+#: src/control/Control.Menubar.js:2208
 msgid "file type icon"
 msgstr "icona del tipus de fitxer"
 
@@ -1967,163 +1967,163 @@ msgstr "Signatura"
 msgid "Rename"
 msgstr "Canvia el nom"
 
-#: src/control/Control.NotebookbarCalc.js:607
+#: src/control/Control.NotebookbarCalc.js:611
 msgid "General"
 msgstr "General"
 
-#: src/control/Control.NotebookbarCalc.js:608
+#: src/control/Control.NotebookbarCalc.js:612
 msgid "Number"
 msgstr "Nombre"
 
-#: src/control/Control.NotebookbarCalc.js:609
+#: src/control/Control.NotebookbarCalc.js:613
 msgid "Percent"
 msgstr "Percentatge"
 
-#: src/control/Control.NotebookbarCalc.js:610
+#: src/control/Control.NotebookbarCalc.js:614
 msgid "Currency"
 msgstr "Moneda"
 
-#: src/control/Control.NotebookbarCalc.js:611
+#: src/control/Control.NotebookbarCalc.js:615
 #: src/control/Control.NotebookbarWriter.js:1402
 #: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
 msgid "Date"
 msgstr "Data"
 
-#: src/control/Control.NotebookbarCalc.js:612
+#: src/control/Control.NotebookbarCalc.js:616
 msgid "Time"
 msgstr "Hora"
 
-#: src/control/Control.NotebookbarCalc.js:613
+#: src/control/Control.NotebookbarCalc.js:617
 msgid "Scientific"
 msgstr "Científic"
 
-#: src/control/Control.NotebookbarCalc.js:614
+#: src/control/Control.NotebookbarCalc.js:618
 msgid "Fraction"
 msgstr "Fracció"
 
-#: src/control/Control.NotebookbarCalc.js:615
+#: src/control/Control.NotebookbarCalc.js:619
 msgid "Boolean Value"
 msgstr "Valor booleà"
 
-#: src/control/Control.NotebookbarCalc.js:616 src/control/Toolbar.js:804
+#: src/control/Control.NotebookbarCalc.js:620 src/control/Toolbar.js:804
 msgid "Text"
 msgstr "Text"
 
-#: src/control/Control.NotebookbarCalc.js:780
+#: src/control/Control.NotebookbarCalc.js:788
 msgid "Default"
 msgstr "Per defecte"
 
-#: src/control/Control.NotebookbarCalc.js:787
+#: src/control/Control.NotebookbarCalc.js:795
 msgid "Heading 1"
 msgstr "Encapçalament 1"
 
-#: src/control/Control.NotebookbarCalc.js:794
+#: src/control/Control.NotebookbarCalc.js:802
 msgid "Heading 2"
 msgstr "Encapçalament 2"
 
-#: src/control/Control.NotebookbarCalc.js:807
+#: src/control/Control.NotebookbarCalc.js:815
 msgid "Good"
 msgstr "Bo"
 
-#: src/control/Control.NotebookbarCalc.js:814
+#: src/control/Control.NotebookbarCalc.js:822
 msgid "Neutral"
 msgstr "Neutre"
 
-#: src/control/Control.NotebookbarCalc.js:821
+#: src/control/Control.NotebookbarCalc.js:829
 msgid "Bad"
 msgstr "Dolent"
 
-#: src/control/Control.NotebookbarCalc.js:851
+#: src/control/Control.NotebookbarCalc.js:860
 #: src/control/Control.NotebookbarDraw.js:1000
-#: src/control/Control.NotebookbarImpress.js:1064
+#: src/control/Control.NotebookbarImpress.js:1036
 #: src/control/Control.NotebookbarWriter.js:905
 msgid "Replace"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:926
+#: src/control/Control.NotebookbarCalc.js:936
 msgid "Row Height"
 msgstr "Alçada de la fila"
 
-#: src/control/Control.NotebookbarCalc.js:934
+#: src/control/Control.NotebookbarCalc.js:944
 msgid "Column Width"
 msgstr "Amplada de la columna"
 
-#: src/control/Control.NotebookbarCalc.js:947
+#: src/control/Control.NotebookbarCalc.js:957
 msgid "Insert Rows Above"
 msgstr "Insereix files a dalt"
 
-#: src/control/Control.NotebookbarCalc.js:954
+#: src/control/Control.NotebookbarCalc.js:964
 msgid "Insert Columns Before"
 msgstr "Insereix columnes abans"
 
-#: src/control/Control.NotebookbarCalc.js:961
+#: src/control/Control.NotebookbarCalc.js:971
 msgid "Delete Rows"
 msgstr "Suprimeix les files"
 
-#: src/control/Control.NotebookbarCalc.js:973
+#: src/control/Control.NotebookbarCalc.js:983
 msgid "Insert Rows Below"
 msgstr "Insereix files a sota"
 
-#: src/control/Control.NotebookbarCalc.js:980
+#: src/control/Control.NotebookbarCalc.js:990
 msgid "Insert Columns After"
 msgstr "Insereix columnes després"
 
-#: src/control/Control.NotebookbarCalc.js:987
+#: src/control/Control.NotebookbarCalc.js:997
 msgid "Delete Columns"
 msgstr "Suprimeix les columnes"
 
-#: src/control/Control.NotebookbarCalc.js:1166
+#: src/control/Control.NotebookbarCalc.js:1176
 #: src/control/Control.NotebookbarDraw.js:335
 #: src/control/Control.NotebookbarImpress.js:351
 #: src/control/Control.NotebookbarWriter.js:1425
 msgid "Read mode"
 msgstr "Mode lectura"
 
-#: src/control/Control.NotebookbarCalc.js:1217
+#: src/control/Control.NotebookbarCalc.js:1227
 #: src/control/Control.NotebookbarDraw.js:386
 #: src/control/Control.NotebookbarImpress.js:426
 #: src/control/Control.NotebookbarWriter.js:1483
 msgid "Compact view"
 msgstr "Visualització compacta"
 
-#: src/control/Control.NotebookbarCalc.js:1230
+#: src/control/Control.NotebookbarCalc.js:1240
 #: src/control/Control.NotebookbarDraw.js:423
 #: src/control/Control.NotebookbarImpress.js:463
 #: src/control/Control.NotebookbarWriter.js:1520
 msgid "Collapse Tabs"
 msgstr "Contraure pestanyes"
 
-#: src/control/Control.NotebookbarCalc.js:1242
+#: src/control/Control.NotebookbarCalc.js:1252
 #: src/control/Control.NotebookbarDraw.js:411
 #: src/control/Control.NotebookbarImpress.js:451
 #: src/control/Control.NotebookbarWriter.js:1508
 msgid "Status Bar"
 msgstr "Barra d'estat"
 
-#: src/control/Control.NotebookbarCalc.js:1335
+#: src/control/Control.NotebookbarCalc.js:1345
 msgid "Sparkline"
 msgstr "Minidiagrama"
 
-#: src/control/Control.NotebookbarCalc.js:1393
+#: src/control/Control.NotebookbarCalc.js:1403
 #: src/control/Control.NotebookbarDraw.js:1285
-#: src/control/Control.NotebookbarImpress.js:1297
+#: src/control/Control.NotebookbarImpress.js:1269
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1477
-#: src/control/Control.NotebookbarCalc.js:2376
+#: src/control/Control.NotebookbarCalc.js:1487
+#: src/control/Control.NotebookbarCalc.js:2386
 #: src/control/Control.NotebookbarDraw.js:869
 #: src/control/Control.NotebookbarDraw.js:1371
-#: src/control/Control.NotebookbarImpress.js:925
-#: src/control/Control.NotebookbarImpress.js:1390
-#: src/control/Control.NotebookbarImpress.js:2449
+#: src/control/Control.NotebookbarImpress.js:929
+#: src/control/Control.NotebookbarImpress.js:1362
+#: src/control/Control.NotebookbarImpress.js:2421
 #: src/control/Control.NotebookbarWriter.js:1085
 #: src/control/Control.NotebookbarWriter.js:2886
 msgid "Shapes"
 msgstr "Formes"
 
-#: src/control/Control.NotebookbarCalc.js:2024
+#: src/control/Control.NotebookbarCalc.js:2034
 #: src/control/Control.NotebookbarWriter.js:945
 msgid "Style list"
 msgstr ""
@@ -2154,7 +2154,7 @@ msgid "Master"
 msgstr "Mestre"
 
 #: src/control/Control.NotebookbarImpress.js:358
-#: src/control/Control.NotebookbarImpress.js:1039
+#: src/control/Control.NotebookbarImpress.js:1010
 msgid "Presentation"
 msgstr "Presentació"
 
@@ -2438,7 +2438,7 @@ msgstr "Insereix formes"
 msgid "Insert connectors"
 msgstr "Insereix connectors"
 
-#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:843
+#: src/control/Control.TopToolbar.js:201 src/control/Control.UIManager.js:841
 msgid "Hide Menu"
 msgstr "Amaga el menú"
 
@@ -2446,7 +2446,7 @@ msgstr "Amaga el menú"
 msgid "Enter new name"
 msgstr "Introduïu el nom nou"
 
-#: src/control/Control.UIManager.js:866
+#: src/control/Control.UIManager.js:864
 msgid "Show Menu"
 msgstr "Mostra el menú"
 
@@ -3062,7 +3062,7 @@ msgstr ""
 "S'ha modificat el document a l'emmagatzematge. Què voleu fer amb els canvis "
 "sense desar?"
 
-#: src/core/Socket.js:1694
+#: src/core/Socket.js:1693
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -3070,11 +3070,11 @@ msgstr ""
 "Això no hauria de passar. No podem connectar amb el vostre document. Torneu-"
 "ho a intentar."
 
-#: src/core/Socket.js:1711
+#: src/core/Socket.js:1710
 msgid "Reconnecting..."
 msgstr "S'està tornant a connectar…"
 
-#: src/core/Socket.js:1721
+#: src/core/Socket.js:1720
 msgid "The server has been disconnected."
 msgstr "S'ha desconnectat el servidor."
 
@@ -3410,7 +3410,7 @@ msgstr "Funcions"
 msgid "Named Range"
 msgstr "Interval amb nom"
 
-#: src/layer/tile/CanvasTileLayer.js:3862
+#: src/layer/tile/CanvasTileLayer.js:3892
 msgid "No Comments"
 msgstr "Cap comentari"
 
@@ -3647,19 +3647,19 @@ msgstr ""
 msgid "Zoom Out"
 msgstr ""
 
-#: src/slideshow/PresenterConsole.js:1215
+#: src/slideshow/PresenterConsole.js:1217
 msgid "Slide {0} of {1}"
 msgstr ""
 
-#: src/slideshow/PresenterConsole.js:1239
+#: src/slideshow/PresenterConsole.js:1241
 msgid "No Notes"
 msgstr ""
 
-#: src/slideshow/PresenterConsole.js:1327
+#: src/slideshow/PresenterConsole.js:1329
 msgid "Repeat in {0} seconds"
 msgstr ""
 
-#: src/slideshow/PresenterConsole.js:1332
+#: src/slideshow/PresenterConsole.js:1334
 #: src/slideshow/SlideShowPresenter.ts:366
 msgid "Click to exit presentation..."
 msgstr ""
