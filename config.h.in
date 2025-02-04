@@ -114,6 +114,9 @@
 /* Define to 1 if this is a mobileapp (eg. Android) build. */
 #undef MOBILEAPP
 
+/* Define to 1 when we should use systemplate and jails (eg. normal coolwsd server), otherwise 0 (eg. CODA). */
+#undef ENABLE_CHILDROOTS
+
 /* Default value of feature_lock.unlock_description */
 #undef UNLOCK_DESCRIPTION
 
