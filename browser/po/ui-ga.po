@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-03 11:48+0100\n"
-"PO-Revision-Date: 2025-01-28 15:02+0000\n"
+"PO-Revision-Date: 2025-02-04 21:47+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -475,7 +475,7 @@ msgstr "Taispeáin ar an taobh"
 
 #: src/canvas/sections/CommentListSection.ts:1205
 msgid "Open in full view"
-msgstr ""
+msgstr "Oscail i radharc iomlán"
 
 #: src/canvas/sections/CommentListSection.ts:1233
 #: src/control/Control.JSDialogBuilder.js:1893
