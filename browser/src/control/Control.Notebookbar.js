@@ -455,10 +455,6 @@ L.Control.Notebookbar = L.Control.extend({
 						'type': 'toolitem',
 						'text': _UNO('.uno:SidebarDeck.ElementsDeck', '', true),
 						'command': '.uno:SidebarDeck.ElementsDeck'
-					},
-					{
-						'type': 'toolitem',
-						// dummy node to avoid creating labels
 					}
 				];
 			}
@@ -555,24 +551,35 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	getOptionsSectionData: function() {
-		return this.buildOptionsSectionData([
+		return this.buildOptionsSectionData(this.getDefaultToolItems());
+	},
+
+	getDefaultToolItems: function() {
+		const optionsToolItems = [
 			{
 				'type': 'toolitem',
 				'text': _UNO('.uno:Sidebar', '', true),
 				'command': '.uno:SidebarDeck.PropertyDeck',
-				'accessibility': { focusBack: false,	combination: 'ZB', de: null }
+				'accessibility': { focusBack: false, combination: 'ZB', de: null }
 			},
 			{
 				'type': 'toolitem',
 				'text': _UNO('.uno:Navigator'),
 				'command': '.uno:Navigator',
 				'accessibility': { focusBack: false, combination: 'ZN', de: 'V' }
-			},
-			{
-				'type': 'toolitem',
-				// dummy node to avoid creating labels
 			}
-		]);
+		];
+	
+		if (this._map && this._map['wopi'].EnableShare) {
+			optionsToolItems.push({
+				'type': 'customtoolitem',
+				'text': _('Share'),
+				'command': 'shareas',
+				'accessibility': { focusBack: false, combination: 'ZS', de: null }
+			});
+		}
+	
+		return optionsToolItems;
 	},
 
 	createOptionsSection: function(childrenArray) {
