@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-03 11:48+0200\n"
-"PO-Revision-Date: 2025-01-31 16:20+0000\n"
+"PO-Revision-Date: 2025-02-03 16:50+0000\n"
 "Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/fi/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -124,4 +124,4 @@ msgstr "Avoin lähdekoodi – Mozilla Public License v2 ja muut"
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:60-1
 msgid "Credits:"
-msgstr "Ansiot:"
+msgstr "Kiitettävää:"
