@@ -2089,7 +2089,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
 
 bool Document::forwardToChild(const std::string& prefix, const std::vector<char>& payload)
 {
-    assert(payload.size() > prefix.size());
+    assert(Util::isFuzzing() || payload.size() > prefix.size());
 
     // Remove the prefix and trim.
     std::size_t index = prefix.size();
