@@ -248,7 +248,6 @@ COOL_JS_LST =\
 	src/core/Class.js \
 	src/core/Events.js \
 	src/core/Socket.js \
-	src/core/Matrix.js \
 	src/core/Debug.js \
 	src/geometry/Point.ts \
 	src/geometry/Bounds.ts \
