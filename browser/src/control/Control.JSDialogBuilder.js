@@ -381,6 +381,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			spinfield.setAttribute('disabled', 'true');
 		}
 
+		spinfield.setAttribute('aria-disabled', Boolean(data.enabled));
+
 		JSDialog.SynchronizeDisabledState(div, [spinfield]);
 
 		if (data.readOnly === true)
@@ -1285,6 +1287,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === 'false' || data.enabled === false)
 			$(radiobutton).attr('disabled', 'disabled');
 
+		radiobutton.setAttribute('aria-disabled', Boolean(data.enabled));
+
 		if (data.checked === 'true' || data.checked === true)
 			$(radiobutton).prop('checked', true);
 
@@ -1327,6 +1331,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			div.disabled = true;
 			checkbox.disabled = true;
 		}
+
+		checkbox.setAttribute('aria-disabled', Boolean(data.enabled));
 
 		JSDialog.SynchronizeDisabledState(div, [checkbox]);
 
@@ -1551,6 +1557,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(pushbutton).prop('disabled', true);
+
+		pushbutton.setAttribute('aria-disabled', Boolean(data.enabled));
 
 		if (customCallback)
 			pushbutton.onclick = customCallback;
@@ -2354,6 +2362,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						button.setAttribute('aria-pressed', false);
 					}
 
+					button.setAttribute('aria-disabled', disabled);
+
 					if (disabled)
 						div.setAttribute('disabled', 'true');
 					else
@@ -2373,6 +2383,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					}
 				}, this);
 			}
+
+			button.setAttribute('aria-disabled', disabled);
 
 			if (disabled) {
 				div.setAttribute('disabled', 'true');
