@@ -37,7 +37,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	},
 
 	getOptionsSectionData: function() {
-		return this.buildOptionsSectionData([
+		return this.buildOptionsSectionData(this.getDefaultToolItems());
+	},
+
+	getDefaultToolItems: function() {
+		const optionsToolItems = [
 			{
 				'id': 'options-modify-page',
 				'type': 'toolitem',
@@ -73,7 +77,16 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:Navigator',
 				'accessibility': { focusBack: false, combination: 'ZN', de: 'V' }
 			}
-		]);
+		];
+		if (this._map && this._map['wopi'].EnableShare) {
+			optionsToolItems.push({
+				'type': 'customtoolitem',
+				'text': _('Share'),
+				'command': 'shareas',
+				'accessibility': { focusBack: false, combination: 'ZS', de: null }
+			});
+		}
+		return optionsToolItems;
 	},
 
 	getTabs: function() {
