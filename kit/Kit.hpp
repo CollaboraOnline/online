@@ -171,7 +171,7 @@ public:
 #endif
     int kitPoll(int timeoutMicroS);
     void setDocument(std::shared_ptr<Document> document) { _document = std::move(document); }
-    std::shared_ptr<Document> getDocument() const { return _document; }
+    const std::shared_ptr<Document>& getDocument() const { return _document; }
 
     // unusual LOK event from another thread, push into our loop to process.
     static bool pushToMainThread(LibreOfficeKitCallback callback, int type, const char* p,
