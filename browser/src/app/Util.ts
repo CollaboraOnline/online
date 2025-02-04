@@ -289,3 +289,5 @@ class Util {
 	public static MAX_SAFE_INTEGER = Math.pow(2, 3) - 1;
 	public static MIN_SAFE_INTEGER = Util.MAX_SAFE_INTEGER;
 }
+
+app.util = Util;
