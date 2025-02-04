@@ -181,7 +181,7 @@ export class ContentControlSection extends CanvasSectionObject {
 			var fontStyle = getComputedStyle(document.body).getPropertyValue('--docs-font').split(',')[0].replace(/'/g, '');
 			var fontSize = getComputedStyle(document.body).getPropertyValue('--default-font-size');
 			var font = fontSize + ' ' + fontStyle;
-			var textWidth: number = L.Util.getTextWidth(text, font) + padding;
+			var textWidth: number = app.util.getTextWidth(text, font) + padding;
 
 			// draw rectangle with backgroundcolor
 			this.context.beginPath();

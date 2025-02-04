@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 
 var END = {
 	mousedown:     'mouseup',
@@ -253,8 +254,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 
 			// hack for skipping the click in canvas-rendered layers
 			var contains = this._path._containsPoint;
-			this._path._containsPoint = L.Util.falseFn;
-			L.Util.requestAnimFrame(function() {
+			this._path._containsPoint = app.util.falseFn;
+			app.util.requestAnimFrame(function() {
 				L.DomEvent._skipped({ type: 'click' });
 				this._path._containsPoint = contains;
 			}, this);
@@ -316,7 +317,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			var rings   = path._rings || path._parts;
 			var latlngs = path._latlngs;
 			dest = dest || latlngs;
-			if (!L.Util.isArray(latlngs[0])) { // polyline
+			if (!app.util.isArray(latlngs[0])) { // polyline
 				latlngs = [latlngs];
 				dest    = [dest];
 			}
@@ -346,14 +347,14 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 	_replaceCoordGetters: function() {
 		if (this._path.getLatLng) { // Circle, CircleMarker
 			this._path.getLatLng_ = this._path.getLatLng;
-			this._path.getLatLng = L.Util.bind(function() {
+			this._path.getLatLng = function() {
 				return this.dragging._transformPoints(this.dragging._matrix, {});
-			}, this._path);
+			}.bind(this._path);
 		} else if (this._path.getLatLngs) {
 			this._path.getLatLngs_ = this._path.getLatLngs;
-			this._path.getLatLngs = L.Util.bind(function() {
+			this._path.getLatLngs = function() {
 				return this.dragging._transformPoints(this.dragging._matrix, []);
-			}, this._path);
+			}.bind(this._path);
 		}
 	},
 

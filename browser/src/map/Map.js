@@ -260,7 +260,7 @@ L.Map = L.Evented.extend({
 		}, this);
 
 		this.on('commandvalues', function(e) {
-			if (e.commandName === '.uno:LanguageStatus' && L.Util.isArray(e.commandValues)) {
+			if (e.commandName === '.uno:LanguageStatus' && app.util.isArray(e.commandValues)) {
 				app.languages = [];
 				e.commandValues.forEach(function(language) {
 					var split = language.split(';');
@@ -841,7 +841,7 @@ L.Map = L.Evented.extend({
 	},
 
 	stop: function () {
-		L.Util.cancelAnimFrame(this._flyToFrame);
+		app.util.cancelAnimFrame(this._flyToFrame);
 		if (this._panAnim) {
 			this._panAnim.stop();
 		}
@@ -1050,7 +1050,7 @@ L.Map = L.Evented.extend({
 	project: function (latlng, zoom) { // (LatLng[, Number]) -> Point
 		zoom = zoom === undefined ? this.getZoom() : zoom;
 		var projectedPoint = this.options.crs.latLngToPoint(L.latLng(latlng), zoom);
-		return new L.Point(L.round(projectedPoint.x, 1e-6), L.round(projectedPoint.y, 1e-6));
+		return new L.Point(app.util.round(projectedPoint.x, 1e-6), app.util.round(projectedPoint.y, 1e-6));
 	},
 
 	unproject: function (point, zoom) { // (Point[, Number]) -> LatLng
@@ -1383,8 +1383,8 @@ L.Map = L.Evented.extend({
 	},
 
 	_onResize: function () {
-		L.Util.cancelAnimFrame(this._resizeRequest);
-		this._resizeRequest = L.Util.requestAnimFrame(
+		app.util.cancelAnimFrame(this._resizeRequest);
+		this._resizeRequest = app.util.requestAnimFrame(
 			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
 
 		if (this.sidebar)
@@ -1532,7 +1532,7 @@ L.Map = L.Evented.extend({
 		if (!this._docLayer || !this._loaded || !this._enabled || L.DomEvent._skipped(e)) { return; }
 
 		// find the layer the event is propagating from
-		var target = this._targets[L.stamp(e.target || e.srcElement)],
+		var target = this._targets[app.util.stamp(e.target || e.srcElement)],
 		    //type = e.type === 'keypress' && e.keyCode === 13 ? 'click' : e.type;
 		    type = e.type;
 

@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 /*
  * L.Control.Layers is a control to allow users to switch between different layers on the map.
  */
@@ -37,7 +38,7 @@ L.Control.Layers = L.Control.extend({
 	removeLayer: function (layer) {
 		layer.off('add remove', this._onLayerChange, this);
 
-		delete this._layers[L.stamp(layer)];
+		delete this._layers[app.util.stamp(layer)];
 		return this._update();
 	},
 
@@ -93,7 +94,7 @@ L.Control.Layers = L.Control.extend({
 	_addLayer: function (layer, name, overlay) {
 		layer.on('add remove', this._onLayerChange, this);
 
-		var id = L.stamp(layer);
+		var id = app.util.stamp(layer);
 
 		this._layers[id] = {
 			layer: layer,
@@ -139,7 +140,7 @@ L.Control.Layers = L.Control.extend({
 			this._update();
 		}
 
-		var overlay = this._layers[L.stamp(e.target)].overlay;
+		var overlay = this._layers[app.util.stamp(e.target)].overlay;
 
 		var type = overlay ?
 			(e.type === 'add' ? 'overlayadd' : 'overlayremove') :
@@ -176,7 +177,7 @@ L.Control.Layers = L.Control.extend({
 			input = this._createRadioElement('leaflet-base-layers', checked);
 		}
 
-		input.layerId = L.stamp(obj.layer);
+		input.layerId = app.util.stamp(obj.layer);
 
 		L.DomEvent.on(input, 'click', this._onInputClick, this);
 

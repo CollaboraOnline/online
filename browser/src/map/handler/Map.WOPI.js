@@ -545,7 +545,7 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.remove();
 		}
 		else if (msg.MessageId === 'Action_Fullscreen') {
-			L.toggleFullScreen();
+			app.util.toggleFullScreen();
 		}
 		else if (msg.MessageId === 'Action_FullscreenPresentation' && this._map.getDocType() === 'presentation') {
 			if (msg.Values) {

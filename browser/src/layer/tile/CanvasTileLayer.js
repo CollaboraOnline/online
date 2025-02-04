@@ -298,7 +298,7 @@ L.TileSectionManager = L.Class.extend({
 
 	stopUpdates: function () {
 		if (this._updatesRunning) {
-			L.Util.cancelAnimFrame(this._canvasRAF);
+			app.util.cancelAnimFrame(this._canvasRAF);
 			this.update();
 			this._updatesRunning = false;
 			return true;
@@ -391,7 +391,7 @@ L.TileSectionManager = L.Class.extend({
 
 	_updateWithRAF: function () {
 		// update-loop with requestAnimationFrame
-		this._canvasRAF = L.Util.requestAnimFrame(this._updateWithRAF, this, false /* immediate */);
+		this._canvasRAF = app.util.requestAnimFrame(this._updateWithRAF, this, false /* immediate */);
 		app.sectionContainer.requestReDraw();
 	},
 
@@ -4408,7 +4408,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			viewreset: this._viewReset,
 			movestart: this._moveStart,
 			// update tiles on move, but not more often than once per given interval
-			move: L.Util.throttle(this._move, this.options.updateInterval, this),
+			move: app.util.throttle(this._move, this.options.updateInterval, this),
 			moveend: this._moveEnd,
 			splitposchanged: this._move,
 		};
