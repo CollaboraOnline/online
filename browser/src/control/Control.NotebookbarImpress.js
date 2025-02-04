@@ -42,31 +42,36 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'id': 'options-modify-page',
 				'type': 'toolitem',
 				'text': _UNO('.uno:ModifyPage', 'presentation', true),
-				'command': '.uno:ModifyPage'
+				'command': '.uno:ModifyPage',
+				'accessibility': { focusBack: true, combination: 'ZL', de: null }
 			},
 			{
 				'id': 'options-slide-change-window',
 				'type': 'toolitem',
 				'text': _UNO('.uno:SlideChangeWindow', 'presentation', true),
-				'command': '.uno:SlideChangeWindow'
+				'command': '.uno:SlideChangeWindow',
+				'accessibility': { focusBack: true, combination: 'ZT', de: null }
 			},
 			{
 				'id': 'options-custom-animation',
 				'type': 'toolitem',
 				'text': _UNO('.uno:CustomAnimation', 'presentation', true),
-				'command': '.uno:CustomAnimation'
+				'command': '.uno:CustomAnimation',
+				'accessibility': { focusBack: true, combination: 'ZA', de: null }
 			},
 			{
 				'id': 'options-master-slides-panel',
 				'type': 'toolitem',
 				'text': _UNO('.uno:MasterSlidesPanel', 'presentation', true),
-				'command': '.uno:MasterSlidesPanel'
+				'command': '.uno:MasterSlidesPanel',
+				'accessibility': { focusBack: true, combination: 'ZM', de: null }
 			},
 			{
 				'id': 'options-navigator',
 				'type': 'toolitem',
 				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator'
+				'command': '.uno:Navigator',
+				'accessibility': { focusBack: false, combination: 'ZN', de: 'V' }
 			}
 		]);
 	},

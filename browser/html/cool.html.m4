@@ -127,7 +127,7 @@ m4_ifelse(MOBILEAPP,[true],
         </div>
         <div id="closebuttonwrapperseparator"></div>
         <div id="closebuttonwrapper">
-          <div class="closebuttonimage" id="closebutton"></div>
+          <button class="closebuttonimage" id="closebutton" accesskey="ZC"></button>
         </div>
       </nav>
 

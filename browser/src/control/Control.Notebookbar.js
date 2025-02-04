@@ -559,12 +559,14 @@ L.Control.Notebookbar = L.Control.extend({
 			{
 				'type': 'toolitem',
 				'text': _UNO('.uno:Sidebar', '', true),
-				'command': '.uno:SidebarDeck.PropertyDeck'
+				'command': '.uno:SidebarDeck.PropertyDeck',
+				'accessibility': { focusBack: false,	combination: 'ZB', de: null }
 			},
 			{
 				'type': 'toolitem',
 				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator'
+				'command': '.uno:Navigator',
+				'accessibility': { focusBack: false, combination: 'ZN', de: 'V' }
 			},
 			{
 				'type': 'toolitem',
