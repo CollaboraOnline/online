@@ -43,6 +43,10 @@ class DocEvents {
     public on(eventType: string, callback: eventCallback) {
         this.container.addEventListener(eventType, callback);
     }
+
+    public off(eventType: string, callback: eventCallback) {
+        this.container.removeEventListener(eventType, callback);
+    }
 }
 
 app.definitions.events = DocEvents;

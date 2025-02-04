@@ -19,7 +19,8 @@ class TopToolbar extends JSDialog.Toolbar {
 		this.stylesSelectValue = null;
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
-		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
+		this.onUpdatePermission = this.onUpdatePermission.bind(this);
+		app.events.on('updatepermission', this.onUpdatePermission);
 		map.on('wopiprops', this.onWopiProps, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
 		app.events.on('contextchange', this.onContextChange.bind(this));
@@ -36,7 +37,7 @@ class TopToolbar extends JSDialog.Toolbar {
 		}
 
 		this.map.off('doclayerinit', this.onDocLayerInit, this);
-		// TODO: app.events.off('updatepermission', this.onUpdatePermission.bind(this));
+		app.events.off('updatepermission', this.onUpdatePermission);
 		this.map.off('wopiprops', this.onWopiProps, this);
 		this.map.off('commandstatechanged', this.onCommandStateChanged, this);
 
