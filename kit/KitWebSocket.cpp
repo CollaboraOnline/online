@@ -99,8 +99,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
             LOG_DBG("CreateSession failed.");
         }
     }
-
-    else if (tokens.equals(0, "exit"))
+    else if (!Util::isFuzzing() && tokens.equals(0, "exit"))
     {
         if constexpr (!Util::isMobileApp())
         {
@@ -143,7 +142,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
             LOG_WRN("No document while processing " << tokens[0] << " request.");
         }
     }
-    else if (tokens.size() == 3 && tokens.equals(0, "setconfig"))
+    else if (!Util::isFuzzing() && tokens.size() == 3 && tokens.equals(0, "setconfig"))
     {
 #if !MOBILEAPP && !defined(BUILDING_TESTS)
         // Currently only rlimit entries are supported.
@@ -153,7 +152,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         }
 #endif
     }
-    else if (tokens.equals(0, "setloglevel"))
+    else if (!Util::isFuzzing() && tokens.equals(0, "setloglevel"))
     {
         Log::setLevel(tokens[1]);
     }
