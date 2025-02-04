@@ -2153,6 +2153,8 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     StorageBase::initialize();
 
 #if !MOBILEAPP
+
+#ifdef __linux__
     // Check for smaps_rollup bug where rewinding and rereading gives
     // bogus doubled results
     if (FILE* fp = fopen("/proc/self/smaps_rollup", "r"))
@@ -2170,6 +2172,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         }
         fclose(fp);
     }
+#endif
 
     ServerApplication::initialize(self);
 
