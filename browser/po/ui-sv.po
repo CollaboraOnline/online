@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-03 11:48+0100\n"
-"PO-Revision-Date: 2025-01-28 15:02+0000\n"
-"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"PO-Revision-Date: 2025-02-04 14:10+0000\n"
+"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -475,7 +475,7 @@ msgstr "Visa på sidan av"
 
 #: src/canvas/sections/CommentListSection.ts:1205
 msgid "Open in full view"
-msgstr ""
+msgstr "Öppna i helskärm"
 
 #: src/canvas/sections/CommentListSection.ts:1233
 #: src/control/Control.JSDialogBuilder.js:1893
