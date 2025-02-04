@@ -13,6 +13,7 @@
 
 #include "SigUtil.hpp"
 #include "SigHandlerTrap.hpp"
+#include "Util.hpp"
 
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
 #  include <execinfo.h>
@@ -91,8 +92,12 @@ bool getTerminationFlag() { return RunStateFlag >= RunState::Terminate; }
 
 void setTerminationFlag()
 {
-    // Set the forced-termination flag.
-    RunStateFlag = RunState::Terminate;
+    // While fuzzing, we never want to terminate.
+    if constexpr (!Util::isFuzzing())
+    {
+        // Set the forced-termination flag.
+        RunStateFlag = RunState::Terminate;
+    }
 
     if constexpr (!Util::isMobileApp())
     {
