@@ -2296,9 +2296,12 @@ bool Document::forwardToChild(const std::string_view prefix, const std::vector<c
         {
             abbrMessage = getAbbreviatedMessage(data, size);
         }
-        LOG_ERR("Child session [" << sessionId << "] not found to forward message: " << abbrMessage);
+
+        if (!Util::isFuzzing())
+            LOG_ERR("Child session [" << sessionId
+                                      << "] not found to forward message: " << abbrMessage);
     }
-    else
+    else if (!Util::isFuzzing())
     {
         LOG_ERR("Failed to parse prefix of forward-to-child message: " << prefix);
     }
