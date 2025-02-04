@@ -3006,7 +3006,7 @@ int pollCallback(void* data, int timeoutUs)
 bool anyInputCallback(void* data)
 {
     auto kitSocketPoll = reinterpret_cast<KitSocketPoll*>(data);
-    std::shared_ptr<Document> document = kitSocketPoll->getDocument();
+    const std::shared_ptr<Document>& document = kitSocketPoll->getDocument();
 
     return document && document->hasQueueItems();
 }
