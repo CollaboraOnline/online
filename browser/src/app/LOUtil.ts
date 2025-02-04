@@ -97,7 +97,7 @@ class LOUtil {
 		return '#' + ('000000' + color.toString(16)).slice(-6);
 	}
 
-	public static stringToBounds(bounds: string) {
+	public static stringToBounds(bounds: string): cool.Bounds {
 		const numbers = bounds.match(/\d+/g);
 		const topLeft = cool.Point.toPoint(
 			parseInt(numbers[0]),
@@ -109,7 +109,7 @@ class LOUtil {
 		return cool.Bounds.toBounds(topLeft, bottomRight);
 	}
 
-	public static stringToRectangles(strRect: string) {
+	public static stringToRectangles(strRect: string): cool.Point[][] {
 		const matches = strRect.match(/\d+/g);
 		const rectangles: cool.Point[][] = [];
 		if (matches !== null) {
@@ -172,7 +172,7 @@ class LOUtil {
 		if (customWindow.host === '' && customWindow.serviceRoot === '')
 			return path; // mobile app
 
-		let url = window.makeHttpUrl('/browser/' + customWindow.versionPath);
+		let url = customWindow.makeHttpUrl('/browser/' + customWindow.versionPath);
 		if (path.substr(0, 1) !== '/') url += '/';
 
 		url += path;
