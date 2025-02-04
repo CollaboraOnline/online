@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 /*
  * L.DomUtil contains various utility functions for working with DOM.
  */
@@ -89,7 +90,7 @@ L.DomUtil = {
 		}
 
 		if (el.classList !== undefined) {
-			var classes = L.Util.splitWords(name);
+			var classes = app.util.splitWords(name);
 			for (var i = 0, len = classes.length; i < len; i++) {
 				el.classList.add(classes[i]);
 			}
@@ -107,7 +108,7 @@ L.DomUtil = {
 		if (el.classList !== undefined) {
 			el.classList.remove(name);
 		} else {
-			L.DomUtil.setClass(el, L.Util.trim((' ' + L.DomUtil.getClass(el) + ' ').replace(' ' + name + ' ', ' ')));
+			L.DomUtil.setClass(el, app.util.trim((' ' + L.DomUtil.getClass(el) + ' ').replace(' ' + name + ' ', ' ')));
 		}
 	},
 

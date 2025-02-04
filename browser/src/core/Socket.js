@@ -1215,7 +1215,7 @@ app.definitions.Socket = L.Class.extend({
 				this._map.fire('infobar',
 					{
 						msg: textMsg,
-						action: L.Util.getProduct(),
+						action: app.util.getProduct(),
 						actionLabel: errorMessages.infoandsupport
 					});
 			}
@@ -1617,7 +1617,7 @@ app.definitions.Socket = L.Class.extend({
 	_onJSDialog: function(textMsg, callback) {
 		var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
 
-		if (msgData.children && !L.Util.isArray(msgData.children)) {
+		if (msgData.children && !app.util.isArray(msgData.children)) {
 			window.app.console.warn('_onJSDialogMsg: The children\'s data should be created of array type');
 			return;
 		}

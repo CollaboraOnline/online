@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 /*
  * L.DomEvent contains functions for working with DOM events.
  * Inspired by John Resig, Dean Edwards and YUI addEvent implementations.
@@ -15,7 +16,7 @@ L.DomEvent = {
 				this._on(obj, type, types[type], fn);
 			}
 		} else {
-			types = L.Util.splitWords(types);
+			types = app.util.splitWords(types);
 
 			for (var i = 0, len = types.length; i < len; i++) {
 				this._on(obj, types[i], fn, context);
@@ -32,7 +33,7 @@ L.DomEvent = {
 				this._off(obj, type, types[type], fn);
 			}
 		} else {
-			types = L.Util.splitWords(types);
+			types = app.util.splitWords(types);
 
 			for (var i = 0, len = types.length; i < len; i++) {
 				this._off(obj, types[i], fn, context);
@@ -43,7 +44,7 @@ L.DomEvent = {
 	},
 
 	_on: function (obj, type, fn, context) {
-		var id = type + L.stamp(fn) + (context ? '_' + L.stamp(context) : '');
+		var id = type + app.util.stamp(fn) + (context ? '_' + app.util.stamp(context) : '');
 
 		if (obj[eventsKey] && obj[eventsKey][id]) { return this; }
 
@@ -98,7 +99,7 @@ L.DomEvent = {
 
 	_off: function (obj, type, fn, context) {
 
-		var id = type + L.stamp(fn) + (context ? '_' + L.stamp(context) : ''),
+		var id = type + app.util.stamp(fn) + (context ? '_' + app.util.stamp(context) : ''),
 		    handler = obj[eventsKey] && obj[eventsKey][id];
 
 		if (!handler) { return this; }

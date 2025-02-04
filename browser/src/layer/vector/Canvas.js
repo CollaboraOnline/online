@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 /*
  * L.Canvas handles Canvas vector layers rendering and mouse events handling. All Canvas-specific code goes here.
  */
@@ -47,10 +48,10 @@ L.Canvas = L.Renderer.extend({
 	},
 
 	_initPath: function (layer) {
-		this._layers[L.stamp(layer)] = layer;
+		this._layers[app.util.stamp(layer)] = layer;
 	},
 
-	_addPath: L.Util.falseFn,
+	_addPath: app.util.falseFn,
 
 	_removePath: function (layer) {
 		layer._removed = true;
@@ -76,7 +77,7 @@ L.Canvas = L.Renderer.extend({
 		this._redrawBounds = this._redrawBounds || new L.Bounds();
 		this._redrawBounds.extend(layer._pxBounds.min).extend(layer._pxBounds.max);
 
-		this._redrawRequest = this._redrawRequest || L.Util.requestAnimFrame(this._redraw, this);
+		this._redrawRequest = this._redrawRequest || app.util.requestAnimFrame(this._redraw, this);
 	},
 
 	_redraw: function () {
@@ -231,8 +232,8 @@ L.Canvas = L.Renderer.extend({
 
 	// TODO _bringToFront & _bringToBack, pretty tricky
 
-	_bringToFront: L.Util.falseFn,
-	_bringToBack: L.Util.falseFn
+	_bringToFront: app.util.falseFn,
+	_bringToBack: app.util.falseFn
 });
 
 L.Browser.canvas = (function () {

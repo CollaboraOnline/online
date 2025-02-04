@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 /*
  * L.LatLng represents a geographical point with latitude and longitude coordinates.
  */
@@ -31,8 +32,8 @@ L.LatLng.prototype = {
 
 	toString: function (precision) {
 		return 'LatLng(' +
-		        L.Util.formatNum(this.lat, precision) + ', ' +
-		        L.Util.formatNum(this.lng, precision) + ')';
+		        app.util.formatNum(this.lat, precision) + ', ' +
+		        app.util.formatNum(this.lng, precision) + ')';
 	},
 
 	distanceTo: function () {
@@ -52,7 +53,7 @@ L.latLng = function (a, b, c) {
 	if (a instanceof L.LatLng) {
 		return a;
 	}
-	if (L.Util.isArray(a) && typeof a[0] !== 'object') {
+	if (app.util.isArray(a) && typeof a[0] !== 'object') {
 		if (a.length === 3) {
 			return new L.LatLng(a[0], a[1], a[2]);
 		}

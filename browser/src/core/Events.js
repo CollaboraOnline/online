@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 /*
  * L.Evented is a base class that Leaflet classes inherit from to handle custom events.
  */
@@ -17,7 +18,7 @@ L.Evented = L.Class.extend({
 
 		} else {
 			// types can be a string of space-separated words
-			types = L.Util.splitWords(types);
+			types = app.util.splitWords(types);
 
 			for (var i = 0, len = types.length; i < len; i++) {
 				this._on(types[i], fn, context);
@@ -39,7 +40,7 @@ L.Evented = L.Class.extend({
 			}
 
 		} else {
-			types = L.Util.splitWords(types);
+			types = app.util.splitWords(types);
 
 			for (var i = 0, len = types.length; i < len; i++) {
 				this._off(types[i], fn, context);
@@ -53,7 +54,7 @@ L.Evented = L.Class.extend({
 	_on: function (type, fn, context) {
 
 		var events = this._events = this._events || {},
-		    contextId = context && context !== this && L.stamp(context);
+		    contextId = context && context !== this && app.util.stamp(context);
 
 		if (contextId) {
 			// store listeners with custom context in a separate hash (if it has an id);
@@ -62,7 +63,7 @@ L.Evented = L.Class.extend({
 			var indexKey = type + '_idx',
 			    indexLenKey = type + '_len',
 			    typeIndex = events[indexKey] = events[indexKey] || {},
-			    id = L.stamp(fn) + '_' + contextId;
+			    id = app.util.stamp(fn) + '_' + contextId;
 
 			if (!typeIndex[id]) {
 				typeIndex[id] = {fn: fn, ctx: context};
@@ -95,11 +96,11 @@ L.Evented = L.Class.extend({
 			return;
 		}
 
-		var contextId = context && context !== this && L.stamp(context),
+		var contextId = context && context !== this && app.util.stamp(context),
 		    listeners, i, len, listener, id;
 
 		if (contextId) {
-			id = L.stamp(fn) + '_' + contextId;
+			id = app.util.stamp(fn) + '_' + contextId;
 			listeners = events[indexKey];
 
 			if (listeners && listeners[id]) {
@@ -124,7 +125,7 @@ L.Evented = L.Class.extend({
 
 		// set the removed listener to noop so that's not called if remove happens in fire
 		if (listener) {
-			listener.fn = L.Util.falseFn;
+			listener.fn = app.util.falseFn;
 		}
 	},
 
@@ -199,13 +200,13 @@ L.Evented = L.Class.extend({
 	// adds a parent to propagate events to (when you fire with true as a 3rd argument)
 	addEventParent: function (obj) {
 		this._eventParents = this._eventParents || {};
-		this._eventParents[L.stamp(obj)] = obj;
+		this._eventParents[app.util.stamp(obj)] = obj;
 		return this;
 	},
 
 	removeEventParent: function (obj) {
 		if (this._eventParents) {
-			delete this._eventParents[L.stamp(obj)];
+			delete this._eventParents[app.util.stamp(obj)];
 		}
 		return this;
 	},

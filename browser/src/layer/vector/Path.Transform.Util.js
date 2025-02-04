@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 
 /**
  * @namespace
@@ -49,7 +50,7 @@ L.PathTransform.merge = function() {
 			val = obj[key];
 
 			if (isObject(val) && isObject(target[key])) {
-				target[key] = L.Util.merge(target[key], val);
+				target[key] = app.util.merge(target[key], val);
 			} else {
 				target[key] = val;
 			}

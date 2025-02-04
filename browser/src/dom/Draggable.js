@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 /*
  * L.Draggable allows you to add dragging capabilities to any element. Supports mobile devices too.
  */
@@ -171,10 +172,10 @@ L.Draggable = L.Evented.extend({
 
 		this._moving = true;
 
-		L.Util.cancelAnimFrame(this._animRequest);
+		app.util.cancelAnimFrame(this._animRequest);
 		this._lastEvent = e;
 
-		this._animRequest = L.Util.requestAnimFrame(this._updatePosition, this, true, this._dragStartTarget);
+		this._animRequest = app.util.requestAnimFrame(this._updatePosition, this, true, this._dragStartTarget);
 	},
 
 	_updatePosition: function () {
@@ -203,7 +204,7 @@ L.Draggable = L.Evented.extend({
 
 		if (this._moved && this._moving) {
 			// ensure drag is not fired after dragend
-			L.Util.cancelAnimFrame(this._animRequest);
+			app.util.cancelAnimFrame(this._animRequest);
 
 			this.fire('dragend', {
 				originalEvent: e,

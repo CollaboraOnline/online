@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8; fill-column: 100 -*- */
+/* global app */
 /*
  * L.Map.CalcTap is used to enable mobile taps.
  */
@@ -438,7 +439,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (window.IgnorePanning)
 			return;
 
-		L.Util.cancelAnimFrame(this.autoscrollAnimReq);
+		app.util.cancelAnimFrame(this.autoscrollAnimReq);
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
@@ -644,7 +645,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._map.dragging._draggable._onDown(evt);
 		this._timeStamp = Date.now();
 		this._inSwipeAction = true;
-		this.autoscrollAnimReq = L.Util.requestAnimFrame(this._autoscroll, this, true);
+		this.autoscrollAnimReq = app.util.requestAnimFrame(this._autoscroll, this, true);
 	},
 
 	_cancelAutoscrollRAF: function () {
@@ -652,7 +653,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._inSwipeAction = false;
 		if (app.file.fileBasedView)
 			this._map._docLayer._checkSelectedPart();
-		L.Util.cancelAnimFrame(this.autoscrollAnimReq);
+		app.util.cancelAnimFrame(this.autoscrollAnimReq);
 		return;
 	},
 
@@ -704,7 +705,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._map._docLayer._preFetchTiles(true /* forceBorderCalc */);
 
 			if (!horizontalEnd || !verticalEnd) {
-				this.autoscrollAnimReq = L.Util.requestAnimFrame(this._autoscroll, this, true);
+				this.autoscrollAnimReq = app.util.requestAnimFrame(this._autoscroll, this, true);
 			} else {
 				this._inSwipeAction = false;
 				if (app.file.fileBasedView)

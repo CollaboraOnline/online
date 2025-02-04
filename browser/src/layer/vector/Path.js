@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 /*
  * L.Path is the base class for all Leaflet vector layers like polygons and circles.
  */
@@ -178,7 +179,7 @@ L.Path.PathNodeData = L.Class.extend({
 });
 
 L.Path.PathNodeData.key = function (layer) {
-	return L.stamp(layer);
+	return app.util.stamp(layer);
 };
 
 L.Path.PathNodeCollection = L.Class.extend({

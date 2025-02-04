@@ -57,7 +57,7 @@ L.Control.DownloadProgress = L.Control.extend({
 		var modalId = this._getDownloadProgressDialogId();
 
 		var msg = this._getLargeCopyPasteMessage();
-		var buttonText = _('Download') + L.Util.replaceCtrlAltInMac(' (Ctrl + C)');
+		var buttonText = _('Download') + app.util.replaceCtrlAltInMac(' (Ctrl + C)');
 
 		if (inSnackbar) {
 			this._map.uiManager.showSnackbar(
@@ -83,7 +83,7 @@ L.Control.DownloadProgress = L.Control.extend({
 			this._map.uiManager.showProgressBar(msg, buttonText, this._onClose.bind(this));
 		} else if (this._isLargeCopy) {
 			// downloading for copy, next: show download complete dialog
-			buttonText = _('Copy') + L.Util.replaceCtrlAltInMac(' (Ctrl + C)');
+			buttonText = _('Copy') + app.util.replaceCtrlAltInMac(' (Ctrl + C)');
 
 			this._map.uiManager.showProgressBarDialog(modalId, this._getDialogTitle(), msg,
 				buttonText, this._onConfirmCopyAction.bind(this), 0, this._onClose.bind(this));
@@ -108,7 +108,7 @@ L.Control.DownloadProgress = L.Control.extend({
 		var modalId = this._getDownloadProgressDialogId();
 		var snackbarMsg = _('Download completed and ready to be copied to clipboard.');
 		var dialogMsg = snackbarMsg + ' ' + _('From now on clipboard notifications will discreetly appear at the bottom.');
-		var buttonText = _('Copy') + L.Util.replaceCtrlAltInMac(' (Ctrl + C)');
+		var buttonText = _('Copy') + app.util.replaceCtrlAltInMac(' (Ctrl + C)');
 
 		if (inSnackbar) {
 			this._map.uiManager.setSnackbarProgress(100);

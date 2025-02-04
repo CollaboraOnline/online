@@ -1277,7 +1277,7 @@ L.Clipboard = L.Class.extend({
 			innerDiv.appendChild(p);
 		}
 		else {
-			const ctrlText = L.Util.replaceCtrlAltInMac('Ctrl');
+			const ctrlText = app.util.replaceCtrlAltInMac('Ctrl');
 			const p = document.createElement('p');
 			p.textContent = 'Your browser has very limited access to the clipboard, so use these keyboard shortcuts:';
 			innerDiv.appendChild(p);
@@ -1358,7 +1358,7 @@ L.Clipboard = L.Class.extend({
 		var innerDiv = L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
 
-		const ctrlText = L.Util.replaceCtrlAltInMac('Ctrl');
+		const ctrlText = app.util.replaceCtrlAltInMac('Ctrl');
 
 		let p = document.createElement('p');
 		p.textContent = _('Your browser has very limited access to the clipboard');

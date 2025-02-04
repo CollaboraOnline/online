@@ -497,7 +497,7 @@ class Dispatcher {
 		};
 
 		this.actionsMap['fullscreen-drawing'] = () => {
-			L.toggleFullScreen();
+			app.util.toggleFullScreen();
 		};
 
 		this.actionsMap['deletepage'] = function () {

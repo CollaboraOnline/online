@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 /*
  * L.Polyline implements polyline vector layer (a set of points connected with lines)
  */
@@ -82,7 +83,7 @@ L.Polyline = L.Path.extend({
 
 	_flat: function (latlngs) {
 		// true if it's a flat array of latlngs; false if nested
-		return !L.Util.isArray(latlngs[0]) || typeof latlngs[0][0] !== 'object';
+		return !app.util.isArray(latlngs[0]) || typeof latlngs[0][0] !== 'object';
 	},
 
 	_project: function () {

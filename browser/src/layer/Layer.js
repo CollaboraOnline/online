@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 
 L.Layer = L.Evented.extend({
 
@@ -27,12 +28,12 @@ L.Layer = L.Evented.extend({
 	},
 
 	addInteractiveTarget: function (targetEl) {
-		this._map._targets[L.stamp(targetEl)] = this;
+		this._map._targets[app.util.stamp(targetEl)] = this;
 		return this;
 	},
 
 	removeInteractiveTarget: function (targetEl) {
-		delete this._map._targets[L.stamp(targetEl)];
+		delete this._map._targets[app.util.stamp(targetEl)];
 		return this;
 	},
 
@@ -59,7 +60,7 @@ L.Layer = L.Evented.extend({
 
 L.Map.include({
 	addLayer: function (layer) {
-		var id = L.stamp(layer);
+		var id = app.util.stamp(layer);
 		if (this._layers[id]) { return layer; }
 		this._layers[id] = layer;
 
@@ -75,7 +76,7 @@ L.Map.include({
 	},
 
 	removeLayer: function (layer) {
-		var id = L.stamp(layer);
+		var id = app.util.stamp(layer);
 
 		if (!this._layers[id]) { return this; }
 
@@ -100,7 +101,7 @@ L.Map.include({
 	},
 
 	hasLayer: function (layer) {
-		return !!layer && (L.stamp(layer) in this._layers);
+		return !!layer && (app.util.stamp(layer) in this._layers);
 	},
 
 	eachLayer: function (method, context) {
@@ -111,7 +112,7 @@ L.Map.include({
 	},
 
 	_addLayers: function (layers) {
-		layers = layers ? (L.Util.isArray(layers) ? layers : [layers]) : [];
+		layers = layers ? (app.util.isArray(layers) ? layers : [layers]) : [];
 
 		for (var i = 0, len = layers.length; i < len; i++) {
 			this.addLayer(layers[i]);
@@ -120,13 +121,13 @@ L.Map.include({
 
 	_addZoomLimit: function (layer) {
 		if (isNaN(layer.options.maxZoom) || !isNaN(layer.options.minZoom)) {
-			this._zoomBoundLayers[L.stamp(layer)] = layer;
+			this._zoomBoundLayers[app.util.stamp(layer)] = layer;
 			this._updateZoomLevels();
 		}
 	},
 
 	_removeZoomLimit: function (layer) {
-		var id = L.stamp(layer);
+		var id = app.util.stamp(layer);
 
 		if (this._zoomBoundLayers[id]) {
 			delete this._zoomBoundLayers[id];

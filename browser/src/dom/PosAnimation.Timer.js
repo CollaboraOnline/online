@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 /*
  * L.PosAnimation fallback implementation that powers Leaflet pan animations
  * in browsers that don't support CSS3 Transitions.
@@ -32,7 +33,7 @@ L.PosAnimation = L.DomUtil.TRANSITION ? L.PosAnimation : L.PosAnimation.extend({
 
 	_animate: function () {
 		// animation loop
-		this._animId = L.Util.requestAnimFrame(this._animate, this);
+		this._animId = app.util.requestAnimFrame(this._animate, this);
 		this._step();
 	},
 
@@ -56,7 +57,7 @@ L.PosAnimation = L.DomUtil.TRANSITION ? L.PosAnimation : L.PosAnimation.extend({
 	},
 
 	_complete: function () {
-		L.Util.cancelAnimFrame(this._animId);
+		app.util.cancelAnimFrame(this._animId);
 
 		this._inProgress = false;
 		this.fire('end');

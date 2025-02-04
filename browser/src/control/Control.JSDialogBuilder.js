@@ -420,7 +420,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			for (var i = 0; i < handlers.length; ++i) {
 				var event = handlers[i].event;
 				var handler = handlers[i].handler;
-				if (!L.isEmpty(event) && handler) {
+				if (!app.util.isEmpty(event) && handler) {
 					if (event === 'click') {
 						var eventData = {
 							id: controlElement.id
