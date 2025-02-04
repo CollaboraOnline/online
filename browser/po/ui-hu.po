@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-03 11:48+0100\n"
-"PO-Revision-Date: 2025-01-27 13:42+0000\n"
+"PO-Revision-Date: 2025-02-04 21:47+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -478,7 +478,7 @@ msgstr "Megjelenítés oldalt"
 
 #: src/canvas/sections/CommentListSection.ts:1205
 msgid "Open in full view"
-msgstr ""
+msgstr "Megnyitás teljes nézetben"
 
 #: src/canvas/sections/CommentListSection.ts:1233
 #: src/control/Control.JSDialogBuilder.js:1893
