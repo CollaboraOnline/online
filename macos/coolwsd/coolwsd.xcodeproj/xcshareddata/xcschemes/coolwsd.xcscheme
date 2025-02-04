@@ -64,6 +64,10 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--o:security.capabilities=false"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "--o:storage.filesystem[@allow]=true"
             isEnabled = "YES">
          </CommandLineArgument>
