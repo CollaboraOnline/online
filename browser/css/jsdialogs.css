@@ -2250,6 +2250,42 @@ kbd,
 	height: 16px;
 }
 
+#ServerAuditDialog #ServerAuditDialog-mainbox label {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	color: #000;
+	border-radius: 30px;
+	width: fit-content;
+	height: 16px;
+	margin-top: 8px;
+	padding-right: 10px;
+}
+
+#ServerAuditDialog #ServerAuditDialog-mainbox label#auditsuccess {
+	background-color: #c4f7cc;
+	color: #1c4f26;
+}
+
+#ServerAuditDialog #ServerAuditDialog-mainbox label#auditerror {
+	background-color: #ffd6d9;
+	color: #d42314;
+}
+
+#ServerAuditDialog #ServerAuditDialog-mainbox label#auditsuccess::before {
+	background: url('images/circle-check.svg') no-repeat center/18px;
+	content: '';
+	width: 16px;
+	height: 16px;
+}
+
+#ServerAuditDialog #ServerAuditDialog-mainbox label#auditerror::before {
+	background: url('images/monochrome-x-cross.svg') no-repeat center;
+	content: '';
+	width: 16px;
+	height: 16px;
+}
+
 /* text-area overflow on function wizard window */
 
 #FormulaDialog #ed_formula.ui-textarea {
