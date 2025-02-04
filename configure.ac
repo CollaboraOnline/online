@@ -148,6 +148,12 @@ AC_ARG_ENABLE([windowsapp],
                               similarly to the iOS app, from the JavaScript and the pseudo WebSocket
                               message plumbing point of view.]))
 
+AC_ARG_ENABLE([coda],
+              AS_HELP_STRING([--enable-coda],
+                             [Use to build a CODA app. This will build the entire coolwsd, so that it runs under the hood
+                              inside the app. Do NOT use together with --enable-*app, this is supposed to be a
+                              different approach that allows multiple documents open at the same time.]))
+
 AC_ARG_WITH([wasm-fallback],
               AS_HELP_STRING([--with-wasm-fallback=<path>],
                              [Build a COOL where the client can fall back to a WASM implementation if the connection to the server fails.
@@ -1537,6 +1543,21 @@ fi
 AC_DEFINE_UNQUOTED([MOBILEAPP],[$MOBILEAPP],[Define to 1 if this is a mobileapp (eg. Android) build.])
 AC_SUBST(ENABLE_MOBILEAPP)
 AM_CONDITIONAL([ENABLE_MOBILEAPP], [test "$ENABLE_MOBILEAPP" = "true"])
+
+AC_MSG_CHECKING([whether to enable the CODA build])
+if test "$enable_coda" = "yes"; then
+    AC_MSG_RESULT([yes])
+    if test "$ENABLE_MOBILEAPP" = "true" ; then
+        AC_MSG_ERROR([--enable-coda conflicts with --enable-(androidapp|gtkapp|iosapp|macosapp|windowsapp), please decide for one or the other.])
+    fi
+    if test "$ENABLE_DEBUG" != "true" ; then
+        AC_MSG_ERROR([--enable-coda currently depends on --enable-debug, please add it to ./configure. Many things haven't been updated to build a production CODA app yet.])
+    fi
+    AC_DEFINE([ENABLE_CHILDROOTS],0,[Disable systemplate and jails when building CODA.])
+else
+    AC_MSG_RESULT([no])
+    AC_DEFINE([ENABLE_CHILDROOTS],1,[Normal server, enable systemplate and jails.])
+fi
 
 if test "$host_os" = "emscripten" ; then
     ENABLE_EMSCRIPTENAPP=true

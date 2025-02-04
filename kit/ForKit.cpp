@@ -531,7 +531,11 @@ int createLibreOfficeKit(const std::string& childRoot, const std::string& sysTem
     std::string jailId = Util::rng::getFilename(16);
 
     // Update the dynamic files as necessary.
+#if ENABLE_CHILDROOTS
     const bool sysTemplateIncomplete = !JailUtil::SysTemplate::updateDynamicFiles(sysTemplate);
+#else
+    const bool sysTemplateIncomplete = false;
+#endif
 
     // Used to label the spare kit instances
     static size_t spareKitId = 0;
@@ -544,7 +548,11 @@ int createLibreOfficeKit(const std::string& childRoot, const std::string& sysTem
     if (Util::isKitInProcess())
     {
         std::thread([childRoot, jailId = std::move(jailId), configId, sysTemplate,
-                     loTemplate, queryVersion, sysTemplateIncomplete] {
+                     loTemplate, queryVersion
+#if ENABLE_CHILDROOTS
+                     , sysTemplateIncomplete
+#endif
+                    ] {
             sleepForDebugger();
             lokit_main(childRoot, jailId, configId, sysTemplate, loTemplate, true,
                        true, false, queryVersion, DisplayVersion,
@@ -1021,11 +1029,13 @@ int forkit_main(int argc, char** argv)
     if (Util::ThreadCounter().count() != 1)
         LOG_ERR("forkit has more than a single thread after pre-init" << Util::ThreadCounter().count());
 
+#if ENABLE_CHILDROOTS
     // Link the network and system files in sysTemplate, if possible.
     JailUtil::SysTemplate::setupDynamicFiles(sysTemplate);
 
     // Make dev/[u]random point to the writable devices in tmp/dev/.
     JailUtil::SysTemplate::setupRandomDeviceLinks(sysTemplate);
+#endif
 
     if (!Util::isKitInProcess())
     {
