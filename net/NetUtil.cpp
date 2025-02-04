@@ -140,12 +140,6 @@ static HostEntry resolveDNS(const std::string& addressToCheck,
 {
     const auto now = std::chrono::steady_clock::now();
 
-    // remove entries >= 20 seconds old
-    std::erase_if(querycache, [now](const auto& entry)->bool {
-                                 auto ageMS = std::chrono::duration_cast<std::chrono::milliseconds>(now - entry.lookupTime).count();
-                                 return ageMS > 20000;
-                              });
-
     // search for hit
     auto findIt = std::find_if(querycache.begin(), querycache.end(),
                                [&addressToCheck, &port](const auto& entry)->bool {
@@ -153,11 +147,27 @@ static HostEntry resolveDNS(const std::string& addressToCheck,
                                         entry.queryPort == port;
                                });
     if (findIt != querycache.end())
-        return findIt->hostEntry;
+    {
+        // remove entries >= 20 seconds old
+        static constexpr std::chrono::seconds MaxAge(20);
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(now - findIt->lookupTime) <
+            MaxAge)
+        {
+            return findIt->hostEntry; // Valid and recent-enough.
+        }
+
+        // Too old; erase it and any other old entries.
+        std::erase_if(querycache,
+                      [now](const DNSCacheEntry& entry) -> bool
+                      {
+                          return std::chrono::duration_cast<std::chrono::milliseconds>(
+                                     now - entry.lookupTime) >= MaxAge;
+                      });
+    }
 
     // lookup and cache
     HostEntry hostEntry(addressToCheck, !port.empty() ? port.c_str() : nullptr);
-    querycache.push_back(DNSCacheEntry{addressToCheck, port, hostEntry, now});
+    querycache.emplace_back(addressToCheck, port, hostEntry, now);
     return hostEntry;
 }
 
