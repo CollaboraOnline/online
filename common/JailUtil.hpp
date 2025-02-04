@@ -90,6 +90,7 @@ void disableMountNamespaces();
 /// Returns true iff namespace-mounting is enabled in this process.
 bool isMountNamespacesEnabled();
 
+#if ENABLE_CHILDROOTS
 namespace SysTemplate
 {
 /// Setup links for /dev/random and /dev/urandom in systemplate.
@@ -106,6 +107,7 @@ void setupDynamicFiles(const std::string& sysTemplate);
 bool updateDynamicFiles(const std::string& sysTemplate);
 
 } // namespace SysTemplate
+#endif // ENABLE_CHILDROOTS
 
 } // end namespace JailUtil
 
