@@ -203,7 +203,6 @@ keyboardShortcuts.definitions.set('de', new Array<ShortcutDescriptor>(
 
     new ShortcutDescriptor('text', 'keydown', Mod.SHIFT, 'F3', '.uno:ChangeCaseRotateCase', null),
     new ShortcutDescriptor('text', 'keydown', 0, 'F5', '.uno:GoToPage', null, null),
-    new ShortcutDescriptor('text', 'keydown', Mod.CTRL, 'f', '.uno:Navigator', null),
     new ShortcutDescriptor('text', 'keydown',  Mod.ALT | Mod.CTRL, 's', null, 'home-search', null),
 
     new ShortcutDescriptor('spreadsheet', 'keydown', Mod.SHIFT, 'F3', '.uno:FunctionDialog', null),
