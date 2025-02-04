@@ -13,11 +13,12 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		calcHelper.clickOnFirstCell();
 	});
 
-	it('Save.', function() {
+	it('Save.', function () {
 		cy.cGet('#bold').click();
 		cy.cGet('#save').click();
 
 		helper.reloadDocument(newFilePath);
+		desktopHelper.switchUIToCompact();
 
 		helper.setDummyClipboardForCopy();
 		calcHelper.selectEntireSheet();
