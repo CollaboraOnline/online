@@ -33,6 +33,11 @@ class Util {
 		return obj._leaflet_id;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	public static merge(one: any, two: any): any {
+		return { ...one, ...two };
+	}
+
 	// return a function that won't be called more often than the given interval
 	public static throttle(
 		fn: CallbackFunctionVariadic,
