@@ -1190,7 +1190,14 @@ L.TextInput = L.Layer.extend({
 		if (!window.mode.isMobile() && !window.mode.isTablet() &&
 			this._autoCorrectChars[text])
 		{
-			var codes = this._autoCorrectChars[text];
+			let codes;
+
+			if (app.calc.decimalSeparator && this._map.numPadDecimalPressed) { // decimalSeparator is set only for Calc.
+				this._map.numPadDecimalPressed = false;
+				codes = this._autoCorrectChars[app.calc.decimalSeparator];
+			}
+			else codes = this._autoCorrectChars[text];
+
 			this._sendKeyEvent(codes[0], codes[1], 'input');
 			this._sendKeyEvent(codes[2], codes[3], 'up');
 		}

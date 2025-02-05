@@ -483,6 +483,9 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 
+		if (ev.code === 'NumpadDecimal') this._map.numPadDecimalPressed = true;
+		else this._map.numPadDecimalPressed = false;
+
 		var docLayer = this._map._docLayer;
 
 		// if any key is pressed, we stop the following other users
