@@ -1045,8 +1045,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._update();
 			this.enableDrawing();
 		}
-		if (this._map.uiManager.getHighlightMode())
-			this._highlightColAndRow(textMsg);
+		if (this._map.uiManager.getHighlightMode()) {
+			if (!textMsg.match('EMPTY'))
+				this._highlightColAndRow(textMsg);
+		}
 		else
 			this._resetReferencesMarks();
 	},
