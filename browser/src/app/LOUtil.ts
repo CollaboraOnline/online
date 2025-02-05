@@ -11,7 +11,7 @@
 
 interface DOMObjectLike {
 	[index: string]: any;
-	children: DOMObjectLike[];
+	children?: DOMObjectLike[];
 }
 
 interface RectangleLike {
