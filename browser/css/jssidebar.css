@@ -370,6 +370,14 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #StyleListPanelPanelExpander [id='5'] button { background: transparent url('images/lc_liststyle.svg') no-repeat center; }
 #StyleListPanelPanelExpander [id='6'] button { background: transparent url('images/lc_tablestyle.svg') no-repeat center; }
 
+
+[data-theme='dark'] #StyleListPanelPanelExpander [id='1'] button { background: transparent url('images/dark/lc_charstyle.svg') no-repeat center; }
+[data-theme='dark'] #StyleListPanelPanelExpander [id='5'] button { background: transparent url('images/dark/lc_liststyle.svg') no-repeat center; }
+[data-theme='dark'] #StyleListPanelPanelExpander [id='2'] button { background: transparent url('images/dark/lc_parastyle.svg') no-repeat center; }
+[data-theme='dark'] #StyleListPanelPanelExpander [id='4'] button { background: transparent url('images/dark/lc_pagestyle.svg') no-repeat center; }
+[data-theme='dark'] #StyleListPanelPanelExpander [id='3'] button { background: transparent url('images/dark/lc_framestyle.svg') no-repeat center; }
+[data-theme='dark'] #StyleListPanelPanelExpander [id='6'] button { background: transparent url('images/dark/lc_tablestyle.svg') no-repeat center; }
+
 #StyleListPanelPanelExpander #left.toolbox button {
 	background-size: cover;
 }
@@ -400,6 +408,15 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 #StyleListPanelPanelExpander .ui-expander-content.jsdialog.sidebar.expanded {
 	height: calc(100% - 45px);
+}
+
+#StyleListPanelPanelExpander #TemplatePanel .sidebar .unotoolbutton {
+	padding: 4px;
+}
+
+#StyleListPanelPanelExpander #TemplatePanel .sidebar .ui-content.unobutton {
+	width: var(--btn-size-m);
+	height: var(--btn-size-m);
 }
 
 #TemplatePanel {
