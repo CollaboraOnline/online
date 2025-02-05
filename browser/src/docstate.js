@@ -26,6 +26,7 @@ window.app = {
 		cellAddress: null, // To be assigned SimplePoint.
 		cellCursorVisible: false,
 		cellCursorRectangle: null, // To be assigned SimpleRectangle.
+		decimalSeparator: null, // Current cell's decimal separator.
 		otherCellCursors: {},
 		splitCoordinate: null, // SimplePoint.
 		partHashes: null, // hashes used to distinguish parts (we use sheet name)

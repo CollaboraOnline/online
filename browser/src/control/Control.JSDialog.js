@@ -811,6 +811,9 @@ L.Control.JSDialog = L.Control.extend({
 		var data = e.data;
 		var innerData = data.data;
 
+		if (data.jsontype === 'formulabar' && innerData && innerData.separator)
+			app.calc.decimalSeparator = innerData.separator;
+
 		if (data.jsontype !== 'dialog' && data.jsontype !== 'popup')
 			return;
 
