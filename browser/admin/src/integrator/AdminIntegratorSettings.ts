@@ -12,7 +12,7 @@
 interface Window {
 	accessToken?: string;
 	accessTokenTTL?: string;
-	enableDebug?: string;
+	enableDebug?: boolean;
 	wopiSettingBaseUrl?: string;
 	iframeType?: string;
 	cssVars?: string;
@@ -195,7 +195,7 @@ function initWindowVariables(): void {
 
 	window.accessToken = element.dataset.accessToken;
 	window.accessTokenTTL = element.dataset.accessTokenTtl;
-	window.enableDebug = element.dataset.enableDebug;
+	window.enableDebug = element.dataset.enableDebug === 'true';
 	window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
 	window.iframeType = element.dataset.iframeType;
 	window.cssVars = element.dataset.cssVars;
