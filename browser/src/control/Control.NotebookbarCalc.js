@@ -1172,7 +1172,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'colrowhighlight',
 				'type': 'bigcustomtoolitem',
-				'text': _UNO('.uno:ViewColumnRowHighlighting', 'spreadsheet', true),
+				'text': _('Focus Cell'),
 				'command': 'columnrowhighlight',
 				'accessibility': { focusBack: true,	combination: 'HL', de: null }
 			},

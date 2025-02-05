@@ -768,7 +768,7 @@ L.Control.Menubar = L.Control.extend({
 				   {uno: '.uno:Navigator', id: 'navigator'},
 				   {type: 'separator'},
 				   {name: _UNO('.uno:ToggleSheetGrid', 'spreadsheet', true), uno: '.uno:ToggleSheetGrid', id: 'sheetgrid'},
-				   {name: _UNO('.uno:ViewColumnRowHighlighting', 'spreadsheet', true), type:'action', id: 'columnrowhighlight'},
+				   {name: _('Focus Cell'), type:'action', id: 'columnrowhighlight'},
 				   {name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes'},
 				   {name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', menu: [
 					   {name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', type: 'action', uno: '.uno:FreezePanesColumn'},
