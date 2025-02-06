@@ -4178,41 +4178,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			documentContainerSize = documentContainerSize.getBoundingClientRect();
 			documentContainerSize = [documentContainerSize.width, documentContainerSize.height];
 
+			app.sectionContainer.onResize(documentContainerSize[0], documentContainerSize[1]); // Canvas's size = documentContainer's size.
+
 			var oldSize = this._getRealMapSize();
 
 			var rectangle = this._getTilesSectionRectangle();
 			var mapElement = document.getElementById('map'); // map's size = tiles section's size.
 			mapElement.style.left = rectangle.getPxX1() + 'px';
 			mapElement.style.top = rectangle.getPxY1() + 'px';
-			var mapSize = [rectangle.getPxWidth(), rectangle.getPxHeight()];
-
-			if (this.isCalc() && (app.file.size.pixels[0] < documentContainerSize[0] || app.file.size.pixels[1] < documentContainerSize[1])) {
-
-				var additionalHeight = 0;
-				var additionalWidth = 0;
-				var rowHeader = app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
-				var columnHeader = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
-				var scroll = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
-				if (scroll) {
-					additionalHeight += scroll.sectionProperties.scrollBarThickness;
-					additionalWidth += scroll.sectionProperties.scrollBarThickness;
-				}
-
-				if (rowHeader) {
-					additionalWidth += rowHeader.size[0];
-				}
-				if (columnHeader) {
-					additionalHeight += columnHeader.size[1];
-				}
-				documentContainerSize = [Math.min(documentContainerSize[0], app.file.size.pixels[0])+ additionalWidth, Math.min(documentContainerSize[1], app.file.size.pixels[1])+additionalHeight];
-
-				mapSize = [Math.min(mapSize[0], app.file.size.pixels[0]), Math.min(mapSize[1], app.file.size.pixels[1])];
-			}
-
-			app.sectionContainer.onResize(documentContainerSize[0], documentContainerSize[1]); // Canvas's size = documentContainer's size.
-
-			mapElement.style.width = mapSize[0] + 'px';
-			mapElement.style.height = mapSize[1] + 'px';
+			mapElement.style.width = rectangle.getPxWidth() + 'px';
+			mapElement.style.height = rectangle.getPxHeight() + 'px';
 
 			tileContainer.style.width = rectangle.getPxWidth() + 'px';
 			tileContainer.style.height = rectangle.getPxHeight() + 'px';
@@ -4220,13 +4195,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			var newSize = this._getRealMapSize();
 			var heightIncreased = oldSize.y < newSize.y;
 			var widthIncreased = oldSize.x < newSize.x;
-
-			if (this._docType === 'spreadsheet') {
-				if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
-					app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
-					app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
-				}
-			}
 
 			if (oldSize.x !== newSize.x || oldSize.y !== newSize.y) {
 				this._map.invalidateSize({}, oldSize);
