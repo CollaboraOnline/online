@@ -384,6 +384,103 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
+	syncTileContainerSize: function() {
+		if (!this._map) return;
+
+		var tileContainer = this._container;
+		if (tileContainer) {
+			// Document container size is up to date as of now.
+			var documentContainerSize = document.getElementById('document-container');
+			documentContainerSize = documentContainerSize.getBoundingClientRect();
+			documentContainerSize = [documentContainerSize.width, documentContainerSize.height];
+
+			var mapElement = document.getElementById('map'); // map's size = tiles section's size.
+
+			var oldSize = [mapElement.clientWidth, mapElement.clientHeight];
+
+			var rectangle = this._getTilesSectionRectangle();
+			mapElement.style.left = rectangle.getPxX1() + 'px';
+			mapElement.style.top = rectangle.getPxY1() + 'px';
+			var mapSize = [rectangle.getPxWidth(), rectangle.getPxHeight()];
+
+			if (app.file.size.pixels[0] < documentContainerSize[0] || app.file.size.pixels[1] < documentContainerSize[1]) {
+				var additionalHeight = 0;
+				var additionalWidth = 0;
+				var rowHeader = app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
+				var columnHeader = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
+				var scroll = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+				if (scroll) {
+					additionalHeight += scroll.sectionProperties.scrollBarThickness;
+					additionalWidth += scroll.sectionProperties.scrollBarThickness;
+				}
+
+				if (rowHeader) {
+					additionalWidth += rowHeader.size[0];
+				}
+				if (columnHeader) {
+					additionalHeight += columnHeader.size[1];
+				}
+				documentContainerSize = [Math.min(documentContainerSize[0], app.file.size.pixels[0])+ additionalWidth, Math.min(documentContainerSize[1], app.file.size.pixels[1])+additionalHeight];
+
+				mapSize = [Math.min(mapSize[0], app.file.size.pixels[0]), Math.min(mapSize[1], app.file.size.pixels[1])];
+			}
+
+			app.sectionContainer.onResize(documentContainerSize[0], documentContainerSize[1]); // Canvas's size = documentContainer's size.
+
+			mapElement.style.width = mapSize[0] + 'px';
+			mapElement.style.height = mapSize[1] + 'px';
+
+			tileContainer.style.width = rectangle.getPxWidth() + 'px';
+			tileContainer.style.height = rectangle.getPxHeight() + 'px';
+
+			var newSize = this._getRealMapSize();
+			var heightIncreased = oldSize[1] < newSize.y;
+			var widthIncreased = oldSize[0] < newSize.x;
+
+			if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
+				app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
+				app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+			}
+
+			if (oldSize[0] !== newSize.x || oldSize[1] !== newSize.y) {
+				this._map.invalidateSize({}, new L.Point(oldSize[0], oldSize[1]));
+			}
+
+			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
+			var hasIframeModalOpened = $('.iframe-dialog-modal').is(':visible');
+			// when integrator has opened dialog in parent frame (eg. save as) we shouldn't steal the focus
+			var focusedUI = document.activeElement === document.body;
+			if (window.mode.isMobile() && !hasMobileWizardOpened && !hasIframeModalOpened && !focusedUI) {
+				if (heightIncreased) {
+					// if the keyboard is hidden - be sure we setup correct state in TextInput
+					this._map.setAcceptInput(false);
+				} else
+					this._onUpdateCursor(true);
+			}
+
+			this._fitWidthZoom();
+
+			// Center the view w.r.t the new map-pane position using the current zoom.
+			this._map.setView(this._map.getCenter());
+
+			// We want to keep cursor visible when we show the keyboard on mobile device or tablet
+			var isTabletOrMobile = window.mode.isMobile() || window.mode.isTablet();
+			var hasVisibleCursor = app.file.textCursor.visible
+				&& this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isDomAttached();
+			if (!heightIncreased && isTabletOrMobile && this._map._docLoaded && hasVisibleCursor) {
+				var cursorPos = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y2 });
+				var cursorPositionInView = this._isLatLngInView(cursorPos);
+				if (!cursorPositionInView)
+					this._map.panTo(cursorPos);
+			}
+
+			if (heightIncreased || widthIncreased) {
+				app.sectionContainer.requestReDraw();
+				this._map.fire('sizeincreased');
+			}
+		}
+	},
+
 	_onStatusMsg: function (textMsg) {
 		console.log('DEBUG: onStatusMsg: ' + textMsg);
 

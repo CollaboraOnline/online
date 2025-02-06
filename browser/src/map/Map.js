@@ -977,11 +977,6 @@ L.Map = L.Evented.extend({
 			this._sizeChanged = false;
 		}
 
-		// do this only for calc as writer and impress renders area around the document too
-		if (app.file.size.pixels[0] !== 0 && app.file.size.pixels[1] !== 0 && this._docLayer.isCalc()) {
-			this._size.x = this._size.x > app.file.size.pixels[0] ? app.file.size.pixels[0] : this._size.x;
-			this._size.y = this._size.y > app.file.size.pixels[1] ? app.file.size.pixels[1] : this._size.y;
-		}
 		return this._size.clone();
 	},
 
