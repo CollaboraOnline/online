@@ -1,0 +1,81 @@
+#!/bin/bash
+# -*- tab-width: 4; indent-tabs-mode: nil; py-indent-offset: 4 -*-
+#
+# Copyright the Collabora Online contributors.
+#
+# SPDX-License-Identifier: MPL-2.0
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+
+# generate output for flamegraph from incremental perf record 100M dumps
+# e.g. perf-record-stackcollapse -e probe:do_wp_page -F5 --call-graph dwarf,65528 -a sleep 10s
+
+# perf record typically uses a huge amount of disk space by default
+# there is perf record -i - to stream instead, but:
+# a) That pipe-mode format is different than the typical to-disk format.
+# In current (6.12) versions, perf record -o - | perf script -i
+# results in lines like:
+#     5580366425ee cmd_record
+#     5580366af1bf [unknown]
+#     5580366af4da [unknown]
+#     5580366297df main
+# while perf record+script file mode, results in lines like:
+#     55a58d6785ee cmd_record+0xdde (/usr/bin/whatever)
+#     55a58d6e51bf [unknown] (/usr/bin/whatever)
+#     55a58d6e54da [unknown] (/usr/bin/whatever)
+#     55a58d65f7df main+0x2ff (/usr/bin/whatever)
+# And flamegraph wants the 2nd format, that's a relatively minor problem
+# which could be worked around, but:
+# b) earlier versions of perf record (4.20.16) don't appear to record callgraphs
+# at all in pipe-mode, or perf script cannot output them
+# So, easiest thing seems to be to use switch-output, and run each incremental
+# perf dump through stackcollapse-perf.pl before deleting the perf dump
+
+if ! test `id -u` = 0; then
+    echo "not root, if this doesn't work try sudo profile-cool"
+fi
+if ! which stackcollapse-perf.pl > /dev/null 2>&1; then
+    REAL_USER_HOME="$(getent passwd $SUDO_USER | cut -d: -f6)"
+    PATH=$PATH:$HOME/FlameGraph:$REAL_USER_HOME/FlameGraph
+fi
+if ! which stackcollapse-perf.pl > /dev/null 2>&1; then
+    echo "no stackcollapse-perf.pl found"
+    echo "On fedora install systemwide with: sudo dnf install flamegraph"
+    echo "Otherwise install locally manually into ~/FlameGraph"
+    echo "    e.g. git clone https://github.com/brendangregg/FlameGraph ~/FlameGraph"
+    exit 1
+fi
+
+PERF="${PERF:-perf}"
+
+set -e
+
+WORK_DIR=`mktemp -d -p /var/tmp`
+pushd "$WORK_DIR" > /dev/null
+echo spooling profiling to "$WORK_DIR" 1>&2
+
+{ $PERF record --switch-output=100M -o perf.data $* && touch stacks.stop; } &
+
+{ (echo "$BASHPID" > "$WORK_DIR/inotifywait.pid"; exec inotifywait -m . -e close_write) |
+    while read dir action file; do
+        if [[ "$file" == "stacks.stop" ]]; then
+            rm stacks.stop
+            kill `cat "$WORK_DIR/inotifywait.pid"`
+            rm "$WORK_DIR/inotifywait.pid"
+        fi
+        if [[ "$file" == perf.data.* ]]; then
+            $PERF script --no-inline -i "$file" | stackcollapse-perf.pl
+            rm "$file"
+        fi
+    done; } &
+
+wait
+
+rm -rf "$WORK_DIR"
+popd > /dev/null
+echo profiling complete 1>&2
+
+# vim: set shiftwidth=4 softtabstop=4 expandtab:
