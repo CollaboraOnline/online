@@ -274,7 +274,7 @@ public:
             // FIXME: _pixmapCache
             << "\n\texportAsWopiUrl: " << _exportAsWopiUrl
             << "\n\tviewRenderedState: " << _viewRenderState
-            << "\n\tisDumpingTiles: " << _isDocLoaded
+            << "\n\tisDumpingTiles: " <<_isDumpingTiles
             << "\n\tclientVisibleArea: " << _clientVisibleArea.toString()
             << "\n\thasURP: " << _hasURP
             << "\n\tURPContext?: " << (_URPContext == nullptr)
