@@ -548,6 +548,7 @@ export class Header extends app.definitions.canvasSectionObject {
 			this._prevMouseOverEntry = this._mouseOverEntry;
 			this._mouseOverEntry = result.entry;
 		}
+		else return;
 
 		if (!this.containerObject.isDraggingSomething()) { // If we are not dragging anything.
 			this._dragDistance = null;
