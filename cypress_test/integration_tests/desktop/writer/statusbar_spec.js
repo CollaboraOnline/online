@@ -28,8 +28,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		desktopHelper.makeZoomItemsVisible(); // make visible next and prev page buttons
 		cy.cGet('#toolbar-down #prev').click();
 		desktopHelper.assertVisiblePage(1, 1, 2);
+		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
 		cy.cGet('#toolbar-down #next').click();
 		desktopHelper.assertVisiblePage(1, 2, 2);
+		desktopHelper.assertScrollbarPosition('vertical', 193, 203);
 	});
 
 	it('Text entering mode.', function() {
