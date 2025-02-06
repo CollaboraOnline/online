@@ -1053,9 +1053,29 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._resetReferencesMarks();
 	},
 
+	updateHighlight: function () {
+		if ( this._map) {
+			if (this._map.uiManager.getHighlightMode()) {
+				var updateMsg = 'updateHighlight';
+				this._highlightColAndRow(updateMsg);
+			}
+			else
+				this._resetReferencesMarks();
+		}
+	},
+
 	_highlightColAndRow: function (textMsg) {
+		var strTwips = [];
+		if(textMsg.startsWith('updateHighlight')) {
+			strTwips[0] = app.calc.cellCursorTopLeftTwips.x;
+			strTwips[1] = app.calc.cellCursorTopLeftTwips.y;
+			strTwips[2] = app.calc.cellCursorOffset.x;
+			strTwips[3] = app.calc.cellCursorOffset.y;
+		}
+		else
+			strTwips = textMsg.match(/\d+/g);
+
 		this._resetReferencesMarks();
-		var strTwips = textMsg.match(/\d+/g);
 		var references = [];
 		this._referencesAll = [];
 		var rectangles = [];
@@ -1077,7 +1097,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			} else {
 				// Row rectangle
 				topLeftTwips = new L.Point(parseInt(0), parseInt(strTwips[1]));
-				offset = new L.Point(parseInt(maxRow), parseInt(strTwips[4]));
+				offset = new L.Point(parseInt(maxRow), parseInt(strTwips[3]));
 				boundsTwips = this._convertToTileTwipsSheetArea(
 					new L.Bounds(topLeftTwips, topLeftTwips.add(offset)));
 				rectangles.push([boundsTwips.getBottomLeft(), boundsTwips.getBottomRight(),
