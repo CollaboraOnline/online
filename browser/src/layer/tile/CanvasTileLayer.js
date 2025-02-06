@@ -941,6 +941,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
 		app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
+
+		if (this._docType === 'spreadsheet')
+			this._syncTileContainerSize();
 	},
 
 	_checkSpreadSheetBounds: function (newZoom) {
