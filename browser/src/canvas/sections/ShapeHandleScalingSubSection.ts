@@ -20,7 +20,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	zIndex: number = L.CSections.DefaultForDocumentObjects.zIndex;
 	documentObject: boolean = true;
 
-	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
+	constructor(parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any, cropModeEnabled: boolean) {
 		super();
 
 		this.size = size;
@@ -35,6 +35,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		this.sectionProperties.initialAngle = null; // Initial angle of the point (handle) to the center in radians.
 		this.sectionProperties.distanceToCenter = null; // Distance to center.
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
+		this.sectionProperties.cropModeEnabled = cropModeEnabled;
 
 		this.setMousePointerType();
 
@@ -60,10 +61,87 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		this.context.fillStyle = 'wheat';
 		this.context.strokeStyle = 'black';
 		this.context.beginPath();
-		this.context.arc(this.size[0] * 0.5, this.size[1] * 0.5, this.size[0] * 0.5, 0, Math.PI * 2);
+		if (this.sectionProperties.cropModeEnabled)
+			this.drawCropHandles();
+		else
+			this.context.arc(this.size[0] * 0.5, this.size[1] * 0.5, this.size[0] * 0.5, 0, Math.PI * 2);
 		this.context.closePath();
 		this.context.fill();
 		this.context.stroke();
+	}
+
+	drawCropCornerHandle() {
+		const markerWidth = this.size[0];
+		const halfMarkerWidth = markerWidth * 0.5;
+		let x = 0, y = 0;
+		this.context.moveTo(x, y);
+		x += markerWidth;
+		this.context.lineTo(x, y);
+		y += halfMarkerWidth;
+		this.context.lineTo(x, y);
+		x -= halfMarkerWidth;
+		this.context.lineTo(x, y);
+		y += halfMarkerWidth;
+		this.context.lineTo(x, y);
+		x -= halfMarkerWidth;
+		this.context.lineTo(x, y);
+	}
+
+	drawCropSideHandle() {
+		const markerWidth = this.size[0];
+		const halfMarkerWidth = markerWidth * 0.5;
+		let x = 0, y = 0;
+		this.context.moveTo(x, y);
+		x += markerWidth;
+		this.context.lineTo(x, y);
+		y += halfMarkerWidth;
+		this.context.lineTo(x, y);
+		x -= markerWidth;
+		this.context.lineTo(x, y);
+	}
+
+	drawCropHandles() {
+		const markerWidth = this.size[0];
+		this.context.save();
+		switch (this.sectionProperties.ownInfo.kind) {
+			case '1':
+				this.drawCropCornerHandle();
+				break;
+			case '2':
+				this.drawCropSideHandle();
+				break;
+			case '3':
+				this.context.rotate(Math.PI / 2);
+				this.context.translate(0, -markerWidth);
+				this.drawCropCornerHandle();
+				break;
+			case '4':
+				this.context.rotate(-Math.PI / 2);
+				this.context.translate(-markerWidth, 0);
+				this.drawCropSideHandle();
+				break;
+			case '5':
+				this.context.rotate(Math.PI / 2);
+				this.context.translate(0, -markerWidth);
+				this.drawCropSideHandle();
+				break;
+			case '6':
+				this.context.rotate(-Math.PI / 2);
+				this.context.translate(-markerWidth, 0);
+				this.drawCropCornerHandle();
+				break;
+			case '7':
+				this.context.rotate(Math.PI);
+				this.context.translate(-markerWidth, -markerWidth);
+				this.drawCropSideHandle();
+				break;
+			case '8':
+				this.context.rotate(Math.PI);
+				this.context.translate(-markerWidth, -markerWidth);
+				this.drawCropCornerHandle();
+				break;
+		}
+		this.context.restore();
 	}
 
 	setMousePointerType() {

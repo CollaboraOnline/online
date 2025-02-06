@@ -553,13 +553,18 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				this.sectionProperties.subSectionPrefix + handle.info.id,
 				[this.sectionProperties.handleWidth, this.sectionProperties.handleHeight],
 				handle.point.clone(),
-				handle.info
+				handle.info,
+				GraphicSelection.extraInfo.isCropMode
 			);
 			return newSubSection;
 		}
 		else {
 			newSubSection.sectionProperties.ownInfo = handle.info;
 			newSubSection.setPosition(handle.point.pX, handle.point.pY);
+			if (GraphicSelection.extraInfo.isCropMode && !newSubSection.sectionProperties.cropModeEnabled) {
+				newSubSection.sectionProperties.cropModeEnabled = GraphicSelection.extraInfo.isCropMode;
+				newSubSection.containerObject.requestReDraw();
+			}
 			return null;
 		}
 	}
