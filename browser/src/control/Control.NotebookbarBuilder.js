@@ -123,7 +123,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:ObjectAlign'] = function() {};
 
 		/*Graphic Tab*/
-		this._toolitemHandlers['.uno:Crop'] = function() {};
 		this._toolitemHandlers['.uno:GraphicFilterToolbox'] = function() {};
 		this._toolitemHandlers['.uno:SaveGraphic'] = function() {};
 		this._toolitemHandlers['.uno:InsertCaptionDialog'] = function() {};
