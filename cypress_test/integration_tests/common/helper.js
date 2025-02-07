@@ -347,6 +347,7 @@ function documentChecks() {
 	cy.log('>> documentChecks - start');
 
 	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	cy.cGet('#map').should('have.class', 'initialized');
 
 	// With php-proxy the client is irresponsive for some seconds after load, because of the incoming messages.
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
