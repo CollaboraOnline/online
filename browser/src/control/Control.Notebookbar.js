@@ -405,7 +405,7 @@ L.Control.Notebookbar = L.Control.extend({
 		var tabs = this.getTabs();
 		var contextTab = null;
 		var defaultTab = null;
-		let alreadySelected = false;
+		let alreadySelected = null;
 		for (var tab in tabs) {
 			var tabElement = $('#' + tabs[tab].name + '-tab-label');
 			if (tabs[tab].context) {
@@ -422,7 +422,7 @@ L.Control.Notebookbar = L.Control.extend({
 						if (!tabElement.hasClass('selected'))
 							contextTab = tabElement;
 						else
-							alreadySelected = true;
+							alreadySelected = tabElement;
 					} else if (contexts[context] === 'default') {
 						tabElement.show();
 						if (!tabElement.hasClass('selected'))
@@ -437,12 +437,19 @@ L.Control.Notebookbar = L.Control.extend({
 			}
 		}
 
-		if (contextTab)
+		if (alreadySelected) {
+			return alreadySelected.attr('id');
+		}
+
+		if (contextTab) {
 			contextTab.click();
-		else if (alreadySelected)
-			return;
-		else if (defaultTab)
+			return contextTab.attr('id');
+		}
+
+		if (defaultTab) {
 			defaultTab.click();
+			return defaultTab.attr('id');
+		}
 	},
 
 	onContextChange: function(event) {
@@ -467,8 +474,21 @@ L.Control.Notebookbar = L.Control.extend({
 		if (this.shouldIgnoreContextChange([detail.context, detail.oldContext]))
 			return;
 
-		this.updateTabsVisibilityForContext(detail.context);
+		let visibleTabId = this.updateTabsVisibilityForContext(detail.context);
+		if (visibleTabId === 'Draw-tab-label')
+			this.toggleCropButton(detail.context);
+
 		this._lastContext = detail.context;
+	},
+
+
+	toggleCropButton(context) {
+		const isGraphic = context === 'Graphic';
+		if (isGraphic) {
+			this.map._docLayer._onStateChangedMsg('statechanged: .uno:Crop=enabled');
+		} else {
+			this.map._docLayer._onStateChangedMsg('statechanged: .uno:Crop=disabled');
+		}
 	},
 
 	onSlideHideToggle: function() {
