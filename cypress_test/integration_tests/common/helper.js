@@ -84,16 +84,18 @@ function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
 		loadDocumentNoIntegration(filePath, isMultiUser);
 	}
 
+	const isDraw = filePath.indexOf('draw') === 0;
+
 	// Wait for and verify that document is loaded
 	if (!skipDocumentChecks) {
 		if (isMultiUser) {
 			cy.cSetActiveFrame('#iframe1');
-			documentChecks();
+			documentChecks(isDraw);
 			cy.cSetActiveFrame('#iframe2');
 			documentChecks(true);
 		} else {
 			// frame set above
-			documentChecks();
+			documentChecks(isDraw);
 		}
 	}
 
