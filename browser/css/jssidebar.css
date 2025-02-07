@@ -408,6 +408,15 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 #StyleListPanelPanelExpander #TemplatePanel .sidebar .unotoolbutton {
 	padding: 4px;
+	border: 0 solid transparent !important;
+	border-bottom-width: 2px !important;
+	background-color: transparent !important;
+	border-radius: 0 !important;
+}
+
+#StyleListPanelPanelExpander #TemplatePanel .sidebar .unotoolbutton:hover,
+#StyleListPanelPanelExpander #TemplatePanel .sidebar .unotoolbutton.selected {
+	border-bottom-color: rgba(var(--doc-type)) !important;
 }
 
 #StyleListPanelPanelExpander #TemplatePanel .sidebar .ui-content.unobutton {
