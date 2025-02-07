@@ -76,3 +76,30 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		desktopHelper.assertScrollbarPosition('horizontal', 270, 390);
 	});
 });
+
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test decimal separator of cells with different languages.', function() {
+	beforeEach(function() {
+		helper.setupAndLoadDocument('calc/decimal_separator.ods');
+		desktopHelper.switchUIToCompact();
+		cy.cGet('#toolbar-up .ui-scroll-right').click();
+		cy.cGet('#sidebar').click({force: true});
+	});
+
+	it('Check different decimal separators', function() {
+		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
+		cy.wait(400);
+
+		cy.window().then(win => {
+			var app = win['0'].app;
+			cy.expect(app.calc.decimalSeparator).to.be.equal('.');
+		});
+
+		helper.typeIntoInputField(helper.addressInputSelector, 'B1');
+		cy.wait(400);
+
+		cy.window().then(win => {
+			var app = win['0'].app;
+			cy.expect(app.calc.decimalSeparator).to.be.equal(',');
+		});
+	});
+});
