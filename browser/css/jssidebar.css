@@ -428,3 +428,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #TemplatePanel > div:nth-child(4) {
 	flex-grow: 1;
 }
+
+#TemplatePanel > div:nth-child(2),
+#TemplatePanel > div:nth-child(3) {
+	height: inherit;
+}
