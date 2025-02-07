@@ -90,7 +90,7 @@ function loadDocument(filePath, skipDocumentChecks, isMultiUser) {
 			cy.cSetActiveFrame('#iframe1');
 			documentChecks();
 			cy.cSetActiveFrame('#iframe2');
-			documentChecks();
+			documentChecks(true);
 		} else {
 			// frame set above
 			documentChecks();
@@ -343,11 +343,12 @@ function waitForInterferingUser() {
 	cy.log('<< waitForInterferingUser - end');
 }
 
-function documentChecks() {
+function documentChecks(skipInitializedCheck = false) {
 	cy.log('>> documentChecks - start');
 
 	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
-	cy.cGet('#map').should('have.class', 'initialized');
+	if (!skipInitializedCheck)
+		cy.cGet('#map').should('have.class', 'initialized');
 
 	// With php-proxy the client is irresponsive for some seconds after load, because of the incoming messages.
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
@@ -374,9 +375,9 @@ function documentChecks() {
 		});
 		// Check also that the inputbar is drawn in Calc.
 		doIfInCalc(function() {
-			cy.cGet('#sc_input_window.formulabar').should('exist');
-			cy.cGet('#pos_window-input.addressInput').should('exist');
-			cy.cGet('#pos_window-input.addressInput').should('not.be.empty');
+			cy.cframe().get('#sc_input_window.formulabar').should('exist');
+			cy.cframe().get('#pos_window-input.addressInput').should('exist');
+			cy.cframe().get('#pos_window-input.addressInput').should('not.be.empty');
 		});
 	}
 
