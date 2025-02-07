@@ -27,6 +27,14 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 	});
 
+	it('Insert into the second slide.', function() {
+		addSlide(1);
+		cy.cGet('#SlideStatus').should('contain','Slide 2 of 2');
+		desktopHelper.insertComment();
+		cy.cGet('.annotation-marker').should('be.visible');
+		cy.cGet('.cool-annotation-content > div').should('contain','some text');
+	});
+
 	it('Modify', function() {
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('be.visible');
