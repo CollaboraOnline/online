@@ -374,7 +374,9 @@ function documentChecks() {
 		});
 		// Check also that the inputbar is drawn in Calc.
 		doIfInCalc(function() {
-			cy.cframe().find('#sc_input_window.formulabar');
+			cy.cGet('#sc_input_window.formulabar').should('exist');
+			cy.cGet('#pos_window-input.addressInput').should('exist');
+			cy.cGet('#pos_window-input.addressInput').should('not.be.empty');
 		});
 	}
 
