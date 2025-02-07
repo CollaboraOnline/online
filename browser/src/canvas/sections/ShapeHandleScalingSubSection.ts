@@ -36,6 +36,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		this.sectionProperties.distanceToCenter = null; // Distance to center.
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 		this.sectionProperties.cropModeEnabled = cropModeEnabled;
+		this.sectionProperties.cropCursor = 'url(' + L.LOUtil.getURL("images/cursors/crop.png") + ') 8 8, auto';
 
 		this.setMousePointerType();
 
@@ -168,7 +169,10 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		e.stopPropagation();
 		this.stopPropagating();
 		this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
-		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.mousePointerType;
+		if (this.sectionProperties.cropModeEnabled)
+			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.cropCursor;
+		else
+			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.mousePointerType;
 		this.containerObject.requestReDraw();
 	}
 
