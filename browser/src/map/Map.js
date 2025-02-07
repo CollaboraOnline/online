@@ -1228,10 +1228,13 @@ L.Map = L.Evented.extend({
 		}
 		this.fire('statusindicator', {statusType: 'initializationcomplete'});
 		this.initComplete = true;
+
+		L.DomUtil.addClass(this._container, 'initialized');
 	},
 
 	_initContainer: function (id) {
 		var container = this._container = L.DomUtil.get(id);
+		L.DomUtil.removeClass(this._container, 'initialized');
 
 		if (!container) {
 			throw new Error('Map container not found.');
