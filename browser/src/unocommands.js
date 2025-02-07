@@ -76,7 +76,7 @@ var unoCommandsArray = {
 	'CopyHyperlinkLocation':{global:{menu:_('Copy Hyperlink Location'),},},
 	'CorrelationDialog':{spreadsheet:{menu:_('~Correlation...'),},},
 	'CovarianceDialog':{spreadsheet:{menu:_('~Covariance...'),},},
-	'Crop':{global:{menu:_('Crop'),},},
+	'Crop':{global:{context:_('Crop Image'),menu:_('Crop'),},},
 	'CustomAnimation':{presentation:{menu:_('Animation'),},},
 	'Cut':{global:{menu:_('~Cut'),},},
 	'DataAreaRefresh':{spreadsheet:{menu:_('R~efresh Range'),},},

@@ -2958,6 +2958,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Crop'),
+				'command': '.uno:Crop'
+			},
 		];
 
 		return this.getTabPage(drawTabName, content);
