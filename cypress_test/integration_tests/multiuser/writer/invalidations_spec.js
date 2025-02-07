@@ -78,7 +78,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			// Wait for page to unload
 			cy.wait(1000);
 			// Wait for page to finish loading
-			helper.documentChecks();
+			helper.documentChecks(true);
 
 			cy.cSetActiveFrame('#iframe1');
 			writerHelper.selectAllTextOfDoc();
