@@ -366,7 +366,9 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			y = shapeRecProps.center[1] - subSection.sectionProperties.distanceToCenter * Math.sin(pointAngle);
 			subSection.setPosition(x - halfWidth, y - halfHeight);
 		}
-		this.adjustSVGProperties(shapeRecProps);
+
+		if (!this.sectionProperties.cropModeEnabled)
+			this.adjustSVGProperties(shapeRecProps);
 	}
 
 	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
