@@ -1277,9 +1277,10 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
         Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
 
     _filename = filename;
-#if !MOBILEAPP
-    _quarantine = std::make_unique<Quarantine>(*this, _filename);
-#endif
+    if constexpr (!Util::isMobileApp())
+    {
+        _quarantine = std::make_unique<Quarantine>(*this, _filename);
+    }
 
     if (!templateSource.empty())
     {
@@ -5220,11 +5221,12 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  backgroundManualSave: " << (_backgroundManualSave?"true":"false");
     os << "\n  isViewFileExtension: " << _isViewFileExtension;
     os << "\n  Total PSS: " << Util::getProcessTreePss(getpid()) << " KB";
-#if !MOBILEAPP
-    os << "\n  last quarantined version: "
-       << (_quarantine && _quarantine->isEnabled() ? _quarantine->lastQuarantinedFilePath()
-                                                   : "<unavailable>");
-#endif
+    if constexpr (!Util::isMobileApp())
+    {
+        os << "\n  last quarantined version: "
+           << (_quarantine && _quarantine->isEnabled() ? _quarantine->lastQuarantinedFilePath()
+                                                       : "<unavailable>");
+    }
 
     if (_limitLifeSeconds > std::chrono::seconds::zero())
         os << "\n  life limit in seconds: " << _limitLifeSeconds.count();
