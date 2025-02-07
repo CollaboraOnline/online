@@ -211,6 +211,12 @@ CheckFileInfo::wopiFileInfo(const Poco::URI& uriPublic) const
         JsonUtil::findJSONValue(_wopiInfo, "BaseFileName", filename);
         JsonUtil::findJSONValue(_wopiInfo, "LastModifiedTime", modifiedTime);
 
+        if (filename.find_first_of('/') != std::string::npos)
+        {
+            LOG_ERR("BaseFileName should be the name of the file without a path, but is: " << filename);
+            filename.clear();
+        }
+
         Poco::JSON::Object::Ptr wopiInfo = _wopiInfo;
         wopiFileInfo = std::make_unique<WopiStorage::WOPIFileInfo>(
             StorageBase::FileInfo(size, std::move(filename), std::move(ownerId),
