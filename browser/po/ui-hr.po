@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-03 11:48+0100\n"
-"PO-Revision-Date: 2024-12-20 08:38+0000\n"
+"PO-Revision-Date: 2025-02-08 01:41+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.9.2-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -478,7 +478,7 @@ msgstr "Prikaži na strani"
 
 #: src/canvas/sections/CommentListSection.ts:1205
 msgid "Open in full view"
-msgstr ""
+msgstr "Otvori u potpunom prikazu"
 
 #: src/canvas/sections/CommentListSection.ts:1233
 #: src/control/Control.JSDialogBuilder.js:1893
@@ -1043,7 +1043,7 @@ msgstr "Južna Afrika"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Dokument se potpisuje i uskoro će biti na raspolaganju"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1389,7 +1389,7 @@ msgstr "Pametni birač"
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:791
 msgid "AI Assistant"
-msgstr ""
+msgstr "UI asistent"
 
 #: src/control/Control.Menubar.js:234
 msgid "Text orientation"
@@ -1796,10 +1796,12 @@ msgstr "Umetni oblik"
 #: src/control/Control.Menubar.js:2025
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"Sada je moguće po potrebi premjestiti redak potpisa ili promijeniti njegovu "
+"veličinu."
 
 #: src/control/Control.Menubar.js:2027
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Završi elektronsko potpisivanje"
 
 #: src/control/Control.Menubar.js:2208
 msgid "file type icon"
@@ -2041,7 +2043,7 @@ msgstr "Loše"
 #: src/control/Control.NotebookbarImpress.js:1036
 #: src/control/Control.NotebookbarWriter.js:905
 msgid "Replace"
-msgstr ""
+msgstr "Zamijeni položaj"
 
 #: src/control/Control.NotebookbarCalc.js:936
 msgid "Row Height"
@@ -2112,7 +2114,7 @@ msgstr "Minijatura grafikona"
 #: src/control/Control.NotebookbarImpress.js:1269
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
-msgstr ""
+msgstr "Asistent"
 
 #: src/control/Control.NotebookbarCalc.js:1487
 #: src/control/Control.NotebookbarCalc.js:2386
