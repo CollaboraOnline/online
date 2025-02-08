@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-03 11:48+0100\n"
-"PO-Revision-Date: 2025-01-18 11:43+0000\n"
+"PO-Revision-Date: 2025-02-06 04:56+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (New Zealand) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_NZ/>\n"
-"Language: \n"
+"Language: en_NZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -472,7 +472,7 @@ msgstr "Show on the side"
 
 #: src/canvas/sections/CommentListSection.ts:1205
 msgid "Open in full view"
-msgstr ""
+msgstr "Open in full view"
 
 #: src/canvas/sections/CommentListSection.ts:1233
 #: src/control/Control.JSDialogBuilder.js:1893
@@ -1036,7 +1036,7 @@ msgstr "South Africa"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "The document is being signed and will be availably shortly"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1378,7 +1378,7 @@ msgstr "Smart Picker"
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:791
 msgid "AI Assistant"
-msgstr ""
+msgstr "AI Assistant"
 
 #: src/control/Control.Menubar.js:234
 msgid "Text orientation"
@@ -1784,11 +1784,11 @@ msgstr "Insert Shape"
 
 #: src/control/Control.Menubar.js:2025
 msgid "The signature line can now be moved or resized as needed."
-msgstr ""
+msgstr "The signature line can now be moved or resized as needed."
 
 #: src/control/Control.Menubar.js:2027
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Finish electronic signing"
 
 #: src/control/Control.Menubar.js:2208
 msgid "file type icon"
@@ -2030,7 +2030,7 @@ msgstr "Bad"
 #: src/control/Control.NotebookbarImpress.js:1036
 #: src/control/Control.NotebookbarWriter.js:905
 msgid "Replace"
-msgstr ""
+msgstr "Replace"
 
 #: src/control/Control.NotebookbarCalc.js:936
 msgid "Row Height"
@@ -2101,7 +2101,7 @@ msgstr "Sparkline"
 #: src/control/Control.NotebookbarImpress.js:1269
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Assistant"
-msgstr ""
+msgstr "Assistant"
 
 #: src/control/Control.NotebookbarCalc.js:1487
 #: src/control/Control.NotebookbarCalc.js:2386
