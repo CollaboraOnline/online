@@ -227,13 +227,7 @@ class ServerAuditDialog {
 							: {
 									id: 'auditerror',
 									type: 'fixedtext',
-									text:
-										countErrors === 1
-											? _('1 issue found')
-											: _('%COUNT% issues found').replaceAll(
-													'%COUNT%',
-													countErrors,
-												),
+									text: _('Alerts:') + ' ' + countErrors,
 								},
 						{
 							id: this.id + '-buttonbox',
