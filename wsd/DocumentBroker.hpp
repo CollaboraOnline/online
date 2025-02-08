@@ -435,17 +435,13 @@ public:
 
     void handleMediaRequest(std::string range, const std::shared_ptr<Socket>& socket, const std::string& tag);
 
-    /// True if any flag to unload or terminate is set.
-    bool isUnloading() const
-    {
-        return _docState.isMarkedToDestroy() || _stop || _docState.isUnloadRequested() ||
-               _docState.isCloseRequested() || SigUtil::getShutdownRequestFlag();
-    }
+    /// True if any flag to close, terminate, or to unload is set.
+    bool isUnloading() const { return isUnloadingUnrecoverably() || _docState.isUnloadRequested(); }
 
-    /// True if any flag to unload or terminate is set.
+    /// True if any flag to close or terminate is set.
     bool isUnloadingUnrecoverably() const
     {
-        return _docState.isMarkedToDestroy() || _stop || _docState.isCloseRequested() ||
+        return isMarkedToDestroy() || _docState.isCloseRequested() ||
                SigUtil::getShutdownRequestFlag();
     }
 
