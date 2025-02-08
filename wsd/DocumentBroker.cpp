@@ -384,9 +384,8 @@ void DocumentBroker::pollThread()
     while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag())
     {
         // Poll more frequently while unloading to cleanup sooner.
-        const bool unloading = isMarkedToDestroy() || _docState.isUnloadRequested();
-        _poll->poll(unloading ? SocketPoll::DefaultPollTimeoutMicroS / 16
-                              : SocketPoll::DefaultPollTimeoutMicroS);
+        _poll->poll(isUnloading() ? SocketPoll::DefaultPollTimeoutMicroS / 16
+                                  : SocketPoll::DefaultPollTimeoutMicroS);
 
         // Consolidate updates across multiple processed events.
         processBatchUpdates();
