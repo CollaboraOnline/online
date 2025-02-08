@@ -59,7 +59,7 @@ public:
     static bool isEnabled() { return !QuarantinePath.empty(); }
 
     /// Quarantines a new version of the document.
-    bool quarantineFile(const std::string& docName);
+    bool quarantineFile(const std::string& docPath);
 
     /// Returns the last quarantined file's path.
     std::string lastQuarantinedFilePath() const;
@@ -67,6 +67,10 @@ public:
 private:
     /// Returns quarantine directory size in bytes.
     static std::size_t quarantineSize();
+
+    /// Quarantines a new version of the document; the implementation.
+    static bool quarantineFile(const std::string& docKey, const std::string& docPath,
+                               const std::string& quarantinedFilename);
 
     /// Cleans up quarantined files to make sure we don't exceed MaxSizeBytes.
     static void makeQuarantineSpace(std::size_t headroomBytes);
