@@ -24,6 +24,8 @@
 #include <common/Common.hpp>
 #include <common/StringVector.hpp>
 #include <common/Log.hpp>
+
+#include <exception>
 #include <mutex>
 
 namespace
@@ -317,6 +319,22 @@ void Quarantine::deleteOldQuarantineVersions(const std::string& docKey, std::siz
 
 bool Quarantine::quarantineFile(const std::string& docPath)
 {
+    try
+    {
+        return quarantineFile(_docKey, docPath, _quarantinedFilename);
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_WRN("Failed to quarantine [" << docPath << "] for docKey [" << _docKey
+                                         << "]: " << exc.what());
+    }
+
+    return false;
+}
+
+bool Quarantine::quarantineFile(const std::string& docKey, const std::string& docPath,
+                                const std::string& quarantinedFilename)
+{
     if (!isEnabled())
         return false;
 
@@ -327,9 +345,9 @@ bool Quarantine::quarantineFile(const std::string& docPath)
         return false;
     }
 
-    Entry entry(QuarantinePath, _docKey, getSecondsSinceEpoch(), _quarantinedFilename,
+    Entry entry(QuarantinePath, docKey, getSecondsSinceEpoch(), quarantinedFilename,
                 sourceStat.size());
-    Poco::File(Poco::Path(QuarantinePath, _docKey)).createDirectories();
+    Poco::File(Poco::Path(QuarantinePath, docKey)).createDirectories();
 
     const std::string linkedFilePath = entry.fullPath();
     LOG_TRC("Quarantining [" << docPath << "] to [" << linkedFilePath << ']');
@@ -337,7 +355,7 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     std::lock_guard<std::mutex> lock(Mutex);
 
     // Check if we have a duplicate or a new version.
-    auto& fileList = QuarantineMap[_docKey];
+    auto& fileList = QuarantineMap[docKey];
     if (!fileList.empty())
     {
         const auto& lastFile = fileList[fileList.size() - 1];
