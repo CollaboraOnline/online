@@ -1527,8 +1527,8 @@ std::string LocalServerSocket::bind()
 #ifndef HAVE_ABSTRACT_UNIX_SOCKETS
 bool LocalServerSocket::link(std::string to)
 {
-    _linkName = to;
-    return 0 == ::link(_name.c_str(), to.c_str());
+    _linkName = std::move(to);
+    return ::link(_name.c_str(), _linkName.c_str()) == 0;
 }
 #endif
 
