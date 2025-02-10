@@ -133,13 +133,13 @@ export class RowHeader extends cool.Header {
 			const x = 2 * app.dpiScale;
 			const w = this.size[0] - 4 * app.dpiScale;
 			const size = 2 * app.dpiScale;
-			const offset = 1 *app.dpiScale;
+			const offsetOnePixel = 1 * app.dpiScale;
 
 			this.context.fillStyle = '#BBBBBB';
 			this.context.beginPath();
-			this.context.fillRect(x + 2 * app.dpiScale, center - size - offset, w - 4 * app.dpiScale, size);
+			this.context.fillRect(x + 2 * app.dpiScale, center - size - offsetOnePixel, w - 4 * app.dpiScale, size);
 			this.context.beginPath();
-			this.context.fillRect(x + 2 * app.dpiScale, center + offset, w - 4 * app.dpiScale, size);
+			this.context.fillRect(x + 2 * app.dpiScale, center + offsetOnePixel, w - 4 * app.dpiScale, size);
 		}
 
 		// draw text content
@@ -151,7 +151,7 @@ export class RowHeader extends cool.Header {
 
 		// draw row borders.
 		this.context.strokeStyle = this._borderColor;
-		var offset = this.getLineOffset();
+		const offset = this.getLineOffset();
 		this.context.lineWidth = this.getLineWidth();
 		this.context.strokeRect(offset, startY - offset, this.size[0], entry.size);
 	}
