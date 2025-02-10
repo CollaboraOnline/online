@@ -17,11 +17,6 @@ endif
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\"$(DIST_FOLDER)\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit \
 	-I${top_srcdir} -I${top_srcdir}/test \
-	-DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
-	-DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
-	-DCOOLWSD_LOGLEVEL='"@COOLWSD_LOGLEVEL@"' \
-	-DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
-	-DNUM_PRESPAWN_CHILDREN='"@NUM_PRESPAWN_CHILDREN@"' \
 	${include_paths}
 
 # These are ordered by how long each takes to run.
