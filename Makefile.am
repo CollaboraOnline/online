@@ -86,11 +86,7 @@ if ENABLE_SSL
 include_paths += ${OPENSSL_CFLAGS}
 endif
 
-AM_CPPFLAGS = -pthread -DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
-	      -DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
-	      -DCOOLWSD_LOGLEVEL='"@COOLWSD_LOGLEVEL@"' \
-	      -DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
-	      -DNUM_PRESPAWN_CHILDREN='"@NUM_PRESPAWN_CHILDREN@"' \
+AM_CPPFLAGS = -pthread \
 	      ${include_paths}
 
 if !ENABLE_DEBUG

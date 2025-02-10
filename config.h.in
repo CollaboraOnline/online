@@ -15,6 +15,12 @@
 /* Options passed to configure script */
 #undef COOLWSD_BUILDCONFIG
 
+/* Directory that contains configuration of coolwsd */
+#undef COOLWSD_CONFIGDIR
+
+/* Default coolwsd loglevel */
+#undef COOLWSD_LOGLEVEL
+
 /* Default location of coolwsd log file */
 #undef COOLWSD_LOGFILE
 
@@ -26,6 +32,12 @@
 
 /* The user-name which is allowed to run coolwsd and its tools */
 #undef COOL_USER_ID
+
+/* Default number of pre-spawn children */
+#undef NUM_PRESPAWN_CHILDREN
+
+/* Absolute path to the top-level source directory */
+#undef DEBUG_ABSSRCDIR
 
 /* Whether to disable SECCOMP */
 #undef DISABLE_SECCOMP
