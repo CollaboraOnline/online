@@ -268,8 +268,9 @@ public:
     /// Return the data if we have it, or nothing.
     Blob lookupCachedStream(StreamType type, const std::string& name);
 
-    // The tiles parameter is an invalidatetiles: message as sent by the child process
-    void invalidateTiles(const std::string& tiles, int normalizedViewId);
+    /// The tiles parameter is an invalidatetiles: message as sent by the child process
+    /// returns true if cache wasn't empty
+    bool invalidateTiles(const std::string& tiles, int normalizedViewId);
 
     /// Parse invalidateTiles message to rectangle and associated attributes of the invalidated area
     static Util::Rectangle parseInvalidateMsg(const std::string& tiles, int &part, int &mode, TileWireId &wid);
@@ -299,7 +300,9 @@ private:
     void ensureCacheSize();
     static size_t itemCacheSize(const Tile &tile);
 
-    void invalidateTiles(int part, int mode, int x, int y, int width, int height, int normalizedViewId);
+    /// Removes the invalid tiles from the cache
+    /// returns true if cache wasn't empty
+    bool invalidateTiles(int part, int mode, int x, int y, int width, int height, int normalizedViewId);
 
     /// Lookup tile in our cache.
     Tile findTile(const TileDesc &desc);
