@@ -1199,7 +1199,7 @@ app.definitions.Socket = L.Class.extend({
 			{
 				setTimeout(function() {
 					this._map.uiManager.showInfoModal('fontsmissing', _('Missing Fonts'), msg, null, _('Close'));
-				}.bind(this), 20000);
+				}.bind(this), 60000);
 			}
 			else
 			{
