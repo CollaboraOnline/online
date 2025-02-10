@@ -3037,6 +3037,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
        _tileWidthTwips == 0 || _tileHeightTwips == 0 ||
        (_clientSelectedPart == -1 && !_isTextDocument))
     {
+        LOG_TRC("No visible area received yet - skip invalidation");
         return;
     }
 
