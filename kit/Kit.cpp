@@ -200,8 +200,15 @@ public:
                       // Failed!
                       LOG_WRN("BgSave timed out and will self-destroy");
                       Log::shutdown(); // Flush logs.
-                      // raise(3) will exit the current thread, not the process.
+                      // this attempts to get the saving-thread to generate a backtrace
                       Util::killThreadById(savingTid, SIGABRT);
+
+                      // It is possible that this process will not exit cleanly after
+                      // handling SIGABRT, so instead after some time fall-back to this:
+
+                      // raise(3) will exit the current thread, not the process.
+                      sleep(30); // long enough for a trace ?
+                      ::kill(0, SIGKILL); // kill(2) is trapped by seccomp.
                   }
               })
     {
