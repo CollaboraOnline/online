@@ -17,8 +17,9 @@
 L.Control.Zotero = L.Control.extend({
 	_cachedURL: [],
 	citations: {},
+	itemsPerPage: 15,
 
-	getCachedOrFetch: function (url) {
+	getCachedOrFetch: function (url, retry=true) {
 		var that = this;
 		var cachedData = this._cachedURL[url];
 		if (cachedData) {
@@ -27,6 +28,9 @@ L.Control.Zotero = L.Control.extend({
 			});
 		} else {
 			return fetch(url).then(function (response) {
+				if (!response.ok && retry)
+					return that.getCachedOrFetch(url, false);
+
 				that._cachedURL[url] = response.json();
 				return that._cachedURL[url];
 			});
@@ -244,6 +248,34 @@ L.Control.Zotero = L.Control.extend({
 							entries: [ { columns: [ { text: _('Loading...') } ] } ]
 						}
 					]
+				},
+				{
+					id: 'ZoteroDialog-buttonbox',
+					type: 'buttonbox',
+					children: [
+						{
+							id: 'previous',
+							type: 'pushbutton',
+							text: _('Previous'),
+							enabled: false,
+							visible: false
+						},
+						{
+							id: 'pagelabel',
+							type: 'fixedtext',
+							text: '1/1',
+							visible: false
+						},
+						{
+							id: 'next',
+							type: 'pushbutton',
+							text: _('Next'),
+							visible: false
+
+						}
+					],
+					vertical: false,
+					layoutstyle: 'start'
 				}
 			],
 			vertical: true
@@ -426,6 +458,55 @@ L.Control.Zotero = L.Control.extend({
 		});
 	},
 
+	enableDisableNextPrevious: function(hide) {
+		this.map.fire('jsdialogupdate', {
+			data: {
+				jsontype: 'dialog',
+				action: 'update',
+				id: 'ZoteroDialog',
+				control: {
+					id: 'previous',
+					type: 'pushbutton',
+					text: _('Previous'),
+					enabled: this._currentPage > 0,
+					visible: hide ? false : true
+				},
+			},
+			callback: this._onAction.bind(this)
+		});
+
+		this.map.fire('jsdialogupdate', {
+			data: {
+				jsontype: 'dialog',
+				action: 'update',
+				id: 'ZoteroDialog',
+				control: {
+					id: 'pagelabel',
+					type: 'fixedtext',
+					text: (this._currentPage + 1) + '/' + this.totalPages,
+					visible: hide ? false : true
+				},
+			},
+			callback: this._onAction.bind(this)
+		});
+
+		this.map.fire('jsdialogupdate', {
+			data: {
+				jsontype: 'dialog',
+				action: 'update',
+				id: 'ZoteroDialog',
+				control: {
+					id: 'next',
+					type: 'pushbutton',
+					text: _('Next'),
+					enabled: this._currentPage < this.totalPages - 1,
+					visible: hide ? false : true
+				},
+			},
+			callback: this._onAction.bind(this)
+		});
+	},
+
 	updateList: function(headerArray, failText) {
 		if (this.items.length !== 0) {
 			return {
@@ -460,8 +541,14 @@ L.Control.Zotero = L.Control.extend({
 		}
 	},
 
-	getZoteroItemQuery: function() {
-		return '?v=3&key=' + this.apiKey + '&include=data,citation,csljson&style=' + this.settings.style + '&locale=' + this.settings.locale;
+	getZoteroItemQuery: function(limit, start) {
+		var result = '?v=3&key=' + this.apiKey + '&include=data,citation,csljson&style=' + this.settings.style + '&locale=' + this.settings.locale;
+
+		if (limit)
+			result += '&limit=' + limit;
+		if (start)
+			result += '&start=' + start;
+		return result;
 	},
 
 	_getDefaultSubCollections: function () {
@@ -472,7 +559,7 @@ L.Control.Zotero = L.Control.extend({
 
 	getDefaultCategories: function () {
 		return [
-			{ columns: [{ text: _('My Library') } ], row: 'https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery(), children: this._getDefaultSubCollections() },
+			{ columns: [{ text: _('My Library') } ], row: 'https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery(this.itemsPerPage, 0), children: this._getDefaultSubCollections() },
 			{ columns: [{ text: _('Group Libraries')}] }];
 	},
 
@@ -736,7 +823,35 @@ L.Control.Zotero = L.Control.extend({
 				that.map.uiManager.showSnackbar(_('Failed to load collections'));
 			});
 
-		this.showItemsForUrl('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery(), true);
+			this.totalItems = -1;
+			this.totalPages = -1;
+			this._currentPage = 0;
+			fetch('https://api.zotero.org/users/'+ this.userID +'/items/top?v=3&key=' + this.apiKey + '&limit=1') //find total number of entries
+			.then(function (response) {
+				that.map.uiManager.showProgressBar(_("Loading references"), undefined, undefined, 10000);
+				that.showItemsForUrl('https://api.zotero.org/users/' + that.userID + '/items/top' + that.getZoteroItemQuery(that.itemsPerPage, 0), true);
+
+				that.totalItems = parseInt(response.headers.get('Total-Results'));
+				that.totalPages = Math.ceil(that.totalItems/that.itemsPerPage);
+				that._currentPage = 0;
+				that.enableDisableNextPrevious();
+				that.asyncItemLoading();
+			});
+	},
+
+	asyncItemLoading: function() {
+		var that = this;
+		var pagesLoaded = 1;
+		for (var i = this.itemsPerPage; i < that.totalItems; i += this.itemsPerPage) {
+			that.getCachedOrFetch('https://api.zotero.org/users/' + that.userID + '/items/top' + that.getZoteroItemQuery(that.itemsPerPage, i), true)
+			.then(function () {
+				++pagesLoaded;
+				var loadPct = (pagesLoaded/that.totalPages)*100;
+				that.map.uiManager.setSnackbarProgress(loadPct);
+				if (pagesLoaded === that.totalPages)
+					that.map.uiManager.closeSnackbar();
+			});
+		}
 	},
 
 	showStyleList: function() {
@@ -1087,6 +1202,7 @@ L.Control.Zotero = L.Control.extend({
 					that.pendingItemListing = true;
 					that.fetchCitationUnderCursor();
 				}
+				that.enableDisableNextPrevious(!url.includes('limit='));
 			}, function () {
 				that.map.uiManager.showSnackbar(_('Failed to load items'));
 			});
@@ -1173,8 +1289,21 @@ L.Control.Zotero = L.Control.extend({
 			}
 			return;
 		}
+		if (data.id === 'next') {
+			this.showItemsForUrl('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery(this.itemsPerPage, (this._currentPage + 1)*this.itemsPerPage), true);
+			this._currentPage++;
+			this.enableDisableNextPrevious();
+			return;
+		}
+		if (data.id === 'previous') {
+			this.showItemsForUrl('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery(this.itemsPerPage, (this._currentPage - 1)*this.itemsPerPage), true);
+			this._currentPage--;
+			this.enableDisableNextPrevious();
+			return;
+		}
 
 		this.closeZoteroDialog();
+		this._currentPage = 0;
 	},
 
 	dispatchPendingAction: function() {
