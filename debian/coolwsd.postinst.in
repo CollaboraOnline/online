@@ -23,7 +23,7 @@ case "$1" in
 	# and installs in @LO_PATH@, and that /opt/cool is
 	# on the same file system
 
-	rm -rf /opt/cool
+	rm -rf /opt/cool || true
 	mkdir -p /opt/cool/child-roots /opt/cool/cache
 	chown cool: /opt/cool
 	chown cool: /opt/cool/child-roots

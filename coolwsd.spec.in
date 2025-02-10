@@ -131,7 +131,7 @@ if [ $COOLWSD_IS_ACTIVE == "1" ]; then systemctl stop coolwsd; fi
 lokitroot=/opt/collaboraoffice
 coolparent=`cd ${lokitroot} && cd .. && /bin/pwd`
 
-rm -rf ${coolparent}/cool
+rm -rf ${coolparent}/cool || true
 mkdir -p ${coolparent}/cool/child-roots ${coolparent}/cool/cache
 chown cool:cool ${coolparent}/cool
 chown cool:cool ${coolparent}/cool/child-roots
