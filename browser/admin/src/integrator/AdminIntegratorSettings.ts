@@ -181,6 +181,7 @@ function insertConfigSections(): void {
 			fileInput.addEventListener('change', () => {
 				if (fileInput.files?.length) {
 					uploadFile(cfg.uploadPath, fileInput.files[0]);
+					fileInput.value = '';
 				}
 			});
 		}
