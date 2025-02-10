@@ -171,8 +171,23 @@ class Tooltip {
 			this.mouseLeave();
 		}
 	}
+
+	static attachEventListener(elem, map) {
+		if (!map.tooltip) {
+			return;
+		}
+
+		elem.addEventListener('mouseenter', function () {
+			map.tooltip.beginShow(elem);
+		});
+		elem.addEventListener('mouseleave', function () {
+			map.tooltip.beginHide(elem);
+		});
+	}
 }
 
 L.control.tooltip = function (options) {
 	return new Tooltip(options);
 };
+
+L.control.attachTooltipEventListener = Tooltip.attachEventListener;
