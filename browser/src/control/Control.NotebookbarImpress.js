@@ -1202,7 +1202,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'id': 'insert-insert-table:InsertTableMenu',
 								'type': 'menubutton',
 								'noLabel': true,
-								'text': _UNO('.uno:InsertTable', 'presentation'),
+								'text': _('Table'),
 								'command': '.uno:InsertTable',
 								'accessibility': { focusBack: true, combination: 'IT', de: null }
 							}
