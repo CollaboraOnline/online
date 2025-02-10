@@ -128,7 +128,7 @@
 
     <logging_ui_cmd>
         <merge type="bool" desc="If true, repeated commands after each other will be merged into 1 line. If false, every command will be 1 new line." default="true">true</merge>
-        <merge_display_end_time type="bool" desc="If true, the duration of the merged command will also be logged." default="false">false</merge_display_end_time>
+        <merge_display_end_time type="bool" desc="If true, the duration of the merged command will also be logged." default="false">true</merge_display_end_time>
         <file enable="@COOLWSD_LOG_UICMD_TO_FILE@">
             <!-- If you use other path than /var/log and you run coolwsd from systemd, make sure that you enable that path in coolwsd.service (ReadWritePaths). Also the log file path must be writable by the 'cool' user. -->
             <property name="path" desc="Log file path.">@COOLWSD_LOGFILE_UICMD@</property>

@@ -304,11 +304,16 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
+        std::chrono::steady_clock::time_point timeStart = std::chrono::steady_clock::now();
+
         // Disable processing of other messages while loading document
         InputProcessingManager processInput(getProtocol(), false);
         // disable watchdog while loading
         WatchdogGuard watchdogGuard;
         _isDocLoaded = loadDocument(tokens);
+
+        LogUiCommands uiLog(this);
+        uiLog.logSaveLoad("load", Poco::URI(getJailedFilePath()).getPath(), timeStart);
 
         LOG_TRC("isDocLoaded state after loadDocument: " << _isDocLoaded);
         return _isDocLoaded;
@@ -720,7 +725,14 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                 // disable watchdog while saving
                 WatchdogGuard watchdogGuard;
 
-                return unoCommand(unoSave);
+                std::chrono::steady_clock::time_point timeStart = std::chrono::steady_clock::now();
+                bool result = unoCommand(unoSave);
+                if (result)
+                {
+                    LogUiCommands uiLog(this);
+                    uiLog.logSaveLoad("save", Poco::URI(getJailedFilePath()).getPath(), timeStart);
+                }
+                return result;
             }
             else
                 return true;
@@ -743,11 +755,25 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "saveas"))
         {
-            return saveAs(tokens);
+            std::chrono::steady_clock::time_point timeStart = std::chrono::steady_clock::now();
+            bool result = saveAs(tokens);
+            if (result)
+            {
+                LogUiCommands uiLog(this);
+                uiLog.logSaveLoad("saveas", Poco::URI(getJailedFilePath()).getPath(), timeStart);
+            }
+            return result;
         }
         else if (tokens.equals(0, "exportas"))
         {
-            return exportAs(tokens);
+            std::chrono::steady_clock::time_point timeStart = std::chrono::steady_clock::now();
+            bool result = exportAs(tokens);
+            if (result)
+            {
+                LogUiCommands uiLog(this);
+                uiLog.logSaveLoad("exportas", Poco::URI(getJailedFilePath()).getPath(), timeStart);
+            }
+            return result;
         }
         else if (tokens.equals(0, "useractive"))
         {
@@ -1027,6 +1053,7 @@ bool ChildSession::saveDocumentBackground([[maybe_unused]] const StringVector& t
     return false;
 #else
     LOG_TRC("Attempting background save");
+    _logUiSaveBackGroundTimeStart = std::chrono::steady_clock::now();
 
     // Keep the session alive over the lifetime of an async save
     if (!_docManager->forkToSave([this, tokens]{
@@ -3856,6 +3883,12 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     }
 }
 
+void ChildSession::saveLogUiBackground()
+{
+    LogUiCommands uiLog(this);
+    uiLog.logSaveLoad("savebg", Poco::URI(getJailedFilePath()).getPath(), _logUiSaveBackGroundTimeStart);
+}
+
 void LogUiCommands::logLine(LogUiCommandsLine &line, bool isUndoChange)
 {
     // log command
@@ -3900,9 +3933,38 @@ void LogUiCommands::logLine(LogUiCommandsLine &line, bool isUndoChange)
     }
 }
 
+void LogUiCommands::logSaveLoad(std::string cmd, const std::string & path, std::chrono::steady_clock::time_point timeStart)
+{
+    LogUiCommandsLine uiLogLine;
+    uiLogLine._timeStart = timeStart;
+    uiLogLine._timeEnd = std::chrono::steady_clock::now();
+    uiLogLine._repeat = 1;
+    uiLogLine._cmd = cmd;
+
+    std::size_t size = 0;
+    const auto st = FileUtil::Stat(path);
+    if (st.exists() && st.good())
+    {
+        size = st.size();
+    }
+
+    std::set<std::string> fileExtensions = { "sxw", "odt", "fodt", "sxc", "ods", "fods", "sxi", "odp", "fodp", "sxd", "odg", "fodg", "doc", "xls", "ppt", "docx", "xlsx", "pptx" };
+    std::string extension = Poco::Path(path).getExtension();
+    if (fileExtensions.find(extension) == fileExtensions.end())
+        extension = "unknown";
+
+    std::stringstream strToLog;
+    strToLog << "size=" << size;
+    strToLog << " ext=" << extension;
+
+    uiLogLine._subCmd = strToLog.str();
+
+    logLine(uiLogLine);
+}
+
 LogUiCommands::~LogUiCommands()
 {
-    if (_session->_isDocLoaded && Log::isLogUIEnabled() && _session->_clientVisibleArea.getWidth() != 0)
+    if (!_skipDestructor && _session->_isDocLoaded && Log::isLogUIEnabled() && _session->_clientVisibleArea.getWidth() != 0)
     {
         if (_tokens->size() > 0 && _cmdToLog.find((*_tokens)[0]) != _cmdToLog.end())
         {
