@@ -58,7 +58,7 @@ class OtherViewCursorSection extends HTMLObjectSection {
 
     public static addOrUpdateOtherViewCursor(viewId: number, username: string, rectangleData: Array<string>, part: number, mode: number) {
         let rectangle = new cool.SimpleRectangle(0, 0, 0, 0);
-        const color = L.LOUtil.rgbToHex(L.LOUtil.getViewIdColor(viewId));
+        const color = app.LOUtil.rgbToHex(app.LOUtil.getViewIdColor(viewId));
 
         if (rectangleData) {
             rectangle = new app.definitions.simpleRectangle(rectangleData[0], rectangleData[1], rectangleData[2], rectangleData[3]);

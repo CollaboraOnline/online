@@ -608,7 +608,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 		if (iconURL) {
 			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
-			L.LOUtil.setImage(icon, iconURL, builder.map);
+			app.LOUtil.setImage(icon, iconURL, builder.map);
 			icon.alt = '';
 			titleClass = 'menu-entry-with-icon';
 
@@ -814,12 +814,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		$(sectionTitle).css('justify-content', 'space-between');
 
 		var commandName = dataid;
-		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
+		if (commandName && commandName.length && app.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var iconName = builder._generateMenuIconName(commandName);
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, sectionTitle);
 			iconName = builder._createIconURL(iconName, true);
 			icon = L.DomUtil.create('img', '', iconSpan);
-			L.LOUtil.setImage(icon, iconName, builder.map);
+			app.LOUtil.setImage(icon, iconName, builder.map);
 			icon.alt = '';
 			var titleSpan2 = L.DomUtil.create('span', 'menu-entry-with-icon flex-fullwidth', sectionTitle);
 			titleSpan2.innerHTML = title;
@@ -1541,7 +1541,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else if (data.symbol) {
 			L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
 			image = L.DomUtil.create('img', '', pushbutton);
-			L.LOUtil.setImage(image, 'symbol_' + data.symbol + '.svg', builder.map);
+			app.LOUtil.setImage(image, 'symbol_' + data.symbol + '.svg', builder.map);
 		} else {
 			pushbutton.innerText = pushbuttonText;
 			builder._stressAccessKey(pushbutton, pushbutton.accessKey);
@@ -1712,13 +1712,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (image) {
 				image = image.substr(0, image.lastIndexOf('.'));
 				image = image.substr(image.lastIndexOf('/') + 1);
-				image = 'url("' + L.LOUtil.getImageURL(image + '.svg') + '")';
+				image = 'url("' + app.LOUtil.getImageURL(image + '.svg') + '")';
 			}
 
 			if (image64) {
 				image = 'url("' + image64 + '")';
 			}
-			L.LOUtil.checkIfImageExists(image);
+			app.LOUtil.checkIfImageExists(image);
 			elem = L.DomUtil.create('div', 'layout ' +
 				(data.entries[index].selected ? ' cool-context-down' : ''), parentContainer);
 			$(elem).data('id', data.entries[index].id);
@@ -1946,7 +1946,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		L.DomUtil.addClass(parentContainer, 'content-has-no-comments');
 		var emptyCommentWizard = L.DomUtil.create('figure', 'empty-comment-wizard-container', parentContainer);
 		var imgNode = L.DomUtil.create('img', 'empty-comment-wizard-img', emptyCommentWizard);
-		L.LOUtil.setImage(imgNode, 'lc_showannotations.svg', builder.map);
+		app.LOUtil.setImage(imgNode, 'lc_showannotations.svg', builder.map);
 		imgNode.alt = data.text;
 
 		var textNode = L.DomUtil.create('figcaption', 'empty-comment-wizard', emptyCommentWizard);
@@ -2287,7 +2287,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			else if (hasImage !== false){
 				if (data.icon) {
 					buttonImage = L.DomUtil.create('img', '', button);
-					this._isStringCloseToURL(data.icon) ? buttonImage.src = data.icon : L.LOUtil.setImage(buttonImage, data.icon, builder.map);
+					this._isStringCloseToURL(data.icon) ? buttonImage.src = data.icon : app.LOUtil.setImage(buttonImage, data.icon, builder.map);
 				}
 				else if (data.image) {
 					buttonImage = L.DomUtil.create('img', '', button);
@@ -2295,7 +2295,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 				else {
 					buttonImage = L.DomUtil.create('img', '', button);
-					L.LOUtil.setImage(buttonImage, builder._createIconURL(data.command), builder.map);
+					app.LOUtil.setImage(buttonImage, builder._createIconURL(data.command), builder.map);
 				}
 			} else {
 				buttonImage = false;
@@ -2671,12 +2671,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var icon = null;
 		var commandName = data.command && data.command.startsWith('.uno:') ? data.command.substring('.uno:'.length) : data.id;
-		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
+		if (commandName && commandName.length && app.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var iconName = builder._generateMenuIconName(commandName);
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, menuEntry);
 			iconName = builder._createIconURL(iconName, true);
 			icon = L.DomUtil.create('img', '', iconSpan);
-			L.LOUtil.setImage(icon, iconName, builder.map);
+			app.LOUtil.setImage(icon, iconName, builder.map);
 			icon.alt = '';
 		}
 		if (data.checked && data.checked === true) {

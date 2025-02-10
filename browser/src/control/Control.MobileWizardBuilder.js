@@ -14,7 +14,7 @@
  * variants for mobile/touch devices from the JSON description provided by the server.
  */
 
-/* global $ _UNO _ JSDialog */
+/* global $ _UNO _ JSDialog app */
 
 L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	_customizeOptions: function() {
@@ -77,10 +77,10 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		div.id = data.id;
 		controls['container'] = div;
 		var commandName = data.id  && data.id.startsWith('.uno:') ? data.id.substring('.uno:'.length) : data.id;
-		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
+		if (commandName && commandName.length && app.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var image = L.DomUtil.create('img', 'spinfieldimage', div);
 			var icon = (data.id === 'Transparency') ? builder._createIconURL('settransparency') : builder._createIconURL(data.id);
-			L.LOUtil.setImage(image, icon, builder.map);
+			app.LOUtil.setImage(image, icon, builder.map);
 			icon.alt = '';
 		}
 

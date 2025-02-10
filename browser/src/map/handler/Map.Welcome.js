@@ -11,7 +11,7 @@ L.Map.mergeOptions({
 L.Map.Welcome = L.Handler.extend({
 
 	_getLocalWelcomeUrl: function() {
-		var welcomeLocation = L.LOUtil.getURL('/welcome/welcome.html');
+		var welcomeLocation = app.LOUtil.getURL('/welcome/welcome.html');
 		if (window.socketProxy)
 			welcomeLocation = window.makeWsUrl(welcomeLocation);
 		return welcomeLocation;

@@ -187,13 +187,13 @@ class IdleHandler {
 
 		if (message === '') {
 			document.getElementById(dialogId).style.display = 'none';
-			L.LOUtil.onRemoveHTMLElement(document.getElementById(this.dimId), restartConnection);
+			app.LOUtil.onRemoveHTMLElement(document.getElementById(this.dimId), restartConnection);
 		}
 		else {
 			var overlayId = dialogId + '-overlay';
 			var overlay = document.getElementById(overlayId);
 			overlay.onmouseover = () => { restartConnection(); uiManager.closeModal(dialogId); };
-			L.LOUtil.onRemoveHTMLElement(overlay, restartConnection);
+			app.LOUtil.onRemoveHTMLElement(overlay, restartConnection);
 		}
 
 		this._sendInactiveMessage();

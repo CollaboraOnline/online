@@ -2530,7 +2530,7 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_initializeMenu: function(menu) {
-		this._isFileODF = L.LOUtil.isFileODF(this._map);
+		this._isFileODF = app.LOUtil.isFileODF(this._map);
 		var menuHtml = this._createMenu(menu);
 		for (var i in menuHtml) {
 			this._menubarCont.appendChild(menuHtml[i]);

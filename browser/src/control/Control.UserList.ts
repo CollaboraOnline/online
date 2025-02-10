@@ -11,6 +11,7 @@
 /*
  * L.Control.UserList
  */
+/* global app */
 
 interface UserExtraInfo {
 	avatar: string;
@@ -163,7 +164,7 @@ class UserList extends L.Control {
 			img = L.DomUtil.create('img', 'avatar-img') as HTMLImageElement;
 		}
 
-		L.LOUtil.setUserImage(img, this.map, viewId);
+		app.LOUtil.setUserImage(img, this.map, viewId);
 
 		img.alt = this.options.userAvatarAlt.replace('{user}', username);
 
@@ -387,7 +388,7 @@ class UserList extends L.Control {
 			you = true;
 		} else {
 			username = e.username;
-			color = L.LOUtil.rgbToHex(this.map.getViewColor(e.viewId));
+			color = app.LOUtil.rgbToHex(this.map.getViewColor(e.viewId));
 			you = false;
 		}
 

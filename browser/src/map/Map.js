@@ -45,7 +45,7 @@ L.Map = L.Evented.extend({
 		tileHeightTwips: window.tileSize * 15,
 		urlPrefix: 'cool',
 		wopiSrc: '',
-		cursorURL: L.LOUtil.getURL('cursors'),
+		cursorURL: app.LOUtil.getURL('cursors'),
 		// cursorURL
 		// The path (local to the server) where custom cursor files are stored.
 	},
@@ -396,7 +396,7 @@ L.Map = L.Evented.extend({
 		if (viewInfo.userextrainfo !== undefined && viewInfo.userextrainfo.avatar !== undefined) {
 			this._viewInfoByUserName[viewInfo.username] = viewInfo;
 		}
-		this.fire('postMessage', {msgId: 'View_Added', args: {Deprecated: true, ViewId: viewInfo.id, UserId: viewInfo.userid, UserName: viewInfo.username, UserExtraInfo: viewInfo.userextrainfo, Color: L.LOUtil.rgbToHex(viewInfo.color), ReadOnly: viewInfo.readonly}});
+		this.fire('postMessage', {msgId: 'View_Added', args: {Deprecated: true, ViewId: viewInfo.id, UserId: viewInfo.userid, UserName: viewInfo.username, UserExtraInfo: viewInfo.userextrainfo, Color: app.LOUtil.rgbToHex(viewInfo.color), ReadOnly: viewInfo.readonly}});
 
 		// Fire last, otherwise not all events are handled correctly.
 		this.fire('addview', {viewId: viewInfo.id, username: viewInfo.username, extraInfo: viewInfo.userextrainfo, readonly: this.isViewReadOnly(viewInfo.id)});
