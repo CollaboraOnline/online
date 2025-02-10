@@ -277,7 +277,7 @@ Blob TileCache::lookupCachedStream(StreamType type, const std::string& name)
     return Blob();
 }
 
-void TileCache::invalidateTiles(int part, int mode, int x, int y, int width, int height, int normalizedViewId)
+bool TileCache::invalidateTiles(int part, int mode, int x, int y, int width, int height, int normalizedViewId)
 {
     LOG_TRC("Removing invalidated tiles: part: " << part << ", mode: " << mode <<
             ", x: " << x << ", y: " << y <<
@@ -286,6 +286,12 @@ void TileCache::invalidateTiles(int part, int mode, int x, int y, int width, int
             ", viewid: " << normalizedViewId);
 
     ASSERT_CORRECT_THREAD_OWNER(_owner);
+
+    if (_cache.empty())
+    {
+        LOG_TRC("Removing invalidated tiles: cache was empty");
+        return false;
+    }
 
     for (auto it = _cache.begin(); it != _cache.end();)
     {
@@ -307,15 +313,17 @@ void TileCache::invalidateTiles(int part, int mode, int x, int y, int width, int
             ++it;
         }
     }
+
+    return true;
 }
 
-void TileCache::invalidateTiles(const std::string& tiles, int normalizedViewId)
+bool TileCache::invalidateTiles(const std::string& tiles, int normalizedViewId)
 {
     int part = 0, mode = 0;
     TileWireId wireId = 0;
     const Util::Rectangle invalidateRect = TileCache::parseInvalidateMsg(tiles, part, mode, wireId);
 
-    invalidateTiles(part, mode, invalidateRect.getLeft(), invalidateRect.getTop(),
+    return invalidateTiles(part, mode, invalidateRect.getLeft(), invalidateRect.getTop(),
                     invalidateRect.getWidth(), invalidateRect.getHeight(), normalizedViewId);
 }
 
