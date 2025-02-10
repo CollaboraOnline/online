@@ -1381,7 +1381,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'insert-insert-objects-star-math',
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertObjectStarMath', 'text'),
+								'text': _('Formula'),
 								'command': '.uno:InsertObjectStarMath',
 								'accessibility': { focusBack: true,	combination: 'ET',	de:	null }
 							}
