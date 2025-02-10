@@ -450,6 +450,7 @@ if __name__ == "__main__":
     # dict of (command - count of undo)
     undoedCommands = {}
     totalUndoedCommands = {}
+    totalCommands = {}
 
     # dict of (current and previous command - count)
     currentCommandPreviousCommand = {}
@@ -468,6 +469,12 @@ if __name__ == "__main__":
 
     # list of (fastest, usual) type speed in char/sec
     userCharPerSec = []
+
+    # list of size/time of load / save
+    loadSizeTimeExt = []
+    saveBgSizeTimeExt = []
+    saveAsSizeTimeExt = []
+    saveSizeTimeExt = []
 
     documentCategories = {
         "Convert/Thumbnail": 0,
@@ -506,12 +513,17 @@ if __name__ == "__main__":
             users = {}
         else:
             numbUser = line.find("user=")
-            numbrep = line.find("rep=")
-            cmdStart = line[numbrep:].find(" ")+numbrep+1
+            numbRep = line.find("rep=")
+            cmdStart = line[numbRep:].find(" ")+numbRep+1
 
-            userId = int(line[numbUser+5:numbrep])
-            repeat = int(line[numbrep+4:cmdStart])
+            userId = int(line[numbUser+5:numbRep])
+            repeat = int(line[numbRep+4:cmdStart])
             lineCmd = line[cmdStart:]
+
+            duration = 0
+            numbDur = line.find("dur=")
+            if numbDur >= 0 and numbDur < numbUser:
+                duration = float(line[numbDur+4:numbUser])
 
             if userId not in users:
                 users[userId] = User()
@@ -524,11 +536,23 @@ if __name__ == "__main__":
                 if lineCmd.startswith("cmd:textinput") or lineCmd.startswith("cmd:removetextcontext"):
                     users[userId].edited = True
                 if lineCmd.startswith("cmd:textinput") and repeat > 1:
-                    # we may have a duration to calculate chars per sec
-                    numbDur = line.find("dur=")
-                    if numbDur >= 0 and numbDur < numbUser:
-                        duration = float(line[numbDur+4:numbUser])
+                    # duration used to calculate chars per sec
+                    if (duration > 0):
                         users[userId].typeSpeed.append(((repeat-1)/duration, repeat-1))
+                if lineCmd.startswith("cmd:load") or lineCmd.startswith("cmd:save"):
+                    numbSize = lineCmd.find("size=")
+                    numbExt = lineCmd.find("ext=")
+                    fileSize = int(lineCmd[numbSize+5:numbExt])
+                    fileExt = lineCmd[numbExt+4:-1]
+                    if lineCmd.startswith("cmd:load"):
+                        loadSizeTimeExt.append([fileSize, duration, fileExt])
+                    elif lineCmd.startswith("cmd:savebg"):
+                        saveBgSizeTimeExt.append([fileSize, duration, fileExt])
+                    elif lineCmd.startswith("cmd:saveas"):
+                        saveAsSizeTimeExt.append([fileSize, duration, fileExt])
+                    elif lineCmd.startswith("cmd:save"):
+                        saveSizeTimeExt.append([fileSize, duration, fileExt])
+                    #exportas ?
 
             elif lineCmd.startswith("undo-count-change:"):
                 if lineCmd[18] == "+":
@@ -574,14 +598,15 @@ if __name__ == "__main__":
     f = open(newFileName, 'r')
     for line in f:
         if line.startswith("kit="):
-            numbrep = line.find("rep=")
-            cmdStart = line[numbrep:].find(" ")+numbrep+1
-            repeat = int(line[numbrep+4:cmdStart])
+            numbRep = line.find("rep=")
+            cmdStart = line[numbRep:].find(" ")+numbRep+1
+            repeat = int(line[numbRep+4:cmdStart])
             lineCmd = line[cmdStart:]
             if lineCmd.startswith("cmd:"):
                 cmd = lineCmd[4:-1]
                 if cmd in totalUndoedCommands.keys():
                     totalUndoedCommands[cmd] += repeat
+                totalCommands[cmd] = totalCommands.get(cmd, 0) + repeat
 
     documentsOpened = len(documents)
     documentsEdited = 0
@@ -689,6 +714,40 @@ if __name__ == "__main__":
         key=lambda x: -x[2]
     )
 
+    # todo:  Load size/10k  odt-count / odt-sum-time  .. odp count / odp sum-time
+    loadDataTable = [["size", "time", "extension"]]
+    loadDataTable.extend(loadSizeTimeExt)
+    sortedLoadDataTable = sorted(
+        loadDataTable[1:],
+        key=lambda x: -x[0]
+    )
+    sortedLoadDataTable.insert(0, loadDataTable[0])
+
+    saveDataTable = [["size", "time", "extension"]]
+    saveDataTable.extend(saveSizeTimeExt)
+    saveDataTable.extend(saveAsSizeTimeExt)
+    sortedSaveDataTable = sorted(
+        saveDataTable[1:],
+        key=lambda x: -x[0]
+    )
+    sortedSaveDataTable.insert(0, saveDataTable[0])
+
+    saveBgDataTable = [["size", "time", "extension"]]
+    saveBgDataTable.extend(saveBgSizeTimeExt)
+    sortedSaveBgDataTable = sorted(
+        saveBgDataTable[1:],
+        key=lambda x: -x[0]
+    )
+    sortedSaveBgDataTable.insert(0, saveBgDataTable[0])
+
+    commandDataTable = [["Command", "Total\nCommands"]]
+    commandDataTable.extend(totalCommands.items())
+    sortedCommandDataTable = sorted(
+        commandDataTable[1:],
+        key=lambda x: -x[1]
+    )
+    sortedCommandDataTable.insert(0, commandDataTable[0])
+
     convertViewerData = [["Usage", "Count"]]
     convertViewerData.extend([[category, count] for category, count in documentCategories.items()])
     sortedConvertViewerData = sorted(
@@ -703,6 +762,7 @@ if __name__ == "__main__":
         for key, count in currentCommandPreviousCommand.items()
         for current, previous in [key.split("|")]
     ])
+
     currentPreviousMatrix = createCommandTransitionMatrix(currentPreviousDataTable)
 
     # Slices out a n x n amount from the matrix and creates new sheet. Easier to view important data
@@ -736,11 +796,15 @@ if __name__ == "__main__":
 
 
     dataSets = { # Sheet name, data set (data, x axis title, heat map effect, rotate top row of text 90 degrees)
+        "Load_size_time": [sortedLoadDataTable, "load size time", False, False],
+        "Save_size_time": [sortedSaveDataTable, "save size time", False, False],
+        "SaveBg_size_time": [sortedSaveBgDataTable, "savebg size time", False, False],
         "Total_Users_Per_Document": [sortedTotalUserPerDocTable, "USERS", False, False],
         "Total_Viewers_Per_Doc": [sortedTotalViewerPerDocTable, "VIEWERS", False, False],
         "Total_Editors_Per_Doc": [sortedTotalEditorPerDocTable, "EDITORS", False, False],
         "Editor_Viewer_Per_Doc": [sortedEditorViewerDataTable, "EDITORS | VIEWERS", False, False],
         "Convert_Thumbnail_Viewer_Edit": [convertViewerData, "DOC TYPE", False, False],
+        "Total_Commands": [sortedCommandDataTable, "COMMAND", False, False],
         "Undo_Command": [undoCommandDataTable, "COMMAND", False, False],
         "Command_Transitions": [currentPreviousMatrix, None, True, True], # Change to true for heatmap effect
         "Sub_Command_Transitions": [sortedSubMatrix, None, True, True], # Change to false for no heatmap effect
@@ -758,6 +822,12 @@ if __name__ == "__main__":
     }
 
     sheetsToLogarithmic = [
+        "Total_Users_Per_Document",
+        "Total_Viewers_Per_Doc",
+        "Total_Editors_Per_Doc",
+        "Editor_Viewer_Per_Doc",
+        "Convert_Thumbnail_Viewer_Edit",
+        "Total_Commands",
         "Undo_Command"
     ]
 

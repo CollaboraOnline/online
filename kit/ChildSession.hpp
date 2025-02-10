@@ -43,14 +43,17 @@ public:
     ChildSession* _session;
     int _lastUndoCount = 0;
     const StringVector* _tokens;
+    bool _skipDestructor = false;
     LogUiCommands(ChildSession* session, const StringVector* tokens) : _session(session),_tokens(tokens) {}
+    LogUiCommands(ChildSession* session) : _session(session),_tokens(nullptr),_skipDestructor(true) {}
     ~LogUiCommands();
+    void logSaveLoad(std::string cmd, const std::string & path, std::chrono::steady_clock::time_point timeStart);
 private:
     // list the commands to log here.
     std::set<std::string> _cmdToLog = {
         "uno", "key", "mouse", "textinput", "removetextcontext",
         "paste", "insertfile", "dialogevent" };
-    // list the the uno commands here, that are not to log. It will serach these strings as a prefixes
+    // list the the uno commands here, that are not to log. It will search these strings as a prefixes
     std::set<std::string> _unoCmdToNotLog = {
         ".uno:SidebarShow", ".uno:ToolbarMode" };
     void logLine(LogUiCommandsLine &line, bool isUndoChange=false);
@@ -155,6 +158,13 @@ public:
     std::string getViewRenderState() { return _viewRenderState; }
 
     float getTilePriority(const std::chrono::steady_clock::time_point &now, const TileDesc &desc) const;
+
+    void saveLogUiBackground()
+#if defined(BUILDING_TESTS)
+    {}
+#else
+    ;
+#endif
 
 private:
     bool loadDocument(const StringVector& tokens);
@@ -341,6 +351,7 @@ private:
     friend class LogUiCommands;
     int _lastUiCmdLinesLoggedCount = 0;
     LogUiCommandsLine _lastUiCmdLinesLogged[2];
+    std::chrono::steady_clock::time_point _logUiSaveBackGroundTimeStart;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
