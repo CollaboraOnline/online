@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		BE16C9F02CD51F58005E5960 /* hello.odt in Resources */ = {isa = PBXBuildFile; fileRef = BE16C9EF2CD51F58005E5960 /* hello.odt */; };
 		BE2231BA2CC67FDE00385A9C /* coolwsd-fork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */; };
-		BE2231BC2CC6804D00385A9C /* Util-mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231BB2CC6804D00385A9C /* Util-mobile.cpp */; };
 		BE22492C2CC79AD700385A9C /* cool.html in Resources */ = {isa = PBXBuildFile; fileRef = BE22492B2CC79AD700385A9C /* cool.html */; };
 		BE2252292CC79BAE00385A9C /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = BE22492E2CC79BAE00385A9C /* bundle.js */; };
 		BE22529E2CC79BAE00385A9C /* cool-help.html in Resources */ = {isa = PBXBuildFile; fileRef = BE22492F2CC79BAE00385A9C /* cool-help.html */; };
@@ -47,8 +46,9 @@
 		BE4C62572D59EC5400047DF2 /* CheckFileInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C624F2D59EC5400047DF2 /* CheckFileInfo.cpp */; };
 		BE4C62582D59EC5400047DF2 /* WopiProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C62532D59EC5400047DF2 /* WopiProxy.cpp */; };
 		BE4C62592D59EC5400047DF2 /* StorageConnectionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C62512D59EC5400047DF2 /* StorageConnectionManager.cpp */; };
+		BE4C625C2D5A3C8A00047DF2 /* Ssl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C625B2D5A3C8A00047DF2 /* Ssl.cpp */; };
+		BE4C625E2D5A3DDA00047DF2 /* Kit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C625D2D5A3DDA00047DF2 /* Kit.cpp */; };
 		BE5A7AE22D354F4000FE7D60 /* Syscall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5A7AE12D354F4000FE7D60 /* Syscall.cpp */; };
-		BE9115AC2CECBD0100C597B2 /* FileUtil-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE9115AB2CECBD0100C597B2 /* FileUtil-apple.mm */; };
 		BE9115AE2CECBD3100C597B2 /* FileUtil-unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */; };
 		BE9115B02CECBECF00C597B2 /* Util-unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9115AF2CECBECF00C597B2 /* Util-unix.cpp */; };
 		BEA2636D2CBE38E20007435A /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2636A2CBE38E20007435A /* Uri.cpp */; };
@@ -68,7 +68,6 @@
 		BEA264922CBE986C0007435A /* KitQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264902CBE986C0007435A /* KitQueue.cpp */; };
 		BEA264932CBE986C0007435A /* KitWebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264912CBE986C0007435A /* KitWebSocket.cpp */; };
 		BEA264942CBE986C0007435A /* ChildSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2648D2CBE986C0007435A /* ChildSession.cpp */; };
-		BEA264952CBE986C0007435A /* Kit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2648E2CBE986C0007435A /* Kit.cpp */; };
 		BEA264962CBE986C0007435A /* DeltaSimd.c in Sources */ = {isa = PBXBuildFile; fileRef = BEA2648C2CBE986C0007435A /* DeltaSimd.c */; };
 		BEA264A02CBE98CD0007435A /* NetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2649C2CBE98CD0007435A /* NetUtil.cpp */; };
 		BEA264A12CBE98CD0007435A /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2649E2CBE98CD0007435A /* Socket.cpp */; };
@@ -105,7 +104,6 @@
 /* Begin PBXFileReference section */
 		BE16C9EF2CD51F58005E5960 /* hello.odt */ = {isa = PBXFileReference; lastKnownFileType = file; name = hello.odt; path = ../../../test/data/hello.odt; sourceTree = "<group>"; };
 		BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "coolwsd-fork.cpp"; path = "../../../../wsd/coolwsd-fork.cpp"; sourceTree = "<group>"; };
-		BE2231BB2CC6804D00385A9C /* Util-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-mobile.cpp"; path = "../../../../common/Util-mobile.cpp"; sourceTree = "<group>"; };
 		BE22492B2CC79AD700385A9C /* cool.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = cool.html; path = ../../../browser/dist/cool.html; sourceTree = "<group>"; };
 		BE22492D2CC79BAE00385A9C /* bundle.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = bundle.css; path = ../../../browser/dist/bundle.css; sourceTree = "<group>"; };
 		BE22492E2CC79BAE00385A9C /* bundle.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../browser/dist/bundle.js; sourceTree = "<group>"; };
@@ -175,10 +173,12 @@
 		BE4C62532D59EC5400047DF2 /* WopiProxy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WopiProxy.cpp; path = ../../../../../wsd/wopi/WopiProxy.cpp; sourceTree = "<group>"; };
 		BE4C62542D59EC5400047DF2 /* WopiStorage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = WopiStorage.hpp; path = ../../../../../wsd/wopi/WopiStorage.hpp; sourceTree = "<group>"; };
 		BE4C62552D59EC5400047DF2 /* WopiStorage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WopiStorage.cpp; path = ../../../../../wsd/wopi/WopiStorage.cpp; sourceTree = "<group>"; };
+		BE4C625A2D5A3C8A00047DF2 /* Ssl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Ssl.hpp; path = ../../../../net/Ssl.hpp; sourceTree = "<group>"; };
+		BE4C625B2D5A3C8A00047DF2 /* Ssl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Ssl.cpp; path = ../../../../net/Ssl.cpp; sourceTree = "<group>"; };
+		BE4C625D2D5A3DDA00047DF2 /* Kit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Kit.cpp; path = ../../../../kit/Kit.cpp; sourceTree = "<group>"; };
 		BE5A7A282D2BE28200FE7D60 /* FileUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FileUtil.hpp; path = ../../../../common/FileUtil.hpp; sourceTree = "<group>"; };
 		BE5A7AE02D354F4000FE7D60 /* Syscall.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Syscall.hpp; path = ../../../../common/Syscall.hpp; sourceTree = "<group>"; };
 		BE5A7AE12D354F4000FE7D60 /* Syscall.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Syscall.cpp; path = ../../../../common/Syscall.cpp; sourceTree = "<group>"; };
-		BE9115AB2CECBD0100C597B2 /* FileUtil-apple.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "FileUtil-apple.mm"; path = "../../../../common/FileUtil-apple.mm"; sourceTree = "<group>"; };
 		BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "FileUtil-unix.cpp"; path = "../../../../common/FileUtil-unix.cpp"; sourceTree = "<group>"; };
 		BE9115AF2CECBECF00C597B2 /* Util-unix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-unix.cpp"; path = "../../../../common/Util-unix.cpp"; sourceTree = "<group>"; };
 		BEA263522CBE38E20007435A /* Authorization.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Authorization.hpp; path = ../../../../common/Authorization.hpp; sourceTree = "<group>"; };
@@ -212,7 +212,6 @@
 		BEA2648B2CBE986C0007435A /* DeltaSimd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeltaSimd.h; path = ../../../../kit/DeltaSimd.h; sourceTree = "<group>"; };
 		BEA2648C2CBE986C0007435A /* DeltaSimd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = DeltaSimd.c; path = ../../../../kit/DeltaSimd.c; sourceTree = "<group>"; };
 		BEA2648D2CBE986C0007435A /* ChildSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChildSession.cpp; path = ../../../../kit/ChildSession.cpp; sourceTree = "<group>"; };
-		BEA2648E2CBE986C0007435A /* Kit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Kit.cpp; path = ../../../../kit/Kit.cpp; sourceTree = "<group>"; };
 		BEA2648F2CBE986C0007435A /* KitQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = KitQueue.hpp; path = ../../../../kit/KitQueue.hpp; sourceTree = "<group>"; };
 		BEA264902CBE986C0007435A /* KitQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KitQueue.cpp; path = ../../../../kit/KitQueue.cpp; sourceTree = "<group>"; };
 		BEA264912CBE986C0007435A /* KitWebSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KitWebSocket.cpp; path = ../../../../kit/KitWebSocket.cpp; sourceTree = "<group>"; };
@@ -331,7 +330,6 @@
 				BE4C62022D59E85500047DF2 /* Crypto.cpp */,
 				BE5A7A282D2BE28200FE7D60 /* FileUtil.hpp */,
 				BEA263562CBE38E20007435A /* FileUtil.cpp */,
-				BE9115AB2CECBD0100C597B2 /* FileUtil-apple.mm */,
 				BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */,
 				BE4C62032D59E85500047DF2 /* JailUtil.hpp */,
 				BE4C62042D59E85500047DF2 /* JailUtil.cpp */,
@@ -366,7 +364,6 @@
 				BEA2636B2CBE38E20007435A /* Util.hpp */,
 				BEA2636C2CBE38E20007435A /* Util.cpp */,
 				BE4C620C2D59E85500047DF2 /* Util-macos.cpp */,
-				BE2231BB2CC6804D00385A9C /* Util-mobile.cpp */,
 				BE4C620D2D59E85500047DF2 /* Util-server.cpp */,
 				BE9115AF2CECBECF00C597B2 /* Util-unix.cpp */,
 			);
@@ -390,7 +387,7 @@
 				BEA2648B2CBE986C0007435A /* DeltaSimd.h */,
 				BEA2648C2CBE986C0007435A /* DeltaSimd.c */,
 				BEA2648D2CBE986C0007435A /* ChildSession.cpp */,
-				BEA2648E2CBE986C0007435A /* Kit.cpp */,
+				BE4C625D2D5A3DDA00047DF2 /* Kit.cpp */,
 				BEA2648F2CBE986C0007435A /* KitQueue.hpp */,
 				BEA264902CBE986C0007435A /* KitQueue.cpp */,
 				BEA264912CBE986C0007435A /* KitWebSocket.cpp */,
@@ -414,6 +411,8 @@
 				BEA2649C2CBE98CD0007435A /* NetUtil.cpp */,
 				BEA2649D2CBE98CD0007435A /* Socket.hpp */,
 				BEA2649E2CBE98CD0007435A /* Socket.cpp */,
+				BE4C625A2D5A3C8A00047DF2 /* Ssl.hpp */,
+				BE4C625B2D5A3C8A00047DF2 /* Ssl.cpp */,
 				BEA2649F2CBE98CD0007435A /* WebSocketHandler.hpp */,
 			);
 			path = net;
@@ -672,6 +671,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE4C625C2D5A3C8A00047DF2 /* Ssl.cpp in Sources */,
+				BE4C625E2D5A3DDA00047DF2 /* Kit.cpp in Sources */,
 				BE4C623F2D59EBAC00047DF2 /* QuarantineUtil.cpp in Sources */,
 				BE4C62402D59EBAC00047DF2 /* RemoteConfig.cpp in Sources */,
 				BE4C62412D59EBAC00047DF2 /* ProxyProtocol.cpp in Sources */,
@@ -693,7 +694,6 @@
 				BE9115AE2CECBD3100C597B2 /* FileUtil-unix.cpp in Sources */,
 				BEA264932CBE986C0007435A /* KitWebSocket.cpp in Sources */,
 				BEA264942CBE986C0007435A /* ChildSession.cpp in Sources */,
-				BEA264952CBE986C0007435A /* Kit.cpp in Sources */,
 				BEA264962CBE986C0007435A /* DeltaSimd.c in Sources */,
 				BE4C62562D59EC5400047DF2 /* WopiStorage.cpp in Sources */,
 				BE4C62572D59EC5400047DF2 /* CheckFileInfo.cpp in Sources */,
@@ -701,10 +701,8 @@
 				BE4C62592D59EC5400047DF2 /* StorageConnectionManager.cpp in Sources */,
 				BEA2636E2CBE38E20007435A /* Util.cpp in Sources */,
 				BEA2636F2CBE38E20007435A /* Unit.cpp in Sources */,
-				BE9115AC2CECBD0100C597B2 /* FileUtil-apple.mm in Sources */,
 				BEA263702CBE38E20007435A /* Log.cpp in Sources */,
 				BEA263712CBE38E20007435A /* Simd.cpp in Sources */,
-				BE2231BC2CC6804D00385A9C /* Util-mobile.cpp in Sources */,
 				BEA263722CBE38E20007435A /* FileUtil.cpp in Sources */,
 				BEA263732CBE38E20007435A /* Session.cpp in Sources */,
 				BEA263742CBE38E20007435A /* TraceEvent.cpp in Sources */,
@@ -957,6 +955,22 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lpam",
+					"-lPocoFoundation",
+					"-lPocoUtil",
+					"-lPocoXML",
+					"-lPocoJSON",
+					"-lPocoNet",
+					"-lPocoNetSSL",
+					"-lPocoCrypto",
+					"-lzstd",
+					"-lpng",
+					"-lz",
+					"-lssl",
+					"-lcrypto",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.coda;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -989,6 +1003,22 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lpam",
+					"-lPocoFoundation",
+					"-lPocoUtil",
+					"-lPocoXML",
+					"-lPocoJSON",
+					"-lPocoNet",
+					"-lPocoNetSSL",
+					"-lPocoCrypto",
+					"-lzstd",
+					"-lpng",
+					"-lz",
+					"-lssl",
+					"-lcrypto",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.coda;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
