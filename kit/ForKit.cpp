@@ -49,6 +49,7 @@
 #include <common/SigUtil.hpp>
 #include <common/security.h>
 #include <common/ConfigUtil.hpp>
+#include <common/Uri.hpp>
 #include <common/Watchdog.hpp>
 #include <kit/DeltaSimd.h>
 
@@ -289,7 +290,7 @@ static bool haveCorrectCapabilities()
 #endif // __FreeBSD__
 
 /// Check if some previously forked kids have died.
-static void cleanupChildren()
+static void cleanupChildren(const std::string& childRoot)
 {
     if (Util::isKitInProcess())
         return;
@@ -366,6 +367,12 @@ static void cleanupChildren()
         {
             LOG_INF("SubForKit " << exitedChildPid << " [" << subit->second
                     << "] has exited with status " << status << ".");
+
+            // remove subforkit settings dir now
+            Poco::Path sharedPresets(childRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH);
+            std::string presetsPath = Poco::Path(sharedPresets, Uri::encode(subit->second)).toString();
+            FileUtil::removeFile(presetsPath, true);
+
             subForKitPids.erase(subit);
         }
         else
@@ -593,7 +600,8 @@ static int createSubForKit(const std::string& subForKitIdent,
 
         // Apply core configmgr xcu settings to this forkit for its coolkits to inherit
         {
-            Poco::Path presetsPath(childRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH);
+            Poco::Path sharedPresets(childRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH);
+            Poco::Path presetsPath = Poco::Path(sharedPresets, Uri::encode(subForKitIdent)).toString();
             assert(loKitPtr);
             loKitPtr->pClass->setOption(loKitPtr, "addconfig", Poco::URI(presetsPath).toString().c_str());
         }
@@ -669,7 +677,7 @@ void forkLibreOfficeKit(const std::string& childRoot,
                         bool useMountNamespaces)
 {
     // Cleanup first, to reduce disk load.
-    cleanupChildren();
+    cleanupChildren(childRoot);
 
     if (ForkCounter > 0)
     {
