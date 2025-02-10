@@ -147,7 +147,9 @@ L.Control.DocumentNameInput = L.Control.extend({
 		if (e.BaseFileName !== null) {
 			// set the document name into the name field
 			$('#document-name-input').val(e.BreadcrumbDocName !== undefined ? e.BreadcrumbDocName : e.BaseFileName);
-			this.map.uiManager.enableTooltip($('#document-name-input'));
+			var input = L.DomUtil.get('document-name-input');
+			input.setAttribute('data-cooltip', input.value);
+			L.control.attachTooltipEventListener(input, this.map);
 		}
 		if (!e.UserCanNotWriteRelative && !this.map.isReadOnlyMode()) {
 			// Save As allowed
