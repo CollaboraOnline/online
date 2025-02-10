@@ -178,7 +178,7 @@ class AboutDialog {
 			_('Copy all version information in English'),
 		);
 		var img = L.DomUtil.create('img', null, null);
-		L.LOUtil.setImage(img, 'lc_copy.svg', this.map);
+		app.LOUtil.setImage(img, 'lc_copy.svg', this.map);
 		copyversion.innerHTML =
 			'<img src="' + sanitizeUrl(img.src) + '" width="18px" height="18px">';
 		copyversion.addEventListener(
@@ -285,9 +285,9 @@ class AboutDialog {
 		const copybutton = document.querySelector(
 			'#modal-dialog-about-dialog-box-copybutton > img',
 		);
-		L.LOUtil.setImage(copybutton, 'lc_clipboard-check.svg', this.map);
+		app.LOUtil.setImage(copybutton, 'lc_clipboard-check.svg', this.map);
 		setTimeout(() => {
-			L.LOUtil.setImage(copybutton, 'lc_copy.svg', this.map);
+			app.LOUtil.setImage(copybutton, 'lc_copy.svg', this.map);
 		}, timeout);
 	}
 

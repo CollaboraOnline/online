@@ -569,7 +569,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		var tdAuthor = L.DomUtil.create(tagTd, 'cool-annotation-author', tr);
 		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
 		var user = this.map.getViewId(commentData.author);
-		L.LOUtil.setUserImage(imgAuthor, this.map, user);
+		app.LOUtil.setUserImage(imgAuthor, this.map, user);
 		imgAuthor.setAttribute('width', 32);
 		imgAuthor.setAttribute('height', 32);
 		var authorAvatarImg = imgAuthor;
@@ -579,7 +579,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		$(contentAuthor).text(commentData.author);
 		$(authorAvatarImg).attr('src', commentData.avatar);
 		if (user >= 0) {
-			var color = L.LOUtil.rgbToHex(this.map.getViewColor(user));
+			var color = app.LOUtil.rgbToHex(this.map.getViewColor(user));
 			$(authorAvatarImg).css('border-color', color);
 		}
 
@@ -1361,7 +1361,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		redline.anchorPix = this.numberArrayToCorePixFromTwips(redline.anchorPos, 0, 2);
 		redline.trackchange = true;
 		redline.text = redline.comment;
-		var rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(redline.textRange), app.map._docLayer);
+		var rectangles = L.PolyUtil.rectanglesToPolygons(app.LOUtil.stringToRectangles(redline.textRange), app.map._docLayer);
 		if (rectangles.length > 0) {
 			redline.textSelected = L.polygon(rectangles, {
 				pointerEvents: 'all',
@@ -1780,7 +1780,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		comment.parthash = comment.parthash ? comment.parthash: null;
 
 		var viewId = this.map.getViewId(comment.author);
-		var color = viewId >= 0 ? L.LOUtil.rgbToHex(this.map.getViewColor(viewId)) : '#43ACE8';
+		var color = viewId >= 0 ? app.LOUtil.rgbToHex(this.map.getViewColor(viewId)) : '#43ACE8';
 		comment.color = color;
 	}
 
@@ -1811,7 +1811,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		}
 
 		var viewId = this.map.getViewId(comment.author);
-		var color = viewId >= 0 ? L.LOUtil.rgbToHex(this.map.getViewColor(viewId)) : '#43ACE8';
+		var color = viewId >= 0 ? app.LOUtil.rgbToHex(this.map.getViewColor(viewId)) : '#43ACE8';
 		comment.color = color;
 	}
 

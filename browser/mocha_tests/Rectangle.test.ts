@@ -1,6 +1,6 @@
 /// <reference path="./refs/globals.ts"/>
 /// <reference path="./helper/util.ts"/>
-/// <reference path="../src/core/Rectangle.ts"/>
+/// <reference path="../src/app/Rectangle.ts"/>
 
 var assert = require('assert').strict;
 

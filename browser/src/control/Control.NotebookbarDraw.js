@@ -13,7 +13,7 @@
  * L.Control.NotebookbarDraw - definition of notebookbar content in Draw
  */
 
-/* global _ _UNO */
+/* global _ _UNO app */
 L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 
 	getShortcutsBarData: function() {
@@ -648,7 +648,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 										'text': _UNO('.uno:FontworkGalleryFloater'),
 										'command': '.uno:FontworkGalleryFloater',
 										// Fontwork export/import not supported in other formats.
-										'visible': L.LOUtil.isFileODF(this._map) ? 'true' : 'false',
+										'visible': app.LOUtil.isFileODF(this._map) ? 'true' : 'false',
 										'accessibility': { focusBack: true, combination: 'FW', de: null }
 									},
 									{
@@ -1401,7 +1401,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'text': _UNO('.uno:FontworkGalleryFloater'),
 								'command': '.uno:FontworkGalleryFloater',
 								// Fontwork export/import not supported in other formats.
-								'visible': L.LOUtil.isFileODF(this._map) ? 'true' : 'false',
+								'visible': app.LOUtil.isFileODF(this._map) ? 'true' : 'false',
 								'accessibility': { focusBack: true, combination: 'FG', de: null }
 							}
 						]

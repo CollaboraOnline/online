@@ -1,4 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -451,6 +452,9 @@ class LOUtil {
 			rect.left >= viewRect.left
 		);
 	}
+
+	public static Rectangle = cool.Rectangle;
+	public static createRectangle = cool.createRectangle;
 }
 
-L.LOUtil = LOUtil;
+app.LOUtil = LOUtil;

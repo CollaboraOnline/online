@@ -1431,7 +1431,7 @@ app.definitions.Socket = L.Class.extend({
 			callbackList.push({ id: 'save-to-new-file', func_: function() {
 				var filename = this._map['wopi'].BaseFileName;
 				if (filename) {
-					filename = L.LOUtil.generateNewFileName(filename, '_new');
+					filename = app.LOUtil.generateNewFileName(filename, '_new');
 					this._map.saveAs(filename);
 				}
 			}.bind(this)});

@@ -235,6 +235,7 @@ COOL_JS_LST =\
 	src/app/DocEvents.ts \
 	src/app/GraphicSelectionMiddleware.ts \
 	src/app/SearchService.ts \
+	src/app/Rectangle.ts \
 	src/app/Util.ts \
 	src/app/LOUtil.ts \
 	src/Leaflet.js \
@@ -244,7 +245,6 @@ COOL_JS_LST =\
 	src/core/Log.js \
 	src/core/Util.js \
 	src/core/geometry.ts \
-	src/core/Rectangle.ts \
 	src/core/Class.js \
 	src/core/Events.js \
 	src/core/Socket.js \

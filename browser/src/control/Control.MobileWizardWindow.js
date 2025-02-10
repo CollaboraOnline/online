@@ -618,13 +618,13 @@ L.Control.MobileWizardWindow = L.Control.extend({
 	},
 
 	_isSlidePropertyPanel: function(data) {
-		var backgroundPanel = L.LOUtil.findItemWithAttributeRecursive(data, 'id', 'SlideBackgroundPanel');
-		var layoutPanel = L.LOUtil.findItemWithAttributeRecursive(data, 'id', 'SdLayoutsPanel');
+		var backgroundPanel = app.LOUtil.findItemWithAttributeRecursive(data, 'id', 'SlideBackgroundPanel');
+		var layoutPanel = app.LOUtil.findItemWithAttributeRecursive(data, 'id', 'SdLayoutsPanel');
 		return backgroundPanel && layoutPanel;
 	},
 
 	_insertCalcBorders: function(deck) {
-		var replaceMe = L.LOUtil.findItemWithAttributeRecursive(deck, 'id', 'cellbordertype');
+		var replaceMe = app.LOUtil.findItemWithAttributeRecursive(deck, 'id', 'cellbordertype');
 		if (replaceMe) {
 			replaceMe.id = 'borderstyle';
 			replaceMe.type = 'borderstyle';
@@ -638,12 +638,12 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		if (data.children && data.children.length && data.children[0].type !== 'deck')
 			data.children.splice(0, 1);
 
-		var deck = L.LOUtil.findItemWithAttributeRecursive(data, 'type', 'deck');
+		var deck = app.LOUtil.findItemWithAttributeRecursive(data, 'type', 'deck');
 		if (deck)
 		{
 			// merge styles into text-panel for elegance
-			var stylesIdx = L.LOUtil.findIndexInParentByAttribute(deck, 'id', 'StylesPropertyPanel');
-			var textIdx = L.LOUtil.findIndexInParentByAttribute(deck, 'id', 'TextPropertyPanel');
+			var stylesIdx = app.LOUtil.findIndexInParentByAttribute(deck, 'id', 'StylesPropertyPanel');
+			var textIdx = app.LOUtil.findIndexInParentByAttribute(deck, 'id', 'TextPropertyPanel');
 
 			if (stylesIdx >= 0 && this.map.getDocType() === 'spreadsheet')
 			{       // remove rather useless calc styles panel

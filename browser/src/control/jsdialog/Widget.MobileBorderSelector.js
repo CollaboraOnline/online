@@ -19,7 +19,7 @@
  * }
  */
 
-/* global _ JSDialog $ */
+/* global _ JSDialog $ app */
 
 function _getCurrentBorderNumber(builder) {
 	var outer = builder.map['stateChangeHandler'].getItemValue('.uno:BorderOuter');
@@ -69,7 +69,7 @@ function _borderControlItem(parentContainer, data, builder, i, selected) {
 
 	var buttonId = 'border-' + i;
 	button = L.DomUtil.create('img', 'ui-content borderbutton', div);
-	L.LOUtil.setImage(button, 'fr0' + i + '.svg', builder.map);
+	app.LOUtil.setImage(button, 'fr0' + i + '.svg', builder.map);
 	button.id = buttonId;
 	if (selected)
 		$(button).addClass('selected');
@@ -77,7 +77,7 @@ function _borderControlItem(parentContainer, data, builder, i, selected) {
 	$(div).click(function () {
 		var color = 0;
 		// Find our associated color picker
-		var item = L.LOUtil.findItemWithAttributeRecursive(data.parent, 'command', '.uno:FrameLineColor');
+		var item = app.LOUtil.findItemWithAttributeRecursive(data.parent, 'command', '.uno:FrameLineColor');
 		if (item)
 			color = JSDialog.getCurrentColor(item, builder);
 		window.setBorderStyle(i, color);

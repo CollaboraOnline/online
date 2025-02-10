@@ -279,7 +279,7 @@ export class Comment extends CanvasSectionObject {
 		var tdAuthor = L.DomUtil.create('td', 'cool-annotation-author', tr);
 		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
 		var viewId = this.map.getViewId(this.sectionProperties.data.author);
-		L.LOUtil.setUserImage(imgAuthor, this.map, viewId);
+		app.LOUtil.setUserImage(imgAuthor, this.map, viewId);
 		imgAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
 		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 
@@ -471,7 +471,7 @@ export class Comment extends CanvasSectionObject {
 		}
 		var user = this.map.getViewId(this.sectionProperties.data.author);
 		if (user >= 0) {
-			var color = L.LOUtil.rgbToHex(this.map.getViewColor(user));
+			var color = app.LOUtil.rgbToHex(this.map.getViewColor(user));
 			this.sectionProperties.authorAvatartdImg.style.borderColor = color;
 		}
 

@@ -58,7 +58,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		copyBtn.setAttribute('title', _('Copy link location'));
 
         const imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
-		L.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', app.map);
+		app.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', app.map);
 		imgCopyBtn.setAttribute('width', 18);
 		imgCopyBtn.setAttribute('height', 18);
 		imgCopyBtn.style.padding = '4px';
@@ -68,7 +68,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		editBtn.setAttribute('title', _('Edit link'));
 
 		const imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
-		L.LOUtil.setImage(imgEditBtn, 'lc_edithyperlink.svg', app.map);
+		app.LOUtil.setImage(imgEditBtn, 'lc_edithyperlink.svg', app.map);
 		imgEditBtn.setAttribute('width', 18);
 		imgEditBtn.setAttribute('height', 18);
 		imgEditBtn.style.padding = '4px';
@@ -78,7 +78,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		removeBtn.setAttribute('title', _('Remove link'));
 
 		const imgRemoveBtn = L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
-		L.LOUtil.setImage(imgRemoveBtn, 'lc_removehyperlink.svg', app.map);
+		app.LOUtil.setImage(imgRemoveBtn, 'lc_removehyperlink.svg', app.map);
 		imgRemoveBtn.setAttribute('width', 18);
 		imgRemoveBtn.setAttribute('height', 18);
 		imgRemoveBtn.style.padding = '4px';

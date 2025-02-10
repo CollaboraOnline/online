@@ -13,7 +13,7 @@
  * L.Control.NotebookbarCalc - definition of notebookbar content in Calc
  */
 
-/* global _ _UNO */
+/* global _ _UNO app */
 L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 
 	getTabs: function() {
@@ -1527,7 +1527,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'text': _UNO('.uno:FontworkGalleryFloater'),
 								'command': '.uno:FontworkGalleryFloater',
 								// Fontwork export/import not supported in other formats.
-								'visible': (L.LOUtil.isFileODF(this._map)) ? 'true' : 'false',
+								'visible': (app.LOUtil.isFileODF(this._map)) ? 'true' : 'false',
 								'accessibility': { focusBack: true,	combination: 'IF', de: null }
 							}
 						]
@@ -2426,7 +2426,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'text': _UNO('.uno:FontworkGalleryFloater'),
 								'command': '.uno:FontworkGalleryFloater',
 								// Fontwork export/import not supported in other formats.
-								'visible': (L.LOUtil.isFileODF(this._map)) ? 'true' : 'false',
+								'visible': (app.LOUtil.isFileODF(this._map)) ? 'true' : 'false',
 								'accessibility': { focusBack: true,	combination: 'FW', de: null }
 							}
 						]

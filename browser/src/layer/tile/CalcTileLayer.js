@@ -1025,7 +1025,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 					var bottomRightTwips = topLeftTwips.add(offset);
 					var boundsTwips = that._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
 
-					element = L.LOUtil.createRectangle(boundsTwips.min.x * ratio, boundsTwips.min.y * ratio, boundsTwips.getSize().x * ratio, boundsTwips.getSize().y * ratio);
+					element = app.LOUtil.createRectangle(boundsTwips.min.x * ratio, boundsTwips.min.y * ratio, boundsTwips.getSize().x * ratio, boundsTwips.getSize().y * ratio);
 					return element;
 				});
 			}

@@ -104,7 +104,7 @@ var CSelections = L.Class.extend({
 		if (!this._selection) {
 			if (!this._isOle) {
 				var fillColor = this._isView ?
-					L.LOUtil.rgbToHex(this._map.getViewColor(this._viewId)) :
+					app.LOUtil.rgbToHex(this._map.getViewColor(this._viewId)) :
 					this._styleData.getPropValue('background-color');
 				var opacity = this._styleData.getFloatPropValue('opacity');
 				var weight = this._styleData.getFloatPropWithoutUnit('border-top-width');
@@ -347,7 +347,7 @@ L.TileSectionManager = L.Class.extend({
 		else {
 			var ratio = this._layer._tileSize / this._layer._tileHeightTwips;
 			var partHeightPixels = Math.round((this._layer._partHeightTwips + this._layer._spaceBetweenParts) * ratio);
-			return L.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pixels[0], app.tile.size.pixels[1]]);
+			return app.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pixels[0], app.tile.size.pixels[1]]);
 		}
 	},
 
@@ -2344,7 +2344,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_addView: function(viewInfo) {
 		if (viewInfo.color === 0 && this._map.getDocType() !== 'text') {
-			viewInfo.color = L.LOUtil.getViewIdColor(viewInfo.id);
+			viewInfo.color = app.LOUtil.getViewIdColor(viewInfo.id);
 		}
 
 		this._map.addView(viewInfo);
@@ -2943,7 +2943,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var topLeftPixels = this._twipsToCorePixels(topLeftTwips);
 			var offsetPixels = this._twipsToCorePixels(offset);
-			this._cellAutoFillAreaPixels = L.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
+			this._cellAutoFillAreaPixels = app.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
 		}
 		else {
 			this._cellAutoFillAreaPixels = null;
@@ -4153,10 +4153,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	_getTilesSectionRectangle: function () {
 		var section = app.sectionContainer.getSectionWithName(L.CSections.Tiles.name);
 		if (section) {
-			return L.LOUtil.createRectangle(section.myTopLeft[0] / app.dpiScale, section.myTopLeft[1] / app.dpiScale, section.size[0] / app.dpiScale, section.size[1] / app.dpiScale);
+			return app.LOUtil.createRectangle(section.myTopLeft[0] / app.dpiScale, section.myTopLeft[1] / app.dpiScale, section.size[0] / app.dpiScale, section.size[1] / app.dpiScale);
 		}
 		else {
-			return L.LOUtil.createRectangle(0, 0, 0, 0);
+			return app.LOUtil.createRectangle(0, 0, 0, 0);
 		}
 	},
 
@@ -4664,7 +4664,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		docBoundsRectangle[3] = docBoundsRectangle[3] - docBoundsRectangle[1];
 		for (i = 0; i < parts.length; i++) {
 			rectangle = [0, partHeightPixels * parts[i].part, partWidthPixels, partHeightPixels];
-			rectangle = L.LOUtil._getIntersectionRectangle(rectangle, docBoundsRectangle);
+			rectangle = app.LOUtil._getIntersectionRectangle(rectangle, docBoundsRectangle);
 			if (rectangle) {
 				if (rectangle[2] * rectangle[3] > maxArea) {
 					maxArea = rectangle[2] * rectangle[3];
@@ -4757,7 +4757,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var partWidthPixels = Math.round((this._partWidthTwips) * ratio);
 		var mode = 0; // mode is different only in Impress MasterPage mode so far
 
-		var intersectionAreaRectangle = L.LOUtil._getIntersectionRectangle(app.file.viewedRectangle.pToArray(), [0, 0, partWidthPixels, partHeightPixels * this._parts]);
+		var intersectionAreaRectangle = app.LOUtil._getIntersectionRectangle(app.file.viewedRectangle.pToArray(), [0, 0, partWidthPixels, partHeightPixels * this._parts]);
 
 		var queue = [];
 

@@ -27,7 +27,7 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
 
         this.size = [rectangle.pWidth, rectangle.pHeight];
         this.position = [rectangle.pX1, rectangle.pY1];
-        this.sectionProperties.color = L.LOUtil.rgbToHex(L.LOUtil.getViewIdColor(viewId));
+        this.sectionProperties.color = app.LOUtil.rgbToHex(app.LOUtil.getViewIdColor(viewId));
         this.name = OtherViewGraphicSelectionSection.sectionNamePrefix + viewId;
 
         this.sectionProperties.viewId = viewId;
