@@ -4405,9 +4405,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
         {
             if (!cachedTile || tooLarge)
                 tile.forceKeyframe();
-            tilesNeedsRendering.push_back(tile);
-            _debugRenderedTileCount++;
-            tileCache().subscribeToTileRendering(tile, session, now);
+            requestTileRendering(tile, /*forceKeyFrame*/ true, now, tilesNeedsRendering, session);
         }
     }
     if (hasOldWireId)
@@ -4569,6 +4567,30 @@ void DocumentBroker::handleMediaRequest(std::string range,
     }
 }
 
+bool DocumentBroker::requestTileRendering(TileDesc& tile, bool forceKeyframe,
+                                          const std::chrono::steady_clock::time_point &now,
+                                          std::vector<TileDesc>& tilesNeedsRendering,
+                                          const std::shared_ptr<ClientSession>& session)
+{
+    bool allSamePartAndSize = true;
+    if (!tileCache().hasTileBeingRendered(tile, &now) || // There is no in progress rendering of the given tile
+        tileCache().getTileBeingRenderedVersion(tile) < tile.getVersion()) // We need a newer version
+    {
+        tile.setVersion(++_tileVersion);
+        if (forceKeyframe)
+        {
+            LOG_TRC("Forcing keyframe for tile was oldwid " << tile.getOldWireId());
+            tile.setOldWireId(0);
+        }
+        allSamePartAndSize &= tilesNeedsRendering.empty() || tile.sameTileCombineParams(tilesNeedsRendering.back());
+        tilesNeedsRendering.push_back(tile);
+        _debugRenderedTileCount++;
+    }
+
+    tileCache().subscribeToTileRendering(tile, session, now);
+    return allSamePartAndSize;
+}
+
 void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& session)
 {
     ASSERT_CORRECT_THREAD();
@@ -4612,20 +4634,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             else
             {
                 // Not cached, needs rendering.
-                if (!tileCache().hasTileBeingRendered(tile, &now) || // There is no in progress rendering of the given tile
-                    tileCache().getTileBeingRenderedVersion(tile) < tile.getVersion()) // We need a newer version
-                {
-                    tile.setVersion(++_tileVersion);
-                    if (!cachedTile) // forceKeyframe
-                    {
-                        LOG_TRC("Forcing keyframe for tile was oldwid " << tile.getOldWireId());
-                        tile.setOldWireId(0);
-                    }
-                    allSamePartAndSize &= tilesNeedsRendering.empty() || tile.sameTileCombineParams(tilesNeedsRendering.back());
-                    tilesNeedsRendering.push_back(tile);
-                    _debugRenderedTileCount++;
-                }
-                tileCache().subscribeToTileRendering(tile, session, now);
+                allSamePartAndSize &= requestTileRendering(tile, !cachedTile, now, tilesNeedsRendering, session);
             }
             requestedTiles.pop_front();
         }
