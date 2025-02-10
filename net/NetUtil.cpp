@@ -124,8 +124,6 @@ HostEntry::HostEntry(const std::string& desc, const char* port)
 
 HostEntry::~HostEntry() = default;
 
-#if !MOBILEAPP
-
 struct DNSCacheEntry
 {
     std::string queryAddress;
@@ -190,11 +188,13 @@ public:
     }
 };
 
-HostEntry resolveDNS(const std::string& addressToCheck)
+HostEntry resolveDNS(const std::string& addressToCheck, const std::string& port = std::string())
 {
     thread_local DNSResolver resolver;
-    return resolver.resolveDNS(addressToCheck, std::string());
+    return resolver.resolveDNS(addressToCheck, port);
 }
+
+#if !MOBILEAPP
 
 std::string canonicalHostName(const std::string& addressToCheck)
 {
@@ -522,7 +522,7 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
     }
 #endif
 
-    HostEntry hostEntry(host, !port.empty() ? port.c_str() : nullptr);
+    HostEntry hostEntry(resolveDNS(host, port));
     if (const addrinfo* ainfo = hostEntry.getAddrInfo())
     {
         for (const addrinfo* ai = ainfo; ai; ai = ai->ai_next)
