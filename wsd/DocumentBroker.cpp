@@ -1825,6 +1825,8 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& configI
 
         const std::string& body = httpResponse->getBody();
 
+        LOG_DBG("Presets JSON for [" << uriAnonym << "] is: " << body);
+
         Poco::JSON::Object::Ptr settings;
         if (!JsonUtil::parseJSON(body, settings))
         {
