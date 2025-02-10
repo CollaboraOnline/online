@@ -37,13 +37,13 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	image.id = imageId;
 	image.src = data.image.replace(/\\/g, '');
 	image.alt = data.text;
-	image.title = data.text;
 	image.tabIndex = 0;
 	image.draggable = false;
 	image.ondragstart = function() { return false; };
+	image.setAttribute('data-cooltip', data.text);
 
 	if (builder.map) {
-		builder.map.uiManager.enableTooltip(image);
+		L.control.attachTooltipEventListener(image, builder.map);
 	}
 
 	// Line width dialog is affected from delay on image render.
