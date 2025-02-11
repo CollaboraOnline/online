@@ -9,6 +9,11 @@
  */
 #pragma once
 
+// macOS can be both server and mobile, so let's include it here, too
+#if defined(MACOS)
+#include "macos.h"
+#endif
+
 #ifdef __linux__
 
 #if !MOBILEAPP
