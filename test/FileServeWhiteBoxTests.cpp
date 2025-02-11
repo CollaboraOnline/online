@@ -298,7 +298,6 @@ void FileServeTests::testPreProcessedFile()
 
     {
         const std::string data = R"xxx(<!DOCTYPE html>
-<!-- saved from url=(0054)http://leafletjs.com/examples/quick-start-example.html -->
 <html %UI_RTL_SETTINGS% style="height:100%"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Online Editor</title>
 <meta charset="utf-8">
