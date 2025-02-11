@@ -257,6 +257,8 @@ app.definitions.Socket = L.Class.extend({
 
 		msg += ' accessibilityState=' + window.getAccessibilityState();
 
+		msg += ' clientvisiblearea=' + window.makeClientVisibleArea();
+
 		this._doSend(msg);
 		for (var i = 0; i < this._msgQueue.length; i++) {
 			this._doSend(this._msgQueue[i]);
