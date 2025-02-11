@@ -1591,6 +1591,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
                 << ConfigUtil::getConfigValue<int>("security.macro_security_level", 1);
         }
 
+        if (!getInitialClientVisibleArea().empty())
+        {
+            oss << " clientvisiblearea=" << getInitialClientVisibleArea();
+        }
+
         if (ConfigUtil::getConfigValue<bool>("accessibility.enable", false))
         {
             oss << " accessibilityState=" << std::boolalpha << getAccessibilityState();

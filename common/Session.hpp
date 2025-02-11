@@ -296,6 +296,8 @@ public:
 
     const std::string& getMacroSecurityLevel() const { return _macroSecurityLevel; }
 
+    const std::string& getInitialClientVisibleArea() const { return _initialClientVisibleArea; }
+
     bool getAccessibilityState() const { return _accessibilityState; }
 
     void setAccessibilityState(bool val) { _accessibilityState = val; }
@@ -435,6 +437,8 @@ private:
 
     /// Level of Macro security.
     std::string _macroSecurityLevel;
+
+    std::string _initialClientVisibleArea;
 
     /// Specifies whether accessibility support is enabled for this session.
     bool _accessibilityState;

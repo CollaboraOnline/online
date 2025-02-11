@@ -1684,6 +1684,14 @@ function getInitializerClass() {
 		return global.makeDocAndWopiSrcUrl(httpURI, docUrlParams, suffix, wopiSrcParam);
 	};
 
+	global.makeClientVisibleArea = function() {
+		// An approximation till we don't yet have CanvasTileLayer, which would properly use
+		// map.getPixelBounds() and pixelsToTwips().
+		const width = window.innerWidth * 15;
+		const height = window.innerHeight * 15;
+		return '0;0;' + width + ';' + height;
+	};
+
 	// Encode a string to hex.
 	global.hexEncode = function (string) {
 		var bytes = new TextEncoder().encode(string);
@@ -1802,6 +1810,7 @@ function getInitializerClass() {
 				msg += ' darkBackground=' + darkBackground;
 
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
+				msg += ' clientvisiblearea=' + window.makeClientVisibleArea();
 
 				global.socket.send(msg);
 			}

@@ -229,6 +229,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _macroSecurityLevel = std::move(value);
             ++offset;
         }
+        else if (name == "clientvisiblearea")
+        {
+            _initialClientVisibleArea = std::move(value);
+            ++offset;
+        }
         else if (name == "accessibilityState")
         {
             _accessibilityState = value == "true";

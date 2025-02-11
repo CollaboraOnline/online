@@ -1874,6 +1874,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     const std::string& batchMode = session->getBatchMode();
     const std::string& enableMacrosExecution = session->getEnableMacrosExecution();
     const std::string& macroSecurityLevel = session->getMacroSecurityLevel();
+    const std::string& clientVisibleArea = session->getInitialClientVisibleArea();
     const bool accessibilityState = session->getAccessibilityState();
     const std::string& userTimezone = session->getTimezone();
     const std::string& userPrivateInfo = session->getUserPrivateInfo();
@@ -1896,6 +1897,9 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
 
     if (!macroSecurityLevel.empty())
         options += ",MacroSecurityLevel=" + macroSecurityLevel;
+
+    if (!clientVisibleArea.empty())
+        options += ",ClientVisibleArea=" + clientVisibleArea;
 
     if (!userTimezone.empty())
         options += ",Timezone=" + userTimezone;
