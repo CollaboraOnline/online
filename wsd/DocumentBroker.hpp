@@ -416,7 +416,7 @@ public:
 
     void handleTileRequest(const StringVector &tokens, bool forceKeyframe,
                            const std::shared_ptr<ClientSession>& session);
-    void handleTileCombinedRequest(TileCombined& tileCombined, bool forceKeyframe,
+    void handleTileCombinedRequest(TileCombined& tileCombined, bool canForceKeyframe,
                                    const std::shared_ptr<ClientSession>& session);
     void sendRequestedTiles(const std::shared_ptr<ClientSession>& session);
     void sendTileCombine(const TileCombined& tileCombined);
