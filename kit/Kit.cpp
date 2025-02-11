@@ -198,7 +198,7 @@ public:
                   else
                   {
                       // Failed!
-                      LOG_WRN("BgSave timed out and will self-destroy");
+                      LOG_WRN("BgSave timed out and will self-destroy process " << getpid());
                       Log::shutdown(); // Flush logs.
                       // this attempts to get the saving-thread to generate a backtrace
                       Util::killThreadById(savingTid, SIGABRT);
@@ -208,6 +208,7 @@ public:
 
                       // raise(3) will exit the current thread, not the process.
                       sleep(30); // long enough for a trace ?
+                      std::cerr << "BgSave failed to terminate after SIGABRT - will hard self-destroy process " << getpid() << std::endl;
                       ::kill(0, SIGKILL); // kill(2) is trapped by seccomp.
                   }
               })
@@ -228,6 +229,12 @@ private:
 };
 
 static std::unique_ptr<BackgroundSaveWatchdog> BgSaveWatchdog;
+
+void Document::shutdownBackgroundWatchdog()
+{
+    if (BgSaveWatchdog)
+        BgSaveWatchdog->complete();
+}
 
 namespace
 {
@@ -1359,10 +1366,6 @@ void Document::handleSaveMessage(const std::string &)
     if (_isBgSaveProcess)
     {
         LOG_TRC("BgSave completed");
-        if (BgSaveWatchdog)
-        {
-            BgSaveWatchdog->complete();
-        }
 
         auto socket = _saveProcessParent.lock();
         if (socket)

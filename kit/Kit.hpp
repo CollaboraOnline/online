@@ -380,6 +380,8 @@ public:
 
     bool isBackgroundSaveProcess() const { return _isBgSaveProcess; }
 
+    static void shutdownBackgroundWatchdog();
+
     /// Save is async, so we need to set 'unmodified' while we are saving
     /// but this can transition back to modified if save fails.
     STATE_ENUM(ModifiedState, Modified, UnModifiedButSaving, UnModified);
