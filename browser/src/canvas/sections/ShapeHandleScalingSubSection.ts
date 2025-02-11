@@ -36,7 +36,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		this.sectionProperties.distanceToCenter = null; // Distance to center.
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 		this.sectionProperties.cropModeEnabled = cropModeEnabled;
-		this.sectionProperties.cropCursor = 'url(' + L.LOUtil.getURL("images/cursors/crop.png") + ') 8 8, auto';
+		this.sectionProperties.cropCursor = 'url(' + app.LOUtil.getURL("images/cursors/crop.png") + ') 8 8, auto';
 
 		this.setMousePointerType();
 
