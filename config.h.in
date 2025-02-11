@@ -117,6 +117,9 @@
 /* Define to 1 when we should use systemplate and jails (eg. normal coolwsd server), otherwise 0 (eg. CODA). */
 #undef ENABLE_CHILDROOTS
 
+/* Define to 1 when the compiled code is supposed to be part of CODA (the entry point is from the app, not from main() etc.), otherwise 0 (ie. normal server). */
+#undef ENABLE_CODA
+
 /* Default value of feature_lock.unlock_description */
 #undef UNLOCK_DESCRIPTION
 
