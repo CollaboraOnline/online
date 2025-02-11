@@ -1695,20 +1695,6 @@ private:
         _fd = -1; // No longer our socket fd.
     }
 
-    std::shared_ptr<StreamSocket> connect()
-    {
-        _socket.reset(); // Reset to make sure we are disconnected.
-        std::shared_ptr<StreamSocket> socket =
-            net::connect(_host, _port, isSecure(), shared_from_this());
-        assert((!socket || _fd == socket->getFD()) &&
-               "The socket FD must have been set in onConnect");
-
-        // When used with proxy.php we may indeed get nullptr here.
-        // assert(socket && "Unexpected nullptr returned from net::connect");
-        _socket = socket; // Hold a weak pointer to it.
-        return socket; // Return the shared pointer.
-    }
-
     void asyncConnectCompleted(SocketPoll& poll, const std::shared_ptr<StreamSocket> &socket, net::AsyncConnectResult result)
     {
         assert((!socket || _fd == socket->getFD()) &&
