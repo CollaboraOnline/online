@@ -382,7 +382,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	visibility: hidden;
 }
 
-#StyleListPanelPanelExpander #TemplatePanel #filter select {
+#TemplatePanel #filter select {
 	width: 100%;
 }
 
@@ -406,7 +406,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	height: calc(100% - 45px);
 }
 
-#StyleListPanelPanelExpander #TemplatePanel .sidebar .unotoolbutton {
+#TemplatePanel .sidebar .unotoolbutton {
 	padding: 4px;
 	border: 0 solid transparent !important;
 	border-bottom-width: 2px !important;
@@ -414,12 +414,12 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	border-radius: 0 !important;
 }
 
-#StyleListPanelPanelExpander #TemplatePanel .sidebar .unotoolbutton:hover,
-#StyleListPanelPanelExpander #TemplatePanel .sidebar .unotoolbutton.selected {
+#TemplatePanel .sidebar .unotoolbutton:hover,
+#TemplatePanel .sidebar .unotoolbutton.selected {
 	border-bottom-color: rgba(var(--doc-type)) !important;
 }
 
-#StyleListPanelPanelExpander #TemplatePanel .sidebar .ui-content.unobutton {
+#TemplatePanel .sidebar .ui-content.unobutton {
 	width: var(--btn-size-m);
 	height: var(--btn-size-m);
 }
@@ -427,15 +427,6 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #TemplatePanel {
 	display: flex;
 	flex-direction: column;
-}
-
-#TemplatePanel > div {
-	flex-grow: 0;
-}
-
-#TemplatePanel > div:nth-child(3),
-#TemplatePanel > div:nth-child(4) {
-	flex-grow: 1;
 }
 
 #TemplatePanel > div:nth-child(4),
