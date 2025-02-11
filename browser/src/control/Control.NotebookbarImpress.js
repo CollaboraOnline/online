@@ -146,21 +146,24 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		];
 	},
 
-	getFullJSON: function(selectedId) {
-		return this.getNotebookbar(
-			[
-				this.getFileTab(),
-				this.getHomeTab(),
-				this.getInsertTab(),
-				this.getLayoutTab(),
-				this.getReviewTab(),
-				this.getFormatTab(),
-				this.getTableTab(),
-				this.getDrawTab(),
-				this.getMasterTab(),
-				this.getViewTab(),
-				this.getHelpTab()
-			], selectedId);
+	getTabsJSON: function () {
+		return [
+			this.getFileTab(),
+			this.getHomeTab(),
+			this.getInsertTab(),
+			this.getLayoutTab(),
+			this.getReviewTab(),
+			this.getFormatTab(),
+			this.getTableTab(),
+			this.getDrawTab(),
+			this.getMasterTab(),
+			this.getViewTab(),
+			this.getHelpTab()
+		];
+	},
+
+	getFullJSON: function (selectedId) {
+		return this.getNotebookbar(this.getTabsJSON(), selectedId);
 	},
 
 	getFileTab: function() {
