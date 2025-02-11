@@ -48,6 +48,7 @@
 		BE4C62592D59EC5400047DF2 /* StorageConnectionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C62512D59EC5400047DF2 /* StorageConnectionManager.cpp */; };
 		BE4C625C2D5A3C8A00047DF2 /* Ssl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C625B2D5A3C8A00047DF2 /* Ssl.cpp */; };
 		BE4C625E2D5A3DDA00047DF2 /* Kit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C625D2D5A3DDA00047DF2 /* Kit.cpp */; };
+		BE4C62612D5B736200047DF2 /* coolwsd.xml in Resources */ = {isa = PBXBuildFile; fileRef = BE4C62602D5B736200047DF2 /* coolwsd.xml */; };
 		BE5A7AE22D354F4000FE7D60 /* Syscall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5A7AE12D354F4000FE7D60 /* Syscall.cpp */; };
 		BE9115AE2CECBD3100C597B2 /* FileUtil-unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */; };
 		BE9115B02CECBECF00C597B2 /* Util-unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9115AF2CECBECF00C597B2 /* Util-unix.cpp */; };
@@ -176,6 +177,7 @@
 		BE4C625A2D5A3C8A00047DF2 /* Ssl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Ssl.hpp; path = ../../../../net/Ssl.hpp; sourceTree = "<group>"; };
 		BE4C625B2D5A3C8A00047DF2 /* Ssl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Ssl.cpp; path = ../../../../net/Ssl.cpp; sourceTree = "<group>"; };
 		BE4C625D2D5A3DDA00047DF2 /* Kit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Kit.cpp; path = ../../../../kit/Kit.cpp; sourceTree = "<group>"; };
+		BE4C62602D5B736200047DF2 /* coolwsd.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = coolwsd.xml; path = ../../../coolwsd.xml; sourceTree = "<group>"; };
 		BE5A7A282D2BE28200FE7D60 /* FileUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FileUtil.hpp; path = ../../../../common/FileUtil.hpp; sourceTree = "<group>"; };
 		BE5A7AE02D354F4000FE7D60 /* Syscall.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Syscall.hpp; path = ../../../../common/Syscall.hpp; sourceTree = "<group>"; };
 		BE5A7AE12D354F4000FE7D60 /* Syscall.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Syscall.cpp; path = ../../../../common/Syscall.cpp; sourceTree = "<group>"; };
@@ -284,7 +286,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BE22492A2CC79AAC00385A9C /* dist */ = {
+		BE22492A2CC79AAC00385A9C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				BE22AA9B2CC7AE7400385A9C /* images */,
@@ -293,11 +295,12 @@
 				BE22492B2CC79AD700385A9C /* cool.html */,
 				BE22492F2CC79BAE00385A9C /* cool-help.html */,
 				BEEF3F852CE2139E00ABE785 /* coolkitconfig.xcu */,
+				BE4C62602D5B736200047DF2 /* coolwsd.xml */,
 				BE2249302CC79BAE00385A9C /* device-desktop.css */,
 				BE2249312CC79BAE00385A9C /* global.js */,
 				BE16C9EF2CD51F58005E5960 /* hello.odt */,
 			);
-			path = dist;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		BE4C624D2D59EC1D00047DF2 /* wopi */ = {
@@ -473,7 +476,7 @@
 		BECC4BA22CBD3FA300A120B3 = {
 			isa = PBXGroup;
 			children = (
-				BE22492A2CC79AAC00385A9C /* dist */,
+				BE22492A2CC79AAC00385A9C /* Resources */,
 				BEA2637D2CBE39C30007435A /* Online */,
 				BECC4BAD2CBD3FA300A120B3 /* coda */,
 				BECC4BBF2CBD3FA400A120B3 /* codaTests */,
@@ -617,6 +620,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE22AA9C2CC7AE7400385A9C /* images in Resources */,
+				BE4C62612D5B736200047DF2 /* coolwsd.xml in Resources */,
 				BE2252292CC79BAE00385A9C /* bundle.js in Resources */,
 				BE22529E2CC79BAE00385A9C /* cool-help.html in Resources */,
 				BE2253F32CC79BAE00385A9C /* device-desktop.css in Resources */,

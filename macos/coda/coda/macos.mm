@@ -64,4 +64,9 @@ std::string getResourceURL(const char *name, const char *ext) {
     return std::string([[url absoluteString] UTF8String]);
 }
 
+std::string getResourcePath(const char *name, const char *ext) {
+    NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:name] ofType:[NSString stringWithUTF8String:ext]];
+    return std::string([path UTF8String]);
+}
+
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
