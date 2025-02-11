@@ -1554,9 +1554,11 @@ if test "$enable_coda" = "yes"; then
         AC_MSG_ERROR([--enable-coda currently depends on --enable-debug, please add it to ./configure. Many things haven't been updated to build a production CODA app yet.])
     fi
     AC_DEFINE([ENABLE_CHILDROOTS],0,[Disable systemplate and jails when building CODA.])
+    AC_DEFINE([ENABLE_CODA],1,[Enable the CODA build - disable the main() function in COOLWSD etc.])
 else
     AC_MSG_RESULT([no])
     AC_DEFINE([ENABLE_CHILDROOTS],1,[Normal server, enable systemplate and jails.])
+    AC_DEFINE([ENABLE_CODA],0,[Disable the CODA build - normal server, the main() function in COOLWSD is the entry point, etc.])
 fi
 
 if test "$host_os" = "emscripten" ; then
