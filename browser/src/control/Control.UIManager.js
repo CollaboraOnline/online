@@ -697,19 +697,25 @@ L.Control.UIManager = L.Control.extend({
 				newButton[0].text = newButton[0].hint;
 				topToolbar.insertItem(insertBefore, newButton);
 
-				// add the css rule for the image
-				const item = document.querySelector(".w2ui-icon." + encodeURIComponent(button.id));
-				if (item) {
-					item.style.background = 'url("' + encodeURI(button.imgurl) + '")';
-					item.style.backgroundRepeat = 'no-repeat';
-					item.style.backgroundPosition = 'center';
-				}
+				// updated css rules to show custom button images
+				this.setCssRulesForCustomButtons();
 			}
 		}
 
 		if (this.map.isReadOnlyMode()) {
 			// Just add a menu entry for it
 			this.map.fire('addmenu', {id: button.id, label: button.hint});
+		}
+	},
+
+	setCssRulesForCustomButtons: function() {
+		for (var button of this.customButtons) {
+			const item = document.querySelector(".w2ui-icon." + encodeURIComponent(button.id));
+			if (item) {
+				item.style.background = 'url("' + encodeURI(button.imgurl) + '")';
+				item.style.backgroundRepeat = 'no-repeat';
+				item.style.backgroundPosition = 'center';
+			}
 		}
 	},
 
