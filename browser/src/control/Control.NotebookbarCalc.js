@@ -83,20 +83,23 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		];
 	},
 
-	getFullJSON: function(selectedId) {
-		return this.getNotebookbar(
-			[
-				this.getFileTab(),
-				this.getHomeTab(),
-				this.getInsertTab(),
-				this.getLayoutTab(),
-				this.getDataTab(),
-				this.getReviewTab(),
-				this.getFormatTab(),
-				this.getDrawTab(),
-				this.getViewTab(),
-				this.getHelpTab()
-			], selectedId);
+	getTabsJSON: function () {
+		return [
+			this.getFileTab(),
+			this.getHomeTab(),
+			this.getInsertTab(),
+			this.getLayoutTab(),
+			this.getDataTab(),
+			this.getReviewTab(),
+			this.getFormatTab(),
+			this.getDrawTab(),
+			this.getViewTab(),
+			this.getHelpTab()
+		]
+	},
+
+	getFullJSON: function (selectedId) {
+		return this.getNotebookbar(this.getTabsJSON(), selectedId);
 	},
 
 	getFileTab: function() {

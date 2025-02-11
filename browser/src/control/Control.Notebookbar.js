@@ -259,6 +259,11 @@ L.Control.Notebookbar = L.Control.extend({
 		return [];
 	},
 
+	getTabsJSON: function() {
+		// implement in child classes
+		return [];
+	},
+
 	getShortcutsBarData: function() {
 		var hasSave = !this._map['wopi'].HideSaveOption;
 		return [
@@ -401,6 +406,58 @@ L.Control.Notebookbar = L.Control.extend({
 		this.updateTabsVisibilityForContext(this._lastContext);
 	},
 
+	updateButtonVisibilityForContext: function (context, tabId) {
+		const tabsJSON = this.getTabsJSON();
+		const splitTabId = tabId.split('-');
+		if (splitTabId.length !== 3)
+			return;
+
+		const tabName = splitTabId[0];
+		const toShow = [];
+		const toHide = [];
+
+		tabsJSON.forEach((tabContent) => {
+			if (!tabContent || !tabContent.children[0] || !tabContent.children[0].children) return;
+
+			const tabPageId = tabContent.children[0].id;
+			const tabPageName = tabPageId.split('-')[0];
+			if (tabPageName !== tabName)
+				return;
+
+			const children = tabContent.children[0].children;
+			const requiredContext = context || 'default';
+
+			children.forEach((item) => {
+				if (!item.context) return;
+
+				if (item.context.indexOf(requiredContext) >= 0) {
+					toShow.push(item.command.replace('.uno:', ''));
+				} else {
+					toHide.push(item.command.replace('.uno:', ''));
+				}
+			});
+		});
+
+		toHide.forEach((item) => {
+			this.showButton(item, false);
+		});
+		toShow.forEach((item) => {
+			this.showButton(item, true);
+		});
+	},
+
+	showButton: function (id, show) {
+		if (!id) return;
+
+		this.builder.executeAction(this.parentContainer, {
+			control_id: id,
+			control: { id: id },
+			action_type: show ? 'show' : 'hide',
+		});
+
+		JSDialog.RefreshScrollables();
+	},
+
 	updateTabsVisibilityForContext: function(requestedContext) {
 		var tabs = this.getTabs();
 		var contextTab = null;
@@ -438,17 +495,23 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 
 		if (alreadySelected) {
-			return alreadySelected.attr('id');
+			const tabId = alreadySelected.attr('id');
+			this.updateButtonVisibilityForContext(requestedContext, tabId);
+			return tabId;
 		}
 
 		if (contextTab) {
 			contextTab.click();
-			return contextTab.attr('id');
+			const tabId = contextTab.attr('id');
+			this.updateButtonVisibilityForContext(requestedContext, tabId);
+			return tabId;
 		}
 
 		if (defaultTab) {
 			defaultTab.click();
-			return defaultTab.attr('id');
+			const tabId = defaultTab.attr('id');
+			this.updateButtonVisibilityForContext(requestedContext, tabId);
+			return tabId;
 		}
 	},
 
@@ -474,21 +537,8 @@ L.Control.Notebookbar = L.Control.extend({
 		if (this.shouldIgnoreContextChange([detail.context, detail.oldContext]))
 			return;
 
-		let visibleTabId = this.updateTabsVisibilityForContext(detail.context);
-		if (visibleTabId === 'Draw-tab-label')
-			this.toggleCropButton(detail.context);
-
+		this.updateTabsVisibilityForContext(detail.context);
 		this._lastContext = detail.context;
-	},
-
-
-	toggleCropButton(context) {
-		const isGraphic = context === 'Graphic';
-		if (isGraphic) {
-			this.map._docLayer._onStateChangedMsg('statechanged: .uno:Crop=enabled');
-		} else {
-			this.map._docLayer._onStateChangedMsg('statechanged: .uno:Crop=disabled');
-		}
 	},
 
 	onSlideHideToggle: function() {
