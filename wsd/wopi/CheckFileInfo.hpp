@@ -89,6 +89,9 @@ private:
         }
     }
 
+    /// Parses the CheckFileInfo response and validates it.
+    bool parseResponseAndValidate(const std::string& response);
+
     std::shared_ptr<TerminatingPoll> _poll;
     Poco::URI _url; ///< Sanitized URL to the document. Can change through redirection.
     const std::string _docKey; ///< Unique DocKey.

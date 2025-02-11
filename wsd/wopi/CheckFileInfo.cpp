@@ -121,7 +121,7 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
             return;
         }
 
-        if (JsonUtil::parseJSON(wopiResponse, _wopiInfo))
+        if (parseResponseAndValidate(wopiResponse))
         {
             LOG_DBG("WOPI::CheckFileInfo ("
                     << callDurationMs
@@ -195,6 +195,26 @@ void CheckFileInfo::checkFileInfoSync(int redirectionLimit)
     }
 }
 
+bool CheckFileInfo::parseResponseAndValidate(const std::string& response)
+{
+    if (JsonUtil::parseJSON(response, _wopiInfo))
+    {
+        // Validate the filename is sane.
+        std::string filename;
+        if (JsonUtil::findJSONValue(_wopiInfo, "BaseFileName", filename) &&
+            filename.find_first_of('/') == std::string::npos)
+        {
+            return true; // We're good.
+        }
+
+        LOG_ERR("BaseFileName should be the name of the file without a path, but is: [" << filename
+                                                                                        << ']');
+    }
+
+    _wopiInfo.reset(); // Clear the parsed JSON, if any.
+    return false;
+}
+
 std::unique_ptr<WopiStorage::WOPIFileInfo>
 CheckFileInfo::wopiFileInfo(const Poco::URI& uriPublic) const
 {
@@ -211,11 +231,8 @@ CheckFileInfo::wopiFileInfo(const Poco::URI& uriPublic) const
         JsonUtil::findJSONValue(_wopiInfo, "BaseFileName", filename);
         JsonUtil::findJSONValue(_wopiInfo, "LastModifiedTime", modifiedTime);
 
-        if (filename.find_first_of('/') != std::string::npos)
-        {
-            LOG_ERR("BaseFileName should be the name of the file without a path, but is: " << filename);
-            filename.clear();
-        }
+        assert(filename.find_first_of('/') == std::string::npos &&
+               "Invalid BaseFileName, which had passed prior validation");
 
         Poco::JSON::Object::Ptr wopiInfo = _wopiInfo;
         wopiFileInfo = std::make_unique<WopiStorage::WOPIFileInfo>(
