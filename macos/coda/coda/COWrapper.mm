@@ -57,14 +57,29 @@ static int closeNotificationPipeForForwardingThread[2];
         assert(coolwsd == nullptr);
 
         // Prepare arguments for COOLWSD
-        char *argv[2];
-        argv[0] = strdup("mobile");
-        argv[1] = nullptr;
+        const int argc = 10;
+        char *argv[argc + 1];
+        argv[0] = strdup("coda");
+        //--o:sys_template_path="$(PROJECT_DIR)/../../systemplate"
+        //--o:child_root_path="$(PROJECT_DIR)/../../jails"
+        argv[1] = strdup("--o:security.capabilities=false");
+        argv[2] = strdup("--o:storage.filesystem[@allow]=true");
+        argv[3] = strdup("--o:logging.color=false");
+        argv[4] = strdup("--o:logging.file[@enable]=false");
+        argv[5] = strdup("--o:logging.level=trace");
+        argv[6] = strdup("--o:trace_event[@enable]=true");
+        argv[7] = strdup("--o:ssl.enable=false");
+        //argv[] = strdup("--o:ssl.cert_file_path="$(PROJECT_DIR)/../../etc/cert.pem"
+        //argv[] = strdup("--o:ssl.key_file_path="$(PROJECT_DIR)/../../etc/key.pem"
+        //argv[] = strdup("--o:ssl.ca_file_path="$(PROJECT_DIR)/../../etc/ca-chain.cert.pem"
+        argv[8] = strdup("--o:admin_console.username=admin");
+        argv[9] = strdup("--o:admin_console.password=admin");
+        argv[10] = nullptr;
 
         Util::setThreadName("app");
 
         coolwsd = new COOLWSD();
-        coolwsd->run(1, argv);
+        coolwsd->run(argc, argv);
         delete coolwsd;
         coolwsd = nullptr; // Reset the pointer after deletion
         NSLog(@"CollaboraOffice: The COOLWSD thread completed");
