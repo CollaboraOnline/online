@@ -123,6 +123,7 @@ class MobileBottomBar extends JSDialog.Toolbar {
 					]},
 				{type: 'toolitem', id: 'flipvertical', text: _UNO('.uno:FlipVertical', 'text', true), command: '.uno:FlipVertical', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
 				{type: 'toolitem', id: 'fliphorizontal', text: _UNO('.uno:FlipHorizontal', 'text', true), command: '.uno:FlipHorizontal', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+				{type: 'toolitem', id: 'crop', text: _UNO('.uno:Crop'), command: '.uno:Crop', context: ['Graphic'] },
 			];
 		} else if (this.docType == 'spreadsheet') {
 			return [
