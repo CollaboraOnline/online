@@ -132,6 +132,14 @@ struct DNSCacheEntry
     std::string queryPort;
     HostEntry hostEntry;
     std::chrono::steady_clock::time_point lookupTime;
+
+    DNSCacheEntry(const std::string& address, const std::string& port, const HostEntry& entry, const std::chrono::steady_clock::time_point& time)
+    : queryAddress(address)
+    , queryPort(port)
+    , hostEntry(entry)
+    , lookupTime(time)
+    {
+    }
 };
 
 static HostEntry resolveDNS(const std::string& addressToCheck,
