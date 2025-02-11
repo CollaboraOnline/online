@@ -414,7 +414,7 @@ var NotebookbarAccessibility = function() {
 
 	this.initialize = function() {
 		setTimeout(function() {
-			if (window.mode.isDesktop()) {
+			if (window.mode.isDesktop() && !this.initialized) {
 				if (document.body.dataset.userinterfacemode === 'notebookbar') {
 					this.tabInfoList = this.definitions.getDefinitions();
 
