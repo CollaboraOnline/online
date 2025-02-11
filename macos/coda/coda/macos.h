@@ -34,4 +34,9 @@ std::string getAppSupportURL();
  */
 std::string getResourceURL(const char *name, const char *ext);
 
+/**
+ * Get (filelystem) path of a resource in the bundle.
+ */
+std::string getResourcePath(const char *name, const char *ext);
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
