@@ -63,13 +63,11 @@ static int closeNotificationPipeForForwardingThread[2];
 
         Util::setThreadName("app");
 
-        while (true) {
-            coolwsd = new COOLWSD();
-            coolwsd->run(1, argv);
-            delete coolwsd;
-            coolwsd = nullptr; // Reset the pointer after deletion
-            LOG_TRC("One run of COOLWSD completed");
-        }
+        coolwsd = new COOLWSD();
+        coolwsd->run(1, argv);
+        delete coolwsd;
+        coolwsd = nullptr; // Reset the pointer after deletion
+        NSLog(@"CollaboraOffice: The COOLWSD thread completed");
     }).detach();
 }
 
