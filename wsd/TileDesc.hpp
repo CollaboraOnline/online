@@ -115,6 +115,7 @@ public:
     void setOldWireId(TileWireId id) { _oldWireId = id; }
     void forceKeyframe() { setOldWireId(0); }
     TileWireId getOldWireId() const { return _oldWireId; }
+    bool isForcedKeyFrame() const { return getOldWireId() == 0; }
     void setWireId(TileWireId id) { _wireId = id; }
     TileWireId getWireId() const { return _wireId; }
 

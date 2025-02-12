@@ -4385,7 +4385,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
         tile.setVersion(++_tileVersion);
 
         // client can force keyframe with an oldWid == 0 on tile
-        if (canForceKeyframe && tile.getOldWireId() == 0)
+        if (canForceKeyframe && tile.isForcedKeyFrame())
         {
             // combinedtiles requests direct from the browser get flagged.
             // The browser may have dropped / cleaned its cache, so we can't
@@ -4585,7 +4585,7 @@ bool DocumentBroker::requestTileRendering(TileDesc& tile, bool forceKeyframe,
         if (forceKeyframe)
         {
             LOG_TRC("Forcing keyframe for tile was oldwid " << tile.getOldWireId());
-            tile.setOldWireId(0);
+            tile.forceKeyframe();
         }
         allSamePartAndSize &= tilesNeedsRendering.empty() || tile.sameTileCombineParams(tilesNeedsRendering.back());
         tilesNeedsRendering.push_back(tile);

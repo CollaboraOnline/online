@@ -162,7 +162,7 @@ namespace RenderTiles
                            mode);
 
             // FIXME: prettify this.
-            bool forceKeyframe = tiles[tileIndex].getOldWireId() == 0;
+            bool forceKeyframe = tiles[tileIndex].isForcedKeyFrame();
 
             // FIXME: share the same wireId for all tiles concurrently rendered.
             TileWireId wireId = getCurrentWireId(true);
