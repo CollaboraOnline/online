@@ -396,6 +396,15 @@ Example:
     2.dialogevent 21 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "16;100;100", "type": "combobox"}
     3.dialogevent 10 { "id": "-1" }
 
+exportas url=<url>
+
+    This command allows for the seamless export of documents within the WOPI protocol framework.
+
+    Requests the export of a file, directing the server to handle it through a WOPI (Web Application Open Platform Interface) URL.
+
+    - <url> is the URL that specifies the location of the file to be exported. This URL is passed using the wopi protocol, encoded via encodeURIComponent to ensure the proper formatting for transfer.
+
+
 contentcontrolevent <JSON>
     *Properties:
     type - date,drop-down
