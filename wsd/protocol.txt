@@ -404,6 +404,16 @@ exportas url=<url>
 
     - <url> is the URL that specifies the location of the file to be exported. This URL is passed using the wopi protocol, encoded via encodeURIComponent to ensure the proper formatting for transfer.
 
+formfieldevent { "type": "<objectType>", "cmd": "<eventType>", "data": "<data>" }
+
+    This command helps communicate form field interactions and pass relevant data back to the server or application for further processing.
+    This can be used to handle user actions like selecting a dropdown option or similar events
+
+    <type> Specifies the type of form field, such as "drop-down" etc
+
+    <cmd> Represents the event that occurred on the form field, such as "selected" etc
+
+    <data> Contains any relevant data tied to the event. This can include an index, value, or other information depending on the event type.
 
 contentcontrolevent <JSON>
     *Properties:
