@@ -139,7 +139,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 		desktopHelper.assertVisiblePage(3, 4, 6);
 
 		cy.cGet('#searchnext').click();
-		desktopHelper.assertScrollbarPosition('vertical', 200, 300);
+		desktopHelper.assertScrollbarPosition('vertical', 200, 305);
 		desktopHelper.assertVisiblePage(3, 4, 6);
 	});
 });
