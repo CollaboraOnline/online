@@ -704,7 +704,7 @@ void SocketPoll::closeAllSockets()
     for (std::shared_ptr<Socket> &it : _pollSockets)
     {
         // first close the underlying socket
-        ::close(it->getFD());
+        it->closeFD(*this);
 
         // avoid the socketHandler' getting an onDisconnect
         auto stream = dynamic_cast<StreamSocket *>(it.get());
