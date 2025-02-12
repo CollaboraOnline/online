@@ -30,6 +30,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 
 	it('Jump on search with not visible cursor', function() {
+		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
+		cy.cGet(helper.addressInputSelector).should('have.value', 'Z11');
+
 		desktopHelper.assertScrollbarPosition('horizontal', 205, 320);
 		cy.cGet('input#search-input').clear().type('FIRST{enter}');
 
