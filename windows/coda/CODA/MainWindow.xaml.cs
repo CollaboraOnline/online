@@ -239,7 +239,7 @@ namespace CODA
                 }
                 else
                 {
-                    webView.CoreWebView2.Navigate("file:///C:/Users/tml/lo/online-gitlab-coda/browser/dist//cool.html?file_path=file:///C:/Users/tml/sailing.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
+                    webView.CoreWebView2.Navigate("file:///C:/Users/tml/lo/online-gitlab-coda/browser/dist/cool.html?file_path=file:///C:/Users/tml/sailing.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
                 }
 
                 OnWebViewFirstInitialized?.Invoke();
