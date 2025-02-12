@@ -139,7 +139,7 @@ inline std::string parseUrl(const std::string& uri)
     const auto itUrl = uri.find('/', itScheme);
     if (itUrl != uri.npos)
     {
-        return uri.substr(itUrl); // Including the first foreslash.
+        return uri.substr(itUrl); // Including the first slash.
     }
 
     return std::string();

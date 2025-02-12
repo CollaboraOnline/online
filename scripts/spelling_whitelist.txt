@@ -373,7 +373,6 @@ fn
 focusable
 fontcolor
 forcedtracevent
-foreslash
 forkit
 forkits
 formulabar
