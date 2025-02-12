@@ -450,6 +450,12 @@ renamefile <filename=<newFilename>>
 
     This command updates the file name on the server, ensuring proper encoding for special characters in the filename.
 
+notasync:
+
+    Warns when a non-asynchronous (blocking) dialog is used.
+
+    This message is triggered to notify that a dialog operation is not running asynchronously, which may affect performance or user experience.
+
 contentcontrolevent <JSON>
     *Properties:
     type - date,drop-down
