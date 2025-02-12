@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <office:document xmlns:css3t="http://www.w3.org/TR/css3-text/" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:drawooo="http://openoffice.org/2010/draw" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:rpt="http://openoffice.org/2005/report" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:officeooo="http://openoffice.org/2009/office" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" office:version="1.3" office:mimetype="application/vnd.oasis.opendocument.text">
- <office:meta><meta:creation-date>2024-05-06T12:44:59.834336364</meta:creation-date><dc:date>2024-10-08T07:28:33.565503063</dc:date><meta:editing-duration>PT11H51M3S</meta:editing-duration><meta:editing-cycles>83</meta:editing-cycles><meta:generator>CollaboraOfficeDev/24.04.12.0$Linux_X86_64 LibreOffice_project/c1cf7ae8a734f26aee6fa38a08e53217f3ab88dd</meta:generator><dc:creator>Kemal T</dc:creator><meta:document-statistic meta:table-count="4" meta:image-count="4" meta:object-count="1" meta:page-count="12" meta:paragraph-count="166" meta:word-count="2011" meta:character-count="13349" meta:non-whitespace-character-count="11515"/></office:meta>
+ <office:meta><meta:creation-date>2024-05-06T12:44:59.834336364</meta:creation-date><dc:date>2025-02-13T12:59:10.105509918</dc:date><meta:editing-duration>PT20H13M53S</meta:editing-duration><meta:editing-cycles>86</meta:editing-cycles><meta:generator>CollaboraOfficeDev/24.04.12.3$Linux_X86_64 LibreOffice_project/7e5075fea733d68c8167ac33e5ce34d89b50a6a9</meta:generator><meta:document-statistic meta:table-count="4" meta:image-count="4" meta:object-count="1" meta:page-count="12" meta:paragraph-count="166" meta:word-count="2011" meta:character-count="13349" meta:non-whitespace-character-count="11515"/></office:meta>
  <office:settings>
   <config:config-item-set config:name="ooo:view-settings">
-   <config:config-item config:name="ViewAreaTop" config:type="long">39566</config:config-item>
+   <config:config-item config:name="ViewAreaTop" config:type="long">0</config:config-item>
    <config:config-item config:name="ViewAreaLeft" config:type="long">0</config:config-item>
-   <config:config-item config:name="ViewAreaWidth" config:type="long">36169</config:config-item>
+   <config:config-item config:name="ViewAreaWidth" config:type="long">28007</config:config-item>
    <config:config-item config:name="ViewAreaHeight" config:type="long">17424</config:config-item>
    <config:config-item config:name="ShowRedlineChanges" config:type="boolean">true</config:config-item>
    <config:config-item config:name="InBrowseMode" config:type="boolean">false</config:config-item>
    <config:config-item-map-indexed config:name="Views">
     <config:config-item-map-entry>
      <config:config-item config:name="ViewId" config:type="string">view2</config:config-item>
-     <config:config-item config:name="ViewLeft" config:type="long">12626</config:config-item>
-     <config:config-item config:name="ViewTop" config:type="long">50638</config:config-item>
+     <config:config-item config:name="ViewLeft" config:type="long">6332</config:config-item>
+     <config:config-item config:name="ViewTop" config:type="long">3911</config:config-item>
      <config:config-item config:name="VisibleLeft" config:type="long">0</config:config-item>
-     <config:config-item config:name="VisibleTop" config:type="long">39566</config:config-item>
-     <config:config-item config:name="VisibleRight" config:type="long">36167</config:config-item>
-     <config:config-item config:name="VisibleBottom" config:type="long">56988</config:config-item>
+     <config:config-item config:name="VisibleTop" config:type="long">0</config:config-item>
+     <config:config-item config:name="VisibleRight" config:type="long">28005</config:config-item>
+     <config:config-item config:name="VisibleBottom" config:type="long">17422</config:config-item>
      <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
      <config:config-item config:name="ViewLayoutColumns" config:type="short">1</config:config-item>
      <config:config-item config:name="ViewLayoutBookMode" config:type="boolean">false</config:config-item>
@@ -161,7 +161,7 @@
    <config:config-item config:name="UseOldPrinterMetrics" config:type="boolean">false</config:config-item>
    <config:config-item config:name="RedlineProtectionKey" config:type="base64Binary"/>
    <config:config-item config:name="TabsRelativeToIndent" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="Rsid" config:type="int">7728546</config:config-item>
+   <config:config-item config:name="Rsid" config:type="int">7766687</config:config-item>
    <config:config-item config:name="UpdateFromTemplate" config:type="boolean">true</config:config-item>
    <config:config-item config:name="ProtectForm" config:type="boolean">false</config:config-item>
    <config:config-item config:name="MsWordCompMinLineHeightByFly" config:type="boolean">false</config:config-item>
@@ -170,7 +170,9 @@
  </office:settings>
  <office:scripts>
   <office:script script:language="ooo:Basic">
-   <ooo:libraries xmlns:ooo="http://openoffice.org/2004/office" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+   <ooo:libraries xmlns:ooo="http://openoffice.org/2004/office" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <ooo:library-embedded ooo:name="Standard"/>
+   </ooo:libraries>
   </office:script>
  </office:scripts>
  <office:font-face-decls>
@@ -356,6 +358,10 @@
   <style:style style:name="Heading_20_9" style:display-name="Heading 9" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="9" style:class="text">
    <style:paragraph-properties fo:margin-top="0.0417in" fo:margin-bottom="0.0417in" style:contextual-spacing="false"/>
    <style:text-properties fo:font-size="9pt" fo:font-weight="bold" style:font-size-asian="9pt" style:font-weight-asian="bold" style:font-size-complex="9pt" style:font-weight-complex="bold"/>
+  </style:style>
+  <style:style style:name="Title" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:class="chapter">
+   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false"/>
+   <style:text-properties fo:font-size="28pt" fo:font-weight="bold" style:font-size-asian="28pt" style:font-weight-asian="bold" style:font-size-complex="28pt" style:font-weight-complex="bold"/>
   </style:style>
   <style:style style:name="Strong_20_Emphasis" style:display-name="Strong Emphasis" style:family="text">
    <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold"/>
@@ -836,114 +842,127 @@
    <style:text-properties fo:font-size="18pt" fo:language="en" fo:country="GB" fo:font-weight="bold" style:font-size-asian="18pt" style:font-weight-asian="bold" style:font-size-complex="18pt" style:font-weight-complex="bold"/>
   </style:style>
   <style:style style:name="P19" style:family="paragraph" style:parent-style-name="Standard">
-   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false"/>
-   <style:text-properties fo:font-size="18pt" fo:language="en" fo:country="GB" fo:font-weight="bold" officeooo:rsid="00014a3c" style:font-size-asian="18pt" style:font-weight-asian="bold" style:font-size-complex="18pt" style:font-weight-complex="bold"/>
+   <style:text-properties officeooo:paragraph-rsid="003ff560"/>
   </style:style>
-  <style:style style:name="P20" style:family="paragraph" style:parent-style-name="Standard">
+  <style:style style:name="P20" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties officeooo:paragraph-rsid="003ff560"/>
   </style:style>
   <style:style style:name="P21" style:family="paragraph" style:parent-style-name="Text_20_body">
-   <style:text-properties officeooo:paragraph-rsid="003ff560"/>
-  </style:style>
-  <style:style style:name="P22" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties officeooo:rsid="003e52eb" officeooo:paragraph-rsid="003e52eb"/>
   </style:style>
-  <style:style style:name="P23" style:family="paragraph" style:parent-style-name="Contents_20_2">
+  <style:style style:name="P22" style:family="paragraph" style:parent-style-name="Contents_20_2">
    <style:paragraph-properties>
     <style:tab-stops>
      <style:tab-stop style:position="6.4957in" style:type="right" style:leader-style="dotted" style:leader-text="."/>
     </style:tab-stops>
    </style:paragraph-properties>
   </style:style>
-  <style:style style:name="P24" style:family="paragraph" style:parent-style-name="Contents_20_3">
+  <style:style style:name="P23" style:family="paragraph" style:parent-style-name="Contents_20_3">
    <style:paragraph-properties>
     <style:tab-stops>
      <style:tab-stop style:position="6.2984in" style:type="right" style:leader-style="dotted" style:leader-text="."/>
     </style:tab-stops>
    </style:paragraph-properties>
   </style:style>
-  <style:style style:name="P25" style:family="paragraph" style:parent-style-name="Contents_20_4">
+  <style:style style:name="P24" style:family="paragraph" style:parent-style-name="Contents_20_4">
    <style:paragraph-properties>
     <style:tab-stops>
      <style:tab-stop style:position="6.102in" style:type="right" style:leader-style="dotted" style:leader-text="."/>
     </style:tab-stops>
    </style:paragraph-properties>
   </style:style>
-  <style:style style:name="P26" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P25" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties fo:language="fr" fo:country="FR"/>
   </style:style>
-  <style:style style:name="P27" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P26" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties fo:language="fr" fo:country="FR" officeooo:paragraph-rsid="005158dc"/>
   </style:style>
-  <style:style style:name="P28" style:family="paragraph" style:parent-style-name="Standard">
-   <style:text-properties fo:language="de" fo:country="DE"/>
+  <style:style style:name="P27" style:family="paragraph" style:parent-style-name="Standard">
+   <style:text-properties fo:language="fr" fo:country="FR"/>
   </style:style>
-  <style:style style:name="P29" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P28" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:paragraph-properties fo:text-align="center" style:justify-single-word="false"/>
   </style:style>
-  <style:style style:name="P30" style:family="paragraph" style:parent-style-name="Footnote">
+  <style:style style:name="P29" style:family="paragraph" style:parent-style-name="Footnote">
    <style:text-properties officeooo:paragraph-rsid="00005e38"/>
   </style:style>
-  <style:style style:name="P31" style:family="paragraph" style:parent-style-name="Standard">
+  <style:style style:name="P30" style:family="paragraph" style:parent-style-name="Standard">
    <style:text-properties officeooo:paragraph-rsid="0058aa73"/>
   </style:style>
-  <style:style style:name="P32" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P31" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties fo:language="zxx" fo:country="none" officeooo:paragraph-rsid="00627123" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
   </style:style>
-  <style:style style:name="P33" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P32" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties fo:language="zxx" fo:country="none" officeooo:paragraph-rsid="0063de2c" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
   </style:style>
-  <style:style style:name="P34" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P33" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:paragraph-properties fo:text-align="justify" style:justify-single-word="false"/>
    <style:text-properties fo:language="zxx" fo:country="none" officeooo:paragraph-rsid="00627123" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
   </style:style>
-  <style:style style:name="P35" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P34" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:paragraph-properties fo:text-align="end" style:justify-single-word="false"/>
    <style:text-properties fo:language="zxx" fo:country="none" officeooo:paragraph-rsid="00627123" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
   </style:style>
-  <style:style style:name="P36" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P35" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:paragraph-properties fo:text-align="center" style:justify-single-word="false"/>
    <style:text-properties fo:language="zxx" fo:country="none" officeooo:paragraph-rsid="00627123" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
   </style:style>
-  <style:style style:name="P37" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P36" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:paragraph-properties fo:break-before="page"/>
   </style:style>
-  <style:style style:name="P38" style:family="paragraph" style:parent-style-name="Heading_20_2">
-   <style:text-properties fo:language="fr" fo:country="FR"/>
+  <style:style style:name="P37" style:family="paragraph" style:parent-style-name="Standard">
+   <style:text-properties fo:language="de" fo:country="DE"/>
   </style:style>
-  <style:style style:name="P39" style:family="paragraph" style:parent-style-name="Heading_20_2" style:list-style-name=""/>
-  <style:style style:name="P40" style:family="paragraph" style:parent-style-name="Heading_20_2">
-   <style:paragraph-properties fo:break-before="page"/>
+  <style:style style:name="P38" style:family="paragraph" style:parent-style-name="Contents_20_2">
+   <style:paragraph-properties>
+    <style:tab-stops>
+     <style:tab-stop style:position="6.4957in" style:type="right" style:leader-style="dotted" style:leader-text="."/>
+    </style:tab-stops>
+   </style:paragraph-properties>
+  </style:style>
+  <style:style style:name="P39" style:family="paragraph" style:parent-style-name="Contents_20_3">
+   <style:paragraph-properties>
+    <style:tab-stops>
+     <style:tab-stop style:position="6.2984in" style:type="right" style:leader-style="dotted" style:leader-text="."/>
+    </style:tab-stops>
+   </style:paragraph-properties>
+  </style:style>
+  <style:style style:name="P40" style:family="paragraph" style:parent-style-name="Contents_20_4">
+   <style:paragraph-properties>
+    <style:tab-stops>
+     <style:tab-stop style:position="6.102in" style:type="right" style:leader-style="dotted" style:leader-text="."/>
+    </style:tab-stops>
+   </style:paragraph-properties>
   </style:style>
   <style:style style:name="P41" style:family="paragraph" style:parent-style-name="Heading_20_2">
-   <style:text-properties fo:language="zxx" fo:country="none" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
-  </style:style>
-  <style:style style:name="P42" style:family="paragraph" style:parent-style-name="Heading_20_3">
-   <style:text-properties fo:color="#3465a4" loext:opacity="100%" fo:language="en" fo:country="GB"/>
-  </style:style>
-  <style:style style:name="P43" style:family="paragraph" style:parent-style-name="Heading_20_3">
-   <style:text-properties fo:color="#069a2e" loext:opacity="100%" fo:language="fr" fo:country="FR"/>
-  </style:style>
-  <style:style style:name="P44" style:family="paragraph" style:parent-style-name="Heading_20_3">
-   <style:text-properties fo:color="#ff0000" loext:opacity="100%" fo:language="de" fo:country="DE"/>
-  </style:style>
-  <style:style style:name="P45" style:family="paragraph" style:parent-style-name="Heading_20_3">
    <style:paragraph-properties fo:break-before="page"/>
   </style:style>
-  <style:style style:name="P46" style:family="paragraph" style:parent-style-name="Heading_20_3">
-   <style:text-properties fo:language="zxx" fo:country="none" officeooo:rsid="00627123" officeooo:paragraph-rsid="00627123" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
-  </style:style>
-  <style:style style:name="P47" style:family="paragraph" style:parent-style-name="Heading_20_3">
+  <style:style style:name="P42" style:family="paragraph" style:parent-style-name="Heading_20_2">
    <style:text-properties fo:language="zxx" fo:country="none" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
   </style:style>
-  <style:style style:name="P48" style:family="paragraph" style:parent-style-name="Heading_20_4">
-   <style:text-properties fo:language="en" fo:country="GB"/>
+  <style:style style:name="P43" style:family="paragraph" style:parent-style-name="Heading_20_3">
+   <style:text-properties fo:color="#3465a4" loext:opacity="100%" fo:language="en" fo:country="GB"/>
+  </style:style>
+  <style:style style:name="P44" style:family="paragraph" style:parent-style-name="Heading_20_3">
+   <style:text-properties fo:color="#069a2e" loext:opacity="100%" fo:language="fr" fo:country="FR"/>
+  </style:style>
+  <style:style style:name="P45" style:family="paragraph" style:parent-style-name="Heading_20_3">
+   <style:text-properties fo:color="#ff0000" loext:opacity="100%" fo:language="de" fo:country="DE"/>
+  </style:style>
+  <style:style style:name="P46" style:family="paragraph" style:parent-style-name="Heading_20_3">
+   <style:paragraph-properties fo:break-before="page"/>
+  </style:style>
+  <style:style style:name="P47" style:family="paragraph" style:parent-style-name="Heading_20_3">
+   <style:text-properties fo:language="zxx" fo:country="none" officeooo:rsid="00627123" officeooo:paragraph-rsid="00627123" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
+  </style:style>
+  <style:style style:name="P48" style:family="paragraph" style:parent-style-name="Heading_20_3">
+   <style:text-properties fo:language="zxx" fo:country="none" style:language-asian="zxx" style:country-asian="none" style:language-complex="zxx" style:country-complex="none"/>
   </style:style>
   <style:style style:name="P49" style:family="paragraph" style:parent-style-name="Heading_20_4">
-   <style:text-properties fo:language="en" fo:country="GB" officeooo:paragraph-rsid="00425342"/>
+   <style:text-properties fo:language="en" fo:country="GB"/>
   </style:style>
   <style:style style:name="P50" style:family="paragraph" style:parent-style-name="Heading_20_4">
-   <style:text-properties fo:language="en" fo:country="GB" officeooo:paragraph-rsid="003ff560"/>
+   <style:text-properties fo:language="en" fo:country="GB" officeooo:paragraph-rsid="00425342"/>
   </style:style>
   <style:style style:name="P51" style:family="paragraph" style:parent-style-name="Heading_20_4">
    <style:text-properties fo:language="fr" fo:country="FR"/>
@@ -960,9 +979,7 @@
   <style:style style:name="P55" style:family="paragraph" style:parent-style-name="Heading_20_4" style:master-page-name="">
    <style:paragraph-properties fo:text-align="center" style:justify-single-word="false" style:page-number="auto" fo:break-before="auto" fo:break-after="auto"/>
   </style:style>
-  <style:style style:name="P56" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L4">
-   <style:text-properties fo:language="de" fo:country="DE"/>
-  </style:style>
+  <style:style style:name="P56" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L4"/>
   <style:style style:name="P57" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L4">
    <style:text-properties fo:language="de" fo:country="DE" officeooo:paragraph-rsid="0056ca82"/>
   </style:style>
@@ -1117,18 +1134,21 @@
    <style:text-properties fo:font-style="normal" style:text-underline-style="none" style:font-style-asian="normal" style:font-style-complex="normal"/>
   </style:style>
   <style:style style:name="T29" style:family="text">
-   <style:text-properties fo:font-size="8pt" fo:font-style="italic"/>
+   <style:text-properties fo:language="de" fo:country="DE"/>
   </style:style>
   <style:style style:name="T30" style:family="text">
-   <style:text-properties fo:language="es" fo:country="ES"/>
+   <style:text-properties fo:font-size="8pt" fo:font-style="italic"/>
   </style:style>
   <style:style style:name="T31" style:family="text">
-   <style:text-properties fo:language="pl" fo:country="PL"/>
+   <style:text-properties fo:language="es" fo:country="ES"/>
   </style:style>
   <style:style style:name="T32" style:family="text">
-   <style:text-properties fo:language="tr" fo:country="TR"/>
+   <style:text-properties fo:language="pl" fo:country="PL"/>
   </style:style>
   <style:style style:name="T33" style:family="text">
+   <style:text-properties fo:language="tr" fo:country="TR"/>
+  </style:style>
+  <style:style style:name="T34" style:family="text">
    <style:text-properties fo:language="en" fo:country="NG" style:language-asian="zh" style:country-asian="CN" style:language-complex="hi" style:country-complex="IN"/>
   </style:style>
   <style:style style:name="fr1" style:family="graphic" style:parent-style-name="Frame">
@@ -1607,15 +1627,15 @@
    </text:list-level-style-number>
   </text:list-style>
   <style:style style:name="gr1" style:family="graphic">
-   <style:graphic-properties draw:fill-color="#158466" draw:textarea-horizontal-align="justify" draw:textarea-vertical-align="middle" draw:auto-grow-height="false" fo:min-height="1.2728in" fo:min-width="1.928in" style:writing-mode="lr-tb" loext:decorative="false" style:run-through="foreground" style:wrap="run-through" style:number-wrapped-paragraphs="no-limit" style:vertical-pos="from-top" style:vertical-rel="paragraph" style:horizontal-pos="center" style:horizontal-rel="paragraph" draw:wrap-influence-on-position="once-concurrent" loext:allow-overlap="true" style:flow-with-text="false"/>
+   <style:graphic-properties draw:fill-color="#158466" draw:textarea-horizontal-align="justify" draw:textarea-vertical-align="middle" draw:auto-grow-height="false" fo:min-height="1.1in" fo:min-width="1.928in" style:writing-mode="lr-tb" loext:decorative="false" style:run-through="foreground" style:wrap="none" style:vertical-pos="from-top" style:vertical-rel="paragraph" style:horizontal-pos="from-left" style:horizontal-rel="paragraph" draw:wrap-influence-on-position="once-concurrent" loext:allow-overlap="true" style:flow-with-text="false"/>
    <style:paragraph-properties style:writing-mode="lr-tb"/>
   </style:style>
   <style:style style:name="gr2" style:family="graphic">
-   <style:graphic-properties draw:textarea-horizontal-align="justify" draw:textarea-vertical-align="middle" draw:auto-grow-height="false" fo:min-height="1.6598in" fo:min-width="1.7098in" style:writing-mode="lr-tb" loext:decorative="false" style:run-through="foreground" style:wrap="parallel" style:number-wrapped-paragraphs="no-limit" style:wrap-contour="true" style:wrap-contour-mode="full" style:vertical-pos="from-top" style:vertical-rel="paragraph" style:horizontal-pos="from-left" style:horizontal-rel="paragraph" draw:wrap-influence-on-position="once-concurrent" loext:allow-overlap="true" style:flow-with-text="false"/>
+   <style:graphic-properties draw:textarea-horizontal-align="justify" draw:textarea-vertical-align="middle" draw:auto-grow-height="false" fo:min-height="1.3783in" fo:min-width="1.3854in" style:writing-mode="lr-tb" loext:decorative="false" style:run-through="foreground" style:wrap="none" style:vertical-pos="from-top" style:vertical-rel="paragraph" style:horizontal-pos="from-left" style:horizontal-rel="paragraph" draw:wrap-influence-on-position="once-concurrent" loext:allow-overlap="true" style:flow-with-text="false"/>
    <style:paragraph-properties style:writing-mode="lr-tb"/>
   </style:style>
   <style:style style:name="gr3" style:family="graphic">
-   <style:graphic-properties svg:stroke-color="#a1467e" draw:fill-color="#5b277d" draw:textarea-horizontal-align="justify" draw:textarea-vertical-align="middle" draw:auto-grow-height="false" fo:min-height="1.2291in" fo:min-width="3.9866in" style:writing-mode="lr-tb" loext:decorative="false" style:run-through="foreground" style:wrap="parallel" style:number-wrapped-paragraphs="no-limit" style:wrap-contour="true" style:wrap-contour-mode="full" style:vertical-pos="from-top" style:vertical-rel="paragraph" style:horizontal-pos="center" style:horizontal-rel="paragraph" draw:wrap-influence-on-position="once-concurrent" loext:allow-overlap="true" style:flow-with-text="false"/>
+   <style:graphic-properties svg:stroke-color="#a1467e" draw:fill-color="#5b277d" draw:textarea-horizontal-align="justify" draw:textarea-vertical-align="middle" draw:auto-grow-height="false" fo:min-height="1.0374in" fo:min-width="4.0508in" style:writing-mode="lr-tb" loext:decorative="false" style:run-through="foreground" style:wrap="none" style:vertical-pos="from-top" style:vertical-rel="paragraph" style:horizontal-pos="center" style:horizontal-rel="paragraph" draw:wrap-influence-on-position="once-concurrent" loext:allow-overlap="true" style:flow-with-text="false"/>
    <style:paragraph-properties style:writing-mode="lr-tb"/>
   </style:style>
   <style:page-layout style:name="pm1">
@@ -1701,7 +1721,7 @@
     </form:form>
    </office:forms>
    <text:tracked-changes text:track-changes="false">
-    <text:changed-region xml:id="ct660170224" text:id="ct660170224">
+    <text:changed-region xml:id="ct519215008" text:id="ct519215008">
      <text:insertion>
       <office:change-info>
        <dc:creator>Mary J</dc:creator>
@@ -1709,7 +1729,7 @@
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct660488576" text:id="ct660488576">
+    <text:changed-region xml:id="ct519525712" text:id="ct519525712">
      <text:deletion>
       <office:change-info>
        <dc:creator>Mary J</dc:creator>
@@ -1726,10 +1746,12 @@
        <text:p/>
        <text:p/>
        <text:p/>
+       <text:p/>
+       <text:p/>
       </office:change-info>
      </text:deletion>
     </text:changed-region>
-    <text:changed-region xml:id="ct660224912" text:id="ct660224912">
+    <text:changed-region xml:id="ct519562640" text:id="ct519562640">
      <text:insertion>
       <office:change-info>
        <dc:creator>Mary J</dc:creator>
@@ -1737,7 +1759,7 @@
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct660557248" text:id="ct660557248">
+    <text:changed-region xml:id="ct519355728" text:id="ct519355728">
      <text:insertion>
       <office:change-info>
        <dc:creator>Mary J</dc:creator>
@@ -1745,7 +1767,7 @@
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct660687344" text:id="ct660687344">
+    <text:changed-region xml:id="ct519719472" text:id="ct519719472">
      <text:insertion>
       <office:change-info>
        <dc:creator>Mary J</dc:creator>
@@ -1753,7 +1775,7 @@
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct660681216" text:id="ct660681216">
+    <text:changed-region xml:id="ct519718512" text:id="ct519718512">
      <text:insertion>
       <office:change-info>
        <dc:creator>Mary J</dc:creator>
@@ -1761,7 +1783,7 @@
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct660685744" text:id="ct660685744">
+    <text:changed-region xml:id="ct519716736" text:id="ct519716736">
      <text:insertion>
       <office:change-info>
        <dc:creator>Mary J</dc:creator>
@@ -1769,7 +1791,7 @@
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct660699136" text:id="ct660699136">
+    <text:changed-region xml:id="ct519717776" text:id="ct519717776">
      <text:insertion>
       <office:change-info>
        <dc:creator>Mary J</dc:creator>
@@ -1777,7 +1799,7 @@
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct660756464" text:id="ct660756464">
+    <text:changed-region xml:id="ct519788400" text:id="ct519788400">
      <text:insertion>
       <office:change-info>
        <dc:creator>Mary J</dc:creator>
@@ -1785,7 +1807,7 @@
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct660796096" text:id="ct660796096">
+    <text:changed-region xml:id="ct519826944" text:id="ct519826944">
      <text:insertion>
       <office:change-info>
        <dc:creator>Mary J</dc:creator>
@@ -1803,10 +1825,12 @@
        <text:p/>
        <text:p/>
        <text:p/>
+       <text:p/>
+       <text:p/>
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct660802944" text:id="ct660802944">
+    <text:changed-region xml:id="ct519833824" text:id="ct519833824">
      <text:deletion>
       <office:change-info>
        <dc:creator>Schmidt</dc:creator>
@@ -1814,7 +1838,7 @@
       </office:change-info>
      </text:deletion>
     </text:changed-region>
-    <text:changed-region xml:id="ct661460656" text:id="ct661460656">
+    <text:changed-region xml:id="ct520309184" text:id="ct520309184">
      <text:insertion>
       <office:change-info>
        <dc:creator>Jose P</dc:creator>
@@ -1828,10 +1852,12 @@
        <text:p/>
        <text:p/>
        <text:p/>
+       <text:p/>
+       <text:p/>
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct661248736" text:id="ct661248736">
+    <text:changed-region xml:id="ct520574560" text:id="ct520574560">
      <text:insertion>
       <office:change-info>
        <dc:creator>Jose P</dc:creator>
@@ -1845,10 +1871,12 @@
        <text:p/>
        <text:p/>
        <text:p/>
+       <text:p/>
+       <text:p/>
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct661294688" text:id="ct661294688">
+    <text:changed-region xml:id="ct520647296" text:id="ct520647296">
      <text:insertion>
       <office:change-info>
        <dc:creator>Mary J</dc:creator>
@@ -1862,10 +1890,12 @@
        <text:p/>
        <text:p/>
        <text:p/>
+       <text:p/>
+       <text:p/>
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct661562752" text:id="ct661562752">
+    <text:changed-region xml:id="ct520512848" text:id="ct520512848">
      <text:insertion>
       <office:change-info>
        <dc:creator>Jose P</dc:creator>
@@ -1879,15 +1909,19 @@
        <text:p/>
        <text:p/>
        <text:p/>
+       <text:p/>
+       <text:p/>
       </office:change-info>
      </text:insertion>
     </text:changed-region>
-    <text:changed-region xml:id="ct661584048" text:id="ct661584048">
+    <text:changed-region xml:id="ct520700032" text:id="ct520700032">
      <text:insertion>
       <office:change-info>
        <dc:creator>Jose P</dc:creator>
        <dc:date>2024-10-11T04:37:09</dc:date>
        <text:p>Comment added</text:p>
+       <text:p/>
+       <text:p/>
        <text:p/>
        <text:p/>
        <text:p/>
@@ -1907,7 +1941,7 @@
     <text:sequence-decl text:display-outline-level="0" text:name="Drawing"/>
     <text:sequence-decl text:display-outline-level="0" text:name="Figure"/>
    </text:sequence-decls>
-   <text:p text:style-name="P19">Collabora Productivity</text:p>
+   <text:p text:style-name="Title">Collabora Productivity</text:p>
    <text:p text:style-name="P18"/>
    <text:table-of-content text:style-name="Sect1" text:protected="true" text:name="Table of Contents1">
     <text:table-of-content-source text:outline-level="10">
@@ -1997,38 +2031,37 @@
      <text:index-title text:style-name="Sect1" text:name="Table of Contents1_Head" text:protected="true">
       <text:p text:style-name="Contents_20_Heading">Table of Contents</text:p>
      </text:index-title>
-     <text:p text:style-name="P23"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc510_380714148" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">1 Introduction<text:tab/>2</text:a></text:p>
-     <text:p text:style-name="P23"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc512_380714148" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">2 Collabora Productivity: A Brief Overview<text:tab/>2</text:a></text:p>
-     <text:p text:style-name="P23"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc928_380714148" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">3 Products – The Collabora Online Apps<text:tab/>3</text:a></text:p>
-     <text:p text:style-name="P24"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc574_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Writer<text:tab/>3</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc578_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Supports<text:tab/>3</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc585_3587465723%20Copy%201" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Features<text:tab/>3</text:a></text:p>
-     <text:p text:style-name="P24"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc587_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Calc<text:tab/>3</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc589_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Soutient<text:tab/>3</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc597_3587465723%20Copy%201" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Caractéristiques<text:tab/>3</text:a></text:p>
-     <text:p text:style-name="P24"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc593_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Impress<text:tab/>4</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc595_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Unterstützt<text:tab/>4</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc597_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Merkmale<text:tab/>4</text:a></text:p>
-     <text:p text:style-name="P23"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc722_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">4 Shapes and Chart<text:tab/>5</text:a></text:p>
-     <text:p text:style-name="P24"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc724_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Shapes<text:tab/>5</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc726_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Basic Shape<text:tab/>5</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc728_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Symbol Shape<text:tab/>5</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc730_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Block Arrow<text:tab/>5</text:a></text:p>
-     <text:p text:style-name="P24"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc732_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Chart<text:tab/>6</text:a></text:p>
-     <text:p text:style-name="P23"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc1200_959359226" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">5 Subscriptions<text:tab/>6</text:a></text:p>
-     <text:p text:style-name="P24"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc610_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Subscription Table<text:tab/>6</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc617_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CODE - Collabora Online Development Edition<text:tab/>6</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc1146_380714148" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Collabora for Business<text:tab/>7</text:a></text:p>
-     <text:p text:style-name="P25"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc1150_380714148" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Collabora for Enterprise<text:tab/>7</text:a></text:p>
-     <text:p text:style-name="P24"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc612_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Forms<text:tab/>8</text:a></text:p>
-     <text:p text:style-name="P23"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc11593_440631829" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">6 Lorem ipsum<text:tab/>9</text:a></text:p>
-     <text:p text:style-name="P24"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc11595_440631829" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Dolor sit amet<text:tab/>9</text:a></text:p>
-     <text:p text:style-name="P24"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc11597_440631829" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fusce rhoncus lacinia pellentesque<text:tab/>10</text:a></text:p>
-     <text:p text:style-name="P24"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc11599_440631829" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Maecenas elit velit<text:tab/>11</text:a></text:p>
+     <text:p text:style-name="P38"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc510_380714148" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">1 Introduction<text:tab/>2</text:a></text:p>
+     <text:p text:style-name="P38"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc512_380714148" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">2 Collabora Productivity: A Brief Overview<text:tab/>2</text:a></text:p>
+     <text:p text:style-name="P38"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc928_380714148" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">3 Products – The Collabora Online Apps<text:tab/>3</text:a></text:p>
+     <text:p text:style-name="P39"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc574_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Writer<text:tab/>3</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc578_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Supports<text:tab/>3</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc585_3587465723%20Copy%201" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Features<text:tab/>3</text:a></text:p>
+     <text:p text:style-name="P39"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc587_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Calc<text:tab/>3</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc589_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Soutient<text:tab/>3</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc597_3587465723%20Copy%201" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Caractéristiques<text:tab/>3</text:a></text:p>
+     <text:p text:style-name="P39"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc593_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Impress<text:tab/>4</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc595_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Unterstützt<text:tab/>4</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc597_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Merkmale<text:tab/>4</text:a></text:p>
+     <text:p text:style-name="P38"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc722_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">4 Shapes and Chart<text:tab/>5</text:a></text:p>
+     <text:p text:style-name="P39"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc724_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Shapes<text:tab/>5</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc726_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Basic Shape<text:tab/>5</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc728_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Symbol Shape<text:tab/>5</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc730_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Block Arrow<text:tab/>5</text:a></text:p>
+     <text:p text:style-name="P39"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc732_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Chart<text:tab/>6</text:a></text:p>
+     <text:p text:style-name="P38"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc1200_959359226" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">5 Subscriptions<text:tab/>6</text:a></text:p>
+     <text:p text:style-name="P39"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc610_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Subscription Table<text:tab/>6</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc617_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CODE - Collabora Online Development Edition<text:tab/>6</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc1146_380714148" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Collabora for Business<text:tab/>6</text:a></text:p>
+     <text:p text:style-name="P40"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc1150_380714148" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Collabora for Enterprise<text:tab/>7</text:a></text:p>
+     <text:p text:style-name="P39"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc612_3587465723" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Forms<text:tab/>8</text:a></text:p>
+     <text:p text:style-name="P38"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc11593_440631829" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">6 Lorem ipsum<text:tab/>9</text:a></text:p>
+     <text:p text:style-name="P39"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc11595_440631829" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Dolor sit amet<text:tab/>9</text:a></text:p>
+     <text:p text:style-name="P39"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc11597_440631829" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fusce rhoncus lacinia pellentesque<text:tab/>10</text:a></text:p>
+     <text:p text:style-name="P39"><text:a xlink:type="simple" xlink:href="#__RefHeading___Toc11599_440631829" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Maecenas elit velit<text:tab/>11</text:a></text:p>
     </text:index-body>
    </text:table-of-content>
    <text:p text:style-name="P17"/>
-   <text:h text:style-name="Heading_20_1" text:outline-level="1" text:is-list-header="true"/>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
@@ -2037,8 +2070,9 @@
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"><text:soft-page-break/></text:p>
    <text:p text:style-name="Text_20_body"/>
+   <text:p text:style-name="Text_20_body"/>
    <text:h text:style-name="Heading_20_2" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc510_380714148"/>Introduction <text:bookmark-end text:name="__RefHeading___Toc510_380714148"/></text:h>
-   <text:p text:style-name="P31"><text:span text:style-name="T1">In today&apos;s digital age, </text:span><office:annotation office:name="__Annotation__1177_2374539774" loext:resolved="false">
+   <text:p text:style-name="P30"><text:span text:style-name="T1">In today&apos;s digital age, </text:span><office:annotation office:name="__Annotation__1177_2374539774" loext:resolved="false">
      <dc:creator>TwoUsers (Guest)</dc:creator>
      <dc:date>2024-07-31T03:33:27.789907482</dc:date>
      <text:p text:style-name="Comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget erat sagittis, porta augue sed, tempus massa. Proin ante erat, malesuada at commodo vitae, consequat nec urna. Donec sit amet molestie odio, faucibus rhoncus augue. Praesent et risus quis lectus convallis sagittis. Nunc tincidunt sed lacus pellentesque malesuada. Maecenas tristique justo orci, eu vehicula ante aliquam pharetra. Aenean eleifend, urna in vehicula luctus, dui diam commodo ante, ac laoreet augue ante in dui. In sit amet urna sed nisl commodo congue. Nullam lacus nibh, tincidunt nec odio ut, condimentum aliquet sem.</text:p>
@@ -2050,11 +2084,11 @@
      <dc:creator>Jose (Guest)</dc:creator>
      <dc:date>2024-09-19T08:14:54.516331120</dc:date>
      <text:p text:style-name="Comment">Suspendisse vel augue id ligula finibus aliquet. Mauris faucibus facilisis tortor vel bibendum. Etiam congue, eros eu iaculis pellentesque, dolor urna porttitor erat, eu commodo est sapien nec eros. In hac habitasse platea dictumst. Quisque egestas bibendum mi at convallis. Sed sed leo nec enim interdum imperdiet. Donec hendrerit nisi mollis euismod porta. Quisque iaculis ac ligula ac fringilla.</text:p>
-    </office:annotation><text:span text:style-name="T1"> tools are essential for individuals and organizations alike. Among the myriad of options available, </text:span><text:a xlink:type="simple" xlink:href="https://www.collaboraoffice.com/" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link"><text:span text:style-name="T1">Collabora Productivity</text:span></text:a><text:span text:style-name="T1"> stands out as a beacon of innovation and collaboration.</text:span><text:change-start text:change-id="ct660170224"/><text:span text:style-name="T1"> This piece aims to delve into the remarkable journey of Collabora Online highlighting its evolution, impact, and the tireless efforts behind its success.</text:span><text:change-end text:change-id="ct660170224"/></text:p>
+    </office:annotation><text:span text:style-name="T1"> tools are essential for individuals and organizations alike. Among the myriad of options available, </text:span><text:a xlink:type="simple" xlink:href="https://www.collaboraoffice.com/" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link"><text:span text:style-name="T1">Collabora Productivity</text:span></text:a><text:span text:style-name="T1"> stands out as a beacon of innovation and collaboration.</text:span><text:change-start text:change-id="ct519215008"/><text:span text:style-name="T1"> This piece aims to delve into the remarkable journey of Collabora Online highlighting its evolution, impact, and the tireless efforts behind its success.</text:span><text:change-end text:change-id="ct519215008"/></text:p>
    <text:p text:style-name="Standard"/>
    <text:p text:style-name="Standard"/>
    <text:h text:style-name="Heading_20_2" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc512_380714148"/>Collabora Productivity: A Brief Overview<text:note text:id="ftn1" text:note-class="footnote"><text:note-citation>1</text:note-citation><text:note-body>
-      <text:p text:style-name="P30"><text:a xlink:type="simple" xlink:href="https://www.collaboraonline.com/collabora-online/" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link"><text:span text:style-name="T2">https://www.collaboraonline.com/collabora-online/</text:span></text:a></text:p>
+      <text:p text:style-name="P29"><text:a xlink:type="simple" xlink:href="https://www.collaboraonline.com/collabora-online/" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link"><text:span text:style-name="T2">https://www.collaboraonline.com/collabora-online/</text:span></text:a></text:p>
       <text:p text:style-name="P10"/></text:note-body></text:note> <text:bookmark-end text:name="__RefHeading___Toc512_380714148"/></text:h>
    <text:p text:style-name="P12"/>
    <text:p text:style-name="P12"><draw:frame draw:style-name="fr3" draw:name="Frame1" text:anchor-type="char" svg:x="-0.2083in" svg:y="0.002in" svg:width="6.6929in" draw:z-index="0">
@@ -2250,7 +2284,7 @@
    <text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="https://www.collaboraonline.com/" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link"><text:span text:style-name="T1">Collabora Productivity</text:span></text:a><text:span text:style-name="T1"> has been at the </text:span><office:annotation office:name="__Annotation__1912_380714148" loext:resolved="false">
      <dc:creator>Unknown Author</dc:creator>
      <dc:date>2024-05-06T17:18:03.448990089</dc:date>
-     <text:p text:style-name="Comment"><text:span text:style-name="T33">Fusce vel tortor non neque auctor eleifend non sit amet mauris.</text:span></text:p>
+     <text:p text:style-name="Comment"><text:span text:style-name="T34">Fusce vel tortor non neque auctor eleifend non sit amet mauris.</text:span></text:p>
     </office:annotation><text:span text:style-name="T1">forefront</text:span><office:annotation-end office:name="__Annotation__1912_380714148"/><office:annotation loext:parent-name="__Annotation__1912_380714148" loext:resolved="false">
      <dc:creator>Mary (Guest)</dc:creator>
      <dc:date>2024-09-19T08:18:01.020551537</dc:date>
@@ -2262,22 +2296,22 @@
     </office:annotation><text:span text:style-name="T1"> of providing open-source productivity solutions. With a focus on empowering users with cutting-edge tools.</text:span></text:p>
    <text:p text:style-name="Standard"/>
    <text:p text:style-name="Standard"/>
-   <text:p text:style-name="P28">Collabora Productivity ist Vorreiter bei der Bereitstellung von Open-Source-Produktivitätslösungen. Der Schwerpunkt<text:change-start text:change-id="ct660488576"/><office:annotation office:name="__Annotation__1108_738740471" loext:resolved="false">
+   <text:p text:style-name="P37">Collabora Productivity ist Vorreiter bei der Bereitstellung von Open-Source-Produktivitätslösungen. Der Schwerpunkt<text:change-start text:change-id="ct519525712"/><office:annotation office:name="__Annotation__1095_2603154482" loext:resolved="false">
      <dc:creator>Mary J (Guest)</dc:creator>
      <dc:date>2024-09-18T11:27:38.625596199</dc:date>
      <text:p text:style-name="Comment">Sed sed nulla ac elit viverra consequat vitae sit amet velit. Mauris vitae augue odio. Nullam sagittis, dui sit amet ultrices venenatis, nulla enim eleifend dolor, auctor iaculis velit lacus quis ante.</text:p>
-    </office:annotation><text:change-end text:change-id="ct660488576"/><office:annotation loext:parent-name="__Annotation__963_2286044882" loext:resolved="false">
+    </office:annotation><text:change-end text:change-id="ct519525712"/><office:annotation loext:parent-name="__Annotation__963_2286044882" loext:resolved="false">
      <dc:creator>Jose (Guest)</dc:creator>
      <dc:date>2024-09-19T08:14:11.860089234</dc:date>
      <text:p text:style-name="Comment">Nunc varius imperdiet nisi, et pellentesque neque euismod nec. Sed consequat porttitor mi et accumsan. Suspendisse feugiat nibh tellus, quis accumsan odio aliquam quis. Fusce ac est a velit scelerisque dignissim placerat blandit velit. Suspendisse gravida, metus a condimentum scelerisque, odio nibh pellentesque justo, quis hendrerit erat elit pellentesque ex.</text:p>
-    </office:annotation> liegt darauf, Benutzern modernste Tools bereitzustelle<text:change-start text:change-id="ct660224912"/>n<text:change-end text:change-id="ct660224912"/>.</text:p>
-   <text:h text:style-name="P38" text:outline-level="2" text:is-list-header="true"/>
-   <text:p text:style-name="P27"><text:change-start text:change-id="ct660557248"/>Collabora Productivity est à l&apos;avant-garde de la fourniture de solutions de productivité open source. L&apos;accent est mis sur la mise à disposition des utilisateurs d&apos;outils de pointe.<text:change-end text:change-id="ct660557248"/></text:p>
-   <text:h text:style-name="Heading_20_2" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc928_380714148"/><text:soft-page-break/>Products – The Collabora Online Apps<text:note text:id="ftn2" text:note-class="footnote"><text:note-citation>2</text:note-citation><text:note-body>
+    </office:annotation> liegt darauf, Benutzern modernste Tools bereitzustelle<text:change-start text:change-id="ct519562640"/>n<text:change-end text:change-id="ct519562640"/>.</text:p>
+   <text:p text:style-name="P27"/>
+   <text:p text:style-name="P27"/>
+   <text:p text:style-name="P26"><text:change-start text:change-id="ct519355728"/><text:soft-page-break/>Collabora Productivity est à l&apos;avant-garde de la fourniture de solutions de productivité open source. L&apos;accent est mis sur la mise à disposition des utilisateurs d&apos;outils de pointe.<text:change-end text:change-id="ct519355728"/></text:p>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc928_380714148"/>Products – The Collabora Online Apps<text:note text:id="ftn2" text:note-class="footnote"><text:note-citation>2</text:note-citation><text:note-body>
       <text:p text:style-name="Footnote"><text:a xlink:type="simple" xlink:href="https://www.collaboraonline.com/collabora-online/" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link"><text:span text:style-name="T7">https://www.collaboraonline.com/collabora-online/</text:span></text:a></text:p></text:note-body></text:note><text:bookmark-end text:name="__RefHeading___Toc928_380714148"/></text:h>
-   <text:h text:style-name="Heading_20_2" text:outline-level="2" text:is-list-header="true"/>
-   <text:h text:style-name="P42" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc574_3587465723"/>Writer<text:bookmark-end text:name="__RefHeading___Toc574_3587465723"/></text:h>
-   <text:h text:style-name="P48" text:outline-level="4"><text:bookmark-start text:name="__RefHeading___Toc578_3587465723"/>Supports<text:bookmark-end text:name="__RefHeading___Toc578_3587465723"/></text:h>
+   <text:h text:style-name="P43" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc574_3587465723"/>Writer<text:bookmark-end text:name="__RefHeading___Toc574_3587465723"/></text:h>
+   <text:h text:style-name="P49" text:outline-level="4"><text:bookmark-start text:name="__RefHeading___Toc578_3587465723"/>Supports<text:bookmark-end text:name="__RefHeading___Toc578_3587465723"/></text:h>
    <text:list text:style-name="L5">
     <text:list-item>
      <text:p text:style-name="P60">odt</text:p>
@@ -2296,20 +2330,20 @@
     </text:list-item>
    </text:list>
    <text:p text:style-name="P15"/>
-   <text:h text:style-name="P49" text:outline-level="4"><text:bookmark-start text:name="__RefHeading___Toc585_3587465723 Copy 1"/>Features<text:bookmark-end text:name="__RefHeading___Toc585_3587465723 Copy 1"/></text:h>
-   <text:list xml:id="list3117246691" text:style-name="L4">
+   <text:h text:style-name="P50" text:outline-level="4"><text:bookmark-start text:name="__RefHeading___Toc585_3587465723 Copy 1"/>Features<text:bookmark-end text:name="__RefHeading___Toc585_3587465723 Copy 1"/></text:h>
+   <text:list xml:id="list2795356671" text:style-name="L4">
     <text:list-item>
      <text:p text:style-name="P61">Provides a true WYSIWYG editing experience, making <office:annotation office:name="__Annotation__1931_380714148" loext:resolved="true">
        <dc:creator>Unknown Author</dc:creator>
        <dc:date>2024-05-06T20:19:30.809585769</dc:date>
-       <text:p text:style-name="Comment"><text:span text:style-name="T33">Vestibulum vitae aliquam diam, eu tristique justo. Integer accumsan quam in erat pulvinar, a malesuada dolor lobortis.</text:span></text:p>
+       <text:p text:style-name="Comment"><text:span text:style-name="T34">Vestibulum vitae aliquam diam, eu tristique justo. Integer accumsan quam in erat pulvinar, a malesuada dolor lobortis.</text:span></text:p>
       </office:annotation>visualising<office:annotation-end office:name="__Annotation__1931_380714148"/> your document layout incredibly easy.</text:p>
     </text:list-item>
     <text:list-item>
      <text:p text:style-name="P61">Open any document, add comments and track changes from anywhere, with anyone.</text:p>
     </text:list-item>
    </text:list>
-   <text:h text:style-name="P43" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc587_3587465723"/>Calc<text:bookmark-end text:name="__RefHeading___Toc587_3587465723"/></text:h>
+   <text:h text:style-name="P44" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc587_3587465723"/>Calc<text:bookmark-end text:name="__RefHeading___Toc587_3587465723"/></text:h>
    <text:h text:style-name="P51" text:outline-level="4"><text:bookmark-start text:name="__RefHeading___Toc589_3587465723"/>Soutient<text:bookmark-end text:name="__RefHeading___Toc589_3587465723"/></text:h>
    <text:list text:style-name="L6">
     <text:list-item>
@@ -2328,8 +2362,8 @@
      <text:p text:style-name="P66"><text:s/>.csv</text:p>
     </text:list-item>
    </text:list>
-   <text:h text:style-name="P52" text:outline-level="4"><text:bookmark-start text:name="__RefHeading___Toc597_3587465723 Copy 1"/>Caractéristique<text:change-start text:change-id="ct660687344"/>s<text:bookmark-end text:name="__RefHeading___Toc597_3587465723 Copy 1"/><text:change-end text:change-id="ct660687344"/></text:h>
-   <text:list xml:id="list170028406509546" text:continue-list="list3117246691" text:style-name="L4">
+   <text:h text:style-name="P52" text:outline-level="4"><text:bookmark-start text:name="__RefHeading___Toc597_3587465723 Copy 1"/>Caractéristique<text:change-start text:change-id="ct519719472"/>s<text:bookmark-end text:name="__RefHeading___Toc597_3587465723 Copy 1"/><text:change-end text:change-id="ct519719472"/></text:h>
+   <text:list xml:id="list125930130177241" text:continue-list="list2795356671" text:style-name="L4">
     <text:list-item>
      <text:p text:style-name="P67">Bénéficiez de formules <office:annotation office:name="__Annotation__591_2686566679" loext:resolved="true">
        <dc:creator>admin</dc:creator>
@@ -2343,22 +2377,22 @@
        <dc:creator>Mary (Guest)</dc:creator>
        <dc:date>2024-09-19T08:19:56.585862358</dc:date>
        <text:p text:style-name="Comment">Quisque tempus ex vitae dignissim dictum. Pellentesque eu odio justo. Pellentesque nec mauris diam. Suspendisse et est in dui consequat feugiat a id magna. In hac habitasse platea dictumst. Suspendisse suscipit metus non metus efficitur pretium.</text:p>
-      </office:annotation>, de tableaux croisés dynamiques, de saisie de formules HTML, de mise en forme conditionnelle et de validation des donné<text:change-start text:change-id="ct660681216"/>es<text:change-end text:change-id="ct660681216"/>.</text:p>
+      </office:annotation>, de tableaux croisés dynamiques, de saisie de formules HTML, de mise en forme conditionnelle et de validation des donné<text:change-start text:change-id="ct519718512"/>es<text:change-end text:change-id="ct519718512"/>.</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P67">Créez des feuilles de calcul géant<text:change-start text:change-id="ct660685744"/>es<text:change-end text:change-id="ct660685744"/> contenant jusqu&apos;à 16 000 colonnes, ajoutez des graphiques, des graphiques sparkline et des hyperlie<text:change-start text:change-id="ct660699136"/>ns<text:change-end text:change-id="ct660699136"/>.<text:change-start text:change-id="ct660756464"/></text:p>
+     <text:p text:style-name="P67">Créez des feuilles de calcul géant<text:change-start text:change-id="ct519716736"/>es<text:change-end text:change-id="ct519716736"/> contenant jusqu&apos;à 16 000 colonnes, ajoutez des graphiques, des graphiques sparkline et des hyperlie<text:change-start text:change-id="ct519717776"/>ns<text:change-end text:change-id="ct519717776"/>.<text:change-start text:change-id="ct519788400"/></text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P68">Tri et filtrage multicolonnes puissants.<text:change-end text:change-id="ct660756464"/></text:p>
+     <text:p text:style-name="P68"><text:soft-page-break/>Tri et filtrage multicolonnes puissants.<text:change-end text:change-id="ct519788400"/></text:p>
     </text:list-item>
    </text:list>
-   <text:p text:style-name="P26"><text:soft-page-break/></text:p>
-   <text:h text:style-name="P44" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc593_3587465723"/>Impress<text:bookmark-end text:name="__RefHeading___Toc593_3587465723"/></text:h>
+   <text:p text:style-name="P25"/>
+   <text:h text:style-name="P45" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc593_3587465723"/>Impress<text:bookmark-end text:name="__RefHeading___Toc593_3587465723"/></text:h>
    <text:h text:style-name="P53" text:outline-level="4"><text:bookmark-start text:name="__RefHeading___Toc595_3587465723"/><office:annotation office:name="__Annotation__1106_738740471" loext:resolved="false">
      <dc:creator>Kemal T</dc:creator>
      <dc:date>2024-10-08T07:28:23.693283265</dc:date>
      <meta:creator-initials>KT</meta:creator-initials>
-     <text:p text:style-name="Comment"><text:span text:style-name="T32">Pijamalı hasta yağız şoföre çabucak güvendi.</text:span></text:p>
+     <text:p text:style-name="Comment"><text:span text:style-name="T33">Pijamalı hasta yağız şoföre çabucak güvendi.</text:span></text:p>
     </office:annotation>Unterstützt<office:annotation-end office:name="__Annotation__1106_738740471"/><text:bookmark-end text:name="__RefHeading___Toc595_3587465723"/></text:h>
    <text:list text:style-name="L7">
     <text:list-item>
@@ -2377,25 +2411,24 @@
     </text:list-header>
    </text:list>
    <text:h text:style-name="P53" text:outline-level="4"><text:bookmark-start text:name="__RefHeading___Toc597_3587465723"/>Merkmale<text:bookmark-end text:name="__RefHeading___Toc597_3587465723"/></text:h>
-   <text:list text:continue-list="list170028406509546" text:style-name="L4">
+   <text:list text:continue-list="list125930130177241" text:style-name="L4">
     <text:list-item>
-     <text:p text:style-name="P56">Entwerfen Sie ganz einfach attraktive <office:annotation office:name="__Annotation__3796_3446878473" loext:resolved="false">
+     <text:p text:style-name="P56"><text:span text:style-name="T29">Entwerfen Sie ganz einfach attraktive </text:span><office:annotation office:name="__Annotation__3796_3446878473" loext:resolved="false">
        <dc:creator>Mary J</dc:creator>
        <dc:date>2024-10-03T17:58:06.376489589</dc:date>
        <meta:creator-initials>MJ</meta:creator-initials>
        <text:p text:style-name="Comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sollicitudin ut massa convallis elementum.</text:p>
-      </office:annotation>Masterfolien, fügen Sie Text, Bilder, Tabellen und SmartArt<text:change-start text:change-id="ct660796096"/><office:annotation-end office:name="__Annotation__3796_3446878473"/><text:change-end text:change-id="ct660796096"/> hinzu und bearbeiten Sie sie dann gemeinam mit Ihren Kollegen<text:change-start text:change-id="ct660802944"/></text:p>
+      </office:annotation><text:span text:style-name="T29">Masterfolien, fügen Sie Text, Bilder, Tabellen und SmartArt</text:span><text:change-start text:change-id="ct519826944"/><office:annotation-end office:name="__Annotation__3796_3446878473"/><text:change-end text:change-id="ct519826944"/><text:span text:style-name="T29"> hinzu und bearbeiten Sie sie dann gemeinam mit Ihren Kollegen</text:span><text:change-start text:change-id="ct519833824"/></text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P57">Entwerfen Sie ganz einfach attraktive Masterfolien, fügen Sie Text, Bilder, Tabellen und SmartArt hinzu und bearbeiten Sie sie dann gemeinam mit Ihren Kollegen<text:change-end text:change-id="ct660802944"/></text:p>
+     <text:p text:style-name="P57">Entwerfen Sie ganz einfach attraktive Masterfolien, fügen Sie Text, Bilder, Tabellen und SmartArt hinzu und bearbeiten Sie sie dann gemeinam mit Ihren Kollegen<text:change-end text:change-id="ct519833824"/><text:span text:style-name="T29"/></text:p>
     </text:list-item>
    </text:list>
-   <text:h text:style-name="P39" text:outline-level="2"/>
-   <text:h text:style-name="P40" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc722_3587465723"/>Shapes and Chart<text:bookmark-end text:name="__RefHeading___Toc722_3587465723"/></text:h>
+   <text:h text:style-name="P41" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc722_3587465723"/>Shapes and Chart<text:bookmark-end text:name="__RefHeading___Toc722_3587465723"/></text:h>
    <text:h text:style-name="Heading_20_3" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc724_3587465723"/>Shapes<text:bookmark-end text:name="__RefHeading___Toc724_3587465723"/></text:h>
    <text:h text:style-name="P54" text:outline-level="4" text:is-list-header="true"><text:bookmark-start text:name="__RefHeading___Toc726_3587465723"/>Basic Shape<text:bookmark-end text:name="__RefHeading___Toc726_3587465723"/></text:h>
-   <text:p text:style-name="P29"/>
-   <text:p text:style-name="P29"><draw:custom-shape text:anchor-type="paragraph" draw:z-index="3" draw:name="Shape 1" draw:style-name="gr3" draw:text-style-name="P79" svg:width="4.3961in" svg:height="1.6378in" svg:x="1.1484in" svg:y="-0.0319in">
+   <text:p text:style-name="P28"/>
+   <text:p text:style-name="P28"><draw:custom-shape text:anchor-type="paragraph" draw:z-index="3" draw:name="Shape 1" draw:style-name="gr3" draw:text-style-name="P79" svg:width="4.3961in" svg:height="1.3823in" svg:x="1.1484in" svg:y="-0.0319in">
      <text:p/>
      <draw:enhanced-geometry svg:viewBox="0 0 21600 21600" draw:glue-points="?f7 0 ?f6 ?f1 0 ?f10 ?f6 21600 ?f4 ?f10 21600 ?f9" draw:path-stretchpoint-x="10800" draw:path-stretchpoint-y="10800" draw:text-areas="0 ?f1 ?f4 ?f12" draw:type="cube" draw:modifiers="5400" draw:enhanced-path="M 0 ?f12 L 0 ?f1 ?f2 0 ?f11 0 ?f11 ?f3 ?f4 ?f12 Z N M 0 ?f1 L ?f2 0 ?f11 0 ?f4 ?f1 Z N M ?f4 ?f12 L ?f4 ?f1 ?f11 0 ?f11 ?f3 Z N">
       <draw:equation draw:name="f0" draw:formula="$0 "/>
@@ -2414,30 +2447,20 @@
       <draw:handle draw:handle-position="left $0" draw:handle-switched="true" draw:handle-range-y-minimum="0" draw:handle-range-y-maximum="21600"/>
      </draw:enhanced-geometry>
     </draw:custom-shape></text:p>
-   <text:p text:style-name="P29"/>
-   <text:p text:style-name="P29"/>
-   <text:p text:style-name="P29"/>
-   <text:h text:style-name="P54" text:outline-level="4" text:is-list-header="true"/>
-   <text:h text:style-name="P54" text:outline-level="4" text:is-list-header="true"/>
-   <text:h text:style-name="P55" text:outline-level="4"><draw:custom-shape text:anchor-type="paragraph" draw:z-index="4" draw:name="Shape 3" draw:style-name="gr2" draw:text-style-name="P78" svg:width="2.4169in" svg:height="2.3461in" draw:transform="rotate (-0.715584993317675) translate (3.20347222222222in -0.0152777777777778in)">
+   <text:h text:style-name="P55" text:outline-level="4" text:is-list-header="true"><text:bookmark-start text:name="__RefHeading___Toc728_3587465723"/>Symbol Shape<text:bookmark-end text:name="__RefHeading___Toc728_3587465723"/></text:h>
+   <text:p text:style-name="P28"><draw:custom-shape text:anchor-type="paragraph" draw:z-index="4" draw:name="Shape 3" draw:style-name="gr2" draw:text-style-name="P78" svg:width="1.9579in" svg:height="1.948in" draw:transform="rotate (-0.715584993317675) translate (3.20347222222222in -0.0152777777777778in)">
      <text:p/>
-     <draw:enhanced-geometry svg:viewBox="0 0 21600 21600" draw:glue-points="10800 0 3163 3163 0 10800 3163 18437 10800 21600 18437 18437 21600 10800 18437 3163" draw:text-areas="3163 3163 18437 18437" draw:type="smiley" draw:modifiers="18520" draw:enhanced-path="U 10800 10800 10800 10800 0 360 Z N U 7305 7515 1000 1865 0 360 Z N U 14295 7515 1000 1865 0 360 Z N M 4870 ?f1 C 8680 ?f2 12920 ?f2 16730 ?f1 F N">
+     <draw:enhanced-geometry svg:viewBox="0 0 21600 21600" draw:mirror-horizontal="false" draw:mirror-vertical="false" draw:glue-points="10800 0 3163 3163 0 10800 3163 18437 10800 21600 18437 18437 21600 10800 18437 3163" draw:text-areas="3163 3163 18437 18437" draw:type="smiley" draw:modifiers="18520" draw:enhanced-path="U 10800 10800 10800 10800 0 360 Z N U 7305 7515 1000 1865 0 360 Z N U 14295 7515 1000 1865 0 360 Z N M 4870 ?f1 C 8680 ?f2 12920 ?f2 16730 ?f1 F N">
       <draw:equation draw:name="f0" draw:formula="$0 -14510"/>
       <draw:equation draw:name="f1" draw:formula="18520-?f0 "/>
       <draw:equation draw:name="f2" draw:formula="14510+?f0 "/>
       <draw:handle draw:handle-position="10800 $0" draw:handle-range-y-minimum="14510" draw:handle-range-y-maximum="18520"/>
      </draw:enhanced-geometry>
-    </draw:custom-shape><text:bookmark-start text:name="__RefHeading___Toc728_3587465723"/>Symbol Shape<text:bookmark-end text:name="__RefHeading___Toc728_3587465723"/></text:h>
-   <text:p text:style-name="P29"/>
-   <text:p text:style-name="P29"/>
-   <text:p text:style-name="P29"/>
-   <text:p text:style-name="P29"/>
-   <text:p text:style-name="P29"/>
-   <text:p text:style-name="P29"/>
-   <text:p text:style-name="P29"/>
-   <text:h text:style-name="P54" text:outline-level="4"/>
+    </draw:custom-shape></text:p>
+   <text:p text:style-name="P28"/>
    <text:h text:style-name="P54" text:outline-level="4"><text:bookmark-start text:name="__RefHeading___Toc730_3587465723"/>Block Arrow<text:bookmark-end text:name="__RefHeading___Toc730_3587465723"/></text:h>
-   <text:p text:style-name="P29"><draw:custom-shape text:anchor-type="paragraph" draw:z-index="5" draw:name="Shape 2" draw:style-name="gr1" draw:text-style-name="P77" svg:width="1.9276in" svg:height="1.9087in" svg:x="2.3827in" svg:y="0.1055in">
+   <text:p text:style-name="P28"/>
+   <text:p text:style-name="P28"><draw:custom-shape text:anchor-type="char" draw:z-index="5" draw:name="Shape 2" draw:style-name="gr1" draw:text-style-name="P77" svg:width="1.9276in" svg:height="1.6496in" svg:x="2.3827in" svg:y="0.1055in">
      <text:p/>
      <draw:enhanced-geometry svg:viewBox="0 0 21600 21600" draw:mirror-horizontal="false" draw:mirror-vertical="false" draw:text-areas="0 ?f0 21600 21600" draw:type="up-arrow-callout" draw:modifiers="7200 5400 3600 8100" draw:enhanced-path="M 21600 ?f0 L 21600 21600 0 21600 0 ?f0 ?f3 ?f0 ?f3 ?f2 ?f1 ?f2 10800 0 ?f4 ?f2 ?f5 ?f2 ?f5 ?f0 Z N">
       <draw:equation draw:name="f0" draw:formula="$0 "/>
@@ -2451,17 +2474,11 @@
       <draw:handle draw:handle-position="$1 top" draw:handle-range-x-minimum="0" draw:handle-range-x-maximum="$3"/>
      </draw:enhanced-geometry>
     </draw:custom-shape></text:p>
-   <text:p text:style-name="P29"/>
-   <text:p text:style-name="P29"/>
-   <text:p text:style-name="P29"/>
-   <text:h text:style-name="Heading_20_4" text:outline-level="4"/>
-   <text:p text:style-name="Text_20_body"/>
-   <text:p text:style-name="Text_20_body"><text:soft-page-break/></text:p>
-   <text:h text:style-name="Heading_20_3" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc732_3587465723"/>Chart<text:bookmark-end text:name="__RefHeading___Toc732_3587465723"/></text:h>
+   <text:h text:style-name="Heading_20_3" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc732_3587465723"/><text:soft-page-break/>Chart<text:bookmark-end text:name="__RefHeading___Toc732_3587465723"/></text:h>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"><draw:frame draw:style-name="fr7" draw:name="Object1" text:anchor-type="char" svg:width="6.7689in" svg:height="3.9618in" draw:z-index="6"><draw:object>
       <office:document xmlns:css3t="http://www.w3.org/TR/css3-text/" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:chartooo="http://openoffice.org/2010/chart" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:drawooo="http://openoffice.org/2010/draw" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:rpt="http://openoffice.org/2005/report" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" office:version="1.3" office:mimetype="application/vnd.oasis.opendocument.chart">
-       <office:meta><meta:generator>CollaboraOfficeDev/24.04.12.0$Linux_X86_64 LibreOffice_project/c1cf7ae8a734f26aee6fa38a08e53217f3ab88dd</meta:generator></office:meta>
+       <office:meta><meta:generator>CollaboraOfficeDev/24.04.12.3$Linux_X86_64 LibreOffice_project/7e5075fea733d68c8167ac33e5ce34d89b50a6a9</meta:generator></office:meta>
        <office:styles/>
        <office:automatic-styles>
         <number:number-style style:name="N0">
@@ -2977,7 +2994,7 @@
      <dc:creator>Mary J</dc:creator>
      <dc:date>2024-09-25T14:34:28.088768585</dc:date>
      <meta:creator-initials>MJ</meta:creator-initials>
-     <text:p text:style-name="Comment"><text:span text:style-name="T31">Stróż pchnął kość w quiz gędźb vel fax myjń.</text:span></text:p>
+     <text:p text:style-name="Comment"><text:span text:style-name="T32">Stróż pchnął kość w quiz gędźb vel fax myjń.</text:span></text:p>
     </office:annotation>Subscription Table<office:annotation-end office:name="__Annotation__1105_573016"/><text:bookmark-end text:name="__RefHeading___Toc610_3587465723"/></text:h>
    <text:p text:style-name="P12"/>
    <table:table table:name="Table2" table:style-name="Table2" table:template-name="Default Style">
@@ -3051,7 +3068,7 @@
         </table:table-cell>
        </table:table-row>
       </table:table>
-      <text:h text:style-name="P50" text:outline-level="4"/>
+      <text:p text:style-name="Text_20_body"/>
      </table:table-cell>
      <table:table-cell table:style-name="Table2.D2" office:value-type="string">
       <text:list text:style-name="L1">
@@ -3068,14 +3085,13 @@
       <text:p text:style-name="P14"/>
      </table:table-cell>
     </table:table-row>
-    <text:soft-page-break/>
     <table:table-row table:style-name="Table2.1">
      <table:table-cell table:style-name="Table2.A2" office:value-type="string">
       <text:p text:style-name="P13">2. </text:p>
      </table:table-cell>
      <table:table-cell table:style-name="Table2.A2" office:value-type="string">
       <text:h text:style-name="Heading_20_4" text:outline-level="4"><text:bookmark-start text:name="__RefHeading___Toc1146_380714148"/>Collabora for Business<text:bookmark-end text:name="__RefHeading___Toc1146_380714148"/></text:h>
-      <text:p text:style-name="P14">Supported Version up-to 99 users</text:p>
+      <text:p text:style-name="P14"><text:soft-page-break/>Supported Version up-to 99 users</text:p>
      </table:table-cell>
      <table:table-cell table:style-name="Table2.A2" office:value-type="string">
       <table:table table:name="Table3" table:style-name="Table3" table:template-name="Default Style">
@@ -3091,7 +3107,7 @@
        </table:table-row>
        <table:table-row>
         <table:table-cell table:style-name="Table3.A2" office:value-type="string">
-         <text:p text:style-name="P13">.odt</text:p>
+         <text:p text:style-name="P13"><text:soft-page-break/>.odt</text:p>
         </table:table-cell>
         <table:table-cell table:style-name="Table3.B2" office:value-type="string">
          <text:p text:style-name="P13">.docx</text:p>
@@ -3122,7 +3138,7 @@
         </table:table-cell>
        </table:table-row>
       </table:table>
-      <text:h text:style-name="P50" text:outline-level="4" text:is-list-header="true"/>
+      <text:p text:style-name="Text_20_body"/>
      </table:table-cell>
      <table:table-cell table:style-name="Table2.D2" office:value-type="string">
       <text:list text:style-name="L2">
@@ -3130,7 +3146,7 @@
         <text:p text:style-name="P63">Lifetime Maintenance</text:p>
        </text:list-item>
        <text:list-item>
-        <text:p text:style-name="P63">Customer Portal Access</text:p>
+        <text:p text:style-name="P63"><text:soft-page-break/>Customer Portal Access</text:p>
        </text:list-item>
        <text:list-item>
         <text:p text:style-name="P63">Service Level Agreement (SLA)</text:p>
@@ -3192,7 +3208,7 @@
         </table:table-cell>
        </table:table-row>
       </table:table>
-      <text:h text:style-name="P50" text:outline-level="4"/>
+      <text:p text:style-name="Text_20_body"/>
      </table:table-cell>
      <table:table-cell table:style-name="Table2.D2" office:value-type="string">
       <text:list text:style-name="L3">
@@ -3204,16 +3220,16 @@
      </table:table-cell>
     </table:table-row>
    </table:table>
+   <text:p text:style-name="P19"/>
    <text:p text:style-name="P20"/>
-   <text:p text:style-name="P21"/>
-   <text:h text:style-name="P45" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc612_3587465723"/>Forms<text:bookmark-end text:name="__RefHeading___Toc612_3587465723"/></text:h>
+   <text:h text:style-name="P46" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc612_3587465723"/>Forms<text:bookmark-end text:name="__RefHeading___Toc612_3587465723"/></text:h>
    <text:list text:style-name="L9">
     <text:list-item>
      <text:p text:style-name="P72"><office:annotation office:name="__Annotation__1104_446268822" loext:resolved="false">
        <dc:creator>Jose P</dc:creator>
        <dc:date>2024-09-18T16:32:15.138944326</dc:date>
        <meta:creator-initials>JP</meta:creator-initials>
-       <text:p text:style-name="Comment"><text:span text:style-name="T30">El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja.</text:span></text:p>
+       <text:p text:style-name="Comment"><text:span text:style-name="T31">El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja.</text:span></text:p>
       </office:annotation>Checkbox<office:annotation-end office:name="__Annotation__1104_446268822"/>:</text:p>
      <text:p text:style-name="P71">What is your preferred theme?</text:p>
      <text:p text:style-name="P74"><loext:content-control loext:checkbox="true" loext:checked-state="☒" loext:unchecked-state="☐" loext:alias="Dark mode" loext:tag="Dark mode" loext:id="526712800">☐</loext:content-control> Dark mode</text:p>
@@ -3228,7 +3244,7 @@
      <text:p text:style-name="P76"><loext:content-control loext:dropdown="true" loext:id="2123631847"><loext:list-item loext:display-text="Choose a pet" loext:value="Choose a pet"/><loext:list-item loext:display-text="Dog" loext:value="Dog"/><loext:list-item loext:display-text="Cat" loext:value="Cat"/><loext:list-item loext:display-text="Parrot" loext:value="Parrot"/><text:span text:style-name="T9">Choose a pet</text:span></loext:content-control></text:p>
     </text:list-item>
    </text:list>
-   <text:p text:style-name="P22"/>
+   <text:p text:style-name="P21"/>
    <text:list text:continue-numbering="true" text:style-name="L9">
     <text:list-item>
      <text:p text:style-name="P73">Date:</text:p>
@@ -3252,11 +3268,10 @@
        </draw:frame></loext:content-control><loext:content-control loext:picture="true" loext:id="256653819"/><loext:content-control loext:picture="true" loext:id="1465149563"/></text:p>
     </text:list-item>
    </text:list>
-   <text:h text:style-name="Heading_20_2" text:outline-level="2" text:is-list-header="true"/>
-   <text:p text:style-name="P37"/>
-   <text:h text:style-name="P41" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc11593_440631829"/>Lorem ipsum<text:bookmark-end text:name="__RefHeading___Toc11593_440631829"/></text:h>
-   <text:h text:style-name="P46" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc11595_440631829"/>Dolor sit amet<text:bookmark-end text:name="__RefHeading___Toc11595_440631829"/></text:h>
-   <text:p text:style-name="P34">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <text:span text:style-name="T12">Vestibulum</text:span> congue mi nec gravida consequat. Sed mollis imperdiet fermentum. Cras id sem massa. Nam nec blandit lectus. Vivamus molestie suscipit <text:span text:style-name="T12">elementum</text:span>. Fusce dignissim ex eget <text:span text:style-name="T13">pellentesque</text:span> blandit. Nam tempus odio eu lorem porttitor placerat. Suspendisse est leo, tincidunt a facilisis id, <office:annotation office:name="__Annotation__11313_440631829" loext:resolved="true">
+   <text:p text:style-name="P36"/>
+   <text:h text:style-name="P42" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc11593_440631829"/>Lorem ipsum<text:bookmark-end text:name="__RefHeading___Toc11593_440631829"/></text:h>
+   <text:h text:style-name="P47" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc11595_440631829"/>Dolor sit amet<text:bookmark-end text:name="__RefHeading___Toc11595_440631829"/></text:h>
+   <text:p text:style-name="P33">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <text:span text:style-name="T12">Vestibulum</text:span> congue mi nec gravida consequat. Sed mollis imperdiet fermentum. Cras id sem massa. Nam nec blandit lectus. Vivamus molestie suscipit <text:span text:style-name="T12">elementum</text:span>. Fusce dignissim ex eget <text:span text:style-name="T13">pellentesque</text:span> blandit. Nam tempus odio eu lorem porttitor placerat. Suspendisse est leo, tincidunt a facilisis id, <office:annotation office:name="__Annotation__11313_440631829" loext:resolved="true">
      <dc:creator>Jose P</dc:creator>
      <dc:date>2024-10-11T04:30:41.113176372</dc:date>
      <meta:creator-initials>JP</meta:creator-initials>
@@ -3265,16 +3280,16 @@
      <dc:creator>Mary J</dc:creator>
      <dc:date>2024-10-11T04:32:35.521761451</dc:date>
      <meta:creator-initials>MJ</meta:creator-initials>
-     <text:p text:style-name="Comment"><text:span text:style-name="T29">Reply to Jose P (11/10/2024, 04:31): &quot;...&quot;</text:span></text:p>
+     <text:p text:style-name="Comment"><text:span text:style-name="T30">Reply to Jose P (11/10/2024, 04:31): &quot;...&quot;</text:span></text:p>
      <text:p text:style-name="Comment">Duis sollicitudin ornare metus et tristique. Vivamus commodo purus vitae nulla lobortis, quis scelerisque quam imperdiet. Nam ante turpis, tincidunt eu est vel, vestibulum lobortis dui.</text:p>
     </office:annotation><office:annotation loext:parent-name="__Annotation__11313_440631829" loext:resolved="true">
      <dc:creator>Mary J</dc:creator>
      <dc:date>2024-10-11T04:32:14.205755681</dc:date>
      <meta:creator-initials>MJ</meta:creator-initials>
-     <text:p text:style-name="Comment"><text:span text:style-name="T29">Reply to Jose P (11/10/2024, 04:31): &quot;...&quot;</text:span></text:p>
+     <text:p text:style-name="Comment"><text:span text:style-name="T30">Reply to Jose P (11/10/2024, 04:31): &quot;...&quot;</text:span></text:p>
      <text:p text:style-name="Comment">Ut aliquam lorem sed egestas dignissim. Sed sem velit, hendrerit id imperdiet in, accumsan nec ante. Proin convallis, tortor non malesuada egestas, turpis mi fermentum sapien, ac dapibus nunc odio non diam.</text:p>
     </office:annotation>. Fusce malesuada, lacus id gravida elementum, purus nunc euismod nibh, sit amet bibendum nunc nisl eu turpis. Mauris ut ligula metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean nec <text:span text:style-name="T14">lorem</text:span> ut risus ornare porta non sit amet est. Curabitur accumsan tristique lectus vel congue. Maecenas luctus pretium lorem id laoreet. In vehicula enim facilisis mollis viverra. Phasellus libero quam, dapibus at eros et, interdum fermentum odio.</text:p>
-   <text:p text:style-name="P35">Nullam sit amet quam et tortor sodales dapibus et non nibh. Suspendisse eu lectus urna. Fusce sit<draw:frame draw:style-name="fr2" draw:name="Frame2" text:anchor-type="char" svg:y="-0.05in" svg:width="3in" draw:z-index="7">
+   <text:p text:style-name="P34">Nullam sit amet quam et tortor sodales dapibus et non nibh. Suspendisse eu lectus urna. Fusce sit<draw:frame draw:style-name="fr2" draw:name="Frame2" text:anchor-type="char" svg:y="-0.05in" svg:width="3in" draw:z-index="7">
      <draw:text-box fo:min-height="4.8in">
       <text:p text:style-name="Figure"><draw:frame draw:style-name="fr4" draw:name="Image3" text:anchor-type="paragraph" svg:width="3in" style:rel-width="100%" svg:height="4.8in" style:rel-height="scale" draw:z-index="8"><draw:image draw:mime-type="image/png">
          <office:binary-data>iVBORw0KGgoAAAANSUhEUgAAF3AAACWAAQMAAADz9LhiAAAABlBMVEX/f7b/frYvHgJ3AACI
@@ -3939,10 +3954,10 @@
      <dc:creator>Mary J</dc:creator>
      <dc:date>2024-10-11T04:33:12.707168321</dc:date>
      <meta:creator-initials>MJ</meta:creator-initials>
-     <text:p text:style-name="Comment"><text:span text:style-name="T29">Reply to Jose P (11/10/2024, 04:31): &quot;...&quot;</text:span></text:p>
+     <text:p text:style-name="Comment"><text:span text:style-name="T30">Reply to Jose P (11/10/2024, 04:31): &quot;...&quot;</text:span></text:p>
      <text:p text:style-name="Comment">Mauris luctus condimentum eros, eget consectetur nisi malesuada id. Vestibulum dui odio, sodales et turpis id, ullamcorper varius felis. Suspendisse vel rutrum quam. Phasellus consectetur blandit ligula quis sagittis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec nulla urna, placerat at faucibus ac, aliquet eu justo. Cras at volutpat justo.</text:p>
     </office:annotation>, et mattis massa lacinia. Maecenas euismod tellus ac nisi aliquam, at semper ligula malesuada. Proin gravida velit id ultricies consectetur. Donec vulputate enim sapien, aliquet cursus est hendrerit in. Vestibulum ultrices nulla vitae lectus vestibulum <text:span text:style-name="T27">semper</text:span>. Pellentesque dapibus <text:span text:style-name="T18">dolor</text:span> nec elit accumsan, id maximus erat pellentesque. Curabitur hendrerit ullamcorper diam et iaculis. Fusce urna quam, ultricies non risus et, euismod condimentum lorem. Aenean lacus lacus, molestie nec dictum vel, imperdiet ut lacus. Maecenas placerat quam non odio dignissim varius. <text:span text:style-name="T12">Cras</text:span> at tellus et mi mollis lacinia quis in lacus. Integer porta ex eget ante dignissim <text:span text:style-name="T16">dignissim</text:span>.</text:p>
-   <text:p text:style-name="P36"><office:annotation loext:resolved="false">
+   <text:p text:style-name="P35"><office:annotation loext:resolved="false">
      <dc:creator>Jose P</dc:creator>
      <dc:date>2024-10-11T04:31:19.956118514</dc:date>
      <meta:creator-initials>JP</meta:creator-initials>
@@ -3952,43 +3967,43 @@
      <dc:date>2024-10-11T04:33:50.290619086</dc:date>
      <meta:creator-initials>MJ</meta:creator-initials>
      <text:p text:style-name="Comment">Curabitur id nunc non nisl rhoncus finibus. Aliquam elementum sem mauris, in auctor augue rhoncus nec. Sed vestibulum, justo sit amet condimentum ornare, lectus neque aliquam justo, eu dapibus risus mauris ut turpis. Nulla facilisi.</text:p>
-    </office:annotation>Morbi<office:annotation-end office:name="__Annotation__11380_440631829"/><text:change-start text:change-id="ct661460656"/><office:annotation loext:parent-name="__Annotation__11380_440631829" loext:resolved="false">
+    </office:annotation>Morbi<office:annotation-end office:name="__Annotation__11380_440631829"/><text:change-start text:change-id="ct520309184"/><office:annotation loext:parent-name="__Annotation__11380_440631829" loext:resolved="false">
      <dc:creator>Jose P</dc:creator>
      <dc:date>2024-10-11T04:36:09.205363752</dc:date>
      <meta:creator-initials>JP</meta:creator-initials>
-     <text:p text:style-name="Comment"><text:span text:style-name="T29">Reply to Mary J (11/10/2024, 04:35): &quot;...&quot;</text:span></text:p>
+     <text:p text:style-name="Comment"><text:span text:style-name="T30">Reply to Mary J (11/10/2024, 04:35): &quot;...&quot;</text:span></text:p>
      <text:p text:style-name="Comment">Donec nulla urna, placerat at faucibus ac, aliquet eu justo. Cras at volutpat justo. Aliquam vel velit rhoncus, blandit orci quis, accumsan est. Sed at ante commodo, consequat neque in, tincidunt ex. Aliquam aliquam mi sapien, non cursus erat finibus a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</text:p>
-    </office:annotation><text:change-end text:change-id="ct661460656"/> suscipit tempor ex. Aenean ornare sem nisi, vitae cursus tellus semper non.</text:p>
-   <text:h text:style-name="P47" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc11597_440631829"/>Fusce rhoncus lacinia pellentesque<text:bookmark-end text:name="__RefHeading___Toc11597_440631829"/></text:h>
-   <text:p text:style-name="P32"><text:span text:style-name="T17">Fusce rutrum</text:span> sodales tortor quis hendrerit. Nulla vestibulum ex leo, quis gravida erat eleifend a. Proin commodo interdum nunc ac ultrices. Vestibulum eu tincidunt velit. Mauris non nisl bibendum, mollis orci eget, feugiat sem. In hac habitasse platea dictumst. Praesent quis arcu congue, elementum leo nec, efficitur ipsum.</text:p>
-   <text:p text:style-name="P34">Pellentesque imperdiet <text:span text:style-name="T12">justo</text:span> id sem maximus molestie. Vestibulum pretium sed augue quis egestas. Curabitur diam nulla, venenatis eu lacinia iaculis, volutpat sit amet quam. Donec placerat non mauris in cursus. Mauris ut vehicula dolor. Aenean scelerisque fermentum sodales. Phasellus eu massa eros.</text:p>
-   <text:p text:style-name="P32">Proin feugiat elit vel malesuada interdum. Nulla quis est erat. Quisque in fermentum elit. Cras at tortor elit. In hac habitasse platea dictumst. Donec viverra scelerisque mattis. Suspendisse arcu quam, ultricies nec nulla at, auctor maximus nisl.</text:p>
-   <text:p text:style-name="P32">Donec ut lectus posuere, luctus orci ac, porttitor felis. Proin in pharetra massa. Etiam rutrum enim id elit porta vehicula. Suspendisse euismod tempor luctus. <text:span text:style-name="T26">Fusce</text:span> <office:annotation office:name="__Annotation__11379_440631829" loext:resolved="false">
+    </office:annotation><text:change-end text:change-id="ct520309184"/> suscipit tempor ex. Aenean ornare sem nisi, vitae cursus tellus semper non.</text:p>
+   <text:h text:style-name="P48" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc11597_440631829"/>Fusce rhoncus lacinia pellentesque<text:bookmark-end text:name="__RefHeading___Toc11597_440631829"/></text:h>
+   <text:p text:style-name="P31"><text:span text:style-name="T17">Fusce rutrum</text:span> sodales tortor quis hendrerit. Nulla vestibulum ex leo, quis gravida erat eleifend a. Proin commodo interdum nunc ac ultrices. Vestibulum eu tincidunt velit. Mauris non nisl bibendum, mollis orci eget, feugiat sem. In hac habitasse platea dictumst. Praesent quis arcu congue, elementum leo nec, efficitur ipsum.</text:p>
+   <text:p text:style-name="P33">Pellentesque imperdiet <text:span text:style-name="T12">justo</text:span> id sem maximus molestie. Vestibulum pretium sed augue quis egestas. Curabitur diam nulla, venenatis eu lacinia iaculis, volutpat sit amet quam. Donec placerat non mauris in cursus. Mauris ut vehicula dolor. Aenean scelerisque fermentum sodales. Phasellus eu massa eros.</text:p>
+   <text:p text:style-name="P31">Proin feugiat elit vel malesuada interdum. Nulla quis est erat. Quisque in fermentum elit. Cras at tortor elit. In hac habitasse platea dictumst. Donec viverra scelerisque mattis. Suspendisse arcu quam, ultricies nec nulla at, auctor maximus nisl.</text:p>
+   <text:p text:style-name="P31">Donec ut lectus posuere, luctus orci ac, porttitor felis. Proin in pharetra massa. Etiam rutrum enim id elit porta vehicula. Suspendisse euismod tempor luctus. <text:span text:style-name="T26">Fusce</text:span> <office:annotation office:name="__Annotation__11379_440631829" loext:resolved="false">
      <dc:creator>Mary J</dc:creator>
      <dc:date>2024-10-11T04:33:31.668533796</dc:date>
      <meta:creator-initials>MJ</meta:creator-initials>
      <text:p text:style-name="Comment">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis nec sapien ante. Aenean sit amet suscipit erat, non ullamcorper sem. In hac habitasse platea dictumst. Aliquam eu velit mi.</text:p>
     </office:annotation>accumsan<office:annotation-end office:name="__Annotation__11379_440631829"/> lobortis suscipit. Vestibulum finibus et nibh ac sodales. In quis pharetra metus. Praesent pharetra venenatis augue sed tempus. Duis velit nibh, varius vitae elit id, malesuada eleifend massa. Curabitur auctor non metus non mattis. Vestibulum vitae justo quis tortor rutrum venenatis. Sed et maximus mauris, vel auctor urna.</text:p>
-   <text:p text:style-name="P32">Quisque hendrerit lorem quis dui sodales pharetra. Suspendisse vel elit sit amet purus volutpat placerat. Nulla malesuada, mauris at imperdiet blandit, turpis purus mattis lorem, eu venenatis ipsum lorem id lorem. Cras tristique vehicula elit nec posuere. <text:span text:style-name="T19">Mauris vel aliquet felis.</text:span> Mauris quis vulputate felis. Sed fringilla diam id sem sodales, cursus ultricies erat elementum. Praesent consequat nulla eget nunc efficitur, a finibus tellus suscipit.</text:p>
-   <text:p text:style-name="P32">Curabitur gravida lorem turpis, quis fermentum sem venenatis at. Proin lobortis felis sed dictum laoreet. Nunc eu lectus fermentum, iaculis arcu at, suscipit elit. Donec quis dolor justo. Phasellus tempus felis nec ex pharetra cursus. Sed accumsan <text:span text:style-name="T12">malesuada</text:span> tellus sit amet sollicitudin. Class aptent taciti <text:span text:style-name="T21">sociosqu</text:span> ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque gravida blandit lacus nec posuere. Cras quis consectetur diam. <office:annotation office:name="__Annotation__11381_440631829" loext:resolved="false">
+   <text:p text:style-name="P31">Quisque hendrerit lorem quis dui sodales pharetra. Suspendisse vel elit sit amet purus volutpat placerat. Nulla malesuada, mauris at imperdiet blandit, turpis purus mattis lorem, eu venenatis ipsum lorem id lorem. Cras tristique vehicula elit nec posuere. <text:span text:style-name="T19">Mauris vel aliquet felis.</text:span> Mauris quis vulputate felis. Sed fringilla diam id sem sodales, cursus ultricies erat elementum. Praesent consequat nulla eget nunc efficitur, a finibus tellus suscipit.</text:p>
+   <text:p text:style-name="P31">Curabitur gravida lorem turpis, quis fermentum sem venenatis at. Proin lobortis felis sed dictum laoreet. Nunc eu lectus fermentum, iaculis arcu at, suscipit elit. Donec quis dolor justo. Phasellus tempus felis nec ex pharetra cursus. Sed accumsan <text:span text:style-name="T12">malesuada</text:span> tellus sit amet sollicitudin. Class aptent taciti <text:span text:style-name="T21">sociosqu</text:span> ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque gravida blandit lacus nec posuere. Cras quis consectetur diam. <office:annotation office:name="__Annotation__11381_440631829" loext:resolved="false">
      <dc:creator>Mary J</dc:creator>
      <dc:date>2024-10-11T04:34:17.119566638</dc:date>
      <meta:creator-initials>MJ</meta:creator-initials>
      <text:p text:style-name="Comment">Cras fermentum, nunc cursus eleifend tempus, enim risus maximus lacus, sed accumsan libero est feugiat purus. Suspendisse semper odio in tellus accumsan, et convallis erat dictum. Quisque diam urna, fringilla semper nulla non, euismod feugiat nisl. Morbi consectetur augue vel augue porta mattis.</text:p>
-    </office:annotation>Fusce egestas, purus et eleifend suscipit, purus lacus fermentum massa, non iaculis elit neque eget nisl.<office:annotation-end office:name="__Annotation__11381_440631829"/><text:change-start text:change-id="ct661248736"/><office:annotation loext:parent-name="__Annotation__11381_440631829" loext:resolved="false">
+    </office:annotation>Fusce egestas, purus et eleifend suscipit, purus lacus fermentum massa, non iaculis elit neque eget nisl.<office:annotation-end office:name="__Annotation__11381_440631829"/><text:change-start text:change-id="ct520574560"/><office:annotation loext:parent-name="__Annotation__11381_440631829" loext:resolved="false">
      <dc:creator>Jose P</dc:creator>
      <dc:date>2024-10-11T04:36:35.315056655</dc:date>
      <meta:creator-initials>JP</meta:creator-initials>
-     <text:p text:style-name="Comment"><text:span text:style-name="T29">Reply to Mary J (11/10/2024, 04:35): &quot;...&quot;</text:span></text:p>
+     <text:p text:style-name="Comment"><text:span text:style-name="T30">Reply to Mary J (11/10/2024, 04:35): &quot;...&quot;</text:span></text:p>
      <text:p text:style-name="Comment">Mauris luctus condimentum eros, eget consectetur nisi malesuada id. Vestibulum dui odio, sodales et turpis id, ullamcorper varius felis. Suspendisse vel rutrum quam. Phasellus consectetur blandit ligula quis sagittis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</text:p>
-    </office:annotation><text:change-end text:change-id="ct661248736"/> Praesent vitae tellus in turpis interdum ullamcorper lacinia quis tellus. Aliquam sed feugiat urna, eu vestibulum justo.</text:p>
-   <text:p text:style-name="P32">Cras <text:span text:style-name="T20">elementum</text:span> sed tellus nec interdum. Suspendisse dictum urna ut libero tincidunt, et cursus risus tempor. Nulla iaculis ligula lacinia fermentum pharetra. Sed gravida nisi sapien, in bibendum <text:soft-page-break/>erat iaculis non. Nulla at <text:span text:style-name="T13">lectus</text:span> non purus <text:span text:style-name="T14">tempus</text:span> aliquet. Aliquam faucibus pellentesque diam, non porta nulla pharetra non. Vivamus molestie fermentum elementum. Donec dictum ligula vitae ex pellentesque finibus. Mauris molestie risus sit amet elementum placerat. Quisque dignissim augue vel nulla venenatis vehicula. <office:annotation office:name="__Annotation__11382_440631829" loext:resolved="true">
+    </office:annotation><text:change-end text:change-id="ct520574560"/> Praesent vitae tellus in turpis interdum ullamcorper lacinia quis tellus. Aliquam sed feugiat urna, eu vestibulum justo.</text:p>
+   <text:p text:style-name="P31">Cras <text:span text:style-name="T20">elementum</text:span> sed tellus nec interdum. Suspendisse dictum urna ut libero tincidunt, et cursus risus tempor. Nulla iaculis ligula lacinia fermentum pharetra. Sed gravida nisi sapien, in bibendum <text:soft-page-break/>erat iaculis non. Nulla at <text:span text:style-name="T13">lectus</text:span> non purus <text:span text:style-name="T14">tempus</text:span> aliquet. Aliquam faucibus pellentesque diam, non porta nulla pharetra non. Vivamus molestie fermentum elementum. Donec dictum ligula vitae ex pellentesque finibus. Mauris molestie risus sit amet elementum placerat. Quisque dignissim augue vel nulla venenatis vehicula. <office:annotation office:name="__Annotation__11382_440631829" loext:resolved="true">
      <dc:creator>Mary J</dc:creator>
      <dc:date>2024-10-11T04:35:20.694488573</dc:date>
      <meta:creator-initials>MJ</meta:creator-initials>
      <text:p text:style-name="Comment">Aliquam aliquam mi sapien, non cursus erat finibus a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</text:p>
-    </office:annotation><text:span text:style-name="T12">Vivamus</text:span><text:change-start text:change-id="ct661294688"/><office:annotation-end office:name="__Annotation__11382_440631829"/><text:change-end text:change-id="ct661294688"/> vel aliquam massa. Proin pulvinar lacus in arcu mattis accumsan. Nam ac odio et arcu accumsan molestie vel sit amet tortor. In lobortis nisi a elit accumsan, ac scelerisque neque consequat.</text:p>
-   <text:p text:style-name="P32"><draw:frame draw:style-name="fr1" draw:name="Frame3" text:anchor-type="char" svg:x="0.0098in" svg:y="0.0098in" svg:width="2.1902in" draw:z-index="9">
+    </office:annotation><text:span text:style-name="T12">Vivamus</text:span><text:change-start text:change-id="ct520647296"/><office:annotation-end office:name="__Annotation__11382_440631829"/><text:change-end text:change-id="ct520647296"/> vel aliquam massa. Proin pulvinar lacus in arcu mattis accumsan. Nam ac odio et arcu accumsan molestie vel sit amet tortor. In lobortis nisi a elit accumsan, ac scelerisque neque consequat.</text:p>
+   <text:p text:style-name="P31"><draw:frame draw:style-name="fr1" draw:name="Frame3" text:anchor-type="char" svg:x="0.0098in" svg:y="0.0098in" svg:width="2.1902in" draw:z-index="9">
      <draw:text-box fo:min-height="3.5in">
       <text:p text:style-name="Figure"><draw:frame draw:style-name="fr4" draw:name="Image4" text:anchor-type="paragraph" svg:width="2.1902in" style:rel-width="100%" svg:height="3.5in" style:rel-height="scale" draw:z-index="10"><draw:image draw:mime-type="image/png">
          <office:binary-data>iVBORw0KGgoAAAANSUhEUgAAF3AAACWAAQMAAADz9LhiAAAABlBMVEUAlP8Ak/8oigi6AAAt
@@ -4213,35 +4228,35 @@
        </draw:frame>Figure <text:sequence text:ref-name="refFigure2" text:name="Figure" text:formula="ooow:Figure+1" style:num-format="1">3</text:sequence>: Aliquam sed</text:p>
      </draw:text-box>
     </draw:frame>Aenean vehicula eros mi, eu condimentum urna fringilla a. Cras ac quam fringilla, bibendum nunc nec, malesuada magna. Ut sit amet sodales felis. Nam imperdiet sit amet leo a rutrum. Aenean ac lorem id urna scelerisque dapibus ut in dolor. Nulla nibh odio, lacinia nec justo eu, sagittis lobortis ligula. Integer mi diam, semper mattis laoreet nec, iaculis eu orci. In vel dictum massa, porttitor mattis urna. Phasellus dignissim lacus et lacus dignissim, et feugiat metus ornare. Integer aliquam mauris vehicula, posuere nulla vel, semper sem. Duis ipsum magna, ullamcorper at felis et, volutpat varius magna. Morbi venenatis nibh id tempor interdum. Praesent quis pellentesque libero, non viverra libero. Integer hendrerit, massa non hendrerit bibendum, mauris felis iaculis diam, at vestibulum erat eros sed lectus. Aliquam maximus dapibus convallis.</text:p>
-   <text:p text:style-name="P32">Aliquam sed ex ac nibh tincidunt interdum efficitur sed enim. <text:span text:style-name="T22">Duis id aliquet ex</text:span>, et tempus urna. Maecenas placerat, nisi eu congue faucibus, neque libero fermentum nibh, ut eleifend ante enim quis libero. Phasellus molestie erat id lectus placerat, non placerat metus commodo. Nam blandit finibus commodo. Maecenas vestibulum lorem et venenatis porttitor. Etiam enim erat, vulputate ut leo a, ullamcorper ultricies elit. Donec eget luctus mi, tempus suscipit dolor. Morbi egestas, dui consectetur egestas mollis, justo ex ornare enim, ac tempus augue tellus at neque. Integer volutpat congue est, vitae facilisis eros sodales <text:span text:style-name="T15">efficitur</text:span>. <text:span text:style-name="T28">Phasellus</text:span> non tincidunt quam.</text:p>
+   <text:p text:style-name="P31">Aliquam sed ex ac nibh tincidunt interdum efficitur sed enim. <text:span text:style-name="T22">Duis id aliquet ex</text:span>, et tempus urna. Maecenas placerat, nisi eu congue faucibus, neque libero fermentum nibh, ut eleifend ante enim quis libero. Phasellus molestie erat id lectus placerat, non placerat metus commodo. Nam blandit finibus commodo. Maecenas vestibulum lorem et venenatis porttitor. Etiam enim erat, vulputate ut leo a, ullamcorper ultricies elit. Donec eget luctus mi, tempus suscipit dolor. Morbi egestas, dui consectetur egestas mollis, justo ex ornare enim, ac tempus augue tellus at neque. Integer volutpat congue est, vitae facilisis eros sodales <text:span text:style-name="T15">efficitur</text:span>. <text:span text:style-name="T28">Phasellus</text:span> non tincidunt quam.</text:p>
    <text:h text:style-name="Heading_20_3" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc11599_440631829"/>Maecenas elit velit<text:bookmark-end text:name="__RefHeading___Toc11599_440631829"/></text:h>
-   <text:p text:style-name="P33"><text:span text:style-name="T11">C</text:span>onsequat vel sem et, accumsan semper nunc. Etiam <text:span text:style-name="T21">maximus</text:span> varius quam, ut scelerisque justo cursus nec. In elementum pretium egestas. Sed auctor massa porttitor varius pulvinar. Curabitur posuere euismod lorem, at porttitor ex egestas eu. Ut convallis auctor turpis, ac imperdiet elit dictum ac. Vestibulum fringilla tortor sed purus consectetur gravida. <office:annotation office:name="__Annotation__11384_440631829" loext:resolved="false">
+   <text:p text:style-name="P32"><text:span text:style-name="T11">C</text:span>onsequat vel sem et, accumsan semper nunc. Etiam <text:span text:style-name="T21">maximus</text:span> varius quam, ut scelerisque justo cursus nec. In elementum pretium egestas. Sed auctor massa porttitor varius pulvinar. Curabitur posuere euismod lorem, at porttitor ex egestas eu. Ut convallis auctor turpis, ac imperdiet elit dictum ac. Vestibulum fringilla tortor sed purus consectetur gravida. <office:annotation office:name="__Annotation__11384_440631829" loext:resolved="false">
      <dc:creator>Jose P</dc:creator>
      <dc:date>2024-10-11T04:38:05.136154136</dc:date>
      <meta:creator-initials>JP</meta:creator-initials>
      <text:p text:style-name="Comment">Cras id malesuada risus. In metus nisl, fermentum ac mattis nec, malesuada in mauris. Nunc auctor feugiat pharetra. Praesent mauris ante, luctus eget aliquam eu, maximus a nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi laoreet ac purus feugiat vulputate.</text:p>
-    </office:annotation>Nulla lobortis tempor lorem non ornare. Pellentesque dapibus tellus nec lorem mollis fermentum.<text:change-start text:change-id="ct661562752"/><office:annotation-end office:name="__Annotation__11384_440631829"/><text:change-end text:change-id="ct661562752"/><office:annotation office:name="__Annotation__11385_440631829" loext:parent-name="__Annotation__11384_440631829" loext:resolved="false">
+    </office:annotation>Nulla lobortis tempor lorem non ornare. Pellentesque dapibus tellus nec lorem mollis fermentum.<text:change-start text:change-id="ct520512848"/><office:annotation-end office:name="__Annotation__11384_440631829"/><text:change-end text:change-id="ct520512848"/><office:annotation office:name="__Annotation__11385_440631829" loext:parent-name="__Annotation__11384_440631829" loext:resolved="false">
      <dc:creator>Mary N</dc:creator>
      <dc:date>2024-10-11T04:38:48.420995702</dc:date>
      <meta:creator-initials>MN</meta:creator-initials>
-     <text:p text:style-name="Comment"><text:span text:style-name="T29">Reply to Jose P (11/10/2024, 04:37): &quot;...&quot;</text:span></text:p>
+     <text:p text:style-name="Comment"><text:span text:style-name="T30">Reply to Jose P (11/10/2024, 04:37): &quot;...&quot;</text:span></text:p>
      <text:p text:style-name="Comment">Praesent lobortis et sem eu feugiat. Curabitur a commodo tellus, ut rutrum erat. Nunc vehicula aliquam nunc nec pellentesque. Nullam sollicitudin leo a nisl luctus, nec pulvinar massa lobortis.</text:p>
     </office:annotation><office:annotation loext:parent-name="__Annotation__11385_440631829" loext:resolved="false">
      <dc:creator>Jose P</dc:creator>
      <dc:date>2024-10-11T04:39:22.692041473</dc:date>
      <meta:creator-initials>JP</meta:creator-initials>
-     <text:p text:style-name="Comment"><text:span text:style-name="T29">Reply to Jose P (11/10/2024, 04:37): &quot;...&quot;</text:span></text:p>
+     <text:p text:style-name="Comment"><text:span text:style-name="T30">Reply to Jose P (11/10/2024, 04:37): &quot;...&quot;</text:span></text:p>
      <text:p text:style-name="Comment">Nulla condimentum ante lacus, non venenatis arcu lacinia eget. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum id justo sit amet sapien vulputate rutrum. Aenean finibus metus nisi, ac aliquet odio mollis eu.</text:p>
     </office:annotation></text:p>
-   <text:p text:style-name="P32">Donec nec accumsan augue. Sed viverra, neque quis lacinia dignissim, quam sapien lobortis lectus, ut mattis lectus lorem ut ex. Donec eget feugiat orci, eget malesuada lorem. Pellentesque habitant <text:soft-page-break/>morbi tristique senectus et netus et malesuada <text:span text:style-name="T13">fames</text:span> ac turpis egestas. <text:span text:style-name="T23">Nulla id diam enim.</text:span> Suspendisse facilisis et <text:span text:style-name="T25">mi</text:span> <text:span text:style-name="T24">sit</text:span> amet imperdiet. Nunc mollis tellus at orci ornare condimentum. Praesent nec interdum mi. Duis vulputate commodo nibh, id fringilla quam gravida sed.</text:p>
-   <text:p text:style-name="P32">Sed id rhoncus leo. Donec nec nisl est. Nulla vestibulum lorem id efficitur finibus. Sed faucibus pulvinar tortor sit amet volutpat. Phasellus rutrum turpis eget dui egestas, vel blandit erat gravida. Mauris dictum lectus non ipsum porta sodales. Nam bibendum faucibus finibus. Phasellus at eros nec purus malesuada placerat. In <text:span text:style-name="T12">interdum</text:span> orci eget venenatis sagittis. Vestibulum consectetur id purus id efficitur. Etiam sollicitudin condimentum tempus. Sed imperdiet venenatis finibus. Morbi ut varius ante. Duis congue elit in ex lacinia, sed feugiat nulla condimentum. Donec non ultricies lacus. Donec nunc lacus, viverra eget luctus sit amet, varius vitae urna.</text:p>
-   <text:p text:style-name="P32">In vestibulum nisi mauris, imperdiet accumsan diam efficitur vitae. Sed rhoncus, eros id varius dictum, est nibh convallis dui, nec bibendum lorem libero consectetur elit. Donec nec odio ac tortor faucibus porta. Nullam a ex non erat dapibus suscipit in a dolor. Etiam sem ipsum, eleifend commodo efficitur ac, dictum in diam. Curabitur ante neque, efficitur at magna a, ullamcorper luctus est. Praesent orci erat, vestibulum at sapien at, ultricies dignissim sapien. <office:annotation office:name="__Annotation__11383_440631829" loext:resolved="false">
+   <text:p text:style-name="P31">Donec nec accumsan augue. Sed viverra, neque quis lacinia dignissim, quam sapien lobortis lectus, ut mattis lectus lorem ut ex. Donec eget feugiat orci, eget malesuada lorem. Pellentesque habitant <text:soft-page-break/>morbi tristique senectus et netus et malesuada <text:span text:style-name="T13">fames</text:span> ac turpis egestas. <text:span text:style-name="T23">Nulla id diam enim.</text:span> Suspendisse facilisis et <text:span text:style-name="T25">mi</text:span> <text:span text:style-name="T24">sit</text:span> amet imperdiet. Nunc mollis tellus at orci ornare condimentum. Praesent nec interdum mi. Duis vulputate commodo nibh, id fringilla quam gravida sed.</text:p>
+   <text:p text:style-name="P31">Sed id rhoncus leo. Donec nec nisl est. Nulla vestibulum lorem id efficitur finibus. Sed faucibus pulvinar tortor sit amet volutpat. Phasellus rutrum turpis eget dui egestas, vel blandit erat gravida. Mauris dictum lectus non ipsum porta sodales. Nam bibendum faucibus finibus. Phasellus at eros nec purus malesuada placerat. In <text:span text:style-name="T12">interdum</text:span> orci eget venenatis sagittis. Vestibulum consectetur id purus id efficitur. Etiam sollicitudin condimentum tempus. Sed imperdiet venenatis finibus. Morbi ut varius ante. Duis congue elit in ex lacinia, sed feugiat nulla condimentum. Donec non ultricies lacus. Donec nunc lacus, viverra eget luctus sit amet, varius vitae urna.</text:p>
+   <text:p text:style-name="P31">In vestibulum nisi mauris, imperdiet accumsan diam efficitur vitae. Sed rhoncus, eros id varius dictum, est nibh convallis dui, nec bibendum lorem libero consectetur elit. Donec nec odio ac tortor faucibus porta. Nullam a ex non erat dapibus suscipit in a dolor. Etiam sem ipsum, eleifend commodo efficitur ac, dictum in diam. Curabitur ante neque, efficitur at magna a, ullamcorper luctus est. Praesent orci erat, vestibulum at sapien at, ultricies dignissim sapien. <office:annotation office:name="__Annotation__11383_440631829" loext:resolved="false">
      <dc:creator>Jose P</dc:creator>
      <dc:date>2024-10-11T04:37:09.460041141</dc:date>
      <meta:creator-initials>JP</meta:creator-initials>
      <text:p text:style-name="Comment">Aliquam rutrum gravida aliquam. Vestibulum varius, ipsum at mollis mattis, risus arcu commodo erat, id auctor felis ipsum eu elit. Aliquam auctor, sem in laoreet blandit, neque massa maximus arcu, a consequat justo quam quis eros. Aliquam justo dolor, eleifend sit amet erat id, blandit elementum lacus. Vivamus commodo lacus sit amet commodo rhoncus.</text:p>
-    </office:annotation>Nullam sodales<text:change-start text:change-id="ct661584048"/><office:annotation-end office:name="__Annotation__11383_440631829"/><text:change-end text:change-id="ct661584048"/> vitae risus et pellentesque. Phasellus ac vulputate mi, vel ultrices purus. Sed sagittis, sem a bibendum tristique, nisl nibh accumsan dui, eget facilisis velit magna non nisl.</text:p>
-   <text:p text:style-name="P32">Pellentesque et tellus ex. Quisque facilisis nibh leo, quis bibendum odio vestibulum sit amet. Mauris ut sapien sem. Proin hendrerit tempor eros at gravida. Mauris a tincidunt ante. Phasellus pretium, ligula a tempus ullamcorper, diam ante interdum tellus, sit amet pellentesque est mi eu nisl. Sed nec nunc vitae ligula condimentum congue. Suspendisse rutrum neque at mi imperdiet commodo. Pellentesque porttitor nibh augue, ut laoreet mauris laoreet ac. Quisque sed ex et tellus suscipit interdum.</text:p>
+    </office:annotation>Nullam sodales<text:change-start text:change-id="ct520700032"/><office:annotation-end office:name="__Annotation__11383_440631829"/><text:change-end text:change-id="ct520700032"/> vitae risus et pellentesque. Phasellus ac vulputate mi, vel ultrices purus. Sed sagittis, sem a bibendum tristique, nisl nibh accumsan dui, eget facilisis velit magna non nisl.</text:p>
+   <text:p text:style-name="P31">Pellentesque et tellus ex. Quisque facilisis nibh leo, quis bibendum odio vestibulum sit amet. Mauris ut sapien sem. Proin hendrerit tempor eros at gravida. Mauris a tincidunt ante. Phasellus pretium, ligula a tempus ullamcorper, diam ante interdum tellus, sit amet pellentesque est mi eu nisl. Sed nec nunc vitae ligula condimentum congue. Suspendisse rutrum neque at mi imperdiet commodo. Pellentesque porttitor nibh augue, ut laoreet mauris laoreet ac. Quisque sed ex et tellus suscipit interdum.</text:p>
   </office:text>
  </office:body>
 </office:document>
