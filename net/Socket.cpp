@@ -620,7 +620,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
                 // re-entrancy hazard
                 LOG_DBG("Unexpected socket poll resize");
             }
-            else if (!_pollSockets[i] || _pollSockets[i]->getFD() < 0)
+            else if (!_pollSockets[i])
             {
                 // removed in a callback
                 ++itemsErased;
@@ -674,10 +674,11 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             LOG_TRC("Scanning to removing " << itemsErased << " defunct sockets from "
                     << _pollSockets.size() << " sockets");
 
-            _pollSockets.erase(std::remove_if(_pollSockets.begin(), _pollSockets.end(),
-                                              [](const std::shared_ptr<Socket>& s) -> bool
-                                              { return !s || s->getFD() < 0; }),
-                               _pollSockets.end());
+            _pollSockets.erase(
+                std::remove_if(_pollSockets.begin(), _pollSockets.end(),
+                    [](const std::shared_ptr<Socket>& s)->bool
+                    { return !s; }),
+                _pollSockets.end());
         }
     }
 
@@ -1484,11 +1485,12 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
             if (!isClosed())
             {
                 // Note: Ensure proper semantics of onDisconnect()
-                LOG_WRN("Socket still open post onDisconnect(), forcing shutdown");
+                LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
+                shutdown(); // signal
+                closeConnection(); // real -> setClosed()
             }
         }
-
-        if (!isClosed())
+        else
         {
             shutdown(); // signal
             closeConnection(); // real -> setClosed()
