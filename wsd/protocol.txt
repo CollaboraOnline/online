@@ -442,6 +442,14 @@ resetaccesstoken <token=<accessToken>>
 
     - <token>: The new access token that replaces the previous one.
 
+renamefile <filename=<newFilename>>
+
+    Requests a file rename operation.
+
+    - `<filename>`: The new name for the file, URL-encoded to handle special characters.
+
+    This command updates the file name on the server, ensuring proper encoding for special characters in the filename.
+
 contentcontrolevent <JSON>
     *Properties:
     type - date,drop-down
