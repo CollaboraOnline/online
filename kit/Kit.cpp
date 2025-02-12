@@ -1881,6 +1881,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     const bool accessibilityState = session->getAccessibilityState();
     const std::string& userTimezone = session->getTimezone();
     const std::string& userPrivateInfo = session->getUserPrivateInfo();
+    const std::string& docTemplate = session->getDocTemplate();
 
     if constexpr (!Util::isMobileApp())
         consistencyCheckFileExists(uri);
@@ -1939,13 +1940,30 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
             | LOK_FEATURE_VIEWID_IN_VISCURSOR_INVALIDATION_CALLBACK;
         _loKit->setOptionalFeatures(flags);
 
+        std::string loadUri = uri;
+
+        if (!docTemplate.empty())
+        {
+            // The template has been downloaded to 'uri'
+            // But since the template might have a different format we temporarily
+            // change the url to have the correct extension
+            // It will be saved back to 'uri' in ChildSession once loaded
+            Poco::URI pocoUri(uri), templateUri(docTemplate);
+            Poco::Path newPath(pocoUri.getPath()), templatePath(templateUri.getPath());
+            newPath.setExtension(templatePath.getExtension());
+
+            rename(pocoUri.getPath().c_str(), newPath.toString().c_str());
+            pocoUri.setPath(newPath.toString());
+            loadUri = pocoUri.toString();
+        }
+
         // Save the provided password with us and the jailed url
         _haveDocPassword = haveDocPassword;
         _docPassword = docPassword;
-        _jailedUrl = uri;
+        _jailedUrl = loadUri;
         _isDocPasswordProtected = false;
 
-        const char *pURL = uri.c_str();
+        const char* pURL = loadUri.c_str();
         LOG_DBG("Calling lokit::documentLoad(" << anonymizeUrl(pURL) << ", \"" << options << "\")");
         const auto start = std::chrono::steady_clock::now();
         _loKitDocument.reset(_loKit->documentLoad(pURL, options.c_str()));

@@ -26,11 +26,14 @@ class UnitWOPITemplate : public WopiTestServer
 
     bool _savedTemplate;
 
+    std::string _templateFile;
+
 public:
-    UnitWOPITemplate()
-        : WopiTestServer("UnitWOPITemplate")
+    UnitWOPITemplate(std::string templateFile)
+        : WopiTestServer("UnitWOPITemplate_" + templateFile)
         , _phase(Phase::LoadTemplate)
         , _savedTemplate(false)
+        , _templateFile(templateFile)
     {
     }
 
@@ -48,7 +51,7 @@ public:
 
             Poco::JSON::Object::Ptr fileInfo = getDefaultCheckFileInfoPayload(uriReq);
             fileInfo->set("BaseFileName", "test.odt");
-            fileInfo->set("TemplateSource", helpers::getTestServerURI() + "/test.ott");
+            fileInfo->set("TemplateSource", helpers::getTestServerURI() + "/" + _templateFile);
 
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
@@ -60,9 +63,9 @@ public:
 
             return true;
         }
-        else if ((request.getMethod() == "OPTIONS" || request.getMethod() == "HEAD"
-                  || request.getMethod() == "PROPFIND")
-                 && uriReq.getPath() == "/test.ott")
+        else if ((request.getMethod() == "OPTIONS" || request.getMethod() == "HEAD" ||
+                  request.getMethod() == "PROPFIND") &&
+                 uriReq.getPath() == "/" + _templateFile)
         {
             LOG_TST("FakeWOPIHost: Handling " << request.getMethod() << " on " << uriReq.getPath());
 
@@ -73,12 +76,12 @@ public:
             return true;
         }
         // Get the template
-        else if (request.getMethod() == "GET" && uriReq.getPath() == "/test.ott")
+        else if (request.getMethod() == "GET" && uriReq.getPath() == "/" + _templateFile)
         {
             LOG_TST("FakeWOPIHost: Handling template GetFile: " << uriReq.getPath());
 
             http::Response response(http::StatusCode::OK);
-            HttpHelper::sendFileAndShutdown(socket, TDOC "/test.ott", response);
+            HttpHelper::sendFileAndShutdown(socket, TDOC "/" + _templateFile, response);
 
             return true;
         }
@@ -154,9 +157,10 @@ public:
     }
 };
 
-UnitBase *unit_create_wsd(void)
+UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitWOPITemplate();
+    return new UnitBase*[3]{ new UnitWOPITemplate("test.ott"), new UnitWOPITemplate("test.dotx"),
+                             nullptr };
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

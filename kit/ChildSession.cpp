@@ -931,8 +931,8 @@ bool ChildSession::loadDocument(const StringVector& tokens)
         return false;
     }
 
-    std::string timestamp, doctemplate;
-    parseDocOptions(tokens, part, timestamp, doctemplate);
+    std::string timestamp;
+    parseDocOptions(tokens, part, timestamp);
 
     std::string renderOpts;
     if (!getDocOptions().empty())
@@ -972,9 +972,9 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     assert(getLOKitDocument() && "Expected valid LOKitDocument instance");
     LOG_INF("Created new view with viewid: [" << _viewId << "] for username: ["
                                               << getUserNameAnonym() << "] in session: [" << getId()
-                                              << "], template: [" << doctemplate << ']');
+                                              << "], template: [" << getDocTemplate() << ']');
 
-    if (!doctemplate.empty())
+    if (!getDocTemplate().empty())
     {
         static constexpr auto Protocol = "file://";
 

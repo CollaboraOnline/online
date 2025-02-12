@@ -1472,9 +1472,9 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
     LOG_INF("Requesting document load from child.");
     try
     {
-        std::string timestamp, doctemplate;
+        std::string timestamp;
         int loadPart = -1;
-        parseDocOptions(tokens, loadPart, timestamp, doctemplate);
+        parseDocOptions(tokens, loadPart, timestamp);
         overrideDocOption();
 
         std::ostringstream oss;
