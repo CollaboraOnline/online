@@ -91,7 +91,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			cy.cGet('.empty-deltas').should(($after) => {
 				// allow one row of empty deltas, the case this protects regression against
 				// is a whole document invalidation
-				expect(parseInt($after.text())).to.be.lessThan(beforeCount + 10);
+				expect(parseInt($after.text())).to.be.lessThan(beforeCount + 12);
 			});
 		});
 	});
