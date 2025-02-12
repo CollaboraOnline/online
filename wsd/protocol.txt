@@ -377,6 +377,25 @@ completefunction name=<FunctionName>
 
 This command allows the client to request calculation functions dynamically.
 
+dialogevent <windowId> { "id": "<objectId>", "cmd": "<eventType>", "data": "<data>", "type": "<objectType>" }
+
+    Sends an event message related to a dialog object within JSDialog.
+
+    - <windowId> is the identifier of the dialog window (e.g., the JSDialog ID).
+
+    - <objectId> is the ID of the object that triggered the event, such as "POPOVER", "numberformat", "masterslidebutton", etc.
+
+    - <eventType> represents the type of event that occurred, such as "selected", "Activate", "click", "close", "response", "keypress", "render", etc.
+
+    - <data> contains any object data entered by the user, which will dictate the action performed.
+
+    - <objectType> specifies the type of object, such as "combobox", "iconpreview", "toolbox", etc.
+
+Example:
+    1.dialogevent 45 { "id": "linestylevalueset", "cmd": "click", "data": "0.19801980198019803;0.19130434782608696", "type": "drawingarea" }
+    2.dialogevent 21 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "16;100;100", "type": "combobox"}
+    3.dialogevent 10 { "id": "-1" }
+
 contentcontrolevent <JSON>
     *Properties:
     type - date,drop-down
