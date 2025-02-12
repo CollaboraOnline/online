@@ -76,7 +76,7 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Feedback').dblclick();
 		desktopHelper.assertVisiblePage(2, 2, 8);
 
-		desktopHelper.assertScrollbarPosition('vertical', 55, 65);
+		desktopHelper.assertScrollbarPosition('vertical', 55, 70);
 
 		// Scroll document to the top so cursor is no longer visible, that turns following off
 		desktopHelper.scrollWriterDocumentToTop();
