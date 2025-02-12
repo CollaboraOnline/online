@@ -624,6 +624,26 @@ http::Request WopiStorage::initHttpRequest(const Poco::URI& uri, const Authoriza
     return httpRequest;
 }
 
+static bool parseResponseAndValidate(const std::string& response, Poco::JSON::Object::Ptr& wopiInfo)
+{
+    if (JsonUtil::parseJSON(response, wopiInfo))
+    {
+        // Validate the filename is sane.
+        std::string filename;
+        if (JsonUtil::findJSONValue(wopiInfo, "BaseFileName", filename) &&
+            filename.find_first_of('/') == std::string::npos)
+        {
+            return true; // We're good.
+        }
+
+        LOG_ERR("BaseFileName should be the name of the file without a path, but is: [" << filename
+                                                                                        << ']');
+    }
+
+    wopiInfo.reset(); // Clear the parsed JSON, if any.
+    return false;
+}
+
 std::unique_ptr<WopiStorage::WOPIFileInfo>
 WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& auth,
                                    LockContext& lockCtx, unsigned redirectLimit)
@@ -726,7 +746,7 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
     }
 
     Poco::JSON::Object::Ptr object;
-    if (JsonUtil::parseJSON(wopiResponse, object))
+    if (parseResponseAndValidate(wopiResponse, object))
     {
         if (COOLWSD::AnonymizeUserData)
             LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): anonymizing...");
@@ -740,6 +760,9 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
         JsonUtil::findJSONValue(object, "OwnerId", ownerId);
         JsonUtil::findJSONValue(object, "BaseFileName", filename);
         JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
+
+        assert(filename.find_first_of('/') == std::string::npos &&
+               "Invalid BaseFileName, which had passed prior validation");
 
         FileInfo fileInfo = FileInfo({filename, ownerId, lastModifiedTime});
         setFileInfo(fileInfo);
