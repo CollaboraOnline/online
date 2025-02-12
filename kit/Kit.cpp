@@ -1395,7 +1395,8 @@ void Document::handleSaveMessage(const std::string &)
         // cleanup any lingering file-system pieces
         _loKitDocument.reset();
 
-        // Next step in the chain is BgSaveChildWebSocketHandler::onDisconnect
+        UnitKit::get().preBackgroundSaveExit();
+        Util::forcedExit(EX_OK);
     }
 }
 
