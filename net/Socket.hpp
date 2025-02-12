@@ -147,6 +147,7 @@ public:
         : _type(type)
         , _clientPort(0)
         , _fd(createSocket(type))
+        , _closed(_fd < 0)
         , _creationTime(creationTime)
         , _lastSeenTime(_creationTime)
         , _bytesSent(0)
@@ -159,11 +160,20 @@ public:
     {
         LOG_TRC("Socket dtor");
 
-        setClosed();
+        // Doesn't block on sockets; no error handling needed.
+        if constexpr (!Util::isMobileApp())
+        {
+            ::close(_fd);
+            LOG_DBG("Closed socket " << toStringImpl());
+        }
+        else
+        {
+            fakeSocketClose(_fd);
+        }
     }
 
-    /// Returns true iff this socket has been closed or is invalid.
-    bool isClosed() const { return _fd < 0; }
+    /// Returns true if this socket has been closed, i.e. rejected from polling and potentially shutdown
+    bool isClosed() const { return _closed; }
 
     constexpr Type type() const { return _type; }
     constexpr bool isIPType() const { return Type::IPv4 == _type || Type::IPv6 == _type; }
@@ -208,7 +218,15 @@ public:
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
     {
-        setClosed(); // Shutdown and close if not closed.
+        if (!_noShutdown)
+        {
+            LOG_TRC("Socket shutdown RDWR. " << *this);
+            setClosed();
+            if constexpr (!Util::isMobileApp())
+                ::shutdown(_fd, SHUT_RDWR);
+            else
+                fakeSocketShutdown(_fd);
+        }
     }
 
     /// Prepare our poll record; adjust @timeoutMaxMs downwards
@@ -400,6 +418,7 @@ protected:
         : _type(type)
         , _clientPort(0)
         , _fd(fd)
+        , _closed(_fd < 0)
         , _creationTime(creationTime)
         , _lastSeenTime(_creationTime)
         , _bytesSent(0)
@@ -418,42 +437,11 @@ protected:
     /// avoid doing a shutdown before close
     void setNoShutdown() { _noShutdown = true; }
 
-    /// Shutdown (if not flagged with no-shutdown) and close the socket.
-    /// Note: to preserve the original FD post closing (f.e. in logs and debugger), we negate it.
-    void setClosed()
-    {
-        if (!isClosed())
-        {
-            // Copy to invalidate immediately as fakeSocket can throw.
-            const int fd = _fd;
+    /// Explicitly marks this socket closed, i.e. rejected from polling and potentially shutdown
+    void setClosed() { _closed = true; }
 
-            // Invalidate the FD by negating to preserve the original value.
-            if (_fd > 0)
-                _fd = -_fd;
-            else if (_fd == 0) // Unlikely, but technically possible.
-                _fd = -1;
-
-            if (!_noShutdown)
-            {
-                LOG_TRC("Socket shutdown RDWR. " << *this);
-                if constexpr (!Util::isMobileApp())
-                    ::shutdown(fd, SHUT_RDWR);
-                else
-                    fakeSocketShutdown(fd);
-            }
-
-            // Doesn't block on sockets; no error handling needed.
-            if constexpr (!Util::isMobileApp())
-            {
-                ::close(fd);
-                LOG_DBG("Closed socket " << toStringImpl());
-            }
-            else
-            {
-                fakeSocketClose(fd);
-            }
-        }
-    }
+    /// Explicitly marks this socket and the given SocketDisposition closed
+    void setClosed(SocketDisposition &disposition) { setClosed(); disposition.setClosed(); }
 
 private:
     /// Create socket of the given type.
@@ -490,7 +478,9 @@ private:
     std::string _clientAddress;
     const Type _type;
     unsigned int _clientPort;
-    int _fd; ///< The socket file-descriptor. Invalid/closed if < 0.
+    const int _fd;
+    /// True if this socket is closed.
+    bool _closed;
 
     const std::chrono::steady_clock::time_point _creationTime;
     std::chrono::steady_clock::time_point _lastSeenTime;
@@ -1590,8 +1580,7 @@ public:
         {
             LOG_TRC("Closed. Firing onDisconnect.");
             _socketHandler->onDisconnect();
-            setClosed();
-            disposition.setClosed();
+            setClosed(disposition);
         }
         else if (isClosed())
             disposition.setClosed();
