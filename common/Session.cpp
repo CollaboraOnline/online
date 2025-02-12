@@ -80,7 +80,7 @@ bool Session::sendBinaryFrame(const char *buffer, int length)
     return _protocol->sendBinaryMessage(buffer, length) >= length;
 }
 
-void Session::parseDocOptions(const StringVector& tokens, int& part, std::string& timestamp, std::string& doctemplate)
+void Session::parseDocOptions(const StringVector& tokens, int& part, std::string& timestamp)
 {
     // First token is the "load" command itself.
     std::size_t offset = 1;
@@ -191,7 +191,7 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
         }
         else if (name == "template")
         {
-            doctemplate = std::move(value);
+            _docTemplate = std::move(value);
             ++offset;
         }
         else if (name == "deviceFormFactor")

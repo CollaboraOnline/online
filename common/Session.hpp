@@ -304,6 +304,8 @@ public:
 
     void disableSpellCheckIfReadOnly();
 
+    const std::string& getDocTemplate() const { return _docTemplate; }
+
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -311,7 +313,7 @@ protected:
 
     /// Parses the options of the "load" command,
     /// shared between MasterProcessSession::loadDocument() and ChildProcessSession::loadDocument().
-    void parseDocOptions(const StringVector& tokens, int& part, std::string& timestamp, std::string& doctemplate);
+    void parseDocOptions(const StringVector& tokens, int& part, std::string& timestamp);
 
     void updateLastActivityTime()
     {
@@ -446,6 +448,9 @@ private:
     /// Specifies whether certification verification for the wopi server
     /// should be disabled in core
     bool _disableVerifyHost;
+
+    // The url of the template file used to create the document
+    std::string _docTemplate;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
