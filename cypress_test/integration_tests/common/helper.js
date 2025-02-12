@@ -129,7 +129,7 @@ function reloadDocument(filePath) {
 	cy.log('>> reloadDocument - start');
 
 	closeDocument(filePath);
-	loadDocument(filePath);
+	loadDocument(filePath, /*skipDocumentChecks*/ true);
 
 	cy.log('<< reloadDocument - end');
 }
