@@ -415,6 +415,26 @@ formfieldevent { "type": "<objectType>", "cmd": "<eventType>", "data": "<data>" 
 
     <data> Contains any relevant data tied to the event. This can include an index, value, or other information depending on the event type.
 
+getslide hash=<slideHash> part=<slidePart> width=<canvasWidth> height=<canvasHeight> renderBackground=<backgroundRenderFlag> renderMasterPage=<masterPageRenderFlag> devicePixelRatio=<devicePixelRatio>
+
+    This command is used to request and render a slide with the appropriate properties for a specific device display and rendering conditions.
+
+    Requests a specific slide from the server, providing necessary parameters to ensure proper rendering based on the client's display settings.
+
+    <hash>: The hash value identifying the specific slide to be requested.
+
+    <part>: Specifies the part or index of the slide (useful for segmented or multi-part slides).
+
+    <width>: The width of the canvas in which the slide will be rendered.
+
+    <height>: The height of the canvas in which the slide will be rendered.
+
+    <renderBackground>: A flag indicating whether the slide background should be rendered. 0 for not rendered, 1 for rendered.
+
+    <renderMasterPage>: A flag indicating whether the master page of the slide should be rendered. 0 for not rendered, 1 for rendered.
+
+    <devicePixelRatio>: The device pixel ratio, typically window.devicePixelRatio, which adjusts the rendering quality for HiDPI displays.
+
 contentcontrolevent <JSON>
     *Properties:
     type - date,drop-down
