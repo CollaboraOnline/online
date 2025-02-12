@@ -673,7 +673,7 @@ bool parseUri(std::string uri, std::string& scheme, std::string& host, std::stri
     const auto itUrl = uri.find('/');
     if (itUrl != uri.npos)
     {
-        pathAndQuery = uri.substr(itUrl); // Including the first foreslash.
+        pathAndQuery = uri.substr(itUrl); // Including the first slash.
         uri = uri.substr(0, itUrl);
     }
     else

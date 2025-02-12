@@ -80,7 +80,7 @@
  * Note that the options are still encoded and need decoding separately.
  *
  * Due to the multi-layer nature of the URI, it raises many difficulties, not least
- * the fact that it has multiple query parameters ('?' sections). It also has foreslash
+ * the fact that it has multiple query parameters ('?' sections). It also has slash
  * delimiters after query parameters.
  *
  * The different sections are henceforth given names to help both in documenting and
