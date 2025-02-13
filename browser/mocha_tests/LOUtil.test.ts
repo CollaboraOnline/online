@@ -141,4 +141,47 @@ describe('LOUtil static class members', function () {
 		});
 	});
 
+	describe('_getIntersectionRectangle', function () {
+
+		it('rectangle intersects with itself', function () {
+			const expected = [10, 20, 100, 200];
+			assert.deepEqual(expected, LOUtil._getIntersectionRectangle([10, 20, 100, 200], [10, 20, 100, 200]));
+		});
+
+		it('A contains B, there is intersection', function () {
+			const expected = [11, 21, 90, 190];
+			assert.deepEqual(expected, LOUtil._getIntersectionRectangle([10, 20, 100, 200], [11, 21, 90, 190]));
+		});
+
+		it('B contains A, there is intersection', function () {
+			const expected = [11, 21, 90, 190];
+			assert.deepEqual(expected, LOUtil._getIntersectionRectangle([11, 21, 90, 190], [10, 20, 100, 200]));
+		});
+
+		it('A meets B tangentially (vertical)', function () {
+			const expected = [109, 20, 1, 200];
+			assert.deepEqual(expected, LOUtil._getIntersectionRectangle([10, 20, 100, 200], [109, 20, 10, 200]));
+		});
+
+		it('A meets B tangentially (horizontal)', function () {
+			const expected = [10, 219, 100, 1];
+			assert.deepEqual(expected, LOUtil._getIntersectionRectangle([10, 20, 100, 200], [10, 219, 100, 20]));
+		});
+
+		it('A meets B tangentially (single point)', function () {
+			const expected = [109, 219, 1, 1];
+			assert.deepEqual(expected, LOUtil._getIntersectionRectangle([10, 20, 100, 200], [109, 219, 10, 20]));
+		});
+
+		it('disjoint ([x2, y2] of first rectangle is away from the [x1, y1] of the second by a pixel)', function () {
+			const expected: number[] = null;
+			assert.deepEqual(expected, LOUtil._getIntersectionRectangle([10, 20, 100, 200], [110, 220, 100, 200]));
+		});
+
+		it('disjoint (rectangles very far away)', function () {
+			const expected: number[] = null;
+			assert.deepEqual(expected ,LOUtil._getIntersectionRectangle([10, 20, 10, 20], [400, 500, 10, 20]));
+		});
+	});
+
 });
