@@ -74,7 +74,11 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	drawCropCornerHandle() {
 		const markerWidth = this.size[0];
 		const halfMarkerWidth = markerWidth * 0.5;
-		let x = 0, y = 0;
+		const shapeAngle = this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.angleRadian;
+		let x = halfMarkerWidth, y = halfMarkerWidth;
+		this.context.translate(x, y);
+		this.context.rotate(shapeAngle * -1);
+		this.context.translate(-x, -y)
 		this.context.moveTo(x, y);
 		x += markerWidth;
 		this.context.lineTo(x, y);
@@ -91,7 +95,11 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 	drawCropSideHandle() {
 		const markerWidth = this.size[0];
 		const halfMarkerWidth = markerWidth * 0.5;
-		let x = 0, y = 0;
+		const shapeAngle = this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties.angleRadian;
+		let x = halfMarkerWidth, y = halfMarkerWidth;
+		this.context.translate(x, y);
+		this.context.rotate(shapeAngle * -1);
+		this.context.translate(-x, -y)
 		this.context.moveTo(x, y);
 		x += markerWidth;
 		this.context.lineTo(x, y);
