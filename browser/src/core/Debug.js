@@ -374,6 +374,28 @@ L.DebugManager = L.Class.extend({
 		});
 
 		this._addDebugTool({
+			name: 'Event delay watchdog',
+			category: 'Logging',
+			startsOn: true,
+			onAdd: function () {
+				self.eventDelayWatchdog = true;
+				self._eventDelayTimeout = null;
+				self._lastEventDelayTime = 0;
+				self._lastEventDelay = 0;
+			},
+			onRemove: function () {
+				self.eventDelayWatchdog = false;
+				self.clearOverlayMessage('eventDelayTime');
+
+				if (self._eventDelayTimeout) clearTimeout(self._eventDelayTimeout);
+				delete self._eventDelayTimeout;
+				delete self._eventDelayWatchStart;
+				delete self._lastEventDelayTime;
+				delete self._lastEventDelay;
+			},
+		});
+
+		this._addDebugTool({
 			name: 'Typer',
 			category: 'Functionality',
 			startsOn: false,
@@ -844,7 +866,7 @@ L.DebugManager = L.Class.extend({
 	setOverlayMessage: function(id, message) {
 		if (this.overlayOn) {
 			if (!this._overlayData[id]) {
-				var topLeftNames = ['tileData'];
+				var topLeftNames = ['tileData', 'eventDelayTime'];
 				var position = topLeftNames.includes(id) ? 'topleft' : 'bottomleft';
 				this._overlayData[id] = L.control.attribution({prefix: '', position: position});
 				this._overlayData[id].addTo(this._map);
@@ -1020,6 +1042,46 @@ L.DebugManager = L.Class.extend({
 			var now = +new Date();
 			var timeText = this._map._debug.updateTimeArray(this._pingTimes, now - oldestPing);
 			this.setOverlayMessage('ping', 'Server ping time: ' + timeText);
+		}
+	},
+
+	timeEventDelay: function() {
+		if (!this.eventDelayWatchdog || this._eventDelayTimeout !== null)
+			return;
+
+		this._eventDelayWatchStart = performance.now();
+		this._eventDelayTimeout = setTimeout(() => {
+			this._eventDelayTimeout = null;
+			this.reportEventDelay(performance.now() - this._eventDelayWatchStart);
+		}, 0);
+	},
+	
+	reportEventDelay: function(delayMs) {
+		if (!this.eventDelayWatchdog)
+			return;
+
+		// Time in ms to prefer showing a large, slow event handling time
+		const slow_time_display_timeout = 3000;
+
+		// Threshold above which event handling is considered 'slow', in ms
+		const slow_time_threshold = 50;
+
+		// Threshold above which event handling is considered to be catastrophically slow, in ms
+		const very_slow_time_threshold = 250;
+
+		let currentTime = performance.now();
+		if (this._lastEventDelay < slow_time_threshold ||
+			delayMs > this._lastEventDelay ||
+			currentTime - this._lastEventDelayTime > slow_time_display_timeout)
+		{
+			this._lastEventDelayTime = currentTime;
+			this._lastEventDelay = delayMs;
+			this.setOverlayMessage('eventDelayTime', 'Event handling delay: ' + delayMs + 'ms');
+
+			if (delayMs > very_slow_time_threshold) {
+				let msg = _('Event handling has been delayed for an unexpectedly long time: {0}ms');
+				this._map.uiManager.showInfoModal('cool_alert', '', msg.replace('{0}', delayMs), '', _('OK'));
+			}
 		}
 	},
 
