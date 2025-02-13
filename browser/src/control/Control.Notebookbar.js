@@ -336,15 +336,18 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 
 		var isUnoCommand = button.unoCommand && button.unoCommand.indexOf('.uno:') >= 0;
+		var forceToUseDefaultIcon = false;
 		if (button.unoCommand && !isUnoCommand)
 			button.unoCommand = '.uno:' + button.unoCommand;
+		if (isUnoCommand && button.imgurl.indexOf('http') === -1)
+			forceToUseDefaultIcon = true;
 
 		this.additionalShortcutButtons.push(
 			{
 				id: button.id,
 				type: 'toolitem',
 				text: button.label ? button.label : (button.hint ? _(button.hint) : ' '),
-				icon: button.imgurl,
+				icon: forceToUseDefaultIcon ? undefined : button.imgurl,
 				command: button.unoCommand,
 				accessKey: button.accessKey ? button.accessKey: null,
 				postmessage: button.unoCommand ? undefined : true,
