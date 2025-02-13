@@ -18,7 +18,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 
 	getShortcutsBarData: function() {
 		return [
-			!this._map['wopi'].HideSaveOption ?
+			!this.map['wopi'].HideSaveOption ?
 				{
 					'id': 'shortcutstoolbox',
 					'type': 'toolbox',
@@ -145,7 +145,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 	getFileTab: function() {
 		var content = [];
 
-		if (!this._map['wopi'].HideSaveOption) {
+		if (!this.map['wopi'].HideSaveOption) {
 			content.push(
 				{
 					'type': 'toolbox',
@@ -161,7 +161,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				});
 			}
 
-		if (!this._map['wopi'].UserCanNotWriteRelative) {
+		if (!this.map['wopi'].UserCanNotWriteRelative) {
 			content.push(
 				{
 					'id': 'file-saveas',
@@ -173,7 +173,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			);
 		}
 
-		if (!this._map['wopi'].UserCanNotWriteRelative) {
+		if (!this.map['wopi'].UserCanNotWriteRelative) {
 			content.push(
 				{
 					'id': 'exportas:ExportAsMenu',
@@ -191,7 +191,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'id': 'file-shareas-rev-history',
 				'type': 'container',
 				'children': [
-					(this._map['wopi'].EnableShare) ?
+					(this.map['wopi'].EnableShare) ?
 						{
 							'id': 'ShareAs',
 							'class': 'unoShareAs',
@@ -216,7 +216,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			}
 		);
 
-		if (!this._map['wopi'].HidePrintOption) {
+		if (!this.map['wopi'].HidePrintOption) {
 			content.push(
 				{
 					'id': 'print',
@@ -228,7 +228,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			);
 		}
 
-		if (!this._map['wopi'].HideExportOption) {
+		if (!this.map['wopi'].HideExportOption) {
 			content.push({
 				'id': 'downloadas:DownloadAsMenu',
 				'command': 'downloadas',
@@ -267,7 +267,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			}
 		);
 
-		if (!this._map['wopi'].HideRepairOption) {
+		if (!this.map['wopi'].HideRepairOption) {
 			content.push(
 				{
 				'type': 'container',
@@ -651,7 +651,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 										'text': _UNO('.uno:FontworkGalleryFloater'),
 										'command': '.uno:FontworkGalleryFloater',
 										// Fontwork export/import not supported in other formats.
-										'visible': app.LOUtil.isFileODF(this._map) ? 'true' : 'false',
+										'visible': app.LOUtil.isFileODF(this.map) ? 'true' : 'false',
 										'accessibility': { focusBack: true, combination: 'FW', de: null }
 									},
 									{
@@ -1273,7 +1273,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': 'hyperlinkdialog',
 				'accessibility': { focusBack: true, combination: 'HD', de: null }
 			},
-			(this._map['wopi'].EnableRemoteLinkPicker) ? {
+			(this.map['wopi'].EnableRemoteLinkPicker) ? {
 				'id': 'insert-remote-link',
 				'class': 'unoremotelink',
 				'type': 'bigcustomtoolitem',
@@ -1281,7 +1281,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': 'remotelink',
 				'accessibility': { focusBack: true, combination: 'RL', de: null }
 			} : {},
-			(this._map['wopi'].EnableRemoteAIContent) ? {
+			(this.map['wopi'].EnableRemoteAIContent) ? {
 				'id': 'insert-insert-remote-ai-content',
 				'class': 'unoremoteaicontent',
 				'type': 'bigcustomtoolitem',
@@ -1404,7 +1404,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'text': _UNO('.uno:FontworkGalleryFloater'),
 								'command': '.uno:FontworkGalleryFloater',
 								// Fontwork export/import not supported in other formats.
-								'visible': app.LOUtil.isFileODF(this._map) ? 'true' : 'false',
+								'visible': app.LOUtil.isFileODF(this.map) ? 'true' : 'false',
 								'accessibility': { focusBack: true, combination: 'FG', de: null }
 							}
 						]
