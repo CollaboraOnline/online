@@ -1,7 +1,7 @@
 /* global describe it require cy beforeEach */
 
 var helper = require('../../common/helper');
-var { insertImage, deleteImage, assertImageSize } = require('../../common/desktop_helper');
+var { insertImage, deleteImage } = require('../../common/desktop_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Image Operation Tests', function() {
@@ -20,10 +20,36 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		deleteImage();
 	});
 
+	it('Crop', function () {
+		insertImage();
+		helper.assertImageSize(248, 63);
+		cy.cGet('#test-div-shape-handle-3').should('exist');
+		cy.cGet('#Crop').should('be.visible');
+		cy.cGet('#Crop').click();
+
+		cy.cGet('#test-div-shape-handle-3').then(($handle) => {
+			const rect = $handle[0].getBoundingClientRect();
+			const startX = rect.left + rect.width / 2;
+			const startY = rect.top + rect.height / 2;
+			const moveX = 20;
+
+			cy.cGet('body').realMouseDown({ x: startX, y: startY });
+
+			cy.cGet('body').realMouseMove(startX + moveX, startY);
+
+			// for some reason even after moving the crop marker 20 px, on realMouseUp crop marker moves a lot more than expected
+			// but it seems to related to how realMouseUp is implemented
+			cy.cGet('body').realMouseUp();
+		});
+
+		cy.wait(1000);
+		helper.assertImageSize(43, 63);
+	});
+
 	it('Resize image when keep ratio option enabled and disabled', function() {
 		insertImage();
 		//when Keep ratio is unchecked
-		assertImageSize(248, 63);
+		helper.assertImageSize(248, 63);
 		// if window is too small sidebar won't popup
 		cy.viewport(1000, 660);
 
@@ -39,7 +65,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		cy.wait(1000);
 
-		assertImageSize(139, 93);
+		helper.assertImageSize(139, 93);
 
 		//Keep ratio checked
 		cy.cGet('#ratio input').check();
@@ -51,6 +77,6 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		cy.wait(1000);
 
-		assertImageSize(347, 232);
+		helper.assertImageSize(347, 232);
 	});
 });

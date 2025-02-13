@@ -326,22 +326,6 @@ function deleteImage() {
 	cy.log('<< deleteImage - end');
 }
 
-function assertImageSize(expectedWidth, expectedHeight) {
-	cy.log('>> assertImageSize - start');
-
-	cy.cGet('#canvas-container > svg')
-		.then(function(element) {
-			expect(element).to.have.length(1);
-			const actualWidth = parseInt(element[0].style.width.replace('px', ''));
-			const actualHeight = parseInt(element[0].style.height.replace('px', ''));
-
-			expect(actualWidth).to.be.closeTo(expectedWidth, 10);
-			expect(actualHeight).to.be.closeTo(expectedHeight, 10);
-		});
-
-	cy.log('<< assertImageSize - end');
-}
-
 function insertComment(text = 'some text0', save = true) {
 	cy.log('>> insertComment - start');
 
@@ -605,7 +589,6 @@ module.exports.insertComment = insertComment;
 module.exports.actionOnSelector = actionOnSelector;
 module.exports.assertScrollbarPosition = assertScrollbarPosition;
 module.exports.pressKey = pressKey;
-module.exports.assertImageSize = assertImageSize;
 module.exports.openReadOnlyFile = openReadOnlyFile;
 module.exports.switchUIToNotebookbar = switchUIToNotebookbar;
 module.exports.switchUIToCompact = switchUIToCompact;

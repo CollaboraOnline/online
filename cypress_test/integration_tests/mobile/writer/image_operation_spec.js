@@ -1,10 +1,9 @@
-/* global describe it beforeEach require */
+/* global describe it beforeEach require cy */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe.skip('Image Operation Tests', function() {
-
+describe(['tagmobile'],'Image Operation Tests', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/image_operation.odt');
 
@@ -18,5 +17,28 @@ describe.skip('Image Operation Tests', function() {
 
 	it('Delete Image', function() {
 		mobileHelper.deleteImage();
+	});
+
+	it('Crop', function() {
+		mobileHelper.insertImage();
+
+		cy.cGet('.mobile-wizard-back.close-button').click();
+
+		helper.assertImageSize(512, 130);
+		cy.cGet('#test-div-shape-handle-3').should('exist');
+		cy.cGet('#crop').should('be.visible');
+		cy.cGet('#crop').click();
+
+		cy.cGet('#test-div-shape-handle-3').then(($handle) => {
+			const rect = $handle[0].getBoundingClientRect();
+			const startX = rect.left + rect.width / 2;
+			const startY = rect.top + rect.height / 2;
+			const moveX = 20;
+
+			cy.cGet('body').realSwipe("toRight", { x: startX, y: startY, length: moveX });
+		});
+
+		cy.wait(1000);
+		helper.assertImageSize(492, 130);
 	});
 });
