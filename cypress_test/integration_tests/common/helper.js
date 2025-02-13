@@ -1210,6 +1210,25 @@ function getSubFolder(filePath) {
 	return subFolder;
 }
 
+/*
+ * Assert image svg
+ */
+function assertImageSize(expectedWidth, expectedHeight) {
+	cy.log('>> assertImageSize - start');
+
+	cy.cGet('#canvas-container > svg')
+		.then(function (element) {
+			expect(element).to.have.length(1);
+			const actualWidth = parseInt(element[0].style.width.replace('px', ''));
+			const actualHeight = parseInt(element[0].style.height.replace('px', ''));
+
+			expect(actualWidth).to.be.closeTo(expectedWidth, 10);
+			expect(actualHeight).to.be.closeTo(expectedHeight, 10);
+		});
+
+	cy.log('<< assertImageSize - end');
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1258,3 +1277,4 @@ module.exports.copy = copy;
 module.exports.getFileName = getFileName;
 module.exports.getSubFolder = getSubFolder;
 module.exports.addressInputSelector = "#addressInput input";
+module.exports.assertImageSize = assertImageSize;
