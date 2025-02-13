@@ -133,6 +133,9 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	sendMessage: function (msg) {
+		if (this._map._debug.eventDelayWatchdog)
+			this._map._debug.timeEventDelay();
+		
 		if (this._map._fatal) {
 			// Avoid communicating when we're in fatal state
 			return;
@@ -370,6 +373,9 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	_emitSlurpedEvents: function() {
+		if (this._map._debug.eventDelayWatchdog)
+			this._map._debug.timeEventDelay();
+
 		var queueLength = this._slurpQueue.length;
 		var completeEventWholeFunction = this.createCompleteTraceEvent('emitSlurped-' + String(queueLength),
 									       {'_slurpQueue.length' : String(queueLength)});
