@@ -442,7 +442,7 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 		else if (msg.MessageId === 'Insert_Button' &&
-			msg.Values && msg.Values.id && msg.Values.imgurl) {
+			msg.Values && msg.Values.id) {
 			this._map.uiManager.insertButton(msg.Values);
 			return;
 		} else if (msg.MessageId === 'Send_UNO_Command' && msg.Values && msg.Values.Command) {

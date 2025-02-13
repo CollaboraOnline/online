@@ -471,7 +471,7 @@ class TreeViewControl {
 
 		const iconId = this.getCellIconId(entry.columns[index]);
 		L.DomUtil.addClass(icon, iconId + 'img');
-		const iconName = builder._createIconURL(iconId, true);
+		const iconName = app.LOUtil.getIconNameOfCommand(iconId, true);
 		app.LOUtil.setImage(icon, iconName, builder.map);
 		icon.tabIndex = -1;
 		icon.alt = ''; //In this case, it is advisable to use an empty alt tag for the icons, as the information of the function is available in text form

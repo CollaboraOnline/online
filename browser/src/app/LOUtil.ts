@@ -22,6 +22,10 @@ interface RectangleLike {
 	right: number;
 }
 
+interface IconNameMap {
+	[key: string]: string;
+}
+
 // LOUtil contains various LO related utility functions used
 // throughout the code.
 
@@ -238,6 +242,199 @@ class LOUtil {
 			? dummyEmptyImg
 			: defaultImageURL;
 		return defaultImageURL;
+	}
+
+	public static getIconNameOfCommand(name: string, noCommad: boolean) {
+		if (!name) return '';
+
+		var alreadyClean = noCommad;
+		var cleanName = name;
+
+		if (!alreadyClean || alreadyClean !== true) {
+			var prefixLength = '.uno:'.length;
+			if (name.substr(0, prefixLength) == '.uno:')
+				cleanName = name.substr(prefixLength);
+			cleanName = encodeURIComponent(cleanName).replace(/%/g, '');
+			cleanName = cleanName.toLowerCase();
+		}
+		var iconURLAliases: IconNameMap = {
+			// lc_closemobile.svg is generated when loading in NB mode then
+			// switch to compact mode: 1st hidden element in the top toolbar
+			closemobile: 'closedocmobile',
+			'file-saveas': 'saveas',
+			'home-search': 'recsearch',
+			'addmb-menu': 'ok',
+			closetablet: 'view',
+			defineprintarea: 'menuprintranges',
+			deleteprintarea: 'delete',
+			sheetrighttoleft: 'pararighttoleft',
+			alignleft: 'leftpara',
+			alignright: 'rightpara',
+			alignhorizontalcenter: 'centerpara',
+			alignblock: 'justifypara',
+			formatsparklinemenu: 'insertsparkline',
+			insertdatecontentcontrol: 'datefield',
+			editheaderandfooter: 'headerandfooter',
+			exportas: 'saveas',
+			insertheaderfooter: 'headerandfooter',
+			previoustrackedchange: 'prevrecord',
+			fieldtransparency: 'linetransparency',
+			lb_glow_transparency: 'linetransparency',
+			settransparency: 'linetransparency',
+			field_transparency: 'linetransparency',
+			selectionlanugagedefault: 'updateall',
+			connectortoolbox: 'connectorlines',
+			conditionalformatdialog: 'conditionalformatmenu',
+			groupoutlinemenu: 'group',
+			paperwidth: 'pagewidth',
+			charspacing: 'spacing',
+			fontworkcharacterspacingfloater: 'spacing',
+			tablesort: 'datasort',
+			spellcheckignoreall: 'spelling',
+			deleterowbreak: 'delbreakmenu',
+			alignmentpropertypanel: 'alignvcenter',
+			cellvertcenter: 'alignvcenter',
+			charbackcolor: 'backcolor',
+			charmapcontrol: 'insertsymbol',
+			insertrowsafter: 'insertrowsmenu',
+			insertobjectchart: 'drawchart',
+			textpropertypanel: 'sidebartextpanel',
+			spacepara15: 'linespacing',
+			orientationdegrees: 'rotation',
+			clearoutline: 'delete',
+			docsign: 'editdoc',
+			editmenu: 'editdoc',
+			drawtext: 'text',
+			inserttextbox: 'text',
+			accepttrackedchanges: 'acceptchanges',
+			accepttrackedchange: 'acceptchanges',
+			chartlinepanel: 'linestyle',
+			linepropertypanel: 'linestyle',
+			xlinestyle: 'linestyle',
+			listspropertypanel: 'outlinebullet',
+			shadowpropertypanel: 'shadowed',
+			incrementlevel: 'outlineleft',
+			menurowheight: 'rowheight',
+			setoptimalrowheight: 'rowheight',
+			cellverttop: 'aligntop',
+			scalignmentpropertypanel: 'aligntop',
+			hyperlinkdialog: 'inserthyperlink',
+			remotelink: 'inserthyperlink',
+			remoteaicontent: 'sdrespageobjs',
+			openhyperlinkoncursor: 'inserthyperlink',
+			pageformatdialog: 'pagedialog',
+			backgroundcolor: 'fillcolor',
+			cellappearancepropertypanel: 'fillcolor',
+			formatarea: 'fillcolor',
+			glowcolor: 'fillcolor',
+			sccellappearancepropertypanel: 'fillcolor',
+			insertcolumnsafter: 'insertcolumnsmenu',
+			insertnonbreakingspace: 'formattingmark',
+			insertcurrentdate: 'datefield',
+			insertdatefieldfix: 'datefield',
+			insertdatefield: 'datefield',
+			insertdatefieldvar: 'datefield',
+			setparagraphlanguagemenu: 'spelldialog',
+			spellingandgrammardialog: 'spelldialog',
+			spellonline: 'spelldialog',
+			styleapply3fstyle3astring3ddefault26familyname3astring3dcellstyles:
+				'fontcolor',
+			fontworkgalleryfloater: 'fontworkpropertypanel',
+			insertfieldctrl: 'insertfield',
+			pagenumberwizard: 'insertpagenumberfield',
+			entirerow: 'fromrow',
+			insertcheckboxcontentcontrol: 'checkbox',
+			cellvertbottom: 'alignbottom',
+			insertcurrenttime: 'inserttimefield',
+			inserttimefieldfix: 'inserttimefield',
+			inserttimefieldvar: 'inserttimefield',
+			cancelformula: 'cancel',
+			resetattributes: 'setdefault',
+			tabledialog: 'tablemenu',
+			insertindexesentry: 'insertmultiindex',
+			paperheight: 'pageheight',
+			masterslidespanel: 'masterslide',
+			slidemasterpage: 'masterslide',
+			tabledeletemenu: 'deletetable',
+			tracechangemode: 'trackchanges',
+			deleteallannotation: 'deleteallnotes',
+			sdtabledesignpanel: 'tabledesign',
+			tableeditpanel: 'tabledesign',
+			tableautofitmenu: 'columnwidth',
+			menucolumnwidth: 'columnwidth',
+			hyphenation: 'hyphenate',
+			objectbackone: 'behindobject',
+			deleteannotation: 'deletenote',
+			areapropertypanel: 'chartareapanel',
+			'downloadas-png': 'insertgraphic',
+			decrementlevel: 'outlineright',
+			acceptformula: 'ok',
+			insertannotation: 'shownote',
+			insertcomment: 'shownote',
+			objecttitledescription: 'shownote',
+			namegroup: 'shownote',
+			incrementindent: 'leftindent',
+			outlineup: 'moveup',
+			charttypepanel: 'diagramtype',
+			arrangeframemenu: 'arrangemenu',
+			bringtofront: 'arrangemenu',
+			scnumberformatpropertypanel: 'numberformatincdecimals',
+			graphicpropertypanel: 'graphicdialog',
+			rotateflipmenu: 'rotateleft',
+			outlinedown: 'movedown',
+			nexttrackedchange: 'nextrecord',
+			toggleorientation: 'orientation',
+			configuredialog: 'sidebar',
+			modifypage: 'sidebar',
+			parapropertypanel: 'paragraphdialog',
+			tablecellbackgroundcolor: 'fillcolor',
+			zoteroArtwork: 'zoteroThesis',
+			zoteroAudioRecording: 'zoteroThesis',
+			zoteroBill: 'zoteroThesis',
+			zoteroBlogPost: 'zoteroThesis',
+			zoteroBookSection: 'zoteroBook',
+			zoteroCase: 'zoteroThesis',
+			zoteroConferencePaper: 'zoteroThesis',
+			zoteroDictionaryEntry: 'zoteroThesis',
+			zoteroDocument: 'zoteroThesis',
+			zoteroEmail: 'zoteroThesis',
+			zoteroEncyclopediaArticle: 'zoteroThesis',
+			zoteroFilm: 'zoteroThesis',
+			zoteroForumPost: 'zoteroThesis',
+			zoteroHearing: 'zoteroThesis',
+			zoteroInstantMessage: 'zoteroThesis',
+			zoteroInterview: 'zoteroThesis',
+			zoteroLetter: 'zoteroThesis',
+			zoteroMagazineArticle: 'zoteroThesis',
+			zoteroWebpage: 'zoteroThesis',
+			zoteroaddeditcitation: 'insertauthoritiesentry',
+			zoteroaddnote: 'addcitationnote',
+			zoterorefresh: 'updateall',
+			zoterounlink: 'unlinkcitation',
+			zoteroaddeditbibliography: 'addeditbibliography',
+			zoteroeditbibliography: 'addeditbibliography',
+			zoterosetdocprefs: 'formproperties',
+			'sidebardeck.propertydeck': 'sidebar',
+			// Fix issue #6145 by adding aliases for the PDF and EPUB icons
+			// The fix for issues #6103 and #6104 changes the name of these
+			// icons so map the new names to the old names.
+			'downloadas-pdf': 'exportpdf',
+			'downloadas-direct-pdf': 'exportdirectpdf',
+			'downloadas-epub': 'exportepub',
+			languagestatusmenu: 'languagemenu',
+			cancelsearch: 'cancel',
+			printoptions: 'print',
+			togglesheetgrid: 'show',
+			'hamburger-tablet': 'fold',
+			exportdirectpdf: 'exportpdf',
+			textcolumnspropertypanel: 'entirecolumn',
+			'sidebardeck.stylelistdeck': 'editstyle',
+		};
+		if (iconURLAliases[cleanName]) {
+			cleanName = iconURLAliases[cleanName];
+		}
+
+		return 'lc_' + cleanName + '.svg';
 	}
 
 	public static checkIfImageExists(
