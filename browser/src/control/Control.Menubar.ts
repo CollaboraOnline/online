@@ -1061,6 +1061,8 @@ class Menubar extends L.Control {
 				{name: MenubarShortcuts.addShortcut(_('Keyboard shortcuts'), MenubarShortcuts.shortcuts.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
+				window.enableAccessibility ?
+					{name: _('Screen Reading'), id: 'togglea11ystate', type: 'action'} : {},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
