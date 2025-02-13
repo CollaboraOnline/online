@@ -713,8 +713,13 @@ L.Control.UIManager = L.Control.extend({
 	setCssRulesForCustomButtons: function() {
 		for (var button of this.customButtons) {
 			const item = document.querySelector(".w2ui-icon." + encodeURIComponent(button.id));
+			var imgUrl = button.imgurl;
 			if (item) {
-				item.style.background = 'url("' + encodeURI(button.imgurl) + '")';
+				if(button.imgurl === undefined || button.imgurl === "") {
+					var iconName = app.LOUtil.getIconNameOfCommand(button.unoCommand);
+					imgUrl = app.LOUtil.getImageURL(iconName);
+				}
+				item.style.background = 'url("' + encodeURI(imgUrl) + '")';
 				item.style.backgroundRepeat = 'no-repeat';
 				item.style.backgroundPosition = 'center';
 			}

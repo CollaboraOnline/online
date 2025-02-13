@@ -40,7 +40,7 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 
 	if (data.icon) {
 		var icon = L.DomUtil.create('img', 'ui-combobox-icon', entry);
-		builder._isStringCloseToURL(data.icon) ? icon.src = data.icon : app.LOUtil.setImage(icon,  builder._createIconURL(data.icon), builder.map);
+		builder._isStringCloseToURL(data.icon) ? icon.src = data.icon : app.LOUtil.setImage(icon,  app.LOUtil.getIconNameOfCommand(data.icon), builder.map);
 	}
 
 	if (data.hint) {
