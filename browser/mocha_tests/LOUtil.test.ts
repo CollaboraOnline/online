@@ -121,19 +121,19 @@ describe('LOUtil static class members', function () {
 		});
 
 		it('A meets B tangentially (vertical)', function () {
-			assert.ok(LOUtil._doRectanglesIntersect([10, 20, 100, 200], [110, 20, 10, 200]));
+			assert.ok(LOUtil._doRectanglesIntersect([10, 20, 100, 200], [109, 20, 10, 200]));
 		});
 
 		it('A meets B tangentially (horizontal)', function () {
-			assert.ok(LOUtil._doRectanglesIntersect([10, 20, 100, 200], [10, 220, 100, 20]));
+			assert.ok(LOUtil._doRectanglesIntersect([10, 20, 100, 200], [10, 219, 100, 20]));
 		});
 
 		it('A meets B tangentially (single point)', function () {
-			assert.ok(LOUtil._doRectanglesIntersect([10, 20, 100, 200], [110, 220, 10, 20]));
+			assert.ok(LOUtil._doRectanglesIntersect([10, 20, 100, 200], [109, 219, 10, 20]));
 		});
 
-		it('disjoint (bug in the function)', function () {
-			assert.ok(LOUtil._doRectanglesIntersect([10, 20, 100, 200], [111, 221, 100, 200]));
+		it('disjoint ([x2, y2] of first rectangle is away from the [x1, y1] of the second by a pixel)', function () {
+			assert.ok(!LOUtil._doRectanglesIntersect([10, 20, 100, 200], [110, 220, 100, 200]));
 		});
 
 		it('disjoint (rectangles very far away)', function () {
