@@ -1753,7 +1753,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
 
     // default to the notebookbar if the value is "default" or whatever
     // nonsensical
-    if (enableAccessibility == "true" || (userInterfaceMode != "classic" && userInterfaceMode != "notebookbar"))
+    if (enableAccessibility == "true" && userInterfaceMode != "classic" && userInterfaceMode != "notebookbar")
         userInterfaceMode = "notebookbar";
 
     Poco::replaceInPlace(preprocess, std::string("%USER_INTERFACE_MODE%"), userInterfaceMode);
