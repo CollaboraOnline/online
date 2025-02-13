@@ -7,6 +7,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/clipboard.ods');
+
+		cy.cGet('#map').focus();
+		calcHelper.clickOnFirstCell();
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
 	});
 
 	function setDummyClipboard(type, content, image = false, fail = false, imageHtml = undefined) {
@@ -56,10 +60,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 	it('HTML paste, internal case', function() {
 		// Given a document with a SUM() in C1, and copying that to the clipboard:
-		cy.cGet('#map').focus();
-		calcHelper.clickOnFirstCell();
 		// A1 is 1, B1 is 2, so C1 is 3.
 		helper.typeIntoInputField(helper.addressInputSelector, 'C1');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'C1');
 		cy.window().then(win => {
 			var app = win['0'].app;
 			app.socket.sendMessage('uno .uno:Copy');
@@ -67,8 +70,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		var html = '<div id="meta-origin" data-coolorigin="%META_URL%">ignored</div>';
 		setDummyClipboard('text/html', html);
 
+		cy.wait(200);
+
 		// When pasting C1 to D1:
 		helper.typeIntoInputField(helper.addressInputSelector, 'D1');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'D1');
 		cy.cGet('#home-paste-button').click();
 		cy.cGet('#home-paste-entries .ui-combobox-entry').contains('Paste').click();
 
@@ -83,9 +89,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 	});
 
 	it('HTML paste, external case', function() {
-		// Given a Calc document:
-		cy.cGet('#map').focus();
-		calcHelper.clickOnFirstCell();
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
+
 		var html = '<div>clipboard</div>';
 		setDummyClipboard('text/html', html);
 
@@ -98,9 +103,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 	});
 
 	it('Plain text paste', function() {
-		// Given a Calc document:
-		cy.cGet('#map').focus();
-		calcHelper.clickOnFirstCell();
 		var text = 'plain text';
 		setDummyClipboard('text/plain', text);
 
@@ -113,9 +115,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 	});
 
 	it('Image paste', function() {
-		// Given a Calc document:
-		cy.cGet('#map').focus();
-		calcHelper.clickOnFirstCell();
 		var base64 = 'iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRo';
 		base64 += 'ge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg==';
 		var blob = Cypress.Blob.base64StringToBlob(base64, 'image/png');
@@ -130,9 +129,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 	});
 
 	it('Image paste with meta', function() {
-		// Given a Calc document:
-		cy.cGet('#map').focus();
-		calcHelper.clickOnFirstCell();
 		let base64 = 'iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRo';
 		base64 += 'ge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg==';
 		let blob = Cypress.Blob.base64StringToBlob(base64, 'image/png');
@@ -151,9 +147,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 	it('HTML paste, internal case failing', function() {
 		// Given a document with an A1 cell copied to the clipboard:
-		cy.cGet('#map').focus();
-		calcHelper.clickOnFirstCell();
-		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
 		cy.window().then(win => {
 			var app = win['0'].app;
 			app.socket.sendMessage('uno .uno:Copy');
