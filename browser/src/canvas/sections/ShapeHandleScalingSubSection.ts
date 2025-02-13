@@ -78,7 +78,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		let x = halfMarkerWidth, y = halfMarkerWidth;
 		this.context.translate(x, y);
 		this.context.rotate(shapeAngle * -1);
-		this.context.translate(-x, -y)
+		this.context.translate(-x, -y);
 		this.context.moveTo(x, y);
 		x += markerWidth;
 		this.context.lineTo(x, y);
@@ -99,7 +99,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		let x = halfMarkerWidth, y = halfMarkerWidth;
 		this.context.translate(x, y);
 		this.context.rotate(shapeAngle * -1);
-		this.context.translate(-x, -y)
+		this.context.translate(-x, -y);
 		this.context.moveTo(x, y);
 		x += markerWidth;
 		this.context.lineTo(x, y);
