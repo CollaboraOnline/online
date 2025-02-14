@@ -58,6 +58,8 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 		cy.cGet('.cursor-overlay .blinking-cursor').should('be.visible');
 	}
 
+	cy.wait(250); // time for switching the cell... it seems to fail currently sometimes
+
 	if (isA1)
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
 
@@ -68,7 +70,6 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 function dblClickOnFirstCell() {
 	cy.log('>> dblClickOnFirstCell - start');
 
-	helper.typeIntoInputField(helper.addressInputSelector, 'A1');
 	clickOnFirstCell(false, true);
 
 	cy.log('<< dblClickOnFirstCell - end');

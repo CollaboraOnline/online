@@ -10,6 +10,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	beforeEach(function() {
 		newFilePath = helper.setupAndLoadDocument('calc/top_toolbar.ods');
 		desktopHelper.switchUIToCompact();
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'C6');
 		calcHelper.clickOnFirstCell();
 	});
 
@@ -86,20 +87,20 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.typeIntoDocument('{enter}');
 		// Wait for enter to work before clicking on first cell again
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2');
-		cy.wait(100);
 
 		// Turn text wrap on
 		calcHelper.clickOnFirstCell();
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
 		cy.cGet('#toolbar-up .unoWrapText').click();
 
 		// Leave cell
 		helper.typeIntoDocument('{enter}');
 		// Wait for enter to work before clicking on first cell again
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2');
-		cy.wait(100);
 
 		// Get cursor position at end of line after wrap
 		calcHelper.dblClickOnFirstCell();
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
 		helper.moveCursor('end');
 		helper.getCursorPos('left', 'currentTextEndPos');
 
@@ -268,8 +269,12 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Set right alignment first
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Right').click();
+
+		cy.wait(100);
 		calcHelper.selectEntireSheet();
 		helper.copy();
+
+		cy.wait(100);
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'align', 'right');
 
 		// Change alignment back
@@ -279,6 +284,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Left').click({force: true}); // tooltip
 		calcHelper.selectEntireSheet();
 		helper.copy();
+
+		cy.wait(100);
 		cy.cGet('#copy-paste-container table td').should('have.attr', 'align', 'left');
 	});
 

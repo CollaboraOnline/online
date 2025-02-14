@@ -408,6 +408,8 @@ function switchUIToCompact() {
 		}
 	});
 
+	cy.cGet('#toolbar-up').should('be.visible');
+
 	cy.log('<< switchUIToCompact - end');
 }
 
