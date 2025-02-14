@@ -1,4 +1,4 @@
-# Ihor Hordiichuk <igor_ck@outlook.com>, 2020, 2021.
+# Ihor Hordiichuk <igor_ck@outlook.com>, 2020, 2021, 2025.
 # Andras Timar <andras.timar@collabora.com>, 2021.
 # Максим Горпиніч <mgorpinic2005@gmail.com>, 2024.
 msgid ""
@@ -6,17 +6,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-08 10:08+0200\n"
-"PO-Revision-Date: 2024-12-21 14:22+0000\n"
-"Last-Translator: Максим Горпиніч <mgorpinic2005@gmail.com>\n"
-"Language-Team: Ukrainian <https://hosted.weblate.org/projects/collabora-"
-"online/app-store-descriptions/uk/>\n"
+"PO-Revision-Date: 2025-02-10 09:03+0000\n"
+"Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
+"collabora-online/app-store-descriptions/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -39,18 +39,18 @@ msgid ""
 "and now it's on Android, enhancing your possibilities to work on mobile and "
 "for collaboration."
 msgstr ""
-"Collabora Office — це програма для текстового редактора, електронних таблиць "
-"і презентацій, заснована на LibreOffice, найпопулярнішому у світі офісному "
-"пакеті з відкритим вихідним кодом, і тепер вона доступна для Android, що "
-"розширює ваші можливості для роботи на мобільному пристрої та співпраці."
+"Collabora Office — це застосунок редагування тексту, електронних таблиць і "
+"презентацій, заснований на LibreOffice, найпопулярнішому у світі офісному "
+"пакеті з відкритим кодом, і тепер він доступний для Android, що розширює "
+"ваші можливості роботи на мобільному пристрої та співпраці."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:17-1
 msgid ""
 "This app is in active development, feedback and bug reports are very welcome."
 msgstr ""
-"Ця програма знаходиться в активній розробці, відгуки та повідомлення про "
-"помилки дуже вітаються."
+"Цей застосунок активно розробляється, відгуки та повідомлення про помилки "
+"вітаються."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:21-1
@@ -93,7 +93,7 @@ msgstr ""
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
 msgid "About the app:"
-msgstr "Про додаток:"
+msgstr "Про застосунок:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:44-1
@@ -103,9 +103,9 @@ msgid ""
 "Collabora Online, reads and saves documents similarly to LibreOffice desktop."
 msgstr ""
 "Collabora Office для Android використовує той самий механізм, що й "
-"LibreOffice для Windows, Mac і Linux. Це, у поєднанні з новим інтерфейсом на "
-"основі Collabora Online, читає та зберігає документи подібно до робочого "
-"столу LibreOffice."
+"LibreOffice для Windows, Mac і Linux. У поєднанні з новим інтерфейсом, "
+"заснованим на Collabora Online, це забезпечує читання і збереження "
+"документів подібно до LibreOffice для комп'ютерів."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:48-1
@@ -115,10 +115,10 @@ msgid ""
 "developing Android support since 2012, with the help of Google Summer of "
 "Code students Andrzej Hunt, Iain Billet and Kaishu Sahu."
 msgstr ""
-"Інженери Collabora Тор Ліллквіст, Томаш Вайнгерл, Майкл Мікс, Міклош Вайна, "
-"Ян Голешовскі, Мерт Тюмер, Рашеш Падія та Скайлер Грей розробляли підтримку "
-"Android з 2012 року за допомогою студентів Google Summer of Code Анджея "
-"Ханта, Ієна Біллета та Кайшу Саху ."
+"Інженери Collabora Tor Lillqvist, Tomaž Vajngerl, Michael Meeks, Miklos "
+"Vajna, Jan Holešovský, Mert Tümer, Rashesh Padia і Skyler Grey працювали над "
+"підтримкою Android з 2012 року за допомогою студентів Google Summer of Code "
+"Andrzej Hunt, Iain Billet і Kaishu Sahu."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:52-1
@@ -133,7 +133,7 @@ msgstr "Open Source - Mozilla Public License v2 та інші"
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:60-1
 msgid "Credits:"
-msgstr "Кредити:"
+msgstr "Автори:"
 
 #~ msgid "Major upgrade to the new 6.4 core."
 #~ msgstr "Вилике оновлення до нового ядра 6.4."
