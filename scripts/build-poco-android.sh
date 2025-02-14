@@ -11,9 +11,9 @@ BUILD_PATH=$2 # e.g. ~/Android/
 mkdir -p $BUILD_PATH
 cd $BUILD_PATH
 # The official POCO C++ Libraries repository is on GitHub.
-# The master branch always reflects the latest release.
+# The main branch always reflects the latest release.
 if ! test -f android-poco/.git/config; then
-    git clone -b master https://github.com/pocoproject/poco.git android-poco
+    git clone -b main https://github.com/pocoproject/poco.git android-poco
 fi
 cd android-poco
 git checkout -f
