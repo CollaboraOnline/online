@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-08 10:08+0100\n"
-"PO-Revision-Date: 2024-11-11 05:06+0000\n"
-"Last-Translator: Frank Pearson <rob@pearson.net.nz>\n"
+"PO-Revision-Date: 2025-02-14 20:10+0000\n"
+"Last-Translator: Ronny Buelund <ronnyworkmail@gmail.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
-"Language: \n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8.2\n"
+"X-Generator: Weblate 5.10\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -211,7 +211,7 @@ msgstr "Opdatér Loggen"
 
 #: admin/admin.strings.js:60
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Kanalfilter:"
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:495
 #: src/control/Control.StatusBar.js:212 src/control/Control.StatusBar.js:217
@@ -258,19 +258,19 @@ msgstr "Om"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "CPU historik"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "Hukommelseshistorik"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Hukommelse"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Vent venligst kubernetes cluster skalerer ..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -341,7 +341,7 @@ msgstr "Afsendt"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Forbindelse"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -413,23 +413,23 @@ msgstr "s"
 
 #: js/global.js:1490
 msgid "Cluster is scaling, retrying..."
-msgstr ""
+msgstr "Cluster skalerer, forsøger igen ..."
 
 #: js/global.js:1492
 msgid "Document is migrating to new server, retrying..."
-msgstr ""
+msgstr "Dokument migrerer til ny server, forsøger igen ..."
 
 #: js/global.js:1494
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Kunne ikke hente route token fra controller"
 
 #: src/canvas/sections/CommentListSection.ts:163
 msgid "A comment is being edited"
-msgstr ""
+msgstr "En kommentar bliver redigeret"
 
 #: src/canvas/sections/CommentListSection.ts:164
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Gem aller afvis venligst kommentaren der aktuelt bliver redigeret."
 
 #: src/canvas/sections/CommentListSection.ts:1164
 msgid "Modify"
@@ -446,7 +446,7 @@ msgstr "Fjern"
 
 #: src/canvas/sections/CommentListSection.ts:1182
 msgid "Remove Thread"
-msgstr ""
+msgstr "Fjern tråd"
 
 #: src/canvas/sections/CommentListSection.ts:1188
 msgid "Resolve"
@@ -454,27 +454,27 @@ msgstr "Løs"
 
 #: src/canvas/sections/CommentListSection.ts:1188
 msgid "Unresolve"
-msgstr ""
+msgstr "Marker som uløst"
 
 #: src/canvas/sections/CommentListSection.ts:1194
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Marker tråd som uløst"
 
 #: src/canvas/sections/CommentListSection.ts:1194
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Løs tråd"
 
 #: src/canvas/sections/CommentListSection.ts:1200
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Promover til top kommentar"
 
 #: src/canvas/sections/CommentListSection.ts:1206
 msgid "Show on the side"
-msgstr ""
+msgstr "Vis på siden"
 
 #: src/canvas/sections/CommentListSection.ts:1206
 msgid "Open in full view"
-msgstr ""
+msgstr "Åben i fuld visning"
 
 #: src/canvas/sections/CommentListSection.ts:1234
 #: src/control/Control.JSDialogBuilder.js:1893
@@ -487,17 +487,19 @@ msgstr "Kommentar"
 #: src/canvas/sections/CommentListSection.ts:1468
 #: src/canvas/sections/CommentListSection.ts:2371
 msgid "Comments Updated"
-msgstr ""
+msgstr "Kommentarer opdateret"
 
 #: src/canvas/sections/CommentListSection.ts:1456
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "En anden bruger har fjernet denne kommentar."
 
 #: src/canvas/sections/CommentListSection.ts:1469
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"En anden bruger har opdateret kommentaren. Ønsker du a overskrive disse "
+"ændringer?"
 
 #: src/canvas/sections/CommentListSection.ts:1470 src/core/Socket.js:1419
 msgid "Overwrite"
@@ -515,6 +517,8 @@ msgstr "Autogemt"
 #: src/canvas/sections/CommentListSection.ts:2372
 msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
+"En anden bruger har opdateret kommentarer. Ønsker du at fortsætte "
+"opdateringen?"
 
 #: src/canvas/sections/CommentSection.ts:305
 msgid "Open menu"
@@ -536,19 +540,19 @@ msgstr "Løst"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:417
 msgid "Document contains unsupported video"
-msgstr ""
+msgstr "Dokumentet indeholde ikke understøttet video"
 
 #: src/canvas/sections/URLPopUpSection.ts:58
 msgid "Copy link location"
-msgstr ""
+msgstr "Kopier linkplacering"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
 msgid "Edit link"
-msgstr ""
+msgstr "Rediger link"
 
 #: src/canvas/sections/URLPopUpSection.ts:78
 msgid "Remove link"
-msgstr ""
+msgstr "Fjern link"
 
 #: src/control/ColorPicker.ts:269
 msgid "No color"
@@ -568,11 +572,11 @@ msgstr "\"Langsom Proxy\""
 
 #: src/control/Control.AboutDialog.ts:178
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Kopier al versionsinformation i engelsk"
 
 #: src/control/Control.AddressInputField.ts:66
 msgid "cell address"
-msgstr ""
+msgstr "celleadresse"
 
 #: src/control/Control.AlertDialog.js:53
 msgid "External link"
@@ -584,11 +588,13 @@ msgstr "Åbn link"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Kopiering af eksterne kilder er ikke tilladt"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
 msgstr ""
+"Det ser ud til at du har kopieret en markering som indeholder eksterne "
+"billeder."
 
 #: src/control/Control.AlertDialog.js:68
 msgid ""
