@@ -2366,17 +2366,6 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.disableLayoutAnimation = true;
 		var comment;
 		if (Comment.isAnyEdit()) {
-			this.map.uiManager.showConfirmModal(
-				'comments-update',
-				_('Comments Updated'),
-				_('Another user has updated comments. Would you like to proceed updating?'),
-				_('OK'),
-				() => {
-					CommentSection.pendingImport = false;
-					this.clearList();
-					this.importComments(commentList);
-				}
-			);
 			CommentSection.pendingImport = true;
 			return;
 		}
