@@ -563,7 +563,6 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			newSubSection.setPosition(handle.point.pX, handle.point.pY);
 			if (GraphicSelection.extraInfo.isCropMode && !newSubSection.sectionProperties.cropModeEnabled) {
 				newSubSection.sectionProperties.cropModeEnabled = GraphicSelection.extraInfo.isCropMode;
-				newSubSection.containerObject.requestReDraw();
 			}
 			return null;
 		}
