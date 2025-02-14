@@ -115,7 +115,7 @@ class Evented extends BaseClass {
 				typeIndex.set(id, { fn: fn, ctx: context });
 
 				// keep track of the number of keys in the index to quickly check if it's empty
-				let count = this._numEvents.has(type) ? this._numEvents.get(type) : 0;
+				const count = this._numEvents.has(type) ? this._numEvents.get(type) : 0;
 
 				this._numEvents.set(type, count + 1);
 			}
@@ -123,6 +123,7 @@ class Evented extends BaseClass {
 			// individual layers mostly use "this" for context and don't fire listeners too often
 			// so simple array makes the memory footprint better while not degrading performance
 
+			// eslint-disable-next-line no-lonely-if
 			if (!this._eventsNoContext.has(type)) {
 				this._eventsNoContext.set(type, [{ fn: fn }]);
 			} else {
@@ -185,7 +186,7 @@ class Evented extends BaseClass {
 			return this;
 		}
 
-		let event = { ...data, type: type, target: this };
+		const event = { ...data, type: type, target: this };
 
 		if (this._events.size) {
 			const typeIndex = this._events.get(type);

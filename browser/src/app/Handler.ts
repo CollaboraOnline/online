@@ -45,6 +45,8 @@ class Handler implements IDAble {
 		return this._enabled;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	protected addHooks() {}
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	protected removeHooks() {}
 }

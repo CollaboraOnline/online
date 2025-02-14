@@ -11,7 +11,9 @@
 
 /// Minimal base class for Map, Layer etc.
 
-interface BaseClassOptions {}
+interface BaseClassOptions {
+	[name: string]: any;
+}
 
 class BaseClass implements IDAble {
 	private baseOptions: BaseClassOptions;
