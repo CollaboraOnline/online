@@ -13,9 +13,10 @@
 // to add interaction features like dragging to classes like Map and
 // Marker.
 
-class Handler {
+class Handler implements IDAble {
 	private _map: any;
 	private _enabled: boolean;
+	public _leaflet_id: number = -1;
 
 	constructor(map: any) {
 		this._map = map;
