@@ -630,7 +630,7 @@ static bool parseResponseAndValidate(const std::string& response, Poco::JSON::Ob
     {
         // Validate the filename is sane.
         std::string filename;
-        if (JsonUtil::findJSONValue(wopiInfo, "BaseFileName", filename) &&
+        if (JsonUtil::findJSONValue(wopiInfo, "BaseFileName", filename, /* bRemove */ false) &&
             filename.find_first_of('/') == std::string::npos)
         {
             return true; // We're good.
