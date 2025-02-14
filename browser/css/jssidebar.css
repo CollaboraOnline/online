@@ -442,3 +442,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #TemplatePanel > div:nth-child(5) {
 	height: inherit;
 }
+
+#TemplatePanel #highlightstyles input {
+	margin-left: 0px;
+}
