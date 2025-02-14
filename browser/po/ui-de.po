@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-08 10:08+0100\n"
-"PO-Revision-Date: 2025-01-28 15:02+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2025-02-10 09:03+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -483,7 +483,7 @@ msgstr "Auf der Seite anzeigen"
 
 #: src/canvas/sections/CommentListSection.ts:1206
 msgid "Open in full view"
-msgstr ""
+msgstr "In Vollansicht öffnen"
 
 #: src/canvas/sections/CommentListSection.ts:1234
 #: src/control/Control.JSDialogBuilder.js:1893
@@ -1680,7 +1680,7 @@ msgstr "Alle Seiten"
 #: src/control/Control.Menubar.js:771
 #: src/control/Control.NotebookbarCalc.js:1175
 msgid "Focus Cell"
-msgstr ""
+msgstr "Zelle fokussieren"
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:291
@@ -2204,11 +2204,11 @@ msgstr "Online Modus"
 
 #: src/control/Control.NotebookbarWriter.js:842
 msgid "Scroll up"
-msgstr ""
+msgstr "Nach oben blättern"
 
 #: src/control/Control.NotebookbarWriter.js:849
 msgid "Scroll down"
-msgstr ""
+msgstr "Nach unten blättern"
 
 #: src/control/Control.NotebookbarWriter.js:1403
 msgid "Rich Text"
@@ -2304,16 +2304,15 @@ msgstr "Status"
 
 #: src/control/Control.ServerAuditDialog.ts:225
 msgid "No issues found"
-msgstr "Keine Probleme festgestellt"
+msgstr "Keine Probleme gefunden"
 
 #: src/control/Control.ServerAuditDialog.ts:232
-#, fuzzy
 msgid "1 issue found"
-msgstr "Keine Probleme festgestellt"
+msgstr "1 Problem gefunden"
 
 #: src/control/Control.ServerAuditDialog.ts:233
 msgid "%COUNT% issues found"
-msgstr ""
+msgstr "%COUNT% Probleme gefunden"
 
 #: src/control/Control.ServerAuditDialog.ts:282
 msgid "Check security warnings of your server"
