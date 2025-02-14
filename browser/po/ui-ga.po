@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-08 10:08+0100\n"
-"PO-Revision-Date: 2025-02-04 21:47+0000\n"
+"PO-Revision-Date: 2025-02-08 20:07+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -71,7 +71,7 @@ msgstr " úsáideoir(í)."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
-msgstr " doiciméid/doiciméid ar oscailt."
+msgstr " doiciméad (doiciméid) oscailte."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -720,7 +720,7 @@ msgstr "Ábhar na gearrthaisce á íosluchtú"
 #: src/control/Control.DownloadProgress.js:111
 #: src/control/Control.PartsPreview.js:288
 msgid "Copy"
-msgstr "Cóipeáil"
+msgstr "Cóip"
 
 #: src/control/Control.DownloadProgress.js:109
 msgid "Download completed and ready to be copied to clipboard."
@@ -1429,7 +1429,7 @@ msgstr "Athnuaigh Luanna"
 #: src/control/Control.NotebookbarWriter.js:2060
 #: src/control/Control.Zotero.js:1445
 msgid "Unlink Citations"
-msgstr "Unlink Citations"
+msgstr "Dícheangail Lua"
 
 #: src/control/Control.Menubar.js:317
 #: src/control/Control.NotebookbarWriter.js:2072
@@ -1670,7 +1670,7 @@ msgstr "Gach Bileog"
 #: src/control/Control.Menubar.js:771
 #: src/control/Control.NotebookbarCalc.js:1175
 msgid "Focus Cell"
-msgstr ""
+msgstr "Cill Fócais"
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:291
@@ -2192,11 +2192,11 @@ msgstr "Téigh As Líne"
 
 #: src/control/Control.NotebookbarWriter.js:842
 msgid "Scroll up"
-msgstr ""
+msgstr "Scrollaigh suas"
 
 #: src/control/Control.NotebookbarWriter.js:849
 msgid "Scroll down"
-msgstr ""
+msgstr "Scrollaigh síos"
 
 #: src/control/Control.NotebookbarWriter.js:1403
 msgid "Rich Text"
@@ -2297,13 +2297,12 @@ msgid "No issues found"
 msgstr "Níor aimsíodh aon saincheisteanna"
 
 #: src/control/Control.ServerAuditDialog.ts:232
-#, fuzzy
 msgid "1 issue found"
-msgstr "Níor aimsíodh aon saincheisteanna"
+msgstr "Fuarthas 1 cheist"
 
 #: src/control/Control.ServerAuditDialog.ts:233
 msgid "%COUNT% issues found"
-msgstr ""
+msgstr "Fuarthas %COUNT% ceist"
 
 #: src/control/Control.ServerAuditDialog.ts:282
 msgid "Check security warnings of your server"
@@ -3182,7 +3181,7 @@ msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"Níl an tseirbhís ar fáil. Bain triail eile as ar ball agus cuir in iúl do do "
+"Níl an tseirbhís ar fáil. Bain triail eile as ar ball agus cuir in iúl le do "
 "riarthóir má leanann an fhadhb."
 
 #: src/errormessages.js:28
@@ -3190,7 +3189,7 @@ msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"Óstach WOPI neamhúdaraithe. Bain triail eile as ar ball agus cuir in iúl do "
+"Óstach WOPI neamhúdaraithe. Bain triail eile as ar ball agus cuir in iúl le "
 "do riarthóir má leanann an fhadhb."
 
 #: src/errormessages.js:29
@@ -3468,7 +3467,7 @@ msgstr "Raon Ainmnithe"
 
 #: src/layer/tile/CanvasTileLayer.js:3894
 msgid "No Comments"
-msgstr "No Comments"
+msgstr "Uimh Tuairimí"
 
 #: src/main.js:139
 msgid "Warning! The browser you are using is not supported."
@@ -3526,7 +3525,7 @@ msgstr ""
 
 #: src/map/Clipboard.js:1387
 msgid "Close popup to ignore paste special"
-msgstr "Dún aníos aníos chun neamhaird a dhéanamh ar ghreamú speisialta"
+msgstr "Dún aníos chun neamhaird a dhéanamh ar ghreamú speisialta"
 
 #: src/map/Map.js:216
 msgid "Initializing..."
