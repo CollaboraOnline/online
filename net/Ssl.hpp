@@ -28,7 +28,7 @@
 namespace ssl
 {
 /// The certificate verification requirements.
-enum class CertificateVerification
+enum class CertificateVerification: std::uint8_t
 {
     Disabled, ///< No verification is performed or results ignored.
     Required ///< Certificate must be provided and will be verified.
