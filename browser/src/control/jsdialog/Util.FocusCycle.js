@@ -19,6 +19,9 @@ function isAnyInputFocused() {
 	if (!app.map)
 		return false;
 
+	if (app.map.hasFocus())
+		return false;
+
 	var hasTunneledDialogOpened = app.map.dialog ? app.map.dialog.hasOpenedDialog() : false;
 	var hasJSDialogOpened = app.map.jsdialog ? app.map.jsdialog.hasDialogOpened() : false;
 	var hasJSDialogFocused = L.DomUtil.hasClass(document.activeElement, 'jsdialog');
