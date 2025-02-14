@@ -4171,73 +4171,87 @@ L.CanvasTileLayer = L.Layer.extend({
 		return this._map.getPixelBounds().getSize();
 	},
 
+	_getDocumentContainerSize: function() {
+		let documentContainerSize = document.getElementById('document-container').getBoundingClientRect();
+		documentContainerSize = [documentContainerSize.width, documentContainerSize.height];
+		return documentContainerSize;
+	},
+
+	_resizeMapElementAndTilesLayer: function(sizeRectangle) {
+		const mapElement = document.getElementById('map'); // map's size = tiles section's size.
+		mapElement.style.left = sizeRectangle.getPxX1() + 'px';
+		mapElement.style.top = sizeRectangle.getPxY1() + 'px';
+		mapElement.style.width = sizeRectangle.getPxWidth() + 'px';
+		mapElement.style.height = sizeRectangle.getPxHeight() + 'px';
+
+		this._container.style.width = sizeRectangle.getPxWidth() + 'px';
+		this._container.style.height = sizeRectangle.getPxHeight() + 'px';
+	},
+
+	_mobileChecksAfterResizeEvent: function(heightIncreased) {
+		if (!window.mode.isMobile()) return;
+
+		const hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
+		const hasIframeModalOpened = $('.iframe-dialog-modal').is(':visible');
+		// when integrator has opened dialog in parent frame (eg. save as) we shouldn't steal the focus
+		const focusedUI = document.activeElement === document.body;
+		if (!hasMobileWizardOpened && !hasIframeModalOpened && !focusedUI) {
+			if (heightIncreased) {
+				// if the keyboard is hidden - be sure we setup correct state in TextInput
+				this._map.setAcceptInput(false);
+			} else
+				this._onUpdateCursor(true);
+		}
+	},
+
+	_nonDesktopChecksAfterResizeEvent: function(heightIncreased) {
+		// We want to keep cursor visible when we show the keyboard on mobile device or tablet
+		if (!window.mode.isMobile() && !window.mode.isTablet()) return;
+
+		const hasVisibleCursor = app.file.textCursor.visible
+			&& this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isDomAttached();
+		if (!heightIncreased && this._map._docLoaded && hasVisibleCursor) {
+			const cursorPos = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y2 });
+			const cursorPositionInView = this._isLatLngInView(cursorPos);
+			if (!cursorPositionInView)
+				this._map.panTo(cursorPos);
+		}
+	},
+
 	_syncTileContainerSize: function () {
 		if (!this._map) return;
 
-		if (this._docType === 'presentation' || this._docType === 'drawing') {
-			this.onResizeImpress();
-		}
+		if (this._docType === 'presentation' || this._docType === 'drawing') this.onResizeImpress();
 
-		var tileContainer = this._container;
-		if (tileContainer) {
-			var documentContainerSize = document.getElementById('document-container');
-			documentContainerSize = documentContainerSize.getBoundingClientRect();
-			documentContainerSize = [documentContainerSize.width, documentContainerSize.height];
+		if (!this._container) return;
 
-			app.sectionContainer.onResize(documentContainerSize[0], documentContainerSize[1]); // Canvas's size = documentContainer's size.
+		const documentContainerSize = this._getDocumentContainerSize();
 
-			var oldSize = this._getRealMapSize();
+		app.sectionContainer.onResize(documentContainerSize[0], documentContainerSize[1]); // Canvas's size = documentContainer's size.
 
-			var rectangle = this._getTilesSectionRectangle();
-			var mapElement = document.getElementById('map'); // map's size = tiles section's size.
-			mapElement.style.left = rectangle.getPxX1() + 'px';
-			mapElement.style.top = rectangle.getPxY1() + 'px';
-			mapElement.style.width = rectangle.getPxWidth() + 'px';
-			mapElement.style.height = rectangle.getPxHeight() + 'px';
+		const oldSize = this._getRealMapSize();
 
-			tileContainer.style.width = rectangle.getPxWidth() + 'px';
-			tileContainer.style.height = rectangle.getPxHeight() + 'px';
+		this._resizeMapElementAndTilesLayer(this._getTilesSectionRectangle());
 
-			var newSize = this._getRealMapSize();
-			var heightIncreased = oldSize.y < newSize.y;
-			var widthIncreased = oldSize.x < newSize.x;
+		const newSize = this._getRealMapSize();
+		const heightIncreased = oldSize.y < newSize.y;
+		const widthIncreased = oldSize.x < newSize.x;
 
-			if (oldSize.x !== newSize.x || oldSize.y !== newSize.y) {
-				this._map.invalidateSize({}, oldSize);
-			}
+		if (oldSize.x !== newSize.x || oldSize.y !== newSize.y)
+			this._map.invalidateSize({}, oldSize);
 
-			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
-			var hasIframeModalOpened = $('.iframe-dialog-modal').is(':visible');
-			// when integrator has opened dialog in parent frame (eg. save as) we shouldn't steal the focus
-			var focusedUI = document.activeElement === document.body;
-			if (window.mode.isMobile() && !hasMobileWizardOpened && !hasIframeModalOpened && !focusedUI) {
-				if (heightIncreased) {
-					// if the keyboard is hidden - be sure we setup correct state in TextInput
-					this._map.setAcceptInput(false);
-				} else
-					this._onUpdateCursor(true);
-			}
+		this._mobileChecksAfterResizeEvent(heightIncreased);
 
-			this._fitWidthZoom();
+		this._fitWidthZoom();
 
-			// Center the view w.r.t the new map-pane position using the current zoom.
-			this._map.setView(this._map.getCenter());
+		// Center the view w.r.t the new map-pane position using the current zoom.
+		this._map.setView(this._map.getCenter());
 
-			// We want to keep cursor visible when we show the keyboard on mobile device or tablet
-			var isTabletOrMobile = window.mode.isMobile() || window.mode.isTablet();
-			var hasVisibleCursor = app.file.textCursor.visible
-				&& this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isDomAttached();
-			if (!heightIncreased && isTabletOrMobile && this._map._docLoaded && hasVisibleCursor) {
-				var cursorPos = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y2 });
-				var cursorPositionInView = this._isLatLngInView(cursorPos);
-				if (!cursorPositionInView)
-					this._map.panTo(cursorPos);
-			}
+		this._nonDesktopChecksAfterResizeEvent(heightIncreased);
 
-			if (heightIncreased || widthIncreased) {
-				app.sectionContainer.requestReDraw();
-				this._map.fire('sizeincreased');
-			}
+		if (heightIncreased || widthIncreased) {
+			app.sectionContainer.requestReDraw();
+			this._map.fire('sizeincreased');
 		}
 	},
 
