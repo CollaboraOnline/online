@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-08 10:08+0100\n"
-"PO-Revision-Date: 2025-02-04 14:10+0000\n"
+"PO-Revision-Date: 2025-02-09 04:16+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1664,7 +1664,7 @@ msgstr "Alla blad"
 #: src/control/Control.Menubar.js:771
 #: src/control/Control.NotebookbarCalc.js:1175
 msgid "Focus Cell"
-msgstr ""
+msgstr "Fokuscell"
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:291
@@ -2186,11 +2186,11 @@ msgstr "Gå Offline"
 
 #: src/control/Control.NotebookbarWriter.js:842
 msgid "Scroll up"
-msgstr ""
+msgstr "Scrolla uppåt"
 
 #: src/control/Control.NotebookbarWriter.js:849
 msgid "Scroll down"
-msgstr ""
+msgstr "Scrolla nedåt"
 
 #: src/control/Control.NotebookbarWriter.js:1403
 msgid "Rich Text"
@@ -2289,13 +2289,12 @@ msgid "No issues found"
 msgstr "Inga problem hittades"
 
 #: src/control/Control.ServerAuditDialog.ts:232
-#, fuzzy
 msgid "1 issue found"
-msgstr "Inga problem hittades"
+msgstr "1 problem hittades"
 
 #: src/control/Control.ServerAuditDialog.ts:233
 msgid "%COUNT% issues found"
-msgstr ""
+msgstr "%COUNT% problem hittades"
 
 #: src/control/Control.ServerAuditDialog.ts:282
 msgid "Check security warnings of your server"
