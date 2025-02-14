@@ -5,13 +5,13 @@
     <string name="no_recent_items">Åbn en fil ved at klikke på fil-ikonet på værktøjslinjen.</string>
     <string name="app_vendor">Denne udgave er fra $VENDOR.</string>
     <string name="app_description">$APP_NAME er en moderne open source kontorpakke som er nem at bruge, indeholdende tekstbehandling, regneark, præsentationer, mm.</string>
-    <string name="temp_file_saving_disabled">Denne fil er skrivebeskyttet og kan ikke gemmes.</string>
+    <string name="temp_file_saving_disabled">Denne fil er skrivebeskyttet. Lagring er deaktiveret.</string>
     <string name="file_creation_failed">Filoprettelse mislykkedes</string>
     <string name="file_exists_warning">Der findes allerede en anden fil med dette navn, som bliver overskrevet.</string>
     <string name="pref_sort_summary">Vælg i hvilken rækkefølge filerne vises: A-Z, efter størrelse eller efter dato.</string>
     <string name="pref_show_hidden_files_summary">Aktiver visning af skjulte filer/mapper</string>
     <string name="list_view">Liste</string>
-    <string name="storage_permission_required">Du skal have tilladelse for at kunne gemme</string>
+    <string name="storage_permission_required">Lagringstilladelse er nødvendig</string>
     <string name="local_documents">Dokumentmappe</string>
     <string name="owncloud_wrong_connection">Kan ikke forbinde til cloud-serveren. Tjek din Konfiguration.</string>
     <string name="remote_server">Fjern-server</string>
