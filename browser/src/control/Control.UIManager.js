@@ -290,8 +290,10 @@ L.Control.UIManager = L.Control.extend({
 		this.documentNameInput = L.control.documentNameInput();
 		this.map.addControl(this.documentNameInput);
 		this.map.addControl(L.control.alertDialog());
-		this.mobileWizard = L.control.mobileWizard();
-		this.map.addControl(this.mobileWizard);
+		if (window.mode.isMobile()) {
+			this.mobileWizard = L.control.mobileWizard();
+			this.map.addControl(this.mobileWizard);
+		}
 		this.map.addControl(L.control.languageDialog());
 		this.map.dialog = L.control.lokDialog();
 		this.map.addControl(this.map.dialog);
