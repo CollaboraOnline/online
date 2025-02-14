@@ -793,7 +793,7 @@ public:
     /// Poll the sockets for available data to read or buffer to write.
     /// Returns the return-value of poll(2): 0 on timeout,
     /// -1 for error, and otherwise the number of events signalled.
-    int poll(std::chrono::microseconds timeoutMax) { return poll(timeoutMax.count()); }
+    int poll(std::chrono::microseconds timeoutMax, bool justPoll = false) { return poll(timeoutMax.count(), justPoll); }
 
     /// Poll the sockets for available data to read or buffer to write.
     /// Returns the return-value of poll(2): 0 on timeout,
@@ -962,7 +962,7 @@ private:
     }
 
     /// Actual poll implementation
-    int poll(int64_t timeoutMaxMicroS);
+    int poll(int64_t timeoutMaxMicroS, bool justPoll = false);
 
     /// Initialize the poll fds array with the right events
     void setupPollFds(std::chrono::steady_clock::time_point now,
