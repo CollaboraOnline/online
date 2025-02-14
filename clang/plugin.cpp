@@ -17,6 +17,19 @@ using namespace clang;
 
 namespace
 {
+
+/// Reports a diagnostic at the specified location.
+clang::DiagnosticBuilder report(clang::ASTContext* context, const std::string& string,
+                                clang::SourceLocation location, const std::string& category)
+{
+    clang::DiagnosticsEngine& engine = context->getDiagnostics();
+    clang::DiagnosticIDs::Level level = clang::DiagnosticIDs::Level::Warning;
+    if (engine.getWarningsAsErrors())
+        level = clang::DiagnosticIDs::Level::Error;
+    std::string formatString = string + " [coplugin:" + category + "]";
+    return engine.Report(location, engine.getDiagnosticIDs()->getCustomDiagID(level, formatString));
+}
+
 /// Finds uses of lambda captures where the variable is captured by reference, but the variable is a
 /// parameter of a function, so the capture should be by value, assuming the lambda will be
 /// long-living.
@@ -90,7 +103,8 @@ public:
             clang::SourceRange range(capture.getLocation());
             clang::SourceLocation location(range.getBegin());
             report(result.Context,
-                   "function parameter captured by reference, capture by value instead", location)
+                   "function parameter captured by reference, capture by value instead", location,
+                   "capture")
                 << range;
         }
     }
@@ -103,31 +117,54 @@ public:
                          hasAncestor(cxxMethodDecl(hasAncestor(lambdaExpr())).bind("methodDecl"))))
             .bind("lambdaExpr");
     }
+};
 
-    clang::DiagnosticBuilder report(clang::ASTContext* context, const std::string& string,
-                                    clang::SourceLocation location) const
+/// Finds locations where CheckFileInfo is allocated on the stack.
+class RefcountingCheck : public clang::ast_matchers::MatchFinder::MatchCallback
+{
+public:
+    void run(const clang::ast_matchers::MatchFinder::MatchResult& result) override
     {
-        clang::DiagnosticsEngine& engine = context->getDiagnostics();
-        clang::DiagnosticIDs::Level level = clang::DiagnosticIDs::Level::Warning;
-        if (engine.getWarningsAsErrors())
-            level = clang::DiagnosticIDs::Level::Error;
-        std::string formatString = string + " [coplugin:capture]";
-        return engine.Report(location,
-                             engine.getDiagnosticIDs()->getCustomDiagID(level, formatString));
+        const clang::VarDecl* varDecl =
+            result.Nodes.getNodeAs<clang::VarDecl>("varDecl");
+
+        clang::SourceManager& sourceManager = result.Context->getSourceManager();
+        if (sourceManager.isInSystemHeader(varDecl->getLocation()))
+        {
+            return;
+        }
+
+        clang::SourceRange range(varDecl->getLocation());
+        clang::SourceLocation location(range.getBegin());
+        report(result.Context, "instance allocated on the stack, create it with std::shared_ptr",
+               location, "refcounting")
+            << range;
+    }
+
+    static clang::ast_matchers::DeclarationMatcher makeMatcher()
+    {
+        using namespace clang::ast_matchers;
+        return varDecl(hasType(namedDecl(hasName("CheckFileInfo")))).bind("varDecl");
     }
 };
+
 
 /// Builds a list of checks to be executed.
 class CheckRegistry
 {
 public:
-    CheckRegistry() { _finder.addMatcher(CaptureCheck::makeMatcher(), &_captureCheck); }
+    CheckRegistry()
+    {
+        _finder.addMatcher(CaptureCheck::makeMatcher(), &_captureCheck);
+        _finder.addMatcher(RefcountingCheck::makeMatcher(), &_refcountingCheck);
+    }
 
     std::unique_ptr<ASTConsumer> makeASTConsumer() { return _finder.newASTConsumer(); }
 
 private:
     clang::ast_matchers::MatchFinder _finder;
     CaptureCheck _captureCheck;
+    RefcountingCheck _refcountingCheck;
 };
 
 /// Connects CheckRegistry to an already existing compiler instance.

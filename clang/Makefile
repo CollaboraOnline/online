@@ -12,7 +12,8 @@ run:
 	clang++ -Werror -Xclang -load -Xclang ./plugin.so -Xclang -add-plugin -Xclang coplugin -c -o test/capture.o test/capture.cpp
 
 check:
-	clang++ -Werror -Xclang -verify -Xclang -load -Xclang ./plugin.so -Xclang -add-plugin -Xclang coplugin -c -o test/capture.o test/capture.cpp
+	clang++ -Werror -Xclang -verify -Xclang -load -Xclang ./plugin.so -Xclang -add-plugin -Xclang coplugin -c test/capture.cpp
+	clang++ -Werror -Xclang -verify -Xclang -load -Xclang ./plugin.so -Xclang -add-plugin -Xclang coplugin -c test/refcounting.cpp
 
 clean:
 	rm -f plugin.so plugin.o
