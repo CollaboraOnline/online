@@ -29,6 +29,7 @@
 #import "SigUtil.hpp"
 #import "Util.hpp"
 #import "Clipboard.hpp"
+#import "CoolURLSchemeHandler.h"
 
 #import "DocumentViewController.h"
 
@@ -94,7 +95,10 @@ static IMP standardImpOfInputAccessoryView = nil;
     [userContentController addScriptMessageHandlerWithReply:self contentWorld:[WKContentWorld pageWorld] name:@"clipboard"];
 
     configuration.userContentController = userContentController;
-
+    
+    CoolURLSchemeHandler * schemeHandler = [[CoolURLSchemeHandler alloc] initWithDocument:self.document];
+    [configuration setURLSchemeHandler:schemeHandler forURLScheme:@"cool"];
+    
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;
     self.webView.allowsLinkPreview = NO;
