@@ -24,6 +24,7 @@
 #include <cctype>
 
 #include <Poco/Base64Decoder.h>
+#include <Poco/Base64Encoder.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
@@ -1991,11 +1992,26 @@ bool ClientSession::handlePresentationInfo(const std::shared_ptr<Message>& paylo
 
                             if (!id.empty() && !url.empty())
                             {
+#if !MOBILEAPP
                                 std::string original = "{ \"id\" : \"" + id + "\", \"url\" : \"" + url + "\" }";
                                 docBroker->addEmbeddedMedia(id, original); // Capture the original message with internal URL.
 
                                 const std::string mediaUrl =
                                     Uri::encode(createPublicURI("media", id, false), "&");
+#else
+                                
+                                const std::ifstream media(url, std::ios::binary);
+
+                                std::stringstream ss;
+                                ss << "data:video/mp4;base64,";
+
+                                Poco::Base64Encoder encoder(ss);
+                                encoder.rdbuf()->setLineLength(0);
+                                encoder << media.rdbuf();
+                                encoder.close();
+                                
+                                const std::string mediaUrl = ss.str();
+#endif
                                 video->set("url", mediaUrl); // Replace the url with the public one.
                                 bModified = true;
                             }
