@@ -1233,7 +1233,7 @@ void WhiteBoxTests::testJsonUtilEscapeJSONValue()
 {
     constexpr auto testname = __func__;
 
-    const std::string in = "domain\\username";
+    constexpr std::string_view in = "domain\\username";
     const std::string expected = "domain\\\\username";
     LOK_ASSERT_EQUAL(JsonUtil::escapeJSONValue(in), expected);
 }
