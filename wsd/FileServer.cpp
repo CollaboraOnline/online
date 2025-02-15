@@ -943,6 +943,12 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             return;
         }
 
+        if (endPoint == "fetch-dic")
+        {
+            fetchDictionaries(request, message, socket);
+            return;
+        }
+
         // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end() &&
             FileHash.find(relPath + ".br") == FileHash.end())
@@ -2101,6 +2107,53 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
     auto httpSession = StorageConnectionManager::getHttpSession(sharedUri);
     httpSession->setFinishedHandler(std::move(finishedCallback));
     httpSession->asyncRequest(httpRequest, *COOLWSD::getWebServerPoll());
+}
+
+void FileServerRequestHandler::fetchDictionaries(const Poco::Net::HTTPRequest& request,
+                                                 Poco::MemoryInputStream& message,
+                                                 const std::shared_ptr<StreamSocket>& socket)
+{
+    Poco::Net::HTMLForm form(request, message);
+
+    const std::string& fileUrl = form.get("fileUrl", std::string());
+    const std::string& accessToken = form.get("accessToken", std::string());
+
+    if (fileUrl.empty() || accessToken.empty())
+    {
+        sendError(http::StatusCode::BadRequest, request, socket, "Failed to fetch dictionaries",
+                  "Missing fileUrl or accessToken in the payload");
+        return;
+    }
+
+    Poco::URI dicUrl(fileUrl);
+    dicUrl.addQueryParameter("access_token", accessToken);
+
+    const std::string& uriAnonym = COOLWSD::anonymizeUrl(dicUrl.toString());
+    Authorization auth(Authorization::Type::Token, accessToken);
+    auto httpRequest = StorageConnectionManager::createHttpRequest(dicUrl, auth);
+    httpRequest.setVerb(http::Request::VERB_GET);
+    httpRequest.header().set("Content-Type", "text/plain");
+
+    auto httpSession = StorageConnectionManager::getHttpSession(dicUrl);
+    auto httpResponse = httpSession->syncRequest(httpRequest);
+
+    if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+    {
+        std::ostringstream responseContent;
+        responseContent << httpResponse->getBody();
+        throw std::runtime_error(
+            "Integrator wopi call failed: " + httpResponse->statusLine().reasonPhrase() +
+            ". Response: " + responseContent.str());
+    }
+
+    std::string fileContent = httpResponse->getBody();
+
+    http::Response clientResponse(http::StatusCode::OK);
+    clientResponse.set("Content-Type", "text/plain; charset=utf-8");
+    clientResponse.set("Cache-Control", "no-cache");
+    clientResponse.setBody(fileContent);
+    socket->send(clientResponse);
+    LOG_DBG("Successfully fetched dictionary file from [" << uriAnonym << "]");
 }
 
 void FileServerRequestHandler::deleteWopiSettingConfigs(

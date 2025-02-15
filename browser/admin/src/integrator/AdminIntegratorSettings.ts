@@ -48,6 +48,7 @@ const API_ENDPOINTS = {
 		: '/browser/dist/upload-settings',
 	fetchSharedConfig: '/browser/dist/fetch-settings-config',
 	deleteSharedConfig: '/browser/dist/delete-settings-config',
+	fetchDictionary: 'browser/dist/fetch-dic',
 };
 
 const PATH = {
@@ -56,6 +57,225 @@ const PATH = {
 	browserSettingsUpload: () => settingConfigBasePath() + '/browsersetting/',
 	XcuUpload: () => settingConfigBasePath() + '/xcu/',
 };
+
+// TODO: Move wordbook to separate class/module
+
+interface DicFile {
+	headerType: string; // eg. "OOoUserDict1"
+	language: string; // the value after "lang:" (eg. "<none>")
+	dictType: string; // the value after "type:" (eg. "positive")
+	words: string[]; // list of dictionary words
+}
+
+// TODO: error handling for non parsed file - how we should handle it?
+function parseDicFile(content: string): DicFile {
+	const lines = content.split(/\r?\n/).filter((line) => line.trim() !== '');
+	const delimiterIndex = lines.findIndex((line) => line.trim() === '---');
+	if (delimiterIndex === -1) {
+		throw new Error('Invalid dictionary format: missing delimiter "---"');
+	}
+	if (delimiterIndex < 3) {
+		throw new Error(
+			'Invalid dictionary format: not enough header lines before delimiter',
+		);
+	}
+
+	const headerType = lines[0].trim();
+
+	const languageMatch = lines[1].trim().match(/^lang:\s*(.*)$/i);
+	const language = languageMatch ? languageMatch[1].trim() : '';
+
+	const typeMatch = lines[2].trim().match(/^type:\s*(.*)$/i);
+	const dictType = typeMatch ? typeMatch[1].trim() : '';
+
+	const words = lines
+		.slice(delimiterIndex + 1)
+		.filter((line) => line.trim() !== '');
+
+	return { headerType, language, dictType, words };
+}
+
+function buildDicFile(dic: DicFile): string {
+	const header = [
+		dic.headerType.trim(),
+		`lang: ${dic.language}`,
+		`type: ${dic.dictType}`,
+	];
+	return [...header, '---', ...dic.words].join('\n');
+}
+
+function updateWordList(listEl: HTMLElement, dic: DicFile): void {
+	listEl.innerHTML = '';
+	dic.words.forEach((word, index) => {
+		// TODO IDEA: Extract list as components?
+
+		const li = document.createElement('li');
+		li.classList.add('list-item__wrapper');
+
+		const listItemDiv = document.createElement('div');
+		listItemDiv.classList.add('list-item');
+
+		const wordContainer = document.createElement('div');
+		wordContainer.classList.add('list-item__anchor');
+
+		const wordContentDiv = document.createElement('div');
+		wordContentDiv.classList.add('list-item-content');
+
+		const wordTextDiv = document.createElement('div');
+		wordTextDiv.classList.add('list-item-content__main');
+		const wordNameDiv = document.createElement('div');
+		wordNameDiv.classList.add('list-item-content__name');
+		wordNameDiv.textContent = word;
+
+		wordTextDiv.appendChild(wordNameDiv);
+		wordContentDiv.appendChild(wordTextDiv);
+		wordContainer.appendChild(wordContentDiv);
+
+		listItemDiv.appendChild(wordContainer);
+
+		const delButton = document.createElement('button');
+		delButton.type = 'button';
+		delButton.classList.add(
+			'button',
+			'button--size-normal',
+			'button--icon-only',
+			'button--vue-secondary',
+			'delete-icon',
+		);
+		delButton.innerHTML = `
+		<span class="button__wrapper">
+		  <span aria-hidden="true" class="button__icon">
+			<span aria-hidden="true" role="img" class="material-design-icon">
+			  <svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24">
+				<path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19
+						  A2,2 0 0,0 8,21H16
+						  A2,2 0 0,0 18,19V7H6V19Z"></path>
+			  </svg>
+			</span>
+		  </span>
+		</span>
+	  `;
+		delButton.addEventListener('click', () => {
+			dic.words.splice(index, 1);
+			updateWordList(listEl, dic);
+		});
+		listItemDiv.appendChild(delButton);
+
+		li.appendChild(listItemDiv);
+		listEl.appendChild(li);
+	});
+}
+
+function openDicEditor(fileName: string, dic: DicFile): void {
+	const modal = document.createElement('div');
+	modal.className = 'modal';
+
+	const modalContent = document.createElement('div');
+	modalContent.className = 'modal-content';
+
+	const titleEl = document.createElement('h2');
+	titleEl.textContent = `${fileName} (Edit)`;
+	titleEl.style.textAlign = 'center';
+	modalContent.appendChild(titleEl);
+
+	const inputContainer = document.createElement('div');
+	inputContainer.className = 'dic-input-container';
+	inputContainer.style.margin = '16px 0';
+
+	const newWordInput = document.createElement('input');
+	newWordInput.type = 'text';
+	newWordInput.placeholder = 'Enter new word';
+	newWordInput.className = 'input-field__input';
+	inputContainer.appendChild(newWordInput);
+
+	const addButton = document.createElement('button');
+	addButton.textContent = 'Add';
+	addButton.className = 'button button--vue-secondary';
+	addButton.style.marginLeft = '8px';
+	addButton.addEventListener('click', () => {
+		const newWord = newWordInput.value.trim();
+		if (newWord) {
+			dic.words.push(newWord);
+			updateWordList(wordList, dic);
+			newWordInput.value = '';
+		}
+	});
+	inputContainer.appendChild(addButton);
+
+	modalContent.appendChild(inputContainer);
+
+	const wordList = document.createElement('ul');
+	wordList.id = 'dicWordList';
+	updateWordList(wordList, dic);
+	modalContent.appendChild(wordList);
+
+	const buttonContainer = document.createElement('div');
+	buttonContainer.className = 'dic-button-container';
+	buttonContainer.style.textAlign = 'center';
+	buttonContainer.style.marginTop = '24px';
+
+	const cancelButton = document.createElement('button');
+	cancelButton.textContent = 'Cancel';
+	cancelButton.className = 'button button--vue-tertiary';
+	cancelButton.style.marginRight = '12px';
+	cancelButton.addEventListener('click', () => {
+		document.body.removeChild(modal);
+	});
+	buttonContainer.appendChild(cancelButton);
+
+	const submitButton = document.createElement('button');
+	submitButton.textContent = 'Submit';
+	submitButton.className = 'button button--vue-primary';
+	submitButton.addEventListener('click', async () => {
+		console.debug('dic', dic);
+		const updatedContent = buildDicFile(dic);
+		console.debug('Updated Dictionary Content:\n', updatedContent);
+		await updateDicFile(fileName, updatedContent);
+		document.body.removeChild(modal);
+	});
+
+	buttonContainer.appendChild(submitButton);
+
+	modalContent.appendChild(buttonContainer);
+	modal.appendChild(modalContent);
+	document.body.appendChild(modal);
+}
+
+async function updateDicFile(filename: string, content: string) {
+	const file = new File([content], filename, { type: 'text/plain' });
+	await uploadFile(PATH.wordBookUpload(), file);
+}
+
+async function fetchDicFile(fileId: string): Promise<void> {
+	const formData = new FormData();
+	formData.append('fileUrl', fileId);
+	formData.append('accessToken', window.accessToken ?? '');
+	try {
+		const apiUrl = API_ENDPOINTS.fetchDictionary;
+
+		const response = await fetch(apiUrl, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${window.accessToken}`,
+			},
+			body: formData,
+		});
+
+		if (!response.ok) {
+			throw new Error(`Upload failed: ${response.statusText}`);
+		}
+
+		let textValue = await response.text();
+		console.debug('textValue: ', textValue);
+
+		const dic = parseDicFile(textValue);
+		const fileName = getFilename(fileId, false);
+		openDicEditor(fileName, dic);
+	} catch (error: unknown) {
+		const message = error instanceof Error ? error.message : 'Unknown error';
+		console.error(`Error uploading file: ${message}`);
+	}
+}
 
 function settingConfigBasePath(): string {
 	return '/settings/' + getConfigType();
@@ -165,7 +385,6 @@ function insertConfigSections(): void {
 		}
 
 		const sectionEl = createConfigSection(cfg);
-
 		const fileInput = sectionEl.querySelector<HTMLInputElement>(
 			`#${cfg.inputId}`,
 		);
@@ -202,7 +421,6 @@ function initWindowVariables(): void {
 	window.cssVars = element.dataset.cssVars;
 	if (window.cssVars) {
 		window.cssVars = atob(window.cssVars);
-		console.log('cssVars: ' + window.cssVars);
 		const styleEl = document.createElement('style');
 		styleEl.setAttribute('id', 'dynamic-css-vars');
 		styleEl.textContent = window.cssVars;
@@ -234,6 +452,7 @@ function initWindowVariables(): void {
 	}
 }
 
+// TODO: Upload dic file separately? We shouldn't allow to upload headers
 async function uploadFile(filePath: string, file: File): Promise<void> {
 	const formData = new FormData();
 	formData.append('file', file);
@@ -436,6 +655,34 @@ function populateList(
 		});
 
 		extraActionsDiv.append(downloadBtn, deleteBtn);
+
+		// Add an "Edit" button for dic file only
+		if (category === '/wordbook') {
+			const editBtn = document.createElement('button');
+			editBtn.type = 'button';
+			editBtn.classList.add(
+				'button',
+				'button--size-normal',
+				'button--icon-only',
+				'button--vue-secondary',
+				'edit-icon',
+			);
+			editBtn.innerHTML = `
+				<span class="button__wrapper">
+					<span aria-hidden="true" class="button__icon">
+						<span aria-hidden="true" role="img" class="material-design-icon">
+							<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24">
+								<path d="M3 17.25V21h3.75l11-11.03-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+							</svg>
+						</span>
+					</span>
+				</span>
+			`;
+			editBtn.addEventListener('click', async () => {
+				await fetchDicFile(item.uri);
+			});
+			extraActionsDiv.appendChild(editBtn);
+		}
 
 		listItemDiv.append(anchor, extraActionsDiv);
 		li.appendChild(listItemDiv);
