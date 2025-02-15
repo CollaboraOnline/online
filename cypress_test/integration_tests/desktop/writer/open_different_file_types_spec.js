@@ -1,5 +1,4 @@
 /* global describe it cy require */
-const { assertImageSize  } = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
@@ -35,7 +34,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 			});
 
 		//assert image
-		assertImageSize(480, 122);
+		helper.assertImageSize(480, 122);
 	}
 
 	it('Open doc file', { defaultCommandTimeout: 60000 }, function() {

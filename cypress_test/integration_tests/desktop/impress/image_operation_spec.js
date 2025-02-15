@@ -1,7 +1,7 @@
 /* global describe it require cy beforeEach */
 
 var helper = require('../../common/helper');
-var { insertImage, insertVideo, deleteImage, assertImageSize } = require('../../common/desktop_helper');
+var { insertImage, insertVideo, deleteImage } = require('../../common/desktop_helper');
 var desktopHelper = require('../../common/desktop_helper');
 var { triggerNewSVGForShapeInTheCenter } = require('../../common/impress_helper');
 
@@ -31,7 +31,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		desktopHelper.switchUIToNotebookbar();
 		insertImage();
 		//when Keep ratio is unchecked
-		assertImageSize(438, 111);
+		helper.assertImageSize(438, 111);
 
 		//sidebar needs more time
 		cy.cGet('#sidebar-panel').should('be.visible').wait(2000).scrollTo('bottom');
@@ -46,7 +46,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		triggerNewSVGForShapeInTheCenter();
 
-		assertImageSize(463, 185);
+		helper.assertImageSize(463, 185);
 
 		//Keep ratio checked
 		//sidebar needs more time
@@ -65,6 +65,6 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		triggerNewSVGForShapeInTheCenter();
 
-		assertImageSize(579, 232);
+		helper.assertImageSize(579, 232);
 	});
 });
