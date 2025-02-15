@@ -19,6 +19,32 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		desktopHelper.deleteImage();
 	});
 
+	it('Crop Image', function() {
+		desktopHelper.insertImage('calc');
+
+		helper.assertImageSize(248, 63);
+
+		cy.cGet('#test-div-shape-handle-3').should('exist');
+		cy.cGet('#Crop').should('be.visible');
+		cy.cGet('#Crop').click();
+
+		cy.cGet('#test-div-shape-handle-3').then(($handle) => {
+			const rect = $handle[0].getBoundingClientRect();
+			const startX = rect.left + rect.width / 2;
+			const startY = rect.top + rect.height / 2;
+			const moveX = 50;
+
+			cy.cGet('body').realMouseDown({ x: startX, y: startY });
+
+			cy.cGet('body').realMouseMove(startX + moveX, startY);
+
+			cy.cGet('body').realMouseUp();
+		});
+
+		cy.wait(1000);
+		helper.assertImageSize(198, 63);
+	});
+
 	it.skip('Resize image when keep ratio option enabled and disabled', function() {
 		desktopHelper.insertImage('calc');
 		//when Keep ratio is unchecked
