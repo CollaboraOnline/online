@@ -355,7 +355,8 @@ private:
 
 public:
     UnitWOPIReadOnly(Scenario scenario, bool disconnect)
-        : WopiTestServer("UnitWOPIReadOnly_" + toStringShort(scenario) + (disconnect ? "_X" : ""))
+        : WopiTestServer("UnitWOPIReadOnly_" + std::string(nameShort(scenario)) +
+                         (disconnect ? "_X" : ""))
         , _phase(Phase::Load)
         , _scenario(scenario)
         , _disconnect(disconnect)

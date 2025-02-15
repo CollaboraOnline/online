@@ -59,11 +59,6 @@
                "Enum value is out of range.");                                                     \
         return NAME##_names[static_cast<int>(e)];                                                  \
     }                                                                                              \
-    /* Returns the state name only, without the namespace, as a std::string. */                    \
-    [[maybe_unused]] static inline std::string toStringShort(NAME e)                                                \
-    {                                                                                              \
-        return nameShort(e);                                                                       \
-    }                                                                                              \
     /* Returns the state name with the namespace. */                                               \
     [[maybe_unused]] static inline const char* name(NAME e)                                        \
     {                                                                                              \
