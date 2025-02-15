@@ -34,7 +34,7 @@ L.Control.ContextMenu = L.Control.extend({
 					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
 					  'OpenHyperlinkOnCursor', 'EditHyperlink', 'CopyHyperlinkLocation', 'RemoveHyperlink',
 					  'AnchorMenu', 'SetAnchorToPage', 'SetAnchorToPara', 'SetAnchorAtChar',
-					  'SetAnchorToChar', 'SetAnchorToFrame',
+					  'SetAnchorToChar', 'SetAnchorToFrame', 'Crop',
 					  'WrapMenu', 'WrapOff', 'WrapOn', 'WrapIdeal', 'WrapLeft', 'WrapRight', 'WrapThrough',
 					  'WrapThroughTransparencyToggle', 'WrapContour', 'WrapAnchorOnly',
 					  'ConvertMenu', 'ChangeBezier',
@@ -65,7 +65,7 @@ L.Control.ContextMenu = L.Control.extend({
 				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes',
 				   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph', 'TableDialog',
 				   'SpellCheckIgnore', 'FrameDialog', 'UnfloatFrame', 'ContentControlProperties', 'DeleteContentControl',
-				   'AddToWordbook', 'Crop'],
+				   'AddToWordbook'],
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'InsertCell', 'DeleteCell',
 				      'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable',

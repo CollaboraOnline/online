@@ -2497,6 +2497,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Crop'),
+				'command': '.uno:Crop',
+				'context': 'Graphic'
+			},
 		];
 
 		return this.getTabPage('Draw', content);
