@@ -11,29 +11,25 @@
 
 #include <config.h>
 
-#include <test/lokassert.hpp>
-#include <cppunit/TestAssert.h>
-#include <cstddef>
-
-#include <common/Anonymizer.hpp>
-#include <Auth.hpp>
-#include <ChildSession.hpp>
 #include <Common.hpp>
 #include <FileUtil.hpp>
-#include <Kit.hpp>
+#include <JsonUtil.hpp>
 #include <Protocol.hpp>
+#include <TileCache.hpp>
 #include <TileDesc.hpp>
 #include <Util.hpp>
-#include <JsonUtil.hpp>
-
+#include <common/Anonymizer.hpp>
 #include <common/Message.hpp>
 #include <common/ThreadPool.hpp>
-#include <wsd/FileServer.hpp>
+
+#include <test/lokassert.hpp>
+
+#include <cppunit/TestAssert.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include <chrono>
+#include <cstddef>
 #include <fstream>
-
-#include <cppunit/extensions/HelperMacros.h>
 
 /// WhiteBox unit-tests.
 class WhiteBoxTests : public CPPUNIT_NS::TestFixture
