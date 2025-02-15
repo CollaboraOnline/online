@@ -20,6 +20,7 @@
 #include <Util.hpp>
 #include <common/Anonymizer.hpp>
 #include <common/Message.hpp>
+#include <common/StateEnum.hpp>
 #include <common/ThreadPool.hpp>
 
 #include <test/lokassert.hpp>
@@ -30,6 +31,7 @@
 #include <chrono>
 #include <cstddef>
 #include <fstream>
+#include <sstream>
 
 /// WhiteBox unit-tests.
 class WhiteBoxTests : public CPPUNIT_NS::TestFixture
@@ -55,6 +57,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testStringCompare);
     CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST(testJsonUtilEscapeJSONValue);
+    CPPUNIT_TEST(testStateEnum);
     CPPUNIT_TEST(testFindInVector);
     CPPUNIT_TEST(testThreadPool);
     CPPUNIT_TEST_SUITE_END();
@@ -79,6 +82,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testStringCompare();
     void testSafeAtoi();
     void testJsonUtilEscapeJSONValue();
+    void testStateEnum();
     void testFindInVector();
     void testThreadPool();
 
@@ -985,6 +989,53 @@ void WhiteBoxTests::testJsonUtilEscapeJSONValue()
     constexpr std::string_view in = "domain\\username";
     const std::string expected = "domain\\\\username";
     LOK_ASSERT_EQUAL(JsonUtil::escapeJSONValue(in), expected);
+}
+
+STATE_ENUM(TestState, First, Second, Last);
+void WhiteBoxTests::testStateEnum()
+{
+    constexpr auto testname = __func__;
+
+    LOK_ASSERT_EQUAL_STR("TestState::First", name(TestState::First));
+    LOK_ASSERT_EQUAL_STR("TestState::Second", name(TestState::Second));
+    LOK_ASSERT_EQUAL_STR("TestState::Last", name(TestState::Last));
+
+    LOK_ASSERT_EQUAL_STR("First", nameShort(TestState::First));
+    LOK_ASSERT_EQUAL_STR("Second", nameShort(TestState::Second));
+    LOK_ASSERT_EQUAL_STR("Last", nameShort(TestState::Last));
+
+    TestState e = TestState::First;
+
+    e = TestState::First;
+    LOK_ASSERT_EQUAL_STR("TestState::First", name(e));
+    e = TestState::Second;
+    LOK_ASSERT_EQUAL_STR("TestState::Second", name(e));
+    e = TestState::Last;
+    LOK_ASSERT_EQUAL_STR("TestState::Last", name(e));
+
+    e = TestState::First;
+    LOK_ASSERT_EQUAL_STR("First", nameShort(e));
+    e = TestState::Second;
+    LOK_ASSERT_EQUAL_STR("Second", nameShort(e));
+    e = TestState::Last;
+    LOK_ASSERT_EQUAL_STR("Last", nameShort(e));
+
+    std::ostringstream oss;
+
+    e = TestState::First;
+    oss << e;
+    LOK_ASSERT_EQUAL_STR("TestState::First", oss.str());
+    oss.str("");
+
+    e = TestState::Second;
+    oss << e;
+    LOK_ASSERT_EQUAL_STR("TestState::Second", oss.str());
+    oss.str("");
+
+    e = TestState::Last;
+    oss << e;
+    LOK_ASSERT_EQUAL_STR("TestState::Last", oss.str());
+    oss.str("");
 }
 
 void WhiteBoxTests::testFindInVector()
