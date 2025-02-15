@@ -10,6 +10,7 @@
 #include <iosfwd>
 #include <type_traits>
 #include <string>
+#include <string_view>
 
 /// Enum macro specifically for state-machines.
 /// Has several limitations, some intentional. For example,
@@ -52,30 +53,30 @@
 #define STATE_ENUM(NAME, ...)                                                                      \
     enum class NAME : char;                                                                        \
     /* Returns the state name only, without the namespace. */                                      \
-    static inline const char* nameShort(NAME e)                                                    \
+    [[maybe_unused]] static inline constexpr std::string_view nameShort(NAME e) noexcept           \
     {                                                                                              \
-        static const char* const NAME##_names[] = { FOR_EACH(STRINGIFY1, NAME, __VA_ARGS__) };     \
+        constexpr std::string_view NAME##_names[] = { FOR_EACH(STRINGIFY1, NAME, __VA_ARGS__) };   \
         assert(static_cast<unsigned>(e) < N_ELEMENTS(NAME##_names) &&                              \
                "Enum value is out of range.");                                                     \
         return NAME##_names[static_cast<int>(e)];                                                  \
     }                                                                                              \
     /* Returns the state name with the namespace. */                                               \
-    [[maybe_unused]] static inline const char* name(NAME e)                                        \
+    [[maybe_unused]] static inline constexpr std::string_view name(NAME e) noexcept                \
     {                                                                                              \
-        static const char* const NAME##_names[] = { FOR_EACH(STRINGIFY2, NAME, __VA_ARGS__) };     \
+        constexpr std::string_view NAME##_names[] = { FOR_EACH(STRINGIFY2, NAME, __VA_ARGS__) };   \
         assert(static_cast<unsigned>(e) < N_ELEMENTS(NAME##_names) &&                              \
                "Enum value is out of range.");                                                     \
         return NAME##_names[static_cast<int>(e)];                                                  \
     }                                                                                              \
-    [[maybe_unused]] static const size_t NAME##Max = COUNT_ARGS(__VA_ARGS__);                      \
+    [[maybe_unused]] static constexpr size_t NAME##Max = COUNT_ARGS(__VA_ARGS__);                  \
     enum class NAME : char                                                                         \
     {                                                                                              \
         __VA_ARGS__                                                                                \
     }
 
 /// Support seamless serialization of STATE_ENUM to ostream.
-template <typename T, typename std::enable_if<
-                          std::is_same<decltype(name(T())), const char*>::value>::type* = nullptr>
+template <typename T, typename std::enable_if<std::is_same<
+                          decltype(name(T())), std::string_view>::value>::type* = nullptr>
 inline std::ostream& operator<<(std::ostream& os, const T state)
 {
     os << name(state);
