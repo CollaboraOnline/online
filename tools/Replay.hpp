@@ -268,7 +268,7 @@ struct Stats {
 
     void endPhase(Log::Phase phase)
     {
-        std::string phaseAsString = Log::toStringShort(phase);
+        const std::string phaseAsString{ nameShort(phase) };
 
         const auto now = std::chrono::steady_clock::now();
         const size_t runMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _start).count();
