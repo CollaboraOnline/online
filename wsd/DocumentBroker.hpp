@@ -587,7 +587,7 @@ public:
 private:
     /// Checks if we really need to request tile rendering or it's in progress
     /// returns true if all tiles are of the same part and size so can be grouped
-    inline bool requestTileRendering(TileDesc& tile, bool forceKeyFrame,
+    inline bool requestTileRendering(TileDesc& tile, bool forceKeyFrame, bool bumpVersion,
                                      const std::chrono::steady_clock::time_point &now,
                                      std::vector<TileDesc>& tilesNeedsRendering,
                                      const std::shared_ptr<ClientSession>& session);
