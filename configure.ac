@@ -1212,10 +1212,10 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE([
     #endif
 ])],
                     [AC_MSG_RESULT([yes])
-                    AC_DEFINE([HAVE_CLANG],true,[whether the C++ compiler is clang])],
+                    AC_DEFINE([HAVE_CLANG],1,[whether the C++ compiler is clang]) HAVE_CLANG=true],
                     [AC_MSG_RESULT([no])
-                    AC_DEFINE([HAVE_CLANG],false,[whether the C++ compiler is clang])])
-AM_CONDITIONAL([HAVE_CLANG], [test "$HAVE_CLANG" = "true"])
+                    AC_DEFINE([HAVE_CLANG],0,[whether the C++ compiler is clang])])
+AM_CONDITIONAL([HAVE_CLANG], [$HAVE_CLANG])
 AC_SUBST(HAVE_CLANG)
 
 CXXFLAGS="$CXXFLAGS $CXXFLAGS_CXXSTD"
