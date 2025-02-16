@@ -2724,8 +2724,8 @@ namespace
 
 std::string extractCertificate(const std::string & certificate)
 {
-    const std::string header("-----BEGIN CERTIFICATE-----");
-    const std::string footer("-----END CERTIFICATE-----");
+    constexpr std::string_view header("-----BEGIN CERTIFICATE-----");
+    constexpr std::string_view footer("-----END CERTIFICATE-----");
 
     size_t pos1 = certificate.find(header);
     if (pos1 == std::string::npos)

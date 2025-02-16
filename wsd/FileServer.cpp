@@ -400,8 +400,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     {
         Poco::URI requestUri(request.getURI());
         const Poco::Path path = requestUri.getPath();
-        const std::string prefix = "/wopi/files";
-        const std::string suffix = "/contents";
+        constexpr std::string_view prefix = "/wopi/files";
+        constexpr std::string_view suffix = "/contents";
         std::string localPath;
         if (path.toString().ends_with(suffix))
         {
