@@ -37,6 +37,7 @@
 #include <androidapp.hpp>
 #endif
 
+#include <wasm/base64.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
@@ -68,18 +69,6 @@ using Poco::URI;
 using namespace COOLProtocol;
 
 bool ChildSession::NoCapsForKit = false;
-
-namespace {
-
-std::vector<unsigned char> decodeBase64(const std::string & inputBase64)
-{
-    std::istringstream stream(inputBase64);
-    Poco::Base64Decoder base64Decoder(stream);
-    std::istreambuf_iterator<char> eos;
-    return std::vector<unsigned char>(std::istreambuf_iterator<char>(base64Decoder), eos);
-}
-
-}
 
 namespace {
 
@@ -1784,11 +1773,12 @@ bool ChildSession::insertFile(const StringVector& tokens)
         else
         {
             assert(type == "graphic" || type == "multimedia");
-            auto binaryData = decodeBase64(data);
+            std::string binaryData;
+            macaron::Base64::Decode(data, binaryData);
             const std::string tempFile = FileUtil::createRandomTmpDir() + '/' + name;
             std::ofstream fileStream;
             fileStream.open(tempFile);
-            fileStream.write(reinterpret_cast<char*>(binaryData.data()), binaryData.size());
+            fileStream.write(binaryData.data(), binaryData.size());
             fileStream.close();
             url = "file://" + tempFile;
         }
@@ -2763,10 +2753,11 @@ bool ChildSession::askSignatureStatus(const char* buffer, int length, const Stri
                 return false;
 
             std::string chainCertificate = rChainPtr;
-            std::vector<unsigned char> binaryChainCertificate = decodeBase64(extractCertificate(chainCertificate));
+            std::string binaryChainCertificate;
+            macaron::Base64::Decode(extractCertificate(chainCertificate), binaryChainCertificate);
 
             bResult = getLOKitDocument()->addCertificate(
-                binaryChainCertificate.data(),
+                reinterpret_cast<const unsigned char*>(binaryChainCertificate.data()),
                 binaryChainCertificate.size());
 
             if (!bResult)
