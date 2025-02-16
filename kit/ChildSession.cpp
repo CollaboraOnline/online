@@ -3826,7 +3826,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         });
 #else
         // Register download id -> URL mapping in the DocumentBroker
-        auto url = std::string("../../") + payload.substr(payload.find_last_of("/"));
+        auto url = std::string("../../") + payload.substr(payload.find_last_of('/'));
         auto downloadId = Util::rng::getFilename(64);
         std::string docBrokerMessage = "registerdownload: downloadid=" + downloadId + " url=" + url + " clientid=" + getId();
         _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
