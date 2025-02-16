@@ -17,7 +17,7 @@ endif
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\"$(DIST_FOLDER)\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit \
 	-I${top_srcdir} -I${top_srcdir}/test \
-	-pthread -DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
+	-DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
 	-DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
 	-DCOOLWSD_LOGLEVEL='"@COOLWSD_LOGLEVEL@"' \
 	-DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
@@ -113,6 +113,7 @@ AM_LDFLAGS = -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS) $(ZSTD_LIBS) 
 
 # Clang's linker doesn't like -pthread.
 if !HAVE_CLANG
+AM_CXXFLAGS += -pthread
 AM_LDFLAGS += -pthread
 endif
 
