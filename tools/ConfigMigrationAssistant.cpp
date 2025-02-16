@@ -22,7 +22,6 @@
 #include <Poco/AutoPtr.h>
 
 using Poco::Util::XMLConfiguration;
-using Poco::Util::AbstractConfiguration;
 
 static const std::string NET_POST_ALLOW_HOST = ".net.post_allow.host";
 static const std::string STORAGE_WOPI_HOST = ".storage.wopi.host";
