@@ -4523,7 +4523,7 @@ void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::s
         LOG_ERR("Could not find matching session to handle clipboard request for " << viewId << " tag: " << tag);
 }
 
-void DocumentBroker::handleMediaRequest(std::string range,
+void DocumentBroker::handleMediaRequest(const std::string_view range,
                                         const std::shared_ptr<Socket>& socket,
                                         const std::string& tag)
 {
@@ -4569,7 +4569,7 @@ void DocumentBroker::handleMediaRequest(std::string range,
 #endif
 
             auto session = std::make_shared<http::server::Session>();
-            session->asyncUpload(path, "video/mp4", std::move(range));
+            session->asyncUpload(path, "video/mp4", range);
             streamSocket->setHandler(std::static_pointer_cast<ProtocolHandlerInterface>(session));
         }
     }
