@@ -3944,7 +3944,7 @@ void LogUiCommands::logSaveLoad(std::string cmd, const std::string & path, std::
     uiLogLine._timeStart = timeStart;
     uiLogLine._timeEnd = std::chrono::steady_clock::now();
     uiLogLine._repeat = 1;
-    uiLogLine._cmd = cmd;
+    uiLogLine._cmd = std::move(cmd);
 
     std::size_t size = 0;
     const auto st = FileUtil::Stat(path);
