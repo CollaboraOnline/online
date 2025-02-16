@@ -93,7 +93,7 @@ static std::string flush()
     else if (loggingCallback != nullptr)
         loggingCallback(loggingBuffer.str());
     loggingBuffer.str("");
-    return "";
+    return std::string();
 }
 
 #ifdef __ANDROID__
