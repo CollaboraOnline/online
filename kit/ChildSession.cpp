@@ -18,12 +18,6 @@
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 
-#include <climits>
-#include <fstream>
-#include <memory>
-#include <sstream>
-#include <string_view>
-
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
@@ -53,12 +47,19 @@
 #include "KitHelper.hpp"
 #include <Png.hpp>
 #include <Clipboard.hpp>
-#include <string>
 #include <CommandControl.hpp>
 
 #ifdef IOS
 #include "DocumentViewController.h"
 #endif
+
+#include <climits>
+#include <fstream>
+#include <memory>
+#include <sstream>
+#include <string>
+#include <string_view>
+#include <utility>
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
