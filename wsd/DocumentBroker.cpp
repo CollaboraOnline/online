@@ -1660,7 +1660,7 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
             for (const auto& fileName : fileNames)
             {
                 std::string filePath = searchDir;
-                filePath.append("/");
+                filePath.push_back('/');
                 filePath.append(fileName);
                 std::filesystem::file_time_type ts = std::filesystem::last_write_time(filePath, ec);
                 if (ec)
@@ -4087,7 +4087,7 @@ void DocumentBroker::uploadPresetsToWopiHost(const Authorization& auth)
     for (const auto& fileName : fileNames)
     {
         std::string fileJailPath = searchDir;
-        fileJailPath.append("/");
+        fileJailPath.push_back('/');
         fileJailPath.append(fileName);
         std::filesystem::file_time_type currentTimestamp =
             std::filesystem::last_write_time(fileJailPath, ec);

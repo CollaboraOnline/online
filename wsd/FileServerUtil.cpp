@@ -160,9 +160,9 @@ std::string PreProcessedFile::substitute(const std::unordered_map<std::string, s
                     // Leave original variable as-is.
                     if (seg.first == SegmentType::Variable)
                     {
-                        recon.append("%");
+                        recon.push_back('%');
                         recon.append(seg.second);
-                        recon.append("%");
+                        recon.push_back('%');
                     }
                     else if (seg.first == SegmentType::CommentedVariable)
                     {

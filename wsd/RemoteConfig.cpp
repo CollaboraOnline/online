@@ -694,7 +694,7 @@ std::string RemoteAssetConfigPoll::removeTemplate(const std::string& uri,
     const std::string filename = path.substr(path.find_last_of('/') + 1);
     std::string assetFile;
     assetFile.append(tmpPath);
-    assetFile.append("/");
+    assetFile.push_back('/');
     assetFile.append(filename);
     FileUtil::removeFile(assetFile);
     return assetFile;

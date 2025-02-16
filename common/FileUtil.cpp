@@ -661,7 +661,7 @@ namespace FileUtil
         {
             std::string fullpath(path);
             if (!fullpath.ends_with("/"))
-                fullpath.append("/");
+                fullpath.push_back('/');
             fullpath.append(f->d_name);
 
             struct stat statbuf;
