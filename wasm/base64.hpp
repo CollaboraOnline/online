@@ -37,7 +37,8 @@ namespace macaron {
 class Base64 {
  public:
 
-  static std::string Encode(const std::string& data) {
+  static std::string Encode(const std::string_view data)
+  {
     static constexpr char sEncodingTable[] = {
       'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
       'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -77,7 +78,8 @@ class Base64 {
     return ret;
   }
 
-  static std::string Decode(const std::string& input, std::string& out) {
+  static std::string Decode(const std::string_view input, std::string& out)
+  {
     static constexpr unsigned char kDecodingTable[] = {
       64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
       64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
