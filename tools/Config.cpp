@@ -120,7 +120,7 @@ bool Config::SupportKeyStringProvided = false;
 std::uint64_t Config::AnonymizationSalt = 0;
 bool Config::AnonymizationSaltProvided = false;
 
-int MigrateConfig(std::string, std::string,  bool);
+int MigrateConfig(const std::string&, const std::string&, bool);
 
 void Config::displayHelp()
 {
