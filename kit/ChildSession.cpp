@@ -3343,7 +3343,7 @@ std::string ChildSession::getBlockedCommandType(std::string command)
         CommandControl::LockManager::getLockedCommandList().end())
         return "locked";
 
-    return "";
+    return std::string();
 }
 #endif
 
