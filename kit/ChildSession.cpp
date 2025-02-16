@@ -2726,15 +2726,13 @@ std::string extractCertificate(const std::string & certificate)
     const std::string header("-----BEGIN CERTIFICATE-----");
     const std::string footer("-----END CERTIFICATE-----");
 
-    std::string result;
-
     size_t pos1 = certificate.find(header);
     if (pos1 == std::string::npos)
-        return result;
+        return std::string();
 
     size_t pos2 = certificate.find(footer, pos1 + 1);
     if (pos2 == std::string::npos)
-        return result;
+        return std::string();
 
     pos1 = pos1 + header.length();
     pos2 = pos2 - pos1;
