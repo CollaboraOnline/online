@@ -52,7 +52,8 @@ L.Control.Notebookbar = L.Control.extend({
 
 		this.loadTab(this.getFullJSON(this.HOME_TAB_ID));
 
-		app.events.on('contextchange', this.onContextChange.bind(this));
+		this.onContextChange = this.onContextChange.bind(this);
+		app.events.on('contextchange', this.onContextChange);
 		this.map.on('notebookbar', this.onNotebookbar, this);
 		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
@@ -114,6 +115,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.off('notebookbar');
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 		this.map.off('jsdialogaction', this.onJSAction, this);
+		app.events.off('contextchange', this.onContextChange);
 		$('.main-nav #document-header').remove();
 		$('.main-nav').removeClass('hasnotebookbar');
 		$('#toolbar-wrapper').removeClass('hasnotebookbar');
