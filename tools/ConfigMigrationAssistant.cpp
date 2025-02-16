@@ -259,7 +259,8 @@ void PostProcess(XMLConfiguration &targetConfig)
     }
 }
 
-int MigrateConfig(std::string oldConfigFile, std::string newConfigFile, bool write) {
+int MigrateConfig(const std::string& oldConfigFile, const std::string& newConfigFile, bool write)
+{
     PreProcess();
     Poco::AutoPtr<XMLConfiguration> oldXMLConfig(new XMLConfiguration(oldConfigFile));
     Poco::AutoPtr<XMLConfiguration> newXMLConfig(new XMLConfiguration(newConfigFile));
