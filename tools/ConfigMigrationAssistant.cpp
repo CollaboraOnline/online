@@ -61,7 +61,7 @@ void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &target
     }
     if (subKeys.empty())
     {
-        const std::string sourceElement = sourceConfig.getString(sourceLevel);
+        std::string sourceElement = sourceConfig.getString(sourceLevel);
         // Need to handle keys pointing to multiple elements separately, refer to multiElems
         const std::string commonKeyPart = sourceLevel.find('[') != std::string::npos
                                               ? sourceLevel.substr(0, sourceLevel.find('['))
