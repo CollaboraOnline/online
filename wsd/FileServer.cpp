@@ -344,14 +344,15 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         }
 
         LocalFileInfo() = delete;
-        LocalFileInfo(const std::string &lPath, const std::string &fName)
+        LocalFileInfo(std::string lPath, std::string fName)
+            : localPath(std::move(lPath))
+            , fileName(std::move(fName))
         {
-            fileName = fName;
-            localPath = lPath;
             const FileUtil::Stat stat(localPath);
             size = std::to_string(stat.size());
             fileLastModifiedTime = stat.modifiedTimepoint();
         }
+
     private:
         // Internal tracking of known files: to store various data
         // on files - rather than writing it back to the file-system.
