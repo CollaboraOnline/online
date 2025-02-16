@@ -1787,7 +1787,7 @@ namespace {
         static std::string generateKey()
         {
             auto random = Util::rng::getBytes(16);
-            return macaron::Base64::Encode(std::string(random.begin(), random.end()));
+            return macaron::Base64::Encode(std::string_view(random.data(), random.size()));
         }
     };
 }
