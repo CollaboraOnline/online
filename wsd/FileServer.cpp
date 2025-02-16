@@ -791,7 +791,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
                 LOG_DBG("Saving uploaded file[" << fileName << "] to directory[" << dirPath << ']');
                 std::ofstream outfile;
-                dirPath.append("/");
+                dirPath.push_back('/');
                 dirPath.append(fileName);
                 outfile.open(dirPath, std::ofstream::binary);
                 outfile.write(buffer.data(), size);
