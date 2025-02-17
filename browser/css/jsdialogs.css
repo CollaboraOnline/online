@@ -2291,3 +2291,10 @@ kbd,
 #FormulaDialog #ed_formula.ui-textarea {
 	max-width: 392px;
 }
+
+#showcomments-container:has(#ShowComments[default-state='true']),
+#insertmode-container:has(#InsertMode[default-state='true']),
+#permissionmode-container:has(.status-edit-mode[default-state='true']),
+#statusselectionmode-container:has(#StatusSelectionMode[default-state='true']) {
+	display: none !important;
+}

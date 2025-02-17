@@ -50,18 +50,28 @@ function getPermissionModeElements(
 	} else {
 		permissionModeDiv.classList.add('status-edit-mode');
 		permissionModeDiv.title = _('Permission Mode');
+		permissionModeDiv.setAttribute('default-state', 'true');
 		permissionModeDiv.textContent = _('Edit mode');
 	}
 
 	return permissionModeDiv;
 }
 
-function getStatusbarItemElements(id: string, title: string, text: string) {
+function getStatusbarItemElements(
+	id: string,
+	title: string,
+	text: string,
+	isDefault: boolean = false,
+) {
 	const div = document.createElement('div');
 	div.id = id;
 	div.className = 'jsdialog ui-badge';
 	div.title = title;
 	div.textContent = text;
+
+	if (isDefault) {
+		div.setAttribute('default-state', 'true');
+	}
 
 	return div;
 }
@@ -83,7 +93,12 @@ function getStatusDocPosElements(text: string) {
 }
 
 function getInsertModeElements(text: string) {
-	return getStatusbarItemElements('InsertMode', _('Entering text mode'), text);
+	return getStatusbarItemElements(
+		'InsertMode',
+		_('Entering text mode'),
+		text,
+		text === 'Insert',
+	);
 }
 
 function getSelectionModeElements(text: string) {
@@ -91,6 +106,7 @@ function getSelectionModeElements(text: string) {
 		'StatusSelectionMode',
 		_('Selection Mode'),
 		text,
+		text === 'Standard selection',
 	);
 }
 
@@ -138,7 +154,12 @@ function getDocumentStatusElements(text: string) {
 }
 
 function getShowCommentsStatusElements(text: string) {
-	return getStatusbarItemElements('ShowComments', _('Show Comments'), text);
+	return getStatusbarItemElements(
+		'ShowComments',
+		_('Show Comments'),
+		text,
+		text === 'Comments: On',
+	);
 }
 
 var getElementsFromId = function (
