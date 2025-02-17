@@ -57,7 +57,7 @@ static int closeNotificationPipeForForwardingThread[2];
         assert(coolwsd == nullptr);
 
         // Prepare arguments for COOLWSD
-        const int argc = 10;
+        const int argc = 11;
         char *argv[argc + 1];
         argv[0] = strdup("coda");
         //--o:sys_template_path="$(PROJECT_DIR)/../../systemplate"
@@ -74,7 +74,8 @@ static int closeNotificationPipeForForwardingThread[2];
         //argv[] = strdup("--o:ssl.ca_file_path="$(PROJECT_DIR)/../../etc/ca-chain.cert.pem"
         argv[8] = strdup("--o:admin_console.username=admin");
         argv[9] = strdup("--o:admin_console.password=admin");
-        argv[10] = nullptr;
+        argv[10] = strdup(("--o:file_server_root_path=" + getBundlePath() + "/Contents/Resources").c_str());
+        argv[11] = nullptr;
 
         Util::setThreadName("app");
 
