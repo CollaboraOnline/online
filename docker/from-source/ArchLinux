@@ -38,4 +38,4 @@ RUN usermod -u 972 cool
 # switch to cool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
 USER 972
 
-CMD ["/start-collabora-online.sh"]
+ENTRYPOINT ["/start-collabora-online.sh"]
