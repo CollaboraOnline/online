@@ -4380,9 +4380,10 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
     const auto now = std::chrono::steady_clock::now();
     std::vector<TileDesc> tilesNeedsRendering;
     bool hasOldWireId = false;
+    ++_tileVersion; // bump only once
     for (auto& tile : tileCombined.getTiles())
     {
-        tile.setVersion(++_tileVersion);
+        tile.setVersion(_tileVersion);
 
         // client can force keyframe with an oldWid == 0 on tile
         if (canForceKeyframe && tile.isForcedKeyFrame())
@@ -4410,8 +4411,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
                 tile.forceKeyframe();
             }
 
-            bool bumpVersion = false; // already done above
-            requestTileRendering(tile, forceKeyFrame, bumpVersion, now, tilesNeedsRendering, session);
+            requestTileRendering(tile, forceKeyFrame, _tileVersion, now, tilesNeedsRendering, session);
         }
     }
     if (hasOldWireId)
@@ -4573,7 +4573,7 @@ void DocumentBroker::handleMediaRequest(std::string range,
     }
 }
 
-bool DocumentBroker::requestTileRendering(TileDesc& tile, bool forceKeyframe, bool bumpVersion,
+bool DocumentBroker::requestTileRendering(TileDesc& tile, bool forceKeyframe, int version,
                                           const std::chrono::steady_clock::time_point &now,
                                           std::vector<TileDesc>& tilesNeedsRendering,
                                           const std::shared_ptr<ClientSession>& session)
@@ -4582,8 +4582,7 @@ bool DocumentBroker::requestTileRendering(TileDesc& tile, bool forceKeyframe, bo
     if (!tileCache().hasTileBeingRendered(tile, &now) || // There is no in progress rendering of the given tile
         tileCache().getTileBeingRenderedVersion(tile) < tile.getVersion()) // We need a newer version
     {
-        if (bumpVersion)
-            tile.setVersion(++_tileVersion);
+        tile.setVersion(version);
 
         if (forceKeyframe)
         {
@@ -4613,6 +4612,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     // All tiles were processed on client side that we sent last time, so we can send
     // a new batch of tiles which was invalidated / requested in the meantime
     std::deque<TileDesc>& requestedTiles = session->getRequestedTiles();
+    bool bumpedVersion = false;
     if (!requestedTiles.empty() && hasTileCache())
     {
         std::vector<TileDesc> tilesNeedsRendering;
@@ -4642,9 +4642,13 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             else
             {
                 // Not cached, needs rendering.
-                bool bumpVersion = true;
+                if (!bumpedVersion)
+                {
+                    ++_tileVersion; // only once
+                    bumpedVersion = true;
+                }
                 bool forceKeyFrame = !cachedTile;
-                allSamePartAndSize &= requestTileRendering(tile, forceKeyFrame, bumpVersion, now, tilesNeedsRendering, session);
+                allSamePartAndSize &= requestTileRendering(tile, forceKeyFrame, _tileVersion, now, tilesNeedsRendering, session);
             }
             requestedTiles.pop_front();
         }
