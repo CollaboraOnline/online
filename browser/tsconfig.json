@@ -6,13 +6,12 @@
       "lib": ["dom", "es2016"],
       "sourceMap": false,
       "incremental": true,
-
-      "moduleResolution": "classic",
+      "moduleResolution": "node",
       "noImplicitAny": true,
       "removeComments": false,
       "preserveConstEnums": false,
       "downlevelIteration": true,
-      "watch": false,
+      "watch": false
     },
     "exclude": [
       "node_modules",
