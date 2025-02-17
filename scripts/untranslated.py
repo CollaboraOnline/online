@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- tab-width: 4; indent-tabs-mode: nil; py-indent-offset: 4 -*-
 #
 # Copyright the Collabora Online contributors.
@@ -26,8 +26,9 @@ Prints en-US strings that do not have translations in the specified language.
     print(message.format(program=os.path.basename(sys.argv[0])))
     exit(1)
 
-
 # extract translations from po files
+
+
 def extractFromPo(poFile, stringIds, untranslated):
     if not os.path.isfile(poFile):
         return
@@ -48,16 +49,14 @@ def extractFromPo(poFile, stringIds, untranslated):
 def parseUnocommandsJS(onlineDir):
     strings = {}
 
-    f = open(onlineDir + '/browser/src/unocommands.js', 'r')
-    for line in f:
-        line = line.decode('utf-8')
-        m = re.match(r"\t([^:]*):.*", line)
-        if m:
-            command = m.group(1)
-
-            n = re.findall(r"_\('([^']*)'\)", line)
-            if n:
-                strings[command] = n
+    with open(onlineDir + '/browser/src/unocommands.js', 'r', encoding='utf-8') as f:
+        for line in f:
+            m = re.match(r"\t([^:]*):.*", line)
+            if m:
+                command = m.group(1)
+                n = re.findall(r"_\('([^']*)'\)", line)
+                if n:
+                    strings[command] = n
 
     return strings
 
@@ -65,8 +64,7 @@ def parseUnocommandsJS(onlineDir):
 # Remove duplicates from list
 def uniq(seq):
     seen = set()
-    seen_add = seen.add
-    return [x for x in seq if not (x in seen or seen_add(x))]
+    return [x for x in seq if not (x in seen or seen.add(x))]
 
 
 if __name__ == "__main__":
@@ -131,10 +129,7 @@ if __name__ == "__main__":
     parsed = parseUnocommandsJS(onlineDir)
     keys = set(parsed.keys())
 
-    poFile = (dir
-              + lang
-              + '/officecfg/registry/data/org/openoffice/Office/UI.po')
-
+    poFile = dir + lang + '/officecfg/registry/data/org/openoffice/Office/UI.po'
     po = polib.pofile(poFile,
                       autodetect_encoding=False,
                       encoding="utf-8",
@@ -164,10 +159,7 @@ if __name__ == "__main__":
 
 # Online help (keyboard shortcuts)
 
-    poFile = (onlineDir
-              + '/browser/po/help-'
-              + lang.replace("-", "_")
-              + '.po')
+    poFile = onlineDir + '/browser/po/help-' + lang.replace("-", "_") + '.po'
     po = polib.pofile(poFile,
                       autodetect_encoding=False,
                       encoding="utf-8",
@@ -180,6 +172,6 @@ if __name__ == "__main__":
 # Print the results
 
     for elem in uniq(untranslated):
-        print elem.encode('utf-8')
+        print(elem)
 
 # vim: set shiftwidth=4 softtabstop=4 expandtab:
