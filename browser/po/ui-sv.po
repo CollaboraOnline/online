@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 10:08+0100\n"
+"POT-Creation-Date: 2025-02-17 20:37+0100\n"
 "PO-Revision-Date: 2025-02-09 04:16+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: sv\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -297,7 +297,7 @@ msgstr "Varning"
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.ESignatureDialog.ts:132
 #: src/control/Control.LanguageDialog.js:119
-#: src/control/Control.ServerAuditDialog.ts:245
+#: src/control/Control.ServerAuditDialog.ts:225
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Parts.js:491 src/control/Permission.js:89
@@ -1156,17 +1156,17 @@ msgstr "svar"
 msgid "Insert Comment"
 msgstr "Infoga kommentar"
 
-#: src/control/Control.JSDialogBuilder.js:2733
+#: src/control/Control.JSDialogBuilder.js:2729
 #: src/control/Control.Menubar.js:893
 msgid "Rows"
 msgstr "Rader"
 
-#: src/control/Control.JSDialogBuilder.js:2734
+#: src/control/Control.JSDialogBuilder.js:2730
 #: src/control/Control.Menubar.js:896
 msgid "Columns"
 msgstr "Kolumner"
 
-#: src/control/Control.JSDialogBuilder.js:2754
+#: src/control/Control.JSDialogBuilder.js:2750
 msgid "Insert Table"
 msgstr "Infoga Tabell"
 
@@ -1506,8 +1506,8 @@ msgstr "Skicka synpunkter"
 #: src/control/Control.Menubar.js:389 src/control/Control.Menubar.js:565
 #: src/control/Control.Menubar.js:702 src/control/Control.Menubar.js:990
 #: src/control/Control.NotebookbarWriter.js:429
-#: src/control/Control.ServerAuditDialog.ts:196
-#: src/control/Control.ServerAuditDialog.ts:197
+#: src/control/Control.ServerAuditDialog.ts:186
+#: src/control/Control.ServerAuditDialog.ts:187
 msgid "Server audit"
 msgstr "Serverkoll"
 
@@ -1660,11 +1660,6 @@ msgstr "Aktivt blad"
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "All Sheets"
 msgstr "Alla blad"
-
-#: src/control/Control.Menubar.js:771
-#: src/control/Control.NotebookbarCalc.js:1175
-msgid "Focus Cell"
-msgstr "Fokuscell"
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:291
@@ -1920,7 +1915,7 @@ msgstr "Visa"
 #: src/control/Control.NotebookbarDraw.js:119
 #: src/control/Control.NotebookbarImpress.js:142
 #: src/control/Control.NotebookbarWriter.js:105
-#: src/control/Control.ServerAuditDialog.ts:216
+#: src/control/Control.ServerAuditDialog.ts:213
 msgid "Help"
 msgstr "Hjälp"
 
@@ -2280,27 +2275,19 @@ msgstr ""
 msgid "Hardware resources are sufficient for optimal performance"
 msgstr "Hårdvaruresurserna är tillräckliga för god prestanda"
 
-#: src/control/Control.ServerAuditDialog.ts:215
-msgid "Status"
-msgstr "Status"
-
-#: src/control/Control.ServerAuditDialog.ts:225
+#: src/control/Control.ServerAuditDialog.ts:205
 msgid "No issues found"
 msgstr "Inga problem hittades"
 
-#: src/control/Control.ServerAuditDialog.ts:232
-msgid "1 issue found"
-msgstr "1 problem hittades"
+#: src/control/Control.ServerAuditDialog.ts:212
+msgid "Status"
+msgstr "Status"
 
-#: src/control/Control.ServerAuditDialog.ts:233
-msgid "%COUNT% issues found"
-msgstr "%COUNT% problem hittades"
-
-#: src/control/Control.ServerAuditDialog.ts:282
+#: src/control/Control.ServerAuditDialog.ts:262
 msgid "Check security warnings of your server"
 msgstr "Kontrollera säkerhetsvarningarna för din server"
 
-#: src/control/Control.ServerAuditDialog.ts:283
+#: src/control/Control.ServerAuditDialog.ts:263
 msgid "OPEN"
 msgstr "ÖPPNA"
 
@@ -3502,7 +3489,7 @@ msgstr "Initierar..."
 msgid "Last saved:"
 msgstr "Senast sparad:"
 
-#: src/map/Map.js:1498
+#: src/map/Map.js:1495
 msgid "Please wait!"
 msgstr "Vänligen vänta!"
 
@@ -3767,6 +3754,15 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Focus Cell"
+#~ msgstr "Fokuscell"
+
+#~ msgid "1 issue found"
+#~ msgstr "1 problem hittades"
+
+#~ msgid "%COUNT% issues found"
+#~ msgstr "%COUNT% problem hittades"
 
 #~ msgid "Show comment bigger"
 #~ msgstr "Visa kommentarer med större grad"

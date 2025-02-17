@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 10:08+0100\n"
+"POT-Creation-Date: 2025-02-17 20:37+0100\n"
 "PO-Revision-Date: 2024-12-14 09:00+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/collabora-online/"
@@ -297,7 +297,7 @@ msgstr "எச்சரிக்கை"
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.ESignatureDialog.ts:132
 #: src/control/Control.LanguageDialog.js:119
-#: src/control/Control.ServerAuditDialog.ts:245
+#: src/control/Control.ServerAuditDialog.ts:225
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Parts.js:491 src/control/Permission.js:89
@@ -1160,17 +1160,17 @@ msgstr "பதில்கள்"
 msgid "Insert Comment"
 msgstr "கருத்தைச் செருகவும்"
 
-#: src/control/Control.JSDialogBuilder.js:2733
+#: src/control/Control.JSDialogBuilder.js:2729
 #: src/control/Control.Menubar.js:893
 msgid "Rows"
 msgstr "வரிசைகள்"
 
-#: src/control/Control.JSDialogBuilder.js:2734
+#: src/control/Control.JSDialogBuilder.js:2730
 #: src/control/Control.Menubar.js:896
 msgid "Columns"
 msgstr "நெடுவரிசைகள்"
 
-#: src/control/Control.JSDialogBuilder.js:2754
+#: src/control/Control.JSDialogBuilder.js:2750
 msgid "Insert Table"
 msgstr "அட்டவணையைச் செருகவும்"
 
@@ -1510,8 +1510,8 @@ msgstr "கருத்துக்களை அனுப்பவும்"
 #: src/control/Control.Menubar.js:389 src/control/Control.Menubar.js:565
 #: src/control/Control.Menubar.js:702 src/control/Control.Menubar.js:990
 #: src/control/Control.NotebookbarWriter.js:429
-#: src/control/Control.ServerAuditDialog.ts:196
-#: src/control/Control.ServerAuditDialog.ts:197
+#: src/control/Control.ServerAuditDialog.ts:186
+#: src/control/Control.ServerAuditDialog.ts:187
 msgid "Server audit"
 msgstr "சேவையக தணிக்கை"
 
@@ -1664,11 +1664,6 @@ msgstr "செயலில் தாள்"
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "All Sheets"
 msgstr "அனைத்து தாள்களும்"
-
-#: src/control/Control.Menubar.js:771
-#: src/control/Control.NotebookbarCalc.js:1175
-msgid "Focus Cell"
-msgstr ""
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:291
@@ -1924,7 +1919,7 @@ msgstr "பார்வை"
 #: src/control/Control.NotebookbarDraw.js:119
 #: src/control/Control.NotebookbarImpress.js:142
 #: src/control/Control.NotebookbarWriter.js:105
-#: src/control/Control.ServerAuditDialog.ts:216
+#: src/control/Control.ServerAuditDialog.ts:213
 msgid "Help"
 msgstr "உதவி"
 
@@ -2284,28 +2279,19 @@ msgstr ""
 msgid "Hardware resources are sufficient for optimal performance"
 msgstr "உகந்த செயல்திறனுக்கு வன்பொருள் வளங்கள் போதுமானவை"
 
-#: src/control/Control.ServerAuditDialog.ts:215
-msgid "Status"
-msgstr "நிலை"
-
-#: src/control/Control.ServerAuditDialog.ts:225
+#: src/control/Control.ServerAuditDialog.ts:205
 msgid "No issues found"
 msgstr "பிரச்சினைகள் எதுவும் கிடைக்கவில்லை"
 
-#: src/control/Control.ServerAuditDialog.ts:232
-#, fuzzy
-msgid "1 issue found"
-msgstr "பிரச்சினைகள் எதுவும் கிடைக்கவில்லை"
+#: src/control/Control.ServerAuditDialog.ts:212
+msgid "Status"
+msgstr "நிலை"
 
-#: src/control/Control.ServerAuditDialog.ts:233
-msgid "%COUNT% issues found"
-msgstr ""
-
-#: src/control/Control.ServerAuditDialog.ts:282
+#: src/control/Control.ServerAuditDialog.ts:262
 msgid "Check security warnings of your server"
 msgstr "உங்கள் சேவையகத்தின் பாதுகாப்பு எச்சரிக்கைகளை சரிபார்க்கவும்"
 
-#: src/control/Control.ServerAuditDialog.ts:283
+#: src/control/Control.ServerAuditDialog.ts:263
 msgid "OPEN"
 msgstr "திற"
 
@@ -3528,7 +3514,7 @@ msgstr "தொடங்குதல் ..."
 msgid "Last saved:"
 msgstr "கடைசியாக சேமிக்கப்பட்டது:"
 
-#: src/map/Map.js:1498
+#: src/map/Map.js:1495
 msgid "Please wait!"
 msgstr "தயவுசெய்து காத்திருங்கள்!"
 
@@ -3793,6 +3779,10 @@ msgstr ""
 "translate = \"true\"> 1 </a> <a ஐடி = \"slide-2-Incator\" href = \"#ச்லைடு -"
 "2\" தரவு-மொழிபெயர்ப்பு = \"உண்மை\"> 2 </a> <a ஐடி = \"slide-3-Incator\" href "
 "= \"#slide-3\" Data-translate = \"true\"> 3 </a >"
+
+#, fuzzy
+#~ msgid "1 issue found"
+#~ msgstr "பிரச்சினைகள் எதுவும் கிடைக்கவில்லை"
 
 #~ msgid "Show comment bigger"
 #~ msgstr "கருத்து பெரியதாகக் காட்டு"

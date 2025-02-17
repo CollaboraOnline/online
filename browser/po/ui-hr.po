@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 10:08+0100\n"
+"POT-Creation-Date: 2025-02-17 20:37+0100\n"
 "PO-Revision-Date: 2025-02-10 09:03+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: hr\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10-dev\n"
 
 #: admin/admin.strings.js:15
@@ -300,7 +300,7 @@ msgstr "Upozorenje"
 #: src/control/Control.DocumentRepair.js:77
 #: src/control/Control.ESignatureDialog.ts:132
 #: src/control/Control.LanguageDialog.js:119
-#: src/control/Control.ServerAuditDialog.ts:245
+#: src/control/Control.ServerAuditDialog.ts:225
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
 #: src/control/Parts.js:491 src/control/Permission.js:89
@@ -1162,17 +1162,17 @@ msgstr "odgovori"
 msgid "Insert Comment"
 msgstr "Umetni komentar"
 
-#: src/control/Control.JSDialogBuilder.js:2733
+#: src/control/Control.JSDialogBuilder.js:2729
 #: src/control/Control.Menubar.js:893
 msgid "Rows"
 msgstr "Redci"
 
-#: src/control/Control.JSDialogBuilder.js:2734
+#: src/control/Control.JSDialogBuilder.js:2730
 #: src/control/Control.Menubar.js:896
 msgid "Columns"
 msgstr "Stupci"
 
-#: src/control/Control.JSDialogBuilder.js:2754
+#: src/control/Control.JSDialogBuilder.js:2750
 msgid "Insert Table"
 msgstr "Umetni tablicu"
 
@@ -1512,8 +1512,8 @@ msgstr "Pošalji povratne informacije"
 #: src/control/Control.Menubar.js:389 src/control/Control.Menubar.js:565
 #: src/control/Control.Menubar.js:702 src/control/Control.Menubar.js:990
 #: src/control/Control.NotebookbarWriter.js:429
-#: src/control/Control.ServerAuditDialog.ts:196
-#: src/control/Control.ServerAuditDialog.ts:197
+#: src/control/Control.ServerAuditDialog.ts:186
+#: src/control/Control.ServerAuditDialog.ts:187
 msgid "Server audit"
 msgstr "Revizija servera"
 
@@ -1666,11 +1666,6 @@ msgstr "Aktivni list"
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "All Sheets"
 msgstr "Svi listovi"
-
-#: src/control/Control.Menubar.js:771
-#: src/control/Control.NotebookbarCalc.js:1175
-msgid "Focus Cell"
-msgstr "Fokusiraj polje"
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:291
@@ -1928,7 +1923,7 @@ msgstr "Prikaz"
 #: src/control/Control.NotebookbarDraw.js:119
 #: src/control/Control.NotebookbarImpress.js:142
 #: src/control/Control.NotebookbarWriter.js:105
-#: src/control/Control.ServerAuditDialog.ts:216
+#: src/control/Control.ServerAuditDialog.ts:213
 msgid "Help"
 msgstr "Pomoć"
 
@@ -2288,27 +2283,19 @@ msgstr ""
 msgid "Hardware resources are sufficient for optimal performance"
 msgstr "Hardverski resursi su dovoljni za optimalnu performansu"
 
-#: src/control/Control.ServerAuditDialog.ts:215
-msgid "Status"
-msgstr "Stanje"
-
-#: src/control/Control.ServerAuditDialog.ts:225
+#: src/control/Control.ServerAuditDialog.ts:205
 msgid "No issues found"
 msgstr "Nema problema"
 
-#: src/control/Control.ServerAuditDialog.ts:232
-msgid "1 issue found"
-msgstr "Pronađen je 1 problem"
+#: src/control/Control.ServerAuditDialog.ts:212
+msgid "Status"
+msgstr "Stanje"
 
-#: src/control/Control.ServerAuditDialog.ts:233
-msgid "%COUNT% issues found"
-msgstr "Pronađeno je %COUNT% problema"
-
-#: src/control/Control.ServerAuditDialog.ts:282
+#: src/control/Control.ServerAuditDialog.ts:262
 msgid "Check security warnings of your server"
 msgstr "Provjeri sigurnosna upozorenja tvog servera"
 
-#: src/control/Control.ServerAuditDialog.ts:283
+#: src/control/Control.ServerAuditDialog.ts:263
 msgid "OPEN"
 msgstr "OTVORI"
 
@@ -3511,7 +3498,7 @@ msgstr "Inicijaliziranje …"
 msgid "Last saved:"
 msgstr "Zadnji put spremljeno:"
 
-#: src/map/Map.js:1498
+#: src/map/Map.js:1495
 msgid "Please wait!"
 msgstr "Pričekaj!"
 
@@ -3779,6 +3766,15 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Focus Cell"
+#~ msgstr "Fokusiraj polje"
+
+#~ msgid "1 issue found"
+#~ msgstr "Pronađen je 1 problem"
+
+#~ msgid "%COUNT% issues found"
+#~ msgstr "Pronađeno je %COUNT% problema"
 
 #~ msgid "Show comment bigger"
 #~ msgstr "Prikaži komentar veće"
