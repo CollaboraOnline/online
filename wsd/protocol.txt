@@ -349,6 +349,20 @@ paintwindow <id> rectangle=<x>,<y>,<width>,<height> dpiscale=<scale>
 
     <scale> is a scaling factor, e.g. 1 for non-HiDPI.
 
+clientzoom tilepixelwidth=<width> tilepixelheight=<height> tiletwipwidth=<twipWidth> tiletwipheight=<twipHeight> dpiscale=<scale> zoom=<zoomLevel>
+
+    Requests an update of the client zoom level and tile size.
+
+    <width> and <height> define the tile dimensions in pixels.
+
+    <twipWidth> and <twipHeight> define the tile dimensions in twips.
+
+    <scale> is the scaling factor, e.g., 1 for non-HiDPI displays.
+
+    <zoomLevel> represents the zoom factor applied to the client view.
+
+    This command ensures that the rendered tiles match the correct zoom level and DPI scaling.
+
 contentcontrolevent <JSON>
     *Properties:
     type - date,drop-down
