@@ -78,4 +78,4 @@ EXPOSE 9980
 # switch to cool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
 USER 100
 
-CMD ["/start-collabora-online.sh"]
+ENTRYPOINT ["/start-collabora-online.sh"]
