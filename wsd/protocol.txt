@@ -369,6 +369,14 @@ commandvalues command=<UNOCommand>[?param1=value1&param2=value2...]
         - <UNOCommand> is the command to be executed (e.g., .uno:ViewAnnotations).
         - Optional query parameters can be appended to specify additional command details.
 
+completefunction name=<FunctionName>
+
+    Requests the execution of a spreadsheet function in MobileWizard.Clients can request to complete a function name partially typed in the formula input box.
+
+    <FunctionName> is the name of the function to be applied, such as SUM, MIN, AVG, MAX, etc.
+
+This command allows the client to request calculation functions dynamically.
+
 contentcontrolevent <JSON>
     *Properties:
     type - date,drop-down
