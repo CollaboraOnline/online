@@ -475,7 +475,7 @@ void SocketPoll::enableWatchdog()
     _watchdogTime = Watchdog::getTimestamp();
 }
 
-int SocketPoll::poll(int64_t timeoutMaxMicroS)
+int SocketPoll::poll(int64_t timeoutMaxMicroS, bool justPoll)
 {
     if (_runOnClientThread)
         checkAndReThread();
@@ -525,6 +525,22 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
     // from now we want to race back to sleep.
     enableWatchdog();
+
+    if (justPoll)
+    {
+        // Done with the poll(), don't process anything.
+        bool ret = false;
+        // Run through the poll entries (except the wakeup poll), and combine them into an answer.
+        for (size_t i = 0; i < size; ++i)
+        {
+            if (_pollFds[i].revents)
+            {
+                ret = true;
+                break;
+            }
+        }
+        return ret;
+    }
 
     // First process the wakeup pipe (always the last entry).
     if (_pollFds[size].revents)
