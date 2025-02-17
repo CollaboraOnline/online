@@ -67,14 +67,15 @@ interface DicFile {
 	words: string[]; // list of dictionary words
 }
 
-// TODO: error handling for non parsed file - how we should handle it?
 function parseDicFile(content: string): DicFile {
 	const lines = content.split(/\r?\n/).filter((line) => line.trim() !== '');
 	const delimiterIndex = lines.findIndex((line) => line.trim() === '---');
 	if (delimiterIndex === -1) {
+		window.alert('Invalid dictionary format');
 		throw new Error('Invalid dictionary format: missing delimiter "---"');
 	}
 	if (delimiterIndex < 3) {
+		window.alert('Invalid dictionary format');
 		throw new Error(
 			'Invalid dictionary format: not enough header lines before delimiter',
 		);
