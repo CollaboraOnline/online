@@ -97,6 +97,10 @@ L.Map.Mouse = L.Handler.extend({
 				}
 			}
 
+			var scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			if (scrollSection.sectionProperties.mouseIsOnVerticalScrollBar || scrollSection.sectionProperties.mouseIsOnHorizontalScrollBar)
+				return;
+
 			// Core side is handling the mouseup by itself when the right button is down.
 			// If we fire mouseup for right button, there will be duplicate.
 			// Without this, selected text in a text box is un-selected via a right click. Therefore, copy / cut operations are disabled.
