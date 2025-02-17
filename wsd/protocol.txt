@@ -363,6 +363,12 @@ clientzoom tilepixelwidth=<width> tilepixelheight=<height> tiletwipwidth=<twipWi
 
     This command ensures that the rendered tiles match the correct zoom level and DPI scaling.
 
+commandvalues command=<UNOCommand>[?param1=value1&param2=value2...]
+
+    Sends a UNO command from the client to the server.
+        - <UNOCommand> is the command to be executed (e.g., .uno:ViewAnnotations).
+        - Optional query parameters can be appended to specify additional command details.
+
 contentcontrolevent <JSON>
     *Properties:
     type - date,drop-down
