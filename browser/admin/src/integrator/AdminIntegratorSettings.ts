@@ -278,6 +278,56 @@ async function fetchDicFile(fileId: string): Promise<void> {
 	}
 }
 
+async function readFileAsText(file: File): Promise<string> {
+	return new Promise<string>((resolve, reject) => {
+		const reader = new FileReader();
+		reader.onload = () => resolve(reader.result as string);
+		reader.onerror = () => reject(reader.error);
+		reader.readAsText(file);
+	});
+}
+
+function parseWords(content: string): string[] {
+	const lines = content
+		.split(/\r?\n/)
+		.map((line) => line.trim())
+		.filter((line) => line !== '');
+	const delimiterIndex = lines.findIndex((line) => line === '---');
+	if (delimiterIndex !== -1) {
+		return lines.slice(delimiterIndex + 1);
+	}
+	return lines;
+}
+
+async function wordbookValidation(uploadPath: string, file: File) {
+	try {
+		const content = await readFileAsText(file);
+		let dicWords: string[];
+		try {
+			dicWords = parseWords(content);
+		} catch (error) {
+			window.alert('Invalid dictionary format. Please check the file.');
+			console.error('Error parsing dictionary file:', error);
+			return;
+		}
+		// TODO: Assuming default values - should be dynamic later?
+		const defaultHeaderType = 'OOoUserDict1';
+		const defaultLanguage = '<none>';
+		const defaultDictType = 'positive';
+		const newDic: DicFile = {
+			headerType: defaultHeaderType,
+			language: defaultLanguage,
+			dictType: defaultDictType,
+			words: dicWords,
+		};
+		const newContent = buildDicFile(newDic);
+		const newFile = new File([newContent], file.name, { type: 'text/plain' });
+		await uploadFile(uploadPath, newFile);
+	} catch (error) {
+		window.alert('Something went wrong while uploading dictionary file');
+	}
+}
+
 function settingConfigBasePath(): string {
 	return '/settings/' + getConfigType();
 }
@@ -400,7 +450,11 @@ function insertConfigSections(): void {
 
 			fileInput.addEventListener('change', () => {
 				if (fileInput.files?.length) {
-					uploadFile(cfg.uploadPath, fileInput.files[0]);
+					if (cfg.uploadPath === PATH.wordBookUpload()) {
+						wordbookValidation(cfg.uploadPath, fileInput.files[0]);
+					} else {
+						uploadFile(cfg.uploadPath, fileInput.files[0]);
+					}
 					fileInput.value = '';
 				}
 			});
