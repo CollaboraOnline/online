@@ -139,5 +139,5 @@ USER 100
 
 # FIXME
 # Use the old starter script until we find out how to replace it.
-CMD ["/start-collabora-online.sh"]
+ENTRYPOINT ["/start-collabora-online.sh"]
 
