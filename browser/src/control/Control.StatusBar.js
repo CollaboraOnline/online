@@ -419,7 +419,7 @@ class StatusBar extends JSDialog.Toolbar {
 		if (permissionContainer) {
 			while (permissionContainer.firstChild)
 				permissionContainer.removeChild(permissionContainer.firstChild);
-			permissionContainer.appendChild(getPermissionModeElements(isReadOnlyMode, canUserWrite));
+			permissionContainer.appendChild(getPermissionModeElements(isReadOnlyMode, canUserWrite, this.map));
 		}
 
 		this.builder.updateWidget(this.parentContainer, {
