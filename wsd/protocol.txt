@@ -477,6 +477,27 @@ notasync:
 
     This message is triggered to notify that a dialog operation is not running asynchronously, which may affect performance or user experience.
 
+getpresentationinfo
+
+    This adds support for getting the presentation info from core.
+
+    This change uses the new GetPresentationInfo() funciton that was added to the LOKit API.
+
+removetextcontext id=<windowId> before=<before_position> after=<after_position>
+
+    This protocol is used to remove text context from a specified location in a document. It allows the deletion of multiple characters within a range by specifying the positions before and after the deletion.
+
+    - id=<windowId> : Specifies the ID of the window where the text removal operation is occurring.
+    - before=<before_position> : The position before the deletion starts.
+    - after=<after_position> : The position after the deletion ends.
+
+browsersetting action=update key=<SettingKey> value=<SettingValue>
+
+    The browsersetting protocol modify specific UI settings.
+
+    - key=<SettingKey> : The name of the setting to update (e.g., ShowStatusBar).
+    - value=<SettingValue> : The new value for the setting (e.g., true or false).
+
 contentcontrolevent <JSON>
     *Properties:
     type - date,drop-down
@@ -1093,6 +1114,16 @@ wopiSrcMap
 verifyauth jwt=<jwt_token> id=<unique_identifier>
 
     verify jwt token without shutting down the socket connection, works only with monitor
+
+routetokensanitycheck
+
+    The routetokensanitycheck protocol is used to request a sanity check for route tokens by the indirection server.
+
+    Usage:
+
+    - Sent as a request to verify the validity of route tokens.
+
+    - Ensures that tokens are correctly formatted and authorized.
 
 admin -> client
 ===============
