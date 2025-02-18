@@ -845,6 +845,14 @@ transformdocumentstructure url=<documentURL> transform=<JSONTransformation>
 
     https://sdk.collaboraonline.com/docs/extract_transform_api.html#general-transform
 
+extractlinktargets url=<documentURL>
+
+    This command returns a list of link targets in JSON format, which includes various document elements such as tables, images, and bookmarks.
+
+    url=<documentURL> : Specifies the document location.
+
+    You can use the target in the URL to open the document at a specific position, for example: `&target=Table1|table`
+
 child -> parent
 ===============
 
