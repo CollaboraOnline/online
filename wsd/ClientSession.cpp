@@ -224,6 +224,28 @@ std::string ClientSession::getClipboardURI(bool encode)
 
 std::string ClientSession::createPublicURI(const std::string& subPath, const std::string& tag, bool encode)
 {
+    if constexpr (!Util::isMobileApp()) {
+        if (subPath == "media") {
+            const std::string mediaPath = getDocumentBroker()->getEmbeddedMediaPath(tag);
+            const std::ifstream media(mediaPath, std::ios::binary);
+
+            std::stringstream ss;
+            ss << "data:video/mp4;base64,";
+
+            Poco::Base64Encoder encoder(ss);
+            encoder.rdbuf()->setLineLength(0);
+            encoder << media.rdbuf();
+            encoder.close();
+            
+            const std::string mediaUrl = ss.str();
+
+            if (!encode)
+                return mediaUrl;
+
+            return Uri::encode(mediaUrl);
+        }
+    }
+
     Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();
     wopiSrc.setQueryParameters(Poco::URI::QueryParameters());
 
@@ -1992,26 +2014,11 @@ bool ClientSession::handlePresentationInfo(const std::shared_ptr<Message>& paylo
 
                             if (!id.empty() && !url.empty())
                             {
-#if !MOBILEAPP
                                 std::string original = "{ \"id\" : \"" + id + "\", \"url\" : \"" + url + "\" }";
                                 docBroker->addEmbeddedMedia(id, original); // Capture the original message with internal URL.
 
                                 const std::string mediaUrl =
                                     Uri::encode(createPublicURI("media", id, false), "&");
-#else
-                                
-                                const std::ifstream media(url, std::ios::binary);
-
-                                std::stringstream ss;
-                                ss << "data:video/mp4;base64,";
-
-                                Poco::Base64Encoder encoder(ss);
-                                encoder.rdbuf()->setLineLength(0);
-                                encoder << media.rdbuf();
-                                encoder.close();
-                                
-                                const std::string mediaUrl = ss.str();
-#endif
                                 video->set("url", mediaUrl); // Replace the url with the public one.
                                 bModified = true;
                             }
