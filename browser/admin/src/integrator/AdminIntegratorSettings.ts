@@ -51,7 +51,7 @@ class SettingIframe {
 			: '/browser/dist/upload-settings',
 		fetchSharedConfig: '/browser/dist/fetch-settings-config',
 		deleteSharedConfig: '/browser/dist/delete-settings-config',
-		fetchDictionary: 'browser/dist/fetch-dic',
+		fetchWordbook: 'browser/dist/fetch-wordbook',
 	};
 
 	private PATH = {
@@ -278,12 +278,12 @@ class SettingIframe {
 		return sectionEl;
 	}
 
-	private async fetchDicFile(fileId: string): Promise<void> {
+	private async fetchWordbookFile(fileId: string): Promise<void> {
 		const formData = new FormData();
 		formData.append('fileUrl', fileId);
 		formData.append('accessToken', window.accessToken ?? '');
 		try {
-			const apiUrl = this.API_ENDPOINTS.fetchDictionary;
+			const apiUrl = this.API_ENDPOINTS.fetchWordbook;
 
 			const response = await fetch(apiUrl, {
 				method: 'POST',
@@ -300,9 +300,9 @@ class SettingIframe {
 			let textValue = await response.text();
 			console.debug('textValue: ', textValue);
 
-			const dic = this.wordbook.parseDicFile(textValue);
+			const wordbook = this.wordbook.parseWordbookFile(textValue);
 			const fileName = this.getFilename(fileId, false);
-			this.wordbook.openDicEditor(fileName, dic);
+			this.wordbook.openWordbookEditor(fileName, wordbook);
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : 'Unknown error';
 			console.error(`Error uploading file: ${message}`);
@@ -466,7 +466,7 @@ class SettingIframe {
 
 			extraActionsDiv.append(downloadBtn, deleteBtn);
 
-			// Add an "Edit" button for dic file only
+			// Add an "Edit" button for wordbook file only
 			if (category === '/wordbook') {
 				const editBtn = document.createElement('button');
 				editBtn.type = 'button';
@@ -489,7 +489,7 @@ class SettingIframe {
 					</span>
 				`;
 				editBtn.addEventListener('click', async () => {
-					await this.fetchDicFile(item.uri);
+					await this.fetchWordbookFile(item.uri);
 				});
 				extraActionsDiv.appendChild(editBtn);
 			}
