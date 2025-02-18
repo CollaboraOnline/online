@@ -895,6 +895,20 @@ extractlinktargets url=<documentURL>
 
     You can use the target in the URL to open the document at a specific position, for example: `&target=Table1|table`
 
+getthumbnail x=<Width> y=<Height>
+
+    Generates a thumbnail image of a document or a specific element inside it.
+
+    - x=<Width> : Sets the width of the thumbnail.
+    - y=<Height> : Sets the height of the thumbnail.
+
+    Usage:
+    Sent via HTTP POST to /cool/get-thumbnail with the document file.
+
+    Optionally, specify a target to generate a thumbnail for a specific element (e.g., a table, image, or heading).
+
+    https://sdk.collaboraonline.com/docs/linking_api.html?highlight=thumbnail
+
 child -> parent
 ===============
 
