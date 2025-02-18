@@ -1426,33 +1426,37 @@ private:
 
         assert(!!_response && "Response must be set!");
 
-        if (!isConnected())
-        {
-            std::shared_ptr<StreamSocket> socket = connect();
-            if (!socket)
-            {
-                LOG_ERR("Failed to connect to " << _host << ':' << _port);
-                return false;
-            }
-
-            poller.insertNewSocket(socket);
-        }
-
         LOG_TRC("Starting syncRequest: " << _request.getVerb() << ' ' << host() << ':' << port()
                                          << ' ' << _request.getUrl());
+
+        ConnectFailCallback origOnConnectFail = _onConnectFail;
+
+        if (!isConnected())
+        {
+            // Intercept onConnectFail to detect connection failure, call the original (if any),
+            // and finish the response to end the poller loop.
+            setConnectFailHandler([this, origOnConnectFail](const std::shared_ptr<http::Session>& rSession) {
+                LOG_ERR("Failed to connect to " << _host << ':' << _port);
+                origOnConnectFail(rSession);
+                assert(_response->state() != Response::State::Complete && "unexpected Complete state");
+                _response->finish();
+            });
+            asyncConnect(poller);
+        }
 
         poller.poll(timeout);
         while (!_response->done())
         {
             const auto now = std::chrono::steady_clock::now();
             if (checkTimeout(now))
-                return false;
+                break;
 
             const auto remaining =
                 std::chrono::duration_cast<std::chrono::microseconds>(deadline - now);
             poller.poll(remaining);
         }
 
+        setConnectFailHandler(origOnConnectFail);
         return _response->state() == Response::State::Complete;
     }
 
@@ -1689,20 +1693,6 @@ private:
             _response->finish();
 
         _fd = -1; // No longer our socket fd.
-    }
-
-    std::shared_ptr<StreamSocket> connect()
-    {
-        _socket.reset(); // Reset to make sure we are disconnected.
-        std::shared_ptr<StreamSocket> socket =
-            net::connect(_host, _port, isSecure(), shared_from_this());
-        assert((!socket || _fd == socket->getFD()) &&
-               "The socket FD must have been set in onConnect");
-
-        // When used with proxy.php we may indeed get nullptr here.
-        // assert(socket && "Unexpected nullptr returned from net::connect");
-        _socket = socket; // Hold a weak pointer to it.
-        return socket; // Return the shared pointer.
     }
 
     void asyncConnectCompleted(SocketPoll& poll, const std::shared_ptr<StreamSocket> &socket, net::AsyncConnectResult result)
