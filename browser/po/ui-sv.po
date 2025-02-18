@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-17 20:37+0100\n"
+"POT-Creation-Date: 2025-02-18 16:01+0100\n"
 "PO-Revision-Date: 2025-02-09 04:16+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
@@ -1660,6 +1660,11 @@ msgstr "Aktivt blad"
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "All Sheets"
 msgstr "Alla blad"
+
+#: src/control/Control.Menubar.js:771
+#: src/control/Control.NotebookbarCalc.js:1175
+msgid "Focus Cell"
+msgstr "Fokuscell"
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:291
@@ -3754,9 +3759,6 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
-
-#~ msgid "Focus Cell"
-#~ msgstr "Fokuscell"
 
 #~ msgid "1 issue found"
 #~ msgstr "1 problem hittades"

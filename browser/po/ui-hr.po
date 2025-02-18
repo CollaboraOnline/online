@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-17 20:37+0100\n"
+"POT-Creation-Date: 2025-02-18 16:01+0100\n"
 "PO-Revision-Date: 2025-02-10 09:03+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
@@ -1666,6 +1666,11 @@ msgstr "Aktivni list"
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "All Sheets"
 msgstr "Svi listovi"
+
+#: src/control/Control.Menubar.js:771
+#: src/control/Control.NotebookbarCalc.js:1175
+msgid "Focus Cell"
+msgstr "Fokusiraj polje"
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:291
@@ -3766,9 +3771,6 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
-
-#~ msgid "Focus Cell"
-#~ msgstr "Fokusiraj polje"
 
 #~ msgid "1 issue found"
 #~ msgstr "Pronađen je 1 problem"

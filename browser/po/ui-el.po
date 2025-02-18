@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-17 20:37+0100\n"
+"POT-Creation-Date: 2025-02-18 16:01+0100\n"
 "PO-Revision-Date: 2025-02-13 19:45+0000\n"
 "Last-Translator: Vangelis Papanastasatos <vagpap@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
@@ -1675,6 +1675,11 @@ msgstr "Ενεργό φύλλο"
 #: src/control/jsdialog/Definitions.Menu.ts:112
 msgid "All Sheets"
 msgstr "Όλα τα Φύλλα"
+
+#: src/control/Control.Menubar.js:771
+#: src/control/Control.NotebookbarCalc.js:1175
+msgid "Focus Cell"
+msgstr "Εστίαση σε κελί"
 
 #: src/control/Control.Menubar.js:865
 #: src/control/jsdialog/Definitions.Menu.ts:291
@@ -3791,9 +3796,6 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
-
-#~ msgid "Focus Cell"
-#~ msgstr "Εστίαση σε κελί"
 
 #~ msgid "Edit"
 #~ msgstr "Επεξεργασία"
