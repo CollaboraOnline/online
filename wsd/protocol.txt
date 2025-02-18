@@ -909,6 +909,20 @@ getthumbnail x=<Width> y=<Height>
 
     https://sdk.collaboraonline.com/docs/linking_api.html?highlight=thumbnail
 
+rendersearchresult <searchResultXml>
+
+    This command generates an image (PNG) of a specific search result within a document.
+
+    - <searchResultXml>: The XML file representing the search results, detailing the position of the search hits within the document.
+
+    This adds a new service render-search-result, which renders an
+    image of the position where, the search fund a hit. The search
+    result contains the information in which object or paragraph,
+    which is just the node id and node type from the document model.
+
+    The service takes the document and the search result (xml file)
+    as the input and returns a PNG image as the output.
+
 child -> parent
 ===============
 
