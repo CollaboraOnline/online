@@ -76,7 +76,7 @@ JSDialog.panel = function (
 							)
 						: '',
 				},
-				icon: builder._createIconURL('morebutton'),
+				icon: app.LOUtil.getIconNameOfCommand('morebutton'),
 			},
 			builder,
 		);

@@ -79,7 +79,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		var commandName = data.id  && data.id.startsWith('.uno:') ? data.id.substring('.uno:'.length) : data.id;
 		if (commandName && commandName.length && app.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var image = L.DomUtil.create('img', 'spinfieldimage', div);
-			var icon = (data.id === 'Transparency') ? builder._createIconURL('settransparency') : builder._createIconURL(data.id);
+			var icon = (data.id === 'Transparency') ? app.LOUtil.getIconNameOfCommand('settransparency') : app.LOUtil.getIconNameOfCommand(data.id);
 			app.LOUtil.setImage(image, icon, builder.map);
 			icon.alt = '';
 		}
@@ -237,7 +237,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 		var iconPath = null;
 		if (data.command)
-			iconPath = builder._createIconURL(data.command);
+			iconPath = app.LOUtil.getIconNameOfCommand(data.command);
 
 		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath);
 
@@ -546,7 +546,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 		updateFunction(null);
 
-		var iconPath = builder._createIconURL(data.command);
+		var iconPath = app.LOUtil.getIconNameOfCommand(data.command);
 		var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
 		var autoColorControl = (data.command === '.uno:FontColor' || data.command === '.uno:Color');
 
@@ -637,7 +637,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		var iconPath = null;
 		var entryId = data.id;
 		if (entryId && entryId.length) {
-			iconPath = builder._createIconURL(entryId);
+			iconPath = app.LOUtil.getIconNameOfCommand(entryId);
 		}
 
 		builder._explorableEntry(parentContainer, data, content, builder, null, iconPath);
@@ -666,7 +666,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 		var nodeId = data.command.indexOf('.uno:') === 0 ? data.command.substr('.uno:'.length) : data.command;
 		var contentNode = {id: nodeId, type: 'mobile-popup-container', children: [], onshow: onShow};
-		var iconPath = builder._createIconURL(data.command);
+		var iconPath = app.LOUtil.getIconNameOfCommand(data.command);
 
 		builder._explorableEntry(parentContainer, data, contentNode, builder, null, iconPath);
 
