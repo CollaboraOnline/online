@@ -1309,9 +1309,9 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
 
     std::string localPathEncoded;
     Poco::URI::encode(localPath, "#?", localPathEncoded);
-    _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
+    _uriJailed = Poco::URI(Poco::Path(localPath)).toString();
     _uriJailedAnonym =
-        Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
+        Poco::URI(Poco::Path(COOLWSD::anonymizeUrl(localPathEncoded))).toString();
 
     _filename = filename;
     if constexpr (!Util::isMobileApp())
