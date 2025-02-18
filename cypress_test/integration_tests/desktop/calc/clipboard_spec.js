@@ -188,7 +188,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		calcHelper.clickOnFirstCell();
 		helper.typeIntoDocument('Something to copy paste.');
 		helper.typeIntoDocument('{enter}');
-		calcHelper.clickOnFirstCell();
+		helper.typeIntoDocument('{upArrow}');
 
 		cy.cGet('#map').rightclick(15, 15, { force: true });
 		cy.cGet('.on-the-fly-context-menu').should('be.visible');
