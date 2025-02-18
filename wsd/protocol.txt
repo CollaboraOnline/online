@@ -193,6 +193,15 @@ selecttext type=<type> x=<x> y=<y>
 
     <type> is 'start', 'end' or 'reset', <x> and <y> are numbers.
 
+windowselecttext id=<dialogId> swap=<true|false> x=<x_position> y=<y_position>
+
+    This protocol is used to notify the system about text selection within a window, including the option to swap the mark and cursor roles.
+
+    - id=<dialogId> : Specifies the ID of the dialog window where the selection is happening.
+    - swap=<true|false> : Indicates whether the mark/cursor roles should be swapped. If swap=true, the mark and cursor positions are swapped.
+    - x=<x_position> : The x-coordinate of the selection position.
+    - y=<y_position> : The y-coordinate of the selection position.
+
 selectgraphic type=<type> x=<x> y=<y>
 
     <type> is 'start' or 'end' <x> and <y> are numbers.
@@ -348,6 +357,145 @@ paintwindow <id> rectangle=<x>,<y>,<width>,<height> dpiscale=<scale>
     <x>,<y>,<width>,<height> is the area of the dialog to be rendered.
 
     <scale> is a scaling factor, e.g. 1 for non-HiDPI.
+
+clientzoom tilepixelwidth=<width> tilepixelheight=<height> tiletwipwidth=<twipWidth> tiletwipheight=<twipHeight> dpiscale=<scale> zoom=<zoomLevel>
+
+    Requests an update of the client zoom level and tile size.
+
+    <width> and <height> define the tile dimensions in pixels.
+
+    <twipWidth> and <twipHeight> define the tile dimensions in twips.
+
+    <scale> is the scaling factor, e.g., 1 for non-HiDPI displays.
+
+    <zoomLevel> represents the zoom factor applied to the client view.
+
+    This command ensures that the rendered tiles match the correct zoom level and DPI scaling.
+
+commandvalues command=<UNOCommand>[?param1=value1&param2=value2...]
+
+    Sends a UNO command from the client to the server.
+        - <UNOCommand> is the command to be executed (e.g., .uno:ViewAnnotations).
+        - Optional query parameters can be appended to specify additional command details.
+
+completefunction name=<FunctionName>
+
+    Requests the execution of a spreadsheet function in MobileWizard.Clients can request to complete a function name partially typed in the formula input box.
+
+    <FunctionName> is the name of the function to be applied, such as SUM, MIN, AVG, MAX, etc.
+
+This command allows the client to request calculation functions dynamically.
+
+dialogevent <windowId> { "id": "<objectId>", "cmd": "<eventType>", "data": "<data>", "type": "<objectType>" }
+
+    Sends an event message related to a dialog object within JSDialog.
+
+    - <windowId> is the identifier of the dialog window (e.g., the JSDialog ID).
+
+    - <objectId> is the ID of the object that triggered the event, such as "POPOVER", "numberformat", "masterslidebutton", etc.
+
+    - <eventType> represents the type of event that occurred, such as "selected", "Activate", "click", "close", "response", "keypress", "render", etc.
+
+    - <data> contains any object data entered by the user, which will dictate the action performed.
+
+    - <objectType> specifies the type of object, such as "combobox", "iconpreview", "toolbox", etc.
+
+Example:
+    1.dialogevent 45 { "id": "linestylevalueset", "cmd": "click", "data": "0.19801980198019803;0.19130434782608696", "type": "drawingarea" }
+    2.dialogevent 21 {"id":"fontnamecombobox", "cmd": "render_entry", "data": "16;100;100", "type": "combobox"}
+    3.dialogevent 10 { "id": "-1" }
+
+exportas url=<url>
+
+    This command allows for the seamless export of documents within the WOPI protocol framework.
+
+    Requests the export of a file, directing the server to handle it through a WOPI (Web Application Open Platform Interface) URL.
+
+    - <url> is the URL that specifies the location of the file to be exported. This URL is passed using the wopi protocol, encoded via encodeURIComponent to ensure the proper formatting for transfer.
+
+formfieldevent { "type": "<objectType>", "cmd": "<eventType>", "data": "<data>" }
+
+    This command helps communicate form field interactions and pass relevant data back to the server or application for further processing.
+    This can be used to handle user actions like selecting a dropdown option or similar events
+
+    <type> Specifies the type of form field, such as "drop-down" etc
+
+    <cmd> Represents the event that occurred on the form field, such as "selected" etc
+
+    <data> Contains any relevant data tied to the event. This can include an index, value, or other information depending on the event type.
+
+getslide hash=<slideHash> part=<slidePart> width=<canvasWidth> height=<canvasHeight> renderBackground=<backgroundRenderFlag> renderMasterPage=<masterPageRenderFlag> devicePixelRatio=<devicePixelRatio>
+
+    This command is used to request and render a slide with the appropriate properties for a specific device display and rendering conditions.
+
+    Requests a specific slide from the server, providing necessary parameters to ensure proper rendering based on the client's display settings.
+
+    <hash>: The hash value identifying the specific slide to be requested.
+
+    <part>: Specifies the part or index of the slide (useful for segmented or multi-part slides).
+
+    <width>: The width of the canvas in which the slide will be rendered.
+
+    <height>: The height of the canvas in which the slide will be rendered.
+
+    <renderBackground>: A flag indicating whether the slide background should be rendered. 0 for not rendered, 1 for rendered.
+
+    <renderMasterPage>: A flag indicating whether the master page of the slide should be rendered. 0 for not rendered, 1 for rendered.
+
+    <devicePixelRatio>: The device pixel ratio, typically window.devicePixelRatio, which adjusts the rendering quality for HiDPI displays.
+
+resetaccesstoken <token=<accessToken>>
+
+    This command ensures that the client uses the updated access token for further requests.
+    Resets the access token for authentication or session management.
+
+    - <token>: The new access token that replaces the previous one.
+
+renamefile <filename=<newFilename>>
+
+    Requests a file rename operation.
+
+    - `<filename>`: The new name for the file, URL-encoded to handle special characters.
+
+    This command updates the file name on the server, ensuring proper encoding for special characters in the filename.
+a11ystate <enableA11y>
+
+    The a11ystate protocol is used to enable or disable accessibility (A11y) support in the UI.
+
+geta11yfocusedparagraph
+
+    The geta11yfocusedparagraph protocol is used to retrieve information about the currently focused paragraph in an editable area, supporting accessibility (A11y) features.
+
+a11ycaretposition
+
+    The a11ycaretposition protocol is used to notify or request the current caret position within an editable area, supporting accessibility (A11y) features.
+
+notasync:
+
+    Warns when a non-asynchronous (blocking) dialog is used.
+
+    This message is triggered to notify that a dialog operation is not running asynchronously, which may affect performance or user experience.
+
+getpresentationinfo
+
+    This adds support for getting the presentation info from core.
+
+    This change uses the new GetPresentationInfo() funciton that was added to the LOKit API.
+
+removetextcontext id=<windowId> before=<before_position> after=<after_position>
+
+    This protocol is used to remove text context from a specified location in a document. It allows the deletion of multiple characters within a range by specifying the positions before and after the deletion.
+
+    - id=<windowId> : Specifies the ID of the window where the text removal operation is occurring.
+    - before=<before_position> : The position before the deletion starts.
+    - after=<after_position> : The position after the deletion ends.
+
+browsersetting action=update key=<SettingKey> value=<SettingValue>
+
+    The browsersetting protocol modify specific UI settings.
+
+    - key=<SettingKey> : The name of the setting to update (e.g., ShowStatusBar).
+    - value=<SettingValue> : The new value for the setting (e.g., true or false).
 
 contentcontrolevent <JSON>
     *Properties:
@@ -711,6 +859,68 @@ unloaded: viewid=<viewId> views=<number of active views>
 
     See also loaded:.
 
+wopi -> server
+===============
+
+extractdocumentstructure url=<documentURL> filter=<filterType>
+
+    Extracts structured data from a document and returns it in JSON format.
+
+    - url=<documentURL> : Specifies the document location.
+
+    - filter=<filterType> : (Optional) Limits extraction to specific elements (e.g., contentcontrol, charts, docprops, slides). If omitted, all available data is extracted.
+
+    This command retrieves structured document data for further processing.
+
+    https://sdk.collaboraonline.com/docs/extract_transform_api.html#general-extraction
+
+transformdocumentstructure url=<documentURL> transform=<JSONTransformation>
+
+    Modifies a document's structure based on a JSON transformation recipe.
+
+    url=<documentURL> : Specifies the document location.
+
+    transform=<JSONTransformation> : Defines the structural modifications in JSON format.
+
+    This command applies the transformation rules and returns the modified document.
+
+    https://sdk.collaboraonline.com/docs/extract_transform_api.html#general-transform
+
+extractlinktargets url=<documentURL>
+
+    This command returns a list of link targets in JSON format, which includes various document elements such as tables, images, and bookmarks.
+
+    url=<documentURL> : Specifies the document location.
+
+    You can use the target in the URL to open the document at a specific position, for example: `&target=Table1|table`
+
+getthumbnail x=<Width> y=<Height>
+
+    Generates a thumbnail image of a document or a specific element inside it.
+
+    - x=<Width> : Sets the width of the thumbnail.
+    - y=<Height> : Sets the height of the thumbnail.
+
+    Usage:
+    Sent via HTTP POST to /cool/get-thumbnail with the document file.
+
+    Optionally, specify a target to generate a thumbnail for a specific element (e.g., a table, image, or heading).
+
+    https://sdk.collaboraonline.com/docs/linking_api.html?highlight=thumbnail
+
+rendersearchresult <searchResultXml>
+
+    This command generates an image (PNG) of a specific search result within a document.
+
+    - <searchResultXml>: The XML file representing the search results, detailing the position of the search hits within the document.
+
+    This adds a new service render-search-result, which renders an
+    image of the position where, the search fund a hit. The search
+    result contains the information in which object or paragraph,
+    which is just the node id and node type from the document model.
+
+    The service takes the document and the search result (xml file)
+    as the input and returns a PNG image as the output.
 
 child -> parent
 ===============
@@ -931,6 +1141,16 @@ wopiSrcMap
 verifyauth jwt=<jwt_token> id=<unique_identifier>
 
     verify jwt token without shutting down the socket connection, works only with monitor
+
+routetokensanitycheck
+
+    The routetokensanitycheck protocol is used to request a sanity check for route tokens by the indirection server.
+
+    Usage:
+
+    - Sent as a request to verify the validity of route tokens.
+
+    - Ensures that tokens are correctly formatted and authorized.
 
 admin -> client
 ===============
