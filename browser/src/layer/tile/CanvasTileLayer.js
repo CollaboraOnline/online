@@ -5,13 +5,6 @@
 
 /* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array cool OtherViewCellCursorSection TileCoordData */
 
-/*eslint no-extend-native:0*/
-if (typeof String.prototype.startsWith !== 'function') {
-	String.prototype.startsWith = function (str) {
-		return this.slice(0, str.length) === str;
-	};
-}
-
 // debugging aid.
 function hex2string(inData, length)
 {
