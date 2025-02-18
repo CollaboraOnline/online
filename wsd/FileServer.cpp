@@ -582,6 +582,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         Poco::JSON::Array::Ptr configAutoTexts = new Poco::JSON::Array();
         Poco::JSON::Array::Ptr configDictionaries = new Poco::JSON::Array();
         Poco::JSON::Array::Ptr configXcu = new Poco::JSON::Array();
+        Poco::JSON::Array::Ptr configTemplate = new Poco::JSON::Array();
         for (const auto& item : items)
         {
             Poco::JSON::Object::Ptr configEntry = new Poco::JSON::Object();
@@ -598,10 +599,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                 configDictionaries->add(configEntry);
             else if (item.first == "xcu")
                 configXcu->add(configEntry);
+            else if (item.first == "template")
+                configTemplate->add(configEntry);
         }
         configInfo->set("autotext", configAutoTexts);
         configInfo->set("wordbook", configDictionaries);
         configInfo->set("xcu", configXcu);
+        configInfo->set("template", configTemplate);
 
         if (serveBrowserSetttings)
         {
@@ -673,6 +677,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                     assetVec.push_back(asset("wordbook", filePath));
                 else if (ext == "xcu")
                     assetVec.push_back(asset("xcu", filePath));
+                else if (ext == "otp")
+                    assetVec.push_back(asset("template", filePath));
                 LOG_TRC("Found preset file[" << filePath << ']');
             }
         };
