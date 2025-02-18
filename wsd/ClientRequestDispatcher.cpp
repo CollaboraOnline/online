@@ -1120,6 +1120,7 @@ STATE_ENUM(CheckStatus,
     UnspecifiedError,
     ConnectionAborted,
     CertificateValidation,
+    SelfSignedCertificate,
     SslHandshakeFail,
     MissingSsl,
     NotHttps,
@@ -1219,7 +1220,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         jsonResponse.set("X-Content-Type-Options", "nosniff");
 
         socket->sendAndShutdown(jsonResponse);
-        LOG_INF("Wopi Access Check request, result" << nameShort(result));
+        LOG_INF("Wopi Access Check request, result: " << nameShort(result));
     };
 
     if (scheme.empty())
@@ -1284,9 +1285,12 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 
             if (!probeSession->getSslVerifyMessage().empty())
             {
-                status = CheckStatus::CertificateValidation;
-
-                LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+                if (probeSession->getSslVerifyMessage() == "self-signed certificate") {
+                    status = CheckStatus::SelfSignedCertificate;
+                } else {
+                    status = CheckStatus::CertificateValidation;
+                    LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+                }
             }
 
             sendResult(status);
@@ -1335,9 +1339,13 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 
         if (!probeSession->getSslVerifyMessage().empty())
         {
-            status = CheckStatus::CertificateValidation;
-
-            LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+            if (probeSession->getSslVerifyMessage() == "self-signed certificate") {
+                // means we aren't checking certificate or we'd have a connectionFail
+                status = CheckStatus::Ok;
+            } else {
+                status = CheckStatus::CertificateValidation;
+                LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+            }
         }
 
         sendResult(status);
