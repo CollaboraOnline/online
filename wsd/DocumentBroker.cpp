@@ -1316,14 +1316,14 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
 
     std::string localPathEncoded;
     Poco::URI::encode(localPath, "#?", localPathEncoded);
-    _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
+    _uriJailed = Poco::URI(Poco::Path(localPath)).toString();
     _uriJailedAnonym =
-        Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
+        Poco::URI(Poco::Path(COOLWSD::anonymizeUrl(localPathEncoded))).toString();
     for (const auto& it : additionalFileLocalPaths)
     {
         std::string additionalFileLocalPathEncoded;
         Poco::URI::encode(it.second, "#?", additionalFileLocalPathEncoded);
-        _additionalFileUrisJailed[it.first] = Poco::URI(Poco::URI("file://"), additionalFileLocalPathEncoded).toString();
+        _additionalFileUrisJailed[it.first] = Poco::URI(Poco::Path(additionalFileLocalPathEncoded)).toString();
     }
 
     _filename = filename;
