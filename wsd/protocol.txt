@@ -193,6 +193,15 @@ selecttext type=<type> x=<x> y=<y>
 
     <type> is 'start', 'end' or 'reset', <x> and <y> are numbers.
 
+windowselecttext id=<dialogId> swap=<true|false> x=<x_position> y=<y_position>
+
+    This protocol is used to notify the system about text selection within a window, including the option to swap the mark and cursor roles.
+
+    - id=<dialogId> : Specifies the ID of the dialog window where the selection is happening.
+    - swap=<true|false> : Indicates whether the mark/cursor roles should be swapped. If swap=true, the mark and cursor positions are swapped.
+    - x=<x_position> : The x-coordinate of the selection position.
+    - y=<y_position> : The y-coordinate of the selection position.
+
 selectgraphic type=<type> x=<x> y=<y>
 
     <type> is 'start' or 'end' <x> and <y> are numbers.
