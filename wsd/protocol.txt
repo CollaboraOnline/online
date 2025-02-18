@@ -818,6 +818,32 @@ unloaded: viewid=<viewId> views=<number of active views>
 
     See also loaded:.
 
+wopi -> server
+===============
+
+extractdocumentstructure url=<documentURL> filter=<filterType>
+
+    Extracts structured data from a document and returns it in JSON format.
+
+    - url=<documentURL> : Specifies the document location.
+
+    - filter=<filterType> : (Optional) Limits extraction to specific elements (e.g., contentcontrol, charts, docprops, slides). If omitted, all available data is extracted.
+
+    This command retrieves structured document data for further processing.
+
+    https://sdk.collaboraonline.com/docs/extract_transform_api.html#general-extraction
+
+transformdocumentstructure url=<documentURL> transform=<JSONTransformation>
+
+    Modifies a document's structure based on a JSON transformation recipe.
+
+    url=<documentURL> : Specifies the document location.
+
+    transform=<JSONTransformation> : Defines the structural modifications in JSON format.
+
+    This command applies the transformation rules and returns the modified document.
+
+    https://sdk.collaboraonline.com/docs/extract_transform_api.html#general-transform
 
 child -> parent
 ===============
