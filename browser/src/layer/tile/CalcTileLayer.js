@@ -13,7 +13,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
-/* global app CPolyUtil CPolygon */
+/* global app CPolyUtil CPolygon $ */
 
 L.CalcTileLayer = L.CanvasTileLayer.extend({
 	options: {
@@ -107,6 +107,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		if (typeof this._prevSelectedPart === 'number' && !e.source) {
 			this.refreshViewData(undefined, false /* compatDataSrcOnly */, true /* sheetGeometryChanged */);
 			this._switchSplitPanesContext();
+			setTimeout(() => {
+				this._syncTileContainerSize();
+			}, 500);
 		}
 	},
 
@@ -380,6 +383,109 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		for (let i = 0; i < statusJSON.parts.length; i++) {
 			app.calc.partHashes.push(statusJSON.parts[i].hash);
+		}
+	},
+
+	_syncTileContainerSize: function() {
+		if (!this._map) return;
+
+		var tileContainer = this._container;
+		if (tileContainer) {
+			// Document container size is up to date as of now.
+			var documentContainerSize = document.getElementById('document-container');
+			documentContainerSize = documentContainerSize.getBoundingClientRect();
+			documentContainerSize = [documentContainerSize.width * app.dpiScale, documentContainerSize.height * app.dpiScale];
+
+			// Size has changed. Our map and canvas are not resized yet.
+			// But the row header, row group, column header and column group sections don't need to be resized.
+			// We can get their width and height from the sections' properties.
+			const rowHeaderSection = app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
+			const columnHeaderSection = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
+			const rowGroupSection = app.sectionContainer.getSectionWithName(L.CSections.RowGroup.name);
+			const columnGroupSection = app.sectionContainer.getSectionWithName(L.CSections.ColumnGroup.name);
+			const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			const scrollBarThickness = scrollSection ? scrollSection.sectionProperties.scrollBarThickness : 0;
+
+			const marginLeft = (rowHeaderSection ? rowHeaderSection.size[0] : 0) + (rowGroupSection ? rowGroupSection.size[0] : 0);
+			const marginTop = (columnHeaderSection ? columnHeaderSection.size[1] : 0) + (columnGroupSection ? columnGroupSection.size[1] : 0);
+
+			// Available for tiles section.
+			const availableSpace = [documentContainerSize[0] - marginLeft - scrollBarThickness, documentContainerSize[1] - marginTop - scrollBarThickness];
+			let newMapSize = availableSpace.slice();
+			let newCanvasSize = documentContainerSize.slice();
+
+			const fileSizePixels = [app.file.size.pixels[0], app.file.size.pixels[1]];
+
+			// If we don't need that much space.
+			if (fileSizePixels[0] < availableSpace[0]) {
+				newMapSize[0] = fileSizePixels[0];
+				newCanvasSize[0] = fileSizePixels[0] + marginLeft + scrollBarThickness;
+			}
+
+			if (fileSizePixels[1] < availableSpace[1]) {
+				newMapSize[1] = fileSizePixels[1];
+				newCanvasSize[1] = fileSizePixels[1] + marginTop + scrollBarThickness;
+			}
+
+			newMapSize = [Math.round(newMapSize[0] / app.dpiScale), Math.round(newMapSize[1] / app.dpiScale)];
+			newCanvasSize = [Math.round(newCanvasSize[0] / app.dpiScale), Math.round(newCanvasSize[1] / app.dpiScale)];
+
+			const mapElement = document.getElementById('map'); // map's size = tiles section's size.
+
+			const oldMapSize = [mapElement.clientWidth, mapElement.clientHeight];
+
+			mapElement.style.left = Math.round(marginLeft / app.dpiScale) + 'px';
+			mapElement.style.top = Math.round(marginTop / app.dpiScale) + 'px';
+			mapElement.style.width = newMapSize[0] + 'px';
+			mapElement.style.height = newMapSize[1] + 'px';
+
+			tileContainer.style.width = newMapSize[0] + 'px';
+			tileContainer.style.height = newMapSize[1] + 'px';
+
+			app.sectionContainer.onResize(newCanvasSize[0], newCanvasSize[1]); // Canvas's size = documentContainer's size.
+
+			var widthIncreased = oldMapSize[0] < newMapSize[0];
+			var heightIncreased = oldMapSize[1] < newMapSize[1];
+
+			if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
+				app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
+				app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+			}
+
+			if (oldMapSize[0] !== newMapSize[0] || oldMapSize[1] !== newMapSize[1]) {
+				this._map.invalidateSize({}, new L.Point(oldMapSize[0], oldMapSize[1]));
+			}
+
+			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
+			var hasIframeModalOpened = $('.iframe-dialog-modal').is(':visible');
+			// when integrator has opened dialog in parent frame (eg. save as) we shouldn't steal the focus
+			var focusedUI = document.activeElement === document.body;
+			if (window.mode.isMobile() && !hasMobileWizardOpened && !hasIframeModalOpened && !focusedUI) {
+				if (heightIncreased) {
+					// if the keyboard is hidden - be sure we setup correct state in TextInput
+					this._map.setAcceptInput(false);
+				} else
+					this._onUpdateCursor(true);
+			}
+
+			// Center the view w.r.t the new map-pane position using the current zoom.
+			this._map.setView(this._map.getCenter());
+
+			// We want to keep cursor visible when we show the keyboard on mobile device or tablet
+			var isTabletOrMobile = window.mode.isMobile() || window.mode.isTablet();
+			var hasVisibleCursor = app.file.textCursor.visible
+				&& this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isDomAttached();
+			if (!heightIncreased && isTabletOrMobile && this._map._docLoaded && hasVisibleCursor) {
+				var cursorPos = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y2 });
+				var cursorPositionInView = this._isLatLngInView(cursorPos);
+				if (!cursorPositionInView)
+					this._map.panTo(cursorPos);
+			}
+
+			if (heightIncreased || widthIncreased) {
+				app.sectionContainer.requestReDraw();
+				this._map.fire('sizeincreased');
+			}
 		}
 	},
 
@@ -965,7 +1071,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 			this._oldSheetGeomMsg = textMsg;
 			this._handleSheetGeometryDataMsg(values, differentSheet);
-
+			this._syncTileContainerSize();
 		} else if (values.comments) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		} else if (values.commentsPos) {

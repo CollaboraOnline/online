@@ -941,6 +941,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
 		app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
+
+		if (this._docType === 'spreadsheet')
+			this._syncTileContainerSize();
 	},
 
 	_checkSpreadSheetBounds: function (newZoom) {
@@ -4195,13 +4198,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			var newSize = this._getRealMapSize();
 			var heightIncreased = oldSize.y < newSize.y;
 			var widthIncreased = oldSize.x < newSize.x;
-
-			if (this._docType === 'spreadsheet') {
-				if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
-					app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
-					app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
-				}
-			}
 
 			if (oldSize.x !== newSize.x || oldSize.y !== newSize.y) {
 				this._map.invalidateSize({}, oldSize);
