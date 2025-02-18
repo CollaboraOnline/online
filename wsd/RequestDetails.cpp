@@ -275,7 +275,7 @@ void RequestDetails::processURI()
 
 Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
 {
-    // The URI of the document should be url-encoded.
+    // The URI of the document is url-encoded, except that in a mobile app it isn't?
     Poco::URI uriPublic((Util::isMobileApp() ? uri : Uri::decode(uri)));
 
     if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
@@ -283,6 +283,10 @@ Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
         // TODO: Validate and limit access to local paths!
         uriPublic.normalize();
 #ifdef _WIN32
+        // Change a bogus path like /C:/Users/tml/foo.odt to C:/Users/tml/foo.odt. If this path then
+        // later is changed back into a file: URI, as in ClientSession::loadDocument(), we can't
+        // just prefix "file://" but need one more slash. So maybe it would in fact be simpler to
+        // just keep the seemingly bogus /C:/Users/tml/foo.odt?
         std::string p = uriPublic.getPath();
         if (p.length() > 4 && p[0] == '/' && std::isalpha(p[1]) && p[2] == ':' && p[3] == '/')
             uriPublic.setPath(p.substr(1));

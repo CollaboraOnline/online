@@ -1685,9 +1685,17 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         parseDocOptions(tokens, loadPart, timestamp);
         overrideDocOption();
 
+        auto publicUri = docBroker->getPublicUri();
+#ifdef _WIN32
+        // See comment in RequestDetails::sanitizeURI()
+        auto p = publicUri.getPath();
+        if (p.length() > 3 && isalpha(p[0]) && p[1] == ':' && p[2] == '/')
+            publicUri.setPath("/" + p);
+#endif
+
         std::ostringstream oss;
         oss << std::boolalpha;
-        oss << "load url=" << docBroker->getPublicUri().toString();
+        oss << "load url=" << publicUri.toString();
 
 #if ENABLE_SSL
         // if ssl client verification was disabled in online for the wopi server,
