@@ -136,7 +136,7 @@ COOL_ADMIN_JS =\
 
 NODE_MODULES_SRC =\
 	autolinker@3.14.1 \
-	dompurify@3.1.7 \
+	dompurify@3.2.4 \
 	json-js@1.1.2 \
 	select2@4.0.13 \
 	l10n-for-node@0.0.1 \
