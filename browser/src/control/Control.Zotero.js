@@ -736,7 +736,19 @@ L.Control.Zotero = L.Control.extend({
 				that.map.uiManager.showSnackbar(_('Failed to load collections'));
 			});
 
-		this.showItemsForUrl('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery(), true);
+			fetch('https://api.zotero.org/users/'+ this.userID +'/items/top?v=3&key=' + this.apiKey + '&limit=1') //find total number of entries
+			.then(function (response) {
+				var totalItems = parseInt(response.headers.get('Total-Results'));
+				var i = 0;
+
+				// we first send smaller request to quickly feel the dialog with entries and then larger request to load in background
+				for (i = 0; i < 15 && i < totalItems; i++) {
+					that.showItemsForUrl('https://api.zotero.org/users/' + that.userID + '/items/top' + that.getZoteroItemQuery() + '&limit=1&start=' + i, true);
+				}
+				for (; i < totalItems; i += 10) {
+					that.showItemsForUrl('https://api.zotero.org/users/' + that.userID + '/items/top' + that.getZoteroItemQuery() + '&limit=10&start=' + i, true);
+				}
+			});
 	},
 
 	showStyleList: function() {
