@@ -1902,18 +1902,18 @@ public:
     }
 
     /// Start a partial asynchronous upload from a file based on the contents of a "Range" header
-    bool asyncUpload(std::string fromFile, std::string mimeType, std::string rangeHeader)
+    bool asyncUpload(std::string fromFile, std::string mimeType, const std::string_view rangeHeader)
     {
-        size_t equalsPos = rangeHeader.find("=");
+        const size_t equalsPos = rangeHeader.find('=');
         if (equalsPos == std::string::npos) return asyncUpload(std::move(fromFile), std::move(mimeType));
 
-        std::string unit = rangeHeader.substr(0, equalsPos);
+        const std::string_view unit = rangeHeader.substr(0, equalsPos);
         if (unit != "bytes") return asyncUpload(std::move(fromFile), std::move(mimeType));
 
-        std::string range = rangeHeader.substr(equalsPos + 1);
+        const std::string_view range = rangeHeader.substr(equalsPos + 1);
 
-        size_t dashPos = range.find("-");
-        std::string startString = range.substr(0, dashPos);
+        size_t dashPos = range.find('-');
+        const std::string_view startString = range.substr(0, dashPos);
         std::string endString = "-1";
 
         if (dashPos != std::string::npos) {
@@ -1924,7 +1924,8 @@ public:
         int end = -1;
         bool startIsSuffix = false;
 
-        if (startString == "") {
+        if (startString.empty())
+        {
             // Could be a suffix
             try {
                 start = std::stoi(endString);
@@ -1938,7 +1939,7 @@ public:
         }
 
         try {
-            start = std::stoi(startString);
+            start = std::stoi(std::string(startString));
             end = std::stoi(endString) + 1;
         }
         catch (std::invalid_argument&) {}

@@ -11,31 +11,27 @@
 
 #include <config.h>
 
-#include <test/lokassert.hpp>
-#include <cppunit/TestAssert.h>
-#include <cstddef>
-
-#include <common/Anonymizer.hpp>
-#include <Auth.hpp>
-#include <ChildSession.hpp>
 #include <Common.hpp>
 #include <FileUtil.hpp>
-#include <Kit.hpp>
+#include <JsonUtil.hpp>
 #include <Protocol.hpp>
+#include <TileCache.hpp>
 #include <TileDesc.hpp>
 #include <Util.hpp>
-#include <JsonUtil.hpp>
-
+#include <common/Anonymizer.hpp>
 #include <common/Message.hpp>
+#include <common/StateEnum.hpp>
 #include <common/ThreadPool.hpp>
-#include <wsd/FileServer.hpp>
-#include <net/Buffer.hpp>
-#include <net/NetUtil.hpp>
+
+#include <test/lokassert.hpp>
+
+#include <cppunit/TestAssert.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include <chrono>
+#include <cstddef>
 #include <fstream>
-
-#include <cppunit/extensions/HelperMacros.h>
+#include <sstream>
 
 /// WhiteBox unit-tests.
 class WhiteBoxTests : public CPPUNIT_NS::TestFixture
@@ -57,14 +53,11 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testAnonymization);
     CPPUNIT_TEST(testIso8601Time);
     CPPUNIT_TEST(testClockAsString);
-    CPPUNIT_TEST(testBufferClass);
     CPPUNIT_TEST(testStat);
     CPPUNIT_TEST(testStringCompare);
-    CPPUNIT_TEST(testParseUri);
-    CPPUNIT_TEST(testParseUriUrl);
-    CPPUNIT_TEST(testParseUrl);
     CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST(testJsonUtilEscapeJSONValue);
+    CPPUNIT_TEST(testStateEnum);
     CPPUNIT_TEST(testFindInVector);
     CPPUNIT_TEST(testThreadPool);
     CPPUNIT_TEST_SUITE_END();
@@ -85,14 +78,11 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testAnonymization();
     void testIso8601Time();
     void testClockAsString();
-    void testBufferClass();
     void testStat();
     void testStringCompare();
-    void testParseUri();
-    void testParseUriUrl();
-    void testParseUrl();
     void testSafeAtoi();
     void testJsonUtilEscapeJSONValue();
+    void testStateEnum();
     void testFindInVector();
     void testThreadPool();
 
@@ -878,91 +868,6 @@ void WhiteBoxTests::testClockAsString()
 #endif
 }
 
-void WhiteBoxTests::testBufferClass()
-{
-    constexpr auto testname = __func__;
-
-    Buffer buf;
-    LOK_ASSERT_EQUAL(0UL, buf.size());
-    LOK_ASSERT_EQUAL(true, buf.empty());
-    LOK_ASSERT(buf.getBlock() == nullptr);
-    buf.eraseFirst(buf.size());
-    LOK_ASSERT_EQUAL(0UL, buf.size());
-    LOK_ASSERT_EQUAL(true, buf.empty());
-
-    // Small data.
-    const char data[] = "abcdefghijklmnop";
-    buf.append(data, sizeof(data));
-
-    LOK_ASSERT_EQUAL(static_cast<std::size_t>(sizeof(data)), buf.size());
-    LOK_ASSERT_EQUAL(false, buf.empty());
-    LOK_ASSERT(buf.getBlock() != nullptr);
-    LOK_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data, buf.size()));
-
-    // Erase one char at a time.
-    for (std::size_t i = buf.size(); i > 0; --i)
-    {
-        buf.eraseFirst(1);
-        LOK_ASSERT_EQUAL(i - 1, buf.size());
-        LOK_ASSERT_EQUAL(i == 1, buf.empty()); // Not empty until the last element.
-        LOK_ASSERT_EQUAL(buf.getBlock() != nullptr, !buf.empty());
-        if (!buf.empty())
-            LOK_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data + (sizeof(data) - i) + 1, buf.size()));
-    }
-
-    // Large data.
-    constexpr std::size_t BlockSize = 512 * 1024; // We add twice this.
-    constexpr std::size_t BlockCount = 10;
-    for (std::size_t i = 0; i < BlockCount; ++i)
-    {
-        const auto prevSize = buf.size();
-
-        const std::vector<char> dataLarge(2 * BlockSize, 'a' + i); // Block of a single char.
-        buf.append(dataLarge.data(), dataLarge.size());
-        LOK_ASSERT_EQUAL(prevSize + (2 * BlockSize), buf.size());
-
-        // Remove half.
-        buf.eraseFirst(BlockSize);
-        LOK_ASSERT_EQUAL(prevSize + BlockSize, buf.size());
-        LOK_ASSERT_EQUAL(0, memcmp(buf.getBlock() + prevSize, dataLarge.data(), BlockSize));
-    }
-
-    LOK_ASSERT_EQUAL(BlockSize * BlockCount, buf.size());
-    LOK_ASSERT_EQUAL(false, buf.empty());
-
-    // Remove each block of data and test.
-    for (std::size_t i = BlockCount / 2; i < BlockCount; ++i) // We removed half above.
-    {
-        LOK_ASSERT_EQUAL(false, buf.empty());
-        LOK_ASSERT_EQUAL(BlockSize * 2 * (BlockCount - i), buf.size());
-
-        const std::vector<char> dataLarge(BlockSize * 2, 'a' + i); // Block of a single char.
-        LOK_ASSERT_EQUAL(0, memcmp(buf.getBlock(), dataLarge.data(), BlockSize));
-
-        buf.eraseFirst(BlockSize * 2);
-    }
-
-    LOK_ASSERT_EQUAL(0UL, buf.size());
-    LOK_ASSERT_EQUAL(true, buf.empty());
-
-    // Very large data.
-    const std::vector<char> dataLarge(20 * BlockSize, 'x'); // Block of a single char.
-    buf.append(dataLarge.data(), dataLarge.size());
-    LOK_ASSERT_EQUAL(dataLarge.size(), buf.size());
-
-    buf.append(data, sizeof(data)); // Add small data.
-    LOK_ASSERT_EQUAL(dataLarge.size() + sizeof(data), buf.size());
-
-    buf.eraseFirst(dataLarge.size()); // Remove large data.
-    LOK_ASSERT_EQUAL(sizeof(data), buf.size());
-    LOK_ASSERT_EQUAL(false, buf.empty());
-    LOK_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data, buf.size()));
-
-    buf.eraseFirst(buf.size()); // Remove all.
-    LOK_ASSERT_EQUAL(0UL, buf.size());
-    LOK_ASSERT_EQUAL(true, buf.empty());
-}
-
 void WhiteBoxTests::testStat()
 {
     constexpr auto testname = __func__;
@@ -1028,158 +933,6 @@ void WhiteBoxTests::testStringCompare()
     LOK_ASSERT(!Util::iequal("abc", 3, "abcd", 4));
 }
 
-void WhiteBoxTests::testParseUri()
-{
-    constexpr auto testname = __func__;
-
-    std::string scheme = "***";
-    std::string host = "***";
-    std::string port = "***";
-
-    LOK_ASSERT(!net::parseUri(std::string(), scheme, host, port));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT(host.empty());
-    LOK_ASSERT(port.empty());
-
-    LOK_ASSERT(net::parseUri("localhost", scheme, host, port));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("localhost"), host);
-    LOK_ASSERT(port.empty());
-
-    LOK_ASSERT(net::parseUri("127.0.0.1", scheme, host, port));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
-    LOK_ASSERT(port.empty());
-
-    LOK_ASSERT(net::parseUri("domain.com", scheme, host, port));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT(port.empty());
-
-    LOK_ASSERT(net::parseUri("127.0.0.1:9999", scheme, host, port));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
-    LOK_ASSERT_EQUAL(std::string("9999"), port);
-
-    LOK_ASSERT(net::parseUri("domain.com:88", scheme, host, port));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
-
-    LOK_ASSERT(net::parseUri("http://domain.com", scheme, host, port));
-    LOK_ASSERT_EQUAL(std::string("http://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT(port.empty());
-
-    LOK_ASSERT(net::parseUri("https://domain.com:88", scheme, host, port));
-    LOK_ASSERT_EQUAL(std::string("https://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
-
-    LOK_ASSERT(net::parseUri("http://domain.com/path/to/file", scheme, host, port));
-    LOK_ASSERT_EQUAL(std::string("http://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT(port.empty());
-
-    LOK_ASSERT(net::parseUri("https://domain.com:88/path/to/file", scheme, host, port));
-    LOK_ASSERT_EQUAL(std::string("https://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
-
-    LOK_ASSERT(net::parseUri("wss://127.0.0.1:9999/", scheme, host, port));
-    LOK_ASSERT_EQUAL(std::string("wss://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
-    LOK_ASSERT_EQUAL(std::string("9999"), port);
-}
-
-void WhiteBoxTests::testParseUriUrl()
-{
-    constexpr auto testname = __func__;
-
-    std::string scheme = "***";
-    std::string host = "***";
-    std::string port = "***";
-    std::string pathAndQuery = "***";
-
-    LOK_ASSERT(!net::parseUri(std::string(), scheme, host, port, pathAndQuery));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT(host.empty());
-    LOK_ASSERT(port.empty());
-    LOK_ASSERT(pathAndQuery.empty());
-
-    LOK_ASSERT(net::parseUri("localhost", scheme, host, port, pathAndQuery));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("localhost"), host);
-    LOK_ASSERT(port.empty());
-    LOK_ASSERT(pathAndQuery.empty());
-
-    LOK_ASSERT(net::parseUri("127.0.0.1", scheme, host, port, pathAndQuery));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
-    LOK_ASSERT(port.empty());
-    LOK_ASSERT(pathAndQuery.empty());
-
-    LOK_ASSERT(net::parseUri("domain.com", scheme, host, port, pathAndQuery));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT(port.empty());
-    LOK_ASSERT(pathAndQuery.empty());
-
-    LOK_ASSERT(net::parseUri("127.0.0.1:9999", scheme, host, port, pathAndQuery));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
-    LOK_ASSERT_EQUAL(std::string("9999"), port);
-    LOK_ASSERT(pathAndQuery.empty());
-
-    LOK_ASSERT(net::parseUri("domain.com:88", scheme, host, port, pathAndQuery));
-    LOK_ASSERT(scheme.empty());
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
-    LOK_ASSERT(pathAndQuery.empty());
-
-    LOK_ASSERT(net::parseUri("http://domain.com", scheme, host, port, pathAndQuery));
-    LOK_ASSERT_EQUAL(std::string("http://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT(port.empty());
-    LOK_ASSERT(pathAndQuery.empty());
-
-    LOK_ASSERT(net::parseUri("https://domain.com:88", scheme, host, port, pathAndQuery));
-    LOK_ASSERT_EQUAL(std::string("https://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
-
-    LOK_ASSERT(net::parseUri("http://domain.com/path/to/file", scheme, host, port, pathAndQuery));
-    LOK_ASSERT_EQUAL(std::string("http://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT(port.empty());
-    LOK_ASSERT_EQUAL(std::string("/path/to/file"), pathAndQuery);
-
-    LOK_ASSERT(net::parseUri("https://domain.com:88/path/to/file", scheme, host, port, pathAndQuery));
-    LOK_ASSERT_EQUAL(std::string("https://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
-    LOK_ASSERT_EQUAL(std::string("88"), port);
-    LOK_ASSERT_EQUAL(std::string("/path/to/file"), pathAndQuery);
-
-    LOK_ASSERT(net::parseUri("wss://127.0.0.1:9999/", scheme, host, port, pathAndQuery));
-    LOK_ASSERT_EQUAL(std::string("wss://"), scheme);
-    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
-    LOK_ASSERT_EQUAL(std::string("9999"), port);
-    LOK_ASSERT_EQUAL(std::string("/"), pathAndQuery);
-}
-
-void WhiteBoxTests::testParseUrl()
-{
-    constexpr auto testname = __func__;
-
-    LOK_ASSERT_EQUAL(std::string(), net::parseUrl(""));
-
-    LOK_ASSERT_EQUAL(std::string(), net::parseUrl("https://sub.domain.com:80"));
-    LOK_ASSERT_EQUAL(std::string("/"), net::parseUrl("https://sub.domain.com:80/"));
-
-    LOK_ASSERT_EQUAL(std::string("/some/path"),
-                     net::parseUrl("https://sub.domain.com:80/some/path"));
-}
-
 void WhiteBoxTests::testSafeAtoi()
 {
     constexpr auto testname = __func__;
@@ -1233,9 +986,56 @@ void WhiteBoxTests::testJsonUtilEscapeJSONValue()
 {
     constexpr auto testname = __func__;
 
-    const std::string in = "domain\\username";
+    constexpr std::string_view in = "domain\\username";
     const std::string expected = "domain\\\\username";
     LOK_ASSERT_EQUAL(JsonUtil::escapeJSONValue(in), expected);
+}
+
+STATE_ENUM(TestState, First, Second, Last);
+void WhiteBoxTests::testStateEnum()
+{
+    constexpr auto testname = __func__;
+
+    LOK_ASSERT_EQUAL_STR("TestState::First", name(TestState::First));
+    LOK_ASSERT_EQUAL_STR("TestState::Second", name(TestState::Second));
+    LOK_ASSERT_EQUAL_STR("TestState::Last", name(TestState::Last));
+
+    LOK_ASSERT_EQUAL_STR("First", nameShort(TestState::First));
+    LOK_ASSERT_EQUAL_STR("Second", nameShort(TestState::Second));
+    LOK_ASSERT_EQUAL_STR("Last", nameShort(TestState::Last));
+
+    TestState e = TestState::First;
+
+    e = TestState::First;
+    LOK_ASSERT_EQUAL_STR("TestState::First", name(e));
+    e = TestState::Second;
+    LOK_ASSERT_EQUAL_STR("TestState::Second", name(e));
+    e = TestState::Last;
+    LOK_ASSERT_EQUAL_STR("TestState::Last", name(e));
+
+    e = TestState::First;
+    LOK_ASSERT_EQUAL_STR("First", nameShort(e));
+    e = TestState::Second;
+    LOK_ASSERT_EQUAL_STR("Second", nameShort(e));
+    e = TestState::Last;
+    LOK_ASSERT_EQUAL_STR("Last", nameShort(e));
+
+    std::ostringstream oss;
+
+    e = TestState::First;
+    oss << e;
+    LOK_ASSERT_EQUAL_STR("TestState::First", oss.str());
+    oss.str("");
+
+    e = TestState::Second;
+    oss << e;
+    LOK_ASSERT_EQUAL_STR("TestState::Second", oss.str());
+    oss.str("");
+
+    e = TestState::Last;
+    oss << e;
+    LOK_ASSERT_EQUAL_STR("TestState::Last", oss.str());
+    oss.str("");
 }
 
 void WhiteBoxTests::testFindInVector()

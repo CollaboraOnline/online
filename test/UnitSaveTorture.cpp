@@ -436,7 +436,7 @@ class UnitKitSaveTorture : public UnitKit
             TST_LOG("stamp exists " << name);
             if (std::chrono::steady_clock::now() - start > std::chrono::seconds(10))
             {
-                LOK_ASSERT_FAIL("Timed out while waiting for stamp file " + name + " to go");
+                LOK_ASSERT_FAIL("Timed out while waiting for stamp file " << name << " to go");
                 return;
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(100));

@@ -1461,7 +1461,7 @@ LocalServerSocket::~LocalServerSocket()
 std::ostream& StreamSocket::stream(std::ostream& os) const
 {
     os << "StreamSocket[#" << getFD()
-       << ", " << toStringShort(_wsState)
+       << ", " << nameShort(_wsState)
        << ", " << Socket::toString(type())
        << " @ ";
     if (Type::IPv6 == type())
