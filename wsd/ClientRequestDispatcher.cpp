@@ -1120,6 +1120,8 @@ STATE_ENUM(CheckStatus,
     UnspecifiedError,
     ConnectionAborted,
     CertificateValidation,
+    SelfSignedCertificate,
+    ExpiredCertificate,
     SslHandshakeFail,
     MissingSsl,
     NotHttps,
@@ -1219,7 +1221,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         jsonResponse.set("X-Content-Type-Options", "nosniff");
 
         socket->sendAndShutdown(jsonResponse);
-        LOG_INF("Wopi Access Check request, result" << nameShort(result));
+        LOG_INF("Wopi Access Check request, result: " << nameShort(result));
     };
 
     if (scheme.empty())
@@ -1278,16 +1280,24 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
                 status = CheckStatus::HostNotFound;
             }
 
+#if ENABLE_SSL
             if (result == net::AsyncConnectResult::SSLHandShakeFailure) {
                 status = CheckStatus::SslHandshakeFail;
             }
 
-            if (!probeSession->getSslVerifyMessage().empty())
+            auto sslResult = probeSession->getSslVerifyResult();
+            if (sslResult != X509_V_OK)
             {
-                status = CheckStatus::CertificateValidation;
-
-                LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+                if (sslResult == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT) {
+                    status = CheckStatus::SelfSignedCertificate;
+                } else if (sslResult == X509_V_ERR_CERT_HAS_EXPIRED) {
+                    status = CheckStatus::ExpiredCertificate;
+                } else {
+                    status = CheckStatus::CertificateValidation;
+                    LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+                }
             }
+#endif
 
             sendResult(status);
     });
@@ -1322,23 +1332,22 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         if (result == net::AsyncConnectResult::UnknownHostError)
             status = CheckStatus::HostNotFound;
 
-        if (protocol == http::Session::Protocol::HttpSsl && lastErrno == ENOTCONN)
-            status = CheckStatus::MissingSsl;
-
         if (result == net::AsyncConnectResult::ConnectionError)
             status = CheckStatus::ConnectionAborted;
 
-        // TODO complete error coverage
-        // certificate errors
-        // self-signed
-        // expired
-
-        if (!probeSession->getSslVerifyMessage().empty())
+#if ENABLE_SSL
+        auto sslResult = probeSession->getSslVerifyResult();
+        if (sslResult != X509_V_OK)
         {
-            status = CheckStatus::CertificateValidation;
-
-            LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+            if (sslResult == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT) {
+                // means we aren't checking certificate or we'd have a connectionFail
+                status = CheckStatus::Ok;
+            } else {
+                status = CheckStatus::CertificateValidation;
+                LOG_WRN("Unexpected failed Result ssl in a connection success: " << probeSession->getSslVerifyMessage());
+            }
         }
+#endif
 
         sendResult(status);
     };

@@ -1361,6 +1361,18 @@ public:
 #endif
     }
 
+    long getSslVerifyResult()
+    {
+#if ENABLE_SSL
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            return socket->getSslVerifyResult();
+        return _handshakeSslVerifyFailure;
+#else
+        return 0; // X509_V_OK
+#endif
+    }
+
     std::string getSslCert(std::string& subjectHash)
     {
 #if ENABLE_SSL
