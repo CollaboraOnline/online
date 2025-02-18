@@ -459,6 +459,18 @@ renamefile <filename=<newFilename>>
 
     This command updates the file name on the server, ensuring proper encoding for special characters in the filename.
 
+a11ystate <enableA11y>
+
+    The a11ystate protocol is used to enable or disable accessibility (A11y) support in the UI.
+
+geta11yfocusedparagraph
+
+    The geta11yfocusedparagraph protocol is used to retrieve information about the currently focused paragraph in an editable area, supporting accessibility (A11y) features.
+
+a11ycaretposition
+
+    The a11ycaretposition protocol is used to notify or request the current caret position within an editable area, supporting accessibility (A11y) features.
+
 notasync:
 
     Warns when a non-asynchronous (blocking) dialog is used.
