@@ -943,7 +943,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             return;
         }
 
-        if (endPoint == "fetch-dic")
+        if (endPoint == "fetch-wordbook")
         {
             fetchDictionaries(request, message, socket);
             return;

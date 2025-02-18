@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-interface DicFile {
+interface WordbookFile {
 	headerType: string; // eg. "OOoUserDict1"
 	language: string; // the value after "lang:" (eg. "<none>")
 	dictType: string; // the value after "type:" (eg. "positive")
@@ -17,7 +17,7 @@ interface DicFile {
 }
 
 class WordBook {
-	openDicEditor(fileName: string, dic: DicFile): void {
+	openWordbookEditor(fileName: string, wordbook: WordbookFile): void {
 		const modal = document.createElement('div');
 		modal.className = 'modal';
 
@@ -46,8 +46,8 @@ class WordBook {
 		addButton.addEventListener('click', () => {
 			const newWord = newWordInput.value.trim();
 			if (newWord) {
-				dic.words.push(newWord);
-				this.updateWordList(wordList, dic);
+				wordbook.words.push(newWord);
+				this.updateWordList(wordList, wordbook);
 				newWordInput.value = '';
 			}
 		});
@@ -57,7 +57,7 @@ class WordBook {
 
 		const wordList = document.createElement('ul');
 		wordList.id = 'dicWordList';
-		this.updateWordList(wordList, dic);
+		this.updateWordList(wordList, wordbook);
 		modalContent.appendChild(wordList);
 
 		const buttonContainer = document.createElement('div');
@@ -78,8 +78,8 @@ class WordBook {
 		submitButton.textContent = 'Submit';
 		submitButton.className = 'button button--vue-primary';
 		submitButton.addEventListener('click', async () => {
-			console.debug('dic', dic);
-			const updatedContent = this.buildDicFile(dic);
+			console.debug('wordbook', wordbook);
+			const updatedContent = this.buildWordbookFile(wordbook);
 			console.debug('Updated Dictionary Content:\n', updatedContent);
 			await (window as any).settingIframe.uploadWordbookFile(
 				fileName,
@@ -95,7 +95,7 @@ class WordBook {
 		document.body.appendChild(modal);
 	}
 
-	parseDicFile(content: string): DicFile {
+	parseWordbookFile(content: string): WordbookFile {
 		const lines = content.split(/\r?\n/).filter((line) => line.trim() !== '');
 		const delimiterIndex = lines.findIndex((line) => line.trim() === '---');
 		if (delimiterIndex === -1) {
@@ -139,13 +139,13 @@ class WordBook {
 			const defaultHeaderType = 'OOoUserDict1';
 			const defaultLanguage = '<none>';
 			const defaultDictType = 'positive';
-			const newDic: DicFile = {
+			const newDic: WordbookFile = {
 				headerType: defaultHeaderType,
 				language: defaultLanguage,
 				dictType: defaultDictType,
 				words: dicWords,
 			};
-			const newContent = this.buildDicFile(newDic);
+			const newContent = this.buildWordbookFile(newDic);
 			await (window as any).settingIframe.uploadWordbookFile(
 				file.name,
 				newContent,
@@ -155,18 +155,18 @@ class WordBook {
 		}
 	}
 
-	private buildDicFile(dic: DicFile): string {
+	private buildWordbookFile(wordbook: WordbookFile): string {
 		const header = [
-			dic.headerType.trim(),
-			`lang: ${dic.language}`,
-			`type: ${dic.dictType}`,
+			wordbook.headerType.trim(),
+			`lang: ${wordbook.language}`,
+			`type: ${wordbook.dictType}`,
 		];
-		return [...header, '---', ...dic.words].join('\n');
+		return [...header, '---', ...wordbook.words].join('\n');
 	}
 
-	private updateWordList(listEl: HTMLElement, dic: DicFile): void {
+	private updateWordList(listEl: HTMLElement, wordbook: WordbookFile): void {
 		listEl.innerHTML = '';
-		dic.words.forEach((word, index) => {
+		wordbook.words.forEach((word, index) => {
 			// TODO IDEA: Extract list as components?
 
 			const li = document.createElement('li');
@@ -216,8 +216,8 @@ class WordBook {
             </span>
           `;
 			delButton.addEventListener('click', () => {
-				dic.words.splice(index, 1);
-				this.updateWordList(listEl, dic);
+				wordbook.words.splice(index, 1);
+				this.updateWordList(listEl, wordbook);
 			});
 			listItemDiv.appendChild(delButton);
 
