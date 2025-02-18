@@ -22,6 +22,7 @@
 #include <Poco/Dynamic/Var.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
+#include <Poco/JSON/JSONException.h>
 
 namespace JsonUtil
 {
@@ -277,4 +278,3 @@ Poco::JSON::Object::Ptr makePropertyValue(const std::string& type, const T& val)
 } // end namespace JsonUtil
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
-
