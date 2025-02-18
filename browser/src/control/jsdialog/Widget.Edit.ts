@@ -73,6 +73,7 @@ class EditWidget {
 		edit.value = data.text;
 		edit.id = data.id + '-input';
 		edit.dir = 'auto';
+		edit.setAttribute('autocomplete', 'off');
 
 		result.input = edit;
 

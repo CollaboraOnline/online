@@ -342,6 +342,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		spinfield.type = 'number';
 		spinfield.dir = document.documentElement.dir;
 		spinfield.tabIndex = '0';
+		spinfield.setAttribute('autocomplete', 'off');
 		controls['spinfield'] = spinfield;
 
 
@@ -1257,6 +1258,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		radiobutton.type = 'radio';
 		radiobutton.id = data.id + '-input';
 		radiobutton.tabIndex = '0';
+		radiobutton.setAttribute('autocomplete', 'off');
 
 		if (data.image) {
 			var image = L.DomUtil.create('img', '', radiobutton);
@@ -1305,6 +1307,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		checkbox.type = 'checkbox';
 		checkbox.id = data.id + '-input';
 		checkbox.tabIndex = '0';
+		checkbox.setAttribute('autocomplete', 'off');
 
 		var checkboxLabel = L.DomUtil.create('label', builder.options.cssClass, div);
 		checkboxLabel.id = data.id + '-label';
