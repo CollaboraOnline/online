@@ -5346,22 +5346,18 @@ std::string DocumentBroker::getEmbeddedMediaPath(const std::string& id)
     }
 
     const std::string localPath = url.substr(sizeof("file:///") - 1);
-    std::string path;
 
-    if constexpr (!Util::isMobileApp())
-    {
-        // We always extract media files in /tmp. Normally, we are in jail (chroot),
-        // and this would need to be accessed from WSD through the JailRoot path.
-        // But, when we have NoCapsForKit there is no jail, so the media file ends
-        // up in the host (AppImage) /tmp
-        path = COOLWSD::NoCapsForKit ? "/" + localPath :
-            FileUtil::buildLocalPathToJail(
-                COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + _jailId, localPath);
-    }
-    else
-    {
-        path = getJailRoot() + "/" + localPath;
-    }
+#if !MOBILEAPP
+    // We always extract media files in /tmp. Normally, we are in jail (chroot),
+    // and this would need to be accessed from WSD through the JailRoot path.
+    // But, when we have NoCapsForKit there is no jail, so the media file ends
+    // up in the host (AppImage) /tmp
+    const std::string path = COOLWSD::NoCapsForKit ? "/" + localPath :
+        FileUtil::buildLocalPathToJail(
+            COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + _jailId, localPath);
+#else
+    const std::string path = getJailRoot() + "/" + localPath;
+#endif
 
     return path;
 }

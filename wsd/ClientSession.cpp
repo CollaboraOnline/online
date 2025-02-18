@@ -224,7 +224,7 @@ std::string ClientSession::getClipboardURI(bool encode)
 
 std::string ClientSession::createPublicURI(const std::string& subPath, const std::string& tag, bool encode)
 {
-    if constexpr (!Util::isMobileApp()) {
+    if constexpr (Util::isMobileApp()) {
         if (subPath == "media") {
             const std::string mediaPath = getDocumentBroker()->getEmbeddedMediaPath(tag);
             const std::ifstream media(mediaPath, std::ios::binary);
