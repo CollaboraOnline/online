@@ -976,6 +976,7 @@ L.Map = L.Evented.extend({
 
 			this._sizeChanged = false;
 		}
+
 		return this._size.clone();
 	},
 

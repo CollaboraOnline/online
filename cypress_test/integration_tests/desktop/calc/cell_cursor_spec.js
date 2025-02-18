@@ -14,11 +14,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 
 	it('No jump on long merged cell', function() {
-		desktopHelper.assertScrollbarPosition('horizontal', 205, 320);
+		desktopHelper.assertScrollbarPosition('horizontal', 205, 330);
 		calcHelper.clickOnFirstCell(true, false, false);
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1:Z1');
-		desktopHelper.assertScrollbarPosition('horizontal', 205, 320);
+		desktopHelper.assertScrollbarPosition('horizontal', 205, 330);
 	});
 
 	it('Jump on address with not visible cursor', function() {
@@ -26,14 +26,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		cy.cGet(helper.addressInputSelector).should('have.value', 'Z11');
 
 		helper.typeIntoInputField(helper.addressInputSelector, 'A110');
-		desktopHelper.assertScrollbarPosition('vertical', 205, 315);
+		desktopHelper.assertScrollbarPosition('vertical', 205, 330);
 	});
 
 	it('Jump on search with not visible cursor', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 		cy.cGet(helper.addressInputSelector).should('have.value', 'Z11');
 
-		desktopHelper.assertScrollbarPosition('horizontal', 205, 320);
+		desktopHelper.assertScrollbarPosition('horizontal', 205, 330);
 		cy.cGet('input#search-input').clear().type('FIRST{enter}');
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A10');
@@ -43,7 +43,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	it('Show cursor on sheet insertion', function() {
 		// scroll down
 		helper.typeIntoInputField(helper.addressInputSelector, 'A110');
-		desktopHelper.assertScrollbarPosition('vertical', 205, 315);
+		desktopHelper.assertScrollbarPosition('vertical', 205, 330);
 
 		// insert sheet before
 		calcHelper.selectOptionFromContextMenu('Insert sheet before this');

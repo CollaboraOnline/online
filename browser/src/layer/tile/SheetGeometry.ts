@@ -95,6 +95,21 @@ export class SheetGeometry {
 		this.update(sheetGeomJSON, /* checkCompleteness */ true, part);
 	}
 
+	private checkMaxIndex(sheetGeomJSON: SheetGeometryCoreData, column: boolean): number {
+		// We will check one special case here: Only a few rows/columns are visible on top, others are hidden all the way to the bottom/right.
+		const hiddenInfo = column ? sheetGeomJSON.columns.hidden.trim() : sheetGeomJSON.rows.hidden.trim();
+
+		// Check if our special case may exist.
+		if (hiddenInfo.split(' ').length === 2) {
+			const parts = hiddenInfo.split(' ');
+			if (parseInt(parts[1]) === 1048575 || parseInt(parts[1]) === 16383) {
+				return parseInt(parts[0].split(':')[1]);
+			}
+		}
+
+		return parseInt(column ? sheetGeomJSON.maxtiledcolumn : sheetGeomJSON.maxtiledrow);
+	}
+
 	public update(sheetGeomJSON: SheetGeometryCoreData, checkCompleteness: boolean, part: number): boolean {
 
 		if (!this._testValidity(sheetGeomJSON, checkCompleteness)) {
@@ -123,8 +138,21 @@ export class SheetGeometry {
 			}
 		}
 
-		this._columns.setMaxIndex(+sheetGeomJSON.maxtiledcolumn);
-		this._rows.setMaxIndex(+sheetGeomJSON.maxtiledrow);
+		/*
+			There is a corner case here. If user hides all the rows/columns other than they use, all the document becomes visible.
+			For example: Where user shows only 3 rows, max index is equal to 1048575.
+			That max index value causes to initiate a very large array for the row headers. That kills the performance.
+		*/
+
+		if (sheetGeomJSON.columns && sheetGeomJSON.columns.hidden) { // If rows/columns .hidden property doesn't exist, don't change the maxIndex.
+			const tempMaxIndex = this.checkMaxIndex(sheetGeomJSON, true);
+			this._columns.setMaxIndex(tempMaxIndex);
+		}
+
+		if (sheetGeomJSON.rows && sheetGeomJSON.rows.hidden) {
+			const tempMaxIndex = this.checkMaxIndex(sheetGeomJSON, false);
+			this._rows.setMaxIndex(tempMaxIndex);
+		}
 
 		return updateOK;
 	}

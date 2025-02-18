@@ -223,6 +223,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			// Hide previous tab's shown comment (if any).
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hideAllComments();
 			this._sheetSwitch.gotSetPart(part);
+			this._syncTileContainerSize();
 		}
 	},
 
@@ -380,6 +381,107 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		for (let i = 0; i < statusJSON.parts.length; i++) {
 			app.calc.partHashes.push(statusJSON.parts[i].hash);
+		}
+	},
+
+	_getMarginPropertiesForTheMap: function() {
+		const rowHeaderSection = app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
+		const columnHeaderSection = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
+		const rowGroupSection = app.sectionContainer.getSectionWithName(L.CSections.RowGroup.name);
+		const columnGroupSection = app.sectionContainer.getSectionWithName(L.CSections.ColumnGroup.name);
+		const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+		const scrollBarThickness = scrollSection ? scrollSection.sectionProperties.scrollBarThickness : 0;
+
+		const marginLeft = (rowHeaderSection ? rowHeaderSection.size[0] : 0) + (rowGroupSection ? rowGroupSection.size[0] : 0);
+		const marginTop = (columnHeaderSection ? columnHeaderSection.size[1] : 0) + (columnGroupSection ? columnGroupSection.size[1] : 0);
+
+		return { marginLeft, marginTop, scrollBarThickness };
+	},
+
+	_calculateNewCanvasAndMapSizes: function(documentContainerSize, availableSpace, marginLeft, marginTop, scrollBarThickness) {
+		let newMapSize = availableSpace.slice();
+		let newCanvasSize = documentContainerSize.slice();
+
+		const fileSizePixels = [app.file.size.pixels[0], app.file.size.pixels[1]];
+
+		// If we don't need that much space.
+		if (fileSizePixels[0] < availableSpace[0]) {
+			newMapSize[0] = fileSizePixels[0];
+			newCanvasSize[0] = fileSizePixels[0] + marginLeft + scrollBarThickness;
+		}
+
+		if (fileSizePixels[1] < availableSpace[1]) {
+			newMapSize[1] = fileSizePixels[1];
+			newCanvasSize[1] = fileSizePixels[1] + marginTop + scrollBarThickness;
+		}
+
+		newMapSize = [Math.round(newMapSize[0] / app.dpiScale), Math.round(newMapSize[1] / app.dpiScale)];
+		newCanvasSize = [Math.round(newCanvasSize[0] / app.dpiScale), Math.round(newCanvasSize[1] / app.dpiScale)];
+
+		return { newMapSize, newCanvasSize };
+	},
+
+	_resizeMapElementAndTilesLayer: function(mapElement, marginLeft, marginTop, newMapSize) {
+		mapElement.style.left = Math.round(marginLeft / app.dpiScale) + 'px';
+		mapElement.style.top = Math.round(marginTop / app.dpiScale) + 'px';
+		mapElement.style.width = newMapSize[0] + 'px';
+		mapElement.style.height = newMapSize[1] + 'px';
+
+		this._container.style.width = newMapSize[0] + 'px';
+		this._container.style.height = newMapSize[1] + 'px';
+	},
+
+	_updateHeaderSections: function() {
+		if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
+			app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
+			app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+		}
+	},
+
+	_syncTileContainerSize: function() {
+		if (!this._map) return;
+
+		if (!this._container) return;
+
+		// Document container size is up to date as of now.
+		const documentContainerSize = this._getDocumentContainerSize();
+		documentContainerSize[0] *= app.dpiScale;
+		documentContainerSize[1] *= app.dpiScale;
+
+		// Size has changed. Our map and canvas are not resized yet.
+		// But the row header, row group, column header and column group sections don't need to be resized.
+		// We can get their width and height from the sections' properties.
+		const { marginLeft, marginTop, scrollBarThickness } = this._getMarginPropertiesForTheMap();
+
+		// Available for tiles section.
+		const availableSpace = [documentContainerSize[0] - marginLeft - scrollBarThickness, documentContainerSize[1] - marginTop - scrollBarThickness];
+		const { newMapSize, newCanvasSize } = this._calculateNewCanvasAndMapSizes(documentContainerSize, availableSpace, marginLeft, marginTop, scrollBarThickness);
+
+		const mapElement = document.getElementById('map'); // map's size = tiles section's size.
+		const oldMapSize = [mapElement.clientWidth, mapElement.clientHeight];
+		this._resizeMapElementAndTilesLayer(mapElement, marginLeft, marginTop, newMapSize);
+
+		app.sectionContainer.onResize(newCanvasSize[0], newCanvasSize[1]); // Canvas's size = documentContainer's size.
+
+		this._updateHeaderSections();
+
+		const widthIncreased = oldMapSize[0] < newMapSize[0];
+		const heightIncreased = oldMapSize[1] < newMapSize[1];
+
+		if (oldMapSize[0] !== newMapSize[0] || oldMapSize[1] !== newMapSize[1])
+			this._map.invalidateSize({}, new L.Point(oldMapSize[0], oldMapSize[1]));
+
+		this._mobileChecksAfterResizeEvent(heightIncreased);
+
+		// Center the view w.r.t the new map-pane position using the current zoom.
+		this._map.setView(this._map.getCenter());
+
+		// We want to keep cursor visible when we show the keyboard on mobile device or tablet
+		this._nonDesktopChecksAfterResizeEvent(heightIncreased);
+
+		if (heightIncreased || widthIncreased) {
+			app.sectionContainer.requestReDraw();
+			this._map.fire('sizeincreased');
 		}
 	},
 
@@ -965,7 +1067,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 			this._oldSheetGeomMsg = textMsg;
 			this._handleSheetGeometryDataMsg(values, differentSheet);
-
+			this._syncTileContainerSize();
 		} else if (values.comments) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		} else if (values.commentsPos) {
