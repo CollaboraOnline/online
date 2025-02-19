@@ -771,7 +771,6 @@ std::string COOLWSD::ServerName;
 std::string COOLWSD::FileServerRoot;
 std::string COOLWSD::ServiceRoot;
 std::string COOLWSD::TmpFontDir;
-std::string COOLWSD::TmpPresntTemplateDir;
 std::string COOLWSD::LOKitVersion;
 std::string COOLWSD::ConfigFile = COOLWSD_CONFIGDIR "/coolwsd.xml";
 std::string COOLWSD::ConfigDir = COOLWSD_CONFIGDIR "/conf.d";
@@ -3645,8 +3644,7 @@ int COOLWSD::innerMain()
     assert(Server && "The COOLWSDServer instance does not exist.");
     Server->findClientPort();
 
-    TmpFontDir = ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH + "/fonts";
-    TmpPresntTemplateDir = ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH + "/templates/presnt";
+    TmpFontDir = ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH;
 
     // Start the internal prisoner server and spawn forkit,
     // which in turn forks first child.
@@ -3706,45 +3704,18 @@ int COOLWSD::innerMain()
         LOG_ERR("Log level is set very high to '" << LogLevel << "' this will have a "
                 "significant performance impact. Do not use this in production.");
 
-    std::string uriConfigKey;
-    const std::string& fontConfigKey = "remote_font_config.url";
-    const std::string& assetConfigKey = "remote_asset_config.url";
-    bool remoteFontDefined = !ConfigUtil::getConfigValue<std::string>(fontConfigKey, "").empty();
-    bool remoteAssetDefined = !ConfigUtil::getConfigValue<std::string>(assetConfigKey, "").empty();
-    // Both defined: warn and use assetConfigKey
-    if (remoteFontDefined && remoteAssetDefined)
+    // Start the remote font downloading polling thread.
+    std::unique_ptr<RemoteFontConfigPoll> remoteFontConfigThread;
+    try
     {
-        LOG_WRN("Both remote_font_config.url and remote_asset_config.url are defined, "
-                "remote_asset_config.url is overriden on remote_font_config.url");
-        uriConfigKey = assetConfigKey;
+        // Fetch font settings from server if configured
+        remoteFontConfigThread = std::make_unique<RemoteFontConfigPoll>(config());
+        remoteFontConfigThread->start();
     }
-    // only font defined: use fontConfigKey
-    else if (remoteFontDefined && !remoteAssetDefined)
+    catch (const Poco::Exception&)
     {
-        uriConfigKey = fontConfigKey;
+        LOG_DBG("No remote_font_config");
     }
-    // only asset defined: use assetConfigKey
-    else if (!remoteFontDefined && remoteAssetDefined)
-    {
-        uriConfigKey = assetConfigKey;
-    }
-
-    // Start the remote asset downloading polling thread.
-    std::unique_ptr<RemoteAssetConfigPoll> remoteAssetConfigThread;
-    if (!uriConfigKey.empty())
-    {
-        try
-        {
-            // Fetch font and/or templates settings from server if configured
-            remoteAssetConfigThread = std::make_unique<RemoteAssetConfigPoll>(config(), uriConfigKey);
-            remoteAssetConfigThread->start();
-        }
-        catch (const Poco::Exception&)
-        {
-            LOG_DBG("No remote_asset_config");
-        }
-    }
-
 #endif
 
     // URI with /contents are public and we don't need to anonymize them.

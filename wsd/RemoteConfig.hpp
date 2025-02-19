@@ -22,8 +22,6 @@
 
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
-#include <Poco/JSON/Object.h>
-#include <map>
 
 #include <string>
 
@@ -116,12 +114,12 @@ private:
     Poco::AutoPtr<ConfigUtil::AppConfigMap> _persistConfig = nullptr;
 };
 
-class RemoteAssetConfigPoll : public RemoteJSONPoll
+class RemoteFontConfigPoll : public RemoteJSONPoll
 {
 public:
-    RemoteAssetConfigPoll(Poco::Util::LayeredConfiguration& config, const std::string& uriConfigKey)
-        : RemoteJSONPoll(config, uriConfigKey, "remoteassetconfig_poll",
-                         "assetconfiguration|fontconfiguration")
+    RemoteFontConfigPoll(Poco::Util::LayeredConfiguration& config)
+        : RemoteJSONPoll(config, "remote_font_config.url", "remotefontconfig_poll",
+                         "fontconfiguration")
     {
     }
 
@@ -130,58 +128,39 @@ public:
     void handleUnchangedJSON() override;
 
 private:
+    bool downloadPlain(const std::string& uri);
+
     bool eTagUnchanged(const std::string& uri, const std::string& oldETag);
 
-    struct AssetData
+    bool downloadWithETag(const std::string& uri, const std::string& oldETag);
+
+    bool finishDownload(const std::string& uri,
+                        const std::shared_ptr<const http::Response>& httpResponse);
+
+    void restartForKitAndReDownloadConfigFile();
+
+    struct FontData
     {
-        // Each asset can have a "stamp" or "version" in the JSON that we treat just as a string. In practice it
+        // Each font can have a "stamp" in the JSON that we treat just as a string. In practice it
         // can be some timestamp, but we don't parse it. If the stamp is changed, we re-download the
-        // asset file.
+        // font file.
         std::string stamp;
 
-        // If the asset has no "stamp" property, we use the ETag mechanism to see if the font file
+        // If the font has no "stamp" property, we use the ETag mechanism to see if the font file
         // needs to be re-downloaded.
         std::string eTag;
 
-        // Where the asset has been stored
+        // Where the font has been stored
         std::string pathName;
 
-        // Flag that tells whether the asset is mentioned in the JSON file that is being handled.
+        // Flag that tells whether the font is mentioned in the JSON file that is being handled.
         // Used only in handleJSON() when the JSON has been (re-)downloaded, not when the JSON was
         // unchanged in handleUnchangedJSON().
         bool active;
     };
 
-    bool downloadPlain(const std::string& uri, std::map<std::string, AssetData>& assets,
-                       const std::string& assetType);
-
-    bool finishDownload(const std::string& uri,
-                        const std::shared_ptr<const http::Response>& httpResponse,
-                        std::map<std::string, AssetData>& assets, const std::string& assetType);
-
-    bool downloadWithETag(const std::string& uri, const std::string& oldETag,
-                          std::map<std::string, AssetData>& assets, const std::string& assetType);
-
-    bool getNewAssets(const Poco::JSON::Array::Ptr& assetsPtr, const std::string& assetJsonKey,
-                      std::map<std::string, AssetData>& assets);
-
-    bool getTemplateAssets(const Poco::JSON::Object::Ptr& remoteJson,
-                           const std::string& templateType);
-
-    bool getFontAssets(const Poco::JSON::Object::Ptr& remoteJson, const std::string& fontJsonKey);
-
-    void reDownloadConfigFile(std::map<std::string, AssetData>& assets,
-                              const std::string& assetType);
-
-    bool handleUnchangedAssets(std::map<std::string, AssetData>& assets);
-
-    std::string removeTemplate(const std::string& uri, const std::string& tmpPath);
-
     // The key of this map is the download URI of the font.
-    std::map<std::string, AssetData> fonts;
-
-    // The key of this map is the download URI of the template.
-    std::map<std::string, AssetData> templates;
+    std::map<std::string, FontData> fonts;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
