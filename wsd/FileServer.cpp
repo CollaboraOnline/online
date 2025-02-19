@@ -2370,6 +2370,8 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     csp.appendDirective("img-src", "'self'");
     csp.appendDirective("img-src", "data:"); // Equivalent to unsafe-inline!
 
+    csp.appendDirective("worker-src", "'self' blob:");
+
     const auto& config = Application::instance().config();
     csp.merge(config.getString("net.content_security_policy", ""));
 

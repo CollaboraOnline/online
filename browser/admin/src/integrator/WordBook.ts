@@ -95,6 +95,50 @@ class WordBook {
 		document.body.appendChild(modal);
 	}
 
+	parseWordbookFileAsync(content: string): Promise<WordbookFile> {
+		return new Promise((resolve, reject) => {
+			const workerCode = `
+				self.onmessage = function(e) {
+					const content = e.data;
+					const lines = content.split(/\\r?\\n/).filter(line => line.trim() !== '');
+					const delimiterIndex = lines.findIndex(line => line.trim() === '---');
+					if (delimiterIndex === -1) {
+						self.postMessage({ error: "Invalid dictionary format: missing delimiter '---'" });
+						return;
+					}
+					if (delimiterIndex < 3) {
+						self.postMessage({ error: "Invalid dictionary format: not enough header lines before delimiter" });
+						return;
+					}
+					const headerType = lines[0].trim();
+					const languageMatch = lines[1].trim().match(/^lang:\\s*(.*)$/i);
+					const language = languageMatch ? languageMatch[1].trim() : '';
+					const typeMatch = lines[2].trim().match(/^type:\\s*(.*)$/i);
+					const dictType = typeMatch ? typeMatch[1].trim() : '';
+					const words = lines.slice(delimiterIndex + 1).filter(line => line.trim() !== '');
+					self.postMessage({ result: { headerType, language, dictType, words } });
+				};
+			`;
+			const blob = new Blob([workerCode], { type: 'application/javascript' });
+			const worker = new Worker(URL.createObjectURL(blob));
+
+			worker.onmessage = function (e) {
+				if (e.data.error) {
+					reject(new Error(e.data.error));
+				} else {
+					resolve(e.data.result);
+				}
+				worker.terminate();
+			};
+			worker.onerror = function (e) {
+				reject(e);
+				worker.terminate();
+			};
+
+			worker.postMessage(content);
+		});
+	}
+
 	parseWordbookFile(content: string): WordbookFile {
 		const lines = content.split(/\r?\n/).filter((line) => line.trim() !== '');
 		const delimiterIndex = lines.findIndex((line) => line.trim() === '---');
