@@ -17,6 +17,25 @@ interface WordbookFile {
 }
 
 class WordBook {
+	private loadingModal: HTMLDivElement | null = null;
+
+	startLoader() {
+		this.loadingModal = document.createElement('div');
+		this.loadingModal.className = 'modal';
+		const loadingContent = document.createElement('div');
+		loadingContent.className = 'modal-content';
+		loadingContent.textContent = 'Loading Wordbook...';
+		this.loadingModal.appendChild(loadingContent);
+		document.body.appendChild(this.loadingModal);
+	}
+
+	stopLoader() {
+		if (this.loadingModal) {
+			document.body.removeChild(this.loadingModal);
+			this.loadingModal = null;
+		}
+	}
+
 	openWordbookEditor(fileName: string, wordbook: WordbookFile): void {
 		const modal = document.createElement('div');
 		modal.className = 'modal';
