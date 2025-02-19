@@ -300,7 +300,7 @@ class SettingIframe {
 			let textValue = await response.text();
 			console.debug('textValue: ', textValue);
 
-			const wordbook = this.wordbook.parseWordbookFile(textValue);
+			const wordbook = await this.wordbook.parseWordbookFileAsync(textValue);
 			const fileName = this.getFilename(fileId, false);
 			this.wordbook.openWordbookEditor(fileName, wordbook);
 		} catch (error: unknown) {
