@@ -1047,48 +1047,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		return boundsList;
 	},
 
-	_initPreFetchPartTiles: function() {
-		const targetPart = this._selectedPart + this._map._partsDirection;
-
-		if (targetPart < 0 || targetPart >= this._parts)
-			return;
-
-		// check existing timeout and clear it before the new one
-		if (this._partTilePreFetcher)
-			clearTimeout(this._partTilePreFetcher);
-		this._partTilePreFetcher =
-			setTimeout(
-				L.bind(function() {
-					this._preFetchPartTiles(targetPart, this._selectedMode);
-				},
-				this),
-				100 /*ms*/);
-	},
-
-	_preFetchPartTiles: function(part, mode) {
-		var center = this._map.getCenter();
-		var zoom = this._map.getZoom();
-		var pixelBounds = this._map.getPixelBoundsCore(center, zoom);
-		var tileRange = this._pxBoundsToTileRange(pixelBounds);
-
-		var tileCombineQueue = [];
-		for (var j = tileRange.min.y; j <= tileRange.max.y; j++) {
-			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
-				var coords = new TileCoordData(i * this._tileSize, j * this._tileSize, zoom, part, mode);
-
-				if (!this._isValidTile(coords))
-					continue;
-
-				var key = this._tileCoordsToKey(coords);
-				if (!this._tileNeedsFetch(key))
-					continue;
-
-				tileCombineQueue.push(coords);
-			}
-		}
-		this._sendTileCombineRequest(tileCombineQueue);
-	},
-
 	_sendTileCombineRequest: function(tileCombineQueue) {
 		if (tileCombineQueue.length <= 0)
 			return;
@@ -5022,7 +4980,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 		}
 		if (this._docType === 'presentation' || this._docType === 'drawing')
-			this._initPreFetchPartTiles();
+			TilesPreFetcher.initPreFetchPartTiles();
 	},
 
 	_tileReady: function (coords) {
@@ -5177,7 +5135,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._sendTileCombineRequest(rectangles[r]);
 
 		if (this._docType === 'presentation' || this._docType === 'drawing')
-			this._initPreFetchPartTiles();
+			TilesPreFetcher.initPreFetchPartTiles();
 	},
 
 	_checkTileMsgObject: function (msgObj) {
