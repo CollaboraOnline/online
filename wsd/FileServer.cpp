@@ -950,7 +950,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
         if (endPoint == "fetch-wordbook")
         {
-            fetchDictionaries(request, message, socket);
+            fetchWordbook(request, message, socket);
             return;
         }
 
@@ -2114,7 +2114,7 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
     httpSession->asyncRequest(httpRequest, *COOLWSD::getWebServerPoll());
 }
 
-void FileServerRequestHandler::fetchDictionaries(const Poco::Net::HTTPRequest& request,
+void FileServerRequestHandler::fetchWordbook(const Poco::Net::HTTPRequest& request,
                                                  Poco::MemoryInputStream& message,
                                                  const std::shared_ptr<StreamSocket>& socket)
 {

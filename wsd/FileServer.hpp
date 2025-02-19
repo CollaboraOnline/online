@@ -141,7 +141,7 @@ private:
                                         Poco::MemoryInputStream& message,
                                         const std::shared_ptr<StreamSocket>& socket);
 
-    static void fetchDictionaries(const Poco::Net::HTTPRequest& request,
+    static void fetchWordbook(const Poco::Net::HTTPRequest& request,
                                    Poco::MemoryInputStream& message,
                                    const std::shared_ptr<StreamSocket>& socket);
 
