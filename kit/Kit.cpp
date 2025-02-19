@@ -3034,13 +3034,25 @@ int pollCallback(void* data, int timeoutUs)
 }
 
 // Do we have any pending input events from coolwsd ?
-bool anyInputCallback(void* data, int /*priority*/)
+bool anyInputCallback(void* data, int mostUrgentPriority)
 {
     auto kitSocketPoll = reinterpret_cast<KitSocketPoll*>(data);
     const std::shared_ptr<Document>& document = kitSocketPoll->getDocument();
 
     if (document)
     {
+        static bool considerPriority = std::getenv("COOL_ANYINPUT_CONSIDER_PRIORITY");
+        if (considerPriority && document->isLoaded())
+        {
+            // Check if core has high-priority tasks in which case we don't interrupt.
+            std::shared_ptr<lok::Document> kitDocument = document->getLOKitDocument();
+            // TaskPriority::HIGHEST -> TaskPriority::REPAINT
+            if (mostUrgentPriority >= 0 && mostUrgentPriority <= 4)
+            {
+                return false;
+            }
+        }
+
         if (document->hasCallbacks())
         {
             // Have pending LOK callbacks from core.
