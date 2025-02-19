@@ -499,14 +499,13 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
 
 static std::vector<char> compressBitmap(const std::vector<char> &bitmap)
 {
-    size_t i;
     std::vector<char> output;
-    for (i = 0; i < bitmap.size(); ++i)
+    for (size_t i = 0, count = bitmap.size(); i < count; ++i)
     {
         char cur;
         int cnt = 0;
         size_t j = i;
-        for (cur = bitmap[j]; bitmap[j] == cur; ++j)
+        for (cur = bitmap[j]; j < count && bitmap[j] == cur; ++j)
             ++cnt;
         output.push_back(cur);
         if (cnt > 3)
