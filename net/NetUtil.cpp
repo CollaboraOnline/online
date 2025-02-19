@@ -184,10 +184,41 @@ public:
     }
 };
 
-HostEntry resolveDNS(const std::string& addressToCheck)
+HostEntry syncResolveDNS(const std::string& addressToCheck)
 {
+#if !MOBILEAPP
+    // Where we have async DNS then use it for the sync DNS use cases too
+    // so we have a single cache of DNS results.
+    std::mutex mutex;
+    std::condition_variable cv;
+
+    std::shared_ptr<HostEntry> result;
+
+    net::AsyncDNS::DNSThreadDumpStateFn dumpState = [addressToCheck]() -> std::string
+    {
+        std::string state = "syncResolveDNS: [" + addressToCheck + "]";
+        return state;
+    };
+
+    net::AsyncDNS::DNSThreadFn callback = [&mutex, &result, &cv](const HostEntry& hostEntry)
+    {
+        std::unique_lock<std::mutex> lock(mutex);
+        result = std::make_shared<HostEntry>(hostEntry);
+        lock.unlock();
+        cv.notify_one();
+    };
+
+    std::unique_lock<std::mutex> lock(mutex);
+
+    AsyncDNS::lookup(addressToCheck, callback, dumpState);
+
+    cv.wait(lock, [&result]{ return static_cast<bool>(result); });
+
+    return *result;
+#else
     thread_local DNSResolver resolver;
     return resolver.resolveDNS(addressToCheck);
+#endif
 }
 
 typedef std::unique_ptr<sockaddr, void (*)(void*)> sockaddr_ptr;
@@ -221,12 +252,12 @@ sockaddr_ptr dupAddrWithPort(const sockaddr* addr, socklen_t addrLen, uint16_t p
 
 std::string canonicalHostName(const std::string& addressToCheck)
 {
-    return resolveDNS(addressToCheck).getCanonicalName();
+    return syncResolveDNS(addressToCheck).getCanonicalName();
 }
 
 std::vector<std::string> resolveAddresses(const std::string& addressToCheck)
 {
-    HostEntry hostEntry = resolveDNS(addressToCheck);
+    HostEntry hostEntry = syncResolveDNS(addressToCheck);
     return hostEntry.getAddresses();
 }
 
@@ -235,7 +266,7 @@ std::string HostEntry::resolveHostAddress() const
     if (!_ipAddresses.empty())
         return _ipAddresses[0];
 
-    LOG_WRN("resolveDNS(\"" << _requestName << "\") failed");
+    LOG_WRN("resolveHostAddress(\"" << _requestName << "\") failed");
 
     try
     {
@@ -252,7 +283,7 @@ std::string HostEntry::resolveHostAddress() const
 
 std::string resolveHostAddress(const std::string& targetHost)
 {
-    return resolveDNS(targetHost).resolveHostAddress();
+    return syncResolveDNS(targetHost).resolveHostAddress();
 }
 
 bool HostEntry::isLocalhost() const
@@ -289,7 +320,7 @@ bool HostEntry::isLocalhost() const
 
 bool isLocalhost(const std::string& targetHost)
 {
-    return resolveDNS(targetHost).isLocalhost();
+    return syncResolveDNS(targetHost).isLocalhost();
 }
 
 void AsyncDNS::startThread()
@@ -544,7 +575,7 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
     }
 #endif
 
-    HostEntry hostEntry(resolveDNS(host));
+    HostEntry hostEntry(syncResolveDNS(host));
     if (const addrinfo* ainfo = hostEntry.getAddrInfo())
     {
         for (const addrinfo* ai = ainfo; ai; ai = ai->ai_next)
