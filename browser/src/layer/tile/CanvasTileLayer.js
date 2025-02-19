@@ -4827,49 +4827,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._addTiles(queue, false);
 
 		if (this.isCalc() || this.isWriter())
-			this._initPreFetchAdjacentTiles(pixelBounds, zoom);
-	},
-
-	_initPreFetchAdjacentTiles: function (pixelBounds, zoom) {
-		if (this._adjacentTilePreFetcher)
-			clearTimeout(this._adjacentTilePreFetcher);
-
-		this._adjacentTilePreFetcher = setTimeout(function() {
-			// Extend what we request to include enough to populate a full
-			// scroll in the direction we were going after or before
-			// the current viewport
-			//
-			// request separately from the current viewPort to get
-			// those tiles first.
-
-			var direction = app.sectionContainer.getLastPanDirection();
-
-			// Conservatively enlarge the area to round to more tiles:
-			var pixelTopLeft = pixelBounds.getTopLeft();
-			pixelTopLeft.y = Math.floor(pixelTopLeft.y / this._tileSize) * this._tileSize;
-			pixelTopLeft.y -= 1;
-			var pixelBottomRight = pixelBounds.getBottomRight();
-			pixelBottomRight.y = Math.ceil(pixelBottomRight.y / this._tileSize) * this._tileSize;
-			pixelBottomRight.y += 1;
-
-			pixelBounds = new L.Bounds(pixelTopLeft, pixelBottomRight);
-
-			// Translate the area in the direction we're going.
-			pixelBounds.translate(pixelBounds.getSize().x * direction[0],
-					      pixelBounds.getSize().y * direction[1]);
-
-			var queue = this._getMissingTiles(pixelBounds, zoom);
-			if (this.isCalc() || queue.length === 0) // pre-load more aggressively
-			{
-				pixelBounds.translate(pixelBounds.getSize().x * direction[0] / 2,
-						      pixelBounds.getSize().y * direction[1] / 2);
-				queue = queue.concat(this._getMissingTiles(pixelBounds, zoom));
-			}
-
-			if (queue.length !== 0)
-				this._addTiles(queue, true);
-
-		}.bind(this), 50 /*ms*/);
+			TilesPreFetcher.initPreFetchAdjacentTiles();
 	},
 
 	_sendClientVisibleArea: function (forceUpdate) {
