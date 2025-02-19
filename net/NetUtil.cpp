@@ -89,7 +89,7 @@ std::string HostEntry::errorMessage() const
     return std::string("[" + _requestName + "]: " + errmsg);
 }
 
-HostEntry::HostEntry(const std::string& desc, const char* port)
+HostEntry::HostEntry(const std::string& desc)
     : _requestName(desc)
     , _saved_errno(0)
     , _eaino(0)
@@ -99,7 +99,7 @@ HostEntry::HostEntry(const std::string& desc, const char* port)
     hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG;
 
     addrinfo* ainfo = nullptr;
-    int rc = getaddrinfo(desc.c_str(), port, &hints, &ainfo);
+    int rc = getaddrinfo(desc.c_str(), nullptr, &hints, &ainfo);
     if (rc != 0)
     {
         setEAI(rc);
@@ -127,13 +127,11 @@ HostEntry::~HostEntry() = default;
 struct DNSCacheEntry
 {
     std::string queryAddress;
-    std::string queryPort;
     HostEntry hostEntry;
     std::chrono::steady_clock::time_point lookupTime;
 
-    DNSCacheEntry(const std::string& address, const std::string& port, const HostEntry& entry, const std::chrono::steady_clock::time_point& time)
+    DNSCacheEntry(const std::string& address, const HostEntry& entry, const std::chrono::steady_clock::time_point& time)
     : queryAddress(address)
-    , queryPort(port)
     , hostEntry(entry)
     , lookupTime(time)
     {
@@ -141,16 +139,14 @@ struct DNSCacheEntry
 };
 
 static HostEntry resolveDNS(const std::string& addressToCheck,
-                            const std::string& port,
                             std::vector<DNSCacheEntry>& querycache)
 {
     const auto now = std::chrono::steady_clock::now();
 
     // search for hit
     auto findIt = std::find_if(querycache.begin(), querycache.end(),
-                               [&addressToCheck, &port](const auto& entry)->bool {
-                                 return entry.queryAddress == addressToCheck &&
-                                        entry.queryPort == port;
+                               [&addressToCheck](const auto& entry)->bool {
+                                 return entry.queryAddress == addressToCheck;
                                });
     if (findIt != querycache.end())
     {
@@ -172,8 +168,8 @@ static HostEntry resolveDNS(const std::string& addressToCheck,
     }
 
     // lookup and cache
-    HostEntry hostEntry(addressToCheck, !port.empty() ? port.c_str() : nullptr);
-    querycache.emplace_back(addressToCheck, port, hostEntry, now);
+    HostEntry hostEntry(addressToCheck);
+    querycache.emplace_back(addressToCheck, hostEntry, now);
     return hostEntry;
 }
 
@@ -182,16 +178,43 @@ class DNSResolver
 private:
     std::vector<DNSCacheEntry> _querycache;
 public:
-    HostEntry resolveDNS(const std::string& addressToCheck, const std::string& port)
+    HostEntry resolveDNS(const std::string& addressToCheck)
     {
-        return net::resolveDNS(addressToCheck, port, _querycache);
+        return net::resolveDNS(addressToCheck, _querycache);
     }
 };
 
-HostEntry resolveDNS(const std::string& addressToCheck, const std::string& port = std::string())
+HostEntry resolveDNS(const std::string& addressToCheck)
 {
     thread_local DNSResolver resolver;
-    return resolver.resolveDNS(addressToCheck, port);
+    return resolver.resolveDNS(addressToCheck);
+}
+
+typedef std::unique_ptr<sockaddr, void (*)(void*)> sockaddr_ptr;
+
+sockaddr_ptr dupAddrWithPort(const sockaddr* addr, socklen_t addrLen, uint16_t port)
+{
+    sockaddr_ptr newAddr((sockaddr*)malloc(addrLen), free);
+    memcpy(newAddr.get(), addr, addrLen);
+
+    // Change port based on address family
+    if (newAddr->sa_family == AF_INET)
+    {
+        sockaddr_in* addr_in = (sockaddr_in*)newAddr.get();
+        addr_in->sin_port = htons(port);
+    }
+    else if (newAddr->sa_family == AF_INET6)
+    {
+        sockaddr_in6* addr_in6 = (sockaddr_in6*)newAddr.get();
+        addr_in6->sin6_port = htons(port);
+    }
+    else
+    {
+        LOG_ERR("Unknown sa_family: " << newAddr->sa_family);
+        newAddr.reset();
+    }
+
+    return newAddr;
 }
 
 #if !MOBILEAPP
@@ -335,7 +358,7 @@ void AsyncDNS::resolveDNS()
         // Unlock to allow entries to queue up in _lookups while resolving
         _lock.unlock();
 
-        _activeLookup.cb(_resolver->resolveDNS(_activeLookup.query, _activeLookup.port));
+        _activeLookup.cb(_resolver->resolveDNS(_activeLookup.query));
 
         _activeLookup = {};
 
@@ -344,12 +367,11 @@ void AsyncDNS::resolveDNS()
 }
 
 void AsyncDNS::addLookup(const std::string& lookup,
-                         const std::string& port,
                          const DNSThreadFn& cb,
                          const DNSThreadDumpStateFn& dumpState)
 {
     std::unique_lock<std::mutex> guard(_lock);
-    _lookups.emplace(Lookup({lookup, port, cb, dumpState}));
+    _lookups.emplace(Lookup({lookup, cb, dumpState}));
     guard.unlock();
     _condition.notify_one();
 }
@@ -384,11 +406,10 @@ void AsyncDNS::stopAsyncDNS()
 
 //static
 void AsyncDNS::lookup(const std::string& searchEntry,
-                      const std::string& port,
                       const DNSThreadFn& cb,
                       const DNSThreadDumpStateFn& dumpState)
 {
-    AsyncDNSThread->addLookup(searchEntry, port, cb, dumpState);
+    AsyncDNSThread->addLookup(searchEntry, cb, dumpState);
 }
 
 void
@@ -435,7 +456,8 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
                         continue;
                     }
 
-                    int res = ::connect(fd, ai->ai_addr, ai->ai_addrlen);
+                    auto addrWithPort = dupAddrWithPort(ai->ai_addr, ai->ai_addrlen, std::stoi(port));
+                    int res = ::connect(fd, addrWithPort.get(), ai->ai_addrlen);
                     if (res < 0 && errno != EINPROGRESS)
                     {
                         result = AsyncConnectResult::ConnectionError;
@@ -488,7 +510,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
         return state;
     };
 
-    AsyncDNS::lookup(host, port, callback, dumpState);
+    AsyncDNS::lookup(host, callback, dumpState);
 }
 
 #else //!MOBILEAPP
@@ -522,7 +544,7 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
     }
 #endif
 
-    HostEntry hostEntry(resolveDNS(host, port));
+    HostEntry hostEntry(resolveDNS(host));
     if (const addrinfo* ainfo = hostEntry.getAddrInfo())
     {
         for (const addrinfo* ai = ainfo; ai; ai = ai->ai_next)
@@ -536,7 +558,8 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
                     continue;
                 }
 
-                int res = ::connect(fd, ai->ai_addr, ai->ai_addrlen);
+                auto addrWithPort = dupAddrWithPort(ai->ai_addr, ai->ai_addrlen, std::stoi(port));
+                int res = ::connect(fd, addrWithPort.get(), ai->ai_addrlen);
                 if (res < 0 && errno != EINPROGRESS)
                 {
                     LOG_SYS("Failed to connect to " << host);
