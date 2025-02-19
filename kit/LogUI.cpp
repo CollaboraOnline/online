@@ -17,7 +17,8 @@ void LogUiCmd::logUiCmdLine(int userId, const std::string& line)
 {
     _fileStreamUICommands.write(line.c_str(), line.length());
     _fileStreamUICommands.write("\n", 1);
-    _usersLogged.insert(userId);
+    if (userId>=0)
+        _usersLogged.insert(userId);
 }
 
 void LogUiCmd::saveLogFile()

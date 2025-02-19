@@ -3893,6 +3893,13 @@ void LogUiCommands::logLine(LogUiCommandsLine &line, bool isUndoChange)
 {
     // log command
     double timeDiffStart = std::chrono::duration<double>(line._timeStart - _session->_docManager->getLogUiCmd().getKitStartTimeSec()).count();
+
+    // Load / Save event made by application will reach here.
+    // In that case save without real userID
+    int userID = _session->_viewId;
+    if (_session->_clientVisibleArea.getWidth() == 0)
+        userID = -1;
+
     std::stringstream strToLog;
     strToLog << "kit=" << _session->_docManager->getDocId();
     strToLog << " time=" << std::fixed << std::setprecision(3) << timeDiffStart;
@@ -3901,7 +3908,7 @@ void LogUiCommands::logLine(LogUiCommandsLine &line, bool isUndoChange)
         double timeDiffEnd = std::chrono::duration<double>(line._timeEnd - line._timeStart).count();
         strToLog << " dur=" << std::fixed << std::setprecision(3) << timeDiffEnd;
     }
-    strToLog << " user=" << _session->_viewId;
+    strToLog << " user=" << userID;
     if (!isUndoChange)
     {
         strToLog << " rep=" << line._repeat;
@@ -3925,7 +3932,7 @@ void LogUiCommands::logLine(LogUiCommandsLine &line, bool isUndoChange)
         }
     }
 
-    _session->_docManager->getLogUiCmd().logUiCmdLine(_session->_viewId, strToLog.str());
+    _session->_docManager->getLogUiCmd().logUiCmdLine(userID, strToLog.str());
 
     if (!isUndoChange && line._undoChange != 0)
     {
