@@ -349,10 +349,6 @@
         <url desc="URL of optional JSON file that lists fonts to be included in Online" type="string" default=""></url>
     </remote_font_config>
 
-    <remote_asset_config>
-        <url desc="URL of optional JSON file that lists fonts and impress template to be included in Online" type="string" default=""></url>
-    </remote_asset_config>
-
     <fonts_missing>
         <handling desc="How to handle fonts missing in a document: 'report', 'log', 'both', or 'ignore'" type="string" default="log">log</handling>
     </fonts_missing>

@@ -428,7 +428,6 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
     cleanupJails(childRoot);
 
     createJailPath(childRoot + CHILDROOT_TMP_INCOMING_PATH + "/fonts");
-    createJailPath(childRoot + CHILDROOT_TMP_INCOMING_PATH + "/templates/presnt");
     createJailPath(childRoot + CHILDROOT_TMP_SHARED_PRESETS_PATH);
 
     disableBindMounting(); // Clear to avoid surprises.
