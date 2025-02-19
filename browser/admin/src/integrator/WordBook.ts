@@ -158,35 +158,6 @@ class WordBook {
 		});
 	}
 
-	parseWordbookFile(content: string): WordbookFile {
-		const lines = content.split(/\r?\n/).filter((line) => line.trim() !== '');
-		const delimiterIndex = lines.findIndex((line) => line.trim() === '---');
-		if (delimiterIndex === -1) {
-			window.alert('Invalid dictionary format');
-			throw new Error('Invalid dictionary format: missing delimiter "---"');
-		}
-		if (delimiterIndex < 3) {
-			window.alert('Invalid dictionary format');
-			throw new Error(
-				'Invalid dictionary format: not enough header lines before delimiter',
-			);
-		}
-
-		const headerType = lines[0].trim();
-
-		const languageMatch = lines[1].trim().match(/^lang:\s*(.*)$/i);
-		const language = languageMatch ? languageMatch[1].trim() : '';
-
-		const typeMatch = lines[2].trim().match(/^type:\s*(.*)$/i);
-		const dictType = typeMatch ? typeMatch[1].trim() : '';
-
-		const words = lines
-			.slice(delimiterIndex + 1)
-			.filter((line) => line.trim() !== '');
-
-		return { headerType, language, dictType, words };
-	}
-
 	async wordbookValidation(uploadPath: string, file: File) {
 		try {
 			const content = await this.readFileAsText(file);
