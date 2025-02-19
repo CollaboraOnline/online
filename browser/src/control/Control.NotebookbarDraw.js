@@ -313,20 +313,22 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				}
 			);
 		}
-		content.push(
-			{
-				'type': 'container',
-				'children': [
-					{
-						'id': 'renamedocument',
-						'class': 'unoRenameDocument',
-						'type': 'bigcustomtoolitem',
-						'text': _('Rename'),
-					}
-				]
-			}
-		);
+		if (this._map['wopi']._supportsRename() && this._map['wopi'].UserCanRename) {
+			content.push(
+				{
+					'type': 'container',
+					'children': [
+						{
+							'id': 'renamedocument',
+							'class': 'unoRenameDocument',
+							'type': 'bigcustomtoolitem',
+							'text': _('Rename'),
+						}
+					]
+				}
+			);
 
+		}
 		return this.getTabPage('File', content);
 	},
 

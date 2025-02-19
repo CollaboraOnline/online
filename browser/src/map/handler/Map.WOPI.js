@@ -105,6 +105,12 @@ L.Map.WOPI = L.Handler.extend({
 		this._map.off('updateviewslist');
 	},
 
+	// Return whether there is the capability to rename, not the permission.
+	// Since we fall back on Save As for rename isn't supported.
+	_supportsRename: function() {
+		return !!this.SupportsRename || !this.UserCanNotWriteRelative;
+	},
+
 	_setWopiProps: function(wopiInfo) {
 		var overridenFileInfo = window.checkFileInfoOverride;
 		// Store postmessageorigin property, if it exists
