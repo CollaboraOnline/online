@@ -121,7 +121,9 @@ L.Map.include({
 			docLayer._invalidatePreviews();
 		}
 		docLayer._drawSearchResults();
-		this.focus();
+
+		if (document.activeElement.id !== 'search-input')
+			this.focus();
 	},
 
 	// part is the part index/id
