@@ -12,7 +12,7 @@
  * Writer tile layer is used to display a text document
  */
 
-/* global app GraphicSelection cool */
+/* global app GraphicSelection cool TilesPreFetcher */
 L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (commentData) {
@@ -179,6 +179,6 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			pages: this._pages,
 			docType: this._docType
 		});
-		this._resetPreFetching(true);
+		TilesPreFetcher.resetPreFetching(true);
 	},
 });
