@@ -44,7 +44,6 @@ public:
     typedef std::function<std::string()> DNSThreadDumpStateFn;
 
     static void lookup(const std::string& searchEntry,
-                       const std::string& port,
                        const DNSThreadFn& cb,
                        const DNSThreadDumpStateFn& dumpState);
 
@@ -57,7 +56,6 @@ private:
     struct Lookup
     {
         std::string query;
-        std::string port;
         AsyncDNS::DNSThreadFn cb;
         AsyncDNS::DNSThreadDumpStateFn dumpState;
     };
@@ -66,7 +64,6 @@ private:
 
     void resolveDNS();
     void addLookup(const std::string& lookup,
-                   const std::string& port,
                    const DNSThreadFn& cb,
                    const DNSThreadDumpStateFn& dumpState);
 

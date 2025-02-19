@@ -485,7 +485,7 @@ public:
         };
 
         const std::string& addressToCheck = _addressesToResolve.front();
-        net::AsyncDNS::lookup(addressToCheck, {}, pushHostnameResolvedToPoll, dumpState);
+        net::AsyncDNS::lookup(addressToCheck, pushHostnameResolvedToPoll, dumpState);
     }
 
     void hostnameResolved(const net::HostEntry& hostEntry)
