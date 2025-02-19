@@ -3,7 +3,7 @@
  * L.Map.Mouse is handling mouse interaction with the document
  */
 
-/* global UNOModifier app */
+/* global UNOModifier app TilesPreFetcher */
 
 L.Map.mergeOptions({
 	mouse: true
@@ -76,7 +76,7 @@ L.Map.Mouse = L.Handler.extend({
 			L.DomEvent.off(document, 'mouseup', this._onMouseUpOutside, this);
 		}
 		else if (e.type === 'mousedown') {
-			docLayer._resetPreFetching();
+			TilesPreFetcher.resetPreFetching();
 			this._mouseDown = true;
 			this._buttonDown = buttons;
 			if (this._holdMouseEvent) {
