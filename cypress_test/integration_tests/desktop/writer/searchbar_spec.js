@@ -142,4 +142,20 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' 
 		desktopHelper.assertScrollbarPosition('vertical', 200, 305);
 		desktopHelper.assertVisiblePage(3, 4, 6);
 	});
+
+	it('Search input should keep the focus after a part change', function() {
+		helper.typeIntoDocument('{ctrl}f');
+
+		cy.cGet('body').type('Off');
+		cy.wait(1000);
+		cy.getFrameWindow().then(function(win) {
+			cy.expect(win.document.activeElement.id).to.be.equal('search-input');
+		});
+
+		cy.cGet('body').type('i');
+		cy.wait(1000);
+		cy.getFrameWindow().then(function(win) {
+			cy.expect(win.document.activeElement.id).to.be.equal('search-input');
+		});
+	});
 });
