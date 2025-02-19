@@ -3274,17 +3274,17 @@ void lokit_main(
             const std::string tmpSubDir = Poco::Path(tempRoot, "cool-" + jailId).toString();
             const std::string jailTmpDir = Poco::Path(jailPath, "tmp").toString();
 
-            const std::string tmpIncoming = Poco::Path(childRoot, JailUtil::CHILDROOT_TMP_INCOMING_PATH).toString();
-            const std::string sharedTemplate = Poco::Path(tmpIncoming, "templates/presnt").toString();
-            const std::string loJailDestImpressTemplatePath = Poco::Path(loJailDestPath, "share/template/common/presnt").toString();
-
             const std::string sharedPresets = Poco::Path(childRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
             const std::string configIdPresets = Poco::Path(sharedPresets, Uri::encode(configId)).toString();
+
             const std::string sharedAutotext = Poco::Path(configIdPresets, "autotext").toString();
             const std::string loJailDestAutotextPath = Poco::Path(loJailDestPath, "share/autotext/common").toString();
 
             const std::string sharedWordbook = Poco::Path(configIdPresets, "wordbook").toString();
             const std::string loJailDestWordbookPath = Poco::Path(loJailDestPath, "share/wordbook").toString();
+
+            const std::string sharedTemplate = Poco::Path(configIdPresets, "template").toString();
+            const std::string loJailDestImpressTemplatePath = Poco::Path(loJailDestPath, "share/template/common/presnt").toString();
 
             const std::string sysTemplateSubDir = Poco::Path(tempRoot, "systemplate-" + jailId).toString();
             const std::string jailEtcDir = Poco::Path(jailPath, "etc").toString();
@@ -3345,15 +3345,6 @@ void lokit_main(
                     return false;
                 }
 
-                // mount the shared templates over the lo shared templates' 'common' dir
-                if (!JailUtil::bind(sharedTemplate, loJailDestImpressTemplatePath) ||
-                    !JailUtil::remountReadonly(sharedTemplate, loJailDestImpressTemplatePath))
-                {
-                    LOG_WRN("Failed to mount [" << sharedTemplate << "] -> ["
-                                                << loJailDestImpressTemplatePath
-                                                << "], will link contents");
-                    return false;
-                }
 
                 if (!configId.empty())
                 {
@@ -3374,6 +3365,17 @@ void lokit_main(
                     {
                         // TODO: actually do this link on failure
                         LOG_WRN("Failed to mount [" << sharedWordbook << "] -> [" << loJailDestWordbookPath
+                                                    << "], will link contents");
+                        return false;
+
+                    }
+
+                    // mount the shared templates over the lo shared templates' 'common' dir
+                    if (!JailUtil::bind(sharedTemplate, loJailDestImpressTemplatePath) ||
+                        !JailUtil::remountReadonly(sharedTemplate, loJailDestImpressTemplatePath))
+                    {
+                        LOG_WRN("Failed to mount [" << sharedTemplate << "] -> ["
+                                                    << loJailDestImpressTemplatePath
                                                     << "], will link contents");
                         return false;
                     }

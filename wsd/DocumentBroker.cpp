@@ -1618,6 +1618,7 @@ public:
             addGroup(settings, "autotext", presets);
             addGroup(settings, "wordbook", presets);
             addGroup(settings, "xcu", presets);
+            addGroup(settings, "template", presets);
         }
 
         Cache::supplyConfigFiles(_configId, presets);
@@ -1910,6 +1911,8 @@ void DocumentBroker::asyncInstallPreset(
         DocumentBroker::parseBrowserSettings(session, body);
         DocumentBroker::sendBrowserSetting(session);
     }
+
+    LOG_DBG("Saving preset file to jailPath[" << presetFile << ']');
     presetHttpResponse->saveBodyToFile(presetFile);
 }
 
