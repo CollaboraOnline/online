@@ -2306,6 +2306,9 @@ L.Control.Menubar = L.Control.extend({
 		if (menuItem.id === 'insertgraphicremote' && !this._map['wopi'].EnableInsertRemoteImage)
 			return false;
 
+		if (menuItem.id === 'renamedocument' && !(this._map['wopi']._supportsRename() && this._map['wopi'].UserCanRename))
+			return false;
+
 		if (menuItem.id === 'insertgraphic' && this._map['wopi'].DisableInsertLocalImage)
 			return false;
 
