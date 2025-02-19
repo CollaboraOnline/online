@@ -13,6 +13,7 @@
 from lxml import etree
 import os
 import sys
+import statistics
 
 def usageAndExit():
     message = """usage: {program} logfile_path
@@ -525,70 +526,72 @@ if __name__ == "__main__":
             if numbDur >= 0 and numbDur < numbUser:
                 duration = float(line[numbDur+4:numbUser])
 
-            if userId not in users:
-                users[userId] = User()
+            if userId >= 0 :
+                if userId not in users:
+                    users[userId] = User()
 
-            if lineCmd.startswith("cmd:"):
-                key = f"{lineCmd[4:-1]}|{users[userId].lastCmd}"
-                currentCommandPreviousCommand[key] = currentCommandPreviousCommand.get(key, 0) + 1
+                if lineCmd.startswith("cmd:"):
+                    key = f"{lineCmd[4:-1]}|{users[userId].lastCmd}"
+                    currentCommandPreviousCommand[key] = currentCommandPreviousCommand.get(key, 0) + 1
 
-                users[userId].lastCmd = lineCmd[4:-1]
-                if lineCmd.startswith("cmd:textinput") or lineCmd.startswith("cmd:removetextcontext"):
-                    users[userId].edited = True
-                if lineCmd.startswith("cmd:textinput") and repeat > 1:
-                    # duration used to calculate chars per sec
-                    if (duration > 0):
-                        users[userId].typeSpeed.append(((repeat-1)/duration, repeat-1))
-                if lineCmd.startswith("cmd:load") or lineCmd.startswith("cmd:save"):
-                    numbSize = lineCmd.find("size=")
-                    numbExt = lineCmd.find("ext=")
-                    fileSize = int(lineCmd[numbSize+5:numbExt])
-                    fileExt = lineCmd[numbExt+4:-1]
-                    if lineCmd.startswith("cmd:load"):
-                        loadSizeTimeExt.append([fileSize, duration, fileExt])
-                    elif lineCmd.startswith("cmd:savebg"):
-                        saveBgSizeTimeExt.append([fileSize, duration, fileExt])
-                    elif lineCmd.startswith("cmd:saveas"):
-                        saveAsSizeTimeExt.append([fileSize, duration, fileExt])
-                    elif lineCmd.startswith("cmd:save"):
-                        saveSizeTimeExt.append([fileSize, duration, fileExt])
-                    #exportas ?
+                    users[userId].lastCmd = lineCmd[4:-1]
+                    if lineCmd.startswith("cmd:textinput") or lineCmd.startswith("cmd:removetextcontext"):
+                        users[userId].edited = True
+                    if lineCmd.startswith("cmd:textinput") and repeat > 1:
+                        # duration used to calculate chars per sec
+                        if (duration > 0):
+                            users[userId].typeSpeed.append(((repeat-1)/duration, repeat-1))
 
-            elif lineCmd.startswith("undo-count-change:"):
-                if lineCmd[18] == "+":
-                    users[userId].undoChgStack.append([repeat, users[userId].lastCmd])
-                else: #"-"
-                    toDelete = repeat
-                    while toDelete > 0:
-                        deleted = 0
-                        stackLen = len(users[userId].undoChgStack) - 1
-                        if stackLen >= 0:
-                            cmd = users[userId].undoChgStack[stackLen][1]
-                            if users[userId].undoChgStack[stackLen][0] > toDelete:
-                                users[userId].undoChgStack[stackLen][0] -= toDelete
-                                deleted = toDelete
-                                toDelete = 0
+                elif lineCmd.startswith("undo-count-change:"):
+                    if lineCmd[18] == "+":
+                        users[userId].undoChgStack.append([repeat, users[userId].lastCmd])
+                    else: #"-"
+                        toDelete = repeat
+                        while toDelete > 0:
+                            deleted = 0
+                            stackLen = len(users[userId].undoChgStack) - 1
+                            if stackLen >= 0:
+                                cmd = users[userId].undoChgStack[stackLen][1]
+                                if users[userId].undoChgStack[stackLen][0] > toDelete:
+                                    users[userId].undoChgStack[stackLen][0] -= toDelete
+                                    deleted = toDelete
+                                    toDelete = 0
+                                else:
+                                    deleted = users[userId].undoChgStack[stackLen][0]
+                                    toDelete -= users[userId].undoChgStack[stackLen][0]
+                                    users[userId].undoChgStack.pop()
+
+                                actValue = 0
+                                if cmd in undoedCommands:
+                                    actValue = undoedCommands[cmd]
+
+                                actValue += deleted
+                                undoedCommands[cmd] = actValue
                             else:
-                                deleted = users[userId].undoChgStack[stackLen][0]
-                                toDelete -= users[userId].undoChgStack[stackLen][0]
-                                users[userId].undoChgStack.pop()
+                                # There is a problem.. undo without undoable change
+                                # Now calculate them to unknown command
+                                # Or we could simply skip them
+                                cmd = "unknown"
+                                if cmd in undoedCommands:
+                                    actValue = undoedCommands[cmd]
+                                actValue += toDelete
+                                undoedCommands[cmd] = actValue
+                                toDelete = 0
 
-                            actValue = 0
-                            if cmd in undoedCommands:
-                                actValue = undoedCommands[cmd]
-
-                            actValue += deleted
-                            undoedCommands[cmd] = actValue
-                        else:
-                            # There is a problem.. undo without undoable change
-                            # Now calculate them to unknown command
-                            # Or we could simply skip them
-                            cmd = "unknown"
-                            if cmd in undoedCommands:
-                                actValue = undoedCommands[cmd]
-                            actValue += toDelete
-                            undoedCommands[cmd] = actValue
-                            toDelete = 0
+            if lineCmd.startswith("cmd:load") or lineCmd.startswith("cmd:save"):
+                numbSize = lineCmd.find("size=")
+                numbExt = lineCmd.find("ext=")
+                fileSize = int(round(int(lineCmd[numbSize+5:numbExt])/1024))
+                fileExt = lineCmd[numbExt+4:-1]
+                if lineCmd.startswith("cmd:load"):
+                    loadSizeTimeExt.append([fileSize, duration, fileExt])
+                elif lineCmd.startswith("cmd:savebg"):
+                    saveBgSizeTimeExt.append([fileSize, duration, fileExt])
+                elif lineCmd.startswith("cmd:saveas"):
+                    saveAsSizeTimeExt.append([fileSize, duration, fileExt])
+                elif lineCmd.startswith("cmd:save"):
+                    saveSizeTimeExt.append([fileSize, duration, fileExt])
+                #exportas ?
 
     # re-check undoed commands, how many times they are used, to calculate how many % of it undoed.
     for cmd in undoedCommands.keys():
@@ -714,31 +717,111 @@ if __name__ == "__main__":
         key=lambda x: -x[2]
     )
 
-    # todo:  Load size/10k  odt-count / odt-sum-time  .. odp count / odp sum-time
-    loadDataTable = [["size", "time", "extension"]]
-    loadDataTable.extend(loadSizeTimeExt)
-    sortedLoadDataTable = sorted(
-        loadDataTable[1:],
-        key=lambda x: -x[0]
-    )
-    sortedLoadDataTable.insert(0, loadDataTable[0])
+    # save/load statistics
+    fileTypesWriter  = ["sxw", "odt", "fodt", "docx", "doc"]
+    fileTypesCalc    = ["sxc", "ods", "fods", "xlsx", "xls"]
+    fileTypesImpress = ["sxi", "odp", "fodp", "pptx", "ppt"]
+    fileTypesDraw    = ["sxd", "odg", "fodg"]
 
-    saveDataTable = [["size", "time", "extension"]]
-    saveDataTable.extend(saveSizeTimeExt)
-    saveDataTable.extend(saveAsSizeTimeExt)
-    sortedSaveDataTable = sorted(
-        saveDataTable[1:],
-        key=lambda x: -x[0]
-    )
-    sortedSaveDataTable.insert(0, saveDataTable[0])
+    sortedLoadSizeTimeExt = sorted(loadSizeTimeExt, key=lambda x: -x[0])
+    sortedSaveAllSizeTimeExt = sorted(saveSizeTimeExt + saveBgSizeTimeExt + saveAsSizeTimeExt, key=lambda x: -x[0])
+    sortedSaveSizeTimeExt = sorted(saveSizeTimeExt + saveAsSizeTimeExt, key=lambda x: -x[0])
+    sortedSaveBgSizeTimeExt = sorted(saveBgSizeTimeExt, key=lambda x: -x[0])
 
-    saveBgDataTable = [["size", "time", "extension"]]
-    saveBgDataTable.extend(saveBgSizeTimeExt)
-    sortedSaveBgDataTable = sorted(
-        saveBgDataTable[1:],
-        key=lambda x: -x[0]
-    )
-    sortedSaveBgDataTable.insert(0, saveBgDataTable[0])
+    for i in range(3):
+        if i == 0:
+            sortedSizeTimeExt = sortedLoadSizeTimeExt
+        elif i == 1:
+            sortedSizeTimeExt = sortedSaveSizeTimeExt
+        else:
+            sortedSizeTimeExt = sortedSaveBgSizeTimeExt
+
+        lastSize=-1
+        index = 0
+        dataTable = [["Size (k)", "odt", "doc", "docx", "ods", "xls", "xlsx", "odp", "ppt", "pptx", "odg", "unknown", "other"]]
+        for item in sortedSizeTimeExt:
+            if lastSize != item[0]:
+                if index > 0:
+                    dataTable.append( [item[0] , "","","", "","","", "","","", "","",""])
+                    j=0
+                    for mapArray in lineMap.values():
+                        if len(mapArray) > 0:
+                            dataTable[index][j+1]=statistics.median(mapArray)
+                        else:
+                            dataTable[index][j+1]=""
+                        j+=1
+
+                index +=1
+                lastSize = item[0]
+                lineMap = { "odt": [], "doc": [], "docx": [], "ods": [], "xls": [], "xlsx": [], "odp": [], "ppt": [], "pptx": [], "odg":[], "unknown": [], "other": [] }
+            if item[2] in lineMap.keys():
+                lineMap[item[2]].append(item[1])
+            else:
+                lineMap["else"].append(item[1])
+
+        if i == 0:
+            dataTable[0][0] = "Load Size (k)"
+            loadDataTable = dataTable
+        elif i == 1:
+            dataTable[0][0] = "Save Size (k)"
+            saveDataTable = dataTable
+        else:
+            dataTable[0][0] = "SaveBg Size (k)"
+            saveBgDataTable = dataTable
+
+    lastSize=-1
+    index = 0
+    loadSizeTypeCountDataTable = [["Load size (k)", "Writer", "Calc", "Impress", "Draw", "Other"]]
+    for loadItem in sortedLoadSizeTimeExt:
+        if lastSize != loadItem[0]:
+            loadSizeTypeCountDataTable.append( [loadItem[0] , 0,0,0,0,0])
+            index+=1
+            lastSize = loadItem[0]
+        typeId = 5
+        if loadItem[2] in fileTypesWriter:
+            typeId = 1
+        elif loadItem[2] in fileTypesCalc:
+            typeId = 2
+        elif loadItem[2] in fileTypesImpress:
+            typeId = 3
+        elif loadItem[2] in fileTypesDraw:
+            typeId = 5
+        loadSizeTypeCountDataTable[index][typeId] += 1
+
+    loadSizeTypeCountDataTable[1].append("sumCount:")
+    for j in range(5):
+        itemCount=0
+        for i in range(index):
+            itemCount += loadSizeTypeCountDataTable[i+1][j+1]
+        loadSizeTypeCountDataTable[2].append(loadSizeTypeCountDataTable[0][j+1])
+        loadSizeTypeCountDataTable[3].append(itemCount)
+
+    lastSize=-1
+    index = 0
+    saveSizeTypeCountDataTable = [["Save size (k)", "Writer", "Calc", "Impress", "Draw", "Other"]]
+    for saveItem in sortedSaveAllSizeTimeExt:
+        if lastSize != saveItem[0]:
+            saveSizeTypeCountDataTable.append( [saveItem[0] , 0,0,0,0,0])
+            index+=1
+            lastSize = saveItem[0]
+        typeId = 5
+        if saveItem[2] in fileTypesWriter:
+            typeId = 1
+        elif saveItem[2] in fileTypesCalc:
+            typeId = 2
+        elif saveItem[2] in fileTypesImpress:
+            typeId = 3
+        elif saveItem[2] in fileTypesDraw:
+            typeId = 5
+        saveSizeTypeCountDataTable[index][typeId] += 1
+
+    saveSizeTypeCountDataTable[1].append("sumCount:")
+    for j in range(5):
+        itemCount=0
+        for i in range(index):
+            itemCount += saveSizeTypeCountDataTable[i+1][j+1]
+        saveSizeTypeCountDataTable[2].append(saveSizeTypeCountDataTable[0][j+1])
+        saveSizeTypeCountDataTable[3].append(itemCount)
 
     commandDataTable = [["Command", "Total\nCommands"]]
     commandDataTable.extend(totalCommands.items())
@@ -793,12 +876,7 @@ if __name__ == "__main__":
         for i in range(3):
             userCharPerSecDataTable[i+2].extend(["",round(userCharPerSec[i][0],2)])
 
-
-
     dataSets = { # Sheet name, data set (data, x axis title, heat map effect, rotate top row of text 90 degrees)
-        "Load_size_time": [sortedLoadDataTable, "load size time", False, False],
-        "Save_size_time": [sortedSaveDataTable, "save size time", False, False],
-        "SaveBg_size_time": [sortedSaveBgDataTable, "savebg size time", False, False],
         "Total_Users_Per_Document": [sortedTotalUserPerDocTable, "USERS", False, False],
         "Total_Viewers_Per_Doc": [sortedTotalViewerPerDocTable, "VIEWERS", False, False],
         "Total_Editors_Per_Doc": [sortedTotalEditorPerDocTable, "EDITORS", False, False],
@@ -809,6 +887,11 @@ if __name__ == "__main__":
         "Command_Transitions": [currentPreviousMatrix, None, True, True], # Change to true for heatmap effect
         "Sub_Command_Transitions": [sortedSubMatrix, None, True, True], # Change to false for no heatmap effect
         "Char_Per_Sec": [userCharPerSecDataTable, "CHARACTERS / SEC", False, False],
+        "Load_Size_Count": [loadSizeTypeCountDataTable, "Load-Size-Count", False, False],
+        "Save_Size_Count": [saveSizeTypeCountDataTable, "Save-Size-Count", False, False],
+        "Load_size_time": [loadDataTable, "Load-Size-Time (median)", False, False],
+        "Save_size_time": [saveDataTable, "Save-Size-Time (median)", False, False],
+        "SaveBg_size_time": [saveBgDataTable, "SaveBackGround-size-time (median)", False, False],
     }
 
     NSMAP = {
