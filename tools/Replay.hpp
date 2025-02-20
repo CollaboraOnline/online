@@ -35,14 +35,14 @@
 
 struct PerfMetricInfo
 {
-    std::string phase;
-    std::string metric;
-    size_t data;
+    std::string _phase;
+    std::string _metric;
+    size_t _data;
 
-    PerfMetricInfo(const std::string& p, const std::string& m, size_t d)
-        : phase(p)
-        , metric(m)
-        , data(d)
+    PerfMetricInfo(const std::string& phase, const std::string& metric, size_t data)
+        : _phase(phase)
+        , _metric(metric)
+        , _data(data)
     {
     }
 };
@@ -362,7 +362,7 @@ struct Stats {
         for(size_t i = 0; i < perfData.size(); i++)
         {
             file << commitHash << ',' << formattedDate << ',' << _testType << ','
-                 << perfData[i].phase << ',' << perfData[i].metric << ',' << perfData[i].data;
+                 << perfData[i]._phase << ',' << perfData[i]._metric << ',' << perfData[i]._data;
             file << '\n';
         }
     }
