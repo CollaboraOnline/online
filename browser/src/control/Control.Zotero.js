@@ -393,31 +393,33 @@ L.Control.Zotero = L.Control.extend({
 		return this;
 	},
 
-	enableDialogOKButton: function() {
+	updateControl: function (controlJSON) {
 		this.map.fire('jsdialogupdate', {
 			data: {
 				jsontype: 'dialog',
 				action: 'update',
 				id: 'ZoteroDialog',
-				control: {
-					id: 'ok',
-					type: 'pushbutton',
-					text: _('OK'),
-					'has_default': true
-				},
+				control: controlJSON,
 			},
 			callback: this._onAction.bind(this)
 		});
 	},
 
+	enableDialogOKButton: function() {
+		this.updateControl(
+			{
+				id: 'ok',
+				type: 'pushbutton',
+				text: _('OK'),
+				'has_default': true
+			}
+		);
+	},
+
 	enableDialogLanguageCombobox: function(locale) {
 		var that = this;
-		this.map.fire('jsdialogupdate', {
-			data: {
-				jsontype: 'dialog',
-				action: 'update',
-				id: 'ZoteroDialog',
-				control: {
+		this.updateControl(
+			{
 					id: 'zoterolocale',
 					type: 'combobox',
 					entries: Array.from(Object.keys(this.availableLanguages), function(langCode) {return that.availableLanguages[langCode][0];}),
@@ -425,10 +427,7 @@ L.Control.Zotero = L.Control.extend({
 					selectedEntries: [
 						Object.keys(this.availableLanguages).indexOf(locale)
 					],
-				},
-			},
-			callback: this._onAction.bind(this)
-		});
+				});
 	},
 
 	enableDialogFieldTypeCombobox: function(citationFormat) {
@@ -438,12 +437,7 @@ L.Control.Zotero = L.Control.extend({
 		} else {
 			entries = [_('Fields'), _('Bookmarks')];
 		}
-		this.map.fire('jsdialogupdate', {
-			data: {
-				jsontype: 'dialog',
-				action: 'update',
-				id: 'ZoteroDialog',
-				control: {
+		this.updateControl({
 					id: 'zoterotype',
 					type: 'combobox',
 					entries: entries,
@@ -452,58 +446,31 @@ L.Control.Zotero = L.Control.extend({
 						this.getFieldType() === 'Bookmark' || this.settings.wrapper === 'Endnote' ? 1 : 0
 					],
 					enabled: !(this.citations && Object.keys(this.citations).length)
-				},
-			},
-			callback: this._onAction.bind(this)
-		});
+				});
 	},
 
 	enableDisableNextPrevious: function(hide) {
-		this.map.fire('jsdialogupdate', {
-			data: {
-				jsontype: 'dialog',
-				action: 'update',
-				id: 'ZoteroDialog',
-				control: {
-					id: 'previous',
-					type: 'pushbutton',
-					text: _('Previous'),
-					enabled: this._currentPage > 0,
-					visible: hide ? false : true
-				},
-			},
-			callback: this._onAction.bind(this)
+		this.updateControl({
+			id: 'previous',
+			type: 'pushbutton',
+			text: _('Previous'),
+			enabled: this._currentPage > 0,
+			visible: hide ? false : true
 		});
 
-		this.map.fire('jsdialogupdate', {
-			data: {
-				jsontype: 'dialog',
-				action: 'update',
-				id: 'ZoteroDialog',
-				control: {
-					id: 'pagelabel',
-					type: 'fixedtext',
-					text: (this._currentPage + 1) + '/' + this.totalPages,
-					visible: hide ? false : true
-				},
-			},
-			callback: this._onAction.bind(this)
+		this.updateControl({
+			id: 'pagelabel',
+			type: 'fixedtext',
+			text: (this._currentPage + 1) + '/' + this.totalPages,
+			visible: hide ? false : true
 		});
 
-		this.map.fire('jsdialogupdate', {
-			data: {
-				jsontype: 'dialog',
-				action: 'update',
-				id: 'ZoteroDialog',
-				control: {
-					id: 'next',
-					type: 'pushbutton',
-					text: _('Next'),
-					enabled: this._currentPage < this.totalPages - 1,
-					visible: hide ? false : true
-				},
-			},
-			callback: this._onAction.bind(this)
+		this.updateControl({
+			id: 'next',
+			type: 'pushbutton',
+			text: _('Next'),
+			enabled: this._currentPage < this.totalPages - 1,
+			visible: hide ? false : true
 		});
 	},
 
@@ -564,19 +531,11 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	updateCategories: function() {
-		return {
-			data: {
-				jsontype: 'dialog',
-				action: 'update',
-				id: 'ZoteroDialog',
-				control: {
-					id: 'zoterocategory',
-					type: 'treelistbox',
-					entries: this.categories,
-				},
-			},
-			callback: this._onAction.bind(this)
-		};
+		this.updateControl({
+			id: 'zoterocategory',
+			type: 'treelistbox',
+			entries: this.categories,
+		});
 	},
 
 	resetCitation: function() {
@@ -787,7 +746,7 @@ L.Control.Zotero = L.Control.extend({
 		this.dialogType = 'itemlist';
 
 		that.dialogSetup(_('My Library'), true);
-		that.map.fire('jsdialogupdate', that.updateCategories());
+		that.updateCategories();
 
 		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey)
 			.then(function (data) {
@@ -799,7 +758,7 @@ L.Control.Zotero = L.Control.extend({
 							row: data[i].links.self.href + '/items/top' + that.getZoteroItemQuery()
 						});
 					that.fillCategories();
-					that.map.fire('jsdialogupdate', that.updateCategories());
+					that.updateCategories();
 				}
 			}, function () {
 				that.map.uiManager.showSnackbar(_('Failed to load groups'));
@@ -817,7 +776,7 @@ L.Control.Zotero = L.Control.extend({
 							ondemand: true
 						});
 					that.fillCategories();
-					that.map.fire('jsdialogupdate', that.updateCategories());
+					that.updateCategories();
 				}
 			}, function () {
 				that.map.uiManager.showSnackbar(_('Failed to load collections'));
@@ -1162,7 +1121,7 @@ L.Control.Zotero = L.Control.extend({
 				if (!data.length)
 					targetCollection.children = undefined;
 				that.fillCategories();
-				that.map.fire('jsdialogupdate', that.updateCategories());
+				that.updateCategories();
 			}, function () {
 				that.map.uiManager.showSnackbar(_('Failed to load collections'));
 			});
@@ -1179,7 +1138,7 @@ L.Control.Zotero = L.Control.extend({
 				targetEntry.children = [];
 				targetEntry.ondemand = undefined;
 				this.fillCategories();
-				this.map.fire('jsdialogupdate', this.updateCategories());
+				this.updateCategories();
 
 				this._fetchCollectionAndPushTo(entry.id, targetEntry);
 			}
