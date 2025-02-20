@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TilesPreFetcher TileManager */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager */
 
 function clamp(num, min, max)
 {
@@ -905,7 +905,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_moveStart: function () {
-		TilesPreFetcher.resetPreFetching();
+		TileManager.resetPreFetching();
 		this._moveInProgress = true;
 		this._moveTileRequests = [];
 	},
@@ -921,7 +921,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 
 		TileManager.update();
-		TilesPreFetcher.resetPreFetching(true);
+		TileManager.resetPreFetching(true);
 		this._onCurrentPageUpdate();
 	},
 
@@ -4026,7 +4026,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		map._removeZoomLimit(this);
 		this._container = null;
 		this._tileZoom = null;
-		TilesPreFetcher.clearPreFetch();
+		TileManager.clearPreFetch();
 		clearTimeout(this._previewInvalidator);
 
 		if (!this._cellCSelections.empty()) {
