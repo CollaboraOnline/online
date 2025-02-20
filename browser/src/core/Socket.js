@@ -12,7 +12,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ $ errorMessages Uint8Array brandProductName GraphicSelection */
+/* global app JSDialog _ $ errorMessages Uint8Array brandProductName GraphicSelection TileManager */
 
 app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
@@ -135,7 +135,7 @@ app.definitions.Socket = L.Class.extend({
 	sendMessage: function (msg) {
 		if (this._map._debug.eventDelayWatchdog)
 			this._map._debug.timeEventDelay();
-		
+
 		if (this._map._fatal) {
 			// Avoid communicating when we're in fatal state
 			return;
@@ -381,7 +381,7 @@ app.definitions.Socket = L.Class.extend({
 									       {'_slurpQueue.length' : String(queueLength)});
 		if (this._map && this._map._docLayer) {
 			this._map._docLayer.pauseDrawing();
-			this._map._docLayer.beginTransaction();
+			TileManager.beginTransaction();
 			this._inLayerTransaction = true;
 
 			// Queue an instant timeout early to try to measure the
@@ -482,7 +482,7 @@ app.definitions.Socket = L.Class.extend({
 
 			if (this._inLayerTransaction && this._map._docLayer) {
 				// Resume with redraw if dirty due to previous _onMessage() calls.
-				this._map._docLayer.endTransaction(completeCallback);
+				TileManager.endTransaction(completeCallback);
 			} else {
 				completeCallback();
 			}
@@ -503,7 +503,7 @@ app.definitions.Socket = L.Class.extend({
 		if (docLayer && docLayer.filterSlurpedMessage(e))
 			return;
 
-		var predictedTiles = docLayer ? docLayer.predictTilesToSlurp() : 0;
+		var predictedTiles = TileManager.predictTilesToSlurp();
 		// scale delay, to a max of 50ms, according to the number of
 		// tiles predicted to arrive.
 		var delayMS = Math.max(Math.min(predictedTiles, 50), 1);

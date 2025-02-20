@@ -20,7 +20,7 @@
  * - &randomUser=true URL parameter (global.js)
  */
 
-/* global app L _ InvalidationRectangleSection */
+/* global app L _ InvalidationRectangleSection TileManager */
 
 L.DebugManager = L.Class.extend({
 	initialize: function(map) {
@@ -364,12 +364,12 @@ L.DebugManager = L.Class.extend({
 			category: 'Logging',
 			startsOn: false,
 			onAdd: function () {
-				self._docLayer._debugDeltas = true;
-				self._docLayer._debugDeltasDetail = true;
+				TileManager.debugDeltas = true;
+				TileManager.debugDeltasDetail = true;
 			},
 			onRemove: function () {
-				self._docLayer._debugDeltas = false;
-				self._docLayer._debugDeltasDetail = false;
+				TileManager.debugDeltas = false;
+				TileManager.debugDeltasDetail = false;
 			},
 		});
 
@@ -1055,7 +1055,7 @@ L.DebugManager = L.Class.extend({
 			this.reportEventDelay(performance.now() - this._eventDelayWatchStart);
 		}, 0);
 	},
-	
+
 	reportEventDelay: function(delayMs) {
 		if (!this.eventDelayWatchdog)
 			return;
