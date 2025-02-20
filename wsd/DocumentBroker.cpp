@@ -1782,6 +1782,8 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& configI
         [uriAnonym, presetsPath, presetTasks,
          session](const std::shared_ptr<http::Session>& configSession)
     {
+        configSession->asyncShutdown();
+
         if (SigUtil::getShutdownRequestFlag())
         {
             LOG_DBG("Shutdown flagged, giving up on in-flight requests");
@@ -1842,6 +1844,8 @@ void DocumentBroker::asyncInstallPreset(
         [configId, presetUri, presetStamp, uriAnonym,
          presetFile, id, finishedCB](const std::shared_ptr<http::Session>& presetSession)
     {
+        presetSession->asyncShutdown();
+
         if (SigUtil::getShutdownRequestFlag())
         {
             LOG_DBG("Shutdown flagged, giving up on in-flight requests");
@@ -4129,6 +4133,8 @@ void DocumentBroker::uploadBrowserSettingsToWopiHost(const std::shared_ptr<Clien
     http::Session::FinishedCallback finishedCallback =
         [uriAnonym](const std::shared_ptr<http::Session>& wopiSession)
     {
+        wopiSession->asyncShutdown();
+
         const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
         const http::StatusLine statusLine = httpResponse->statusLine();
         if (statusLine.statusCode() != http::StatusCode::OK)

@@ -2085,6 +2085,8 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
         [uriAnonym, socket, request,
          shortMessage](const std::shared_ptr<http::Session>& wopiSession)
     {
+        wopiSession->asyncShutdown();
+
         const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
         const http::StatusLine statusLine = httpResponse->statusLine();
         const http::StatusCode statusCode = statusLine.statusCode();
@@ -2199,6 +2201,8 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
         [uriAnonym, socket, request, fileId,
          shortMessage](const std::shared_ptr<http::Session>& wopiSession)
     {
+        wopiSession->asyncShutdown();
+
         const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
         const http::StatusLine statusLine = httpResponse->statusLine();
         const http::StatusCode statusCode = statusLine.statusCode();
@@ -2281,6 +2285,8 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
         [fileName, uriAnonym, socket, request,
          shortMessage](const std::shared_ptr<http::Session>& wopiSession)
     {
+        wopiSession->asyncShutdown();
+
         const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
         const http::StatusLine statusLine = httpResponse->statusLine();
         if (statusLine.statusCode() != http::StatusCode::OK)
