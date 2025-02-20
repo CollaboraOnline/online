@@ -38,6 +38,13 @@ struct PerfMetricInfo
     std::string phase;
     std::string metric;
     size_t data;
+
+    PerfMetricInfo(const std::string& p, const std::string& m, size_t d)
+        : phase(p)
+        , metric(m)
+        , data(d)
+    {
+    }
 };
 
 // store buckets of latency
