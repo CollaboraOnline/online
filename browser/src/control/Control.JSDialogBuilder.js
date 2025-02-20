@@ -342,6 +342,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		spinfield.type = 'number';
 		spinfield.dir = document.documentElement.dir;
 		spinfield.tabIndex = '0';
+		spinfield.setAttribute('autocomplete', 'off');
 		controls['spinfield'] = spinfield;
 
 
