@@ -7,7 +7,7 @@
  * at TextInput.
  */
 
-/* global app UNOKey UNOModifier TilesPreFetcher */
+/* global app UNOKey UNOModifier TileManager */
 
 L.Map.mergeOptions({
 	keyboard: true,
@@ -572,7 +572,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (this._map.isEditMode()) {
-			TilesPreFetcher.resetPreFetching();
+			TileManager.resetPreFetching();
 
 			if (this._ignoreKeyEvent(ev)) {
 				// key ignored
