@@ -381,10 +381,19 @@ private:
         const unsigned long bioError = ERR_peek_error();
         const std::string bioErrStr = getBioError(bioError);
 
-        LOG_DBG("SSL error (" << context << "): " << sslErrorToName(sslError) << " (" << sslError
+        // Having an empty answer is valid, no need to log
+        // EAGAIN, SSL_ERROR_WANT_READ/SSL_ERROR_WANT_WRITE are normal business
+        if (bioError != SSL_ERROR_ZERO_RETURN && bioError != SSL_ERROR_WANT_READ && bioError != SSL_ERROR_WANT_WRITE) {
+            LOG_DBG("SSL error (" << context << "): " << sslErrorToName(sslError) << " (" << sslError
                               << "), rc: " << rc << ", errno: " << last_errno << " ("
                               << Util::symbolicErrno(last_errno) << ": "
                               << std::strerror(last_errno) << ")" << ": " << bioErrStr);
+        } else {
+            LOG_TRC("SSL error (" << context << "): " << sslErrorToName(sslError) << " (" << sslError
+                              << "), rc: " << rc << ", errno: " << last_errno << " ("
+                              << Util::symbolicErrno(last_errno) << ": "
+                              << std::strerror(last_errno) << ")" << ": " << bioErrStr);
+        }
 
         // Handle non-fatal cases first.
         switch (sslError)
