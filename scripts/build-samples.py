@@ -207,6 +207,23 @@ def generateCalc(srcDir, destDir, base, extn):
     fout.close()
     fin.close()
 
+def generateWriter(srcDir, destDir, base, extn):
+    fin = open(srcName(srcDir, base, extn), 'r', encoding='utf-8')
+    fout = open(destName(srcDir, base, extn), 'w', encoding='utf-8')
+
+    # The template has a single paragraph: paste it enough times so that we get a document of ~300
+    # pages.
+    pattern = re.compile('.*<text:p .*')
+    for line in fin:
+        if pattern.match(line):
+            for _ in range(825):
+                fout.write(line)
+        else:
+            fout.write(line)
+
+    fout.close()
+    fin.close()
+
 def copyFile(srcDir, destDir, base, extn):
     sys.stdout.write('Copy ' + base + ' to ' + destDir + '\n')
     shutil.copy2(srcName(srcDir, base, extn), destName(destDir, base, extn))
@@ -231,6 +248,9 @@ if __name__ == "__main__":
 
         if file.endswith('calc.fods'):
             generateCalc(src, dest, base, extn)
+        elif file.endswith('writer-large.fodt'):
+            if 'COOL_WRITER_LARGE' in os.environ:
+                generateWriter(src, dest, base, extn)
         else:
             copyFile(src, dest, base, extn)
 
