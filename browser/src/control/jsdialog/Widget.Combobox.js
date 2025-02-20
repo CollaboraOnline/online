@@ -187,6 +187,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	content.id = data.id + '-input';
 	content.value = data.text;
 	content.role = 'combobox';
+	content.setAttribute('autocomplete', 'off');
 
 	if (data.aria) {
 		content.setAttribute('aria-label',data.aria.label);
