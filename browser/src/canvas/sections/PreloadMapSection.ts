@@ -34,8 +34,8 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 		var zoom = Math.round(this._map.getZoom());
 		var part = docLayer._selectedPart;
 		var tileRanges = ctx.paneBoundsList.map(
-			docLayer._pxBoundsToTileRange,
-			docLayer,
+			TileManager.pxBoundsToTileRange,
+			TileManager,
 		);
 
 		// Get the 'main' view
@@ -110,7 +110,7 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 							docLayer._selectedMode,
 						);
 						var key = coords.key();
-						tile = docLayer._tiles[key];
+						tile = TileManager.tiles[key];
 
 						if (!tile)
 							canvas.fillStyle = 'rgba(128, 128, 128, 0.5)'; // grey
