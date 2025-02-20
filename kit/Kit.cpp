@@ -861,6 +861,8 @@ bool Document::createSession(const std::string& sessionId)
         auto session = std::make_shared<ChildSession>(
             _websocketHandler, sessionId,
             _jailId, JailRoot, *this);
+        if (!Util::isMobileApp())
+            UnitKit::get().postKitSessionCreated(session.get());
         _sessions.emplace(sessionId, session);
         _deltaGen->setSessionCount(_sessions.size());
 
@@ -2998,6 +3000,9 @@ void documentViewCallback(const int type, const char* payload, void* data)
 /// Called by LOK main-loop the central location for data processing.
 int pollCallback(void* data, int timeoutUs)
 {
+    if (!Util::isMobileApp())
+        UnitKit::get().preKitPollCallback();
+
     if (timeoutUs < 0)
         timeoutUs = SocketPoll::DefaultPollTimeoutMicroS.count();
 #ifndef IOS

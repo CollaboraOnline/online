@@ -658,6 +658,12 @@ public:
         return false;
     }
 
+    /// Before the kit process poll callback executes
+    virtual void preKitPollCallback() {}
+
+    /// After the kit process created a ChildSession
+    virtual void postKitSessionCreated(Session* /*session*/) {}
+
     /// Allow a custom LibreOfficeKit wrapper
     virtual LibreOfficeKit *lok_init(const char * /* instdir */,
                                      const char * /* userdir */,
