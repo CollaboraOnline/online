@@ -946,13 +946,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		TileManager.update();
 	},
 
-	_refreshTilesInBackground: function() {
-		for (var key in TileManager.tiles) {
-			TileManager.get(key).wireId = 0;
-			TileManager.get(key).invalidFrom = 0;
-		}
-	},
-
 	_sendClientZoom: function (forceUpdate) {
 		if (!this._map._docLoaded)
 			return;
