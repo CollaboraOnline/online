@@ -11,6 +11,10 @@
 
 #pragma once
 
+#ifndef _WIN32
+#include <sys/un.h>
+#endif
+
 #include "NetUtil.hpp"
 #include "memory"
 
@@ -128,6 +132,46 @@ private:
 
 #if !MOBILEAPP
 
+/// Class to remember the socket name, and abstract the fact if it's an abstract unix socket, or real one (backed by a file).
+class UnxSocketPath {
+
+private:
+    std::string _name;
+
+public:
+    UnxSocketPath() : _name() {}
+    UnxSocketPath(const std::string& name) : _name(name) {}
+
+    /// Make sure we construct the name correctly, based on whether we create the
+    /// abstract socket, or a normal one.
+    void fillInto(struct sockaddr_un& addrunix) const {
+        assert(!_name.empty() && "Trying to use an invalid unx socket");
+
+#ifdef HAVE_ABSTRACT_UNIX_SOCKETS
+        std::memcpy(&addrunix.sun_path[1], _name.c_str(), _name.length());
+        addrunix.sun_path[0] = '\0'; // this is an abstract name
+#else
+        std::memcpy(addrunix.sun_path, _name.c_str(), _name.length());
+#endif
+        LOG_ASSERT_MSG(addrunix.sun_path[sizeof(addrunix.sun_path) - 1] == '\0',
+                       "addrunix.sun_path is not null terminated");
+    }
+
+    /// Is this a valid path?
+    bool isValid() const {
+        return !_name.empty();
+    }
+
+    /// Return the name - either for debugging printount, or for passing as --masterport=
+    const std::string& getName() const {
+        return _name;
+    }
+};
+
+inline std::ostream& operator<<(std::ostream& os, const UnxSocketPath &s) {
+    return os << s.getName();
+}
+
 /// A non-blocking, streaming Unix Domain Socket for local use
 class LocalServerSocket : public ServerSocket
 {
@@ -141,13 +185,13 @@ public:
 
     bool bind(Type, int) override { assert(false); return false; }
     std::shared_ptr<Socket> accept() override;
-    std::string bind();
-#ifndef HAVE_ABSTRACT_UNIX_SOCKETS
-    bool link(std::string to);
-#endif
+    UnxSocketPath bind();
+
+    /// Links the socket to the location 'toPath', in case it is not an abstract socket. For abstract sockets, it return 'true' right away.
+    bool linkTo(std::string toPath);
 
 private:
-    std::string _name;
+    UnxSocketPath _id;
 #ifndef HAVE_ABSTRACT_UNIX_SOCKETS
     std::string _linkName;
 #endif
