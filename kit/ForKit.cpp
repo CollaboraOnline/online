@@ -51,6 +51,7 @@
 #include <common/ConfigUtil.hpp>
 #include <common/Uri.hpp>
 #include <common/Watchdog.hpp>
+#include <net/ServerSocket.hpp>
 #include <kit/DeltaSimd.h>
 
 namespace
@@ -916,7 +917,7 @@ int forkit_main(int argc, char** argv)
         else if (std::strstr(cmd, "--masterport=") == cmd)
         {
             eq = std::strchr(cmd, '=');
-            MasterLocation = std::string(eq+1);
+            MasterLocation = UnxSocketPath(std::string(eq+1));
         }
         else if (std::strstr(cmd, "--version") == cmd)
         {
