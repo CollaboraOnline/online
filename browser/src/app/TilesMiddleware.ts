@@ -1221,7 +1221,7 @@ class TileManager {
 	}
 
 	private static tileNeedsFetch(key: string) {
-		const tile = this.tiles[key];
+		const tile: Tile = this.tiles[key];
 		return !tile || tile.needsFetch();
 	}
 
@@ -1274,104 +1274,97 @@ class TileManager {
 		return queue;
 	}
 
+	private static removeIrrelevantsFromCoordsQueue(
+		coordsQueue: Array<TileCoordData>,
+	) {
+		const part: number = app.map._docLayer._selectedPart;
+		const mode: number = app.map._docLayer._selectedMode;
+
+		for (let i = coordsQueue.length - 1; i > 0; i--) {
+			if (
+				coordsQueue[i].part !== part ||
+				coordsQueue[i].mode !== mode ||
+				!this.tileNeedsFetch(coordsQueue[i].key())
+			) {
+				coordsQueue.splice(i, 1);
+			} else if (app.map._docLayer._moveInProgress) {
+				// While we are actively scrolling, filter out duplicate
+				// (still) missing tiles requests during the scroll.
+				if (app.map._docLayer._moveTileRequests.includes(coordsQueue[i].key()))
+					coordsQueue.splice(i, 1);
+				else app.map._docLayer._moveTileRequests.push(coordsQueue[i].key());
+			}
+		}
+	}
+
 	// create tiles if needed for queued coordinates, and build a
 	// tilecombined request for any tiles we need to fetch.
-	private static addTiles(coordsQueue: Array<any>, preFetch: boolean) {
-		var coords, key;
+	private static addTiles(
+		coordsQueue: Array<TileCoordData>,
+		preFetch: boolean = false,
+	) {
+		// Remove irrelevant tiles from the queue earlier.
+		this.removeIrrelevantsFromCoordsQueue(coordsQueue);
 
 		// If we're pre-fetching, we may end up rehydrating tiles, so begin a transaction
 		// so that they're grouped together.
 		if (preFetch) this.beginTransaction();
 
-		var redraw = false;
-		for (var i = 0; i < coordsQueue.length; i++) {
-			coords = coordsQueue[i];
+		let redraw: boolean = false;
 
-			key = coords.key();
+		for (let i = 0; i < coordsQueue.length; i++) {
+			const key = coordsQueue[i].key();
+			let tile: Tile = this.tiles[key];
 
-			if (
-				coords.part === app.map._docLayer._selectedPart &&
-				coords.mode === app.map._docLayer._selectedMode
-			) {
-				var tile = this.tiles[key];
-				if (!tile) {
-					// We always want to ensure the tile
-					// exists.
-					tile = this.createTile(coords, key);
-				}
-				if (preFetch) {
-					// If preFetching at idle, take the
-					// opportunity to create an up to date
-					// canvas for the tile in advance.
-					this.ensureCanvas(tile, null, true);
-					redraw = redraw || tile.hasPendingUpdate();
-				}
+			// We always want to ensure the tile exists.
+			if (!tile) tile = this.createTile(coordsQueue[i], key);
+
+			if (preFetch) {
+				// If preFetching at idle, take the
+				// opportunity to create an up to date
+				// canvas for the tile in advance.
+				this.ensureCanvas(tile, null, true);
+				redraw = redraw || tile.hasPendingUpdate();
 			}
 		}
 
-		if (preFetch)
+		if (preFetch) {
 			this.endTransaction(
 				redraw ? () => app.sectionContainer.requestReDraw() : null,
 			);
+		}
 
 		// sort the tiles by the rows
 		coordsQueue.sort(function (a, b) {
-			if (a.y !== b.y) {
-				return a.y - b.y;
-			} else {
-				return a.x - b.x;
-			}
+			if (a.y !== b.y) return a.y - b.y;
+			else return a.x - b.x;
 		});
 
 		// try group the tiles into rectangular areas
-		var rectangles = [];
+		const rectangles = [];
 		while (coordsQueue.length > 0) {
-			coords = coordsQueue[0];
+			const coords: TileCoordData = coordsQueue[0];
 
-			// tiles that do not interest us
-			key = coords.key();
-			if (
-				!this.tileNeedsFetch(key) ||
-				coords.part !== app.map._docLayer._selectedPart ||
-				coords.mode !== app.map._docLayer._selectedMode
-			) {
-				coordsQueue.splice(0, 1);
-				continue;
-			}
-
-			// While we are actively scrolling, filter out duplicate
-			// (still) missing tiles requests during the scroll.
-			if (app.map._docLayer._moveInProgress) {
-				if (app.map._docLayer._moveTileRequests.includes(key)) {
-					coordsQueue.splice(0, 1);
-					continue;
-				}
-				app.map._docLayer._moveTileRequests.push(key);
-			}
-
-			var rectQueue = [coords];
-			var bound = coords.getPos(); // L.Point
+			const rectQueue: Array<TileCoordData> = [coords];
+			const bound = coords.getPos(); // L.Point
 
 			// remove it
 			coordsQueue.splice(0, 1);
 
 			// find the close ones
-			var rowLocked = false;
-			var hasHole = false;
-			i = 0;
+			let rowLocked = false;
+			let hasHole = false;
+			let i = 0;
 			while (i < coordsQueue.length) {
-				var current = coordsQueue[i];
+				const current: TileCoordData = coordsQueue[i];
 
-				// extend the bound vertically if possible (so far it was
-				// continuous)
+				// extend the bound vertically if possible (so far it was continuous)
 				if (!hasHole && current.y === bound.y + this.tileSize) {
 					rowLocked = true;
 					bound.y += this.tileSize;
 				}
 
-				if (current.y > bound.y) {
-					break;
-				}
+				if (current.y > bound.y) break;
 
 				if (!rowLocked) {
 					if (current.y === bound.y && current.x === bound.x + this.tileSize) {
@@ -1398,7 +1391,7 @@ class TileManager {
 			rectangles.push(rectQueue);
 		}
 
-		for (var r = 0; r < rectangles.length; ++r)
+		for (let r = 0; r < rectangles.length; ++r)
 			this.sendTileCombineRequest(rectangles[r]);
 
 		if (
