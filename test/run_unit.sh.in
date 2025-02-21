@@ -64,6 +64,13 @@ fi
 # drop .la suffix
 tst=`echo $tst | sed "s/\.la//"`;
 
+if [ -n "$SUPPRESS_TESTS" ]; then
+    # Do not run tests (but still build them).
+    echo ":test-result: SKIP $tst" >> $test_output
+    echo > $tst_log
+    exit 0
+fi
+
 # result logging
 echo > $test_output
 
