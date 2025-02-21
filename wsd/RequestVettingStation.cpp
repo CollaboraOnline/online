@@ -210,6 +210,7 @@ void RequestVettingStation::launchInstallPresets()
         {
             COOLWSD::ensureSubForKit(configId);
         }
+        _asyncInstallTask.reset();
     };
 
     // if this wopi server has some shared settings we want to have a subForKit for those settings
@@ -218,8 +219,8 @@ void RequestVettingStation::launchInstallPresets()
     Poco::File(Poco::Path(configIdPresets, "autotext")).createDirectories();
     Poco::File(Poco::Path(configIdPresets, "wordbook")).createDirectories();
     // ensure the server config is downloaded and populate a subforkit when config is available
-    DocumentBroker::asyncInstallPresets(*_poll, configId, sharedSettings.getUri(), configIdPresets,
-                                        nullptr, finishedCallback);
+    _asyncInstallTask = DocumentBroker::asyncInstallPresets(*_poll, configId, sharedSettings.getUri(), configIdPresets,
+                                                            nullptr, finishedCallback);
 }
 
 #endif

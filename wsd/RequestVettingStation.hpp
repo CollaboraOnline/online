@@ -21,6 +21,7 @@
 #include <string>
 
 class CheckFileInfo;
+class PresetsInstallTask;
 
 /// RequestVettingStation is used to vet the request in the background.
 /// Vetting for a WOPI request is performed through CheckFileInfo.
@@ -96,6 +97,7 @@ private:
 
     void checkFileInfo(const Poco::URI& uri, bool isReadOnly, int redirectionLimit);
     std::shared_ptr<CheckFileInfo> _checkFileInfo;
+    std::shared_ptr<PresetsInstallTask> _asyncInstallTask;
 #endif // !MOBILEAPP
 
     Util::Stopwatch _birthday;
