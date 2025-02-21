@@ -3433,11 +3433,13 @@ std::shared_ptr<ServerSocket> COOLWSDServer::findPrisonerServerPort()
 
     LOG_INF("Listening to prisoner connections on " << location);
     MasterLocation = std::move(location);
+#if ENABLE_CHILDROOTS
     if(!socket->linkTo(COOLWSD::SysTemplate))
     {
         LOG_FTL("Failed to hardlink local unix domain socket into a jail. Exiting.");
         Util::forcedExit(EX_SOFTWARE);
     }
+#endif
 #else
     constexpr int UNUSED_PORT_NUMBER = 0;
     std::shared_ptr<ServerSocket> socket
