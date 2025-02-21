@@ -1582,7 +1582,7 @@ app.definitions.Socket = L.Class.extend({
 		else if (this._reconnecting) {
 			// we are reconnecting ...
 			this._map._docLayer._resetClientVisArea();
-			this._map._docLayer._refreshTilesInBackground();
+			TileManager.refreshTilesInBackground();
 			this._map.fire('statusindicator', { statusType: 'reconnected' });
 
 			var darkTheme = window.prefs.getBoolean('darkTheme');

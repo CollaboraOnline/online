@@ -196,11 +196,11 @@ class TileManager {
 	private static emptyTilesCount: number = 0;
 	private static debugDeltas: boolean = false;
 	private static debugDeltasDetail: boolean = false;
+	private static tiles: any = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
 
 	//private static _debugTime: any = {}; Reserved for future.
 
 	public static tileSize: number = 256;
-	public static tiles: any = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
 
 	public static initialize() {
 		if (window.Worker && !(window as any).ThisIsAMobileApp) {
@@ -1408,6 +1408,13 @@ class TileManager {
 			this.initPreFetchPartTiles();
 	}
 
+	public static refreshTilesInBackground() {
+		for (const key in this.tiles) {
+			this.tiles[key].wireId = 0;
+			this.tiles[key].invalidFrom = 0;
+		}
+	}
+
 	public static setDebugDeltas(state: boolean) {
 		this.debugDeltas = state;
 		this.debugDeltasDetail = state;
@@ -1426,8 +1433,8 @@ class TileManager {
 	) {
 		let needsNewTiles = false;
 
-		for (const key in TileManager.tiles) {
-			const coords: TileCoordData = TileManager.get(key).coords;
+		for (const key in this.tiles) {
+			const coords: TileCoordData = this.tiles[key].coords;
 			const tileRectangle = [coords.x, coords.y, this.tileSize, this.tileSize];
 
 			if (
@@ -1436,7 +1443,7 @@ class TileManager {
 				invalidatedRectangle.intersectsRectangle(tileRectangle)
 			) {
 				if (app.isRectangleVisibleInTheDisplayedArea(tileRectangle)) {
-					TileManager.invalidateTile(key, wireId);
+					this.invalidateTile(key, wireId);
 					needsNewTiles = true;
 				}
 			}
