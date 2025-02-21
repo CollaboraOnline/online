@@ -604,6 +604,9 @@ class CanvasSectionContainer {
 					section.isVisible = isVisible;
 					section.onDocumentObjectVisibilityChange();
 				}
+
+				if (this.testing)
+					this.createUpdateSingleDivElement(section);
 			}
 
 			this.sections[i].onNewDocumentTopLeft(this.getDocumentTopLeft());
