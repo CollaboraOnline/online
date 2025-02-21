@@ -277,8 +277,8 @@ class TileManager {
 		// Trim memory down to size.
 		if (totalSize > highDeltaMemory) {
 			for (var i = 0; i < keys.length && totalSize > lowDeltaMemory; ++i) {
-				var key = keys[i];
-				var tile = this.tiles[key];
+				const key = keys[i];
+				const tile: Tile = this.tiles[key];
 				if (tile.rawDeltas && !tile.current) {
 					totalSize -= tile.rawDeltas.length;
 					if (this.debugDeltas)
@@ -301,8 +301,8 @@ class TileManager {
 		// Trim the number of tiles down too ...
 		if (keys.length > highTileCount) {
 			for (var i = 0; i < keys.length - lowTileCount; ++i) {
-				var key = keys[i];
-				var tile = this.tiles[key];
+				const key = keys[i];
+				const tile: Tile = this.tiles[key];
 				if (!tile.current) this.removeTile(keys[i]);
 			}
 		}
