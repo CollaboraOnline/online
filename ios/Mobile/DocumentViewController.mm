@@ -630,7 +630,14 @@ static IMP standardImpOfInputAccessoryView = nil;
 
             [self.view addSubview:self.slideshowWebView];
             [self.view bringSubviewToFront:self.slideshowWebView];
-
+            
+            if (@available(macOS 13.3, iOS 16.4, tvOS 16.4, *)) {
+#if ENABLE_DEBUG == 1
+                self.slideshowWebView.inspectable = YES;
+#else
+                self.slideshowWebView.inspectable = NO;
+#endif
+            }
 
             WKWebView *slideshowWebViewP = self.slideshowWebView;
             NSDictionary *views = NSDictionaryOfVariableBindings(slideshowWebViewP);
