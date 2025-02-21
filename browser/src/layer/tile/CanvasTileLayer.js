@@ -1455,6 +1455,45 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	_onInvalidateTilesMsg: function (textMsg) {
+		const command = app.socket.parseServerCmd(textMsg);
+		if (command.x === undefined || command.y === undefined || command.part === undefined) {
+			var strTwips = textMsg.match(/\d+/g);
+			command.x = parseInt(strTwips[0]);
+			command.y = parseInt(strTwips[1]);
+			command.width = parseInt(strTwips[2]);
+			command.height = parseInt(strTwips[3]);
+			command.part = this._selectedPart;
+		}
+
+		if (isNaN(command.mode))
+			command.mode = this._selectedMode;
+
+		const invalidArea = new app.definitions.simpleRectangle(command.x, command.y, command.width, command.height);
+		TileManager.overlapInvalidatedRectangleWithView(command.part, command.mode, command.wireId, invalidArea, textMsg);
+
+		if (this._docType === 'presentation' || this._docType === 'drawing') {
+			if (command.part === this._selectedPart &&
+				command.mode === this._selectedMode &&
+				command.part !== this._lastValidPart) {
+				this._map.fire('updatepart', {part: this._lastValidPart, docType: this._docType});
+				this._lastValidPart = command.part;
+				this._map.fire('updatepart', {part: command.part, docType: this._docType});
+			}
+
+			const preview = this._map._docPreviews ? this._map._docPreviews[command.part] : null;
+			if (preview) { preview.invalid = true; }
+
+			const topLeftTwips = new L.Point(command.x, command.y);
+			const offset = new L.Point(command.width, command.height);
+			const bottomRightTwips = topLeftTwips.add(offset);
+			this._previewInvalidations.push(new L.Bounds(topLeftTwips, bottomRightTwips));
+			// 1s after the last invalidation, update the preview
+			clearTimeout(this._previewInvalidator);
+			this._previewInvalidator = setTimeout(L.bind(this._invalidatePreviews, this), this.options.previewInvalidationTimeout);
+		}
+	},
+
 	handleInvalidateTilesMsg: function(textMsg) {
 		var payload = textMsg.substring('invalidatetiles:'.length + 1);
 		if (!payload.startsWith('EMPTY')) {

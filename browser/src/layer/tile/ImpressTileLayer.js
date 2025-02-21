@@ -206,68 +206,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	// TODO: share code with WriterTileLayer
-	/* jscpd:ignore-start */
-	_onInvalidateTilesMsg: function (textMsg) {
-		var command = app.socket.parseServerCmd(textMsg);
-		if (command.x === undefined || command.y === undefined || command.part === undefined) {
-			var strTwips = textMsg.match(/\d+/g);
-			command.x = parseInt(strTwips[0]);
-			command.y = parseInt(strTwips[1]);
-			command.width = parseInt(strTwips[2]);
-			command.height = parseInt(strTwips[3]);
-			command.part = this._selectedPart;
-		}
-
-		if (isNaN(command.mode))
-			command.mode = this._selectedMode;
-
-		var topLeftTwips = new L.Point(command.x, command.y);
-		var offset = new L.Point(command.width, command.height);
-		var bottomRightTwips = topLeftTwips.add(offset);
-		if (this._debug.tileInvalidationsOn && command.part === this._selectedPart) {
-			this._debug.addTileInvalidationRectangle(topLeftTwips, bottomRightTwips, textMsg);
-		}
-		var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
-		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
-		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
-		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
-		var needsNewTiles = false;
-		for (var key in TileManager.tiles) {
-			var coords = TileManager.get(key).coords;
-			var bounds = this._coordsToTileBounds(coords);
-			if (coords.part === command.part && coords.mode === command.mode &&
-			    invalidBounds.intersects(bounds)) {
-				if (visibleArea.intersects(bounds)) {
-					needsNewTiles = true;
-				}
-				TileManager.invalidateTile(key, command.wireId);
-			}
-		}
-
-		if (needsNewTiles && command.part === this._selectedPart && this._debug.tileInvalidationsOn) {
-			this._debug.addTileInvalidationMessage(textMsg);
-		}
-
-		if (command.part === this._selectedPart &&
-			command.mode === this._selectedMode &&
-			command.part !== this._lastValidPart) {
-			this._map.fire('updatepart', {part: this._lastValidPart, docType: this._docType});
-			this._lastValidPart = command.part;
-			this._map.fire('updatepart', {part: command.part, docType: this._docType});
-		}
-
-		var preview = this._map._docPreviews ? this._map._docPreviews[command.part] : null;
-		if (preview) {
-			preview.invalid = true;
-		}
-		this._previewInvalidations.push(invalidBounds);
-		// 1s after the last invalidation, update the preview
-		clearTimeout(this._previewInvalidator);
-		this._previewInvalidator = setTimeout(L.bind(this._invalidatePreviews, this), this.options.previewInvalidationTimeout);
-	},
-	/* jscpd:ignore-end */
-
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
 		if (part !== this._selectedPart) {

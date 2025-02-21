@@ -43,7 +43,7 @@ app.getViewRectangles = function () {
 };
 
 // ToDo: _splitPanesContext should be an app variable.
-app.isPointVisibleInTheDisplayedArea = function (twipsArray) {
+app.isPointVisibleInTheDisplayedArea = function (twipsArray /* x, y */) {
 	if (app.map._docLayer._splitPanesContext) {
 		let rectangles = app.map._docLayer._splitPanesContext.getViewRectangles();
 		for (let i = 0; i < rectangles.length; i++) {
@@ -52,6 +52,20 @@ app.isPointVisibleInTheDisplayedArea = function (twipsArray) {
 		return false;
 	} else {
 		return app.file.viewedRectangle.containsPoint(twipsArray);
+	}
+};
+
+app.isRectangleVisibleInTheDisplayedArea = function (
+	twipsArray /* x, y, width, height */,
+) {
+	if (app.map._docLayer._splitPanesContext) {
+		let rectangles = app.map._docLayer._splitPanesContext.getViewRectangles();
+		for (let i = 0; i < rectangles.length; i++) {
+			if (rectangles[i].intersectsRectangle(twipsArray)) return true;
+		}
+		return false;
+	} else {
+		return app.file.viewedRectangle.intersectsRectangle(twipsArray);
 	}
 };
 
