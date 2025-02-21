@@ -197,6 +197,8 @@ class TileManager {
 	private static debugDeltas: boolean = false;
 	private static debugDeltasDetail: boolean = false;
 
+	//private static _debugTime: any = {}; Reserved for future.
+
 	public static tileSize: number = 256;
 	public static tiles: any = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
 
@@ -1409,6 +1411,10 @@ class TileManager {
 	public static setDebugDeltas(state: boolean) {
 		this.debugDeltas = state;
 		this.debugDeltasDetail = state;
+	}
+
+	public static get(key: string): Tile {
+		return this.tiles[key];
 	}
 
 	public static resetPreFetching(resetBorder: boolean) {

@@ -251,7 +251,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 
 			for (var k: number = 0; k < coordList.length; k++) {
 				var key = coordList[k].key();
-				var tile = TileManager.tiles[key];
+				const tile: Tile = TileManager.get(key);
 				if (!callback(tile, coordList[k]))
 					return;
 			}
@@ -269,7 +269,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 							mode);
 
 						const key = coords.key();
-						const tile = TileManager.tiles[key];
+						const tile: Tile = TileManager.get(key);
 
 						if (!callback(tile, coords))
 							return;
@@ -480,7 +480,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 			for (var k: number = 0; k < coordList.length; k++) {
 				var coords = coordList[k];
 				var key = coords.key();
-				var tile = TileManager.tiles[key];
+				const tile: Tile = TileManager.get(key);
 				if (tile)
 					callback(tile, coords, this);
 			}
@@ -500,7 +500,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 					mode);
 
 				const key = coords.key();
-				const tile = TileManager.tiles[key];
+				const tile: Tile = TileManager.get(key);
 				if (tile)
 					callback(tile, coords, this);
 			}
@@ -702,9 +702,10 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 				'misses: ' + tile.missingContent + ' gce: ' + tile.gcErrors,
 				'dlta size/kB: ' + ((tile.rawDeltas ? tile.rawDeltas.length : 0)/1024).toFixed(2)
 			];
-// FIXME: generate metrics of how long a tile has been visible & invalid for.
-//			if (tile._debugTime && tile._debugTime.date !== 0)
-//					lines.push(this.map._debug.updateTimeArray(tile._debugTime, +new Date() - tile._debugTime.date));
+
+			// FIXME: generate metrics of how long a tile has been visible & invalid for.
+			//			if (tile._debugTime && tile._debugTime.date !== 0)
+			//					lines.push(this.map._debug.updateTimeArray(tile._debugTime, +new Date() - tile._debugTime.date));
 
 			const startY = tSize - 12 * lines.length;
 
