@@ -86,7 +86,8 @@ constexpr const char UPLOADING_SUFFIX[] = "ing";
 
 /// The client port number, both coolwsd and the kits have this.
 extern int ClientPortNumber;
-extern std::string MasterLocation;
+class UnxSocketPath;
+extern UnxSocketPath MasterLocation;
 
 /// Controls whether experimental features/behavior is enabled or not.
 extern bool EnableExperimental;
