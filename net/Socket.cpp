@@ -90,7 +90,11 @@ namespace ThreadChecks
 
 std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
-#define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
+#ifndef __APPLE__
+#define SOCKET_ABSTRACT_UNIX_NAME "coolwsd-"
+#else
+#define SOCKET_ABSTRACT_UNIX_NAME "/tmp/coolwsd-"
+#endif
 
 #endif
 
@@ -946,7 +950,7 @@ void SocketPoll::insertNewWebSocketSync(const Poco::URI& uri,
 }
 
 bool SocketPoll::insertNewUnixSocket(
-    const std::string &location,
+    const UnxSocketPath &location,
     const std::string &pathAndQuery,
     const std::shared_ptr<WebSocketHandler>& websocketHandler,
     const std::vector<int>* shareFDs)
@@ -962,12 +966,7 @@ bool SocketPoll::insertNewUnixSocket(
     struct sockaddr_un addrunix;
     std::memset(&addrunix, 0, sizeof(addrunix));
     addrunix.sun_family = AF_UNIX;
-#ifdef HAVE_ABSTRACT_UNIX_SOCKETS
-    addrunix.sun_path[0] = '\0'; // abstract name
-#else
-    addrunix.sun_path[0] = '0';
-#endif
-    std::memcpy(&addrunix.sun_path[1], location.c_str(), location.length());
+    location.fillInto(addrunix);
 
     const int res = connect(fd, (const struct sockaddr*)&addrunix, sizeof(addrunix));
     if (res < 0 && errno != EINPROGRESS)
@@ -1499,7 +1498,7 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
 }
 
 /// Returns true on success only.
-std::string LocalServerSocket::bind()
+UnxSocketPath LocalServerSocket::bind()
 {
     int rc;
     struct sockaddr_un addrunix;
@@ -1508,13 +1507,13 @@ std::string LocalServerSocket::bind()
     std::string socketAbstractUnixName(SOCKET_ABSTRACT_UNIX_NAME);
     const char* snapInstanceName = std::getenv("SNAP_INSTANCE_NAME");
     if (snapInstanceName && snapInstanceName[0])
-        socketAbstractUnixName = std::string("0snap.") + snapInstanceName + ".coolwsd-";
+        socketAbstractUnixName = std::string("snap.") + snapInstanceName + ".coolwsd-";
 
     LOG_INF("Binding to Unix socket for local server with base name: " << socketAbstractUnixName);
 
     constexpr auto RandomSuffixLength = 8;
     constexpr auto MaxSocketAbstractUnixNameLength =
-        sizeof(addrunix.sun_path) - RandomSuffixLength - 1; // 1 byte for null termination.
+        sizeof(addrunix.sun_path) - RandomSuffixLength - 2; // 1 byte for null termination, 1 byte for abstract's leading \0
     LOG_ASSERT_MSG(socketAbstractUnixName.size() < MaxSocketAbstractUnixNameLength,
                    "SocketAbstractUnixName is too long. Max: " << MaxSocketAbstractUnixNameLength
                                                                << ", actual: "
@@ -1525,47 +1524,43 @@ std::string LocalServerSocket::bind()
     {
         std::memset(&addrunix, 0, sizeof(addrunix));
         addrunix.sun_family = AF_UNIX;
-        std::memcpy(addrunix.sun_path, socketAbstractUnixName.c_str(), socketAbstractUnixName.length());
-#ifdef HAVE_ABSTRACT_UNIX_SOCKETS
-        addrunix.sun_path[0] = '\0'; // abstract name
-#endif
 
-        const std::string rand = Util::rng::getFilename(RandomSuffixLength);
-        std::memcpy(addrunix.sun_path + socketAbstractUnixName.size(), rand.c_str(), RandomSuffixLength);
-        LOG_ASSERT_MSG(addrunix.sun_path[sizeof(addrunix.sun_path) - 1] == '\0',
-                       "addrunix.sun_path is not null terminated");
+        const std::string socketName = socketAbstractUnixName + Util::rng::getFilename(RandomSuffixLength);
+        UnxSocketPath socketPath(socketName);
+        socketPath.fillInto(addrunix);
 
         rc = ::bind(getFD(), (const sockaddr *)&addrunix, sizeof(struct sockaddr_un));
         last_errno = errno;
         LOG_TRC("Binding to Unix socket location ["
-                << &addrunix.sun_path[1] << "], result: " << rc
+                << socketPath << "], result: " << rc
                 << ((rc >= 0) ? std::string()
                               : '\t' + Util::symbolicErrno(last_errno) + ": " +
                                     std::strerror(last_errno)));
+        if (rc >= 0)
+        {
+            _id = socketPath;
+            return socketPath;
+        }
     } while (rc < 0 && errno == EADDRINUSE);
 
-    if (rc >= 0)
-    {
-        _name = std::string(&addrunix.sun_path[0]);
-        return std::string(&addrunix.sun_path[1]);
-    }
-
-    LOG_ERR_ERRNO(last_errno, "Failed to bind to Unix socket at [" << &addrunix.sun_path[1] << ']');
+    LOG_ERR_ERRNO(last_errno, "Failed to bind to Unix socket");
     return std::string();
 }
 
-#ifndef HAVE_ABSTRACT_UNIX_SOCKETS
-bool LocalServerSocket::link(std::string to)
+bool LocalServerSocket::linkTo([[maybe_unused]] std::string toPath)
 {
-    _linkName = std::move(to);
-    return ::link(_name.c_str(), _linkName.c_str()) == 0;
-}
+#ifndef HAVE_ABSTRACT_UNIX_SOCKETS
+    _linkName = toPath + "/" + _id.getName();
+    return 0 == ::link(_id.getName().c_str(), _linkName.c_str());
+#else
+    return true;
 #endif
+}
 
 LocalServerSocket::~LocalServerSocket()
 {
 #ifndef HAVE_ABSTRACT_UNIX_SOCKETS
-    ::unlink(_name.c_str());
+    ::unlink(_id.getName().c_str());
     if (!_linkName.empty())
         ::unlink(_linkName.c_str());
 #endif
