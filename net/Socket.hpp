@@ -73,6 +73,7 @@ std::ostream& operator<<(std::ostream& os, const Socket &s);
 
 class Watchdog;
 class SocketPoll;
+class UnxSocketPath;
 
 /// Helper to allow us to easily defer the movement of a socket
 /// between polls to clarify thread ownership.
@@ -987,7 +988,7 @@ public:
                                 const std::shared_ptr<WebSocketHandler>& websocketHandler);
 
     bool insertNewUnixSocket(
-        const std::string &location,
+        const UnxSocketPath &location,
         const std::string &pathAndQuery,
         const std::shared_ptr<WebSocketHandler>& websocketHandler,
         const std::vector<int>* shareFDs = nullptr);

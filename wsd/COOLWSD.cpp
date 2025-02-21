@@ -117,7 +117,7 @@ int ClientPortNumber = 0;
 
 #if !MOBILEAPP
 /// UDS address for kits to connect to.
-std::string MasterLocation;
+UnxSocketPath MasterLocation;
 
 std::string COOLWSD::BuyProductUrl;
 std::string COOLWSD::LatestVersion;
@@ -2755,7 +2755,7 @@ bool COOLWSD::createForKit()
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
-    args.push_back("--masterport=" + MasterLocation);
+    args.push_back("--masterport=" + MasterLocation.getName());
 
     const DocProcSettings& docProcSettings = Admin::instance().getDefDocProcSettings();
     std::ostringstream ossRLimits;
@@ -3417,8 +3417,8 @@ std::shared_ptr<ServerSocket> COOLWSDServer::findPrisonerServerPort()
     auto socket = std::make_shared<LocalServerSocket>(
                     std::chrono::steady_clock::now(), *PrisonerPoll, factory);
 
-    std::string location = socket->bind();
-    if (!location.length())
+    const UnxSocketPath location = socket->bind();
+    if (!location.isValid())
     {
         LOG_FTL("Failed to create local unix domain socket. Exiting.");
         Util::forcedExit(EX_SOFTWARE);
@@ -3433,13 +3433,11 @@ std::shared_ptr<ServerSocket> COOLWSDServer::findPrisonerServerPort()
 
     LOG_INF("Listening to prisoner connections on " << location);
     MasterLocation = std::move(location);
-#ifndef HAVE_ABSTRACT_UNIX_SOCKETS
-    if(!socket->link(COOLWSD::SysTemplate + "/0" + MasterLocation))
+    if(!socket->linkTo(COOLWSD::SysTemplate))
     {
         LOG_FTL("Failed to hardlink local unix domain socket into a jail. Exiting.");
         Util::forcedExit(EX_SOFTWARE);
     }
-#endif
 #else
     constexpr int UNUSED_PORT_NUMBER = 0;
     std::shared_ptr<ServerSocket> socket
