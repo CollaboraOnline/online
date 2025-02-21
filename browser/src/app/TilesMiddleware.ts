@@ -194,10 +194,11 @@ class TileManager {
 	private static queuedProcessed: any = [];
 	private static fetchKeyframeQueue: any = []; // Queue of tiles which were GC'd earlier than coolwsd expected
 	private static emptyTilesCount: number = 0;
+	private static debugDeltas: boolean = false;
+	private static debugDeltasDetail: boolean = false;
+
 	public static tileSize: number = 256;
 	public static tiles: any = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
-	public static debugDeltas: boolean = false;
-	public static debugDeltasDetail: boolean = false;
 
 	public static initialize() {
 		if (window.Worker && !(window as any).ThisIsAMobileApp) {
@@ -1403,6 +1404,11 @@ class TileManager {
 			app.map._docLayer._docType === 'drawing'
 		)
 			this.initPreFetchPartTiles();
+	}
+
+	public static setDebugDeltas(state: boolean) {
+		this.debugDeltas = state;
+		this.debugDeltasDetail = state;
 	}
 
 	public static resetPreFetching(resetBorder: boolean) {
