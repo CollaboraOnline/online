@@ -2,6 +2,7 @@
 /// <reference path="../src/core/geometry.ts" />
 /// <reference path="../src/geometry/Point.ts" />
 /// <reference path="../src/geometry/Bounds.ts" />
+/// <reference path="../src/app/TilesMiddleware.ts" />
 /// <reference path="./helper/canvasContainerSetup.ts" />
 /// <reference path="./helper/rectUtil.ts" />
 
