@@ -364,12 +364,10 @@ L.DebugManager = L.Class.extend({
 			category: 'Logging',
 			startsOn: false,
 			onAdd: function () {
-				TileManager.debugDeltas = true;
-				TileManager.debugDeltasDetail = true;
+				TileManager.setDebugDeltas(true);
 			},
 			onRemove: function () {
-				TileManager.debugDeltas = false;
-				TileManager.debugDeltasDetail = false;
+				TileManager.setDebugDeltas(false);
 			},
 		});
 
