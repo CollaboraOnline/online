@@ -44,6 +44,7 @@
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "TraceEvent.hpp"
+#include "PresetsInstall.hpp"
 #include "ProxyProtocol.hpp"
 #include "Util.hpp"
 #include "QuarantineUtil.hpp"
@@ -1497,148 +1498,124 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     return templateSource;
 }
 
-class PresetsInstallTask : public std::enable_shared_from_this<PresetsInstallTask>
+void PresetsInstallTask::asyncInstall(const std::string& uri, const std::string& stamp, const std::string& fileName,
+                                      const std::shared_ptr<ClientSession>& session)
 {
-private:
-    SocketPoll& _poll;
-    bool _reportedStatus;
-    bool _overallSuccess;
-    int _idCount;
-    std::string _configId;
-    std::string _presetsPath;
-    std::set<std::string> _installingPresets;
-    std::vector<std::function<void(bool)>> _installFinishedCBs;
-
-    void asyncInstall(const std::string& uri, const std::string& stamp, const std::string& fileName,
-                      const std::shared_ptr<ClientSession>& session)
+    auto presetInstallFinished = [this](const std::string& id, bool presetResult)
     {
-        auto presetInstallFinished = [this](const std::string& id, bool presetResult)
-        {
-            installPresetFinished(id, presetResult);
-        };
+        installPresetFinished(id, presetResult);
+    };
 
-        // just something unique for this resource
-        std::string id = std::to_string(_idCount++);
+    // just something unique for this resource
+    std::string id = std::to_string(_idCount++);
 
-        installPresetStarted(id);
+    installPresetStarted(id);
 
-        DocumentBroker::asyncInstallPreset(_poll, _configId, uri, stamp, fileName, id,
-                                           presetInstallFinished, session);
+    DocumentBroker::asyncInstallPreset(_poll, _configId, uri, stamp, fileName, id,
+                                       presetInstallFinished, session);
+}
+
+void PresetsInstallTask::installPresetStarted(const std::string& id)
+{
+    _installingPresets.insert(id);
+}
+
+void PresetsInstallTask::installPresetFinished(const std::string& id, bool presetResult)
+{
+    _overallSuccess &= presetResult;
+    _installingPresets.erase(id);
+    // If there are no remaining presets to fetch, or this one has
+    // failed, then we can respond. TODO could we cancel outstanding
+    // downloads?
+    if (_installingPresets.empty() && !_reportedStatus)
+    {
+        LOG_INF("Async fetch of presets for " << _configId << " completed. Success: " << _overallSuccess);
+        completed();
     }
+}
 
-    void installPresetStarted(const std::string& id)
+void PresetsInstallTask::completed()
+{
+    auto selfLifecycle = shared_from_this();
+    _reportedStatus = true;
+    for (const auto& cb : _installFinishedCBs)
+        cb(_overallSuccess);
+}
+
+void PresetsInstallTask::addGroup(Poco::JSON::Object::Ptr settings, const std::string& groupName,
+              std::vector<CacheQuery>& queries)
+{
+    if (!settings->has(groupName))
+        return;
+
+    auto group = settings->get(groupName).extract<Poco::JSON::Array::Ptr>();
+    for (std::size_t i = 0, count = group->size(); i < count; ++i)
     {
-        _installingPresets.insert(id);
-    }
+        auto elem = group->get(i).extract<Poco::JSON::Object::Ptr>();
+        if (!elem)
+            continue;
 
-    void installPresetFinished(const std::string& id, bool presetResult)
-    {
-        _overallSuccess &= presetResult;
-        _installingPresets.erase(id);
-        // If there are no remaining presets to fetch, or this one has
-        // failed, then we can respond. TODO could we cancel outstanding
-        // downloads?
-        if (_installingPresets.empty() && !_reportedStatus)
-        {
-            LOG_INF("Async fetch of presets for " << _configId << " completed. Success: " << _overallSuccess);
-            completed();
-        }
-    }
+        const std::string uri = JsonUtil::getJSONValue<std::string>(elem, "uri");
+        const std::string stamp = JsonUtil::getJSONValue<std::string>(elem, "stamp");
 
-    void completed()
-    {
-        auto selfLifecycle = shared_from_this();
-        _reportedStatus = true;
-        for (const auto& cb : _installFinishedCBs)
-            cb(_overallSuccess);
-    }
-
-    void addGroup(Poco::JSON::Object::Ptr settings, const std::string& groupName,
-                  std::vector<CacheQuery>& queries)
-    {
-        if (!settings->has(groupName))
-            return;
-
-        auto group = settings->get(groupName).extract<Poco::JSON::Array::Ptr>();
-        for (std::size_t i = 0, count = group->size(); i < count; ++i)
-        {
-            auto elem = group->get(i).extract<Poco::JSON::Object::Ptr>();
-            if (!elem)
-                continue;
-
-            const std::string uri = JsonUtil::getJSONValue<std::string>(elem, "uri");
-            const std::string stamp = JsonUtil::getJSONValue<std::string>(elem, "stamp");
-
-            Poco::Path destDir(_presetsPath, groupName);
-            Poco::File(destDir).createDirectories();
-            std::string fileName;
-            if (groupName == "xcu")
-                fileName = Poco::Path(destDir.toString(), "config.xcu").toString();
-            else if (groupName == "browsersetting")
-                fileName = Poco::Path(destDir.toString(), "browsersetting.json").toString();
-            else
-                fileName = Poco::Path(destDir.toString(), Uri::getFilenameWithExtFromURL(uri)).toString();
-
-            queries.emplace_back(uri, stamp, fileName);
-        }
-    }
-
-public:
-    PresetsInstallTask(SocketPoll& poll, const std::string& configId,
-                       const std::string& presetsPath,
-                       const std::function<void(bool)>& installFinishedCB)
-        : _poll(poll)
-        , _reportedStatus(false)
-        , _overallSuccess(true)
-        , _idCount(0)
-        , _configId(configId)
-        , _presetsPath(presetsPath)
-    {
-        appendCallback(installFinishedCB);
-    }
-
-    bool empty() const
-    {
-        return _installingPresets.empty();
-    }
-
-    void appendCallback(const std::function<void(bool)>& installFinishedCB)
-    {
-        _installFinishedCBs.emplace_back(installFinishedCB);
-    }
-
-    void install(const Poco::JSON::Object::Ptr& settings,
-                 const std::shared_ptr<ClientSession>& session)
-    {
-        std::vector<CacheQuery> presets;
-        if (!settings)
-            _overallSuccess = false;
+        Poco::Path destDir(_presetsPath, groupName);
+        Poco::File(destDir).createDirectories();
+        std::string fileName;
+        if (groupName == "xcu")
+            fileName = Poco::Path(destDir.toString(), "config.xcu").toString();
+        else if (groupName == "browsersetting")
+            fileName = Poco::Path(destDir.toString(), "browsersetting.json").toString();
         else
-        {
-            addGroup(settings, "browsersetting", presets);
-            addGroup(settings, "autotext", presets);
-            addGroup(settings, "wordbook", presets);
-            addGroup(settings, "xcu", presets);
-            addGroup(settings, "template", presets);
-        }
+            fileName = Poco::Path(destDir.toString(), Uri::getFilenameWithExtFromURL(uri)).toString();
 
-        Cache::supplyConfigFiles(_configId, presets);
-
-        // If there are no presets to fetch then we can respond now, otherwise
-        // that happens when the last preset is installed.
-        if (!presets.empty())
-        {
-            LOG_INF("Async fetch of presets for " << _configId << " launched");
-            for (const auto& preset : presets)
-                asyncInstall(preset._uri, preset._stamp, preset._dest, session);
-        }
-        else
-        {
-            LOG_INF("Fetch of presets for " << _configId << " completed immediately. Success: " << _overallSuccess);
-            completed();
-        }
+        queries.emplace_back(uri, stamp, fileName);
     }
-};
+}
+
+PresetsInstallTask::PresetsInstallTask(SocketPoll& poll, const std::string& configId,
+                   const std::string& presetsPath,
+                   const std::function<void(bool)>& installFinishedCB)
+    : _poll(poll)
+    , _reportedStatus(false)
+    , _overallSuccess(true)
+    , _idCount(0)
+    , _configId(configId)
+    , _presetsPath(presetsPath)
+{
+    appendCallback(installFinishedCB);
+}
+
+void PresetsInstallTask::install(const Poco::JSON::Object::Ptr& settings,
+             const std::shared_ptr<ClientSession>& session)
+{
+    std::vector<CacheQuery> presets;
+    if (!settings)
+        _overallSuccess = false;
+    else
+    {
+        addGroup(settings, "browsersetting", presets);
+        addGroup(settings, "autotext", presets);
+        addGroup(settings, "wordbook", presets);
+        addGroup(settings, "xcu", presets);
+        addGroup(settings, "template", presets);
+    }
+
+    Cache::supplyConfigFiles(_configId, presets);
+
+    // If there are no presets to fetch then we can respond now, otherwise
+    // that happens when the last preset is installed.
+    if (!presets.empty())
+    {
+        LOG_INF("Async fetch of presets for " << _configId << " launched");
+        for (const auto& preset : presets)
+            asyncInstall(preset._uri, preset._stamp, preset._dest, session);
+    }
+    else
+    {
+        LOG_INF("Fetch of presets for " << _configId << " completed immediately. Success: " << _overallSuccess);
+        completed();
+    }
+}
 
 void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& session,
                                          const std::string& configId,
