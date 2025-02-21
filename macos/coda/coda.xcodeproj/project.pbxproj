@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BE16C9F02CD51F58005E5960 /* hello.odt in Resources */ = {isa = PBXBuildFile; fileRef = BE16C9EF2CD51F58005E5960 /* hello.odt */; };
-		BE2231BA2CC67FDE00385A9C /* coolwsd-fork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */; };
 		BE22492C2CC79AD700385A9C /* cool.html in Resources */ = {isa = PBXBuildFile; fileRef = BE22492B2CC79AD700385A9C /* cool.html */; };
 		BE2252292CC79BAE00385A9C /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = BE22492E2CC79BAE00385A9C /* bundle.js */; };
 		BE22529E2CC79BAE00385A9C /* cool-help.html in Resources */ = {isa = PBXBuildFile; fileRef = BE22492F2CC79BAE00385A9C /* cool-help.html */; };
@@ -84,6 +83,9 @@
 		BEA264B42CBE99340007435A /* RequestVettingStation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264AA2CBE99340007435A /* RequestVettingStation.cpp */; };
 		BEEF3F862CE2139E00ABE785 /* coolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BEEF3F852CE2139E00ABE785 /* coolkitconfig.xcu */; };
 		BEF5CE8F2D633CE60006FD77 /* discovery.xml in Resources */ = {isa = PBXBuildFile; fileRef = BEF5CE8E2D633CE60006FD77 /* discovery.xml */; };
+		BEFC03192D64986E009FF7B8 /* ForKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFC03172D64986E009FF7B8 /* ForKit.cpp */; };
+		BEFC031D2D64D76D009FF7B8 /* coolwsd-inproc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFC031C2D64D76D009FF7B8 /* coolwsd-inproc.cpp */; };
+		BEFC6A492D6737AF009FF7B8 /* dist in Resources */ = {isa = PBXBuildFile; fileRef = BEFC6A482D6737A9009FF7B8 /* dist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,7 +107,6 @@
 
 /* Begin PBXFileReference section */
 		BE16C9EF2CD51F58005E5960 /* hello.odt */ = {isa = PBXFileReference; lastKnownFileType = file; name = hello.odt; path = ../../../test/data/hello.odt; sourceTree = "<group>"; };
-		BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "coolwsd-fork.cpp"; path = "../../../../wsd/coolwsd-fork.cpp"; sourceTree = "<group>"; };
 		BE22492B2CC79AD700385A9C /* cool.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = cool.html; path = ../../../browser/dist/cool.html; sourceTree = "<group>"; };
 		BE22492D2CC79BAE00385A9C /* bundle.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = bundle.css; path = ../../../browser/dist/bundle.css; sourceTree = "<group>"; };
 		BE22492E2CC79BAE00385A9C /* bundle.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../browser/dist/bundle.js; sourceTree = "<group>"; };
@@ -243,6 +244,10 @@
 		BEEF3F822CE20BDD00ABE785 /* SetupKitEnvironment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SetupKitEnvironment.hpp; path = ../../../../kit/SetupKitEnvironment.hpp; sourceTree = "<group>"; };
 		BEEF3F852CE2139E00ABE785 /* coolkitconfig.xcu */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = coolkitconfig.xcu; path = ../../../coolkitconfig.xcu; sourceTree = "<group>"; };
 		BEF5CE8E2D633CE60006FD77 /* discovery.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = discovery.xml; path = ../../../discovery.xml; sourceTree = "<group>"; };
+		BEFC03172D64986E009FF7B8 /* ForKit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ForKit.cpp; path = ../../../../kit/ForKit.cpp; sourceTree = "<group>"; };
+		BEFC03182D64986E009FF7B8 /* Kit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Kit.hpp; path = ../../../../kit/Kit.hpp; sourceTree = "<group>"; };
+		BEFC031C2D64D76D009FF7B8 /* coolwsd-inproc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "coolwsd-inproc.cpp"; path = "../../../../wsd/coolwsd-inproc.cpp"; sourceTree = "<group>"; };
+		BEFC6A482D6737A9009FF7B8 /* dist */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dist; path = ../../../browser/dist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -291,6 +296,7 @@
 		BE22492A2CC79AAC00385A9C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BEFC6A482D6737A9009FF7B8 /* dist */,
 				BE22AA9B2CC7AE7400385A9C /* images */,
 				BE22492D2CC79BAE00385A9C /* bundle.css */,
 				BE22492E2CC79BAE00385A9C /* bundle.js */,
@@ -392,7 +398,9 @@
 			children = (
 				BEA2648B2CBE986C0007435A /* DeltaSimd.h */,
 				BEA2648C2CBE986C0007435A /* DeltaSimd.c */,
+				BEFC03172D64986E009FF7B8 /* ForKit.cpp */,
 				BEA2648D2CBE986C0007435A /* ChildSession.cpp */,
+				BEFC03182D64986E009FF7B8 /* Kit.hpp */,
 				BE4C625D2D5A3DDA00047DF2 /* Kit.cpp */,
 				BEA2648F2CBE986C0007435A /* KitQueue.hpp */,
 				BEA264902CBE986C0007435A /* KitQueue.cpp */,
@@ -440,7 +448,7 @@
 				BEA264A52CBE99340007435A /* ClientSession.cpp */,
 				BE4C62262D59EBAC00047DF2 /* COOLWSD.hpp */,
 				BEA264A62CBE99340007435A /* COOLWSD.cpp */,
-				BE2231B92CC67FDE00385A9C /* coolwsd-fork.cpp */,
+				BEFC031C2D64D76D009FF7B8 /* coolwsd-inproc.cpp */,
 				BE4C62272D59EBAC00047DF2 /* DocumentBroker.hpp */,
 				BEA264A72CBE99340007435A /* DocumentBroker.cpp */,
 				BE4C62282D59EBAC00047DF2 /* Exceptions.hpp */,
@@ -627,6 +635,7 @@
 				BE4C62612D5B736200047DF2 /* coolwsd.xml in Resources */,
 				BE2252292CC79BAE00385A9C /* bundle.js in Resources */,
 				BE22529E2CC79BAE00385A9C /* cool-help.html in Resources */,
+				BEFC6A492D6737AF009FF7B8 /* dist in Resources */,
 				BE2253F32CC79BAE00385A9C /* device-desktop.css in Resources */,
 				BE22557E2CC79BAE00385A9C /* global.js in Resources */,
 				BE16C9F02CD51F58005E5960 /* hello.odt in Resources */,
@@ -670,7 +679,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${TARGET_NAME}.app/Contents/lokit/\"\nrsync -avz $LO_PATH/Contents/ ${CONFIGURATION_BUILD_DIR}/${TARGET_NAME}.app/Contents/lokit/\n";
+			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${TARGET_NAME}.app/Contents/lokit/\"\nrsync -avz $LO_PATH/Contents/ ${CONFIGURATION_BUILD_DIR}/${TARGET_NAME}.app/Contents/lokit/\n\n# It's impossible to create 'browser/dist' in Resources via a rule directly,\n# we need to create the extra dir manually\nDIST_DIR=\"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/dist\"\nBROWSER_DIR=\"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/browser\"\necho \"Moving $DIST_DIR to $BROWSER_DIR\"\nmkdir -p \"$BROWSER_DIR\"\nrm -r \"$BROWSER_DIR/dist\"\nmv \"$DIST_DIR\" \"$BROWSER_DIR/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -685,6 +694,7 @@
 				BE4C62402D59EBAC00047DF2 /* RemoteConfig.cpp in Sources */,
 				BE4C62412D59EBAC00047DF2 /* ProxyProtocol.cpp in Sources */,
 				BE4C62422D59EBAC00047DF2 /* ProxyRequestHandler.cpp in Sources */,
+				BEFC031D2D64D76D009FF7B8 /* coolwsd-inproc.cpp in Sources */,
 				BE4C62432D59EBAC00047DF2 /* FileServerUtil.cpp in Sources */,
 				BE4C62442D59EBAC00047DF2 /* ProofKey.cpp in Sources */,
 				BE4C62452D59EBAC00047DF2 /* ServerAuditUtil.cpp in Sources */,
@@ -699,6 +709,7 @@
 				BEA264922CBE986C0007435A /* KitQueue.cpp in Sources */,
 				BE4C621C2D59EAA900047DF2 /* DelaySocket.cpp in Sources */,
 				BE4C621D2D59EAA900047DF2 /* HttpHelper.cpp in Sources */,
+				BEFC03192D64986E009FF7B8 /* ForKit.cpp in Sources */,
 				BE9115AE2CECBD3100C597B2 /* FileUtil-unix.cpp in Sources */,
 				BEA264932CBE986C0007435A /* KitWebSocket.cpp in Sources */,
 				BEA264942CBE986C0007435A /* ChildSession.cpp in Sources */,
@@ -736,7 +747,6 @@
 				BEA264B02CBE99340007435A /* ClientSession.cpp in Sources */,
 				BEA264B12CBE99340007435A /* RequestDetails.cpp in Sources */,
 				BEA264B22CBE99340007435A /* ClientRequestDispatcher.cpp in Sources */,
-				BE2231BA2CC67FDE00385A9C /* coolwsd-fork.cpp in Sources */,
 				BEA264B32CBE99340007435A /* DocumentBroker.cpp in Sources */,
 				BEA264B42CBE99340007435A /* RequestVettingStation.cpp in Sources */,
 				BE5A7AE22D354F4000FE7D60 /* Syscall.cpp in Sources */,
@@ -951,7 +961,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J4FQ687VJK;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coda/Info.plist;
@@ -999,7 +1010,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J4FQ687VJK;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coda/Info.plist;
