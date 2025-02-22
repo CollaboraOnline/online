@@ -4830,7 +4830,8 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
     LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
     if (_sessions.find(session->getId()) == _sessions.end())
     {
-        LOG_WRN("ClientSession must be known");
+        LOG_WRN("Cannot forward to unknown ClientSession [" << session->getId()
+                                                            << "]: " << message);
         return false;
     }
 
