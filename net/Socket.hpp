@@ -176,7 +176,7 @@ public:
         }
     }
 
-    /// Returns true if this socket has been closed, i.e. rejected from polling and potentially shutdown
+    /// Returns true if this socket FD has been shutdown, but not necessarily closed.
     bool isClosed() const { return _closed; }
 
     constexpr Type type() const { return _type; }
@@ -453,7 +453,7 @@ protected:
     /// avoid doing a shutdown before close
     void setNoShutdown() { _noShutdown = true; }
 
-    /// Explicitly marks this socket closed, i.e. rejected from polling and potentially shutdown
+    /// Explicitly marks this socket FD closed when we call shutdown, but not necessarily closed.
     void setClosed() { _closed = true; }
 
 private:
