@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-17 21:10+0100\n"
-"PO-Revision-Date: 2025-02-12 05:24+0000\n"
+"PO-Revision-Date: 2025-02-19 20:48+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.10.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2304,7 +2304,7 @@ msgstr "Geen problemen gevonden"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Waarschuwingen:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2938,6 +2938,7 @@ msgstr "Ctrl+Shift+Alt+D om te verlaten"
 #: src/core/Debug.js:1082
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
+"De afhandeling van gebeurtenissen heeft langer geduurd dan verwacht: {0}ms"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
