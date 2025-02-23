@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-17 21:10+0100\n"
-"PO-Revision-Date: 2025-02-04 11:51+0000\n"
+"PO-Revision-Date: 2025-02-18 09:45+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sq/>\n"
-"Language: \n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.10.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2200,11 +2200,11 @@ msgstr "Kalo Jashtë Linje"
 
 #: src/control/Control.NotebookbarWriter.js:840
 msgid "Scroll up"
-msgstr ""
+msgstr "Rrëshqit për sipër"
 
 #: src/control/Control.NotebookbarWriter.js:847
 msgid "Scroll down"
-msgstr ""
+msgstr "Rrëshqit për poshtë"
 
 #: src/control/Control.NotebookbarWriter.js:1401
 msgid "Rich Text"
@@ -2304,7 +2304,7 @@ msgstr "S’u gjetën probleme"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Sinjalizime:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2336,11 +2336,11 @@ msgstr "Futni fletë"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "On"
 
 #: src/control/Control.StatusBar.js:179
 msgid "Off"
-msgstr ""
+msgstr "Off"
 
 #: src/control/Control.StatusBar.js:205
 #: src/control/jsdialog/Definitions.Menu.ts:23
@@ -2935,7 +2935,7 @@ msgstr "Ctrl+Shift+Alt+D që të dilet"
 
 #: src/core/Debug.js:1082
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr ""
+msgstr "Trajtimi i akteve është vonuar për një kohë të gjatë të papritur: {0}ms"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
