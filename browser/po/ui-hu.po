@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-17 21:10+0100\n"
-"PO-Revision-Date: 2025-02-08 20:07+0000\n"
+"PO-Revision-Date: 2025-02-17 20:30+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.10.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2302,7 +2302,7 @@ msgstr "Nincs probléma"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Figyelmeztetések:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2934,7 +2934,7 @@ msgstr "Kilépés: Ctrl+Shift+Alt+D"
 
 #: src/core/Debug.js:1082
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr ""
+msgstr "Az eseménykezelést váratlanul hosszú ideig késleltették: {0} ms"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
