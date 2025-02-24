@@ -53,8 +53,7 @@ man_MANS = man/coolwsd.1 \
            man/coolmount.1
 
 
-dist_doc_DATA = wsd/README.md \
-                wsd/README.vars \
+dist_doc_DATA = wsd/README.vars \
                 wsd/protocol.txt \
                 wsd/metrics.txt \
                 THIRDPARTYLICENSES

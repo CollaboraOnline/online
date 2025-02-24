@@ -108,8 +108,57 @@ merged into `master`).
 
 Head over to https://collaboraonline.github.io/post/build-code/#build-code-on-gitpod and follow the steps.
 
+## Admin Panel
+
+You can access the admin panel by directly accessing the admin.html file
+from browser directory.
+
+Websocket connections to admin console can be made at path: /adminws/ on the
+same url and port as coolwsd is running on. However, one needs a JWT token to
+authenticate to the admin console websocket. This is stored as a cookie with
+`Path: /adminws/` when user successfully authenticates when trying to access
+/browser/dist/admin/admin\*html files (HTTP Basic authentication). Token
+is expired after every half an hour, so websocket connection to admin console
+must be established within this period.
+
+It should also be possible to do various sorts of tasks such as killing
+documents that are open for more than 10 hours etc. See protocol.txt for
+various commands. Only tricky thing here is getting the JWT token which can
+be obtained as described above.
+
+## Protocol description
+
+See **[protocol.txt](wsd/protocol.txt)** for a description of the protocol to be used over the
+websocket.
+
 ## Integrating
 
 To [integrate](https://sdk.collaboraonline.com/docs/why_integrate.html) Collabora Online into your own solution, you can see our [step-by-step tutorial](https://sdk.collaboraonline.com/docs/Step_by_step_tutorial.html), view the [available integrations](https://sdk.collaboraonline.com/docs/available_integrations.html), understand the [post message API](https://sdk.collaboraonline.com/docs/postmessage_api.html) used to customize and interact with Collabora Online, and a lot more.
+
+### Test running with integration for developers
+
+Unless you want to test SSL itself, it is easier to go for the non-SSL option.
+
+Setup Nextcloud or ownCloud on localhost, and install the richdocuments app.
+Good tutorials exist how to install ownCloud or Nextcloud, we don't repeat
+them here. richdocuments is called Collabora Online in the respective app
+stores / marketplaces / whatever.
+
+When you have a running Nextcloud or ownCloud instance at
+http://localhost/nextcloud or at http://localhost/owncloud
+go to Collabora Online settings, and set the WOPI URL to
+http://localhost:9980
+
+Then in the build tree, edit the generated coolwsd.xml and set ssl setting to
+false. You can run make run, and test coolwsd with the ownCloud or Nextcloud
+integration.
+
+Note: if SSL is enabled in either Online or the integration, both must
+have SSL enabled. That is, you must access NC/OC using https:// as well
+as configure the Collabora Online endpoint in NC/OC as https://localhost:9980.
+
+## Architecture
+
+Please refer to https://sdk.collaboraonline.com/docs/architecture.html
 
 ## Enjoy!
