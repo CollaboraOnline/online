@@ -2049,16 +2049,16 @@ class TileManager {
 		if (!checkOnly) {
 			// zoomFrameBounds and forZoom params were introduced to work only in checkOnly mode.
 			window.app.console.assert(
-				zoomFrameBounds === undefined,
+				zoomFrameBounds === null,
 				'zoomFrameBounds must only be supplied when checkOnly is true',
 			);
 			window.app.console.assert(
-				forZoom === undefined,
+				forZoom === null,
 				'forZoom must only be supplied when checkOnly is true',
 			);
 		}
 
-		if (forZoom !== undefined) {
+		if (forZoom !== null) {
 			window.app.console.assert(
 				zoomFrameBounds,
 				'zoomFrameBounds must be valid when forZoom is specified',
