@@ -18,6 +18,8 @@ interface WordbookFile {
 
 class WordBook {
 	private loadingModal: HTMLDivElement | null = null;
+	private currWordbookFile: WordbookFile;
+	private virtualWordList: VirtualWordList | null = null;
 
 	startLoader() {
 		this.loadingModal = document.createElement('div');
@@ -35,8 +37,73 @@ class WordBook {
 			this.loadingModal = null;
 		}
 	}
+	renderWordItem = (
+		container: HTMLElement,
+		word: string,
+		index: number,
+	): void => {
+		container.innerHTML = '';
+		container.style.removeProperty('display');
+		container.classList.add('list-item__wrapper');
+
+		const listItemDiv = document.createElement('div');
+		listItemDiv.classList.add('list-item');
+
+		const wordContainer = document.createElement('div');
+		wordContainer.classList.add('list-item__anchor');
+
+		const wordContentDiv = document.createElement('div');
+		wordContentDiv.classList.add('list-item-content');
+
+		const wordTextDiv = document.createElement('div');
+		wordTextDiv.classList.add('list-item-content__main');
+
+		const wordNameDiv = document.createElement('div');
+		wordNameDiv.classList.add('list-item-content__name');
+		wordNameDiv.textContent = word;
+
+		wordTextDiv.appendChild(wordNameDiv);
+		wordContentDiv.appendChild(wordTextDiv);
+		wordContainer.appendChild(wordContentDiv);
+		listItemDiv.appendChild(wordContainer);
+
+		const delButton = document.createElement('button');
+		delButton.type = 'button';
+		delButton.classList.add(
+			'button',
+			'button--size-normal',
+			'button--icon-only',
+			'button--vue-secondary',
+			'delete-icon',
+		);
+		delButton.innerHTML = `
+		  <span class="button__wrapper">
+			<span aria-hidden="true" class="button__icon">
+			  <span aria-hidden="true" role="img" class="material-design-icon">
+				<svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24">
+				  <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19
+							A2,2 0 0,0 8,21H16
+							A2,2 0 0,0 18,19V7H6V19Z"></path>
+				</svg>
+			  </span>
+			</span>
+		  </span>
+		`;
+		delButton.addEventListener('click', () => {
+			(window as any).WordBook.currWordbookFile.words.splice(index, 1);
+			if ((window as any).WordBook.virtualWordList) {
+				(window as any).WordBook.virtualWordList.refresh(
+					(window as any).WordBook.currWordbookFile.words,
+				);
+			}
+		});
+		listItemDiv.appendChild(delButton);
+
+		container.appendChild(listItemDiv);
+	};
 
 	openWordbookEditor(fileName: string, wordbook: WordbookFile): void {
+		this.currWordbookFile = wordbook;
 		const modal = document.createElement('div');
 		modal.className = 'modal';
 
@@ -65,18 +132,23 @@ class WordBook {
 		addButton.addEventListener('click', () => {
 			const newWord = newWordInput.value.trim();
 			if (newWord) {
-				wordbook.words.push(newWord);
-				this.updateWordList(wordList, wordbook);
+				this.currWordbookFile.words.push(newWord);
+				if (this.virtualWordList) {
+					this.virtualWordList.refresh(this.currWordbookFile.words);
+				}
 				newWordInput.value = '';
 			}
 		});
 		inputContainer.appendChild(addButton);
-
 		modalContent.appendChild(inputContainer);
 
 		const wordList = document.createElement('ul');
 		wordList.id = 'dicWordList';
-		this.updateWordList(wordList, wordbook);
+		this.virtualWordList = new VirtualWordList(
+			wordList,
+			this.currWordbookFile.words,
+			this.renderWordItem.bind(this),
+		);
 		modalContent.appendChild(wordList);
 
 		const buttonContainer = document.createElement('div');
@@ -97,8 +169,7 @@ class WordBook {
 		submitButton.textContent = 'Submit';
 		submitButton.className = 'button button--vue-primary';
 		submitButton.addEventListener('click', async () => {
-			console.debug('wordbook', wordbook);
-			const updatedContent = this.buildWordbookFile(wordbook);
+			const updatedContent = this.buildWordbookFile(this.currWordbookFile);
 			console.debug('Updated Dictionary Content:\n', updatedContent);
 			await (window as any).settingIframe.uploadWordbookFile(
 				fileName,
@@ -106,9 +177,7 @@ class WordBook {
 			);
 			document.body.removeChild(modal);
 		});
-
 		buttonContainer.appendChild(submitButton);
-
 		modalContent.appendChild(buttonContainer);
 		modal.appendChild(modalContent);
 		document.body.appendChild(modal);
@@ -198,68 +267,6 @@ class WordBook {
 		return [...header, '---', ...wordbook.words].join('\n');
 	}
 
-	private updateWordList(listEl: HTMLElement, wordbook: WordbookFile): void {
-		listEl.innerHTML = '';
-		wordbook.words.forEach((word, index) => {
-			// TODO IDEA: Extract list as components?
-
-			const li = document.createElement('li');
-			li.classList.add('list-item__wrapper');
-
-			const listItemDiv = document.createElement('div');
-			listItemDiv.classList.add('list-item');
-
-			const wordContainer = document.createElement('div');
-			wordContainer.classList.add('list-item__anchor');
-
-			const wordContentDiv = document.createElement('div');
-			wordContentDiv.classList.add('list-item-content');
-
-			const wordTextDiv = document.createElement('div');
-			wordTextDiv.classList.add('list-item-content__main');
-			const wordNameDiv = document.createElement('div');
-			wordNameDiv.classList.add('list-item-content__name');
-			wordNameDiv.textContent = word;
-
-			wordTextDiv.appendChild(wordNameDiv);
-			wordContentDiv.appendChild(wordTextDiv);
-			wordContainer.appendChild(wordContentDiv);
-
-			listItemDiv.appendChild(wordContainer);
-
-			const delButton = document.createElement('button');
-			delButton.type = 'button';
-			delButton.classList.add(
-				'button',
-				'button--size-normal',
-				'button--icon-only',
-				'button--vue-secondary',
-				'delete-icon',
-			);
-			delButton.innerHTML = `
-            <span class="button__wrapper">
-              <span aria-hidden="true" class="button__icon">
-                <span aria-hidden="true" role="img" class="material-design-icon">
-                  <svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24">
-                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19
-                              A2,2 0 0,0 8,21H16
-                              A2,2 0 0,0 18,19V7H6V19Z"></path>
-                  </svg>
-                </span>
-              </span>
-            </span>
-          `;
-			delButton.addEventListener('click', () => {
-				wordbook.words.splice(index, 1);
-				this.updateWordList(listEl, wordbook);
-			});
-			listItemDiv.appendChild(delButton);
-
-			li.appendChild(listItemDiv);
-			listEl.appendChild(li);
-		});
-	}
-
 	private async readFileAsText(file: File): Promise<string> {
 		return new Promise<string>((resolve, reject) => {
 			const reader = new FileReader();
@@ -279,6 +286,92 @@ class WordBook {
 			return lines.slice(delimiterIndex + 1);
 		}
 		return lines;
+	}
+}
+
+type RenderItemFunction = (
+	container: HTMLElement,
+	word: string,
+	index: number,
+) => void;
+
+class VirtualWordList {
+	private container: HTMLUListElement;
+	private contentWrapper: HTMLDivElement;
+	private viewport: HTMLDivElement;
+	private words: string[];
+	private itemHeight: number;
+	private visibleCount: number;
+	private pool: HTMLLIElement[];
+	private renderItem: RenderItemFunction;
+
+	constructor(
+		containerEl: HTMLUListElement,
+		words: string[],
+		renderItem: RenderItemFunction,
+	) {
+		this.container = containerEl;
+		this.words = words;
+		this.renderItem = renderItem;
+		this.itemHeight = 50;
+
+		this.container.style.overflowY = 'auto';
+		this.container.style.minHeight = '40vh';
+
+		this.contentWrapper = document.createElement('div');
+		this.contentWrapper.style.position = 'relative';
+		this.contentWrapper.style.height = `${this.words.length * this.itemHeight}px`;
+		this.container.appendChild(this.contentWrapper);
+
+		this.viewport = document.createElement('div');
+		this.viewport.style.position = 'absolute';
+		this.viewport.style.top = '0';
+		this.viewport.style.left = '0';
+		this.viewport.style.right = '0';
+		this.contentWrapper.appendChild(this.viewport);
+
+		this.visibleCount = 7;
+		this.pool = [];
+
+		for (let i = 0; i < this.visibleCount; i++) {
+			const li = document.createElement('li');
+			li.style.display = 'none';
+			li.style.height = this.itemHeight + 'px';
+			this.pool.push(li);
+			this.viewport.appendChild(li);
+		}
+
+		this.container.addEventListener('scroll', () => this.onScroll());
+		this.onScroll();
+	}
+
+	private onScroll(): void {
+		const scrollTop = this.container.scrollTop;
+		let firstIndex = Math.floor(scrollTop / this.itemHeight);
+
+		const maxFirstIndex = Math.max(0, this.words.length - this.pool.length);
+		if (firstIndex > maxFirstIndex) {
+			firstIndex = maxFirstIndex;
+		}
+
+		this.viewport.style.transform = `translateY(${firstIndex * this.itemHeight}px)`;
+
+		for (let i = 0; i < this.pool.length; i++) {
+			const wordIndex = firstIndex + i;
+			if (wordIndex < this.words.length) {
+				this.renderItem(this.pool[i], this.words[wordIndex], wordIndex);
+			} else {
+				this.pool[i].innerHTML = '';
+			}
+		}
+	}
+
+	public refresh(newWords?: string[]): void {
+		if (newWords) {
+			this.words = newWords;
+		}
+		this.contentWrapper.style.height = `${this.words.length * this.itemHeight}px`;
+		this.onScroll();
 	}
 }
 
