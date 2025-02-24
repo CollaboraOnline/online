@@ -68,9 +68,7 @@ This project has several components:
 
 ## Further recommended reading with build details
 
-Please consult the README files in the component's directory for more details:
-- **[wsd/README.md](wsd/README.md)**
-- **[browser/README](browser/README)**
+* **[Build Collabora online](https://collaboraonline.github.io/post/build-code/)**
 
 ## iOS and Android apps
 
