@@ -210,3 +210,12 @@ autogen.input
 
 # SBOM
 collabora-online-sbom.spdx.json
+
+# Visual Studio projects for CODA-W
+windows/coda/.vs
+windows/coda/CODA/bin
+windows/coda/CODA/obj
+windows/coda/CODALib/x64
+
+# CODA-W generated files
+windows/coda/config.props
