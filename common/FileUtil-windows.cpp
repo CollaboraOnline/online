@@ -154,19 +154,33 @@ namespace FileUtil
     {
         std::wstring path = std::filesystem::temp_directory_path().wstring();
 
+        if (!path.empty() && path.back() == L'\\')
+            path.pop_back();
+
         if (!path.empty())
             return Util::wide_string_to_string(path);
 
         // Try some fallbacks
-        const wchar_t *tmp = _wgetenv(L"TEMP");
+        wchar_t *tmp = _wgetenv(L"TEMP");
         if (!tmp)
             tmp = _wgetenv(L"TMP");
 
-        // This folder seems to be protected somehow on modern Windows, but oh well.
-        if (!tmp)
-            tmp = L"C:/Windows/Temp";
+        // We don't want to modify the environment string directly.
+        if (tmp)
+        {
+            tmp = _wcsdup(tmp);
+            if (tmp[wcslen(tmp)-1] == L'\\')
+                tmp[wcslen(tmp)-1] = L'\0';
+        }
 
-        return Util::wide_string_to_string(tmp);
+        // This folder seems to be protected somehow on modern Windows, but oh well.
+        // Duplicate here, too, so we can free() below.
+        if (!tmp)
+            tmp = _wcsdup(L"C:/Windows/Temp");
+
+        auto result = Util::wide_string_to_string(tmp);
+        free(tmp);
+        return result;
     }
 
     bool isWritable(const char* path)
