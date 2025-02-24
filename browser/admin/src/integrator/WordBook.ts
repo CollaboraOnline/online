@@ -135,6 +135,7 @@ class WordBook {
 				this.currWordbookFile.words.push(newWord);
 				if (this.virtualWordList) {
 					this.virtualWordList.refresh(this.currWordbookFile.words);
+					this.virtualWordList.scrollToBottom();
 				}
 				newWordInput.value = '';
 			}
@@ -370,8 +371,12 @@ class VirtualWordList {
 		if (newWords) {
 			this.words = newWords;
 		}
-		this.contentWrapper.style.height = `${this.words.length * this.itemHeight}px`;
+		this.contentWrapper.style.height = `${(this.words.length + 1) * this.itemHeight}px`;
 		this.onScroll();
+	}
+
+	public scrollToBottom(): void {
+		this.container.scrollTop = (this.words.length + 1) * this.itemHeight;
 	}
 }
 
