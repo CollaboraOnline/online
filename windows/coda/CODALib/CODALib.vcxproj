@@ -55,7 +55,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_USRDLL;%(PreprocessorDefinitions);NOMINMAX;_CRT_SECURE_NO_WARNINGS;COOLWSD_CONFIGDIR=".";COOLWSD_LOGLEVEL="debug";NUM_PRESPAWN_CHILDREN="1"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_USRDLL;%(PreprocessorDefinitions);NOMINMAX;_CRT_SECURE_NO_WARNINGS;COOLWSD_LOGLEVEL="debug"</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -79,7 +79,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_USRDLL;%(PreprocessorDefinitions);NOMINMAX;_CRT_SECURE_NO_WARNINGS;COOLWSD_CONFIGDIR=".";COOLWSD_LOGLEVEL="warning";NUM_PRESPAWN_CHILDREN="1"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_USRDLL;%(PreprocessorDefinitions);NOMINMAX;_CRT_SECURE_NO_WARNINGS;COOLWSD_LOGLEVEL="warning"</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
