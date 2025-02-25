@@ -47,6 +47,7 @@ Forkit
 Fullscreen
 Hexify
 Http
+Iframe
 Joomla
 Keyframes
 Keypresses
@@ -111,6 +112,7 @@ Yknv
 Zotero
 abc
 acceptformula
+accesskey
 accessors
 addforkit
 addr

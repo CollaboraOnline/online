@@ -112,7 +112,7 @@ class Util {
 	}
 
 	// removes given prefix and suffix from the string if exists
-	// if suffix is not specifed prefix is trimmed from both end of string
+	// if suffix is not specified, prefix is trimmed from both end of string
 	// trim whitespace from both sides of a string if prefix and suffix are not given
 	public static trim(str: string, prefix?: string, suffix?: string): string {
 		if (!prefix) return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g, '');
