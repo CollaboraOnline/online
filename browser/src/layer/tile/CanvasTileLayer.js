@@ -4440,15 +4440,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		return this._painter.getTileSectionPos();
 	},
 
-	_coordsToTileBounds: function (coords) {
-		var zoomFactor = this._map.zoomToFactor(coords.z);
-		var tileTopLeft = new L.Point(
-			coords.x * this.options.tileWidthTwips / this._tileSize / zoomFactor,
-			coords.y * this.options.tileHeightTwips / this._tileSize / zoomFactor);
-		var tileSize = new L.Point(this.options.tileWidthTwips / zoomFactor, this.options.tileHeightTwips / zoomFactor);
-		return new L.Bounds(tileTopLeft, tileTopLeft.add(tileSize));
-	},
-
 	isLayoutRTL: function () {
 		return !!this._layoutIsRTL;
 	},
