@@ -30,7 +30,7 @@ L.Map.include({
 			text: '',
 			textrange: '',
 			author: author,
-			dateTime: new Date().toDateString(),
+			dateTime: new Date().toISOString(),
 			id: 'new', // 'new' only when added by us
 			avatar: avatar
 		});
