@@ -1417,6 +1417,22 @@ class TileManager {
 		return this.tiles[key];
 	}
 
+	private static coordsToTileBounds(coords: TileCoordData): number[] {
+		var zoomFactor = app.map.zoomToFactor(coords.z);
+		const x =
+			(coords.x * app.map._docLayer._tileWidthTwips) /
+			this.tileSize /
+			zoomFactor;
+		const y =
+			(coords.y * app.map._docLayer._tileHeightTwips) /
+			this.tileSize /
+			zoomFactor;
+		const width = app.map._docLayer._tileWidthTwips / zoomFactor;
+		const height = app.map._docLayer._tileHeightTwips / zoomFactor;
+
+		return [x, y, width, height];
+	}
+
 	public static overlapInvalidatedRectangleWithView(
 		part: number,
 		mode: number,
@@ -1428,17 +1444,17 @@ class TileManager {
 
 		for (const key in this.tiles) {
 			const coords: TileCoordData = this.tiles[key].coords;
-			const tileRectangle = [coords.x, coords.y, this.tileSize, this.tileSize];
+			const tileRectangle = this.coordsToTileBounds(coords);
 
 			if (
 				coords.part === part &&
 				coords.mode === mode &&
 				invalidatedRectangle.intersectsRectangle(tileRectangle)
 			) {
-				if (app.isRectangleVisibleInTheDisplayedArea(tileRectangle)) {
-					this.invalidateTile(key, wireId);
+				if (app.isRectangleVisibleInTheDisplayedArea(tileRectangle))
 					needsNewTiles = true;
-				}
+
+				this.invalidateTile(key, wireId);
 			}
 		}
 
