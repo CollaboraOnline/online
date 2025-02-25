@@ -11,6 +11,7 @@ var assert = require('assert').strict;
 
 var dom = new jsdom.JSDOM(canvasDomString());
 
+addMockCanvas(dom.window);
 global.window = dom.window;
 global.document = dom.window.document;
 
