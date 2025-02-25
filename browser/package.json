@@ -34,6 +34,7 @@
     "shrinkpack": "1.0.0-alpha",
     "smartmenus": "1.0.0",
     "stylelint": "13.7.0",
+    "tmp": "0.2.3",
     "typescript": "4.4.2",
     "uglify-js": "3.17.4",
     "uglifycss": "0.0.29",
