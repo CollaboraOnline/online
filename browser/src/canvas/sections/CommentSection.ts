@@ -481,7 +481,7 @@ export class Comment extends CanvasSectionObject {
 
 		// dateTime is already in UTC, so we will not append Z that will create issues while converting date
 		var d = new Date(this.sectionProperties.data.dateTime.replace(/,.*/, ''));
-		var dateOptions: any = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+		var dateOptions: any = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 		this.sectionProperties.contentDate.innerText = isNaN(d.getTime()) ? this.sectionProperties.data.dateTime: d.toLocaleDateString((<any>String).locale, dateOptions);
 
 		if (this.sectionProperties.data.trackchange) {
