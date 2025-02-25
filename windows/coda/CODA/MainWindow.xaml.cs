@@ -264,8 +264,12 @@ namespace CODA
 
         private bool _isMessageOfType(byte[] message, string type, int lengthOfMessage)
         {
-            int typeLen = type.Length;
-            return message.SequenceEqual(System.Text.Encoding.UTF8.GetBytes(type));
+            if (message.Length < type.Length + 2)
+                return false;
+            for (int i = 0; i < type.Length; i++)
+                if (message[i] != type[i])
+                    return false;
+            return true;
         }
 
         void send2JS(IntPtr buffer, int length)
