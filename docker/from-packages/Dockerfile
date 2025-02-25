@@ -118,6 +118,10 @@ RUN --mount=type=secret,id=secret_key \
             apt-get -y install code-brand; \
         fi; \
     fi && \
+# Change cool uid/gid to 1001/1001
+    find /opt/cool -user cool -exec chown -h 1001:1001 {} \; && \
+    usermod -u 1001 cool && groupmod -g 1001 cool && \
+    chown cool:cool /etc/coolwsd/coolwsd.xml && \
 # Fix ownership of config directory that will be modified on start of the container by cool user
     chown cool:cool /etc/coolwsd && \
 # Remove perl-base, it's not needed and triggered some license scanner because of Paul Hsieh derivative license
@@ -135,9 +139,8 @@ COPY /scripts/start-collabora-online.sh /
 EXPOSE 9980
 
 # Switch to cool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
-USER 100
+USER 1001
 
 # FIXME
 # Use the old starter script until we find out how to replace it.
 ENTRYPOINT ["/start-collabora-online.sh"]
-
