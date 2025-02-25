@@ -69,7 +69,18 @@ function dblClickOnFirstCell() {
 	cy.log('>> dblClickOnFirstCell - start');
 
 	helper.typeIntoInputField(helper.addressInputSelector, 'A1');
-	clickOnFirstCell(false, true);
+
+	cy.wait(300);
+
+	cy.cGet('#test-div-OwnCellCursor')
+	.then(function(items) {
+		expect(items).to.have.lengthOf(1);
+		const item = items[0];
+		const boundingRectangle = item.getBoundingClientRect();
+		const xPos = (boundingRectangle.left + boundingRectangle.right) / 2;
+		const yPos = (boundingRectangle.top + boundingRectangle.bottom) / 2;
+		cy.cGet('body').dblclick(xPos, yPos);
+	});
 
 	cy.log('<< dblClickOnFirstCell - end');
 }
