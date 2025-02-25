@@ -23,3 +23,30 @@ function setupCanvasContainer(width: number, height: number): CanvasSectionConta
 
   return sectionContainer;
 }
+
+// The necessary canvas API functions are mocked here as we don't use canvas node module.
+function addMockCanvas(window: any): void {
+	window.HTMLCanvasElement.prototype.getContext = function () {
+		return {
+			fillRect: function() {},
+			clearRect: function(){},
+			setTransform: function(){},
+			drawImage: function(){},
+			save: function(){},
+			fillText: function(){},
+			restore: function(){},
+			beginPath: function(){},
+			moveTo: function(){},
+			lineTo: function(){},
+			closePath: function(){},
+			stroke: function(){},
+			translate: function(){},
+			scale: function(){},
+			rotate: function(){},
+			fill: function(){},
+			transform: function(){},
+			rect: function(){},
+			clip: function(){},
+		};
+	};
+}
