@@ -10,7 +10,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	beforeEach(function() {
 		newFilePath = helper.setupAndLoadDocument('calc/top_toolbar.ods');
 		desktopHelper.switchUIToCompact();
-		calcHelper.clickOnFirstCell();
+		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
 	});
 
 	it('Save.', function () {
