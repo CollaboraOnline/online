@@ -461,6 +461,9 @@
 
         <!-- End of legacy MIME-type actions -->
 
+        <app name="Settings">
+            <action name="iframe" ext=""/>
+        </app>
         <app name="Capabilities">
             <action name="getinfo" ext=""/>
         </app>

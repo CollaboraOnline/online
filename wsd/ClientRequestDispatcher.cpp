@@ -2310,6 +2310,11 @@ std::string ClientRequestDispatcher::getDiscoveryXML()
             elem->setAttribute(urlsrc, uriValue);
         }
 
+        if (parent && parent->getAttribute("name") == "Settings")
+        {
+            elem->setAttribute(urlsrc, uriBaseValue + SETTING_IFRAME_END_POINT);
+        }
+
         // Set the View extensions cache as well.
         if (elem->getAttribute("name") == "edit")
         {
