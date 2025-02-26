@@ -184,7 +184,7 @@ public:
                   Util::setThreadName("kitbgsv_" + Util::encodeId(mobileAppDocId, 3) + "_wdg");
 
                   const auto timeout = std::chrono::seconds(
-                      ConfigUtil::getInt("per_document.bgsave_timeout_secs", 60));
+                      ConfigUtil::getInt("per_document.bgsave_timeout_secs", 120));
 
                   std::unique_lock<std::mutex> lock(_watchdogMutex);
 

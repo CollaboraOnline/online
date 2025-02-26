@@ -51,7 +51,7 @@
         <max_concurrency desc="The maximum number of threads to use while processing a document." type="uint" default="4">4</max_concurrency>
         <batch_priority desc="A (lower) priority for use by batch eg. convert-to processes to avoid starving interactive ones" type="uint" default="5">5</batch_priority>
         <bgsave_priority desc="A (lower) priority for use by background save processes to free time for interactive ones" type="uint" default="5">5</bgsave_priority>
-        <bgsave_timeout_secs desc="The default maximum number of seconds to wait for the background save processes to finish before giving up and reverting to synchronous saving" type="uint" default="60">60</bgsave_timeout_secs>
+        <bgsave_timeout_secs desc="The default maximum number of seconds to wait for the background save processes to finish before giving up and reverting to synchronous saving" type="uint" default="120">120</bgsave_timeout_secs>
         <redlining_as_comments desc="If true show red-lines as comments" type="bool" default="false">false</redlining_as_comments>
         <pdf_resolution_dpi desc="The resolution, in DPI, used to render PDF documents as image. Memory consumption grows proportionally. Must be a positive value less than 385. Defaults to 96." type="uint" default="96">96</pdf_resolution_dpi>
         <idle_timeout_secs desc="The maximum number of seconds before unloading an idle document. Defaults to 1 hour." type="uint" default="3600">3600</idle_timeout_secs>
