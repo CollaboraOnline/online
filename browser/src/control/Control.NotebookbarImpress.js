@@ -29,7 +29,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							'type': 'toolitem',
 							'text': _('Save'),
 							'command': '.uno:Save',
-							'accessKey': '1'
+							'accessKey': '1',
+							'isCustomTooltip': true
 						}
 					]
 				} : {}
