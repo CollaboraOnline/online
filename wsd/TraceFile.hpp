@@ -357,17 +357,9 @@ private:
 class TraceFileReader
 {
 public:
-    TraceFileReader(const std::string& path) :
-        _compressed(path.size() > 2 && path.substr(path.size() - 2) == "gz"),
-        _epochStart(0),
-        _epochEnd(0),
-        _stream(path, _compressed ? std::ios::binary : std::ios::in),
-        _inflater(_stream, Poco::InflatingStreamBuf::STREAM_GZIP),
-        _index(0),
-        _indexIn(-1),
-        _indexOut(-1)
+    TraceFileReader(const std::string& path)
+        : TraceFileReader(path, (path.size() > 2 && path.substr(path.size() - 2) == "gz"))
     {
-        readFile();
     }
 
     ~TraceFileReader()
@@ -415,6 +407,19 @@ public:
     }
 
 private:
+    TraceFileReader(const std::string& path, bool compressed) :
+        _stream(path, compressed ? std::ios::binary : std::ios::in),
+        _inflater(_stream, Poco::InflatingStreamBuf::STREAM_GZIP),
+        _epochStart(0),
+        _epochEnd(0),
+        _index(0),
+        _indexIn(-1),
+        _indexOut(-1),
+        _compressed(compressed)
+    {
+        readFile();
+    }
+
     void readFile()
     {
         _records.clear();
@@ -519,15 +524,15 @@ private:
     }
 
 private:
-    const bool _compressed;
-    int64_t _epochStart;
-    int64_t _epochEnd;
     std::ifstream _stream;
     Poco::InflatingInputStream _inflater;
     std::vector<TraceFileRecord> _records;
+    int64_t _epochStart;
+    int64_t _epochEnd;
     unsigned _index;
     unsigned _indexIn;
     unsigned _indexOut;
+    const bool _compressed;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
