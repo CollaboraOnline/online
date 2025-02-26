@@ -27,12 +27,12 @@ extern "C"
  */
 class Watchdog : private std::thread
 {
-    std::atomic<bool> _exit;
-    std::unique_ptr<std::thread> _thread;
-    std::mutex _lock;
     std::condition_variable _condition;
+    std::mutex _lock;
     typedef std::pair<std::atomic<uint64_t>*,int *> WatchDetail;
     std::vector<WatchDetail> _times;
+    std::unique_ptr<std::thread> _thread;
+    std::atomic<bool> _exit;
 
     static const uint64_t MsToTrigger = 100;
 

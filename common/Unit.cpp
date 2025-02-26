@@ -632,8 +632,8 @@ void UnitBase::endTest([[maybe_unused]] const std::string& reason)
 
 UnitWSD::UnitWSD(const std::string& name)
     : UnitBase(name, UnitType::Wsd)
-    , _hasKitHooks(false)
     , _wsd(nullptr)
+    , _hasKitHooks(false)
 {
 }
 

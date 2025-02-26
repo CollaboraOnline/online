@@ -38,12 +38,12 @@ public:
     /// Create an instance with a SocketPoll and a RequestDetails instance.
     CheckFileInfo(const std::shared_ptr<TerminatingPoll>& poll, const Poco::URI& url,
                   std::function<void(CheckFileInfo&)> onFinishCallback)
-        : _poll(poll)
-        , _url(url)
+        : _url(url)
+        , _profileZone("WopiStorage::getWOPIFileInfo", { { "url", url.toString() } })
+        , _poll(poll)
         , _docKey(RequestDetails::getDocKey(url))
         , _onFinishCallback(std::move(onFinishCallback))
         , _state(State::None)
-        , _profileZone("WopiStorage::getWOPIFileInfo", { { "url", url.toString() } })
     {
         assert(_url == RequestDetails::sanitizeURI(url.toString()) && "Expected sanitized URL");
 
@@ -92,12 +92,12 @@ private:
     /// Parses the CheckFileInfo response and validates it.
     bool parseResponseAndValidate(const std::string& response);
 
-    std::shared_ptr<TerminatingPoll> _poll;
     Poco::URI _url; ///< Sanitized URL to the document. Can change through redirection.
+    ProfileZone _profileZone;
+    std::shared_ptr<http::Session> _httpSession;
+    std::shared_ptr<TerminatingPoll> _poll;
     const std::string _docKey; ///< Unique DocKey.
     std::function<void(CheckFileInfo&)> _onFinishCallback;
-    std::shared_ptr<http::Session> _httpSession;
-    std::atomic<State> _state;
     Poco::JSON::Object::Ptr _wopiInfo;
-    ProfileZone _profileZone;
+    std::atomic<State> _state;
 };

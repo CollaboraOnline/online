@@ -30,20 +30,20 @@
 class WebSocketHandler : public ProtocolHandlerInterface
 {
 private:
+#if !MOBILEAPP
+    /// The security key. Meaningful only for clients.
+    const std::string _key;
+#endif
+    std::vector<char> _wsPayload;
     /// The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
-
 #if !MOBILEAPP
     std::chrono::steady_clock::time_point _lastPingSentTime;
     int _pingTimeUs;
     bool _isMasking;
     bool _inFragmentBlock;
-    /// The security key. Meaningful only for clients.
-    const std::string _key;
     unsigned char _lastFlags; ///< The flags in the last frame.
 #endif
-
-    std::vector<char> _wsPayload;
     std::atomic<bool> _shuttingDown;
     const bool _isClient;
 
@@ -72,13 +72,13 @@ public:
     WebSocketHandler(bool isClient, [[maybe_unused]] bool isMasking)
         :
 #if !MOBILEAPP
-        _lastPingSentTime(std::chrono::steady_clock::now() -
-                          PingFrequencyMicroS +
-                          std::chrono::microseconds(InitialPingDelayMicroS))
+        _key(isClient ? generateKey() : std::string())
+        , _lastPingSentTime(std::chrono::steady_clock::now() -
+                           PingFrequencyMicroS +
+                           std::chrono::microseconds(InitialPingDelayMicroS))
         , _pingTimeUs(0)
         , _isMasking(isClient && isMasking)
         , _inFragmentBlock(false)
-        , _key(isClient ? generateKey() : std::string())
         , _lastFlags(0)
         ,
 #endif
