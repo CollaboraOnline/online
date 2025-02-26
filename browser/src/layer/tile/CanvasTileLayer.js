@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager ViewLayout */
 
 function clamp(num, min, max)
 {
@@ -671,6 +671,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._moveTileRequests = [];
 		this._canonicalIdInitialized = false;
 
+		ViewLayout.initialize();
 		TileManager.initialize();
 	},
 
@@ -2844,7 +2845,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._sendClientZoom();
 
-		this._sendClientVisibleArea();
+		ViewLayout.sendClientVisibleArea();
 
 		const verticalOffset = this.getFiledBasedViewVerticalOffset();
 		if (verticalOffset) {
@@ -2943,7 +2944,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._sendClientZoom();
 
-		this._sendClientVisibleArea();
+		ViewLayout.sendClientVisibleArea();
 
 		if (winId === 0) {
 			app.socket.sendMessage(
@@ -4328,41 +4329,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this.highlightCurrentPart(partToSelect);
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 			}
-		}
-	},
-
-	_sendClientVisibleArea: function (forceUpdate) {
-		if (!this._map._docLoaded)
-			return;
-
-		var splitPos = this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0);
-
-		var visibleArea = this._map.getPixelBounds();
-		visibleArea = new L.Bounds(
-			this._pixelsToTwips(visibleArea.min),
-			this._pixelsToTwips(visibleArea.max)
-		);
-		splitPos = this._corePixelsToTwips(splitPos);
-		var size = visibleArea.getSize();
-		var visibleTopLeft = visibleArea.min;
-		var newClientVisibleArea = 'clientvisiblearea x=' + Math.round(visibleTopLeft.x)
-					+ ' y=' + Math.round(visibleTopLeft.y)
-					+ ' width=' + Math.round(size.x)
-					+ ' height=' + Math.round(size.y)
-					+ ' splitx=' + Math.round(splitPos.x)
-					+ ' splity=' + Math.round(splitPos.y);
-
-		if (this._ySplitter) {
-			this._ySplitter.onPositionChange();
-		}
-		if (this._xSplitter) {
-			this._xSplitter.onPositionChange();
-		}
-		if (this._clientVisibleArea !== newClientVisibleArea || forceUpdate) {
-			// Visible area is dirty, update it on the server
-			app.socket.sendMessage(newClientVisibleArea);
-			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
-				this._clientVisibleArea = newClientVisibleArea;
 		}
 	},
 

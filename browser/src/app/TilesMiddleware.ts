@@ -1885,7 +1885,7 @@ class TileManager {
 		var pixelBounds = map.getPixelBoundsCore(center, zoom);
 		var queue = this.getMissingTiles(pixelBounds, zoom);
 
-		app.map._docLayer._sendClientVisibleArea();
+		ViewLayout.sendClientVisibleArea();
 		app.map._docLayer._sendClientZoom();
 
 		if (queue.length !== 0) this.addTiles(queue, false);
@@ -2153,7 +2153,7 @@ class TileManager {
 		if (checkOnly) {
 			return queue;
 		} else {
-			app.map._docLayer._sendClientVisibleArea();
+			ViewLayout.sendClientVisibleArea();
 			app.map._docLayer._sendClientZoom();
 
 			var tileCombineQueue = [];
