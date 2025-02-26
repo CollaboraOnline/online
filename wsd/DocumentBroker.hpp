@@ -1412,9 +1412,9 @@ private:
     public:
         LockStateUpdateRequest(StorageBase::LockState requestedLockState,
                                const std::shared_ptr<class ClientSession>& session)
-            : _startTime(std::chrono::steady_clock::now())
+            : _session(session)
+            , _startTime(std::chrono::steady_clock::now())
             , _requestedLockState(requestedLockState)
-            , _session(session)
         {
         }
 
@@ -1432,35 +1432,17 @@ private:
         std::shared_ptr<class ClientSession> session() const { return _session.lock(); }
 
     private:
+        const std::weak_ptr<class ClientSession> _session; ///< Allows for cleanup, if it's closed.
         const std::chrono::steady_clock::time_point _startTime; ///< The time we made the request.
         const StorageBase::LockState _requestedLockState;
-        const std::weak_ptr<class ClientSession> _session; ///< Allows for cleanup, if it's closed.
     };
 
 protected:
+    std::string _uriOrig;
     /// Seconds to live for, or 0 forever
     std::chrono::seconds _limitLifeSeconds;
-    std::string _uriOrig;
 
 private:
-    /// What type are we: affects priority.
-    ChildType _type;
-    const Poco::URI _uriPublic;
-    /// URL-based key. May be repeated during the lifetime of WSD.
-    const std::string _docKey;
-    /// Short numerical ID. Unique during the lifetime of WSD.
-    const std::string _docId;
-    std::shared_ptr<ChildProcess> _childProcess;
-    std::string _uriJailed;
-    std::string _uriJailedAnonym;
-    std::string _jailId;
-    std::string _filename;
-    std::atomic<bool> _migrateMsgReceived = false;
-
-    /// The WopiFileInfo of the initial request loading the document for the first time.
-    /// This has a single-use, and then it's reset.
-    std::unique_ptr<WopiStorage::WOPIFileInfo> _initialWopiFileInfo;
-
     /// The state of the document.
     /// This regulates all other primary operations.
     class DocumentState final
@@ -1626,43 +1608,35 @@ private:
     /// Called when document conflict is detected (i.e. it changed in storage).
     void handleDocumentConflict();
 
-    /// The main state of the document.
-    DocumentState _docState;
-
-    /// Set to true when document changed in storage and we are waiting
-    /// for user's command to act.
-    bool _documentChangedInStorage;
-
-    /// True for file that COOLWSD::IsViewFileExtension return true.
-    /// These files, such as PDF, don't have a reliable ModifiedStatus.
-    bool _isViewFileExtension;
+    /// What type are we: affects priority.
+    const Poco::URI _uriPublic;
 
     /// Manage saving in Core.
     SaveManager _saveManager;
 
-    /// The current upload request, if any.
-    /// For now we can only have one at a time.
-    std::unique_ptr<UploadRequest> _uploadRequest;
-
-#if !MOBILEAPP
-    /// The current CheckFileInfo request, if any.
-    std::shared_ptr<CheckFileInfo> _checkFileInfo;
-    std::shared_ptr<PresetsInstallTask> _asyncInstallTask;
-#endif
-
     /// Manage uploading to Storage.
     StorageManager _storageManager;
-
-    /// The current lock-state update request, if any.
-    std::unique_ptr<LockStateUpdateRequest> _lockStateUpdateRequest;
 
     /// All session of this DocBroker by ID.
     SessionMap<ClientSession> _sessions;
 
+#if !MOBILEAPP && !WASMAPP
+    ServerAuditUtil _serverAudit;
+#endif
+
+    // Maps download id -> URL
+    std::map<std::string, std::string> _registeredDownloadLinks;
+
+    /// Embedded media map [id, json].
+    std::map<std::string, std::string> _embeddedMedia;
+
+#if !MOBILEAPP
+    /// stores timestamps of preset files when they get installed to compare later to check if they are modified
+    std::map<std::string, std::filesystem::file_time_type> _presetTimestamp;
+#endif
+
     /// If we set the user-requested initial (on load) settings to be forced.
     std::set<std::string> _isInitialStateSet;
-
-    std::unique_ptr<StorageBase> _storage;
 
     /// The next upload request's attributes, used during uno:Save only.
     /// Updated right before saving and when saving is completed.
@@ -1674,32 +1648,55 @@ private:
     /// Updated right before uploading.
     StorageBase::Attributes _lastStorageAttrs;
 
-    /// The Quarantine manager.
-    std::unique_ptr<Quarantine> _quarantine;
+    /// URL-based key. May be repeated during the lifetime of WSD.
+    const std::string _docKey;
+    /// Short numerical ID. Unique during the lifetime of WSD.
+    const std::string _docId;
+    std::string _uriJailed;
+    std::string _uriJailedAnonym;
+    std::string _jailId;
+    std::string _filename;
 
-#if !MOBILEAPP && !WASMAPP
-    ServerAuditUtil _serverAudit;
-#endif
-
-    std::unique_ptr<TileCache> _tileCache;
-    std::atomic<bool> _isModified;
-    int _cursorPosX;
-    int _cursorPosY;
-    int _cursorWidth;
-    int _cursorHeight;
-    std::shared_ptr<DocumentBrokerPoll> _poll;
-    std::atomic<bool> _stop;
     std::string _closeReason;
-    std::unique_ptr<LockContext> _lockCtx;
     std::string _renameFilename; ///< The new filename to rename to.
     std::string _renameSessionId; ///< The sessionId used for renaming.
     std::string _lastEditingSessionId; ///< The last session edited, for auto-saving.
 
-    /// Versioning is used to prevent races between
-    /// painting and invalidation.
-    std::atomic<std::size_t> _tileVersion;
+    std::string _configId;
 
-    int _debugRenderedTileCount;
+    std::shared_ptr<ChildProcess> _childProcess;
+
+#if !MOBILEAPP
+    /// The current CheckFileInfo request, if any.
+    std::shared_ptr<CheckFileInfo> _checkFileInfo;
+    std::shared_ptr<PresetsInstallTask> _asyncInstallTask;
+#endif
+
+    std::shared_ptr<DocumentBrokerPoll> _poll;
+
+    /// The current upload request, if any.
+    /// For now we can only have one at a time.
+    std::unique_ptr<UploadRequest> _uploadRequest;
+
+    /// The current lock-state update request, if any.
+    std::unique_ptr<LockStateUpdateRequest> _lockStateUpdateRequest;
+
+    /// The WopiFileInfo of the initial request loading the document for the first time.
+    /// This has a single-use, and then it's reset.
+    std::unique_ptr<WopiStorage::WOPIFileInfo> _initialWopiFileInfo;
+
+    std::unique_ptr<StorageBase> _storage;
+
+    /// The Quarantine manager.
+    std::unique_ptr<Quarantine> _quarantine;
+
+    std::unique_ptr<TileCache> _tileCache;
+
+    std::unique_ptr<LockContext> _lockCtx;
+
+#if !MOBILEAPP
+    Admin& _admin;
+#endif
 
     std::chrono::steady_clock::time_point _lastNotifiedActivityTime;
 
@@ -1713,19 +1710,38 @@ private:
     std::chrono::milliseconds _loadDuration;
     std::chrono::milliseconds _wopiDownloadDuration;
 
-    /// Unique DocBroker ID for tracing and debugging.
-    static std::atomic<unsigned> DocBrokerId;
+    /// Versioning is used to prevent races between
+    /// painting and invalidation.
+    std::atomic<std::size_t> _tileVersion;
 
-    std::string _configId;
+    int _cursorPosX;
+    int _cursorPosY;
+    int _cursorWidth;
+    int _cursorHeight;
+
+    int _debugRenderedTileCount;
 
     // Relevant only in the mobile apps
     const unsigned _mobileAppDocId;
 
-    // Maps download id -> URL
-    std::map<std::string, std::string> _registeredDownloadLinks;
+    ChildType _type;
 
-    /// Embedded media map [id, json].
-    std::map<std::string, std::string> _embeddedMedia;
+    /// The main state of the document.
+    DocumentState _docState;
+
+    std::atomic<bool> _migrateMsgReceived = false;
+
+    std::atomic<bool> _isModified;
+
+    std::atomic<bool> _stop;
+
+    /// Set to true when document changed in storage and we are waiting
+    /// for user's command to act.
+    bool _documentChangedInStorage;
+
+    /// True for file that COOLWSD::IsViewFileExtension return true.
+    /// These files, such as PDF, don't have a reliable ModifiedStatus.
+    bool _isViewFileExtension;
 
     /// True iff the config per_document.always_save_on_exit is true.
     const bool _alwaysSaveOnExit : 1;
@@ -1735,11 +1751,8 @@ private:
 
     const bool _backgroundManualSave : 1;
 
-#if !MOBILEAPP
-    Admin& _admin;
-    /// stores timestamps of preset files when they get installed to compare later to check if they are modified
-    std::map<std::string, std::filesystem::file_time_type> _presetTimestamp;
-#endif
+    /// Unique DocBroker ID for tracing and debugging.
+    static std::atomic<unsigned> DocBrokerId;
 
     // Last member.
     /// The UnitWSD instance. We capture it here since

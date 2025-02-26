@@ -165,14 +165,9 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
                                const std::string& docKey, const std::string& configId,
                                unsigned mobileAppDocId,
                                std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
-    : _limitLifeSeconds(std::chrono::seconds::zero())
-    , _uriOrig(uri)
-    , _type(type)
+    : _uriOrig(uri)
+    , _limitLifeSeconds(std::chrono::seconds::zero())
     , _uriPublic(uriPublic)
-    , _docKey(docKey)
-    , _docId(Util::encodeId(DocBrokerId++, 3))
-    , _documentChangedInStorage(false)
-    , _isViewFileExtension(false)
     , _saveManager(std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
                                             ? 0
                                             : ConfigUtil::getConfigValueNonZero<int>(
@@ -185,29 +180,34 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
                        "per_document.min_time_between_saves_ms", 500)))
     , _storageManager(std::chrono::milliseconds(
           ConfigUtil::getConfigValueNonZero<int>("per_document.min_time_between_uploads_ms", 5000)))
-    , _isModified(false)
+    , _docKey(docKey)
+    , _docId(Util::encodeId(DocBrokerId++, 3))
+    , _configId(configId)
+    , _poll(
+          std::make_shared<DocumentBrokerPoll>("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this))
+    , _lockCtx(std::make_unique<LockContext>())
+#if !MOBILEAPP
+    , _admin(Admin::instance())
+#endif
+    , _loadDuration(0)
+    , _wopiDownloadDuration(0)
+    , _tileVersion(0)
     , _cursorPosX(0)
     , _cursorPosY(0)
     , _cursorWidth(0)
     , _cursorHeight(0)
-    , _poll(
-          std::make_shared<DocumentBrokerPoll>("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this))
-    , _stop(false)
-    , _lockCtx(std::make_unique<LockContext>())
-    , _tileVersion(0)
     , _debugRenderedTileCount(0)
-    , _loadDuration(0)
-    , _wopiDownloadDuration(0)
-    , _configId(configId)
     , _mobileAppDocId(mobileAppDocId)
+    , _type(type)
+    , _isModified(false)
+    , _stop(false)
+    , _documentChangedInStorage(false)
+    , _isViewFileExtension(false)
     , _alwaysSaveOnExit(ConfigUtil::getConfigValue<bool>("per_document.always_save_on_exit", false))
     , _backgroundAutoSave(
           ConfigUtil::getConfigValue<bool>("per_document.background_autosave", true))
     , _backgroundManualSave(
           ConfigUtil::getConfigValue<bool>("per_document.background_manualsave", true))
-#if !MOBILEAPP
-    , _admin(Admin::instance())
-#endif
     , _unitWsd(UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr)
 {
     assert(!_docKey.empty());
@@ -1579,12 +1579,12 @@ void PresetsInstallTask::addGroup(const Poco::JSON::Object::Ptr& settings, const
 PresetsInstallTask::PresetsInstallTask(SocketPoll& poll, const std::string& configId,
                    const std::string& presetsPath,
                    const std::function<void(bool)>& installFinishedCB)
-    : _poll(poll)
+    : _configId(configId)
+    , _presetsPath(presetsPath)
+    , _poll(poll)
+    , _idCount(0)
     , _reportedStatus(false)
     , _overallSuccess(true)
-    , _idCount(0)
-    , _configId(configId)
-    , _presetsPath(presetsPath)
 {
     appendCallback(installFinishedCB);
 }

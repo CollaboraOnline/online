@@ -101,17 +101,17 @@ public:
                     const bool recordOutgoing,
                     const bool compress,
                     const bool takeSnapshot,
-                    const std::vector<std::string>& filters) :
-        _epochStart(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now()
-                                                            .time_since_epoch()).count()),
-        _recordOutgoing(recordOutgoing),
-        _compress(compress),
-        _takeSnapshot(takeSnapshot),
-        _path(Poco::Path(path).parent().toString()),
-        _lastTime(_epochStart),
-        _filter(true),
-        _stream(processPath(path), compress ? std::ios::binary : std::ios::out),
-        _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP)
+                    const std::vector<std::string>& filters)
+        : _stream(processPath(path), compress ? std::ios::binary : std::ios::out)
+        , _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP)
+        , _filter(true)
+        , _path(Poco::Path(path).parent().toString())
+        , _epochStart(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now()
+                                                            .time_since_epoch()).count())
+        , _lastTime(_epochStart)
+        , _recordOutgoing(recordOutgoing)
+        , _compress(compress)
+        , _takeSnapshot(takeSnapshot)
     {
         for (const auto& f : filters)
         {
@@ -339,17 +339,17 @@ private:
     };
 
 private:
+    std::ofstream _stream;
+    Poco::DeflatingOutputStream _deflater;
+    Util::RegexListMatcher _filter;
+    std::map<std::string, SnapshotData> _urlToSnapshot;
+    std::mutex _mutex;
+    const std::string _path;
     const int64_t _epochStart;
+    int64_t _lastTime;;
     const bool _recordOutgoing;
     const bool _compress;
     const bool _takeSnapshot;
-    const std::string _path;
-    int64_t _lastTime;;
-    Util::RegexListMatcher _filter;
-    std::ofstream _stream;
-    Poco::DeflatingOutputStream _deflater;
-    std::mutex _mutex;
-    std::map<std::string, SnapshotData> _urlToSnapshot;
 };
 
 /// Trace-file parser class.

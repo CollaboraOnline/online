@@ -26,8 +26,8 @@ public:
 
 private:
     std::fstream _fileStreamUICommands;
-    std::chrono::steady_clock::time_point _kitStartTimeSec;
-    std::string _kitStartTimeStr;
     std::set<int> _usersLogged;
+    std::string _kitStartTimeStr;
     std::string _docId;
+    std::chrono::steady_clock::time_point _kitStartTimeSec;
 };
