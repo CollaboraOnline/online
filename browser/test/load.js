@@ -145,7 +145,7 @@ Object.defineProperty(window.HTMLElement.prototype, "clientHeight", {
 	}
 });
 
-process.stderr.write('Finished bootstrapping: mobile=' + window.L.Browser.mobile + ' desktop=' + window.mode.isDesktop() + ' now running\n');
+process.stderr.write('Finished bootstrapping: mobile=' + L.Browser.mobile + ' desktop=' + window.mode.isDesktop() + ' now running\n');
 console.debug('Window size ' + window.innerWidth + 'x' + window.innerHeight);
 
 window.HTMLElement.prototype.getBoundingClientRect = function() {
