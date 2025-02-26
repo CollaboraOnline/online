@@ -521,7 +521,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
                                 LockUpdateResult(LockUpdateResult::Status::OK, lock)));
         }
 
-        const std::string failureReason = httpResponse->get("X-WOPI-LockFailureReason", "");
+        std::string failureReason = httpResponse->get("X-WOPI-LockFailureReason", "");
 
         const bool unauthorized =
             (httpResponse->statusLine().statusCode() == http::StatusCode::Unauthorized ||
