@@ -22,14 +22,14 @@ class ClientSession;
 class PresetsInstallTask : public std::enable_shared_from_this<PresetsInstallTask>
 {
 private:
-    SocketPoll& _poll;
-    bool _reportedStatus;
-    bool _overallSuccess;
-    int _idCount;
+    std::set<std::string> _installingPresets;
     std::string _configId;
     std::string _presetsPath;
-    std::set<std::string> _installingPresets;
     std::vector<std::function<void(bool)>> _installFinishedCBs;
+    SocketPoll& _poll;
+    int _idCount;
+    bool _reportedStatus;
+    bool _overallSuccess;
 
     void asyncInstall(const std::string& uri, const std::string& stamp,
                       const std::string& fileName,

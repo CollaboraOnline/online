@@ -112,20 +112,19 @@ public:
     };
 
 private:
-
+    StringVector _pathSegs;
+    std::map<std::string, std::string> _params;
+    std::map<Field, std::string> _fields;
+    std::map<std::string, std::string> _docUriParams;
+    std::string _uriString;
+    std::string _proxyPrefix;
+    std::string _hostUntrusted;
+    std::string _documentURI;
     bool _isGet : 1;
     bool _isHead : 1;
     bool _isProxy : 1;
     bool _isWebSocket : 1;
     bool _closeConnection : 1;
-    std::string _uriString;
-    std::string _proxyPrefix;
-    std::string _hostUntrusted;
-    std::string _documentURI;
-    StringVector _pathSegs;
-    std::map<std::string, std::string> _params;
-    std::map<Field, std::string> _fields;
-    std::map<std::string, std::string> _docUriParams;
 
     void dehexify();
     void processURI();
