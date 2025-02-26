@@ -387,6 +387,7 @@ class BrowserInitializer extends InitializerBase {
 		window.enableAccessibility = element.dataset.enableAccessibility.toLowerCase().trim() === "true";
 		window.outOfFocusTimeoutSecs = parseInt(element.dataset.outOfFocusTimeoutSecs);
 		window.idleTimeoutSecs = parseInt(element.dataset.idleTimeoutSecs);
+		window.minSavedMessageTimeoutSecs = parseInt(element.dataset.minSavedMessageTimeoutSecs);
 		window.protocolDebug = element.dataset.protocolDebug.toLowerCase().trim() === "true";
 		window.enableDebug = element.dataset.enableDebug.toLowerCase().trim() === "true";
 		window.frameAncestors = decodeURIComponent(element.dataset.frameAncestors);
