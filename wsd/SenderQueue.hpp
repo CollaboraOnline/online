@@ -45,7 +45,7 @@ public:
         // This check is always thread-safe.
         if (SigUtil::getTerminationFlag())
         {
-            LOG_DBG("SenderQueue: TerminationFlag is set");
+            LOG_DBG("SenderQueue: TerminationFlag is set, will not dequeue");
             return false;
         }
 
