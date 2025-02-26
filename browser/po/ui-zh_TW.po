@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-17 21:10+0100\n"
+"POT-Creation-Date: 2025-02-26 13:36+0100\n"
 "PO-Revision-Date: 2025-02-19 02:29+0000\n"
 "Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/ui/zh_Hant/>\n"
-"Language: zh_TW\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -193,7 +193,7 @@ msgid "Expired:"
 msgstr "逾期："
 
 #: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
-#: src/control/Control.Zotero.js:209
+#: src/control/Control.Zotero.js:213
 msgid "Refresh"
 msgstr "重整"
 
@@ -213,8 +213,8 @@ msgstr "重新整理紀錄"
 msgid "Channel Filter:"
 msgstr "頻道篩選:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:495
-#: src/control/Control.StatusBar.js:212 src/control/Control.StatusBar.js:217
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:496
+#: src/control/Control.StatusBar.js:213 src/control/Control.StatusBar.js:218
 msgid "None"
 msgstr "無"
 
@@ -229,7 +229,7 @@ msgstr "紀錄層級"
 #: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:164
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
-#: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
+#: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
 #: src/core/Socket.js:436 src/core/Socket.js:1207 src/core/Socket.js:1212
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -288,7 +288,6 @@ msgstr "警告"
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: src/canvas/sections/CommentListSection.ts:1457
-#: src/canvas/sections/CommentListSection.ts:2373
 #: src/control/Control.AboutDialog.ts:154
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -296,14 +295,14 @@ msgstr "警告"
 #: src/control/Control.LanguageDialog.js:119
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
-#: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
-#: src/control/Parts.js:491 src/control/Permission.js:89
+#: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
+#: src/control/Parts.js:493 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Debug.js:1083 src/core/Socket.js:713 src/core/Socket.js:1177
+#: src/core/Debug.js:1081 src/core/Socket.js:713 src/core/Socket.js:1177
 #: src/core/Socket.js:1247 src/core/Socket.js:1398 src/core/Socket.js:1402
 #: src/docdispatcher.ts:516 src/main.js:84 src/main.js:87 src/main.js:140
-#: src/map/Clipboard.js:1269 src/map/handler/Map.Feedback.js:87
+#: src/map/Clipboard.js:1266 src/map/handler/Map.Feedback.js:87
 #: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:165
 #: src/map/handler/Map.SlideShow.js:293 src/map/handler/Map.SlideShow.js:304
 #: src/map/handler/Map.WOPI.js:673 src/slideshow/SlideShowPresenter.ts:644
@@ -322,9 +321,9 @@ msgstr "確定"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1347 src/control/Control.UIManager.js:1414
-#: src/control/Control.UIManager.js:1549 src/control/Control.UIManager.js:1708
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:832
+#: src/control/Control.UIManager.js:1352 src/control/Control.UIManager.js:1419
+#: src/control/Control.UIManager.js:1554 src/control/Control.UIManager.js:1713
+#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:832
 #: src/core/Socket.js:1423
 msgid "Cancel"
 msgstr "取消"
@@ -475,15 +474,14 @@ msgid "Open in full view"
 msgstr "在完整檢視中開啟"
 
 #: src/canvas/sections/CommentListSection.ts:1234
-#: src/control/Control.JSDialogBuilder.js:1893
-#: src/layer/tile/CanvasTileLayer.js:3866
-#: src/layer/tile/CanvasTileLayer.js:3877
+#: src/control/Control.JSDialogBuilder.js:1894
+#: src/layer/tile/CanvasTileLayer.js:3634
+#: src/layer/tile/CanvasTileLayer.js:3645
 msgid "Comment"
 msgstr "評註"
 
 #: src/canvas/sections/CommentListSection.ts:1455
 #: src/canvas/sections/CommentListSection.ts:1468
-#: src/canvas/sections/CommentListSection.ts:2371
 msgid "Comments Updated"
 msgstr "評註已更新"
 
@@ -509,10 +507,6 @@ msgstr "更新"
 #: src/canvas/sections/CommentListSection.ts:1644
 msgid "Autosaved"
 msgstr "已自動儲存"
-
-#: src/canvas/sections/CommentListSection.ts:2372
-msgid "Another user has updated comments. Would you like to proceed updating?"
-msgstr "其他使用者更新了評註。您想要繼續更新嗎？"
 
 #: src/canvas/sections/CommentSection.ts:305
 msgid "Open menu"
@@ -1069,98 +1063,98 @@ msgstr "閒置文件 - 請輕觸以重新載入並繼續編輯"
 msgid "Close dialog"
 msgstr "關閉對話方塊"
 
-#: src/control/Control.JSDialogBuilder.js:498
+#: src/control/Control.JSDialogBuilder.js:499
 msgid "Solid"
 msgstr "實心"
 
-#: src/control/Control.JSDialogBuilder.js:501
+#: src/control/Control.JSDialogBuilder.js:502
 msgid "Linear"
 msgstr "線形"
 
-#: src/control/Control.JSDialogBuilder.js:504
+#: src/control/Control.JSDialogBuilder.js:505
 msgid "Axial"
 msgstr "軸向"
 
-#: src/control/Control.JSDialogBuilder.js:507
+#: src/control/Control.JSDialogBuilder.js:508
 msgid "Radial"
 msgstr "放射"
 
-#: src/control/Control.JSDialogBuilder.js:510
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Ellipsoid"
 msgstr "橢圓體"
 
-#: src/control/Control.JSDialogBuilder.js:514
+#: src/control/Control.JSDialogBuilder.js:515
 msgid "Quadratic"
 msgstr "立方形"
 
-#: src/control/Control.JSDialogBuilder.js:517
+#: src/control/Control.JSDialogBuilder.js:518
 msgid "Square"
 msgstr "正方形"
 
-#: src/control/Control.JSDialogBuilder.js:520
+#: src/control/Control.JSDialogBuilder.js:521
 msgid "Fixed size"
 msgstr "固定大小"
 
-#: src/control/Control.JSDialogBuilder.js:1432
+#: src/control/Control.JSDialogBuilder.js:1433
 msgid "From"
 msgstr "從"
 
-#: src/control/Control.JSDialogBuilder.js:1435
+#: src/control/Control.JSDialogBuilder.js:1436
 msgid "To"
 msgstr "到"
 
-#: src/control/Control.JSDialogBuilder.js:1438
+#: src/control/Control.JSDialogBuilder.js:1439
 msgid "Color"
 msgstr "色彩"
 
-#: src/control/Control.JSDialogBuilder.js:1514
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "Select range"
 msgstr "選取範圍"
 
-#: src/control/Control.JSDialogBuilder.js:1624
+#: src/control/Control.JSDialogBuilder.js:1625
 #: src/control/Control.NotebookbarBuilder.js:155
 msgid "Font Name"
 msgstr "字型名稱"
 
-#: src/control/Control.JSDialogBuilder.js:1626 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1627 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "字型大小"
 
-#: src/control/Control.JSDialogBuilder.js:1628
+#: src/control/Control.JSDialogBuilder.js:1629
 #: src/control/Control.TopToolbar.js:461
 msgid "Style"
 msgstr "樣式"
 
-#: src/control/Control.JSDialogBuilder.js:1879
+#: src/control/Control.JSDialogBuilder.js:1880
 msgid "reply"
 msgstr "回覆"
 
-#: src/control/Control.JSDialogBuilder.js:1882
+#: src/control/Control.JSDialogBuilder.js:1883
 msgid "replies"
 msgstr "所有回覆"
 
-#: src/control/Control.JSDialogBuilder.js:1957
+#: src/control/Control.JSDialogBuilder.js:1958
 msgid "Insert Comment"
 msgstr "插入評註"
 
-#: src/control/Control.JSDialogBuilder.js:2732
+#: src/control/Control.JSDialogBuilder.js:2523
 #: src/control/Control.Menubar.js:894
 msgid "Rows"
 msgstr "列"
 
-#: src/control/Control.JSDialogBuilder.js:2733
+#: src/control/Control.JSDialogBuilder.js:2524
 #: src/control/Control.Menubar.js:897
 msgid "Columns"
 msgstr "欄"
 
-#: src/control/Control.JSDialogBuilder.js:2753
+#: src/control/Control.JSDialogBuilder.js:2544
 msgid "Insert Table"
 msgstr "插入表格"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:363
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:367
 #: src/control/Control.Menubar.js:555 src/control/Control.Menubar.js:695
-#: src/control/Control.Menubar.js:979 src/control/Control.StatusBar.js:538
+#: src/control/Control.Menubar.js:979 src/control/Control.StatusBar.js:542
 msgid "None (Do not check spelling)"
 msgstr "無 (不檢查拼字)"
 
@@ -1301,7 +1295,7 @@ msgstr "修復"
 #: src/control/Control.NotebookbarDraw.js:352
 #: src/control/Control.NotebookbarImpress.js:410
 #: src/control/Control.NotebookbarWriter.js:1473
-#: src/control/Control.StatusBar.js:273
+#: src/control/Control.StatusBar.js:274
 msgid "Reset zoom"
 msgstr "重設遠近"
 
@@ -1408,7 +1402,7 @@ msgstr "刷新引文"
 
 #: src/control/Control.Menubar.js:317
 #: src/control/Control.NotebookbarWriter.js:2058
-#: src/control/Control.Zotero.js:1445
+#: src/control/Control.Zotero.js:1533
 msgid "Unlink Citations"
 msgstr "取消引文"
 
@@ -1736,7 +1730,7 @@ msgstr "低於平均水平..."
 #: src/control/Control.NotebookbarDraw.js:992
 #: src/control/Control.NotebookbarImpress.js:1046
 #: src/control/Control.NotebookbarWriter.js:921
-#: src/control/Control.StatusBar.js:246 src/control/Control.Zotero.js:218
+#: src/control/Control.StatusBar.js:247 src/control/Control.Zotero.js:222
 #: src/control/Toolbar.js:575
 msgid "Search"
 msgstr "搜尋"
@@ -1753,7 +1747,7 @@ msgstr "定義列印區域"
 msgid "Remove print area"
 msgstr "清除列印區域"
 
-#: src/control/Control.Menubar.js:1488 src/control/Control.StatusBar.js:537
+#: src/control/Control.Menubar.js:1488 src/control/Control.StatusBar.js:541
 msgid "Reset to Default Language"
 msgstr "重設回預設語言"
 
@@ -1976,7 +1970,7 @@ msgstr "貨幣"
 
 #: src/control/Control.NotebookbarCalc.js:618
 #: src/control/Control.NotebookbarWriter.js:1429
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Date"
 msgstr "日期"
 
@@ -2316,68 +2310,68 @@ msgstr "開啟"
 msgid "Off"
 msgstr "關閉"
 
-#: src/control/Control.StatusBar.js:205
+#: src/control/Control.StatusBar.js:206
 #: src/control/jsdialog/Definitions.Menu.ts:23
 msgid "Average"
 msgstr "平均值"
 
-#: src/control/Control.StatusBar.js:206
+#: src/control/Control.StatusBar.js:207
 msgid "CountA"
 msgstr "全計數"
 
-#: src/control/Control.StatusBar.js:207
+#: src/control/Control.StatusBar.js:208
 #: src/control/jsdialog/Definitions.Menu.ts:26
 msgid "Count"
 msgstr "計數"
 
-#: src/control/Control.StatusBar.js:208
+#: src/control/Control.StatusBar.js:209
 msgid "Maximum"
 msgstr "最大"
 
-#: src/control/Control.StatusBar.js:209
+#: src/control/Control.StatusBar.js:210
 msgid "Minimum"
 msgstr "最小"
 
-#: src/control/Control.StatusBar.js:210
+#: src/control/Control.StatusBar.js:211
 #: src/control/jsdialog/Definitions.Menu.ts:22
 msgid "Sum"
 msgstr "總和"
 
-#: src/control/Control.StatusBar.js:211
+#: src/control/Control.StatusBar.js:212
 msgid "Selection count"
 msgstr "選取計數"
 
-#: src/control/Control.StatusBar.js:249
+#: src/control/Control.StatusBar.js:250
 msgid "Cancel the search"
 msgstr "取消搜尋"
 
-#: src/control/Control.StatusBar.js:413
+#: src/control/Control.StatusBar.js:414
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr "為了防止意外變更，作者已將此檔案設定為僅檢視"
 
-#: src/control/Control.StatusBar.js:463
+#: src/control/Control.StatusBar.js:464
 msgid "Select multiple cells"
 msgstr "選擇多個儲存格"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:467
 msgid "Insert mode: inactive"
 msgstr "插入模式：未激活"
 
-#: src/control/Control.StatusBar.js:477
+#: src/control/Control.StatusBar.js:480
 msgid "Selection mode: inactive"
 msgstr "選擇模式：未激活"
 
-#: src/control/Control.StatusBar.js:554
+#: src/control/Control.StatusBar.js:558
 msgid "Set Language for All text"
 msgstr "設定所有文字的語言"
 
-#: src/control/Control.StatusBar.js:557
+#: src/control/Control.StatusBar.js:561
 msgid "Set Language for Paragraph"
 msgstr "設定該段落語言"
 
-#: src/control/Control.StatusBar.js:558
+#: src/control/Control.StatusBar.js:562
 msgid "Set Language for Selection"
 msgstr "設定已選文字語言"
 
@@ -2439,7 +2433,7 @@ msgstr "插入形狀"
 msgid "Insert connectors"
 msgstr "插入連接器"
 
-#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:869
+#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:874
 msgid "Hide Menu"
 msgstr "隱藏選單"
 
@@ -2447,7 +2441,7 @@ msgstr "隱藏選單"
 msgid "Enter new name"
 msgstr "輸入新名稱"
 
-#: src/control/Control.UIManager.js:892
+#: src/control/Control.UIManager.js:897
 msgid "Show Menu"
 msgstr "顯示選單"
 
@@ -2499,150 +2493,164 @@ msgstr "追蹤中"
 msgid "Always follow the editor"
 msgstr "總是跟隨編輯者"
 
-#: src/control/Control.Zotero.js:139
+#: src/control/Control.Zotero.js:143
 msgid "Zotero API key is not configured"
 msgstr "Zotero API 金鑰未配置"
 
-#: src/control/Control.Zotero.js:160
+#: src/control/Control.Zotero.js:164
 msgid "Zotero API key is incorrect"
 msgstr "Zotero API 金鑰不正確"
 
-#: src/control/Control.Zotero.js:187
+#: src/control/Control.Zotero.js:191
 msgid "Zotero Warning"
 msgstr "Zotero 警告"
 
-#: src/control/Control.Zotero.js:188
+#: src/control/Control.Zotero.js:192
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr "該文件包含一些可能無法透過 Web API "
 "存取的引用。編輯引用或參考書目時可能會出現一些問題。"
 
-#: src/control/Control.Zotero.js:244 src/core/Socket.js:1347
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
 msgid "Loading..."
 msgstr "正在載入..."
 
-#: src/control/Control.Zotero.js:262
+#: src/control/Control.Zotero.js:259 src/control/Control.Zotero.js:456
+#: src/slideshow/PresenterConsole.js:31
+msgid "Previous"
+msgstr "前一個"
+
+#: src/control/Control.Zotero.js:272 src/control/Control.Zotero.js:471
+#: src/slideshow/PresenterConsole.js:32
+msgid "Next"
+msgstr "下一個"
+
+#: src/control/Control.Zotero.js:294
 msgid "Language:"
 msgstr "語言："
 
-#: src/control/Control.Zotero.js:277
+#: src/control/Control.Zotero.js:309
 msgid "Store as:"
 msgstr "儲存為:"
 
-#: src/control/Control.Zotero.js:283 src/control/Control.Zotero.js:407
+#: src/control/Control.Zotero.js:315 src/control/Control.Zotero.js:438
 msgid "Fields"
 msgstr "欄位"
 
-#: src/control/Control.Zotero.js:284 src/control/Control.Zotero.js:407
+#: src/control/Control.Zotero.js:316 src/control/Control.Zotero.js:438
 msgid "Bookmarks"
 msgstr "書籤"
 
-#: src/control/Control.Zotero.js:405
+#: src/control/Control.Zotero.js:436
 msgid "Footnotes"
 msgstr "註腳"
 
-#: src/control/Control.Zotero.js:405
+#: src/control/Control.Zotero.js:436
 msgid "Endnotes"
 msgstr "尾註"
 
-#: src/control/Control.Zotero.js:469
+#: src/control/Control.Zotero.js:523
 msgid "My Publications"
 msgstr "我的發布"
 
-#: src/control/Control.Zotero.js:475 src/control/Control.Zotero.js:702
+#: src/control/Control.Zotero.js:529 src/control/Control.Zotero.js:748
 msgid "My Library"
 msgstr "我的書架"
 
-#: src/control/Control.Zotero.js:476
+#: src/control/Control.Zotero.js:530
 msgid "Group Libraries"
 msgstr "群組書架"
 
-#: src/control/Control.Zotero.js:718
+#: src/control/Control.Zotero.js:764
 msgid "Failed to load groups"
 msgstr "載入群組失敗"
 
-#: src/control/Control.Zotero.js:736 src/control/Control.Zotero.js:1052
+#: src/control/Control.Zotero.js:782 src/control/Control.Zotero.js:1126
 msgid "Failed to load collections"
 msgstr "無法載入收藏"
 
-#: src/control/Control.Zotero.js:750
+#: src/control/Control.Zotero.js:790
+msgid "Loading references"
+msgstr ""
+
+#: src/control/Control.Zotero.js:824
 msgid "Citation Style"
 msgstr "引用樣式"
 
-#: src/control/Control.Zotero.js:755
+#: src/control/Control.Zotero.js:829
 msgid "Styles"
 msgstr "樣式"
 
-#: src/control/Control.Zotero.js:755
+#: src/control/Control.Zotero.js:829
 msgid "An error occurred while fetching style list"
 msgstr "取得樣式清單時發生錯誤"
 
-#: src/control/Control.Zotero.js:763
+#: src/control/Control.Zotero.js:837
 msgid "Failed to load styles"
 msgstr "載入樣式失敗"
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Title"
 msgstr "標題"
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Creator(s)"
 msgstr "作者"
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Your library is empty"
 msgstr "你的書架是空的"
 
-#: src/control/Control.Zotero.js:1091
+#: src/control/Control.Zotero.js:1166
 msgid "Failed to load items"
 msgstr "項目載入失敗"
 
-#: src/control/Control.Zotero.js:1143
+#: src/control/Control.Zotero.js:1218
 msgid "Citation warning"
 msgstr "引文警告"
 
-#: src/control/Control.Zotero.js:1144
+#: src/control/Control.Zotero.js:1219
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr "一旦輸入引文，其儲存和顯示類型就無法變更。"
 
-#: src/control/Control.Zotero.js:1145 src/control/Control.Zotero.js:1447
+#: src/control/Control.Zotero.js:1220 src/control/Control.Zotero.js:1535
 msgid "Confirm"
 msgstr "確認"
 
-#: src/control/Control.Zotero.js:1251
+#: src/control/Control.Zotero.js:1339
 msgid "Add Note"
 msgstr "新增註釋"
 
-#: src/control/Control.Zotero.js:1254 src/slideshow/PresenterConsole.js:33
+#: src/control/Control.Zotero.js:1342 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
 msgstr "註釋"
 
-#: src/control/Control.Zotero.js:1254
+#: src/control/Control.Zotero.js:1342
 msgid "An error occurred while fetching notes"
 msgstr "取得註釋時發生錯誤"
 
-#: src/control/Control.Zotero.js:1385
+#: src/control/Control.Zotero.js:1473
 msgid "Updated citations"
 msgstr "引文已更新"
 
-#: src/control/Control.Zotero.js:1387
+#: src/control/Control.Zotero.js:1475
 msgid "Citations update failed"
 msgstr "引文更新失敗"
 
-#: src/control/Control.Zotero.js:1391
+#: src/control/Control.Zotero.js:1479
 msgid "Updating citations"
 msgstr "正在更新引文"
 
-#: src/control/Control.Zotero.js:1446
+#: src/control/Control.Zotero.js:1534
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr "取消引用連結將阻止 Collabora Online 更新本文檔中的引用和參考書目。"
 
-#: src/control/Parts.js:491
+#: src/control/Parts.js:493
 msgid "Show sheets"
 msgstr "顯示工作表"
 
@@ -2893,7 +2901,7 @@ msgstr "偵錯工具"
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "Ctrl+Shift+Alt+D 退出"
 
-#: src/core/Debug.js:1082
+#: src/core/Debug.js:1080
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr "事件處理意外延遲了很長的時間：{0}毫秒"
 
@@ -3081,7 +3089,7 @@ msgstr "主題顏色"
 msgid "Document colors"
 msgstr "文件顏色"
 
-#: src/docstatefunctions.js:181
+#: src/docstatefunctions.js:195
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr "，叢集組態錯誤：伺服器 ID 不符合"
 
@@ -3358,15 +3366,15 @@ msgstr "「說明」分頁"
 msgid "the View menu"
 msgstr "「檢視」選單"
 
-#: src/layer/tile/CanvasTileLayer.js:1878
+#: src/layer/tile/CanvasTileLayer.js:1646
 msgid "Functions"
 msgstr "功能"
 
-#: src/layer/tile/CanvasTileLayer.js:2145
+#: src/layer/tile/CanvasTileLayer.js:1913
 msgid "Named Range"
 msgstr "已命名的範圍"
 
-#: src/layer/tile/CanvasTileLayer.js:3894
+#: src/layer/tile/CanvasTileLayer.js:3662
 msgid "No Comments"
 msgstr "暫無評註"
 
@@ -3391,34 +3399,34 @@ msgstr "警告：複製/貼上請求逾時"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "無法下載剪貼簿，請重新複製"
 
-#: src/map/Clipboard.js:1276
+#: src/map/Clipboard.js:1273
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "請使用螢幕鍵盤上的貼上按鈕。"
 
-#: src/map/Clipboard.js:1332
+#: src/map/Clipboard.js:1329
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr "由於大型複製/貼上作業導致的下載已經開始。請等待目前的下載或先取消下載，再開始"
 "新的下載"
 
-#: src/map/Clipboard.js:1354
+#: src/map/Clipboard.js:1351
 msgid "Paste from this document"
 msgstr "從此文件貼上"
 
-#: src/map/Clipboard.js:1354
+#: src/map/Clipboard.js:1351
 msgid "Cancel paste special"
 msgstr "取消選擇性貼上"
 
-#: src/map/Clipboard.js:1364
+#: src/map/Clipboard.js:1361
 msgid "Your browser has very limited access to the clipboard"
 msgstr "您的瀏覽器對剪貼簿的存取相當受限"
 
-#: src/map/Clipboard.js:1369
+#: src/map/Clipboard.js:1366
 msgid "Please use following combination to see more options:"
 msgstr "請使用以下組合來檢視更多選項："
 
-#: src/map/Clipboard.js:1387
+#: src/map/Clipboard.js:1384
 msgid "Close popup to ignore paste special"
 msgstr "關閉彈出式視窗以忽略選擇性貼上"
 
@@ -3430,7 +3438,7 @@ msgstr "正在初始化……"
 msgid "Last saved:"
 msgstr "最後儲存於："
 
-#: src/map/Map.js:1486
+#: src/map/Map.js:1487
 msgid "Please wait!"
 msgstr "請稍候！"
 
@@ -3560,14 +3568,6 @@ msgstr "目前投影片"
 msgid "Next Slide"
 msgstr "下一張投影片"
 
-#: src/slideshow/PresenterConsole.js:31
-msgid "Previous"
-msgstr "前一個"
-
-#: src/slideshow/PresenterConsole.js:32
-msgid "Next"
-msgstr "下一個"
-
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
 msgstr "投影片"
@@ -3689,6 +3689,9 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Another user has updated comments. Would you like to proceed updating?"
+#~ msgstr "其他使用者更新了評註。您想要繼續更新嗎？"
 
 #~ msgid "1 issue found"
 #~ msgstr "發現 1 個問題"

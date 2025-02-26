@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-17 21:10+0100\n"
+"POT-Creation-Date: 2025-02-26 13:36+0100\n"
 "PO-Revision-Date: 2025-01-28 15:02+0000\n"
 "Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
@@ -200,7 +200,7 @@ msgid "Expired:"
 msgstr "Истекают:"
 
 #: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
-#: src/control/Control.Zotero.js:209
+#: src/control/Control.Zotero.js:213
 msgid "Refresh"
 msgstr "Обновить"
 
@@ -220,8 +220,8 @@ msgstr "Обновить журнал"
 msgid "Channel Filter:"
 msgstr "Фильтр каналов:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:495
-#: src/control/Control.StatusBar.js:212 src/control/Control.StatusBar.js:217
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:496
+#: src/control/Control.StatusBar.js:213 src/control/Control.StatusBar.js:218
 msgid "None"
 msgstr "Нет"
 
@@ -236,7 +236,7 @@ msgstr "Уровни логирования"
 #: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:164
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
-#: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
+#: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
 #: src/core/Socket.js:436 src/core/Socket.js:1207 src/core/Socket.js:1212
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -296,7 +296,6 @@ msgstr "Предупреждение"
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: src/canvas/sections/CommentListSection.ts:1457
-#: src/canvas/sections/CommentListSection.ts:2373
 #: src/control/Control.AboutDialog.ts:154
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -304,14 +303,14 @@ msgstr "Предупреждение"
 #: src/control/Control.LanguageDialog.js:119
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
-#: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
-#: src/control/Parts.js:491 src/control/Permission.js:89
+#: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
+#: src/control/Parts.js:493 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Debug.js:1083 src/core/Socket.js:713 src/core/Socket.js:1177
+#: src/core/Debug.js:1081 src/core/Socket.js:713 src/core/Socket.js:1177
 #: src/core/Socket.js:1247 src/core/Socket.js:1398 src/core/Socket.js:1402
 #: src/docdispatcher.ts:516 src/main.js:84 src/main.js:87 src/main.js:140
-#: src/map/Clipboard.js:1269 src/map/handler/Map.Feedback.js:87
+#: src/map/Clipboard.js:1266 src/map/handler/Map.Feedback.js:87
 #: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:165
 #: src/map/handler/Map.SlideShow.js:293 src/map/handler/Map.SlideShow.js:304
 #: src/map/handler/Map.WOPI.js:673 src/slideshow/SlideShowPresenter.ts:644
@@ -330,9 +329,9 @@ msgstr "ОК"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1347 src/control/Control.UIManager.js:1414
-#: src/control/Control.UIManager.js:1549 src/control/Control.UIManager.js:1708
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:832
+#: src/control/Control.UIManager.js:1352 src/control/Control.UIManager.js:1419
+#: src/control/Control.UIManager.js:1554 src/control/Control.UIManager.js:1713
+#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:832
 #: src/core/Socket.js:1423
 msgid "Cancel"
 msgstr "Отмена"
@@ -484,15 +483,14 @@ msgid "Open in full view"
 msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1234
-#: src/control/Control.JSDialogBuilder.js:1893
-#: src/layer/tile/CanvasTileLayer.js:3866
-#: src/layer/tile/CanvasTileLayer.js:3877
+#: src/control/Control.JSDialogBuilder.js:1894
+#: src/layer/tile/CanvasTileLayer.js:3634
+#: src/layer/tile/CanvasTileLayer.js:3645
 msgid "Comment"
 msgstr "Примечание"
 
 #: src/canvas/sections/CommentListSection.ts:1455
 #: src/canvas/sections/CommentListSection.ts:1468
-#: src/canvas/sections/CommentListSection.ts:2371
 msgid "Comments Updated"
 msgstr "Комментарии обновлены"
 
@@ -520,11 +518,6 @@ msgstr "Обновить"
 #: src/canvas/sections/CommentListSection.ts:1644
 msgid "Autosaved"
 msgstr "Автоматически сохранён"
-
-#: src/canvas/sections/CommentListSection.ts:2372
-msgid "Another user has updated comments. Would you like to proceed updating?"
-msgstr ""
-"Другой пользователь обновил комментарии. Вы хотите продолжить обновление?"
 
 #: src/canvas/sections/CommentSection.ts:305
 msgid "Open menu"
@@ -1091,98 +1084,98 @@ msgstr ""
 msgid "Close dialog"
 msgstr "Закрыть диалог"
 
-#: src/control/Control.JSDialogBuilder.js:498
+#: src/control/Control.JSDialogBuilder.js:499
 msgid "Solid"
 msgstr "Сплошной"
 
-#: src/control/Control.JSDialogBuilder.js:501
+#: src/control/Control.JSDialogBuilder.js:502
 msgid "Linear"
 msgstr "Линейный"
 
-#: src/control/Control.JSDialogBuilder.js:504
+#: src/control/Control.JSDialogBuilder.js:505
 msgid "Axial"
 msgstr "Осевой"
 
-#: src/control/Control.JSDialogBuilder.js:507
+#: src/control/Control.JSDialogBuilder.js:508
 msgid "Radial"
 msgstr "Радиальный"
 
-#: src/control/Control.JSDialogBuilder.js:510
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Ellipsoid"
 msgstr "Эллипсоидный"
 
-#: src/control/Control.JSDialogBuilder.js:514
+#: src/control/Control.JSDialogBuilder.js:515
 msgid "Quadratic"
 msgstr "Квадратный"
 
-#: src/control/Control.JSDialogBuilder.js:517
+#: src/control/Control.JSDialogBuilder.js:518
 msgid "Square"
 msgstr "Прямоугольный"
 
-#: src/control/Control.JSDialogBuilder.js:520
+#: src/control/Control.JSDialogBuilder.js:521
 msgid "Fixed size"
 msgstr "Фиксированный размер"
 
-#: src/control/Control.JSDialogBuilder.js:1432
+#: src/control/Control.JSDialogBuilder.js:1433
 msgid "From"
 msgstr "От"
 
-#: src/control/Control.JSDialogBuilder.js:1435
+#: src/control/Control.JSDialogBuilder.js:1436
 msgid "To"
 msgstr "До"
 
-#: src/control/Control.JSDialogBuilder.js:1438
+#: src/control/Control.JSDialogBuilder.js:1439
 msgid "Color"
 msgstr "Цвет"
 
-#: src/control/Control.JSDialogBuilder.js:1514
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "Select range"
 msgstr "Выбрать диапазон"
 
-#: src/control/Control.JSDialogBuilder.js:1624
+#: src/control/Control.JSDialogBuilder.js:1625
 #: src/control/Control.NotebookbarBuilder.js:155
 msgid "Font Name"
 msgstr "Шрифт"
 
-#: src/control/Control.JSDialogBuilder.js:1626 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1627 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Кегль"
 
-#: src/control/Control.JSDialogBuilder.js:1628
+#: src/control/Control.JSDialogBuilder.js:1629
 #: src/control/Control.TopToolbar.js:461
 msgid "Style"
 msgstr "Стиль"
 
-#: src/control/Control.JSDialogBuilder.js:1879
+#: src/control/Control.JSDialogBuilder.js:1880
 msgid "reply"
 msgstr "ответить"
 
-#: src/control/Control.JSDialogBuilder.js:1882
+#: src/control/Control.JSDialogBuilder.js:1883
 msgid "replies"
 msgstr "ответы"
 
-#: src/control/Control.JSDialogBuilder.js:1957
+#: src/control/Control.JSDialogBuilder.js:1958
 msgid "Insert Comment"
 msgstr "Вставить комментарий"
 
-#: src/control/Control.JSDialogBuilder.js:2732
+#: src/control/Control.JSDialogBuilder.js:2523
 #: src/control/Control.Menubar.js:894
 msgid "Rows"
 msgstr "Строки"
 
-#: src/control/Control.JSDialogBuilder.js:2733
+#: src/control/Control.JSDialogBuilder.js:2524
 #: src/control/Control.Menubar.js:897
 msgid "Columns"
 msgstr "Столбцы"
 
-#: src/control/Control.JSDialogBuilder.js:2753
+#: src/control/Control.JSDialogBuilder.js:2544
 msgid "Insert Table"
 msgstr "Вставить таблицу"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:363
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:367
 #: src/control/Control.Menubar.js:555 src/control/Control.Menubar.js:695
-#: src/control/Control.Menubar.js:979 src/control/Control.StatusBar.js:538
+#: src/control/Control.Menubar.js:979 src/control/Control.StatusBar.js:542
 msgid "None (Do not check spelling)"
 msgstr "Нет (не проверять орфографию)"
 
@@ -1323,7 +1316,7 @@ msgstr "Восстановить"
 #: src/control/Control.NotebookbarDraw.js:352
 #: src/control/Control.NotebookbarImpress.js:410
 #: src/control/Control.NotebookbarWriter.js:1473
-#: src/control/Control.StatusBar.js:273
+#: src/control/Control.StatusBar.js:274
 msgid "Reset zoom"
 msgstr "Сбросить масштаб"
 
@@ -1430,7 +1423,7 @@ msgstr "Обновить цитаты"
 
 #: src/control/Control.Menubar.js:317
 #: src/control/Control.NotebookbarWriter.js:2058
-#: src/control/Control.Zotero.js:1445
+#: src/control/Control.Zotero.js:1533
 msgid "Unlink Citations"
 msgstr "Разорвать связи цитат"
 
@@ -1758,7 +1751,7 @@ msgstr "Ниже среднего..."
 #: src/control/Control.NotebookbarDraw.js:992
 #: src/control/Control.NotebookbarImpress.js:1046
 #: src/control/Control.NotebookbarWriter.js:921
-#: src/control/Control.StatusBar.js:246 src/control/Control.Zotero.js:218
+#: src/control/Control.StatusBar.js:247 src/control/Control.Zotero.js:222
 #: src/control/Toolbar.js:575
 msgid "Search"
 msgstr "Поиск"
@@ -1775,7 +1768,7 @@ msgstr "Выберите область печати"
 msgid "Remove print area"
 msgstr "Убрать область печати"
 
-#: src/control/Control.Menubar.js:1488 src/control/Control.StatusBar.js:537
+#: src/control/Control.Menubar.js:1488 src/control/Control.StatusBar.js:541
 msgid "Reset to Default Language"
 msgstr "Установить язык по умолчанию"
 
@@ -1998,7 +1991,7 @@ msgstr "Денежный"
 
 #: src/control/Control.NotebookbarCalc.js:618
 #: src/control/Control.NotebookbarWriter.js:1429
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Date"
 msgstr "Дата"
 
@@ -2342,42 +2335,42 @@ msgstr "Вкл"
 msgid "Off"
 msgstr "Выкл"
 
-#: src/control/Control.StatusBar.js:205
+#: src/control/Control.StatusBar.js:206
 #: src/control/jsdialog/Definitions.Menu.ts:23
 msgid "Average"
 msgstr "Среднее"
 
-#: src/control/Control.StatusBar.js:206
+#: src/control/Control.StatusBar.js:207
 msgid "CountA"
 msgstr "Количество2"
 
-#: src/control/Control.StatusBar.js:207
+#: src/control/Control.StatusBar.js:208
 #: src/control/jsdialog/Definitions.Menu.ts:26
 msgid "Count"
 msgstr "Количество"
 
-#: src/control/Control.StatusBar.js:208
+#: src/control/Control.StatusBar.js:209
 msgid "Maximum"
 msgstr "Максимум"
 
-#: src/control/Control.StatusBar.js:209
+#: src/control/Control.StatusBar.js:210
 msgid "Minimum"
 msgstr "Минимум"
 
-#: src/control/Control.StatusBar.js:210
+#: src/control/Control.StatusBar.js:211
 #: src/control/jsdialog/Definitions.Menu.ts:22
 msgid "Sum"
 msgstr "Сумма"
 
-#: src/control/Control.StatusBar.js:211
+#: src/control/Control.StatusBar.js:212
 msgid "Selection count"
 msgstr "Выделено"
 
-#: src/control/Control.StatusBar.js:249
+#: src/control/Control.StatusBar.js:250
 msgid "Cancel the search"
 msgstr "Отменить поиск"
 
-#: src/control/Control.StatusBar.js:413
+#: src/control/Control.StatusBar.js:414
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
@@ -2385,27 +2378,27 @@ msgstr ""
 "Чтобы предотвратить случайные изменения, автор пометил этот файл \"только "
 "для чтения\""
 
-#: src/control/Control.StatusBar.js:463
+#: src/control/Control.StatusBar.js:464
 msgid "Select multiple cells"
 msgstr "Выбор нескольких ячеек"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:467
 msgid "Insert mode: inactive"
 msgstr "Режим вставки: откл"
 
-#: src/control/Control.StatusBar.js:477
+#: src/control/Control.StatusBar.js:480
 msgid "Selection mode: inactive"
 msgstr "Режим выбора: откл"
 
-#: src/control/Control.StatusBar.js:554
+#: src/control/Control.StatusBar.js:558
 msgid "Set Language for All text"
 msgstr "Задать язык для всего текста"
 
-#: src/control/Control.StatusBar.js:557
+#: src/control/Control.StatusBar.js:561
 msgid "Set Language for Paragraph"
 msgstr "Задать язык для абзаца"
 
-#: src/control/Control.StatusBar.js:558
+#: src/control/Control.StatusBar.js:562
 msgid "Set Language for Selection"
 msgstr "Задать язык для выделения"
 
@@ -2469,7 +2462,7 @@ msgstr "Вставить фигуры"
 msgid "Insert connectors"
 msgstr "Вставить соединители"
 
-#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:869
+#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:874
 msgid "Hide Menu"
 msgstr "Скрыть меню"
 
@@ -2477,7 +2470,7 @@ msgstr "Скрыть меню"
 msgid "Enter new name"
 msgstr "Введите новое имя"
 
-#: src/control/Control.UIManager.js:892
+#: src/control/Control.UIManager.js:897
 msgid "Show Menu"
 msgstr "Показать меню"
 
@@ -2529,19 +2522,19 @@ msgstr "Следую"
 msgid "Always follow the editor"
 msgstr "Всегда следовать за редактором"
 
-#: src/control/Control.Zotero.js:139
+#: src/control/Control.Zotero.js:143
 msgid "Zotero API key is not configured"
 msgstr "Ключ Zotero API не настроен"
 
-#: src/control/Control.Zotero.js:160
+#: src/control/Control.Zotero.js:164
 msgid "Zotero API key is incorrect"
 msgstr "Некорректный ключ Zotero API"
 
-#: src/control/Control.Zotero.js:187
+#: src/control/Control.Zotero.js:191
 msgid "Zotero Warning"
 msgstr "Предупреждение Zotero"
 
-#: src/control/Control.Zotero.js:188
+#: src/control/Control.Zotero.js:192
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
@@ -2550,126 +2543,140 @@ msgstr ""
 "API. Это может вызвать некоторые проблемы при редактировании цитат или "
 "библиографии."
 
-#: src/control/Control.Zotero.js:244 src/core/Socket.js:1347
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
 msgid "Loading..."
 msgstr "Загрузка…"
 
-#: src/control/Control.Zotero.js:262
+#: src/control/Control.Zotero.js:259 src/control/Control.Zotero.js:456
+#: src/slideshow/PresenterConsole.js:31
+msgid "Previous"
+msgstr "Предыдущий"
+
+#: src/control/Control.Zotero.js:272 src/control/Control.Zotero.js:471
+#: src/slideshow/PresenterConsole.js:32
+msgid "Next"
+msgstr "Далее"
+
+#: src/control/Control.Zotero.js:294
 msgid "Language:"
 msgstr "Язык:"
 
-#: src/control/Control.Zotero.js:277
+#: src/control/Control.Zotero.js:309
 msgid "Store as:"
 msgstr "Записать как:"
 
-#: src/control/Control.Zotero.js:283 src/control/Control.Zotero.js:407
+#: src/control/Control.Zotero.js:315 src/control/Control.Zotero.js:438
 msgid "Fields"
 msgstr "Поля"
 
-#: src/control/Control.Zotero.js:284 src/control/Control.Zotero.js:407
+#: src/control/Control.Zotero.js:316 src/control/Control.Zotero.js:438
 msgid "Bookmarks"
 msgstr "Закладки"
 
-#: src/control/Control.Zotero.js:405
+#: src/control/Control.Zotero.js:436
 msgid "Footnotes"
 msgstr "Сноски"
 
-#: src/control/Control.Zotero.js:405
+#: src/control/Control.Zotero.js:436
 msgid "Endnotes"
 msgstr "Примечания"
 
-#: src/control/Control.Zotero.js:469
+#: src/control/Control.Zotero.js:523
 msgid "My Publications"
 msgstr "Мои публикации"
 
-#: src/control/Control.Zotero.js:475 src/control/Control.Zotero.js:702
+#: src/control/Control.Zotero.js:529 src/control/Control.Zotero.js:748
 msgid "My Library"
 msgstr "Моя библиотека"
 
-#: src/control/Control.Zotero.js:476
+#: src/control/Control.Zotero.js:530
 msgid "Group Libraries"
 msgstr "Библиотеки группы"
 
-#: src/control/Control.Zotero.js:718
+#: src/control/Control.Zotero.js:764
 msgid "Failed to load groups"
 msgstr "Не удалось загрузить группы"
 
-#: src/control/Control.Zotero.js:736 src/control/Control.Zotero.js:1052
+#: src/control/Control.Zotero.js:782 src/control/Control.Zotero.js:1126
 msgid "Failed to load collections"
 msgstr "Не удалось загрузить коллекции"
 
-#: src/control/Control.Zotero.js:750
+#: src/control/Control.Zotero.js:790
+msgid "Loading references"
+msgstr ""
+
+#: src/control/Control.Zotero.js:824
 msgid "Citation Style"
 msgstr "Стиль цитирования"
 
-#: src/control/Control.Zotero.js:755
+#: src/control/Control.Zotero.js:829
 msgid "Styles"
 msgstr "Стили"
 
-#: src/control/Control.Zotero.js:755
+#: src/control/Control.Zotero.js:829
 msgid "An error occurred while fetching style list"
 msgstr "При получении списка стилей произошла ошибка"
 
-#: src/control/Control.Zotero.js:763
+#: src/control/Control.Zotero.js:837
 msgid "Failed to load styles"
 msgstr "Не удалось загрузить стили"
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Title"
 msgstr "Заголовок"
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Creator(s)"
 msgstr "Создатели"
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Your library is empty"
 msgstr "Ваша библиотека пуста"
 
-#: src/control/Control.Zotero.js:1091
+#: src/control/Control.Zotero.js:1166
 msgid "Failed to load items"
 msgstr "Не удалось загрузить элементы"
 
-#: src/control/Control.Zotero.js:1143
+#: src/control/Control.Zotero.js:1218
 msgid "Citation warning"
 msgstr "Предупреждение цитирования"
 
-#: src/control/Control.Zotero.js:1144
+#: src/control/Control.Zotero.js:1219
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
 "После ввода цитат их место хранения и тип отображения не могут быть изменены."
 
-#: src/control/Control.Zotero.js:1145 src/control/Control.Zotero.js:1447
+#: src/control/Control.Zotero.js:1220 src/control/Control.Zotero.js:1535
 msgid "Confirm"
 msgstr "Подтверждение"
 
-#: src/control/Control.Zotero.js:1251
+#: src/control/Control.Zotero.js:1339
 msgid "Add Note"
 msgstr "Добавить заметку"
 
-#: src/control/Control.Zotero.js:1254 src/slideshow/PresenterConsole.js:33
+#: src/control/Control.Zotero.js:1342 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
 msgstr "Заметки"
 
-#: src/control/Control.Zotero.js:1254
+#: src/control/Control.Zotero.js:1342
 msgid "An error occurred while fetching notes"
 msgstr "При получении заметок произошла ошибка"
 
-#: src/control/Control.Zotero.js:1385
+#: src/control/Control.Zotero.js:1473
 msgid "Updated citations"
 msgstr "Цитирования обновлены"
 
-#: src/control/Control.Zotero.js:1387
+#: src/control/Control.Zotero.js:1475
 msgid "Citations update failed"
 msgstr "Не удалось обновить цитирования"
 
-#: src/control/Control.Zotero.js:1391
+#: src/control/Control.Zotero.js:1479
 msgid "Updating citations"
 msgstr "Обновление цитирований"
 
-#: src/control/Control.Zotero.js:1446
+#: src/control/Control.Zotero.js:1534
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
@@ -2677,7 +2684,7 @@ msgstr ""
 "Отвязка цитат не позволит Collabora Online обновлять цитаты и библиографию в "
 "этом документе."
 
-#: src/control/Parts.js:491
+#: src/control/Parts.js:493
 msgid "Show sheets"
 msgstr "Показать листы"
 
@@ -2932,7 +2939,7 @@ msgstr "Инструменты отладки"
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "Нажмите Ctrl+Shift+Alt+D для выхода"
 
-#: src/core/Debug.js:1082
+#: src/core/Debug.js:1080
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
 
@@ -3128,7 +3135,7 @@ msgstr "Цвета темы"
 msgid "Document colors"
 msgstr "Цвета документа"
 
-#: src/docstatefunctions.js:181
+#: src/docstatefunctions.js:195
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr ", ошибка конфигурации кластера: неверный идентификатор сервера"
 
@@ -3443,15 +3450,15 @@ msgstr "вкладка Помощь"
 msgid "the View menu"
 msgstr "меню Вид"
 
-#: src/layer/tile/CanvasTileLayer.js:1878
+#: src/layer/tile/CanvasTileLayer.js:1646
 msgid "Functions"
 msgstr "Функции"
 
-#: src/layer/tile/CanvasTileLayer.js:2145
+#: src/layer/tile/CanvasTileLayer.js:1913
 msgid "Named Range"
 msgstr "Именованный диапазон"
 
-#: src/layer/tile/CanvasTileLayer.js:3894
+#: src/layer/tile/CanvasTileLayer.js:3662
 msgid "No Comments"
 msgstr "Нет комментариев"
 
@@ -3477,11 +3484,11 @@ msgstr ""
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Не удалось загрузить буфер обмена, повторите копирование"
 
-#: src/map/Clipboard.js:1276
+#: src/map/Clipboard.js:1273
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "<p>Используйте клавиши вставки на экранной клавиатуре.</p>"
 
-#: src/map/Clipboard.js:1332
+#: src/map/Clipboard.js:1329
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -3489,23 +3496,23 @@ msgstr ""
 "Идёт загрузка для копирования/вставки крупного фрагмента. Пожалуйста, "
 "дождитесь завершения загрузки или отмените её, чтобы начать новую"
 
-#: src/map/Clipboard.js:1354
+#: src/map/Clipboard.js:1351
 msgid "Paste from this document"
 msgstr "Вставить из этого документа"
 
-#: src/map/Clipboard.js:1354
+#: src/map/Clipboard.js:1351
 msgid "Cancel paste special"
 msgstr "Отменить специальную вставку"
 
-#: src/map/Clipboard.js:1364
+#: src/map/Clipboard.js:1361
 msgid "Your browser has very limited access to the clipboard"
 msgstr "У вашего браузера ограничен доступ к буферу обмена"
 
-#: src/map/Clipboard.js:1369
+#: src/map/Clipboard.js:1366
 msgid "Please use following combination to see more options:"
 msgstr "Используйте следующее сочетание, чтобы посмотреть больше опций:"
 
-#: src/map/Clipboard.js:1387
+#: src/map/Clipboard.js:1384
 msgid "Close popup to ignore paste special"
 msgstr "Закройте всплывающее окно, чтобы игнорировать специальную вставку"
 
@@ -3517,7 +3524,7 @@ msgstr "Инициализация…"
 msgid "Last saved:"
 msgstr "Последнее сохранение:"
 
-#: src/map/Map.js:1486
+#: src/map/Map.js:1487
 msgid "Please wait!"
 msgstr "Пожалуйста подождите!"
 
@@ -3650,14 +3657,6 @@ msgstr "Текущий слайд"
 msgid "Next Slide"
 msgstr "Следующий слайд"
 
-#: src/slideshow/PresenterConsole.js:31
-msgid "Previous"
-msgstr "Предыдущий"
-
-#: src/slideshow/PresenterConsole.js:32
-msgid "Next"
-msgstr "Далее"
-
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
 msgstr "Слайды"
@@ -3783,6 +3782,10 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Another user has updated comments. Would you like to proceed updating?"
+#~ msgstr ""
+#~ "Другой пользователь обновил комментарии. Вы хотите продолжить обновление?"
 
 #, fuzzy
 #~ msgid "1 issue found"

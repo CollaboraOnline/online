@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-17 21:10+0100\n"
+"POT-Creation-Date: 2025-02-26 13:36+0100\n"
 "PO-Revision-Date: 2024-01-22 15:44+0000\n"
 "Last-Translator: Seungcheon Seo <seoseungcheon@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/collabora-online/"
@@ -193,7 +193,7 @@ msgid "Expired:"
 msgstr "만료:"
 
 #: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
-#: src/control/Control.Zotero.js:209
+#: src/control/Control.Zotero.js:213
 msgid "Refresh"
 msgstr "새로 고침"
 
@@ -214,8 +214,8 @@ msgstr "새로 고침"
 msgid "Channel Filter:"
 msgstr "필터:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:495
-#: src/control/Control.StatusBar.js:212 src/control/Control.StatusBar.js:217
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:496
+#: src/control/Control.StatusBar.js:213 src/control/Control.StatusBar.js:218
 msgid "None"
 msgstr "없음"
 
@@ -230,7 +230,7 @@ msgstr "로그 레벨"
 #: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:164
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
-#: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
+#: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
 #: src/core/Socket.js:436 src/core/Socket.js:1207 src/core/Socket.js:1212
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -289,7 +289,6 @@ msgstr "경고"
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: src/canvas/sections/CommentListSection.ts:1457
-#: src/canvas/sections/CommentListSection.ts:2373
 #: src/control/Control.AboutDialog.ts:154
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -297,14 +296,14 @@ msgstr "경고"
 #: src/control/Control.LanguageDialog.js:119
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
-#: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
-#: src/control/Parts.js:491 src/control/Permission.js:89
+#: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
+#: src/control/Parts.js:493 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Debug.js:1083 src/core/Socket.js:713 src/core/Socket.js:1177
+#: src/core/Debug.js:1081 src/core/Socket.js:713 src/core/Socket.js:1177
 #: src/core/Socket.js:1247 src/core/Socket.js:1398 src/core/Socket.js:1402
 #: src/docdispatcher.ts:516 src/main.js:84 src/main.js:87 src/main.js:140
-#: src/map/Clipboard.js:1269 src/map/handler/Map.Feedback.js:87
+#: src/map/Clipboard.js:1266 src/map/handler/Map.Feedback.js:87
 #: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:165
 #: src/map/handler/Map.SlideShow.js:293 src/map/handler/Map.SlideShow.js:304
 #: src/map/handler/Map.WOPI.js:673 src/slideshow/SlideShowPresenter.ts:644
@@ -323,9 +322,9 @@ msgstr "확인"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1347 src/control/Control.UIManager.js:1414
-#: src/control/Control.UIManager.js:1549 src/control/Control.UIManager.js:1708
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:832
+#: src/control/Control.UIManager.js:1352 src/control/Control.UIManager.js:1419
+#: src/control/Control.UIManager.js:1554 src/control/Control.UIManager.js:1713
+#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:832
 #: src/core/Socket.js:1423
 msgid "Cancel"
 msgstr "취소"
@@ -476,15 +475,14 @@ msgid "Open in full view"
 msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1234
-#: src/control/Control.JSDialogBuilder.js:1893
-#: src/layer/tile/CanvasTileLayer.js:3866
-#: src/layer/tile/CanvasTileLayer.js:3877
+#: src/control/Control.JSDialogBuilder.js:1894
+#: src/layer/tile/CanvasTileLayer.js:3634
+#: src/layer/tile/CanvasTileLayer.js:3645
 msgid "Comment"
 msgstr "추가 설명"
 
 #: src/canvas/sections/CommentListSection.ts:1455
 #: src/canvas/sections/CommentListSection.ts:1468
-#: src/canvas/sections/CommentListSection.ts:2371
 msgid "Comments Updated"
 msgstr ""
 
@@ -509,10 +507,6 @@ msgstr ""
 #: src/canvas/sections/CommentListSection.ts:1572
 #: src/canvas/sections/CommentListSection.ts:1644
 msgid "Autosaved"
-msgstr ""
-
-#: src/canvas/sections/CommentListSection.ts:2372
-msgid "Another user has updated comments. Would you like to proceed updating?"
 msgstr ""
 
 #: src/canvas/sections/CommentSection.ts:305
@@ -1073,91 +1067,91 @@ msgstr "대기중인 문서 - 편집을 계속하려면 클릭하십시오.(새�
 msgid "Close dialog"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:498
+#: src/control/Control.JSDialogBuilder.js:499
 msgid "Solid"
 msgstr "고정"
 
-#: src/control/Control.JSDialogBuilder.js:501
+#: src/control/Control.JSDialogBuilder.js:502
 msgid "Linear"
 msgstr "선"
 
-#: src/control/Control.JSDialogBuilder.js:504
+#: src/control/Control.JSDialogBuilder.js:505
 msgid "Axial"
 msgstr "축"
 
-#: src/control/Control.JSDialogBuilder.js:507
+#: src/control/Control.JSDialogBuilder.js:508
 msgid "Radial"
 msgstr "방사형"
 
-#: src/control/Control.JSDialogBuilder.js:510
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Ellipsoid"
 msgstr "타원체"
 
-#: src/control/Control.JSDialogBuilder.js:514
+#: src/control/Control.JSDialogBuilder.js:515
 msgid "Quadratic"
 msgstr "입방형"
 
-#: src/control/Control.JSDialogBuilder.js:517
+#: src/control/Control.JSDialogBuilder.js:518
 msgid "Square"
 msgstr "정방형"
 
-#: src/control/Control.JSDialogBuilder.js:520
+#: src/control/Control.JSDialogBuilder.js:521
 msgid "Fixed size"
 msgstr "고정 크기"
 
-#: src/control/Control.JSDialogBuilder.js:1432
+#: src/control/Control.JSDialogBuilder.js:1433
 msgid "From"
 msgstr "발신"
 
-#: src/control/Control.JSDialogBuilder.js:1435
+#: src/control/Control.JSDialogBuilder.js:1436
 msgid "To"
 msgstr "수신"
 
-#: src/control/Control.JSDialogBuilder.js:1438
+#: src/control/Control.JSDialogBuilder.js:1439
 msgid "Color"
 msgstr "색"
 
-#: src/control/Control.JSDialogBuilder.js:1514
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "Select range"
 msgstr "범위 선택"
 
-#: src/control/Control.JSDialogBuilder.js:1624
+#: src/control/Control.JSDialogBuilder.js:1625
 #: src/control/Control.NotebookbarBuilder.js:155
 msgid "Font Name"
 msgstr "글꼴 이름"
 
-#: src/control/Control.JSDialogBuilder.js:1626 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1627 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "글꼴 크기"
 
-#: src/control/Control.JSDialogBuilder.js:1628
+#: src/control/Control.JSDialogBuilder.js:1629
 #: src/control/Control.TopToolbar.js:461
 msgid "Style"
 msgstr "스타일"
 
-#: src/control/Control.JSDialogBuilder.js:1879
+#: src/control/Control.JSDialogBuilder.js:1880
 msgid "reply"
 msgstr "회신"
 
-#: src/control/Control.JSDialogBuilder.js:1882
+#: src/control/Control.JSDialogBuilder.js:1883
 msgid "replies"
 msgstr "회신"
 
-#: src/control/Control.JSDialogBuilder.js:1957
+#: src/control/Control.JSDialogBuilder.js:1958
 msgid "Insert Comment"
 msgstr "메모삽입"
 
-#: src/control/Control.JSDialogBuilder.js:2732
+#: src/control/Control.JSDialogBuilder.js:2523
 #: src/control/Control.Menubar.js:894
 msgid "Rows"
 msgstr "열"
 
-#: src/control/Control.JSDialogBuilder.js:2733
+#: src/control/Control.JSDialogBuilder.js:2524
 #: src/control/Control.Menubar.js:897
 msgid "Columns"
 msgstr "행"
 
-#: src/control/Control.JSDialogBuilder.js:2753
+#: src/control/Control.JSDialogBuilder.js:2544
 #, fuzzy
 msgid "Insert Table"
 msgstr "표 삽입"
@@ -1165,7 +1159,7 @@ msgstr "표 삽입"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:363
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:367
 #: src/control/Control.Menubar.js:555 src/control/Control.Menubar.js:695
-#: src/control/Control.Menubar.js:979 src/control/Control.StatusBar.js:538
+#: src/control/Control.Menubar.js:979 src/control/Control.StatusBar.js:542
 msgid "None (Do not check spelling)"
 msgstr "없음 (맞춤법 검사 안함)"
 
@@ -1308,7 +1302,7 @@ msgstr "복구"
 #: src/control/Control.NotebookbarDraw.js:352
 #: src/control/Control.NotebookbarImpress.js:410
 #: src/control/Control.NotebookbarWriter.js:1473
-#: src/control/Control.StatusBar.js:273
+#: src/control/Control.StatusBar.js:274
 msgid "Reset zoom"
 msgstr "배율 초기화"
 
@@ -1415,7 +1409,7 @@ msgstr "인용 새로고침"
 
 #: src/control/Control.Menubar.js:317
 #: src/control/Control.NotebookbarWriter.js:2058
-#: src/control/Control.Zotero.js:1445
+#: src/control/Control.Zotero.js:1533
 msgid "Unlink Citations"
 msgstr "인용 연결끊기"
 
@@ -1746,7 +1740,7 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:992
 #: src/control/Control.NotebookbarImpress.js:1046
 #: src/control/Control.NotebookbarWriter.js:921
-#: src/control/Control.StatusBar.js:246 src/control/Control.Zotero.js:218
+#: src/control/Control.StatusBar.js:247 src/control/Control.Zotero.js:222
 #: src/control/Toolbar.js:575
 msgid "Search"
 msgstr "검색"
@@ -1763,7 +1757,7 @@ msgstr "인쇄 영역 설정"
 msgid "Remove print area"
 msgstr "인쇄 영역 삭제"
 
-#: src/control/Control.Menubar.js:1488 src/control/Control.StatusBar.js:537
+#: src/control/Control.Menubar.js:1488 src/control/Control.StatusBar.js:541
 msgid "Reset to Default Language"
 msgstr "기본 언어로 다시 설정"
 
@@ -1991,7 +1985,7 @@ msgstr "통화"
 
 #: src/control/Control.NotebookbarCalc.js:618
 #: src/control/Control.NotebookbarWriter.js:1429
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Date"
 msgstr "날짜"
 
@@ -2338,68 +2332,68 @@ msgstr ""
 msgid "Off"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:205
+#: src/control/Control.StatusBar.js:206
 #: src/control/jsdialog/Definitions.Menu.ts:23
 msgid "Average"
 msgstr "평균"
 
-#: src/control/Control.StatusBar.js:206
+#: src/control/Control.StatusBar.js:207
 msgid "CountA"
 msgstr "CountA"
 
-#: src/control/Control.StatusBar.js:207
+#: src/control/Control.StatusBar.js:208
 #: src/control/jsdialog/Definitions.Menu.ts:26
 msgid "Count"
 msgstr "수"
 
-#: src/control/Control.StatusBar.js:208
+#: src/control/Control.StatusBar.js:209
 msgid "Maximum"
 msgstr "최대"
 
-#: src/control/Control.StatusBar.js:209
+#: src/control/Control.StatusBar.js:210
 msgid "Minimum"
 msgstr "최소"
 
-#: src/control/Control.StatusBar.js:210
+#: src/control/Control.StatusBar.js:211
 #: src/control/jsdialog/Definitions.Menu.ts:22
 msgid "Sum"
 msgstr "합계"
 
-#: src/control/Control.StatusBar.js:211
+#: src/control/Control.StatusBar.js:212
 msgid "Selection count"
 msgstr "선택 수"
 
-#: src/control/Control.StatusBar.js:249
+#: src/control/Control.StatusBar.js:250
 msgid "Cancel the search"
 msgstr "검색 취소"
 
-#: src/control/Control.StatusBar.js:413
+#: src/control/Control.StatusBar.js:414
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:463
+#: src/control/Control.StatusBar.js:464
 msgid "Select multiple cells"
 msgstr "다중 셀 선택"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:467
 msgid "Insert mode: inactive"
 msgstr "삽입 모드: 비활성"
 
-#: src/control/Control.StatusBar.js:477
+#: src/control/Control.StatusBar.js:480
 msgid "Selection mode: inactive"
 msgstr "선택 모드: 비활성"
 
-#: src/control/Control.StatusBar.js:554
+#: src/control/Control.StatusBar.js:558
 msgid "Set Language for All text"
 msgstr "모든 텍스트 언어 설정"
 
-#: src/control/Control.StatusBar.js:557
+#: src/control/Control.StatusBar.js:561
 msgid "Set Language for Paragraph"
 msgstr "모든 문단 언어 설정"
 
-#: src/control/Control.StatusBar.js:558
+#: src/control/Control.StatusBar.js:562
 msgid "Set Language for Selection"
 msgstr "선택 영역 언어 설정"
 
@@ -2463,7 +2457,7 @@ msgstr "도형 삽입"
 msgid "Insert connectors"
 msgstr "커넥터 삽입"
 
-#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:869
+#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:874
 msgid "Hide Menu"
 msgstr "메뉴 숨기기"
 
@@ -2471,7 +2465,7 @@ msgstr "메뉴 숨기기"
 msgid "Enter new name"
 msgstr "새로운 이름 넣기"
 
-#: src/control/Control.UIManager.js:892
+#: src/control/Control.UIManager.js:897
 msgid "Show Menu"
 msgstr "메뉴 보기"
 
@@ -2523,150 +2517,165 @@ msgstr "팔로잉"
 msgid "Always follow the editor"
 msgstr "항상 편집자를 따라감"
 
-#: src/control/Control.Zotero.js:139
+#: src/control/Control.Zotero.js:143
 msgid "Zotero API key is not configured"
 msgstr "Zotero API 키가 설정되지 않았습니다"
 
-#: src/control/Control.Zotero.js:160
+#: src/control/Control.Zotero.js:164
 msgid "Zotero API key is incorrect"
 msgstr "Zotero API 키가 올바르지 않습니다"
 
-#: src/control/Control.Zotero.js:187
+#: src/control/Control.Zotero.js:191
 msgid "Zotero Warning"
 msgstr "Zotero 경고"
 
-#: src/control/Control.Zotero.js:188
+#: src/control/Control.Zotero.js:192
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
 
-#: src/control/Control.Zotero.js:244 src/core/Socket.js:1347
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
 msgid "Loading..."
 msgstr "불러오는 중..."
 
-#: src/control/Control.Zotero.js:262
+#: src/control/Control.Zotero.js:259 src/control/Control.Zotero.js:456
+#: src/slideshow/PresenterConsole.js:31
+msgid "Previous"
+msgstr ""
+
+#: src/control/Control.Zotero.js:272 src/control/Control.Zotero.js:471
+#: src/slideshow/PresenterConsole.js:32
+#, fuzzy
+msgid "Next"
+msgstr "문자"
+
+#: src/control/Control.Zotero.js:294
 msgid "Language:"
 msgstr "언어:"
 
-#: src/control/Control.Zotero.js:277
+#: src/control/Control.Zotero.js:309
 msgid "Store as:"
 msgstr "다음으로 저장:"
 
-#: src/control/Control.Zotero.js:283 src/control/Control.Zotero.js:407
+#: src/control/Control.Zotero.js:315 src/control/Control.Zotero.js:438
 msgid "Fields"
 msgstr "필드"
 
-#: src/control/Control.Zotero.js:284 src/control/Control.Zotero.js:407
+#: src/control/Control.Zotero.js:316 src/control/Control.Zotero.js:438
 msgid "Bookmarks"
 msgstr "즐겨찾기"
 
-#: src/control/Control.Zotero.js:405
+#: src/control/Control.Zotero.js:436
 msgid "Footnotes"
 msgstr "풋노트"
 
-#: src/control/Control.Zotero.js:405
+#: src/control/Control.Zotero.js:436
 msgid "Endnotes"
 msgstr ""
 
-#: src/control/Control.Zotero.js:469
+#: src/control/Control.Zotero.js:523
 msgid "My Publications"
 msgstr ""
 
-#: src/control/Control.Zotero.js:475 src/control/Control.Zotero.js:702
+#: src/control/Control.Zotero.js:529 src/control/Control.Zotero.js:748
 msgid "My Library"
 msgstr "내 라이브러리"
 
-#: src/control/Control.Zotero.js:476
+#: src/control/Control.Zotero.js:530
 msgid "Group Libraries"
 msgstr "그룹 라이브러리"
 
-#: src/control/Control.Zotero.js:718
+#: src/control/Control.Zotero.js:764
 msgid "Failed to load groups"
 msgstr ""
 
-#: src/control/Control.Zotero.js:736 src/control/Control.Zotero.js:1052
+#: src/control/Control.Zotero.js:782 src/control/Control.Zotero.js:1126
 msgid "Failed to load collections"
 msgstr ""
 
-#: src/control/Control.Zotero.js:750
+#: src/control/Control.Zotero.js:790
+msgid "Loading references"
+msgstr ""
+
+#: src/control/Control.Zotero.js:824
 msgid "Citation Style"
 msgstr ""
 
-#: src/control/Control.Zotero.js:755
+#: src/control/Control.Zotero.js:829
 #, fuzzy
 msgid "Styles"
 msgstr "스타일"
 
-#: src/control/Control.Zotero.js:755
+#: src/control/Control.Zotero.js:829
 msgid "An error occurred while fetching style list"
 msgstr ""
 
-#: src/control/Control.Zotero.js:763
+#: src/control/Control.Zotero.js:837
 msgid "Failed to load styles"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Title"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Creator(s)"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Your library is empty"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1091
+#: src/control/Control.Zotero.js:1166
 msgid "Failed to load items"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1143
+#: src/control/Control.Zotero.js:1218
 msgid "Citation warning"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1144
+#: src/control/Control.Zotero.js:1219
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
 
-#: src/control/Control.Zotero.js:1145 src/control/Control.Zotero.js:1447
+#: src/control/Control.Zotero.js:1220 src/control/Control.Zotero.js:1535
 msgid "Confirm"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1251
+#: src/control/Control.Zotero.js:1339
 msgid "Add Note"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1254 src/slideshow/PresenterConsole.js:33
+#: src/control/Control.Zotero.js:1342 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1254
+#: src/control/Control.Zotero.js:1342
 msgid "An error occurred while fetching notes"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1385
+#: src/control/Control.Zotero.js:1473
 msgid "Updated citations"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1387
+#: src/control/Control.Zotero.js:1475
 msgid "Citations update failed"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1391
+#: src/control/Control.Zotero.js:1479
 msgid "Updating citations"
 msgstr ""
 
-#: src/control/Control.Zotero.js:1446
+#: src/control/Control.Zotero.js:1534
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
 
-#: src/control/Parts.js:491
+#: src/control/Parts.js:493
 msgid "Show sheets"
 msgstr ""
 
@@ -2926,7 +2935,7 @@ msgstr ""
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr ""
 
-#: src/core/Debug.js:1082
+#: src/core/Debug.js:1080
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
 
@@ -3118,7 +3127,7 @@ msgstr ""
 msgid "Document colors"
 msgstr ""
 
-#: src/docstatefunctions.js:181
+#: src/docstatefunctions.js:195
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr ""
 
@@ -3398,16 +3407,16 @@ msgstr ""
 msgid "the View menu"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:1878
+#: src/layer/tile/CanvasTileLayer.js:1646
 #, fuzzy
 msgid "Functions"
 msgstr "함수 마법사"
 
-#: src/layer/tile/CanvasTileLayer.js:2145
+#: src/layer/tile/CanvasTileLayer.js:1913
 msgid "Named Range"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:3894
+#: src/layer/tile/CanvasTileLayer.js:3662
 #, fuzzy
 msgid "No Comments"
 msgstr "추가 설명"
@@ -3433,12 +3442,12 @@ msgstr ""
 msgid "Failed to download clipboard, please re-copy"
 msgstr "클립보드 다운로드 실패하였습니다, 다시 복사하세요"
 
-#: src/map/Clipboard.js:1276
+#: src/map/Clipboard.js:1273
 #, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "<p>화면 키보드의 복사/붙여넣기 버튼을 사용하세요.</p>"
 
-#: src/map/Clipboard.js:1332
+#: src/map/Clipboard.js:1329
 #, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
@@ -3447,23 +3456,23 @@ msgstr ""
 "<p>대량의 복사/붙여넣기 작업에 따른 다운로드가 이미 시작되었습니다. 새 "
 "다운로드를 시작하기 전에 현재 다운로드를 기다리거나 취소하시기 바랍니다</p>"
 
-#: src/map/Clipboard.js:1354
+#: src/map/Clipboard.js:1351
 msgid "Paste from this document"
 msgstr ""
 
-#: src/map/Clipboard.js:1354
+#: src/map/Clipboard.js:1351
 msgid "Cancel paste special"
 msgstr ""
 
-#: src/map/Clipboard.js:1364
+#: src/map/Clipboard.js:1361
 msgid "Your browser has very limited access to the clipboard"
 msgstr ""
 
-#: src/map/Clipboard.js:1369
+#: src/map/Clipboard.js:1366
 msgid "Please use following combination to see more options:"
 msgstr ""
 
-#: src/map/Clipboard.js:1387
+#: src/map/Clipboard.js:1384
 msgid "Close popup to ignore paste special"
 msgstr ""
 
@@ -3475,7 +3484,7 @@ msgstr "초기화하는 중..."
 msgid "Last saved:"
 msgstr ""
 
-#: src/map/Map.js:1486
+#: src/map/Map.js:1487
 msgid "Please wait!"
 msgstr ""
 
@@ -3606,15 +3615,6 @@ msgstr ""
 #, fuzzy
 msgid "Next Slide"
 msgstr "다음 슬라이드"
-
-#: src/slideshow/PresenterConsole.js:31
-msgid "Previous"
-msgstr ""
-
-#: src/slideshow/PresenterConsole.js:32
-#, fuzzy
-msgid "Next"
-msgstr "문자"
 
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"

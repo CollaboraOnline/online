@@ -11,12 +11,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-17 21:10+0100\n"
+"POT-Creation-Date: 2025-02-26 13:36+0100\n"
 "PO-Revision-Date: 2025-02-18 17:40+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: cs\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -199,7 +199,7 @@ msgid "Expired:"
 msgstr "Platnost vypršela:"
 
 #: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
-#: src/control/Control.Zotero.js:209
+#: src/control/Control.Zotero.js:213
 msgid "Refresh"
 msgstr "Obnovit"
 
@@ -219,8 +219,8 @@ msgstr "Obnovit protokol"
 msgid "Channel Filter:"
 msgstr "Filtr kanálu:"
 
-#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:495
-#: src/control/Control.StatusBar.js:212 src/control/Control.StatusBar.js:217
+#: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:496
+#: src/control/Control.StatusBar.js:213 src/control/Control.StatusBar.js:218
 msgid "None"
 msgstr "Žádný"
 
@@ -235,7 +235,7 @@ msgstr "Úrovně podrobností protokolu"
 #: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:164
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
-#: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:189
+#: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
 #: src/core/Socket.js:436 src/core/Socket.js:1207 src/core/Socket.js:1212
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -295,7 +295,6 @@ msgstr "Upozornění"
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
 #: src/canvas/sections/CommentListSection.ts:1457
-#: src/canvas/sections/CommentListSection.ts:2373
 #: src/control/Control.AboutDialog.ts:154
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -303,14 +302,14 @@ msgstr "Upozornění"
 #: src/control/Control.LanguageDialog.js:119
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
-#: src/control/Control.Zotero.js:335 src/control/Control.Zotero.js:373
-#: src/control/Parts.js:491 src/control/Permission.js:89
+#: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
+#: src/control/Parts.js:493 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Debug.js:1083 src/core/Socket.js:713 src/core/Socket.js:1177
+#: src/core/Debug.js:1081 src/core/Socket.js:713 src/core/Socket.js:1177
 #: src/core/Socket.js:1247 src/core/Socket.js:1398 src/core/Socket.js:1402
 #: src/docdispatcher.ts:516 src/main.js:84 src/main.js:87 src/main.js:140
-#: src/map/Clipboard.js:1269 src/map/handler/Map.Feedback.js:87
+#: src/map/Clipboard.js:1266 src/map/handler/Map.Feedback.js:87
 #: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:165
 #: src/map/handler/Map.SlideShow.js:293 src/map/handler/Map.SlideShow.js:304
 #: src/map/handler/Map.WOPI.js:673 src/slideshow/SlideShowPresenter.ts:644
@@ -329,9 +328,9 @@ msgstr "OK"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1347 src/control/Control.UIManager.js:1414
-#: src/control/Control.UIManager.js:1549 src/control/Control.UIManager.js:1708
-#: src/control/Control.Zotero.js:330 src/control/Toolbar.js:832
+#: src/control/Control.UIManager.js:1352 src/control/Control.UIManager.js:1419
+#: src/control/Control.UIManager.js:1554 src/control/Control.UIManager.js:1713
+#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:832
 #: src/core/Socket.js:1423
 msgid "Cancel"
 msgstr "Zrušit"
@@ -482,15 +481,14 @@ msgid "Open in full view"
 msgstr "Otevřít v plném zobrazení"
 
 #: src/canvas/sections/CommentListSection.ts:1234
-#: src/control/Control.JSDialogBuilder.js:1893
-#: src/layer/tile/CanvasTileLayer.js:3866
-#: src/layer/tile/CanvasTileLayer.js:3877
+#: src/control/Control.JSDialogBuilder.js:1894
+#: src/layer/tile/CanvasTileLayer.js:3634
+#: src/layer/tile/CanvasTileLayer.js:3645
 msgid "Comment"
 msgstr "Komentář"
 
 #: src/canvas/sections/CommentListSection.ts:1455
 #: src/canvas/sections/CommentListSection.ts:1468
-#: src/canvas/sections/CommentListSection.ts:2371
 msgid "Comments Updated"
 msgstr "Komentáře aktualizovány"
 
@@ -517,12 +515,6 @@ msgstr "Aktualizovat"
 #: src/canvas/sections/CommentListSection.ts:1644
 msgid "Autosaved"
 msgstr "Automaticky uloženo"
-
-#: src/canvas/sections/CommentListSection.ts:2372
-msgid "Another user has updated comments. Would you like to proceed updating?"
-msgstr ""
-"Komentáře byly upraveny jiným uživatelem. Přejete si v aktualizaci "
-"pokračovat?"
 
 #: src/canvas/sections/CommentSection.ts:305
 msgid "Open menu"
@@ -1091,98 +1083,98 @@ msgstr ""
 msgid "Close dialog"
 msgstr "Zavřít dialogové okno"
 
-#: src/control/Control.JSDialogBuilder.js:498
+#: src/control/Control.JSDialogBuilder.js:499
 msgid "Solid"
 msgstr "Plný"
 
-#: src/control/Control.JSDialogBuilder.js:501
+#: src/control/Control.JSDialogBuilder.js:502
 msgid "Linear"
 msgstr "Lineární"
 
-#: src/control/Control.JSDialogBuilder.js:504
+#: src/control/Control.JSDialogBuilder.js:505
 msgid "Axial"
 msgstr "Axiální"
 
-#: src/control/Control.JSDialogBuilder.js:507
+#: src/control/Control.JSDialogBuilder.js:508
 msgid "Radial"
 msgstr "Radiální"
 
-#: src/control/Control.JSDialogBuilder.js:510
+#: src/control/Control.JSDialogBuilder.js:511
 msgid "Ellipsoid"
 msgstr "Oválný"
 
-#: src/control/Control.JSDialogBuilder.js:514
+#: src/control/Control.JSDialogBuilder.js:515
 msgid "Quadratic"
 msgstr "Krychlový"
 
-#: src/control/Control.JSDialogBuilder.js:517
+#: src/control/Control.JSDialogBuilder.js:518
 msgid "Square"
 msgstr "Čtvercový"
 
-#: src/control/Control.JSDialogBuilder.js:520
+#: src/control/Control.JSDialogBuilder.js:521
 msgid "Fixed size"
 msgstr "Neměnná velikost"
 
-#: src/control/Control.JSDialogBuilder.js:1432
+#: src/control/Control.JSDialogBuilder.js:1433
 msgid "From"
 msgstr "Od"
 
-#: src/control/Control.JSDialogBuilder.js:1435
+#: src/control/Control.JSDialogBuilder.js:1436
 msgid "To"
 msgstr "Do"
 
-#: src/control/Control.JSDialogBuilder.js:1438
+#: src/control/Control.JSDialogBuilder.js:1439
 msgid "Color"
 msgstr "Barva"
 
-#: src/control/Control.JSDialogBuilder.js:1514
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "Select range"
 msgstr "Vybrat rozsah"
 
-#: src/control/Control.JSDialogBuilder.js:1624
+#: src/control/Control.JSDialogBuilder.js:1625
 #: src/control/Control.NotebookbarBuilder.js:155
 msgid "Font Name"
 msgstr "Název písma"
 
-#: src/control/Control.JSDialogBuilder.js:1626 src/control/Toolbar.js:134
+#: src/control/Control.JSDialogBuilder.js:1627 src/control/Toolbar.js:134
 msgid "Font Size"
 msgstr "Velikost písma"
 
-#: src/control/Control.JSDialogBuilder.js:1628
+#: src/control/Control.JSDialogBuilder.js:1629
 #: src/control/Control.TopToolbar.js:461
 msgid "Style"
 msgstr "Styl"
 
-#: src/control/Control.JSDialogBuilder.js:1879
+#: src/control/Control.JSDialogBuilder.js:1880
 msgid "reply"
 msgstr "odpověď"
 
-#: src/control/Control.JSDialogBuilder.js:1882
+#: src/control/Control.JSDialogBuilder.js:1883
 msgid "replies"
 msgstr "odpovědí"
 
-#: src/control/Control.JSDialogBuilder.js:1957
+#: src/control/Control.JSDialogBuilder.js:1958
 msgid "Insert Comment"
 msgstr "Vložit komentář"
 
-#: src/control/Control.JSDialogBuilder.js:2732
+#: src/control/Control.JSDialogBuilder.js:2523
 #: src/control/Control.Menubar.js:894
 msgid "Rows"
 msgstr "Řádky"
 
-#: src/control/Control.JSDialogBuilder.js:2733
+#: src/control/Control.JSDialogBuilder.js:2524
 #: src/control/Control.Menubar.js:897
 msgid "Columns"
 msgstr "Sloupce"
 
-#: src/control/Control.JSDialogBuilder.js:2753
+#: src/control/Control.JSDialogBuilder.js:2544
 msgid "Insert Table"
 msgstr "Vložit tabulku"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:363
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:367
 #: src/control/Control.Menubar.js:555 src/control/Control.Menubar.js:695
-#: src/control/Control.Menubar.js:979 src/control/Control.StatusBar.js:538
+#: src/control/Control.Menubar.js:979 src/control/Control.StatusBar.js:542
 msgid "None (Do not check spelling)"
 msgstr "Žádný (bez kontroly pravopisu)"
 
@@ -1323,7 +1315,7 @@ msgstr "Opravit"
 #: src/control/Control.NotebookbarDraw.js:352
 #: src/control/Control.NotebookbarImpress.js:410
 #: src/control/Control.NotebookbarWriter.js:1473
-#: src/control/Control.StatusBar.js:273
+#: src/control/Control.StatusBar.js:274
 msgid "Reset zoom"
 msgstr "Obnovit přiblížení"
 
@@ -1430,7 +1422,7 @@ msgstr "Obnovit citace"
 
 #: src/control/Control.Menubar.js:317
 #: src/control/Control.NotebookbarWriter.js:2058
-#: src/control/Control.Zotero.js:1445
+#: src/control/Control.Zotero.js:1533
 msgid "Unlink Citations"
 msgstr "Zrušit odkazy na citace"
 
@@ -1758,7 +1750,7 @@ msgstr "Pod průměrem..."
 #: src/control/Control.NotebookbarDraw.js:992
 #: src/control/Control.NotebookbarImpress.js:1046
 #: src/control/Control.NotebookbarWriter.js:921
-#: src/control/Control.StatusBar.js:246 src/control/Control.Zotero.js:218
+#: src/control/Control.StatusBar.js:247 src/control/Control.Zotero.js:222
 #: src/control/Toolbar.js:575
 msgid "Search"
 msgstr "Hledat"
@@ -1775,7 +1767,7 @@ msgstr "Definovat oblast tisku"
 msgid "Remove print area"
 msgstr "Odstranit oblast tisku"
 
-#: src/control/Control.Menubar.js:1488 src/control/Control.StatusBar.js:537
+#: src/control/Control.Menubar.js:1488 src/control/Control.StatusBar.js:541
 msgid "Reset to Default Language"
 msgstr "Obnovit výchozí jazyk"
 
@@ -1999,7 +1991,7 @@ msgstr "Měna"
 
 #: src/control/Control.NotebookbarCalc.js:618
 #: src/control/Control.NotebookbarWriter.js:1429
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Date"
 msgstr "Datum"
 
@@ -2343,42 +2335,42 @@ msgstr "Zapnuto"
 msgid "Off"
 msgstr "Vypnuto"
 
-#: src/control/Control.StatusBar.js:205
+#: src/control/Control.StatusBar.js:206
 #: src/control/jsdialog/Definitions.Menu.ts:23
 msgid "Average"
 msgstr "Průměr"
 
-#: src/control/Control.StatusBar.js:206
+#: src/control/Control.StatusBar.js:207
 msgid "CountA"
 msgstr "Počet hodnot"
 
-#: src/control/Control.StatusBar.js:207
+#: src/control/Control.StatusBar.js:208
 #: src/control/jsdialog/Definitions.Menu.ts:26
 msgid "Count"
 msgstr "Počet čísel"
 
-#: src/control/Control.StatusBar.js:208
+#: src/control/Control.StatusBar.js:209
 msgid "Maximum"
 msgstr "Maximum"
 
-#: src/control/Control.StatusBar.js:209
+#: src/control/Control.StatusBar.js:210
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.StatusBar.js:210
+#: src/control/Control.StatusBar.js:211
 #: src/control/jsdialog/Definitions.Menu.ts:22
 msgid "Sum"
 msgstr "Součet"
 
-#: src/control/Control.StatusBar.js:211
+#: src/control/Control.StatusBar.js:212
 msgid "Selection count"
 msgstr "Počet vybraných"
 
-#: src/control/Control.StatusBar.js:249
+#: src/control/Control.StatusBar.js:250
 msgid "Cancel the search"
 msgstr "Zrušit vyhledávání"
 
-#: src/control/Control.StatusBar.js:413
+#: src/control/Control.StatusBar.js:414
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
@@ -2386,27 +2378,27 @@ msgstr ""
 "Aby se zabránilo náhodným změnám, autor nastavil, že tento soubor lze "
 "otevřít jen pro čtení"
 
-#: src/control/Control.StatusBar.js:463
+#: src/control/Control.StatusBar.js:464
 msgid "Select multiple cells"
 msgstr "Vyberte více buněk"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:467
 msgid "Insert mode: inactive"
 msgstr "Režim vkládání: neaktivní"
 
-#: src/control/Control.StatusBar.js:477
+#: src/control/Control.StatusBar.js:480
 msgid "Selection mode: inactive"
 msgstr "Režim výběru: neaktivní"
 
-#: src/control/Control.StatusBar.js:554
+#: src/control/Control.StatusBar.js:558
 msgid "Set Language for All text"
 msgstr "Nastavit jazyk pro veškerý text"
 
-#: src/control/Control.StatusBar.js:557
+#: src/control/Control.StatusBar.js:561
 msgid "Set Language for Paragraph"
 msgstr "Nastavit jazyk pro odstavec"
 
-#: src/control/Control.StatusBar.js:558
+#: src/control/Control.StatusBar.js:562
 msgid "Set Language for Selection"
 msgstr "Nastavit jazyk pro výběr"
 
@@ -2470,7 +2462,7 @@ msgstr "Vložit tvary"
 msgid "Insert connectors"
 msgstr "Vložit spojnice"
 
-#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:869
+#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:874
 msgid "Hide Menu"
 msgstr "Skrýt nabídku"
 
@@ -2478,7 +2470,7 @@ msgstr "Skrýt nabídku"
 msgid "Enter new name"
 msgstr "Zadejte nový název"
 
-#: src/control/Control.UIManager.js:892
+#: src/control/Control.UIManager.js:897
 msgid "Show Menu"
 msgstr "Zobrazit nabídku"
 
@@ -2530,19 +2522,19 @@ msgstr "Sledován"
 msgid "Always follow the editor"
 msgstr "Vždy sledovat editora"
 
-#: src/control/Control.Zotero.js:139
+#: src/control/Control.Zotero.js:143
 msgid "Zotero API key is not configured"
 msgstr "Není nastaven klíč API pro Zotero"
 
-#: src/control/Control.Zotero.js:160
+#: src/control/Control.Zotero.js:164
 msgid "Zotero API key is incorrect"
 msgstr "Klíč API pro Zotero není správný"
 
-#: src/control/Control.Zotero.js:187
+#: src/control/Control.Zotero.js:191
 msgid "Zotero Warning"
 msgstr "Upozornění o Zoteru"
 
-#: src/control/Control.Zotero.js:188
+#: src/control/Control.Zotero.js:192
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
@@ -2551,125 +2543,139 @@ msgstr ""
 "webového API dostupné. To může při úpravách citací nebo seznamu použité "
 "literatury způsobovat problémy."
 
-#: src/control/Control.Zotero.js:244 src/core/Socket.js:1347
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
 msgid "Loading..."
 msgstr "Načítání…"
 
-#: src/control/Control.Zotero.js:262
+#: src/control/Control.Zotero.js:259 src/control/Control.Zotero.js:456
+#: src/slideshow/PresenterConsole.js:31
+msgid "Previous"
+msgstr "Předchozí"
+
+#: src/control/Control.Zotero.js:272 src/control/Control.Zotero.js:471
+#: src/slideshow/PresenterConsole.js:32
+msgid "Next"
+msgstr "Další"
+
+#: src/control/Control.Zotero.js:294
 msgid "Language:"
 msgstr "Jazyk:"
 
-#: src/control/Control.Zotero.js:277
+#: src/control/Control.Zotero.js:309
 msgid "Store as:"
 msgstr "Uložit jako:"
 
-#: src/control/Control.Zotero.js:283 src/control/Control.Zotero.js:407
+#: src/control/Control.Zotero.js:315 src/control/Control.Zotero.js:438
 msgid "Fields"
 msgstr "Pole"
 
-#: src/control/Control.Zotero.js:284 src/control/Control.Zotero.js:407
+#: src/control/Control.Zotero.js:316 src/control/Control.Zotero.js:438
 msgid "Bookmarks"
 msgstr "Záložky"
 
-#: src/control/Control.Zotero.js:405
+#: src/control/Control.Zotero.js:436
 msgid "Footnotes"
 msgstr "Poznámky pod čarou"
 
-#: src/control/Control.Zotero.js:405
+#: src/control/Control.Zotero.js:436
 msgid "Endnotes"
 msgstr "Vysvětlivky"
 
-#: src/control/Control.Zotero.js:469
+#: src/control/Control.Zotero.js:523
 msgid "My Publications"
 msgstr "Moje publikace"
 
-#: src/control/Control.Zotero.js:475 src/control/Control.Zotero.js:702
+#: src/control/Control.Zotero.js:529 src/control/Control.Zotero.js:748
 msgid "My Library"
 msgstr "Moje knihovna"
 
-#: src/control/Control.Zotero.js:476
+#: src/control/Control.Zotero.js:530
 msgid "Group Libraries"
 msgstr "Knihovny skupiny"
 
-#: src/control/Control.Zotero.js:718
+#: src/control/Control.Zotero.js:764
 msgid "Failed to load groups"
 msgstr "Nepodařilo se načíst skupiny"
 
-#: src/control/Control.Zotero.js:736 src/control/Control.Zotero.js:1052
+#: src/control/Control.Zotero.js:782 src/control/Control.Zotero.js:1126
 msgid "Failed to load collections"
 msgstr "Nepodařilo se načíst kolekce"
 
-#: src/control/Control.Zotero.js:750
+#: src/control/Control.Zotero.js:790
+msgid "Loading references"
+msgstr ""
+
+#: src/control/Control.Zotero.js:824
 msgid "Citation Style"
 msgstr "Citační styl"
 
-#: src/control/Control.Zotero.js:755
+#: src/control/Control.Zotero.js:829
 msgid "Styles"
 msgstr "Styly"
 
-#: src/control/Control.Zotero.js:755
+#: src/control/Control.Zotero.js:829
 msgid "An error occurred while fetching style list"
 msgstr "Při načítání seznamu stylů došlo k chybě"
 
-#: src/control/Control.Zotero.js:763
+#: src/control/Control.Zotero.js:837
 msgid "Failed to load styles"
 msgstr "Nepodařilo se načíst styly"
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Title"
 msgstr "Název"
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Creator(s)"
 msgstr "Autoři"
 
-#: src/control/Control.Zotero.js:1080 src/control/Control.Zotero.js:1518
+#: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Your library is empty"
 msgstr "Knihovna je prázdná"
 
-#: src/control/Control.Zotero.js:1091
+#: src/control/Control.Zotero.js:1166
 msgid "Failed to load items"
 msgstr "Nepodařilo se načíst položky"
 
-#: src/control/Control.Zotero.js:1143
+#: src/control/Control.Zotero.js:1218
 msgid "Citation warning"
 msgstr "Upozornění o citacích"
 
-#: src/control/Control.Zotero.js:1144
+#: src/control/Control.Zotero.js:1219
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr "Po zadání citací nelze měnit jejich úložiště a typ zobrazení."
 
-#: src/control/Control.Zotero.js:1145 src/control/Control.Zotero.js:1447
+#: src/control/Control.Zotero.js:1220 src/control/Control.Zotero.js:1535
 msgid "Confirm"
 msgstr "Potvrdit"
 
-#: src/control/Control.Zotero.js:1251
+#: src/control/Control.Zotero.js:1339
 msgid "Add Note"
 msgstr "Přidat poznámku"
 
-#: src/control/Control.Zotero.js:1254 src/slideshow/PresenterConsole.js:33
+#: src/control/Control.Zotero.js:1342 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
 msgstr "Poznámky"
 
-#: src/control/Control.Zotero.js:1254
+#: src/control/Control.Zotero.js:1342
 msgid "An error occurred while fetching notes"
 msgstr "Při načítání poznámek došlo k chybě"
 
-#: src/control/Control.Zotero.js:1385
+#: src/control/Control.Zotero.js:1473
 msgid "Updated citations"
 msgstr "Aktualizované citace"
 
-#: src/control/Control.Zotero.js:1387
+#: src/control/Control.Zotero.js:1475
 msgid "Citations update failed"
 msgstr "Nepodařilo se aktualizovat citace"
 
-#: src/control/Control.Zotero.js:1391
+#: src/control/Control.Zotero.js:1479
 msgid "Updating citations"
 msgstr "Aktualizace citací"
 
-#: src/control/Control.Zotero.js:1446
+#: src/control/Control.Zotero.js:1534
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
@@ -2677,7 +2683,7 @@ msgstr ""
 "Zrušení odkazů na citace způsobí, že v Collabora Online nebude v tomto "
 "dokumentu možné aktualizovat citace a seznam použité literatury."
 
-#: src/control/Parts.js:491
+#: src/control/Parts.js:493
 msgid "Show sheets"
 msgstr "Zobrazit listy"
 
@@ -2932,7 +2938,7 @@ msgstr "Nástroje pro ladění"
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "Ctrl+Shift+Alt+D pro ukončení"
 
-#: src/core/Debug.js:1082
+#: src/core/Debug.js:1080
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr "Zpracování událostí se nečekaně dlouho odkládalo: {0}ms"
 
@@ -3129,7 +3135,7 @@ msgstr "Barvy motivu vzhledu"
 msgid "Document colors"
 msgstr "Barvy dokumentu"
 
-#: src/docstatefunctions.js:181
+#: src/docstatefunctions.js:195
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr ", chyba konfigurace clusteru: neodpovídající identifikátor serveru"
 
@@ -3445,15 +3451,15 @@ msgstr "karta Nápověda"
 msgid "the View menu"
 msgstr "nabídka Zobrazit"
 
-#: src/layer/tile/CanvasTileLayer.js:1878
+#: src/layer/tile/CanvasTileLayer.js:1646
 msgid "Functions"
 msgstr "Funkce"
 
-#: src/layer/tile/CanvasTileLayer.js:2145
+#: src/layer/tile/CanvasTileLayer.js:1913
 msgid "Named Range"
 msgstr "Pojmenovaná oblast"
 
-#: src/layer/tile/CanvasTileLayer.js:3894
+#: src/layer/tile/CanvasTileLayer.js:3662
 msgid "No Comments"
 msgstr "Bez komentářů"
 
@@ -3478,11 +3484,11 @@ msgstr "Upozornění: vypršel časový limit pro kopírování/vkládání"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Nepodařilo se stáhnout schránku, zkuste zkopírovat znovu"
 
-#: src/map/Clipboard.js:1276
+#: src/map/Clipboard.js:1273
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "Použijte tlačítko vložit na klávesnici na obrazovce."
 
-#: src/map/Clipboard.js:1332
+#: src/map/Clipboard.js:1329
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -3490,23 +3496,23 @@ msgstr ""
 "Stahování za účelem rozsáhlého kopírování/vkládání již začalo. Počkejte na "
 "jeho dokončení, nebo ho před zahájením nového nejprve zrušte."
 
-#: src/map/Clipboard.js:1354
+#: src/map/Clipboard.js:1351
 msgid "Paste from this document"
 msgstr "Vložit z tohoto dokumentu"
 
-#: src/map/Clipboard.js:1354
+#: src/map/Clipboard.js:1351
 msgid "Cancel paste special"
 msgstr "Zrušit vložení jinak"
 
-#: src/map/Clipboard.js:1364
+#: src/map/Clipboard.js:1361
 msgid "Your browser has very limited access to the clipboard"
 msgstr "Prohlížeč má velmi omezený přístup ke schránce"
 
-#: src/map/Clipboard.js:1369
+#: src/map/Clipboard.js:1366
 msgid "Please use following combination to see more options:"
 msgstr "Následující kombinací zobrazíte další možnosti:"
 
-#: src/map/Clipboard.js:1387
+#: src/map/Clipboard.js:1384
 msgid "Close popup to ignore paste special"
 msgstr "Zavřením okna vložení jinak ignorujete"
 
@@ -3518,7 +3524,7 @@ msgstr "Inicializace…"
 msgid "Last saved:"
 msgstr "Naposledy uloženo:"
 
-#: src/map/Map.js:1486
+#: src/map/Map.js:1487
 msgid "Please wait!"
 msgstr "Počkejte"
 
@@ -3655,14 +3661,6 @@ msgstr "Aktuální snímek"
 msgid "Next Slide"
 msgstr "Následující snímek"
 
-#: src/slideshow/PresenterConsole.js:31
-msgid "Previous"
-msgstr "Předchozí"
-
-#: src/slideshow/PresenterConsole.js:32
-msgid "Next"
-msgstr "Další"
-
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
 msgstr "Snímky"
@@ -3788,6 +3786,11 @@ msgstr ""
 "translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
+
+#~ msgid "Another user has updated comments. Would you like to proceed updating?"
+#~ msgstr ""
+#~ "Komentáře byly upraveny jiným uživatelem. Přejete si v aktualizaci "
+#~ "pokračovat?"
 
 #~ msgid "1 issue found"
 #~ msgstr "Nalezen 1 problém"
