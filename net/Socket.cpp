@@ -1027,6 +1027,9 @@ void StreamSocket::dumpState(std::ostream& os)
 {
     int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS.count();
     const int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
+
+    // The format of the table is as follows (spaces are really tabs):
+    // "fd events status rbuffered rcapacity wbuffered wcapacity rtotal wtotal clientaddress";
     os << '\t' << std::setw(6) << getFD() << "\t0x" << std::hex << events << std::dec
        << (ignoringInput() ? "\t\tignore\t" : "\t\tprocess\t") << std::setw(7) << _inBuffer.size()
        << '\t' << std::setw(7) << _inBuffer.capacity() << '\t' << std::setw(6) << _outBuffer.size()
