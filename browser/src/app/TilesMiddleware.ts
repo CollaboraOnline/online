@@ -665,7 +665,7 @@ class TileManager {
 
 	private static clearTilesPreFetcher() {
 		if (this._tilesPreFetcher !== undefined) {
-			clearInterval(this._tilesPreFetcher);
+			clearTimeout(this._tilesPreFetcher);
 			this._tilesPreFetcher = undefined;
 		}
 	}
@@ -1469,7 +1469,7 @@ class TileManager {
 		this._preFetchMode = this._docLayer._selectedMode;
 		this._preFetchIdle = setTimeout(
 			L.bind(function () {
-				this._tilesPreFetcher = setInterval(
+				this._tilesPreFetcher = setTimeout(
 					L.bind(this.preFetchTiles, this),
 					interval,
 				);

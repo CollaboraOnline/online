@@ -1074,16 +1074,17 @@ function typeIntoInputField(selector, text, clearBefore = true)
 {
 	cy.log('>> typeIntoInputField - start');
 
-	cy.cGet(selector).as('input');
-	cy.get('@input').focus();
-	cy.get('@input').should('have.focus');
 	if (clearBefore) {
-		cy.get('@input').invoke('val', '');
-		cy.get('@input').should('have.value', '');
+		cy.wait(300);
+		cy.cGet(selector).type('{selectall}{backspace}{selectall}{backspace}');
+		cy.wait(300);
 	}
 
-	cy.get('@input').type(text + '{enter}');
-	cy.get('@input').should('have.value', text);
+	cy.cGet(selector).type(text, {force: true});
+	cy.wait(300);
+	cy.cGet(selector).type('{enter}', {force: true});
+	cy.wait(300);
+	cy.cGet(selector).should('have.value', text);
 
 	cy.log('<< typeIntoInputField - end');
 }
