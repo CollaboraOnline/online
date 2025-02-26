@@ -13,7 +13,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
-/* global app CPolyUtil CPolygon TileManager */
+/* global app CPolyUtil CPolygon TileManager ViewLayout */
 
 L.CalcTileLayer = L.CanvasTileLayer.extend({
 	options: {
@@ -1265,7 +1265,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return new L.LatLng(0, 0);
 		}
 
-		let paneRectangles = app.getViewRectangles(); // SimpleRectangle array.
+		let paneRectangles = ViewLayout.getSplitViewRectangles(); // SimpleRectangle array.
 		let contained = false;
 		for (let i = 0; i < paneRectangles.length; i++) {
 			if (paneRectangles[i].containsRectangle(app.calc.cellCursorRectangle.toArray()))

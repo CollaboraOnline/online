@@ -3,7 +3,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global app _ Cursor JSDialog TileManager */
+/* global app _ Cursor JSDialog TileManager ViewLayout */
 
 L.Map = L.Evented.extend({
 
@@ -522,7 +522,7 @@ L.Map = L.Evented.extend({
 
 		if (app.calc.cellCursorRectangle) {
 			const twipsTopLeft = [app.calc.cellCursorRectangle.x1, app.calc.cellCursorRectangle.y1];
-			const cursorInBounds = app.file.viewedRectangle.containsPoint(twipsTopLeft);
+			const cursorInBounds = ViewLayout.getViewedRectangle().containsPoint(twipsTopLeft);
 
 			if (cursorInBounds) {
 				return new L.Point(...twipsTopLeft);
@@ -531,7 +531,7 @@ L.Map = L.Evented.extend({
 
 		if (docLayer._cellSelectionArea) {
 			const twipsCenter = docLayer._cellSelectionArea.center;
-			const selectionInBounds = app.file.viewedRectangle.containsPoint(twipsCenter);
+			const selectionInBounds = ViewLayout.getViewedRectangle().containsPoint(twipsCenter);
 
 			if (selectionInBounds) {
 				return new L.Point(...twipsCenter);
@@ -669,7 +669,7 @@ L.Map = L.Evented.extend({
 		var cssBounds = this.getPixelBounds();
 		var mapUpdater;
 		var runAtFinish;
-		if (this._docLayer && app.file.textCursor.visible && app.file.viewedRectangle.containsPoint(app.file.textCursor.rectangle.center)) {
+		if (this._docLayer && app.file.textCursor.visible && ViewLayout.getViewedRectangle().containsPoint(app.file.textCursor.rectangle.center)) {
 			// Calculate new center after zoom. The intent is that the caret
 			// position stays the same.
 			var zoomScale = 1.0 / this.getZoomScale(zoom, this._zoom);

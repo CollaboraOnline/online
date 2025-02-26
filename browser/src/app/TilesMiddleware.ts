@@ -1435,7 +1435,7 @@ class TileManager {
 				coords.mode === mode &&
 				invalidatedRectangle.intersectsRectangle(tileRectangle)
 			) {
-				if (app.isRectangleVisibleInTheDisplayedArea(tileRectangle)) {
+				if (ViewLayout.isRectangleVisibleInTheDisplayedArea(tileRectangle)) {
 					this.invalidateTile(key, wireId);
 					needsNewTiles = true;
 				}
@@ -2079,7 +2079,7 @@ class TileManager {
 		var mode = 0; // mode is different only in Impress MasterPage mode so far
 
 		var intersectionAreaRectangle = app.LOUtil._getIntersectionRectangle(
-			app.file.viewedRectangle.pToArray(),
+			ViewLayout.getViewedRectangle().pToArray(),
 			[0, 0, partWidthPixels, partHeightPixels * app.map._docLayer._parts],
 		);
 
@@ -2098,7 +2098,8 @@ class TileManager {
 			var startPart = Math.floor(
 				intersectionAreaRectangle[1] / partHeightPixels,
 			);
-			var startY = app.file.viewedRectangle.pY1 - startPart * partHeightPixels;
+			var startY =
+				ViewLayout.getViewedRectangle().pY1 - startPart * partHeightPixels;
 			startY =
 				Math.floor(startY / app.tile.size.pixels[1]) * app.tile.size.pixels[1];
 
@@ -2107,8 +2108,8 @@ class TileManager {
 					partHeightPixels,
 			);
 			var endY =
-				app.file.viewedRectangle.pY1 +
-				app.file.viewedRectangle.pY2 -
+				ViewLayout.getViewedRectangle().pY1 +
+				ViewLayout.getViewedRectangle().pY2 -
 				endPart * partHeightPixels;
 			endY =
 				Math.floor(endY / app.tile.size.pixels[1]) * app.tile.size.pixels[1];

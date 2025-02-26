@@ -36,7 +36,7 @@ class CellCursorSection extends CanvasSectionObject {
 	}
 
 	private getContainingPane() {
-		const rectangles = app.getViewRectangles();
+		const rectangles = ViewLayout.getSplitViewRectangles();
 
 		this.sectionProperties.paneIndex = -1;
 		this.sectionProperties.paneCount = 1;
