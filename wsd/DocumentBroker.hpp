@@ -1437,6 +1437,13 @@ private:
         const StorageBase::LockState _requestedLockState;
     };
 
+private:
+    // First member.
+    /// The UnitWSD instance. We capture it here since
+    /// this is our instance, but the test framework
+    /// has a single global instance via UnitWSD::get().
+    UnitWSD* const _unitWsd;
+
 protected:
     std::string _uriOrig;
     /// Seconds to live for, or 0 forever
@@ -1753,12 +1760,6 @@ private:
 
     /// Unique DocBroker ID for tracing and debugging.
     static std::atomic<unsigned> DocBrokerId;
-
-    // Last member.
-    /// The UnitWSD instance. We capture it here since
-    /// this is our instance, but the test framework
-    /// has a single global instance via UnitWSD::get().
-    UnitWSD* const _unitWsd;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
