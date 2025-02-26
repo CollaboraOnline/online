@@ -165,7 +165,8 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
                                const std::string& docKey, const std::string& configId,
                                unsigned mobileAppDocId,
                                std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
-    : _uriOrig(uri)
+    : _unitWsd(UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr)
+    , _uriOrig(uri)
     , _limitLifeSeconds(std::chrono::seconds::zero())
     , _uriPublic(uriPublic)
     , _saveManager(std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
@@ -208,7 +209,6 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
           ConfigUtil::getConfigValue<bool>("per_document.background_autosave", true))
     , _backgroundManualSave(
           ConfigUtil::getConfigValue<bool>("per_document.background_manualsave", true))
-    , _unitWsd(UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr)
 {
     assert(!_docKey.empty());
     assert(!COOLWSD::ChildRoot.empty());
