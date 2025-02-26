@@ -34,6 +34,10 @@
 # So, easiest thing seems to be to use switch-output, and run each incremental
 # perf dump through stackcollapse-perf.pl before deleting the perf dump
 
+# Notes:
+# building perf standalone: https://medium.com/@manas.marwah/building-perf-tool-fc838f084f71
+# perf-4.20.16 seen with maps__fixup_overlappings hang on perf script:
+#   https://lkml.iu.edu/hypermail/linux/kernel/1912.1/05324.html
 if ! test `id -u` = 0; then
     echo "not root, if this doesn't work try sudo profile-cool"
 fi
