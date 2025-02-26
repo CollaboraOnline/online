@@ -31,12 +31,10 @@ public:
     /// @param socket is the underlying Socket to the process.
     WSProcess(const std::string& name, const pid_t pid, const std::shared_ptr<StreamSocket>& socket,
               std::shared_ptr<WebSocketHandler> handler)
-        :
-
-        _name(name)
-        , _pid(pid)
+        : _name(name)
         , _ws(std::move(handler))
         , _socket(socket)
+        , _pid(pid)
     {
         LOG_INF(_name << " ctor [" << _pid << "].");
     }
@@ -182,9 +180,9 @@ protected:
 
 private:
     std::string _name;
-    std::atomic<pid_t> _pid; ///< The process-id, which can be access from different threads.
     std::shared_ptr<WebSocketHandler> _ws; // FIXME: should be weak ? ...
     std::weak_ptr<StreamSocket> _socket;
+    std::atomic<pid_t> _pid; ///< The process-id, which can be access from different threads.
 };
 
 /// A ChildProcess object represents a Kit process that hosts a document and manipulates the

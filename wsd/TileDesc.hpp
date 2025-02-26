@@ -812,6 +812,7 @@ public:
 
 protected:
     std::vector<TileDesc> _tiles;
+    Util::Rectangle _aabbox;
     CanonicalViewId _canonicalViewId;
     int _part;
     int _mode;
@@ -823,7 +824,6 @@ protected:
     bool _hasOldWids : 1;
     bool _isCombined : 1;
     bool _hasImgSizes : 1;
-    Util::Rectangle _aabbox;
 };
 
 class TileCombinedBuilder : public TileCombined
