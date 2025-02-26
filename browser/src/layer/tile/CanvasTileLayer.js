@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager ViewLayout */
 
 function clamp(num, min, max)
 {
@@ -292,7 +292,7 @@ L.TileSectionManager = L.Class.extend({
 		else {
 			var ratio = this._layer._tileSize / this._layer._tileHeightTwips;
 			var partHeightPixels = Math.round((this._layer._partHeightTwips + this._layer._spaceBetweenParts) * ratio);
-			return app.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pixels[0], app.tile.size.pixels[1]]);
+			return app.LOUtil._doRectanglesIntersect(ViewLayout.getViewedRectangle().pToArray(), [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pixels[0], app.tile.size.pixels[1]]);
 		}
 	},
 
@@ -671,6 +671,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._moveTileRequests = [];
 		this._canonicalIdInitialized = false;
 
+		ViewLayout.initialize();
 		TileManager.initialize();
 	},
 
@@ -2597,19 +2598,19 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
 		if (this.isCalc() && oldSelection) {
-			if (!app.file.viewedRectangle.containsRectangle(newSelection.toArray()) && !newSelection.equals(oldSelection.toArray())) {
+			if (!ViewLayout.getViewedRectangle().containsRectangle(newSelection.toArray()) && !newSelection.equals(oldSelection.toArray())) {
 				var spacingX = Math.abs(app.calc.cellCursorRectangle.pWidth) / 4.0;
 				var spacingY = Math.abs(app.calc.cellCursorRectangle.pHeight) / 2.0;
 
 				var scrollX = 0, scrollY = 0;
-				if (newSelection.pX2 > app.file.viewedRectangle.pX2 && newSelection.pX2 > oldSelection.pX2)
-					scrollX = newSelection.pX2 - app.file.viewedRectangle.pX2 + spacingX;
-				else if (newSelection.pX1 < app.file.viewedRectangle.pX1 && newSelection.pX1 < oldSelection.pX1)
-					scrollX = newSelection.pX1 - app.file.viewedRectangle.pX1 - spacingX;
-				if (newSelection.pY2 > app.file.viewedRectangle.pY2 && newSelection.pY2 > oldSelection.pY2)
-					scrollY = newSelection.pY2 - app.file.viewedRectangle.pY2 + spacingY;
-				else if (newSelection.pY1 < app.file.viewedRectangle.pY1 && newSelection.pY1 < oldSelection.pY1)
-					scrollY = newSelection.pY1 - app.file.viewedRectangle.pY1 - spacingY;
+				if (newSelection.pX2 > ViewLayout.getViewedRectangle().pX2 && newSelection.pX2 > oldSelection.pX2)
+					scrollX = newSelection.pX2 - ViewLayout.getViewedRectangle().pX2 + spacingX;
+				else if (newSelection.pX1 < ViewLayout.getViewedRectangle().pX1 && newSelection.pX1 < oldSelection.pX1)
+					scrollX = newSelection.pX1 - ViewLayout.getViewedRectangle().pX1 - spacingX;
+				if (newSelection.pY2 > ViewLayout.getViewedRectangle().pY2 && newSelection.pY2 > oldSelection.pY2)
+					scrollY = newSelection.pY2 - ViewLayout.getViewedRectangle().pY2 + spacingY;
+				else if (newSelection.pY1 < ViewLayout.getViewedRectangle().pY1 && newSelection.pY1 < oldSelection.pY1)
+					scrollY = newSelection.pY1 - ViewLayout.getViewedRectangle().pY1 - spacingY;
 				if (scrollX !== 0 || scrollY !== 0) {
 					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
 						var address = document.querySelector('#addressInput input').value;
@@ -2844,7 +2845,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._sendClientZoom();
 
-		this._sendClientVisibleArea();
+		ViewLayout.sendClientVisibleArea();
 
 		const verticalOffset = this.getFiledBasedViewVerticalOffset();
 		if (verticalOffset) {
@@ -2943,7 +2944,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._sendClientZoom();
 
-		this._sendClientVisibleArea();
+		ViewLayout.sendClientVisibleArea();
 
 		if (winId === 0) {
 			app.socket.sendMessage(
@@ -3072,8 +3073,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.file.size.twips[0]);
 			}
 
-			if (!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
-				!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x2, correctedCursor.y2).toArray())) {
+			if (!ViewLayout.isPointVisibleInTheDisplayedArea([correctedCursor.x1, correctedCursor.y1]) ||
+				!ViewLayout.isPointVisibleInTheDisplayedArea([correctedCursor.x2, correctedCursor.y2])) {
 				if (app.isFollowingUser() && app.getFollowedViewId() === this._viewId && !this._map.calcInputBarHasFocus()) {
 					this.scrollToPos(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1));
 				}
@@ -3089,7 +3090,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			*/
 			var that = this;
 
-			var isCursorVisible = app.isPointVisibleInTheDisplayedArea(app.file.textCursor.rectangle.toArray());
+			var isCursorVisible = ViewLayout.isPointVisibleInTheDisplayedArea(app.file.textCursor.rectangle.toArray());
 
 			if (!isCursorVisible) {
 				setTimeout(function () {
@@ -3173,7 +3174,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (section && section.showSection) {
 			const point = new app.definitions.simplePoint(section.position[0] * app.pixelsToTwips, section.position[1] * app.pixelsToTwips);
-			var isNewCursorVisible = app.isPointVisibleInTheDisplayedArea(point.toArray());
+			var isNewCursorVisible = ViewLayout.isPointVisibleInTheDisplayedArea(point.toArray());
 			if (!isNewCursorVisible)
 				this.scrollToPos(point);
 			app.definitions.cursorHeaderSection.showCursorHeader(viewId);
@@ -4328,41 +4329,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this.highlightCurrentPart(partToSelect);
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 			}
-		}
-	},
-
-	_sendClientVisibleArea: function (forceUpdate) {
-		if (!this._map._docLoaded)
-			return;
-
-		var splitPos = this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0);
-
-		var visibleArea = this._map.getPixelBounds();
-		visibleArea = new L.Bounds(
-			this._pixelsToTwips(visibleArea.min),
-			this._pixelsToTwips(visibleArea.max)
-		);
-		splitPos = this._corePixelsToTwips(splitPos);
-		var size = visibleArea.getSize();
-		var visibleTopLeft = visibleArea.min;
-		var newClientVisibleArea = 'clientvisiblearea x=' + Math.round(visibleTopLeft.x)
-					+ ' y=' + Math.round(visibleTopLeft.y)
-					+ ' width=' + Math.round(size.x)
-					+ ' height=' + Math.round(size.y)
-					+ ' splitx=' + Math.round(splitPos.x)
-					+ ' splity=' + Math.round(splitPos.y);
-
-		if (this._ySplitter) {
-			this._ySplitter.onPositionChange();
-		}
-		if (this._xSplitter) {
-			this._xSplitter.onPositionChange();
-		}
-		if (this._clientVisibleArea !== newClientVisibleArea || forceUpdate) {
-			// Visible area is dirty, update it on the server
-			app.socket.sendMessage(newClientVisibleArea);
-			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
-				this._clientVisibleArea = newClientVisibleArea;
 		}
 	},
 

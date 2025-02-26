@@ -12,7 +12,7 @@
  * Ruler Handler
  */
 
-/* global app $ L _ Hammer */
+/* global app $ L _ Hammer ViewLayout */
 L.Control.Ruler = L.Control.extend({
 	options: {
 		interactive: true,
@@ -418,7 +418,7 @@ L.Control.Ruler = L.Control.extend({
 		if (!this._map.options.docBounds || !this.options.showruler)
 			return;
 
-		const rulerOffset = -app.file.viewedRectangle.cX1 + (this.options.tileMargin * app.getScale());
+		const rulerOffset = -ViewLayout.getViewedRectangle().cX1 + (this.options.tileMargin * app.getScale());
 
 		this._rFace.style.marginInlineStart = rulerOffset + 'px';
 

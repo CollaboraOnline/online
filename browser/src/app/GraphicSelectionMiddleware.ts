@@ -318,11 +318,11 @@ class GraphicSelection {
 				app.map._docLayer._allowViewJump()
 			) {
 				if (
-					(!app.isPointVisibleInTheDisplayedArea([
+					(!ViewLayout.isPointVisibleInTheDisplayedArea([
 						this.rectangle.x1,
 						this.rectangle.y1,
 					]) ||
-						!app.isPointVisibleInTheDisplayedArea([
+						!ViewLayout.isPointVisibleInTheDisplayedArea([
 							this.rectangle.x2,
 							this.rectangle.y2,
 						])) &&

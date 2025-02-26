@@ -14,8 +14,8 @@
  * Ruler Handler
 
  * HRuler.ts
- * 
- * Manages the horizontal ruler for displaying measurements and positioning. 
+ *
+ * Manages the horizontal ruler for displaying measurements and positioning.
  * Handles user interactions like scrolling and dragging, and renders grid lines/ticks.
  */
 
@@ -622,7 +622,8 @@ class HRuler extends Ruler {
 		if (!this._map.options.docBounds) return;
 
 		const rulerOffset =
-			-app.file.viewedRectangle.cX1 + this.options.tileMargin * app.getScale();
+			-ViewLayout.getViewedRectangle().cX1 +
+			this.options.tileMargin * app.getScale();
 
 		this._rFace.style.marginInlineStart = rulerOffset + 'px';
 

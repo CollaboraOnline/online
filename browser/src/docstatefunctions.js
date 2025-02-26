@@ -15,7 +15,7 @@
  * This file is meant to be used for setting and getting the document states.
  */
 
-/* global app _ */
+/* global app _ ViewLayout */
 
 window.addEventListener('load', function () {
 	app.calc.cellCursorRectangle = new app.definitions.simpleRectangle(
@@ -27,7 +27,6 @@ window.addEventListener('load', function () {
 	app.calc.cellAddress = new app.definitions.simplePoint(0, 0);
 	app.calc.splitCoordinate = new app.definitions.simplePoint(0, 0);
 	app.canvasSize = new app.definitions.simplePoint(0, 0);
-	app.file.viewedRectangle = new app.definitions.simpleRectangle(0, 0, 0, 0);
 	app.file.textCursor.rectangle = new app.definitions.simpleRectangle(
 		0,
 		0,
@@ -35,39 +34,6 @@ window.addEventListener('load', function () {
 		0,
 	);
 });
-
-app.getViewRectangles = function () {
-	if (app.map._docLayer._splitPanesContext)
-		return app.map._docLayer._splitPanesContext.getViewRectangles();
-	else return [app.file.viewedRectangle.clone()];
-};
-
-// ToDo: _splitPanesContext should be an app variable.
-app.isPointVisibleInTheDisplayedArea = function (twipsArray /* x, y */) {
-	if (app.map._docLayer._splitPanesContext) {
-		let rectangles = app.map._docLayer._splitPanesContext.getViewRectangles();
-		for (let i = 0; i < rectangles.length; i++) {
-			if (rectangles[i].containsPoint(twipsArray)) return true;
-		}
-		return false;
-	} else {
-		return app.file.viewedRectangle.containsPoint(twipsArray);
-	}
-};
-
-app.isRectangleVisibleInTheDisplayedArea = function (
-	twipsArray /* x, y, width, height */,
-) {
-	if (app.map._docLayer._splitPanesContext) {
-		let rectangles = app.map._docLayer._splitPanesContext.getViewRectangles();
-		for (let i = 0; i < rectangles.length; i++) {
-			if (rectangles[i].intersectsRectangle(twipsArray)) return true;
-		}
-		return false;
-	} else {
-		return app.file.viewedRectangle.intersectsRectangle(twipsArray);
-	}
-};
 
 app.isReadOnly = function () {
 	return app.file.readOnly;
@@ -170,7 +136,7 @@ app.updateFollowingUsers = function () {
 			];
 
 		const cursorPositionInView =
-			app.isPointVisibleInTheDisplayedArea(twipsArray);
+			ViewLayout.isPointVisibleInTheDisplayedArea(twipsArray);
 
 		if (
 			parseInt(app.getFollowedViewId()) ===

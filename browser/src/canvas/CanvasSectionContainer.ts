@@ -589,10 +589,10 @@ class CanvasSectionContainer {
 		this.documentBottomRight[0] = Math.round(points[2]);
 		this.documentBottomRight[1] = Math.round(points[3]);
 
-		app.file.viewedRectangle.pX1 = points[0];
-		app.file.viewedRectangle.pY1 = points[1];
-		app.file.viewedRectangle.pWidth = points[2] - points[0];
-		app.file.viewedRectangle.pHeight = points[3] - points[1];
+		ViewLayout.getViewedRectangle().pX1 = points[0];
+		ViewLayout.getViewedRectangle().pY1 = points[1];
+		ViewLayout.getViewedRectangle().pWidth = points[2] - points[0];
+		ViewLayout.getViewedRectangle().pHeight = points[3] - points[1];
 
 		for (var i: number = 0; i < this.sections.length; i++) {
 			var section: CanvasSectionObject = this.sections[i];
