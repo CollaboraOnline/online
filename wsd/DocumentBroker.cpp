@@ -4030,32 +4030,33 @@ void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::s
                                                  << "] for all sessions with userId [" << userId
                                                  << ']');
 
-    bool upload = false;
+    // update browsersetting for all the matching session
+    std::shared_ptr<ClientSession> sessionForUpload;
     for (auto& it : _sessions)
     {
         if (it.second->getUserId() != userId)
             continue;
 
         it.second->updateBrowserSettingsJSON(key, value);
-        if (!upload)
-        {
-            try
-            {
-                uploadBrowserSettingsToWopiHost(it.second);
-                upload = true;
-            }
-            catch (const std::exception& exc)
-            {
-                LOG_WRN("Failed to upload browsersetting json for session ["
-                        << it.second->getId() << "]: " << exc.what());
-            }
-        }
+        sessionForUpload = it.second;
+    }
+
+    // upload browsersetting only once if we found matching session
+    if (!sessionForUpload)
+        return;
+
+    try
+    {
+        uploadBrowserSettingsToWopiHost(sessionForUpload);
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_WRN("Failed to upload browsersetting json for session [" << sessionForUpload->getId());
     }
 }
 
-Poco::URI DocumentBroker::getPresetUploadBaseUrl(const Poco::URI& uri)
+Poco::URI DocumentBroker::getPresetUploadBaseUrl(Poco::URI uriObject)
 {
-    Poco::URI uriObject(uri);
     std::string path = uriObject.getPath();
     size_t pos = path.find("/files/");
     if (pos != std::string::npos)
