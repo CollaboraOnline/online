@@ -338,7 +338,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 	}
 
 	private drawPageBackgrounds (ctx: any) {
-		if (this.map._docLayer._docType !== 'text' && !app.file.fileBasedView)
+		if (this.map._docLayer._docType !== 'text' && !app.file.fileBasedView && !app.file.writer.multiPageView)
 			return; // For now, Writer and PDF view only.
 
 		/* Note: Probably, Calc won't need this function but in case this is activated for Calc:
@@ -368,6 +368,17 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 					(rectangle[1] < viewRectangleTwips[1] && rectangle[1] + rectangle[3] > viewRectangleTwips[1] + viewRectangleTwips[3])) {
 
 					this.drawPageBackgroundWriter(ctx, rectangle.slice(), i + 1);
+				}
+			}
+
+			if (app.file.writer.multiPageView) {
+				MultiPageViewLayout.resetViewLayout();
+				for (let i = 0; i < MultiPageViewLayout.rows.length; i++) {
+					for (let j = 0; j < MultiPageViewLayout.rows[i].rectangles.length; j++) {
+						const rectangle = MultiPageViewLayout.rows[i].rectangles[j];
+						this.context.strokeStyle = "red";
+						this.context.strokeRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3]);
+					}
 				}
 			}
 		}
