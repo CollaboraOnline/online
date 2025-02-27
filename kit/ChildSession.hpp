@@ -157,7 +157,7 @@ public:
 
     std::string getViewRenderState() { return _viewRenderState; }
 
-    float getTilePriority(const std::chrono::steady_clock::time_point &now, const TileDesc &desc) const;
+    float getTilePriority(const TileDesc &desc) const;
 
     void saveLogUiBackground()
 #if defined(BUILDING_TESTS)

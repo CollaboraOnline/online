@@ -270,7 +270,8 @@ private:
     static void reapZombieChildren();
 
     /// Calculate tile rendering priority from a TileDesc
-    virtual float getTilePriority(const std::chrono::steady_clock::time_point &now, const TileDesc &desc) const override;
+    virtual float getTilePriority(const TileDesc &desc) const override;
+    virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const override;
 
 public:
     /// Request loading a document, or a new view, if one exists,
@@ -343,7 +344,7 @@ public:
     bool canRenderTiles() const {
         return processInputEnabled() && !isLoadOngoing() &&
             !isBackgroundSaveProcess() && _queue &&
-            _queue->getTileQueueSize() > 0;
+            !_queue->isTileQueueEmpty();
     }
     bool hasCallbacks() const { return _queue && _queue->callbackSize() > 0; }
 
