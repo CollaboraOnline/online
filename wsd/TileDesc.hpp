@@ -233,11 +233,14 @@ public:
         return true;
     }
 
+    bool onSameColumn(const TileDesc& other) const
+    {
+        return other.getTilePosX() + other.getTileWidth() >= getTilePosX() &&
+               other.getTilePosX() <= getTilePosX() + getTileWidth();
+    }
+
     bool onSameRow(const TileDesc& other) const
     {
-        if (!sameTileCombineParams(other))
-            return false;
-
         return other.getTilePosY() + other.getTileHeight() >= getTilePosY() &&
                other.getTilePosY() <= getTilePosY() + getTileHeight();
     }
@@ -247,7 +250,10 @@ public:
         if (isPreview() || other.isPreview())
             return false;
 
-        if (!onSameRow(other))
+        if (!sameTileCombineParams(other))
+            return false;
+
+        if (!onSameRow(other) || !onSameColumn(other))
             return false;
 
         const int gridX = getTilePosX() / getTileWidth();
