@@ -374,6 +374,23 @@ class TreeViewControl {
 			if (this._isRealTree) td.setAttribute('aria-level', level);
 		}
 
+		// Character limits for text at each tree level.
+		const textLengthAndLevel: { [key: number]: number } = {
+			1: 30,
+			2: 33,
+			3: 25,
+			4: 19,
+			5: 10,
+		};
+
+		// Get text limit for the level (or default to 20)
+		const textLimit = textLengthAndLevel[level] || 20;
+
+		if (data.id === 'treeview' && entry.text && entry.text.length > textLimit) {
+			tr.setAttribute('data-cooltip', entry.text);
+			L.control.attachTooltipEventListener(tr, builder.map);
+		}
+
 		this.fillCells(entry, builder, data, tr, level, selectionElement);
 
 		this.setupRowProperties(tr, entry, level, selectionElement);

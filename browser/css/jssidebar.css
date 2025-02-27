@@ -343,6 +343,13 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	font-size: 14px;
 	white-space: break-spaces;
 }
+
+#StyleListPanelPanelExpander .ui-treeview-cell-text {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+}
 #NavigatorDeck .ui-treeview-cell {
 	/* Move this whole block away and fix in the main control */
 	display: flex;

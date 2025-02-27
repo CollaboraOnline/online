@@ -693,19 +693,35 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 .ui-treeview div[aria-level='2'] + .ui-treeview-expanded-content {
-	margin-left: 5ch;
+	margin-left: 3.5ch;
 }
 
 .ui-treeview div[aria-level='3'] + .ui-treeview-expanded-content {
-	margin-left: 7.5ch;
+	margin-left: 4.5ch;
 }
 
 .ui-treeview div[aria-level='4'] + .ui-treeview-expanded-content {
-	margin-left: 10ch;
+	margin-left: 5.5ch;
 }
 
 .ui-treeview div[aria-level='5'] + .ui-treeview-expanded-content {
-	margin-left: 12.5ch;
+	margin-left: 6.5ch;
+}
+
+#StyleListPanelPanelExpander .ui-treeview-expanded-content .ui-treeview-entry[aria-level='2'] .ui-treeview-cell-text > .ui-treeview-cell-text {
+	max-width: 220px;
+}
+
+#StyleListPanelPanelExpander .ui-treeview-expanded-content .ui-treeview-entry[aria-level='3'] .ui-treeview-cell-text > .ui-treeview-cell-text {
+	max-width: 180px;
+}
+
+#StyleListPanelPanelExpander .ui-treeview-expanded-content .ui-treeview-entry[aria-level='4'] .ui-treeview-cell-text > .ui-treeview-cell-text {
+	max-width: 150px;
+}
+
+#StyleListPanelPanelExpander .ui-treeview-expanded-content .ui-treeview-entry[aria-level='5'] .ui-treeview-cell-text > .ui-treeview-cell-text {
+	max-width: 120px;
 }
 
 .ui-treeview div.ui-treeview-expander {
