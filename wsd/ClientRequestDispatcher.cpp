@@ -936,7 +936,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         }
         else
         {
-            LOG_ERR("Unknown resource: " << requestDetails.toString());
+            LOG_WRN("Unknown resource: " << requestDetails.toString());
 
             // Bad request.
             HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
