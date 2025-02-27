@@ -1352,10 +1352,7 @@ public:
     std::string getSslVerifyMessage()
     {
 #if ENABLE_SSL
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
-        if (socket)
-            return SslStreamSocket::getSslVerifyString(socket->getSslVerifyResult());
-        return SslStreamSocket::getSslVerifyString(_handshakeSslVerifyFailure);
+        return SslStreamSocket::getSslVerifyString(getSslVerifyResult());
 #else
         return std::string();
 #endif
