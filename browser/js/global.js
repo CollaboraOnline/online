@@ -223,8 +223,11 @@ class InitializerBase {
 		if (initCSSVars) {
 			initCSSVars = atob(initCSSVars);
 			const sheet = new CSSStyleSheet();
-			sheet.replace(initCSSVars);
-			document.adoptedStyleSheets.push(sheet);
+			if (typeof sheet.replace === 'function')
+			{
+				sheet.replace(initCSSVars);
+				document.adoptedStyleSheets.push(sheet);
+			} // else jsdom
 		}
 
 		const element = document.getElementById("initial-variables");
