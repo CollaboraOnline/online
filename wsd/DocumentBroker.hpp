@@ -582,7 +582,7 @@ public:
                                    const std::function<void(const std::string&, bool)>& finishedCB,
                                    const std::shared_ptr<ClientSession>& session);
 
-    static Poco::URI getPresetUploadBaseUrl(const Poco::URI& uri);
+    static Poco::URI getPresetUploadBaseUrl(Poco::URI uri);
 
     static std::shared_ptr<const http::Response> sendHttpSyncRequest(const std::string& url,
                                                                      const std::string& logContext);
