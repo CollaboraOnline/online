@@ -1501,8 +1501,12 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
 void PresetsInstallTask::asyncInstall(const std::string& uri, const std::string& stamp, const std::string& fileName,
                                       const std::shared_ptr<ClientSession>& session)
 {
-    auto presetInstallFinished = [this](const std::string& id, bool presetResult)
+    auto presetInstallFinished = [selfWeak = weak_from_this(), this](const std::string& id, bool presetResult)
     {
+        std::shared_ptr<PresetsInstallTask> selfLifecycle = selfWeak.lock();
+        if (!selfLifecycle)
+            return;
+
         installPresetFinished(id, presetResult);
     };
 
