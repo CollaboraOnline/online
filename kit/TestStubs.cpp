@@ -23,7 +23,7 @@ void ChildSession::loKitCallback(const int /* type */, const std::string& /* pay
 void ChildSession::disconnect() {}
 int ChildSession::getSpeed() { return 0; }
 bool ChildSession::_handleInput(const char* /*buffer*/, int /*length*/) { return false; }
-float ChildSession::getTilePriority(const TileDesc &) const { return 0; }
+TilePrioritizer::Priority ChildSession::getTilePriority(const TileDesc &) const { return TilePrioritizer::Priority::NORMAL; }
 ChildSession::~ChildSession() {}
 
 int simd_initPixRowSimd(const uint32_t *, uint32_t *, size_t *, uint64_t *) { return 0; }

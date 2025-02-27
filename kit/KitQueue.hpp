@@ -26,7 +26,18 @@ class TilePrioritizer
 {
 public:
     virtual ~TilePrioritizer() {}
-    virtual float getTilePriority(const TileDesc &) const { return 0.0; }
+
+    enum class Priority {
+        NONE = -1,  // an error
+        LOWEST,
+        LOW,
+        NORMAL,
+        HIGH,
+        VERYHIGH,
+        ULTRAHIGH
+    };
+    virtual Priority getTilePriority(const TileDesc &) const { return Priority::NORMAL; }
+
     typedef std::pair<int, float> ViewIdInactivity;
     virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const { return {}; }
 };
@@ -91,7 +102,7 @@ public:
     void pushTileCombineRequest(const Payload &value);
     /// Pops the highest priority TileCombined from the
     /// render queue, with it's priority.
-    TileCombined popTileQueue(float &priority);
+    TileCombined popTileQueue(TilePrioritizer::Priority& priority);
     size_t getTileQueueSize() const;
     bool isTileQueueEmpty() const;
 
@@ -173,7 +184,7 @@ private:
 
     std::vector<TileDesc>* getTileQueue(int viewid);
     std::vector<TileDesc>& ensureTileQueue(int viewid);
-    TileCombined popTileQueue(std::vector<TileDesc>& tileQueue, float &priority);
+    TileCombined popTileQueue(std::vector<TileDesc>& tileQueue, TilePrioritizer::Priority &priority);
 
 private:
     /// Queue of incoming messages from coolwsd

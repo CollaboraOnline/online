@@ -440,7 +440,7 @@ KitQueue::Payload KitQueue::pop()
     return front;
 }
 
-TileCombined KitQueue::popTileQueue(float &priority)
+TileCombined KitQueue::popTileQueue(TilePrioritizer::Priority &priority)
 {
     assert(!isTileQueueEmpty());
 
@@ -481,7 +481,7 @@ TileCombined KitQueue::popTileQueue(float &priority)
     return popTileQueue(*tileQueue, priority);
 }
 
-TileCombined KitQueue::popTileQueue(std::vector<TileDesc>& tileQueue, float &priority)
+TileCombined KitQueue::popTileQueue(std::vector<TileDesc>& tileQueue, TilePrioritizer::Priority &priority)
 {
     assert(!tileQueue.empty());
 
@@ -495,12 +495,12 @@ TileCombined KitQueue::popTileQueue(std::vector<TileDesc>& tileQueue, float &pri
     // We are handling a tile; first try to find one that is at the cursor's
     // position, otherwise handle the one that is at the front
     int prioritized = 0;
-    float prioritySoFar = -1000.0;
+    TilePrioritizer::Priority prioritySoFar = TilePrioritizer::Priority::NONE;
     for (size_t i = 0; i < tileQueue.size(); ++i)
     {
         auto& prio = tileQueue[i];
 
-        const float p = _prio.getTilePriority(prio);
+        const TilePrioritizer::Priority p = _prio.getTilePriority(prio);
         if (p > prioritySoFar)
         {
             prioritySoFar = p;
