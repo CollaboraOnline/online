@@ -3747,8 +3747,15 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
                                      << ", IsPossiblyModified: " << isPossiblyModified());
 
 #if !MOBILEAPP
-        /// make sure to upload preset to WOPIHost
-        uploadPresetsToWopiHost(session->getAuthorization());
+        try
+        {
+            /// make sure to upload preset to WOPIHost
+            uploadPresetsToWopiHost(session->getAuthorization());
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_WRN("Failed to upload presets for session [" << id << "]: " << exc.what());
+        }
 #endif
 #ifndef IOS
         if (activeSessionCount <= 1)
