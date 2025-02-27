@@ -739,8 +739,9 @@ function getInitializerClass() {
 		set: function(key, value) {
 			value = String(value); // NOT "new String(...)". We cannot use .toString here because value could be null/undefined
 			if (global.prefs.useBrowserSetting) {
+				const oldValue = global.prefs._userBrowserSetting[key];
 				global.prefs._userBrowserSetting[key] = value;
-				if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1)
+				if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1 && oldValue !== value)
 					global.socket.send('browsersetting action=update key=' + key + ' value=' + value);
 			}
 			if (global.prefs.canPersist) {
