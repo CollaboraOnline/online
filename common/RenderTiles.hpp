@@ -113,7 +113,8 @@ namespace RenderTiles
 
         if (pixmapWidth > 4096 || pixmapHeight > 4096)
             LOG_WRN("Unusual extremely large tile combine of size " << pixmapWidth << 'x' << pixmapHeight
-                    << " (" << tilesByX << 'x' << tilesByY << " tiles");
+                    << " (" << tilesByX << 'x' << tilesByY << " tiles to serve " << tiles.size() << " tiles: "
+                    << (tiles.size() * 100)/(tilesByX * tilesByY) << "% in " << (tilesByX*tilesByY*0.25) << "MB");
 
         RenderTiles::Buffer pixmap(pixmapWidth, pixmapHeight);
 
