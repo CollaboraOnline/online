@@ -270,7 +270,7 @@ private:
     static void reapZombieChildren();
 
     /// Calculate tile rendering priority from a TileDesc
-    virtual float getTilePriority(const TileDesc &desc) const override;
+    virtual Priority getTilePriority(const TileDesc &desc) const override;
     virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const override;
 
 public:

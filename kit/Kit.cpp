@@ -2287,9 +2287,9 @@ bool Document::forwardToChild(const std::string& prefix, const std::vector<char>
     return std::string();
 }
 
-float Document::getTilePriority(const TileDesc &desc) const
+TilePrioritizer::Priority Document::getTilePriority(const TileDesc &desc) const
 {
-    float maxPrio = std::numeric_limits<float>::min();
+    TilePrioritizer::Priority maxPrio = TilePrioritizer::Priority::NONE;
 
     assert(_sessions.size() > 0);
     for (const auto& it : _sessions)
@@ -2300,9 +2300,9 @@ float Document::getTilePriority(const TileDesc &desc) const
         if (session->getCanonicalViewId() != desc.getNormalizedViewId())
             continue;
 
-        maxPrio = std::max<int>(maxPrio, session->getTilePriority(desc));
+        maxPrio = std::max(maxPrio, session->getTilePriority(desc));
     }
-    if (maxPrio == std::numeric_limits<float>::min())
+    if (maxPrio == TilePrioritizer::Priority::NONE)
         LOG_WRN("No sessions match this viewId " << desc.getNormalizedViewId());
     // LOG_TRC("Priority for tile " << desc.generateID() << " is " << maxPrio);
     return maxPrio;
@@ -2490,11 +2490,12 @@ void Document::drainQueue()
 
         if (canRenderTiles())
         {
-            float prio = 8; // visible & intersect with an active viewport
-            while (!_queue->isTileQueueEmpty() && prio >= 8)
+            // Priority for tiles of visible part that intersect with an active viewport
+            TilePrioritizer::Priority prio = TilePrioritizer::Priority::VERYHIGH;
+            while (!_queue->isTileQueueEmpty() && prio >= TilePrioritizer::Priority::VERYHIGH)
             {
                 TileCombined tileCombined = _queue->popTileQueue(prio);
-                LOG_TRC("Tile priority is " << prio << " for " << tileCombined.serialize());
+                LOG_TRC("Tile priority is " << static_cast<int>(prio) << " for " << tileCombined.serialize());
 
                 renderTiles(tileCombined);
             }

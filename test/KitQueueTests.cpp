@@ -183,10 +183,10 @@ void KitQueueTests::testViewOrder()
 
     class TestPrioritizer : public TilePrioritizer {
     public:
-        virtual float getTilePriority(const TileDesc &) const
+        virtual Priority getTilePriority(const TileDesc &) const
         {
             // FIXME: implement cursor priority hooks.
-            return 0.0;
+            return Priority::NORMAL;
         }
     };
     TestPrioritizer dummy;

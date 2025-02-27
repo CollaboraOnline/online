@@ -1275,35 +1275,34 @@ bool ChildSession::clientVisibleArea(const StringVector& tokens)
     return true;
 }
 
-float ChildSession::getTilePriority(const TileDesc &tile) const
+TilePrioritizer::Priority ChildSession::getTilePriority(const TileDesc &tile) const
 {
-    float score = tile.intersects(_clientVisibleArea) ? 2.0 : 1.0;
+    // previews are least interesting
+    if (tile.isPreview())
+        return TilePrioritizer::Priority::LOWEST;
+
+    // different part less interesting than session's current part
+    if (tile.getPart() != _currentPart)
+        return TilePrioritizer::Priority::LOW;
 
     // most important to render things close to the cursor fast
-    if (tile.getPart() == _currentPart)
-    {
-        if (tile.intersects(_cursorPosition))
-            score *= 2.0;
+    if (tile.intersects(_cursorPosition))
+        return TilePrioritizer::Priority::ULTRAHIGH;
 
-        // pre-loading near the viewing area is also more important than far away
-        Util::Rectangle r = tile.toAABBox();
-        // grow in each direction
-        Util::Rectangle enlarged =
-            Util::Rectangle::create(r.getLeft() - r.getWidth(), r.getTop() - r.getHeight(),
-                                    r.getRight() + r.getWidth(), r.getBottom() + r.getHeight());
-        if (enlarged.intersects(_clientVisibleArea))
-            score *= 2.0;
-    }
+    // inside viewing area more important than outside it
+    if (tile.intersects(_clientVisibleArea))
+        return TilePrioritizer::Priority::VERYHIGH;
 
-    // previews are less interesting
-    if (tile.isPreview())
-        score /= 2.0;
+    // pre-loading near the viewing area is also more important than far away
+    Util::Rectangle r = tile.toAABBox();
+    // grow in each direction
+    Util::Rectangle enlarged =
+        Util::Rectangle::create(r.getLeft() - r.getWidth(), r.getTop() - r.getHeight(),
+                                r.getRight() + r.getWidth(), r.getBottom() + r.getHeight());
+    if (enlarged.intersects(_clientVisibleArea))
+        return TilePrioritizer::Priority::HIGH;
 
-    // readonly viewers are also less high priority
-    else if (isReadOnly())
-        score /= 2;
-
-    return score;
+    return TilePrioritizer::Priority::NORMAL;
 }
 
 bool ChildSession::outlineState(const StringVector& tokens)
