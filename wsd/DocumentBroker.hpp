@@ -532,6 +532,8 @@ public:
     /// Remove embedded media objects.
     void removeEmbeddedMedia(const std::string& json);
 
+    std::string getEmbeddedMediaPath(const std::string& id);
+
     void onUrpMessage(const char* data, size_t len);
 
     void setMigrationMsgReceived() { _migrateMsgReceived = true; }
