@@ -245,10 +245,6 @@
 	top: 3px;
 }
 
-.main-nav:not(.hasnotebookbar) ~ #toolbar-wrapper .toolbar-row {
-	height: 42px;
-}
-
 /* center the toolbar */
 #tb_presentation-toolbar_item_left {
 	width: 50%;
