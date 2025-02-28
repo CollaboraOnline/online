@@ -167,9 +167,6 @@ protected:
     std::string combineRemoveText(const StringVector& tokens);
 
 private:
-    /// Search the queue for a duplicate tile and remove it (if present).
-    void removeTileDuplicate(const TileDesc &desc);
-
     /// Search the queue for a duplicate callback and remove it (if present).
     ///
     /// This removes also callbacks that are made invalid by the current
