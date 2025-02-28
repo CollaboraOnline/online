@@ -967,7 +967,7 @@ void Document::setDocumentPassword(int passwordType)
 void Document::renderTiles(TileCombined &tileCombined)
 {
     // Find a session matching our view / render settings.
-    const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
+    const auto session = _sessions.findByCanonicalId(tileCombined.getCanonicalViewId());
     if (!session)
     {
         LOG_ERR("Session is not found. Maybe exited after rendering request.");
@@ -987,7 +987,7 @@ void Document::renderTiles(TileCombined &tileCombined)
     }
 
     // if necessary select a suitable rendering view eg. with 'show non-printing chars'
-    if (tileCombined.getNormalizedViewId())
+    if (tileCombined.getCanonicalViewId())
         _loKitDocument->setView(session->getViewId());
 
     const auto blenderFunc = [&](unsigned char* data, int offsetX, int offsetY,
@@ -2297,13 +2297,13 @@ TilePrioritizer::Priority Document::getTilePriority(const TileDesc &desc) const
         const std::shared_ptr<ChildSession> &session = it.second;
 
         // only interested in sessions that match our viewId
-        if (session->getCanonicalViewId() != desc.getNormalizedViewId())
+        if (session->getCanonicalViewId() != desc.getCanonicalViewId())
             continue;
 
         maxPrio = std::max(maxPrio, session->getTilePriority(desc));
     }
     if (maxPrio == TilePrioritizer::Priority::NONE)
-        LOG_WRN("No sessions match this viewId " << desc.getNormalizedViewId());
+        LOG_WRN("No sessions match this viewId " << desc.getCanonicalViewId());
     // LOG_TRC("Priority for tile " << desc.generateID() << " is " << maxPrio);
     return maxPrio;
 }
