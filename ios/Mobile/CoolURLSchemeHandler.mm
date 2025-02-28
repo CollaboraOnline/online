@@ -110,7 +110,7 @@
     [ongoingTasks addObject:urlSchemeTask];
     
     // Get tag from request
-    Poco::URI requestUri([[urlSchemeTask.request.URL absoluteString] UTF8String]);
+    Poco::URI requestUri([[[urlSchemeTask.request.URL absoluteString] stringByRemovingPercentEncoding] UTF8String]);
     Poco::URI::QueryParameters params = requestUri.getQueryParameters();
     std::string tag;
     
@@ -122,10 +122,29 @@
     
     // Get path from tag & open a stream
     std::string mediaPath = [self getDocumentBroker]->getEmbeddedMediaPath(tag);
+    
+    NSMutableDictionary<NSString*, NSString*> * responseHeaders = [[NSMutableDictionary alloc] init];
+        
+    if (mediaPath.empty() || !std::filesystem::exists(mediaPath)) {
+        [responseHeaders setObject:@"0" forKey:@"Content-Length"];
+
+        NSHTTPURLResponse * response = [[NSHTTPURLResponse alloc]
+                                        initWithURL:urlSchemeTask.request.URL
+                                        statusCode:404
+                                        HTTPVersion:nil
+                                        headerFields:responseHeaders
+        ];
+        [urlSchemeTask didReceiveResponse:response];
+
+        [ongoingTasks removeObject:urlSchemeTask];
+        [urlSchemeTask didFinish];
+
+        return;
+    }
+
     NSInteger size = std::filesystem::file_size(mediaPath);
     
     NSDictionary<NSString*, NSString*> * requestHeaders = urlSchemeTask.request.allHTTPHeaderFields;
-    NSMutableDictionary<NSString*, NSString*> * responseHeaders = [[NSMutableDictionary alloc] init];
     
     NSInteger responseStatus = 200;
     NSInteger start = 0;
