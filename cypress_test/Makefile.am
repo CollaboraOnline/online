@@ -795,3 +795,4 @@ check-local:
 	$(error CypressError: Can't find LibreOffice core installation!)
 
 endif
+
