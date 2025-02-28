@@ -160,15 +160,15 @@ private:
     /// The only instance of the Anonymizer per process.
     static inline std::unique_ptr<Anonymizer> _instance;
 
-    /// The prefix counter.
-    std::atomic<unsigned> _prefix;
-
-    /// The salt used to hash.
-    const std::uint64_t _salt;
+    /// The map of plain to anonymized strings.
+    std::unordered_map<std::string, std::string> _map;
 
     /// The mutex protecting the map.
     mutable std::mutex _mutex;
 
-    /// The map of plain to anonymized strings.
-    std::unordered_map<std::string, std::string> _map;
+    /// The salt used to hash.
+    const std::uint64_t _salt;
+
+    /// The prefix counter.
+    std::atomic<unsigned> _prefix;
 };

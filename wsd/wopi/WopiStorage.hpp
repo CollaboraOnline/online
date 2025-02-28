@@ -126,12 +126,16 @@ public:
         /// If set to "mobile" | "tablet" | "desktop", will be hidden on a specified device
         /// (may be joint, delimited by commas eg. "mobile,tablet")
         std::string _hideUserList;
+        /// error code if integration does not use isAdminUser field properly
+        std::string _isAdminUserError;
         /// If we should disable change-tracking visibility by default (meaningful at loading).
         TriState _disableChangeTrackingShow = WOPIFileInfo::TriState::Unset;
         /// If we should disable change-tracking ability by default (meaningful at loading).
         TriState _disableChangeTrackingRecord = WOPIFileInfo::TriState::Unset;
         /// If we should hide change-tracking commands for this user.
         TriState _hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
+        /// If user is considered as admin on the integrator side
+        std::optional<bool> _isAdminUser = std::nullopt;
         /// If user accessing the file has write permission
         bool _userCanWrite = false;
         /// Hide print button from UI
@@ -176,13 +180,8 @@ public:
         bool _supportsRename = false;
         /// If user is allowed to rename the document
         bool _userCanRename = false;
-        /// If user is considered as admin on the integrator side
-        std::optional<bool> _isAdminUser = std::nullopt;
         /// If user is limited to only writing/modifiyng comments
         bool _userCanOnlyComment = false;
-
-        /// error code if integration does not use isAdminUser field properly
-        std::string _isAdminUserError;
     };
 
     WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
@@ -243,8 +242,8 @@ protected:
         const std::string filePathAnonym;
         const std::string uriAnonym;
         const std::string httpResponseReason;
-        const http::StatusCode httpResponseCode;
         const std::size_t size;
+        const http::StatusCode httpResponseCode;
         const bool isSaveAs;
         const bool isRename;
     };

@@ -825,6 +825,20 @@ coverage-report:
 coverage-clean:
 	$(CLEANUP_COVERAGE)
 
+# a) -D/usr/include, don't care about system headers
+# b) -xProtocolHandlerInterface, this class poses a problem for pahole 1.29
+# (https://github.com/acmel/dwarves/issues/38 might be relevant)
+# c) Redirect stderr to /dev/null because there are a lot of dwarf parse
+# warnings: 'template_parameter_pack__load_params: DW_TAG_template_value_parameter'
+# possibly related to https://gcc.gnu.org/wiki/TemplateParmsDwarf
+check-struct-packing:
+	@echo Note: results only reliable with clang++ and CXXFLAGS=-fno-eliminate-unused-debug-types
+	@if pahole -D/usr/include -x ProtocolHandlerInterface -P coolwsd 2> /dev/null | grep .; then \
+		echo you can examine each candidate with pahole -S -R --class_name=CANDIDATE coolwsd; \
+		exit 1; \
+	fi
+	@echo coolwsd struct packing is acceptably optimal
+
 czech: check
 	@echo "This should do something much cooler"
 

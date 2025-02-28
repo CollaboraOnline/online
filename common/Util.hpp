@@ -1167,29 +1167,29 @@ int main(int argc, char**argv)
         {
         }
 
-        RegexListMatcher(const bool allowByDefault) :
-            _allowByDefault(allowByDefault)
+        RegexListMatcher(const bool allowByDefault)
+            : _allowByDefault(allowByDefault)
         {
         }
 
-        RegexListMatcher(std::initializer_list<std::string> allowed) :
-            _allowByDefault(false),
-            _allowed(allowed)
+        RegexListMatcher(std::initializer_list<std::string> allowed)
+            : _allowed(allowed)
+            , _allowByDefault(false)
         {
         }
 
         RegexListMatcher(std::initializer_list<std::string> allowed,
-                         std::initializer_list<std::string> denied) :
-            _allowByDefault(false),
-            _allowed(allowed),
-            _denied(denied)
+                         std::initializer_list<std::string> denied)
+            : _allowed(allowed)
+            , _denied(denied)
+            , _allowByDefault(false)
         {
         }
 
         RegexListMatcher(const bool allowByDefault,
-                         std::initializer_list<std::string> denied) :
-            _allowByDefault(allowByDefault),
-            _denied(denied)
+                         std::initializer_list<std::string> denied)
+            : _denied(denied)
+            , _allowByDefault(allowByDefault)
         {
         }
 
@@ -1226,9 +1226,9 @@ int main(int argc, char**argv)
         }
 
     private:
-        const bool _allowByDefault;
         std::set<std::string> _allowed;
         std::set<std::string> _denied;
+        const bool _allowByDefault;
     };
 
     /// Simple backtrace capture
@@ -1252,9 +1252,9 @@ int main(int argc, char**argv)
         };
 
     private:
-        int skipFrames;
         /// Stack frames {address, symbol}
         std::vector<std::pair<void*, Symbol>> _frames;
+        int skipFrames;
 
         static bool separateRawSymbol(const std::string& raw, Symbol& s);
 

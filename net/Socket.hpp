@@ -81,10 +81,10 @@ class SocketDisposition final
 public:
     typedef std::function<void(const std::shared_ptr<Socket> &)> MoveFunction;
 
-    SocketDisposition(const std::shared_ptr<Socket> &socket) :
-        _disposition(Type::CONTINUE),
-        _toPoll(nullptr),
-        _socket(socket)
+    SocketDisposition(const std::shared_ptr<Socket> &socket)
+        : _socket(socket)
+        , _toPoll(nullptr)
+        , _disposition(Type::CONTINUE)
     {}
     ~SocketDisposition()
     {
@@ -124,10 +124,10 @@ public:
     void execute();
 
 private:
-    Type _disposition;
     MoveFunction _socketMove;
-    SocketPoll *_toPoll;
     std::shared_ptr<Socket> _socket;
+    SocketPoll *_toPoll;
+    Type _disposition;
 };
 
 /// A non-blocking, streaming socket.
@@ -144,14 +144,14 @@ public:
     // NB. see other Socket::Socket by init below.
     Socket(Type type,
            std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now())
-        : _type(type)
-        , _clientPort(0)
-        , _fd(createSocket(type))
-        , _closed(_fd < 0)
-        , _creationTime(creationTime)
+        : _creationTime(creationTime)
         , _lastSeenTime(_creationTime)
         , _bytesSent(0)
         , _bytesRcvd(0)
+        , _clientPort(0)
+        , _fd(createSocket(type))
+        , _type(type)
+        , _closed(_fd < 0)
     {
         init();
     }
@@ -431,14 +431,14 @@ protected:
     /// Used by accept() only.
     Socket(const int fd, Type type,
            std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now())
-        : _type(type)
-        , _clientPort(0)
-        , _fd(fd)
-        , _closed(_fd < 0)
-        , _creationTime(creationTime)
+        : _creationTime(creationTime)
         , _lastSeenTime(_creationTime)
         , _bytesSent(0)
         , _bytesRcvd(0)
+        , _clientPort(0)
+        , _fd(fd)
+        , _type(type)
+        , _closed(_fd < 0)
     {
         init();
     }
@@ -489,25 +489,26 @@ private:
     }
 
     std::string _clientAddress;
-    const Type _type;
-    unsigned int _clientPort;
-    int _fd;
-    /// True if this socket is closed.
-    bool _closed;
 
     const std::chrono::steady_clock::time_point _creationTime;
     std::chrono::steady_clock::time_point _lastSeenTime;
     uint64_t _bytesSent;
     uint64_t _bytesRcvd;
 
+    /// We check the owner even in the release builds, needs to be always correct.
+    std::thread::id _owner;
+
+    unsigned int _clientPort;
+    int _fd;
+    int _sendBufferSize;
+
+    const Type _type;
+
+    /// True if this socket is closed.
+    bool _closed;
     // If _ignoreInput is true no more input from this socket will be processed.
     bool _ignoreInput;
     bool _noShutdown;
-
-    int _sendBufferSize;
-
-    /// We check the owner even in the release builds, needs to be always correct.
-    std::thread::id _owner;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Socket &s) { return s.stream(os); }
@@ -519,8 +520,6 @@ class MessageHandlerInterface;
 class ProtocolHandlerInterface :
     public std::enable_shared_from_this<ProtocolHandlerInterface>
 {
-    int _fdSocket; ///< The socket file-descriptor.
-
 protected:
     /// We own a message handler, after decoding the socket data we pass it on as messages.
     std::shared_ptr<MessageHandlerInterface> _msgHandler;
@@ -616,6 +615,9 @@ public:
     {
         os << indent;
     }
+
+private:
+    int _fdSocket; ///< The socket file-descriptor.
 };
 
 // Forward declare WebSocketHandler, which is inherited from ProtocolHandlerInterface.
@@ -1004,34 +1006,37 @@ private:
     /// Used to set the thread name and mark the thread as stopped when done.
     void pollingThreadEntry();
 
+    /// Protects _newSockets and _newCallbacks
+    std::mutex _mutex;
+
     /// Debug name used for logging.
     const std::string _name;
 
-    /// main-loop wakeup pipe
-    int _wakeup[2];
     /// The sockets we're controlling
     std::vector<std::shared_ptr<Socket>> _pollSockets;
-    /// We start handling the poll results of the above sockets at a different index each time, to
-    /// not arbitrarily prioritize some
-    size_t _pollStartIndex;
-    /// Protects _newSockets and _newCallbacks
-    std::mutex _mutex;
     std::vector<std::shared_ptr<Socket>> _newSockets;
     std::vector<CallbackFn> _newCallbacks;
     /// The fds to poll.
     std::vector<pollfd> _pollFds;
 
-    /// Flag the thread to stop.
-    std::atomic<bool> _stop;
+    /// main-loop wakeup pipe
+    int _wakeup[2];
+    /// We start handling the poll results of the above sockets at a different index each time, to
+    /// not arbitrarily prioritize some
+    size_t _pollStartIndex;
     /// The polling thread.
     std::thread _thread;
-    std::atomic<int64_t> _threadStarted;
-    std::atomic<bool> _threadFinished;
-    std::atomic<bool> _runOnClientThread;
     std::thread::id _owner;
+    /// Flag the thread to stop.
+    std::atomic<int64_t> _threadStarted;
+    std::atomic<uint64_t> _watchdogTime;
+
     /// Time-stamp for profiling
     int _ownerThreadId;
-    std::atomic<uint64_t> _watchdogTime;
+
+    std::atomic<bool> _stop;
+    std::atomic<bool> _threadFinished;
+    std::atomic<bool> _runOnClientThread;
 };
 
 /// A SocketPoll that will stop polling and
@@ -1062,16 +1067,16 @@ public:
     /// Create a StreamSocket from native FD.
     StreamSocket(std::string host, const int fd, Type type, bool isClient,
                  HostType hostType, ReadType readType = ReadType::NormalRead,
-                 std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now() ) :
-        Socket(fd, type, creationTime),
-        _hostname(std::move(host)),
-        _wsState(WSState::HTTP),
-        _isClient(isClient),
-        _isLocalHost(hostType == LocalHost),
-        _sentHTTPContinue(false),
-        _shutdownSignalled(false),
-        _readType(readType),
-        _inputProcessingEnabled(true)
+                 std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now() )
+        : Socket(fd, type, creationTime)
+        , _hostname(std::move(host))
+        , _wsState(WSState::HTTP)
+        , _readType(readType)
+        , _shutdownSignalled(false)
+        , _inputProcessingEnabled(true)
+        , _isClient(isClient)
+        , _isLocalHost(hostType == LocalHost)
+        , _sentHTTPContinue(false)
     {
         LOG_TRC("StreamSocket ctor");
         if (isExternalCountedConnection())
@@ -1778,14 +1783,23 @@ private:
     /// The hostname (or IP) of the peer we are connecting to.
     const std::string _hostname;
 
-    /// Client handling the actual data.
-    std::shared_ptr<ProtocolHandlerInterface> _socketHandler;
-
     Buffer _inBuffer;
     Buffer _outBuffer;
 
+    std::vector<int> _incomingFDs;
+
+    /// Client handling the actual data.
+    std::shared_ptr<ProtocolHandlerInterface> _socketHandler;
+
     STATE_ENUM(WSState, HTTP, WS);
     WSState _wsState;
+
+    ReadType _readType;
+
+    /// True when shutdown was requested via shutdown().
+    /// It's accessed from different threads.
+    std::atomic_bool _shutdownSignalled;
+    std::atomic_bool _inputProcessingEnabled;
 
     /// True if owner is in client role, otherwise false (server)
     bool _isClient:1;
@@ -1795,13 +1809,6 @@ private:
 
     /// True if we've received a Continue in response to an Expect: 100-continue
     bool _sentHTTPContinue:1;
-
-    /// True when shutdown was requested via shutdown().
-    /// It's accessed from different threads.
-    std::atomic_bool _shutdownSignalled;
-    std::vector<int> _incomingFDs;
-    ReadType _readType;
-    std::atomic_bool _inputProcessingEnabled;
 
     bool isExternalCountedConnection() const { return !_isClient && isIPType(); }
     static std::atomic<size_t> ExternalConnectionCount; // accepted external TCP IPv4/IPv6 socket count

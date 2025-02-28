@@ -61,13 +61,13 @@ private:
 struct DocCleanupSettings
 {
     DocCleanupSettings()
-        : _enable(false)
-        , _cleanupInterval(0)
+        : _cleanupInterval(0)
         , _badBehaviorPeriod(0)
         , _idleTime(0)
         , _limitDirtyMem(0)
         , _limitCpu(0)
         , _lostKitGracePeriod(0)
+        , _enable(false)
     {
     }
 
@@ -87,13 +87,13 @@ struct DocCleanupSettings
     size_t getLostKitGracePeriod() { return _lostKitGracePeriod; }
 
 private:
-    bool _enable;
     size_t _cleanupInterval;
     size_t _badBehaviorPeriod;
     size_t _idleTime;
     size_t _limitDirtyMem;
     size_t _limitCpu;
     size_t _lostKitGracePeriod;
+    bool _enable;
 };
 
 struct DocProcSettings
@@ -118,12 +118,12 @@ struct DocProcSettings
     DocCleanupSettings& getCleanupSettings() { return _docCleanupSettings; }
 
 private:
+    DocCleanupSettings _docCleanupSettings;
+
     size_t _limitVirtMemMb;
     size_t _limitStackMemKb;
     size_t _limitFileSizeMb;
     size_t _limitNumberOpenFiles;
-
-    DocCleanupSettings _docCleanupSettings;
 };
 
 /// Containing basic information about document
@@ -162,14 +162,11 @@ class Document
 public:
     Document(const std::string& docKey, pid_t pid,
              const std::string& filename, const Poco::URI& wopiSrc)
-        : _docKey(docKey)
-        , _pid(pid)
-        , _activeViews(0)
+        : _wopiSrc(wopiSrc)
+        , _docKey(docKey)
         , _filename(filename)
-        , _wopiSrc(wopiSrc)
         , _memoryDirty(0)
         , _lastJiffy(0)
-        , _lastCpuPercentage(0)
         , _start(std::time(nullptr))
         , _lastActivity(_start)
         , _end(0)
@@ -179,11 +176,14 @@ public:
         , _wopiUploadDuration(0)
         , _procSMaps(nullptr)
         , _lastTimeSMapsRead(0)
-        , _isModified(false)
-        , _hasMemDirtyChanged(true)
         , _badBehaviorDetectionTime(0)
         , _abortTime(0)
-        , _isUploaded(0)
+        , _pid(pid)
+        , _activeViews(0)
+        , _lastCpuPercentage(0)
+        , _isModified(false)
+        , _hasMemDirtyChanged(true)
+        , _isUploaded(false)
     {
     }
 
@@ -260,27 +260,21 @@ public:
     std::string to_string() const;
 
 private:
-    const std::string _docKey;
-    const pid_t _pid;
+    Poco::URI _wopiSrc;
     /// SessionId mapping to View object
     std::map<std::string, View> _views;
-    /// Total number of active views
-    unsigned _activeViews;
+    std::map<std::time_t,std::string> _snapshots;
+    const std::string _docKey;
     /// Hosted filename
     std::string _filename;
-
-    Poco::URI _wopiSrc;
     /// The dirty (ie. un-shared) memory of the document's Kit process.
     size_t _memoryDirty;
     /// Last noted Jiffy count
     size_t _lastJiffy;
     std::chrono::steady_clock::time_point _lastJiffyTime;
-    unsigned _lastCpuPercentage;
-
     std::time_t _start;
     std::time_t _lastActivity;
     std::time_t _end;
-    std::map<std::time_t,std::string> _snapshots;
 
     /// Total bytes sent and recv'd by this document.
     uint64_t _sentBytes, _recvBytes;
@@ -292,11 +286,17 @@ private:
     FILE* _procSMaps;
     std::time_t _lastTimeSMapsRead;
 
-    bool _isModified;
-    bool _hasMemDirtyChanged;
-
     std::time_t _badBehaviorDetectionTime;
     std::time_t _abortTime;
+
+    const pid_t _pid;
+    /// Total number of active views
+    unsigned _activeViews;
+
+    unsigned _lastCpuPercentage;
+
+    bool _isModified;
+    bool _hasMemDirtyChanged;
 
     bool _isUploaded;
 };
@@ -465,25 +465,18 @@ private:
     void CalcDocAggregateStats(DocumentAggregateStats& stats);
 
 private:
+    DocProcSettings _defDocProcSettings;
+
     std::map<int, Subscriber> _subscribers;
     std::map<std::string, std::unique_ptr<Document>> _documents;
     std::map<std::string, std::unique_ptr<Document>> _expiredDocuments;
 
     /// The last N total memory Dirty size.
     std::list<unsigned> _memStats;
-    unsigned _memStatsSize = 100;
-
     std::list<unsigned> _cpuStats;
-    unsigned _cpuStatsSize = 100;
-
     std::list<unsigned> _sentStats;
-    unsigned _sentStatsSize = 200;
-
     std::list<unsigned> _recvStats;
-    unsigned _recvStatsSize = 200;
-
     std::list<size_t> _connStats;
-    unsigned _connStatsSize = 200;
 
     uint64_t _sentBytesTotal = 0;
     uint64_t _recvBytesTotal = 0;
@@ -493,18 +486,22 @@ private:
     uint64_t _killedCount = 0;
     uint64_t _oomKilledCount = 0;
 
-    pid_t _forKitPid = 0;
-
     /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;
-
-    DocProcSettings _defDocProcSettings;
 
     std::string _currentMigDoc = std::string();
 
     std::string _currentMigToken = std::string();
 
     std::string _targetMigServerId = std::string();
+
+    unsigned _memStatsSize = 100;
+    unsigned _cpuStatsSize = 100;
+    unsigned _sentStatsSize = 200;
+    unsigned _recvStatsSize = 200;
+    unsigned _connStatsSize = 200;
+
+    pid_t _forKitPid = 0;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

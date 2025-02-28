@@ -1019,8 +1019,8 @@ public:
     bool watch(std::string configFile);
 
 private:
-    bool m_stopOnConfigChange;
     int m_watchedCount = 0;
+    bool m_stopOnConfigChange;
 };
 
 bool InotifySocket::watch(const std::string configFile)

@@ -29,13 +29,13 @@ class ServerSocket : public Socket
 public:
     ServerSocket(Socket::Type type,
                  std::chrono::steady_clock::time_point creationTime,
-                 SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory) :
-        Socket(type, creationTime),
+                 SocketPoll& clientPoller, std::shared_ptr<SocketFactory> sockFactory)
+        : Socket(type, creationTime)
+        , _sockFactory(std::move(sockFactory))
+        , _clientPoller(clientPoller)
 #if !MOBILEAPP
-        _type(type),
+        , _type(type)
 #endif
-        _clientPoller(clientPoller),
-        _sockFactory(std::move(sockFactory))
     {
     }
 
@@ -119,11 +119,11 @@ protected:
     }
 
 private:
+    std::shared_ptr<SocketFactory> _sockFactory;
+    SocketPoll& _clientPoller;
 #if !MOBILEAPP
     Socket::Type _type;
 #endif
-    SocketPoll& _clientPoller;
-    std::shared_ptr<SocketFactory> _sockFactory;
 };
 
 #if !MOBILEAPP

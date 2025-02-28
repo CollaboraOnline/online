@@ -146,10 +146,10 @@ struct TileData
     bool isValid() const { return _valid; }
     void invalidate() { _valid = false; }
 
-    bool _valid; // not true - waiting for a new tile if in view.
     std::vector<TileWireId> _wids;
     std::vector<size_t> _offsets; // offset of the start of data
     BlobData _deltas; // first item is a key-frame, followed by deltas at _offsets
+    bool _valid; // not true - waiting for a new tile if in view.
 
     size_t size() const
     {
@@ -320,17 +320,8 @@ private:
     void saveDataToStreamCache(StreamType type, const std::string& fileName, const char* data,
                                size_t size);
 
-    const std::string _docURL;
-
-    std::thread::id _owner;
-
-    const bool _dontCache;
-
-    /// Approximate size of tilecache in bytes
-    size_t _cacheSize;
-
-    /// Maximum (high watermark) size of the tilecache in bytes
-    size_t _maxCacheSize;
+    // old-style file-name to data grab-bag.
+    std::map<std::string, Blob> _streamCache[static_cast<int>(StreamType::Last)];
 
     // FIXME: should we have a tile-desc to WID map instead and a simpler lookup ?
     std::unordered_map<TileDesc, Tile,
@@ -341,8 +332,17 @@ private:
                        TileDescCacheHasher,
                        TileDescCacheCompareEq> _tilesBeingRendered;
 
-    // old-style file-name to data grab-bag.
-    std::map<std::string, Blob> _streamCache[static_cast<int>(StreamType::Last)];
+    const std::string _docURL;
+
+    std::thread::id _owner;
+
+    /// Approximate size of tilecache in bytes
+    size_t _cacheSize;
+
+    /// Maximum (high watermark) size of the tilecache in bytes
+    size_t _maxCacheSize;
+
+    const bool _dontCache;
 };
 
 /// Tracks view-port area tiles to track which we last

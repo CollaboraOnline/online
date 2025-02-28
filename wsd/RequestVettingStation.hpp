@@ -45,8 +45,8 @@ public:
     /// Create an instance with a SocketPoll and a RequestDetails instance.
     RequestVettingStation(const std::shared_ptr<TerminatingPoll>& poll,
                           const RequestDetails& requestDetails)
-        : _poll(poll)
-        , _requestDetails(requestDetails)
+        : _requestDetails(requestDetails)
+        , _poll(poll)
         , _mobileAppDocId(0)
     {
     }
@@ -100,12 +100,12 @@ private:
     std::shared_ptr<PresetsInstallTask> _asyncInstallTask;
 #endif // !MOBILEAPP
 
-    Util::Stopwatch _birthday;
-    std::shared_ptr<TerminatingPoll> _poll;
-    std::string _id;
-    std::shared_ptr<WebSocketHandler> _ws;
     RequestDetails _requestDetails;
+    std::string _id;
+    std::shared_ptr<TerminatingPoll> _poll;
+    std::shared_ptr<WebSocketHandler> _ws;
     std::shared_ptr<StreamSocket> _socket;
-    unsigned _mobileAppDocId;
     std::shared_ptr<DocumentBroker> _docBroker;
+    Util::Stopwatch _birthday;
+    unsigned _mobileAppDocId;
 };

@@ -520,15 +520,15 @@ Admin::Admin()
     : SocketPoll("admin")
     , _totalSysMemKb(Util::getTotalSystemMemoryKb())
     , _totalAvailMemKb(_totalSysMemKb)
-    , _forKitPid(-1)
     , _lastTotalMemory(0)
     , _lastJiffies(0)
+    , _cleanupIntervalMs(DefStatsIntervalMs * 10)
     , _lastSentCount(0)
     , _lastRecvCount(0)
+    , _forKitPid(-1)
     , _cpuStatsTaskIntervalMs(DefStatsIntervalMs)
     , _memStatsTaskIntervalMs(DefStatsIntervalMs * 2)
     , _netStatsTaskIntervalMs(DefStatsIntervalMs * 2)
-    , _cleanupIntervalMs(DefStatsIntervalMs * 10)
 {
     LOG_INF("Admin ctor");
 
@@ -1131,10 +1131,10 @@ void Admin::dumpState(std::ostream& os) const
 }
 
 
-MonitorSocketHandler::MonitorSocketHandler(Admin *admin, const std::string &uri) :
-    AdminSocketHandler(admin),
-    _connecting(true),
-    _uri(uri)
+MonitorSocketHandler::MonitorSocketHandler(Admin *admin, const std::string &uri)
+    : AdminSocketHandler(admin)
+    , _uri(uri)
+    , _connecting(true)
 {
 }
 

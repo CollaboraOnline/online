@@ -74,31 +74,31 @@ ClientSession::ClientSession(
     const std::shared_ptr<DocumentBroker>& docBroker,
     const Poco::URI& uriPublic,
     const bool readOnly,
-    const RequestDetails &requestDetails) :
-    Session(ws, "ToClient-" + id, id, readOnly),
-    _docBroker(docBroker),
-    _uriPublic(uriPublic),
-    _auth(Authorization::create(uriPublic)),
-    _isDocumentOwner(false),
-    _state(SessionState::DETACHED),
-    _lastStateTime(std::chrono::steady_clock::now()),
-    _keyEvents(1),
-    _clientVisibleArea(0, 0, 0, 0),
-    _splitX(0),
-    _splitY(0),
-    _clientSelectedPart(-1),
-    _clientSelectedMode(0),
-    _tileWidthPixel(0),
-    _tileHeightPixel(0),
-    _tileWidthTwips(0),
-    _tileHeightTwips(0),
-    _kitViewId(-1),
-    _serverURL(requestDetails),
-    _isTextDocument(false),
-    _thumbnailSession(false),
-    _canonicalViewId(0),
-    _sentAudit(false),
-    _sentBrowserSetting(false)
+    const RequestDetails &requestDetails)
+        : Session(ws, "ToClient-" + id, id, readOnly)
+        , _uriPublic(uriPublic)
+        , _serverURL(requestDetails)
+        , _auth(Authorization::create(uriPublic))
+        , _docBroker(docBroker)
+        , _lastStateTime(std::chrono::steady_clock::now())
+        , _clientVisibleArea(0, 0, 0, 0)
+        , _keyEvents(1)
+        , _splitX(0)
+        , _splitY(0)
+        , _clientSelectedPart(-1)
+        , _clientSelectedMode(0)
+        , _tileWidthPixel(0)
+        , _tileHeightPixel(0)
+        , _tileWidthTwips(0)
+        , _tileHeightTwips(0)
+        , _kitViewId(-1)
+        , _canonicalViewId(0)
+        , _state(SessionState::DETACHED)
+        , _isDocumentOwner(false)
+        , _isTextDocument(false)
+        , _thumbnailSession(false)
+        , _sentAudit(false)
+        , _sentBrowserSetting(false)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()

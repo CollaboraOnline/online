@@ -171,6 +171,8 @@ public:
         }
 
     private:
+        /// The client-provided saving extended data to send to the WOPI host.
+        std::string _extendedData;
         /// Whether or not we want to force uploading.
         bool _forced;
         /// The document has been modified by the user.
@@ -179,8 +181,6 @@ public:
         bool _isAutosave;
         /// Saving on exit (when the document is cleaned up from memory)
         bool _isExitSave;
-        /// The client-provided saving extended data to send to the WOPI host.
-        std::string _extendedData;
     };
 
     /// Represents the upload request result, with a Result code
@@ -204,8 +204,8 @@ public:
         }
 
         UploadResult(Result result, std::string reason)
-            : _result(result)
-            , _reason(std::move(reason))
+            : _reason(std::move(reason))
+            , _result(result)
         {
         }
 
@@ -228,10 +228,10 @@ public:
         const std::string& getReason() const { return _reason; }
 
     private:
-        Result _result;
         std::string _saveAsName;
         std::string _saveAsUrl;
         std::string _reason;
+        Result _result;
     };
 
     /// The state of an asynchronous request.
@@ -247,8 +247,8 @@ public:
         );
 
         AsyncRequest(State state, TResult result)
-            : _state(state)
-            , _result(std::move(result))
+            : _result(std::move(result))
+            , _state(state)
         {
         }
 
@@ -259,8 +259,8 @@ public:
         const TResult& result() const { return _result; }
 
     private:
-        State _state;
         TResult _result;
+        State _state;
     };
 
     /// The state of an asynchronous Upload request.
@@ -292,8 +292,8 @@ public:
 
         /// Construct a LockUpdateResult with a failure reason.
         LockUpdateResult(Status status, LockState requestedLockState, std::string reason)
-            : _status(status)
-            , _reason(std::move(reason))
+            : _reason(std::move(reason))
+            , _status(status)
             , _requestedLockState(requestedLockState)
         {
         }
@@ -309,8 +309,8 @@ public:
         LockState requestedLockState() const { return _requestedLockState; }
 
     private:
-        Status _status;
         std::string _reason;
+        Status _status;
         LockState _requestedLockState;
     };
 
@@ -326,10 +326,10 @@ public:
     /// jailPath the path within the jail that the child uses for documents.
     StorageBase(const Poco::URI& uri, const std::string& localStorePath,
                 const std::string& jailPath)
-        : _localStorePath(localStorePath)
-        , _jailPath(jailPath)
-        , _fileInfo(/*size=*/0, /*filename=*/std::string(), /*ownerId=*/"cool",
+        : _fileInfo(/*size=*/0, /*filename=*/std::string(), /*ownerId=*/"cool",
                     /*modifiedTime=*/std::string())
+        , _localStorePath(localStorePath)
+        , _jailPath(jailPath)
         , _isDownloaded(false)
     {
         setUri(uri);
@@ -486,11 +486,11 @@ protected:
 
 private:
     Poco::URI _uri;
+    FileInfo _fileInfo;
     const std::string _localStorePath;
     const std::string _jailPath;
     std::string _jailedFilePath;
     std::string _jailedFilePathAnonym;
-    FileInfo _fileInfo;
     bool _isDownloaded;
 
     static bool FilesystemEnabled;
@@ -579,20 +579,21 @@ private:
 /// and with what token.
 class LockContext final
 {
-    /// Do we have support for locking for a storage.
-    bool _supportsLocks;
-    /// Do we own the (leased) lock currently
-    StorageBase::LockState _lockState;
     /// Name if we need it to use consistently for locking
     std::string _lockToken;
     /// Time of last successful lock (re-)acquisition
     std::chrono::steady_clock::time_point _lastLockTime;
+    const std::chrono::seconds _refreshSeconds;
+    /// Do we have support for locking for a storage.
+    bool _supportsLocks;
+    /// Do we own the (leased) lock currently
+    StorageBase::LockState _lockState;
 
 public:
     LockContext()
-        : _supportsLocks(false)
+        : _refreshSeconds(ConfigUtil::getConfigValue<int>("storage.wopi.locking.refresh", 900))
+        , _supportsLocks(false)
         , _lockState(StorageBase::LockState::UNLOCK)
-        , _refreshSeconds(ConfigUtil::getConfigValue<int>("storage.wopi.locking.refresh", 900))
     {
     }
 
@@ -623,9 +624,6 @@ public:
     bool needsRefresh(const std::chrono::steady_clock::time_point& now) const;
 
     void dumpState(std::ostream& os) const;
-
-private:
-    const std::chrono::seconds _refreshSeconds;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

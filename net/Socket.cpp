@@ -294,15 +294,15 @@ namespace {
 
 
 SocketPoll::SocketPoll(std::string threadName)
-    : _name(std::move(threadName)),
-      _pollStartIndex(0),
-      _stop(false),
-      _threadStarted(0),
-      _threadFinished(false),
-      _runOnClientThread(false),
-      _owner(std::this_thread::get_id()),
-      _ownerThreadId(Util::getThreadId()),
-      _watchdogTime(Watchdog::getDisableStamp())
+    : _name(std::move(threadName))
+    , _pollStartIndex(0)
+    , _owner(std::this_thread::get_id())
+    , _threadStarted(0)
+    , _watchdogTime(Watchdog::getDisableStamp())
+    , _ownerThreadId(Util::getThreadId())
+    , _stop(false)
+    , _threadFinished(false)
+    , _runOnClientThread(false)
 {
     ProfileZone profileZone("SocketPoll::SocketPoll");
 

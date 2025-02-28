@@ -40,14 +40,14 @@ std::string getSupportPublicKey()
 
 struct SupportKeyImpl
 {
-    bool _invalid;
     std::string _key;
     std::string _data;
     std::string _signature;
     DateTime _expiry;
+    bool _invalid;
     // Key format: iso-expiry-date:field1:field2:field:...:<signature>
     SupportKeyImpl(const std::string &key)
-        : _invalid(true), _key(key)
+        : _key(key), _invalid(true)
     {
         LOG_INF("Support key '" << key << "' provided");
         std::size_t firstColon = key.find(':');

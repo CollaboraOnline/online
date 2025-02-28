@@ -101,17 +101,17 @@ public:
                     const bool recordOutgoing,
                     const bool compress,
                     const bool takeSnapshot,
-                    const std::vector<std::string>& filters) :
-        _epochStart(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now()
-                                                            .time_since_epoch()).count()),
-        _recordOutgoing(recordOutgoing),
-        _compress(compress),
-        _takeSnapshot(takeSnapshot),
-        _path(Poco::Path(path).parent().toString()),
-        _lastTime(_epochStart),
-        _filter(true),
-        _stream(processPath(path), compress ? std::ios::binary : std::ios::out),
-        _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP)
+                    const std::vector<std::string>& filters)
+        : _stream(processPath(path), compress ? std::ios::binary : std::ios::out)
+        , _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP)
+        , _filter(true)
+        , _path(Poco::Path(path).parent().toString())
+        , _epochStart(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now()
+                                                            .time_since_epoch()).count())
+        , _lastTime(_epochStart)
+        , _recordOutgoing(recordOutgoing)
+        , _compress(compress)
+        , _takeSnapshot(takeSnapshot)
     {
         for (const auto& f : filters)
         {
@@ -339,17 +339,17 @@ private:
     };
 
 private:
+    std::ofstream _stream;
+    Poco::DeflatingOutputStream _deflater;
+    Util::RegexListMatcher _filter;
+    std::map<std::string, SnapshotData> _urlToSnapshot;
+    std::mutex _mutex;
+    const std::string _path;
     const int64_t _epochStart;
+    int64_t _lastTime;;
     const bool _recordOutgoing;
     const bool _compress;
     const bool _takeSnapshot;
-    const std::string _path;
-    int64_t _lastTime;;
-    Util::RegexListMatcher _filter;
-    std::ofstream _stream;
-    Poco::DeflatingOutputStream _deflater;
-    std::mutex _mutex;
-    std::map<std::string, SnapshotData> _urlToSnapshot;
 };
 
 /// Trace-file parser class.
@@ -357,17 +357,9 @@ private:
 class TraceFileReader
 {
 public:
-    TraceFileReader(const std::string& path) :
-        _compressed(path.size() > 2 && path.substr(path.size() - 2) == "gz"),
-        _epochStart(0),
-        _epochEnd(0),
-        _stream(path, _compressed ? std::ios::binary : std::ios::in),
-        _inflater(_stream, Poco::InflatingStreamBuf::STREAM_GZIP),
-        _index(0),
-        _indexIn(-1),
-        _indexOut(-1)
+    TraceFileReader(const std::string& path)
+        : TraceFileReader(path, (path.size() > 2 && path.substr(path.size() - 2) == "gz"))
     {
-        readFile();
     }
 
     ~TraceFileReader()
@@ -415,6 +407,19 @@ public:
     }
 
 private:
+    TraceFileReader(const std::string& path, bool compressed) :
+        _stream(path, compressed ? std::ios::binary : std::ios::in),
+        _inflater(_stream, Poco::InflatingStreamBuf::STREAM_GZIP),
+        _epochStart(0),
+        _epochEnd(0),
+        _index(0),
+        _indexIn(-1),
+        _indexOut(-1),
+        _compressed(compressed)
+    {
+        readFile();
+    }
+
     void readFile()
     {
         _records.clear();
@@ -519,15 +524,15 @@ private:
     }
 
 private:
-    const bool _compressed;
-    int64_t _epochStart;
-    int64_t _epochEnd;
     std::ifstream _stream;
     Poco::InflatingInputStream _inflater;
     std::vector<TraceFileRecord> _records;
+    int64_t _epochStart;
+    int64_t _epochEnd;
     unsigned _index;
     unsigned _indexIn;
     unsigned _indexOut;
+    const bool _compressed;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
