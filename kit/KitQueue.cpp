@@ -386,27 +386,6 @@ bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &pay
     return false;
 }
 
-// FIXME: it's not that clear what good this does for us ...
-// we process all previews in the same batch of rendering
-void KitQueue::deprioritizePreviews()
-{
-    for (auto& queue : _tileQueues)
-    {
-        std::vector<TileDesc>& tileQueue = queue.second;
-        for (size_t i = 0; i < tileQueue.size(); ++i)
-        {
-            const TileDesc front = tileQueue.front();
-
-            // stop at the first non-tile or non-'id' (preview) message
-            if (!front.isPreview())
-                break;
-
-            tileQueue.erase(tileQueue.begin());
-            tileQueue.push_back(front);
-        }
-    }
-}
-
 KitQueue::Payload KitQueue::pop()
 {
     if (_queue.empty())
