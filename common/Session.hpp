@@ -33,30 +33,30 @@ class Session;
 template<class T>
 class SessionMap : public std::map<std::string, std::shared_ptr<T> >
 {
-    std::map<std::string, int> _canonicalIds;
+    std::map<std::string, CanonicalViewId> _canonicalIds;
 public:
     SessionMap() {
         static_assert(std::is_base_of<Session, T>::value, "sessions must have base of Session");
     }
 
     /// Generate a unique key for this set of view properties, only used by WSD
-    int createCanonicalId(const std::string &viewProps)
+    CanonicalViewId createCanonicalId(const std::string &viewProps)
     {
         if (viewProps.empty())
-            return 0;
+            return CanonicalViewId::None;
         for (const auto& it : _canonicalIds)
         {
             if (it.first == viewProps)
                 return it.second;
         }
 
-        const std::size_t id = _canonicalIds.size() + 1000;
+        const CanonicalViewId id = static_cast<CanonicalViewId>(_canonicalIds.size() + 1000);
         _canonicalIds[viewProps] = id;
         return id;
     }
 
     /// Lookup one session in the map that matches this canonical view id, only used by Kit
-    std::shared_ptr<T> findByCanonicalId(int id) const
+    std::shared_ptr<T> findByCanonicalId(CanonicalViewId id) const
     {
         for (const auto &it : *this) {
             if (it.second->getCanonicalViewId() == id)

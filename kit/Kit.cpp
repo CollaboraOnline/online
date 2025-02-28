@@ -967,7 +967,7 @@ void Document::setDocumentPassword(int passwordType)
 void Document::renderTiles(TileCombined &tileCombined)
 {
     // Find a session matching our view / render settings.
-    const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
+    const auto session = _sessions.findByCanonicalId(tileCombined.getCanonicalViewId());
     if (!session)
     {
         LOG_ERR("Session is not found. Maybe exited after rendering request.");
@@ -987,7 +987,7 @@ void Document::renderTiles(TileCombined &tileCombined)
     }
 
     // if necessary select a suitable rendering view eg. with 'show non-printing chars'
-    if (tileCombined.getNormalizedViewId())
+    if (tileCombined.getCanonicalViewId() != CanonicalViewId::None)
         _loKitDocument->setView(session->getViewId());
 
     const auto blenderFunc = [&](unsigned char* data, int offsetX, int offsetY,
@@ -1749,7 +1749,7 @@ void Document::invalidateCanonicalId(const std::string& sessionId)
         return;
     }
     std::shared_ptr<ChildSession> session = it->second;
-    int newCanonicalId = _sessions.createCanonicalId(getViewProps(session));
+    CanonicalViewId newCanonicalId = _sessions.createCanonicalId(getViewProps(session));
     if (newCanonicalId == session->getCanonicalViewId())
         return;
     session->setCanonicalViewId(newCanonicalId);
@@ -1764,7 +1764,7 @@ void Document::invalidateCanonicalId(const std::string& sessionId)
         stateName = "Empty";
     }
     std::string message = "canonicalidchange: viewid=" + std::to_string(session->getViewId()) +
-        " canonicalid=" + std::to_string(newCanonicalId) +
+        " canonicalid=" + std::to_string(to_underlying(newCanonicalId)) +
         " viewrenderedstate=" + stateName;
     session->sendTextFrame(message);
 }
@@ -2287,9 +2287,9 @@ bool Document::forwardToChild(const std::string& prefix, const std::vector<char>
     return std::string();
 }
 
-float Document::getTilePriority(const std::chrono::steady_clock::time_point &now, const TileDesc &desc) const
+TilePrioritizer::Priority Document::getTilePriority(const TileDesc &desc) const
 {
-    float maxPrio = std::numeric_limits<float>::min();
+    TilePrioritizer::Priority maxPrio = TilePrioritizer::Priority::NONE;
 
     assert(_sessions.size() > 0);
     for (const auto& it : _sessions)
@@ -2297,15 +2297,46 @@ float Document::getTilePriority(const std::chrono::steady_clock::time_point &now
         const std::shared_ptr<ChildSession> &session = it.second;
 
         // only interested in sessions that match our viewId
-        if (session->getCanonicalViewId() != desc.getNormalizedViewId())
+        if (session->getCanonicalViewId() != desc.getCanonicalViewId())
             continue;
 
-        maxPrio = std::max<int>(maxPrio, session->getTilePriority(now, desc));
+        maxPrio = std::max(maxPrio, session->getTilePriority(desc));
     }
-    if (maxPrio == std::numeric_limits<float>::min())
-        LOG_WRN("No sessions match this viewId " << desc.getNormalizedViewId());
+    if (maxPrio == TilePrioritizer::Priority::NONE)
+        LOG_WRN("No sessions match this viewId " << desc.getCanonicalViewId());
     // LOG_TRC("Priority for tile " << desc.generateID() << " is " << maxPrio);
     return maxPrio;
+}
+
+std::vector<TilePrioritizer::ViewIdInactivity> Document::getViewIdsByInactivity() const
+{
+    std::vector<TilePrioritizer::ViewIdInactivity> viewIds;
+
+    const auto now = std::chrono::steady_clock::now();
+
+    assert(_sessions.size() > 0);
+    for (const auto& it : _sessions)
+    {
+        const std::shared_ptr<ChildSession> &session = it.second;
+
+        double sessionInactivity = session->getInactivityMS(now);
+        CanonicalViewId viewId = session->getCanonicalViewId();
+
+        auto found = std::find_if(viewIds.begin(), viewIds.end(),
+                                  [viewId](const auto& entry)->bool {
+                                    return entry.first == viewId;
+                                  });
+        if (found == viewIds.end())
+            viewIds.emplace_back(viewId, sessionInactivity);
+        else if (sessionInactivity < found->second)
+            found->second = sessionInactivity;
+    }
+
+    std::sort(viewIds.begin(), viewIds.end(), [](const auto& a, const auto& b) {
+                                                return a.second < b.second;
+                                              });
+
+    return viewIds;
 }
 
 // poll is idle, are we ?
@@ -2459,11 +2490,12 @@ void Document::drainQueue()
 
         if (canRenderTiles())
         {
-            float prio = 8; // visible & intersect with an active viewport
-            while (_queue->getTileQueueSize() > 0 && prio >= 8)
+            // Priority for tiles of visible part that intersect with an active viewport
+            TilePrioritizer::Priority prio = TilePrioritizer::Priority::VERYHIGH;
+            while (!_queue->isTileQueueEmpty() && prio >= TilePrioritizer::Priority::VERYHIGH)
             {
                 TileCombined tileCombined = _queue->popTileQueue(prio);
-                LOG_TRC("Tile priority is " << prio << " for " << tileCombined.serialize());
+                LOG_TRC("Tile priority is " << static_cast<int>(prio) << " for " << tileCombined.serialize());
 
                 renderTiles(tileCombined);
             }

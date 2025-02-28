@@ -89,19 +89,22 @@ void KitQueue::put(const Payload& value)
         _queue.emplace_back(value);
 }
 
-void KitQueue::removeTileDuplicate(const TileDesc &desc)
+std::vector<TileDesc>* KitQueue::getTileQueue(CanonicalViewId viewid)
 {
-    for (size_t i = 0; i < _tileQueue.size(); ++i)
+    for (auto& queue : _tileQueues)
     {
-        auto& it = _tileQueue[i];
-        if (it == desc)
-        {
-            LOG_TRC("Remove duplicate tile request: " << it.serialize() <<
-                    " -> " << desc.serialize());
-            _tileQueue.erase(_tileQueue.begin() + i);
-            break;
-        }
+        if (queue.first == viewid)
+            return &queue.second;
     }
+    return nullptr;
+}
+
+std::vector<TileDesc>& KitQueue::ensureTileQueue(CanonicalViewId viewid)
+{
+    std::vector<TileDesc>* tileQueue = getTileQueue(viewid);
+    if (tileQueue)
+        return *tileQueue;
+    return _tileQueues.emplace_back(viewid, std::vector<TileDesc>()).second;
 }
 
 namespace {
@@ -383,23 +386,6 @@ bool KitQueue::elideDuplicateCallback(int view, int type, const std::string &pay
     return false;
 }
 
-// FIXME: it's not that clear what good this does for us ...
-// we process all previews in the same batch of rendering
-void KitQueue::deprioritizePreviews()
-{
-    for (size_t i = 0; i < _tileQueue.size(); ++i)
-    {
-        const TileDesc front = _tileQueue.front();
-
-        // stop at the first non-tile or non-'id' (preview) message
-        if (!front.isPreview())
-            break;
-
-        _tileQueue.erase(_tileQueue.begin());
-        _tileQueue.push_back(front);
-    }
-}
-
 KitQueue::Payload KitQueue::pop()
 {
     if (_queue.empty())
@@ -415,15 +401,54 @@ KitQueue::Payload KitQueue::pop()
     return front;
 }
 
-TileCombined KitQueue::popTileQueue(float &priority)
+TileCombined KitQueue::popTileQueue(TilePrioritizer::Priority &priority)
 {
-    assert(!_tileQueue.empty());
+    assert(!isTileQueueEmpty());
 
-    const auto now = std::chrono::steady_clock::now();
+    std::vector<TileDesc>* tileQueue(nullptr);
 
-    LOG_TRC("KitQueue depth: " << _tileQueue.size());
+    // canonical viewIds in order of least inactive to highest
+    auto viewIdsByPrio = _prio.getViewIdsByInactivity();
 
-    TileDesc msg = _tileQueue.front();
+    // find which queue has tiles for the least inactive canonical viewId
+    for (const auto& viewIdEntry : viewIdsByPrio)
+    {
+        auto found = std::find_if(_tileQueues.begin(), _tileQueues.end(),
+                                  [viewIdEntry](const auto& queue) {
+                                    return viewIdEntry.first == queue.first && !queue.second.empty();
+                                  });
+        if (found != _tileQueues.end())
+        {
+            tileQueue = &found->second;
+            break;
+        }
+    }
+
+    // This shouldn't happen, but if it does, pick something to pop from
+    if (!tileQueue)
+    {
+        LOG_ERR("No existing session for any tiles in queue.");
+        for (auto& queue : _tileQueues)
+        {
+            if (queue.second.empty())
+                continue;
+            tileQueue = &queue.second;
+            break;
+        }
+    }
+
+    assert(tileQueue);
+
+    return popTileQueue(*tileQueue, priority);
+}
+
+TileCombined KitQueue::popTileQueue(std::vector<TileDesc>& tileQueue, TilePrioritizer::Priority &priority)
+{
+    assert(!tileQueue.empty());
+
+    LOG_TRC("KitQueue depth: " << tileQueue.size());
+
+    TileDesc msg = tileQueue.front();
 
     // vector of tiles we will render
     std::vector<TileDesc> tiles;
@@ -431,12 +456,12 @@ TileCombined KitQueue::popTileQueue(float &priority)
     // We are handling a tile; first try to find one that is at the cursor's
     // position, otherwise handle the one that is at the front
     int prioritized = 0;
-    float prioritySoFar = -1000.0;
-    for (size_t i = 0; i < _tileQueue.size(); ++i)
+    TilePrioritizer::Priority prioritySoFar = TilePrioritizer::Priority::NONE;
+    for (size_t i = 0; i < tileQueue.size(); ++i)
     {
-        auto& prio = _tileQueue[i];
+        auto& prio = tileQueue[i];
 
-        const float p = _prio.getTilePriority(now, prio);
+        const TilePrioritizer::Priority p = _prio.getTilePriority(prio);
         if (p > prioritySoFar)
         {
             prioritySoFar = p;
@@ -446,16 +471,16 @@ TileCombined KitQueue::popTileQueue(float &priority)
     }
 
     // remove highest priority tile from the queue
-    _tileQueue.erase(_tileQueue.begin() + prioritized);
+    tileQueue.erase(tileQueue.begin() + prioritized);
     priority = prioritySoFar;
 
     // and add it to the render list
     tiles.emplace_back(msg);
 
     // Combine as many tiles as possible with this tile.
-    for (size_t i = 0; i < _tileQueue.size(); )
+    for (size_t i = 0; i < tileQueue.size(); )
     {
-        auto& it = _tileQueue[i];
+        auto& it = tileQueue[i];
 
         LOG_TRC("Combining candidate: " << it.serialize());
 
@@ -463,13 +488,13 @@ TileCombined KitQueue::popTileQueue(float &priority)
         if (tiles[0].canCombine(it))
         {
             tiles.emplace_back(it);
-            _tileQueue.erase(_tileQueue.begin() + i);
+            tileQueue.erase(tileQueue.begin() + i);
         }
         else
             ++i;
     }
 
-    LOG_TRC("Combined " << tiles.size() << " tiles, leaving " << _tileQueue.size() << " in queue.");
+    LOG_TRC("Combined " << tiles.size() << " tiles, leaving " << tileQueue.size() << " in queue.");
 
     if (tiles.size() == 1)
     {
@@ -541,6 +566,35 @@ std::string KitQueue::combineTextInput(const StringVector& tokens)
     return std::string();
 }
 
+namespace {
+
+    // Sort tiles, so they are arranged as ttb rows with ltr cells within rows,
+    // with previews at the end.
+    bool CompareTiles(const TileDesc& a, const TileDesc& b)
+    {
+        bool preview1 = a.isPreview(), preview2 = b.isPreview();
+        if (preview1 != preview2)
+            return !preview1;
+        int y1 = a.getTilePosY(), y2 = b.getTilePosY();
+        if (y1 != y2)
+            return y1 < y2;
+        return a.getTilePosX() < b.getTilePosX();
+    }
+
+    void sortedInsert(std::vector<TileDesc>& tileQueue, const TileDesc& tile)
+    {
+        const auto it = std::lower_bound(tileQueue.begin(), tileQueue.end(), tile, CompareTiles);
+        const bool duplicate = it != tileQueue.end() && !CompareTiles(tile, *it);
+        if (duplicate)
+        {
+            LOG_TRC("Ignored duplicate tile request of: " << tile.serialize() <<
+                    " in favor of existing " << it->serialize());
+            return;
+        }
+        tileQueue.insert(it, tile);
+    }
+}
+
 void KitQueue::pushTileCombineRequest(const Payload &value)
 {
     assert(COOLProtocol::getFirstToken(value) == "tilecombine");
@@ -549,19 +603,40 @@ void KitQueue::pushTileCombineRequest(const Payload &value)
     // the tiles inside popTileQueue() again)
     const std::string msg = std::string(value.data(), value.size());
     const TileCombined tileCombined = TileCombined::parse(msg);
-    for (const auto& tile : tileCombined.getTiles())
-    {
-        removeTileDuplicate(tile);
-        _tileQueue.emplace_back(tile);
-    }
+
+    std::vector<TileDesc>& tileQueue = ensureTileQueue(tileCombined.getCanonicalViewId());
+    const std::vector<TileDesc>& tiles = tileCombined.getTiles();
+    tileQueue.reserve(tileQueue.size() + tiles.size());
+    for (const auto& tile : tiles)
+        sortedInsert(tileQueue, tile);
 }
 
 void KitQueue::pushTileQueue(const Payload &value)
 {
     const std::string msg = std::string(value.data(), value.size());
     const TileDesc desc = TileDesc::parse(msg);
-    removeTileDuplicate(desc);
-    _tileQueue.push_back(desc);
+    std::vector<TileDesc>& tileQueue = ensureTileQueue(desc.getCanonicalViewId());
+    sortedInsert(tileQueue, desc);
+}
+
+size_t KitQueue::getTileQueueSize() const
+{
+    size_t queuedTiles(0);
+
+    for (const auto& queue : _tileQueues)
+        queuedTiles += queue.second.size();
+
+    return queuedTiles;
+}
+
+bool KitQueue::isTileQueueEmpty() const
+{
+    for (const auto& queue : _tileQueues)
+    {
+        if (!queue.second.empty())
+            return false;
+    }
+    return true;
 }
 
 std::string KitQueue::combineRemoveText(const StringVector& tokens)
@@ -627,10 +702,16 @@ void KitQueue::dumpState(std::ostream& oss)
     for (Payload &it : _queue)
         oss << "\t\t" << i++ << ": " << COOLProtocol::getFirstLine(it) << "\n";
 
-    oss << "\tTile Queue size: " << _tileQueue.size() << "\n";
-    i = 0;
-    for (TileDesc &it : _tileQueue)
-        oss << "\t\t" << i++ << ": " << it.serialize() << "\n";
+    oss << "\tTile Queues count: " << _tileQueues.size() << "\n";
+    for (auto& queue : _tileQueues)
+    {
+        CanonicalViewId viewId = queue.first;
+        const std::vector<TileDesc>& tileQueue = queue.second;
+        oss << "\t\tTile Queue size: " << tileQueue.size() << " viewId: " << viewId << "\n";
+        i = 0;
+        for (const TileDesc &it : tileQueue)
+            oss << "\t\t\t" << i++ << ": " << it.serialize() << "\n";
+    }
 
     oss << "\tCallbacks size: " << _callbacks.size() << "\n";
     i = 0;

@@ -96,7 +96,7 @@ ClientSession::ClientSession(
     _serverURL(requestDetails),
     _isTextDocument(false),
     _thumbnailSession(false),
-    _canonicalViewId(0),
+    _canonicalViewId(CanonicalViewId::None),
     _sentAudit(false),
     _sentBrowserSetting(false)
 {
@@ -861,19 +861,21 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "tile"))
     {
-        if (!(UnitWSD::isUnitTesting() ? true : getCanonicalViewId() != 0 && getCanonicalViewId() >= 1000))
+        int canonicalViewId = to_underlying(getCanonicalViewId());
+        if (!(UnitWSD::isUnitTesting() ? true : canonicalViewId != 0 && canonicalViewId >= 1000))
         {
             LOG_WRN("Got tile request for session [" << getId() << "] on document [" << docBroker->getDocKey()
-                                << "] with invalid view ID [" << getCanonicalViewId() << "].");
+                                << "] with invalid view ID [" << canonicalViewId << "].");
         }
         return sendTile(buffer, length, tokens, docBroker);
     }
     else if (tokens.equals(0, "tilecombine"))
     {
-        if (!(UnitWSD::isUnitTesting() ? true : getCanonicalViewId() != 0 && getCanonicalViewId() >= 1000))
+        int canonicalViewId = to_underlying(getCanonicalViewId());
+        if (!(UnitWSD::isUnitTesting() ? true : canonicalViewId != 0 && canonicalViewId >= 1000))
         {
             LOG_WRN("Got tilecombine request for session [" << getId() << "] on document [" << docBroker->getDocKey()
-                                << "] with invalid view ID [" << getCanonicalViewId() << "].");
+                                << "] with invalid view ID [" << canonicalViewId << "].");
         }
         return sendCombinedTiles(buffer, length, tokens, docBroker);
     }
@@ -1750,7 +1752,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
     try
     {
         TileCombined tileCombined = TileCombined::parse(tokens);
-        tileCombined.setNormalizedViewId(getCanonicalViewId());
+        tileCombined.setCanonicalViewId(getCanonicalViewId());
         if (tileCombined.hasDuplicates())
         {
             LOG_ERR("Dangerous, tilecombine with duplicates is not acceptable");
@@ -2443,7 +2445,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         if (getTokenInteger(tokens[1], "viewid", viewId) &&
             getTokenInteger(tokens[2], "canonicalid", canonicalId))
         {
-            _canonicalViewId = canonicalId;
+            _canonicalViewId = CanonicalViewId(canonicalId);
         }
     }
 #if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
@@ -3079,7 +3081,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     if( part == -1 ) // If no part is specified we use the part used by the client
         part = _clientSelectedPart;
 
-    int normalizedViewId = getCanonicalViewId();
+    CanonicalViewId canonicalViewId = getCanonicalViewId();
 
     std::vector<TileDesc> invalidTiles;
     if((part == _clientSelectedPart && mode == _clientSelectedMode) || _isTextDocument)
@@ -3099,7 +3101,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
                     Util::Rectangle tileRect (j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips);
                     if(invalidateRect.intersects(tileRect))
                     {
-                        TileDesc desc(normalizedViewId, part, mode,
+                        TileDesc desc(canonicalViewId, part, mode,
                                       _tileWidthPixel, _tileHeightPixel,
                                       j * _tileWidthTwips, i * _tileHeightTwips,
                                       _tileWidthTwips, _tileHeightTwips, -1, 0, -1);
@@ -3138,7 +3140,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     if(!invalidTiles.empty())
     {
         TileCombined tileCombined = TileCombined::create(invalidTiles);
-        tileCombined.setNormalizedViewId(normalizedViewId);
+        tileCombined.setCanonicalViewId(canonicalViewId);
         docBroker->handleTileCombinedRequest(tileCombined, false, client_from_this());
     }
 }

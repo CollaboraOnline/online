@@ -4314,7 +4314,7 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens, bool forceKey
     ASSERT_CORRECT_THREAD();
 
     TileDesc tile = TileDesc::parse(tokens);
-    tile.setNormalizedViewId(session->getCanonicalViewId());
+    tile.setCanonicalViewId(session->getCanonicalViewId());
 
     tile.setVersion(++_tileVersion);
     const std::string tileMsg = tile.serialize();
@@ -4434,10 +4434,10 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
     // Drop duplicated tiles, but use newer version number
     else
     {
-        // Make sure that the old request has the same normalizedviewid with the new request.
+        // Make sure that the old request has the same canonicalviewid with the new request.
         for (size_t i = 0; i < requestedTiles.size(); i++) {
-            if (requestedTiles[i].getNormalizedViewId() != session->getCanonicalViewId())
-                requestedTiles[i].setNormalizedViewId(session->getCanonicalViewId());
+            if (requestedTiles[i].getCanonicalViewId() != session->getCanonicalViewId())
+                requestedTiles[i].setCanonicalViewId(session->getCanonicalViewId());
         }
 
         for (const auto& newTile : tileCombined.getTiles())

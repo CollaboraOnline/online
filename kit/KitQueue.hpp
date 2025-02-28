@@ -26,7 +26,20 @@ class TilePrioritizer
 {
 public:
     virtual ~TilePrioritizer() {}
-    virtual float getTilePriority(const std::chrono::steady_clock::time_point &, const TileDesc &) const { return 0.0; }
+
+    enum class Priority {
+        NONE = -1,  // an error
+        LOWEST,
+        LOW,
+        NORMAL,
+        HIGH,
+        VERYHIGH,
+        ULTRAHIGH
+    };
+    virtual Priority getTilePriority(const TileDesc &) const { return Priority::NORMAL; }
+
+    typedef std::pair<CanonicalViewId, float> ViewIdInactivity;
+    virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const { return {}; }
 };
 
 /// Queue for handling the Kit's messaging needs
@@ -83,14 +96,15 @@ public:
     Payload pop();
     Payload get() { return pop(); }
 
-    /// Tiles are special manage a separate queue of them
-    void clearTileQueue() { _tileQueue.clear(); }
+    /// Tiles are special manage separate queues of them
+    void clearTileQueue() { _tileQueues.clear(); }
     void pushTileQueue(const Payload &value);
     void pushTileCombineRequest(const Payload &value);
     /// Pops the highest priority TileCombined from the
     /// render queue, with it's priority.
-    TileCombined popTileQueue(float &priority);
-    size_t getTileQueueSize() const { return _tileQueue.size(); }
+    TileCombined popTileQueue(TilePrioritizer::Priority& priority);
+    size_t getTileQueueSize() const;
+    bool isTileQueueEmpty() const;
 
     /// Obtain the next callback
     Callback getCallback()
@@ -153,9 +167,6 @@ protected:
     std::string combineRemoveText(const StringVector& tokens);
 
 private:
-    /// Search the queue for a duplicate tile and remove it (if present).
-    void removeTileDuplicate(const TileDesc &desc);
-
     /// Search the queue for a duplicate callback and remove it (if present).
     ///
     /// This removes also callbacks that are made invalid by the current
@@ -164,16 +175,17 @@ private:
     /// @return New message to put into the queue.  If empty, use what was in callbackMsg.
     std::string removeCallbackDuplicate(const std::string& callbackMsg);
 
-    /// De-prioritize the previews (tiles with 'id') - move them to the end of
-    /// the queue.
-    void deprioritizePreviews();
+    std::vector<TileDesc>* getTileQueue(CanonicalViewId viewid);
+    std::vector<TileDesc>& ensureTileQueue(CanonicalViewId viewid);
+    TileCombined popTileQueue(std::vector<TileDesc>& tileQueue, TilePrioritizer::Priority &priority);
 
 private:
     /// Queue of incoming messages from coolwsd
     std::vector<Payload> _queue;
 
-    /// Queue of incoming tile requests from coolwsd
-    std::vector<TileDesc> _tileQueue;
+    /// Queues of incoming tile requests from coolwsd
+    typedef std::pair<CanonicalViewId, std::vector<TileDesc>> viewTileQueue;
+    std::vector<viewTileQueue> _tileQueues;
 
     /// Queue of callbacks from Kit to send out to coolwsd
     std::vector<Callback> _callbacks;
