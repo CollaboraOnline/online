@@ -142,6 +142,7 @@ class Tile {
 	wireId: number = 0; // monotonic timestamp for optimizing fetch
 	invalidFrom: number = 0; // a wireId - for avoiding races on invalidation
 	lastRendered: Date = new Date();
+	private lastRequestTime: Date = undefined; // when did we last do a tilecombine request.
 	hasPendingDelta: 0;
 	hasPendingKeyframe: 0;
 
@@ -167,6 +168,29 @@ class Tile {
 
 	hasPendingUpdate(): boolean {
 		return this.hasPendingDelta > 0 || this.hasPendingKeyframe > 0;
+	}
+
+	/// Demand a whole tile back to the keyframe from coolwsd.
+	forceKeyframe() {
+		this.wireId = 0;
+		this.invalidFrom = 0;
+		this.allowFastRequest();
+	}
+
+	/// Avoid continually re-requesting tiles for eg. preloading
+	requestingTooFast(now: Date): boolean {
+		const tooFast: boolean = this.lastRequestTime &&
+		    (now.getTime() - this.lastRequestTime.getTime()) < 5000 /* ms */;
+		return tooFast;
+	}
+
+	updateLastRequest(now: Date) {
+		this.lastRequestTime = now;
+	}
+
+	/// Allow faster requests
+	allowFastRequest() {
+		this.updateLastRequest(undefined);
 	}
 }
 
@@ -1156,6 +1180,8 @@ class TileManager {
 			partMode[pmKey].push(coords);
 		}
 
+		var now = new Date();
+
 		for (var pmKey in partMode) {
 			// no keys method
 			var partTileQueue = partMode[pmKey];
@@ -1167,15 +1193,22 @@ class TileManager {
 			var tileWids = [];
 
 			var added: any = {}; // uniqify
+			var hasTiles = false;
 			for (var i = 0; i < partTileQueue.length; ++i) {
 				var coords = partTileQueue[i];
 				var key = coords.key();
+				var tile = this.tiles[key];
+
+				// don't send lots of duplicate, fast tilecombines
+				if (tile && tile.requestingTooFast(now))
+					continue;
+
 				// request each tile just once in these tilecombines
 				if (added[key]) continue;
 				added[key] = true;
+				hasTiles = true;
 
 				// build parameters
-				var tile = this.tiles[key];
 				tileWids.push(tile && tile.wireId !== undefined ? tile.wireId : 0);
 
 				const twips = new L.Point(
@@ -1187,6 +1220,9 @@ class TileManager {
 
 				tilePositionsX.push(twips.x);
 				tilePositionsY.push(twips.y);
+
+				if (tile)
+					tile.updateLastRequest(now);
 			}
 
 			var msg =
@@ -1216,7 +1252,10 @@ class TileManager {
 				' ' +
 				'tileheight=' +
 				app.map._docLayer._tileHeightTwips;
-			app.socket.sendMessage(msg, '');
+			if (hasTiles)
+				app.socket.sendMessage(msg, '');
+			else
+				window.app.console.log('Skipped empty (too fast) tilecombine');
 		}
 	}
 
@@ -1784,8 +1823,7 @@ class TileManager {
 				'Unusual: Delta sent - but we have no keyframe for ' + key,
 			);
 			// force keyframe
-			tile.wireId = 0;
-			tile.invalidFrom = 0;
+			tile.forceKeyframe();
 			tile.gcErrors++;
 
 			// queue a later fetch of this and any other
@@ -2193,6 +2231,7 @@ class TileManager {
 		if (!tile) return;
 
 		tile.invalidateCount++;
+		tile.allowFastRequest();
 
 		if (app.map._debug.tileDataOn) {
 			app.map._debug.tileDataAddInvalidate();
