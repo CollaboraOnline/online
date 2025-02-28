@@ -24,6 +24,7 @@
 #include <Log.hpp>
 #include <Common.hpp>
 #include <FileUtil.hpp>
+#include <TileDesc.hpp>
 #include <Png.hpp>
 #include <Simd.hpp>
 #include <DeltaSimd.h>
@@ -40,10 +41,10 @@ struct TileLocation {
     int _top;
     int _size;
     int _part;
-    int _canonicalViewId;
+    CanonicalViewId _canonicalViewId;
     int _viewMode;
     TileLocation(int left, int top, int size, int part,
-                 int canonicalViewId, int viewMode)
+                 CanonicalViewId canonicalViewId, int viewMode)
         : _left(left), _top(top), _size(size), _part(part),
           _canonicalViewId(canonicalViewId), _viewMode(viewMode)
     {
@@ -54,7 +55,7 @@ struct TileLocation {
         size_t top = _top;
         size_t part = _part;
         size_t size = _size;
-        size_t canonicalViewId = _canonicalViewId;
+        size_t canonicalViewId = to_underlying(_canonicalViewId);
         size_t viewMode = _viewMode;
         return (left << 20) ^ top ^ (part << 15) ^ (size << 7) ^
                (canonicalViewId << 24) ^ (viewMode << 28);

@@ -408,7 +408,7 @@ public:
         _cursorHeight = h;
     }
 
-    void invalidateTiles(const std::string& tiles, int canonicalViewId)
+    void invalidateTiles(const std::string& tiles, CanonicalViewId canonicalViewId)
     {
         // Remove from cache.
         _tileCache->invalidateTiles(tiles, canonicalViewId);
