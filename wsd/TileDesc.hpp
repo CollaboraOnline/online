@@ -138,6 +138,22 @@ public:
         return !(*this == other);
     }
 
+    // Sort tiles, so they are arranged as ttb rows with ltr cells within rows,
+    // with previews at the end.
+    bool operator<(const TileDesc& other) const
+    {
+        return std::tie(_normalizedViewId, _id,
+                        _mode, _part,
+                        _height, _width,
+                        _tileHeight, _tileWidth,
+                        _tilePosY, _tilePosX) <
+               std::tie(other._normalizedViewId, other._id,
+                        other._mode, other._part,
+                        other._height, other._width,
+                        other._tileHeight, other._tileWidth,
+                        other._tilePosY, other._tilePosX);
+    }
+
     // used to cache a hash of the key elements compared in ==
     uint32_t equalityHash() const
     {

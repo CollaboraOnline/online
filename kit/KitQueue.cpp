@@ -107,24 +107,6 @@ std::vector<TileDesc>& KitQueue::ensureTileQueue(int viewid)
     return _tileQueues.emplace_back(viewid, std::vector<TileDesc>()).second;
 }
 
-void KitQueue::removeTileDuplicate(const TileDesc &desc)
-{
-    std::vector<TileDesc>* viewQueue = getTileQueue(desc.getNormalizedViewId());
-    if (!viewQueue)
-        return;
-    for (size_t i = 0; i < viewQueue->size(); ++i)
-    {
-        auto& it = (*viewQueue)[i];
-        if (it == desc)
-        {
-            LOG_TRC("Remove duplicate tile request: " << it.serialize() <<
-                    " -> " << desc.serialize());
-            viewQueue->erase(viewQueue->begin() + i);
-            break;
-        }
-    }
-}
-
 namespace {
 
 /// Read the viewId from the payload.
@@ -605,6 +587,24 @@ std::string KitQueue::combineTextInput(const StringVector& tokens)
     return std::string();
 }
 
+namespace {
+
+    void sortedInsert(std::vector<TileDesc>& tileQueue, const TileDesc& tile)
+    {
+        const auto it = std::lower_bound(tileQueue.begin(), tileQueue.end(), tile);
+        const bool duplicate = it != tileQueue.end() && tile == *it;
+        if (duplicate)
+        {
+            // We discard the earlier dup in favour of this new one
+            LOG_TRC("Remove duplicate tile request: " << it->serialize() <<
+                    " -> " << tile.serialize());
+            *it = tile;
+            return;
+        }
+        tileQueue.insert(it, tile);
+    }
+}
+
 void KitQueue::pushTileCombineRequest(const Payload &value)
 {
     assert(COOLProtocol::getFirstToken(value) == "tilecombine");
@@ -615,20 +615,18 @@ void KitQueue::pushTileCombineRequest(const Payload &value)
     const TileCombined tileCombined = TileCombined::parse(msg);
 
     std::vector<TileDesc>& tileQueue = ensureTileQueue(tileCombined.getNormalizedViewId());
-    for (const auto& tile : tileCombined.getTiles())
-    {
-        removeTileDuplicate(tile);
-        tileQueue.emplace_back(tile);
-    }
+    const std::vector<TileDesc>& tiles = tileCombined.getTiles();
+    tileQueue.reserve(tileQueue.size() + tiles.size());
+    for (const auto& tile : tiles)
+        sortedInsert(tileQueue, tile);
 }
 
 void KitQueue::pushTileQueue(const Payload &value)
 {
     const std::string msg = std::string(value.data(), value.size());
     const TileDesc desc = TileDesc::parse(msg);
-    removeTileDuplicate(desc);
     std::vector<TileDesc>& tileQueue = ensureTileQueue(desc.getNormalizedViewId());
-    tileQueue.push_back(desc);
+    sortedInsert(tileQueue, desc);
 }
 
 size_t KitQueue::getTileQueueSize() const
