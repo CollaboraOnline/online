@@ -408,10 +408,10 @@ public:
         _cursorHeight = h;
     }
 
-    void invalidateTiles(const std::string& tiles, int normalizedViewId)
+    void invalidateTiles(const std::string& tiles, int canonicalViewId)
     {
         // Remove from cache.
-        _tileCache->invalidateTiles(tiles, normalizedViewId);
+        _tileCache->invalidateTiles(tiles, canonicalViewId);
     }
 
     void handleTileRequest(const StringVector &tokens, bool forceKeyframe,

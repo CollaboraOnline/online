@@ -614,7 +614,7 @@ void KitQueue::pushTileCombineRequest(const Payload &value)
     const std::string msg = std::string(value.data(), value.size());
     const TileCombined tileCombined = TileCombined::parse(msg);
 
-    std::vector<TileDesc>& tileQueue = ensureTileQueue(tileCombined.getNormalizedViewId());
+    std::vector<TileDesc>& tileQueue = ensureTileQueue(tileCombined.getCanonicalViewId());
     const std::vector<TileDesc>& tiles = tileCombined.getTiles();
     tileQueue.reserve(tileQueue.size() + tiles.size());
     for (const auto& tile : tiles)
@@ -625,7 +625,7 @@ void KitQueue::pushTileQueue(const Payload &value)
 {
     const std::string msg = std::string(value.data(), value.size());
     const TileDesc desc = TileDesc::parse(msg);
-    std::vector<TileDesc>& tileQueue = ensureTileQueue(desc.getNormalizedViewId());
+    std::vector<TileDesc>& tileQueue = ensureTileQueue(desc.getCanonicalViewId());
     sortedInsert(tileQueue, desc);
 }
 
