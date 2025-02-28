@@ -176,7 +176,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	z-index: 11;
 }
 
-#toolbar-row {
+.hasnotebookbar > #toolbar-row {
 	height: 74px;
 }
 

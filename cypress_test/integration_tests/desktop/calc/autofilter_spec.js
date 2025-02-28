@@ -20,11 +20,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter Complex', funct
 		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
 		cy.wait(1000);
 
-		helper.typeIntoInputField(helper.addressInputSelector, 'U125');
+		helper.typeIntoInputField(helper.addressInputSelector, 'U126');
 		cy.cGet('#map').focus();
 		cy.wait(1000);
 
-		desktopHelper.assertScrollbarPosition('vertical', 240, 260);
+		desktopHelper.assertScrollbarPosition('vertical', 250, 270);
 		desktopHelper.assertScrollbarPosition('horizontal', 210, 230);
 	});
 

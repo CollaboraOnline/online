@@ -29,7 +29,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		helper.typeIntoDocument('{ctrl}{home}');
 		//scroll to bottom
 		desktopHelper.assertVisiblePage(1, 1, 4);
-		desktopHelper.pressKey(2, 'pagedown');
+		desktopHelper.pressKey(1, 'pagedown');
 		desktopHelper.assertVisiblePage(2, 2, 4);
 		desktopHelper.pressKey(1, 'pagedown');
 		desktopHelper.assertVisiblePage(3, 3, 4);
