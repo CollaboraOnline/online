@@ -298,53 +298,83 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 		return allTilesFetched;
 	}
 
-	private drawPageBackgroundWriter (ctx: any, rectangle: any, pageNumber: number) {
-		rectangle = [Math.round(rectangle[0] * app.twipsToPixels), Math.round(rectangle[1] * app.twipsToPixels), Math.round(rectangle[2] * app.twipsToPixels), Math.round(rectangle[3] * app.twipsToPixels)];
+	private drawPageBackgroundWriter (ctx: any) {
+		let viewRectangleTwips = [this.documentTopLeft[0], this.documentTopLeft[1], this.containerObject.getDocumentAnchorSection().size[0], this.containerObject.getDocumentAnchorSection().size[1]];
+		viewRectangleTwips = viewRectangleTwips.map(function(element: number) {
+			return Math.round(element * app.pixelsToTwips);
+		});
 
-		this.context.fillStyle = this.containerObject.getDocumentBackgroundColor(); // used to be pageBackgroundFillColorWriter (see below)
-		this.context.fillRect(rectangle[0] - ctx.viewBounds.min.x + this.sectionProperties.pageBackgroundInnerMargin,
-			rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
-			rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
-			rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
+		this.context.fillStyle = this.containerObject.getDocumentBackgroundColor();
+		for (let i: number = 0; i < app.file.writer.pageRectangleList.length; i++) {
+			let rectangle: any = app.file.writer.pageRectangleList[i];
+			if ((rectangle[1] > viewRectangleTwips[1] && rectangle[1] < viewRectangleTwips[1] + viewRectangleTwips[3]) ||
+				(rectangle[1] + rectangle[3] > viewRectangleTwips[1] && rectangle[1] + rectangle[3] < viewRectangleTwips[1] + viewRectangleTwips[3]) ||
+				(rectangle[1] < viewRectangleTwips[1] && rectangle[1] + rectangle[3] > viewRectangleTwips[1] + viewRectangleTwips[3])) {
 
-		// We don't want to render page numbers to the background of pages any more. In this case we could set pageBackgroundFillColorWriter value once for all pages. I'll keep it for now.
-		//this.context.fillStyle = this.sectionProperties.pageBackgroundTextColor;
-		//this.context.fillText(String(pageNumber), Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x, Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y, rectangle[2] * 0.4);
+				rectangle = [Math.round(rectangle[0] * app.twipsToPixels), Math.round(rectangle[1] * app.twipsToPixels), Math.round(rectangle[2] * app.twipsToPixels), Math.round(rectangle[3] * app.twipsToPixels)];
+
+				this.context.fillRect(rectangle[0] - ctx.viewBounds.min.x + this.sectionProperties.pageBackgroundInnerMargin,
+					rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
+					rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
+					rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
+			}
+		}
 	}
 
-	private drawPageBackgroundFileBasedView (ctx: any, top: number, bottom: number) {
-		var partHeightPixels: number = Math.round(this.map._docLayer._partHeightTwips * app.twipsToPixels);
-		var gap: number = Math.round(this.map._docLayer._spaceBetweenParts * app.twipsToPixels);
-		var partWidthPixels: number = Math.round(this.map._docLayer._partWidthTwips * app.twipsToPixels);
-		var startY: number = (partHeightPixels + gap) * (top > 0 ? top -1: 0);
-		var rectangle: Array<number>;
+	private drawPageBackgroundFileBasedView (ctx: any) {
+		// PDF view supports only same-sized pages for now. So we can use simple math instead of a loop.
+		var partHeightPixels: number = Math.round((this.map._docLayer._partHeightTwips + this.map._docLayer._spaceBetweenParts) * app.twipsToPixels);
+		var visibleBounds: Array<number> = this.containerObject.getDocumentBounds();
+		var topVisible: number = Math.floor(visibleBounds[1] / partHeightPixels);
+		var bottomVisible: number = Math.ceil(visibleBounds[3] / partHeightPixels);
 
-		for (var i: number = 0; i <= bottom - top; i++) {
-			rectangle = [0, startY, partWidthPixels, partHeightPixels];
+		// Check existence of pages.
+		topVisible = topVisible >= 0 ? topVisible : 0;
+		bottomVisible = bottomVisible < this.map._docLayer._parts ? bottomVisible : this.map._docLayer._parts - 1;
 
-			this.context.strokeRect(
-				rectangle[0] - ctx.viewBounds.min.x + this.sectionProperties.pageBackgroundInnerMargin,
-				rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
-				rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
-				rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
+		if (!isNaN(partHeightPixels) && partHeightPixels > 0) {
+			var partHeightPixels: number = Math.round(this.map._docLayer._partHeightTwips * app.twipsToPixels);
+			var gap: number = Math.round(this.map._docLayer._spaceBetweenParts * app.twipsToPixels);
+			var partWidthPixels: number = Math.round(this.map._docLayer._partWidthTwips * app.twipsToPixels);
+			var startY: number = (partHeightPixels + gap) * (topVisible > 0 ? topVisible -1: 0);
+			var rectangle: Array<number>;
 
-			this.context.fillText(String(i + top + 1),
-				Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x,
-				Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y,
-				rectangle[2] * 0.4);
+			for (var i: number = 0; i <= bottomVisible - topVisible; i++) {
+				rectangle = [0, startY, partWidthPixels, partHeightPixels];
 
-			startY += partHeightPixels + gap;
+				this.context.strokeRect(
+					rectangle[0] - ctx.viewBounds.min.x + this.sectionProperties.pageBackgroundInnerMargin,
+					rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
+					rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
+					rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
+
+				this.context.fillText(String(i + topVisible + 1),
+					Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x,
+					Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y,
+					rectangle[2] * 0.4);
+
+				startY += partHeightPixels + gap;
+			}
+		}
+	}
+
+	private drawPageBackgroundsMultiPageView() {
+		MultiPageViewLayout.resetViewLayout();
+		this.context.fillStyle = this.containerObject.getDocumentBackgroundColor();
+
+		for (let i = 0; i < MultiPageViewLayout.rows.length; i++) {
+			for (let j = 0; j < MultiPageViewLayout.rows[i].rectangles.length; j++) {
+				const rectangle = MultiPageViewLayout.rows[i].rectangles[j];
+				this.context.strokeStyle = "red";
+				this.context.strokeRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3]);
+				this.context.fillRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3]);
+			}
 		}
 	}
 
 	private drawPageBackgrounds (ctx: any) {
-		if (this.map._docLayer._docType !== 'text' && !app.file.fileBasedView && !app.file.writer.multiPageView)
-			return; // For now, Writer and PDF view only.
-
-		/* Note: Probably, Calc won't need this function but in case this is activated for Calc:
-				* If the font change of context affects Calc drawings (headers etc), then one should set the font there.
-				* Creating a temp variable like "oldFont" here is not a good solution in that case.
-		*/
+		if (!app.file.fileBasedView && !app.file.writer.multiPageView && this.map._docLayer._docType !== 'text')
+			return;
 
 		if (!this.containerObject.getDocumentAnchorSection())
 			return;
@@ -355,47 +385,12 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 
 		this.context.font = this.sectionProperties.pageBackgroundFont;
 
-		if (this.map._docLayer._docType === 'text') {
-			var viewRectangleTwips = [this.documentTopLeft[0], this.documentTopLeft[1], this.containerObject.getDocumentAnchorSection().size[0], this.containerObject.getDocumentAnchorSection().size[1]];
-			viewRectangleTwips = viewRectangleTwips.map(function(element: number) {
-				return Math.round(element * app.pixelsToTwips);
-			});
-
-			for (var i: number = 0; i < app.file.writer.pageRectangleList.length; i++) {
-				var rectangle: any = app.file.writer.pageRectangleList[i];
-				if ((rectangle[1] > viewRectangleTwips[1] && rectangle[1] < viewRectangleTwips[1] + viewRectangleTwips[3]) ||
-					(rectangle[1] + rectangle[3] > viewRectangleTwips[1] && rectangle[1] + rectangle[3] < viewRectangleTwips[1] + viewRectangleTwips[3]) ||
-					(rectangle[1] < viewRectangleTwips[1] && rectangle[1] + rectangle[3] > viewRectangleTwips[1] + viewRectangleTwips[3])) {
-
-					this.drawPageBackgroundWriter(ctx, rectangle.slice(), i + 1);
-				}
-			}
-
-			if (app.file.writer.multiPageView) {
-				MultiPageViewLayout.resetViewLayout();
-				for (let i = 0; i < MultiPageViewLayout.rows.length; i++) {
-					for (let j = 0; j < MultiPageViewLayout.rows[i].rectangles.length; j++) {
-						const rectangle = MultiPageViewLayout.rows[i].rectangles[j];
-						this.context.strokeStyle = "red";
-						this.context.strokeRect(rectangle[0], rectangle[1], rectangle[2], rectangle[3]);
-					}
-				}
-			}
-		}
-		else if (app.file.fileBasedView) { // Writer and fileBasedView can not be "true" at the same time.
-			// PDF view supports only same-sized pages for now. So we can use simple math instead of a loop.
-			var partHeightPixels: number = Math.round((this.map._docLayer._partHeightTwips + this.map._docLayer._spaceBetweenParts) * app.twipsToPixels);
-			var visibleBounds: Array<number> = this.containerObject.getDocumentBounds();
-			var topVisible: number = Math.floor(visibleBounds[1] / partHeightPixels);
-			var bottomVisible: number = Math.ceil(visibleBounds[3] / partHeightPixels);
-
-			// Check existence of pages.
-			topVisible = topVisible >= 0 ? topVisible : 0;
-			bottomVisible = bottomVisible < this.map._docLayer._parts ? bottomVisible : this.map._docLayer._parts - 1;
-
-			if (!isNaN(partHeightPixels) && partHeightPixels > 0)
-				this.drawPageBackgroundFileBasedView(ctx, topVisible, bottomVisible);
-		}
+		if (app.file.fileBasedView)
+			this.drawPageBackgroundFileBasedView(ctx);
+		else if (app.file.writer.multiPageView)
+			this.drawPageBackgroundsMultiPageView();
+		else if (this.map._docLayer._docType === 'text')
+			this.drawPageBackgroundWriter(ctx);
 	}
 
 	public onDraw (frameCount: number = null, elapsedTime: number = null, subsetBounds: cool.Bounds = null): void {
@@ -440,13 +435,6 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 					if (docLayer._isTileReadyToDraw(tile) || this.map._debug.tileOverlaysOn) { // Ensure tile is loaded
 						this.paint(tile, ctx, false /* async? */, now);
 					}
-					// else if (this.map._debug.tileOverlaysOn) {
-						// // when debugging draw a checkerboard for the missing tile
-						// var oldcanvas = tile.canvas;
-						// tile.canvas = this.checkpattern;
-						// this.paint(tile, ctx, false /* async? */, now);
-						// tile.canvas = oldcanvas;
-					// }
 				}
 			}
 			doneTiles.add(coords.key());
