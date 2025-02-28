@@ -28,6 +28,12 @@ class TileCoordData {
 	part: number;
 	mode: number;
 
+	/*
+		No need to calculate the scale every time. We have the current scale, reachable via app.getScale().
+		We can compare these two when we need check if a tile is in the current scale. Assigned on creation.
+	*/
+	scale: number;
+
 	constructor(
 		left: number,
 		top: number,
@@ -40,6 +46,8 @@ class TileCoordData {
 		this.z = zoom !== null ? zoom : app.map.getZoom();
 		this.part = part !== null ? part : app.map._docLayer._selectedPart;
 		this.mode = mode !== undefined ? mode : 0;
+
+		this.scale = Math.round(Math.pow(1.2, this.z - 10) * 1000) / 1000;
 	}
 
 	getPos() {
