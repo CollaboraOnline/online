@@ -568,7 +568,6 @@ class SlideShowPresenter {
 		}
 
 		if (
-			(window as any).ThisIsTheiOSApp ||
 			(window as any).ThisIsTheAndroidApp
 		) {
 			window.postMobileMessage('SLIDESHOW');
