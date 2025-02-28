@@ -4217,10 +4217,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		return this._cssPixelsToTwips(pixels);
 	},
 
-	_isTileReadyToDraw: function(tile) {
-		return !!tile.imgDataCache;
-	},
-
 	_updateMaxBounds: function (sizeChanged) {
 		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
 			return;
