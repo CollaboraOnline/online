@@ -1599,4 +1599,10 @@ inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_cloc
 
 inline std::ostream& operator<<(std::ostream& os, const Util::Backtrace& bt) { return bt.send(os); }
 
+// std::to_underlying will be available in C++23
+template <typename Enum> constexpr std::underlying_type_t<Enum> to_underlying(Enum e)
+{
+   return static_cast<std::underlying_type_t<Enum>>(e);
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
