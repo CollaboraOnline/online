@@ -175,10 +175,6 @@ private:
     /// @return New message to put into the queue.  If empty, use what was in callbackMsg.
     std::string removeCallbackDuplicate(const std::string& callbackMsg);
 
-    /// De-prioritize the previews (tiles with 'id') - move them to the end of
-    /// the queue.
-    void deprioritizePreviews();
-
     std::vector<TileDesc>* getTileQueue(int viewid);
     std::vector<TileDesc>& ensureTileQueue(int viewid);
     TileCombined popTileQueue(std::vector<TileDesc>& tileQueue, TilePrioritizer::Priority &priority);
