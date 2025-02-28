@@ -923,7 +923,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		TileManager.update();
 		TileManager.resetPreFetching(true);
-		this._onCurrentPageUpdate();
 	},
 
 	_isLatLngInView: function (position) {
@@ -3463,29 +3462,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.setZoom(zoom, {animate: false});
 	},
 
-	_onCurrentPageUpdate: function () {
-		if (!this._map)
-			return;
-
-		var mapCenter = this._map.project(this._map.getCenter());
-		if (!this._partPageRectanglesPixels || !(this._currentPage >= 0) || this._currentPage >= this._partPageRectanglesPixels.length ||
-				this._partPageRectanglesPixels[this._currentPage].contains(mapCenter)) {
-			// page number has not changed
-			return;
-		}
-		for (var i = 0; i < this._partPageRectanglesPixels.length; i++) {
-			if (this._partPageRectanglesPixels[i].contains(mapCenter)) {
-				this._currentPage = i;
-				this._map.fire('pagenumberchanged', {
-					currentPage: this._currentPage,
-					pages: this._pages,
-					docType: this._docType
-				});
-				return;
-			}
-		}
-	},
-
 	// Cells can change position during changes of zoom level in calc
 	// hence we need to request an updated cell cursor position for this level.
 	_onCellCursorShift: function (force) {
@@ -3520,14 +3496,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				for (var key in this._map._docPreviews) {
 					// find preview tiles that need to be updated and add them in a set
 					var preview = this._map._docPreviews[key];
-					if (preview.index >= 0 && this.isWriter()) {
-						// we have a preview for a page
-						if (preview.invalid || (this._partPageRectanglesTwips.length > preview.index &&
-								invalidBounds.intersects(this._partPageRectanglesTwips[preview.index]))) {
-							toInvalidate[key] = true;
-						}
-					}
-					else if (preview.index >= 0) {
+					if (preview.index >= 0) {
 						// we have a preview for a part
 						if (preview.invalid || preview.index === this._selectedPart ||
 								(preview.index === this._prevSelectedPart && this._prevSelectedPartNeedsUpdate)) {
