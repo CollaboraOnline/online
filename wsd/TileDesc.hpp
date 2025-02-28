@@ -59,12 +59,24 @@ namespace TileParse
     }
 }
 
+enum class CanonicalViewId : int
+{
+    Invalid = -1,
+    None
+};
+
+inline std::ostream& operator<<(std::ostream& os, const CanonicalViewId e)
+{
+    os << to_underlying(e);
+    return os;
+}
+
 /// Tile Descriptor
 /// Represents a tile's coordinates and dimensions.
 class TileDesc final
 {
 public:
-    TileDesc(int canonicalViewId, int part, int mode, int width, int height, int tilePosX, int tilePosY, int tileWidth,
+    TileDesc(CanonicalViewId canonicalViewId, int part, int mode, int width, int height, int tilePosX, int tilePosY, int tileWidth,
              int tileHeight, int ver, int imgSize, int id)
         : _canonicalViewId(canonicalViewId)
         , _part(part)
@@ -81,7 +93,7 @@ public:
         , _oldWireId(0)
         , _wireId(0)
     {
-        if (_canonicalViewId < 0 ||
+        if (_canonicalViewId <= CanonicalViewId::Invalid ||
             _part < 0 ||
             _mode < 0 ||
             _width <= 0 ||
@@ -96,8 +108,8 @@ public:
         }
     }
 
-    int getCanonicalViewId() const { return _canonicalViewId; }
-    void setCanonicalViewId(const int canonicalViewId) { _canonicalViewId = canonicalViewId; }
+    CanonicalViewId getCanonicalViewId() const { return _canonicalViewId; }
+    void setCanonicalViewId(CanonicalViewId canonicalViewId) { _canonicalViewId = canonicalViewId; }
     int getPart() const { return _part; }
     int getEditMode() const { return _mode; }
     int getWidth() const { return _width; }
@@ -157,7 +169,7 @@ public:
     // used to cache a hash of the key elements compared in ==
     uint32_t equalityHash() const
     {
-        uint32_t a = _canonicalViewId << 17;
+        uint32_t a = to_underlying(_canonicalViewId) << 17;
         uint32_t b = _tilePosX << 7;
 
         a ^= _part;
@@ -387,7 +399,7 @@ public:
             }
         }
 
-        TileDesc result(pairs[nviewid], pairs[part], pairs[mode],
+        TileDesc result(CanonicalViewId(pairs[nviewid]), pairs[part], pairs[mode],
                         pairs[width], pairs[height],
                         pairs[tileposx], pairs[tileposy],
                         pairs[tilewidth], pairs[tileheight],
@@ -414,7 +426,7 @@ public:
     }
 
 private:
-    int _canonicalViewId;
+    CanonicalViewId _canonicalViewId;
     int _part;
     int _mode; ///< Used in Impress for EditMode::(Page|MasterPage), 0 = default
     int _width;
@@ -436,7 +448,7 @@ private:
 class TileCombined
 {
 private:
-    TileCombined(int canonicalViewId, int part, int mode, int width, int height,
+    TileCombined(CanonicalViewId canonicalViewId, int part, int mode, int width, int height,
                  const std::string& tilePositionsX, const std::string& tilePositionsY,
                  int tileWidth, int tileHeight, const std::string& vers,
                  const std::string& imgSizes,
@@ -539,7 +551,7 @@ private:
     }
 protected:
     TileCombined() :
-        _canonicalViewId(-1),
+        _canonicalViewId(CanonicalViewId::Invalid),
         _part(-1),
         _mode(-1),
         _width(-1),
@@ -554,7 +566,7 @@ protected:
     }
 
 public:
-    int getCanonicalViewId() const { return _canonicalViewId; }
+    CanonicalViewId getCanonicalViewId() const { return _canonicalViewId; }
     int getPart() const { return _part; }
     int getEditMode() const { return _mode; }
     int getWidth() const { return _width; }
@@ -571,7 +583,7 @@ public:
     std::vector<TileDesc>& getTiles() { return _tiles; }
     void setHasOldWireId() { _hasOldWids = true; }
 
-    void setCanonicalViewId(int viewId)
+    void setCanonicalViewId(CanonicalViewId viewId)
     {
         for (auto& tile : _tiles)
             tile.setCanonicalViewId(viewId);
@@ -755,7 +767,8 @@ public:
             }
         }
 
-        return TileCombined(pairs[nviewid], pairs[part], pairs[mode],
+        return TileCombined(CanonicalViewId(pairs[nviewid]),
+                            pairs[part], pairs[mode],
                             pairs[width], pairs[height],
                             tilePositionsX, tilePositionsY,
                             pairs[tilewidth], pairs[tileheight],
@@ -818,7 +831,7 @@ public:
 
 protected:
     std::vector<TileDesc> _tiles;
-    int _canonicalViewId;
+    CanonicalViewId _canonicalViewId;
     int _part;
     int _mode;
     int _width;

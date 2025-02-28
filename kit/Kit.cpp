@@ -987,7 +987,7 @@ void Document::renderTiles(TileCombined &tileCombined)
     }
 
     // if necessary select a suitable rendering view eg. with 'show non-printing chars'
-    if (tileCombined.getCanonicalViewId())
+    if (tileCombined.getCanonicalViewId() != CanonicalViewId::None)
         _loKitDocument->setView(session->getViewId());
 
     const auto blenderFunc = [&](unsigned char* data, int offsetX, int offsetY,
@@ -1749,7 +1749,7 @@ void Document::invalidateCanonicalId(const std::string& sessionId)
         return;
     }
     std::shared_ptr<ChildSession> session = it->second;
-    int newCanonicalId = _sessions.createCanonicalId(getViewProps(session));
+    CanonicalViewId newCanonicalId = _sessions.createCanonicalId(getViewProps(session));
     if (newCanonicalId == session->getCanonicalViewId())
         return;
     session->setCanonicalViewId(newCanonicalId);
@@ -1764,7 +1764,7 @@ void Document::invalidateCanonicalId(const std::string& sessionId)
         stateName = "Empty";
     }
     std::string message = "canonicalidchange: viewid=" + std::to_string(session->getViewId()) +
-        " canonicalid=" + std::to_string(newCanonicalId) +
+        " canonicalid=" + std::to_string(to_underlying(newCanonicalId)) +
         " viewrenderedstate=" + stateName;
     session->sendTextFrame(message);
 }
@@ -2320,7 +2320,7 @@ std::vector<TilePrioritizer::ViewIdInactivity> Document::getViewIdsByInactivity(
         const std::shared_ptr<ChildSession> &session = it.second;
 
         double sessionInactivity = session->getInactivityMS(now);
-        int viewId = session->getCanonicalViewId();
+        CanonicalViewId viewId = session->getCanonicalViewId();
 
         auto found = std::find_if(viewIds.begin(), viewIds.end(),
                                   [viewId](const auto& entry)->bool {

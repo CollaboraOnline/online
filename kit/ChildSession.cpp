@@ -103,7 +103,7 @@ ChildSession::ChildSession(const std::shared_ptr<ProtocolHandlerInterface>& prot
     , _currentPart(-1)
     , _isDocLoaded(false)
     , _copyToClipboard(false)
-    , _canonicalViewId(-1)
+    , _canonicalViewId(CanonicalViewId::Invalid)
     , _isDumpingTiles(false)
     , _clientVisibleArea(0, 0, 0, 0)
     , _URPContext(nullptr)

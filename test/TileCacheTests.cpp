@@ -202,8 +202,8 @@ void TileCacheTests::testDesc()
 {
     constexpr auto testname = __func__;
 
-    TileDesc descA = TileDesc(0, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 0, 1234, 1);
-    TileDesc descB = TileDesc(0, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 1, 1235, 2);
+    TileDesc descA = TileDesc(CanonicalViewId::None, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 0, 1234, 1);
+    TileDesc descB = TileDesc(CanonicalViewId::None, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 1, 1235, 2);
 
     TileDescCacheCompareEq pred;
     LOK_ASSERT_MESSAGE("TileDesc versions do match", descA.getVersion() != descB.getVersion());
@@ -224,7 +224,7 @@ void TileCacheTests::testSimple()
     // now, so it discards the cached data.
     TileCache tc("doc.ods", std::chrono::system_clock::time_point());
 
-    int nviewid = 0;
+    CanonicalViewId nviewid(CanonicalViewId::None);
     int part = 0;
     int mode = 0;
     int width = 256;
@@ -418,7 +418,7 @@ void TileCacheTests::testSize()
     // now, so it discards the cached data.
     TileCache tc("doc.ods", std::chrono::system_clock::time_point());
 
-    int nviewid = 0;
+    CanonicalViewId nviewid(CanonicalViewId::None);
     int part = 0;
     int mode = 0;
     int width = 256;

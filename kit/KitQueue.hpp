@@ -38,7 +38,7 @@ public:
     };
     virtual Priority getTilePriority(const TileDesc &) const { return Priority::NORMAL; }
 
-    typedef std::pair<int, float> ViewIdInactivity;
+    typedef std::pair<CanonicalViewId, float> ViewIdInactivity;
     virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const { return {}; }
 };
 
@@ -175,8 +175,8 @@ private:
     /// @return New message to put into the queue.  If empty, use what was in callbackMsg.
     std::string removeCallbackDuplicate(const std::string& callbackMsg);
 
-    std::vector<TileDesc>* getTileQueue(int viewid);
-    std::vector<TileDesc>& ensureTileQueue(int viewid);
+    std::vector<TileDesc>* getTileQueue(CanonicalViewId viewid);
+    std::vector<TileDesc>& ensureTileQueue(CanonicalViewId viewid);
     TileCombined popTileQueue(std::vector<TileDesc>& tileQueue, TilePrioritizer::Priority &priority);
 
 private:
@@ -184,7 +184,7 @@ private:
     std::vector<Payload> _queue;
 
     /// Queues of incoming tile requests from coolwsd
-    typedef std::pair<int, std::vector<TileDesc>> viewTileQueue;
+    typedef std::pair<CanonicalViewId, std::vector<TileDesc>> viewTileQueue;
     std::vector<viewTileQueue> _tileQueues;
 
     /// Queue of callbacks from Kit to send out to coolwsd

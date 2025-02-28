@@ -89,7 +89,7 @@ void KitQueue::put(const Payload& value)
         _queue.emplace_back(value);
 }
 
-std::vector<TileDesc>* KitQueue::getTileQueue(int viewid)
+std::vector<TileDesc>* KitQueue::getTileQueue(CanonicalViewId viewid)
 {
     for (auto& queue : _tileQueues)
     {
@@ -99,7 +99,7 @@ std::vector<TileDesc>* KitQueue::getTileQueue(int viewid)
     return nullptr;
 }
 
-std::vector<TileDesc>& KitQueue::ensureTileQueue(int viewid)
+std::vector<TileDesc>& KitQueue::ensureTileQueue(CanonicalViewId viewid)
 {
     std::vector<TileDesc>* tileQueue = getTileQueue(viewid);
     if (tileQueue)
@@ -694,7 +694,7 @@ void KitQueue::dumpState(std::ostream& oss)
     oss << "\tTile Queues count: " << _tileQueues.size() << "\n";
     for (auto& queue : _tileQueues)
     {
-        int viewId = queue.first;
+        CanonicalViewId viewId = queue.first;
         const std::vector<TileDesc>& tileQueue = queue.second;
         oss << "\t\tTile Queue size: " << tileQueue.size() << " viewId: " << viewId << "\n";
         i = 0;

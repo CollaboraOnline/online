@@ -277,7 +277,7 @@ Blob TileCache::lookupCachedStream(StreamType type, const std::string& name)
     return Blob();
 }
 
-bool TileCache::invalidateTiles(int part, int mode, int x, int y, int width, int height, int canonicalViewId)
+bool TileCache::invalidateTiles(int part, int mode, int x, int y, int width, int height, CanonicalViewId canonicalViewId)
 {
     LOG_TRC("Removing invalidated tiles: part: " << part << ", mode: " << mode <<
             ", x: " << x << ", y: " << y <<
@@ -317,7 +317,7 @@ bool TileCache::invalidateTiles(int part, int mode, int x, int y, int width, int
     return true;
 }
 
-bool TileCache::invalidateTiles(const std::string& tiles, int canonicalViewId)
+bool TileCache::invalidateTiles(const std::string& tiles, CanonicalViewId canonicalViewId)
 {
     int part = 0, mode = 0;
     TileWireId wireId = 0;
@@ -423,7 +423,7 @@ bool TileCache::parseCacheFileName(const std::string& fileName, int& part, int& 
            == 8;
 }
 
-bool TileCache::intersectsTile(const TileDesc &tileDesc, int part, int mode, int x, int y, int width, int height, int canonicalViewId)
+bool TileCache::intersectsTile(const TileDesc &tileDesc, int part, int mode, int x, int y, int width, int height, CanonicalViewId canonicalViewId)
 {
     if (part != -1 && tileDesc.getPart() != part)
         return false;
