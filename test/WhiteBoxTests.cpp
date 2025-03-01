@@ -43,6 +43,8 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testPathPrefixTrimming);
     CPPUNIT_TEST(testMessageAbbreviation);
     CPPUNIT_TEST(testReplace);
+    CPPUNIT_TEST(testReplaceChar);
+    CPPUNIT_TEST(testReplaceCharInPlace);
     CPPUNIT_TEST(testReplaceAllOf);
     CPPUNIT_TEST(testRegexListMatcher);
     CPPUNIT_TEST(testRegexListMatcher_Init);
@@ -68,6 +70,8 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testPathPrefixTrimming();
     void testMessageAbbreviation();
     void testReplace();
+    void testReplaceChar();
+    void testReplaceCharInPlace();
     void testReplaceAllOf();
     void testRegexListMatcher();
     void testRegexListMatcher_Init();
@@ -447,6 +451,25 @@ void WhiteBoxTests::testReplace()
     LOK_ASSERT_EQUAL(std::string("tete one two flee"), Util::replace("tettet one two flee", "tet", "te"));
     LOK_ASSERT_EQUAL(std::string("t one two flee"), Util::replace("test one two flee", "tes", ""));
     LOK_ASSERT_EQUAL(std::string("test one two flee"), Util::replace("test one two flee", "", "X"));
+}
+
+void WhiteBoxTests::testReplaceChar()
+{
+    constexpr auto testname = __func__;
+
+    LOK_ASSERT_EQUAL_STR("zesz one zwo flee", Util::replace("test one two flee", 't', 'z'));
+    LOK_ASSERT_EQUAL_STR("test one two flee", Util::replace("test one two flee", ' ', ' '));
+}
+
+void WhiteBoxTests::testReplaceCharInPlace()
+{
+    constexpr auto testname = __func__;
+
+    // Can't compile, because the argument is a temporary.
+    // LOK_ASSERT_EQUAL_STR("zesz one zwo flee", Util::replaceInPlace("test one two flee", 't', 'z'));
+    std::string s = "test one two flee";
+    LOK_ASSERT_EQUAL_STR("zesz one zwo flee", Util::replaceInPlace(s, 't', 'z'));
+    LOK_ASSERT_EQUAL_STR("zesz one zwo flee", Util::replaceInPlace(s, ' ', ' '));
 }
 
 void WhiteBoxTests::testReplaceAllOf()

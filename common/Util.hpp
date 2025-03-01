@@ -377,6 +377,26 @@ namespace Util
     /// Replace substring @a in string @s with string @b.
     std::string replace(std::string s, const std::string& a, const std::string& b);
 
+    /// Replace character @a in string @s, in place, with character @b.
+    inline std::string& replaceInPlace(std::string& s, char a, char b)
+    {
+        for (std::size_t i = 0; i < s.size(); ++i)
+        {
+            if (s[i] == a)
+                s[i] = b;
+        }
+
+        return s;
+    }
+
+    /// Replace character @a in string @s with character @b.
+    inline std::string replace(const std::string_view s, char a, char b)
+    {
+        std::string res(s);
+        replaceInPlace(res, a, b);
+        return res;
+    }
+
     /// Replace any characters in @a matching characters in @b with replacement chars in @c and return
     std::string replaceAllOf(std::string_view str, std::string_view match, std::string_view repl);
 
