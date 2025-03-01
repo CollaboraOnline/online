@@ -147,7 +147,7 @@ public:
         : _type(type)
         , _clientPort(0)
         , _fd(createSocket(type))
-        , _closed(_fd < 0)
+        , _isShutdown(_fd < 0)
         , _creationTime(creationTime)
         , _lastSeenTime(_creationTime)
         , _bytesSent(0)
@@ -177,7 +177,7 @@ public:
     }
 
     /// Returns true if this socket FD has been shutdown, but not necessarily closed.
-    bool isClosed() const { return _closed; }
+    bool isClosed() const { return _isShutdown; }
 
     constexpr Type type() const { return _type; }
     constexpr bool isIPType() const { return Type::IPv4 == _type || Type::IPv6 == _type; }
@@ -434,7 +434,7 @@ protected:
         : _type(type)
         , _clientPort(0)
         , _fd(fd)
-        , _closed(_fd < 0)
+        , _isShutdown(_fd < 0)
         , _creationTime(creationTime)
         , _lastSeenTime(_creationTime)
         , _bytesSent(0)
@@ -454,7 +454,7 @@ protected:
     void setNoShutdown() { _noShutdown = true; }
 
     /// Explicitly marks this socket FD closed when we call shutdown, but not necessarily closed.
-    void setClosed() { _closed = true; }
+    void setClosed() { _isShutdown = true; }
 
 private:
     /// Create socket of the given type.
@@ -492,8 +492,8 @@ private:
     const Type _type;
     unsigned int _clientPort;
     int _fd;
-    /// True if this socket is closed.
-    bool _closed;
+    /// True if this socket is shut down.
+    bool _isShutdown;
 
     const std::chrono::steady_clock::time_point _creationTime;
     std::chrono::steady_clock::time_point _lastSeenTime;
