@@ -757,7 +757,7 @@ public:
         os << indent << "http::Request: " << _version << ' ' << _verb << ' ' << _url;
         os << indent << "\tstage: " << name(_stage);
         os << indent << "\theaders: ";
-        Util::joinPair(os, _header, (indent + '\t').c_str());
+        Util::joinPair(os, _header, indent + '\t');
     }
 
 private:
@@ -1065,7 +1065,7 @@ public:
         os << indent << "\theaders: ";
 
         std::string childIndent = indent + '\t';
-        Util::joinPair(os, _header, childIndent.c_str());
+        Util::joinPair(os, _header, childIndent);
         os << indent
            << Util::dumpHex(_body, "\tbody:\n", Util::replace(childIndent, "\n", "").c_str());
     }
