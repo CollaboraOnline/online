@@ -3089,13 +3089,15 @@ void DocumentBroker::handleDocumentConflict()
 
 void DocumentBroker::broadcastSaveResult(bool success, const std::string& result, const std::string& errorMsg)
 {
-    const std::string resultstr = success ? "true" : "false";
+    const std::string_view resultstr = success ? "true" : "false";
     // Some sane limit, otherwise we get problems transferring this to the client with large strings (can be a whole webpage)
     std::string errorMsgFormatted = COOLProtocol::getAbbreviatedMessage(errorMsg);
-    // Replace reserved characters before sending.
-    Util::replaceInPlace(errorMsgFormatted, '"', '\'');
-    broadcastMessage("commandresult: { \"command\": \"save\", \"success\": " + resultstr +
-                     ", \"result\": \"" + result + "\", \"errorMsg\": \"" + errorMsgFormatted  + "\"}");
+    std::ostringstream oss;
+    oss << "commandresult: { \"command\": \"save\", \"success\": " << resultstr
+        << ", \"result\": \"" << result << "\", \"errorMsg\": \""
+        << Util::replaceInPlace(errorMsgFormatted, '"', '\'') // Replace reserved characters
+        << "\"}";
+    broadcastMessage(oss.str());
 }
 
 void DocumentBroker::setLoaded()
