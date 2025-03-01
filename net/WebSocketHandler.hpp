@@ -289,7 +289,7 @@ private:
 
             // force close after writing this message (real shutdown)
             if (hardShutdown)
-                socket->closeConnection();
+                socket->shutdownConnection();
         }
 
         _wsPayload.clear();
@@ -901,7 +901,7 @@ protected:
             // But more important is to flush the data we have before closing the socket.
             // There is a FIXME item in Session::shutdown specifically to address this case.
             // When we terminate a client's connection in DocumentBroker::finalRemoveSession,
-            // we send the close frame and close the socket via Socket::closeConnection(),
+            // we send the close frame and close the socket via Socket::shutdownConnection(),
             // which is called immediately after *this* function (see shutdown() above).
             // So, a common scenario is when we want to shutdown all clients. The stack
             // trace looks like this:

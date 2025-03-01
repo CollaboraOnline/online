@@ -107,7 +107,7 @@ public:
         if (!isShutdownSignalled())
         {
             setShutdownSignalled();
-            SslStreamSocket::closeConnection();
+            SslStreamSocket::shutdownConnection();
         }
 
         SSL_free(_ssl);
@@ -131,9 +131,9 @@ public:
     }
 
     /// Shutdown the TLS/SSL connection properly.
-    void closeConnection() override
+    void shutdownConnection() override
     {
-        LOG_DBG("SslStreamSocket::closeConnection() #" << getFD());
+        LOG_DBG("SslStreamSocket::shutdownConnection() #" << getFD());
         if (SSL_shutdown(_ssl) == 0)
         {
             // Complete the bidirectional shutdown.
@@ -277,7 +277,7 @@ private:
                 if (!verifyCertificate())
                 {
                     LOG_WRN("Failed to verify the certificate of [" << hostname() << ']');
-                    closeConnection();
+                    shutdownConnection();
                     return 0; // Connection is closed.
                 }
             }
