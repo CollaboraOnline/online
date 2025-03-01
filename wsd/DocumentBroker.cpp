@@ -5051,15 +5051,17 @@ std::size_t DocumentBroker::broadcastMessage(const std::string& message) const
     return count;
 }
 
-void DocumentBroker::broadcastMessageToOthers(const std::string& message, const std::shared_ptr<ClientSession>& _session) const
+void DocumentBroker::broadcastMessageToOthers(const std::string& message,
+                                              const std::shared_ptr<ClientSession>& session) const
 {
     ASSERT_CORRECT_THREAD();
 
-    LOG_DBG("Broadcasting message [" << message << "] to all, except for " << _session->getId() << _sessions.size() <<  " sessions.");
+    LOG_DBG("Broadcasting message [" << message << "] to all " << _sessions.size()
+                                     << " sessions, except for " << session->getId());
     for (const auto& sessionIt : _sessions)
     {
-        if (sessionIt.second == _session) continue;
-        sessionIt.second->sendTextFrame(message);
+        if (sessionIt.second != session)
+            sessionIt.second->sendTextFrame(message);
     }
 }
 
