@@ -48,9 +48,9 @@ void sendLoadResult(const std::shared_ptr<ClientSession>& clientSession, bool su
     const std::string resultstr = success ? "true" : "false";
     // Some sane limit, otherwise we get problems transferring this
     // to the client with large strings (can be a whole webpage)
-    // Replace reserved characters
+    // Replace reserved characters before sending.
     std::string errorMsgFormatted = COOLProtocol::getAbbreviatedMessage(errorMsg);
-    errorMsgFormatted = Poco::translate(errorMsg, "\"", "'");
+    Util::replaceInPlace(errorMsgFormatted, '"', '\'');
     clientSession->sendTextFrame(
         "commandresult: { \"command\": \"load\", \"success\": " + resultstr + ", \"result\": \"" +
         result + "\", \"errorMsg\": \"" + errorMsgFormatted + "\"}");
