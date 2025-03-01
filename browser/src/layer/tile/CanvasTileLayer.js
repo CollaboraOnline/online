@@ -814,7 +814,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!L.Browser.mobileWebkit)
 				TileManager.update(this._map.getCenter(), tileZoom);
 
-			TileManager.pruneTiles();
+			if (tileZoomChanged)
+				TileManager.pruneTiles();
 
 			if (this._docType === 'spreadsheet')
 				this._syncTileContainerSize();
