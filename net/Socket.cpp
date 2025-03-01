@@ -660,7 +660,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS, bool justPoll)
                     rc = -1;
                 }
 
-                if (_pollSockets[i]->isClosed() || !disposition.isContinue())
+                if (_pollSockets[i]->isShutdown() || !disposition.isContinue())
                 {
                     ++itemsErased;
                     LOGA_TRC(Socket, '#' << _pollFds[i].fd << ": Removing socket (at " << i
@@ -1501,21 +1501,21 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
         if (_socketHandler)
         {
             _socketHandler->onDisconnect();
-            if (!isClosed())
+            if (!isShutdown())
             {
                 // Note: Ensure proper semantics of onDisconnect()
                 LOG_WRN("Socket still open post onDisconnect(), forced shutdown.");
                 shutdown(); // signal
-                closeConnection(); // real -> setClosed()
+                closeConnection(); // real -> setShutdown()
             }
         }
         else
         {
             shutdown(); // signal
-            closeConnection(); // real -> setClosed()
+            closeConnection(); // real -> setShutdown()
         }
 
-        assert(isClosed()); // should have issued shutdown
+        assert(isShutdown() && "Should have issued shutdown");
         return true;
     }
 
