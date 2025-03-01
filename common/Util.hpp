@@ -1557,7 +1557,7 @@ int main(int argc, char**argv)
 
     /// Stringify elements from a container of pairs with a delimiter to a stream.
     template <typename S, typename T>
-    void joinPair(S& stream, const T& container, const char* delimiter = " / ")
+    void joinPair(S& stream, const T& container, const std::string_view delimiter = " / ")
     {
         unsigned i = 0;
         for (const auto& pair : container)
@@ -1567,7 +1567,8 @@ int main(int argc, char**argv)
     }
 
     /// Stringify elements from a container of pairs with a delimiter to string.
-    template <typename T> std::string joinPair(const T& container, const char* delimiter = " / ")
+    template <typename T>
+    std::string joinPair(const T& container, const std::string_view delimiter = " / ")
     {
         std::ostringstream oss;
         joinPair(oss, container, delimiter);
