@@ -177,7 +177,7 @@ public:
     }
 
     /// Returns true if this socket FD has been shutdown, but not necessarily closed.
-    bool isClosed() const { return _isShutdown; }
+    bool isShutdown() const { return _isShutdown; }
 
     constexpr Type type() const { return _type; }
     constexpr bool isIPType() const { return Type::IPv4 == _type || Type::IPv6 == _type; }
@@ -225,7 +225,7 @@ public:
         if (!_noShutdown)
         {
             LOG_TRC("Socket shutdown RDWR. " << *this);
-            setClosed();
+            setShutdown();
             if constexpr (!Util::isMobileApp())
                 ::shutdown(_fd, SHUT_RDWR);
             else
@@ -453,8 +453,8 @@ protected:
     /// avoid doing a shutdown before close
     void setNoShutdown() { _noShutdown = true; }
 
-    /// Explicitly marks this socket FD closed when we call shutdown, but not necessarily closed.
-    void setClosed() { _isShutdown = true; }
+    /// Explicitly marks this socket FD as shut down, but not necessarily closed.
+    void setShutdown() { _isShutdown = true; }
 
 private:
     /// Create socket of the given type.
@@ -1083,7 +1083,7 @@ public:
         LOG_TRC("StreamSocket dtor called with pending write: " << _outBuffer.size()
                                                                 << ", read: " << _inBuffer.size());
 
-        if (!isClosed())
+        if (!isShutdown())
         {
             ASSERT_CORRECT_SOCKET_THREAD(this);
             if (_socketHandler)
@@ -1462,18 +1462,18 @@ public:
                     const int events) override
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
-        assert((getFD() >= 0 || isClosed()) && "Socket is closed but not marked correctly");
+        assert((getFD() >= 0 || isShutdown()) && "Socket is closed but not marked correctly");
 
         if (_socketHandler->checkTimeout(now))
         {
-            assert(isClosed()); // should have issued shutdown
-            setClosed();
+            assert(isShutdown() && "checkTimeout should have issued shutdown");
+            setShutdown();
             LOGA_DBG(Socket, "socket timeout: " << getStatsString(now) << ", " << *this);
             disposition.setClosed();
             return;
         }
 
-        if (isClosed() || checkRemoval(now))
+        if (isShutdown() || checkRemoval(now))
         {
             disposition.setClosed();
             return;
@@ -1593,10 +1593,10 @@ public:
         {
             LOG_TRC("Closed. Firing onDisconnect.");
             _socketHandler->onDisconnect();
-            setClosed();
+            setShutdown();
             disposition.setClosed();
         }
-        else if (isClosed())
+        else if (isShutdown())
             disposition.setClosed();
     }
 
@@ -1720,7 +1720,7 @@ protected:
     virtual int readData(char* buf, int len)
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
-        assert((getFD() >= 0 || isClosed()) && "Socket is closed but not marked correctly");
+        assert((getFD() >= 0 || isShutdown()) && "Socket is closed but not marked correctly");
 
         // avoided in readIncomingData
         if (ignoringInput())
@@ -1745,7 +1745,7 @@ protected:
     virtual int writeData(const char* buf, const int len)
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
-        assert((getFD() >= 0 || isClosed()) && "Socket is closed but not marked correctly");
+        assert((getFD() >= 0 || isShutdown()) && "Socket is closed but not marked correctly");
 
 #if !MOBILEAPP
 #if ENABLE_DEBUG
