@@ -130,6 +130,7 @@ class Tile {
 	coords: TileCoordData;
 	current: boolean = true; // is this currently visible
 	canvas: any = null; // canvas ready to render
+	ctx: CanvasRenderingContext2D | null = null; // canvas context to render onto
 	imgDataCache: any = null; // flat byte array of canvas data
 	rawDeltas: any = null; // deltas ready to decompress
 	deltaCount: number = 0; // how many deltas on top of the keyframe
@@ -195,6 +196,81 @@ class Tile {
 	}
 }
 
+class CanvasItem {
+	canvas: HTMLCanvasElement | null = null;
+	ctx: CanvasRenderingContext2D | null = null;
+}
+
+// Allocating and freeing canvas' is surprisingly expensive and
+// can block rendering for long periods, so re-use canvas' instead.
+class CanvasCache {
+	private _tileSize: number;
+
+	private _canvasList: CanvasItem[] = [];
+
+	constructor(tileSize: number) {
+		this._tileSize = tileSize;
+	}
+
+	get size() {
+		return this._canvasList.length;
+	}
+
+	acquireCanvas(tile: Tile): CanvasRenderingContext2D | null {
+		let item: CanvasItem;
+
+		if (this._canvasList.length === 0) {
+			item = new CanvasItem();
+
+			// This allocation is usually cheap and reliable,
+			// getting the canvas context, not so much.
+			item.canvas = document.createElement('canvas');
+			item.canvas.width = this._tileSize;
+			item.canvas.height = this._tileSize;
+
+			// So we need to grab the context too ...
+			item.ctx = item.canvas.getContext('2d');
+			// handle null item.ctx higher up
+		} else item = this._canvasList.pop();
+
+		tile.canvas = item.canvas;
+		tile.ctx = item.ctx;
+
+		return item.ctx;
+	}
+
+	releaseCanvas(tile: Tile) {
+		var item: CanvasItem = new CanvasItem();
+		item.canvas = tile.canvas;
+		item.ctx = tile.ctx;
+		tile.canvas = null;
+		tile.ctx = null;
+		this._canvasList.push(item);
+
+		tile.imgDataCache = null;
+	}
+
+	trim(limit: number) {
+		while (this._canvasList.length > limit) {
+			const item = this._canvasList.pop();
+
+			// Fix for cool#5876 allow immediate reuse of canvas context memory
+			// WKWebView has a hard limit on the number of bytes of canvas
+			// context memory that can be allocated. Reducing the canvas
+			// size to zero is a way to reduce the number of bytes counted
+			// against this limit.
+			item.canvas.width = 0;
+			item.canvas.height = 0;
+
+			delete item.canvas;
+		}
+	}
+
+	clear() {
+		this.trim(0);
+	}
+}
+
 class TileManager {
 	private static _docLayer: any;
 	private static _zoom: number;
@@ -222,10 +298,10 @@ class TileManager {
 	private static debugDeltas: boolean = false;
 	private static debugDeltasDetail: boolean = false;
 	private static tiles: any = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
+	private static canvasCache: CanvasCache = new CanvasCache(256);
+	public static tileSize: number = 256;
 
 	//private static _debugTime: any = {}; Reserved for future.
-
-	public static tileSize: number = 256;
 
 	public static initialize() {
 		if (window.Worker && !(window as any).ThisIsAMobileApp) {
@@ -242,10 +318,9 @@ class TileManager {
 		if (!(++this.gcCounter % 53)) this.garbageCollect();
 	}
 
-	// FIXME: could trim quite hard here, and do this at idle ...
 	// Set a high and low watermark of how many canvases we want
 	// and expire old ones
-	private static garbageCollect() {
+	private static garbageCollect(discardAll = false) {
 		// 4k screen -> 8Mpixel, each tile is 64kpixel uncompressed
 		var highNumCanvases = 250; // ~60Mb.
 		var lowNumCanvases = 125; // ~30Mb
@@ -256,8 +331,21 @@ class TileManager {
 		var highTileCount = 2 * 1024;
 		var lowTileCount = 1024;
 
+		if (discardAll) {
+			highNumCanvases = 0;
+			lowNumCanvases = 0;
+			highDeltaMemory = 0;
+			lowDeltaMemory = 0;
+			highTileCount = 0;
+			lowTileCount = 0;
+		}
+
 		if (this.debugDeltas)
 			window.app.console.log('Garbage collect! iter: ' + this.gcCounter);
+
+		// In case garbage collection was forced outside of maybeGarbageCollect, make sure future
+		// garbage collection doesn't happen prematurely.
+		this.gcCounter += (53 - (this.gcCounter % 53)) % 53;
 
 		/* uncomment to exercise me harder. */
 		/* highNumCanvases = 3; lowNumCanvases = 2;
@@ -331,24 +419,30 @@ class TileManager {
 				if (!tile.current) this.removeTile(keys[i]);
 			}
 		}
+
+		// Canvases are returned to a cache when reclaimed. Given
+		// (highNumCanvases - lowNumCanvases) canvases may regularly be returned to
+		// the cache, ensure the cache stays about that size.
+		// Under regular circumstances, this should do nothing and is a failsafe.
+		const canvasCacheTargetSize = highNumCanvases - lowNumCanvases;
+		if (this.canvasCache.size > canvasCacheTargetSize * 1.5)
+			this.canvasCache.trim(canvasCacheTargetSize);
 	}
 
 	// work hard to ensure we get a canvas context to render with
 	private static ensureContext(tile: Tile) {
-		var ctx;
-
 		this.maybeGarbageCollect();
 
 		// important this is after the garbagecollect
 		if (!tile.canvas) this.ensureCanvas(tile, null, false);
 
-		if ((ctx = tile.canvas.getContext('2d'))) return ctx;
+		if (tile.ctx) return tile.ctx;
 
 		// Not a good result - we ran out of canvas memory
 		this.garbageCollect();
 
 		if (!tile.canvas) this.ensureCanvas(tile, null, false);
-		if ((ctx = tile.canvas.getContext('2d'))) return ctx;
+		if (tile.ctx) return tile.ctx;
 
 		// Free non-current canvas' and start again.
 		if (this.debugDeltas)
@@ -357,21 +451,23 @@ class TileManager {
 			var t = this.tiles[key];
 			if (t && !t.current) this.reclaimTileCanvasMemory(t);
 		}
+		this.canvasCache.clear();
 		if (!tile.canvas) this.ensureCanvas(tile, null, false);
-		if ((ctx = tile.canvas.getContext('2d'))) return ctx;
+		if (tile.ctx) return tile.ctx;
 
 		if (this.debugDeltas)
 			window.app.console.log(
-				'Throw everything overbarod to free all tiles canvas memory',
+				'Throw everything overboard to free all tiles canvas memory',
 			);
 		for (var key in this.tiles) {
 			var t = this.tiles[key];
 			this.reclaimTileCanvasMemory(t);
 		}
+		this.canvasCache.clear();
 		if (!tile.canvas) this.ensureCanvas(tile, null, false);
-		ctx = tile.canvas.getContext('2d');
-		if (!ctx) window.app.console.log('Error: out of canvas memory.');
-		return ctx;
+		if (!tile.ctx) window.app.console.log('Error: out of canvas memory.');
+
+		return tile.ctx;
 	}
 
 	private static decompressPendingDeltas(message: string) {
@@ -1080,18 +1176,8 @@ class TileManager {
 		}
 	}
 
-	// Fix for cool#5876 allow immediate reuse of canvas context memory
-	// WKWebView has a hard limit on the number of bytes of canvas
-	// context memory that can be allocated. Reducing the canvas
-	// size to zero is a way to reduce the number of bytes counted
-	// against this limit.
 	private static reclaimTileCanvasMemory(tile: Tile) {
-		if (tile && tile.canvas) {
-			tile.canvas.width = 0;
-			tile.canvas.height = 0;
-			delete tile.canvas;
-		}
-		tile.imgDataCache = null;
+		this.canvasCache.releaseCanvas(tile);
 	}
 
 	private static initPreFetchPartTiles() {
@@ -1861,6 +1947,13 @@ class TileManager {
 		this.garbageCollect();
 	}
 
+	public static discardAllCache() {
+		// update tile.current for the view
+		if (app.file.fileBasedView) this.updateFileBasedView(true);
+
+		this.garbageCollect(true);
+	}
+
 	public static isValidTile(coords: TileCoordData) {
 		if (coords.x < 0 || coords.y < 0) {
 			return false;
@@ -2251,14 +2344,7 @@ class TileManager {
 	public static ensureCanvas(tile: Tile, now: any, forPrefetch: any) {
 		if (!tile) return;
 		if (!tile.canvas) {
-			// This allocation is usually cheap and reliable,
-			// getting the canvas context, not so much.
-			var canvas = document.createElement('canvas');
-			canvas.width = this.tileSize;
-			canvas.height = this.tileSize;
-
-			tile.canvas = canvas;
-
+			this.canvasCache.acquireCanvas(tile);
 			this.rehydrateTile(tile);
 		}
 		if (!forPrefetch) {
