@@ -335,10 +335,10 @@ public:
     /// if we timed out without disconnecting.
     bool waitForDisconnection(const std::chrono::milliseconds timeout)
     {
-        std::unique_lock<std::mutex> lock(_outMutex);
-
         if (_disconnected)
             return true;
+
+        std::unique_lock<std::mutex> lock(_outMutex);
 
         _disconnectCv.wait_for(lock, timeout, [this]() { return _disconnected.load(); });
         return _disconnected;
@@ -423,10 +423,7 @@ private:
 
     void onDisconnect() override
     {
-        {
-            std::unique_lock<std::mutex> lock(_outMutex);
-            _disconnected = true;
-        }
+        _disconnected = true;
 
         _disconnectCv.notify_all();
     }
