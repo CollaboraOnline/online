@@ -146,7 +146,7 @@ void Cache::supplyConfigFiles(const std::string& configId, std::vector<CacheQuer
         if (supplyConfigFile(cacheDir.toString(), it->_stamp, it->_dest))
         {
             it = queries.erase(it);
-            cacheHits.insert(cachename);
+            cacheHits.insert(std::move(cachename));
         }
         else
             ++it;
