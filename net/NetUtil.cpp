@@ -118,7 +118,7 @@ HostEntry::HostEntry(const std::string& desc)
         std::string address = makeIPAddress(ai->ai_addr);
         if (!good())
             break;
-        _ipAddresses.push_back(address);
+        _ipAddresses.push_back(std::move(address));
     }
 }
 
