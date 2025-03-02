@@ -41,7 +41,7 @@ private:
 
     void completed();
 
-    void addGroup(Poco::JSON::Object::Ptr settings, const std::string& groupName,
+    void addGroup(const Poco::JSON::Object::Ptr& settings, const std::string& groupName,
                   std::vector<CacheQuery>& queries);
 
 public:
