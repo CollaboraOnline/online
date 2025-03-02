@@ -703,7 +703,7 @@ private:
     /// (regardless of whether we need to or not).
     CanSave canSaveToDisk() const
     {
-        if (_docState.isDisconnected() || getPid() <= 0)
+        if (_docState.isKitDisconnected() || getPid() <= 0)
         {
             return CanSave::NoKit;
         }
@@ -1502,9 +1502,9 @@ private:
 #endif // !MOBILEAPP && !WASMAPP
         );
 
-        STATE_ENUM(Disconnected,
-                   No, ///< No, not disconnected
-                   Normal, ///< Yes, normal disconnection
+        STATE_ENUM(KitDisconnected,
+                   No, ///< No, kit is not disconnected
+                   Normal, ///< Yes, normal kit disconnection
                    Unexpected, ///< Yes, unexpected disconnection from Kit
         );
 
@@ -1514,7 +1514,7 @@ private:
             , _loaded(false)
             , _closeRequested(false)
             , _unloadRequested(false)
-            , _disconnected(Disconnected::No)
+            , _kitDisconnected(KitDisconnected::No)
             , _interactive(false)
         {
         }
@@ -1568,9 +1568,9 @@ private:
         bool isUnloadRequested() const { return _unloadRequested; }
 
         /// Flag that we are disconnected from the Kit. Irreversible.
-        void setDisconnected(Disconnected disconnected) { _disconnected = disconnected; }
-        DocumentState::Disconnected disconnected() const { return _disconnected; }
-        bool isDisconnected() const { return disconnected() != Disconnected::No; }
+        void setKitDisconnected(KitDisconnected disconnected) { _kitDisconnected = disconnected; }
+        DocumentState::KitDisconnected kitDisconnected() const { return _kitDisconnected; }
+        bool isKitDisconnected() const { return kitDisconnected() != KitDisconnected::No; }
 
         void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
@@ -1580,7 +1580,7 @@ private:
             os << indent << "interactive: " << _interactive;
             os << indent << "close requested: " << _closeRequested;
             os << indent << "unload requested: " << _unloadRequested;
-            os << indent << "disconnected from kit: " << name(_disconnected);
+            os << indent << "disconnected from kit: " << name(_kitDisconnected);
         }
 
     private:
@@ -1589,7 +1589,8 @@ private:
         std::atomic<bool> _loaded; ///< If the document ever loaded (check isLive to see if it still is).
         std::atomic<bool> _closeRequested; ///< Owner-Termination flag.
         std::atomic<bool> _unloadRequested; ///< Unload-Requested flag, which may be reset.
-        std::atomic<Disconnected> _disconnected; ///< Disconnected from the Kit. Implies unloading.
+        std::atomic<KitDisconnected>
+            _kitDisconnected; ///< Disconnected from the Kit. Implies unloading.
         bool _interactive; ///< If the document has interactive dialogs before load
     };
 
