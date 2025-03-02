@@ -1546,7 +1546,7 @@ void PresetsInstallTask::completed()
         cb(_overallSuccess);
 }
 
-void PresetsInstallTask::addGroup(Poco::JSON::Object::Ptr settings, const std::string& groupName,
+void PresetsInstallTask::addGroup(const Poco::JSON::Object::Ptr& settings, const std::string& groupName,
               std::vector<CacheQuery>& queries)
 {
     if (!settings->has(groupName))
