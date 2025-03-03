@@ -145,7 +145,6 @@ var unoCommandsArray = {
 	'EditRegion':{text:{menu:_('~Sections...'),},},
 	'EditSparkline':{spreadsheet:{menu:_('Edit Sparkline...'),},},
 	'EditSparklineGroup':{spreadsheet:{menu:_('Edit Sparkline Group...'),},},
-	'EditStyle':{global:{menu:_('~Edit Style...'),},presentation:{menu:_('E~dit Style...'),},},
 	'EnterGroup':{global:{menu:_('~Enter Group'),},},
 	'EntireCell':{text:{context:_('Select Cell'),menu:_('C~ell'),},},
 	'EntireColumn':{presentation:{menu:_('Select Column'),},text:{menu:_('~Column'),},},

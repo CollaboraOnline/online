@@ -127,8 +127,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:RejectAllTrackedChanges', 'text'), id: 'rejectalltrackedchanges', type: 'action'},
 					{uno: '.uno:PreviousTrackedChange'},
 					{uno: '.uno:NextTrackedChange'}
-				]},
-				{uno: '.uno:EditStyle'}
+				]}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu',
 			 menu: (window.mode.isTablet() ? [
@@ -148,6 +147,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 					{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
 					{uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
+					{uno: '.uno:SidebarDeck.StyleListDeck', name: _('Style list')},
 					{uno: '.uno:Navigator', id: 'navigator'},
 					{type: 'separator'},
 					{name: _UNO('.uno:ShowAnnotations', 'text'), id: 'showannotations', type: 'action'},
@@ -767,6 +767,7 @@ L.Control.Menubar = L.Control.extend({
 				   {name: _('Invert Background'), id: 'invertbackground', type: 'action'},
 				   {uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 				   {uno: '.uno:Navigator', id: 'navigator'},
+				   {uno: '.uno:SidebarDeck.StyleListDeck', name: _('Style list')},
 				   {type: 'separator'},
 				   {name: _UNO('.uno:ToggleSheetGrid', 'spreadsheet', true), uno: '.uno:ToggleSheetGrid', id: 'sheetgrid'},
 				   {name: _('Focus Cell'), type:'action', id: 'columnrowhighlight'},
@@ -899,6 +900,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:SetOptimalColumnWidth'}]},
 				{uno: '.uno:FontDialog'},
 				{uno: '.uno:ParagraphDialog'},
+				{uno: '.uno:SidebarDeck.StyleListDeck'},
 				{uno: '.uno:PageFormatDialog'},
 				{type: 'separator'},
 				{uno: '.uno:TransformDialog'},
