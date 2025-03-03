@@ -219,10 +219,19 @@ void KitQueueTests::testTileRecombining()
                   "tileposx=0,23040,49920,51840 tileposy=268800,268800,270720,270720 "
                   "tilewidth=1920 tileheight=1920 ver=-1,-1,-1,-1");
 
+        // rearrange this to avoid excessively large tile combines
+        // 0:140, 12:140
         LOK_ASSERT_EQUAL_STR(
             "tilecombine nviewid=1000 part=0 width=256 height=256 "
-            "tileposx=23040,0,49920,51840 tileposy=268800,268800,270720,270720 "
-            "tilewidth=1920 tileheight=1920 ver=-1,-1,-1,-1",
+            "tileposx=0,23040 tileposy=268800,268800 tilewidth=1920 "
+            "tileheight=1920 ver=-1,-1",
+            popHelper(queue));
+
+        // 26:141, 27:141
+        LOK_ASSERT_EQUAL_STR(
+            "tilecombine nviewid=1000 part=0 width=256 height=256 "
+            "tileposx=49920,51840 tileposy=270720,270720 "
+            "tilewidth=1920 tileheight=1920 ver=-1,-1",
             popHelper(queue));
 
         // and nothing remains in the queue
