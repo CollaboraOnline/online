@@ -3073,8 +3073,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._docType === 'text') {
 				// For Writer documents, disallow scrolling to cursor outside of the page (horizontally)
 				// Use document dimensions to approximate page width
-				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.file.size.twips[0]);
-				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.file.size.twips[0]);
+				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.view.size.pixels[0] * app.pixelsToTwips);
+				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.view.size.pixels[0] * app.pixelsToTwips);
 			}
 
 			if (!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
