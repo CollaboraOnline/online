@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-26 13:36+0100\n"
-"PO-Revision-Date: 2025-02-08 20:07+0000\n"
+"PO-Revision-Date: 2025-02-27 20:27+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :("
 "n>6 && n<11) ? 3 : 4;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.10.2-rc\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2296,7 +2296,7 @@ msgstr "Níor aimsíodh aon saincheisteanna"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Foláirimh:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2602,7 +2602,7 @@ msgstr "Theip ar luchtú na mbailiúchán"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "Tagairtí á lódáil"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -2946,6 +2946,8 @@ msgstr "Ctrl+Shift+Alt+D le scor"
 #: src/core/Debug.js:1080
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
+"Cuireadh moill ar láimhseáil imeachtaí ar feadh tréimhse fada gan choinne: "
+"{0}ms"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
