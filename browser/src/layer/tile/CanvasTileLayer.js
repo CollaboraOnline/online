@@ -4233,7 +4233,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._docPixelSize = {x: docPixelLimits.x, y: docPixelLimits.y};
-		this._map.fire('scrolllimits', {x: scrollPixelLimits.x, y: scrollPixelLimits.y});
+		this._map.fire('scrolllimits', {});
 	},
 
 	// Used with filebasedview.
