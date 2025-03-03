@@ -208,14 +208,6 @@
 	z-index: -1;
 }
 
-/* Sidebar: Style: Hide dialog button
-   - There is no paragraph style dialog in calc
-   - The style sidebar pane visible on core side is not implemented in online
-*/
-[data-docType='spreadsheet'] .unoEditStyle.sidebar {
-	display: none;
-}
-
 /* formulabar */
 #formulabar-row {
 	display: grid;
