@@ -180,13 +180,17 @@ class FormulaBar {
 
 		// in the core we have DrawingArea not TextView
 		if (object.id.indexOf('sc_input_window') === 0) {
+			const map = builder.map;
 			objectType = 'drawingarea';
+
 			if (eventType === 'keypress' && data === UNOKey.RETURN || data === UNOKey.ESCAPE)
-				builder.map.focus();
+				map.focus();
 			else if (eventType === 'grab_focus') {
 				this.focusField();
-				builder.map.onFormulaBarFocus();
+				map.onFormulaBarFocus();
 			}
+
+			map.userList.followUser(map._docLayer._getViewId(), false);
 		}
 
 		builder._defaultCallbackHandler(objectType, eventType, object, data, builder);

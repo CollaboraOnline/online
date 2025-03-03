@@ -25,4 +25,19 @@ describe(['tagmultiuser'], 'Check following the other views', function() {
 		// following is off
 		cy.cGet('#followingChip').should('not.be.visible');
 	});
+
+	it('Stop following on formulabar', function() {
+		// second view follow the first one
+		cy.cSetActiveFrame('#iframe2');
+		cy.cGet('#userListHeader').click();
+		cy.cGet('.user-list-item').eq(1).click();
+		cy.cGet('.jsdialog-overlay').should('not.exist');
+
+		// second view activates the formulabar
+		cy.cGet('#followingChip').should('be.visible');
+		cy.cGet('#sc_input_window').click();
+
+		// following is off
+		cy.cGet('#followingChip').should('not.be.visible');
+	});
 });
