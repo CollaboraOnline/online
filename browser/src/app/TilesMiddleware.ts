@@ -1680,13 +1680,8 @@ class TileManager {
 		var validTileRange = new L.Bounds(
 			new L.Point(0, 0),
 			new L.Point(
-				Math.floor(
-					(this._docLayer._docWidthTwips - 1) / this._docLayer._tileWidthTwips,
-				),
-				Math.floor(
-					(this._docLayer._docHeightTwips - 1) /
-						this._docLayer._tileHeightTwips,
-				),
+				Math.floor((app.file.size.x - 1) / this._docLayer._tileWidthTwips),
+				Math.floor((app.file.size.y - 1) / this._docLayer._tileHeightTwips),
 			),
 		);
 
@@ -1974,9 +1969,9 @@ class TileManager {
 			return false;
 		} else if (
 			(coords.x / this.tileSize) * app.map._docLayer._tileWidthTwips >
-				app.map._docLayer._docWidthTwips ||
+				app.file.size.x ||
 			(coords.y / this.tileSize) * app.map._docLayer._tileHeightTwips >
-				app.map._docLayer._docHeightTwips
+				app.file.size.y
 		) {
 			return false;
 		} else return true;
