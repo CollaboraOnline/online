@@ -109,9 +109,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	newAnnotation: function (commentData) {
-		var ratio = this._tileWidthTwips / this._tileSize;
-		var docTopLeft = app.sectionContainer.getDocumentTopLeft();
-		docTopLeft = [docTopLeft[0] * ratio, docTopLeft[1] * ratio];
+		let docTopLeft = app.sectionContainer.getDocumentTopLeft();
+		docTopLeft = [docTopLeft[0] * app.pixelsToTwips, docTopLeft[1] * app.pixelsToTwips];
 		commentData.anchorPos = [docTopLeft[0], docTopLeft[1]];
 		commentData.rectangle = [docTopLeft[0], docTopLeft[1], 566, 566];
 

@@ -1058,7 +1058,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			textMsg = textMsg.replace('textselection:', '');
 			if (textMsg.trim() !== 'EMPTY' && textMsg.trim() !== '') {
 				this._cellSelections = textMsg.split(';');
-				var ratio = this._tileSize / this._tileWidthTwips;
 				var that = this;
 				this._cellSelections = this._cellSelections.map(function(element) {
 					element = element.split(',');
@@ -1067,7 +1066,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 					var bottomRightTwips = topLeftTwips.add(offset);
 					var boundsTwips = that._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
 
-					element = app.LOUtil.createRectangle(boundsTwips.min.x * ratio, boundsTwips.min.y * ratio, boundsTwips.getSize().x * ratio, boundsTwips.getSize().y * ratio);
+					element = app.LOUtil.createRectangle(boundsTwips.min.x * app.twipsToPixels, boundsTwips.min.y * app.twipsToPixels, boundsTwips.getSize().x * app.twipsToPixels, boundsTwips.getSize().y * app.twipsToPixels);
 					return element;
 				});
 			}

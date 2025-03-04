@@ -515,11 +515,10 @@ export class Comment extends CanvasSectionObject {
 					yMax = rectangles[i][1] + rectangles[i][3];
 			}
 			// Rectangles are in twips. Convert them to core pixels.
-			var ratio: number = (app.tile.size.pX / app.tile.size.x);
-			xMin = Math.round(xMin * ratio);
-			yMin = Math.round(yMin * ratio);
-			xMax = Math.round(xMax * ratio);
-			yMax = Math.round(yMax * ratio);
+			xMin = Math.round(xMin * app.twipsToPixels);
+			yMin = Math.round(yMin * app.twipsToPixels);
+			xMax = Math.round(xMax * app.twipsToPixels);
+			yMax = Math.round(yMax * app.twipsToPixels);
 
 			this.setPosition(xMin, yMin); // This function is added by section container.
 			this.size = [xMax - xMin, yMax - yMin];
@@ -527,7 +526,6 @@ export class Comment extends CanvasSectionObject {
 				this.size[0] = 5;
 		}
 		else if (this.sectionProperties.data.cellRange && app.map._docLayer._docType === 'spreadsheet') {
-			var ratio: number = (app.tile.size.pX / app.tile.size.x);
 			this.size = this.calcCellSize();
 			var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 			let startX = cellPos[0];
@@ -536,7 +534,7 @@ export class Comment extends CanvasSectionObject {
 				startX += sizeX;  // but adjust for width of the cell.
 			}
 			this.setShowSection(true);
-			var position: Array<number> = [Math.round(cellPos[0] * ratio), Math.round(cellPos[1] * ratio)];
+			var position: Array<number> = [Math.round(cellPos[0] * app.twipsToPixels), Math.round(cellPos[1] * app.twipsToPixels)];
 			var splitPosCore = {x: 0, y: 0};
 			if (app.map._docLayer.getSplitPanesContext())
 				splitPosCore = app.map._docLayer.getSplitPanesContext().getSplitPos();
@@ -557,9 +555,8 @@ export class Comment extends CanvasSectionObject {
 			this.setPosition(position[0], position[1]);
 		}
 		else if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
-			var ratio: number = (app.tile.size.pX / app.tile.size.x);
 			this.size = [Math.round(this.sectionProperties.imgSize[0] * app.dpiScale), Math.round(this.sectionProperties.imgSize[1] * app.dpiScale)];
-			this.setPosition(Math.round(this.sectionProperties.data.rectangle[0] * ratio), Math.round(this.sectionProperties.data.rectangle[1] * ratio));
+			this.setPosition(Math.round(this.sectionProperties.data.rectangle[0] * app.twipsToPixels), Math.round(this.sectionProperties.data.rectangle[1] * app.twipsToPixels));
 		}
 	}
 
@@ -623,18 +620,17 @@ export class Comment extends CanvasSectionObject {
 		var pixelBasedOrgRectangles = new Array<Array<number>>();
 
 		var originals = this.sectionProperties.data.rectanglesOriginal;
-		var ratio: number = (app.tile.size.pX / app.tile.size.x);
 		var pos: number[], size: number[];
 
 		if (originals) {
 			for (var i = 0; i < originals.length; i++) {
 				pos = [
-					Math.round(originals[i][0] * ratio),
-					Math.round(originals[i][1] * ratio)
+					Math.round(originals[i][0] * app.twipsToPixels),
+					Math.round(originals[i][1] * app.twipsToPixels)
 				];
 				size = [
-					Math.round(originals[i][2] * ratio),
-					Math.round(originals[i][3] * ratio)
+					Math.round(originals[i][2] * app.twipsToPixels),
+					Math.round(originals[i][3] * app.twipsToPixels)
 				];
 
 				pixelBasedOrgRectangles.push([pos[0], pos[1], size[0], size[1]]);
@@ -652,7 +648,6 @@ export class Comment extends CanvasSectionObject {
 		var originals = this.sectionProperties.data.rectanglesOriginal;
 		var viewContext = this.map.getTileSectionMgr()._paintContext();
 		var intersectsVisibleArea = false;
-		var ratio: number = (app.tile.size.pX / app.tile.size.x);
 		var pos: number[], size: number[];
 
 		if (rectangles) {
@@ -661,12 +656,12 @@ export class Comment extends CanvasSectionObject {
 
 			for (var i = 0; i < rectangles.length; i++) {
 				pos = [
-					Math.round(originals[i][0] * ratio),
-					Math.round(originals[i][1] * ratio)
+					Math.round(originals[i][0] * app.twipsToPixels),
+					Math.round(originals[i][1] * app.twipsToPixels)
 				];
 				size = [
-					Math.round(originals[i][2] * ratio),
-					Math.round(originals[i][3] * ratio)
+					Math.round(originals[i][2] * app.twipsToPixels),
+					Math.round(originals[i][3] * app.twipsToPixels)
 				];
 
 				if (!intersectsVisibleArea && Comment.doesRectIntersectView(pos, size, viewContext))
@@ -693,11 +688,10 @@ export class Comment extends CanvasSectionObject {
 		// For redline comments there are no 'rectangles' or 'rectangleOriginal' properties in sectionProperties.data
 		// So use the comment rectangle stored in anchorPos (in display? twips).
 		if (this.sectionProperties.data.trackchange && this.sectionProperties.data.anchorPos) {
-			var ratio: number = (app.tile.size.pX / app.tile.size.x);
 			var anchorPos = this.sectionProperties.data.anchorPos;
 			return [
-				Math.round(anchorPos[0] * ratio),
-				Math.round(anchorPos[1] * ratio)
+				Math.round(anchorPos[0] * app.twipsToPixels),
+				Math.round(anchorPos[1] * app.twipsToPixels)
 			];
 		} else {
 			return this.position;
@@ -708,11 +702,10 @@ export class Comment extends CanvasSectionObject {
 		// For redline comments there are no 'rectangles' or 'rectangleOriginal' properties in sectionProperties.data
 		// So use the comment rectangle stored in anchorPos (in display? twips).
 		if (this.sectionProperties.data.trackchange && this.sectionProperties.data.anchorPos) {
-			var ratio: number = (app.tile.size.pX / app.tile.size.x);
 			var anchorPos = this.sectionProperties.data.anchorPos;
 			return [
-				Math.round(anchorPos[2] * ratio),
-				Math.round(anchorPos[3] * ratio)
+				Math.round(anchorPos[2] * app.twipsToPixels),
+				Math.round(anchorPos[3] * app.twipsToPixels)
 			];
 		} else {
 			return this.size;
@@ -822,9 +815,8 @@ export class Comment extends CanvasSectionObject {
 
 	public positionCalcComment(): void {
 		if (!(<any>window).mode.isMobile()) {
-			var ratio: number = (app.tile.size.pX / app.tile.size.x);
 			var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
-			var originalSize = [Math.round((cellPos[2]) * ratio), Math.round((cellPos[3]) * ratio)];
+			var originalSize = [Math.round((cellPos[2]) * app.twipsToPixels), Math.round((cellPos[3]) * app.twipsToPixels)];
 
 			const startX = this.isCalcRTL() ? this.myTopLeft[0] - this.getCommentWidth() : this.myTopLeft[0] + originalSize[0] - 3;
 
@@ -1426,9 +1418,8 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public calcCellSize (): number[] {
-		var ratio: number = (app.tile.size.pX / app.tile.size.x);
 		var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
-		return [Math.round((cellPos[2]) * ratio), Math.round((cellPos[3]) * ratio)];
+		return [Math.round((cellPos[2]) * app.twipsToPixels), Math.round((cellPos[3]) * app.twipsToPixels)];
 	}
 
 	public onMouseEnter (): void {
@@ -1447,9 +1438,8 @@ export class Comment extends CanvasSectionObject {
 				}
 
 				var containerWidth: number = this.sectionProperties.container.getBoundingClientRect().width;
-				var ratio: number = (app.tile.size.pX / app.tile.size.x);
 				var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
-				this.size = [Math.round((cellPos[2]) * ratio + containerWidth), Math.round((cellPos[3]) * ratio)];
+				this.size = [Math.round((cellPos[2]) * app.twipsToPixels + containerWidth), Math.round((cellPos[3]) * app.twipsToPixels)];
 				this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
 				this.show();
 			}

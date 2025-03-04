@@ -119,11 +119,10 @@ export class ContentControlSection extends CanvasSectionObject {
 				yMax = rectangles[i][1] + rectangles[i][3];
 		}
 		// Rectangles are in twips. Convert them to core pixels.
-		var ratio: number = (app.tile.size.pX / app.tile.size.x);
-		xMin = Math.round(xMin * ratio);
-		yMin = Math.round(yMin * ratio);
-		xMax = Math.round(xMax * ratio);
-		yMax = Math.round(yMax * ratio);
+		xMin = Math.round(xMin * app.twipsToPixels);
+		yMin = Math.round(yMin * app.twipsToPixels);
+		xMax = Math.round(xMax * app.twipsToPixels);
+		yMax = Math.round(yMax * app.twipsToPixels);
 
 		this.setPosition(xMin, yMin); // This function is added by section container.
 		this.size = [xMax - xMin, yMax - yMin];
@@ -169,9 +168,8 @@ export class ContentControlSection extends CanvasSectionObject {
 		var text:string = this.sectionProperties.json.alias;
 		if (text) {
 			var rectangles: Array<number>[] = this.getRectangles(this.sectionProperties.json.rectangles);
-			var ratio: number = (app.tile.size.pX / app.tile.size.x);
-			var x: number = rectangles[rectangles.length-1][0] * ratio;
-			var y: number = rectangles[rectangles.length-1][1] * ratio;
+			var x: number = rectangles[rectangles.length-1][0] * app.twipsToPixels;
+			var y: number = rectangles[rectangles.length-1][1] * app.twipsToPixels;
 
 			// fixed height for alias tag
 			var h: number = 20;
