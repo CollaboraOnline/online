@@ -138,6 +138,7 @@ wsd_sources = \
 	../wsd/TileCache.cpp
 
 test_base_sources = \
+	KitQueueTests.cpp \
 	RequestDetailsTests.cpp \
 	StringVectorTests.cpp \
 	FileServeWhiteBoxTests.cpp \
@@ -149,8 +150,6 @@ test_base_sources = \
 	WopiProofTests.cpp \
 	UriTests.cpp \
 	$(wsd_sources)
-
-# test_base_sources += KitQueueTests.cpp
 
 common_sources = \
 	../common/Authorization.cpp \
