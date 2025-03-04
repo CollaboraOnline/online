@@ -280,7 +280,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	}
 
 	private calculateAvailableSpace() {
-		var availableSpace = (this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5;
+		var availableSpace = (this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pX) * 0.5;
 		availableSpace = Math.round(availableSpace / app.dpiScale);
 		return availableSpace;
 	}
@@ -2017,9 +2017,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 
 			if (availableSpace > this.sectionProperties.commentWidth) {
 				if (isRTL)
-					x = Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5) - this.containerObject.getDocumentAnchorSection().size[0];
+					x = Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pX) * 0.5) - this.containerObject.getDocumentAnchorSection().size[0];
 				else
-					x = topRight[0] - Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5);
+					x = topRight[0] - Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pX) * 0.5);
 			} else if (isRTL)
 				x = -this.containerObject.getDocumentAnchorSection().size[0];
 			else
@@ -2053,12 +2053,12 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			this.resizeComments();
 
 		lastY += this.containerObject.getDocumentTopLeft()[1];
-		if (lastY > app.file.size.pixels[1]) {
-			app.view.size.pixels[1] = lastY;
+		if (lastY > app.file.size.pY) {
+			app.view.size.pY = lastY;
 			this.containerObject.requestReDraw();
 		}
 		else
-			app.view.size.pixels[1] = app.file.size.pixels[1];
+			app.view.size.pY = app.file.size.pY;
 
 		this.disableLayoutAnimation = false;
 	}

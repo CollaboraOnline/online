@@ -852,8 +852,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * factor);
 		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
 		app.tile.size.twips = [this._tileWidthTwips, this._tileHeightTwips];
-		app.file.size.pixels = [Math.round(app.tile.size.pixels[0] * (app.file.size.twips[0] / app.tile.size.twips[0])), Math.round(app.tile.size.pixels[1] * (app.file.size.twips[1] / app.tile.size.twips[1]))];
-		app.view.size.pixels = app.file.size.pixels.slice();
 
 		app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
 		app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
@@ -3073,8 +3071,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._docType === 'text') {
 				// For Writer documents, disallow scrolling to cursor outside of the page (horizontally)
 				// Use document dimensions to approximate page width
-				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.view.size.pixels[0] * app.pixelsToTwips);
-				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.view.size.pixels[0] * app.pixelsToTwips);
+				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.view.size.x);
+				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.view.size.x);
 			}
 
 			if (!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
@@ -4222,8 +4220,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		var docPixelLimits = new L.Point(app.file.size.pixels[0] / app.dpiScale, app.file.size.pixels[1] / app.dpiScale);
-		var scrollPixelLimits = new L.Point(app.view.size.pixels[0] / app.dpiScale, app.view.size.pixels[1] / app.dpiScale);
+		var docPixelLimits = new L.Point(app.file.size.pX / app.dpiScale, app.file.size.pY / app.dpiScale);
+		var scrollPixelLimits = new L.Point(app.view.size.pX / app.dpiScale, app.view.size.pY / app.dpiScale);
 		var topLeft = this._map.unproject(new L.Point(0, 0));
 
 		if (this._documentInfo === '' || sizeChanged) {

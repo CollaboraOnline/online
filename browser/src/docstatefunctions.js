@@ -34,6 +34,8 @@ window.addEventListener('load', function () {
 		0,
 		0,
 	);
+	app.view.size = new app.definitions.simplePoint(0, 0);
+	app.file.size = new app.definitions.simplePoint(0, 0);
 });
 
 app.getViewRectangles = function () {

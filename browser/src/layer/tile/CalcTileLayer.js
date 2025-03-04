@@ -13,7 +13,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
-/* global app CPolyUtil CPolygon TileManager */
+/* global app CPolyUtil CPolygon TileManager cool */
 
 L.CalcTileLayer = L.CanvasTileLayer.extend({
 	options: {
@@ -248,9 +248,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._docPixelSize = newSizePx.clone();
 		this._docWidthTwips = newDocWidth;
 		this._docHeightTwips = newDocHeight;
-		app.file.size.twips = [newDocWidth, newDocHeight];
-		app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
-		app.view.size.pixels = app.file.size.pixels.slice();
+		app.file.size = new cool.SimplePoint(newDocWidth, newDocHeight);
+		app.view.size = app.file.size.clone();
 
 		this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
 
@@ -345,7 +344,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		let newMapSize = availableSpace.slice();
 		let newCanvasSize = documentContainerSize.slice();
 
-		const fileSizePixels = [app.file.size.pixels[0], app.file.size.pixels[1]];
+		const fileSizePixels = app.file.size.pToArray();
 
 		// If we don't need that much space.
 		if (fileSizePixels[0] < availableSpace[0]) {
@@ -445,9 +444,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._docWidthTwips = statusJSON.width;
 			this._docHeightTwips = statusJSON.height;
 
-			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
-			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
-			app.view.size.pixels = app.file.size.pixels.slice();
+			app.file.size = new cool.SimplePoint(this._docWidthTwips, this._docHeightTwips);
+			app.view.size = app.file.size.clone();
 
 			this._docType = statusJSON.type;
 			this._parts = statusJSON.partscount;
