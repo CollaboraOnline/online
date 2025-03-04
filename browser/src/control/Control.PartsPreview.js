@@ -409,7 +409,7 @@ L.Control.PartsPreview = L.Control.extend({
 	_scrollViewToPartPosition: function (partNumber, fromBottom) {
 		if (this._map._docLayer && this._map._docLayer._isZooming)
 			return;
-		var ratio = this._map._docLayer._tileSize / this._map._docLayer._tileHeightTwips;
+		var ratio = this._map._docLayer._tileSize / app.tile.size.y;
 		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * ratio);
 		var scrollTop = partHeightPixels * partNumber;
 		var viewHeight = app.sectionContainer.getViewSize()[1];
@@ -427,7 +427,7 @@ L.Control.PartsPreview = L.Control.extend({
 	_scrollViewByDirection: function(buttonType) {
 		if (this._map._docLayer && this._map._docLayer._isZooming)
 			return;
-		var ratio = this._map._docLayer._tileSize / this._map._docLayer._tileHeightTwips;
+		var ratio = this._map._docLayer._tileSize / app.tile.size.y;
 		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * ratio);
 		var scroll = Math.floor(partHeightPixels / app.dpiScale);
 		var viewHeight = Math.floor(app.sectionContainer.getViewSize()[1]);

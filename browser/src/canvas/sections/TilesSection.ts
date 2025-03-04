@@ -214,7 +214,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 		var tileSizeY;
 		if (app.file.fileBasedView) {
 			tileSizeX = tileSizeY = this.sectionProperties.docLayer._tileSize;
-			var ratio = tileSizeX / this.sectionProperties.docLayer._tileHeightTwips;
+			var ratio = tileSizeX / app.tile.size.y;
 			var partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * ratio);
 
 			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - this.documentTopLeft[1];
@@ -549,7 +549,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 					var tilePos = coords.getPos();
 
 					if (app.file.fileBasedView) {
-						var ratio = ctx.tileSize.y * relScale / docLayer._tileHeightTwips;
+						var ratio = ctx.tileSize.y * relScale / app.tile.size.y;
 						var partHeightPixels = Math.round((docLayer._partHeightTwips + docLayer._spaceBetweenParts) * ratio);
 						tilePos.y = coords.part * partHeightPixels + tilePos.y;
 					}
@@ -834,7 +834,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 
 				var tileCoords = tile.coords.getPos();
 				if (app.file.fileBasedView) {
-					var ratio = ctx.tileSize.y * relScale / docLayer._tileHeightTwips;
+					var ratio = ctx.tileSize.y * relScale / app.tile.size.y;
 					var partHeightPixels = Math.round((docLayer._partHeightTwips + docLayer._spaceBetweenParts) * ratio);
 					tileCoords.y = tile.coords.part * partHeightPixels + tileCoords.y;
 				}
@@ -876,7 +876,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 		var convScale = this.map.getZoomScale(toZoom, fromZoom);
 
 		if (docLayer.sheetGeometry) {
-			var toScale = convScale * docLayer._tileSize * 15.0 / docLayer._tileWidthTwips;
+			var toScale = convScale * docLayer._tileSize * 15.0 / app.tile.size.x;
 			toScale = docLayer._tileSize * 15.0 / Math.round(15.0 * docLayer._tileSize / toScale);
 			var posScaled = docLayer.sheetGeometry.getCorePixelsAtZoom(pos, toScale);
 			return posScaled;
