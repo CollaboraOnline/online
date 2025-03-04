@@ -265,7 +265,7 @@ L.TileSectionManager = L.Class.extend({
 
 	// Details of tile areas to render
 	_paintContext: function() {
-		var tileSize = new L.Point(this._layer._getTileSize(), this._layer._getTileSize());
+		var tileSize = new L.Point(TileManager.tileSize, TileManager.tileSize);
 
 		var viewBounds = this._map.getPixelBoundsCore();
 		var splitPanesContext = this._layer.getSplitPanesContext();
@@ -290,7 +290,7 @@ L.TileSectionManager = L.Class.extend({
 			return tileBounds.intersectsAny(ctx.paneBoundsList);
 		}
 		else {
-			var ratio = this._layer._tileSize / app.tile.size.y;
+			var ratio = TileManager.tileSize / app.tile.size.y;
 			var partHeightPixels = Math.round((this._layer._partHeightTwips + this._layer._spaceBetweenParts) * ratio);
 			return app.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pX, app.tile.size.pY]);
 		}
@@ -787,7 +787,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	_reset: function (hard) {
 		var tileZoom = Math.round(this._map.getZoom()),
 		    tileZoomChanged = this._tileZoom !== tileZoom;
-		this._tileSize = this._getTileSize();
 
 		if (hard || tileZoomChanged) {
 			this._resetClientVisArea();
@@ -861,8 +860,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		// cells downwards and to the right, like we have on desktop
 		var viewSize = this._map.getSize();
 		var scale = this._map.getZoomScale(newZoom);
-		var width = app.file.size.x / app.tile.size.x * this._tileSize * scale;
-		var height = app.file.size.y / app.tile.size.y * this._tileSize * scale;
+		var width = app.file.size.x / app.tile.size.x * TileManager.tileSize * scale;
+		var height = app.file.size.y / app.tile.size.y * TileManager.tileSize * scale;
 		if (width < viewSize.x || height < viewSize.y) {
 			// if after zoomimg the document becomes smaller than the viewing area
 			width = Math.max(width, viewSize.x);
@@ -890,10 +889,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		var x = Math.round(newScrollPos.x < 0 ? 0 : newScrollPos.x);
 		var y = Math.round(newScrollPos.y < 0 ? 0 : newScrollPos.y);
 		requestAnimationFrame(() => this._map.fire('updatescrolloffset', {x: x, y: y, updateHeaders: true}));
-	},
-
-	_getTileSize: function () {
-		return this.options.tileSize;
 	},
 
 	_moveStart: function () {
@@ -3432,7 +3427,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (this.isWriter() && newSize.x - oldSize.x === 0) { return; }
 
-		var widthTwips = newSize.x * app.tile.size.x / this._tileSize;
+		var widthTwips = newSize.x * app.tile.size.x / TileManager.tileSize;
 		var ratio = widthTwips / app.file.size.x;
 
 		maxZoom = maxZoom ? maxZoom : 10;
@@ -4180,8 +4175,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_twipsToCssPixels: function (twips) {
 		return new L.Point(
-			(twips.x / app.tile.size.x) * (this._tileSize / app.dpiScale),
-			(twips.y / app.tile.size.y) * (this._tileSize / app.dpiScale));
+			(twips.x / app.tile.size.x) * (TileManager.tileSize / app.dpiScale),
+			(twips.y / app.tile.size.y) * (TileManager.tileSize / app.dpiScale));
 	},
 
 	_cssPixelsToTwips: function (pixels) {
@@ -4244,7 +4239,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			found = false;
 		}
 
-		var ratio = this._tileSize / app.tile.size.y;
+		var ratio = TileManager.tileSize / app.tile.size.y;
 		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * ratio);
 		var partWidthPixels = Math.round(this._partWidthTwips * ratio);
 
@@ -4340,7 +4335,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_coordsToPixBounds: function (coords) {
 		// coords.x and coords.y are the pixel coordinates of the top-left corner of the tile.
 		var topLeft = new L.Point(coords.x, coords.y);
-		var bottomRight = topLeft.add(new L.Point(this._tileSize, this._tileSize));
+		var bottomRight = topLeft.add(new L.Point(TileManager.tileSize, TileManager.tileSize));
 		return new L.Bounds(topLeft, bottomRight);
 	},
 
