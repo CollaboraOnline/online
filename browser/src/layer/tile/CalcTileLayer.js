@@ -173,7 +173,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_onZoomRowColumns: function () {
 		this._sendClientZoom();
 		if (this.sheetGeometry) {
-			this.sheetGeometry.setTileGeometryData(this._tileWidthTwips, this._tileHeightTwips,
+			this.sheetGeometry.setTileGeometryData(app.tile.size.x, app.tile.size.y,
 				this._tileSize);
 		}
 		this._restrictDocumentSize();
@@ -785,7 +785,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		if (!this.sheetGeometry) {
 			this._sheetGeomFirstWait = false;
 			this.sheetGeometry = new L.SheetGeometry(jsonMsgObj,
-				this._tileWidthTwips, this._tileHeightTwips,
+				app.tile.size.x, app.tile.size.y,
 				this._tileSize, this._selectedPart);
 
 			app.sectionContainer.addSection(L.control.cornerHeader());
