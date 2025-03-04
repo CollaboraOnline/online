@@ -168,23 +168,66 @@ void KitQueueTests::testTileRecombining()
 {
     constexpr auto testname = __func__;
 
-    TilePrioritizer dummy;
-    KitQueue queue(dummy);
+    class TestPrioritizer : public TilePrioritizer {
+        int _prioX = 0;
+        int _prioY = 0;
+    public:
+        virtual Priority getTilePriority(const TileDesc& tile) const
+        {
+            if (tile.getTilePosX() == _prioX && tile.getTilePosY() == _prioY)
+                return TilePrioritizer::Priority::ULTRAHIGH;
+            return TilePrioritizer::Priority::NORMAL;
+        }
+        void setHighestPrio(int prioX, int prioY)
+        {
+            _prioX = prioX;
+            _prioY = prioY;
+        }
+    };
 
-    queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
-    queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
-    // the tilecombine's get merged, resulting in 3 "tile" messages
-    LOK_ASSERT_EQUAL(3, static_cast<int>(queue.getTileQueueSize()));
+    TestPrioritizer prio;
+    KitQueue queue(prio);
 
-    // but when we later extract that, it is just one "tilecombine" message
-    LOK_ASSERT_EQUAL_STR(
-        "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 "
-        "tilewidth=3840 tileheight=3840 ver=-1,-1,-1",
-        popHelper(queue));
+    {
+        queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
+        queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
-    // and nothing remains in the queue
-    LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getTileQueueSize()));
+        // the tilecombine's get merged, resulting in 3 "tile" messages
+        LOK_ASSERT_EQUAL(3, static_cast<int>(queue.getTileQueueSize()));
+
+        // but when we later extract that, it is just one "tilecombine" message
+        LOK_ASSERT_EQUAL_STR(
+            "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 "
+            "tilewidth=3840 tileheight=3840 ver=-1,-1,-1",
+            popHelper(queue));
+
+        // and nothing remains in the queue
+        LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getTileQueueSize()));
+    }
+
+    // Set the 2nd tile on the first row as the prio tile, with one candidate
+    // on the same row relatively distant to the left.
+    // The following row is adjacent to the first row, and has two candidates
+    // relatively distant to the right of the prio tile, but very distant from
+    // the first tile in the first row.
+    {
+        prio.setHighestPrio(23040, 268800);
+
+        // notional grid positions of 0:140, 12:140, 26:141, 27:141
+        queue.put("tilecombine nviewid=1000 part=0 width=256 height=256 "
+                  "tileposx=0,23040,49920,51840 tileposy=268800,268800,270720,270720 "
+                  "tilewidth=1920 tileheight=1920 ver=-1,-1,-1,-1");
+
+        LOK_ASSERT_EQUAL_STR(
+            "tilecombine nviewid=1000 part=0 width=256 height=256 "
+            "tileposx=23040,0,49920,51840 tileposy=268800,268800,270720,270720 "
+            "tilewidth=1920 tileheight=1920 ver=-1,-1,-1,-1",
+            popHelper(queue));
+
+        // and nothing remains in the queue
+        LOK_ASSERT_EQUAL(0, static_cast<int>(queue.getTileQueueSize()));
+    }
 }
 
 #if 0
