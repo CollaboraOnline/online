@@ -119,7 +119,7 @@ export class ContentControlSection extends CanvasSectionObject {
 				yMax = rectangles[i][1] + rectangles[i][3];
 		}
 		// Rectangles are in twips. Convert them to core pixels.
-		var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+		var ratio: number = (app.tile.size.pX / app.tile.size.x);
 		xMin = Math.round(xMin * ratio);
 		yMin = Math.round(yMin * ratio);
 		xMax = Math.round(xMax * ratio);
@@ -169,7 +169,7 @@ export class ContentControlSection extends CanvasSectionObject {
 		var text:string = this.sectionProperties.json.alias;
 		if (text) {
 			var rectangles: Array<number>[] = this.getRectangles(this.sectionProperties.json.rectangles);
-			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			var ratio: number = (app.tile.size.pX / app.tile.size.x);
 			var x: number = rectangles[rectangles.length-1][0] * ratio;
 			var y: number = rectangles[rectangles.length-1][1] * ratio;
 

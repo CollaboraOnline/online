@@ -292,7 +292,7 @@ L.TileSectionManager = L.Class.extend({
 		else {
 			var ratio = this._layer._tileSize / this._layer._tileHeightTwips;
 			var partHeightPixels = Math.round((this._layer._partHeightTwips + this._layer._spaceBetweenParts) * ratio);
-			return app.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pixels[0], app.tile.size.pixels[1]]);
+			return app.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pX, app.tile.size.pY]);
 		}
 	},
 
@@ -798,18 +798,16 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._updateMaxBounds();
 			}
 
-			app.tile.size.pixels = [this._tileSize, this._tileSize];
+			app.tile.size.pX = app.tile.size.pY = this._tileSize;
 			if (this._tileWidthTwips === undefined) {
 				this._tileWidthTwips = this.options.tileWidthTwips;
-				app.tile.size.twips[0] = this.options.tileWidthTwips;
 			}
 			if (this._tileHeightTwips === undefined) {
 				this._tileHeightTwips = this.options.tileHeightTwips;
-				app.tile.size.twips[1] = this.options.tileHeightTwips;
 			}
 
-			app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
-			app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
+			app.twipsToPixels = app.tile.size.pX / this._tileWidthTwips;
+			app.pixelsToTwips = 1 / app.twipsToPixels;
 
 			if (!L.Browser.mobileWebkit)
 				TileManager.update(this._map.getCenter(), tileZoom);
@@ -851,10 +849,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		var factor = Math.pow(1.2, (this._map.options.zoom - this._tileZoom));
 		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * factor);
 		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
-		app.tile.size.twips = [this._tileWidthTwips, this._tileHeightTwips];
 
-		app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
-		app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
+		app.twipsToPixels = app.tile.size.pX / this._tileWidthTwips;
+		app.pixelsToTwips = 1 / app.twipsToPixels;
 
 		if (this._docType === 'spreadsheet')
 			this._syncTileContainerSize();

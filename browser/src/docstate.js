@@ -83,10 +83,7 @@ window.app = {
 		viewId: -1, // viewId of currently followed user
 	},
 	tile: {
-		size: {
-			pixels: [0, 0],
-			twips: [0, 0]
-		}
+		size: null, // SimplePoint.
 	},
 	socket: window.app.socket,
 	console: window.app.console,
