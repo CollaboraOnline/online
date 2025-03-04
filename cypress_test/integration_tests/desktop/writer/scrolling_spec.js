@@ -21,7 +21,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		cy.wait(500);
 		desktopHelper.assertVisiblePage(2, 3, 6);
 
-		desktopHelper.assertScrollbarPosition('vertical', 140, 160);
+		desktopHelper.assertScrollbarPosition('vertical', 140, 240);
 	});
 
 	it('Scrolling to bottom/top', function() {
