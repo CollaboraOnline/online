@@ -112,9 +112,8 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		if (sizeChanged) {
 			this._docWidthTwips = statusJSON.width;
 			this._docHeightTwips = statusJSON.height;
-			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
-			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
-			app.view.size.pixels = app.file.size.pixels.slice();
+			app.file.size = new cool.SimplePoint(this._docWidthTwips, this._docHeightTwips);
+			app.view.size = app.file.size.clone();
 			this._docType = statusJSON.type;
 			this._updateMaxBounds(true);
 		}
