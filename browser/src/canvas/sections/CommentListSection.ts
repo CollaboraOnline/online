@@ -1736,10 +1736,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 			length = numberArray.length - startIndex;
 
 		var result = new Array(length);
-		var ratio: number = (app.tile.size.pX / app.tile.size.x);
 
 		for (var i = startIndex; i < length; i++) {
-			result[i] = Math.round(numberArray[i] * ratio);
+			result[i] = Math.round(numberArray[i] * app.twipsToPixels);
 		}
 
 		return result;
