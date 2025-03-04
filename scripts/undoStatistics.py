@@ -290,6 +290,7 @@ def addSheetWithData(templateFile, outputFile, dataSets, NSMAP):
     tree, root, spreadsheet, template = parseTemplate(templateFile)
 
     for sheetName, data in dataSets.items():
+        print ("sheet:", sheetName)
         duplicateAndPrepareSheet(root, template, sheetName, data[0], data[1], data[2], data[3])
 
     # Remove template sheet
@@ -531,10 +532,16 @@ if __name__ == "__main__":
                     users[userId] = User()
 
                 if lineCmd.startswith("cmd:"):
-                    key = f"{lineCmd[4:-1]}|{users[userId].lastCmd}"
+                    lineCmdCropped = lineCmd[4:-1]
+                    if lineCmd.startswith("cmd:load") or lineCmd.startswith("cmd:save"):
+                        lineCmdCropped = lineCmd[4:8]
+                    elif lineCmd.startswith("cmd:exportas"):
+                        lineCmdCropped = lineCmd[4:12]
+
+                    key = f"{lineCmdCropped}|{users[userId].lastCmd}"
                     currentCommandPreviousCommand[key] = currentCommandPreviousCommand.get(key, 0) + 1
 
-                    users[userId].lastCmd = lineCmd[4:-1]
+                    users[userId].lastCmd = lineCmdCropped
                     if lineCmd.startswith("cmd:textinput") or lineCmd.startswith("cmd:removetextcontext"):
                         users[userId].edited = True
                     if lineCmd.startswith("cmd:textinput") and repeat > 1:
@@ -582,6 +589,7 @@ if __name__ == "__main__":
                 numbSize = lineCmd.find("size=")
                 numbExt = lineCmd.find("ext=")
                 fileSize = int(round(int(lineCmd[numbSize+5:numbExt])/1024))
+                fileSize = round(fileSize , 1-len(str(fileSize)))
                 fileExt = lineCmd[numbExt+4:-1]
                 if lineCmd.startswith("cmd:load"):
                     loadSizeTimeExt.append([fileSize, duration, fileExt])
@@ -607,6 +615,11 @@ if __name__ == "__main__":
             lineCmd = line[cmdStart:]
             if lineCmd.startswith("cmd:"):
                 cmd = lineCmd[4:-1]
+                if lineCmd.startswith("cmd:load") or lineCmd.startswith("cmd:save"):
+                    cmd = lineCmd[4:8]
+                elif lineCmd.startswith("cmd:exportas"):
+                    cmd = lineCmd[4:12]
+
                 if cmd in totalUndoedCommands.keys():
                     totalUndoedCommands[cmd] += repeat
                 totalCommands[cmd] = totalCommands.get(cmd, 0) + repeat
@@ -742,7 +755,7 @@ if __name__ == "__main__":
         for item in sortedSizeTimeExt:
             if lastSize != item[0]:
                 if index > 0:
-                    dataTable.append( [item[0] , "","","", "","","", "","","", "","",""])
+                    dataTable.append( [lastSize , "","","", "","","", "","","", "","",""])
                     j=0
                     for mapArray in lineMap.values():
                         if len(mapArray) > 0:
@@ -757,7 +770,17 @@ if __name__ == "__main__":
             if item[2] in lineMap.keys():
                 lineMap[item[2]].append(item[1])
             else:
-                lineMap["else"].append(item[1])
+                lineMap["other"].append(item[1])
+
+        dataTable.append( [lastSize , "","","", "","","", "","","", "","",""])
+        j=0
+        for mapArray in lineMap.values():
+            if len(mapArray) > 0:
+                dataTable[index][j+1]=statistics.median(mapArray)
+            else:
+                dataTable[index][j+1]=""
+            j+=1
+
 
         if i == 0:
             dataTable[0][0] = "Load Size (k)"
@@ -785,7 +808,7 @@ if __name__ == "__main__":
         elif loadItem[2] in fileTypesImpress:
             typeId = 3
         elif loadItem[2] in fileTypesDraw:
-            typeId = 5
+            typeId = 4
         loadSizeTypeCountDataTable[index][typeId] += 1
 
     loadSizeTypeCountDataTable[1].append("sumCount:")
@@ -812,7 +835,7 @@ if __name__ == "__main__":
         elif saveItem[2] in fileTypesImpress:
             typeId = 3
         elif saveItem[2] in fileTypesDraw:
-            typeId = 5
+            typeId = 4
         saveSizeTypeCountDataTable[index][typeId] += 1
 
     saveSizeTypeCountDataTable[1].append("sumCount:")
@@ -875,6 +898,8 @@ if __name__ == "__main__":
         userCharPerSecDataTable[1].extend(["","Fastest speeds:"])
         for i in range(3):
             userCharPerSecDataTable[i+2].extend(["",round(userCharPerSec[i][0],2)])
+
+    print("Save-data-to-document")
 
     dataSets = { # Sheet name, data set (data, x axis title, heat map effect, rotate top row of text 90 degrees)
         "Total_Users_Per_Document": [sortedTotalUserPerDocTable, "USERS", False, False],
