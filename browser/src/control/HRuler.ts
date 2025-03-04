@@ -14,8 +14,8 @@
  * Ruler Handler
 
  * HRuler.ts
- * 
- * Manages the horizontal ruler for displaying measurements and positioning. 
+ *
+ * Manages the horizontal ruler for displaying measurements and positioning.
  * Handles user interactions like scrolling and dragging, and renders grid lines/ticks.
  */
 
@@ -395,8 +395,7 @@ class HRuler extends Ruler {
 		this.options.unit = state.unit;
 
 		var pxPerMm100 =
-			this._map._docLayer._docPixelSize.x /
-			((this._map._docLayer._docWidthTwips * 2540) / 1440);
+			this._map._docLayer._docPixelSize.x / ((app.file.size.x * 2540) / 1440);
 
 		// Conversion to mm100.
 		if (this.options.unit === 'inch') {
@@ -514,8 +513,7 @@ class HRuler extends Ruler {
 		L.DomUtil.removeChildNodes(this._rTSContainer);
 
 		var pxPerMm100 =
-			this._map._docLayer._docPixelSize.x /
-			((this._map._docLayer._docWidthTwips * 2540) / 1440);
+			this._map._docLayer._docPixelSize.x / ((app.file.size.x * 2540) / 1440);
 		this._rTSContainer.tabStops = [];
 		for (
 			var tabstopIndex = 0;
