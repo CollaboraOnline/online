@@ -213,7 +213,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 		var tileSizeX;
 		var tileSizeY;
 		if (app.file.fileBasedView) {
-			tileSizeX = tileSizeY = this.sectionProperties.docLayer._tileSize;
+			tileSizeX = tileSizeY = TileManager.tileSize;
 			var ratio = tileSizeX / app.tile.size.y;
 			var partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * ratio);
 
@@ -876,8 +876,8 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 		var convScale = this.map.getZoomScale(toZoom, fromZoom);
 
 		if (docLayer.sheetGeometry) {
-			var toScale = convScale * docLayer._tileSize * 15.0 / app.tile.size.x;
-			toScale = docLayer._tileSize * 15.0 / Math.round(15.0 * docLayer._tileSize / toScale);
+			var toScale = convScale * TileManager.tileSize * 15.0 / app.tile.size.x;
+			toScale = TileManager.tileSize * 15.0 / Math.round(15.0 * TileManager.tileSize / toScale);
 			var posScaled = docLayer.sheetGeometry.getCorePixelsAtZoom(pos, toScale);
 			return posScaled;
 		}
