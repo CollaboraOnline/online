@@ -775,7 +775,7 @@ private:
      * @param result: Short message why saving was (not) successful
      * @param errorMsg: Long error msg (Error message from WOPI host if any)
      */
-    void broadcastSaveResult(bool success, const std::string& result = std::string(),
+    void broadcastSaveResult(bool success, std::string_view result,
                              const std::string& errorMsg = std::string());
 
     /// Broadcasts to all sessions the last modification time of the document.
