@@ -16,6 +16,32 @@
 
 /* global app $ _ L JSDialog */
 
+let _globalDecimal = '.';
+let _globalMinusSign = '-';
+
+if (typeof Intl !== 'undefined') {
+	var formatter, lang;
+	try {
+		if (app.UI.language.fromURL && app.UI.language.fromURL !== '')
+			formatter = new Intl.NumberFormat(app.UI.language.fromURL);
+		else
+			formatter = new Intl.NumberFormat(L.Browser.lang);
+
+		formatter.formatToParts(-11.1).map(function (item) {
+				switch (item.type) {
+				case 'decimal':
+					_globalDecimal = item.value;
+				break;
+				case 'minusSign':
+					_globalMinusSign = item.value;
+				break;
+			}
+		});
+	} catch(e) {
+		window.app.console.log('Exception parsing lang ' + lang + ' ' + e);
+	}
+}
+
 L.Control.JSDialogBuilder = L.Control.extend({
 
 	options: {
@@ -174,29 +200,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		this._currentDepth = 0;
 
-		if (typeof Intl !== 'undefined') {
-		    var formatter, lang;
-		    try {
-			if (app.UI.language.fromURL && app.UI.language.fromURL !== '')
-			    formatter = new Intl.NumberFormat(app.UI.language.fromURL);
-			else
-			    formatter = new Intl.NumberFormat(L.Browser.lang);
-
-			var that = this;
-			formatter.formatToParts(-11.1).map(function (item) {
-			     switch (item.type) {
-			     case 'decimal':
-				 that._decimal = item.value;
-				 break;
-			     case 'minusSign':
-				 that._minusSign = item.value;
-				 break;
-			    }
-			});
-		    } catch(e) {
-			    window.app.console.log('Exception parsing lang ' + lang + ' ' + e);
-		    }
-		}
+		this._decimal = _globalDecimal;
+		this._minusSign = _globalMinusSign;
 	},
 
 	reportValidity: function() {
@@ -2721,34 +2726,36 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var focusedElementInDialog = focusedElement ? container.querySelector('[id=\'' + focusedElement.id + '\']') : null;
 		var focusedId = focusedElementInDialog ? focusedElementInDialog.id : null;
 
-		control.style.visibility = 'hidden';
-
-		var temporaryParent = L.DomUtil.create('div');
+		var temporaryParent = new DocumentFragment();
 
 		// Remove the id of the to-be-removed control, so _makeIdUnique() won't rename
 		// data.id to something we can't find later.
 		control.id = '';
 
 		buildFunc.bind(this)(temporaryParent, [data], false);
-		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		var backupGridSpan = control.style.gridColumn;
-		L.DomUtil.remove(control);
 
-		var newControl = container.querySelector('[id=\'' + elementId + '\']');
-		if (newControl) {
-			newControl.scrollTop = scrollTop;
-			newControl.style.gridColumn = backupGridSpan;
+		app.appendLayoutingTask(() => {
+			control.replaceWith(temporaryParent.firstChild)
 
-			// todo: is that needed? should be in widget impl?
-			if (data.has_default === true && (data.type === 'pushbutton' || data.type === 'okbutton'))
-				L.DomUtil.addClass(newControl, 'button-primary');
-		}
+			var newControl = container.querySelector('[id=\'' + elementId + '\']');
+			if (newControl) {
+				newControl.scrollTop = scrollTop;
+				newControl.style.gridColumn = backupGridSpan;
 
-		if (focusedId) {
-			var found = container.querySelector('[id=\'' + focusedId + '\']');
-			if (found)
-				found.focus();
-		}
+				// todo: is that needed? should be in widget impl?
+				if (data.has_default === true && (data.type === 'pushbutton' || data.type === 'okbutton'))
+					L.DomUtil.addClass(newControl, 'button-primary');
+			}
+
+			if (focusedId) {
+				var found = container.querySelector('[id=\'' + focusedId + '\']');
+				if (found)
+					found.focus();
+			}
+		});
+
+		app.scheduleLayouting();
 	},
 
 	// replaces widget in-place with new instance with updated data

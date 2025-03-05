@@ -335,3 +335,20 @@ app.impress.isSlideSelected = function (index) {
 		return app.impress.partList[index].selected === 1;
 	} else return false;
 };
+
+app._flushLayoutingQueue = function () {
+	window.requestAnimationFrame(() => {
+		while (app.layoutTasks.length) {
+			const task = app.layoutTasks.shift();
+			task.call(this);
+		}
+	});
+};
+
+app.appendLayoutingTask = function (task) {
+	app.layoutTasks.push(task);
+};
+
+app.scheduleLayouting = function () {
+	setTimeout(app._flushLayoutingQueue, 10);
+};
