@@ -324,9 +324,9 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 	private drawPageBackgroundFileBasedView (ctx: any) {
 		// PDF view supports only same-sized pages for now. So we can use simple math instead of a loop.
 		var partHeightPixels: number = Math.round((this.map._docLayer._partHeightTwips + this.map._docLayer._spaceBetweenParts) * app.twipsToPixels);
-		var visibleBounds: Array<number> = this.containerObject.getDocumentBounds();
+		var visibleBounds: Array<number> = app.file.viewedRectangle.pToArray();
 		var topVisible: number = Math.floor(visibleBounds[1] / partHeightPixels);
-		var bottomVisible: number = Math.ceil(visibleBounds[3] / partHeightPixels);
+		var bottomVisible: number = Math.ceil((visibleBounds[1] + visibleBounds[3]) / partHeightPixels);
 
 		// Check existence of pages.
 		topVisible = topVisible >= 0 ? topVisible : 0;

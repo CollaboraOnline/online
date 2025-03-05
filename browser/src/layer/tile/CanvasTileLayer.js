@@ -3346,8 +3346,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (app.map._docLayer.isCalcRTL()) {
 			// Mirror position from right to left.
-			startPos.x = app.sectionContainer.getDocumentBounds()[2] - (startPos.x - app.sectionContainer.getDocumentBounds()[0]);
-			endPos.x = app.sectionContainer.getDocumentBounds()[2] - (endPos.x - app.sectionContainer.getDocumentBounds()[0]);
+			startPos.x = app.file.viewedRectangle.pX2 - (startPos.x - app.file.viewedRectangle.pX1);
+			endPos.x = app.file.viewedRectangle.pX2 - (endPos.x - app.file.viewedRectangle.pX1);
 		}
 
 		const oldStart = this._selectionHandles.start.getPosition();
@@ -4246,12 +4246,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		var rectangle;
 		var maxArea = -1;
 		var mostVisiblePart = 0;
-		var docBoundsRectangle = app.sectionContainer.getDocumentBounds();
-		docBoundsRectangle[2] = docBoundsRectangle[2] - docBoundsRectangle[0];
-		docBoundsRectangle[3] = docBoundsRectangle[3] - docBoundsRectangle[1];
+		const viewedRectangle = app.file.viewedRectangle.pToArray();
 		for (i = 0; i < parts.length; i++) {
 			rectangle = [0, partHeightPixels * parts[i].part, partWidthPixels, partHeightPixels];
-			rectangle = app.LOUtil._getIntersectionRectangle(rectangle, docBoundsRectangle);
+			rectangle = app.LOUtil._getIntersectionRectangle(rectangle, viewedRectangle);
 			if (rectangle) {
 				if (rectangle[2] * rectangle[3] > maxArea) {
 					maxArea = rectangle[2] * rectangle[3];
