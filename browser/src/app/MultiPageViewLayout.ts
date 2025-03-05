@@ -70,9 +70,9 @@ class MultiPageViewLayout {
 
 		this.rows.length = 0;
 
-		this.totalWidth = (
-			app.sectionContainer as CanvasSectionContainer
-		).getViewSize()[0];
+		const canvasSize = app.sectionContainer.getViewSize();
+
+		this.totalWidth = canvasSize[0];
 
 		this.availableWidth = this.totalWidth - this.sideMargins * 2;
 
@@ -111,5 +111,14 @@ class MultiPageViewLayout {
 
 			this.rows.push(row);
 		}
+
+		app.view.size.pY = Math.max(
+			this.rows[this.rows.length - 1].startY +
+				this.rows[this.rows.length - 1].height +
+				this.gapBetweenPages,
+			canvasSize[1],
+		);
+
+		app.view.size.pX = this.totalWidth;
 	}
 }
