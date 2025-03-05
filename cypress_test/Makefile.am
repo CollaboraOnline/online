@@ -181,6 +181,8 @@ define start_coolwsd
 	$(if $(coolwsd),true,$(call start_coolwsd_instance))
 endef
 
+# Use 'ulimit' to intentionally reduce the maximum number of open file descriptors: if 1024 is not
+# enough, then probably we leak them.
 define start_coolwsd_instance
 	$(eval FREE_PORT:=$(shell $(GET_PORT_BINARY) --host=127.0.0.1 $(ALLOWED_PORTS)))
 	export $FREE_PORT
@@ -194,7 +196,7 @@ define start_coolwsd_instance
 	$(V)fc-cache "@LO_PATH@"/share/fonts/truetype
 	$(V)echo
 	$(V)mkdir -p $(dir $(COOLWSD_OUTPUT))
-	../coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
+	ulimit -n 1024; ../coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			--o:child_root_path="@JAILS_PATH@" \
 			--o:cache_files.path="@CACHE_PATH@" \
 			--o:storage.filesystem[@allow]=true \
