@@ -3887,7 +3887,8 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
             LOG_DBG("Disconnecting session [" << id << "] from Kit");
             hardDisconnect = session->disconnectFromKit();
 
-            if (!Util::isMobileApp() && !isLoaded() && _sessions.empty())
+            if (!Util::isMobileApp() && !isLoaded() &&
+                _sessions.size() <= 1) // We remove the session below, so we still have it here.
             {
                 // We aren't even loaded and no other views--kill.
                 // If we send disconnect, we risk hanging because we flag Core for
@@ -3900,6 +3901,8 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
                                     << "] isn't loaded yet. Terminating the child roughly");
                 if (_childProcess)
                     _childProcess->terminate();
+
+                stop("Disconnected before loading");
             }
         }
 
