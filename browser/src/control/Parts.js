@@ -457,26 +457,6 @@ L.Map.include({
 
 	showPage: function () {
 		if (this.getDocType() === 'spreadsheet' && app.calc.isAnyPartHidden()) {
-			var hiddenParts = app.calc.getHiddenPartNameArray();
-
-			if (app.calc.isAnyPartHidden()) {
-				var container = document.createElement('div');
-				container.style.maxHeight = '300px';
-				container.style.overflowY = 'auto';
-				for (var i = 0; i < hiddenParts.length; i++) {
-					var checkbox = document.createElement('input');
-					checkbox.type = 'checkbox';
-					checkbox.id = 'hidden-part-checkbox-' + hiddenParts[i];
-					var label = document.createElement('label');
-					label.htmlFor = 'hidden-part-checkbox-' + hiddenParts[i];
-					label.innerText = hiddenParts[i];
-					var newLine = document.createElement('br');
-					container.appendChild(checkbox);
-					container.appendChild(label);
-					container.appendChild(newLine);
-				}
-			}
-
 			const dialogId = 'show-sheets-modal';
 
 			const buttonCallback = function() {
@@ -491,24 +471,54 @@ L.Map.include({
 			};
 
 			this.uiManager.showInfoModal(dialogId, _('Show sheets'), ' ', ' ', _('OK'), buttonCallback, true, dialogId + '-response');
-			const modal = document.getElementById(dialogId);
-			modal.insertBefore(container, modal.children[0]);
-
-			JSDialog.enableButtonInModal(dialogId, dialogId + '-response', false);
-
-			var checkboxes = document.querySelectorAll('#show-sheets-modal input[type="checkbox"]');
-			checkboxes.forEach(function(checkbox) {
-				checkbox.addEventListener('change', function() {
-					var anyChecked = false;
-					checkboxes.forEach(function(checkbox) {
-						if (checkbox.checked) {
-							anyChecked = true;
-						}
-					});
-					JSDialog.enableButtonInModal(dialogId, dialogId + '-response', anyChecked);
-				});
-			});
+			this.showPageModalImpl(dialogId);
 		}
+	},
+
+	showPageModalImpl: function(dialogId) {
+		const modal = document.getElementById(dialogId);
+
+		if (!modal) {
+			setTimeout(() => { this.showPageModalImpl(dialogId) }, 10);
+			return;
+		}
+
+		var hiddenParts = app.calc.getHiddenPartNameArray();
+
+		if (app.calc.isAnyPartHidden()) {
+			var container = document.createElement('div');
+			container.style.maxHeight = '300px';
+			container.style.overflowY = 'auto';
+			for (var i = 0; i < hiddenParts.length; i++) {
+				var checkbox = document.createElement('input');
+				checkbox.type = 'checkbox';
+				checkbox.id = 'hidden-part-checkbox-' + hiddenParts[i];
+				var label = document.createElement('label');
+				label.htmlFor = 'hidden-part-checkbox-' + hiddenParts[i];
+				label.innerText = hiddenParts[i];
+				var newLine = document.createElement('br');
+				container.appendChild(checkbox);
+				container.appendChild(label);
+				container.appendChild(newLine);
+			}
+		}
+
+		modal.insertBefore(container, modal.children[0]);
+
+		JSDialog.enableButtonInModal(dialogId, dialogId + '-response', false);
+
+		var checkboxes = document.querySelectorAll('#show-sheets-modal input[type="checkbox"]');
+		checkboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				var anyChecked = false;
+				checkboxes.forEach(function(checkbox) {
+					if (checkbox.checked) {
+						anyChecked = true;
+					}
+				});
+				JSDialog.enableButtonInModal(dialogId, dialogId + '-response', anyChecked);
+			});
+		});
 	},
 
 	hidePage: function (tabNumber) {
