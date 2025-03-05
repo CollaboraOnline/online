@@ -359,7 +359,6 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 	}
 
 	private drawPageBackgroundsMultiPageView() {
-		MultiPageViewLayout.resetViewLayout();
 		this.context.fillStyle = this.containerObject.getDocumentBackgroundColor();
 
 		for (let i = 0; i < MultiPageViewLayout.rows.length; i++) {

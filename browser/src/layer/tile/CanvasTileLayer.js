@@ -4292,6 +4292,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!this._map._docLoaded)
 			return;
 
+		if (app.file.writer.multiPageView)
+			return; // This view mode sends the client visible area after modifying the document position.
+
 		var splitPos = this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0);
 
 		var visibleArea = this._map.getPixelBounds();

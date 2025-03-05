@@ -11,15 +11,10 @@
 
 class LayoutRow {
 	public startY: number;
-	public rectangles: Array<Array<number>>;
+	public rectangles: Array<Array<number>> = [];
 	public width: number = 0;
 	public height: number = 0;
-
-	constructor() {
-		this.rectangles = [];
-		this.width = 0;
-		this.height = 0;
-	}
+	public startingPartNumber = 0;
 
 	private adjustX() {
 		let x = Math.round((MultiPageViewLayout.totalWidth - this.width) / 2);
@@ -61,6 +56,81 @@ class MultiPageViewLayout {
 	public static totalWidth = 0;
 	private static maxRowsSize = 2;
 
+	private static getVisibleTopLeft(): Array<number> {
+		const viewedRectangle = app.file.viewedRectangle.pToArray();
+		let intersection: Array<number> = null;
+
+		for (let i = 0; i < this.rows.length && intersection === null; i++) {
+			for (let j = 0; j < this.rows[i].rectangles.length; j++) {
+				const nextIntersection = LOUtil._getIntersectionRectangle(
+					viewedRectangle,
+					this.rows[i].rectangles[j],
+				);
+				if (nextIntersection !== null) {
+					if (intersection === null)
+						intersection = [nextIntersection[0], nextIntersection[1]];
+					else {
+						if (nextIntersection[0] < intersection[0])
+							intersection[0] = nextIntersection[0];
+
+						if (nextIntersection[1] < intersection[1])
+							intersection[1] = nextIntersection[1];
+					}
+				}
+			}
+		}
+
+		return intersection;
+	}
+
+	private static getVisibleBottomRight(): Array<number> {
+		const viewedRectangle = app.file.viewedRectangle.pToArray();
+		let intersection: Array<number> = null;
+
+		for (let i = this.rows.length - 1; i >= 0 && intersection === null; i--) {
+			for (let j = this.rows[i].rectangles.length - 1; j >= 0; j--) {
+				const nextIntersection = LOUtil._getIntersectionRectangle(
+					viewedRectangle,
+					this.rows[i].rectangles[j],
+				);
+				if (nextIntersection !== null) {
+					if (intersection === null)
+						intersection = [
+							nextIntersection[0] + nextIntersection[2],
+							nextIntersection[1] + nextIntersection[3],
+						];
+					else {
+						if (nextIntersection[0] + nextIntersection[2] > intersection[0])
+							intersection[0] = nextIntersection[0] + nextIntersection[2];
+
+						if (nextIntersection[1] + nextIntersection[3] > intersection[1])
+							intersection[1] = nextIntersection[1] + nextIntersection[3];
+					}
+				}
+			}
+		}
+
+		return intersection;
+	}
+
+	public static sendClientVisibleArea() {
+		const topLeft = this.getVisibleTopLeft();
+		const bottomRight = this.getVisibleBottomRight();
+
+		const visibleAreaCommand =
+			'clientvisiblearea x=' +
+			Math.round(topLeft[0] * app.pixelsToTwips) +
+			' y=' +
+			Math.round(topLeft[1] * app.pixelsToTwips) +
+			' width=' +
+			Math.round((bottomRight[0] - topLeft[0]) * app.pixelsToTwips) +
+			' height=' +
+			Math.round((bottomRight[1] - topLeft[1]) * app.pixelsToTwips);
+		+' splitx=' + Math.round(0) + ' splity=' + Math.round(0);
+
+		app.socket.sendMessage(visibleAreaCommand);
+	}
+
 	public static resetViewLayout() {
 		if (
 			!app.file.writer.multiPageView ||
@@ -87,8 +157,11 @@ class MultiPageViewLayout {
 			},
 		);
 
+		let currentPartNumber = 0;
+
 		while (rectangles.length > 0) {
 			const row = new LayoutRow();
+			row.startingPartNumber = currentPartNumber;
 
 			row.startY = this.gapBetweenPages;
 			row.startY +=
@@ -98,15 +171,17 @@ class MultiPageViewLayout {
 					: 0;
 
 			row.addRectangle(rectangles.shift());
+			currentPartNumber++;
 
 			while (row.width < this.availableWidth && rectangles.length > 0) {
 				const next = rectangles[0];
 				if (
 					row.width + next[2] + this.gapBetweenPages < this.availableWidth &&
 					row.rectangles.length < this.maxRowsSize
-				)
+				) {
 					row.addRectangle(rectangles.shift());
-				else break;
+					currentPartNumber++;
+				} else break;
 			}
 
 			this.rows.push(row);
@@ -120,5 +195,7 @@ class MultiPageViewLayout {
 		);
 
 		app.view.size.pX = this.totalWidth;
+
+		this.sendClientVisibleArea();
 	}
 }
