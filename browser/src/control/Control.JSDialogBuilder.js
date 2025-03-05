@@ -2547,6 +2547,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	// executes actions like changing the selection without rebuilding the widget
 	executeAction: function(container, data) {
+		app.layoutingService.appendLayoutingTask(() => { this.executeActionImpl(container, data); });
+		app.layoutingService.scheduleLayouting();
+	},
+
+	executeActionImpl: function(container, data) {
 		var control = container.querySelector('[id=\'' + this._removeMenuId(data.control_id) + '\']');
 		if (!control && data.control)
 			control = container.querySelector('[id=\'' + this._removeMenuId(data.control.id) + '\']');
@@ -2702,34 +2707,36 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var focusedElementInDialog = focusedElement ? container.querySelector('[id=\'' + focusedElement.id + '\']') : null;
 		var focusedId = focusedElementInDialog ? focusedElementInDialog.id : null;
 
-		control.style.visibility = 'hidden';
-
-		var temporaryParent = L.DomUtil.create('div');
+		var temporaryParent = new DocumentFragment();
 
 		// Remove the id of the to-be-removed control, so _makeIdUnique() won't rename
 		// data.id to something we can't find later.
 		control.id = '';
 
 		buildFunc.bind(this)(temporaryParent, [data], false);
-		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		var backupGridSpan = control.style.gridColumn;
-		L.DomUtil.remove(control);
 
-		var newControl = container.querySelector('[id=\'' + elementId + '\']');
-		if (newControl) {
-			newControl.scrollTop = scrollTop;
-			newControl.style.gridColumn = backupGridSpan;
+		app.layoutingService.appendLayoutingTask(() => {
+			control.replaceWith(temporaryParent.firstChild)
 
-			// todo: is that needed? should be in widget impl?
-			if (data.has_default === true && (data.type === 'pushbutton' || data.type === 'okbutton'))
-				L.DomUtil.addClass(newControl, 'button-primary');
-		}
+			var newControl = container.querySelector('[id=\'' + elementId + '\']');
+			if (newControl) {
+				newControl.scrollTop = scrollTop;
+				newControl.style.gridColumn = backupGridSpan;
 
-		if (focusedId) {
-			var found = container.querySelector('[id=\'' + focusedId + '\']');
-			if (found)
-				found.focus();
-		}
+				// todo: is that needed? should be in widget impl?
+				if (data.has_default === true && (data.type === 'pushbutton' || data.type === 'okbutton'))
+					L.DomUtil.addClass(newControl, 'button-primary');
+			}
+
+			if (focusedId) {
+				var found = container.querySelector('[id=\'' + focusedId + '\']');
+				if (found)
+					found.focus();
+			}
+		});
+
+		app.layoutingService.scheduleLayouting();
 	},
 
 	// replaces widget in-place with new instance with updated data
