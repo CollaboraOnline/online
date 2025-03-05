@@ -15,6 +15,11 @@ if [ -z "$name" ]; then
 fi
 shift # Eat the first argument.
 
+# Make sure to not run an outdated binary.
+if ! make -C test $name.la; then
+    exit 1
+fi
+
 # Maximum number of runs.
 limit=1
 if [ $# -ne 0 ];
