@@ -13,11 +13,11 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function () {
 		cy.cSetActiveFrame('#iframe1');
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"] button').click(); // Hide sidebar.
-		selectZoomLevel('50');
+		selectZoomLevel('50', false);
 		cy.cSetActiveFrame('#iframe2');
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"] button').click(); // Hide sidebar.
-		selectZoomLevel('50');
+		selectZoomLevel('50', false);
 	});
 
 	describe(['tagmultiuser'], 'Annotation Tests', function () {

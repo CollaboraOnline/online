@@ -25,7 +25,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	});
 
 	it('Scrolling to bottom/top', function() {
-		desktopHelper.selectZoomLevel('40');
+		desktopHelper.selectZoomLevel('40', false);
 		helper.typeIntoDocument('{ctrl}{home}');
 		//scroll to bottom
 		desktopHelper.assertVisiblePage(1, 1, 4);
@@ -46,7 +46,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 
 	it('Scrolling to left/right', function() {
 		cy.cGet('#toolbar-down').click();
-		desktopHelper.selectZoomLevel('200');
+		desktopHelper.selectZoomLevel('200', false);
 		//show horizontal scrollbar
 		cy.cGet('.leaflet-layer').click('bottom');
 		cy.wait(1000);
@@ -60,7 +60,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	it('Check if we jump the view on change of formatting mark', function() {
 		desktopHelper.switchUIToNotebookbar();
 
-		desktopHelper.selectZoomLevel('40');
+		desktopHelper.selectZoomLevel('40', false);
 		helper.typeIntoDocument('{ctrl}{home}');
 		desktopHelper.pressKey(2, 'pagedown');
 		desktopHelper.pressKey(1, 'pagedown');

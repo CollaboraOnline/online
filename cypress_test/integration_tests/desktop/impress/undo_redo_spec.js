@@ -10,7 +10,7 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/undo_redo.odp');
 		desktopHelper.switchUIToCompact();
-		desktopHelper.selectZoomLevel('30');
+		desktopHelper.selectZoomLevel('30', false);
 		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.dblclickOnSelectedShape();
 	});

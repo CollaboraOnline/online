@@ -9,7 +9,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/table_operation.odt');
 		desktopHelper.switchUIToNotebookbar();
-		desktopHelper.selectZoomLevel('70');
+		desktopHelper.selectZoomLevel('70', false);
 	});
 
 	function selectFullTable() {

@@ -10,7 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		helper.setupAndLoadDocument('writer/track_changes.odt');
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#sidebar').click({force: true}); // Hide sidebar.
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 	});
 
 	function confirmChange(action) {

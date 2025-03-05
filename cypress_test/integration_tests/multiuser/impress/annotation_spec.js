@@ -16,14 +16,14 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 			desktopHelper.hideSidebarIfVisible();
 		}
 		cy.cGet('#options-modify-page').click();
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 
 		cy.cSetActiveFrame('#iframe2');
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		}
 		cy.cGet('#options-modify-page').click();
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 	});
 
 	it('Insert', function() {
@@ -96,14 +96,14 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 			desktopHelper.hideSidebarIfVisible();
 		}
 		cy.cGet('#options-modify-page').click();
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 
 		cy.cSetActiveFrame('#iframe2');
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		}
 		cy.cGet('#options-modify-page').click();
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 	});
 
 	it('Insert', function() {
@@ -179,14 +179,14 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 			desktopHelper.hideSidebarIfVisible();
 		}
 		cy.cGet('#options-modify-page').click();
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 
 		cy.cSetActiveFrame('#iframe2');
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		}
 		cy.cGet('#options-modify-page').click();
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 	});
 
 	it('Insert autosave', function() {
