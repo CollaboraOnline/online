@@ -494,15 +494,6 @@ class CanvasSectionContainer {
 		return [this.documentTopLeft[0], this.documentTopLeft[1]];
 	}
 
-	public getDocumentBottomRight (): Array<number> {
-		return [this.documentBottomRight[0], this.documentBottomRight[1]];
-	}
-
-	// Returns top-left and bottom-right coordinates respectively.
-	public getDocumentBounds (): Array<number> {
-		return [this.documentTopLeft[0], this.documentTopLeft[1], this.documentBottomRight[0], this.documentBottomRight[1]];
-	}
-
 	public getDocumentSize (): Array<number> {
 		return [this.documentBottomRight[0] - this.documentTopLeft[0], this.documentBottomRight[1] - this.documentTopLeft[1]];
 	}
