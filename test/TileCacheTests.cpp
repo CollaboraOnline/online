@@ -522,6 +522,19 @@ void TileCacheTests::testUnresponsiveClient()
     }
 
     const std::string documentContents = oss.str();
+
+    // Request tiles before expecting an invalidate.
+    sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 "
+                           "tileposx=0,3840,7680,11520,0,3840,7680,11520 "
+                           "tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 "
+                           "tileheight=3840",
+                  testname + "2 ");
+    for (int i = 0; i < 8; ++i)
+    {
+        std::vector<char> tile = getResponseMessage(socket2, "tile:", testname + "2 ");
+        LOK_ASSERT_MESSAGE("Did not receive tile #" + std::to_string(i+1) + " of 8: message as expected", !tile.empty());
+    }
+
     for (int x = 0; x < 8; ++x)
     {
         // Invalidate to force re-rendering.
