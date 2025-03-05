@@ -10,7 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#modifypage').click({force: true});
-		desktopHelper.selectZoomLevel('200');
+		desktopHelper.selectZoomLevel('200', false);
 	});
 
 	function clickOnTheCenter() {

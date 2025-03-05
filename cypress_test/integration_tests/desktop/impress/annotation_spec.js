@@ -18,7 +18,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		}
 
 		cy.cGet('#options-modify-page').click();
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 	});
 
 	it('Insert', function() {
@@ -98,7 +98,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		// TODO: skip sidebar detection on reload
 		// cy.cGet('#options-modify-page').click();
 
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 	});
 
 	it('Insert', function() {
@@ -174,7 +174,7 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		cy.cGet('#options-modify-page').click();
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 	});
 
 	it('no comment or one comment', function() {
@@ -232,7 +232,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		// }
 		// cy.cGet('#options-modify-page').click();
 
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 	});
 
 	it('Insert autosave', function() {

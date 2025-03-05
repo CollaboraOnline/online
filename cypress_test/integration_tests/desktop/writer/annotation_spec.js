@@ -11,7 +11,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		helper.setupAndLoadDocument('writer/annotation.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
-		selectZoomLevel('50');
+		selectZoomLevel('50', false);
 	});
 
 	it('Insert', function() {
@@ -167,7 +167,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		desktopHelper.switchUIToNotebookbar();
 		// TODO: skip sidebar detection on reload
 		//cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
-		selectZoomLevel('50');
+		selectZoomLevel('50', false);
 	});
 
 	it('Insert autosave', function() {
@@ -340,7 +340,7 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		helper.setupAndLoadDocument('writer/annotation.odt');
 		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 		desktopHelper.switchUIToNotebookbar();
-		selectZoomLevel('50');
+		selectZoomLevel('50', false);
 	});
 
 	it('Insert comment with mention', function() {

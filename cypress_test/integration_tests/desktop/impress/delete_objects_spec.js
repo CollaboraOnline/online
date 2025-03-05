@@ -48,7 +48,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Table',function() {
-		desktopHelper.selectZoomLevel('50');
+		desktopHelper.selectZoomLevel('50', false);
 
 		cy.cGet('#menu-table').click();
 		cy.cGet('body').contains('Insert Table...').click();
