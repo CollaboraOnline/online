@@ -2180,6 +2180,16 @@ class TileManager {
 		);
 	}
 
+	/*
+		Checks the visible tiles in current zoom level.
+		Marks the visible ones as current.
+	*/
+	public static udpateLayoutView(bounds: any): any {
+		const queue = this.getMissingTiles(bounds, Math.round(app.map.getZoom()));
+
+		if (queue.length > 0) this.addTiles(queue, false);
+	}
+
 	public static updateFileBasedView(
 		checkOnly: boolean = false,
 		zoomFrameBounds: any = null,

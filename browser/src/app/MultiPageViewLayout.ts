@@ -129,15 +129,14 @@ class MultiPageViewLayout {
 		+' splitx=' + Math.round(0) + ' splity=' + Math.round(0);
 
 		app.socket.sendMessage(visibleAreaCommand);
+
+		return new L.Bounds(
+			new L.Point(topLeft[0], topLeft[1]),
+			new L.Point(bottomRight[0], bottomRight[1]),
+		);
 	}
 
-	public static resetViewLayout() {
-		if (
-			!app.file.writer.multiPageView ||
-			!app.file.writer.pageRectangleList.length
-		)
-			return;
-
+	private static resetViewLayout() {
 		this.rows.length = 0;
 
 		const canvasSize = app.sectionContainer.getViewSize();
@@ -195,7 +194,18 @@ class MultiPageViewLayout {
 		);
 
 		app.view.size.pX = this.totalWidth;
+	}
 
-		this.sendClientVisibleArea();
+	public static reset() {
+		if (
+			!app.file.writer.multiPageView ||
+			!app.file.writer.pageRectangleList.length
+		)
+			return;
+
+		this.resetViewLayout();
+		app.map._docLayer._sendClientZoom();
+		const bounds = this.sendClientVisibleArea();
+		TileManager.udpateLayoutView(bounds);
 	}
 }
