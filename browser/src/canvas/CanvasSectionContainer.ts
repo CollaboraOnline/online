@@ -168,7 +168,6 @@ class CanvasSectionContainer {
 	private sections: Array<any> = new Array(0);
 	private lastDocumentTopLeft: Array<number> = [0, -1];
 	private documentTopLeft: Array<number> = [0, 0];
-	private documentBottomRight: Array<number> = [0, 0];
 	private canvas: HTMLCanvasElement;
 	private context: CanvasRenderingContext2D;
 	private width: number;
@@ -494,10 +493,6 @@ class CanvasSectionContainer {
 		return [this.documentTopLeft[0], this.documentTopLeft[1]];
 	}
 
-	public getDocumentSize (): Array<number> {
-		return [this.documentBottomRight[0] - this.documentTopLeft[0], this.documentBottomRight[1] - this.documentTopLeft[1]];
-	}
-
 	public getDocumentAnchor(): Array<number> {
 		return [this.documentAnchor[0], this.documentAnchor[1]];
 	}
@@ -527,17 +522,7 @@ class CanvasSectionContainer {
 	}
 
 	public isDocumentObjectVisible (section: CanvasSectionObject): boolean {
-		const width = this.getDocumentSize()[0];
-		const halfWidth = width * 0.5;
-		const height = this.getDocumentSize()[1];
-		const halfHeight = height * 0.5;
-		if (Math.abs(section.position[0] + section.size[0] * 0.5 - (this.documentTopLeft[0] + halfWidth)) < (width + section.size[0]) * 0.5 &&
-				Math.abs(section.position[1] + section.size[1] * 0.5 - (this.documentTopLeft[1] + halfHeight)) < (height + section.size[1]) * 0.5)
-		{
-			return true;
-		}
-		else
-			return false;
+		return app.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [section.position[0], section.position[1], section.size[0], section.size[1]]);
 	}
 
 	// For window sections, there is a "targetSection" property in CanvasSectionContainer.
@@ -576,9 +561,6 @@ class CanvasSectionContainer {
 
 		this.documentTopLeft[0] = x;
 		this.documentTopLeft[1] = y;
-
-		this.documentBottomRight[0] = Math.round(points[2]);
-		this.documentBottomRight[1] = Math.round(points[3]);
 
 		app.file.viewedRectangle.pX1 = points[0];
 		app.file.viewedRectangle.pY1 = points[1];
