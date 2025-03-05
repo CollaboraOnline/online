@@ -237,9 +237,9 @@ L.Control.JSDialog = L.Control.extend({
 		return isMenu || isOnlyChild;
 	},
 
-	createContainer: function(instance, parentContainer) {
+	createContainer: function(instance, documentFragment) {
 		// it has to be form to handle default button
-		instance.container = L.DomUtil.create('div', 'jsdialog-window', parentContainer);
+		instance.container = L.DomUtil.create('div', 'jsdialog-window', documentFragment);
 		instance.container.id = instance.id;
 
 		instance.form = L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', instance.container);
@@ -748,32 +748,42 @@ L.Control.JSDialog = L.Control.extend({
 			if (this.map)
 				this.map._progressBar.end();
 
-			this.createContainer(instance, instance.overlay ? instance.overlay: instance.containerParent);
+			const dialogDomParent = instance.overlay ? instance.overlay: instance.containerParent;
+			const documentFragment = new DocumentFragment(); // do not modify dom yet
+
+			this.createContainer(instance, documentFragment);
 			this.createDialog(instance);
 			this.addHandlers(instance);
 
 			// FIXME: remove this auto-bound instance so it will be clear what is passed
 			instance.updatePos = this.setPosition.bind(this, instance);
 
-			// Special case for nonModal dialogues. Core side doesn't send their initial coordinates. We need to center them.
-			if (instance.nonModal && !(instance.startX && instance.startY)) {
-				this.centerDialogPosition(instance);
-			} else {
-				instance.updatePos();
-			}
+			app.appendLayoutingTask(() => {
+				// dialog built - add to DOM now
+				dialogDomParent.append(instance.container);
 
-			// AutoPopup  will calculate popup position for Autofilter Popup
-			if (instance.isAutofilter && !instance.isAutoFillPreviewTooltip)
-				this.calculateAutoFilterPosition(instance);
-			else if (instance.isAutoFillPreviewTooltip || instance.isAutoCompletePopup){
-				this.updateAutoPopPosition(instance.container, instance.posx, instance.posy);
-			}
+				// Special case for nonModal dialogues. Core side doesn't send their initial coordinates. We need to center them.
+				if (instance.nonModal && !(instance.startX && instance.startY)) {
+					this.centerDialogPosition(instance);
+				} else {
+					instance.updatePos();
+				}
+
+				// AutoPopup  will calculate popup position for Autofilter Popup
+				if (instance.isAutofilter && !instance.isAutoFillPreviewTooltip)
+					this.calculateAutoFilterPosition(instance);
+				else if (instance.isAutoFillPreviewTooltip || instance.isAutoCompletePopup){
+					this.updateAutoPopPosition(instance.container, instance.posx, instance.posy);
+				}
+			});
 
 			this.dialogs[instance.id] = instance;
 
 			if (instance.isSnackbar && instance.snackbarTimeout > 0) {
 				instance.timeoutId = setTimeout(function () { app.map.uiManager.closeSnackbar(); }, instance.snackbarTimeout);
 			}
+
+			app.scheduleLayouting();
 		}
 	},
 
