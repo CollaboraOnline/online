@@ -337,12 +337,15 @@ app.impress.isSlideSelected = function (index) {
 };
 
 app._flushLayoutingQueue = function () {
-	window.requestAnimationFrame(() => {
-		while (app.layoutTasks.length) {
+	if (app.layoutTasks.length) {
+		window.requestAnimationFrame(() => {
 			const task = app.layoutTasks.shift();
-			task.call(this);
-		}
-	});
+			if (task) {
+				task.call(this);
+				app.scheduleLayouting();
+			}
+		});
+	}
 };
 
 app.appendLayoutingTask = function (task) {
