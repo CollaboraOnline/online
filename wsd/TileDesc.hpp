@@ -150,9 +150,7 @@ public:
         return !(*this == other);
     }
 
-    // Sort tiles, so they are arranged as ttb rows with ltr cells within rows,
-    // with previews at the end.
-    bool operator<(const TileDesc& other) const
+    bool compareAsAtTilePos(const TileDesc& other, int tilePosX, int tilePosY) const
     {
         return std::tie(_canonicalViewId, _id,
                         _mode, _part,
@@ -163,7 +161,14 @@ public:
                         other._mode, other._part,
                         other._height, other._width,
                         other._tileHeight, other._tileWidth,
-                        other._tilePosY, other._tilePosX);
+                        tilePosY, tilePosX);
+    }
+
+    // Sort tiles, so they are arranged as ttb rows with ltr cells within rows,
+    // with previews at the end.
+    bool operator<(const TileDesc& other) const
+    {
+        return compareAsAtTilePos(other, other._tilePosX, other._tilePosY);
     }
 
     // used to cache a hash of the key elements compared in ==
@@ -179,16 +184,6 @@ public:
         a ^= _width << 19;
 
         return a ^ b;
-    }
-
-    TileDesc makeTileForGridPos(int gridX, int gridY) const
-    {
-        TileDesc tile(*this);
-
-        tile._tilePosX = gridX * tile._tileWidth;
-        tile._tilePosY = gridY * tile._tileHeight;
-
-        return tile;
     }
 
     /// Returns the tile's AABBox, i.e. tile-position + tile-extend

@@ -444,6 +444,7 @@ TileCombined KitQueue::popTileQueue(TilePrioritizer::Priority &priority)
 
 namespace {
 
+    // If these can appear in the same tile combine
     bool allowCombine(const TileDesc& a, const TileDesc& b)
     {
         if (a.isPreview() || b.isPreview())
@@ -451,12 +452,15 @@ namespace {
         return a.sameTileCombineParams(b);
     }
 
-    bool allowCombineSameRow(const TileDesc& anchorTile,
-                             const TileDesc& candidate,
-                             std::string_view check)
+    // If candidate can appear in the same tile combine as prioTile and is
+    // positioned at the same Y pos as tilePosY
+    bool allowCombineIfRow(const TileDesc& prioTile,
+                           int tilePosY,
+                           const TileDesc& candidate,
+                           std::string_view check)
     {
-        bool res = anchorTile.getTilePosY() == candidate.getTilePosY() &&
-                   allowCombine(anchorTile, candidate);
+        bool res = tilePosY == candidate.getTilePosY() &&
+                   allowCombine(prioTile, candidate);
         LOG_TRC("Combining candidate: " << candidate.serialize() <<
                 " x-grid=" << candidate.getTilePosX() / candidate.getTileWidth() <<
                 " y-grid-" << candidate.getTilePosY() / candidate.getTileHeight() <<
@@ -495,6 +499,8 @@ namespace {
         int leftTile = tilePos - 1;
         int rightTile = tilePos + 1;
 
+        int tilePosY = prioTile.getTilePosY();
+
         // Starting at the (guaranteed to exist) priority tile check in the
         // sorted tileQueue to its left and right along the same row for
         // candidate tiles that can be combined into the same request.
@@ -502,9 +508,9 @@ namespace {
         while (true)
         {
             const bool canCombineLeft = leftTile > -1 &&
-                allowCombineSameRow(prioTile, tileQueue[leftTile], "same row, left");
+                allowCombineIfRow(prioTile, tilePosY, tileQueue[leftTile], "same row, left");
             const bool canCombineRight = static_cast<unsigned>(rightTile) < tileQueue.size() &&
-                allowCombineSameRow(prioTile, tileQueue[rightTile], "same row, right");
+                allowCombineIfRow(prioTile, tilePosY, tileQueue[rightTile], "same row, right");
             if (!canCombineLeft && !canCombineRight)
                 break;
 
@@ -551,20 +557,44 @@ namespace {
         return std::make_pair(leftGridX, rightGridX);
     }
 
+    // To stand in for a tile otherwise the same as prioTile, but at an
+    // alternative position
+    struct SpeculativeTileDesc
+    {
+        const TileDesc& _prioTile;
+        int _tilePosX;
+        int _tilePosY;
+
+        SpeculativeTileDesc(const TileDesc& prioTile,
+                            int leftGridX, int vertDirection)
+            : _prioTile(prioTile)
+        {
+            _tilePosX = leftGridX * prioTile.getTileWidth();
+            _tilePosY = prioTile.getTilePosY() + (prioTile.getTileHeight() * vertDirection);
+        }
+
+    };
+
+    bool operator<(const TileDesc& candidate, const SpeculativeTileDesc& other)
+    {
+        return candidate.compareAsAtTilePos(other._prioTile,
+                                            other._tilePosX,
+                                            other._tilePosY);
+    }
+
     void combineVerticalTiles(std::vector<TileDesc>& tileQueue,
                               std::vector<TileDesc>& destTiles,
                               const TileDesc& prioTile,
                               int leftGridX, int rightGridX,
                               int vertDirection)
     {
-        int anchorGridRow = prioTile.getTilePosY() / prioTile.getTileHeight();
-        TileDesc anchorTile(prioTile.makeTileForGridPos(leftGridX, anchorGridRow + vertDirection));
+        SpeculativeTileDesc anchorTile(prioTile, leftGridX, vertDirection);
 
         auto it = std::lower_bound(tileQueue.begin(), tileQueue.end(), anchorTile);
         while (it != tileQueue.end())
         {
-            if (!allowCombineSameRow(anchorTile, *it,
-                                     vertDirection > 0 ? "row below" : "row above"))
+            if (!allowCombineIfRow(prioTile, anchorTile._tilePosY, *it,
+                                   vertDirection > 0 ? "row below" : "row above"))
             {
                 break;
             }
