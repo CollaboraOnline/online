@@ -11,7 +11,7 @@
  */
 
 /* global errorMessages accessToken accessTokenTTL accessHeader createOnlineModule */
-/* global app $ L host idleTimeoutSecs outOfFocusTimeoutSecs _ LocaleService */
+/* global app $ L host idleTimeoutSecs outOfFocusTimeoutSecs _ LocaleService LayoutingService */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 
 (function (global) {
@@ -35,6 +35,7 @@ else
 
 app.localeService = new LocaleService();
 app.setPermission(global.coolParams.get('permission') || 'edit');
+app.layoutingService = new LayoutingService();
 
 var timestamp = global.coolParams.get('timestamp');
 var target = global.coolParams.get('target') || '';
