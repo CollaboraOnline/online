@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-26 13:36+0200\n"
+"POT-Creation-Date: 2025-03-05 09:51+0200\n"
 "PO-Revision-Date: 2024-09-10 22:08+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
@@ -79,13 +79,13 @@ msgstr "Rapportera problem:"
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:35-1
 msgid ""
-"Use the bugtracker and attach any files that caused problems via <a "
-"href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
-"that anything you enter in the bugtracker will be public."
+"Use the bugtracker and attach any files that caused problems via <a href="
+"\"https://col.la/android\"> https://col.la/android</a>. Please note that "
+"anything you enter in the bugtracker will be public."
 msgstr ""
-"Använd felspåraren och bifoga alla filer som orsakade problem via <a "
-"href=\"https://col.la/android\">https://col.la/android</a>. Observera att "
-"allt du anger i felspåraren kommer att vara offentligt."
+"Använd felspåraren och bifoga alla filer som orsakade problem via <a href="
+"\"https://col.la/android\">https://col.la/android</a>. Observera att allt du "
+"anger i felspåraren kommer att vara offentligt."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1

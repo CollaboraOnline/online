@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-26 13:36+0100\n"
+"POT-Creation-Date: 2025-03-05 09:51+0100\n"
 "PO-Revision-Date: 2024-12-14 09:00+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/collabora-online/"
@@ -145,9 +145,9 @@ msgstr "பிணைய வரைபடம்"
 #: src/control/Control.Notebookbar.js:279
 #: src/control/Control.NotebookbarCalc.js:115
 #: src/control/Control.NotebookbarDraw.js:29
-#: src/control/Control.NotebookbarDraw.js:156
+#: src/control/Control.NotebookbarDraw.js:157
 #: src/control/Control.NotebookbarImpress.js:30
-#: src/control/Control.NotebookbarImpress.js:198
+#: src/control/Control.NotebookbarImpress.js:199
 #: src/control/Control.NotebookbarWriter.js:153
 msgid "Save"
 msgstr "சேமி"
@@ -252,10 +252,10 @@ msgstr "உரிமம்"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:391
 #: src/control/Control.Menubar.js:567 src/control/Control.Menubar.js:704
-#: src/control/Control.Menubar.js:992 src/control/Control.Menubar.js:1060
-#: src/control/Control.Menubar.js:1125 src/control/Control.Menubar.js:1180
-#: src/control/Control.Menubar.js:1255
-#: src/control/Control.NotebookbarWriter.js:474
+#: src/control/Control.Menubar.js:994 src/control/Control.Menubar.js:1062
+#: src/control/Control.Menubar.js:1127 src/control/Control.Menubar.js:1182
+#: src/control/Control.Menubar.js:1257
+#: src/control/Control.NotebookbarWriter.js:476
 msgid "About"
 msgstr "பற்றி"
 
@@ -308,7 +308,7 @@ msgstr "எச்சரிக்கை"
 #: src/map/Clipboard.js:1266 src/map/handler/Map.Feedback.js:87
 #: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:165
 #: src/map/handler/Map.SlideShow.js:293 src/map/handler/Map.SlideShow.js:304
-#: src/map/handler/Map.WOPI.js:673 src/slideshow/SlideShowPresenter.ts:644
+#: src/map/handler/Map.WOPI.js:679 src/slideshow/SlideShowPresenter.ts:644
 #: src/slideshow/SlideShowPresenter.ts:659
 #: src/slideshow/SlideShowPresenter.ts:674
 #: src/slideshow/SlideShowPresenter.ts:697
@@ -411,15 +411,15 @@ msgstr "நிமி"
 msgid " s"
 msgstr "வி"
 
-#: js/global.js:1490
+#: js/global.js:1495
 msgid "Cluster is scaling, retrying..."
 msgstr "கிளச்டர் அளவிடுதல், மீண்டும் முயற்சிக்கிறது ..."
 
-#: js/global.js:1492
+#: js/global.js:1497
 msgid "Document is migrating to new server, retrying..."
 msgstr "ஆவணம் புதிய சேவையகத்திற்கு இடம்பெயர்கிறது, மீண்டும் முயற்சிக்கிறது ..."
 
-#: js/global.js:1494
+#: js/global.js:1499
 msgid "Failed to get RouteToken from controller"
 msgstr "கட்டுப்பாட்டாளரிடமிருந்து ர"
 
@@ -698,8 +698,8 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:60
 #: src/control/Control.NotebookbarCalc.js:215
-#: src/control/Control.NotebookbarDraw.js:237
-#: src/control/Control.NotebookbarImpress.js:302
+#: src/control/Control.NotebookbarDraw.js:238
+#: src/control/Control.NotebookbarImpress.js:303
 #: src/control/Control.NotebookbarWriter.js:279
 msgid "Download"
 msgstr "பதிவிறக்கம்"
@@ -1055,7 +1055,7 @@ msgid "Function Wizard"
 msgstr "செயல்பாடு வழிகாட்டி"
 
 #: src/control/Control.FormulaBarJSDialog.js:75
-#: src/control/Control.NotebookbarWriter.js:1382
+#: src/control/Control.NotebookbarWriter.js:1384
 msgid "Formula"
 msgstr "தேற்றம்"
 
@@ -1154,12 +1154,12 @@ msgid "Insert Comment"
 msgstr "கருத்தைச் செருகவும்"
 
 #: src/control/Control.JSDialogBuilder.js:2523
-#: src/control/Control.Menubar.js:894
+#: src/control/Control.Menubar.js:895
 msgid "Rows"
 msgstr "வரிசைகள்"
 
 #: src/control/Control.JSDialogBuilder.js:2524
-#: src/control/Control.Menubar.js:897
+#: src/control/Control.Menubar.js:898
 msgid "Columns"
 msgstr "நெடுவரிசைகள்"
 
@@ -1170,7 +1170,7 @@ msgstr "அட்டவணையைச் செருகவும்"
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.js:363
 #: src/control/Control.Menubar.js:365 src/control/Control.Menubar.js:367
 #: src/control/Control.Menubar.js:555 src/control/Control.Menubar.js:695
-#: src/control/Control.Menubar.js:979 src/control/Control.StatusBar.js:542
+#: src/control/Control.Menubar.js:981 src/control/Control.StatusBar.js:542
 msgid "None (Do not check spelling)"
 msgstr "எதுவுமில்லை (எழுத்துப்பிழை சரிபார்க்க வேண்டாம்)"
 
@@ -1183,28 +1183,28 @@ msgid "Language"
 msgstr "மொழி"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:92
-#: src/control/Control.Menubar.js:1014
+#: src/control/Control.Menubar.js:1016
 #: src/control/Control.NotebookbarBuilder.js:347
 #: src/control/Control.NotebookbarBuilder.js:560
 msgid "ODF text document (.odt)"
 msgstr "ODF உரை ஆவணம் (.odt)"
 
 #: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:93
-#: src/control/Control.Menubar.js:1015
+#: src/control/Control.Menubar.js:1017
 #: src/control/Control.NotebookbarBuilder.js:359
 #: src/control/Control.NotebookbarBuilder.js:572
 msgid "Word 2003 Document (.doc)"
 msgstr "வேர்ட் 2003 ஆவணம் (.doc)"
 
 #: src/control/Control.Menubar.js:79 src/control/Control.Menubar.js:94
-#: src/control/Control.Menubar.js:1016
+#: src/control/Control.Menubar.js:1018
 #: src/control/Control.NotebookbarBuilder.js:355
 #: src/control/Control.NotebookbarBuilder.js:568
 msgid "Word Document (.docx)"
 msgstr "சொல் ஆவணம் (.docx)"
 
 #: src/control/Control.Menubar.js:80 src/control/Control.Menubar.js:95
-#: src/control/Control.Menubar.js:1017
+#: src/control/Control.Menubar.js:1019
 #: src/control/Control.NotebookbarBuilder.js:351
 #: src/control/Control.NotebookbarBuilder.js:564
 msgid "Rich Text (.rtf)"
@@ -1214,10 +1214,10 @@ msgstr "பணக்கார உரை (.rtf)"
 #: src/control/Control.Menubar.js:404 src/control/Control.Menubar.js:410
 #: src/control/Control.Menubar.js:576 src/control/Control.Menubar.js:583
 #: src/control/Control.Menubar.js:717 src/control/Control.Menubar.js:722
-#: src/control/Control.Menubar.js:1002 src/control/Control.Menubar.js:1011
-#: src/control/Control.Menubar.js:1068 src/control/Control.Menubar.js:1076
-#: src/control/Control.Menubar.js:1133 src/control/Control.Menubar.js:1140
-#: src/control/Control.Menubar.js:1188 src/control/Control.Menubar.js:1198
+#: src/control/Control.Menubar.js:1004 src/control/Control.Menubar.js:1013
+#: src/control/Control.Menubar.js:1070 src/control/Control.Menubar.js:1078
+#: src/control/Control.Menubar.js:1135 src/control/Control.Menubar.js:1142
+#: src/control/Control.Menubar.js:1190 src/control/Control.Menubar.js:1200
 msgid "Export as"
 msgstr "ஏற்றுமதி"
 
@@ -1225,10 +1225,10 @@ msgstr "ஏற்றுமதி"
 #: src/control/Control.Menubar.js:405 src/control/Control.Menubar.js:411
 #: src/control/Control.Menubar.js:577 src/control/Control.Menubar.js:584
 #: src/control/Control.Menubar.js:718 src/control/Control.Menubar.js:723
-#: src/control/Control.Menubar.js:1003 src/control/Control.Menubar.js:1012
-#: src/control/Control.Menubar.js:1069 src/control/Control.Menubar.js:1077
-#: src/control/Control.Menubar.js:1134 src/control/Control.Menubar.js:1141
-#: src/control/Control.Menubar.js:1189 src/control/Control.Menubar.js:1199
+#: src/control/Control.Menubar.js:1005 src/control/Control.Menubar.js:1014
+#: src/control/Control.Menubar.js:1071 src/control/Control.Menubar.js:1079
+#: src/control/Control.Menubar.js:1136 src/control/Control.Menubar.js:1143
+#: src/control/Control.Menubar.js:1191 src/control/Control.Menubar.js:1201
 #: src/control/Control.NotebookbarBuilder.js:368
 #: src/control/Control.NotebookbarBuilder.js:406
 #: src/control/Control.NotebookbarBuilder.js:442
@@ -1236,12 +1236,12 @@ msgstr "ஏற்றுமதி"
 #: src/control/Control.NotebookbarBuilder.js:632
 #: src/control/Control.NotebookbarBuilder.js:639
 #: src/control/Control.NotebookbarBuilder.js:646
-#: src/control/Control.NotebookbarDraw.js:251
+#: src/control/Control.NotebookbarDraw.js:252
 msgid "PDF Document (.pdf)"
 msgstr "PDF ஆவணம் (.pdf)"
 
 #: src/control/Control.Menubar.js:84 src/control/Control.Menubar.js:96
-#: src/control/Control.Menubar.js:1004 src/control/Control.Menubar.js:1018
+#: src/control/Control.Menubar.js:1006 src/control/Control.Menubar.js:1020
 #: src/control/Control.NotebookbarBuilder.js:363
 #: src/control/Control.NotebookbarBuilder.js:625
 msgid "EPUB (.epub)"
@@ -1253,29 +1253,29 @@ msgstr "ஆவணத்தை மறுபெயரிடுங்கள்"
 
 #: src/control/Control.Menubar.js:87 src/control/Control.Menubar.js:408
 #: src/control/Control.Menubar.js:580 src/control/Control.Menubar.js:720
-#: src/control/Control.Menubar.js:1006 src/control/Control.Menubar.js:1071
-#: src/control/Control.Menubar.js:1136 src/control/Control.Menubar.js:1191
+#: src/control/Control.Menubar.js:1008 src/control/Control.Menubar.js:1073
+#: src/control/Control.Menubar.js:1138 src/control/Control.Menubar.js:1193
 msgid "Share..."
 msgstr "பங்கு ..."
 
 #: src/control/Control.Menubar.js:88 src/control/Control.Menubar.js:409
 #: src/control/Control.Menubar.js:582 src/control/Control.Menubar.js:721
-#: src/control/Control.Menubar.js:1007 src/control/Control.Menubar.js:1072
-#: src/control/Control.Menubar.js:1138 src/control/Control.Menubar.js:1192
+#: src/control/Control.Menubar.js:1009 src/control/Control.Menubar.js:1074
+#: src/control/Control.Menubar.js:1140 src/control/Control.Menubar.js:1194
 msgid "See revision history"
 msgstr "திருத்த வரலாற்றைக் காண்க"
 
 #: src/control/Control.Menubar.js:89 src/control/Control.Menubar.js:410
 #: src/control/Control.Menubar.js:583 src/control/Control.Menubar.js:722
-#: src/control/Control.Menubar.js:1011 src/control/Control.Menubar.js:1076
-#: src/control/Control.Menubar.js:1140 src/control/Control.Menubar.js:1198
+#: src/control/Control.Menubar.js:1013 src/control/Control.Menubar.js:1078
+#: src/control/Control.Menubar.js:1142 src/control/Control.Menubar.js:1200
 msgid "Download as"
 msgstr "இவ்வாறு பதிவிறக்கு"
 
 #: src/control/Control.Menubar.js:91 src/control/Control.Menubar.js:412
 #: src/control/Control.Menubar.js:585 src/control/Control.Menubar.js:724
-#: src/control/Control.Menubar.js:1013 src/control/Control.Menubar.js:1078
-#: src/control/Control.Menubar.js:1142 src/control/Control.Menubar.js:1200
+#: src/control/Control.Menubar.js:1015 src/control/Control.Menubar.js:1080
+#: src/control/Control.Menubar.js:1144 src/control/Control.Menubar.js:1202
 #: src/control/Control.NotebookbarBuilder.js:378
 #: src/control/Control.NotebookbarBuilder.js:412
 #: src/control/Control.NotebookbarBuilder.js:454
@@ -1294,91 +1294,98 @@ msgstr "ஆவணத்தை மூடு"
 
 #: src/control/Control.Menubar.js:107 src/control/Control.Menubar.js:436
 #: src/control/Control.Menubar.js:596 src/control/Control.Menubar.js:742
-#: src/control/Control.Menubar.js:1023 src/control/Control.Menubar.js:1087
-#: src/control/Control.Menubar.js:1148 src/control/Control.Menubar.js:1208
+#: src/control/Control.Menubar.js:1025 src/control/Control.Menubar.js:1089
+#: src/control/Control.Menubar.js:1150 src/control/Control.Menubar.js:1210
 #: src/control/Control.NotebookbarCalc.js:228
-#: src/control/Control.NotebookbarDraw.js:279
-#: src/control/Control.NotebookbarImpress.js:315
+#: src/control/Control.NotebookbarDraw.js:280
+#: src/control/Control.NotebookbarImpress.js:316
 #: src/control/Control.NotebookbarWriter.js:292
 msgid "Repair"
 msgstr "பழுது"
 
-#: src/control/Control.Menubar.js:135 src/control/Control.Menubar.js:141
+#: src/control/Control.Menubar.js:134 src/control/Control.Menubar.js:140
 #: src/control/Control.Menubar.js:448 src/control/Control.Menubar.js:454
 #: src/control/Control.Menubar.js:608 src/control/Control.Menubar.js:614
 #: src/control/Control.Menubar.js:754 src/control/Control.Menubar.js:760
-#: src/control/Control.NotebookbarCalc.js:1200
-#: src/control/Control.NotebookbarDraw.js:352
-#: src/control/Control.NotebookbarImpress.js:410
-#: src/control/Control.NotebookbarWriter.js:1473
+#: src/control/Control.NotebookbarCalc.js:1202
+#: src/control/Control.NotebookbarDraw.js:355
+#: src/control/Control.NotebookbarImpress.js:413
+#: src/control/Control.NotebookbarWriter.js:1475
 #: src/control/Control.StatusBar.js:274
 msgid "Reset zoom"
 msgstr "பெரிதாக்கு மீட்டமைக்கவும்"
 
-#: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:460
+#: src/control/Control.Menubar.js:143 src/control/Control.Menubar.js:460
 #: src/control/Control.Menubar.js:620 src/control/Control.Menubar.js:763
 msgid "Toggle UI Mode"
 msgstr "இடைமுகம் பயன்முறையை மாற்றவும்"
 
-#: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:461
+#: src/control/Control.Menubar.js:144 src/control/Control.Menubar.js:461
 msgid "Show Ruler"
 msgstr "ஆட்சியாளரைக் காட்டு"
 
-#: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:462
+#: src/control/Control.Menubar.js:145 src/control/Control.Menubar.js:462
 #: src/control/Control.Menubar.js:625 src/control/Control.Menubar.js:764
 msgid "Show Status Bar"
 msgstr "நிலை பட்டியைக் காட்டு"
 
-#: src/control/Control.Menubar.js:147 src/control/Control.Menubar.js:464
+#: src/control/Control.Menubar.js:146 src/control/Control.Menubar.js:464
 #: src/control/Control.Menubar.js:626 src/control/Control.Menubar.js:765
 msgid "Hide Menu Bar"
 msgstr "பட்டியல் பட்டியை மறைக்கவும்"
 
-#: src/control/Control.Menubar.js:148 src/control/Control.Menubar.js:465
+#: src/control/Control.Menubar.js:147 src/control/Control.Menubar.js:465
 #: src/control/Control.Menubar.js:621 src/control/Control.Menubar.js:766
-#: src/control/Control.Menubar.js:1044 src/control/Control.Menubar.js:1097
-#: src/control/Control.Menubar.js:1158 src/control/Control.Menubar.js:1218
-#: src/control/Control.NotebookbarCalc.js:1274
-#: src/control/Control.NotebookbarDraw.js:452
-#: src/control/Control.NotebookbarImpress.js:525
-#: src/control/Control.NotebookbarWriter.js:1553
+#: src/control/Control.Menubar.js:1046 src/control/Control.Menubar.js:1099
+#: src/control/Control.Menubar.js:1160 src/control/Control.Menubar.js:1220
+#: src/control/Control.NotebookbarCalc.js:1276
+#: src/control/Control.NotebookbarDraw.js:455
+#: src/control/Control.NotebookbarImpress.js:528
+#: src/control/Control.NotebookbarWriter.js:1555
 msgid "Dark Mode"
 msgstr "இருண்ட முறை"
 
-#: src/control/Control.Menubar.js:149 src/control/Control.Menubar.js:466
+#: src/control/Control.Menubar.js:148 src/control/Control.Menubar.js:466
 #: src/control/Control.Menubar.js:622 src/control/Control.Menubar.js:767
-#: src/control/Control.Menubar.js:1045 src/control/Control.Menubar.js:1098
-#: src/control/Control.Menubar.js:1159 src/control/Control.Menubar.js:1219
-#: src/control/Control.NotebookbarCalc.js:1281
-#: src/control/Control.NotebookbarDraw.js:459
-#: src/control/Control.NotebookbarImpress.js:532
-#: src/control/Control.NotebookbarWriter.js:1560
+#: src/control/Control.Menubar.js:1047 src/control/Control.Menubar.js:1100
+#: src/control/Control.Menubar.js:1161 src/control/Control.Menubar.js:1221
+#: src/control/Control.NotebookbarCalc.js:1283
+#: src/control/Control.NotebookbarDraw.js:462
+#: src/control/Control.NotebookbarImpress.js:535
+#: src/control/Control.NotebookbarWriter.js:1562
 msgid "Invert Background"
 msgstr "தலைகீழ் பின்னணி"
 
+#: src/control/Control.Menubar.js:150 src/control/Control.Menubar.js:770
+#: src/control/Control.NotebookbarCalc.js:2046
+#: src/control/Control.NotebookbarWriter.js:856
+#: src/control/Control.NotebookbarWriter.js:974
+msgid "Style list"
+msgstr ""
+
 #: src/control/Control.Menubar.js:158 src/control/Control.Menubar.js:477
-#: src/control/Control.Menubar.js:629 src/control/Control.Menubar.js:780
-#: src/control/Control.Menubar.js:1261 src/control/Control.Menubar.js:1311
-#: src/control/Control.Menubar.js:1325 src/control/Control.Menubar.js:1348
+#: src/control/Control.Menubar.js:629 src/control/Control.Menubar.js:781
+#: src/control/Control.Menubar.js:1263 src/control/Control.Menubar.js:1313
+#: src/control/Control.Menubar.js:1327 src/control/Control.Menubar.js:1350
 msgid "Local Image..."
 msgstr "உள்ளக படம் ..."
 
 #: src/control/Control.Menubar.js:182 src/control/Control.Menubar.js:184
-#: src/control/Control.Menubar.js:1278 src/control/Control.Menubar.js:1280
+#: src/control/Control.Menubar.js:1280 src/control/Control.Menubar.js:1282
 msgid "All"
 msgstr "அனைத்தும்"
 
 #: src/control/Control.Menubar.js:193 src/control/Control.Menubar.js:488
-#: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:792
-#: src/control/Control.NotebookbarCalc.js:1405
-#: src/control/Control.NotebookbarDraw.js:1280
-#: src/control/Control.NotebookbarImpress.js:1270
-#: src/control/Control.NotebookbarWriter.js:1156
+#: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:793
+#: src/control/Control.NotebookbarCalc.js:1407
+#: src/control/Control.NotebookbarDraw.js:1283
+#: src/control/Control.NotebookbarImpress.js:1273
+#: src/control/Control.NotebookbarWriter.js:1158
 msgid "Smart Picker"
 msgstr "அறிவுள்ள பிக்கர்"
 
 #: src/control/Control.Menubar.js:194 src/control/Control.Menubar.js:489
-#: src/control/Control.Menubar.js:637 src/control/Control.Menubar.js:793
+#: src/control/Control.Menubar.js:637 src/control/Control.Menubar.js:794
 msgid "AI Assistant"
 msgstr ""
 
@@ -1392,143 +1399,143 @@ msgid "References"
 msgstr "குறிப்புகள்"
 
 #: src/control/Control.Menubar.js:303
-#: src/control/Control.NotebookbarWriter.js:1920
+#: src/control/Control.NotebookbarWriter.js:1922
 msgid "Update Index"
 msgstr "புதுப்பிப்பு அட்டவணை"
 
 #: src/control/Control.Menubar.js:312
-#: src/control/Control.NotebookbarWriter.js:2016
+#: src/control/Control.NotebookbarWriter.js:2018
 msgid "Add Citation"
 msgstr "மேற்கோள் சேர்க்கவும்"
 
 #: src/control/Control.Menubar.js:313
-#: src/control/Control.NotebookbarWriter.js:2028
+#: src/control/Control.NotebookbarWriter.js:2030
 msgid "Add Citation Note"
 msgstr "மேற்கோள் குறிப்பைச் சேர்க்கவும்"
 
 #: src/control/Control.Menubar.js:314
-#: src/control/Control.NotebookbarWriter.js:2003
+#: src/control/Control.NotebookbarWriter.js:2005
 msgid "Add Bibliography"
 msgstr "நூலியல் சேர்க்கவும்"
 
 #: src/control/Control.Menubar.js:316
-#: src/control/Control.NotebookbarWriter.js:2046
+#: src/control/Control.NotebookbarWriter.js:2048
 msgid "Refresh Citations"
 msgstr "மேற்கோள்களைப் புதுப்பிக்கவும்"
 
 #: src/control/Control.Menubar.js:317
-#: src/control/Control.NotebookbarWriter.js:2058
+#: src/control/Control.NotebookbarWriter.js:2060
 #: src/control/Control.Zotero.js:1533
 msgid "Unlink Citations"
 msgstr "மேற்கோள்களை அவிழ்த்து விடுங்கள்"
 
 #: src/control/Control.Menubar.js:318
-#: src/control/Control.NotebookbarWriter.js:2070
+#: src/control/Control.NotebookbarWriter.js:2072
 msgid "Citation Preferences"
 msgstr "மேற்கோள் விருப்பத்தேர்வுகள்"
 
-#: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:1300
+#: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:1302
 msgid "Insert Rich Text"
 msgstr "பணக்கார உரையைச் செருகவும்"
 
-#: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:1301
+#: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:1303
 msgid "Insert Checkbox"
 msgstr "தேர்வுப்பெட்டியைச் செருகவும்"
 
-#: src/control/Control.Menubar.js:348 src/control/Control.Menubar.js:1302
+#: src/control/Control.Menubar.js:348 src/control/Control.Menubar.js:1304
 msgid "Insert Dropdown"
 msgstr "கீழ்தோன்றும் செருகவும்"
 
-#: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:1303
+#: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:1305
 msgid "Insert Picture"
 msgstr "படத்தைச் செருகவும்"
 
-#: src/control/Control.Menubar.js:350 src/control/Control.Menubar.js:1304
+#: src/control/Control.Menubar.js:350 src/control/Control.Menubar.js:1306
 msgid "Insert Date"
 msgstr "தேதியைச் செருகவும்"
 
-#: src/control/Control.Menubar.js:351 src/control/Control.Menubar.js:1305
+#: src/control/Control.Menubar.js:351 src/control/Control.Menubar.js:1307
 #: src/control/Control.NotebookbarCalc.js:243
-#: src/control/Control.NotebookbarDraw.js:293
-#: src/control/Control.NotebookbarImpress.js:330
+#: src/control/Control.NotebookbarDraw.js:294
+#: src/control/Control.NotebookbarImpress.js:331
 #: src/control/Control.NotebookbarWriter.js:307
-#: src/control/Control.NotebookbarWriter.js:1436
+#: src/control/Control.NotebookbarWriter.js:1438
 msgid "Properties"
 msgstr "பண்புகள்"
 
-#: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:1049
-#: src/control/Control.NotebookbarWriter.js:412
+#: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:1051
+#: src/control/Control.NotebookbarWriter.js:414
 msgid "Screen Reading"
 msgstr "திரை வாசிப்பு"
 
 #: src/control/Control.Menubar.js:384
-#: src/control/Control.NotebookbarWriter.js:378
+#: src/control/Control.NotebookbarWriter.js:380
 msgid "Forum"
 msgstr "மன்றம்"
 
 #: src/control/Control.Menubar.js:385 src/control/Control.Menubar.js:561
-#: src/control/Control.Menubar.js:698 src/control/Control.Menubar.js:986
-#: src/control/Control.NotebookbarWriter.js:390
+#: src/control/Control.Menubar.js:698 src/control/Control.Menubar.js:988
+#: src/control/Control.NotebookbarWriter.js:392
 msgid "Online Help"
 msgstr "நிகழ்நிலை உதவி"
 
 #: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:562
-#: src/control/Control.Menubar.js:699 src/control/Control.Menubar.js:987
-#: src/control/Control.NotebookbarWriter.js:402
+#: src/control/Control.Menubar.js:699 src/control/Control.Menubar.js:989
+#: src/control/Control.NotebookbarWriter.js:404
 msgid "Keyboard shortcuts"
 msgstr "விசைப்பலகை குறுக்குவழிகள்"
 
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:563
-#: src/control/Control.Menubar.js:700 src/control/Control.Menubar.js:988
-#: src/control/Control.NotebookbarWriter.js:437
+#: src/control/Control.Menubar.js:700 src/control/Control.Menubar.js:990
+#: src/control/Control.NotebookbarWriter.js:439
 msgid "Report an issue"
 msgstr "ஒரு சிக்கலைப் புகாரளிக்கவும்"
 
 #: src/control/Control.Menubar.js:388 src/control/Control.Menubar.js:564
-#: src/control/Control.Menubar.js:701 src/control/Control.Menubar.js:989
-#: src/control/Control.Menubar.js:1058 src/control/Control.Menubar.js:1123
-#: src/control/Control.Menubar.js:1178 src/control/Control.Menubar.js:1253
-#: src/control/Control.NotebookbarWriter.js:450
+#: src/control/Control.Menubar.js:701 src/control/Control.Menubar.js:991
+#: src/control/Control.Menubar.js:1060 src/control/Control.Menubar.js:1125
+#: src/control/Control.Menubar.js:1180 src/control/Control.Menubar.js:1255
+#: src/control/Control.NotebookbarWriter.js:452
 msgid "Latest Updates"
 msgstr "அண்மைக் கால புதுப்பிப்புகள்"
 
 #: src/control/Control.Menubar.js:389 src/control/Control.Menubar.js:565
-#: src/control/Control.Menubar.js:702 src/control/Control.Menubar.js:990
-#: src/control/Control.Menubar.js:1059 src/control/Control.Menubar.js:1124
-#: src/control/Control.Menubar.js:1179 src/control/Control.Menubar.js:1254
-#: src/control/Control.NotebookbarWriter.js:462
+#: src/control/Control.Menubar.js:702 src/control/Control.Menubar.js:992
+#: src/control/Control.Menubar.js:1061 src/control/Control.Menubar.js:1126
+#: src/control/Control.Menubar.js:1181 src/control/Control.Menubar.js:1256
+#: src/control/Control.NotebookbarWriter.js:464
 msgid "Send Feedback"
 msgstr "கருத்துக்களை அனுப்பவும்"
 
 #: src/control/Control.Menubar.js:390 src/control/Control.Menubar.js:566
-#: src/control/Control.Menubar.js:703 src/control/Control.Menubar.js:991
-#: src/control/Control.NotebookbarWriter.js:427
+#: src/control/Control.Menubar.js:703 src/control/Control.Menubar.js:993
+#: src/control/Control.NotebookbarWriter.js:429
 #: src/control/Control.ServerAuditDialog.ts:196
 #: src/control/Control.ServerAuditDialog.ts:197
 msgid "Server audit"
 msgstr "சேவையக தணிக்கை"
 
 #: src/control/Control.Menubar.js:393 src/control/Control.Menubar.js:569
-#: src/control/Control.Menubar.js:706 src/control/Control.Menubar.js:994
+#: src/control/Control.Menubar.js:706 src/control/Control.Menubar.js:996
 msgid "Last modification"
 msgstr "கடைசி மாற்றம்"
 
 #: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:413
-#: src/control/Control.Menubar.js:1079
+#: src/control/Control.Menubar.js:1081
 #: src/control/Control.NotebookbarBuilder.js:420
 #: src/control/Control.NotebookbarBuilder.js:594
 msgid "ODF presentation (.odp)"
 msgstr "ODF வழங்கல் (.odp)"
 
 #: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:414
-#: src/control/Control.Menubar.js:1080
+#: src/control/Control.Menubar.js:1082
 #: src/control/Control.NotebookbarBuilder.js:432
 #: src/control/Control.NotebookbarBuilder.js:602
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "பவர்பாயிண்ட் 2003 விளக்கக்காட்சி (.பிபிடி)"
 
 #: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:415
-#: src/control/Control.Menubar.js:1081
+#: src/control/Control.Menubar.js:1083
 #: src/control/Control.NotebookbarBuilder.js:428
 #: src/control/Control.NotebookbarBuilder.js:598
 msgid "PowerPoint Presentation (.pptx)"
@@ -1584,12 +1591,12 @@ msgid "Notes Pages"
 msgstr "குறிப்புகள் பக்கங்கள்"
 
 #: src/control/Control.Menubar.js:463
-#: src/control/Control.NotebookbarImpress.js:491
+#: src/control/Control.NotebookbarImpress.js:494
 msgid "Notes View"
 msgstr "குறிப்புகள் பார்வை"
 
 #: src/control/Control.Menubar.js:467
-#: src/control/Control.NotebookbarImpress.js:497
+#: src/control/Control.NotebookbarImpress.js:500
 msgid "Master View"
 msgstr "முதன்மை பார்வை"
 
@@ -1597,7 +1604,7 @@ msgstr "முதன்மை பார்வை"
 msgid "Local Multimedia..."
 msgstr "உள்ளக மல்டிமீடியா ..."
 
-#: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:1122
+#: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:1124
 #: src/control/Control.PresentationBar.js:127
 msgid "Fullscreen presentation"
 msgstr "முழுத்திரை வழங்கல்"
@@ -1611,34 +1618,34 @@ msgid "Present in new window"
 msgstr "புதிய சாளரத்தில் உள்ளது"
 
 #: src/control/Control.Menubar.js:549
-#: src/control/Control.NotebookbarImpress.js:395
+#: src/control/Control.NotebookbarImpress.js:398
 #: src/slideshow/PresenterConsole.js:229
 msgid "Presenter Console"
 msgstr "தொகுப்பாளர் கன்சோல்"
 
-#: src/control/Control.Menubar.js:586 src/control/Control.Menubar.js:1082
-#: src/control/Control.Menubar.js:1143
+#: src/control/Control.Menubar.js:586 src/control/Control.Menubar.js:1084
+#: src/control/Control.Menubar.js:1145
 #: src/control/Control.NotebookbarBuilder.js:424
 #: src/control/Control.NotebookbarBuilder.js:537
 msgid "ODF Drawing (.odg)"
 msgstr "ODF வரைதல் (.odg)"
 
 #: src/control/Control.Menubar.js:713 src/control/Control.Menubar.js:725
-#: src/control/Control.Menubar.js:1201
+#: src/control/Control.Menubar.js:1203
 #: src/control/Control.NotebookbarBuilder.js:386
 #: src/control/Control.NotebookbarBuilder.js:579
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF விரிதாள் (.ods)"
 
 #: src/control/Control.Menubar.js:714 src/control/Control.Menubar.js:726
-#: src/control/Control.Menubar.js:1202
+#: src/control/Control.Menubar.js:1204
 #: src/control/Control.NotebookbarBuilder.js:394
 #: src/control/Control.NotebookbarBuilder.js:587
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "எக்செல் 2003 விரிதாள் (.xls)"
 
 #: src/control/Control.Menubar.js:715 src/control/Control.Menubar.js:727
-#: src/control/Control.Menubar.js:1203
+#: src/control/Control.Menubar.js:1205
 #: src/control/Control.NotebookbarBuilder.js:390
 #: src/control/Control.NotebookbarBuilder.js:583
 msgid "Excel Spreadsheet (.xlsx)"
@@ -1658,146 +1665,146 @@ msgstr "செயலில் தாள்"
 msgid "All Sheets"
 msgstr "அனைத்து தாள்களும்"
 
-#: src/control/Control.Menubar.js:772
-#: src/control/Control.NotebookbarCalc.js:1178
+#: src/control/Control.Menubar.js:773
+#: src/control/Control.NotebookbarCalc.js:1180
 msgid "Focus Cell"
 msgstr ""
 
-#: src/control/Control.Menubar.js:866
+#: src/control/Control.Menubar.js:867
 #: src/control/jsdialog/Definitions.Menu.ts:291
 msgid "Highlight cells with..."
 msgstr "உடன் கலங்களை முன்னிலைப்படுத்தவும் ..."
 
-#: src/control/Control.Menubar.js:867
+#: src/control/Control.Menubar.js:868
 #: src/control/jsdialog/Definitions.Menu.ts:294
 msgid "Values greater than..."
 msgstr "மதிப்புகளை விட பெரியது ..."
 
-#: src/control/Control.Menubar.js:868
+#: src/control/Control.Menubar.js:869
 #: src/control/jsdialog/Definitions.Menu.ts:298
 msgid "Values less than..."
 msgstr "மதிப்புகள் குறைவாக ..."
 
-#: src/control/Control.Menubar.js:869
+#: src/control/Control.Menubar.js:870
 #: src/control/jsdialog/Definitions.Menu.ts:302
 msgid "Values equal to..."
 msgstr "மதிப்புகள் சமமாக ..."
 
-#: src/control/Control.Menubar.js:870
+#: src/control/Control.Menubar.js:871
 #: src/control/jsdialog/Definitions.Menu.ts:306
 msgid "Values between..."
 msgstr "இடையில் மதிப்புகள் ..."
 
-#: src/control/Control.Menubar.js:871
+#: src/control/Control.Menubar.js:872
 #: src/control/jsdialog/Definitions.Menu.ts:310
 msgid "Values duplicate..."
 msgstr "மதிப்புகள் நகல் ..."
 
-#: src/control/Control.Menubar.js:872
+#: src/control/Control.Menubar.js:873
 #: src/control/jsdialog/Definitions.Menu.ts:314
 msgid "Containing text..."
 msgstr "உரை கொண்ட ..."
 
-#: src/control/Control.Menubar.js:874 src/control/Control.Menubar.js:884
+#: src/control/Control.Menubar.js:875 src/control/Control.Menubar.js:885
 #: src/control/jsdialog/Definitions.Menu.ts:318
 #: src/control/jsdialog/Definitions.Menu.ts:349
 msgid "More highlights..."
 msgstr "மேலும் சிறப்பம்சங்கள் ..."
 
-#: src/control/Control.Menubar.js:876
+#: src/control/Control.Menubar.js:877
 #: src/control/jsdialog/Definitions.Menu.ts:322
 msgid "Top/Bottom Rules..."
 msgstr "மேல்/கீழ் விதிகள் ..."
 
-#: src/control/Control.Menubar.js:877
+#: src/control/Control.Menubar.js:878
 #: src/control/jsdialog/Definitions.Menu.ts:325
 msgid "Top N elements..."
 msgstr "சிறந்த n கூறுகள் ..."
 
-#: src/control/Control.Menubar.js:878
+#: src/control/Control.Menubar.js:879
 #: src/control/jsdialog/Definitions.Menu.ts:329
 msgid "Top N percent..."
 msgstr "சிறந்த n விழுக்காடு ..."
 
-#: src/control/Control.Menubar.js:879
+#: src/control/Control.Menubar.js:880
 #: src/control/jsdialog/Definitions.Menu.ts:333
 msgid "Bottom N elements..."
 msgstr "கீழே n கூறுகள் ..."
 
-#: src/control/Control.Menubar.js:880
+#: src/control/Control.Menubar.js:881
 #: src/control/jsdialog/Definitions.Menu.ts:337
 msgid "Bottom N percent..."
 msgstr "கீழே n விழுக்காடு ..."
 
-#: src/control/Control.Menubar.js:881
+#: src/control/Control.Menubar.js:882
 #: src/control/jsdialog/Definitions.Menu.ts:341
 msgid "Above Average..."
 msgstr "சராசரிக்கு மேல் ..."
 
-#: src/control/Control.Menubar.js:882
+#: src/control/Control.Menubar.js:883
 #: src/control/jsdialog/Definitions.Menu.ts:345
 msgid "Below Average..."
 msgstr "சராசரிக்கு கீழே ..."
 
-#: src/control/Control.Menubar.js:998 src/control/Control.Menubar.js:1064
-#: src/control/Control.Menubar.js:1129 src/control/Control.Menubar.js:1184
+#: src/control/Control.Menubar.js:1000 src/control/Control.Menubar.js:1066
+#: src/control/Control.Menubar.js:1131 src/control/Control.Menubar.js:1186
 #: src/control/Control.MobileSearchBar.ts:29
-#: src/control/Control.NotebookbarCalc.js:852
-#: src/control/Control.NotebookbarDraw.js:992
-#: src/control/Control.NotebookbarImpress.js:1046
-#: src/control/Control.NotebookbarWriter.js:921
+#: src/control/Control.NotebookbarCalc.js:854
+#: src/control/Control.NotebookbarDraw.js:995
+#: src/control/Control.NotebookbarImpress.js:1049
+#: src/control/Control.NotebookbarWriter.js:923
 #: src/control/Control.StatusBar.js:247 src/control/Control.Zotero.js:222
 #: src/control/Toolbar.js:575
 msgid "Search"
 msgstr "தேடல்"
 
-#: src/control/Control.Menubar.js:1051
+#: src/control/Control.Menubar.js:1053
 msgid "Page Setup"
 msgstr "பக்கம் அமைப்பு"
 
-#: src/control/Control.Menubar.js:1195
+#: src/control/Control.Menubar.js:1197
 msgid "Define print area"
 msgstr "அச்சு பகுதியை வரையறுக்கவும்"
 
-#: src/control/Control.Menubar.js:1196
+#: src/control/Control.Menubar.js:1198
 msgid "Remove print area"
 msgstr "அச்சு பகுதியை அகற்று"
 
-#: src/control/Control.Menubar.js:1488 src/control/Control.StatusBar.js:541
+#: src/control/Control.Menubar.js:1490 src/control/Control.StatusBar.js:541
 msgid "Reset to Default Language"
 msgstr "இயல்புநிலை மொழிக்கு மீட்டமைக்கவும்"
 
-#: src/control/Control.Menubar.js:1519 src/control/Control.Menubar.js:1520
-#: src/control/Control.Menubar.js:1521 src/control/Control.Toolbar.js:140
+#: src/control/Control.Menubar.js:1521 src/control/Control.Menubar.js:1522
+#: src/control/Control.Menubar.js:1523 src/control/Control.Toolbar.js:140
 #: src/control/Control.Toolbar.js:206
 msgid "More..."
 msgstr "மேலும் ..."
 
-#: src/control/Control.Menubar.js:1829
+#: src/control/Control.Menubar.js:1831
 msgid "Use Compact view"
 msgstr "சிறிய பார்வையைப் பயன்படுத்தவும்"
 
-#: src/control/Control.Menubar.js:1831
+#: src/control/Control.Menubar.js:1833
 msgid "Use Tabbed view"
 msgstr "தாவல் பார்வையைப் பயன்படுத்தவும்"
 
-#: src/control/Control.Menubar.js:1916
+#: src/control/Control.Menubar.js:1918
 msgid "Read-only mode"
 msgstr "படிக்க மட்டும் பயன்முறை"
 
-#: src/control/Control.Menubar.js:1961
+#: src/control/Control.Menubar.js:1963
 msgid "Insert Shape"
 msgstr "வடிவத்தை செருகவும்"
 
-#: src/control/Control.Menubar.js:2034
+#: src/control/Control.Menubar.js:2036
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
 
-#: src/control/Control.Menubar.js:2036
+#: src/control/Control.Menubar.js:2038
 msgid "Finish electronic signing"
 msgstr ""
 
-#: src/control/Control.Menubar.js:2219
+#: src/control/Control.Menubar.js:2221
 msgid "file type icon"
 msgstr "கோப்பு வகை படவுரு"
 
@@ -1834,9 +1841,9 @@ msgstr "சாய்வு முடிவு"
 
 #: src/control/Control.Notebookbar.js:648
 #: src/control/Control.NotebookbarCalc.js:164
-#: src/control/Control.NotebookbarDraw.js:199
-#: src/control/Control.NotebookbarImpress.js:84
-#: src/control/Control.NotebookbarImpress.js:249
+#: src/control/Control.NotebookbarDraw.js:200
+#: src/control/Control.NotebookbarImpress.js:85
+#: src/control/Control.NotebookbarImpress.js:250
 #: src/control/Control.NotebookbarWriter.js:201
 #: src/control/Control.NotebookbarWriter.js:225
 msgid "Share"
@@ -1865,29 +1872,29 @@ msgid "Image (.png)"
 msgstr "படம் (.png)"
 
 #: src/control/Control.NotebookbarCalc.js:23
-#: src/control/Control.NotebookbarDraw.js:62
-#: src/control/Control.NotebookbarImpress.js:96
+#: src/control/Control.NotebookbarDraw.js:63
+#: src/control/Control.NotebookbarImpress.js:97
 #: src/control/Control.NotebookbarWriter.js:36
 msgid "File"
 msgstr "கோப்பு"
 
 #: src/control/Control.NotebookbarCalc.js:29
-#: src/control/Control.NotebookbarDraw.js:68
-#: src/control/Control.NotebookbarImpress.js:102
+#: src/control/Control.NotebookbarDraw.js:69
+#: src/control/Control.NotebookbarImpress.js:103
 #: src/control/Control.NotebookbarWriter.js:42
 msgid "Home"
 msgstr "வீடு"
 
 #: src/control/Control.NotebookbarCalc.js:36
-#: src/control/Control.NotebookbarDraw.js:75
-#: src/control/Control.NotebookbarImpress.js:109
+#: src/control/Control.NotebookbarDraw.js:76
+#: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:49
 msgid "Insert"
 msgstr "செருகவும்"
 
 #: src/control/Control.NotebookbarCalc.js:42
-#: src/control/Control.NotebookbarDraw.js:81
-#: src/control/Control.NotebookbarImpress.js:115
+#: src/control/Control.NotebookbarDraw.js:82
+#: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:55
 msgid "Layout"
 msgstr "மனையமைவு"
@@ -1897,280 +1904,274 @@ msgid "Data"
 msgstr "தகவல்கள்"
 
 #: src/control/Control.NotebookbarCalc.js:54
-#: src/control/Control.NotebookbarDraw.js:87
-#: src/control/Control.NotebookbarImpress.js:121
+#: src/control/Control.NotebookbarDraw.js:88
+#: src/control/Control.NotebookbarImpress.js:122
 #: src/control/Control.NotebookbarWriter.js:67
 msgid "Review"
 msgstr "சீராய்வு"
 
 #: src/control/Control.NotebookbarCalc.js:60
-#: src/control/Control.NotebookbarDraw.js:93
-#: src/control/Control.NotebookbarImpress.js:127
+#: src/control/Control.NotebookbarDraw.js:94
+#: src/control/Control.NotebookbarImpress.js:128
 #: src/control/Control.NotebookbarWriter.js:73
 msgid "Format"
 msgstr "வடிவம்"
 
 #: src/control/Control.NotebookbarCalc.js:66
-#: src/control/Control.NotebookbarDraw.js:106
+#: src/control/Control.NotebookbarDraw.js:107
 #: src/control/Control.NotebookbarWriter.js:92
 msgid "Draw"
 msgstr "டிரா"
 
 #: src/control/Control.NotebookbarCalc.js:73
-#: src/control/Control.NotebookbarDraw.js:113
-#: src/control/Control.NotebookbarImpress.js:154
+#: src/control/Control.NotebookbarDraw.js:114
+#: src/control/Control.NotebookbarImpress.js:155
 #: src/control/Control.NotebookbarWriter.js:99
 msgid "View"
 msgstr "பார்வை"
 
 #: src/control/Control.NotebookbarCalc.js:79
-#: src/control/Control.NotebookbarDraw.js:119
-#: src/control/Control.NotebookbarImpress.js:160
+#: src/control/Control.NotebookbarDraw.js:120
+#: src/control/Control.NotebookbarImpress.js:161
 #: src/control/Control.NotebookbarWriter.js:105
 #: src/control/Control.ServerAuditDialog.ts:216
 msgid "Help"
 msgstr "உதவி"
 
 #: src/control/Control.NotebookbarCalc.js:130
-#: src/control/Control.NotebookbarImpress.js:214
+#: src/control/Control.NotebookbarImpress.js:215
 #: src/control/Control.NotebookbarWriter.js:167
 #: src/control/Control.NotebookbarWriter.js:279
 msgid "Save As"
 msgstr "என சேமி"
 
 #: src/control/Control.NotebookbarCalc.js:149
-#: src/control/Control.NotebookbarDraw.js:183
-#: src/control/Control.NotebookbarImpress.js:234
+#: src/control/Control.NotebookbarDraw.js:184
+#: src/control/Control.NotebookbarImpress.js:235
 #: src/control/Control.NotebookbarWriter.js:187
 msgid "Export As"
 msgstr "ஏற்றுமதி"
 
 #: src/control/Control.NotebookbarCalc.js:174
-#: src/control/Control.NotebookbarDraw.js:209
-#: src/control/Control.NotebookbarImpress.js:259
+#: src/control/Control.NotebookbarDraw.js:210
+#: src/control/Control.NotebookbarImpress.js:260
 #: src/control/Control.NotebookbarWriter.js:209
 #: src/control/Control.NotebookbarWriter.js:239
 msgid "See history"
 msgstr "வரலாற்றைக் காண்க"
 
 #: src/control/Control.NotebookbarCalc.js:256
-#: src/control/Control.NotebookbarDraw.js:307
-#: src/control/Control.NotebookbarImpress.js:342
+#: src/control/Control.NotebookbarDraw.js:308
+#: src/control/Control.NotebookbarImpress.js:343
 #: src/control/Control.NotebookbarWriter.js:320
 msgid "Signature"
 msgstr "கையொப்பம்"
 
-#: src/control/Control.NotebookbarCalc.js:271
-#: src/control/Control.NotebookbarDraw.js:323
-#: src/control/Control.NotebookbarImpress.js:357
-#: src/control/Control.NotebookbarWriter.js:335
+#: src/control/Control.NotebookbarCalc.js:272
+#: src/control/Control.NotebookbarDraw.js:325
+#: src/control/Control.NotebookbarImpress.js:359
+#: src/control/Control.NotebookbarWriter.js:336
 #: src/control/Control.UIManager.js:234
 msgid "Rename"
 msgstr "மறுபெயரிடுங்கள்"
 
-#: src/control/Control.NotebookbarCalc.js:614
+#: src/control/Control.NotebookbarCalc.js:616
 msgid "General"
 msgstr "பொது"
 
-#: src/control/Control.NotebookbarCalc.js:615
+#: src/control/Control.NotebookbarCalc.js:617
 msgid "Number"
 msgstr "எண்"
 
-#: src/control/Control.NotebookbarCalc.js:616
+#: src/control/Control.NotebookbarCalc.js:618
 msgid "Percent"
 msgstr "விழுக்காடு"
 
-#: src/control/Control.NotebookbarCalc.js:617
+#: src/control/Control.NotebookbarCalc.js:619
 msgid "Currency"
 msgstr "நாணயம்"
 
-#: src/control/Control.NotebookbarCalc.js:618
-#: src/control/Control.NotebookbarWriter.js:1429
+#: src/control/Control.NotebookbarCalc.js:620
+#: src/control/Control.NotebookbarWriter.js:1431
 #: src/control/Control.Zotero.js:1154 src/control/Control.Zotero.js:1606
 msgid "Date"
 msgstr "திகதி"
 
-#: src/control/Control.NotebookbarCalc.js:619
+#: src/control/Control.NotebookbarCalc.js:621
 msgid "Time"
 msgstr "நேரம்"
 
-#: src/control/Control.NotebookbarCalc.js:620
+#: src/control/Control.NotebookbarCalc.js:622
 msgid "Scientific"
 msgstr "அறிவியல்"
 
-#: src/control/Control.NotebookbarCalc.js:621
+#: src/control/Control.NotebookbarCalc.js:623
 msgid "Fraction"
 msgstr "பின்னம்"
 
-#: src/control/Control.NotebookbarCalc.js:622
+#: src/control/Control.NotebookbarCalc.js:624
 msgid "Boolean Value"
 msgstr "பூலியன் மதிப்பு"
 
-#: src/control/Control.NotebookbarCalc.js:623 src/control/Toolbar.js:804
+#: src/control/Control.NotebookbarCalc.js:625 src/control/Toolbar.js:804
 msgid "Text"
 msgstr "உரை"
 
-#: src/control/Control.NotebookbarCalc.js:791
+#: src/control/Control.NotebookbarCalc.js:793
 msgid "Default"
 msgstr "இயல்புநிலை"
 
-#: src/control/Control.NotebookbarCalc.js:798
+#: src/control/Control.NotebookbarCalc.js:800
 msgid "Heading 1"
 msgstr "தலைப்பு 1"
 
-#: src/control/Control.NotebookbarCalc.js:805
+#: src/control/Control.NotebookbarCalc.js:807
 msgid "Heading 2"
 msgstr "தலைப்பு 2"
 
-#: src/control/Control.NotebookbarCalc.js:818
+#: src/control/Control.NotebookbarCalc.js:820
 msgid "Good"
 msgstr "நல்லது"
 
-#: src/control/Control.NotebookbarCalc.js:825
+#: src/control/Control.NotebookbarCalc.js:827
 msgid "Neutral"
 msgstr "நடுநிலை"
 
-#: src/control/Control.NotebookbarCalc.js:832
+#: src/control/Control.NotebookbarCalc.js:834
 msgid "Bad"
 msgstr "மோசமான"
 
-#: src/control/Control.NotebookbarCalc.js:863
-#: src/control/Control.NotebookbarDraw.js:1003
-#: src/control/Control.NotebookbarImpress.js:1057
-#: src/control/Control.NotebookbarWriter.js:932
+#: src/control/Control.NotebookbarCalc.js:865
+#: src/control/Control.NotebookbarDraw.js:1006
+#: src/control/Control.NotebookbarImpress.js:1060
+#: src/control/Control.NotebookbarWriter.js:934
 msgid "Replace"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:939
+#: src/control/Control.NotebookbarCalc.js:941
 msgid "Row Height"
 msgstr "வரிசை உயரம்"
 
-#: src/control/Control.NotebookbarCalc.js:947
+#: src/control/Control.NotebookbarCalc.js:949
 msgid "Column Width"
 msgstr "நெடுவரிசை அகலம்"
 
-#: src/control/Control.NotebookbarCalc.js:960
+#: src/control/Control.NotebookbarCalc.js:962
 msgid "Insert Rows Above"
 msgstr "மேலே வரிசைகளைச் செருகவும்"
 
-#: src/control/Control.NotebookbarCalc.js:967
+#: src/control/Control.NotebookbarCalc.js:969
 msgid "Insert Columns Before"
 msgstr "முன் நெடுவரிசைகளைச் செருகவும்"
 
-#: src/control/Control.NotebookbarCalc.js:974
+#: src/control/Control.NotebookbarCalc.js:976
 msgid "Delete Rows"
 msgstr "வரிசைகளை நீக்கு"
 
-#: src/control/Control.NotebookbarCalc.js:986
+#: src/control/Control.NotebookbarCalc.js:988
 msgid "Insert Rows Below"
 msgstr "கீழே வரிசைகளைச் செருகவும்"
 
-#: src/control/Control.NotebookbarCalc.js:993
+#: src/control/Control.NotebookbarCalc.js:995
 msgid "Insert Columns After"
 msgstr "பிறகு நெடுவரிசைகளைச் செருகவும்"
 
-#: src/control/Control.NotebookbarCalc.js:1000
+#: src/control/Control.NotebookbarCalc.js:1002
 msgid "Delete Columns"
 msgstr "நெடுவரிசைகளை நீக்கு"
 
-#: src/control/Control.NotebookbarCalc.js:1186
-#: src/control/Control.NotebookbarDraw.js:338
-#: src/control/Control.NotebookbarImpress.js:372
-#: src/control/Control.NotebookbarWriter.js:1452
+#: src/control/Control.NotebookbarCalc.js:1188
+#: src/control/Control.NotebookbarDraw.js:341
+#: src/control/Control.NotebookbarImpress.js:375
+#: src/control/Control.NotebookbarWriter.js:1454
 msgid "Read mode"
 msgstr "பயன்முறையைப் படியுங்கள்"
 
-#: src/control/Control.NotebookbarCalc.js:1237
-#: src/control/Control.NotebookbarDraw.js:389
-#: src/control/Control.NotebookbarImpress.js:447
-#: src/control/Control.NotebookbarWriter.js:1510
+#: src/control/Control.NotebookbarCalc.js:1239
+#: src/control/Control.NotebookbarDraw.js:392
+#: src/control/Control.NotebookbarImpress.js:450
+#: src/control/Control.NotebookbarWriter.js:1512
 msgid "Compact view"
 msgstr "சிறிய பார்வை"
 
-#: src/control/Control.NotebookbarCalc.js:1250
-#: src/control/Control.NotebookbarDraw.js:426
-#: src/control/Control.NotebookbarImpress.js:484
-#: src/control/Control.NotebookbarWriter.js:1547
+#: src/control/Control.NotebookbarCalc.js:1252
+#: src/control/Control.NotebookbarDraw.js:429
+#: src/control/Control.NotebookbarImpress.js:487
+#: src/control/Control.NotebookbarWriter.js:1549
 msgid "Collapse Tabs"
 msgstr "தாவல்கள் சரிவு"
 
-#: src/control/Control.NotebookbarCalc.js:1262
-#: src/control/Control.NotebookbarDraw.js:414
-#: src/control/Control.NotebookbarImpress.js:472
-#: src/control/Control.NotebookbarWriter.js:1535
+#: src/control/Control.NotebookbarCalc.js:1264
+#: src/control/Control.NotebookbarDraw.js:417
+#: src/control/Control.NotebookbarImpress.js:475
+#: src/control/Control.NotebookbarWriter.js:1537
 msgid "Status Bar"
 msgstr "நிலை பட்டி"
 
-#: src/control/Control.NotebookbarCalc.js:1355
+#: src/control/Control.NotebookbarCalc.js:1357
 msgid "Sparkline"
 msgstr "ச்பார்க்லைன்"
 
-#: src/control/Control.NotebookbarCalc.js:1413
-#: src/control/Control.NotebookbarDraw.js:1288
-#: src/control/Control.NotebookbarImpress.js:1290
-#: src/control/Control.NotebookbarWriter.js:1176
+#: src/control/Control.NotebookbarCalc.js:1415
+#: src/control/Control.NotebookbarDraw.js:1291
+#: src/control/Control.NotebookbarImpress.js:1293
+#: src/control/Control.NotebookbarWriter.js:1178
 msgid "Assistant"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1497
-#: src/control/Control.NotebookbarCalc.js:2396
-#: src/control/Control.NotebookbarDraw.js:872
-#: src/control/Control.NotebookbarDraw.js:1374
-#: src/control/Control.NotebookbarImpress.js:950
-#: src/control/Control.NotebookbarImpress.js:1383
-#: src/control/Control.NotebookbarImpress.js:2442
-#: src/control/Control.NotebookbarWriter.js:1112
-#: src/control/Control.NotebookbarWriter.js:2913
+#: src/control/Control.NotebookbarCalc.js:1499
+#: src/control/Control.NotebookbarCalc.js:2398
+#: src/control/Control.NotebookbarDraw.js:875
+#: src/control/Control.NotebookbarDraw.js:1377
+#: src/control/Control.NotebookbarImpress.js:953
+#: src/control/Control.NotebookbarImpress.js:1386
+#: src/control/Control.NotebookbarImpress.js:2445
+#: src/control/Control.NotebookbarWriter.js:1114
+#: src/control/Control.NotebookbarWriter.js:2915
 msgid "Shapes"
 msgstr "வடிவங்கள்"
 
-#: src/control/Control.NotebookbarCalc.js:2044
-#: src/control/Control.NotebookbarWriter.js:854
-#: src/control/Control.NotebookbarWriter.js:972
-msgid "Style list"
-msgstr ""
-
-#: src/control/Control.NotebookbarDraw.js:99
-#: src/control/Control.NotebookbarDraw.js:1247
-#: src/control/Control.NotebookbarImpress.js:133
-#: src/control/Control.NotebookbarImpress.js:1226
+#: src/control/Control.NotebookbarDraw.js:100
+#: src/control/Control.NotebookbarDraw.js:1250
+#: src/control/Control.NotebookbarImpress.js:134
+#: src/control/Control.NotebookbarImpress.js:1229
 #: src/control/Control.NotebookbarWriter.js:85
-#: src/control/Control.NotebookbarWriter.js:1091
+#: src/control/Control.NotebookbarWriter.js:1093
 msgid "Table"
 msgstr "அட்டவணை"
 
-#: src/control/Control.NotebookbarDraw.js:260
+#: src/control/Control.NotebookbarDraw.js:261
 msgid "PDF Document (.pdf) - Expert"
 msgstr "PDF ஆவணம் (.pdf) - வல்லுநர்"
 
-#: src/control/Control.NotebookbarDraw.js:402
-#: src/control/Control.NotebookbarImpress.js:460
-#: src/control/Control.NotebookbarWriter.js:1523
+#: src/control/Control.NotebookbarDraw.js:405
+#: src/control/Control.NotebookbarImpress.js:463
+#: src/control/Control.NotebookbarWriter.js:1525
 msgid "Ruler"
 msgstr "ஆட்சியாளர்"
 
-#: src/control/Control.NotebookbarDraw.js:1073
+#: src/control/Control.NotebookbarDraw.js:1076
 msgid "Page Layout"
 msgstr "பக்க தளவமைப்பு"
 
-#: src/control/Control.NotebookbarImpress.js:147
+#: src/control/Control.NotebookbarImpress.js:148
 msgid "Master"
 msgstr "மாச்டர்"
 
-#: src/control/Control.NotebookbarImpress.js:379
-#: src/control/Control.NotebookbarImpress.js:1031
+#: src/control/Control.NotebookbarImpress.js:382
+#: src/control/Control.NotebookbarImpress.js:1034
 msgid "Presentation"
 msgstr "விளக்கக்காட்சி"
 
-#: src/control/Control.NotebookbarImpress.js:387
+#: src/control/Control.NotebookbarImpress.js:390
 msgid "Present in Window"
 msgstr "சாளரத்தில் உள்ளது"
 
-#: src/control/Control.NotebookbarImpress.js:507
+#: src/control/Control.NotebookbarImpress.js:510
 msgid "Show Grid"
 msgstr "கட்டத்தைக் காட்டு"
 
-#: src/control/Control.NotebookbarImpress.js:514
+#: src/control/Control.NotebookbarImpress.js:517
 msgid "Snap to Grid"
 msgstr "கட்டத்திற்கு ச்னாப்"
 
@@ -2178,35 +2179,35 @@ msgstr "கட்டத்திற்கு ச்னாப்"
 msgid "Form"
 msgstr "வடிவம்"
 
-#: src/control/Control.NotebookbarWriter.js:349
+#: src/control/Control.NotebookbarWriter.js:351
 msgid "Go Online"
 msgstr "ஆன்லைனில் செல்லுங்கள்"
 
-#: src/control/Control.NotebookbarWriter.js:349
+#: src/control/Control.NotebookbarWriter.js:351
 msgid "Go Offline"
 msgstr "ஆஃப்லைனில் செல்லுங்கள்"
 
-#: src/control/Control.NotebookbarWriter.js:840
+#: src/control/Control.NotebookbarWriter.js:842
 msgid "Scroll up"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:847
+#: src/control/Control.NotebookbarWriter.js:849
 msgid "Scroll down"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1401
+#: src/control/Control.NotebookbarWriter.js:1403
 msgid "Rich Text"
 msgstr "பணக்கார உரை"
 
-#: src/control/Control.NotebookbarWriter.js:1408
+#: src/control/Control.NotebookbarWriter.js:1410
 msgid "Checkbox"
 msgstr "தேர்வுப்பெட்டி"
 
-#: src/control/Control.NotebookbarWriter.js:1415
+#: src/control/Control.NotebookbarWriter.js:1417
 msgid "Dropdown"
 msgstr "கீழ்தோன்றும்"
 
-#: src/control/Control.NotebookbarWriter.js:1422
+#: src/control/Control.NotebookbarWriter.js:1424
 msgid "Picture"
 msgstr "படம்"
 
@@ -2767,7 +2768,7 @@ msgstr "எழுத்துரு"
 msgid "Downloading..."
 msgstr "பதிவிறக்குகிறது..."
 
-#: src/control/Toolbar.js:280 src/control/jsdialog/Widget.HTMLContent.ts:128
+#: src/control/Toolbar.js:280 src/control/jsdialog/Widget.HTMLContent.ts:167
 msgid "Saving..."
 msgstr "சேமிக்கிறது..."
 
@@ -2867,58 +2868,58 @@ msgstr "தானியங்கி"
 msgid "Recent"
 msgstr "அண்மைக் கால"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:45
-#: src/control/jsdialog/Widget.HTMLContent.ts:52
-msgid "Permission Mode"
-msgstr "இசைவு முறை"
-
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
 msgstr "படிக்க மட்டும்"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:53
+#: src/control/jsdialog/Widget.HTMLContent.ts:47
+#: src/control/jsdialog/Widget.HTMLContent.ts:55
+msgid "Permission Mode"
+msgstr "இசைவு முறை"
+
+#: src/control/jsdialog/Widget.HTMLContent.ts:54
 msgid "Edit mode"
 msgstr ""
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:72
-#: src/control/jsdialog/Widget.HTMLContent.ts:118
+#: src/control/jsdialog/Widget.HTMLContent.ts:81
+#: src/control/jsdialog/Widget.HTMLContent.ts:153
 msgid "Number of Pages"
 msgstr "பக்கங்களின் எண்ணிக்கை"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:78
+#: src/control/jsdialog/Widget.HTMLContent.ts:90
 msgid "Word Counter"
 msgstr "சொல் எண்ணி"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:82
+#: src/control/jsdialog/Widget.HTMLContent.ts:99
 msgid "Number of Sheets"
 msgstr "தாள் எண்ணிக்கை"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:86
+#: src/control/jsdialog/Widget.HTMLContent.ts:108
 msgid "Entering text mode"
 msgstr "உரை முறையில் நுழைகிறது"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:92
+#: src/control/jsdialog/Widget.HTMLContent.ts:117
 msgid "Selection Mode"
 msgstr "தேர்வு முறை"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:100
+#: src/control/jsdialog/Widget.HTMLContent.ts:126
 msgid "Selected range of cells"
 msgstr "தேர்ந்த கலங்களின் வீச்சு"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:108
+#: src/control/jsdialog/Widget.HTMLContent.ts:135
 msgid "Choice of functions"
 msgstr "செயலாற்றிகளின் தேர்வு"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:114
+#: src/control/jsdialog/Widget.HTMLContent.ts:144
 msgid "Number of Slides"
 msgstr "படவில்லைகளின் எண்ணிக்கை"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:124
-#: src/control/jsdialog/Widget.HTMLContent.ts:132
+#: src/control/jsdialog/Widget.HTMLContent.ts:162
+#: src/control/jsdialog/Widget.HTMLContent.ts:174
 msgid "Your changes have been saved"
 msgstr "உங்கள் மாற்றங்கள் சேமிக்கப்பட்டுள்ளன"
 
-#: src/control/jsdialog/Widget.HTMLContent.ts:141
+#: src/control/jsdialog/Widget.HTMLContent.ts:186
 #, fuzzy
 msgid "Show Comments"
 msgstr "கருத்துகள் இல்லை"
@@ -3641,19 +3642,19 @@ msgstr ""
 "உங்கள் ஒத்துழைப்பு நிகழ்நிலை சேவையகத்திற்கு புதுப்பிக்க வேண்டும். பதிப்பு {0}"
 " கிடைக்கிறது."
 
-#: src/map/handler/Map.WOPI.js:161
+#: src/map/handler/Map.WOPI.js:167
 msgid "Creating new file from template..."
 msgstr "வார்ப்புருவில் இருந்து புதிய கோப்பை உருவாக்குதல் ..."
 
-#: src/map/handler/Map.WOPI.js:673
+#: src/map/handler/Map.WOPI.js:679
 msgid "Error"
 msgstr "பிழை"
 
-#: src/map/handler/Map.WOPI.js:673
+#: src/map/handler/Map.WOPI.js:679
 msgid "File name should contain an extension."
 msgstr "கோப்பு பெயரில் நீட்டிப்பு இருக்க வேண்டும்."
 
-#: src/map/handler/Map.WOPI.js:681
+#: src/map/handler/Map.WOPI.js:687
 msgid "Creating copy..."
 msgstr "நகலை உருவாக்குதல் ..."
 
