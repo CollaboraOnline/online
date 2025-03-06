@@ -272,9 +272,8 @@ L.TileSectionManager = L.Class.extend({
 		var paneBoundsList = splitPanesContext ?
 		    splitPanesContext.getPxBoundList(viewBounds) :
 		    [viewBounds];
-		var canvasCorePx = new L.Point(this._pixWidth, this._pixHeight);
 
-		return { canvasSize: canvasCorePx,
+		return {
 			 tileSize: tileSize,
 			 viewBounds: viewBounds,
 			 paneBoundsList: paneBoundsList,
