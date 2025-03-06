@@ -5338,6 +5338,57 @@ void DocumentBroker::removeEmbeddedMedia(const std::string& json)
     }
 }
 
+std::string DocumentBroker::getEmbeddedMediaPath(const std::string& id)
+{
+    
+    const auto it = _embeddedMedia.find(id);
+
+    if (it == _embeddedMedia.end())
+    {
+        LOG_ERR("Invalid media request in Doc [" << _docId << "] with tag [" << id << ']');
+        return std::string();
+    }
+
+    LOG_DBG("Media: " << it->second);
+    Poco::JSON::Object::Ptr object;
+
+    if (!JsonUtil::parseJSON(it->second, object))
+    {
+        LOG_ERR("Invalid media object in Doc [" << _docId << "] with tag [" << id << "] (could not parse JSON)");
+        return std::string();
+    }
+
+    if (JsonUtil::getJSONValue<std::string>(object, "id") != id)
+    {
+        LOG_ERR("Invalid media object in Doc [" << _docId << "] with tag [" << id << "] (ID does not match search)");
+        return std::string();
+    }
+
+    const std::string url = JsonUtil::getJSONValue<std::string>(object, "url");
+
+    if (!Util::toLower(url).starts_with("file://"))
+    {
+        LOG_ERR("Invalid media object in Doc [" << _docId << "] with tag [" << id << "] (URL does not start with file://)");
+        return std::string();
+    }
+
+    const std::string localPath = url.substr(sizeof("file:///") - 1);
+
+#if !MOBILEAPP
+    // We always extract media files in /tmp. Normally, we are in jail (chroot),
+    // and this would need to be accessed from WSD through the JailRoot path.
+    // But, when we have NoCapsForKit there is no jail, so the media file ends
+    // up in the host (AppImage) /tmp
+    const std::string path = COOLWSD::NoCapsForKit ? "/" + localPath :
+        FileUtil::buildLocalPathToJail(
+            COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + _jailId, localPath);
+#else
+    const std::string path = getJailRoot() + "/" + localPath;
+#endif
+
+    return path;
+}
+
 void DocumentBroker::onUrpMessage(const char* data, size_t len)
 {
     const auto session = getWriteableSession();
