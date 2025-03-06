@@ -1356,9 +1356,6 @@ class CanvasSectionContainer {
 		this.canvas.style.width = cssWidth.toFixed(4) + 'px';
 		this.canvas.style.height = cssHeight.toFixed(4) + 'px';
 
-		app.canvasSize.pX = newWidth;
-		app.canvasSize.pY = newHeight;
-
 		// Avoid black default background.
 		if (oldImageData)
 			this.context.putImageData(oldImageData, 0, 0);
