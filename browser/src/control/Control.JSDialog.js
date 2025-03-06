@@ -760,7 +760,11 @@ L.Control.JSDialog = L.Control.extend({
 
 			app.appendLayoutingTask(() => {
 				// dialog built - add to DOM now
-				dialogDomParent.append(instance.container);
+				const existingNode = dialogDomParent.querySelector('[id="' + instance.container.id + '"]');
+				if (existingNode)
+					existingNode.replaceWith(instance.container);
+				else
+					dialogDomParent.append(instance.container);
 
 				// Special case for nonModal dialogues. Core side doesn't send their initial coordinates. We need to center them.
 				if (instance.nonModal && !(instance.startX && instance.startY)) {
