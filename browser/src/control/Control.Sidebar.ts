@@ -12,17 +12,8 @@
  * JSDialog.Sidebar
  */
 
-/* global app */
-interface SidebarOptions {
-	animSpeed: number;
-}
-class Sidebar {
-	options: SidebarOptions;
-
-	map: any;
-
-	container: HTMLDivElement;
-	builder: any;
+// /* global app */
+class Sidebar extends JSDialog.SidebarBase {
 	targetDeckCommand: string;
 
 	constructor(
@@ -31,74 +22,35 @@ class Sidebar {
 			animSpeed: 1000,
 		} /* Default speed: to be used on load */,
 	) {
-		this.options = options;
-		this.onAdd(map);
+		super(map, options, SidebarType.Sidebar);
 	}
 
 	onAdd(map: ReturnType<typeof L.map>) {
-		this.map = map;
-
-		app.events.on('resize', this.onResize.bind(this));
-
-		this.builder = new L.control.jsDialogBuilder({
-			mobileWizard: this,
-			map: map,
-			cssClass: 'jsdialog sidebar',
-		});
-		this.container = L.DomUtil.create(
-			'div',
-			'sidebar-container',
-			$('#sidebar-panel').get(0),
-		);
-
+		super.onAdd(map);
 		this.map.on('sidebar', this.onSidebar, this);
-		this.map.on('jsdialogupdate', this.onJSUpdate, this);
-		this.map.on('jsdialogaction', this.onJSAction, this);
 	}
 
 	onRemove() {
+		super.onRemove();
 		this.map.off('sidebar');
-		this.map.off('jsdialogupdate', this.onJSUpdate, this);
-		this.map.off('jsdialogaction', this.onJSAction, this);
 	}
 
-	isVisible(): boolean {
-		return $('#sidebar-dock-wrapper').hasClass('visible');
-	}
+	// 	if (!this.container) return;
 
-	closeSidebar() {
-		$('#sidebar-dock-wrapper').removeClass('visible');
-		this.map._onResize();
+	// 	if (!this.builder) return;
 
-		if (!this.map.editorHasFocus()) {
-			this.map.fire('editorgotfocus');
-			this.map.focus();
-		}
+	// 	// reduce unwanted warnings in console
+	// 	if (data.control.id === 'addonimage') {
+	// 		window.app.console.log('Ignored update for control: ' + data.control.id);
+	// 		return;
+	// 	}
 
-		this.map.uiManager.setDocTypePref('ShowSidebar', false);
-	}
+	// 	if (this.getTargetDeck() === this.commandForDeck('NavigatorDeck')) {
+	// 		this.markNavigatorTreeView(data.control);
+	// 	}
 
-	onJSUpdate(e: FireEvent) {
-		var data = e.data;
-
-		if (data.jsontype !== 'sidebar') return;
-
-		if (!this.container) return;
-
-		if (!this.builder) return;
-
-		// reduce unwanted warnings in console
-		if (data.control.id === 'addonimage') {
-			window.app.console.log('Ignored update for control: ' + data.control.id);
-			return;
-		}
-
-		if (this.getTargetDeck() === this.commandForDeck('NavigatorDeck')) {
-			this.markNavigatorTreeView(data.control);
-		}
-
-		this.builder.updateWidget(this.container, data.control);
-	}
+	// 	this.builder.updateWidget(this.container, data.control);
+	// }
 
 	onJSAction(e: FireEvent) {
 		var data = e.data;
@@ -132,13 +84,6 @@ class Sidebar {
 		}
 
 		this.builder.executeAction(this.container, innerData);
-	}
-
-	onResize() {
-		var wrapper = document.getElementById('sidebar-dock-wrapper');
-		wrapper.style.maxHeight =
-			document.getElementById('document-container').getBoundingClientRect()
-				.height + 'px';
 	}
 
 	unsetSelectedSidebar() {
