@@ -11,6 +11,8 @@ window.app = {
 	console: {}
 };
 
+// For typings (including the global object), please see browser/src/global.d.ts
+
 // This function may look unused, but it's needed in WASM and Android to send data through the fake websocket. Please
 // don't remove it without first grepping for 'Base64ToArrayBuffer' in the C++ code
 // eslint-disable-next-line
