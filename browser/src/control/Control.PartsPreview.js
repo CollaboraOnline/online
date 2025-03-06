@@ -409,8 +409,7 @@ L.Control.PartsPreview = L.Control.extend({
 	_scrollViewToPartPosition: function (partNumber, fromBottom) {
 		if (this._map._docLayer && this._map._docLayer._isZooming)
 			return;
-		var ratio = TileManager.tileSize / app.tile.size.y;
-		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * ratio);
+		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * app.twipsToPixels);
 		var scrollTop = partHeightPixels * partNumber;
 		var viewHeight = app.sectionContainer.getViewSize()[1];
 

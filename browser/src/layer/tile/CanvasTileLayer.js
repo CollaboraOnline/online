@@ -265,8 +265,6 @@ L.TileSectionManager = L.Class.extend({
 
 	// Details of tile areas to render
 	_paintContext: function() {
-		var tileSize = new L.Point(TileManager.tileSize, TileManager.tileSize);
-
 		var viewBounds = this._map.getPixelBoundsCore();
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		var paneBoundsList = splitPanesContext ?
@@ -274,7 +272,6 @@ L.TileSectionManager = L.Class.extend({
 		    [viewBounds];
 
 		return {
-			 tileSize: tileSize,
 			 viewBounds: viewBounds,
 			 paneBoundsList: paneBoundsList,
 			 paneBoundsActive: splitPanesContext ? true: false,
@@ -285,12 +282,11 @@ L.TileSectionManager = L.Class.extend({
 	coordsIntersectVisible: function (coords) {
 		if (!app.file.fileBasedView) {
 			var ctx = this._paintContext();
-			var tileBounds = new L.Bounds(new L.Point(coords.x, coords.y), new L.Point(coords.x + ctx.tileSize.x, coords.y + ctx.tileSize.y));
+			var tileBounds = new L.Bounds(new L.Point(coords.x, coords.y), new L.Point(coords.x + TileManager.tileSize, coords.y + TileManager.tileSize));
 			return tileBounds.intersectsAny(ctx.paneBoundsList);
 		}
 		else {
-			var ratio = TileManager.tileSize / app.tile.size.y;
-			var partHeightPixels = Math.round((this._layer._partHeightTwips + this._layer._spaceBetweenParts) * ratio);
+			var partHeightPixels = Math.round((this._layer._partHeightTwips + this._layer._spaceBetweenParts) * app.twipsToPixels);
 			return app.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pX, app.tile.size.pY]);
 		}
 	},
