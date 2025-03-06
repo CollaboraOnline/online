@@ -130,6 +130,7 @@ class SlideShowPresenter {
 	private _onKeyDownHandler: (e: KeyboardEvent) => void;
 	private _onImpressModeChanged: any = null;
 	private _startingPresentation: boolean = false;
+	private _hammer: HammerManager;
 
 	constructor(map: any) {
 		this._cypressSVGPresentationTest =
@@ -346,6 +347,20 @@ class SlideShowPresenter {
 		canvas.addEventListener(
 			'mousemove',
 			this._slideShowNavigator.onMouseMove.bind(this._slideShowNavigator),
+		);
+
+		if (this._hammer) {
+			this._hammer.off('swipe');
+		}
+		this._hammer = new Hammer(canvas);
+		this._hammer.get('swipe').set({
+			direction: Hammer.DIRECTION_ALL,
+		});
+		this._hammer.on(
+			'swipe',
+			window.touch
+				.touchOnly(this._slideShowNavigator.onSwipe)
+				.bind(this._slideShowNavigator),
 		);
 
 		this._slideShowHandler.getContext().aCanvas = canvas;

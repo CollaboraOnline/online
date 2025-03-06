@@ -17,6 +17,7 @@ class SlideShowNavigator {
 	private slideShowHandler: SlideShowHandler;
 	private presenter: SlideShowPresenter;
 	private keyHandlerMap: Record<string, () => void>;
+	private swipeHandlerMap: Record<string, () => void>;
 	private _canvasClickHandler: MouseClickHandler;
 	private currentSlide: number;
 	private prevSlide: number;
@@ -45,6 +46,12 @@ class SlideShowNavigator {
 			Space: this.dispatchEffect.bind(this),
 			Backspace: this.rewindEffect.bind(this),
 			Escape: this.quit.bind(this),
+		};
+		this.swipeHandlerMap = {
+			[Hammer.DIRECTION_RIGHT]: this.rewindEffect.bind(this),
+			[Hammer.DIRECTION_LEFT]: this.dispatchEffect.bind(this),
+			[Hammer.DIRECTION_UP]: this.quit.bind(this),
+			[Hammer.DIRECTION_DOWN]: this.quit.bind(this),
 		};
 	}
 
@@ -410,6 +417,18 @@ class SlideShowNavigator {
 		aEvent.stopPropagation();
 		if (!this.isEnabled && aEvent.code !== 'Escape') return;
 		const handler = this.keyHandlerMap[aEvent.code];
+		if (handler) handler();
+	}
+
+	onSwipe(event: HammerInput) {
+		event.preventDefault();
+		if (
+			!this.isEnabled &&
+			event.direction !== Hammer.DIRECTION_DOWN &&
+			event.direction !== Hammer.DIRECTION_UP
+		)
+			return;
+		const handler = this.swipeHandlerMap[event.direction];
 		if (handler) handler();
 	}
 
