@@ -26,6 +26,10 @@ L.Path = L.Layer.extend({
 		fixed: false,
 	},
 
+	initialize: function () {
+		L.Layer.prototype.initialize.call(this);
+	},
+
 	onAdd: function () {
 		this._pathNodeCollection = new L.Path.PathNodeCollection();
 		this._renderer = this._map.getRenderer(this);

@@ -609,6 +609,9 @@ L.CanvasTileLayer = L.Layer.extend({
 	_pngCache: [],
 
 	initialize: function (options) {
+
+		L.Layer.prototype.initialize.call(this);
+
 		options = L.setOptions(this, options);
 
 		// text, presentation, spreadsheet, etc

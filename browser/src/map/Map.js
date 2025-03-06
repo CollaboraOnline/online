@@ -62,6 +62,7 @@ L.Map = L.Evented.extend({
 	context: {context: ''},
 
 	initialize: function (id, options) { // (HTMLElement or String, Object)
+		L.Evented.prototype.initialize.call(this);
 		options = L.setOptions(this, options);
 
 		if (this.options.documentContainer) {

@@ -11,6 +11,9 @@ L.ProgressOverlay = L.Layer.extend({
 	},
 
 	initialize: function (size) {
+
+		L.Layer.prototype.initialize.call(this);
+
 		this._size = size;
 		this._percent = 0;
 		this._initLayout();
