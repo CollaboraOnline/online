@@ -71,7 +71,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	paintWithPanes (tile: any, ctx: any, async: boolean, now: Date): void {
 		var tileTopLeft = tile.coords.getPos();
-		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
+		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(new L.Point(TileManager.tileSize, TileManager.tileSize)));
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
@@ -122,7 +122,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 		var bounds: cool.Bounds;
 		for (const coords of Array.from(tileSubset)) {
 			var topLeft = new L.Point(coords.getPos().x, coords.getPos().y);
-			var rightBottom = new L.Point(topLeft.x + ctx.tileSize.x, topLeft.y + ctx.tileSize.y);
+			var rightBottom = new L.Point(topLeft.x + TileManager.tileSize, topLeft.y + TileManager.tileSize);
 
 			if (bounds === undefined)
 				bounds = new cool.Bounds(topLeft, rightBottom);
@@ -207,23 +207,16 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 			// For the full view area repaint, whole canvas is cleared by section container.
 			// Whole canvas is not cleared after zoom has changed, so clear it per tile as they arrive even if not async.
 			this.context.fillStyle = this.containerObject.getClearColor();
-			this.context.fillRect(offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
+			this.context.fillRect(offset.x, offset.y, TileManager.tileSize, TileManager.tileSize);
 		}
 
-		var tileSizeX;
-		var tileSizeY;
 		if (app.file.fileBasedView) {
-			tileSizeX = tileSizeY = TileManager.tileSize;
-			var ratio = tileSizeX / app.tile.size.y;
-			var partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * ratio);
+			var partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * app.twipsToPixels);
 
 			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - this.documentTopLeft[1];
-		} else {
-			tileSizeX = ctx.tileSize.x;
-			tileSizeY = ctx.tileSize.y;
 		}
 
-		this.drawTileToCanvas(tile, now, this.context, offset.x, offset.y, tileSizeX, tileSizeY);
+		this.drawTileToCanvas(tile, now, this.context, offset.x, offset.y, TileManager.tileSize, TileManager.tileSize);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -262,8 +255,8 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 				for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
 					for (var i: number = tileRange.min.x; i <= tileRange.max.x; ++i) {
 						var coords = new TileCoordData(
-							i * ctx.tileSize.x,
-							j * ctx.tileSize.y,
+							i * TileManager.tileSize,
+							j * TileManager.tileSize,
 							zoom,
 							part,
 							mode);
@@ -491,8 +484,8 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 		for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
 			for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
 				const coords = new TileCoordData(
-					i * ctx.tileSize.x,
-					j * ctx.tileSize.y,
+					i * TileManager.tileSize,
+					j * TileManager.tileSize,
 					zoom,
 					part,
 					mode);
@@ -548,12 +541,12 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 					var tilePos = coords.getPos();
 
 					if (app.file.fileBasedView) {
-						var ratio = ctx.tileSize.y * relScale / app.tile.size.y;
+						var ratio = TileManager.tileSize * relScale / app.tile.size.y;
 						var partHeightPixels = Math.round((docLayer._partHeightTwips + docLayer._spaceBetweenParts) * ratio);
 						tilePos.y = coords.part * partHeightPixels + tilePos.y;
 					}
 
-					var tileBounds = new L.Bounds(tilePos, tilePos.add(ctx.tileSize));
+					var tileBounds = new L.Bounds(tilePos, tilePos.add(new L.Point(TileManager.tileSize, TileManager.tileSize)));
 					var interFrac = TilesSection.getTileIntersectionAreaFraction(tileBounds, areaAtZoom);
 
 					// Add to score how much of tile area is available.
@@ -833,11 +826,11 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 
 				var tileCoords = tile.coords.getPos();
 				if (app.file.fileBasedView) {
-					var ratio = ctx.tileSize.y * relScale / app.tile.size.y;
+					var ratio = TileManager.tileSize * relScale / app.tile.size.y;
 					var partHeightPixels = Math.round((docLayer._partHeightTwips + docLayer._spaceBetweenParts) * ratio);
 					tileCoords.y = tile.coords.part * partHeightPixels + tileCoords.y;
 				}
-				var tileBounds = new L.Bounds(tileCoords, tileCoords.add(ctx.tileSize));
+				var tileBounds = new L.Bounds(tileCoords, tileCoords.add(new L.Point(TileManager.tileSize, TileManager.tileSize)));
 
 				var crop = new L.Bounds(tileBounds.min, tileBounds.max);
 				crop.min.x = Math.max(docRangeScaled.min.x, tileBounds.min.x);

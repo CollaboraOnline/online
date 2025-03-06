@@ -101,8 +101,8 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 				for (var i: number = range.min.x; i <= range.max.x; ++i) {
 					if (i >= 0 && j >= 0 && range.part >= 0) {
 						var coords = new TileCoordData(
-							i * ctx.tileSize.x,
-							j * ctx.tileSize.y,
+							i * TileManager.tileSize,
+							j * TileManager.tileSize,
 							zoom,
 							range.part,
 							docLayer._selectedMode,
