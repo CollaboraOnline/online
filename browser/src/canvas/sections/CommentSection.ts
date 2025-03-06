@@ -16,7 +16,6 @@ declare var app: any;
 declare var _: any;
 declare var Autolinker: any;
 declare var DOMPurify : any;
-declare var Hammer: any;
 
 namespace cool {
 
