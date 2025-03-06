@@ -611,9 +611,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	initialize: function (options) {
 		options = L.setOptions(this, options);
 
-		this._tileWidthPx = options.tileSize;
-		this._tileHeightPx = options.tileSize;
-
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
 		this._documentInfo = '';
@@ -919,8 +916,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!this._map._docLoaded)
 			return;
 
-		var newClientZoom = 'tilepixelwidth=' + this._tileWidthPx + ' ' +
-		    'tilepixelheight=' + this._tileHeightPx + ' ' +
+		var newClientZoom = 'tilepixelwidth=' + TileManager.tileSize + ' ' +
+		    'tilepixelheight=' + TileManager.tileSize + ' ' +
 		    'tiletwipwidth=' + app.tile.size.x + ' ' +
 		    'tiletwipheight=' + app.tile.size.y + ' ' +
 		    'dpiscale=' + window.devicePixelRatio + ' ' +
@@ -3441,8 +3438,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	requestCellCursor: function() {
 		app.socket.sendMessage('commandvalues command=.uno:CellCursor'
-			+ '?outputHeight=' + this._tileWidthPx
-			+ '&outputWidth=' + this._tileHeightPx
+			+ '?outputHeight=' + TileManager.tileSize
+			+ '&outputWidth=' + TileManager.tileSize
 			+ '&tileHeight=' + app.tile.size.x
 			+ '&tileWidth=' + app.tile.size.y);
 	},
@@ -3889,9 +3886,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	onAdd: function (map) {
-		this._tileWidthPx = this.options.tileSize;
-		this._tileHeightPx = this.options.tileSize;
-
 		this._initContainer();
 
 		// Initiate selection handles.
