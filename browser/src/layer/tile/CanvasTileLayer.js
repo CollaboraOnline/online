@@ -279,18 +279,6 @@ L.TileSectionManager = L.Class.extend({
 		};
 	},
 
-	coordsIntersectVisible: function (coords) {
-		if (!app.file.fileBasedView) {
-			var ctx = this._paintContext();
-			var tileBounds = new L.Bounds(new L.Point(coords.x, coords.y), new L.Point(coords.x + TileManager.tileSize, coords.y + TileManager.tileSize));
-			return tileBounds.intersectsAny(ctx.paneBoundsList);
-		}
-		else {
-			var partHeightPixels = Math.round((this._layer._partHeightTwips + this._layer._spaceBetweenParts) * app.twipsToPixels);
-			return app.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pX, app.tile.size.pY]);
-		}
-	},
-
 	// Debug tool. Splits are enabled for only Calc for now.
 	_addSplitsSection: function () {
 		const splitSection = new app.definitions.splitSection();

@@ -890,9 +890,10 @@ class TileManager {
 
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
-		if (app.map._docLayer._painter.coordsIntersectVisible(coords)) {
+		if (
+			app.isRectangleVisibleInTheDisplayedArea(this.coordsToTileBounds(coords))
+		)
 			app.sectionContainer.setDirty(coords);
-		}
 	}
 
 	private static createTile(coords: TileCoordData, key: string) {
