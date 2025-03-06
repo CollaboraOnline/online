@@ -35,6 +35,9 @@ L.Draggable = L.Evented.extend({
 	}),
 
 	initialize: function (element, dragStartTarget, preventOutline) {
+
+		L.Evented.prototype.initialize.call(this);
+
 		this._element = element;
 		this._dragStartTarget = dragStartTarget || element;
 		this._preventOutline = preventOutline;

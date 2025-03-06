@@ -14,6 +14,9 @@ L.Polyline = L.Path.extend({
 	},
 
 	initialize: function (latlngs, options) {
+
+		L.Path.prototype.initialize.call(this);
+
 		L.setOptions(this, options);
 		this._setLatLngs(latlngs);
 	},

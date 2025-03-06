@@ -8,6 +8,9 @@
 L.LayerGroup = L.Layer.extend({
 
 	initialize: function (layers) {
+
+		L.Layer.prototype.initialize.call(this);
+
 		this._layers = {};
 
 		var i, len;
