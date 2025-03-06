@@ -241,6 +241,8 @@ COOL_JS_LST =\
 	src/app/GraphicSelectionMiddleware.ts \
 	src/app/TilesMiddleware.ts \
 	src/app/SearchService.ts \
+	src/app/BaseClass.ts \
+	src/app/Events.ts \
 	src/app/Rectangle.ts \
 	src/app/Util.ts \
 	src/app/LOUtil.ts \
