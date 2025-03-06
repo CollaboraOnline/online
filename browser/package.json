@@ -4,6 +4,7 @@
   "description": "Collabora Online front-end",
   "devDependencies": {
     "@braintree/sanitize-url": "6.0.2",
+    "@types/hammerjs": "^2.0.46",
     "@types/jquery": "^3.5.29",
     "@types/jquery.contextmenu": "^1.7.38",
     "@types/jqueryui": "^1.12.21",
