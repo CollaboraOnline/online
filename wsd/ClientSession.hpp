@@ -349,6 +349,14 @@ private:
     void handleTileInvalidation(const std::string& message,
                                 const std::shared_ptr<DocumentBroker>& docBroker);
 
+    /// Generate tile push requests for a change in view if necessary
+    void renderMissingTilesForVisibleArea(const std::shared_ptr<DocumentBroker>& docBroker);
+
+    /// Generate tile push requests for a given area
+    void ClientSession::requestTilesForArea(const Util::Rectange &invalidateRect,
+                                            const std::shared_ptr<DocumentBroker>& docBroker,
+                                            bool onlyMissing);
+
     bool isTileInsideVisibleArea(const TileDesc& tile) const;
 
     /// If this session is read-only because of failed lock, try to unlock and make it read-write.

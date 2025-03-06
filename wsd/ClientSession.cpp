@@ -973,7 +973,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             }
 
             _clientVisibleArea = Util::Rectangle(x, y, width, height);
-            return forwardToChild(std::string(buffer, length), docBroker);
+            boolean ret = forwardToChild(std::string(buffer, length), docBroker);
+            renderMissingTilesForVisibleArea(docBroker);
+            return ret;
         }
     }
     else if (tokens.equals(0, "setclientpart"))
@@ -3034,7 +3036,20 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     const std::shared_ptr<DocumentBroker>& docBroker)
 {
     docBroker->invalidateTiles(message, getCanonicalViewId());
+    Util::Rectangle invalidateRect = TileCache::parseInvalidateMsg(message, part, mode, wireId);
+    requestTilesForArea(invalidateRect, docBroker, false /* all changed tiles */);
+}
 
+void ClientSession::renderMissingTilesForVisibleArea(
+    const std::shared_ptr<DocumentBroker>& docBroker)
+{
+    requestTilesForArea(_clientVisibleArea, docBroker, true /* only missing */);
+}
+
+void ClientSession::requestTilesForArea(const Util::Rectange &invalidateRect,
+                                        const std::shared_ptr<DocumentBroker>& docBroker,
+                                        bool onlyMissing)
+{
     // Skip requesting new tiles if we don't have client visible area data yet.
     if(!_clientVisibleArea.hasSurface() ||
        _tileWidthPixel == 0 || _tileHeightPixel == 0 ||
@@ -3053,7 +3068,6 @@ void ClientSession::handleTileInvalidation(const std::string& message,
 
     int part = 0, mode = 0;
     TileWireId wireId = 0;
-    Util::Rectangle invalidateRect = TileCache::parseInvalidateMsg(message, part, mode, wireId);
 
     constexpr SplitPaneName panes[4] = {
         TOPLEFT_PANE,
@@ -3120,16 +3134,19 @@ void ClientSession::handleTileInvalidation(const std::string& message,
 
                         if (!dup)
                         {
-                            invalidTiles.push_back(desc);
-
                             TileWireId makeDelta = 1;
                             // FIXME: mobile with no TileCache & flushed kit cache
                             // FIXME: out of (a)sync kit vs. TileCache re: keyframes ?
                             if (getDocumentBroker()->hasTileCache() &&
                                 !getDocumentBroker()->tileCache().lookupTile(desc))
                                 makeDelta = 0; // force keyframe
-                            invalidTiles.back().setOldWireId(makeDelta);
-                            invalidTiles.back().setWireId(0);
+
+                            if (!onlyMissing || (onlyMissing && makeDelta == 0))
+                            {
+                                invalidTiles.push_back(desc);
+                                invalidTiles.back().setOldWireId(makeDelta);
+                                invalidTiles.back().setWireId(0);
+                            }
                         }
                     }
                 }
