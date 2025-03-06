@@ -1513,7 +1513,9 @@ public:
             else if (read == 0 || (read < 0 && (last_errno == EPIPE || last_errno == ECONNRESET)))
             {
                 // There is nothing more to read; either we got EOF, or we drained after ECONNRESET.
-                LOG_DBG("Closed after reading");
+                LOG_DBG("Closed after reading (" << Util::symbolicErrno(last_errno)
+                                                               << "): " << std::strerror(last_errno)
+                                                               << '')';
                 closed = true;
             }
         }
