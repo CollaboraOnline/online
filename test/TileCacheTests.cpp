@@ -960,8 +960,6 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<http::WebSocketSession>& so
 
 void TileCacheTests::testTileInvalidateWriter()
 {
-    // Expects to get invalidates without requesting tiles.
-    return;
     const char* testname = "tileInvalidateWriter ";
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
@@ -969,24 +967,17 @@ void TileCacheTests::testTileInvalidateWriter()
     std::shared_ptr<http::WebSocketSession> socket
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
-    std::string text = "Test. Now go 3 \"Enters\":\n\n\nNow after the enters, goes this text";
+    // Request a tile before expecting an invalidate.
+    sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 "
+                           "tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840",
+                  testname);
+    std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+    LOK_ASSERT_MESSAGE("Did not receive tile message as expected", !tile.empty());
+
+    std::string text = "abcde";
     for (char ch : text)
     {
         sendChar(socket, ch, skNone, testname); // Send ordinary characters and wait for response -> one tile invalidation for each
-        assertResponseString(socket, "invalidatetiles:", testname);
-    }
-
-    text = "\n\n\n";
-    for (char ch : text)
-    {
-        sendChar(socket, ch, skCtrl, testname); // Send 3 Ctrl+Enter -> 3 new pages
-        assertResponseString(socket, "invalidatetiles:", testname);
-    }
-
-    text = "abcde";
-    for (char ch : text)
-    {
-        sendChar(socket, ch, skNone, testname);
         assertResponseString(socket, "invalidatetiles:", testname);
     }
 
