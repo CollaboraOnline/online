@@ -21,6 +21,9 @@ L.Marker = L.Layer.extend({
 	},
 
 	initialize: function (latlng, options) {
+
+		L.Layer.prototype.initialize.call(this);
+
 		L.setOptions(this, options);
 		this._latlng = L.latLng(latlng);
 		this.on('down', this.onDown);

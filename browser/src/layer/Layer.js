@@ -7,6 +7,10 @@ L.Layer = L.Evented.extend({
 		pane: 'overlayPane'
 	},
 
+	initialize: function () {
+		L.Evented.prototype.initialize.call(this);
+	},
+
 	addTo: function (map) {
 		map.addLayer(this);
 		return this;

@@ -626,6 +626,9 @@ L.CanvasTileLayer = L.Layer.extend({
 	_pngCache: [],
 
 	initialize: function (options) {
+
+		L.Layer.prototype.initialize.call(this);
+
 		options = L.setOptions(this, options);
 
 		this._tileWidthPx = options.tileSize;
