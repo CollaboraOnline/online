@@ -3710,7 +3710,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			var documentPos = documentBounds.min;
 			var documentEndPos = documentBounds.max;
 			app.sectionContainer.setDocumentBounds([documentPos.x, documentPos.y, documentEndPos.x, documentEndPos.y]);
-			MultiPageViewLayout.reset();
+			if (app.file.writer.multiPageView)
+				MultiPageViewLayout.reset();
 		}
 	},
 
