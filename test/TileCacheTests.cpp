@@ -1373,8 +1373,6 @@ void TileCacheTests::requestTiles(std::shared_ptr<http::WebSocketSession>& socke
 
 void TileCacheTests::testTileRequestByInvalidation()
 {
-    // Expects to get invalidates without requesting tiles.
-    return;
     const char* testname = "tileRequestByInvalidation ";
 
     std::string documentPath, documentURL;
@@ -1382,6 +1380,13 @@ void TileCacheTests::testTileRequestByInvalidation()
 
     std::shared_ptr<http::WebSocketSession> socket
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
+
+    // Request a tile before expecting an invalidate.
+    sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 "
+                           "tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840",
+                  testname);
+    std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+    LOK_ASSERT_MESSAGE("Did not receive tile message as expected", !tile.empty());
 
     // 1. use case: invalidation without having a valid visible area in wsd
     // Type one character to trigger invalidation
@@ -1391,7 +1396,7 @@ void TileCacheTests::testTileRequestByInvalidation()
     assertResponseString(socket, "invalidatetiles:", testname);
 
     // Since we did not set client visible area wsd won't send tile
-    std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+    tile = getResponseMessage(socket, "tile:", testname);
     LOK_ASSERT_MESSAGE("Not expected tile message arrived!", tile.empty());
 
     // 2. use case: invalidation of one tile inside the client visible area
@@ -1406,7 +1411,7 @@ void TileCacheTests::testTileRequestByInvalidation()
     assertResponseString(socket, "invalidatetiles:", testname);
 
     // Then sends the new tile which was invalidated inside the visible area
-    assertResponseString(socket, "tile:", testname);
+    assertResponseString(socket, "delta:", testname);
 
     socket->asyncShutdown();
     LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
