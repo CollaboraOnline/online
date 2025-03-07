@@ -576,6 +576,10 @@ QUIET_SAMPLES = $(QUIET_SAMPLES_$(V))
 QUIET_SAMPLES_ = $(QUIET_SAMPLES_$(AM_DEFAULT_VERBOSITY))
 QUIET_SAMPLES_0 = @echo "  SAMPLES " $@;
 
+QUIET_SBOM = $(QUIET_SBOM_$(V))
+QUIET_SBOM_ = $(QUIET_SBOM_$(AM_DEFAULT_VERBOSITY))
+QUIET_SBOM_0 = @echo "  SBOM    " $@;
+
 setup-wsd: all @JAILS_PATH@ @CACHE_PATH@ presets-dir
 	@echo "Launching coolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
@@ -833,4 +837,4 @@ czech: check
 	@echo "This should do something much cooler"
 
 collabora-online-sbom.spdx.json: coolforkit-ns
-	python3 $(abs_top_srcdir)/scripts/create-sbom.py $(abs_top_builddir)
+	$(QUIET_SBOM) python3 $(abs_top_srcdir)/scripts/create-sbom.py $(abs_top_builddir)
