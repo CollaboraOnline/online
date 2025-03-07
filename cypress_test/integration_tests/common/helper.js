@@ -362,7 +362,7 @@ function documentChecks(skipInitializedCheck = false) {
 		doIfOnDesktop(function() {
 			var showSidebar = localStorage.getItem('text.ShowSidebar');
 			if (Cypress.env('pdf-view') !== true && showSidebar !== 'false')
-				cy.cframe().find('#sidebar-panel').should('be.visible');
+				cy.cframe().find('#sidebar-panel').should('be.visible').should('not.be.empty');
 
 			// Check that the document does not take the whole window width.
 			cy.window()
