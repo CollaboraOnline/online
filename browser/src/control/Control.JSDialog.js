@@ -753,7 +753,6 @@ L.Control.JSDialog = L.Control.extend({
 
 			this.createContainer(instance, documentFragment);
 			this.createDialog(instance);
-			this.addHandlers(instance);
 
 			// FIXME: remove this auto-bound instance so it will be clear what is passed
 			instance.updatePos = this.setPosition.bind(this, instance);
@@ -765,6 +764,9 @@ L.Control.JSDialog = L.Control.extend({
 					existingNode.replaceWith(instance.container);
 				else
 					dialogDomParent.append(instance.container);
+
+				// do in task to apply correct focus when already shown
+				this.addHandlers(instance);
 
 				// Special case for nonModal dialogues. Core side doesn't send their initial coordinates. We need to center them.
 				if (instance.nonModal && !(instance.startX && instance.startY)) {
