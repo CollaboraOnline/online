@@ -158,7 +158,7 @@ class Evented extends BaseClass {
 	}
 
 	private _off(type: string, fn: CEventListener, context: any): void {
-		if (!this._events.size) {
+		if (!this._events.size && !this._eventsNoContext.size) {
 			return;
 		}
 
