@@ -169,12 +169,134 @@ describe('Evented: Register handler with event names as a string', function () {
 
 		assert.equal(1, obj.first.numCalls);
 		assert.equal('e1', obj.first.event.type);
+		assert.equal(obj, obj.first.event.target);
 		const eventData = obj.first.event as any;
 		assert.equal(42, eventData.key1);
 		assert.equal('innerValue', eventData.key2.inner);
 
 		assert.equal(0, obj.second.numCalls);
 		assert.equal(null, obj.second.event);
+	});
+
+	it('fire() with no propagate but has parent object', function () {
+		const obj = new DerivedEvented();
+		const parentObj = new DerivedEvented();
+
+		obj.on('e1', obj.handler1, obj);
+		parentObj.on('e1', parentObj.handler1, parentObj);
+
+		// Register parent object.
+		obj.addEventParent(parentObj);
+
+		obj.fire('e1', {key1: 42, key2: { inner: 'innerValue'}});
+
+		obj.off('e1', obj.handler1, obj);
+		parentObj.off('e1', parentObj.handler1, parentObj);
+
+		assert.equal(1, obj.first.numCalls);
+		assert.equal('e1', obj.first.event.type);
+		assert.equal(obj, obj.first.event.target);
+		const eventData = obj.first.event as any;
+		assert.equal(42, eventData.key1);
+		assert.equal('innerValue', eventData.key2.inner);
+
+		assert.equal(0, obj.second.numCalls);
+		assert.equal(null, obj.second.event);
+
+		// No calls should have been made to parent object handlers.
+		assert.equal(0, parentObj.first.numCalls);
+		assert.equal(null, parentObj.first.event);
+
+		assert.equal(0, parentObj.second.numCalls);
+		assert.equal(null, parentObj.second.event);
+	});
+
+	it('fire() with propagate and has parent object', function () {
+		const obj = new DerivedEvented();
+		const parentObj = new DerivedEvented();
+
+		obj.on('e1', obj.handler1, obj);
+		parentObj.on('e1', parentObj.handler1, parentObj);
+
+		// Register parent object.
+		obj.addEventParent(parentObj);
+
+		obj.fire('e1', {key1: 42, key2: { inner: 'innerValue'}}, true);
+
+		obj.off('e1', obj.handler1, obj);
+		parentObj.off('e1', parentObj.handler1, parentObj);
+
+		assert.equal(1, obj.first.numCalls);
+		assert.equal('e1', obj.first.event.type);
+		const eventData = obj.first.event as any;
+		assert.equal(42, eventData.key1);
+		assert.equal('innerValue', eventData.key2.inner);
+
+		assert.equal(0, obj.second.numCalls);
+		assert.equal(null, obj.second.event);
+
+		// Parent object must also have received the call.
+		assert.equal(1, parentObj.first.numCalls);
+		assert.equal('e1', parentObj.first.event.type);
+		const eventData2 = parentObj.first.event as any;
+		assert.equal(42, eventData2.key1);
+		assert.equal('innerValue', eventData2.key2.inner);
+		assert.deepEqual(obj, eventData2.layer);
+
+		assert.equal(0, parentObj.second.numCalls);
+		assert.equal(null, parentObj.second.event);
+	});
+
+	it('fire() with propagate but with removed parent object', function () {
+		const obj = new DerivedEvented();
+		const parentObj = new DerivedEvented();
+
+		obj.on('e1', obj.handler1, obj);
+		parentObj.on('e1', parentObj.handler1, parentObj);
+
+		// Register parent object.
+		obj.addEventParent(parentObj);
+		// Deregister the same parent.
+		obj.removeEventParent(parentObj);
+
+		obj.fire('e1', {key1: 42, key2: { inner: 'innerValue'}}, true);
+
+		obj.off('e1', obj.handler1, obj);
+		parentObj.off('e1', parentObj.handler1, parentObj);
+
+		assert.equal(1, obj.first.numCalls);
+		assert.equal('e1', obj.first.event.type);
+		assert.equal(obj, obj.first.event.target);
+		const eventData = obj.first.event as any;
+		assert.equal(42, eventData.key1);
+		assert.equal('innerValue', eventData.key2.inner);
+
+		assert.equal(0, obj.second.numCalls);
+		assert.equal(null, obj.second.event);
+
+		// No calls should have been made to parent object handlers.
+		assert.equal(0, parentObj.first.numCalls);
+		assert.equal(null, parentObj.first.event);
+
+		assert.equal(0, parentObj.second.numCalls);
+		assert.equal(null, parentObj.second.event);
+	});
+
+	it('listens() when object is not listening', function () {
+		const obj = new DerivedEvented();
+		obj.on('e1', obj.handler1, obj);
+
+		assert.equal(false, obj.listens('e2'));
+
+		obj.off('e1', obj.handler1, obj);
+	});
+
+	it('listens() when object stopped listening', function () {
+		const obj = new DerivedEvented();
+		obj.on('e1', obj.handler1, obj);
+		obj.off('e1', obj.handler1, obj);
+
+		assert.equal(false, obj.listens('e1'));
 	});
 
 });
