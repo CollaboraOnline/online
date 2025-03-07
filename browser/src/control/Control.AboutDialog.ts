@@ -157,7 +157,21 @@ class AboutDialog {
 			null,
 			true,
 		);
+
+		this.showImpl(aboutDialogId, content);
+	}
+
+	showImpl(aboutDialogId: string, content: HTMLElement) {
 		var box = document.getElementById(aboutDialogId + '-box');
+
+		// TODO: do it JSDialog native...
+		if (!box) {
+			setTimeout(() => {
+				this.showImpl(aboutDialogId, content);
+			}, 10);
+			return;
+		}
+
 		var innerDiv = L.DomUtil.create('div', '', null);
 		box.insertBefore(innerDiv, box.firstChild);
 		innerDiv.appendChild(content);
