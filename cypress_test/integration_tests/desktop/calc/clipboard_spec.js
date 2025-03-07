@@ -2,11 +2,17 @@
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/clipboard.ods');
+
+		if (Cypress.env('INTEGRATION') === 'nextcloud') {
+			desktopHelper.showStatusBarIfHidden();
+		}
+		desktopHelper.shouldHaveZoomLevel('100');
 
 		cy.cGet('#map').focus();
 		calcHelper.clickOnFirstCell();
