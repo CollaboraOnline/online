@@ -8,7 +8,6 @@ if test "${DONT_GEN_SSL_CERT-set}" = set; then
 mkdir -p /tmp/ssl/
 cd /tmp/ssl/
 mkdir -p certs/ca
-openssl rand -writerand /opt/cool/.rnd
 openssl genrsa -out certs/ca/root.key.pem 2048
 openssl req -x509 -new -nodes -key certs/ca/root.key.pem -days 9131 -out certs/ca/root.crt.pem -subj "/C=DE/ST=BW/L=Stuttgart/O=Dummy Authority/CN=Dummy Authority"
 mkdir -p certs/servers
