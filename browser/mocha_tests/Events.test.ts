@@ -299,4 +299,69 @@ describe('Evented: Register handler with event names as a string', function () {
 		assert.equal(false, obj.listens('e1'));
 	});
 
+	it('listens() when object is listening', function () {
+		const obj = new DerivedEvented();
+		obj.on('e1', obj.handler1, obj);
+
+		assert.equal(true, obj.listens('e1'));
+
+		obj.off('e1', obj.handler1, obj);
+	});
+
+	it('once() without firing', function () {
+		const obj = new DerivedEvented();
+		obj.once('e1', obj.handler1, obj);
+
+		obj.off('e1', obj.handler1, obj);
+
+		assert.equal(0, obj.first.numCalls);
+		assert.equal(null, obj.first.event);
+
+		assert.equal(0, obj.second.numCalls);
+		assert.equal(null, obj.second.event);
+	});
+
+	it('once() with single fire()', function () {
+		const obj = new DerivedEvented();
+		obj.once('e1', obj.handler1, obj);
+
+		obj.fire('e1', {key1: 42, key2: { inner: 'innerValue'}});
+
+		assert.equal(1, obj.first.numCalls);
+		assert.equal('e1', obj.first.event.type);
+		assert.equal(obj, obj.first.event.target);
+		const eventData = obj.first.event as any;
+		assert.equal(42, eventData.key1);
+		assert.equal('innerValue', eventData.key2.inner);
+		// off() should have been called automatically
+		// so listens() should return false.
+		assert.equal(false, obj.listens('e1'));
+
+		assert.equal(0, obj.second.numCalls);
+		assert.equal(null, obj.second.event);
+	});
+
+	it('once() with multiple fire()', function () {
+		const obj = new DerivedEvented();
+		obj.once('e1', obj.handler1, obj);
+
+		obj.fire('e1', {key1: 42, key2: { inner: 'innerValue'}});
+		obj.fire('e1', {key1: 4242, key2: { inner: 'innerValue'}});
+		obj.fire('e1', {key1: 424242, key2: { inner: 'innerValue'}});
+
+		// despite the multiple fire() calls, handler must have been
+		// called just once.
+		assert.equal(1, obj.first.numCalls);
+		assert.equal('e1', obj.first.event.type);
+		assert.equal(obj, obj.first.event.target);
+		const eventData = obj.first.event as any;
+		assert.equal(42, eventData.key1);
+		assert.equal('innerValue', eventData.key2.inner);
+		// off() should have been called automatically
+		// so listens() should return false.
+		assert.equal(false, obj.listens('e1'));
+
+		assert.equal(0, obj.second.numCalls);
+		assert.equal(null, obj.second.event);
+	});
 });
