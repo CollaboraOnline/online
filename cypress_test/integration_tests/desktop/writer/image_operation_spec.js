@@ -8,7 +8,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/image_operation.odt');
-		desktopHelper.switchUIToNotebookbar();
+		desktopHelper.shouldHaveZoomLevel('70');
 	});
 
 	it('Insert Image',function() {
