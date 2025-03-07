@@ -2472,24 +2472,28 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         }
         else if (tokens.equals(0, "loaded:"))
         {
-            setState(ClientSession::SessionState::LIVE);
-
-            if (firstLine.find("isfirst=true") != std::string::npos)
+            // We expect to be in the Loading state, as set in
+            // DocumentBroker::addSessionInternal().
+            if (_state == ClientSession::SessionState::LOADING)
             {
-                // The document has just loaded.
-                docBroker->setInteractive(false);
-                docBroker->setLoaded();
+                setState(ClientSession::SessionState::LIVE);
 
-                // Wopi post load actions.
-                if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
+                if (firstLine.find("isfirst=true") != std::string::npos)
                 {
-                    LOG_DBG("Uploading template [" << _wopiFileInfo->getTemplateSource()
-                                                   << "] to storage after loading.");
-                    docBroker->uploadAfterLoadingTemplate(client_from_this());
-                }
-            }
+                    // The document has just loaded.
+                    docBroker->setInteractive(false);
+                    docBroker->setLoaded();
 
-            docBroker->onViewLoaded(client_from_this());
+                    // Wopi post load actions.
+                    if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
+                    {
+                        LOG_DBG("Uploading template [" << _wopiFileInfo->getTemplateSource()
+                                                       << "] to storage after loading.");
+                        docBroker->uploadAfterLoadingTemplate(client_from_this());
+                    }
+                }
+
+                docBroker->onViewLoaded(client_from_this());
 
 #if !MOBILEAPP
             Admin::instance().setViewLoadDuration(
@@ -2497,6 +2501,12 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 std::chrono::duration_cast<std::chrono::milliseconds>(
                     std::chrono::steady_clock::now() - _viewLoadStart));
 #endif
+            }
+            else
+            {
+                LOG_WRN("Document loaded while we are not loading. Likely the client gave up and "
+                        "abandoned the document");
+            }
         }
         else if (tokens.equals(0, "status:"))
         {
