@@ -257,11 +257,34 @@ class Evented extends BaseClass {
 		return this;
 	}
 
+	private hasContextListeners(type: string): boolean {
+		if (!this._events.size) {
+			return false;
+		}
+
+		const mp = this._events.get(type);
+		if (!mp || !mp.size) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private hasNoContextListener(type: string): boolean {
+		if (!this._eventsNoContext.size) {
+			return false;
+		}
+
+		const arr = this._eventsNoContext.get(type);
+		if (!arr || !arr.length) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public listens(type: string, propagate?: boolean): boolean {
-		if (
-			(this._events.size || this._eventsNoContext.size) &&
-			(this._eventsNoContext.has(type) || this._events.has(type))
-		) {
+		if (this.hasContextListeners(type) || this.hasNoContextListener(type)) {
 			return true;
 		}
 
