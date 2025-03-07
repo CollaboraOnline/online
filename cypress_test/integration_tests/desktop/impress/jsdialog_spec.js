@@ -14,6 +14,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog Tests', function(
 		cy.cGet('#options-custom-animation-button').click();
 		cy.cGet('#options-custom-animation-button').should('have.class', 'selected');
 
+		cy.cGet('#SdCustomAnimationPanelPanelExpander').should('be.visible');
+
 		// all options are disabled
 		cy.cGet('#start_effect_list-input').should('be.disabled');
 		cy.cGet('#combo-input').should('be.disabled');
@@ -21,8 +23,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog Tests', function(
 		cy.cGet('#delay_value-input').should('be.disabled');
 
 		// select animation entry
-		cy.cGet('#custom_animation_list').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Shape 1').click();
-		cy.wait(500);
+		cy.cGet('#categorylb-input').should('be.disabled');
+
+		cy.cGet('#custom_animation_list')
+			.contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Shape 1').click();
+
+		cy.cGet('#categorylb-input').should('not.be.disabled');
+
+		cy.wait(1000);
 
 		// some options are enabled
 		cy.cGet('#start_effect_list-input').should('not.be.disabled');
@@ -31,7 +39,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog Tests', function(
 		cy.cGet('#delay_value-input').should('not.be.disabled');
 
 		// use different type of animation
-		cy.cGet('#categorylb-input').select('Entrance');
+		cy.cGet('#categorylb-input').should('be.visible').select('Entrance');
 		cy.cGet('#effect_list').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Fly In').click();
 
 		// all options are enabled
