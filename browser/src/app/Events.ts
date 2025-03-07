@@ -51,7 +51,7 @@ class Evented extends BaseClass {
 		this._numEvents = new Map();
 		this._eventsNoContext = new Map();
 		this._eventParents = new Map();
-		this._outerObject = outerObject;
+		this._outerObject = outerObject ? outerObject : this;
 	}
 
 	public on(
