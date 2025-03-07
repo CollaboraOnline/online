@@ -12,6 +12,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden ();
 		}
+
+		desktopHelper.shouldHaveZoomLevel('70');
 	});
 
 	it('Text selection.', function() {

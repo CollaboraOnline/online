@@ -13,6 +13,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 			desktopHelper.showStatusBarIfHidden();
 		}
 
+		desktopHelper.shouldHaveZoomLevel('100');
+
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A3');
 		cy.wait(100);
 	});
