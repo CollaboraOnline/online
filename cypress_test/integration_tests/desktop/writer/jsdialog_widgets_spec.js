@@ -7,7 +7,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 		helper.setupAndLoadDocument('writer/help_dialog.odt');
 		cy.cGet('#Help-tab-label').click();
 		cy.cGet('#about-button').click();
-		cy.cGet('#js-dialog a').click({multiple: true, force: true});
+
+		cy.cGet('#modal-dialog-about-dialog-box')
+			.should('be.visible')
+			.should('not.be.empty')
+			.contains('#js-dialog a', 'View widgets')
+			.click();
 	});
 
 	it('Combobox', function() {
