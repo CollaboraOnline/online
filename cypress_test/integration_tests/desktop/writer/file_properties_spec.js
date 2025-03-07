@@ -7,27 +7,24 @@ const desktopHelper = require('../../common/desktop_helper');
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', function() {
 
 	beforeEach(function() {
+		cy.viewport(1400, 1000);
 		helper.setupAndLoadDocument('writer/file_properties.odt');
 		desktopHelper.switchUIToNotebookbar();
 	});
 
 	it('Add File Description.', function() {
 		writerHelper.openFileProperties();
-		// Too early click on the 'Description' button would have no effect.
-		cy.wait(500);
-		cy.cGet('#tabcontrol-2').click();
-		helper.waitUntilIdle('#title-input.ui-edit');
-		cy.cGet('#title-input.ui-edit').type('New Title');
-		// sometimes it doesn't finish typing
-		helper.waitUntilIdle('#title-input.ui-edit');
 
+		cy.cGet('#tabcontrol-2').click();
+
+		cy.cGet('#title-input.ui-edit').should('be.visible');;
+		cy.cGet('#title-input.ui-edit').type('New Title');
 		cy.cGet('#comments.ui-textarea').type('New');
 
-		helper.waitUntilIdle('#comments.ui-textarea');
 		cy.cGet('#ok.ui-pushbutton').click();
+
 		writerHelper.openFileProperties();
 
-		cy.wait(500);
 		cy.cGet('#tabcontrol-2').click();
 		cy.cGet('#title-input.ui-edit').should('have.value', 'New Title');
 		cy.cGet('#comments.ui-textarea').should('have.value', 'New');
@@ -35,39 +32,33 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		cy.cGet('#cancel.ui-pushbutton').click();
 	});
 
-	it.skip('Add Custom Property.', function() {
+	it('Add Custom Property.', function() {
 		writerHelper.openFileProperties();
-		cy.cGet('#customprops-tab-label').click();
-		cy.wait(200);
+		cy.cGet('#tabcontrol-3').click();
 
 		// Add property
-		cy.cGet('.ui-pushbutton', 'Add Property').click();
-		helper.waitUntilIdle('#namebox');
-		cy.cGet('#namebox select').select('Mailstop');
+		cy.cGet('#add.ui-pushbutton').click();
+		cy.cGet('#namebox-input').type('Mailstop');
 
-		helper.waitUntilIdle('#value-input');
 		cy.cGet('#valueedit-input').type('123 Address');
 		cy.cGet('#ok.ui-pushbutton').click();
 
 		// Check property saved
 		writerHelper.openFileProperties();
-		cy.cGet('#customprops-tab-label').click();
-		cy.cGet('#valueedit-input.ui-edit').should('have.value', '123 Address');
+		cy.cGet('#tabcontrol-3').click();
+		cy.cGet('#valueedit-input').should('have.value', '123 Address');
 
 		cy.cGet('#cancel.ui-pushbutton').click();
 	});
 
-	it.skip('Add Custom Duration Property.', function() {
+	it('Add Custom Duration Property.', function() {
 		writerHelper.openFileProperties();
-		cy.cGet('#customprops-tab-label').click();
-		cy.wait(200);
+		cy.cGet('#tabcontrol-3').click();
 
 		// Add property
-		cy.cGet('.ui-pushbutton', 'Add Property').click();
-		helper.waitUntilIdle('#namebox');
-		cy.cGet('#namebox select').select('Received from');
-		helper.waitUntilIdle('#typebox');
-		cy.cGet('#typebox select').select('Duration');
+		cy.cGet('#add.ui-pushbutton').click();
+		cy.cGet('#namebox-input').type('Received from');
+		cy.cGet('#typebox-input').select('Duration');
 		cy.cGet('#durationbutton').click();
 		cy.cGet('#negative-input').check();
 		cy.cGet('#years-input').type('1');
@@ -80,29 +71,25 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 		// Check property saved
 		writerHelper.openFileProperties();
-		cy.cGet('#customprops-tab-label').click();
-		cy.cGet('#duration-input.ui-edit').should('have.value', '- Y: 1 M: 0 D: 2 H: 0 M: 0 S: 3');
+		cy.cGet('#tabcontrol-3').click();
+		cy.cGet('#duration-input').should('have.value', '- Y: 1 M: 0 D: 2 H: 0 M: 0 S: 3');
 		cy.cGet('#cancel.ui-pushbutton').click();
 	});
 
-	it.skip('Add Custom Yes/No Property.', function() {
+	it('Add Custom Yes/No Property.', function() {
 		writerHelper.openFileProperties();
-		cy.cGet('#customprops-tab-label').click();
-		cy.wait(200);
+		cy.cGet('#tabcontrol-3').click();
 
 		// Add property
-		cy.cGet('.ui-pushbutton', 'Add Property').click();
-		helper.waitUntilIdle('#namebox');
-		cy.cGet('#namebox select').select('Telephone number');
-		helper.waitUntilIdle('#typebox');
-		cy.cGet('#typebox-input select').select('Yes or no');
-		helper.waitUntilIdle('#yes-input');
+		cy.cGet('#add.ui-pushbutton').click();
+		cy.cGet('#namebox-input').type('Telephone number');
+		cy.cGet('#typebox-input').select('Yes or no');
 		cy.cGet('#yes-input').check();
 		cy.cGet('#ok.ui-pushbutton').click();
 
 		// Check property saved
 		writerHelper.openFileProperties();
-		cy.cGet('#customprops-tab-label').click();
+		cy.cGet('#tabcontrol-3').click();
 		cy.cGet('#yes-input').should('be.checked');
 		cy.cGet('#cancel.ui-pushbutton').click();
 	});

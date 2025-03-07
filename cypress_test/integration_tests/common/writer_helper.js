@@ -25,12 +25,24 @@ function selectAllTextOfDoc() {
 function openFileProperties() {
 	cy.log('>> openFileProperties - start');
 
+	cy.cGet('.jsdialog-window').should('not.exist');
+
 	cy.cGet('#File-tab-label').then(function(element) {
 		if (!element.hasClass('selected'))
 			element.click();
 
 		cy.cGet('#File-container .unoSetDocumentProperties').click();
 	});
+
+	// file properties dialog appears 2 times due to embedded tab pages
+	// do not use it just after first one appears
+	cy.cGet('.jsdialog-window')
+		.should('exist')
+		.then(dialog => {
+			dialog.remove();
+		});
+
+	cy.cGet('.jsdialog-window').should('exist');
 
 	cy.log('<< openFileProperties - end');
 }
