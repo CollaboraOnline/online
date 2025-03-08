@@ -14,6 +14,9 @@ L.Renderer = L.Layer.extend({
 	},
 
 	initialize: function (options) {
+
+		L.Layer.prototype.initialize.call(this);
+
 		L.setOptions(this, options);
 		app.util.stamp(this);
 	},
