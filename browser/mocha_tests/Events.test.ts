@@ -427,7 +427,7 @@ function runTestsForContextType(contextType: string, callType: string) {
 				{ eventList: 'e1', handler: context.handler1 },
 			];
 
-			registerForOnce(obj, regData, context)
+			registerForOnce(obj, regData, context);
 
 			unregisterEvents(obj, regData, context);
 
@@ -444,7 +444,7 @@ function runTestsForContextType(contextType: string, callType: string) {
 				{ eventList: 'e1', handler: context.handler1 },
 			];
 
-			registerForOnce(obj, regData, context)
+			registerForOnce(obj, regData, context);
 
 			obj.fire('e1', {key1: 42, key2: { inner: 'innerValue'}});
 
@@ -468,7 +468,7 @@ function runTestsForContextType(contextType: string, callType: string) {
 				{ eventList: 'e1', handler: context.handler1 },
 			];
 
-			registerForOnce(obj, regData, context)
+			registerForOnce(obj, regData, context);
 
 			obj.fire('e1', {key1: 42, key2: { inner: 'innerValue'}});
 			obj.fire('e1', {key1: 4242, key2: { inner: 'innerValue'}});
