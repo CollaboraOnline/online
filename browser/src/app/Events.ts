@@ -57,7 +57,7 @@ class Evented extends BaseClass {
 	public on(
 		types: Map<string, CEventListener> | string | EventMapObject,
 		fn: CEventListener | any,
-		context: any,
+		context?: any,
 	): Evented {
 		if (typeof types === 'string') {
 			// types can be a string of space-separated words
@@ -302,7 +302,7 @@ class Evented extends BaseClass {
 	public once(
 		types: Map<string, CEventListener> | string | EventMapObject,
 		fn: CEventListener | any,
-		context: any,
+		context?: any,
 	): Evented {
 		if (typeof types == 'string') {
 			var handler = function () {
