@@ -72,11 +72,9 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
                 checkFileInfo(redirectLimit - 1);
                 return;
             }
-            else
-            {
-                LOG_WRN("WOPI::CheckFileInfo redirected too many times. Giving up on URI ["
-                        << uriAnonym << ']');
-            }
+
+            LOG_WRN("WOPI::CheckFileInfo redirected too many times. Giving up on URI [" << uriAnonym
+                                                                                        << ']');
         }
 
         std::chrono::milliseconds callDurationMs =

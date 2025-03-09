@@ -570,8 +570,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     LOG_WRN("For some reason the _performanceCounterEpoch is still zero, ignoring TRACEEVENT from cool as the timestamp would be garbage");
                     warnedOnce = true;
                 }
+
                 return false;
-            } else if (_performanceCounterEpoch < 1620000000000000ull || _performanceCounterEpoch > 2000000000000000ull)
+            }
+
+            if (_performanceCounterEpoch < 1620000000000000ull ||
+                _performanceCounterEpoch > 2000000000000000ull)
             {
                 static bool warnedOnce = false;
                 if (!warnedOnce)
@@ -579,6 +583,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     LOG_WRN("For some reason the _performanceCounterEpoch is bogus, ignoring TRACEEVENT from cool as the timestamp would be garbage");
                     warnedOnce = true;
                 }
+
                 return false;
             }
 
@@ -946,35 +951,35 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             logSyntaxErrorDetails(tokens, firstLine);
             return true;
         }
-        else
+
+        if (tokens.size() == 7)
         {
-            if (tokens.size() == 7)
+            int splitX;
+            int splitY;
+            if (!getTokenInteger(tokens[5], "splitx", splitX) ||
+                !getTokenInteger(tokens[6], "splity", splitY))
             {
-                int splitX, splitY;
-                if (!getTokenInteger(tokens[5], "splitx", splitX) ||
-                    !getTokenInteger(tokens[6], "splity", splitY))
-                {
-                    logSyntaxErrorDetails(tokens, firstLine);
-                    return true;
-                }
-
-                _splitX = splitX;
-                _splitY = splitY;
+                logSyntaxErrorDetails(tokens, firstLine);
+                return true;
             }
 
-            // Untrusted user input, make sure these are not negative.
-            if (width < 0)
-            {
-                width = 0;
-            }
-            if (height < 0)
-            {
-                height = 0;
-            }
-
-            _clientVisibleArea = Util::Rectangle(x, y, width, height);
-            return forwardToChild(std::string(buffer, length), docBroker);
+            _splitX = splitX;
+            _splitY = splitY;
         }
+
+        // Untrusted user input, make sure these are not negative.
+        if (width < 0)
+        {
+            width = 0;
+        }
+
+        if (height < 0)
+        {
+            height = 0;
+        }
+
+        _clientVisibleArea = Util::Rectangle(x, y, width, height);
+        return forwardToChild(std::string(buffer, length), docBroker);
     }
     else if (tokens.equals(0, "setclientpart"))
     {
@@ -987,11 +992,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 logSyntaxErrorDetails(tokens, firstLine);
                 return false;
             }
-            else
-            {
-                _clientSelectedPart = temp;
-                return forwardToChild(std::string(buffer, length), docBroker);
-            }
+
+            _clientSelectedPart = temp;
+            return forwardToChild(std::string(buffer, length), docBroker);
         }
     }
     else if (tokens.equals(0, "selectclientpart"))
@@ -1007,10 +1010,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 sendTextFrameAndLogError("error: cmd=selectclientpart kind=syntax");
                 return false;
             }
-            else
-            {
-                return forwardToChild(std::string(buffer, length), docBroker);
-            }
+
+            return forwardToChild(std::string(buffer, length), docBroker);
         }
     }
     else if (tokens.equals(0, "moveselectedclientparts"))
@@ -1024,17 +1025,18 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 sendTextFrameAndLogError("error: cmd=moveselectedclientparts kind=syntax");
                 return false;
             }
-            else
-            {
-                if (isEditable())
-                    docBroker->updateLastModifyingActivityTime();
-                return forwardToChild(std::string(buffer, length), docBroker);
-            }
+
+            if (isEditable())
+                docBroker->updateLastModifyingActivityTime();
+            return forwardToChild(std::string(buffer, length), docBroker);
         }
     }
     else if (tokens.equals(0, "clientzoom"))
     {
-        int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
+        int tilePixelWidth;
+        int tilePixelHeight;
+        int tileTwipWidth;
+        int tileTwipHeight;
         if (tokens.size() < 5 ||
             !getTokenInteger(tokens[1], "tilepixelwidth", tilePixelWidth) ||
             !getTokenInteger(tokens[2], "tilepixelheight", tilePixelHeight) ||
@@ -1046,14 +1048,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             logSyntaxErrorDetails(tokens, firstLine);
             return true;
         }
-        else
-        {
-            _tileWidthPixel = tilePixelWidth;
-            _tileHeightPixel = tilePixelHeight;
-            _tileWidthTwips = tileTwipWidth;
-            _tileHeightTwips = tileTwipHeight;
-            return forwardToChild(std::string(buffer, length), docBroker);
-        }
+
+        _tileWidthPixel = tilePixelWidth;
+        _tileHeightPixel = tilePixelHeight;
+        _tileWidthTwips = tileTwipWidth;
+        _tileHeightTwips = tileTwipHeight;
+        return forwardToChild(std::string(buffer, length), docBroker);
     }
     else if (tokens.equals(0, "tileprocessed"))
     {
@@ -1338,10 +1338,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             const std::string dummyFrame = "dummymsg";
             return forwardToChild(dummyFrame, docBroker);
         }
-        else
-        {
-            return forwardToChild(std::string(buffer, length), docBroker);
-        }
+
+        return forwardToChild(std::string(buffer, length), docBroker);
     }
     else if (tokens.equals(0, "attemptlock"))
     {
@@ -1956,14 +1954,14 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
                     origin = "</div>";
                     data.insert(data.begin() + pos, origin.begin(), origin.end());
                 }
+
                 return true;
             }
-            else
-            {
-                LOG_DBG("Missing <body> in textselectioncontent/clipboardcontent payload: "
-                        << Util::dumpHex(data));
-                return false;
-            }
+
+            LOG_DBG("Missing <body> in textselectioncontent/clipboardcontent payload: "
+                    << Util::dumpHex(data));
+            return false;
+
         });
 }
 
@@ -2422,10 +2420,8 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                         forwardToClient(std::make_shared<Message>(msg, Message::Dir::Out));
                         return true;
                     }
-                    else
-                    {
-                        LOG_ERR("Invalid embeddedmedia json without id: " << json);
-                    }
+
+                    LOG_ERR("Invalid embeddedmedia json without id: " << json);
                 }
             }
         }

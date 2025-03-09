@@ -1071,11 +1071,9 @@ int main(int argc, char**argv)
             // Non-Prefix part
             return std::string(str_pos, str.end());
         }
-        else
-        {
-            // Return the original string as it is
-            return str;
-        }
+
+        // Return the original string as it is
+        return str;
     }
 
     /// Split a string in two at the delimiter, removing it.

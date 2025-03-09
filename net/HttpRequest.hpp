@@ -470,18 +470,18 @@ public:
         {
             return ConnectionToken::Close;
         }
-        else if (Util::iequal("keep-alive", token))
+
+        if (Util::iequal("keep-alive", token))
         {
             return ConnectionToken::KeepAlive;
         }
-        else if (Util::iequal("upgrade", token))
+
+        if (Util::iequal("upgrade", token))
         {
             return ConnectionToken::Upgrade;
         }
-        else
-        {
-            return ConnectionToken::None;
-        }
+
+        return ConnectionToken::None;
     }
     void setConnectionToken(ConnectionToken token)
     {
