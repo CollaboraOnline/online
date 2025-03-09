@@ -4939,8 +4939,9 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
             }
             else
             {
-                const std::string abbreviatedPayload = COOLWSD::AnonymizeUserData ? "..." : payload->abbr();
-                LOG_WRN("Client session [" << sid << "] not found to forward message: " << abbreviatedPayload);
+                LOG_WRN("Client session ["
+                        << sid << "] not found to forward message: "
+                        << (COOLWSD::AnonymizeUserData ? "..." : payload->abbr()));
             }
         }
     }
