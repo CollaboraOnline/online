@@ -395,12 +395,15 @@ public:
     /// Set an HTTP header field, replacing an earlier value, if exists (case insensitive).
     void set(const std::string& key, std::string value)
     {
-        const Iterator e = _headers.end();
-        const Iterator it = std::find_if(_headers.begin(), e,
-                                    [&key](const Pair &pair) -> bool { return Util::iequal(pair.first, key); });
-        if( e != it ) {
+        const Iterator end = _headers.end();
+        const Iterator it = std::find_if(_headers.begin(), end, [&key](const Pair& pair) -> bool
+                                         { return Util::iequal(pair.first, key); });
+        if (it != end)
+        {
             it->second.swap(value);
-        } else {
+        }
+        else
+        {
             _headers.emplace_back(key, std::move(value));
         }
     }
@@ -408,21 +411,23 @@ public:
     // Returns true if the HTTP header field exists (case insensitive)
     bool has(const std::string& key) const
     {
-        const ConstIterator e = end();
-        return e != std::find_if(begin(), e,
-                            [&key](const Pair &pair) -> bool { return Util::iequal(pair.first, key); });
+        const ConstIterator end = this->end();
+        return std::find_if(begin(), end, [&key](const Pair& pair) -> bool
+                            { return Util::iequal(pair.first, key); }) != end;
     }
 
     /// Remove the first matching HTTP header field (case insensitive), returning true if found and removed.
     bool remove(const std::string& key)
     {
-        const ConstIterator e = end();
-        const ConstIterator it = std::find_if(begin(), e,
-                                    [&key](const Pair &pair) -> bool { return Util::iequal(pair.first, key); });
-        if( e != it ) {
+        const ConstIterator end = this->end();
+        const ConstIterator it = std::find_if(begin(), end, [&key](const Pair& pair) -> bool
+                                              { return Util::iequal(pair.first, key); });
+        if (it != end)
+        {
             _headers.erase(it);
             return true;
         }
+
         return false;
     }
 
@@ -432,14 +437,12 @@ public:
         // There are typically half a dozen header
         // entries, rarely much more. A map would
         // probably not be faster but would add complexity.
-        const ConstIterator e = end();
-        const ConstIterator it = std::find_if(begin(), e,
-                                    [&key](const Pair &pair) -> bool { return Util::iequal(pair.first, key); });
-        if( e != it ) {
+        const ConstIterator end = this->end();
+        const ConstIterator it = std::find_if(begin(), end, [&key](const Pair& pair) -> bool
+                                              { return Util::iequal(pair.first, key); });
+        if (it != end)
             return it->second;
-        } else {
-            return def;
-        }
+        return def;
     }
 
     /// Set the Content-Type header.
