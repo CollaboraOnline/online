@@ -111,7 +111,7 @@ public:
 
     bool sendTextFrame(const char* buffer, int length) override
     {
-        if (!_docManager)
+        if (_docManager == nullptr)
         {
             LOG_TRC("ERR dropping - client-" + getId() + ' ' + std::string(buffer, length));
             return false;
@@ -122,7 +122,7 @@ public:
 
     bool sendBinaryFrame(const char* buffer, int length) override
     {
-        if (!_docManager)
+        if (_docManager == nullptr)
         {
             LOG_TRC("ERR dropping binary - client-" + getId());
             return false;
@@ -244,7 +244,7 @@ private:
     {
         char *lastErr = _docManager->getLOKit()->getError();
         std::string ret;
-        if (lastErr)
+        if (lastErr != nullptr)
         {
             ret = std::string(lastErr, strlen(lastErr));
             free (lastErr);
