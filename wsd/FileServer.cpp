@@ -149,7 +149,7 @@ bool isPamAuthOk(const std::string& userProvidedUsr, const std::string& userProv
 bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userProvidedPwd)
 {
     const auto& config = Application::instance().config();
-    const std::string& user = config.getString("admin_console.username", "");
+    const std::string& user = config.getString("admin_console.username", std::string());
 
     // Check for the username
     if (user.empty())
@@ -169,7 +169,8 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
     // do we have secure_password?
     if (config.has("admin_console.secure_password"))
     {
-        const std::string securePass = config.getString("admin_console.secure_password", "");
+        const std::string securePass =
+            config.getString("admin_console.secure_password", std::string());
         if (securePass.empty())
         {
             LOG_ERR("Admin Console secure password is empty, denying access." << useCoolconfig);
