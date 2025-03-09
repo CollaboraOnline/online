@@ -2826,7 +2826,7 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
 
 void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
 {
-    if (isCloseFrame())
+    if (isCloseFrame() || isDisconnected())
     {
         LOG_TRC("Connection closed, dropping message " << data->id());
         return;
