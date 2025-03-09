@@ -81,7 +81,7 @@ private:
                          const std::string& url, const Poco::URI& uriPublic);
 
     void createClientSession(const std::string& docKey, const std::string& url,
-                             const Poco::URI& uriPublic, const bool isReadOnly);
+                             const Poco::URI& uriPublic, bool isReadOnly);
 
     /// Send unauthorized error to the client and disconnect the socket.
     /// Includes SSL verification status, if available, as the error code.

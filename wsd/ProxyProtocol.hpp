@@ -51,8 +51,8 @@ public:
     /// Clear all external references
     void dispose() override { _msgHandler.reset(); }
 
-    int sendTextMessage(const char *msg, const size_t len, bool flush = false) const override;
-    int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const override;
+    int sendTextMessage(const char* msg, size_t len, bool flush = false) const override;
+    int sendBinaryMessage(const char* data, size_t len, bool flush = false) const override;
     void shutdown(bool goingAway = false, const std::string &statusMessage = "") override;
     void getIOStats(uint64_t &sent, uint64_t &recv) override;
     // don't duplicate ourselves for every socket
@@ -70,7 +70,7 @@ private:
     std::shared_ptr<StreamSocket> popOutSocket();
     /// can we find anything to send back if we try ?
     bool slurpHasMessages(std::size_t capacity);
-    int sendMessage(const char *msg, const size_t len, bool text, bool flush);
+    int sendMessage(const char* msg, size_t len, bool text, bool flush);
     bool flushQueueTo(const std::shared_ptr<StreamSocket> &socket);
 
     struct Message : public std::vector<char>

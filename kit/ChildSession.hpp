@@ -92,7 +92,7 @@ public:
     void updateSpeed();
     int getSpeed();
 
-    void loKitCallback(const int type, const std::string& payload);
+    void loKitCallback(int type, const std::string& payload);
 
     /// Initializes the watermark support, if enabled and required.
     /// Returns true if watermark is enabled and initialized.
@@ -183,18 +183,19 @@ private:
     std::string getTextSelectionInternal(const std::string& mimeType);
     bool paste(const char* buffer, int length, const StringVector& tokens);
     bool insertFile(const StringVector& tokens);
-    bool keyEvent(const StringVector& tokens, const LokEventTargetEnum target);
+    bool keyEvent(const StringVector& tokens, LokEventTargetEnum target);
     bool extTextInputEvent(const StringVector& tokens);
     bool dialogKeyEvent(const char* buffer, int length, const std::vector<std::string>& tokens);
-    bool mouseEvent(const StringVector& tokens, const LokEventTargetEnum target);
+    bool mouseEvent(const StringVector& tokens, LokEventTargetEnum target);
     bool gestureEvent(const StringVector& tokens);
     bool dialogEvent(const StringVector& tokens);
     bool completeFunction(const StringVector& tokens);
     bool unoCommand(const StringVector& tokens);
     bool unoSignatureCommand(const std::string& commandName);
-    bool selectText(const StringVector& tokens, const LokEventTargetEnum target);
+    bool selectText(const StringVector& tokens, LokEventTargetEnum target);
     bool selectGraphic(const StringVector& tokens);
-    bool renderNextSlideLayer(const unsigned width, const unsigned height, double dDevicePixelRatio, bool& done);
+    bool renderNextSlideLayer(unsigned width, unsigned height, double dDevicePixelRatio,
+                              bool& done);
     bool renderSlide(const StringVector& tokens);
     bool renderWindow(const StringVector& tokens);
     bool resizeWindow(const StringVector& tokens);
@@ -222,7 +223,7 @@ private:
     bool getA11yCaretPosition();
     bool getPresentationInfo();
 
-    void rememberEventsForInactiveUser(const int type, const std::string& payload);
+    void rememberEventsForInactiveUser(int type, const std::string& payload);
 
     virtual void disconnect() override;
     virtual bool _handleInput(const char* buffer, int length) override;

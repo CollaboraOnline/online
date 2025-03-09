@@ -589,7 +589,7 @@ public:
     /// Sends a text message.
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.
-    virtual int sendTextMessage(const char* msg, const size_t len, bool flush = false) const = 0;
+    virtual int sendTextMessage(const char* msg, size_t len, bool flush = false) const = 0;
 
     /// Convenience wrapper
     int sendTextMessage(const std::string &msg, bool flush = false) const
@@ -600,7 +600,7 @@ public:
     /// Sends a binary message.
     /// Returns the number of bytes written (including frame overhead) on success,
     /// 0 for closed/invalid socket, and -1 for other errors.
-    virtual int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const = 0;
+    virtual int sendBinaryMessage(const char* data, size_t len, bool flush = false) const = 0;
 
     /// Shutdown the socket and specify if the endpoint is going away or not (useful for WS).
     /// Optionally provide a message sent in the close frame (useful for WS).

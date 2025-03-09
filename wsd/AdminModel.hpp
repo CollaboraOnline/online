@@ -392,8 +392,9 @@ public:
     void notify(const std::string& message);
 
     void addDocument(const std::string& docKey, pid_t pid, const std::string& filename,
-                     const std::string& sessionId, const std::string& userName, const std::string& userId,
-                     const int smapsFD, const Poco::URI& wopiSrc, bool readOnly);
+                     const std::string& sessionId, const std::string& userName,
+                     const std::string& userId, int smapsFD, const Poco::URI& wopiSrc,
+                     bool readOnly);
 
     void removeDocument(const std::string& docKey, const std::string& sessionId);
     void removeDocument(const std::string& docKey);
@@ -413,7 +414,8 @@ public:
 
     void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
     void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
-    void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds wopiUploadDuration);
+    void setDocWopiUploadDuration(const std::string& docKey,
+                                  std::chrono::milliseconds wopiUploadDuration);
     void addErrorExitCounters(unsigned segFaultCount, unsigned killedCount,
                               unsigned oomKilledCount);
     void setForKitPid(pid_t pid) { _forKitPid = pid; }

@@ -127,7 +127,7 @@ public:
 
     /// overridden to prepend client ids on messages by the Kit
     virtual bool sendBinaryFrame(const char* buffer, int length);
-    virtual bool sendTextFrame(const char* buffer, const int length);
+    virtual bool sendTextFrame(const char* buffer, int length);
 
     /// Get notified that the underlying transports disconnected
     void onDisconnect() override { /* ignore */ }
@@ -262,7 +262,7 @@ public:
 
     const std::string& getDocPassword() const { return _docPassword; }
 
-    const std::optional<bool> getIsAdminUser() const { return _isAdminUser; }
+    std::optional<bool> getIsAdminUser() const { return _isAdminUser; }
 
     const std::string& getUserExtraInfo() const { return _userExtraInfo; }
 

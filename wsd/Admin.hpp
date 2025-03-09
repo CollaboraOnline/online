@@ -112,8 +112,8 @@ public:
 
     /// Calls with same pid will increment view count, if pid already exists
     void addDoc(const std::string& docKey, pid_t pid, const std::string& filename,
-                const std::string& sessionId, const std::string& userName, const std::string& userId,
-                const int smapsFD, const std::string& wopiSrc, bool readOnly);
+                const std::string& sessionId, const std::string& userName,
+                const std::string& userId, int smapsFD, const std::string& wopiSrc, bool readOnly);
 
     /// Decrement view count till becomes zero after which doc is removed
     void rmDoc(const std::string& docKey, const std::string& sessionId);
@@ -167,7 +167,8 @@ public:
 
     void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
     void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
-    void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds uploadDuration);
+    void setDocWopiUploadDuration(const std::string& docKey,
+                                  std::chrono::milliseconds uploadDuration);
     void addErrorExitCounters(unsigned segFaultCount, unsigned killedCount,
                               unsigned oomKilledCount);
     void addLostKitsTerminated(unsigned lostKitsTerminated);
