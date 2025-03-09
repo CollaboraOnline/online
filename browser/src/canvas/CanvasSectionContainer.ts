@@ -168,11 +168,10 @@ class CanvasSectionContainer {
 	private sections: Array<any> = new Array(0);
 	private lastDocumentTopLeft: Array<number> = [0, -1];
 	private documentTopLeft: Array<number> = [0, 0];
-	private documentBottomRight: Array<number> = [0, 0];
 	private canvas: HTMLCanvasElement;
 	private context: CanvasRenderingContext2D;
-	private right: number;
-	private bottom: number;
+	private width: number;
+	private height: number;
 	private positionOnMouseDown: Array<number> = null;
 	private positionOnMouseUp: Array<number> = null;
 	private positionOnClick: Array<number> = null;
@@ -494,19 +493,6 @@ class CanvasSectionContainer {
 		return [this.documentTopLeft[0], this.documentTopLeft[1]];
 	}
 
-	public getDocumentBottomRight (): Array<number> {
-		return [this.documentBottomRight[0], this.documentBottomRight[1]];
-	}
-
-	// Returns top-left and bottom-right coordinates respectively.
-	public getDocumentBounds (): Array<number> {
-		return [this.documentTopLeft[0], this.documentTopLeft[1], this.documentBottomRight[0], this.documentBottomRight[1]];
-	}
-
-	public getDocumentSize (): Array<number> {
-		return [this.documentBottomRight[0] - this.documentTopLeft[0], this.documentBottomRight[1] - this.documentTopLeft[1]];
-	}
-
 	public getDocumentAnchor(): Array<number> {
 		return [this.documentAnchor[0], this.documentAnchor[1]];
 	}
@@ -515,12 +501,12 @@ class CanvasSectionContainer {
 		return this.canvas.getBoundingClientRect();
 	}
 
-	public getCanvasRight(): number {
-		return this.right;
+	public getWidth(): number {
+		return this.width;
 	}
 
-	public getCanvasBottom(): number {
-		return this.bottom;
+	public getHeight(): number {
+		return this.height;
 	}
 
 	public isDraggingSomething(): boolean {
@@ -536,17 +522,7 @@ class CanvasSectionContainer {
 	}
 
 	public isDocumentObjectVisible (section: CanvasSectionObject): boolean {
-		const width = this.getDocumentSize()[0];
-		const halfWidth = width * 0.5;
-		const height = this.getDocumentSize()[1];
-		const halfHeight = height * 0.5;
-		if (Math.abs(section.position[0] + section.size[0] * 0.5 - (this.documentTopLeft[0] + halfWidth)) < (width + section.size[0]) * 0.5 &&
-				Math.abs(section.position[1] + section.size[1] * 0.5 - (this.documentTopLeft[1] + halfHeight)) < (height + section.size[1]) * 0.5)
-		{
-			return true;
-		}
-		else
-			return false;
+		return app.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [section.position[0], section.position[1], section.size[0], section.size[1]]);
 	}
 
 	// For window sections, there is a "targetSection" property in CanvasSectionContainer.
@@ -585,9 +561,6 @@ class CanvasSectionContainer {
 
 		this.documentTopLeft[0] = x;
 		this.documentTopLeft[1] = y;
-
-		this.documentBottomRight[0] = Math.round(points[2]);
-		this.documentBottomRight[1] = Math.round(points[3]);
 
 		app.file.viewedRectangle.pX1 = points[0];
 		app.file.viewedRectangle.pY1 = points[1];
@@ -1365,7 +1338,7 @@ class CanvasSectionContainer {
 		newWidth = Math.floor(newWidth * app.dpiScale);
 		newHeight = Math.floor(newHeight * app.dpiScale);
 
-		if (this.right === newWidth && this.bottom === newHeight && this.documentAnchor)
+		if (this.width === newWidth && this.height === newHeight && this.documentAnchor)
 			return;
 
 		// Drawing may happen asynchronously so backup the old contents to avoid
@@ -1383,9 +1356,6 @@ class CanvasSectionContainer {
 		this.canvas.style.width = cssWidth.toFixed(4) + 'px';
 		this.canvas.style.height = cssHeight.toFixed(4) + 'px';
 
-		app.canvasSize.pX = newWidth;
-		app.canvasSize.pY = newHeight;
-
 		// Avoid black default background.
 		if (oldImageData)
 			this.context.putImageData(oldImageData, 0, 0);
@@ -1393,8 +1363,8 @@ class CanvasSectionContainer {
 			this.clearCanvas();
 
 		this.clearMousePositions();
-		this.right = this.canvas.width;
-		this.bottom = this.canvas.height;
+		this.width = this.canvas.width;
+		this.height = this.canvas.height;
 
 		this.reNewAllSections();
 	}
@@ -1472,7 +1442,7 @@ class CanvasSectionContainer {
 		}
 
 		if (minX === Infinity)
-			return this.right; // There is nothing on the right of this section.
+			return this.width; // There is nothing on the right of this section.
 		else
 			return minX - app.roundedDpiScale; // Don't overlap with the section on the right.
 	}
@@ -1510,7 +1480,7 @@ class CanvasSectionContainer {
 			}
 		}
 		if (minY === Infinity)
-			return this.bottom; // There is nothing on the left of this section.
+			return this.height; // There is nothing on the left of this section.
 		else
 			return minY - app.roundedDpiScale; // Don't overlap with the section on the bottom.
 	}
@@ -1576,9 +1546,9 @@ class CanvasSectionContainer {
 		if (typeof section.anchor[index] === 'string' || section.anchor[index].length === 1) {
 			var anchor: string = typeof section.anchor[index] === 'string' ? section.anchor[index]: section.anchor[index][0];
 			if (index === 0)
-				return anchor === 'top' ? section.position[1]: (this.bottom - (section.position[1] + section.size[1]));
+				return anchor === 'top' ? section.position[1]: (this.height - (section.position[1] + section.size[1]));
 			else
-				return anchor === 'left' ? section.position[0]: (this.right - (section.position[0] + section.size[0]));
+				return anchor === 'left' ? section.position[0]: (this.width - (section.position[0] + section.size[0]));
 		}
 		else {
 			// If we are here, it means section's edge(s) will be snapped to another section's edges.
@@ -1633,10 +1603,10 @@ class CanvasSectionContainer {
 					// No target section is found. Use fallback.
 					var anchor: string = section.anchor[index][count - 1];
 					if (index === 0) {
-						return anchor === 'top' ? section.position[1]: (this.bottom - (section.position[1] + section.size[1]));
+						return anchor === 'top' ? section.position[1]: (this.height - (section.position[1] + section.size[1]));
 					}
 					else {
-						return anchor === 'left' ? section.position[0]: (this.right - (section.position[0] + section.size[0]));
+						return anchor === 'left' ? section.position[0]: (this.width - (section.position[0] + section.size[0]));
 					}
 				}
 			}

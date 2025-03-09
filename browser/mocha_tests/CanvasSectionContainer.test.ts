@@ -15,8 +15,6 @@ addMockCanvas(dom.window);
 global.window = dom.window;
 global.document = dom.window.document;
 
-app.canvasSize = new cool.SimplePoint(0, 0);
-
 const canvasWidth = 1024;
 const canvasHeight = 768;
 const halfWidth = Math.floor(canvasWidth / 2);

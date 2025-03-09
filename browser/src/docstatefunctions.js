@@ -26,7 +26,6 @@ window.addEventListener('load', function () {
 	);
 	app.calc.cellAddress = new app.definitions.simplePoint(0, 0);
 	app.calc.splitCoordinate = new app.definitions.simplePoint(0, 0);
-	app.canvasSize = new app.definitions.simplePoint(0, 0);
 	app.file.viewedRectangle = new app.definitions.simpleRectangle(0, 0, 0, 0);
 	app.file.textCursor.rectangle = new app.definitions.simpleRectangle(
 		0,
@@ -34,6 +33,12 @@ window.addEventListener('load', function () {
 		0,
 		0,
 	);
+	app.view.size = new app.definitions.simplePoint(0, 0);
+	app.file.size = new app.definitions.simplePoint(0, 0);
+	app.tile.size = new app.definitions.simplePoint(0, 0);
+	app.pixelsToTwips = 15;
+	app.twipsToPixels = 1 / app.pixelsToTwips;
+	app.tile.size.pX = app.tile.size.pY = 256;
 });
 
 app.getViewRectangles = function () {
@@ -74,7 +79,7 @@ app.isReadOnly = function () {
 };
 
 app.getScale = function () {
-	return (app.tile.size.pixels[0] / app.tile.size.twips[0]) * 15;
+	return (app.tile.size.pX / app.tile.size.x) * 15;
 };
 
 app.isCommentEditingAllowed = function () {
