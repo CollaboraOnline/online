@@ -62,7 +62,7 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
             statusCode == http::StatusCode::TemporaryRedirect ||
             statusCode == http::StatusCode::PermanentRedirect)
         {
-            if (redirectLimit)
+            if (redirectLimit != 0)
             {
                 const std::string location = httpResponse->get("Location");
                 LOG_INF("WOPI::CheckFileInfo redirect to URI [" << COOLWSD::anonymizeUrl(location)
