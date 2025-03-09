@@ -1649,8 +1649,8 @@ app.definitions.Socket = L.Class.extend({
 		this._map.fire('hyperlinkclicked', {url: link, coordinates: coords});
 	},
 
-	_onSocketError: function () {
-		window.app.console.debug('_onSocketError:');
+	_onSocketError: function (event) {
+		window.app.console.warning('_onSocketError:', event);
 		this._map.hideBusy();
 		// Let onclose (_onSocketClose) report errors.
 	},
