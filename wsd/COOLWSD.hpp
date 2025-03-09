@@ -218,7 +218,7 @@ public:
     /// child kit processes and cleans up DocBrokers.
     static void doHousekeeping();
 
-    static void checkDiskSpaceAndWarnClients(const bool cacheLastCheck);
+    static void checkDiskSpaceAndWarnClients(bool cacheLastCheck);
 
     static void checkSessionLimitsAndWarnClients();
 
@@ -288,7 +288,7 @@ protected:
 private:
 #if !MOBILEAPP
     void processFetchUpdate(SocketPoll& poll);
-    static void setupChildRoot(const bool UseMountNamespaces);
+    static void setupChildRoot(bool UseMountNamespaces);
     void initializeEnvOptions();
 #endif // !MOBILEAPP
 

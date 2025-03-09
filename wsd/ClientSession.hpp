@@ -32,18 +32,15 @@ class DocumentBroker;
 class ClientSession final : public Session
 {
 public:
-    ClientSession(const std::shared_ptr<ProtocolHandlerInterface>& ws,
-                  const std::string& id,
-                  const std::shared_ptr<DocumentBroker>& docBroker,
-                  const Poco::URI& uriPublic,
-                  const bool isReadOnly,
-                  const RequestDetails &requestDetails);
+    ClientSession(const std::shared_ptr<ProtocolHandlerInterface>& ws, const std::string& id,
+                  const std::shared_ptr<DocumentBroker>& docBroker, const Poco::URI& uriPublic,
+                  bool isReadOnly, const RequestDetails& requestDetails);
     void construct();
     virtual ~ClientSession();
 
     void setReadOnly(bool bValue = true) override;
 
-    void sendFileMode(const bool readOnly, const bool editComments);
+    void sendFileMode(bool readOnly, bool editComments);
 
     void setLockFailed(const std::string& sReason);
 
@@ -207,10 +204,10 @@ public:
     };
 
     /// Returns true if the given split-pane is currently valid.
-    bool isSplitPane(const SplitPaneName) const;
+    bool isSplitPane(SplitPaneName) const;
 
     /// Returns the normalized visible area of a given split-pane.
-    Util::Rectangle getNormalizedVisiblePaneArea(const SplitPaneName) const;
+    Util::Rectangle getNormalizedVisiblePaneArea(SplitPaneName) const;
 
     int getTileWidthInTwips() const { return _tileWidthTwips; }
     int getTileHeightInTwips() const { return _tileHeightTwips; }
