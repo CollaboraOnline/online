@@ -71,8 +71,7 @@ namespace LOKitHelper
 
         if (partObject->has("mode"))
             return std::atoi(partObject->get("mode").toString().c_str());
-        else
-            return 0;
+        return 0;
     }
 
     inline void fetchPartsData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int partsCount, int &mode)

@@ -4937,12 +4937,9 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
                 std::shared_ptr<ClientSession> session = it->second;
                 return session->handleKitToClientMessage(payload);
             }
-            else
-            {
-                LOG_WRN("Client session ["
-                        << sid << "] not found to forward message: "
-                        << (COOLWSD::AnonymizeUserData ? "..." : payload->abbr()));
-            }
+
+            LOG_WRN("Client session [" << sid << "] not found to forward message: "
+                                       << (COOLWSD::AnonymizeUserData ? "..." : payload->abbr()));
         }
     }
     else

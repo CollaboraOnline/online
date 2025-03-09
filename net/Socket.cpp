@@ -252,11 +252,9 @@ bool SslStreamSocket::verifyCertificate()
             LOG_TRC("SSL cert verified for host [" << hostname() << ']');
             return true;
         }
-        else
-        {
-            LOG_INF("SSL cert failed verification for host [" << hostname() << ']');
-            return false;
-        }
+
+        LOG_INF("SSL cert failed verification for host [" << hostname() << ']');
+        return false;
     }
 
     return false;
@@ -1048,11 +1046,9 @@ bool StreamSocket::send(const http::Response& response)
         flush();
         return true;
     }
-    else
-    {
-        shutdown();
-        return false;
-    }
+
+    shutdown();
+    return false;
 }
 
 bool StreamSocket::send(http::Request& request)
@@ -1062,11 +1058,9 @@ bool StreamSocket::send(http::Request& request)
         flush();
         return true;
     }
-    else
-    {
-        shutdown();
-        return false;
-    }
+
+    shutdown();
+    return false;
 }
 
 bool StreamSocket::sendAndShutdown(http::Response& response)
@@ -1652,10 +1646,10 @@ bool StreamSocket::parseHeader(const char *clientName,
                     shutdown();
                     return false; // TODO: throw something sensible in this case
                 }
-                else
-                {
-                    LOG_CHUNK("parseHeader: Chunk " << chunk << " is: \n" << Util::dumpHex("", "", chunkStart, itBody + 1, false));
-                }
+
+                LOG_CHUNK("parseHeader: Chunk "
+                          << chunk << " is: \n"
+                          << Util::dumpHex("", "", chunkStart, itBody + 1, false));
 
                 itBody+=2;
                 chunk++;

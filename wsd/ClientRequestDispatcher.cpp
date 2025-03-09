@@ -378,21 +378,24 @@ getConvertToBrokerImplementation(const std::string& requestType, const std::stri
     if (requestType == "convert-to")
         return std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, options,
                                                  lang);
-    else if (requestType == "extract-link-targets")
+
+    if (requestType == "extract-link-targets")
         return std::make_shared<ExtractLinkTargetsBroker>(fromPath, uriPublic, docKey, lang);
-    else if (requestType == "extract-document-structure")
+
+    if (requestType == "extract-document-structure")
         return std::make_shared<ExtractDocumentStructureBroker>(fromPath, uriPublic, docKey, lang,
                                                                 filter);
-    else if (requestType == "transform-document-structure")
+    if (requestType == "transform-document-structure")
     {
         if (format.empty())
-            return std::make_shared<TransformDocumentStructureBroker>(fromPath, uriPublic, docKey,
-                Poco::Path(fromPath).getExtension(), lang, transformJSON);
-        else
-            return std::make_shared<TransformDocumentStructureBroker>(fromPath, uriPublic, docKey,
-                format, lang, transformJSON);
+            return std::make_shared<TransformDocumentStructureBroker>(
+                fromPath, uriPublic, docKey, Poco::Path(fromPath).getExtension(), lang,
+                transformJSON);
+        return std::make_shared<TransformDocumentStructureBroker>(fromPath, uriPublic, docKey,
+                                                                  format, lang, transformJSON);
     }
-    else if (requestType == "get-thumbnail")
+
+    if (requestType == "get-thumbnail")
         return std::make_shared<GetThumbnailBroker>(fromPath, uriPublic, docKey, lang, target);
 
     return nullptr;
@@ -1917,7 +1920,8 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         }
         return false;
     }
-    else if (requestDetails.equals(2, "insertfile"))
+
+    if (requestDetails.equals(2, "insertfile"))
     {
         LOG_INF("Insert file request.");
 

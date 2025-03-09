@@ -292,18 +292,17 @@ public:
                                                                                << " bytes.");
             return false;
         }
-        else
+
+        if (_sendBufferSize > MaximumSendBufferSize * 2)
         {
-            if (_sendBufferSize > MaximumSendBufferSize * 2)
-            {
-                LOG_TRC("Clamped send buffer size to " << MaximumSendBufferSize << " from "
-                                                       << _sendBufferSize);
-                _sendBufferSize = MaximumSendBufferSize;
-            }
-            else
-                LOG_TRC("Set socket buffer size to " << _sendBufferSize);
-            return true;
+            LOG_TRC("Clamped send buffer size to " << MaximumSendBufferSize << " from "
+                                                   << _sendBufferSize);
+            _sendBufferSize = MaximumSendBufferSize;
         }
+        else
+            LOG_TRC("Set socket buffer size to " << _sendBufferSize);
+
+        return true;
 #else
         return false;
 #endif
