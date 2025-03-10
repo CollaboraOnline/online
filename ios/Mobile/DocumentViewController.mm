@@ -29,6 +29,7 @@
 #import "SigUtil.hpp"
 #import "Util.hpp"
 #import "Clipboard.hpp"
+#import "CoolURLSchemeHandler.h"
 
 #import "DocumentViewController.h"
 
@@ -94,7 +95,10 @@ static IMP standardImpOfInputAccessoryView = nil;
     [userContentController addScriptMessageHandlerWithReply:self contentWorld:[WKContentWorld pageWorld] name:@"clipboard"];
 
     configuration.userContentController = userContentController;
-
+    
+    CoolURLSchemeHandler * schemeHandler = [[CoolURLSchemeHandler alloc] initWithDocument:self.document];
+    [configuration setURLSchemeHandler:schemeHandler forURLScheme:@"cool"];
+    
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;
     self.webView.allowsLinkPreview = NO;
@@ -598,68 +602,6 @@ static IMP standardImpOfInputAccessoryView = nil;
             LOG_TRC("Document window terminating on JavaScript side. Closing our end of the socket.");
 
             [self bye];
-            return;
-        } else if ([message.body isEqualToString:@"SLIDESHOW"]) {
-
-            // Create the SVG for the slideshow.
-
-            self.slideshowFile = FileUtil::createRandomTmpDir() + "/slideshow.svg";
-            self.slideshowURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:self.slideshowFile.c_str()] isDirectory:NO];
-
-            DocumentData::get(self.document->appDocId).loKitDocument->saveAs([[self.slideshowURL absoluteString] UTF8String], "svg", nullptr);
-
-            // Add a new full-screen WebView displaying the slideshow.
-
-            WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-            WKUserContentController *userContentController = [[WKUserContentController alloc] init];
-
-            [userContentController addScriptMessageHandler:self name:@"lok"];
-
-            configuration.userContentController = userContentController;
-
-            self.slideshowWebView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
-
-            [self.slideshowWebView becomeFirstResponder];
-
-            self.slideshowWebView.contentMode = UIViewContentModeScaleAspectFit;
-            self.slideshowWebView.translatesAutoresizingMaskIntoConstraints = NO;
-            self.slideshowWebView.navigationDelegate = self;
-            self.slideshowWebView.UIDelegate = self;
-
-            self.webView.hidden = true;
-
-            [self.view addSubview:self.slideshowWebView];
-            [self.view bringSubviewToFront:self.slideshowWebView];
-            
-            if (@available(macOS 13.3, iOS 16.4, tvOS 16.4, *)) {
-#if ENABLE_DEBUG == 1
-                self.slideshowWebView.inspectable = YES;
-#else
-                self.slideshowWebView.inspectable = NO;
-#endif
-            }
-
-            WKWebView *slideshowWebViewP = self.slideshowWebView;
-            NSDictionary *views = NSDictionaryOfVariableBindings(slideshowWebViewP);
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[slideshowWebViewP(>=0)]-0-|"
-                                                                              options:0
-                                                                              metrics:nil
-                                                                                views:views]];
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[slideshowWebViewP(>=0)]-0-|"
-                                                                              options:0
-                                                                              metrics:nil
-                                                                                views:views]];
-            [self.slideshowWebView loadRequest:[NSURLRequest requestWithURL:self.slideshowURL]];
-
-            return;
-        } else if ([message.body isEqualToString:@"EXITSLIDESHOW"]) {
-
-            std::remove(self.slideshowFile.c_str());
-
-            [self.slideshowWebView removeFromSuperview];
-            self.slideshowWebView = nil;
-            self.webView.hidden = false;
-
             return;
         } else if ([message.body isEqualToString:@"PRINT"]) {
 
