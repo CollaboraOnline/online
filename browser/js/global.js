@@ -740,13 +740,39 @@ function getInitializerClass() {
 			return defaultValue;
 		},
 
+		// set multiple preference together and when browsersetting is enabled send
+		// update only once
+		setMultiple: function (prefsObject) {
+			const settingUpdateJSON = {};
+			const browserSettingEnabled = global.prefs.useBrowserSetting;
+			for (const [key, value] of Object.entries(prefsObject)) {
+				if (browserSettingEnabled) {
+					const oldValue = global.prefs._userBrowserSetting[key];
+					global.prefs._userBrowserSetting[key] = value;
+					if (oldValue !== value)
+						settingUpdateJSON[key] = value;
+				}
+				if (global.prefs.canPersist) {
+					global.localStorage.setItem(key, value);
+				}
+				global.prefs._localStorageCache[key] = value;
+			}
+
+			const isEmpty = (obj) => Object.keys(obj).length === 0;
+			if (browserSettingEnabled && !isEmpty(settingUpdateJSON) && global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1)
+				global.socket.send('browsersetting action=update json=' + JSON.stringify(settingUpdateJSON));
+		},
+
 		set: function(key, value) {
 			value = String(value); // NOT "new String(...)". We cannot use .toString here because value could be null/undefined
 			if (global.prefs.useBrowserSetting) {
 				const oldValue = global.prefs._userBrowserSetting[key];
 				global.prefs._userBrowserSetting[key] = value;
-				if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1 && oldValue !== value)
-					global.socket.send('browsersetting action=update key=' + key + ' value=' + value);
+				if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1 && oldValue !== value) {
+					const tmpObject = {};
+					tmpObject[key] = value;
+					global.socket.send('browsersetting action=update json=' + JSON.stringify(tmpObject));
+				}
 			}
 			if (global.prefs.canPersist) {
 				global.localStorage.setItem(key, value);

@@ -141,14 +141,22 @@ class Sidebar {
 				.height + 'px';
 	}
 
-	unsetSelectedSidebar() {
-		this.map.uiManager.setDocTypePref('PropertyDeck', false);
-		this.map.uiManager.setDocTypePref('SdSlideTransitionDeck', false);
-		this.map.uiManager.setDocTypePref('SdCustomAnimationDeck', false);
-		this.map.uiManager.setDocTypePref('SdMasterPagesDeck', false);
-		this.map.uiManager.setDocTypePref('NavigatorDeck', false);
-		this.map.uiManager.setDocTypePref('StyleListDeck', false);
-		this.map.uiManager.setDocTypePref('A11yCheckDeck', false);
+	updateSidebarPrefs(currentDeck: string) {
+		const decks = [
+			'PropertyDeck',
+			'SdSlideTransitionDeck',
+			'SdCustomAnimationDeck',
+			'SdMasterPagesDeck',
+			'NavigatorDeck',
+			'StyleListDeck',
+			'A11yCheckDeck',
+		];
+
+		const deckPref: { [key: string]: string } = {};
+		decks.forEach((deck: string) => {
+			deckPref[deck] = currentDeck === deck ? 'true' : 'false';
+		});
+		this.map.uiManager.setDocTypeMultiplePrefs(deckPref);
 	}
 
 	commandForDeck(deckId: string): string {
@@ -216,9 +224,8 @@ class Sidebar {
 					sidebarData.children[0] &&
 					sidebarData.children[0].id
 				) {
-					this.unsetSelectedSidebar();
 					var currentDeck = sidebarData.children[0].id;
-					this.map.uiManager.setDocTypePref(currentDeck, true);
+					this.updateSidebarPrefs(currentDeck);
 					if (this.targetDeckCommand) {
 						var stateHandler = this.map['stateChangeHandler'];
 						var isCurrent = stateHandler

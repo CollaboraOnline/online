@@ -248,8 +248,7 @@ public:
     static void setMigrationMsgReceived(const std::string& docKey);
     static void setAllMigrationMsgReceived();
 #if !MOBILEAPP
-    static void syncUsersBrowserSettings(const std::string& userId, const std::string& key,
-                                             const std::string& value);
+    static void syncUsersBrowserSettings(const std::string& userId, const std::string& json);
 #endif
 
 #if ENABLE_DEBUG

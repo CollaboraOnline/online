@@ -383,8 +383,7 @@ public:
     void alertAllUsers(const std::string& msg);
 
 #if !MOBILEAPP
-    void syncBrowserSettings(const std::string& userId, const std::string& key,
-                             const std::string& value);
+    void syncBrowserSettings(const std::string& userId, const std::string& json);
 
     void uploadBrowserSettingsToWopiHost(const std::shared_ptr<ClientSession>& session);
 

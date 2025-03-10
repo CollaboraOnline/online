@@ -1756,6 +1756,16 @@ L.Control.UIManager = L.Control.extend({
 		return window.prefs.set(`${docType}.${name}`, value);
 	},
 
+	setDocTypeMultiplePrefs: function (prefs) {
+		const docType = this.map.getDocType();
+
+		const deckPrefs = {};
+		for (const [key, value] of Object.entries(prefs)) {
+			deckPrefs[`${docType}.${key}`] = value
+		}
+		window.prefs.setMultiple(deckPrefs);
+	},
+
 	getBooleanDocTypePref: function(name, defaultValue = false) {
 		const docType = this.map.getDocType();
 		return window.prefs.getBoolean(`${docType}.${name}`, defaultValue);

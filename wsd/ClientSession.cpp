@@ -27,6 +27,7 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
+#include <Poco/JSON/Parser.h>
 
 #include "ConfigUtil.hpp"
 #include "DocumentBroker.hpp"
@@ -1363,15 +1364,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens.equals(0, "browsersetting") && tokens.size() >= 3)
     {
         std::string action;
-        std::string json;
         getTokenString(tokens[1], "action", action);
         if (action == "update")
         {
-            std::string key;
-            std::string value;
-            getTokenString(tokens[2], "key", key);
-            getTokenString(tokens[3], "value", value);
-            COOLWSD::syncUsersBrowserSettings(getUserId(), key, value);
+            std::string json;
+            getTokenString(tokens[2], "json", json);
+            COOLWSD::syncUsersBrowserSettings(getUserId(), json);
         }
     }
 #endif
@@ -1385,28 +1383,35 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 }
 
 #if !MOBILEAPP
-void ClientSession::updateBrowserSettingsJSON(const std::string& key, const std::string& value)
+void ClientSession::updateBrowserSettingsJSON(const std::string& json)
 {
-    std::vector<std::string> vec = Util::splitStringToVector(key, '.');
-    if (vec.size() == 2)
+    Poco::JSON::Parser parser;
+    auto result = parser.parse(json);
+    auto extractedObject= result.extract<Poco::JSON::Object::Ptr>();
+    for (const auto& key : extractedObject->getNames())
     {
-        const std::string& parentKey = vec[0];
-        const std::string& childKey = vec[1];
-        if (!childKey.empty() && !parentKey.empty())
+        const std::string& value = extractedObject->get(key);
+        std::vector<std::string> vec = Util::splitStringToVector(key, '.');
+        if (vec.size() == 2)
         {
-            Poco::JSON::Object::Ptr jsonObject;
-            if (_browserSettingsJSON->has(parentKey))
-                jsonObject = _browserSettingsJSON->getObject(parentKey);
-            else
-                jsonObject = new Poco::JSON::Object();
+            const std::string& parentKey = vec[0];
+            const std::string& childKey = vec[1];
+            if (!childKey.empty() && !parentKey.empty())
+            {
+                Poco::JSON::Object::Ptr jsonObject;
+                if (_browserSettingsJSON->has(parentKey))
+                    jsonObject = _browserSettingsJSON->getObject(parentKey);
+                else
+                    jsonObject = new Poco::JSON::Object();
 
-            jsonObject->set(childKey, value);
-            _browserSettingsJSON->set(parentKey, jsonObject);
+                jsonObject->set(childKey, value);
+                _browserSettingsJSON->set(parentKey, jsonObject);
+            }
         }
-    }
-    else
-    {
-        _browserSettingsJSON->set(key, value);
+        else
+        {
+            _browserSettingsJSON->set(key, value);
+        }
     }
 }
 #endif
