@@ -11,7 +11,7 @@
 
 // macOS can be both server and mobile, so let's include it here, not in
 // PlatformMobile.hpp
-#if defined(MACOS) && ENABLE_CODA
+#if defined(MACOS)
 
 #include "macos.h"
 

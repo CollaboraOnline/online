@@ -57,7 +57,7 @@ autogen.input:
 Configure Collabora Online
 
     ./autogen.sh && ./configure \
-    --enable-debug --enable-coda \
+    --enable-macosapp \
     --enable-experimental \
     --with-app-name="Collabora Office" \
     --with-vendor="Collabora Productivity" \
