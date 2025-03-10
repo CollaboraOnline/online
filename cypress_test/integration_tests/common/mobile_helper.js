@@ -303,7 +303,7 @@ function selectListBoxItem2(listboxSelector, item) {
 
 	cy.log('<< selectListBoxItem2 - end');
 }
-function insertComment() {
+function insertComment(skipCommentCheck = false) {
 	cy.log('>> insertComment - start');
 
 	openInsertionWizard();
@@ -311,8 +311,11 @@ function insertComment() {
 	cy.cGet('.cool-annotation-table').should('exist');
 	cy.cGet('#input-modal-input').type('some text');
 	cy.cGet('#response-ok').click();
-	cy.cGet('#comment-container-1').should('exist').wait(300);
-	cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
+
+	if (!skipCommentCheck) {
+		cy.cGet('#comment-container-1').should('exist').wait(300);
+		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
+	}
 
 	cy.log('<< insertComment - end');
 }
