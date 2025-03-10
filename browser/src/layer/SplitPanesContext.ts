@@ -60,12 +60,12 @@ export class SplitPanesContext {
 	}
 
 	public getMaxSplitPosX(): number {
-		const rawMax = Math.floor(app.canvasSize.pX * this.options.maxHorizontalSplitPercent / 100);
+		const rawMax = Math.floor(app.sectionContainer.getWidth() * this.options.maxHorizontalSplitPercent / 100);
 		return this._docLayer.getSnapDocPosX(rawMax);
 	}
 
 	public getMaxSplitPosY(): number {
-		const rawMax = Math.floor(app.canvasSize.pY * this.options.maxVerticalSplitPercent / 100);
+		const rawMax = Math.floor(app.sectionContainer.getHeight() * this.options.maxVerticalSplitPercent / 100);
 		return this._docLayer.getSnapDocPosY(rawMax);
 	}
 

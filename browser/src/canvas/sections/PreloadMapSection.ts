@@ -47,12 +47,12 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 
 		// stop annoying jitter as the view fits different numbers of tiles.
 		var viewWidth = Math.floor(
-			(this._map.getPixelBoundsCore().getSize().x + docLayer._tileSize - 1) /
-				docLayer._tileSize,
+			(this._map.getPixelBoundsCore().getSize().x + TileManager.tileSize - 1) /
+				TileManager.tileSize,
 		);
 		var viewHeight = Math.floor(
-			(this._map.getPixelBoundsCore().getSize().y + docLayer._tileSize - 1) /
-				docLayer._tileSize,
+			(this._map.getPixelBoundsCore().getSize().y + TileManager.tileSize - 1) /
+				TileManager.tileSize,
 		);
 
 		// writer defaults
@@ -101,8 +101,8 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 				for (var i: number = range.min.x; i <= range.max.x; ++i) {
 					if (i >= 0 && j >= 0 && range.part >= 0) {
 						var coords = new TileCoordData(
-							i * ctx.tileSize.x,
-							j * ctx.tileSize.y,
+							i * TileManager.tileSize,
+							j * TileManager.tileSize,
 							zoom,
 							range.part,
 							docLayer._selectedMode,

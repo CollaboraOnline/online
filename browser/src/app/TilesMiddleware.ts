@@ -28,6 +28,12 @@ class TileCoordData {
 	part: number;
 	mode: number;
 
+	/*
+		No need to calculate the scale every time. We have the current scale, reachable via app.getScale().
+		We can compare these two when we need check if a tile is in the current scale. Assigned on creation.
+	*/
+	scale: number;
+
 	constructor(
 		left: number,
 		top: number,
@@ -40,6 +46,8 @@ class TileCoordData {
 		this.z = zoom !== null ? zoom : app.map.getZoom();
 		this.part = part !== null ? part : app.map._docLayer._selectedPart;
 		this.mode = mode !== undefined ? mode : 0;
+
+		this.scale = Math.round(Math.pow(1.2, this.z - 10) * 1000) / 1000;
 	}
 
 	getPos() {
@@ -193,6 +201,10 @@ class Tile {
 	allowFastRequest() {
 		this.updateLastRequest(undefined);
 	}
+
+	isReadyToDraw(): boolean {
+		return !!this.imgDataCache;
+	}
 }
 
 class TileManager {
@@ -225,7 +237,7 @@ class TileManager {
 
 	//private static _debugTime: any = {}; Reserved for future.
 
-	public static tileSize: number = 256;
+	public static readonly tileSize: number = 256;
 
 	public static initialize() {
 		if (window.Worker && !(window as any).ThisIsAMobileApp) {
@@ -779,9 +791,10 @@ class TileManager {
 
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
-		if (app.map._docLayer._painter.coordsIntersectVisible(coords)) {
+		if (
+			app.isRectangleVisibleInTheDisplayedArea(this.coordsToTileBounds(coords))
+		)
 			app.sectionContainer.setDirty(coords);
-		}
 	}
 
 	private static createTile(coords: TileCoordData, key: string) {
@@ -1212,10 +1225,8 @@ class TileManager {
 				tileWids.push(tile && tile.wireId !== undefined ? tile.wireId : 0);
 
 				const twips = new L.Point(
-					Math.floor(coords.x / this.tileSize) *
-						app.map._docLayer._tileWidthTwips,
-					Math.floor(coords.y / this.tileSize) *
-						app.map._docLayer._tileHeightTwips,
+					Math.floor(coords.x / this.tileSize) * app.tile.size.x,
+					Math.floor(coords.y / this.tileSize) * app.tile.size.y,
 				);
 
 				tilePositionsX.push(twips.x);
@@ -1232,10 +1243,10 @@ class TileManager {
 				' ' +
 				(mode !== 0 ? 'mode=' + mode + ' ' : '') +
 				'width=' +
-				app.map._docLayer._tileWidthPx +
+				this.tileSize +
 				' ' +
 				'height=' +
-				app.map._docLayer._tileHeightPx +
+				this.tileSize +
 				' ' +
 				'tileposx=' +
 				tilePositionsX.join(',') +
@@ -1247,10 +1258,10 @@ class TileManager {
 				tileWids.join(',') +
 				' ' +
 				'tilewidth=' +
-				app.map._docLayer._tileWidthTwips +
+				app.tile.size.x +
 				' ' +
 				'tileheight=' +
-				app.map._docLayer._tileHeightTwips;
+				app.tile.size.y;
 			if (hasTiles) app.socket.sendMessage(msg, '');
 			else window.app.console.log('Skipped empty (too fast) tilecombine');
 		}
@@ -1455,16 +1466,10 @@ class TileManager {
 
 	private static coordsToTileBounds(coords: TileCoordData): number[] {
 		var zoomFactor = app.map.zoomToFactor(coords.z);
-		const x =
-			(coords.x * app.map._docLayer._tileWidthTwips) /
-			this.tileSize /
-			zoomFactor;
-		const y =
-			(coords.y * app.map._docLayer._tileHeightTwips) /
-			this.tileSize /
-			zoomFactor;
-		const width = app.map._docLayer._tileWidthTwips / zoomFactor;
-		const height = app.map._docLayer._tileHeightTwips / zoomFactor;
+		const x = (coords.x * app.pixelsToTwips) / zoomFactor;
+		const y = (coords.y * app.pixelsToTwips) / zoomFactor;
+		const width = app.tile.size.x / zoomFactor;
+		const height = app.tile.size.y / zoomFactor;
 
 		return [x, y, width, height];
 	}
@@ -1579,13 +1584,8 @@ class TileManager {
 		var validTileRange = new L.Bounds(
 			new L.Point(0, 0),
 			new L.Point(
-				Math.floor(
-					(this._docLayer._docWidthTwips - 1) / this._docLayer._tileWidthTwips,
-				),
-				Math.floor(
-					(this._docLayer._docHeightTwips - 1) /
-						this._docLayer._tileHeightTwips,
-				),
+				Math.floor((app.file.size.x - 1) / app.tile.size.x),
+				Math.floor((app.file.size.y - 1) / app.tile.size.y),
 			),
 		);
 
@@ -1865,10 +1865,8 @@ class TileManager {
 		if (coords.x < 0 || coords.y < 0) {
 			return false;
 		} else if (
-			(coords.x / this.tileSize) * app.map._docLayer._tileWidthTwips >
-				app.map._docLayer._docWidthTwips ||
-			(coords.y / this.tileSize) * app.map._docLayer._tileHeightTwips >
-				app.map._docLayer._docHeightTwips
+			coords.x * app.pixelsToTwips > app.file.size.x ||
+			coords.y * app.pixelsToTwips > app.file.size.y
 		) {
 			return false;
 		} else return true;
@@ -2087,6 +2085,16 @@ class TileManager {
 		);
 	}
 
+	/*
+		Checks the visible tiles in current zoom level.
+		Marks the visible ones as current.
+	*/
+	public static udpateLayoutView(bounds: any): any {
+		const queue = this.getMissingTiles(bounds, Math.round(app.map.getZoom()));
+
+		if (queue.length > 0) this.addTiles(queue, false);
+	}
+
 	public static updateFileBasedView(
 		checkOnly: boolean = false,
 		zoomFrameBounds: any = null,
@@ -2120,7 +2128,7 @@ class TileManager {
 		var currZoom = Math.round(app.map.getZoom());
 		var relScale = currZoom == zoom ? 1 : app.map.getZoomScale(zoom, currZoom);
 
-		var ratio = (this.tileSize * relScale) / app.map._docLayer._tileHeightTwips;
+		var ratio = (this.tileSize * relScale) / app.tile.size.y;
 		var partHeightPixels = Math.round(
 			(app.map._docLayer._partHeightTwips +
 				app.map._docLayer._spaceBetweenParts) *
@@ -2138,20 +2146,19 @@ class TileManager {
 
 		if (intersectionAreaRectangle) {
 			var minLocalX =
-				Math.floor(intersectionAreaRectangle[0] / app.tile.size.pixels[0]) *
-				app.tile.size.pixels[0];
+				Math.floor(intersectionAreaRectangle[0] / app.tile.size.pX) *
+				app.tile.size.pX;
 			var maxLocalX =
 				Math.floor(
 					(intersectionAreaRectangle[0] + intersectionAreaRectangle[2]) /
-						app.tile.size.pixels[0],
-				) * app.tile.size.pixels[0];
+						app.tile.size.pX,
+				) * app.tile.size.pX;
 
 			var startPart = Math.floor(
 				intersectionAreaRectangle[1] / partHeightPixels,
 			);
 			var startY = app.file.viewedRectangle.pY1 - startPart * partHeightPixels;
-			startY =
-				Math.floor(startY / app.tile.size.pixels[1]) * app.tile.size.pixels[1];
+			startY = Math.floor(startY / app.tile.size.pY) * app.tile.size.pY;
 
 			var endPart = Math.ceil(
 				(intersectionAreaRectangle[1] + intersectionAreaRectangle[3]) /
@@ -2161,19 +2168,16 @@ class TileManager {
 				app.file.viewedRectangle.pY1 +
 				app.file.viewedRectangle.pY2 -
 				endPart * partHeightPixels;
-			endY =
-				Math.floor(endY / app.tile.size.pixels[1]) * app.tile.size.pixels[1];
+			endY = Math.floor(endY / app.tile.size.pY) * app.tile.size.pY;
 
-			var vTileCountPerPart = Math.ceil(
-				partHeightPixels / app.tile.size.pixels[1],
-			);
+			var vTileCountPerPart = Math.ceil(partHeightPixels / app.tile.size.pY);
 
 			for (var i = startPart; i < endPart; i++) {
-				for (var j = minLocalX; j <= maxLocalX; j += app.tile.size.pixels[0]) {
+				for (var j = minLocalX; j <= maxLocalX; j += app.tile.size.pX) {
 					for (
 						var k = 0;
-						k <= vTileCountPerPart * app.tile.size.pixels[0];
-						k += app.tile.size.pixels[1]
+						k <= vTileCountPerPart * app.tile.size.pX;
+						k += app.tile.size.pY
 					)
 						if (
 							(i !== startPart || k >= startY) &&

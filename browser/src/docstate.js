@@ -66,31 +66,24 @@ window.app = {
 			*/
 			rectangle: null // SimpleRectangle.
 		},
-		size: {
-			pixels: [0, 0], // This can change according to the zoom level and document's size.
-			twips: [0, 0]
-		},
+		size: null, // SimplePoint. Size of the document.
 		viewedRectangle: null, // Visible part of the file - SimpleRectangle.
 		fileBasedView: false, // (draw-impress only) Default is false. For read-only documents, user can view all parts at once. In that case, this variable is set to "true".
 		writer: {
 			pageRectangleList: [], // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too often.
+			multiPageView: false
 		},
 		exportFormats: [] // possible output formats
 	},
 	view: {
-		size: {
-			pixels: [0, 0] // This can be larger than the document's size.
-		}
+		size: null, // SimplePoint. This can be larger than the document's size.
 	},
 	following: { // describes which cursor we follow with the view
 		mode: 'none', // none | user | editor
 		viewId: -1, // viewId of currently followed user
 	},
 	tile: {
-		size: {
-			pixels: [0, 0],
-			twips: [0, 0]
-		}
+		size: null, // SimplePoint.
 	},
 	socket: window.app.socket,
 	console: window.app.console,
