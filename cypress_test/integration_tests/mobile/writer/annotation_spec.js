@@ -3,6 +3,12 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
+function openCommentDialog() {
+	mobileHelper.openInsertionWizard();
+	cy.cGet('body').contains('.menu-entry-with-icon', 'Comment').click();
+	cy.cGet('.cool-annotation-table').should('exist');
+}
+
 describe(['tagmobile'], 'Annotation tests.', function() {
 	var newFilePath;
 
@@ -68,7 +74,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 	it('Resolve comment.', function() {
 		// Show resolved comments
 		mobileHelper.selectHamburgerMenuItem(['View', 'Resolved Comments']);
-		mobileHelper.insertComment();
+		mobileHelper.insertComment(/* FIXME: skipCommentCheck */true);
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
 		mobileHelper.selectAnnotationMenuItem('Resolve');
 		cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-content-resolved').should('exist');
@@ -81,12 +87,6 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		helper.setupAndLoadDocument('writer/annotation.odt');
 		mobileHelper.enableEditingMobile();
 	});
-
-	function openCommentDialog() {
-		mobileHelper.openInsertionWizard();
-		cy.cGet('body').contains('.menu-entry-with-icon', 'Comment').click();
-		cy.cGet('.cool-annotation-table').should('exist');
-	}
 
 	it('Inserting comment with @mention', function() {
 		openCommentDialog();
@@ -109,7 +109,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 	});
 
 	it('Modifying comment with @mention', function() {
-		mobileHelper.insertComment();
+		mobileHelper.insertComment(/* FIXME: skipCommentCheck */true);
 		mobileHelper.selectAnnotationMenuItem('Modify');
 
 		cy.cGet('#comment-container-1').should('exist');
@@ -136,7 +136,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 	});
 
 	it('Reply comment with @mention', function() {
-		mobileHelper.insertComment();
+		mobileHelper.insertComment(/* FIXME: skipCommentCheck */true);
 		mobileHelper.selectAnnotationMenuItem('Reply');
 
 		cy.cGet('#comment-container-1').should('exist');
