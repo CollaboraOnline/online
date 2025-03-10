@@ -691,7 +691,14 @@ namespace Log
         AutoPtr<Channel> channelUILog;
         if (logToFileUICmd)
         {
-            channelUILog = static_cast<Poco::Channel*>(new Poco::FileChannel("coolwsd-ui-cmd.log"));
+            std::string logPath;
+            const auto it = configUICmd.find("path");
+            if (it != configUICmd.cend()) {
+                logPath = it->second;
+            } else {
+                logPath = "coolwsd-ui-cmd.log";
+            }
+            channelUILog = static_cast<Poco::Channel*>(new Poco::FileChannel(logPath));
             for (const auto& pair : configUICmd)
             {
                 channelUILog->setProperty(pair.first, pair.second);
