@@ -4044,11 +4044,10 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 }
 
 #if !MOBILEAPP
-void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::string& key,
-                                         const std::string& value)
+void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::string& json)
 {
     ASSERT_CORRECT_THREAD();
-    LOG_DBG("Updating browser setting with key[" << key << "] and value[" << value
+    LOG_DBG("Updating browser setting with json[" << json
                                                  << "] for all sessions with userId [" << userId
                                                  << ']');
 
@@ -4059,7 +4058,16 @@ void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::s
         if (it.second->getUserId() != userId)
             continue;
 
-        it.second->updateBrowserSettingsJSON(key, value);
+        try
+        {
+            it.second->updateBrowserSettingsJSON(json);
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_WRN("Failed to update browsersetting json for session["
+                    << sessionForUpload->getId() << "], skipping the browsersetting upload step");
+            return;
+        }
         sessionForUpload = it.second;
     }
 
@@ -4182,7 +4190,7 @@ void DocumentBroker::uploadBrowserSettingsToWopiHost(const std::shared_ptr<Clien
         LOG_TRC("Successfully uploaded browsersetting to wopiHost");
     };
 
-    LOG_DBG("Uploading updated browsersetting to wopiHost[" << uriAnonym << ']');
+    LOG_DBG("Uploading browsersetting json [" << jsonStream.str() << "] to wopiHost[" << uriAnonym << ']');
     httpSession->setFinishedHandler(std::move(finishedCallback));
     httpSession->asyncRequest(httpRequest, *COOLWSD::getWebServerPoll());
 }

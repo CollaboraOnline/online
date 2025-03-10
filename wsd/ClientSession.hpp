@@ -295,7 +295,7 @@ public:
     void overrideDocOption();
 
 #if !MOBILEAPP
-    void updateBrowserSettingsJSON(const std::string& key, const std::string& value);
+    void updateBrowserSettingsJSON(const std::string& json);
 #endif
 
 private:
