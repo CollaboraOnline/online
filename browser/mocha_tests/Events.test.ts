@@ -1,6 +1,6 @@
 /// <reference path="./refs/globals.ts"/>
 /// <reference path="../src/app/Util.ts"/>
-/// <reference path="helper/EventTypes.ts"/>
+/// <reference path="helper/Events.ts"/>
 
 var assert = require('assert').strict;
 
