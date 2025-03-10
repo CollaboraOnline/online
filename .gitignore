@@ -45,8 +45,6 @@ debian/coolwsd.postinst
 common/support-public-key.hpp
 compile_commands.json
 **/gdb.txt
-macos/coda/config.h
-macos/coda/Config.xcconfig
 macos/coolwsd/gmake-wrapper.sh
 
 # Test stuff
@@ -100,11 +98,11 @@ browser/compilets
 browser/typescript_js
 browser/src/layer/tile/CanvasTileWorker.js
 
-coolforkit
-coolforkitns
-coolforkit-caps
-coolforkit-nocaps
-coolforkit-ns
+/coolforkit
+/coolforkitns
+/coolforkit-caps
+/coolforkit-nocaps
+/coolforkit-ns
 connect
 lokitclient
 /coolwsd

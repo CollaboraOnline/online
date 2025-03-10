@@ -1,0 +1,442 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BE9998852D7EC1FD00172B83 /* Common.hpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9998732D7EBEE100172B83 /* Common.hpp */; };
+		BE9998862D7EC1FD00172B83 /* ConfigUtil.hpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9998742D7EBEE100172B83 /* ConfigUtil.hpp */; };
+		BE9998872D7EC1FD00172B83 /* ConfigUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9998752D7EBEE100172B83 /* ConfigUtil.cpp */; };
+		BE9998882D7EC1FD00172B83 /* FileUtil.hpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9998762D7EBEE100172B83 /* FileUtil.hpp */; };
+		BE9998892D7EC1FD00172B83 /* FileUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9998772D7EBEE100172B83 /* FileUtil.cpp */; };
+		BE99988A2D7EC1FD00172B83 /* JailUtil.hpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9998782D7EBEE100172B83 /* JailUtil.hpp */; };
+		BE99988B2D7EC1FD00172B83 /* JailUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9998792D7EBEE100172B83 /* JailUtil.cpp */; };
+		BE99988C2D7EC1FD00172B83 /* Seccomp.hpp in Sources */ = {isa = PBXBuildFile; fileRef = BE99987A2D7EBEE100172B83 /* Seccomp.hpp */; };
+		BE99988D2D7EC1FD00172B83 /* Seccomp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE99987B2D7EBEE100172B83 /* Seccomp.cpp */; };
+		BE99988E2D7EC1FD00172B83 /* security.h in Sources */ = {isa = PBXBuildFile; fileRef = BE99987C2D7EBEE100172B83 /* security.h */; };
+		BE99988F2D7EC1FD00172B83 /* SigUtil.hpp in Sources */ = {isa = PBXBuildFile; fileRef = BE99987D2D7EBEE100172B83 /* SigUtil.hpp */; };
+		BE9998902D7EC1FD00172B83 /* SigUtil-server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE99987E2D7EBEE100172B83 /* SigUtil-server.cpp */; };
+		BE9998912D7EC1FD00172B83 /* Watchdog.hpp in Sources */ = {isa = PBXBuildFile; fileRef = BE99987F2D7EBEE100172B83 /* Watchdog.hpp */; };
+		BE9998922D7EC1FD00172B83 /* DeltaSimd.h in Sources */ = {isa = PBXBuildFile; fileRef = BE9998802D7EBF3900172B83 /* DeltaSimd.h */; };
+		BE9998932D7EC1FD00172B83 /* DeltaSimd.c in Sources */ = {isa = PBXBuildFile; fileRef = BE9998812D7EBF3900172B83 /* DeltaSimd.c */; };
+		BE9998942D7EC1FD00172B83 /* ForKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9998712D7EBDF000172B83 /* ForKit.cpp */; };
+		BE9998952D7EC1FD00172B83 /* forkit-main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9998722D7EBDF000172B83 /* forkit-main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BE4679112D775BA900569CBF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		BE4679132D775BA900569CBF /* coolforkit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = coolforkit; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE9998712D7EBDF000172B83 /* ForKit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ForKit.cpp; path = ../../../../kit/ForKit.cpp; sourceTree = "<group>"; };
+		BE9998722D7EBDF000172B83 /* forkit-main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "forkit-main.cpp"; path = "../../../../kit/forkit-main.cpp"; sourceTree = "<group>"; };
+		BE9998732D7EBEE100172B83 /* Common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Common.hpp; path = ../../../../common/Common.hpp; sourceTree = "<group>"; };
+		BE9998742D7EBEE100172B83 /* ConfigUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ConfigUtil.hpp; path = ../../../../common/ConfigUtil.hpp; sourceTree = "<group>"; };
+		BE9998752D7EBEE100172B83 /* ConfigUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigUtil.cpp; path = ../../../../common/ConfigUtil.cpp; sourceTree = "<group>"; };
+		BE9998762D7EBEE100172B83 /* FileUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FileUtil.hpp; path = ../../../../common/FileUtil.hpp; sourceTree = "<group>"; };
+		BE9998772D7EBEE100172B83 /* FileUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FileUtil.cpp; path = ../../../../common/FileUtil.cpp; sourceTree = "<group>"; };
+		BE9998782D7EBEE100172B83 /* JailUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = JailUtil.hpp; path = ../../../../common/JailUtil.hpp; sourceTree = "<group>"; };
+		BE9998792D7EBEE100172B83 /* JailUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JailUtil.cpp; path = ../../../../common/JailUtil.cpp; sourceTree = "<group>"; };
+		BE99987A2D7EBEE100172B83 /* Seccomp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Seccomp.hpp; path = ../../../../common/Seccomp.hpp; sourceTree = "<group>"; };
+		BE99987B2D7EBEE100172B83 /* Seccomp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Seccomp.cpp; path = ../../../../common/Seccomp.cpp; sourceTree = "<group>"; };
+		BE99987C2D7EBEE100172B83 /* security.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = security.h; path = ../../../../common/security.h; sourceTree = "<group>"; };
+		BE99987D2D7EBEE100172B83 /* SigUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SigUtil.hpp; path = ../../../../common/SigUtil.hpp; sourceTree = "<group>"; };
+		BE99987E2D7EBEE100172B83 /* SigUtil-server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "SigUtil-server.cpp"; path = "../../../../common/SigUtil-server.cpp"; sourceTree = "<group>"; };
+		BE99987F2D7EBEE100172B83 /* Watchdog.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Watchdog.hpp; path = ../../../../common/Watchdog.hpp; sourceTree = "<group>"; };
+		BE9998802D7EBF3900172B83 /* DeltaSimd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeltaSimd.h; path = ../../../../kit/DeltaSimd.h; sourceTree = "<group>"; };
+		BE9998812D7EBF3900172B83 /* DeltaSimd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = DeltaSimd.c; path = ../../../../kit/DeltaSimd.c; sourceTree = "<group>"; };
+		BE9998962D7EC58B00172B83 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		BE4679152D775BA900569CBF /* coolforkit */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = coolforkit;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BE4679102D775BA900569CBF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BE46790A2D775BA900569CBF = {
+			isa = PBXGroup;
+			children = (
+				BE99986E2D7EBDA100172B83 /* Online */,
+				BE4679152D775BA900569CBF /* coolforkit */,
+				BE9998962D7EC58B00172B83 /* Config.xcconfig */,
+				BE4679142D775BA900569CBF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BE4679142D775BA900569CBF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BE4679132D775BA900569CBF /* coolforkit */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BE99986E2D7EBDA100172B83 /* Online */ = {
+			isa = PBXGroup;
+			children = (
+				BE99986F2D7EBDAD00172B83 /* common */,
+				BE9998702D7EBDBE00172B83 /* kit */,
+			);
+			path = Online;
+			sourceTree = "<group>";
+		};
+		BE99986F2D7EBDAD00172B83 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				BE9998732D7EBEE100172B83 /* Common.hpp */,
+				BE9998742D7EBEE100172B83 /* ConfigUtil.hpp */,
+				BE9998752D7EBEE100172B83 /* ConfigUtil.cpp */,
+				BE9998762D7EBEE100172B83 /* FileUtil.hpp */,
+				BE9998772D7EBEE100172B83 /* FileUtil.cpp */,
+				BE9998782D7EBEE100172B83 /* JailUtil.hpp */,
+				BE9998792D7EBEE100172B83 /* JailUtil.cpp */,
+				BE99987A2D7EBEE100172B83 /* Seccomp.hpp */,
+				BE99987B2D7EBEE100172B83 /* Seccomp.cpp */,
+				BE99987C2D7EBEE100172B83 /* security.h */,
+				BE99987D2D7EBEE100172B83 /* SigUtil.hpp */,
+				BE99987E2D7EBEE100172B83 /* SigUtil-server.cpp */,
+				BE99987F2D7EBEE100172B83 /* Watchdog.hpp */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		BE9998702D7EBDBE00172B83 /* kit */ = {
+			isa = PBXGroup;
+			children = (
+				BE9998802D7EBF3900172B83 /* DeltaSimd.h */,
+				BE9998812D7EBF3900172B83 /* DeltaSimd.c */,
+				BE9998712D7EBDF000172B83 /* ForKit.cpp */,
+				BE9998722D7EBDF000172B83 /* forkit-main.cpp */,
+			);
+			path = kit;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BE4679122D775BA900569CBF /* coolforkit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE46791A2D775BA900569CBF /* Build configuration list for PBXNativeTarget "coolforkit" */;
+			buildPhases = (
+				BE46790F2D775BA900569CBF /* Sources */,
+				BE4679102D775BA900569CBF /* Frameworks */,
+				BE4679112D775BA900569CBF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				BE4679152D775BA900569CBF /* coolforkit */,
+			);
+			name = coolforkit;
+			packageProductDependencies = (
+			);
+			productName = coolforkit;
+			productReference = BE4679132D775BA900569CBF /* coolforkit */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BE46790B2D775BA900569CBF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					BE4679122D775BA900569CBF = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = BE46790E2D775BA900569CBF /* Build configuration list for PBXProject "coolforkit" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BE46790A2D775BA900569CBF;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = BE4679142D775BA900569CBF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BE4679122D775BA900569CBF /* coolforkit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BE46790F2D775BA900569CBF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE9998852D7EC1FD00172B83 /* Common.hpp in Sources */,
+				BE9998862D7EC1FD00172B83 /* ConfigUtil.hpp in Sources */,
+				BE9998872D7EC1FD00172B83 /* ConfigUtil.cpp in Sources */,
+				BE9998882D7EC1FD00172B83 /* FileUtil.hpp in Sources */,
+				BE9998892D7EC1FD00172B83 /* FileUtil.cpp in Sources */,
+				BE99988A2D7EC1FD00172B83 /* JailUtil.hpp in Sources */,
+				BE99988B2D7EC1FD00172B83 /* JailUtil.cpp in Sources */,
+				BE99988C2D7EC1FD00172B83 /* Seccomp.hpp in Sources */,
+				BE99988D2D7EC1FD00172B83 /* Seccomp.cpp in Sources */,
+				BE99988E2D7EC1FD00172B83 /* security.h in Sources */,
+				BE99988F2D7EC1FD00172B83 /* SigUtil.hpp in Sources */,
+				BE9998902D7EC1FD00172B83 /* SigUtil-server.cpp in Sources */,
+				BE9998912D7EC1FD00172B83 /* Watchdog.hpp in Sources */,
+				BE9998922D7EC1FD00172B83 /* DeltaSimd.h in Sources */,
+				BE9998932D7EC1FD00172B83 /* DeltaSimd.c in Sources */,
+				BE9998942D7EC1FD00172B83 /* ForKit.cpp in Sources */,
+				BE9998952D7EC1FD00172B83 /* forkit-main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BE4679182D775BA900569CBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE9998962D7EC58B00172B83 /* Config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		BE4679192D775BA900569CBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BE46791B2D775BA900569CBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J4FQ687VJK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+					"$(SRCROOT)/coda",
+					"$(SRCROOT)/../..",
+					"$(SRCROOT)/../../common",
+					"$(SRCROOT)/../../kit",
+					"$(SRCROOT)/../../net",
+					"$(SRCROOT)/../../wsd",
+					"$(HOMEBREW_PATH)/include",
+				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PATH)/lib";
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lpam",
+					"-lPocoFoundation",
+					"-lPocoUtil",
+					"-lPocoXML",
+					"-lPocoJSON",
+					"-lPocoNet",
+					"-lPocoNetSSL",
+					"-lPocoCrypto",
+					"-lzstd",
+					"-lpng",
+					"-lz",
+					"-lssl",
+					"-lcrypto",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BE46791C2D775BA900569CBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J4FQ687VJK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+					"$(SRCROOT)/coda",
+					"$(SRCROOT)/../..",
+					"$(SRCROOT)/../../common",
+					"$(SRCROOT)/../../kit",
+					"$(SRCROOT)/../../net",
+					"$(SRCROOT)/../../wsd",
+					"$(HOMEBREW_PATH)/include",
+				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PATH)/lib";
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lpam",
+					"-lPocoFoundation",
+					"-lPocoUtil",
+					"-lPocoXML",
+					"-lPocoJSON",
+					"-lPocoNet",
+					"-lPocoNetSSL",
+					"-lPocoCrypto",
+					"-lzstd",
+					"-lpng",
+					"-lz",
+					"-lssl",
+					"-lcrypto",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BE46790E2D775BA900569CBF /* Build configuration list for PBXProject "coolforkit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE4679182D775BA900569CBF /* Debug */,
+				BE4679192D775BA900569CBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE46791A2D775BA900569CBF /* Build configuration list for PBXNativeTarget "coolforkit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE46791B2D775BA900569CBF /* Debug */,
+				BE46791C2D775BA900569CBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BE46790B2D775BA900569CBF /* Project object */;
+}
