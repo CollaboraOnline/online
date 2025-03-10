@@ -74,7 +74,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('not.exist');
 
 		// Apply bulleting
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#toolbar-up #defaultbullet').click();
 
 		impressHelper.removeShapeSelection();
@@ -90,7 +89,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('not.have.attr', 'ooo:numbering-type');
 
 		// Apply numbering
-		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#toolbar-up #defaultnumbering').click();
 
 		impressHelper.removeShapeSelection();
