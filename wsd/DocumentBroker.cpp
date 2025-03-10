@@ -5192,7 +5192,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     const auto now = std::chrono::steady_clock::now();
 
     os << std::boolalpha;
-    os << " Broker: " << getDocKey() << " pid: " << getPid();
+    os << "\nDocumentBroker [" << _docId << "] Dump: [" << getDocKey() << "], pid: " << getPid();
     if (_docState.isMarkedToDestroy())
         os << " *** Marked to destroy ***";
     else
@@ -5272,19 +5272,23 @@ void DocumentBroker::dumpState(std::ostream& os)
 
 #if !MOBILEAPP
     // Bit nasty - need a cleaner way to dump state.
-    os << "\n  Document broker sessions [" << _sessions.size() << "], should duplicate the above:";
-    for (const auto &it : _sessions)
+    if (!_sessions.empty())
     {
-        auto proto = it.second->getProtocol();
-        auto proxy = dynamic_cast<ProxyProtocolHandler *>(proto.get());
-        if (proxy)
-            proxy->dumpProxyState(os);
-        else
-            std::static_pointer_cast<MessageHandlerInterface>(it.second)->dumpState(os);
+        os << "\n  Document broker sessions [" << _sessions.size()
+           << "], should duplicate the above:";
+        for (const auto& it : _sessions)
+        {
+            auto proto = it.second->getProtocol();
+            auto proxy = dynamic_cast<ProxyProtocolHandler*>(proto.get());
+            if (proxy)
+                proxy->dumpProxyState(os);
+            else
+                std::static_pointer_cast<MessageHandlerInterface>(it.second)->dumpState(os);
+        }
     }
 #endif
 
-    os << '\n';
+    os << "\n End DocumentBroker [" << _docId << "] Dump\n";
 }
 
 bool DocumentBroker::isAsyncUploading() const
