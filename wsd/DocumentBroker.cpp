@@ -1905,17 +1905,26 @@ void DocumentBroker::asyncInstallPreset(
 void DocumentBroker::parseBrowserSettings(const std::shared_ptr<ClientSession>& session,
                                           const std::string& responseBody)
 {
-    Poco::JSON::Parser parser;
-    auto result = parser.parse(responseBody);
-    auto browsersetting = result.extract<Poco::JSON::Object::Ptr>();
-    if (browsersetting.isNull())
+    try
     {
-        LOG_INF("browsersetting.json is empty");
-        return;
-    }
+        LOG_TRC("Parsing browsersetting json from repsonseBody[" << responseBody << ']');
+        Poco::JSON::Parser parser;
+        auto result = parser.parse(responseBody);
+        auto browsersetting = result.extract<Poco::JSON::Object::Ptr>();
+        if (browsersetting.isNull())
+        {
+            LOG_INF("browsersetting.json is empty");
+            return;
+        }
 
-    LOG_TRC("Setting _browserSettingsJSON for clientsession[" << session->getId() << ']');
-    session->setBrowserSettingsJSON(browsersetting);
+        LOG_TRC("Setting _browserSettingsJSON for clientsession[" << session->getId() << ']');
+        session->setBrowserSettingsJSON(browsersetting);
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_ERR("Failed to parse browsersetting json[" << responseBody << "] with error["
+                                                       << exc.what() << ']');
+    }
 }
 
 bool DocumentBroker::processPlugins(std::string& localPath)
