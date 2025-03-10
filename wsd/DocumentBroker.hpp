@@ -558,7 +558,8 @@ public:
 
     static void sendBrowserSetting(const std::shared_ptr<ClientSession>& session);
 
-    static void parseBrowserSettings(const std::shared_ptr<ClientSession>& session,
+    // Return true if parsing of browsersetting is successfull
+    static bool parseBrowserSettings(const std::shared_ptr<ClientSession>& session,
                                      const std::string& responseBody);
 
     /// Start an asynchronous Installation of the user presets, e.g. autotexts etc, as
