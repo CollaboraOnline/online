@@ -1751,8 +1751,8 @@ void DocumentBroker::getBrowserSettingSync(const std::shared_ptr<ClientSession>&
         return;
     }
 
-    parseBrowserSettings(session, browsersettingResponse->getBody());
-    sendBrowserSetting(session);
+    if (parseBrowserSettings(session, browsersettingResponse->getBody()))
+        sendBrowserSetting(session);
 }
 
 struct PresetRequest
@@ -1894,15 +1894,15 @@ void DocumentBroker::asyncInstallPreset(
         if (session == nullptr || session->getSentBrowserSetting())
             return;
         const std::string& body = presetHttpResponse->getBody();
-        DocumentBroker::parseBrowserSettings(session, body);
-        DocumentBroker::sendBrowserSetting(session);
+        if (DocumentBroker::parseBrowserSettings(session, body))
+            DocumentBroker::sendBrowserSetting(session);
     }
 
     LOG_DBG("Saving preset file to jailPath[" << presetFile << ']');
     presetHttpResponse->saveBodyToFile(presetFile);
 }
 
-void DocumentBroker::parseBrowserSettings(const std::shared_ptr<ClientSession>& session,
+bool DocumentBroker::parseBrowserSettings(const std::shared_ptr<ClientSession>& session,
                                           const std::string& responseBody)
 {
     try
@@ -1914,7 +1914,7 @@ void DocumentBroker::parseBrowserSettings(const std::shared_ptr<ClientSession>& 
         if (browsersetting.isNull())
         {
             LOG_INF("browsersetting.json is empty");
-            return;
+            return true;
         }
 
         LOG_TRC("Setting _browserSettingsJSON for clientsession[" << session->getId() << ']');
@@ -1922,9 +1922,12 @@ void DocumentBroker::parseBrowserSettings(const std::shared_ptr<ClientSession>& 
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Failed to parse browsersetting json[" << responseBody << "] with error["
-                                                       << exc.what() << ']');
+        LOG_ERR("Failed to parse browsersetting json["
+                << responseBody << "] with error[" << exc.what()
+                << "], disabling browsersetting for session[" << session->getId() << ']');
+        return false;
     }
+    return true;
 }
 
 bool DocumentBroker::processPlugins(std::string& localPath)
