@@ -3007,9 +3007,12 @@ void ClientSession::dumpState(std::ostream& os)
 
     if (_protocol)
     {
-        uint64_t sent = 0, recv = 0;
+        uint64_t sent = 0;
+        uint64_t recv = 0;
         _protocol->getIOStats(sent, recv);
-        os << "\n\t\tsent/keystroke: " << (double)sent/_keyEvents << " bytes";
+        os << "\n\t\tsent: " << sent / 1024 << " Kbytes";
+        os << "\n\t\trecv: " << recv / 1024 << " Kbytes";
+        os << "\n\t\tsent/keystroke: " << sent / 1024. / _keyEvents << " Kbytes";
     }
 
     os << "\n\t\tonFlyUpperLimit: " << getTilesOnFlyUpperLimit();

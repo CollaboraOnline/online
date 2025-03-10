@@ -4202,7 +4202,7 @@ void dump_state()
     if (Server)
         Server->dumpState(oss);
 
-    oss << "\nMalloc info: \n" << Util::getMallocInfo() << '\n';
+    oss << "\nMalloc info [" << getpid() << "]: \n" << Util::getMallocInfo() << '\n';
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s\n", msg.c_str());

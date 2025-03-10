@@ -2662,9 +2662,9 @@ void Document::dumpState(std::ostream& oss)
 
     std::string smap;
     if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
-        oss << "\n  smaps_rollup: <unavailable>";
+        oss << "\n\tsmaps_rollup: <unavailable>";
     else
-        oss << "\n  smaps_rollup: " << smap;
+        oss << "\n\tsmaps_rollup: " << smap;
     oss << '\n';
 
     // dumpState:
@@ -4121,7 +4121,7 @@ void dump_kit_state()
     std::ostringstream oss;
     KitSocketPoll::dumpGlobalState(oss);
 
-    oss << "\nMalloc info: \n" << Util::getMallocInfo() << '\n';
+    oss << "\nMalloc info [" << getpid() << "]: \n" << Util::getMallocInfo() << '\n';
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s", msg.c_str());
