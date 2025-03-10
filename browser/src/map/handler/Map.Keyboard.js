@@ -680,6 +680,24 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
+		// Cmd + Ctrl + Space on a Mac/iPad, open system emoji picker
+		if (e.keyCode === this.keyCodes.SPACE
+			&& e.ctrlKey && e.metaKey
+			&& (window.ThisIsTheiOSApp || L.Browser.mac)) {
+			return true;
+		}
+
+		// Cmd + R on a Mac, refresh tab. Safari does not allow preventDefaulting this ... but Chrome and Firefox both do(!!)
+		// The bind without this would justify text right ... which can also be achieved with Ctrl+R
+		if (e.keyCode === this.keyCodes.R && e.metaKey && L.Browser.mac) {
+			return true;
+		}
+
+		// Cmd + M on a Mac, minimize window. Safari does not allow preventDefaulting this ... but Chrome and Firefox both do(!!)
+		if (e.keyCode === this.keyCodes.M && e.metaKey && L.Browser.mac) {
+			return true;
+		}
+
 		if (e.keyCode !== this.keyCodes.C[DEFAULT] && e.keyCode !== this.keyCodes.V[DEFAULT] && e.keyCode !== this.keyCodes.X[DEFAULT] &&
 		/* Safari */ e.keyCode !== this.keyCodes.C[MAC] && e.keyCode !== this.keyCodes.V[MAC] && e.keyCode !== this.keyCodes.X[MAC]) {
 			// not copy or paste
