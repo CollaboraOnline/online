@@ -36,11 +36,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 	});
 
 	it('Text editing mode.', function() {
-		cy.cGet('#InsertMode').should('have.text', 'Insert mode: inactive');
+		cy.cGet('#InsertMode').should('have.text', 'Tracking changes: on');
 		calcHelper.dblClickOnFirstCell();
 		cy.cGet('#InsertMode').should('have.text', 'Insert');
 		calcHelper.typeIntoFormulabar('{enter}');
-		cy.cGet('#InsertMode').should('have.text', 'Insert mode: inactive');
+		cy.cGet('#InsertMode').should('have.text', 'Tracking changes: on');
 	});
 
 	it('Selected data summary.', function() {
