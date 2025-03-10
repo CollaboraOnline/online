@@ -9,13 +9,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-var L: any = {
-    CSections: { Scroll: { name : 'scroll' } },
-    LOUtil: {},
-};
+/// Minimal base class for Map, Layer etc.
 
-var app: any = {
-    roundedDpiScale : 1,
-    canvasSize: null,
-    definitions: {}
-};
+interface BaseClassOptions {
+	[name: string]: any;
+}
+
+class BaseClass implements IDAble {
+	private baseOptions: BaseClassOptions;
+	public _leaflet_id: number = -1;
+
+	constructor(opts?: BaseClassOptions) {
+		this.baseOptions = opts;
+	}
+}
