@@ -2263,8 +2263,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'review-track-changes',
-				'type': 'bigtoolitem',
+				'id': 'review-track-changes:RecordTrackedChangesMenu',
+				'type': 'menubutton',
 				'text': _UNO('.uno:TrackChanges', 'text'),
 				'command': '.uno:TrackChanges',
 				'accessibility': { focusBack: true, combination: 'TC', de: null }
