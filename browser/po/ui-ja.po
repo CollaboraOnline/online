@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-05 09:51+0100\n"
-"PO-Revision-Date: 2024-06-29 10:46+0000\n"
+"PO-Revision-Date: 2025-03-08 13:54+0000\n"
 "Last-Translator: Shavazo <pleasure.7010@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
-"Language: \n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.10.3-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -258,15 +258,15 @@ msgstr "このソフトウェアについて"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "CPUの履歴"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "メモリの履歴"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "メモリ"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
@@ -338,7 +338,7 @@ msgstr "送信"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "接続"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -632,7 +632,7 @@ msgstr "セルのコピー"
 
 #: src/control/Control.ContextMenu.js:286
 msgid "Fill Series"
-msgstr "系列塗りつぶし"
+msgstr "セルのフィル"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
@@ -743,11 +743,11 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:136
 msgid "Austria"
-msgstr ""
+msgstr "オーストリア"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Australia"
-msgstr ""
+msgstr "オーストラリア"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Åland Islands"
@@ -779,7 +779,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:145
 msgid "Canada"
-msgstr ""
+msgstr "カナダ"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Switzerland"
@@ -1003,7 +1003,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:201
 msgid "Ukraine"
-msgstr ""
+msgstr "ウクライナ"
 
 #: src/control/Control.ESignature.ts:202
 msgid "United States of America"
@@ -1031,7 +1031,7 @@ msgstr ""
 
 #: src/control/Control.ESignatureDialog.ts:120
 msgid "Provider:"
-msgstr ""
+msgstr "プロバイダー:"
 
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
@@ -1063,7 +1063,7 @@ msgstr "アイドルのドキュメント - リロードをタップして編集
 
 #: src/control/Control.JSDialog.js:283
 msgid "Close dialog"
-msgstr ""
+msgstr "ダイアログを閉じる"
 
 #: src/control/Control.JSDialogBuilder.js:499
 msgid "Solid"
@@ -1270,7 +1270,7 @@ msgstr "PDFドキュメント (.pdf)..."
 
 #: src/control/Control.Menubar.js:97 src/control/Control.Menubar.js:729
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "HTMLファイル (.html)"
 
 #: src/control/Control.Menubar.js:102 src/control/Control.Menubar.js:431
 #: src/control/Control.Menubar.js:591 src/control/Control.Menubar.js:737
@@ -1347,7 +1347,7 @@ msgstr "背景を変更"
 #: src/control/Control.NotebookbarWriter.js:856
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Style list"
-msgstr ""
+msgstr "スタイル一覧"
 
 #: src/control/Control.Menubar.js:158 src/control/Control.Menubar.js:477
 #: src/control/Control.Menubar.js:629 src/control/Control.Menubar.js:781
@@ -1373,7 +1373,7 @@ msgstr "スマートピッカー"
 #: src/control/Control.Menubar.js:194 src/control/Control.Menubar.js:489
 #: src/control/Control.Menubar.js:637 src/control/Control.Menubar.js:794
 msgid "AI Assistant"
-msgstr ""
+msgstr "AIアシスタント"
 
 #: src/control/Control.Menubar.js:235
 msgid "Text orientation"
@@ -1534,7 +1534,7 @@ msgstr "コメントの保存"
 #: src/control/Control.Menubar.js:416
 #: src/control/Control.NotebookbarBuilder.js:436
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "HTML文書 (.html)"
 
 #: src/control/Control.Menubar.js:417
 #: src/control/Control.NotebookbarBuilder.js:467
@@ -1588,7 +1588,7 @@ msgstr "マスター表示"
 
 #: src/control/Control.Menubar.js:479
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "ローカルマルチメディア..."
 
 #: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:1124
 #: src/control/Control.PresentationBar.js:127
@@ -1654,7 +1654,7 @@ msgstr "すべてのシート"
 #: src/control/Control.Menubar.js:773
 #: src/control/Control.NotebookbarCalc.js:1180
 msgid "Focus Cell"
-msgstr ""
+msgstr "セルのフォーカス"
 
 #: src/control/Control.Menubar.js:867
 #: src/control/jsdialog/Definitions.Menu.ts:291
@@ -1847,7 +1847,7 @@ msgstr "タップで非表示"
 #: src/control/Control.NotebookbarBuilder.js:373
 #: src/control/Control.NotebookbarBuilder.js:402
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "HTMLファイル (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:398
 msgid "CSV File (.csv)"
@@ -1951,7 +1951,7 @@ msgstr "履歴"
 #: src/control/Control.NotebookbarImpress.js:343
 #: src/control/Control.NotebookbarWriter.js:320
 msgid "Signature"
-msgstr ""
+msgstr "署名"
 
 #: src/control/Control.NotebookbarCalc.js:272
 #: src/control/Control.NotebookbarDraw.js:325
