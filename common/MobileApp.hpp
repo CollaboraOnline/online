@@ -59,6 +59,7 @@ public:
 
 #ifdef IOS
     CODocument *coDocument;
+    std::weak_ptr<DocumentBroker> docBroker;
 #endif
 };
 

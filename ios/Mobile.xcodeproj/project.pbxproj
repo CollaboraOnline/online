@@ -87,6 +87,7 @@
 		BEDCC8992456FFAD00FB02BD /* SceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEDCC8982456FFAC00FB02BD /* SceneDelegate.mm */; };
 		BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEFB1EE021C29CC70081D757 /* L10n.mm */; };
 		D49B580F2D1077F700E0E607 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49B580E2D1077F700E0E607 /* UniformTypeIdentifiers.framework */; };
+		D4A0F3D72D64E86C00472DEE /* CoolURLSchemeHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4A0F3D62D64E86C00472DEE /* CoolURLSchemeHandler.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1473,6 +1474,8 @@
 		BEFB1EDF21C29CC70081D757 /* L10n.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L10n.h; sourceTree = "<group>"; };
 		BEFB1EE021C29CC70081D757 /* L10n.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = L10n.mm; sourceTree = "<group>"; };
 		D49B580E2D1077F700E0E607 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+		D4A0F3D62D64E86C00472DEE /* CoolURLSchemeHandler.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CoolURLSchemeHandler.mm; sourceTree = "<group>"; };
+		D4A0F3D82D663A0000472DEE /* CoolURLSchemeHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoolURLSchemeHandler.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2629,6 +2632,8 @@
 		BE8D77292136762500AC58EA /* Mobile */ = {
 			isa = PBXGroup;
 			children = (
+				D4A0F3D82D663A0000472DEE /* CoolURLSchemeHandler.h */,
+				D4A0F3D62D64E86C00472DEE /* CoolURLSchemeHandler.mm */,
 				BE58E13021874A2E00249358 /* Mobile.entitlements */,
 				BE5EB5D92140363100E0826C /* ios.mm */,
 				BE00F8922139494E001CE2D4 /* Resources */,
@@ -3679,6 +3684,7 @@
 				BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */,
 				A5C2FA5A2AC1BB3900265946 /* Simd.cpp in Sources */,
 				BEDCC84E2452F82800FB02BD /* MobileApp.cpp in Sources */,
+				D4A0F3D72D64E86C00472DEE /* CoolURLSchemeHandler.mm in Sources */,
 				BE5EB5DA2140363100E0826C /* ios.mm in Sources */,
 				BE5EB5D421400DC100E0826C /* DocumentBroker.cpp in Sources */,
 				BEA28377214FFD8C00848631 /* Unit.cpp in Sources */,
