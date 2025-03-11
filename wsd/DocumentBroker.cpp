@@ -5313,11 +5313,19 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n    Next StorageAttributes:";
     _nextStorageAttrs.dumpState(os, "\n      ");
 
+    os << "\n  Storage:";
+    _storage->dumpState(os, "\n    ");
+
+    os << '\n';
     _lockCtx->dumpState(os);
 
     if (_tileCache)
+    {
+        os << '\n';
         _tileCache->dumpState(os);
+    }
 
+    os << '\n';
     _poll->dumpState(os);
 
 #if !MOBILEAPP
