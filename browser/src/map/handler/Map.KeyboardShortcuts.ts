@@ -19,11 +19,19 @@ function isCtrlKey (e: KeyboardEvent) {
         return e.ctrlKey;
 }
 
+function isMacCtrlKey (e: KeyboardEvent) {
+    if ((window as any).ThisIsTheiOSApp || L.Browser.mac)
+        return e.ctrlKey;
+    else
+        return false;
+}
+
 enum Mod {
     NONE    = 0,
     CTRL    = 1,
     ALT     = 2,
     SHIFT   = 4,
+    MACCTRL = 8, // Ctrl (*not Cmd*) on a Mac
 }
 
 enum ViewType {
@@ -142,9 +150,11 @@ class KeyboardShortcuts {
         const alt = event.altKey;
         const keyCode = event.which;
         const key = event.key;
+        const macctrl = isMacCtrlKey(event);
         const modifier = (ctrl ? Mod.CTRL : Mod.NONE) |
             (shift ? Mod.SHIFT : Mod.NONE) |
-            (alt ? Mod.ALT : Mod.NONE);
+            (alt ? Mod.ALT : Mod.NONE) |
+            (macctrl ? Mod.MACCTRL : Mod.NONE);
         const platform = (window.ThisIsTheAndroidApp ? Platform.ANDROIDAPP : Platform.NONE) |
             (window.ThisIsTheiOSApp ? Platform.IOSAPP : Platform.NONE) |
             (L.Browser.mac ? Platform.MAC : Platform.NONE) |
