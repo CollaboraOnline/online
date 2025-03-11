@@ -31,6 +31,16 @@ enum ViewType {
     ReadOnly = 1,
 }
 
+enum Platform {
+    NONE        = 0,
+    ANDROIDAPP  = 1,
+    IOSAPP      = 2,
+    MAC         = 4,
+    WINDOWS     = 8,
+    LINUX       = 16, // There is no "Linux" option, so just !mac && !windows
+    CHROMEOSAPP = 32,
+}
+
 type shortcutCallback = () => void;
 
 class ShortcutDescriptor {
@@ -43,6 +53,7 @@ class ShortcutDescriptor {
     dispatchAction: string;
     viewType: ViewType;
     preventDefault: boolean;
+    platform: Platform;
 
     constructor({
         docType = null,
@@ -54,6 +65,7 @@ class ShortcutDescriptor {
         dispatchAction = null,
         viewType = null,
         preventDefault = true,
+        platform = null,
     }: {
         docType?: string,
         eventType: string,
@@ -64,6 +76,7 @@ class ShortcutDescriptor {
         dispatchAction?: string,
         viewType?: ViewType,
         preventDefault?: boolean,
+        platform?: Platform,
     }) {
         app.console.assert(keyCode !== null || key !== null, 'registering a keyboard shortcut without specifying either a key or a keyCode - this will result in an untriggerable shortcut');
 
@@ -76,6 +89,7 @@ class ShortcutDescriptor {
         this.dispatchAction = dispatchAction;
         this.viewType = viewType;
         this.preventDefault = preventDefault;
+        this.platform = platform;
     }
 }
 
@@ -87,7 +101,7 @@ class KeyboardShortcuts {
         this.definitions = new Map<string, Array<ShortcutDescriptor>>();
     }
 
-    private findShortcut(language: string, eventType: string, modifier: Mod, keyCode: number | undefined, key: string | undefined)
+    private findShortcut(language: string, eventType: string, modifier: Mod, keyCode: number | undefined, key: string | undefined, platform: Platform)
         : ShortcutDescriptor | undefined {
         const descriptors = this.definitions.get(language);
         if (!descriptors) {
@@ -105,6 +119,7 @@ class KeyboardShortcuts {
                 descriptor.eventType === eventType &&
                 descriptor.modifier === modifier &&
                 (descriptor.viewType === null || descriptor.viewType === viewType) &&
+                (!descriptor.platform || (descriptor.platform & platform)) &&
                 (keyMatches || keyCodeMatches);
         });
 
@@ -130,8 +145,14 @@ class KeyboardShortcuts {
         const modifier = (ctrl ? Mod.CTRL : Mod.NONE) |
             (shift ? Mod.SHIFT : Mod.NONE) |
             (alt ? Mod.ALT : Mod.NONE);
+        const platform = (window.ThisIsTheAndroidApp ? Platform.ANDROIDAPP : Platform.NONE) |
+            (window.ThisIsTheiOSApp ? Platform.IOSAPP : Platform.NONE) |
+            (L.Browser.mac ? Platform.MAC : Platform.NONE) |
+            (L.Browser.win ? Platform.WINDOWS : Platform.NONE) |
+            (!(L.Browser.mac || L.Browser.win) ? Platform.LINUX : Platform.NONE) |
+            (window.mode.isChromebook() ? Platform.CHROMEOSAPP : Platform.NONE);
 
-        const shortcut = this.findShortcut(language, eventType, modifier, keyCode, key);
+        const shortcut = this.findShortcut(language, eventType, modifier, keyCode, key, platform);
 
         if (shortcut) {
             let action = 'disabled';
@@ -185,11 +206,11 @@ class KeyboardShortcuts {
 
                 for (const keyCode of shortcutKeyCodes) {
                     this.findShortcut(language,
-                        shortcut.eventType, shortcut.modifier, keyCode, undefined);
+                        shortcut.eventType, shortcut.modifier, keyCode, undefined, shortcut.platform);
                 }
 
                 this.findShortcut(language,
-                    shortcut.eventType, shortcut.modifier, undefined, shortcut.key);
+                    shortcut.eventType, shortcut.modifier, undefined, shortcut.key, shortcut.platform);
             });
         });
         console.debug('KeyboardShortcuts.verifyShortcuts finished');
@@ -235,7 +256,8 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT | Mod.CTRL, key: 'p', dispatchAction: 'userlist' }),
 
     // Passthrough some system shortcuts
-    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'I', preventDefault: false }), // Open browser developer tools
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'I', preventDefault: false, platform: Platform.WINDOWS | Platform.LINUX }), // Open browser developer tools on Non-MacOS - shift means the I here is capital
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.ALT, keyCode: 73 /* keyCode('I') === 73 */, preventDefault: false, platform: Platform.MAC }), // Open browser developer tools on MacOS - registered with keyCode as alt+i triggers a dead key on MacOS
 ));
 
 // German shortcuts.
