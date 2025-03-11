@@ -904,11 +904,16 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
 
         LOG_DBG(wopiLog << " async upload request: " << httpRequest.header().toString());
 
-        _uploadHttpSession->setConnectFailHandler([asyncUploadCallback](const std::shared_ptr<http::Session>& /* httpSession */) {
-            LOG_ERR("Cannot connect for uploading to wopi storage.");
-            asyncUploadCallback(AsyncUpload(AsyncUpload::State::Error,
-                            UploadResult(UploadResult::Result::FAILED, "Connection failed.")));
-        });
+        _uploadHttpSession->setConnectFailHandler(
+            [asyncUploadCallback,
+             uriObject](const std::shared_ptr<http::Session>& /* httpSession */)
+            {
+                LOG_ERR("Cannot connect to [" << uriObject.toString()
+                                              << "] for uploading to wopi storage");
+                asyncUploadCallback(
+                    AsyncUpload(AsyncUpload::State::Error,
+                                UploadResult(UploadResult::Result::FAILED, "Connection failed.")));
+            });
 
         // Notify client via callback that the request is in progress...
         asyncUploadCallback(
