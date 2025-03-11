@@ -42,6 +42,7 @@ class ShortcutDescriptor {
     unoAction: string;
     dispatchAction: string;
     viewType: ViewType;
+    preventDefault: boolean;
 
     constructor({
         docType = null,
@@ -52,6 +53,7 @@ class ShortcutDescriptor {
         unoAction = null,
         dispatchAction = null,
         viewType = null,
+        preventDefault = true,
     }: {
         docType?: string,
         eventType: string,
@@ -61,6 +63,7 @@ class ShortcutDescriptor {
         unoAction?: string,
         dispatchAction?: string,
         viewType?: ViewType,
+        preventDefault?: boolean,
     }) {
         app.console.assert(keyCode !== null || key !== null, 'registering a keyboard shortcut without specifying either a key or a keyCode - this will result in an untriggerable shortcut');
 
@@ -72,6 +75,7 @@ class ShortcutDescriptor {
         this.unoAction = unoAction;
         this.dispatchAction = dispatchAction;
         this.viewType = viewType;
+        this.preventDefault = preventDefault;
     }
 }
 
@@ -137,6 +141,10 @@ class KeyboardShortcuts {
             } else if (shortcut.dispatchAction) {
                 action = shortcut.dispatchAction;
                 app.dispatcher.dispatch(action);
+            }
+
+            if (shortcut.preventDefault) {
+                event.preventDefault();
             }
 
             console.debug('handled keyboard shortcut: ' + action);
@@ -233,6 +241,9 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
 
 
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT | Mod.CTRL, key: 'p', dispatchAction: 'userlist' }),
+
+    // Passthrough some system shortcuts
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'I', preventDefault: false }), // Open browser developer tools
 ));
 
 // German shortcuts.

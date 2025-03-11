@@ -406,7 +406,6 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev)) {
-			ev.preventDefault();
 			return;
 		}
 		if (this._map.jsdialog
@@ -493,7 +492,6 @@ L.Map.Keyboard = L.Handler.extend({
 
 		if (window.KeyboardShortcuts.processEvent(app.UI.language.fromURL, ev)) {
 			ev.shortCutActivated = true;
-			ev.preventDefault();
 			return;
 		}
 		if (!keyEventFn && docLayer && docLayer.postKeyboardEvent) {
@@ -672,11 +670,6 @@ L.Map.Keyboard = L.Handler.extend({
 
 		// Control + INSERT
 		if (this._isCtrlKey(e) && e.keyCode === this.keyCodes.INSERT) {
-			return true;
-		}
-
-		// Control + Shift + I, open browser developper tools
-		if (this._isCtrlKey(e) && e.shiftKey && e.keyCode === this.keyCodes.I) {
 			return true;
 		}
 
