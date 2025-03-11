@@ -46,7 +46,7 @@ L.Map.SlideShow = L.Handler.extend({
 			return;
 		}
 
-		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
+		if (window.ThisIsTheAndroidApp) {
 			window.postMobileMessage('SLIDESHOW');
 			return;
 		}
