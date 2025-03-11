@@ -25,6 +25,13 @@
 		BE44ACD42D7F07B700BFA3B2 /* HttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACD32D7F07B700BFA3B2 /* HttpRequest.cpp */; };
 		BE44ACD72D7F07D800BFA3B2 /* NetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACD62D7F07D800BFA3B2 /* NetUtil.cpp */; };
 		BE44ACDA2D7F089200BFA3B2 /* RequestVettingStation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACD92D7F089200BFA3B2 /* RequestVettingStation.cpp */; };
+		BE44ACFC2D7F1F6B00BFA3B2 /* branding-mobile.css in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACF82D7F1F6B00BFA3B2 /* branding-mobile.css */; };
+		BE44ACFD2D7F1F6B00BFA3B2 /* branding-unsupported.js in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACFB2D7F1F6B00BFA3B2 /* branding-unsupported.js */; };
+		BE44ACFE2D7F1F6B00BFA3B2 /* branding.js in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACF62D7F1F6B00BFA3B2 /* branding.js */; };
+		BE44ACFF2D7F1F6B00BFA3B2 /* branding-desktop.css in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACF72D7F1F6B00BFA3B2 /* branding-desktop.css */; };
+		BE44AD002D7F1F6B00BFA3B2 /* branding-tablet.css in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACF92D7F1F6B00BFA3B2 /* branding-tablet.css */; };
+		BE44AD012D7F1F6B00BFA3B2 /* branding.css in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACF52D7F1F6B00BFA3B2 /* branding.css */; };
+		BE44AD022D7F1F6B00BFA3B2 /* branding-unsupported.css in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACFA2D7F1F6B00BFA3B2 /* branding-unsupported.css */; };
 		BE4C620E2D59E85500047DF2 /* MobileApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C62062D59E85500047DF2 /* MobileApp.cpp */; };
 		BE4C620F2D59E85500047DF2 /* Util-macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C620C2D59E85500047DF2 /* Util-macos.cpp */; };
 		BE4C625E2D5A3DDA00047DF2 /* Kit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C625D2D5A3DDA00047DF2 /* Kit.cpp */; };
@@ -103,6 +110,13 @@
 		BE44ACD62D7F07D800BFA3B2 /* NetUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NetUtil.cpp; path = ../../../../net/NetUtil.cpp; sourceTree = "<group>"; };
 		BE44ACD82D7F089200BFA3B2 /* RequestVettingStation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RequestVettingStation.hpp; path = ../../../../wsd/RequestVettingStation.hpp; sourceTree = "<group>"; };
 		BE44ACD92D7F089200BFA3B2 /* RequestVettingStation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RequestVettingStation.cpp; path = ../../../../wsd/RequestVettingStation.cpp; sourceTree = "<group>"; };
+		BE44ACF52D7F1F6B00BFA3B2 /* branding.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = branding.css; path = ../../../browser/dist/branding.css; sourceTree = "<group>"; };
+		BE44ACF62D7F1F6B00BFA3B2 /* branding.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = branding.js; path = ../../../browser/dist/branding.js; sourceTree = "<group>"; };
+		BE44ACF72D7F1F6B00BFA3B2 /* branding-desktop.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "branding-desktop.css"; path = "../../../browser/dist/branding-desktop.css"; sourceTree = "<group>"; };
+		BE44ACF82D7F1F6B00BFA3B2 /* branding-mobile.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "branding-mobile.css"; path = "../../../browser/dist/branding-mobile.css"; sourceTree = "<group>"; };
+		BE44ACF92D7F1F6B00BFA3B2 /* branding-tablet.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "branding-tablet.css"; path = "../../../browser/dist/branding-tablet.css"; sourceTree = "<group>"; };
+		BE44ACFA2D7F1F6B00BFA3B2 /* branding-unsupported.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "branding-unsupported.css"; path = "../../../browser/dist/branding-unsupported.css"; sourceTree = "<group>"; };
+		BE44ACFB2D7F1F6B00BFA3B2 /* branding-unsupported.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "branding-unsupported.js"; path = "../../../browser/dist/branding-unsupported.js"; sourceTree = "<group>"; };
 		BE4C61FF2D59E85500047DF2 /* Common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Common.hpp; path = ../../../../common/Common.hpp; sourceTree = "<group>"; };
 		BE4C62012D59E85500047DF2 /* Crypto.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Crypto.hpp; path = ../../../../common/Crypto.hpp; sourceTree = "<group>"; };
 		BE4C62052D59E85500047DF2 /* MobileApp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MobileApp.hpp; path = ../../../../common/MobileApp.hpp; sourceTree = "<group>"; };
@@ -222,6 +236,13 @@
 			isa = PBXGroup;
 			children = (
 				BE22AA9B2CC7AE7400385A9C /* images */,
+				BE44ACF52D7F1F6B00BFA3B2 /* branding.css */,
+				BE44ACF62D7F1F6B00BFA3B2 /* branding.js */,
+				BE44ACF72D7F1F6B00BFA3B2 /* branding-desktop.css */,
+				BE44ACF82D7F1F6B00BFA3B2 /* branding-mobile.css */,
+				BE44ACF92D7F1F6B00BFA3B2 /* branding-tablet.css */,
+				BE44ACFA2D7F1F6B00BFA3B2 /* branding-unsupported.css */,
+				BE44ACFB2D7F1F6B00BFA3B2 /* branding-unsupported.js */,
 				BE22492D2CC79BAE00385A9C /* bundle.css */,
 				BE22492E2CC79BAE00385A9C /* bundle.js */,
 				BE22492B2CC79AD700385A9C /* cool.html */,
@@ -508,6 +529,13 @@
 				BE16C9F02CD51F58005E5960 /* hello.odt in Resources */,
 				BE2257AD2CC79BAE00385A9C /* bundle.css in Resources */,
 				BE22492C2CC79AD700385A9C /* cool.html in Resources */,
+				BE44ACFC2D7F1F6B00BFA3B2 /* branding-mobile.css in Resources */,
+				BE44ACFD2D7F1F6B00BFA3B2 /* branding-unsupported.js in Resources */,
+				BE44ACFE2D7F1F6B00BFA3B2 /* branding.js in Resources */,
+				BE44ACFF2D7F1F6B00BFA3B2 /* branding-desktop.css in Resources */,
+				BE44AD002D7F1F6B00BFA3B2 /* branding-tablet.css in Resources */,
+				BE44AD012D7F1F6B00BFA3B2 /* branding.css in Resources */,
+				BE44AD022D7F1F6B00BFA3B2 /* branding-unsupported.css in Resources */,
 				BEEF3F862CE2139E00ABE785 /* coolkitconfig.xcu in Resources */,
 				BEA264162CBE7A770007435A /* Config.xcconfig in Resources */,
 			);
