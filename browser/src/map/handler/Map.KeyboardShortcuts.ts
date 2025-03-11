@@ -42,7 +42,23 @@ class ShortcutDescriptor {
     dispatchAction: string;
     viewType: ViewType;
 
-    constructor(docType: string, eventType: string, modifier: Mod, key: string, unoAction: string, dispatchAction: string, viewType: ViewType = null) {
+    constructor({
+        docType = null,
+        eventType,
+        modifier = Mod.NONE,
+        key,
+        unoAction = null,
+        dispatchAction = null,
+        viewType = null,
+    }: {
+        docType?: string,
+        eventType: string,
+        modifier?: Mod,
+        key: string,
+        unoAction?: string,
+        dispatchAction?: string,
+        viewType?: ViewType,
+    }) {
         this.docType = docType;
         this.eventType = eventType;
         this.modifier = modifier;
@@ -164,54 +180,54 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
         Disable multi-sheet selection shortcuts in Calc.
         Disable F2 in Writer, formula bar is unsupported, and messes with further input.
     */
-    new ShortcutDescriptor(null, 'keydown', 0, 'F1', null, 'showhelp', null),
-    new ShortcutDescriptor(null, 'keydown', Mod.ALT, 'F1', null, 'focustonotebookbar', null),
-    new ShortcutDescriptor(null, 'keydown', Mod.CTRL, 'f', null,'home-search', null),
+    new ShortcutDescriptor({ eventType: 'keydown', key: 'F1', dispatchAction: 'showhelp' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT, key: 'F1', dispatchAction: 'focustonotebookbar' }),
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'f', dispatchAction: 'home-search' }),
 
-    new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL | Mod.SHIFT, 'PageUp', undefined, undefined),
-    new ShortcutDescriptor('spreadsheet', 'keydown', Mod.CTRL | Mod.SHIFT, 'PageDown', undefined, undefined),
-    new ShortcutDescriptor('spreadsheet', 'keydown', 0, 'F5', null, null, null),
-
-
-    new ShortcutDescriptor('text', 'keydown', 0, 'F2', null, null, null),
-    new ShortcutDescriptor('text', 'keydown', 0, 'F3', '.uno:ExpandGlossary', null, null),
-    new ShortcutDescriptor('text', 'keydown', Mod.CTRL, 'F3', null, null, null),
-    new ShortcutDescriptor('text', 'keydown', 0, 'F5', null, null, null),
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'PageUp' }),
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'PageDown' }),
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F5' }),
 
 
-    new ShortcutDescriptor('presentation', 'keydown', 0, 'F5', null, 'presentation', null),
-    new ShortcutDescriptor('presentation', 'keydown', 0, 'PageUp', null, 'previouspart', ViewType.ReadOnly),
-    new ShortcutDescriptor('presentation', 'keydown', 0, 'PageDown', null, 'nextpart', ViewType.ReadOnly),
+    new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', key: 'F2' }),
+    new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', key: 'F3', unoAction: '.uno:ExpandGlossary' }),
+    new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', modifier: Mod.CTRL, key: 'F3' }),
+    new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', key: 'F5' }),
 
 
-    new ShortcutDescriptor('drawing', 'keydown', 0, 'F5', null, null, null),
-    new ShortcutDescriptor('drawing', 'keydown', 0, 'PageUp', null, 'previouspart', ViewType.ReadOnly),
-    new ShortcutDescriptor('drawing', 'keydown', 0, 'PageDown', null, 'nextpart', ViewType.ReadOnly),
-    new ShortcutDescriptor('drawing', 'keydown', 0, 'End', null, 'lastpart', ViewType.ReadOnly),
-    new ShortcutDescriptor('drawing', 'keydown', 0, 'Home', null, 'firstpart', ViewType.ReadOnly),
+    new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', key: 'F5', dispatchAction: 'presentation' }),
+    new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', key: 'PageUp', dispatchAction: 'previouspart', viewType: ViewType.ReadOnly }),
+    new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', key: 'PageDown', dispatchAction: 'nextpart', viewType: ViewType.ReadOnly }),
 
 
-    new ShortcutDescriptor(null, 'keydown', Mod.ALT | Mod.CTRL, 'p', null, 'userlist', null),
+    new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'F5' }),
+    new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'PageUp', dispatchAction: 'previouspart', viewType: ViewType.ReadOnly }),
+    new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'PageDown', dispatchAction: 'nextpart', viewType: ViewType.ReadOnly }),
+    new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'End', dispatchAction: 'lastpart', viewType: ViewType.ReadOnly }),
+    new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'Home', dispatchAction: 'firstpart', viewType: ViewType.ReadOnly }),
+
+
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT | Mod.CTRL, key: 'p', dispatchAction: 'userlist' }),
 ));
 
 // German shortcuts.
 keyboardShortcuts.definitions.set('de', new Array<ShortcutDescriptor>(
-    new ShortcutDescriptor(null, 'keydown', 0, 'F12', null, 'saveas', null),
+    new ShortcutDescriptor({ eventType: 'keydown', key: 'F12', dispatchAction: 'saveas' }),
 
-    new ShortcutDescriptor('presentation', 'keydown', Mod.SHIFT, 'F9', '.uno:GridVisible', null),
-    new ShortcutDescriptor('presentation', 'keydown', Mod.SHIFT, 'F3', '.uno:ChangeCaseRotateCase', null),
-    new ShortcutDescriptor('presentation', 'keydown', Mod.SHIFT, 'F5', null, 'presentation', null), // Already available without this shortcut.
+    new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', modifier: Mod.SHIFT, key: 'F9', unoAction: '.uno:GridVisible' }),
+    new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', modifier: Mod.SHIFT, key: 'F3', unoAction: '.uno:ChangeCaseRotateCase' }),
+    new ShortcutDescriptor({ docType: 'presentation', eventType: 'keydown', modifier: Mod.SHIFT, key: 'F5', dispatchAction: 'presentation' }), // Already available without this shortcut.
 
-    new ShortcutDescriptor('text', 'keydown', Mod.SHIFT, 'F3', '.uno:ChangeCaseRotateCase', null),
-    new ShortcutDescriptor('text', 'keydown', 0, 'F5', '.uno:GoToPage', null, null),
-    new ShortcutDescriptor('text', 'keydown',  Mod.ALT | Mod.CTRL, 's', null, 'home-search', null),
+    new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', modifier: Mod.SHIFT, key: 'F3', unoAction: '.uno:ChangeCaseRotateCase' }),
+    new ShortcutDescriptor({ docType: 'text', eventType: 'keydown', key: 'F5', unoAction: '.uno:GoToPage' }),
+    new ShortcutDescriptor({ docType: 'text', eventType: 'keydown',  modifier: Mod.ALT | Mod.CTRL, key: 's', dispatchAction: 'home-search' }),
 
-    new ShortcutDescriptor('spreadsheet', 'keydown', Mod.SHIFT, 'F3', '.uno:FunctionDialog', null),
-    new ShortcutDescriptor('spreadsheet', 'keydown', Mod.SHIFT, 'F2', null, 'insertcomment', null),
-    new ShortcutDescriptor('spreadsheet', 'keydown', 0, 'F4', null, 'togglerelative', null),
-    new ShortcutDescriptor('spreadsheet', 'keydown', 0, 'F9', '.uno:Calculate', null),
-    new ShortcutDescriptor('spreadsheet', 'keydown', 0, 'F5', null, 'focusonaddressinput', null),
-    new ShortcutDescriptor('spreadsheet', 'keydown', Mod.ALT, '0', '.uno:FormatCellDialog', null)
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.SHIFT, key: 'F3', unoAction: '.uno:FunctionDialog' }),
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.SHIFT, key: 'F2', dispatchAction: 'insertcomment' }),
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F4', dispatchAction: 'togglerelative' }),
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F9', unoAction: '.uno:Calculate' }),
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', key: 'F5', dispatchAction: 'focusonaddressinput' }),
+    new ShortcutDescriptor({ docType: 'spreadsheet', eventType: 'keydown', modifier: Mod.ALT, key: '0', unoAction: '.uno:FormatCellDialog' })
 ));
 
 (window as any).KeyboardShortcuts = keyboardShortcuts;
