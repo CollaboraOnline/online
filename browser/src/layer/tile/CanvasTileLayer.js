@@ -2823,9 +2823,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._references.clear();
 	},
 
-	_resetReferencesMarks: function () {
-		this._referencesAll = [];
+	_resetReferencesMarks: function (type) {
 		this._clearReferences();
+
+        if (type === undefined)
+		    this._referencesAll = [];
+        else if (type === 'focuscell')
+            this._referencesAll = this._referencesAll.filter(function(e) { return e.type !== 'focuscell' });
+
 		this._updateReferenceMarks();
 	},
 
