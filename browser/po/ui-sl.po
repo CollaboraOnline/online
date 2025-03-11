@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-05 09:51+0100\n"
-"PO-Revision-Date: 2025-01-28 20:40+0000\n"
+"PO-Revision-Date: 2025-03-11 19:03+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.10.3-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:15
@@ -477,7 +477,7 @@ msgstr "Pokaži ob strani"
 
 #: src/canvas/sections/CommentListSection.ts:1206
 msgid "Open in full view"
-msgstr ""
+msgstr "Odpri v polnem pogledu"
 
 #: src/canvas/sections/CommentListSection.ts:1234
 #: src/control/Control.JSDialogBuilder.js:1894
@@ -1667,7 +1667,7 @@ msgstr "Vsi delovni listi"
 #: src/control/Control.Menubar.js:773
 #: src/control/Control.NotebookbarCalc.js:1180
 msgid "Focus Cell"
-msgstr ""
+msgstr "Pozornost na celico"
 
 #: src/control/Control.Menubar.js:867
 #: src/control/jsdialog/Definitions.Menu.ts:291
@@ -2189,11 +2189,11 @@ msgstr "V nepovezan način"
 
 #: src/control/Control.NotebookbarWriter.js:842
 msgid "Scroll up"
-msgstr ""
+msgstr "Drsaj navzgor"
 
 #: src/control/Control.NotebookbarWriter.js:849
 msgid "Scroll down"
-msgstr ""
+msgstr "Drsaj navzdol"
 
 #: src/control/Control.NotebookbarWriter.js:1403
 msgid "Rich Text"
@@ -2293,7 +2293,7 @@ msgstr "Ni zaznanih težav"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Alarmi:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2599,7 +2599,7 @@ msgstr "Nalaganje zbirk je spodletelo"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "Nalaganje sklicev"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -2938,7 +2938,7 @@ msgstr "Krmilka+dvigalka+izmenjalka+D za izhod"
 
 #: src/core/Debug.js:1080
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr ""
+msgstr "Ravnanje z dogodki je zakasnjeno nepričakovano dolgo: {0} ms"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
