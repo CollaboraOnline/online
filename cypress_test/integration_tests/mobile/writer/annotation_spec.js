@@ -23,6 +23,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 		helper.reloadDocument(newFilePath);
 		mobileHelper.enableEditingMobile();
+		cy.wait(100);
 		mobileHelper.openCommentWizard();
 		helper.waitUntilIdle('#mobile-wizard-content', undefined);
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
@@ -31,6 +32,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 	it('Modifying comment.', function() {
 		mobileHelper.insertComment();
 		mobileHelper.selectAnnotationMenuItem('Modify');
+		helper.waitUntilIdle('#mobile-wizard-content', undefined);
 
 		cy.cGet('#comment-container-1').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
@@ -46,6 +48,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 	it('Reply to comment.', function() {
 		mobileHelper.insertComment();
 		mobileHelper.selectAnnotationMenuItem('Reply');
+		helper.waitUntilIdle('#mobile-wizard-content', undefined);
 		cy.cGet('#comment-container-1').should('exist');
 		cy.cGet('#input-modal-input').should('have.text', '');
 		cy.cGet('#input-modal-input').type('reply');
@@ -64,8 +67,8 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 	it('Try to insert empty comment.', function() {
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Comment').click();
-		cy.cGet('#input-modal-input').should('exist');
-		cy.cGet('#input-modal-input').should('have.text', '');
+		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+		cy.cGet('#input-modal-input').should('exist').should('have.text', '');
 		cy.cGet('#response-ok').click();
 		cy.cGet('#mobile-wizard .wizard-comment-box.cool-annotation-content-wrapper').should('not.exist');
 		cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-content').should('not.exist');
@@ -77,8 +80,10 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		mobileHelper.insertComment(/* FIXME: skipCommentCheck */true);
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
 		mobileHelper.selectAnnotationMenuItem('Resolve');
-		cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-content-resolved').should('exist');
-		cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-content-resolved').should('have.text', 'Resolved');
+		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+		cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-content-resolved')
+			.should('exist')
+			.should('have.text', 'Resolved');
 	});
 });
 
@@ -94,17 +99,21 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		cy.cGet('#mentionPopupList').should('be.visible');
 		cy.cGet('#mentionPopupList.mobile-wizard > :nth-child(1)').click();
 
-		cy.cGet('#input-modal-input a').should('exist');
-		cy.cGet('#input-modal-input a').should('have.text', '@Alexandra');
-		cy.cGet('#input-modal-input a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#input-modal-input a')
+			.should('exist')
+			.should('have.text', '@Alexandra')
+			.should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
 		cy.cGet('#input-modal-input').should('have.text','some text @Alexandra\u00A0');
 
 		cy.cGet('#response-ok').click();
 
+		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+
 		cy.cGet('#comment-container-1').should('exist');
-		cy.cGet('#annotation-content-area-1 a').should('exist');
-		cy.cGet('#annotation-content-area-1 a').should('have.text', '@Alexandra');
-		cy.cGet('#annotation-content-area-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#annotation-content-area-1 a')
+			.should('exist')
+			.should('have.text', '@Alexandra')
+			.should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text @Alexandra ');
 	});
 
@@ -120,18 +129,23 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		cy.cGet('#mentionPopupList').should('be.visible');
 		cy.cGet('#mentionPopupList.mobile-wizard > :nth-child(1)').click();
 
-		cy.cGet('#input-modal-input a').should('exist');
-		cy.cGet('#input-modal-input a').should('have.text', '@Alexandra');
-		cy.cGet('#input-modal-input a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#input-modal-input a')
+			.should('exist')
+			.should('have.text', '@Alexandra')
+			.should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
 		cy.cGet('#input-modal-input').should('have.text','some text @Alexandra\u00A0');
 
 		cy.cGet('#response-ok').click();
+		cy.wait(100);
+
 		cy.cGet('#toolbar-up #comment_wizard').click();
+		helper.waitUntilIdle('#mobile-wizard-content', undefined);
 
 		cy.cGet('#comment-container-1').should('exist');
-		cy.cGet('#annotation-content-area-1 a').should('exist');
-		cy.cGet('#annotation-content-area-1 a').should('have.text', '@Alexandra');
-		cy.cGet('#annotation-content-area-1 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#annotation-content-area-1 a')
+			.should('exist')
+			.should('have.text', '@Alexandra')
+			.should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
 		cy.cGet('#annotation-content-area-1').should('have.text','some text @Alexandra ');
 	});
 
@@ -148,18 +162,21 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		cy.cGet('#mentionPopupList').should('be.visible');
 		cy.cGet('#mentionPopupList.mobile-wizard > :nth-child(1)').click();
 
-		cy.cGet('#input-modal-input a').should('exist');
-		cy.cGet('#input-modal-input a').should('have.text', '@Alexandra');
-		cy.cGet('#input-modal-input a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#input-modal-input a')
+			.should('exist')
+			.should('have.text', '@Alexandra')
+			.should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
 		cy.cGet('#input-modal-input').should('have.text','reply @Alexandra\u00A0');
 
 		cy.cGet('#response-ok').click();
+		helper.waitUntilIdle('#mobile-wizard-content', undefined);
 
 		cy.cGet('#comment-container-1').click();
 		cy.cGet('#comment-container-2').should('exist');
-		cy.cGet('#annotation-content-area-2 a').should('exist');
-		cy.cGet('#annotation-content-area-2 a').should('have.text', '@Alexandra');
-		cy.cGet('#annotation-content-area-2 a').should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
+		cy.cGet('#annotation-content-area-2 a')
+			.should('exist')
+			.should('have.text', '@Alexandra')
+			.should('have.attr', 'href', 'https://github.com/CollaboraOnline/online');
 		cy.cGet('#annotation-content-area-2').should('have.text','reply @Alexandra ');
 	});
 
