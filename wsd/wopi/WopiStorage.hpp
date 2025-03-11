@@ -32,7 +32,7 @@
 class WopiStorage : public StorageBase
 {
 public:
-    class WOPIFileInfo : public FileInfo
+    class WOPIFileInfo final : public FileInfo
     {
         void init();
 
