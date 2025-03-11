@@ -19,11 +19,19 @@ function isCtrlKey (e: KeyboardEvent) {
         return e.ctrlKey;
 }
 
+function isMacCtrlKey (e: KeyboardEvent) {
+    if ((window as any).ThisIsTheiOSApp || L.Browser.mac)
+        return e.ctrlKey;
+    else
+        return false;
+}
+
 enum Mod {
     NONE    = 0,
     CTRL    = 1,
     ALT     = 2,
     SHIFT   = 4,
+    MACCTRL = 8, // Ctrl (*not Cmd*) on a Mac
 }
 
 enum ViewType {
@@ -141,9 +149,11 @@ class KeyboardShortcuts {
         const alt = event.altKey;
         const keyCode = event.which;
         const key = event.key;
+        const macctrl = isMacCtrlKey(event);
         const modifier = (ctrl ? Mod.CTRL : Mod.NONE) |
             (shift ? Mod.SHIFT : Mod.NONE) |
-            (alt ? Mod.ALT : Mod.NONE);
+            (alt ? Mod.ALT : Mod.NONE) |
+            (macctrl ? Mod.MACCTRL : Mod.NONE);
         const platform = window.mode.isChromebook() ? Platform.CHROMEOSAPP :
                          window.ThisIsTheAndroidApp ? Platform.ANDROIDAPP : // Cannot come before window.mode.isChromebook() as all Chromebook app users are necessarily also Android app users
                          window.ThisIsTheiOSApp ? Platform.IOSAPP :
