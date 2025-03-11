@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-05 09:51+0100\n"
-"PO-Revision-Date: 2025-02-10 09:03+0000\n"
+"PO-Revision-Date: 2025-03-09 10:56+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.10.3-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1408,7 +1408,7 @@ msgstr "Textausrichtung"
 #: src/control/Control.Menubar.js:300
 #: src/control/Control.NotebookbarWriter.js:61
 msgid "References"
-msgstr "Referenzen"
+msgstr "Zitate"
 
 #: src/control/Control.Menubar.js:303
 #: src/control/Control.NotebookbarWriter.js:1922
@@ -1444,7 +1444,7 @@ msgstr "Zitate entfernen"
 #: src/control/Control.Menubar.js:318
 #: src/control/Control.NotebookbarWriter.js:2072
 msgid "Citation Preferences"
-msgstr "Zitate Einstellungen"
+msgstr "Zitate-Einstellungen"
 
 #: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:1302
 msgid "Insert Rich Text"
@@ -2307,7 +2307,7 @@ msgstr "Keine Probleme gefunden"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Alarme:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2613,7 +2613,7 @@ msgstr "Laden der Sammlungen gescheitert"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "Zitate werden geladen"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -2955,6 +2955,7 @@ msgstr "Strg+Umschalt+Alt+D zum Beenden"
 #: src/core/Debug.js:1080
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
+"Die Ereignisbehandlung wurde für eine unerwartet lange Zeit verzögert: {0} ms"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
