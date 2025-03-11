@@ -8,6 +8,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
  * Evented is a base class that Map/Layer classes inherit from to
  * handle custom events.
@@ -123,7 +124,7 @@ class Evented extends BaseClass {
 		return this;
 	}
 
-	private addHandlerForeignCtxt(
+	private _addHandlerForeignCtxt(
 		foreignCtxtId: number,
 		type: string,
 		fn: CEventListener,
@@ -147,7 +148,6 @@ class Evented extends BaseClass {
 		}
 	}
 
-	// Implements the adding of a new event handler.
 	private _addEventHandlerImpl(
 		type: string,
 		fn: CEventListener,
@@ -161,7 +161,7 @@ class Evented extends BaseClass {
 		}
 
 		if (foreignCtxtId) {
-			this.addHandlerForeignCtxt(foreignCtxtId, type, fn, context);
+			this._addHandlerForeignCtxt(foreignCtxtId, type, fn, context);
 		} else {
 			// Context is the current Evented object itself.
 			// Append just the handler to 'auto' map (context is implicitly known).
@@ -175,8 +175,7 @@ class Evented extends BaseClass {
 		}
 	}
 
-	// Implements the removing of an event handler.
-	private removeHandlerForeignCtxt(
+	private _removeHandlerForeignCtxt(
 		foreignCtxtId: number,
 		type: string,
 		fn: CEventListener,
@@ -195,7 +194,7 @@ class Evented extends BaseClass {
 		return listener;
 	}
 
-	private removeHandlerSelfCtxt(
+	private _removeHandlerSelfCtxt(
 		type: string,
 		fn: CEventListener,
 	): CallbackWithoutContext {
@@ -242,9 +241,9 @@ class Evented extends BaseClass {
 
 		let listener: CallbackWithContext | CallbackWithoutContext;
 		if (foreignCtxtId) {
-			listener = this.removeHandlerForeignCtxt(foreignCtxtId, type, fn);
+			listener = this._removeHandlerForeignCtxt(foreignCtxtId, type, fn);
 		} else {
-			listener = this.removeHandlerSelfCtxt(type, fn);
+			listener = this._removeHandlerSelfCtxt(type, fn);
 		}
 
 		// ensure the removed handler is not called if remove happens in fire
