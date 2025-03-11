@@ -15,6 +15,7 @@
 #include "Log.hpp"
 #include "TileDesc.hpp"
 #include "JsonUtil.hpp"
+#include "Protocol.hpp"
 
 #include <deque>
 #include <mutex>
@@ -69,13 +70,36 @@ public:
 
     void dumpState(std::ostream& os)
     {
-        os << "\t\tqueue size: " << _queue.size() << '\n';
         std::lock_guard<std::mutex> lock(_mutex);
+        size_t queueSize = _queue.size();
+        size_t totalSize = 0;
+
+        os << "\t\tqueue items: " << queueSize << '\n';
+
+        std::size_t repeats = 0;
+        std::string lastStr = "";
         for (const Item &item : _queue)
         {
-            os << "\t\t\ttype: " << (item->isBinary() ? "binary\n" : "text\n");
-            os << "\t\t\t" << item->abbr() << '\n';
+            std::string itemStr = COOLProtocol::getAbbreviatedMessage(
+                item->data().data(), item->size());
+            if (lastStr == itemStr && !item->isBinary())
+                repeats++;
+            else if (repeats > 0)
+            {
+                os << "\t\t\t<repeats " << repeats << " times>\n";
+                repeats = 0;
+            }
+            if (repeats == 0)
+            {
+                os << "\t\t\ttype: " << (item->isBinary() ? "binary" : "text");
+                os << ": " << item->id() << " - " << itemStr << '\n';
+            }
+            lastStr = itemStr;
+            totalSize += item->size();
         }
+        if (repeats > 0)
+            os << "\t\t\t<repeats " << repeats << " times>\n";
+        os << "\t\tqueue size: " << totalSize << " bytes\n";
     }
 
 private:

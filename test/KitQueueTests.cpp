@@ -35,6 +35,7 @@ class KitQueueTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testTileCombinedRendering);
     CPPUNIT_TEST(testTileRecombining);
     CPPUNIT_TEST(testSenderQueue);
+    CPPUNIT_TEST(testSenderQueueLog);
     CPPUNIT_TEST(testSenderQueueProgress);
     CPPUNIT_TEST(testSenderQueueTileDeduplication);
     CPPUNIT_TEST(testInvalidateViewCursorDeduplication);
@@ -53,6 +54,7 @@ class KitQueueTests : public CPPUNIT_NS::TestFixture
     void testTileCombinedRendering();
     void testTileRecombining();
     void testSenderQueue();
+    void testSenderQueueLog();
     void testSenderQueueProgress();
     void testSenderQueueTileDeduplication();
     void testInvalidateViewCursorDeduplication();
@@ -402,6 +404,49 @@ void KitQueueTests::testSenderQueue()
     LOK_ASSERT_EQUAL(messages[2], msgStr(item));
 
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
+}
+
+void KitQueueTests::testSenderQueueLog()
+{
+    constexpr auto testname = __func__;
+
+    SenderQueue<std::shared_ptr<Message>> queue;
+
+    std::shared_ptr<Message> item;
+
+    const std::vector<std::string> messages =
+    {
+        "just one",
+        "message",
+        "message",
+        "another",
+        "another",
+        "another",
+        "single one",
+        "last",
+        "last"
+    };
+
+    for (const auto& msg : messages)
+    {
+        queue.enqueue(std::make_shared<Message>(msg, Message::Dir::Out));
+    }
+
+    std::stringstream str;
+    queue.dumpState(str);
+
+    std::string result = "\t\tqueue items: 9\n"
+        "\t\t\ttype: text: o4 - just one\n"
+        "\t\t\ttype: text: o5 - message\n"
+        "\t\t\t<repeats 1 times>\n"
+        "\t\t\ttype: text: o7 - another\n"
+        "\t\t\t<repeats 2 times>\n"
+        "\t\t\ttype: text: o10 - single one\n"
+        "\t\t\ttype: text: o11 - last\n"
+        "\t\t\t<repeats 1 times>\n"
+        "\t\tqueue size: 61 bytes\n";
+
+    LOK_ASSERT_EQUAL(result, str.str());
 }
 
 void KitQueueTests::testSenderQueueProgress()
