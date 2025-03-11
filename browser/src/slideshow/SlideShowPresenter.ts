@@ -582,10 +582,7 @@ class SlideShowPresenter {
 			return false;
 		}
 
-		if (
-			(window as any).ThisIsTheiOSApp ||
-			(window as any).ThisIsTheAndroidApp
-		) {
+		if ((window as any).ThisIsTheAndroidApp) {
 			window.postMobileMessage('SLIDESHOW');
 			return false;
 		}

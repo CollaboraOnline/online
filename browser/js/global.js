@@ -448,6 +448,8 @@ class MobileAppInitializer extends InitializerBase {
 		window.coolLogging = "true";
 		window.outOfFocusTimeoutSecs = 1000000;
 		window.idleTimeoutSecs = 1000000;
+
+		window.canvasSlideshowEnabled = true;
 	}
 }
 
