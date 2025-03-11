@@ -474,6 +474,10 @@ L.Control.UIManager = L.Control.extend({
 				app.socket.sendMessage('uno .uno:SidebarShow');
 				app.socket.sendMessage('uno .uno:Navigator');
 				this.map.sidebar.setupTargetDeck('.uno:Navigator');
+			} else if (this.getBooleanDocTypePref('StyleListDeck', false)) {
+				app.socket.sendMessage('uno .uno:SidebarShow');
+				app.socket.sendMessage('uno .uno:SidebarDeck.StyleListDeck');
+				this.map.sidebar.setupTargetDeck('.uno:SidebarDeck.StyleListDeck');
 			}
 
 			if (!showSidebar)
