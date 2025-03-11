@@ -93,7 +93,11 @@ public:
 
     std::string getSubURLForEndpoint(const std::string &path) const
     {
+#ifdef IOS
+        return std::string("cool:") + _pathPlus + path;
+#else
         return std::string("http") + (_ssl ? "s" : "") + "://" + _schemeAuthority + _pathPlus + path;
+#endif
     }
 };
 
