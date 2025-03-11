@@ -17,14 +17,16 @@
 #include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/Log.hpp>
+#include <common/Util.hpp>
 #include <wsd/COOLWSD.hpp>
 
 #include <Poco/URI.h>
 
+#include <chrono>
+#include <ios>
 #include <memory>
 #include <string>
 #include <string_view>
-#include <chrono>
 
 class LockContext;
 
@@ -89,6 +91,14 @@ public:
 
         /// Set last modified time as unsafe
         void setLastModifiedTimeUnSafe() { _modifiedTime.clear(); }
+
+        virtual void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+        {
+            os << indent << "filename: [" << _filename << ']';
+            os << indent << "size: " << _size;
+            os << indent << "ownerId: [" << _ownerId << ']';
+            os << indent << "modifiedTime: [" << _modifiedTime << ']';
+        }
 
     private:
         std::size_t _size;
@@ -163,6 +173,7 @@ public:
         /// Dump the internals of this instance.
         void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
+            os << indent << "StorageBase::Attributes:";
             os << indent << "forced: " << std::boolalpha << isForced();
             os << indent << "user-modified: " << std::boolalpha << isUserModified();
             os << indent << "auto-save: " << std::boolalpha << isAutosave();
@@ -452,6 +463,26 @@ public:
     /// such as convert-to requests.
     static std::unique_ptr<StorageBase> create(const Poco::URI& uri, const std::string& jailRoot,
                                                const std::string& jailPath, bool takeOwnership);
+
+    virtual void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
+    {
+        const auto now = std::chrono::steady_clock::now();
+
+        os << indent << "StorageBase:";
+        os << indent << "uri: " << _uri.toString();
+        os << indent << "isDownloaded: " << std::boolalpha << _isDownloaded;
+        os << indent << "localStorePath: " << _localStorePath;
+        os << indent << "jailPath: " << _jailPath;
+        os << indent << "jailedFilePath: " << _jailedFilePath;
+        os << indent << "jailedFilePathAnonym: " << _jailedFilePathAnonym;
+
+        const auto st = FileUtil::Stat(getRootFilePathUploading());
+        os << indent << "rootFilePathUploading: [" << getRootFilePathUploading() << "], "
+           << (st.exists() ? Util::getTimeForLog(now, st.modifiedTimepoint()) : "<missing>");
+
+        os << indent << "fileInfo: ";
+        _fileInfo.dumpState(os, indent + "  ");
+    }
 
 protected:
 
