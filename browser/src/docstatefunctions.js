@@ -335,3 +335,28 @@ app.impress.isSlideSelected = function (index) {
 		return app.impress.partList[index].selected === 1;
 	} else return false;
 };
+
+let _layoutTaskFlush = null;
+
+let _flushLayoutingQueue = function () {
+	if (app.layoutTasks.length) {
+		window.requestAnimationFrame(() => {
+			const task = app.layoutTasks.shift();
+			if (task) {
+				task.call(this);
+				app.scheduleLayouting();
+			}
+		});
+		_layoutTaskFlush = null;
+	}
+};
+
+app.appendLayoutingTask = function (task) {
+	app.layoutTasks.push(task);
+};
+
+app.scheduleLayouting = function () {
+	if (_layoutTaskFlush) clearTimeout(_layoutTaskFlush);
+
+	_layoutTaskFlush = setTimeout(_flushLayoutingQueue, 10);
+};
