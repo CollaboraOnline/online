@@ -852,7 +852,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
 #endif
 
-void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
+bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                                              const RequestDetails& requestDetails,
                                              Poco::MemoryInputStream& message,
                                              const std::shared_ptr<StreamSocket>& socket,
@@ -901,13 +901,13 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (relPath.starts_with("/wopi/files"))
         {
             handleWopiRequest(request, requestDetails, message, socket);
-            return;
+            return true;
         }
 
         if (relPath.starts_with("/wopi/settings") || relPath.ends_with("/wopi/settings/upload"))
         {
             handleSettingsRequest(request, etagString, message, socket);
-            return;
+            return true;
         }
 
 #endif
@@ -929,7 +929,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                     http::Response httpResponse(http::StatusCode::OK);
                     FileServerRequestHandler::hstsHeaders(httpResponse);
                     socket->send(httpResponse);
-                    return;
+                    return true;
                 }
             }
         }
@@ -938,25 +938,25 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         {
             LOG_INF("Processing upload-settings request.");
             uploadFileToIntegrator(request, message, socket);
-            return;
+            return false;
         }
 
         if (endPoint == "fetch-settings-config")
         {
             fetchWopiSettingConfigs(request, message, socket);
-            return;
+            return false;
         }
 
         if (endPoint == "delete-settings-config")
         {
             deleteWopiSettingConfigs(request, message, socket);
-            return;
+            return false;
         }
 
         if (endPoint == "fetch-wordbook")
         {
             fetchWordbook(request, message, socket);
-            return;
+            return false;
         }
 
         // Is this a file we read at startup - if not; it's not for serving.
@@ -970,7 +970,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (endPoint == "welcome.html")
         {
             preprocessWelcomeFile(request, response, requestDetails, message, socket);
-            return;
+            return true;
         }
 
         if (endPoint == "cool.html" ||
@@ -981,13 +981,13 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             endPoint == "uno-localizations-override.json")
         {
             accessDetails = preprocessFile(request, response, requestDetails, message, socket);
-            return;
+            return true;
         }
 
         if (endPoint == "adminIntegratorSettings.html")
         {
             preprocessIntegratorAdminFile(request, response, requestDetails, message, socket);
-            return;
+            return true;
         }
 
         if (request.getMethod() == HTTPRequest::HTTP_GET)
@@ -998,7 +998,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 endPoint == "adminClusterOverviewAbout.html")
             {
                 preprocessAdminFile(request, response, requestDetails, socket);
-                return;
+                return true;
             }
 
             if (endPoint == "admin-bundle.js" ||
@@ -1058,7 +1058,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                         "Cache-Control: max-age=11059200\r\n";
                     HttpHelper::sendErrorAndShutdown(http::StatusCode::NotModified, socket,
                                                      std::string(), extraHeaders);
-                    return;
+                    return true;
                 }
             }
 
@@ -1087,7 +1087,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 }
 
                 HttpHelper::sendFile(socket, filePath, response, noCache);
-                return;
+                return true;
             }
 #endif
 
@@ -1150,6 +1150,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                   "500 - Internal Server Error!",
                   "Cannot process the request - " + exc.displayText());
     }
+    return true;
 }
 
 void FileServerRequestHandler::sendError(http::StatusCode errorCode,
@@ -2111,7 +2112,7 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
 
         clientResponse.setBody(httpResponse->getBody());
 
-        socket->send(clientResponse);
+        socket->sendAndShutdown(clientResponse);
         LOG_DBG("Successfully fetched wopi settings config from wopiHost[" << uriAnonym << ']');
     };
 
@@ -2227,7 +2228,7 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
 
         clientResponse.setBody(httpResponse->getBody());
 
-        socket->send(clientResponse);
+        socket->sendAndShutdown(clientResponse);
         LOG_DBG("Successfully deleted presetfile with fileId[" << fileId << "] from wopiHost["
                                                                << uriAnonym << ']');
     };
@@ -2305,7 +2306,7 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
         }
         http::Response httpResponseToClient(http::StatusCode::OK);
         httpResponseToClient.setBody("File uploaded successfully to WopiHost.");
-        socket->send(httpResponseToClient);
+        socket->sendAndShutdown(httpResponseToClient);
         LOG_TRC("Successfully uploaded presetfile[" << fileName << "] to wopiHost[" << uriAnonym
                                                     << ']');
     };

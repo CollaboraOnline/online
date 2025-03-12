@@ -185,7 +185,7 @@ public:
     static bool authenticateAdmin(const Poco::Net::HTTPBasicCredentials& credentials,
                                   http::Response& response, std::string& jwtToken);
 
-    static void handleRequest(const Poco::Net::HTTPRequest& request,
+    static bool handleRequest(const Poco::Net::HTTPRequest& request,
                               const RequestDetails& requestDetails,
                               Poco::MemoryInputStream& message,
                               const std::shared_ptr<StreamSocket>& socket,
