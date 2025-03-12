@@ -50,6 +50,7 @@
     "hr": "%SERVICE_ROOT%/browser/%VERSION%/l10n/uno/hr.json",
     "hsb": "%SERVICE_ROOT%/browser/%VERSION%/l10n/uno/hsb.json",
     "hu": "%SERVICE_ROOT%/browser/%VERSION%/l10n/uno/hu.json",
+    "hy": "%SERVICE_ROOT%/browser/%VERSION%/l10n/uno/hy.json",
     "id": "%SERVICE_ROOT%/browser/%VERSION%/l10n/uno/id.json",
     "is": "%SERVICE_ROOT%/browser/%VERSION%/l10n/uno/is.json",
     "it": "%SERVICE_ROOT%/browser/%VERSION%/l10n/uno/it.json",
