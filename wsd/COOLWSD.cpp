@@ -690,8 +690,7 @@ inline std::string getLaunchBase(bool asAdmin = false)
 {
     std::ostringstream oss;
     oss << "    ";
-    oss << ((ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination()) ? "https://"
-                                                                           : "http://");
+    oss << (ConfigUtil::isSslEnabled() ? "https://" : "http://");
 
     if (asAdmin)
     {
