@@ -219,7 +219,7 @@
 "French (Burkina Faso)":"ฝรั่งเศส (บูร์กินาฟาโซ)",
 "French (Canada)":"ฝรั่งเศส (แคนาดา)",
 "French (Côte d'Ivoire)":"ฝรั่งเศส (โกตดิวัวร์)",
-"French (France)":"ฝรั่งเศส (ฝรังเศส)",
+"French (France)":"ฝรั่งเศส (ฝรั่งเศส)",
 "French (Luxembourg)":"ฝรั่งเศส (ลักเซมเบิร์ก)",
 "French (Mali)":"ฝรั่งเศส (มาลี)",
 "French (Mauritius)":"ฝรั่งเศส (มอริเชียส)",
@@ -534,7 +534,6 @@
 "Sami, Southern (Sweden)":"ซามีใต้ (สวีเดน)",
 "Sango":"ซังโก",
 "Sanskrit":"สันสกฤต",
-"Santali":"สันถาลี",
 "Saraiki":"ซะราอีกี",
 "Sardinian":"ซาร์ดิเนีย",
 "Sardinian, Campidanese":"ซาร์ดิเนีย แคมพิดานีส",
@@ -700,6 +699,8 @@
 "Yombe (Congo)":"ยอมเบ (คองโก)",
 "Yoruba":"โยรูบา",
 "Zulu":"ซูลู",
+"[Multiple]":"[หลายภาษา]",
 "[None]":"[ไม่มี]",
+"[Undetermined]":"[ไม่ทราบ]",
 "Éwé":"เอเว"
 }

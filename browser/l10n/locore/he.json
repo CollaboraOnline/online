@@ -1,4 +1,5 @@
 {
+"%1 of %2 records found":"נמצאו %1 מתוך %2 רשומות",
 "3D Objects":"עצמים תלת ממדיים",
 "A0":"A0",
 "A4":"A4",
@@ -249,7 +250,6 @@
 "Header":"כותרת עליונה",
 "Header Left":"כותרת עליונה משמאל",
 "Header Right":"כותרת עליונה מימין",
-"Header and Footer":"כותרת עליונה ותחתונה",
 "Heading":"כותרת",
 "Heading 1":"כותרת 1",
 "Heading 10":"כותרת 10‏",
@@ -439,6 +439,7 @@
 "Numbering IVX":"מספור IVX",
 "Numbering Symbols":"סמלי מספור",
 "Numbering abc":"מספור abc",
+"Numbering ivx":"מספור ivx",
 "Nyanja":"ניאנג׳ה",
 "OLE":"‏‪OLE‬‏",
 "Object Index 1":"מפתח עצמים 1‏",
@@ -494,7 +495,7 @@
 "Rohingya Hanifi":"רוהינגיה בכתב הניפי",
 "Romanian (Moldova)":"רומנית (מולדובה)",
 "Romanian (Romania)":"רומנית (רומניה)",
-"Rubies":"טקסט שוליים זעירים (טקסט \"רובי\")",
+"Rubies":"טקסט שוליים זעירים (טקסט "רובי")",
 "Russian":"רוסית",
 "Rusyn (Slovakia)":"רוסינית (סלובקיה)",
 "Rusyn (Ukraine)":"רוסינית (אוקראינה)",
@@ -511,7 +512,6 @@
 "Sami, Southern (Sweden)":"סאמי, דרומית (שוודיה)",
 "Sango":"סנגו",
 "Sanskrit":"סנסקריט",
-"Santali":"סנטלי",
 "Saraiki":"סראיקי",
 "Sardinian":"סרדו",
 "Sardinian, Campidanese":"סרדינית קאמפידנזית",
@@ -674,6 +674,8 @@
 "Yombe (Congo)":"יומבה (קונגו)",
 "Yoruba":"יורובה",
 "Zulu":"זולו",
+"[Multiple]":"[מגוון]",
 "[None]":"[None]",
+"[Undetermined]":"[לא נקבע]",
 "Éwé":"אווה"
 }

@@ -49,6 +49,7 @@
     "hr": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/hr.json",
     "hsb": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/hsb.json",
     "hu": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/hu.json",
+    "hy": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/hy.json",
     "id": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/id.json",
     "is": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/is.json",
     "it": "%SERVICE_ROOT%/browser/%VERSION%/l10n/locore/it.json",

@@ -260,7 +260,7 @@
 "Header":"Üst bilgi",
 "Header Left":"Sol üst bilgi",
 "Header Right":"Sağ üst bilgi",
-"Header and Footer":"Üst ve alt bilgi",
+"Header and Footer":"Üst Bilgi ve Alt Bilgi",
 "Heading":"Başlık",
 "Heading 1":"Başlık 1",
 "Heading 10":"Başlık 10",
@@ -534,7 +534,6 @@
 "Sami, Southern (Sweden)":"Sami, Güney (İsveç)",
 "Sango":"Sango",
 "Sanskrit":"Sanskrit",
-"Santali":"Santali",
 "Saraiki":"Sarayiki",
 "Sardinian":"Sardinyalı",
 "Sardinian, Campidanese":"Sarduca, Campidanese",
@@ -700,6 +699,8 @@
 "Yombe (Congo)":"Yombe (Kongo)",
 "Yoruba":"Yoruba dili",
 "Zulu":"Zulu",
+"[Multiple]":"[Çoklu]",
 "[None]":"[Hiçbiri]",
+"[Undetermined]":"[Belirsiz]",
 "Éwé":"Éwé"
 }
