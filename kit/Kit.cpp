@@ -227,9 +227,9 @@ public:
 
 private:
     std::atomic_bool _saveCompleted; ///< Defend against spurious wakes.
-    std::thread _watchdogThread;
     std::condition_variable _watchdogCV;
     std::mutex _watchdogMutex;
+    std::thread _watchdogThread;
 };
 
 static std::unique_ptr<BackgroundSaveWatchdog> BgSaveWatchdog;
