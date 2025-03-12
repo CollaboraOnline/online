@@ -786,12 +786,14 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                     }
                 }
 #endif
+                if (!servedSync)
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
             }
             else
             {
                 FileServerRequestHandler::ResourceAccessDetails accessDetails;
-                COOLWSD::FileRequestHandler->handleRequest(request, requestDetails, message, socket,
-                                                           accessDetails);
+                servedSync = COOLWSD::FileRequestHandler->handleRequest(
+                    request, requestDetails, message, socket, accessDetails);
                 if (accessDetails.isValid())
                 {
                     LOG_ASSERT_MSG(
@@ -802,11 +804,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                     launchAsyncCheckFileInfo(_id, accessDetails, RequestVettingStations,
                                              RvsHighWatermark);
                 }
-                servedSync = true;
             }
-
-            if (!servedSync)
-                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "adminws"))
