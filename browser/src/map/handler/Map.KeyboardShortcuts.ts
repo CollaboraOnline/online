@@ -37,7 +37,8 @@ class ShortcutDescriptor {
     docType: string; // if undefined then all apps match
     eventType: string;
     modifier: Mod;
-    key: string;
+    keyCode: number | readonly number[] | null;
+    key: string | null;
     unoAction: string;
     dispatchAction: string;
     viewType: ViewType;
@@ -46,7 +47,8 @@ class ShortcutDescriptor {
         docType = null,
         eventType,
         modifier = Mod.NONE,
-        key,
+        keyCode = null,
+        key = null,
         unoAction = null,
         dispatchAction = null,
         viewType = null,
@@ -54,14 +56,18 @@ class ShortcutDescriptor {
         docType?: string,
         eventType: string,
         modifier?: Mod,
-        key: string,
+        keyCode?: number | readonly number[],
+        key?: string,
         unoAction?: string,
         dispatchAction?: string,
         viewType?: ViewType,
     }) {
+        app.console.assert(keyCode !== null || key !== null, 'registering a keyboard shortcut without specifying either a key or a keyCode - this will result in an untriggerable shortcut');
+
         this.docType = docType;
         this.eventType = eventType;
         this.modifier = modifier;
+        this.keyCode = keyCode;
         this.key = key;
         this.unoAction = unoAction;
         this.dispatchAction = dispatchAction;
@@ -77,7 +83,7 @@ class KeyboardShortcuts {
         this.definitions = new Map<string, Array<ShortcutDescriptor>>();
     }
 
-    private findShortcut(language: string, eventType: string, modifier: Mod, key: string)
+    private findShortcut(language: string, eventType: string, modifier: Mod, keyCode: number | undefined, key: string | undefined)
         : ShortcutDescriptor | undefined {
         const descriptors = this.definitions.get(language);
         if (!descriptors) {
@@ -88,11 +94,14 @@ class KeyboardShortcuts {
         const viewType = this.map.isEditMode() ? ViewType.Edit : ViewType.ReadOnly;
 
         const shortcuts = descriptors.filter((descriptor: ShortcutDescriptor) => {
+            const keyMatches = descriptor.key === key;
+            const keyCodeMatches = Array.isArray(descriptor.keyCode) ? descriptor.keyCode.includes(keyCode) : descriptor.keyCode === keyCode;
+
             return (!descriptor.docType || descriptor.docType === docType) &&
                 descriptor.eventType === eventType &&
                 descriptor.modifier === modifier &&
                 (descriptor.viewType === null || descriptor.viewType === viewType) &&
-                descriptor.key === key;
+                (keyMatches || keyCodeMatches);
         });
 
         if (shortcuts.length > 1) {
@@ -112,12 +121,13 @@ class KeyboardShortcuts {
         const ctrl = isCtrlKey(event);
         const shift = event.shiftKey;
         const alt = event.altKey;
+        const keyCode = event.which;
         const key = event.key;
         const modifier = (ctrl ? Mod.CTRL : Mod.NONE) |
             (shift ? Mod.SHIFT : Mod.NONE) |
             (alt ? Mod.ALT : Mod.NONE);
 
-        const shortcut = this.findShortcut(language, eventType, modifier, key);
+        const shortcut = this.findShortcut(language, eventType, modifier, keyCode, key);
 
         if (shortcut) {
             let action = 'disabled';
@@ -163,8 +173,23 @@ class KeyboardShortcuts {
         this.definitions.forEach((shortcuts, language) => {
             shortcuts.forEach((shortcut) => {
                 // throws an exception if finds duplicated
+                const shortcutKeyCodes = Array.isArray(shortcut.keyCode) ? shortcut.keyCode : [shortcut.keyCode];
+
+                for (const keyCode of shortcutKeyCodes) {
+                    if (keyCode === null) {
+                        continue;
+                    }
+
+                    this.findShortcut(language,
+                        shortcut.eventType, shortcut.modifier, keyCode, undefined);
+                }
+
+                if (shortcut.key === null) {
+                    return;
+                }
+
                 this.findShortcut(language,
-                    shortcut.eventType, shortcut.modifier, shortcut.key);
+                    shortcut.eventType, shortcut.modifier, undefined, shortcut.key);
             });
         });
         console.debug('KeyboardShortcuts.verifyShortcuts finished');
