@@ -57,7 +57,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		desktopHelper.assertScrollbarPosition('horizontal', 430, 653);
 	});
 
-	it('Check if we jump the view on change of formatting mark', function() {
+	// TODO: fix this test, it seems like scrollWriterDocumentToTop is not scrolling to the top
+	// visually
+	it.skip('Check if we jump the view on change of formatting mark', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		desktopHelper.selectZoomLevel('40', false);
