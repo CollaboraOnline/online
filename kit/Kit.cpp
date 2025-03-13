@@ -3082,8 +3082,7 @@ bool anyInputCallback(void* data, int mostUrgentPriority)
 
     if (document)
     {
-        static bool considerPriority = std::getenv("COOL_ANYINPUT_CONSIDER_PRIORITY");
-        if (considerPriority && document->isLoaded())
+        if (document->isLoaded())
         {
             // Check if core has high-priority tasks in which case we don't interrupt.
             std::shared_ptr<lok::Document> kitDocument = document->getLOKitDocument();
