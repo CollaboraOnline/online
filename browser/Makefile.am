@@ -238,6 +238,7 @@ COOL_JS_LST =\
 	src/docstatefunctions.js \
 	src/docdispatcher.ts \
 	src/app/DocEvents.ts \
+	src/core/geometry.ts \
 	src/app/GraphicSelectionMiddleware.ts \
 	src/app/MultiPageViewLayout.ts \
 	src/app/TilesMiddleware.ts \
@@ -251,7 +252,6 @@ COOL_JS_LST =\
 	src/UNO/Key.js \
 	src/core/Log.js \
 	src/core/Util.js \
-	src/core/geometry.ts \
 	src/core/Class.js \
 	src/core/Events.js \
 	src/core/Socket.js \

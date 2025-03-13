@@ -1977,6 +1977,8 @@ class TileManager {
 	}
 
 	public static update(center: any = null, zoom: number = null) {
+		if (app.file.writer.multiPageView) return;
+
 		const map: any = app.map;
 
 		if (
@@ -2189,6 +2191,24 @@ class TileManager {
 		const queue = this.getMissingTiles(bounds, Math.round(app.map.getZoom()));
 
 		if (queue.length > 0) this.addTiles(queue, false);
+	}
+
+	public static getVisibleCoordList(
+		rectangle: cool.SimpleRectangle = app.file.viewedRectangle,
+	) {
+		const coordList = Array<TileCoordData>();
+		const zoom = app.map.getZoom();
+
+		for (const [key, value] of Object.entries(this.tiles)) {
+			const coords = (value as Tile).coords;
+			if (
+				coords.z === zoom
+				//rectangle.intersectsRectangle(this.coordsToTileBounds(coords))
+			)
+				coordList.push(coords);
+		}
+
+		return coordList;
 	}
 
 	public static updateFileBasedView(

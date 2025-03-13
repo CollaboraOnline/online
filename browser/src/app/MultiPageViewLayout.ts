@@ -9,191 +9,172 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class LayoutRow {
-	public startY: number;
-	public rectangles: Array<Array<number>> = [];
-	public width: number = 0;
-	public height: number = 0;
-	public startingPartNumber = 0;
-
-	private adjustX() {
-		let x = Math.round((MultiPageViewLayout.totalWidth - this.width) / 2);
-
-		for (let i = 0; i < this.rectangles.length; i++) {
-			const gap = i > 0 ? MultiPageViewLayout.gapBetweenPages : 0;
-			this.rectangles[i][0] = x + gap;
-			x += this.rectangles[i][2] + gap;
-		}
-	}
-
-	private adjustY() {
-		for (let i = 0; i < this.rectangles.length; i++) {
-			this.rectangles[i][1] =
-				this.startY + Math.round((this.height - this.rectangles[i][3]) / 2);
-		}
-	}
-
-	public addRectangle(rectangle: Array<number>) {
-		if (this.rectangles.length) rectangle[1] = this.rectangles[0][1];
-
-		this.rectangles.push(rectangle);
-		this.width +=
-			rectangle[2] +
-			(this.rectangles.length > 0 ? MultiPageViewLayout.gapBetweenPages : 0);
-
-		this.height = Math.max(this.height, rectangle[3]);
-
-		this.adjustX();
-		this.adjustY();
-	}
+class LayoutPageRectangle extends cool.SimpleRectangle {
+	// X and Y coordinates of the rectangle in multi page view.
+	layoutX: number = 0;
+	layoutY: number = 0;
+	part: number;
 }
 
 class MultiPageViewLayout {
-	private static sideMargins = 20; // Core pixels.
 	public static gapBetweenPages = 20; // Core pixels.
-	public static rows: Array<LayoutRow> = [];
 	public static availableWidth = 0;
-	public static totalWidth = 0;
 	private static maxRowsSize = 2;
+	public static layoutRectangles = Array<LayoutPageRectangle>();
 
-	private static getVisibleTopLeft(): Array<number> {
-		const viewedRectangle = app.file.viewedRectangle.pToArray();
-		let intersection: Array<number> = null;
-
-		for (let i = 0; i < this.rows.length && intersection === null; i++) {
-			for (let j = 0; j < this.rows[i].rectangles.length; j++) {
-				const nextIntersection = LOUtil._getIntersectionRectangle(
-					viewedRectangle,
-					this.rows[i].rectangles[j],
-				);
-				if (nextIntersection !== null) {
-					if (intersection === null)
-						intersection = [nextIntersection[0], nextIntersection[1]];
-					else {
-						if (nextIntersection[0] < intersection[0])
-							intersection[0] = nextIntersection[0];
-
-						if (nextIntersection[1] < intersection[1])
-							intersection[1] = nextIntersection[1];
-					}
-				}
-			}
-		}
-
-		return intersection;
-	}
-
-	private static getVisibleBottomRight(): Array<number> {
-		const viewedRectangle = app.file.viewedRectangle.pToArray();
-		let intersection: Array<number> = null;
-
-		for (let i = this.rows.length - 1; i >= 0 && intersection === null; i--) {
-			for (let j = this.rows[i].rectangles.length - 1; j >= 0; j--) {
-				const nextIntersection = LOUtil._getIntersectionRectangle(
-					viewedRectangle,
-					this.rows[i].rectangles[j],
-				);
-				if (nextIntersection !== null) {
-					if (intersection === null)
-						intersection = [
-							nextIntersection[0] + nextIntersection[2],
-							nextIntersection[1] + nextIntersection[3],
-						];
-					else {
-						if (nextIntersection[0] + nextIntersection[2] > intersection[0])
-							intersection[0] = nextIntersection[0] + nextIntersection[2];
-
-						if (nextIntersection[1] + nextIntersection[3] > intersection[1])
-							intersection[1] = nextIntersection[1] + nextIntersection[3];
-					}
-				}
-			}
-		}
-
-		return intersection;
-	}
-
-	public static sendClientVisibleArea() {
-		const topLeft = this.getVisibleTopLeft();
-		const bottomRight = this.getVisibleBottomRight();
+	private static sendClientVisibleArea() {
+		const visibleArea = this.getVisibleAreaRectangle();
 
 		const visibleAreaCommand =
 			'clientvisiblearea x=' +
-			Math.round(topLeft[0] * app.pixelsToTwips) +
+			visibleArea.x1 +
 			' y=' +
-			Math.round(topLeft[1] * app.pixelsToTwips) +
+			visibleArea.y1 +
 			' width=' +
-			Math.round((bottomRight[0] - topLeft[0]) * app.pixelsToTwips) +
+			visibleArea.width +
 			' height=' +
-			Math.round((bottomRight[1] - topLeft[1]) * app.pixelsToTwips);
+			visibleArea.height;
 		+' splitx=' + Math.round(0) + ' splity=' + Math.round(0);
 
 		app.socket.sendMessage(visibleAreaCommand);
 
 		return new L.Bounds(
-			new L.Point(topLeft[0], topLeft[1]),
-			new L.Point(bottomRight[0], bottomRight[1]),
+			new L.Point(visibleArea.pX1, visibleArea.pY1),
+			new L.Point(visibleArea.pX2, visibleArea.pY2),
 		);
 	}
 
 	private static resetViewLayout() {
-		this.rows.length = 0;
+		this.layoutRectangles.length = 0;
 
 		const canvasSize = app.sectionContainer.getViewSize();
 
-		this.totalWidth = canvasSize[0];
+		// Copy the page rectangle array.
+		for (let i = 0; i < app.file.writer.pageRectangleList.length; i++) {
+			const temp = app.file.writer.pageRectangleList[i];
+			this.layoutRectangles.push(
+				new LayoutPageRectangle(temp[0], temp[1], temp[2], temp[3]),
+			);
 
-		this.availableWidth = this.totalWidth - this.sideMargins * 2;
-
-		const rectangles = app.file.writer.pageRectangleList.map(
-			(rectangle: Array<number>) => {
-				return [
-					Math.round(rectangle[0] * app.twipsToPixels),
-					Math.round(rectangle[1] * app.twipsToPixels),
-					Math.round(rectangle[2] * app.twipsToPixels),
-					Math.round(rectangle[3] * app.twipsToPixels),
-				];
-			},
-		);
-
-		let currentPartNumber = 0;
-
-		while (rectangles.length > 0) {
-			const row = new LayoutRow();
-			row.startingPartNumber = currentPartNumber;
-
-			row.startY = this.gapBetweenPages;
-			row.startY +=
-				this.rows.length > 0
-					? this.rows[this.rows.length - 1].startY +
-						this.rows[this.rows.length - 1].height
-					: 0;
-
-			row.addRectangle(rectangles.shift());
-			currentPartNumber++;
-
-			while (row.width < this.availableWidth && rectangles.length > 0) {
-				const next = rectangles[0];
-				if (
-					row.width + next[2] + this.gapBetweenPages < this.availableWidth &&
-					row.rectangles.length < this.maxRowsSize
-				) {
-					row.addRectangle(rectangles.shift());
-					currentPartNumber++;
-				} else break;
-			}
-
-			this.rows.push(row);
+			const currentPageRectangle = this.layoutRectangles[i];
+			currentPageRectangle.part = i;
 		}
 
-		app.view.size.pY = Math.max(
-			this.rows[this.rows.length - 1].startY +
-				this.rows[this.rows.length - 1].height +
-				this.gapBetweenPages,
-			canvasSize[1],
+		let lastY = this.gapBetweenPages;
+		app.view.size.pX = canvasSize[0];
+
+		for (let i = 0; i < this.layoutRectangles.length; i++) {
+			let x = 0;
+
+			let j = i;
+			let totalWidth = 0;
+			let go = true;
+
+			while (
+				go &&
+				j - i < this.maxRowsSize &&
+				j < this.layoutRectangles.length
+			) {
+				const addition = this.layoutRectangles[j].pWidth + this.gapBetweenPages;
+				if (x + addition < canvasSize[0] || j === i) {
+					if (x + addition > canvasSize[0]) {
+						go = false;
+					}
+
+					x += addition;
+					totalWidth += this.layoutRectangles[j].pWidth;
+
+					j++;
+				} else go = false;
+			}
+
+			if (x < canvasSize[0]) {
+				const rowItemCount = j - i;
+				const gap = (rowItemCount - 1) * this.gapBetweenPages;
+				const margin = (canvasSize[0] - totalWidth + gap) * 0.5;
+				let currentX = margin + app.file.viewedRectangle.pX1;
+				let maxY = 0;
+				for (let k = i; k < j; k++) {
+					this.layoutRectangles[k].layoutX = currentX;
+					this.layoutRectangles[k].layoutY = lastY;
+					currentX += this.layoutRectangles[k].pWidth + this.gapBetweenPages;
+					maxY = Math.max(maxY, this.layoutRectangles[k].pHeight);
+				}
+
+				lastY += maxY + this.gapBetweenPages;
+			} else {
+				if (x > app.view.size.pX) app.view.size.pX = x;
+
+				this.layoutRectangles[i].layoutX = this.gapBetweenPages;
+				this.layoutRectangles[i].layoutY = lastY;
+				lastY += this.layoutRectangles[i].pHeight + this.gapBetweenPages;
+			}
+
+			i = j - 1;
+		}
+
+		app.view.size.pY = Math.max(lastY, canvasSize[1]);
+	}
+
+	public static getVisibleAreaRectangle() {
+		const viewedRectangle = app.file.viewedRectangle.clone();
+		viewedRectangle.pWidth = app.view.size.pX;
+		viewedRectangle.pHeight = app.view.size.pY;
+		const resultingRectangle = new cool.SimpleRectangle(
+			Number.POSITIVE_INFINITY,
+			Number.POSITIVE_INFINITY,
+			Number.NEGATIVE_INFINITY,
+			Number.NEGATIVE_INFINITY,
 		);
 
-		app.view.size.pX = this.totalWidth;
+		for (let i = 0; i < this.layoutRectangles.length; i++) {
+			const rectangle = this.layoutRectangles[i];
+			const controlRectangle = [
+				rectangle.layoutX,
+				rectangle.layoutY,
+				rectangle.pWidth,
+				rectangle.pHeight,
+			];
+			const intersection = LOUtil._getIntersectionRectangle(
+				viewedRectangle.pToArray(),
+				controlRectangle,
+			);
+
+			if (intersection) {
+				const diffX = intersection[0] - rectangle.layoutX;
+				const diffY = intersection[1] - rectangle.layoutY;
+				const documentIntersection = [
+					rectangle.pX1 + diffX,
+					rectangle.pY1 + diffY,
+					intersection[2],
+					intersection[3],
+				];
+				if (resultingRectangle.pX1 > documentIntersection[0])
+					resultingRectangle.pX1 = documentIntersection[0];
+				if (resultingRectangle.pY1 > documentIntersection[1])
+					resultingRectangle.pY1 = documentIntersection[1];
+
+				if (
+					resultingRectangle.pX2 <
+					documentIntersection[0] + documentIntersection[2]
+				)
+					resultingRectangle.pX2 =
+						documentIntersection[0] + documentIntersection[2];
+				if (
+					resultingRectangle.pY2 <
+					documentIntersection[1] + documentIntersection[3]
+				)
+					resultingRectangle.pY2 =
+						documentIntersection[1] + documentIntersection[3];
+			}
+		}
+
+		resultingRectangle.pX1 -= TileManager.tileSize * 2;
+		resultingRectangle.pY1 -= TileManager.tileSize * 2;
+		resultingRectangle.pWidth += TileManager.tileSize * 4;
+		resultingRectangle.pHeight += TileManager.tileSize * 4;
+
+		return resultingRectangle;
 	}
 
 	public static reset() {

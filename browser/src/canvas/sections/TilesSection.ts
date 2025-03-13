@@ -17,7 +17,7 @@ declare var app: any;
 
 namespace cool {
 
-export class TilesSection extends app.definitions.canvasSectionObject {
+export class TilesSection extends CanvasSectionObject {
 	name: string = L.CSections.Tiles.name;
 
 	// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
@@ -352,15 +352,16 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 	}
 
 	private drawPageBackgroundsMultiPageView() {
-		this.context.fillStyle = this.containerObject.getDocumentBackgroundColor();
+		if (MultiPageViewLayout === undefined) return;
 
-		for (let i = 0; i < MultiPageViewLayout.rows.length; i++) {
-			for (let j = 0; j < MultiPageViewLayout.rows[i].rectangles.length; j++) {
-				const rectangle = MultiPageViewLayout.rows[i].rectangles[j];
-				this.context.strokeStyle = "red";
-				this.context.strokeRect(rectangle[0], rectangle[1] - app.file.viewedRectangle.pY1, rectangle[2], rectangle[3]);
-				this.context.fillRect(rectangle[0], rectangle[1] - app.file.viewedRectangle.pY1, rectangle[2], rectangle[3]);
-			}
+		this.context.fillStyle = this.containerObject.getDocumentBackgroundColor();
+		this.context.strokeStyle = "red";
+
+		for (let i = 0; i < MultiPageViewLayout.layoutRectangles.length; i++) {
+			const rectangle = MultiPageViewLayout.layoutRectangles[i];
+			const coords = [rectangle.layoutX - app.file.viewedRectangle.pX1, rectangle.layoutY - app.file.viewedRectangle.pY1, rectangle.pWidth, rectangle.pHeight];
+			this.context.strokeRect(coords[0], coords[1], coords[2], coords[3]);
+			this.context.fillRect(coords[0], coords[1], coords[2], coords[3]);
 		}
 	}
 
@@ -385,12 +386,56 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 			this.drawPageBackgroundWriter(ctx);
 	}
 
+	private drawForMultiPageView() {
+		const visibleCoordList: Array<TileCoordData> = TileManager.getVisibleCoordList(MultiPageViewLayout.getVisibleAreaRectangle());
+
+		for (let i = 0; i < visibleCoordList.length; i++) {
+			const coords = visibleCoordList[i];
+
+			let firstIntersection = -1;
+			for (let j = 0; j < MultiPageViewLayout.layoutRectangles.length; j++) {
+				const layoutRectangle = MultiPageViewLayout.layoutRectangles[j];
+				const coordsRectangle = [coords.x, coords.y, TileManager.tileSize, TileManager.tileSize];
+				const intersection = LOUtil._getIntersectionRectangle(layoutRectangle.pToArray(), coordsRectangle);
+
+				if (intersection) {
+					firstIntersection = j;
+
+					const viewX = layoutRectangle.layoutX + (intersection[0] - layoutRectangle.pX1) - app.file.viewedRectangle.pX1;
+					const viewY = layoutRectangle.layoutY + (intersection[1] - layoutRectangle.pY1) - app.file.viewedRectangle.pY1;
+					const sX = intersection[0] - coords.x;
+					const sY = intersection[1] - coords.y;
+
+					this.drawTileToCanvasCrop(
+						TileManager.get(coords.key()),
+						new Date(),
+						this.context,
+						sX, sY,
+						intersection[2],
+						intersection[3],
+						viewX,
+						viewY,
+						intersection[2],
+						intersection[3]);
+				}
+
+				if (firstIntersection > -1 && j - firstIntersection > 1) break; // Check only the next page rectangle (one tile may intersect 2 pages).
+			}
+		}
+	}
+
 	public onDraw (frameCount: number = null, elapsedTime: number = null, subsetBounds: cool.Bounds = null): void {
 		if (this.containerObject.isInZoomAnimation())
 			return;
 
 		if (this.containerObject.testing) {
 			this.containerObject.createUpdateSingleDivElement(this);
+		}
+
+		if (app.file.writer.multiPageView === true) {
+			this.drawPageBackgroundsMultiPageView();
+			this.drawForMultiPageView();
+			return;
 		}
 
 		var zoom = Math.round(this.map.getZoom());
