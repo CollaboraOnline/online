@@ -52,7 +52,7 @@ type shortcutCallback = () => void;
 
 class ShortcutDescriptor {
     docType: string; // if undefined then all apps match
-    eventType: string;
+    eventType: string | readonly string[];
     modifier: Mod;
     keyCode: number | readonly number[] | null;
     key: string | null;
@@ -75,7 +75,7 @@ class ShortcutDescriptor {
         platform = null,
     }: {
         docType?: string,
-        eventType: string,
+        eventType: string | readonly string[],
         modifier?: Mod,
         keyCode?: number | readonly number[],
         key?: string,
@@ -123,7 +123,7 @@ class KeyboardShortcuts {
             const keyCodeMatches = Array.isArray(descriptor.keyCode) ? descriptor.keyCode.includes(keyCode) : descriptor.keyCode === keyCode;
 
             return (!descriptor.docType || descriptor.docType === docType) &&
-                descriptor.eventType === eventType &&
+                (Array.isArray(descriptor.eventType) ? descriptor.eventType.includes(eventType) : descriptor.eventType === eventType) &&
                 descriptor.modifier === modifier &&
                 (descriptor.viewType === null || descriptor.viewType === viewType) &&
                 (!descriptor.platform || (descriptor.platform & platform)) &&
@@ -211,23 +211,26 @@ class KeyboardShortcuts {
         this.definitions.forEach((shortcuts, language) => {
             shortcuts.forEach((shortcut) => {
                 // throws an exception if finds duplicated
+                const shortcutEventTypes = Array.isArray(shortcut.eventType) ? shortcut.eventType : [shortcut.eventType];
                 const shortcutKeyCodes = Array.isArray(shortcut.keyCode) ? shortcut.keyCode : [shortcut.keyCode];
 
-                for (const keyCode of shortcutKeyCodes) {
-                    if (keyCode === null) {
+                for (const eventType of shortcutEventTypes) {
+                    for (const keyCode of shortcutKeyCodes) {
+                        if (keyCode === null) {
+                            continue;
+                        }
+                        
+                        this.findShortcut(language,
+                            eventType, shortcut.modifier, keyCode, undefined, shortcut.platform);
+                    }
+
+                    if (shortcut.key === null) {
                         continue;
                     }
 
                     this.findShortcut(language,
-                        shortcut.eventType, shortcut.modifier, keyCode, undefined, shortcut.platform);
+                        eventType, shortcut.modifier, undefined, shortcut.key, shortcut.platform);
                 }
-
-                if (shortcut.key === null) {
-                    return;
-                }
-
-                this.findShortcut(language,
-                    shortcut.eventType, shortcut.modifier, undefined, shortcut.key, shortcut.platform);
             });
         });
         console.debug('KeyboardShortcuts.verifyShortcuts finished');
@@ -275,6 +278,7 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     // Passthrough some system shortcuts
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: 'I', preventDefault: false, platform: Platform.WINDOWS | Platform.LINUX }), // Open browser developer tools on Non-MacOS - shift means the I here is capital
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.ALT, keyCode: 73 /* keyCode('I') === 73 */, preventDefault: false, platform: Platform.MAC }), // Open browser developer tools on MacOS - registered with keyCode as alt+i triggers a dead key on MacOS
+    new ShortcutDescriptor({ eventType: ['keydown', 'keypress'], modifier: Mod.CTRL | Mod.MACCTRL, key: ' ', preventDefault: false, platform: Platform.MAC | Platform.IOSAPP }), // On MacOS, open system emoji picker - bound to keypress as well as keydown since as that is needed on webkit browsers (such as Safari or Orion)
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'r', preventDefault: false, platform: Platform.MAC }), // Refresh browser tab
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'm', preventDefault: false, platform: Platform.MAC }), // On MacOS, minimize window
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'q', preventDefault: false, platform: Platform.MAC }), // On MacOS, quit browser
