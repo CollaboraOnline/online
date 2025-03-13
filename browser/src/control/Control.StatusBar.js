@@ -286,7 +286,7 @@ class StatusBar extends JSDialog.Toolbar {
 		this.builder.build(this.parentContainer, this.getToolItems());
 
 		this.onLanguagesUpdated();
-		JSDialog.MakeScrollable(this.parentContainer, this.parentContainer.querySelector('div'));
+		JSDialog.MakeScrollable(this.parentContainer, this.parentContainer.querySelector('div'), false);
 		JSDialog.RefreshScrollables();
 	}
 

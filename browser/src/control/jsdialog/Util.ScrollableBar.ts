@@ -96,9 +96,15 @@ function setupResizeHandler(container: Element, scrollable: Element) {
 	scrollable.addEventListener('wheel', shiftHandler);
 }
 
-JSDialog.MakeScrollable = function (parent: Element, scrollable: Element) {
+JSDialog.MakeScrollable = function (
+	parent: Element,
+	scrollable: Element,
+	scrollButtons: boolean = true,
+) {
 	L.DomUtil.addClass(scrollable, 'ui-scrollable-content');
-	createScrollButtons(parent, scrollable);
+	if (scrollButtons) {
+		createScrollButtons(parent, scrollable);
+	}
 	setupResizeHandler(parent, scrollable);
 };
 
