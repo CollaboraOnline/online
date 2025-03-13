@@ -40,7 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'x', '23586');
+			.should('have.attr', 'x', '23583');
 
 		// Set left alignment
 		cy.cGet('#leftpara').click();

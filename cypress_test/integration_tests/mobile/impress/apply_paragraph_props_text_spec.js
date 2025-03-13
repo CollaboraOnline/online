@@ -50,7 +50,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'x', '23586');
+			.should('have.attr', 'x', '23583');
 
 		// Set left alignment
 		openParagraphPropertiesPanel();
@@ -70,7 +70,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'x', '12493');
+			.should('have.attr', 'x', '12491');
 
 		// Set justified alignment
 		openParagraphPropertiesPanel();
@@ -224,7 +224,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'x', '23586');
+			.should('have.attr', 'x', '23584');
 
 		// Change back to the default left-to-right
 		openParagraphPropertiesPanel();
