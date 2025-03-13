@@ -103,7 +103,8 @@ class MultiPageViewLayout {
 
 				lastY += maxY + this.gapBetweenPages;
 			} else {
-				if (x > app.view.size.pX) app.view.size.pX = x;
+				if (x > app.view.size.pX)
+					app.view.size.pX = x + this.gapBetweenPages * 2;
 
 				this.layoutRectangles[i].layoutX = this.gapBetweenPages;
 				this.layoutRectangles[i].layoutY = lastY;
@@ -141,38 +142,24 @@ class MultiPageViewLayout {
 			);
 
 			if (intersection) {
-				const diffX = intersection[0] - rectangle.layoutX;
-				const diffY = intersection[1] - rectangle.layoutY;
-				const documentIntersection = [
-					rectangle.pX1 + diffX,
-					rectangle.pY1 + diffY,
-					intersection[2],
-					intersection[3],
-				];
-				if (resultingRectangle.pX1 > documentIntersection[0])
-					resultingRectangle.pX1 = documentIntersection[0];
-				if (resultingRectangle.pY1 > documentIntersection[1])
-					resultingRectangle.pY1 = documentIntersection[1];
+				if (resultingRectangle.pX1 > rectangle.pX1)
+					resultingRectangle.pX1 = rectangle.pX1;
 
-				if (
-					resultingRectangle.pX2 <
-					documentIntersection[0] + documentIntersection[2]
-				)
-					resultingRectangle.pX2 =
-						documentIntersection[0] + documentIntersection[2];
-				if (
-					resultingRectangle.pY2 <
-					documentIntersection[1] + documentIntersection[3]
-				)
-					resultingRectangle.pY2 =
-						documentIntersection[1] + documentIntersection[3];
+				if (resultingRectangle.pY1 > rectangle.pY1)
+					resultingRectangle.pY1 = rectangle.pY1;
+
+				if (resultingRectangle.pX2 < rectangle.pX2)
+					resultingRectangle.pX2 = rectangle.pX2;
+
+				if (resultingRectangle.pY2 < rectangle.pY2)
+					resultingRectangle.pY2 = rectangle.pY2;
 			}
 		}
 
-		resultingRectangle.pX1 -= TileManager.tileSize * 2;
-		resultingRectangle.pY1 -= TileManager.tileSize * 2;
-		resultingRectangle.pWidth += TileManager.tileSize * 4;
-		resultingRectangle.pHeight += TileManager.tileSize * 4;
+		resultingRectangle.pX1 -= TileManager.tileSize;
+		resultingRectangle.pY1 -= TileManager.tileSize;
+		resultingRectangle.pWidth += TileManager.tileSize * 2;
+		resultingRectangle.pHeight += TileManager.tileSize * 2;
 
 		return resultingRectangle;
 	}
