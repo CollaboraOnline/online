@@ -298,6 +298,37 @@ public:
 
     void updateActivityHeader() const;
 
+    /// Really important that if we drop, we re-start for the kit.
+    class ThreadDropper final {
+        Document *_doc;
+    public:
+        ThreadDropper() : _doc(nullptr) { }
+        ~ThreadDropper()
+        {
+            if (_doc) _doc->startThreads();
+        }
+        void clear()
+        {
+            _doc = nullptr;
+        }
+        bool dropThreads(Document *doc)
+        {
+            if (doc->joinThreads())
+            {
+                // only this path starts later.
+                _doc = doc;
+                return true;
+            }
+            return false;
+        }
+        void startThreads()
+        {
+            if (_doc)
+                _doc->startThreads();
+            _doc = nullptr;
+        }
+    };
+
     bool joinThreads();
     void startThreads();
 
