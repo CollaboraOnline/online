@@ -108,7 +108,8 @@ static std::atomic<unsigned> appDocIdCounter(1);
                           isMessageOfType(buffer, "delta:", length) ||
                           isMessageOfType(buffer, "renderfont:", length) ||
                           isMessageOfType(buffer, "rendersearchlist:", length) ||
-                          isMessageOfType(buffer, "windowpaint:", length));
+                          isMessageOfType(buffer, "windowpaint:", length) ||
+                          isMessageOfType(buffer, "slidelayer:", length));
 
     const char *pretext = binaryMessage ? "window.TheFakeWebSocket.onmessage({'data': window.atob('"
                                         : "window.TheFakeWebSocket.onmessage({'data': window.b64d('";
