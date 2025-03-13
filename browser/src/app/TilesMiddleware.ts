@@ -2199,11 +2199,16 @@ class TileManager {
 		const coordList = Array<TileCoordData>();
 		const zoom = app.map.getZoom();
 
-		for (const [key, value] of Object.entries(this.tiles)) {
+		for (const [, value] of Object.entries(this.tiles)) {
 			const coords = (value as Tile).coords;
 			if (
-				coords.z === zoom
-				//rectangle.intersectsRectangle(this.coordsToTileBounds(coords))
+				coords.z === zoom &&
+				rectangle.intersectsRectangle([
+					coords.x * app.pixelsToTwips,
+					coords.y * app.pixelsToTwips,
+					this.tileSize * app.pixelsToTwips,
+					this.tileSize * app.pixelsToTwips,
+				])
 			)
 				coordList.push(coords);
 		}

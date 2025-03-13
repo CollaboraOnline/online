@@ -401,10 +401,10 @@ export class TilesSection extends CanvasSectionObject {
 				if (intersection) {
 					firstIntersection = j;
 
-					const viewX = layoutRectangle.layoutX + (intersection[0] - layoutRectangle.pX1) - app.file.viewedRectangle.pX1;
-					const viewY = layoutRectangle.layoutY + (intersection[1] - layoutRectangle.pY1) - app.file.viewedRectangle.pY1;
-					const sX = intersection[0] - coords.x;
-					const sY = intersection[1] - coords.y;
+					const viewX = Math.round(layoutRectangle.layoutX + (intersection[0] - layoutRectangle.pX1) - app.file.viewedRectangle.pX1);
+					const viewY = Math.round(layoutRectangle.layoutY + (intersection[1] - layoutRectangle.pY1) - app.file.viewedRectangle.pY1);
+					const sX = Math.round(intersection[0] - coords.x);
+					const sY = Math.round(intersection[1] - coords.y);
 
 					this.drawTileToCanvasCrop(
 						TileManager.get(coords.key()),
