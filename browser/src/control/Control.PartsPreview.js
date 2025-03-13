@@ -398,7 +398,7 @@ L.Control.PartsPreview = L.Control.extend({
 	// We will use this function because IE doesn't support "Array.from" feature.
 	_findClickedPart: function (element) {
 		for (var i = 0; i < this._partsPreviewCont.children.length; i++) {
-			if (this._partsPreviewCont.children[i] === element) {
+			if (this._partsPreviewCont.children[i] === element || this._partsPreviewCont.children[i] === element.parentNode) {
 				return i;
 			}
 		}
