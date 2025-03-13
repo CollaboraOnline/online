@@ -956,7 +956,7 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (endPoint == "fetch-wordbook")
         {
             fetchWordbook(request, message, socket);
-            return false;
+            return true;
         }
 
         // Is this a file we read at startup - if not; it's not for serving.
