@@ -38,12 +38,12 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	it('Modify', function() {
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('be.visible');
-		cy.cGet('#annotation-content-area-1').should('contain','some text0');
+		cy.cGet('[id^=annotation-content-area-]').should('contain','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Modify').click();
-		cy.cGet('#annotation-modify-textarea-1').type(', some other text');
-		cy.cGet('#annotation-save-1').click();
-		cy.cGet('#annotation-content-area-1').should('contain','some text0, some other text');
+		cy.cGet('[id^=annotation-modify-textarea-]').type(', some other text');
+		cy.cGet('[id^=annotation-save-]').click();
+		cy.cGet('[id^=annotation-content-area-]').should('contain','some text0, some other text');
 		cy.cGet('.annotation-marker').should('be.visible');
 	});
 
@@ -62,8 +62,8 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Reply').click();
-		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
-		cy.cGet('#annotation-reply-1').click();
+		cy.cGet('[id^=annotation-reply-textarea-]').type('some reply text');
+		cy.cGet('[id^=annotation-reply-].button-primary').click();
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
 
@@ -110,13 +110,13 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	it('Modify', function() {
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('be.visible');
-		cy.cGet('#annotation-content-area-1').should('contain','some text0');
+		cy.cGet('[id^=annotation-content-area-]').should('contain','some text0');
 		cy.cGet('.cool-annotation-table .avatar-img').click();
 		cy.cGet('.cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Modify').click();
-		cy.cGet('#annotation-modify-textarea-1').type(', some other text');
-		cy.cGet('#annotation-save-1').click();
-		cy.cGet('#annotation-content-area-1').should('contain','some text0, some other text');
+		cy.cGet('[id^=annotation-modify-textarea-]').type(', some other text');
+		cy.cGet('[id^=annotation-save-]').click();
+		cy.cGet('[id^=annotation-content-area-]').should('contain','some text0, some other text');
 		cy.cGet('.annotation-marker').should('be.visible');
 	});
 
@@ -137,8 +137,8 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('.cool-annotation-table .avatar-img').click();
 		cy.cGet('.cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Reply').click();
-		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
-		cy.cGet('#annotation-reply-1').click();
+		cy.cGet('[id^=annotation-reply-textarea-]').type('some reply text');
+		cy.cGet('[id^=annotation-reply-].button-primary').click();
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
 
@@ -150,9 +150,9 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('.cool-annotation-info-collapsed').should('be.visible');
 		cy.cGet('.cool-annotation-img').click();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
-		cy.cGet('#annotation-save-1').click();
+		cy.cGet('[id^=annotation-save-]').click();
 		cy.cGet('.cool-annotation-img').click();
-		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
+		cy.cGet('[id^=annotation-content-area-]').should('have.text','some text0');
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('.cool-annotation-info-collapsed').should('not.have.text','!');
 		cy.cGet('#map').focus();
@@ -251,7 +251,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
-		cy.cGet('#annotation-save-1').click();
+		cy.cGet('[id^=annotation-save-]').click();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.not.visible');
 		cy.cGet('.annotation-marker').should('be.visible');
@@ -267,7 +267,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
-		cy.cGet('#annotation-cancel-1').click();
+		cy.cGet('.modify-annotation [id^=annotation-cancel-]').click();
 		cy.cGet('.cool-annotation-autosavelabel').should('not.exist');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('not.exist');
 		cy.cGet('.annotation-marker').should('not.exist');
@@ -281,10 +281,10 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 	it('Modify autosave', function() {
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('be.visible');
-		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
+		cy.cGet('[id^=annotation-content-area-]').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Modify').click();
-		cy.cGet('#annotation-modify-textarea-1').type(', some other text');
+		cy.cGet('[id^=annotation-modify-textarea-]').type(', some other text');
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
@@ -297,15 +297,15 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 	it('Modify autosave save', function() {
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('be.visible');
-		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
+		cy.cGet('[id^=annotation-content-area-]').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Modify').click();
-		cy.cGet('#annotation-modify-textarea-1').type(', some other text');
+		cy.cGet('[id^=annotation-modify-textarea-]').type(', some other text');
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
-		cy.cGet('#annotation-save-1').click();
-		cy.cGet('#annotation-content-area-1').should('have.text','some text0, some other text');
+		cy.cGet('[id^=annotation-save-]').click();
+		cy.cGet('[id^=annotation-content-area-]').should('have.text','some text0, some other text');
 		cy.cGet('.annotation-marker').should('be.visible');
 
 		helper.reloadDocument(newFilePath);
@@ -316,15 +316,15 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 	it('Modify autosave cancel', function() {
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('be.visible');
-		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
+		cy.cGet('[id^=annotation-content-area-]').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Modify').click();
-		cy.cGet('#annotation-modify-textarea-1').type(', some other text');
+		cy.cGet('[id^=annotation-modify-textarea-]').type(', some other text');
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
 		cy.cGet('.cool-annotation-edit.modify-annotation').should('be.visible');
-		cy.cGet('#annotation-cancel-1').click();
-		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
+		cy.cGet('.modify-annotation [id^=annotation-cancel-]').click();
+		cy.cGet('[id^=annotation-content-area-]').should('have.text','some text0');
 		cy.cGet('.annotation-marker').should('be.visible');
 
 		helper.reloadDocument(newFilePath);
@@ -338,12 +338,12 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Reply').click();
-		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
+		cy.cGet('[id^=annotation-reply-textarea-]').type('some reply text');
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
-		cy.cGet('#annotation-modify-textarea-1').should('be.visible');
-		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some text0');
-		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some reply text');
+		cy.cGet('[id^=annotation-modify-textarea-]').should('be.visible');
+		cy.cGet('[id^=annotation-modify-textarea-]').should('include.text', 'some text0');
+		cy.cGet('[id^=annotation-modify-textarea-]').should('include.text', 'some reply text');
 
 		helper.reloadDocument(newFilePath);
 		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.not.visible');
@@ -356,13 +356,13 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Reply').click();
-		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
+		cy.cGet('[id^=annotation-reply-textarea-]').type('some reply text');
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
-		cy.cGet('#annotation-modify-textarea-1').should('be.visible');
-		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some text0');
-		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some reply text');
-		cy.cGet('#annotation-save-1').click();
+		cy.cGet('[id^=annotation-modify-textarea-]').should('be.visible');
+		cy.cGet('[id^=annotation-modify-textarea-]').should('include.text', 'some text0');
+		cy.cGet('[id^=annotation-modify-textarea-]').should('include.text', 'some reply text');
+		cy.cGet('[id^=annotation-save-]').click();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.not.visible');
 		cy.cGet('.cool-annotation-content > div').should('include.text','some text0');
@@ -379,13 +379,13 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item','Reply').click();
-		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
+		cy.cGet('[id^=annotation-reply-textarea-]').type('some reply text');
 		cy.cGet('#map').focus();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.visible');
-		cy.cGet('#annotation-modify-textarea-1').should('be.visible');
-		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some text0');
-		cy.cGet('#annotation-modify-textarea-1').should('include.text', 'some reply text');
-		cy.cGet('#annotation-cancel-1').click();
+		cy.cGet('[id^=annotation-modify-textarea-]').should('be.visible');
+		cy.cGet('[id^=annotation-modify-textarea-]').should('include.text', 'some text0');
+		cy.cGet('[id^=annotation-modify-textarea-]').should('include.text', 'some reply text');
+		cy.cGet('.modify-annotation [id^=annotation-cancel-]').click();
 		cy.cGet('.cool-annotation-autosavelabel').should('be.not.visible');
 		cy.cGet('.cool-annotation-edit.reply-annotation').should('be.not.visible');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');

@@ -313,8 +313,9 @@ function insertComment(skipCommentCheck = false) {
 	cy.cGet('#response-ok').click();
 
 	if (!skipCommentCheck) {
-		cy.cGet('#comment-container-1').should('exist').wait(300);
-		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
+		cy.cGet('[id^=comment-container-]').should('exist').wait(300);
+		cy.cGet('[id^=annotation-content-area-]').should('be.visible');
+		cy.cGet('[id^=annotation-content-area-]').should('have.text', 'some text');
 	}
 
 	cy.log('<< insertComment - end');
