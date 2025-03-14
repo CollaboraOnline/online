@@ -4083,14 +4083,15 @@ void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::s
         try
         {
             it.second->updateBrowserSettingsJSON(json);
+            sessionForUpload = it.second;
         }
         catch (const std::exception& exc)
         {
             LOG_WRN("Failed to update browsersetting json for session["
-                    << sessionForUpload->getId() << "], skipping the browsersetting upload step");
+                    << it.second->getId() << "] with error[" << exc.what()
+                    << "], skipping the browsersetting upload step");
             return;
         }
-        sessionForUpload = it.second;
     }
 
     // upload browsersetting only once if we found matching session
