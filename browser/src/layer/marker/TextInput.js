@@ -12,6 +12,9 @@
 
 L.TextInput = L.Layer.extend({
 	initialize: function() {
+
+		L.Layer.prototype.initialize.call(this);
+
 		this._className = 'TextInput';
 
 		// Flag to denote the composing state, derived from
