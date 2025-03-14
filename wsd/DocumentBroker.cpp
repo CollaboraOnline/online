@@ -4078,12 +4078,10 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::string& json)
 {
     ASSERT_CORRECT_THREAD();
-    LOG_DBG("Updating browser setting with json[" << json
+    LOG_DBG("Updating browsersetting with json[" << json
                                                  << "] for all sessions with userId [" << userId
                                                  << ']');
 
-    // update browsersetting for all the matching session
-    std::shared_ptr<ClientSession> sessionForUpload;
     for (auto& it : _sessions)
     {
         if (it.second->getUserId() != userId)
@@ -4091,8 +4089,9 @@ void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::s
 
         try
         {
+            LOG_TRC("Updating browsersetting with json[" << json << "] for session["
+                                                         << it.second->getId() << ']');
             it.second->updateBrowserSettingsJSON(json);
-            sessionForUpload = it.second;
         }
         catch (const std::exception& exc)
         {
@@ -4101,19 +4100,6 @@ void DocumentBroker::syncBrowserSettings(const std::string& userId, const std::s
                     << "], skipping the browsersetting upload step");
             return;
         }
-    }
-
-    // upload browsersetting only once if we found matching session
-    if (!sessionForUpload)
-        return;
-
-    try
-    {
-        uploadBrowserSettingsToWopiHost(sessionForUpload);
-    }
-    catch (const std::exception& exc)
-    {
-        LOG_WRN("Failed to upload browsersetting json for session [" << sessionForUpload->getId());
     }
 }
 
@@ -4184,47 +4170,6 @@ void DocumentBroker::uploadPresetsToWopiHost()
 
         LOG_DBG("Successfully uploaded presetFile[" << fileName << ']');
     }
-}
-
-void DocumentBroker::uploadBrowserSettingsToWopiHost(const std::shared_ptr<ClientSession>& session)
-{
-    const Authorization& auth = session->getAuthorization();
-    Poco::URI uriObject = DocumentBroker::getPresetUploadBaseUrl(_uriPublic);
-
-    const std::string& filePath = "/settings/userconfig/browsersetting/browsersetting.json";
-    uriObject.addQueryParameter("fileId", filePath);
-    auth.authorizeURI(uriObject);
-
-    const std::string& uriAnonym = COOLWSD::anonymizeUrl(uriObject.toString());
-
-    auto httpRequest = StorageConnectionManager::createHttpRequest(uriObject, auth);
-    httpRequest.setVerb(http::Request::VERB_POST);
-    auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
-
-    auto browserSettingsJSON = session->getBrowserSettingJSON();
-    std::ostringstream jsonStream;
-    browserSettingsJSON->stringify(jsonStream, 2);
-    httpRequest.setBody(jsonStream.str(), "application/json; charset=utf-8");
-
-    http::Session::FinishedCallback finishedCallback =
-        [uriAnonym](const std::shared_ptr<http::Session>& wopiSession)
-    {
-        wopiSession->asyncShutdown();
-
-        const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
-        const http::StatusLine statusLine = httpResponse->statusLine();
-        if (statusLine.statusCode() != http::StatusCode::OK)
-        {
-            LOG_ERR("Failed to upload updated browsersetting to wopiHost["
-                    << uriAnonym << "] with status[" << statusLine.reasonPhrase() << ']');
-            return;
-        }
-        LOG_TRC("Successfully uploaded browsersetting to wopiHost");
-    };
-
-    LOG_DBG("Uploading browsersetting json [" << jsonStream.str() << "] to wopiHost[" << uriAnonym << ']');
-    httpSession->setFinishedHandler(std::move(finishedCallback));
-    httpSession->asyncRequest(httpRequest, *COOLWSD::getWebServerPoll());
 }
 #endif
 

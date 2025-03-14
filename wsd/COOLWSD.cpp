@@ -332,17 +332,19 @@ void COOLWSD::alertAllUsersInternal(const std::string& msg)
 }
 
 #if !MOBILEAPP
-void COOLWSD::syncUsersBrowserSettings(const std::string& userId, const std::string& json)
+void COOLWSD::syncUsersBrowserSettings(const std::string& userId, const pid_t childPid, const std::string& json)
 {
     if constexpr (Util::isMobileApp())
         return;
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
-    LOG_INF("Syncing browsersettings of the users");
+    LOG_INF("Syncing browsersettings for all the users");
 
     for (auto& brokerIt : DocBrokers)
     {
         std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
+        if (docBroker->getPid() == childPid)
+            continue;
         docBroker->addCallback([userId, json, docBroker]()
                                { docBroker->syncBrowserSettings(userId, json); });
     }
