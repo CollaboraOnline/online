@@ -253,6 +253,7 @@ class CanvasCache {
 	trim(limit: number) {
 		while (this._canvasList.length > limit) {
 			const item = this._canvasList.pop();
+			if (!item) continue;
 
 			// Fix for cool#5876 allow immediate reuse of canvas context memory
 			// WKWebView has a hard limit on the number of bytes of canvas
