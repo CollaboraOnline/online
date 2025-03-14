@@ -304,7 +304,7 @@ L.DebugManager = L.Class.extend({
 			startsOn: true,
 			onAdd: function () {
 				window.setLogging(true);
-				L.Log.print();
+				app.Log.print();
 			},
 			onRemove: function () {
 				window.setLogging(false);
