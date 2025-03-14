@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 09:51+0100\n"
+"POT-Creation-Date: 2025-03-14 16:34+0100\n"
 "PO-Revision-Date: 2025-02-10 09:03+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
@@ -235,7 +235,7 @@ msgstr "Razine dnevnika"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
-#: src/core/Socket.js:436 src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:436 src/core/Socket.js:1208 src/core/Socket.js:1213
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Zatvori"
@@ -302,11 +302,11 @@ msgstr "Upozorenje"
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
-#: src/control/Parts.js:493 src/control/Permission.js:89
+#: src/control/Parts.js:473 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Debug.js:1081 src/core/Socket.js:713 src/core/Socket.js:1177
-#: src/core/Socket.js:1247 src/core/Socket.js:1398 src/core/Socket.js:1402
+#: src/control/Toolbar.js:741 src/control/Toolbar.js:838
+#: src/core/Debug.js:1081 src/core/Socket.js:713 src/core/Socket.js:1178
+#: src/core/Socket.js:1248 src/core/Socket.js:1399 src/core/Socket.js:1403
 #: src/docdispatcher.ts:516 src/main.js:84 src/main.js:87 src/main.js:140
 #: src/map/Clipboard.js:1266 src/map/handler/Map.Feedback.js:87
 #: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:165
@@ -327,10 +327,10 @@ msgstr "U redu"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1352 src/control/Control.UIManager.js:1419
-#: src/control/Control.UIManager.js:1554 src/control/Control.UIManager.js:1713
-#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:832
-#: src/core/Socket.js:1423
+#: src/control/Control.UIManager.js:1356 src/control/Control.UIManager.js:1423
+#: src/control/Control.UIManager.js:1558 src/control/Control.UIManager.js:1717
+#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:833
+#: src/core/Socket.js:1424
 msgid "Cancel"
 msgstr "Odustani"
 
@@ -414,15 +414,15 @@ msgstr " min"
 msgid " s"
 msgstr " s"
 
-#: js/global.js:1495
+#: js/global.js:1521
 msgid "Cluster is scaling, retrying..."
 msgstr "Cluster raste. Pokušaj se ponavlja …"
 
-#: js/global.js:1497
+#: js/global.js:1523
 msgid "Document is migrating to new server, retrying..."
 msgstr "Dokument se migrira na novi server. Pokušaj se ponavlja …"
 
-#: js/global.js:1499
+#: js/global.js:1525
 msgid "Failed to get RouteToken from controller"
 msgstr "Neuspjelo dohvaćanje RouteTokena od kontrolera"
 
@@ -481,8 +481,8 @@ msgstr "Otvori u potpunom prikazu"
 
 #: src/canvas/sections/CommentListSection.ts:1234
 #: src/control/Control.JSDialogBuilder.js:1894
-#: src/layer/tile/CanvasTileLayer.js:3634
-#: src/layer/tile/CanvasTileLayer.js:3645
+#: src/layer/tile/CanvasTileLayer.js:3640
+#: src/layer/tile/CanvasTileLayer.js:3651
 msgid "Comment"
 msgstr "Komentar"
 
@@ -503,7 +503,7 @@ msgstr ""
 "Jedan drugi korisnik je aktualizirao ovaj komentar. Želiš li prepisati te "
 "promjene?"
 
-#: src/canvas/sections/CommentListSection.ts:1470 src/core/Socket.js:1427
+#: src/canvas/sections/CommentListSection.ts:1470 src/core/Socket.js:1428
 msgid "Overwrite"
 msgstr "Prepiši"
 
@@ -566,7 +566,7 @@ msgstr "Ovu verziju {productname}a omogućuje"
 msgid "\"Slow Proxy\""
 msgstr "„Slow Proxy”"
 
-#: src/control/Control.AboutDialog.ts:178
+#: src/control/Control.AboutDialog.ts:192
 msgid "Copy all version information in English"
 msgstr "Kopiraj sve informacije o verziji na engleskom jeziku"
 
@@ -1673,78 +1673,78 @@ msgid "Focus Cell"
 msgstr "Fokusiraj polje"
 
 #: src/control/Control.Menubar.js:867
-#: src/control/jsdialog/Definitions.Menu.ts:291
+#: src/control/jsdialog/Definitions.Menu.ts:309
 msgid "Highlight cells with..."
 msgstr "Istakni polja sa …"
 
 #: src/control/Control.Menubar.js:868
-#: src/control/jsdialog/Definitions.Menu.ts:294
+#: src/control/jsdialog/Definitions.Menu.ts:312
 msgid "Values greater than..."
 msgstr "Vrijednosti veća od …"
 
 #: src/control/Control.Menubar.js:869
-#: src/control/jsdialog/Definitions.Menu.ts:298
+#: src/control/jsdialog/Definitions.Menu.ts:316
 msgid "Values less than..."
 msgstr "Vrijednosti manja od …"
 
 #: src/control/Control.Menubar.js:870
-#: src/control/jsdialog/Definitions.Menu.ts:302
+#: src/control/jsdialog/Definitions.Menu.ts:320
 msgid "Values equal to..."
 msgstr "Vrijednosti jednaka …"
 
 #: src/control/Control.Menubar.js:871
-#: src/control/jsdialog/Definitions.Menu.ts:306
+#: src/control/jsdialog/Definitions.Menu.ts:324
 msgid "Values between..."
 msgstr "Vrijednosti između …"
 
 #: src/control/Control.Menubar.js:872
-#: src/control/jsdialog/Definitions.Menu.ts:310
+#: src/control/jsdialog/Definitions.Menu.ts:328
 msgid "Values duplicate..."
 msgstr "Duple vrijednosti …"
 
 #: src/control/Control.Menubar.js:873
-#: src/control/jsdialog/Definitions.Menu.ts:314
+#: src/control/jsdialog/Definitions.Menu.ts:332
 msgid "Containing text..."
 msgstr "Sadrži tekst …"
 
 #: src/control/Control.Menubar.js:875 src/control/Control.Menubar.js:885
-#: src/control/jsdialog/Definitions.Menu.ts:318
-#: src/control/jsdialog/Definitions.Menu.ts:349
+#: src/control/jsdialog/Definitions.Menu.ts:336
+#: src/control/jsdialog/Definitions.Menu.ts:367
 msgid "More highlights..."
 msgstr "Još više isticanja …"
 
 #: src/control/Control.Menubar.js:877
-#: src/control/jsdialog/Definitions.Menu.ts:322
+#: src/control/jsdialog/Definitions.Menu.ts:340
 msgid "Top/Bottom Rules..."
 msgstr "Pravila gornjih/donjih …"
 
 #: src/control/Control.Menubar.js:878
-#: src/control/jsdialog/Definitions.Menu.ts:325
+#: src/control/jsdialog/Definitions.Menu.ts:343
 msgid "Top N elements..."
 msgstr "Gornjih N elemenata …"
 
 #: src/control/Control.Menubar.js:879
-#: src/control/jsdialog/Definitions.Menu.ts:329
+#: src/control/jsdialog/Definitions.Menu.ts:347
 msgid "Top N percent..."
 msgstr "Gornjih N posto …"
 
 #: src/control/Control.Menubar.js:880
-#: src/control/jsdialog/Definitions.Menu.ts:333
+#: src/control/jsdialog/Definitions.Menu.ts:351
 msgid "Bottom N elements..."
 msgstr "Doljnih N elemenata …"
 
 #: src/control/Control.Menubar.js:881
-#: src/control/jsdialog/Definitions.Menu.ts:337
+#: src/control/jsdialog/Definitions.Menu.ts:355
 msgid "Bottom N percent..."
 msgstr "Doljnih N posto …"
 
 #: src/control/Control.Menubar.js:882
-#: src/control/jsdialog/Definitions.Menu.ts:341
+#: src/control/jsdialog/Definitions.Menu.ts:359
 msgid "Above Average..."
 msgstr "Iznad prosjeka …"
 
 #: src/control/Control.Menubar.js:883
-#: src/control/jsdialog/Definitions.Menu.ts:345
+#: src/control/jsdialog/Definitions.Menu.ts:363
 msgid "Below Average..."
 msgstr "Ispod prosjeka …"
 
@@ -1756,7 +1756,7 @@ msgstr "Ispod prosjeka …"
 #: src/control/Control.NotebookbarImpress.js:1049
 #: src/control/Control.NotebookbarWriter.js:923
 #: src/control/Control.StatusBar.js:247 src/control/Control.Zotero.js:222
-#: src/control/Toolbar.js:575
+#: src/control/Toolbar.js:576
 msgid "Search"
 msgstr "Traži"
 
@@ -2017,7 +2017,7 @@ msgstr "Razlomak"
 msgid "Boolean Value"
 msgstr "Booleova vrijednost"
 
-#: src/control/Control.NotebookbarCalc.js:625 src/control/Toolbar.js:804
+#: src/control/Control.NotebookbarCalc.js:625 src/control/Toolbar.js:805
 msgid "Text"
 msgstr "Tekst"
 
@@ -2332,6 +2332,7 @@ msgid "On"
 msgstr "Uključeno"
 
 #: src/control/Control.StatusBar.js:179
+#: src/control/jsdialog/Definitions.Menu.ts:292
 msgid "Off"
 msgstr "Isključeno"
 
@@ -2462,7 +2463,7 @@ msgstr "Umetni oblike"
 msgid "Insert connectors"
 msgstr "Umetni poveznice"
 
-#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:874
+#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:878
 msgid "Hide Menu"
 msgstr "Sakrij izbornik"
 
@@ -2470,7 +2471,7 @@ msgstr "Sakrij izbornik"
 msgid "Enter new name"
 msgstr "Upiši novo ime"
 
-#: src/control/Control.UIManager.js:897
+#: src/control/Control.UIManager.js:901
 msgid "Show Menu"
 msgstr "Prikaži izbornik"
 
@@ -2542,7 +2543,7 @@ msgstr ""
 "Dokument sadrži neke citate koji možda nisu dostupni putem web API-ja. Može "
 "prouzročiti probleme prilikom uređivanja citata ili bibliografije."
 
-#: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1348
 msgid "Loading..."
 msgstr "Učitavanje …"
 
@@ -2684,7 +2685,7 @@ msgstr ""
 "Uklanjanje poveznica citata spriječit će Collabora Online aktualizirati "
 "citate i bibliografiju u ovom dokumentu."
 
-#: src/control/Parts.js:493
+#: src/control/Parts.js:473
 msgid "Show sheets"
 msgstr "Prikaži listove"
 
@@ -2776,11 +2777,11 @@ msgstr "Spremanje …"
 msgid "Renaming..."
 msgstr "Preimenovanje …"
 
-#: src/control/Toolbar.js:792
+#: src/control/Toolbar.js:793
 msgid "Insert hyperlink"
 msgstr "Umetni hiper-poveznicu"
 
-#: src/control/Toolbar.js:816
+#: src/control/Toolbar.js:817
 msgid "Link"
 msgstr "Poveznica"
 
@@ -2844,11 +2845,19 @@ msgstr "Široko"
 msgid "Very Loose"
 msgstr "Jako široko"
 
-#: src/control/jsdialog/Definitions.Menu.ts:417
+#: src/control/jsdialog/Definitions.Menu.ts:297
+msgid "All users"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:302
+msgid "This user"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:435
 msgid "From Beginning"
 msgstr "Od početka"
 
-#: src/control/jsdialog/Definitions.Menu.ts:421
+#: src/control/jsdialog/Definitions.Menu.ts:439
 msgid "From Current Slide"
 msgstr "Od trenutačnog slajda"
 
@@ -3023,78 +3032,78 @@ msgstr ""
 msgid "Reloading the document after rename"
 msgstr "Ponovno učitavanje dokumenta nakon preimenovanja"
 
-#: src/core/Socket.js:1129
+#: src/core/Socket.js:1130
 msgid "Document requires password to view."
 msgstr "Za prikaz dokumenta je potrebna lozinka."
 
-#: src/core/Socket.js:1132
+#: src/core/Socket.js:1133
 msgid "Document requires password to modify."
 msgstr "Za mijenjanje dokumenta je potrebna lozinka."
 
-#: src/core/Socket.js:1134
+#: src/core/Socket.js:1135
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Pritisni „Odustani” za otvaranje u modusu samo za prikaz."
 
-#: src/core/Socket.js:1138
+#: src/core/Socket.js:1139
 msgid "Wrong password provided. Please try again."
 msgstr "Navedena je netočna lozinka. Pokušaj ponovo."
 
-#: src/core/Socket.js:1176
+#: src/core/Socket.js:1177
 msgid "Only the document owner can change the password."
 msgstr "Lozinku može promijeniti samo vlasnik dokumenta."
 
-#: src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:1208 src/core/Socket.js:1213
 msgid "Missing Fonts"
 msgstr "Nedostajući fontovi"
 
-#: src/core/Socket.js:1244
+#: src/core/Socket.js:1245
 msgid "Someone"
 msgstr "Netko"
 
-#: src/core/Socket.js:1245
+#: src/core/Socket.js:1246
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
 "{username} je spremio/la ovaj dokument kao {filename}. Želiš li se "
 "pridružiti?"
 
-#: src/core/Socket.js:1262
+#: src/core/Socket.js:1263
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokument se preimenuje i uskoro će se ponovo učitati"
 
-#: src/core/Socket.js:1265
+#: src/core/Socket.js:1266
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
 "Dokument se prebacuje u izvanmrežni način rada i uskoro će se ponovo učitati"
 
-#: src/core/Socket.js:1347
+#: src/core/Socket.js:1348
 msgid "Connecting..."
 msgstr "Povezivanje …"
 
-#: src/core/Socket.js:1362
+#: src/core/Socket.js:1363
 msgid "Server is shutting down"
 msgstr "Server se gasi"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Exported to storage"
 msgstr "Izvezeno u spremište"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Successfully exported: "
 msgstr "Uspješno izvezeno: "
 
-#: src/core/Socket.js:1426
+#: src/core/Socket.js:1427
 msgid "Discard"
 msgstr "Odbaci"
 
-#: src/core/Socket.js:1438
+#: src/core/Socket.js:1439
 msgid "Save to new file"
 msgstr "Spremi u novu datoteku"
 
-#: src/core/Socket.js:1448
+#: src/core/Socket.js:1449
 msgid "Document has been changed"
 msgstr "Dokument je promijenjen"
 
-#: src/core/Socket.js:1449
+#: src/core/Socket.js:1450
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -3102,7 +3111,7 @@ msgstr ""
 "Dokument je promijenjen u spremištu. Što želiš uraditi s nespremljenim "
 "promjenama?"
 
-#: src/core/Socket.js:1712
+#: src/core/Socket.js:1713
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -3110,11 +3119,11 @@ msgstr ""
 "Ovo je neugodno, ali izgleda da povezivanje s dokumentom nije moguće. "
 "Pokušaj ponovo."
 
-#: src/core/Socket.js:1729
+#: src/core/Socket.js:1730
 msgid "Reconnecting..."
 msgstr "Ponovno povezivanje …"
 
-#: src/core/Socket.js:1739
+#: src/core/Socket.js:1740
 msgid "The server has been disconnected."
 msgstr "Server je odspojen."
 
@@ -3451,15 +3460,15 @@ msgstr "kartica za „Pomoć”"
 msgid "the View menu"
 msgstr "izbornik za „Prikaz”"
 
-#: src/layer/tile/CanvasTileLayer.js:1646
+#: src/layer/tile/CanvasTileLayer.js:1647
 msgid "Functions"
 msgstr "Funkcije"
 
-#: src/layer/tile/CanvasTileLayer.js:1913
+#: src/layer/tile/CanvasTileLayer.js:1914
 msgid "Named Range"
 msgstr "Imenovani raspon"
 
-#: src/layer/tile/CanvasTileLayer.js:3662
+#: src/layer/tile/CanvasTileLayer.js:3668
 msgid "No Comments"
 msgstr "Bez komentara"
 
@@ -3484,11 +3493,11 @@ msgstr "upozorenje: vrijeme zahtjeva za kopiranje/umetanje je isteklo"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Neuspjelo preuzimanje međuspremnika, kopiraj ponovo"
 
-#: src/map/Clipboard.js:1273
+#: src/map/Clipboard.js:1284
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "Koristi gumbe za umetanje na ekranskoj tipkovnici."
 
-#: src/map/Clipboard.js:1329
+#: src/map/Clipboard.js:1340
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -3496,23 +3505,23 @@ msgstr ""
 "Preuzimanje je zbog velike operacije kopiranja/umetanja već započelo. Čekaj "
 "na trenutačno preuzimanje ili ga prekini prije pokretanja novog"
 
-#: src/map/Clipboard.js:1351
+#: src/map/Clipboard.js:1362
 msgid "Paste from this document"
 msgstr "Umetni iz ovog dokumenta"
 
-#: src/map/Clipboard.js:1351
+#: src/map/Clipboard.js:1362
 msgid "Cancel paste special"
 msgstr "Prekini posebno umetanje"
 
-#: src/map/Clipboard.js:1361
+#: src/map/Clipboard.js:1384
 msgid "Your browser has very limited access to the clipboard"
 msgstr "Tvoj preglednik ima vrlo ograničen pristup međuspremniku"
 
-#: src/map/Clipboard.js:1366
+#: src/map/Clipboard.js:1389
 msgid "Please use following combination to see more options:"
 msgstr "Koristi sljedeću kombinaciju za više opcija:"
 
-#: src/map/Clipboard.js:1384
+#: src/map/Clipboard.js:1407
 msgid "Close popup to ignore paste special"
 msgstr "Zatvori skočni prozor za zanemarivanje posebnog umetanja"
 

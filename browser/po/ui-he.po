@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 09:51+0100\n"
+"POT-Creation-Date: 2025-03-14 16:34+0100\n"
 "PO-Revision-Date: 2024-12-17 09:59+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
@@ -231,7 +231,7 @@ msgstr "רמות תיעוד ביומן"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
-#: src/core/Socket.js:436 src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:436 src/core/Socket.js:1208 src/core/Socket.js:1213
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "סגירה"
@@ -297,11 +297,11 @@ msgstr "אזהרה"
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
-#: src/control/Parts.js:493 src/control/Permission.js:89
+#: src/control/Parts.js:473 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Debug.js:1081 src/core/Socket.js:713 src/core/Socket.js:1177
-#: src/core/Socket.js:1247 src/core/Socket.js:1398 src/core/Socket.js:1402
+#: src/control/Toolbar.js:741 src/control/Toolbar.js:838
+#: src/core/Debug.js:1081 src/core/Socket.js:713 src/core/Socket.js:1178
+#: src/core/Socket.js:1248 src/core/Socket.js:1399 src/core/Socket.js:1403
 #: src/docdispatcher.ts:516 src/main.js:84 src/main.js:87 src/main.js:140
 #: src/map/Clipboard.js:1266 src/map/handler/Map.Feedback.js:87
 #: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:165
@@ -322,10 +322,10 @@ msgstr "אישור"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1352 src/control/Control.UIManager.js:1419
-#: src/control/Control.UIManager.js:1554 src/control/Control.UIManager.js:1713
-#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:832
-#: src/core/Socket.js:1423
+#: src/control/Control.UIManager.js:1356 src/control/Control.UIManager.js:1423
+#: src/control/Control.UIManager.js:1558 src/control/Control.UIManager.js:1717
+#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:833
+#: src/core/Socket.js:1424
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -409,15 +409,15 @@ msgstr " דקות"
 msgid " s"
 msgstr " שניות"
 
-#: js/global.js:1495
+#: js/global.js:1521
 msgid "Cluster is scaling, retrying..."
 msgstr "הקלאסטר עובר שינוי, ננסה שוב…"
 
-#: js/global.js:1497
+#: js/global.js:1523
 msgid "Document is migrating to new server, retrying..."
 msgstr "המסמך מועבר לשרת חדש, ננסה שוב…"
 
-#: js/global.js:1499
+#: js/global.js:1525
 msgid "Failed to get RouteToken from controller"
 msgstr "קבלת RouteToken (אסימון נתיב) מהבקר נכשלה"
 
@@ -476,8 +476,8 @@ msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1234
 #: src/control/Control.JSDialogBuilder.js:1894
-#: src/layer/tile/CanvasTileLayer.js:3634
-#: src/layer/tile/CanvasTileLayer.js:3645
+#: src/layer/tile/CanvasTileLayer.js:3640
+#: src/layer/tile/CanvasTileLayer.js:3651
 msgid "Comment"
 msgstr "הערה"
 
@@ -496,7 +496,7 @@ msgid ""
 "changes?"
 msgstr "משתמש אחר עדכן את ההערה הזאת. לדרוס את השינויים האלה?"
 
-#: src/canvas/sections/CommentListSection.ts:1470 src/core/Socket.js:1427
+#: src/canvas/sections/CommentListSection.ts:1470 src/core/Socket.js:1428
 msgid "Overwrite"
 msgstr "דריסה"
 
@@ -559,7 +559,7 @@ msgstr "גרסה זו של {productname} מופעלת על גבי"
 msgid "\"Slow Proxy\""
 msgstr "„מתווך אטי”"
 
-#: src/control/Control.AboutDialog.ts:178
+#: src/control/Control.AboutDialog.ts:192
 msgid "Copy all version information in English"
 msgstr "העתקת כל פרטי הגרסה באנגלית"
 
@@ -1657,78 +1657,78 @@ msgid "Focus Cell"
 msgstr ""
 
 #: src/control/Control.Menubar.js:867
-#: src/control/jsdialog/Definitions.Menu.ts:291
+#: src/control/jsdialog/Definitions.Menu.ts:309
 msgid "Highlight cells with..."
 msgstr "הדגשת תאים ב…"
 
 #: src/control/Control.Menubar.js:868
-#: src/control/jsdialog/Definitions.Menu.ts:294
+#: src/control/jsdialog/Definitions.Menu.ts:312
 msgid "Values greater than..."
 msgstr "ערכים גדולים מ…"
 
 #: src/control/Control.Menubar.js:869
-#: src/control/jsdialog/Definitions.Menu.ts:298
+#: src/control/jsdialog/Definitions.Menu.ts:316
 msgid "Values less than..."
 msgstr "ערכים קטנים מ…"
 
 #: src/control/Control.Menubar.js:870
-#: src/control/jsdialog/Definitions.Menu.ts:302
+#: src/control/jsdialog/Definitions.Menu.ts:320
 msgid "Values equal to..."
 msgstr "ערכים ששווים ל…"
 
 #: src/control/Control.Menubar.js:871
-#: src/control/jsdialog/Definitions.Menu.ts:306
+#: src/control/jsdialog/Definitions.Menu.ts:324
 msgid "Values between..."
 msgstr "ערכים בין…"
 
 #: src/control/Control.Menubar.js:872
-#: src/control/jsdialog/Definitions.Menu.ts:310
+#: src/control/jsdialog/Definitions.Menu.ts:328
 msgid "Values duplicate..."
 msgstr "ערכים כפולים…"
 
 #: src/control/Control.Menubar.js:873
-#: src/control/jsdialog/Definitions.Menu.ts:314
+#: src/control/jsdialog/Definitions.Menu.ts:332
 msgid "Containing text..."
 msgstr "מכילים טקסט…"
 
 #: src/control/Control.Menubar.js:875 src/control/Control.Menubar.js:885
-#: src/control/jsdialog/Definitions.Menu.ts:318
-#: src/control/jsdialog/Definitions.Menu.ts:349
+#: src/control/jsdialog/Definitions.Menu.ts:336
+#: src/control/jsdialog/Definitions.Menu.ts:367
 msgid "More highlights..."
 msgstr "הדגשות נוספות…"
 
 #: src/control/Control.Menubar.js:877
-#: src/control/jsdialog/Definitions.Menu.ts:322
+#: src/control/jsdialog/Definitions.Menu.ts:340
 msgid "Top/Bottom Rules..."
 msgstr "כללים עליונים/תחתונים…"
 
 #: src/control/Control.Menubar.js:878
-#: src/control/jsdialog/Definitions.Menu.ts:325
+#: src/control/jsdialog/Definitions.Menu.ts:343
 msgid "Top N elements..."
 msgstr "N הרכיבים העליונים…"
 
 #: src/control/Control.Menubar.js:879
-#: src/control/jsdialog/Definitions.Menu.ts:329
+#: src/control/jsdialog/Definitions.Menu.ts:347
 msgid "Top N percent..."
 msgstr "N האחוזים העליונים…"
 
 #: src/control/Control.Menubar.js:880
-#: src/control/jsdialog/Definitions.Menu.ts:333
+#: src/control/jsdialog/Definitions.Menu.ts:351
 msgid "Bottom N elements..."
 msgstr "N הרכיבים התחתונים…"
 
 #: src/control/Control.Menubar.js:881
-#: src/control/jsdialog/Definitions.Menu.ts:337
+#: src/control/jsdialog/Definitions.Menu.ts:355
 msgid "Bottom N percent..."
 msgstr "N האחוזים התחתונים…"
 
 #: src/control/Control.Menubar.js:882
-#: src/control/jsdialog/Definitions.Menu.ts:341
+#: src/control/jsdialog/Definitions.Menu.ts:359
 msgid "Above Average..."
 msgstr "מעל לממוצע…"
 
 #: src/control/Control.Menubar.js:883
-#: src/control/jsdialog/Definitions.Menu.ts:345
+#: src/control/jsdialog/Definitions.Menu.ts:363
 msgid "Below Average..."
 msgstr "מתחת לממוצע…"
 
@@ -1740,7 +1740,7 @@ msgstr "מתחת לממוצע…"
 #: src/control/Control.NotebookbarImpress.js:1049
 #: src/control/Control.NotebookbarWriter.js:923
 #: src/control/Control.StatusBar.js:247 src/control/Control.Zotero.js:222
-#: src/control/Toolbar.js:575
+#: src/control/Toolbar.js:576
 msgid "Search"
 msgstr "חיפוש"
 
@@ -1999,7 +1999,7 @@ msgstr "שבר"
 msgid "Boolean Value"
 msgstr "ערך בוליאני"
 
-#: src/control/Control.NotebookbarCalc.js:625 src/control/Toolbar.js:804
+#: src/control/Control.NotebookbarCalc.js:625 src/control/Toolbar.js:805
 msgid "Text"
 msgstr "טקסט"
 
@@ -2312,6 +2312,7 @@ msgid "On"
 msgstr ""
 
 #: src/control/Control.StatusBar.js:179
+#: src/control/jsdialog/Definitions.Menu.ts:292
 msgid "Off"
 msgstr ""
 
@@ -2440,7 +2441,7 @@ msgstr "הוספת צורות"
 msgid "Insert connectors"
 msgstr "הוספת מחברים"
 
-#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:874
+#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:878
 msgid "Hide Menu"
 msgstr "הסתרת תפריט"
 
@@ -2448,7 +2449,7 @@ msgstr "הסתרת תפריט"
 msgid "Enter new name"
 msgstr "נא למלא שם חדש"
 
-#: src/control/Control.UIManager.js:897
+#: src/control/Control.UIManager.js:901
 msgid "Show Menu"
 msgstr "הצגת תפריט"
 
@@ -2520,7 +2521,7 @@ msgstr ""
 "המסמך מכיל ציטוטים שעשויים לא להיות נגישים דרך API מקוון. עשוי לגרום לבעיות "
 "בעריכת ציטוטים או ביבליוגרפיה."
 
-#: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1348
 msgid "Loading..."
 msgstr "בטעינה…"
 
@@ -2660,7 +2661,7 @@ msgstr ""
 "ניתוק ציטוטים ימנע מ־Collabora Online לעדכן את הציטוטים והביבליוגרפיה במסמך "
 "הזה."
 
-#: src/control/Parts.js:493
+#: src/control/Parts.js:473
 msgid "Show sheets"
 msgstr "הצגת גיליונות"
 
@@ -2748,11 +2749,11 @@ msgstr "מתבצעת שמירה…"
 msgid "Renaming..."
 msgstr "ניתן שם אחר…"
 
-#: src/control/Toolbar.js:792
+#: src/control/Toolbar.js:793
 msgid "Insert hyperlink"
 msgstr "הוספת קישור"
 
-#: src/control/Toolbar.js:816
+#: src/control/Toolbar.js:817
 msgid "Link"
 msgstr "קישור"
 
@@ -2816,11 +2817,19 @@ msgstr "משוחרר"
 msgid "Very Loose"
 msgstr "משוחרר מאוד"
 
-#: src/control/jsdialog/Definitions.Menu.ts:417
+#: src/control/jsdialog/Definitions.Menu.ts:297
+msgid "All users"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:302
+msgid "This user"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:435
 msgid "From Beginning"
 msgstr "מההתחלה"
 
-#: src/control/jsdialog/Definitions.Menu.ts:421
+#: src/control/jsdialog/Definitions.Menu.ts:439
 msgid "From Current Slide"
 msgstr "מהשקופית הנוכחית"
 
@@ -2992,91 +3001,91 @@ msgstr "מהדורה ישנה משוחזרת. שינויים שלא יישמרו
 msgid "Reloading the document after rename"
 msgstr "רענון המסמך אחרי שינוי שם"
 
-#: src/core/Socket.js:1129
+#: src/core/Socket.js:1130
 msgid "Document requires password to view."
 msgstr "נדרשת ססמה כדי לצפות במסמך."
 
-#: src/core/Socket.js:1132
+#: src/core/Socket.js:1133
 msgid "Document requires password to modify."
 msgstr "נדרשת ססמה כדי לערוך את המסמך."
 
-#: src/core/Socket.js:1134
+#: src/core/Socket.js:1135
 msgid "Hit Cancel to open in view-only mode."
 msgstr "יש ללחוץ על ביטול כדי לפתוח במצב צפייה בלבד."
 
-#: src/core/Socket.js:1138
+#: src/core/Socket.js:1139
 msgid "Wrong password provided. Please try again."
 msgstr "הססמה שסופקה שגויה. נא לנסות שוב."
 
-#: src/core/Socket.js:1176
+#: src/core/Socket.js:1177
 msgid "Only the document owner can change the password."
 msgstr "רק בעלי המסמך יכולים לשנות את הסיסמה."
 
-#: src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:1208 src/core/Socket.js:1213
 msgid "Missing Fonts"
 msgstr "גופנים חסרים"
 
-#: src/core/Socket.js:1244
+#: src/core/Socket.js:1245
 msgid "Someone"
 msgstr "מישהו"
 
-#: src/core/Socket.js:1245
+#: src/core/Socket.js:1246
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr "המסמך הזה נשמר על ידי {username} בשם {filename}. אפשר להציע לך להצטרף?"
 
-#: src/core/Socket.js:1262
+#: src/core/Socket.js:1263
 msgid "The document is being renamed and will reload shortly"
 msgstr "שם המסמך נערך והוא ירוענן בעוד זמן קצר"
 
-#: src/core/Socket.js:1265
+#: src/core/Socket.js:1266
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr "המסמך עובר למצב בלתי־מקוון והוא ייטען מחדש תכף"
 
-#: src/core/Socket.js:1347
+#: src/core/Socket.js:1348
 msgid "Connecting..."
 msgstr "מתבצעת התחברות…"
 
-#: src/core/Socket.js:1362
+#: src/core/Socket.js:1363
 msgid "Server is shutting down"
 msgstr "השרת נכבה"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Exported to storage"
 msgstr "ייוצא לאחסון"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Successfully exported: "
 msgstr "ייוצא בהצלחה: "
 
-#: src/core/Socket.js:1426
+#: src/core/Socket.js:1427
 msgid "Discard"
 msgstr "התעלמות"
 
-#: src/core/Socket.js:1438
+#: src/core/Socket.js:1439
 msgid "Save to new file"
 msgstr "שמירה לקובץ חדש"
 
-#: src/core/Socket.js:1448
+#: src/core/Socket.js:1449
 msgid "Document has been changed"
 msgstr "המסמך נערך"
 
-#: src/core/Socket.js:1449
+#: src/core/Socket.js:1450
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "המסמך נערך באחסון. מה ברצונך לעשות בנוגע לשינויים שלא שמרת?"
 
-#: src/core/Socket.js:1712
+#: src/core/Socket.js:1713
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "ובכן, לא נעים, לא הצלחנו להתחבר למסמך שלך. נא לנסות שוב מאוחר יותר."
 
-#: src/core/Socket.js:1729
+#: src/core/Socket.js:1730
 msgid "Reconnecting..."
 msgstr "התחברות מחדש…"
 
-#: src/core/Socket.js:1739
+#: src/core/Socket.js:1740
 msgid "The server has been disconnected."
 msgstr "השרת התנתק."
 
@@ -3394,15 +3403,15 @@ msgstr "לשונית העזרה"
 msgid "the View menu"
 msgstr "תפריט התצוגה"
 
-#: src/layer/tile/CanvasTileLayer.js:1646
+#: src/layer/tile/CanvasTileLayer.js:1647
 msgid "Functions"
 msgstr "פונקציות"
 
-#: src/layer/tile/CanvasTileLayer.js:1913
+#: src/layer/tile/CanvasTileLayer.js:1914
 msgid "Named Range"
 msgstr "טווח שמי"
 
-#: src/layer/tile/CanvasTileLayer.js:3662
+#: src/layer/tile/CanvasTileLayer.js:3668
 msgid "No Comments"
 msgstr "אין הערות"
 
@@ -3427,11 +3436,11 @@ msgstr "אזהרה: תם זמן ההמתנה לבקשת העתקה/הדבקה"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "הורדת לוח הגזירים נכשלה, נא להעתיק מחדש"
 
-#: src/map/Clipboard.js:1273
+#: src/map/Clipboard.js:1284
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "נא להשתמש בכפתורים להעתקה/הדבקה שבמקלדת הצפה על גבי המסך."
 
-#: src/map/Clipboard.js:1329
+#: src/map/Clipboard.js:1340
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -3439,23 +3448,23 @@ msgstr ""
 "כבר החלה הורדה עקב פעילות העתקה/הדבקה גדולה. נא להמתין לסיום ההורדה הנוכחית "
 "או לבטל אותה בטרם התחלת הורדה חדשה"
 
-#: src/map/Clipboard.js:1351
+#: src/map/Clipboard.js:1362
 msgid "Paste from this document"
 msgstr "הדבקה מהמסמך הזה"
 
-#: src/map/Clipboard.js:1351
+#: src/map/Clipboard.js:1362
 msgid "Cancel paste special"
 msgstr "ביטול הדבקה מיוחדת"
 
-#: src/map/Clipboard.js:1361
+#: src/map/Clipboard.js:1384
 msgid "Your browser has very limited access to the clipboard"
 msgstr "הגישה של הדפדפן שלך ללוח הגזירים היא מוגבלת מאוד"
 
-#: src/map/Clipboard.js:1366
+#: src/map/Clipboard.js:1389
 msgid "Please use following combination to see more options:"
 msgstr "נא להשתמש בצירוף הבא כדי לצפות באפשרויות נוספות:"
 
-#: src/map/Clipboard.js:1384
+#: src/map/Clipboard.js:1407
 msgid "Close popup to ignore paste special"
 msgstr "יש לסגור את החלונית כדי להתעלם מההדבקה המיוחדת"
 
