@@ -248,11 +248,11 @@ COOL_JS_LST =\
 	src/app/Rectangle.ts \
 	src/app/Util.ts \
 	src/app/LOUtil.ts \
+	src/app/Log.ts \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
 	src/UNO/Key.js \
-	src/core/Log.js \
 	src/core/Util.js \
 	src/core/Class.js \
 	src/core/Events.js \
