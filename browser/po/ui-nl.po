@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 09:51+0100\n"
+"POT-Creation-Date: 2025-03-14 16:34+0100\n"
 "PO-Revision-Date: 2025-02-27 09:38+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
@@ -235,7 +235,7 @@ msgstr "Nivo gebeurtenisoverzicht"
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
 #: src/control/Control.AlertDialog.js:101
 #: src/control/Control.AlertDialog.js:108 src/control/Control.Zotero.js:193
-#: src/core/Socket.js:436 src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:436 src/core/Socket.js:1208 src/core/Socket.js:1213
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Sluiten"
@@ -301,11 +301,11 @@ msgstr "Waarschuwing"
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
-#: src/control/Parts.js:493 src/control/Permission.js:89
+#: src/control/Parts.js:473 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
-#: src/control/Toolbar.js:740 src/control/Toolbar.js:837
-#: src/core/Debug.js:1081 src/core/Socket.js:713 src/core/Socket.js:1177
-#: src/core/Socket.js:1247 src/core/Socket.js:1398 src/core/Socket.js:1402
+#: src/control/Toolbar.js:741 src/control/Toolbar.js:838
+#: src/core/Debug.js:1081 src/core/Socket.js:713 src/core/Socket.js:1178
+#: src/core/Socket.js:1248 src/core/Socket.js:1399 src/core/Socket.js:1403
 #: src/docdispatcher.ts:516 src/main.js:84 src/main.js:87 src/main.js:140
 #: src/map/Clipboard.js:1266 src/map/handler/Map.Feedback.js:87
 #: src/map/handler/Map.SlideShow.js:56 src/map/handler/Map.SlideShow.js:165
@@ -326,10 +326,10 @@ msgstr "OK"
 #: src/control/Control.DownloadProgress.js:80
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.js:1352 src/control/Control.UIManager.js:1419
-#: src/control/Control.UIManager.js:1554 src/control/Control.UIManager.js:1713
-#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:832
-#: src/core/Socket.js:1423
+#: src/control/Control.UIManager.js:1356 src/control/Control.UIManager.js:1423
+#: src/control/Control.UIManager.js:1558 src/control/Control.UIManager.js:1717
+#: src/control/Control.Zotero.js:362 src/control/Toolbar.js:833
+#: src/core/Socket.js:1424
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -413,15 +413,15 @@ msgstr " minuten"
 msgid " s"
 msgstr " seconden"
 
-#: js/global.js:1495
+#: js/global.js:1521
 msgid "Cluster is scaling, retrying..."
 msgstr "Cluster is aan het schalen, opnieuw proberen..."
 
-#: js/global.js:1497
+#: js/global.js:1523
 msgid "Document is migrating to new server, retrying..."
 msgstr "Document wordt gemigreerd naar andere server, opnieuw proberen..."
 
-#: js/global.js:1499
+#: js/global.js:1525
 msgid "Failed to get RouteToken from controller"
 msgstr "Verkrijgen RouteToken van controller is niet gelukt"
 
@@ -480,8 +480,8 @@ msgstr "Beeldvullend openen"
 
 #: src/canvas/sections/CommentListSection.ts:1234
 #: src/control/Control.JSDialogBuilder.js:1894
-#: src/layer/tile/CanvasTileLayer.js:3634
-#: src/layer/tile/CanvasTileLayer.js:3645
+#: src/layer/tile/CanvasTileLayer.js:3640
+#: src/layer/tile/CanvasTileLayer.js:3651
 msgid "Comment"
 msgstr "Opmerking"
 
@@ -502,7 +502,7 @@ msgstr ""
 "Een andere gebruiker heeft de opmerking bijgewerkt. Wil je deze wijzigingen "
 "overschrijven?"
 
-#: src/canvas/sections/CommentListSection.ts:1470 src/core/Socket.js:1427
+#: src/canvas/sections/CommentListSection.ts:1470 src/core/Socket.js:1428
 msgid "Overwrite"
 msgstr "Overschrijven"
 
@@ -565,7 +565,7 @@ msgstr "Deze versie van {productname} werk op basis van"
 msgid "\"Slow Proxy\""
 msgstr "\"Langzame Proxy\""
 
-#: src/control/Control.AboutDialog.ts:178
+#: src/control/Control.AboutDialog.ts:192
 msgid "Copy all version information in English"
 msgstr "Kopieer alle versie informatie in het Engels"
 
@@ -1673,78 +1673,78 @@ msgid "Focus Cell"
 msgstr "Focus Cel"
 
 #: src/control/Control.Menubar.js:867
-#: src/control/jsdialog/Definitions.Menu.ts:291
+#: src/control/jsdialog/Definitions.Menu.ts:309
 msgid "Highlight cells with..."
 msgstr "Markeer cellen met..."
 
 #: src/control/Control.Menubar.js:868
-#: src/control/jsdialog/Definitions.Menu.ts:294
+#: src/control/jsdialog/Definitions.Menu.ts:312
 msgid "Values greater than..."
 msgstr "Waarden groter dan..."
 
 #: src/control/Control.Menubar.js:869
-#: src/control/jsdialog/Definitions.Menu.ts:298
+#: src/control/jsdialog/Definitions.Menu.ts:316
 msgid "Values less than..."
 msgstr "Waarden minder dan..."
 
 #: src/control/Control.Menubar.js:870
-#: src/control/jsdialog/Definitions.Menu.ts:302
+#: src/control/jsdialog/Definitions.Menu.ts:320
 msgid "Values equal to..."
 msgstr "Waarden gelijk aan..."
 
 #: src/control/Control.Menubar.js:871
-#: src/control/jsdialog/Definitions.Menu.ts:306
+#: src/control/jsdialog/Definitions.Menu.ts:324
 msgid "Values between..."
 msgstr "Waarden tussen..."
 
 #: src/control/Control.Menubar.js:872
-#: src/control/jsdialog/Definitions.Menu.ts:310
+#: src/control/jsdialog/Definitions.Menu.ts:328
 msgid "Values duplicate..."
 msgstr "Waarden dubbel..."
 
 #: src/control/Control.Menubar.js:873
-#: src/control/jsdialog/Definitions.Menu.ts:314
+#: src/control/jsdialog/Definitions.Menu.ts:332
 msgid "Containing text..."
 msgstr "Bevat tekst..."
 
 #: src/control/Control.Menubar.js:875 src/control/Control.Menubar.js:885
-#: src/control/jsdialog/Definitions.Menu.ts:318
-#: src/control/jsdialog/Definitions.Menu.ts:349
+#: src/control/jsdialog/Definitions.Menu.ts:336
+#: src/control/jsdialog/Definitions.Menu.ts:367
 msgid "More highlights..."
 msgstr "Meer hoogtepunten..."
 
 #: src/control/Control.Menubar.js:877
-#: src/control/jsdialog/Definitions.Menu.ts:322
+#: src/control/jsdialog/Definitions.Menu.ts:340
 msgid "Top/Bottom Rules..."
 msgstr "Bovenste/onderste regels..."
 
 #: src/control/Control.Menubar.js:878
-#: src/control/jsdialog/Definitions.Menu.ts:325
+#: src/control/jsdialog/Definitions.Menu.ts:343
 msgid "Top N elements..."
 msgstr "Top N elementen..."
 
 #: src/control/Control.Menubar.js:879
-#: src/control/jsdialog/Definitions.Menu.ts:329
+#: src/control/jsdialog/Definitions.Menu.ts:347
 msgid "Top N percent..."
 msgstr "Top N procent..."
 
 #: src/control/Control.Menubar.js:880
-#: src/control/jsdialog/Definitions.Menu.ts:333
+#: src/control/jsdialog/Definitions.Menu.ts:351
 msgid "Bottom N elements..."
 msgstr "Onderste N elementen..."
 
 #: src/control/Control.Menubar.js:881
-#: src/control/jsdialog/Definitions.Menu.ts:337
+#: src/control/jsdialog/Definitions.Menu.ts:355
 msgid "Bottom N percent..."
 msgstr "Onderste N procent..."
 
 #: src/control/Control.Menubar.js:882
-#: src/control/jsdialog/Definitions.Menu.ts:341
+#: src/control/jsdialog/Definitions.Menu.ts:359
 msgid "Above Average..."
 msgstr "Boven het gemiddelde..."
 
 #: src/control/Control.Menubar.js:883
-#: src/control/jsdialog/Definitions.Menu.ts:345
+#: src/control/jsdialog/Definitions.Menu.ts:363
 msgid "Below Average..."
 msgstr "Onder het gemiddelde..."
 
@@ -1756,7 +1756,7 @@ msgstr "Onder het gemiddelde..."
 #: src/control/Control.NotebookbarImpress.js:1049
 #: src/control/Control.NotebookbarWriter.js:923
 #: src/control/Control.StatusBar.js:247 src/control/Control.Zotero.js:222
-#: src/control/Toolbar.js:575
+#: src/control/Toolbar.js:576
 msgid "Search"
 msgstr "Zoeken"
 
@@ -2017,7 +2017,7 @@ msgstr "Fractie"
 msgid "Boolean Value"
 msgstr "Booleaanse waarde"
 
-#: src/control/Control.NotebookbarCalc.js:625 src/control/Toolbar.js:804
+#: src/control/Control.NotebookbarCalc.js:625 src/control/Toolbar.js:805
 msgid "Text"
 msgstr "Tekst"
 
@@ -2332,6 +2332,7 @@ msgid "On"
 msgstr "Aan"
 
 #: src/control/Control.StatusBar.js:179
+#: src/control/jsdialog/Definitions.Menu.ts:292
 msgid "Off"
 msgstr "Uit"
 
@@ -2462,7 +2463,7 @@ msgstr "Vormen invoegen"
 msgid "Insert connectors"
 msgstr "Verbindingspunten toevoegen"
 
-#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:874
+#: src/control/Control.TopToolbar.js:202 src/control/Control.UIManager.js:878
 msgid "Hide Menu"
 msgstr "Menu verbergen"
 
@@ -2470,7 +2471,7 @@ msgstr "Menu verbergen"
 msgid "Enter new name"
 msgstr "Geef nieuwe naam op"
 
-#: src/control/Control.UIManager.js:897
+#: src/control/Control.UIManager.js:901
 msgid "Show Menu"
 msgstr "Menu weergeven"
 
@@ -2542,7 +2543,7 @@ msgstr ""
 "Het document bevat enkele citaten die ontoegankelijk zijn via de web-API. "
 "Dit kan problemen veroorzaken bij het bewerken van citaten of bibliografie."
 
-#: src/control/Control.Zotero.js:248 src/core/Socket.js:1347
+#: src/control/Control.Zotero.js:248 src/core/Socket.js:1348
 msgid "Loading..."
 msgstr "Laden…"
 
@@ -2683,7 +2684,7 @@ msgstr ""
 "Door het ontkoppelen van citaten wordt voorkomen dat Collabora Online de "
 "citaten en bibliografie in dit document bijwerkt."
 
-#: src/control/Parts.js:493
+#: src/control/Parts.js:473
 msgid "Show sheets"
 msgstr "Bladen tonen"
 
@@ -2779,11 +2780,11 @@ msgstr "Opslaan..."
 msgid "Renaming..."
 msgstr "Hernoemen..."
 
-#: src/control/Toolbar.js:792
+#: src/control/Toolbar.js:793
 msgid "Insert hyperlink"
 msgstr "Hyperlink invoegen"
 
-#: src/control/Toolbar.js:816
+#: src/control/Toolbar.js:817
 msgid "Link"
 msgstr "Koppeling"
 
@@ -2847,11 +2848,19 @@ msgstr "Los"
 msgid "Very Loose"
 msgstr "Zeer los"
 
-#: src/control/jsdialog/Definitions.Menu.ts:417
+#: src/control/jsdialog/Definitions.Menu.ts:297
+msgid "All users"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:302
+msgid "This user"
+msgstr ""
+
+#: src/control/jsdialog/Definitions.Menu.ts:435
 msgid "From Beginning"
 msgstr "Vanaf het begin"
 
-#: src/control/jsdialog/Definitions.Menu.ts:421
+#: src/control/jsdialog/Definitions.Menu.ts:439
 msgid "From Current Slide"
 msgstr "Vanaf huidige dia"
 
@@ -3027,77 +3036,77 @@ msgstr ""
 msgid "Reloading the document after rename"
 msgstr "Document opnieuw laden na hernoemen"
 
-#: src/core/Socket.js:1129
+#: src/core/Socket.js:1130
 msgid "Document requires password to view."
 msgstr "Er is een wachtwoord nodig om dit document te bekijken."
 
-#: src/core/Socket.js:1132
+#: src/core/Socket.js:1133
 msgid "Document requires password to modify."
 msgstr "Er is een wachtwoord nodig om dit document te bewerken."
 
-#: src/core/Socket.js:1134
+#: src/core/Socket.js:1135
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Klik Cancel om het in alleen-lezen modus te openen."
 
-#: src/core/Socket.js:1138
+#: src/core/Socket.js:1139
 msgid "Wrong password provided. Please try again."
 msgstr "Verkeerd wachtwoord opgegeven. Probeer het opnieuw."
 
-#: src/core/Socket.js:1176
+#: src/core/Socket.js:1177
 msgid "Only the document owner can change the password."
 msgstr "Alleen de eigenaar van het document kan het wachtwoord wijzigen."
 
-#: src/core/Socket.js:1207 src/core/Socket.js:1212
+#: src/core/Socket.js:1208 src/core/Socket.js:1213
 msgid "Missing Fonts"
 msgstr "Ontbrekende lettertypes"
 
-#: src/core/Socket.js:1244
+#: src/core/Socket.js:1245
 msgid "Someone"
 msgstr "Iemand"
 
-#: src/core/Socket.js:1245
+#: src/core/Socket.js:1246
 msgid "{username} saved this document as {filename}. Do you want to join?"
 msgstr ""
 "{username} heeft dit document opgeslagen als {filename}. Wilt u meedoen?"
 
-#: src/core/Socket.js:1262
+#: src/core/Socket.js:1263
 msgid "The document is being renamed and will reload shortly"
 msgstr "Het document wordt hernoemd en zal binnenkort opnieuw worden geladen"
 
-#: src/core/Socket.js:1265
+#: src/core/Socket.js:1266
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
 "Het document schakelt over naar Offline modus en zal binnenkort herladen"
 
-#: src/core/Socket.js:1347
+#: src/core/Socket.js:1348
 msgid "Connecting..."
 msgstr "Bezig met verbinden..."
 
-#: src/core/Socket.js:1362
+#: src/core/Socket.js:1363
 msgid "Server is shutting down"
 msgstr "Server wordt afgesloten"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Exported to storage"
 msgstr "Geëxporteerd naar opslag"
 
-#: src/core/Socket.js:1398
+#: src/core/Socket.js:1399
 msgid "Successfully exported: "
 msgstr "Succesvol geëxporteerd: "
 
-#: src/core/Socket.js:1426
+#: src/core/Socket.js:1427
 msgid "Discard"
 msgstr "Verwerpen"
 
-#: src/core/Socket.js:1438
+#: src/core/Socket.js:1439
 msgid "Save to new file"
 msgstr "Als nieuw bestand opslaan"
 
-#: src/core/Socket.js:1448
+#: src/core/Socket.js:1449
 msgid "Document has been changed"
 msgstr "Document is gewijzigd"
 
-#: src/core/Socket.js:1449
+#: src/core/Socket.js:1450
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -3105,7 +3114,7 @@ msgstr ""
 "Document is gewijzigd tijdens opslag. Wat zou wilt u doen met uw niet-"
 "opgeslagen wijzigingen?"
 
-#: src/core/Socket.js:1712
+#: src/core/Socket.js:1713
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -3113,11 +3122,11 @@ msgstr ""
 "Ach, dit is vervelend. We kunnen geen verbinding maken met uw document. "
 "Probeer het opnieuw."
 
-#: src/core/Socket.js:1729
+#: src/core/Socket.js:1730
 msgid "Reconnecting..."
 msgstr "Opnieuw verbinden..."
 
-#: src/core/Socket.js:1739
+#: src/core/Socket.js:1740
 msgid "The server has been disconnected."
 msgstr "De verbinding met de server is verbroken."
 
@@ -3465,15 +3474,15 @@ msgstr "het tabblad Help"
 msgid "the View menu"
 msgstr "het menu Beeld"
 
-#: src/layer/tile/CanvasTileLayer.js:1646
+#: src/layer/tile/CanvasTileLayer.js:1647
 msgid "Functions"
 msgstr "Functies"
 
-#: src/layer/tile/CanvasTileLayer.js:1913
+#: src/layer/tile/CanvasTileLayer.js:1914
 msgid "Named Range"
 msgstr "Benoemd bereik"
 
-#: src/layer/tile/CanvasTileLayer.js:3662
+#: src/layer/tile/CanvasTileLayer.js:3668
 msgid "No Comments"
 msgstr "Geen notities"
 
@@ -3498,11 +3507,11 @@ msgstr "waarschuwing: kopieer/plakverzoek time-out"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Downloaden van het klembord is mislukt; kopieer opnieuw"
 
-#: src/map/Clipboard.js:1273
+#: src/map/Clipboard.js:1284
 msgid "Please use the paste buttons on your on-screen keyboard."
 msgstr "Gebruik de plaktoetsen op uw schermtoetsenbord."
 
-#: src/map/Clipboard.js:1329
+#: src/map/Clipboard.js:1340
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
@@ -3510,23 +3519,23 @@ msgstr ""
 "Er is al een download gestart voor een grote kopieer/plak-actie. Wacht tot "
 "die gereed is of annuleer die voor u een nieuwe start"
 
-#: src/map/Clipboard.js:1351
+#: src/map/Clipboard.js:1362
 msgid "Paste from this document"
 msgstr "Plakken uit dit document"
 
-#: src/map/Clipboard.js:1351
+#: src/map/Clipboard.js:1362
 msgid "Cancel paste special"
 msgstr "Annuleren plakken speciaal"
 
-#: src/map/Clipboard.js:1361
+#: src/map/Clipboard.js:1384
 msgid "Your browser has very limited access to the clipboard"
 msgstr "Uw browser heeft zeer beperkte toegang tot het klembord"
 
-#: src/map/Clipboard.js:1366
+#: src/map/Clipboard.js:1389
 msgid "Please use following combination to see more options:"
 msgstr "Gebruik de volgende combinatie om meer opties te zien:"
 
-#: src/map/Clipboard.js:1384
+#: src/map/Clipboard.js:1407
 msgid "Close popup to ignore paste special"
 msgstr "Sluit popup om plakken speciaal te negeren"
 
