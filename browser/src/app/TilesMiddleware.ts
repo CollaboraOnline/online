@@ -260,8 +260,10 @@ class CanvasCache {
 			// context memory that can be allocated. Reducing the canvas
 			// size to zero is a way to reduce the number of bytes counted
 			// against this limit.
-			item.canvas.width = 0;
-			item.canvas.height = 0;
+			if (item.canvas) {
+				item.canvas.width = 0;
+				item.canvas.height = 0;
+			}
 
 			delete item.canvas;
 		}
