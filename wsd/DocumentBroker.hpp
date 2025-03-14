@@ -380,8 +380,6 @@ public:
 #if !MOBILEAPP
     void syncBrowserSettings(const std::string& userId, const std::string& json);
 
-    void uploadBrowserSettingsToWopiHost(const std::shared_ptr<ClientSession>& session);
-
     void uploadPresetsToWopiHost();
 #endif
 

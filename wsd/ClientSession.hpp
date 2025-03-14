@@ -290,6 +290,8 @@ public:
         return _browserSettingsJSON;
     }
 
+    void uploadBrowserSettingsToWopiHost();
+
     /// Override parsedDocOption values we get from browser setting json
     /// Because when client sends `load url` it doesn't have information about browser setting json
     void overrideDocOption();
