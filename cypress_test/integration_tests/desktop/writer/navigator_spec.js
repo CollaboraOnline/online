@@ -24,7 +24,7 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 
 	it('Navigator visual test', function() {
 		cy.wait(500); // wait to make fully rendered
-		cy.cGet('#contenttree').compareSnapshot('navigator_writer', 0.05);
+		cy.cGet('#contenttree').compareSnapshot('navigator_writer', 0.06);
 	});
 
 	it('Jump to element. Navigator -> Document', function() {

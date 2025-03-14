@@ -47,8 +47,8 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 			cy.cGet('body').realMouseUp();
 		});
 
-		cy.cGet('#test-div-shape-handle-3').should('exist');
 		cy.wait(1000);
+		cy.cGet('#test-div-shape-handle-3').should('exist');
 		cy.cGet('#canvas-container > svg').should('exist');
 		helper.assertImageSize(418, 111);
 	});
