@@ -323,7 +323,7 @@ app.definitions.Socket = L.Class.extend({
 		if (!window.bundlejsLoaded)
 			status += '[!bundlejsLoaded]';
 
-		L.Log.log(msg, type + status);
+		app.Log.log(msg, type + status);
 
 		if (!window.protocolDebug && !debugOn)
 			return;
