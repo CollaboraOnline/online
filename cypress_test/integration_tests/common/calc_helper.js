@@ -58,8 +58,12 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 		cy.cGet('.cursor-overlay .blinking-cursor').should('be.visible');
 	}
 
-	if (isA1)
-		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
+	if (isA1) {
+		cy.waitUntil(() => {
+			return cy.cGet(helper.addressInputSelector)
+				.should('have.prop', 'value', 'A1');
+		});
+	}
 
 	cy.log('<< clickOnFirstCell - end');
 }
