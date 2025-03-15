@@ -1406,26 +1406,27 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     }
 
     // Do the same for ui command logging
-    const auto logToFileUICmd = ConfigUtil::getConfigValue<bool>(conf, "logging_ui_cmd.file[@enable]", false);
+    const bool logToFileUICmd =
+        ConfigUtil::getConfigValue<bool>(conf, "logging_ui_cmd.file[@enable]", false);
     std::map<std::string, std::string> logPropertiesUICmd;
-    for (std::size_t i = 0; ; ++i)
-    {
-        const std::string confPath = "logging_ui_cmd.file.property[" + std::to_string(i) + ']';
-        const std::string confName = config().getString(confPath + "[@name]", "");
-        if (!confName.empty())
-        {
-            const std::string value = config().getString(confPath, "");
-            logPropertiesUICmd.emplace(confName, value);
-        }
-        else if (!config().has(confPath))
-        {
-            break;
-        }
-    }
-
-    // Setup the logfile envar for the kit processes.
     if (logToFileUICmd)
     {
+        for (std::size_t i = 0;; ++i)
+        {
+            const std::string confPath = "logging_ui_cmd.file.property[" + std::to_string(i) + ']';
+            const std::string confName = config().getString(confPath + "[@name]", "");
+            if (!confName.empty())
+            {
+                const std::string value = config().getString(confPath, "");
+                logPropertiesUICmd.emplace(confName, value);
+            }
+            else if (!config().has(confPath))
+            {
+                break;
+            }
+        }
+
+        // Setup the logfile envar for the kit processes.
         const auto it = logPropertiesUICmd.find("path");
         if (it != logPropertiesUICmd.end())
         {
