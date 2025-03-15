@@ -282,7 +282,7 @@ protected:
     int main(const std::vector<std::string>& args) override;
 
     /// Handle various global static destructors.
-    static void cleanup();
+    static void cleanup(int returnValue);
 
 private:
 #if !MOBILEAPP
