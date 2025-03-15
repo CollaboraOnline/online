@@ -4033,10 +4033,6 @@ int COOLWSD::innerMain()
 
     SigUtil::addActivity("finished with status " + std::to_string(returnValue));
 
-    // At least on centos7, Poco deadlocks while
-    // cleaning up its SSL context singleton.
-    Util::forcedExit(returnValue);
-
     return returnValue;
 #endif
 }
@@ -4062,10 +4058,27 @@ void COOLWSD::cleanup([[maybe_unused]] int returnValue)
         FileRequestHandler.reset();
         JWTAuth::cleanup();
 
+        TraceDumper.reset();
+
+        Socket::InhibitThreadChecks = true;
+        SocketPoll::InhibitThreadChecks = true;
+
+        // Delete these while the static Admin instance is still alive.
+        {
+            std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
+            DocBrokers.clear();
+        }
+
 #if ENABLE_SSL
         // Finally, we no longer need SSL.
         if (ConfigUtil::isSslEnabled())
         {
+#if !ENABLE_DEBUG
+            // At least on centos7, Poco deadlocks while
+            // cleaning up its SSL context singleton.
+            Util::forcedExit(returnValue);
+#endif // !ENABLE_DEBUG
+
             Poco::Net::uninitializeSSL();
             Poco::Crypto::uninitializeCrypto();
             ssl::Manager::uninitializeClientContext();
@@ -4073,15 +4086,6 @@ void COOLWSD::cleanup([[maybe_unused]] int returnValue)
         }
 #endif
 #endif
-
-        TraceDumper.reset();
-
-        Socket::InhibitThreadChecks = true;
-        SocketPoll::InhibitThreadChecks = true;
-
-        // Delete these while the static Admin instance is still alive.
-        std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
-        DocBrokers.clear();
     }
     catch (const std::exception& ex)
     {
