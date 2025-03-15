@@ -74,6 +74,26 @@ std::map<std::string, std::string> GetQueryParams(const Poco::URI& uri)
     return result;
 }
 
+static void addStorageDebugCookie([[maybe_unused]] Poco::Net::HTTPRequest& request)
+{
+#if ENABLE_DEBUG
+    static const char* CoolStorageCookie = std::getenv("COOL_STORAGE_COOKIE");
+    if (CoolStorageCookie != nullptr)
+    {
+        const StringVector cookieTokens =
+            StringVector::tokenize(std::string(CoolStorageCookie), ':');
+        if (cookieTokens.size() == 2)
+        {
+            Poco::Net::NameValueCollection nvcCookies;
+            nvcCookies.add(cookieTokens[0], cookieTokens[1]);
+            request.setCookies(nvcCookies);
+            LOG_TRC("Added storage debug cookie [" << cookieTokens[0] << '=' << cookieTokens[1]
+                                                   << ']');
+        }
+    }
+#endif
+}
+
 void initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
                      const Authorization& auth)
 {
@@ -81,7 +101,7 @@ void initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
 
     auth.authorizeRequest(request);
 
-    // addStorageDebugCookie(request);
+    addStorageDebugCookie(request);
 
     // TODO: Avoid repeated parsing.
     std::map<std::string, std::string> params = GetQueryParams(uri);
