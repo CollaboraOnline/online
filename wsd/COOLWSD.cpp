@@ -4069,6 +4069,8 @@ void COOLWSD::cleanup([[maybe_unused]] int returnValue)
             DocBrokers.clear();
         }
 
+        SigUtil::uninitialize();
+
 #if ENABLE_SSL
         // Finally, we no longer need SSL.
         if (ConfigUtil::isSslEnabled())
