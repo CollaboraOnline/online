@@ -1377,24 +1377,24 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     const auto logToFile = ConfigUtil::getConfigValue<bool>(conf, "logging.file[@enable]", false);
     std::map<std::string, std::string> logProperties;
-    for (std::size_t i = 0; ; ++i)
-    {
-        const std::string confPath = "logging.file.property[" + std::to_string(i) + ']';
-        const std::string confName = config().getString(confPath + "[@name]", "");
-        if (!confName.empty())
-        {
-            const std::string value = config().getString(confPath, "");
-            logProperties.emplace(confName, value);
-        }
-        else if (!config().has(confPath))
-        {
-            break;
-        }
-    }
-
-    // Setup the logfile envar for the kit processes.
     if (logToFile)
     {
+        for (std::size_t i = 0;; ++i)
+        {
+            const std::string confPath = "logging.file.property[" + std::to_string(i) + ']';
+            const std::string confName = config().getString(confPath + "[@name]", "");
+            if (!confName.empty())
+            {
+                const std::string value = config().getString(confPath, "");
+                logProperties.emplace(confName, value);
+            }
+            else if (!config().has(confPath))
+            {
+                break;
+            }
+        }
+
+        // Setup the logfile envar for the kit processes.
         const auto it = logProperties.find("path");
         if (it != logProperties.end())
         {
