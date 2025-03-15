@@ -3,6 +3,9 @@
 /// <reference path="../src/geometry/Point.ts" />
 /// <reference path="../src/geometry/Bounds.ts" />
 /// <reference path="../src/app/TilesMiddleware.ts" />
+/// <reference path="../src/app/Rectangle.ts" />
+/// <reference path="../src/app/LOUtil.ts" />
+/// <reference path="../src/app/MultiPageViewLayout.ts" />
 /// <reference path="./helper/canvasContainerSetup.ts" />
 /// <reference path="./helper/rectUtil.ts" />
 
@@ -14,8 +17,6 @@ var dom = new jsdom.JSDOM(canvasDomString());
 addMockCanvas(dom.window);
 global.window = dom.window;
 global.document = dom.window.document;
-
-app.canvasSize = new cool.SimplePoint(0, 0);
 
 const canvasWidth = 1024;
 const canvasHeight = 768;

@@ -252,7 +252,7 @@ L.Control.Ruler = L.Control.extend({
 		this.options.rightParagraphIndent = parseFloat(state.right.replace(',', '.')) / conversionFactorToInches ;
 		this.options.indentUnit = state.unit;
 
-		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (this._map._docLayer._docWidthTwips * 2540/1440);
+		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (app.file.size.x * 2540/1440);
 
 		// Conversion to mm100.
 		if (this.options.indentUnit === 'inch') {
@@ -347,7 +347,7 @@ L.Control.Ruler = L.Control.extend({
 		// RULER_TAB_RIGHT, RULER_TAB_CENTER, and RULER_TAB_DECIMAL. See <svtools/ruler.hxx>.
 		L.DomUtil.removeChildNodes(this._rTSContainer);
 
-		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (this._map._docLayer._docWidthTwips * 2540/1440);
+		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (app.file.size.x * 2540/1440);
 		this._rTSContainer.tabStops = [];
 		for (var tabstopIndex = 0; tabstopIndex < this.options.tabs.length; tabstopIndex++) {
 			var markerClass = null;

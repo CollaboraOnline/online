@@ -44,7 +44,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			app.file.partBasedView = true; // For Writer and Calc, this one should always be "true".
 
 		this._partHeightTwips = 0; // Single part's height.
-		this._partWidthTwips = 0; // Single part's width. These values are equal to _docWidthTwips & _docHeightTwips when app.file.partBasedView is true.
+		this._partWidthTwips = 0; // Single part's width. These values are equal to app.file.size.x & app.file.size.y when app.file.partBasedView is true.
 
 		app.events.on('contextchange', this._onContextChange.bind(this));
 	},
@@ -109,9 +109,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	newAnnotation: function (commentData) {
-		var ratio = this._tileWidthTwips / this._tileSize;
-		var docTopLeft = app.sectionContainer.getDocumentTopLeft();
-		docTopLeft = [docTopLeft[0] * ratio, docTopLeft[1] * ratio];
+		let docTopLeft = app.sectionContainer.getDocumentTopLeft();
+		docTopLeft = [docTopLeft[0] * app.pixelsToTwips, docTopLeft[1] * app.pixelsToTwips];
 		commentData.anchorPos = [docTopLeft[0], docTopLeft[1]];
 		commentData.rectangle = [docTopLeft[0], docTopLeft[1], 566, 566];
 
@@ -222,25 +221,23 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		textMsg = textMsg.replace('status: ', '');
 		textMsg = textMsg.replace('statusupdate: ', '');
 		if (statusJSON.width && statusJSON.height && this._documentInfo !== textMsg) {
-			this._docWidthTwips = statusJSON.width;
-			this._docHeightTwips = statusJSON.height;
+			app.file.size.x = statusJSON.width;
+			app.file.size.y = statusJSON.height;
 			this._docType = statusJSON.type;
 			if (this._docType === 'drawing') {
 				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'drawing');
 			}
 			this._parts = statusJSON.partscount;
-			this._partHeightTwips = this._docHeightTwips;
-			this._partWidthTwips = this._docWidthTwips;
+			this._partHeightTwips = app.file.size.y;
+			this._partWidthTwips = app.file.size.x;
 
 			if (app.file.fileBasedView) {
-				var totalHeight = this._parts * this._docHeightTwips; // Total height in twips.
+				var totalHeight = this._parts * app.file.size.y; // Total height in twips.
 				totalHeight += (this._parts) * this._spaceBetweenParts; // Space between parts.
-				this._docHeightTwips = totalHeight;
+				app.file.size.y = totalHeight;
 			}
 
-			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
-			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
-			app.view.size.pixels = app.file.size.pixels.slice();
+			app.view.size = app.file.size.clone();
 
 			app.impress.partList = Object.assign([], statusJSON.parts);
 

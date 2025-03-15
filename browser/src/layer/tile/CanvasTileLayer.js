@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout */
 
 function clamp(num, min, max)
 {
@@ -265,35 +265,18 @@ L.TileSectionManager = L.Class.extend({
 
 	// Details of tile areas to render
 	_paintContext: function() {
-		var tileSize = new L.Point(this._layer._getTileSize(), this._layer._getTileSize());
-
 		var viewBounds = this._map.getPixelBoundsCore();
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		var paneBoundsList = splitPanesContext ?
 		    splitPanesContext.getPxBoundList(viewBounds) :
 		    [viewBounds];
-		var canvasCorePx = new L.Point(this._pixWidth, this._pixHeight);
 
-		return { canvasSize: canvasCorePx,
-			 tileSize: tileSize,
+		return {
 			 viewBounds: viewBounds,
 			 paneBoundsList: paneBoundsList,
 			 paneBoundsActive: splitPanesContext ? true: false,
 			 splitPos: this.getSplitPos(),
 		};
-	},
-
-	coordsIntersectVisible: function (coords) {
-		if (!app.file.fileBasedView) {
-			var ctx = this._paintContext();
-			var tileBounds = new L.Bounds(new L.Point(coords.x, coords.y), new L.Point(coords.x + ctx.tileSize.x, coords.y + ctx.tileSize.y));
-			return tileBounds.intersectsAny(ctx.paneBoundsList);
-		}
-		else {
-			var ratio = this._layer._tileSize / this._layer._tileHeightTwips;
-			var partHeightPixels = Math.round((this._layer._partHeightTwips + this._layer._spaceBetweenParts) * ratio);
-			return app.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pixels[0], app.tile.size.pixels[1]]);
-		}
 	},
 
 	// Debug tool. Splits are enabled for only Calc for now.
@@ -628,9 +611,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	initialize: function (options) {
 		options = L.setOptions(this, options);
 
-		this._tileWidthPx = options.tileSize;
-		this._tileHeightPx = options.tileSize;
-
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
 		this._documentInfo = '';
@@ -787,7 +767,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	_reset: function (hard) {
 		var tileZoom = Math.round(this._map.getZoom()),
 		    tileZoomChanged = this._tileZoom !== tileZoom;
-		this._tileSize = this._getTileSize();
 
 		if (hard || tileZoomChanged) {
 			this._resetClientVisArea();
@@ -798,18 +777,12 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._updateMaxBounds();
 			}
 
-			app.tile.size.pixels = [this._tileSize, this._tileSize];
-			if (this._tileWidthTwips === undefined) {
-				this._tileWidthTwips = this.options.tileWidthTwips;
-				app.tile.size.twips[0] = this.options.tileWidthTwips;
+			if (app.tile.size.x === 0 || app.tile.size.y === 0) {
+				let tileWidthTwips = this.options.tileWidthTwips;
+				app.twipsToPixels =  TileManager.tileSize / tileWidthTwips;
+				app.pixelsToTwips = 1 / app.twipsToPixels;
+				app.tile.size.pX = app.tile.size.pY = TileManager.tileSize;
 			}
-			if (this._tileHeightTwips === undefined) {
-				this._tileHeightTwips = this.options.tileHeightTwips;
-				app.tile.size.twips[1] = this.options.tileHeightTwips;
-			}
-
-			app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
-			app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
 
 			if (!L.Browser.mobileWebkit)
 				TileManager.update(this._map.getCenter(), tileZoom);
@@ -848,15 +821,12 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_updateTileTwips: function () {
 		// smaller zoom = zoom in
-		var factor = Math.pow(1.2, (this._map.options.zoom - this._tileZoom));
-		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * factor);
-		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
-		app.tile.size.twips = [this._tileWidthTwips, this._tileHeightTwips];
-		app.file.size.pixels = [Math.round(app.tile.size.pixels[0] * (app.file.size.twips[0] / app.tile.size.twips[0])), Math.round(app.tile.size.pixels[1] * (app.file.size.twips[1] / app.tile.size.twips[1]))];
-		app.view.size.pixels = app.file.size.pixels.slice();
+		const factor = Math.pow(1.2, (this._map.options.zoom - this._tileZoom));
+		const tileWidthTwips = Math.round(this.options.tileWidthTwips * factor);
 
-		app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
-		app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
+		app.twipsToPixels = TileManager.tileSize / tileWidthTwips;
+		app.pixelsToTwips = 1 / app.twipsToPixels;
+		app.tile.size.pX = app.tile.size.pY = TileManager.tileSize;
 
 		if (this._docType === 'spreadsheet')
 			this._syncTileContainerSize();
@@ -870,8 +840,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		// cells downwards and to the right, like we have on desktop
 		var viewSize = this._map.getSize();
 		var scale = this._map.getZoomScale(newZoom);
-		var width = this._docWidthTwips / this._tileWidthTwips * this._tileSize * scale;
-		var height = this._docHeightTwips / this._tileHeightTwips * this._tileSize * scale;
+		var width = app.file.size.x / app.tile.size.x * TileManager.tileSize * scale;
+		var height = app.file.size.y / app.tile.size.y * TileManager.tileSize * scale;
 		if (width < viewSize.x || height < viewSize.y) {
 			// if after zoomimg the document becomes smaller than the viewing area
 			width = Math.max(width, viewSize.x);
@@ -901,10 +871,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		requestAnimationFrame(() => this._map.fire('updatescrolloffset', {x: x, y: y, updateHeaders: true}));
 	},
 
-	_getTileSize: function () {
-		return this.options.tileSize;
-	},
-
 	_moveStart: function () {
 		TileManager.resetPreFetching();
 		this._moveInProgress = true;
@@ -923,7 +889,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		TileManager.update();
 		TileManager.resetPreFetching(true);
-		this._onCurrentPageUpdate();
 	},
 
 	_isLatLngInView: function (position) {
@@ -951,10 +916,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!this._map._docLoaded)
 			return;
 
-		var newClientZoom = 'tilepixelwidth=' + this._tileWidthPx + ' ' +
-		    'tilepixelheight=' + this._tileHeightPx + ' ' +
-		    'tiletwipwidth=' + this._tileWidthTwips + ' ' +
-		    'tiletwipheight=' + this._tileHeightTwips + ' ' +
+		var newClientZoom = 'tilepixelwidth=' + TileManager.tileSize + ' ' +
+		    'tilepixelheight=' + TileManager.tileSize + ' ' +
+		    'tiletwipwidth=' + app.tile.size.x + ' ' +
+		    'tiletwipheight=' + app.tile.size.y + ' ' +
 		    'dpiscale=' + window.devicePixelRatio + ' ' +
 		    'zoom=' + this._map.getZoom()
 
@@ -1533,8 +1498,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					+ ' ';
 			}
 			msg += 'x=0 y=0 ';
-			msg += 'width=' + this._docWidthTwips + ' ';
-			msg += 'height=' + this._docHeightTwips;
+			msg += 'width=' + app.file.size.x + ' ';
+			msg += 'height=' + app.file.size.y;
 			if (wireIdToken !== undefined)
 				msg += ' ' + wireIdToken;
 			this._onInvalidateTilesMsg(msg);
@@ -3074,8 +3039,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._docType === 'text') {
 				// For Writer documents, disallow scrolling to cursor outside of the page (horizontally)
 				// Use document dimensions to approximate page width
-				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.file.size.twips[0]);
-				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.file.size.twips[0]);
+				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.view.size.x);
+				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.view.size.x);
 			}
 
 			if (!app.isPointVisibleInTheDisplayedArea(new app.definitions.simplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
@@ -3361,8 +3326,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (app.map._docLayer.isCalcRTL()) {
 			// Mirror position from right to left.
-			startPos.x = app.sectionContainer.getDocumentBounds()[2] - (startPos.x - app.sectionContainer.getDocumentBounds()[0]);
-			endPos.x = app.sectionContainer.getDocumentBounds()[2] - (endPos.x - app.sectionContainer.getDocumentBounds()[0]);
+			startPos.x = app.file.viewedRectangle.pX2 - (startPos.x - app.file.viewedRectangle.pX1);
+			endPos.x = app.file.viewedRectangle.pX2 - (endPos.x - app.file.viewedRectangle.pX1);
 		}
 
 		const oldStart = this._selectionHandles.start.getPosition();
@@ -3431,7 +3396,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this.isCalc())
 			return;
 
-		if (isNaN(this._docWidthTwips)) { return; }
+		if (app.file.size.x === 0) { return; }
 		var oldSize = e ? e.oldSize : this._map.getSize();
 		var newSize = e ? e.newSize : this._map.getSize();
 
@@ -3442,8 +3407,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (this.isWriter() && newSize.x - oldSize.x === 0) { return; }
 
-		var widthTwips = newSize.x * this._tileWidthTwips / this._tileSize;
-		var ratio = widthTwips / this._docWidthTwips;
+		var widthTwips = newSize.x * app.tile.size.x / TileManager.tileSize;
+		var ratio = widthTwips / app.file.size.x;
 
 		maxZoom = maxZoom ? maxZoom : 10;
 		var zoom = this._map.getScaleZoom(ratio, 10);
@@ -3463,29 +3428,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.setZoom(zoom, {animate: false});
 	},
 
-	_onCurrentPageUpdate: function () {
-		if (!this._map)
-			return;
-
-		var mapCenter = this._map.project(this._map.getCenter());
-		if (!this._partPageRectanglesPixels || !(this._currentPage >= 0) || this._currentPage >= this._partPageRectanglesPixels.length ||
-				this._partPageRectanglesPixels[this._currentPage].contains(mapCenter)) {
-			// page number has not changed
-			return;
-		}
-		for (var i = 0; i < this._partPageRectanglesPixels.length; i++) {
-			if (this._partPageRectanglesPixels[i].contains(mapCenter)) {
-				this._currentPage = i;
-				this._map.fire('pagenumberchanged', {
-					currentPage: this._currentPage,
-					pages: this._pages,
-					docType: this._docType
-				});
-				return;
-			}
-		}
-	},
-
 	// Cells can change position during changes of zoom level in calc
 	// hence we need to request an updated cell cursor position for this level.
 	_onCellCursorShift: function (force) {
@@ -3496,10 +3438,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	requestCellCursor: function() {
 		app.socket.sendMessage('commandvalues command=.uno:CellCursor'
-			+ '?outputHeight=' + this._tileWidthPx
-			+ '&outputWidth=' + this._tileHeightPx
-			+ '&tileHeight=' + this._tileWidthTwips
-			+ '&tileWidth=' + this._tileHeightTwips);
+			+ '?outputHeight=' + TileManager.tileSize
+			+ '&outputWidth=' + TileManager.tileSize
+			+ '&tileHeight=' + app.tile.size.x
+			+ '&tileWidth=' + app.tile.size.y);
 	},
 
 	_invalidateAllPreviews: function () {
@@ -3520,14 +3462,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				for (var key in this._map._docPreviews) {
 					// find preview tiles that need to be updated and add them in a set
 					var preview = this._map._docPreviews[key];
-					if (preview.index >= 0 && this.isWriter()) {
-						// we have a preview for a page
-						if (preview.invalid || (this._partPageRectanglesTwips.length > preview.index &&
-								invalidBounds.intersects(this._partPageRectanglesTwips[preview.index]))) {
-							toInvalidate[key] = true;
-						}
-					}
-					else if (preview.index >= 0) {
+					if (preview.index >= 0) {
 						// we have a preview for a part
 						if (preview.invalid || preview.index === this._selectedPart ||
 								(preview.index === this._prevSelectedPart && this._prevSelectedPartNeedsUpdate)) {
@@ -3775,6 +3710,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			var documentPos = documentBounds.min;
 			var documentEndPos = documentBounds.max;
 			app.sectionContainer.setDocumentBounds([documentPos.x, documentPos.y, documentEndPos.x, documentEndPos.y]);
+			if (app.file.writer.multiPageView)
+				MultiPageViewLayout.reset();
 		}
 	},
 
@@ -3950,9 +3887,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	onAdd: function (map) {
-		this._tileWidthPx = this.options.tileSize;
-		this._tileHeightPx = this.options.tileSize;
-
 		this._initContainer();
 
 		// Initiate selection handles.
@@ -4201,8 +4135,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_twipsToCorePixels: function (twips) {
 		return new L.Point(
-			twips.x / this._tileWidthTwips * this._tileSize,
-			twips.y / this._tileHeightTwips * this._tileSize);
+			twips.x * app.twipsToPixels,
+			twips.y * app.twipsToPixels);
 	},
 
 	_twipsToCorePixelsBounds: function (twips) {
@@ -4214,20 +4148,20 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_corePixelsToTwips: function (corePixels) {
 		return new L.Point(
-			corePixels.x / this._tileSize * this._tileWidthTwips,
-			corePixels.y / this._tileSize * this._tileHeightTwips);
+			corePixels.x * app.pixelsToTwips,
+			corePixels.y * app.pixelsToTwips);
 	},
 
 	_twipsToCssPixels: function (twips) {
 		return new L.Point(
-			(twips.x / this._tileWidthTwips) * (this._tileSize / app.dpiScale),
-			(twips.y / this._tileHeightTwips) * (this._tileSize / app.dpiScale));
+			(twips.x / app.tile.size.x) * (TileManager.tileSize / app.dpiScale),
+			(twips.y / app.tile.size.y) * (TileManager.tileSize / app.dpiScale));
 	},
 
 	_cssPixelsToTwips: function (pixels) {
 		return new L.Point(
-			((pixels.x * app.dpiScale) / this._tileSize) * this._tileWidthTwips,
-			((pixels.y * app.dpiScale) / this._tileSize) * this._tileHeightTwips);
+			(pixels.x * app.dpiScale) * app.pixelsToTwips,
+			(pixels.y * app.dpiScale) * app.pixelsToTwips);
 	},
 
 	_twipsToLatLng: function (twips, zoom) {
@@ -4248,17 +4182,13 @@ L.CanvasTileLayer = L.Layer.extend({
 		return this._cssPixelsToTwips(pixels);
 	},
 
-	_isTileReadyToDraw: function(tile) {
-		return !!tile.imgDataCache;
-	},
-
 	_updateMaxBounds: function (sizeChanged) {
-		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
+		if (app.file.size.x === 0 || app.file.size.y === 0) {
 			return;
 		}
 
-		var docPixelLimits = new L.Point(app.file.size.pixels[0] / app.dpiScale, app.file.size.pixels[1] / app.dpiScale);
-		var scrollPixelLimits = new L.Point(app.view.size.pixels[0] / app.dpiScale, app.view.size.pixels[1] / app.dpiScale);
+		var docPixelLimits = new L.Point(app.file.size.pX / app.dpiScale, app.file.size.pY / app.dpiScale);
+		var scrollPixelLimits = new L.Point(app.view.size.pX / app.dpiScale, app.view.size.pY / app.dpiScale);
 		var topLeft = this._map.unproject(new L.Point(0, 0));
 
 		if (this._documentInfo === '' || sizeChanged) {
@@ -4268,7 +4198,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._docPixelSize = {x: docPixelLimits.x, y: docPixelLimits.y};
-		this._map.fire('scrolllimits', {x: scrollPixelLimits.x, y: scrollPixelLimits.y});
+		this._map.fire('scrolllimits', {});
 	},
 
 	// Used with filebasedview.
@@ -4288,19 +4218,17 @@ L.CanvasTileLayer = L.Layer.extend({
 			found = false;
 		}
 
-		var ratio = this._tileSize / this._tileHeightTwips;
+		var ratio = TileManager.tileSize / app.tile.size.y;
 		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * ratio);
 		var partWidthPixels = Math.round(this._partWidthTwips * ratio);
 
 		var rectangle;
 		var maxArea = -1;
 		var mostVisiblePart = 0;
-		var docBoundsRectangle = app.sectionContainer.getDocumentBounds();
-		docBoundsRectangle[2] = docBoundsRectangle[2] - docBoundsRectangle[0];
-		docBoundsRectangle[3] = docBoundsRectangle[3] - docBoundsRectangle[1];
+		const viewedRectangle = app.file.viewedRectangle.pToArray();
 		for (i = 0; i < parts.length; i++) {
 			rectangle = [0, partHeightPixels * parts[i].part, partWidthPixels, partHeightPixels];
-			rectangle = app.LOUtil._getIntersectionRectangle(rectangle, docBoundsRectangle);
+			rectangle = app.LOUtil._getIntersectionRectangle(rectangle, viewedRectangle);
 			if (rectangle) {
 				if (rectangle[2] * rectangle[3] > maxArea) {
 					maxArea = rectangle[2] * rectangle[3];
@@ -4340,6 +4268,9 @@ L.CanvasTileLayer = L.Layer.extend({
 	_sendClientVisibleArea: function (forceUpdate) {
 		if (!this._map._docLoaded)
 			return;
+
+		if (app.file.writer.multiPageView)
+			return; // This view mode sends the client visible area after modifying the document position.
 
 		var splitPos = this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0);
 
@@ -4384,7 +4315,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_coordsToPixBounds: function (coords) {
 		// coords.x and coords.y are the pixel coordinates of the top-left corner of the tile.
 		var topLeft = new L.Point(coords.x, coords.y);
-		var bottomRight = topLeft.add(new L.Point(this._tileSize, this._tileSize));
+		var bottomRight = topLeft.add(new L.Point(TileManager.tileSize, TileManager.tileSize));
 		return new L.Bounds(topLeft, bottomRight);
 	},
 

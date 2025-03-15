@@ -538,7 +538,7 @@ export class Header extends app.definitions.canvasSectionObject {
 		this.context.strokeStyle = 'darkblue';
 		this.context.beginPath();
 		this.context.moveTo(x, y);
-		this.context.lineTo(this._isColumn ? x: (isRTL ? -this.myTopLeft[0]: this.containerObject.getCanvasRight()), this._isColumn ? this.containerObject.getCanvasBottom(): y);
+		this.context.lineTo(this._isColumn ? x: (isRTL ? -this.myTopLeft[0]: this.containerObject.getWidth()), this._isColumn ? this.containerObject.getHeight(): y);
 		this.context.stroke();
 	}
 
