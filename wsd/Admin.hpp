@@ -71,13 +71,13 @@ private:
 class MemoryStatsTask;
 
 /// An admin command processor.
-class Admin : public SocketPoll
+class Admin final : public SocketPoll
 {
     Admin(const Admin &) = delete;
     Admin& operator = (const Admin &) = delete;
     Admin();
 public:
-    virtual ~Admin();
+    ~Admin() override;
 
     static Admin& instance()
     {
