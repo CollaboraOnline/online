@@ -75,6 +75,9 @@ namespace SigUtil
     /// and WTERMSIG(stat_loc), if it were SEGV, ABRT, or BUS.
     std::pair<int, int> reapZombieChild(int pid);
 
+    /// Uninitialize and free memory.
+    void uninitialize();
+
 #if !MOBILEAPP
 
     /// Open the signalLog file.
