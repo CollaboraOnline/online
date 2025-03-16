@@ -347,15 +347,14 @@ private:
 
 /// Tracks view-port area tiles to track which we last
 /// sent to avoid re-sending an existing delta causing grief
-class ClientDeltaTracker final {
-public:
+class ClientDeltaTracker final
+{
     // FIXME: could be a simple 2d TileWireId array for better packing.
     std::unordered_set<TileDesc,
                        TileDescCacheHasher,
                        TileDescCacheCompareEq> _cache;
-    ClientDeltaTracker() {
-    }
 
+public:
     // FIXME: only need to store this for the current viewports
     void updateViewPort( /* ... */ )
     {
