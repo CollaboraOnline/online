@@ -876,16 +876,25 @@ DocumentBroker::~DocumentBroker()
     // Do this early - to avoid operating on _childProcess from two threads.
     _poll->joinThread();
 
-    for (const auto& sessionIt : _sessions)
+    for (const auto& [id, session] : _sessions)
     {
-        if (sessionIt.second->isLive())
+        if (session->isLive())
         {
             LOG_WRN("Destroying DocumentBroker ["
                     << _docKey << "] while having " << _sessions.size()
                     << " unremoved sessions, at least one is still live");
             break;
         }
+
+        if (session.use_count() > 1)
+        {
+            LOG_WRN("Destroying DocumentBroker [" << _docKey << "] while having session [" << id
+                                                  << "] with " << session.use_count()
+                                                  << " references");
+        }
     }
+
+    _sessions.clear();
 
     // Need to first make sure the child exited, socket closed,
     // and thread finished before we are destroyed.
