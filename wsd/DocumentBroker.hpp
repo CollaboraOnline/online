@@ -927,11 +927,19 @@ private:
         /// When unloading, we reduce throttling significantly.
         bool canRequestNow(bool unloading) const
         {
-            const std::chrono::milliseconds minTimeBetweenRequests =
-                unloading ? _minTimeBetweenRequests / 10 : _minTimeBetweenRequests;
+            std::chrono::milliseconds minTimeBetweenRequests =
+                std::max(_minTimeBetweenRequests, _lastRequestDuration);
+            if (unloading)
+            {
+                // More aggressive when unloading.
+                minTimeBetweenRequests /= 10;
+            }
+
             const auto now = RequestManager::now();
-            return !isActive() && std::min(timeSinceLastRequest(now), timeSinceLastResponse(now)) >=
-                                      std::max(minTimeBetweenRequests, _lastRequestDuration / 2);
+            const std::chrono::milliseconds timeSinceLastCommunication =
+                std::min(timeSinceLastRequest(now), timeSinceLastResponse(now));
+
+            return !isActive() && timeSinceLastCommunication >= minTimeBetweenRequests;
         }
 
         /// Sets the last request's result, either to success or failure.
