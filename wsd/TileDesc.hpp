@@ -268,8 +268,8 @@ public:
 
     /// Serialize this instance into a string.
     /// Optionally prepend a prefix.
-    std::string serialize(const std::string& prefix = std::string(),
-                          const std::string& suffix = std::string()) const
+    std::string serialize(std::string_view prefix = std::string_view(),
+                          std::string_view suffix = std::string_view()) const
     {
         std::ostringstream oss;
         oss << prefix
@@ -393,7 +393,7 @@ public:
     }
 
     /// Deserialize a TileDesc from a string format.
-    static TileDesc parse(const std::string& message)
+    static TileDesc parse(std::string_view message)
     {
         return parse(StringVector::tokenize(message.data(), message.size()));
     }
@@ -598,8 +598,8 @@ public:
 
     /// Serialize this instance into a string.
     /// Optionally prepend a prefix.
-    std::string serialize(const std::string& prefix = std::string(),
-                          const std::string &suffix = std::string()) const
+    std::string serialize(std::string_view prefix = std::string_view(),
+                          std::string_view suffix = std::string_view()) const
     {
         std::ostringstream oss;
         int num = 0;
@@ -757,7 +757,7 @@ public:
     }
 
     /// Deserialize a TileDesc from a string format.
-    static TileCombined parse(const std::string& message)
+    static TileCombined parse(std::string_view message)
     {
         return parse(StringVector::tokenize(message.data(), message.size()));
     }
