@@ -90,8 +90,6 @@ public:
         return false;
     }
 
-    ClientDeltaTracker _tracker;
-
     void resetTileSeq(const TileDesc &desc)
     {
         _tracker.resetTileSeq(desc);
@@ -398,6 +396,9 @@ private:
 
     /// Sockets to send binary selection content to
     std::vector<std::weak_ptr<StreamSocket>> _clipSockets;
+
+    /// Delta tile tracker.
+    ClientDeltaTracker _tracker;
 
     /// Visible area of the client
     Util::Rectangle _clientVisibleArea;
