@@ -74,15 +74,67 @@ class ShortcutDescriptor {
         preventDefault = true,
         platform = null,
     }: {
+        /** The type of document to register this keybind in. If omitted, the keybind will be registered for all document types */
         docType?: 'text' | 'presentation' | 'drawing' | 'spreadsheet',
+        /** The event type or types to register this keybind for. Generally you probably want this to be 'keydown' */
         eventType: string | readonly string[],
+        /** A bitfield of modifiers you want to be active. For example, Mod.CTRL | Mod.SHIFT would mean that *both* control and shift would need to be held while pressing the keybind.
+
+        On Mac, command is seen as Mod.CTRL and there is a separate Mod.MACCTRL to read control
+
+        If ommitted, no modifier will be required
+
+        @default Mod.NONE */
         modifier?: Mod,
+        /** The keyCode of the shortcut trigger key, as seen in the table on https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
+
+        It is rare but possible for this to provide different results in different browsers. For example, Safari sometimes returns keyCode 0 (unknown) on some event types when the bind would trigger certain system shortcuts. You should test any shortcuts you make with 'keyCode' on different browsers and systems to make sure they all work as intended.
+
+        You must provide at least one of 'key' or 'keyCode'. If you provide both, either a matching key or a matching keyCode will trigger the binding.
+
+        @deprecated Unless you know you need this, you should probably use 'key' instead, as this relies on a deprecated web API. It will not be removed as dead keys cannot be properly handled in the key API */
         keyCode?: number | readonly number[],
+        /** The key of the shortcut trigger key, as seen on https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
+
+        You must provide at least one of 'key' or 'keyCode'. If you provide both, either a matching key or a matching keyCode will trigger the binding.
+
+        When adding shortcuts using 'key' you should always test in multiple browsers and systems or ask for review from someone who can. Sometimes, particularly on keybinds that trigger "dead keys" (accents for letters), there are inconsistencies in different browsers. It's also possible for multiple different key combinations to trigger the same typed glyph - leading to this munging different keybinds together */
         key?: string,
+        /** The uno command, including its .uno: prefix, to run when this keybind is pressed
+
+        If both the unoAction and dispatchAction are provided, only the unoAction will trigger. The dispatchAction will be ignored.
+
+        If ommitted, no uno command will be run when this keybind is pressed */
         unoAction?: string,
+        /** The action to dispatch when the keybind is pressed
+
+        If both the unoAction and dispatchAction are provided, only the unoAction will trigger. The dispatchAction will be ignored.
+
+        If ommitted, no action will be dispatched when this keybind is pressed */
         dispatchAction?: string,
+        /** The view type (Edit or ReadOnly) to restrict this keybind to
+
+        If ommitted, the keybind will be active in both Edit and ReadOnly view types */
         viewType?: ViewType,
+        /** Whether to prevent the default system binding. This is important if you're overriding a system binding, and not generally harmful otherwise
+
+        Note that all keypresses which include a control (or a command on mac) are already preventDefaulted elsewhere to be sent to core. If you want to stop this, you should manually register a binding without any action but with this option set to false
+
+        Note that some browsers may not allow you to preventDefault some events. For example, Safari will not allow you to preventDefault the command+r keybind to refresh the current tab
+
+        @default true
+        */
         preventDefault?: boolean,
+        /** A bitfield of platforms you want this keybind to be active on
+
+        A user on any provided platform will get the keybind, so providing Platform.WINDOWS | Platform.LINUX would bind the key for both Windows *and* Linux (but not iOS, Android or Chromebook).
+
+        Platforms are detected in a mutually-exclusive fashion - that is: although, for example, Chromebook app users are necessarily using the Android app, they will only ever be registered as their most specific possible platform.
+
+        There will never be a platformless user. If a platform can't be detected, the user will be assumed to be using Linux. This is probably an OK assumption, given Windows and MacOS already have specific detections earlier.
+
+        If ommitted, the keybind will be active on all platforms
+        */
         platform?: Platform,
     }) {
         app.console.assert(keyCode !== null || key !== null, 'registering a keyboard shortcut without specifying either a key or a keyCode - this will result in an untriggerable shortcut');
