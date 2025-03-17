@@ -74,7 +74,7 @@ class ShortcutDescriptor {
         preventDefault = true,
         platform = null,
     }: {
-        docType?: string,
+        docType?: 'text' | 'presentation' | 'drawing' | 'spreadsheet',
         eventType: string | readonly string[],
         modifier?: Mod,
         keyCode?: number | readonly number[],
