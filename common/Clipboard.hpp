@@ -136,17 +136,25 @@ public:
     void dumpState(std::ostream& os) const
     {
         os << "Saved clipboards: " << _cache.size() << '\n';
+        size_t totalSize = 0;
         auto now = std::chrono::steady_clock::now();
         for (auto &it : _cache)
         {
-            std::string rawString = *it.second._rawData;
-            if (rawString.size() > 256)
-                rawString.resize(256);
+            std::shared_ptr<std::string> data = it.second._rawData;
 
-            os << "\t" << std::chrono::duration_cast<std::chrono::seconds>(
-                now - it.second._inserted).count() << " seconds\n";
-            Util::dumpHex(os, rawString, "", "\t");
+            os << "  size: " << data->size() << " bytes, lifetime: " <<
+                std::chrono::duration_cast<std::chrono::seconds>(
+                    now - it.second._inserted).count() << " seconds\n";
+            if (data->size() <= 256)
+                Util::dumpHex(os, *data, "", "  ");
+            else
+            {
+                std::string tmp = data->substr(0,256);
+                Util::dumpHex(os, tmp, "", "  ");
+            }
+            totalSize += data->size();
         }
+        os << "Saved clipboard total size: " << totalSize << '\n';
     }
 
     void insertClipboard(const std::string key[2],
