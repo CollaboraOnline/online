@@ -109,11 +109,31 @@ L.Map.FileInserter = L.Handler.extend({
 		this._toInsertBackground = {};
 	},
 
-	_sendFile: function (name, file, type) {
+	_sendFile: async function (name, file, type) {
 		var socket = app.socket;
 		var map = this._map;
 		var sectionContainer = app.sectionContainer;
 		var url = this.getWopiUrl(map);
+
+		var size;
+
+		if (type === 'multimedia') {
+			const videoElement = document.createElement('video');
+			const objectURL = window.URL.createObjectURL(file);
+			videoElement.src = objectURL;
+
+			const videoLoadPromise = new Promise((resolve) => {
+				videoElement.addEventListener("loadedmetadata", resolve);
+			});
+
+			videoElement.load();
+			await videoLoadPromise;
+
+			size = {
+				width: videoElement.videoWidth,
+				height: videoElement.videoHeight,
+			};
+		}
 
 		if ('processCoolUrl' in window) {
 			url = window.processCoolUrl({ url: url, type: 'insertfile' });
@@ -140,8 +160,15 @@ L.Map.FileInserter = L.Handler.extend({
 					for (var i = 0; i < byteBuffer.length; i++) {
 						strBytes += String.fromCharCode(byteBuffer[i]);
 					}
-					window.postMobileMessage('insertfile name=' + aFile.name + ' type=' + type +
-										       ' data=' + window.btoa(strBytes));
+
+					if (type === 'multimedia') {
+						window.postMobileMessage('insertfile name=' + aFile.name + ' type=' + type +
+											       ' data=' + window.btoa(strBytes) +
+											       ' width=' + size.width + ' height=' + size.height);
+					} else {
+						window.postMobileMessage('insertfile name=' + aFile.name + ' type=' + type +
+											       ' data=' + window.btoa(strBytes));
+					}
 				};
 			})(file);
 			reader.onerror = function(e) {
@@ -165,6 +192,8 @@ L.Map.FileInserter = L.Handler.extend({
 						}
 						if (section && section.sectionProperties.picturePicker && type === 'graphic') {
 							socket.sendMessage('contentcontrolevent type=picture' + ' name=' + name);
+						} else if (type === 'multimedia') {
+							socket.sendMessage('insertfile name=' + name + ' type=' + type + ' width=' + size.width + ' height=' + size.height);
 						} else {
 							socket.sendMessage('insertfile name=' + name + ' type=' + type);
 						}
