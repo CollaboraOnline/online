@@ -206,8 +206,6 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                     return
                 }
                 else if body.hasPrefix("HYPERLINK") {
-                    COWrapper.LOG_ERR("TODO: Implement HYPERLINK")
-                    /*
                     let messageBodyItems = body.components(separatedBy: " ")
                     if messageBodyItems.count >= 2 {
                         if let url = URL(string: messageBodyItems[1]) {
@@ -215,7 +213,6 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                             return
                         }
                     }
-                    */
                     return
                 }
                 else if body == "FONTPICKER" {
