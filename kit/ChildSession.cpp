@@ -1721,21 +1721,45 @@ bool ChildSession::paste(const char* buffer, int length, const StringVector& tok
 bool ChildSession::insertFile(const StringVector& tokens)
 {
     std::string name, type, data;
+    int multimedia_width = 0;
+    int multimedia_height = 0;
 
     if constexpr (!Util::isMobileApp())
     {
-        if (tokens.size() != 3 || !getTokenString(tokens[1], "name", name) ||
+        if (tokens.size() < 3 || !getTokenString(tokens[1], "name", name) ||
             !getTokenString(tokens[2], "type", type))
         {
+            sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
+            return false;
+        }
+
+        if (type == "multimedia") {
+            if (tokens.size() != 5 || !getTokenInteger(tokens[3], "width", multimedia_width) ||
+                !getTokenInteger(tokens[4], "height", multimedia_height)) {
+                sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
+                return false;
+            }
+        } else if (tokens.size() != 3) {
             sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
             return false;
         }
     }
     else
     {
-        if (tokens.size() != 4 || !getTokenString(tokens[1], "name", name) ||
+        if (tokens.size() < 4 || !getTokenString(tokens[1], "name", name) ||
             !getTokenString(tokens[2], "type", type) || !getTokenString(tokens[3], "data", data))
         {
+            sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
+            return false;
+        }
+
+        if (type == "multimedia") {
+            if (tokens.size() != 6 || !getTokenInteger(tokens[4], "width", multimedia_width) ||
+                !getTokenInteger(tokens[5], "height", multimedia_height)) {
+                sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
+                return false;
+            }
+        } else if (tokens.size() != 4) {
             sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
             return false;
         }
@@ -1804,15 +1828,15 @@ bool ChildSession::insertFile(const StringVector& tokens)
                     "\"value\":{"
                         "\"type\":\"com.sun.star.awt.Size\","
                         "\"value\":{"
-                            // We don't know the real size, but the core we have can't calculate it for us either due to a lack of gstreamer. Use the default...
-                            // TODO: someday, maybe we could send this from online, perhaps calculating it by using a video element, if we're inserting a video?
+                            // Core can't calculate the size for us due to a lack of gstreamer,
+                            // but for multimedia (not multimediaurl) we can do it in online with a <video> element
                             "\"Width\":{"
                                 "\"type\":\"long\","
-                                "\"value\":0"
+                                "\"value\":" + std::to_string(multimedia_width) +
                             "},"
                             "\"Height\":{"
                                 "\"type\":\"long\","
-                                "\"value\":0"
+                                "\"value\":" + std::to_string(multimedia_height) +
                             "}"
                         "}"
                     "}"
