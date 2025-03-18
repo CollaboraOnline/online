@@ -3303,6 +3303,9 @@ public:
            << "\n  Admin: " << (COOLWSD::AdminEnabled ? "enabled" : "disabled")
            << "\n  RouteToken: " << COOLWSD::RouteToken
 #endif
+           << "\n  Uptime (seconds): " <<
+            std::chrono::duration_cast<std::chrono::seconds>(
+                std::chrono::steady_clock::now() - COOLWSD::StartTime).count()
            << "\n  TerminationFlag: " << SigUtil::getTerminationFlag()
            << "\n  isShuttingDown: " << SigUtil::getShutdownRequestFlag()
            << "\n  NewChildren: " << NewChildren.size() << " (" << NewChildren.capacity() << ')'
