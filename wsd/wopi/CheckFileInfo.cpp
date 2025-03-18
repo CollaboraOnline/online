@@ -41,6 +41,8 @@ void CheckFileInfo::checkFileInfo(int redirectLimit)
     http::Session::FinishedCallback finishedCallback =
         [selfWeak = weak_from_this(), this, startTime, uriAnonym, redirectLimit](const std::shared_ptr<http::Session>& session)
     {
+        session->asyncShutdown();
+
         std::shared_ptr<CheckFileInfo> selfLifecycle = selfWeak.lock();
         if (!selfLifecycle)
             return;
