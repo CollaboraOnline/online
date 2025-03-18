@@ -1846,6 +1846,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     csp.appendDirective("font-src", "'self'");
     csp.appendDirective("object-src", "'self'");
     csp.appendDirective("media-src", "'self'");
+    csp.appendDirective("media-src", "blob:");
     csp.appendDirectiveUrl("media-src", cnxDetails.getWebServerUrl());
     csp.appendDirective("img-src", "'self'");
     csp.appendDirective("img-src", "data:"); // Equivalent to unsafe-inline!
@@ -2409,6 +2410,7 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     csp.appendDirective("font-src", "'self'");
     csp.appendDirective("object-src", "'self'");
     csp.appendDirective("media-src", "'self'");
+    csp.appendDirective("media-src", "blob:");
     csp.appendDirectiveUrl("media-src", cnxDetails.getWebServerUrl());
     csp.appendDirectiveUrl("connect-src", cnxDetails.getWebServerUrl());
     csp.appendDirective("img-src", "'self'");
