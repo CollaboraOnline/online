@@ -14,7 +14,6 @@
 
 declare var L: any;
 declare var app: any;
-declare var _: any;
 declare var Autolinker: any;
 declare var DOMPurify : any;
 

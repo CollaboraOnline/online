@@ -1378,7 +1378,7 @@ class DebugManager {
 				this._map.uiManager.showInfoModal(
 					'cool_alert',
 					'',
-					msg.replace('{0}', delayMs),
+					msg.replace('{0}', delayMs.toString()),
 					'',
 					_('OK'),
 				);
