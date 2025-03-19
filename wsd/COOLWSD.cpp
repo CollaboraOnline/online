@@ -3747,6 +3747,7 @@ int COOLWSD::innerMain()
 
     /// The main-poll does next to nothing:
     std::shared_ptr<SocketPoll> mainWait = std::make_shared<SocketPoll>("main");
+    mainWait->runOnClientThread();
 
     SigUtil::addActivity("coolwsd accepting connections");
 
