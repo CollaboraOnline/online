@@ -140,7 +140,7 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 	private getPauseTextContent(): string {
 		return _('Pause... ( %SECONDS% )').replace(
 			'%SECONDS%',
-			Math.ceil(this.pauseTimeRemaining),
+			Math.ceil(this.pauseTimeRemaining).toString(),
 		);
 	}
 }

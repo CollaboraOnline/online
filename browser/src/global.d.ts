@@ -121,4 +121,4 @@ interface Window {
 }
 
 // For localization
-//declare function _(text: string): string;
+declare function _(text: string): string;
