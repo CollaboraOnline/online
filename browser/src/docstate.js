@@ -41,6 +41,7 @@ window.app = {
 	LOUtil: null, // Attach the LOUtil class.
 	Evented: null, // Attach the Evented class.
 	Log: null, // Attach Logger instance.
+	DebugManager: null, // Attach DebugManager class.
 	dispatcher: null, // A Dispatcher class instance is assigned to this.
 	twipsToPixels: 0, // Twips to pixels multiplier.
 	pixelsToTwips: 0, // Pixels to twips multiplier.
