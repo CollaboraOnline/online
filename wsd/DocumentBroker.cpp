@@ -2330,7 +2330,7 @@ bool DocumentBroker::isStorageOutdated() const
             << " and the last uploaded file was modified at " << lastModifiedTime << ", which are "
             << (currentModifiedTime == lastModifiedTime ? "identical" : "different"));
 
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
     if (_storageManager.getLastUploadedFileModifiedTime() != _saveManager.getLastModifiedTime())
     {
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
