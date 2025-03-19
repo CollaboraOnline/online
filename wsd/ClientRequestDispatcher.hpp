@@ -25,14 +25,20 @@
 class ClientRequestDispatcher final : public SimpleSocketHandler
 {
 public:
-    ClientRequestDispatcher() {}
-
     static void InitStaticFileContentCache()
     {
         StaticFileContentCache["discovery.xml"] = getDiscoveryXML();
     }
 
     typedef std::function<void(bool)> AsyncFn;
+
+    /// Uninitialize static data.
+    static void uninitialize()
+    {
+        StaticFileContentCache.clear();
+
+        RequestVettingStations.clear();
+    }
 
 private:
     /// Set the socket associated with this ResponseClient.

@@ -4006,9 +4006,13 @@ int COOLWSD::innerMain()
 
     SigUtil::addActivity("terminated unused children");
 
+    ClientRequestDispatcher::uninitialize();
+
 #if !MOBILEAPP
     if (!Util::isKitInProcess())
     {
+        SigUtil::addActivity("waiting for forkit to exit");
+
         // Wait for forkit process finish.
         LOG_INF("Waiting for forkit process to exit");
         int status = 0;
