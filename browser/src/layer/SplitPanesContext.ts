@@ -10,7 +10,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 declare var L: any;
-declare var app: any;
 
 namespace cool {
 

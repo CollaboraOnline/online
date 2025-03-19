@@ -11,8 +11,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-declare var app: any;
-
 class MetaPresentation {
 	private docWidth: number;
 	private docHeight: number;

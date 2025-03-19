@@ -11,8 +11,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-declare var app: any;
-
 class NodeContext {
 	public aContext: SlideShowContext = null;
 	public aAnimationNodeMap: AnimationNodeMap = null;

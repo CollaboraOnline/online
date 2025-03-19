@@ -72,7 +72,7 @@ class CursorHeaderSection extends HTMLObjectSection {
 
         // If this is calc and cell cursor username popup is shown, hide it.
         if (app.map._docLayer._docType === 'spreadsheet') {
-            const cellCursorSection = OtherViewCellCursorSection.getViewCursorSection(viewId);
+            const cellCursorSection = OtherViewCellCursorSection.getViewCursorSection(viewId) as OtherViewCellCursorSection;
             if (cellCursorSection)
                 cellCursorSection.hideUsernamePopUp();
         }

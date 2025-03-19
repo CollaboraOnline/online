@@ -13,7 +13,6 @@
 /* See CanvasSectionContainer.ts for explanations. */
 
 declare var L: any;
-declare var app: any;
 
 namespace cool {
 

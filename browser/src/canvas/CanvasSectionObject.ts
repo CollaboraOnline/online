@@ -34,7 +34,7 @@ class CanvasSectionObject {
 	documentTopLeft: Array<number> = [0, 0]; // Document top left will be updated by container.
 	containerObject: CanvasSectionContainer = null;
 	name: string = null;
-	backgroundColor: string = null; // Defult is null (container's background color will be used).
+	backgroundColor: string = null; // Default is null (container's background color will be used).
 	backgroundOpacity: number = 1; // Valid when backgroundColor is valid.
 	borderColor: string = null; // Default is null (no borders).
 	boundToSection: string = null;
@@ -60,20 +60,20 @@ class CanvasSectionObject {
 
 	onInitialize(): void { return; }
 	onCursorPositionChanged(newPosition: any): void { return; }
-    onCellAddressChanged(): void { return; }
+	onCellAddressChanged(): void { return; }
 	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent): void { return; }
 	onMouseDown(point: Array<number>, e: MouseEvent): void { return; }
 	onMouseUp(point: Array<number>, e: MouseEvent): void { return; }
 	setShowSection(show: boolean): void { return; }
-    onSectionShowStatusChange(): void { return; } /// Called when setShowSection is called.
-    isSectionShown(): boolean { return; }
+	onSectionShowStatusChange(): void { return; } /// Called when setShowSection is called.
+	isSectionShown(): boolean { return; }
 	onDocumentObjectVisibilityChange(): void { return; }
 	onMouseEnter(point: Array<number>, e: MouseEvent): void { return; }
 	onMouseLeave(point: Array<number>, e: MouseEvent): void { return; }
 	onClick(point: Array<number>, e: MouseEvent): void { return; }
 	onDoubleClick(point: Array<number>, e: MouseEvent): void { return; }
 	onContextMenu(e?: MouseEvent): void { return; }
-	onMouseWheel(point: Array<number>, delta: Array<number>, e: MouseEvent): void { return; }
+	onMouseWheel(point: Array<number>, delta: Array<number>, e: WheelEvent): void { return; }
 	onMultiTouchStart(e: TouchEvent): void { return; }
 	onMultiTouchMove(point: Array<number>, dragDistance: number, e: TouchEvent): void { return; }
 	onMultiTouchEnd(e: TouchEvent): void { return; }
@@ -93,6 +93,24 @@ class CanvasSectionObject {
 	getTestDiv(): HTMLDivElement { return; }
 	setPosition(x: number, y: number): void { return; } // Document objects only.
 	isCalcRTL(): boolean { return; }
+
+	setViewResolved(on: boolean): void { return; }
+	setView(on: boolean): void { return; }
+	scrollVerticalWithOffset(offset: number): void { return; }
+	remove(id: string): void { return; }
+	deleteThis(): void { return; }
+	getActiveEdit(): any { return; }
+	isMobileCommentActive(): boolean { return false; }
+	getMobileCommentModalId(): string { return ''; }
+	rejectAllTrackedCommentChanges(): void { return; }
+	removeHighlighters(): void { return; }
+	showUsernamePopUp(): void { return; }
+	_selectColumn (colNumber: number, modifier: number): void { return; }
+	_selectRow (row: number, modifier: number): void { return; }
+	insertColumnBefore (index: number): void { return; }
+	insertRowAbove (index: number): void { return; }
+	deleteColumn (index: number): void { return; }
+	deleteRow (index: number): void { return; }
 
 	public getLineWidth(): number {
 		if (app.dpiScale > 1.0) {

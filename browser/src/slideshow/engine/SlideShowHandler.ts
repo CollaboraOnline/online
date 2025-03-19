@@ -10,8 +10,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-declare var app: any;
-
 type InteractiveAnimationSequenceMap = Map<
 	number,
 	InteractiveAnimationSequence

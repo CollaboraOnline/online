@@ -156,7 +156,7 @@ class URLPopUpSection extends HTMLObjectSection {
 	}
 
 	public static resetPosition(section: URLPopUpSection) {
-		if (!section) section = app.sectionContainer.getSectionWithName(URLPopUpSection.sectionName);
+		if (!section) section = app.sectionContainer.getSectionWithName(URLPopUpSection.sectionName) as URLPopUpSection;
 		if (!section) return;
 
 		let originalLeft = section.sectionProperties.documentPosition.pX - section.getPopUpWidth() * 0.5 * app.dpiScale;

@@ -69,7 +69,7 @@ class OtherViewCursorSection extends HTMLObjectSection {
         const sectionName = OtherViewCursorSection.sectionNamePrefix + viewId;
         let section: OtherViewCursorSection;
         if (app.sectionContainer.doesSectionExist(sectionName)) {
-            section = app.sectionContainer.getSectionWithName(sectionName);
+            section = app.sectionContainer.getSectionWithName(sectionName) as OtherViewCursorSection;
             section.sectionProperties.part = part;
             section.sectionProperties.mode = mode;
             section.size[0] = rectangle.pWidth;
@@ -100,7 +100,7 @@ class OtherViewCursorSection extends HTMLObjectSection {
     public static removeView(viewId: number) {
         const sectionName = OtherViewCursorSection.sectionNamePrefix + viewId;
         if (app.sectionContainer.doesSectionExist(sectionName)) {
-            const section = app.sectionContainer.getSectionWithName(sectionName);
+            const section = app.sectionContainer.getSectionWithName(sectionName) as OtherViewCursorSection;
             OtherViewCursorSection.sectionPointers.splice(OtherViewCursorSection.sectionPointers.indexOf(section), 1);
             app.sectionContainer.removeSection(sectionName);
             app.sectionContainer.requestReDraw();

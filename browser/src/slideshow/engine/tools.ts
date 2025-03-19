@@ -10,7 +10,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-declare var app: any;
 declare var SlideShow: any;
 
 type AGConstructor<T> = abstract new (...args: any[]) => T;
