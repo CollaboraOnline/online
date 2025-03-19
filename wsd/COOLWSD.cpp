@@ -3536,6 +3536,8 @@ void COOLWSD::processFetchUpdate(SocketPoll& poll)
         request.add("Accept", "application/json");
 
         FetchHttpSession->setFinishedHandler([](const std::shared_ptr<http::Session>& httpSession) {
+            httpSession->asyncShutdown();
+
             std::shared_ptr<http::Response> httpResponse = httpSession->response();
 
             FetchHttpSession.reset();
