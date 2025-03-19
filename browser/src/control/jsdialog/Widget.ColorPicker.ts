@@ -25,10 +25,6 @@ type ColorItem = string;
 type CoreColorPalette = Array<Array<{ Value: ColorItem }>>;
 type ColorPalette = Array<Array<ColorItem>>;
 
-interface Window {
-	prefs: any;
-}
-
 function getCurrentPaletteName(): string {
 	const palette = window.prefs.get('colorPalette');
 
