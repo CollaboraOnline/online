@@ -5337,7 +5337,10 @@ void DocumentBroker::dumpState(std::ostream& os)
     _nextStorageAttrs.dumpState(os, "\n      ");
 
     os << "\n  Storage:";
-    _storage->dumpState(os, "\n    ");
+    if (_storage)
+        _storage->dumpState(os, "\n    ");
+    else
+        os << " none";
 
     os << '\n';
     _lockCtx->dumpState(os);
