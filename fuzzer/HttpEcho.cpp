@@ -27,6 +27,7 @@
 #include <net/ServerSocket.hpp>
 #include <net/DelaySocket.hpp>
 #include <net/HttpRequest.hpp>
+#include <net/AsyncDNS.hpp>
 #include <FileUtil.hpp>
 #include <Util.hpp>
 #include <fuzzer/Common.hpp>
@@ -54,6 +55,7 @@ public:
         : _pollServerThread("HttpServerPoll")
         , _poller("HttpSynReqPoll")
     {
+        net::AsyncDNS::startAsyncDNS();
         _poller.runOnClientThread();
 
         std::map<std::string, std::string> logProperties;
@@ -97,6 +99,7 @@ public:
     {
         _pollServerThread.stop();
         _socket.reset();
+        net::AsyncDNS::stopAsyncDNS();
     }
 
     const std::string& localUri() const { return _localUri; }
