@@ -21,6 +21,9 @@
  */
 
 /* global app L _ InvalidationRectangleSection TileManager */
+
+type TimeoutHdl = ReturnType<typeof setTimeout>;
+
 interface DebugTool {
 	name: string;
 	category: string;
@@ -62,7 +65,7 @@ class DebugManager {
 	private _tileInvalidationId: number;
 	private _tileInvalidationKeypressQueue: any[];
 	private _tileInvalidationKeypressTimes: DebugTimeArray;
-	private _tileInvalidationTimeoutId: NodeJS.Timeout;
+	private _tileInvalidationTimeoutId: TimeoutHdl;
 
 	private tileDataOn: boolean;
 	private _tileDataTotalMessages: number;
@@ -74,23 +77,23 @@ class DebugManager {
 	private pingOn: boolean;
 	private _pingQueue: number[];
 	private _pingTimes: DebugTimeArray;
-	private _pingTimeoutId: NodeJS.Timeout;
+	private _pingTimeoutId: TimeoutHdl;
 
 	private logIncomingMessages: boolean;
 	private logOutgoingMessages: boolean;
 	private logKeyboardEvents: boolean;
 
 	private eventDelayWatchdog: boolean;
-	private _eventDelayTimeout: NodeJS.Timeout;
+	private _eventDelayTimeout: TimeoutHdl;
 	private _lastEventDelayTime: number;
 	private _lastEventDelay: number;
 	private _eventDelayWatchStart: number;
 
 	private _typerLorem: string;
 	private _typerLoremPos: number;
-	private _typerTimeoutId: NodeJS.Timeout;
+	private _typerTimeoutId: TimeoutHdl;
 
-	private _automatedUserTimeoutId: NodeJS.Timeout;
+	private _automatedUserTimeoutId: TimeoutHdl;
 	private _automatedUserTask: string;
 	private _automatedUserTasks: AutomatedTaskSet;
 	private _automatedUserQueue: string[];
