@@ -111,6 +111,7 @@ class CanvasSectionObject {
 	insertRowAbove (index: number): void { return; }
 	deleteColumn (index: number): void { return; }
 	deleteRow (index: number): void { return; }
+	resetStrokeStyle(): void { return; }
 
 	public getLineWidth(): number {
 		if (app.dpiScale > 1.0) {
