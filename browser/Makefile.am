@@ -453,7 +453,7 @@ COOL_JS_LST =\
 	src/control/Control.PresentationBar.js \
 	src/control/Control.TopToolbar.js \
 	src/control/Control.SaveState.ts \
-	src/control/Control.UIManager.js \
+	src/control/Control.UIManager.ts \
 	src/control/Control.DocumentNameInput.js \
 	src/control/Control.Notebookbar.js \
 	src/control/Control.NotebookbarWriter.js \
@@ -1011,7 +1011,7 @@ pot:
 		src/control/Control.Tabs.js \
 		src/control/Control.Toolbar.js \
 		src/control/Control.TopToolbar.js \
-		src/control/Control.UIManager.js \
+		src/control/Control.UIManager.ts \
 		src/control/Control.UserList.ts \
 		src/control/Control.Zotero.js \
 		src/control/Parts.js \

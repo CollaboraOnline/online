@@ -9,26 +9,43 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/*
- * L.Control.UIManager - initializes the UI elements like toolbars, menubar or ruler
- *			 and allows to controll them (show/hide)
+/**
+ * Type for the toolbar button configuration.
  */
+interface ToolbarButton {
+	type: string;
+	uno: string;
+	id: string;
+	img: string;
+	hint: string;
+	postmessage: boolean;
+	command?: string; // Optional because it's added later
+	w2icon?: string; // Optional because it's added later
+	text?: string; // Optional because it's added later
+}
 
-/* global app $ setupToolbar _ JSDialog SlideShow */
-L.Control.UIManager = L.Control.extend({
-	mobileWizard: null,
-	documentNameInput: null,
-	blockedUI: false,
-	busyPopupTimer: null,
-	customButtons: [], // added by WOPI InsertButton
-	hiddenButtons: {},
-	hiddenCommands: {},
+/**
+ * UIManager class – initializes UI elements (toolbars, menubar, ruler, etc.) and controls their visibility.
+ */
+class UIManager extends L.Control {
+	mobileWizard: any = null;
+	documentNameInput: any = null;
+	blockedUI: any = false;
+	busyPopupTimer: number | null = null;
+	customButtons: any[] = []; // added by WOPI InsertButton
+	hiddenButtons: { [key: string]: boolean } = {};
+	hiddenCommands: { [key: string]: boolean } = {};
 	// Hidden Notebookbar tabs.
-	hiddenTabs: {},
+	hiddenTabs: { [key: string]: boolean } = {};
 
-	onAdd: function (map) {
+	/**
+	 * Called when the UIManager control is added to the map.
+	 * Initializes UI elements, clones original templates, and sets up event listeners.
+	 * @param map - The Leaflet map instance.
+	 * @returns A dummy container HTMLElement.
+	 */
+	onAdd(map: ReturnType<typeof L.Map>) {
 		this.map = map;
-		var that = this;
 		this.notebookbar = null;
 		// Every time the UI mode changes from 'classic' to 'notebookbar'
 		// the two below elements will be destroyed.
@@ -55,16 +72,18 @@ L.Control.UIManager = L.Control.extend({
 		map.on('blockUI', this.blockUI, this);
 		map.on('unblockUI', this.unblockUI, this);
 
-		$('#toolbar-wrapper').on('click', function (event) {
-			if (event.target.parentElement.id === 'toolbar-up') // checks if clicked on empty part of the toolbar on tabbed view
-				that.map.fire('editorgotfocus');
+		$('#toolbar-wrapper').on('click', (event) => {
+			const target = event.target as HTMLElement;
+			if (target.parentElement?.id === 'toolbar-up') // checks if clicked on empty part of the toolbar on tabbed view
+				this.map.fire('editorgotfocus');
 		});
 
-		$('.main-nav').on('click', function (event) {
-			if (event.target.parentElement.nodeName === 'NAV' || // checks if clicked on an container of an element
-				event.target.nodeName === 'NAV' || // checks if clicked on navigation bar itself
-				event.target.parentElement.id === 'document-titlebar') { // checks if clicked on the document titlebar container
-				that.map.fire('editorgotfocus');}
+		$('.main-nav').on('click', (event) => {
+			const target = event.target as HTMLElement;
+			if (target.parentElement?.nodeName === 'NAV' || // checks if clicked on an container of an element
+				target.nodeName === 'NAV' || // checks if clicked on navigation bar itself
+				target.parentElement?.id === 'document-titlebar') { // checks if clicked on the document titlebar container
+				this.map.fire('editorgotfocus');}
 		});
 
 		this.map.on('updateviewslist', this.onUpdateViews, this);
@@ -72,51 +91,72 @@ L.Control.UIManager = L.Control.extend({
 		this.map['stateChangeHandler'].setItemValue('toggledarktheme', 'false');
 		this.map['stateChangeHandler'].setItemValue('invertbackground', 'false');
 		this.map['stateChangeHandler'].setItemValue('showannotations', 'true');
-	},
+	}
 
 	// UI initialization
 
-	getCurrentMode: function() {
+	/**
+	 * Returns the current UI mode ("notebookbar" or "classic").
+	 */
+	getCurrentMode(): string {
 		// no notebookbar on mobile
 		if (window.mode.isMobile())
 			return 'classic';
 
 		return this.shouldUseNotebookbarMode() ? 'notebookbar' : 'classic';
-	},
+	}
 
-	getHighlightMode: function() {
+	/**
+	 * Returns if the highlight of column/row is enabled.
+	 */
+	getHighlightMode(): boolean {
 		return window.prefs.getBoolean('ColumnRowHighlightEnabled', false);
-	},
+	}
 
-	setHighlightMode: function( newState ) {
+	/**
+	 * Changes status of the highlight of column/row is enabled.
+	 */
+	setHighlightMode(newState: boolean): void {
 		window.prefs.set('ColumnRowHighlightEnabled', newState);
-		let highlightState = newState? 'true' : 'false';
+		const highlightState = newState? 'true' : 'false';
 		this.map['stateChangeHandler'].setItemValue('columnrowhighlight', highlightState);
 		this._map.fire('commandstatechanged', {commandName : 'columnrowhighlight', state : highlightState});
-	},
+	}
 
-	shouldUseNotebookbarMode: function() {
-		let forceCompact = window.prefs.getBoolean('compactMode', null);
+	/**
+	 * Determines whether to use notebookbar mode based on user preferences.
+	 */
+	shouldUseNotebookbarMode(): boolean {
+		const forceCompact = window.prefs.get('compactMode', null); // getBoolean() does not accept null as the default value
 		// all other cases should default to notebookbar
-		let shouldUseClassic = (window.userInterfaceMode === 'classic' && forceCompact == null) || forceCompact === true;
+		const shouldUseClassic = (window.userInterfaceMode === 'classic' && forceCompact == null) || forceCompact === 'true';
 		return !shouldUseClassic;
-	},
+	}
 
 	// Dark mode toggle
 
-	loadLightMode: function() {
+	/**
+	 * Switches the UI to light mode.
+	 */
+	loadLightMode(): void {
 		document.documentElement.setAttribute('data-theme','light');
 		this._map.fire('commandstatechanged', {commandName : 'toggledarktheme', state : 'false'});
 		this.map.fire('darkmodechanged');
-	},
+	}
 
-	loadDarkMode: function() {
+	/**
+	 * Switches the UI to dark mode.
+	 */
+	loadDarkMode(): void {
 		document.documentElement.setAttribute('data-theme','dark');
 		this._map.fire('commandstatechanged', {commandName : 'toggledarktheme', state : 'true'});
 		this.map.fire('darkmodechanged');
-	},
+	}
 
-	setCanvasColorAfterModeChange: function() {
+	/**
+	 * Adjusts the canvas color after a mode change.
+	 */
+	setCanvasColorAfterModeChange(): void {
 		if (app.sectionContainer) {
 			app.sectionContainer.setBackgroundColorMode(false);
 
@@ -129,16 +169,22 @@ L.Control.UIManager = L.Control.extend({
 			//change back to it's default value after setting canvas color
 			app.sectionContainer.setBackgroundColorMode(true);
 		}
-	},
+	}
 
-	setDarkBackground: function(activate) {
+	/**
+	 * Sets the document background based on the activation flag.
+	 */
+	setDarkBackground(activate: boolean): void {
 		var cmd = { 'NewTheme': { 'type': 'string', 'value': '' } };
 		activate ? cmd.NewTheme.value = 'Dark' : cmd.NewTheme.value = 'Light';
 		app.socket.sendMessage('uno .uno:InvertBackground ' + JSON.stringify(cmd));
 		this.initDarkBackgroundUI(activate);
-	},
+	}
 
-	initDarkBackgroundUI: function(activate) {
+	/**
+	 * Initializes UI changes related to the dark background.
+	 */
+	initDarkBackgroundUI(activate: boolean): void {
 		document.documentElement.setAttribute('data-bg-theme', activate ? 'dark' : 'light');
 		if (activate) {
 			this._map.fire('commandstatechanged', {commandName : 'invertbackground', state : 'false'});
@@ -147,9 +193,12 @@ L.Control.UIManager = L.Control.extend({
 			this._map.fire('commandstatechanged', {commandName : 'invertbackground', state : 'true'});
 		}
 		this.setCanvasColorAfterModeChange();
-	},
+	}
 
-	applyInvert: function(skipCore) {
+	/**
+	 * Applies background inversion (with an option to skip core changes).
+	 */
+	applyInvert(skipCore: boolean = false): void {
 		// get the initial mode
 		var backgroundDark = this.isBackgroundDark();
 
@@ -158,17 +207,23 @@ L.Control.UIManager = L.Control.extend({
 		} else {
 			this.setDarkBackground(backgroundDark);
 		}
-	},
+	}
 
-	isBackgroundDark: function() {
+	/**
+	 * Returns whether the document background should be dark.
+	 */
+	isBackgroundDark(): boolean {
 		// get the initial mode If document background is inverted or not
 		var inDarkTheme = window.prefs.getBoolean('darkTheme');
 		var darkBackgroundPrefName = 'darkBackgroundForTheme.' + (inDarkTheme ? 'dark' : 'light');
 		var backgroundDark = window.prefs.getBoolean(darkBackgroundPrefName, inDarkTheme);
 		return backgroundDark;
-	},
+	}
 
-	toggleInvert: function() {
+	/**
+	 * Toggles the background inversion setting.
+	 */
+	toggleInvert(): void {
 		// get the initial mode
 		var inDarkTheme = window.prefs.getBoolean('darkTheme');
 		var darkBackgroundPrefName = 'darkBackgroundForTheme.' + (inDarkTheme ? 'dark' : 'light');
@@ -183,9 +238,12 @@ L.Control.UIManager = L.Control.extend({
 			window.prefs.set(darkBackgroundPrefName, true);
 			this.setDarkBackground(true);
 		}
-	},
+	}
 
-	toggleDarkMode: function() {
+	/**
+	 * Toggles the overall dark mode setting and refreshes related UI components.
+	 */
+	toggleDarkMode(): void {
 		// get the initial mode
 		var inDarkTheme = window.prefs.getBoolean('darkTheme');
 		// swap them by invoking the appropriate load function and saving the state
@@ -211,9 +269,12 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		this.map.fire('themechanged');
-	},
+	}
 
-	initDarkModeFromSettings: function() {
+	/**
+	 * Initializes dark mode based on user settings.
+	 */
+	initDarkModeFromSettings(): void {
 		var inDarkTheme = window.prefs.getBoolean('darkTheme');
 
 		if (inDarkTheme) {
@@ -223,25 +284,34 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		this.applyInvert(true);
-	},
+	}
 
-	activateDarkModeInCore: function(activate) {
+	/**
+	 * Informs the core system about the dark mode change.
+	 */
+	activateDarkModeInCore(activate: boolean): void {
 		var cmd = { 'NewTheme': { 'type': 'string', 'value': '' } };
 		activate ? cmd.NewTheme.value = 'Dark' : cmd.NewTheme.value = 'Light';
 		app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
-	},
+	}
 
-	renameDocument: function() {
+	/**
+	 * Shows a modal dialog asking to rename document.
+	 */
+	renameDocument(): void {
 		// todo: does this need _('rename document)
 		var docNameInput = this.documentNameInput;
 		var fileName = this.map['wopi'].BaseFileName ? this.map['wopi'].BaseFileName : '';
 		this.showInputModal('rename-modal', _('Rename Document'), _('Enter new name'), fileName, _('Rename'),
-			function(newName) {
+			(newName: string) => {
 				docNameInput.documentNameConfirm(newName);
 		});
-	},
+	}
 
-	toggleWasm: function () {
+	/**
+	 * Toggles WASM mode (if applicable).
+	 */
+	toggleWasm(): void {
 		if (window.ThisIsTheEmscriptenApp) {
 			//TODO: Should use the "external" socket.
 			// app.socket.sendMessage('switch_request online');
@@ -250,11 +320,14 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		// Wait for Coolwsd to initiate the switch.
-	},
+	}
 
-	initializeMenubarAndTopToolbar: function () {
-		let enableNotebookbar = this.shouldUseNotebookbarMode();
-		let isMobile = window.mode.isMobile();
+	/**
+	 * Setup menubar and the top toolbar.
+	 */
+	initializeMenubarAndTopToolbar(): void {
+		const enableNotebookbar = this.shouldUseNotebookbarMode();
+		const isMobile = window.mode.isMobile();
 		if (isMobile || !enableNotebookbar) {
 			var menubar = L.control.menubar();
 			this.map.menubar = menubar;
@@ -263,16 +336,17 @@ L.Control.UIManager = L.Control.extend({
 
 		if (!isMobile && !enableNotebookbar)
 			this.map.topToolbar = JSDialog.TopToolbar(this.map);
-	},
+	}
 
-	initializeBasicUI: function () {
-		var that = this;
-
+	/**
+	 * Initializes basic UI components.
+	 */
+	initializeBasicUI(): void {
 		this.initializeMenubarAndTopToolbar();
 
 		if (window.mode.isMobile()) {
-			$('#toolbar-mobile-back').on('click', function () {
-				that.enterReadonlyOrClose();
+			$('#toolbar-mobile-back').on('click', () => {
+				this.enterReadonlyOrClose();
 			});
 		}
 
@@ -291,7 +365,7 @@ L.Control.UIManager = L.Control.extend({
 		this.map.jsdialog = L.control.jsDialog();
 		this.map.addControl(this.map.jsdialog);
 
-		setupToolbar(this.map);
+		window.setupToolbar(this.map);
 
 		this.documentNameInput = L.control.documentNameInput();
 		this.map.addControl(this.documentNameInput);
@@ -311,8 +385,8 @@ L.Control.UIManager = L.Control.extend({
 		if (L.Map.versionBar && window.allowUpdateNotification)
 			this.map.addControl(L.Map.versionBar);
 
-		var openBusyPopup = function(label) {
-			this.busyPopupTimer = setTimeout(function() {
+		var openBusyPopup = (label: string) => {
+			this.busyPopupTimer = window.setTimeout(() => {
 				var json = {
 					id: 'busypopup',
 					jsontype: 'dialog',
@@ -336,8 +410,9 @@ L.Control.UIManager = L.Control.extend({
 			}, 700);
 		};
 
-		var fadeoutBusyPopup = function() {
-			clearTimeout(this.busyPopupTimer);
+		var fadeoutBusyPopup = () => {
+			if (this.busyPopupTimer != null)
+				window.clearTimeout(this.busyPopupTimer);
 			var json = {
 				id: 'busypopup',
 				jsontype: 'dialog',
@@ -348,17 +423,21 @@ L.Control.UIManager = L.Control.extend({
 				app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json)});
 		};
 
-		this.map.on('showbusy', function(e) {
+		this.map.on('showbusy', (e: any) => {
 			fadeoutBusyPopup();
 			openBusyPopup(e.label);
 		});
 
-		this.map.on('hidebusy', function() {
+		this.map.on('hidebusy', (e: any) => {
 			fadeoutBusyPopup();
 		});
-	},
+	}
 
-	initializeSpecializedUI: function(docType) {
+	/**
+	 * Initializes specialized UI components based on the document type.
+	 * @param docType - Document type (e.g. 'spreadsheet', 'presentation', 'text').
+	 */
+	initializeSpecializedUI(docType: string): void {
 		var isDesktop = window.mode.isDesktop();
 		var currentMode = this.getCurrentMode();
 		var enableNotebookbar = currentMode === 'notebookbar' && !app.isReadOnly();
@@ -389,19 +468,21 @@ L.Control.UIManager = L.Control.extend({
 		if (docType === 'spreadsheet') {
 			this.sheetsBar = JSDialog.SheetsBar(this.map, isDesktop || window.mode.isTablet());
 
-			let formulabarRow = document.getElementById('formulabar-row');
-			let spreadsheetToolbar = document.getElementById('spreadsheet-toolbar');
-			spreadsheetToolbar.classList.remove('hidden');
-			formulabarRow.classList.remove('hidden');
+			const formulabarRow = document.getElementById('formulabar-row');
+			const spreadsheetToolbar = document.getElementById('spreadsheet-toolbar');
+			spreadsheetToolbar?.classList?.remove('hidden');
+			formulabarRow?.classList?.remove('hidden');
 			this.map.formulabar = JSDialog.FormulaBar(this.map);
 			this.map.addressInputField = JSDialog.AddressInputField(this.map);
 			$('#toolbar-wrapper').addClass('spreadsheet');
 
 			// remove unused elements
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
-			document.getElementById('selectbackground').parentNode.removeChild(document.getElementById('selectbackground'));
+			const selectBackground = document.getElementById('selectbackground');
+			if (selectBackground != null)
+				selectBackground.parentNode?.removeChild(selectBackground);
 
-			let highlightState = this.getHighlightMode()? 'true' : 'false';
+			const highlightState = this.getHighlightMode()? 'true' : 'false';
 			this.map['stateChangeHandler'].setItemValue('columnrowhighlight', highlightState);
 			this._map.fire('commandstatechanged', {commandName : 'columnrowhighlight', state : highlightState});
 		}
@@ -419,12 +500,14 @@ L.Control.UIManager = L.Control.extend({
 			// remove unused elements
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
-			document.getElementById('selectbackground').parentNode.removeChild(document.getElementById('selectbackground'));
+			const selectBackground = document.getElementById('selectbackground');
+			if (selectBackground != null)
+				selectBackground.parentNode?.removeChild(selectBackground);
 
 			this.initializeRuler();
 
 			var showResolved = this.getBooleanDocTypePref('ShowResolved', true);
-			if (showResolved === false || showResolved === 'false')
+			if (showResolved === false)
 				this.map.sendUnoCommand('.uno:ShowResolvedAnnotations');
 			// Notify the initial status of comments
 			var initialCommentState = this.map['stateChangeHandler'].getItemValue('showannotations');
@@ -450,9 +533,12 @@ L.Control.UIManager = L.Control.extend({
 				app.dispatcher.dispatch('presentation');
 			}
 		});
-	},
+	}
 
-	initializeSidebar: function() {
+	/**
+	 * Initializes the sidebar based on saved state and preferences.
+	 */
+	initializeSidebar(): void {
 		// Hide the sidebar on start if saved state or UIDefault is set.
 		if (window.mode.isDesktop() && !window.ThisIsAMobileApp) {
 			var showSidebar = this.getBooleanDocTypePref('ShowSidebar', true);
@@ -498,10 +584,12 @@ L.Control.UIManager = L.Control.extend({
 			// Chromebooks early
 			app.socket.sendMessage('uno .uno:SidebarHide');
 		}
-	},
+	}
 
-	// Initialize ruler
-	initializeRuler: function() {
+	/**
+	 * Initializes the ruler component.
+	 */
+	initializeRuler(): void {
 		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
 			var showRuler = this.getBooleanDocTypePref('ShowRuler');
 			var interactiveRuler = this.map.isEditMode();
@@ -511,9 +599,12 @@ L.Control.UIManager = L.Control.extend({
 				showruler: showRuler
 			});
 		}
-	},
+	}
 
-	removeClassicUI: function() {
+	/**
+	 * Removes classic UI components.
+	 */
+	removeClassicUI(): void {
 		if (this.map.menubar)
 		{
 			this.map.removeControl(this.map.menubar);
@@ -524,9 +615,12 @@ L.Control.UIManager = L.Control.extend({
 			this.map.topToolbar.onRemove();
 			this.map.topToolbar = null;
 		}
-	},
+	}
 
-	addClassicUI: function() {
+	/**
+	 * Adds classic UI components.
+	 */
+	addClassicUI(): void {
 		this.map.menubar = L.control.menubar();
 		this.map.addControl(this.map.menubar);
 		this.map.topToolbar = JSDialog.TopToolbar(this.map);
@@ -544,9 +638,13 @@ L.Control.UIManager = L.Control.extend({
 
 		if (this._menubarShouldBeHidden)
 			this.hideMenubar();
-	},
+	}
 
-	createNotebookbarControl: function(docType) {
+	/**
+	 * Creates and adds a notebookbar control based on document type.
+	 * @param docType - Document type (e.g. 'spreadsheet', 'presentation', etc.)
+	 */
+	createNotebookbarControl(docType: string): void {
 		if (docType === 'spreadsheet') {
 			var notebookbar = L.control.notebookbarCalc();
 		} else if (docType === 'presentation') {
@@ -561,18 +659,24 @@ L.Control.UIManager = L.Control.extend({
 		this.map.addControl(notebookbar);
 		this.map.fire('a11ystatechanged');
 		app.UI.notebookbarAccessibility.initialize();
-	},
+	}
 
-	refreshAfterThemeChange: function() {
+	/**
+	 * Refreshes UI components after a theme change.
+	 */
+	refreshAfterThemeChange(): void {
 		if (this.getCurrentMode() === 'classic' || this.map.isReadOnlyMode()) {
 			this.refreshMenubar();
 			this.refreshToolbar();
 		}
 		// jsdialog components like notebookbar or sidebar
 		// doesn't require reload to change icons
-	},
+	}
 
-	refreshNotebookbar: function() {
+	/**
+	 * Refreshes the notebookbar.
+	 */
+	refreshNotebookbar(): void {
 			var selectedTab = $('.ui-tab.notebookbar[aria-selected="true"]').attr('id') || 'Home-tab-label';
 			this.removeNotebookbarUI();
 			this.createNotebookbarControl(this.map.getDocType());
@@ -588,13 +692,21 @@ L.Control.UIManager = L.Control.extend({
 			this.map.sendInitUNOCommands();
 			if (this.map.getDocType() === 'presentation')
 				this.map.fire('toggleslidehide');
-	},
+	}
 
-	refreshMenubar: function() {
+	/**
+	 * Refreshes the menubar.
+	 */
+	refreshMenubar(): void {
 		if (this.map.menubar)
 			this.map.menubar._onRefresh();
-	},
-	refreshSidebar: function(ms) {
+	}
+
+	/**
+	 * Refreshes the sidebar after a delay.
+	 * @param ms - Milliseconds to delay the refresh (default 400ms).
+	 */
+	refreshSidebar(ms?: number): void {
 		ms = ms !== undefined ? ms : 400;
 		setTimeout(function () {
 			var message = 'dialogevent ' +
@@ -602,29 +714,43 @@ L.Control.UIManager = L.Control.extend({
 				' {"id":"-1"}';
 			app.socket.sendMessage(message);
 		}, ms);
+	}
 
-	},
-	refreshToolbar: function() {
+	/**
+	 * Placeholder method for refreshing the toolbar.
+	 */
+	refreshToolbar(): void {
 		// TODO
-	},
-	addNotebookbarUI: function() {
+	}
+
+	/**
+	 * Adds notebookbar UI components.
+	 */
+	addNotebookbarUI(): void {
 		this.refreshNotebookbar();
 		this.map._docLayer._resetClientVisArea();
 		this.map._docLayer._requestNewTiles();
 		var menubarWasHidden = this.isMenubarHidden();
 		this.showMenubar();
 		this._menubarShouldBeHidden = menubarWasHidden;
-	},
+	}
 
-	removeNotebookbarUI: function() {
+	/**
+	 * Removes notebookbar UI components.
+	 */
+	removeNotebookbarUI(): void {
 		if (this.notebookbar) {
 			this.map.removeControl(this.notebookbar);
 			this.notebookbar = null;
 		}
 		$('#map').removeClass('notebookbar-opened');
-	},
+	}
 
-	onChangeUIMode: function(uiMode) {
+	/**
+	 * Handles UI mode changes.
+	 * @param uiMode - Object containing the new UI mode and additional flags.
+	 */
+	onChangeUIMode(uiMode: any): void {
 		if (window.mode.isMobile())
 			return;
 
@@ -677,22 +803,26 @@ L.Control.UIManager = L.Control.extend({
 		this.map.fire('rulerchanged');
 		this.map.fire('statusbarchanged');
 		this.map.fire('a11ystatechanged');
-	},
+	}
 
 	// UI modification
 
-	insertButtonToClassicToolbar: function(button) {
+	/**
+	 * Inserts a button into the classic toolbar.
+	 * @param button - Button configuration object.
+	 */
+	insertButtonToClassicToolbar(button: any): void {
 		if (this.map.isEditMode()) {
 			// Position: Either specified by the caller, or defaulting to first position (before save)
 			var insertBefore = button.insertBefore || 'save';
 
-			var newButton = [
+			var newButton: ToolbarButton[] = [
 				{
 					type: 'button',
 					uno: button.unoCommand,
 					id: button.id,
 					img: button.id,
-					hint: _(button.hint.replaceAll('\"', '&quot;')), /* "Try" to localize ! */
+					hint: _(button.hint.replaceAll('"', '&quot;')), /* "Try" to localize ! */
 					/* Notify the host back when button is clicked (only when unoCommand is not set) */
 					postmessage: !Object.prototype.hasOwnProperty.call(button, 'unoCommand')
 				}
@@ -717,11 +847,11 @@ L.Control.UIManager = L.Control.extend({
 			// Just add a menu entry for it
 			this.map.fire('addmenu', {id: button.id, label: button.hint});
 		}
-	},
+	}
 
-	setCssRulesForCustomButtons: function() {
+	setCssRulesForCustomButtons(): void {
 		for (var button of this.customButtons) {
-			const item = document.querySelector(".w2ui-icon." + encodeURIComponent(button.id));
+			const item = document.querySelector(".w2ui-icon." + encodeURIComponent(button.id)) as HTMLElement | null;
 			var imgUrl = button.imgurl;
 			if (item) {
 				if(button.imgurl === undefined || button.imgurl === "") {
@@ -733,10 +863,15 @@ L.Control.UIManager = L.Control.extend({
 				item.style.backgroundPosition = 'center';
 			}
 		}
-	},
+	}
 
-	// called by the WOPI API to register new custom button
-	insertButton: function(button) {
+	/**
+	 * Registers a new custom button.
+	 *
+	 * Called by the WOPI API to register new custom button
+	 * @param button - Button configuration object.
+	 */
+	insertButton(button: any): void {
 		for (var i in this.customButtons) {
 			var item = this.customButtons[i];
 			if (item.id === button.id)
@@ -745,10 +880,13 @@ L.Control.UIManager = L.Control.extend({
 
 		this.customButtons.push(button);
 		this.insertCustomButton(button);
-	},
+	}
 
-	// insert custom button to the current UI
-	insertCustomButton: function(button) {
+	/**
+	 * Inserts a custom button into the current UI.
+	 * @param button - Button configuration object.
+	 */
+	insertCustomButton(button: any): void {
 		if (button.tablet === false && window.mode.isTablet()) {
 			return;
 		}
@@ -756,39 +894,47 @@ L.Control.UIManager = L.Control.extend({
 			this.insertButtonToClassicToolbar(button);
 		else
 			this.notebookbar.insertButtonToShortcuts(button);
-	},
+	}
 
-	// add all custom buttons to the current UI - on view mode change
-	insertCustomButtons: function() {
+	/**
+	 * Inserts all custom buttons into the current UI.
+	 */
+	insertCustomButtons(): void {
 		for (var i in this.customButtons)
 			this.insertCustomButton(this.customButtons[i]);
-	},
+	}
 
-	showButtonInClassicToolbar: function(buttonId, show) {
+	/**
+	 * Shows or hides a button in the classic toolbar.
+	 * @param buttonId - The button’s ID.
+	 * @param show - Flag to show (true) or hide (false).
+	 */
+	showButtonInClassicToolbar(buttonId: string, show: boolean): boolean {
 		// TODO: other
-		var toolbars = [];
-		var found = false;
+		const toolbars: any[] = [];
+		let found = false;
 
-		toolbars.forEach(function(toolbar) {
+		toolbars.forEach((toolbar) => {
 			if (toolbar && toolbar.get(buttonId)) {
 				found = true;
-				if (show) {
-					toolbar.showItem(buttonId, true);
-				} else {
-					toolbar.showItem(buttonId, false);
-				}
+				toolbar.showItem(buttonId, show);
 			}
 		});
 
-		var topToolbarHas = window.app.map.topToolbar.hasItem(buttonId);
-		found = found | topToolbarHas;
+		const topToolbarHas = window.app.map.topToolbar.hasItem(buttonId);
+		found = found || topToolbarHas;
 		if (topToolbarHas)
 			window.app.map.topToolbar.showItem(buttonId, show);
 
 		return found;
-	},
+	}
 
-	showButton: function(buttonId, show) {
+	/**
+	 * Shows or hides a button in the current UI.
+	 * @param buttonId - The button’s ID.
+	 * @param show - Flag to show (true) or hide (false).
+	 */
+	showButton(buttonId: string, show: boolean): void {
 		var found = false;
 		if (!this.notebookbar) {
 			found = this.showButtonInClassicToolbar(buttonId, show);
@@ -806,32 +952,46 @@ L.Control.UIManager = L.Control.extend({
 			window.app.console.error('Button with id "' + buttonId + '" not found.');
 			return;
 		}
-	},
+	}
 
-	isButtonVisible: function(buttonId) {
+	/**
+	 * Returns whether a button is currently visible.
+	 * @param buttonId - The button’s ID.
+	 */
+	isButtonVisible(buttonId: string): boolean {
 		return !(buttonId in this.hiddenButtons);
-	},
+	}
 
 	// Commands
 
-	showCommandInMenubar: function(command, show) {
+	/**
+	 * Shows or hides a command in the menubar.
+	 * @param command - Command identifier.
+	 * @param show - Flag to show (true) or hide (false).
+	 */
+	showCommandInMenubar(command: string, show: boolean): boolean {
 		var menubar = this._map.menubar;
 		if (show) {
 			return menubar.showUnoItem(command);
 		} else {
 			return menubar.hideUnoItem(command);
 		}
-	},
+	}
 
-	showCommandInClassicToolbar: function(command, show) {
+	/**
+	 * Shows or hides a command in the classic toolbar.
+	 * @param command - Command identifier.
+	 * @param show - Flag to show (true) or hide (false).
+	 */
+	showCommandInClassicToolbar(command: string, show: boolean): boolean {
 		// TODO: other
-		var toolbars = [];
+		const toolbars: any[] = [];
 		var found = false;
 
-		toolbars.forEach(function(toolbar) {
+		toolbars.forEach((toolbar) => {
 			if (!toolbar)
 				return;
-			toolbar.items.forEach(function(item) {
+			toolbar.items.forEach((item: any) => {
 				var commands = this.map._extractCommand(item);
 				if (commands.indexOf(command) != -1) {
 					found = true;
@@ -841,13 +1001,18 @@ L.Control.UIManager = L.Control.extend({
 						toolbar.showItem(item.id, false);
 					}
 				}
-			}.bind(this));
-		}.bind(this));
+			});
+		});
 
 		return found;
-	},
+	}
 
-	showCommand: function(command, show) {
+	/**
+	 * Shows or hides a command in the current UI.
+	 * @param command - Command identifier.
+	 * @param show - Flag to show (true) or hide (false).
+	 */
+	showCommand(command: string, show: boolean): void {
 		if (show) {
 			delete this.hiddenCommands[command];
 		} else {
@@ -855,25 +1020,32 @@ L.Control.UIManager = L.Control.extend({
 		}
 		var found = false;
 		if (!this.notebookbar) {
-			found |= this.showCommandInClassicToolbar(command, show);
-			found |= this.showCommandInMenubar(command, show);
+			found ||= this.showCommandInClassicToolbar(command, show);
+			found ||= this.showCommandInMenubar(command, show);
 		} else {
 			this.notebookbar.reloadShortcutsBar();
-			found |= this.notebookbar.showNotebookbarCommand(command, show);
+			found ||= this.notebookbar.showNotebookbarCommand(command, show);
 		}
 
 		if (!found) {
 			window.app.console.error('Item with command "' + command + '" not found.');
 		}
-	},
+	}
 
-	isCommandVisible: function(command) {
+	/**
+	 * Returns whether a command is visible.
+	 * @param command - Command identifier.
+	 */
+	isCommandVisible(command: string): boolean {
 		return !(command in this.hiddenCommands);
-	},
+	}
 
 	// Menubar
 
-	showMenubar: function() {
+	/**
+	 * Shows the menubar.
+	 */
+	showMenubar(): void {
 		this._menubarShouldBeHidden = false;
 		if (!this.isMenubarHidden())
 			return;
@@ -883,15 +1055,19 @@ L.Control.UIManager = L.Control.extend({
 			$('#closebuttonwrapperseparator').show();
 		}
 		const obj = document.getElementById('fold-button');
-		obj.style.transform = 'rotate(0deg)';
+		if (obj != null)
+			obj.style.transform = 'rotate(0deg)';
 
 		$('#fold').prop('title', _('Hide Menu'));
 
 		if (this._notebookbarShouldBeCollapsed)
 			this.collapseNotebookbar();
-	},
+	}
 
-	hideMenubar: function() {
+	/**
+	 * Hides the menubar.
+	 */
+	hideMenubar(): void {
 		this._menubarShouldBeHidden = true;
 		if (this.isMenubarHidden() || this.shouldUseNotebookbarMode())
 			return;
@@ -906,51 +1082,73 @@ L.Control.UIManager = L.Control.extend({
 			$('#closebuttonwrapperseparator').hide();
 		}
 		const obj = document.getElementById('fold-button');
-		obj.style.transform = 'rotate(180deg)';
+		if (obj != null)
+			obj.style.transform = 'rotate(180deg)';
 
 		$('#fold').prop('title', _('Show Menu'));
-	},
+	}
 
-	isMenubarHidden: function() {
+	/**
+	 * Returns whether the menubar is hidden.
+	 */
+	isMenubarHidden(): boolean {
 		return $('.main-nav').css('display') === 'none';
-	},
+	}
 
-	toggleMenubar: function() {
+	/**
+	 * Toggles the menubar’s visibility.
+	 */
+	toggleMenubar(): void {
 		if (this.isMenubarHidden())
 			this.showMenubar();
 		else
 			this.hideMenubar();
-	},
+	}
 
 	// Ruler
 
-	showRuler: function() {
+	/**
+	 * Shows the ruler.
+	 */
+	showRuler(): void {
 		this._map.sendUnoCommand('.uno:ShowRuler');
 		$('.cool-ruler').show();
 		$('#map').addClass('hasruler');
 		this.setDocTypePref('ShowRuler', true);
 		this.map.fire('rulerchanged');
-	},
+	}
 
-	hideRuler: function() {
+	/**
+	 * Hides the ruler.
+	 */
+	hideRuler(): void {
 		$('.cool-ruler').hide();
 		$('#map').removeClass('hasruler');
 		this.setDocTypePref('ShowRuler', false);
 		this.map.fire('rulerchanged');
-	},
+	}
 
-	toggleRuler: function() {
+	/**
+	 * Toggles the ruler’s visibility.
+	 */
+	toggleRuler(): void {
 		if (this.isRulerVisible())
 			this.hideRuler();
 		else
 			this.showRuler();
-	},
+	}
 
-	isRulerVisible: function() {
+	/**
+	 * Returns whether the ruler is visible.
+	 */
+	isRulerVisible(): boolean {
 		return $('.cool-ruler').is(':visible');
-	},
+	}
 
-	isFullscreen: function() {
+	/**
+	 * Returns whether the document is in fullscreen mode.
+	 */
+	isFullscreen(): boolean {
 		if (!document.fullscreenElement &&
 			!document.mozFullscreenElement &&
 			!document.msFullscreenElement &&
@@ -958,22 +1156,31 @@ L.Control.UIManager = L.Control.extend({
 			return false;
 		else
 			return true;
-	},
+	}
 
 	// Notebookbar helpers
 
-	hasNotebookbarShown: function() {
+	/**
+	 * Returns whether the notebookbar is currently shown.
+	 */
+	hasNotebookbarShown(): boolean {
 		return $('#map').hasClass('notebookbar-opened');
-	},
+	}
 
-	makeSpaceForNotebookbar: function() {
+	/**
+	 * Adjusts layout to make space for the notebookbar.
+	 */
+	makeSpaceForNotebookbar(): void {
 		if (this.hasNotebookbarShown())
 			return;
 
 		$('#map').addClass('notebookbar-opened');
-	},
+	}
 
-	collapseNotebookbar: function() {
+	/**
+	 * Collapses the notebookbar.
+	 */
+	collapseNotebookbar(): void {
 		this._notebookbarShouldBeCollapsed = true;
 
 		if (this.isNotebookbarCollapsed() || this.isMenubarHidden())
@@ -985,9 +1192,12 @@ L.Control.UIManager = L.Control.extend({
 		$('#document-container').addClass('tabs-collapsed');
 
 		this.map._docLayer._syncTileContainerSize();
-	},
+	}
 
-	extendNotebookbar: function() {
+	/**
+	 * Extends (uncollapses) the notebookbar.
+	 */
+	extendNotebookbar(): void {
 		this._notebookbarShouldBeCollapsed = false;
 
 		if (!this.isNotebookbarCollapsed())
@@ -999,9 +1209,9 @@ L.Control.UIManager = L.Control.extend({
 		$('#document-container').removeClass('tabs-collapsed');
 
 		this.map._docLayer._syncTileContainerSize();
-	},
+	}
 
-	showNotebookTab: function(id, show) {
+	showNotebookTab(id: string, show: boolean): void {
 		if (show) {
 			delete this.hiddenTabs[id];
 		} else {
@@ -1010,26 +1220,39 @@ L.Control.UIManager = L.Control.extend({
 		if (this.notebookbar) {
 			this.notebookbar.refreshContextTabsVisibility();
 		}
-	},
+	}
 
-	isTabVisible: function(name) {
+	/**
+	 * Is the notebookbar's tab visible?
+	 */
+	isTabVisible(name: string): boolean {
 		return !(name in this.hiddenTabs);
-	},
+	}
 
-	isNotebookbarCollapsed: function() {
+	/**
+	 * Returns whether the notebookbar is collapsed.
+	 */
+	isNotebookbarCollapsed(): boolean {
 		return $('#document-container').hasClass('tabs-collapsed');
-	},
+	}
 
 	// UI Defaults functions
 
-	showStatusBar: function() {
+	/**
+	 * Shows the status bar.
+	 */
+	showStatusBar(): void {
 		$('#document-container').css('bottom', this.documentBottom);
 		this.map.statusBar.show();
 		this.setDocTypePref('ShowStatusbar', true);
 		this.map.fire('statusbarchanged');
-	},
+	}
 
-	hideStatusBar: function(firstStart) {
+	/**
+	 * Hides the status bar.
+	 * @param firstStart - Optional flag indicating if this is the initial call.
+	 */
+	hideStatusBar(firstStart?: boolean): void {
 		if (!firstStart && !this.isStatusBarVisible())
 			return;
 
@@ -1039,27 +1262,40 @@ L.Control.UIManager = L.Control.extend({
 		if (!firstStart)
 			this.setDocTypePref('ShowStatusbar', false);
 		this.map.fire('statusbarchanged');
-	},
+	}
 
-	toggleStatusBar: function() {
+	/**
+	 * Toggles the status bar’s visibility.
+	 */
+	toggleStatusBar(): void {
 		if (this.isStatusBarVisible())
 			this.hideStatusBar();
 		else
 			this.showStatusBar();
-	},
+	}
 
-	focusSearch: function() {
+	/**
+	 * Focuses the search functionality.
+	 */
+	focusSearch(): void {
 		this.showStatusBar();
 		this.map.fire('focussearch');
-	},
+	}
 
-	isStatusBarVisible: function() {
-		return document.getElementById('toolbar-down').style.display !== 'none';
-	},
+	/**
+	 * Returns whether the status bar is visible.
+	 */
+	isStatusBarVisible(): boolean {
+		return document.getElementById('toolbar-down')?.style?.display !== 'none';
+	}
 
 	// Event handlers
 
-	onUpdatePermission: function(e) {
+	/**
+	 * Event handler for updating document permission.
+	 * @param e - The event object containing permission details.
+	 */
+	onUpdatePermission(e: any): void {
 		if (window.mode.isMobile()) {
 			if (e.detail.perm === 'edit') {
 				history.pushState({context: 'app-started'}, 'edit-mode');
@@ -1097,24 +1333,30 @@ L.Control.UIManager = L.Control.extend({
 
 		// We've resized the document container.
 		this.map.invalidateSize();
-	},
+	}
 
-	refreshUI: function () {
+	/**
+	 * Refreshes the UI.
+	 */
+	refreshUI(): void {
 		if (this.notebookbar && !this.map._shouldStartReadOnly())
 			this.refreshNotebookbar();
 		else
 			this.refreshMenubar();
 
 		this.refreshTheme();
-	},
+	}
 
-	refreshTheme: function () {
+	refreshTheme(): void {
 		if (typeof window.initializedUI === 'function') {
 			window.initializedUI();
 		}
-	},
+	}
 
-	onUpdateViews: function () {
+	/**
+	 * Updates the view information.
+	 */
+	onUpdateViews(): void {
 		if (!this.map._docLayer || typeof this.map._docLayer._viewId === 'undefined')
 			return;
 
@@ -1151,9 +1393,12 @@ L.Control.UIManager = L.Control.extend({
 				}
 			}
 		}
-	},
+	}
 
-	enterReadonlyOrClose: function() {
+	/**
+	 * Enters read-only mode or closes the app.
+	 */
+	enterReadonlyOrClose(): void {
 		if (this.map.isEditMode()) {
 			// in edit mode, passing 'edit' actually enters readonly mode
 			// and bring the blue circle editmode button back
@@ -1166,9 +1411,13 @@ L.Control.UIManager = L.Control.extend({
 		} else {
 			app.dispatcher.dispatch('closeapp');
 		}
-	},
+	}
 
-	onGoBack: function(popStateEvent) {
+	/**
+	 * Handles mobile back navigation.
+	 * @param popStateEvent - The popstate event.
+	 */
+	onGoBack(popStateEvent: any): void {
 		if (popStateEvent.state && popStateEvent.state.context) {
 			if (popStateEvent.state.context === 'mobile-wizard' && this.mobileWizard) {
 				if (this.mobileWizard.isOpen()) {
@@ -1180,35 +1429,52 @@ L.Control.UIManager = L.Control.extend({
 				this.enterReadonlyOrClose();
 			}
 		}
-	},
+	}
 
 	// Blocking UI
 
-	isUIBlocked: function() {
+	/**
+	 * Returns whether the UI is blocked.
+	 */
+	isUIBlocked(): boolean {
 		return this.blockedUI;
-	},
+	}
 
-	blockUI: function(event) {
+	/**
+	 * Blocks the UI and displays a busy popup.
+	 * @param event - Event containing an optional message.
+	 */
+	blockUI(event: any): void {
 		this.blockedUI = true;
 		this.map.fire('showbusy', {label: event ? event.message : null});
-	},
+	}
 
-	unblockUI: function() {
+	/**
+	 * Unblocks the UI and hides the busy popup.
+	 */
+	unblockUI(): void {
 		this.blockedUI = false;
 		this.map.fire('hidebusy');
-	},
+	}
 
 	// Document area tooltip
 
-	_setTooltipText: function(element, text) {
+	/**
+	 * Sets the tooltip text for an element.
+	 * @param element - The target element.
+	 * @param text - Tooltip text.
+	 */
+	private _setTooltipText(element: any, text: string): void {
 		var dummyNode = L.DomUtil.create('div');
 		dummyNode.innerText = text;
 		element.tooltip('option', 'content', dummyNode.innerHTML);
-	},
+	}
 
-	/// Shows general tooltips in the document area
-	/// tooltipInfo contains rectangle (position in twips) and text properties
-	showDocumentTooltip: function(tooltipInfo) {
+	/**
+	 * Shows general tooltips in the document area
+	 * @param tooltipInfo - contains rectangle (position in twips) and text properties.
+	 */
+	showDocumentTooltip(tooltipInfo: any): void {
 		var split = tooltipInfo.rectangle.split(',');
 		var latlng = this.map._docLayer._twipsToLatLng(new L.Point(+split[0], +split[1]));
 		var pt = this.map.latLngToContainerPoint(latlng);
@@ -1224,41 +1490,73 @@ L.Control.UIManager = L.Control.extend({
 			elem.tooltip('close');
 			elem.tooltip('disable');
 		}, {once: true});
-	},
+	}
 
 	// Snack bar
 
-	closeSnackbar: function() {
+	/**
+	 * Closes the snackbar.
+	 */
+	closeSnackbar(): void {
 		JSDialog.SnackbarController.closeSnackbar();
-	},
+	}
 
-	showSnackbar: function(label, action, callback, timeout, hasProgress, withDismiss) {
+	/**
+	 * Displays a snackbar notification.
+	 * @param label - Message text.
+	 * @param action - Action text.
+	 * @param callback - Callback to execute on action.
+	 * @param timeout - Duration before auto-dismiss.
+	 * @param hasProgress - Whether to show a progress bar.
+	 * @param withDismiss - Whether a dismiss button is included.
+	 */
+	showSnackbar(
+		label: string,
+		action: string,
+		callback: any,
+		timeout: number,
+		hasProgress: boolean,
+		withDismiss: boolean,
+	): void {
 		JSDialog.SnackbarController.showSnackbar(label, action, callback, timeout, hasProgress, withDismiss);
-	},
+	}
 
-	/// shows snackbar with progress
-	showProgressBar: function(message, buttonText, callback, timeout, withDismiss) {
+	/**
+	 * Displays a snackbar with a progress bar.
+	 */
+	showProgressBar(
+		message: string,
+		buttonText: string,
+		callback: any,
+		timeout?: number,
+		withDismiss?: boolean,
+	): void {
 		JSDialog.SnackbarController.showSnackbar(message, buttonText, callback, timeout ? timeout : -1, true, withDismiss);
-	},
+	}
 
-	/// sets progressbar status, value should be in range 0-100
-	setSnackbarProgress: function(value) {
+	/**
+	 * Updates the progress value on the snackbar.
+	 * @param value - Progress value (0–100).
+	 */
+	setSnackbarProgress(value: number): void {
 		JSDialog.SnackbarController.setSnackbarProgress(value);
-	},
+	}
 
 	// Modals
 
-	/// shows modal dialog
-	/// json - JSON for building the dialog
-	/// callbacks - array of { id: widgetId, type: eventType, func: functionToCall }
-	showModal: function(json, callbacks, cancelButtonId) {
-		var that = this;
-		var builderCallback = function(objectType, eventType, object, data) {
-			window.app.console.debug('modal action: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
+	/**
+	 * Displays a modal dialog.
+	 * @param json - JSON configuration for the dialog.
+	 * @param callbacks - Array of callback configurations.
+	 * @param cancelButtonId - Optional ID for the cancel button.
+	 */
+	showModal(json: any, callbacks: any[], cancelButtonId?: string): void {
+		var builderCallback = (objectType: any, eventType: any, object: any, data: any) => {
+			window.app.console.debug("modal action: '" + objectType + "' id:'" + object.id + "' event: '" + eventType + "' state: '" + data + "'");
 
 			// default close methods
-			callbacks.push({id: (cancelButtonId ? cancelButtonId: 'response-cancel'), func: function() { that.closeModal(json.id); }});
-			callbacks.push({id: '__POPOVER__', func: function() { that.closeModal(json.id); }});
+			callbacks.push({id: (cancelButtonId ? cancelButtonId: 'response-cancel'), func: () => { this.closeModal(json.id); }});
+			callbacks.push({id: '__POPOVER__', func: () => { this.closeModal(json.id); }});
 
 			for (var i in callbacks) {
 				var callback = callbacks[i];
@@ -1269,33 +1567,59 @@ L.Control.UIManager = L.Control.extend({
 		};
 
 		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
-	},
+	}
 
-	closeModal: function(dialogId) {
+	/**
+	 * Closes a modal dialog.
+	 * @param dialogId - The ID of the dialog to close.
+	 */
+	closeModal(dialogId: string): void {
 		var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
 		app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
-	},
+	}
 
-	closeAll: function() {
+	/**
+	 * Closes all open dialogs.
+	 */
+	closeAll(): void {
 		if (this.map.jsdialog)
 			this.map.jsdialog.closeAll();
 		else
 			this.mobileWizard._closeWizard();
-	},
+	}
 
-	isAnyDialogOpen: function() {
+	/**
+	 * Returns whether any dialog is currently open.
+	 */
+	isAnyDialogOpen(): boolean {
 		if (this.map.jsdialog)
 			return this.map.jsdialog.hasDialogOpened();
 		else
 			return this.mobileWizard.isOpen();
-	},
+	}
 
 	// TODO: remove and use JSDialog.generateModalId directly
-	generateModalId: function(givenId) {
+	generateModalId(givenId: string): string {
 		return JSDialog.generateModalId(givenId);
-	},
+	}
 
-	_modalDialogJSON: function(id, title, cancellable, widgets, focusId, clickToDismiss) {
+	/**
+	 * Constructs JSON for a modal dialog.
+	 * @param id - Base ID.
+	 * @param title - Dialog title.
+	 * @param cancellable - Whether the dialog is cancellable.
+	 * @param widgets - Array of widget configurations.
+	 * @param focusId - Optional focus element ID.
+	 * @param clickToDismiss - Optional flag for click-to-dismiss behavior.
+	 */
+	private _modalDialogJSON(
+		id: string,
+		title: string,
+		cancellable: boolean,
+		widgets: any[],
+		focusId?: string,
+		clickToDismiss?: boolean,
+	): any {
 		var dialogId = this.generateModalId(id);
 		focusId = focusId ? focusId : 'response';
 		return {
@@ -1318,7 +1642,7 @@ L.Control.UIManager = L.Control.extend({
 				},
 			]
 		};
-	},
+	}
 
 	/// DEPRECATED: use JSDialog.showInfoModalWithOptions instead
 	/// shows simple info modal (message + ok button)
@@ -1330,7 +1654,16 @@ L.Control.UIManager = L.Control.extend({
 	/// buttonText - text inside button
 	/// callback - callback on button press
 	/// withCancel - specifies if needs cancel button also
-	showInfoModal: function(id, title, message1, message2, buttonText, callback, withCancel, focusId) {
+	showInfoModal(
+		id: string,
+		title: string,
+		message1: string,
+		message2: string,
+		buttonText: string,
+		callback: any,
+		withCancel: boolean,
+		focusId?: string,
+	): void {
 		var dialogId = this.generateModalId(id);
 		var responseButtonId = id + '-response';
 		var cancelButtonId = id + '-cancel';
@@ -1378,27 +1711,39 @@ L.Control.UIManager = L.Control.extend({
 			},
 		], focusId, clickToDismiss);
 
-		var that = this;
 		this.showModal(json, [
-			{id: responseButtonId, func: function() {
+			{id: responseButtonId, func: () => {
 				var dontClose = false;
 				if (typeof callback === 'function')
 					dontClose = callback();
 				if (!dontClose)
-					that.closeModal(dialogId);
+					this.closeModal(dialogId);
 			}}
 		], cancelButtonId);
 		if (!buttonText && !withCancel) {
 			// if no buttons better to set tabIndex to negative so the element is not reachable via sequential keyboard navigation but can be focused programatically
-			document.getElementById(dialogId).tabIndex = -1;
-			// We hid the OK button, we need to set focus manually on the popup.
-			document.getElementById(dialogId).focus();
-			document.getElementById(dialogId).className += ' focus-hidden';
+			const dialogElement = document.getElementById(dialogId);
+			if (dialogElement != null) {
+				dialogElement.tabIndex = -1;
+				// We hid the OK button, we need to set focus manually on the popup.
+				dialogElement.focus();
+				dialogElement.className += ' focus-hidden';
+			}
 		}
-	},
+	}
 
-	/// shows modal dialog with progress
-	showProgressBarDialog: function(id, title, message, buttonText, callback, value, cancelCallback) {
+	/**
+	 * Displays a modal dialog with a progress bar.
+	 */
+	showProgressBarDialog(
+		id: string,
+		title: string,
+		message: string,
+		buttonText: string,
+		callback: any,
+		value?: number,
+		cancelCallback?: any,
+	): void {
 		var dialogId = this.generateModalId(id);
 		var responseButtonId = id + '-response';
 		var cancelButtonId = id + '-cancel';
@@ -1445,24 +1790,26 @@ L.Control.UIManager = L.Control.extend({
 			},
 		], buttonText ? responseButtonId : cancelButtonId);
 
-		var that = this;
 		this.showModal(json, [
-			{id: responseButtonId, func: function() {
+			{id: responseButtonId, func: () => {
 				var dontClose = false;
 				if (typeof callback === 'function')
 					dontClose = callback();
 				if (!dontClose)
-					that.closeModal(dialogId);
+					this.closeModal(dialogId);
 			}},
-			{id: cancelButtonId, func: function() {
+			{id: cancelButtonId, func: () => {
 				if (typeof cancelCallback === 'function')
 					cancelCallback();
 			}}
 		], cancelButtonId);
-	},
+	}
 
-	/// sets progressbar status, value should be in range 0-100
-	setDialogProgress: function(id, value) {
+	/**
+	 * Updates the progress value in a progress dialog.
+	 * @param value - Progress value (0–100).
+	 */
+	setDialogProgress(id: string, value: number): void {
 		if (!app.socket)
 			return;
 
@@ -1482,11 +1829,18 @@ L.Control.UIManager = L.Control.extend({
 		};
 
 		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json)});
-	},
+	}
 
 	/// buttonObjectList: [{id: button's id, text: button's text, ..other properties if needed}, ...]
 	/// callbackList: [{id: button's id, func_: function}, ...]
-	showModalWithCustomButtons: function(id, title, message, cancellable, buttonObjectList, callbackList) {
+	showModalWithCustomButtons(
+		id: string,
+		title: string,
+		message: string,
+		cancellable: boolean,
+		buttonObjectList: any[],
+		callbackList: any[],
+	): void {
 		var dialogId = this.generateModalId(id);
 
 		for (var i = 0; i < buttonObjectList.length; i++)
@@ -1515,23 +1869,23 @@ L.Control.UIManager = L.Control.extend({
 			},
 		]);
 
-		buttonObjectList.forEach(function(button) {
-			callbackList.forEach(function(callback) {
+		buttonObjectList.forEach((button) => {
+			callbackList.forEach((callback) => {
 				if (button.id === callback.id) {
 					if (typeof callback.func_ === 'function') {
-						callback.func = function() {
+						callback.func = () => {
 							callback.func_();
 							this.closeModal(dialogId);
-						}.bind(this);
+						};
 					}
 					else
-						callback.func = function() { this.closeModal(dialogId); }.bind(this);
+						callback.func = () => { this.closeModal(dialogId); };
 				}
-			}.bind(this));
-		}.bind(this));
+			});
+		});
 
 		this.showModal(json, callbackList);
-	},
+	}
 
 	/// shows simple input modal (message + input + (cancel + ok) button)
 	/// id - id of a dialog
@@ -1540,7 +1894,15 @@ L.Control.UIManager = L.Control.extend({
 	/// defaultValue - default value of an input
 	/// buttonText - text inside OK button
 	/// callback - callback on button press
-	showInputModal: function(id, title, message, defaultValue, buttonText, callback, passwordInput) {
+	showInputModal(
+		id: string,
+		title: string,
+		message: string,
+		defaultValue: string,
+		buttonText: string,
+		callback: (input: string) => void,
+		passwordInput?: boolean,
+	): void {
 		var dialogId = this.generateModalId(id);
 		var json = this._modalDialogJSON(id, title, !window.mode.isDesktop(), [
 			{
@@ -1579,22 +1941,20 @@ L.Control.UIManager = L.Control.extend({
 			},
 		], 'input-modal-input');
 
-		var that = this;
 		this.showModal(json, [
-			{id: 'response-ok', func: function() {
+			{id: 'response-ok', func: () => {
 				if (typeof callback === 'function') {
-					var input = document.getElementById('input-modal-input');
+					var input = document.getElementById('input-modal-input') as HTMLInputElement;
 					callback(input.value);
 				}
-				that.closeModal(dialogId);
+				this.closeModal(dialogId);
 			}}
 		]);
-	},
+	}
 
 	/// Shows an info bar at the bottom right of the view.
 	/// This is called by map.fire('infobar', {data}).
-	showInfoBar: function(e) {
-
+	showInfoBar(e: any): void {
 		var message = e.msg;
 		var link = e.action;
 		var linkText = e.actionLabel;
@@ -1632,18 +1992,32 @@ L.Control.UIManager = L.Control.extend({
 				if (!link || !linkText)
 					return;
 				var win = window.open(window.sanitizeUrl(link), '_blank');
-				win.focus();
+				win?.focus();
 			}
 		}]);
 
 		if (!window.mode.isMobile()) {
-			document.getElementById(dialogId).style.marginRight = '0';
-			document.getElementById(dialogId).style.marginBottom = '0';
+			const dialogElement = document.getElementById(dialogId);
+			if (dialogElement != null) {
+				dialogElement.style.marginRight = '0';
+				dialogElement.style.marginBottom = '0';
+			}
 		}
-	},
+	}
 
-	// Opens a yesno modal with configurable buttons.
-	showYesNoButton: function(id, title, message, yesButtonText, noButtonText, yesFunction, noFunction, cancellable) {
+	/**
+	 * Displays a yes/no confirmation modal dialog.
+	 */
+	showYesNoButton(
+		id: string,
+		title: string,
+		message: string,
+		yesButtonText: string,
+		noButtonText: string,
+		yesFunction: () => void,
+		noFunction: () => void,
+		cancellable: boolean,
+	): void {
 		var dialogId = this.generateModalId(id);
 
 		var json = this._modalDialogJSON(id, title, cancellable, [
@@ -1684,22 +2058,22 @@ L.Control.UIManager = L.Control.extend({
 		[
 			{
 				id: dialogId + '-nobutton',
-				func: function() {
+				func: () => {
 					if (typeof noFunction === 'function')
 						noFunction();
 					this.closeModal(dialogId);
-				}.bind(this)
+				}
 			},
 			{
 				id: dialogId + '-yesbutton',
-				func: function() {
+				func: () => {
 					if (typeof yesFunction === 'function')
 						yesFunction();
 					this.closeModal(dialogId);
-				}.bind(this)
+				}
 			}
 		]);
-	},
+	}
 
 	/// shows simple confirm modal (message + (cancel + ok) button)
 	/// id - id of a dialog
@@ -1707,7 +2081,14 @@ L.Control.UIManager = L.Control.extend({
 	/// message - message
 	/// buttonText - text inside OK button
 	/// callback - callback on button press
-	showConfirmModal: function(id, title, message, buttonText, callback, hideCancelButton) {
+	showConfirmModal(
+		id: string,
+		title: string,
+		message: string,
+		buttonText: string,
+		callback: () => void,
+		hideCancelButton?: boolean,
+	): void {
 		var dialogId = this.generateModalId(id);
 		var json = this._modalDialogJSON(id, title, !window.mode.isDesktop(), [
 			{
@@ -1739,53 +2120,71 @@ L.Control.UIManager = L.Control.extend({
 			},
 		]);
 
-		var that = this;
 		this.showModal(json, [
-			{id: 'response-ok', func: function() {
+			{id: 'response-ok', func: () => {
 				if (typeof callback === 'function') {
 					callback();
 				}
-				that.closeModal(dialogId);
+				this.closeModal(dialogId);
 			}}
 		]);
-	},
+	}
 
 	// Helper functions
 
-	moveObjectVertically: function(obj, diff) {
+	/**
+	 * Moves a jQuery element vertically by a specified difference.
+	 * @param obj - The jQuery element.
+	 * @param diff - The vertical pixel difference.
+	 */
+	moveObjectVertically(obj: JQuery, diff: number): void {
 		if (obj) {
 			var prevTop = obj.css('top');
 			if (prevTop) {
-				prevTop = parseInt(prevTop.slice(0, -2)) + diff;
+				prevTop = parseInt(prevTop.slice(0, -2)) + diff + 'px';
 			}
 			else {
-				prevTop = 0 + diff;
+				prevTop = diff + 'px';
 			}
-			obj.css({'top': String(prevTop) + 'px'});
+			obj.css({ top: prevTop });
+			}
 		}
-	},
 
-	setDocTypePref: function(name, value) {
+	/**
+	 * Sets a document type–specific preference.
+	 * @param name - Preference name.
+	 * @param value - Preference value.
+	 */
+	setDocTypePref(name: string, value: any): any {
 		const docType = this.map.getDocType();
 		return window.prefs.set(`${docType}.${name}`, value);
-	},
+	}
 
-	setDocTypeMultiplePrefs: function (prefs) {
+	/**
+	 * Sets several document type–specific preference items at once.
+	 */
+	setDocTypeMultiplePrefs(prefs: { [key: string]: string }) {
 		const docType = this.map.getDocType();
 
-		const deckPrefs = {};
+		const deckPrefs: Record<string, string> = {};
 		for (const [key, value] of Object.entries(prefs)) {
 			deckPrefs[`${docType}.${key}`] = value
 		}
 		window.prefs.setMultiple(deckPrefs);
-	},
+	}
 
-	getBooleanDocTypePref: function(name, defaultValue = false) {
+	/**
+	 * Retrieves a boolean preference for the current document type.
+	 * @param name - Preference name.
+	 * @param defaultValue - Default value if not set.
+	 */
+	getBooleanDocTypePref(name: string, defaultValue: boolean = false): boolean {
 		const docType = this.map.getDocType();
 		return window.prefs.getBoolean(`${docType}.${name}`, defaultValue);
-	},
-});
+	}
+}
 
-L.control.uiManager = function () {
-	return new L.Control.UIManager();
+// Export a factory function for the UIManager control.
+L.control.uiManager = function (): UIManager {
+	return new UIManager();
 };

@@ -113,6 +113,13 @@ declare const app: {
 	[key: string]: any; // other properties as needed
 };
 
+// Extend the global Document interface
+interface Document {
+	mozFullscreenElement: Element | null;
+	msFullscreenElement: Element | null;
+	webkitFullscreenElement: Element | null;
+}
+
 // Extend the global Window interface
 // Defined in: js/global.js
 interface Window {
@@ -120,11 +127,18 @@ interface Window {
 	app: {
 		colorPalettes: any; // TODO declare according to Widget.ColorPicker.ts
 		console: Console;
+		map: any; // TODO should be L.Map
 		// file defined in: src/docstate.js
 		file: {
 			disableSidebar: boolean;
 		};
 		roundedDpiScale: number;
+	};
+	// coolParams defined in: js/global.js
+	coolParams: {
+		p: URLSearchParams;
+
+		get(name: string): string;
 	};
 	mode: {
 		isMobile(): boolean;
@@ -134,11 +148,21 @@ interface Window {
 	};
 	prefs: {
 		getBoolean(key: string, defaultValue?: boolean): boolean;
-		get(key: string, defaultValue?: string | undefined): string | undefined;
-		set(key: string, value: string): void;
+		get(key: string, defaultValue?: any): any;
+		set(key: string, value: any): void;
+		setMultiple(prefs: Record<string, string>): void;
 	};
+
+	allowUpdateNotification: boolean;
+	documentSigningEnabled: boolean;
+	sidebarId: number;
 	userInterfaceMode: string;
+	ThisIsAMobileApp: boolean;
 	ThisIsTheEmscriptenApp: boolean;
+	zoteroEnabled: boolean;
+
+	initializedUI?: () => void; // initializedUI is an optional function, potentially defined in branding
+	setupToolbar(map: any): void; // TODO should be L.Map
 }
 
 // For localization

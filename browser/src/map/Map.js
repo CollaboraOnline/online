@@ -53,10 +53,10 @@ L.Map = L.Evented.extend({
 	// Control.UIManager instance, set in main.js
 	uiManager: null,
 
-	// Control.LokDialog instance, is set in Control.UIManager.js
+	// Control.LokDialog instance, is set in Control.UIManager.ts
 	dialog: null,
 
-	// Control.JSDialog instance, is set in Control.UIManager.js
+	// Control.JSDialog instance, is set in Control.UIManager.ts
 	jsdialog: null,
 
 	context: {context: ''},
