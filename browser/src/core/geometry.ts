@@ -152,7 +152,9 @@ export class SimpleRectangle {
 	public containsX (x: number): boolean { return (Math.round(x) >= this.x1 && Math.round(x) <= this.x2); }
 	public containsY (y: number): boolean { return (Math.round(y) >= this.y1 && Math.round(y) <= this.y2); }
 	public containsRectangle(rectangle: number[]): boolean { return this.containsPoint([rectangle[0], rectangle[1]]) && this.containsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
-	public intersectsRectangle(rectangle: number[]): boolean { return this.containsPoint([rectangle[0], rectangle[1]]) || this.containsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
+	public intersectsRectangle(rectangle: number[]): boolean {
+		return app.LOUtil._doRectanglesIntersect(this.toArray(), rectangle);
+	}
 	public equals(rectangle: Array<number>): boolean { return this.x1 === Math.round(rectangle[0]) && this.y1 === Math.round(rectangle[1]) && this.width === Math.round(rectangle[2]) && this.height === Math.round(rectangle[3]); }
 
 	public moveTo (point: number[]): void { this._x1 = Math.round(point[0]); this._y1 = Math.round(point[1]); }
@@ -187,7 +189,9 @@ export class SimpleRectangle {
 	public pContainsX (x: number): boolean { return (Math.round(x) >= this.pX1 && Math.round(x) <= this.pX2); }
 	public pContainsY (y: number): boolean { return (Math.round(y) >= this.pY1 && Math.round(y) <= this.pY2); }
 	public pContainsRectangle(rectangle: number[]): boolean { return this.pContainsPoint([rectangle[0], rectangle[1]]) && this.pContainsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
-	public pIntersectsRectangle(rectangle: number[]): boolean { return this.pContainsPoint([rectangle[0], rectangle[1]]) || this.pContainsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
+	public pIntersectsRectangle(rectangle: number[]): boolean {
+		return app.LOUtil._doRectanglesIntersect(this.pToArray(), rectangle);
+	}
 	public pEquals(rectangle: Array<number>): boolean { return this.pX1 === Math.round(rectangle[0]) && this.pY1 === Math.round(rectangle[1]) && this.pWidth === Math.round(rectangle[2]) && this.pHeight === Math.round(rectangle[3]); }
 
 	public pMoveTo (point: number[]): void { this._x1 = Math.round(point[0] * app.pixelsToTwips); this._y1 = Math.round(point[1] * app.pixelsToTwips); }
@@ -222,7 +226,9 @@ export class SimpleRectangle {
 	public cContainsX (x: number): boolean { return (Math.round(x) >= this.cX1 && Math.round(x) <= this.cX2); }
 	public cContainsY (y: number): boolean { return (Math.round(y) >= this.cY1 && Math.round(y) <= this.cY2); }
 	public cContainsRectangle(rectangle: number[]): boolean { return this.cContainsPoint([rectangle[0], rectangle[1]]) && this.cContainsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
-	public cIntersectsRectangle(rectangle: number[]): boolean { return this.cContainsPoint([rectangle[0], rectangle[1]]) || this.cContainsPoint([rectangle[0] + rectangle[2], rectangle[1] + rectangle[3]]); }
+	public cIntersectsRectangle(rectangle: number[]): boolean {
+		return app.LOUtil._doRectanglesIntersect(this.cToArray(), rectangle);
+	}
 	public cEquals(rectangle: Array<number>): boolean { return this.cX1 === Math.round(rectangle[0]) && this.cY1 === Math.round(rectangle[this.y1]) && this.cWidth === Math.round(rectangle[2]) && this.cHeight === Math.round(rectangle[3]); }
 
 	public cMoveTo (point: number[]): void { this._x1 = Math.round(point[0] * app.dpiScale * app.pixelsToTwips); this._y1 = Math.round(point[1] * app.dpiScale * app.pixelsToTwips); }
