@@ -1554,11 +1554,10 @@ class TileManager {
 	}
 
 	private static coordsToTileBounds(coords: TileCoordData): number[] {
-		var zoomFactor = app.map.zoomToFactor(coords.z);
-		const x = (coords.x * app.pixelsToTwips) / zoomFactor;
-		const y = (coords.y * app.pixelsToTwips) / zoomFactor;
-		const width = app.tile.size.x / zoomFactor;
-		const height = app.tile.size.y / zoomFactor;
+		const x = coords.x * app.pixelsToTwips;
+		const y = coords.y * app.pixelsToTwips;
+		const width = app.tile.size.x;
+		const height = app.tile.size.y;
 
 		return [x, y, width, height];
 	}
