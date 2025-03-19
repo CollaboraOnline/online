@@ -878,9 +878,12 @@ class TileManager {
 
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
-		if (app.map._docLayer._painter.coordsIntersectVisible(coords)) {
+		if (
+			app.isRectangleVisibleInTheDisplayedArea(
+				this.pixelCoordsToTwipTileBounds(coords),
+			)
+		)
 			app.sectionContainer.setDirty(coords);
-		}
 	}
 
 	private static createTile(coords: TileCoordData, key: string) {
@@ -1542,7 +1545,7 @@ class TileManager {
 		return this.tiles[key];
 	}
 
-	private static coordsToTileBounds(coords: TileCoordData): number[] {
+	private static pixelCoordsToTwipTileBounds(coords: TileCoordData): number[] {
 		const x = coords.x * app.pixelsToTwips;
 		const y = coords.y * app.pixelsToTwips;
 		const width = app.tile.size.twips[0];
@@ -1562,7 +1565,7 @@ class TileManager {
 
 		for (const key in this.tiles) {
 			const coords: TileCoordData = this.tiles[key].coords;
-			const tileRectangle = this.coordsToTileBounds(coords);
+			const tileRectangle = this.pixelCoordsToTwipTileBounds(coords);
 
 			if (
 				coords.part === part &&
