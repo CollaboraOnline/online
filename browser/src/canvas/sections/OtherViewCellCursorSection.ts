@@ -148,7 +148,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
         let section: OtherViewCellCursorSection;
         let newSection = false;
         if (app.sectionContainer.doesSectionExist(sectionName)) {
-            section = app.sectionContainer.getSectionWithName(sectionName);
+            section = app.sectionContainer.getSectionWithName(sectionName) as OtherViewCellCursorSection;
             section.sectionProperties.part = part;
             section.size[0] = rectangle.pWidth;
             section.size[1] = rectangle.pHeight;
@@ -178,7 +178,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     public static removeView(viewId: number) {
         const sectionName = OtherViewCellCursorSection.sectionNamePrefix + viewId;
         if (app.sectionContainer.doesSectionExist(sectionName)) {
-            const section = app.sectionContainer.getSectionWithName(sectionName);
+            const section = app.sectionContainer.getSectionWithName(sectionName) as OtherViewCellCursorSection;
             OtherViewCellCursorSection.sectionPointers.splice(OtherViewCellCursorSection.sectionPointers.indexOf(section), 1);
             app.sectionContainer.removeSection(sectionName);
             app.sectionContainer.requestReDraw();

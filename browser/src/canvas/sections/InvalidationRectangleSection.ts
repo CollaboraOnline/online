@@ -80,7 +80,9 @@ class InvalidationRectangleSection extends CanvasSectionObject {
 	private static getSection(): InvalidationRectangleSection {
 		let section: InvalidationRectangleSection;
 		if (app.sectionContainer.doesSectionExist(sectionName))
-			section = app.sectionContainer.getSectionWithName(sectionName);
+			section = app.sectionContainer.getSectionWithName(
+				sectionName,
+			) as InvalidationRectangleSection;
 		else {
 			section = new InvalidationRectangleSection();
 			app.sectionContainer.addSection(section);

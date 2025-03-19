@@ -11,7 +11,6 @@
  */
 
 declare var L: any;
-declare var app: any;
 
 function isCtrlKey (e: KeyboardEvent) {
     if ((window as any).ThisIsTheiOSApp || L.Browser.mac)

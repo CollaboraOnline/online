@@ -10,8 +10,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-declare var app: any;
-
 abstract class ContinuousActivityBase extends SimpleContinuousActivityBase {
 	protected constructor(aCommonParamSet: ActivityParamSet) {
 		super(aCommonParamSet);

@@ -1,3 +1,14 @@
+/* -*- tab-width: 4 -*- */
+/*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 // TypeScript declarations for the global scope (e.g., window, document, etc.)
 
 interface COOLTouch {
@@ -95,16 +106,26 @@ declare namespace L {
     const control: Control;
     const map: L.Map;
 }
-
+*/
 // Add the app declaration
 declare const app: {
-    sectionContainer: HTMLElement;
-    [key: string]: any; // Add other properties as needed
-}
-*/
+	sectionContainer: CanvasSectionContainer;
+	[key: string]: any; // other properties as needed
+};
+
 // Extend the global Window interface
 // Defined in: js/global.js
 interface Window {
+	// app defined in: js/bundle.js
+	app: {
+		colorPalettes: any; // TODO declare according to Widget.ColorPicker.ts
+		console: Console;
+		// file defined in: src/docstate.js
+		file: {
+			disableSidebar: boolean;
+		};
+		roundedDpiScale: number;
+	};
 	mode: {
 		isMobile(): boolean;
 		isDesktop(): boolean;
