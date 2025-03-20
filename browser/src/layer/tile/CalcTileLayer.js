@@ -401,6 +401,11 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		const mapElement = document.getElementById('map'); // map's size = tiles section's size.
 		const oldMapSize = [mapElement.clientWidth, mapElement.clientHeight];
+
+		// Early exit. If there is no need to update the size, return here.
+		if (oldMapSize[0] === newMapSize[0] && oldMapSize[1] === newMapSize[1])
+			return false;
+
 		this._resizeMapElementAndTilesLayer(mapElement, marginLeft, marginTop, newMapSize);
 
 		app.sectionContainer.onResize(newCanvasSize[0], newCanvasSize[1]); // Canvas's size = documentContainer's size.
