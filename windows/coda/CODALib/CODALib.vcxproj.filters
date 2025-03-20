@@ -129,5 +129,8 @@
     <ClCompile Include="..\..\..\common\Unit-mobile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\kit\LogUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
