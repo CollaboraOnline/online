@@ -131,7 +131,7 @@ JSDialog.toolbox = function (
 			: '';
 	const toolbox = L.DomUtil.create(
 		'div',
-		builder.options.cssClass + ' toolbox' + levelClass,
+		builder.options.cssClass + ' horizontal toolbox' + levelClass,
 		parentContainer,
 	);
 	toolbox.id = data.id;
