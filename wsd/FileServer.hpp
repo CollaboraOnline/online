@@ -216,6 +216,8 @@ public:
 #endif
     }
 
+    static void dumpState(std::ostream& os);
+
 private:
     static std::map<std::string, std::pair<std::string, std::string>> FileHash;
     static void sendError(http::StatusCode errorCode, const Poco::Net::HTTPRequest& request,
