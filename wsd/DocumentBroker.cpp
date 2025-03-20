@@ -1478,7 +1478,7 @@ void PresetsInstallTask::asyncInstall(const std::string& uri, const std::string&
     installPresetStarted(id);
 
     DocumentBroker::asyncInstallPreset(_poll, _configId, uri, stamp, fileName, id,
-                                       presetInstallFinished, session);
+                                       presetInstallFinished, session, HTTP_REDIRECTION_LIMIT);
 }
 
 void PresetsInstallTask::installPresetStarted(const std::string& id)
@@ -1623,8 +1623,10 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
             stop("configfailed");
         }
     };
-    _asyncInstallTask = asyncInstallPresets(*_poll, configId, userSettingsUri,
-                                            presetsPath, session, installFinishedCB);
+    _asyncInstallTask =
+        std::make_shared<PresetsInstallTask>(*_poll, configId, presetsPath, installFinishedCB);
+    asyncInstallPresets(*_poll, userSettingsUri, session, HTTP_REDIRECTION_LIMIT,
+                        _asyncInstallTask);
     _asyncInstallTask->appendCallback([selfWeak = weak_from_this(), this,
                                        keepPollAlive=_poll](bool){
         // For the edge case where the DocumentBroker lifecycle ends before the document
@@ -1640,7 +1642,8 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
 }
 
 std::shared_ptr<const http::Response>
-DocumentBroker::sendHttpSyncRequest(const std::string& url, const std::string& logContext)
+DocumentBroker::sendHttpSyncRequest(const std::string& url, const std::string& logContext,
+                                    unsigned redirectionLimit)
 {
     const Poco::URI uri{ url };
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(uri));
@@ -1654,7 +1657,24 @@ DocumentBroker::sendHttpSyncRequest(const std::string& url, const std::string& l
     LOG_TRC("sendHttpSyncRequest returned " << statusLine.statusCode() << " when fetching "
                                             << logContext << " json");
 
-    if (statusLine.statusCode() != http::StatusCode::OK)
+    http::StatusCode statusCode = statusLine.statusCode();
+    if (statusCode == http::StatusCode::MovedPermanently || statusCode == http::StatusCode::Found ||
+        statusCode == http::StatusCode::TemporaryRedirect ||
+        statusCode == http::StatusCode::PermanentRedirect)
+    {
+        if (redirectionLimit)
+        {
+            const std::string& location = httpResponse->get("Location");
+            LOG_DBG("sendHttpSyncRequest for " << logContext << " redirect to URI ["
+                                               << COOLWSD::anonymizeUrl(location) << ']');
+            return sendHttpSyncRequest(location, logContext, redirectionLimit - 1);
+        }
+        LOG_ERR("sendHttpSyncRequest for "
+                << logContext << " redirected too many times. Giving up on URI[" << uriAnonym
+                << ']');
+        return nullptr;
+    }
+    else if (statusCode != http::StatusCode::OK)
     {
         LOG_ERR("Failed to get " << logContext << " json from [" << uriAnonym << "] with status["
                                  << statusLine.reasonPhrase() << ']');
@@ -1682,7 +1702,7 @@ void DocumentBroker::getBrowserSettingSync(const std::shared_ptr<ClientSession>&
     if (session == nullptr || session->getSentBrowserSetting())
         return;
 
-    const auto userSettingsResponse = sendHttpSyncRequest(userSettingsUri, "usersetting");
+    const auto userSettingsResponse = sendHttpSyncRequest(userSettingsUri, "usersetting", HTTP_REDIRECTION_LIMIT);
     if (!userSettingsResponse)
         return;
 
@@ -1711,7 +1731,7 @@ void DocumentBroker::getBrowserSettingSync(const std::shared_ptr<ClientSession>&
 
     const std::string browsersettingUri = JsonUtil::getJSONValue<std::string>(firstElem, "uri");
 
-    const auto browsersettingResponse = sendHttpSyncRequest(browsersettingUri, "browsersetting");
+    const auto browsersettingResponse = sendHttpSyncRequest(browsersettingUri, "browsersetting", HTTP_REDIRECTION_LIMIT);
     if (!browsersettingResponse)
     {
         sendBrowserSetting(session);
@@ -1729,12 +1749,10 @@ struct PresetRequest
     std::string _id;
 };
 
-std::shared_ptr<PresetsInstallTask>
-DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& configId,
-                                    const std::string& userSettingsUri,
-                                    const std::string& presetsPath,
-                                    const std::shared_ptr<ClientSession>& session,
-                                    const std::function<void(bool)>& installFinishedCB)
+void DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,
+                                         const std::shared_ptr<ClientSession>& session,
+                                         unsigned redirectionLimit,
+                                         const std::shared_ptr<PresetsInstallTask>& presetTasks)
 {
     // Download the json for settings
     const Poco::URI settingsUri{userSettingsUri};
@@ -1744,14 +1762,11 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& configI
     const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
     LOG_DBG("Getting settings from [" << uriAnonym << ']');
 
-    auto presetTasks = std::make_shared<PresetsInstallTask>(poll, configId, presetsPath,
-                                                            installFinishedCB);
-
     // When result arrives, extract uris of what we want to install to the jail's user presets
     // and async download and install those.
     http::Session::FinishedCallback finishedCallback =
-        [uriAnonym, presetsPath, presetTasks,
-         session](const std::shared_ptr<http::Session>& configSession)
+        [uriAnonym, presetTasks, session, &poll,
+         redirectionLimit](const std::shared_ptr<http::Session>& configSession)
     {
         configSession->asyncShutdown();
 
@@ -1766,8 +1781,29 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& configI
         const http::StatusLine statusLine = httpResponse->statusLine();
 
         LOG_TRC("DocumentBroker::asyncInstallPresets returned " << statusLine.statusCode());
-        const bool failed = (statusLine.statusCode() != http::StatusCode::OK);
-        if (failed)
+        const http::StatusCode statusCode = statusLine.statusCode();
+        if (statusCode == http::StatusCode::MovedPermanently ||
+            statusCode == http::StatusCode::Found ||
+            statusCode == http::StatusCode::TemporaryRedirect ||
+            statusCode == http::StatusCode::PermanentRedirect)
+        {
+            if (redirectionLimit)
+            {
+                const std::string& location = httpResponse->get("Location");
+                LOG_DBG("asyncInstallPresets redirect to URI [" << COOLWSD::anonymizeUrl(location)
+                                                                << ']');
+
+                asyncInstallPresets(poll, location, session, redirectionLimit - 1, presetTasks);
+            }
+            else
+            {
+                LOG_ERR("asyncInstallPresets redirected too many times. Giving up on URI["
+                        << uriAnonym << ']');
+                presetTasks->install(nullptr, nullptr);
+            }
+            return;
+        }
+        else if (statusCode != http::StatusCode::OK)
         {
             LOG_ERR("Failed to get settings json from [" << uriAnonym << "] with status["
                                                          << statusLine.reasonPhrase() << ']');
@@ -1794,26 +1830,24 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& configI
 
     // Run the request on the WebServer Poll.
     httpSession->asyncRequest(request, poll);
-
-    return presetTasks;
 }
 
 void DocumentBroker::asyncInstallPreset(
     SocketPoll& poll, const std::string& configId, const std::string& presetUri,
     const std::string& presetStamp, const std::string& presetFile, const std::string& id,
     const std::function<void(const std::string&, bool)>& finishedCB,
-    const std::shared_ptr<ClientSession>& session)
+    const std::shared_ptr<ClientSession>& session, unsigned redirectionLimit)
 {
     const std::string uriAnonym = COOLWSD::anonymizeUrl(presetUri);
     LOG_DBG("Getting preset from [" << uriAnonym << ']');
 
-    const Poco::URI uri{presetUri};
+    const Poco::URI uri{ presetUri };
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(uri));
     http::Request request(uri.getPathAndQuery());
 
     http::Session::FinishedCallback finishedCallback =
-        [configId, presetUri, presetStamp, uriAnonym,
-         presetFile, id, finishedCB](const std::shared_ptr<http::Session>& presetSession)
+        [configId, presetUri, presetStamp, uriAnonym, presetFile, id, finishedCB, redirectionLimit,
+         &poll, session](const std::shared_ptr<http::Session>& presetSession)
     {
         presetSession->asyncShutdown();
 
@@ -1827,7 +1861,27 @@ void DocumentBroker::asyncInstallPreset(
 
         bool success = false;
         const http::StatusLine statusLine = presetHttpResponse->statusLine();
-        if (statusLine.statusCode() != http::StatusCode::OK)
+        const http::StatusCode statusCode = statusLine.statusCode();
+        if (statusCode == http::StatusCode::MovedPermanently ||
+            statusCode == http::StatusCode::Found ||
+            statusCode == http::StatusCode::TemporaryRedirect ||
+            statusCode == http::StatusCode::PermanentRedirect)
+        {
+            if (redirectionLimit)
+            {
+                const std::string& location = presetHttpResponse->get("Location");
+                LOG_DBG("asyncInstallPreset redirect to URI [" << COOLWSD::anonymizeUrl(location)
+                                                               << ']');
+
+                asyncInstallPreset(poll, configId, location, presetStamp, presetFile, id,
+                                   finishedCB, session, redirectionLimit - 1);
+                return;
+            }
+            LOG_ERR("asyncInstallPreset redirected too many times. Giving up on URI[" << uriAnonym
+                                                                                      << ']');
+            return;
+        }
+        else if (statusCode != http::StatusCode::OK)
         {
             LOG_ERR("Failed to fetch preset uri[" << uriAnonym << "] with status["
                                                   << statusLine.reasonPhrase() << ']');

@@ -30,6 +30,7 @@
 
 #if !MOBILEAPP
 #include <wopi/CheckFileInfo.hpp>
+#include <PresetsInstall.hpp>
 #endif // !MOBILEAPP
 
 extern std::pair<std::shared_ptr<DocumentBroker>, std::string>
@@ -188,7 +189,7 @@ void RequestVettingStation::launchInstallPresets()
     if (sharedSettings.getUri().empty())
         return;
 
-    std::string configId = sharedSettings.getConfigId();
+    const std::string& configId = sharedSettings.getConfigId();
 
     auto finishedCallback = [selfWeak = weak_from_this(), this, configId](bool success)
     {
@@ -214,13 +215,13 @@ void RequestVettingStation::launchInstallPresets()
 
     // if this wopi server has some shared settings we want to have a subForKit for those settings
     std::string presetsPath = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
-    std::string configIdPresets = Poco::Path(presetsPath, Uri::encode(configId)).toString();
-    Poco::File(Poco::Path(configIdPresets, "autotext")).createDirectories();
-    Poco::File(Poco::Path(configIdPresets, "wordbook")).createDirectories();
-    Poco::File(Poco::Path(configIdPresets, "template")).createDirectories();
+    std::string configIdPresetsPath = Poco::Path(presetsPath, Uri::encode(configId)).toString();
+    Poco::File(Poco::Path(configIdPresetsPath, "autotext")).createDirectories();
+    Poco::File(Poco::Path(configIdPresetsPath, "wordbook")).createDirectories();
+    Poco::File(Poco::Path(configIdPresetsPath, "template")).createDirectories();
     // ensure the server config is downloaded and populate a subforkit when config is available
-    _asyncInstallTask = DocumentBroker::asyncInstallPresets(*_poll, configId, sharedSettings.getUri(), configIdPresets,
-                                                            nullptr, finishedCallback);
+    _asyncInstallTask = std::make_shared<PresetsInstallTask>(*_poll, configId, configIdPresetsPath, finishedCallback);
+    DocumentBroker::asyncInstallPresets(*_poll, sharedSettings.getUri(), nullptr, HTTP_REDIRECTION_LIMIT, _asyncInstallTask);
 }
 
 #endif
