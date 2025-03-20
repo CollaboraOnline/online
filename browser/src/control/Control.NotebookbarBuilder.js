@@ -28,7 +28,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['exportmenubutton'] = this._exportMenuButton;
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
 		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
-		this._controlHandlers['toolbox'] = this._toolboxHandler;
 
 		this._controlHandlers['pushbutton'] = function() { return false; };
 		this._controlHandlers['spinfield'] = function() { return false; };
@@ -278,16 +277,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		JSDialog.MakeFocusCycle(tabPage);
 
 		return result;
-	},
-
-	_toolboxHandler: function(parentContainer, data) {
-		if (data.enabled === false || data.enabled === 'false') {
-			for (var index in data.children) {
-				data.children[index].enabled = false;
-			}
-		}
-
-		return true;
 	},
 
 	_exportMenuButton: function(parentContainer, data, builder) {
