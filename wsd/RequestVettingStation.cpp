@@ -30,6 +30,7 @@
 
 #if !MOBILEAPP
 #include <wopi/CheckFileInfo.hpp>
+#include <PresetsInstall.hpp>
 #endif // !MOBILEAPP
 
 extern std::pair<std::shared_ptr<DocumentBroker>, std::string>
@@ -189,7 +190,7 @@ void RequestVettingStation::launchInstallPresets()
     if (sharedSettings.getUri().empty())
         return;
 
-    std::string configId = sharedSettings.getConfigId();
+    const std::string& configId = sharedSettings.getConfigId();
 
     auto finishedCallback = [selfWeak = weak_from_this(), this, configId](bool success)
     {
@@ -220,8 +221,8 @@ void RequestVettingStation::launchInstallPresets()
     Poco::File(Poco::Path(configIdPresets, "wordbook")).createDirectories();
     Poco::File(Poco::Path(configIdPresets, "template")).createDirectories();
     // ensure the server config is downloaded and populate a subforkit when config is available
-    _asyncInstallTask = DocumentBroker::asyncInstallPresets(*_poll, configId, sharedSettings.getUri(), configIdPresets,
-                                                            nullptr, finishedCallback);
+    _asyncInstallTask = std::make_shared<PresetsInstallTask>(*_poll, configIdPresets, presetsPath, finishedCallback);
+    DocumentBroker::asyncInstallPresets(*_poll, sharedSettings.getUri(), nullptr, HTTP_REDIRECTION_LIMIT, _asyncInstallTask);
 }
 
 #endif
