@@ -230,9 +230,9 @@ void BgSaveChildWebSocketHandler::onDisconnect()
 {
     LOG_TRC("Disconnected background web socket to parent kit");
     UnitKit::get().preBackgroundSaveExit();
-
+#if !MOBILEAPP
     Document::shutdownBackgroundWatchdog();
-
+#endif
     Util::forcedExit(EX_OK);
 }
 

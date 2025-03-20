@@ -85,14 +85,14 @@ namespace ThreadChecks
 
 std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
+#define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
+
+#endif
+
 std::atomic<size_t> StreamSocket::ExternalConnectionCount = 0;
 
 net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3600),
                                      .maxExtConnections = 200000 /* arbitrary value to be resolved */ };
-
-#define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
-
-#endif
 
 constexpr std::string_view Socket::toString(Type t)
 {
