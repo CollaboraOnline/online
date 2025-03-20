@@ -3379,6 +3379,9 @@ public:
 
         os << '\n';
         COOLWSD::SavedClipboards->dumpState(os);
+
+        os << '\n';
+        FileServerRequestHandler::dumpState(os);
 #endif
 
         os << "\nDocument Broker polls " << "[ " << DocBrokers.size() << " ]:\n";

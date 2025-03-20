@@ -236,6 +236,22 @@ FileServerRequestHandler::FileServerRequestHandler(const std::string& root)
     }
 }
 
+//static
+void FileServerRequestHandler::dumpState(std::ostream& os)
+{
+    os << "FileHash with " << FileHash.size() << " entries\n";
+
+    size_t fileHashEstSize = sizeof(FileHash);
+    for (const auto& entry : FileHash)
+    {
+        fileHashEstSize += entry.first.capacity();
+        fileHashEstSize += entry.second.first.capacity();
+        fileHashEstSize += entry.second.second.capacity();
+    }
+
+    os << "\t Estimated allocation size: " << fileHashEstSize << " bytes\n";
+}
+
 FileServerRequestHandler::~FileServerRequestHandler()
 {
     // Clean cached files.
