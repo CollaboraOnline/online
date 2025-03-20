@@ -349,6 +349,7 @@ void SocketPoll::checkAndReThread()
 
 void SocketPoll::removeFromWakeupArray()
 {
+    if (_wakeup[1] != -1)
     {
         std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
         auto it = std::find(getWakeupsArray().begin(),
