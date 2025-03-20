@@ -722,8 +722,11 @@ function getInitializerClass() {
 				let val = defaultValue;
 				if (Object.prototype.hasOwnProperty.call(global.prefs._userBrowserSetting, key))
 					val = global.prefs._userBrowserSetting[key];
-				global.prefs._localStorageCache[key] = val;
-				return val;
+
+				if(val !== undefined) {
+					global.prefs._localStorageCache[key] = val;
+					return val;
+				}
 			}
 
 			if (global.prefs.canPersist) {
