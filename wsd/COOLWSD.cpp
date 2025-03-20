@@ -3337,7 +3337,7 @@ public:
            << "\n  IsProxyPrefixEnabled: " << (COOLWSD::IsProxyPrefixEnabled ? "yes" : "no")
            << "\n  OverrideWatermark: " << COOLWSD::OverrideWatermark
            << "\n  UserInterface: " << COOLWSD::UserInterface
-           << "\n  Total PSS: " << Util::getProcessTreePss(getpid()) << " KB"
+           << "\n  Total PSS: " << Util::getProcessTreePss(Util::getProcessId()) << " KB"
            << "\n  Config: " << LoggableConfigEntries
             ;
         THREAD_UNSAFE_DUMP_END
@@ -4292,7 +4292,7 @@ void dump_state()
     if (Server)
         Server->dumpState(oss);
 
-    oss << "\nMalloc info [" << getpid() << "]: \n\t"
+    oss << "\nMalloc info [" << Util::getProcessId() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
     oss << "\nEnd WSD " << getpid() << " Dump State.\n";
 

@@ -4313,7 +4313,7 @@ void dump_kit_state()
 
     KitSocketPoll::dumpGlobalState(oss);
 
-    oss << "\nMalloc info [" << getpid() << "]: \n\t"
+    oss << "\nMalloc info [" << Util::getProcessId() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
     oss << "\nEnd Kit " << getpid() << " Dump State.\n";
 
