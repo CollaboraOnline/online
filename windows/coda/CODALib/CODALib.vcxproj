@@ -122,6 +122,7 @@
     <ClCompile Include="..\..\..\kit\Kit.cpp" />
     <ClCompile Include="..\..\..\kit\KitQueue.cpp" />
     <ClCompile Include="..\..\..\kit\KitWebSocket.cpp" />
+    <ClCompile Include="..\..\..\kit\LogUI.cpp" />
     <ClCompile Include="..\..\..\net\FakeSocket.cpp" />
     <ClCompile Include="..\..\..\net\Socket.cpp" />
     <ClCompile Include="..\..\..\wsd\ClientRequestDispatcher.cpp" />
