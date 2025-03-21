@@ -39,7 +39,10 @@ L.Path = L.Layer.extend({
 	},
 
 	onRemove: function () {
-		this._renderer._removePath(this);
+		if (this._renderer)
+			this._renderer._removePath(this);
+		else
+			console.debug('Path.onRemove: this._renderer missing');
 	},
 
 	getEvents: function () {
