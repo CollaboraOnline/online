@@ -35,8 +35,9 @@
 .hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline):hover,
 .sidebar.unotoolbutton:hover,
 .jsdialog.unotoolbutton:hover,
-.notebookbar.unotoolbutton:hover {
-	border: 1px solid var(--color-border-darker);
+.notebookbar.unotoolbutton:hover,
+.close-navigation-wrapper:hover {
+	border: 1px solid var(--color-border);
 	color: var(--color-text-darker);
 	border-radius: var(--border-radius);
 }

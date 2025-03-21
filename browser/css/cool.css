@@ -315,25 +315,31 @@ body {
 }
 
 #presentation-controls-wrapper {
-	background: var(--color-main-background);
+	background: var(--color-background-lighter);
 	position: relative;
 	border-top: 1px solid var(--color-border);
 	display: none;
+	overflow-y: auto;
+	height: 100%;
 }
 
 #sidebar-dock-wrapper, #navigator-dock-wrapper {
 	display: none;
 	background: var(--color-background-lighter);
 	position: relative;
-	border-inline-start: 1px solid var(--color-border);
-	overflow: hidden;
+	overflow-x: hidden;
 	z-index: 990;
 	max-width: 350px;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-border) transparent;
+	height: 100%;
 }
 
 #sidebar-dock-wrapper.visible {
 	display: block;
 	animation: 200ms ease-out appear-from-right;
+	border-inline-start: 1px solid var(--color-border);
 }
 
 @keyframes appear-from-right {
@@ -349,13 +355,9 @@ body {
 	padding: 0px;
 	margin: 0px;
 	position: relative;
-	width: 300px;
+	width: auto;
 	height: 100%;
-	overflow-x: hidden;
-	overflow-y: auto;
 	z-index: 1200;
-	scrollbar-width: thin;
-	scrollbar-color: var(--color-border) transparent;
 }
 
 #sidebar-panel::-webkit-scrollbar, #navigator-panel::-webkit-scrollbar {

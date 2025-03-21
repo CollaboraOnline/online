@@ -435,6 +435,9 @@ L.Control.UIManager = L.Control.extend({
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
 			JSDialog.PresentationBar(this.map);
 		}
+		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
+			this.map.navigator.initializeNavigator(docType);
+		}
 
 		this.map.on('changeuimode', this.onChangeUIMode, this);
 

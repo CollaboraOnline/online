@@ -669,7 +669,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 .ui-treeview-entry:hover {
-	background-color: var(--color-background-darker);
+	background-color: var(--color-background-darker) !important;
 	color: var(--color-text-darker);
 }
 

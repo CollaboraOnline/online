@@ -324,7 +324,6 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	color: var(--color-primary);
 }
 [data-theme='dark'] #NavigatorPanel div.selected {
-	background-color: transparent;
 	color: var(--color-text-lighter);
 }
 
@@ -367,6 +366,155 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	display: none;
 }
 
+#navigator-floating-icon {
+	border: none;
+	position: absolute;
+	z-index: 100;
+	display: none;
+	margin-inline-start: 15px;
+}
+
+#navigator-floating-icon > button {
+	margin-top: 100px;
+}
+
+#navigator-floating-icon img {
+	width: var(--btn-img-size);
+	height: var(--btn-img-size);
+}
+
+#navigator-floating-icon.visible {
+	display: flex;
+	flex-direction: column;
+}
+.navigator-btn-wrapper {
+	background-color: var(--color-background-lighter);
+	border-radius: var(--border-radius);
+	padding: 4px;
+	box-shadow: 0px 1px 3px var(--color-box-shadow);
+	margin-top: 10px; /* Same value as we have for leaflet-control-scroll-up */
+}
+
+.navigator-btn-wrapper:hover {
+	background: var(--color-background-darker);
+}
+
+.navigator-btn-wrapper button {
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+.navigator-btn-wrapper img {
+	width: 24px;
+	height: 24px;
+}
+
+/* Navigation Panel Container */
+#navigation-options-wrapper {
+	font-family: var(--cool-font);
+}
+
+/* Navigation Header */
+.navigation-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: var(--header-font-size);
+	font-family: var(--cool-font);
+	color: var(--color-main-text);
+	height: 30px;
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+.close-navigation-wrapper {
+	display: flex;
+	margin: 8px 4px;
+	box-sizing: border-box;
+	border: 1px solid transparent;
+	border-radius: var(--border-radius);
+}
+
+/* Close Button Styling */
+.close-navigation-button {
+	width: var(--btn-size-s);
+	height: var(--btn-size-s);
+	background-image: url('images/closedoc.svg');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	background-color: transparent;
+	cursor: pointer;
+	filter: saturate(0);
+	transition: filter 0.2s ease-in-out, transform 0.2s;
+}
+
+/* Navigation Tabs */
+#navigation-options {
+	display: flex;
+	padding: 0;
+}
+
+/* Tab Style */
+#navigation-options .tab {
+	flex: 1;
+	padding: 10px;
+	cursor: pointer;
+	font-size: 14px;
+	border-bottom: none;
+	color: var(--color-main-text);
+	transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Hover Effect */
+#navigation-options .tab:hover {
+	background: var(--color-background-darker);
+}
+
+/* Active/Selected Tab */
+#navigation-options .tab.selected {
+	font-weight: bold;
+	border-bottom: 2px solid rgba(var(--doc-type), 1);
+}
+#navigation-sidebar {
+	width: 330px;
+	display: none;
+	border-inline-end: 1px solid var(--color-border);
+	background-color: var(--color-background-lighter);
+}
+
+#navigation-sidebar.visible {
+	display: flex;
+	flex-direction: column;
+}
+/* Wrapper for the Toggle Button */
+#toggle-sidebar-wrapper {
+	position: absolute;
+	top: 15px;
+	left: 10px;
+}
+
+/* Floating Toggle Button */
+#toggle-sidebar-btn {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 8px 12px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background-color 0.3s ease;
+}
+
+#toggle-sidebar-btn:hover {
+	background-color: #0056b3;
+}
 /* Styles deck */
 #StyleListPanelPanelExpander [id='2'] button { background: transparent url('images/lc_parastyle.svg') no-repeat center; }
 #StyleListPanelPanelExpander [id='1'] button { background: transparent url('images/lc_charstyle.svg') no-repeat center; }

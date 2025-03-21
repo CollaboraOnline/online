@@ -29,6 +29,8 @@ abstract class SidebarBase {
 	map: any;
 
 	container: HTMLDivElement;
+	documentContainer: HTMLDivElement;
+	wrapper: HTMLElement;
 	builder: any;
 
 	constructor(
@@ -58,6 +60,8 @@ abstract class SidebarBase {
 			`${this.type}-container`,
 			$(`#${this.type}-panel`).get(0),
 		);
+		this.wrapper = document.getElementById(`${this.type}-dock-wrapper`);
+		this.documentContainer = document.querySelector('#document-container');
 
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
 		this.map.on('jsdialogaction', this.onJSAction, this);
@@ -152,10 +156,8 @@ abstract class SidebarBase {
 		return false;
 	}
 	onResize() {
-		var wrapper = document.getElementById(`${this.type}-dock-wrapper`);
-		wrapper.style.maxHeight =
-			document.getElementById('document-container').getBoundingClientRect()
-				.height + 'px';
+		this.wrapper.style.maxHeight =
+			this.documentContainer.getBoundingClientRect().height + 'px';
 	}
 }
 JSDialog.SidebarBase = SidebarBase;
