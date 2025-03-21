@@ -78,7 +78,12 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 			var dialog = win.L.control.jsDialog();
 			dialog.onJSDialog({data: jsonDialog, callback: function() {}});
 			expect(Object.keys(dialog.dialogs)).to.have.length(1);
+		});
 
+		cy.cGet('#tabcontrol').should('be.visible');
+
+		cy.getFrameWindow().then(function(win) {
+			var dialog = win.L.control.jsDialog();
 			var current = win.document.activeElement;
 			expect(current.id).to.equal('tabcontrol-1');
 
