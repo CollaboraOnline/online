@@ -72,6 +72,9 @@ L.Control.Notebookbar = L.Control.extend({
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
+		var FloatingNavIcon = document.querySelector('.navigator-btn-wrapper');
+		if (FloatingNavIcon) 
+			FloatingNavIcon.classList.add('hasnotebookbar');
 		document.getElementById('document-container').classList.add('notebookbar-active');
 
 		var docLogoHeader = L.DomUtil.create('div', '');
@@ -119,6 +122,9 @@ L.Control.Notebookbar = L.Control.extend({
 		$('.main-nav #document-header').remove();
 		$('.main-nav').removeClass('hasnotebookbar');
 		$('#toolbar-wrapper').removeClass('hasnotebookbar');
+		var FloatingNavIcon = document.querySelector('.navigator-btn-wrapper');
+		if (FloatingNavIcon) 
+			FloatingNavIcon.classList.remove('hasnotebookbar');
 		$('.main-nav #document-header').remove();
 		this.clearNotebookbar();
 	},

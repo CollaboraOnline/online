@@ -436,6 +436,9 @@ L.Control.UIManager = L.Control.extend({
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
 			JSDialog.PresentationBar(this.map);
 		}
+		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
+			this.initializeNavigator(docType);
+		}
 
 		this.map.on('changeuimode', this.onChangeUIMode, this);
 
@@ -510,6 +513,131 @@ L.Control.UIManager = L.Control.extend({
 			});
 		}
 	},
+
+	initializeNavigator: function (docType) {
+
+		var navigatorPanel = document.getElementById('navigation-sidebar');
+		// Create navigation container
+		var navContainer = L.DomUtil.create('div', 'navigation-options-container');
+		navContainer.id = 'navigation-options-wrapper';
+
+		// For calc we do not need to add floating icon
+		if (docType !== 'spreadsheet')
+		{
+			// Create floating navigation button
+			var floatingNavIcon = this.createFloatingNavigatorBtn();
+	
+			// Insert floatingNavIcon right after navigatorPanel
+			navigatorPanel.insertAdjacentElement("afterend", floatingNavIcon);
+		}
+
+		// Create header section
+		var navHeader = L.DomUtil.create('div', 'navigation-header', navContainer);
+
+		var navTitle = L.DomUtil.create('span', 'navigation-title', navHeader);
+		navTitle.textContent = 'Navigation';
+
+		// Create a wrapper div
+		const closeNavWrapper = L.DomUtil.create('div', 'close-navigation-wrapper', navHeader);
+
+		// Create the close button inside the div
+		const closeNavButton = L.DomUtil.create('span', 'close-navigation-button', closeNavWrapper);
+		closeNavButton.setAttribute('aria-label', 'Close Navigation');
+
+		closeNavButton.addEventListener('click', function () {
+			navigatorPanel.classList.remove('visible');
+			if (app.map.uiManager.getBooleanDocTypePref('ShowNavigator')) {
+				app.map.sendUnoCommand('.uno:Navigator');
+			}
+		});
+
+
+		if (this.map.isPresentationOrDrawing()) {
+			var navOptions = L.DomUtil.create('div', 'navigation-tabs', navContainer);
+			navOptions.id = 'navigation-options';
+
+			// Create Slide Sorter tab
+			var slideSorterTab = L.DomUtil.create('div', 'tab selected', navOptions);
+			slideSorterTab.id = 'tab-slide-sorter';
+			slideSorterTab.textContent = 'Slides';
+
+			// Create Navigator tab
+			var navigatorTab = L.DomUtil.create('div', 'tab', navOptions);
+			navigatorTab.id = 'tab-navigator';
+			navigatorTab.textContent = 'Outline';
+
+			// Tab Click Event Listener
+			[slideSorterTab, navigatorTab].forEach(tab => {
+				tab.addEventListener('click', function () {
+					this.switchNavigationTab(tab.id);
+				}.bind(this));
+			});
+		}
+
+		if (navigatorPanel) {
+			// Insert navigation container as the first child & navHeader as next-child of navigator-panel
+			navigatorPanel.prepend(navContainer);
+			navigatorPanel.prepend(navHeader);
+		}
+		
+	},
+
+	// Function to handle tab click
+	switchNavigationTab(tabId) {
+
+		var presentationControlsWrapper = document.getElementById('presentation-controls-wrapper');
+		var navigatorDockWrapper = document.getElementById('navigator-dock-wrapper');
+
+		// Remove 'selected' class from all tabs
+		document.querySelectorAll('.navigation-tabs .tab').forEach(t => t.classList.remove('selected'));
+		
+		// Add 'selected' class to the clicked tab
+		document.getElementById(tabId).classList.add('selected');
+
+		// Toggle visibility based on tabId
+		if (tabId === 'tab-slide-sorter') {
+			presentationControlsWrapper.style.display = 'block';
+			navigatorDockWrapper.style.display = 'none';
+		} else {
+			presentationControlsWrapper.style.display = 'none';
+			navigatorDockWrapper.style.display = 'block';
+		}
+	},
+	createFloatingNavigatorBtn() {
+		// Get or create the main wrapper div
+		let floatingNavIcon = document.getElementById("navigator-floating-icon");
+		floatingNavIcon.className = "notebookbar unoNavigator unospan-view-navigator unotoolbutton visible";
+		floatingNavIcon.setAttribute("tabindex", "-1");
+		floatingNavIcon.setAttribute("data-cooltip", "Navigator");
+	
+		// Create the button wrapper (square container)
+		const buttonWrapper = document.createElement("div");
+		buttonWrapper.className = "navigator-btn-wrapper"; // Class for styling
+		buttonWrapper.setAttribute("aria-label", "Navigator");
+	
+		// Create the button
+		const button = document.createElement("button");
+		button.className = "ui-content unobutton";
+		button.id = "view-navigator-button";
+		button.setAttribute("aria-pressed", "false");
+	
+		// Create the image inside the button
+		const img = document.createElement("img");
+		app.LOUtil.setImage(img, 'lc_navigator.svg', this.map);
+	
+		// Append elements
+		button.appendChild(img);
+		buttonWrapper.appendChild(button);
+		floatingNavIcon.appendChild(buttonWrapper);
+	
+		// Click event
+		floatingNavIcon.addEventListener('click', function () {
+			app.map.sendUnoCommand('.uno:Navigator');
+		});
+	
+		return floatingNavIcon;
+	},
+	
 
 	removeClassicUI: function() {
 		if (this.map.menubar)

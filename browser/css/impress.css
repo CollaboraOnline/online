@@ -4,7 +4,7 @@
 }
 
 #slide-sorter {
-	background: transparent !important;
+	background: transparent;
 }
 #presentation-controls-wrapper {
 	background: var(--color-main-background) !important;

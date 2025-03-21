@@ -152,11 +152,11 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			}
 		}
 		else {
-			var container = L.DomUtil.get('presentation-controls-wrapper');
+			var container = L.DomUtil.get('main-document-content');// consider height of document area to calculate estimated height for slide-sorter
 			var slideSorter = L.DomUtil.get('slide-sorter');
-			var toolbar = $('#presentation-toolbar');
+			var navigationOptions = L.DomUtil.get('navigation-options-wrapper');
 			if (container && slideSorter && toolbar) {
-				$(slideSorter).height($(container).height() - toolbar.outerHeight());
+				$(slideSorter).height($(container).height() - $(navigationOptions).height());
 			}
 		}
 	},
