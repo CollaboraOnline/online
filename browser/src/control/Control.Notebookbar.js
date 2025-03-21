@@ -619,7 +619,6 @@ L.Control.Notebookbar = L.Control.extend({
 			{
 				'id': 'optionscontainer',
 				'type': 'container',
-				'vertical': 'true',
 				'children': [
 					{
 						'id': 'optionstoolboxdown',
@@ -641,14 +640,9 @@ L.Control.Notebookbar = L.Control.extend({
 				'type': 'toolitem',
 				'text': _UNO('.uno:Sidebar', '', true),
 				'command': '.uno:SidebarDeck.PropertyDeck',
-				'accessibility': { focusBack: false, combination: 'ZB', de: null }
+				'accessibility': { focusBack: false, combination: 'ZB', de: null },
+				'useInLineLabelsForUnoButtons': false,
 			},
-			{
-				'type': 'toolitem',
-				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator',
-				'accessibility': { focusBack: false, combination: 'ZN', de: 'V' }
-			}
 		];
 	
 		if (this._map && this._map['wopi'].EnableShare) {
