@@ -3743,6 +3743,7 @@ int COOLWSD::innerMain()
 
     /// The main-poll does next to nothing:
     SocketPoll mainWait("main");
+    mainWait.runOnClientThread();
 
     SigUtil::addActivity("coolwsd accepting connections");
 
