@@ -20,17 +20,17 @@
 ![](https://www.collaboraonline.com/wp-content/uploads/2024/02/Website_COOL_2305_Home-1024x366.png)
 
 ## Learn more 💡
-* Collabora Online Development Edition (CODE) https://www.collaboraonline.com/code/
-* Collabora Online https://www.collaboraonline.com/collabora-online/
-* Collabora Office https://www.collaboraonline.com/collabora-office/
-* Collabora Office for iOS and Android https://www.collaboraonline.com/collabora-office-android-ios/
-* For additional details, build instructions, downloads, and more, please visit https://collaboraonline.github.io/. You can also explore the SDK Documentation at https://sdk.collaboraonline.com/.
+* [Collabora Online Development Edition (CODE)](https://www.collaboraonline.com/code/)
+* [Collabora Online](https://www.collaboraonline.com/collabora-online/)
+* [Collabora Office](https://www.collaboraonline.com/collabora-office/)
+* [Collabora Office for iOS and Android](https://www.collaboraonline.com/collabora-office-android-ios/)
+* For additional details, build instructions, downloads, and more, please visit [collaboraonline.github.io](https://collaboraonline.github.io/). You can also explore the [SDK Documentation](https://sdk.collaboraonline.com/).
 
 ## Key features
 * View and edit text documents, spreadsheets, presentations & more
 * Collaborative editing features
 * Works in any modern browser – no plugin needed
-* Integrate, extend and customise https://www.collaboraonline.com/integrations/
+* [Integrate, extend and customise](https://www.collaboraonline.com/integrations/)
 * Open Source – primarily under the [MPLv2](http://mozilla.org/MPL/2.0/) license. Some parts are under other open source licences, see e.g. [browser/LICENSE](https://github.com/CollaboraOnline/online/blob/master/browser/LICENSE).
 
 ## Get in touch 💬
@@ -72,7 +72,7 @@ as configure the Collabora Online endpoint in NC/OC as https://localhost:9980.
 
 ## Find a partner
 
-Do you want a ready-to-go or simplified solution? Find a trusted vendor from our list of global partners who integrate and host Collabora Online. https://www.collaboraonline.com/partners/
+Do you want a ready-to-go or simplified solution? Find a trusted vendor from our [list of global partners](https://www.collaboraonline.com/partners/) who integrate and host Collabora Online.
 
 ## Developer assistance
 Please ask your questions on any of the bridged Matrix/Telegram rooms
