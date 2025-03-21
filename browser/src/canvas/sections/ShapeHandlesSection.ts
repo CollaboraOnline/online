@@ -911,7 +911,16 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	onMouseMove(position: number[], dragDistance: number[]) {
-		if (this.containerObject.isDraggingSomething() && !app.file.textCursor.visible) {
+		let canDrag = !app.file.textCursor.visible;
+
+		if (canDrag && app.map.getDocType() === 'presentation') {
+			// Tables get selected when multiple cells are selected. In this case, we check if DeleteRows is disabled.
+			// Because in non-edit mode, deleteRows is disabled. So we can drag the table.
+			const deleteRowsState = app.map.stateChangeHandler.getItemValue('.uno:DeleteRows');
+			canDrag = deleteRowsState ? deleteRowsState === 'disabled': true;
+		}
+
+		if (this.containerObject.isDraggingSomething() && canDrag) {
 			(window as any).IgnorePanning = true;
 
 			if (this.sectionProperties.svg) {
