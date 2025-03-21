@@ -2024,6 +2024,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: transparent !important;
 	border-color: transparent;
 }
+
+#toolbar-down  .jsdialog .ui-edit-container{
+	place-content: center;
+}
+
 /* Formula Wizard */
 #FormulaDialog .ui-tabs-root {
 	background-color: var(--color-background-tabs-group);
