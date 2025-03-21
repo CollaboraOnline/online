@@ -79,7 +79,7 @@ app.isReadOnly = function () {
 };
 
 app.getScale = function () {
-	return (app.tile.size.pX / app.tile.size.x) * 15;
+	return Math.round((app.tile.size.pX / app.tile.size.x) * 15 * 10000) / 10000;
 };
 
 app.isCommentEditingAllowed = function () {
