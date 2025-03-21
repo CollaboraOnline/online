@@ -4,10 +4,10 @@
 }
 
 #slide-sorter {
-	background: transparent !important;
+	background: transparent;
 }
 #presentation-controls-wrapper {
-	background: var(--color-main-background) !important;
+	background: var(--color-background-lighter);
 }
 .slideshow-vertical-center {
 	margin: 0;
