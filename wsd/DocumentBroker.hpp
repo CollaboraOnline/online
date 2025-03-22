@@ -922,18 +922,37 @@ private:
         /// The minimum time to wait between requests.
         std::chrono::milliseconds minTimeBetweenRequests() const { return _minTimeBetweenRequests; }
 
+        /// Returns how long before we can issue a new request now.
+        /// Calculates based on time elapsed since the last request,
+        /// including that more time than half the last request's
+        /// duration has passed.
+        /// When unloading, we reduce throttling significantly.
+        std::chrono::milliseconds timeToNextRequest(bool unloading) const
+        {
+            std::chrono::milliseconds minTimeBetweenRequests =
+                std::max(_minTimeBetweenRequests, _lastRequestDuration);
+            if (unloading)
+            {
+                // More aggressive when unloading.
+                minTimeBetweenRequests /= 10;
+            }
+
+            const auto now = RequestManager::now();
+            const std::chrono::milliseconds timeSinceLastCommunication =
+                std::min(timeSinceLastRequest(now), timeSinceLastResponse(now));
+
+            return (timeSinceLastCommunication >= minTimeBetweenRequests)
+                       ? std::chrono::milliseconds::zero()
+                       : minTimeBetweenRequests - timeSinceLastCommunication;
+        }
+
         /// Checks whether or not we can issue a new request now.
         /// Returns true iff there is no active request and sufficient
-        /// time has elapsed since the last request, including that
-        /// more time than half the last request's duration has passed.
-        /// When unloading, we reduce throttling significantly.
+        /// time has elapsed since the last request.
+        /// See timeToNextRequest() for details.
         bool canRequestNow(bool unloading) const
         {
-            const std::chrono::milliseconds minTimeBetweenRequests =
-                unloading ? _minTimeBetweenRequests / 10 : _minTimeBetweenRequests;
-            const auto now = RequestManager::now();
-            return !isActive() && std::min(timeSinceLastRequest(now), timeSinceLastResponse(now)) >=
-                                      std::max(minTimeBetweenRequests, _lastRequestDuration / 2);
+            return !isActive() && timeToNextRequest(unloading) == std::chrono::milliseconds::zero();
         }
 
         /// Sets the last request's result, either to success or failure.
@@ -1169,6 +1188,12 @@ private:
         /// 0 for original, as-loaded version.
         std::size_t version() const { return _version.load(); }
 
+        /// Returns the time to next save, or 0 if we can save now.
+        std::chrono::milliseconds timeToNextSave(bool unloading) const
+        {
+            return _request.timeToNextRequest(unloading);
+        }
+
         /// True if we aren't saving and the minimum time since last save has elapsed.
         bool canSaveNow(bool unloading) const { return _request.canRequestNow(unloading); }
 
@@ -1363,6 +1388,12 @@ private:
         std::chrono::milliseconds minTimeBetweenUploads() const
         {
             return _request.minTimeBetweenRequests();
+        }
+
+        /// Returns the time to next upload, or 0 if we can upload now.
+        std::chrono::milliseconds timeToNextUpload(bool unloading) const
+        {
+            return _request.timeToNextRequest(unloading);
         }
 
         /// True if we aren't uploading and the minimum time since last upload has elapsed.

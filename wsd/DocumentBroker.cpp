@@ -3515,11 +3515,14 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     {
         // Stop if there is nothing to save.
         const bool possiblyModified = isPossiblyModified();
+        const bool lastSaveSuccessful = _saveManager.lastSaveSuccessful();
         LOG_INF("Autosaving " << reason << " DocumentBroker for docKey [" << getDocKey()
                               << "] before terminating. isPossiblyModified: "
                               << (possiblyModified ? "yes" : "no")
+                              << ", lastSaveSuccessful: " << (lastSaveSuccessful ? "yes" : "no")
                               << ", conflict: " << (_documentChangedInStorage ? "yes" : "no"));
-        if (!autoSave(/*force=*/possiblyModified, /*dontSaveIfUnmodified=*/true, /*finalWrite=*/true))
+        if (!autoSave(/*force=*/possiblyModified || !lastSaveSuccessful,
+                      /*dontSaveIfUnmodified=*/true, /*finalWrite=*/true))
         {
             // Nothing to save. Try to upload if necessary.
             const auto session = getWriteableSession();
@@ -3551,8 +3554,9 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     else if (!canStop)
     {
         LOG_TRC("Too soon to issue another save on ["
-                << getDocKey() << "]: " << _saveManager.timeSinceLastSaveRequest()
-                << " since last save request, " << _saveManager.timeSinceLastSaveResponse()
+                << getDocKey() << "], need at least " << _saveManager.timeToNextSave(isUnloading())
+                << ": " << _saveManager.timeSinceLastSaveRequest() << " since last save request, "
+                << _saveManager.timeSinceLastSaveResponse()
                 << " since last save response, and last save took "
                 << _saveManager.lastSaveDuration()
                 << ". Min time between saves: " << _saveManager.minTimeBetweenSaves());
