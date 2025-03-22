@@ -1330,7 +1330,7 @@ public:
 #ifdef LOG_SOCKET_DATA
         if (len > 0)
             LOG_TRC("(Unix) outBuffer (" << len << " bytes):\n"
-                                         << Util::dumpHex(std::string(data, len)));
+                                         << HexUtil::dumpHex(std::string(data, len)));
 #endif
 
         //FIXME: retry on EINTR?
@@ -1395,12 +1395,12 @@ public:
                         LOGA_TRC(Socket,
                                  "Read closed (0), have " << _inBuffer.size() << " buffered bytes");
                     else // Success.
-                        LOGA_TRC(Socket, "Read "
-                                             << len << " bytes in addition to " << _inBuffer.size()
-                                             << " buffered bytes"
+                        LOGA_TRC(Socket,
+                                 "Read " << len << " bytes in addition to " << _inBuffer.size()
+                                         << " buffered bytes"
 #ifdef LOG_SOCKET_DATA
-                                             << (len ? Util::dumpHex(std::string(buf, len), ":\n")
-                                                     : std::string())
+                                         << (len ? HexUtil::dumpHex(std::string(buf, len), ":\n")
+                                                 : std::string())
 #endif
                         );
                 } while (len < 0 && last_errno == EINTR);
@@ -1593,11 +1593,12 @@ public:
             const int read = readIncomingData();
             const int last_errno = errno;
             LOGA_TRC(Socket, "Incoming data buffer "
-                    << _inBuffer.size() << " bytes, read result: " << read << ", events: 0x"
-                    << std::hex << events << std::dec << " (" << (closed ? "closed" : "not closed")
-                    << ')'
+                                 << _inBuffer.size() << " bytes, read result: " << read
+                                 << ", events: 0x" << std::hex << events << std::dec << " ("
+                                 << (closed ? "closed" : "not closed") << ')'
 #ifdef LOG_SOCKET_DATA
-                    << (!_inBuffer.empty() ? Util::dumpHex(_inBuffer, ":\n") : std::string())
+                                 << (!_inBuffer.empty() ? HexUtil::dumpHex(_inBuffer, ":\n")
+                                                        : std::string())
 #endif
             );
 
@@ -1729,10 +1730,13 @@ public:
                              << Util::symbolicErrno(last_errno) << ": "
                              << std::strerror(last_errno) << ')');
                 else // Success.
-                    LOGA_TRC(Socket, "Wrote " << len << " bytes of " << _outBuffer.size() << " buffered data"
+                    LOGA_TRC(Socket,
+                             "Wrote "
+                                 << len << " bytes of " << _outBuffer.size() << " buffered data"
 #ifdef LOG_SOCKET_DATA
-                            << (len ? Util::dumpHex(std::string(_outBuffer.getBlock(), len), ":\n")
-                                    : std::string())
+                                 << (len ? HexUtil::dumpHex(std::string(_outBuffer.getBlock(), len),
+                                                            ":\n")
+                                         : std::string())
 #endif
                     );
             }

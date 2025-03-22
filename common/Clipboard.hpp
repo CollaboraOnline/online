@@ -14,6 +14,7 @@
 #pragma once
 
 #include <common/Common.hpp>
+#include <common/HexUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Util.hpp>
@@ -156,7 +157,7 @@ public:
             os << "  size: " << string.size() << " bytes, lifetime: " <<
                 std::chrono::duration_cast<std::chrono::seconds>(
                     now - it.second._inserted).count() << " seconds\n";
-			Util::dumpHex(os, string.substr(0, 256), "", "  ");
+			HexUtil::dumpHex(os, string.substr(0, 256), "", "  ");
             totalSize += string.size();
         }
 

@@ -181,7 +181,7 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
         if (tokens.size() != 5 ||
             !tokens.equals(0, "pbkdf2") ||
             !tokens.equals(1, "sha512") ||
-            !Util::dataFromHexString(tokens[3], saltData))
+            !HexUtil::dataFromHexString(tokens[3], saltData))
         {
             LOG_ERR("Incorrect format detected for secure_password in config file." << useCoolconfig);
             return false;

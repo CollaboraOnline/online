@@ -21,6 +21,7 @@
 #include <stdint.h>
 #include <endian.h>
 
+#include <common/HexUtil.hpp>
 #include <Log.hpp>
 #include <Common.hpp>
 #include <FileUtil.hpp>
@@ -181,8 +182,9 @@ class DeltaGenerator {
                          _rleSize, mode);
 
             size_t size = 2 + sizeof(_rleMask) + _rleSize * 4;
-            LOGA_TRC(Pixel,"packed row of size " << size << " bytes "
-                     << Util::dumpHex(std::string((char *)output, size)));
+            LOGA_TRC(Pixel, "packed row of size "
+                                << size << " bytes "
+                                << HexUtil::dumpHex(std::string((char*)output, size)));
 
             return size;
         }
@@ -640,7 +642,7 @@ class DeltaGenerator {
         }
 
         LOGA_TRC(Pixel, "Compressed delta of size " << output.size() << " to size " << compSize);
-//                << Util::dumpHex(std::string((char *)compressed.get(), compSize)));
+        //                << HexUtil::dumpHex(std::string((char *)compressed.get(), compSize)));
 
         // FIXME: should get zstd to drop it directly in-place really.
         outStream.push_back('D');
@@ -873,7 +875,7 @@ class DeltaGenerator {
 
             size_t compSize = outb.pos;
             LOGA_TRC(Pixel, "Compressed image of size " << (width * height * 4) << " to size " << compSize);
-//            << Util::dumpHex(std::string((char *)compressed, compSize)));
+            //            << HexUtil::dumpHex(std::string((char *)compressed, compSize)));
 
             // FIXME: get zstd to compress directly into this buffer.
             output.push_back('Z');

@@ -120,7 +120,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
 
     static HttpRequestTests test;
 
-    http::Request httpRequest("/inject/" + Util::bytesToHexString(data, size));
+    http::Request httpRequest("/inject/" + HexUtil::bytesToHexString(data, size));
 
     test.resetCompleted();
 

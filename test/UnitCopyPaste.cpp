@@ -138,8 +138,8 @@ public:
         {
             LOG_TST("Error: clipboard content mismatch "
                     << value.length() << " bytes vs. " << content.length() << " bytes. Clipboard:\n"
-                    << Util::dumpHex(value) << "Expected:\n"
-                    << Util::dumpHex(content));
+                    << HexUtil::dumpHex(value) << "Expected:\n"
+                    << HexUtil::dumpHex(content));
             LOK_ASSERT_EQUAL_MESSAGE("Clipboard content mismatch", content, value);
             exitTest(TestResult::Failed);
             return false;

@@ -744,7 +744,7 @@ public:
 
 #ifdef DEBUG_HTTP
         LOG_TRC("Request::writeData: " << buffered_size << " bytes buffered\n"
-                                       << Util::dumpHex(out));
+                                       << HexUtil::dumpHex(out));
 #endif //DEBUG_HTTP
 
         return true;
@@ -1070,7 +1070,7 @@ public:
         std::string childIndent = indent + '\t';
         Util::joinPair(os, _header, childIndent);
         os << indent;
-        Util::dumpHex(os, _body, "\tbody:\n", Util::replace(std::move(childIndent), "\n", "").c_str());
+        HexUtil::dumpHex(os, _body, "\tbody:\n", Util::replace(std::move(childIndent), "\n", "").c_str());
     }
 
 private:
@@ -1601,7 +1601,8 @@ private:
             }
 
             LOG_TRC("HandleIncomingMessage: buffer has:\n"
-                    << Util::dumpHex(std::string(data.data(), std::min<size_t>(data.size(), 256UL))));
+                    << HexUtil::dumpHex(
+                           std::string(data.data(), std::min<size_t>(data.size(), 256UL))));
 
             const int64_t read = _response->readData(data.data(), data.size());
             if (read >= 0)
@@ -2038,7 +2039,7 @@ public:
         os << indent << "\tend: " << _end;
         os << indent << "\tstartIsSuffix: " << _startIsSuffix;
         os << indent;
-        Util::dumpHex(os, _data, "\tdata:\n", Util::replace(indent + '\t', "\n", "").c_str());
+        HexUtil::dumpHex(os, _data, "\tdata:\n", Util::replace(indent + '\t', "\n", "").c_str());
         os << '\n';
 
         // We are typically called from the StreamSocket, so don't
