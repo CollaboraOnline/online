@@ -51,7 +51,7 @@ private:
         }
 
         LOG_TRC("HandleIncomingMessage: buffer has:\n"
-                << Util::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
+                << HexUtil::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
 
         // Consume the incoming data by parsing and processing the body.
         http::Request request;
@@ -121,7 +121,7 @@ private:
                 // /inject/<hex data> sends back the data (in binary form)
                 // verbatim. It doesn't add headers or anything at all.
                 const std::string hex = request.getUrl().substr(sizeof("/inject"));
-                const std::string bytes = Util::hexStringToBytes(
+                const std::string bytes = HexUtil::hexStringToBytes(
                     reinterpret_cast<const uint8_t*>(hex.data()), hex.size());
                 socket->send(bytes);
                 socket->shutdown();

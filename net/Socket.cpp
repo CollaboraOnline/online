@@ -14,6 +14,7 @@
 #include "Socket.hpp"
 
 #include <common/ConfigUtil.hpp>
+#include <common/HexUtil.hpp>
 #include <common/Log.hpp>
 #include <common/SigUtil.hpp>
 #include <common/TraceEvent.hpp>
@@ -1027,7 +1028,7 @@ void WebSocketHandler::dumpState(std::ostream& os, const std::string& indent) co
     os << std::setw(5) << _pingTimeUs/1000. << "ms ";
 #endif
     if (_wsPayload.size() > 0)
-        Util::dumpHex(os, _wsPayload, "\t\tws queued payload:\n", "\t\t");
+        HexUtil::dumpHex(os, _wsPayload, "\t\tws queued payload:\n", "\t\t");
     os << '\n';
     if (_msgHandler)
     {
@@ -1050,7 +1051,7 @@ void StreamSocket::dumpState(std::ostream& os)
        << bytesRcvd() << "\t w: " << std::setw(6) << bytesSent() << '\t' << clientAddress() << '\t';
     _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
-        Util::dumpHex(os, _inBuffer, "\t\tinBuffer:\n", "\t\t");
+        HexUtil::dumpHex(os, _inBuffer, "\t\tinBuffer:\n", "\t\t");
     _outBuffer.dumpHex(os, "\t\toutBuffer:\n", "\t\t");
 }
 
@@ -1622,7 +1623,7 @@ bool StreamSocket::parseHeader(const char* clientName, Poco::MemoryInputStream& 
                 size_t chunkLen = 0;
                 for (; itBody != _inBuffer.end(); ++itBody)
                 {
-                    int digit = Util::hexDigitFromChar(*itBody);
+                    int digit = HexUtil::hexDigitFromChar(*itBody);
                     if (digit >= 0)
                         chunkLen = chunkLen * 16 + digit;
                     else
@@ -1662,14 +1663,15 @@ bool StreamSocket::parseHeader(const char* clientName, Poco::MemoryInputStream& 
                 if (*itBody != '\r' || *(itBody + 1) != '\n')
                 {
                     LOG_ERR("parseHeader: Missing \\r\\n at end of chunk " << chunk << " of length " << chunkLen << ", delay " << delayMs.count() << "ms");
-                    LOG_CHUNK("Chunk " << chunk << " is: \n" << Util::dumpHex("", "", chunkStart, itBody + 1, false));
+                    LOG_CHUNK("Chunk " << chunk << " is: \n"
+                                       << HexUtil::dumpHex("", "", chunkStart, itBody + 1, false));
                     shutdown();
                     return false; // TODO: throw something sensible in this case
                 }
 
                 LOG_CHUNK("parseHeader: Chunk "
                           << chunk << " is: \n"
-                          << Util::dumpHex("", "", chunkStart, itBody + 1, false));
+                          << HexUtil::dumpHex("", "", chunkStart, itBody + 1, false));
 
                 itBody+=2;
                 chunk++;
@@ -1746,8 +1748,9 @@ bool StreamSocket::compactChunks(MessageMap& map)
     if (!map._spans.size())
         return false; // single message.
 
-    LOG_CHUNK("Pre-compact " << map._spans.size() << " chunks: \n" <<
-              Util::dumpHex("", "", _inBuffer.begin(), _inBuffer.end(), false));
+    LOG_CHUNK(
+        "Pre-compact " << map._spans.size() << " chunks: \n"
+                       << HexUtil::dumpHex("", "", _inBuffer.begin(), _inBuffer.end(), false));
 
     char *first = _inBuffer.data();
     char *dest = first;
@@ -1762,8 +1765,9 @@ bool StreamSocket::compactChunks(MessageMap& map)
     size_t gap = map._messageSize - newEnd;
     _inBuffer.erase(_inBuffer.begin() + newEnd, _inBuffer.begin() + map._messageSize);
 
-    LOG_CHUNK("Post-compact with erase of " << newEnd << " to " << map._messageSize << " giving: \n" <<
-              Util::dumpHex("", "", _inBuffer.begin(), _inBuffer.end(), false));
+    LOG_CHUNK("Post-compact with erase of "
+              << newEnd << " to " << map._messageSize << " giving: \n"
+              << HexUtil::dumpHex("", "", _inBuffer.begin(), _inBuffer.end(), false));
 
     // shrink our size to fit
     map._messageSize -= gap;

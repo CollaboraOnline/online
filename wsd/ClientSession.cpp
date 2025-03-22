@@ -40,6 +40,7 @@
 #include <common/Clipboard.hpp>
 #include <common/Session.hpp>
 #include <common/TraceEvent.hpp>
+#include <common/HexUtil.hpp>
 #include <common/Util.hpp>
 #include <common/CommandControl.hpp>
 #include <wsd/TileDesc.hpp>
@@ -2025,7 +2026,7 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
                 // clipboardcontent: content.application/x-openoffice-svxb;windows_formatname="SVXB (StarView Bitmap/Animation)"
                 // Do not issue this in those cases. (We should also cap the data we dump here.)
                 LOG_DBG("Missing <body> in textselectioncontent/clipboardcontent payload:\n"
-                        << [data](auto& log) { Util::dumpHex(log, data); });
+                        << [data](auto& log) { HexUtil::dumpHex(log, data); });
             }
 
             return false;

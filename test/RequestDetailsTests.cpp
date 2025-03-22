@@ -286,7 +286,7 @@ void RequestDetailsTests::testLocalHexified()
     static const std::string fileUrl =
         "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt";
 
-    const std::string fileUrlHex = "0x" + Util::dataToHexString(fileUrl, 0, fileUrl.size());
+    const std::string fileUrlHex = "0x" + HexUtil::dataToHexString(fileUrl, 0, fileUrl.size());
 
     {
         const std::string URI = "/cool/" + fileUrlHex + "/ws/open/open/0";

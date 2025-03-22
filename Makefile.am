@@ -378,6 +378,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/CharacterConverter.hpp \
                  common/Clipboard.hpp \
                  common/Crypto.hpp \
+                 common/HexUtil.hpp \
                  common/JsonUtil.hpp \
                  common/FileUtil.hpp \
                  common/JailUtil.hpp \

@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <common/HexUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Unit.hpp>
@@ -380,8 +381,9 @@ private:
         }
 
         LOGA_TRC(WebSocket, "Incoming WebSocket data of "
-                << len << " bytes: "
-                << Util::stringifyHexLine(socket->getInBuffer(), 0, std::min((size_t)32, len)));
+                                << len << " bytes: "
+                                << HexUtil::stringifyHexLine(socket->getInBuffer(), 0,
+                                                             std::min((size_t)32, len)));
 
         unsigned char *data = p + headerLen;
 
@@ -501,11 +503,12 @@ private:
 #if !MOBILEAPP
 
         LOGA_TRC(WebSocket, "Incoming WebSocket frame code "
-            << static_cast<unsigned>(code) << ", fin? " << fin << ", mask? " << hasMask
-            << ", payload length: " << payloadLen
-            << ", residual socket data: " << socket->getInBuffer().size()
-            << " bytes, unmasked data: " +
-                   Util::stringifyHexLine(_wsPayload, 0, std::min((size_t)32, _wsPayload.size())));
+                                << static_cast<unsigned>(code) << ", fin? " << fin << ", mask? "
+                                << hasMask << ", payload length: " << payloadLen
+                                << ", residual socket data: " << socket->getInBuffer().size()
+                                << " bytes, unmasked data: " +
+                                       HexUtil::stringifyHexLine(
+                                           _wsPayload, 0, std::min((size_t)32, _wsPayload.size())));
 
         if (fin)
         {
@@ -859,7 +862,7 @@ protected:
                 if (len < 256)
                 {
                     raw = std::string(data, len);
-                    hex = "whole string:" + Util::dumpHex(raw);
+                    hex = "whole string:" + HexUtil::dumpHex(raw);
                 }
                 else
                 {
@@ -872,8 +875,9 @@ protected:
                     croplen = std::min<size_t>(len - cropstart, 128);
                     assert (cropstart + croplen <= len);
                     raw = std::string(data + cropstart, croplen);
-                    hex = "msg: "+ COOLProtocol::getAbbreviatedMessage(data, len) +
-                        " string region error at byte " + std::to_string(offset - cropstart) + ": " + Util::dumpHex(raw);
+                    hex = "msg: " + COOLProtocol::getAbbreviatedMessage(data, len) +
+                          " string region error at byte " + std::to_string(offset - cropstart) +
+                          ": " + HexUtil::dumpHex(raw);
                 };
                 std::cerr << "attempting to send invalid UTF-8 message '" << raw << "' "
                           << " error at offset " << std::hex << "0x" << offset << std::dec

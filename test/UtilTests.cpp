@@ -14,6 +14,7 @@
 #include <test/lokassert.hpp>
 
 #include <common/CharacterConverter.hpp>
+#include <common/HexUtil.hpp>
 #include <common/Util.hpp>
 
 #include <cppunit/extensions/HelperMacros.h>
@@ -55,8 +56,8 @@ void UtilTests::testStringifyHexLine()
                         "                                                       "
                         "| hello here.test                 ");
     std::string result2("68 65 72 65 0A 74  | here.t");
-    LOK_ASSERT_EQUAL(result1, Util::stringifyHexLine(test, 0));
-    LOK_ASSERT_EQUAL(result2, Util::stringifyHexLine(test, 6, 6));
+    LOK_ASSERT_EQUAL(result1, HexUtil::stringifyHexLine(test, 0));
+    LOK_ASSERT_EQUAL(result2, HexUtil::stringifyHexLine(test, 6, 6));
 }
 
 void UtilTests::testHexify()
@@ -64,19 +65,19 @@ void UtilTests::testHexify()
     constexpr auto testname = __func__;
 
     const std::string s1 = "some ascii text with !@#$%^&*()_+/-\\|";
-    const auto hex = Util::dataToHexString(s1, 0, s1.size());
+    const auto hex = HexUtil::dataToHexString(s1, 0, s1.size());
     std::string decoded;
-    LOK_ASSERT(Util::dataFromHexString(hex, decoded));
+    LOK_ASSERT(HexUtil::dataFromHexString(hex, decoded));
     LOK_ASSERT_EQUAL(s1, decoded);
 
     for (std::size_t randStrLen = 1; randStrLen < 129; ++randStrLen)
     {
         const auto s2 = Util::rng::getBytes(randStrLen);
         LOK_ASSERT_EQUAL(randStrLen, s2.size());
-        const auto hex2 = Util::dataToHexString(s2, 0, s2.size());
+        const auto hex2 = HexUtil::dataToHexString(s2, 0, s2.size());
         LOK_ASSERT_EQUAL(randStrLen * 2, hex2.size());
         std::vector<char> decoded2;
-        LOK_ASSERT(Util::dataFromHexString(hex2, decoded2));
+        LOK_ASSERT(HexUtil::dataFromHexString(hex2, decoded2));
         LOK_ASSERT_EQUAL(randStrLen, decoded2.size());
         LOK_ASSERT_EQUAL(Util::toString(s2), Util::toString(decoded2));
     }
@@ -88,8 +89,8 @@ void UtilTests::testBytesToHex()
 
     {
         const std::string d("Some text");
-        const std::string hex = Util::bytesToHexString(d);
-        const std::string s = Util::hexStringToBytes(hex);
+        const std::string hex = HexUtil::bytesToHexString(d);
+        const std::string s = HexUtil::hexStringToBytes(hex);
         LOK_ASSERT_EQUAL(d, s);
     }
 }

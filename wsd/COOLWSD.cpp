@@ -119,6 +119,7 @@
 #include <wsd/wopi/StorageConnectionManager.hpp>
 #include <wsd/TraceFile.hpp>
 #include <common/ConfigUtil.hpp>
+#include <common/HexUtil.hpp>
 #include <common/SigUtil.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
@@ -2964,7 +2965,7 @@ private:
 
 #ifdef LOG_SOCKET_DATA
         LOG_TRC("HandleIncomingMessage: buffer has:\n"
-                << Util::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
+                << HexUtil::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
 #endif
 
         // Consume the incoming data by parsing and processing the body.

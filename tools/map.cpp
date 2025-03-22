@@ -35,6 +35,7 @@
 #include <locale.h>
 #include <math.h>
 
+#include <common/HexUtil.hpp>
 #include <Util.hpp>
 
 #ifdef __FreeBSD__
@@ -343,8 +344,8 @@ static void dumpDiff(const AddrSpace &space,
 
     for (unsigned int i = 0; i < pageData.size(); i += width)
     {
-        std::string page = Util::stringifyHexLine(pageData, i, width);
-        std::string parent = Util::stringifyHexLine(parentData, i, width);
+        std::string page = HexUtil::stringifyHexLine(pageData, i, width);
+        std::string parent = HexUtil::stringifyHexLine(parentData, i, width);
 
         // page
         printf("0x%.4x  %s\n", i, page.c_str());
@@ -467,7 +468,7 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
             if (touched == 0) // not present in parent
             {
                 std::stringstream pageStr;
-                Util::dumpHex(pageStr, pageData, "", "", false, DumpWidth);
+                HexUtil::dumpHex(pageStr, pageData, "", "", false, DumpWidth);
                 printf("%s", pageStr.str().c_str());
             }
             else

@@ -13,6 +13,7 @@
 
 #include "HttpRequest.hpp"
 
+#include <common/HexUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Util.hpp>
 
@@ -196,7 +197,7 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
 {
 #ifdef DEBUG_HTTP
     LOG_TRC("StatusLine::parse: " << len << " bytes available\n"
-                                  << Util::dumpHex(std::string(p, std::min(len, 10 * 1024L))));
+                                  << HexUtil::dumpHex(std::string(p, std::min(len, 10 * 1024L))));
 #endif //DEBUG_HTTP
 
     // First line is the status line.
@@ -398,7 +399,7 @@ int64_t Request::readData(const char* p, const int64_t len)
 #ifdef DEBUG_HTTP
             LOG_TRC("After Header: "
                     << available << " bytes availble\n"
-                    << Util::dumpHex(std::string(p, std::min(available, 1 * 1024UL))));
+                    << HexUtil::dumpHex(std::string(p, std::min(available, 1 * 1024UL))));
 #endif //DEBUG_HTTP
         }
 
@@ -467,7 +468,7 @@ int64_t Response::readData(const char* p, int64_t len)
 #ifdef DEBUG_HTTP
             LOG_TRC("After Header: "
                     << available << " bytes available\n"
-                    << Util::dumpHex(std::string(p, std::min(available, 1 * 1024L))));
+                    << HexUtil::dumpHex(std::string(p, std::min(available, 1 * 1024L))));
 #endif //DEBUG_HTTP
 
             // Assume we have a body unless we have reason to expect otherwise.
@@ -528,7 +529,7 @@ int64_t Response::readData(const char* p, int64_t len)
 #ifdef DEBUG_HTTP
                 LOG_TRC("New Chunk, "
                         << available << " bytes available\n"
-                        << Util::dumpHex(std::string(p, std::min(available, 10 * 1024L))));
+                        << HexUtil::dumpHex(std::string(p, std::min(available, 10 * 1024L))));
 #endif //DEBUG_HTTP
 
                 // Read ahead to see if we have enough data
@@ -548,7 +549,7 @@ int64_t Response::readData(const char* p, int64_t len)
                 int chunkLenSize = 0;
                 for (; chunkLenSize < available; ++chunkLenSize)
                 {
-                    const int digit = Util::hexDigitFromChar(p[chunkLenSize]);
+                    const int digit = HexUtil::hexDigitFromChar(p[chunkLenSize]);
                     if (digit < 0)
                         break;
 

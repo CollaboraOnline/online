@@ -902,7 +902,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "clipboard"))
         {
-            //              Util::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
+            //              HexUtil::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
             servedSync = handleClipboardRequest(request, message, disposition, socket);
         }
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
