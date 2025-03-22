@@ -30,12 +30,16 @@ img.sidebar.ui-drawing-area {
 	margin: 0;
 }
 
-#document-container:not(.mobile) + #sidebar-dock-wrapper {
+#document-container:not(.mobile) + #sidebar-dock-wrapper,
+#document-container:not(.mobile) + #navigator-dock-wrapper {
 	padding: 0;
 	box-sizing: border-box;
 }
+
 [data-userinterfacemode='classic'] #document-container:not(.mobile) + #sidebar-dock-wrapper,
-[data-docType='spreadsheet'] #document-container:not(.mobile) + #sidebar-dock-wrapper {
+[data-userinterfacemode='classic'] #document-container:not(.mobile) + #navigator-dock-wrapper,
+[data-docType='spreadsheet'] #document-container:not(.mobile) + #sidebar-dock-wrapper,
+[data-docType='spreadsheet'] #document-container:not(.mobile) + #navigator-dock-wrapper {
 	border-inline-start: 1px solid var(--color-border);
 }
 .sidebar .menu-entry-icon {
@@ -294,42 +298,42 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 
 /* Navigator */
 
-#NavigatorDeck #contentbox,
-#NavigatorDeck #contenttree,
-#NavigatorDeck #tree {
-	position: absolute;
+#NavigatorPanel #contentbox,
+#NavigatorPanel #contenttree,
+#NavigatorPanel #tree {
+	position: relative;
 	top: 0;
 	bottom: 10px;
-	left: 10px;
+	left: 15px;
 	right: 10px;
 	border: none;
+	outline: none;
 }
-#NavigatorDeck .ui-expander-content > .root-container.jsdialog {
+#NavigatorPanel .ui-expander-content > .root-container.jsdialog {
 	margin: 0;
 }
-#NavigatorDeck div {
-	padding-inline-start: 0;
+#NavigatorPanel div {
 	background-color: transparent;
 }
-#NavigatorDeck .ui-treeview-icon {
+#NavigatorPanel .ui-treeview-icon {
 	width: var(--btn-size-s);
 	height: var(--btn-size-s);
 }
-#NavigatorDeck div.selected {
+#NavigatorPanel div.selected {
 	background-color: var(--color-background-dark);
 	color: var(--color-primary);
 }
-[data-theme='dark'] #NavigatorDeck div.selected {
+[data-theme='dark'] #NavigatorPanel div.selected {
 	background-color: transparent;
 	color: var(--color-text-lighter);
 }
 
-#NavigatorDeck .ui-treeview-entry,
-#NavigatorDeck .ui-treeview-expanded-content {
+#NavigatorPanel .ui-treeview-entry,
+#NavigatorPanel .ui-treeview-expanded-content {
 	margin-block-end: 8px;
 }
 
-#NavigatorDeck div.selected:not(.ui-treeview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
+#NavigatorPanel div.selected:not(.ui-treeview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
 	content: '–';
 	/* good to move this into css var*/
 	font-size: 17px;
@@ -338,7 +342,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	left: -20px;
 	width: 0px;
 }
-#NavigatorDeck .ui-treeview-cell-text {
+#NavigatorPanel .ui-treeview-cell-text {
 	/* good to move this into css var*/
 	font-size: 14px;
 	white-space: break-spaces;
@@ -348,7 +352,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	white-space: break-spaces;
 }
 
-#NavigatorDeck .ui-treeview-cell {
+#NavigatorPanel .ui-treeview-cell {
 	/* Move this whole block away and fix in the main control */
 	display: flex;
 	align-items: center;
@@ -359,10 +363,156 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	margin-left: 15px;
 }
 
-#NavigatorDeck .ui-expander {
+#NavigatorPanel .ui-expander {
 	display: none;
 }
 
+#navigator-floating-icon {
+	border: none;
+	background-color: var(--color-canvas);
+	position: absolute;
+	z-index: 100;
+	display: none;
+	margin-inline-start: 15px;
+}
+
+#navigator-floating-icon > button {
+	margin-top: 100px;
+}
+
+#navigator-floating-icon img {
+	width: 30px;
+	height: 30px;
+}
+
+#navigator-floating-icon.visible {
+	display: flex;
+	flex-direction: column;
+}
+.navigator-btn-wrapper {
+	background-color: var(--color-background-lighter);
+	border-radius: var(--border-radius);
+	padding: 8px;
+	box-shadow: 0px 1px 3px var(--color-box-shadow);
+	margin-top: 10px; /* Same value as we have for leaflet-control-scroll-up */
+}
+
+.navigator-btn-wrapper:hover {
+	background: var(--color-background-darker);
+}
+
+.navigator-btn-wrapper button {
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+.navigator-btn-wrapper img {
+	width: 24px;
+	height: 24px;
+}
+
+/* Navigation Panel Container */
+#navigation-options-wrapper {
+	font-family: var(--cool-font);
+}
+
+/* Navigation Header */
+.navigation-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: var(--header-font-size);
+	font-family: var(--cool-font);
+	color: var(--color-main-text);
+	height: 30px;
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+/* Close Button Styling */
+.close-navigation-button {
+	width: var(--btn-img-size-s);
+	height: var(--btn-img-size-s);
+	background-image: url('images/close-widget.svg');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	filter: saturate(0);
+	transition: filter 0.2s ease-in-out, transform 0.2s;
+}
+
+/* Hover Effect */
+.close-navigation-button:hover {
+	filter: brightness(0.7);
+}
+
+/* Navigation Tabs */
+#navigation-options {
+	display: flex;
+	padding: 0;
+}
+
+/* Tab Style */
+#navigation-options .tab {
+	flex: 1;
+	padding: 10px;
+	cursor: pointer;
+	font-size: 14px;
+	border-bottom: none;
+	color: var(--color-main-text);
+	transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Hover Effect */
+#navigation-options .tab:hover {
+	background: #eaeaea;
+}
+
+/* Active/Selected Tab */
+#navigation-options .tab.selected {
+	font-weight: bold;
+	border-bottom: 2px solid rgba(var(--doc-type), 1);
+}
+#navigation-sidebar {
+	width: 330px;
+	display: none;
+}
+
+#navigation-sidebar.visible {
+	display: flex;
+	flex-direction: column;
+}
+/* Wrapper for the Toggle Button */
+#toggle-sidebar-wrapper {
+	position: absolute;
+	top: 15px;
+	left: 10px;
+}
+
+/* Floating Toggle Button */
+#toggle-sidebar-btn {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 8px 12px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background-color 0.3s ease;
+}
+
+#toggle-sidebar-btn:hover {
+	background-color: #0056b3;
+}
 /* Styles deck */
 #StyleListPanelPanelExpander [id='2'] button { background: transparent url('images/lc_parastyle.svg') no-repeat center; }
 #StyleListPanelPanelExpander [id='1'] button { background: transparent url('images/lc_charstyle.svg') no-repeat center; }
@@ -392,9 +542,9 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 }
 
 /* required to dynamically resize treeviews or lists inside sidebar */
-.sidebar-container,
-.sidebar-container > .root-container.jsdialog.sidebar,
-.sidebar-container > .root-container.jsdialog.sidebar > .vertical.jsdialog.sidebar {
+.sidebar-container, .navigator-container
+.sidebar-container > .root-container.jsdialog.sidebar,.navigator-container > .root-container.jsdialog.sidebar > .root-container.jsdialog.sidebar
+.sidebar-container > .root-container.jsdialog.sidebar > .vertical.jsdialog.sidebar , .navigator-container > .root-container.jsdialog.sidebar > .vertical.jsdialog.sidebar{
 	height: 100%;
 }
 
