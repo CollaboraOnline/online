@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <array>
 #include <cassert>
 #include <cerrno>
 #include <chrono>
@@ -428,10 +429,10 @@ namespace Util
 
     std::string getVersionJSON(bool enableExperimental, const std::string& timezone);
 
-    inline constexpr unsigned short hexFromByte(unsigned char byte)
+    inline constexpr std::array<char, 2> hexFromByte(unsigned char byte)
     {
         constexpr auto hex = "0123456789ABCDEF";
-        return (hex[byte >> 4] << 8) | hex[byte & 0xf];
+        return { hex[byte >> 4], hex[byte & 0xf] };
     }
 
     inline std::string bytesToHexString(const uint8_t* data, size_t size)
@@ -440,10 +441,10 @@ namespace Util
         s.resize(size * 2); // Each byte is two hex digits.
         for (size_t i = 0; i < size; ++i)
         {
-            const unsigned short hex = hexFromByte(data[i]);
+            const std::array<char, 2> hex = hexFromByte(data[i]);
             const size_t off = i * 2;
-            s[off] = hex >> 8;
-            s[off + 1] = hex & 0xff;
+            s[off] = hex[0];
+            s[off + 1] = hex[1];
         }
 
         return s;
@@ -550,9 +551,9 @@ namespace Util
                 str.push_back(' ');
             if ((offset + i) < buffer.size())
             {
-                const unsigned short hex = hexFromByte(buffer[offset+i]);
-                str.push_back(hex >> 8);
-                str.push_back(hex & 0xff);
+                const std::array<char, 2> hex = hexFromByte(buffer[offset + i]);
+                str.push_back(hex[0]);
+                str.push_back(hex[1]);
                 str.push_back(' ');
             }
             else
