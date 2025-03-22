@@ -1145,14 +1145,6 @@ int main(int argc, char**argv)
         std::memcpy(vector.data() + vlen, data, dataLen);
     }
 
-    /// Append a number as hexadecimal to a vector
-    inline void vectorAppendHex(std::vector<char> &vector, uint64_t number)
-    {
-        char output[32];
-        snprintf(output, sizeof(output), "%" PRIx64, number);
-        vectorAppend(vector, output);
-    }
-
     /// Splits a URL into path (with protocol), filename, extension, parameters.
     /// All components are optional, depending on what the URL represents (can be a unix path).
     std::tuple<std::string, std::string, std::string, std::string> splitUrl(const std::string& url);
