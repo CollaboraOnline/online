@@ -12,16 +12,18 @@
 #include <config.h>
 
 #include "RequestDetails.hpp"
-#include "Util.hpp"
-#include "common/Log.hpp"
+
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 #if !MOBILEAPP
-#include <HostUtil.hpp>
+#include <wsd/HostUtil.hpp>
 #endif // !MOBILEAPP
+#include <wsd/Exceptions.hpp>
 
 #include <Poco/URI.h>
+
 #include <sstream>
 #include <stdexcept>
-#include "Exceptions.hpp"
 
 namespace
 {

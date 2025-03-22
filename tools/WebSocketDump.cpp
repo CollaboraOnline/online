@@ -13,7 +13,17 @@
 
 #include <config.h>
 
-#include <unistd.h>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
+#include <common/Protocol.hpp>
+#include <net/ServerSocket.hpp>
+#include <net/WebSocketHandler.hpp>
+#if !MOBILEAPP
+#include <net/HttpHelper.hpp>
+#endif
+#if ENABLE_SSL
+#include <net/SslSocket.hpp>
+#endif
 
 #include <Poco/URI.h>
 #include <Poco/MemoryStream.h>
@@ -21,17 +31,7 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Util/XMLConfiguration.h>
 
-#include <Log.hpp>
-#include <Util.hpp>
-#include <Protocol.hpp>
-#include <ServerSocket.hpp>
-#include <WebSocketHandler.hpp>
-#if !MOBILEAPP
-#include <net/HttpHelper.hpp>
-#endif
-#if ENABLE_SSL
-#  include <SslSocket.hpp>
-#endif
+#include <unistd.h>
 
 // Dumps incoming websocket messages and doesn't respond.
 class DumpSocketHandler : public WebSocketHandler

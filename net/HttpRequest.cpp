@@ -13,19 +13,19 @@
 
 #include "HttpRequest.hpp"
 
+#include <common/Log.hpp>
+#include <common/Util.hpp>
+
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPResponse.h>
 
 #include <cstdint>
 #include <memory>
+#include <netdb.h>
 #include <stdexcept>
 #include <string>
 #include <sys/types.h>
-#include <netdb.h>
-
 #include <utility>
-#include "Log.hpp"
-#include "Util.hpp"
 
 namespace http
 {

@@ -12,8 +12,25 @@
 #include "config.h"
 
 #include "Socket.hpp"
-#include "TraceEvent.hpp"
-#include "Util.hpp"
+
+#include <common/ConfigUtil.hpp>
+#include <common/Log.hpp>
+#include <common/SigUtil.hpp>
+#include <common/TraceEvent.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <common/Util.hpp>
+#include <common/Watchdog.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/NetUtil.hpp>
+#include <net/ServerSocket.hpp>
+#include <net/WebSocketHandler.hpp>
+#include <wasm/base64.hpp>
+
+#if !MOBILEAPP && ENABLE_SSL
+#include <net/SslSocket.hpp>
+#include <openssl/x509v3.h>
+#endif
 
 #include <cerrno>
 #include <chrono>
@@ -44,22 +61,6 @@
 #if ENABLE_SSL
 #include <Poco/Net/X509Certificate.h>
 #endif
-
-#include <SigUtil.hpp>
-#include "ServerSocket.hpp"
-#if !MOBILEAPP && ENABLE_SSL
-#include <net/SslSocket.hpp>
-#include <openssl/x509v3.h>
-#endif
-#include "WebSocketHandler.hpp"
-#include <net/HttpRequest.hpp>
-#include <NetUtil.hpp>
-#include <Log.hpp>
-#include <Watchdog.hpp>
-#include <wasm/base64.hpp>
-#include <common/ConfigUtil.hpp>
-#include <common/Unit.hpp>
-#include <common/Util.hpp>
 
 // Bug in pre C++17 where static constexpr must be defined. Fixed in C++17.
 constexpr std::chrono::microseconds SocketPoll::DefaultPollTimeoutMicroS;

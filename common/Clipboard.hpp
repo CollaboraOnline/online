@@ -13,16 +13,17 @@
 
 #pragma once
 
-#include <cstdlib>
-#include <string>
-#include <vector>
-#include <unordered_map>
-#include <mutex>
+#include <common/Common.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/Util.hpp>
+#include <wsd/Exceptions.hpp>
 
-#include <Log.hpp>
-#include <Common.hpp>
-#include <Protocol.hpp>
-#include <Exceptions.hpp>
+#include <cstdlib>
+#include <mutex>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 struct ClipboardData
 {

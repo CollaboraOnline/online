@@ -14,7 +14,8 @@
 // HostUtil is only used in non-mobile apps.
 #if !MOBILEAPP
 
-#include <Util.hpp>
+#include <common/Util.hpp>
+
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
