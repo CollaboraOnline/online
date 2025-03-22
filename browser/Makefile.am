@@ -285,6 +285,7 @@ COOL_JS_LST =\
 	src/canvas/sections/PixelGridSection.ts \
 	src/canvas/sections/PreloadMapSection.ts \
 	src/canvas/sections/TilesSection.ts \
+	src/canvas/sections/MouseSection.ts \
 	src/canvas/sections/AutoFillMarkerSection.ts \
 	src/canvas/sections/URLPopUpSection.ts \
 	src/canvas/sections/InvalidationRectangleSection.ts \

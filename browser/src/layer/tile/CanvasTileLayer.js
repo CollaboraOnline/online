@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier cool OtherViewCellCursorSection TileManager MultiPageViewLayout MouseSection */
 
 function clamp(num, min, max)
 {
@@ -1908,8 +1908,14 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// Remember the last position of the caret (in core pixels).
 		this._cursorPreviousPositionCorePixels = app.file.textCursor.rectangle.clone();
+		const tempRectangle = new app.definitions.simpleRectangle(recCursor.getTopLeft().x, recCursor.getTopLeft().y, recCursor.getSize().x, recCursor.getSize().y);
+		if (app.file.writer.multiPageView && false) {
+			const viewXY = MultiPageViewLayout.twipsToViewPixels(tempRectangle.x1, tempRectangle.y1);
+			tempRectangle.pX1 = viewXY[0];
+			tempRectangle.pY1 = viewXY[1];
+		}
 
-		app.file.textCursor.rectangle = new app.definitions.simpleRectangle(recCursor.getTopLeft().x, recCursor.getTopLeft().y, recCursor.getSize().x, recCursor.getSize().y);
+		app.file.textCursor.rectangle = tempRectangle;
 
 		if (this._docType === 'text') {
 			app.sectionContainer.onCursorPositionChanged();
@@ -2801,6 +2807,21 @@ L.CanvasTileLayer = L.Layer.extend({
             this._referencesAll = this._referencesAll.filter(function(e) { return e.type !== 'focuscell' });
 
 		this._updateReferenceMarks();
+	},
+
+	_postMouseEventMultiPageView: function(type, x, y, count, buttons, modifier) {
+		const viewPixels = MultiPageViewLayout.twipsToViewPixels(x, y);
+		const twips = MultiPageViewLayout.viewPixelsToTwips(viewPixels[0], viewPixels[1]);
+
+		app.socket.sendMessage('mouse type=' + type +
+			' x=' + twips[0] + ' y=' + twips[1] + ' count=' + count +
+			' buttons=' + buttons + ' modifier=' + modifier);
+
+		if (type === 'buttondown')
+			this._clearSearchResults();
+
+		if (this._map && this._map._docLayer && (type === 'buttondown' || type === 'buttonup'))
+			this._map.userList.followUser(this._map._docLayer._getViewId(), false);
 	},
 
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
@@ -3905,6 +3926,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._cellSelectionHandleEnd = new app.definitions.cellSelectionHandle('cell_selection_handle_end');
 		app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleStart);
 		app.sectionContainer.addSection(this._map._docLayer._cellSelectionHandleEnd);
+
+		if (app.file.writer.multiPageView)
+			app.sectionContainer.addSection(new MouseSection());
+
 
 		if (this.isCalc()) {
 			var cursorStyle = new CStyleData(this._cursorDataDiv);
