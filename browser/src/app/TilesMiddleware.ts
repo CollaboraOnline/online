@@ -47,7 +47,7 @@ class TileCoordData {
 		this.part = part !== null ? part : app.map._docLayer._selectedPart;
 		this.mode = mode !== undefined ? mode : 0;
 
-		this.scale = Math.round(Math.pow(1.2, this.z - 10) * 1000) / 1000;
+		this.scale = Math.round(Math.pow(1.2, this.z - 10) * 10000) / 10000;
 	}
 
 	getPos() {
@@ -889,11 +889,12 @@ class TileManager {
 
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
-		if (
-			app.isRectangleVisibleInTheDisplayedArea(
-				this.pixelCoordsToTwipTileBounds(coords),
-			)
-		)
+		const tileVisible = app.isRectangleVisibleInTheDisplayedArea(
+			this.pixelCoordsToTwipTileBounds(coords),
+		);
+
+		// Also check the scale because incoming tile may not be in the same zoom level.
+		if (tileVisible && coords.scale === app.getScale())
 			app.sectionContainer.setDirty(coords);
 	}
 
@@ -1555,10 +1556,11 @@ class TileManager {
 	}
 
 	private static pixelCoordsToTwipTileBounds(coords: TileCoordData): number[] {
-		const x = coords.x * app.pixelsToTwips;
-		const y = coords.y * app.pixelsToTwips;
-		const width = app.tile.size.x;
-		const height = app.tile.size.y;
+		const pixelsToTwipsForTile = 15 / coords.scale;
+		const x = coords.x * pixelsToTwipsForTile;
+		const y = coords.y * pixelsToTwipsForTile;
+		const width = app.tile.size.pX * pixelsToTwipsForTile;
+		const height = app.tile.size.pY * pixelsToTwipsForTile;
 
 		return [x, y, width, height];
 	}
@@ -1571,6 +1573,8 @@ class TileManager {
 		textMsg: string,
 	) {
 		let needsNewTiles = false;
+		const calc = app.map._docLayer.isCalc();
+		const scale = app.getScale();
 
 		for (const key in this.tiles) {
 			const coords: TileCoordData = this.tiles[key].coords;
@@ -1579,7 +1583,8 @@ class TileManager {
 			if (
 				coords.part === part &&
 				coords.mode === mode &&
-				invalidatedRectangle.intersectsRectangle(tileRectangle)
+				(invalidatedRectangle.intersectsRectangle(tileRectangle) ||
+					(calc && coords.scale !== scale)) // In calc, we invalidate all tiles with different zoom levels.
 			) {
 				if (app.isRectangleVisibleInTheDisplayedArea(tileRectangle))
 					needsNewTiles = true;
