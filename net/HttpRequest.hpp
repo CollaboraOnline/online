@@ -1069,8 +1069,8 @@ public:
 
         std::string childIndent = indent + '\t';
         Util::joinPair(os, _header, childIndent);
-        os << indent
-           << Util::dumpHex(_body, "\tbody:\n", Util::replace(childIndent, "\n", "").c_str());
+        os << indent;
+        Util::dumpHex(os, _body, "\tbody:\n", Util::replace(childIndent, "\n", "").c_str());
     }
 
 private:
@@ -2027,8 +2027,8 @@ public:
         os << indent << "\tstart: " << _start;
         os << indent << "\tend: " << _end;
         os << indent << "\tstartIsSuffix: " << _startIsSuffix;
-        os << indent
-           << Util::dumpHex(_data, "\tdata:\n", Util::replace(indent + '\t', "\n", "").c_str());
+        os << indent;
+        Util::dumpHex(os, _data, "\tdata:\n", Util::replace(indent + '\t', "\n", "").c_str());
         os << '\n';
 
         // We are typically called from the StreamSocket, so don't
