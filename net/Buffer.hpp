@@ -11,11 +11,11 @@
 
 #pragma once
 
+#include <common/Util.hpp>
+
 #include <assert.h>
 #include <ostream>
 #include <vector>
-
-#include <Util.hpp>
 
 // Blocks -> we can share from client -> server ... etc.
 // headers / and a 'writeV' etc. =)

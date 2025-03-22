@@ -106,7 +106,7 @@
 #include <common/FileUtil.hpp>
 #include <common/JailUtil.hpp>
 #include <common/Watchdog.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <MobileApp.hpp>
 #include <Protocol.hpp>
 #include <Session.hpp>
@@ -115,11 +115,11 @@
 #endif
 #include <wsd/wopi/StorageConnectionManager.hpp>
 #include <wsd/TraceFile.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
 #include <common/ConfigUtil.hpp>
-
 #include <common/SigUtil.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+
 #include <net/AsyncDNS.hpp>
 
 #include <ServerSocket.hpp>

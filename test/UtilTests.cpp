@@ -13,8 +13,8 @@
 
 #include <test/lokassert.hpp>
 
-#include <Util.hpp>
-#include <CharacterConverter.hpp>
+#include <common/CharacterConverter.hpp>
+#include <common/Util.hpp>
 
 #include <cppunit/extensions/HelperMacros.h>
 
