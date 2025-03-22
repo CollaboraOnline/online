@@ -1312,7 +1312,10 @@ public:
                 {
                     assert(len <= ssize_t(sizeof(buf)) && "Read more data than the buffer size");
                     notifyBytesRcvd(len);
+                    const size_t origSize = _inBuffer.size();
                     _inBuffer.append(&buf[0], len);
+                    if (origSize < 104857600 && _inBuffer.size() > 104857600)
+                        LOG_WRN("inBuffer for " << getFD() << " has grown to " << _inBuffer.size() << " bytes");
                 }
                 // else poll will handle errors.
             } while (len == static_cast<ssize_t>(sizeof(buf)));
