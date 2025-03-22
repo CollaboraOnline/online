@@ -2014,8 +2014,15 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
                 return true;
             }
 
-            LOG_DBG("Missing <body> in textselectioncontent/clipboardcontent payload: "
-                    << Util::dumpHex(data));
+            if (json)
+            {
+                // The content may not be json or any textual form. For example:
+                // clipboardcontent: content.application/x-openoffice-svxb;windows_formatname="SVXB (StarView Bitmap/Animation)"
+                // Do not issue this in those cases. (We should also cap the data we dump here.)
+                LOG_DBG("Missing <body> in textselectioncontent/clipboardcontent payload:\n"
+                        << Util::dumpHex(data));
+            }
+
             return false;
 
         });
