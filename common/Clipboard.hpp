@@ -119,6 +119,9 @@ struct ClipboardData
 /// Used to store expired view's clipboards
 class ClipboardCache
 {
+    /// Check and expire clipboard-cache entries every 1/10th the lifetime of each.
+    static constexpr std::chrono::seconds ExpiryCheckPeriod{ CLIPBOARD_EXPIRY_MINUTES * 60 / 10 };
+
     std::mutex _mutex;
     struct Entry {
         std::chrono::steady_clock::time_point _inserted;
@@ -131,8 +134,14 @@ class ClipboardCache
     };
     // clipboard key -> data
     std::unordered_map<std::string, Entry> _cache;
+
+    std::chrono::steady_clock::time_point _nextExpiryTime;
+
 public:
-    ClipboardCache() = default;
+    ClipboardCache()
+        : _nextExpiryTime(std::chrono::steady_clock::now() + ExpiryCheckPeriod)
+    {
+    }
 
     void dumpState(std::ostream& os) const
     {
@@ -190,21 +199,33 @@ public:
         return it->second._rawData;
     }
 
-    void checkexpiry()
+    void checkexpiry(std::chrono::steady_clock::time_point now)
     {
-        std::lock_guard<std::mutex> lock(_mutex);
-        auto now = std::chrono::steady_clock::now();
+        if (now < _nextExpiryTime)
+        {
+            return;
+        }
+
+        std::unique_lock<std::mutex> lock(_mutex, std::defer_lock);
+        if (!lock.try_lock())
+        {
+            LOG_DBG("Clipboard cache expiry check was due, but the lock is taken.");
+            return;
+        }
+
         LOG_TRC("check expiry of cached clipboards");
         for (auto it = _cache.begin(); it != _cache.end();)
         {
             if (it->second.hasExpired(now))
             {
-                LOG_TRC("expiring expiry of cached clipboard: " + it->first);
+                LOG_TRC("Expiring cached clipboard entry: " << it->first);
                 it = _cache.erase(it);
             }
             else
                 ++it;
         }
+
+        _nextExpiryTime = now + ExpiryCheckPeriod;
     }
 };
 
