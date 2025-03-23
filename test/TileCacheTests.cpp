@@ -1161,7 +1161,7 @@ void TileCacheTests::testTileInvalidatePartCalc()
     assertResponseString(socket2, "setpart:", testname2);
     sendTextFrame(socket2, "mouse type=buttondown x=1500 y=1500 count=1 buttons=1 modifier=0", testname2);
 
-    static const std::string text = "Some test";
+    constexpr std::string_view text = "Some test";
     for (char ch : text)
     {
         sendChar(socket1, ch, skNone, testname);
@@ -1210,7 +1210,7 @@ void TileCacheTests::testTileInvalidatePartImpress()
     sendTextFrame(socket2, "mouse type=buttondown x=1500 y=1500 count=1 buttons=1 modifier=0", testname2);
 
     // This should be short, as in odp the font is large and we leave the page otherwise.
-    static const std::string text = "Some test";
+    constexpr std::string_view text = "Some test";
     for (char ch : text)
     {
         sendChar(socket1, ch, skNone, testname);
