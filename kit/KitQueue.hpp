@@ -110,7 +110,7 @@ public:
     Callback getCallback()
     {
         assert(_callbacks.size() > 0);
-        const Callback front = _callbacks.front();
+        Callback front = _callbacks.front();
         _callbacks.erase(_callbacks.begin());
         return front;
     }
