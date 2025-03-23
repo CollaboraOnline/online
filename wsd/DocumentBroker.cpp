@@ -714,7 +714,7 @@ void DocumentBroker::pollThread()
     if (!reason.empty() || (_unitWsd && _unitWsd->isFinished() && _unitWsd->failed()))
     {
         std::stringstream state;
-        state << "DocBroker [" << _docKey << " stopped "
+        state << "DocBroker [" << _docKey << "] stopped "
               << (reason.empty() ? "because of test failure" : ("although " + reason)) << ": ";
         dumpState(state);
         LOG_WRN(state.str());
