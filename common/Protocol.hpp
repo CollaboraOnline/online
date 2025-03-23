@@ -63,8 +63,8 @@ namespace COOLProtocol
         return res;
     }
 
-    inline
-    bool parseNameValuePair(const std::string& token, std::string& name, std::string& value, const char delim = '=')
+    inline bool parseNameValuePair(const std::string_view token, std::string& name,
+                                   std::string& value, const char delim = '=')
     {
         const size_t mid = token.find_first_of(delim);
         if (mid != std::string::npos)
