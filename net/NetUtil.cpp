@@ -130,10 +130,11 @@ struct DNSCacheEntry
     HostEntry hostEntry;
     std::chrono::steady_clock::time_point lookupTime;
 
-    DNSCacheEntry(const std::string& address, const HostEntry& entry, const std::chrono::steady_clock::time_point& time)
-    : queryAddress(address)
-    , hostEntry(entry)
-    , lookupTime(time)
+    DNSCacheEntry(const std::string& address, const HostEntry& entry,
+                  const std::chrono::steady_clock::time_point time)
+        : queryAddress(address)
+        , hostEntry(entry)
+        , lookupTime(time)
     {
     }
 };

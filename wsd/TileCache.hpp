@@ -236,8 +236,9 @@ public:
 
     /// Subscribes if no subscription exists and returns true.
     /// Otherwise returns false to signify a subscription already exists.
-    bool subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession>& subscriber,
-                                  const std::chrono::steady_clock::time_point& now);
+    bool subscribeToTileRendering(const TileDesc& tile,
+                                  const std::shared_ptr<ClientSession>& subscriber,
+                                  const std::chrono::steady_clock::time_point now);
 
     /// Cancels all tile requests by the given subscriber.
     std::string cancelTiles(const std::shared_ptr<ClientSession>& subscriber);
@@ -280,7 +281,7 @@ public:
                                  const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered);
 
     size_t countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& session,
-                                             const std::chrono::steady_clock::time_point& now);
+                                             std::chrono::steady_clock::time_point now);
     bool hasTileBeingRendered(const TileDesc& tileDesc, const std::chrono::steady_clock::time_point *now = nullptr) const;
 
     int getTileBeingRenderedVersion(const TileDesc& tileDesc);

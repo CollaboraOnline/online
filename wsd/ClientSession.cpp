@@ -193,7 +193,7 @@ bool ClientSession::disconnectFromKit()
 }
 
 // Allow 20secs for the clipboard and disconnection to come.
-bool ClientSession::staleWaitDisconnect(const std::chrono::steady_clock::time_point &now)
+bool ClientSession::staleWaitDisconnect(const std::chrono::steady_clock::time_point now)
 {
     if (_state != SessionState::WAIT_DISCONNECT)
         return false;
@@ -2943,7 +2943,7 @@ size_t ClientSession::getTilesOnFlyUpperLimit() const
     return tilesOnFlyUpperLimit;
 }
 
-void ClientSession::removeOutdatedTilesOnFly(const std::chrono::steady_clock::time_point &now)
+void ClientSession::removeOutdatedTilesOnFly(const std::chrono::steady_clock::time_point now)
 {
     size_t dropped = 0;
     const auto highTimeoutMs = std::chrono::milliseconds(TILE_ROUNDTRIP_TIMEOUT_MS);

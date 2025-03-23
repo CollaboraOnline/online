@@ -654,7 +654,7 @@ public:
     void bumpTimer() { _lastLockTime = std::chrono::steady_clock::now(); }
 
     /// do we need to refresh our lock ?
-    bool needsRefresh(const std::chrono::steady_clock::time_point& now) const;
+    bool needsRefresh(const std::chrono::steady_clock::time_point now) const;
 
     void dumpState(std::ostream& os) const;
 };

@@ -421,7 +421,7 @@ void LockContext::initSupportsLocks()
     }
 }
 
-bool LockContext::needsRefresh(const std::chrono::steady_clock::time_point &now) const
+bool LockContext::needsRefresh(const std::chrono::steady_clock::time_point now) const
 {
     return _supportsLocks && isLocked() && _refreshSeconds > std::chrono::seconds::zero() &&
            (now - _lastLockTime) >= _refreshSeconds;

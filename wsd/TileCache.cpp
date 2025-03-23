@@ -73,8 +73,12 @@ void TileCache::clear()
 /// rendering latency.
 struct TileCache::TileBeingRendered
 {
-    explicit TileBeingRendered(const TileDesc& tile, const std::chrono::steady_clock::time_point &now)
-        : _startTime(now), _tile(tile) { }
+    explicit TileBeingRendered(const TileDesc& tile,
+                               const std::chrono::steady_clock::time_point now)
+        : _startTime(now)
+        , _tile(tile)
+    {
+    }
 
     const TileDesc& getTile() const { return _tile; }
 
@@ -85,14 +89,13 @@ struct TileCache::TileBeingRendered
     void setVersion(int version) { _tile.setVersion(version); }
 
     std::chrono::steady_clock::time_point getStartTime() const { return _startTime; }
-    std::chrono::milliseconds getElapsedTimeMs(const std::chrono::steady_clock::time_point* now
-                                               = nullptr) const
+    std::chrono::milliseconds
+    getElapsedTimeMs(const std::chrono::steady_clock::time_point now) const
     {
-        return std::chrono::duration_cast<std::chrono::milliseconds>(
-            (now ? *now : std::chrono::steady_clock::now()) - _startTime);
+        return std::chrono::duration_cast<std::chrono::milliseconds>(now - _startTime);
     }
 
-    bool isStale(const std::chrono::steady_clock::time_point* now = nullptr) const
+    bool isStale(const std::chrono::steady_clock::time_point now) const
     {
         return getElapsedTimeMs(now) > std::chrono::milliseconds(COMMAND_TIMEOUT_MS);
     }
@@ -108,12 +111,12 @@ private:
 };
 
 size_t TileCache::countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& session,
-                                                    const std::chrono::steady_clock::time_point &now)
+                                                    const std::chrono::steady_clock::time_point now)
 {
     size_t count = 0;
     for (auto& it : _tilesBeingRendered)
     {
-        if (it.second->isStale(&now))
+        if (it.second->isStale(now))
             continue;
 
         for (auto& s : it.second->getSubscribers())
@@ -133,7 +136,7 @@ bool TileCache::hasTileBeingRendered(const TileDesc& tileDesc, const std::chrono
         return false;
 
     /// did we stall ? if so re-issue.
-    return !now ? true : !it->second->isStale(now);
+    return !now ? true : !it->second->isStale(*now);
 }
 
 std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(const TileDesc& tileDesc)
@@ -219,8 +222,9 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
         // else zero sized
 
         // Remove subscriptions.
-        LOG_DBG("STATISTICS: tile " << desc.getVersion() << " internal roundtrip " <<
-                tileBeingRendered->getElapsedTimeMs());
+        LOG_DBG("STATISTICS: tile "
+                << desc.getVersion() << " internal roundtrip "
+                << tileBeingRendered->getElapsedTimeMs(std::chrono::steady_clock::now()));
         forgetTileBeingRendered(desc, tileBeingRendered);
     }
     else
@@ -443,8 +447,9 @@ bool TileCache::intersectsTile(const TileDesc &tileDesc, int part, int mode, int
 }
 
 // FIXME: to be further simplified when we centralize tile messages.
-bool TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession>& subscriber,
-                                         const std::chrono::steady_clock::time_point &now)
+bool TileCache::subscribeToTileRendering(const TileDesc& tile,
+                                         const std::shared_ptr<ClientSession>& subscriber,
+                                         const std::chrono::steady_clock::time_point now)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
@@ -452,7 +457,7 @@ bool TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
 
     if (tileBeingRendered)
     {
-        if (tileBeingRendered->isStale(&now))
+        if (tileBeingRendered->isStale(now))
             LOG_DBG("Painting stalled; need to re-issue on tile " << tile.debugName());
 
         for (const auto &s : tileBeingRendered->getSubscribers())
@@ -646,8 +651,9 @@ void TileCache::saveDataToStreamCache(StreamType type, const std::string &fileNa
 
 void TileCache::TileBeingRendered::dumpState(std::ostream& os)
 {
-    os << "    " << _tile.serialize() << ' ' << std::setw(4) << getElapsedTimeMs()
-       << _subscribers.size() << " subscribers\n";
+    os << "    " << _tile.serialize() << ' ' << std::setw(4)
+       << getElapsedTimeMs(std::chrono::steady_clock::now()) << _subscribers.size()
+       << " subscribers\n";
     for (const auto& it : _subscribers)
     {
         std::shared_ptr<ClientSession> session = it.lock();

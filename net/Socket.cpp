@@ -113,7 +113,8 @@ int Socket::createSocket([[maybe_unused]] Socket::Type type)
 #endif
 }
 
-std::ostream& Socket::streamStats(std::ostream& os, const std::chrono::steady_clock::time_point &now) const
+std::ostream& Socket::streamStats(std::ostream& os,
+                                  const std::chrono::steady_clock::time_point now) const
 {
     const auto durTotal = std::chrono::duration_cast<std::chrono::milliseconds>(now - _creationTime);
     const auto durLast = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastSeenTime);
@@ -141,7 +142,7 @@ std::ostream& Socket::streamStats(std::ostream& os, const std::chrono::steady_cl
     return os;
 }
 
-std::string Socket::getStatsString(const std::chrono::steady_clock::time_point &now) const
+std::string Socket::getStatsString(const std::chrono::steady_clock::time_point now) const
 {
     std::ostringstream oss;
     streamStats(oss, now);
@@ -164,7 +165,7 @@ std::string Socket::toStringImpl() const
 
 #if !MOBILEAPP
 
-bool StreamSocket::socketpair(const std::chrono::steady_clock::time_point &creationTime,
+bool StreamSocket::socketpair(const std::chrono::steady_clock::time_point creationTime,
                               std::shared_ptr<StreamSocket>& parent,
                               std::shared_ptr<StreamSocket>& child)
 {
@@ -1519,10 +1520,9 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
 
 #if !MOBILEAPP
 
-bool StreamSocket::parseHeader(const char *clientName,
-                               Poco::MemoryInputStream &message,
-                               Poco::Net::HTTPRequest &request,
-                               std::chrono::steady_clock::time_point &lastHTTPHeader,
+bool StreamSocket::parseHeader(const char* clientName, Poco::MemoryInputStream& message,
+                               Poco::Net::HTTPRequest& request,
+                               std::chrono::steady_clock::time_point lastHTTPHeader,
                                MessageMap& map)
 {
     assert(map._headerSize == 0 && map._messageSize == 0);
