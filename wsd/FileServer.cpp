@@ -2364,9 +2364,10 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     Poco::replaceInPlace(adminFile, ACCESS_HEADER, urv[ACCESS_HEADER]);
     Poco::replaceInPlace(adminFile, IFRAME_TYPE, urv[IFRAME_TYPE]);
     Poco::replaceInPlace(adminFile, CSS_VARS, cssVarsToStyle(urv[CSS_VARS]));
-    bool enableDebug = false;
 #if ENABLE_DEBUG
-    enableDebug = true;
+    const bool enableDebug = true;
+#else
+    const bool enableDebug = false;
 #endif
     Poco::replaceInPlace(adminFile, std::string("%ENABLE_DEBUG%"),
                          std::string(enableDebug ? "true" : "false"));
