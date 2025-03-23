@@ -450,7 +450,8 @@ void cleanupDocBrokers()
         if (!docBroker->isAlive())
         {
             LastSubForKitBrokerExitTimes[docBroker->getConfigId()] = now;
-            LOG_INF("Removing DocumentBroker for docKey [" << it->first << "].");
+            LOG_INF("Removing DocumentBroker for docKey ["
+                    << it->first << "], " << docBroker.use_count() << " references");
             docBroker->dispose();
             it = DocBrokers.erase(it);
             continue;

@@ -156,12 +156,13 @@ protected:
             const int count = std::stoi(tokens[1]);
             if (count > 0)
             {
-                LOG_INF("Setting to spawn " << tokens[1] << " child" << (count == 1 ? "" : "ren") << " per request.");
+                LOG_INF("Setting to spawn " << count << " child" << (count == 1 ? "" : "ren")
+                                            << " per request");
                 ForkCounter = count;
             }
             else
             {
-                LOG_WRN("Cannot spawn " << tokens[1] << " children as requested.");
+                LOG_WRN("Cannot spawn [" << tokens[1] << "] children as requested");
             }
         }
         else if (tokens.size() == 2 && tokens.equals(0, "addforkit"))
