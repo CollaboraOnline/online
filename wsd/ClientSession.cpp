@@ -2454,7 +2454,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             }
         }
 
-        if (payload->find("url", 3) >= 0)
+        if (payload->contains("url"))
         {
             std::string json(payload->data().data(), payload->size());
             const auto it = json.find('{');
