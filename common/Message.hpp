@@ -69,17 +69,11 @@ public:
     uint32_t getHash() const { return _hash; }
     void setHash(uint32_t hash) { _hash = hash; }
 
-    /// Find a subarray in the raw message.
-    int find(const char* sub, const std::size_t subLen) const
+    /// Returns true iff the subarray exists in the raw message.
+    bool contains(const std::string_view msg) const
     {
-        return Util::findSubArray(_data.data(), _data.size(), sub, subLen);
+        return std::string_view(_data.data(), _data.size()).find(msg) != std::string::npos;
     }
-
-    /// Returns true iff the subarray exists in the raw message.
-    bool contains(const char* p, const std::size_t len) const { return find(p, len) >= 0; }
-
-    /// Returns true iff the subarray exists in the raw message.
-    bool contains(const std::string &msg) const { return contains(msg.c_str(), msg.size()); }
 
     const std::string& firstLine()
     {

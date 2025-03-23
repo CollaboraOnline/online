@@ -91,14 +91,14 @@ public:
     {
         LOG_TST("Filtering: [" << message->firstLine() << ']');
 
-        constexpr char unoSave[] = ".uno:Save";
-        constexpr char unoModifiedStatus[] = ".uno:ModifiedStatus";
-        if (message->contains(unoSave, sizeof(unoSave) - 1))
+        constexpr std::string_view unoSave = ".uno:Save";
+        constexpr std::string_view unoModifiedStatus = ".uno:ModifiedStatus";
+        if (message->contains(unoSave))
         {
             LOG_TST("Dropping .uno:Save to simulate stuck save");
             return true; // Do not process the message further.
         }
-        else if (message->contains(unoModifiedStatus, sizeof(unoModifiedStatus) - 1))
+        else if (message->contains(unoModifiedStatus))
         {
             if (message->tokens().size() > 1)
             {
