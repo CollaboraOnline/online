@@ -94,7 +94,7 @@ public:
                 os << "\t\t\ttype: " << (item->isBinary() ? "binary" : "text");
                 os << ": " << item->id() << " - " << itemStr << '\n';
             }
-            lastStr = itemStr;
+            lastStr = std::move(itemStr);
             totalSize += item->size();
         }
         if (repeats > 0)
