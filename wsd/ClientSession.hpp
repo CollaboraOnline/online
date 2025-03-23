@@ -186,7 +186,7 @@ public:
     void addTileOnFly(TileWireId wireId);
     size_t getTilesOnFlyCount() const { return _tilesOnFly.size(); }
     size_t getTilesOnFlyUpperLimit() const;
-    void removeOutdatedTilesOnFly(const std::chrono::steady_clock::time_point &now);
+    void removeOutdatedTilesOnFly(std::chrono::steady_clock::time_point now);
     void onTileProcessed(TileWireId wireId);
 
     Util::Rectangle getVisibleArea() const { return _clientVisibleArea; }
@@ -250,7 +250,7 @@ public:
     void preProcessSetClipboardPayload(std::string& payload);
 
     /// Returns true if we're expired waiting for a clipboard and should be removed
-    bool staleWaitDisconnect(const std::chrono::steady_clock::time_point &now);
+    bool staleWaitDisconnect(std::chrono::steady_clock::time_point now);
 
     /// Generate and rotate a new clipboard hash, sending it if appropriate
     void rotateClipboardKey(bool notifyClient);

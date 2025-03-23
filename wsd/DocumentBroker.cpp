@@ -4565,7 +4565,7 @@ void DocumentBroker::handleMediaRequest(const std::string_view range,
 }
 
 bool DocumentBroker::requestTileRendering(TileDesc& tile, bool forceKeyframe, int version,
-                                          const std::chrono::steady_clock::time_point &now,
+                                          const std::chrono::steady_clock::time_point now,
                                           std::vector<TileDesc>& tilesNeedsRendering,
                                           const std::shared_ptr<ClientSession>& session)
 {
@@ -5361,13 +5361,12 @@ void DocumentBroker::removeEmbeddedMedia(const std::string& json)
 }
 
 // This is used on mobile to allow our custom URL handling to get the media path
-// 
+//
 // on iOS this works through CoolURLSchemeHandler.mm, which handles cool:/cool/media?Tag=... requests in much the same way as
 // https://.../cool/media?Tag=... would be handled by COOLWSD on a server. As part of that, we need to get the media path from
 // the tag using this function
 std::string DocumentBroker::getEmbeddedMediaPath(const std::string& id)
 {
-    
     const auto it = _embeddedMedia.find(id);
 
     if (it == _embeddedMedia.end())

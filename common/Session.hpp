@@ -203,7 +203,7 @@ public:
     void setIsActive(bool active) { _isActive = active; }
 
     /// Returns the inactivity time of the client in milliseconds.
-    double getInactivityMS(const std::chrono::steady_clock::time_point &now) const
+    double getInactivityMS(const std::chrono::steady_clock::time_point now) const
     {
         const auto duration = now - _lastActivityTime;
         return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();

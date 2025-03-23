@@ -193,8 +193,8 @@ public:
     /// Returns the OS native socket fd.
     constexpr int getFD() const { return _fd; }
 
-    std::ostream& streamStats(std::ostream& os, const std::chrono::steady_clock::time_point &now) const;
-    std::string getStatsString(const std::chrono::steady_clock::time_point &now) const;
+    std::ostream& streamStats(std::ostream& os, std::chrono::steady_clock::time_point now) const;
+    std::string getStatsString(std::chrono::steady_clock::time_point now) const;
 
     virtual std::ostream& stream(std::ostream& os) const  { return streamImpl(os); }
 
@@ -204,7 +204,7 @@ public:
     constexpr std::chrono::steady_clock::time_point getLastSeenTime() const { return _lastSeenTime; }
 
     /// Sets monotonic timestamp of last received signal from remote
-    void setLastSeenTime(std::chrono::steady_clock::time_point now) { _lastSeenTime = now; }
+    void setLastSeenTime(const std::chrono::steady_clock::time_point now) { _lastSeenTime = now; }
 
     /// Returns bytes sent statistic
     constexpr uint64_t bytesSent() const { return _bytesSent; }
@@ -1150,9 +1150,9 @@ public:
     }
 
     /// Create a pair of connected stream sockets
-    static bool socketpair(const std::chrono::steady_clock::time_point &creationTime,
-                           std::shared_ptr<StreamSocket> &parent,
-                           std::shared_ptr<StreamSocket> &child);
+    static bool socketpair(std::chrono::steady_clock::time_point creationTime,
+                           std::shared_ptr<StreamSocket>& parent,
+                           std::shared_ptr<StreamSocket>& child);
 
     /// Send data to the socket peer.
     void send(const char* data, const int len, const bool doFlush = true)
@@ -1415,11 +1415,9 @@ public:
 
     /// Detects if we have an HTTP header in the provided message and
     /// populates a request for that.
-    bool parseHeader(const char *clientLoggingName,
-                     Poco::MemoryInputStream &message,
-                     Poco::Net::HTTPRequest &request,
-                     std::chrono::steady_clock::time_point &lastHTTPHeader,
-                     MessageMap& map);
+    bool parseHeader(const char* clientLoggingName, Poco::MemoryInputStream& message,
+                     Poco::Net::HTTPRequest& request,
+                     std::chrono::steady_clock::time_point lastHTTPHeader, MessageMap& map);
 
     Buffer& getInBuffer() { return _inBuffer; }
 

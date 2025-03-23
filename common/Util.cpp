@@ -611,7 +611,7 @@ namespace Util
 
     /// Returns the given system_clock time_point as string in the local time.
     /// Format: Thu Jan 27 03:45:27.123 2022
-    std::string getSystemClockAsString(const std::chrono::system_clock::time_point &time)
+    std::string getSystemClockAsString(const std::chrono::system_clock::time_point time)
     {
         const auto ms = std::chrono::time_point_cast<std::chrono::milliseconds>(time);
         const std::time_t t = std::chrono::system_clock::to_time_t(ms);

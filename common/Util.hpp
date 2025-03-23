@@ -1340,24 +1340,24 @@ int main(int argc, char**argv)
 
     /// Converts from system_clock to string for debugging / tracing.
     /// Format (local time): Thu Jan 27 03:45:27.123 2022
-    std::string getSystemClockAsString(const std::chrono::system_clock::time_point &time);
+    std::string getSystemClockAsString(const std::chrono::system_clock::time_point time);
 
     /// conversion from steady_clock for debugging / tracing
     /// Format (local time): Thu Jan 27 03:45:27.123 2022
-    inline std::string getSteadyClockAsString(const std::chrono::steady_clock::time_point& time)
+    inline std::string getSteadyClockAsString(const std::chrono::steady_clock::time_point time)
     {
         return getSystemClockAsString(
             convertChronoClock<std::chrono::system_clock::time_point>(time));
     }
 
     /// See getSystemClockAsString.
-    inline std::string getClockAsString(const std::chrono::system_clock::time_point& time)
+    inline std::string getClockAsString(const std::chrono::system_clock::time_point time)
     {
         return getSystemClockAsString(time);
     }
 
     /// See getSteadyClockAsString.
-    inline std::string getClockAsString(const std::chrono::steady_clock::time_point& time)
+    inline std::string getClockAsString(const std::chrono::steady_clock::time_point time)
     {
         return getSteadyClockAsString(time);
     }

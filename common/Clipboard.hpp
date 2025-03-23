@@ -123,7 +123,7 @@ class ClipboardCache
         std::chrono::steady_clock::time_point _inserted;
         std::shared_ptr<std::string> _rawData; // big.
 
-        bool hasExpired(const std::chrono::steady_clock::time_point &now)
+        bool hasExpired(const std::chrono::steady_clock::time_point now)
         {
             return (now - _inserted) >= std::chrono::minutes(CLIPBOARD_EXPIRY_MINUTES);
         }
