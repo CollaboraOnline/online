@@ -14,6 +14,7 @@
 #include <atomic>
 #include <cstring>
 #include <string>
+#include <string_view>
 #include <vector>
 #include <functional>
 
@@ -32,33 +33,9 @@ public:
 
     /// Construct a text message.
     /// message must include the full first-line.
-    Message(const std::string& message,
-            const enum Dir dir) :
-        _forwardToken(getForwardToken(message.data(), message.size())),
-        _data(copyDataAfterOffset(message.data(), message.size(), _forwardToken.size())),
-        _tokens(StringVector::tokenize(_data.data(), _data.size())),
-        _id(makeId(dir)),
-        _type(detectType()),
-        _hash(0)
+    Message(const std::string_view message, const enum Dir dir)
+        : Message(message.data(), message.size(), dir)
     {
-        LOG_TRC("Message " << abbr());
-    }
-
-    /// Construct a message from a string with type and
-    /// reserve extra space (total, including message).
-    /// message must include the full first-line.
-    Message(const std::string& message,
-            const enum Dir dir,
-            const size_t reserve) :
-        _forwardToken(getForwardToken(message.data(), message.size())),
-        _data(copyDataAfterOffset(message.data(), message.size(), _forwardToken.size())),
-        _tokens(StringVector::tokenize(message.data() + _forwardToken.size(), message.size() - _forwardToken.size())),
-        _id(makeId(dir)),
-        _type(detectType()),
-        _hash(0)
-    {
-        _data.reserve(std::max(reserve, message.size()));
-        LOG_TRC("Message " << abbr());
     }
 
     /// Construct a message from a character array with type.
@@ -82,7 +59,10 @@ public:
     const StringVector& tokens() const { return _tokens; }
     const std::string& forwardToken() const { return _forwardToken; }
     std::string firstToken() const { return _tokens[0]; }
-    bool firstTokenMatches(const std::string& target) const { return _tokens[0] == target; }
+    bool firstTokenMatches(const std::string_view target) const
+    {
+        return _tokens.equals(0, target);
+    }
     std::string operator[](size_t index) const { return _tokens[index]; }
 
     /// Allow a message to annotate a hash of its content for use later
@@ -107,8 +87,7 @@ public:
         return _firstLine;
     }
 
-
-    bool getTokenInteger(const std::string& name, int& value)
+    bool getTokenInteger(const std::string_view name, int& value)
     {
         return COOLProtocol::getTokenInteger(_tokens, name, value);
     }
