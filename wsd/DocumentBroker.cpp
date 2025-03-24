@@ -163,8 +163,7 @@ std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 
 DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
                                const std::string& docKey, const std::string& configId,
-                               unsigned mobileAppDocId,
-                               std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
+                               unsigned mobileAppDocId)
     : _unitWsd(UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr)
     , _uriOrig(uri)
     , _limitLifeSeconds(std::chrono::seconds::zero())
@@ -226,13 +225,6 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     if (_unitWsd)
     {
         _unitWsd->onDocBrokerCreate(_docKey);
-    }
-
-    _initialWopiFileInfo = std::move(wopiFileInfo);
-    if (_initialWopiFileInfo)
-    {
-        LOG_DBG("Starting DocBrokerPoll thread");
-        _poll->startThread();
     }
 }
 
@@ -327,30 +319,6 @@ void DocumentBroker::pollThread()
     LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
 
     setupPriorities();
-
-    // Download and load the document.
-    if (_initialWopiFileInfo)
-    {
-        try
-        {
-            downloadAdvance(_childProcess->getJailId(), _uriPublic, std::move(_initialWopiFileInfo));
-        }
-        catch (const std::exception& exc)
-        {
-            LOG_ERR("Failed to advance download [" << _docKey << "]: " << exc.what());
-
-            stop("advance download failed");
-
-            // Stop to mark it done and cleanup.
-            _poll->stop();
-
-            // Async cleanup.
-            COOLWSD::doHousekeeping();
-
-            return;
-        }
-    }
-
 
 #if !MOBILEAPP
     CONFIG_STATIC const std::size_t IdleDocTimeoutSecs =
@@ -932,21 +900,6 @@ void DocumentBroker::stop(const std::string& reason)
 
     _stop = true;
     _poll->wakeup();
-}
-
-bool DocumentBroker::downloadAdvance(const std::string& jailId, const Poco::URI& uriPublic,
-                                     std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
-{
-    ASSERT_CORRECT_THREAD();
-
-    LOG_INF("Loading [" << _docKey << "] ahead-of-time in jail [" << jailId << ']');
-
-    assert(!_docState.isMarkedToDestroy() && "MarkedToDestroy while downloading ahead-of-time");
-
-    assert(_storage == nullptr &&
-           "Unexpected to find storage created while downloading ahead-of-time");
-
-    return download(/*session=*/nullptr, jailId, uriPublic, std::move(wopiFileInfo));
 }
 
 bool DocumentBroker::download(
@@ -3515,11 +3468,14 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     {
         // Stop if there is nothing to save.
         const bool possiblyModified = isPossiblyModified();
+        const bool lastSaveSuccessful = _saveManager.lastSaveSuccessful();
         LOG_INF("Autosaving " << reason << " DocumentBroker for docKey [" << getDocKey()
                               << "] before terminating. isPossiblyModified: "
                               << (possiblyModified ? "yes" : "no")
+                              << ", lastSaveSuccessful: " << (lastSaveSuccessful ? "yes" : "no")
                               << ", conflict: " << (_documentChangedInStorage ? "yes" : "no"));
-        if (!autoSave(/*force=*/possiblyModified, /*dontSaveIfUnmodified=*/true, /*finalWrite=*/true))
+        if (!autoSave(/*force=*/possiblyModified || !lastSaveSuccessful,
+                      /*dontSaveIfUnmodified=*/true, /*finalWrite=*/true))
         {
             // Nothing to save. Try to upload if necessary.
             const auto session = getWriteableSession();
@@ -3551,8 +3507,9 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     else if (!canStop)
     {
         LOG_TRC("Too soon to issue another save on ["
-                << getDocKey() << "]: " << _saveManager.timeSinceLastSaveRequest()
-                << " since last save request, " << _saveManager.timeSinceLastSaveResponse()
+                << getDocKey() << "], need at least " << _saveManager.timeToNextSave(isUnloading())
+                << ": " << _saveManager.timeSinceLastSaveRequest() << " since last save request, "
+                << _saveManager.timeSinceLastSaveResponse()
                 << " since last save response, and last save took "
                 << _saveManager.lastSaveDuration()
                 << ". Min time between saves: " << _saveManager.minTimeBetweenSaves());
@@ -4388,9 +4345,10 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
     const auto now = std::chrono::steady_clock::now();
     std::vector<TileDesc> tilesNeedsRendering;
     bool hasOldWireId = false;
+    ++_tileVersion; // bump only once
     for (auto& tile : tileCombined.getTiles())
     {
-        tile.setVersion(++_tileVersion);
+        tile.setVersion(_tileVersion);
 
         // client can force keyframe with an oldWid == 0 on tile
         if (canForceKeyframe && tile.isForcedKeyFrame())
@@ -4418,7 +4376,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
                 tile.forceKeyframe();
             }
 
-            requestTileRendering(tile, forceKeyFrame, now, tilesNeedsRendering, session);
+            requestTileRendering(tile, forceKeyFrame, _tileVersion, now, tilesNeedsRendering, session);
         }
     }
     if (hasOldWireId)
@@ -4580,7 +4538,7 @@ void DocumentBroker::handleMediaRequest(const std::string_view range,
     }
 }
 
-bool DocumentBroker::requestTileRendering(TileDesc& tile, bool forceKeyframe,
+bool DocumentBroker::requestTileRendering(TileDesc& tile, bool forceKeyframe, int version,
                                           const std::chrono::steady_clock::time_point &now,
                                           std::vector<TileDesc>& tilesNeedsRendering,
                                           const std::shared_ptr<ClientSession>& session)
@@ -4589,7 +4547,8 @@ bool DocumentBroker::requestTileRendering(TileDesc& tile, bool forceKeyframe,
     if (!tileCache().hasTileBeingRendered(tile, &now) || // There is no in progress rendering of the given tile
         tileCache().getTileBeingRenderedVersion(tile) < tile.getVersion()) // We need a newer version
     {
-        tile.setVersion(++_tileVersion);
+        tile.setVersion(version);
+
         if (forceKeyframe)
         {
             LOG_TRC("Forcing keyframe for tile was oldwid " << tile.getOldWireId());
@@ -4618,6 +4577,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     // All tiles were processed on client side that we sent last time, so we can send
     // a new batch of tiles which was invalidated / requested in the meantime
     std::deque<TileDesc>& requestedTiles = session->getRequestedTiles();
+    bool bumpedVersion = false;
     if (!requestedTiles.empty() && hasTileCache())
     {
         std::vector<TileDesc> tilesNeedsRendering;
@@ -4647,7 +4607,13 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             else
             {
                 // Not cached, needs rendering.
-                allSamePartAndSize &= requestTileRendering(tile, !cachedTile, now, tilesNeedsRendering, session);
+                if (!bumpedVersion)
+                {
+                    ++_tileVersion; // only once
+                    bumpedVersion = true;
+                }
+                bool forceKeyFrame = !cachedTile;
+                allSamePartAndSize &= requestTileRendering(tile, forceKeyFrame, _tileVersion, now, tilesNeedsRendering, session);
             }
             requestedTiles.pop_front();
         }

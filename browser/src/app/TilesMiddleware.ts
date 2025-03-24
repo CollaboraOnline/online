@@ -47,7 +47,7 @@ class TileCoordData {
 		this.part = part !== null ? part : app.map._docLayer._selectedPart;
 		this.mode = mode !== undefined ? mode : 0;
 
-		this.scale = Math.round(Math.pow(1.2, this.z - 10) * 1000) / 1000;
+		this.scale = Math.pow(1.2, this.z - 10);
 	}
 
 	getPos() {
@@ -136,7 +136,7 @@ class PaneBorder {
 
 class Tile {
 	coords: TileCoordData;
-	current: boolean = true; // is this currently visible
+	current: boolean = false; // is this currently visible
 	canvas: any = null; // canvas ready to render
 	ctx: CanvasRenderingContext2D | null = null; // canvas context to render onto
 	imgDataCache: any = null; // flat byte array of canvas data
@@ -150,10 +150,10 @@ class Tile {
 	viewId: number = 0; // canonical view id
 	wireId: number = 0; // monotonic timestamp for optimizing fetch
 	invalidFrom: number = 0; // a wireId - for avoiding races on invalidation
-	lastRendered: Date = new Date();
+	lastRendered: number = performance.timeOrigin;
 	private lastRequestTime: Date = undefined; // when did we last do a tilecombine request.
-	hasPendingDelta: 0;
-	hasPendingKeyframe: 0;
+	hasPendingDelta: number = 0;
+	hasPendingKeyframe: number = 0;
 
 	constructor(coords: TileCoordData) {
 		this.coords = coords;
@@ -172,7 +172,7 @@ class Tile {
 	}
 
 	hasKeyframe(): boolean {
-		return this.rawDeltas && this.rawDeltas.length > 0;
+		return !!this.rawDeltas && this.rawDeltas.length > 0;
 	}
 
 	hasPendingUpdate(): boolean {
@@ -366,31 +366,35 @@ class TileManager {
 		   highDeltaMemory = 1024*1024; lowDeltaMemory = 1024*128;
 		   highTileCount = 100; lowTileCount = 50; */
 
-		var keys: Array<string> = [];
-		for (const key in this.tiles) // no .keys() method.
-			keys.push(key);
-
-		// FIXME: should we sort by wireId - which is monotonic server ~time
-		// sort by oldest
-		keys.sort(function (a: any, b: any) {
-			return b.lastRendered - a.lastRendered;
+		// sort by lastRendered.
+		// FIXME: This is a really coarse sort, we probably want to sort by distance
+		//        to the view centre.
+		var keys = Object.keys(this.tiles).sort((a: any, b: any) => {
+			return this.tiles[a].lastRendered - this.tiles[b].lastRendered;
 		});
 
 		var canvasKeys = [];
 		var totalSize = 0;
+		var n_canvases = 0;
 		for (var i = 0; i < keys.length; ++i) {
 			var tile = this.tiles[keys[i]];
-			// Don't GC tiles that are visible or that have pending deltas. In
-			// the latter case, those tiles would just be immediately recreated
-			// and the former case can cause visible flicker.
-			if (tile.canvas && !tile.current && tile.hasPendingDelta === 0)
-				canvasKeys.push(keys[i]);
+			// Don't GC tiles that are visible or that have pending deltas. We don't have
+			// a mechanism to immediately rehydrate tiles, so GC'ing visible tiles would
+			// cause flickering, and the same would happen for tiles with pending deltas.
+			if (tile.canvas) {
+				++n_canvases;
+				if (!tile.current && !tile.hasPendingDelta) canvasKeys.push(keys[i]);
+			}
 			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
 		}
 
 		// Trim ourselves down to size.
-		if (canvasKeys.length > highNumCanvases) {
-			for (var i = 0; i < canvasKeys.length - lowNumCanvases; ++i) {
+		if (n_canvases > highNumCanvases) {
+			var n_to_reclaim = Math.min(
+				canvasKeys.length,
+				n_canvases - lowNumCanvases,
+			);
+			for (var i = 0; i < n_to_reclaim; ++i) {
 				var key = canvasKeys[i];
 				var tile = this.tiles[key];
 				if (this.debugDeltas)
@@ -398,8 +402,12 @@ class TileManager {
 						'Reclaim canvas ' + key + ' last rendered: ' + tile.lastRendered,
 					);
 				this.reclaimTileCanvasMemory(tile);
+				--n_canvases;
 			}
 		}
+
+		// FIXME: We should consider resorting keys by wireId now -
+		// 	      which is monotonic server ~time
 
 		// Trim memory down to size.
 		if (totalSize > highDeltaMemory) {
@@ -430,16 +438,17 @@ class TileManager {
 			for (var i = 0; i < keys.length - lowTileCount; ++i) {
 				const key = keys[i];
 				const tile: Tile = this.tiles[key];
-				if (!tile.current) this.removeTile(keys[i]);
+				if (!tile.current) {
+					if (tile.canvas) --n_canvases;
+					this.removeTile(keys[i]);
+				}
 			}
 		}
 
-		// Canvases are returned to a cache when reclaimed. Given
-		// (highNumCanvases - lowNumCanvases) canvases may regularly be returned to
-		// the cache, ensure the cache stays about that size.
-		// Under regular circumstances, this should do nothing and is a failsafe.
-		const canvasCacheTargetSize = highNumCanvases - lowNumCanvases;
-		if (this.canvasCache.size > canvasCacheTargetSize * 1.5)
+		// Canvases are returned to a cache when reclaimed. Try to keep the total
+		// number of alive canvases within the specified limits.
+		const canvasCacheTargetSize = highNumCanvases - n_canvases;
+		if (this.canvasCache.size > canvasCacheTargetSize)
 			this.canvasCache.trim(canvasCacheTargetSize);
 	}
 
@@ -448,14 +457,13 @@ class TileManager {
 		this.maybeGarbageCollect();
 
 		// important this is after the garbagecollect
-		if (!tile.canvas) this.ensureCanvas(tile, null, false);
-
+		if (!tile.canvas) this.ensureCanvas(tile, false, false);
 		if (tile.ctx) return tile.ctx;
 
 		// Not a good result - we ran out of canvas memory
 		this.garbageCollect();
 
-		if (!tile.canvas) this.ensureCanvas(tile, null, false);
+		if (!tile.canvas) this.ensureCanvas(tile, false, false);
 		if (tile.ctx) return tile.ctx;
 
 		// Free non-current canvas' and start again.
@@ -466,7 +474,7 @@ class TileManager {
 			if (t && !t.current) this.reclaimTileCanvasMemory(t);
 		}
 		this.canvasCache.clear();
-		if (!tile.canvas) this.ensureCanvas(tile, null, false);
+		if (!tile.canvas) this.ensureCanvas(tile, false, false);
 		if (tile.ctx) return tile.ctx;
 
 		if (this.debugDeltas)
@@ -478,7 +486,7 @@ class TileManager {
 			this.reclaimTileCanvasMemory(t);
 		}
 		this.canvasCache.clear();
-		if (!tile.canvas) this.ensureCanvas(tile, null, false);
+		if (!tile.canvas) this.ensureCanvas(tile, false, false);
 		if (!tile.ctx) window.app.console.log('Error: out of canvas memory.');
 
 		return tile.ctx;
@@ -882,17 +890,16 @@ class TileManager {
 			app.map.fire('statusindicator', { statusType: 'alltilesloaded' });
 		}
 
-		var now = new Date();
-
-		// Newly (pre)-fetched tiles, rendered or not should be privileged.
-		tile.lastRendered = now;
-
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
+		const tileVisible = app.isRectangleVisibleInTheDisplayedArea(
+			this.pixelCoordsToTwipTileBounds(coords),
+		);
+
+		// Also check the scale because incoming tile may not be in the same zoom level.
 		if (
-			app.isRectangleVisibleInTheDisplayedArea(
-				this.pixelCoordsToTwipTileBounds(coords),
-			)
+			tileVisible &&
+			Math.round(coords.scale * 1000) === Math.round(app.getScale() * 1000)
 		)
 			app.sectionContainer.setDirty(coords);
 	}
@@ -1250,7 +1257,7 @@ class TileManager {
 					this._pixelBounds.getSize().y * direction[1],
 				);
 
-				var queue = this.getMissingTiles(this._pixelBounds, this._zoom);
+				var queue = this.getMissingTiles(this._pixelBounds, this._zoom, false);
 
 				if (this._docLayer.isCalc() || queue.length === 0) {
 					// pre-load more aggressively
@@ -1259,7 +1266,7 @@ class TileManager {
 						(this._pixelBounds.getSize().y * direction[1]) / 2,
 					);
 					queue = queue.concat(
-						this.getMissingTiles(this._pixelBounds, this._zoom),
+						this.getMissingTiles(this._pixelBounds, this._zoom, false),
 					);
 				}
 
@@ -1373,13 +1380,21 @@ class TileManager {
 		return boundList.map(this.pxBoundsToTileRange, this);
 	}
 
-	private static getMissingTiles(pixelBounds: any, zoom: number) {
+	private static getMissingTiles(
+		pixelBounds: any,
+		zoom: number,
+		updateCurrent: boolean,
+	) {
 		var tileRanges = this.pxBoundsToTileRanges(pixelBounds);
 		var queue = [];
 
+		if (updateCurrent) {
+			for (var key in this.tiles) this.tiles[key].current = false;
+		}
+
 		// create a queue of coordinates to load tiles from
 		this.beginTransaction();
-		var redraw = false;
+		let didRehydrate = false;
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
 			var tileRange = tileRanges[rangeIdx];
 			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
@@ -1398,14 +1413,21 @@ class TileManager {
 
 					var key = coords.key();
 					var tile = this.tiles[key];
-					if (tile && !tile.needsFetch())
-						redraw = redraw || this.makeTileCurrent(tile);
-					else queue.push(coords);
+					if (tile && !tile.needsFetch()) {
+						if (tile.needsRehydration()) {
+							this.rehydrateTile(tile);
+							didRehydrate = true;
+						}
+					} else queue.push(coords);
+
+					if (tile && updateCurrent) tile.current = true;
 				}
 			}
 		}
 		this.endTransaction(
-			redraw ? () => app.sectionContainer.requestReDraw() : null,
+			updateCurrent && didRehydrate && queue.length === 0
+				? () => app.sectionContainer.requestReDraw()
+				: null,
 		);
 
 		return queue;
@@ -1439,6 +1461,7 @@ class TileManager {
 	private static addTiles(
 		coordsQueue: Array<TileCoordData>,
 		preFetch: boolean = false,
+		isCurrent: boolean = false,
 	) {
 		// Remove irrelevant tiles from the queue earlier.
 		this.removeIrrelevantsFromCoordsQueue(coordsQueue);
@@ -1446,8 +1469,6 @@ class TileManager {
 		// If we're pre-fetching, we may end up rehydrating tiles, so begin a transaction
 		// so that they're grouped together.
 		if (preFetch) this.beginTransaction();
-
-		let redraw: boolean = false;
 
 		for (let i = 0; i < coordsQueue.length; i++) {
 			const key = coordsQueue[i].key();
@@ -1460,16 +1481,13 @@ class TileManager {
 				// If preFetching at idle, take the
 				// opportunity to create an up to date
 				// canvas for the tile in advance.
-				this.ensureCanvas(tile, null, true);
-				redraw = redraw || tile.hasPendingUpdate();
+				this.ensureCanvas(tile, true, false);
 			}
+
+			tile.current = isCurrent;
 		}
 
-		if (preFetch) {
-			this.endTransaction(
-				redraw ? () => app.sectionContainer.requestReDraw() : null,
-			);
-		}
+		if (preFetch) this.endTransaction(null);
 
 		// sort the tiles by the rows
 		coordsQueue.sort(function (a, b) {
@@ -1555,10 +1573,12 @@ class TileManager {
 	}
 
 	private static pixelCoordsToTwipTileBounds(coords: TileCoordData): number[] {
-		const x = coords.x * app.pixelsToTwips;
-		const y = coords.y * app.pixelsToTwips;
-		const width = app.tile.size.x;
-		const height = app.tile.size.y;
+		// We need to calculate pixelsToTwips for the scale of this tile. 15 is the ratio between pixels and twips when the scale is 1.
+		const pixelsToTwipsForTile = 15 / coords.scale;
+		const x = coords.x * pixelsToTwipsForTile;
+		const y = coords.y * pixelsToTwipsForTile;
+		const width = app.tile.size.pX * pixelsToTwipsForTile;
+		const height = app.tile.size.pY * pixelsToTwipsForTile;
 
 		return [x, y, width, height];
 	}
@@ -1571,6 +1591,8 @@ class TileManager {
 		textMsg: string,
 	) {
 		let needsNewTiles = false;
+		const calc = app.map._docLayer.isCalc();
+		const scale = app.getScale();
 
 		for (const key in this.tiles) {
 			const coords: TileCoordData = this.tiles[key].coords;
@@ -1579,7 +1601,8 @@ class TileManager {
 			if (
 				coords.part === part &&
 				coords.mode === mode &&
-				invalidatedRectangle.intersectsRectangle(tileRectangle)
+				(invalidatedRectangle.intersectsRectangle(tileRectangle) ||
+					(calc && coords.scale !== scale)) // In calc, we invalidate all tiles with different zoom levels.
 			) {
 				if (app.isRectangleVisibleInTheDisplayedArea(tileRectangle))
 					needsNewTiles = true;
@@ -1938,7 +1961,7 @@ class TileManager {
 		var zoom = Math.round(app.map.getZoom());
 		var pixelBounds = app.map.getPixelBoundsCore(app.map.getCenter(), zoom);
 
-		var queue = this.getMissingTiles(pixelBounds, zoom);
+		var queue = this.getMissingTiles(pixelBounds, zoom, false);
 
 		return queue.length;
 	}
@@ -2018,24 +2041,13 @@ class TileManager {
 			zoom = Math.round(map.getZoom());
 		}
 
-		for (var key in this.tiles) {
-			var thiscoords = TileCoordData.keyToTileCoords(key);
-			if (
-				thiscoords.z !== zoom ||
-				thiscoords.part !== app.map._docLayer._selectedPart ||
-				thiscoords.mode !== app.map._docLayer._selectedMode
-			) {
-				this.tiles[key].current = false;
-			}
-		}
-
 		var pixelBounds = map.getPixelBoundsCore(center, zoom);
-		var queue = this.getMissingTiles(pixelBounds, zoom);
+		var queue = this.getMissingTiles(pixelBounds, zoom, true);
 
 		app.map._docLayer._sendClientVisibleArea();
 		app.map._docLayer._sendClientZoom();
 
-		if (queue.length !== 0) this.addTiles(queue, false);
+		if (queue.length !== 0) this.addTiles(queue, false, true);
 
 		if (app.map._docLayer.isCalc() || app.map._docLayer.isWriter())
 			this.initPreFetchAdjacentTiles();
@@ -2187,10 +2199,14 @@ class TileManager {
 		Checks the visible tiles in current zoom level.
 		Marks the visible ones as current.
 	*/
-	public static udpateLayoutView(bounds: any): any {
-		const queue = this.getMissingTiles(bounds, Math.round(app.map.getZoom()));
+	public static updateLayoutView(bounds: any): any {
+		const queue = this.getMissingTiles(
+			bounds,
+			Math.round(app.map.getZoom()),
+			true,
+		);
 
-		if (queue.length > 0) this.addTiles(queue, false);
+		if (queue.length > 0) this.addTiles(queue, false, true);
 	}
 
 	public static getVisibleCoordList(
@@ -2373,14 +2389,18 @@ class TileManager {
 
 	// Ensure we have a renderable canvas for a given tile
 	// Use this immediately before drawing a tile, pass in the time.
-	public static ensureCanvas(tile: Tile, now: any, forPrefetch: any) {
+	public static ensureCanvas(
+		tile: Tile,
+		forPrefetch: any,
+		forPaint: boolean = true,
+	) {
 		if (!tile) return;
 		if (!tile.canvas) {
 			this.canvasCache.acquireCanvas(tile);
 			this.rehydrateTile(tile);
 		}
+		if (forPaint) tile.lastRendered = performance.now();
 		if (!forPrefetch) {
-			if (now !== null) tile.lastRendered = now;
 			if (!tile.hasContent() && tile.hasPendingKeyframe === 0)
 				tile.missingContent++;
 		}

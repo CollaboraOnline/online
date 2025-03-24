@@ -236,15 +236,13 @@ public:
 
     DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
                    const std::string& docKey, const std::string& configId,
-                   unsigned mobileAppDocId,
-                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
+                   unsigned mobileAppDocId);
 
 protected:
     /// Used by derived classes.
     DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
                    const std::string& docKey, const std::string& configId)
-        : DocumentBroker(type, uri, uriPublic, docKey, configId,
-                         /*mobileAppDocId=*/0, /*wopiFileInfo=*/nullptr)
+        : DocumentBroker(type, uri, uriPublic, docKey, configId, /*mobileAppDocId=*/0)
     {
     }
 
@@ -587,7 +585,7 @@ public:
 private:
     /// Checks if we really need to request tile rendering or it's in progress
     /// returns true if all tiles are of the same part and size so can be grouped
-    inline bool requestTileRendering(TileDesc& tile, bool forceKeyFrame,
+    inline bool requestTileRendering(TileDesc& tile, bool forceKeyFrame, int version,
                                      const std::chrono::steady_clock::time_point &now,
                                      std::vector<TileDesc>& tilesNeedsRendering,
                                      const std::shared_ptr<ClientSession>& session);
@@ -600,10 +598,6 @@ private:
     std::shared_ptr<ClientSession> getFirstAuthorizedSession() const;
 
     void refreshLock();
-
-    /// Downloads the document ahead-of-time.
-    bool downloadAdvance(const std::string& jailId, const Poco::URI& uriPublic,
-                         std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
@@ -922,18 +916,37 @@ private:
         /// The minimum time to wait between requests.
         std::chrono::milliseconds minTimeBetweenRequests() const { return _minTimeBetweenRequests; }
 
+        /// Returns how long before we can issue a new request now.
+        /// Calculates based on time elapsed since the last request,
+        /// including that more time than half the last request's
+        /// duration has passed.
+        /// When unloading, we reduce throttling significantly.
+        std::chrono::milliseconds timeToNextRequest(bool unloading) const
+        {
+            std::chrono::milliseconds minTimeBetweenRequests =
+                std::max(_minTimeBetweenRequests, _lastRequestDuration);
+            if (unloading)
+            {
+                // More aggressive when unloading.
+                minTimeBetweenRequests /= 10;
+            }
+
+            const auto now = RequestManager::now();
+            const std::chrono::milliseconds timeSinceLastCommunication =
+                std::min(timeSinceLastRequest(now), timeSinceLastResponse(now));
+
+            return (timeSinceLastCommunication >= minTimeBetweenRequests)
+                       ? std::chrono::milliseconds::zero()
+                       : minTimeBetweenRequests - timeSinceLastCommunication;
+        }
+
         /// Checks whether or not we can issue a new request now.
         /// Returns true iff there is no active request and sufficient
-        /// time has elapsed since the last request, including that
-        /// more time than half the last request's duration has passed.
-        /// When unloading, we reduce throttling significantly.
+        /// time has elapsed since the last request.
+        /// See timeToNextRequest() for details.
         bool canRequestNow(bool unloading) const
         {
-            const std::chrono::milliseconds minTimeBetweenRequests =
-                unloading ? _minTimeBetweenRequests / 10 : _minTimeBetweenRequests;
-            const auto now = RequestManager::now();
-            return !isActive() && std::min(timeSinceLastRequest(now), timeSinceLastResponse(now)) >=
-                                      std::max(minTimeBetweenRequests, _lastRequestDuration / 2);
+            return !isActive() && timeToNextRequest(unloading) == std::chrono::milliseconds::zero();
         }
 
         /// Sets the last request's result, either to success or failure.
@@ -1169,6 +1182,12 @@ private:
         /// 0 for original, as-loaded version.
         std::size_t version() const { return _version.load(); }
 
+        /// Returns the time to next save, or 0 if we can save now.
+        std::chrono::milliseconds timeToNextSave(bool unloading) const
+        {
+            return _request.timeToNextRequest(unloading);
+        }
+
         /// True if we aren't saving and the minimum time since last save has elapsed.
         bool canSaveNow(bool unloading) const { return _request.canRequestNow(unloading); }
 
@@ -1363,6 +1382,12 @@ private:
         std::chrono::milliseconds minTimeBetweenUploads() const
         {
             return _request.minTimeBetweenRequests();
+        }
+
+        /// Returns the time to next upload, or 0 if we can upload now.
+        std::chrono::milliseconds timeToNextUpload(bool unloading) const
+        {
+            return _request.timeToNextRequest(unloading);
         }
 
         /// True if we aren't uploading and the minimum time since last upload has elapsed.
@@ -1689,10 +1714,6 @@ private:
 
     /// The current lock-state update request, if any.
     std::unique_ptr<LockStateUpdateRequest> _lockStateUpdateRequest;
-
-    /// The WopiFileInfo of the initial request loading the document for the first time.
-    /// This has a single-use, and then it's reset.
-    std::unique_ptr<WopiStorage::WOPIFileInfo> _initialWopiFileInfo;
 
     std::unique_ptr<StorageBase> _storage;
 

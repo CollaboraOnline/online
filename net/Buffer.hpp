@@ -28,6 +28,14 @@ class Buffer
     std::size_t _offset;  /// offset into _buffer of data
     std::vector<char> _buffer;
 
+    void resetOffset()
+    {
+        // reset underlying capacity of previously large buffers
+        if (_buffer.empty() && _buffer.capacity() > 32768)
+            _buffer.shrink_to_fit();
+        _offset = 0;
+    }
+
 public:
     Buffer() : _offset(0)
     {
@@ -73,7 +81,7 @@ public:
         }
 
         _buffer.erase(_buffer.begin(), _buffer.begin() + _offset + len);
-        _offset = 0;
+        resetOffset();
     }
 
     void append(const char *data, const int len)
@@ -103,7 +111,7 @@ public:
     void clear()
     {
         _buffer.clear();
-        _offset = 0;
+        resetOffset();
     }
 
     iterator begin() { return _buffer.begin() + _offset; }

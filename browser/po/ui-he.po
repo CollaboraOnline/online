@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-14 16:34+0100\n"
-"PO-Revision-Date: 2024-12-17 09:59+0000\n"
+"PO-Revision-Date: 2025-03-17 08:02+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.9\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -472,7 +472,7 @@ msgstr "הצגה בצד"
 
 #: src/canvas/sections/CommentListSection.ts:1206
 msgid "Open in full view"
-msgstr ""
+msgstr "פתיחה בתצוגה מלאה"
 
 #: src/canvas/sections/CommentListSection.ts:1234
 #: src/control/Control.JSDialogBuilder.js:1894
@@ -1023,7 +1023,7 @@ msgstr "דרום אפריקה"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "המסמך נחתם ויהיה זמין בעוד זמן קצר"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1347,7 +1347,7 @@ msgstr "היפוך הרקע"
 #: src/control/Control.NotebookbarWriter.js:856
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Style list"
-msgstr ""
+msgstr "רשימת סגנונות"
 
 #: src/control/Control.Menubar.js:158 src/control/Control.Menubar.js:477
 #: src/control/Control.Menubar.js:629 src/control/Control.Menubar.js:781
@@ -1373,7 +1373,7 @@ msgstr "בורר חכם"
 #: src/control/Control.Menubar.js:194 src/control/Control.Menubar.js:489
 #: src/control/Control.Menubar.js:637 src/control/Control.Menubar.js:794
 msgid "AI Assistant"
-msgstr ""
+msgstr "מסייע בינה מלאכותית"
 
 #: src/control/Control.Menubar.js:235
 msgid "Text orientation"
@@ -1654,7 +1654,7 @@ msgstr "כל הגיליונות"
 #: src/control/Control.Menubar.js:773
 #: src/control/Control.NotebookbarCalc.js:1180
 msgid "Focus Cell"
-msgstr ""
+msgstr "התמקדות על תא"
 
 #: src/control/Control.Menubar.js:867
 #: src/control/jsdialog/Definitions.Menu.ts:309
@@ -1784,11 +1784,11 @@ msgstr "הוספת צורה"
 
 #: src/control/Control.Menubar.js:2036
 msgid "The signature line can now be moved or resized as needed."
-msgstr ""
+msgstr "ניתן להזיז ולשנות את גודל שורת החתימה בהתאם לצורך מעתה."
 
 #: src/control/Control.Menubar.js:2038
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "סיום חתימה אלקטרונית"
 
 #: src/control/Control.Menubar.js:2221
 msgid "file type icon"
@@ -2032,7 +2032,7 @@ msgstr "רע"
 #: src/control/Control.NotebookbarImpress.js:1060
 #: src/control/Control.NotebookbarWriter.js:934
 msgid "Replace"
-msgstr ""
+msgstr "החלפה"
 
 #: src/control/Control.NotebookbarCalc.js:941
 msgid "Row Height"
@@ -2103,7 +2103,7 @@ msgstr "תרשים מזערי"
 #: src/control/Control.NotebookbarImpress.js:1293
 #: src/control/Control.NotebookbarWriter.js:1178
 msgid "Assistant"
-msgstr ""
+msgstr "מסייע"
 
 #: src/control/Control.NotebookbarCalc.js:1499
 #: src/control/Control.NotebookbarCalc.js:2398
@@ -2175,11 +2175,11 @@ msgstr "ניתוק מהאינטרנט"
 
 #: src/control/Control.NotebookbarWriter.js:842
 msgid "Scroll up"
-msgstr ""
+msgstr "גלילה למעלה"
 
 #: src/control/Control.NotebookbarWriter.js:849
 msgid "Scroll down"
-msgstr ""
+msgstr "גלילה למטה"
 
 #: src/control/Control.NotebookbarWriter.js:1403
 msgid "Rich Text"
@@ -2277,7 +2277,7 @@ msgstr "לא נמצאו תקלות"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "התראות:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2309,12 +2309,12 @@ msgstr "הוספת גיליון"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "פעיל"
 
 #: src/control/Control.StatusBar.js:179
 #: src/control/jsdialog/Definitions.Menu.ts:292
 msgid "Off"
-msgstr ""
+msgstr "כבוי"
 
 #: src/control/Control.StatusBar.js:206
 #: src/control/jsdialog/Definitions.Menu.ts:23
@@ -2581,7 +2581,7 @@ msgstr "טעינת האוספים נכשלה"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "ההפניות נטענות"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -2819,11 +2819,11 @@ msgstr "משוחרר מאוד"
 
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "All users"
-msgstr ""
+msgstr "כל המשתמשים"
 
 #: src/control/jsdialog/Definitions.Menu.ts:302
 msgid "This user"
-msgstr ""
+msgstr "המשתמש הזה"
 
 #: src/control/jsdialog/Definitions.Menu.ts:435
 msgid "From Beginning"
@@ -2901,9 +2901,8 @@ msgid "Your changes have been saved"
 msgstr "השינויים שלך נשמרו"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:186
-#, fuzzy
 msgid "Show Comments"
-msgstr "אין הערות"
+msgstr "הצגת הערות"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -2923,7 +2922,7 @@ msgstr "Ctrl+Shift+Alt+D ליציאה"
 
 #: src/core/Debug.js:1080
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr ""
+msgstr "טיפול באירועים הושהה לזמן ארוך מהצפוי: {0} מילישניות"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "

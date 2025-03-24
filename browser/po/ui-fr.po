@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-14 16:34+0100\n"
-"PO-Revision-Date: 2025-01-28 15:02+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2025-03-24 13:13+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -479,7 +479,7 @@ msgstr "Afficher sur le côté"
 
 #: src/canvas/sections/CommentListSection.ts:1206
 msgid "Open in full view"
-msgstr ""
+msgstr "Ouvert en pleine vue"
 
 #: src/canvas/sections/CommentListSection.ts:1234
 #: src/control/Control.JSDialogBuilder.js:1894
@@ -753,302 +753,301 @@ msgstr "Albanie"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Armenia"
-msgstr ""
+msgstr "Arménie"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Argentina"
-msgstr ""
+msgstr "Argentine"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Austria"
-msgstr ""
+msgstr "Autriche"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Australia"
-msgstr ""
+msgstr "Australie"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Åland Islands"
-msgstr ""
+msgstr "Îles Åland"
 
 #: src/control/Control.ESignature.ts:139
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbaïdjan"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnie-Herzégovine"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Belgium"
-msgstr ""
+msgstr "Belgique"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulgarie"
 
 #: src/control/Control.ESignature.ts:143
 msgid "Brazil"
-msgstr ""
+msgstr "Brésil"
 
 #: src/control/Control.ESignature.ts:144
 msgid "Belarus"
-msgstr ""
+msgstr "Bélarus"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Canada"
-msgstr ""
+msgstr "Canada"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Switzerland"
-msgstr ""
+msgstr "Suisse"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Chile"
-msgstr ""
+msgstr "Chili"
 
 #: src/control/Control.ESignature.ts:148
 msgid "China"
-msgstr ""
+msgstr "Chine"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Cyprus"
-msgstr ""
+msgstr "Chypre"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Czech Republic"
-msgstr ""
+msgstr "République tchèque"
 
 #: src/control/Control.ESignature.ts:151
 msgid "Germany"
-msgstr ""
+msgstr "Allemagne"
 
 #: src/control/Control.ESignature.ts:152
 msgid "Denmark"
-msgstr ""
+msgstr "Danemark"
 
 #: src/control/Control.ESignature.ts:153
 msgid "Estonia"
-msgstr ""
+msgstr "Estonie"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Spain"
-msgstr ""
+msgstr "Espagne"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Finland"
-msgstr ""
+msgstr "Finlande"
 
 #: src/control/Control.ESignature.ts:156
 msgid "France"
-msgstr ""
+msgstr "France"
 
 #: src/control/Control.ESignature.ts:157
 msgid "United Kingdom"
-msgstr ""
+msgstr "Royaume-Uni"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Georgia"
-msgstr ""
+msgstr "Géorgie"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Guernsey"
-msgstr ""
+msgstr "Guernesey"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Greece"
-msgstr ""
+msgstr "Grèce"
 
 #: src/control/Control.ESignature.ts:161
 msgid "Croatia"
-msgstr ""
+msgstr "Croatie"
 
 #: src/control/Control.ESignature.ts:162
 msgid "Hungary"
-msgstr ""
+msgstr "Hongrie"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Indonesia"
-msgstr ""
+msgstr "Indonésie"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Ireland"
-msgstr ""
+msgstr "Irlande"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Israel"
-msgstr ""
+msgstr "Israël"
 
 #: src/control/Control.ESignature.ts:166
 msgid "India"
-msgstr ""
+msgstr "Inde"
 
 #: src/control/Control.ESignature.ts:167
 msgid "Iceland"
-msgstr ""
+msgstr "Islande"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Italy"
-msgstr ""
+msgstr "Italie"
 
 #: src/control/Control.ESignature.ts:169
 msgid "Japan"
-msgstr ""
+msgstr "Japon"
 
 #: src/control/Control.ESignature.ts:170
 msgid "Kenya"
-msgstr ""
+msgstr "Kenya"
 
 #: src/control/Control.ESignature.ts:171
 msgid "South Korea"
-msgstr ""
+msgstr "Corée du Sud"
 
 #: src/control/Control.ESignature.ts:172
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Kazakhstan"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Liechtenstein"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Lithuania"
-msgstr ""
+msgstr "Lituanie"
 
 #: src/control/Control.ESignature.ts:175
 msgid "Luxembourg"
-msgstr ""
+msgstr "Luxembourg"
 
 #: src/control/Control.ESignature.ts:176
 msgid "Latvia"
-msgstr ""
+msgstr "Lettonie"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Monaco"
-msgstr ""
+msgstr "Monaco"
 
 #: src/control/Control.ESignature.ts:178
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "République de Moldova"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Montenegro"
-msgstr ""
+msgstr "Monténégro"
 
 #: src/control/Control.ESignature.ts:180
 msgid "North Macedonia, Republic of"
-msgstr ""
+msgstr "Macédoine du Nord République"
 
 #: src/control/Control.ESignature.ts:181
 msgid "Malta"
-msgstr ""
+msgstr "Malte"
 
 #: src/control/Control.ESignature.ts:182
 msgid "Mexico"
-msgstr ""
+msgstr "Mexique"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Netherlands"
-msgstr ""
+msgstr "Pays-Bas"
 
 #: src/control/Control.ESignature.ts:184
 msgid "Norway"
-msgstr ""
+msgstr "Norvège"
 
 #: src/control/Control.ESignature.ts:185
 msgid "New Zealand"
-msgstr ""
+msgstr "Nouvelle-Zélande"
 
 #: src/control/Control.ESignature.ts:186
 msgid "Philippines"
-msgstr ""
+msgstr "Philippines"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Poland"
-msgstr ""
+msgstr "Pologne"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Portugal"
-msgstr ""
+msgstr "Portugal"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Qatar"
-msgstr ""
+msgstr "Qatar"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Romania"
-msgstr ""
+msgstr "Roumanie"
 
 #: src/control/Control.ESignature.ts:191
 msgid "Serbia"
-msgstr ""
+msgstr "Serbie"
 
 #: src/control/Control.ESignature.ts:192
 msgid "Russian Federation"
-msgstr ""
+msgstr "Fédération de Russie"
 
 #: src/control/Control.ESignature.ts:193
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Saudi Arabia"
 
 #: src/control/Control.ESignature.ts:194
 msgid "Sweden"
-msgstr ""
+msgstr "Suède"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Singapore"
-msgstr ""
+msgstr "Singapour"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Slovenia"
-msgstr ""
+msgstr "Slovénie"
 
 #: src/control/Control.ESignature.ts:197
 msgid "Slovakia"
-msgstr ""
+msgstr "Slovaquie"
 
 #: src/control/Control.ESignature.ts:198
 msgid "San Marino"
-msgstr ""
+msgstr "Saint-Marin"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Turkey"
-msgstr ""
+msgstr "Turquie"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Taiwan, Province de Chine"
 
 #: src/control/Control.ESignature.ts:201
 msgid "Ukraine"
-msgstr ""
+msgstr "Ukraine"
 
 #: src/control/Control.ESignature.ts:202
 msgid "United States of America"
-msgstr ""
+msgstr "États-Unis d'Amérique"
 
 #: src/control/Control.ESignature.ts:203
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Saint-Siège (État de la Cité du Vatican)"
 
 #: src/control/Control.ESignature.ts:204
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovo"
 
 #: src/control/Control.ESignature.ts:205
 msgid "South Africa"
-msgstr ""
+msgstr "Afrique du Sud"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Le document est en cours de signature et sera bientôt disponible"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
 msgstr "Pays :"
 
 #: src/control/Control.ESignatureDialog.ts:120
-#, fuzzy
 msgid "Provider:"
 msgstr "Fournisseur :"
 
@@ -1368,7 +1367,7 @@ msgstr "Inverser le fond"
 #: src/control/Control.NotebookbarWriter.js:856
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Style list"
-msgstr ""
+msgstr "Liste des styles"
 
 #: src/control/Control.Menubar.js:158 src/control/Control.Menubar.js:477
 #: src/control/Control.Menubar.js:629 src/control/Control.Menubar.js:781
@@ -1394,7 +1393,7 @@ msgstr "Sélecteur intelligent"
 #: src/control/Control.Menubar.js:194 src/control/Control.Menubar.js:489
 #: src/control/Control.Menubar.js:637 src/control/Control.Menubar.js:794
 msgid "AI Assistant"
-msgstr ""
+msgstr "AI Assistant"
 
 #: src/control/Control.Menubar.js:235
 msgid "Text orientation"
@@ -1675,7 +1674,7 @@ msgstr "Toutes les feuilles"
 #: src/control/Control.Menubar.js:773
 #: src/control/Control.NotebookbarCalc.js:1180
 msgid "Focus Cell"
-msgstr ""
+msgstr "Mettre en évidence la cellule"
 
 #: src/control/Control.Menubar.js:867
 #: src/control/jsdialog/Definitions.Menu.ts:309
@@ -1806,10 +1805,12 @@ msgstr "Insérer une forme"
 #: src/control/Control.Menubar.js:2036
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"La ligne de signature peut maintenant être déplacée ou redimensionnée au "
+"besoin."
 
 #: src/control/Control.Menubar.js:2038
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Terminer la signature électronique"
 
 #: src/control/Control.Menubar.js:2221
 msgid "file type icon"
@@ -2124,7 +2125,7 @@ msgstr "Sparkline"
 #: src/control/Control.NotebookbarImpress.js:1293
 #: src/control/Control.NotebookbarWriter.js:1178
 msgid "Assistant"
-msgstr ""
+msgstr "Assistant"
 
 #: src/control/Control.NotebookbarCalc.js:1499
 #: src/control/Control.NotebookbarCalc.js:2398
@@ -2196,11 +2197,11 @@ msgstr "Aller en mode hors-ligne"
 
 #: src/control/Control.NotebookbarWriter.js:842
 msgid "Scroll up"
-msgstr ""
+msgstr "Faire défiler vers le haut"
 
 #: src/control/Control.NotebookbarWriter.js:849
 msgid "Scroll down"
-msgstr ""
+msgstr "Faire défiler vers le bas"
 
 #: src/control/Control.NotebookbarWriter.js:1403
 msgid "Rich Text"
@@ -2301,7 +2302,7 @@ msgstr "Pas de problèmes rencontrés"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Alertes :"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2333,12 +2334,12 @@ msgstr "Insérer une feuille"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "Marche"
 
 #: src/control/Control.StatusBar.js:179
 #: src/control/jsdialog/Definitions.Menu.ts:292
 msgid "Off"
-msgstr ""
+msgstr "Arrêt"
 
 #: src/control/Control.StatusBar.js:206
 #: src/control/jsdialog/Definitions.Menu.ts:23
@@ -2608,7 +2609,7 @@ msgstr "Échec du chargement des collections"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "Chargement des références"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -2854,11 +2855,11 @@ msgstr "Très lâche"
 
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "All users"
-msgstr ""
+msgstr "Tous les utilisateurs"
 
 #: src/control/jsdialog/Definitions.Menu.ts:302
 msgid "This user"
-msgstr ""
+msgstr "Cet utilisateur"
 
 #: src/control/jsdialog/Definitions.Menu.ts:435
 msgid "From Beginning"
@@ -2936,9 +2937,8 @@ msgid "Your changes have been saved"
 msgstr "Vos changements ont été sauvegardés"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:186
-#, fuzzy
 msgid "Show Comments"
-msgstr "Aucun commentaire"
+msgstr "Afficher les commentaires"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -2959,6 +2959,8 @@ msgstr "Ctrl+Maj+Alt+D pour sortir"
 #: src/core/Debug.js:1080
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
+"La manipulation de l'événement a été retardée pendant une période inattendue "
+": {0}ms"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -3345,7 +3347,7 @@ msgid ""
 "to continue."
 msgstr ""
 "Le document ne pouvait pas être sauvegardé du a que votre session à expiré, "
-"s’il vous plaît, réouvrez le document pour continuer"
+"s’il vous plaît, réouvrez le document pour continuer."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -3387,7 +3389,7 @@ msgid ""
 "continue."
 msgstr ""
 "Le fichier ne peut pas être sauvegardé du a que votre session a expiré, "
-"rafraîchissez la page s’il vous plaît"
+"rafraîchissez la page s’il vous plaît."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -3696,7 +3698,6 @@ msgid "Current Slide"
 msgstr "Diapositive actuelle"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
 msgstr "Diapositive suivante"
 
