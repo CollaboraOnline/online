@@ -9,7 +9,7 @@
 .cxx_tags
 .yavide_proj
 .yavide_session
-.vscode
+/.vscode
 Doxyfile.cpp.cfg
 doc/cpp/**
 **/.clangd

@@ -1,0 +1,8 @@
+{
+    "files.exclude": {
+        "**/.git": true, // ignore version control folder
+        "**/.DS_Store": true, // ignore macOS system file
+        "node_modules": true, // ignore node_modules folder
+        "dist": true, // ignore dist folder where the compiled code is stored
+    }
+}
