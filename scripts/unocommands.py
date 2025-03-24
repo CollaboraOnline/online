@@ -79,7 +79,7 @@ def extractMenuCommands(path):
     commands = []
 
     # extract from the menu specifications
-    f = open(path + '/browser/src/control/Control.Menubar.js', 'r', encoding='utf-8')
+    f = open(path + '/browser/src/control/Control.Menubar.ts', 'r', encoding='utf-8')
     for line in f:
         if line.find("uno:") >= 0 and line.find("name:") < 0:
             commands += commandFromMenuLine(line)

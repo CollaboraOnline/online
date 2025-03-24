@@ -120,6 +120,11 @@ interface Document {
 	webkitFullscreenElement: Element | null;
 }
 
+// Extenhd StringConstructor
+interface StringConstructor {
+	locale: string; // from cool-src.js
+}
+
 // Extend the global Window interface
 // Defined in: js/global.js
 interface Window {
@@ -154,13 +159,21 @@ interface Window {
 	};
 
 	allowUpdateNotification: boolean;
+	deeplEnabled: boolean;
 	documentSigningEnabled: boolean;
+	enableAccessibility: boolean;
+	enableMacrosExecution: boolean;
+	enableWelcomeMessage: boolean;
+	extraExportFormats: string[];
+	mobileMenuWizard: boolean;
+	pageMobileWizard: boolean;
 	sidebarId: number;
 	userInterfaceMode: string;
 	ThisIsAMobileApp: boolean;
 	ThisIsTheEmscriptenApp: boolean;
 	zoteroEnabled: boolean;
 
+	createShapesPanel(shapeType: string): HTMLDivElement;
 	initializedUI?: () => void; // initializedUI is an optional function, potentially defined in branding
 	setupToolbar(map: any): void; // TODO should be L.Map
 }
