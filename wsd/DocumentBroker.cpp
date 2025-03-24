@@ -5208,7 +5208,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     else
         os << "\n  still loading... "
            << std::chrono::duration_cast<std::chrono::seconds>(now - _threadStart);
-    os << "\n  child PID: " << (_childProcess ? _childProcess->getPid() : 0);
+    int childPid = _childProcess ? _childProcess->getPid() : 0;
+    os << "\n  child PID: " << childPid;
     os << "\n  sent: " << sent;
     os << "\n  recv: " << recv;
     os << "\n  jail id: " << _jailId;
@@ -5238,6 +5239,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  backgroundManualSave: " << (_backgroundManualSave?"true":"false");
     os << "\n  isViewFileExtension: " << _isViewFileExtension;
     os << "\n  Total PSS: " << Util::getProcessTreePss(getpid()) << " KB";
+    if (childPid)
+        os << "\n  Doc PSS: " << Util::getProcessTreePss(childPid) << " KB";
     if constexpr (!Util::isMobileApp())
     {
         os << "\n  last quarantined version: "
