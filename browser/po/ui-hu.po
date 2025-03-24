@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-14 16:34+0100\n"
-"PO-Revision-Date: 2025-02-26 19:51+0000\n"
+"PO-Revision-Date: 2025-03-14 16:46+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.2-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2847,11 +2847,11 @@ msgstr "Nagyon laza"
 
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "All users"
-msgstr ""
+msgstr "Minden felhasználó"
 
 #: src/control/jsdialog/Definitions.Menu.ts:302
 msgid "This user"
-msgstr ""
+msgstr "Ez a felhasználó"
 
 #: src/control/jsdialog/Definitions.Menu.ts:435
 msgid "From Beginning"
