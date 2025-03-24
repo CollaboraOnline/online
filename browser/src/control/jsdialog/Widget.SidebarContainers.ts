@@ -18,7 +18,7 @@ declare var JSDialog: any;
 JSDialog.deck = function (
 	parentContainer: Element,
 	data: WidgetJSON,
-	builder: any,
+	builder: JSBuilder,
 ) {
 	var deck = L.DomUtil.create(
 		'div',
@@ -29,7 +29,7 @@ JSDialog.deck = function (
 	deck.tabIndex = '-1';
 
 	for (var i = 0; i < data.children.length; i++) {
-		builder.build(deck, [data.children[i]]);
+		builder.build(deck, [data.children[i]], undefined);
 	}
 
 	return false;
@@ -38,7 +38,7 @@ JSDialog.deck = function (
 JSDialog.panel = function (
 	parentContainer: Element,
 	data: PanelWidgetJSON,
-	builder: any,
+	builder: JSBuilder,
 ) {
 	// we want to show the contents always, hidden property decides if we collapse the panel
 	if (data.children && data.children.length) data.children[0].visible = true;
@@ -49,6 +49,7 @@ JSDialog.panel = function (
 		data.children,
 	);
 	expanderData.id = data.id + 'PanelExpander';
+	// FIXME: use getter for handlers
 	builder._expanderHandler(parentContainer, expanderData, builder, () => {
 		expanderData; /*do nothing*/
 	});

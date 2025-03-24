@@ -29,7 +29,7 @@ class SearchEditWidget extends EditWidget {
 	constructor(
 		parentContainer: HTMLElement,
 		data: EditWidgetJSON,
-		builder: any,
+		builder: JSBuilder,
 		callback: JSDialogCallback,
 	) {
 		super(parentContainer, data, builder, callback);
@@ -117,7 +117,7 @@ class SearchEditWidget extends EditWidget {
 JSDialog.searchEdit = function (
 	parentContainer: HTMLElement,
 	data: EditWidgetJSON,
-	builder: any,
+	builder: JSBuilder,
 	callback: JSDialogCallback,
 ) {
 	const widget = new SearchEditWidget(parentContainer, data, builder, callback);

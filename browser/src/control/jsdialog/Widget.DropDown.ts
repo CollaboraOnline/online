@@ -18,7 +18,7 @@ declare var JSDialog: any;
 JSDialog.Dropdown = function (
 	parentContainer: HTMLElement,
 	data: any,
-	builder: any,
+	builder: JSBuilder,
 ) {
 	builder.build(parentContainer, data.children, data.vertical === true);
 

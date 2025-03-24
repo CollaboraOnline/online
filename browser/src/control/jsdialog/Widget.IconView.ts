@@ -27,7 +27,7 @@ declare var JSDialog: any;
 
 function _createEntryImage(
 	parent: HTMLElement,
-	builder: any,
+	builder: JSBuilder,
 	entryData: IconViewEntry,
 	image: string,
 ) {
@@ -54,7 +54,7 @@ function _iconViewEntry(
 	parentContainer: Element,
 	parentData: IconViewJSON,
 	entry: IconViewEntry,
-	builder: any,
+	builder: JSBuilder,
 ) {
 	const disabled = parentData.enabled === false;
 	const hasText = entry.text && parentData.textWithIconEnabled;
@@ -148,7 +148,7 @@ function _iconViewEntry(
 JSDialog.iconView = function (
 	parentContainer: Element,
 	data: IconViewJSON,
-	builder: any,
+	builder: JSBuilder,
 ) {
 	const container = L.DomUtil.create(
 		'div',

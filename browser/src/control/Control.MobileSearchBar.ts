@@ -53,7 +53,7 @@ class MobileSearchBar extends Toolbar {
 
 	create() {
 		var items = this.getToolItems();
-		this.builder.build(this.parentContainer, items);
+		this.builder.build(this.parentContainer, items, undefined);
 	}
 }
 

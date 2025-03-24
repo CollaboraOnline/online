@@ -16,7 +16,7 @@
 declare var JSDialog: any;
 
 function onDemandRenderer(
-	builder: any,
+	builder: JSBuilder,
 	controlId: string,
 	controlType: string,
 	entryId: number,

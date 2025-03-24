@@ -19,7 +19,7 @@ declare var JSDialog: any;
 JSDialog.buttonBox = function (
 	parentContainer: Element,
 	data: ContainerWidgetJSON,
-	builder: any,
+	builder: JSBuilder,
 ) {
 	var container = L.DomUtil.create(
 		'div',

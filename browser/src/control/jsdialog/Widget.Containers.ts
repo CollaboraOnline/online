@@ -46,7 +46,7 @@ JSDialog.container = function (
 JSDialog.grid = function (
 	parentContainer: Element,
 	data: GridWidgetJSON,
-	builder: any,
+	builder: JSBuilder,
 ) {
 	const rows = builder._getGridRows(data.children);
 	const cols = builder._getGridColumns(data.children);
@@ -123,7 +123,7 @@ JSDialog.grid = function (
 JSDialog.toolbox = function (
 	parentContainer: Element,
 	data: WidgetJSON,
-	builder: any,
+	builder: JSBuilder,
 ) {
 	const levelClass =
 		builder._currentDepth !== undefined
@@ -162,7 +162,7 @@ JSDialog.toolbox = function (
 	const noLabels = builder.options.noLabelsForUnoButtons;
 	builder.options.noLabelsForUnoButtons = true;
 
-	builder.build(toolbox, data.children, false, false);
+	builder.build(toolbox, data.children, false);
 
 	builder.options.noLabelsForUnoButtons = noLabels;
 
@@ -172,7 +172,7 @@ JSDialog.toolbox = function (
 JSDialog.spacer = function (
 	parentContainer: Element,
 	data: WidgetJSON,
-	builder: any,
+	builder: JSBuilder,
 ) {
 	const spacer = L.DomUtil.create(
 		'div',
