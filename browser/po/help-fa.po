@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-14 16:34+0200\n"
-"PO-Revision-Date: 2023-08-19 05:57+0000\n"
-"Last-Translator: Fatemeh Komeily <komeily.fatemeh@gmail.com>\n"
+"PO-Revision-Date: 2025-03-15 14:59+0000\n"
+"Last-Translator: HM <goodlinuxuser@chmail.ir>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/collabora-online/"
 "help/fa/>\n"
 "Language: fa\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -580,7 +580,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-88
 msgid "Home"
-msgstr ""
+msgstr "آغازه"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:73-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
