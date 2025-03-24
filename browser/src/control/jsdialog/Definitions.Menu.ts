@@ -278,12 +278,12 @@ menuDefinitions.set('PasteMenu', [
 	{
 		text: _UNO('.uno:Paste', 'text'),
 		action: '.uno:Paste',
-		hint: L.Control.MenubarShortcuts.shortcuts.PASTE,
+		hint: MenubarShortcuts.shortcuts.PASTE,
 	},
 	{
 		text: _UNO('.uno:PasteSpecial', 'text'),
 		action: '.uno:PasteSpecial',
-		hint: L.Control.MenubarShortcuts.shortcuts.PASTE_SPECIAL,
+		hint: MenubarShortcuts.shortcuts.PASTE_SPECIAL,
 	},
 ] as Array<MenuDefinition>);
 
