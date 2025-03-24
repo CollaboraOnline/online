@@ -252,7 +252,7 @@ var getElementsFromId = function (
 function htmlContent(
 	parentContainer: Element,
 	data: HtmlContentJson,
-	builder: any,
+	builder: JSBuilder,
 ) {
 	parentContainer.replaceChildren();
 
