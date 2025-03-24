@@ -152,8 +152,8 @@ class Tile {
 	invalidFrom: number = 0; // a wireId - for avoiding races on invalidation
 	lastRendered: Date = new Date();
 	private lastRequestTime: Date = undefined; // when did we last do a tilecombine request.
-	hasPendingDelta: 0;
-	hasPendingKeyframe: 0;
+	hasPendingDelta: number = 0;
+	hasPendingKeyframe: number = 0;
 
 	constructor(coords: TileCoordData) {
 		this.coords = coords;
@@ -172,7 +172,7 @@ class Tile {
 	}
 
 	hasKeyframe(): boolean {
-		return this.rawDeltas && this.rawDeltas.length > 0;
+		return !!this.rawDeltas && this.rawDeltas.length > 0;
 	}
 
 	hasPendingUpdate(): boolean {
