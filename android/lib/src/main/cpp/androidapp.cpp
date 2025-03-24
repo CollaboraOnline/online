@@ -563,4 +563,12 @@ Java_org_libreoffice_androidlib_LOActivity_paste(JNIEnv *env, jobject, jstring i
     env->ReleaseStringUTFChars(inMimeType, mimeType);
 }
 
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_org_libreoffice_androidlib_COWebViewClient_getEmbeddedMediaPath(JNIEnv *env, jobject, jstring inTag) {
+    std::string tag = copyJavaString(env, inTag);
+    std::string mediaPath = getDocumentBrokerForAndroidOnly()->getEmbeddedMediaPath(tag);
+    return env->NewStringUTF(mediaPath.c_str());
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */
