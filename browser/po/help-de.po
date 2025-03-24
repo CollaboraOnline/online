@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-14 16:34+0200\n"
-"PO-Revision-Date: 2024-10-12 21:16+0000\n"
+"PO-Revision-Date: 2025-03-22 20:07+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "help/de/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -150,9 +150,7 @@ msgstr "Fett"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:189-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:254-69
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B</kbd>"
-msgstr ""
-"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>F</kbd>"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:28-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-38
@@ -166,10 +164,7 @@ msgstr "Kursiv"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:190-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:255-71
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I</kbd>"
-msgstr ""
-"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>I</kbd><br/>oder<br/"
-"><kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>K</kbd>"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>I</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:29-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-38
@@ -183,10 +178,7 @@ msgstr "Unterstrichen"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:191-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:256-74
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U</kbd>"
-msgstr ""
-"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>U</kbd><br/>oder<br/"
-"><kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>U</kbd>"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>U</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-38
 msgid "Double Underline"
@@ -195,9 +187,7 @@ msgstr "Doppelt unterstreichen"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-81
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-74
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
-msgstr ""
-"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>D</kbd>"
+msgstr "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:31-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-38
@@ -230,9 +220,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>P</kbd>"
 msgstr ""
-"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>P</kbd><br/>oder<br/><kbd>Strg</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>+</kbd>"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:194-38
@@ -248,8 +237,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>B</kbd>"
 msgstr ""
 "<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>B</kbd><br/>oder<br/><kbd>Strg</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>#</kbd>"
+"class=\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
