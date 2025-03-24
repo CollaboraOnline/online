@@ -136,7 +136,7 @@ class PaneBorder {
 
 class Tile {
 	coords: TileCoordData;
-	current: boolean = true; // is this currently visible
+	current: boolean = false; // is this currently visible
 	canvas: any = null; // canvas ready to render
 	ctx: CanvasRenderingContext2D | null = null; // canvas context to render onto
 	imgDataCache: any = null; // flat byte array of canvas data
@@ -362,27 +362,35 @@ class TileManager {
 		   highDeltaMemory = 1024*1024; lowDeltaMemory = 1024*128;
 		   highTileCount = 100; lowTileCount = 50; */
 
-		// FIXME: should we sort by wireId - which is monotonic server ~time
-		// sort by oldest
+		// sort by lastRendered.
+		// FIXME: This is a really coarse sort, we probably want to sort by distance
+		//        to the view centre.
 		var keys = Object.keys(this.tiles).sort((a: any, b: any) => {
 			return this.tiles[a].lastRendered - this.tiles[b].lastRendered;
 		});
 
 		var canvasKeys = [];
 		var totalSize = 0;
+		var n_canvases = 0;
 		for (var i = 0; i < keys.length; ++i) {
 			var tile = this.tiles[keys[i]];
-			// Don't GC tiles that are visible or that have pending deltas. In
-			// the latter case, those tiles would just be immediately recreated
-			// and the former case can cause visible flicker.
-			if (tile.canvas && !tile.current && tile.hasPendingDelta === 0)
-				canvasKeys.push(keys[i]);
+			// Don't GC tiles that are visible or that have pending deltas. We don't have
+			// a mechanism to immediately rehydrate tiles, so GC'ing visible tiles would
+			// cause flickering, and the same would happen for tiles with pending deltas.
+			if (tile.canvas) {
+				++n_canvases;
+				if (!tile.current && !tile.hasPendingDelta) canvasKeys.push(keys[i]);
+			}
 			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
 		}
 
 		// Trim ourselves down to size.
-		if (canvasKeys.length > highNumCanvases) {
-			for (var i = 0; i < canvasKeys.length - lowNumCanvases; ++i) {
+		if (n_canvases > highNumCanvases) {
+			var n_to_reclaim = Math.min(
+				canvasKeys.length,
+				n_canvases - lowNumCanvases,
+			);
+			for (var i = 0; i < n_to_reclaim; ++i) {
 				var key = canvasKeys[i];
 				var tile = this.tiles[key];
 				if (this.debugDeltas)
@@ -390,8 +398,12 @@ class TileManager {
 						'Reclaim canvas ' + key + ' last rendered: ' + tile.lastRendered,
 					);
 				this.reclaimTileCanvasMemory(tile);
+				--n_canvases;
 			}
 		}
+
+		// FIXME: We should consider resorting keys by wireId now -
+		// 	      which is monotonic server ~time
 
 		// Trim memory down to size.
 		if (totalSize > highDeltaMemory) {
@@ -422,16 +434,17 @@ class TileManager {
 			for (var i = 0; i < keys.length - lowTileCount; ++i) {
 				const key = keys[i];
 				const tile: Tile = this.tiles[key];
-				if (!tile.current) this.removeTile(keys[i]);
+				if (!tile.current) {
+					if (tile.canvas) --n_canvases;
+					this.removeTile(keys[i]);
+				}
 			}
 		}
 
-		// Canvases are returned to a cache when reclaimed. Given
-		// (highNumCanvases - lowNumCanvases) canvases may regularly be returned to
-		// the cache, ensure the cache stays about that size.
-		// Under regular circumstances, this should do nothing and is a failsafe.
-		const canvasCacheTargetSize = highNumCanvases - lowNumCanvases;
-		if (this.canvasCache.size > canvasCacheTargetSize * 1.5)
+		// Canvases are returned to a cache when reclaimed. Try to keep the total
+		// number of alive canvases within the specified limits.
+		const canvasCacheTargetSize = highNumCanvases - n_canvases;
+		if (this.canvasCache.size > canvasCacheTargetSize)
 			this.canvasCache.trim(canvasCacheTargetSize);
 	}
 
@@ -1240,7 +1253,7 @@ class TileManager {
 					this._pixelBounds.getSize().y * direction[1],
 				);
 
-				var queue = this.getMissingTiles(this._pixelBounds, this._zoom);
+				var queue = this.getMissingTiles(this._pixelBounds, this._zoom, false);
 
 				if (this._docLayer.isCalc() || queue.length === 0) {
 					// pre-load more aggressively
@@ -1249,7 +1262,7 @@ class TileManager {
 						(this._pixelBounds.getSize().y * direction[1]) / 2,
 					);
 					queue = queue.concat(
-						this.getMissingTiles(this._pixelBounds, this._zoom),
+						this.getMissingTiles(this._pixelBounds, this._zoom, false),
 					);
 				}
 
@@ -1365,13 +1378,21 @@ class TileManager {
 		return boundList.map(this.pxBoundsToTileRange, this);
 	}
 
-	private static getMissingTiles(pixelBounds: any, zoom: number) {
+	private static getMissingTiles(
+		pixelBounds: any,
+		zoom: number,
+		updateCurrent: boolean,
+	) {
 		var tileRanges = this.pxBoundsToTileRanges(pixelBounds);
 		var queue = [];
 
+		if (updateCurrent) {
+			for (var key in this.tiles) this.tiles[key].current = false;
+		}
+
 		// create a queue of coordinates to load tiles from
 		this.beginTransaction();
-		var redraw = false;
+		let didRehydrate = false;
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
 			var tileRange = tileRanges[rangeIdx];
 			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
@@ -1390,14 +1411,21 @@ class TileManager {
 
 					var key = coords.key();
 					var tile = this.tiles[key];
-					if (tile && !tile.needsFetch())
-						redraw = redraw || this.makeTileCurrent(tile);
-					else queue.push(coords);
+					if (tile && !tile.needsFetch()) {
+						if (tile.needsRehydration()) {
+							this.rehydrateTile(tile);
+							didRehydrate = true;
+						}
+					} else queue.push(coords);
+
+					if (tile && updateCurrent) tile.current = true;
 				}
 			}
 		}
 		this.endTransaction(
-			redraw ? () => app.sectionContainer.requestReDraw() : null,
+			updateCurrent && didRehydrate && queue.length === 0
+				? () => app.sectionContainer.requestReDraw()
+				: null,
 		);
 
 		return queue;
@@ -1431,6 +1459,7 @@ class TileManager {
 	private static addTiles(
 		coordsQueue: Array<TileCoordData>,
 		preFetch: boolean = false,
+		isCurrent: boolean = false,
 	) {
 		// Remove irrelevant tiles from the queue earlier.
 		this.removeIrrelevantsFromCoordsQueue(coordsQueue);
@@ -1438,8 +1467,6 @@ class TileManager {
 		// If we're pre-fetching, we may end up rehydrating tiles, so begin a transaction
 		// so that they're grouped together.
 		if (preFetch) this.beginTransaction();
-
-		let redraw: boolean = false;
 
 		for (let i = 0; i < coordsQueue.length; i++) {
 			const key = coordsQueue[i].key();
@@ -1453,15 +1480,12 @@ class TileManager {
 				// opportunity to create an up to date
 				// canvas for the tile in advance.
 				this.ensureCanvas(tile, true, false);
-				redraw = redraw || tile.hasPendingUpdate();
 			}
+
+			tile.current = isCurrent;
 		}
 
-		if (preFetch) {
-			this.endTransaction(
-				redraw ? () => app.sectionContainer.requestReDraw() : null,
-			);
-		}
+		if (preFetch) this.endTransaction(null);
 
 		// sort the tiles by the rows
 		coordsQueue.sort(function (a, b) {
@@ -1940,7 +1964,7 @@ class TileManager {
 		var zoom = Math.round(app.map.getZoom());
 		var pixelBounds = app.map.getPixelBoundsCore(app.map.getCenter(), zoom);
 
-		var queue = this.getMissingTiles(pixelBounds, zoom);
+		var queue = this.getMissingTiles(pixelBounds, zoom, false);
 
 		return queue.length;
 	}
@@ -2020,24 +2044,13 @@ class TileManager {
 			zoom = Math.round(map.getZoom());
 		}
 
-		for (var key in this.tiles) {
-			var thiscoords = TileCoordData.keyToTileCoords(key);
-			if (
-				thiscoords.z !== zoom ||
-				thiscoords.part !== app.map._docLayer._selectedPart ||
-				thiscoords.mode !== app.map._docLayer._selectedMode
-			) {
-				this.tiles[key].current = false;
-			}
-		}
-
 		var pixelBounds = map.getPixelBoundsCore(center, zoom);
-		var queue = this.getMissingTiles(pixelBounds, zoom);
+		var queue = this.getMissingTiles(pixelBounds, zoom, true);
 
 		app.map._docLayer._sendClientVisibleArea();
 		app.map._docLayer._sendClientZoom();
 
-		if (queue.length !== 0) this.addTiles(queue, false);
+		if (queue.length !== 0) this.addTiles(queue, false, true);
 
 		if (app.map._docLayer.isCalc() || app.map._docLayer.isWriter())
 			this.initPreFetchAdjacentTiles();
