@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-14 16:34+0100\n"
-"PO-Revision-Date: 2023-08-20 07:59+0000\n"
-"Last-Translator: Ali Elminia <ali.elminia@gmail.com>\n"
+"PO-Revision-Date: 2025-03-15 14:59+0000\n"
+"Last-Translator: HM <goodlinuxuser@chmail.ir>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fa/>\n"
-"Language: \n"
+"Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -66,19 +66,19 @@ msgstr "باز کردن پرونده"
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
-msgstr " .کاربر"
+msgstr " کاربر(ان)."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
-msgstr ""
+msgstr " سند(ها) باز است."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
-msgstr "شماره پرونده ها"
+msgstr "تعداد اسناد"
 
 #: admin/admin.strings.js:29
 msgid "Memory consumed"
-msgstr "حافظه مصرف شده است"
+msgstr "حافظه مصرف شده"
 
 #: admin/admin.strings.js:30
 msgid "Bytes sent"
@@ -246,7 +246,7 @@ msgstr "اطلاعات نسخه"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "مجوز"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:391
 #: src/control/Control.Menubar.js:567 src/control/Control.Menubar.js:704
@@ -259,15 +259,15 @@ msgstr "در باره"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "تاریخچه CPU"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "تاریخچه حافظه"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "حافظه"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
@@ -1221,9 +1221,8 @@ msgstr "صادرات به عنوان"
 #: src/control/Control.NotebookbarBuilder.js:639
 #: src/control/Control.NotebookbarBuilder.js:646
 #: src/control/Control.NotebookbarDraw.js:252
-#, fuzzy
 msgid "PDF Document (.pdf)"
-msgstr "سند PDF (.pdf) به عنوان..."
+msgstr "سند PDF (.pdf)"
 
 #: src/control/Control.Menubar.js:84 src/control/Control.Menubar.js:96
 #: src/control/Control.Menubar.js:1006 src/control/Control.Menubar.js:1020
@@ -1233,9 +1232,8 @@ msgid "EPUB (.epub)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:86 src/control/Control.UIManager.js:234
-#, fuzzy
 msgid "Rename Document"
-msgstr "سند تعمیر"
+msgstr "تغییر نام سند"
 
 #: src/control/Control.Menubar.js:87 src/control/Control.Menubar.js:408
 #: src/control/Control.Menubar.js:580 src/control/Control.Menubar.js:720
@@ -1861,78 +1859,68 @@ msgstr "تصویر (png.)"
 #: src/control/Control.NotebookbarDraw.js:63
 #: src/control/Control.NotebookbarImpress.js:97
 #: src/control/Control.NotebookbarWriter.js:36
-#, fuzzy
 msgid "File"
-msgstr "~پرونده"
+msgstr "پرونده"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:69
 #: src/control/Control.NotebookbarImpress.js:103
 #: src/control/Control.NotebookbarWriter.js:42
-#, fuzzy
 msgid "Home"
-msgstr "صفحه اصلی"
+msgstr "آغازه"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:49
-#, fuzzy
 msgid "Insert"
-msgstr "~ درج کنید"
+msgstr "درج"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:82
 #: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:55
-#, fuzzy
 msgid "Layout"
-msgstr "~طرح بندی"
+msgstr "طرح بندی"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Data"
-msgstr "~ داده ها"
+msgstr "داده"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:88
 #: src/control/Control.NotebookbarImpress.js:122
 #: src/control/Control.NotebookbarWriter.js:67
-#, fuzzy
 msgid "Review"
-msgstr "~ بررسی"
+msgstr "بازبینی"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:94
 #: src/control/Control.NotebookbarImpress.js:128
 #: src/control/Control.NotebookbarWriter.js:73
-#, fuzzy
 msgid "Format"
-msgstr "قالب"
+msgstr "قالب بندی"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:107
 #: src/control/Control.NotebookbarWriter.js:92
-#, fuzzy
 msgid "Draw"
-msgstr "بکشید"
+msgstr "رسم"
 
 #: src/control/Control.NotebookbarCalc.js:73
 #: src/control/Control.NotebookbarDraw.js:114
 #: src/control/Control.NotebookbarImpress.js:155
 #: src/control/Control.NotebookbarWriter.js:99
-#, fuzzy
 msgid "View"
-msgstr "بازدیدها"
+msgstr "نما"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:120
 #: src/control/Control.NotebookbarImpress.js:161
 #: src/control/Control.NotebookbarWriter.js:105
 #: src/control/Control.ServerAuditDialog.ts:216
-#, fuzzy
 msgid "Help"
-msgstr "~کمک"
+msgstr "راهنما"
 
 #: src/control/Control.NotebookbarCalc.js:130
 #: src/control/Control.NotebookbarImpress.js:215
@@ -2133,7 +2121,6 @@ msgstr "شکل ها"
 #: src/control/Control.NotebookbarImpress.js:1229
 #: src/control/Control.NotebookbarWriter.js:85
 #: src/control/Control.NotebookbarWriter.js:1093
-#, fuzzy
 msgid "Table"
 msgstr "جدول"
 
@@ -2152,9 +2139,8 @@ msgid "Page Layout"
 msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:148
-#, fuzzy
 msgid "Master"
-msgstr "ارشد"
+msgstr "اصلی"
 
 #: src/control/Control.NotebookbarImpress.js:382
 #: src/control/Control.NotebookbarImpress.js:1034
@@ -2174,9 +2160,8 @@ msgid "Snap to Grid"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:79
-#, fuzzy
 msgid "Form"
-msgstr "انجمن"
+msgstr "فرم"
 
 #: src/control/Control.NotebookbarWriter.js:351
 msgid "Go Online"
@@ -2227,9 +2212,8 @@ msgid "Saving"
 msgstr ""
 
 #: src/control/Control.SaveState.ts:52
-#, fuzzy
 msgid "Saved"
-msgstr "ذخیره"
+msgstr "ذخیره شده"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -2334,9 +2318,8 @@ msgid "Average"
 msgstr "میانگین"
 
 #: src/control/Control.StatusBar.js:207
-#, fuzzy
 msgid "CountA"
-msgstr "شمردن"
+msgstr "شمردن(A)"
 
 #: src/control/Control.StatusBar.js:208
 #: src/control/jsdialog/Definitions.Menu.ts:26
@@ -2545,9 +2528,8 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:272 src/control/Control.Zotero.js:471
 #: src/slideshow/PresenterConsole.js:32
-#, fuzzy
 msgid "Next"
-msgstr "متن"
+msgstr "بعدی"
 
 #: src/control/Control.Zotero.js:294
 msgid "Language:"
@@ -2919,9 +2901,8 @@ msgid "Your changes have been saved"
 msgstr ""
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:186
-#, fuzzy
 msgid "Show Comments"
-msgstr "بدون نظر"
+msgstr "نمایش نظرات"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -2984,9 +2965,8 @@ msgid "LOKit version:"
 msgstr ""
 
 #: src/core/Socket.js:884
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "سند در حال انتقال است..."
+msgstr "نوشتار در حال مهاجرت است"
 
 #: src/core/Socket.js:911
 msgid "Session terminated by document owner"
@@ -3468,19 +3448,16 @@ msgid "Failed to download clipboard, please re-copy"
 msgstr "بریده‌دان بارگیری نشد، لطفاً دوباره کپی کنید"
 
 #: src/map/Clipboard.js:1284
-#, fuzzy
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr ""
-"<p>لطفاً از دکمه های کپی/پیست روی صفحه کلید روی صفحه خود استفاده کنید.</p>"
+msgstr "لطفاً از دکمه های جایگذاری روی صفحه کلید روی صفحه خود استفاده کنید."
 
 #: src/map/Clipboard.js:1340
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>بارگیری به دلیل یک عملیات کپی/پیست بزرگ از قبل شروع شده است. لطفاً منتظر "
-"دانلود فعلی باشید یا قبل از شروع دانلود جدید آن را لغو کنید</p>"
+"بارگیری به دلیل یک عملیات بزرگ رونوشت / چسباندن آغاز شده‌ است . لطفا قبل از "
+"شروع بارگیری فعلی صبر کنید یا آن را لغو کنید"
 
 #: src/map/Clipboard.js:1362
 msgid "Paste from this document"
@@ -3580,9 +3557,8 @@ msgid "Presenting in fullscreen"
 msgstr ""
 
 #: src/map/handler/Map.SlideShow.js:227
-#, fuzzy
 msgid "End Presentation"
-msgstr "ارائه"
+msgstr "پایان ارائه"
 
 #: src/map/handler/Map.SlideShow.js:291
 #: src/slideshow/SlideShowPresenter.ts:656
@@ -3637,7 +3613,6 @@ msgid "Current Slide"
 msgstr ""
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
 msgstr "اسلاید بعدی"
 
