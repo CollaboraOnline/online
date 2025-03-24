@@ -44,6 +44,7 @@ public class COWebViewClient extends WebViewClient {
         String mediaPath = getEmbeddedMediaPath(tag);
 
         Map<String, String> responseHeaders = new HashMap<>();
+        responseHeaders.put("Access-Control-Allow-Origin", "null"); // Yes, the origin really is 'null' for 'file:' origins
 
         if (mediaPath.isEmpty()) {
             responseHeaders.put("Content-Length", "0");
