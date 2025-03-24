@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-14 16:34+0100\n"
-"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"PO-Revision-Date: 2025-03-22 03:09+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -220,11 +220,11 @@ msgstr ""
 
 #: admin/admin.strings.js:62
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Afitar niveles de rexistru"
 
 #: admin/admin.strings.js:63
 msgid "Log Levels"
-msgstr ""
+msgstr "Niveles de rexistru"
 
 #: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:164
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
@@ -237,7 +237,7 @@ msgstr "Zarrar"
 
 #: admin/admin.strings.js:65
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Anovar niveles de rexistru"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
@@ -245,7 +245,7 @@ msgstr "Información tocante a la versión"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Llicencia"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.js:391
 #: src/control/Control.Menubar.js:567 src/control/Control.Menubar.js:704
@@ -266,7 +266,7 @@ msgstr ""
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Memoria"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
@@ -338,7 +338,7 @@ msgstr "Unviaos"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Conexones"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -561,7 +561,7 @@ msgstr ""
 
 #: src/control/Control.AboutDialog.ts:192
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Copiar tola información de versión n'inglés"
 
 #: src/control/Control.AddressInputField.ts:66
 msgid "cell address"
@@ -626,7 +626,7 @@ msgstr "Apegadura especial"
 
 #: src/control/Control.ContextMenu.js:281
 msgid "Copy Cells"
-msgstr ""
+msgstr "Copiar caxelles"
 
 #: src/control/Control.ContextMenu.js:286
 msgid "Fill Series"
@@ -700,7 +700,7 @@ msgstr ""
 #: src/control/Control.DownloadProgress.js:111
 #: src/control/Control.PartsPreview.js:288
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: src/control/Control.DownloadProgress.js:109
 msgid "Download completed and ready to be copied to clipboard."
@@ -725,7 +725,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:132
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Emiratos Árabes Xuníos"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Albania"
@@ -2819,11 +2819,11 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "All users"
-msgstr ""
+msgstr "Tolos usuarios"
 
 #: src/control/jsdialog/Definitions.Menu.ts:302
 msgid "This user"
-msgstr ""
+msgstr "Esti usuariu"
 
 #: src/control/jsdialog/Definitions.Menu.ts:435
 msgid "From Beginning"

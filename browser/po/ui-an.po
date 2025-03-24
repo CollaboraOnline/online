@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-14 16:34+0100\n"
-"PO-Revision-Date: 2020-08-04 07:34+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
-"Language-Team: Aragonese <https://weblate.documentfoundation.org/projects/"
-"libo_online/cool-ui/an/>\n"
-"Language: \n"
+"PO-Revision-Date: 2025-03-16 07:15+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Language-Team: Aragonese <https://hosted.weblate.org/projects/"
+"collabora-online/ui/an/>\n"
+"Language: an\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -339,7 +339,7 @@ msgstr ""
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Connexions"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
