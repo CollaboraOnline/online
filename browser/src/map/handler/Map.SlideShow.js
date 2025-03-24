@@ -46,11 +46,6 @@ L.Map.SlideShow = L.Handler.extend({
 			return;
 		}
 
-		if (window.ThisIsTheAndroidApp) {
-			window.postMobileMessage('SLIDESHOW');
-			return;
-		}
-
 		if (app.impress.areAllSlidesHidden()) {
 			this._map.uiManager.showInfoModal('allslidehidden-modal', _('Empty Slide Show'),
 					'All slides are hidden!', '', _('OK'), function () { }, false, 'allslidehidden-modal-response');
