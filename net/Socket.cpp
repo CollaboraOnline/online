@@ -17,7 +17,9 @@
 #include <common/HexUtil.hpp>
 #include <common/Log.hpp>
 #include <common/SigUtil.hpp>
+#if !MOBILEAPP
 #include <common/Syscall.hpp>
+#endif
 #include <common/TraceEvent.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
