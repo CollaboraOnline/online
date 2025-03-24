@@ -2861,7 +2861,7 @@ bool ChildSession::resizeWindow(const StringVector& tokens)
 
 bool ChildSession::sendWindowCommand(const StringVector& tokens)
 {
-    const unsigned winId = (tokens.size() > 1 ? std::stoul(tokens[1]) : 0);
+    const unsigned winId = (tokens.size() > 1 ? Util::u64FromString(tokens[1], 0).first : 0);
 
     getLOKitDocument()->setView(_viewId);
 
