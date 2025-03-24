@@ -863,22 +863,16 @@ int main(int argc, char**argv)
         return std::string(message, size);
     }
 
-    /// Eliminates the prefix from str(if present) and returns a copy of the modified string
-    inline
-    std::string eliminatePrefix(const std::string& str, const std::string& prefix)
+    /// Eliminates the prefix from str (if present) and returns a string view.
+    inline std::string_view eliminatePrefix(const std::string_view str,
+                                            const std::string_view prefix)
     {
-        std::string::const_iterator prefix_pos;
-        std::string::const_iterator str_pos;
-
-        std::tie(prefix_pos,str_pos) = std::mismatch(prefix.begin(), prefix.end(), str.begin());
-
-        if (prefix_pos == prefix.end())
+        if (str.starts_with(prefix))
         {
-            // Non-Prefix part
-            return std::string(str_pos, str.end());
+            return str.substr(prefix.size());
         }
 
-        // Return the original string as it is
+        // Return the original string as-is.
         return str;
     }
 
