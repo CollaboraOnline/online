@@ -79,13 +79,14 @@ std::string formatUnoCommandInfo(const std::string& unoCommand)
     std::string recorded_time = Util::getTimeNow("%Y-%m-%d %T");
 
     std::string unoCommandInfo;
+    unoCommandInfo.reserve(unoCommand.size() * 2);
 
     // unoCommand(sessionId) : command - time
     unoCommandInfo.append("unoCommand");
     unoCommandInfo.append(" : ");
     unoCommandInfo.append(Util::eliminatePrefix(unoCommand,".uno:"));
     unoCommandInfo.append(" - ");
-    unoCommandInfo.append(recorded_time);
+    unoCommandInfo.append(std::move(recorded_time));
 
     return unoCommandInfo;
 }
