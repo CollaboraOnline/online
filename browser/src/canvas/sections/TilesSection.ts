@@ -712,6 +712,8 @@ export class TilesSection extends CanvasSectionObject {
 				canvas.fillStyle = 'rgba(255, 0, 0, 0.8)';   // red
 			else if (tile.needsFetch())
 				canvas.fillStyle = 'rgba(255, 255, 0, 0.8)'; // yellow
+			else if (tile.hasPendingUpdate())
+				canvas.fillStyle = 'rgba(0, 160, 0, 0.8)'; // dark green
 			else // present
 				canvas.fillStyle = 'rgba(0, 255, 0, 0.5)';   // green
 			canvas.fillRect(ox + dx + 1.5, oy + dy + 1.5, 12, 12);
