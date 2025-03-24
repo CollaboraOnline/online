@@ -1194,8 +1194,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{type: 'separator'},
 				{name: _UNO('.uno:Print', 'spreadsheet'), id: 'print', type: 'action'},
-				{name: _('Define print area', 'spreadsheet'), uno: '.uno:DefinePrintArea' },
-				{name: _('Remove print area', 'spreadsheet'), uno: '.uno:DeletePrintArea' },
+				{name: _('Define print area'), uno: '.uno:DefinePrintArea' },
+				{name: _('Remove print area'), uno: '.uno:DeletePrintArea' },
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id:'downloadas', type: 'menu', menu: [
 				{name: _('PDF Document (.pdf)'), id: !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', type: 'action'},
