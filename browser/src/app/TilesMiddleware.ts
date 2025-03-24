@@ -150,7 +150,7 @@ class Tile {
 	viewId: number = 0; // canonical view id
 	wireId: number = 0; // monotonic timestamp for optimizing fetch
 	invalidFrom: number = 0; // a wireId - for avoiding races on invalidation
-	lastRendered: Date = new Date();
+	lastRendered: number = performance.timeOrigin;
 	private lastRequestTime: Date = undefined; // when did we last do a tilecombine request.
 	hasPendingDelta: number = 0;
 	hasPendingKeyframe: number = 0;
@@ -366,14 +366,10 @@ class TileManager {
 		   highDeltaMemory = 1024*1024; lowDeltaMemory = 1024*128;
 		   highTileCount = 100; lowTileCount = 50; */
 
-		var keys: Array<string> = [];
-		for (const key in this.tiles) // no .keys() method.
-			keys.push(key);
-
 		// FIXME: should we sort by wireId - which is monotonic server ~time
 		// sort by oldest
-		keys.sort(function (a: any, b: any) {
-			return b.lastRendered - a.lastRendered;
+		var keys = Object.keys(this.tiles).sort((a: any, b: any) => {
+			return this.tiles[a].lastRendered - this.tiles[b].lastRendered;
 		});
 
 		var canvasKeys = [];
@@ -448,14 +444,13 @@ class TileManager {
 		this.maybeGarbageCollect();
 
 		// important this is after the garbagecollect
-		if (!tile.canvas) this.ensureCanvas(tile, null, false);
-
+		if (!tile.canvas) this.ensureCanvas(tile, false, false);
 		if (tile.ctx) return tile.ctx;
 
 		// Not a good result - we ran out of canvas memory
 		this.garbageCollect();
 
-		if (!tile.canvas) this.ensureCanvas(tile, null, false);
+		if (!tile.canvas) this.ensureCanvas(tile, false, false);
 		if (tile.ctx) return tile.ctx;
 
 		// Free non-current canvas' and start again.
@@ -466,7 +461,7 @@ class TileManager {
 			if (t && !t.current) this.reclaimTileCanvasMemory(t);
 		}
 		this.canvasCache.clear();
-		if (!tile.canvas) this.ensureCanvas(tile, null, false);
+		if (!tile.canvas) this.ensureCanvas(tile, false, false);
 		if (tile.ctx) return tile.ctx;
 
 		if (this.debugDeltas)
@@ -478,7 +473,7 @@ class TileManager {
 			this.reclaimTileCanvasMemory(t);
 		}
 		this.canvasCache.clear();
-		if (!tile.canvas) this.ensureCanvas(tile, null, false);
+		if (!tile.canvas) this.ensureCanvas(tile, false, false);
 		if (!tile.ctx) window.app.console.log('Error: out of canvas memory.');
 
 		return tile.ctx;
@@ -881,11 +876,6 @@ class TileManager {
 		if (app.map && emptyTilesCountChanged && this.emptyTilesCount === 0) {
 			app.map.fire('statusindicator', { statusType: 'alltilesloaded' });
 		}
-
-		var now = new Date();
-
-		// Newly (pre)-fetched tiles, rendered or not should be privileged.
-		tile.lastRendered = now;
 
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
@@ -1460,7 +1450,7 @@ class TileManager {
 				// If preFetching at idle, take the
 				// opportunity to create an up to date
 				// canvas for the tile in advance.
-				this.ensureCanvas(tile, null, true);
+				this.ensureCanvas(tile, true, false);
 				redraw = redraw || tile.hasPendingUpdate();
 			}
 		}
@@ -2373,14 +2363,18 @@ class TileManager {
 
 	// Ensure we have a renderable canvas for a given tile
 	// Use this immediately before drawing a tile, pass in the time.
-	public static ensureCanvas(tile: Tile, now: any, forPrefetch: any) {
+	public static ensureCanvas(
+		tile: Tile,
+		forPrefetch: any,
+		forPaint: boolean = true,
+	) {
 		if (!tile) return;
 		if (!tile.canvas) {
 			this.canvasCache.acquireCanvas(tile);
 			this.rehydrateTile(tile);
 		}
+		if (forPaint) tile.lastRendered = performance.now();
 		if (!forPrefetch) {
-			if (now !== null) tile.lastRendered = now;
 			if (!tile.hasContent() && tile.hasPendingKeyframe === 0)
 				tile.missingContent++;
 		}
