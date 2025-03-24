@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-14 16:34+0100\n"
-"PO-Revision-Date: 2024-11-22 13:43+0000\n"
+"PO-Revision-Date: 2025-03-14 19:04+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cy/>\n"
-"Language: \n"
+"Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : "
 "(n==3) ? 3 :(n==6) ? 4 : 5;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -472,7 +472,7 @@ msgstr "Dangos ar yr ochr"
 
 #: src/canvas/sections/CommentListSection.ts:1206
 msgid "Open in full view"
-msgstr ""
+msgstr "Agor yn yr olwg lawn"
 
 #: src/canvas/sections/CommentListSection.ts:1234
 #: src/control/Control.JSDialogBuilder.js:1894
@@ -733,320 +733,320 @@ msgstr "Methwyd llwytho i lawr"
 
 #: src/control/Control.ESignature.ts:131
 msgid "Andorra"
-msgstr ""
+msgstr "Andorra"
 
 #: src/control/Control.ESignature.ts:132
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Yr Emiraethau Arabaidd Unedig"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Albania"
-msgstr ""
+msgstr "Albania"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Armenia"
-msgstr ""
+msgstr "Armenia"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Argentina"
-msgstr ""
+msgstr "Yr Ariannin"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Austria"
-msgstr ""
+msgstr "Awstria"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Australia"
-msgstr ""
+msgstr "Awstralia"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Åland Islands"
-msgstr ""
+msgstr "Ynysoedd Åland"
 
 #: src/control/Control.ESignature.ts:139
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbaijan"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnia-Hertsegofina"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Belgium"
-msgstr ""
+msgstr "Gwlad Belg"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bwlgaria"
 
 #: src/control/Control.ESignature.ts:143
 msgid "Brazil"
-msgstr ""
+msgstr "Brasil"
 
 #: src/control/Control.ESignature.ts:144
 msgid "Belarus"
-msgstr ""
+msgstr "Belarws"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Canada"
-msgstr ""
+msgstr "Canada"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Switzerland"
-msgstr ""
+msgstr "Y Swistir"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Chile"
-msgstr ""
+msgstr "Chile"
 
 #: src/control/Control.ESignature.ts:148
 msgid "China"
-msgstr ""
+msgstr "Tsieina"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Cyprus"
-msgstr ""
+msgstr "Cyprus"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Czech Republic"
-msgstr ""
+msgstr "Y Weriniaeth Tsiec"
 
 #: src/control/Control.ESignature.ts:151
 msgid "Germany"
-msgstr ""
+msgstr "Yr Almaen"
 
 #: src/control/Control.ESignature.ts:152
 msgid "Denmark"
-msgstr ""
+msgstr "Denmarc"
 
 #: src/control/Control.ESignature.ts:153
 msgid "Estonia"
-msgstr ""
+msgstr "Estonia"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Spain"
-msgstr ""
+msgstr "Sbaen"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Finland"
-msgstr ""
+msgstr "Y Ffindir"
 
 #: src/control/Control.ESignature.ts:156
 msgid "France"
-msgstr ""
+msgstr "Ffrainc"
 
 #: src/control/Control.ESignature.ts:157
 msgid "United Kingdom"
-msgstr ""
+msgstr "Y Deyrnas Gyfunol"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Georgia"
-msgstr ""
+msgstr "Georgia"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Guernsey"
-msgstr ""
+msgstr "Guernsey"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Greece"
-msgstr ""
+msgstr "Gwlad Groeg"
 
 #: src/control/Control.ESignature.ts:161
 msgid "Croatia"
-msgstr ""
+msgstr "Croatia"
 
 #: src/control/Control.ESignature.ts:162
 msgid "Hungary"
-msgstr ""
+msgstr "Hwngari"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Indonesia"
-msgstr ""
+msgstr "Indonesia"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Ireland"
-msgstr ""
+msgstr "Iwerddon"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Israel"
-msgstr ""
+msgstr "Israel"
 
 #: src/control/Control.ESignature.ts:166
 msgid "India"
-msgstr ""
+msgstr "India"
 
 #: src/control/Control.ESignature.ts:167
 msgid "Iceland"
-msgstr ""
+msgstr "Gwlad yr Iâ"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Italy"
-msgstr ""
+msgstr "Yr Eidal"
 
 #: src/control/Control.ESignature.ts:169
 msgid "Japan"
-msgstr ""
+msgstr "Siapan"
 
 #: src/control/Control.ESignature.ts:170
 msgid "Kenya"
-msgstr ""
+msgstr "Cenia"
 
 #: src/control/Control.ESignature.ts:171
 msgid "South Korea"
-msgstr ""
+msgstr "De Corea"
 
 #: src/control/Control.ESignature.ts:172
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Casachstan"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Liechtenstein"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Lithuania"
-msgstr ""
+msgstr "Lithwania"
 
 #: src/control/Control.ESignature.ts:175
 msgid "Luxembourg"
-msgstr ""
+msgstr "Lwcsembwrg"
 
 #: src/control/Control.ESignature.ts:176
 msgid "Latvia"
-msgstr ""
+msgstr "Latfia"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Monaco"
-msgstr ""
+msgstr "Monaco"
 
 #: src/control/Control.ESignature.ts:178
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "Moldova, Gweriniaeth"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Montenegro"
-msgstr ""
+msgstr "Montenegro"
 
 #: src/control/Control.ESignature.ts:180
 msgid "North Macedonia, Republic of"
-msgstr ""
+msgstr "Gogledd Macedonia, Gweriniaeth"
 
 #: src/control/Control.ESignature.ts:181
 msgid "Malta"
-msgstr ""
+msgstr "Malta"
 
 #: src/control/Control.ESignature.ts:182
 msgid "Mexico"
-msgstr ""
+msgstr "Mecsico"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Netherlands"
-msgstr ""
+msgstr "Yr Iseldiroedd"
 
 #: src/control/Control.ESignature.ts:184
 msgid "Norway"
-msgstr ""
+msgstr "Norwy"
 
 #: src/control/Control.ESignature.ts:185
 msgid "New Zealand"
-msgstr ""
+msgstr "Seland Newydd"
 
 #: src/control/Control.ESignature.ts:186
 msgid "Philippines"
-msgstr ""
+msgstr "Philipinas"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Poland"
-msgstr ""
+msgstr "Gwlad Pwyl"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Portugal"
-msgstr ""
+msgstr "Portiwgal"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Qatar"
-msgstr ""
+msgstr "Qatar"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Romania"
-msgstr ""
+msgstr "Rwmania"
 
 #: src/control/Control.ESignature.ts:191
 msgid "Serbia"
-msgstr ""
+msgstr "Serbia"
 
 #: src/control/Control.ESignature.ts:192
 msgid "Russian Federation"
-msgstr ""
+msgstr "Ffederasiwn Rwseg"
 
 #: src/control/Control.ESignature.ts:193
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Saudi Arabia"
 
 #: src/control/Control.ESignature.ts:194
 msgid "Sweden"
-msgstr ""
+msgstr "Sweden"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Singapore"
-msgstr ""
+msgstr "Singapôr"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Slovenia"
-msgstr ""
+msgstr "Slofenia"
 
 #: src/control/Control.ESignature.ts:197
 msgid "Slovakia"
-msgstr ""
+msgstr "Slofacia"
 
 #: src/control/Control.ESignature.ts:198
 msgid "San Marino"
-msgstr ""
+msgstr "San Marino"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Turkey"
-msgstr ""
+msgstr "Twrci"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Taiwan, Talaith Tsieina"
 
 #: src/control/Control.ESignature.ts:201
 msgid "Ukraine"
-msgstr ""
+msgstr "Wcráin"
 
 #: src/control/Control.ESignature.ts:202
 msgid "United States of America"
-msgstr ""
+msgstr "Unol Daleithiau America"
 
 #: src/control/Control.ESignature.ts:203
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Sanctaidd See (Dinas-wladwriaeth y Fatican)"
 
 #: src/control/Control.ESignature.ts:204
 msgid "Kosovo"
-msgstr ""
+msgstr "Cosofo"
 
 #: src/control/Control.ESignature.ts:205
 msgid "South Africa"
-msgstr ""
+msgstr "De Affrica"
 
 #: src/control/Control.ESignature.ts:339
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Mae'r ddogfen yn cael ei harwyddo a bydd ar gael yn fuan"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
-msgstr ""
+msgstr "Gwlad:"
 
 #: src/control/Control.ESignatureDialog.ts:120
 msgid "Provider:"
-msgstr ""
+msgstr "Darparwr:"
 
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Mewnosod Llofnod Electronig"
 
 #: src/control/Control.FormulaBarJSDialog.js:63
 #: src/control/Control.FormulaBarJSDialog.js:117
@@ -1357,7 +1357,7 @@ msgstr "Gwrthdroi Cefndir"
 #: src/control/Control.NotebookbarWriter.js:856
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Style list"
-msgstr ""
+msgstr "Rhestr arddull"
 
 #: src/control/Control.Menubar.js:158 src/control/Control.Menubar.js:477
 #: src/control/Control.Menubar.js:629 src/control/Control.Menubar.js:781
@@ -1383,7 +1383,7 @@ msgstr "Dewisydd Clyfar"
 #: src/control/Control.Menubar.js:194 src/control/Control.Menubar.js:489
 #: src/control/Control.Menubar.js:637 src/control/Control.Menubar.js:794
 msgid "AI Assistant"
-msgstr ""
+msgstr "Cynorthwy-ydd AI"
 
 #: src/control/Control.Menubar.js:235
 msgid "Text orientation"
@@ -1664,7 +1664,7 @@ msgstr "Pob dalen"
 #: src/control/Control.Menubar.js:773
 #: src/control/Control.NotebookbarCalc.js:1180
 msgid "Focus Cell"
-msgstr ""
+msgstr "Cell Ffocws"
 
 #: src/control/Control.Menubar.js:867
 #: src/control/jsdialog/Definitions.Menu.ts:309
@@ -1795,10 +1795,11 @@ msgstr "Mewnosod siapiau"
 #: src/control/Control.Menubar.js:2036
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"Bellach mae modd symud neu newid maint y llinell llofnod yn ôl yr angen."
 
 #: src/control/Control.Menubar.js:2038
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Gorffen llofnodi electronig"
 
 #: src/control/Control.Menubar.js:2221
 msgid "file type icon"
@@ -2042,7 +2043,7 @@ msgstr "Drwg"
 #: src/control/Control.NotebookbarImpress.js:1060
 #: src/control/Control.NotebookbarWriter.js:934
 msgid "Replace"
-msgstr ""
+msgstr "Amnewid"
 
 #: src/control/Control.NotebookbarCalc.js:941
 msgid "Row Height"
@@ -2113,7 +2114,7 @@ msgstr "Sparkline"
 #: src/control/Control.NotebookbarImpress.js:1293
 #: src/control/Control.NotebookbarWriter.js:1178
 msgid "Assistant"
-msgstr ""
+msgstr "Cynorthwywr"
 
 #: src/control/Control.NotebookbarCalc.js:1499
 #: src/control/Control.NotebookbarCalc.js:2398
@@ -2185,11 +2186,11 @@ msgstr "Mynd All-lein"
 
 #: src/control/Control.NotebookbarWriter.js:842
 msgid "Scroll up"
-msgstr ""
+msgstr "Sgrolio i fyny"
 
 #: src/control/Control.NotebookbarWriter.js:849
 msgid "Scroll down"
-msgstr ""
+msgstr "Sgrolio i lawr"
 
 #: src/control/Control.NotebookbarWriter.js:1403
 msgid "Rich Text"
@@ -2289,7 +2290,7 @@ msgstr "Heb ddarganfod unrhyw faterion"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr ""
+msgstr "Rhybuddion:"
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2321,12 +2322,12 @@ msgstr "Mewnosod dalen"
 
 #: src/control/Control.StatusBar.js:177
 msgid "On"
-msgstr ""
+msgstr "Ymlaen"
 
 #: src/control/Control.StatusBar.js:179
 #: src/control/jsdialog/Definitions.Menu.ts:292
 msgid "Off"
-msgstr ""
+msgstr "Diffodd"
 
 #: src/control/Control.StatusBar.js:206
 #: src/control/jsdialog/Definitions.Menu.ts:23
@@ -2595,7 +2596,7 @@ msgstr "Wedi methu llwytho casgliadau"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "Wrthi'n llwytho cyfeiriadau"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -2679,7 +2680,7 @@ msgstr ""
 
 #: src/control/Parts.js:473
 msgid "Show sheets"
-msgstr ""
+msgstr "Dangos taflenni"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
@@ -2841,11 +2842,11 @@ msgstr "Rhydd Iawn"
 
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "All users"
-msgstr ""
+msgstr "Pob defnyddiwr"
 
 #: src/control/jsdialog/Definitions.Menu.ts:302
 msgid "This user"
-msgstr ""
+msgstr "Mae'r defnyddiwr hwn"
 
 #: src/control/jsdialog/Definitions.Menu.ts:435
 msgid "From Beginning"
@@ -2882,7 +2883,7 @@ msgstr "Modd Caniatâd"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:54
 msgid "Edit mode"
-msgstr ""
+msgstr "Modd golygu"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:81
 #: src/control/jsdialog/Widget.HTMLContent.ts:153
@@ -2923,9 +2924,8 @@ msgid "Your changes have been saved"
 msgstr "Mae eich newidiadau wedi'u cadw"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:186
-#, fuzzy
 msgid "Show Comments"
-msgstr "Dim Sylwadau"
+msgstr "Dangos Sylwadau"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -2945,7 +2945,7 @@ msgstr "Ctrl+Shift+Alt+D i adael"
 
 #: src/core/Debug.js:1080
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr ""
+msgstr "Bu oedi wrth drin y digwyddiad am gyfnod annisgwyl o hir: {0}ms"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -3706,7 +3706,7 @@ msgstr "Dim Nodiadau"
 
 #: src/slideshow/PresenterConsole.js:1329
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "Ailadrodd mewn {0} eiliad"
 
 #: src/slideshow/PresenterConsole.js:1334
 #: src/slideshow/SlideShowPresenter.ts:366
