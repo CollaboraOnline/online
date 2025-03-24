@@ -582,11 +582,6 @@ class SlideShowPresenter {
 			return false;
 		}
 
-		if ((window as any).ThisIsTheAndroidApp) {
-			window.postMobileMessage('SLIDESHOW');
-			return false;
-		}
-
 		if (app.impress.notesMode) {
 			console.debug(
 				'SlideShowPresenter._onPrepareScreen: notes mode is enabled, exiting',
