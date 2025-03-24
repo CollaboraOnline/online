@@ -3517,7 +3517,7 @@ private:
 };
 
 #if !MOBILEAPP
-void COOLWSD::processFetchUpdate(SocketPoll& poll)
+void COOLWSD::processFetchUpdate(const std::shared_ptr<SocketPoll>& poll)
 {
     try
     {
@@ -3742,7 +3742,7 @@ int COOLWSD::innerMain()
 #endif
 
     /// The main-poll does next to nothing:
-    SocketPoll mainWait("main");
+    std::shared_ptr<SocketPoll> mainWait = std::make_shared<SocketPoll>("main");
 
     SigUtil::addActivity("coolwsd accepting connections");
 
@@ -3797,7 +3797,7 @@ int COOLWSD::innerMain()
     if (ConfigUtil::getConfigValue<bool>("stop_on_config_change", false))
     {
         std::shared_ptr<InotifySocket> inotifySocket = std::make_shared<InotifySocket>(startStamp);
-        mainWait.insertNewSocket(inotifySocket);
+        mainWait->insertNewSocket(inotifySocket);
     }
 #endif
 #endif
@@ -3819,7 +3819,7 @@ int COOLWSD::innerMain()
             waitMicroS /= 4;
         }
 
-        mainWait.poll(waitMicroS);
+        mainWait->poll(waitMicroS);
 
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll->wakeup();

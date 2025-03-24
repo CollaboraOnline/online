@@ -364,7 +364,8 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
 
 std::size_t LocalStorage::uploadLocalFileToStorageAsync(
     const Authorization& /*auth*/, LockContext& /*lockCtx*/, const std::string& /*saveAsPath*/,
-    const std::string& /*saveAsFilename*/, bool /*isRename*/, const Attributes&, SocketPoll&,
+    const std::string& /*saveAsFilename*/, bool /*isRename*/, const Attributes&,
+    const std::shared_ptr<SocketPoll>&,
     const AsyncUploadCallback& asyncUploadCallback)
 {
     const std::string path = getUri().getPath();

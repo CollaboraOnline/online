@@ -1463,6 +1463,13 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
 void PresetsInstallTask::asyncInstall(const std::string& uri, const std::string& stamp, const std::string& fileName,
                                       const std::shared_ptr<ClientSession>& session)
 {
+    std::shared_ptr<SocketPoll> poll = _poll.lock();
+    if (!poll)
+    {
+        LOG_WRN("asyncInstall started after poll was destroyed");
+        return;
+    }
+
     auto presetInstallFinished = [selfWeak = weak_from_this(), this](const std::string& id, bool presetResult)
     {
         std::shared_ptr<PresetsInstallTask> selfLifecycle = selfWeak.lock();
@@ -1477,7 +1484,7 @@ void PresetsInstallTask::asyncInstall(const std::string& uri, const std::string&
 
     installPresetStarted(id);
 
-    DocumentBroker::asyncInstallPreset(_poll, _configId, uri, stamp, fileName, id,
+    DocumentBroker::asyncInstallPreset(poll, _configId, uri, stamp, fileName, id,
                                        presetInstallFinished, session);
 }
 
@@ -1538,7 +1545,8 @@ void PresetsInstallTask::addGroup(const Poco::JSON::Object::Ptr& settings, const
     }
 }
 
-PresetsInstallTask::PresetsInstallTask(SocketPoll& poll, const std::string& configId,
+PresetsInstallTask::PresetsInstallTask(const std::shared_ptr<SocketPoll>& poll,
+                   const std::string& configId,
                    const std::string& presetsPath,
                    const std::function<void(bool)>& installFinishedCB)
     : _configId(configId)
@@ -1623,7 +1631,7 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
             stop("configfailed");
         }
     };
-    _asyncInstallTask = asyncInstallPresets(*_poll, configId, userSettingsUri,
+    _asyncInstallTask = asyncInstallPresets(_poll, configId, userSettingsUri,
                                             presetsPath, session, installFinishedCB);
     _asyncInstallTask->appendCallback([selfWeak = weak_from_this(), this,
                                        keepPollAlive=_poll](bool){
@@ -1730,7 +1738,7 @@ struct PresetRequest
 };
 
 std::shared_ptr<PresetsInstallTask>
-DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& configId,
+DocumentBroker::asyncInstallPresets(const std::shared_ptr<SocketPoll>& poll, const std::string& configId,
                                     const std::string& userSettingsUri,
                                     const std::string& presetsPath,
                                     const std::shared_ptr<ClientSession>& session,
@@ -1799,7 +1807,7 @@ DocumentBroker::asyncInstallPresets(SocketPoll& poll, const std::string& configI
 }
 
 void DocumentBroker::asyncInstallPreset(
-    SocketPoll& poll, const std::string& configId, const std::string& presetUri,
+    const std::shared_ptr<SocketPoll>& poll, const std::string& configId, const std::string& presetUri,
     const std::string& presetStamp, const std::string& presetFile, const std::string& id,
     const std::function<void(const std::string&, bool)>& finishedCB,
     const std::shared_ptr<ClientSession>& session)
@@ -2212,7 +2220,7 @@ bool DocumentBroker::updateStorageLockStateAsync(const std::shared_ptr<ClientSes
     _lockStateUpdateRequest = std::make_unique<LockStateUpdateRequest>(lock, session);
 
     _storage->updateLockStateAsync(session->getAuthorization(), *_lockCtx, lock,
-                                   _currentStorageAttrs, *_poll, asyncLockCallback);
+                                   _currentStorageAttrs, _poll, asyncLockCallback);
     return true;
 }
 
@@ -2719,7 +2727,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
     _storageManager.markLastUploadRequestTime();
     const std::size_t size = _storage->uploadLocalFileToStorageAsync(
         session->getAuthorization(), *_lockCtx, saveAsPath, saveAsFilename, isRename,
-        _lastStorageAttrs, *_poll, asyncUploadCallback);
+        _lastStorageAttrs, _poll, asyncUploadCallback);
 
     _storageManager.setSizeAsUploaded(size);
 }
@@ -4014,9 +4022,10 @@ void DocumentBroker::addSocketToPoll(const std::shared_ptr<StreamSocket>& socket
 {
     _poll->insertNewSocket(socket);
 }
-SocketPoll& DocumentBroker::getPoll()
+
+std::shared_ptr<SocketPoll> DocumentBroker::getPoll() const
 {
-    return *_poll;
+    return _poll;
 }
 
 void DocumentBroker::alertAllUsers(const std::string& msg)
