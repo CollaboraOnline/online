@@ -212,7 +212,7 @@ public:
                                      const Attributes& attribs) override;
 
     void updateLockStateAsync(const Authorization& auth, LockContext& lockCtx, LockState lock,
-                              const Attributes& attribs, SocketPoll& socketPoll,
+                              const Attributes& attribs, const std::shared_ptr<SocketPoll>& socketPoll,
                               const AsyncLockStateCallback& asyncLockStateCallback) override;
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
@@ -222,7 +222,8 @@ public:
     std::size_t
     uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
                                   const std::string& saveAsPath, const std::string& saveAsFilename,
-                                  const bool isRename, const Attributes&, SocketPoll& socketPoll,
+                                  const bool isRename, const Attributes&,
+                                  const std::shared_ptr<SocketPoll>& socketPoll,
                                   const AsyncUploadCallback& asyncUploadCallback) override;
 
     /// Total time taken for making WOPI calls during uploading.

@@ -1318,7 +1318,7 @@ public:
     /// Note: when reusing this Session, it is assumed that the socket
     /// is already added to the SocketPoll on a previous call (do not
     /// use multiple SocketPoll instances on the same Session).
-    void asyncRequest(const Request& req, SocketPoll& poll)
+    void asyncRequest(const Request& req, const std::shared_ptr<SocketPoll>& poll)
     {
         LOG_TRC("new asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                      << req.getUrl());
@@ -1334,7 +1334,7 @@ public:
             // Technically, there is a race here. The socket can
             // get disconnected and removed right after isConnected.
             // In that case, we will timeout and no request will be sent.
-            poll.wakeup();
+            poll->wakeup();
         }
 
         LOG_DBG("starting asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
@@ -1744,13 +1744,19 @@ private:
         poll.insertNewSocket(socket);
     }
 
-    void asyncConnect(SocketPoll& poll)
+    void asyncConnect(const std::weak_ptr<SocketPoll>& poll)
     {
         _socket.reset(); // Reset to make sure we are disconnected.
 
-        auto pushConnectCompleteToPoll = [this, &poll](std::shared_ptr<StreamSocket> socket, net::AsyncConnectResult result ) {
-            poll.addCallback([selfLifecycle = shared_from_this(), this, &poll, socket=std::move(socket), result]() {
-                asyncConnectCompleted(poll, socket, result);
+        auto pushConnectCompleteToPoll = [this, poll](std::shared_ptr<StreamSocket> socket, net::AsyncConnectResult result ) {
+            std::shared_ptr<SocketPoll> socketPoll(poll.lock());
+            if (!socketPoll)
+            {
+                LOG_WRN("asyncConnect completed after poll was destroyed");
+                return;
+            }
+            socketPoll->addCallback([selfLifecycle = shared_from_this(), this, pollPtr=socketPoll.get(), socket=std::move(socket), result]() {
+                asyncConnectCompleted(*pollPtr, socket, result);
             });
         };
 

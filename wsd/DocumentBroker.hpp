@@ -373,7 +373,7 @@ public:
     /// Transfer this socket into our polling thread / loop.
     void addSocketToPoll(const std::shared_ptr<StreamSocket>& socket);
 
-    SocketPoll& getPoll();
+    std::shared_ptr<SocketPoll> getPoll() const;
 
     void alertAllUsers(const std::string& msg);
 
@@ -563,7 +563,8 @@ public:
 
     /// Start an asynchronous Installation of the user presets, e.g. autotexts etc, as
     /// described at userSettingsUri for installation into presetsPath
-    static std::shared_ptr<PresetsInstallTask> asyncInstallPresets(SocketPoll& poll,
+    static std::shared_ptr<PresetsInstallTask> asyncInstallPresets(
+                                    const std::shared_ptr<SocketPoll>& poll,
                                     const std::string& configId,
                                     const std::string& userSettingsUri,
                                     const std::string& presetsPath,
@@ -572,7 +573,8 @@ public:
 
     /// Start an asynchronous Installation of a user preset resource, e.g. an autotext
     /// file, to copy as presetFile
-    static void asyncInstallPreset(SocketPoll& poll, const std::string& configId,
+    static void asyncInstallPreset(const std::shared_ptr<SocketPoll>& poll,
+                                   const std::string& configId,
                                    const std::string& presetUri, const std::string& presetStamp,
                                    const std::string& presetFile, const std::string& id,
                                    const std::function<void(const std::string&, bool)>& finishedCB,

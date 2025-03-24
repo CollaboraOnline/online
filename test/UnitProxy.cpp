@@ -25,14 +25,14 @@
 class UnitProxy : public UnitWSD
 {
     std::thread _worker;
-    SocketPoll  _poll;
+    std::shared_ptr<SocketPoll>  _poll;
     http::Request _req;
     bool _sentRequest;
 
 public:
     UnitProxy()
         : UnitWSD("UnitProxy"),
-          _poll("proxy-poll"),
+          _poll(std::make_shared<SocketPoll>("proxy-poll")),
           _sentRequest(false)
     {
         setTimeout(std::chrono::seconds(10));
@@ -65,7 +65,7 @@ public:
 
         httpSession->asyncRequest(_req, _poll);
 
-        _poll.startThread();
+        _poll->startThread();
     }
 };
 

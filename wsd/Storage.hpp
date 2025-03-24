@@ -409,7 +409,7 @@ public:
     /// Update the locking state (check-in/out) of the associated file asynchronously.
     virtual void updateLockStateAsync(const Authorization& auth, LockContext& lockCtx,
                                       LockState lock, const Attributes& attribs,
-                                      SocketPoll& socketPoll,
+                                      const std::shared_ptr<SocketPoll>& socketPoll,
                                       const AsyncLockStateCallback& asyncLockStateCallback) = 0;
 
     /// Returns a local file path for the given URI.
@@ -427,7 +427,8 @@ public:
     virtual std::size_t
     uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
                                   const std::string& saveAsPath, const std::string& saveAsFilename,
-                                  bool isRename, const Attributes&, SocketPoll&,
+                                  bool isRename, const Attributes&,
+                                  const std::shared_ptr<SocketPoll>&,
                                   const AsyncUploadCallback& asyncUploadCallback) = 0;
 
     /// Get the progress state of an asynchronous LocalFileToStorage upload.
@@ -575,7 +576,7 @@ public:
     }
 
     void updateLockStateAsync(const Authorization&, LockContext&, LockState requestedLockState,
-                              const Attributes&, SocketPoll&,
+                              const Attributes&, const std::shared_ptr<SocketPoll>&,
                               const AsyncLockStateCallback& asyncLockStateCallback) override
     {
         if (asyncLockStateCallback)
@@ -592,7 +593,8 @@ public:
     std::size_t
     uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
                                   const std::string& saveAsPath, const std::string& saveAsFilename,
-                                  bool isRename, const Attributes&, SocketPoll&,
+                                  bool isRename, const Attributes&,
+                                  const std::shared_ptr<SocketPoll>&,
                                   const AsyncUploadCallback& asyncUploadCallback) override;
 
 private:
