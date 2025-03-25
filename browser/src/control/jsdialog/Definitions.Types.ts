@@ -130,6 +130,10 @@ interface GridWidgetJSON extends ContainerWidgetJSON {
 	rows: number; // numer of grid rows
 }
 
+interface ToolboxWidgetJSON extends WidgetJSON {
+	hasVerticalParent: boolean;
+}
+
 interface PanelWidgetJSON extends WidgetJSON {
 	hidden: boolean; // is hidden
 	command: string; // command to trigger options for a panel
