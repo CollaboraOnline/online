@@ -260,9 +260,9 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 		else {
 			diff = Math.round((app.view.size.pY - this.containerObject.getDocumentAnchorSection().size[1]) * 0.5);
-			this.sectionProperties.yMin = diff;
+			this.sectionProperties.yMin = app.map.getDocType() === 'spreadsheet' ? 0 : diff;
 			this.sectionProperties.yMax = diff;
-			if (app.view.size.pY >  0) {
+			if (app.view.size.pY > 0) {
 				if (this.map._docLayer._docType !== 'spreadsheet' || !(<any>window).mode.isDesktop())
 					this.sectionProperties.drawVerticalScrollBar = false;
 			}
