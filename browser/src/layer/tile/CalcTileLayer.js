@@ -246,8 +246,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var bottomRight = this._map.unproject(newSizePx);
 
 		this._docPixelSize = newSizePx.clone();
-		app.file.size.x = newDocWidth;
-		app.file.size.y = newDocHeight;
 		app.file.size = new cool.SimplePoint(newDocWidth, newDocHeight);
 		app.view.size = app.file.size.clone();
 
@@ -387,8 +385,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		// Document container size is up to date as of now.
 		const documentContainerSize = this._getDocumentContainerSize();
-		documentContainerSize[0] *= app.dpiScale;
-		documentContainerSize[1] *= app.dpiScale;
+		documentContainerSize[0] = Math.round(app.dpiScale * documentContainerSize[0]);
+		documentContainerSize[1] = Math.round(app.dpiScale * documentContainerSize[1]);
 
 		// Size has changed. Our map and canvas are not resized yet.
 		// But the row header, row group, column header and column group sections don't need to be resized.
@@ -405,34 +403,32 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		// Early exit. If there is no need to update the size, return here.
 		if (oldMapSize[0] === newMapSize[0] && oldMapSize[1] === newMapSize[1])
 			return false;
+		else {
+			this._resizeMapElementAndTilesLayer(mapElement, marginLeft, marginTop, newMapSize);
 
-		this._resizeMapElementAndTilesLayer(mapElement, marginLeft, marginTop, newMapSize);
+			const widthIncreased = oldMapSize[0] < newMapSize[0];
+			const heightIncreased = oldMapSize[1] < newMapSize[1];
 
-		app.sectionContainer.onResize(newCanvasSize[0], newCanvasSize[1]); // Canvas's size = documentContainer's size.
-
-		this._updateHeaderSections();
-
-		const widthIncreased = oldMapSize[0] < newMapSize[0];
-		const heightIncreased = oldMapSize[1] < newMapSize[1];
-
-		if (oldMapSize[0] !== newMapSize[0] || oldMapSize[1] !== newMapSize[1])
 			this._map.invalidateSize({}, new L.Point(oldMapSize[0], oldMapSize[1]));
+			app.sectionContainer.onResize(newCanvasSize[0], newCanvasSize[1]); // Canvas's size = documentContainer's size.
+			this._updateHeaderSections();
 
-		this._mobileChecksAfterResizeEvent(heightIncreased);
+			this._mobileChecksAfterResizeEvent(heightIncreased);
 
-		// Center the view w.r.t the new map-pane position using the current zoom.
-		this._map.setView(this._map.getCenter());
+			// Center the view w.r.t the new map-pane position using the current zoom.
+			this._map.setView(this._map.getCenter());
 
-		// We want to keep cursor visible when we show the keyboard on mobile device or tablet
-		this._nonDesktopChecksAfterResizeEvent(heightIncreased);
+			// We want to keep cursor visible when we show the keyboard on mobile device or tablet
+			this._nonDesktopChecksAfterResizeEvent(heightIncreased);
 
-		if (heightIncreased || widthIncreased) {
-			app.sectionContainer.requestReDraw();
-			this._map.fire('sizeincreased');
-			return true;
+			if (heightIncreased || widthIncreased) {
+				app.sectionContainer.requestReDraw();
+				this._map.fire('sizeincreased');
+				return true;
+			}
+
+			return false;
 		}
-
-		return false;
 	},
 
 	_onStatusMsg: function (textMsg) {
