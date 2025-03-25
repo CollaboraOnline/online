@@ -47,9 +47,9 @@ interface AutomatedTaskSet {
 }
 
 class DebugManager {
-	private _map: any;
-	private _docLayer: any;
-	private _painter: any;
+	private _map: MapInterface;
+	private _docLayer: DocLayerInterface;
+	private _painter: PainterInterface;
 	private debugOn: boolean;
 	private debugNeverStarted: boolean;
 	private _controls: any;
