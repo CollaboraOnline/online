@@ -248,6 +248,8 @@ COOL_JS_LST =\
 	src/app/Rectangle.ts \
 	src/app/Util.ts \
 	src/app/LOUtil.ts \
+	src/app/iface/DocLayer.Interface.ts \
+	src/app/iface/Map.Interface.ts \
 	src/app/Log.ts \
 	src/app/Debug.ts \
 	src/Leaflet.js \
