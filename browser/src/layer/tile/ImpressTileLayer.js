@@ -87,10 +87,9 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	_putPCWOutsideFlex: function () {
 		if (this._isPCWInsideFlex()) {
 			var pcw = document.getElementById('presentation-controls-wrapper');
-			if (pcw) {
+			if (pcw && pcw.parentNode) {
+				pcw.parentNode.removeChild(pcw);  // Remove from its actual parent
 				var frc = document.getElementById('main-document-content');
-				frc.removeChild(pcw);
-
 				frc.parentNode.insertBefore(pcw, frc.nextSibling);
 			}
 		}
