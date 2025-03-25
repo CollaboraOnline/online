@@ -1868,7 +1868,8 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     csp.appendDirectiveUrl("img-src", "https://www.collaboraoffice.com/");
 
     // Frame ancestors: Allow coolwsd host, wopi host and anything configured.
-    const std::string configFrameAncestor = config.getString("net.frame_ancestors", "");
+    // This is deprecated.
+    std::string configFrameAncestor = config.getString("net.frame_ancestors", "");
     if (!configFrameAncestor.empty())
     {
         static bool warned = false;
@@ -1879,6 +1880,14 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
                     "future. Please add 'frame-ancestors "
                     << configFrameAncestor << ";' in the net.content_security_policy config");
         }
+    }
+
+    ContentSecurityPolicy configCSP(config.getString("net.content_security_policy", ""));
+    // Get the frame ancestors out of the configured CSP.
+    auto configCspFrameAncestors = configCSP.getDirective("frame-ancestors");
+    if (!configCspFrameAncestors.empty())
+    {
+        configFrameAncestor += configCspFrameAncestors;
     }
 
     std::string frameAncestors = configFrameAncestor;
@@ -1959,7 +1968,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     }
 #endif // !MOBILEAPP
 
-    csp.merge(config.getString("net.content_security_policy", ""));
+    csp.merge(configCSP);
 
     // Append CSP to response headers too
     httpResponse.add("Content-Security-Policy", csp.generate());
