@@ -210,8 +210,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			limitMargin.y *= 8;
 		}
 
-		var limitWidth = mapPosTwips.x + mapSizeTwips.x < lastCellTwips.x;
-		var limitHeight = mapPosTwips.y + mapSizeTwips.y < lastCellTwips.y;
+		var limitWidth = mapPosTwips.x + mapSizeTwips.x < lastCellTwips.x && !this.widthShrinked;
+		var limitHeight = mapPosTwips.y + mapSizeTwips.y < lastCellTwips.y && !this.heightShrinked;
 
 		// limit to data area only (and map size for margin)
 		if (limitWidth)
@@ -348,12 +348,16 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		if (fileSizePixels[0] < availableSpace[0]) {
 			newMapSize[0] = fileSizePixels[0];
 			newCanvasSize[0] = fileSizePixels[0] + marginLeft + scrollBarThickness;
+			this.widthShrinked = true;
 		}
+		else this.widthShrinked = false;
 
 		if (fileSizePixels[1] < availableSpace[1]) {
 			newMapSize[1] = fileSizePixels[1];
 			newCanvasSize[1] = fileSizePixels[1] + marginTop + scrollBarThickness;
+			this.heightShrinked = true;
 		}
+		else this.heightShrinked = false;
 
 		newMapSize = [Math.round(newMapSize[0] / app.dpiScale), Math.round(newMapSize[1] / app.dpiScale)];
 		newCanvasSize = [Math.round(newCanvasSize[0] / app.dpiScale), Math.round(newCanvasSize[1] / app.dpiScale)];
