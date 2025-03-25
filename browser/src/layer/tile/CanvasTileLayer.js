@@ -307,6 +307,16 @@ L.TileSectionManager = L.Class.extend({
 		app.sectionContainer.reNewAllSections(true);
 	},
 
+	_addDebugOverlaySection: function () {
+		app.sectionContainer.addSection(new app.definitions.debugOverlaySection());
+		app.sectionContainer.reNewAllSections(true);
+	},
+
+	_removeDebugOverlaySection: function () {
+		app.sectionContainer.removeSection(L.CSections.Debug.DebugOverlay.name);
+		app.sectionContainer.reNewAllSections(true);
+	},
+
 	_addPreloadMap: function () {
 		app.sectionContainer.addSection(new app.definitions.preloadMapSection());
 		app.sectionContainer.reNewAllSections(true);
