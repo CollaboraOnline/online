@@ -1,4 +1,3 @@
-/* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.
  *
