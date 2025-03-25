@@ -1082,9 +1082,6 @@ public class LOActivity extends AppCompatActivity {
                     }
                 });
                 return false;
-            case "SLIDESHOW":
-                initiateSlideShow();
-                return false;
             case "SAVE":
                 copyTempBackToIntent();
                 sendBroadcast(messageAndParam[0], messageAndParam[1]);
@@ -1348,28 +1345,6 @@ public class LOActivity extends AppCompatActivity {
         PrintManager printManager = (PrintManager) getSystemService(PRINT_SERVICE);
         PrintDocumentAdapter printAdapter = new PrintAdapter(LOActivity.this);
         printManager.print("Document", printAdapter, new PrintAttributes.Builder().build());
-    }
-
-    private void initiateSlideShow() {
-        mProgressDialog.indeterminate(R.string.loading);
-
-        nativeHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.v(TAG, "saving svg for slideshow by " + Thread.currentThread().getName());
-                final String slideShowFileUri = new File(LOActivity.this.getCacheDir(), "slideShow.svg").toURI().toString();
-                LOActivity.this.saveAs(slideShowFileUri, "svg", null);
-                LOActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mProgressDialog.dismiss();
-                        Intent slideShowActIntent = new Intent(LOActivity.this, SlideShowActivity.class);
-                        slideShowActIntent.putExtra(SlideShowActivity.SVG_URI_KEY, slideShowFileUri);
-                        LOActivity.this.startActivity(slideShowActIntent);
-                    }
-                });
-            }
-        });
     }
 
     /** Send message back to the shell (for example for the cloud save). */
