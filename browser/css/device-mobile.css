@@ -345,6 +345,7 @@ textarea.cool-annotation-textarea {
 /* Slidesorter in portrait mode */
 #presentation-controls-wrapper.portrait {
 	width: 100%;
+	max-height: 60px;
 }
 
 #document-container.portrait.parts-preview-document.keyboard {
@@ -372,6 +373,7 @@ textarea.cool-annotation-textarea {
 	max-width: 100%;
 	display: inline-block;
 	padding-right: 1em;
+	padding-top: 0px;
 	margin: 0;
 }
 
