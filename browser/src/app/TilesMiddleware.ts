@@ -874,6 +874,11 @@ class TileManager {
 		++this.inTransaction;
 	}
 
+	private static tileZoomIsCurrent(coords: TileCoordData) {
+		const scale = Math.pow(1.2, app.map.getZoom() - 10);
+		return Math.round(coords.scale * 1000) === Math.round(scale * 1000);
+	}
+
 	private static tileReady(coords: TileCoordData) {
 		var key = coords.key();
 
@@ -897,10 +902,7 @@ class TileManager {
 		);
 
 		// Also check the scale because incoming tile may not be in the same zoom level.
-		if (
-			tileVisible &&
-			Math.round(coords.scale * 1000) === Math.round(app.getScale() * 1000)
-		)
+		if (tileVisible && this.tileZoomIsCurrent(coords))
 			app.sectionContainer.setDirty(coords);
 	}
 
@@ -1602,7 +1604,7 @@ class TileManager {
 				coords.part === part &&
 				coords.mode === mode &&
 				(invalidatedRectangle.intersectsRectangle(tileRectangle) ||
-					(calc && coords.scale !== scale)) // In calc, we invalidate all tiles with different zoom levels.
+					(calc && !this.tileZoomIsCurrent(coords))) // In calc, we invalidate all tiles with different zoom levels.
 			) {
 				if (app.isRectangleVisibleInTheDisplayedArea(tileRectangle))
 					needsNewTiles = true;
