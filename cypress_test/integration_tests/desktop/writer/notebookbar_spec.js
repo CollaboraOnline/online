@@ -28,4 +28,15 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
 	});
+
+	it('Check label showing heuristic', function() {
+		// no label
+		cy.cGet('.notebookbar .unoBold').should('be.visible');
+		cy.cGet('.notebookbar .unoBold span').should('not.exist');
+
+		// with label
+		cy.cGet('.notebookbar #Review-tab-label').click();
+		cy.cGet('.notebookbar .unoSpellOnline').should('be.visible');
+		cy.cGet('.notebookbar .unoSpellOnline span').contains('Automatic Spell Checking');
+	});
 });
