@@ -16,10 +16,110 @@ interface WordbookFile {
 	words: string[]; // list of dictionary words
 }
 
+const languageMapping: Record<string, string> = {
+	'<none>': 'All Language',
+	ar: 'Arabic',
+	bg: 'Bulgarian',
+	ca: 'Catalan',
+	cs: 'Czech',
+	da: 'Danish',
+	de: 'German',
+	el: 'Greek',
+	'en-US': 'English (US)',
+	'en-GB': 'English (UK)',
+	eo: 'Esperanto',
+	es: 'Spanish',
+	eu: 'Basque',
+	fi: 'Finnish',
+	fr: 'French',
+	gl: 'Galician',
+	he: 'Hebrew',
+	hr: 'Croatian',
+	hu: 'Hungarian',
+	id: 'Indonesian',
+	is: 'Icelandic',
+	it: 'Italian',
+	ja: 'Japanese',
+	ko: 'Korean',
+	lo: 'Lao',
+	nb: 'Norwegian Bokmål',
+	nl: 'Dutch',
+	oc: 'Occitan',
+	pl: 'Polish',
+	pt: 'Portuguese',
+	'pt-BR': 'Portuguese (Brazil)',
+	sq: 'Albanian',
+	ru: 'Russian',
+	sk: 'Slovak',
+	sl: 'Slovenian',
+	sv: 'Swedish',
+	tr: 'Turkish',
+	uk: 'Ukrainian',
+	vi: 'Vietnamese',
+	'zh-CN': 'Chinese (Simplified)',
+	'zh-TW': 'Chinese (Traditional)',
+};
+
+const supportedLanguages = [
+	'<none>',
+	'ar',
+	'bg',
+	'ca',
+	'cs',
+	'da',
+	'de',
+	'el',
+	'en-US',
+	'en-GB',
+	'eo',
+	'es',
+	'eu',
+	'fi',
+	'fr',
+	'gl',
+	'he',
+	'hr',
+	'hu',
+	'id',
+	'is',
+	'it',
+	'ja',
+	'ko',
+	'lo',
+	'nb',
+	'nl',
+	'oc',
+	'pl',
+	'pt',
+	'pt-BR',
+	'sq',
+	'ru',
+	'sk',
+	'sl',
+	'sv',
+	'tr',
+	'uk',
+	'vi',
+	'zh-CN',
+	'zh-TW',
+];
+
 class WordBook {
 	private loadingModal: HTMLDivElement | null = null;
 	private currWordbookFile: WordbookFile;
 	private virtualWordList: VirtualWordList | null = null;
+	private options = [
+		{
+			value: 'positive',
+			heading: 'Standard dictionary',
+			description: 'Words are ignored by the spell checker',
+		},
+		{
+			value: 'negative',
+			heading: 'Dictionary of exceptions',
+			description: 'Exception words are underlined while checking spelling',
+		},
+	];
 
 	startLoader() {
 		this.loadingModal = document.createElement('div');
@@ -115,9 +215,100 @@ class WordBook {
 		titleEl.style.textAlign = 'center';
 		modalContent.appendChild(titleEl);
 
+		const languageContainer = document.createElement('div');
+		languageContainer.className = 'dic-select-container';
+
+		const languageSelect = document.createElement('select');
+		languageSelect.id = 'languageSelect';
+
+		supportedLanguages.forEach((code) => {
+			const option = document.createElement('option');
+			option.value = code;
+			option.textContent = languageMapping[code] || code;
+			languageSelect.appendChild(option);
+		});
+
+		languageSelect.value = wordbook.language || '<none>';
+
+		languageContainer.appendChild(languageSelect);
+		modalContent.appendChild(languageContainer);
+
+		const dictDropdownContainer = document.createElement('div');
+		dictDropdownContainer.className = 'dic-dropdown-container';
+
+		const currentDictType = wordbook.dictType || 'positive';
+		dictDropdownContainer.setAttribute('data-selected', currentDictType);
+
+		const dictDropdownSelected = document.createElement('div');
+		dictDropdownSelected.className = 'dic-dropdown-selected';
+
+		const updateSelectedDisplay = (value: string) => {
+			while (dictDropdownSelected.firstChild) {
+				dictDropdownSelected.removeChild(dictDropdownSelected.firstChild);
+			}
+			const opt = this.options.find((o) => o.value === value);
+			if (opt) {
+				const heading = document.createElement('div');
+				heading.className = 'dic-dropdown-heading';
+				heading.textContent = opt.heading;
+				const desc = document.createElement('div');
+				desc.className = 'dic-dropdown-description';
+				desc.textContent = opt.description;
+				dictDropdownSelected.appendChild(heading);
+				dictDropdownSelected.appendChild(desc);
+			}
+		};
+		updateSelectedDisplay(currentDictType);
+		dictDropdownContainer.appendChild(dictDropdownSelected);
+
+		const dictDropdownList = document.createElement('div');
+		dictDropdownList.className = 'dic-dropdown-list';
+		dictDropdownList.style.display = 'none';
+
+		const populateDropdownList = () => {
+			dictDropdownList.innerHTML = '';
+			const selected = dictDropdownContainer.getAttribute('data-selected');
+			this.options.forEach((option) => {
+				if (option.value !== selected) {
+					const optionDiv = document.createElement('div');
+					optionDiv.className = 'dic-dropdown-option';
+					optionDiv.setAttribute('data-value', option.value);
+					const optHeading = document.createElement('div');
+					optHeading.className = 'dic-dropdown-heading';
+					optHeading.textContent = option.heading;
+					const optDesc = document.createElement('div');
+					optDesc.className = 'dic-dropdown-description';
+					optDesc.textContent = option.description;
+					optionDiv.appendChild(optHeading);
+					optionDiv.appendChild(optDesc);
+					optionDiv.addEventListener('click', () => {
+						dictDropdownContainer.setAttribute('data-selected', option.value);
+						updateSelectedDisplay(option.value);
+						dictDropdownList.style.display = 'none';
+						dictDropdownContainer.classList.remove('open');
+					});
+					dictDropdownList.appendChild(optionDiv);
+				}
+			});
+		};
+		populateDropdownList();
+		dictDropdownContainer.appendChild(dictDropdownList);
+
+		dictDropdownSelected.addEventListener('click', () => {
+			if (dictDropdownList.style.display === 'none') {
+				populateDropdownList();
+				dictDropdownList.style.display = 'block';
+				dictDropdownContainer.classList.add('open');
+			} else {
+				dictDropdownList.style.display = 'none';
+				dictDropdownContainer.classList.remove('open');
+			}
+		});
+		modalContent.appendChild(dictDropdownContainer);
+
 		const inputContainer = document.createElement('div');
 		inputContainer.className = 'dic-input-container';
-		inputContainer.style.margin = '16px 0';
+		inputContainer.style.margin = '16px 5px';
 
 		const newWordInput = document.createElement('input');
 		newWordInput.type = 'text';
@@ -170,6 +361,9 @@ class WordBook {
 		submitButton.textContent = 'Submit';
 		submitButton.className = 'button button--vue-primary';
 		submitButton.addEventListener('click', async () => {
+			this.currWordbookFile.language = languageSelect.value;
+			this.currWordbookFile.dictType =
+				dictDropdownContainer.getAttribute('data-selected') || 'positive';
 			const updatedContent = this.buildWordbookFile(this.currWordbookFile);
 			console.debug('Updated Dictionary Content:\n', updatedContent);
 			await (window as any).settingIframe.uploadWordbookFile(
