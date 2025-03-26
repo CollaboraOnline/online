@@ -86,10 +86,12 @@ class SettingIframe {
 		window.cssVars = element.dataset.cssVars;
 		if (window.cssVars) {
 			window.cssVars = atob(window.cssVars);
-			const styleEl = document.createElement('style');
-			styleEl.setAttribute('id', 'dynamic-css-vars');
-			styleEl.textContent = window.cssVars;
-			document.head.appendChild(styleEl);
+			const sheet = new CSSStyleSheet();
+			if (typeof (sheet as any).replace === 'function') {
+				(sheet as any).replace(window.cssVars);
+				(document as any).adoptedStyleSheets.push(sheet);
+				console.debug('sheet', sheet);
+			}
 		}
 
 		if (window.enableDebug) {
