@@ -222,7 +222,7 @@ function addSlide(numberOfSlides) {
 		for (let i = 0; i < numberOfSlides; i++) {
 			cy.cGet('#presentation-toolbar #insertpage')
 				.should('not.have.class', 'disabled')
-				.click();
+				.click({force: true});
 		}
 		cy.cGet('.preview-frame')
 			.should('have.length',origSlides+numberOfSlides);

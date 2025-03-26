@@ -61,7 +61,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		helper.assertImageSize(438, 111);
 
 		//sidebar needs more time
-		cy.cGet('#sidebar-panel').should('be.visible').wait(2000).scrollTo('bottom');
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible').wait(2000).scrollTo('bottom');
 
 		cy.cGet('#PosSizePropertyPanelPanelExpander-label').should('be.visible').click();
 
@@ -77,7 +77,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		//Keep ratio checked
 		//sidebar needs more time
-		cy.cGet('#sidebar-panel').should('be.visible').wait(2000).scrollTo('bottom');
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible').wait(2000).scrollTo('bottom');
 
 		cy.cGet('#PosSizePropertyPanelPanelExpander-label').should('be.visible').click();
 

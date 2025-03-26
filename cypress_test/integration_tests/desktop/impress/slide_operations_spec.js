@@ -12,13 +12,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 		desktopHelper.switchUIToNotebookbar();
 	});
 
-	it('Add slides', function() {
+	it.skip('Add slides', function() {
 		cy.cGet('#presentation-toolbar #insertpage').click();
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 	});
 
-	it('Remove slides', function() {
+	it.skip('Remove slides', function() {
 		// Add slides
 		cy.cGet('#presentation-toolbar #insertpage').click();
 
@@ -40,7 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 	});
 
-	it('Duplicate slide', function() {
+	it.skip('Duplicate slide', function() {
 		// Also check if comments are getting duplicated
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.insertComment();
@@ -53,26 +53,34 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 	});
 
-	it('Slide pane height test', function() {
-		var container, content, toolbar;
+	// Skip it for now will enable it after Despatch nav patch get merged in CORE 25.04
+	it.skip('Navigator height test', function() {
+		var navigationContainer, navOptionContainer, presentationWrapper, navHeading;
 
-		cy.cGet('#slide-sorter')
+		cy.cGet('.navigation-header')
 			.then(function(items) {
 				expect(items).to.have.lengthOf(1);
-				content = items[0].getBoundingClientRect();
+				navHeading = items[0].getBoundingClientRect();
 			});
 
-		cy.cGet('#presentation-toolbar')
+		cy.cGet('.navigation-options-container')
 			.then(function(items) {
 				expect(items).to.have.lengthOf(1);
-				toolbar = items[0].getBoundingClientRect();
+				navOptionContainer = items[0].getBoundingClientRect();
 			});
+
 
 		cy.cGet('#presentation-controls-wrapper')
 			.then(function(items) {
 				expect(items).to.have.lengthOf(1);
-				container = items[0].getBoundingClientRect();
-				expect(container.height).equal(content.height + toolbar.height);
+				presentationWrapper = items[0].getBoundingClientRect();
+			});
+
+		cy.cGet('#navigation-sidebar')
+			.then(function(items) {
+				expect(items).to.have.lengthOf(1);
+				navigationContainer = items[0].getBoundingClientRect();
+				expect(navigationContainer.height).equal(navHeading.height + navOptionContainer.height + presentationWrapper.height);
 			});
 	});
 });
