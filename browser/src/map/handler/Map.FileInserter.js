@@ -146,6 +146,20 @@ L.Map.FileInserter = L.Handler.extend({
 					width: videoElement.videoWidth,
 					height: videoElement.videoHeight,
 				};
+
+				const maxSize = {
+					width: app.file.size.cX * map.getZoomScale(10),
+					height: app.file.size.cY * map.getZoomScale(10),
+				};
+
+				const shrinkToFitFactor = Math.min(
+					1,
+					maxSize.width / size.width,
+					maxSize.height / size.height
+				);
+
+				size.width *= shrinkToFitFactor;
+				size.height *= shrinkToFitFactor;
 			}
 
 			videoElement.src = undefined;
