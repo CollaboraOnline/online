@@ -1490,6 +1490,7 @@ static const std::string BUYPRODUCT_URL = "%BUYPRODUCT_URL%";
 static const std::string PERMISSION = "%PERMISSION%";
 static const std::string WOPI_SETTING_BASE_URL = "%WOPI_SETTING_BASE_URL%";
 static const std::string IFRAME_TYPE = "%IFRAME_TYPE%";
+static const std::string UI_THEME = "%UI_THEME%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1588,6 +1589,8 @@ public:
         extractVariable(form, "wopi_setting_base_url", WOPI_SETTING_BASE_URL);
 
         extractVariable(form, "iframe_type", IFRAME_TYPE);
+
+        extractVariable(form, "ui_theme", UI_THEME);
 
         std::string buyProduct;
         {
@@ -2375,6 +2378,7 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     Poco::replaceInPlace(adminFile, ACCESS_HEADER, urv[ACCESS_HEADER]);
     Poco::replaceInPlace(adminFile, IFRAME_TYPE, urv[IFRAME_TYPE]);
     Poco::replaceInPlace(adminFile, CSS_VARS, cssVarsToStyle(urv[CSS_VARS]));
+    Poco::replaceInPlace(adminFile, UI_THEME, urv[UI_THEME]);
 #if ENABLE_DEBUG
     const bool enableDebug = true;
 #else
