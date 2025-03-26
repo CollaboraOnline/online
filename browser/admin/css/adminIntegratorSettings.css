@@ -187,6 +187,12 @@ ul {
   background-color: var(--color-primary-element-light);
 }
 
+.button:disabled {
+  cursor: default;
+  opacity: .5;
+  filter: saturate(0.7);
+}
+
 .button--icon-and-text {
   --button-padding: min(
     calc(var(--default-grid-baseline) + var(--button-radius)),
