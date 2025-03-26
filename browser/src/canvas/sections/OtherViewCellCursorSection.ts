@@ -41,6 +41,9 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     }
 
     onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
+        if (app.map._docLayer._isZooming)
+            return;
+
         this.adjustPopUpPosition();
 
         this.context.strokeStyle = this.sectionProperties.color;
@@ -129,7 +132,8 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     hideUsernamePopUp() {
         if (this.sectionProperties.popUpContainer) {
             this.sectionProperties.popUpShown = false;
-            this.sectionProperties.popUpContainer.style.display = 'none';
+            if (this.sectionProperties.popUpContainer.style.display !== 'none')
+                this.sectionProperties.popUpContainer.style.display = 'none';
         }
         this.clearPopUpTimer();
     }
@@ -180,9 +184,20 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     public static updateVisibilities() {
         for (let i = 0; i < OtherViewCellCursorSection.sectionPointers.length; i++) {
             const section = OtherViewCellCursorSection.sectionPointers[i];
-            section.setShowSection(section.checkMyVisibility());
+            const newState = section.checkMyVisibility();
+
+            if (newState !== section.showSection) {
+                section.setShowSection(newState);
+                if (newState === false)
+                    section.hideUsernamePopUp();
+            }
         }
         app.sectionContainer.requestReDraw();
+    }
+
+    public static closePopups() {
+        for (let i = 0; i < OtherViewCellCursorSection.sectionPointers.length; i++)
+            OtherViewCellCursorSection.sectionPointers[i].hideUsernamePopUp();
     }
 
     public static getViewCursorSection(viewId: number) {
