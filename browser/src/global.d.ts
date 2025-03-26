@@ -15,4 +15,5 @@ interface COOLTouch {
 
 interface Window {
 	touch: COOLTouch;
+	setLogging(value: boolean): void;
 }
