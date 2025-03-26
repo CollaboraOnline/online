@@ -52,18 +52,18 @@ class DebugManager {
 	private _painter: PainterInterface;
 	private debugOn: boolean;
 	private debugNeverStarted: boolean;
-	private _controls: any;
-	private _toolLayers: any[];
+	private _controls: ControlsInterface;
+	private _toolLayers: BaseClass[];
 
 	private overlayOn: boolean;
-	private _overlayData: any;
+	private _overlayData: OverlaysInterface;
 
 	private tileOverlaysOn: boolean;
 
 	private tileInvalidationsOn: boolean;
 	private _tileInvalidationMessages: Map<number, string>;
 	private _tileInvalidationId: number;
-	private _tileInvalidationKeypressQueue: any[];
+	private _tileInvalidationKeypressQueue: number[];
 	private _tileInvalidationKeypressTimes: DebugTimeArray;
 	private _tileInvalidationTimeoutId: TimeoutHdl;
 
@@ -99,7 +99,7 @@ class DebugManager {
 	private _automatedUserQueue: string[];
 	private _automatedUserPhase: number;
 
-	constructor(map: any) {
+	constructor(map: MapInterface) {
 		this._map = map;
 		this._docLayer = null;
 		this._painter = null;
@@ -155,12 +155,13 @@ class DebugManager {
 		this.debugOn = false;
 
 		// Remove layers
-		for (const i in this._toolLayers) {
-			this._map.removeLayer(this._toolLayers[i]);
+		for (const tool of this._toolLayers) {
+			this._map.removeLayer(tool);
 		}
 
 		// Remove controls
-		for (const category in this._controls) {
+		const keys = Object.keys(this._controls);
+		for (const category of keys) {
 			this._controls[category].remove();
 		}
 		this._controls = {};
@@ -388,11 +389,11 @@ class DebugManager {
 			category: 'Logging',
 			startsOn: true,
 			onAdd: function () {
-				(window as any).setLogging(true);
+				window.setLogging(true);
 				app.Log.print();
 			},
 			onRemove: function () {
-				(window as any).setLogging(false);
+				window.setLogging(false);
 			},
 		});
 
