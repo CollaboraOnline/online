@@ -190,6 +190,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
 #if !MOBILEAPP
     , _admin(Admin::instance())
 #endif
+    , _createTime(std::chrono::steady_clock::now())
     , _loadDuration(0)
     , _wopiDownloadDuration(0)
     , _tileVersion(0)
@@ -270,6 +271,11 @@ void DocumentBroker::setupTransfer(const std::shared_ptr<StreamSocket>& socket,
         });
 }
 
+static int getLimitLoadSecs()
+{
+    return ConfigUtil::getConfigValue<int>("per_document.limit_load_secs", 100);
+}
+
 void DocumentBroker::assertCorrectThread(const char* filename, int line) const
 {
     _poll->assertCorrectThread(filename, line);
@@ -278,7 +284,7 @@ void DocumentBroker::assertCorrectThread(const char* filename, int line) const
 // The inner heart of the DocumentBroker - our poll loop.
 void DocumentBroker::pollThread()
 {
-    _threadStart = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point threadStart = std::chrono::steady_clock::now();
 
     LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << ']' << " and configId [" << _configId << ']');
 
@@ -289,7 +295,7 @@ void DocumentBroker::pollThread()
         _childProcess = getNewChild_Blocks(*_poll, _configId, _mobileAppDocId);
         if (_childProcess
             || std::chrono::duration_cast<std::chrono::milliseconds>(
-                   std::chrono::steady_clock::now() - _threadStart)
+                   std::chrono::steady_clock::now() - threadStart)
                    > timeoutMs)
             break;
 
@@ -368,7 +374,7 @@ void DocumentBroker::pollThread()
         // ignore load time out
         std::getenv("PAUSEFORDEBUGGER") ? -1 :
 #endif
-            ConfigUtil::getConfigValue<int>("per_document.limit_load_secs", 100);
+            getLimitLoadSecs();
 
     auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
 #endif
@@ -444,7 +450,7 @@ void DocumentBroker::pollThread()
 
         // Check if we had a sunset time and expired.
         if (_limitLifeSeconds > std::chrono::seconds::zero()
-            && std::chrono::duration_cast<std::chrono::seconds>(now - _threadStart)
+            && std::chrono::duration_cast<std::chrono::seconds>(now - threadStart)
                    > _limitLifeSeconds)
         {
             LOG_WRN("Doc [" << _docKey << "] is taking too long to convert. Will kill process ["
@@ -864,6 +870,12 @@ bool DocumentBroker::isAlive() const
 
     // Shouldn't have live child process outside of the polling thread.
     return _childProcess && _childProcess->isAlive();
+}
+
+void DocumentBroker::timeoutNotLoaded(std::chrono::steady_clock::time_point now)
+{
+    if (!_stop && !_poll->isAlive() && !isLoaded() && now - _createTime > std::chrono::seconds(getLimitLoadSecs()))
+        stop("neverloaded");
 }
 
 DocumentBroker::~DocumentBroker()
@@ -3146,7 +3158,7 @@ void DocumentBroker::setLoaded()
     {
         _docState.setLive();
         _loadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
-                                std::chrono::steady_clock::now() - _threadStart);
+                                std::chrono::steady_clock::now() - _createTime);
         const auto minTimeoutSecs = ((_loadDuration * 4).count() + 500) / 1000;
         _saveManager.setSavingTimeout(
             std::max(std::chrono::seconds(minTimeoutSecs), std::chrono::seconds(5)));
@@ -5227,7 +5239,7 @@ void DocumentBroker::dumpState(std::ostream& os)
         os << "\n  loaded in: " << _loadDuration;
     else
         os << "\n  still loading... "
-           << std::chrono::duration_cast<std::chrono::seconds>(now - _threadStart);
+           << std::chrono::duration_cast<std::chrono::seconds>(now - _createTime);
     int childPid = _childProcess ? _childProcess->getPid() : 0;
     os << "\n  child PID: " << childPid;
     os << "\n  sent: " << sent;
@@ -5239,7 +5251,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
-    os << "\n  thread start: " << Util::getTimeForLog(now, _threadStart);
+    os << "\n  createTime: " << Util::getTimeForLog(now, _createTime);
     os << "\n  stop: " << _stop;
     os << "\n  closeReason: " << _closeReason;
     os << "\n  modified?: " << isModified();

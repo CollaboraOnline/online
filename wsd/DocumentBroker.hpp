@@ -544,6 +544,10 @@ public:
 
     StorageBase* getStorage() { return _storage.get(); }
 
+    // mark as dead if poll is not running and no doc loaded after a reasonable
+    // time since construction
+    void timeoutNotLoaded(std::chrono::steady_clock::time_point now);
+
 #if !MOBILEAPP
     void asyncInstallPresets(const std::shared_ptr<ClientSession>& session,
                              const std::string& configId,
@@ -1744,7 +1748,7 @@ private:
     /// Time of the last interactive event that very likely modified the document.
     std::chrono::steady_clock::time_point _lastModifyActivityTime;
 
-    std::chrono::steady_clock::time_point _threadStart;
+    std::chrono::steady_clock::time_point _createTime;
     std::chrono::milliseconds _loadDuration;
     std::chrono::milliseconds _wopiDownloadDuration;
 
