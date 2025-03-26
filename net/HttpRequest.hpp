@@ -1269,9 +1269,9 @@ public:
     const std::shared_ptr<const Response> syncDownload(const Request& req,
                                                        const std::string& saveToFilePath)
     {
-        TerminatingPoll poller("HttpSynReqPoll");
-        poller.runOnClientThread();
-        return syncDownload(req, saveToFilePath, poller);
+        std::shared_ptr<TerminatingPoll> poller(std::make_shared<TerminatingPoll>("HttpSynReqPoll"));
+        poller->runOnClientThread();
+        return syncDownload(req, saveToFilePath, *poller);
     }
 
     /// Make a synchronous request.
@@ -1290,9 +1290,9 @@ public:
     /// The payload body of the response, if any, can be read via getBody().
     const std::shared_ptr<const Response> syncRequest(const Request& req)
     {
-        TerminatingPoll poller("HttpSynReqPoll");
-        poller.runOnClientThread();
-        return syncRequest(req, poller);
+        std::shared_ptr<TerminatingPoll> poller(std::make_shared<TerminatingPoll>("HttpSynReqPoll"));
+        poller->runOnClientThread();
+        return syncRequest(req, *poller);
     }
 
     /// Make a synchronous request with the given timeout.

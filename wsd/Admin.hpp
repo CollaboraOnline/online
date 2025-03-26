@@ -81,8 +81,8 @@ public:
 
     static Admin& instance()
     {
-        static Admin admin;
-        return admin;
+        static std::shared_ptr<Admin> admin(new Admin);
+        return *admin;
     }
 
     void start();

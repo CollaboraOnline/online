@@ -86,7 +86,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     static constexpr std::chrono::seconds DefTimeoutSeconds{ 5 };
 
     std::string _localUri;
-    SocketPoll _pollServerThread;
+    std::shared_ptr<SocketPoll> _pollServerThread;
     std::shared_ptr<ServerSocket> _socket;
     int _port;
 
@@ -94,7 +94,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
 
 public:
     HttpRequestTests()
-        : _pollServerThread("HttpServerPoll")
+        : _pollServerThread(std::make_shared<SocketPoll>("HttpServerPoll"))
         , _port(0)
     {
         net::AsyncDNS::startAsyncDNS();
@@ -153,7 +153,7 @@ public:
             // Try listening on this port.
             LOG_INF("HttpRequestTests::setUp: creating socket to listen on port " << _port);
             _socket = ServerSocket::create(ServerSocket::Type::Local, _port, Socket::Type::IPv4,
-                                           now, _pollServerThread, factory);
+                                           now, *_pollServerThread, factory);
             if (_socket)
                 break;
         }
@@ -163,14 +163,14 @@ public:
         else
             _localUri = "http://127.0.0.1:" + std::to_string(_port);
 
-        _pollServerThread.startThread();
-        _pollServerThread.insertNewSocket(_socket);
+        _pollServerThread->startThread();
+        _pollServerThread->insertNewSocket(_socket);
     }
 
     void tearDown()
     {
         LOG_INF("HttpRequestTests::tearDown");
-        _pollServerThread.stop();
+        _pollServerThread->stop();
         _socket.reset();
     }
 };

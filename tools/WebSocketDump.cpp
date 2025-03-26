@@ -222,7 +222,7 @@ int main (int argc, char **argv)
 {
     (void) argc; (void) argv;
 
-    SocketPoll DumpSocketPoll("websocket");
+    std::shared_ptr<SocketPoll> DumpSocketPoll = std::make_shared<SocketPoll>("websocket");
 
     if (!UnitWSD::init(UnitWSD::UnitType::Wsd, ""))
     {
@@ -261,13 +261,13 @@ int main (int argc, char **argv)
                                               ssl::CertificateVerification::Disabled);
 #endif
 
-    SocketPoll acceptPoll("accept");
+    std::shared_ptr<SocketPoll> acceptPoll = std::make_shared<SocketPoll>("accept");
 
     // Setup listening socket with a factory for connected sockets.
     auto serverSocket = std::make_shared<ServerSocket>(
         Socket::Type::All,
         std::chrono::steady_clock::now(),
-        DumpSocketPoll,
+        *DumpSocketPoll,
         std::make_shared<DumpSocketFactory>(isSSL));
 
     if (!serverSocket->bind(ServerSocket::Type::Public, port))
@@ -282,12 +282,12 @@ int main (int argc, char **argv)
         return -1;
     }
 
-    acceptPoll.startThread();
-    acceptPoll.insertNewSocket(serverSocket);
+    acceptPoll->startThread();
+    acceptPoll->insertNewSocket(serverSocket);
 
     while (true)
     {
-        DumpSocketPoll.poll(std::chrono::seconds(100));
+        DumpSocketPoll->poll(std::chrono::seconds(100));
     }
 }
 
