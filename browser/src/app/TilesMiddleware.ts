@@ -426,9 +426,7 @@ class TileManager {
 						);
 					this.reclaimTileCanvasMemory(tile);
 					tile.rawDeltas = null;
-					// force keyframe
-					tile.wireId = 0;
-					tile.invalidFrom = 0;
+					tile.forceKeyframe();
 				}
 			}
 		}
@@ -923,6 +921,7 @@ class TileManager {
 	// has pending updates.
 	private static makeTileCurrent(tile: Tile): boolean {
 		tile.current = true;
+		tile.allowFastRequest();
 
 		if (tile.needsRehydration()) this.rehydrateTile(tile);
 
@@ -1409,25 +1408,20 @@ class TileManager {
 						app.map._docLayer._selectedMode,
 					);
 
-					if (!this.isValidTile(coords)) {
-						continue;
-					}
+					if (!this.isValidTile(coords)) continue;
 
 					var key = coords.key();
 					var tile = this.tiles[key];
-					if (tile && !tile.needsFetch()) {
-						if (tile.needsRehydration()) {
-							this.rehydrateTile(tile);
-							didRehydrate = true;
-						}
-					} else queue.push(coords);
 
-					if (tile && updateCurrent) tile.current = true;
+					if (!tile || tile.needsFetch()) queue.push(coords);
+
+					if (tile && updateCurrent)
+						didRehydrate = this.makeTileCurrent(tile) || didRehydrate;
 				}
 			}
 		}
 		this.endTransaction(
-			updateCurrent && didRehydrate && queue.length === 0
+			didRehydrate && queue.length === 0
 				? () => app.sectionContainer.requestReDraw()
 				: null,
 		);
@@ -1487,6 +1481,7 @@ class TileManager {
 			}
 
 			tile.current = isCurrent;
+			if (isCurrent) tile.allowFastRequest();
 		}
 
 		if (preFetch) this.endTransaction(null);
@@ -1559,10 +1554,7 @@ class TileManager {
 	}
 
 	public static refreshTilesInBackground() {
-		for (const key in this.tiles) {
-			this.tiles[key].wireId = 0;
-			this.tiles[key].invalidFrom = 0;
-		}
+		for (const key in this.tiles) this.tiles[key].forceKeyframe();
 	}
 
 	public static setDebugDeltas(state: boolean) {
@@ -1605,7 +1597,7 @@ class TileManager {
 				(invalidatedRectangle.intersectsRectangle(tileRectangle) ||
 					(calc && !this.tileZoomIsCurrent(coords))) // In calc, we invalidate all tiles with different zoom levels.
 			) {
-				if (app.isRectangleVisibleInTheDisplayedArea(tileRectangle))
+				if (this.tiles[key].current)
 					needsNewTiles = true;
 
 				this.invalidateTile(key, wireId);
