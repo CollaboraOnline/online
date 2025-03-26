@@ -144,7 +144,10 @@ public:
     static clang::ast_matchers::DeclarationMatcher makeMatcher()
     {
         using namespace clang::ast_matchers;
-        return varDecl(hasType(namedDecl(hasName("CheckFileInfo")))).bind("varDecl");
+        return varDecl(hasType(cxxRecordDecl(anyOf(
+                           hasName("CheckFileInfo"), hasName("SocketPoll"),
+                           isDerivedFrom(anyOf(hasName("CheckFileInfo"), hasName("SocketPoll")))))))
+            .bind("varDecl");
     }
 };
 
