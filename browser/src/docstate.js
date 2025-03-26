@@ -22,6 +22,7 @@ window.app = {
 	canvasSize: null, // To be assigned SimplePoint.
 	viewId: null, // Unique view id of the user.
 	isAdminUser: null, // Is admin on the integrator side - used eg. to show update warnings
+	layoutTasks: [],
 	calc: {
 		cellAddress: null, // To be assigned SimplePoint.
 		cellCursorVisible: false,
