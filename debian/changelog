@@ -1,3 +1,9 @@
+coolwsd (24.04.12.5-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-24.04.12-5
+
+ -- Andras Timar <andras.timar@collabora.com>  Wed, 26 Mar 2025 12:17:00 +0100
+
 coolwsd (24.04.12.4-1) unstable; urgency=medium
 
   * https://github.com/CollaboraOnline/online/releases/tag/cp-24.04.12-4
