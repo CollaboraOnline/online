@@ -314,6 +314,10 @@ function deleteImage() {
 	cy.log('<< deleteImage - end');
 }
 
+function closeNavigatorSidebar () {
+	cy.cGet('.close-navigation-button').click();
+}
+
 function insertComment(text = 'some text0', save = true) {
 	cy.log('>> insertComment - start');
 
@@ -586,3 +590,4 @@ module.exports.scrollWriterDocumentToTop = scrollWriterDocumentToTop;
 module.exports.scrollViewDown = scrollViewDown;
 module.exports.updateFollowingUsers = updateFollowingUsers;
 module.exports.assertVisiblePage = assertVisiblePage;
+module.exports.closeNavigatorSidebar = closeNavigatorSidebar;

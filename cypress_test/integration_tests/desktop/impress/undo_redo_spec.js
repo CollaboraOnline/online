@@ -16,6 +16,8 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/undo_redo.odp');
 		desktopHelper.switchUIToCompact();
+		// close the default slide-sorter navigation sidebar
+		desktopHelper.closeNavigatorSidebar();
 		desktopHelper.selectZoomLevel('30', false);
 		impressHelper.selectTextShapeInTheCenter();
 		skipMessage();
@@ -41,7 +43,7 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		helper.setDummyClipboardForCopy();
 		undo();
 		helper.typeIntoDocument('{ctrl}y');
-		impressHelper.selectTextOfShape();
+		impressHelper.dblclickOnSelectedShape();
 		helper.copy();
 		helper.expectTextForClipboard('Hello World');
 	});
@@ -50,12 +52,12 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		helper.setDummyClipboardForCopy();
 		helper.typeIntoDocument('Hello World');
 		impressHelper.triggerNewSVGForShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		impressHelper.dblclickOnSelectedShape();
 		helper.typeIntoDocument('Overwrite Text');
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		repairHelper.rollbackPastChange('Undo');
 		impressHelper.triggerNewSVGForShapeInTheCenter();
-		impressHelper.selectTextOfShape();
+		impressHelper.dblclickOnSelectedShape();
 		helper.copy();
 		helper.expectTextForClipboard('Hello World');
 	});

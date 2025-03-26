@@ -12,7 +12,6 @@ function selectTextShape(i) {
 
     var n = 2;
     var parts = n + 1;
-
     // Click on the top-center of the slide to select the text shape there
     cy.cGet('#document-container')
         .then(function(items) {
@@ -32,6 +31,8 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
     beforeEach(function () {
         helper.setupAndLoadDocument('impress/two_text_shapes.odp');
         desktopHelper.switchUIToCompact();
+        // Zoom 70 will help to make sure frame area is visible
+        desktopHelper.selectZoomLevel('70', false);
         cy.cGet('#toolbar-up > .ui-scroll-right').click();
         cy.cGet('#modifypage').click({force: true});
         cy.cGet('div.clipboard').as('clipboard');
