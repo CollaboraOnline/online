@@ -180,9 +180,9 @@ class Tile {
 	}
 
 	/// Demand a whole tile back to the keyframe from coolwsd.
-	forceKeyframe() {
-		this.wireId = 0;
-		this.invalidFrom = 0;
+	forceKeyframe(wireId: number = 0) {
+		this.wireId = wireId;
+		this.invalidFrom = wireId;
 		this.allowFastRequest();
 	}
 
@@ -426,9 +426,7 @@ class TileManager {
 						);
 					this.reclaimTileCanvasMemory(tile);
 					tile.rawDeltas = null;
-					// force keyframe
-					tile.wireId = 0;
-					tile.invalidFrom = 0;
+					tile.forceKeyframe();
 				}
 			}
 		}
@@ -923,6 +921,7 @@ class TileManager {
 	// has pending updates.
 	private static makeTileCurrent(tile: Tile): boolean {
 		tile.current = true;
+		tile.allowFastRequest();
 
 		if (tile.needsRehydration()) this.rehydrateTile(tile);
 
@@ -1409,25 +1408,19 @@ class TileManager {
 						app.map._docLayer._selectedMode,
 					);
 
-					if (!this.isValidTile(coords)) {
-						continue;
-					}
+					if (!this.isValidTile(coords)) continue;
 
 					var key = coords.key();
 					var tile = this.tiles[key];
-					if (tile && !tile.needsFetch()) {
-						if (tile.needsRehydration()) {
-							this.rehydrateTile(tile);
-							didRehydrate = true;
-						}
-					} else queue.push(coords);
 
-					if (tile && updateCurrent) tile.current = true;
+					if (!tile || tile.needsFetch()) queue.push(coords);
+					else if (updateCurrent)
+						didRehydrate = this.makeTileCurrent(tile) || didRehydrate;
 				}
 			}
 		}
 		this.endTransaction(
-			updateCurrent && didRehydrate && queue.length === 0
+			didRehydrate && queue.length === 0
 				? () => app.sectionContainer.requestReDraw()
 				: null,
 		);
@@ -1487,6 +1480,7 @@ class TileManager {
 			}
 
 			tile.current = isCurrent;
+			if (isCurrent) tile.allowFastRequest();
 		}
 
 		if (preFetch) this.endTransaction(null);
@@ -1559,10 +1553,7 @@ class TileManager {
 	}
 
 	public static refreshTilesInBackground() {
-		for (const key in this.tiles) {
-			this.tiles[key].wireId = 0;
-			this.tiles[key].invalidFrom = 0;
-		}
+		for (const key in this.tiles) this.tiles[key].forceKeyframe();
 	}
 
 	public static setDebugDeltas(state: boolean) {
@@ -1605,8 +1596,7 @@ class TileManager {
 				(invalidatedRectangle.intersectsRectangle(tileRectangle) ||
 					(calc && !this.tileZoomIsCurrent(coords))) // In calc, we invalidate all tiles with different zoom levels.
 			) {
-				if (app.isRectangleVisibleInTheDisplayedArea(tileRectangle))
-					needsNewTiles = true;
+				if (this.tiles[key].current) needsNewTiles = true;
 
 				this.invalidateTile(key, wireId);
 			}
@@ -2110,13 +2100,11 @@ class TileManager {
 		if (!this.checkPointers() || app.map._docLayer._documentInfo === '') {
 			return;
 		}
-		var key, coords, tile;
+		var key, coords;
 		var center = app.map.getCenter();
 		var zoom = Math.round(app.map.getZoom());
 
 		var pixelBounds = app.map.getPixelBoundsCore(center, zoom);
-		var tileRanges = this.pxBoundsToTileRanges(pixelBounds);
-		var queue = [];
 
 		// mark tiles not matching our part & mode as not being current
 		for (key in this.tiles) {
@@ -2131,56 +2119,19 @@ class TileManager {
 		}
 
 		// create a queue of coordinates to load tiles from
-		this.beginTransaction();
-		var redraw = false;
-		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
-			var tileRange = tileRanges[rangeIdx];
-			for (var j = tileRange.min.y; j <= tileRange.max.y; j++) {
-				for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
-					coords = new TileCoordData(
-						i * this.tileSize,
-						j * this.tileSize,
-						zoom,
-						app.map._docLayer._selectedPart,
-						app.map._docLayer._selectedMode,
-					);
-
-					if (!this.isValidTile(coords)) {
-						continue;
-					}
-
-					key = coords.key();
-					tile = this.tiles[key];
-					if (tile && !tile.needsFetch())
-						redraw = redraw || this.makeTileCurrent(tile);
-					else queue.push(coords);
-				}
-			}
-		}
-		this.endTransaction(
-			redraw ? () => app.sectionContainer.requestReDraw() : null,
-		);
+		const queue = this.getMissingTiles(pixelBounds, zoom, true);
 
 		if (queue.length !== 0) {
-			var tileCombineQueue = [];
-
-			for (i = 0; i < queue.length; i++) {
+			for (let i = 0; i < queue.length; i++) {
 				coords = queue[i];
 				key = coords.key();
-				if (!this.tiles[key]) this.createTile(coords, key);
-
-				if (this.tileNeedsFetch(key)) {
-					tileCombineQueue.push(coords);
+				if (!this.tiles[key]) {
+					this.createTile(coords, key);
+					this.tiles[key].current = true;
 				}
 			}
 
-			if (tileCombineQueue.length >= 0) {
-				this.sendTileCombineRequest(tileCombineQueue);
-			} else {
-				// We have all necessary tile images in the cache, schedule a paint..
-				// This may not be immediate if we are now in a slurp events call.
-				app.map._docLayer._painter.update();
-			}
+			this.sendTileCombineRequest(queue);
 		}
 		if (
 			app.map._docLayer._docType === 'presentation' ||
@@ -2370,7 +2321,6 @@ class TileManager {
 		if (!tile) return;
 
 		tile.invalidateCount++;
-		tile.allowFastRequest();
 
 		if (app.map._debug.tileDataOn) {
 			app.map._debug.tileDataAddInvalidate();
@@ -2383,8 +2333,7 @@ class TileManager {
 				window.app.console.debug(
 					'invalidate tile ' + key + ' with wireId ' + wireId,
 				);
-			if (wireId) tile.invalidFrom = wireId;
-			else tile.invalidFrom = tile.wireId;
+			tile.forceKeyframe(wireId ? wireId : tile.wireId);
 		}
 	}
 
