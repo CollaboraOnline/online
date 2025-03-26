@@ -2688,23 +2688,27 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeFont', 'text'),
-				'command': '.uno:ChangeFont'
+				'command': '.uno:ChangeFont',
+				'icon': 'lc_fontdialog.svg'
 			},
 			{ type: 'separator', id: 'formula-changefont-break', orientation: 'vertical' },
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeFontSize', 'text'),
-				'command': '.uno:ChangeFontSize'
+				'command': '.uno:ChangeFontSize',
+				'icon': 'lc_fontheight.svg'
 			},
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeDistance', 'text'),
-				'command': '.uno:ChangeDistance'
+				'command': '.uno:ChangeDistance',
+				'icon': 'lc_spacing.svg',
 			},
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeAlignment', 'text'),
-				'command': '.uno:ChangeAlignment'
+				'command': '.uno:ChangeAlignment',
+				'icon': 'lc_fontworkalignmentfloater.svg'
 			}
         ];
 		return this.getTabPage(formulaTabName, content);
