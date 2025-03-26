@@ -3,7 +3,7 @@
  * L.Handler.Scroll is used by L.Map to enable mouse scroll wheel zoom on the map.
  */
 
-/* global app */
+/* global app OtherViewCellCursorSection */
 L.Map.mergeOptions({
 	scrollHandler: true,
 	wheelDebounceTime: 40,
@@ -79,6 +79,9 @@ L.Map.Scroll = L.Handler.extend({
 	}),
 
 	_performZoom: function () {
+		if (this._map.getDocType() === 'spreadsheet')
+			OtherViewCellCursorSection.closePopups();
+
 		var lastScrollTime = this._zoomScrollTime;
 		this._zoomScrollTime = new Date();
 		var map = this._map;
