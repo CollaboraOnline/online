@@ -561,12 +561,10 @@ public:
 
     /// Start an asynchronous Installation of the user presets, e.g. autotexts etc, as
     /// described at userSettingsUri for installation into presetsPath
-    static std::shared_ptr<PresetsInstallTask> asyncInstallPresets(SocketPoll& poll,
-                                    const std::string& configId,
-                                    const std::string& userSettingsUri,
-                                    const std::string& presetsPath,
+    static void asyncInstallPresets(SocketPoll& poll, const std::string& userSettingsUri,
                                     const std::shared_ptr<ClientSession>& session,
-                                    const std::function<void(bool)>& finishedCB);
+                                    unsigned redirectLimit,
+                                    const std::shared_ptr<PresetsInstallTask>& presetTasks);
 
     /// Start an asynchronous Installation of a user preset resource, e.g. an autotext
     /// file, to copy as presetFile
@@ -574,12 +572,14 @@ public:
                                    const std::string& presetUri, const std::string& presetStamp,
                                    const std::string& presetFile, const std::string& id,
                                    const std::function<void(const std::string&, bool)>& finishedCB,
-                                   const std::shared_ptr<ClientSession>& session);
+                                   const std::shared_ptr<ClientSession>& session,
+                                   unsigned redirectLimit);
 
     static Poco::URI getPresetUploadBaseUrl(Poco::URI uri);
 
     static std::shared_ptr<const http::Response> sendHttpSyncRequest(const std::string& url,
-                                                                     const std::string& logContext);
+                                                                     const std::string& logContext,
+                                                                     unsigned redirectLimit);
 #endif // !MOBILEAPP
 
 private:
