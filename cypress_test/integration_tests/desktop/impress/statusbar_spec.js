@@ -7,11 +7,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/statusbar.odp');
-
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden ();
 		}
-		desktopHelper.shouldHaveZoomLevel('70');
+		desktopHelper.shouldHaveZoomLevel('60');
 	});
 
 	it('Selected slide.', function() {

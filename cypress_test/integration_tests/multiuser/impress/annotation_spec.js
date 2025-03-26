@@ -15,6 +15,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		}
+		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50', false);
 
@@ -22,6 +23,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		}
+		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50', false);
 	});
@@ -95,6 +97,7 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		}
+		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50', false);
 
@@ -102,6 +105,7 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		}
+		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50', false);
 	});
@@ -178,6 +182,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		}
+		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50', false);
 
@@ -185,6 +190,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		}
+		desktopHelper.closeNavigatorSidebar();
 		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50', false);
 	});

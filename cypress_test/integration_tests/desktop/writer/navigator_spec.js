@@ -18,16 +18,16 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/navigator.odt');
-
-		cy.cGet('#Navigator-button').click();
+		cy.cGet('#navigator-floating-icon').click(); // Ensure it's open
 	});
 
-	it.skip('Navigator visual test', function() {
+	it('Navigator visual test', function() {
 		cy.wait(500); // wait to make fully rendered
-		cy.cGet('#contenttree').compareSnapshot('navigator_writer', 0.06);
+		cy.cGet('#navigator-dock-wrapper').scrollTo(0,0,{ ensureScrollable: false });
+		cy.cGet('#navigator-dock-wrapper').compareSnapshot('navigator_writer', 0.06);
 	});
 
-	it.skip('Jump to element. Navigator -> Document', function() {
+	it('Jump to element. Navigator -> Document', function() {
 		// Expand Tables, Frames, Images
 		// Note click()/dblclick() scrolls the contenttree even if it would be not needed to click
 		expandSecion('Tables');
@@ -35,7 +35,7 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		expandSecion('Images');
 
 		//Scroll back to Top
-		cy.cGet('#contenttree').scrollTo(0,0);
+		cy.cGet('#navigator-dock-wrapper').scrollTo(0,0, { ensureScrollable: false });
 
 		// Doubleclick several items, and check if the document is scrolled to the right page
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Feedback').dblclick();
@@ -63,7 +63,7 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		desktopHelper.assertVisiblePage(5, 5, 8);
 	});
 
-	it.skip('Jump to element even when cursor not visible', function() {
+	it('Jump to element even when cursor not visible', function() {
 		// Expand Tables, Frames, Images
 		// Note click()/dblclick() scrolls the contenttree even if it would be not needed to click
 		expandSecion('Tables');
@@ -71,7 +71,7 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		expandSecion('Images');
 
 		//Scroll back to Top
-		cy.cGet('#contenttree').scrollTo(0,0);
+		cy.cGet('#navigator-dock-wrapper').scrollTo(0,0, { ensureScrollable: false });
 
 		// Doubleclick several items, and check if the document is scrolled to the right page
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Feedback').dblclick();
