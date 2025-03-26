@@ -288,10 +288,10 @@ void RequestVettingStation::handleRequest(const std::string& id,
                                   << docKey << ']');
 
                     // Create the DocBroker.
-                    if (createDocBroker(docKey, "", url, uriPublic))
+                    if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey, "",
+                                url, uriPublic))
                     {
-                        assert(_docBroker && "Must have docBroker");
-                        createClientSession(docKey, url, uriPublic, isReadOnly);
+                        createClientSession(docBroker, docKey, url, uriPublic, isReadOnly);
                     }
                 });
             break;
@@ -324,10 +324,10 @@ void RequestVettingStation::handleRequest(const std::string& id,
                         std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
                         // We have a valid CheckFileInfo result; Create the DocBroker.
                         SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
-                        if (createDocBroker(docKey, sharedSettings.getConfigId(), url, uriPublic))
+                        if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey,
+                                    sharedSettings.getConfigId(), url, uriPublic))
                         {
-                            assert(_docBroker && "Must have docBroker");
-                            createClientSession(docKey, url, uriPublic, isReadOnly);
+                            createClientSession(docBroker, docKey, url, uriPublic, isReadOnly);
                             // If there is anything dubious about the ssl
                             // connection provide a warning about that.
                             if (!sslVerifyResult.empty())
@@ -335,7 +335,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                                 LOG_WRN_S("SSL verification warning: '" << sslVerifyResult << "' seen on CheckFileInfo for ["
                                               << docKey << "]");
 #if !MOBILEAPP && !WASMAPP
-                                _docBroker->setCertAuditWarning();
+                                docBroker->setCertAuditWarning();
 #endif
                             }
                         }
@@ -384,14 +384,14 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
             LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
                     << docKey << "] now with URL: [" << url << ']');
             SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
-            if (createDocBroker(docKey, sharedSettings.getConfigId(), url, uriPublic))
+            if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey,
+                        sharedSettings.getConfigId(), url, uriPublic))
             {
-                assert(_docBroker && "Must have docBroker");
                 launchInstallPresets();
                 if (_ws)
                 {
                     // If we don't have the WebSocket, defer creating the client session.
-                    createClientSession(docKey, url, uriPublic, isReadOnly);
+                    createClientSession(docBroker, docKey, url, uriPublic, isReadOnly);
                 }
                 else
                 {
@@ -421,18 +421,16 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
 }
 #endif //!MOBILEAPP
 
-bool RequestVettingStation::createDocBroker(const std::string& docKey,
-                                            const std::string& configId,
-                                            const std::string& url,
-                                            const Poco::URI& uriPublic)
+std::shared_ptr<DocumentBroker> RequestVettingStation::createDocBroker(
+        const std::string& docKey, const std::string& configId,
+        const std::string& url, const Poco::URI& uriPublic)
 {
     // Request a kit process for this doc.
     const auto [docBroker, error] =
         findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey,
                               configId, _id, uriPublic, _mobileAppDocId);
 
-    _docBroker = docBroker;
-    if (_docBroker)
+    if (docBroker)
     {
         // Indicate to the client that we're connecting to the docbroker.
         if (_ws)
@@ -443,7 +441,7 @@ bool RequestVettingStation::createDocBroker(const std::string& docKey,
         }
 
         LOG_DBG("DocBroker [" << docKey << "] acquired for [" << url << ']');
-        return true;
+        return docBroker;
     }
 
     // Failed.
@@ -453,17 +451,18 @@ bool RequestVettingStation::createDocBroker(const std::string& docKey,
         sendErrorAndShutdown(_ws, error, WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
     }
 
-    return false;
+    return nullptr;
 }
 
-void RequestVettingStation::createClientSession(const std::string& docKey, const std::string& url,
+void RequestVettingStation::createClientSession(std::shared_ptr<DocumentBroker> docBroker,
+                                                const std::string& docKey, const std::string& url,
                                                 const Poco::URI& uriPublic, const bool isReadOnly)
 {
-    assert(_docBroker && "Must have DocBroker");
+    assert(docBroker && "Must have DocBroker");
     assert(_ws && "Must have WebSocket");
 
     std::shared_ptr<ClientSession> clientSession =
-        _docBroker->createNewClientSession(_ws, _id, uriPublic, isReadOnly, _requestDetails);
+        docBroker->createNewClientSession(_ws, _id, uriPublic, isReadOnly, _requestDetails);
     if (!clientSession)
     {
         LOG_ERR("Failed to create Client Session [" << _id << "] on docKey [" << docKey << ']');
@@ -488,8 +487,7 @@ void RequestVettingStation::createClientSession(const std::string& docKey, const
 
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
     const auto ws = _ws;
-    const auto docBroker = _docBroker;
-    _docBroker->setupTransfer(
+    docBroker->setupTransfer(
         _socket,
         [clientSession=std::move(clientSession), uriPublic, wopiFileInfo=std::move(wopiFileInfo),
          ws, docBroker](const std::shared_ptr<Socket>& moveSocket) mutable
