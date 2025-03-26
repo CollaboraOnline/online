@@ -77,10 +77,13 @@ public:
     }
 
 private:
-    bool createDocBroker(const std::string& docKey, const std::string& configId,
-                         const std::string& url, const Poco::URI& uriPublic);
+    std::shared_ptr<DocumentBroker> createDocBroker(const std::string& docKey,
+                                                    const std::string& configId,
+                                                    const std::string& url,
+                                                    const Poco::URI& uriPublic);
 
-    void createClientSession(const std::string& docKey, const std::string& url,
+    void createClientSession(std::shared_ptr<DocumentBroker> docBroker,
+                             const std::string& docKey, const std::string& url,
                              const Poco::URI& uriPublic, bool isReadOnly);
 
     /// Send unauthorized error to the client and disconnect the socket.
@@ -105,7 +108,6 @@ private:
     std::shared_ptr<TerminatingPoll> _poll;
     std::shared_ptr<WebSocketHandler> _ws;
     std::shared_ptr<StreamSocket> _socket;
-    std::shared_ptr<DocumentBroker> _docBroker;
     Util::Stopwatch _birthday;
     unsigned _mobileAppDocId;
 };
