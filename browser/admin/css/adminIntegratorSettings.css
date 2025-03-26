@@ -424,8 +424,8 @@ ul {
 
 .dic-button-container {
   display: flex;
-  justify-content: center;
-  gap: 12px;
+  justify-content: end;
+  margin-top: 24px;
 }
 
 .dic-button-container button {
@@ -507,13 +507,9 @@ ul {
   background-color: var(--color-background-hover);
 }
 
-.dic-dropdown-heading {
-  font-weight: bold;
-  line-height: 1.2;
-}
 
 .dic-dropdown-description {
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: var(--color-text-lighter);
   line-height: 1.2;
 }

@@ -308,11 +308,11 @@ class WordBook {
 
 		const inputContainer = document.createElement('div');
 		inputContainer.className = 'dic-input-container';
-		inputContainer.style.margin = '16px 5px';
+		inputContainer.style.margin = '16px 0px';
 
 		const newWordInput = document.createElement('input');
 		newWordInput.type = 'text';
-		newWordInput.placeholder = 'Enter new word';
+		newWordInput.placeholder = 'Type to add a word';
 		newWordInput.className = 'input-field__input';
 		inputContainer.appendChild(newWordInput);
 
@@ -353,8 +353,6 @@ class WordBook {
 
 		const buttonContainer = document.createElement('div');
 		buttonContainer.className = 'dic-button-container';
-		buttonContainer.style.textAlign = 'center';
-		buttonContainer.style.marginTop = '24px';
 
 		const cancelButton = document.createElement('button');
 		cancelButton.textContent = 'Cancel';
@@ -366,7 +364,7 @@ class WordBook {
 		buttonContainer.appendChild(cancelButton);
 
 		const submitButton = document.createElement('button');
-		submitButton.textContent = 'Submit';
+		submitButton.textContent = 'Save';
 		submitButton.className = 'button button--vue-primary';
 		submitButton.addEventListener('click', async () => {
 			this.currWordbookFile.language = languageSelect.value;
