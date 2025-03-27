@@ -256,7 +256,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		this._map.fire('scrolllimits', newSizePx.clone());
 
-		if (!this._syncTileContainerSize() && (limitWidth || limitHeight || extendedLimit))
+		if (limitWidth || limitHeight || extendedLimit)
 			app.sectionContainer.requestReDraw();
 	},
 
@@ -382,9 +382,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_syncTileContainerSize: function() {
-		if (!this._map) return false;
+		if (!this._map) return;
 
-		if (!this._container) return false;
+		if (!this._container) return;
 
 		// Document container size is up to date as of now.
 		const documentContainerSize = this._getDocumentContainerSize();
@@ -425,10 +425,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		if (heightIncreased || widthIncreased) {
 			app.sectionContainer.requestReDraw();
 			this._map.fire('sizeincreased');
-			return true;
 		}
-
-		return false;
 	},
 
 	_onStatusMsg: function (textMsg) {
