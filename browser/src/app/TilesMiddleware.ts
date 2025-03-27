@@ -122,7 +122,6 @@ class TilesPreFetcher {
 	static _cumTileCount: number;
 	static _preFetchIdle: any;
 	static _tilesPreFetcher: any;
-	static _partTilePreFetcher: any;
 
 	private static checkDocLayer() {
 		if (this._docLayer) return true;
@@ -485,48 +484,5 @@ class TilesPreFetcher {
 			this.clearTilesPreFetcher();
 			this._borders = undefined;
 		}
-	}
-
-	private static preFetchPartTiles(part: number, mode: number): void {
-		this.updateProperties();
-
-		const tileRange = this._docLayer._pxBoundsToTileRange(this._pixelBounds);
-		const tileCombineQueue = [];
-
-		for (let j = tileRange.min.y; j <= tileRange.max.y; j++) {
-			for (let i = tileRange.min.x; i <= tileRange.max.x; i++) {
-				const coords = new TileCoordData(
-					i * this._docLayer._tileSize,
-					j * this._docLayer._tileSize,
-					this._zoom,
-					part,
-					mode,
-				);
-
-				if (!this._docLayer._isValidTile(coords)) continue;
-
-				const key = this._docLayer._tileCoordsToKey(coords);
-				if (!this._docLayer._tileNeedsFetch(key)) continue;
-
-				tileCombineQueue.push(coords);
-			}
-		}
-
-		this._docLayer._sendTileCombineRequest(tileCombineQueue);
-	}
-
-	public static initPreFetchPartTiles() {
-		if (!this.checkDocLayer()) return;
-
-		const targetPart = this._docLayer._selectedPart + app.map._partsDirection;
-
-		if (targetPart < 0 || targetPart >= this._docLayer._parts) return;
-
-		// check existing timeout and clear it before the new one
-		if (this._partTilePreFetcher) clearTimeout(this._partTilePreFetcher);
-
-		this._partTilePreFetcher = setTimeout(() => {
-			this.preFetchPartTiles(targetPart, this._docLayer._selectedMode);
-		}, 100);
 	}
 }
