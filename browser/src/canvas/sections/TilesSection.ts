@@ -244,14 +244,15 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 
 	private forEachTileInView(zoom: number, part: number, mode: number, ctx: any,
 		callback: (tile: any, coords: any) => boolean) {
-		var tileRanges = ctx.paneBoundsList.map(TileManager.pxBoundsToTileRange, TileManager);
+		var docLayer = this.sectionProperties.docLayer;
+		var tileRanges = ctx.paneBoundsList.map(docLayer._pxBoundsToTileRange, docLayer);
 
 		if (app.file.fileBasedView) {
-			var coordList: Array<any> = TileManager.updateFileBasedView(true);
+			var coordList: Array<any> = this.sectionProperties.docLayer._updateFileBasedView(true);
 
 			for (var k: number = 0; k < coordList.length; k++) {
 				var key = coordList[k].key();
-				var tile = TileManager.tiles[key];
+				var tile = docLayer._tiles[key];
 				if (!callback(tile, coordList[k]))
 					return;
 			}
@@ -269,7 +270,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 							mode);
 
 						const key = coords.key();
-						const tile = TileManager.tiles[key];
+						const tile = docLayer._tiles[key];
 
 						if (!callback(tile, coords))
 							return;
@@ -414,7 +415,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 		var docLayer = this.sectionProperties.docLayer;
 		var doneTiles = new Set();
 		var now = new Date();
-		this.forEachTileInView(zoom, part, mode, ctx, function (tile: any, coords: TileCoordData): boolean {
+		this.forEachTileInView(zoom, part, mode, ctx, function (tile: any, coords: any): boolean {
 
 			if (doneTiles.has(coords.key()))
 				return true;
@@ -424,7 +425,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 				return true;
 
 			// Ensure tile is within document bounds.
-			if (tile && TileManager.isValidTile(coords)) {
+			if (tile && docLayer._isValidTile(coords)) {
 				if (!this.isJSDOM) { // perf-test code
 					if (docLayer._isTileReadyToDraw(tile) || this.map._debug.tileOverlaysOn) { // Ensure tile is loaded
 						this.paint(tile, ctx, false /* async? */, now);
@@ -473,14 +474,15 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 
 	private forEachTileInArea(area: any, zoom: number, part: number, mode: number, ctx: any,
 		callback: (tile: any, coords: any, section: TilesSection) => boolean) {
+		var docLayer = this.sectionProperties.docLayer;
 
 		if (app.file.fileBasedView) {
-			var coordList: Array<any> = TileManager.updateFileBasedView(true, area, zoom);
+			var coordList: Array<any> = docLayer._updateFileBasedView(true, area, zoom);
 
 			for (var k: number = 0; k < coordList.length; k++) {
 				var coords = coordList[k];
 				var key = coords.key();
-				var tile = TileManager.tiles[key];
+				var tile = docLayer._tiles[key];
 				if (tile)
 					callback(tile, coords, this);
 			}
@@ -488,7 +490,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 			return;
 		}
 
-		var tileRange = TileManager.pxBoundsToTileRange(area);
+		var tileRange = docLayer._pxBoundsToTileRange(area);
 
 		for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
 			for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
@@ -500,7 +502,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 					mode);
 
 				const key = coords.key();
-				const tile = TileManager.tiles[key];
+				const tile = docLayer._tiles[key];
 				if (tile)
 					callback(tile, coords, this);
 			}
@@ -588,7 +590,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public ensureCanvas(tile: any, now: Date): void
 	{
-		TileManager.ensureCanvas(tile, now, false);
+		this.sectionProperties.docLayer.ensureCanvas(tile, now, false);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -829,7 +831,7 @@ export class TilesSection extends app.definitions.canvasSectionObject {
 			this.beforeDraw(canvasContext);
 			var now = new Date();
 			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, mode, ctx, function (tile, coords, section): boolean {
-				if (!tile || !docLayer._isTileReadyToDraw(tile) || !TileManager.isValidTile(coords))
+				if (!tile || !docLayer._isTileReadyToDraw(tile) || !docLayer._isValidTile(coords))
 					return false;
 
 				var tileCoords = tile.coords.getPos();

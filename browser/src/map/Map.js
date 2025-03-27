@@ -3,7 +3,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-/* global app _ Cursor JSDialog TileManager */
+/* global app _ Cursor JSDialog */
 
 L.Map = L.Evented.extend({
 
@@ -372,7 +372,7 @@ L.Map = L.Evented.extend({
 			if (this._docLayer.options.sheetGeometryDataEnabled)
 				this._docLayer.requestSheetGeometryData();
 			this._docLayer.refreshViewData();
-			TileManager.update();
+			this._docLayer._update();
 		}
 		// For calc parsing this will need SheetGeometry, so send after
 		// requesting that
