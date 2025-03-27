@@ -1497,11 +1497,6 @@ class TileManager {
 			this.initPreFetchPartTiles();
 	}
 
-	public static setDebugDeltas(state: boolean) {
-		this.debugDeltas = state;
-		this.debugDeltasDetail = state;
-	}
-
 	public static resetPreFetching(resetBorder: boolean) {
 		if (!this.checkDocLayer()) return;
 
