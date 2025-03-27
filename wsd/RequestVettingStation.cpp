@@ -140,8 +140,7 @@ void RequestVettingStation::sendUnauthorizedErrorAndShutdown()
             error += " code=" + base64Encode(sslVerifyResult);
     }
 #endif
-    sendErrorAndShutdown(_ws, error,
-                         WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+    sendErrorAndShutdown(error, WebSocketHandler::StatusCodes::POLICY_VIOLATION);
 }
 
 #if !MOBILEAPP
@@ -200,11 +199,8 @@ void RequestVettingStation::launchInstallPresets()
         if (!success)
         {
             LOG_ERR("Failed to install config [" << configId << "]");
-            if (_ws)
-            {
-                sendErrorAndShutdown(_ws, "shared config install failed",
-                                     WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
-            }
+            sendErrorAndShutdown("shared config install failed",
+                                 WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
         }
         else
         {
@@ -448,12 +444,20 @@ std::shared_ptr<DocumentBroker> RequestVettingStation::createDocBroker(
 
     // Failed.
     LOG_ERR("Failed to create DocBroker [" << docKey << "]: " << error);
-    if (_ws)
-    {
-        sendErrorAndShutdown(_ws, error, WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
-    }
+    sendErrorAndShutdown(error, WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
 
     return nullptr;
+}
+
+static void sendErrorAndShutdownWS(const std::shared_ptr<WebSocketHandler>& ws,
+                                   const std::string& msg,
+                                   WebSocketHandler::StatusCodes statusCode)
+{
+    if (ws)
+    {
+        ws->sendMessage(msg);
+        ws->shutdown(statusCode, msg); // And ignore input (done in shutdown()).
+    }
 }
 
 void RequestVettingStation::createClientSession(std::shared_ptr<DocumentBroker> docBroker,
@@ -468,7 +472,7 @@ void RequestVettingStation::createClientSession(std::shared_ptr<DocumentBroker> 
     if (!clientSession)
     {
         LOG_ERR("Failed to create Client Session [" << _id << "] on docKey [" << docKey << ']');
-        sendErrorAndShutdown(_ws, "error: cmd=internal kind=load",
+        sendErrorAndShutdown("error: cmd=internal kind=load",
                              WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
         return;
     }
@@ -521,32 +525,32 @@ void RequestVettingStation::createClientSession(std::shared_ptr<DocumentBroker> 
                 LOG_ERR_S("Unauthorized Request while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                sendErrorAndShutdown(ws, "error: cmd=internal kind=unauthorized",
-                                     WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+                sendErrorAndShutdownWS(ws, "error: cmd=internal kind=unauthorized",
+                                       WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
             catch (const StorageConnectionException& exc)
             {
                 LOG_ERR_S("Storage error while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                sendErrorAndShutdown(ws, "error: cmd=storage kind=loadfailed",
-                                     WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+                sendErrorAndShutdownWS(ws, "error: cmd=storage kind=loadfailed",
+                                       WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
             catch (const StorageSpaceLowException& exc)
             {
                 LOG_ERR_S("Disk-Full error while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                sendErrorAndShutdown(ws, "error: cmd=internal kind=diskfull",
-                                     WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
+                sendErrorAndShutdownWS(ws, "error: cmd=internal kind=diskfull",
+                                       WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
             }
             catch (const std::exception& exc)
             {
                 LOG_ERR_S("Error while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                sendErrorAndShutdown(ws, "error: cmd=storage kind=loadfailed",
-                                     WebSocketHandler::StatusCodes::POLICY_VIOLATION);
+                sendErrorAndShutdownWS(ws, "error: cmd=storage kind=loadfailed",
+                                       WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
         });
         // _socket is now the DocumentBroker poll's responsibility forget about it here
@@ -555,15 +559,13 @@ void RequestVettingStation::createClientSession(std::shared_ptr<DocumentBroker> 
         _ws.reset();
 }
 
-void RequestVettingStation::sendErrorAndShutdown(const std::shared_ptr<WebSocketHandler>& ws,
-                                                 const std::string& msg,
+void RequestVettingStation::sendErrorAndShutdown(const std::string& msg,
                                                  WebSocketHandler::StatusCodes statusCode)
 {
-    if (ws)
-    {
-        ws->sendMessage(msg);
-        ws->shutdown(statusCode, msg); // And ignore input (done in shutdown()).
-    }
+    sendErrorAndShutdownWS(_ws, msg, statusCode);
+    // abandon responsibility for these now
+    _socket.reset();
+    _ws.reset();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
