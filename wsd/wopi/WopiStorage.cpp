@@ -421,7 +421,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
     http::Session::FinishedCallback finishedCallback =
         [this, startTime, lock, wopiLog, uriAnonym, asyncLockStateCallback,
          profileZone =
-             std::move(profileZone)](const std::shared_ptr<http::Session>& httpSession) mutable
+             std::move(profileZone)](const std::shared_ptr<http::Session>& httpSession)
     {
         profileZone->end();
 
