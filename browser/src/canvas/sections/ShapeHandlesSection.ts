@@ -442,22 +442,6 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		source[0].src = decodeURIComponent(source[0].src);
 
 		this.addVideoSupportHandlers(videos);
-
-		function _fixSVGPos() {
-			var mat = this.sectionProperties.svg.getScreenCTM();
-			var boundingBox = this.context.canvas.getBoundingClientRect();
-			videoContainer.style.transform = 'matrix(' + [mat.a, mat.b, mat.c, mat.d, mat.e - boundingBox.x, mat.f - boundingBox.y].join(', ') + ')';
-		}
-		var fixSVGPos = _fixSVGPos.bind(this);
-
-		if (L.Browser.safari) {
-			fixSVGPos();
-			var observer = new MutationObserver(fixSVGPos);
-
-			observer.observe(this.context.canvas, {
-				attributes: true
-			});
-		}
 	}
 
 	removeTagFromHTML(data: string, startString: string, endString: string): string {
