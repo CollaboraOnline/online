@@ -1001,7 +1001,6 @@ app.definitions.Socket = L.Class.extend({
 
 			if (textMsg === 'idle' || textMsg === 'oom') {
 				app.idleHandler._dim();
-				TileManager.discardAllCache();
 			}
 
 			if (postMsgData['Reason']) {
