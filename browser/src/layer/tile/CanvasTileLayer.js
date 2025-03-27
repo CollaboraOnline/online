@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array cool OtherViewCellCursorSection TileCoordData */
+/* global app L JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CSplitterLine CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array cool OtherViewCellCursorSection */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -204,6 +204,41 @@ var CReferences = L.Class.extend({
 	}
 
 });
+
+
+L.TileCoordData = L.Class.extend({
+
+	initialize: function (left, top, zoom, part, mode) {
+		this.x = left;
+		this.y = top;
+		this.z = zoom;
+		this.part = part;
+		this.mode = (mode !== undefined) ? mode : 0;
+	},
+
+	getPos: function () {
+		return new L.Point(this.x, this.y);
+	},
+
+	key: function () {
+		return this.x + ':' + this.y + ':' + this.z + ':' + this.part + ':'
+			+ ((this.mode !== undefined) ? this.mode : 0);
+	},
+
+	toString: function () {
+		return '{ left : ' + this.x + ', top : ' + this.y +
+			', z : ' + this.z + ', part : ' + this.part + ', mode : ' + this.mode + ' }';
+	}
+});
+
+L.TileCoordData.parseKey = function (keyString) {
+
+	window.app.console.assert(typeof keyString === 'string', 'key should be a string');
+	var k = keyString.split(':');
+	var mode = (k.length === 4) ? +k[4] : 0;
+	window.app.console.assert(k.length >= 5, 'invalid key format');
+	return new L.TileCoordData(+k[0], +k[1], +k[2], +k[3], mode);
+};
 
 L.TileSectionManager = L.Class.extend({
 
@@ -1081,7 +1116,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var tileCombineQueue = [];
 		for (var j = tileRange.min.y; j <= tileRange.max.y; j++) {
 			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
-				var coords = new TileCoordData(i * this._tileSize, j * this._tileSize, zoom, part, mode);
+				var coords = new L.TileCoordData(i * this._tileSize, j * this._tileSize, zoom, part, mode);
 
 				if (!this._isValidTile(coords))
 					continue;
@@ -4572,7 +4607,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_twipsToCoords: function (twips) {
-		return new TileCoordData(
+		return new L.TileCoordData(
 			Math.round(twips.x / twips.tileWidth) * this._tileSize,
 			Math.round(twips.y / twips.tileHeight) * this._tileSize);
 	},
@@ -4762,7 +4797,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				for (var j = minLocalX; j <= maxLocalX; j += app.tile.size.pixels[0]) {
 					for (var k = 0; k <= vTileCountPerPart * app.tile.size.pixels[0]; k += app.tile.size.pixels[1])
 						if ((i !== startPart || k >= startY) && (i !== endPart || k <= endY))
-							queue.push(new TileCoordData(j, k, zoom, i, mode));
+							queue.push(new L.TileCoordData(j, k, zoom, i, mode));
 				}
 			}
 
@@ -4813,7 +4848,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			var tileRange = tileRanges[rangeIdx];
 			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
 				for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
-					var coords = new TileCoordData(
+					var coords = new L.TileCoordData(
 						i * this._tileSize,
 						j * this._tileSize,
 						zoom,
@@ -4991,7 +5026,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			var tileRange = tileRanges[rangeIdx];
 			for (var j = tileRange.min.y; j <= tileRange.max.y; j++) {
 				for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
-					coords = new TileCoordData(
+					coords = new L.TileCoordData(
 						i * this._tileSize,
 						j * this._tileSize,
 						zoom,
@@ -5217,7 +5252,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_keyToTileCoords: function (key) {
-		return TileCoordData.parseKey(key);
+		return L.TileCoordData.parseKey(key);
 	},
 
 	// Fix for cool#5876 allow immediate reuse of canvas context memory
@@ -6104,7 +6139,7 @@ L.TilesPreFetcher = L.Class.extend({
 				if (fetchBottomBorder) {
 					for (var i = clampedBorder.min.x; i <= clampedBorder.max.x; i++) {
 						// tiles below the visible area
-						var coords = new TileCoordData(
+						var coords = new L.TileCoordData(
 							i * tileSize,
 							borderBounds.max.y * tileSize);
 						queue.push(coords);
@@ -6114,7 +6149,7 @@ L.TilesPreFetcher = L.Class.extend({
 				if (fetchTopBorder) {
 					for (i = clampedBorder.min.x; i <= clampedBorder.max.x; i++) {
 						// tiles above the visible area
-						coords = new TileCoordData(
+						coords = new L.TileCoordData(
 							i * tileSize,
 							borderBounds.min.y * tileSize);
 						queue.push(coords);
@@ -6124,7 +6159,7 @@ L.TilesPreFetcher = L.Class.extend({
 				if (fetchRightBorder) {
 					for (i = clampedBorder.min.y; i <= clampedBorder.max.y; i++) {
 						// tiles to the right of the visible area
-						coords = new TileCoordData(
+						coords = new L.TileCoordData(
 							borderBounds.max.x * tileSize,
 							i * tileSize);
 						queue.push(coords);
@@ -6134,7 +6169,7 @@ L.TilesPreFetcher = L.Class.extend({
 				if (fetchLeftBorder) {
 					for (i = clampedBorder.min.y; i <= clampedBorder.max.y; i++) {
 						// tiles to the left of the visible area
-						coords = new TileCoordData(
+						coords = new L.TileCoordData(
 							borderBounds.min.x * tileSize,
 							i * tileSize);
 						queue.push(coords);
