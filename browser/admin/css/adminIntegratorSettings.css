@@ -1,5 +1,3 @@
-/* Todo: make branding working  */
-
 :root {
   --default-font-size: 15px;
   --animation-quick: 100ms;
@@ -18,6 +16,8 @@
   --color-border: #ededed;
   --color-border-dark: #dbdbdb;
   --color-primary-hover: #3285b1;
+  --color-primary-element-text: #ffffff;
+  --color-primary-element: #00679e;
   --color-primary-element-light: #e5eff5;
   --color-primary-element-light-text: #00293f;
 }
@@ -30,6 +30,8 @@
   --color-border: #292929;
   --color-border-dark: #3b3b3b;
   --color-primary-hover: #045783;
+  --color-primary-element-text: #000000;
+  --color-primary-element: #0091f2;
   --color-primary-element-light: #14232c;
   --color-primary-element-light-text: #99d3f9;
 }
@@ -128,6 +130,11 @@ ul {
   padding-inline: var(--default-grid-baseline) var(--button-padding);
 }
 
+.button-primary {
+  color: var(--color-primary-element-text);
+  background-color: var(--color-primary-element);
+}
+
 .button--vue-secondary {
   color: var(--color-primary-element-light-text);
   background-color: var(--color-primary-element-light);
@@ -177,7 +184,7 @@ ul {
 
 .button--vue-tertiary {
   color: var(--color-main-text);
-  background-color: rgba(0, 0, 0, 0);
+  background-color: var(--color-main-background);
 }
 
 .button--icon-only {
@@ -313,20 +320,9 @@ ul {
   background-color: var(--color-main-background);
 }
 
-.dic-input-container button {
-  margin-left: 8px;
-  padding: 8px 12px;
-  font-size: 15px;
-  cursor: pointer;
-  background-color: var(--color-primary, #00679e);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.dic-input-container button:hover {
-  background-color: var(--color-primary-hover, #3285b1);
+.wordbook-add-button {
+  padding: 8px;
+  margin: 0px 5px;
 }
 
 #dicWordList {
@@ -366,23 +362,6 @@ ul {
   transition: background-color 0.2s ease;
 }
 
-.dic-button-container button:nth-child(1) {
-  background-color: #eee;
-  color: #333;
-}
-
-.dic-button-container button:nth-child(1):hover {
-  background-color: #ddd;
-}
-
-.dic-button-container button:nth-child(2) {
-  background-color: var(--color-primary, #00679e);
-  color: #fff;
-}
-
-.dic-button-container button:nth-child(2):hover {
-  background-color: var(--color-primary-hover, #3285b1);
-}
 
 .dic-dropdown-container {
   position: relative;
