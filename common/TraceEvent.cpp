@@ -5,7 +5,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// To build a freestanding test executable for just Tracevent:
+// To build a freestanding test executable for just TraceEvent:
 // clang++ -Wall -Wextra -DTEST_TRACEEVENT_EXE TraceEvent.cpp -o TraceEvent -pthread
 
 #include "config.h"

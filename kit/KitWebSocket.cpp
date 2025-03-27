@@ -261,22 +261,23 @@ void BgSaveParentWebSocketHandler::reportFailedSave(const std::string &reason)
 
 void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
 {
-    LOG_DBG(_socketName << ": recv from parent [" <<
-            COOLProtocol::getAbbreviatedMessage(data));
-
     const StringVector tokens = StringVector::tokenize(data.data(), data.size());
 
-    // Should pass only:
-    // "error:", "forcedtracevent", "unocommandresult:"
-    // "statusindicator[start|finish|setvalue]"
-
-    // Badly don't want modified state coming from the background processx
-    if (tokens[1] == "statechanged:" ||
-        tokens[1] == "calcfunctionlist:")
+    // Only accept messages that make sense
+    if (tokens[1] != "error:" &&
+        tokens[1] != "jsdialog:" &&
+        tokens[1] != "progress:" &&
+        tokens[1] != "traceevent:" &&
+        tokens[1] != "forcedtraceevent:" &&
+        tokens[1] != "unocommandresult:")
     {
-        LOG_TRC("Don't send un-wanted message to parent: " << COOLProtocol::getAbbreviatedMessage(data));
+        LOG_TRC("Ignore un-wanted message from bg child: " <<
+                COOLProtocol::getAbbreviatedMessage(data));
         return;
     }
+
+    LOG_DBG(_socketName << ": recv from bg child [" <<
+            COOLProtocol::getAbbreviatedMessage(data));
 
     if (tokens[1] == "jsdialog:")
     {
