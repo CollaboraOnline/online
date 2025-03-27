@@ -949,8 +949,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_refreshTilesInBackground: function() {
 		for (var key in TileManager.tiles) {
-			TileManager.get(key).wireId = 0;
-			TileManager.get(key).invalidFrom = 0;
+			TileManager.tiles[key].wireId = 0;
+			TileManager.tiles[key].invalidFrom = 0;
 		}
 	},
 
@@ -4349,7 +4349,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!this._debug.debugOn)
 			return;
 
-		const tile = TileManager.get(key);
+		var tile = TileManager.tiles[key];
 		tile._debugTime = this._debug.getTimeArray();
 	},
 
