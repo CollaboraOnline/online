@@ -361,6 +361,10 @@ L.Map.include({
 
 		docLayer._parts++;
 
+		// user interaction - follow own cursor so it's visible after switch
+		if (this.userList)
+			this.userList.followUser(docLayer._getViewId());
+
 		// Since we know which part we want to set, use the index (instead of 'next', 'prev')
 		if (typeof nPos === 'number') {
 			this.setPart(nPos);
