@@ -126,6 +126,487 @@ class PaneBorder {
 	}
 }
 
+class TilesPreFetcher {
+	public static _docLayer: any;
+	static _zoom: number;
+	static _preFetchPart: number;
+	static _preFetchMode: number;
+	static _hasEditPerm: boolean;
+	static _pixelBounds: any;
+	static _splitPos: any;
+	static _borders: any;
+	static _cumTileCount: number;
+	static _preFetchIdle: any;
+	static _tilesPreFetcher: any;
+	static _partTilePreFetcher: any;
+	static _adjacentTilePreFetcher: any;
+
+	private static checkDocLayer() {
+		if (this._docLayer) return true;
+		else if (!this._docLayer && app.map._docLayer) {
+			this._docLayer = app.map._docLayer;
+			return true;
+		} else return false;
+	}
+
+	private static getMaxTileCountToPrefetch(tileSize: number): number {
+		const viewTileWidth = Math.floor(
+			(this._pixelBounds.getSize().x + tileSize - 1) / tileSize,
+		);
+
+		const viewTileHeight = Math.floor(
+			(this._pixelBounds.getSize().y + tileSize - 1) / tileSize,
+		);
+
+		// Read-only views can much more agressively pre-load
+		return (
+			Math.ceil((viewTileWidth * viewTileHeight) / 4) *
+			(!this._hasEditPerm ? 4 : 1)
+		);
+	}
+
+	private static updateProperties() {
+		let updated: boolean = false;
+
+		const zoom = app.map.getZoom();
+		if (this._zoom !== zoom) {
+			this._zoom = zoom;
+			updated = true;
+		}
+
+		const part = this._docLayer._selectedPart;
+		if (this._preFetchPart !== part) {
+			this._preFetchPart = part;
+			updated = true;
+		}
+
+		const mode = this._docLayer._selectedMode;
+		if (this._preFetchMode !== mode) {
+			this._preFetchMode = mode;
+			updated = true;
+		}
+
+		const hasEditPerm = app.map.isEditMode();
+		if (this._hasEditPerm !== hasEditPerm) {
+			this._hasEditPerm = hasEditPerm;
+			updated = true;
+		}
+
+		const center = app.map.getCenter();
+		const pixelBounds = app.map.getPixelBoundsCore(center, this._zoom);
+		if (!this._pixelBounds || !pixelBounds.equals(this._pixelBounds)) {
+			this._pixelBounds = pixelBounds;
+			updated = true;
+		}
+
+		const splitPanesContext = this._docLayer.getSplitPanesContext();
+		const splitPos = splitPanesContext
+			? splitPanesContext.getSplitPos()
+			: new L.Point(0, 0);
+		if (!this._splitPos || !splitPos.equals(this._splitPos)) {
+			this._splitPos = splitPos;
+			updated = true;
+		}
+
+		return updated;
+	}
+
+	private static computeBorders() {
+		// Need to compute borders afresh and fetch tiles for them.
+		this._borders = []; // Stores borders for each split-pane.
+		const tileRanges = TileManager.pxBoundsToTileRanges(this._pixelBounds);
+
+		const splitPanesContext = this._docLayer.getSplitPanesContext();
+		const paneStatusList = splitPanesContext
+			? splitPanesContext.getPanesProperties()
+			: [{ xFixed: false, yFixed: false }];
+
+		window.app.console.assert(
+			tileRanges.length === paneStatusList.length,
+			'tileRanges and paneStatusList should agree on the number of split-panes',
+		);
+
+		for (let paneIdx = 0; paneIdx < tileRanges.length; ++paneIdx) {
+			if (paneStatusList[paneIdx].xFixed && paneStatusList[paneIdx].yFixed) {
+				continue;
+			}
+
+			const tileRange = tileRanges[paneIdx];
+			const paneBorder = new L.Bounds(
+				tileRange.min.add(new L.Point(-1, -1)),
+				tileRange.max.add(new L.Point(1, 1)),
+			);
+
+			this._borders.push(
+				new PaneBorder(
+					paneBorder,
+					paneStatusList[paneIdx].xFixed,
+					paneStatusList[paneIdx].yFixed,
+				),
+			);
+		}
+	}
+
+	private static clearTilesPreFetcher() {
+		if (this._tilesPreFetcher !== undefined) {
+			clearInterval(this._tilesPreFetcher);
+			this._tilesPreFetcher = undefined;
+		}
+	}
+
+	private static preFetchPartTiles(part: number, mode: number): void {
+		this.updateProperties();
+
+		const tileRange = TileManager.pxBoundsToTileRange(this._pixelBounds);
+		const tileCombineQueue = [];
+
+		for (let j = tileRange.min.y; j <= tileRange.max.y; j++) {
+			for (let i = tileRange.min.x; i <= tileRange.max.x; i++) {
+				const coords = new TileCoordData(
+					i * TileManager.tileSize,
+					j * TileManager.tileSize,
+					this._zoom,
+					part,
+					mode,
+				);
+
+				if (!TileManager.isValidTile(coords)) continue;
+
+				const key = coords.key();
+				if (!TileManager.tileNeedsFetch(key)) continue;
+
+				tileCombineQueue.push(coords);
+			}
+		}
+
+		TileManager.sendTileCombineRequest(tileCombineQueue);
+	}
+
+	public static resetPreFetching(resetBorder: boolean) {
+		if (!this.checkDocLayer()) return;
+
+		this.clearPreFetch();
+
+		if (resetBorder) this._borders = undefined;
+
+		var interval = 250;
+		var idleTime = 750;
+		this._preFetchPart = this._docLayer._selectedPart;
+		this._preFetchMode = this._docLayer._selectedMode;
+		this._preFetchIdle = setTimeout(
+			L.bind(function () {
+				this._tilesPreFetcher = setInterval(
+					L.bind(this.preFetchTiles, this),
+					interval,
+				);
+				this._preFetchIdle = undefined;
+				this._cumTileCount = 0;
+			}, this),
+			idleTime,
+		);
+	}
+
+	public static clearPreFetch() {
+		if (!this.checkDocLayer()) return;
+
+		this.clearTilesPreFetcher();
+		if (this._preFetchIdle !== undefined) {
+			clearTimeout(this._preFetchIdle);
+			this._preFetchIdle = undefined;
+		}
+	}
+
+	public static preFetchTiles(forceBorderCalc: boolean, immediate: boolean) {
+		if (!this.checkDocLayer()) return;
+
+		if (app.file.fileBasedView && this._docLayer)
+			TileManager.updateFileBasedView();
+
+		if (
+			!this._docLayer ||
+			TileManager.emptyTilesCount > 0 ||
+			!this._docLayer._canonicalIdInitialized
+		)
+			return;
+
+		const propertiesUpdated = this.updateProperties();
+		const tileSize = TileManager.tileSize;
+		const maxTilesToFetch = this.getMaxTileCountToPrefetch(tileSize);
+		const maxBorderWidth = !this._hasEditPerm ? 40 : 10;
+
+		// FIXME: when we are actually editing we should pre-load much less until we stop
+		/*		if (isActiveEditing()) {
+			maxTilesToFetch = 5;
+			maxBorderWidth = 2;
+		} */
+
+		if (
+			propertiesUpdated ||
+			forceBorderCalc ||
+			!this._borders ||
+			this._borders.length === 0
+		)
+			this.computeBorders();
+
+		var finalQueue = [];
+		const visitedTiles: any = {};
+
+		var validTileRange = new L.Bounds(
+			new L.Point(0, 0),
+			new L.Point(
+				Math.floor(
+					(this._docLayer._docWidthTwips - 1) / this._docLayer._tileWidthTwips,
+				),
+				Math.floor(
+					(this._docLayer._docHeightTwips - 1) /
+						this._docLayer._tileHeightTwips,
+				),
+			),
+		);
+
+		var tilesToFetch = immediate ? Infinity : maxTilesToFetch; // total tile limit per call of preFetchTiles()
+		var doneAllPanes = true;
+
+		for (let paneIdx = 0; paneIdx < this._borders.length; ++paneIdx) {
+			const queue = [];
+			const paneBorder = this._borders[paneIdx];
+			const borderBounds = paneBorder.getBorderBounds();
+			const paneXFixed = paneBorder.isXFixed();
+			const paneYFixed = paneBorder.isYFixed();
+
+			while (tilesToFetch > 0 && paneBorder.getBorderIndex() < maxBorderWidth) {
+				const clampedBorder = validTileRange.clamp(borderBounds);
+				const fetchTopBorder =
+					!paneYFixed && borderBounds.min.y === clampedBorder.min.y;
+				const fetchBottomBorder =
+					!paneYFixed && borderBounds.max.y === clampedBorder.max.y;
+				const fetchLeftBorder =
+					!paneXFixed && borderBounds.min.x === clampedBorder.min.x;
+				const fetchRightBorder =
+					!paneXFixed && borderBounds.max.x === clampedBorder.max.x;
+
+				if (
+					!fetchLeftBorder &&
+					!fetchRightBorder &&
+					!fetchTopBorder &&
+					!fetchBottomBorder
+				) {
+					break;
+				}
+
+				if (fetchBottomBorder) {
+					for (var i = clampedBorder.min.x; i <= clampedBorder.max.x; i++) {
+						// tiles below the visible area
+						queue.push(
+							new TileCoordData(
+								i * tileSize,
+								borderBounds.max.y * tileSize,
+								this._zoom,
+								this._preFetchPart,
+								this._preFetchMode,
+							),
+						);
+					}
+				}
+
+				if (fetchTopBorder) {
+					for (i = clampedBorder.min.x; i <= clampedBorder.max.x; i++) {
+						// tiles above the visible area
+						queue.push(
+							new TileCoordData(
+								i * tileSize,
+								borderBounds.min.y * tileSize,
+								this._zoom,
+								this._preFetchPart,
+								this._preFetchMode,
+							),
+						);
+					}
+				}
+
+				if (fetchRightBorder) {
+					for (i = clampedBorder.min.y; i <= clampedBorder.max.y; i++) {
+						// tiles to the right of the visible area
+						queue.push(
+							new TileCoordData(
+								borderBounds.max.x * tileSize,
+								i * tileSize,
+								this._zoom,
+								this._preFetchPart,
+								this._preFetchMode,
+							),
+						);
+					}
+				}
+
+				if (fetchLeftBorder) {
+					for (i = clampedBorder.min.y; i <= clampedBorder.max.y; i++) {
+						// tiles to the left of the visible area
+						queue.push(
+							new TileCoordData(
+								borderBounds.min.x * tileSize,
+								i * tileSize,
+								this._zoom,
+								this._preFetchPart,
+								this._preFetchMode,
+							),
+						);
+					}
+				}
+
+				var tilesPending = false;
+				for (i = 0; i < queue.length; i++) {
+					const coords = queue[i];
+					const key: string = coords.key();
+
+					if (
+						visitedTiles[key] ||
+						!TileManager.isValidTile(coords) ||
+						!TileManager.tileNeedsFetch(key)
+					)
+						continue;
+
+					if (tilesToFetch > 0) {
+						visitedTiles[key] = true;
+						finalQueue.push(coords);
+						tilesToFetch -= 1;
+					} else {
+						tilesPending = true;
+					}
+				}
+
+				if (tilesPending) {
+					// don't update the border as there are still
+					// some tiles to be fetched
+					continue;
+				}
+
+				if (!paneXFixed) {
+					if (borderBounds.min.x > 0) {
+						borderBounds.min.x -= 1;
+					}
+					if (borderBounds.max.x < validTileRange.max.x) {
+						borderBounds.max.x += 1;
+					}
+				}
+
+				if (!paneYFixed) {
+					if (borderBounds.min.y > 0) {
+						borderBounds.min.y -= 1;
+					}
+
+					if (borderBounds.max.y < validTileRange.max.y) {
+						borderBounds.max.y += 1;
+					}
+				}
+
+				paneBorder.incBorderIndex();
+			} // border width loop end
+
+			if (paneBorder.getBorderIndex() < maxBorderWidth) {
+				doneAllPanes = false;
+			}
+		} // pane loop end
+
+		if (!immediate)
+			window.app.console.assert(
+				finalQueue.length <= maxTilesToFetch,
+				'finalQueue length(' +
+					finalQueue.length +
+					') exceeded maxTilesToFetch(' +
+					maxTilesToFetch +
+					')',
+			);
+
+		var tilesRequested = false;
+
+		if (finalQueue.length > 0) {
+			this._cumTileCount += finalQueue.length;
+			TileManager.addTiles(finalQueue, !immediate);
+			tilesRequested = true;
+		}
+
+		if (!tilesRequested || doneAllPanes) {
+			this.clearTilesPreFetcher();
+			this._borders = undefined;
+		}
+	}
+
+	public static initPreFetchPartTiles() {
+		if (!this.checkDocLayer()) return;
+
+		const targetPart = this._docLayer._selectedPart + app.map._partsDirection;
+
+		if (targetPart < 0 || targetPart >= this._docLayer._parts) return;
+
+		// check existing timeout and clear it before the new one
+		if (this._partTilePreFetcher) clearTimeout(this._partTilePreFetcher);
+
+		this._partTilePreFetcher = setTimeout(() => {
+			this.preFetchPartTiles(targetPart, this._docLayer._selectedMode);
+		}, 100);
+	}
+
+	public static initPreFetchAdjacentTiles() {
+		if (!this.checkDocLayer()) return;
+
+		this.updateProperties();
+
+		if (this._adjacentTilePreFetcher)
+			clearTimeout(this._adjacentTilePreFetcher);
+
+		this._adjacentTilePreFetcher = setTimeout(
+			function () {
+				// Extend what we request to include enough to populate a full
+				// scroll in the direction we were going after or before
+				// the current viewport
+				//
+				// request separately from the current viewPort to get
+				// those tiles first.
+
+				const direction = app.sectionContainer.getLastPanDirection();
+
+				// Conservatively enlarge the area to round to more tiles:
+				const pixelTopLeft = this._pixelBounds.getTopLeft();
+				pixelTopLeft.y =
+					Math.floor(pixelTopLeft.y / TileManager.tileSize) *
+					TileManager.tileSize;
+				pixelTopLeft.y -= 1;
+
+				const pixelBottomRight = this._pixelBounds.getBottomRight();
+				pixelBottomRight.y =
+					Math.ceil(pixelBottomRight.y / TileManager.tileSize) *
+					TileManager.tileSize;
+				pixelBottomRight.y += 1;
+
+				this._pixelBounds = new L.Bounds(pixelTopLeft, pixelBottomRight);
+
+				// Translate the area in the direction we're going.
+				this._pixelBounds.translate(
+					this._pixelBounds.getSize().x * direction[0],
+					this._pixelBounds.getSize().y * direction[1],
+				);
+
+				var queue = TileManager.getMissingTiles(this._pixelBounds, this._zoom);
+
+				if (this._docLayer.isCalc() || queue.length === 0) {
+					// pre-load more aggressively
+					this._pixelBounds.translate(
+						(this._pixelBounds.getSize().x * direction[0]) / 2,
+						(this._pixelBounds.getSize().y * direction[1]) / 2,
+					);
+					queue = queue.concat(
+						TileManager.getMissingTiles(this._pixelBounds, this._zoom),
+					);
+				}
+
+				if (queue.length !== 0) TileManager.addTiles(queue, true);
+			}.bind(this),
+			50 /*ms*/,
+		);
+	}
+}
+
 class Tile {
 	coords: TileCoordData;
 	current: boolean = true; // is this currently visible
@@ -250,34 +731,21 @@ class CanvasCache {
 }
 
 class TileManager {
-	private static _docLayer: any;
-	private static _zoom: number;
-	private static _preFetchPart: number;
-	private static _preFetchMode: number;
-	private static _hasEditPerm: boolean;
-	private static _pixelBounds: any;
-	private static _splitPos: any;
-	private static _borders: any;
-	private static _cumTileCount: number;
-	private static _preFetchIdle: any;
-	private static _tilesPreFetcher: any;
-	private static _partTilePreFetcher: any;
-	private static _adjacentTilePreFetcher: any;
+	public static tileSize: number = 256;
 	private static inTransaction: number = 0;
 	private static pendingTransactions: number = 0;
 	private static pendingDeltas: any = [];
 	private static transactionCallbacks: any = [];
 	private static worker: any;
+	public static tiles: any = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
+	public static emptyTilesCount: number = 0;
+	public static debugDeltas: boolean = false;
+	public static debugDeltasDetail: boolean = false;
 	private static gcCounter = 0; // Tile garbage collection counter
 	private static nullDeltaUpdate = 0;
 	private static queuedProcessed: any = [];
 	private static fetchKeyframeQueue: any = []; // Queue of tiles which were GC'd earlier than coolwsd expected
-	private static emptyTilesCount: number = 0;
-	private static debugDeltas: boolean = false;
-	private static debugDeltasDetail: boolean = false;
-	private static tiles: any = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
 	private static canvasCache: CanvasCache = new CanvasCache(256);
-	public static tileSize: number = 256;
 
 	//private static _debugTime: any = {}; Reserved for future.
 
@@ -656,147 +1124,6 @@ class TileManager {
 		}
 	}
 
-	private static checkDocLayer() {
-		if (this._docLayer) return true;
-		else if (!this._docLayer && app.map._docLayer) {
-			this._docLayer = app.map._docLayer;
-			return true;
-		} else return false;
-	}
-
-	private static getMaxTileCountToPrefetch(tileSize: number): number {
-		const viewTileWidth = Math.floor(
-			(this._pixelBounds.getSize().x + tileSize - 1) / tileSize,
-		);
-
-		const viewTileHeight = Math.floor(
-			(this._pixelBounds.getSize().y + tileSize - 1) / tileSize,
-		);
-
-		// Read-only views can much more agressively pre-load
-		return (
-			Math.ceil((viewTileWidth * viewTileHeight) / 4) *
-			(!this._hasEditPerm ? 4 : 1)
-		);
-	}
-
-	private static updateProperties() {
-		let updated: boolean = false;
-
-		const zoom = app.map.getZoom();
-		if (this._zoom !== zoom) {
-			this._zoom = zoom;
-			updated = true;
-		}
-
-		const part = this._docLayer._selectedPart;
-		if (this._preFetchPart !== part) {
-			this._preFetchPart = part;
-			updated = true;
-		}
-
-		const mode = this._docLayer._selectedMode;
-		if (this._preFetchMode !== mode) {
-			this._preFetchMode = mode;
-			updated = true;
-		}
-
-		const hasEditPerm = app.map.isEditMode();
-		if (this._hasEditPerm !== hasEditPerm) {
-			this._hasEditPerm = hasEditPerm;
-			updated = true;
-		}
-
-		const center = app.map.getCenter();
-		const pixelBounds = app.map.getPixelBoundsCore(center, this._zoom);
-		if (!this._pixelBounds || !pixelBounds.equals(this._pixelBounds)) {
-			this._pixelBounds = pixelBounds;
-			updated = true;
-		}
-
-		const splitPanesContext = this._docLayer.getSplitPanesContext();
-		const splitPos = splitPanesContext
-			? splitPanesContext.getSplitPos()
-			: new L.Point(0, 0);
-		if (!this._splitPos || !splitPos.equals(this._splitPos)) {
-			this._splitPos = splitPos;
-			updated = true;
-		}
-
-		return updated;
-	}
-
-	private static computeBorders() {
-		// Need to compute borders afresh and fetch tiles for them.
-		this._borders = []; // Stores borders for each split-pane.
-		const tileRanges = this.pxBoundsToTileRanges(this._pixelBounds);
-
-		const splitPanesContext = this._docLayer.getSplitPanesContext();
-		const paneStatusList = splitPanesContext
-			? splitPanesContext.getPanesProperties()
-			: [{ xFixed: false, yFixed: false }];
-
-		window.app.console.assert(
-			tileRanges.length === paneStatusList.length,
-			'tileRanges and paneStatusList should agree on the number of split-panes',
-		);
-
-		for (let paneIdx = 0; paneIdx < tileRanges.length; ++paneIdx) {
-			if (paneStatusList[paneIdx].xFixed && paneStatusList[paneIdx].yFixed) {
-				continue;
-			}
-
-			const tileRange = tileRanges[paneIdx];
-			const paneBorder = new L.Bounds(
-				tileRange.min.add(new L.Point(-1, -1)),
-				tileRange.max.add(new L.Point(1, 1)),
-			);
-
-			this._borders.push(
-				new PaneBorder(
-					paneBorder,
-					paneStatusList[paneIdx].xFixed,
-					paneStatusList[paneIdx].yFixed,
-				),
-			);
-		}
-	}
-
-	private static clearTilesPreFetcher() {
-		if (this._tilesPreFetcher !== undefined) {
-			clearInterval(this._tilesPreFetcher);
-			this._tilesPreFetcher = undefined;
-		}
-	}
-
-	private static preFetchPartTiles(part: number, mode: number): void {
-		this.updateProperties();
-
-		const tileRange = this.pxBoundsToTileRange(this._pixelBounds);
-		const tileCombineQueue = [];
-
-		for (let j = tileRange.min.y; j <= tileRange.max.y; j++) {
-			for (let i = tileRange.min.x; i <= tileRange.max.x; i++) {
-				const coords = new TileCoordData(
-					i * this.tileSize,
-					j * this.tileSize,
-					this._zoom,
-					part,
-					mode,
-				);
-
-				if (!this.isValidTile(coords)) continue;
-
-				const key = coords.key();
-				if (!this.tileNeedsFetch(key)) continue;
-
-				tileCombineQueue.push(coords);
-			}
-		}
-
-		this.sendTileCombineRequest(tileCombineQueue);
-	}
-
 	private static queueAcknowledgement(tileMsgObj: any) {
 		// Queue acknowledgment, that the tile message arrived
 		this.queuedProcessed.push(+tileMsgObj.wireId);
@@ -1158,81 +1485,112 @@ class TileManager {
 		this.canvasCache.releaseCanvas(tile);
 	}
 
-	private static initPreFetchPartTiles() {
-		if (!this.checkDocLayer()) return;
-
-		const targetPart = this._docLayer._selectedPart + app.map._partsDirection;
-
-		if (targetPart < 0 || targetPart >= this._docLayer._parts) return;
-
-		// check existing timeout and clear it before the new one
-		if (this._partTilePreFetcher) clearTimeout(this._partTilePreFetcher);
-
-		this._partTilePreFetcher = setTimeout(() => {
-			this.preFetchPartTiles(targetPart, this._docLayer._selectedMode);
-		}, 100);
+	public static sendProcessedResponse() {
+		var toSend = this.queuedProcessed;
+		this.queuedProcessed = [];
+		if (toSend.length > 0)
+			app.socket.sendMessage('tileprocessed wids=' + toSend.join(','));
+		if (this.fetchKeyframeQueue.length > 0) {
+			window.app.console.warn('re-fetching prematurely GCd keyframes');
+			this.sendTileCombineRequest(this.fetchKeyframeQueue);
+			this.fetchKeyframeQueue = [];
+		}
 	}
 
-	private static initPreFetchAdjacentTiles() {
-		if (!this.checkDocLayer()) return;
+	public static onTileMsg(textMsg: string, img: any) {
+		var tileMsgObj: any = app.socket.parseServerCmd(textMsg);
+		this.checkTileMsgObject(tileMsgObj);
 
-		this.updateProperties();
+		if (app.map._debug.tileDataOn) {
+			app.map._debug.tileDataAddMessage();
+		}
 
-		if (this._adjacentTilePreFetcher)
-			clearTimeout(this._adjacentTilePreFetcher);
+		// a rather different code-path with a png; should have its own msg perhaps.
+		if (tileMsgObj.id !== undefined) {
+			app.map.fire('tilepreview', {
+				tile: img,
+				id: tileMsgObj.id,
+				width: tileMsgObj.width,
+				height: tileMsgObj.height,
+				part: tileMsgObj.part,
+				mode: tileMsgObj.mode !== undefined ? tileMsgObj.mode : 0,
+				docType: app.map._docLayer._docType,
+			});
+			this.queueAcknowledgement(tileMsgObj);
+			return;
+		}
 
-		this._adjacentTilePreFetcher = setTimeout(
-			function () {
-				// Extend what we request to include enough to populate a full
-				// scroll in the direction we were going after or before
-				// the current viewport
-				//
-				// request separately from the current viewPort to get
-				// those tiles first.
+		var coords = this.tileMsgToCoords(tileMsgObj);
+		var key = coords.key();
+		var tile = TileManager.tiles[key];
 
-				const direction = app.sectionContainer.getLastPanDirection();
+		if (!tile) tile = this.createTile(coords, key);
 
-				// Conservatively enlarge the area to round to more tiles:
-				const pixelTopLeft = this._pixelBounds.getTopLeft();
-				pixelTopLeft.y =
-					Math.floor(pixelTopLeft.y / this.tileSize) * this.tileSize;
-				pixelTopLeft.y -= 1;
+		tile.viewId = tileMsgObj.nviewid;
+		// update monotonic timestamp
+		tile.wireId = +tileMsgObj.wireId;
+		if (tile.invalidFrom == tile.wireId)
+			window.app.console.debug('Nasty - updated wireId matches old one');
 
-				const pixelBottomRight = this._pixelBounds.getBottomRight();
-				pixelBottomRight.y =
-					Math.ceil(pixelBottomRight.y / this.tileSize) * this.tileSize;
-				pixelBottomRight.y += 1;
+		var hasContent = img != null;
 
-				this._pixelBounds = new L.Bounds(pixelTopLeft, pixelBottomRight);
+		// obscure case: we could have garbage collected the
+		// keyframe content in JS but coolwsd still thinks we have
+		// it and now we just have a delta with nothing to apply
+		// it to; if so, mark it bad to re-fetch.
+		if (
+			img &&
+			!img.isKeyframe &&
+			!tile.hasKeyframe() &&
+			tile.hasPendingKeyframe === 0
+		) {
+			window.app.console.debug(
+				'Unusual: Delta sent - but we have no keyframe for ' + key,
+			);
+			// force keyframe
+			tile.wireId = 0;
+			tile.invalidFrom = 0;
+			tile.gcErrors++;
 
-				// Translate the area in the direction we're going.
-				this._pixelBounds.translate(
-					this._pixelBounds.getSize().x * direction[0],
-					this._pixelBounds.getSize().y * direction[1],
-				);
+			// queue a later fetch of this and any other
+			// rogue tiles in this state
+			this.fetchKeyframeQueue.push(coords);
 
-				var queue = this.getMissingTiles(this._pixelBounds, this._zoom);
+			hasContent = false;
+		}
 
-				if (this._docLayer.isCalc() || queue.length === 0) {
-					// pre-load more aggressively
-					this._pixelBounds.translate(
-						(this._pixelBounds.getSize().x * direction[0]) / 2,
-						(this._pixelBounds.getSize().y * direction[1]) / 2,
-					);
-					queue = queue.concat(
-						this.getMissingTiles(this._pixelBounds, this._zoom),
-					);
-				}
+		// updates don't need more chattiness with a tileprocessed
+		if (hasContent) {
+			this.applyCompressedDelta(tile, img.rawData, img.isKeyframe, true);
+		}
 
-				if (queue.length !== 0) this.addTiles(queue, true);
-			}.bind(this),
-			50 /*ms*/,
-		);
+		this.queueAcknowledgement(tileMsgObj);
 	}
 
-	private static sendTileCombineRequest(
-		tileCombineQueue: Array<TileCoordData>,
-	) {
+	// Returns a guess of how many tiles are yet to arrive
+	public static predictTilesToSlurp() {
+		if (!this.checkPointers()) return 0;
+
+		var size = app.map.getSize();
+
+		if (size.x === 0 || size.y === 0) return 0;
+
+		var zoom = Math.round(app.map.getZoom());
+		var pixelBounds = app.map.getPixelBoundsCore(app.map.getCenter(), zoom);
+
+		var queue = this.getMissingTiles(pixelBounds, zoom);
+
+		return queue.length;
+	}
+
+	public static pruneTiles() {
+		// update tile.current for the view
+		if (app.file.fileBasedView) this.updateFileBasedView(true);
+
+		this.garbageCollect();
+	}
+
+	public static sendTileCombineRequest(tileCombineQueue: Array<TileCoordData>) {
 		if (tileCombineQueue.length <= 0) return;
 
 		// Sort into buckets of consistent part & mode.
@@ -1309,553 +1667,9 @@ class TileManager {
 		}
 	}
 
-	private static tileNeedsFetch(key: string) {
+	public static tileNeedsFetch(key: string) {
 		const tile = this.tiles[key];
 		return !tile || tile.needsFetch();
-	}
-
-	private static pxBoundsToTileRanges(bounds: any) {
-		if (!this.checkPointers()) return null;
-
-		if (!app.map._docLayer._splitPanesContext) {
-			return [this.pxBoundsToTileRange(bounds)];
-		}
-
-		var boundList = app.map._docLayer._splitPanesContext.getPxBoundList(bounds);
-		return boundList.map(this.pxBoundsToTileRange, this);
-	}
-
-	private static getMissingTiles(pixelBounds: any, zoom: number) {
-		var tileRanges = this.pxBoundsToTileRanges(pixelBounds);
-		var queue = [];
-
-		// create a queue of coordinates to load tiles from
-		this.beginTransaction();
-		var redraw = false;
-		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
-			var tileRange = tileRanges[rangeIdx];
-			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
-				for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
-					var coords = new TileCoordData(
-						i * this.tileSize,
-						j * this.tileSize,
-						zoom,
-						app.map._docLayer._selectedPart,
-						app.map._docLayer._selectedMode,
-					);
-
-					if (!this.isValidTile(coords)) {
-						continue;
-					}
-
-					var key = coords.key();
-					var tile = this.tiles[key];
-					if (tile && !tile.needsFetch())
-						redraw = redraw || this.makeTileCurrent(tile);
-					else queue.push(coords);
-				}
-			}
-		}
-		this.endTransaction(
-			redraw ? () => app.sectionContainer.requestReDraw() : null,
-		);
-
-		return queue;
-	}
-
-	// create tiles if needed for queued coordinates, and build a
-	// tilecombined request for any tiles we need to fetch.
-	private static addTiles(coordsQueue: Array<any>, preFetch: boolean) {
-		var coords, key;
-
-		// If we're pre-fetching, we may end up rehydrating tiles, so begin a transaction
-		// so that they're grouped together.
-		if (preFetch) this.beginTransaction();
-
-		var redraw = false;
-		for (var i = 0; i < coordsQueue.length; i++) {
-			coords = coordsQueue[i];
-
-			key = coords.key();
-
-			if (
-				coords.part === app.map._docLayer._selectedPart &&
-				coords.mode === app.map._docLayer._selectedMode
-			) {
-				var tile = this.tiles[key];
-				if (!tile) {
-					// We always want to ensure the tile
-					// exists.
-					tile = this.createTile(coords, key);
-				}
-				if (preFetch) {
-					// If preFetching at idle, take the
-					// opportunity to create an up to date
-					// canvas for the tile in advance.
-					this.ensureCanvas(tile, null, true);
-					redraw = redraw || tile.hasPendingUpdate();
-				}
-			}
-		}
-
-		if (preFetch)
-			this.endTransaction(
-				redraw ? () => app.sectionContainer.requestReDraw() : null,
-			);
-
-		// sort the tiles by the rows
-		coordsQueue.sort(function (a, b) {
-			if (a.y !== b.y) {
-				return a.y - b.y;
-			} else {
-				return a.x - b.x;
-			}
-		});
-
-		// try group the tiles into rectangular areas
-		var rectangles = [];
-		while (coordsQueue.length > 0) {
-			coords = coordsQueue[0];
-
-			// tiles that do not interest us
-			key = coords.key();
-			if (
-				!this.tileNeedsFetch(key) ||
-				coords.part !== app.map._docLayer._selectedPart ||
-				coords.mode !== app.map._docLayer._selectedMode
-			) {
-				coordsQueue.splice(0, 1);
-				continue;
-			}
-
-			// While we are actively scrolling, filter out duplicate
-			// (still) missing tiles requests during the scroll.
-			if (app.map._docLayer._moveInProgress) {
-				if (app.map._docLayer._moveTileRequests.includes(key)) {
-					coordsQueue.splice(0, 1);
-					continue;
-				}
-				app.map._docLayer._moveTileRequests.push(key);
-			}
-
-			var rectQueue = [coords];
-			var bound = coords.getPos(); // L.Point
-
-			// remove it
-			coordsQueue.splice(0, 1);
-
-			// find the close ones
-			var rowLocked = false;
-			var hasHole = false;
-			i = 0;
-			while (i < coordsQueue.length) {
-				var current = coordsQueue[i];
-
-				// extend the bound vertically if possible (so far it was
-				// continuous)
-				if (!hasHole && current.y === bound.y + this.tileSize) {
-					rowLocked = true;
-					bound.y += this.tileSize;
-				}
-
-				if (current.y > bound.y) {
-					break;
-				}
-
-				if (!rowLocked) {
-					if (current.y === bound.y && current.x === bound.x + this.tileSize) {
-						// extend the bound horizontally
-						bound.x += this.tileSize;
-						rectQueue.push(current);
-						coordsQueue.splice(i, 1);
-					} else {
-						// ignore the rest of the row
-						rowLocked = true;
-						++i;
-					}
-				} else if (current.x <= bound.x && current.y <= bound.y) {
-					// we are inside the bound
-					rectQueue.push(current);
-					coordsQueue.splice(i, 1);
-				} else {
-					// ignore this one, but there still may be other tiles
-					hasHole = true;
-					++i;
-				}
-			}
-
-			rectangles.push(rectQueue);
-		}
-
-		for (var r = 0; r < rectangles.length; ++r)
-			this.sendTileCombineRequest(rectangles[r]);
-
-		if (
-			app.map._docLayer._docType === 'presentation' ||
-			app.map._docLayer._docType === 'drawing'
-		)
-			this.initPreFetchPartTiles();
-	}
-
-	public static resetPreFetching(resetBorder: boolean) {
-		if (!this.checkDocLayer()) return;
-
-		this.clearPreFetch();
-
-		if (resetBorder) this._borders = undefined;
-
-		var interval = 250;
-		var idleTime = 750;
-		this._preFetchPart = this._docLayer._selectedPart;
-		this._preFetchMode = this._docLayer._selectedMode;
-		this._preFetchIdle = setTimeout(
-			L.bind(function () {
-				this._tilesPreFetcher = setInterval(
-					L.bind(this.preFetchTiles, this),
-					interval,
-				);
-				this._preFetchIdle = undefined;
-				this._cumTileCount = 0;
-			}, this),
-			idleTime,
-		);
-	}
-
-	public static clearPreFetch() {
-		if (!this.checkDocLayer()) return;
-
-		this.clearTilesPreFetcher();
-		if (this._preFetchIdle !== undefined) {
-			clearTimeout(this._preFetchIdle);
-			this._preFetchIdle = undefined;
-		}
-	}
-
-	public static preFetchTiles(forceBorderCalc: boolean, immediate: boolean) {
-		if (!this.checkDocLayer()) return;
-
-		if (app.file.fileBasedView && this._docLayer) this.updateFileBasedView();
-
-		if (
-			!this._docLayer ||
-			this.emptyTilesCount > 0 ||
-			!this._docLayer._canonicalIdInitialized
-		)
-			return;
-
-		const propertiesUpdated = this.updateProperties();
-		const tileSize = this.tileSize;
-		const maxTilesToFetch = this.getMaxTileCountToPrefetch(tileSize);
-		const maxBorderWidth = !this._hasEditPerm ? 40 : 10;
-
-		// FIXME: when we are actually editing we should pre-load much less until we stop
-		/*		if (isActiveEditing()) {
-			maxTilesToFetch = 5;
-			maxBorderWidth = 2;
-		} */
-
-		if (
-			propertiesUpdated ||
-			forceBorderCalc ||
-			!this._borders ||
-			this._borders.length === 0
-		)
-			this.computeBorders();
-
-		var finalQueue = [];
-		const visitedTiles: any = {};
-
-		var validTileRange = new L.Bounds(
-			new L.Point(0, 0),
-			new L.Point(
-				Math.floor(
-					(this._docLayer._docWidthTwips - 1) / this._docLayer._tileWidthTwips,
-				),
-				Math.floor(
-					(this._docLayer._docHeightTwips - 1) /
-						this._docLayer._tileHeightTwips,
-				),
-			),
-		);
-
-		var tilesToFetch = immediate ? Infinity : maxTilesToFetch; // total tile limit per call of preFetchTiles()
-		var doneAllPanes = true;
-
-		for (let paneIdx = 0; paneIdx < this._borders.length; ++paneIdx) {
-			const queue = [];
-			const paneBorder = this._borders[paneIdx];
-			const borderBounds = paneBorder.getBorderBounds();
-			const paneXFixed = paneBorder.isXFixed();
-			const paneYFixed = paneBorder.isYFixed();
-
-			while (tilesToFetch > 0 && paneBorder.getBorderIndex() < maxBorderWidth) {
-				const clampedBorder = validTileRange.clamp(borderBounds);
-				const fetchTopBorder =
-					!paneYFixed && borderBounds.min.y === clampedBorder.min.y;
-				const fetchBottomBorder =
-					!paneYFixed && borderBounds.max.y === clampedBorder.max.y;
-				const fetchLeftBorder =
-					!paneXFixed && borderBounds.min.x === clampedBorder.min.x;
-				const fetchRightBorder =
-					!paneXFixed && borderBounds.max.x === clampedBorder.max.x;
-
-				if (
-					!fetchLeftBorder &&
-					!fetchRightBorder &&
-					!fetchTopBorder &&
-					!fetchBottomBorder
-				) {
-					break;
-				}
-
-				if (fetchBottomBorder) {
-					for (var i = clampedBorder.min.x; i <= clampedBorder.max.x; i++) {
-						// tiles below the visible area
-						queue.push(
-							new TileCoordData(
-								i * tileSize,
-								borderBounds.max.y * tileSize,
-								this._zoom,
-								this._preFetchPart,
-								this._preFetchMode,
-							),
-						);
-					}
-				}
-
-				if (fetchTopBorder) {
-					for (i = clampedBorder.min.x; i <= clampedBorder.max.x; i++) {
-						// tiles above the visible area
-						queue.push(
-							new TileCoordData(
-								i * tileSize,
-								borderBounds.min.y * tileSize,
-								this._zoom,
-								this._preFetchPart,
-								this._preFetchMode,
-							),
-						);
-					}
-				}
-
-				if (fetchRightBorder) {
-					for (i = clampedBorder.min.y; i <= clampedBorder.max.y; i++) {
-						// tiles to the right of the visible area
-						queue.push(
-							new TileCoordData(
-								borderBounds.max.x * tileSize,
-								i * tileSize,
-								this._zoom,
-								this._preFetchPart,
-								this._preFetchMode,
-							),
-						);
-					}
-				}
-
-				if (fetchLeftBorder) {
-					for (i = clampedBorder.min.y; i <= clampedBorder.max.y; i++) {
-						// tiles to the left of the visible area
-						queue.push(
-							new TileCoordData(
-								borderBounds.min.x * tileSize,
-								i * tileSize,
-								this._zoom,
-								this._preFetchPart,
-								this._preFetchMode,
-							),
-						);
-					}
-				}
-
-				var tilesPending = false;
-				for (i = 0; i < queue.length; i++) {
-					const coords = queue[i];
-					const key: string = coords.key();
-
-					if (
-						visitedTiles[key] ||
-						!this.isValidTile(coords) ||
-						!this.tileNeedsFetch(key)
-					)
-						continue;
-
-					if (tilesToFetch > 0) {
-						visitedTiles[key] = true;
-						finalQueue.push(coords);
-						tilesToFetch -= 1;
-					} else {
-						tilesPending = true;
-					}
-				}
-
-				if (tilesPending) {
-					// don't update the border as there are still
-					// some tiles to be fetched
-					continue;
-				}
-
-				if (!paneXFixed) {
-					if (borderBounds.min.x > 0) {
-						borderBounds.min.x -= 1;
-					}
-					if (borderBounds.max.x < validTileRange.max.x) {
-						borderBounds.max.x += 1;
-					}
-				}
-
-				if (!paneYFixed) {
-					if (borderBounds.min.y > 0) {
-						borderBounds.min.y -= 1;
-					}
-
-					if (borderBounds.max.y < validTileRange.max.y) {
-						borderBounds.max.y += 1;
-					}
-				}
-
-				paneBorder.incBorderIndex();
-			} // border width loop end
-
-			if (paneBorder.getBorderIndex() < maxBorderWidth) {
-				doneAllPanes = false;
-			}
-		} // pane loop end
-
-		if (!immediate)
-			window.app.console.assert(
-				finalQueue.length <= maxTilesToFetch,
-				'finalQueue length(' +
-					finalQueue.length +
-					') exceeded maxTilesToFetch(' +
-					maxTilesToFetch +
-					')',
-			);
-
-		var tilesRequested = false;
-
-		if (finalQueue.length > 0) {
-			this._cumTileCount += finalQueue.length;
-			this.addTiles(finalQueue, !immediate);
-			tilesRequested = true;
-		}
-
-		if (!tilesRequested || doneAllPanes) {
-			this.clearTilesPreFetcher();
-			this._borders = undefined;
-		}
-	}
-
-	public static sendProcessedResponse() {
-		var toSend = this.queuedProcessed;
-		this.queuedProcessed = [];
-		if (toSend.length > 0)
-			app.socket.sendMessage('tileprocessed wids=' + toSend.join(','));
-		if (this.fetchKeyframeQueue.length > 0) {
-			window.app.console.warn('re-fetching prematurely GCd keyframes');
-			this.sendTileCombineRequest(this.fetchKeyframeQueue);
-			this.fetchKeyframeQueue = [];
-		}
-	}
-
-	public static onTileMsg(textMsg: string, img: any) {
-		var tileMsgObj: any = app.socket.parseServerCmd(textMsg);
-		this.checkTileMsgObject(tileMsgObj);
-
-		if (app.map._debug.tileDataOn) {
-			app.map._debug.tileDataAddMessage();
-		}
-
-		// a rather different code-path with a png; should have its own msg perhaps.
-		if (tileMsgObj.id !== undefined) {
-			app.map.fire('tilepreview', {
-				tile: img,
-				id: tileMsgObj.id,
-				width: tileMsgObj.width,
-				height: tileMsgObj.height,
-				part: tileMsgObj.part,
-				mode: tileMsgObj.mode !== undefined ? tileMsgObj.mode : 0,
-				docType: app.map._docLayer._docType,
-			});
-			this.queueAcknowledgement(tileMsgObj);
-			return;
-		}
-
-		var coords = this.tileMsgToCoords(tileMsgObj);
-		var key = coords.key();
-		var tile = this.tiles[key];
-
-		if (!tile) tile = this.createTile(coords, key);
-
-		tile.viewId = tileMsgObj.nviewid;
-		// update monotonic timestamp
-		tile.wireId = +tileMsgObj.wireId;
-		if (tile.invalidFrom == tile.wireId)
-			window.app.console.debug('Nasty - updated wireId matches old one');
-
-		var hasContent = img != null;
-
-		// obscure case: we could have garbage collected the
-		// keyframe content in JS but coolwsd still thinks we have
-		// it and now we just have a delta with nothing to apply
-		// it to; if so, mark it bad to re-fetch.
-		if (
-			img &&
-			!img.isKeyframe &&
-			!tile.hasKeyframe() &&
-			tile.hasPendingKeyframe === 0
-		) {
-			window.app.console.debug(
-				'Unusual: Delta sent - but we have no keyframe for ' + key,
-			);
-			// force keyframe
-			tile.wireId = 0;
-			tile.invalidFrom = 0;
-			tile.gcErrors++;
-
-			// queue a later fetch of this and any other
-			// rogue tiles in this state
-			this.fetchKeyframeQueue.push(coords);
-
-			hasContent = false;
-		}
-
-		// updates don't need more chattiness with a tileprocessed
-		if (hasContent) {
-			this.applyCompressedDelta(tile, img.rawData, img.isKeyframe, true);
-		}
-
-		this.queueAcknowledgement(tileMsgObj);
-	}
-
-	// Returns a guess of how many tiles are yet to arrive
-	public static predictTilesToSlurp() {
-		if (!this.checkPointers()) return 0;
-
-		var size = app.map.getSize();
-
-		if (size.x === 0 || size.y === 0) return 0;
-
-		var zoom = Math.round(app.map.getZoom());
-		var pixelBounds = app.map.getPixelBoundsCore(app.map.getCenter(), zoom);
-
-		var queue = this.getMissingTiles(pixelBounds, zoom);
-
-		return queue.length;
-	}
-
-	public static pruneTiles() {
-		// update tile.current for the view
-		if (app.file.fileBasedView) this.updateFileBasedView(true);
-
-		this.garbageCollect();
-	}
-
-	public static discardAllCache() {
-		// update tile.current for the view
-		if (app.file.fileBasedView) this.updateFileBasedView(true);
-
-		this.garbageCollect(true);
 	}
 
 	public static isValidTile(coords: TileCoordData) {
@@ -1939,7 +1753,7 @@ class TileManager {
 		if (queue.length !== 0) this.addTiles(queue, false);
 
 		if (app.map._docLayer.isCalc() || app.map._docLayer.isWriter())
-			this.initPreFetchAdjacentTiles();
+			TilesPreFetcher.initPreFetchAdjacentTiles();
 	}
 
 	public static onWorkerMessage(e: any) {
@@ -2074,7 +1888,7 @@ class TileManager {
 			app.map._docLayer._docType === 'presentation' ||
 			app.map._docLayer._docType === 'drawing'
 		)
-			this.initPreFetchPartTiles();
+			TilesPreFetcher.initPreFetchPartTiles();
 	}
 
 	public static pxBoundsToTileRange(bounds: any) {
@@ -2082,6 +1896,55 @@ class TileManager {
 			bounds.min.divideBy(this.tileSize).floor(),
 			bounds.max.divideBy(this.tileSize).floor(),
 		);
+	}
+
+	public static pxBoundsToTileRanges(bounds: any) {
+		if (!this.checkPointers()) return null;
+
+		if (!app.map._docLayer._splitPanesContext) {
+			return [this.pxBoundsToTileRange(bounds)];
+		}
+
+		var boundList = app.map._docLayer._splitPanesContext.getPxBoundList(bounds);
+		return boundList.map(this.pxBoundsToTileRange, this);
+	}
+
+	public static getMissingTiles(pixelBounds: any, zoom: number) {
+		var tileRanges = this.pxBoundsToTileRanges(pixelBounds);
+		var queue = [];
+
+		// create a queue of coordinates to load tiles from
+		this.beginTransaction();
+		var redraw = false;
+		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
+			var tileRange = tileRanges[rangeIdx];
+			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
+				for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
+					var coords = new TileCoordData(
+						i * this.tileSize,
+						j * this.tileSize,
+						zoom,
+						app.map._docLayer._selectedPart,
+						app.map._docLayer._selectedMode,
+					);
+
+					if (!this.isValidTile(coords)) {
+						continue;
+					}
+
+					var key = coords.key();
+					var tile = this.tiles[key];
+					if (tile && !tile.needsFetch())
+						redraw = redraw || this.makeTileCurrent(tile);
+					else queue.push(coords);
+				}
+			}
+		}
+		this.endTransaction(
+			redraw ? () => app.sectionContainer.requestReDraw() : null,
+		);
+
+		return queue;
 	}
 
 	public static updateFileBasedView(
@@ -2213,6 +2076,140 @@ class TileManager {
 			}
 			this.sendTileCombineRequest(tileCombineQueue);
 		}
+	}
+
+	// create tiles if needed for queued coordinates, and build a
+	// tilecombined request for any tiles we need to fetch.
+	public static addTiles(coordsQueue: Array<any>, preFetch: boolean) {
+		var coords, key;
+
+		// If we're pre-fetching, we may end up rehydrating tiles, so begin a transaction
+		// so that they're grouped together.
+		if (preFetch) this.beginTransaction();
+
+		var redraw = false;
+		for (var i = 0; i < coordsQueue.length; i++) {
+			coords = coordsQueue[i];
+
+			key = coords.key();
+
+			if (
+				coords.part === app.map._docLayer._selectedPart &&
+				coords.mode === app.map._docLayer._selectedMode
+			) {
+				var tile = this.tiles[key];
+				if (!tile) {
+					// We always want to ensure the tile
+					// exists.
+					tile = this.createTile(coords, key);
+				}
+				if (preFetch) {
+					// If preFetching at idle, take the
+					// opportunity to create an up to date
+					// canvas for the tile in advance.
+					this.ensureCanvas(tile, null, true);
+					redraw = redraw || tile.hasPendingUpdate();
+				}
+			}
+		}
+
+		if (preFetch)
+			this.endTransaction(
+				redraw ? () => app.sectionContainer.requestReDraw() : null,
+			);
+
+		// sort the tiles by the rows
+		coordsQueue.sort(function (a, b) {
+			if (a.y !== b.y) {
+				return a.y - b.y;
+			} else {
+				return a.x - b.x;
+			}
+		});
+
+		// try group the tiles into rectangular areas
+		var rectangles = [];
+		while (coordsQueue.length > 0) {
+			coords = coordsQueue[0];
+
+			// tiles that do not interest us
+			key = coords.key();
+			if (
+				!this.tileNeedsFetch(key) ||
+				coords.part !== app.map._docLayer._selectedPart ||
+				coords.mode !== app.map._docLayer._selectedMode
+			) {
+				coordsQueue.splice(0, 1);
+				continue;
+			}
+
+			// While we are actively scrolling, filter out duplicate
+			// (still) missing tiles requests during the scroll.
+			if (app.map._docLayer._moveInProgress) {
+				if (app.map._docLayer._moveTileRequests.includes(key)) {
+					coordsQueue.splice(0, 1);
+					continue;
+				}
+				app.map._docLayer._moveTileRequests.push(key);
+			}
+
+			var rectQueue = [coords];
+			var bound = coords.getPos(); // L.Point
+
+			// remove it
+			coordsQueue.splice(0, 1);
+
+			// find the close ones
+			var rowLocked = false;
+			var hasHole = false;
+			i = 0;
+			while (i < coordsQueue.length) {
+				var current = coordsQueue[i];
+
+				// extend the bound vertically if possible (so far it was
+				// continuous)
+				if (!hasHole && current.y === bound.y + this.tileSize) {
+					rowLocked = true;
+					bound.y += this.tileSize;
+				}
+
+				if (current.y > bound.y) {
+					break;
+				}
+
+				if (!rowLocked) {
+					if (current.y === bound.y && current.x === bound.x + this.tileSize) {
+						// extend the bound horizontally
+						bound.x += this.tileSize;
+						rectQueue.push(current);
+						coordsQueue.splice(i, 1);
+					} else {
+						// ignore the rest of the row
+						rowLocked = true;
+						++i;
+					}
+				} else if (current.x <= bound.x && current.y <= bound.y) {
+					// we are inside the bound
+					rectQueue.push(current);
+					coordsQueue.splice(i, 1);
+				} else {
+					// ignore this one, but there still may be other tiles
+					hasHole = true;
+					++i;
+				}
+			}
+
+			rectangles.push(rectQueue);
+		}
+
+		for (var r = 0; r < rectangles.length; ++r)
+			this.sendTileCombineRequest(rectangles[r]);
+
+		if (
+			app.map._docLayer._docType === 'presentation' ||
+			app.map._docLayer._docType === 'drawing'
+		)
+			TilesPreFetcher.initPreFetchPartTiles();
 	}
 
 	// We keep tile content around, but it will need
