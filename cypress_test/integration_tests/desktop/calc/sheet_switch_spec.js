@@ -4,6 +4,30 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', function() {
+	beforeEach(function() {
+		helper.setupAndLoadDocument('calc/calc-zoomed.fods');
+	});
+
+	/* calc-zoomed.fods opens with the cell selection in the bottom right corner
+	 * which can be later covered by the sidebar - causing it to be invisible */
+
+	it('Check view position on sheet switch', function() {
+		// we should be somewhere far from A1
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'CQ1017');
+		desktopHelper.assertScrollbarPosition('vertical', 310, 350);
+		desktopHelper.assertScrollbarPosition('horizontal', 480, 520);
+
+		// insert sheet
+		cy.cGet('#sheets-buttons-toolbox #insertsheet').click();
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
+
+		// after switch we should see cursor and A1
+		desktopHelper.assertScrollbarPosition('vertical', 0, 50);
+		desktopHelper.assertScrollbarPosition('horizontal', 0, 50);
+	});
+});
+
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/switch.ods');
