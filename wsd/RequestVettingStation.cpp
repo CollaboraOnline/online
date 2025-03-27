@@ -549,6 +549,8 @@ void RequestVettingStation::createClientSession(std::shared_ptr<DocumentBroker> 
                                      WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
         });
+        // _socket is now the DocumentBroker poll's responsibility forget about it here
+        _socket.reset();
 }
 
 void RequestVettingStation::sendErrorAndShutdown(const std::shared_ptr<WebSocketHandler>& ws,
