@@ -111,27 +111,23 @@ class PaneBorder {
 }
 
 class TilesPreFetcher {
-	public static _docLayer: any;
-	static _zoom: number;
-	static _preFetchPart: number;
-	static _preFetchMode: number;
-	static _hasEditPerm: boolean;
-	static _pixelBounds: any;
-	static _splitPos: any;
-	static _borders: any;
-	static _cumTileCount: number;
-	static _preFetchIdle: any;
-	static _tilesPreFetcher: any;
+	_docLayer: any;
+	_zoom: number;
+	_preFetchPart: number;
+	_preFetchMode: number;
+	_hasEditPerm: boolean;
+	_pixelBounds: any;
+	_splitPos: any;
+	_borders: any;
+	_cumTileCount: number;
+	_preFetchIdle: any;
+	_tilesPreFetcher: any;
 
-	private static checkDocLayer() {
-		if (this._docLayer) return true;
-		else if (!this._docLayer && app.map._docLayer) {
-			this._docLayer = app.map._docLayer;
-			return true;
-		} else return false;
+	constructor(docLayer: any) {
+		this._docLayer = docLayer;
 	}
 
-	private static getMaxTileCountToPrefetch(tileSize: number): number {
+	private getMaxTileCountToPrefetch(tileSize: number): number {
 		const viewTileWidth = Math.floor(
 			(this._pixelBounds.getSize().x + tileSize - 1) / tileSize,
 		);
@@ -147,7 +143,7 @@ class TilesPreFetcher {
 		);
 	}
 
-	private static updateProperties() {
+	private updateProperties() {
 		let updated: boolean = false;
 
 		const zoom = app.map.getZoom();
@@ -193,7 +189,7 @@ class TilesPreFetcher {
 		return updated;
 	}
 
-	private static computeBorders() {
+	private computeBorders() {
 		// Need to compute borders afresh and fetch tiles for them.
 		this._borders = []; // Stores borders for each split-pane.
 		const tileRanges = this._docLayer._pxBoundsToTileRanges(this._pixelBounds);
@@ -229,16 +225,14 @@ class TilesPreFetcher {
 		}
 	}
 
-	private static clearTilesPreFetcher() {
+	private clearTilesPreFetcher() {
 		if (this._tilesPreFetcher !== undefined) {
 			clearInterval(this._tilesPreFetcher);
 			this._tilesPreFetcher = undefined;
 		}
 	}
 
-	public static resetPreFetching(resetBorder: boolean) {
-		if (!this.checkDocLayer()) return;
-
+	public resetPreFetching(resetBorder: boolean) {
 		this.clearPreFetch();
 
 		if (resetBorder) this._borders = undefined;
@@ -260,9 +254,7 @@ class TilesPreFetcher {
 		);
 	}
 
-	public static clearPreFetch() {
-		if (!this.checkDocLayer()) return;
-
+	public clearPreFetch() {
 		this.clearTilesPreFetcher();
 		if (this._preFetchIdle !== undefined) {
 			clearTimeout(this._preFetchIdle);
@@ -270,9 +262,7 @@ class TilesPreFetcher {
 		}
 	}
 
-	public static preFetchTiles(forceBorderCalc: boolean, immediate: boolean) {
-		if (!this.checkDocLayer()) return;
-
+	public preFetchTiles(forceBorderCalc: boolean, immediate: boolean) {
 		if (app.file.fileBasedView && this._docLayer)
 			this._docLayer._updateFileBasedView();
 

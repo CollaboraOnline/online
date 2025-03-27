@@ -8,7 +8,7 @@ L.Map.mergeOptions({
 	touchGesture: true,
 });
 
-/* global Hammer app $ GraphicSelection TilesPreFetcher */
+/* global Hammer app $ GraphicSelection */
 L.Map.TouchGesture = L.Handler.extend({
 	statics: {
 		MAP: 1,
@@ -701,8 +701,8 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._map.dragging._draggable._onMove(e);
 
 			// Prefetch border tiles for the current visible area after cancelling any scheduled calls to the prefetcher.
-			TilesPreFetcher.clearPreFetch();
-			TilesPreFetcher.preFetchTiles(true /* forceBorderCalc */);
+			this._map._docLayer._clearPreFetch();
+			this._map._docLayer._preFetchTiles(true /* forceBorderCalc */);
 
 			if (!horizontalEnd || !verticalEnd) {
 				this.autoscrollAnimReq = app.util.requestAnimFrame(this._autoscroll, this, true);
