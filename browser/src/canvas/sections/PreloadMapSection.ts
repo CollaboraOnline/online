@@ -102,7 +102,7 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 					var tile = undefined;
 
 					if (i >= 0 && j >= 0 && range.part >= 0) {
-						var coords = new TileCoordData(
+						var coords = new L.TileCoordData(
 							i * ctx.tileSize.x,
 							j * ctx.tileSize.y,
 							zoom,
