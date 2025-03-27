@@ -1506,45 +1506,6 @@ class TileManager {
 		return this.tiles[key];
 	}
 
-	public static overlapInvalidatedRectangleWithView(
-		part: number,
-		mode: number,
-		wireId: number,
-		invalidatedRectangle: cool.SimpleRectangle,
-		textMsg: string,
-	) {
-		let needsNewTiles = false;
-
-		for (const key in TileManager.tiles) {
-			const coords: TileCoordData = TileManager.get(key).coords;
-			const tileRectangle = [coords.x, coords.y, this.tileSize, this.tileSize];
-
-			if (
-				coords.part === part &&
-				coords.mode === mode &&
-				invalidatedRectangle.intersectsRectangle(tileRectangle)
-			) {
-				if (app.isRectangleVisibleInTheDisplayedArea(tileRectangle)) {
-					TileManager.invalidateTile(key, wireId);
-					needsNewTiles = true;
-				}
-			}
-		}
-
-		if (
-			app.map._docLayer._debug.tileInvalidationsOn &&
-			part === app.map._docLayer._selectedPart
-		) {
-			app.map._docLayer._debug.addTileInvalidationRectangle(
-				invalidatedRectangle.toArray(),
-				textMsg,
-			);
-
-			if (needsNewTiles && mode === app.map._docLayer._selectedMode)
-				app.map._docLayer._debug.addTileInvalidationMessage(textMsg);
-		}
-	}
-
 	public static resetPreFetching(resetBorder: boolean) {
 		if (!this.checkDocLayer()) return;
 
@@ -2268,8 +2229,8 @@ class TileManager {
 	// know what monotonic time the invalidate came from
 	// so we match this to a new incoming tile to unset
 	// the invalid state later.
-	public static invalidateTile(key: any, wireId: number) {
-		const tile: Tile = this.tiles[key];
+	public static invalidateTile(key: any, wireId: any) {
+		var tile = this.tiles[key];
 		if (!tile) return;
 
 		tile.invalidateCount++;

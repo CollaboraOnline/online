@@ -988,15 +988,15 @@ L.DebugManager = L.Class.extend({
 		this.setOverlayMessage('tileInvalidationMessages',messages);
 	},
 
-	addTileInvalidationRectangle: function(rectangleArray /* [x, y, width, height] in twips */, command) {
+	addTileInvalidationRectangle: function(topLeftTwips, bottomRightTwips, command) {
 		if (!this.tileInvalidationsOn) {
 			return;
 		}
 
 		var signX =  this._docLayer.isCalcRTL() ? -1 : 1;
 
-		var absTopLeftTwips = L.point(rectangleArray[0] * signX, rectangleArray[1]);
-		var absBottomRightTwips = L.point((rectangleArray[0] + rectangleArray[2]) * signX, rectangleArray[1] + rectangleArray[3]);
+		var absTopLeftTwips = L.point(topLeftTwips.x * signX, topLeftTwips.y);
+		var absBottomRightTwips = L.point(bottomRightTwips.x * signX, bottomRightTwips.y);
 
 		this._tileInvalidationMessages[this._tileInvalidationId] = command;
 		this._tileInvalidationId++;
