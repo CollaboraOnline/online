@@ -1365,10 +1365,8 @@ class CanvasSectionContainer {
 		newWidth = Math.floor(newWidth * app.dpiScale);
 		newHeight = Math.floor(newHeight * app.dpiScale);
 
-		if (this.right === newWidth && this.bottom === newHeight && this.documentAnchor) {
-			this.reNewAllSections(false);
+		if (this.right === newWidth && this.bottom === newHeight && this.documentAnchor)
 			return;
-		}
 
 		// Drawing may happen asynchronously so backup the old contents to avoid
 		// showing a blank canvas.
@@ -1398,7 +1396,7 @@ class CanvasSectionContainer {
 		this.right = this.canvas.width;
 		this.bottom = this.canvas.height;
 
-		this.reNewAllSections(false);
+		this.reNewAllSections();
 	}
 
 	findSectionContainingPoint (point: Array<number>): any {
