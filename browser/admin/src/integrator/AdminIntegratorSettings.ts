@@ -262,7 +262,6 @@ class SettingIframe {
 		buttonEl.classList.add(
 			'inline-button',
 			'button',
-			'button--size-normal',
 			'button--text-only',
 			'button--vue-secondary',
 		);
@@ -387,7 +386,6 @@ class SettingIframe {
 			downloadBtn.type = 'button';
 			downloadBtn.classList.add(
 				'button',
-				'button--size-normal',
 				'button--icon-only',
 				'button--vue-secondary',
 				'download-icon',
@@ -413,7 +411,6 @@ class SettingIframe {
 			deleteBtn.type = 'button';
 			deleteBtn.classList.add(
 				'button',
-				'button--size-normal',
 				'button--icon-only',
 				'button--vue-secondary',
 				'delete-icon',
@@ -477,7 +474,6 @@ class SettingIframe {
 				editBtn.type = 'button';
 				editBtn.classList.add(
 					'button',
-					'button--size-normal',
 					'button--icon-only',
 					'button--vue-secondary',
 					'edit-icon',

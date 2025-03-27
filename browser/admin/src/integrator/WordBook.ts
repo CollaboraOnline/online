@@ -171,7 +171,6 @@ class WordBook {
 		delButton.type = 'button';
 		delButton.classList.add(
 			'button',
-			'button--size-normal',
 			'button--icon-only',
 			'button--vue-secondary',
 			'delete-icon',
@@ -318,8 +317,11 @@ class WordBook {
 
 		const addButton = document.createElement('button');
 		addButton.textContent = 'Add';
-		addButton.className = 'button button--vue-secondary';
-		addButton.style.marginLeft = '8px';
+		addButton.classList.add(
+			'button',
+			'button--vue-secondary',
+			'wordbook-add-button',
+		);
 
 		addButton.disabled = true;
 		newWordInput.addEventListener('input', () => {
@@ -356,8 +358,7 @@ class WordBook {
 
 		const cancelButton = document.createElement('button');
 		cancelButton.textContent = 'Cancel';
-		cancelButton.className = 'button button--vue-tertiary';
-		cancelButton.style.marginRight = '12px';
+		cancelButton.classList.add('button', 'button--vue-tertiary');
 		cancelButton.addEventListener('click', () => {
 			document.body.removeChild(modal);
 		});
@@ -365,7 +366,8 @@ class WordBook {
 
 		const submitButton = document.createElement('button');
 		submitButton.textContent = 'Save';
-		submitButton.className = 'button button--vue-primary';
+		submitButton.classList.add('button', 'button-primary');
+
 		submitButton.addEventListener('click', async () => {
 			this.currWordbookFile.language = languageSelect.value;
 			this.currWordbookFile.dictType =
