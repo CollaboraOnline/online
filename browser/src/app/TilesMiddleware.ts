@@ -248,29 +248,30 @@ class CanvasCache {
 	}
 
 	releaseCanvas(tile: Tile) {
-		if (tile.canvas && tile.ctx) {
-			var item: CanvasItem = new CanvasItem();
-			item.canvas = tile.canvas;
-			item.ctx = tile.ctx;
-			this._canvasList.push(item);
-		}
-
+		var item: CanvasItem = new CanvasItem();
+		item.canvas = tile.canvas;
+		item.ctx = tile.ctx;
 		tile.canvas = null;
 		tile.ctx = null;
+		this._canvasList.push(item);
+
 		tile.imgDataCache = null;
 	}
 
 	trim(limit: number) {
 		while (this._canvasList.length > limit) {
 			const item = this._canvasList.pop();
+			if (!item) continue;
 
 			// Fix for cool#5876 allow immediate reuse of canvas context memory
 			// WKWebView has a hard limit on the number of bytes of canvas
 			// context memory that can be allocated. Reducing the canvas
 			// size to zero is a way to reduce the number of bytes counted
 			// against this limit.
-			item.canvas.width = 0;
-			item.canvas.height = 0;
+			if (item.canvas) {
+				item.canvas.width = 0;
+				item.canvas.height = 0;
+			}
 
 			delete item.canvas;
 		}
