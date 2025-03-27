@@ -261,7 +261,7 @@ class CanvasCache {
 	}
 
 	trim(limit: number) {
-		while (this._canvasList.length > Math.max(0, limit)) {
+		while (this._canvasList.length > limit) {
 			const item = this._canvasList.pop();
 
 			// Fix for cool#5876 allow immediate reuse of canvas context memory
