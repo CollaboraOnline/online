@@ -28,12 +28,6 @@ class TileCoordData {
 	part: number;
 	mode: number;
 
-	/*
-		No need to calculate the scale every time. We have the current scale, reachable via app.getScale().
-		We can compare these two when we need check if a tile is in the current scale. Assigned on creation.
-	*/
-	scale: number;
-
 	constructor(
 		left: number,
 		top: number,
@@ -46,8 +40,6 @@ class TileCoordData {
 		this.z = zoom !== null ? zoom : app.map.getZoom();
 		this.part = part !== null ? part : app.map._docLayer._selectedPart;
 		this.mode = mode !== undefined ? mode : 0;
-
-		this.scale = Math.pow(1.2, this.z - 10);
 	}
 
 	getPos() {
@@ -886,14 +878,10 @@ class TileManager {
 
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
-		const tileVisible = app.isRectangleVisibleInTheDisplayedArea(
-			this.pixelCoordsToTwipTileBounds(coords),
-		);
-
-		// Also check the scale because incoming tile may not be in the same zoom level.
 		if (
-			tileVisible &&
-			Math.round(coords.scale * 1000) === Math.round(app.getScale() * 1000)
+			app.isRectangleVisibleInTheDisplayedArea(
+				this.pixelCoordsToTwipTileBounds(coords),
+			)
 		)
 			app.sectionContainer.setDirty(coords);
 	}
@@ -1558,12 +1546,10 @@ class TileManager {
 	}
 
 	private static pixelCoordsToTwipTileBounds(coords: TileCoordData): number[] {
-		// We need to calculate pixelsToTwips for the scale of this tile. 15 is the ratio between pixels and twips when the scale is 1.
-		const pixelsToTwipsForTile = 15 / coords.scale;
-		const x = coords.x * pixelsToTwipsForTile;
-		const y = coords.y * pixelsToTwipsForTile;
-		const width = this.tileSize * pixelsToTwipsForTile;
-		const height = this.tileSize * pixelsToTwipsForTile;
+		const x = coords.x * app.pixelsToTwips;
+		const y = coords.y * app.pixelsToTwips;
+		const width = app.tile.size.twips[0];
+		const height = app.tile.size.twips[1];
 
 		return [x, y, width, height];
 	}
@@ -1576,8 +1562,6 @@ class TileManager {
 		textMsg: string,
 	) {
 		let needsNewTiles = false;
-		const calc = app.map._docLayer.isCalc();
-		const scale = app.getScale();
 
 		for (const key in this.tiles) {
 			const coords: TileCoordData = this.tiles[key].coords;
@@ -1586,8 +1570,7 @@ class TileManager {
 			if (
 				coords.part === part &&
 				coords.mode === mode &&
-				(invalidatedRectangle.intersectsRectangle(tileRectangle) ||
-					(calc && coords.scale !== scale)) // In calc, we invalidate all tiles with different zoom levels.
+				invalidatedRectangle.intersectsRectangle(tileRectangle)
 			) {
 				if (app.isRectangleVisibleInTheDisplayedArea(tileRectangle))
 					needsNewTiles = true;
