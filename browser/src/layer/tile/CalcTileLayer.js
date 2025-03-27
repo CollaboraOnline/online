@@ -13,7 +13,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
-/* global app CPolyUtil CPolygon TilesPreFetcher TileManager */
+/* global app CPolyUtil CPolygon TilesPreFetcher */
 
 L.CalcTileLayer = L.CanvasTileLayer.extend({
 	options: {
@@ -190,8 +190,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		var needsNewTiles = false;
-		for (var key in TileManager.tiles) {
-			var coords = TileManager.tiles[key].coords;
+		for (var key in this._tiles) {
+			var coords = this._tiles[key].coords;
 			var bounds = this._coordsToTileBounds(coords);
 			if (coords.part === command.part && coords.mode === command.mode &&
 				invalidBounds.intersects(bounds)) {
@@ -199,7 +199,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				if (intersectsVisible) {
 					needsNewTiles = true;
 				}
-				TileManager.invalidateTile(key, command.wireId);
+				this._invalidateTile(key, command.wireId);
 			}
 		}
 
@@ -1144,7 +1144,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		if (!this._gotFirstCellCursor) {
 			// Drawing is disabled from CalcTileLayer construction, enable it now.
 			this._gotFirstCellCursor = true;
-			TileManager.update();
+			this._update();
 			this.enableDrawing();
 		}
 		if (this._map.uiManager.getHighlightMode()) {

@@ -12,7 +12,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global app $ L cool TilesPreFetcher TileManager */
+/* global app $ L cool TilesPreFetcher */
 
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
@@ -75,7 +75,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		if (isDrawOrNotesPage) {
 			this._selectedMode = e.detail.context === 'NotesPage' ? 2 : 0;
 			this._refreshTilesInBackground();
-			TileManager.update();
+			this._update();
 		}
 	},
 
@@ -233,15 +233,15 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
 		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
 		var needsNewTiles = false;
-		for (var key in TileManager.tiles) {
-			var coords = TileManager.tiles[key].coords;
+		for (var key in this._tiles) {
+			var coords = this._tiles[key].coords;
 			var bounds = this._coordsToTileBounds(coords);
 			if (coords.part === command.part && coords.mode === command.mode &&
 			    invalidBounds.intersects(bounds)) {
 				if (visibleArea.intersects(bounds)) {
 					needsNewTiles = true;
 				}
-				TileManager.invalidateTile(key, command.wireId);
+				this._invalidateTile(key, command.wireId);
 			}
 		}
 
@@ -342,7 +342,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (app.file.fileBasedView)
-			TileManager.updateFileBasedView();
+			this._updateFileBasedView();
 	},
 
 	_invalidateAllPreviews: function () {
