@@ -1502,10 +1502,6 @@ class TileManager {
 		this.debugDeltasDetail = state;
 	}
 
-	public static get(key: string): Tile {
-		return this.tiles[key];
-	}
-
 	public static resetPreFetching(resetBorder: boolean) {
 		if (!this.checkDocLayer()) return;
 

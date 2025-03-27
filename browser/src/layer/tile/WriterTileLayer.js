@@ -103,7 +103,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
 		var needsNewTiles = false;
 		for (var key in TileManager.tiles) {
-			var coords = TileManager.get(key).coords;
+			var coords = TileManager.tiles[key].coords;
 			var bounds = this._coordsToTileBounds(coords);
 			if (coords.part === command.part && coords.mode === command.mode &&
 				invalidBounds.intersects(bounds)) {
