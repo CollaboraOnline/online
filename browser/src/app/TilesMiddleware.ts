@@ -123,7 +123,6 @@ class TilesPreFetcher {
 	static _preFetchIdle: any;
 	static _tilesPreFetcher: any;
 	static _partTilePreFetcher: any;
-	static _adjacentTilePreFetcher: any;
 
 	private static checkDocLayer() {
 		if (this._docLayer) return true;
@@ -236,34 +235,6 @@ class TilesPreFetcher {
 			clearInterval(this._tilesPreFetcher);
 			this._tilesPreFetcher = undefined;
 		}
-	}
-
-	private static preFetchPartTiles(part: number, mode: number): void {
-		this.updateProperties();
-
-		const tileRange = this._docLayer._pxBoundsToTileRange(this._pixelBounds);
-		const tileCombineQueue = [];
-
-		for (let j = tileRange.min.y; j <= tileRange.max.y; j++) {
-			for (let i = tileRange.min.x; i <= tileRange.max.x; i++) {
-				const coords = new TileCoordData(
-					i * this._docLayer._tileSize,
-					j * this._docLayer._tileSize,
-					this._zoom,
-					part,
-					mode,
-				);
-
-				if (!this._docLayer._isValidTile(coords)) continue;
-
-				const key = coords.key();
-				if (!this._docLayer._tileNeedsFetch(key)) continue;
-
-				tileCombineQueue.push(coords);
-			}
-		}
-
-		this._docLayer._sendTileCombineRequest(tileCombineQueue);
 	}
 
 	public static resetPreFetching(resetBorder: boolean) {
@@ -516,6 +487,34 @@ class TilesPreFetcher {
 		}
 	}
 
+	private static preFetchPartTiles(part: number, mode: number): void {
+		this.updateProperties();
+
+		const tileRange = this._docLayer._pxBoundsToTileRange(this._pixelBounds);
+		const tileCombineQueue = [];
+
+		for (let j = tileRange.min.y; j <= tileRange.max.y; j++) {
+			for (let i = tileRange.min.x; i <= tileRange.max.x; i++) {
+				const coords = new TileCoordData(
+					i * this._docLayer._tileSize,
+					j * this._docLayer._tileSize,
+					this._zoom,
+					part,
+					mode,
+				);
+
+				if (!this._docLayer._isValidTile(coords)) continue;
+
+				const key = coords.key();
+				if (!this._docLayer._tileNeedsFetch(key)) continue;
+
+				tileCombineQueue.push(coords);
+			}
+		}
+
+		this._docLayer._sendTileCombineRequest(tileCombineQueue);
+	}
+
 	public static initPreFetchPartTiles() {
 		if (!this.checkDocLayer()) return;
 
@@ -529,66 +528,5 @@ class TilesPreFetcher {
 		this._partTilePreFetcher = setTimeout(() => {
 			this.preFetchPartTiles(targetPart, this._docLayer._selectedMode);
 		}, 100);
-	}
-
-	public static initPreFetchAdjacentTiles() {
-		if (!this.checkDocLayer()) return;
-
-		this.updateProperties();
-
-		if (this._adjacentTilePreFetcher)
-			clearTimeout(this._adjacentTilePreFetcher);
-
-		const tileSize = this._docLayer._tileSize;
-
-		this._adjacentTilePreFetcher = setTimeout(
-			function () {
-				// Extend what we request to include enough to populate a full
-				// scroll in the direction we were going after or before
-				// the current viewport
-				//
-				// request separately from the current viewPort to get
-				// those tiles first.
-
-				const direction = app.sectionContainer.getLastPanDirection();
-
-				// Conservatively enlarge the area to round to more tiles:
-				const pixelTopLeft = this._pixelBounds.getTopLeft();
-				pixelTopLeft.y = Math.floor(pixelTopLeft.y / tileSize) * tileSize;
-				pixelTopLeft.y -= 1;
-
-				const pixelBottomRight = this._pixelBounds.getBottomRight();
-				pixelBottomRight.y =
-					Math.ceil(pixelBottomRight.y / tileSize) * tileSize;
-				pixelBottomRight.y += 1;
-
-				this._pixelBounds = new L.Bounds(pixelTopLeft, pixelBottomRight);
-
-				// Translate the area in the direction we're going.
-				this._pixelBounds.translate(
-					this._pixelBounds.getSize().x * direction[0],
-					this._pixelBounds.getSize().y * direction[1],
-				);
-
-				var queue = this._docLayer._getMissingTiles(
-					this._pixelBounds,
-					this._zoom,
-				);
-
-				if (this._docLayer.isCalc() || queue.length === 0) {
-					// pre-load more aggressively
-					this._pixelBounds.translate(
-						(this._pixelBounds.getSize().x * direction[0]) / 2,
-						(this._pixelBounds.getSize().y * direction[1]) / 2,
-					);
-					queue = queue.concat(
-						this._docLayer._getMissingTiles(this._pixelBounds, this._zoom),
-					);
-				}
-
-				if (queue.length !== 0) this._docLayer._addTiles(queue, true);
-			}.bind(this),
-			50 /*ms*/,
-		);
 	}
 }
