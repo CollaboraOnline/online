@@ -13,7 +13,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
-/* global app CPolyUtil CPolygon TileManager */
+/* global app CPolyUtil CPolygon TilesPreFetcher TileManager */
 
 L.CalcTileLayer = L.CanvasTileLayer.extend({
 	options: {
@@ -566,7 +566,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				partNames: this._partNames
 			});
 
-			TileManager.resetPreFetching(true);
+			TilesPreFetcher.resetPreFetching(true);
 
 			if (firstSelectedPart) this._switchSplitPanesContext();
 		} else {
