@@ -4195,6 +4195,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	_getTilePos: function (coords) {
+		return coords.getPos();
+	},
+
 	_cssPixelsToCore: function (cssPixels) {
 		return cssPixels.multiplyBy(app.dpiScale);
 	},
