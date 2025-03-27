@@ -74,7 +74,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 		if (isDrawOrNotesPage) {
 			this._selectedMode = e.detail.context === 'NotesPage' ? 2 : 0;
-			TileManager.refreshTilesInBackground();
+			this._refreshTilesInBackground();
 			TileManager.update();
 		}
 	},
