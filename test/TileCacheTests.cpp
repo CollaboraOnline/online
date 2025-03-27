@@ -522,19 +522,6 @@ void TileCacheTests::testUnresponsiveClient()
     }
 
     const std::string documentContents = oss.str();
-
-    // Request tiles before expecting an invalidate.
-    sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 "
-                           "tileposx=0,3840,7680,11520,0,3840,7680,11520 "
-                           "tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 "
-                           "tileheight=3840",
-                  testname + "2 ");
-    for (int i = 0; i < 8; ++i)
-    {
-        std::vector<char> tile = getResponseMessage(socket2, "tile:", testname + "2 ");
-        LOK_ASSERT_MESSAGE("Did not receive tile #" + std::to_string(i+1) + " of 8: message as expected", !tile.empty());
-    }
-
     for (int x = 0; x < 8; ++x)
     {
         // Invalidate to force re-rendering.
@@ -967,17 +954,24 @@ void TileCacheTests::testTileInvalidateWriter()
     std::shared_ptr<http::WebSocketSession> socket
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
-    // Request a tile before expecting an invalidate.
-    sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 "
-                           "tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840",
-                  testname);
-    std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
-    LOK_ASSERT_MESSAGE("Did not receive tile message as expected", !tile.empty());
-
-    std::string text = "abcde";
+    std::string text = "Test. Now go 3 \"Enters\":\n\n\nNow after the enters, goes this text";
     for (char ch : text)
     {
         sendChar(socket, ch, skNone, testname); // Send ordinary characters and wait for response -> one tile invalidation for each
+        assertResponseString(socket, "invalidatetiles:", testname);
+    }
+
+    text = "\n\n\n";
+    for (char ch : text)
+    {
+        sendChar(socket, ch, skCtrl, testname); // Send 3 Ctrl+Enter -> 3 new pages
+        assertResponseString(socket, "invalidatetiles:", testname);
+    }
+
+    text = "abcde";
+    for (char ch : text)
+    {
+        sendChar(socket, ch, skNone, testname);
         assertResponseString(socket, "invalidatetiles:", testname);
     }
 
@@ -1000,13 +994,6 @@ void TileCacheTests::testTileInvalidateWriterPage()
 
     std::shared_ptr<http::WebSocketSession> socket
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
-
-    // Request a tile before expecting an invalidate.
-    sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 "
-                           "tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840",
-                  testname);
-    std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
-    LOK_ASSERT_MESSAGE("Did not receive tile message as expected", !tile.empty());
 
     sendChar(socket, '\n', skCtrl, testname); // Send Ctrl+Enter (page break).
     assertResponseString(socket, "invalidatetiles:", testname);
@@ -1118,19 +1105,26 @@ void TileCacheTests::testTileInvalidateCalc()
     const std::string testname = "tileInvalidateCalc ";
         std::shared_ptr<http::WebSocketSession> socket
             = loadDocAndGetSession(_socketPoll, "empty.ods", _uri, testname);
-    helpers::sendTextFrame(socket, "uno .uno:GoToStart", testname);
 
-    // Request a tile before expecting an invalidate.
-    sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 "
-                           "tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840",
-                  testname);
-    std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
-    LOK_ASSERT_MESSAGE("Did not receive tile message as expected", !tile.empty());
-
-    std::string text = "abcde";
+    std::string text = "Test. Now go 3 \"Enters\": Now after the enters, goes this text";
     for (char ch : text)
     {
         sendChar(socket, ch, skNone, testname); // Send ordinary characters -> one tile invalidation for each
+        assertResponseString(socket, "invalidatetiles:", testname);
+    }
+
+    TST_LOG("Sending enters");
+    text = "\n\n\n";
+    for (char ch : text)
+    {
+        sendChar(socket, ch, skCtrl, testname); // Send 3 Ctrl+Enter -> 3 new pages; I see 3 tiles invalidated for each
+        assertResponseString(socket, "invalidatetiles:", testname);
+    }
+
+    text = "abcde";
+    for (char ch : text)
+    {
+        sendChar(socket, ch, skNone, testname);
         assertResponseString(socket, "invalidatetiles:", testname);
     }
 
@@ -1381,13 +1375,6 @@ void TileCacheTests::testTileRequestByInvalidation()
     std::shared_ptr<http::WebSocketSession> socket
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
-    // Request a tile before expecting an invalidate.
-    sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 "
-                           "tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840",
-                  testname);
-    std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
-    LOK_ASSERT_MESSAGE("Did not receive tile message as expected", !tile.empty());
-
     // 1. use case: invalidation without having a valid visible area in wsd
     // Type one character to trigger invalidation
     sendChar(socket, 'x', skNone, testname);
@@ -1396,7 +1383,7 @@ void TileCacheTests::testTileRequestByInvalidation()
     assertResponseString(socket, "invalidatetiles:", testname);
 
     // Since we did not set client visible area wsd won't send tile
-    tile = getResponseMessage(socket, "tile:", testname);
+    std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
     LOK_ASSERT_MESSAGE("Not expected tile message arrived!", tile.empty());
 
     // 2. use case: invalidation of one tile inside the client visible area
@@ -1411,7 +1398,7 @@ void TileCacheTests::testTileRequestByInvalidation()
     assertResponseString(socket, "invalidatetiles:", testname);
 
     // Then sends the new tile which was invalidated inside the visible area
-    assertResponseString(socket, "delta:", testname);
+    assertResponseString(socket, "tile:", testname);
 
     socket->asyncShutdown();
     LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
