@@ -1077,7 +1077,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			for (var i = 0; i < partTileQueue.length; ++i)
 			{
 				var coords = partTileQueue[i];
-				var key = coords.key();
+				var key = this._tileCoordsToKey(coords);
 				// request each tile just once in these tilecombines
 				if (added[key])
 					continue;
@@ -4726,7 +4726,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this.beginTransaction();
 			var redraw = false;
 			for (i = 0; i < queue.length; i++) {
-				var tempTile = this._tiles[queue[i].key()];
+				var tempTile = this._tiles[this._tileCoordsToKey(queue[i])];
 				if (tempTile)
 					redraw |= this._makeTileCurrent(tempTile);
 			}
@@ -4742,7 +4742,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var tileCombineQueue = [];
 			for (var i = 0; i < queue.length; i++) {
-				var key = queue[i].key();
+				var key = this._tileCoordsToKey(queue[i]);
 				var tile = this._tiles[key];
 				if (!tile)
 					tile = this.createTile(queue[i], key);
@@ -4773,7 +4773,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 					if (!this._isValidTile(coords)) { continue; }
 
-					var key = coords.key();
+					var key = this._tileCoordsToKey(coords);
 					var tile = this._tiles[key];
 					if (tile && !tile.needsFetch())
 						redraw |= this._makeTileCurrent(tile);
@@ -4951,7 +4951,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 					if (!this._isValidTile(coords)) { continue; }
 
-					key = coords.key();
+					key = this._tileCoordsToKey(coords);
 					tile = this._tiles[key];
 					if (tile && !tile.needsFetch())
 						redraw |= this._makeTileCurrent(tile);
@@ -4967,7 +4967,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			for (i = 0; i < queue.length; i++) {
 				coords = queue[i];
-				key = coords.key();
+				key = this._tileCoordsToKey(coords);
 				if (!this._tiles[key])
 					this.createTile(coords, key);
 
@@ -4989,7 +4989,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_tileReady: function (coords) {
-		var key = coords.key();
+		var key = this._tileCoordsToKey(coords);
 
 		var tile = this._tiles[key];
 		if (!tile)
@@ -5031,7 +5031,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		for (var i = 0; i < coordsQueue.length; i++) {
 			coords = coordsQueue[i];
 
-			key = coords.key();
+			key = this._tileCoordsToKey(coords);
 
 			if (coords.part === this._selectedPart &&
 			    coords.mode === this._selectedMode) {
@@ -5069,7 +5069,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			coords = coordsQueue[0];
 
 			// tiles that do not interest us
-			key = coords.key();
+			key = this._tileCoordsToKey(coords);
 			if (!this._tileNeedsFetch(key)
 			    || coords.part !== this._selectedPart
 			    || coords.mode !== this._selectedMode) {
@@ -5163,6 +5163,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		return coords;
 	},
 
+	_tileCoordsToKey: function (coords) {
+		return coords.key();
+	},
+
 	_keyToTileCoords: function (key) {
 		return TileCoordData.parseKey(key);
 	},
@@ -5227,7 +5231,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (tile.hasKeyframe() && tile.hasPendingKeyframe === 0) {
 			// Re-hydrate tile from cached raw deltas.
 			if (this._debugDeltas)
-				window.app.console.log('Restoring a tile from cached delta at ' + tile.coords.key());
+				window.app.console.log('Restoring a tile from cached delta at ' +
+							   this._tileCoordsToKey(tile.coords));
 			this._applyCompressedDelta(tile, tile.rawDeltas, true, false, false);
 		}
 	},
@@ -5420,7 +5425,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var e =
 			{
-				key: tile.coords.key(),
+				key: this._tileCoordsToKey(tile.coords),
 				rawDelta: rawDelta,
 				isKeyframe: isKeyframe,
 				wireMessage: wireMessage
@@ -5673,7 +5678,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		var coords = this._tileMsgToCoords(tileMsgObj);
-		var key = coords.key();
+		var key = this._tileCoordsToKey(coords);
 		var tile = this._tiles[key];
 
 		if (!tile)

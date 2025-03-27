@@ -412,7 +412,7 @@ class TilesPreFetcher {
 				var tilesPending = false;
 				for (i = 0; i < queue.length; i++) {
 					const coords = queue[i];
-					const key: string = coords.key();
+					const key: string = this._docLayer._tileCoordsToKey(coords);
 
 					if (
 						visitedTiles[key] ||
@@ -505,7 +505,7 @@ class TilesPreFetcher {
 
 				if (!this._docLayer._isValidTile(coords)) continue;
 
-				const key = coords.key();
+				const key = this._docLayer._tileCoordsToKey(coords);
 				if (!this._docLayer._tileNeedsFetch(key)) continue;
 
 				tileCombineQueue.push(coords);
