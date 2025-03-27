@@ -74,9 +74,7 @@ app.isReadOnly = function () {
 };
 
 app.getScale = function () {
-	return (
-		((app.tile.size.pixels[0] / app.tile.size.twips[0]) * 15) / app.dpiScale
-	);
+	return (app.tile.size.pixels[0] / app.tile.size.twips[0]) * 15;
 };
 
 app.isCommentEditingAllowed = function () {
