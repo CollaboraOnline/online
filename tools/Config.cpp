@@ -138,6 +138,7 @@ void Config::displayHelp()
     std::cout << std::endl
               << "Commands: " << std::endl
               << "    migrateconfig [--old-config-file=<path>] [--config-file=<path>] [--write]" << std::endl
+              << "        The migrateconfig command migrates config file of Collabora Online 6.4 or older to the new format." << std::endl
               << "    anonymize [string-1]...[string-n]" << std::endl
               << "    set-admin-password" << std::endl;
     if constexpr (ConfigUtil::isSupportKeyEnabled())
@@ -453,6 +454,8 @@ int Config::main(const std::vector<std::string>& args)
     }
     else if (args[0] == "migrateconfig")
     {
+        if (!Write)
+            std::cout << "The migrateconfig command migrates config file of Collabora Online 6.4 or older to the new format." << std::endl;
         std::cout << "Migrating old configuration from " << OldConfigFile << " to " << ConfigFile << "." << std::endl;
         if (!Write)
             std::cout << "This is a dry run, no changes are written to file." << std::endl;
