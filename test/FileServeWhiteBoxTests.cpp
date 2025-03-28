@@ -43,6 +43,8 @@ class FileServeTests : public CPPUNIT_NS::TestFixture
 
     void preProcessedFileSubstitution(const std::string& testname,
                                       std::unordered_map<std::string, std::string> variables);
+    // helper for replacements with the empty map
+    std::string& replaceOrKeep(std::string& str, const std::string& from, const std::string& to);
 };
 
 void FileServeTests::testUIDefaults()
@@ -391,28 +393,39 @@ void FileServeTests::preProcessedFileSubstitution(
 
             const std::string recon = ppf.substitute(variables);
 
-            Poco::replaceInPlace(orig, std::string("%ACCESS_TOKEN%"), variables["ACCESS_TOKEN"]);
-            Poco::replaceInPlace(orig, std::string("%ACCESS_TOKEN_TTL%"),
+            replaceOrKeep(orig, std::string("%ACCESS_TOKEN%"), variables["ACCESS_TOKEN"]);
+            replaceOrKeep(orig, std::string("%ACCESS_TOKEN_TTL%"),
                                  variables["ACCESS_TOKEN_TTL"]);
-            Poco::replaceInPlace(orig, std::string("%ACCESS_HEADER%"), variables["ACCESS_HEADER"]);
-            Poco::replaceInPlace(orig, std::string("%UI_DEFAULTS%"), variables["UI_DEFAULTS"]);
-            Poco::replaceInPlace(orig, std::string("<!--%CSS_VARIABLES%-->"),
+            replaceOrKeep(orig, std::string("%ACCESS_HEADER%"), variables["ACCESS_HEADER"]);
+            replaceOrKeep(orig, std::string("%UI_DEFAULTS%"), variables["UI_DEFAULTS"]);
+            replaceOrKeep(orig, std::string("<!--%CSS_VARIABLES%-->"),
                                  variables["CSS_VARIABLES"]);
-            Poco::replaceInPlace(orig, std::string("%POSTMESSAGE_ORIGIN%"),
+            replaceOrKeep(orig, std::string("%POSTMESSAGE_ORIGIN%"),
                                  variables["POSTMESSAGE_ORIGIN"]);
-            Poco::replaceInPlace(orig, std::string("%BRANDING_THEME%"),
+            replaceOrKeep(orig, std::string("%BRANDING_THEME%"),
                                  variables["BRANDING_THEME"]);
-            Poco::replaceInPlace(orig, std::string("<!--%BRANDING_JS%-->"),
+            replaceOrKeep(orig, std::string("<!--%BRANDING_JS%-->"),
                                  variables["BRANDING_JS"]);
-            Poco::replaceInPlace(orig, std::string("%FOOTER%"), variables["FOOTER"]);
-            Poco::replaceInPlace(orig, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
+            replaceOrKeep(orig, std::string("%FOOTER%"), variables["FOOTER"]);
+            replaceOrKeep(orig, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
                                  variables["CHECK_FILE_INFO_OVERRIDE"]);
-            Poco::replaceInPlace(orig, std::string("%BUYPRODUCT_URL%"),
+            replaceOrKeep(orig, std::string("%BUYPRODUCT_URL%"),
                                  variables["BUYPRODUCT_URL"]);
 
             LOK_ASSERT_EQUAL(orig, recon);
         }
     }
+}
+
+// Replace each occurence of from in str to to except if to is the empty string
+std::string& FileServeTests::replaceOrKeep(std::string& str, const std::string& from,
+                                           const std::string& to)
+{
+    if (to.empty())
+    {
+        return str;
+    }
+    return Poco::replaceInPlace(str, from, to);
 }
 
 void FileServeTests::testPreProcessedFileSubstitution()
