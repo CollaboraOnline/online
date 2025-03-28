@@ -138,11 +138,108 @@ public:
     }
 };
 
+/// This is to test that: if a file fails to load due to an Unauthorized response,
+/// then we don't leak sockets
+class UnauthorizedSocketLeak : public WopiTestServer
+{
+    STATE_ENUM(Phase, LoadAttempt, WaitUnauthorized, WaitSocketDtor, Done) _phase;
+
+    std::weak_ptr<StreamSocket> _ensureNotLeaked;
+
+public:
+    UnauthorizedSocketLeak()
+        : WopiTestServer("Unauthorized Load Leak")
+        , _phase(Phase::LoadAttempt)
+    {
+    }
+
+    // enables parallel checkFileInfo connection
+    std::map<std::string, std::string>
+        parallelizeCheckInfo(const Poco::Net::HTTPRequest& request,
+                             Poco::MemoryInputStream& /*message*/,
+                             std::shared_ptr<StreamSocket>& socket) override
+    {
+        // We want to test that this socket dtor will get called when this
+        // session is Unauthorized. Without the fix the test times out and
+        // fails.
+        _ensureNotLeaked = socket;
+
+        std::string uri = Uri::decode(request.getURI());
+        LOG_TST("parallelizeCheckInfo requested: " << uri);
+        return std::map<std::string, std::string>{
+            {"wopiSrc", "/wopi/files/0"},
+            {"accessToken", "anything"},
+            {"permission", ""},
+            {"configid", ""}
+        };
+    }
+
+    bool handleCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/,
+                                            std::shared_ptr<StreamSocket>& socket) override
+    {
+        std::unique_ptr<http::Response> httpResponse =
+            std::make_unique<http::Response>(http::StatusCode::Unauthorized);
+        socket->sendAndShutdown(*httpResponse);
+        TRANSITION_STATE(_phase, Phase::WaitUnauthorized);
+        return true;
+    }
+
+    bool onFilterSendWebSocketMessage(const char* data, const std::size_t len,
+                                      const WSOpCode /* code */, const bool /* flush */,
+                                      int& /*unitReturn*/) override
+    {
+        const std::string message(data, len);
+
+        LOG_TST("onFilterSendWebSocketMessage:" << message);
+
+        if (message.starts_with("error: cmd=internal kind=unauthorized"))
+        {
+            LOG_TST("Expected Unauthorized load failed: " << message);
+            TRANSITION_STATE(_phase, Phase::WaitSocketDtor);
+        }
+
+        return false;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::LoadAttempt:
+            {
+                // Always transition before issuing commands.
+                TRANSITION_STATE(_phase, Phase::WaitUnauthorized);
+
+                LOG_TST("Attempt load which should fail with Unauthorized");
+
+                initWebsocket("/wopi/files/0?access_token=anything");
+                WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());
+
+                break;
+            }
+            case Phase::WaitSocketDtor:
+            {
+                if (_ensureNotLeaked.expired())
+                {
+                    TRANSITION_STATE(_phase, Phase::Done);
+                    passTest("Socket not leaked");
+                }
+                break;
+            }
+            case Phase::WaitUnauthorized:
+            case Phase::Done:
+                break;
+        }
+    }
+};
+
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase* [2]
+    return new UnitBase* [3]
     {
-        new InitialLoadFail(), nullptr
+        new InitialLoadFail(),
+        new UnauthorizedSocketLeak(),
+        nullptr
     };
 }
 
