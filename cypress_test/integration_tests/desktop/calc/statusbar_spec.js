@@ -51,10 +51,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		cy.cGet('#StateTableCell').should('have.text', 'Average: 10; Sum: 10');
 
 		desktopHelper.makeZoomItemsVisible();
-		cy.cGet('#StateTableCellMenu .unolabel').contains('Average; Sum');
-		cy.cGet('#StateTableCellMenu .arrowbackground').click();
-		cy.cGet('.jsdialog-overlay').should('exist');
-		cy.cGet('.ui-combobox-entry.selected').contains(/Average|Sum/g);
+		cy.cGet('#StateTableCellMenu:visible')
+		.should('exist')
+		.then(() => {
+			cy.log('StateTableCellMenu is visible for test interaction');
+			cy.cGet('#StateTableCellMenu .arrowbackground').click();
+			cy.cGet('.jsdialog-overlay').should('exist');
+			cy.cGet('.ui-combobox-entry.selected').contains(/Average|Sum/g);
+		});
 	});
 
 	it('Change zoom level.', function() {

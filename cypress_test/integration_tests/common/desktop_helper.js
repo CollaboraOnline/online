@@ -181,23 +181,7 @@ function shouldHaveZoomLevel(zoomLevel) {
 function makeZoomItemsVisible() {
 	cy.log('>> makeZoomItemsVisible - start');
 
-	const scrollRight = () => {
-		cy.cGet('#toolbar-down .ui-scroll-right:visible').then($scrollRightButton => {
-			if ($scrollRightButton.is(':visible')) {
-				// Wrap .ui-scroll-right so we can continue executing commands
-				cy.wrap($scrollRightButton).click();
-				// Wait the same ms as in Util.ScrollableBar.ts timeout
-				cy.wait(350);
-				// Scroll again if $scrollRightButton is visible
-				cy.cGet('#toolbar-down .ui-scroll-right').then($scrollRightButtonInner => {
-					if ($scrollRightButtonInner.is(':visible'))
-						scrollRight();
-				});
-			}
-		});
-	};
-
-	scrollRight();
+	// Ensure the #zoomin element is visible
 	cy.cGet('#toolbar-down #zoomin').should('be.visible');
 
 	cy.log('<< makeZoomItemsVisible - end');
