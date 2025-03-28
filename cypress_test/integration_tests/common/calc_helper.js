@@ -138,6 +138,24 @@ function removeTextSelection() {
 	cy.log('<< removeTextSelection - end');
 }
 
+// Click on rows header and select Hide rows from a context menu
+function hideSelectedRows() {
+	cy.log('>> hideSelectedRows - start');
+
+	cy.cGet('[id="test-div-row header"]')
+		.then(function(header) {
+			expect(header).to.have.lengthOf(1);
+			var rect = header[0].getBoundingClientRect();
+			var posX = (rect.right + rect.left) / 2.0;
+			var posY = (rect.top + rect.bottom) / 2.0;
+			cy.cGet('body').rightclick(posX, posY);
+			cy.cGet('body').contains('.context-menu-item', 'Hide Rows').click();
+			cy.cGet('.context-menu-list').should('not.be.visible');
+		});
+
+	cy.log('<< hideSelectedRows - end');
+}
+
 // Select the entire sheet using the "Select All" button
 // at the corner of the row and column headers.
 // Additionally, this method removes any preexisting text selection.
@@ -303,3 +321,4 @@ module.exports.openAutoFilterMenu = openAutoFilterMenu;
 module.exports.assertNumberofSheets = assertNumberofSheets;
 module.exports.selectOptionFromContextMenu = selectOptionFromContextMenu;
 module.exports.selectOptionMobileWizard = selectOptionMobileWizard;
+module.exports.hideSelectedRows = hideSelectedRows;
