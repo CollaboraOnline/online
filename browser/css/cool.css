@@ -462,6 +462,13 @@ body {
 	color: var(--color-main-text);
 }
 
+@media screen and (max-width: 500px) {
+	#search-input {
+		width: 100px;
+	}
+}
+
+
 .cool-character {
 	table-layout: fixed;
 	font: 17px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif;

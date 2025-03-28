@@ -291,7 +291,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 #toolbar-down .ui-badge,
 #toolbar-down .unolabel {
 	font-family: var(--cool-font);
-	font-size: var(--default-font-size);
+	font-size: var(--default-font-size) !important;
 	color: var(--color-status-badge) !important;
 }
 
@@ -2024,6 +2024,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: transparent !important;
 	border-color: transparent;
 }
+
+#toolbar-down  .jsdialog .ui-edit-container{
+	place-content: center;
+}
+
 /* Formula Wizard */
 #FormulaDialog .ui-tabs-root {
 	background-color: var(--color-background-tabs-group);
@@ -2295,6 +2300,11 @@ kbd,
 #showcomments-container[default-state='true'],
 #insertmode-container[default-state='true'],
 #permissionmode-container[default-state='true'],
+#documentstatus-container[default-state='true'],
 #statusselectionmode-container[default-state='true'] {
+	display: none !important;
+}
+
+.status-hidden {
 	display: none !important;
 }
