@@ -4877,14 +4877,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (center === undefined) { center = map.getCenter(); }
 		if (zoom === undefined) { zoom = Math.round(map.getZoom()); }
 
-		for (var key in this._tiles) {
-			var thiscoords = this._keyToTileCoords(key);
-			if (thiscoords.z !== zoom ||
-				thiscoords.part !== this._selectedPart ||
-				thiscoords.mode !== this._selectedMode) {
-				this._tiles[key].current = false;
-			}
-		}
+		for (var key in this._tiles) this._tiles[key].current = false;
 
 		var pixelBounds = map.getPixelBoundsCore(center, zoom);
 		var queue = this._getMissingTiles(pixelBounds, zoom);
@@ -5111,6 +5104,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					// canvas for the tile in advance.
 					this.ensureCanvas(tile, null, true);
 					redraw |= tile.hasPendingUpdate();
+					tile.current = false;
 				}
 			}
 		}

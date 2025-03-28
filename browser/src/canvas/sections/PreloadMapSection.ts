@@ -119,8 +119,12 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 							canvas.fillStyle = 'rgba(255, 0, 0, 0.8)'; // red
 						else if (tile.needsFetch())
 							canvas.fillStyle = 'rgba(255, 255, 0, 0.8)'; // yellow
+						else if (!tile.canvas)
+							canvas.fillStyle = 'rgba(0, 64, 0, 0.8)'; // dark green
 						// present
-						else canvas.fillStyle = 'rgba(0, 255, 0, 0.5)'; // green
+						else if (!tile.current)
+							canvas.fillStyle = 'rgba(0, 128, 0, 0.8)'; // green
+						else canvas.fillStyle = 'rgba(0, 255, 0, 0.5)'; // light green
 					} // outside document range
 					else canvas.fillStyle = 'rgba(0, 0, 0, 0.3)'; // dark grey
 
