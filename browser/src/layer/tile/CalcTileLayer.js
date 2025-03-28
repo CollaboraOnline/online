@@ -223,7 +223,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			// Hide previous tab's shown comment (if any).
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hideAllComments();
 			this._sheetSwitch.gotSetPart(part);
-			this._syncTileContainerSize();
 		}
 	},
 
@@ -312,6 +311,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
 
 		this._map.fire('scrolllimits', newSizePx.clone());
+		this._syncTileContainerSize();
 
 		if (limitWidth || limitHeight || extendedLimit)
 			app.sectionContainer.requestReDraw();
@@ -384,7 +384,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	_syncTileContainerSize: function() {
+	syncTileContainerSize: function() {
 		if (!this._map) return;
 
 		var tileContainer = this._container;
@@ -392,66 +392,58 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			// Document container size is up to date as of now.
 			var documentContainerSize = document.getElementById('document-container');
 			documentContainerSize = documentContainerSize.getBoundingClientRect();
-			documentContainerSize = [documentContainerSize.width * app.dpiScale, documentContainerSize.height * app.dpiScale];
+			documentContainerSize = [documentContainerSize.width, documentContainerSize.height];
 
-			// Size has changed. Our map and canvas are not resized yet.
-			// But the row header, row group, column header and column group sections don't need to be resized.
-			// We can get their width and height from the sections' properties.
-			const rowHeaderSection = app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
-			const columnHeaderSection = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
-			const rowGroupSection = app.sectionContainer.getSectionWithName(L.CSections.RowGroup.name);
-			const columnGroupSection = app.sectionContainer.getSectionWithName(L.CSections.ColumnGroup.name);
-			const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
-			const scrollBarThickness = scrollSection ? scrollSection.sectionProperties.scrollBarThickness : 0;
+			var mapElement = document.getElementById('map'); // map's size = tiles section's size.
 
-			const marginLeft = (rowHeaderSection ? rowHeaderSection.size[0] : 0) + (rowGroupSection ? rowGroupSection.size[0] : 0);
-			const marginTop = (columnHeaderSection ? columnHeaderSection.size[1] : 0) + (columnGroupSection ? columnGroupSection.size[1] : 0);
+			var oldSize = [mapElement.clientWidth, mapElement.clientHeight];
 
-			// Available for tiles section.
-			const availableSpace = [documentContainerSize[0] - marginLeft - scrollBarThickness, documentContainerSize[1] - marginTop - scrollBarThickness];
-			let newMapSize = availableSpace.slice();
-			let newCanvasSize = documentContainerSize.slice();
+			var rectangle = this._getTilesSectionRectangle();
+			mapElement.style.left = rectangle.getPxX1() + 'px';
+			mapElement.style.top = rectangle.getPxY1() + 'px';
+			var mapSize = [rectangle.getPxWidth(), rectangle.getPxHeight()];
 
-			const fileSizePixels = [app.file.size.pixels[0], app.file.size.pixels[1]];
+			if (app.file.size.pixels[0] < documentContainerSize[0] || app.file.size.pixels[1] < documentContainerSize[1]) {
+				var additionalHeight = 0;
+				var additionalWidth = 0;
+				var rowHeader = app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
+				var columnHeader = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
+				var scroll = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+				if (scroll) {
+					additionalHeight += scroll.sectionProperties.scrollBarThickness;
+					additionalWidth += scroll.sectionProperties.scrollBarThickness;
+				}
 
-			// If we don't need that much space.
-			if (fileSizePixels[0] < availableSpace[0]) {
-				newMapSize[0] = fileSizePixels[0];
-				newCanvasSize[0] = fileSizePixels[0] + marginLeft + scrollBarThickness;
+				if (rowHeader) {
+					additionalWidth += rowHeader.size[0];
+				}
+				if (columnHeader) {
+					additionalHeight += columnHeader.size[1];
+				}
+				documentContainerSize = [Math.min(documentContainerSize[0], app.file.size.pixels[0])+ additionalWidth, Math.min(documentContainerSize[1], app.file.size.pixels[1])+additionalHeight];
+
+				mapSize = [Math.min(mapSize[0], app.file.size.pixels[0]), Math.min(mapSize[1], app.file.size.pixels[1])];
 			}
 
-			if (fileSizePixels[1] < availableSpace[1]) {
-				newMapSize[1] = fileSizePixels[1];
-				newCanvasSize[1] = fileSizePixels[1] + marginTop + scrollBarThickness;
-			}
+			app.sectionContainer.onResize(documentContainerSize[0], documentContainerSize[1]); // Canvas's size = documentContainer's size.
 
-			newMapSize = [Math.round(newMapSize[0] / app.dpiScale), Math.round(newMapSize[1] / app.dpiScale)];
-			newCanvasSize = [Math.round(newCanvasSize[0] / app.dpiScale), Math.round(newCanvasSize[1] / app.dpiScale)];
+			mapElement.style.width = mapSize[0] + 'px';
+			mapElement.style.height = mapSize[1] + 'px';
 
-			const mapElement = document.getElementById('map'); // map's size = tiles section's size.
+			tileContainer.style.width = rectangle.getPxWidth() + 'px';
+			tileContainer.style.height = rectangle.getPxHeight() + 'px';
 
-			const oldMapSize = [mapElement.clientWidth, mapElement.clientHeight];
-
-			mapElement.style.left = Math.round(marginLeft / app.dpiScale) + 'px';
-			mapElement.style.top = Math.round(marginTop / app.dpiScale) + 'px';
-			mapElement.style.width = newMapSize[0] + 'px';
-			mapElement.style.height = newMapSize[1] + 'px';
-
-			tileContainer.style.width = newMapSize[0] + 'px';
-			tileContainer.style.height = newMapSize[1] + 'px';
-
-			app.sectionContainer.onResize(newCanvasSize[0], newCanvasSize[1]); // Canvas's size = documentContainer's size.
-
-			var widthIncreased = oldMapSize[0] < newMapSize[0];
-			var heightIncreased = oldMapSize[1] < newMapSize[1];
+			var newSize = this._getRealMapSize();
+			var heightIncreased = oldSize[1] < newSize.y;
+			var widthIncreased = oldSize[0] < newSize.x;
 
 			if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
 				app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
 				app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
 			}
 
-			if (oldMapSize[0] !== newMapSize[0] || oldMapSize[1] !== newMapSize[1]) {
-				this._map.invalidateSize({}, new L.Point(oldMapSize[0], oldMapSize[1]));
+			if (oldSize[0] !== newSize.x || oldSize[1] !== newSize.y) {
+				this._map.invalidateSize({}, new L.Point(oldSize[0], oldSize[1]));
 			}
 
 			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
@@ -465,6 +457,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				} else
 					this._onUpdateCursor(true);
 			}
+
+			this._fitWidthZoom();
 
 			// Center the view w.r.t the new map-pane position using the current zoom.
 			this._map.setView(this._map.getCenter());
@@ -1069,7 +1063,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 			this._oldSheetGeomMsg = textMsg;
 			this._handleSheetGeometryDataMsg(values, differentSheet);
-			this._syncTileContainerSize();
+
 		} else if (values.comments) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		} else if (values.commentsPos) {
