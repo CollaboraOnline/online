@@ -1,5 +1,6 @@
 /* global describe it cy beforeEach require */
 
+var calcHelper = require('../../common/calc_helper');
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
@@ -24,6 +25,36 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		// after switch we should see cursor and A1
 		desktopHelper.assertScrollbarPosition('vertical', 0, 50);
 		desktopHelper.assertScrollbarPosition('horizontal', 0, 50);
+	});
+
+	it('Check the visibility of tile content when rows are hidden', function() {
+		// Insert sheet
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'CQ1017');
+		cy.cGet('#sheets-buttons-toolbox #insertsheet').click();
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
+
+		// Step1: Go to B1 and type something
+		helper.typeIntoDocument('{rightArrow}Text');
+		cy.wait(1000);
+		cy.cGet('#map').compareSnapshot('b1_text_step1', 0.15);
+		cy.wait(500);
+
+		// Step2: Hide rows and still see text
+		helper.typeIntoDocument('{leftArrow}{downArrow}');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2');
+		helper.typeIntoDocument('{shift}{ctrl}{rightArrow}');
+		helper.typeIntoDocument('{shift}{ctrl}{downArrow}');
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2:XFD1048576');
+		calcHelper.hideSelectedRows();
+		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
+		cy.wait(500);
+		cy.cGet('#map').compareSnapshot('b1_text_step2', 0.05);
+		cy.wait(500);
+
+		// Step3: type and still see text
+		helper.typeIntoDocument('Calc is Cool{enter}');
+		cy.wait(500);
+		cy.cGet('#map').compareSnapshot('b1_text_step3', 0.05);
 	});
 });
 
