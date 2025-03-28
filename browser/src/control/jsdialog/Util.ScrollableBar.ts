@@ -96,10 +96,90 @@ function setupResizeHandler(container: Element, scrollable: Element) {
 	scrollable.addEventListener('wheel', shiftHandler);
 }
 
+function setupPriorityStatusHandler(scrollable: Element, toolItems: any[]) {
+	const handler = function () {
+		const rootContainer = scrollable.querySelector('div');
+		if (!rootContainer) return;
+
+		const statusBarItems = Array.from(rootContainer.children) as HTMLElement[];
+		// Match DOM items to toolItems by ID and set data-priority
+		statusBarItems.forEach((domItem) => {
+			const toolItem = toolItems.find((item) => {
+				const itemIdBase = item.id.split(':')[0]; // The base ID with a possible suffix for example 'languagestatus:LanguageStatusMenu'
+				return (
+					itemIdBase === domItem.id || item.id + '-container' === domItem.id
+				);
+			});
+
+			if (toolItem && toolItem.dataPriority) {
+				domItem.setAttribute('data-priority', toolItem.dataPriority);
+			} else {
+				domItem.removeAttribute('data-priority');
+			}
+		});
+
+		// Reset visibility of hidden statuses
+		statusBarItems.forEach((item) => {
+			item.classList.remove('status-hidden');
+		});
+
+		const availableWidth = window.innerWidth;
+		let contentWidth = rootContainer.scrollWidth;
+
+		if (contentWidth > availableWidth) {
+			// Group items by data-priority
+			const itemsByPriorityLevel: { [key: string]: HTMLElement[] } = {};
+			statusBarItems.forEach((item) => {
+				if (item.hasAttribute('data-priority')) {
+					const priority = item.getAttribute('data-priority') || '0';
+					if (!itemsByPriorityLevel[priority]) {
+						itemsByPriorityLevel[priority] = [];
+					}
+					itemsByPriorityLevel[priority].push(item);
+				}
+			});
+
+			const priorityLevels = Object.keys(itemsByPriorityLevel)
+				.map(Number)
+				.sort((a, b) => b - a);
+
+			let remainingWidthToFit = contentWidth - availableWidth;
+			// Hide items with the same priority level
+			for (const priority of priorityLevels) {
+				const itemsAtPriority = itemsByPriorityLevel[priority];
+				if (!itemsAtPriority) continue;
+
+				// Calculate total width of the items
+				const combinedWidthAtPriority = itemsAtPriority.reduce(
+					(sum, item) => sum + item.offsetWidth,
+					0,
+				);
+
+				if (remainingWidthToFit > 0) {
+					itemsAtPriority.forEach((item) => {
+						item.classList.add('status-hidden');
+					});
+					remainingWidthToFit -= combinedWidthAtPriority;
+					contentWidth -= combinedWidthAtPriority;
+				} else {
+					break;
+				}
+			}
+		}
+	}.bind(this);
+
+	window.addEventListener('resize', handler);
+}
+
 JSDialog.MakeScrollable = function (parent: Element, scrollable: Element) {
 	L.DomUtil.addClass(scrollable, 'ui-scrollable-content');
 	createScrollButtons(parent, scrollable);
 	setupResizeHandler(parent, scrollable);
+};
+
+JSDialog.MakeStatusPriority = function (scrollable: Element, toolItems: any[]) {
+	L.DomUtil.addClass(scrollable, 'ui-scrollable-content');
+	setupPriorityStatusHandler(scrollable, toolItems);
 };
 
 JSDialog.RefreshScrollables = function () {

@@ -12,8 +12,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc bottom bar tests.', f
 	it('Bottom tool bar.', function() {
 		cy.cGet('#map').focus();
 		calcHelper.clickOnFirstCell();
-		cy.cGet('#StateTableCellMenu').click();
-		// If it clicks, it passes.
-		cy.cGet('body').contains('.ui-combobox-entry', 'CountA').click();
+		cy.cGet('#StateTableCellMenu:visible')
+		.should('exist')
+		.then(() => {
+			cy.log('StateTableCellMenu is visible, for test interaction');
+			cy.cGet('#StateTableCellMenu').click();
+			cy.cGet('body').contains('.ui-combobox-entry', 'CountA').click();
+		});
 	});
 });
