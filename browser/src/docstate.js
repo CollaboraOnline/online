@@ -151,5 +151,7 @@ if (activateValidation) {
 	window.app.file = new Proxy(window.app.file, validator);
 }
 
-window.JSDialog = {}; // initialize jsdialog module
+window.JSDialog = {
+    popupParent : null,
+}; // initialize jsdialog module
 window.SlideShow = {}; // initialize slideshow module
