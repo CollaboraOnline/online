@@ -10,7 +10,6 @@
 
 /src/control/ColorPicker.js
 /src/control/Control.AlertDialog.js
-/src/control/Control.Attribution.js
 /src/control/Control.ColumnGroup.ts
 /src/control/Control.ColumnHeader.ts
 /src/control/Control.Command.js

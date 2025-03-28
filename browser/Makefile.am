@@ -439,7 +439,6 @@ COOL_JS_LST =\
 	src/control/Control.MobileWizardWindow.js \
 	src/control/Control.MobileWizard.js \
 	src/control/Control.LanguageDialog.js \
-	src/control/Control.Attribution.js \
 	src/control/Control.MobileSlide.js \
 	src/control/Control.StatusBar.js \
 	src/control/Control.MobileSearchBar.ts \
