@@ -158,6 +158,8 @@ function _menubuttonControl (parentContainer, data, builder) {
 			}
 		});
 
+		button.setAttribute('aria-disabled', Boolean(data.enabled));
+
 		if (data.enabled === false)
 			button.disabled = true;
 	} else {
