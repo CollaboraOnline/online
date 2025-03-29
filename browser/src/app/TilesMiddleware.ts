@@ -332,6 +332,44 @@ class TileManager {
 		if (!(++this.gcCounter % 53)) this.garbageCollect();
 	}
 
+	/// Called before frame rendering to update details
+	public static updateOverlayMessages() {
+		if (!app.map._debug.tileDataOn) return;
+
+		var totalSize = 0;
+		var n_canvases = 0;
+		var n_current = 0;
+		var keys = Object.keys(this.tiles);
+		for (var i = 0; i < keys.length; ++i) {
+			var tile = this.tiles[keys[i]];
+			if (tile.canvas) ++n_canvases;
+			if (tile.current) ++n_current;
+			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
+		}
+
+		app.map._debug.setOverlayMessage(
+			'top-tileMem',
+			'Tiles: ' +
+				String(keys.length).padStart(4, ' ') +
+				', canvases: ' +
+				String(n_canvases).padStart(3, ' ') +
+				' + cached: ' +
+				String(this.canvasCache.size).padStart(3, ' ') +
+				' = ' +
+				String(this.canvasCache.size + n_canvases).padStart(3, ' ') +
+				' current ' +
+				String(n_current).padStart(3, ' ') +
+				', Delta size ' +
+				Math.ceil(totalSize / 1024) +
+				'(KB)' +
+				', Canvas size: ' +
+				Math.ceil(n_canvases / 2) +
+				'+' +
+				Math.ceil(this.canvasCache.size / 4) +
+				'(MB)',
+		);
+	}
+
 	// Set a high and low watermark of how many canvases we want
 	// and expire old ones
 	private static garbageCollect(discardAll = false) {

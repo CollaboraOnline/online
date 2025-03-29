@@ -138,13 +138,12 @@ L.DebugManager = L.Class.extend({
 			onAdd: function () {
 				self.overlayOn = true;
 				self._overlayData = {};
+				self._painter._addDebugOverlaySection();
 			},
 			onRemove: function () {
 				self.overlayOn = false;
-				for (var i in self._overlayData) {
-					self._overlayData[i].remove();
-				}
-				delete self._overlayData;
+				self._overlayData = {};
+				self._painter._removeDebugOverlaySection();
 			},
 		});
 
@@ -194,11 +193,10 @@ L.DebugManager = L.Class.extend({
 				self._tileDataTotalUpdates = 0;
 				self._tileDataTotalDeltas = 0;
 				self._tileDataTotalInvalidates = 0;
-				self._tileDataShowOverlay();
 			},
 			onRemove: function () {
 				self.tileDataOn = false;
-				self.clearOverlayMessage('tileData');
+				self.clearOverlayMessage('top-tileData');
 			},
 		});
 
@@ -863,23 +861,21 @@ L.DebugManager = L.Class.extend({
 
 	setOverlayMessage: function(id, message) {
 		if (this.overlayOn) {
-			if (!this._overlayData[id]) {
-				var topLeftNames = ['tileData', 'eventDelayTime'];
-				var position = topLeftNames.includes(id) ? 'topleft' : 'bottomleft';
-				this._overlayData[id] = L.control.attribution({prefix: '', position: position});
-				this._overlayData[id].addTo(this._map);
-			}
-			this._overlayData[id].setPrefix(message);
+			this._overlayData[id] = message;
 		}
 	},
 
 	clearOverlayMessage: function(id) {
-		if (this.overlayOn) {
-			if (this._overlayData[id]) {
-				this._overlayData[id].remove();
-				delete this._overlayData[id];
-			}
+		if (this.overlayOn && this._overlayData[id]) {
+			delete this._overlayData[id];
 		}
+	},
+
+	getOverlayMessages: function() {
+		if (this.tileDataOn)
+			this._tileDataUpdateOverlay();
+
+		return this._overlayData;
 	},
 
 	getTimeArray: function() {
@@ -898,13 +894,13 @@ L.DebugManager = L.Class.extend({
 		return 'best: ' + times.best + ' ms, worst: ' + times.worst + ' ms, avg: ' + Math.round(times.ms/times.count) + ' ms, last: ' + value + ' ms';
 	},
 
-	_tileDataShowOverlay: function() {
+	_tileDataUpdateOverlay: function() {
 		var messages = this._tileDataTotalMessages;
 		var loads = this._tileDataTotalLoads;
 		var deltas = this._tileDataTotalDeltas;
 		var updates = this._tileDataTotalUpdates;
 		var invalidates = this._tileDataTotalInvalidates;
-		this.setOverlayMessage('tileData',
+		this.setOverlayMessage('top-tileData',
 			'Total tile messages: ' + messages + '\n' +
 			'loads: ' + loads + ' ' +
 			'deltas: ' + deltas + ' ' +
@@ -916,43 +912,23 @@ L.DebugManager = L.Class.extend({
 	},
 
 	tileDataAddMessage() {
-		if (!this.tileDataOn) {
-			return;
-		}
 		this._tileDataTotalMessages++;
-		this._tileDataShowOverlay();
 	},
 
 	tileDataAddLoad() {
-		if (!this.tileDataOn) {
-			return;
-		}
 		this._tileDataTotalLoads++;
-		this._tileDataShowOverlay();
 	},
 
 	tileDataAddUpdate() {
-		if (!this.tileDataOn) {
-			return;
-		}
 		this._tileDataTotalUpdates++;
-		this._tileDataShowOverlay();
 	},
 
 	tileDataAddDelta() {
-		if (!this.tileDataOn) {
-			return;
-		}
 		this._tileDataTotalDeltas++;
-		this._tileDataShowOverlay();
 	},
 
 	tileDataAddInvalidate() {
-		if (!this.tileDataOn) {
-			return;
-		}
 		this._tileDataTotalInvalidates++;
-		this._tileDataShowOverlay();
 	},
 
 	_tileInvalidationTimeout: function() {
@@ -1074,7 +1050,7 @@ L.DebugManager = L.Class.extend({
 		{
 			this._lastEventDelayTime = currentTime;
 			this._lastEventDelay = delayMs;
-			this.setOverlayMessage('eventDelayTime', 'Event handling delay: ' + delayMs + 'ms');
+			this.setOverlayMessage('top-eventDelayTime', 'Event handling delay: ' + Math.ceil(delayMs) + 'ms');
 
 			if (delayMs > very_slow_time_threshold) {
 				let msg = _('Event handling has been delayed for an unexpectedly long time: {0}ms');
