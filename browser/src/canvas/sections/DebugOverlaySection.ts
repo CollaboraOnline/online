@@ -29,6 +29,8 @@ class DebugOverlaySection extends app.definitions.canvasSectionObject {
 		elapsedTime?: number,
 		subsetBounds?: Bounds,
 	): void {
+		TileManager.updateOverlayMessages();
+
 		const msgs = this._debug.getOverlayMessages();
 		if (!msgs) return;
 
