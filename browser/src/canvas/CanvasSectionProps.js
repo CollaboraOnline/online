@@ -44,6 +44,8 @@ L.CSections.ColumnGroup = 			{ name: 'column group'		, zIndex: 5 };
 L.CSections.RowGroup = 				{ name: 'row group'			, zIndex: 5 };
 L.CSections.CornerGroup = 			{ name: 'corner group'		, zIndex: 5 };
 
+L.CSections.Mouse =                 { name: 'mouse'             , zIndex: 5 },
+
 L.CSections.Comment =				{ name: 'comment'			, zIndex: 7	}; // This class is for comment markers. It is a document object. One should change instance's name after initializing (there may be many instances of this class).
 
 L.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 9 };
@@ -75,6 +77,7 @@ L.CSections.Debug.PreloadMap.processingOrder =		62; // Writer & Impress & Calc. 
 L.CSections.CalcGrid.processingOrder = 				63; // Calc. This is bound to tiles.
 L.CSections.Debug.Splits.processingOrder = 			64; // Calc. This is bound to tiles.
 L.CSections.OtherViewCellCursor.processingOrder =   65; // Calc. Other views' cell cursors.
+L.CSections.Mouse.processingOrder =                 70; // This is bound to tiles. Going to be universal. Writer multi-page view only, for now.
 
 L.CSections.CalcGrid.drawingOrder = 				40; // Calc.
 L.CSections.Tiles.drawingOrder = 					50; // Writer & Impress & Calc.
@@ -90,7 +93,7 @@ L.CSections.CornerGroup.drawingOrder =				120; // Calc.
 L.CSections.CornerHeader.drawingOrder =				130; // Calc.
 L.CSections.RowHeader.drawingOrder = 				140; // Calc.
 L.CSections.ColumnHeader.drawingOrder = 			150; // Calc.
-
+L.CSections.Mouse.drawingOrder =                    160; // This is bound to tiles. Going to be universal. Writer multi-page view only, for now.
 
 /* zIndex = 6 and goes on. */
 
