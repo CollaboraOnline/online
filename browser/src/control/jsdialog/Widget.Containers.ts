@@ -122,7 +122,7 @@ JSDialog.grid = function (
 
 JSDialog.toolbox = function (
 	parentContainer: Element,
-	data: WidgetJSON,
+	data: ToolboxWidgetJSON,
 	builder: JSBuilder,
 ) {
 	const levelClass =
@@ -159,11 +159,18 @@ JSDialog.toolbox = function (
 	};
 	JSDialog.OnStateChange(toolbox, enabledCallback);
 
+	// builder modifiers
 	const noLabels = builder.options.noLabelsForUnoButtons;
 	builder.options.noLabelsForUnoButtons = true;
 
+	const inlineLabels = builder.options.useInLineLabelsForUnoButtons;
+	if (data.hasVerticalParent === true && data.children.length === 1)
+		builder.options.useInLineLabelsForUnoButtons = true;
+
 	builder.build(toolbox, data.children, false);
 
+	// reset modifiers
+	builder.options.useInLineLabelsForUnoButtons = inlineLabels;
 	builder.options.noLabelsForUnoButtons = noLabels;
 
 	return false;
