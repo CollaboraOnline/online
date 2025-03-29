@@ -247,6 +247,9 @@ public:
     /// Do we have internally queued incoming / outgoing data ?
     virtual bool hasBuffered() const { return false; }
 
+    /// Returns the total capacity of all data buffers.
+    virtual std::size_t totalBufferCapacity() const { return 0; }
+
     /// manage latency issues around packet aggregation
     void setNoDelay()
     {
@@ -1147,6 +1150,11 @@ public:
     bool hasBuffered() const override
     {
         return !_outBuffer.empty() || !_inBuffer.empty();
+    }
+
+    std::size_t totalBufferCapacity() const override
+    {
+        return _outBuffer.capacity() + _inBuffer.capacity();
     }
 
     /// Create a pair of connected stream sockets
