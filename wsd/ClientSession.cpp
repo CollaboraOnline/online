@@ -1974,16 +1974,17 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
 {
     // Insert our meta origin if we can
     payload->rewriteDataBody([this](std::vector<char>& data) {
-            if (Util::findInVector(data, "clipboardcontent: content\ntext/plain") == 0)
+            std::string_view sv(data.data(), data.size());
+            if (sv.starts_with("clipboardcontent: content\ntext/plain"))
             {
                 // Single format and it's plain text (not HTML): no need to rewrite anything.
                 return false;
             }
 
-            bool json = Util::findInVector(data, "textselectioncontent:\n{") == 0;
+            bool json = sv.starts_with("textselectioncontent:\n{");
             if (!json)
             {
-                json = Util::findInVector(data, "clipboardcontent: content\n{") == 0;
+                json = sv.starts_with("clipboardcontent: content\n{");
             }
             std::size_t pos = Util::findInVector(data, "<body");
             if (pos != std::string::npos)
