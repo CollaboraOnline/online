@@ -263,9 +263,10 @@ void DocumentBroker::setupTransfer(const std::shared_ptr<StreamSocket>& socket,
         });
 }
 
-static int getLimitLoadSecs()
+static std::chrono::seconds getLimitLoadSecs()
 {
-    return ConfigUtil::getConfigValue<int>("per_document.limit_load_secs", 100);
+    const auto value = ConfigUtil::getConfigValue<int>("per_document.limit_load_secs", 100);
+    return std::chrono::seconds(std::max(value, 0));
 }
 
 void DocumentBroker::assertCorrectThread(const char* filename, int line) const
@@ -336,15 +337,15 @@ void DocumentBroker::pollThread()
     auto lastBWUpdateTime = std::chrono::steady_clock::now();
     auto lastClipboardHashUpdateTime = std::chrono::steady_clock::now();
 
-    const int limit_load_secs =
+    const std::chrono::seconds limit_load_secs =
 #if ENABLE_DEBUG
         // paused waiting for a debugger to attach
         // ignore load time out
-        std::getenv("PAUSEFORDEBUGGER") ? -1 :
+        std::getenv("PAUSEFORDEBUGGER") ? std::chrono::seconds::max() :
 #endif
-            getLimitLoadSecs();
+                                        getLimitLoadSecs();
 
-    auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
+    auto loadDeadline = std::chrono::steady_clock::now() + limit_load_secs;
 #endif
 
     const auto limStoreFailures =
@@ -397,11 +398,11 @@ void DocumentBroker::pollThread()
             }
 
             // Extend the deadline while we are interactiving with the user.
-            loadDeadline = now + std::chrono::seconds(limit_load_secs);
+            loadDeadline = now + limit_load_secs;
             continue;
         }
 
-        if (!isLoaded() && (limit_load_secs > 0) && (now > loadDeadline))
+        if (!isLoaded() && (limit_load_secs > std::chrono::seconds::zero()) && (now > loadDeadline))
         {
             LOG_ERR("Doc [" << _docKey << "] is taking too long to load. Will kill process ["
                     << _childProcess->getPid() << "]. per_document.limit_load_secs set to "
