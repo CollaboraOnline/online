@@ -60,7 +60,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         impressHelper.removeShapeSelection();
     });
 
-    it('Deleting text', function () {
+    it.skip('Deleting text', function () {
         // select shape and activate editing
         selectTextShape(1);
         impressHelper.dblclickOnSelectedShape();

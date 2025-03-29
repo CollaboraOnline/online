@@ -70,13 +70,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'text': _UNO('.uno:MasterSlidesPanel', 'presentation', true),
 				'command': '.uno:MasterSlidesPanel',
 				'accessibility': { focusBack: true, combination: 'ZM', de: null }
-			},
-			{
-				'id': 'options-navigator',
-				'type': 'toolitem',
-				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator',
-				'accessibility': { focusBack: false, combination: 'ZN', de: 'V' }
 			}
 		];
 		if (this._map && this._map['wopi'].EnableShare) {

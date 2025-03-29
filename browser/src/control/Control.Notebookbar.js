@@ -72,6 +72,9 @@ L.Control.Notebookbar = L.Control.extend({
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
+		var FloatingNavIcon = document.querySelector('.navigator-btn-wrapper');
+		if (FloatingNavIcon) 
+			FloatingNavIcon.classList.add('hasnotebookbar');
 		document.getElementById('document-container').classList.add('notebookbar-active');
 
 		var docLogoHeader = L.DomUtil.create('div', '');
@@ -119,6 +122,9 @@ L.Control.Notebookbar = L.Control.extend({
 		$('.main-nav #document-header').remove();
 		$('.main-nav').removeClass('hasnotebookbar');
 		$('#toolbar-wrapper').removeClass('hasnotebookbar');
+		var FloatingNavIcon = document.querySelector('.navigator-btn-wrapper');
+		if (FloatingNavIcon) 
+			FloatingNavIcon.classList.remove('hasnotebookbar');
 		$('.main-nav #document-header').remove();
 		this.clearNotebookbar();
 	},
@@ -610,7 +616,6 @@ L.Control.Notebookbar = L.Control.extend({
 			{
 				'id': 'optionscontainer',
 				'type': 'container',
-				'vertical': 'true',
 				'children': [
 					{
 						'id': 'optionstoolboxdown',
@@ -632,14 +637,9 @@ L.Control.Notebookbar = L.Control.extend({
 				'type': 'toolitem',
 				'text': _UNO('.uno:Sidebar', '', true),
 				'command': '.uno:SidebarDeck.PropertyDeck',
-				'accessibility': { focusBack: false, combination: 'ZB', de: null }
+				'accessibility': { focusBack: false, combination: 'ZB', de: null },
+				'useInLineLabelsForUnoButtons': false,
 			},
-			{
-				'type': 'toolitem',
-				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator',
-				'accessibility': { focusBack: false, combination: 'ZN', de: 'V' }
-			}
 		];
 	
 		if (this._map && this._map['wopi'].EnableShare) {

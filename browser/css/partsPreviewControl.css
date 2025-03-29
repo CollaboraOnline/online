@@ -12,8 +12,11 @@
 	height: 100%
 }
 
+#first-drop-site {
+	padding: 0px;
+}
+
 .preview-frame {
-	max-width: 190px;
 	white-space: nowrap;
 	text-align: center;
 	padding: 1em 0;

@@ -319,20 +319,27 @@ body {
 	position: relative;
 	border-top: 1px solid var(--color-border);
 	display: none;
+	overflow-y: auto;
+	height: 100%;
 }
 
-#sidebar-dock-wrapper {
+#sidebar-dock-wrapper, #navigator-dock-wrapper {
 	display: none;
 	background: var(--color-background-lighter);
 	position: relative;
-	border-inline-start: 1px solid var(--color-border);
-	overflow: hidden;
+	overflow-x: hidden;
 	z-index: 990;
+	max-width: 350px;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-border) transparent;
+	height: 100%;
 }
 
 #sidebar-dock-wrapper.visible {
 	display: block;
 	animation: 200ms ease-out appear-from-right;
+	border-inline-start: 1px solid var(--color-border);
 }
 
 @keyframes appear-from-right {
@@ -344,24 +351,20 @@ body {
 	}
 }
 
-#sidebar-panel {
+#sidebar-panel, #navigator-panel {
 	padding: 0px;
 	margin: 0px;
 	position: relative;
 	width: auto;
 	height: 100%;
-	overflow-x: hidden;
-	overflow-y: auto;
 	z-index: 1200;
-	scrollbar-width: thin;
-	scrollbar-color: var(--color-border) transparent;
 }
 
-#sidebar-panel::-webkit-scrollbar {
+#sidebar-panel::-webkit-scrollbar, #navigator-panel::-webkit-scrollbar {
 	width: 8px;
 }
 
-#sidebar-panel::-webkit-scrollbar-thumb {
+#sidebar-panel::-webkit-scrollbar-thumb, #navigator-panel::-webkit-scrollbar-thumb {
 	background-color: var(--color-border);
 }
 

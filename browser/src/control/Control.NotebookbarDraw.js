@@ -46,12 +46,6 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			},
 			{
 				'type': 'toolitem',
-				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator',
-				'accessibility': { focusBack: true, combination: 'ZN', de: null }
-			},
-			{
-				'type': 'toolitem',
 			}
 		]);
 	},

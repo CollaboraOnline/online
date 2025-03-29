@@ -87,10 +87,9 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	_putPCWOutsideFlex: function () {
 		if (this._isPCWInsideFlex()) {
 			var pcw = document.getElementById('presentation-controls-wrapper');
-			if (pcw) {
+			if (pcw && pcw.parentNode) {
+				pcw.parentNode.removeChild(pcw);  // Remove from its actual parent
 				var frc = document.getElementById('main-document-content');
-				frc.removeChild(pcw);
-
 				frc.parentNode.insertBefore(pcw, frc.nextSibling);
 			}
 		}
@@ -152,11 +151,11 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			}
 		}
 		else {
-			var container = L.DomUtil.get('presentation-controls-wrapper');
+			var container = L.DomUtil.get('main-document-content');// consider height of document area to calculate estimated height for slide-sorter
 			var slideSorter = L.DomUtil.get('slide-sorter');
-			var toolbar = $('#presentation-toolbar');
+			var navigationOptions = L.DomUtil.get('navigation-options-wrapper');
 			if (container && slideSorter && toolbar) {
-				$(slideSorter).height($(container).height() - toolbar.outerHeight());
+				$(slideSorter).height($(container).height() - $(navigationOptions).height());
 			}
 		}
 	},
