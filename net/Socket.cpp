@@ -1085,14 +1085,20 @@ void SocketPoll::dumpState(std::ostream& os) const
     os << "\n  SocketPoll [" << name() << "] with " << pollSockets.size() << " socket"
        << (pollSockets.size() == 1 ? "" : "s") << " - wakeup rfd: " << _wakeup[0]
        << " wfd: " << _wakeup[1] << '\n';
-    const auto callbacks = _newCallbacks.size();
-    if (callbacks > 0)
-        os << "\tcallbacks: " << callbacks << '\n';
+
+    os << "\tcallbacks: " << _newCallbacks.size() << '\n';
+
     os << "\t\tfd\tevents\tstatus\trbuffered\trcapacity\twbuffered\twcapacity\trtotal\twtotal\tclie"
           "ntaddress\n";
+    std::size_t totalCapacity = 0;
     for (const std::shared_ptr<Socket>& socket : pollSockets)
+    {
         socket->dumpState(os);
-    os << "\n  Done [" << name() << "]\n";
+        totalCapacity += socket->totalBufferCapacity();
+    }
+
+    os << "\n  Total socket buffer capacity: " << totalCapacity / 1024 << " KB\n";
+    os << "\n  Done SocketPoll [" << name() << "]\n";
     THREAD_UNSAFE_DUMP_END
 }
 
