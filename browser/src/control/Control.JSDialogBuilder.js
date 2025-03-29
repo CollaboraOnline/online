@@ -2118,7 +2118,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 			}
 
-			div.setAttribute('data-cooltip', builder._cleanText(data.text));
+			const tooltip = builder._cleanText(data.tooltip) || builder._cleanText(data.text);
+			div.setAttribute('data-cooltip', tooltip);
 
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
 				$(div).addClass('inline');
