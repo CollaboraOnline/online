@@ -5222,8 +5222,8 @@ void DocumentBroker::dumpState(std::ostream& os)
            << std::chrono::duration_cast<std::chrono::seconds>(now - _createTime);
     int childPid = _childProcess ? _childProcess->getPid() : 0;
     os << "\n  child PID: " << childPid;
-    os << "\n  sent: " << sent;
-    os << "\n  recv: " << recv;
+    os << "\n  sent: " << sent << " bytes";
+    os << "\n  recv: " << recv << " bytes";
     os << "\n  jail id: " << _jailId;
     os << "\n  filename: " << COOLWSD::anonymizeUrl(_filename);
     os << "\n  public uri: " << _uriPublic.toString();
