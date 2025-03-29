@@ -151,7 +151,7 @@ public:
             totalSize += string.size();
         }
 
-        os << "Saved clipboard total size: " << totalSize << '\n';
+        os << "Saved clipboard total size: " << totalSize << " bytes\n";
     }
 
     void insertClipboard(const std::string key[2],

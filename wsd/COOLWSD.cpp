@@ -3349,7 +3349,7 @@ public:
         if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
             os << "\n  smaps_rollup: <unavailable>";
         else
-            os << "\n  smaps_rollup: " << smap;
+            os << "\n  smaps_rollup: " << Util::replace(smap, "\n", "\n\t");
 
 #if !MOBILEAPP
         if (FetchHttpSession)
@@ -4241,7 +4241,8 @@ void dump_state()
     if (Server)
         Server->dumpState(oss);
 
-    oss << "\nMalloc info [" << getpid() << "]: \n" << Util::getMallocInfo() << '\n';
+    oss << "\nMalloc info [" << getpid() << "]: \n\t"
+        << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s\n", msg.c_str());

@@ -103,7 +103,8 @@ void dump_forkit_state()
         << "  MasterLocation: " << MasterLocation
         << "\n";
 
-    oss << "\nMalloc info [" << getpid() << "]: \n" << Util::getMallocInfo() << '\n';
+    oss << "\nMalloc info [" << getpid() << "]: \n\t"
+        << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s", msg.c_str());
