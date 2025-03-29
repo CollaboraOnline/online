@@ -2207,7 +2207,8 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
                                   << socket->getFD());
 
     // First Upgrade.
-    auto ws = std::make_shared<WebSocketHandler>(socket, request);
+    const ServerURL cnxDetails(requestDetails);
+    auto ws = std::make_shared<WebSocketHandler>(socket, request, cnxDetails.getWebServerUrl());
 
     // Response to clients beyond this point is done via WebSocket.
     try
