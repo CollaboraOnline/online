@@ -1770,7 +1770,7 @@ DocumentBroker::asyncInstallPresets(const std::shared_ptr<SocketPoll>& poll, con
     // When result arrives, extract uris of what we want to install to the jail's user presets
     // and async download and install those.
     http::Session::FinishedCallback finishedCallback =
-        [uriAnonym, presetsPath, presetTasks,
+        [uriAnonym = std::move(uriAnonym), presetsPath, presetTasks,
          session](const std::shared_ptr<http::Session>& configSession)
     {
         configSession->asyncShutdown();
