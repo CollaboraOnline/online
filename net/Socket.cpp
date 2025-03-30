@@ -524,6 +524,13 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS, bool justPoll)
     LOGA_TRC(Socket, "Poll completed with " << rc << " live polls max (" <<
              timeoutMaxMicroS << "us)" << ((rc==0) ? "(timedout)" : ""));
 
+    if (rc == 0)
+    {
+        // We timed out. Flush the thread-local log
+        // buffer to avoid falling too much behind.
+        Log::flush();
+    }
+
     // from now we want to race back to sleep.
     enableWatchdog();
 
