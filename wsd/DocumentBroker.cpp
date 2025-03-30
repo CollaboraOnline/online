@@ -716,8 +716,14 @@ void DocumentBroker::pollThread()
     {
         std::stringstream state;
         state << "DocBroker [" << _docKey << "] stopped "
-              << (reason.empty() ? "because of test failure" : ("although " + reason)) << ": ";
-        dumpState(state);
+              << (reason.empty() ? "because of test failure" : ("although " + reason));
+        if (!UnitWSD::isUnitTesting())
+        {
+            // When running unit-tests, we issue USR1.
+            state << ": ";
+            dumpState(state);
+        }
+
         LOG_WRN(state.str());
     }
 
