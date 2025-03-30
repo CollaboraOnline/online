@@ -353,10 +353,15 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	visibility: hidden !important;
 }
 
-.ui-tab.selected.jsdialog {
+.ui-tabs-root.jsdialog > [role='tablist'] > .ui-tab.jsdialog.selected {
+	background-color: var(--color-background-dark) !important;
+	color: var(--color-text-lighter) !important;
+	box-shadow: 0 0 2px 1px var(--color-box-shadow) !important;
+}
+
+.ui-tabs-root.jsdialog.ui-grid-cell > [role='tablist'] > .ui-tab.jsdialog.selected {
 	background-color: var(--color-background-lighter) !important;
 	color: var(--color-text-darker) !important;
-	box-shadow: 0 0 2px 1px var(--color-box-shadow) !important;
 }
 
 .ui-tab.jsdialog:not(.selected):hover {
