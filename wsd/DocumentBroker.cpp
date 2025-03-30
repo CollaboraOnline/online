@@ -1832,7 +1832,7 @@ void DocumentBroker::asyncInstallPreset(
     http::Request request(uri.getPathAndQuery());
 
     http::Session::FinishedCallback finishedCallback =
-        [configId, presetUri, presetStamp, uriAnonym,
+        [configId, presetUri, presetStamp, uriAnonym=std::move(uriAnonym),
          presetFile, id, finishedCB](const std::shared_ptr<http::Session>& presetSession)
     {
         presetSession->asyncShutdown();
