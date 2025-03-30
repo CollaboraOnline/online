@@ -419,7 +419,7 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
     httpHeader.setContentLength(0);
 
     http::Session::FinishedCallback finishedCallback =
-        [this, startTime, lock, wopiLog, uriAnonym, asyncLockStateCallback,
+        [this, startTime, lock, wopiLog, asyncLockStateCallback,
          profileZone =
              std::move(profileZone)](const std::shared_ptr<http::Session>& httpSession)
     {
