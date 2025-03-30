@@ -825,7 +825,7 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
                 handleUploadToStorageResponse(details, httpResponse->getBody());
 
             // Fire the callback to our client (DocBroker, typically).
-            asyncUploadCallback(AsyncUpload(AsyncUpload::State::Complete, res));
+            asyncUploadCallback(AsyncUpload(AsyncUpload::State::Complete, std::move(res)));
         };
 
         _uploadHttpSession->setFinishedHandler(std::move(finishedCallback));
