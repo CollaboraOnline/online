@@ -329,6 +329,14 @@ const std::unordered_map<std::string, std::string>& getDefaultAppConfig() { retu
 void extract(const std::string& parentKey, const Poco::Util::AbstractConfiguration& config,
              std::map<std::string, std::string>& map)
 {
+    if (parentKey.empty() || !config.has(parentKey))
+    {
+        // For some unclear reason, we sometimes get
+        // an empty key. This results in all entries
+        // have a leading '.', which is unexpected.
+        return;
+    }
+
     std::vector<std::string> keys;
     config.keys(parentKey, keys);
     const std::string parentKeyDot = parentKey + '.';
@@ -349,12 +357,9 @@ std::map<std::string, std::string> extractAll(const Poco::Util::AbstractConfigur
 
     std::vector<std::string> keys;
     config.keys(keys);
-    for (const auto& key : keys)
+    for (const std::string& key : keys)
     {
-        if (config.has(key))
-        {
-            extract(key, config, map);
-        }
+        extract(key, config, map);
     }
 
     // These keys have no values, but Poco gives us the values of
