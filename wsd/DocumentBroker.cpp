@@ -2630,9 +2630,8 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
     const std::string uriAnonym = COOLWSD::anonymizeUrl(uri);
 
     // If the file timestamp hasn't changed, skip uploading.
-    const std::string filePath = _storage->getRootFilePathUploading();
     const std::chrono::system_clock::time_point newFileModifiedTime
-        = FileUtil::Stat(filePath).modifiedTimepoint();
+        = FileUtil::Stat(_storage->getRootFilePathUploading()).modifiedTimepoint();
     if (!isSaveAs && newFileModifiedTime == _saveManager.getLastModifiedTime() && !isRename
         && !force)
     {
