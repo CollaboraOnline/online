@@ -458,7 +458,7 @@ static void sendErrorAndShutdownWS(const std::shared_ptr<WebSocketHandler>& ws,
     }
 }
 
-void RequestVettingStation::createClientSession(std::shared_ptr<DocumentBroker> docBroker,
+void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBroker>& docBroker,
                                                 const std::string& docKey, const std::string& url,
                                                 const Poco::URI& uriPublic, const bool isReadOnly)
 {
