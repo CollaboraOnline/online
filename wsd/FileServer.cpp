@@ -492,12 +492,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                 fileInfo->set("SharedSettings", sharedSettings);
             }
 
-            bool cypressUserConfig(false);
 #if defined(BUILDING_TESTS)
             // Cypress tests both assume that tests start in the default config, e.g.
             // spell checking and sidebar enabled, and some tests assume they can override
             // features by changing localStorage before loading a document.
-            cypressUserConfig = localPath.find("cypress_test") != std::string::npos;
+            const bool cypressUserConfig = localPath.find("cypress_test") != std::string::npos;
+#else
+            const bool cypressUserConfig(false);
 #endif
 
             {
