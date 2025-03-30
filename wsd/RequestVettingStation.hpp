@@ -82,7 +82,7 @@ private:
                                                     const std::string& url,
                                                     const Poco::URI& uriPublic);
 
-    void createClientSession(std::shared_ptr<DocumentBroker> docBroker,
+    void createClientSession(const std::shared_ptr<DocumentBroker>& docBroker,
                              const std::string& docKey, const std::string& url,
                              const Poco::URI& uriPublic, bool isReadOnly);
 
