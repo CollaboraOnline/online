@@ -382,7 +382,7 @@ std::size_t LocalStorage::uploadLocalFileToStorageAsync(
         if (_isCopy && Poco::File(getRootFilePathUploading()).exists())
             FileUtil::copyFileTo(getRootFilePathUploading(), path);
 
-        const FileUtil::Stat stat(path);
+        const FileUtil::Stat stat(std::move(path));
         size = stat.size();
 
         // update its fileinfo object. This is used later to check if someone else changed the
