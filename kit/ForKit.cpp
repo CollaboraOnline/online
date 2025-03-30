@@ -548,7 +548,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
                        DisplayVersion, sysTemplateIncomplete, spareKitId);
         };
 
-        auto parentFunc = [childRoot, jailId](int pid)
+        auto parentFunc = [childRoot, jailId = std::move(jailId)](int pid)
         {
             // Parent
             if (pid < 0)
