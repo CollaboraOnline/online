@@ -490,11 +490,11 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
         std::make_shared<std::unique_ptr<WopiStorage::WOPIFileInfo>>(std::move(realWopiFileInfo));
 
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
-    const auto ws = _ws;
+    std::shared_ptr<WebSocketHandler> ws = _ws;
     docBroker->setupTransfer(
         _socket,
         [clientSession=std::move(clientSession), wopiFileInfo=std::move(wopiFileInfo),
-         ws, docBroker](const std::shared_ptr<Socket>& moveSocket)
+         ws=std::move(ws), docBroker](const std::shared_ptr<Socket>& moveSocket)
         {
             try
             {
