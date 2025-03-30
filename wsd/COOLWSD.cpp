@@ -3828,6 +3828,12 @@ int COOLWSD::innerMain()
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll->wakeup();
 
+        if (SigUtil::getShutdownRequestFlag())
+        {
+            // The code below can be unsafe as other threads start shutting down.
+            break;
+        }
+
         const auto timeNow = std::chrono::steady_clock::now();
         const std::chrono::milliseconds timeSinceStartMs
             = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - startStamp);
