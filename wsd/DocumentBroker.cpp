@@ -4874,7 +4874,8 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
 #if !MOBILEAPP
             if (_asyncInstallTask)
             {
-                auto sendLoad = [selfWeak = weak_from_this(), this, msg, binary](bool success) {
+                auto sendLoad = [selfWeak = weak_from_this(), this,
+                                 msg = std::move(msg), binary](bool success) {
                     if (!success)
                         return;
                     std::shared_ptr<DocumentBroker> selfLifecycle = selfWeak.lock();
