@@ -2183,12 +2183,10 @@ void FileServerRequestHandler::fetchWordbook(const Poco::Net::HTTPRequest& reque
             ". Response: " + responseContent.str());
     }
 
-    std::string fileContent = httpResponse->getBody();
-
     http::Response clientResponse(http::StatusCode::OK);
     clientResponse.set("Content-Type", "text/plain; charset=utf-8");
     clientResponse.set("Cache-Control", "no-cache");
-    clientResponse.setBody(fileContent);
+    clientResponse.setBody(httpResponse->getBody());
     socket->send(clientResponse);
     LOG_DBG("Successfully fetched dictionary file from [" << uriAnonym << "]");
 }
