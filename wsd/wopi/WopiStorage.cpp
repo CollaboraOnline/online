@@ -795,8 +795,9 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
         httpRequest.setBodyFile(filePath);
 
         http::Session::FinishedCallback finishedCallback =
-            [this, startTime, wopiLog, filePathAnonym, uriAnonym, size, isSaveAs, isRename,
-             asyncUploadCallback, profileZone = std::move(profileZone)](
+            [this, startTime, wopiLog, filePathAnonym, uriAnonym = std::move(uriAnonym),
+             size, isSaveAs, isRename, asyncUploadCallback,
+             profileZone = std::move(profileZone)](
                 const std::shared_ptr<http::Session>& httpSession)
         {
             profileZone->end();
