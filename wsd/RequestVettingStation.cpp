@@ -493,7 +493,7 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
     const auto ws = _ws;
     docBroker->setupTransfer(
         _socket,
-        [clientSession=std::move(clientSession), uriPublic, wopiFileInfo=std::move(wopiFileInfo),
+        [clientSession=std::move(clientSession), wopiFileInfo=std::move(wopiFileInfo),
          ws, docBroker](const std::shared_ptr<Socket>& moveSocket)
         {
             try
