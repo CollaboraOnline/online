@@ -56,7 +56,7 @@ void UnitPerf::testPerf(std::string testType, std::string fileType, std::string 
     stats = std::make_shared<Stats>();
     stats->setTypeOfTest(std::move(testType));
 
-    TerminatingPoll poll("performance test");
+    std::shared_ptr<TerminatingPoll> poll = std::make_shared<TerminatingPoll>("performance test");
 
     std::string docName = "empty." + fileType;
 
@@ -66,13 +66,13 @@ void UnitPerf::testPerf(std::string testType, std::string fileType, std::string 
 
     const std::string tracePath = TDOC + traceStr;
     StressSocketHandler::addPollFor(
-        poll, helpers::getTestServerURI("ws"),
+        *poll, helpers::getTestServerURI("ws"),
         filePath, tracePath,
         stats);
 
     do {
-        poll.poll(TerminatingPoll::DefaultPollTimeoutMicroS);
-    } while (poll.continuePolling() && poll.getSocketCount() > 0);
+        poll->poll(TerminatingPoll::DefaultPollTimeoutMicroS);
+    } while (poll->continuePolling() && poll->getSocketCount() > 0);
 
     stats->dump();
 }
