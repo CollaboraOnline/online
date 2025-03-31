@@ -1570,7 +1570,9 @@ bool ChildSession::getClipboard(const StringVector& tokens)
         {
             Util::vectorAppend(output, outMimeTypes[i]);
             Util::vectorAppend(output, "\n", 1);
-            const std::array<char, 2> hex = Util::hexFromByte(outSizes[i]);
+            std::stringstream sstream;
+            sstream << std::hex << outSizes[i];
+            std::string hex = sstream.str();
             Util::vectorAppend(output, hex.data(), hex.size());
             Util::vectorAppend(output, "\n", 1);
             Util::vectorAppend(output, outStreams[i], outSizes[i]);
