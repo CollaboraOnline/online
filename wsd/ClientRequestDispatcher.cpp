@@ -1348,7 +1348,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         }
 #endif
 
-        sendResult(status);
+        sendResult(std::move(status));
     };
 
     httpProbeSession->setFinishedHandler(std::move(finishHandler));
