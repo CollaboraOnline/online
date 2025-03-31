@@ -444,7 +444,7 @@ private:
 
             TraceFileRecord rec;
             if (extractRecord(line, lastTime, rec))
-                _records.push_back(rec);
+                _records.push_back(std::move(rec));
             else
                 fprintf(stderr, "Invalid trace file record, expected 4 tokens. [%s]\n", line.c_str());
         }
