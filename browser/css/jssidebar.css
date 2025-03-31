@@ -125,7 +125,6 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 
 .sidebar.ui-grid.ui-grid-cell .menubutton {
 	justify-content: space-between;
-	justify-self: end;
 	padding: 0;
 	margin-right: 1px;
 }
