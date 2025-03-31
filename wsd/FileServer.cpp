@@ -82,8 +82,6 @@ using Poco::Net::HTTPRequest;
 using Poco::Net::NameValueCollection;
 using Poco::Util::Application;
 
-std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
-
 // We have files that are at least 2.5 MB already.
 // WASM files are in the order of 30 MB, however,
 constexpr auto MaxFileSizeToCacheInBytes = 50 * 1024 * 1024;
