@@ -864,10 +864,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
             std::string timestamp =
                 Util::getIso8601FracformatTime(std::chrono::system_clock::now());
-            const std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
+            std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
             http::Response httpResponse(http::StatusCode::OK);
             FileServerRequestHandler::hstsHeaders(httpResponse);
-            httpResponse.setBody(body, "application/json; charset=utf-8");
+            httpResponse.setBody(std::move(body), "application/json; charset=utf-8");
             socket->send(httpResponse);
         }
     }
