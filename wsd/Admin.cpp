@@ -1221,7 +1221,7 @@ void Admin::scheduleMonitorConnect(const std::string &uri, std::chrono::steady_c
     MonitorConnectRecord todo;
     todo.setWhen(when);
     todo.setUri(uri);
-    _pendingConnects.push_back(todo);
+    _pendingConnects.push_back(std::move(todo));
 }
 
 void Admin::getMetrics(std::ostringstream &metrics)
