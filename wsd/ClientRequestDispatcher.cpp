@@ -1038,13 +1038,12 @@ bool ClientRequestDispatcher::handleRootRequest(const RequestDetails& requestDet
     assert(socket && "Must have a valid socket");
 
     LOG_DBG("HTTP request: " << requestDetails.getURI());
-    const std::string mimeType = "text/plain";
     const std::string responseString = "OK";
 
     http::Response httpResponse(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(httpResponse);
     httpResponse.set("Content-Length", std::to_string(responseString.size()));
-    httpResponse.set("Content-Type", mimeType);
+    httpResponse.set("Content-Type", "text/plain");
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
     if( requestDetails.closeConnection() )
         httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Close);
