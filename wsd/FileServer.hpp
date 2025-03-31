@@ -122,16 +122,16 @@ private:
     static std::string getRequestPathname(const Poco::Net::HTTPRequest& request,
                                           const RequestDetails& requestDetails);
 
-    static ResourceAccessDetails preprocessFile(const Poco::Net::HTTPRequest& request,
-                                                http::Response& httpResponse,
-                                                const RequestDetails& requestDetails,
-                                                Poco::MemoryInputStream& message,
-                                                const std::shared_ptr<StreamSocket>& socket);
-    static void preprocessWelcomeFile(const Poco::Net::HTTPRequest& request,
-                                      http::Response& httpResponse,
-                                      const RequestDetails& requestDetails,
-                                      Poco::MemoryInputStream& message,
-                                      const std::shared_ptr<StreamSocket>& socket);
+    ResourceAccessDetails preprocessFile(const Poco::Net::HTTPRequest& request,
+                                         http::Response& httpResponse,
+                                         const RequestDetails& requestDetails,
+                                         Poco::MemoryInputStream& message,
+                                         const std::shared_ptr<StreamSocket>& socket);
+    void preprocessWelcomeFile(const Poco::Net::HTTPRequest& request,
+                               http::Response& httpResponse,
+                               const RequestDetails& requestDetails,
+                               Poco::MemoryInputStream& message,
+                               const std::shared_ptr<StreamSocket>& socket);
 
     static void uploadFileToIntegrator(const Poco::Net::HTTPRequest& request,
                                        Poco::MemoryInputStream& message,
@@ -149,16 +149,16 @@ private:
                                          Poco::MemoryInputStream& message,
                                          const std::shared_ptr<StreamSocket>& socket);
 
-    static void preprocessAdminFile(const Poco::Net::HTTPRequest& request,
-                                    http::Response& httpResponse,
-                                    const RequestDetails& requestDetails,
-                                    const std::shared_ptr<StreamSocket>& socket);
+    void preprocessAdminFile(const Poco::Net::HTTPRequest& request,
+                             http::Response& httpResponse,
+                             const RequestDetails& requestDetails,
+                             const std::shared_ptr<StreamSocket>& socket);
 
-    static void preprocessIntegratorAdminFile(const Poco::Net::HTTPRequest& request,
-                                              http::Response& httpResponse,
-                                              const RequestDetails& requestDetails,
-                                              Poco::MemoryInputStream& message,
-                                              const std::shared_ptr<StreamSocket>& socket);
+    void preprocessIntegratorAdminFile(const Poco::Net::HTTPRequest& request,
+                                       http::Response& httpResponse,
+                                       const RequestDetails& requestDetails,
+                                       Poco::MemoryInputStream& message,
+                                       const std::shared_ptr<StreamSocket>& socket);
 
     /// Construct a JSON to be accepted by the cool.html from a list like
     /// UIMode=classic;TextRuler=true;PresentationStatusbar=false
@@ -185,17 +185,17 @@ public:
     static bool authenticateAdmin(const Poco::Net::HTTPBasicCredentials& credentials,
                                   http::Response& response, std::string& jwtToken);
 
-    static bool handleRequest(const Poco::Net::HTTPRequest& request,
-                              const RequestDetails& requestDetails,
-                              Poco::MemoryInputStream& message,
-                              const std::shared_ptr<StreamSocket>& socket,
-                              ResourceAccessDetails& accessDetails);
+    bool handleRequest(const Poco::Net::HTTPRequest& request,
+                       const RequestDetails& requestDetails,
+                       Poco::MemoryInputStream& message,
+                       const std::shared_ptr<StreamSocket>& socket,
+                       ResourceAccessDetails& accessDetails);
 
-    static void readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix = std::string());
+    void readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix = std::string());
 
-    static const std::string *getCompressedFile(const std::string &path);
+    const std::string *getCompressedFile(const std::string &path);
 
-    static const std::string *getUncompressedFile(const std::string &path);
+    const std::string *getUncompressedFile(const std::string &path);
 
     /// If configured and necessary, sets the HSTS headers.
     static void hstsHeaders([[maybe_unused]] http::Response& response)
@@ -216,10 +216,10 @@ public:
 #endif
     }
 
-    static void dumpState(std::ostream& os);
+    void dumpState(std::ostream& os);
 
 private:
-    static std::map<std::string, std::pair<std::string, std::string>> FileHash;
+    std::map<std::string, std::pair<std::string, std::string>> FileHash;
     static void sendError(http::StatusCode errorCode, const Poco::Net::HTTPRequest& request,
                           const std::shared_ptr<StreamSocket>& socket,
                           const std::string& shortMessage, const std::string& longMessage,
