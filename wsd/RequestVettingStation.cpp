@@ -422,7 +422,7 @@ std::shared_ptr<DocumentBroker> RequestVettingStation::createDocBroker(
         const std::string& url, const Poco::URI& uriPublic)
 {
     // Request a kit process for this doc.
-    const auto [docBroker, error] =
+    auto [docBroker, error] =
         findOrCreateDocBroker(DocumentBroker::ChildType::Interactive, url, docKey,
                               configId, _id, uriPublic, _mobileAppDocId);
 
