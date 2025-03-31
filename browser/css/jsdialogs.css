@@ -1492,7 +1492,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .jsdialog.menubutton[disabled] {
-	background-color: var(--color-background-lighter) !important;
+	background-color: transparent !important;
 	color: var(--color-text-lighter) !important;
 }
 
