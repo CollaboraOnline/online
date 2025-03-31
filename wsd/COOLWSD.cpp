@@ -11,6 +11,9 @@
 
 #include <config.h>
 #include <config_version.h>
+#ifdef __linux__
+#include <malloc.h>
+#endif
 
 #include "COOLWSD.hpp"
 
@@ -3792,6 +3795,11 @@ int COOLWSD::innerMain()
         mainWait->insertNewSocket(inotifySocket);
     }
 #endif
+#endif
+
+#if defined(M_TRIM_THRESHOLD)
+    LOG_DBG("trimming memory post startup");
+    malloc_trim(0);
 #endif
 
     SigUtil::addActivity("coolwsd running");
