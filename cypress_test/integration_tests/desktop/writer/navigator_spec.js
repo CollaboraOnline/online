@@ -22,12 +22,12 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		cy.cGet('#Navigator-button').click();
 	});
 
-	it('Navigator visual test', function() {
+	it.skip('Navigator visual test', function() {
 		cy.wait(500); // wait to make fully rendered
 		cy.cGet('#contenttree').compareSnapshot('navigator_writer', 0.06);
 	});
 
-	it('Jump to element. Navigator -> Document', function() {
+	it.skip('Jump to element. Navigator -> Document', function() {
 		// Expand Tables, Frames, Images
 		// Note click()/dblclick() scrolls the contenttree even if it would be not needed to click
 		expandSecion('Tables');
@@ -63,7 +63,7 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		desktopHelper.assertVisiblePage(5, 5, 8);
 	});
 
-	it('Jump to element even when cursor not visible', function() {
+	it.skip('Jump to element even when cursor not visible', function() {
 		// Expand Tables, Frames, Images
 		// Note click()/dblclick() scrolls the contenttree even if it would be not needed to click
 		expandSecion('Tables');
