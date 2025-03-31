@@ -220,7 +220,7 @@ public:
 
 private:
     std::map<std::string, std::pair<std::string, std::string>> FileHash;
-    static void sendError(http::StatusCode errorCode, const Poco::Net::HTTPRequest& request,
+    static void sendError(http::StatusCode errorCode, const std::string& requestPath,
                           const std::shared_ptr<StreamSocket>& socket,
                           const std::string& shortMessage, const std::string& longMessage,
                           const std::string& extraHeader = std::string());
