@@ -1211,12 +1211,12 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 
     const auto sendResult = [this, socket](CheckStatus result)
     {
-        const auto output = "{\"status\": \"" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
+        std::string output = "{\"status\": \"" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
 
         http::Response jsonResponse(http::StatusCode::OK);
         FileServerRequestHandler::hstsHeaders(jsonResponse);
         jsonResponse.set("Last-Modified", Util::getHttpTimeNow());
-        jsonResponse.setBody(output, "application/json");
+        jsonResponse.setBody(std::move(output), "application/json");
         jsonResponse.set("X-Content-Type-Options", "nosniff");
 
         socket->sendAndShutdown(jsonResponse);
