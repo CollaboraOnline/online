@@ -1,6 +1,6 @@
 /* For btns hover status see device-desktop.css */
 
-.jsdialog *[disabled] {
+.jsdialog:not(.sidebar) *[disabled] {
 	color: var(--color-text-lighter) !important;
 	background: var(--color-background-lighter);
 }
