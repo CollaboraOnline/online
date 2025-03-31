@@ -92,9 +92,7 @@ public:
     {
         Poco::Net::HTTPResponse response;
         std::istream& responseStream = _session->receiveResponse(response);
-        const std::string result(std::istreambuf_iterator<char>(responseStream), {});
-        // std::cerr << "Got response '" << result << "'\n";
-        return result;
+        return std::string(std::istreambuf_iterator<char>(responseStream), {});
     }
 
     int getResponseInt()
