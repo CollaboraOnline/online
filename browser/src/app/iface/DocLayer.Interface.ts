@@ -6,6 +6,8 @@ interface PainterInterface {
 	_removePreloadMap(): void;
 	_addSplitsSection(): void;
 	_removeSplitsSection(): void;
+	_addDebugOverlaySection(): void;
+	_removeDebugOverlaySection(): void;
 }
 
 interface DocLayerInterface {

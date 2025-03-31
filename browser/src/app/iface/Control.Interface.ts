@@ -13,10 +13,6 @@ interface ControlsInterface {
 	[name: string]: ControlLayerInterface;
 }
 
-interface OverlayControlInterface extends ControlInterface {
-	setPrefix(prefix: string): OverlayControlInterface;
-}
-
 interface OverlaysInterface {
-	[name: string]: OverlayControlInterface;
+	[name: string]: string;
 }
