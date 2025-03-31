@@ -298,11 +298,7 @@ std::string RequestDetails::getLineModeKey(const std::string& /*access_token*/) 
 {
     // This key is based on the WOPISrc and the access_token only.
     // However, we strip the host:port and scheme from the WOPISrc.
-    const std::string wopiSrc = Poco::URI(getField(RequestDetails::Field::WOPISrc)).getPath();
-
-    //FIXME: For now, just use the path.
-    // return wopiSrc + "?access_token=" + access_token;
-    return wopiSrc;
+    return Poco::URI(getField(RequestDetails::Field::WOPISrc)).getPath();
 }
 
 #if !defined(BUILDING_TESTS)
