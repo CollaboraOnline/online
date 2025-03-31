@@ -737,7 +737,7 @@ class DeltaGenerator {
             if (it == _deltaEntries.end())
             {
                 _deltaEntries.insert(update);
-                rleData = update;
+                rleData = std::move(update);
                 return false;
             }
             cacheEntry = *it;
