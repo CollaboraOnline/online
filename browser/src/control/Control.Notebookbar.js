@@ -357,10 +357,15 @@ L.Control.Notebookbar = L.Control.extend({
 
 	showNotebookbarButton: function(buttonId, show) {
 		var button = $(this.container).find('#' + buttonId);
-		if (show) {
-			button.show();
+		if (button) {
+			if (show) {
+				button.show();
+			} else {
+				button.hide();
+			}
+			return true;
 		} else {
-			button.hide();
+			return false;
 		}
 	},
 
@@ -372,11 +377,15 @@ L.Control.Notebookbar = L.Control.extend({
 			cssClass = commandId;
 		}
 		var button = $(this.container).find('div.' + cssClass);
-		if (show) {
-			button.show();
-		} else {
-			button.hide();
+		if (button) {
+			if (show) {
+				button.show();
+			} else {
+				button.hide();
+			}
+			return true;
 		}
+		return false;
 	},
 
 	setCurrentScrollPosition: function() {
