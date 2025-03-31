@@ -44,6 +44,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 	});
 
 	it('Selected data summary.', function() {
+		// Ensure the viewport is large enough to show the whole status bar
+		// In Calc #StateTableCellMenu has a high data-priority
+		// and will be hidden if the status bar doesn't have enough space
+		cy.viewport(1280, 720);
 		cy.cGet('#StateTableCell').should('have.text', 'Average: ; Sum: 0');
 		helper.typeIntoInputField(helper.addressInputSelector, 'A1:A2');
 		cy.cGet('#StateTableCell').should('have.text', 'Average: 15.5; Sum: 31');
