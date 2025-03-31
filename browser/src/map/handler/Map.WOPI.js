@@ -450,9 +450,11 @@ L.Map.WOPI = L.Handler.extend({
 			}
 
 			if (msg.MessageId === 'Show_Menu_Item') {
-				this._map.menubar.showItem(msg.Values.id);
-			} else {
-				this._map.menubar.hideItem(msg.Values.id);
+				if (!this._map.menubar.showItem(msg.Values.id)) {
+					window.app.console.error('Menu entry with id "' + msg.Values.id + '" not found.');
+				}
+			} else if (!this._map.menubar.hideItem(msg.Values.id)) {
+				window.app.console.error('Menu entry with id "' + msg.Values.id + '" not found.');
 			}
 			return;
 		}

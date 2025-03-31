@@ -784,15 +784,13 @@ L.Control.UIManager = L.Control.extend({
 		if (topToolbarHas)
 			window.app.map.topToolbar.showItem(buttonId, show);
 
-		if (!found) {
-			window.app.console.error('Toolbar button with id "' + buttonId + '" not found.');
-			return;
-		}
+		return found;
 	},
 
 	showButton: function(buttonId, show) {
+		var found = false;
 		if (!this.notebookbar) {
-			this.showButtonInClassicToolbar(buttonId, show);
+			found = this.showButtonInClassicToolbar(buttonId, show);
 		} else {
 			if (show) {
 				delete this.hiddenButtons[buttonId];
@@ -800,7 +798,12 @@ L.Control.UIManager = L.Control.extend({
 				this.hiddenButtons[buttonId] = true;
 			}
 			this.notebookbar.reloadShortcutsBar();
-			this.notebookbar.showNotebookbarButton(buttonId, show);
+			found = this.notebookbar.showNotebookbarButton(buttonId, show);
+		}
+
+		if (!found) {
+			window.app.console.error('Button with id "' + buttonId + '" not found.');
+			return;
 		}
 	},
 
@@ -813,9 +816,9 @@ L.Control.UIManager = L.Control.extend({
 	showCommandInMenubar: function(command, show) {
 		var menubar = this._map.menubar;
 		if (show) {
-			menubar.showUnoItem(command);
+			return menubar.showUnoItem(command);
 		} else {
-			menubar.hideUnoItem(command);
+			return menubar.hideUnoItem(command);
 		}
 	},
 
@@ -840,10 +843,7 @@ L.Control.UIManager = L.Control.extend({
 			}.bind(this));
 		}.bind(this));
 
-		if (!found) {
-			window.app.console.error('Toolbar item with command "' + command + '" not found.');
-			return;
-		}
+		return found;
 	},
 
 	showCommand: function(command, show) {
@@ -852,12 +852,17 @@ L.Control.UIManager = L.Control.extend({
 		} else {
 			this.hiddenCommands[command] = true;
 		}
+		var found = false;
 		if (!this.notebookbar) {
-			this.showCommandInClassicToolbar(command, show);
-			this.showCommandInMenubar(command, show);
+			found |= this.showCommandInClassicToolbar(command, show);
+			found |= this.showCommandInMenubar(command, show);
 		} else {
 			this.notebookbar.reloadShortcutsBar();
-			this.notebookbar.showNotebookbarCommand(command, show);
+			found |= this.notebookbar.showNotebookbarCommand(command, show);
+		}
+
+		if (!found) {
+			window.app.console.error('Item with command "' + command + '" not found.');
 		}
 	},
 
