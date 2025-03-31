@@ -28,18 +28,18 @@ class Logger {
 	}
 
 	public log(msg: string, direction: Direction): void {
-		var time = Date.now();
+		const time = Date.now();
 		if (!this.startTime) this.startTime = time;
 
 		// Limit memory usage of log by only keeping the latest entries
-		var maxEntries = 100;
+		let maxEntries = 100;
 		if ((window as any).enableDebug) maxEntries = 1000;
 
 		if (time - this.startTime < 60 * 1000 /* ms */) maxEntries = 500; // enough to capture early start.
 		while (this._logs.length > maxEntries) this._logs.shift();
 
 		// Limit memory usage of log by limiting length of message
-		var maxMsgLen = 128;
+		const maxMsgLen = 128;
 		if (msg.length > maxMsgLen) msg = msg.substring(0, maxMsgLen);
 		msg = msg.replace(/(\r\n|\n|\r)/gm, ' ');
 		this._logs.push({ msg: msg, direction: direction, time: time });
@@ -56,7 +56,7 @@ class Logger {
 			return 0;
 		});
 		let data: string = '';
-		for (var i = 0; i < this._logs.length; i++) {
+		for (let i = 0; i < this._logs.length; i++) {
 			data +=
 				this._logs[i].time +
 				'.' +
