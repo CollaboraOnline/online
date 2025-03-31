@@ -17,7 +17,7 @@ img.sidebar.ui-image {
 }
 
 /* Impress -> Master Slides images should fit in the visible width */
-img.sidebar.ui-drawing-area {
+#SdLayoutsPanelPanelExpander img.sidebar.ui-drawing-area {
 	width: 300px;
 }
 
