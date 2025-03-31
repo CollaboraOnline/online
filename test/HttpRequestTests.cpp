@@ -238,7 +238,7 @@ void HttpRequestTests::testGoodResponse()
     // Date: Wed, 02 Jun 2021 02:30:52 GMT
     // Content-Type: text/html; charset=utf-8
     // Content-Length: 0
-    const std::string URL =
+    constexpr auto URL =
         "/inject/"
         "485454502F312E3120323030204F4B0D0A446174653A205765642C203032204A756E20323032312030323A3330"
         "3A353220474D540D0A436F6E74656E742D547970653A20746578742F68746D6C3B20636861727365743D757466"
