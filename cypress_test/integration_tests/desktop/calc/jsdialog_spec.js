@@ -94,7 +94,7 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		// Open conditional format menu
 		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#toolbar-up .ui-scroll-right').click();
-		cy.cGet('#toolbar-up #home-conditional-format-menu-button').click();
+		cy.cGet('#toolbar-up #home-conditional-format-menu').click();
 
 		// Click on overlay to close
 		cy.cGet('.jsdialog-overlay').click();
@@ -106,7 +106,7 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 
 	it('JSDialog check enable edit input', function() {
 		cy.cGet('#File-tab-label').click();
-		cy.cGet('#File-container .unodownloadas button').click();
+		cy.cGet('#File-container .unodownloadas').click();
 
 		// open "PDF options JsDialog"
 		cy.cGet('.exportpdf-submenu-icon').click();

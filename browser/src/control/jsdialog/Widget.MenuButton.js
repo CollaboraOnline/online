@@ -25,7 +25,7 @@
 
 /* global JSDialog $ app */
 
-function _menubuttonControl (parentContainer, data, builder) {
+function _menubuttonControl (parentContainer, data, builder, container) {
 	var ids;
 	var menuId = null;
 
@@ -65,7 +65,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 		if (!data.command)
 			data.command = menuId;
 
-		var options = {hasDropdownArrow: menuEntries.length > 1};
+		var options = {hasDropdownArrow: menuEntries.length > 1, container: container};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).addClass('menubutton');
@@ -117,21 +117,15 @@ function _menubuttonControl (parentContainer, data, builder) {
 
 		var isSplitButton = data.applyCallback;
 
+		if (control.arrow) {
+			JSDialog.AddOnClick(control.button, clickFunction);
+		}
 		// make it possible to setup separate callbacks for split button
-		if (isSplitButton) {
+		else if (isSplitButton) {
 			JSDialog.AddOnClick(control.button, data.applyCallback);
-			if (control.label)
-				JSDialog.AddOnClick(control.label, data.applyCallback);
-			if (control.arrow)
-				control.arrow.tabIndex = 0;
 		} else {
 			JSDialog.AddOnClick(control.button, clickFunction);
-			if (control.label)
-				JSDialog.AddOnClick(control.label, clickFunction);
 		}
-
-		if (control.arrow)
-			JSDialog.AddOnClick(control.arrow, clickFunction);
 
 		builder._preventDocumentLosingFocusOnClick(control.container);
 
@@ -167,7 +161,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 	return false;
 }
 
-JSDialog.menubuttonControl = function (parentContainer, data, builder) {
-	var buildInnerData = _menubuttonControl(parentContainer, data, builder);
+JSDialog.menubuttonControl = function (parentContainer, data, builder, container) {
+	var buildInnerData = _menubuttonControl(parentContainer, data, builder, container);
 	return buildInnerData;
 };

@@ -51,8 +51,6 @@ L.Util = {
 		}
 		return obj.options;
 	},
-
-
 };
 
 if (!String.prototype.startsWith) {

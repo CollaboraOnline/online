@@ -220,7 +220,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	padding: 0px !important;
 }
 
-.unotoolbutton.notebookbar .unobutton {
+.unotoolbutton.notebookbar.unobutton {
+	cursor: pointer;
 	box-sizing: border-box;
 	padding: var(--btn-padding);
 	width: var(--btn-size);
@@ -253,6 +254,12 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	background-color: var(--color-background-darker);
 }
 
+.unotoolbutton.notebookbar .unobutton.dropdown {
+	display: flex;
+	width: 100%;
+	alig-items: center;
+}
+
 .jsdialog .ui-tabs-content {
 	margin-top: 10px;
 }
@@ -273,6 +280,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	padding: 0px 5px !important;
 	line-height: normal;
 	grid-column: 2;
+	margin: auto;
+	vertical-align: bottom;
 }
 
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
@@ -330,12 +339,6 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 .unotoolbutton.notebookbar {
 	text-align: center;
-}
-
-.unotoolbutton.notebookbar.has-label > *:not(.arrowbackground) { /*so they stay side by side*/
-	display: table-cell;
-	width: 100%;
-	height: 100%;
 }
 
 .unotoolbutton.notebookbar.has-label {

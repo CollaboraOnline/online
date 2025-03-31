@@ -70,7 +70,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 
 			// joins after a save triggered excessive invalidations on changes
 			cy.cGet('#File-tab-label').click();
-			cy.cGet('.notebookbar-shortcuts-bar .unoSave > button').click();
+			cy.cGet('.notebookbar-shortcuts-bar .unoSave').click();
 
 			// Reload page
 			cy.cSetActiveFrame('#iframe2');

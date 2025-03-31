@@ -540,7 +540,7 @@ function closeDocument(filePath) {
 			// Close the document, with the close button.
 			doIfOnMobile(function() {
 				cy.cGet('#toolbar-mobile-back').click();
-				cy.cGet('#mobile-edit-button').should('be.visible');
+				cy.cGet('#mobile-edit').should('be.visible');
 				cy.cGet('#toolbar-mobile-back').then(function(item) {
 						cy.wrap(item).click();
 						Cypress.env('IFRAME_LEVEL', '');
@@ -1171,6 +1171,7 @@ function setDummyClipboardForCopy(type) {
 // Clicks the Copy button on the UI.
 function copy() {
 	cy.log('helper.copy()');
+
 	cy.window({log: false}).then(win => {
 		const app = win['0'].app;
 		const clipboard = app.map._clip;
@@ -1223,6 +1224,14 @@ function assertImageSize(expectedWidth, expectedHeight) {
 	cy.log('<< assertImageSize - end');
 }
 
+function listenProtocol(protocol) {
+	cy.getFrameWindow()
+		.its('L')
+		.then(function(L) {
+			L.Util.listenProtocol(protocol);
+		});
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1272,3 +1281,4 @@ module.exports.getFileName = getFileName;
 module.exports.getSubFolder = getSubFolder;
 module.exports.addressInputSelector = "#addressInput input";
 module.exports.assertImageSize = assertImageSize;
+module.exports.listenProtocol = listenProtocol;

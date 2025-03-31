@@ -53,7 +53,7 @@ describe(['tagdesktop'], 'Idle', function() {
 				cy.cGet('#SidebarDeck.PropertyDeck').click();
 			}
 		});
-		cy.cGet('div.sidebar#Underline > .arrowbackground').click();
+		cy.cGet('div.sidebar#Underline').click();
 		cy.cGet('.jsdialog-window.modalpopup').should('exist');
 		cy.cGet(dimDialogSelector).should('not.exist');
 		cy.wait(7100); // inactivity timeout is 7s
