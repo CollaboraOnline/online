@@ -335,12 +335,12 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         Poco::JSON::Object::Ptr object;
         if (JsonUtil::parseJSON(tokens[1], object))
         {
-            const std::string routeToken =
+            std::string routeToken =
                 JsonUtil::getJSONValue<std::string>(object, Util::getProcessIdentifier());
             if (!routeToken.empty())
             {
                 COOLWSD::alertAllUsersInternal("updateroutetoken " + routeToken);
-                COOLWSD::RouteToken = routeToken;
+                COOLWSD::RouteToken = std::move(routeToken);
             }
             else
             {
