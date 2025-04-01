@@ -309,7 +309,10 @@ inline std::string getPathFromConfigWithFallback(const std::string& name,
     {
     }
 
-    return value.empty() ? getPathFromConfig(fallbackName) : value;
+    if (!value.empty())
+        return value;
+
+    return getPathFromConfig(fallbackName);
 }
 
 /// Returns true if and only if the property with the given key exists.
