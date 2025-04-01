@@ -2074,10 +2074,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         for (size_t i = 0; ; ++i)
         {
             const std::string confPath = "trace.filter.message[" + std::to_string(i) + ']';
-            const std::string regex = config().getString(confPath, "");
+            std::string regex = config().getString(confPath, "");
             if (!regex.empty())
             {
-                filters.push_back(regex);
+                filters.push_back(std::move(regex));
             }
             else if (!config().has(confPath))
             {
