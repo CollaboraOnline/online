@@ -2232,10 +2232,24 @@ class TileManager {
 	}
 
 	public static pxBoundsToTileRange(bounds: any, grow: number = 0) {
-		const growSize = new L.Point(grow, grow);
+		const direction = app.sectionContainer.getLastPanDirection();
+
+		const growSize = new L.Point(
+			grow * (1.0 + Math.abs(direction[0])),
+			grow * (1.0 + Math.abs(direction[1])),
+		);
+		const translate = new L.Point(
+			grow * 2.0 * direction[0],
+			grow * 2.0 * direction[1],
+		);
+
 		return new L.Bounds(
-			bounds.min.divideBy(this.tileSize).floor()._subtract(growSize),
-			bounds.max.divideBy(this.tileSize).floor()._add(growSize),
+			bounds.min
+				.divideBy(this.tileSize)
+				.floor()
+				._subtract(growSize)
+				.add(translate),
+			bounds.max.divideBy(this.tileSize).floor()._add(growSize).add(translate),
 		);
 	}
 

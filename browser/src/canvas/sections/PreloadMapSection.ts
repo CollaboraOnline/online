@@ -93,7 +93,7 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 		partBounds[preParts].max.y += viewHeight * mainYMultiply;
 
 		var offx: number = 50;
-		var offy: number = 400;
+		var offy: number = 200;
 		var voffset: number = 0;
 		for (var p = 0; p < partBounds.length; ++p) {
 			var range = partBounds[p];
