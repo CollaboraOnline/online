@@ -213,7 +213,7 @@ void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, cons
 void WopiProxy::download(const std::shared_ptr<TerminatingPoll>& poll, const std::string& url,
                          const Poco::URI& uriPublic, int redirectLimit)
 {
-    const std::string uriAnonym = COOLWSD::anonymizeUrl(uriPublic.toString());
+    std::string uriAnonym = COOLWSD::anonymizeUrl(uriPublic.toString());
 
     LOG_DBG("Getting info for wopi uri [" << uriAnonym << ']');
     _httpSession = StorageConnectionManager::getHttpSession(uriPublic);
@@ -226,7 +226,7 @@ void WopiProxy::download(const std::shared_ptr<TerminatingPoll>& poll, const std
                                                      << httpRequest.header());
 
     http::Session::FinishedCallback finishedCallback =
-        [this, &poll, startTime, url, uriPublic, uriAnonym,
+        [this, &poll, startTime, url, uriPublic, uriAnonym=std::move(uriAnonym),
          redirectLimit](const std::shared_ptr<http::Session>& session)
     {
         if (SigUtil::getShutdownRequestFlag())
