@@ -1308,7 +1308,7 @@ class TileManager {
 					);
 				}
 
-				if (queue.length !== 0) this.addTiles(queue, true);
+				if (queue.length !== 0) this.addTiles(queue);
 			}.bind(this),
 			50 /*ms*/,
 		);
@@ -1524,15 +1524,10 @@ class TileManager {
 	// tilecombined request for any tiles we need to fetch.
 	private static addTiles(
 		coordsQueue: Array<TileCoordData>,
-		preFetch: boolean = false,
 		currentBounds: any | null = null,
 	) {
 		// Remove irrelevant tiles from the queue earlier.
 		this.removeIrrelevantsFromCoordsQueue(coordsQueue);
-
-		// If we're pre-fetching, we may end up rehydrating tiles, so begin a transaction
-		// so that they're grouped together.
-		if (preFetch) this.beginTransaction();
 
 		let visibleRanges = null;
 		for (let i = 0; i < coordsQueue.length; i++) {
@@ -1557,16 +1552,7 @@ class TileManager {
 
 				this.updateTileDistance(tile, visibleRanges);
 			}
-
-			if (preFetch) {
-				// If preFetching at idle, take the
-				// opportunity to create an up to date
-				// canvas for the tile in advance.
-				this.ensureCanvas(tile, true, false);
-			}
 		}
-
-		if (preFetch) this.endTransaction(null);
 
 		// sort the tiles by the rows
 		coordsQueue.sort(function (a, b) {
@@ -1733,7 +1719,7 @@ class TileManager {
 		}
 	}
 
-	public static preFetchTiles(forceBorderCalc: boolean, immediate: boolean) {
+	public static preFetchTiles(forceBorderCalc: boolean) {
 		if (!this.checkDocLayer()) return;
 
 		if (app.file.fileBasedView && this._docLayer) this.updateFileBasedView();
@@ -1775,7 +1761,7 @@ class TileManager {
 			),
 		);
 
-		var tilesToFetch = immediate ? Infinity : maxTilesToFetch; // total tile limit per call of preFetchTiles()
+		var tilesToFetch = maxTilesToFetch; // total tile limit per call of preFetchTiles()
 		var doneAllPanes = true;
 
 		for (let paneIdx = 0; paneIdx < this._borders.length; ++paneIdx) {
@@ -1919,21 +1905,20 @@ class TileManager {
 			}
 		} // pane loop end
 
-		if (!immediate)
-			window.app.console.assert(
-				finalQueue.length <= maxTilesToFetch,
-				'finalQueue length(' +
-					finalQueue.length +
-					') exceeded maxTilesToFetch(' +
-					maxTilesToFetch +
-					')',
-			);
+		window.app.console.assert(
+			finalQueue.length <= maxTilesToFetch,
+			'finalQueue length(' +
+				finalQueue.length +
+				') exceeded maxTilesToFetch(' +
+				maxTilesToFetch +
+				')',
+		);
 
 		var tilesRequested = false;
 
 		if (finalQueue.length > 0) {
 			this._cumTileCount += finalQueue.length;
-			this.addTiles(finalQueue, !immediate);
+			this.addTiles(finalQueue);
 			tilesRequested = true;
 		}
 
@@ -2021,7 +2006,25 @@ class TileManager {
 
 		// updates don't need more chattiness with a tileprocessed
 		if (hasContent) {
-			this.applyCompressedDelta(tile, img.rawData, img.isKeyframe, true);
+			// Only decompress deltas for tiles that are either current, have a canvas or
+			// have a pending update (so will imminently have a canvas). This stops prefetching
+			// from blowing past GC limits.
+			const shouldDecompressDelta =
+				tile.distanceFromView === 0 || tile.canvas || tile.hasPendingUpdate();
+
+			if (shouldDecompressDelta) {
+				this.applyCompressedDelta(tile, img.rawData, img.isKeyframe, true);
+			} else if (img.isKeyframe) {
+				tile.rawDeltas = img.rawData;
+			} else {
+				// FIXME: this is not beautiful; but no concatenate here.
+				const tmp = new Uint8Array(
+					tile.rawDeltas.byteLength + img.rawData.byteLength,
+				);
+				tmp.set(tile.rawDeltas, 0);
+				tmp.set(img.rawData, tile.rawDeltas.byteLength);
+				tile.rawDeltas = tmp;
+			}
 		}
 
 		this.queueAcknowledgement(tileMsgObj);
@@ -2124,7 +2127,7 @@ class TileManager {
 		app.map._docLayer._sendClientVisibleArea();
 		app.map._docLayer._sendClientZoom();
 
-		if (queue.length !== 0) this.addTiles(queue, false, pixelBounds);
+		if (queue.length !== 0) this.addTiles(queue, pixelBounds);
 
 		if (app.map._docLayer.isCalc() || app.map._docLayer.isWriter())
 			this.initPreFetchAdjacentTiles();
@@ -2241,7 +2244,7 @@ class TileManager {
 			true,
 		);
 
-		if (queue.length > 0) this.addTiles(queue, false, bounds);
+		if (queue.length > 0) this.addTiles(queue, bounds);
 	}
 
 	public static getVisibleCoordList(
