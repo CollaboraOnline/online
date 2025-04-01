@@ -342,12 +342,12 @@ void HttpRequestTests::testSimpleGetSync()
 
     const auto data = Util::rng::getHexString(Util::rng::getNext() % 1024);
     const auto body = std::string(data.data(), data.size());
-    const std::string URL = "/echo/" + body;
+    std::string URL = "/echo/" + body;
     TST_LOG("Requesting URI: [" << URL << ']');
 
     const auto pocoResponse = helpers::pocoGet(Poco::URI(_localUri + URL));
 
-    http::Request httpRequest(URL);
+    http::Request httpRequest(std::move(URL));
 
     auto httpSession = http::Session::create(_localUri);
     httpSession->setTimeout(std::chrono::seconds(1));
