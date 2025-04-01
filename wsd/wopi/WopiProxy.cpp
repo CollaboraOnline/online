@@ -37,7 +37,7 @@ void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<Terminating
 
     LOG_INF("URL [" << url << "] for WS Request.");
     const auto uriPublic = RequestDetails::sanitizeURI(url);
-    const auto docKey = RequestDetails::getDocKey(uriPublic);
+    std::string docKey = RequestDetails::getDocKey(uriPublic);
     const std::string fileId = Uri::getFilenameFromURL(docKey);
     Anonymizer::mapAnonymized(fileId,
                               fileId); // Identity mapping, since fileId is already obfuscated
@@ -76,7 +76,8 @@ void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<Terminating
 
             // Remove from the current poll and transfer.
             disposition.setMove(
-                [this, docKey, url=std::move(url), uriPublic](const std::shared_ptr<Socket>& moveSocket)
+                [this, docKey=std::move(docKey),
+                 url=std::move(url), uriPublic](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
                                   << ": Dissociating client socket from "
