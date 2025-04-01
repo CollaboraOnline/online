@@ -2680,7 +2680,7 @@ void Document::dumpState(std::ostream& oss)
     if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
         oss << "\n\tsmaps_rollup: <unavailable>";
     else
-        oss << "\n\tsmaps_rollup: " << Util::replace(smap, "\n", "\n\t");
+        oss << "\n\tsmaps_rollup: " << Util::replace(std::move(smap), "\n", "\n\t");
     oss << '\n';
 
     // dumpState:
