@@ -1713,23 +1713,6 @@ class Menubar extends L.Control {
 	}
 
 	/**
-	 * Function to check if an event is already bound.
-	 * @param element - The target element.
-	 * @param eventType - The event type.
-	 * @param namespace - Optional namespace.
-	 * @returns True if bound; otherwise false.
-	 */
-	private _isEventBound(element: any, eventType: string, namespace?: string): boolean {
-		var events = $.data($(element)[0], 'events');
-		if (events && events[eventType]) {
-			return namespace
-				? events[eventType].some((event: any) => event.namespace === namespace)
-				: true;
-		}
-		return false;
-	}
-
-	/**
 	 * Function to bind an event if it's not already bound.
 	 * @param element - The target element.
 	 * @param eventType - The event type.
@@ -1738,10 +1721,8 @@ class Menubar extends L.Control {
 	 * @param handler - The event handler function.
 	 */
 	private _bindEventIfNotBound(element: any, eventType: string, namespace: string, data: any, handler: any): void {
-		if (!this._isEventBound(element, eventType, namespace)) {
-			const eventName = eventType + (namespace ? '.' + namespace : '');
-			$(element).on(eventName, data, (e, menu) => handler.call(this, e, menu));
-		}
+		const eventName = eventType + (namespace ? '.' + namespace : '');
+		$(element).off(eventName).on(eventName, data, (e, menu) => handler.call(this, e, menu));
 	}
 
 	/**
