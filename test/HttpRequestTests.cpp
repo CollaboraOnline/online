@@ -594,7 +594,6 @@ void HttpRequestTests::testSimplePost_External()
 {
     constexpr auto testname = __func__;
 
-    const std::string Host = "httpbin.org";
     const char* URL = "/post";
 
     // Start the polling thread.
@@ -612,7 +611,7 @@ void HttpRequestTests::testSimplePost_External()
 
     httpRequest.setBodyFile(path);
 
-    auto httpSession = http::Session::createHttpSsl(Host);
+    auto httpSession = http::Session::createHttpSsl("httpbin.org");
     httpSession->setTimeout(DefTimeoutSeconds);
 
     std::condition_variable cv;
