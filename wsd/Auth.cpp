@@ -94,7 +94,7 @@ const std::string JWTAuth::getAccessToken()
 
     LOG_INF("Sig generated is : " << encodedSig);
 
-    const std::string jwtToken = encodedBody + '.' + encodedSig;
+    std::string jwtToken = encodedBody + '.' + encodedSig;
     LOG_INF("JWT token generated: " << jwtToken);
 
     return jwtToken;
