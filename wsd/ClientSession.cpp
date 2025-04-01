@@ -2770,13 +2770,11 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 LOG_ERR("Error in extractedlinktargets: not in isConvertTo mode");
             else
             {
-                const std::string stringJSON = payload->jsonString();
-
                 http::Response httpResponse(http::StatusCode::OK);
                 FileServerRequestHandler::hstsHeaders(httpResponse);
                 httpResponse.set("Last-Modified", Util::getHttpTimeNow());
                 httpResponse.set("X-Content-Type-Options", "nosniff");
-                httpResponse.setBody(stringJSON, "application/json");
+                httpResponse.setBody(payload->jsonString(), "application/json");
                 _saveAsSocket->sendAndShutdown(httpResponse);
             }
 
