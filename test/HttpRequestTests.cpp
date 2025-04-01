@@ -213,9 +213,7 @@ void HttpRequestTests::testBadResponse()
 {
     constexpr auto testname = __func__;
 
-    const std::string URL = "/inject/" + Util::bytesToHexString("\0\0xa", 2);
-
-    http::Request httpRequest(URL);
+    http::Request httpRequest(std::string("/inject/" + Util::bytesToHexString("\0\0xa", 2)));
 
     auto httpSession = http::Session::create(_localUri);
     if (httpSession)
