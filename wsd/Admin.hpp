@@ -28,12 +28,14 @@ public:
     /// Connection from remote admin socket
     AdminSocketHandler(Admin* adminManager,
                        const std::weak_ptr<StreamSocket>& socket,
-                       const Poco::Net::HTTPRequest& request);
+                       const Poco::Net::HTTPRequest& request,
+                       const std::string& expectedOrigin);
 
     /// Handle the initial Admin WS upgrade request.
     /// @returns true if we should give this socket to the Admin poll.
     static bool handleInitialRequest(const std::weak_ptr<StreamSocket> &socket,
-                                     const Poco::Net::HTTPRequest& request);
+                                     const Poco::Net::HTTPRequest& request,
+                                     const std::string& expectedOrigin);
 
     static void subscribeAsync(const std::shared_ptr<AdminSocketHandler>& handler);
 

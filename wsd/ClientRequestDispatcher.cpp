@@ -809,7 +809,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         {
             // Admin connections
             LOG_INF("Admin request: " << request.getURI());
-            if (AdminSocketHandler::handleInitialRequest(_socket, request))
+            const ServerURL cnxDetails(requestDetails);
+            if (AdminSocketHandler::handleInitialRequest(_socket, request, cnxDetails.getWebServerUrl()))
             {
                 disposition.setMove(
                     [](const std::shared_ptr<Socket>& moveSocket)
