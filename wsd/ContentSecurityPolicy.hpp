@@ -57,8 +57,8 @@ public:
     void merge(const ContentSecurityPolicy& csp)
     {
         LOG_TRC("Merging CSP object");
-        for (auto directive : csp._directives) {
-            appendDirective(std::string(directive.first), std::string(directive.second));
+        for (const auto& directive : csp._directives) {
+            appendDirective(directive.first, directive.second);
         }
     }
 
