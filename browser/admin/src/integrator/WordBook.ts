@@ -201,6 +201,16 @@ class WordBook {
 		container.appendChild(listItemDiv);
 	};
 
+	private createDropdownElement(className, textContent, parent) {
+		const element = document.createElement('div');
+		element.className = className;
+		element.textContent = textContent;
+		if (parent) {
+			parent.appendChild(element);
+		}
+		return element;
+	}
+
 	openWordbookEditor(fileName: string, wordbook: WordbookFile): void {
 		this.currWordbookFile = wordbook;
 		const modal = document.createElement('div');
@@ -247,16 +257,19 @@ class WordBook {
 			}
 			const opt = this.options.find((o) => o.value === value);
 			if (opt) {
-				const heading = document.createElement('div');
-				heading.className = 'dic-dropdown-heading';
-				heading.textContent = opt.heading;
-				const desc = document.createElement('div');
-				desc.className = 'dic-dropdown-description';
-				desc.textContent = opt.description;
-				dictDropdownSelected.appendChild(heading);
-				dictDropdownSelected.appendChild(desc);
+				this.createDropdownElement(
+					'dic-dropdown-heading',
+					opt.heading,
+					dictDropdownSelected,
+				);
+				this.createDropdownElement(
+					'dic-dropdown-description',
+					opt.description,
+					dictDropdownSelected,
+				);
 			}
 		};
+
 		updateSelectedDisplay(currentDictType);
 		dictDropdownContainer.appendChild(dictDropdownSelected);
 
@@ -272,14 +285,16 @@ class WordBook {
 					const optionDiv = document.createElement('div');
 					optionDiv.className = 'dic-dropdown-option';
 					optionDiv.setAttribute('data-value', option.value);
-					const optHeading = document.createElement('div');
-					optHeading.className = 'dic-dropdown-heading';
-					optHeading.textContent = option.heading;
-					const optDesc = document.createElement('div');
-					optDesc.className = 'dic-dropdown-description';
-					optDesc.textContent = option.description;
-					optionDiv.appendChild(optHeading);
-					optionDiv.appendChild(optDesc);
+					this.createDropdownElement(
+						'dic-dropdown-heading',
+						option.heading,
+						optionDiv,
+					);
+					this.createDropdownElement(
+						'dic-dropdown-description',
+						option.description,
+						optionDiv,
+					);
 					optionDiv.addEventListener('click', () => {
 						dictDropdownContainer.setAttribute('data-selected', option.value);
 						updateSelectedDisplay(option.value);
@@ -290,6 +305,7 @@ class WordBook {
 				}
 			});
 		};
+
 		populateDropdownList();
 		dictDropdownContainer.appendChild(dictDropdownList);
 
