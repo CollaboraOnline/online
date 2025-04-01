@@ -90,32 +90,7 @@ class SettingIframe {
 			if (typeof (sheet as any).replace === 'function') {
 				(sheet as any).replace(window.cssVars);
 				(document as any).adoptedStyleSheets.push(sheet);
-				console.debug('sheet', sheet);
 			}
-		}
-
-		if (window.enableDebug) {
-			const debugInfoList = document.createElement('ul');
-			const debugInfoEle1 = document.createElement('li');
-			debugInfoEle1.textContent = 'AccessToken: ' + window.accessToken;
-			debugInfoList.append(debugInfoEle1);
-
-			const debugInfoEle2 = document.createElement('li');
-			debugInfoEle2.textContent = 'WOPI Base URL: ' + window.wopiSettingBaseUrl;
-			debugInfoList.append(debugInfoEle2);
-
-			const debugInfoEle3 = document.createElement('li');
-			debugInfoEle3.textContent = 'IFrameType: ' + window.iframeType;
-			debugInfoList.append(debugInfoEle3);
-
-			const debugInfo = document.createElement('div');
-			const debugInfoHeading = document.createElement('h4');
-			debugInfoHeading.textContent = 'DebugInfo: ';
-			debugInfo.append(debugInfoHeading);
-			debugInfo.append(debugInfoList);
-
-			const fileControls = document.getElementById('fileControls');
-			fileControls?.append(debugInfo);
 		}
 	}
 
