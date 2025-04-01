@@ -218,11 +218,11 @@ void COOLWSD::appendAllowedHostsFrom(LayeredConfiguration& conf, const std::stri
         {
             break;
         }
-        const std::string host = ConfigUtil::getConfigValue<std::string>(conf, path, "");
+        std::string host = ConfigUtil::getConfigValue<std::string>(conf, path, "");
         if (!host.empty())
         {
             LOG_INF_S("Adding trusted LOK_ALLOW host: [" << host << ']');
-            allowed.push_back(host);
+            allowed.push_back(std::move(host));
         }
     }
 }
