@@ -1296,7 +1296,7 @@ class TileManager {
 					this._pixelBounds.getSize().y * direction[1],
 				);
 
-				var queue = this.getMissingTiles(this._pixelBounds, this._zoom, false);
+				var queue = this.getMissingTiles(this._pixelBounds, this._zoom, false, true);
 
 				if (this._docLayer.isCalc() || queue.length === 0) {
 					// pre-load more aggressively
@@ -1305,7 +1305,7 @@ class TileManager {
 						(this._pixelBounds.getSize().y * direction[1]) / 2,
 					);
 					queue = queue.concat(
-						this.getMissingTiles(this._pixelBounds, this._zoom, false),
+						this.getMissingTiles(this._pixelBounds, this._zoom, false, true),
 					);
 				}
 
@@ -1423,6 +1423,7 @@ class TileManager {
 		pixelBounds: any,
 		zoom: number,
 		updateCurrent: boolean,
+		rehydrate: boolean = false
 	) {
 		var tileRanges = this.pxBoundsToTileRanges(pixelBounds);
 		var queue = [];
@@ -1452,6 +1453,8 @@ class TileManager {
 					var tile = this.tiles[key];
 
 					if (!tile || tile.needsFetch()) queue.push(coords);
+					else if (rehydrate && tile.needsRehydration())
+						this.rehydrateTile(tile);
 					else if (updateCurrent)
 						didRehydrate = this.makeTileCurrent(tile) || didRehydrate;
 				}
