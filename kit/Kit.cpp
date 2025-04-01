@@ -1762,11 +1762,11 @@ void Document::invalidateCanonicalId(const std::string& sessionId)
     if (newCanonicalId == session->getCanonicalViewId())
         return;
     session->setCanonicalViewId(newCanonicalId);
-    const std::string viewRenderedState = session->getViewRenderState();
+    std::string viewRenderedState = session->getViewRenderState();
     std::string stateName;
     if (!viewRenderedState.empty())
     {
-        stateName = viewRenderedState;
+        stateName = std::move(viewRenderedState);
     }
     else
     {
