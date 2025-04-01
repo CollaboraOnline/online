@@ -109,7 +109,7 @@ private:
     bool deduplicate(const Item& item)
     {
         // Deduplicate messages based on the incoming one.
-        const std::string command = item->firstToken();
+        std::string command = item->firstToken();
         if (command == "tile:")
         {
             // Remove previous identical tile, if any, and use most recent (incoming).
@@ -176,9 +176,10 @@ private:
             Poco::JSON::Parser newParser;
             const Poco::Dynamic::Var newResult = newParser.parse(newMsg);
             const auto& newJson = newResult.extract<Poco::JSON::Object::Ptr>();
-            const std::string viewId = newJson->get("viewId").toString();
+            std::string viewId = newJson->get("viewId").toString();
             const auto& pos = std::find_if(_queue.begin(), _queue.end(),
-                [command, viewId](const queue_item_t& cur)
+                [command=std::move(command),
+                 viewId=std::move(viewId)](const queue_item_t& cur)
                 {
                     if (cur->firstTokenMatches(command))
                     {
