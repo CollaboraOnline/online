@@ -415,12 +415,12 @@ void HttpRequestTests::testChunkedGetSync_External()
     constexpr auto testname = "chunkedGetSync_External";
 
     const std::string hostname = "http://anglesharp.azurewebsites.net";
-    const std::string URL = "/Chunked";
+    std::string URL = "/Chunked";
     TST_LOG("Requesting URI: [" << hostname << URL << ']');
 
     const auto pocoResponse = helpers::pocoGet(Poco::URI(hostname + URL));
 
-    http::Request httpRequest(URL);
+    http::Request httpRequest(std::move(URL));
 
     auto httpSession = http::Session::create(hostname);
     httpSession->setTimeout(DefTimeoutSeconds);
