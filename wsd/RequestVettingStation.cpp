@@ -233,7 +233,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
     _socket = socket;
     _mobileAppDocId = mobileAppDocId;
 
-    const std::string url = _requestDetails.getDocumentURI();
+    std::string url = _requestDetails.getDocumentURI();
 
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
@@ -297,7 +297,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                             << docKey << "] is for a WOPI document");
             // Remove from the current poll and transfer.
             disposition.setMove(
-                [selfLifecycle = shared_from_this(), this, docKey, url, uriPublic,
+                [selfLifecycle = shared_from_this(), this, docKey, url = std::move(url), uriPublic,
                  isReadOnly](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
