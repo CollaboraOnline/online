@@ -136,7 +136,7 @@ class PaneBorder {
 
 class Tile {
 	coords: TileCoordData;
-	current: boolean = false; // is this currently visible
+	distanceFromView: number = 0; // distance to the center of the nearest visible area (0 = visible)
 	canvas: any = null; // canvas ready to render
 	ctx: CanvasRenderingContext2D | null = null; // canvas context to render onto
 	imgDataCache: any = null; // flat byte array of canvas data
@@ -343,7 +343,7 @@ class TileManager {
 		for (var i = 0; i < keys.length; ++i) {
 			var tile = this.tiles[keys[i]];
 			if (tile.canvas) ++n_canvases;
-			if (tile.current) ++n_current;
+			if (tile.distanceFromView === 0) ++n_current;
 			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
 		}
 
@@ -405,10 +405,8 @@ class TileManager {
 		   highTileCount = 100; lowTileCount = 50; */
 
 		// sort by lastRendered.
-		// FIXME: This is a really coarse sort, we probably want to sort by distance
-		//        to the view centre.
 		var keys = Object.keys(this.tiles).sort((a: any, b: any) => {
-			return this.tiles[a].lastRendered - this.tiles[b].lastRendered;
+			return this.tiles[b].distanceFromView - this.tiles[a].distanceFromView;
 		});
 
 		var canvasKeys = [];
@@ -421,7 +419,8 @@ class TileManager {
 			// cause flickering, and the same would happen for tiles with pending deltas.
 			if (tile.canvas) {
 				++n_canvases;
-				if (!tile.current && !tile.hasPendingDelta) canvasKeys.push(keys[i]);
+				if (tile.distanceFromView !== 0 && !tile.hasPendingDelta)
+					canvasKeys.push(keys[i]);
 			}
 			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
 		}
@@ -452,7 +451,7 @@ class TileManager {
 			for (var i = 0; i < keys.length && totalSize > lowDeltaMemory; ++i) {
 				const key = keys[i];
 				const tile: Tile = this.tiles[key];
-				if (tile.rawDeltas && !tile.current) {
+				if (tile.rawDeltas && tile.distanceFromView !== 0) {
 					totalSize -= tile.rawDeltas.length;
 					if (this.debugDeltas)
 						window.app.console.log(
@@ -474,7 +473,7 @@ class TileManager {
 			for (var i = 0; i < keys.length - lowTileCount; ++i) {
 				const key = keys[i];
 				const tile: Tile = this.tiles[key];
-				if (!tile.current) {
+				if (tile.distanceFromView !== 0) {
 					if (tile.canvas) --n_canvases;
 					this.removeTile(keys[i]);
 				}
@@ -507,7 +506,7 @@ class TileManager {
 			window.app.console.log('Free non-current tiles canvas memory');
 		for (var key in this.tiles) {
 			var t = this.tiles[key];
-			if (t && !t.current) this.reclaimTileCanvasMemory(t);
+			if (t && t.distanceFromView !== 0) this.reclaimTileCanvasMemory(t);
 		}
 		this.canvasCache.clear();
 		if (!tile.canvas) this.ensureCanvas(tile, false, false);
@@ -958,7 +957,7 @@ class TileManager {
 	// Make the given tile current and rehydrates if necessary. Returns true if the tile
 	// has pending updates.
 	private static makeTileCurrent(tile: Tile): boolean {
-		tile.current = true;
+		tile.distanceFromView = 0;
 		tile.allowFastRequest();
 
 		if (tile.needsRehydration()) this.rehydrateTile(tile);
@@ -1296,7 +1295,7 @@ class TileManager {
 					this._pixelBounds.getSize().y * direction[1],
 				);
 
-				var queue = this.getMissingTiles(this._pixelBounds, this._zoom, false);
+				var queue = this.getMissingTiles(this._pixelBounds, this._zoom);
 
 				if (this._docLayer.isCalc() || queue.length === 0) {
 					// pre-load more aggressively
@@ -1305,7 +1304,7 @@ class TileManager {
 						(this._pixelBounds.getSize().y * direction[1]) / 2,
 					);
 					queue = queue.concat(
-						this.getMissingTiles(this._pixelBounds, this._zoom, false),
+						this.getMissingTiles(this._pixelBounds, this._zoom),
 					);
 				}
 
@@ -1419,19 +1418,57 @@ class TileManager {
 		return boundList.map(this.pxBoundsToTileRange, this);
 	}
 
+	private static updateTileDistance(
+		tile: Tile,
+		visibleRanges: any | null = null,
+	) {
+		if (!visibleRanges) {
+			const zoom = Math.round(app.map.getZoom());
+			const currentBounds = app.map.getPixelBoundsCore(
+				app.map.getCenter(),
+				zoom,
+			);
+			visibleRanges = app.map._docLayer._splitPanesContext
+				? app.map._docLayer._splitPanesContext.getPxBoundList(currentBounds)
+				: [currentBounds];
+		}
+
+		const tileBounds = new L.Bounds(
+			new L.Point(tile.coords.x, tile.coords.y),
+			new L.Point(tile.coords.x + this.tileSize, tile.coords.y + this.tileSize),
+		);
+		if (tileBounds.intersectsAny(visibleRanges)) {
+			tile.distanceFromView = 0;
+			return;
+		}
+
+		const tileCenter = tileBounds.getCenter();
+		tile.distanceFromView = tileCenter.distanceTo(visibleRanges[0].getCenter());
+		for (let i = 1; i < visibleRanges.length; ++i) {
+			const distance = tileCenter.distanceTo(visibleRanges[i].getCenter());
+			if (distance < tile.distanceFromView) tile.distanceFromView = distance;
+		}
+	}
+
 	private static getMissingTiles(
 		pixelBounds: any,
 		zoom: number,
-		updateCurrent: boolean,
+		isCurrent: boolean = false,
 	) {
 		var tileRanges = this.pxBoundsToTileRanges(pixelBounds);
 		var queue = [];
 
-		if (updateCurrent) {
-			for (var key in this.tiles) this.tiles[key].current = false;
+		// If we're looking for tiles for the current (visible) area, update tile distance.
+		if (isCurrent) {
+			const currentBounds = app.map._docLayer._splitPanesContext
+				? app.map._docLayer._splitPanesContext.getPxBoundList(pixelBounds)
+				: [pixelBounds];
+			for (const key in this.tiles)
+				this.updateTileDistance(this.tiles[key], currentBounds);
 		}
 
-		// create a queue of coordinates to load tiles from
+		// create a queue of coordinates to load tiles from. Rehydrate tiles if we're dealing
+		// with the currently visible area.
 		this.beginTransaction();
 		let didRehydrate = false;
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
@@ -1452,7 +1489,7 @@ class TileManager {
 					var tile = this.tiles[key];
 
 					if (!tile || tile.needsFetch()) queue.push(coords);
-					else if (updateCurrent)
+					else if (isCurrent)
 						didRehydrate = this.makeTileCurrent(tile) || didRehydrate;
 				}
 			}
@@ -1494,7 +1531,7 @@ class TileManager {
 	private static addTiles(
 		coordsQueue: Array<TileCoordData>,
 		preFetch: boolean = false,
-		isCurrent: boolean = false,
+		currentBounds: any | null = null,
 	) {
 		// Remove irrelevant tiles from the queue earlier.
 		this.removeIrrelevantsFromCoordsQueue(coordsQueue);
@@ -1503,12 +1540,29 @@ class TileManager {
 		// so that they're grouped together.
 		if (preFetch) this.beginTransaction();
 
+		let visibleRanges = null;
 		for (let i = 0; i < coordsQueue.length; i++) {
 			const key = coordsQueue[i].key();
 			let tile: Tile = this.tiles[key];
 
 			// We always want to ensure the tile exists.
-			if (!tile) tile = this.createTile(coordsQueue[i], key);
+			if (!tile) {
+				tile = this.createTile(coordsQueue[i], key);
+
+				// Update the tile distance when creating new tiles. Tile distance is otherwise
+				// updated in getMissingTiles when updates are processed.
+				if (!currentBounds) {
+					const zoom = Math.round(app.map.getZoom());
+					currentBounds = app.map.getPixelBoundsCore(app.map.getCenter(), zoom);
+				}
+
+				if (!visibleRanges)
+					visibleRanges = app.map._docLayer._splitPanesContext
+						? app.map._docLayer._splitPanesContext.getPxBoundList(currentBounds)
+						: [currentBounds];
+
+				this.updateTileDistance(tile, visibleRanges);
+			}
 
 			if (preFetch) {
 				// If preFetching at idle, take the
@@ -1516,9 +1570,6 @@ class TileManager {
 				// canvas for the tile in advance.
 				this.ensureCanvas(tile, true, false);
 			}
-
-			tile.current = isCurrent;
-			if (isCurrent) tile.allowFastRequest();
 		}
 
 		if (preFetch) this.endTransaction(null);
@@ -1937,7 +1988,10 @@ class TileManager {
 		var key = coords.key();
 		var tile = this.tiles[key];
 
-		if (!tile) tile = this.createTile(coords, key);
+		if (!tile) {
+			tile = this.createTile(coords, key);
+			this.updateTileDistance(tile);
+		}
 
 		tile.viewId = tileMsgObj.nviewid;
 		// update monotonic timestamp
@@ -1990,20 +2044,20 @@ class TileManager {
 		var zoom = Math.round(app.map.getZoom());
 		var pixelBounds = app.map.getPixelBoundsCore(app.map.getCenter(), zoom);
 
-		var queue = this.getMissingTiles(pixelBounds, zoom, false);
+		var queue = this.getMissingTiles(pixelBounds, zoom);
 
 		return queue.length;
 	}
 
 	public static pruneTiles() {
-		// update tile.current for the view
+		// update tile.distanceFromView for the view
 		if (app.file.fileBasedView) this.updateFileBasedView(true);
 
 		this.garbageCollect();
 	}
 
 	public static discardAllCache() {
-		// update tile.current for the view
+		// update tile.distanceFromView for the view
 		if (app.file.fileBasedView) this.updateFileBasedView(true);
 
 		this.garbageCollect(true);
@@ -2076,7 +2130,7 @@ class TileManager {
 		app.map._docLayer._sendClientVisibleArea();
 		app.map._docLayer._sendClientZoom();
 
-		if (queue.length !== 0) this.addTiles(queue, false, true);
+		if (queue.length !== 0) this.addTiles(queue, false, pixelBounds);
 
 		if (app.map._docLayer.isCalc() || app.map._docLayer.isWriter())
 			this.initPreFetchAdjacentTiles();
@@ -2163,10 +2217,7 @@ class TileManager {
 			for (let i = 0; i < queue.length; i++) {
 				coords = queue[i];
 				key = coords.key();
-				if (!this.tiles[key]) {
-					this.createTile(coords, key);
-					this.tiles[key].current = true;
-				}
+				if (!this.tiles[key]) this.createTile(coords, key);
 			}
 
 			this.sendTileCombineRequest(queue);
@@ -2196,7 +2247,7 @@ class TileManager {
 			true,
 		);
 
-		if (queue.length > 0) this.addTiles(queue, false, true);
+		if (queue.length > 0) this.addTiles(queue, false, bounds);
 	}
 
 	public static getVisibleCoordList(
