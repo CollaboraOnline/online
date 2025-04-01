@@ -3429,7 +3429,7 @@ private:
         auto socket = std::make_shared<LocalServerSocket>(
                         std::chrono::steady_clock::now(), *PrisonerPoll, factory);
 
-        const std::string location = socket->bind();
+        std::string location = socket->bind();
         if (!location.length())
         {
             LOG_FTL("Failed to create local unix domain socket. Exiting.");
@@ -3444,7 +3444,7 @@ private:
         }
 
         LOG_INF("Listening to prisoner connections on " << location);
-        MasterLocation = location;
+        MasterLocation = std::move(location);
 #ifndef HAVE_ABSTRACT_UNIX_SOCKETS
         if(!socket->link(COOLWSD::SysTemplate + "/0" + MasterLocation))
         {
