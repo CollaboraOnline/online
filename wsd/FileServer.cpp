@@ -578,11 +578,11 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             outfile.write(buffer.data(), size);
             outfile.close();
 
-            const std::string body = "{\"LastModifiedTime\": \"" +
+            std::string body = "{\"LastModifiedTime\": \"" +
                 localFile->getLastModifiedTime() + "\" }";
             http::Response httpResponse(http::StatusCode::OK);
             FileServerRequestHandler::hstsHeaders(httpResponse);
-            httpResponse.setBody(body, "application/json; charset=utf-8");
+            httpResponse.setBody(std::move(body), "application/json; charset=utf-8");
             socket->send(httpResponse);
             return;
         }
