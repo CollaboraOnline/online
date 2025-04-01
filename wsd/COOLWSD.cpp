@@ -3355,7 +3355,7 @@ public:
         if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
             os << "\n  smaps_rollup: <unavailable>";
         else
-            os << "\n  smaps_rollup: " << Util::replace(smap, "\n", "\n\t");
+            os << "\n  smaps_rollup: " << Util::replace(std::move(smap), "\n", "\n\t");
 
 #if !MOBILEAPP
         if (FetchHttpSession)
