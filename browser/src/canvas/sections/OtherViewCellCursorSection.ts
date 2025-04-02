@@ -168,6 +168,9 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
         if (section.showSection && !newSection)
             section.showUsernamePopUp();
 
+        if (!section.showSection)
+            section.hideUsernamePopUp();
+
         app.sectionContainer.requestReDraw();
     }
 
