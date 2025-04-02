@@ -11,24 +11,6 @@ declare var L: any;
 
 namespace cool {
 	export abstract class CanvasTileUtils {
-		public static unpremultiply(
-			data: Uint8Array,
-			byteLength: number,
-			byteOffset: number = 0,
-		): void {
-			for (var i = byteOffset; i < byteOffset + byteLength; i += 4) {
-				// premultiplied rgba -> unpremultiplied rgba
-				var alpha = data[i + 3];
-				if (alpha === 0) {
-					data.fill(0, i, i + 3);
-				} else if (alpha !== 255) {
-					data[i] = Math.ceil((data[i] * 255) / alpha);
-					data[i + 1] = Math.ceil((data[i + 1] * 255) / alpha);
-					data[i + 2] = Math.ceil((data[i + 2] * 255) / alpha);
-				}
-			}
-		}
-
 		private static lastPixel = new Uint8Array(4);
 
 		public static unrle(
@@ -48,8 +30,6 @@ namespace cool {
 				const rleMaskSizeBytes = 256 / 8;
 
 				offset += rleMaskSizeBytes;
-
-				if (rleSize > 0) this.unpremultiply(data, rleSize * 4, offset);
 
 				// It would be rather nice to have real 64bit types [!]
 				this.lastPixel.fill(0);
