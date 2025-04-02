@@ -483,10 +483,11 @@ class TileManager {
 					keyframeDeltaSize,
 					keyframeImage,
 					e.wireMessage,
-					true,
 				);
 
-				bitmaps.push(createImageBitmap(tile.imgDataCache));
+				bitmaps.push(
+					createImageBitmap(tile.imgDataCache, { premultiplyAlpha: 'none' }),
+				);
 				pendingDeltas.push(e);
 			}
 
@@ -533,7 +534,6 @@ class TileManager {
 		oldData: any,
 		width: any,
 		height: any,
-		needsUnpremultiply: any,
 	) {
 		var pixSize = width * height * 4;
 		if (this.debugDeltas)
@@ -605,8 +605,6 @@ class TileManager {
 						);
 					i += 4;
 					span *= 4;
-					if (needsUnpremultiply)
-						L.CanvasTileUtils.unpremultiply(delta, span, i);
 					for (var j = 0; j < span; ++j) imgData.data[offset++] = delta[i + j];
 					i += span;
 					// imgData.data[offset - 2] = 256; // debug - blue terminator
@@ -938,7 +936,6 @@ class TileManager {
 		keyframeDeltaSize: any,
 		keyframeImage: any,
 		wireMessage: any,
-		deltasNeedUnpremultiply: any,
 	) {
 		// 'Uint8Array' rawDelta
 
@@ -1056,7 +1053,6 @@ class TileManager {
 				oldData,
 				this.tileSize,
 				this.tileSize,
-				deltasNeedUnpremultiply,
 			);
 			if (this.debugDeltas)
 				window.app.console.log(
@@ -2062,10 +2058,11 @@ class TileManager {
 						x.keyframeDeltaSize,
 						keyframeImage,
 						x.wireMessage,
-						false,
 					);
 
-					bitmaps.push(createImageBitmap(tile.imgDataCache));
+					bitmaps.push(
+						createImageBitmap(tile.imgDataCache, { premultiplyAlpha: 'none' }),
+					);
 					pendingDeltas.push(x);
 				}
 

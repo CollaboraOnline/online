@@ -48,32 +48,6 @@ if ('undefined' === typeof window) {
 						buffers.push(tile.keyframeBuffer.buffer);
 					}
 
-					// Unpremultiply delta updates
-					var stop = false;
-					for (var i = tile.keyframeDeltaSize; i < deltas.length && !stop; ) {
-						switch (deltas[i]) {
-							case 99: // 'c': // copy row
-								i += 4;
-								break;
-							case 100: // 'd': // new run
-								var span = deltas[i + 3] * 4;
-								i += 4;
-								L.CanvasTileUtils.unpremultiply(deltas, span, i);
-								i += span;
-								break;
-							case 116: // 't': // terminate delta
-								stop = true;
-								i++;
-								break;
-							default:
-								console.error(
-									'[' + i + ']: ERROR: Unknown delta code ' + deltas[i],
-								);
-								i = deltas.length;
-								break;
-						}
-					}
-
 					// Now wrap as Uint8ClampedArray as that's what ImageData requires. Don't do
 					// it earlier to avoid unnecessarily incurring bounds-checking penalties.
 					tile.deltas = new Uint8ClampedArray(
