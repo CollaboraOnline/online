@@ -1404,8 +1404,11 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         {
             setenv("COOL_LOGFILE", "1", true);
             setenv("COOL_LOGFILENAME", it->second.c_str(), true);
-            std::cerr << "\nLogging at " << LogLevel << " level to file: " << it->second.c_str()
-                      << std::endl;
+            if (!CleanupOnly)
+            {
+                std::cerr << "\nLogging at " << LogLevel << " level to file: " << it->second.c_str()
+                    << std::endl;
+            }
         }
     }
 
@@ -1436,7 +1439,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         {
             setenv("COOL_LOGFILE_UICMD", "1", true);
             setenv("COOL_LOGFILENAME_UICMD", it->second.c_str(), true);
-            std::cerr << "\nLogging UI Commands to file: " << it->second.c_str() << std::endl;
+            if (!CleanupOnly)
+            {
+                std::cerr << "\nLogging UI Commands to file: " << it->second.c_str() << std::endl;
+            }
         }
         const bool merge = ConfigUtil::getConfigValue<bool>(conf, "logging_ui_cmd.merge", true);
         const bool logEndtime =
