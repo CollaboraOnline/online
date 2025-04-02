@@ -579,7 +579,7 @@ export class TilesSection extends CanvasSectionObject {
 			var relScale = this.map.getZoomScale(zoom, areaZoom);
 
 			this.forEachTileInArea(areaAtZoom, zoom, part, mode, ctx, function(tile, coords, section) {
-				if (tile && tile.canvas) {
+				if (tile && tile.image) {
 					var tilePos = coords.getPos();
 
 					if (app.file.fileBasedView) {
@@ -619,18 +619,11 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	public ensureCanvas(tile: any): void
-	{
-		TileManager.ensureCanvas(tile, false);
-	}
-
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public drawTileToCanvas(tile: any, canvas: CanvasRenderingContext2D,
 							dx: number, dy: number, dWidth: number, dHeight: number): void
 	{
-		this.ensureCanvas(tile);
 		this.drawTileToCanvasCrop(tile, canvas,
-								  0, 0, tile.canvas.width, tile.canvas.height,
+								  0, 0, TileManager.tileSize, TileManager.tileSize,
 								  dx, dy, dWidth, dHeight);
 	}
 
@@ -671,12 +664,13 @@ export class TilesSection extends CanvasSectionObject {
 								sx: number, sy: number, sWidth: number, sHeight: number,
 								dx: number, dy: number, dWidth: number, dHeight: number): void
 	{
-		this.ensureCanvas(tile);
+		TileManager.touchImage(tile);
 
 		/* if (!(tile.wireId % 4)) // great for debugging tile grid alignment.
 				canvas.drawImage(this.checkpattern, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 		else */
-		canvas.drawImage(tile.canvas, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+		if (tile.image)
+			canvas.drawImage(tile.image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
 		if (this.map._debug.tileOverlaysOn)
 		{

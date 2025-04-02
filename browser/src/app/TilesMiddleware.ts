@@ -137,9 +137,8 @@ class PaneBorder {
 class Tile {
 	coords: TileCoordData;
 	distanceFromView: number = 0; // distance to the center of the nearest visible area (0 = visible)
-	canvas: any = null; // canvas ready to render
-	ctx: CanvasRenderingContext2D | null = null; // canvas context to render onto
-	imgDataCache: any = null; // flat byte array of canvas data
+	image: ImageBitmap | null = null; // ImageBitmap ready to render
+	imgDataCache: any = null; // flat byte array of image data
 	rawDeltas: any = null; // deltas ready to decompress
 	deltaCount: number = 0; // how many deltas on top of the keyframe
 	updateCount: number = 0; // how many updates did we have
@@ -204,84 +203,7 @@ class Tile {
 	}
 
 	isReadyToDraw(): boolean {
-		return !!this.imgDataCache;
-	}
-}
-
-class CanvasItem {
-	canvas: HTMLCanvasElement | null = null;
-	ctx: CanvasRenderingContext2D | null = null;
-}
-
-// Allocating and freeing canvas' is surprisingly expensive and
-// can block rendering for long periods, so re-use canvas' instead.
-class CanvasCache {
-	private _tileSize: number;
-
-	private _canvasList: CanvasItem[] = [];
-
-	constructor(tileSize: number) {
-		this._tileSize = tileSize;
-	}
-
-	get size() {
-		return this._canvasList.length;
-	}
-
-	acquireCanvas(tile: Tile): CanvasRenderingContext2D | null {
-		let item: CanvasItem;
-
-		if (this._canvasList.length === 0) {
-			item = new CanvasItem();
-
-			// This allocation is usually cheap and reliable,
-			// getting the canvas context, not so much.
-			item.canvas = document.createElement('canvas');
-			item.canvas.width = this._tileSize;
-			item.canvas.height = this._tileSize;
-
-			// So we need to grab the context too ...
-			item.ctx = item.canvas.getContext('2d');
-			// handle null item.ctx higher up
-		} else item = this._canvasList.pop();
-
-		tile.canvas = item.canvas;
-		tile.ctx = item.ctx;
-
-		return item.ctx;
-	}
-
-	releaseCanvas(tile: Tile) {
-		if (tile.canvas && tile.ctx) {
-			var item: CanvasItem = new CanvasItem();
-			item.canvas = tile.canvas;
-			item.ctx = tile.ctx;
-			this._canvasList.push(item);
-		}
-
-		tile.canvas = null;
-		tile.ctx = null;
-		tile.imgDataCache = null;
-	}
-
-	trim(limit: number) {
-		while (this._canvasList.length > Math.max(0, limit)) {
-			const item = this._canvasList.pop();
-
-			// Fix for cool#5876 allow immediate reuse of canvas context memory
-			// WKWebView has a hard limit on the number of bytes of canvas
-			// context memory that can be allocated. Reducing the canvas
-			// size to zero is a way to reduce the number of bytes counted
-			// against this limit.
-			item.canvas.width = 0;
-			item.canvas.height = 0;
-
-			delete item.canvas;
-		}
-	}
-
-	clear() {
-		this.trim(0);
+		return !!this.image;
 	}
 }
 
@@ -312,7 +234,6 @@ class TileManager {
 	private static debugDeltas: boolean = false;
 	private static debugDeltasDetail: boolean = false;
 	private static tiles: any = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
-	private static canvasCache: CanvasCache = new CanvasCache(256);
 	public static tileSize: number = 256;
 	public static visibleTileExpansion: number = 2;
 
@@ -329,21 +250,17 @@ class TileManager {
 		}
 	}
 
-	private static maybeGarbageCollect() {
-		if (!(++this.gcCounter % 53)) this.garbageCollect();
-	}
-
 	/// Called before frame rendering to update details
 	public static updateOverlayMessages() {
 		if (!app.map._debug.tileDataOn) return;
 
 		var totalSize = 0;
-		var n_canvases = 0;
+		var n_bitmaps = 0;
 		var n_current = 0;
 		var keys = Object.keys(this.tiles);
 		for (var i = 0; i < keys.length; ++i) {
 			var tile = this.tiles[keys[i]];
-			if (tile.canvas) ++n_canvases;
+			if (tile.image) ++n_bitmaps;
 			if (tile.distanceFromView === 0) ++n_current;
 			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
 		}
@@ -352,31 +269,25 @@ class TileManager {
 			'top-tileMem',
 			'Tiles: ' +
 				String(keys.length).padStart(4, ' ') +
-				', canvases: ' +
-				String(n_canvases).padStart(3, ' ') +
-				' + cached: ' +
-				String(this.canvasCache.size).padStart(3, ' ') +
-				' = ' +
-				String(this.canvasCache.size + n_canvases).padStart(3, ' ') +
+				', bitmaps: ' +
+				String(n_bitmaps).padStart(3, ' ') +
 				' current ' +
 				String(n_current).padStart(3, ' ') +
 				', Delta size ' +
 				Math.ceil(totalSize / 1024) +
 				'(KB)' +
-				', Canvas size: ' +
-				Math.ceil(n_canvases / 2) +
-				'+' +
-				Math.ceil(this.canvasCache.size / 4) +
+				', Bitmap size: ' +
+				Math.ceil(n_bitmaps / 2) +
 				'(MB)',
 		);
 	}
 
-	// Set a high and low watermark of how many canvases we want
+	// Set a high and low watermark of how many bitmaps we want
 	// and expire old ones
 	private static garbageCollect(discardAll = false) {
 		// 4k screen -> 8Mpixel, each tile is 64kpixel uncompressed
-		var highNumCanvases = 250; // ~60Mb.
-		var lowNumCanvases = 125; // ~30Mb
+		var highNumBitmaps = 250; // ~60Mb.
+		var lowNumBitmaps = 125; // ~30Mb
 		// real RAM sizes for keyframes + delta cache in memory.
 		var highDeltaMemory = 120 * 1024 * 1024; // 120Mb
 		var lowDeltaMemory = 60 * 1024 * 1024; // 60Mb
@@ -385,8 +296,8 @@ class TileManager {
 		var lowTileCount = 1024;
 
 		if (discardAll) {
-			highNumCanvases = 0;
-			lowNumCanvases = 0;
+			highNumBitmaps = 0;
+			lowNumBitmaps = 0;
 			highDeltaMemory = 0;
 			lowDeltaMemory = 0;
 			highTileCount = 0;
@@ -394,53 +305,45 @@ class TileManager {
 		}
 
 		if (this.debugDeltas)
-			window.app.console.log('Garbage collect! iter: ' + this.gcCounter);
-
-		// In case garbage collection was forced outside of maybeGarbageCollect, make sure future
-		// garbage collection doesn't happen prematurely.
-		this.gcCounter += (53 - (this.gcCounter % 53)) % 53;
+			window.app.console.log('Garbage collect! iter: ' + this.gcCounter++);
 
 		/* uncomment to exercise me harder. */
-		/* highNumCanvases = 3; lowNumCanvases = 2;
+		/* highNumBitmaps = 3; lowNumBitmaps = 2;
 		   highDeltaMemory = 1024*1024; lowDeltaMemory = 1024*128;
 		   highTileCount = 100; lowTileCount = 50; */
 
-		// sort by lastRendered.
 		var keys = Object.keys(this.tiles).sort((a: any, b: any) => {
 			return this.tiles[b].distanceFromView - this.tiles[a].distanceFromView;
 		});
 
-		var canvasKeys = [];
+		var bitmapKeys = [];
 		var totalSize = 0;
-		var n_canvases = 0;
+		var n_bitmaps = 0;
 		for (var i = 0; i < keys.length; ++i) {
 			var tile = this.tiles[keys[i]];
 			// Don't GC tiles that are visible or that have pending deltas. We don't have
 			// a mechanism to immediately rehydrate tiles, so GC'ing visible tiles would
 			// cause flickering, and the same would happen for tiles with pending deltas.
-			if (tile.canvas) {
-				++n_canvases;
+			if (tile.image) {
+				++n_bitmaps;
 				if (tile.distanceFromView !== 0 && !tile.hasPendingDelta)
-					canvasKeys.push(keys[i]);
+					bitmapKeys.push(keys[i]);
 			}
 			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
 		}
 
 		// Trim ourselves down to size.
-		if (n_canvases > highNumCanvases) {
-			var n_to_reclaim = Math.min(
-				canvasKeys.length,
-				n_canvases - lowNumCanvases,
-			);
+		if (n_bitmaps > highNumBitmaps) {
+			var n_to_reclaim = Math.min(bitmapKeys.length, n_bitmaps - lowNumBitmaps);
 			for (var i = 0; i < n_to_reclaim; ++i) {
-				var key = canvasKeys[i];
+				var key = bitmapKeys[i];
 				var tile = this.tiles[key];
 				if (this.debugDeltas)
 					window.app.console.log(
-						'Reclaim canvas ' + key + ' last rendered: ' + tile.lastRendered,
+						'Reclaim bitmap ' + key + ' last rendered: ' + tile.lastRendered,
 					);
-				this.reclaimTileCanvasMemory(tile);
-				--n_canvases;
+				this.reclaimTileBitmapMemory(tile);
+				--n_bitmaps;
 			}
 		}
 
@@ -462,7 +365,7 @@ class TileManager {
 								tile.rawDeltas.length +
 								' bytes',
 						);
-					this.reclaimTileCanvasMemory(tile);
+					this.reclaimTileBitmapMemory(tile);
 					tile.rawDeltas = null;
 					tile.forceKeyframe();
 				}
@@ -475,60 +378,49 @@ class TileManager {
 				const key = keys[i];
 				const tile: Tile = this.tiles[key];
 				if (tile.distanceFromView !== 0) {
-					if (tile.canvas) --n_canvases;
+					if (tile.image) --n_bitmaps;
 					this.removeTile(keys[i]);
 				}
 			}
 		}
-
-		// Canvases are returned to a cache when reclaimed. Try to keep the total
-		// number of alive canvases within the specified limits.
-		const canvasCacheTargetSize = highNumCanvases - n_canvases;
-		if (this.canvasCache.size > canvasCacheTargetSize)
-			this.canvasCache.trim(canvasCacheTargetSize);
 	}
 
-	// work hard to ensure we get a canvas context to render with
-	private static ensureContext(tile: Tile) {
-		this.maybeGarbageCollect();
+	private static endTransactionHandleBitmaps(
+		deltas: any[],
+		bitmaps: ImageBitmap[],
+	) {
+		while (deltas.length) {
+			const delta = deltas.shift();
+			const bitmap = bitmaps.shift();
 
-		// important this is after the garbagecollect
-		if (!tile.canvas) this.ensureCanvas(tile, false, false);
-		if (tile.ctx) return tile.ctx;
+			const tile = this.tiles[delta.key];
+			if (!tile) continue;
 
-		// Not a good result - we ran out of canvas memory
+			if (tile.image) tile.image.close();
+			tile.image = bitmap;
+
+			if (delta.isKeyframe) --tile.hasPendingKeyframe;
+			else --tile.hasPendingDelta;
+
+			if (!tile.hasPendingUpdate()) this.tileReady(tile.coords);
+		}
+
+		if (this.pendingTransactions === 0)
+			window.app.console.warn('Unexpectedly received decompressed deltas');
+		else --this.pendingTransactions;
+
+		if (!this.hasPendingTransactions()) {
+			while (this.transactionCallbacks.length) {
+				var callback = this.transactionCallbacks.pop();
+				if (callback) callback();
+			}
+		}
+
 		this.garbageCollect();
-
-		if (!tile.canvas) this.ensureCanvas(tile, false, false);
-		if (tile.ctx) return tile.ctx;
-
-		// Free non-current canvas' and start again.
-		if (this.debugDeltas)
-			window.app.console.log('Free non-current tiles canvas memory');
-		for (var key in this.tiles) {
-			var t = this.tiles[key];
-			if (t && t.distanceFromView !== 0) this.reclaimTileCanvasMemory(t);
-		}
-		this.canvasCache.clear();
-		if (!tile.canvas) this.ensureCanvas(tile, false, false);
-		if (tile.ctx) return tile.ctx;
-
-		if (this.debugDeltas)
-			window.app.console.log(
-				'Throw everything overboard to free all tiles canvas memory',
-			);
-		for (var key in this.tiles) {
-			var t = this.tiles[key];
-			this.reclaimTileCanvasMemory(t);
-		}
-		this.canvasCache.clear();
-		if (!tile.canvas) this.ensureCanvas(tile, false, false);
-		if (!tile.ctx) window.app.console.log('Error: out of canvas memory.');
-
-		return tile.ctx;
 	}
 
 	private static decompressPendingDeltas(message: string) {
+		++this.pendingTransactions;
 		if (this.worker) {
 			this.worker.postMessage(
 				{
@@ -538,11 +430,20 @@ class TileManager {
 				},
 				this.pendingDeltas.map((x: any) => x.rawDelta.buffer),
 			);
-			++this.pendingTransactions;
 		} else {
-			for (var e of this.pendingDeltas) {
-				// Synchronous path
-				var tile = this.tiles[e.key];
+			// Synchronous path
+			const bitmaps: Promise<ImageBitmap>[] = [];
+			const pendingDeltas: any[] = [];
+			for (const e of this.pendingDeltas) {
+				const tile = this.tiles[e.key];
+
+				if (!tile) {
+					window.app.console.warn(
+						'Tile deleted during rawDelta decompression.',
+					);
+					continue;
+				}
+
 				var deltas = (window as any).fzstd.decompress(e.rawDelta);
 
 				var keyframeDeltaSize = 0;
@@ -585,10 +486,13 @@ class TileManager {
 					true,
 				);
 
-				if (e.isKeyframe) --tile.hasPendingKeyframe;
-				else --tile.hasPendingDelta;
-				if (!tile.hasPendingUpdate()) this.tileReady(tile.coords);
+				bitmaps.push(createImageBitmap(tile.imgDataCache));
+				pendingDeltas.push(e);
 			}
+
+			Promise.all(bitmaps).then((bitmaps) => {
+				this.endTransactionHandleBitmaps(pendingDeltas, bitmaps);
+			});
 		}
 		this.pendingDeltas.length = 0;
 	}
@@ -605,7 +509,8 @@ class TileManager {
 				'applyCompressedDelta called outside of transaction',
 			);
 
-		if (rehydrate && !tile.canvas && !isKeyframe) this.rehydrateTile(tile);
+		if (rehydrate && !tile.imgDataCache && !isKeyframe)
+			this.rehydrateTile(tile);
 
 		// We need to own rawDelta for it to hang around outside of a transaction (which happens
 		// with workers enabled). If we're rehydrating, we already own it.
@@ -635,7 +540,7 @@ class TileManager {
 			window.app.console.log(
 				'Applying a delta of length ' +
 					delta.length +
-					' canvas size: ' +
+					' image size: ' +
 					pixSize,
 			);
 		// + ' hex: ' + hex2string(delta, delta.length));
@@ -932,7 +837,7 @@ class TileManager {
 		}
 
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
-		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
+		// _emitSlurpedTileEvents() will repaint (if it is dirty).
 		const tileVisible = app.isRectangleVisibleInTheDisplayedArea(
 			this.pixelCoordsToTwipTileBounds(coords),
 		);
@@ -1003,13 +908,6 @@ class TileManager {
 			if (callback) callback();
 			return;
 		}
-
-		if (!this.worker) {
-			while (this.transactionCallbacks.length) {
-				callback = this.transactionCallbacks.pop();
-				if (callback) callback();
-			}
-		}
 	}
 
 	private static disableWorker(e: any = null) {
@@ -1062,12 +960,7 @@ class TileManager {
 			tile.imgDataCache = null;
 		}
 
-		var ctx = this.ensureContext(tile);
-		if (!ctx)
-			// out of canvas / texture memory.
-			return;
-
-		// if re-creating a canvas from rawDeltas, don't update counts
+		// if re-creating ImageData from rawDeltas, don't update counts
 		if (wireMessage) {
 			if (keyframeDeltaSize) {
 				tile.loadCount++;
@@ -1101,7 +994,7 @@ class TileManager {
 		);
 
 		// store the compressed version for later in its current
-		// form as byte arrays, so that we can manage our canvases
+		// form as byte arrays, so that we can manage our bitmaps
 		// better.
 		if (keyframeDeltaSize) {
 			tile.rawDeltas = rawDelta; // overwrite
@@ -1122,9 +1015,6 @@ class TileManager {
 		// apply potentially several deltas in turn.
 		var i = 0;
 
-		// May have been changed by _ensureContext garbage collection
-		var canvas = tile.canvas;
-
 		// If it's a new keyframe, use the given image and offset
 		var imgData = keyframeImage;
 		var offset = keyframeDeltaSize;
@@ -1138,12 +1028,12 @@ class TileManager {
 			var delta = !offset ? deltas : deltas.subarray(offset);
 
 			// Debugging paranoia: if we get this wrong bad things happen.
-			if (delta.length >= canvas.width * canvas.height * 4) {
+			if (delta.length >= this.tileSize * this.tileSize * 4) {
 				window.app.console.warn(
 					'Unusual delta possibly mis-tagged, suspicious size vs. type ' +
 						delta.length +
 						' vs. ' +
-						canvas.width * canvas.height * 4,
+						this.tileSize * this.tileSize * 4,
 				);
 			}
 
@@ -1151,8 +1041,10 @@ class TileManager {
 				// no keyframe
 				imgData = tile.imgDataCache;
 			if (!imgData) {
-				if (this.debugDeltas) window.app.console.log('Fetch canvas contents');
-				imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+				window.app.console.error(
+					'Trying to apply delta with no ImageData cache',
+				);
+				return;
 			}
 
 			// copy old data to work from:
@@ -1162,8 +1054,8 @@ class TileManager {
 				imgData,
 				delta,
 				oldData,
-				canvas.width,
-				canvas.height,
+				this.tileSize,
+				this.tileSize,
 				deltasNeedUnpremultiply,
 			);
 			if (this.debugDeltas)
@@ -1181,11 +1073,8 @@ class TileManager {
 			offset += len;
 		}
 
-		if (imgData) {
-			// hold onto the original imgData for reuse in the no keyframe case
-			tile.imgDataCache = imgData;
-			ctx.putImageData(imgData, 0, 0);
-		}
+		// hold onto the original imgData for reuse in the no keyframe case
+		tile.imgDataCache = imgData;
 
 		if (traceEvent) traceEvent.finish();
 	}
@@ -1201,7 +1090,7 @@ class TileManager {
 		)
 			this.emptyTilesCount -= 1;
 
-		this.reclaimTileCanvasMemory(tile);
+		this.reclaimTileBitmapMemory(tile);
 		delete this.tiles[key];
 	}
 
@@ -1239,8 +1128,12 @@ class TileManager {
 		}
 	}
 
-	private static reclaimTileCanvasMemory(tile: Tile) {
-		this.canvasCache.releaseCanvas(tile);
+	private static reclaimTileBitmapMemory(tile: Tile) {
+		if (tile.image) {
+			tile.image.close();
+			tile.image = null;
+			tile.imgDataCache = null;
+		}
 	}
 
 	private static initPreFetchPartTiles() {
@@ -2011,11 +1904,13 @@ class TileManager {
 
 		// updates don't need more chattiness with a tileprocessed
 		if (hasContent) {
-			// Only decompress deltas for tiles that are either current, have a canvas or
-			// have a pending update (so will imminently have a canvas). This stops prefetching
-			// from blowing past GC limits.
+			// Only decompress deltas for tiles that are either current, have image data or
+			// have a pending update (so will imminently have image data). This stops
+			// prefetching from blowing past GC limits.
 			const shouldDecompressDelta =
-				tile.distanceFromView === 0 || tile.canvas || tile.hasPendingUpdate();
+				tile.distanceFromView === 0 ||
+				tile.imgDataCache ||
+				tile.hasPendingUpdate();
 
 			if (shouldDecompressDelta) {
 				this.applyCompressedDelta(tile, img.rawData, img.isKeyframe, true);
@@ -2139,10 +2034,13 @@ class TileManager {
 	}
 
 	public static onWorkerMessage(e: any) {
+		const bitmaps: Promise<ImageBitmap>[] = [];
+		const pendingDeltas: any[] = [];
 		switch (e.data.message) {
 			case 'endTransaction':
-				for (var x of e.data.deltas) {
-					var tile = this.tiles[x.key];
+				for (const x of e.data.deltas) {
+					const tile = this.tiles[x.key];
+
 					if (!tile) {
 						window.app.console.warn(
 							'Tile deleted during rawDelta decompression.',
@@ -2150,7 +2048,7 @@ class TileManager {
 						continue;
 					}
 
-					var keyframeImage = null;
+					let keyframeImage = null;
 					if (x.isKeyframe)
 						keyframeImage = new ImageData(
 							x.keyframeBuffer,
@@ -2167,21 +2065,13 @@ class TileManager {
 						false,
 					);
 
-					if (x.isKeyframe) --tile.hasPendingKeyframe;
-					else --tile.hasPendingDelta;
-					if (!tile.hasPendingUpdate()) this.tileReady(tile.coords);
+					bitmaps.push(createImageBitmap(tile.imgDataCache));
+					pendingDeltas.push(x);
 				}
 
-				if (this.pendingTransactions === 0)
-					window.app.console.warn('Unexpectedly received decompressed deltas');
-				else --this.pendingTransactions;
-
-				if (!this.hasPendingTransactions()) {
-					while (this.transactionCallbacks.length) {
-						var callback = this.transactionCallbacks.pop();
-						if (callback) callback();
-					}
-				}
+				Promise.all(bitmaps).then((bitmaps) => {
+					this.endTransactionHandleBitmaps(pendingDeltas, bitmaps);
+				});
 				break;
 
 			default:
@@ -2443,22 +2333,10 @@ class TileManager {
 		}
 	}
 
-	// Ensure we have a renderable canvas for a given tile
-	// Use this immediately before drawing a tile, pass in the time.
-	public static ensureCanvas(
-		tile: Tile,
-		forPrefetch: any,
-		forPaint: boolean = true,
-	) {
+	// Indicate that we're about to render this image.
+	public static touchImage(tile: Tile) {
 		if (!tile) return;
-		if (!tile.canvas) {
-			this.canvasCache.acquireCanvas(tile);
-			this.rehydrateTile(tile);
-		}
-		if (forPaint) tile.lastRendered = performance.now();
-		if (!forPrefetch) {
-			if (!tile.hasContent() && tile.hasPendingKeyframe === 0)
-				tile.missingContent++;
-		}
+		tile.lastRendered = performance.now();
+		if (!tile.image) tile.missingContent++;
 	}
 }

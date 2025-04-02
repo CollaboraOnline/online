@@ -117,7 +117,7 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 							canvas.fillStyle = 'rgba(255, 0, 0, 0.8)'; // red
 						else if (tile.needsFetch())
 							canvas.fillStyle = 'rgba(255, 255, 0, 0.8)'; // yellow
-						else if (!tile.canvas)
+						else if (!tile.image)
 							canvas.fillStyle = 'rgba(0, 96, 0, 0.8)'; // dark green
 						else if (tile.distanceFromView !== 0)
 							canvas.fillStyle = 'rgba(0, 192, 0, 0.8)'; // green
