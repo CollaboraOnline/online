@@ -478,7 +478,7 @@ class SlideShowPresenter {
 		return this._slideShowWindowProxy.contentWindow.document;
 	}
 
-	_doInWindowPresentation() {
+	async _doInWindowPresentation() {
 		const popupTitle =
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
 		const htmlContent = this._generateSlideWindowHtml(popupTitle);
@@ -490,6 +490,24 @@ class SlideShowPresenter {
 		);
 		this._getProxyDocumentNode().open();
 		this._getProxyDocumentNode().write(htmlContent);
+
+		// TODO to work
+		{
+			let options = 'popup';
+			// if the device has more than one screen.
+			if ((window.screen as any).isExtended) {
+				const details = await (window as any).getScreenDetails();
+				const secondary = details.screens.find(function (s: any) {
+					return s !== s.primaryScreen;
+				});
+				options +=
+					'left=${secondary.availLeft},' +
+					'top=${secondary.availTop},' +
+					'width=${secondary.availWidth},' +
+					'height=${secondary.availHeight}';
+			}
+			this._slideShowWindowProxy = window.open('', '_blank', options);
+		}
 
 		if (!this._slideShowWindowProxy) {
 			this._notifyBlockedPresenting();
