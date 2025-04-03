@@ -1803,25 +1803,8 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
                 LOG_WRN("Quarantine path is relative. Please use an absolute path for better "
                         "reliability");
 
-            Poco::File p(path);
-            try
-            {
-                LOG_TRC("Creating quarantine directory [" + path << ']');
-                p.createDirectories();
-
-                LOG_DBG("Created quarantine directory [" + path << ']');
-            }
-            catch (const std::exception& ex)
-            {
-                LOG_WRN("Failed to create quarantine directory [" << path
-                                                                  << "]. Disabling quaratine");
-            }
-
-            if (FileUtil::Stat(path).exists())
-            {
-                LOG_INF("Initializing quarantine at [" + path << ']');
-                Quarantine::initialize(path);
-            }
+            LOG_DBG("Initializing quarantine at [" + path << ']');
+            Quarantine::initialize(path);
         }
     }
     else

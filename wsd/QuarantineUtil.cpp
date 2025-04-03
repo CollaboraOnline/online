@@ -27,6 +27,7 @@
 
 #include <exception>
 #include <mutex>
+#include <stdexcept>
 
 namespace
 {
@@ -73,7 +74,45 @@ void Quarantine::initialize(const std::string& path)
                                            << " seconds, Max Versions: " << MaxVersions);
 
     // Make sure the quarantine directories exists, or we throw if we can't create it.
-    Poco::File(path).createDirectories();
+    try
+    {
+        Poco::File(path).createDirectories();
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_FTL("Quarantine directory [" << path
+                                         << "] is invalid or we have no permission to create it");
+        throw;
+    }
+
+    // Make sure we can write into the quarantine directory.
+    {
+        const std::string testFile = "quarantine.test";
+        const Poco::Path target(path, testFile);
+        const std::string testPath = target.toString();
+
+        FileUtil::removeFile(testPath); // Make sure there are no left-overs.
+
+        try
+        {
+            Poco::File file(target);
+            file.createFile();
+            if (!FileUtil::Stat(testPath).exists())
+            {
+                throw std::runtime_error("Cannot write to quarantine directory [" + path +
+                                         "] as it is read-only");
+            }
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_FTL("Quarantine directory [" << path
+                                             << "] is read-only. Please ensure that the coolwsd "
+                                                "process account has write permissions to it");
+            throw;
+        }
+
+        FileUtil::removeFile(testPath); // Make sure there are no left-overs.
+    }
 
     // This function should ever be called once, but for consistency, take the lock.
     std::lock_guard<std::mutex> lock(Mutex);
