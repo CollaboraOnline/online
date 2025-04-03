@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 /* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.

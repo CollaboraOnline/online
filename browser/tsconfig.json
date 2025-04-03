@@ -11,7 +11,12 @@
       "removeComments": false,
       "preserveConstEnums": false,
       "downlevelIteration": true,
-      "watch": false
+      "watch": false,
+      "plugins": [
+        {
+          "name": "typescript-strict-plugin"
+        }
+      ]
     },
     "exclude": [
       "node_modules",

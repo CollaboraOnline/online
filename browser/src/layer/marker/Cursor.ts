@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 /* eslint-disable */
 
 declare var L: any;
