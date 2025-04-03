@@ -150,7 +150,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 	_preventNonNumericalInput: function(e) {
 		e = e || window.event;
-		var charCode = (typeof e.which === undefined) ? e.keyCode : e.which;
+		var charCode = e.which === undefined ? e.keyCode : e.which;
 		var charStr = String.fromCharCode(charCode);
 
 		if (!charStr.match(/^[0-9.,]+$/) && charCode !== 13)
