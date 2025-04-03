@@ -150,9 +150,7 @@ L.CanvasTileLayer.include({
 	},
 
 	_updateTableMoveMarkerVisibility: function() {
-		if (this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isVisible())
-			this._removeMoveMarker();
-		else if (this._currentTableData
+		if (this._currentTableData
 			&& this._currentTableMarkerJson === this._lastTableMarkerJson
 			&& this._currentTableData.rows && this._currentTableData.columns
 			&& this._map.getDocType() === 'presentation' && this._currentTableData.rectangle
