@@ -211,6 +211,9 @@ class SettingIframe {
 			this.populateSharedConfigUI(data);
 			console.debug('Shared config data: ', data);
 		} catch (error: unknown) {
+			this.showErrorModal(
+				'Something went wrong, Please try to refresh the page.',
+			);
 			console.error('Error fetching shared config:', error);
 		}
 	}
@@ -284,6 +287,9 @@ class SettingIframe {
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : 'Unknown error';
 			console.error(`Error uploading file: ${message}`);
+			this.showErrorModal(
+				'Something went wrong while fetching wordbook, Please try to refresh the page.',
+			);
 			this.wordbook.stopLoader();
 		}
 	}
@@ -315,6 +321,9 @@ class SettingIframe {
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : 'Unknown error';
 			console.error(`Error uploading file: ${message}`);
+			this.showErrorModal(
+				'Something went wrong while uploading the file. Please try again.',
+			);
 		}
 	}
 
@@ -437,6 +446,9 @@ class SettingIframe {
 
 					await this.fetchAndPopulateSharedConfigs();
 				} catch (error: unknown) {
+					this.showErrorModal(
+						'Something went wrong while deleting the file. Please try refreshing the page.',
+					);
 					console.error('Error deleting file:', error);
 				}
 			});
@@ -521,6 +533,39 @@ class SettingIframe {
 
 	private isAdmin(): boolean {
 		return window.iframeType === 'admin';
+	}
+
+	private showErrorModal(message: string): void {
+		const modal = document.createElement('div');
+		modal.className = 'modal';
+
+		const modalContent = document.createElement('div');
+		modalContent.className = 'modal-content';
+
+		const header = document.createElement('h2');
+		header.textContent = 'Error';
+		header.style.textAlign = 'center';
+		modalContent.appendChild(header);
+
+		const messageEl = document.createElement('p');
+		messageEl.textContent = message;
+		modalContent.appendChild(messageEl);
+
+		const buttonContainer = document.createElement('div');
+		buttonContainer.className = 'modal-button-container';
+
+		const okButton = document.createElement('button');
+		okButton.textContent = 'OK';
+		okButton.classList.add('button', 'button--vue-secondary');
+		okButton.addEventListener('click', () => {
+			document.body.removeChild(modal);
+		});
+
+		buttonContainer.appendChild(okButton);
+		modalContent.appendChild(buttonContainer);
+
+		modal.appendChild(modalContent);
+		document.body.appendChild(modal);
 	}
 
 	private settingConfigBasePath(): string {

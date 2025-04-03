@@ -347,13 +347,15 @@ ul {
   cursor: pointer;
 }
 
-.dic-button-container {
+.dic-button-container,
+.modal-button-container {
   display: flex;
   justify-content: end;
   margin-top: 24px;
 }
 
-.dic-button-container button {
+.dic-button-container button,
+.modal-button-container button {
   padding: 8px 16px;
   font-size: 15px;
   cursor: pointer;
