@@ -26,7 +26,7 @@ private:
     std::string _configId;
     std::string _presetsPath;
     std::vector<std::function<void(bool)>> _installFinishedCBs;
-    SocketPoll& _poll;
+    std::weak_ptr<SocketPoll> _poll;
     int _idCount;
     bool _reportedStatus;
     bool _overallSuccess;
@@ -45,7 +45,7 @@ private:
                   std::vector<CacheQuery>& queries);
 
 public:
-    PresetsInstallTask(SocketPoll& poll, const std::string& configId,
+    PresetsInstallTask(const std::shared_ptr<SocketPoll>& poll, const std::string& configId,
                        const std::string& presetsPath,
                        const std::function<void(bool)>& installFinishedCB);
 

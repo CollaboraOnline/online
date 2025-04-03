@@ -1342,6 +1342,27 @@ public:
 
     }
 
+    void asyncRequest(const Request& req, const std::shared_ptr<SocketPoll>& poll)
+    {
+        LOG_TRC("new asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
+                                     << req.getUrl());
+
+        newRequest(req);
+
+        if (!isConnected())
+        {
+            asyncConnect(poll);
+        }
+        else
+        {
+            poll->wakeup();
+        }
+
+        LOG_DBG("starting asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
+                                          << req.getUrl());
+
+    }
+
     void asyncShutdown()
     {
         LOG_TRC("asyncShutdown");
@@ -1751,6 +1772,25 @@ private:
         auto pushConnectCompleteToPoll = [this, &poll](std::shared_ptr<StreamSocket> socket, net::AsyncConnectResult result ) {
             poll.addCallback([selfLifecycle = shared_from_this(), this, &poll, socket=std::move(socket), result]() {
                 asyncConnectCompleted(poll, socket, result);
+            });
+        };
+
+        net::asyncConnect(_host, _port, isSecure(), shared_from_this(), pushConnectCompleteToPoll);
+    }
+
+    void asyncConnect(const std::weak_ptr<SocketPoll>& poll)
+    {
+        _socket.reset(); // Reset to make sure we are disconnected.
+
+        auto pushConnectCompleteToPoll = [this, poll](std::shared_ptr<StreamSocket> socket, net::AsyncConnectResult result ) {
+            std::shared_ptr<SocketPoll> socketPoll(poll.lock());
+            if (!socketPoll)
+            {
+                LOG_WRN("asyncConnect completed after poll was destroyed");
+                return;
+            }
+            socketPoll->addCallback([selfLifecycle = shared_from_this(), this, pollPtr=socketPoll.get(), socket=std::move(socket), result]() {
+                asyncConnectCompleted(*pollPtr, socket, result);
             });
         };
 
