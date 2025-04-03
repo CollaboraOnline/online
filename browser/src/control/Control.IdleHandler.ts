@@ -171,7 +171,7 @@ class IdleHandler {
 				window.app.console.debug('idleness: reactivating');
 				map.fire('postMessage', {msgId: 'User_Active'});
 				app.idleHandler._documentIdle = false;
-				app.idleHandler.map._docLayer._setCursorVisible();
+				app.setCursorVisibility(true);
 			}
 			return app.idleHandler._activate();
 		};
