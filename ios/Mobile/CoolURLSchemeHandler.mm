@@ -163,7 +163,7 @@
                     static_cast<long>(size)]
          forKey:@"Content-Range"];
         errorResponse = true;
-    } else {
+    } else if (rangeHeader != nil) {
         responseStatus = 206;
         NSInteger totalSize = size;
         std::tie(start, end, size) = rangePositionsAndSize.value();
