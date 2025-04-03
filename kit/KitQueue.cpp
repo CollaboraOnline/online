@@ -552,7 +552,7 @@ namespace {
         }
 
         // erase from source all the dest inserted tiles in one fell swoop
-        tileQueue.erase(tileQueue.begin() + leftTile + 1, tileQueue.begin() + rightTile);
+        tileQueue.erase(tileQueue.begin() + (leftTile + 1), tileQueue.begin() + rightTile);
 
         return std::make_pair(leftGridX, rightGridX);
     }
