@@ -528,14 +528,18 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
              httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden ||
              httpResponse->statusLine().statusCode() == http::StatusCode::NotFound);
 
+        const StorageBase::LockUpdateResult::Status status =
+            unauthorized ? LockUpdateResult::Status::UNAUTHORIZED
+                         : LockUpdateResult::Status::FAILED;
+
         LOG_ERR("Un-successful " << wopiLog << " with " << (unauthorized ? "expired token, " : "")
                                  << "HTTP status " << httpResponse->statusLine().statusCode()
                                  << ", failure reason: [" << failureReason << "] and response: ["
                                  << responseString << ']');
 
-        return asyncLockStateCallback(AsyncLockUpdate(
-            AsyncLockUpdate::State::Error,
-            LockUpdateResult(LockUpdateResult::Status::UNAUTHORIZED, lock, std::move(failureReason))));
+        return asyncLockStateCallback(
+            AsyncLockUpdate(AsyncLockUpdate::State::Error,
+                            LockUpdateResult(status, lock, std::move(failureReason))));
     };
 
     _lockHttpSession->setFinishedHandler(std::move(finishedCallback));
