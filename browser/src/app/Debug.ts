@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 /* -*- js-indent-level: 8; fill-column: 100 -*- */
 
 /*

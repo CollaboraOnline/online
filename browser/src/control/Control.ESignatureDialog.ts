@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 /*
  * Copyright the Collabora Online contributors.
  *
