@@ -82,6 +82,10 @@ app.getScale = function () {
 	return ((app.tile.size.pX / app.tile.size.x) * 15) / app.dpiScale;
 };
 
+app.setCursorVisibility = function (visible) {
+	app.file.textCursor.visible = visible;
+};
+
 app.isCommentEditingAllowed = function () {
 	return app.file.editComment;
 };

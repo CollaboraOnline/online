@@ -628,7 +628,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._docType = options.docType;
 		this._documentInfo = '';
 		if (this._docType !== 'text')
-			app.file.textCursor.visible = false; // Don't change the default for Writer.
+			app.setCursorVisibility(false); // Don't change the default for Writer.
 		// Last cursor position for invalidation
 		this.lastCursorPos = null;
 		// Are we zooming currently ? - if so, no cursor.
@@ -1703,14 +1703,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onCursorVisibleMsg: function(textMsg) {
 		var command = textMsg.match('cursorvisible: true');
-		app.file.textCursor.visible = command ? true : false;
+		app.setCursorVisibility(command ? true : false);
 		this._removeSelection();
 		this._onUpdateCursor();
 		app.events.fire('TextCursorVisibility', { visible: app.file.textCursor.visible });
-	},
-
-	_setCursorVisible: function() {
-		app.file.textCursor.visible = true;
 	},
 
 	_onDownloadAsMsg: function (textMsg) {
