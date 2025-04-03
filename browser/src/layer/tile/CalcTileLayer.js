@@ -1158,9 +1158,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			var reference = new CPolygon(pointSet, {
 				pointerEvents: 'none',
 				fillColor: strColor,
-				fillOpacity: 0.25,
+				fillOpacity: 0.15,
 				weight: 2 * app.dpiScale,
-				opacity: 0.25});
+				opacity: 0.15});
 
 			references.push({mark: reference, part: part, type: 'focuscell'});
 			this._referencesAll.push(references[i]);
