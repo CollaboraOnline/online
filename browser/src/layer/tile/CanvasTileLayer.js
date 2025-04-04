@@ -1703,6 +1703,11 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onCursorVisibleMsg: function(textMsg) {
 		var command = textMsg.match('cursorvisible: true');
+
+		// .uno:InsertMode is sent for Calc when edit mode changes. Ignore this when InsertMode is true.
+		if (!command && app.map.getDocType() === 'spreadsheet' && app.map['stateChangeHandler'].getItemValue('.uno:InsertMode') === 'true')
+			return;
+
 		app.setCursorVisibility(command ? true : false);
 		this._removeSelection();
 		this._onUpdateCursor();
