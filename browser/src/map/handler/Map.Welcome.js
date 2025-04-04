@@ -10,7 +10,7 @@ L.Map.mergeOptions({
 
 L.Map.Welcome = L.Handler.extend({
 
-	_getLocalWelcomeUrl: function() {
+	_getLocalWelcomeUrl: function () {
 		var welcomeLocation = app.LOUtil.getURL('/welcome/welcome.html');
 		if (window.socketProxy)
 			welcomeLocation = window.makeWsUrl(welcomeLocation);
@@ -32,10 +32,10 @@ L.Map.Welcome = L.Handler.extend({
 		this.remove();
 	},
 
-	isGuest: function() {
+	isGuest: function () {
 		var docLayer = this._map._docLayer || {};
 		var viewInfo = this._map._viewInfo[docLayer._viewId];
-		return  viewInfo && viewInfo.userextrainfo && viewInfo.userextrainfo.is_guest;
+		return viewInfo && viewInfo.userextrainfo && viewInfo.userextrainfo.is_guest;
 	},
 
 	onUpdateList: function () {
@@ -44,11 +44,11 @@ L.Map.Welcome = L.Handler.extend({
 		}
 	},
 
-	shouldWelcome: function() {
+	shouldWelcome: function () {
 		var storedVersion = window.prefs.get('WSDWelcomeVersion');
 		var currentVersion = app.socket.WSDServer.Version;
 		var welcomeDisabledCookie = window.prefs.getBoolean('WSDWelcomeDisabled');
-		var welcomeDisabledDate = window.prefs.get('WSDWelcomeDisabledDate');
+		var welcomeDisabledDate = window.prefs.get('WSDWelcomeDisabledDate').replaceAll('-', ' ');
 		var isWelcomeDisabled = false;
 
 		if (welcomeDisabledCookie && welcomeDisabledDate) {
@@ -70,12 +70,12 @@ L.Map.Welcome = L.Handler.extend({
 		return false;
 	},
 
-	showWelcomeDialog: function() {
+	showWelcomeDialog: function () {
 		if (this._iframeWelcome && this._iframeWelcome.queryContainer())
 			this.remove();
 
 		var uiTheme = window.prefs.getBoolean('darkTheme') ? 'dark' : 'light';
-		var params = [{'ui_theme' : uiTheme}];
+		var params = [{ 'ui_theme': uiTheme }];
 
 		this._iframeWelcome = L.iframeDialog(this._url, params, null, { prefix: 'iframe-welcome' });
 		this._iframeWelcome._iframe.title = _('Welcome Dialog');
@@ -121,7 +121,7 @@ L.Map.Welcome = L.Handler.extend({
 			} else if (this._fallback) {
 				var currentDate = new Date();
 				window.prefs.set('WSDWelcomeDisabled', true);
-				window.prefs.set('WSDWelcomeDisabledDate', currentDate.toDateString());
+				window.prefs.set('WSDWelcomeDisabledDate', currentDate.toDateString().replaceAll(' ', '-'));
 				this.remove();
 			} else {
 				// fallback
