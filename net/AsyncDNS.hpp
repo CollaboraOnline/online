@@ -23,6 +23,8 @@
 
 #include <NetUtil.hpp>
 
+class UnitWSD;
+
 namespace net
 {
 
@@ -48,6 +50,7 @@ public:
                        const DNSThreadDumpStateFn& dumpState);
 
 private:
+    UnitWSD* const _unitWsd;
     std::atomic<bool> _exit;
     std::unique_ptr<DNSResolver> _resolver;
     std::unique_ptr<std::thread> _thread;
