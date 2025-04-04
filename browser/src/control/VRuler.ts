@@ -159,6 +159,7 @@ class VRuler extends Ruler {
 			'cool-ruler leaflet-bar leaflet-control leaflet-control-custom',
 		);
 		this._rWrapper.id = 'vertical-ruler';
+		this._rWrapper.classList.add('vruler');
 		this._rWrapper.style.visibility = 'hidden';
 
 		// We start it hidden rather than not initialzing at all.

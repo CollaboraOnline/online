@@ -848,6 +848,11 @@ body {
 	bottom: -2.8em;
 	left: auto;
 }
+
+.cool-ruler.vruler {
+	border-top: solid 1px var(--color-toolbar-border);
+}
+
 #vertical-ruler .cool-ruler-left[data-title]:after,
 #vertical-ruler .cool-ruler-right[data-title]:after {
 	bottom: 3em;
