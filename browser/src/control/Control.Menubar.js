@@ -296,6 +296,11 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FormatArea'},
 				{uno: '.uno:NameGroup'},
 				{uno: '.uno:ObjectTitleDescription'},
+				{type: 'separator'},
+				{uno: '.uno:ChangeFont'},
+				{uno: '.uno:ChangeFontSize'},
+				{uno: '.uno:ChangeDistance'},
+				{uno: '.uno:ChangeAlignment'}
 			]},
 			{name: _('References'), id: 'references', type: 'menu', menu: [
 				{name: _UNO('.uno:IndexesMenu', 'text'), uno: '.uno:InsertMultiIndex'},
