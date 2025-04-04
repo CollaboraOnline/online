@@ -403,6 +403,7 @@ var unoCommandsArray = {
 	'RecalcPivotTable':{spreadsheet:{menu:_('~Refresh'),},},
 	'Redo':{global:{menu:_('~Redo'),},},
 	'RegressionDialog':{spreadsheet:{menu:_('~Regression...'),},},
+	'ReinstateTrackedChange':{text:{context:_('Reinstate Change'),menu:_('Reinstate'),},},
 	'RejectAllTrackedChanges':{text:{context:_('Reject All Changes'),menu:_('Reject All'),},},
 	'RejectTrackedChange':{text:{context:_('Reject Change'),menu:_('Reject'),},},
 	'RejectTrackedChangeToNext':{text:{context:_('Reject Track Change and select the next one'),menu:_('Reject and Move to Next'),},},

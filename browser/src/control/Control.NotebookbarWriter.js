@@ -2406,11 +2406,34 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'review-accept-tracked-changes',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:AcceptTrackedChanges', 'text'),
-				'command': '.uno:AcceptTrackedChanges',
-				'accessibility': { focusBack: false, combination: 'AA', de: null }
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'review-reinstate-tracked-change',
+								'type': 'toolitem',
+								'text': _UNO('.uno:ReinstateTrackedChange', 'text'),
+								'command': '.uno:ReinstateTrackedChange',
+								'accessibility': { focusBack: true, combination: 'RR' }
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'review-accept-tracked-changes',
+								'type': 'toolitem',
+								'text': _UNO('.uno:AcceptTrackedChanges', 'text'),
+								'command': '.uno:AcceptTrackedChanges',
+								'accessibility': { focusBack: false, combination: 'AA', de: null }
+							}
+						]
+					},
+				],
+				'vertical': 'true'
 			},
 			{
 				'id': 'review-accessibility-check',
