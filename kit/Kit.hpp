@@ -461,6 +461,7 @@ private:
     std::shared_ptr<lok::Document> _loKitDocument;
 #ifdef __ANDROID__
     static std::shared_ptr<lok::Document> _loKitDocumentForAndroidOnly;
+    static std::weak_ptr<DocumentBroker> _documentBrokerForAndroidOnly;
 #endif
     std::unique_ptr<KitQueue> _queue;
 
@@ -501,6 +502,7 @@ private:
     std::map<int, UserInfo> _sessionUserInfo;
 #ifdef __ANDROID__
     friend std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();
+    friend std::shared_ptr<DocumentBroker> getDocumentBrokerForAndroidOnly();
 #endif
 
     const unsigned _mobileAppDocId;
@@ -530,6 +532,7 @@ TileWireId getCurrentWireId(bool increment = false);
 #ifdef __ANDROID__
 /// For the Android app, for now, we need access to the one and only document open to perform eg. saveAs() for printing.
 std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();
+std::shared_ptr<DocumentBroker> getDocumentBrokerForAndroidOnly();
 #endif
 
 extern _LibreOfficeKit* loKitPtr;

@@ -124,6 +124,7 @@
     std::string mediaPath = [self getDocumentBroker]->getEmbeddedMediaPath(tag);
     
     NSMutableDictionary<NSString*, NSString*> * responseHeaders = [[NSMutableDictionary alloc] init];
+    [responseHeaders setObject:@"null" forKey:@"Access-Control-Allow-Origin"]; // Yes, the origin really is 'null' for 'file:' origins
         
     if (mediaPath.empty() || !std::filesystem::exists(mediaPath)) {
         [responseHeaders setObject:@"0" forKey:@"Content-Length"];
