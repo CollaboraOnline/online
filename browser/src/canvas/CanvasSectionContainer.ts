@@ -2111,6 +2111,8 @@ class CanvasSectionContainer {
 			options (possible values are separated by the '|' char):
 				// Developer can set the duration for the animation, in milliseconds. There are also other ways to stop the animation.
 				duration: 2000 | null // 2 seconds | null.
+				// The animation can start after a requestAnimationFrame
+				defer: boolean
 		*/
 
 		if (!this.getAnimatingSectionName()) {
@@ -2122,7 +2124,10 @@ class CanvasSectionContainer {
 			this.elapsedTime = 0;
 			this.frameCount = 0;
 
-			this.animate(performance.now());
+			if (options.defer)
+				requestAnimationFrame(this.animate.bind(this));
+			else
+				this.animate(performance.now());
 			return true;
 		}
 		else {
