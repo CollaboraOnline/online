@@ -75,6 +75,20 @@ class VRuler extends Ruler {
 		}
 	}
 
+	onRemove() {
+		this._map.off('vrulerupdate', this._updateOptions, this);
+		this._map.off('scrolllimits', this._updatePaintTimer, this);
+		this._map.off('moveend', this._fixOffset, this);
+		app.events.off('updatepermission', this._changeInteractions.bind(this));
+		this._map.off(
+			'resettopbottompagespacing',
+			this._resetTopBottomPageSpacing,
+			this,
+		);
+		this._map.off('commandstatechanged', this.onCommandStateChanged, this);
+		this._map.off('rulerchanged', this._onRulerChanged, this);
+	}
+
 	_resetTopBottomPageSpacing(e?: any) {
 		this.options.pageTopMargin = undefined;
 		this.options.pageBottomMargin = undefined;

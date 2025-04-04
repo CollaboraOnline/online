@@ -209,6 +209,8 @@ class NavigatorPanel extends SidebarBase {
 			this.showNavigationPanel();
 			$('#navigator-dock-wrapper').show(200);
 			app.map.uiManager.setDocTypePref('ShowNavigator', true);
+			// this will update the indentation marks for elements like ruler
+			app.map.fire('fixruleroffset');
 			if (app.map.isPresentationOrDrawing()) {
 				this.switchNavigationTab('tab-navigator');
 			}
