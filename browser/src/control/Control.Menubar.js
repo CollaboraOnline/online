@@ -125,6 +125,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:RejectTrackedChange'},
 					{uno: '.uno:RejectTrackedChangeToNext'},
 					{name: _UNO('.uno:RejectAllTrackedChanges', 'text'), id: 'rejectalltrackedchanges', type: 'action'},
+					{uno: '.uno:ReinstateTrackedChange'},
 					{uno: '.uno:PreviousTrackedChange'},
 					{uno: '.uno:NextTrackedChange'}
 				]}

@@ -54,7 +54,7 @@ L.Control.ContextMenu = L.Control.extend({
 					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion', 'PageDialog',
 					  'CompressGraphic', 'GraphicDialog', 'InsertCaptionDialog',
 					  'AnimationEffects', 'ExecuteAnimationEffect',
-					  'NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange', 'InsertAnnotation'],
+					  'NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange', 'ReinstateTrackedChange', 'InsertAnnotation'],
 
 			text: ['TableInsertMenu',
 				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
