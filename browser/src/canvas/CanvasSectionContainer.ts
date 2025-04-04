@@ -207,6 +207,7 @@ class CanvasSectionContainer {
 	private dirtySubset: Set<any> = null; // If not null this is the set of coords that need redrawing.
 	private sectionsDirty: boolean = false;
 	private paintedEver: boolean = false;
+	private framesRendered: number = 0; // Total frame count for debugging
 
 	// For window sections.
 	private windowSectionList: Array<CanvasSectionObject> = [];
@@ -1772,6 +1773,14 @@ class CanvasSectionContainer {
 	}
 
 	private drawSections (frameCount: number = null, elapsedTime: number = null, tileSubset: Set<any> = null) {
+
+//              Un-comment to debug duplicate rendering problems:
+//		const stack = new Error().stack;
+//		console.log("Draw sections:\n", stack);
+
+		if (app.map && app.map._debug)
+			app.map._debug.setOverlayMessage('top-frames', 'Frames: ' + this.framesRendered++);
+
 		this.context.setTransform(1, 0, 0, 1, 0, 0);
 
 		var subsetBounds: cool.Bounds = null;
