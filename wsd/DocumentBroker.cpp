@@ -3575,17 +3575,26 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     // Invalidate the timestamp to force persisting.
     _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
 
+    static const bool forceBackgroundEnv = !!getenv("COOL_FORCE_BGSAVE");
+    constexpr std::size_t MaxFailureCountForBackgroundSaving = 2; // Give only 1 extra chance.
+
+    // Note: It's odd to capture these here, but this function is used from ClientSession too.
+    const bool autosave = isAutosave || (_unitWsd && _unitWsd->isAutosave());
+    const bool backgroundConfigured = (autosave && _backgroundAutoSave) || _backgroundManualSave;
+    const bool canBackground = forceBackgroundEnv || (!finalWrite && backgroundConfigured);
+    const bool background = canBackground && _saveManager.lastSaveSuccessful() &&
+                            _saveManager.saveFailureCount() < MaxFailureCountForBackgroundSaving;
+
     std::ostringstream oss;
     // arguments init
     oss << '{';
 
-    if (dontTerminateEdit)
-    {
-        // We do not want save to terminate editing mode if we are in edit mode now.
-        //TODO: Perhaps we want to terminate if forced by the user,
-        // otherwise autosave doesn't terminate?
-        oss << "\"DontTerminateEdit\" : { \"type\":\"boolean\", \"value\":true }";
-    }
+    // We do not want save to terminate editing mode if we are in edit mode now.
+    // We want to terminate if forced by the user, otherwise autosave doesn't terminate.
+    dontTerminateEdit = dontTerminateEdit && background == false;
+
+    oss << "\"DontTerminateEdit\" : { \"type\":\"boolean\", \"value\":"
+        << (dontTerminateEdit ? "true" : "false") << " }";
 
     if (dontSaveIfUnmodified)
     {
@@ -3601,16 +3610,6 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     // At this point, if we have any potential modifications, we need to capture the fact.
     // If Core does report something different after saving, we'll update this flag.
     _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
-
-    static const bool forceBackgroundEnv = !!getenv("COOL_FORCE_BGSAVE");
-
-    // Note: It's odd to capture these here, but this function is used from ClientSession too.
-    const bool autosave = isAutosave || (_unitWsd && _unitWsd->isAutosave());
-    const bool backgroundConfigured = (autosave && _backgroundAutoSave) || _backgroundManualSave;
-    const bool canBackground = forceBackgroundEnv || (!finalWrite && backgroundConfigured);
-    constexpr std::size_t MaxFailureCountForBackgroundSaving = 2; // Give only 1 extra chance.
-    const bool background = canBackground && _saveManager.lastSaveSuccessful() &&
-                            _saveManager.saveFailureCount() < MaxFailureCountForBackgroundSaving;
 
     if (finalWrite)
         LOG_TRC("suspected final save: don't do background write");
