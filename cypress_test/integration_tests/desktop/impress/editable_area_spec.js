@@ -1,7 +1,6 @@
 /* global describe expect it cy beforeEach require */
 
 var helper = require('../../common/helper');
-var desktopHelper = require('../../common/desktop_helper');
 var impressHelper = require('../../common/impress_helper');
 var ceHelper = require('../../common/contenteditable_helper');
 
@@ -21,7 +20,7 @@ function selectTextShape(i) {
             cy.cGet('body').click(XPos, YPos);
         });
 
-    cy.cGet('[id^="test-div-shape-handle-"]').should('have.length', 6); // 3 of the handles are not visible because of the side bar.
+    cy.cGet('[id^="test-div-shape-handle-"]').should('have.length', 9);
     cy.cGet('#document-container svg g path').should('exist');
     cy.log('Selecting text shape - end.');
 }
@@ -30,31 +29,29 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
 
     beforeEach(function () {
         helper.setupAndLoadDocument('impress/two_text_shapes.odp');
-        desktopHelper.switchUIToCompact();
-        // Zoom 70 will help to make sure frame area is visible
-        desktopHelper.selectZoomLevel('70', false);
-        cy.cGet('#toolbar-up > .ui-scroll-right').click();
-        cy.cGet('#modifypage').click({force: true});
+        cy.cGet('#optionstoolboxdown .unoModifyPage').click();
+        // do not cover shapes with sidebar
+        cy.cGet('#sidebar-panel').should('not.be.visible');
         cy.cGet('div.clipboard').as('clipboard');
     });
 
     it.skip('Editing top text shape', function () {
         // select shape and activate editing
         selectTextShape(1);
-        impressHelper.editTextInShape();
+        impressHelper.dblclickOnSelectedShape();
         // initial position
         ceHelper.checkHTMLContent('');
         ceHelper.checkCaretPosition(0);
         // typing
         ceHelper.type('Hello World');
-        ceHelper.checkHTMLContent('Hello World');
+        ceHelper.checkPlainContent('Hello World');
         ceHelper.checkCaretPosition(11);
         // remove shape selection
         impressHelper.removeShapeSelection();
         ceHelper.checkHTMLContent('');
         // activate editing again
         selectTextShape(1);
-        impressHelper.editTextInShape();
+        impressHelper.dblclickOnSelectedShape();
         ceHelper.checkPlainContent('Hello World');
         ceHelper.moveCaret('end');
         ceHelper.checkCaretPosition(11);
@@ -70,7 +67,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         ceHelper.checkCaretPosition(0);
         // typing
         ceHelper.type('Hello World');
-        ceHelper.checkHTMLContent('Hello World');
+        ceHelper.checkPlainContent('Hello World');
         ceHelper.checkCaretPosition(11);
         // backspace
         ceHelper.moveCaret('left', '', 4);
@@ -88,7 +85,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
     it.skip('Editing bottom text shape', function () {
         // select shape and activate editing
         selectTextShape(2);
-        impressHelper.editTextInShape();
+        impressHelper.dblclickOnSelectedShape();
         // initial position
         ceHelper.checkHTMLContent('');
         ceHelper.checkCaretPosition(0);
@@ -99,7 +96,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         impressHelper.removeShapeSelection();
         // activate editing again
         selectTextShape(2);
-        impressHelper.editTextInShape();
+        impressHelper.dblclickOnSelectedShape();
         ceHelper.checkPlainContent('Hello World');
         ceHelper.moveCaret('end');
         ceHelper.checkCaretPosition(11);
@@ -110,7 +107,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         impressHelper.removeShapeSelection();
         // activate editing again
         selectTextShape(2);
-        impressHelper.editTextInShape();
+        impressHelper.dblclickOnSelectedShape();
         // navigating between paragraphs
         ceHelper.checkPlainContent('Green red');
         ceHelper.moveCaret('up');
@@ -121,7 +118,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
     it.skip('Editing both text shapes', function () {
         // select top shape and activate editing
         selectTextShape(1);
-        impressHelper.editTextInShape();
+        impressHelper.dblclickOnSelectedShape();
         // initial position
         ceHelper.checkHTMLContent('');
         ceHelper.checkCaretPosition(0);
@@ -132,7 +129,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         // select bottom shape and activate editing
         selectTextShape(2);
         ceHelper.checkHTMLContent('');
-        impressHelper.editTextInShape();
+        impressHelper.dblclickOnSelectedShape();
         // typing
         ceHelper.checkHTMLContent('');
         ceHelper.checkCaretPosition(0);
@@ -142,7 +139,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         // select top shape and activate editing
         selectTextShape(1);
         ceHelper.checkHTMLContent('');
-        impressHelper.editTextInShape();
+        impressHelper.dblclickOnSelectedShape();
         ceHelper.checkPlainContent('Hello World');
         ceHelper.moveCaret('end');
         ceHelper.type(' Yellow');
@@ -150,11 +147,10 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         // select bottom shape and activate editing
         selectTextShape(2);
         ceHelper.checkHTMLContent('');
-        impressHelper.editTextInShape();
+        impressHelper.dblclickOnSelectedShape();
         ceHelper.checkPlainContent('Green red');
         // remove shape selection
         impressHelper.removeShapeSelection();
         ceHelper.checkHTMLContent('');
     });
-
 });
