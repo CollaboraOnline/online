@@ -111,11 +111,11 @@ L.CanvasTileLayer.include({
 		return marker;
 	},
 	_addMoveMarker() {
-		let x = parseInt(this._currentTableData.rectangle.x); // * app.twipsToPixels;
-		let y = parseInt(this._currentTableData.rectangle.y); // * app.twipsToPixels;
+		let x = parseInt(this._currentTableData.rectangle.x);
+		let y = parseInt(this._currentTableData.rectangle.y);
 
-		x -= 750 * Math.cos(Math.PI * 0.25);
-		y -= 750 * Math.sin(Math.PI * 0.25);
+		x -= Math.round(20 * app.pixelsToTwips);
+		y -= Math.round(20 * app.pixelsToTwips);
 
 		this._tableAnchorSection = new app.definitions.shapeHandleAnchorSubSection(null, 'table-anchor', [20, 20], new app.definitions.simplePoint(x, y), null);
 		app.sectionContainer.addSection(this._tableAnchorSection);
