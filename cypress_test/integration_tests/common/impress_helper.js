@@ -164,33 +164,15 @@ function selectTextOfShape() {
 	// Double click onto the selected shape
 	// Retry until the cursor appears and the text is selected
 	cy.waitUntil(function() {
-		cy.cGet('#canvas-container > svg').then(function(element) {
-			const x = parseInt(element[0].style.left.replace('px', '')) + parseInt(element[0].style.width.replace('px', '')) / 2;
-			const y = parseInt(element[0].style.top.replace('px', '')) + parseInt(element[0].style.height.replace('px', '')) / 2;
-			cy.cGet('.leaflet-layer').dblclick(x, y, { force: true });
-		});
+		dblclickOnSelectedShape();
 		helper.typeIntoDocument('{ctrl}a');
 		return cy.cGet('.text-selection-handle-start').should('be.visible');
 	});
 
+	cy.cGet('.leaflet-cursor-container')
+		.should('exist');
+
 	cy.log('<< selectTextOfShape - end');
-}
-
-// Double click on the shape to edit the text
-// and wait for the cursor to appear
-function editTextInShape() {
-	cy.log('>> editTextInShape - start');
-
-	cy.waitUntil(function() {
-		cy.cGet('#document-container svg g').dblclick({force: true});
-		return cy.cGet('.cursor-overlay')
-			.then(function(overlay) {
-				return overlay.children('.leaflet-cursor-container').length !== 0;
-			});
-	});
-	cy.cGet('.leaflet-cursor.blinking-cursor').should('exist');
-
-	cy.log('<< editTextInShape - end');
 }
 
 // Step into text editing of the preselected shape. So we assume
@@ -199,13 +181,16 @@ function editTextInShape() {
 function dblclickOnSelectedShape() {
 	cy.log('>> dblclickOnSelectedShape - start');
 
-	cy.cGet('#document-container')
-		.then(function(items) {
-			expect(items).to.have.length(1);
-			var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().width) / 2;
-			var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().height) / 2;
-			cy.cGet('body').dblclick(XPos, YPos);
+	cy.cGet('#canvas-container > svg')
+		.then(function(element) {
+			expect(element).to.have.length(1);
+			const x = parseInt(element[0].style.left.replace('px', '')) + parseInt(element[0].style.width.replace('px', '')) / 2;
+			const y = parseInt(element[0].style.top.replace('px', '')) + parseInt(element[0].style.height.replace('px', '')) / 2;
+			cy.cGet('.leaflet-layer').dblclick(x, y, { force: true });
 		});
+
+	cy.cGet('.leaflet-cursor-container')
+		.should('exist');
 
 	cy.cGet('.leaflet-cursor.blinking-cursor')
 		.should('exist');
@@ -258,7 +243,6 @@ module.exports.selectTextShapeInTheCenter = selectTextShapeInTheCenter;
 module.exports.triggerNewSVGForShapeInTheCenter = triggerNewSVGForShapeInTheCenter;
 module.exports.removeShapeSelection = removeShapeSelection;
 module.exports.selectTextOfShape = selectTextOfShape;
-module.exports.editTextInShape =editTextInShape;
 module.exports.dblclickOnSelectedShape = dblclickOnSelectedShape;
 module.exports.addSlide = addSlide;
 module.exports.changeSlide = changeSlide;
