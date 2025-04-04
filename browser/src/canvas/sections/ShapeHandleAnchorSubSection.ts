@@ -16,6 +16,8 @@
 */
 
 class ShapeHandleAnchorSubSection extends HTMLObjectSection {
+	static tableAnchorIconSize = [20, 20]; // CSS pixels.
+
 	constructor (parentHandlerSection: ShapeHandlesSection, sectionName: string, size: number[], documentPosition: cool.SimplePoint, ownInfo: any) {
         super(sectionName, size[0], size[1], documentPosition, 'anchor-marker');
 
@@ -101,7 +103,7 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 				svg = document.getElementById('canvas-container').querySelector('svg');
 				svg.style.display = '';
 				if (!this.sectionProperties.initialPosition) {
-					this.sectionProperties.initialPosition = [parseFloat(svg.style.left.replace('px', '')), parseFloat(svg.style.top.replace('px', ''))];
+					this.sectionProperties.initialPosition = [parseFloat(svg.style.left.replace('px', '')) * app.dpiScale, parseFloat(svg.style.top.replace('px', '')) * app.dpiScale];
 				}
 				initialPosition = this.sectionProperties.initialPosition;
 			}
