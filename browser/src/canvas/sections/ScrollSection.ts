@@ -111,6 +111,7 @@ export class ScrollSection extends CanvasSectionObject {
 		this.sectionProperties.scrollAnimationDelta = [0, 0];
 		this.sectionProperties.scrollAnimationVelocity = [0, 0];
 		this.sectionProperties.scrollAnimationDisableTimeout = null;
+		this.sectionProperties.scrollWheelDelta = [0, 0];	// Used for non-animated scrolling
 
 		this.sectionProperties.pointerSyncWithVerticalScrollBar = true;
 		this.sectionProperties.pointerSyncWithHorizontalScrollBar = true;
@@ -563,14 +564,26 @@ export class ScrollSection extends CanvasSectionObject {
 				this.scrollHorizontalWithOffset(deltas[0]);
 			if (deltas[1] !== 0)
 				this.scrollVerticalWithOffset(deltas[1]);
-
-			if (this.sectionProperties.scrollAnimationDelta.reduce((a: number, x: number) => a + x, 0) === 0) {
-				// Animated scroll is an endless animation, so if no other animations
-				// are running, make sure to stop animating.
-				this.containerObject.stopAnimating();
-				this.sectionProperties.animatingScroll = false;
+		} else {
+			if (this.sectionProperties.scrollWheelDelta[0] !== 0) {
+				const delta = this.sectionProperties.scrollWheelDelta[0];
+				this.sectionProperties.scrollWheelDelta[0] = 0;
+				this.scrollHorizontalWithOffset(delta);
+			}
+			if (this.sectionProperties.scrollWheelDelta[1] !== 0) {
+				const delta = this.sectionProperties.scrollWheelDelta[1];
+				this.sectionProperties.scrollWheelDelta[1] = 0;
+				this.scrollVerticalWithOffset(delta);
 			}
 		}
+
+		const animatingScrollbar =
+			(this.sectionProperties.animatingHorizontalScrollBar
+			 || this.sectionProperties.animatingVerticalScrollBar) &&
+			elapsedTime && (elapsedTime < this.sectionProperties.fadeOutDuration);
+		const animatingScroll = this.sectionProperties.animatingScroll
+			&& this.sectionProperties.scrollAnimationDelta.reduce((a: number, x: number) => a + x, 0) !== 0;
+		if (!animatingScrollbar && !animatingScroll) this.containerObject.stopAnimating();
 	}
 
 	public onAnimationEnded (frameCount: number, elapsedTime: number): void {
@@ -588,7 +601,8 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 		else {
 			var options: any = {
-				duration: this.sectionProperties.idleDuration
+				duration: this.sectionProperties.idleDuration,
+				defer: true
 			};
 
 			this.sectionProperties.animatingHorizontalScrollBar = this.startAnimating(options);
@@ -602,7 +616,8 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 		else {
 			var options: any = {
-				duration: this.sectionProperties.idleDuration
+				duration: this.sectionProperties.idleDuration,
+				defer: true
 			};
 
 			this.sectionProperties.animatingVerticalScrollBar = this.startAnimating(options);
@@ -760,36 +775,51 @@ export class ScrollSection extends CanvasSectionObject {
 
 		if (app.file.fileBasedView) this.map._docLayer._checkSelectedPart();
 
+		if (!this.sectionProperties.drawVerticalScrollBar) {
+			if (this.isAnimating) {
+				this.resetAnimation();
+				this.sectionProperties.animatingVerticalScrollBar = true;
+			}
+			else
+				this.fadeOutVerticalScrollBar();
+		}
+
 		return true;
 	}
 
-	public scrollHorizontalWithOffset (offset: number): void {
+	public scrollHorizontalWithOffset (offset: number): boolean {
 		this.calculateXMinMax();
 
-		if (this.isRTL()) {
-			offset = -offset;
-		}
+		if (this.isRTL()) offset = -offset;
 
-		var go = true;
 		if (offset > 0) {
 			if (this.documentTopLeft[0] + offset > this.sectionProperties.xMax)
 				offset = this.sectionProperties.xMax - this.documentTopLeft[0];
 			if (offset <= 0)
-				go = false;
+				return false;
 		}
 		else {
 			if (this.documentTopLeft[0] + offset < this.sectionProperties.xMin)
 				offset = this.sectionProperties.xMin - this.documentTopLeft[0];
 			if (offset >= 0)
-				go = false;
+				return false;
 		}
 
-		if (go) {
-			app.sectionContainer.pauseDrawing();
-			this.map.scroll(offset / app.dpiScale, 0, {});
-			this.onUpdateScrollOffset();
-			app.sectionContainer.resumeDrawing();
+		app.sectionContainer.pauseDrawing();
+		this.map.scroll(offset / app.dpiScale, 0, {});
+		this.onUpdateScrollOffset();
+		app.sectionContainer.resumeDrawing();
+
+		if (!this.sectionProperties.drawHorizontalScrollBar) {
+			if (this.isAnimating) {
+				this.resetAnimation();
+				this.sectionProperties.animatingHorizontalScrollBar = true;
+			}
+			else
+				this.fadeOutHorizontalScrollBar();
 		}
+
+		return true;
 	}
 
 	private isMouseInsideDocumentAnchor (point: Array<number>): boolean {
@@ -1088,30 +1118,6 @@ export class ScrollSection extends CanvasSectionObject {
 		this.onMouseMove(point, null, e);
 	}
 
-	private performVerticalScroll (delta: number): void {
-		this.scrollVerticalWithOffset(delta);
-		if (!this.sectionProperties.drawVerticalScrollBar) {
-			if (this.isAnimating) {
-				this.resetAnimation();
-				this.sectionProperties.animatingVerticalScrollBar = true;
-			}
-			else
-				this.fadeOutVerticalScrollBar();
-		}
-	}
-
-	private performHorizontalScroll (delta: number): void {
-		this.scrollHorizontalWithOffset(delta);
-		if (!this.sectionProperties.drawHorizontalScrollBar) {
-			if (this.isAnimating) {
-				this.resetAnimation();
-				this.sectionProperties.animatingHorizontalScrollBar = true;
-			}
-			else
-				this.fadeOutHorizontalScrollBar();
-		}
-	}
-
 	public onClick(point: Array<number>, e: MouseEvent): void {
 		if (this.isAnimating && this.sectionProperties.animatingWheelScrollVertical)
 			this.containerObject.stopAnimating();
@@ -1140,7 +1146,7 @@ export class ScrollSection extends CanvasSectionObject {
 			// We're about to start a duration-less animation, so we need to
 			// make sure the animation is reset first.
 			this.resetAnimation();
-			this.startAnimating({});
+			this.startAnimating({'defer': true});
 			this.sectionProperties.animatingScroll = true;
 		}
 	}
@@ -1172,15 +1178,18 @@ export class ScrollSection extends CanvasSectionObject {
 		if (shouldAnimate)
 			this.animateScroll([hscroll, vscroll]);
 		else {
-			this.containerObject.stopAnimating();
+			this.sectionProperties.animatingScroll = false;
+
 			if (this.sectionProperties.scrollAnimationDisableTimeout)
 				clearTimeout(this.sectionProperties.scrollAnimationDisableTimeout);
 			this.sectionProperties.scrollAnimationDisableTimeout =
 				setTimeout(() => { this.sectionProperties.scrollAnimationDisableTimeout = null; },
 					ScrollSection.scrollDirectTimeoutMs);
 
-			if (hscroll !== 0) this.performHorizontalScroll(hscroll);
-			if (vscroll !== 0) this.performVerticalScroll(vscroll);
+			this.sectionProperties.scrollWheelDelta[0] += hscroll;
+			this.sectionProperties.scrollWheelDelta[1] += vscroll;
+
+			if (!this.isAnimating) this.startAnimating({'defer': true});
 		}
 	}
 }
