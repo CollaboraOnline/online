@@ -64,7 +64,7 @@ class HRuler extends Ruler {
 		this._map.on('rulerupdate', this._updateOptions, this);
 		this._map.on('tabstoplistupdate', this._updateTabStops, this);
 		this._map.on('scrolllimits', this._updatePaintTimer, this);
-		this._map.on('moveend', this._fixOffset, this);
+		this._map.on('moveend fixruleroffset', this._fixOffset, this);
 		this._map.on('updatepermission', this._changeInteractions, this);
 		L.DomUtil.addClass(this._map.getContainer(), 'hasruler');
 
@@ -79,6 +79,14 @@ class HRuler extends Ruler {
 		} else {
 			corner.appendChild(container);
 		}
+	}
+
+	onRemove() {
+		this._map.off('rulerupdate', this._updateOptions, this);
+		this._map.off('tabstoplistupdate', this._updateTabStops, this);
+		this._map.off('scrolllimits', this._updatePaintTimer, this);
+		this._map.off('moveend fixruleroffset', this._fixOffset, this);
+		this._map.off('updatepermission', this._changeInteractions, this);
 	}
 
 	_changeInteractions(e: any) {
@@ -411,14 +419,23 @@ class HRuler extends Ruler {
 		this.options.leftParagraphIndent *= pxPerMm100;
 		this.options.rightParagraphIndent *= pxPerMm100;
 
+		// Get navigatiosidebar width only when navigation sidebar is visible
+		const navigationsidebarWidth = this._map.uiManager.getBooleanDocTypePref(
+			'ShowNavigator',
+		)
+			? this._getNavigationSidebarWidth()
+			: 0;
+
 		// rTSContainer is the reference element.
-		var pStartPosition =
+		const pStartPosition =
 			this._rTSContainer.getBoundingClientRect().left +
-			this.options.leftParagraphIndent;
-		var fLinePosition = pStartPosition + this.options.firstLineIndent;
-		var pEndPosition =
+			this.options.leftParagraphIndent -
+			navigationsidebarWidth;
+		const fLinePosition = pStartPosition + this.options.firstLineIndent;
+		const pEndPosition =
 			this._rTSContainer.getBoundingClientRect().right -
-			this.options.rightParagraphIndent;
+			this.options.rightParagraphIndent -
+			navigationsidebarWidth;
 
 		// We calculated the positions. Now we should move them to left in order to make their sharp edge point to the right direction..
 		this._firstLineMarker.style.left =
@@ -1078,5 +1095,18 @@ class HRuler extends Ruler {
 			this._map.sendUnoCommand('.uno:ChangeTabStop', params);
 			this.currentPositionInTwips = null;
 		}
+	}
+
+	_getNavigationSidebarWidth() {
+		// Consider navigations sidebar width to place marker at correct position
+		const presentationControlsWrapper: HTMLDivElement = document.querySelector(
+			'#navigation-sidebar',
+		);
+		let presentationControlsWrapperWidth: number = 0;
+
+		if (presentationControlsWrapper)
+			presentationControlsWrapperWidth =
+				presentationControlsWrapper.getBoundingClientRect().width;
+		return presentationControlsWrapperWidth;
 	}
 }

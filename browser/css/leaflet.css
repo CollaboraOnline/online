@@ -886,7 +886,7 @@ input.clipboard {
 	height: var(--ruler-height);
 	width: 100vw;
 	margin: 0px !important;
-	position: fixed;
+	position: absolute;
 	overflow-x: clip;
 }
 
