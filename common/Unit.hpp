@@ -550,6 +550,12 @@ public:
         return false;
     }
 
+    /// Called before uri is set as a preinstall settings asset
+    virtual void filterRegisterPresetAsset(std::string& /*uri*/) {}
+
+    /// Called before DNS resolves query
+    virtual void filterResolveDNS(std::string& /*query*/) {}
+
     // ---------------- WSD events ----------------
     virtual void onChildConnected(const int /* pid */, const std::string& /* sessionId */) {}
     /// When admin notify message is sent
@@ -573,6 +579,10 @@ public:
     virtual void onDocBrokerRemoveSession(const std::string&, const std::shared_ptr<ClientSession>&)
     {
     }
+    /// Called when document presets install is launched
+    virtual void onDocBrokerPresetsInstallStart() {}
+    /// Called when document presets install is finished
+    virtual void onDocBrokerPresetsInstallEnd(bool /*success*/) {}
 
 protected:
     /// Called when a DocumentBroker is destroyed (from the destructor).
