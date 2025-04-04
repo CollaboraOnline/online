@@ -2278,7 +2278,8 @@ bool ChildSession::unoCommand(const StringVector& tokens)
                           tokens.equals(1, ".uno:OpenHyperlink") ||
                           tokens.startsWith(1, "vnd.sun.star.script:"));
 
-    LOG_TRC("uno command " << tokens[1] << " " << tokens.cat(' ', 2) << " notify: " << bNotify);
+    const std::string saveArgs = tokens.cat(' ', 2);
+    LOG_TRC("uno command " << tokens[1] << " " << saveArgs << " notify: " << bNotify);
 
     // check that internal UNO commands don't make it to the core
     assert (!tokens.equals(1, ".uno:AutoSave"));
@@ -2288,22 +2289,13 @@ bool ChildSession::unoCommand(const StringVector& tokens)
     if (tokens.equals(1, ".uno:Copy") || tokens.equals(1, ".uno:CopyHyperlinkLocation"))
         _copyToClipboard = true;
 
-    if (tokens.size() == 2)
+    if (tokens.size() == 2 && tokens.equals(1, ".uno:fakeDiskFull"))
     {
-        if (tokens.equals(1, ".uno:fakeDiskFull"))
-        {
-            _docManager->alertAllUsers("internal", "diskfull");
-        }
-        else
-        {
-            getLOKitDocument()->postUnoCommand(tokens[1].c_str(), nullptr, bNotify);
-        }
-    }
-    else
-    {
-        getLOKitDocument()->postUnoCommand(tokens[1].c_str(), tokens.cat(' ', 2).c_str(), bNotify);
+        _docManager->alertAllUsers("internal", "diskfull");
+        return true;
     }
 
+    getLOKitDocument()->postUnoCommand(tokens[1].c_str(), saveArgs.c_str(), bNotify);
     return true;
 }
 
