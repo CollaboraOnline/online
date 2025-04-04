@@ -26,6 +26,46 @@ function selectTextShape(i) {
     cy.log('Selecting text shape - end.');
 }
 
+describe(['taga11yenabled'], 'Check auto-save of editable area', function() {
+
+    it('Check if we auto save textbox content', function () {
+        const newFilePath = helper.setupAndLoadDocument('impress/two_text_shapes.odp');
+        cy.cGet('#optionstoolboxdown .unoModifyPage').click();
+        // do not cover shapes with sidebar
+        cy.cGet('#sidebar-panel').should('not.be.visible');
+        cy.cGet('div.clipboard').as('clipboard');
+
+        // select top shape and activate editing
+        selectTextShape(1);
+        impressHelper.dblclickOnSelectedShape();
+        // initial position
+        ceHelper.checkHTMLContent('');
+        ceHelper.checkCaretPosition(0);
+
+        // typing without Enter at the end or any textbox confirmation
+        ceHelper.type('autosaved');
+        cy.cGet('.savemodified').should('exist');
+
+        // reload
+        cy.cGet('.notebookbar-shortcuts-bar .unoSave').click();
+        cy.wait(1000);
+        helper.closeDocument(newFilePath);
+        cy.wait(1000);
+        helper.setupAndLoadDocument(newFilePath);
+
+        cy.cGet('#optionstoolboxdown .unoModifyPage').click();
+        cy.cGet('#sidebar-panel').should('not.be.visible');
+        cy.cGet('div.clipboard').as('clipboard');
+
+        // select top shape and activate editing
+        selectTextShape(1);
+        impressHelper.dblclickOnSelectedShape();
+
+        //verify text
+        ceHelper.checkPlainContent('autosaved');
+    })
+});
+
 describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving - Shape 1', function() {
 
     beforeEach(function () {
@@ -45,7 +85,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving - Sh
         ceHelper.type('Hello World');
         ceHelper.checkPlainContent('Hello World');
         ceHelper.checkCaretPosition(11);
-   });
+    });
 
     it.skip('Editing top text shape', function () {
         // remove shape selection
@@ -90,7 +130,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving - Sh
         // initial position
         ceHelper.checkHTMLContent('');
         ceHelper.checkCaretPosition(0);
-   });
+    });
 
     it.skip('Editing bottom text shape', function () {
         // typing
