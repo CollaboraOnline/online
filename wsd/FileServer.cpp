@@ -608,6 +608,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         Poco::JSON::Array::Ptr configDictionaries = new Poco::JSON::Array();
         Poco::JSON::Array::Ptr configXcu = new Poco::JSON::Array();
         Poco::JSON::Array::Ptr configTemplate = new Poco::JSON::Array();
+
+        UnitWSD* const unitWsd = UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr;
         for (const auto& item : items)
         {
             Poco::JSON::Object::Ptr configEntry = new Poco::JSON::Object();
@@ -616,6 +618,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             Util::trim(uri);
             if (!unittest.empty())
                 uri += "?testname=" + unittest;
+            if (unitWsd)
+                unitWsd->filterRegisterPresetAsset(uri);
             configEntry->set("uri", uri);
             configEntry->set("stamp", etagString);
             if (item.first == "autotext")

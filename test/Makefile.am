@@ -99,6 +99,7 @@ all_la_unit_tests = \
 	unit-timeout_none.la \
 	unit-serversock_accept1.la \
 	unit-streamsock_ctor1.la \
+	unit-user-presets.la \
 	unit-base.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
@@ -342,6 +343,8 @@ unit_quarantine_la_SOURCES = UnitQuarantine.cpp
 unit_quarantine_la_LIBADD = $(CPPUNIT_LIBS)
 unit_multi_tenant_la_SOURCES = UnitMultiTenant.cpp
 unit_multi_tenant_la_LIBADD = $(CPPUNIT_LIBS)
+unit_user_presets_la_SOURCES = UnitUserPresets.cpp
+unit_user_presets_la_LIBADD = $(CPPUNIT_LIBS)
 unit_perf_la_SOURCES = UnitPerf.cpp
 unit_perf_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 unit_proxy_la_SOURCES = UnitProxy.cpp
