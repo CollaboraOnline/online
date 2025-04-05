@@ -1748,13 +1748,27 @@ private:
     {
         _socket.reset(); // Reset to make sure we are disconnected.
 
-        auto pushConnectCompleteToPoll = [this, poll](std::shared_ptr<StreamSocket> socket, net::AsyncConnectResult result ) {
+        auto pushConnectCompleteToPoll =
+            [this, poll, pollThreadId = std::thread::id()](std::shared_ptr<StreamSocket> socket,
+                                                           net::AsyncConnectResult result)
+        {
             std::shared_ptr<SocketPoll> socketPoll(poll.lock());
             if (!socketPoll)
             {
                 LOG_WRN("asyncConnect completed after poll was destroyed");
                 return;
             }
+            /* socket was created by asyncDNS thread, so that is set as the
+               current thread owner.
+
+               It is not guaranteed that asyncConnectCompleted will be called.
+               The SocketPoll can be destroyed before dispatching the callback.
+               So associate it with the SocketPolls thread now so if
+               asyncConnectCompleted is never dispatched, and the socket is
+               destroyed while still in the callback queue then its thread
+               owner is that of the SocketPoll.
+            */
+            socket->setThreadOwner(pollThreadId);
             socketPoll->addCallback([selfLifecycle = shared_from_this(), this, pollPtr=socketPoll.get(), socket=std::move(socket), result]() {
                 asyncConnectCompleted(*pollPtr, socket, result);
             });
