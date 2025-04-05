@@ -2361,6 +2361,7 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
 {
     const ServerURL cnxDetails(requestDetails);
     const std::string responseRoot = cnxDetails.getResponseRoot();
+    const auto& config = Application::instance().config();
 
     static const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/%s.js\"></script>");
     static const std::string footerPage("<footer class=\"footer has-text-centered\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</footer>");
@@ -2387,22 +2388,37 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     Poco::replaceInPlace(adminFile, std::string("%ENABLE_DEBUG%"),
                          std::string(enableDebug ? "true" : "false"));
 
-    std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
-    std::string brandFooter;
+    const std::string& theme = urv[BRANDING_THEME];
+
+    static const bool useIntegrationTheme =
+        config.getBool("user_interface.use_integration_theme", true);
+    const bool hasIntegrationTheme =
+        !theme.empty() &&
+        FileUtil::Stat(COOLWSD::FileServerRoot + "/browser/dist/" + theme).exists();
+    const std::string themePreFix =
+        (hasIntegrationTheme && useIntegrationTheme) ? (theme + "/") : "";
+
+    const std::string linkCSS = "<link rel=\"stylesheet\" href=\"" + responseRoot + "/browser/" +
+                                COOLWSD_VERSION_HASH + "/" + themePreFix + "%s.css\">";
+    const std::string themeScriptJS = "<script src=\"" + responseRoot + "/browser/" +
+                                      COOLWSD_VERSION_HASH + "/" + themePreFix +
+                                      "%s.js\"></script>";
+
+    std::string brandCSS = Poco::format(linkCSS, std::string(BRANDING));
+    std::string brandJS = Poco::format(themeScriptJS, std::string(BRANDING));
 
     if constexpr (ConfigUtil::isSupportKeyEnabled())
     {
-        const auto& config = Application::instance().config();
         const std::string keyString = config.getString("support_key", "");
         SupportKey key(keyString);
-
         if (!key.verify() || key.validDaysRemaining() <= 0)
         {
-            brandJS = Poco::format(scriptJS, std::string(SUPPORT_KEY_BRANDING_UNSUPPORTED));
-            brandFooter = Poco::format(footerPage, key.data(), Poco::DateTimeFormatter::format(key.expiry(), Poco::DateTimeFormat::RFC822_FORMAT));
+            brandCSS = Poco::format(linkCSS, std::string(SUPPORT_KEY_BRANDING_UNSUPPORTED));
+            brandJS = Poco::format(themeScriptJS, std::string(SUPPORT_KEY_BRANDING_UNSUPPORTED));
         }
     }
 
+    Poco::replaceInPlace(adminFile, std::string("<!--%BRANDING_CSS%-->"), brandCSS);
     Poco::replaceInPlace(adminFile, std::string("<!--%BRANDING_JS%-->"), brandJS);
     Poco::replaceInPlace(adminFile, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
     Poco::replaceInPlace(adminFile, std::string("%SERVICE_ROOT%"), responseRoot);
@@ -2420,18 +2436,14 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     csp.appendDirectiveUrl("connect-src", cnxDetails.getWebServerUrl());
     csp.appendDirective("img-src", "'self'");
     csp.appendDirective("img-src", "data:"); // Equivalent to unsafe-inline!
-
     csp.appendDirective("worker-src", "'self' blob:");
 
-    const auto& config = Application::instance().config();
     csp.merge(config.getString("net.content_security_policy", ""));
 
     response.add("Content-Security-Policy", csp.generate());
-
     response.set("Last-Modified", Util::getHttpTimeNow());
     response.set("Cache-Control", "max-age=11059200");
     response.set("ETag", COOLWSD_VERSION_HASH);
-
     response.add("X-Content-Type-Options", "nosniff");
     response.add("X-XSS-Protection", "1; mode=block");
     response.add("Referrer-Policy", "no-referrer");
@@ -2440,7 +2452,6 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     socket->send(response);
     LOG_TRC("Sent file: " << relPath << ": " << response.getBody());
 }
-
 
 void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
                                                    http::Response& response,
