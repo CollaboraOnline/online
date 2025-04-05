@@ -491,12 +491,16 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
     std::shared_ptr<std::unique_ptr<WopiStorage::WOPIFileInfo>> wopiFileInfo =
         std::make_shared<std::unique_ptr<WopiStorage::WOPIFileInfo>>(std::move(realWopiFileInfo));
 
+    // _socket is now the DocumentBroker poll's responsibility forget about it here
+    std::shared_ptr<StreamSocket> socket = _socket;
+    _socket.reset();
+
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
     std::shared_ptr<WebSocketHandler> ws = _ws;
     docBroker->setupTransfer(
-        _socket,
-        [clientSession=std::move(clientSession), wopiFileInfo=std::move(wopiFileInfo),
-         ws=std::move(ws), docBroker](const std::shared_ptr<Socket>& moveSocket)
+        socket,
+        [clientSession = std::move(clientSession), wopiFileInfo = std::move(wopiFileInfo),
+         ws = std::move(ws), docBroker](const std::shared_ptr<Socket>& moveSocket)
         {
             try
             {
@@ -553,8 +557,6 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
                                        WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
         });
-        // _socket is now the DocumentBroker poll's responsibility forget about it here
-        _socket.reset();
 }
 
 void RequestVettingStation::sendErrorAndShutdown(const std::string& msg,
