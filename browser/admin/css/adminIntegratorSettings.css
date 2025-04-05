@@ -1,45 +1,28 @@
 :root {
+	--settings-btn-primary: var(--color-primary);
+	--settings-btn-primary-text: var(--color-primary-text);
+	--settings-btn-light-text: #0e242f;
+	--settings-btn-light: var(--color-primary-lighter);
+	--settings-border: var(--color-border);
+	--settings-border-contrast: var(--color-border-darker);
+	--settings-text: var(--color-primary-text);
+	--settings-text-maxcontrast: var(--color-border-lighter);
+	--settings-background: var(--color-main-background);
+	--settings-background-hover: var(--color-background-dark);
+
   --default-font-size: 15px;
   --animation-quick: 100ms;
   --border-radius-element: 8px;
   --default-clickable-area: 34px;
   --default-grid-baseline: 4px;
-  --color-text-lighter: var(--color-text-maxcontrast);
-  --color-scrollbar: var(--color-border-maxcontrast) transparent;
-}
-
-[data-theme='light'] {
-  --color-text-maxcontrast: #6b6b6b;
-  --color-background-hover: #f5f5f5;
-  --color-main-text: #222222;
-  --color-main-background: #ffffff;
-  --color-border: #ededed;
-  --color-border-dark: #dbdbdb;
-  --color-primary-hover: #3285b1;
-  --color-primary-element-text: #ffffff;
-  --color-primary-element: #00679e;
-  --color-primary-element-light: #e5eff5;
-  --color-primary-element-light-text: #00293f;
-}
-
-[data-theme='dark'] {
-  --color-text-maxcontrast: #999999;
-  --color-background-hover: #212121;
-  --color-main-text: #ebebeb;
-  --color-main-background: #171717;
-  --color-border: #292929;
-  --color-border-dark: #3b3b3b;
-  --color-primary-hover: #045783;
-  --color-primary-element-text: #000000;
-  --color-primary-element: #0091f2;
-  --color-primary-element-light: #14232c;
-  --color-primary-element-light-text: #99d3f9;
+  --color-text-lighter: var(--settings-text-maxcontrast);
+  --color-scrollbar: var(--settings-border-contrast) transparent;
 }
 
 html,
 body {
-  color: var(--color-main-text);
-  background-color: var(--color-main-background);
+  color: var(--settings-text);
+  background-color: var(--settings-background);
   padding-left: 0px;
   margin-left: 0px;
   display: block;
@@ -79,7 +62,7 @@ ul {
 }
 
 .section:not(:last-child) {
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--settings-border);
 }
 
 .section h3 {
@@ -111,8 +94,8 @@ ul {
   transition-property: color, border-color, background-color;
   transition-duration: 0.1s;
   transition-timing-function: linear;
-  color: var(--color-primary-element-light-text);
-  background-color: var(--color-primary-element-light);
+  color: var(--settings-btn-light-text);
+  background-color: var(--settings-btn-light);
 }
 
 .button:disabled {
@@ -131,13 +114,13 @@ ul {
 }
 
 .button-primary {
-  color: var(--color-primary-element-text);
-  background-color: var(--color-primary-element);
+  color: var(--settings-btn-primary-text);
+  background-color: var(--settings-btn-primary);
 }
 
 .button--vue-secondary {
-  color: var(--color-primary-element-light-text);
-  background-color: var(--color-primary-element-light);
+  color: var(--settings-btn-light-text);
+  background-color: var(--settings-btn-light);
 }
 
 .button__wrapper {
@@ -174,8 +157,8 @@ ul {
 }
 
 .button--vue-secondary {
-  color: var(--color-primary-element-light-text);
-  background-color: var(--color-primary-element-light);
+  color: var(--settings-btn-light-text);
+  background-color: var(--settings-btn-light);
 }
 
 .button--text-only {
@@ -183,8 +166,8 @@ ul {
 }
 
 .button--vue-tertiary {
-  color: var(--color-main-text);
-  background-color: var(--color-main-background);
+  color: var(--settings-text);
+  background-color: var(--settings-background);
 }
 
 .button--icon-only {
@@ -207,7 +190,7 @@ ul {
   cursor: pointer;
   transition: background-color var(--animation-quick) ease-in-out;
   list-style: none;
-  border: 0.5px solid var(--color-border);
+  border: 0.5px solid var(--settings-border);
   padding-right: 8px;
 }
 
@@ -290,7 +273,7 @@ ul {
 }
 
 .modal-content {
-  background-color: var(--color-main-background);
+  background-color: var(--settings-background);
   padding: 20px;
   width: 400px;
   max-width: 90%;
@@ -314,10 +297,10 @@ ul {
   flex: 1;
   padding: 8px;
   font-size: 15px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--settings-border);
   border-radius: 4px;
-  color: var(--color-main-text);
-  background-color: var(--color-main-background);
+  color: var(--settings-text);
+  background-color: var(--settings-background);
 }
 
 .wordbook-add-button {
@@ -364,14 +347,13 @@ ul {
   transition: background-color 0.2s ease;
 }
 
-
 .dic-dropdown-container {
   position: relative;
   margin-bottom: 16px;
   cursor: pointer;
-  border: 1px solid var(--color-border-dark);
+  border: 1px solid var(--settings-border-contrast);
   border-radius: 4px;
-  background-color: var(--color-main-background);
+  background-color: var(--settings-background);
   padding: 8px;
 }
 
@@ -387,7 +369,7 @@ ul {
 }
 
 .dic-dropdown-container .open {
-  border: 1px solid var(--color-border-dark);
+  border: 1px solid var(--settings-border-contrast);
 }
 
 .dic-dropdown-container.open::after {
@@ -399,8 +381,8 @@ ul {
   top: 100%;
   left: 0;
   right: 0;
-  background-color: var(--color-main-background);
-  border: 1px solid var(--color-border);
+  background-color: var(--settings-background);
+  border: 1px solid var(--settings-border);
   border-radius: 4px;
   z-index: 100;
   max-height: 200px;
@@ -409,11 +391,11 @@ ul {
 
 .dic-dropdown-option {
   padding: 8px;
-  border: 1px solid var(--color-border-dark);
+  border: 1px solid var(--settings-border-contrast);
 }
 
 .dic-dropdown-option:hover {
-  background-color: var(--color-background-hover);
+  background-color: var(--settings-background-hover);
 }
 
 .dic-dropdown-description {
@@ -430,8 +412,8 @@ ul {
 .dic-select-container select {
   padding: 8px;
   font-size: var(--default-font-size);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--settings-border);
   border-radius: 4px;
-  background-color: var(--color-main-background);
-  color: var(--color-main-text);
+  background-color: var(--settings-background);
+  color: var(--settings-text);
 }
