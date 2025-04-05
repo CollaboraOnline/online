@@ -154,6 +154,11 @@ private:
                              const RequestDetails& requestDetails,
                              const std::shared_ptr<StreamSocket>& socket);
 
+    static void updateThemeResources(std::string& fileContent,
+                                    const std::string& responseRoot,
+                                    const std::string& theme,
+                                    const Poco::Util::AbstractConfiguration& config);
+
     void preprocessIntegratorAdminFile(const Poco::Net::HTTPRequest& request,
                                        http::Response& httpResponse,
                                        const RequestDetails& requestDetails,
