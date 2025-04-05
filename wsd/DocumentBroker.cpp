@@ -1649,6 +1649,9 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
             LOG_ERR("Failed to load all settings from [" << uriAnonym << ']');
             stop("configfailed");
         }
+
+        if (_unitWsd)
+            _unitWsd->onDocBrokerPresetsInstallEnd(success);
     };
     _asyncInstallTask = asyncInstallPresets(_poll, configId, userSettingsUri,
                                             presetsPath, session, installFinishedCB);
@@ -1664,6 +1667,8 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
 
         _asyncInstallTask.reset();
     });
+    if (_unitWsd)
+        _unitWsd->onDocBrokerPresetsInstallStart();
 }
 
 std::shared_ptr<const http::Response>

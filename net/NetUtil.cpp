@@ -14,6 +14,7 @@
 #include "NetUtil.hpp"
 #include "AsyncDNS.hpp"
 #include <common/Util.hpp>
+#include <common/Unit.hpp>
 
 #include "Socket.hpp"
 #if ENABLE_SSL && !MOBILEAPP
@@ -362,7 +363,8 @@ void AsyncDNS::dumpQueueState(std::ostream& os) const
 }
 
 AsyncDNS::AsyncDNS()
-    : _resolver(std::make_unique<DNSResolver>())
+    : _unitWsd(UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr)
+    , _resolver(std::make_unique<DNSResolver>())
 {
     startThread();
 }
@@ -386,6 +388,9 @@ void AsyncDNS::resolveDNS()
 
         _activeLookup = _lookups.front();
         _lookups.pop();
+
+        if (_unitWsd)
+            _unitWsd->filterResolveDNS(_activeLookup.query);
 
         // Unlock to allow entries to queue up in _lookups while resolving
         _lock.unlock();
