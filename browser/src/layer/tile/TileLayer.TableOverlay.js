@@ -12,7 +12,7 @@
  * Table Overlay
  */
 
-/* global app */
+/* global app ShapeHandleAnchorSubSection */
 
 L.CanvasTileLayer.include({
 	_initializeTableOverlay: function () {
@@ -111,13 +111,15 @@ L.CanvasTileLayer.include({
 		return marker;
 	},
 	_addMoveMarker() {
-		let x = parseInt(this._currentTableData.rectangle.x); // * app.twipsToPixels;
-		let y = parseInt(this._currentTableData.rectangle.y); // * app.twipsToPixels;
+		let x = parseInt(this._currentTableData.rectangle.x);
+		let y = parseInt(this._currentTableData.rectangle.y);
 
-		x -= 750 * Math.cos(Math.PI * 0.25);
-		y -= 750 * Math.sin(Math.PI * 0.25);
+		const anchorSize = ShapeHandleAnchorSubSection.tableAnchorIconSize;
 
-		this._tableAnchorSection = new app.definitions.shapeHandleAnchorSubSection(null, 'table-anchor', [20, 20], new app.definitions.simplePoint(x, y), null);
+		x -= Math.round(anchorSize[0] * app.pixelsToTwips);
+		y -= Math.round(anchorSize[1] * app.pixelsToTwips);
+
+		this._tableAnchorSection = new app.definitions.shapeHandleAnchorSubSection(null, 'table-anchor', anchorSize, new app.definitions.simplePoint(x, y), null);
 		app.sectionContainer.addSection(this._tableAnchorSection);
 	},
 	_removeMoveMarker() {
