@@ -431,6 +431,7 @@ class TileManager {
 				this.pendingDeltas.map((x: any) => x.rawDelta.buffer),
 			);
 		} else {
+			console.log("Sync decompress delta");
 			// Synchronous path
 			const bitmaps: Promise<ImageBitmap>[] = [];
 			const pendingDeltas: any[] = [];
@@ -1937,7 +1938,7 @@ class TileManager {
 		var zoom = Math.round(app.map.getZoom());
 		var pixelBounds = app.map.getPixelBoundsCore(app.map.getCenter(), zoom);
 
-		var queue = this.getMissingTiles(pixelBounds, zoom);
+		var queue = this.getMissingTiles(pixelBounds, zoom, true);
 
 		return queue.length;
 	}

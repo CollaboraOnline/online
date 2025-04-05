@@ -275,12 +275,13 @@ export class TilesSection extends CanvasSectionObject {
 	public haveAllTilesInView(zoom?: number, part?: number, mode?: number, ctx?: any): boolean {
 		zoom = zoom || Math.round(this.map.getZoom());
 		part = part || this.sectionProperties.docLayer._selectedPart;
+		mode = mode || this.sectionProperties.docLayer._selectedMode;
 		ctx = ctx || this.sectionProperties.tsManager._paintContext();
 
 		var allTilesFetched = true;
 		this.forEachTileInView(zoom, part, mode, ctx, function (tile: any): boolean {
 			// Ensure all tile are available.
-			if (!tile || tile.needsFetch()) {
+			if (!tile || tile.needsFetch() || tile.needsRehydration()) {
 				allTilesFetched = false;
 				return false; // stop search.
 			}
@@ -288,6 +289,13 @@ export class TilesSection extends CanvasSectionObject {
 		});
 
 		return allTilesFetched;
+	}
+
+    public isReadyToRender(): boolean
+	{
+		const ready = this.haveAllTilesInView();
+		console.log('Render: tile section has all tiles in view? ' + ready);
+		return ready;
 	}
 
 	private drawPageBackgroundWriter (ctx: any) {

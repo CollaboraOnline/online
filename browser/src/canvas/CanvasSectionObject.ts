@@ -91,6 +91,7 @@ class CanvasSectionObject {
 	getTestDiv(): HTMLDivElement { return; }
 	setPosition(x: number, y: number): void { return; } // Document objects only.
 	isCalcRTL(): boolean { return; }
+	isReadyToRender(): boolean { return true; }
 
 	public getLineWidth(): number {
 		if (app.dpiScale > 1.0) {

@@ -219,6 +219,11 @@ class CanvasSectionContainer {
 	private duration: number = null; // Duration for the animation.
 	private elapsedTime: number = null; // Time that passed since the animation started.
 
+	// Deferred / idle rendering pieces
+	private idleRenderTimer: ReturnType<typeof setTimeout>;
+	private idleRenderStartTime: number = 0;
+	private hasAnimationFrameQueued: boolean = false;
+
 	constructor (canvasDOMElement: HTMLCanvasElement, disableDrawing?: boolean) {
 		this.canvas = canvasDOMElement;
 		this.context = canvasDOMElement.getContext('2d', { alpha: false });
@@ -395,11 +400,15 @@ class CanvasSectionContainer {
 
 		var scrollSection = <any> this.getSectionWithName(L.CSections.Scroll.name);
 		if (scrollSection)
+		{
+			// Scrolling has a habit of requesting redraws -> fall-back win here ...
+//			this.drawingEnabled = false;
 			scrollSection.completePendingScroll(); // No painting, only dirtying.
+//			this.drawingEnabled = true;
+		}
 
 		if (this.dirty) {
 			this.requestReDraw(this.dirtySubset);
-			this.clearDirty();
 		}
 	}
 
@@ -651,6 +660,36 @@ class CanvasSectionContainer {
 		}
 	}
 
+	private isReadyToRender() {
+		for (var i: number = 0; i < this.sections.length; i++) {
+			if (!this.sections[i].isReadyToRender())
+				return false;
+		}
+		return true;
+	}
+
+	// Aggregate multiple requestReDraw requests together
+	// we tend to get lots at once.
+	private idleRender() {
+		this.idleRenderTimer = undefined;
+
+		if (this.isReadyToRender())
+		{
+			console.log("Render: ready - go!");
+			if (!this.hasAnimationFrameQueued)
+				requestAnimationFrame(this.animate.bind(this));
+			this.hasAnimationFrameQueued = true;
+		}
+		else
+		{
+			console.log("Render: wait for more tiles");
+			// if we are de-hydrating we can safely wait and be woken on de-hydration (?)
+			// FIXME: how long should we wait anyway ?
+			// if we are waiting and we get the tiles de-hydrated
+			// we should then render in the next animationframe so ...
+		}
+	}
+
 	requestReDraw(tileSubset: Set<any> = null) {
 		if (!this.drawingAllowed()) {
 			// Someone requested a redraw, but we're paused => schedule a redraw.
@@ -659,7 +698,15 @@ class CanvasSectionContainer {
 		}
 
 		if (!this.getAnimatingSectionName())
-			this.drawSections(null, null, tileSubset);
+		{
+			// Grim hack ...
+			// FIXME: pass the tileSubset through to animation frame more sensibly
+			if (!this.idleRenderTimer)
+			{
+				this.idleRenderTimer = setTimeout(this.idleRender.bind(this), 0);
+				this.idleRenderStartTime = performance.now();
+			}
+		}
 	}
 
 	private propagateCursorPositionChanged() {
@@ -1777,7 +1824,7 @@ class CanvasSectionContainer {
 //		const stack = new Error().stack;
 //		console.log("Draw sections:\n", stack);
 
-		if (app.map._debug)
+		if (app.map && app.map._debug)
 			app.map._debug.setOverlayMessage('top-frames', 'Frames: ' + this.framesRendered++);
 
 		this.context.setTransform(1, 0, 0, 1, 0, 0);
@@ -2057,6 +2104,8 @@ class CanvasSectionContainer {
 	}
 
 	private animate (timeStamp: number) {
+		this.hasAnimationFrameQueued = false;
+
 		if (this.lastFrameStamp > 0)
 			this.elapsedTime += timeStamp - this.lastFrameStamp;
 
@@ -2068,6 +2117,7 @@ class CanvasSectionContainer {
 
 		if (this.continueAnimating) {
 			this.drawSections(this.frameCount, this.elapsedTime);
+			this.clearDirty();
 			this.frameCount++;
 			requestAnimationFrame(this.animate.bind(this));
 		}
@@ -2082,6 +2132,7 @@ class CanvasSectionContainer {
 			this.frameCount = this.elapsedTime = null;
 
 			this.drawSections();
+			this.clearDirty();
 		}
 	}
 
