@@ -4558,7 +4558,8 @@ void DocumentBroker::handleMediaRequest(const std::string_view range,
             // up in the host (AppImage) /tmp
             const std::string path = COOLWSD::NoCapsForKit ? "/" + localPath :
                 FileUtil::buildLocalPathToJail(
-                    COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + _jailId, localPath);
+                    COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + _jailId,
+                    std::move(localPath));
 #else
             const std::string path = getJailRoot() + "/" + localPath;
 #endif
