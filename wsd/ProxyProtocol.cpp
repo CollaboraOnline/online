@@ -111,7 +111,7 @@ bool ProxyProtocolHandler::parseEmitIncoming(
     Buffer& in = socket->getInBuffer();
 
 #if 0 // protocol debugging.
-    std::stringstream oss;
+    std::ostringstream oss(Util::makeDumpStateStream());
     socket->dumpState(oss);
     LOG_TRC("Parse message:\n" << oss.str());
 #endif
@@ -182,7 +182,7 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
             LOG_WRN("proxy: unusual - incoming message with no-one to handle it");
         else if (!parseEmitIncoming(streamSocket))
         {
-            std::stringstream oss;
+            std::ostringstream oss(Util::makeDumpStateStream());
             streamSocket->dumpState(oss);
             LOG_ERR("proxy: bad socket structure " << oss.str());
         }
@@ -227,7 +227,7 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
 
 void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
 {
-    std::stringstream oss;
+    std::ostringstream oss(Util::makeDumpStateStream());
     disposition.getSocket()->dumpState(oss);
     LOG_ERR("If you got here, it means we failed to parse this properly in handleRequest: " << oss.str());
 }

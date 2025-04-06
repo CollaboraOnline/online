@@ -105,7 +105,7 @@ public:
             std::istringstream responseStream(body);
             auto clipboard = std::make_shared<ClipboardData>();
             clipboard->read(responseStream);
-            std::ostringstream oss;
+            std::ostringstream oss(Util::makeDumpStateStream());
             clipboard->dumpState(oss);
 
             LOG_TST("getClipboard: got response. State:\n" << oss.str());

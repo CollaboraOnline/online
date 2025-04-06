@@ -432,7 +432,7 @@ void KitQueueTests::testSenderQueueLog()
         queue.enqueue(std::make_shared<Message>(msg, Message::Dir::Out));
     }
 
-    std::stringstream str;
+    std::ostringstream str(Util::makeDumpStateStream());
     queue.dumpState(str);
 
     std::string result = "\t\tqueue items: 9\n"

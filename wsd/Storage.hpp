@@ -174,10 +174,10 @@ public:
         void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
             os << indent << "StorageBase::Attributes:";
-            os << indent << "forced: " << std::boolalpha << isForced();
-            os << indent << "user-modified: " << std::boolalpha << isUserModified();
-            os << indent << "auto-save: " << std::boolalpha << isAutosave();
-            os << indent << "exit-save: " << std::boolalpha << isExitSave();
+            os << indent << "forced: " << isForced();
+            os << indent << "user-modified: " << isUserModified();
+            os << indent << "auto-save: " << isAutosave();
+            os << indent << "exit-save: " << isExitSave();
             os << indent << "extended-data: " << getExtendedData();
         }
 
@@ -471,7 +471,7 @@ public:
 
         os << indent << "StorageBase:";
         os << indent << "uri: " << _uri.toString();
-        os << indent << "isDownloaded: " << std::boolalpha << _isDownloaded;
+        os << indent << "isDownloaded: " << _isDownloaded;
         os << indent << "localStorePath: " << _localStorePath;
         os << indent << "jailPath: " << _jailPath;
         os << indent << "jailedFilePath: " << _jailedFilePath;

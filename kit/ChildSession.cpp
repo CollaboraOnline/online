@@ -1626,7 +1626,6 @@ bool ChildSession::setClipboard(const char* buffer, int length, const StringVect
         {
             data.read(stream);
         }
-//        data.dumpState(std::cerr);
 
         const size_t inCount = html.empty() ? data.size() : 1;
         std::vector<size_t> inSizes(inCount);

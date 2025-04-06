@@ -714,7 +714,7 @@ void DocumentBroker::pollThread()
 
     if (!reason.empty() || (_unitWsd && _unitWsd->isFinished() && _unitWsd->failed()))
     {
-        std::stringstream state;
+        std::ostringstream state(Util::makeDumpStateStream());
         state << "DocBroker [" << _docKey << "] stopped "
               << (reason.empty() ? "because of test failure" : ("although " + reason));
         if (!UnitWSD::isUnitTesting())
@@ -5013,7 +5013,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
         // But first signal the Kit, because we might kill it soon after returning.
         ::kill(getPid(), SIGUSR1);
 
-        std::ostringstream oss;
+        std::ostringstream oss(Util::makeDumpStateStream());
         dumpState(oss);
         LOG_WRN("OOM-closing Document [" << _docId << "]: " << oss.str());
     }
@@ -5221,7 +5221,6 @@ void DocumentBroker::dumpState(std::ostream& os)
 
     const auto now = std::chrono::steady_clock::now();
 
-    os << std::boolalpha;
     os << "\nDocumentBroker [" << _docId << "] Dump: [" << getDocKey() << "], pid: " << getPid();
     if (_docState.isMarkedToDestroy())
         os << " *** Marked to destroy ***";

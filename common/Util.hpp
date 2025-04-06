@@ -1537,11 +1537,19 @@ int main(int argc, char**argv)
         return oss.str();
     }
 
+    // Create a ostringstream with desired ostream format set
+    inline std::ostringstream makeDumpStateStream()
+    {
+        std::ostringstream os;
+        os.setf(std::ios_base::boolalpha);
+        return os;
+    }
+
     /// Dump an object that supports .dumpState into a string.
     /// Helpful for logging.
     template <typename T> std::string dump(const T& object, const std::string& indent = ", ")
     {
-        std::ostringstream oss;
+        std::ostringstream oss(Util::makeDumpStateStream());
         object.dumpState(oss, indent);
         return oss.str().substr(indent.size());
     }
