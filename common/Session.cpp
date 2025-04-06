@@ -341,8 +341,7 @@ void Session::getIOStats(uint64_t &sent, uint64_t &recv)
 
 void Session::dumpState(std::ostream& os)
 {
-    os << std::boolalpha
-       << "\n\t\tid: " << _id
+    os << "\n\t\tid: " << _id
        << "\n\t\tname: " << _name
        << "\n\t\tdisconnected: " << _disconnected
        << "\n\t\tisActive: " << _isActive

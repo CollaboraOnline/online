@@ -1767,7 +1767,7 @@ bool StreamSocket::compactChunks(MessageMap& map)
     map._messageSize -= gap;
 
 #if ENABLE_DEBUG
-    std::ostringstream oss;
+    std::ostringstream oss(Util::makeDumpStateStream());
     dumpState(oss);
     LOG_TRC("Socket state: " << oss.str());
 #endif

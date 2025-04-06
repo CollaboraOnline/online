@@ -4232,7 +4232,7 @@ void forwardSignal(const int signum);
 
 void dump_state()
 {
-    std::ostringstream oss;
+    std::ostringstream oss(Util::makeDumpStateStream());
 
     if (Server)
         Server->dumpState(oss);

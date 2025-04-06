@@ -687,7 +687,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 #if 0 // debug a specific command's payload
         if (Util::findInVector(socket->getInBuffer(), "insertfile") != std::string::npos)
         {
-            std::ostringstream oss;
+            std::ostringstream oss(Util::makeDumpStateStream());
             oss << "Debug - specific command:\n";
             socket->dumpState(oss);
             LOG_INF(oss.str());
