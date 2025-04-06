@@ -1303,7 +1303,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
         (ConfigUtil::isSupportKeyEnabled() && !COOLWSD::OverrideWatermark.empty())
             ? COOLWSD::OverrideWatermark
             : wopiFileInfo->getWatermarkText();
-    const std::string templateSource = wopiFileInfo->getTemplateSource();
+    std::string templateSource = wopiFileInfo->getTemplateSource();
 
     std::optional<bool> isAdminUser = wopiFileInfo->getIsAdminUser();
     if (!wopiFileInfo->getIsAdminUserError().empty())
