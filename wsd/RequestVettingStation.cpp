@@ -500,7 +500,7 @@ void RequestVettingStation::createClientSession(std::shared_ptr<DocumentBroker> 
     docBroker->setupTransfer(
         socket,
         [clientSession=std::move(clientSession), uriPublic, wopiFileInfo=std::move(wopiFileInfo),
-         ws, docBroker](const std::shared_ptr<Socket>& moveSocket) mutable
+         ws, docBroker, selfLifecycle = shared_from_this()](const std::shared_ptr<Socket>& moveSocket)
         {
             try
             {
@@ -509,6 +509,7 @@ void RequestVettingStation::createClientSession(std::shared_ptr<DocumentBroker> 
                 auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
 
                 // Set WebSocketHandler's socket after its construction for shared_ptr goodness.
+                // Note: this replaces ClientRequestDispatcher, which owns us.
                 streamSocket->setHandler(ws);
 
                 LOG_DBG_S('#' << moveSocket->getFD() << " handler is " << clientSession->getName());
