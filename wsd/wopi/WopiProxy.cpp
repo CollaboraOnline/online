@@ -106,7 +106,8 @@ void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<Terminating
                             << docKey << "] is for a WOPI document");
             // Remove from the current poll and transfer.
             disposition.setMove(
-                [this, &poll, docKey, url=std::move(url), uriPublic](const std::shared_ptr<Socket>& moveSocket)
+                [this, &poll, docKey = std::move(docKey), url = std::move(url),
+                 uriPublic](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
                                   << ": Dissociating client socket from "
