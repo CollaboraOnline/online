@@ -236,9 +236,9 @@ void RequestDetails::processURI()
     _fields[Field::WOPISrc] = getParam("WOPISrc");
 
     // &compat=
-    const std::string compat = getParam("compat");
+    std::string compat = getParam("compat");
     if (!compat.empty())
-        _fields[Field::Compat] = compat;
+        _fields[Field::Compat] = std::move(compat);
 
     // /ws[/<sessionId>/<command>/<serial>]
     if (posLastWS != std::string::npos)
