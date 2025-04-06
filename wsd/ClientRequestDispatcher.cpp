@@ -613,6 +613,9 @@ void ClientRequestDispatcher::onConnect(const std::shared_ptr<StreamSocket>& soc
     LOG_TRC("Connected to ClientRequestDispatcher");
 }
 
+/// Starts an asynchronous CheckFileInfo request in parallel to serving
+/// static files. At this point, we don't have the client's WebSocket
+/// yet, and we're proactively trying to authenticate the client.
 void launchAsyncCheckFileInfo(
     const std::string& id, const FileServerRequestHandler::ResourceAccessDetails& accessDetails,
     std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>& requestVettingStations,
@@ -620,6 +623,8 @@ void launchAsyncCheckFileInfo(
 {
     const std::string requestKey = RequestDetails::getRequestKey(
         accessDetails.wopiSrc(), accessDetails.accessToken());
+    LOG_DBG("RequestKey: [" << requestKey << "], wopiSrc: [" << accessDetails.wopiSrc()
+                            << "], accessToken: [" << accessDetails.accessToken() << ']');
 
     std::vector<std::string> options = {
         "access_token=" + accessDetails.accessToken(), "access_token_ttl=0"
@@ -654,6 +659,7 @@ void launchAsyncCheckFileInfo(
             requestKey, std::make_shared<RequestVettingStation>(
                             COOLWSD::getWebServerPoll(), fullRequestDetails));
 
+        // Start async CheckFileInfo, ahead of getting the client WS.
         it.first->second->handleRequest(id);
     }
 }
@@ -731,12 +737,15 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         bool handledByUnitTesting = false;
         if (isUnitTesting)
         {
+            LOG_DBG("Unit-Test: handleHttpRequest: " << request.getURI());
             handledByUnitTesting = UnitWSD::get().handleHttpRequest(request, message, socket);
             if (!handledByUnitTesting)
             {
+                LOG_DBG("Unit-Test: parallelizeCheckInfo" << request.getURI());
                 auto mapAccessDetails = UnitWSD::get().parallelizeCheckInfo(request, message, socket);
                 if (!mapAccessDetails.empty())
                 {
+                    LOG_DBG("Unit-Test: launchAsyncCheckFileInfo" << request.getURI());
                     auto accessDetails = FileServerRequestHandler::ResourceAccessDetails(
                         mapAccessDetails.at("wopiSrc"),
                         mapAccessDetails.at("accessToken"),
@@ -747,6 +756,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
                 }
             }
         }
+
         if (handledByUnitTesting)
         {
             // Unit testing, nothing to do here
@@ -2252,6 +2262,8 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         LOG_TRC("Sending to Client [" << status << ']');
         ws->sendMessage(status);
 
+        // We have the client's WS and we either got the proactive CheckFileInfo
+        // results, which we can use, or we need to issue a new async CheckFileInfo.
         _rvs->handleRequest(_id, requestDetails, ws, socket, mobileAppDocId, disposition);
         return false; // async keep alive
     }
