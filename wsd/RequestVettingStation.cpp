@@ -236,7 +236,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
     std::string url = _requestDetails.getDocumentURI();
 
     const auto uriPublic = RequestDetails::sanitizeURI(url);
-    const auto docKey = RequestDetails::getDocKey(uriPublic);
+    std::string docKey = RequestDetails::getDocKey(uriPublic);
     const std::string fileId = Uri::getFilenameFromURL(docKey);
     Anonymizer::mapAnonymized(fileId,
                               fileId); // Identity mapping, since fileId is already obfuscated
@@ -275,7 +275,8 @@ void RequestVettingStation::handleRequest(const std::string& id,
 
             // Remove from the current poll and transfer.
             disposition.setMove(
-                [selfLifecycle = shared_from_this(), this, docKey, url, uriPublic,
+                [selfLifecycle = shared_from_this(), this, docKey = std::move(docKey),
+                 url = std::move(url), uriPublic,
                  isReadOnly](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
@@ -297,7 +298,8 @@ void RequestVettingStation::handleRequest(const std::string& id,
                             << docKey << "] is for a WOPI document");
             // Remove from the current poll and transfer.
             disposition.setMove(
-                [selfLifecycle = shared_from_this(), this, docKey, url = std::move(url), uriPublic,
+                [selfLifecycle = shared_from_this(), this, docKey = std::move(docKey),
+                 url = std::move(url), uriPublic,
                  isReadOnly](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
