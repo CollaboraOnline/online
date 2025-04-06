@@ -1967,8 +1967,8 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
             Poco::URI pocoUri(uri), templateUri(docTemplate);
             Poco::Path newPath(pocoUri.getPath()), templatePath(templateUri.getPath());
             newPath.setExtension(templatePath.getExtension());
-
-            rename(pocoUri.getPath().c_str(), newPath.toString().c_str());
+            if (::rename(pocoUri.getPath().c_str(), newPath.toString().c_str()) < 0)
+                LOG_SYS("Failed to rename [" << pocoUri.getPath() << "] to [" << newPath.toString() << ']');
             pocoUri.setPath(newPath.toString());
             loadUri = pocoUri.toString();
         }
