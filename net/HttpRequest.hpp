@@ -1720,28 +1720,25 @@ private:
         return socket; // Return the shared pointer.
     }
 
-    void asyncConnectCompleted(SocketPoll& poll, const std::shared_ptr<StreamSocket> &socket, net::AsyncConnectResult result)
+    void asyncConnectFailed(net::AsyncConnectResult result)
     {
-        assert((!socket || _fd == socket->getFD()) &&
-               "The socket FD must have been set in onConnect");
-
-        // When used with proxy.php we may indeed get nullptr here.
-        // assert(socket && "Unexpected nullptr returned from net::connect");
-        _socket = socket; // Hold a weak pointer to it.
+        assert(!_socket.use_count());
         _result = result;
 
-        if (!socket)
-        {
-            LOG_ERR("Failed to connect to " << _host << ':' << _port);
-            callOnConnectFail();
-            return;
-        }
+        LOG_ERR("Failed to connect to " << _host << ':' << _port);
+        callOnConnectFail();
+    }
+
+    void asyncConnectSuccess(const std::shared_ptr<StreamSocket> &socket, net::AsyncConnectResult result)
+    {
+        assert(socket && _fd == socket->getFD() && "The socket FD must have been set in onConnect");
+
+        _socket = socket; // Hold a weak pointer to it.
+        _result = result;
 
         LOG_ASSERT_MSG(_socket.lock(), "Connect must set the _socket member.");
         LOG_ASSERT_MSG(_socket.lock()->getFD() == socket->getFD(),
                        "Socket FD's mismatch after connect().");
-        LOG_TRC("Inserting in poller after connecting");
-        poll.insertNewSocket(socket);
     }
 
     void asyncConnect(const std::weak_ptr<SocketPoll>& poll)
@@ -1749,8 +1746,7 @@ private:
         _socket.reset(); // Reset to make sure we are disconnected.
 
         auto pushConnectCompleteToPoll =
-            [this, poll, pollThreadId = std::thread::id()](std::shared_ptr<StreamSocket> socket,
-                                                           net::AsyncConnectResult result)
+            [this, poll](std::shared_ptr<StreamSocket> socket, net::AsyncConnectResult result)
         {
             std::shared_ptr<SocketPoll> socketPoll(poll.lock());
             if (!socketPoll)
@@ -1758,20 +1754,25 @@ private:
                 LOG_WRN("asyncConnect completed after poll was destroyed");
                 return;
             }
-            /* socket was created by asyncDNS thread, so that is set as the
-               current thread owner.
 
-               It is not guaranteed that asyncConnectCompleted will be called.
-               The SocketPoll can be destroyed before dispatching the callback.
-               So associate it with the SocketPolls thread now so if
-               asyncConnectCompleted is never dispatched, and the socket is
-               destroyed while still in the callback queue then its thread
-               owner is that of the SocketPoll.
-            */
-            socket->setThreadOwner(pollThreadId);
-            socketPoll->addCallback([selfLifecycle = shared_from_this(), this, pollPtr=socketPoll.get(), socket=std::move(socket), result]() {
-                asyncConnectCompleted(*pollPtr, socket, result);
-            });
+            if (!socket)
+            {
+                // When used with proxy.php we may indeed get nullptr here.
+                socketPoll->addCallback([selfLifecycle = shared_from_this(), this, result]()
+                                        { asyncConnectFailed(result); });
+                return;
+            }
+
+            SocketDisposition disposition(socket);
+            disposition.setTransfer(*socketPoll,
+                                    [selfLifecycle = shared_from_this(), this,
+                                     socket = std::move(socket),
+                                     result]([[maybe_unused]] const std::shared_ptr<Socket>& moveSocket)
+                                    {
+                                        assert(socket == moveSocket);
+                                        asyncConnectSuccess(socket, result);
+                                    });
+            disposition.execute();
         };
 
         net::asyncConnect(_host, _port, isSecure(), shared_from_this(), pushConnectCompleteToPoll);
