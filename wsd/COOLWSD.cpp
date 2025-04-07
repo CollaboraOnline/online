@@ -3917,11 +3917,14 @@ int COOLWSD::innerMain()
 
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Exiting. Cleaning up lingering documents.");
+
+#if !MOBILEAPP
     if (remoteFontConfigThread)
     {
         LOG_DBG("Stopping remote font config thread");
         remoteFontConfigThread->stop();
     }
+#endif
 
     if (!SigUtil::getShutdownRequestFlag())
     {
