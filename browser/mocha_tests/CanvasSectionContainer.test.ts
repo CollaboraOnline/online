@@ -23,11 +23,13 @@
 var jsdom = require('jsdom');
 var assert = require('assert').strict;
 
-var dom = new jsdom.JSDOM(canvasDomString());
+var dom = new jsdom.JSDOM(canvasDomString(), { pretendToBeVisual: true });
 
 addMockCanvas(dom.window);
 global.window = dom.window;
 global.document = dom.window.document;
+global.requestAnimationFrame = dom.window.requestAnimationFrame;
+global.cancelAnimationFrame = dom.window.cancelAnimationFrame;
 
 const canvasWidth = 1024;
 const canvasHeight = 768;

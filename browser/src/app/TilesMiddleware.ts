@@ -390,6 +390,7 @@ class TileManager {
 		deltas: any[],
 		bitmaps: ImageBitmap[],
 	) {
+		const visibleRanges = this.getVisibleRanges();
 		while (deltas.length) {
 			const delta = deltas.shift();
 			const bitmap = bitmaps.shift();
@@ -403,7 +404,7 @@ class TileManager {
 			if (delta.isKeyframe) --tile.hasPendingKeyframe;
 			else --tile.hasPendingDelta;
 
-			if (!tile.hasPendingUpdate()) this.tileReady(tile.coords);
+			if (!tile.hasPendingUpdate()) this.tileReady(tile.coords, visibleRanges);
 		}
 
 		if (this.pendingTransactions === 0)
@@ -814,12 +815,23 @@ class TileManager {
 		++this.inTransaction;
 	}
 
+	private static getVisibleRanges(): Array<cool.Bounds> {
+		var zoom = Math.round(app.map.getZoom());
+		var pixelBounds = app.map.getPixelBoundsCore(app.map.getCenter(), zoom);
+		return app.map._docLayer._splitPanesContext
+			? app.map._docLayer._splitPanesContext.getPxBoundList(pixelBounds)
+			: [pixelBounds];
+	}
+
 	private static tileZoomIsCurrent(coords: TileCoordData) {
 		const scale = Math.pow(1.2, app.map.getZoom() - 10);
 		return Math.round(coords.scale * 1000) === Math.round(scale * 1000);
 	}
 
-	private static tileReady(coords: TileCoordData) {
+	private static tileReady(
+		coords: TileCoordData,
+		visibleRanges: Array<cool.Bounds>,
+	) {
 		var key = coords.key();
 
 		var tile: Tile = this.tiles[key];
@@ -834,6 +846,14 @@ class TileManager {
 		if (app.map && emptyTilesCountChanged && this.emptyTilesCount === 0) {
 			app.map.fire('statusindicator', { statusType: 'alltilesloaded' });
 		}
+
+		// Request a redraw if the tile is visible
+		const tileBounds = new L.Bounds(
+			[tile.coords.x, tile.coords.y],
+			[tile.coords.x + this.tileSize, tile.coords.y + this.tileSize],
+		);
+		if (tileBounds.intersectsAny(visibleRanges))
+			app.sectionContainer.requestReDraw();
 	}
 
 	private static createTile(coords: TileCoordData, key: string) {
@@ -1303,20 +1323,10 @@ class TileManager {
 		tile: Tile,
 		visibleRanges: any | null = null,
 	) {
-		if (!visibleRanges) {
-			const zoom = Math.round(app.map.getZoom());
-			const currentBounds = app.map.getPixelBoundsCore(
-				app.map.getCenter(),
-				zoom,
-			);
-			visibleRanges = app.map._docLayer._splitPanesContext
-				? app.map._docLayer._splitPanesContext.getPxBoundList(currentBounds)
-				: [currentBounds];
-		}
-
+		if (!visibleRanges) visibleRanges = this.getVisibleRanges();
 		const tileBounds = new L.Bounds(
-			new L.Point(tile.coords.x, tile.coords.y),
-			new L.Point(tile.coords.x + this.tileSize, tile.coords.y + this.tileSize),
+			[tile.coords.x, tile.coords.y],
+			[tile.coords.x + this.tileSize, tile.coords.y + this.tileSize],
 		);
 		tile.distanceFromView = tileBounds.distanceTo(visibleRanges[0]);
 		for (let i = 1; i < visibleRanges.length; ++i) {
@@ -1348,7 +1358,6 @@ class TileManager {
 		// create a queue of coordinates to load tiles from. Rehydrate tiles if we're dealing
 		// with the currently visible area.
 		this.beginTransaction();
-		let didRehydrate = false;
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
 			var tileRange = tileRanges[rangeIdx];
 			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
@@ -1367,16 +1376,11 @@ class TileManager {
 					var tile = this.tiles[key];
 
 					if (!tile || tile.needsFetch()) queue.push(coords);
-					else if (isCurrent)
-						didRehydrate = this.makeTileCurrent(tile) || didRehydrate;
+					else if (isCurrent) this.makeTileCurrent(tile);
 				}
 			}
 		}
-		this.endTransaction(
-			didRehydrate && queue.length === 0
-				? () => app.sectionContainer.requestReDraw()
-				: null,
-		);
+		this.endTransaction(null);
 
 		return queue;
 	}
@@ -1413,18 +1417,8 @@ class TileManager {
 		// Remove irrelevant tiles from the queue earlier.
 		this.removeIrrelevantsFromCoordsQueue(coordsQueue);
 
-		let visibleRanges = null;
-		if (!isCurrent) {
-			// If these aren't current tiles, calculate the visible ranges to update tile distance.
-			const zoom = Math.round(app.map.getZoom());
-			const currentBounds = app.map.getPixelBoundsCore(
-				app.map.getCenter(),
-				zoom,
-			);
-			visibleRanges = app.map._docLayer._splitPanesContext
-				? app.map._docLayer._splitPanesContext.getPxBoundList(currentBounds)
-				: [currentBounds];
-		}
+		// If these aren't current tiles, calculate the visible ranges to update tile distance.
+		const visibleRanges = isCurrent ? null : this.getVisibleRanges();
 
 		// Ensure tiles exist for requested coordinates
 		for (let i = 0; i < coordsQueue.length; i++) {
@@ -2267,15 +2261,12 @@ class TileManager {
 			}
 
 			this.beginTransaction();
-			var redraw = false;
 			for (i = 0; i < queue.length; i++) {
 				const tempTile = this.tiles[queue[i].key()];
 
-				if (tempTile) redraw = redraw || this.makeTileCurrent(tempTile);
+				if (tempTile) this.makeTileCurrent(tempTile);
 			}
-			this.endTransaction(
-				redraw ? () => app.sectionContainer.requestReDraw() : null,
-			);
+			this.endTransaction(null);
 		}
 
 		if (checkOnly) {
