@@ -23,7 +23,7 @@ class SplitSection extends app.definitions.canvasSectionObject {
 
     constructor () { super(); }
 
-    onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
+    onDraw(frameCount?: number, elapsedTime?: number): void {
 		var splitPanesContext = this.sectionProperties.docLayer.getSplitPanesContext();
 		if (splitPanesContext) {
 			var splitPos = splitPanesContext.getSplitPos();

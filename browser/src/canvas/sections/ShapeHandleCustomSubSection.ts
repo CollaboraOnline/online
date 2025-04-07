@@ -34,7 +34,7 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 	}
 
-	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds): void {
+	onDraw(frameCount?: number, elapsedTime?: number): void {
 		this.context.fillStyle = 'yellow';
 		this.context.strokeStyle = 'black';
 		this.context.beginPath();

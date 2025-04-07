@@ -19,7 +19,7 @@ class PixelGridSection extends app.definitions.canvasSectionObject {
 
     constructor () { super(); }
 
-    onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
+    onDraw(frameCount?: number, elapsedTime?: number): void {
 		var offset = 8;
 		var count;
 		this.context.lineWidth = 1;

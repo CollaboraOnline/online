@@ -176,7 +176,7 @@ class CalcGridSection extends app.definitions.canvasSectionObject {
 		}
 	}
 
-    onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
+    onDraw(frameCount?: number, elapsedTime?: number): void {
 		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
 			return;
 

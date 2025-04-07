@@ -75,7 +75,7 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		this.sectionProperties.mapPane.style.cursor = this.sectionProperties.previousCursorStyle;
 	}
 
-	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds): void {
+	onDraw(frameCount?: number, elapsedTime?: number): void {
 		this.context.fillStyle = 'white';
 		this.context.strokeStyle = 'black';
 		this.context.beginPath();
