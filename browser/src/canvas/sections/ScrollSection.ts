@@ -536,7 +536,9 @@ export class ScrollSection extends CanvasSectionObject {
 		if ((this.sectionProperties.drawHorizontalScrollBar || this.sectionProperties.animatingHorizontalScrollBar)) {
 			this.drawHorizontalScrollBar();
 		}
+	}
 
+	public onAnimate(frameCount: number, elapsedTime: number): void {
 		if (this.sectionProperties.animatingScroll) {
 			const lineHeight = this.containerObject.getScrollLineHeight();
 			const accel = lineHeight * ScrollSection.scrollAnimationAcceleration;
@@ -578,15 +580,13 @@ export class ScrollSection extends CanvasSectionObject {
 			}
 		}
 
-		if (this.isAnimating) {
-			const animatingScrollbar =
-				(this.sectionProperties.animatingHorizontalScrollBar
-				|| this.sectionProperties.animatingVerticalScrollBar) &&
-				elapsedTime && (elapsedTime < this.sectionProperties.fadeOutDuration);
-			const animatingScroll = this.sectionProperties.animatingScroll
-				&& this.sectionProperties.scrollAnimationDelta.reduce((a: number, x: number) => a + x, 0) !== 0;
-			if (!animatingScrollbar && !animatingScroll) this.containerObject.stopAnimating();
-		}
+		const animatingScrollbar =
+			(this.sectionProperties.animatingHorizontalScrollBar
+			|| this.sectionProperties.animatingVerticalScrollBar) &&
+			elapsedTime && (elapsedTime < this.sectionProperties.fadeOutDuration);
+		const animatingScroll = this.sectionProperties.animatingScroll
+			&& this.sectionProperties.scrollAnimationDelta.reduce((a: number, x: number) => a + x, 0) !== 0;
+		if (!animatingScrollbar && !animatingScroll) this.containerObject.stopAnimating();
 	}
 
 	public onAnimationEnded (frameCount: number, elapsedTime: number): void {
@@ -605,7 +605,6 @@ export class ScrollSection extends CanvasSectionObject {
 		else {
 			var options: any = {
 				duration: this.sectionProperties.idleDuration,
-				defer: true
 			};
 
 			this.sectionProperties.animatingHorizontalScrollBar = this.startAnimating(options);
@@ -620,7 +619,6 @@ export class ScrollSection extends CanvasSectionObject {
 		else {
 			var options: any = {
 				duration: this.sectionProperties.idleDuration,
-				defer: true
 			};
 
 			this.sectionProperties.animatingVerticalScrollBar = this.startAnimating(options);
@@ -771,10 +769,8 @@ export class ScrollSection extends CanvasSectionObject {
 				return false;
 		}
 
-		app.sectionContainer.pauseDrawing();
 		this.map.scroll(0, offset / app.dpiScale, {});
 		this.onUpdateScrollOffset();
-		app.sectionContainer.resumeDrawing();
 
 		if (app.file.fileBasedView) this.map._docLayer._checkSelectedPart();
 
@@ -808,10 +804,8 @@ export class ScrollSection extends CanvasSectionObject {
 				return false;
 		}
 
-		app.sectionContainer.pauseDrawing();
 		this.map.scroll(offset / app.dpiScale, 0, {});
 		this.onUpdateScrollOffset();
-		app.sectionContainer.resumeDrawing();
 
 		if (!this.sectionProperties.drawHorizontalScrollBar) {
 			if (this.isAnimating) {
@@ -1146,11 +1140,10 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		if (!this.sectionProperties.animatingScroll) {
+			this.sectionProperties.animatingScroll = true;
 			// We're about to start a duration-less animation, so we need to
 			// ensure the animation is reset.
-			if (!this.startAnimating({'defer': true}))
-				this.resetAnimation();
-			this.sectionProperties.animatingScroll = true;
+			if (!this.startAnimating({})) this.resetAnimation();
 		}
 	}
 
@@ -1192,7 +1185,7 @@ export class ScrollSection extends CanvasSectionObject {
 			this.sectionProperties.scrollWheelDelta[0] += hscroll;
 			this.sectionProperties.scrollWheelDelta[1] += vscroll;
 
-			if (!this.isAnimating) this.startAnimating({'defer': true});
+			if (!this.isAnimating) this.startAnimating({});
 		}
 	}
 }
