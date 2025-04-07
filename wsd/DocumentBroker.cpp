@@ -5302,8 +5302,11 @@ void DocumentBroker::dumpState(std::ostream& os)
     else
         os << " none";
 
-    os << '\n';
-    _lockCtx->dumpState(os);
+    if (_lockCtx)
+    {
+        os << '\n';
+        _lockCtx->dumpState(os);
+    }
 
     if (_tileCache)
     {
@@ -5311,8 +5314,11 @@ void DocumentBroker::dumpState(std::ostream& os)
         _tileCache->dumpState(os);
     }
 
-    os << '\n';
-    _poll->dumpState(os);
+    if (_poll)
+    {
+        os << '\n';
+        _poll->dumpState(os);
+    }
 
 #if !MOBILEAPP
     // Bit nasty - need a cleaner way to dump state.
