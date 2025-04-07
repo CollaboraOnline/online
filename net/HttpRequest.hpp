@@ -1318,7 +1318,7 @@ public:
     /// Note: when reusing this Session, it is assumed that the socket
     /// is already added to the SocketPoll on a previous call (do not
     /// use multiple SocketPoll instances on the same Session).
-    void asyncRequest(const Request& req, const std::shared_ptr<SocketPoll>& poll)
+    void asyncRequest(const Request& req, const std::weak_ptr<SocketPoll>& poll)
     {
         LOG_TRC("new asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                      << req.getUrl());
@@ -1334,7 +1334,11 @@ public:
             // Technically, there is a race here. The socket can
             // get disconnected and removed right after isConnected.
             // In that case, we will timeout and no request will be sent.
-            poll->wakeup();
+            std::shared_ptr<SocketPoll> socketPoll(poll.lock());
+            if (socketPoll)
+                socketPoll->wakeup();
+            else
+                LOG_ERR("Failed to acquire SocketPoll");
         }
 
         LOG_DBG("starting asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '

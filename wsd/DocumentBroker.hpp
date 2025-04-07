@@ -371,7 +371,7 @@ public:
     /// Transfer this socket into our polling thread / loop.
     void addSocketToPoll(const std::shared_ptr<StreamSocket>& socket);
 
-    std::shared_ptr<SocketPoll> getPoll() const;
+    std::weak_ptr<SocketPoll> getPoll() const;
 
     void alertAllUsers(const std::string& msg);
 
