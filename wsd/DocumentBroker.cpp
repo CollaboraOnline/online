@@ -5004,6 +5004,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
 {
     ASSERT_CORRECT_THREAD();
 
+#if !MOBILEAPP
     if (reason == "oom")
     {
         // This is an internal close request, coming from Admin::triggerMemoryCleanup().
@@ -5016,6 +5017,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
         dumpState(oss);
         LOG_WRN("OOM-closing Document [" << _docId << "]: " << oss.str());
     }
+#endif
 
     _docState.setCloseRequested();
     _closeReason = reason;
