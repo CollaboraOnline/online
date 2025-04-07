@@ -14,6 +14,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		}
 		desktopHelper.shouldHaveZoomLevel('100');
 
+		// make it more complex and prevent form initial being A1
+		helper.typeIntoInputField(helper.addressInputSelector, 'D5');
+
 		cy.cGet('#map').focus();
 		calcHelper.clickOnFirstCell();
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
@@ -174,6 +177,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 
 		calcHelper.dblClickOnFirstCell();
 		helper.clearAllText();
+		cy.cGet('.ui-custom-textarea-text-layer').should('have.text', '');
+
 		let url = 'http://www.example.com/';
 		helper.typeIntoDocument(url + '{enter}');
 
