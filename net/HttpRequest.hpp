@@ -1820,11 +1820,13 @@ private:
     std::chrono::steady_clock::time_point _startTime;
     bool _connected;
     Request _request;
+    net::AsyncConnectResult _result; // last connection tentative result
     FinishedCallback _onFinished;
     ConnectFailCallback _onConnectFail;
     std::shared_ptr<Response> _response;
-    std::weak_ptr<StreamSocket> _socket; ///< Must be the last member.
-    net::AsyncConnectResult _result; // last connection tentative result
+    /// Keep _socket as last member so it is destructed first, ensuring that
+    /// the peer members it depends on are not destructed before it
+    std::weak_ptr<StreamSocket> _socket;
 };
 
 /// HTTP Get a URL synchronously.
@@ -2204,7 +2206,9 @@ private:
                          //  e.g. if this is true and start is 5, we will send the last 5 bytes
     http::StatusCode _statusCode;
     FinishedCallback _onFinished;
-    std::shared_ptr<StreamSocket> _socket; ///< Must be the last member.
+    /// Keep _socket as last member so it is destructed first, ensuring that
+    /// the peer members it depends on are not destructed before it
+    std::shared_ptr<StreamSocket> _socket;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const http::Header& header)
