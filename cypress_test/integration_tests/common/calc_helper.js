@@ -63,6 +63,9 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 			return cy.cGet(helper.addressInputSelector)
 				.should('have.prop', 'value', 'A1');
 		});
+
+		cy.cGet(helper.addressInputSelector)
+			.should('have.prop', 'value', 'A1');
 	}
 
 	cy.log('<< clickOnFirstCell - end');
