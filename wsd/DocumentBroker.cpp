@@ -252,7 +252,7 @@ void DocumentBroker::setupTransfer(const std::shared_ptr<StreamSocket>& socket,
                                    const SocketDisposition::MoveFunction& transferFn)
 {
     // Drop pretentions of ownership before _socketMove.
-    socket->resetThreadOwner();
+    SocketThreadOwnerChange::resetThreadOwner(*socket);
 
     _poll->startThread();
     _poll->addCallback(

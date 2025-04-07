@@ -130,6 +130,8 @@ private:
     Type _disposition;
 };
 
+class SocketThreadOwnerChange;
+
 /// A non-blocking, streaming socket.
 class Socket
 {
@@ -375,28 +377,6 @@ public:
 
     virtual void dumpState(std::ostream&) {}
 
-    /// Set the thread-id we're bound to
-    void setThreadOwner(const std::thread::id &id)
-    {
-        if (id != _owner)
-        {
-            LOG_TRC("Thread affinity set to " << Log::to_string(id) << " (was "
-                                              << Log::to_string(_owner) << ')');
-            _owner = id;
-        }
-    }
-
-    /// Reset the thread-id while it's in transition.
-    void resetThreadOwner()
-    {
-        if (std::thread::id() != _owner)
-        {
-            LOG_TRC("Resetting thread affinity while in transit (was " << Log::to_string(_owner)
-                                                                       << ')');
-            _owner = std::thread::id();
-        }
-    }
-
     /// Returns the owner thread's id.
     const std::thread::id& getThreadOwner() const { return _owner; }
 
@@ -459,6 +439,8 @@ protected:
     void setShutdown() { _isShutdown = true; }
 
 private:
+    friend class SocketThreadOwnerChange;
+
     /// Create socket of the given type.
     /// return >= 0 for a successfully created socket, -1 on error
     static int createSocket(Type type);
@@ -490,6 +472,28 @@ private:
         }
     }
 
+    /// Set the thread-id we're bound to
+    void setThreadOwner(const std::thread::id &id)
+    {
+        if (id != _owner)
+        {
+            LOG_TRC("Thread affinity set to " << Log::to_string(id) << " (was "
+                                              << Log::to_string(_owner) << ')');
+            _owner = id;
+        }
+    }
+
+    /// Reset the thread-id while it's in transition.
+    void resetThreadOwner()
+    {
+        if (std::thread::id() != _owner)
+        {
+            LOG_TRC("Resetting thread affinity while in transit (was " << Log::to_string(_owner)
+                                                                       << ')');
+            _owner = std::thread::id();
+        }
+    }
+
     std::string _clientAddress;
 
     const std::chrono::steady_clock::time_point _creationTime;
@@ -511,6 +515,26 @@ private:
     // If _ignoreInput is true no more input from this socket will be processed.
     bool _ignoreInput;
     bool _noShutdown;
+};
+
+// Allow SocketPoll and SocketDisposition to call Socket::setThreadOwner
+// without exposing the entirety of Socket's internals to them
+class SocketThreadOwnerChange
+{
+private:
+    friend class DocumentBroker; // TODO: remove this case?
+    friend class SocketDisposition;
+    friend class SocketPoll;
+
+    static void setThreadOwner(Socket& socket, const std::thread::id &id)
+    {
+        socket.setThreadOwner(id);
+    }
+
+    static void resetThreadOwner(Socket& socket)
+    {
+        socket.resetThreadOwner();
+    }
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Socket &s) { return s.stream(os); }
@@ -849,7 +873,7 @@ public:
             LOG_TRC("Inserting socket #" << newSocket->getFD() << ", address ["
                                          << newSocket->clientAddress() << "], into " << _name);
             // sockets in transit are un-owned.
-            newSocket->resetThreadOwner();
+            SocketThreadOwnerChange::resetThreadOwner(*newSocket);
 
             std::lock_guard<std::mutex> lock(_mutex);
             const bool wasEmpty = _newSockets.empty() && _newCallbacks.empty();
