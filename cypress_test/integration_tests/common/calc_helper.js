@@ -44,7 +44,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	cy.cGet('#map')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
-			var XPos = items[0].getBoundingClientRect().left + 10;
+			var XPos = items[0].getBoundingClientRect().left + 2;
 			var YPos = items[0].getBoundingClientRect().top + 10;
 			if (dblClick)
 				cy.cGet('body').click(XPos, YPos).dblclick(XPos, YPos);
@@ -63,6 +63,9 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 			return cy.cGet(helper.addressInputSelector)
 				.should('have.prop', 'value', 'A1');
 		});
+
+		cy.cGet(helper.addressInputSelector)
+			.should('have.prop', 'value', 'A1');
 	}
 
 	cy.log('<< clickOnFirstCell - end');
