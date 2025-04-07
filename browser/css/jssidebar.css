@@ -485,7 +485,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	width: 330px;
 	display: none;
 	border-inline-end: 1px solid var(--color-border);
-	background-color: var(--color-background-lighter);
+	/* bg set in #sidebar-dock-wrapper, #navigator-dock-wrapper */
 }
 
 #navigation-sidebar.visible {
