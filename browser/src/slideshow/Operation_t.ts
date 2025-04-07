@@ -14,6 +14,18 @@
 
 declare var SlideShow: any;
 
+// prettier-ignore
+declare type mat4 = [
+	number, number, number, number,
+	number, number, number, number,
+	number, number, number, number,
+	number, number, number, number,
+];
+
+declare type vec2 = [number, number];
+declare type vec3 = [number, number, number];
+declare type vec4 = [number, number, number, number];
+
 class Operation_t {
 	OperationCB: any;
 
