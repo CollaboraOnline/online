@@ -35,7 +35,7 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
         this.sectionProperties.mode = mode;
     }
 
-    onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: Bounds): void {
+    onDraw(frameCount?: number, elapsedTime?: number): void {
         this.context.strokeStyle = this.sectionProperties.color;
         this.context.lineWidth = 2;
         this.context.strokeRect(-0.5, -0.5, this.size[0], this.size[1]);

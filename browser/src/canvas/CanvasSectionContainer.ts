@@ -203,8 +203,6 @@ class CanvasSectionContainer {
 	// Above 2 properties can be used with documentBounds.
 	private drawingPaused: number = 0;
 	private drawingEnabled: boolean = true;
-	private dirty: DirtyType = DirtyType.NotDirty;
-	private dirtySubset: Set<any> = null; // If not null this is the set of coords that need redrawing.
 	private sectionsDirty: boolean = false;
 	private paintedEver: boolean = false;
 	private framesRendered: number = 0; // Total frame count for debugging
@@ -360,16 +358,12 @@ class CanvasSectionContainer {
 		this.drawingEnabled = true;
 		if (this.drawingPaused === 0) {
 			// Trigger a forced repaint as drawing is not paused currently.
-			this.setDirty(null);
 			this.paintOnResumeOrEnable();
 		}
 	}
 
 	pauseDrawing () {
-
-		if (this.drawingPaused++ === 0) {
-			this.clearDirty();
-		}
+		this.drawingPaused++;
 	}
 
 	// set topLevel if we are sure that we are the top of call nesting
@@ -398,34 +392,7 @@ class CanvasSectionContainer {
 		if (scrollSection)
 			scrollSection.completePendingScroll(); // No painting, only dirtying.
 
-		if (this.dirty) {
-			this.requestReDraw(this.dirtySubset);
-			this.clearDirty();
-		}
-	}
-
-	private clearDirty() {
-		this.dirty = DirtyType.NotDirty;
-		this.dirtySubset = null;
-	}
-
-	private setDirty(coords: any) {
-		if (this.dirty == DirtyType.All)
-			return;
-		if (coords === null ||
-		    // multi-clip needed for split-panes in drawSections.
-		    app.map._docLayer.getSplitPanesContext())
-		{
-			this.dirty = DirtyType.All;
-			this.dirtySubset = null;
-		}
-		else
-		{
-			this.dirty = DirtyType.TileRange;
-			if (this.dirtySubset === null)
-				this.dirtySubset = new Set<any>();
-			this.dirtySubset.add(coords);
-		}
+		this.requestReDraw();
 	}
 
 	/**
@@ -652,15 +619,12 @@ class CanvasSectionContainer {
 		}
 	}
 
-	requestReDraw(tileSubset: Set<any> = null) {
-		if (!this.drawingAllowed()) {
-			// Someone requested a redraw, but we're paused => schedule a redraw.
-			this.setDirty(null);
-			return;
-		}
+	requestReDraw() {
+		// Someone requested a redraw, but we're paused => schedule a redraw.
+		if (!this.drawingAllowed()) return;
 
 		if (!this.getAnimatingSectionName())
-			this.drawSections(null, null, tileSubset);
+			this.drawSections(null, null);
 	}
 
 	private propagateCursorPositionChanged() {
@@ -1772,7 +1736,7 @@ class CanvasSectionContainer {
 	    return section.isLocated && section.showSection && (!section.documentObject || section.isVisible);
 	}
 
-	private drawSections (frameCount: number = null, elapsedTime: number = null, tileSubset: Set<any> = null) {
+	private drawSections (frameCount: number = null, elapsedTime: number = null) {
 
 //              Un-comment to debug duplicate rendering problems:
 //		const stack = new Error().stack;
@@ -1782,23 +1746,6 @@ class CanvasSectionContainer {
 			app.map._debug.setOverlayMessage('top-frames', 'Frames: ' + this.framesRendered++);
 
 		this.context.setTransform(1, 0, 0, 1, 0, 0);
-
-		var subsetBounds: cool.Bounds = null;
-		// if there is a tileSubset we only want to draw the minimum region of its bounds
-		if (tileSubset) {
-			const tileSection: cool.TilesSection = (this.getSectionWithName(L.CSections.Tiles.name) as any) as cool.TilesSection;
-			if (tileSection && this.shouldDrawSection((tileSection as any) as CanvasSectionObject)) {
-				subsetBounds = tileSection.getSubsetBounds(this.context, tileSubset);
-			}
-			if (subsetBounds) {
-				this.context.save();
-
-				// FIXME: needs re-thinking for split-panes
-				this.context.translate(tileSection.myTopLeft[0], tileSection.myTopLeft[1]);
-				tileSection.clipSubsetBounds(this.context, subsetBounds);
-				this.context.translate(-tileSection.myTopLeft[0], -tileSection.myTopLeft[1]);
-			}
-		}
 
 		if (!this.zoomChanged) {
 			this.clearCanvas();
@@ -1815,7 +1762,7 @@ class CanvasSectionContainer {
 					this.context.globalAlpha = 1;
 				}
 
-				this.sections[i].onDraw(frameCount, elapsedTime, subsetBounds);
+				this.sections[i].onDraw(frameCount, elapsedTime, null);
 				if (this.sections[i].borderColor) { // If section's border is set, draw its borders after section's "onDraw" function is called.
 					var offset = this.sections[i].getLineOffset();
 					this.context.lineWidth = this.sections[i].getLineWidth();
@@ -1825,10 +1772,6 @@ class CanvasSectionContainer {
 
 				this.context.translate(-this.sections[i].myTopLeft[0], -this.sections[i].myTopLeft[1]);
 			}
-		}
-
-		if (subsetBounds) {
-			this.context.restore();
 		}
 
 		this.paintedEver = true;
@@ -2013,10 +1956,6 @@ class CanvasSectionContainer {
 		if (this.drawingAllowed()) {
 			this.updateBoundSectionLists();
 			this.reNewAllSections();
-		}
-		else {
-			this.sectionsDirty = true;
-			this.setDirty(null);
 		}
 	}
 

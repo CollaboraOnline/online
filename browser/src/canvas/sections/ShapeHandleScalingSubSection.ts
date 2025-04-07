@@ -58,7 +58,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		}
 	}
 
-	onDraw(frameCount?: number, elapsedTime?: number, subsetBounds?: cool.Bounds): void {
+	onDraw(frameCount?: number, elapsedTime?: number): void {
 		this.context.fillStyle = 'wheat';
 		this.context.strokeStyle = 'black';
 		this.context.beginPath();
