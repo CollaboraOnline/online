@@ -1844,15 +1844,12 @@ get(const std::string& url, const std::string& path,
     return httpSession->syncRequest(http::Request(path), timeout);
 }
 
-namespace server
-{
-
 /// A server http Session to make asynchronous HTTP responses.
-class Session final : public ProtocolHandlerInterface
+class ServerSession final : public ProtocolHandlerInterface
 {
 public:
-    /// Construct a Session instance.
-    Session()
+    /// Construct a ServerSession instance.
+    ServerSession()
         : _timeout(getDefaultTimeout())
         , _pos(-1)
         , _size(0)
@@ -1879,7 +1876,7 @@ public:
     std::chrono::microseconds getTimeout() const { return _timeout; }
 
     /// The onFinished callback handler signature.
-    using FinishedCallback = std::function<void(const std::shared_ptr<Session>& session)>;
+    using FinishedCallback = std::function<void(const std::shared_ptr<ServerSession>& session)>;
 
     /// Set a callback to handle onFinished events from this session.
     /// onFinished is triggered whenever a request has finished,
@@ -1888,9 +1885,9 @@ public:
 
     /// Start an asynchronous upload from a file.
     /// Return true when it dispatches the socket to the SocketPoll.
-    /// Note: when reusing this Session, it is assumed that the socket
+    /// Note: when reusing this ServerSession, it is assumed that the socket
     /// is already added to the SocketPoll on a previous call (do not
-    /// use multiple SocketPoll instances on the same Session).
+    /// use multiple SocketPoll instances on the same ServerSession).
     bool asyncUpload(std::string fromFile, std::string mimeType, int start, int end, bool startIsSuffix, http::StatusCode statusCode = http::StatusCode::OK)
     {
         _start = start;
@@ -2031,7 +2028,7 @@ public:
     void dumpState(std::ostream& os, const std::string& indent) const override
     {
         const auto now = std::chrono::steady_clock::now();
-        os << indent << "http::server::Session: #" << _fd << " (" << (_socket ? "have" : "no")
+        os << indent << "http::ServerSession: #" << _fd << " (" << (_socket ? "have" : "no")
            << " socket)";
         os << indent << "\tconnected: " << std::boolalpha << _connected;
         os << indent << "\tstartTime: " << Util::getTimeForLog(now, _startTime);
@@ -2209,7 +2206,6 @@ private:
     FinishedCallback _onFinished;
     std::shared_ptr<StreamSocket> _socket; ///< Must be the last member.
 };
-}
 
 inline std::ostream& operator<<(std::ostream& os, const http::Header& header)
 {
