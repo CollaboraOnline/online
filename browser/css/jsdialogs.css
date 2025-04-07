@@ -688,24 +688,29 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 /* tree grid */
 
-.ui-treeview div[aria-level='1'] + .ui-treeview-expanded-content {
-	margin-left: 2.5ch;
+.ui-treeview div[aria-level='1'] + .ui-treeview-expanded-content > .ui-treeview-entry {
+	padding-left: 2.5ch;
+	width: auto;
 }
 
-.ui-treeview div[aria-level='2'] + .ui-treeview-expanded-content {
-	margin-left: 3.5ch;
+.ui-treeview div[aria-level='2'] + .ui-treeview-expanded-content > .ui-treeview-entry {
+	padding-left: 3.5ch;
+	width: auto;
 }
 
-.ui-treeview div[aria-level='3'] + .ui-treeview-expanded-content {
-	margin-left: 4.5ch;
+.ui-treeview div[aria-level='3'] + .ui-treeview-expanded-content > .ui-treeview-entry {
+	padding-left: 4.5ch;
+	width: auto;
 }
 
-.ui-treeview div[aria-level='4'] + .ui-treeview-expanded-content {
-	margin-left: 5.5ch;
+.ui-treeview div[aria-level='4'] + .ui-treeview-expanded-content > .ui-treeview-entry {
+	padding-left: 5.5ch;
+	width: auto;
 }
 
-.ui-treeview div[aria-level='5'] + .ui-treeview-expanded-content {
-	margin-left: 6.5ch;
+.ui-treeview div[aria-level='5'] + .ui-treeview-expanded-content > .ui-treeview-entry {
+	padding-left: 6.5ch;
+	width: auto;
 }
 
 .ui-treeview div.ui-treeview-expander {
