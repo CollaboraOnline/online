@@ -4045,7 +4045,7 @@ void DocumentBroker::addSocketToPoll(const std::shared_ptr<StreamSocket>& socket
     _poll->insertNewSocket(socket);
 }
 
-std::shared_ptr<SocketPoll> DocumentBroker::getPoll() const
+std::weak_ptr<SocketPoll> DocumentBroker::getPoll() const
 {
     return _poll;
 }
