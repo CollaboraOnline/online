@@ -221,7 +221,7 @@ static bool getRawConfig(const Poco::Util::AbstractConfiguration& config, const 
 
 template <typename T>
 static T getConfigValue(const Poco::Util::AbstractConfiguration& config, const std::string& name,
-                        const T def)
+                        T def)
 {
     T value = def;
     if (getRawConfig(config, name, value) || getRawConfig(config, name + "[@default]", value))
