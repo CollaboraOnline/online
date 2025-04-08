@@ -1313,15 +1313,15 @@ class TileManager {
 		return !tile || tile.needsFetch();
 	}
 
-	private static pxBoundsToTileRanges(bounds: any, grow: number = 0) {
+	private static pxBoundsToTileRanges(bounds: any) {
 		if (!this.checkPointers()) return null;
 
 		if (!app.map._docLayer._splitPanesContext) {
-			return [this.pxBoundsToTileRange(bounds, grow)];
+			return [this.pxBoundsToTileRange(bounds)];
 		}
 
 		var boundList = app.map._docLayer._splitPanesContext.getPxBoundList(bounds);
-		return boundList.map((x: any) => this.pxBoundsToTileRange(x, grow));
+		return boundList.map((x: any) => this.pxBoundsToTileRange(x));
 	}
 
 	private static updateTileDistance(
@@ -1345,10 +1345,7 @@ class TileManager {
 		zoom: number,
 		isCurrent: boolean = false,
 	) {
-		var tileRanges = this.pxBoundsToTileRanges(
-			pixelBounds,
-			isCurrent ? this.visibleTileExpansion : 0,
-		);
+		var tileRanges = this.pxBoundsToTileRanges(pixelBounds);
 		var queue = [];
 
 		// If we're looking for tiles for the current (visible) area, update tile distance.
@@ -1363,8 +1360,14 @@ class TileManager {
 		// create a queue of coordinates to load tiles from. Rehydrate tiles if we're dealing
 		// with the currently visible area.
 		this.beginTransaction();
+		let dehydratedVisible = false;
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
-			var tileRange = tileRanges[rangeIdx];
+			// Expand the 'current' area to add a small buffer around the visible area that
+			// helps us avoid visible tile updates.
+			const tileRange = isCurrent
+				? this.expandTileRange(tileRanges[rangeIdx])
+				: tileRanges[rangeIdx];
+
 			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
 				for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
 					var coords = new TileCoordData(
@@ -1381,11 +1384,25 @@ class TileManager {
 					var tile = this.tiles[key];
 
 					if (!tile || tile.needsFetch()) queue.push(coords);
-					else if (isCurrent) this.makeTileCurrent(tile);
+					else if (isCurrent && this.makeTileCurrent(tile)) {
+						const tileIsVisible =
+							j >= tileRanges[rangeIdx].min.y &&
+							j <= tileRanges[rangeIdx].max.y &&
+							i >= tileRanges[rangeIdx].min.x &&
+							i <= tileRanges[rangeIdx].max.x;
+						if (tileIsVisible) dehydratedVisible = true;
+					}
 				}
 			}
 		}
-		this.endTransaction(null);
+
+		// If we dehydrated a visible tile, wait for it to be ready before drawing
+		if (dehydratedVisible) {
+			app.sectionContainer.pauseDrawing();
+			this.endTransaction(() => {
+				app.sectionContainer.resumeDrawing();
+			});
+		} else this.endTransaction(null);
 
 		return queue;
 	}
@@ -2108,9 +2125,9 @@ class TileManager {
 			this.initPreFetchPartTiles();
 	}
 
-	public static pxBoundsToTileRange(bounds: any, grow: number = 0) {
+	public static expandTileRange(range: cool.Bounds): cool.Bounds {
+		const grow = this.visibleTileExpansion;
 		const direction = app.sectionContainer.getLastPanDirection();
-
 		const minOffset = new L.Point(
 			grow - grow * this.directionalTileExpansion * Math.min(0, direction[0]),
 			grow - grow * this.directionalTileExpansion * Math.min(0, direction[1]),
@@ -2119,10 +2136,16 @@ class TileManager {
 			grow + grow * this.directionalTileExpansion * Math.max(0, direction[0]),
 			grow + grow * this.directionalTileExpansion * Math.max(0, direction[1]),
 		);
-
 		return new L.Bounds(
-			bounds.min.divideBy(this.tileSize)._floor()._subtract(minOffset),
-			bounds.max.divideBy(this.tileSize)._floor()._add(maxOffset),
+			range.min.subtract(minOffset),
+			range.max.add(maxOffset),
+		);
+	}
+
+	public static pxBoundsToTileRange(bounds: any) {
+		return new L.Bounds(
+			bounds.min.divideBy(this.tileSize)._floor(),
+			bounds.max.divideBy(this.tileSize)._floor(),
 		);
 	}
 
