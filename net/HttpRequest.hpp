@@ -1388,16 +1388,6 @@ public:
         return std::string();
     }
 
-    void disconnect()
-    {
-        LOG_TRC("disconnect");
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
-        if (socket)
-        {
-            socket->shutdownConnection();
-        }
-    }
-
     net::AsyncConnectResult connectionResult()
     {
         return _result;
@@ -2015,15 +2005,6 @@ public:
         if (_socket)
         {
             _socket->shutdown();
-        }
-    }
-
-    void disconnect()
-    {
-        LOG_TRC("disconnect");
-        if (_socket)
-        {
-            _socket->shutdownConnection();
         }
     }
 
