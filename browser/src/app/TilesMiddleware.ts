@@ -412,14 +412,19 @@ class TileManager {
 			if (!tile.hasPendingUpdate()) this.tileReady(tile.coords, visibleRanges);
 		}
 
-		if (this.pendingTransactions === 0)
+		if (this.pendingTransactions <= 0)
 			window.app.console.warn('Unexpectedly received decompressed deltas');
-		else --this.pendingTransactions;
+		else {
+			--this.pendingTransactions;
+			var callback = this.transactionCallbacks.pop();
+			if (callback) callback();
 
-		if (!this.hasPendingTransactions()) {
-			while (this.transactionCallbacks.length) {
-				var callback = this.transactionCallbacks.pop();
-				if (callback) callback();
+			if (this.pendingTransactions === 0 && this.transactionCallbacks.length) {
+				window.app.console.warn('Transaction callback mismatch');
+				while (this.transactionCallbacks.length) {
+					var callback = this.transactionCallbacks.pop();
+					if (callback) callback();
+				}
 			}
 		}
 
