@@ -427,8 +427,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	font-size: var(--header-font-size);
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
-	height: 30px;
-	padding: 5px;
+	height: 54px;
+	padding: 16px;
 	box-sizing: border-box;
 }
 
