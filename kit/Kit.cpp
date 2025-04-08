@@ -4037,13 +4037,11 @@ bool startURP(const std::shared_ptr<lok::Office>& LOKit, void** ppURPContext)
 /// Initializes LibreOfficeKit for cross-fork re-use.
 bool globalPreinit(const std::string &loTemplate)
 {
-    const std::string libSofficeapp = loTemplate + "/program/libsofficeapp.so";
-    const std::string libMerged = loTemplate + "/program/libmergedlo.so";
-
     std::string loadedLibrary;
     // we deliberately don't dlclose handle on success, make it
     // static so static analysis doesn't see this as a leak
     static void *handle;
+    std::string libMerged = loTemplate + "/program/libmergedlo.so";
     if (File(libMerged).exists())
     {
         LOG_TRC("dlopen(" << libMerged << ", RTLD_GLOBAL|RTLD_NOW)");
@@ -4053,10 +4051,11 @@ bool globalPreinit(const std::string &loTemplate)
             LOG_FTL("Failed to load " << libMerged << ": " << dlerror());
             return false;
         }
-        loadedLibrary = libMerged;
+        loadedLibrary = std::move(libMerged);
     }
     else
     {
+        std::string libSofficeapp = loTemplate + "/program/libsofficeapp.so";
         if (File(libSofficeapp).exists())
         {
             LOG_TRC("dlopen(" << libSofficeapp << ", RTLD_GLOBAL|RTLD_NOW)");
@@ -4066,7 +4065,7 @@ bool globalPreinit(const std::string &loTemplate)
                 LOG_FTL("Failed to load " << libSofficeapp << ": " << dlerror());
                 return false;
             }
-            loadedLibrary = libSofficeapp;
+            loadedLibrary = std::move(libSofficeapp);
         }
         else
         {
