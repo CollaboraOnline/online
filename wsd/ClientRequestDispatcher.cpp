@@ -1220,7 +1220,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 
     LOG_TRC("Wopi Access Check request scheme: " << scheme << " " << port);
 
-    const auto sendResult = [this, socket](CheckStatus result)
+    auto sendResult = [this, socket](CheckStatus result)
     {
         std::string output = "{\"status\": \"" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
 
@@ -1361,7 +1361,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         }
 #endif
 
-        sendResult(std::move(status));
+        sendResult(status);
     };
 
     httpProbeSession->setFinishedHandler(std::move(finishHandler));
