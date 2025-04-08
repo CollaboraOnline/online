@@ -177,6 +177,7 @@ protected:
     /// Implementation of the ProtocolHandlerInterface.
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
+        ASSERT_CORRECT_THREAD();
         LOG_ASSERT_MSG(socket, "Invalid socket passed to WebSocketHandler::onConnect");
 
         _socket = socket;
@@ -225,6 +226,7 @@ protected:
 
     void shutdown(bool goingAway, const std::string &statusMessage) override
     {
+        ASSERT_CORRECT_THREAD();
         shutdownImpl(_socket.lock(),
                      goingAway ? WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY :
                      WebSocketHandler::StatusCodes::NORMAL_CLOSE, statusMessage,
@@ -558,6 +560,7 @@ protected:
     /// Implementation of the ProtocolHandlerInterface.
     void handleIncomingMessage(SocketDisposition&) override
     {
+        ASSERT_CORRECT_THREAD();
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
         if constexpr (Util::isMobileApp())
@@ -594,6 +597,7 @@ protected:
     int getPollEvents([[maybe_unused]] std::chrono::steady_clock::time_point now,
                       [[maybe_unused]] int64_t& timeoutMaxMicroS) override
     {
+        ASSERT_CORRECT_THREAD();
 #if !MOBILEAPP
         if (!_isClient)
         {
@@ -657,6 +661,7 @@ public:
     /// Do we need to handle a timeout ?
     bool checkTimeout([[maybe_unused]] std::chrono::steady_clock::time_point now) override
     {
+        ASSERT_CORRECT_THREAD();
 #if !MOBILEAPP
         if (_isClient)
             return false;
@@ -676,12 +681,14 @@ public:
 public:
     void performWrites(std::size_t capacity) override
     {
+        ASSERT_CORRECT_THREAD();
         if (_msgHandler)
             _msgHandler->writeQueuedMessages(capacity);
     }
 
     void onDisconnect() override
     {
+        ASSERT_CORRECT_THREAD();
         if (_msgHandler)
             _msgHandler->onDisconnect();
     }
@@ -700,12 +707,14 @@ public:
     /// Implementation of the ProtocolHandlerInterface.
     int sendTextMessage(const char* msg, const size_t len, bool flush = false) const override
     {
+        ASSERT_CORRECT_THREAD();
         return sendMessage(msg, len, WSOpCode::Text, flush);
     }
 
     /// Implementation of the ProtocolHandlerInterface.
     int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const override
     {
+        ASSERT_CORRECT_THREAD();
         return sendMessage(data, len, WSOpCode::Binary, flush);
     }
 
@@ -729,6 +738,7 @@ public:
 
     bool processInputEnabled() const override
     {
+        ASSERT_CORRECT_THREAD();
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
             return socket->processInputEnabled();

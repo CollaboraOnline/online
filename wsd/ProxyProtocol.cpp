@@ -256,12 +256,14 @@ int ProxyProtocolHandler::sendMessage(const char *msg, const size_t len, bool te
 
 int ProxyProtocolHandler::sendTextMessage(const char *msg, const size_t len, bool flush) const
 {
+    ASSERT_CORRECT_THREAD();
     LOG_TRC("ProxyHack - send text msg " + std::string(msg, len));
     return const_cast<ProxyProtocolHandler *>(this)->sendMessage(msg, len, true, flush);
 }
 
 int ProxyProtocolHandler::sendBinaryMessage(const char *data, const size_t len, bool flush) const
 {
+    ASSERT_CORRECT_THREAD();
     LOG_TRC("ProxyHack - send binary msg len " << len);
     return const_cast<ProxyProtocolHandler *>(this)->sendMessage(data, len, false, flush);
 }
@@ -295,6 +297,7 @@ void ProxyProtocolHandler::dumpProxyState(std::ostream& os)
 int ProxyProtocolHandler::getPollEvents(std::chrono::steady_clock::time_point /* now */,
                                         int64_t &/* timeoutMaxMs */)
 {
+    ASSERT_CORRECT_THREAD();
     int events = POLLIN;
     if (_msgHandler && _msgHandler->hasQueuedMessages())
         events |= POLLOUT;
@@ -312,6 +315,7 @@ bool ProxyProtocolHandler::slurpHasMessages(std::size_t capacity)
 
 void ProxyProtocolHandler::performWrites(std::size_t capacity)
 {
+    ASSERT_CORRECT_THREAD();
     if (!slurpHasMessages(capacity))
         return;
 
