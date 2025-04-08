@@ -71,9 +71,7 @@
 //
 // http::Session is the primary class that is
 // used for all requests. It is created for a
-// specific host. Because http::Session is
-// designed to be reusable, the connection itself
-// can also be reused, improving efficiency.
+// specific host.
 //
 // An http::Session takes an http::Request and,
 // only after initiating a new request, access
@@ -1314,10 +1312,7 @@ public:
     }
 
     /// Start an asynchronous request on the given SocketPoll.
-    /// Return true when it dispatches the socket to the SocketPoll.
-    /// Note: when reusing this Session, it is assumed that the socket
-    /// is already added to the SocketPoll on a previous call (do not
-    /// use multiple SocketPoll instances on the same Session).
+    /// Note: Sessions are not reusable, create a new one per request.
     void asyncRequest(const Request& req, const std::shared_ptr<SocketPoll>& poll)
     {
         LOG_TRC("new asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
@@ -1325,17 +1320,9 @@ public:
 
         newRequest(req);
 
-        if (!isConnected())
-        {
-            asyncConnect(poll);
-        }
-        else
-        {
-            // Technically, there is a race here. The socket can
-            // get disconnected and removed right after isConnected.
-            // In that case, we will timeout and no request will be sent.
-            poll->wakeup();
-        }
+        assert(!isConnected() && _socket.expired());
+
+        asyncConnect(poll);
 
         LOG_DBG("starting asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                           << req.getUrl());
@@ -1441,7 +1428,8 @@ private:
 
         assert(!!_response && "Response must be set!");
 
-        if (!isConnected())
+        assert(!isConnected() && _socket.expired());
+
         {
             std::shared_ptr<StreamSocket> socket = connect();
             if (!socket)
@@ -1722,7 +1710,7 @@ private:
 
     void asyncConnectFailed(net::AsyncConnectResult result)
     {
-        assert(!_socket.use_count());
+        assert(_socket.expired());
         _result = result;
 
         LOG_ERR("Failed to connect to " << _host << ':' << _port);
@@ -1743,7 +1731,7 @@ private:
 
     void asyncConnect(const std::weak_ptr<SocketPoll>& poll)
     {
-        _socket.reset(); // Reset to make sure we are disconnected.
+        assert(_socket.expired());
 
         auto pushConnectCompleteToPoll =
             [this, poll](std::shared_ptr<StreamSocket> socket, net::AsyncConnectResult result)
