@@ -171,7 +171,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		cy.cGet('#response-ok').click();
 		helper.waitUntilIdle('#mobile-wizard-content', undefined);
 
-		cy.cGet('#comment-container-1').click();
+		cy.cGet('#comment-container-1').should('exist').click();
 		cy.cGet('#comment-container-2').should('exist');
 		cy.cGet('#annotation-content-area-2 a')
 			.should('exist')
