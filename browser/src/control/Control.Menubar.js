@@ -390,8 +390,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		presentation: [
@@ -566,8 +565,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		drawing: [
@@ -703,8 +701,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		spreadsheet: [
@@ -993,8 +990,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		mobiletext:  [
