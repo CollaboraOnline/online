@@ -3279,8 +3279,7 @@ public:
     void dumpState(std::ostream& os) const
     {
         // FIXME: add some stop-world magic before doing the dump(?)
-        Socket::InhibitThreadChecks = true;
-        SocketPoll::InhibitThreadChecks = true;
+        ThreadChecks::Inhibit = true;
 
         std::string version, hash;
         Util::getVersionInfo(version, hash);
@@ -3388,8 +3387,7 @@ public:
 
         os << "\nDone COOLWSDServer state dumping.\n";
 
-        Socket::InhibitThreadChecks = false;
-        SocketPoll::InhibitThreadChecks = false;
+        ThreadChecks::Inhibit = false;
     }
 
 private:
@@ -3930,8 +3928,7 @@ int COOLWSD::innerMain()
     }
 
     // Disable thread checking - we'll now cleanup lots of things if we can
-    Socket::InhibitThreadChecks = true;
-    SocketPoll::InhibitThreadChecks = true;
+    ThreadChecks::Inhibit = true;
 
     // Wait for the DocumentBrokers. They must be saving/uploading now.
     // Do not stop them! Otherwise they might not save/upload the document.
@@ -4064,8 +4061,7 @@ void COOLWSD::cleanup([[maybe_unused]] int returnValue)
 
         TraceDumper.reset();
 
-        Socket::InhibitThreadChecks = true;
-        SocketPoll::InhibitThreadChecks = true;
+        ThreadChecks::Inhibit = true;
 
         // Delete these while the static Admin instance is still alive.
         {

@@ -132,13 +132,17 @@ private:
 
 class SocketThreadOwnerChange;
 
+namespace ThreadChecks
+{
+    extern std::atomic<bool> Inhibit;
+}
+
 /// A non-blocking, streaming socket.
 class Socket
 {
 public:
     static constexpr int DefaultSendBufferSize = 16 * 1024;
     static constexpr int MaximumSendBufferSize = 128 * 1024;
-    static std::atomic<bool> InhibitThreadChecks;
 
     enum class Type : uint8_t { IPv4, IPv6, All, Unix };
     static constexpr std::string_view toString(Type t);
@@ -383,7 +387,7 @@ public:
     /// Asserts in the debug builds, otherwise just logs.
     void assertCorrectThread(const char* fileName = "", int lineNo = 0) const
     {
-        if (!InhibitThreadChecks)
+        if (!ThreadChecks::Inhibit)
             Util::assertCorrectThread(_owner, fileName, lineNo);
     }
 
@@ -758,7 +762,6 @@ public:
 
     /// Default poll time - useful to increase for debugging.
     static constexpr std::chrono::microseconds DefaultPollTimeoutMicroS = std::chrono::seconds(64);
-    static std::atomic<bool> InhibitThreadChecks;
 
     /// Stop the polling thread.
     void stop()
@@ -808,7 +811,7 @@ public:
     /// Asserts in the debug builds, otherwise just logs.
     void assertCorrectThread(const char* fileName = "?", int lineNo = 0) const
     {
-        if (!InhibitThreadChecks && isAlive())
+        if (!ThreadChecks::Inhibit && isAlive())
             Util::assertCorrectThread(_owner, fileName, lineNo);
     }
 
