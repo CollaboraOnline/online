@@ -315,8 +315,8 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	background-color: transparent;
 }
 #NavigatorPanel .ui-treeview-icon {
-	width: var(--btn-size-s);
-	height: var(--btn-size-s);
+	width: var(--btn-img-size-s);
+	height: var(--btn-img-size-s);
 }
 #NavigatorPanel div.selected {
 	background-color: var(--color-background-dark);
