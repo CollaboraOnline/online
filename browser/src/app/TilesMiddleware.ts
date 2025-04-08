@@ -236,7 +236,12 @@ class TileManager {
 	private static debugDeltasDetail: boolean = false;
 	private static tiles: any = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
 	public static tileSize: number = 256;
-	public static visibleTileExpansion: number = 2;
+
+	// The tile distance around the visible tile area that will be requested when updating
+	private static visibleTileExpansion: number = 1;
+	// The tile expansion ratio that the visible tile area will be expanded towards when
+	// updating during scrolling
+	private static directionalTileExpansion: number = 2;
 
 	//private static _debugTime: any = {}; Reserved for future.
 
@@ -2106,22 +2111,18 @@ class TileManager {
 	public static pxBoundsToTileRange(bounds: any, grow: number = 0) {
 		const direction = app.sectionContainer.getLastPanDirection();
 
-		const growSize = new L.Point(
-			grow * (1.0 + Math.abs(direction[0])),
-			grow * (1.0 + Math.abs(direction[1])),
+		const minOffset = new L.Point(
+			grow - grow * this.directionalTileExpansion * Math.min(0, direction[0]),
+			grow - grow * this.directionalTileExpansion * Math.min(0, direction[1]),
 		);
-		const translate = new L.Point(
-			grow * 2.0 * direction[0],
-			grow * 2.0 * direction[1],
+		const maxOffset = new L.Point(
+			grow + grow * this.directionalTileExpansion * Math.max(0, direction[0]),
+			grow + grow * this.directionalTileExpansion * Math.max(0, direction[1]),
 		);
 
 		return new L.Bounds(
-			bounds.min
-				.divideBy(this.tileSize)
-				.floor()
-				._subtract(growSize)
-				.add(translate),
-			bounds.max.divideBy(this.tileSize).floor()._add(growSize).add(translate),
+			bounds.min.divideBy(this.tileSize)._floor()._subtract(minOffset),
+			bounds.max.divideBy(this.tileSize)._floor()._add(maxOffset),
 		);
 	}
 
