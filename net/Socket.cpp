@@ -1002,8 +1002,11 @@ void SocketDisposition::execute()
             _socketMove(_socket);
         } else {
             assert (isTransfer());
-            // Ensure the thread is running before adding callback.
-            _toPoll->startThread();
+            if (!_toPoll->isRunOnClientThread())
+            {
+                // Ensure the thread is running before adding callback.
+                _toPoll->startThread();
+            }
             _toPoll->addCallback([pollCopy = _toPoll, socket = _socket, socketMoveFn = std::move(_socketMove)]()
                 {
                     pollCopy->insertNewSocket(socket);
