@@ -951,6 +951,11 @@ public:
         return false;
     }
 
+    bool isRunOnClientThread() const
+    {
+        return _runOnClientThread;
+    }
+
     void disableWatchdog();
     void enableWatchdog();
 
