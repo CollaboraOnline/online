@@ -54,11 +54,13 @@ L.Map.Welcome = L.Handler.extend({
 	},
 
 	shouldWelcome: function () {
-		var storedVersion = window.prefs.get('WSDWelcomeVersion');
-		var currentVersion = app.socket.WSDServer.Version;
-		var welcomeDisabledCookie = window.prefs.getBoolean('WSDWelcomeDisabled');
-		var welcomeDisabledDate = window.prefs.get('WSDWelcomeDisabledDate').replaceAll('-', ' ');
-		var isWelcomeDisabled = false;
+		let storedVersion = window.prefs.get('WSDWelcomeVersion');
+		let currentVersion = app.socket.WSDServer.Version;
+		let welcomeDisabledCookie = window.prefs.getBoolean('WSDWelcomeDisabled');
+		let welcomeDisabledDate = window.prefs.get('WSDWelcomeDisabledDate');
+		if (welcomeDisabledDate)
+			welcomeDisabledDate = welcomeDisabledDate.replaceAll('-', ' ');
+		let isWelcomeDisabled = false;
 
 		if (welcomeDisabledCookie && welcomeDisabledDate) {
 			// Check if we are still in the same day
