@@ -1108,6 +1108,7 @@ void WhiteBoxTests::testThreadPool()
 //    const size_t existingUnrelatedThreads = Util::getCurrentThreadCount();
     // coverity[tainted_data_argument : FALSE] - we trust this variable in tests
     setenv("MAX_CONCURRENCY","8",1);
+    // coverity[tainted_argument] : don't warn that getenv("MAX_CONCURRENCY") is tainted
     ThreadPool pool;
     LOK_ASSERT_EQUAL(int(8), pool._maxConcurrency);
     LOK_ASSERT_EQUAL(size_t(7), pool._threads.size());
