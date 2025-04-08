@@ -1539,6 +1539,8 @@ private:
 
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
+        ASSERT_CORRECT_THREAD();
+
         if (socket)
         {
             _fd = socket->getFD();
@@ -1576,6 +1578,7 @@ private:
     int getPollEvents(std::chrono::steady_clock::time_point /*now*/,
                       int64_t& /*timeoutMaxMicroS*/) override
     {
+        ASSERT_CORRECT_THREAD();
         int events = POLLIN;
         if (_request.stage() != Request::Stage::Finished)
             events |= POLLOUT;
@@ -1585,6 +1588,7 @@ private:
     void handleIncomingMessage(SocketDisposition& disposition) override
     {
         LOG_TRC("handleIncomingMessage");
+        ASSERT_CORRECT_THREAD();
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (isConnected() && socket)
         {
@@ -1622,6 +1626,7 @@ private:
 
     void performWrites(std::size_t capacity) override
     {
+        ASSERT_CORRECT_THREAD();
         // We may get called after disconnecting and freeing the Socket instance.
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
@@ -1670,6 +1675,7 @@ private:
     // result while it is still available
     void onHandshakeFail() override
     {
+        ASSERT_CORRECT_THREAD();
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
         {
@@ -1683,6 +1689,7 @@ private:
 
     void onDisconnect() override
     {
+        ASSERT_CORRECT_THREAD();
         // Make sure the socket is disconnected and released.
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
@@ -1702,6 +1709,7 @@ private:
 
     std::shared_ptr<StreamSocket> connect()
     {
+        ASSERT_CORRECT_THREAD();
         _socket.reset(); // Reset to make sure we are disconnected.
         std::shared_ptr<StreamSocket> socket =
             net::connect(_host, _port, isSecure(), shared_from_this());
@@ -1725,6 +1733,7 @@ private:
 
     void asyncConnectSuccess(const std::shared_ptr<StreamSocket> &socket, net::AsyncConnectResult result)
     {
+        ASSERT_CORRECT_THREAD();
         assert(socket && _fd == socket->getFD() && "The socket FD must have been set in onConnect");
 
         _socket = socket; // Hold a weak pointer to it.
@@ -1737,6 +1746,7 @@ private:
 
     void asyncConnect(const std::weak_ptr<SocketPoll>& poll)
     {
+        ASSERT_CORRECT_THREAD();
         _socket.reset(); // Reset to make sure we are disconnected.
 
         auto pushConnectCompleteToPoll =
@@ -1774,6 +1784,7 @@ private:
 
     bool checkTimeout(std::chrono::steady_clock::time_point now) override
     {
+        ASSERT_CORRECT_THREAD();
         if (!_response || _response->done())
             return false;
 
@@ -2037,6 +2048,7 @@ public:
 private:
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
+        ASSERT_CORRECT_THREAD();
         _connected = false; // Assume disconnected by default.
         _socket = socket;
         if (socket)
@@ -2090,6 +2102,7 @@ private:
     int getPollEvents(std::chrono::steady_clock::time_point /*now*/,
                       int64_t& /*timeoutMaxMicroS*/) override
     {
+        ASSERT_CORRECT_THREAD();
         int events = POLLIN;
         if (_fd >= 0 || _pos >= 0)
             events |= POLLOUT;
@@ -2098,6 +2111,7 @@ private:
 
     void handleIncomingMessage(SocketDisposition& /*disposition*/) override
     {
+        ASSERT_CORRECT_THREAD();
         if (!isConnected())
         {
             LOG_ERR("handleIncomingMessage called when not connected.");
@@ -2111,6 +2125,7 @@ private:
 
     void performWrites(std::size_t capacity) override
     {
+        ASSERT_CORRECT_THREAD();
         // We may get called after disconnecting and freeing the Socket instance.
         if (_socket)
         {
@@ -2154,6 +2169,7 @@ private:
 
     void onDisconnect() override
     {
+        ASSERT_CORRECT_THREAD();
         // Make sure the socket is disconnected and released.
         if (_socket)
         {
