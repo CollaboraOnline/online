@@ -66,8 +66,10 @@
 constexpr std::chrono::microseconds SocketPoll::DefaultPollTimeoutMicroS;
 constexpr std::chrono::microseconds WebSocketHandler::InitialPingDelayMicroS;
 
-std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
-std::atomic<bool> Socket::InhibitThreadChecks(false);
+namespace ThreadChecks
+{
+    std::atomic<bool> Inhibit(false);
+}
 
 std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
@@ -335,7 +337,7 @@ SocketPoll::~SocketPoll()
 
 void SocketPoll::checkAndReThread()
 {
-    if (InhibitThreadChecks)
+    if (ThreadChecks::Inhibit)
         return; // in late shutdown
     const std::thread::id us = std::this_thread::get_id();
     if (_owner == us)
