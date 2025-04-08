@@ -1070,7 +1070,7 @@ public:
         std::string childIndent = indent + '\t';
         Util::joinPair(os, _header, childIndent);
         os << indent;
-        Util::dumpHex(os, _body, "\tbody:\n", Util::replace(childIndent, "\n", "").c_str());
+        Util::dumpHex(os, _body, "\tbody:\n", Util::replace(std::move(childIndent), "\n", "").c_str());
     }
 
 private:
