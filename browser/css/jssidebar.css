@@ -436,7 +436,6 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 .close-navigation-wrapper {
 	display: flex;
-	margin: 8px 4px;
 	box-sizing: border-box;
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
@@ -444,8 +443,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 /* Close Button Styling */
 .close-navigation-button {
-	width: var(--btn-size-s);
-	height: var(--btn-size-s);
+	width: var(--btn-img-size);
+	height: var(--btn-img-size);
 	background-image: url('images/closedoc.svg');
 	background-repeat: no-repeat;
 	background-size: contain;
