@@ -260,19 +260,19 @@ static std::string getPathFromConfig(const Poco::Util::AbstractConfiguration& co
 
 /// Returns the value of the specified application configuration,
 /// or the default, if one doesn't exist.
-template <typename T> static T getConfigValue(const std::string& name, const T def)
+template <typename T> static T getConfigValue(const std::string& name, T def)
 {
     if (Util::isFuzzing())
     {
         return def;
     }
 
-    return getConfigValue(Poco::Util::Application::instance().config(), name, def);
+    return getConfigValue(Poco::Util::Application::instance().config(), name, std::move(def));
 }
 
 /// Returns the value of the specified application configuration,
 /// or the default, if one doesn't exist.
-template <typename T> static T getConfigValueNonZero(const std::string& name, const T def)
+template <typename T> static T getConfigValueNonZero(const std::string& name, T def)
 {
     static_assert(std::is_integral<T>::value, "Meaningless on non-integral types");
 
