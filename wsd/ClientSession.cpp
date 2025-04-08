@@ -435,8 +435,8 @@ void ClientSession::onTileProcessed(TileWireId wireId)
 namespace
 {
 std::shared_ptr<http::Session>
-makeSignatureActionSession(const std::shared_ptr<ClientSession> clientSession,
-                           const std::string& commandName, const std::string& requestUrl)
+makeSignatureActionSession(std::shared_ptr<ClientSession> clientSession,
+                           std::string commandName, const std::string& requestUrl)
 {
     // Create the session and set a finished callback
     std::shared_ptr<http::Session> httpSession = http::Session::create(requestUrl);
@@ -446,7 +446,9 @@ makeSignatureActionSession(const std::shared_ptr<ClientSession> clientSession,
         return nullptr;
     }
 
-    http::Session::FinishedCallback finishedCallback = [clientSession, commandName](const std::shared_ptr<http::Session>& session)
+    http::Session::FinishedCallback finishedCallback =
+        [clientSession = std::move(clientSession),
+         commandName = std::move(commandName)](const std::shared_ptr<http::Session>& session)
     {
         const std::shared_ptr<const http::Response> httpResponse = session->response();
         Poco::JSON::Object::Ptr resultArguments = new Poco::JSON::Object();
@@ -476,7 +478,6 @@ makeSignatureActionSession(const std::shared_ptr<ClientSession> clientSession,
 
 bool ClientSession::handleSignatureAction(const StringVector& tokens)
 {
-    const std::string commandName = tokens[1];
     // Make the HTTP session: this requires an URL
     Poco::JSON::Object::Ptr serverPrivateInfoObject = new Poco::JSON::Object();
     if (!JsonUtil::parseJSON(getServerPrivateInfo(), serverPrivateInfoObject))
@@ -486,6 +487,7 @@ bool ClientSession::handleSignatureAction(const StringVector& tokens)
     }
     std::string requestUrl;
     JsonUtil::findJSONValue(serverPrivateInfoObject, "ESignatureBaseUrl", requestUrl);
+    std::string commandName = tokens[1];
     if (commandName == ".uno:PrepareSignature")
     {
         requestUrl += "/api/signatures/prepare-files-for-signing";
@@ -494,7 +496,8 @@ bool ClientSession::handleSignatureAction(const StringVector& tokens)
     {
         requestUrl += "/api/signatures/download-signed-file";
     }
-    std::shared_ptr<http::Session> httpSession = makeSignatureActionSession(client_from_this(), commandName, requestUrl);
+    std::shared_ptr<http::Session> httpSession =
+        makeSignatureActionSession(client_from_this(), std::move(commandName), requestUrl);
     if (!httpSession)
     {
         return false;
