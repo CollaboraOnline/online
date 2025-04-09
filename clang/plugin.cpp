@@ -151,6 +151,56 @@ public:
     }
 };
 
+/// only "SocketPoll" should have std::shared_ptr<Socket> as a member.
+/// Everything else should have std::weak_ptr<Socket> of those.
+class SocketPollCheck : public clang::ast_matchers::MatchFinder::MatchCallback
+{
+public:
+    void run(const clang::ast_matchers::MatchFinder::MatchResult& result) override
+    {
+        const clang::FieldDecl* fieldDecl =
+            result.Nodes.getNodeAs<clang::FieldDecl>("fieldDecl");
+
+        clang::SourceManager& sourceManager = result.Context->getSourceManager();
+        if (sourceManager.isInSystemHeader(fieldDecl->getLocation()))
+        {
+            return;
+        }
+        auto recordDecl = fieldDecl->getParent();
+        if (recordDecl && recordDecl->getIdentifier()
+            && (recordDecl->getName() == "SocketPoll" || recordDecl->getName() == "SocketDisposition"))
+        {
+            return;
+        }
+
+        clang::SourceRange range(fieldDecl->getLocation());
+        clang::SourceLocation location(range.getBegin());
+
+        // we trust the code in here
+        if (sourceManager.getFilename(location).ends_with("Socket.cpp"))
+        {
+            return;
+        }
+
+        report(result.Context, "Only SocketPoll can have std::shared_ptr<Socket> as a member. Everything else should have std::weak_ptr<Socket>",
+               location, "socketPoll")
+            << range;
+    }
+
+    static clang::ast_matchers::DeclarationMatcher makeMatcher()
+    {
+        using namespace clang::ast_matchers;
+        return fieldDecl(
+                    hasType(
+                        classTemplateSpecializationDecl(
+                            hasAnyTemplateArgument(
+                                refersToType(
+                                    recordType(
+                                        hasDeclaration(
+                                            cxxRecordDecl(isSameOrDerivedFrom("Socket")))))))))
+            .bind("fieldDecl");
+    }
+};
 
 /// Builds a list of checks to be executed.
 class CheckRegistry
@@ -160,6 +210,7 @@ public:
     {
         _finder.addMatcher(CaptureCheck::makeMatcher(), &_captureCheck);
         _finder.addMatcher(RefcountingCheck::makeMatcher(), &_refcountingCheck);
+        _finder.addMatcher(SocketPollCheck::makeMatcher(), &_socketPollCheck);
     }
 
     std::unique_ptr<ASTConsumer> makeASTConsumer() { return _finder.newASTConsumer(); }
@@ -168,6 +219,7 @@ private:
     clang::ast_matchers::MatchFinder _finder;
     CaptureCheck _captureCheck;
     RefcountingCheck _refcountingCheck;
+    SocketPollCheck _socketPollCheck;
 };
 
 /// Connects CheckRegistry to an already existing compiler instance.
