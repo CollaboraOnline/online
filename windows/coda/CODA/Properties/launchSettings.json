@@ -6,7 +6,7 @@
         "SAL_LOG": "+INFO+WARN-INFO.sal.bootstrap-INFO.i18nlangtag-INFO.vcl.fonts-INFO.vcl.gdi.fontmetric-INFO.cppu-INFO.salhelper.thread-INFO.drawinglayer-INFO.vcl.schedule-WARN.xmloff-WARN.unotools.config-WARN.legacy.tools"
       },
       "nativeDebugging": true,
-      "jsWebView2Debugging": false
+      "jsWebView2Debugging": true
     }
   }
 }
