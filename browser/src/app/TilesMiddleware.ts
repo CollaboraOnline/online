@@ -227,7 +227,6 @@ class TileManager {
 	private static pendingDeltas: any = [];
 	private static transactionCallbacks: any = [];
 	private static worker: any;
-	private static gcCounter = 0; // Tile garbage collection counter
 	private static nullDeltaUpdate = 0;
 	private static queuedProcessed: any = [];
 	private static fetchKeyframeQueue: any = []; // Queue of tiles which were GC'd earlier than coolwsd expected
@@ -309,9 +308,6 @@ class TileManager {
 			highTileCount = 0;
 			lowTileCount = 0;
 		}
-
-		if (this.debugDeltas)
-			window.app.console.log('Garbage collect! iter: ' + this.gcCounter++);
 
 		/* uncomment to exercise me harder. */
 		/* highNumBitmaps = 3; lowNumBitmaps = 2;
