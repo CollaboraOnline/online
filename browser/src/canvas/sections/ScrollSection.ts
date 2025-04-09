@@ -1171,6 +1171,9 @@ export class ScrollSection extends CanvasSectionObject {
 			&& !this.sectionProperties.scrollAnimationDisableTimeout
 			&& Math.max(Math.abs(hscroll), Math.abs(vscroll)) % 1 === 0;
 
+		hscroll *= app.dpiScale;
+		vscroll *= app.dpiScale;
+		
 		if (shouldAnimate)
 			this.animateScroll([hscroll, vscroll]);
 		else {
