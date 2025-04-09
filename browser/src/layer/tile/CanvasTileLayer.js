@@ -262,7 +262,6 @@ L.TileSectionManager = L.Class.extend({
 	_addSplitsSection: function () {
 		const splitSection = new app.definitions.splitSection();
 		app.sectionContainer.addSection(splitSection);
-		app.sectionContainer.reNewAllSections(true);
 	},
 
 	_removeSplitsSection: function () {
@@ -272,38 +271,31 @@ L.TileSectionManager = L.Class.extend({
 			section.sectionProperties.strokeStyle = '#c0c0c0';
 		}
 		app.sectionContainer.removeSection(L.CSections.Debug.Splits.name);
-		app.sectionContainer.reNewAllSections(true);
 	},
 
 	// Debug tool
 	_addTilePixelGridSection: function () {
 		app.sectionContainer.addSection(new app.definitions.pixelGridSection());
-		app.sectionContainer.reNewAllSections(true);
 	},
 
 	_removeTilePixelGridSection: function () {
 		app.sectionContainer.removeSection(L.CSections.Debug.TilePixelGrid.name);
-		app.sectionContainer.reNewAllSections(true);
 	},
 
 	_addDebugOverlaySection: function () {
 		app.sectionContainer.addSection(new app.definitions.debugOverlaySection(this._map._debug));
-		app.sectionContainer.reNewAllSections(true);
 	},
 
 	_removeDebugOverlaySection: function () {
 		app.sectionContainer.removeSection(L.CSections.Debug.DebugOverlay.name);
-		app.sectionContainer.reNewAllSections(true);
 	},
 
 	_addPreloadMap: function () {
 		app.sectionContainer.addSection(new app.definitions.preloadMapSection());
-		app.sectionContainer.reNewAllSections(true);
 	},
 
 	_removePreloadMap: function () {
 		app.sectionContainer.removeSection(L.CSections.Debug.PreloadMap.name);
-		app.sectionContainer.reNewAllSections(true);
 	},
 
 	update: function () {
