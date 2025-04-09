@@ -272,7 +272,7 @@ function selectCellsInRange(range) {
 function openAutoFilterMenu(secondColumn) {
 	cy.log('>> openAutoFilterMenu - start');
 
-	let XPos = 95;
+	let XPos = 90;
 	let YPos = 10;
 
 	if (secondColumn) {
