@@ -1542,7 +1542,7 @@ class TileManager {
 
 	private static pixelCoordsToTwipTileBounds(coords: TileCoordData): number[] {
 		// We need to calculate pixelsToTwips for the scale of this tile. 15 is the ratio between pixels and twips when the scale is 1.
-		const pixelsToTwipsForTile = 15 / coords.scale;
+		const pixelsToTwipsForTile = 15 / app.dpiScale / coords.scale;
 		const x = coords.x * pixelsToTwipsForTile;
 		const y = coords.y * pixelsToTwipsForTile;
 		const width = app.tile.size.pX * pixelsToTwipsForTile;
