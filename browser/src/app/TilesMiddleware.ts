@@ -535,7 +535,7 @@ class TileManager {
 						);
 				}
 
-				this.applyDelta(
+				const deltaApplied = this.applyDelta(
 					tile,
 					e.rawDelta,
 					deltas,
@@ -544,10 +544,12 @@ class TileManager {
 					e.wireMessage,
 				);
 
-				bitmaps.push(
-					createImageBitmap(tile.imgDataCache, { premultiplyAlpha: 'none' }),
-				);
-				pendingDeltas.push(e);
+				if (deltaApplied) {
+					bitmaps.push(
+						createImageBitmap(tile.imgDataCache, { premultiplyAlpha: 'none' }),
+					);
+					pendingDeltas.push(e);
+				}
 			}
 
 			Promise.all(bitmaps).then((bitmaps) => {
@@ -1004,7 +1006,7 @@ class TileManager {
 		keyframeDeltaSize: any,
 		keyframeImage: any,
 		wireMessage: any,
-	) {
+	): boolean {
 		// 'Uint8Array' rawDelta
 
 		if (this.debugDeltas)
@@ -1043,7 +1045,7 @@ class TileManager {
 				if (app.map._debug.tileDataOn) {
 					app.map._debug.tileDataAddUpdate();
 				}
-				return; // that was easy
+				return false; // that was easy
 			} else {
 				tile.deltaCount++;
 				if (app.map._debug.tileDataOn) {
@@ -1067,7 +1069,7 @@ class TileManager {
 			window.app.console.warn(
 				'Unusual: attempt to append a delta when we have no keyframe.',
 			);
-			return;
+			return false;
 		} // assume we already have a delta.
 		else {
 			// FIXME: this is not beautiful; but no concatenate here.
@@ -1109,7 +1111,7 @@ class TileManager {
 				window.app.console.error(
 					'Trying to apply delta with no ImageData cache',
 				);
-				return;
+				return false;
 			}
 
 			// copy old data to work from:
@@ -1141,6 +1143,8 @@ class TileManager {
 		tile.imgDataCache = imgData;
 
 		if (traceEvent) traceEvent.finish();
+
+		return true;
 	}
 
 	private static removeTile(key: string) {
@@ -2125,7 +2129,8 @@ class TileManager {
 							e.data.tileSize,
 							e.data.tileSize,
 						);
-					this.applyDelta(
+
+					const deltaApplied = this.applyDelta(
 						tile,
 						x.rawDelta,
 						x.deltas,
@@ -2134,10 +2139,14 @@ class TileManager {
 						x.wireMessage,
 					);
 
-					bitmaps.push(
-						createImageBitmap(tile.imgDataCache, { premultiplyAlpha: 'none' }),
-					);
-					pendingDeltas.push(x);
+					if (deltaApplied) {
+						bitmaps.push(
+							createImageBitmap(tile.imgDataCache, {
+								premultiplyAlpha: 'none',
+							}),
+						);
+						pendingDeltas.push(x);
+					}
 				}
 
 				Promise.all(bitmaps).then((bitmaps) => {
