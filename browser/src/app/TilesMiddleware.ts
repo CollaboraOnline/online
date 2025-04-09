@@ -1331,8 +1331,17 @@ class TileManager {
 
 	private static updateTileDistance(
 		tile: Tile,
+		zoom: number,
 		visibleRanges: any | null = null,
 	) {
+		if (
+			tile.coords.z !== zoom ||
+			tile.coords.part !== app.map._docLayer._selectedPart ||
+			tile.coords.mode !== app.map._docLayer._selectedMode
+		) {
+			tile.distanceFromView = Number.MAX_SAFE_INTEGER;
+			return;
+		}
 		if (!visibleRanges) visibleRanges = this.getVisibleRanges();
 		const tileBounds = new L.Bounds(
 			[tile.coords.x, tile.coords.y],
@@ -1359,7 +1368,7 @@ class TileManager {
 				? app.map._docLayer._splitPanesContext.getPxBoundList(pixelBounds)
 				: [pixelBounds];
 			for (const key in this.tiles)
-				this.updateTileDistance(this.tiles[key], currentBounds);
+				this.updateTileDistance(this.tiles[key], zoom, currentBounds);
 		}
 
 		// create a queue of coordinates to load tiles from. Rehydrate tiles if we're dealing
@@ -1446,6 +1455,7 @@ class TileManager {
 
 		// If these aren't current tiles, calculate the visible ranges to update tile distance.
 		const visibleRanges = isCurrent ? null : this.getVisibleRanges();
+		const zoom = Math.round(app.map.getZoom());
 
 		// Ensure tiles exist for requested coordinates
 		for (let i = 0; i < coordsQueue.length; i++) {
@@ -1456,7 +1466,7 @@ class TileManager {
 				tile = this.createTile(coordsQueue[i], key);
 
 				// Newly created tiles have a distance of zero, which means they're current.
-				if (!isCurrent) this.updateTileDistance(tile, visibleRanges);
+				if (!isCurrent) this.updateTileDistance(tile, zoom, visibleRanges);
 			}
 		}
 
@@ -1571,7 +1581,7 @@ class TileManager {
 				(invalidatedRectangle.intersectsRectangle(tileRectangle) ||
 					(calc && !this.tileZoomIsCurrent(coords))) // In calc, we invalidate all tiles with different zoom levels.
 			) {
-				if (this.tiles[key].current) needsNewTiles = true;
+				if (this.tiles[key].distanceFromView === 0) needsNewTiles = true;
 
 				this.invalidateTile(key, wireId);
 			}
@@ -1875,7 +1885,7 @@ class TileManager {
 
 		if (!tile) {
 			tile = this.createTile(coords, key);
-			this.updateTileDistance(tile);
+			this.updateTileDistance(tile, Math.round(app.map.getZoom()));
 		}
 
 		tile.viewId = tileMsgObj.nviewid;
@@ -2099,18 +2109,6 @@ class TileManager {
 
 		var pixelBounds = app.map.getPixelBoundsCore(center, zoom);
 
-		// mark tiles not matching our part & mode as not being current
-		for (key in this.tiles) {
-			var thiscoords = TileCoordData.keyToTileCoords(key);
-			if (
-				thiscoords.z !== zoom ||
-				thiscoords.part !== app.map._docLayer._selectedPart ||
-				thiscoords.mode !== app.map._docLayer._selectedMode
-			) {
-				this.tiles[key].current = false;
-			}
-		}
-
 		// create a queue of coordinates to load tiles from
 		const queue = this.getMissingTiles(pixelBounds, zoom, true);
 
@@ -2285,8 +2283,9 @@ class TileManager {
 
 			this.sortFileBasedQueue(queue);
 
-			for (i = 0; i < this.tiles.length; i++) {
-				this.tiles[i].current = false; // Visible ones's "current" property will be set to true below.
+			for (const key in this.tiles) {
+				// Visible tiles' distance property will be set zero below by makeTileCurrent.
+				this.tiles[key].distanceFromView = Number.MAX_SAFE_INTEGER;
 			}
 
 			this.beginTransaction();
