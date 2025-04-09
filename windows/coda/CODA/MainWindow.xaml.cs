@@ -232,14 +232,14 @@ namespace CODA
                 // FIXME: Temporarily when running from <repo>/windows/coda/CODA/bin/Debug/net8.0-windows.
 
                 // FIXME: Even more temporarily, just use hardcoded pathnames on tml's machine to make debugging the JS easier.
-                if (true)
+                if (false)
                 {
                     webView.CoreWebView2.SetVirtualHostNameToFolderMapping("appassets", "..\\..\\..\\..\\..\\..\\browser\\dist", CoreWebView2HostResourceAccessKind.DenyCors);
                     webView.CoreWebView2.Navigate("https://appassets/cool.html?file_path=file:///C:/Users/tml/sailing.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
                 }
                 else
                 {
-                    webView.CoreWebView2.Navigate("file:///C:/Users/tml/lo/online-gitlab-coda/browser/dist/cool.html?file_path=file:///C:/Users/tml/sailing.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
+                    webView.CoreWebView2.Navigate("file:///C:/Users/tml/lo/online-gitlab-coda25-coda/browser/dist/cool.html?file_path=file:///C:/Users/tml/sailing.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
                 }
 
                 OnWebViewFirstInitialized?.Invoke();
