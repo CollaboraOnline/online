@@ -174,29 +174,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		this._currentDepth = 0;
 
-		if (typeof Intl !== 'undefined') {
-		    var formatter, lang;
-		    try {
-			if (app.UI.language.fromURL && app.UI.language.fromURL !== '')
-			    formatter = new Intl.NumberFormat(app.UI.language.fromURL);
-			else
-			    formatter = new Intl.NumberFormat(L.Browser.lang);
-
-			var that = this;
-			formatter.formatToParts(-11.1).map(function (item) {
-			     switch (item.type) {
-			     case 'decimal':
-				 that._decimal = item.value;
-				 break;
-			     case 'minusSign':
-				 that._minusSign = item.value;
-				 break;
-			    }
-			});
-		    } catch(e) {
-			    window.app.console.log('Exception parsing lang ' + lang + ' ' + e);
-		    }
-		}
+		app.localeService.initializeNumberFormatting();
+		this._decimal = app.localeService.getDecimalSeparator();
+		this._minusSign = app.localeService.getMinusSign();
 	},
 
 	reportValidity: function() {
