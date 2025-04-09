@@ -234,6 +234,7 @@ class TileManager {
 	private static debugDeltas: boolean = false;
 	private static debugDeltasDetail: boolean = false;
 	private static tiles: any = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
+	private static tileBitmapList: Tile[] = []; // stores all tiles with bitmaps, sorted by distance from view(s)
 	public static tileSize: number = 256;
 
 	// The tile distance around the visible tile area that will be requested when updating
@@ -269,6 +270,9 @@ class TileManager {
 			if (tile.distanceFromView === 0) ++n_current;
 			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
 		}
+		let mismatch = '';
+		if (n_bitmaps != this.tileBitmapList.length)
+			mismatch = '\nmismatch! ' + n_bitmaps + ' vs. ' + this.tileBitmapList;
 
 		app.map._debug.setOverlayMessage(
 			'top-tileMem',
@@ -283,26 +287,27 @@ class TileManager {
 				'(KB)' +
 				', Bitmap size: ' +
 				Math.ceil(n_bitmaps / 2) +
-				'(MB)',
+				'(MB)' + mismatch,
 		);
+	}
+
+	private static sortTileKeysByDistance() {
+		return Object.keys(this.tiles).sort((a: any, b: any) => {
+			return this.tiles[b].distanceFromView - this.tiles[a].distanceFromView;
+		});
 	}
 
 	// Set a high and low watermark of how many bitmaps we want
 	// and expire old ones
 	private static garbageCollect(discardAll = false) {
-		// 4k screen -> 8Mpixel, each tile is 64kpixel uncompressed
-		var highNumBitmaps = 250; // ~60Mb.
-		var lowNumBitmaps = 125; // ~30Mb
 		// real RAM sizes for keyframes + delta cache in memory.
-		var highDeltaMemory = 120 * 1024 * 1024; // 120Mb
-		var lowDeltaMemory = 60 * 1024 * 1024; // 60Mb
+		let highDeltaMemory = 120 * 1024 * 1024; // 120Mb
+		let lowDeltaMemory = 100 * 1024 * 1024; // 100Mb
 		// number of tiles
-		var highTileCount = 2 * 1024;
-		var lowTileCount = 1024;
+		let highTileCount = 2048;
+		let lowTileCount = highTileCount - 128;
 
 		if (discardAll) {
-			highNumBitmaps = 0;
-			lowNumBitmaps = 0;
 			highDeltaMemory = 0;
 			lowDeltaMemory = 0;
 			highTileCount = 0;
@@ -310,54 +315,39 @@ class TileManager {
 		}
 
 		/* uncomment to exercise me harder. */
-		/* highNumBitmaps = 3; lowNumBitmaps = 2;
-		   highDeltaMemory = 1024*1024; lowDeltaMemory = 1024*128;
+		/* highDeltaMemory = 1024*1024; lowDeltaMemory = 1024*128;
 		   highTileCount = 100; lowTileCount = 50; */
 
-		var keys = Object.keys(this.tiles).sort((a: any, b: any) => {
-			return this.tiles[b].distanceFromView - this.tiles[a].distanceFromView;
-		});
-
-		var bitmapKeys = [];
+		// FIXME: could maintain this as we go rather than re-accounting it regularly.
 		var totalSize = 0;
-		var n_bitmaps = 0;
-		for (var i = 0; i < keys.length; ++i) {
-			var tile = this.tiles[keys[i]];
-			// Don't GC tiles that are visible or that have pending deltas. We don't have
+		var tileCount = 0;
+		for (const tile of Object.values(this.tiles) as Tile[]) {
+			// Don't count size of tiles that are visible or that have pending deltas. We don't have
 			// a mechanism to immediately rehydrate tiles, so GC'ing visible tiles would
 			// cause flickering, and the same would happen for tiles with pending deltas.
-			if (tile.image) {
-				++n_bitmaps;
-				if (tile.distanceFromView !== 0 && !tile.hasPendingDelta)
-					bitmapKeys.push(keys[i]);
-			}
-			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
-		}
-
-		// Trim ourselves down to size.
-		if (n_bitmaps > highNumBitmaps) {
-			var n_to_reclaim = Math.min(bitmapKeys.length, n_bitmaps - lowNumBitmaps);
-			for (var i = 0; i < n_to_reclaim; ++i) {
-				var key = bitmapKeys[i];
-				var tile = this.tiles[key];
-				if (this.debugDeltas)
-					window.app.console.log(
-						'Reclaim bitmap ' + key + ' last rendered: ' + tile.lastRendered,
-					);
-				this.reclaimTileBitmapMemory(tile);
-				--n_bitmaps;
+			if (tile.distanceFromView !== 0 && !tile.hasPendingDelta)
+			{
+				totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
+				tileCount ++;
 			}
 		}
 
-		// FIXME: We should consider resorting keys by wireId now -
-		// 	      which is monotonic server ~time
+		// FIXME: We should consider also sorting keys by wireId -
+		// which is monotonic server rendering ~time.
+
+		// Try to re-use sorting whenever we can - it's expensive
+		let sortedKeys: string[] = [];
 
 		// Trim memory down to size.
 		if (totalSize > highDeltaMemory) {
+			const keys = this.sortTileKeysByDistance();
+			sortedKeys = keys;
+
 			for (var i = 0; i < keys.length && totalSize > lowDeltaMemory; ++i) {
 				const key = keys[i];
 				const tile: Tile = this.tiles[key];
-				if (tile.rawDeltas && tile.distanceFromView !== 0) {
+				if (tile.rawDeltas && tile.distanceFromView !== 0 &&
+				    !tile.hasPendingDelta) {
 					totalSize -= tile.rawDeltas.length;
 					if (this.debugDeltas)
 						window.app.console.log(
@@ -375,16 +365,80 @@ class TileManager {
 		}
 
 		// Trim the number of tiles down too ...
-		if (keys.length > highTileCount) {
+		if (tileCount > highTileCount) {
+			var keys = sortedKeys;
+			if (!keys.length)
+				keys = this.sortTileKeysByDistance();
+
 			for (var i = 0; i < keys.length - lowTileCount; ++i) {
 				const key = keys[i];
 				const tile: Tile = this.tiles[key];
-				if (tile.distanceFromView !== 0) {
-					if (tile.image) --n_bitmaps;
+				if (tile.distanceFromView !== 0 && !tile.hasPendingDelta) {
 					this.removeTile(keys[i]);
 				}
 			}
 		}
+	}
+
+	// When a new bitmap is set on a tile we should see if we need to expire an old tile
+	private static setBitmapOnTile(tile: Tile, bitmap: ImageBitmap)
+	{
+		// 4k screen -> 8Mpixel, each tile is 64kpixel uncompressed
+		const highNumBitmaps = 250; // ~60Mb.
+
+		const assertChecks = false;
+
+		if (tile.image)
+		{
+			// fast case - no impact on count of tiles or bitmap list:
+			if (assertChecks)
+				window.app.console.assert(!!this.tileBitmapList.find(i => i == tile));
+			tile.image.close();
+			tile.image = bitmap;
+			return;
+		}
+
+		if (assertChecks)
+			window.app.console.assert(!this.tileBitmapList.find(i => i == tile));
+
+		// free the last tile if we need to
+		if (this.tileBitmapList.length > highNumBitmaps)
+			this.reclaimTileBitmapMemory(
+				this.tileBitmapList[this.tileBitmapList.length - 1]);
+
+		// current tiles are first:
+		if (tile.distanceFromView === 0)
+			this.tileBitmapList.unshift(tile);
+		else
+		{
+			let low = 0;
+			let high = this.tileBitmapList.length;
+			const distance = tile.distanceFromView;
+
+			// sort on insertion
+			while (low < high) {
+				const mid = Math.floor((low + high) / 2);
+				if (this.tileBitmapList[mid].distanceFromView < distance)
+					low = mid + 1;
+				else
+					high = mid;
+			}
+			this.tileBitmapList.splice(low, 0, tile);
+		}
+
+		tile.image = bitmap;
+	}
+
+	private static sortTileBitmapList()
+	{
+		// furthest away at the end
+		this.tileBitmapList.sort((a, b) => a.distanceFromView - b.distanceFromView);
+	}
+
+	// returns negative for not present, and otherwise proportion, low is low expiry.
+	public static getExpiryFactor(tile : Tile)
+	{
+		return this.tileBitmapList.indexOf(tile) / Math.max(this.tileBitmapList.length, 1);
 	}
 
 	private static endTransactionHandleBitmaps(
@@ -399,8 +453,7 @@ class TileManager {
 			const tile = this.tiles[delta.key];
 			if (!tile) continue;
 
-			if (tile.image) tile.image.close();
-			tile.image = bitmap;
+			this.setBitmapOnTile(tile, bitmap)
 
 			if (delta.isKeyframe) --tile.hasPendingKeyframe;
 			else --tile.hasPendingDelta;
@@ -1108,6 +1161,7 @@ class TileManager {
 	}
 
 	private static removeAllTiles() {
+		this.tileBitmapList = [];
 		for (var key in this.tiles) {
 			this.removeTile(key);
 		}
@@ -1146,6 +1200,10 @@ class TileManager {
 			tile.image.close();
 			tile.image = null;
 			tile.imgDataCache = null;
+
+			const n = this.tileBitmapList.findIndex(it => it == tile);
+			if (n !== -1)
+				this.tileBitmapList.splice(n, 1);
 		}
 	}
 
@@ -1365,6 +1423,7 @@ class TileManager {
 				: [pixelBounds];
 			for (const key in this.tiles)
 				this.updateTileDistance(this.tiles[key], zoom, currentBounds);
+			this.sortTileBitmapList();
 		}
 
 		// create a queue of coordinates to load tiles from. Rehydrate tiles if we're dealing
