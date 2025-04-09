@@ -544,10 +544,12 @@ class TileManager {
 					e.wireMessage,
 				);
 
-				bitmaps.push(
-					createImageBitmap(tile.imgDataCache, { premultiplyAlpha: 'none' }),
-				);
-				pendingDeltas.push(e);
+				if (tile.imgDataCache) {
+					bitmaps.push(
+						createImageBitmap(tile.imgDataCache, { premultiplyAlpha: 'none' }),
+					);
+					pendingDeltas.push(e);
+				}
 			}
 
 			Promise.all(bitmaps).then((bitmaps) => {
@@ -2134,10 +2136,14 @@ class TileManager {
 						x.wireMessage,
 					);
 
-					bitmaps.push(
-						createImageBitmap(tile.imgDataCache, { premultiplyAlpha: 'none' }),
-					);
-					pendingDeltas.push(x);
+					if (tile.imgDataCache) {
+						bitmaps.push(
+							createImageBitmap(tile.imgDataCache, {
+								premultiplyAlpha: 'none',
+							}),
+						);
+						pendingDeltas.push(x);
+					}
 				}
 
 				Promise.all(bitmaps).then((bitmaps) => {
