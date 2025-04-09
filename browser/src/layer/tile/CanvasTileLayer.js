@@ -700,7 +700,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			}, this._painter);
 		}
 		this._map.on('zoomend', this._painter.update, this._painter);
-		this._map.on('splitposchanged', this._painter.update, this._painter);
+		this._map.on('splitposchanged', function () {
+			TileManager.update();
+		}, this);
 		this._map.on('sheetgeometrychanged', this._painter.update, this._painter);
 		this._map.on('move', this._syncTilePanePos, this);
 
