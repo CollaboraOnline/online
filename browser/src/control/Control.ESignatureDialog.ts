@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -30,14 +29,14 @@ namespace cool {
 
 		availableCountries: Array<Country>;
 
-		defaultCountryCode: string;
+		defaultCountryCode: string = '';
 
-		defaultProviderId: string;
+		defaultProviderId: string = '';
 
 		availableProviders: Array<SignatureProvider>;
 
 		// Providers available in the selected country
-		filteredProviders: Array<SignatureProvider>;
+		filteredProviders: Array<SignatureProvider> = [];
 
 		constructor(
 			countries: Array<Country>,
