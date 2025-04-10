@@ -822,12 +822,9 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             const ServerURL cnxDetails(requestDetails);
             if (AdminSocketHandler::handleInitialRequest(_socket, request, cnxDetails.getWebServerUrl()))
             {
-                disposition.setMove(
-                    [](const std::shared_ptr<Socket>& moveSocket)
-                    {
-                        // Hand the socket over to the Admin poll.
-                        Admin::instance().insertNewSocket(moveSocket);
-                    });
+                // Hand the socket over to the Admin poll.
+                disposition.setTransfer(Admin::instance(),
+                                        [](const std::shared_ptr<Socket>& /*moveSocket*/) {});
             }
             else
                 HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
