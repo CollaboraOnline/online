@@ -9,6 +9,8 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/image_operation.odp');
+		cy.cGet('#optionstoolboxdown .unoModifyPage button').click();
+		cy.cGet('#sidebar-panel').should('not.be.visible');
 	});
 
 	it('Insert/Delete image',function() {
@@ -48,8 +50,9 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		});
 
 		cy.wait(1000);
-		cy.cGet('#test-div-shape-handle-3').should('exist');
+
 		cy.cGet('#canvas-container > svg').should('exist');
+		cy.cGet('#test-div-shape-handle-3').should('exist');
 		helper.assertImageSize(418, 111);
 	});
 
@@ -59,6 +62,9 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		insertImage();
 		//when Keep ratio is unchecked
 		helper.assertImageSize(438, 111);
+
+		cy.cGet('#optionstoolboxdown .unoModifyPage button').click();
+		cy.cGet('#sidebar-panel').should('be.visible');
 
 		//sidebar needs more time
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible').wait(2000).scrollTo('bottom');
