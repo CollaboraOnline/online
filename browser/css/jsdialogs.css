@@ -365,6 +365,13 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	color: var(--color-text-darker) !important;
 }
 
+/* Sub Tabs: example Format Cells: Font */
+
+.ui-tabs-content .ui-tabs.jsdialog.ui-widget {
+	border-block-start: 1px solid var(--color-border-lighter);
+	padding-block-start: 24px
+}
+
 /* Expander */
 
 .jsdialog.ui-expander {
