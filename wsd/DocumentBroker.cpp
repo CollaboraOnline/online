@@ -1240,9 +1240,10 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
     }
 #endif //!MOBILEAPP
 
-    const std::string localFilePath = Poco::Path(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
-                                                                                getJailRoot(),
-                                                                                localPath)).toString();
+    std::string localFilePath =
+        Poco::Path(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces, getJailRoot(),
+                                                  localPath))
+            .toString();
     std::ifstream istr(localFilePath, std::ios::binary);
     Poco::SHA1Engine sha1;
     Poco::DigestOutputStream dos(sha1);
@@ -1773,7 +1774,7 @@ DocumentBroker::asyncInstallPresets(const std::shared_ptr<SocketPoll>& poll, con
     std::shared_ptr<http::Session> httpSession(StorageConnectionManager::getHttpSession(settingsUri));
     http::Request request(settingsUri.getPathAndQuery());
 
-    const std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
+    std::string uriAnonym = COOLWSD::anonymizeUrl(userSettingsUri);
     LOG_DBG("Getting settings from [" << uriAnonym << ']');
 
     auto presetTasks = std::make_shared<PresetsInstallTask>(poll, configId, presetsPath,
@@ -1836,7 +1837,7 @@ void DocumentBroker::asyncInstallPreset(
     const std::function<void(const std::string&, bool)>& finishedCB,
     const std::shared_ptr<ClientSession>& session)
 {
-    const std::string uriAnonym = COOLWSD::anonymizeUrl(presetUri);
+    std::string uriAnonym = COOLWSD::anonymizeUrl(presetUri);
     LOG_DBG("Getting preset from [" << uriAnonym << ']');
 
     const Poco::URI uri{presetUri};
@@ -4551,16 +4552,17 @@ void DocumentBroker::handleMediaRequest(const std::string_view range,
         {
             // For now, we only support file:// schemes.
             // In the future, we may/should support http.
-            const std::string localPath = url.substr(sizeof("file:///") - 1);
+            std::string localPath = url.substr(sizeof("file:///") - 1);
 #if !MOBILEAPP
             // We always extract media files in /tmp. Normally, we are in jail (chroot),
             // and this would need to be accessed from WSD through the JailRoot path.
             // But, when we have NoCapsForKit there is no jail, so the media file ends
             // up in the host (AppImage) /tmp
-            const std::string path = COOLWSD::NoCapsForKit ? "/" + localPath :
-                FileUtil::buildLocalPathToJail(
-                    COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + _jailId,
-                    std::move(localPath));
+            std::string path = COOLWSD::NoCapsForKit
+                                   ? "/" + localPath
+                                   : FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
+                                                                    COOLWSD::ChildRoot + _jailId,
+                                                                    std::move(localPath));
 #else
             const std::string path = getJailRoot() + "/" + localPath;
 #endif
@@ -5412,7 +5414,7 @@ std::string DocumentBroker::getEmbeddedMediaPath(const std::string& id)
         return std::string();
     }
 
-    const std::string localPath = url.substr(sizeof("file:///") - 1);
+    std::string localPath = url.substr(sizeof("file:///") - 1);
 
 #if !MOBILEAPP
     // We always extract media files in /tmp. Normally, we are in jail (chroot),
