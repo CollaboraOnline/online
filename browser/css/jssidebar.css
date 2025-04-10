@@ -330,7 +330,6 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 }
 
 #NavigatorPanel div.selected:not(.ui-treeview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
-	content: '–';
 	/* good to move this into css var*/
 	font-size: 17px;
 	font-weight: 500;
