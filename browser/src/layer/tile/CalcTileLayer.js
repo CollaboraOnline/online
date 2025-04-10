@@ -459,25 +459,26 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		const mapElement = document.getElementById('map'); // map's size = tiles section's size.
 		const oldMapSize = [mapElement.clientWidth, mapElement.clientHeight];
-		this._resizeMapElementAndTilesLayer(mapElement, marginLeft, marginTop, newMapSize);
-
-		app.sectionContainer.onResize(newCanvasSize[0], newCanvasSize[1]); // Canvas's size = documentContainer's size.
-
-		this._updateHeaderSections();
-
 		const widthIncreased = oldMapSize[0] < newMapSize[0];
 		const heightIncreased = oldMapSize[1] < newMapSize[1];
+		const sizeChanged = oldMapSize[0] !== newMapSize[0] || oldMapSize[1] !== newMapSize[1];
 
-		if (oldMapSize[0] !== newMapSize[0] || oldMapSize[1] !== newMapSize[1])
+		if (sizeChanged) {
+			this._resizeMapElementAndTilesLayer(mapElement, marginLeft, marginTop, newMapSize);
+			app.sectionContainer.onResize(newCanvasSize[0], newCanvasSize[1]); // Canvas's size = documentContainer's size.
+
+			this._updateHeaderSections();
 			this._map.invalidateSize({}, new L.Point(oldMapSize[0], oldMapSize[1]));
-
-		this._mobileChecksAfterResizeEvent(heightIncreased);
+		}
 
 		// Center the view w.r.t the new map-pane position using the current zoom.
 		this._map.setView(this._map.getCenter());
 
-		// We want to keep cursor visible when we show the keyboard on mobile device or tablet
-		this._nonDesktopChecksAfterResizeEvent(heightIncreased);
+		if (sizeChanged) {
+			// We want to keep cursor visible when we show the keyboard on mobile device or tablet
+			this._nonDesktopChecksAfterResizeEvent(heightIncreased);
+			this._mobileChecksAfterResizeEvent(heightIncreased);
+		}
 
 		if (heightIncreased || widthIncreased) {
 			app.sectionContainer.requestReDraw();
@@ -508,6 +509,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
 			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
 			app.view.size.pixels = app.file.size.pixels.slice();
+
+			if (app.map._docLoaded)
+				this._syncTileContainerSize();
 
 			this._docType = statusJSON.type;
 			this._parts = statusJSON.partscount;
