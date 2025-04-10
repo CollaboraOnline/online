@@ -21,6 +21,14 @@ interface ColorPaletteWidgetData {
 	command: string;
 }
 
+interface ThemeColor {
+	Value: string;
+	Name: string;
+	Data: {
+		ThemeIndex: number;
+		Transformations: { Type: string; Value: number }[];
+	};
+}
 type ColorItem = string;
 type CoreColorPalette = Array<Array<{ Value: ColorItem }>>;
 type ColorPalette = Array<Array<ColorItem>>;
@@ -103,9 +111,19 @@ function createColor(
 	color.setAttribute('name', colorItem);
 	color.setAttribute('index', index);
 	color.tabIndex = 0;
+	color.innerHTML = isCurrent ? '&#149;' : '&#160;';
 	if (themeData) color.setAttribute('theme', themeData);
 
-	color.innerHTML = isCurrent ? '&#149;' : '&#160;';
+	// Set color tooltips
+	if (themeData) {
+		const themeColors: ThemeColor[][] =
+			window.app.colorPalettes['ThemeColors'].colors;
+		const flattened: ThemeColor[] = themeColors.flat();
+		const found = flattened.find((item) => item.Value === colorItem);
+		if (found) color.setAttribute('data-cooltip', found.Name);
+	} else if (window.app.colorNames)
+		color.setAttribute('data-cooltip', window.app.colorNames[colorItem]);
+
 	// Assuming 'color' is your target HTMLElement
 	color.addEventListener('click', (event: MouseEvent) => {
 		handleColorSelection(
@@ -123,6 +141,8 @@ function createColor(
 			);
 		}
 	});
+	L.control.attachTooltipEventListener(color, builder.map);
+
 	return color;
 }
 
