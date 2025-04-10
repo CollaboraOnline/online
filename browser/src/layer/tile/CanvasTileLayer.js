@@ -1325,6 +1325,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			var json = JSON.parse(textMsg.substring('colorpalettes:'.length + 1));
 
 			for (var key in json) {
+				if(key === 'ColorNames') {
+					window.app.colorNames = json[key];
+					continue;
+				}
 				if (app.colorPalettes[key]) {
 					app.colorPalettes[key].colors = json[key];
 				} else {

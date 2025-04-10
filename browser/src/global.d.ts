@@ -131,6 +131,7 @@ interface Window {
 	// app defined in: js/bundle.js
 	app: {
 		colorPalettes: any; // TODO declare according to Widget.ColorPicker.ts
+		colorNames: any; // TODO declare according to Widget.ColorPicker.ts
 		console: Console;
 		map: any; // TODO should be L.Map
 		// file defined in: src/docstate.js

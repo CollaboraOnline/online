@@ -21,9 +21,30 @@ interface ColorPaletteWidgetData {
 	command: string;
 }
 
+interface ThemeColor {
+	Value: string;
+	Name: string;
+	Data: {
+		ThemeIndex: number;
+		Transformations: { Type: string; Value: number }[];
+	};
+}
+
+type ColorEntry = {
+	hexCode: string;
+	name: string;
+};
+
 type ColorItem = string;
 type CoreColorPalette = Array<Array<{ Value: ColorItem }>>;
 type ColorPalette = Array<Array<ColorItem>>;
+
+function findColorName(hexCode: string): string {
+	const color = window.app.colorNames.find(
+		(c: ColorEntry) => c.hexCode.toLowerCase() === hexCode.toLowerCase(),
+	);
+	return color ? color.name : _('Unknown color');
+}
 
 function getCurrentPaletteName(): string {
 	const palette = window.prefs.get('colorPalette');
@@ -93,6 +114,7 @@ function createColor(
 	themeData: any,
 	widgetData: ColorPaletteWidgetData,
 	isCurrent: boolean,
+	themeColors: ThemeColor[],
 ): Element {
 	const color = L.DomUtil.create(
 		'div',
@@ -103,9 +125,20 @@ function createColor(
 	color.setAttribute('name', colorItem);
 	color.setAttribute('index', index);
 	color.tabIndex = 0;
+	color.innerHTML = isCurrent ? '&#149;' : '&#160;';
 	if (themeData) color.setAttribute('theme', themeData);
 
-	color.innerHTML = isCurrent ? '&#149;' : '&#160;';
+	// Set color tooltips
+	if (themeData) {
+		const found = themeColors.find(
+			(item: ThemeColor) => item.Value === colorItem,
+		);
+		if (found) color.setAttribute('data-cooltip', found.Name);
+		else color.setAttribute('data-cooltip', _('Unknown color'));
+	} else if (window.app.colorNames) {
+		color.setAttribute('data-cooltip', findColorName(colorItem));
+	}
+
 	// Assuming 'color' is your target HTMLElement
 	color.addEventListener('click', (event: MouseEvent) => {
 		handleColorSelection(
@@ -123,6 +156,8 @@ function createColor(
 			);
 		}
 	});
+	L.control.attachTooltipEventListener(color, builder.map);
+
 	return color;
 }
 
@@ -241,6 +276,8 @@ function updatePalette(
 
 	const palette = generatePalette(paletteName);
 	const detailedPalette = window.app.colorPalettes[paletteName].colors;
+	const themeColors: ThemeColor[] =
+		window.app.colorPalettes['ThemeColors'].colors.flat();
 
 	paletteContainer.style.gridTemplateRows =
 		'repeat(' + (palette.length - 2) + ', auto)';
@@ -262,6 +299,7 @@ function updatePalette(
 				themeData,
 				data,
 				currentColor == palette[i][j],
+				themeColors,
 			);
 		}
 	}
@@ -308,6 +346,7 @@ function updatePalette(
 			undefined,
 			data,
 			currentColor == customColors[i],
+			themeColors,
 		);
 	}
 
@@ -322,6 +361,7 @@ function updatePalette(
 			undefined,
 			data,
 			currentColor == recentColors[i],
+			themeColors,
 		);
 	}
 }

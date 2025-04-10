@@ -95,6 +95,7 @@ window.app = {
 	// Below 2 are related to document. I guess we can move these into "file" property.
 	languages: [], // all available languages, fetched from core
 	favouriteLanguages: ['de-DE', 'en-US', 'en-GB', 'es-ES', 'fr-FR', 'it', 'nl-NL', 'pt-BR', 'pt-PT', 'ru'],
+	colorNames: null,
 	colorPalettes: {
 		'StandardColors': { name: _('Standard'), colors: [
 			[{Value: '000000'}, {Value: '111111'}, {Value: '1C1C1C'}, {Value: '333333'}, {Value: '666666'}, {Value: '808080'}, {Value: '999999'}, {Value: 'B2B2B2'}, {Value: 'CCCCCC'}, {Value: 'DDDDDD'}, {Value: 'EEEEEE'}, {Value: 'FFFFFF'}],
