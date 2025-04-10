@@ -287,7 +287,8 @@ class TileManager {
 				'(KB)' +
 				', Bitmap size: ' +
 				Math.ceil(n_bitmaps / 2) +
-				'(MB)' + mismatch,
+				'(MB)' +
+				mismatch,
 		);
 	}
 
@@ -325,10 +326,9 @@ class TileManager {
 			// Don't count size of tiles that are visible or that have pending deltas. We don't have
 			// a mechanism to immediately rehydrate tiles, so GC'ing visible tiles would
 			// cause flickering, and the same would happen for tiles with pending deltas.
-			if (tile.distanceFromView !== 0 && !tile.hasPendingDelta)
-			{
+			if (tile.distanceFromView !== 0 && !tile.hasPendingDelta) {
 				totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
-				tileCount ++;
+				tileCount++;
 			}
 		}
 
@@ -346,8 +346,11 @@ class TileManager {
 			for (var i = 0; i < keys.length && totalSize > lowDeltaMemory; ++i) {
 				const key = keys[i];
 				const tile: Tile = this.tiles[key];
-				if (tile.rawDeltas && tile.distanceFromView !== 0 &&
-				    !tile.hasPendingDelta) {
+				if (
+					tile.rawDeltas &&
+					tile.distanceFromView !== 0 &&
+					!tile.hasPendingDelta
+				) {
 					totalSize -= tile.rawDeltas.length;
 					if (this.debugDeltas)
 						window.app.console.log(
@@ -367,8 +370,7 @@ class TileManager {
 		// Trim the number of tiles down too ...
 		if (tileCount > highTileCount) {
 			var keys = sortedKeys;
-			if (!keys.length)
-				keys = this.sortTileKeysByDistance();
+			if (!keys.length) keys = this.sortTileKeysByDistance();
 
 			for (var i = 0; i < keys.length - lowTileCount; ++i) {
 				const key = keys[i];
@@ -381,36 +383,33 @@ class TileManager {
 	}
 
 	// When a new bitmap is set on a tile we should see if we need to expire an old tile
-	private static setBitmapOnTile(tile: Tile, bitmap: ImageBitmap)
-	{
+	private static setBitmapOnTile(tile: Tile, bitmap: ImageBitmap) {
 		// 4k screen -> 8Mpixel, each tile is 64kpixel uncompressed
 		const highNumBitmaps = 250; // ~60Mb.
 
 		const assertChecks = false;
 
-		if (tile.image)
-		{
+		if (tile.image) {
 			// fast case - no impact on count of tiles or bitmap list:
 			if (assertChecks)
-				window.app.console.assert(!!this.tileBitmapList.find(i => i == tile));
+				window.app.console.assert(!!this.tileBitmapList.find((i) => i == tile));
 			tile.image.close();
 			tile.image = bitmap;
 			return;
 		}
 
 		if (assertChecks)
-			window.app.console.assert(!this.tileBitmapList.find(i => i == tile));
+			window.app.console.assert(!this.tileBitmapList.find((i) => i == tile));
 
 		// free the last tile if we need to
 		if (this.tileBitmapList.length > highNumBitmaps)
 			this.reclaimTileBitmapMemory(
-				this.tileBitmapList[this.tileBitmapList.length - 1]);
+				this.tileBitmapList[this.tileBitmapList.length - 1],
+			);
 
 		// current tiles are first:
-		if (tile.distanceFromView === 0)
-			this.tileBitmapList.unshift(tile);
-		else
-		{
+		if (tile.distanceFromView === 0) this.tileBitmapList.unshift(tile);
+		else {
 			let low = 0;
 			let high = this.tileBitmapList.length;
 			const distance = tile.distanceFromView;
@@ -418,10 +417,8 @@ class TileManager {
 			// sort on insertion
 			while (low < high) {
 				const mid = Math.floor((low + high) / 2);
-				if (this.tileBitmapList[mid].distanceFromView < distance)
-					low = mid + 1;
-				else
-					high = mid;
+				if (this.tileBitmapList[mid].distanceFromView < distance) low = mid + 1;
+				else high = mid;
 			}
 			this.tileBitmapList.splice(low, 0, tile);
 		}
@@ -429,16 +426,17 @@ class TileManager {
 		tile.image = bitmap;
 	}
 
-	private static sortTileBitmapList()
-	{
+	private static sortTileBitmapList() {
 		// furthest away at the end
 		this.tileBitmapList.sort((a, b) => a.distanceFromView - b.distanceFromView);
 	}
 
 	// returns negative for not present, and otherwise proportion, low is low expiry.
-	public static getExpiryFactor(tile : Tile)
-	{
-		return this.tileBitmapList.indexOf(tile) / Math.max(this.tileBitmapList.length, 1);
+	public static getExpiryFactor(tile: Tile) {
+		return (
+			this.tileBitmapList.indexOf(tile) /
+			Math.max(this.tileBitmapList.length, 1)
+		);
 	}
 
 	private static endTransactionHandleBitmaps(
@@ -453,7 +451,7 @@ class TileManager {
 			const tile = this.tiles[delta.key];
 			if (!tile) continue;
 
-			this.setBitmapOnTile(tile, bitmap)
+			this.setBitmapOnTile(tile, bitmap);
 
 			if (delta.isKeyframe) --tile.hasPendingKeyframe;
 			else --tile.hasPendingDelta;
@@ -1201,9 +1199,8 @@ class TileManager {
 			tile.image = null;
 			tile.imgDataCache = null;
 
-			const n = this.tileBitmapList.findIndex(it => it == tile);
-			if (n !== -1)
-				this.tileBitmapList.splice(n, 1);
+			const n = this.tileBitmapList.findIndex((it) => it == tile);
+			if (n !== -1) this.tileBitmapList.splice(n, 1);
 		}
 	}
 

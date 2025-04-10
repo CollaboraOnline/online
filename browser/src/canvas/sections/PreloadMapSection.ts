@@ -122,11 +122,15 @@ class PreloadMapSection extends app.definitions.canvasSectionObject {
 						else if (tile.distanceFromView <= 0)
 							canvas.fillStyle = 'rgba(0, 255, 0, 0.5)'; // visible
 						else {
-							const expFactor = TileManager.getExpiryFactor(tile)
-							if (expFactor >= 0) // expiry shown by more blue, and less green
-								canvas.fillStyle = 'rgba(0, ' +
-									Math.round(192 * (1.0-expFactor)) + ', ' +
-									Math.round(96 * expFactor) + ', 0.8)';
+							const expFactor = TileManager.getExpiryFactor(tile);
+							if (expFactor >= 0)
+								// expiry shown by more blue, and less green
+								canvas.fillStyle =
+									'rgba(0, ' +
+									Math.round(192 * (1.0 - expFactor)) +
+									', ' +
+									Math.round(96 * expFactor) +
+									', 0.8)';
 						}
 					} // outside document range
 					else canvas.fillStyle = 'rgba(0, 0, 0, 0.3)'; // dark grey
