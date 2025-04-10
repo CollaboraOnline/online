@@ -173,3 +173,5 @@ private:
     /// Cache for static files, to avoid reading and processing from disk.
     static std::map<std::string, std::string> StaticFileContentCache;
 };
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -51,3 +51,5 @@ private:
     std::shared_ptr<http::Session> _httpSession;
     std::shared_ptr<CheckFileInfo> _checkFileInfo;
 };
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

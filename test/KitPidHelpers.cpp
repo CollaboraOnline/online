@@ -154,3 +154,5 @@ void helpers::killAllKitProcesses(
 
     LOK_ASSERT_MESSAGE_SILENT("Timed out waiting for these kit processes to close", pass);
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -29,3 +29,5 @@
 - (std::shared_ptr<DocumentBroker>)getDocumentBroker;
 - (std::optional<std::tuple<NSUInteger, NSUInteger, NSUInteger>>)getPositionsAndSizeForRange:(NSString *)range withTotalSize:(NSInteger)size;
 @end
+
+// vim:set shiftwidth=4 softtabstop=4 expandtab:

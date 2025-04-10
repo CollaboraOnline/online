@@ -254,3 +254,5 @@ void StorageConnectionManager::initialize()
         LOG_INF("Initialized Client SSL.");
 #endif // ENABLE_SSL
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

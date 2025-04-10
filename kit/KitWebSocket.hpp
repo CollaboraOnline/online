@@ -116,3 +116,5 @@ protected:
     // let WSD know something went wrong during the save
     void reportFailedSave(const std::string &reason);
 };
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

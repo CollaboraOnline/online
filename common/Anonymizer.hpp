@@ -172,3 +172,5 @@ private:
     /// The prefix counter.
     std::atomic<unsigned> _prefix;
 };
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

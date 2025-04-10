@@ -106,3 +106,5 @@ private:
     /// The document filename is encoded to ensure tokenization.
     const std::string _quarantinedFilename;
 };
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

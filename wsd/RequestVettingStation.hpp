@@ -110,3 +110,5 @@ private:
     Util::Stopwatch _birthday;
     unsigned _mobileAppDocId;
 };
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

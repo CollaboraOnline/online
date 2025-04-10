@@ -270,3 +270,5 @@ int MigrateConfig(const std::string& oldConfigFile, const std::string& newConfig
         newXMLConfig->save(newConfigFile);
     return 0;
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
