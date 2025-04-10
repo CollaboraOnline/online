@@ -9,6 +9,7 @@
 	--settings-text-maxcontrast: var(--color-border-lighter);
 	--settings-background: var(--color-main-background);
 	--settings-background-hover: var(--color-background-dark);
+	--settings-font-face: system-ui, -apple-system, "Noto Sans", "Segoe UI", Roboto, Oxygen-Sans, Cantarell, Ubuntu, "Helvetica Neue", "Liberation Sans", Arial, sans-serif;
 
   --default-font-size: 15px;
   --animation-quick: 100ms;
@@ -29,6 +30,7 @@ body {
   margin-left: 0px;
   display: block;
   scrollbar-width: thin;
+  font-family: var(--settings-font-face);
 }
 
 li {
