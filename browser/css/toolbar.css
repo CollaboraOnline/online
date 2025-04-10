@@ -154,7 +154,7 @@
 
 #presentation-toolbar {
 	bottom: 0;
-	background-color: var(--color-main-background);
+	background-color: var(--color-background-lighter);
 	text-align: center;
 	position: absolute;
 	z-index: 500;
@@ -167,8 +167,9 @@
 }
 
 #presentation-buttons-toolbar {
-	display: grid;
-	grid-auto-flow: column;
+	display: flex !important;
+	flex: 1;
+	justify-content: space-between;
 }
 
 .w2ui-toolbar .w2ui-break {
