@@ -728,7 +728,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					else
 						builder.callback('expander', 'toggle', data, null, builder);
 
-					var state = Boolean(expander.getAttribute('aria-expanded'));
+					var state = expander.getAttribute('aria-expanded') === 'true';
 					expander.setAttribute('aria-expanded', !state);
 					$(label).toggleClass('expanded');
 					$(expander).siblings().toggleClass('expanded');
