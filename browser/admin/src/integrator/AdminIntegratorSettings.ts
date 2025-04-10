@@ -33,6 +33,7 @@ interface ConfigData {
 
 interface SectionConfig {
 	sectionTitle: string;
+	sectionDesc: string;
 	listId: string;
 	inputId: string;
 	buttonId: string;
@@ -101,6 +102,8 @@ class SettingIframe {
 		const configSections: SectionConfig[] = [
 			{
 				sectionTitle: 'Autotext',
+				sectionDesc:
+					'Upload reusable text snippets (.bau). To insert the text in your document, type the shortcut for an AutoText entry and press F3.',
 				listId: 'autotextList',
 				inputId: 'autotextFile',
 				buttonId: 'uploadAutotextButton',
@@ -110,6 +113,8 @@ class SettingIframe {
 			},
 			{
 				sectionTitle: 'Custom Dictionaries',
+				sectionDesc:
+					'Add or edit words in a spell check dictionary. Words in your wordbook (.dic) will be available for spelling checks.',
 				listId: 'wordbookList',
 				inputId: 'wordbookFile',
 				buttonId: 'uploadWordbookButton',
@@ -119,20 +124,24 @@ class SettingIframe {
 			},
 			{
 				sectionTitle: 'Interface',
+				sectionDesc: 'Set default interface preferences.',
 				listId: 'BrowserSettingsList',
 				inputId: 'BrowserSettingsFile',
 				buttonId: 'uploadBrowserSettingsButton',
 				fileAccept: '.json',
-				buttonText: 'Upload Browser Setting',
+				// TODO: replace btn with rich interface (toggles)
+				buttonText: 'Upload Configuration',
 				uploadPath: this.PATH.browserSettingsUpload(),
 				enabledFor: 'userconfig',
 			},
 			{
 				sectionTitle: 'Document View',
+				sectionDesc: 'Adjust how office documents look.',
 				listId: 'XcuList',
 				inputId: 'XcuFile',
 				buttonId: 'uploadXcuButton',
 				fileAccept: '.xcu',
+				// TODO: replace btn with rich interface (toggles)
 				buttonText: 'Upload Xcu',
 				uploadPath: this.PATH.XcuUpload(),
 			},
@@ -225,6 +234,9 @@ class SettingIframe {
 		const headingEl = document.createElement('h3');
 		headingEl.textContent = config.sectionTitle;
 
+		const descEl = document.createElement('p');
+		descEl.textContent = config.sectionDesc;
+
 		const ulEl = document.createElement('ul');
 		ulEl.id = config.listId;
 
@@ -250,6 +262,7 @@ class SettingIframe {
 		`;
 
 		sectionEl.appendChild(headingEl);
+		sectionEl.appendChild(descEl);
 		sectionEl.appendChild(ulEl);
 		sectionEl.appendChild(inputEl);
 		sectionEl.appendChild(buttonEl);
