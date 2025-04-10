@@ -3592,6 +3592,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
 
     // We do not want save to terminate editing mode if we are in edit mode now.
     // We want to terminate if forced by the user, otherwise autosave doesn't terminate.
+    // Note: We always force terminating edit when saving in the background.
     dontTerminateEdit = dontTerminateEdit && background == false;
 
     oss << "\"DontTerminateEdit\" : { \"type\":\"boolean\", \"value\":"
