@@ -47,7 +47,7 @@ public:
     }
 
     /// Convert the given source string to the desired encoding.
-    std::string convert(std::string source) const
+    std::string convert(const std::string& source) const
     {
         if (reinterpret_cast<int64_t>(_iconvd) == -1)
         {
@@ -55,7 +55,7 @@ public:
             return source;
         }
 
-        char* in = source.data();
+        const char* in = source.data();
         std::size_t in_left = source.size();
 
         std::vector<char> buffer(8 * source.size());
@@ -63,7 +63,7 @@ public:
         std::size_t out_left = buffer.size();
 
         // Convert.
-        if (iconv(_iconvd, &in, &in_left, &out, &out_left) == static_cast<size_t>(-1))
+        if (iconv(_iconvd, (char**)&in, &in_left, &out, &out_left) == static_cast<size_t>(-1))
         {
             LOG_ERR("Failed to convert [" << source << ']');
             return source;
