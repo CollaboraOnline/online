@@ -2211,54 +2211,7 @@ bool DocumentBroker::updateStorageLockStateAsync(const std::shared_ptr<ClientSes
         _lockStateUpdateRequest.reset(); // No longer needed.
 
         // We have some result, look at the result status.
-        const StorageBase::LockState requestedLock = asyncLock.result().requestedLockState();
-        switch (asyncLock.result().getStatus())
-        {
-            case StorageBase::LockUpdateResult::Status::UNSUPPORTED:
-                LOG_DBG("Locks on docKey [" << _docKey << "] are unsupported while trying to "
-                                            << StorageBase::nameShort(requestedLock));
-                return; // Not an error.
-                break;
-
-            case StorageBase::LockUpdateResult::Status::OK:
-                LOG_DBG(StorageBase::nameShort(requestedLock)
-                        << "ed docKey [" << _docKey << "] successfully");
-                _lockCtx->setState(requestedLock);
-                return;
-                break;
-
-            case StorageBase::LockUpdateResult::Status::UNAUTHORIZED:
-            {
-                LOG_ERR("Failed to "
-                        << StorageBase::nameShort(requestedLock) << " docKey [" << _docKey
-                        << "]. Invalid or expired access token. Notifying client and "
-                           "invalidating the authorization token of session ["
-                        << requestingSession->getId() << "]. This session will now be read-only");
-                requestingSession->invalidateAuthorizationToken();
-                if (requestedLock == StorageBase::LockState::LOCK)
-                {
-                    // If we can't unlock, we don't want to set the document to read-only mode.
-                    requestingSession->setLockFailed(asyncLock.result().getReason());
-                }
-            }
-            break;
-
-            case StorageBase::LockUpdateResult::Status::FAILED:
-            {
-                LOG_ERR("Failed to "
-                        << StorageBase::nameShort(requestedLock) << " docKey [" << _docKey
-                        << "] with reason [" << asyncLock.result().getReason()
-                        << "]. Notifying client and making session [" << requestingSession->getId()
-                        << "] read-only");
-
-                if (requestedLock == StorageBase::LockState::LOCK)
-                {
-                    // If we can't unlock, we don't want to set the document to read-only mode.
-                    requestingSession->setLockFailed(asyncLock.result().getReason());
-                }
-            }
-            break;
-        }
+        handleLockResult(*requestingSession, asyncLock.result());
     };
 
     _lockStateUpdateRequest = std::make_unique<LockStateUpdateRequest>(lock, session);
@@ -2266,6 +2219,59 @@ bool DocumentBroker::updateStorageLockStateAsync(const std::shared_ptr<ClientSes
     _storage->updateLockStateAsync(session->getAuthorization(), *_lockCtx, lock,
                                    _currentStorageAttrs, _poll, asyncLockCallback);
     return true;
+}
+
+void DocumentBroker::handleLockResult(ClientSession& session,
+                                      const StorageBase::LockUpdateResult& result)
+{
+    const StorageBase::LockState requestedLock = result.requestedLockState();
+    const std::string& reason = result.getReason();
+
+    switch (result.getStatus())
+    {
+        case StorageBase::LockUpdateResult::Status::UNSUPPORTED:
+            LOG_DBG("Locks on docKey [" << _docKey << "] are unsupported while trying to "
+                                        << StorageBase::nameShort(requestedLock));
+            return; // Not an error.
+            break;
+
+        case StorageBase::LockUpdateResult::Status::OK:
+            LOG_DBG(StorageBase::nameShort(requestedLock)
+                    << "ed docKey [" << _docKey << "] successfully");
+            _lockCtx->setState(requestedLock);
+            return;
+            break;
+
+        case StorageBase::LockUpdateResult::Status::UNAUTHORIZED:
+        {
+            LOG_ERR("Failed to " << StorageBase::nameShort(requestedLock) << " docKey [" << _docKey
+                                 << "]. Invalid or expired access token. Notifying client and "
+                                    "invalidating the authorization token of session ["
+                                 << session.getId() << "]. This session will now be read-only");
+            session.invalidateAuthorizationToken();
+            if (requestedLock == StorageBase::LockState::LOCK)
+            {
+                // If we can't unlock, we don't want to set the document to read-only mode.
+                session.setLockFailed(reason);
+            }
+        }
+        break;
+
+        case StorageBase::LockUpdateResult::Status::FAILED:
+        {
+            LOG_ERR("Failed to " << StorageBase::nameShort(requestedLock) << " docKey [" << _docKey
+                                 << "] with reason [" << reason
+                                 << "]. Notifying client and making session [" << session.getId()
+                                 << "] read-only");
+
+            if (requestedLock == StorageBase::LockState::LOCK)
+            {
+                // If we can't unlock, we don't want to set the document to read-only mode.
+                session.setLockFailed(reason);
+            }
+        }
+        break;
+    }
 }
 
 bool DocumentBroker::attemptLock(ClientSession& session, std::string& failReason)

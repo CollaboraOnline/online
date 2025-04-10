@@ -646,6 +646,9 @@ private:
     bool updateStorageLockStateAsync(const std::shared_ptr<ClientSession>& session,
                                      StorageBase::LockState lock, std::string& error);
 
+    /// Handle the Un/Lock request result.
+    void handleLockResult(ClientSession& session, const StorageBase::LockUpdateResult& result);
+
     std::size_t getIdleTimeSecs() const
     {
         const auto duration = (std::chrono::steady_clock::now() - _lastActivityTime);
