@@ -105,7 +105,7 @@ void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<Terminating
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
                             << docKey << "] is for a WOPI document");
             // Remove from the current poll and transfer.
-            disposition.setMove(
+            disposition.setTransfer(*poll,
                 [this, &poll, docKey = std::move(docKey), url = std::move(url),
                  uriPublic](const std::shared_ptr<Socket>& moveSocket)
                 {
@@ -113,8 +113,6 @@ void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<Terminating
                                   << ": Dissociating client socket from "
                                      "ClientRequestDispatcher and invoking CheckFileInfo for ["
                                   << docKey << ']');
-
-                    poll->insertNewSocket(moveSocket);
 
                     // CheckFileInfo and only when it's good create DocBroker.
                     checkFileInfo(poll, uriPublic, HTTP_REDIRECTION_LIMIT);
