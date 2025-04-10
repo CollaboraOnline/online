@@ -19,7 +19,9 @@
   --color-scrollbar: var(--settings-border-contrast) transparent;
 }
 
-html,
+html {
+  font-size: var(--default-font-size);
+}
 body {
   color: var(--settings-text);
   background-color: var(--settings-background);
