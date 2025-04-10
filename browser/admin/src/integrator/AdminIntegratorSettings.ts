@@ -109,7 +109,7 @@ class SettingIframe {
 				uploadPath: this.PATH.autoTextUpload(),
 			},
 			{
-				sectionTitle: 'Wordbook',
+				sectionTitle: 'Custom Dictionaries',
 				listId: 'wordbookList',
 				inputId: 'wordbookFile',
 				buttonId: 'uploadWordbookButton',
@@ -118,7 +118,7 @@ class SettingIframe {
 				uploadPath: this.PATH.wordBookUpload(),
 			},
 			{
-				sectionTitle: 'Browser Settings',
+				sectionTitle: 'Interface',
 				listId: 'BrowserSettingsList',
 				inputId: 'BrowserSettingsFile',
 				buttonId: 'uploadBrowserSettingsButton',
@@ -128,7 +128,7 @@ class SettingIframe {
 				enabledFor: 'userconfig',
 			},
 			{
-				sectionTitle: 'Xcu',
+				sectionTitle: 'Document View',
 				listId: 'XcuList',
 				inputId: 'XcuFile',
 				buttonId: 'uploadXcuButton',
