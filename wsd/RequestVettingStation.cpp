@@ -150,7 +150,7 @@ namespace
 class SharedSettings
 {
 public:
-    SharedSettings(const Poco::JSON::Object::Ptr wopiInfo)
+    explicit SharedSettings(const Poco::JSON::Object::Ptr& wopiInfo)
     {
         if (auto settingsJSON = wopiInfo->getObject("SharedSettings"))
         {
@@ -187,7 +187,7 @@ void RequestVettingStation::launchInstallPresets()
     if (sharedSettings.getUri().empty())
         return;
 
-    std::string configId = sharedSettings.getConfigId();
+    const std::string& configId = sharedSettings.getConfigId();
 
     auto finishedCallback = [selfWeak = weak_from_this(), this, configId](bool success)
     {
