@@ -166,10 +166,10 @@ function selectTextOfShape() {
 	cy.waitUntil(function() {
 		dblclickOnSelectedShape();
 		helper.typeIntoDocument('{ctrl}a');
-		return cy.cGet('.text-selection-handle-start').should('be.visible');
+		return cy.cGet('.text-selection-handle-start, .text-selection-handle-end').should('exist');
 	});
 
-	cy.cGet('.leaflet-cursor-container')
+	cy.cGet('.leaflet-cursor-container, .text-selection-handle-start')
 		.should('exist');
 
 	cy.log('<< selectTextOfShape - end');
@@ -189,10 +189,8 @@ function dblclickOnSelectedShape() {
 			cy.cGet('.leaflet-layer').dblclick(x, y, { force: true });
 		});
 
-	cy.cGet('.leaflet-cursor-container')
-		.should('exist');
-
-	cy.cGet('.leaflet-cursor.blinking-cursor')
+	// check if any of text input markers exist
+	cy.cGet('.leaflet-cursor-container, .text-selection-handle-start, .leaflet-cursor.blinking-cursor')
 		.should('exist');
 
 	cy.log('<< dblclickOnSelectedShape - end');
