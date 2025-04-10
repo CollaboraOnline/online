@@ -153,12 +153,6 @@ declare var L: any;
 			mouse down + multi touch start + multi touch move + multi touch end
 */
 
-enum DirtyType {
-	NotDirty,
-	All,
-	TileRange
-}
-
 class CanvasSectionContainer {
 	/*
 		All events will be cached by this class and propagated to sections.
