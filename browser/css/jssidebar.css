@@ -67,13 +67,27 @@ img.sidebar.ui-image {
 	margin: 0px !important;
 }
 
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right,
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right * {
-	display: block;
-	width: 10px;
-	height: 10px;
+.ui-expander.jsdialog.sidebar {
 	margin-inline-end: 10px;
 	padding: 0;
+}
+
+.ui-expander-icon-right.jsdialog.sidebar,
+.ui-expander-icon-right.jsdialog.sidebar .sidebar.unotoolbutton,
+{
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	padding: 0;
+	margin: 0;
+}
+
+.ui-expander-icon-right.jsdialog.sidebar .sidebar.unotoolbutton button,
+.ui-expander-icon-right.jsdialog.sidebar .sidebar.unotoolbutton button img {
+	width: 10px;
+	height: 10px;
+	padding: 0;
+	margin: 0;
 }
 
 .ui-expander.jsdialog.sidebar .ui-expander-icon-right:hover img {
