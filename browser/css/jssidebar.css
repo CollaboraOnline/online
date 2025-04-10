@@ -451,8 +451,9 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	background-position: center;
 	background-color: transparent;
 	cursor: pointer;
-	filter: brightness(0.3);
-	transition: filter 0.2s ease-in-out, transform 0.2s;
+}
+[data-theme='dark']  .close-navigation-button {
+	background-image: url('images/dark/closedoc.svg');
 }
 
 /* Navigation Tabs */
