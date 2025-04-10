@@ -467,8 +467,7 @@ class Menubar extends L.Control {
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		presentation: [
@@ -643,8 +642,7 @@ class Menubar extends L.Control {
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		drawing: [
@@ -780,8 +778,7 @@ class Menubar extends L.Control {
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		spreadsheet: [
@@ -1070,8 +1067,7 @@ class Menubar extends L.Control {
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
-			},
-			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
+			}
 		],
 
 		mobiletext:  [
