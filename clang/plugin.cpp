@@ -193,6 +193,7 @@ public:
         return fieldDecl(
                     hasType(
                         classTemplateSpecializationDecl(
+                            hasName("std::shared_ptr"),
                             hasAnyTemplateArgument(
                                 refersToType(
                                     recordType(
