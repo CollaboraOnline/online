@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -39,3 +40,5 @@ std::string getLinuxVersion() { return "unknown"; }
 void alertAllUsers(const std::string&) {}
 void alertAllUsers(const std::string&, const std::string&) {}
 } // namespace Util
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

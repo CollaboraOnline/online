@@ -101,3 +101,5 @@ private:
     Poco::JSON::Object::Ptr _wopiInfo;
     std::atomic<State> _state;
 };
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -73,3 +73,5 @@ void killAllKitProcesses(const std::string& testname,
                          const std::chrono::milliseconds retryMs = std::chrono::milliseconds(KIT_PID_RETRY_MS));
 
 } // namespace helpers
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

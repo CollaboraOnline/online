@@ -146,3 +146,5 @@ inline std::string parseUrl(const std::string& uri)
 }
 
 } // namespace net
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

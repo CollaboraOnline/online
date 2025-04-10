@@ -84,3 +84,5 @@ private:
     /// If true, force SSL communication with storage server
     static bool SSLEnabled;
 };
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

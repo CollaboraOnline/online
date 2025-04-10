@@ -31,3 +31,5 @@ private:
     std::string _docId;
     std::chrono::steady_clock::time_point _kitStartTimeSec;
 };
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

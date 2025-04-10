@@ -26,3 +26,5 @@ int SupportKey::validDaysRemaining() { return 0; }
 Poco::DateTime SupportKey::expiry() const { return Poco::DateTime(); }
 
 std::string SupportKey::data() const { return std::string(); }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

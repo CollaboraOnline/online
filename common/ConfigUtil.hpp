@@ -322,3 +322,5 @@ inline bool hasProperty(const std::string& key)
 }
 
 } // namespace ConfigUtil
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

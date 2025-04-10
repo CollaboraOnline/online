@@ -212,3 +212,5 @@ inline constexpr bool failed() { return false; }
         dummyStringstream << message;                                                              \
         CPPUNIT_FAIL(dummyStringstream.str().c_str());                                             \
     } while (false)
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
