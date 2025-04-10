@@ -9,24 +9,16 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/apply_paragraph_props_text.odp');
 		desktopHelper.switchUIToCompact();
-
 		cy.cGet('#toolbar-up .ui-scroll-right').click();
 		cy.cGet('#modifypage button').click({force: true});
 		cy.cGet('#sidebar-panel').should('not.be.visible');
+		cy.cGet('.close-navigation-button').click();
+		cy.cGet('#navigator-sidebar').should('not.exist');
 	});
 
 	function selectText() {
-		// Select the text in the shape by double
-		// clicking in the center of the shape,
-		// which is in the center of the slide,
-		// which is in the center of the document
-
-		// Only the svg (shape selection) is needed for the verifications,
-		// but the text needs to be selected for the subsequent button clicks
-
-		cy.cGet('#document-container').dblclick('center');
-		helper.typeIntoDocument('{ctrl}a');
-		helper.textSelectionShouldExist();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.selectTextOfShape();
 	}
 
 	it('Apply horizontal alignment on selected text.', function() {
@@ -37,15 +29,17 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		// Set right alignment
 		cy.cGet('#rightpara').click();
 
-		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'x', '23583');
+			.invoke('attr', 'x')
+			.then((x) => {
+				const value = Number(x);
+				expect(value).to.be.closeTo(23583, 5);
+			});
 
 		// Set left alignment
 		cy.cGet('#leftpara').click();
 
-		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
@@ -53,19 +47,17 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		// Set centered alignment
 		cy.cGet('#centerpara').click();
 
-		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.invoke('attr', 'x')
 			.then((x) => {
 				const value = Number(x);
-				expect(value).to.be.closeTo(12493, 5);
+				expect(value).to.be.closeTo(12491, 5);
 			});
 
 		// Set justified alignment
 		cy.cGet('#justifypara').click();
 
-		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
@@ -80,7 +72,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		// Apply bulleting
 		cy.cGet('#toolbar-up #defaultbullet').click();
 
-		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .BulletChars')
 			.should('exist');
@@ -95,7 +86,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		// Apply numbering
 		cy.cGet('#toolbar-up #defaultnumbering').click();
 
-		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .SVGTextShape tspan')
 			.should('have.attr', 'ooo:numbering-type', 'number-style');
@@ -110,7 +100,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		cy.cGet('#linespacing').click();
 		cy.cGet('#linespacing-dropdown .ui-combobox-entry').contains('Increase Paragraph Spacing').click();
 
-		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6700');
@@ -119,7 +108,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		cy.cGet('#linespacing').click();
 		cy.cGet('#linespacing-dropdown .ui-combobox-entry').contains('Decrease Paragraph Spacing').click();
 
-		impressHelper.removeShapeSelection();
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
