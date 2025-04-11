@@ -148,7 +148,6 @@
     
     NSInteger responseStatus = 200;
     NSInteger start = 0;
-    NSInteger end = size - 1; // 'end' is considered to be *inclusive* here to match the range header
     
     bool errorResponse = false;
 
@@ -163,9 +162,10 @@
                     static_cast<long>(size)]
          forKey:@"Content-Range"];
         errorResponse = true;
-    } else {
+    } else if (rangeHeader != nil) {
         responseStatus = 206;
         NSInteger totalSize = size;
+        NSInteger end;
         std::tie(start, end, size) = rangePositionsAndSize.value();
         [responseHeaders
          setObject:[NSString
