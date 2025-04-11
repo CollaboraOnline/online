@@ -323,24 +323,10 @@ void RequestVettingStation::handleRequest(const std::string& id,
                              _checkFileInfo->state() == CheckFileInfo::State::Pass &&
                              _checkFileInfo->wopiInfo())
                     {
-                        std::string sslVerifyResult = _checkFileInfo->getSslVerifyMessage();
-                        // We have a valid CheckFileInfo result; Create the DocBroker.
                         SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
-                        if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey,
-                                    sharedSettings.getConfigId(), url, uriPublic))
-                        {
-                            createClientSession(docBroker, docKey, url, uriPublic);
-                            // If there is anything dubious about the ssl
-                            // connection provide a warning about that.
-                            if (!sslVerifyResult.empty())
-                            {
-                                LOG_WRN_S("SSL verification warning: '" << sslVerifyResult << "' seen on CheckFileInfo for ["
-                                              << docKey << "]");
-#if !MOBILEAPP && !WASMAPP
-                                docBroker->setCertAuditWarning();
-#endif
-                            }
-                        }
+                        transferToDocBroker(_checkFileInfo->url().toString(),
+                                            sharedSettings.getConfigId(),
+                                            _checkFileInfo->getSslVerifyMessage());
                     }
                     else if (_checkFileInfo == nullptr ||
                              _checkFileInfo->state() == CheckFileInfo::State::None ||
@@ -371,6 +357,42 @@ void RequestVettingStation::handleRequest(const std::string& id,
 }
 
 #if !MOBILEAPP
+void RequestVettingStation::transferToDocBroker(const std::string& url,
+                                                const std::string& configId,
+                                                const std::string& sslVerifyResult)
+{
+    // The final URL might be different due to redirection.
+    const auto uriPublic = RequestDetails::sanitizeURI(url);
+    const auto docKey = RequestDetails::getDocKey(uriPublic);
+    LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
+            << docKey << "] now with URL: [" << url << ']');
+    if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey, configId, url, uriPublic))
+    {
+        launchInstallPresets();
+        if (_ws)
+        {
+            // If we don't have the WebSocket, defer creating the client session.
+            createClientSession(docBroker, docKey, url, uriPublic);
+        }
+        else
+        {
+            LOG_DBG("WOPI::CheckFileInfo succeeded but we don't have the client's "
+                    "WebSocket yet. Deferring the ClientSession creation.");
+        }
+
+        // If there is anything dubious about the ssl connection provide a
+        // warning about that.
+        if (!sslVerifyResult.empty())
+        {
+            LOG_WRN("SSL verification warning: '" << sslVerifyResult << "' seen on CheckFileInfo for ["
+                    << docKey << "]");
+#if !WASMAPP
+            docBroker->setCertAuditWarning();
+#endif
+        }
+    }
+}
+
 void RequestVettingStation::checkFileInfo(const Poco::URI& uri, int redirectLimit)
 {
     auto cfiContinuation = [this](CheckFileInfo& checkFileInfo)
@@ -379,28 +401,10 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, int redirectLimi
         if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Pass &&
             _checkFileInfo->wopiInfo())
         {
-            // The final URL might be different due to redirection.
-            const std::string url = checkFileInfo.url().toString();
-            const auto uriPublic = RequestDetails::sanitizeURI(url);
-            const auto docKey = RequestDetails::getDocKey(uriPublic);
-            LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
-                    << docKey << "] now with URL: [" << url << ']');
             SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
-            if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey,
-                        sharedSettings.getConfigId(), url, uriPublic))
-            {
-                launchInstallPresets();
-                if (_ws)
-                {
-                    // If we don't have the WebSocket, defer creating the client session.
-                    createClientSession(docBroker, docKey, url, uriPublic);
-                }
-                else
-                {
-                    LOG_DBG("WOPI::CheckFileInfo succeeded but we don't have the client's "
-                            "WebSocket yet. Deferring the ClientSession creation.");
-                }
-            }
+            transferToDocBroker(checkFileInfo.url().toString(),
+                                sharedSettings.getConfigId(),
+                                checkFileInfo.getSslVerifyMessage());
         }
         else
         {
