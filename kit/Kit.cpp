@@ -118,7 +118,7 @@ using JsonUtil::makePropertyValue;
 
 extern "C" { void dump_kit_state(void); /* easy for gdb */ }
 
-#ifdef IOS
+#if MOBILEAPP
 extern std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 extern std::mutex DocBrokersMutex;
 #endif
@@ -1985,6 +1985,12 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         _loKitDocument.reset(_loKit->documentLoad(pURL, options.c_str()));
 #ifdef __ANDROID__
         _loKitDocumentForAndroidOnly = _loKitDocument;
+        {
+            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+            auto docBrokerIt = DocBrokers.find(_docKey);
+            assert(docBrokerIt != DocBrokers.end());
+            _documentBrokerForAndroidOnly = docBrokerIt->second;
+        }
 #endif
         const auto duration = std::chrono::steady_clock::now() - start;
         const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
@@ -2823,10 +2829,16 @@ void flushTraceEventRecordings()
 #ifdef __ANDROID__
 
 std::shared_ptr<lok::Document> Document::_loKitDocumentForAndroidOnly = std::shared_ptr<lok::Document>();
+std::weak_ptr<DocumentBroker> Document::_documentBrokerForAndroidOnly;
 
 std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly()
 {
     return Document::_loKitDocumentForAndroidOnly;
+}
+
+std::shared_ptr<DocumentBroker> getDocumentBrokerForAndroidOnly()
+{
+    return Document::_documentBrokerForAndroidOnly.lock();
 }
 
 #endif

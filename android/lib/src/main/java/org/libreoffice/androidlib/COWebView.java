@@ -18,18 +18,22 @@ public class COWebView extends WebView {
     public COWebView(Context context) {
         super(context);
         mContext = context;
+        setWebViewClient(new COWebViewClient());
     }
 
     public COWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setWebViewClient(new COWebViewClient());
     }
 
     public COWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setWebViewClient(new COWebViewClient());
     }
 
     public COWebView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        setWebViewClient(new COWebViewClient());
     }
 
     /*

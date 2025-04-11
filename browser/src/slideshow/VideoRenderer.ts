@@ -96,6 +96,7 @@ abstract class VideoRenderer {
 
 		video.playsInline = true;
 		video.loop = true;
+		video.crossOrigin = 'anonymous';
 
 		video.addEventListener(
 			'playing',
