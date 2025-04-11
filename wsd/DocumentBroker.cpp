@@ -5314,11 +5314,8 @@ void DocumentBroker::dumpState(std::ostream& os)
         _tileCache->dumpState(os);
     }
 
-    if (_poll)
-    {
-        os << '\n';
-        _poll->dumpState(os);
-    }
+    os << '\n';
+    _poll->dumpState(os);
 
 #if !MOBILEAPP
     // Bit nasty - need a cleaner way to dump state.
