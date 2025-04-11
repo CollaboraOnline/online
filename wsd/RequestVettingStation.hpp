@@ -84,7 +84,7 @@ private:
 
     void createClientSession(const std::shared_ptr<DocumentBroker>& docBroker,
                              const std::string& docKey, const std::string& url,
-                             const Poco::URI& uriPublic, bool isReadOnly);
+                             const Poco::URI& uriPublic);
 
     /// Send unauthorized error to the client and disconnect the socket.
     /// Includes SSL verification status, if available, as the error code.
@@ -97,7 +97,7 @@ private:
 #if !MOBILEAPP
     void launchInstallPresets();
 
-    void checkFileInfo(const Poco::URI& uri, bool isReadOnly, int redirectionLimit);
+    void checkFileInfo(const Poco::URI& uri, int redirectionLimit);
     std::shared_ptr<CheckFileInfo> _checkFileInfo;
     std::shared_ptr<PresetsInstallTask> _asyncInstallTask;
 #endif // !MOBILEAPP
