@@ -120,7 +120,7 @@ interface Document {
 	webkitFullscreenElement: Element | null;
 }
 
-// Extenhd StringConstructor
+// Extend StringConstructor
 interface StringConstructor {
 	locale: string; // from cool-src.js
 }

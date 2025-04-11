@@ -559,7 +559,7 @@ public:
 
     static void sendBrowserSetting(const std::shared_ptr<ClientSession>& session);
 
-    // Return true if parsing of browsersetting is successfull
+    // Return true if parsing of browsersetting is successful
     static bool parseBrowserSettings(const std::shared_ptr<ClientSession>& session,
                                      const std::string& responseBody);
 
