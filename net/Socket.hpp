@@ -528,7 +528,6 @@ private:
 class SocketThreadOwnerChange
 {
 private:
-    friend class DocumentBroker; // TODO: remove this case?
     friend class SocketDisposition;
     friend class SocketPoll;
 

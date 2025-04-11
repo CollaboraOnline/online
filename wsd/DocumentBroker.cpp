@@ -265,19 +265,10 @@ void DocumentBroker::setupTransfer(SocketDisposition &disposition,
     disposition.setTransfer(*_poll, std::move(transferFn));
 }
 
-void DocumentBroker::setupTransfer(const std::shared_ptr<StreamSocket>& socket,
+void DocumentBroker::setupTransfer(SocketPoll& from, const std::weak_ptr<StreamSocket>& socket,
                                    const SocketDisposition::MoveFunction& transferFn)
 {
-    // Drop pretentions of ownership before _socketMove.
-    SocketThreadOwnerChange::resetThreadOwner(*socket);
-
-    _poll->startThread();
-    _poll->addCallback(
-        [this, socket, transferFn]()
-        {
-            _poll->insertNewSocket(socket);
-            transferFn(socket);
-        });
+    from.transferSocketTo(socket, getPoll(), transferFn);
 }
 
 static std::chrono::seconds getLimitLoadSecs()
