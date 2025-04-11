@@ -24,8 +24,8 @@ class LocaleService {
 		this._initialized = true;
 
 		if (typeof Intl !== 'undefined') {
-			let formatter, lang;
 			try {
+				let formatter;
 				if (app.UI.language.fromURL && app.UI.language.fromURL !== '')
 					formatter = new Intl.NumberFormat(app.UI.language.fromURL);
 				else formatter = new Intl.NumberFormat(L.Browser.lang);
@@ -41,7 +41,7 @@ class LocaleService {
 					}
 				});
 			} catch (e) {
-				window.app.console.log('Exception parsing lang ' + lang + ' ' + e);
+				window.app.console.log('Exception parsing lang ' + e);
 			}
 		}
 	}
