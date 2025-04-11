@@ -194,7 +194,6 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	}
 
 	var button = L.DomUtil.create('div', 'ui-combobox-button ' + builder.options.cssClass, container);
-	button.tabIndex = '0';
 	button.role = 'button';
 
 	var arrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
