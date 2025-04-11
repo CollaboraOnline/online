@@ -92,8 +92,9 @@ class CanvasSectionObject {
 	resetAnimation(): void { return; }
 	getTestDiv(): HTMLDivElement { return; }
 	setPosition(x: number, y: number): void { return; } // Document objects only.
-	isCalcRTL(): boolean { return; }
 
+	// All below functions should be included in their respective section definitions (or other classes), not here.
+	isCalcRTL(): boolean { return; }
 	setViewResolved(on: boolean): void { return; }
 	setView(on: boolean): void { return; }
 	scrollVerticalWithOffset(offset: number): void { return; }
