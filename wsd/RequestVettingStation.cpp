@@ -228,12 +228,13 @@ void RequestVettingStation::handleRequest(const std::string& id,
                                           const RequestDetails& requestDetails,
                                           const std::shared_ptr<WebSocketHandler>& ws,
                                           const std::shared_ptr<StreamSocket>& socket,
-                                          unsigned mobileAppDocId, SocketDisposition& disposition)
+                                          unsigned mobileAppDocId, SocketDisposition& /*disposition*/)
 {
     _id = id;
     _requestDetails = requestDetails;
     _ws = ws;
     _socket = socket;
+    _logContextFD = socket->getFD();
     _mobileAppDocId = mobileAppDocId;
 
     std::string url = _requestDetails.getDocumentURI();
@@ -271,29 +272,21 @@ void RequestVettingStation::handleRequest(const std::string& id,
                                                                            << "] in config");
             sendUnauthorizedErrorAndShutdown();
             break;
-
 #if ENABLE_LOCAL_FILESYSTEM
         case StorageBase::StorageType::FileSystem:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
                             << docKey << "] is for a FileSystem document");
 
-            // Remove from the current poll and transfer.
-            disposition.setMove(
-                [selfLifecycle = shared_from_this(), this, docKey = std::move(docKey),
-                 url = std::move(url), uriPublic](const std::shared_ptr<Socket>& moveSocket)
-                {
-                    LOG_TRC_S('#' << moveSocket->getFD()
-                                  << ": Dissociating client socket from "
-                                     "ClientRequestDispatcher and creating DocBroker for ["
-                                  << docKey << ']');
+            LOG_TRC("Dissociating client socket from "
+                             "ClientRequestDispatcher and creating DocBroker for ["
+                          << docKey << ']');
 
-                    // Create the DocBroker.
-                    if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey, "",
-                                url, uriPublic))
-                    {
-                        createClientSession(docBroker, docKey, url, uriPublic);
-                    }
-                });
+            // Create the DocBroker.
+            if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey, "",
+                        url, uriPublic))
+            {
+                createClientSession(docBroker, docKey, url, uriPublic);
+            }
             break;
 #endif // ENABLE_LOCAL_FILESYSTEM
 
@@ -302,55 +295,48 @@ void RequestVettingStation::handleRequest(const std::string& id,
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
                             << docKey << "] is for a WOPI document");
             // Remove from the current poll and transfer.
-            disposition.setMove(
-                [selfLifecycle = shared_from_this(), this, docKey = std::move(docKey),
-                 url = std::move(url), uriPublic](const std::shared_ptr<Socket>& moveSocket)
-                {
-                    LOG_TRC_S('#' << moveSocket->getFD()
-                                  << ": Dissociating client socket from "
-                                     "ClientRequestDispatcher and invoking CheckFileInfo for ["
-                                  << docKey << "], "
-                                  << (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
-                                                     : "no CheckFileInfo"));
+            LOG_TRC("Dissociating client socket from "
+                             "ClientRequestDispatcher and invoking CheckFileInfo for ["
+                          << docKey << "], "
+                          << (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
+                                             : "no CheckFileInfo"));
 
-                    // CheckFileInfo and only when it's good create DocBroker.
-                    if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Active)
-                    {
-                        // Wait for CheckFileInfo result.
-                        LOG_DBG("CheckFileInfo request is in progress. Will resume when done");
-                    }
-                    else if (_checkFileInfo &&
-                             _checkFileInfo->state() == CheckFileInfo::State::Pass &&
-                             _checkFileInfo->wopiInfo())
-                    {
-                        SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
-                        transferToDocBroker(_checkFileInfo->url().toString(),
-                                            sharedSettings.getConfigId(),
-                                            _checkFileInfo->getSslVerifyMessage());
-                    }
-                    else if (_checkFileInfo == nullptr ||
-                             _checkFileInfo->state() == CheckFileInfo::State::None ||
-                             _checkFileInfo->state() == CheckFileInfo::State::Timedout)
-                    {
-                        // We haven't tried or we timed-out. Retry.
-                        _checkFileInfo.reset();
-                        checkFileInfo(uriPublic, HTTP_REDIRECTION_LIMIT);
-                    }
-                    else
-                    {
-                        // We had a response, but it was empty/error. Meaning the user is unauthorized.
-                        assert(_checkFileInfo && !_checkFileInfo->wopiInfo() &&
-                               "Unexpected to have wopiInfo");
+            // CheckFileInfo and only when it's good create DocBroker.
+            if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Active)
+            {
+                // Wait for CheckFileInfo result.
+                LOG_DBG("CheckFileInfo request is in progress. Will resume when done");
+            }
+            else if (_checkFileInfo &&
+                     _checkFileInfo->state() == CheckFileInfo::State::Pass &&
+                     _checkFileInfo->wopiInfo())
+            {
+                SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
+                transferToDocBroker(_checkFileInfo->url().toString(),
+                                    sharedSettings.getConfigId(),
+                                    _checkFileInfo->getSslVerifyMessage());
+            }
+            else if (_checkFileInfo == nullptr ||
+                     _checkFileInfo->state() == CheckFileInfo::State::None ||
+                     _checkFileInfo->state() == CheckFileInfo::State::Timedout)
+            {
+                // We haven't tried or we timed-out. Retry.
+                _checkFileInfo.reset();
+                checkFileInfo(uriPublic, HTTP_REDIRECTION_LIMIT);
+            }
+            else
+            {
+                // We had a response, but it was empty/error. Meaning the user is unauthorized.
+                assert(_checkFileInfo && !_checkFileInfo->wopiInfo() &&
+                       "Unexpected to have wopiInfo");
 
-                        LOG_ERR_S('#'
-                                  << moveSocket->getFD() << ": CheckFileInfo failed for [" << docKey
-                                  << "], "
-                                  << (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
-                                                     : "no CheckFileInfo"));
+                LOG_ERR("CheckFileInfo failed for [" << docKey
+                          << "], "
+                          << (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
+                                             : "no CheckFileInfo"));
 
-                        sendUnauthorizedErrorAndShutdown();
-                    }
-                });
+                sendUnauthorizedErrorAndShutdown();
+            }
             break;
 #endif //!MOBILEAPP
     }
@@ -500,14 +486,12 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
     std::shared_ptr<std::unique_ptr<WopiStorage::WOPIFileInfo>> wopiFileInfo =
         std::make_shared<std::unique_ptr<WopiStorage::WOPIFileInfo>>(std::move(realWopiFileInfo));
 
-    // _socket is now the DocumentBroker poll's responsibility forget about it here
-    std::shared_ptr<StreamSocket> socket = _socket;
+    std::weak_ptr<StreamSocket> socket = _socket;
     _socket.reset();
 
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
     std::shared_ptr<WebSocketHandler> ws = _ws;
-    docBroker->setupTransfer(
-        socket,
+    docBroker->setupTransfer(*_poll, socket,
         [clientSession = std::move(clientSession), wopiFileInfo = std::move(wopiFileInfo),
          ws = std::move(ws), docBroker,
          selfLifecycle = shared_from_this()](const std::shared_ptr<Socket>& moveSocket)

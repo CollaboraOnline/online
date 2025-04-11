@@ -48,14 +48,15 @@ public:
         : _requestDetails(requestDetails)
         , _poll(poll)
         , _mobileAppDocId(0)
+        , _logContextFD(-1)
     {
     }
 
     inline void logPrefix(std::ostream& os) const
     {
-        if (_socket)
+        if (_logContextFD > -1)
         {
-            os << '#' << _socket->getFD() << ": ";
+            os << '#' << _logContextFD << ": ";
         }
     }
 
@@ -114,9 +115,10 @@ private:
     std::string _id;
     std::shared_ptr<TerminatingPoll> _poll;
     std::shared_ptr<WebSocketHandler> _ws;
-    std::shared_ptr<StreamSocket> _socket;
+    std::weak_ptr<StreamSocket> _socket;
     Util::Stopwatch _birthday;
     unsigned _mobileAppDocId;
+    int _logContextFD;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
