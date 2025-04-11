@@ -37,6 +37,8 @@ function _createEntryImage(
 
 	if (entryData.tooltip) img.title = entryData.tooltip;
 	else img.title = entryData.text;
+
+	img.setAttribute('contenteditable', 'true');
 }
 
 function _createEntryText(parent: HTMLElement, entryData: IconViewEntry) {
@@ -98,8 +100,6 @@ function _iconViewEntry(
 		if (entry.tooltip) placeholder.title = entry.tooltip;
 		else placeholder.title = entry.text;
 
-		// Add tabindex attribute for accessibility, enabling keyboard navigation in the icon preview
-		entryContainer.setAttribute('tabindex', '0');
 		JSDialog.OnDemandRenderer(
 			builder,
 			parentData.id,

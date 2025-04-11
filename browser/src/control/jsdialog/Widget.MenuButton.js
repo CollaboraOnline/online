@@ -123,7 +123,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 			if (control.label)
 				JSDialog.AddOnClick(control.label, data.applyCallback);
 			if (control.arrow)
-				control.arrow.tabIndex = 0;
+				control.arrow.tabIndex = -1;
 		} else {
 			JSDialog.AddOnClick(control.button, clickFunction);
 			if (control.label)

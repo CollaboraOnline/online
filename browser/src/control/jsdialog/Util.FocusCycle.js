@@ -69,7 +69,7 @@ function isFocusable(element) {
 }
 
 /// close tab focus switching in cycle inside container
-function makeFocusCycle(container, failedToFindFocusFunc) {
+function makeFocusCycle(container, failedToFindFocusFunc, customFocusFunc) {
 	var beginMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
 	var endMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-end-marker');
 
@@ -81,6 +81,10 @@ function makeFocusCycle(container, failedToFindFocusFunc) {
 
 	container.addEventListener('focusin', function(event) {
 		if (event.target == endMarker) {
+			if (customFocusFunc) {
+				customFocusFunc();
+				return;
+			}
 			var firstFocusElement = getFocusableElements(container);
 			if (firstFocusElement && firstFocusElement.length) {
 				firstFocusElement[0].focus();
@@ -88,7 +92,7 @@ function makeFocusCycle(container, failedToFindFocusFunc) {
 			}
 		} else if (event.target == beginMarker) {
 			var focusables = getFocusableElements(container);
-			var lastFocusElement = focusables.length ? focusables[focusables.length - 1] : null;
+			var lastFocusElement = focusables.length ? focusables[0] : null;
 			if (lastFocusElement) {
 				lastFocusElement.focus();
 				return;
