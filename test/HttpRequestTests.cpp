@@ -87,7 +87,6 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
 
     std::string _localUri;
     std::shared_ptr<SocketPoll> _pollServerThread;
-    std::shared_ptr<ServerSocket> _socket;
     int _port;
 
     static const int SimulatedLatencyMs = 0;
@@ -148,13 +147,14 @@ public:
         std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         std::shared_ptr<SocketFactory> factory = std::make_shared<ServerSocketFactory>();
         _port = 9990;
+        std::shared_ptr<ServerSocket> socket;
         for (int i = 0; i < 40; ++i, ++_port)
         {
             // Try listening on this port.
             LOG_INF("HttpRequestTests::setUp: creating socket to listen on port " << _port);
-            _socket = ServerSocket::create(ServerSocket::Type::Local, _port, Socket::Type::IPv4,
+            socket = ServerSocket::create(ServerSocket::Type::Local, _port, Socket::Type::IPv4,
                                            now, *_pollServerThread, factory);
-            if (_socket)
+            if (socket)
                 break;
         }
 
@@ -164,14 +164,13 @@ public:
             _localUri = "http://127.0.0.1:" + std::to_string(_port);
 
         _pollServerThread->startThread();
-        _pollServerThread->insertNewSocket(_socket);
+        _pollServerThread->insertNewSocket(socket);
     }
 
     void tearDown()
     {
         LOG_INF("HttpRequestTests::tearDown");
         _pollServerThread->stop();
-        _socket.reset();
     }
 };
 
