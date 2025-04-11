@@ -92,7 +92,7 @@ function makeFocusCycle(container, failedToFindFocusFunc, customFocusFunc) {
 			}
 		} else if (event.target == beginMarker) {
 			var focusables = getFocusableElements(container);
-			var lastFocusElement = focusables.length ? focusables[focusables.length - 1] : null;
+			var lastFocusElement = focusables.length ? focusables[0] : null;
 			if (lastFocusElement) {
 				lastFocusElement.focus();
 				return;
