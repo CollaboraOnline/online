@@ -274,7 +274,19 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var result = builder._tabPageHandler(parentContainer, data, builder);
 
 		var tabPage = parentContainer.lastChild;
-		JSDialog.MakeFocusCycle(tabPage);
+		JSDialog.MakeFocusCycle(tabPage, null, function() {
+			var notebookbar = builder.map.uiManager.notebookbar;
+			if (notebookbar) {
+				var container = notebookbar.getTabsContainer();
+				if (container) {
+					var currentTab = container.querySelector('[tabIndex="0"]');
+					if (currentTab) {
+						currentTab.focus();
+					}
+				}
+			}
+		});
+
 
 		return result;
 	},
