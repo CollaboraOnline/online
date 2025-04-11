@@ -102,6 +102,8 @@ class NavigatorPanel extends SidebarBase {
 			closeNavWrapper,
 		);
 		closeNavButton.setAttribute('aria-label', _('Close Navigation'));
+		// on Intialization of sidebar make sure we set Navigator flag to false for safe check against cache
+		this.map.uiManager.setDocTypePref('ShowNavigator', false);
 
 		closeNavButton.addEventListener(
 			'click',

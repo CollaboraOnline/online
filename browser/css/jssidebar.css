@@ -330,7 +330,6 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 }
 
 #NavigatorPanel div.selected:not(.ui-treeview-expandable-with-icon):not(:empty):not([aria-level='1'])::before {
-	content: '–';
 	/* good to move this into css var*/
 	font-size: 17px;
 	font-weight: 500;
@@ -451,8 +450,9 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	background-position: center;
 	background-color: transparent;
 	cursor: pointer;
-	filter: brightness(0.3);
-	transition: filter 0.2s ease-in-out, transform 0.2s;
+}
+[data-theme='dark']  .close-navigation-button {
+	background-image: url('images/dark/closedoc.svg');
 }
 
 /* Navigation Tabs */
@@ -483,7 +483,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	border-bottom: 2px solid rgba(var(--doc-type), 1);
 }
 #navigation-sidebar {
-	width: 330px;
+	width: 250px;
 	display: none;
 	border-inline-end: 1px solid var(--color-border);
 	/* bg set in #sidebar-dock-wrapper, #navigator-dock-wrapper */
@@ -492,6 +492,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #navigation-sidebar.visible {
 	display: flex;
 	flex-direction: column;
+	background-color: var(--color-background-lighter)
 }
 /* Wrapper for the Toggle Button */
 #toggle-sidebar-wrapper {
