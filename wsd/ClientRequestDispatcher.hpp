@@ -58,6 +58,9 @@ private:
     void performWrites(std::size_t /*capacity*/) override {}
 
 #if !MOBILEAPP
+    /// Enable transferring of a Socket outside of a socket read.
+    bool checkTransfer(SocketDisposition& disposition) override;
+
     /// Does this address feature in the allowed hosts list.
     static bool allowPostFrom(const std::string& address);
 

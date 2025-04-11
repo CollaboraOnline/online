@@ -265,21 +265,6 @@ void DocumentBroker::setupTransfer(SocketDisposition &disposition,
     disposition.setTransfer(*_poll, std::move(transferFn));
 }
 
-void DocumentBroker::setupTransfer(const std::shared_ptr<StreamSocket>& socket,
-                                   const SocketDisposition::MoveFunction& transferFn)
-{
-    // Drop pretentions of ownership before _socketMove.
-    SocketThreadOwnerChange::resetThreadOwner(*socket);
-
-    _poll->startThread();
-    _poll->addCallback(
-        [this, socket, transferFn]()
-        {
-            _poll->insertNewSocket(socket);
-            transferFn(socket);
-        });
-}
-
 static std::chrono::seconds getLimitLoadSecs()
 {
     const auto value = ConfigUtil::getConfigValue<int>("per_document.limit_load_secs", 100);

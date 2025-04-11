@@ -528,7 +528,6 @@ private:
 class SocketThreadOwnerChange
 {
 private:
-    friend class DocumentBroker; // TODO: remove this case?
     friend class SocketDisposition;
     friend class SocketPoll;
 
@@ -602,6 +601,10 @@ public:
     /// Checks whether a timeout has occurred. Method will shutdown connection and socket on timeout.
     /// Returns true in case of a timeout, caller shall stop processing
     virtual bool checkTimeout(std::chrono::steady_clock::time_point /* now */) { return false; }
+
+    // Checks if the handler wants to trigger a transfer of the Socket to another Poll.
+    // Returns true in case a transfer of the SocketDisposition was requested.
+    virtual bool checkTransfer(SocketDisposition& /* disposition */) { return false; }
 
     /// Do some of the queued writing.
     virtual void performWrites(std::size_t capacity) = 0;
@@ -1565,6 +1568,12 @@ public:
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
         assert((getFD() >= 0 || isShutdown()) && "Socket is closed but not marked correctly");
+
+        if (_socketHandler->checkTransfer(disposition))
+        {
+            assert(disposition.isTransfer());
+            return;
+        }
 
         if (_socketHandler->checkTimeout(now))
         {
