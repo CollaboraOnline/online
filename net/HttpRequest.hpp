@@ -1753,9 +1753,9 @@ private:
             [this, poll](std::shared_ptr<StreamSocket> socket, net::AsyncConnectResult result)
         {
             std::shared_ptr<SocketPoll> socketPoll(poll.lock());
-            if (!socketPoll)
+            if (!socketPoll || !socketPoll->isAlive())
             {
-                LOG_WRN("asyncConnect completed after poll was destroyed");
+                LOG_WRN("asyncConnect completed after poll " << (!socketPoll ? "destroyed" : "finished"));
                 return;
             }
 
