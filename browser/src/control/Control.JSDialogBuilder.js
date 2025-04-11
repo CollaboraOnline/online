@@ -2183,7 +2183,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(div).addClass('has-dropdown');
 			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
 			L.DomUtil.create('i', 'unoarrow', arrowbackground);
-			arrowbackground.tabIndex = '0';
 			controls['arrow'] = arrowbackground;
 
 			// Attach event listeners for both 'click' and 'keydown'
