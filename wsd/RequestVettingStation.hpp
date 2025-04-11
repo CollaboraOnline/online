@@ -68,6 +68,14 @@ public:
                        const std::shared_ptr<StreamSocket>& socket, unsigned mobileAppDocId,
                        SocketDisposition& disposition);
 
+#if !MOBILEAPP
+    /// Attempt to create a DocBroker and setup a transfer via disposition
+    /// of disposition's Socket to the DocBrokers SocketPoll
+    void transferToDocBroker(const std::string& url,
+                             const std::string& configId,
+                             const std::string& sslVerifyResult);
+#endif
+
     /// Returns true iff we are older than the given age.
     template <typename T>
     bool aged(T minAge,
