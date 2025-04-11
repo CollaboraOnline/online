@@ -63,7 +63,7 @@ public:
         std::size_t out_left = buffer.size();
 
         // Convert.
-        if (iconv(_iconvd, (char**)&in, &in_left, &out, &out_left) == static_cast<size_t>(-1))
+        if (iconv(_iconvd, const_cast<char**>(&in), &in_left, &out, &out_left) == static_cast<size_t>(-1))
         {
             LOG_ERR("Failed to convert [" << source << ']');
             return source;
