@@ -48,14 +48,16 @@ public:
         : _requestDetails(requestDetails)
         , _poll(poll)
         , _mobileAppDocId(0)
+        , _logContextFD(-1)
+        , _postponingTransferToDocBroker(false)
     {
     }
 
     inline void logPrefix(std::ostream& os) const
     {
-        if (_socket)
+        if (_logContextFD > -1)
         {
-            os << '#' << _socket->getFD() << ": ";
+            os << '#' << _logContextFD << ": ";
         }
     }
 
@@ -65,8 +67,24 @@ public:
     /// Called when the WebSocket is connected (i.e. after cool.html is loaded in the browser).
     void handleRequest(const std::string& id, const RequestDetails& requestDetails,
                        const std::shared_ptr<WebSocketHandler>& ws,
-                       const std::shared_ptr<StreamSocket>& socket, unsigned mobileAppDocId,
+                       unsigned mobileAppDocId,
                        SocketDisposition& disposition);
+
+#if !MOBILEAPP
+    /// Attempt to create a DocBroker and setup a transfer via disposition
+    /// of disposition's Socket to the DocBrokers SocketPoll
+    bool transferToDocBroker(const std::string& url,
+                             const std::string& configId,
+                             const std::string& sslVerifyResult,
+                             const std::shared_ptr<WebSocketHandler>& ws,
+                             SocketDisposition& disposition);
+
+    /// If a DocBroker couldn't be created because the results of CheckFileInfo were not
+    /// available at the time of ClientRequestDispatcher::handleClientWsUpgrade then
+    /// when the CheckFileInfo results are available this method executes the deferred
+    /// DocBroker creation and transfer of disposition's Socket to the DocBroker SocketPoll.
+    bool doPostponedTransferToDocBroker(SocketDisposition& disposition);
+#endif
 
     /// Returns true iff we are older than the given age.
     template <typename T>
@@ -82,9 +100,11 @@ private:
                                                     const std::string& url,
                                                     const Poco::URI& uriPublic);
 
-    void createClientSession(const std::shared_ptr<DocumentBroker>& docBroker,
+    bool createClientSession(SocketDisposition& disposition,
+                             const std::shared_ptr<WebSocketHandler>& ws,
+                             const std::shared_ptr<DocumentBroker>& docBroker,
                              const std::string& docKey, const std::string& url,
-                             const Poco::URI& uriPublic, bool isReadOnly);
+                             const Poco::URI& uriPublic);
 
     /// Send unauthorized error to the client and disconnect the socket.
     /// Includes SSL verification status, if available, as the error code.
@@ -97,7 +117,7 @@ private:
 #if !MOBILEAPP
     void launchInstallPresets();
 
-    void checkFileInfo(const Poco::URI& uri, bool isReadOnly, int redirectionLimit);
+    void checkFileInfo(const Poco::URI& uri, int redirectionLimit);
     std::shared_ptr<CheckFileInfo> _checkFileInfo;
     std::shared_ptr<PresetsInstallTask> _asyncInstallTask;
 #endif // !MOBILEAPP
@@ -106,9 +126,10 @@ private:
     std::string _id;
     std::shared_ptr<TerminatingPoll> _poll;
     std::shared_ptr<WebSocketHandler> _ws;
-    std::shared_ptr<StreamSocket> _socket;
     Util::Stopwatch _birthday;
     unsigned _mobileAppDocId;
+    int _logContextFD;
+    bool _postponingTransferToDocBroker;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
