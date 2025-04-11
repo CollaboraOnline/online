@@ -111,7 +111,7 @@ void RequestVettingStation::handleRequest(const std::string& id)
                             << docKey << "] is for a WOPI document");
 
             // CheckFileInfo asynchronously.
-            checkFileInfo(uriPublic, isReadOnly, HTTP_REDIRECTION_LIMIT);
+            checkFileInfo(uriPublic, HTTP_REDIRECTION_LIMIT);
             break;
 #endif //!MOBILEAPP
     }
@@ -280,8 +280,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
             // Remove from the current poll and transfer.
             disposition.setMove(
                 [selfLifecycle = shared_from_this(), this, docKey = std::move(docKey),
-                 url = std::move(url), uriPublic,
-                 isReadOnly](const std::shared_ptr<Socket>& moveSocket)
+                 url = std::move(url), uriPublic](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
                                   << ": Dissociating client socket from "
@@ -292,7 +291,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                     if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey, "",
                                 url, uriPublic))
                     {
-                        createClientSession(docBroker, docKey, url, uriPublic, isReadOnly);
+                        createClientSession(docBroker, docKey, url, uriPublic);
                     }
                 });
             break;
@@ -305,8 +304,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
             // Remove from the current poll and transfer.
             disposition.setMove(
                 [selfLifecycle = shared_from_this(), this, docKey = std::move(docKey),
-                 url = std::move(url), uriPublic,
-                 isReadOnly](const std::shared_ptr<Socket>& moveSocket)
+                 url = std::move(url), uriPublic](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
                                   << ": Dissociating client socket from "
@@ -331,7 +329,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                         if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey,
                                     sharedSettings.getConfigId(), url, uriPublic))
                         {
-                            createClientSession(docBroker, docKey, url, uriPublic, isReadOnly);
+                            createClientSession(docBroker, docKey, url, uriPublic);
                             // If there is anything dubious about the ssl
                             // connection provide a warning about that.
                             if (!sslVerifyResult.empty())
@@ -350,7 +348,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
                     {
                         // We haven't tried or we timed-out. Retry.
                         _checkFileInfo.reset();
-                        checkFileInfo(uriPublic, isReadOnly, HTTP_REDIRECTION_LIMIT);
+                        checkFileInfo(uriPublic, HTTP_REDIRECTION_LIMIT);
                     }
                     else
                     {
@@ -373,9 +371,9 @@ void RequestVettingStation::handleRequest(const std::string& id,
 }
 
 #if !MOBILEAPP
-void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly, int redirectLimit)
+void RequestVettingStation::checkFileInfo(const Poco::URI& uri, int redirectLimit)
 {
-    auto cfiContinuation = [this, isReadOnly](CheckFileInfo& checkFileInfo)
+    auto cfiContinuation = [this](CheckFileInfo& checkFileInfo)
     {
         assert(&checkFileInfo == _checkFileInfo.get() && "Unknown CheckFileInfo instance");
         if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Pass &&
@@ -395,7 +393,7 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, bool isReadOnly,
                 if (_ws)
                 {
                     // If we don't have the WebSocket, defer creating the client session.
-                    createClientSession(docBroker, docKey, url, uriPublic, isReadOnly);
+                    createClientSession(docBroker, docKey, url, uriPublic);
                 }
                 else
                 {
@@ -468,11 +466,12 @@ static void sendErrorAndShutdownWS(const std::shared_ptr<WebSocketHandler>& ws,
 
 void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBroker>& docBroker,
                                                 const std::string& docKey, const std::string& url,
-                                                const Poco::URI& uriPublic, const bool isReadOnly)
+                                                const Poco::URI& uriPublic)
 {
     assert(docBroker && "Must have DocBroker");
     assert(_ws && "Must have WebSocket");
 
+    const bool isReadOnly = Uri::hasReadonlyPermission(uriPublic.toString());
     std::shared_ptr<ClientSession> clientSession =
         docBroker->createNewClientSession(_ws, _id, uriPublic, isReadOnly, _requestDetails);
     if (!clientSession)
