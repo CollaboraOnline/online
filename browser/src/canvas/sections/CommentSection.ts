@@ -332,9 +332,6 @@ export class Comment extends CanvasSectionObject {
 				this.sectionProperties.childLines[i] = L.DomUtil.create('div', 'cool-annotation-child-line', this.sectionProperties.childLinesNode);
 				this.sectionProperties.childLines[i].id = 'annotation-child-line-' + this.sectionProperties.data.id + '-' + i;
 				this.sectionProperties.childLines[i].style.width = this.sectionProperties.childCommentOffset/2 + 'px';
-				// this.sectionProperties.childLines[i].style.borderStyle = 'none none dashed dashed';
-				// this.sectionProperties.childLines[i].style.borderWidth = 'thin';
-				// this.sectionProperties.childLines[i].style.borderColor = 'darkgray';
 			}
 			this.sectionProperties.childLines[i].style.marginLeft =  (this.sectionProperties.childCommentOffset*this.getChildLevel() + 4) + 'px';
 			this.sectionProperties.childLines[i].style.height = (childPositions[i].posY + 24 - lastPosY) + 'px';

@@ -58,7 +58,7 @@ declare var JSDialog: any;
 
 namespace cool {
 
-export class CommentSection extends app.definitions.canvasSectionObject {
+export class CommentSection extends CanvasSectionObject {
 	name: string = L.CSections.CommentList.name;
 	backgroundColor: string = app.sectionContainer.clearColor;
 	expand: string[] = ['bottom'];
@@ -110,7 +110,6 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.sectionProperties.showResolved = null;
 		this.sectionProperties.marginY = 10 * app.dpiScale;
 		this.sectionProperties.offset = 5 * app.dpiScale;
-		this.sectionProperties.layoutTimer = null;
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
 		this.sectionProperties.commentWidth = 200 * 1.3; // CSS pixels.
@@ -118,6 +117,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.sectionProperties.deflectionOfSelectedComment = 160; // CSS pixels.
 		this.sectionProperties.showSelectedBigger = false;
 		this.sectionProperties.calcCurrentComment = null; // We don't automatically show a Calc comment when cursor is on its cell. But we remember it to show if user presses Alt+C keys.
+		this.sectionProperties.pendingUpdate = false;
+		this.sectionProperties.reLayout = true;
+
 		// This (commentsAreListed) variable means that comments are shown as a list on the right side of the document.
 		this.sectionProperties.commentsAreListed = (app.map._docLayer._docType === 'text' || app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') && !(<any>window).mode.isMobile();
 		this.idIndexMap = new Map<any, number>();
@@ -146,7 +148,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 
 		this.map.on('zoomend', function() {
 			this.checkCollapseState();
-			this.layout(true);
+			this.doLayout(true);
 		}, this);
 
 		this.backgroundColor = this.containerObject.getClearColor();
@@ -229,8 +231,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	}
 
 	private isEditing(): boolean {
-		const sections = this.containerObject.sections;
-		const textBoxes = sections
+		const textBoxes = this.sectionProperties.commentList
 			.flatMap((section: any) => [section.sectionProperties.nodeModifyText, section.sectionProperties.nodeReplyText])
 			.filter((textBox: any) => textBox !== undefined);
 
@@ -1263,7 +1264,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 
 		var previousAnimationState = this.disableLayoutAnimation;
 		this.disableLayoutAnimation = true;
-		this.update(true, false);
+		this.update(false);
 		this.disableLayoutAnimation = previousAnimationState;
 	}
 
@@ -2061,21 +2062,20 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		this.disableLayoutAnimation = false;
 	}
 
-	private layout (immediate: any = null, relayout: boolean = true): void {
-		if (immediate)
-			this.doLayout(relayout);
-		else if (!this.sectionProperties.layoutTimer) {
-			this.sectionProperties.layoutTimer = setTimeout(() => {
-				delete this.sectionProperties.layoutTimer;
-				this.doLayout(relayout);
-			}, 10 /* ms */);
-		} // else - avoid excessive re-layout
+	private update (reLayout: boolean = true): void {
+		this.sectionProperties.pendingUpdate = true;
+		this.sectionProperties.reLayout = reLayout;
+		this.containerObject.addDOMUpdaterCallback(this.updateDOM.bind(this));
+		this.containerObject.requestReDraw();
 	}
 
-	private update (immediate: boolean = false, relayout: boolean = true): void {
-		if (relayout && app.map._docLayer._docType === 'text')
+	public updateDOM(): void {
+		if (this.sectionProperties.reLayout && app.map._docLayer._docType === 'text')
 			this.updateThreadInfoIndicator();
-		this.layout(immediate, relayout);
+
+		this.doLayout(this.sectionProperties.reLayout);
+		this.sectionProperties.pendingUpdate = false;
+		this.sectionProperties.reLayout = true;
 	}
 
 	private updateThreadInfoIndicator(): void {
@@ -2408,6 +2408,9 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 		if ((app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing'))
 			this.showHideComments();
 
+		this.sectionProperties.reLayout = true;
+		this.updateDOM();
+
 		CommentSection.importingComments = false;
 	}
 
@@ -2501,7 +2504,7 @@ export class CommentSection extends app.definitions.canvasSectionObject {
 	}
 
 	public hasAnyComments(): boolean {
-		return this.containerObject.sections.some((x: any) => x.constructor.name == "Comment")
+		return this.sectionProperties.commentList.length > 0;
 	}
 }
 

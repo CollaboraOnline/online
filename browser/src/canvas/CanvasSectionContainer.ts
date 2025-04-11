@@ -153,12 +153,6 @@ declare var L: any;
 			mouse down + multi touch start + multi touch move + multi touch end
 */
 
-enum DirtyType {
-	NotDirty,
-	All,
-	TileRange
-}
-
 class CanvasSectionContainer {
 	/*
 		All events will be cached by this class and propagated to sections.
@@ -217,6 +211,8 @@ class CanvasSectionContainer {
 	private frameCount: number = null; // Frame count of the current animation.
 	private duration: number = null; // Duration for the animation.
 	private elapsedTime: number = null; // Time that passed since the animation started.
+
+	private domUpdaterCallbackList: Array<CallableFunction> = new Array(0); // This is for updating DOM elements. These callbacks (if any) are called before drawSections.
 
 	constructor (canvasDOMElement: HTMLCanvasElement, disableDrawing?: boolean) {
 		this.canvas = canvasDOMElement;
@@ -632,10 +628,19 @@ class CanvasSectionContainer {
 		this.drawSections();
 	}
 
+	public addDOMUpdaterCallback(callback: CallableFunction) {
+		if (this.domUpdaterCallbackList.indexOf(callback) < 0) {
+			this.domUpdaterCallbackList.push(callback);
+		}
+	}
+
 	public requestReDraw() {
 		if (!this.drawingAllowed()) return;
-		if (this.drawRequest === null)
+		if (this.drawRequest === null) {
+			while (this.domUpdaterCallbackList.length > 0) this.domUpdaterCallbackList.shift()();
+
 			this.drawRequest = requestAnimationFrame(this.redrawCallback.bind(this));
+		}
 	}
 
 	private propagateCursorPositionChanged() {
