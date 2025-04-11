@@ -340,9 +340,14 @@ class WordBook {
 		);
 
 		addButton.disabled = true;
-		newWordInput.addEventListener('input', () => {
+		newWordInput.addEventListener('change', () => {
 			const newWord = newWordInput.value.trim();
-			addButton.disabled = newWord === '';
+
+			const wordExists = this.currWordbookFile.words.some(
+				(word) => word.toLowerCase() === newWord.toLowerCase(),
+			);
+
+			addButton.disabled = newWord === '' || wordExists;
 		});
 
 		addButton.addEventListener('click', () => {
