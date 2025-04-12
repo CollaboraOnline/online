@@ -118,8 +118,8 @@ namespace {
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         while (!SigUtil::getShutdownRequestFlag())
         {
-            if (std::chrono::duration_cast<std::chrono::seconds>(
-                    std::chrono::steady_clock::now() - start).count() > timeout.count())
+            if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() -
+                                                                 start) > timeout)
             {
                 LOK_ASSERT_FAIL("Timed out waiting for modified status change");
                 return false; // arbitrary but why not.
