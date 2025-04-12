@@ -584,7 +584,8 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
             auto ws = http::WebSocketSession::create(uri.toString());
 
             TST_LOG("Connection to " << uri.toString() << " is "
-                                     << (ws->secure() ? "secure" : "plain"));
+                                     << (ws->secure() ? "secure" : "plain")
+                                     << ", requesting: " << url);
 
             http::Request req(url);
             ws->asyncRequest(req, socketPoll);
