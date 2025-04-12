@@ -217,6 +217,7 @@ namespace Log
             std::size_t size() const { return _size; }
             std::size_t available() const { return BufferSize - _size; }
 
+            /// Flush internal buffers, if any.
             inline void flush()
             {
                 if (_size)
@@ -297,6 +298,7 @@ namespace Log
 
         void close() override { flush(); }
 
+        /// Flush buffers, if any.
         static inline void flush() { _tlb.flush(); }
 
         void log(const Poco::Message& msg) override
@@ -796,15 +798,11 @@ namespace Log
         Poco::Logger::shutdown();
 
         flush();
+
+        ::fflush(nullptr); // Flush all open output streams.
     }
 
-    void flush()
-    {
-        BufferedConsoleChannel::flush();
-
-        fflush(stdout);
-        fflush(stderr);
-    }
+    void flush() { BufferedConsoleChannel::flush(); }
 
     void setThreadLocalLogLevel(const std::string& logLevel)
     {
