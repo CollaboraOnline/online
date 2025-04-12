@@ -912,7 +912,7 @@ public:
         // There is a race when shutting down because
         // SocketPoll threads exit when shutting down.
         if (!isAlive() && !SigUtil::getShutdownRequestFlag())
-            LOG_WRN("Waking up dead poll thread ["
+            LOG_DBG("WARNING: Waking up dead poll thread ["
                     << _name << "], started: " << (_threadStarted ? "true" : "false")
                     << ", finished: " << _threadFinished);
 
