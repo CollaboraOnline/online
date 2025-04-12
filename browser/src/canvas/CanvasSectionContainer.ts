@@ -395,7 +395,13 @@ class CanvasSectionContainer {
 
 		var scrollSection = <any> this.getSectionWithName(L.CSections.Scroll.name);
 		if (scrollSection)
+		{
+			// Scrolling has a habit of requesting redraws - stop that ...
+			var wasEnabled = this.drawingEnabled;
+			this.drawingEnabled = false;
 			scrollSection.completePendingScroll(); // No painting, only dirtying.
+			this.drawingEnabled = wasEnabled;
+		}
 
 		if (this.dirty) {
 			this.requestReDraw(this.dirtySubset);
