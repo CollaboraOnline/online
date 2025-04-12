@@ -556,18 +556,18 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS, bool justPoll)
     // First process the wakeup pipe (always the last entry).
     if (_pollFds[size].revents)
     {
-        LOGA_TRC(Socket, '#' << _pollFds[size].fd << ": Handling events of wakeup pipe: 0x" << std::hex
-                 << _pollFds[size].revents << std::dec);
+        LOGA_TRC(Socket, "Handling events of wakeup pipe (" << _pollFds[size].fd << "): 0x"
+                                                            << std::hex << _pollFds[size].revents
+                                                            << std::dec);
 
         // Clear the data.
-#if !MOBILEAPP
         int dump[32];
+#if !MOBILEAPP
         dump[0] = ::read(_wakeup[0], &dump, sizeof(dump));
-        LOGA_TRC(Socket, "Wakeup pipe read " << dump[0] << " bytes");
 #else
-        LOGA_TRC(Socket, "Wakeup pipe read");
-        int dump = fakeSocketRead(_wakeup[0], &dump, sizeof(dump));
+        dump[0] = fakeSocketRead(_wakeup[0], &dump, sizeof(dump));
 #endif
+        LOGA_TRC(Socket, "Wakeup pipe (" << _wakeup[0] << ") read " << dump[0] << " bytes");
 
         std::vector<CallbackFn> invoke;
         {
@@ -807,6 +807,9 @@ void SocketPoll::createWakeups()
     {
         throw std::runtime_error("Failed to allocate pipe for SocketPoll [" + _name + "] waking.");
     }
+
+    LOG_DBG("Created wakeup FDs for SocketPoll [" << _name << "], rfd: " << _wakeup[0]
+                                                  << ", wfd: " << _wakeup[1]);
 
     std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
     getWakeupsArray().push_back(_wakeup[1]);
