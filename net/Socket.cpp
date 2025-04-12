@@ -1097,22 +1097,24 @@ void SocketPoll::dumpState(std::ostream& os) const
     // FIXME: NOT thread-safe! _pollSockets is modified from the polling thread!
     const std::vector<std::shared_ptr<Socket>> pollSockets = _pollSockets;
 
-    os << "\n  SocketPoll [" << name() << "] with " << pollSockets.size() << " socket"
-       << (pollSockets.size() == 1 ? "" : "s") << " - wakeup rfd: " << _wakeup[0]
+    os << "\n  SocketPoll [" << name() << "] with " << pollSockets.size() << " socket(s)" << " and "
+       << _newCallbacks.size() << " callback(s) - wakeup rfd: " << _wakeup[0]
        << " wfd: " << _wakeup[1] << '\n';
 
-    os << "\tcallbacks: " << _newCallbacks.size() << '\n';
-
-    os << "\t\tfd\tevents\tstatus\trbuffered\trcapacity\twbuffered\twcapacity\trtotal\twtotal\tclie"
-          "ntaddress\n";
-    std::size_t totalCapacity = 0;
-    for (const std::shared_ptr<Socket>& socket : pollSockets)
+    if (!pollSockets.empty())
     {
-        socket->dumpState(os);
-        totalCapacity += socket->totalBufferCapacity();
+        os << "\t\tfd\tevents\tstatus\trbuffered\trcapacity\twbuffered\twcapacity\trtotal\twtotal\t"
+              "clientaddress\n";
+        std::size_t totalCapacity = 0;
+        for (const std::shared_ptr<Socket>& socket : pollSockets)
+        {
+            socket->dumpState(os);
+            totalCapacity += socket->totalBufferCapacity();
+        }
+
+        os << "\n  Total socket buffer capacity: " << totalCapacity / 1024 << " KB\n";
     }
 
-    os << "\n  Total socket buffer capacity: " << totalCapacity / 1024 << " KB\n";
     os << "\n  Done SocketPoll [" << name() << "]\n";
     THREAD_UNSAFE_DUMP_END
 }
