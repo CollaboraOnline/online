@@ -459,6 +459,8 @@ static int forkKit(const std::function<void()> &childFunc,
     if (hasWatchDog)
         SocketPoll::PollWatchdog->joinThread();
 
+    Log::preFork();
+
     pid = fork();
     if (!pid)
     {

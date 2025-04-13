@@ -1497,6 +1497,8 @@ bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
     static size_t numSaves = 0;
     numSaves++;
 
+    Log::preFork();
+
     const pid_t pid = fork();
 
     if (!pid) // Child
