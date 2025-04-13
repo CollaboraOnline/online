@@ -184,6 +184,8 @@ namespace Log
         }
     };
 
+    void preFork() { flush(); }
+
     void postFork()
     {
         /// after forking we can end up with threads that

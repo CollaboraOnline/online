@@ -79,6 +79,9 @@ namespace Log
     /// Flush buffered console logs, if used.
     void flush();
 
+    /// Prepare for forking.
+    void preFork();
+
     /// Cleanup state after forking
     void postFork();
 
