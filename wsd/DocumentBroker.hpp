@@ -647,7 +647,8 @@ private:
                                      StorageBase::LockState lock, std::string& error);
 
     /// Handle the Un/Lock request result.
-    void handleLockResult(ClientSession& session, const StorageBase::LockUpdateResult& result);
+    /// Returns false on failure/unauthorized.
+    bool handleLockResult(ClientSession& session, const StorageBase::LockUpdateResult& result);
 
     std::size_t getIdleTimeSecs() const
     {
