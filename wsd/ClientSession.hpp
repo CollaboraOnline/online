@@ -42,7 +42,7 @@ public:
 
     void sendFileMode(bool readOnly, bool editComments);
 
-    void setLockFailed(const std::string& sReason);
+    void setLockFailed(const std::string& reason);
 
     STATE_ENUM(SessionState,
                DETACHED, // initial

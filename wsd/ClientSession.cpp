@@ -1902,13 +1902,13 @@ void ClientSession::sendFileMode(const bool readOnly, const bool editComments)
     sendTextFrame(result);
 }
 
-void ClientSession::setLockFailed(const std::string& sReason)
+void ClientSession::setLockFailed(const std::string& reason)
 {
     // TODO: make this "read-only" a special one with a notification (infobar? balloon tip?)
     //       and a button to unlock
     _isLockFailed = true;
     setReadOnly(true);
-    sendTextFrame("lockfailed:" + sReason);
+    sendTextFrame("lockfailed:" + reason);
 }
 
 bool ClientSession::attemptLock(const std::shared_ptr<DocumentBroker>& docBroker)
