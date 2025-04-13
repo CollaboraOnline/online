@@ -269,17 +269,10 @@ namespace Log
                 assert(_size <= BufferSize && "Buffer overflow");
             }
 
-        template <std::size_t N> inline void buffer(const char (&data)[N])
-        {
-            buffer(data, N - 1); // Minus the null.
-        }
-
-        inline void buffer(const std::string& string) { buffer(string.data(), string.size()); }
-
-    private:
-        char _buffer[BufferSize];
-        std::size_t _size;
-        std::int64_t _oldest_time_us; ///< The timestamp of the oldest buffered entry.
+        private:
+            char _buffer[BufferSize];
+            std::size_t _size;
+            std::int64_t _oldest_time_us; ///< The timestamp of the oldest buffered entry.
         };
 
     protected:
@@ -288,12 +281,7 @@ namespace Log
 
         inline void buffer(const char* data, std::size_t size) { _tlb.buffer(data, size); }
 
-        template <std::size_t N> inline void buffer(const char (&data)[N])
-        {
-            buffer(data, N - 1); // Minus the null.
-        }
-
-        inline void buffer(const std::string& string) { buffer(string.data(), string.size()); }
+        inline void buffer(const std::string_view string) { buffer(string.data(), string.size()); }
 
     public:
         ~BufferedConsoleChannel() { flush(); }
