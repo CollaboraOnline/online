@@ -167,11 +167,6 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 };
 
 JSDialog.CloseDropdown = function (id) {
-	var popupParent = L.DomUtil.get(id.replace('-dropdown', ''));
-	if (popupParent && popupParent._onClose) {
-		popupParent._onClose();
-	}
-
 	L.Map.THIS.fire('jsdialog', {data: {
 		id: _createDropdownId(id),
 		jsontype: 'dialog',
