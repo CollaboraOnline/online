@@ -312,6 +312,14 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.childLinesNode.style.width = this.sectionProperties.childCommentOffset*(this.getChildLevel() + 1) + 'px';
 	}
 
+	public getContainerPosX(): number {
+		return parseInt(this.sectionProperties.container.style.left.replace('px', ''));
+	}
+
+	public getContainerPosY(): number {
+		return parseInt(this.sectionProperties.container.style.top.replace('px', ''));
+	}
+
 	public updateChildLines (): void {
 		if (!this.isContainerVisible())
 			return;
@@ -322,10 +330,10 @@ export class Comment extends CanvasSectionObject {
 		for (let i = 0; i < this.sectionProperties.children.length; i++) {
 			if (this.sectionProperties.children[i].isContainerVisible())
 				childPositions.push({ id: this.sectionProperties.children[i].sectionProperties.data.id,
-									posY: this.sectionProperties.children[i].sectionProperties.container._leaflet_pos.y});
+									posY: this.getContainerPosY()});
 		}
 		childPositions.sort((a, b) => { return a.posY - b.posY; });
-		let lastPosY = this.sectionProperties.container._leaflet_pos.y + this.getCommentHeight(false);
+		let lastPosY = this.getContainerPosY() + this.getCommentHeight(false);
 		let i = 0;
 		for (; i < childPositions.length; i++) {
 			if (this.sectionProperties.childLines[i] === undefined) {

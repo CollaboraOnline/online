@@ -1740,9 +1740,9 @@ class CanvasSectionContainer {
 
 	private drawSections (frameCount: number = null, elapsedTime: number = null) {
 
-//              Un-comment to debug duplicate rendering problems:
-//		const stack = new Error().stack;
-//		console.log("Draw sections:\n", stack);
+		// Un-comment to debug duplicate rendering problems:
+		// const stack = new Error().stack;
+		// console.log("Draw sections:\n", stack);
 
 		if (app.map && app.map._debug)
 			app.map._debug.setOverlayMessage('top-frames', 'Frames: ' + this.framesRendered++);
@@ -1764,6 +1764,7 @@ class CanvasSectionContainer {
 					this.context.globalAlpha = 1;
 				}
 
+				this.sections[i].onUpdateDOM();
 				this.sections[i].onDraw(frameCount, elapsedTime);
 				if (this.sections[i].borderColor) { // If section's border is set, draw its borders after section's "onDraw" function is called.
 					var offset = this.sections[i].getLineOffset();
