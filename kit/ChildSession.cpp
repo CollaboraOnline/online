@@ -615,6 +615,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "getclipboard"))
         {
+            fprintf(stderr, "THIS CLIPBOARD 3\n");
             return getClipboard(tokens);
         }
         else if (tokens.equals(0, "setclipboard"))
@@ -1530,8 +1531,15 @@ bool ChildSession::getClipboard(const StringVector& tokens)
     size_t      *outSizes = nullptr;
     char       **outStreams = nullptr;
 
+    std::string tagName;
+    if (tokens.size() < 2 || !getTokenString(tokens[1], "name", tagName))
+    {
+        sendTextFrameAndLogError("error: cmd=getclipboard kind=syntax");
+        return false;
+    }
+
     std::string mimeType;
-    bool hasMimeRequest = tokens.size() > 1 && getTokenString(tokens[1], "mimetype", mimeType);
+    bool hasMimeRequest = tokens.size() > 2 && getTokenString(tokens[2], "mimetype", mimeType);
     if (hasMimeRequest)
     {
         specifics = Util::splitStringToVector(mimeType, ',');
@@ -1602,6 +1610,23 @@ bool ChildSession::getClipboard(const StringVector& tokens)
         selectionObject.stringify(selectionStream);
         std::string selection = selectionStream.str();
         Util::vectorAppend(output, selection.c_str(), selection.size());
+    }
+
+    std::string tempFile = Poco::URI(getJailedFilePath()).getPath() + ".clipboard." + tagName;
+    fprintf(stderr, "%d %d getJailedFilePath IS %s, tag is %s using name %s\n", getpid(), gettid(), getJailedFilePath().c_str(), tagName.c_str(), tempFile.c_str());
+
+    std::ofstream fileStream;
+    fileStream.open(tempFile);
+    fprintf(stderr, "one is %d\n", fileStream.fail());
+    fileStream.write(output.data(), output.size());
+    fprintf(stderr, "two is %d\n", fileStream.fail());
+    fileStream.close();
+    fprintf(stderr, "three is %d\n", fileStream.fail());
+
+    if (fileStream.fail())
+    {
+        LOG_ERR("GetClipboard Failed for tag: " << tagName);
+        return false;
     }
 
     LOG_TRC("Sending clipboardcontent of size " << output.size() << " bytes");

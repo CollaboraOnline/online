@@ -308,8 +308,9 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             return;
         }
 
-        LOG_TRC("Session [" << getId() << "] sending getclipboard" + specific);
-        docBroker->forwardToChild(client_from_this(), "getclipboard" + specific);
+        LOG_TRC("Session [" << getId() << "] sending getclipboard name=" + tag + specific);
+        fprintf(stderr, "THIS CLIPBOARD 2\n");
+        docBroker->forwardToChild(client_from_this(), "getclipboard name=" + tag + specific);
         _clipSockets.push_back(socket);
     }
     else // REQUEST_SET

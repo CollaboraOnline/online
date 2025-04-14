@@ -3797,6 +3797,7 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
             // if there is no reason to think the document is possibly-
             // modified, then it's unlikely there is anything in the clipboard.
             LOG_TRC("request/rescue clipboard on disconnect for " << session->getId());
+            fprintf(stderr, "THIS CLIPBOARD 1\n");
             forwardToChild(session, "getclipboard");
         }
 #endif
