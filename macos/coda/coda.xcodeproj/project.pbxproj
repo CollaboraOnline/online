@@ -22,8 +22,6 @@
 		BE44ACCA2D7F018700BFA3B2 /* SigUtil-mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACC92D7F018700BFA3B2 /* SigUtil-mobile.cpp */; };
 		BE44ACCF2D7F067500BFA3B2 /* Crypto-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACCE2D7F067500BFA3B2 /* Crypto-stub.cpp */; };
 		BE44ACD12D7F073000BFA3B2 /* Unit-mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACD02D7F073000BFA3B2 /* Unit-mobile.cpp */; };
-		BE44ACD42D7F07B700BFA3B2 /* HttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACD32D7F07B700BFA3B2 /* HttpRequest.cpp */; };
-		BE44ACD72D7F07D800BFA3B2 /* NetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACD62D7F07D800BFA3B2 /* NetUtil.cpp */; };
 		BE44ACDA2D7F089200BFA3B2 /* RequestVettingStation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACD92D7F089200BFA3B2 /* RequestVettingStation.cpp */; };
 		BE44ACFC2D7F1F6B00BFA3B2 /* branding-mobile.css in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACF82D7F1F6B00BFA3B2 /* branding-mobile.css */; };
 		BE44ACFD2D7F1F6B00BFA3B2 /* branding-unsupported.js in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACFB2D7F1F6B00BFA3B2 /* branding-unsupported.js */; };
@@ -36,6 +34,7 @@
 		BE4C620F2D59E85500047DF2 /* Util-macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C620C2D59E85500047DF2 /* Util-macos.cpp */; };
 		BE4C625E2D5A3DDA00047DF2 /* Kit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C625D2D5A3DDA00047DF2 /* Kit.cpp */; };
 		BE4C62612D5B736200047DF2 /* coolwsd.xml in Resources */ = {isa = PBXBuildFile; fileRef = BE4C62602D5B736200047DF2 /* coolwsd.xml */; };
+		BE5FDE372DAD3DCF00C48DB2 /* LogUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5FDE362DAD3DCF00C48DB2 /* LogUI.cpp */; };
 		BE9115AE2CECBD3100C597B2 /* FileUtil-unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */; };
 		BE9115B02CECBECF00C597B2 /* Util-unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9115AF2CECBECF00C597B2 /* Util-unix.cpp */; };
 		BEA2636D2CBE38E20007435A /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2636A2CBE38E20007435A /* Uri.cpp */; };
@@ -104,10 +103,6 @@
 		BE44ACC92D7F018700BFA3B2 /* SigUtil-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "SigUtil-mobile.cpp"; path = "../../../../common/SigUtil-mobile.cpp"; sourceTree = "<group>"; };
 		BE44ACCE2D7F067500BFA3B2 /* Crypto-stub.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Crypto-stub.cpp"; path = "../../../../common/Crypto-stub.cpp"; sourceTree = "<group>"; };
 		BE44ACD02D7F073000BFA3B2 /* Unit-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Unit-mobile.cpp"; path = "../../../../common/Unit-mobile.cpp"; sourceTree = "<group>"; };
-		BE44ACD22D7F07B700BFA3B2 /* HttpRequest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = HttpRequest.hpp; path = ../../../../net/HttpRequest.hpp; sourceTree = "<group>"; };
-		BE44ACD32D7F07B700BFA3B2 /* HttpRequest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HttpRequest.cpp; path = ../../../../net/HttpRequest.cpp; sourceTree = "<group>"; };
-		BE44ACD52D7F07D800BFA3B2 /* NetUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = NetUtil.hpp; path = ../../../../net/NetUtil.hpp; sourceTree = "<group>"; };
-		BE44ACD62D7F07D800BFA3B2 /* NetUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NetUtil.cpp; path = ../../../../net/NetUtil.cpp; sourceTree = "<group>"; };
 		BE44ACD82D7F089200BFA3B2 /* RequestVettingStation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RequestVettingStation.hpp; path = ../../../../wsd/RequestVettingStation.hpp; sourceTree = "<group>"; };
 		BE44ACD92D7F089200BFA3B2 /* RequestVettingStation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RequestVettingStation.cpp; path = ../../../../wsd/RequestVettingStation.cpp; sourceTree = "<group>"; };
 		BE44ACF52D7F1F6B00BFA3B2 /* branding.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = branding.css; path = ../../../browser/dist/branding.css; sourceTree = "<group>"; };
@@ -130,6 +125,8 @@
 		BE4C625D2D5A3DDA00047DF2 /* Kit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Kit.cpp; path = ../../../../kit/Kit.cpp; sourceTree = "<group>"; };
 		BE4C62602D5B736200047DF2 /* coolwsd.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = coolwsd.xml; path = ../../../coolwsd.xml; sourceTree = "<group>"; };
 		BE5A7A282D2BE28200FE7D60 /* FileUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FileUtil.hpp; path = ../../../../common/FileUtil.hpp; sourceTree = "<group>"; };
+		BE5FDE352DAD3DCF00C48DB2 /* LogUI.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = LogUI.hpp; path = ../../../../kit/LogUI.hpp; sourceTree = "<group>"; };
+		BE5FDE362DAD3DCF00C48DB2 /* LogUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LogUI.cpp; path = ../../../../kit/LogUI.cpp; sourceTree = "<group>"; };
 		BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "FileUtil-unix.cpp"; path = "../../../../common/FileUtil-unix.cpp"; sourceTree = "<group>"; };
 		BE9115AF2CECBECF00C597B2 /* Util-unix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-unix.cpp"; path = "../../../../common/Util-unix.cpp"; sourceTree = "<group>"; };
 		BEA263522CBE38E20007435A /* Authorization.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Authorization.hpp; path = ../../../../common/Authorization.hpp; sourceTree = "<group>"; };
@@ -330,6 +327,8 @@
 				BEA2648F2CBE986C0007435A /* KitQueue.hpp */,
 				BEA264902CBE986C0007435A /* KitQueue.cpp */,
 				BEA264912CBE986C0007435A /* KitWebSocket.cpp */,
+				BE5FDE352DAD3DCF00C48DB2 /* LogUI.hpp */,
+				BE5FDE362DAD3DCF00C48DB2 /* LogUI.cpp */,
 				BEEF3F822CE20BDD00ABE785 /* SetupKitEnvironment.hpp */,
 			);
 			path = kit;
@@ -340,10 +339,6 @@
 			children = (
 				BEA264972CBE98CD0007435A /* AsyncDNS.hpp */,
 				BEA264982CBE98CD0007435A /* FakeSocket.cpp */,
-				BE44ACD22D7F07B700BFA3B2 /* HttpRequest.hpp */,
-				BE44ACD32D7F07B700BFA3B2 /* HttpRequest.cpp */,
-				BE44ACD52D7F07D800BFA3B2 /* NetUtil.hpp */,
-				BE44ACD62D7F07D800BFA3B2 /* NetUtil.cpp */,
 				BEA2649D2CBE98CD0007435A /* Socket.hpp */,
 				BEA2649E2CBE98CD0007435A /* Socket.cpp */,
 			);
@@ -593,15 +588,14 @@
 				BEF6F02D2DD1EC0200EA06BF /* RegexUtil.cpp in Sources */,
 				BEA2636E2CBE38E20007435A /* Util.cpp in Sources */,
 				BE44ACC22D7EFF1500BFA3B2 /* Util-mobile.cpp in Sources */,
-				BE44ACD42D7F07B700BFA3B2 /* HttpRequest.cpp in Sources */,
 				BEA2636F2CBE38E20007435A /* Unit.cpp in Sources */,
 				BEA263702CBE38E20007435A /* Log.cpp in Sources */,
 				BE44ACDA2D7F089200BFA3B2 /* RequestVettingStation.cpp in Sources */,
 				BEA263712CBE38E20007435A /* Simd.cpp in Sources */,
 				BEA263722CBE38E20007435A /* FileUtil.cpp in Sources */,
-				BE44ACD72D7F07D800BFA3B2 /* NetUtil.cpp in Sources */,
 				BEA263732CBE38E20007435A /* Session.cpp in Sources */,
 				BE44ACC02D7EFDE900BFA3B2 /* DummyTraceEventEmitter.cpp in Sources */,
+				BE5FDE372DAD3DCF00C48DB2 /* LogUI.cpp in Sources */,
 				BEA263742CBE38E20007435A /* TraceEvent.cpp in Sources */,
 				BE44ACD12D7F073000BFA3B2 /* Unit-mobile.cpp in Sources */,
 				BEA264A12CBE98CD0007435A /* Socket.cpp in Sources */,
