@@ -953,14 +953,16 @@ procmemstats: pid=<pid> pss=<pss in kb> dirty=<private dirty in kb>
     Memory information sent periodically to parent process by each of
     the kit processes.
 
-clipboardcontent:
+clipboardcontent: file=<file>
 
-     in reply to a getclipboard: message.
+    in reply to a getclipboard: message.
 
-     mime_type\n
-     length\n
-     <binary selection content>
-     ...
+    <file> is a path to the clipboard content which is of the format:
+
+    mime_type\n
+    length\n
+    <binary selection content>
+    ...
 
 traceevent:
 forcedtraceevent:
@@ -988,10 +990,11 @@ child-<sessionId> getclipboard [mimetype=<mimeType>]:
      the clipboard formats to that comma separated list of
      mimetypes, otherwise provide the complete clipboard.
 
-child-<sessionId> setclipboard:
+child-<sessionId> setclipboard name=<name>:
 
-     Sets the clipboard content for this view.
+     Sets the clipboard content for this view from the file with the name <name>.
 
+     The format of the data in <name> is:
      mime_type\n
      length\n
      <binary selection content>

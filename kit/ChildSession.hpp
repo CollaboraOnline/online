@@ -181,7 +181,7 @@ private:
     bool downloadAs(const StringVector& tokens);
     bool getChildId();
     bool getTextSelection(const StringVector& tokens);
-    bool setClipboard(const char* buffer, int length, const StringVector& tokens);
+    bool setClipboard(const StringVector& tokens);
     std::string getTextSelectionInternal(const std::string& mimeType);
     bool paste(const char* buffer, int length, const StringVector& tokens);
     bool insertFile(const StringVector& tokens);

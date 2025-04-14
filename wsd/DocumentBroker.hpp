@@ -419,7 +419,7 @@ public:
     };
     void handleClipboardRequest(ClipboardRequest type,  const std::shared_ptr<StreamSocket> &socket,
                                 const std::string &viewId, const std::string &tag,
-                                const std::shared_ptr<std::string> &data);
+                                const std::string &clipFile);
     static bool lookupSendClipboardTag(const std::shared_ptr<StreamSocket> &socket,
                                        const std::string &tag, bool sendError = false);
 

@@ -14,10 +14,12 @@
 #pragma once
 
 #include <common/Common.hpp>
-#include <common/HexUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JailUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Util.hpp>
+#include <wsd/COOLWSD.hpp>
 #include <wsd/Exceptions.hpp>
 
 #include <cstdlib>
@@ -126,7 +128,7 @@ class ClipboardCache
     std::mutex _mutex;
     struct Entry {
         std::chrono::steady_clock::time_point _inserted;
-        std::shared_ptr<std::string> _rawData; // big.
+        std::shared_ptr<FileUtil::OwnedFile> _cacheFile;  // cached clipboard
 
         bool hasExpired(const std::chrono::steady_clock::time_point now) const
         {
@@ -135,13 +137,21 @@ class ClipboardCache
     };
     // clipboard key -> data
     std::unordered_map<std::string, Entry> _cache;
-
+    std::string _cacheDir;
     std::chrono::steady_clock::time_point _nextExpiryTime;
-
+    int _cacheFileId;
 public:
     ClipboardCache()
-        : _nextExpiryTime(std::chrono::steady_clock::now() + ExpiryCheckPeriod)
+        : _cacheDir(FileUtil::createRandomTmpDir(
+              COOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH + "/clipboards"))
+        , _nextExpiryTime(std::chrono::steady_clock::now() + ExpiryCheckPeriod)
+        , _cacheFileId(0)
     {
+    }
+
+    ~ClipboardCache()
+    {
+        FileUtil::removeFile(_cacheDir, true);
     }
 
     void dumpState(std::ostream& os) const
@@ -151,36 +161,45 @@ public:
         auto now = std::chrono::steady_clock::now();
         for (const auto &it : _cache)
         {
-            std::shared_ptr<std::string> data = it.second._rawData;
-            std::string_view string = *data;
+            const std::string& cacheFile = it.second._cacheFile->_file;
 
-            os << "  size: " << string.size() << " bytes, lifetime: " <<
+            size_t size = FileUtil::Stat(cacheFile).size();
+            os << "  size: " << size << " bytes, lifetime: " <<
                 std::chrono::duration_cast<std::chrono::seconds>(
                     now - it.second._inserted).count() << " seconds\n";
-			HexUtil::dumpHex(os, string.substr(0, 256), "", "  ");
-            totalSize += string.size();
+            os << "  file: " << cacheFile << "\n";
+            totalSize += size;
         }
 
-        os << "Saved clipboard total size: " << totalSize << " bytes\n";
+        os << "Saved clipboard total size: " << totalSize << " bytes (disk)\n";
     }
 
-    void insertClipboard(const std::string key[2],
-                         const char *data, std::size_t size)
+    std::string nextClipFileName()
     {
-        if (size == 0)
-        {
-            LOG_TRC("clipboard cache - ignores empty clipboard data");
-            return;
-        }
+        return _cacheDir + '/' + std::to_string(_cacheFileId++);
+    }
+
+    std::string insertClipboard(const std::string key[2],
+                         const std::string& clipFile)
+    {
         Entry ent;
         ent._inserted = std::chrono::steady_clock::now();
-        ent._rawData = std::make_shared<std::string>(data, size);
-        LOG_TRC("Insert cached clipboard: " << key[0] << " and " << key[1]);
+
+        std::string cacheFile = nextClipFileName();
+        if (::rename(clipFile.c_str(), cacheFile.c_str()) < 0)
+        {
+            LOG_SYS("Failed to rename [" << clipFile << "] to [" << cacheFile << ']');
+            return clipFile;
+        }
+
+        ent._cacheFile = std::make_shared<FileUtil::OwnedFile>(cacheFile);
+        LOG_TRC("Insert cached clipboard: " << key[0] << " and " << key[1] << ", clip file of: " << cacheFile);
         std::lock_guard<std::mutex> lock(_mutex);
         _cache[key[0]] = _cache[key[1]] = std::move(ent);
+        return cacheFile;
     }
 
-    std::shared_ptr<std::string> getClipboard(const std::string &key)
+    std::shared_ptr<FileUtil::OwnedFile> getClipboard(const std::string &key)
     {
         LOG_TRC("Looking up cached clipboard with key [" << key << ']');
 
@@ -197,7 +216,7 @@ public:
             return nullptr;
         }
 
-        return it->second._rawData;
+        return it->second._cacheFile;
     }
 
     void checkexpiry(std::chrono::steady_clock::time_point now)
