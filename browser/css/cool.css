@@ -565,6 +565,7 @@ body {
 	-ms-user-select: text;
 	z-index: 10;
 	width: 250px;
+	transition: left .25s;
 }
 
 .cool-annotation.annotation-pop-up {

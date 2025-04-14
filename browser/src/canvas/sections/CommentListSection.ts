@@ -110,7 +110,6 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.showResolved = null;
 		this.sectionProperties.marginY = 10 * app.dpiScale;
 		this.sectionProperties.offset = 5 * app.dpiScale;
-		this.sectionProperties.layoutTimer = null;
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
 		this.sectionProperties.commentWidth = 200 * 1.3; // CSS pixels.
@@ -118,6 +117,9 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.deflectionOfSelectedComment = 160; // CSS pixels.
 		this.sectionProperties.showSelectedBigger = false;
 		this.sectionProperties.calcCurrentComment = null; // We don't automatically show a Calc comment when cursor is on its cell. But we remember it to show if user presses Alt+C keys.
+		this.sectionProperties.pendingUpdate = false;
+		this.sectionProperties.reLayout = true;
+
 		// This (commentsAreListed) variable means that comments are shown as a list on the right side of the document.
 		this.sectionProperties.commentsAreListed = (app.map._docLayer._docType === 'text' || app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') && !(<any>window).mode.isMobile();
 		this.idIndexMap = new Map<any, number>();
@@ -1262,7 +1264,7 @@ export class CommentSection extends CanvasSectionObject {
 
 		var previousAnimationState = this.disableLayoutAnimation;
 		this.disableLayoutAnimation = true;
-		this.update(true, false);
+		this.update(false);
 		this.disableLayoutAnimation = previousAnimationState;
 	}
 
@@ -1842,16 +1844,15 @@ export class CommentSection extends CanvasSectionObject {
 		return (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') && !app.file.fileBasedView;
 	}
 
-	private getAnimationDuration() :number {
-		return this.disableLayoutAnimation ? 0 : undefined; // undefined means it will use default value
-	}
-
-	private layoutUp (subList: any, actualPosition: Array<number>, lastY: number, relayout: boolean = true): number {
+	private layoutUp (subList: Array<Comment>, actualPosition: Array<number>, lastY: number, relayout: boolean = true): number {
 		var height: number;
 		for (var i = 0; i < subList.length; i++) {
 			height = subList[i].getCommentHeight(relayout);
 			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY - (height * app.dpiScale);
-			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
+
+			subList[i].sectionProperties.container.style.left = String(Math.round(actualPosition[0] / app.dpiScale)) + 'px';
+			subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale)) + 'px';
+
 			if (!subList[i].isEdit())
 				subList[i].show();
 		}
@@ -1901,10 +1902,14 @@ export class CommentSection extends CanvasSectionObject {
 				const posX = (this.sectionProperties.showSelectedBigger ?
 								Math.round((document.getElementById('document-container').getBoundingClientRect().width - subList[i].sectionProperties.container.getBoundingClientRect().width)/2) :
 								Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1));
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: posX, y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
+
+				subList[i].sectionProperties.container.style.left = String(posX) + 'px';
+				subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale)) + 'px';
 			}
-			else
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)}, this.getAnimationDuration());
+			else {
+				subList[i].sectionProperties.container.style.left = String(Math.round(actualPosition[0] / app.dpiScale)) + 'px';
+				subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale)) + 'px';
+			}
 
 			lastY += (subList[i].getCommentHeight(relayout) * app.dpiScale);
 			if (!subList[i].isEdit())
@@ -1992,7 +1997,7 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	private doLayout (relayout: boolean = true): void {
+	private layout (relayout: boolean = true): void {
 		if ((<any>window).mode.isMobile() || app.map._docLayer._docType === 'spreadsheet') {
 			if (this.sectionProperties.commentList.length > 0)
 				this.orderCommentList();
@@ -2060,21 +2065,22 @@ export class CommentSection extends CanvasSectionObject {
 		this.disableLayoutAnimation = false;
 	}
 
-	private layout (immediate: any = null, relayout: boolean = true): void {
-		if (immediate)
-			this.doLayout(relayout);
-		else if (!this.sectionProperties.layoutTimer) {
-			this.sectionProperties.layoutTimer = setTimeout(() => {
-				delete this.sectionProperties.layoutTimer;
-				this.doLayout(relayout);
-			}, 10 /* ms */);
-		} // else - avoid excessive re-layout
+	private update (reLayout: boolean = true): void {
+		this.sectionProperties.pendingUpdate = true;
+		this.sectionProperties.reLayout = reLayout;
+		this.containerObject.requestReDraw();
 	}
 
-	private update (immediate: boolean = false, relayout: boolean = true): void {
-		if (relayout && app.map._docLayer._docType === 'text')
+	public onUpdateDOM(): void {
+		if (!this.sectionProperties.pendingUpdate)
+			return
+
+		if (this.sectionProperties.reLayout && app.map._docLayer._docType === 'text')
 			this.updateThreadInfoIndicator();
-		this.layout(immediate, relayout);
+
+		this.layout(this.sectionProperties.reLayout);
+		this.sectionProperties.pendingUpdate = false;
+		this.sectionProperties.reLayout = true;
 	}
 
 	private updateThreadInfoIndicator(): void {
@@ -2200,7 +2206,7 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	// grow comments size if they have more text, and there is enought space between other comments
+	// grow comments size if they have more text, and there is enough space between other comments
 	private resizeComments (): void {
 		// Change it true, if comments are allowed to grow up direction.
 		// Now it is disabled, because without constant indicator of the comments anchor, it can be confusing.
@@ -2220,17 +2226,14 @@ export class CommentSection extends CanvasSectionObject {
 						if (actHeight > maxMaxHeight) {
 							actHeight = maxMaxHeight;
 						}
-						// if _leaflet_pos are not calculated (undefined) then don't do it (leave the comment at default size)
-						if (typeof this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos !== 'undefined'
-							 && (i+1 >= this.sectionProperties.commentList.length
-							 || typeof this.sectionProperties.commentList[i+1].sectionProperties.container._leaflet_pos !== 'undefined'))
-						{
-							// check if there is more space after this commit
+
+						if (i + 1 >= this.sectionProperties.commentList.length) {
+							// check if there is more space after this comment.
 							var maxSize = maxMaxHeight;
-							if (i+1 < this.sectionProperties.commentList.length)
+							if (i + 1 < this.sectionProperties.commentList.length)
 								// max size of text should be the space between comments - size of non text parts
-								maxSize = this.sectionProperties.commentList[i+1].sectionProperties.container._leaflet_pos.y
-									- this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y
+								maxSize = this.sectionProperties.commentList[i + 1].getContainerPosY()
+									- this.sectionProperties.commentList[i].getContainerPosY()
 									- this.sectionProperties.commentList[i].sectionProperties.author.getBoundingClientRect().height
 									- 3 * this.sectionProperties.marginY //top/bottom of comment window + space between comments
 									- 2; // not sure why
@@ -2240,10 +2243,10 @@ export class CommentSection extends CanvasSectionObject {
 							} else if (growUp && actHeight > maxSize) {
 								// if more space needed as we have after the comment
 								// check it there is any space before the comment
-								var spaceBefore = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y;
+								var spaceBefore = this.sectionProperties.commentList[i].getContainerPosY();
 								if (i > 0) {
-									spaceBefore -= this.sectionProperties.commentList[i-1].sectionProperties.container._leaflet_pos.y
-										+ this.sectionProperties.commentList[i-1].getCommentHeight()
+									spaceBefore -= this.sectionProperties.commentList[i - 1].getContainerPosY()
+										+ this.sectionProperties.commentList[i - 1].getCommentHeight()
 										+ this.sectionProperties.marginY;
 								} else {
 									spaceBefore += this.documentTopLeft[1];
@@ -2252,16 +2255,17 @@ export class CommentSection extends CanvasSectionObject {
 								if (spaceBefore > 0) {
 									var moveUp = 0;
 									if (actHeight - maxSize < spaceBefore) {
-										// there is enought space, move up as much as we can;
+										// there is enough space, move up as much as we can;
 										moveUp = actHeight - maxSize;
 									} else {
-										// there is not enought space
+										// there is not enough space
 										moveUp = spaceBefore;
 									}
 									// move up
-									var posX = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.x;
-									var posY = this.sectionProperties.commentList[i].sectionProperties.container._leaflet_pos.y-moveUp;
-									(new L.PosAnimation()).run(this.sectionProperties.commentList[i].sectionProperties.container, {x: Math.round(posX), y: Math.round(posY)}, this.getAnimationDuration());
+									const posX = this.sectionProperties.commentList[i].getContainerPosX();
+									const posY = this.sectionProperties.commentList[i].getContainerPosY() - moveUp;
+									this.sectionProperties.commentList[i].sectionProperties.container.style.left = Math.round(posX) + 'px';
+									this.sectionProperties.commentList[i].sectionProperties.container.style.top = Math.round(posY) + 'px';
 									// increase comment height
 									maxSize += moveUp;
 								}
@@ -2406,6 +2410,9 @@ export class CommentSection extends CanvasSectionObject {
 
 		if ((app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing'))
 			this.showHideComments();
+
+		this.sectionProperties.reLayout = true;
+		this.onUpdateDOM();
 
 		CommentSection.importingComments = false;
 	}
