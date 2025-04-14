@@ -196,7 +196,7 @@ int main(int argc, char* argv_main[])
 
     assert(argc == 3);
 
-    Log::initialize("WASM", "error", false, false, {}, false, {});
+    Log::initialize("WASM", "error");
     Util::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line)
