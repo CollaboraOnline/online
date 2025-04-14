@@ -71,35 +71,25 @@ void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<Terminating
             break;
 
         case StorageBase::StorageType::FileSystem:
+        {
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
                             << docKey << "] is for a FileSystem document");
 
-            // Remove from the current poll and transfer.
-            disposition.setMove(
-                [this, docKey=std::move(docKey),
-                 url=std::move(url), uriPublic](const std::shared_ptr<Socket>& moveSocket)
-                {
-                    LOG_TRC_S('#' << moveSocket->getFD()
-                                  << ": Dissociating client socket from "
-                                     "ClientRequestDispatcher and creating DocBroker for ["
-                                  << docKey << ']');
-
-                    // Send the file contents.
-                    std::unique_ptr<std::vector<char>> data =
-                        FileUtil::readFile(uriPublic.getPath());
-                    if (data)
-                    {
-                        http::Response response(http::StatusCode::OK);
-                        response.setBody(std::string(data->data(), data->size()),
-                                         "application/octet-stream");
-                        _socket->sendAndShutdown(response);
-                    }
-                    else
-                    {
-                        HttpHelper::sendErrorAndShutdown(http::StatusCode::NotFound, _socket);
-                    }
-                });
+            // Send the file contents.
+            std::unique_ptr<std::vector<char>> data = FileUtil::readFile(uriPublic.getPath());
+            if (data)
+            {
+                http::Response response(http::StatusCode::OK);
+                response.setBody(std::string(data->data(), data->size()),
+                                 "application/octet-stream");
+                _socket->sendAndShutdown(response);
+            }
+            else
+            {
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::NotFound, _socket);
+            }
             break;
+        }
 #if !MOBILEAPP
         case StorageBase::StorageType::Wopi:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
