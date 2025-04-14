@@ -357,13 +357,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(spinfield).attr('step', step);
 		}
 
-		if (data.enabled === false) {
+		const isDisabled = data.enabled === false;
+
+		if (isDisabled) {
 			div.disabled = true;
 			spinfield.setAttribute('disabled', 'true');
 		}
 
-		var enabled = Boolean(data.enabled);
-		spinfield.setAttribute('aria-disabled', !enabled);
+		spinfield.setAttribute('aria-disabled', isDisabled);
 
 		JSDialog.SynchronizeDisabledState(div, [spinfield]);
 
@@ -374,9 +375,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(spinfield).hide();
 
 		spinfield.addEventListener('change', function() {
-			var isDisabled = div.hasAttribute('disabled');
+			const isCurrentlyDisabled = div.hasAttribute('disabled');
 			var isValid = this.checkValidity();
-			if (!isDisabled && isValid) {
+			if (!isCurrentlyDisabled && isValid) {
 				if (customCallback)
 					customCallback('spinfield', 'change', div, this.value, builder);
 				else
@@ -1260,17 +1261,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		};
 
 		$(radiobuttonLabel).click(() => {
-			if ($(radiobutton).prop('disabled')) return;
+			if (radiobutton.hasAttribute('disabled')) return;
 
 			$(radiobutton).prop('checked', true);
 			toggleFunction.bind({checked: true})();
 		});
 
-		if (data.enabled === 'false' || data.enabled === false)
-			$(radiobutton).attr('disabled', 'disabled');
-
-		var enabled = Boolean(data.enabled);
-		radiobutton.setAttribute('aria-disabled', !enabled);
+		const isDisabled = data.enabled === false;
+		if (isDisabled) {
+			radiobutton.setAttribute('disabled', 'disabled');
+			radiobutton.setAttribute('aria-disabled', isDisabled);
+		}
 
 		if (data.checked === 'true' || data.checked === true)
 			$(radiobutton).prop('checked', true);
@@ -1310,13 +1311,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		});
 
-		if (data.enabled === false) {
+		const isDisabled = data.enabled === false;
+		if (isDisabled) {
 			div.disabled = true;
 			checkbox.disabled = true;
+			checkbox.setAttribute('aria-disabled', true);
 		}
-
-		var enabled = Boolean(data.enabled);
-		checkbox.setAttribute('aria-disabled', !enabled);
 
 		JSDialog.SynchronizeDisabledState(div, [checkbox]);
 
@@ -1539,11 +1539,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (image)
 			image.alt = '';
 
-		if (data.enabled === 'false' || data.enabled === false)
-			$(pushbutton).prop('disabled', true);
-
-		var enabled = Boolean(data.enabled);
-		pushbutton.setAttribute('aria-disabled', !enabled);
+		const isDisabled = data.enabled === false;
+		if (isDisabled) {
+			pushbutton.setAttribute('disabled', 'disabled');
+			pushbutton.setAttribute('aria-disabled', true);
+		}
 
 		if (customCallback)
 			pushbutton.onclick = customCallback;
@@ -2121,7 +2121,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				controls['label'] = label;
 			}
-			var disabled = data.enabled === 'false' || data.enabled === false;
+			var isDisabled = data.enabled === false;
 			if (data.command) {
 				var updateFunction = function() {
 					var items = builder.map['stateChangeHandler'];
@@ -2138,32 +2138,32 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						button.setAttribute('aria-pressed', false);
 					}
 
-					button.setAttribute('aria-disabled', disabled);
-
-					if (disabled)
+					if (isDisabled) {
 						div.setAttribute('disabled', 'true');
-					else
+						div.setAttribute('aria-disabled', true);
+					} else {
 						div.removeAttribute('disabled');
+						div.removeAttribute('aria-disabled');
+					}
 				};
 
 				updateFunction();
 
 				builder.map.on('commandstatechanged', function(e) {
-					disabled = false;
+					isDisabled = false;
 					if (e.commandName === data.command)
 					{
 						// in some cases we will get both property like state and disabled
 						// to handle it we will set disable var based on INCOMING info (ex: .uno:ParaRightToLft)
-						disabled = e.disabled || e.state == 'disabled';
+						isDisabled = e.disabled || e.state == 'disabled';
 						updateFunction();
 					}
 				}, this);
 			}
 
-			button.setAttribute('aria-disabled', disabled);
-
-			if (disabled) {
+			if (isDisabled) {
 				div.setAttribute('disabled', 'true');
+				div.setAttribute('aria-disabled', true);
 			}
 
 			var selectFn = function() {
@@ -2271,8 +2271,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		builder._preventDocumentLosingFocusOnClick(div);
 
-		if (data.enabled === 'false' || data.enabled === false)
+		if (isDisabled) {
 			div.setAttribute('disabled', 'true');
+			div.setAttribute('aria-disabled', true);
+		}
 
 		builder.map.hideRestrictedItems(data, controls['container'], controls['container']);
 		builder.map.disableLockedItem(data, controls['container'], controls['container']);
