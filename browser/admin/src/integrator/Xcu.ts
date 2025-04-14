@@ -2,19 +2,146 @@ interface XcuObject {
 	[app: string]: any;
 }
 
+const defaultXcuObj: Record<string, any> = {
+	Calc: {
+		Grid: {
+			Option: {
+				SnapToGrid: false,
+				SizeToGrid: true,
+				VisibleGrid: false,
+				Synchronize: true,
+			},
+		},
+		Print: {
+			Page: {
+				EmptyPages: false,
+				ForceBreaks: false,
+			},
+			Other: {
+				AllSheets: false,
+			},
+		},
+	},
+	Draw: {
+		Grid: {
+			Option: {
+				SnapToGrid: true,
+				VisibleGrid: false,
+				Synchronize: false,
+			},
+			SnapGrid: {
+				Size: true,
+			},
+		},
+		Print: {
+			Content: {
+				Drawing: true,
+			},
+			Page: {
+				PageSize: false,
+				PageTile: false,
+				Booklet: false,
+				BookletFront: true,
+				BookletBack: true,
+			},
+			Other: {
+				PageName: false,
+				Date: false,
+				Time: false,
+				HiddenPage: true,
+				FromPrinterSetup: false,
+			},
+		},
+	},
+	Impress: {
+		Grid: {
+			Option: {
+				SnapToGrid: true,
+				VisibleGrid: false,
+				Synchronize: false,
+			},
+			SnapGrid: {
+				Size: true,
+			},
+		},
+		Print: {
+			Content: {
+				Presentation: true,
+				Note: false,
+				Handout: false,
+				Outline: false,
+			},
+			Page: {
+				PageSize: false,
+				PageTile: false,
+				Booklet: false,
+				BookletFront: true,
+				BookletBack: true,
+			},
+			Other: {
+				PageName: false,
+				Date: false,
+				Time: false,
+				HiddenPage: true,
+				FromPrinterSetup: false,
+				HandoutHorizontal: false,
+			},
+		},
+	},
+	Writer: {
+		Grid: {
+			Option: {
+				SnapToGrid: false,
+				VisibleGrid: false,
+				Synchronize: false,
+			},
+		},
+		Print: {
+			Content: {
+				Graphic: true,
+				Table: true,
+				Drawing: true,
+				Control: true,
+				Background: true,
+				PrintBlack: false,
+				PrintHiddenText: false,
+				PrintPlaceholders: false,
+			},
+			Page: {
+				LeftPage: true,
+				RightPage: true,
+				Reversed: false,
+				Brochure: false,
+				BrochureRightToLeft: false,
+			},
+			Output: {
+				SinglePrintJob: false,
+			},
+			Papertray: {
+				FromPrinterSetup: false,
+			},
+			EmptyPages: true,
+		},
+		Content: {
+			Display: {
+				GraphicObject: true,
+			},
+		},
+	},
+};
+
 class Xcu {
 	private xcuDataObj: XcuObject = {};
 	private fileId: string | null = null;
 
 	constructor(fileId: string, XcuFileContent: string | null) {
-		if (XcuFileContent === null || XcuFileContent.length === 0) {
-			XcuFileContent = sampleXcuContent;
-		}
-
 		this.fileId = fileId;
 
 		try {
-			this.xcuDataObj = this.parse(XcuFileContent);
+			this.xcuDataObj =
+				XcuFileContent === null || XcuFileContent.length === 0
+					? defaultXcuObj
+					: this.parse(XcuFileContent);
 		} catch (error) {
 			console.error('Error parsing XCU file:', error);
 		}
@@ -325,8 +452,17 @@ class Xcu {
 			</span>
 			`;
 
-		resetButton.addEventListener('click', () => {
-			console.log('Reset button clicked');
+		resetButton.addEventListener('click', async () => {
+			const confirmed = window.confirm(
+				'Are you sure you want to reset Document View settings?',
+			);
+			if (!confirmed) {
+				return;
+			}
+			resetButton.disabled = true;
+			this.xcuDataObj = defaultXcuObj;
+			this.generateXcuAndUpload();
+			resetButton.disabled = false;
 		});
 
 		const saveButton = document.createElement('button');
@@ -342,11 +478,7 @@ class Xcu {
 
 		saveButton.addEventListener('click', async () => {
 			saveButton.disabled = true;
-			const xcuContent = this.generate(this.xcuDataObj);
-			await (window as any).settingIframe.uploadXcuFile(
-				this.fileId,
-				xcuContent,
-			);
+			this.generateXcuAndUpload();
 			saveButton.disabled = false;
 		});
 
@@ -365,126 +497,11 @@ class Xcu {
 
 		return container;
 	}
+
+	private async generateXcuAndUpload(): Promise<void> {
+		const xcuContent = this.generate(this.xcuDataObj);
+		await (window as any).settingIframe.uploadXcuFile(this.fileId, xcuContent);
+	}
 }
-
-const sampleXcuContent = `<?xml version="1.0" encoding="UTF-8"?>
-<oor:items 
-    xmlns:oor="http://openoffice.org/2001/registry" 
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
-  <item oor:path="/org.openoffice.Office.Calc/Grid/Option">
-    <prop oor:name="SnapToGrid" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="SizeToGrid" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="VisibleGrid" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Synchronize" oor:op="fuse"><value>true</value></prop>
-  </item>
- 
-  <item oor:path="/org.openoffice.Office.Calc/Print/Page">
-    <prop oor:name="EmptyPages" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="ForceBreaks" oor:op="fuse"><value>false</value></prop>
-  </item>
-  <item oor:path="/org.openoffice.Office.Calc/Print/Other">
-    <prop oor:name="AllSheets" oor:op="fuse"><value>false</value></prop>
-  </item>
-
-  <item oor:path="/org.openoffice.Office.Draw/Grid/Option">
-    <prop oor:name="SnapToGrid" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="VisibleGrid" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Synchronize" oor:op="fuse"><value>false</value></prop>
-  </item>
-  <item oor:path="/org.openoffice.Office.Draw/Grid/SnapGrid">
-    <prop oor:name="Size" oor:op="fuse"><value>true</value></prop>
-  </item>
-
-  <item oor:path="/org.openoffice.Office.Draw/Print/Content">
-    <prop oor:name="Drawing" oor:op="fuse"><value>true</value></prop>
-  </item>
-  <item oor:path="/org.openoffice.Office.Draw/Print/Page">
-    <prop oor:name="PageSize" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="PageTile" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Booklet" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="BookletFront" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="BookletBack" oor:op="fuse"><value>true</value></prop>
-  </item>
-  <item oor:path="/org.openoffice.Office.Draw/Print/Other">
-    <prop oor:name="PageName" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Date" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Time" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="HiddenPage" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="FromPrinterSetup" oor:op="fuse"><value>false</value></prop>
-  </item>
-
-  <item oor:path="/org.openoffice.Office.Impress/Grid/Option">
-    <prop oor:name="SnapToGrid" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="VisibleGrid" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Synchronize" oor:op="fuse"><value>false</value></prop>
-  </item>
-  <item oor:path="/org.openoffice.Office.Impress/Grid/SnapGrid">
-    <prop oor:name="Size" oor:op="fuse"><value>true</value></prop>
-  </item>
-
-  <item oor:path="/org.openoffice.Office.Impress/Print/Content">
-    <prop oor:name="Presentation" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="Note" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Handout" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Outline" oor:op="fuse"><value>false</value></prop>
-  </item>
-  <item oor:path="/org.openoffice.Office.Impress/Print/Page">
-    <prop oor:name="PageSize" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="PageTile" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Booklet" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="BookletFront" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="BookletBack" oor:op="fuse"><value>true</value></prop>
-  </item>
-  <item oor:path="/org.openoffice.Office.Impress/Print/Other">
-    <prop oor:name="PageName" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Date" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Time" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="HiddenPage" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="FromPrinterSetup" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="HandoutHorizontal" oor:op="fuse"><value>false</value></prop>
-  </item>
-
-  <item oor:path="/org.openoffice.Office.Writer/Grid/Option">
-    <prop oor:name="SnapToGrid" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="VisibleGrid" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Synchronize" oor:op="fuse"><value>false</value></prop>
-  </item>
-
-  <item oor:path="/org.openoffice.Office.Writer/Print/Content">
-    <prop oor:name="Graphic" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="Table" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="Drawing" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="Control" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="Background" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="PrintBlack" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="PrintHiddenText" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="PrintPlaceholders" oor:op="fuse"><value>false</value></prop>
-  </item>
-  <item oor:path="/org.openoffice.Office.Writer/Print/Page">
-    <prop oor:name="LeftPage" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="RightPage" oor:op="fuse"><value>true</value></prop>
-    <prop oor:name="Reversed" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Brochure" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="BrochureRightToLeft" oor:op="fuse"><value>false</value></prop>
-  </item>
-  <item oor:path="/org.openoffice.Office.Writer/Print/Output">
-    <prop oor:name="SinglePrintJob" oor:op="fuse"><value>false</value></prop>
-    <prop oor:name="Fax" oor:op="fuse"><value></value></prop>
-  </item>
-  <item oor:path="/org.openoffice.Office.Writer/Print/Papertray">
-    <prop oor:name="FromPrinterSetup" oor:op="fuse"><value>false</value></prop>
-  </item>
-  <item oor:path="/org.openoffice.Office.Writer/Print">
-    <prop oor:name="EmptyPages" oor:op="fuse"><value>true</value></prop>
-  </item>
-
-  <item oor:path="/org.openoffice.Office.Writer/Content/Display">
-    <prop oor:name="GraphicObject" oor:op="fuse"><value>true</value></prop>
-  </item>
-
-</oor:items>
-`;
 
 (window as any).Xcu = Xcu;
