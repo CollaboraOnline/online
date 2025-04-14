@@ -162,7 +162,7 @@ m4_ifelse(MOBILEAPP,[true],
           <div id="presentation-toolbar"></div>
         </div>
         <div id="navigator-dock-wrapper">
-          <div id="navigator-panel"></div>
+          <div id="navigator-panel" class="sidebar-panel"></div>
         </div>
       </div>
       <div id="navigator-floating-icon"></div>
@@ -170,7 +170,7 @@ m4_ifelse(MOBILEAPP,[true],
         <div id="map"></div>
       </div>
       <div id="sidebar-dock-wrapper">
-        <div id="sidebar-panel"></div>
+        <div id="sidebar-panel" class="sidebar-panel"></div>
       </div>
     </div>
 
