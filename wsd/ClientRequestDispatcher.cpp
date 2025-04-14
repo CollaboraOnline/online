@@ -1311,7 +1311,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
             sendResult(status);
     });
 
-    auto finishHandler = [=, this](const std::shared_ptr<http::Session>& probeSession)
+    auto finishHandler = [sendResult, this](const std::shared_ptr<http::Session>& probeSession)
     {
         LOG_TRC("finishHandler ");
 
