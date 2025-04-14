@@ -407,8 +407,12 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 	},
 
-	shouldIgnoreContextChange(contextes) {
-		const ignored = [['NotesPage', 'DrawPage'], ['DrawPage', 'NotesPage']];
+	shouldIgnoreContextChange(contextes, appId) {
+		// New -> old context name pairs.
+		let ignored = [['NotesPage', 'DrawPage'], ['DrawPage', 'NotesPage']];
+		if (appId === 'com.sun.star.text.TextDocument') {
+			ignored.push(['Text', '']);
+		}
 
 		for (let i = 0; i < ignored.length; i++) {
 			if (contextes[0] === ignored[i][0] && contextes[1] === ignored[i][1])
@@ -550,7 +554,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (detail.context === detail.oldContext)
 			return;
 
-		if (this.shouldIgnoreContextChange([detail.context, detail.oldContext]))
+		if (this.shouldIgnoreContextChange([detail.context, detail.oldContext], detail.appId))
 			return;
 
 		this.updateTabsVisibilityForContext(detail.context);
