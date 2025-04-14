@@ -41,10 +41,12 @@ interface SectionConfig {
 	buttonText: string;
 	uploadPath: string;
 	enabledFor?: string;
+	debugOnly?: boolean;
 }
 
 class SettingIframe {
 	private wordbook;
+	private xcuEditor;
 
 	private API_ENDPOINTS = {
 		uploadSettings: window.enableDebug
@@ -68,6 +70,11 @@ class SettingIframe {
 		this.insertConfigSections();
 		void this.fetchAndPopulateSharedConfigs();
 		this.wordbook = (window as any).WordBook;
+	}
+
+	public async uploadXcuFile(filename: string, content: string): Promise<void> {
+		const file = new File([content], filename, { type: 'application/xml' });
+		await this.uploadFile(this.PATH.XcuUpload(), file);
 	}
 
 	async uploadWordbookFile(filename: string, content: string): Promise<void> {
@@ -144,11 +151,16 @@ class SettingIframe {
 				// TODO: replace btn with rich interface (toggles)
 				buttonText: 'Upload Xcu',
 				uploadPath: this.PATH.XcuUpload(),
+				debugOnly: true,
 			},
 		];
 
 		configSections.forEach((cfg) => {
 			if (cfg.enabledFor && cfg.enabledFor !== this.getConfigType()) {
+				return;
+			}
+
+			if (cfg.debugOnly && !window.enableDebug) {
 				return;
 			}
 
@@ -217,7 +229,7 @@ class SettingIframe {
 			}
 
 			const data: ConfigData = await response.json();
-			this.populateSharedConfigUI(data);
+			await this.populateSharedConfigUI(data);
 			console.debug('Shared config data: ', data);
 		} catch (error: unknown) {
 			this.showErrorModal(
@@ -270,6 +282,36 @@ class SettingIframe {
 		return sectionEl;
 	}
 
+	private async fetchSettingFile(fileId: string) {
+		try {
+			const formData = new FormData();
+			formData.append('fileUrl', fileId);
+			formData.append('accessToken', window.accessToken ?? '');
+
+			const apiUrl = this.API_ENDPOINTS.fetchWordbook;
+
+			const response = await fetch(apiUrl, {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${window.accessToken}`,
+				},
+				body: formData,
+			});
+
+			if (!response.ok) {
+				throw new Error(`Upload failed: ${response.statusText}`);
+			}
+
+			return await response.text();
+		} catch (error) {
+			this.showErrorModal(
+				'Something went wrong while fetching setting file, Please try to refresh the page.',
+			);
+			return null;
+		}
+	}
+
+	// TODO: Re-use fetchSettingFile function to fetch wordbook?
 	private async fetchWordbookFile(fileId: string): Promise<void> {
 		this.wordbook.startLoader();
 		const formData = new FormData();
@@ -501,7 +543,7 @@ class SettingIframe {
 		});
 	}
 
-	private populateSharedConfigUI(data: ConfigData): void {
+	private async populateSharedConfigUI(data: ConfigData): Promise<void> {
 		const browserSettingButton = document.getElementById(
 			'uploadBrowserSettingsButton',
 		) as HTMLButtonElement | null;
@@ -526,7 +568,30 @@ class SettingIframe {
 			}
 		}
 
-		// todo: dynamically generate this list too from configSections
+		if (data.xcu && data.xcu.length > 0) {
+			const fileId = data.xcu[0].uri;
+			const xcuFileContent = await this.fetchSettingFile(fileId);
+			this.xcuEditor = new (window as any).Xcu(
+				this.getFilename(fileId, false),
+				xcuFileContent,
+			);
+
+			const settingsContainer = document.getElementById('allConfigSection');
+			if (!settingsContainer) return;
+
+			const existingXcuSection = document.getElementById('xcu-section');
+			if (existingXcuSection) {
+				existingXcuSection.remove();
+			}
+
+			const xcuContainer = document.createElement('div');
+			xcuContainer.id = 'xcu-section';
+			xcuContainer.classList.add('section');
+			settingsContainer.appendChild(
+				this.xcuEditor.createXcuEditorUI(xcuContainer),
+			);
+		}
+
 		if (data.autotext)
 			this.populateList('autotextList', data.autotext, '/autotext');
 		if (data.wordbook)
