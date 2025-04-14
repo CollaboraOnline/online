@@ -407,7 +407,7 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 	},
 
-	shouldIgnoreContextChange(contextes, appId) {
+	shouldIgnoreContextChange(contexts, appId) {
 		// New -> old context name pairs.
 		let ignored = [['NotesPage', 'DrawPage'], ['DrawPage', 'NotesPage']];
 		if (appId === 'com.sun.star.text.TextDocument') {
@@ -415,7 +415,7 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 
 		for (let i = 0; i < ignored.length; i++) {
-			if (contextes[0] === ignored[i][0] && contextes[1] === ignored[i][1])
+			if (contexts[0] === ignored[i][0] && contexts[1] === ignored[i][1])
 				return true;
 		}
 
