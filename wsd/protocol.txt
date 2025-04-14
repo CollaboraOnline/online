@@ -981,10 +981,12 @@ child-<sessionId> <Payload Message>
     Forwarding message between a parent and its child session.
     The payload message is forwarded to the ChildSession.
 
-child-<sessionId> getclipboard:
+child-<sessionId> getclipboard [mimetype=<mimeType>]:
 
-     fetches the complete clipboard for this view and returns
-     a clipboardcontent message.
+     fetches the clipboard for this view and returns a
+     clipboardcontent message. If mimetype is present limit
+     the clipboard formats to that comma separated list of
+     mimetypes, otherwise provide the complete clipboard.
 
 child-<sessionId> setclipboard:
 
