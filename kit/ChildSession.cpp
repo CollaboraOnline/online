@@ -1530,10 +1530,11 @@ bool ChildSession::getClipboard(const StringVector& tokens)
     size_t      *outSizes = nullptr;
     char       **outStreams = nullptr;
 
-    bool hasMimeRequest = tokens.size() > 1;
+    std::string mimeType;
+    bool hasMimeRequest = tokens.size() > 1 && getTokenString(tokens[1], "mimetype", mimeType);
     if (hasMimeRequest)
     {
-        specifics = Util::splitStringToVector(tokens[1], ',');
+        specifics = Util::splitStringToVector(mimeType, ',');
         for (const auto& specific : specifics)
         {
             inMimeTypes.push_back(specific.c_str());
