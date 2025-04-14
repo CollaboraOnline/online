@@ -351,7 +351,7 @@ body {
 	}
 }
 
-#sidebar-panel, #navigator-panel {
+.sidebar-panel{
 	padding: 0px;
 	margin: 0px;
 	position: relative;
@@ -360,11 +360,11 @@ body {
 	z-index: 1200;
 }
 
-#sidebar-panel::-webkit-scrollbar, #navigator-panel::-webkit-scrollbar {
+.sidebar-panel::-webkit-scrollbar {
 	width: 8px;
 }
 
-#sidebar-panel::-webkit-scrollbar-thumb, #navigator-panel::-webkit-scrollbar-thumb {
+.sidebar-panel::-webkit-scrollbar-thumb {
 	background-color: var(--color-border);
 }
 
