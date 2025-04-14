@@ -2484,8 +2484,15 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
 
 /// Send the /hosting/capabilities JSON to socket
 static void sendCapabilities(bool convertToAvailable, bool closeConnection,
-                             const std::shared_ptr<StreamSocket>& socket)
+                             const std::weak_ptr<StreamSocket>& socketWeak)
 {
+    std::shared_ptr<StreamSocket> socket = socketWeak.lock();
+    if (!socket)
+    {
+        LOG_ERR("Invalid socket while sending capabilities");
+        return;
+    }
+
     http::Response httpResponse(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(httpResponse);
     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
@@ -2505,10 +2512,13 @@ bool ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPReq
 
     LOG_DBG("Wopi capabilities request: " << request.getURI());
     const bool closeConnection = !request.getKeepAlive();
+    std::weak_ptr<StreamSocket> socketWeak(socket);
 
-    AsyncFn convertToAllowedCb = [socket, closeConnection](bool allowedConvert){
-        COOLWSD::getWebServerPoll()->addCallback([socket, allowedConvert, closeConnection]()
-                                                 { sendCapabilities(allowedConvert, closeConnection, socket); });
+    AsyncFn convertToAllowedCb = [socketWeak, closeConnection](bool allowedConvert)
+    {
+        COOLWSD::getWebServerPoll()->addCallback(
+            [socketWeak, allowedConvert, closeConnection]()
+            { sendCapabilities(allowedConvert, closeConnection, socketWeak); });
     };
 
     allowConvertTo(socket->clientAddress(), request, std::move(convertToAllowedCb));
