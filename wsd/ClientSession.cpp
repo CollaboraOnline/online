@@ -24,6 +24,7 @@
 #include <cctype>
 
 #include <Poco/Base64Decoder.h>
+#include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
@@ -291,7 +292,7 @@ static std::string getLocalPathToJail(std::string filePath, const DocumentBroker
 void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     type,
                                            const std::shared_ptr<StreamSocket> &socket,
                                            const std::string                   &tag,
-                                           const std::shared_ptr<std::string>  &data)
+                                           const std::string                   &clipFile)
 {
     // Move the socket into our DocBroker.
     auto docBroker = getDocumentBroker();
@@ -334,24 +335,58 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             return;
         }
 
-        LOG_TRC("Session [" << getId() << "] sending getclipboard" + specific);
-        docBroker->forwardToChild(client_from_this(), "getclipboard" + specific);
+        LOG_TRC("Session [" << getId() << "] sending getclipboard name=" + tag + specific);
+        docBroker->forwardToChild(client_from_this(), "getclipboard name=" + tag + specific);
         _clipSockets.push_back(socket);
     }
     else // REQUEST_SET
     {
-        // FIXME: manage memory more efficiently.
         LOG_TRC("Session [" << getId() << "] sending setclipboard");
-        if (data.get())
+        std::string jailClipFile = getLocalPathToJail(clipFile, *docBroker);
+        if (!jailClipFile.empty())
         {
-            preProcessSetClipboardPayload(*data);
+            std::string preProcessedClipFile = jailClipFile + ".preproc";
+            std::ofstream ofs(preProcessedClipFile, std::ofstream::out);
+            std::ifstream ifs(jailClipFile, std::ifstream::in);
+            bool preProcesed = preProcessSetClipboardPayload(ifs, ofs);
+            ifs.close();
+            ofs.close();
+
+            if (!preProcesed)
+                FileUtil::removeFile(preProcessedClipFile);
+            else
+            {
+                if (::rename(preProcessedClipFile.c_str(), jailClipFile.c_str()) < 0)
+                {
+                    LOG_SYS("Failed to rename [" << preProcessedClipFile << "] to [" << jailClipFile << ']');
+                }
+                else
+                {
+                    LOG_TRC("Renamed [" << preProcessedClipFile << "] to [" << jailClipFile << ']');
+                }
+            }
 
 #if !MOBILEAPP
-            if (data->starts_with('{'))
+            ifs.open(jailClipFile, std::ifstream::in);
+            if (ifs.get() == '{')
             {
+                ifs.seekg(0, std::ios_base::beg);
+
                 // We got JSON, extract the URL and the UNO command name.
                 Poco::JSON::Object::Ptr json;
-                if (JsonUtil::parseJSON(*data, json))
+
+                Poco::JSON::Parser parser;
+                try
+                {
+                    const Poco::Dynamic::Var result = parser.parse(ifs);
+                    json = result.extract<Poco::JSON::Object::Ptr>();
+                }
+                catch (const Poco::JSON::JSONException& exception)
+                {
+                    LOG_WRN("parseJSON: failed to parse '" << jailClipFile << "': '" << exception.what() << "'");
+                }
+
+                if (json)
                 {
                     std::string url;
                     JsonUtil::findJSONValue(json, "url", url);
@@ -427,7 +462,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
 #endif
             {
                 // List of mimetype-size-data tuples, pass that over as-is.
-                docBroker->forwardToChild(client_from_this(), "setclipboard\n" + *data, true);
+                docBroker->forwardToChild(client_from_this(), "setclipboard name=" + clipFile, true);
             }
 
             // FIXME: work harder for error detection ?
@@ -439,6 +474,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         }
         else
         {
+            LOG_DBG("clipboardcontent produced no output in '" << clipFile << "'");
             if constexpr (!Util::isMobileApp())
                 HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
         }
@@ -1999,6 +2035,81 @@ void ClientSession::writeQueuedMessages(std::size_t capacity)
     LOG_TRC("performed write, wrote " << wrote << " bytes");
 }
 
+// Insert our meta origin if we can
+bool ClientSession::postProcessCopyPayload(std::istream& in, std::ostream& out)
+{
+    // back to start
+    std::string line;
+    std::getline(in, line);
+    in.clear();
+    in.seekg(0);
+
+    constexpr std::string_view textPlain = "text/plain";
+
+    char data[textPlain.size()];
+    in.read(data, textPlain.size());
+    if (in.gcount() == textPlain.size() &&
+        std::string_view(data, textPlain.size()) == textPlain)
+    {
+        // Single format and it's plain text (not HTML): no need to rewrite anything.
+        return false;
+    }
+
+    // back to start
+    in.clear();
+    in.seekg(0);
+
+    bool json = in.get() == '{';
+
+    in.clear();
+    in.seekg(0);
+
+    // copy as far as body
+    bool match = Util::copyToMatch(in, out, "<body");
+    if (match)
+    {
+        // copy as far as the closing tag
+        match = Util::copyToMatch(in, out, ">");
+    }
+
+    // cf. TileLayer.js /_dataTransferToDocument/
+    if (match)
+    {
+        // write the output tag close
+        out.write(">", 1);
+        // skip the input tag close
+        in.seekg(1, std::ios_base::cur);
+
+        const std::string meta = getClipboardURI();
+        LOG_TRC("Inject clipboard cool origin of '" << meta << "'");
+
+        std::string origin = "<div id=\"meta-origin\" data-coolorigin=\"" + meta + "\">\n";
+        if (json)
+        {
+            origin = "<div id=\\\"meta-origin\\\" data-coolorigin=\\\"" + meta + "\\\">\\n";
+        }
+        out.write(origin.data(), origin.size());
+
+        // if there is a closing body tag, match style and write closing div tag before it
+        if (Util::copyToMatch(in, out, "</body>"))
+            out.write("</div>", 6);
+
+        // write the remainder to out
+        Poco::StreamCopier::copyStream(in, out);
+
+        return true;
+    }
+
+    if (json)
+    {
+        // The content may not be json or any textual form. For example:
+        // clipboardcontent: content.application/x-openoffice-svxb;windows_formatname="SVXB (StarView Bitmap/Animation)"
+        LOG_DBG("Missing <body> in textselectioncontent/clipboardcontent payload");
+    }
+
+    return false;
+}
+
 // NB. also see browser/src/map/Clipboard.js that does this in JS for stubs.
 // See also ClientSession::preProcessSetClipboardPayload() which removes the
 // <div id="meta-origin"...>  tag added here.
@@ -2006,58 +2117,28 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
 {
     // Insert our meta origin if we can
     payload->rewriteDataBody([this](std::vector<char>& data) {
-            std::string_view sv(data.data(), data.size());
-            if (sv.starts_with("clipboardcontent: content\ntext/plain"))
+            const char* start = data.data();
+            size_t size = data.size();
+
+            std::ostringstream oss;
+
+            std::string_view sv(start, size);
+            std::string_view prefix("textselectioncontent:\n");
+            if (sv.starts_with(prefix))
             {
-                // Single format and it's plain text (not HTML): no need to rewrite anything.
-                return false;
+                oss.write(prefix.data(), prefix.size());
+                start += prefix.size();
+                size -= prefix.size();
             }
 
-            bool json = sv.starts_with("textselectioncontent:\n{");
-            if (!json)
+            Poco::MemoryInputStream iss(start, size);
+            if (postProcessCopyPayload(iss, oss))
             {
-                json = sv.starts_with("clipboardcontent: content\n{");
-            }
-            std::size_t pos = Util::findInVector(data, "<body");
-            if (pos != std::string::npos)
-            {
-                pos = Util::findInVector(data, ">", pos);
-            }
-
-            // cf. TileLayer.js /_dataTransferToDocument/
-            if (pos != std::string::npos)
-            {
-                const std::string meta = getClipboardURI();
-                LOG_TRC("Inject clipboard cool origin of '" << meta << "'");
-                std::string origin = "<div id=\"meta-origin\" data-coolorigin=\"" + meta + "\">\n";
-                if (json)
-                {
-                    origin = "<div id=\\\"meta-origin\\\" data-coolorigin=\\\"" + meta + "\\\">\\n";
-                }
-                data.insert(data.begin() + pos + strlen(">"), origin.begin(), origin.end());
-
-                const char* end = "</body>";
-                pos = Util::findInVector(data, end);
-                if (pos != std::string::npos)
-                {
-                    origin = "</div>";
-                    data.insert(data.begin() + pos, origin.begin(), origin.end());
-                }
-
+                std::string str(oss.str());
+                data.assign(str.begin(), str.end());
                 return true;
             }
-
-            if (json)
-            {
-                // The content may not be json or any textual form. For example:
-                // clipboardcontent: content.application/x-openoffice-svxb;windows_formatname="SVXB (StarView Bitmap/Animation)"
-                // Do not issue this in those cases. (We should also cap the data we dump here.)
-                LOG_DBG("Missing <body> in textselectioncontent/clipboardcontent payload:\n"
-                        << [data](auto& log) { HexUtil::dumpHex(log, data); });
-            }
-
             return false;
-
         });
 }
 
@@ -2421,18 +2502,56 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                                                  << _clipSockets.size() << " sockets in state "
                                                  << name(_state));
 
-        postProcessCopyPayload(payload);
+        std::string clipFile;
+        if (!getTokenString(tokens[1], "file", clipFile))
+        {
+            LOG_ERR("Bad syntax for: " << firstLine);
+            return false;
+        }
 
-        std::size_t header;
-        for (header = 0; header < payload->size();)
-            if (payload->data()[header++] == '\n')
-                break;
-        const bool empty = header >= payload->size();
+        LOG_TRC("clipboardcontent path: " << clipFile);
 
-        // final cleanup ...
+        std::string jailClipFile = getLocalPathToJail(clipFile, *docBroker);
+        if (jailClipFile.empty())
+            LOG_DBG("clipboardcontent produced no output in '" << clipFile << "'");
+
+        bool empty = jailClipFile.empty() ? true : FileUtil::Stat(jailClipFile).size() == 0;
+
+        if (!empty)
+        {
+            std::string postProcessedClipFile = COOLWSD::SavedClipboards->nextClipFileName();
+            std::ofstream ofs(postProcessedClipFile, std::ofstream::out);
+            std::ifstream ifs(jailClipFile, std::ifstream::in);
+            bool postProcesed = postProcessCopyPayload(ifs, ofs);
+            ifs.close();
+            ofs.close();
+
+            if (!postProcesed)
+                FileUtil::removeFile(postProcessedClipFile);
+            else
+            {
+                FileUtil::removeFile(jailClipFile);
+                jailClipFile = postProcessedClipFile;
+            }
+        }
+
+        // final cleanup via clipFileRemove dtor
+        std::shared_ptr<FileUtil::OwnedFile> clipFileRemove;
+
+        bool removeClipFile = true;
         if (!empty && (!_wopiFileInfo || !_wopiFileInfo->getDisableCopy()))
-            COOLWSD::SavedClipboards->insertClipboard(
-                _clipboardKeys, &payload->data()[header], payload->size() - header);
+        {
+            // returns same filename as its arg on rename failure
+            std::string cacheFile = COOLWSD::SavedClipboards->insertClipboard(_clipboardKeys, jailClipFile);
+            if (cacheFile != jailClipFile)
+            {
+                jailClipFile = cacheFile;
+                removeClipFile = false;
+            }
+        }
+
+        if (removeClipFile)
+            clipFileRemove = std::make_shared<FileUtil::OwnedFile>(jailClipFile);
 
         for (const auto& it : _clipSockets)
         {
@@ -2441,25 +2560,24 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 continue;
 
             // The custom header for the clipboard of a living document.
-            http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-            httpResponse.set("Content-Length",
-                             std::to_string(empty ? 0 : (payload->size() - header)));
-            httpResponse.add("Content-Type", "application/octet-stream");
-            httpResponse.add("X-Content-Type-Options", "nosniff");
-            httpResponse.add("X-COOL-Clipboard", "true");
-            httpResponse.add("Cache-Control", "no-cache");
-            httpResponse.set("Connection", "close");
-            socket->send(httpResponse);
+            auto session = std::make_shared<http::ServerSession>();
 
-            if (!empty)
-            {
-                socket->setSocketBufferSize(
-                    std::min(payload->size() + 256, std::size_t(Socket::MaximumSendBufferSize)));
-                socket->send(&payload->data()[header], payload->size() - header);
-            }
+            http::ServerSession::ResponseHeaders headers;
+            headers.emplace_back("Last-Modified", Util::getHttpTimeNow());
+            headers.emplace_back("Content-Type", "application/octet-stream");
+            headers.emplace_back("X-Content-Type-Options", "nosniff");
+            headers.emplace_back("X-COOL-Clipboard", "true");
+            headers.emplace_back("Cache-Control", "no-cache");
+            headers.emplace_back("Connection", "close");
 
-            socket->shutdown();
+            // on final session dtor clipFileRemove cleanup removes clipboard file
+            session->setFinishedHandler([clipFileRemove](const std::shared_ptr<http::ServerSession>&) {});
+
+            // Hand over socket to ServerSession which will async provide
+            // clipboard content backed by jailClipFile
+            session->asyncUpload(jailClipFile, std::move(headers));
+            socket->setHandler(std::static_pointer_cast<ProtocolHandlerInterface>(session));
+
             LOG_INF("Queued " << (empty?"empty":"clipboard") << " response for send.");
         }
 #endif
@@ -3347,30 +3465,31 @@ bool ClientSession::isTileInsideVisibleArea(const TileDesc& tile) const
 // 1. ChildSession::getClipboard() where the data for various
 //    flavours along with flavour-type and length fields are packed into the payload.
 // 2. The clipboard payload parsing code in ClipboardData::read().
-void ClientSession::preProcessSetClipboardPayload(std::string& payload)
+bool ClientSession::preProcessSetClipboardPayload(std::istream& in, std::ostream& out)
 {
-    std::size_t start = payload.find("<div id=\"meta-origin\" data-coolorigin=\"");
-    if (start != std::string::npos)
+    if (!Util::copyToMatch(in, out, "<div id=\"meta-origin\" data-coolorigin=\""))
+        return false;
+
+    // discard this tag
+    if (!Util::seekToMatch(in, "\">\n"))
     {
-        std::size_t end = payload.find("\">\n", start);
-        if (end == std::string::npos)
-        {
-            LOG_DBG("Found unbalanced starting meta <div> tag in setclipboard payload.");
-            return;
-        }
-
-        std::size_t len = end - start + 3;
-        payload.erase(start, len);
-
-        start = payload.find("</div></body>");
-        if (start == std::string::npos)
-        {
-            LOG_DBG("Found unbalanced ending meta <div> tag in setclipboard payload.");
-            return;
-        }
-
-        payload.erase(start, strlen("</div>"));
+        LOG_DBG("Found unbalanced starting meta <div> tag in setclipboard payload.");
+        return false;
     }
+    in.seekg(3, std::ios_base::cur);
+
+    if (!Util::copyToMatch(in, out, "</div></body>"))
+    {
+        LOG_DBG("Found unbalanced ending meta <div> tag in setclipboard payload.");
+        return false;
+    }
+
+    in.seekg(strlen("</div>"), std::ios_base::cur);
+
+    // write the remainder to out
+    Poco::StreamCopier::copyStream(in, out);
+
+    return true;
 }
 
 std::string ClientSession::processSVGContent(const std::string& svg)
