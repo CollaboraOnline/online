@@ -77,7 +77,7 @@ report that, it's a mistake and should be fixed.
 
 ## Then you can build CODA-M:
 
-* ( cd browser ; make )
+* ( cd browser ; gmake )
 * open Xcode's project macos/coda/coda.xcodeproj & build from there
 
 # Building and debugging coolwsd directly in Xcode
