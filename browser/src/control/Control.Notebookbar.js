@@ -483,8 +483,13 @@ L.Control.Notebookbar = L.Control.extend({
 		var contextTab = null;
 		var defaultTab = null;
 		let alreadySelected = null;
+		// Currently selected tab name, part of the element's ID.
+		let currentlySelectedTabName = null;
 		for (var tab in tabs) {
 			var tabElement = $('#' + tabs[tab].name + '-tab-label');
+			if (tabElement.hasClass('selected')) {
+				currentlySelectedTabName = tabs[tab].name;
+			}
 			if (tabs[tab].context) {
 				tabElement.hide();
 				var contexts = tabs[tab].context.split('|');
@@ -521,7 +526,13 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 
 		if (contextTab) {
-			contextTab.click();
+			// Switch to the tab of the context, unless we currently show the review tab
+			// for text documents, where jumping to the next change would possibly
+			// switch to the Home or Table tabs, which is not wanted.
+			var docType = this._map.getDocType();
+			if (docType !== 'text' || currentlySelectedTabName !== 'Review') {
+				contextTab.click();
+			}
 			const tabId = contextTab.attr('id');
 			this.updateButtonVisibilityForContext(requestedContext, tabId);
 			return tabId;
