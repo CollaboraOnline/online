@@ -166,7 +166,7 @@ class IdleHandler {
 		this._active = false;
 		var map = this.map;
 
-		var restartConnectionFn = function() {
+		var restartConnectionFn = () => {
 			if (app.idleHandler._documentIdle)
 			{
 				window.app.console.debug('idleness: reactivating');
@@ -179,23 +179,30 @@ class IdleHandler {
 
 		this.map._textInput.hideCursor();
 
-		var uiManager = this.map.uiManager;
-		var dialogId = uiManager.generateModalId(this.dimId);
+		const uiManager = this.map.uiManager;
+		const dialogId = uiManager.generateModalId(this.dimId);
 		uiManager.showInfoModal(this.dimId);
-		document.getElementById(this.dimId).textContent = message;
 
-		var restartConnection = function() { restartConnectionFn(); }.bind(this);
+		app.layoutingService.appendLayoutingTask(() => {
+			const dimNode = document.getElementById(this.dimId);
+			if (!dimNode)
+				return;
 
-		if (message === '') {
-			document.getElementById(dialogId).style.display = 'none';
-			app.LOUtil.onRemoveHTMLElement(document.getElementById(this.dimId), restartConnection);
-		}
-		else {
-			var overlayId = dialogId + '-overlay';
-			var overlay = document.getElementById(overlayId);
-			overlay.onmouseover = () => { restartConnection(); uiManager.closeModal(dialogId); };
-			app.LOUtil.onRemoveHTMLElement(overlay, restartConnection);
-		}
+			dimNode.textContent = message;
+
+			const restartConnection = () => { restartConnectionFn(); };
+
+			if (message === '') {
+				const dialogNode = document.getElementById(dialogId);
+				if (dialogNode) dialogNode.style.display = 'none';
+				app.LOUtil.onRemoveHTMLElement(dimNode, restartConnection);
+			} else {
+				const overlayId = dialogId + '-overlay';
+				const overlay = document.getElementById(overlayId);
+				if (overlay) overlay.onmouseover = () => { restartConnection(); uiManager.closeModal(dialogId); };
+				app.LOUtil.onRemoveHTMLElement(overlay, restartConnection);
+			}
+		});
 
 		this._sendInactiveMessage();
 	}
