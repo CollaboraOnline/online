@@ -292,7 +292,7 @@ int main(int argc, char* argv[])
         _exit(1); // avoid log cleanup
     }
 
-    Log::initialize("Mobile", "trace", false, false, {}, false, {});
+    Log::initialize("Mobile", "trace");
     Util::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line)
