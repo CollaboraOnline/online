@@ -13,7 +13,7 @@
  * Util.Dropdown - helper to create dropdown menus for JSDialogs
  */
 
-/* global JSDialog */
+/* global JSDialog app */
 
 function _createDropdownId(id) {
 	return id + '-dropdown';
@@ -41,10 +41,10 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		]
 	};
 
-	if (!popupParent._onClose) {
-		popupParent._onClose = function () {
-			this.setAttribute('aria-expanded', false);
-		}.bind(popupParent);
+	if (popupParent && !popupParent._onClose) {
+		popupParent._onClose = () => {
+			popupParent.setAttribute('aria-expanded', false);
+		};
 	}
 	popupParent.setAttribute('aria-expanded', true);
 
@@ -136,12 +136,14 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 						generateCallback(entry.items), 'top-end', true);
 					lastSubMenuOpened = subMenuId;
 
-					var dropdown = JSDialog.GetDropdown(subMenuId);
-					var container = dropdown.querySelector('.ui-grid');
-					JSDialog.MakeFocusCycle(container);
-					var focusables = JSDialog.GetFocusableElements(container);
-					if (focusables && focusables.length)
-						focusables[0].focus();
+					app.layoutingService.appendLayoutingTask(() => {
+						var dropdown = JSDialog.GetDropdown(subMenuId);
+						var container = dropdown.querySelector('.ui-grid');
+						JSDialog.MakeFocusCycle(container);
+						var focusables = JSDialog.GetFocusableElements(container);
+						if (focusables && focusables.length)
+							focusables[0].focus();
+					});
 				} else if (eventType === 'selected' && entry.uno) {
 					var uno = (entry.uno.indexOf('.uno:') === 0) ? entry.uno : '.uno:' + entry.uno;
 					L.Map.THIS.sendUnoCommand(uno);
