@@ -498,7 +498,7 @@ class Xcu {
 		return container;
 	}
 
-	private async generateXcuAndUpload(): Promise<void> {
+	public async generateXcuAndUpload(): Promise<void> {
 		const xcuContent = this.generate(this.xcuDataObj);
 		await (window as any).settingIframe.uploadXcuFile(this.fileId, xcuContent);
 	}
