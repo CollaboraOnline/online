@@ -53,6 +53,10 @@ QUIET_CMP = $(QUIET_CMP_$(V))
 QUIET_CMP_ = $(QUIET_CMP_$(AM_DEFAULT_VERBOSITY))
 QUIET_CMP_0 = @echo "  CMP     " $@;
 
+QUIET_JSCPCD = $(QUIET_JSCPCD_$(V))
+QUIET_JSCPCD_ = $(QUIET_JSCPCD_$(AM_DEFAULT_VERBOSITY))
+QUIET_JSCPCD_0 = @echo "  JSCPCD  " $@;
+
 MOCHA_DIR = $(srcdir)/mocha_tests
 MOCHA_JS_DIR = $(MOCHA_DIR)/workdir
 MOCHA_TS_FILES = $(wildcard $(MOCHA_DIR)/*.ts)
@@ -1122,9 +1126,8 @@ check-local: $(MOCHA_TS_JS_FILES)
 		exit 1; \
 	fi
 
-	@echo "Checking code duplication..."
 	@echo > ${DUPLICATION_TEST_LOG}
-	@if npm run duplication 2> ${DUPLICATION_TEST_LOG} 1>&2; then \
+	$(QUIET_JSCPCD) if npm run duplication 2> ${DUPLICATION_TEST_LOG} 1>&2; then \
 		echo "Code duplication tests finished successfully."; \
 	else \
 		cat ${DUPLICATION_TEST_LOG}; \
