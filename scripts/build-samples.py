@@ -180,7 +180,14 @@ def substitute(queue, var):
             queue.writeLine('<text:p>$' + str(v*0.93) + '</text:p>')
             queue.writeLine('</table:table-cell>')
 
-            queue.writeLine('<table:table-cell table:number-columns-repeated="1011"/>')
+            # 4k screens need more data
+            for i in range(0,32):
+                v = str(rng.uniform(0, 1000))
+                queue.writeLine('<table:table-cell office:value-type="float" office:value="' + v + '" calcext:value-type="float">')
+                queue.writeLine('<text:p>' + v + '</text:p>')
+                queue.writeLine('</table:table-cell>')
+
+            queue.writeLine('<table:table-cell table:number-columns-repeated="979"/>')
 
             queue.writeLine('</table:table-row>')
 
