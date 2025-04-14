@@ -49,7 +49,7 @@ void initialize_cpp_things()
 {
     // FIXME: Code snippet shared with gtk/mobile.cpp, factor out into separate file.
 
-    Log::initialize("Mobile", "trace", false, false, {}, false, {});
+    Log::initialize("Mobile", "trace");
     Util::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line)

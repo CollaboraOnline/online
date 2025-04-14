@@ -51,7 +51,7 @@ NSString *app_text_direction;
     else
         setupKitEnvironment("");
 
-    Log::initialize("Mobile", trace, false, false, {}, false, {});
+    Log::initialize("Mobile", trace);
     Util::setThreadName("main");
 
     // Clear the cache directory if it is for another build of the app

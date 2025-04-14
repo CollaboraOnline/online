@@ -40,9 +40,9 @@ static int closeNotificationPipeForForwardingThread[2];
     // Initialize logging
     // Use "debug" or potentially even "trace" for debugging
 #if DEBUG
-    Log::initialize("Mobile", "debug", false, false, {});
+    Log::initialize("Mobile", "debug");
 #else
-    Log::initialize("Mobile", "information", false, false, {});
+    Log::initialize("Mobile", "information");
 #endif
     Util::setThreadName("main");
 
