@@ -56,9 +56,9 @@ JNI_OnLoad(JavaVM* vm, void*) {
     // Uncomment the following to see the logs from the core too
     //setenv("SAL_LOG", "+WARN+INFO", 0);
 #if ENABLE_DEBUG
-    Log::initialize("Mobile", "debug", false, false, {}, false, {});
+    Log::initialize("Mobile", "debug");
 #else
-    Log::initialize("Mobile", "information", false, false, {}, false, {});
+    Log::initialize("Mobile", "information");
 #endif
     return JNI_VERSION_1_6;
 }
