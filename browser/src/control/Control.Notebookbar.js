@@ -522,7 +522,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (alreadySelected) {
 			const tabId = alreadySelected.attr('id');
 			this.updateButtonVisibilityForContext(requestedContext, tabId);
-			return tabId;
+			return;
 		}
 
 		if (contextTab) {
@@ -535,14 +535,14 @@ L.Control.Notebookbar = L.Control.extend({
 			}
 			const tabId = contextTab.attr('id');
 			this.updateButtonVisibilityForContext(requestedContext, tabId);
-			return tabId;
+			return;
 		}
 
 		if (defaultTab) {
 			defaultTab.click();
 			const tabId = defaultTab.attr('id');
 			this.updateButtonVisibilityForContext(requestedContext, tabId);
-			return tabId;
+			return;
 		}
 	},
 
