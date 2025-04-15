@@ -412,7 +412,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			const widthIncreased = oldMapSize[0] < newMapSize[0];
 			const heightIncreased = oldMapSize[1] < newMapSize[1];
 
-			this._map.invalidateSize({}, new L.Point(oldMapSize[0], oldMapSize[1]));
+			this._map.invalidateSize(false, new L.Point(oldMapSize[0], oldMapSize[1]));
 			app.sectionContainer.onResize(newCanvasSize[0], newCanvasSize[1]); // Canvas's size = documentContainer's size.
 			this._updateHeaderSections();
 
