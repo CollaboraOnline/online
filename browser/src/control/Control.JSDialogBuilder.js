@@ -2739,25 +2739,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		buildFunc.bind(this)(temporaryParent, [data], false);
 		var backupGridSpan = control.style.gridColumn;
 
-		app.layoutingService.appendLayoutingTask(() => {
-			control.replaceWith(temporaryParent.firstChild)
+		control.replaceWith(temporaryParent.firstChild)
 
-			var newControl = container.querySelector('[id=\'' + elementId + '\']');
-			if (newControl) {
-				newControl.scrollTop = scrollTop;
-				newControl.style.gridColumn = backupGridSpan;
+		var newControl = container.querySelector('[id=\'' + elementId + '\']');
+		if (newControl) {
+			newControl.scrollTop = scrollTop;
+			newControl.style.gridColumn = backupGridSpan;
 
-				// todo: is that needed? should be in widget impl?
-				if (data.has_default === true && (data.type === 'pushbutton' || data.type === 'okbutton'))
-					L.DomUtil.addClass(newControl, 'button-primary');
-			}
+			// todo: is that needed? should be in widget impl?
+			if (data.has_default === true && (data.type === 'pushbutton' || data.type === 'okbutton'))
+				L.DomUtil.addClass(newControl, 'button-primary');
+		}
 
-			if (focusedId) {
-				var found = container.querySelector('[id=\'' + focusedId + '\']');
-				if (found)
-					found.focus();
-			}
-		});
+		if (focusedId) {
+			var found = container.querySelector('[id=\'' + focusedId + '\']');
+			if (found)
+				found.focus();
+		}
 	},
 
 	// replaces widget in-place with new instance with updated data
