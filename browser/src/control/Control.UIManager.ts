@@ -1190,8 +1190,6 @@ class UIManager extends L.Control {
 		$('#toolbar-wrapper').css('display', 'none');
 
 		$('#document-container').addClass('tabs-collapsed');
-
-		this.map._docLayer._syncTileContainerSize();
 	}
 
 	/**
@@ -1207,8 +1205,6 @@ class UIManager extends L.Control {
 		$('#toolbar-wrapper').css('display', '');
 
 		$('#document-container').removeClass('tabs-collapsed');
-
-		this.map._docLayer._syncTileContainerSize();
 	}
 
 	showNotebookTab(id: string, show: boolean): void {
