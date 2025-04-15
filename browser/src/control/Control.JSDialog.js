@@ -817,15 +817,16 @@ L.Control.JSDialog = L.Control.extend({
 
 		builder.updateWidget(dialog, data.control);
 
-		var dialogInfo = this.dialogs[data.id];
-		if (dialogInfo.isDocumentAreaPopup) {
-			// In case of AutocompletePopup's update data would have posx, posy
-			dialogInfo.updatePos(new L.Point(data.posx, data.posy));
-		}
-
-		// FIXME: remove 100 ms magic timing, drawing areas should request dialog position update
-		//        when they receive payload with bigger content
-		setTimeout(function () { dialogInfo.updatePos(); }, 100);
+		// after widget update we might have bigger content and need to center the dialog again
+		app.layoutingService.appendLayoutingTask(() => {
+			var dialogInfo = this.dialogs[data.id];
+			if (dialogInfo.isDocumentAreaPopup) {
+				// In case of AutocompletePopup's update data would have posx, posy
+				dialogInfo.updatePos(new L.Point(data.posx, data.posy));
+			} else {
+				dialogInfo.updatePos();
+			}
+		});
 	},
 
 	onJSAction: function (e) {
