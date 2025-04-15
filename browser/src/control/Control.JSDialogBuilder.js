@@ -2572,7 +2572,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	// executes actions like changing the selection without rebuilding the widget
 	executeAction: function(container, data) {
 		app.layoutingService.appendLayoutingTask(() => { this.executeActionImpl(container, data); });
-		app.layoutingService.scheduleLayouting();
 	},
 
 	executeActionImpl: function(container, data) {
@@ -2759,8 +2758,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					found.focus();
 			}
 		});
-
-		app.layoutingService.scheduleLayouting();
 	},
 
 	// replaces widget in-place with new instance with updated data

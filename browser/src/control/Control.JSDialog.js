@@ -793,8 +793,6 @@ L.Control.JSDialog = L.Control.extend({
 			if (instance.isSnackbar && instance.snackbarTimeout > 0) {
 				instance.timeoutId = setTimeout(function () { app.map.uiManager.closeSnackbar(); }, instance.snackbarTimeout);
 			}
-
-			app.layoutingService.scheduleLayouting();
 		}
 	},
 
