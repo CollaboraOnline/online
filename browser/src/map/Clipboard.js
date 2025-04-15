@@ -1281,7 +1281,7 @@ L.Clipboard = L.Class.extend({
 
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			const p = document.createElement('p');
-			p.textContent = _('Please use the paste buttons on your on-screen keyboard.');
+			p.textContent = _('Your browser has very limited access to the clipboard, so please use the paste buttons on your on-screen keyboard instead.');
 			innerDiv.appendChild(p);
 		}
 		else {
