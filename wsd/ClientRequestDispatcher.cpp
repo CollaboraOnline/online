@@ -1275,8 +1275,10 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
     auto httpProbeSession = http::Session::create(std::move(host), protocol, port);
     httpProbeSession->setTimeout(std::chrono::seconds(2));
 
+    std::weak_ptr<StreamSocket> socketWeak(socket);
+
     httpProbeSession->setConnectFailHandler(
-        [socket, this] (const std::shared_ptr<http::Session>& probeSession){
+        [socketWeak, this] (const std::shared_ptr<http::Session>& probeSession){
 
             CheckStatus status = CheckStatus::UnspecifiedError;
 
@@ -1308,10 +1310,16 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
             (void) this; // to make the compiler happy wrt. the lambda capture
 #endif
 
-            sendResult(socket, status);
+            std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
+            if (!destSocket)
+            {
+                LOG_ERR("Invalid socket while sending wopi access check result");
+                return;
+            }
+            sendResult(destSocket, status);
     });
 
-    auto finishHandler = [socket, this](const std::shared_ptr<http::Session>& probeSession)
+    auto finishHandler = [socketWeak, this](const std::shared_ptr<http::Session>& probeSession)
     {
         LOG_TRC("finishHandler ");
 
@@ -1358,7 +1366,13 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         }
 #endif
 
-        sendResult(socket, status);
+        std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
+        if (!destSocket)
+        {
+            LOG_ERR("Invalid socket while sending wopi access check result");
+            return;
+        }
+        sendResult(destSocket, status);
     };
 
     httpProbeSession->setFinishedHandler(std::move(finishHandler));
