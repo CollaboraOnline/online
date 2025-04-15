@@ -91,9 +91,8 @@ private:
     void sendUnauthorizedErrorAndShutdown();
 
     /// Send an error to the client and disconnect the socket.
-    static void sendErrorAndShutdown(const std::shared_ptr<WebSocketHandler>& ws,
-                                     const std::string& msg,
-                                     WebSocketHandler::StatusCodes statusCode);
+    void sendErrorAndShutdown(const std::string& msg,
+                              WebSocketHandler::StatusCodes statusCode);
 
 #if !MOBILEAPP
     void launchInstallPresets();
