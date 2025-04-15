@@ -388,8 +388,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		// Document container size is up to date as of now.
 		const documentContainerSize = this._getDocumentContainerSize();
-		documentContainerSize[0] = Math.round(app.dpiScale * documentContainerSize[0]);
-		documentContainerSize[1] = Math.round(app.dpiScale * documentContainerSize[1]);
+		documentContainerSize[0] *= app.dpiScale;
+		documentContainerSize[1] *= app.dpiScale;
 
 		// Size has changed. Our map and canvas are not resized yet.
 		// But the row header, row group, column header and column group sections don't need to be resized.
@@ -402,25 +402,25 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		const mapElement = document.getElementById('map'); // map's size = tiles section's size.
 		const oldMapSize = [mapElement.clientWidth, mapElement.clientHeight];
+		const widthIncreased = oldMapSize[0] < newMapSize[0];
+		const heightIncreased = oldMapSize[1] < newMapSize[1];
+		const sizeChanged = oldMapSize[0] !== newMapSize[0] || oldMapSize[1] !== newMapSize[1];
 
 		// Early exit. If there is no need to update the size, return here.
-		if (oldMapSize[0] === newMapSize[0] && oldMapSize[1] === newMapSize[1])
-			return false;
-		else {
+		if (sizeChanged) {
 			this._resizeMapElementAndTilesLayer(mapElement, marginLeft, marginTop, newMapSize);
-
-			const widthIncreased = oldMapSize[0] < newMapSize[0];
-			const heightIncreased = oldMapSize[1] < newMapSize[1];
 
 			this._map.invalidateSize(false, new L.Point(oldMapSize[0], oldMapSize[1]));
 			app.sectionContainer.onResize(newCanvasSize[0], newCanvasSize[1]); // Canvas's size = documentContainer's size.
 			this._updateHeaderSections();
 
 			this._mobileChecksAfterResizeEvent(heightIncreased);
+		}
 
-			// Center the view w.r.t the new map-pane position using the current zoom.
-			this._map.setView(this._map.getCenter());
+		// Center the view w.r.t the new map-pane position using the current zoom.
+		this._map.setView(this._map.getCenter());
 
+		if (sizeChanged) {
 			// We want to keep cursor visible when we show the keyboard on mobile device or tablet
 			this._nonDesktopChecksAfterResizeEvent(heightIncreased);
 
@@ -429,9 +429,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._map.fire('sizeincreased');
 				return true;
 			}
-
-			return false;
 		}
+
+		return false;
 	},
 
 	_onStatusMsg: function (textMsg) {
@@ -452,6 +452,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			app.file.size.y = statusJSON.height;
 
 			app.view.size = app.file.size.clone();
+
+			if (app.map._docLoaded)
+				this._syncTileContainerSize();
 
 			this._docType = statusJSON.type;
 			this._parts = statusJSON.partscount;
