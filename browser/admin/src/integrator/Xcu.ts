@@ -343,7 +343,7 @@ class Xcu {
 					textElement.textContent = key;
 					checkboxContent.appendChild(textElement);
 
-					checkboxWrapper.addEventListener('click', (event) => {
+					checkboxWrapper.addEventListener('click', () => {
 						const currentChecked = !(inputCheckbox as HTMLInputElement).checked;
 						inputCheckbox.checked = currentChecked;
 						if (currentChecked) {
@@ -461,7 +461,7 @@ class Xcu {
 			}
 			resetButton.disabled = true;
 			this.xcuDataObj = defaultXcuObj;
-			this.generateXcuAndUpload();
+			await this.generateXcuAndUpload();
 			resetButton.disabled = false;
 		});
 
@@ -478,7 +478,7 @@ class Xcu {
 
 		saveButton.addEventListener('click', async () => {
 			saveButton.disabled = true;
-			this.generateXcuAndUpload();
+			await this.generateXcuAndUpload();
 			saveButton.disabled = false;
 		});
 
