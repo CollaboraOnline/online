@@ -36,7 +36,7 @@ class LayoutingService {
 
 					duration = performance.now() - start;
 					if (duration > 10) {
-						this.scheduleLayouting();
+						this._scheduleLayouting();
 						break;
 					}
 					task = this._layoutTasks.shift();
@@ -49,9 +49,10 @@ class LayoutingService {
 
 	public appendLayoutingTask(task: LayoutingTask) {
 		this._layoutTasks.push(task);
+		this._scheduleLayouting();
 	}
 
-	public scheduleLayouting() {
+	private _scheduleLayouting() {
 		if (this._layoutTaskFlush) return;
 
 		// get something around 60 fps
