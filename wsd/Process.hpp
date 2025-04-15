@@ -203,44 +203,35 @@ public:
         , _jailId(jailId)
         , _configId(configId)
         , _smapsFD(-1)
+        , _urpFromKitFD(socket->getIncomingFD(SharedFDType::URPFromKit))
+        , _urpToKitFD(socket->getIncomingFD(SharedFDType::URPToKit))
     {
-        const int urpFromKitFD = socket->getIncomingFD(SharedFDType::URPFromKit);
-        const int urpToKitFD = socket->getIncomingFD(SharedFDType::URPToKit);
-        if (urpFromKitFD != -1 && urpToKitFD != -1)
-        {
-            std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-            _urpFromKit = StreamSocket::create<StreamSocket>(
-                std::string(), urpFromKitFD, Socket::Type::Unix, /*isClient=*/false,
-                HostType::Other, std::make_shared<UrpHandler>(this),
-                StreamSocket::ReadType::NormalRead, now);
-
-            _urpToKit = StreamSocket::create<StreamSocket>(
-                std::string(), urpToKitFD, Socket::Type::Unix, /*isClient=*/false, HostType::Other,
-                std::make_shared<UrpHandler>(this), StreamSocket::ReadType::NormalRead, now);
-        }
     }
 
     ChildProcess(ChildProcess&& other) = delete;
 
     bool sendUrpMessage(const std::string& message)
     {
-        if (!_urpToKit)
+        std::shared_ptr<StreamSocket> urpToKit(_urpToKit.lock());
+        if (!urpToKit)
             return false;
         if (message.size() < 4)
         {
             LOG_ERR("URP Message too short");
             return false;
         }
-        _urpToKit->send(message.data() + 4, message.size() - 4);
+        urpToKit->send(message.data() + 4, message.size() - 4);
         return true;
     }
 
     virtual ~ChildProcess()
     {
-        if (_urpFromKit)
-            _urpFromKit->shutdown();
-        if (_urpToKit)
-            _urpToKit->shutdown();
+        std::shared_ptr<StreamSocket> urpFromKit(_urpFromKit.lock());
+        if (urpFromKit)
+            urpFromKit->shutdown();
+        std::shared_ptr<StreamSocket> urpToKit(_urpToKit.lock());
+        if (urpToKit)
+            urpToKit->shutdown();
         if (_smapsFD != -1)
         {
             ::close(_smapsFD);
@@ -266,9 +257,11 @@ private:
     const std::string _jailId;
     const std::string _configId;
     std::weak_ptr<DocumentBroker> _docBroker;
-    std::shared_ptr<StreamSocket> _urpFromKit;
-    std::shared_ptr<StreamSocket> _urpToKit;
+    std::weak_ptr<StreamSocket> _urpFromKit;
+    std::weak_ptr<StreamSocket> _urpToKit;
     int _smapsFD;
+    int _urpFromKitFD;
+    int _urpToKitFD;
 };
 
 #if !MOBILEAPP
