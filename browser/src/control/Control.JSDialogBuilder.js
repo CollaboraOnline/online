@@ -714,9 +714,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					L.DomUtil.addClass(label, 'hidden');
 				builder.postProcess(expander, data.children[0]);
 
-				if (data.children.length > 1 && expanded)
-					$(label).addClass('expanded');
-
 				var toggleFunction = function () {
 					if (customCallback)
 						customCallback();
@@ -724,6 +721,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						builder.callback('expander', 'toggle', data, null, builder);
 					$(label).toggleClass('expanded');
 					$(expander).siblings().toggleClass('expanded');
+
+					// Toggle aria-expanded attribute
+					const currentState = expander.getAttribute('aria-expanded') === 'true';
+					expander.setAttribute('aria-expanded', (!currentState).toString());
 				};
 
 				$(expander).click(toggleFunction);
@@ -736,9 +737,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			var expanderChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
-
-			if (expanded)
-				$(expanderChildren).addClass('expanded');
+		
+			if (expanded) {
+				if (data.children.length > 1) {
+					label.classList.add('expanded');
+					expander.setAttribute('aria-expanded', 'true');
+				}
+				expanderChildren.classList.add('expanded');
+			}
+			else {
+				expander.setAttribute('aria-expanded', 'false');
+			}
 
 			var children = [];
 			var startPos = 1;
