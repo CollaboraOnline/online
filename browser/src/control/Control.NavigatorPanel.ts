@@ -19,6 +19,7 @@ class NavigatorPanel extends SidebarBase {
 	floatingNavIcon: HTMLElement;
 	presentationControlsWrapper: HTMLElement;
 	navigatorDockWrapper: HTMLElement;
+	closeNavButton: HTMLElement;
 
 	constructor(map: any, options: SidebarOptions) {
 		super(map, options, SidebarType.Navigator);
@@ -96,14 +97,15 @@ class NavigatorPanel extends SidebarBase {
 		);
 
 		// Create the close button inside the div
-		const closeNavButton = L.DomUtil.create(
+		this.closeNavButton = L.DomUtil.create(
 			'span',
 			'close-navigation-button',
 			closeNavWrapper,
 		);
-		closeNavButton.setAttribute('aria-label', _('Close Navigation'));
+		this.closeNavButton.setAttribute('aria-label', _('Close Navigation'));
+		this.closeNavButton.setAttribute('tabindex', '0');
 
-		closeNavButton.addEventListener(
+		this.closeNavButton.addEventListener(
 			'click',
 			function () {
 				this.closeNavigation();
@@ -160,7 +162,8 @@ class NavigatorPanel extends SidebarBase {
 		// Create the button
 		const button = document.createElement('button');
 		button.className = 'ui-content unobutton';
-		button.id = 'view-navigator-button';
+		button.id = 'floating-navigator';
+		button.accessKey = 'ZN';
 		button.setAttribute('aria-pressed', 'false');
 
 		// Create the image inside the button
