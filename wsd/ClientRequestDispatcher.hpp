@@ -21,6 +21,8 @@
 #include <string>
 #include <memory>
 
+enum class CheckStatus : char;
+
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher final : public SimpleSocketHandler
 {
@@ -113,6 +115,8 @@ private:
     bool handleClientProxyRequest(const Poco::Net::HTTPRequest& request,
                                   const RequestDetails& requestDetails,
                                   Poco::MemoryInputStream& message, SocketDisposition& disposition);
+
+    void sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result);
 
 #endif // !MOBILEAPP
 

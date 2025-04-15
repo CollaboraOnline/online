@@ -1136,6 +1136,20 @@ STATE_ENUM(CheckStatus,
     Timeout,
 );
 
+void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result)
+{
+    std::string output = "{\"status\": \"" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
+
+    http::Response jsonResponse(http::StatusCode::OK);
+    FileServerRequestHandler::hstsHeaders(jsonResponse);
+    jsonResponse.set("Last-Modified", Util::getHttpTimeNow());
+    jsonResponse.setBody(std::move(output), "application/json");
+    jsonResponse.set("X-Content-Type-Options", "nosniff");
+
+    socket->sendAndShutdown(jsonResponse);
+    LOG_INF("Wopi Access Check request, result: " << nameShort(result));
+}
+
 bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTPRequest& request,
                                                            Poco::MemoryInputStream& message,
                                                            const std::shared_ptr<StreamSocket>& socket)
@@ -1217,23 +1231,9 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 
     LOG_TRC("Wopi Access Check request scheme: " << scheme << " " << port);
 
-    auto sendResult = [this, socket](CheckStatus result)
-    {
-        std::string output = "{\"status\": \"" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
-
-        http::Response jsonResponse(http::StatusCode::OK);
-        FileServerRequestHandler::hstsHeaders(jsonResponse);
-        jsonResponse.set("Last-Modified", Util::getHttpTimeNow());
-        jsonResponse.setBody(std::move(output), "application/json");
-        jsonResponse.set("X-Content-Type-Options", "nosniff");
-
-        socket->sendAndShutdown(jsonResponse);
-        LOG_INF("Wopi Access Check request, result: " << nameShort(result));
-    };
-
     if (scheme.empty())
     {
-        sendResult(CheckStatus::NoScheme);
+        sendResult(socket, CheckStatus::NoScheme);
         return true;
     }
     // if the wopi hosts uses https, so must cool or it will have Mixed Content errors
@@ -1245,7 +1245,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
 #endif
     )
     {
-        sendResult(CheckStatus::NotHttps);
+        sendResult(socket, CheckStatus::NotHttps);
         return true;
     }
 
@@ -1267,7 +1267,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
     if (!wopiHostAllowed)
     {
         LOG_TRC("Wopi Access Check, wopi host not allowed " << host);
-        sendResult(CheckStatus::WopiHostNotAllowed);
+        sendResult(socket, CheckStatus::WopiHostNotAllowed);
         return true;
     }
 
@@ -1276,7 +1276,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
     httpProbeSession->setTimeout(std::chrono::seconds(2));
 
     httpProbeSession->setConnectFailHandler(
-        [sendResult, this] (const std::shared_ptr<http::Session>& probeSession){
+        [socket, this] (const std::shared_ptr<http::Session>& probeSession){
 
             CheckStatus status = CheckStatus::UnspecifiedError;
 
@@ -1308,10 +1308,10 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
             (void) this; // to make the compiler happy wrt. the lambda capture
 #endif
 
-            sendResult(status);
+            sendResult(socket, status);
     });
 
-    auto finishHandler = [sendResult, this](const std::shared_ptr<http::Session>& probeSession)
+    auto finishHandler = [socket, this](const std::shared_ptr<http::Session>& probeSession)
     {
         LOG_TRC("finishHandler ");
 
@@ -1358,7 +1358,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(const Poco::Net::HTTP
         }
 #endif
 
-        sendResult(status);
+        sendResult(socket, status);
     };
 
     httpProbeSession->setFinishedHandler(std::move(finishHandler));
