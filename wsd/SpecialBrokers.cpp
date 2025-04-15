@@ -319,7 +319,12 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
                 httpResponse.setBody(std::string(_responseData.data(), _responseData.size()),
                                      "image/png");
                 httpResponse.header().setConnectionToken(http::Header::ConnectionToken::Close);
-                _socket->sendAndShutdown(httpResponse);
+
+                std::shared_ptr<StreamSocket> socket(_socket.lock());
+                if (socket)
+                    socket->sendAndShutdown(httpResponse);
+                else
+                    LOG_ERR("Invalid socket while sending rendersearchresult response");
 
                 removeSession(_clientSession);
                 stop("Finished RenderSearchResult handler.");
