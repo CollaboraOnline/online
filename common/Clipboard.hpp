@@ -14,12 +14,14 @@
 #pragma once
 
 #include <common/Common.hpp>
+#include <common/FileUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Util.hpp>
 #include <wsd/Exceptions.hpp>
 
 #include <cstdlib>
+#include <fstream>
 #include <mutex>
 #include <string>
 #include <unordered_map>
@@ -120,19 +122,45 @@ struct ClipboardData
 class ClipboardCache
 {
     std::mutex _mutex;
+    struct ClipFile {
+        std::string _file;
+        ssize_t _size;
+
+        ClipFile(std::string file, ssize_t size)
+            : _file(std::move(file))
+            , _size(size)
+        {
+        }
+        ~ClipFile()
+        {
+            FileUtil::removeFile(_file);
+        }
+    };
     struct Entry {
         std::chrono::steady_clock::time_point _inserted;
-        std::shared_ptr<std::string> _rawData; // big.
+        std::shared_ptr<std::string> _rawData; // cache small buffers in memory
+        std::shared_ptr<ClipFile> _cacheFile;  // cache large buffers to disk
 
-        bool hasExpired(const std::chrono::steady_clock::time_point now)
+        bool hasExpired(const std::chrono::steady_clock::time_point now) const
         {
             return (now - _inserted) >= std::chrono::minutes(CLIPBOARD_EXPIRY_MINUTES);
         }
     };
     // clipboard key -> data
     std::unordered_map<std::string, Entry> _cache;
+    std::string _cacheDir;
+    int _cacheFileId;
 public:
-    ClipboardCache() = default;
+    ClipboardCache()
+        : _cacheDir(FileUtil::createRandomTmpDir())
+        , _cacheFileId(0)
+    {
+    }
+
+    ~ClipboardCache()
+    {
+        FileUtil::removeFile(_cacheDir, true);
+    }
 
     void dumpState(std::ostream& os) const
     {
@@ -142,12 +170,18 @@ public:
         for (const auto &it : _cache)
         {
             std::shared_ptr<std::string> data = it.second._rawData;
-            std::string_view string = *data;
-
-            os << "  size: " << string.size() << " bytes, lifetime: " <<
+            os << "  memory size: " << (data ? data->size() : 0) << " bytes, lifetime: " <<
                 std::chrono::duration_cast<std::chrono::seconds>(
                     now - it.second._inserted).count() << " seconds\n";
-			Util::dumpHex(os, string.substr(0, 256), "", "  ");
+            if (it.second._cacheFile)
+            {
+                os << "  cacheFile: " << it.second._cacheFile->_file << ", disk size:" <<
+                    it.second._cacheFile->_size << " bytes\n";
+            }
+            if (!data)
+                continue;
+            std::string_view string = *data;
+            Util::dumpHex(os, string.substr(0, 256), "", "  ");
             totalSize += string.size();
         }
 
@@ -164,7 +198,24 @@ public:
         }
         Entry ent;
         ent._inserted = std::chrono::steady_clock::now();
-        ent._rawData = std::make_shared<std::string>(data, size);
+
+        if (size > 0x10000)
+        {
+            std::string tempFile = _cacheDir + '/' + std::to_string(_cacheFileId++);
+
+            std::ofstream fileStream;
+            fileStream.open(tempFile, std::ios::binary);
+            fileStream.write(data, size);
+            fileStream.close();
+
+            if (!fileStream)
+                LOG_WRN("Unable to cache clipboard entry to: " << tempFile);
+            else
+                ent._cacheFile = std::make_shared<ClipFile>(std::move(tempFile), size);
+        }
+
+        if (!ent._cacheFile)
+            ent._rawData = std::make_shared<std::string>(data, size);
         LOG_TRC("Insert cached clipboard: " << key[0] << " and " << key[1]);
         std::lock_guard<std::mutex> lock(_mutex);
         _cache[key[0]] = _cache[key[1]] = std::move(ent);
@@ -185,6 +236,19 @@ public:
         {
             LOG_TRC("Clipboard item with key [" << key << "] is expired");
             return nullptr;
+        }
+
+        if (it->second._cacheFile)
+        {
+            std::shared_ptr<std::string> res = std::make_shared<std::string>();
+
+            if (it->second._cacheFile->_size != FileUtil::readFile(it->second._cacheFile->_file, *res, it->second._cacheFile->_size))
+            {
+                LOG_WRN("Unable to read clipboard entry from: " << it->second._cacheFile->_file);
+                return nullptr;
+            }
+
+            return res;
         }
 
         return it->second._rawData;
