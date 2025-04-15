@@ -201,6 +201,9 @@ keyboardShortcuts.definitions.set('de', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor('presentation', 'keydown', Mod.SHIFT, 'F9', '.uno:GridVisible', null),
     new ShortcutDescriptor('presentation', 'keydown', Mod.SHIFT, 'F3', '.uno:ChangeCaseRotateCase', null),
     new ShortcutDescriptor('presentation', 'keydown', Mod.SHIFT, 'F5', null, 'presentation', null), // Already available without this shortcut.
+    new ShortcutDescriptor('presentation', 'keydown', Mod.SHIFT | Mod.CTRL, 'F', '.uno:Bold', null),
+    new ShortcutDescriptor('presentation', 'keydown', Mod.SHIFT | Mod.CTRL, 'K', '.uno:Italic', null),
+    new ShortcutDescriptor('presentation', 'keydown', Mod.SHIFT | Mod.CTRL, 'U', '.uno:Underline', null),
 
     new ShortcutDescriptor('text', 'keydown', Mod.SHIFT, 'F3', '.uno:ChangeCaseRotateCase', null),
     new ShortcutDescriptor('text', 'keydown', 0, 'F5', '.uno:GoToPage', null, null),
