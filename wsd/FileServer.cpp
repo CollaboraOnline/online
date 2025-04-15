@@ -2103,11 +2103,21 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
     httpRequest.setVerb(http::Request::VERB_GET);
     httpRequest.header().set("Content-Type", "application/json");
 
+    std::weak_ptr<StreamSocket> socketWeak(socket);
+
     http::Session::FinishedCallback finishedCallback =
-        [uriAnonym, socket, requestPath = getRequestPath(request),
+        [uriAnonym, socketWeak, requestPath = getRequestPath(request),
          shortMessage](const std::shared_ptr<http::Session>& wopiSession)
     {
         wopiSession->asyncShutdown();
+
+        std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
+        if (!destSocket)
+        {
+            LOG_ERR("Invalid socket while sending wopi settings config from wopiHost[" << uriAnonym
+                                                                                       << ']');
+            return;
+        }
 
         const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
         const http::StatusLine statusLine = httpResponse->statusLine();
@@ -2118,7 +2128,7 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
                     << uriAnonym << "] with status[" << statusLine.reasonPhrase() << ']');
 
             const std::string& body = httpResponse->getBody();
-            sendError(statusCode, requestPath, socket, shortMessage,
+            sendError(statusCode, requestPath, destSocket, shortMessage,
                       statusLine.reasonPhrase() + ". Response: " + body);
             return;
         }
@@ -2128,7 +2138,7 @@ void FileServerRequestHandler::fetchWopiSettingConfigs(const Poco::Net::HTTPRequ
 
         clientResponse.setBody(httpResponse->getBody());
 
-        socket->sendAndShutdown(clientResponse);
+        destSocket->sendAndShutdown(clientResponse);
         LOG_DBG("Successfully fetched wopi settings config from wopiHost[" << uriAnonym << ']');
     };
 
@@ -2217,11 +2227,21 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
 
     auto httpSession = StorageConnectionManager::getHttpSession(sharedUri);
 
+    std::weak_ptr<StreamSocket> socketWeak(socket);
+
     http::Session::FinishedCallback finishedCallback =
-        [uriAnonym, socket, requestPath = getRequestPath(request), fileId,
+        [uriAnonym, socketWeak, requestPath = getRequestPath(request), fileId,
          shortMessage](const std::shared_ptr<http::Session>& wopiSession)
     {
         wopiSession->asyncShutdown();
+
+        std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
+        if (!destSocket)
+        {
+            LOG_ERR("Invalid socket while deleting presetfile with fileId["
+                    << fileId << "] from wopiHost[" << uriAnonym << ']');
+            return;
+        }
 
         const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
         const http::StatusLine statusLine = httpResponse->statusLine();
@@ -2232,7 +2252,7 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
                     << uriAnonym << "] with status[" << statusLine.reasonPhrase() << ']');
 
             const std::string& body = httpResponse->getBody();
-            sendError(statusCode, requestPath, socket, shortMessage,
+            sendError(statusCode, requestPath, destSocket, shortMessage,
                       statusLine.reasonPhrase() + ". Response: " + body);
             return;
         }
@@ -2242,7 +2262,7 @@ void FileServerRequestHandler::deleteWopiSettingConfigs(
 
         clientResponse.setBody(httpResponse->getBody());
 
-        socket->sendAndShutdown(clientResponse);
+        destSocket->sendAndShutdown(clientResponse);
         LOG_DBG("Successfully deleted presetfile with fileId[" << fileId << "] from wopiHost["
                                                                << uriAnonym << ']');
     };
@@ -2301,11 +2321,21 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
 
     auto httpSession = StorageConnectionManager::getHttpSession(wopiUri);
 
+    std::weak_ptr<StreamSocket> socketWeak(socket);
+
     http::Session::FinishedCallback finishedCallback =
-        [fileName, uriAnonym, socket, requestPath = getRequestPath(request),
+        [fileName, uriAnonym, socketWeak, requestPath = getRequestPath(request),
          shortMessage](const std::shared_ptr<http::Session>& wopiSession)
     {
         wopiSession->asyncShutdown();
+
+        std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
+        if (!destSocket)
+        {
+            LOG_ERR("Invalid socket while uploadeding presetfile[" << fileName << "] to wopiHost["
+                                                                   << uriAnonym << ']');
+            return;
+        }
 
         const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
         const http::StatusLine statusLine = httpResponse->statusLine();
@@ -2314,13 +2344,13 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
             LOG_ERR("Failed to upload preset file to wopiHost["
                     << uriAnonym << "] with status[" << statusLine.reasonPhrase() << ']');
 
-            sendError(statusLine.statusCode(), requestPath, socket, shortMessage,
+            sendError(statusLine.statusCode(), requestPath, destSocket, shortMessage,
                       statusLine.reasonPhrase());
             return;
         }
         http::Response httpResponseToClient(http::StatusCode::OK);
         httpResponseToClient.setBody("File uploaded successfully to WopiHost.");
-        socket->sendAndShutdown(httpResponseToClient);
+        destSocket->sendAndShutdown(httpResponseToClient);
         LOG_TRC("Successfully uploaded presetfile[" << fileName << "] to wopiHost[" << uriAnonym
                                                     << ']');
     };
