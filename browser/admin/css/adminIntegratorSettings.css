@@ -1,15 +1,17 @@
 :root {
-	--settings-btn-primary: var(--color-primary);
-	--settings-btn-primary-text: var(--color-primary-text);
-	--settings-btn-light-text: #0e242f;
-	--settings-btn-light: var(--color-primary-lighter);
-	--settings-border: var(--color-border);
-	--settings-border-contrast: var(--color-border-darker);
-	--settings-text: var(--color-primary-text);
-	--settings-text-maxcontrast: var(--color-border-lighter);
-	--settings-background: var(--color-main-background);
-	--settings-background-hover: var(--color-background-dark);
-	--settings-font-face: system-ui, -apple-system, "Noto Sans", "Segoe UI", Roboto, Oxygen-Sans, Cantarell, Ubuntu, "Helvetica Neue", "Liberation Sans", Arial, sans-serif;
+  --settings-btn-primary: var(--color-primary);
+  --settings-btn-primary-text: var(--color-primary-text);
+  --settings-btn-light-text: #0e242f;
+  --settings-btn-light: var(--color-primary-lighter);
+  --settings-border: var(--color-border);
+  --settings-border-contrast: var(--color-border-darker);
+  --settings-text: var(--color-primary-text);
+  --settings-text-maxcontrast: var(--color-border-lighter);
+  --settings-background: var(--color-main-background);
+  --settings-background-hover: var(--color-background-dark);
+  --settings-font-face:
+    system-ui, -apple-system, 'Noto Sans', 'Segoe UI', Roboto, Oxygen-Sans,
+    Cantarell, Ubuntu, 'Helvetica Neue', 'Liberation Sans', Arial, sans-serif;
 
   --default-font-size: 15px;
   --animation-quick: 100ms;
@@ -74,7 +76,7 @@ ul {
 }
 
 .section p {
-  margin-top: -.2em;
+  margin-top: -0.2em;
   margin-bottom: 1em;
   opacity: 0.7;
   max-width: 900px;
@@ -434,15 +436,10 @@ ul {
   padding: 10px;
 }
 
-
-
-
-
 .material-design-icon__svg {
   width: var(--icon-size, 24px);
   height: var(--icon-height, 24px);
 }
-
 
 .xcu-editor-tabs-nav {
   display: flex;
@@ -464,7 +461,7 @@ ul {
 }
 
 .xcu-editor-tab::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 25%;
@@ -482,7 +479,6 @@ ul {
   background-color: var(--settings-btn-primary);
 }
 
-
 .xcu-settings-fieldset {
   border: 1px solid var(--settings-border);
   padding: 10px;
@@ -496,37 +492,39 @@ ul {
 }
 
 .checkbox-wrapper {
-  --icon-size: 24px; --icon-height: 24px;
+  --icon-size: 24px;
+  --icon-height: 24px;
 }
 
-.checkbox-radio-switch{
+.checkbox-radio-switch {
   display: flex;
   align-items: center;
   color: var(--settings-text);
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   font-size: var(--default-font-size);
   line-height: var(--default-line-height);
-  padding:
-0;
+  padding: 0;
   position: relative;
-  --checkbox-radio-switch--border-radius: var(--border-radius-element, calc(var(--default-clickable-area) / 2));
-  --checkbox-radio-switch--border-radius-outer: calc(var(--checkbox-radio-switch--border-radius) + 2px);
+  --checkbox-radio-switch--border-radius: var(
+    --border-radius-element,
+    calc(var(--default-clickable-area) / 2)
+  );
+  --checkbox-radio-switch--border-radius-outer: calc(
+    var(--checkbox-radio-switch--border-radius) + 2px
+  );
 }
 
-.checkbox-radio-switch-input{
+.checkbox-radio-switch-input {
   position: absolute;
   z-index: -1;
   opacity: 0 !important;
   width: var(--icon-size);
   height: var(--icon-size);
-  margin: 4px calc((var(--default-clickable-area) - 16px)/2);
+  margin: 4px calc((var(--default-clickable-area) - 16px) / 2);
 }
 
-
-
-
 .checkbox-content--has-text {
-  padding-inline-end: calc((var(--default-clickable-area) - 16px)/2);
+  padding-inline-end: calc((var(--default-clickable-area) - 16px) / 2);
 }
 
 .checkbox-content {
@@ -537,11 +535,11 @@ ul {
   user-select: none;
   min-height: var(--default-clickable-area);
   border-radius: var(--checkbox-radio-switch--border-radius);
-  padding: var(--default-grid-baseline) calc((var(--default-clickable-area) - var(--icon-height))/2);
+  padding: var(--default-grid-baseline)
+    calc((var(--default-clickable-area) - var(--icon-height)) / 2);
   width: 100%;
   max-width: fit-content;
 }
-
 
 .checkbox-content-icon {
   width: var(--icon-size);
@@ -549,7 +547,7 @@ ul {
   color: var(--settings-btn-primary);
 }
 
-.checkbox-content{
+.checkbox-content {
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -557,9 +555,8 @@ ul {
 .xcu-settings-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px; 
+  gap: 16px;
 }
-
 
 .xcu-editor-actions {
   display: flex;
