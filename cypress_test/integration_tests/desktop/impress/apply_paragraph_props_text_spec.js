@@ -83,8 +83,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('have.attr', 'ooo:numbering-type', 'number-style');
 	});
 
-	// FIXME: fails on 6600 might be related to recent core margin updates
-	it.skip('Increase/decrease spacing of selected text.', function() {
+	it('Increase/decrease spacing of selected text.', function() {
 		selectText();
 		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
