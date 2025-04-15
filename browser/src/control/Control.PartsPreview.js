@@ -79,12 +79,9 @@ L.Control.PartsPreview = L.Control.extend({
 			{
 				// make room for the preview
 				var docContainer = this._map.options.documentContainer;
-				if (!L.DomUtil.hasClass(docContainer, 'parts-preview-document')) {
+
+				if (!L.DomUtil.hasClass(docContainer, 'parts-preview-document'))
 					L.DomUtil.addClass(docContainer, 'parts-preview-document');
-					setTimeout(L.bind(function () {
-						this._map.invalidateSize();
-					}, this), 500);
-				}
 
 				// Add a special frame just as a drop-site for reordering.
 				var frameClass = 'preview-frame ' + this.options.frameClass;
