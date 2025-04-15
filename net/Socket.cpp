@@ -1048,22 +1048,18 @@ void SocketDisposition::execute()
         // Drop pretentions of ownership before _socketMove.
         SocketThreadOwnerChange::resetThreadOwner(*_socket);
 
-        if (!_toPoll) {
-            assert (isMove());
-            _socketMove(_socket);
-        } else {
-            assert (isTransfer());
-            if (!_toPoll->isRunOnClientThread())
-            {
-                // Ensure the thread is running before adding callback.
-                _toPoll->startThread();
-            }
-            _toPoll->addCallback([pollCopy = _toPoll, socket = _socket, socketMoveFn = std::move(_socketMove)]()
-                {
-                    pollCopy->insertNewSocket(socket);
-                    socketMoveFn(socket);
-                });
+        assert (isTransfer() && _toPoll);
+        if (!_toPoll->isRunOnClientThread())
+        {
+            // Ensure the thread is running before adding callback.
+            _toPoll->startThread();
         }
+        _toPoll->addCallback([pollCopy = _toPoll, socket = _socket, socketMoveFn = std::move(_socketMove)]()
+            {
+                pollCopy->insertNewSocket(socket);
+                socketMoveFn(socket);
+            });
+
         _socketMove = nullptr;
         _toPoll = nullptr;
     }
