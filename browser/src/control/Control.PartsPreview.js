@@ -187,6 +187,7 @@ L.Control.PartsPreview = L.Control.extend({
 		var imgClassName = 'preview-img ' + this.options.imageClass;
 		var img = L.DomUtil.create('img', imgClassName, frame);
 		img.setAttribute('alt', _('preview of page ') + String(i + 1));
+		img.setAttribute('tabindex', '0');
 		img.id = 'preview-img-part-' + this._idNum;
 		img.hash = hashCode;
 		img.src = document.querySelector('meta[name="previewSmile"]').content;
@@ -216,7 +217,6 @@ L.Control.PartsPreview = L.Control.extend({
 				}
 			} else {
 				this._setPart(e);
-				this._map.focus();
 				this.partsFocused = true;
 				if (!window.mode.isDesktop()) {
 					// needed so on-screen keyboard doesn't pop up when switching slides,
@@ -226,7 +226,19 @@ L.Control.PartsPreview = L.Control.extend({
 			}
 			if (app.file.fileBasedView)
 				this._map._docLayer._checkSelectedPart();
+			img.focus();
 		}, this);
+
+		var that = this;
+		img.onfocus = function () {
+			that.partsFocused = true;
+			that._map._clip.setTextSelectionType('text');
+		}
+
+		img.onblur = function () {
+			that.partsFocused = false;
+			that._map._clip.clearSelection();
+		}
 
 		var that = this;
 		L.DomEvent.on(frame, 'contextmenu', function(e) {
@@ -288,6 +300,7 @@ L.Control.PartsPreview = L.Control.extend({
 						name: _('Copy'),
 						callback: function() {
 							that.copiedSlide = e;
+							that._map._clip._execCopyCutPaste('CopySlide')
 						},
 						visible: function() {
 							return true;
@@ -295,16 +308,9 @@ L.Control.PartsPreview = L.Control.extend({
 					},
 					paste: {
 						name: _('Paste'),
-						callback: function(key, options) {
-							var part = that._findClickedPart(options.$trigger[0].parentNode);
-							if (part !== null) {
-								that._setPart(that.copiedSlide);
-								that._map.duplicatePage(parseInt(part));
-							}
+						callback: function() {
+							that._map._clip._execCopyCutPaste('PasteSlide')
 						},
-						visible: function() {
-							return that.copiedSlide;
-						}
 					},
 					newslide: {
 						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'),
