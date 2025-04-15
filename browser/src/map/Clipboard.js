@@ -849,8 +849,8 @@ L.Clipboard = L.Class.extend({
 		});
 	},
 
-	_parseClipboardFetchResult: function(text, mimetype, shorttype) {
-		const content = this.parseClipboard(text)[shorttype];
+	_parseClipboardFetchResult: async function(text, mimetype, shorttype) {
+		const content = this.parseClipboard(await text)[shorttype];
 		const blob = new Blob([content], { 'type': mimetype });
 		console.log('Generate blob of type ' + mimetype + ' from ' + shorttype + ' text: ' + content);
 		return blob;
@@ -872,28 +872,42 @@ L.Clipboard = L.Class.extend({
 
 	_asyncAttemptNavigatorClipboardWrite: async function(params) {
 		const command = this._unoCommandForCopyCutPaste;
-		const check_ = await this._sendCommandAndWaitForCompletion(command, params);
+		const check_ = this._sendCommandAndWaitForCompletion(command, params);
 
-		if (check_ === null)
-			return; // Either wrong command or a pending event.
-
-		// This is sent down the websocket URL which can race with the
-		// web fetch - so first step is to wait for the result of
-		// that command so we are sure the clipboard is set before
-		// fetching it.
+		// I strongly disrecommend awaiting before the clipboard.write line in the non-iOS-app path
+		// It turns out there are some rather precarious conditions for copy/paste to be allowed in Safari on mobile - and awaiting seems to tip us over into "too late to copy/paste"
+		// Deferring like this is kinda horrible - it certainly looks gross in places - but it's absolutely necessary to avoid errors on the clipboard.write line
+		// I don't like it either :). If you change this make sure to thoroughly test cross-browser and cross-device!
 
 		if (window.ThisIsTheiOSApp) {
+			// This is sent down the fakewebsocket which can race with the
+			// native message - so first step is to wait for the result of
+			// that command so we are sure the clipboard is set before
+			// fetching it.
+			if (await check_ === null)
+				return; // Either wrong command or a pending event.
+
 			await window.webkit.messageHandlers.clipboard.postMessage(`write`);
 		} else {
 			const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
 
-			var result = await fetch(url);
-			var text = await result.text();
+			const text = (async () => {
+				if (await check_ === null)
+					throw new Error('Failed check, either wrong command or pending event');
+					// We need to throw an error here rather than just returning so that a failure halts copying the ClipboardItem to the clipboard
+
+				const result = await fetch(url);
+				return await result.text();
+			})();
 
 			const clipboardItem = new ClipboardItem({
 				'text/html': this._parseClipboardFetchResult(text, 'text/html', 'html'),
-				'text/plain': this._parseClipboardFetchResult(text, 'text/plain', 'plain')
+				'text/plain': this._parseClipboardFetchResult(text, 'text/plain', 'plain'),
 			});
+			// Again, despite fetch(url), this._parseClipboardFetchResult(...) and check_ all being promises, we need to let browser internals await them after we have safely succeeded in calling clipboard.write
+			// We throw an error if our checks fail before returning our text to cause these promises to reject - that way everything can be deffered for later, with failures causing the clipboard write to fail later
+			// We define the text promise outside to allow us to reuse the fetch rather than fetching twice (as in Ic23f7f817cc855ff08f25a2afefcd73d6fc3472b)
+
 			let clipboard = navigator.clipboard;
 			if (L.Browser.cypressTest) {
 				clipboard = this._dummyClipboard;
@@ -905,17 +919,24 @@ L.Clipboard = L.Class.extend({
 				// When document is not focused, writing to clipboard is not allowed. But this error shouldn't stop the usage of clipboard API.
 				if (!document.hasFocus()) {
 					window.app.console.warn('navigator.clipboard.write() failed: ' + error.message);
+					return;
 				}
-				else {
-					window.app.console.error('navigator.clipboard.write() failed: ' + error.message);
-					// Warn that the copy failed.
-					this._warnCopyPaste();
-					// Once broken, always broken.
-					L.Browser.clipboardApiAvailable = false;
-					window.prefs.set('clipboardApiAvailable', false);
-					// Prefetch selection, so next time copy will work with the keyboard.
-					app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
+
+				// Similarly, we'll get an error that is identical to the permission error if our `text` promise rejects
+				// But this is really a check failure - if we can see that check failed we don't need to act on the bogus permission error
+				if (await check_ === null) {
+					 window.app.console.warn('navigator.clipboard.write() failed due to a failing check');
+					 return;
 				}
+				
+				window.app.console.error('navigator.clipboard.write() failed: ' + error.message);
+				// Warn that the copy failed.
+				this._warnCopyPaste();
+				// Once broken, always broken.
+				L.Browser.clipboardApiAvailable = false;
+				window.prefs.set('clipboardApiAvailable', false);
+				// Prefetch selection, so next time copy will work with the keyboard.
+				app.socket.sendMessage('gettextselection mimetype=text/html,text/plain;charset=utf-8');
 			}
 		}
 	},
