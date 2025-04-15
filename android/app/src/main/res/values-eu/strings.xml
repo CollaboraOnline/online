@@ -67,7 +67,7 @@
     <string name="sort_largest">Handiena lehena</string>
     <string name="sort_smallest">Txikiena lehena</string>
     <string name="sort">Ordenatu:</string>
-    <string name="filter">Iragazi honen arabera</string>
+    <string name="filter">Iragazkia:</string>
     <string name="default_document_name">izengabea</string>
     <string name="new_spreadsheet">Kalkulu-orri berria</string>
     <string name="new_presentation">Aurkezpen berria</string>
