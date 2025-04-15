@@ -76,7 +76,7 @@ class SocketPoll;
 /// between polls to clarify thread ownership.
 class SocketDisposition final
 {
-    STATE_ENUM(Type, CONTINUE, CLOSED, MOVE, TRANSFER);
+    STATE_ENUM(Type, CONTINUE, CLOSED, TRANSFER);
 
 public:
     typedef std::function<void(const std::shared_ptr<Socket> &)> MoveFunction;
@@ -89,12 +89,6 @@ public:
     ~SocketDisposition()
     {
         assert (!_socketMove);
-    }
-    // not the method you want.
-    void setMove(MoveFunction moveFn)
-    {
-        _socketMove = std::move(moveFn);
-        _disposition = Type::MOVE;
     }
     /** move, correctly change ownership of and insert into a new poll.
      * @transferFn is called as a callback inside the new poll, which
@@ -115,7 +109,6 @@ public:
     {
         return _socket;
     }
-    bool isMove() const { return _disposition == Type::MOVE; }
     bool isClosed() const { return _disposition == Type::CLOSED; }
     bool isTransfer() const { return  _disposition == Type::TRANSFER; }
     bool isContinue() const { return _disposition == Type::CONTINUE; }
@@ -1683,7 +1676,7 @@ public:
                 disposition.setClosed();
             }
 
-            if (disposition.isMove() || disposition.isTransfer())
+            if (disposition.isTransfer())
                 return;
         }
 
