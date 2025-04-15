@@ -194,7 +194,7 @@ L.Map = L.Evented.extend({
 			{
 				document.getElementById('document-container').classList.add('mobile');
 				this._size = new L.Point(0,0);
-				this._onResize();
+				this.showCalcInputBar();
 			}
 		});
 		this.on('updatetoolbarcommandvalues', function(e) {
@@ -1352,22 +1352,10 @@ L.Map = L.Evented.extend({
 
 		this._mainEvents(onOff);
 
-		app.events.on('resize', this._onResize.bind(this));
-
 		L.DomEvent[onOff](window, 'blur', this._onLostFocus, this);
 		L.DomEvent[onOff](window, 'focus', this._onGotFocus, this);
 	},
 
-	_onResize: function () {
-		app.util.cancelAnimFrame(this._resizeRequest);
-		this._resizeRequest = app.util.requestAnimFrame(
-			function () { this.invalidateSize(true); }, this, false, this._container);
-
-		if (this.sidebar)
-			this.sidebar.onResize();
-
-		this.showCalcInputBar();
-	},
 
 	showCalcInputBar: function() {
 		if (this.formulabar)
