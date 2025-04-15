@@ -142,8 +142,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
 
-	// FIXME: fails on '!'
-	it.skip('Autosave Collapse', function() {
+	it('Autosave Collapse', function() {
 		desktopHelper.insertComment(undefined, false);
 		cy.cGet('#map').focus();
 		helper.typeIntoDocument('{home}');
