@@ -28,7 +28,12 @@ class LayoutingService {
 				let task = this._layoutTasks.shift();
 				let duration = 0;
 				while (task) {
-					task.call(this);
+					try {
+						task.call(this);
+					} catch (ex) {
+						console.error('LayoutingTask exception: ' + ex);
+					}
+
 					duration = performance.now() - start;
 					if (duration > 10) {
 						this.scheduleLayouting();
