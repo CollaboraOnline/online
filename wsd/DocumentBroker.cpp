@@ -107,10 +107,25 @@ void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docB
     // The prisoner socket is added in 'takeSocket'
 
     // if URP is enabled, also add its socket to the poll
-    if (_urpFromKit)
-        docBroker->addSocketToPoll(_urpFromKit);
-    if (_urpToKit)
-        docBroker->addSocketToPoll(_urpToKit);
+    if (_urpFromKitFD != -1 && _urpToKitFD != -1)
+    {
+        std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+
+        std::shared_ptr<StreamSocket> urpFromKit = StreamSocket::create<StreamSocket>(
+            std::string(), _urpFromKitFD, Socket::Type::Unix, /*isClient=*/false,
+            HostType::Other, std::make_shared<UrpHandler>(this),
+            StreamSocket::ReadType::NormalRead, now);
+        docBroker->addSocketToPoll(urpFromKit);
+        _urpFromKit = urpFromKit;
+
+        std::shared_ptr<StreamSocket> urpToKit = StreamSocket::create<StreamSocket>(
+            std::string(), _urpToKitFD, Socket::Type::Unix, /*isClient=*/false,
+            HostType::Other, std::make_shared<UrpHandler>(this),
+            StreamSocket::ReadType::NormalRead, now);
+       docBroker->addSocketToPoll(urpToKit);
+       _urpToKit = urpToKit;
+    }
+
     if (UnitWSD::isUnitTesting())
     {
         UnitWSD::get().onDocBrokerAttachKitProcess(docBroker->getDocKey(), getPid());
