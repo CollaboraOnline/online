@@ -1574,9 +1574,11 @@ export class CommentSection extends CanvasSectionObject {
 						annotation.sectionProperties.autoSave.innerText = _('Autosaved');
 						if (app.map._docLayer._docType === 'spreadsheet')
 							annotation.show();
-						annotation.edit();
 						if (autoSavedComment.sectionProperties.data.id === 'new')
 							this.removeItem(autoSavedComment.sectionProperties.data.id);
+						annotation.edit();
+						if(this.shouldCollapse())
+							annotation.setCollapsed();
 						CommentSection.autoSavedComment = null;
 						CommentSection.commentWasAutoAdded = true;
 					}
