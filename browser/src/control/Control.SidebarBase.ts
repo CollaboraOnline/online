@@ -79,7 +79,6 @@ abstract class SidebarBase {
 
 	closeSidebar() {
 		$(`#${this.type}-dock-wrapper`).removeClass('visible');
-		this.map._onResize();
 
 		if (!this.map.editorHasFocus()) {
 			this.map.fire('editorgotfocus');
