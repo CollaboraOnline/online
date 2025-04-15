@@ -797,17 +797,12 @@ L.Map = L.Evented.extend({
 
 	// If map size has already been updated, invalidateSize needs the oldSize to work properly
 	// (e.g. if getSize() has already been called whith _sizeChanged === true)
-	invalidateSize: function (options, oldSize) {
+	invalidateSize: function (debounceMoveend, oldSize) {
 		if (!this._loaded) { return this; }
 
-		options = L.extend({
-			animate: false,
-			pan: false
-		}, options === true ? {animate: true} : options);
-
-		if (!oldSize) {
+		if (!oldSize)
 			oldSize = this.getSize();
-		}
+
 		this._sizeChanged = true;
 
 		var newSize = this.getSize(),
@@ -817,22 +812,13 @@ L.Map = L.Evented.extend({
 
 		if (!offset.x && !offset.y) { return this; }
 
-		if (options.animate && options.pan) {
-			this.panBy(offset);
+		this.fire('move');
 
+		if (debounceMoveend) {
+			clearTimeout(this._sizeTimer);
+			this._sizeTimer = setTimeout(L.bind(this.fire, this, 'moveend'), 200);
 		} else {
-			if (options.pan) {
-				this._rawPanBy(offset);
-			}
-
-			this.fire('move');
-
-			if (options.debounceMoveend) {
-				clearTimeout(this._sizeTimer);
-				this._sizeTimer = setTimeout(L.bind(this.fire, this, 'moveend'), 200);
-			} else {
-				this.fire('moveend');
-			}
+			this.fire('moveend');
 		}
 
 		return this.fire('resize', {
@@ -1375,7 +1361,7 @@ L.Map = L.Evented.extend({
 	_onResize: function () {
 		app.util.cancelAnimFrame(this._resizeRequest);
 		this._resizeRequest = app.util.requestAnimFrame(
-			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
+			function () { this.invalidateSize(true); }, this, false, this._container);
 
 		if (this.sidebar)
 			this.sidebar.onResize();

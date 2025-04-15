@@ -3825,7 +3825,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		const widthIncreased = oldSize.x < newSize.x;
 
 		if (oldSize.x !== newSize.x || oldSize.y !== newSize.y)
-			this._map.invalidateSize({}, oldSize);
+			this._map.invalidateSize(false, oldSize);
 
 		this._mobileChecksAfterResizeEvent(heightIncreased);
 
