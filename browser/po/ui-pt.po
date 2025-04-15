@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-14 16:34+0100\n"
-"PO-Revision-Date: 2025-02-23 23:07+0000\n"
-"Last-Translator: Bruno Fragoso <darth_signa@hotmail.com>\n"
+"PO-Revision-Date: 2025-04-06 08:37+0000\n"
+"Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10.1-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2604,7 +2604,7 @@ msgstr "Não foi possível carregar as coleções"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr ""
+msgstr "A carregar referências"
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -2848,11 +2848,11 @@ msgstr "Muito largo"
 
 #: src/control/jsdialog/Definitions.Menu.ts:297
 msgid "All users"
-msgstr ""
+msgstr "Todos utilizadores"
 
 #: src/control/jsdialog/Definitions.Menu.ts:302
 msgid "This user"
-msgstr ""
+msgstr "Este utilizador"
 
 #: src/control/jsdialog/Definitions.Menu.ts:435
 msgid "From Beginning"
@@ -2952,6 +2952,7 @@ msgstr "Ctrl+Shift+Alt+D para sair"
 #: src/core/Debug.js:1080
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
+"O manuseio de eventos foi adiado por um tempo inesperadamente longo: {0}ms"
 
 #: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to {productname}: "
