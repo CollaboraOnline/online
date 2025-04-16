@@ -724,12 +724,15 @@ L.Control.JSDialog = L.Control.extend({
 			var dialogs = Object.keys(this.dialogs);
 			if (dialogs.length) {
 				var lastKey = dialogs[dialogs.length - 1];
-				var container = this.dialogs[lastKey].container;
-				if (container)
-					container.focus();
-				var initialFocusElement = JSDialog.GetFocusableElements(container);
-				if (initialFocusElement && initialFocusElement.length)
-					initialFocusElement[0].focus();
+				const lastDialog = this.dialogs[lastKey];
+				const lastContainer = lastDialog.container;
+				if (lastDialog.canHaveFocus && lastContainer) {
+					var initialFocusElement = JSDialog.GetFocusableElements(lastContainer);
+					if (initialFocusElement && initialFocusElement.length)
+						initialFocusElement[0].focus();
+					else
+						lastContainer.focus();
+				}
 			} else {
 				this.map.focus();
 			}
