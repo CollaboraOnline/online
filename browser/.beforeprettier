@@ -81,7 +81,6 @@
 /src/control/jsdialog/Widget.Timefield.js
 /src/control/Parts.js
 /src/control/Permission.js
-/src/control/Scroll.js
 /src/control/Search.js
 /src/control/Signing.js
 /src/control/Styles.js
@@ -190,7 +189,6 @@
 /src/layer/vector/Rectangle.js
 /src/layer/vector/Renderer.js
 /src/main.js
-/src/map/anim/Map.PanAnimation.js
 /src/map/Clipboard.js
 /src/map/handler/Map.DoubleClickZoom.js
 /src/map/handler/Map.Drag.js
