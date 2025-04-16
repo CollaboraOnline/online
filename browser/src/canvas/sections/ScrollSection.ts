@@ -138,8 +138,8 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 		// Triggered by the document (e.g. search result out of the viewing area).
 		if (this.map.scrollTop && this.map.scrollLeft) {
-			this.map.scrollTop(e.y, {});
-			this.map.scrollLeft(e.x, {});
+			this.map.scrollTop(e.y);
+			this.map.scrollLeft(e.x);
 		}
 	}
 
@@ -768,7 +768,7 @@ export class ScrollSection extends CanvasSectionObject {
 				return false;
 		}
 
-		this.map.scroll(0, offset / app.dpiScale, {});
+		this.map.scroll(0, offset / app.dpiScale);
 		this.onUpdateScrollOffset();
 
 		if (app.file.fileBasedView) this.map._docLayer._checkSelectedPart();
@@ -803,7 +803,7 @@ export class ScrollSection extends CanvasSectionObject {
 				return false;
 		}
 
-		this.map.scroll(offset / app.dpiScale, 0, {});
+		this.map.scroll(offset / app.dpiScale, 0);
 		this.onUpdateScrollOffset();
 
 		if (!this.sectionProperties.drawHorizontalScrollBar) {

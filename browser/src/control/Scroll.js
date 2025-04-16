@@ -12,11 +12,10 @@
  * Scroll methods
  */
 L.Map.include({
-	scroll: function (x, y, options) {
+	scroll: function (x, y) {
 		if (typeof (x) !== 'number' || typeof (y) !== 'number') {
 			return;
 		}
-		this._setUpdateOffsetEvt(options);
 		this.panBy(new L.Point(x, y));
 	},
 
@@ -29,25 +28,14 @@ L.Map.include({
 		return offset;
 	},
 
-	scrollTop: function (y, options) {
-		this._setUpdateOffsetEvt(options);
+	scrollTop: function (y) {
 		var offset = this.scrollOffset();
 		window.app.console.debug('scrollTop: ' + y + ' ' + offset.y + ' ' + (y - offset.y));
 		this.panBy(new L.Point(0, y - offset.y));
 	},
 
-	scrollLeft: function (x, options) {
-		this._setUpdateOffsetEvt(options);
+	scrollLeft: function (x) {
 		var offset = this.scrollOffset();
 		this.panBy(new L.Point(x - offset.x, 0));
-	},
-
-	_setUpdateOffsetEvt: function (e) {
-		if (e && e.update === true) {
-			this.on('moveend', this._docLayer._updateScrollOffset, this._docLayer);
-		}
-		else {
-			this.off('moveend', this._docLayer._updateScrollOffset, this._docLayer);
-		}
 	},
 });
