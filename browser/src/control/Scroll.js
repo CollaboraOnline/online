@@ -12,13 +12,6 @@
  * Scroll methods
  */
 L.Map.include({
-	scroll: function (x, y) {
-		if (typeof (x) !== 'number' || typeof (y) !== 'number') {
-			return;
-		}
-		this.panBy(new L.Point(x, y));
-	},
-
 	scrollOffset: function () {
 		var center = this.project(this.getCenter());
 		var centerOffset = center.subtract(this.getSize().divideBy(2));
