@@ -17,7 +17,7 @@ L.Map.include({
 			return;
 		}
 		this._setUpdateOffsetEvt(options);
-		this.panBy(new L.Point(x, y), {animate: false});
+		this.panBy(new L.Point(x, y));
 	},
 
 	scrollOffset: function () {
@@ -33,13 +33,13 @@ L.Map.include({
 		this._setUpdateOffsetEvt(options);
 		var offset = this.scrollOffset();
 		window.app.console.debug('scrollTop: ' + y + ' ' + offset.y + ' ' + (y - offset.y));
-		this.panBy(new L.Point(0, y - offset.y), {animate: false});
+		this.panBy(new L.Point(0, y - offset.y));
 	},
 
 	scrollLeft: function (x, options) {
 		this._setUpdateOffsetEvt(options);
 		var offset = this.scrollOffset();
-		this.panBy(new L.Point(x - offset.x, 0), {animate: false});
+		this.panBy(new L.Point(x - offset.x, 0));
 	},
 
 	_setUpdateOffsetEvt: function (e) {
