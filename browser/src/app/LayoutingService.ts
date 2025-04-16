@@ -21,12 +21,28 @@ class LayoutingService {
 	private _layoutTasks: Array<LayoutingTask> = [];
 	private _layoutTaskFlush: ReturnType<typeof setTimeout> | null = null;
 
+	// get something around 60 fps
+	private MAX_TASK_DURATION_MS = 10;
+	private MIN_TIMER_DELAY_MS = 10;
+
+	private _setupTimer() {
+		this._layoutTaskFlush = setTimeout(
+			this._flushLayoutingQueue.bind(this),
+			this.MIN_TIMER_DELAY_MS,
+		);
+	}
+
+	private _reachedTaskTimeout(start: number): boolean {
+		const duration = performance.now() - start;
+		if (duration > this.MAX_TASK_DURATION_MS) return true;
+		return false;
+	}
+
 	private _flushLayoutingQueue() {
 		if (this._layoutTasks.length) {
 			window.requestAnimationFrame(() => {
 				const start = performance.now();
 				let task = this._layoutTasks.shift();
-				let duration = 0;
 				while (task) {
 					try {
 						task.call(this);
@@ -34,11 +50,11 @@ class LayoutingService {
 						console.error('LayoutingTask exception: ' + ex);
 					}
 
-					duration = performance.now() - start;
-					if (duration > 10) {
+					if (this._reachedTaskTimeout(start)) {
 						this._scheduleLayouting();
-						break;
+						return;
 					}
+
 					task = this._layoutTasks.shift();
 				}
 			});
@@ -54,11 +70,6 @@ class LayoutingService {
 
 	private _scheduleLayouting() {
 		if (this._layoutTaskFlush) return;
-
-		// get something around 60 fps
-		this._layoutTaskFlush = setTimeout(
-			this._flushLayoutingQueue.bind(this),
-			10,
-		);
+		this._setupTimer();
 	}
 }
