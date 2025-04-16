@@ -33,6 +33,7 @@ abstract class SidebarBase {
 	documentContainer: HTMLDivElement;
 	wrapper: HTMLElement;
 	builder: any;
+	enableFocus: boolean;
 
 	constructor(
 		map: any,
@@ -86,6 +87,7 @@ abstract class SidebarBase {
 		}
 
 		this.map.uiManager.setDocTypePref(`Show${this.type}`, false);
+		this.enableFocus = true;
 	}
 
 	onJSUpdate(e: FireEvent) {
