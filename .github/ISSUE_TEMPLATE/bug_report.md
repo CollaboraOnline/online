@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: bug, unconfirmed, 24.04
+labels: bug, unconfirmed, 25.04
 assignees: ''
 
 ---
