@@ -324,7 +324,10 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	addFocusHandler: function(instance) {
-		var failedToFindFocus = function() {
+		if (!instance.canHaveFocus)
+			return;
+
+		const failedToFindFocus = () => {
 			if (document.getElementById(instance.init_focus_id))
 				document.getElementById(instance.init_focus_id).focus();
 			else {
