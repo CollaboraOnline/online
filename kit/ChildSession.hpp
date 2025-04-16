@@ -254,6 +254,7 @@ private:
 
     void updateCursorPosition(const std::string &rect);
     void updateCursorPositionJSON(const std::string &payload);
+    std::string getJailDocRoot() const;
 
 public:
     // simple one line for priming
