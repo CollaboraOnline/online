@@ -15,6 +15,7 @@
 
 #include <common/Common.hpp>
 #include <common/HexUtil.hpp>
+#include <common/FileUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Util.hpp>
@@ -124,9 +125,21 @@ class ClipboardCache
     static constexpr std::chrono::seconds ExpiryCheckPeriod{ CLIPBOARD_EXPIRY_MINUTES * 60 / 10 };
 
     std::mutex _mutex;
+    struct ClipFile {
+        std::string _file;
+
+        ClipFile(std::string file)
+            : _file(std::move(file))
+        {
+        }
+        ~ClipFile()
+        {
+            FileUtil::removeFile(_file);
+        }
+    };
     struct Entry {
         std::chrono::steady_clock::time_point _inserted;
-        std::shared_ptr<std::string> _rawData; // big.
+        std::shared_ptr<ClipFile> _cacheFile;  // cached clipboard
 
         bool hasExpired(const std::chrono::steady_clock::time_point now) const
         {
@@ -135,13 +148,20 @@ class ClipboardCache
     };
     // clipboard key -> data
     std::unordered_map<std::string, Entry> _cache;
-
+    std::string _cacheDir;
     std::chrono::steady_clock::time_point _nextExpiryTime;
-
+    int _cacheFileId;
 public:
     ClipboardCache()
-        : _nextExpiryTime(std::chrono::steady_clock::now() + ExpiryCheckPeriod)
+        : _cacheDir(FileUtil::createRandomTmpDir())
+        , _nextExpiryTime(std::chrono::steady_clock::now() + ExpiryCheckPeriod)
+        , _cacheFileId(0)
     {
+    }
+
+    ~ClipboardCache()
+    {
+        FileUtil::removeFile(_cacheDir, true);
     }
 
     void dumpState(std::ostream& os) const
@@ -151,30 +171,33 @@ public:
         auto now = std::chrono::steady_clock::now();
         for (const auto &it : _cache)
         {
-            std::shared_ptr<std::string> data = it.second._rawData;
-            std::string_view string = *data;
+            const std::string& cacheFile = it.second._cacheFile->_file;
 
-            os << "  size: " << string.size() << " bytes, lifetime: " <<
+            size_t size = FileUtil::Stat(cacheFile).size();
+            os << "  size: " << size << " bytes, lifetime: " <<
                 std::chrono::duration_cast<std::chrono::seconds>(
                     now - it.second._inserted).count() << " seconds\n";
-			HexUtil::dumpHex(os, string.substr(0, 256), "", "  ");
-            totalSize += string.size();
+            os << "  file: " << cacheFile << "\n";
+            totalSize += size;
         }
 
-        os << "Saved clipboard total size: " << totalSize << " bytes\n";
+        os << "Saved clipboard total size: " << totalSize << " bytes (disk)\n";
     }
 
     void insertClipboard(const std::string key[2],
-                         const char *data, std::size_t size)
+                         const std::string& clipFile)
     {
-        if (size == 0)
-        {
-            LOG_TRC("clipboard cache - ignores empty clipboard data");
-            return;
-        }
         Entry ent;
         ent._inserted = std::chrono::steady_clock::now();
-        ent._rawData = std::make_shared<std::string>(data, size);
+
+        std::string cacheFile = _cacheDir + '/' + std::to_string(_cacheFileId++);
+        if (::rename(clipFile.c_str(), cacheFile.c_str()) < 0)
+        {
+            LOG_SYS("Failed to rename [" << clipFile << "] to [" << cacheFile << ']');
+            return;
+        }
+
+        ent._cacheFile = std::make_shared<ClipFile>(std::move(cacheFile));
         LOG_TRC("Insert cached clipboard: " << key[0] << " and " << key[1]);
         std::lock_guard<std::mutex> lock(_mutex);
         _cache[key[0]] = _cache[key[1]] = std::move(ent);
@@ -197,7 +220,16 @@ public:
             return nullptr;
         }
 
-        return it->second._rawData;
+        // TEMP
+        std::shared_ptr<std::string> res = std::make_shared<std::string>();
+
+        if (FileUtil::readFile(it->second._cacheFile->_file, *res) == 0)
+        {
+            LOG_WRN("Unable to read clipboard entry from: " << it->second._cacheFile->_file);
+            return nullptr;
+        }
+
+        return res;
     }
 
     void checkexpiry(std::chrono::steady_clock::time_point now)

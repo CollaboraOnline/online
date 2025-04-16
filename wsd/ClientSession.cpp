@@ -2447,12 +2447,9 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             empty = f.good() ? (f.size() > 0) : 0;
         }
 
-#if 0
         // final cleanup ...
         if (!empty && (!_wopiFileInfo || !_wopiFileInfo->getDisableCopy()))
-            COOLWSD::SavedClipboards->insertClipboard(
-                _clipboardKeys, &payload->data()[header], payload->size() - header);
-#endif
+            COOLWSD::SavedClipboards->insertClipboard(_clipboardKeys, clipFile);
 
         for (const auto& it : _clipSockets)
         {
