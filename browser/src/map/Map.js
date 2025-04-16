@@ -415,12 +415,50 @@ L.Map = L.Evented.extend({
 		this.fire('removeview', {viewId: viewid, username: username});
 	},
 
+	panBy: function (offset) {
+		offset = L.point(offset).round();
 
-	// replaced by animation-powered implementation in Map.PanAnimation.js
-	setView: function (center, zoom) {
-		zoom = zoom === undefined ? this.getZoom() : zoom;
-		this._resetView(L.latLng(center), this._limitZoom(zoom));
+		if (!offset.x && !offset.y)
+			return this;
+
+		//If we pan too far then chrome gets issues with tiles
+		// and makes them disappear or appear in the wrong place (slightly offset) #2602
+		if (!this.getSize().contains(offset)) {
+			this._resetView(this.unproject(this.project(this.getCenter()).add(offset)), this.getZoom());
+			return this;
+		}
+
+		this.fire('movestart');
+		L.DomUtil.setPosition(this._mapPane, this._getMapPanePos().subtract(offset));
+		this.fire('move').fire('moveend');
+
 		return this;
+	},
+
+	scrollOffset: function () {
+		var center = this.project(this.getCenter());
+		var centerOffset = center.subtract(this.getSize().divideBy(2));
+		var offset = {};
+		offset.x = centerOffset.x < 0 ? 0 : Math.round(centerOffset.x);
+		offset.y = Math.round(centerOffset.y);
+		return offset;
+	},
+
+	setView: function (center, zoom, reset) {
+		zoom = zoom === undefined ? this._zoom : this._limitZoom(zoom);
+		center = this._limitCenter(L.latLng(center), zoom, this.options.maxBounds);
+
+		if (this._loaded && !reset && zoom === this._zoom) {
+			// difference between the new and current centers in pixels
+			var offset = this._getCenterOffset(center)._floor();
+			this.panBy(offset);
+			return this;
+		}
+		else {
+			this._resetView(center, zoom);
+
+			return this;
+		}
 	},
 
 	updateAvatars: function() {
