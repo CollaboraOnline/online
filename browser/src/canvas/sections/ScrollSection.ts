@@ -768,7 +768,7 @@ export class ScrollSection extends CanvasSectionObject {
 				return false;
 		}
 
-		this.map.scroll(0, offset / app.dpiScale);
+		this.map.panBy(new L.Point(0, offset / app.dpiScale));
 		this.onUpdateScrollOffset();
 
 		if (app.file.fileBasedView) this.map._docLayer._checkSelectedPart();
@@ -803,7 +803,7 @@ export class ScrollSection extends CanvasSectionObject {
 				return false;
 		}
 
-		this.map.scroll(offset / app.dpiScale, 0);
+		this.map.panBy(new L.Point(offset / app.dpiScale, 0));
 		this.onUpdateScrollOffset();
 
 		if (!this.sectionProperties.drawHorizontalScrollBar) {
