@@ -41,13 +41,4 @@ L.Map.include({
 
 		return this;
 	},
-
-	_onPanTransitionStep: function () {
-		this.fire('move');
-	},
-
-	_onPanTransitionEnd: function () {
-		L.DomUtil.removeClass(this._mapPane, 'leaflet-pan-anim');
-		this.fire('moveend');
-	},
 });
