@@ -679,7 +679,7 @@ L.Map = L.Evented.extend({
 						     curCenter.lng + (caretPos.lng - curCenter.lng) * (1.0 - zoomScale));
 
 			mapUpdater = function() {
-				thisObj.setView(newCenter, zoom, {zoom: options});
+				thisObj.setView(newCenter, zoom);
 			};
 			runAtFinish = function() {
 				thisObj._docLayer.setZoomChanged(false);
@@ -704,7 +704,7 @@ L.Map = L.Evented.extend({
 		}
 
 		mapUpdater = function() {
-			thisObj.setView(curCenter, zoom, {zoom: options});
+			thisObj.setView(curCenter, zoom);
 		};
 
 		runAtFinish = function() {
@@ -731,7 +731,7 @@ L.Map = L.Evented.extend({
 		return this.setZoom(this._zoom - (delta || 1), options, animate);
 	},
 
-	setZoomAround: function (latlng, zoom, options) {
+	setZoomAround: function (latlng, zoom) {
 		var scale = this.getZoomScale(zoom),
 		    viewHalf = this.getSize().divideBy(2),
 		    containerPoint = latlng instanceof L.Point ? latlng : this.latLngToContainerPointIgnoreSplits(latlng),
@@ -739,11 +739,11 @@ L.Map = L.Evented.extend({
 		    centerOffset = containerPoint.subtract(viewHalf).multiplyBy(1 - 1 / scale),
 		    newCenter = this.containerPointToLatLngIgnoreSplits(viewHalf.add(centerOffset));
 
-		return this.setView(newCenter, zoom, {zoom: options});
+		return this.setView(newCenter, zoom);
 	},
 
-	panTo: function (center, options) { // (LatLng)
-		return this.setView(center, this._zoom, {pan: options});
+	panTo: function (center) { // (LatLng)
+		return this.setView(center, this._zoom);
 	},
 
 	setMaxBounds: function (bounds) {
@@ -775,14 +775,14 @@ L.Map = L.Evented.extend({
 			this._docLayer._cssPixelsToCore(bottomRight));
 	},
 
-	panInsideBounds: function (bounds, options) {
+	panInsideBounds: function (bounds) {
 		var center = this.getCenter(),
 		    newCenter = this._limitCenter(center, this._zoom, bounds);
 
 		if (center.equals(newCenter)) { return this; }
 		if (this.distance(center, newCenter) < 0.0000001) { return this; }
 
-		return this.panTo(newCenter, options);
+		return this.panTo(newCenter);
 	},
 
 	// If map size has already been updated, invalidateSize needs the oldSize to work properly

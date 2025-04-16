@@ -64,7 +64,7 @@ declare namespace L {
         getZoom(): number;
         getCenter(): [number, number];
         fitBounds(bounds: any, options?: any): this; // Replace 'any' with the appropriate type if known
-        panTo(center: [number, number], options?: any): this;
+        panTo(center: [number, number]): this;
         zoomIn(delta?: number, options?: any): this;
         zoomOut(delta?: number, options?: any): this;
 
