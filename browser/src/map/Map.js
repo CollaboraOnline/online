@@ -91,7 +91,7 @@ L.Map = L.Evented.extend({
 		}
 
 		if (options.center && options.zoom !== undefined) {
-			this.setView(L.latLng(options.center), options.zoom, {reset: true});
+			this.setView(L.latLng(options.center), options.zoom, true /* reset */);
 		}
 
 		Cursor.imagePath = options.cursorURL;
