@@ -25,7 +25,6 @@ class AutoFillPreviewTooltip extends L.Control.AutoCompletePopup {
 
 	onAdd() {
 		this.newPopupData.isAutoFillPreviewTooltip = true;
-		this.newPopupData.canHaveFocus = false;
 		this.newPopupData.noOverlay = true;
 		this.newPopupData.id = 'autoFillPreviewTooltip';
 

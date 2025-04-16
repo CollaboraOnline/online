@@ -429,7 +429,7 @@ L.Control.JSDialog = L.Control.extend({
 			firstFocusableElement = firstFocusableElement.length > 0 ? firstFocusableElement[0] : firstFocusableElement;
 			firstFocusableElement.focus();
 		}
-		else
+		else if (instance.canHaveFocus !== false)
 			console.error('cannot get focus for widget: "' + instance.init_focus_id + '"');
 
 		if (instance.isDropdown && instance.isSubmenu) {
