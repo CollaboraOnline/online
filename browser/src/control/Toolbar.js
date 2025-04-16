@@ -730,7 +730,7 @@ L.Map.include({
 	},
 
 	_doOpenHelpFile: function(data, id, map) {
-		var productName;
+		let productName;
 		if (window.ThisIsAMobileApp) {
 			productName = window.MobileAppName;
 		} else {
@@ -738,12 +738,14 @@ L.Map.include({
 		}
 
 		map.uiManager.showYesNoButton(id + '-box', productName, '', _('OK'), null, null, null, true);
-		var box = document.getElementById(id + '-box');
-		var innerDiv = L.DomUtil.create('div', '', null);
-		box.insertBefore(innerDiv, box.firstChild);
-		innerDiv.innerHTML = data;
+		app.layoutingService.appendLayoutingTask(() => {
+			const box = document.getElementById(id + '-box');
+			const innerDiv = L.DomUtil.create('div', '', null);
+			box.insertBefore(innerDiv, box.firstChild);
+			innerDiv.innerHTML = data;
 
-		this.onHelpOpen(id, map, productName);
+			this.onHelpOpen(id, map, productName);
+		});
 	},
 
 	showHelp: function(id) {
