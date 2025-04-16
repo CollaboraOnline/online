@@ -144,6 +144,14 @@ class Sidebar extends SidebarBase {
 				this.builder.build(this.container, [sidebarData]);
 				if (!this.isVisible()) $('#sidebar-dock-wrapper').addClass('visible');
 
+				if (this.enableFocus === true) {
+					const focusables = JSDialog.GetFocusableElements(this.container);
+					if (focusables && focusables.length) {
+						focusables[0].focus();
+					}
+					this.enableFocus = false;
+				}
+
 				this.map.uiManager.setDocTypePref('ShowSidebar', true);
 			} else {
 				this.closeSidebar();
