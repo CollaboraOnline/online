@@ -173,33 +173,35 @@ class Cursor {
 		}
 		var canvasOffset = this.position.subtract(origin);
 
-		if (inDocCursor) {
-			var cursorOffset = new cool.Point(
-				origin.x ? canvasOffset.x - splitPos.x : canvasOffset.x,
-				origin.y ? canvasOffset.y - splitPos.y : canvasOffset.y);
-			var paneBounds = new cool.Bounds(new cool.Point(0, 0), paneSize);
-			var cursorBounds = new cool.Bounds(cursorOffset, cursorOffset.add(this.size));
+		app?.layoutService?.appendLayoutingTask(() => {
+			if (inDocCursor) {
+				var cursorOffset = new cool.Point(
+					origin.x ? canvasOffset.x - splitPos.x : canvasOffset.x,
+					origin.y ? canvasOffset.y - splitPos.y : canvasOffset.y);
+				var paneBounds = new cool.Bounds(new cool.Point(0, 0), paneSize);
+				var cursorBounds = new cool.Bounds(cursorOffset, cursorOffset.add(this.size));
 
-			if (!paneBounds.contains(cursorBounds)) {
-				this.container.style.visibility = 'hidden';
-				this.visible = false;
-				this.addCursorClass(this.visible);
-				this.showCursorHeader();
-				return;
+				if (!paneBounds.contains(cursorBounds)) {
+					this.container.style.visibility = 'hidden';
+					this.visible = false;
+					this.addCursorClass(this.visible);
+					this.showCursorHeader();
+					return;
+				}
 			}
-		}
 
-		this.container.style.visibility = 'visible';
-		this.visible = true;
-		this.addCursorClass(this.visible);
+			this.container.style.visibility = 'visible';
+			this.visible = true;
+			this.addCursorClass(this.visible);
 
-		var tileSectionPos = this.map._docLayer.getTileSectionPos();
-		// Compute tile-section offset in css pixels.
-		var pos = canvasOffset.add(tileSectionPos)._divideBy(app.dpiScale)._round();
-		var size = this.size.divideBy(app.dpiScale)._round();
-		this.setSize(size);
-		this.setPos(pos);
-		this.showCursorHeader();
+			var tileSectionPos = this.map._docLayer.getTileSectionPos();
+			// Compute tile-section offset in css pixels.
+			var pos = canvasOffset.add(tileSectionPos)._divideBy(app.dpiScale)._round();
+			var size = this.size.divideBy(app.dpiScale)._round();
+			this.setSize(size);
+			this.setPos(pos);
+			this.showCursorHeader();
+		});
 	}
 
 	setOpacity(opacity: number) {
