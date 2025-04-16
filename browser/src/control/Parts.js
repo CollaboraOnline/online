@@ -297,9 +297,12 @@ L.Map.include({
 			docLayer._currentPage = page;
 		}
 		if (!this.isEditMode() && app.file.writer.pageRectangleList.length > docLayer._currentPage) {
-			var pos = new L.Point(app.file.writer.pageRectangleList[docLayer._currentPage][0], app.file.writer.pageRectangleList[docLayer._currentPage][1]);
-			pos = docLayer._twipsToCorePixels(pos);
-			this.scrollTop(pos.y);
+			const posY = Math.round(app.file.writer.pageRectangleList[docLayer._currentPage][1] / app.dpiScale);
+
+			const section = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			if (section)
+				section.onScrollTo({x: 0, y: posY});
+
 			var state = 'Page ' + (docLayer._currentPage + 1) + ' of ' + app.file.writer.pageRectangleList.length;
 			this.fire('updatestatepagenumber',{
 				state: state
