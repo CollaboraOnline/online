@@ -384,8 +384,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		this.addFocusHandler(instance); // Loop focus for all dialogues.
 
-		var clickToCloseId = instance.clickToClose
-			? instance.clickToClose.replaceAll(' ', '') : null;
+		var clickToCloseId = instance.clickToClose ? L.Util.sanitizeElementId(instance.clickToClose) : null;
 		if (clickToCloseId && clickToCloseId.indexOf('.uno:') === 0)
 			clickToCloseId = clickToCloseId.substr('.uno:'.length);
 
