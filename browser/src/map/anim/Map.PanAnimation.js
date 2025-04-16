@@ -11,19 +11,9 @@ L.Map.include({
 		center = this._limitCenter(L.latLng(center), zoom, this.options.maxBounds);
 		options = options || {};
 
-		this.stop();
-
 		if (this._loaded && !options.reset && options !== true) {
-
-			if (options.animate !== undefined) {
-				options.zoom = L.extend({animate: options.animate}, options.zoom);
-				options.pan = L.extend({animate: options.animate}, options.pan);
-			}
-
 			// try animating pan or zoom
-			var animated = (this._zoom !== zoom) ?
-				this._tryAnimatedZoom && this._tryAnimatedZoom(center, zoom, options.zoom) :
-				this._tryAnimatedPan(center, options.pan);
+			var animated = (this._zoom !== zoom) ? false : this._tryAnimatedPan(center, options.pan);
 
 			if (animated) {
 				// prevent resize handler call, the view will refresh after animation anyway
@@ -72,7 +62,7 @@ L.Map.include({
 		var offset = this._getCenterOffset(center)._floor();
 
 		// don't animate too far unless animate: true specified in options
-		if ((options && options.animate) !== true && !this.getSize().contains(offset)) { return false; }
+		if (!this.getSize().contains(offset)) { return false; }
 
 		this.panBy(offset, options);
 
