@@ -52,7 +52,7 @@ L.Map.include({
 		}
 
 		this.fire('movestart');
-		this._rawPanBy(offset);
+		L.DomUtil.setPosition(this._mapPane, this._getMapPanePos().subtract(offset));
 		this.fire('move').fire('moveend');
 
 		return this;
