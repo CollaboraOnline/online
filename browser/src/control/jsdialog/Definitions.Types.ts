@@ -87,6 +87,7 @@ interface PopupData extends JSDialogJSON {
 	isAutoCompletePopup?: boolean;
 	isAutoFillPreviewTooltip?: boolean;
 	cancellable?: boolean;
+	hasClose: boolean;
 	noOverlay: boolean;
 	popupParent?: string;
 	clickToClose?: string;
