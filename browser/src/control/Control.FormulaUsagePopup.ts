@@ -32,12 +32,14 @@ class FormulaUsagePopup extends L.Control.AutoCompletePopup {
 				} as any as WidgetJSON,
 			] as Array<WidgetJSON>,
 			jsontype: 'dialog',
-			type: 'dialog',
+			type: 'dialog', // exception: dialog but it behaves like a popup
 			cancellable: true,
-			popupParent: '',
-			clickToClose: '',
+			hasClose: false, // do not show titlebar
+			isAutoCompletePopup: true, // don't steal focus
+			popupParent: undefined,
+			clickToClose: undefined,
 			id: 'formulausagePopup',
-			title: '',
+			title: '', // no titlebar
 		} as PopupData;
 	}
 

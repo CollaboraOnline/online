@@ -362,7 +362,7 @@ L.Control.JSDialog = L.Control.extend({
 			};
 		}
 
-		if (instance.nonModal) {
+		if (instance.nonModal && instance.haveTitlebar) {
 			instance.titleCloseButton.onclick = function() {
 				var newestDialog = Math.max.apply(null,
 					Object.keys(instance.that.dialogs).map(function(i) { return parseInt(i);}));
@@ -704,7 +704,10 @@ L.Control.JSDialog = L.Control.extend({
 		instance.isAutoPopup = instance.isDocumentAreaPopup && this.map._docLayer.isCalc();
 		instance.isAutofilter = instance.isAutoPopup && !instance.isAutoFillPreviewTooltip && !instance.isAutoCompletePopup;// separate the autofilter case
 		instance.containerParent = this.getAutoPopupParentContainer(instance);
-		instance.haveTitlebar = (!instance.isModalPopUp && !instance.isSnackbar) || (instance.hasClose && instance.title && instance.title !== '');
+		instance.hasClose = !!instance.hasClose; // default is true
+		instance.haveTitlebar = instance.hasClose
+			|| (!instance.isModalPopUp && !instance.isSnackbar && instance.hasClose)
+			|| (instance.title && instance.title !== '');
 		instance.nonModal = !instance.isModalPopUp && !instance.isDocumentAreaPopup && !instance.isSnackbar;
 
 		// Make a better seperation between popups and modals.
