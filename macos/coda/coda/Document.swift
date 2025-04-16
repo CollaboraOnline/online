@@ -91,7 +91,7 @@ class Document: NSDocument {
         // Load the storyboard and get the window controller.
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         let identifier = NSStoryboard.SceneIdentifier("DocumentWindowController")
-        guard let windowController = storyboard.instantiateController(withIdentifier: identifier) as? NSWindowController else {
+        guard let windowController = storyboard.instantiateController(withIdentifier: identifier) as? WindowController else {
             fatalError("Unable to find DocumentWindowController in storyboard.")
         }
         self.addWindowController(windowController)
