@@ -746,16 +746,6 @@ L.Map = L.Evented.extend({
 		return this.setView(center, this._zoom, {pan: options});
 	},
 
-	panBy: function (offset) { // (Point)
-		// replaced with animated panBy in Map.PanAnimation.js
-		this.fire('movestart');
-
-		this._rawPanBy(L.point(offset));
-
-		this.fire('move');
-		return this.fire('moveend');
-	},
-
 	setMaxBounds: function (bounds) {
 		bounds = L.latLngBounds(bounds);
 
