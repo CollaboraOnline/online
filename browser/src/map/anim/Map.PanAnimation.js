@@ -38,44 +38,22 @@ L.Map.include({
 		return this;
 	},
 
-	panBy: function (offset, options) {
+	panBy: function (offset) {
 		offset = L.point(offset).round();
-		options = options || {};
 
-		if (!offset.x && !offset.y) {
+		if (!offset.x && !offset.y)
 			return this;
-		}
+
 		//If we pan too far then chrome gets issues with tiles
 		// and makes them disappear or appear in the wrong place (slightly offset) #2602
-		if (options.animate !== true && !this.getSize().contains(offset)) {
+		if (!this.getSize().contains(offset)) {
 			this._resetView(this.unproject(this.project(this.getCenter()).add(offset)), this.getZoom());
 			return this;
 		}
 
-		if (!this._panAnim) {
-			this._panAnim = new L.PosAnimation();
-
-			this._panAnim.on({
-				'step': this._onPanTransitionStep,
-				'end': this._onPanTransitionEnd
-			}, this);
-		}
-
-		// don't fire movestart if animating inertia
-		if (!options.noMoveStart) {
-			this.fire('movestart');
-		}
-
-		// animate pan if animate: true specified
-		if (options.animate === true) {
-			L.DomUtil.addClass(this._mapPane, 'leaflet-pan-anim');
-
-			var newPos = this._getMapPanePos().subtract(offset);
-			this._panAnim.run(this._mapPane, newPos, options.duration || 0.25, options.easeLinearity);
-		} else {
-			this._rawPanBy(offset);
-			this.fire('move').fire('moveend');
-		}
+		this.fire('movestart');
+		this._rawPanBy(offset);
+		this.fire('move').fire('moveend');
 
 		return this;
 	},
