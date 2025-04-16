@@ -95,6 +95,12 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		});
 	});
 
+	it('Open hybrid help dialog', function() {
+		cy.cGet('#Help-tab-label').click();
+		cy.cGet('#Help').click();
+		cy.cGet('#online-help-content').should('exist');
+	});
+
 	it('JSDialog dropdown', function() {
 		// Open conditional format menu
 		cy.cGet('#toolbar-up .ui-scroll-right').click();
