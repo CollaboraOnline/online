@@ -10,20 +10,16 @@ L.Map.include({
 		center = this._limitCenter(L.latLng(center), zoom, this.options.maxBounds);
 
 		if (this._loaded && !reset && zoom === this._zoom) {
-			// try animating pan or zoom
-			var animated = this._tryAnimatedPan(center);
-
-			if (animated) {
-				// prevent resize handler call, the view will refresh after animation anyway
-				clearTimeout(this._sizeTimer);
-				return this;
-			}
+			// difference between the new and current centers in pixels
+			var offset = this._getCenterOffset(center)._floor();
+			this.panBy(offset);
+			return this;
 		}
+		else {
+			this._resetView(center, zoom);
 
-		// animation didn't start, just reset the map view
-		this._resetView(center, zoom);
-
-		return this;
+			return this;
+		}
 	},
 
 	panBy: function (offset) {
@@ -54,16 +50,4 @@ L.Map.include({
 		L.DomUtil.removeClass(this._mapPane, 'leaflet-pan-anim');
 		this.fire('moveend');
 	},
-
-	_tryAnimatedPan: function (center) {
-		// difference between the new and current centers in pixels
-		var offset = this._getCenterOffset(center)._floor();
-
-		// don't animate too far unless animate: true specified in options
-		if (!this.getSize().contains(offset)) { return false; }
-
-		this.panBy(offset);
-
-		return true;
-	}
 });
