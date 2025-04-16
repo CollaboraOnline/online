@@ -1310,10 +1310,6 @@ L.Map = L.Evented.extend({
 		app.setFollowingUser(backupFollowed);
 	},
 
-	_rawPanBy: function (offset) {
-		L.DomUtil.setPosition(this._mapPane, this._getMapPanePos().subtract(offset));
-	},
-
 	_getZoomSpan: function () {
 		return this.getMaxZoom() - this.getMinZoom();
 	},
