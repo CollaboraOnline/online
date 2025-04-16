@@ -1258,15 +1258,21 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			app.layoutingService.appendLayoutingTask(() => {
+				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			});
 		}
 		else if (textMsg.startsWith('redlinetablemodified:')) {
 			obj = JSON.parse(textMsg.substring('redlinetablemodified:'.length + 1));
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			app.layoutingService.appendLayoutingTask(() => {
+				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			});
 		}
 		else if (textMsg.startsWith('redlinetablechanged:')) {
 			obj = JSON.parse(textMsg.substring('redlinetablechanged:'.length + 1));
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			app.layoutingService.appendLayoutingTask(() => {
+				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			});
 		}
 		else if (textMsg.startsWith('applicationbackgroundcolor:')) {
 			app.sectionContainer.setClearColor('#' + textMsg.substring('applicationbackgroundcolor:'.length + 1).trim());

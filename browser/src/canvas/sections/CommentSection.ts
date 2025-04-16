@@ -251,8 +251,10 @@ export class Comment extends CanvasSectionObject {
 
 		this.sectionProperties.wrapper.style.marginLeft = this.sectionProperties.childCommentOffset*this.getChildLevel() + 'px';
 
-		if (!(<any>window).mode.isMobile())
-			document.getElementById('document-container').appendChild(this.sectionProperties.container);
+		app.layoutingService.appendLayoutingTask(() => {
+			if (!(<any>window).mode.isMobile())
+				document.getElementById('document-container').appendChild(this.sectionProperties.container);
+		});
 
 		// We make comment directly visible when its transitioned to its determined position
 		if (cool.CommentSection.autoSavedComment)
