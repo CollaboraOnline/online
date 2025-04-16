@@ -21,8 +21,8 @@ class LayoutingService {
 	private _layoutTasks: Array<LayoutingTask> = [];
 	private _layoutTaskFlush: ReturnType<typeof setTimeout> | null = null;
 
-	// get something around 60 fps
-	private MAX_TASK_DURATION_MS = 10;
+	// get something around 25 fps as minimum (35ms + some overflow = ~40ms)
+	private MAX_TASK_DURATION_MS = 35;
 	private MIN_TIMER_DELAY_MS = 10;
 
 	private _setupTimer() {
