@@ -128,4 +128,18 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 
 		cy.cGet('#data-input').should('not.be.disabled');
 	});
+
+	it.only('QuerySelector Syntax error', function(){
+
+		cy.getFrameWindow().then(function(win) {
+			cy.spy(win.console, 'error').as('consoleError');
+		})
+
+		cy.cGet('#Format-tab-label').click();
+		cy.cGet('#format-style-dialog').click();
+		cy.cGet('#filter-input').select('4');
+		cy.wait(500);
+		cy.cGet('#flatview .ui-treeview-entry').rightclick();
+		cy.get('@consoleError').should('not.be.called');
+	});
 });
