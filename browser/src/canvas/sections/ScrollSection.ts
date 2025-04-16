@@ -137,9 +137,9 @@ export class ScrollSection extends CanvasSectionObject {
 			return;
 		}
 		// Triggered by the document (e.g. search result out of the viewing area).
-		if (this.map.scrollTop && this.map.scrollLeft) {
-			this.map.scrollTop(e.y);
-			this.map.scrollLeft(e.x);
+		if (this.map.panBy) {
+			const offset = this.map.scrollOffset();
+			this.map.panBy(new L.Point(e.x - offset.x, e.y - offset.y));
 		}
 	}
 
