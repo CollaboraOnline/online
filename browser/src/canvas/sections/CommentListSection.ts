@@ -551,51 +551,53 @@ export class CommentSection extends CanvasSectionObject {
 			{id: listId, func: mentionListCallback}
 		]);
 
-	  const multilineEditDiv = document.getElementById('input-modal-input');
-		multilineEditDiv.addEventListener('input', function(ev: any){
-			if (ev && app.map._docLayer._docType === 'text') {
-				// special handling for mentions
-				this.map?.mention.handleMentionInput(ev, comment.isNewPara());
+		app.layoutingService.appendLayoutingTask(() => {
+			const multilineEditDiv = document.getElementById('input-modal-input');
+			multilineEditDiv.addEventListener('input', function(ev: any){
+				if (ev && app.map._docLayer._docType === 'text') {
+					// special handling for mentions
+					this.map?.mention.handleMentionInput(ev, comment.isNewPara());
+				}
+			}.bind(this));
+
+			const tagTd = 'td',
+			empty = '',
+			tagDiv = 'div';
+			const author = L.DomUtil.create('table', 'cool-annotation-table');
+			const tbody = L.DomUtil.create('tbody', empty, author);
+			const tr = L.DomUtil.create('tr', empty, tbody);
+			const tdImg = L.DomUtil.create(tagTd, 'cool-annotation-img', tr);
+			const tdAuthor = L.DomUtil.create(tagTd, 'cool-annotation-author', tr);
+			const imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
+			const user = this.map.getViewId(commentData.author);
+			app.LOUtil.setUserImage(imgAuthor, this.map, user);
+			imgAuthor.setAttribute('width', 32);
+			imgAuthor.setAttribute('height', 32);
+			const authorAvatarImg = imgAuthor;
+			const contentAuthor = L.DomUtil.create(tagDiv, 'cool-annotation-content-author', tdAuthor);
+			const contentDate = L.DomUtil.create(tagDiv, 'cool-annotation-date', tdAuthor);
+
+			$(contentAuthor).text(commentData.author);
+			$(authorAvatarImg).attr('src', commentData.avatar);
+			if (user >= 0) {
+				const color = app.LOUtil.rgbToHex(this.map.getViewColor(user));
+				$(authorAvatarImg).css('border-color', color);
 			}
-		}.bind(this));
 
-		var tagTd = 'td',
-		empty = '',
-		tagDiv = 'div';
-		var author = L.DomUtil.create('table', 'cool-annotation-table');
-		var tbody = L.DomUtil.create('tbody', empty, author);
-		var tr = L.DomUtil.create('tr', empty, tbody);
-		var tdImg = L.DomUtil.create(tagTd, 'cool-annotation-img', tr);
-		var tdAuthor = L.DomUtil.create(tagTd, 'cool-annotation-author', tr);
-		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
-		var user = this.map.getViewId(commentData.author);
-		app.LOUtil.setUserImage(imgAuthor, this.map, user);
-		imgAuthor.setAttribute('width', 32);
-		imgAuthor.setAttribute('height', 32);
-		var authorAvatarImg = imgAuthor;
-		var contentAuthor = L.DomUtil.create(tagDiv, 'cool-annotation-content-author', tdAuthor);
-		var contentDate = L.DomUtil.create(tagDiv, 'cool-annotation-date', tdAuthor);
+			if (commentData.dateTime) {
+				const d = new Date(commentData.dateTime.replace(/,.*/, 'Z'));
+				const dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+				$(contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString((<any>String).locale, <any>dateOptions));
+			}
 
-		$(contentAuthor).text(commentData.author);
-		$(authorAvatarImg).attr('src', commentData.avatar);
-		if (user >= 0) {
-			var color = app.LOUtil.rgbToHex(this.map.getViewColor(user));
-			$(authorAvatarImg).css('border-color', color);
-		}
-
-		if (commentData.dateTime) {
-			var d = new Date(commentData.dateTime.replace(/,.*/, 'Z'));
-			var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-			$(contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString((<any>String).locale, <any>dateOptions));
-		}
-
-		var newAnnotationDialog = document.getElementById(this.mobileCommentId);
-		$(newAnnotationDialog).css('width', '100%');
-		var dialogInput = newAnnotationDialog.children[0];
-		$(dialogInput).css('height', '30vh');
-		var parent = newAnnotationDialog.parentElement;
-		parent.insertBefore(author, parent.childNodes[0]);
-		document.getElementById('input-modal-input').focus();
+			const newAnnotationDialog = document.getElementById(this.mobileCommentId);
+			$(newAnnotationDialog).css('width', '100%');
+			const dialogInput = newAnnotationDialog.children[0];
+			$(dialogInput).css('height', '30vh');
+			const parent = newAnnotationDialog.parentElement;
+			parent.insertBefore(author, parent.childNodes[0]);
+			document.getElementById('input-modal-input').focus();
+		});
 	}
 
 	public highlightComment (comment: any): void {
