@@ -5,12 +5,11 @@
 
 L.Map.include({
 
-	setView: function (center, zoom, options) {
+	setView: function (center, zoom, reset) {
 		zoom = zoom === undefined ? this._zoom : this._limitZoom(zoom);
 		center = this._limitCenter(L.latLng(center), zoom, this.options.maxBounds);
-		options = options || {};
 
-		if (this._loaded && !options.reset) {
+		if (this._loaded && !reset) {
 			// try animating pan or zoom
 			var animated = (this._zoom !== zoom) ? false : this._tryAnimatedPan(center);
 
