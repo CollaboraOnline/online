@@ -1573,8 +1573,8 @@ bool ChildSession::getClipboard(const StringVector& tokens)
     std::vector<char> output;
     output.reserve(outGuess);
 
-    // FIXME: extra 'content' is necessary for Message parsing.
-    Util::vectorAppend(output, "clipboardcontent: content\n");
+    //// FIXME: extra 'content' is necessary for Message parsing.
+    //Util::vectorAppend(output, "clipboardcontent: content\n");
     bool json = !specifics.empty();
     Poco::JSON::Object selectionObject;
     LOG_TRC("Building clipboardcontent: " << outCount << " items");
@@ -1612,11 +1612,11 @@ bool ChildSession::getClipboard(const StringVector& tokens)
         Util::vectorAppend(output, selection.c_str(), selection.size());
     }
 
-    std::string tempFile = Poco::URI(getJailedFilePath()).getPath() + ".clipboard." + tagName;
-    fprintf(stderr, "%d %d getJailedFilePath IS %s, tag is %s using name %s\n", getpid(), gettid(), getJailedFilePath().c_str(), tagName.c_str(), tempFile.c_str());
+    std::string clipFile = ChildSession::getJailDocRoot() + "clipboard." + tagName;
+    fprintf(stderr, "%d %d getJailedFilePath IS %s, tag is %s using name %s\n", getpid(), gettid(), getJailedFilePath().c_str(), tagName.c_str(), clipFile.c_str());
 
     std::ofstream fileStream;
-    fileStream.open(tempFile);
+    fileStream.open(clipFile);
     fprintf(stderr, "one is %d\n", fileStream.fail());
     fileStream.write(output.data(), output.size());
     fprintf(stderr, "two is %d\n", fileStream.fail());
@@ -1630,7 +1630,9 @@ bool ChildSession::getClipboard(const StringVector& tokens)
     }
 
     LOG_TRC("Sending clipboardcontent of size " << output.size() << " bytes");
-    sendBinaryFrame(output.data(), output.size());
+    // sendBinaryFrame(output.data(), output.size());
+
+    sendTextFrame("clipboardcontent: file=" + clipFile);
 
     return true;
 }

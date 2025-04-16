@@ -2396,18 +2396,63 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                                                  << _clipSockets.size() << " sockets in state "
                                                  << name(_state));
 
-        postProcessCopyPayload(payload);
+        std::string clipFile;
+        if (!getTokenString(tokens[1], "file", clipFile))
+        {
+            LOG_ERR("Bad syntax for: " << firstLine);
+            return false;
+        }
 
+        fprintf(stderr, "clipboard file is %s\n", clipFile.c_str());
+
+        // Prepend the jail path in the normal (non-nocaps) case
+        if (!COOLWSD::NoCapsForKit)
+        {
+            if (clipFile.size() > 0 && clipFile[0] == '/')
+                clipFile = clipFile.substr(1);
+
+            // Rewrite path to be visible to the outside world.
+            const Path path(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
+                                                           docBroker->getJailRoot(),
+                                                           clipFile));
+            if (Poco::File(path).exists())
+                clipFile = path.toString();
+            else
+            {
+                // Blank for failure.
+                LOG_DBG("clipboardcontent produced no output in '" << path.toString() << "'");
+                clipFile.clear();
+            }
+        }
+
+        fprintf(stderr, "clipboard file is now %s\n", clipFile.c_str());
+
+        LOG_TRC("clipboardcontent path: " << clipFile);
+
+//        postProcessCopyPayload(payload);
+
+#if 0
         std::size_t header;
         for (header = 0; header < payload->size();)
             if (payload->data()[header++] == '\n')
                 break;
         const bool empty = header >= payload->size();
+#endif
 
+        bool empty = true;
+        if (!clipFile.empty())
+        {
+            FileUtil::Stat f(clipFile);
+            fprintf(stderr, "clipboard size is %ld\n", f.size());
+            empty = f.good() ? (f.size() > 0) : 0;
+        }
+
+#if 0
         // final cleanup ...
         if (!empty && (!_wopiFileInfo || !_wopiFileInfo->getDisableCopy()))
             COOLWSD::SavedClipboards->insertClipboard(
                 _clipboardKeys, &payload->data()[header], payload->size() - header);
+#endif
 
         for (const auto& it : _clipSockets)
         {
@@ -2415,6 +2460,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             if (!socket)
                 continue;
 
+#if 0
             // The custom header for the clipboard of a living document.
             http::Response httpResponse(http::StatusCode::OK);
             httpResponse.set("Last-Modified", Util::getHttpTimeNow());
@@ -2433,6 +2479,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     std::min(payload->size() + 256, std::size_t(Socket::MaximumSendBufferSize)));
                 socket->send(&payload->data()[header], payload->size() - header);
             }
+#endif
 
             socket->shutdown();
             LOG_INF("Queued " << (empty?"empty":"clipboard") << " response for send.");

@@ -953,14 +953,16 @@ procmemstats: pid=<pid> pss=<pss in kb> dirty=<private dirty in kb>
     Memory information sent periodically to parent process by each of
     the kit processes.
 
-clipboardcontent:
+clipboardcontent: file=<file>
 
-     in reply to a getclipboard: message.
+    in reply to a getclipboard: message.
 
-     mime_type\n
-     length\n
-     <binary selection content>
-     ...
+    <file> is a path to the clipboard content which is of the format:
+
+    mime_type\n
+    length\n
+    <binary selection content>
+    ...
 
 traceevent:
 forcedtraceevent:
