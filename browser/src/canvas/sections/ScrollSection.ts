@@ -169,7 +169,7 @@ export class ScrollSection extends CanvasSectionObject {
 			if (docTopLef[0] + diff < 0) {
 				e.x = Math.round(-1 * docTopLef[0] / app.dpiScale);
 			}
-			this.map.panBy(new L.Point(e.x, e.y), {animate: false});
+			this.map.panBy(new L.Point(e.x, e.y));
 		}
 	}
 
@@ -1172,7 +1172,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 		hscroll *= app.dpiScale;
 		vscroll *= app.dpiScale;
-		
+
 		if (shouldAnimate)
 			this.animateScroll([hscroll, vscroll]);
 		else {
