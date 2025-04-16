@@ -2,10 +2,12 @@
 
 #
 # 'make check' runs all wsdunit tests, this script allows running just one of them
-# usage: <script> <test name> [<limit>]
+# usage: <script> <test name> [<limit>] [<stop on pass>]
 #
 # In case a second integer parameter is supplied, then it's supported to try running the test a
 # number of times to see if it fails all the time or it's just unstable.
+#
+# If a third parameter is passed and is "y", then the iteration stops after the first success.
 #
 
 name="$1" # e.g. unit-base
@@ -33,6 +35,13 @@ then
     shift
 fi
 
+stop_on_pass=n
+if [ $# -ne 0 ]; then
+    stop_on_pass=$1
+    echo "Will stop on the first pass."
+    shift
+fi
+
 pass=0;
 for ((i=1; i<=$limit; i++))
 do
@@ -42,6 +51,9 @@ do
     (cd test && ./run_unit.sh --test-name $name.la --log-file $name.log --trs-file $name.trs --color-tests yes --enable-hard-errors yes --expect-failure no -- ./$name.la)
     if test $? -eq 0 && grep -q PASS test/$name.trs; then
         ((pass=pass+1));
+        if [ $stop_on_pass == "y" ]; then
+            break
+        fi
     fi;
     echo;
 done;
