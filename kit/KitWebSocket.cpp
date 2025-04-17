@@ -332,7 +332,7 @@ void BgSaveParentWebSocketHandler::onDisconnect()
     LOG_TRC("Disconnected background web socket to child " << _childPid);
 
     // reap and de-zombify children.
-    const auto [ret, sig] = SigUtil::reapZombieChild(_childPid);
+    const auto [ret, sig] = SigUtil::reapZombieChild(_childPid, /*sighandler=*/false);
     if (sig)
         reportFailedSave(std::string("crashed with status ") + SigUtil::signalName(sig));
     else if (ret <= 0)
