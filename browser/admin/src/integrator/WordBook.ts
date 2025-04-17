@@ -340,14 +340,16 @@ class WordBook {
 		);
 
 		addButton.disabled = true;
-		newWordInput.addEventListener('change', () => {
-			const newWord = newWordInput.value.trim();
-
-			const wordExists = this.currWordbookFile.words.some(
-				(word) => word.toLowerCase() === newWord.toLowerCase(),
-			);
-
-			addButton.disabled = newWord === '' || wordExists;
+		let debounceTimer;
+		newWordInput.addEventListener('input', () => {
+			clearTimeout(debounceTimer);
+			debounceTimer = setTimeout(() => {
+				const newWord = newWordInput.value.trim();
+				const wordExists = this.currWordbookFile.words.some(
+					(w) => w.toLowerCase() === newWord.toLowerCase(),
+				);
+				addButton.disabled = newWord === '' || wordExists;
+			}, 300);
 		});
 
 		addButton.addEventListener('click', () => {
