@@ -68,7 +68,9 @@ L.Control.DownloadProgress = L.Control.extend({
 			this._map.uiManager.showInfoModal(modalId, this._getDialogTitle(), msg, '',
 				buttonText, this._onStartDownload.bind(this), true, modalId + '-response');
 
-			this.setupKeyboardShortcutForDialog(modalId);
+			app.layoutingService.appendLayoutingTask(() => {
+				this.setupKeyboardShortcutForDialog(modalId);
+			});
 		}
 	},
 
