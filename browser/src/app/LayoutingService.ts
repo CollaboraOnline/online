@@ -18,12 +18,43 @@
 type LayoutingTask = () => void;
 
 class LayoutingService {
+	private _requestedFrame: ReturnType<typeof requestAnimationFrame> | null =
+		null;
 	private _layoutTasks: Array<LayoutingTask> = [];
 	private _layoutTaskFlush: ReturnType<typeof setTimeout> | null = null;
 
 	// get something around 25 fps as minimum (35ms + some overflow = ~40ms)
 	private MAX_TASK_DURATION_MS = 35;
 	private MIN_TIMER_DELAY_MS = 10;
+
+	public appendLayoutingTask(task: LayoutingTask): void {
+		this._layoutTasks.push(task);
+		this._scheduleLayouting();
+	}
+
+	public hasTasksPending(): boolean {
+		return this._layoutTasks.length > 0;
+	}
+
+	public runTheTopTask(): boolean {
+		const task = this._layoutTasks.shift();
+		if (!task) return false;
+
+		try {
+			task.call(this);
+		} catch (ex) {
+			console.error('LayoutingTask exception: ' + ex);
+		}
+
+		return true;
+	}
+
+	public cancelFrame() {
+		if (this._requestedFrame) window.cancelAnimationFrame(this._requestedFrame);
+		this._requestedFrame = null;
+	}
+
+	// internal implementation below
 
 	private _setupTimer() {
 		this._layoutTaskFlush = setTimeout(
@@ -38,37 +69,24 @@ class LayoutingService {
 		return false;
 	}
 
-	private _flushLayoutingQueue() {
-		if (this._layoutTasks.length) {
-			window.requestAnimationFrame(() => {
-				const start = performance.now();
-				let task = this._layoutTasks.shift();
-				while (task) {
-					try {
-						task.call(this);
-					} catch (ex) {
-						console.error('LayoutingTask exception: ' + ex);
-					}
-
-					if (this._reachedTaskTimeout(start)) {
-						this._scheduleLayouting();
-						return;
-					}
-
-					task = this._layoutTasks.shift();
-				}
-			});
-		}
-
+	private _flushLayoutingQueue(): void {
 		this._layoutTaskFlush = null;
+		if (!this.hasTasksPending()) return;
+
+		this._requestedFrame = window.requestAnimationFrame(() => {
+			this._requestedFrame = null;
+
+			const start = performance.now();
+			while (this.runTheTopTask()) {
+				if (this._reachedTaskTimeout(start)) {
+					this._scheduleLayouting();
+					return;
+				}
+			}
+		});
 	}
 
-	public appendLayoutingTask(task: LayoutingTask) {
-		this._layoutTasks.push(task);
-		this._scheduleLayouting();
-	}
-
-	private _scheduleLayouting() {
+	private _scheduleLayouting(): void {
 		if (this._layoutTaskFlush) return;
 		this._setupTimer();
 	}
