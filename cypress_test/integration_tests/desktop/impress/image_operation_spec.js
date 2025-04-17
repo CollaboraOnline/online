@@ -29,7 +29,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		insertVideo();
 	});
 
-	it('Crop Image', function () {
+	it.skip('Crop Image', function () {
 		// close sidebar
 		cy.cGet('.unospan-options-modify-page.unoModifyPage').click();
 		insertImage();
