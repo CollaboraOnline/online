@@ -856,7 +856,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		TileManager.update();
 		TileManager.resetPreFetching(true);
-		app.sectionContainer.requestReDraw();
 	},
 
 	_isLatLngInView: function (position) {
