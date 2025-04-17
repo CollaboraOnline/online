@@ -1598,7 +1598,7 @@ void Document::reapZombieChildren()
     /// Here, we reap any zombies that might exist--at most 1.
     for (;;)
     {
-        const auto [ret, sig] = SigUtil::reapZombieChild(-1);
+        const auto [ret, sig] = SigUtil::reapZombieChild(-1, /*sighandler=*/false);
         if (ret <= 0)
         {
             break;
@@ -3158,7 +3158,7 @@ extern "C"
     static void sigChildHandler(int pid)
     {
         // Reap the child; will log failures.
-        SigUtil::reapZombieChild(pid);
+        SigUtil::reapZombieChild(pid, /*sighandler=*/true);
     }
 }
 

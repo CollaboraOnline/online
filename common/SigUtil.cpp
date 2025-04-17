@@ -167,28 +167,33 @@ void requestShutdown()
         UnattendedRun = true;
     }
 
-    std::pair<int, int> reapZombieChild(int pid)
+    std::pair<int, int> reapZombieChild(int pid, bool sighandler)
     {
-        LOG_TRC("Reaping " << pid << " with (WUNTRACED | WNOHANG)");
+        if (!sighandler)
+            LOG_TRC("Reaping " << pid << " with (WUNTRACED | WNOHANG)");
 
         int status = 0;
         pid_t ret = 0;
         if ((ret = ::waitpid(pid, &status, WUNTRACED | WNOHANG)) > 0)
         {
-            LOG_DBG("Child " << ret << " terminated with status " << status);
+            if (!sighandler)
+                LOG_DBG("Child " << ret << " terminated with status " << status);
+
             if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGSEGV || WTERMSIG(status) == SIGBUS ||
                                         WTERMSIG(status) == SIGABRT))
             {
-                LOG_WRN("Zombie child " << ret << " has exited due to "
-                                        << signalName(WTERMSIG(status)));
+                if (!sighandler)
+                    LOG_WRN("Zombie child " << ret << " has exited due to "
+                                            << signalName(WTERMSIG(status)));
                 return std::make_pair(ret, WTERMSIG(status));
             }
         }
         else if (pid > 0 && errno != 0) // Don't complain if the process is reaped already.
         {
             // Log errno if we had a child pid we expected to reap.
-            LOG_WRN("Failed to reap child process " << pid << " (" << Util::symbolicErrno(errno)
-                                                    << ": " << std::strerror(errno) << ')');
+            if (!sighandler)
+                LOG_WRN("Failed to reap child process " << pid << " (" << Util::symbolicErrno(errno)
+                                                        << ": " << std::strerror(errno) << ')');
         }
 
         return std::make_pair(ret, 0);

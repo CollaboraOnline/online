@@ -73,7 +73,9 @@ namespace SigUtil
     /// Reap one or more children.
     /// Returns a pair of the return value of waitpid(2)
     /// and WTERMSIG(stat_loc), if it were SEGV, ABRT, or BUS.
-    std::pair<int, int> reapZombieChild(int pid);
+    /// @sighandler is true if we are invoked from a signal handler.
+    /// This is needed to comply with signal handler requirements.
+    std::pair<int, int> reapZombieChild(int pid, bool sighandler);
 
 #if !MOBILEAPP
 
