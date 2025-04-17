@@ -838,15 +838,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_updateScrollOffset: function () {
-		if (!this._map) return;
-		var centerPixel = this._map.project(this._map.getCenter());
-		var newScrollPos = centerPixel.subtract(this._map.getSize().divideBy(2));
-		var x = Math.round(newScrollPos.x < 0 ? 0 : newScrollPos.x);
-		var y = Math.round(newScrollPos.y < 0 ? 0 : newScrollPos.y);
-		requestAnimationFrame(() => this._map.fire('updatescrolloffset', {x: x, y: y, updateHeaders: true}));
-	},
-
 	_moveStart: function () {
 		TileManager.resetPreFetching();
 		this._moveInProgress = true;
@@ -2786,10 +2777,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		this._sendClientZoom();
-
-		this._sendClientVisibleArea();
-
 		const verticalOffset = this.getFiledBasedViewVerticalOffset();
 		if (verticalOffset) {
 			y -= verticalOffset;
@@ -2884,10 +2871,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map.wholeRowSelected = true;
 			}
 		}
-
-		this._sendClientZoom();
-
-		this._sendClientVisibleArea();
 
 		if (winId === 0) {
 			app.socket.sendMessage(
@@ -3358,10 +3341,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			var htmlText = e.dataTransfer.getData('text/html');
 			this._map._clip.dataTransferToDocument(e.dataTransfer, /* preferInternal = */ false, htmlText);
 		}
-	},
-
-	_onDragStart: function () {
-		this._map.on('moveend', this._updateScrollOffset, this);
 	},
 
 	// This is really just called on zoomend
@@ -3909,7 +3888,6 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		map._fadeAnimated = false;
 		this._viewReset();
-		map.on('drag resize zoomend', this._updateScrollOffset, this);
 
 		map.on('dragover', this._onDragOver, this);
 		map.on('drop', this._onDrop, this);
@@ -3919,7 +3897,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._docType === 'spreadsheet') {
 			map.on('zoomend', this._onCellCursorShift, this);
 		}
-		map.on('dragstart', this._onDragStart, this);
 		map.on('error', this._mapOnError, this);
 		if (map.options.autoFitWidth !== false) {
 			// always true since autoFitWidth is never set
