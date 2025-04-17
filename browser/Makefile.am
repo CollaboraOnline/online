@@ -973,8 +973,8 @@ pot:
 		admin/src/AdminSocketSettings.js \
 		admin/src/Util.js \
 		js/global.js \
+		src/app/Debug.ts \
 		src/canvas/sections/CommentListSection.ts \
-		src/canvas/sections/CommentMarkerSubSection.ts \
 		src/canvas/sections/CommentSection.ts \
 		src/canvas/sections/ShapeHandlesSection.ts \
 		src/canvas/sections/URLPopUpSection.ts \
@@ -994,11 +994,13 @@ pot:
 		src/control/Control.JSDialog.js \
 		src/control/Control.JSDialogBuilder.js \
 		src/control/Control.LanguageDialog.js \
+		src/control/Control.Mention.ts \
 		src/control/Control.Menubar.ts \
 		src/control/Control.MobileBottomBar.js \
 		src/control/Control.MobileSearchBar.ts \
 		src/control/Control.MobileTopBar.ts \
 		src/control/Control.MobileWizardBuilder.js \
+		src/control/Control.NavigatorPanel.ts \
 		src/control/Control.Notebookbar.js \
 		src/control/Control.NotebookbarBuilder.js \
 		src/control/Control.NotebookbarCalc.js \
@@ -1011,9 +1013,6 @@ pot:
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.ServerAuditDialog.ts \
 		src/control/Control.SheetsBar.js \
-		src/control/Control.SidebarBase.ts \
-		src/control/Control.Sidebar.ts \
-		src/control/Control.NavigatorPanel.ts \
 		src/control/Control.StatusBar.js \
 		src/control/Control.Tabs.js \
 		src/control/Control.Toolbar.js \
@@ -1021,20 +1020,18 @@ pot:
 		src/control/Control.UIManager.ts \
 		src/control/Control.UserList.ts \
 		src/control/Control.Zotero.js \
+		src/control/HRuler.ts \
 		src/control/Parts.js \
 		src/control/Permission.js \
 		src/control/Signing.js \
 		src/control/Toolbar.js \
-		src/control/Ruler.ts \
 		src/control/VRuler.ts \
-		src/control/HRuler.ts \
 		src/control/jsdialog/Definitions.Menu.ts \
 		src/control/jsdialog/Util.SnackbarController.ts \
 		src/control/jsdialog/Widget.ColorPicker.ts \
 		src/control/jsdialog/Widget.HTMLContent.ts \
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
-		src/core/Debug.js \
 		src/core/Socket.js \
 		src/docdispatcher.ts \
 		src/docstate.js \
