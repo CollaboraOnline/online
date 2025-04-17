@@ -49,9 +49,18 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
                                               uriProxy.getPort());
     sessionProxy->setTimeout(std::chrono::seconds(10));
     http::Request requestProxy(uriProxy.getPathAndQuery());
+    std::weak_ptr<StreamSocket> socketWeak(socket);
     http::Session::FinishedCallback proxyCallback =
-        [socket, zero](const std::shared_ptr<http::Session>& httpSession)
+        [socketWeak, zero](const std::shared_ptr<http::Session>& httpSession)
             {
+                std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
+                if (!destSocket)
+                {
+                    const std::string uriAnonym = COOLWSD::anonymizeUrl(httpSession->getUrl());
+                    LOG_ERR("Invalid socket ProxyRequestHandler while handling [" << uriAnonym << ']');
+                    return;
+                }
+
                 try
                 {
                     const auto callbackNow = std::chrono::system_clock::now();
@@ -68,30 +77,37 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
                         // We're proxying, we take responsibility.
                         httpResponse->set("Server", http::getServerString());
 
-                        socket->sendAndShutdown(*httpResponse);
+                        destSocket->sendAndShutdown(*httpResponse);
                     }
                     else
                     {
-                        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+                        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, destSocket);
                     }
                 }
                 catch(std::exception& exc)
                 {
                     LOG_ERR("ProxyCallback: " << exc.what());
-                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, destSocket);
                 }
                 catch(...)
                 {
                     LOG_ERR("ProxyCallback: Unknown exception");
-                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, destSocket);
                 }
             };
 
     sessionProxy->setFinishedHandler(std::move(proxyCallback));
 
     http::Session::ConnectFailCallback connectFailCallback =
-        [socket](const std::shared_ptr<http::Session>& /* session */) {
-            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+        [socketWeak](const std::shared_ptr<http::Session>& session) {
+            std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
+            if (!destSocket)
+            {
+                const std::string uriAnonym = COOLWSD::anonymizeUrl(session->getUrl());
+                LOG_ERR("Invalid socket ProxyRequestHandler while handling [" << uriAnonym << ']');
+                return;
+            }
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, destSocket);
     };
     sessionProxy->setConnectFailHandler(std::move(connectFailCallback));
 
