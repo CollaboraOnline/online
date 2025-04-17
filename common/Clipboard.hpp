@@ -184,7 +184,7 @@ public:
         os << "Saved clipboard total size: " << totalSize << " bytes (disk)\n";
     }
 
-    void insertClipboard(const std::string key[2],
+    std::string insertClipboard(const std::string key[2],
                          const std::string& clipFile)
     {
         Entry ent;
@@ -194,13 +194,14 @@ public:
         if (::rename(clipFile.c_str(), cacheFile.c_str()) < 0)
         {
             LOG_SYS("Failed to rename [" << clipFile << "] to [" << cacheFile << ']');
-            return;
+            return clipFile;
         }
 
-        ent._cacheFile = std::make_shared<ClipFile>(std::move(cacheFile));
+        ent._cacheFile = std::make_shared<ClipFile>(cacheFile);
         LOG_TRC("Insert cached clipboard: " << key[0] << " and " << key[1]);
         std::lock_guard<std::mutex> lock(_mutex);
         _cache[key[0]] = _cache[key[1]] = std::move(ent);
+        return cacheFile;
     }
 
     std::shared_ptr<std::string> getClipboard(const std::string &key)

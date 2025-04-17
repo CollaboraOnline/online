@@ -2456,7 +2456,8 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         if (!empty && (!_wopiFileInfo || !_wopiFileInfo->getDisableCopy()))
         {
             fprintf(stderr, "save clipboard\n");
-            COOLWSD::SavedClipboards->insertClipboard(_clipboardKeys, clipFile);
+            // remove on else
+            clipFile = COOLWSD::SavedClipboards->insertClipboard(_clipboardKeys, clipFile);
         }
         else
             fprintf(stderr, "don't save clipboard\n");
