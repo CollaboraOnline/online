@@ -2397,6 +2397,7 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
 
     updateThemeResources(adminFile, responseRoot, urv[BRANDING_THEME], config);
 
+    Poco::replaceInPlace(adminFile, std::string("%UI_LANG%"), requestDetails.getParam("lang"));
     Poco::replaceInPlace(adminFile, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
     Poco::replaceInPlace(adminFile, std::string("%SERVICE_ROOT%"), responseRoot);
 
