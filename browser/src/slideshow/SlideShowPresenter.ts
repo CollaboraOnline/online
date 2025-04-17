@@ -612,6 +612,14 @@ class SlideShowPresenter {
 			return false;
 		}
 
+		// if we're playing a video, it'll continue *under* the presentation if we aren't careful
+		// that's not a problem for visuals, but the audio of the video will also play
+		// we don't currently need to do this for <audio> elements, since as we just use <video> tags for that anyway
+		const videos = document.getElementsByTagName('video');
+		for (const video of Array.from(videos)) {
+			video.pause();
+		}
+
 		if (!this._map['wopi'].DownloadAsPostMessage) {
 			if (inWindow) {
 				this._doInWindowPresentation();
