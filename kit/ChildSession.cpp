@@ -667,8 +667,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                 assert(false);
                 return false;
             }
-            else if (tokens[1].find(".uno:SetDocumentProperties") != std::string::npos)
+            else if (tokens[1].find(".uno:SetDocumentProperties") != std::string::npos && tokens.size() == 2)
             {
+                // Don't append anything if command has any parameters
+                // It maybe json and appending plain string makes everything broken
                 std::string PossibleFileExtensions[3] = {"", TO_UPLOAD_SUFFIX + std::string(UPLOADING_SUFFIX), TO_UPLOAD_SUFFIX};
                 for (size_t i = 0; i < 3; i++)
                 {
