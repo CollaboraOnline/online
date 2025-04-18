@@ -358,7 +358,7 @@ class SlideShowNavigator {
 					slideInfo.hash,
 					videoInfo,
 				);
-				video.playVideo();
+				video.handleClick();
 			} else {
 				this.dispatchEffect();
 			}
