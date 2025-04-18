@@ -405,7 +405,7 @@ class VideoRendererGl extends VideoRenderer {
 		gl.activeTexture(gl.TEXTURE0);
 
 		const video = this.videoRenderInfo;
-		if (video.playing && video.videoElement.currentTime > 0) {
+		if (!video.ended && video.videoElement.currentTime > 0) {
 			gl.bindVertexArray(video.getVao());
 			gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 			this.updateTexture(video.getTexture(), video.videoElement);
