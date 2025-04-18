@@ -1826,8 +1826,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	.fadeout {
 		animation: fade 0.7s;
 	}
-
-	.jsdialog-overlay {
+	.fadein {
+		animation: fade reverse 0.15s;
+	}
+	.fsdialog-overlay {
 		animation: fade reverse .3s;
 	}
 }

@@ -774,10 +774,12 @@ L.Control.JSDialog = L.Control.extend({
 			app.layoutingService.appendLayoutingTask(() => {
 				// dialog built - add to DOM now
 				const existingNode = dialogDomParent.querySelector('[id="' + instance.container.id + '"]');
-				if (existingNode)
+				if (existingNode) {
 					existingNode.replaceWith(instance.container);
-				else
+				} else {
+					instance.container.classList.add('fadein');
 					dialogDomParent.append(instance.container);
+				}
 
 				// do in task to apply correct focus when already shown
 				this.addHandlers(instance);
