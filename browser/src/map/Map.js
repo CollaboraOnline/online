@@ -1380,6 +1380,77 @@ L.Map = L.Evented.extend({
 		L.DomEvent[onOff](window, 'focus', this._onGotFocus, this);
 	},
 
+	_adjustZoom: function () {
+		var menubar = window.document.body.querySelector('.main-nav');
+		var toolbar = L.DomUtil.get('toolbar-wrapper');
+		var container = L.DomUtil.get('main-document-content');
+		var auxbar = L.DomUtil.get('spreadsheet-toolbar');
+		var statusbar = L.DomUtil.get('toolbar-down');
+
+		if (window.devicePixelRatio > 1.5) {
+			var width = window.innerWidth * window.devicePixelRatio + 'px';
+			var height = window.innerHeight * window.devicePixelRatio + 'px';
+			window.document.body.style.overflow = "auto";
+			window.document.body.style.setProperty('--zoom-level', window.devicePixelRatio);
+
+			if (menubar) {
+				menubar.style.width = width;
+			}
+
+			if (toolbar) {
+				toolbar.style.width = width;
+			}
+
+			if (container) {
+				container.style.flex = 'none';
+				container.style.width = width;
+				container.style.height = height;
+			}
+
+			if (auxbar) {
+				auxbar.style.width = width;
+			}
+
+			if (statusbar) {
+				statusbar.style.width = width;
+			}
+		} else {
+			window.document.body.style.overflow = '';
+
+			if (menubar) {
+				menubar.style.width = '';
+			}
+
+			if (toolbar) {
+				toolbar.style.width = '';
+			}
+
+			if (container) {
+				container.style.flex = '';
+				container.style.width = '';
+				container.style.height = '';
+			}
+
+			if (auxbar) {
+				auxbar.style.width = '';
+			}
+
+			if (statusbar) {
+				statusbar.style.width = '';
+			}
+		}
+	},
+
+	_onResize: function () {
+		app.util.cancelAnimFrame(this._resizeRequest);
+		this._resizeRequest = app.util.requestAnimFrame(
+			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
+
+		if (this.sidebar)
+			this.sidebar.onResize();
+
+		this.showCalcInputBar();
+	},
 
 	showCalcInputBar: function() {
 		if (this.formulabar)
