@@ -319,6 +319,8 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         LOG_TRC("Session [" << getId() << "] sending setclipboard");
         if (data.get())
         {
+            fprintf(stderr, "preProcessSetClipboardPayload case here\n");
+
             preProcessSetClipboardPayload(*data);
 
 #if !MOBILEAPP
@@ -2433,25 +2435,23 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 #endif
 
         bool empty = true;
-        if (!clipFile.empty())
-        {
-            FileUtil::Stat f(clipFile);
-            fprintf(stderr, "clipboard size is %ld, good is %d\n", f.size(), f.good());
-            empty = f.size() == 0;
-        }
+        FileUtil::Stat f(clipFile);
+        fprintf(stderr, "clipboard size is %ld, good is %d\n", f.size(), f.good());
+        empty = f.size() == 0;
 
         // TEMP
         std::vector<char> res;
-        if (FileUtil::readFile(clipFile, res) == 0)
+        if (FileUtil::readFile(clipFile, res, f.size()) != f.size())
             fprintf(stderr, "broken read\n");
         else
-            fprintf(stderr, "good read\n");
+            fprintf(stderr, "good read of %ld from %s\n", res.size(), clipFile.c_str());
 
         postProcessCopyPayload(res);
         std::string_view sv(res.data(), res.size());
 
-        std::cerr << "FOO is:" << sv << "\n";
+        std::cerr << "FOO len: " << res.size() << "\n";
 
+        FileUtil::removeFile(std::string("/tmp/cliptest"));
         std::ofstream fileStream;
         fileStream.open("/tmp/cliptest");
         fileStream.write(res.data(), res.size());
@@ -2500,8 +2500,8 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         }
 
         fprintf(stderr, "removeClipFile is %d\n", removeClipFile);
-        if (removeClipFile)
-            FileUtil::removeFile(clipFile);
+        //if (removeClipFile)
+        //    FileUtil::removeFile(clipFile);
 #endif
         _clipSockets.clear();
         return true;

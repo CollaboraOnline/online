@@ -682,6 +682,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         return;
     }
 
+    fprintf(stderr, "size of message is %ld\n", socket->getInBuffer().size());
     Poco::MemoryInputStream startmessage(socket->getInBuffer().data(), socket->getInBuffer().size());
 
 #if 0 // debug a specific command's payload
