@@ -50,7 +50,6 @@ export class ScrollSection extends CanvasSectionObject {
 		this.map.on('scrollby', this.onScrollBy, this);
 		this.map.on('scrollvelocity', this.onScrollVelocity, this);
 		this.map.on('handleautoscroll', this.onHandleAutoScroll, this);
-		this.map.on('updatescrolloffset', this.onUpdateScrollOffset, this);
 	}
 
 	public onInitialize (): void {
