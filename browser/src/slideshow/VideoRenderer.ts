@@ -19,6 +19,7 @@ class VideoRenderInfo {
 	private vao: WebGLVertexArrayObject = null;
 	public pos2d: number[];
 	public playing: boolean;
+	public ended: boolean;
 
 	public getTexture(): WebGLTexture {
 		return this.texture;
@@ -94,6 +95,16 @@ abstract class VideoRenderer {
 		this.videoRenderInfo.deleteResources(this._context);
 	}
 
+	public handleClick(): void {
+		if (this.videoRenderInfo.playing) {
+			this.pauseVideo();
+		} else if (this.videoRenderInfo.ended) {
+			this.playVideo(true);
+		} else {
+			this.playVideo(false);
+		}
+	}
+
 	protected setupVideo(
 		videoRenderInfo: VideoRenderInfo,
 		url: string,
@@ -107,6 +118,7 @@ abstract class VideoRenderer {
 			'playing',
 			() => {
 				videoRenderInfo.playing = true;
+				videoRenderInfo.ended = false;
 				this._slideRenderer.notifyVideoStarted(this.sId);
 			},
 			true,
@@ -116,6 +128,16 @@ abstract class VideoRenderer {
 			'pause',
 			() => {
 				videoRenderInfo.playing = false;
+				this._slideRenderer.notifyVideoEnded(this.sId);
+			},
+			true,
+		);
+
+		video.addEventListener(
+			'ended',
+			() => {
+				videoRenderInfo.playing = false;
+				videoRenderInfo.ended = true;
 				this._slideRenderer.notifyVideoEnded(this.sId);
 			},
 			true,
