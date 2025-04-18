@@ -245,6 +245,13 @@ class SlideShowPresenter {
 		return info.notes;
 	}
 
+	public getVideoRenderer(
+		slideHash: string,
+		videoInfo: VideoInfo,
+	): VideoRenderer {
+		return this._slideCompositor.getVideoRenderer(slideHash, videoInfo);
+	}
+
 	_onFullScreenChange() {
 		this._fullscreen = document.fullscreenElement;
 		if (this._fullscreen) {
