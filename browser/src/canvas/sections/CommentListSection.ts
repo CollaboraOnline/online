@@ -1444,7 +1444,9 @@ export class CommentSection extends CanvasSectionObject {
 	public overWriteCommentChanges(obj: any, editComment: Comment) {
 		this.clearAutoSaveStatus();
 		editComment.onCancelClick(null);
-		this.onACKComment(obj);
+		app.layoutingService.appendLayoutingTask(() => {
+			this.onACKComment(obj);
+		});
 	}
 
 	public handleCommentConflict(obj: any, editComment: Comment) {
