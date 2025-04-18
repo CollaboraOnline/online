@@ -49,6 +49,7 @@ abstract class VideoRenderer {
 	protected _context: RenderContext;
 	protected _slideRenderer: SlideRenderer;
 	protected videoRenderInfo: VideoRenderInfo;
+	public videoInfoId: number;
 
 	constructor(
 		sId: string,
@@ -69,6 +70,11 @@ abstract class VideoRenderer {
 		docWidth: number,
 		docHeight: number,
 	): void;
+
+	public loadVideo() {
+		if (!this.videoRenderInfo) return;
+		this.videoRenderInfo.videoElement.load();
+	}
 
 	public playVideo(reset: boolean = true) {
 		if (!this.videoRenderInfo) return;
@@ -159,6 +165,7 @@ class VideoRenderer2d extends VideoRenderer {
 			docHeight,
 		);
 		this.videoRenderInfo = video;
+		this.videoInfoId = videoInfo.id;
 	}
 
 	public render(): void {
@@ -255,6 +262,7 @@ class VideoRendererGl extends VideoRenderer {
 			),
 		);
 		this.videoRenderInfo = video;
+		this.videoInfoId = videoInfo.id;
 	}
 
 	private initTexture() {

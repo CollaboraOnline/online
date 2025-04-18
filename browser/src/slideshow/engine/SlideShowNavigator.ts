@@ -326,11 +326,13 @@ class SlideShowNavigator {
 	private clickHandler(aEvent: MouseEvent) {
 		if (aEvent.button === 0) {
 			const slideInfo = this.theMetaPres.getSlideInfoByIndex(this.currentSlide);
-			if (
-				!slideInfo ||
-				!slideInfo.interactions ||
-				slideInfo.interactions.length == 0
-			) {
+			const slideHasInteractions =
+				slideInfo &&
+				slideInfo.interactions &&
+				slideInfo.interactions.length > 0;
+			const slideHasVideos =
+				slideInfo && slideInfo.videos && slideInfo.videos.length > 0;
+			if (!slideHasInteractions && !slideHasVideos) {
 				this.dispatchEffect();
 				return;
 			}
@@ -346,8 +348,17 @@ class SlideShowNavigator {
 			const shape = slideInfo.interactions.find((shape) =>
 				hitTest(shape.bounds, x, y),
 			);
+			const videoInfo = slideInfo.videos.find((videoInfo) =>
+				hitTest(videoInfo, x, y),
+			);
 			if (shape) {
 				this._onExecuteInteraction(shape.clickAction);
+			} else if (videoInfo) {
+				const video = this.presenter.getVideoRenderer(
+					slideInfo.hash,
+					videoInfo,
+				);
+				video.playVideo();
 			} else {
 				this.dispatchEffect();
 			}

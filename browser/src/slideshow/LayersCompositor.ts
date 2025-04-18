@@ -135,6 +135,13 @@ class LayersCompositor extends SlideCompositor {
 		return this.layerDrawing.getLayerRendererContext();
 	}
 
+	public getVideoRenderer(
+		slideHash: string,
+		videoInfo: VideoInfo,
+	): VideoRenderer {
+		return this.layerDrawing.getVideoRenderer(slideHash, videoInfo);
+	}
+
 	public getAnimatedSlide(slideIndex: number): ImageBitmap {
 		return this.layerDrawing.getAnimatedSlide(slideIndex);
 	}
