@@ -87,37 +87,12 @@ export class RowGroup extends GroupBase {
 	drawGroupControl (group: GroupEntry): void {
 		let startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
 		let startY = this.getRelativeY(group.startPos);
+		startX = Math.round(startX);
+		startY = Math.round(startY);
 		const endY = this.getEndPosition(group.endPos);
 
 		if (this.isGroupHeaderVisible(startY, group.startPos)) {
-			// draw head
-			this.context.beginPath();
-			this.context.fillStyle = this.backgroundColor;
-			this.context.fillRect(this.transformRectX(startX, this._groupHeadSize), startY, this._groupHeadSize, this._groupHeadSize);
-			this.context.strokeStyle = 'black';
-			this.context.lineWidth = 1.0;
-			this.context.strokeRect(this.transformRectX(startX + 0.5, this._groupHeadSize), startY + 0.5, this._groupHeadSize, this._groupHeadSize);
-
-			if (!group.hidden) {
-				// draw '-'
-				this.context.beginPath();
-				this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.25), startY + this._groupHeadSize / 2 + 0.5);
-				this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale), startY + this._groupHeadSize / 2 + 0.5);
-				this.context.stroke();
-			}
-			else {
-				// draw '+'
-				this.context.beginPath();
-				this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.25), startY + this._groupHeadSize / 2 + 0.5);
-				this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale), startY + this._groupHeadSize / 2 + 0.5);
-
-				this.context.stroke();
-
-				this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.50 + 0.5), startY + this._groupHeadSize * 0.25);
-				this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.50 + 0.5), startY + this._groupHeadSize * 0.75 + app.roundedDpiScale);
-
-				this.context.stroke();
-			}
+			this.drawGroupBoxes(startX, startY, group.hidden);
 		}
 
 		if (!group.hidden && endY > this._cornerHeaderHeight + this._groupHeadSize && endY > startY) {
