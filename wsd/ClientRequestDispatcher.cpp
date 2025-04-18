@@ -701,6 +701,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     if (!socket->parseHeader("Client", startmessage, request, _lastSeenHTTPHeader, map))
         return;
 
+    fprintf(stderr, "2: size of message is %ld for %s\n", socket->getInBuffer().size(), requestDetails.toString().c_str());
+
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
     LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
     const size_t preInBufferSz = socket->getInBuffer().size();
@@ -719,6 +721,8 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         // re-write ServiceRoot and cache.
         RequestDetails requestDetails(request, COOLWSD::ServiceRoot);
         // LOG_TRC("Request details " << requestDetails.toString());
+
+        fprintf(stderr, "size of message is %ld for %s\n", socket->getInBuffer().size(), requestDetails.toString().c_str());
 
         // Config & security ...
         if (requestDetails.isProxy())
