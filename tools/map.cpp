@@ -63,29 +63,31 @@ int  DumpWidth = 32;
 #define PATH_SIZE 1000 // No harm in having it much larger than strictly necessary. Avoids compiler warning.
 #define BUFFER_SIZE 9600
 
-static int read_buffer(char *buffer, unsigned size,
-                       const char *file, char sep)
+static size_t read_buffer(char *buffer, size_t size,
+                          const char *file, char sep)
 {
-    int file_desc;
-    unsigned total_bytes = 0;
-
-    file_desc = open(file, O_RDONLY);
+    int file_desc = open(file, O_RDONLY);
     if (file_desc == -1)
         return 0;
 
-    for (;;)
-    {
-        ssize_t number_bytes = read(file_desc,
-                                    buffer + total_bytes,
-                                    size - total_bytes);
-        if (number_bytes == -1)
-        {
-            if (errno==EINTR)
-                continue;
-            break;
-        }
+    size_t total_bytes = 0;
+    size_t count = size;
+    char *ptr = buffer;
 
-        total_bytes += number_bytes;
+    while (count)
+    {
+        ssize_t number_bytes;
+
+        do {
+            number_bytes = read(file_desc, ptr, count);
+        } while (number_bytes < 0 && errno == EINTR);
+
+        if (number_bytes < 0)
+            break;
+
+        ptr += number_bytes;
+        total_bytes = ptr - buffer;
+
         if (total_bytes == size)
         {
             --total_bytes;
@@ -94,13 +96,15 @@ static int read_buffer(char *buffer, unsigned size,
 
         if (number_bytes==0)
             break;  // EOF
+
+        count -= number_bytes;
     }
 
     close(file_desc);
 
     if (total_bytes)
     {
-        int i=total_bytes;
+        size_t i = total_bytes;
 
         while (i--)
             if (buffer[i]=='\n' || buffer[i]=='\0')
