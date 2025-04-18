@@ -101,7 +101,6 @@ abstract class VideoRenderer {
 		const video = document.createElement('video');
 
 		video.playsInline = true;
-		video.loop = true;
 		video.crossOrigin = 'anonymous';
 
 		video.addEventListener(
