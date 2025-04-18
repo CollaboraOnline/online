@@ -47,6 +47,7 @@ namespace
 std::thread TimeoutThread;
 std::mutex TimeoutThreadMutex;
 std::condition_variable TimeoutConditionVariable;
+bool KitWorkFinished = false;
 
 } // namespace
 
@@ -263,8 +264,8 @@ bool UnitBase::init([[maybe_unused]] UnitType type, [[maybe_unused]] const std::
 
                         std::unique_lock<std::mutex> lock2(TimeoutThreadMutex);
                         if (TimeoutConditionVariable.wait_for(lock2,
-                                                              instance->_timeoutMilliSeconds) ==
-                            std::cv_status::no_timeout)
+                                                              instance->_timeoutMilliSeconds,
+                                                              [] { return KitWorkFinished; }))
                         {
                             LOG_DBG(instance->getTestname() << ": Unit test finished in time");
                         }
@@ -623,6 +624,7 @@ void UnitBase::endTest([[maybe_unused]] const std::string& reason)
         socketPoll->joinThread();
 
     // tell the timeout thread that the work has finished
+    KitWorkFinished = true;
     TimeoutConditionVariable.notify_all();
     if (TimeoutThread.joinable())
         TimeoutThread.join();
