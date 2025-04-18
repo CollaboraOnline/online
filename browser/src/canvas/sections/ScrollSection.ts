@@ -41,7 +41,6 @@ export class ScrollSection extends CanvasSectionObject {
 	constructor (isRTL?: () => boolean) {
 		super();
 
-
 		this.map = L.Map.THIS;
 
 		this.isRTL = isRTL ?? (() => false);
@@ -119,6 +118,8 @@ export class ScrollSection extends CanvasSectionObject {
 		// Step by step scrolling interval in ms
 		this.sectionProperties.stepDuration = 50;
 		this.sectionProperties.quickScrollHorizontalTimer = null;
+
+		this.sectionProperties.moveMapBy = null; // Move map this amount [x, y] (CSS pixels) when updating the DOM.
 	}
 
 	public completePendingScroll(): void {
@@ -143,7 +144,15 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public moveMapBy(cX: number, cY: number): void {
-		this.map.panBy(new L.Point(cX, cY));
+		if (this.sectionProperties.moveMapBy !== null) {
+			this.sectionProperties.moveMapBy[0] += cX;
+			this.sectionProperties.moveMapBy[1] += cY;
+		}
+		else {
+			this.sectionProperties.moveMapBy = [cX, cY];
+		}
+
+		this.containerObject.requestReDraw();
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -539,6 +548,12 @@ export class ScrollSection extends CanvasSectionObject {
 		if ((this.sectionProperties.drawHorizontalScrollBar || this.sectionProperties.animatingHorizontalScrollBar)) {
 			this.drawHorizontalScrollBar();
 		}
+
+		if (this.sectionProperties.moveMapBy !== null) {
+			this.map.panBy(new L.Point(this.sectionProperties.moveMapBy[0], this.sectionProperties.moveMapBy[1]));
+			this.sectionProperties.moveMapBy = null;
+			this.onUpdateScrollOffset();
+		}
 	}
 
 	public onAnimate(frameCount: number, elapsedTime: number): void {
@@ -773,7 +788,6 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		this.moveMapBy(0, offset / app.dpiScale);
-		this.onUpdateScrollOffset();
 
 		if (app.file.fileBasedView) this.map._docLayer._checkSelectedPart();
 
@@ -808,7 +822,6 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		this.moveMapBy(offset / app.dpiScale, 0);
-		this.onUpdateScrollOffset();
 
 		if (!this.sectionProperties.drawHorizontalScrollBar) {
 			if (this.isAnimating) {
