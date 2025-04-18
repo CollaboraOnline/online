@@ -1925,14 +1925,14 @@ public:
         }
 
         _size = sb.st_size;
-        _data = std::move(fromFile);
+        _filename = std::move(fromFile);
         _responseHeaders = std::move(responseHeaders);
         LOG_ASSERT_MSG(!getMimeType().empty(), "Missing Content-Type");
 
         int firstBytePos = getStart();
 
         if (lseek(_fd, firstBytePos, SEEK_SET) < 0)
-            LOG_SYS("Failed to seek " << _data << " to " << firstBytePos << " because: " << strerror(errno));
+            LOG_SYS("Failed to seek " << _filename << " to " << firstBytePos << " because: " << strerror(errno));
         else
             _pos = firstBytePos;
 
@@ -2043,7 +2043,7 @@ public:
         os << indent << "\tend: " << _end;
         os << indent << "\tstartIsSuffix: " << _startIsSuffix;
         os << indent;
-        HexUtil::dumpHex(os, _data, "\tdata:\n", Util::replace(indent + '\t', "\n", "").c_str());
+        HexUtil::dumpHex(os, _filename, "\tfilename:\n", Util::replace(indent + '\t', "\n", "").c_str());
         os << '\n';
 
         // We are typically called from the StreamSocket, so don't
@@ -2149,7 +2149,7 @@ private:
                 const auto size = std::min({sizeof(buffer), capacity, (size_t)(getEnd() - _pos)});
                 int n;
                 while ((n = ::read(_fd, buffer, size)) < 0 && errno == EINTR)
-                    LOG_TRC("EINTR reading from " << _data);
+                    LOG_TRC("EINTR reading from " << _filename);
 
                 if (n <= 0 || _pos >= getEnd())
                 {
@@ -2211,7 +2211,7 @@ private:
     http::Header::Container _responseHeaders; ///< The data Content-Type.
     std::chrono::microseconds _timeout;
     std::chrono::steady_clock::time_point _startTime;
-    std::string _data; ///< Data to upload, if not from a file, OR, the filename (if _pos == -1).
+    std::string _filename; ///< The filename (if _fd != -1)
     int _pos; ///< The current position in the data string.
     int _size; ///< The size of the data in bytes.
     int _fd; ///< The descriptor of the file to upload.
