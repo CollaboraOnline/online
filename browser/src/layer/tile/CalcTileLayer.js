@@ -183,8 +183,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_restrictDocumentSize: function () {
-
-		if (!this.sheetGeometry) {
+		if (!this.sheetGeometry || !this._lastColumn || !this._lastRow) {
 			return;
 		}
 
@@ -281,15 +280,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			start: this._corePixelsToTwips(bounds.min).add([1, 1]),
 			end: this._corePixelsToTwips(bounds.max).subtract([1, 1]),
 		};
-	},
-
-	/// take into account only data area to reduce scrollbar range
-	updateScrollLimit: function () {
-		if (this.sheetGeometry
-			&& this._lastColumn !== undefined && this._lastColumn !== null
-			&& this._lastRow !== undefined && this._lastRow !== null) {
-			this._restrictDocumentSize();
-		}
 	},
 
 	_hasPartsCountOrNamesChanged(lastStatusJSON, statusJSON) {
