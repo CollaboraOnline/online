@@ -1599,7 +1599,7 @@ class UIManager extends L.Control {
 	/**
 	 * Constructs JSON for a modal dialog.
 	 * @param id - Base ID.
-	 * @param title - Dialog title.
+	 * @param title - Dialog title. No titlebar if missing.
 	 * @param cancellable - Whether the dialog is cancellable.
 	 * @param widgets - Array of widget configurations.
 	 * @param focusId - Optional focus element ID.
@@ -1607,7 +1607,7 @@ class UIManager extends L.Control {
 	 */
 	private _modalDialogJSON(
 		id: string,
-		title: string,
+		title: string | undefined,
 		cancellable: boolean,
 		widgets: any[],
 		focusId?: string,
@@ -1620,7 +1620,7 @@ class UIManager extends L.Control {
 			dialogid: id,
 			type: 'modalpopup',
 			title: title,
-			hasClose: true,
+			hasClose: title !== undefined,
 			hasOverlay: true,
 			cancellable: cancellable,
 			jsontype: 'dialog',
@@ -1649,7 +1649,7 @@ class UIManager extends L.Control {
 	/// withCancel - specifies if needs cancel button also
 	showInfoModal(
 		id: string,
-		title: string,
+		title: string | undefined,
 		message1: string,
 		message2: string,
 		buttonText: string,
