@@ -73,7 +73,7 @@ L.Control.Notebookbar = L.Control.extend({
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
 		this.floatingNavIcon = document.querySelector('.navigator-btn-wrapper');
-		if (this.floatingNavIcon) 
+		if (this.floatingNavIcon)
 			this.floatingNavIcon.classList.add('hasnotebookbar');
 		document.getElementById('document-container').classList.add('notebookbar-active');
 
@@ -122,7 +122,7 @@ L.Control.Notebookbar = L.Control.extend({
 		$('.main-nav #document-header').remove();
 		$('.main-nav').removeClass('hasnotebookbar');
 		$('#toolbar-wrapper').removeClass('hasnotebookbar');
-		if (this.floatingNavIcon) 
+		if (this.floatingNavIcon)
 			this.floatingNavIcon.classList.remove('hasnotebookbar');
 		$('.main-nav #document-header').remove();
 		this.clearNotebookbar();
@@ -255,6 +255,11 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 		$('#document-titlebar').before(container);
 		this.createShortcutsBar();
+		this.tabsContainer = container;
+	},
+
+	getTabsContainer: function () {
+		return this.tabsContainer;
 	},
 
 	selectedTab: function() {
