@@ -640,6 +640,7 @@ void DocumentBroker::pollThread()
                         // We can't upload without a valid token anyway.
                         LOG_WRN("No valid session to synchronize the timestamp with. Setting "
                                 "timestamp as unsafe");
+                        assert(_storage && "existed at uploadLocalFileToStorageAsync call");
                         _storage->setLastModifiedTimeUnSafe();
                         endActivity(); // End the SyncFileTimestamp activity.
                     }
