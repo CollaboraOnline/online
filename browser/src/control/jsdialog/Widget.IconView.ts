@@ -33,7 +33,14 @@ function _createEntryImage(
 ) {
 	const img = L.DomUtil.create('img', builder.options.cssClass, parent);
 	if (image) img.src = image;
-	img.alt = entryData.text;
+
+	if (entryData.text) {
+		img.alt = entryData.text;
+	} else if (entryData.tooltip) {
+		img.alt = entryData.tooltip;
+	} else {
+		img.alt = '';
+	}
 
 	if (entryData.tooltip) img.title = entryData.tooltip;
 	else img.title = entryData.text;
