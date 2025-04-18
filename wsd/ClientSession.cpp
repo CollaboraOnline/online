@@ -2458,11 +2458,17 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         fileStream.close();
 
         // final cleanup ...
+        bool removeClipFile = true;
         if (!empty && (!_wopiFileInfo || !_wopiFileInfo->getDisableCopy()))
         {
             fprintf(stderr, "save clipboard\n");
-            // remove on else
-            clipFile = COOLWSD::SavedClipboards->insertClipboard(_clipboardKeys, clipFile);
+            // returns same filename as its arg on rename failure
+            std::string cacheFile = COOLWSD::SavedClipboards->insertClipboard(_clipboardKeys, clipFile);
+            if (cacheFile != clipFile)
+            {
+                clipFile = cacheFile;
+                removeClipFile = false;
+            }
         }
         else
             fprintf(stderr, "don't save clipboard\n");
@@ -2476,27 +2482,6 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             fprintf(stderr, "PAYLOAD LEN is %ld\n", res.size());
 
             // The custom header for the clipboard of a living document.
-#if 0
-            http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-            httpResponse.add("Content-Type", "application/octet-stream");
-            httpResponse.add("X-Content-Type-Options", "nosniff");
-            httpResponse.add("X-COOL-Clipboard", "true");
-            httpResponse.add("Cache-Control", "no-cache");
-            httpResponse.set("Connection", "close");
-
-
-            httpResponse.set("Content-Length", std::to_string(res.size()));
-            socket->send(httpResponse);
-
-            if (!empty)
-            {
-                socket->setSocketBufferSize(
-                    std::min(res.size() + 256, std::size_t(Socket::MaximumSendBufferSize)));
-                socket->send(res.data(), res.size());
-            }
-            socket->shutdown();
-#endif
             auto session = std::make_shared<http::ServerSession>();
 
             http::ServerSession::ResponseHeaders headers;
@@ -2513,6 +2498,10 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
             LOG_INF("Queued " << (empty?"empty":"clipboard") << " response for send.");
         }
+
+        fprintf(stderr, "removeClipFile is %d\n", removeClipFile);
+        if (removeClipFile)
+            FileUtil::removeFile(clipFile);
 #endif
         _clipSockets.clear();
         return true;
