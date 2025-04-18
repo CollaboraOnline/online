@@ -1252,10 +1252,9 @@ export class CommentSection extends CanvasSectionObject {
 
 	public onResize (): void {
 		this.checkCollapseState();
-		this.update();
 		// When window is resized, it may mean that comment wizard is closed. So we hide the highlights.
 		this.removeHighlighters();
-		this.containerObject.requestReDraw();
+		this.update();
 	}
 
 	public onNewDocumentTopLeft (): void {
