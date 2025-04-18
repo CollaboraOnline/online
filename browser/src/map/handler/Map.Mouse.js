@@ -39,6 +39,8 @@ L.Map.Mouse = L.Handler.extend({
 	},
 
 	_onMouseEvent: window.touch.mouseOnly(function (e) {
+		if (app.file.writer.multiPageView) return;
+
 		if (this._map.uiManager.isUIBlocked() || app.map.dontHandleMouse)
 			return;
 
