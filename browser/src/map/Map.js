@@ -1289,7 +1289,6 @@ L.Map = L.Evented.extend({
 
 		this._mapPane = this.createPane('mapPane', this._container);
 
-		this.createPane('tilePane');
 		this.createPane('shadowPane');
 		this.createPane('overlayPane');
 		this.createPane('markerPane');

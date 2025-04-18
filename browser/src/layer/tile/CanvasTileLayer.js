@@ -566,8 +566,6 @@ L.TileSectionManager = L.Class.extend({
 L.CanvasTileLayer = L.Layer.extend({
 
 	options: {
-		pane: 'tilePane',
-
 		tileSize: window.tileSize,
 		opacity: 1,
 
@@ -3653,17 +3651,12 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_syncTilePanePos: function () {
-		var tilePane = this._container ? this._container.parentElement : null;
-		if (tilePane) {
-			var mapPanePos = this._map._getMapPanePos();
-			L.DomUtil.setPosition(tilePane, new L.Point(-mapPanePos.x , -mapPanePos.y));
-			var documentBounds = this._map.getPixelBoundsCore();
-			var documentPos = documentBounds.min;
-			var documentEndPos = documentBounds.max;
-			app.sectionContainer.setDocumentBounds([documentPos.x, documentPos.y, documentEndPos.x, documentEndPos.y]);
-			if (app.file.writer.multiPageView)
-				MultiPageViewLayout.reset();
-		}
+		var documentBounds = this._map.getPixelBoundsCore();
+		var documentPos = documentBounds.min;
+		var documentEndPos = documentBounds.max;
+		app.sectionContainer.setDocumentBounds([documentPos.x, documentPos.y, documentEndPos.x, documentEndPos.y]);
+		if (app.file.writer.multiPageView)
+			MultiPageViewLayout.reset();
 	},
 
 	pauseDrawing: function () {
