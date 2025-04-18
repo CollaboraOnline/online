@@ -621,9 +621,18 @@ class CanvasSectionContainer {
 		}
 	}
 
+	private flushLayoutingTasks() {
+		const layoutingService = app.layoutingService;
+		if (layoutingService.hasTasksPending())
+			layoutingService.cancelFrame();
+
+		while (layoutingService.runTheTopTask());
+	}
+
 	private redrawCallback(timestamp: number) {
 		this.drawRequest = null;
 		this.drawSections();
+		this.flushLayoutingTasks();
 	}
 
 	public requestReDraw() {
