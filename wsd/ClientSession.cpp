@@ -2452,6 +2452,11 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
         std::cerr << "FOO is:" << sv << "\n";
 
+        std::ofstream fileStream;
+        fileStream.open("/tmp/cliptest");
+        fileStream.write(res.data(), res.size());
+        fileStream.close();
+
         // final cleanup ...
         if (!empty && (!_wopiFileInfo || !_wopiFileInfo->getDisableCopy()))
         {
@@ -2468,17 +2473,20 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             if (!socket)
                 continue;
 
-#if 1
+            fprintf(stderr, "PAYLOAD LEN is %ld\n", res.size());
+
             // The custom header for the clipboard of a living document.
+#if 0
             http::Response httpResponse(http::StatusCode::OK);
             httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-            httpResponse.set("Content-Length", std::to_string(res.size()));
-            fprintf(stderr, "PAYLOAD LEN is %ld\n", res.size());
             httpResponse.add("Content-Type", "application/octet-stream");
             httpResponse.add("X-Content-Type-Options", "nosniff");
             httpResponse.add("X-COOL-Clipboard", "true");
             httpResponse.add("Cache-Control", "no-cache");
             httpResponse.set("Connection", "close");
+
+
+            httpResponse.set("Content-Length", std::to_string(res.size()));
             socket->send(httpResponse);
 
             if (!empty)
@@ -2487,9 +2495,22 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     std::min(res.size() + 256, std::size_t(Socket::MaximumSendBufferSize)));
                 socket->send(res.data(), res.size());
             }
-#endif
-
             socket->shutdown();
+#endif
+            auto session = std::make_shared<http::ServerSession>();
+
+            http::ServerSession::ResponseHeaders headers;
+            headers.emplace_back("Last-Modified", Util::getHttpTimeNow());
+            headers.emplace_back("Content-Type", "application/octet-stream");
+            headers.emplace_back("X-Content-Type-Options", "nosniff");
+            headers.emplace_back("X-COOL-Clipboard", "true");
+            headers.emplace_back("Cache-Control", "no-cache");
+            headers.emplace_back("Connection", "close");
+
+//            session->asyncUpload(clipFile, std::move(headers));
+            session->asyncUpload("/tmp/cliptest", std::move(headers));
+            socket->setHandler(std::static_pointer_cast<ProtocolHandlerInterface>(session));
+
             LOG_INF("Queued " << (empty?"empty":"clipboard") << " response for send.");
         }
 #endif
