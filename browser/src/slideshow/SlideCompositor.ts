@@ -61,6 +61,11 @@ abstract class SlideCompositor {
 
 	public abstract getLayerRendererContext(): RenderContext;
 
+	public abstract getVideoRenderer(
+		slideHash: string,
+		videoInfo: VideoInfo,
+	): VideoRenderer;
+
 	public abstract deleteResources(): void;
 
 	public abstract pauseVideos(slideHash: string): void;

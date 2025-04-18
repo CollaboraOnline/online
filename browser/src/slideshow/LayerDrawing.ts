@@ -215,12 +215,12 @@ class LayerDrawing {
 		}
 	}
 
-	public playVideos(slideHash: string) {
+	public loadVideos(slideHash: string) {
 		const videoRenderers = this.videoRenderers.get(slideHash);
 		if (!videoRenderers) return;
 
 		for (const videoRenderer of videoRenderers) {
-			videoRenderer.playVideo();
+			videoRenderer.loadVideo();
 		}
 	}
 
@@ -230,6 +230,19 @@ class LayerDrawing {
 
 		for (const videoRenderer of videoRenderers) {
 			videoRenderer.pauseVideo();
+		}
+	}
+
+	public getVideoRenderer(
+		slideHash: string,
+		videoInfo: VideoInfo,
+	): VideoRenderer {
+		const videoRenderers = this.videoRenderers.get(slideHash);
+
+		for (const videoRenderer of videoRenderers) {
+			if (videoRenderer.videoInfoId === videoInfo.id) {
+				return videoRenderer;
+			}
 		}
 	}
 
@@ -746,7 +759,7 @@ class LayerDrawing {
 	public notifyTransitionEnd(slideHash: string) {
 		this.handleVideos(slideHash);
 		if (this.videoRenderers.has(slideHash)) {
-			this.playVideos(slideHash);
+			this.loadVideos(slideHash);
 		}
 	}
 }
