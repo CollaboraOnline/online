@@ -101,6 +101,7 @@ ClientSession::ClientSession(
         , _thumbnailSession(false)
         , _sentAudit(false)
         , _sentBrowserSetting(false)
+        , _isConvertTo(false)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -2110,7 +2111,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         return false;
     }
 
-    const bool isConvertTo = static_cast<bool>(_saveAsSocket);
+    std::shared_ptr<StreamSocket> saveAsSocket = _saveAsSocket.lock();
 
     if constexpr (!Util::isMobileApp())
         COOLWSD::dumpOutgoingTrace(docBroker->getJailId(), getId(), firstLine);
@@ -2162,11 +2163,16 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     errorKind == "passwordrequired:to-modify" ||
                     errorKind == "wrongpassword")
                 {
-                    if (isConvertTo)
+                    if (_isConvertTo)
                     {
-                        http::Response response(http::StatusCode::Unauthorized);
-                        response.set("X-ERROR-KIND", std::move(errorKind));
-                        _saveAsSocket->send(response);
+                        if (!saveAsSocket)
+                            LOG_ERR("Error saveas socket missing in isConvertTo mode");
+                        else
+                        {
+                            http::Response response(http::StatusCode::Unauthorized);
+                            response.set("X-ERROR-KIND", std::move(errorKind));
+                            saveAsSocket->send(response);
+                        }
 
                         // Conversion failed, cleanup fake session.
                         LOG_TRC("Removing save-as ClientSession after conversion error.");
@@ -2222,7 +2228,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             LOG_ERR("Bad syntax for: " << firstLine);
             // we must not return early with convert-to so that we clean up
             // the session
-            if (!isConvertTo)
+            if (!_isConvertTo)
             {
                 sendTextFrameAndLogError("error: cmd=saveas kind=syntax");
                 return false;
@@ -2230,7 +2236,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         }
 
         std::string encodedWopiFilename;
-        if (!isConvertTo && !getTokenString(tokens[2], "filename", encodedWopiFilename))
+        if (!_isConvertTo && !getTokenString(tokens[2], "filename", encodedWopiFilename))
         {
             LOG_ERR("Bad syntax for: " << firstLine);
             sendTextFrameAndLogError("error: cmd=saveas kind=syntax");
@@ -2247,7 +2253,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         if (resultURL.getScheme() == "file" && !COOLWSD::NoCapsForKit)
         {
             std::string relative;
-            if (isConvertTo || isExportAs)
+            if (_isConvertTo || isExportAs)
                 relative = Uri::decode(resultURL.getPath());
             else
                 relative = resultURL.getPath();
@@ -2261,7 +2267,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                                                            std::move(relative)));
             if (Poco::File(path).exists())
             {
-                if (!isConvertTo)
+                if (!_isConvertTo)
                 {
                     // Encode path for special characters (i.e '%') since Poco::URI::setPath implicitly decodes the input param
                     std::string encodedPath;
@@ -2284,7 +2290,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
         LOG_TRC("Save-as URL: " << resultURL.toString());
 
-        if (!isConvertTo)
+        if (!_isConvertTo)
         {
             // Normal SaveAs - save to Storage and log result.
             if (resultURL.getScheme() == "file" && !resultURL.getPath().empty())
@@ -2312,7 +2318,10 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
                 response.setContentType("application/octet-stream");
 
-                HttpHelper::sendFileAndShutdown(_saveAsSocket, resultURL.getPath(), response);
+                if (!saveAsSocket)
+                    LOG_ERR("Error saveas socket missing in isConvertTo mode");
+                else
+                    HttpHelper::sendFileAndShutdown(saveAsSocket, resultURL.getPath(), response);
             }
 
             // Conversion is done, cleanup this fake session.
@@ -2771,7 +2780,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         else if (tokens.equals(0, "extractedlinktargets:"))
         {
             LOG_TRC("Sending extracted link targets response.");
-            if (!_saveAsSocket)
+            if (!saveAsSocket)
                 LOG_ERR("Error in extractedlinktargets: not in isConvertTo mode");
             else
             {
@@ -2780,7 +2789,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 httpResponse.set("Last-Modified", Util::getHttpTimeNow());
                 httpResponse.set("X-Content-Type-Options", "nosniff");
                 httpResponse.setBody(payload->jsonString(), "application/json");
-                _saveAsSocket->sendAndShutdown(httpResponse);
+                saveAsSocket->sendAndShutdown(httpResponse);
             }
 
             // Now terminate.
@@ -2790,7 +2799,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         else if (tokens.equals(0, "extracteddocumentstructure:"))
         {
             LOG_TRC("Sending extracted document structure response.");
-            if (!_saveAsSocket)
+            if (!saveAsSocket)
                 LOG_ERR("Error in extracteddocumentstructure: not in isConvertTo mode");
             else
             {
@@ -2799,7 +2808,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 httpResponse.set("Last-Modified", Util::getHttpTimeNow());
                 httpResponse.set("X-Content-Type-Options", "nosniff");
                 httpResponse.setBody(payload->jsonString(), "application/json");
-                _saveAsSocket->sendAndShutdown(httpResponse);
+                saveAsSocket->sendAndShutdown(httpResponse);
             }
 
             // Now terminate.
@@ -2809,7 +2818,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         else if (tokens.equals(0, "transformeddocumentstructure:"))
         {
             LOG_TRC("Sending transformed document structure response.");
-            if (!_saveAsSocket)
+            if (!saveAsSocket)
                 LOG_ERR("Error in transformeddocumentstructure: not in isConvertTo mode");
             else
             {
@@ -2818,7 +2827,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 httpResponse.set("Last-Modified", Util::getHttpTimeNow());
                 httpResponse.set("X-Content-Type-Options", "nosniff");
                 httpResponse.setBody(payload->jsonString(), "application/json");
-                _saveAsSocket->sendAndShutdown(httpResponse);
+                saveAsSocket->sendAndShutdown(httpResponse);
             }
 
             // Now terminate.
@@ -2828,7 +2837,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         else if (tokens.equals(0, "sendthumbnail:"))
         {
             LOG_TRC("Sending get-thumbnail response.");
-            if (!_saveAsSocket)
+            if (!saveAsSocket)
                 LOG_ERR("Error in sendthumbnail: not in isConvertTo mode");
             else
             {
@@ -2847,14 +2856,14 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     httpResponse.set("Last-Modified", Util::getHttpTimeNow());
                     httpResponse.set("X-Content-Type-Options", "nosniff");
                     httpResponse.setBody(std::move(thumbnail), "image/png");
-                    _saveAsSocket->sendAndShutdown(httpResponse);
+                    saveAsSocket->sendAndShutdown(httpResponse);
                 }
 
                 if (error)
                 {
                     http::Response httpResponse(http::StatusCode::InternalServerError);
                     httpResponse.set("Content-Length", "0");
-                    _saveAsSocket->sendAndShutdown(httpResponse);
+                    saveAsSocket->sendAndShutdown(httpResponse);
                 }
             }
 
