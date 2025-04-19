@@ -19,12 +19,13 @@
 #include <cassert>
 #include <chrono>
 #include <ctime>
-#include <ios>
 #include <fstream>
+#include <ios>
 #include <memory>
+#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <sstream>
+#include <sysexits.h>
 
 #include <Poco/DigestStream.h>
 #include <Poco/Exception.h>
