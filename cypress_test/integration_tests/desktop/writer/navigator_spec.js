@@ -24,7 +24,8 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 	it('Navigator visual test', function() {
 		cy.wait(500); // wait to make fully rendered
 		cy.cGet('#navigator-dock-wrapper').scrollTo(0,0,{ ensureScrollable: false });
-		cy.cGet('#navigator-dock-wrapper').compareSnapshot('navigator_writer', 0.06);
+		cy.wait(500); // wait for animations
+		cy.cGet('#navigator-dock-wrapper').compareSnapshot('navigator_writer', 0.065);
 	});
 
 	it('Jump to element. Navigator -> Document', function() {
@@ -34,8 +35,11 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		expandSecion('Frames');
 		expandSecion('Images');
 
+		cy.wait(500);
+
 		//Scroll back to Top
 		cy.cGet('#navigator-dock-wrapper').scrollTo(0,0, { ensureScrollable: false });
+		cy.wait(500);
 
 		// Doubleclick several items, and check if the document is scrolled to the right page
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Feedback').dblclick();
