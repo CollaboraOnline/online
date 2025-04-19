@@ -13,17 +13,19 @@
 
 #include "CacheUtil.hpp"
 
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <common/Log.hpp>
+#include <common/StringVector.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
+
 #include <Poco/Path.h>
 #include <Poco/URI.h>
-#include "ClientSession.hpp"
-#include "DocumentBroker.hpp"
-#include "FileUtil.hpp"
-#include "Util.hpp"
 
 #include <chrono>
-#include <common/Common.hpp>
-#include <common/StringVector.hpp>
-#include <common/Log.hpp>
+#include <fstream>
 #include <mutex>
 
 std::mutex CacheMutex;
