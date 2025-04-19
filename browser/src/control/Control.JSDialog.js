@@ -748,11 +748,12 @@ L.Control.JSDialog = L.Control.extend({
 			if (instance.isModalPopUp || instance.isDocumentAreaPopup)
 				this.getOrCreateOverlay(instance);
 
-			if (this.dialogs[instance.id]) {
-				instance.posx = this.dialogs[instance.id].startX;
-				instance.posy = this.dialogs[instance.id].startY;
-				var toRemove = this.dialogs[instance.id].container;
-				L.DomUtil.remove(toRemove);
+			// Sometimes we get another full update for the same dialog
+			const existingNode = this.dialogs[instance.id];
+
+			if (existingNode) {
+				instance.posx = existingNode.startX;
+				instance.posy = existingNode.startY;
 			}
 
 			// We show some dialogs such as Macro Security Warning Dialog and Text Import Dialog (csv)
@@ -773,9 +774,8 @@ L.Control.JSDialog = L.Control.extend({
 
 			app.layoutingService.appendLayoutingTask(() => {
 				// dialog built - add to DOM now
-				const existingNode = dialogDomParent.querySelector('[id="' + instance.container.id + '"]');
 				if (existingNode) {
-					existingNode.replaceWith(instance.container);
+					existingNode.container.replaceWith(instance.container);
 				} else {
 					instance.container.classList.add('fadein');
 					dialogDomParent.append(instance.container);
