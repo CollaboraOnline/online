@@ -1027,11 +1027,17 @@ bool DocumentBroker::download(
         if (!wopiFileInfo)
         {
             std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-            auto poller = std::make_shared<TerminatingPoll>("CFISynReqPoll");
-            poller->runOnClientThread();
-            auto checkFileInfo = std::make_shared<CheckFileInfo>(poller, session->getPublicUri(), [](CheckFileInfo&) {});
-            checkFileInfo->checkFileInfoSync(HTTP_REDIRECTION_LIMIT);
-            wopiFileInfo = checkFileInfo->wopiFileInfo(session->getPublicUri());
+
+            if (!session)
+                LOG_ERR("No session for CheckFileInfo");
+            else
+            {
+                auto poller = std::make_shared<TerminatingPoll>("CFISynReqPoll");
+                poller->runOnClientThread();
+                auto checkFileInfo = std::make_shared<CheckFileInfo>(poller, session->getPublicUri(), [](CheckFileInfo&) {});
+                checkFileInfo->checkFileInfoSync(HTTP_REDIRECTION_LIMIT);
+                wopiFileInfo = checkFileInfo->wopiFileInfo(session->getPublicUri());
+            }
             if (!wopiFileInfo)
             {
                 throw std::runtime_error(
