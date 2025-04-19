@@ -13,6 +13,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 			.should('not.be.empty')
 			.contains('#js-dialog a', 'View widgets')
 			.click();
+
+			cy.wait(500); // be sure we finished all animations
 	});
 
 	it('Combobox', function() {
