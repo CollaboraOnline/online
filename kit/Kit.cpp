@@ -4152,8 +4152,8 @@ void dump_kit_state()
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
 
     const std::string msg = oss.str();
-    fprintf(stderr, "%s", msg.c_str());
-    LOG_TRC(msg);
+    fprintf(stderr, "%s\n", msg.c_str()); // Log in the journal.
+    LOG_INF(msg);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

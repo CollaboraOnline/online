@@ -4246,9 +4246,9 @@ void dump_state()
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
 
     const std::string msg = oss.str();
-    fprintf(stderr, "%s\n", msg.c_str());
+    fprintf(stderr, "%s\n", msg.c_str()); // Log in the journal.
 
-    LOG_TRC(msg);
+    LOG_INF(msg);
 
 #if !MOBILEAPP
     Admin::dumpMetrics();
