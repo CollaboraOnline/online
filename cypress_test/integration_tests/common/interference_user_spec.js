@@ -56,7 +56,7 @@ describe('Interfering second user.', function() {
 				// In Impress we do some mouse activity.
 				helper.doIfInImpress(function() {
 					for (var i = 0; i < 5; i++) {
-						cy.get('.leaflet-pane.leaflet-tile-pane')
+						cy.get('.leaflet-pane.leaflet-map-pane')
 							.click(10, 10);
 					}
 				});

@@ -2094,8 +2094,8 @@ class TileManager {
 		var pixelBounds = map.getPixelBoundsCore(center, zoom);
 		var queue = this.getMissingTiles(pixelBounds, zoom, true);
 
-		app.map._docLayer._sendClientVisibleArea();
 		app.map._docLayer._sendClientZoom();
+		app.map._docLayer._sendClientVisibleArea();
 
 		if (queue.length !== 0) this.addTiles(queue, true);
 
