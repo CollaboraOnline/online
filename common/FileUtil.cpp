@@ -57,6 +57,24 @@ namespace FileUtil
         return name;
     }
 
+    // Handle short writes and EINTR
+    ssize_t writeBuffer(int to, const char *buffer, size_t size, const std::string& toPath)
+    {
+        size_t count = size;
+        const char *ptr = buffer;
+        while (count)
+        {
+            ssize_t written;
+            while ((written = ::write(to, ptr, count)) < 0 && errno == EINTR)
+                LOG_TRC("EINTR writing to " << anonymizeUrl(toPath));
+            if (written < 0)
+                return -1;
+            count -= written;
+            ptr += written;
+        }
+        return size;
+    }
+
     bool copy(const std::string& fromPath, const std::string& toPath, bool log, bool throw_on_error)
     {
         int from = -1, to = -1;
@@ -81,10 +99,10 @@ namespace FileUtil
 
             char buffer[64 * 1024];
 
-            int n;
             off_t bytesIn = 0;
             do
             {
+                ssize_t n;
                 while ((n = ::read(from, buffer, sizeof(buffer))) < 0 && errno == EINTR)
                     LOG_TRC("EINTR reading from " << anonymizeUrl(fromPath));
                 if (n < 0)
@@ -95,20 +113,13 @@ namespace FileUtil
                 if (n == 0) // EOF
                     break;
                 assert (off_t(sizeof (buffer)) >= n);
-                // Handle short writes and EINTR
-                for (int j = 0; j < n;)
+
+                if (writeBuffer(to, buffer, n, toPath) < 0)
                 {
-                    int written;
-                    while ((written = ::write(to, buffer + j, n - j)) < 0 && errno == EINTR)
-                        LOG_TRC("EINTR writing to " << anonymizeUrl(toPath));
-                    if (written < 0)
-                    {
-                        throw std::runtime_error("Failed to write " + std::to_string(n)
-                                                 + " bytes to " + anonymizeUrl(toPath) + " at "
-                                                 + std::to_string(bytesIn) + " bytes into "
-                                                 + anonymizeUrl(fromPath));
-                    }
-                    j += written;
+                    throw std::runtime_error("Failed to write " + std::to_string(n)
+                                             + " bytes to " + anonymizeUrl(toPath) + " at "
+                                             + std::to_string(bytesIn) + " bytes into "
+                                             + anonymizeUrl(fromPath));
                 }
             } while (true);
             if (bytesIn != st.st_size)
