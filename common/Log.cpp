@@ -126,25 +126,25 @@ namespace Log
         void close() override { flush(); }
 
         /// Write the given buffer to stderr directly.
-        static inline int writeRaw(const char* data, std::size_t size)
+        static inline std::size_t writeRaw(const char* data, std::size_t count)
         {
-            std::size_t i = 0;
-            for (; i < size;)
+            const char *ptr = data;
+            while (count > 0)
             {
-                int wrote;
-                while ((wrote = ::write(LOG_FILE_FD, data + i, size - i)) < 0 && errno == EINTR)
+                ssize_t wrote;
+                while ((wrote = ::write(LOG_FILE_FD, ptr, count)) < 0 && errno == EINTR)
                 {
                 }
 
                 if (wrote < 0)
                 {
-                    return i;
+                    break;
                 }
 
-                i += wrote;
+                ptr += wrote;
+                count -= wrote;
             }
-
-            return i;
+            return ptr - data;
         }
 
         template <std::size_t N> inline void writeRaw(const char (&data)[N])

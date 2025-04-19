@@ -3990,32 +3990,44 @@ std::string anonymizeUrl(const std::string& url)
 #endif
 }
 
-static int receiveURPFromLO(void* context, const signed char* buffer, int bytesToWrite)
+static int receiveURPData(void* context, const signed char* buffer, size_t bytesToWrite)
 {
-    int bytesWritten = 0;
+    const signed char *ptr = buffer;
     while (bytesToWrite > 0)
     {
-        int bytes = ::write(reinterpret_cast<intptr_t>(context), buffer + bytesWritten, bytesToWrite);
+        ssize_t bytes = ::write(reinterpret_cast<intptr_t>(context), ptr, bytesToWrite);
         if (bytes <= 0)
             break;
         bytesToWrite -= bytes;
-        bytesWritten += bytes;
+        ptr += bytes;
     }
-    return bytesWritten;
+    return ptr - buffer;
+}
+
+static size_t sendURPData(void* context, signed char* buffer, size_t bytesToRead)
+{
+    signed char *ptr = buffer;
+    while (bytesToRead > 0)
+    {
+        ssize_t bytes = ::read(reinterpret_cast<intptr_t>(context), ptr, bytesToRead);
+        if (bytes <= 0)
+            break;
+        bytesToRead -= bytes;
+        ptr += bytes;
+    }
+    return ptr - buffer;
+}
+
+static int receiveURPFromLO(void* context, const signed char* buffer, int bytesToWrite)
+{
+    assert(bytesToWrite >= 0 && "cannot be negative");
+    return receiveURPData(context, buffer, bytesToWrite);
 }
 
 static int sendURPToLO(void* context, signed char* buffer, int bytesToRead)
 {
-    int bytesRead = 0;
-    while (bytesToRead > 0)
-    {
-        int bytes = ::read(reinterpret_cast<intptr_t>(context), buffer + bytesRead, bytesToRead);
-        if (bytes <= 0)
-            break;
-        bytesToRead -= bytes;
-        bytesRead += bytes;
-    }
-    return bytesRead;
+    assert(bytesToRead >= 0 && "cannot be negative");
+    return sendURPData(context, buffer, bytesToRead);
 }
 
 bool startURP(const std::shared_ptr<lok::Office>& LOKit, void** ppURPContext)
