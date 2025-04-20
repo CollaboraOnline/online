@@ -115,3 +115,11 @@
 /* Makes config variables conditionally static, only in non-debug builds, to allow for overriding them in unit-tests. */
 #undef CONFIG_STATIC
 
+/* Controls whether or not we allow loading documents from the local filesystem. */
+#ifndef ENABLE_LOCAL_FILESYSTEM
+#if MOBILEAPP || ENABLE_DEBUG
+#define ENABLE_LOCAL_FILESYSTEM 1
+#else
+#define ENABLE_LOCAL_FILESYSTEM 0
+#endif
+#endif
