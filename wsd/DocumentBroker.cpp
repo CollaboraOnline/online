@@ -1211,7 +1211,8 @@ bool DocumentBroker::download(
         }
     }
 
-#endif
+#endif // !MOBILEAPP
+
     return true;
 }
 
@@ -2398,32 +2399,33 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
                                                     << DocumentState::name(_docState.activity())
                                                     << ") in " << _saveManager.lastSaveDuration());
 
-#if !MOBILEAPP
-    // Create the 'upload' file regardless of success or failure,
-    // because we don't know if the last upload worked or not.
-    // DocBroker will have to decide to upload or skip.
-    const std::string oldName = _storage->getRootFilePathToUpload();
-    if (FileUtil::Stat(oldName).exists())
+    if constexpr (!Util::isMobileApp())
     {
-        if (_quarantine && _quarantine->isEnabled())
+        // Create the 'upload' file regardless of success or failure,
+        // because we don't know if the last upload worked or not.
+        // DocBroker will have to decide to upload or skip.
+        const std::string oldName = _storage->getRootFilePathToUpload();
+        if (FileUtil::Stat(oldName).exists())
         {
-            // Quarantine the file before renaming, if it exists.
-            LOG_DBG("Quarantining the old file after saving: " << oldName);
-            _quarantine->quarantineFile(oldName);
-        }
+            if (_quarantine && _quarantine->isEnabled())
+            {
+                // Quarantine the file before renaming, if it exists.
+                LOG_DBG("Quarantining the old file after saving: " << oldName);
+                _quarantine->quarantineFile(oldName);
+            }
 
-        // Rename even if no new save, in case we have an older version.
-        const std::string newName = _storage->getRootFilePathUploading();
-        if (::rename(oldName.c_str(), newName.c_str()) < 0)
-        {
-            LOG_SYS("Failed to rename [" << oldName << "] to [" << newName << ']');
-        }
-        else
-        {
-            LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+            // Rename even if no new save, in case we have an older version.
+            const std::string newName = _storage->getRootFilePathUploading();
+            if (::rename(oldName.c_str(), newName.c_str()) < 0)
+            {
+                LOG_SYS("Failed to rename [" << oldName << "] to [" << newName << ']');
+            }
+            else
+            {
+                LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+            }
         }
     }
-#endif //!MOBILEAPP
 
     // Let the clients know of any save failures.
     if (!success && result != "unmodified")
@@ -2509,23 +2511,25 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
         break;
     }
 
-#if !MOBILEAPP
-    // Avoid multiple uploads during unloading if we know we need to save a new version.
-    const bool unloading = isUnloading();
-    const bool modified =
-        justSaved ? haveModifyActivityAfterSaveRequest() : needToSaveToDisk() != NeedToSave::No;
-
-    if (modified && unloading)
+    if constexpr (!Util::isMobileApp())
     {
-        // We are unloading but have possible modifications. Save again (done in poll).
-        LOG_DBG("Document [" << getDocKey()
+        // Avoid multiple uploads during unloading if we know we need to save a new version.
+        const bool unloading = isUnloading();
+        const bool modified =
+            justSaved ? haveModifyActivityAfterSaveRequest() : needToSaveToDisk() != NeedToSave::No;
+
+        if (modified && unloading)
+        {
+            // We are unloading but have possible modifications. Save again (done in poll).
+            LOG_DBG(
+                "Document [" << getDocKey()
                              << "] is unloading, but was possibly modified during saving. Skipping "
                                 "upload to save again before unloading");
 
-        assert(canSaveToDisk() == CanSave::Yes && "Cannot save to disk");
-        return;
+            assert(canSaveToDisk() == CanSave::Yes && "Cannot save to disk");
+            return;
+        }
     }
-#endif
 
     if (needToUploadState != NeedToUpload::No)
     {
@@ -2583,23 +2587,24 @@ void DocumentBroker::uploadAfterLoadingTemplate(const std::shared_ptr<ClientSess
 {
     LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
 
-#if !MOBILEAPP
-    // Create the 'upload' file as it gets created only when
-    // handling .uno:Save, which isn't issued for templates
-    // (save is done in Kit right after loading a template).
-    const std::string oldName = _storage->getRootFilePathToUpload();
-    const std::string newName = _storage->getRootFilePathUploading();
-    if (::rename(oldName.c_str(), newName.c_str()) < 0)
+    if constexpr (!Util::isMobileApp())
     {
-        // It's not an error if there was no file to rename, when the document isn't modified.
-        LOG_SYS("Expected to renamed the document [" << oldName << "] after template-loading to ["
-                                                     << newName << ']');
+        // Create the 'upload' file as it gets created only when
+        // handling .uno:Save, which isn't issued for templates
+        // (save is done in Kit right after loading a template).
+        const std::string oldName = _storage->getRootFilePathToUpload();
+        const std::string newName = _storage->getRootFilePathUploading();
+        if (::rename(oldName.c_str(), newName.c_str()) < 0)
+        {
+            // It's not an error if there was no file to rename, when the document isn't modified.
+            LOG_SYS("Expected to renamed the document ["
+                    << oldName << "] after template-loading to [" << newName << ']');
+        }
+        else
+        {
+            LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+        }
     }
-    else
-    {
-        LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
-    }
-#endif //!MOBILEAPP
 
     uploadToStorage(session, /*force=*/false);
 }
@@ -3646,16 +3651,18 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
 
 std::string DocumentBroker::getJailRoot() const
 {
-#if !MOBILEAPP
-    if (_jailId.empty())
+    if constexpr (!Util::isMobileApp())
     {
-        LOG_WRN("Trying to get the jail root of a not yet downloaded document.");
-        return std::string();
+        if (_jailId.empty())
+        {
+            LOG_WRN("Trying to get the jail root of a not yet downloaded document.");
+            return std::string();
+        }
+
+        return Poco::Path(COOLWSD::ChildRoot, _jailId).toString();
     }
-    return Poco::Path(COOLWSD::ChildRoot, _jailId).toString();
-#else
+
     return std::string();
-#endif
 }
 
 std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session,
