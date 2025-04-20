@@ -94,10 +94,29 @@ namespace SigUtil
     /// Signal log number
     void signalLogNumber(std::size_t num, int base = 10);
 
-#endif // !MOBILEAPP
+#else // MOBILEAPP
+
+    /// Open the signalLog file.
+    inline void signalLogOpen() {}
+    /// Close the signalLog file.
+    inline void signalLogClose() {}
+
+    /// Signal safe prefix logging
+    inline void signalLogPrefix() {}
+    /// Signal safe logging
+    inline void signalLog(const char*) {}
+    /// Signal log number
+    inline void signalLogNumber(std::size_t, int = 10) {}
+
+#endif // MOBILEAPP
 
     /// Returns the name of the signal.
     const char* signalName(int signo);
+
+    extern "C"
+    {
+        typedef void (*SigChildHandler)(int);
+    }
 
 #if !MOBILEAPP
 
@@ -129,11 +148,6 @@ namespace SigUtil
     /// after a certain (short) timeout.
     bool killChild(const int pid, const int signal);
 
-    extern "C"
-    {
-        typedef void (*SigChildHandler)(int);
-    }
-
     /// Sets a child death signal handler
     void setSigChildHandler(SigChildHandler fn);
 
@@ -143,7 +157,30 @@ namespace SigUtil
     /// Dump a signal-safe back-trace
     void dumpBacktrace();
 
-#endif // !MOBILEAPP
+#else // MOBILEAPP
+
+    /// Trap all fatal signals to assist debugging.
+    inline void setFatalSignals(const std::string&) {}
+
+    /// Update version info
+    inline void setVersionInfo(const std::string&) {}
+
+    /// Trap generally useful signals
+    inline void setUserSignals() {}
+
+    /// Trap to unpause the process
+    inline void setDebuggerSignal() {}
+
+    /// Sets a child death signal handler
+    inline void setSigChildHandler(SigChildHandler) {}
+
+    /// Ensure that if a parent process is killed we go down too
+    inline void dieOnParentDeath() {}
+
+    /// Dump a signal-safe back-trace
+    inline void dumpBacktrace() {}
+
+#endif // MOBILEAPP
 
 } // end namespace SigUtil
 
