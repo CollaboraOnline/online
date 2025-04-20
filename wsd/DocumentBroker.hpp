@@ -524,6 +524,8 @@ public:
     void removeEmbeddedMedia(const std::string& json);
 
     std::string getEmbeddedMediaPath(const std::string& id);
+    /// Returns the absolute media path given the local path of the media file.
+    std::string getAbsoluteMediaPath(std::string localPath);
 
     void onUrpMessage(const char* data, size_t len);
 
