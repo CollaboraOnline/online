@@ -25,6 +25,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <sstream>
 #include <sysexits.h>
 
 #include <Poco/DigestStream.h>
@@ -1062,6 +1063,7 @@ bool DocumentBroker::download(
     }
     else
 #endif
+#if ENABLE_LOCAL_FILESYSTEM
     {
         LocalStorage* localStorage = dynamic_cast<LocalStorage*>(_storage.get());
         if (localStorage != nullptr)
@@ -1103,7 +1105,18 @@ bool DocumentBroker::download(
                 session->setUserName(localfileinfo->getUsername());
             }
         }
+        else
+        {
+            LOG_FTL("Unknown or unsupported storage");
+            Util::forcedExit(EX_SOFTWARE);
+        }
     }
+#else // !ENABLE_LOCAL_FILESYSTEM
+    {
+        LOG_FTL("Unknown or unsupported storage");
+        Util::forcedExit(EX_SOFTWARE);
+    }
+#endif // !ENABLE_LOCAL_FILESYSTEM
 
     if (session)
     {

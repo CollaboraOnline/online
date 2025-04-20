@@ -56,7 +56,9 @@
 #include "wasmapp.hpp"
 #endif // IOS
 
+#if ENABLE_LOCAL_FILESYSTEM
 bool StorageBase::FilesystemEnabled;
+#endif
 
 #if !MOBILEAPP
 
@@ -92,7 +94,10 @@ void StorageBase::initialize()
 {
 #if !MOBILEAPP
     const auto& app = Poco::Util::Application::instance();
+
+#if ENABLE_LOCAL_FILESYSTEM
     FilesystemEnabled = app.config().getBool("storage.filesystem[@allow]", false);
+#endif
 
     //parse wopi.storage.host only when there is no storage.wopi.alias_groups entry in config
     if (!app.config().has("storage.wopi.alias_groups"))
@@ -106,7 +111,7 @@ void StorageBase::initialize()
 
     HostUtil::parseAliases(app.config());
 
-#else // !MOBILEAPP
+#else // MOBILEAPP
     FilesystemEnabled = true;
 #endif // MOBILEAPP
 }
@@ -131,7 +136,8 @@ bool isLocalhost(const std::string& targetHost)
 
 #endif
 
-StorageBase::StorageType StorageBase::validate(const Poco::URI& uri, bool takeOwnership)
+StorageBase::StorageType StorageBase::validate(const Poco::URI& uri,
+                                               [[maybe_unused]] bool takeOwnership)
 {
     if (uri.isRelative() || uri.getScheme() == "file")
     {
@@ -145,12 +151,15 @@ StorageBase::StorageType StorageBase::validate(const Poco::URI& uri, bool takeOw
             return StorageBase::StorageType::Unauthorized;
         }
 #endif
+
+#if ENABLE_LOCAL_FILESYSTEM
         if (FilesystemEnabled || takeOwnership)
         {
             LOG_DBG("Validated URI [" << COOLWSD::anonymizeUrl(uri.toString())
                                       << "] as FileSystem");
             return StorageBase::StorageType::FileSystem;
         }
+#endif // ENABLE_LOCAL_FILESYSTEM
 
         LOG_DBG("Local Storage is disabled by default. Enable in the config file or on the "
                 "command-line to enable.");
@@ -224,9 +233,13 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
                 "No acceptable WOPI hosts found matching the target host [" + uri.getHost() +
                 "] in config");
             break;
+
+#if ENABLE_LOCAL_FILESYSTEM
         case StorageBase::StorageType::FileSystem:
             return std::make_unique<LocalStorage>(uri, jailRoot, jailPath, takeOwnership);
             break;
+#endif // ENABLE_LOCAL_FILESYSTEM
+
 #if !MOBILEAPP
         case StorageBase::StorageType::Wopi:
             return std::make_unique<WopiStorage>(uri, jailRoot, jailPath);
@@ -237,6 +250,8 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     throw BadRequestException("No Storage configured or invalid URI " +
                               COOLWSD::anonymizeUrl(uri.toString()) + ']');
 }
+
+#if ENABLE_LOCAL_FILESYSTEM
 
 std::atomic<unsigned> LocalStorage::LastLocalStorageId;
 
@@ -405,6 +420,8 @@ std::size_t LocalStorage::uploadLocalFileToStorageAsync(
 
     return size;
 }
+
+#endif // ENABLE_LOCAL_FILESYSTEM
 
 void LockContext::initSupportsLocks()
 {
