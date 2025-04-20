@@ -71,7 +71,7 @@ static void handleSysSignal(int /* signal */,
                             siginfo_t *info,
                             void *context)
 {
-	ucontext_t *uctx = static_cast<ucontext_t *>(context);
+    ucontext_t* uctx = static_cast<ucontext_t*>(context);
 
     SigUtil::signalLogOpen();
     SigUtil::signalLogPrefix();
@@ -81,8 +81,8 @@ static void handleSysSignal(int /* signal */,
     SigUtil::signalLogNumber(reinterpret_cast<size_t>(context));
     SigUtil::signalLog("\n");
 
-	if (info->si_code != SYS_SECCOMP || !uctx)
-		return;
+    if (info->si_code != SYS_SECCOMP || !uctx)
+        return;
 
     unsigned int syscall = SECCOMP_SYSCALL (uctx);
 
