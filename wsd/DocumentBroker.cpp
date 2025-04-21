@@ -2633,7 +2633,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
 
     // Map the FileId from the docKey to the new filename to anonymize the new filename as the FileId.
     const std::string newFilename = Uri::getFilenameFromURL(uri);
-    const std::string fileId = Uri::getFilenameFromURL(_docKey);
+    const std::string fileId = Uri::getFilenameFromURL(Uri::decode(_docKey));
     if (COOLWSD::AnonymizeUserData)
     {
         LOG_DBG("New filename [" << COOLWSD::anonymizeUrl(newFilename)
