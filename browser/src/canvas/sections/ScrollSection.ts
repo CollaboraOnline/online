@@ -138,8 +138,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 		// Triggered by the document (e.g. search result out of the viewing area).
 		if (this.map.panBy) {
-			const offset = this.map.scrollOffset();
-			this.moveMapBy(e.x - offset.x, e.y - offset.y);
+			this.moveMapBy(e.x - app.file.viewedRectangle.cX1, e.y - app.file.viewedRectangle.cY1);
 		}
 	}
 
