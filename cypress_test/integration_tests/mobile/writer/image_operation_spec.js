@@ -16,6 +16,7 @@ describe(['tagmobile'],'Image Operation Tests', function() {
 	});
 
 	it('Delete Image', function() {
+		mobileHelper.insertImage();
 		mobileHelper.deleteImage();
 	});
 
