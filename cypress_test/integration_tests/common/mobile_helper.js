@@ -342,7 +342,6 @@ function insertImage() {
 function deleteImage() {
 	cy.log('>> deleteImage - start');
 
-	insertImage();
 	var eventOptions = {
 		force: true,
 		button: 0,
