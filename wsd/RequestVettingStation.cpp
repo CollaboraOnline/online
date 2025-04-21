@@ -65,7 +65,7 @@ void RequestVettingStation::handleRequest(const std::string& id)
 
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
-    const std::string fileId = Uri::getFilenameFromURL(docKey);
+    const std::string fileId = Uri::getFilenameFromURL(Uri::decode(docKey));
     Anonymizer::mapAnonymized(fileId,
                               fileId); // Identity mapping, since fileId is already obfuscated
 
@@ -240,7 +240,7 @@ void RequestVettingStation::handleRequest(const std::string& id,
 
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     std::string docKey = RequestDetails::getDocKey(uriPublic);
-    const std::string fileId = Uri::getFilenameFromURL(docKey);
+    const std::string fileId = Uri::getFilenameFromURL(Uri::decode(docKey));
     Anonymizer::mapAnonymized(fileId,
                               fileId); // Identity mapping, since fileId is already obfuscated
 

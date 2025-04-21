@@ -69,11 +69,11 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         const std::string& sessionId = tokens[1];
         _docKey = tokens[2];
         const std::string& docId = tokens[3];
-        const std::string fileId = Uri::getFilenameFromURL(_docKey);
+        const std::string url = Uri::decode(_docKey);
+        const std::string fileId = Uri::getFilenameFromURL(url);
         Anonymizer::mapAnonymized(fileId,
                                   fileId); // Identity mapping, since fileId is already obfuscated
 
-        const std::string url = Uri::decode(_docKey);
 #ifndef IOS
         Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
 #endif

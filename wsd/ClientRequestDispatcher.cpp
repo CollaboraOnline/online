@@ -2143,7 +2143,7 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
     LOG_INF("URL [" << url << "] for Proxy request.");
     auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
-    const std::string fileId = Uri::getFilenameFromURL(docKey);
+    const std::string fileId = Uri::getFilenameFromURL(Uri::decode(docKey));
     Anonymizer::mapAnonymized(fileId,
                               fileId); // Identity mapping, since fileId is already obfuscated
 

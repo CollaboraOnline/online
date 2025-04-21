@@ -763,7 +763,7 @@ Document::Document(const std::shared_ptr<lok::Office>& loKit, const std::string&
     , _docKey(docKey)
     , _docId(docId)
     , _url(url)
-    , _obfuscatedFileId(Uri::getFilenameFromURL(docKey))
+    , _obfuscatedFileId(Uri::getFilenameFromURL(Uri::decode(docKey)))
     , _queue(new KitQueue(*this))
     , _websocketHandler(websocketHandler)
     , _modified(ModifiedState::UnModified)

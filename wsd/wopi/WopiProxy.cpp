@@ -46,7 +46,7 @@ void WopiProxy::handleRequest([[maybe_unused]] const std::shared_ptr<Terminating
 
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     std::string docKey = RequestDetails::getDocKey(uriPublic);
-    const std::string fileId = Uri::getFilenameFromURL(docKey);
+    const std::string fileId = Uri::getFilenameFromURL(Uri::decode(docKey));
     Anonymizer::mapAnonymized(fileId,
                               fileId); // Identity mapping, since fileId is already obfuscated
 
