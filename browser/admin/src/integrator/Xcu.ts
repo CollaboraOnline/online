@@ -143,6 +143,9 @@ class Xcu {
 					? defaultXcuObj
 					: this.parse(XcuFileContent);
 		} catch (error) {
+			(window as any).SettingIframe.showErrorModal(
+				'Something went wrong while loading Document view settings.',
+			);
 			console.error('Error parsing XCU file:', error);
 		}
 	}
@@ -152,7 +155,9 @@ class Xcu {
 		const xmlDoc = parser.parseFromString(content, 'application/xml');
 
 		if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
-			throw new Error('Error parsing XCU file: Invalid XML content.');
+			(window as any).SettingIframe.showErrorModal(
+				'Something went wrong while loading Document view settings.',
+			);
 		}
 
 		const result: XcuObject = {};

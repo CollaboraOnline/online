@@ -232,7 +232,7 @@ class SettingIframe {
 			await this.populateSharedConfigUI(data);
 			console.debug('Shared config data: ', data);
 		} catch (error: unknown) {
-			this.showErrorModal(
+			SettingIframe.showErrorModal(
 				'Something went wrong, Please try to refresh the page.',
 			);
 			console.error('Error fetching shared config:', error);
@@ -304,7 +304,7 @@ class SettingIframe {
 
 			return await response.text();
 		} catch (error) {
-			this.showErrorModal(
+			SettingIframe.showErrorModal(
 				'Something went wrong while fetching setting file, Please try to refresh the page.',
 			);
 			return null;
@@ -342,7 +342,7 @@ class SettingIframe {
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : 'Unknown error';
 			console.error(`Error uploading file: ${message}`);
-			this.showErrorModal(
+			SettingIframe.showErrorModal(
 				'Something went wrong while fetching wordbook, Please try to refresh the page.',
 			);
 			this.wordbook.stopLoader();
@@ -376,7 +376,7 @@ class SettingIframe {
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : 'Unknown error';
 			console.error(`Error uploading file: ${message}`);
-			this.showErrorModal(
+			SettingIframe.showErrorModal(
 				'Something went wrong while uploading the file. Please try again.',
 			);
 		}
@@ -501,7 +501,7 @@ class SettingIframe {
 
 					await this.fetchAndPopulateSharedConfigs();
 				} catch (error: unknown) {
-					this.showErrorModal(
+					SettingIframe.showErrorModal(
 						'Something went wrong while deleting the file. Please try refreshing the page.',
 					);
 					console.error('Error deleting file:', error);
@@ -618,7 +618,7 @@ class SettingIframe {
 		return window.iframeType === 'admin';
 	}
 
-	private showErrorModal(message: string): void {
+	static showErrorModal(message: string): void {
 		const modal = document.createElement('div');
 		modal.className = 'modal';
 
