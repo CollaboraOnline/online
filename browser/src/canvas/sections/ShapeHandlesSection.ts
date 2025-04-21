@@ -396,7 +396,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 			video.addEventListener('playing', function() {
 				window.setTimeout(function() {
-					if (video.webkitDecodedFrameCount === 0) {
+					if (video.webkitDecodedFrameCount === 0 && video.webkitAudioDecodedByteCount === 0) {
 						this.showUnsupportedVideoWarning();
 					}
 				}.bind(this), 1000);
