@@ -54,7 +54,7 @@ class SettingIframe {
 			: '/browser/dist/upload-settings',
 		fetchSharedConfig: '/browser/dist/fetch-settings-config',
 		deleteSharedConfig: '/browser/dist/delete-settings-config',
-		fetchWordbook: 'browser/dist/fetch-wordbook',
+		fetchSettingFile: '/browser/dist/fetch-settings-file',
 	};
 
 	private PATH = {
@@ -288,7 +288,7 @@ class SettingIframe {
 			formData.append('fileUrl', fileId);
 			formData.append('accessToken', window.accessToken ?? '');
 
-			const apiUrl = this.API_ENDPOINTS.fetchWordbook;
+			const apiUrl = this.API_ENDPOINTS.fetchSettingFile;
 
 			const response = await fetch(apiUrl, {
 				method: 'POST',
@@ -311,29 +311,14 @@ class SettingIframe {
 		}
 	}
 
-	// TODO: Re-use fetchSettingFile function to fetch wordbook?
 	private async fetchWordbookFile(fileId: string): Promise<void> {
 		this.wordbook.startLoader();
-		const formData = new FormData();
-		formData.append('fileUrl', fileId);
-		formData.append('accessToken', window.accessToken ?? '');
 		try {
-			const apiUrl = this.API_ENDPOINTS.fetchWordbook;
+			const textValue = await this.fetchSettingFile(fileId);
 
-			const response = await fetch(apiUrl, {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${window.accessToken}`,
-				},
-				body: formData,
-			});
-
-			if (!response.ok) {
-				throw new Error(`Upload failed: ${response.statusText}`);
+			if (!textValue) {
+				throw new Error('Failed to fetch wordbook file');
 			}
-
-			let textValue = await response.text();
-			console.debug('textValue: ', textValue);
 
 			const wordbook = await this.wordbook.parseWordbookFileAsync(textValue);
 			const fileName = this.getFilename(fileId, false);
