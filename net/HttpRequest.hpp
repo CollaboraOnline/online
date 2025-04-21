@@ -2018,16 +2018,17 @@ public:
     void asyncShutdown()
     {
         LOG_TRC("asyncShutdown");
-        if (_socket)
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
         {
-            _socket->shutdown();
+            socket->shutdown();
         }
     }
 
     void dumpState(std::ostream& os, const std::string& indent) const override
     {
         const auto now = std::chrono::steady_clock::now();
-        os << indent << "http::ServerSession: #" << _fd << " (" << (_socket ? "have" : "no")
+        os << indent << "http::ServerSession: #" << _fd << " (" << (_socket.lock() ? "have" : "no")
            << " socket)";
         os << indent << "\tconnected: " << _connected;
         os << indent << "\tstartTime: " << Util::getTimeForLog(now, _startTime);
@@ -2091,8 +2092,9 @@ private:
     void getIOStats(uint64_t& sent, uint64_t& recv) override
     {
         LOG_TRC("getIOStats");
-        if (_socket)
-            _socket->getIOStats(sent, recv);
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            socket->getIOStats(sent, recv);
         else
         {
             sent = 0;
@@ -2113,14 +2115,15 @@ private:
     void handleIncomingMessage(SocketDisposition& /*disposition*/) override
     {
         ASSERT_CORRECT_THREAD();
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!isConnected())
         {
             LOG_ERR("handleIncomingMessage called when not connected.");
-            assert(!_socket && "Expected no socket when not connected.");
+            assert(!socket && "Expected no socket when not connected.");
             return;
         }
 
-        assert(_socket && "No valid socket to handleIncomingMessage.");
+        assert(socket && "No valid socket to handleIncomingMessage.");
         LOG_TRC("handleIncomingMessage");
     }
 
@@ -2128,9 +2131,10 @@ private:
     {
         ASSERT_CORRECT_THREAD();
         // We may get called after disconnecting and freeing the Socket instance.
-        if (_socket)
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
         {
-            const Buffer& out = _socket->getOutBuffer();
+            const Buffer& out = socket->getOutBuffer();
             LOG_TRC("performWrites: " << out.size() << " bytes, capacity: " << capacity);
 
             while (_fd >= 0 && capacity > 0)
@@ -2159,7 +2163,7 @@ private:
                     break;
                 }
 
-                _socket->send(buffer, n);
+                socket->send(buffer, n);
                 _pos += n;
                 LOG_ASSERT(static_cast<std::size_t>(n) <= capacity);
                 capacity -= n;
@@ -2172,12 +2176,12 @@ private:
     {
         ASSERT_CORRECT_THREAD();
         // Make sure the socket is disconnected and released.
-        if (_socket)
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
         {
             LOG_TRC("onDisconnect");
-
-            _socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
-            _socket->shutdownConnection(); // Immediately disconnect.
+            socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
+            socket->shutdownConnection(); // Immediately disconnect.
             _socket.reset();
         }
 
@@ -2210,7 +2214,7 @@ private:
     FinishedCallback _onFinished;
     /// Keep _socket as last member so it is destructed first, ensuring that
     /// the peer members it depends on are not destructed before it
-    std::shared_ptr<StreamSocket> _socket;
+    std::weak_ptr<StreamSocket> _socket;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const http::Header& header)
