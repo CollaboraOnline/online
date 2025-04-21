@@ -285,6 +285,17 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	display: none;
 }
 
+.unoChartColorPalette.unotoolbutton > .unobutton {
+	width: calc(3*var(--btn-size));
+	height: calc(2*var(--btn-size));
+}
+
+.unoChartColorPalette.unotoolbutton > .unobutton img {
+	width: calc(3*var(--btn-img-size));
+	height: calc(2*var(--btn-img-size));
+}
+
+
 /* not available commands*/
 
 .sidebar #orientationcontrol,
