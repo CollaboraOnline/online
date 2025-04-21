@@ -3255,12 +3255,12 @@ public:
 
     void start(std::shared_ptr<ServerSocket>&& serverSocket)
     {
-        _acceptPoll.startThread();
-        _acceptPoll.insertNewSocket(std::move(serverSocket));
-
 #if MOBILEAPP
         coolwsd_server_socket_fd = serverSocket->getFD();
 #endif
+
+        _acceptPoll.startThread();
+        _acceptPoll.insertNewSocket(std::move(serverSocket));
 
         WebServerPoll->startThread();
 
