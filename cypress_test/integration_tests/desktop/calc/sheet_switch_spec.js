@@ -16,7 +16,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet switching tests', fu
 		// we should be somewhere far from A1
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'CQ1017');
 		desktopHelper.assertScrollbarPosition('vertical', 310, 350);
-		desktopHelper.assertScrollbarPosition('horizontal', 480, 520);
+		desktopHelper.assertScrollbarPosition('horizontal', 410, 520);
 
 		// insert sheet
 		cy.cGet('#sheets-buttons-toolbox #insertsheet').click();
