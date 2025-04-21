@@ -660,7 +660,7 @@ static IMP standardImpOfInputAccessoryView = nil;
             }
         } else if ([message.body isEqualToString:@"FONTPICKER"]) {
             UIFontPickerViewControllerConfiguration *configuration = [[UIFontPickerViewControllerConfiguration alloc] init];
-            configuration.includeFaces = YES;
+            configuration.includeFaces = NO;
             UIFontPickerViewController *picker = [[UIFontPickerViewController alloc] initWithConfiguration:configuration];
             picker.delegate = self;
             [self presentViewController:picker
