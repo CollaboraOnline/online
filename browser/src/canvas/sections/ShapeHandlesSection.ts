@@ -397,25 +397,25 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			video.addEventListener('playing', function() {
 				window.setTimeout(function() {
 					if (video.webkitDecodedFrameCount === 0 && video.webkitAudioDecodedByteCount === 0) {
-						this.showUnsupportedVideoWarning();
+						this.showUnsupportedMediaWarning();
 					}
 				}.bind(this), 1000);
 			}.bind(this));
 
 			video.addEventListener('error', function() {
-				this.showUnsupportedVideoWarning();
+				this.showUnsupportedMediaWarning();
 			}.bind(this));
 
 			if (sources.length) {
 				sources[0].addEventListener('error', function(error: string) {
-					this.showUnsupportedVideoWarning();
+					this.showUnsupportedMediaWarning();
 				}.bind(this));
 			}
 		}
 	}
 
-	showUnsupportedVideoWarning() {
-		var videoWarning = _('Document contains unsupported video');
+	showUnsupportedMediaWarning() {
+		var videoWarning = _('Document contains unsupported media');
 		L.Map.THIS.uiManager.showSnackbar(videoWarning);
 	}
 
