@@ -525,19 +525,16 @@ class Dispatcher {
 
 		this.actionsMap['previouspart'] = function () {
 			app.map._docLayer._preview._scrollViewByDirection('prev');
-			if (app.file.fileBasedView) app.map._docLayer._checkSelectedPart();
 		};
 
 		this.actionsMap['nextpart'] = function () {
 			app.map._docLayer._preview._scrollViewByDirection('next');
-			if (app.file.fileBasedView) app.map._docLayer._checkSelectedPart();
 		};
 
 		this.actionsMap['lastpart'] = function () {
 			if (app && app.file.fileBasedView === true) {
 				const partToSelect = app.map._docLayer._parts - 1;
 				app.map._docLayer._preview._scrollViewToPartPosition(partToSelect);
-				app.map._docLayer._checkSelectedPart();
 			}
 		};
 
@@ -545,7 +542,6 @@ class Dispatcher {
 			if (app && app.file.fileBasedView === true) {
 				const partToSelect = 0;
 				app.map._docLayer._preview._scrollViewToPartPosition(partToSelect);
-				app.map._docLayer._checkSelectedPart();
 			}
 		};
 

@@ -552,6 +552,9 @@ export class ScrollSection extends CanvasSectionObject {
 			this.map.panBy(new L.Point(this.sectionProperties.moveMapBy[0], this.sectionProperties.moveMapBy[1]));
 			this.sectionProperties.moveMapBy = null;
 			this.onUpdateScrollOffset();
+
+			if (app && app.file.fileBasedView === true)
+				app.map._docLayer._checkSelectedPart();
 		}
 	}
 
