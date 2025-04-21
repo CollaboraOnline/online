@@ -138,14 +138,14 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 		// Triggered by the document (e.g. search result out of the viewing area).
 		if (this.map.panBy) {
-			this.moveMapBy(e.x - app.file.viewedRectangle.cX1, e.y - app.file.viewedRectangle.cY1);
+			this.moveMapBy(e.x - app.file.viewedRectangle.cX1, e.y - app.file.viewedRectangle.cY1, true);
 		}
 	}
 
-	public moveMapBy(cX: number, cY: number): void {
+	public moveMapBy(cX: number, cY: number, reset: boolean = false): void {
 		if (this.sectionProperties.moveMapBy !== null) {
-			this.sectionProperties.moveMapBy[0] += cX;
-			this.sectionProperties.moveMapBy[1] += cY;
+			this.sectionProperties.moveMapBy[0] = reset === false ? this.sectionProperties.moveMapBy[0] + cX : cX;
+			this.sectionProperties.moveMapBy[1] = reset === false ? this.sectionProperties.moveMapBy[1] + cY : cY;
 		}
 		else {
 			this.sectionProperties.moveMapBy = [cX, cY];
