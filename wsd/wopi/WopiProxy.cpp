@@ -232,7 +232,7 @@ void WopiProxy::download(const std::shared_ptr<TerminatingPoll>& poll, const std
                                                      << httpRequest.header());
 
     http::Session::FinishedCallback finishedCallback =
-        [this, &poll, startTime, url, uriPublic, uriAnonym=std::move(uriAnonym),
+        [this, &poll, startTime, url, uriAnonym=std::move(uriAnonym),
          redirectLimit](const std::shared_ptr<http::Session>& session)
     {
         if (SigUtil::getShutdownRequestFlag())
