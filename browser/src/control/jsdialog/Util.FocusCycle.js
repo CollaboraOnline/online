@@ -36,16 +36,12 @@ function getFocusableElements(container) {
 	if (!container)
 		return null;
 
-	var ret = container.querySelectorAll('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker):not([disabled]):not(.hidden)');
-	if (!ret.length)
-		ret = container.querySelectorAll('input:not([disabled]):not(.hidden)');
-	if (!ret.length)
-		ret = container.querySelectorAll('textarea:not([disabled]):not(.hidden)');
-	if (!ret.length)
-		ret = container.querySelectorAll('select:not([disabled]):not(.hidden)');
-	if (!ret.length)
-		ret = container.querySelectorAll('button:not([disabled]):not(.hidden)');
-	return ret;
+	return container.querySelectorAll('input:not([disabled]):not(.hidden),' +
+                                          'textarea:not([disabled]):not(.hidden),' +
+                                          'select:not([disabled]):not(.hidden),' +
+                                          'button:not([disabled]):not(.hidden),' +
+                                          '[tabIndex="0"]:not(.jsdialog-begin-marker,' +
+                                          '.jsdialog-end-marker, .ui-grid-cell):not([disabled]):not(.hidden)');
 }
 
 // Utility function to check if an element is focusable
