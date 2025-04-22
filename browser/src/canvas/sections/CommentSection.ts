@@ -18,6 +18,15 @@ declare var Autolinker: any;
 declare var DOMPurify : any;
 declare var Hammer: any;
 
+// By default DOMPurify will strip all targets, so set everything
+// as target=_blank with rel=noopener
+DOMPurify.addHook('afterSanitizeAttributes', function (node: HTMLElement) {
+	if (node.tagName === 'A') {
+		node.setAttribute('target', '_blank');
+		node.setAttribute('rel', 'noopener');
+	}
+});
+
 namespace cool {
 
 /*
