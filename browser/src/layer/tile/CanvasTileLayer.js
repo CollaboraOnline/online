@@ -2268,6 +2268,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			// when json.commandName is '.uno:RowColSelCount'.
 			if (json.commandName && json.state !== undefined) {
 				this._map.fire('commandstatechanged', json);
+				if (window.ThisIsTheMacOSApp) {
+					window.postMobileMessage('COMMANDSTATECHANGED ' + JSON.stringify(json));
+				}
 			}
 		}
 		else if (textMsg.startsWith('.uno:Context=') && this._docType === 'presentation') {
@@ -2277,7 +2280,11 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			var index = textMsg.indexOf('=');
 			var commandName = index !== -1 ? textMsg.substr(0, index) : '';
 			var state = index !== -1 ? textMsg.substr(index + 1) : '';
-			this._map.fire('commandstatechanged', {commandName : commandName, state : state});
+			const json = {commandName : commandName, state : state};
+			this._map.fire('commandstatechanged', json);
+			if (window.ThisIsTheMacOSApp) {
+				window.postMobileMessage('COMMANDSTATECHANGED ' + JSON.stringify(json));
+			}
 		}
 	},
 
