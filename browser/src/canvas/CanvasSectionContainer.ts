@@ -1336,10 +1336,10 @@ class CanvasSectionContainer {
 		this.canvas.style.height = cssHeight.toFixed(4) + 'px';
 
 		// Avoid black default background.
+		if (!oldImageData || this.width < newWidth || this.height < newHeight)
+			this.clearCanvas();
 		if (oldImageData)
 			this.context.putImageData(oldImageData, 0, 0);
-		else
-			this.clearCanvas();
 
 		this.clearMousePositions();
 		this.width = this.canvas.width;
