@@ -3985,6 +3985,8 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
     const bool isReadOnly,
     const RequestDetails &requestDetails)
 {
+    ASSERT_CORRECT_THREAD();
+
     try
     {
         if (isMarkedToDestroy() || _docState.isCloseRequested())

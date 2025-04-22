@@ -460,20 +460,6 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
     assert(docBroker && "Must have DocBroker");
     assert(_ws && "Must have WebSocket");
 
-    const bool isReadOnly = Uri::hasReadonlyPermission(uriPublic.toString());
-    std::shared_ptr<ClientSession> clientSession =
-        docBroker->createNewClientSession(_ws, _id, uriPublic, isReadOnly, _requestDetails);
-    if (!clientSession)
-    {
-        LOG_ERR("Failed to create Client Session [" << _id << "] on docKey [" << docKey << ']');
-        sendErrorAndShutdown("error: cmd=internal kind=load",
-                             WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
-        return;
-    }
-
-    LOG_DBG("ClientSession [" << clientSession->getName() << "] for [" << docKey
-                              << "] acquired for [" << url << ']');
-
     std::unique_ptr<WopiStorage::WOPIFileInfo> realWopiFileInfo;
 #if !MOBILEAPP
     assert((!_checkFileInfo || _checkFileInfo->wopiInfo()) &&
@@ -491,8 +477,8 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
     std::shared_ptr<WebSocketHandler> ws = _ws;
     docBroker->setupTransfer(*_poll, socket,
-        [clientSession = std::move(clientSession), wopiFileInfo = std::move(wopiFileInfo),
-         ws = std::move(ws), docBroker,
+        [wopiFileInfo = std::move(wopiFileInfo), ws = std::move(ws), id = _id,
+         requestDetails = _requestDetails, docBroker, docKey, url, uriPublic,
          selfLifecycle = shared_from_this()](const std::shared_ptr<Socket>& moveSocket)
         {
             try
@@ -505,7 +491,24 @@ void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBr
                 // Note: this replaces ClientRequestDispatcher, which owns us.
                 streamSocket->setHandler(ws);
 
-                LOG_DBG_S('#' << moveSocket->getFD() << " handler is " << clientSession->getName());
+                std::string logPrefix = '#' + std::to_string(moveSocket->getFD()) + ' ';
+
+                const bool isReadOnly = Uri::hasReadonlyPermission(uriPublic.toString());
+                std::shared_ptr<ClientSession> clientSession = docBroker->createNewClientSession(
+                    ws, id, uriPublic, isReadOnly, requestDetails);
+                if (!clientSession)
+                {
+                    LOG_ERR_S(logPrefix << "Failed to create Client Session [" << id
+                                        << "] on docKey [" << docKey << ']');
+                    sendErrorAndShutdownWS(ws, "error: cmd=internal kind=load",
+                                           WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
+                    return;
+                }
+
+                LOG_DBG_S(logPrefix << "handler is " << clientSession->getName());
+
+                LOG_DBG_S(logPrefix << "ClientSession [" << clientSession->getName() << "] for ["
+                                    << docKey << "] acquired for [" << url << ']');
 
                 // Add and load the session.
                 // Will download synchronously, but in own docBroker thread.
