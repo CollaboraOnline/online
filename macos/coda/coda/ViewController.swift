@@ -88,7 +88,22 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                     //self.bye()
                     return
                 }
-                else if body.starts(with: "MODIFIED ") {
+                else if body.hasPrefix("COMMANDSTATECHANGED ") {
+                    if let brace = body.firstIndex(of: "{") {
+                        // substring that shares storage with the original string
+                        let jsonSlice = body[brace...]
+
+                        // convert directly to Data and decode.
+                        let data = Data(jsonSlice.utf8)
+                        do {
+                            let state = try JSONDecoder().decode(CommandStateChange.self, from: data)
+                            if let windowController = view.window?.windowController as? WindowController {
+                                windowController.handleCommandStateChange(state)
+                            }
+                        } catch {}
+                    }
+                }
+                else if body.hasPrefix("MODIFIED ") {
                     document?.isModified = body.hasSuffix("true")
                     return
                 }

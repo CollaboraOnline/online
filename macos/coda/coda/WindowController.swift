@@ -16,33 +16,45 @@ enum FormatMenuCommand: Int {
     case underline
 }
 
-let formatMenuUnoCommands: [FormatMenuCommand: String] = [
+let formatMenuCommandNames: [FormatMenuCommand: String] = [
     .bold: "Bold",
     .italic: "Italic",
     .underline: "Underline"
 ]
 
+/// The structure we expect in the COMMANDSTATECHANGED payload.
+struct CommandStateChange: Decodable {
+    let commandName: String
+    let state: String
+}
+
 /// Window controller that manages the document window & menus
 class WindowController: NSWindowController, NSMenuItemValidation {
 
     /// Track menu states here, to be able to show the state in the menu
-    var formatStates: [FormatMenuCommand: Bool] = [:]
+    var formatStates: [String: Bool] = [:]
 
     /// Single IBAction for all Format commands in the menu
     @IBAction func formatMenuAction(_ sender: NSMenuItem) {
         guard let command = FormatMenuCommand(rawValue: sender.tag) else { return }
 
-        // Toggle or otherwise update the command state
-        let oldVal = formatStates[command] ?? false
-        let newVal = !oldVal
-        formatStates[command] = newVal
-
         // Forward to the ViewController so it can actually set bold/italic/...
         if let vc = contentViewController as? ViewController {
-            if let unoCommand = formatMenuUnoCommands[command] ?? nil {
+            if let unoCommand = formatMenuCommandNames[command] ?? nil {
                 COWrapper.handleMessage(with: vc.document, message: "uno .uno:\(unoCommand)")
             }
         }
+    }
+
+    /// Remember the new command state value as provided by JS.
+    func handleCommandStateChange(_ stateChange: CommandStateChange) {
+        // extract the command name from the ".uno:CommandName" form
+        let unoCommmandName = stateChange.commandName
+        guard let colon = unoCommmandName.firstIndex(of: ":") else { return }
+        let commandName = unoCommmandName[unoCommmandName.index(after: colon)...]
+
+        // store it
+        formatStates[String(commandName)] = stateChange.state == "true"
     }
 
     /// Show on/off checkmarks for the particular command(s) like Bold/Italics/...
@@ -51,12 +63,12 @@ class WindowController: NSWindowController, NSMenuItemValidation {
             return true // not our action
         }
 
-        guard let command = FormatMenuCommand(rawValue: menuItem.tag) else {
-            return false
-        }
+        // convert the id to a command name
+        guard let command = FormatMenuCommand(rawValue: menuItem.tag) else { return false }
+        guard let commandName = formatMenuCommandNames[command] else { return false }
 
         // Show a check if the command is currently ON
-        let isOn = formatStates[command] ?? false
+        let isOn = formatStates[commandName] ?? false
         menuItem.state = isOn ? .on : .off
         return true
     }
