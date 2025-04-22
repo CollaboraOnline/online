@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
+using Microsoft.Win32;
 
 namespace CODA
 {
@@ -147,6 +148,21 @@ namespace CODA
             SetWebView(webView2XamlElement);
             await InitializeWebView(webView2XamlElement);
             _iWebView2.CoreWebView2.WebMessageReceived += WebView_WebMessageReceived;
+        }
+
+        private void MainWindow_FileOpen(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter =
+                "Text documents|*.odt;*.docx;*.doc|" +
+                "Spreadsheets|*.ods;*.xlsx;*.xls|" +
+                "Presentations|*.odp;*.pptx;*.ppt|" +
+                "All files|*.*";
+
+            String file = "";
+			if (openFileDialog.ShowDialog() == true)
+				 file = openFileDialog.FileName;
+            Debug.WriteLine($"MainWindow_FileOpen: {file}");
         }
 
         void WebView_WebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs args)
