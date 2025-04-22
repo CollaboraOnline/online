@@ -2165,7 +2165,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 {
                     if (_isConvertTo)
                     {
-                        abortConversion(docBroker, saveAsSocket, errorKind);
+                        abortConversion(docBroker, saveAsSocket, std::move(errorKind));
                     }
                     else
                     {
@@ -2173,6 +2173,12 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     }
                     return false;
                 }
+            }
+            else if (_isConvertTo && errorCommand == "saveas")
+            {
+                // Conversion failed.
+                abortConversion(docBroker, saveAsSocket, std::move(errorKind));
+                return false;
             }
             else
             {
@@ -2877,7 +2883,7 @@ void ClientSession::abortConversion(const std::shared_ptr<DocumentBroker>& docBr
     {
         http::Response response(http::StatusCode::Unauthorized);
         response.set("X-ERROR-KIND", std::move(errorKind));
-        saveAsSocket->send(response);
+        saveAsSocket->sendAndShutdown(response);
     }
 
     // Conversion failed, cleanup fake session.
