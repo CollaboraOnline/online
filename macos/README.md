@@ -10,6 +10,12 @@
     * brew install zstd
 * missing from the iOS build instructions (needed for online.git)
     * brew install libtool
+* zlib
+    * brew install zlib
+* libpng
+    * brew install libpng
+* cppunit
+    * brew install cppunit
 
 * install dependencies for the canvas@next
     * brew install cairo
