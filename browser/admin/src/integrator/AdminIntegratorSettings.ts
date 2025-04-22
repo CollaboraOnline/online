@@ -311,7 +311,9 @@ class SettingIframe {
 			return await response.text();
 		} catch (error) {
 			SettingIframe.showErrorModal(
-				_('Something went wrong while fetching setting file, Please try to refresh the page.'),
+				_(
+					'Something went wrong while fetching setting file, Please try to refresh the page.',
+				),
 			);
 			return null;
 		}
@@ -334,7 +336,9 @@ class SettingIframe {
 			const message = error instanceof Error ? error.message : 'Unknown error';
 			console.error(`Error uploading file: ${message}`);
 			SettingIframe.showErrorModal(
-				_('Something went wrong while fetching wordbook, Please try to refresh the page.'),
+				_(
+					'Something went wrong while fetching wordbook, Please try to refresh the page.',
+				),
 			);
 			this.wordbook.stopLoader();
 		}
@@ -493,7 +497,9 @@ class SettingIframe {
 					await this.fetchAndPopulateSharedConfigs();
 				} catch (error: unknown) {
 					SettingIframe.showErrorModal(
-						_('Something went wrong while deleting the file. Please try refreshing the page.'),
+						_(
+							'Something went wrong while deleting the file. Please try refreshing the page.',
+						),
 					);
 					console.error('Error deleting file:', error);
 				}

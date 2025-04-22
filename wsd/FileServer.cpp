@@ -1033,8 +1033,7 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 return true;
             }
 
-            if (endPoint == "admin-bundle.js" ||
-                endPoint == "admin-localizations.js")
+            if (endPoint == "admin-bundle.js")
             {
                 noCache = true;
 
