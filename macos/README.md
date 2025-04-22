@@ -75,6 +75,13 @@ not /opt/homebrew.
 If you find an instance of /Users/kendy hardcoded somewhere, please
 report that, it's a mistake and should be fixed.
 
+## Install branding
+
+Checkout online-branding, and install the branding like the following (please
+update the paths to the core instdir and online repo):
+
+./brand.sh ~/Projects/lo/core/instdir ../online/browser/dist 1
+
 ## Then you can build CODA-M:
 
 * ( cd browser ; gmake )
