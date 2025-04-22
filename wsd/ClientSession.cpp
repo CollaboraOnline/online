@@ -2165,21 +2165,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 {
                     if (_isConvertTo)
                     {
-                        if (!saveAsSocket)
-                            LOG_ERR("Error saveas socket missing in isConvertTo mode");
-                        else
-                        {
-                            http::Response response(http::StatusCode::Unauthorized);
-                            response.set("X-ERROR-KIND", std::move(errorKind));
-                            saveAsSocket->send(response);
-                        }
-
-                        // Conversion failed, cleanup fake session.
-                        LOG_TRC("Removing save-as ClientSession after conversion error.");
-                        // Remove us.
-                        docBroker->removeSession(client_from_this());
-                        // Now terminate.
-                        docBroker->stop("Aborting saveas handler.");
+                        abortConversion(docBroker, saveAsSocket, errorKind);
                     }
                     else
                     {
@@ -2877,6 +2863,29 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
     // Forward everything else.
     return forwardToClient(payload);
+}
+
+void ClientSession::abortConversion(const std::shared_ptr<DocumentBroker>& docBroker,
+                                    const std::shared_ptr<StreamSocket>& saveAsSocket,
+                                    std::string errorKind)
+{
+    assert(_isConvertTo && "Expected convert-to context");
+
+    if (!saveAsSocket)
+        LOG_ERR("Error saveas socket missing in isConvertTo mode");
+    else
+    {
+        http::Response response(http::StatusCode::Unauthorized);
+        response.set("X-ERROR-KIND", std::move(errorKind));
+        saveAsSocket->send(response);
+    }
+
+    // Conversion failed, cleanup fake session.
+    LOG_DBG("Removing save-as ClientSession after conversion error.");
+    // Remove us.
+    docBroker->removeSession(client_from_this());
+    // Now terminate.
+    docBroker->stop("Aborting saveas handler.");
 }
 
 bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
