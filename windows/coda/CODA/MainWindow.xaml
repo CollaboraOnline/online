@@ -8,13 +8,22 @@
         xmlns:local="clr-namespace:CODA"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-  <Grid x:Name="Layout">
-    <wv2:WebView2 x:Name="webView2XamlElement">
+  <StackPanel>
+    <Menu>
+      <MenuItem Header="File">
+        <MenuItem Header="Open..." Click="MainWindow_FileOpen"/>
+        <MenuItem Header="Save"/>
+        <MenuItem Header="Save As..."/>
+        <Separator/>
+        <MenuItem Header="Exit"/>
+      </MenuItem>
+    </Menu>
+    <!-- Will the height anyway be bound by what fits inside the parent below
+         the menu bar? -->
+    <wv2:WebView2 x:Name="webView2XamlElement" Height="1000">
       <wv2:WebView2.CreationProperties>
-        <wv2:CoreWebView2CreationProperties
-            BrowserExecutableFolder=""
-            AdditionalBrowserArguments="" />
+        <wv2:CoreWebView2CreationProperties BrowserExecutableFolder="" AdditionalBrowserArguments="" />
       </wv2:WebView2.CreationProperties>
     </wv2:WebView2>
-  </Grid>
+  </StackPanel>
 </Window>
