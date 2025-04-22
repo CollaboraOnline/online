@@ -112,6 +112,31 @@ JSDialog.grid = function (
 			const control = sandbox.firstChild;
 			if (control) {
 				L.DomUtil.addClass(control, 'ui-grid-cell');
+
+				const nestedRows = builder._getGridRows(child.children);
+				const nestedCols = builder._getGridColumns(child.children);
+
+				if (nestedCols > 1 && control.classList.contains('ui-grid')) {
+					const gap = 24;
+
+					let columnsTemplate = '';
+					for (let i = 0; i < nestedCols; i++) {
+						columnsTemplate += '1fr ';
+					}
+					columnsTemplate = columnsTemplate.trim();
+
+					const nestedGridStyle =
+						'grid-template-rows: repeat(' +
+						nestedRows +
+						', auto); \
+							grid-template-columns: ' +
+						columnsTemplate +
+						'; \
+							column-gap: ' +
+						gap +
+						'px;';
+					control.style = nestedGridStyle;
+				}
 				table.appendChild(control);
 			}
 			processedChildren.push(child);

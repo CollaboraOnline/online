@@ -327,7 +327,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-tabpage.jsdialog {
-	width: 100%;
 	height: 100%;
 }
 
