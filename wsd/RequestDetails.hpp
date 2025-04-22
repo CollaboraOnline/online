@@ -260,7 +260,7 @@ public:
         return (_isGet || _isHead) && _uriString == path;
     }
 
-    bool equals(std::size_t index, const char* string) const
+    bool equals(std::size_t index, const std::string_view string) const
     {
         return _pathSegs.equals(index, string);
     }
@@ -290,10 +290,10 @@ public:
         return it != _fields.end() ? it->second : std::string();
     }
 
-    bool equals(const Field field, const char* string) const
+    bool equals(const Field field, const std::string_view string) const
     {
         const auto it = _fields.find(field);
-        return it != _fields.end() ? it->second == string : (string == nullptr || *string == '\0');
+        return it != _fields.end() ? it->second == string : string.empty();
     }
 
     std::string toString() const
