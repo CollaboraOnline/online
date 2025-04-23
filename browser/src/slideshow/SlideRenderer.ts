@@ -138,6 +138,7 @@ class SlideRenderer2d extends SlideRenderer {
 		});
 
 		gl.drawImage(slideImage, 0, 0);
+		slideImage.close();
 
 		gl.setTransform(1, 0, 0, 1, 0, 0);
 
@@ -254,6 +255,7 @@ class SlideRendererGl extends SlideRenderer {
 			frame: slideImage,
 		});
 		this.updateTexture(this._slideTexture, slideImage);
+		slideImage.close();
 		return this._slideTexture;
 	}
 
