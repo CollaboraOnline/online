@@ -478,6 +478,32 @@ class TileManager {
 		this.garbageCollect();
 	}
 
+	private static createTileBitmap(
+		tile: Tile,
+		delta: any,
+		deltas: any[],
+		bitmaps: Promise<ImageBitmap>[],
+	) {
+		if (tile.imgDataCache) {
+			bitmaps.push(
+				createImageBitmap(tile.imgDataCache, {
+					premultiplyAlpha: 'none',
+				}),
+			);
+			deltas.push(delta);
+		} else {
+			// This is an error state, tiles should not have a null ImageData
+			// after a keyframe or delta update. It's still a good idea to maintain
+			// correct properties for a chance at recovery and continuing in a
+			// coherent state.
+			tile.distanceFromView = Number.MAX_SAFE_INTEGER;
+			if (delta.isKeyframe) --tile.hasPendingKeyframe;
+			else --tile.hasPendingDelta;
+			if (!tile.hasPendingUpdate())
+				this.tileReady(tile.coords, this.getVisibleRanges());
+		}
+	}
+
 	private static decompressPendingDeltas(message: string) {
 		++this.pendingTransactions;
 		if (this.worker) {
@@ -544,12 +570,7 @@ class TileManager {
 					e.wireMessage,
 				);
 
-				if (tile.imgDataCache) {
-					bitmaps.push(
-						createImageBitmap(tile.imgDataCache, { premultiplyAlpha: 'none' }),
-					);
-					pendingDeltas.push(e);
-				}
+				this.createTileBitmap(tile, e, pendingDeltas, bitmaps);
 			}
 
 			Promise.all(bitmaps).then((bitmaps) => {
@@ -2136,14 +2157,7 @@ class TileManager {
 						x.wireMessage,
 					);
 
-					if (tile.imgDataCache) {
-						bitmaps.push(
-							createImageBitmap(tile.imgDataCache, {
-								premultiplyAlpha: 'none',
-							}),
-						);
-						pendingDeltas.push(x);
-					}
+					this.createTileBitmap(tile, x, pendingDeltas, bitmaps);
 				}
 
 				Promise.all(bitmaps).then((bitmaps) => {
