@@ -239,7 +239,7 @@ class SettingIframe {
 			console.debug('Shared config data: ', data);
 		} catch (error: unknown) {
 			SettingIframe.showErrorModal(
-				_('Something went wrong, Please try to refresh the page.'),
+				_('Something went wrong. Please try to refresh the page.'),
 			);
 			console.error('Error fetching shared config:', error);
 		}
@@ -312,7 +312,7 @@ class SettingIframe {
 		} catch (error) {
 			SettingIframe.showErrorModal(
 				_(
-					'Something went wrong while fetching setting file, Please try to refresh the page.',
+					'Something went wrong while fetching setting file. Please try to refresh the page.',
 				),
 			);
 			return null;
@@ -337,7 +337,7 @@ class SettingIframe {
 			console.error(`Error uploading file: ${message}`);
 			SettingIframe.showErrorModal(
 				_(
-					'Something went wrong while fetching wordbook, Please try to refresh the page.',
+					'Something went wrong while fetching wordbook. Please try to refresh the page.',
 				),
 			);
 			this.wordbook.stopLoader();
@@ -588,7 +588,7 @@ class SettingIframe {
 				this.xcuEditor.createXcuEditorUI(xcuContainer),
 			);
 		} else {
-			// If user don't have any xcu file, We generate with default settings...
+			// If user doesn't have any xcu file, we generate with default settings...
 			this.xcuEditor = new (window as any).Xcu('documentView.xcu', null);
 			this.xcuEditor.generateXcuAndUpload();
 			return await this.fetchAndPopulateSharedConfigs();
@@ -623,7 +623,7 @@ class SettingIframe {
 		modalContent.className = 'modal-content';
 
 		const header = document.createElement('h2');
-		header.textContent = 'Error';
+		header.textContent = _('Error');
 		header.style.textAlign = 'center';
 		modalContent.appendChild(header);
 
@@ -635,7 +635,7 @@ class SettingIframe {
 		buttonContainer.className = 'modal-button-container';
 
 		const okButton = document.createElement('button');
-		okButton.textContent = 'OK';
+		okButton.textContent = _('OK');
 		okButton.classList.add('button', 'button--vue-secondary');
 		okButton.addEventListener('click', () => {
 			document.body.removeChild(modal);
