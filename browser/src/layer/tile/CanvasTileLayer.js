@@ -231,10 +231,6 @@ L.TileSectionManager = L.Class.extend({
 		sourceElement.addEventListener('touchcancel', function (e) { app.sectionContainer.onTouchCancel(e); }, true);
 	},
 
-	dispose: function () {
-		this.stopUpdates();
-	},
-
 	getSplitPos: function () {
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		return splitPanesContext ?
