@@ -227,13 +227,15 @@ void RequestVettingStation::launchInstallPresets()
 void RequestVettingStation::handleRequest(const std::string& id,
                                           const RequestDetails& requestDetails,
                                           const std::shared_ptr<WebSocketHandler>& ws,
-                                          unsigned mobileAppDocId, SocketDisposition& disposition)
+                                          const std::shared_ptr<StreamSocket>& socket,
+                                          unsigned mobileAppDocId, SocketDisposition& /*disposition*/)
 {
     _id = id;
     _requestDetails = requestDetails;
     _ws = ws;
+    _socket = socket;
+    _logContextFD = socket->getFD();
     _mobileAppDocId = mobileAppDocId;
-    _logContextFD = disposition.getSocket()->getFD();
 
     std::string url = _requestDetails.getDocumentURI();
 
@@ -275,15 +277,15 @@ void RequestVettingStation::handleRequest(const std::string& id,
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
                             << docKey << "] is for a FileSystem document");
 
-            // Remove from the current poll and transfer.
             LOG_TRC("Dissociating client socket from "
-                    "ClientRequestDispatcher and creating DocBroker for [" << docKey << ']');
+                             "ClientRequestDispatcher and creating DocBroker for ["
+                          << docKey << ']');
 
             // Create the DocBroker.
             if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey, "",
                         url, uriPublic))
             {
-                createClientSession(disposition, ws, docBroker, docKey, url, uriPublic);
+                createClientSession(docBroker, docKey, url, uriPublic);
             }
             break;
 #endif // ENABLE_LOCAL_FILESYSTEM
@@ -292,35 +294,33 @@ void RequestVettingStation::handleRequest(const std::string& id,
         case StorageBase::StorageType::Wopi:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
                             << docKey << "] is for a WOPI document");
+            // Remove from the current poll and transfer.
+            LOG_TRC("Dissociating client socket from "
+                             "ClientRequestDispatcher and invoking CheckFileInfo for ["
+                          << docKey << "], "
+                          << (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
+                                             : "no CheckFileInfo"));
 
             // CheckFileInfo and only when it's good create DocBroker.
             if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Active)
             {
-                // Wait for CheckFileInfo result. Defer creating DocBroker and transferring
-                // the socket to it until there is a CheckFileInfo result.
+                // Wait for CheckFileInfo result.
                 LOG_DBG("CheckFileInfo request is in progress. Will resume when done");
             }
             else if (_checkFileInfo &&
                      _checkFileInfo->state() == CheckFileInfo::State::Pass &&
                      _checkFileInfo->wopiInfo())
             {
-                // At this point we already have everything we need to; create
-                // a DocBroker, its ClientSession, and transfer the disposition
-                // socket to it.
                 SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
-                _postponingTransferToDocBroker = false;
                 transferToDocBroker(_checkFileInfo->url().toString(),
                                     sharedSettings.getConfigId(),
-                                    _checkFileInfo->getSslVerifyMessage(),
-                                    ws, disposition);
+                                    _checkFileInfo->getSslVerifyMessage());
             }
             else if (_checkFileInfo == nullptr ||
                      _checkFileInfo->state() == CheckFileInfo::State::None ||
                      _checkFileInfo->state() == CheckFileInfo::State::Timedout)
             {
-                // We haven't tried or we timed-out. Retry. Defer creating
-                // DocBroker and transferring the socket to it until there is a
-                // CheckFileInfo result.
+                // We haven't tried or we timed-out. Retry.
                 _checkFileInfo.reset();
                 checkFileInfo(uriPublic, HTTP_REDIRECTION_LIMIT);
             }
@@ -330,9 +330,10 @@ void RequestVettingStation::handleRequest(const std::string& id,
                 assert(_checkFileInfo && !_checkFileInfo->wopiInfo() &&
                        "Unexpected to have wopiInfo");
 
-                LOG_ERR("CheckFileInfo failed for [" << docKey << "], " <<
-                        (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
-                                        : "no CheckFileInfo"));
+                LOG_ERR("CheckFileInfo failed for [" << docKey
+                          << "], "
+                          << (_checkFileInfo ? CheckFileInfo::name(_checkFileInfo->state())
+                                             : "no CheckFileInfo"));
 
                 sendUnauthorizedErrorAndShutdown();
             }
@@ -342,24 +343,28 @@ void RequestVettingStation::handleRequest(const std::string& id,
 }
 
 #if !MOBILEAPP
-
-bool RequestVettingStation::transferToDocBroker(const std::string& url,
+void RequestVettingStation::transferToDocBroker(const std::string& url,
                                                 const std::string& configId,
-                                                const std::string& sslVerifyResult,
-                                                const std::shared_ptr<WebSocketHandler>& ws,
-                                                SocketDisposition& disposition)
+                                                const std::string& sslVerifyResult)
 {
-    assert(ws && "Must have WebSocket");
     // The final URL might be different due to redirection.
     const auto uriPublic = RequestDetails::sanitizeURI(url);
     const auto docKey = RequestDetails::getDocKey(uriPublic);
     LOG_DBG("WOPI::CheckFileInfo succeeded and will create DocBroker ["
             << docKey << "] now with URL: [" << url << ']');
-    bool bTransferred = false;
     if (std::shared_ptr<DocumentBroker> docBroker = createDocBroker(docKey, configId, url, uriPublic))
     {
         launchInstallPresets();
-        bTransferred = createClientSession(disposition, ws, docBroker, docKey, url, uriPublic);
+        if (_ws)
+        {
+            // If we don't have the WebSocket, defer creating the client session.
+            createClientSession(docBroker, docKey, url, uriPublic);
+        }
+        else
+        {
+            LOG_DBG("WOPI::CheckFileInfo succeeded but we don't have the client's "
+                    "WebSocket yet. Deferring the ClientSession creation.");
+        }
 
         // If there is anything dubious about the ssl connection provide a
         // warning about that.
@@ -372,51 +377,20 @@ bool RequestVettingStation::transferToDocBroker(const std::string& url,
 #endif
         }
     }
-    return bTransferred;
-}
-
-bool RequestVettingStation::doPostponedTransferToDocBroker(SocketDisposition& disposition)
-{
-    if (!_postponingTransferToDocBroker)
-        return false;
-
-    if (!_ws)
-    {
-        // RequestVettingStation::handleRequest hasn't been called yet. Can't
-        // transfer yet anyway.
-        return false;
-    }
-
-    // RequestVettingStation::handleRequest was called, but deferred creating
-    // the DocBroker and transferring the disposition's Socket to its
-    // SocketPoll until this result was available.
-    if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Pass &&
-        _checkFileInfo->wopiInfo())
-    {
-        _postponingTransferToDocBroker = false;
-
-        SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
-        return transferToDocBroker(_checkFileInfo->url().toString(),
-                                   sharedSettings.getConfigId(),
-                                   _checkFileInfo->getSslVerifyMessage(),
-                                   _ws, disposition);
-    }
-
-    return false;
 }
 
 void RequestVettingStation::checkFileInfo(const Poco::URI& uri, int redirectLimit)
 {
-    auto cfiContinuation = [this]([[maybe_unused]] CheckFileInfo& checkFileInfo)
+    auto cfiContinuation = [this](CheckFileInfo& checkFileInfo)
     {
         assert(&checkFileInfo == _checkFileInfo.get() && "Unknown CheckFileInfo instance");
         if (_checkFileInfo && _checkFileInfo->state() == CheckFileInfo::State::Pass &&
             _checkFileInfo->wopiInfo())
         {
-            // We have a useful result, wakeup SocketPoll so
-            // ClientRequestDispatcher::checkTransfer will be called
-            // promptly on the next poll.
-            _poll->wakeup();
+            SharedSettings sharedSettings(_checkFileInfo->wopiInfo());
+            transferToDocBroker(checkFileInfo.url().toString(),
+                                sharedSettings.getConfigId(),
+                                checkFileInfo.getSslVerifyMessage());
         }
         else
         {
@@ -434,7 +408,6 @@ void RequestVettingStation::checkFileInfo(const Poco::URI& uri, int redirectLimi
 
     // CheckFileInfo asynchronously.
     assert(_checkFileInfo == nullptr);
-    _postponingTransferToDocBroker = true;
     _checkFileInfo = std::make_shared<CheckFileInfo>(_poll, uri, std::move(cfiContinuation));
     _checkFileInfo->checkFileInfo(redirectLimit);
 }
@@ -481,24 +454,22 @@ static void sendErrorAndShutdownWS(const std::shared_ptr<WebSocketHandler>& ws,
     }
 }
 
-bool RequestVettingStation::createClientSession(SocketDisposition& disposition,
-                                                const std::shared_ptr<WebSocketHandler>& ws,
-                                                const std::shared_ptr<DocumentBroker>& docBroker,
+void RequestVettingStation::createClientSession(const std::shared_ptr<DocumentBroker>& docBroker,
                                                 const std::string& docKey, const std::string& url,
                                                 const Poco::URI& uriPublic)
 {
     assert(docBroker && "Must have DocBroker");
-    assert(ws && "Must have WebSocket");
+    assert(_ws && "Must have WebSocket");
 
     const bool isReadOnly = Uri::hasReadonlyPermission(uriPublic.toString());
     std::shared_ptr<ClientSession> clientSession =
-        docBroker->createNewClientSession(ws, _id, uriPublic, isReadOnly, _requestDetails);
+        docBroker->createNewClientSession(_ws, _id, uriPublic, isReadOnly, _requestDetails);
     if (!clientSession)
     {
         LOG_ERR("Failed to create Client Session [" << _id << "] on docKey [" << docKey << ']');
         sendErrorAndShutdown("error: cmd=internal kind=load",
                              WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
-        return false;
+        return;
     }
 
     LOG_DBG("ClientSession [" << clientSession->getName() << "] for [" << docKey
@@ -515,11 +486,15 @@ bool RequestVettingStation::createClientSession(SocketDisposition& disposition,
     std::shared_ptr<std::unique_ptr<WopiStorage::WOPIFileInfo>> wopiFileInfo =
         std::make_shared<std::unique_ptr<WopiStorage::WOPIFileInfo>>(std::move(realWopiFileInfo));
 
+    std::weak_ptr<StreamSocket> socket = _socket;
+    _socket.reset();
+
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
-    docBroker->setupTransfer(
-        disposition,
+    std::shared_ptr<WebSocketHandler> ws = _ws;
+    docBroker->setupTransfer(*_poll, socket,
         [clientSession = std::move(clientSession), wopiFileInfo = std::move(wopiFileInfo),
-         ws, docBroker](const std::shared_ptr<Socket>& moveSocket)
+         ws = std::move(ws), docBroker,
+         selfLifecycle = shared_from_this()](const std::shared_ptr<Socket>& moveSocket)
         {
             try
             {
@@ -577,13 +552,14 @@ bool RequestVettingStation::createClientSession(SocketDisposition& disposition,
                                        WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
         });
-    return true;
 }
 
 void RequestVettingStation::sendErrorAndShutdown(const std::string& msg,
                                                  WebSocketHandler::StatusCodes statusCode)
 {
     sendErrorAndShutdownWS(_ws, msg, statusCode);
+    // abandon responsibility for _socket now
+    _socket.reset();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

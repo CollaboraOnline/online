@@ -265,6 +265,12 @@ void DocumentBroker::setupTransfer(SocketDisposition &disposition,
     disposition.setTransfer(*_poll, std::move(transferFn));
 }
 
+void DocumentBroker::setupTransfer(SocketPoll& from, const std::weak_ptr<StreamSocket>& socket,
+                                   const SocketDisposition::MoveFunction& transferFn)
+{
+    from.transferSocketTo(socket, getPoll(), transferFn);
+}
+
 static std::chrono::seconds getLimitLoadSecs()
 {
     const auto value = ConfigUtil::getConfigValue<int>("per_document.limit_load_secs", 100);

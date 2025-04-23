@@ -1040,11 +1040,6 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 }
 
 #if !MOBILEAPP
-bool ClientRequestDispatcher::checkTransfer(SocketDisposition& disposition)
-{
-    return _rvs && _rvs->doPostponedTransferToDocBroker(disposition);
-}
-
 bool ClientRequestDispatcher::handleRootRequest(const RequestDetails& requestDetails,
                                                 const std::shared_ptr<StreamSocket>& socket)
 {
@@ -2283,7 +2278,7 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 
         // We have the client's WS and we either got the proactive CheckFileInfo
         // results, which we can use, or we need to issue a new async CheckFileInfo.
-        _rvs->handleRequest(_id, requestDetails, ws, mobileAppDocId, disposition);
+        _rvs->handleRequest(_id, requestDetails, ws, socket, mobileAppDocId, disposition);
         return false; // async keep alive
     }
     catch (const std::exception& exc)
