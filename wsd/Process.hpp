@@ -248,9 +248,10 @@ public:
     void setSMapsFD(int smapsFD) { _smapsFD = smapsFD; }
     int getSMapsFD() { return _smapsFD; }
 
-    void moveSocketFromTo(const std::shared_ptr<SocketPoll>& from, SocketPoll& to)
+    void moveSocketFromTo(const std::shared_ptr<SocketPoll>& from,
+                          const std::shared_ptr<SocketPoll>& to)
     {
-        to.takeSocket(from, getSocket());
+        SocketPoll::takeSocket(from, to, getSocket());
     }
 
 private:

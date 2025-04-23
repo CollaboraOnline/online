@@ -889,7 +889,8 @@ std::mutex COOLWSD::lokit_main_mutex;
 #endif
 #endif
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks(SocketPoll &destPoll, const std::string& configId,
+std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPoll>& destPoll,
+                                                 const std::string& configId,
                                                  unsigned mobileAppDocId)
 {
     (void)mobileAppDocId;

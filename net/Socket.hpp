@@ -939,19 +939,22 @@ public:
 
     void transferSocketTo(const std::weak_ptr<Socket>& socket,
                           const std::weak_ptr<SocketPoll>& toPoll,
-                          SocketDisposition::MoveFunction cb)
+                          SocketDisposition::MoveFunction toCb,
+                          std::function<void()> fromCb)
     {
         std::lock_guard<std::mutex> lock(_mutex);
         const bool wasEmpty = taskQueuesEmpty();
-        _pendingTransfers.emplace_back(socket, toPoll, std::move(cb));
+        _pendingTransfers.emplace_back(socket, toPoll, std::move(toCb),
+                                       std::move(fromCb));
         if (wasEmpty)
             wakeup();
     }
 
-    /// Takes socket from @fromPoll and moves it to this current
-    /// poll. Blocks until the transfer is complete.
-    void takeSocket(const std::shared_ptr<SocketPoll> &fromPoll,
-                    const std::shared_ptr<Socket> &socket);
+    /// Takes socket from @fromPoll and moves it to @toPoll.
+    /// Blocks until the transfer is complete.
+    static void takeSocket(const std::shared_ptr<SocketPoll>& fromPoll,
+                           const std::shared_ptr<SocketPoll>& toPoll,
+                           const std::shared_ptr<Socket>& socket);
 
 #if !MOBILEAPP
     /// Inserts a new remote websocket to be polled.
@@ -1112,13 +1115,16 @@ private:
         std::weak_ptr<Socket> _socket;
         std::weak_ptr<SocketPoll> _toPoll;
         SocketDisposition::MoveFunction _socketMove;
+        std::function<void()> _socketMovedCb;
 
         SocketTransfer(std::weak_ptr<Socket> socket,
                        std::weak_ptr<SocketPoll> toPoll,
-                       SocketDisposition::MoveFunction socketMove)
+                       SocketDisposition::MoveFunction socketMove,
+                       std::function<void()> socketMovedCb)
             : _socket(std::move(socket))
             , _toPoll(std::move(toPoll))
             , _socketMove(std::move(socketMove))
+            , _socketMovedCb(std::move(socketMovedCb))
        {
        }
     };

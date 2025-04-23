@@ -754,6 +754,8 @@ void SocketPoll::transfer(const SocketTransfer& pendingTransfer)
         // cleaned later.
         *it = nullptr;
         disposition.execute();
+        if (pendingTransfer._socketMovedCb)
+            pendingTransfer._socketMovedCb();
     }
 }
 
@@ -788,38 +790,24 @@ void SocketPoll::closeAllSockets()
     assert(_newSockets.size() == 0);
 }
 
-void SocketPoll::takeSocket(const std::shared_ptr<SocketPoll> &fromPoll,
-                            const std::shared_ptr<Socket> &inSocket)
+void SocketPoll::takeSocket(const std::shared_ptr<SocketPoll>& fromPoll,
+                            const std::shared_ptr<SocketPoll>& toPoll,
+                            const std::shared_ptr<Socket>& inSocket)
 {
     std::mutex mut;
     std::condition_variable cond;
     bool transferred = false;
 
     // Important we're not blocking the fromPoll thread.
-    ASSERT_CORRECT_THREAD();
+    toPoll->assertCorrectThread(__FILE__, __LINE__);
 
-    // hold a reference during transfer
-    std::shared_ptr<Socket> socket = inSocket;
+    int socketFD = inSocket->getFD();
 
-    SocketPoll *toPoll = this;
-    fromPoll->addCallback([fromPoll,socket,&mut,&cond,&transferred,toPoll](){
-        auto it = std::find(fromPoll->_pollSockets.begin(),
-                            fromPoll->_pollSockets.end(), socket);
-        if (it != fromPoll->_pollSockets.end())
-        {
-            // Erasing messes up the tracking of poll results in 'poll'
-            // leave to be added to toErase and cleaned later.
-            *it = nullptr;
-        }
-        else
-            LOG_WRN("Trying to move socket out of the wrong poll");
+    fromPoll->transferSocketTo(inSocket, toPoll,
+        [](const std::shared_ptr<Socket>& /*moveSocket*/){},
+        [&mut,&cond,&transferred,socketFD](){
 
-        // sockets in transit are un-owned
-        SocketThreadOwnerChange::resetThreadOwner(*socket);
-
-        toPoll->insertNewSocket(socket);
-
-        LOG_TRC("Socket #" << socket->getFD() << " moved across polls");
+        LOG_TRC("Socket #" << socketFD << " moved across polls");
 
         // Let the caller know we've done our job.
         std::unique_lock<std::mutex> lock(mut);
@@ -827,14 +815,14 @@ void SocketPoll::takeSocket(const std::shared_ptr<SocketPoll> &fromPoll,
         cond.notify_all();
     });
 
-    LOG_TRC("Waiting to transfer Socket #" << socket->getFD() <<
-            " from: " << fromPoll->name() << " to new poll: " << name());
+    LOG_TRC("Waiting to transfer Socket #" << socketFD <<
+            " from: " << fromPoll->name() << " to new poll: " << toPoll->name());
     std::unique_lock<std::mutex> lock(mut);
-    while (!transferred && continuePolling()) // in case of exit during transfer.
+    while (!transferred && toPoll->continuePolling()) // in case of exit during transfer.
         cond.wait_for(lock, std::chrono::milliseconds(50));
 
-    LOG_TRC("Transfer of Socket #" << socket->getFD() <<
-            " from: " << fromPoll->name() << " to new poll: " << name() << " complete");
+    LOG_TRC("Transfer of Socket #" << socketFD <<
+            " from: " << fromPoll->name() << " to new poll: " << toPoll->name() << " complete");
 }
 
 void SocketPoll::createWakeups()
