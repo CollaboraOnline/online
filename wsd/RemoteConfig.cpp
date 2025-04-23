@@ -760,8 +760,10 @@ bool RemoteFontConfigPoll::finishDownload(const std::string& uri,
 
     // And in reality, it is a bit unclear how likely it even is that fonts downloaded through
     // this mechanism even will be updated.
+    std::size_t dotPos = uri.rfind('.');
+    const std::string extension = dotPos != std::string::npos ? uri.substr(dotPos) : ".ttf";
     const std::string fontFile =
-        COOLWSD::TmpFontDir + '/' + Util::encodeId(Util::rng::getNext()) + ".ttf";
+        COOLWSD::TmpFontDir + '/' + Util::encodeId(Util::rng::getNext()) + extension;
 
     std::ofstream fontStream(fontFile);
     fontStream.write(body.data(), body.size());
