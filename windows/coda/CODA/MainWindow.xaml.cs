@@ -81,52 +81,13 @@ namespace CODA
         public static extern void set_send2JS_function(Send2JSDelegate f);
 
         [DllImport("CODALib.dll")]
-        public static extern void do_hullo_handling_things();
+        public static extern void do_hullo_handling_things(String fileURL);
 
         [DllImport("CODALib.dll")]
         public static extern void do_bye_handling_things();
 
         [DllImport("CODALib.dll")]
         public static extern void do_other_message_handling_things([MarshalAs(UnmanagedType.LPStr)] string message);
-
-        private CoreWebView2Settings _webViewSettings;
-        CoreWebView2Settings WebViewSettings
-        {
-            get
-            {
-                if (_webViewSettings == null && _iWebView2?.CoreWebView2 != null)
-                {
-                    _webViewSettings = _iWebView2.CoreWebView2.Settings;
-                }
-                return _webViewSettings;
-            }
-        }
-
-        CoreWebView2Environment _webViewEnvironment;
-        CoreWebView2Environment WebViewEnvironment
-        {
-            get
-            {
-                if (_webViewEnvironment == null && _iWebView2?.CoreWebView2 != null)
-                {
-                    _webViewEnvironment = _iWebView2.CoreWebView2.Environment;
-                }
-                return _webViewEnvironment;
-            }
-        }
-
-        CoreWebView2Profile _webViewProfile;
-        CoreWebView2Profile WebViewProfile
-        {
-            get
-            {
-                if (_webViewProfile == null && _iWebView2?.CoreWebView2 != null)
-                {
-                    _webViewProfile = _iWebView2.CoreWebView2.Profile;
-                }
-                return _webViewProfile;
-            }
-        }
 
         // Keep a static reference so that the delegate doesn't get garbage collected. Or something
         // like that.
@@ -159,10 +120,8 @@ namespace CODA
                 "Presentations|*.odp;*.pptx;*.ppt|" +
                 "All files|*.*";
 
-            String file = "";
 			if (openFileDialog.ShowDialog() == true)
-				 file = openFileDialog.FileName;
-            Debug.WriteLine($"MainWindow_FileOpen: {file}");
+                openCOOL(_iWebView2, new Uri(openFileDialog.FileName).AbsoluteUri);
         }
 
         void WebView_WebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs args)
@@ -175,7 +134,7 @@ namespace CODA
                 s = s.Substring(5);
                 if (s == "HULLO\"")
                 {
-                   do_hullo_handling_things();
+                   do_hullo_handling_things("file:///C:/Users/tml/sailing.odt");
                 }
                 else if (s == "BYE\"")
                 {
@@ -204,7 +163,6 @@ namespace CODA
 
         private void SetWebView(IWebView2 newWebView2)
         {
-			webView2XamlElement = newWebView2 as WebView2;
             _iWebView2 = newWebView2;
 
             // We display the type of control in the window title, so update that now.
@@ -230,7 +188,6 @@ namespace CODA
             _isNavigating = true;
 
             CoreWebView2NavigationKind kind = e.NavigationKind;
-            Debug.WriteLine($"CoreWebView2_NavigationStarting: NavigationKind({kind})");
         }
 
         void WebView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
@@ -238,30 +195,25 @@ namespace CODA
             _isNavigating = false;
         }
 
-        Action OnWebViewFirstInitialized;
-
-        void WebView_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
+        private void openCOOL(IWebView2 webView, String fileURL)
         {
-            IWebView2 webView = sender as IWebView2;
-            if (e.IsSuccess)
+            useFileDialogNote.Visibility = Visibility.Collapsed;
+
+            // FIXME: Temporarily when running from <repo>/windows/coda/CODA/bin/Debug/net8.0-windows.
+
+            // FIXME: Even more temporarily, just use hardcoded pathnames on tml's machine to make debugging the JS easier.
+            if (false)
             {
-                // FIXME: Temporarily when running from <repo>/windows/coda/CODA/bin/Debug/net8.0-windows.
+                webView.CoreWebView2.SetVirtualHostNameToFolderMapping("appassets", "..\\..\\..\\..\\..\\..\\browser\\dist", CoreWebView2HostResourceAccessKind.DenyCors);
+                webView.CoreWebView2.Navigate("https://appassets/cool.html?file_path=" + fileURL + "&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
+            }
+            else
+            {
+                webView.CoreWebView2.Navigate("file:///C:/Users/tml/lo/online-gitlab-coda25-coda/browser/dist/cool.html?file_path=" + fileURL + "&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
+            }
 
-                // FIXME: Even more temporarily, just use hardcoded pathnames on tml's machine to make debugging the JS easier.
-                if (false)
-                {
-                    webView.CoreWebView2.SetVirtualHostNameToFolderMapping("appassets", "..\\..\\..\\..\\..\\..\\browser\\dist", CoreWebView2HostResourceAccessKind.DenyCors);
-                    webView.CoreWebView2.Navigate("https://appassets/cool.html?file_path=file:///C:/Users/tml/sailing.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
-                }
-                else
-                {
-                    webView.CoreWebView2.Navigate("file:///C:/Users/tml/lo/online-gitlab-coda25-coda/browser/dist/cool.html?file_path=file:///C:/Users/tml/sailing.odt&closebutton=1&permission=edit&lang=en-US&appdocid=1&userinterfacemode=notebookbar&dir=ltr");
-                }
-
-                OnWebViewFirstInitialized?.Invoke();
-
-                webView.CoreWebView2.NewWindowRequested += delegate (
-                    object webview2, CoreWebView2NewWindowRequestedEventArgs args)
+            webView.CoreWebView2.NewWindowRequested += delegate (
+                object webview2, CoreWebView2NewWindowRequestedEventArgs args)
                 {
                     ProcessStartInfo startInfo = new ProcessStartInfo
                     {
@@ -272,10 +224,14 @@ namespace CODA
                     Process.Start(startInfo);
                     args.Handled = true;
                 };
-                return;
-            }
+        }
 
-            MessageBox.Show($"WebView2 creation failed with exception = {e.InitializationException}");
+        void WebView_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
+        {
+            if (e.IsSuccess)
+                _iWebView2.CoreWebView2.Navigate("about:blank");
+            else
+                MessageBox.Show($"WebView2 creation failed with exception = {e.InitializationException}");
         }
 
         private bool _isMessageOfType(byte[] message, string type, int lengthOfMessage)
