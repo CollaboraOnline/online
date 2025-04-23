@@ -450,12 +450,10 @@ public:
     STATE_ENUM(StorageType,
                Unsupported, ///< An unsupported type.
                Unauthorized, ///< The host is not allowed by the admin.
-#if ENABLE_LOCAL_FILESYSTEM
                FileSystem, ///< File-System storage. Only for testing.
-#endif
 #if !MOBILEAPP
                Wopi ///< WOPI-like storage.
-#endif
+#endif //!MOBILEAPP
     );
 
     /// Validates the given URI.
@@ -527,12 +525,8 @@ private:
     std::string _jailedFilePathAnonym;
     bool _isDownloaded;
 
-#if ENABLE_LOCAL_FILESYSTEM
     static bool FilesystemEnabled;
-#endif
 };
-
-#if ENABLE_LOCAL_FILESYSTEM
 
 /// Trivial implementation of local storage that does not need do anything.
 class LocalStorage : public StorageBase
@@ -613,8 +607,6 @@ private:
     bool _isCopy;
     static std::atomic<unsigned> LastLocalStorageId;
 };
-
-#endif // ENABLE_LOCAL_FILESYSTEM
 
 /// Represents whether the underlying file is locked
 /// and with what token.

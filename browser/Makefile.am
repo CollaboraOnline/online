@@ -969,7 +969,6 @@ pot:
 		admin/src/AdminSocketBase.js \
 		admin/src/AdminSocketOverview.js \
 		admin/src/AdminSocketSettings.js \
-		admin/src/integrator/AdminIntegratorSettings.ts \
 		admin/src/Util.js \
 		js/global.js \
 		src/app/Debug.ts \

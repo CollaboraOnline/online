@@ -1415,11 +1415,11 @@ void Document::handleSaveMessage(const std::string &)
 }
 
 // need to hold a reference on session in case it exits during async save
-bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
+bool Document::forkToSave(const std::function<void()> &childSave, int viewId)
 {
-    if constexpr (Util::isMobileApp())
-        return false;
-
+#if MOBILEAPP
+    return false;
+#else // !MOBILEAPP
     if (_isBgSaveProcess)
     {
         LOG_ERR("Serious error bgsv process trying to fork again");
@@ -1591,6 +1591,7 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
         reapZombieChildren();
     }
     return true;
+#endif // !MOBILEAPP
 }
 
 void Document::reapZombieChildren()
@@ -1929,18 +1930,17 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
     if (FileUtil::Stat(wopiCertDir).exists())
         ::setenv("LO_CERTIFICATE_AUTHORITY_PATH", wopiCertDir.c_str(), 1);
 
-    if constexpr (!Util::isMobileApp())
+#if !MOBILEAPP
+    // if ssl client verification was disabled in online for the wopi server,
+    // and this is a https connection then also exempt that host from ssl host
+    // verification in 'core'
+    if (session->isDisableVerifyHost())
     {
-        // if ssl client verification was disabled in online for the wopi server,
-        // and this is a https connection then also exempt that host from ssl host
-        // verification in 'core'
-        if (session->isDisableVerifyHost())
-        {
-            std::string scheme, host, port;
-            if (net::parseUri(session->getDocURL(), scheme, host, port) && scheme == "https://")
-                ::setenv("LOK_EXEMPT_VERIFY_HOST", host.c_str(), 1);
-        }
+        std::string scheme, host, port;
+        if (net::parseUri(session->getDocURL(), scheme, host, port) && scheme == "https://")
+            ::setenv("LOK_EXEMPT_VERIFY_HOST", host.c_str(), 1);
     }
+#endif
 
     std::string spellOnline = session->getSpellOnline();
     if (!_loKitDocument)

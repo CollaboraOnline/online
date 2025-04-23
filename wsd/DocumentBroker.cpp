@@ -25,7 +25,6 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include <sstream>
 #include <sysexits.h>
 
 #include <Poco/DigestStream.h>
@@ -1063,7 +1062,6 @@ bool DocumentBroker::download(
     }
     else
 #endif
-#if ENABLE_LOCAL_FILESYSTEM
     {
         LocalStorage* localStorage = dynamic_cast<LocalStorage*>(_storage.get());
         if (localStorage != nullptr)
@@ -1105,18 +1103,7 @@ bool DocumentBroker::download(
                 session->setUserName(localfileinfo->getUsername());
             }
         }
-        else
-        {
-            LOG_FTL("Unknown or unsupported storage");
-            Util::forcedExit(EX_SOFTWARE);
-        }
     }
-#else // !ENABLE_LOCAL_FILESYSTEM
-    {
-        LOG_FTL("Unknown or unsupported storage");
-        Util::forcedExit(EX_SOFTWARE);
-    }
-#endif // !ENABLE_LOCAL_FILESYSTEM
 
     if (session)
     {
@@ -1211,8 +1198,7 @@ bool DocumentBroker::download(
         }
     }
 
-#endif // !MOBILEAPP
-
+#endif
     return true;
 }
 
@@ -2399,33 +2385,32 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
                                                     << DocumentState::name(_docState.activity())
                                                     << ") in " << _saveManager.lastSaveDuration());
 
-    if constexpr (!Util::isMobileApp())
+#if !MOBILEAPP
+    // Create the 'upload' file regardless of success or failure,
+    // because we don't know if the last upload worked or not.
+    // DocBroker will have to decide to upload or skip.
+    const std::string oldName = _storage->getRootFilePathToUpload();
+    if (FileUtil::Stat(oldName).exists())
     {
-        // Create the 'upload' file regardless of success or failure,
-        // because we don't know if the last upload worked or not.
-        // DocBroker will have to decide to upload or skip.
-        const std::string oldName = _storage->getRootFilePathToUpload();
-        if (FileUtil::Stat(oldName).exists())
+        if (_quarantine && _quarantine->isEnabled())
         {
-            if (_quarantine && _quarantine->isEnabled())
-            {
-                // Quarantine the file before renaming, if it exists.
-                LOG_DBG("Quarantining the old file after saving: " << oldName);
-                _quarantine->quarantineFile(oldName);
-            }
+            // Quarantine the file before renaming, if it exists.
+            LOG_DBG("Quarantining the old file after saving: " << oldName);
+            _quarantine->quarantineFile(oldName);
+        }
 
-            // Rename even if no new save, in case we have an older version.
-            const std::string newName = _storage->getRootFilePathUploading();
-            if (::rename(oldName.c_str(), newName.c_str()) < 0)
-            {
-                LOG_SYS("Failed to rename [" << oldName << "] to [" << newName << ']');
-            }
-            else
-            {
-                LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
-            }
+        // Rename even if no new save, in case we have an older version.
+        const std::string newName = _storage->getRootFilePathUploading();
+        if (::rename(oldName.c_str(), newName.c_str()) < 0)
+        {
+            LOG_SYS("Failed to rename [" << oldName << "] to [" << newName << ']');
+        }
+        else
+        {
+            LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
         }
     }
+#endif //!MOBILEAPP
 
     // Let the clients know of any save failures.
     if (!success && result != "unmodified")
@@ -2511,25 +2496,23 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
         break;
     }
 
-    if constexpr (!Util::isMobileApp())
-    {
-        // Avoid multiple uploads during unloading if we know we need to save a new version.
-        const bool unloading = isUnloading();
-        const bool modified =
-            justSaved ? haveModifyActivityAfterSaveRequest() : needToSaveToDisk() != NeedToSave::No;
+#if !MOBILEAPP
+    // Avoid multiple uploads during unloading if we know we need to save a new version.
+    const bool unloading = isUnloading();
+    const bool modified =
+        justSaved ? haveModifyActivityAfterSaveRequest() : needToSaveToDisk() != NeedToSave::No;
 
-        if (modified && unloading)
-        {
-            // We are unloading but have possible modifications. Save again (done in poll).
-            LOG_DBG(
-                "Document [" << getDocKey()
+    if (modified && unloading)
+    {
+        // We are unloading but have possible modifications. Save again (done in poll).
+        LOG_DBG("Document [" << getDocKey()
                              << "] is unloading, but was possibly modified during saving. Skipping "
                                 "upload to save again before unloading");
 
-            assert(canSaveToDisk() == CanSave::Yes && "Cannot save to disk");
-            return;
-        }
+        assert(canSaveToDisk() == CanSave::Yes && "Cannot save to disk");
+        return;
     }
+#endif
 
     if (needToUploadState != NeedToUpload::No)
     {
@@ -2587,24 +2570,23 @@ void DocumentBroker::uploadAfterLoadingTemplate(const std::shared_ptr<ClientSess
 {
     LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
 
-    if constexpr (!Util::isMobileApp())
+#if !MOBILEAPP
+    // Create the 'upload' file as it gets created only when
+    // handling .uno:Save, which isn't issued for templates
+    // (save is done in Kit right after loading a template).
+    const std::string oldName = _storage->getRootFilePathToUpload();
+    const std::string newName = _storage->getRootFilePathUploading();
+    if (::rename(oldName.c_str(), newName.c_str()) < 0)
     {
-        // Create the 'upload' file as it gets created only when
-        // handling .uno:Save, which isn't issued for templates
-        // (save is done in Kit right after loading a template).
-        const std::string oldName = _storage->getRootFilePathToUpload();
-        const std::string newName = _storage->getRootFilePathUploading();
-        if (::rename(oldName.c_str(), newName.c_str()) < 0)
-        {
-            // It's not an error if there was no file to rename, when the document isn't modified.
-            LOG_SYS("Expected to renamed the document ["
-                    << oldName << "] after template-loading to [" << newName << ']');
-        }
-        else
-        {
-            LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
-        }
+        // It's not an error if there was no file to rename, when the document isn't modified.
+        LOG_SYS("Expected to renamed the document [" << oldName << "] after template-loading to ["
+                                                     << newName << ']');
     }
+    else
+    {
+        LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+    }
+#endif //!MOBILEAPP
 
     uploadToStorage(session, /*force=*/false);
 }
@@ -3651,17 +3633,16 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
 
 std::string DocumentBroker::getJailRoot() const
 {
-    if constexpr (!Util::isMobileApp())
+#if !MOBILEAPP
+    if (_jailId.empty())
     {
-        if (!_jailId.empty())
-        {
-            return Poco::Path(COOLWSD::ChildRoot, _jailId).toString();
-        }
-
-        LOG_WRN("Trying to get the jail root of a not yet downloaded document (no jailId)");
+        LOG_WRN("Trying to get the jail root of a not yet downloaded document.");
+        return std::string();
     }
-
+    return Poco::Path(COOLWSD::ChildRoot, _jailId).toString();
+#else
     return std::string();
+#endif
 }
 
 std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session,
@@ -4201,11 +4182,10 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
 {
     LOG_TRC("DocumentBroker handling child message: [" << message->abbr() << ']');
 
-    if constexpr (!Util::isMobileApp())
-    {
-        if (COOLWSD::TraceDumper)
-            COOLWSD::dumpOutgoingTrace(getJailId(), "0", message->abbr());
-    }
+#if !MOBILEAPP
+    if (COOLWSD::TraceDumper)
+        COOLWSD::dumpOutgoingTrace(getJailId(), "0", message->abbr());
+#endif
 
     if (_unitWsd && _unitWsd->filterLOKitMessage(message))
         return true;
@@ -4504,13 +4484,11 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
     if (!sendError)
         return false;
 
-    if constexpr (!Util::isMobileApp())
-    {
-        // Bad request.
-        HttpHelper::sendError(http::StatusCode::BadRequest, socket, "Failed to find this clipboard",
-                              "Connection: close\r\n");
-    }
-
+#if !MOBILEAPP
+    // Bad request.
+    HttpHelper::sendError(http::StatusCode::BadRequest, socket, "Failed to find this clipboard",
+                          "Connection: close\r\n");
+#endif
     socket->shutdown();
     socket->ignoreInput();
 
@@ -4566,7 +4544,19 @@ void DocumentBroker::handleMediaRequest(const std::string_view range,
             // For now, we only support file:// schemes.
             // In the future, we may/should support http.
             std::string localPath = url.substr(sizeof("file:///") - 1);
-            std::string path = getAbsoluteMediaPath(std::move(localPath));
+#if !MOBILEAPP
+            // We always extract media files in /tmp. Normally, we are in jail (chroot),
+            // and this would need to be accessed from WSD through the JailRoot path.
+            // But, when we have NoCapsForKit there is no jail, so the media file ends
+            // up in the host (AppImage) /tmp
+            std::string path = COOLWSD::NoCapsForKit
+                                   ? "/" + localPath
+                                   : FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
+                                                                    COOLWSD::ChildRoot + _jailId,
+                                                                    std::move(localPath));
+#else
+            const std::string path = getJailRoot() + "/" + localPath;
+#endif
 
             auto session = std::make_shared<http::ServerSession>();
             session->asyncUpload(std::move(path), "video/mp4", range);
@@ -5317,24 +5307,23 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << '\n';
     _poll->dumpState(os);
 
-    if constexpr (!Util::isMobileApp())
+#if !MOBILEAPP
+    // Bit nasty - need a cleaner way to dump state.
+    if (!_sessions.empty())
     {
-        // Bit nasty - need a cleaner way to dump state.
-        if (!_sessions.empty())
+        os << "\n  Document broker sessions [" << _sessions.size()
+           << "], should duplicate the above:";
+        for (const auto& it : _sessions)
         {
-            os << "\n  Document broker sessions [" << _sessions.size()
-               << "], should duplicate the above:";
-            for (const auto& it : _sessions)
-            {
-                auto proto = it.second->getProtocol();
-                auto proxy = dynamic_cast<ProxyProtocolHandler*>(proto.get());
-                if (proxy)
-                    proxy->dumpProxyState(os);
-                else
-                    std::static_pointer_cast<MessageHandlerInterface>(it.second)->dumpState(os);
-            }
+            auto proto = it.second->getProtocol();
+            auto proxy = dynamic_cast<ProxyProtocolHandler*>(proto.get());
+            if (proxy)
+                proxy->dumpProxyState(os);
+            else
+                std::static_pointer_cast<MessageHandlerInterface>(it.second)->dumpState(os);
         }
     }
+#endif
 
     os << "\n End DocumentBroker [" << _docId << "] Dump\n";
 }
@@ -5414,24 +5403,19 @@ std::string DocumentBroker::getEmbeddedMediaPath(const std::string& id)
     }
 
     std::string localPath = url.substr(sizeof("file:///") - 1);
-    return getAbsoluteMediaPath(std::move(localPath));
-}
 
-std::string DocumentBroker::getAbsoluteMediaPath(std::string localPath)
-{
 #if !MOBILEAPP
     // We always extract media files in /tmp. Normally, we are in jail (chroot),
     // and this would need to be accessed from WSD through the JailRoot path.
     // But, when we have NoCapsForKit there is no jail, so the media file ends
     // up in the host (AppImage) /tmp
     if (COOLWSD::NoCapsForKit)
-        return "/" + localPath;
-
-    return FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
-                                          COOLWSD::ChildRoot + _jailId, std::move(localPath));
-#else // MOBILEAPP
+       return "/" + localPath;
+    return FileUtil::buildLocalPathToJail(
+        COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + _jailId, std::move(localPath));
+#else
     return getJailRoot() + "/" + localPath;
-#endif // MOBILEAPP
+#endif
 }
 
 void DocumentBroker::onUrpMessage(const char* data, size_t len)

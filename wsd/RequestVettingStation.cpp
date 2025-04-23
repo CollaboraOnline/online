@@ -98,13 +98,10 @@ void RequestVettingStation::handleRequest(const std::string& id)
             sendUnauthorizedErrorAndShutdown();
             break;
 
-#if ENABLE_LOCAL_FILESYSTEM
         case StorageBase::StorageType::FileSystem:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
                             << docKey << "] is for a FileSystem document");
             break;
-#endif // ENABLE_LOCAL_FILESYSTEM
-
 #if !MOBILEAPP
         case StorageBase::StorageType::Wopi:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
@@ -272,7 +269,6 @@ void RequestVettingStation::handleRequest(const std::string& id,
             sendUnauthorizedErrorAndShutdown();
             break;
 
-#if ENABLE_LOCAL_FILESYSTEM
         case StorageBase::StorageType::FileSystem:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
                             << docKey << "] is for a FileSystem document");
@@ -296,8 +292,6 @@ void RequestVettingStation::handleRequest(const std::string& id,
                     }
                 });
             break;
-#endif // ENABLE_LOCAL_FILESYSTEM
-
 #if !MOBILEAPP
         case StorageBase::StorageType::Wopi:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["

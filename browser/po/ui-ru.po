@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-23 14:52+0200\n"
-"PO-Revision-Date: 2025-04-23 08:03+0000\n"
-"Last-Translator: xXxLeVIaFaNxXx <sakovalev@polyplast-nm.ru>\n"
+"POT-Creation-Date: 2025-04-17 14:55+0200\n"
+"PO-Revision-Date: 2025-01-28 15:02+0000\n"
+"Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
 "Language: \n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.11.1-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -142,7 +142,7 @@ msgid "Network Graph"
 msgstr "График сети"
 
 #: admin/admin.strings.js:45 src/canvas/sections/CommentListSection.ts:512
-#: src/canvas/sections/CommentSection.ts:166
+#: src/canvas/sections/CommentSection.ts:157
 #: src/control/Control.Notebookbar.js:284
 #: src/control/Control.NotebookbarCalc.js:115
 #: src/control/Control.NotebookbarDraw.js:29
@@ -295,7 +295,7 @@ msgstr "Предупреждение"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: src/app/Debug.ts:1383 src/canvas/sections/CommentListSection.ts:1458
+#: src/app/Debug.ts:1383 src/canvas/sections/CommentListSection.ts:1459
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -304,7 +304,7 @@ msgstr "Предупреждение"
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
-#: src/control/Parts.js:480 src/control/Permission.js:89
+#: src/control/Parts.js:477 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:740 src/control/Toolbar.js:839
 #: src/core/Socket.js:709 src/core/Socket.js:1174 src/core/Socket.js:1244
@@ -323,14 +323,14 @@ msgstr "ОК"
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: src/canvas/sections/CommentListSection.ts:507
-#: src/canvas/sections/CommentSection.ts:165
-#: src/canvas/sections/CommentSection.ts:168
+#: src/canvas/sections/CommentSection.ts:156
+#: src/canvas/sections/CommentSection.ts:159
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:82
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1692 src/control/Control.UIManager.ts:1771
-#: src/control/Control.UIManager.ts:1923 src/control/Control.UIManager.ts:2101
+#: src/control/Control.UIManager.ts:1699 src/control/Control.UIManager.ts:1778
+#: src/control/Control.UIManager.ts:1930 src/control/Control.UIManager.ts:2108
 #: src/control/Control.Zotero.js:362 src/control/Toolbar.js:834
 #: src/core/Socket.js:1420
 msgid "Cancel"
@@ -367,92 +367,6 @@ msgstr "Действительно завершить сеанс?"
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
 msgstr "Вы уверены, что хотите остановить сервер?"
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:115
-msgid "Autotext"
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:117
-msgid ""
-"Upload reusable text snippets (.bau). To insert the text in your document, "
-"type the shortcut for an AutoText entry and press F3."
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:123
-msgid "Upload Autotext"
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:127
-msgid "Custom Dictionaries"
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:129
-msgid ""
-"Add or edit words in a spell check dictionary. Words in your wordbook (."
-"dic) will be available for spelling checks."
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:135
-msgid "Upload Wordbook"
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:139
-msgid "Interface"
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:140
-msgid "Set default interface preferences."
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:146
-msgid "Upload Configuration"
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:151
-msgid "Document View"
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:152
-msgid "Adjust how office documents look."
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:158
-msgid "Upload Xcu"
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:207
-msgid "Shared Config URL is missing in initial variables."
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:213
-msgid "Access token is missing in initial variables."
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:242
-msgid "Something went wrong, Please try to refresh the page."
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:315
-msgid ""
-"Something went wrong while fetching setting file, Please try to refresh the "
-"page."
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:340
-msgid ""
-"Something went wrong while fetching wordbook, Please try to refresh the "
-"page."
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:375
-msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
-
-#: admin/src/integrator/AdminIntegratorSettings.ts:501
-msgid ""
-"Something went wrong while deleting the file. Please try refreshing the "
-"page."
-msgstr ""
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -524,7 +438,7 @@ msgstr "Нажмите Ctrl+Shift+Alt+D для выхода"
 
 #: src/app/Debug.ts:1376
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr "Обработка события была отложена на неожиданно долгое время: {0}мс"
+msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:164
 msgid "A comment is being edited"
@@ -540,7 +454,7 @@ msgid "Modify"
 msgstr "Изменить"
 
 #: src/canvas/sections/CommentListSection.ts:1172
-#: src/canvas/sections/CommentSection.ts:169
+#: src/canvas/sections/CommentSection.ts:160
 msgid "Reply"
 msgstr "Ответ"
 
@@ -578,25 +492,25 @@ msgstr "Показать сбоку"
 
 #: src/canvas/sections/CommentListSection.ts:1208
 msgid "Open in full view"
-msgstr "Открыть полностью"
+msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1236
 #: src/control/Control.JSDialogBuilder.js:1895
-#: src/layer/tile/CanvasTileLayer.js:3524
-#: src/layer/tile/CanvasTileLayer.js:3535
+#: src/layer/tile/CanvasTileLayer.js:3548
+#: src/layer/tile/CanvasTileLayer.js:3559
 msgid "Comment"
 msgstr "Примечание"
 
-#: src/canvas/sections/CommentListSection.ts:1456
-#: src/canvas/sections/CommentListSection.ts:1469
+#: src/canvas/sections/CommentListSection.ts:1457
+#: src/canvas/sections/CommentListSection.ts:1470
 msgid "Comments Updated"
 msgstr "Комментарии обновлены"
 
-#: src/canvas/sections/CommentListSection.ts:1457
+#: src/canvas/sections/CommentListSection.ts:1458
 msgid "Another user has removed this comment."
 msgstr "Другой пользователь удалил этот комментарий."
 
-#: src/canvas/sections/CommentListSection.ts:1470
+#: src/canvas/sections/CommentListSection.ts:1471
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
@@ -604,40 +518,39 @@ msgstr ""
 "Другой пользователь обновил этот комментарий. Вы хотите перезаписать его "
 "изменения?"
 
-#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1424
+#: src/canvas/sections/CommentListSection.ts:1472 src/core/Socket.js:1424
 msgid "Overwrite"
 msgstr "Перезаписать"
 
-#: src/canvas/sections/CommentListSection.ts:1472
+#: src/canvas/sections/CommentListSection.ts:1473
 msgid "Update"
 msgstr "Обновить"
 
-#: src/canvas/sections/CommentListSection.ts:1573
-#: src/canvas/sections/CommentListSection.ts:1647
+#: src/canvas/sections/CommentListSection.ts:1574
+#: src/canvas/sections/CommentListSection.ts:1646
 msgid "Autosaved"
 msgstr "Автоматически сохранён"
 
-#: src/canvas/sections/CommentSection.ts:312
+#: src/canvas/sections/CommentSection.ts:303
 msgid "Open menu"
 msgstr "Открыть меню"
 
-#: src/canvas/sections/CommentSection.ts:378
-#: src/canvas/sections/CommentSection.ts:379
+#: src/canvas/sections/CommentSection.ts:369
+#: src/canvas/sections/CommentSection.ts:370
 msgid "Accept change"
 msgstr "Принять изменение"
 
-#: src/canvas/sections/CommentSection.ts:385
-#: src/canvas/sections/CommentSection.ts:386
+#: src/canvas/sections/CommentSection.ts:376
+#: src/canvas/sections/CommentSection.ts:377
 msgid "Reject change"
 msgstr "Отклонить изменение"
 
-#: src/canvas/sections/CommentSection.ts:409
+#: src/canvas/sections/CommentSection.ts:400
 msgid "Resolved"
 msgstr "Решено"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
-#, fuzzy
-msgid "Document contains unsupported media"
+msgid "Document contains unsupported video"
 msgstr "Документ содержит неподдерживаемое видео"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
@@ -814,7 +727,7 @@ msgstr "Загрузить содержимое буфера обмена"
 
 #: src/control/Control.DownloadProgress.js:88
 #: src/control/Control.DownloadProgress.js:113
-#: src/control/Control.PartsPreview.js:295
+#: src/control/Control.PartsPreview.js:298
 msgid "Copy"
 msgstr "Копировать"
 
@@ -1289,7 +1202,7 @@ msgstr "Язык"
 
 #: src/control/Control.Mention.ts:180
 msgid "No search results found!"
-msgstr "Результаты поиска не найдены!"
+msgstr ""
 
 #: src/control/Control.Menubar.ts:148 src/control/Control.Menubar.ts:163
 #: src/control/Control.Menubar.ts:1088
@@ -1777,7 +1690,7 @@ msgstr "Все листы"
 #: src/control/Control.Menubar.ts:845
 #: src/control/Control.NotebookbarCalc.js:1186
 msgid "Focus Cell"
-msgstr "Фокус на ячейку"
+msgstr ""
 
 #: src/control/Control.Menubar.ts:939
 #: src/control/jsdialog/Definitions.Menu.ts:310
@@ -1950,11 +1863,11 @@ msgstr "Конец градиента"
 
 #: src/control/Control.NavigatorPanel.ts:90
 msgid "Navigation"
-msgstr "Навигация"
+msgstr ""
 
 #: src/control/Control.NavigatorPanel.ts:105
 msgid "Close Navigation"
-msgstr "Закрыть Навигацию"
+msgstr ""
 
 #: src/control/Control.NavigatorPanel.ts:125
 #: src/slideshow/PresenterConsole.js:34
@@ -1963,12 +1876,12 @@ msgstr "Слайды"
 
 #: src/control/Control.NavigatorPanel.ts:130
 msgid "Outline"
-msgstr "Контур"
+msgstr ""
 
 #: src/control/Control.NavigatorPanel.ts:155
 #: src/control/Control.NavigatorPanel.ts:160
 msgid "Navigator"
-msgstr "Навигатор"
+msgstr ""
 
 #: src/control/Control.Notebookbar.js:671
 #: src/control/Control.NotebookbarCalc.js:164
@@ -2320,11 +2233,11 @@ msgstr "Переключиться в режим офлайн"
 
 #: src/control/Control.NotebookbarWriter.js:851
 msgid "Scroll up"
-msgstr "Прокрутить вверх"
+msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:858
 msgid "Scroll down"
-msgstr "Прокрутить вниз"
+msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:1412
 msgid "Rich Text"
@@ -2342,15 +2255,15 @@ msgstr "Выпадающий список"
 msgid "Picture"
 msgstr "Изображение"
 
-#: src/control/Control.PartsPreview.js:186
+#: src/control/Control.PartsPreview.js:189
 msgid "preview of page "
 msgstr "предпросмотр страницы "
 
-#: src/control/Control.PartsPreview.js:261
+#: src/control/Control.PartsPreview.js:264
 msgid "Paste Slide"
 msgstr "Вставить слайд"
 
-#: src/control/Control.PartsPreview.js:305
+#: src/control/Control.PartsPreview.js:308
 msgid "Paste"
 msgstr "Вставить"
 
@@ -2424,7 +2337,7 @@ msgstr "Проблемы не обнаружены"
 
 #: src/control/Control.ServerAuditDialog.ts:230
 msgid "Alerts:"
-msgstr "Предупреждения:"
+msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:276
 msgid "Check security warnings of your server"
@@ -2727,7 +2640,7 @@ msgstr "Не удалось загрузить коллекции"
 
 #: src/control/Control.Zotero.js:790
 msgid "Loading references"
-msgstr "Загрузка ссылок"
+msgstr ""
 
 #: src/control/Control.Zotero.js:824
 msgid "Citation Style"
@@ -2824,7 +2737,7 @@ msgstr "Вставить позицию табуляции"
 msgid "Delete tabstop"
 msgstr "Удалить позицию табуляции"
 
-#: src/control/Parts.js:480
+#: src/control/Parts.js:477
 msgid "Show sheets"
 msgstr "Показать листы"
 
@@ -2970,11 +2883,11 @@ msgstr "Очень свободно"
 
 #: src/control/jsdialog/Definitions.Menu.ts:298
 msgid "All users"
-msgstr "Все пользователи"
+msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:303
 msgid "This user"
-msgstr "Этот пользователь"
+msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:436
 msgid "From Beginning"
@@ -3570,15 +3483,15 @@ msgstr "вкладка Помощь"
 msgid "the View menu"
 msgstr "меню Вид"
 
-#: src/layer/tile/CanvasTileLayer.js:1577
+#: src/layer/tile/CanvasTileLayer.js:1589
 msgid "Functions"
 msgstr "Функции"
 
-#: src/layer/tile/CanvasTileLayer.js:1840
+#: src/layer/tile/CanvasTileLayer.js:1852
 msgid "Named Range"
 msgstr "Именованный диапазон"
 
-#: src/layer/tile/CanvasTileLayer.js:3552
+#: src/layer/tile/CanvasTileLayer.js:3576
 msgid "No Comments"
 msgstr "Нет комментариев"
 
@@ -3606,7 +3519,7 @@ msgstr "Не удалось загрузить буфер обмена, повт
 
 #: src/map/Clipboard.js:1289
 msgid "Please use the paste buttons on your on-screen keyboard."
-msgstr "Используйте клавиши вставки на экранной клавиатуре."
+msgstr "<p>Используйте клавиши вставки на экранной клавиатуре.</p>"
 
 #: src/map/Clipboard.js:1345
 msgid ""
@@ -3640,11 +3553,11 @@ msgstr "Закройте всплывающее окно, чтобы игнор�
 msgid "Initializing..."
 msgstr "Инициализация…"
 
-#: src/map/Map.js:491 src/map/Map.js:494 src/map/Map.js:497 src/map/Map.js:500
+#: src/map/Map.js:462 src/map/Map.js:465 src/map/Map.js:468 src/map/Map.js:471
 msgid "Last saved:"
 msgstr "Последнее сохранение:"
 
-#: src/map/Map.js:1476
+#: src/map/Map.js:1488
 msgid "Please wait!"
 msgstr "Пожалуйста подождите!"
 
