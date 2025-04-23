@@ -120,7 +120,7 @@ namespace CODA
                 "Presentations|*.odp;*.pptx;*.ppt|" +
                 "All files|*.*";
 
-			if (openFileDialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() == true)
                 openCOOL(_iWebView2, new Uri(openFileDialog.FileName).AbsoluteUri);
         }
 
@@ -197,7 +197,10 @@ namespace CODA
 
         private void openCOOL(IWebView2 webView, String fileURL)
         {
+            // Hide the helpful note
             useFileDialogNote.Visibility = Visibility.Collapsed;
+            // Also hide the initial menu as COOL has its own
+            menu.Visibility = Visibility.Collapsed;
 
             // FIXME: Temporarily when running from <repo>/windows/coda/CODA/bin/Debug/net8.0-windows.
 
