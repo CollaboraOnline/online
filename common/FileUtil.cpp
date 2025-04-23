@@ -209,7 +209,7 @@ namespace FileUtil
 
     void removeFile(const std::string& path, const bool recursive)
     {
-        LOG_DBG("Removing [" << path << "] " << (recursive ? "recursively." : "only."));
+        LOG_DBG("Removing [" << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively." : "only."));
 
 // Amazingly filesystem::remove_all silently fails to work on some
 // systems. No real need to be using experimental API here either.
@@ -246,7 +246,7 @@ namespace FileUtil
             {
                 // Error only if it still exists.
                 LOG_ERR("Failed to remove ["
-                        << path << "] " << (recursive ? "recursively: " : "only: ") << e.what());
+                        << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively: " : "only: ") << e.what());
             }
         }
 #endif
