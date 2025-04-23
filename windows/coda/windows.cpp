@@ -9,6 +9,7 @@
 #include "windows.hpp"
 
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
 #include <thread>
 
@@ -22,7 +23,6 @@ int coolwsd_server_socket_fd = -1;
 
 LibreOfficeKit *lo_kit;
 
-static std::string fileURL = "file:///C:/Users/tml/sailing.odt";
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2];
@@ -86,7 +86,7 @@ void set_send2JS_function(send2JS_t f)
 }
 
 EXPORT
-void do_hullo_handling_things()
+void do_hullo_handling_things(const char *fileURL)
 {
     // FIXME: Code snippet shared with gtk/mobile.cpp, factor out into separate file.
 
@@ -153,13 +153,16 @@ void do_hullo_handling_things()
     LOG_TRC_NOFILE("Actually sending to Online:" << fileURL);
 
     // Must do this in a thread, too, so that we can return to the main loop
-    std::thread([]
+    // Must duplicate fileURL as it exists only while this function is called from C#.
+    char *fileURLcopy = _strdup(fileURL);
+    std::thread([fileURLcopy]
     {
         struct pollfd pollfd;
         pollfd.fd = fakeClientFd;
         pollfd.events = POLLOUT;
         fakeSocketPoll(&pollfd, 1, -1);
-        fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
+        fakeSocketWrite(fakeClientFd, fileURLcopy, strlen(fileURLcopy));
+        std::free(fileURLcopy);
     }).detach();
 }
 
