@@ -8,9 +8,13 @@
         xmlns:local="clr-namespace:CODA"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-  <StackPanel>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
     <Menu>
-      <MenuItem Header="File">
+      <MenuItem Header="File" Grid.Row="0">
         <MenuItem Header="Open..." Click="MainWindow_FileOpen"/>
         <MenuItem Header="Save"/>
         <MenuItem Header="Save As..."/>
@@ -18,12 +22,15 @@
         <MenuItem Header="Exit"/>
       </MenuItem>
     </Menu>
-    <!-- Will the height anyway be bound by what fits inside the parent below
-         the menu bar? -->
-    <wv2:WebView2 x:Name="webView2XamlElement" Height="1000">
+    <!-- This TextBlock and the WebView2 intentionally overlap. The
+         TextBlock is hidden once we open a document. -->
+    <TextBlock x:Name="useFileDialogNote" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" Grid.Row="1">
+      Use the File menu to open a document
+    </TextBlock>
+    <wv2:WebView2 x:Name="webView2XamlElement" Grid.Row="1">
       <wv2:WebView2.CreationProperties>
         <wv2:CoreWebView2CreationProperties BrowserExecutableFolder="" AdditionalBrowserArguments="" />
       </wv2:WebView2.CreationProperties>
     </wv2:WebView2>
-  </StackPanel>
+  </Grid>
 </Window>
