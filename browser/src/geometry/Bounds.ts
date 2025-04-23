@@ -23,11 +23,21 @@ export class Bounds {
 		if (!a)
 			return;
 
-		var points = b ? [<PointConvertable>a, b] : <PointConvertable[]>a;
-
-		for (var i = 0, len = points.length; i < len; i++) {
-			this.extend(points[i]);
-		}
+		// Bounds construction is called very often so it's important to avoid object construction
+		// when possible. This is the reason for the amount of convolution here (that and ES6's lack
+		// of multiple constructors...)
+		if (b) {
+			this.min = a instanceof Point ? a.clone() : toPoint(<PointConvertable>a);
+			const maybeMax = b instanceof Point ? b.clone() : toPoint(b);
+			if (maybeMax.x >= this.min.x && maybeMax.y >= this.min.y)
+				this.max = maybeMax;
+			else {
+				this.max = this.min.clone();
+				this.extend(maybeMax);
+			}
+		} else
+			for (const point of <PointConvertable[]>a)
+				this.extend(point);
 	}
 
 	public static parse(rectString: string): Bounds {
