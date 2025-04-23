@@ -200,13 +200,21 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	fadeOutDialog: function(instance) {
-		if (instance.id && this.dialogs[instance.id]) {
-			var container = this.dialogs[instance.id].container;
+		if (!instance.id)
+			return;
+
+		const dialogInfo = this.dialogs[instance.id];
+		if (!dialogInfo)
+			return;
+
+		const container = dialogInfo.container;
+
+		app.layoutingService.appendLayoutingTask(() => {
 			L.DomUtil.addClass(container, 'fadeout');
-			container.onanimationend = function() { instance.that.close(instance.id, false); };
-			// be sure it will be removed
-			setTimeout(function() { instance.that.close(instance.id, false); }, 700);
-		}
+			container.onanimationend = () => { instance.that.close(instance.id, false); };
+			// be sure it will be removed if onanimationend will not be executed
+			setTimeout(() => { instance.that.close(instance.id, false); }, 700);
+		});
 	},
 
 	getOrCreateOverlay: function(instance) {
