@@ -938,11 +938,22 @@ public:
             SocketThreadOwnerChange::resetThreadOwner(*newSocket);
 
             std::lock_guard<std::mutex> lock(_mutex);
-            const bool wasEmpty = _newSockets.empty() && _newCallbacks.empty();
+            const bool wasEmpty = taskQueuesEmpty();
             _newSockets.emplace_back(std::move(newSocket));
             if (wasEmpty)
                 wakeup();
         }
+    }
+
+    void transferSocketTo(const std::weak_ptr<Socket>& socket,
+                          const std::weak_ptr<SocketPoll>& toPoll,
+                          SocketDisposition::MoveFunction cb)
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        const bool wasEmpty = taskQueuesEmpty();
+        _pendingTransfers.emplace_back(socket, toPoll, std::move(cb));
+        if (wasEmpty)
+            wakeup();
     }
 
     /// Takes socket from @fromPoll and moves it to this current
@@ -973,7 +984,7 @@ public:
     void addCallback(const CallbackFn& fn)
     {
         std::lock_guard<std::mutex> lock(_mutex);
-        const bool wasEmpty = _newSockets.empty() && _newCallbacks.empty();
+        const bool wasEmpty = taskQueuesEmpty();
         _newCallbacks.emplace_back(fn);
         if (wasEmpty)
             wakeup();
@@ -1099,7 +1110,30 @@ private:
     /// Used to set the thread name and mark the thread as stopped when done.
     void pollingThreadEntry();
 
-    /// Protects _newSockets and _newCallbacks
+    bool taskQueuesEmpty() const
+    {
+        return _newSockets.empty() && _newCallbacks.empty() && _pendingTransfers.empty();
+    }
+
+    struct SocketTransfer
+    {
+        std::weak_ptr<Socket> _socket;
+        std::weak_ptr<SocketPoll> _toPoll;
+        SocketDisposition::MoveFunction _socketMove;
+
+        SocketTransfer(std::weak_ptr<Socket> socket,
+                       std::weak_ptr<SocketPoll> toPoll,
+                       SocketDisposition::MoveFunction socketMove)
+            : _socket(std::move(socket))
+            , _toPoll(std::move(toPoll))
+            , _socketMove(std::move(socketMove))
+       {
+       }
+    };
+
+    void transfer(const SocketTransfer& pendingTransfer);
+
+    /// Protects _newSockets, _newCallbacks and _pendingTransfers
     std::mutex _mutex;
 
     /// Debug name used for logging.
@@ -1109,6 +1143,8 @@ private:
     std::vector<std::shared_ptr<Socket>> _pollSockets;
     std::vector<std::shared_ptr<Socket>> _newSockets;
     std::vector<CallbackFn> _newCallbacks;
+    std::vector<SocketTransfer> _pendingTransfers;
+
     /// The fds to poll.
     std::vector<pollfd> _pollFds;
 
