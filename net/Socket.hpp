@@ -944,21 +944,25 @@ public:
         }
     }
 
+    typedef std::function<void()> CallbackFn;
+
     void transferSocketTo(const std::weak_ptr<Socket>& socket,
                           const std::weak_ptr<SocketPoll>& toPoll,
-                          SocketDisposition::MoveFunction cb)
+                          SocketDisposition::MoveFunction toCb,
+                          CallbackFn fromCb)
     {
         std::lock_guard<std::mutex> lock(_mutex);
         const bool wasEmpty = taskQueuesEmpty();
-        _pendingTransfers.emplace_back(socket, toPoll, std::move(cb));
+        _pendingTransfers.emplace_back(socket, toPoll, std::move(toCb), std::move(fromCb));
         if (wasEmpty)
             wakeup();
     }
 
-    /// Takes socket from @fromPoll and moves it to this current
-    /// poll. Blocks until the transfer is complete.
-    void takeSocket(const std::shared_ptr<SocketPoll> &fromPoll,
-                    const std::shared_ptr<Socket> &socket);
+    /// Takes socket from @fromPoll and moves it to @toPoll.
+    /// Blocks until the transfer is complete.
+    static void takeSocket(const std::shared_ptr<SocketPoll>& fromPoll,
+                           const std::shared_ptr<SocketPoll>& toPoll,
+                           const std::shared_ptr<Socket>& socket);
 
 #if !MOBILEAPP
     /// Inserts a new remote websocket to be polled.
@@ -976,8 +980,6 @@ public:
         int peerSocket,
         const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler);
 #endif
-
-    typedef std::function<void()> CallbackFn;
 
     /// Add a callback to be invoked in the polling thread
     void addCallback(const CallbackFn& fn)
@@ -1119,13 +1121,16 @@ private:
         std::weak_ptr<Socket> _socket;
         std::weak_ptr<SocketPoll> _toPoll;
         SocketDisposition::MoveFunction _socketMove;
+        CallbackFn _fromCallback;
 
         SocketTransfer(std::weak_ptr<Socket> socket,
                        std::weak_ptr<SocketPoll> toPoll,
-                       SocketDisposition::MoveFunction socketMove)
+                       SocketDisposition::MoveFunction socketMove,
+                       CallbackFn fromCallback)
             : _socket(std::move(socket))
             , _toPoll(std::move(toPoll))
             , _socketMove(std::move(socketMove))
+            , _fromCallback(std::move(fromCallback))
        {
        }
     };

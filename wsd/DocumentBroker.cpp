@@ -268,7 +268,7 @@ void DocumentBroker::setupTransfer(SocketDisposition &disposition,
 void DocumentBroker::setupTransfer(SocketPoll& from, const std::weak_ptr<StreamSocket>& socket,
                                    const SocketDisposition::MoveFunction& transferFn)
 {
-    from.transferSocketTo(socket, getPoll(), transferFn);
+    from.transferSocketTo(socket, getPoll(), transferFn, nullptr);
 }
 
 static std::chrono::seconds getLimitLoadSecs()
@@ -293,7 +293,7 @@ void DocumentBroker::pollThread()
     do
     {
         static constexpr std::chrono::milliseconds timeoutMs(COMMAND_TIMEOUT_MS * 5);
-        _childProcess = getNewChild_Blocks(*_poll, _configId, _mobileAppDocId);
+        _childProcess = getNewChild_Blocks(_poll, _configId, _mobileAppDocId);
         if (_childProcess
             || std::chrono::duration_cast<std::chrono::milliseconds>(
                    std::chrono::steady_clock::now() - threadStart)
