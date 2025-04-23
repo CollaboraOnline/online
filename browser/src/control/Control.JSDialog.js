@@ -62,22 +62,27 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	clearDialog: function(id) {
-		var builder = this.dialogs[id].builder;
+		const dialogInfo = this.dialogs[id];
+		const builder = dialogInfo.builder;
 
-		L.DomUtil.remove(this.dialogs[id].container);
+		app.layoutingService.appendLayoutingTask(() => {
+			L.DomUtil.remove(dialogInfo.container);
 
-		if (this.dialogs[id].overlay && !this.dialogs[id].isSubmenu)
-			L.DomUtil.remove(this.dialogs[id].overlay);
+			if (dialogInfo.overlay && !dialogInfo.isSubmenu)
+				L.DomUtil.remove(dialogInfo.overlay);
 
-		delete this.dialogs[id];
+			delete this.dialogs[id];
+		});
 
 		return builder;
 	},
 
 	close: function(id, sendCloseEvent) {
 		if (id !== undefined && this.dialogs[id]) {
-			if (!sendCloseEvent && this.dialogs[id].overlay && !this.dialogs[id].isSubmenu)
-				L.DomUtil.remove(this.dialogs[id].overlay);
+			if (!sendCloseEvent && this.dialogs[id].overlay && !this.dialogs[id].isSubmenu) {
+				app.layoutingService.appendLayoutingTask(
+					() => { L.DomUtil.remove(this.dialogs[id].overlay); });
+			}
 
 			if (this.dialogs[id].timeoutId)
 				clearTimeout(this.dialogs[id].timeoutId);
@@ -166,12 +171,14 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	focusToLastElement: function(id) {
-		try {
-			this.dialogs[id].lastFocusedElement.focus();
-		}
-		catch (error) {
-			this.map.focus();
-		}
+		app.layoutingService.appendLayoutingTask(() => {
+			try {
+				this.dialogs[id].lastFocusedElement.focus();
+			}
+			catch (error) {
+				this.map.focus();
+			}
+		});
 	},
 
 	setTabs: function() {
