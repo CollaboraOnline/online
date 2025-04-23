@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-23 14:52+0200\n"
+"POT-Creation-Date: 2025-04-23 16:31+0200\n"
 "PO-Revision-Date: 2021-04-26 23:46+0000\n"
 "Last-Translator: HelaBasa <R45XvezA@protonmail.ch>\n"
 "Language-Team: Sinhala <https://hosted.weblate.org/projects/collabora-online/"
@@ -288,7 +288,8 @@ msgstr ""
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: src/app/Debug.ts:1383 src/canvas/sections/CommentListSection.ts:1458
+#: admin/src/integrator/AdminIntegratorSettings.ts:638 src/app/Debug.ts:1383
+#: src/canvas/sections/CommentListSection.ts:1458
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -422,18 +423,18 @@ msgid "Access token is missing in initial variables."
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:242
-msgid "Something went wrong, Please try to refresh the page."
+msgid "Something went wrong. Please try to refresh the page."
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:315
 msgid ""
-"Something went wrong while fetching setting file, Please try to refresh the "
+"Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 msgid ""
-"Something went wrong while fetching wordbook, Please try to refresh the "
+"Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
 
@@ -445,6 +446,11 @@ msgstr ""
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:626
+#: src/map/handler/Map.WOPI.js:690
+msgid "Error"
 msgstr ""
 
 #: admin/src/Util.js:26
@@ -3639,10 +3645,6 @@ msgstr ""
 
 #: src/map/handler/Map.WOPI.js:176
 msgid "Creating new file from template..."
-msgstr ""
-
-#: src/map/handler/Map.WOPI.js:690
-msgid "Error"
 msgstr ""
 
 #: src/map/handler/Map.WOPI.js:690
