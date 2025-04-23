@@ -570,6 +570,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS, bool justPoll)
         LOGA_TRC(Socket, "Wakeup pipe (" << _wakeup[0] << ") read " << dump[0] << " bytes");
 
         std::vector<CallbackFn> invoke;
+        std::vector<SocketTransfer> pendingTransfers;
         {
             std::lock_guard<std::mutex> lock(_mutex);
 
@@ -590,6 +591,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS, bool justPoll)
 
             // Extract list of callbacks to process
             std::swap(_newCallbacks, invoke);
+            std::swap(_pendingTransfers, pendingTransfers);
         }
 
         if (invoke.size() > 0)
@@ -604,6 +606,21 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS, bool justPoll)
             {
                 LOG_ERR("Exception while invoking poll [" << _name <<
                         "] callback: " << exc.what());
+            }
+        }
+
+        if (pendingTransfers.size() > 0)
+            LOGA_TRC(Socket, "Invoking " << pendingTransfers.size() << " transfers");
+        for (const auto& pendingTransfer : pendingTransfers)
+        {
+            try
+            {
+                transfer(pendingTransfer);
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_ERR("Exception while invoking poll [" << _name <<
+                        "] transfer: " << exc.what());
             }
         }
 
@@ -710,6 +727,34 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS, bool justPoll)
     }
 
     return rc;
+}
+
+void SocketPoll::transfer(const SocketTransfer& pendingTransfer)
+{
+    std::shared_ptr<Socket> socket = pendingTransfer._socket.lock();
+    std::shared_ptr<SocketPoll> toPoll = pendingTransfer._toPoll.lock();
+    if (!socket)
+    {
+        LOG_WRN("Socket for transfer no longer exists");
+        return;
+    }
+    if (!toPoll)
+    {
+        LOG_WRN("Destination Poll for socket transfer no longer exists");
+        return;
+    }
+    auto it = std::find(_pollSockets.begin(), _pollSockets.end(), socket);
+    if (it == _pollSockets.end())
+        LOG_WRN("Trying to move socket out of the wrong poll");
+    else
+    {
+        SocketDisposition disposition(socket);
+        disposition.setTransfer(*toPoll, pendingTransfer._socketMove);
+        // leave empty entry in _pollSockets to be added to toErase and
+        // cleaned later.
+        *it = nullptr;
+        disposition.execute();
+    }
 }
 
 void SocketPoll::wakeupWorld()
