@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-17 14:55+0200\n"
+"POT-Creation-Date: 2025-04-23 14:52+0200\n"
 "PO-Revision-Date: 2025-03-16 12:13+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
@@ -141,7 +141,7 @@ msgid "Network Graph"
 msgstr "Network Graph"
 
 #: admin/admin.strings.js:45 src/canvas/sections/CommentListSection.ts:512
-#: src/canvas/sections/CommentSection.ts:157
+#: src/canvas/sections/CommentSection.ts:166
 #: src/control/Control.Notebookbar.js:284
 #: src/control/Control.NotebookbarCalc.js:115
 #: src/control/Control.NotebookbarDraw.js:29
@@ -287,7 +287,7 @@ msgstr "Warning"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: src/app/Debug.ts:1383 src/canvas/sections/CommentListSection.ts:1459
+#: src/app/Debug.ts:1383 src/canvas/sections/CommentListSection.ts:1458
 #: src/control/Control.AboutDialog.ts:155
 #: src/control/Control.AlertDialog.js:54
 #: src/control/Control.DocumentRepair.js:77
@@ -296,7 +296,7 @@ msgstr "Warning"
 #: src/control/Control.ServerAuditDialog.ts:239
 #: src/control/Control.Tabs.js:385 src/control/Control.Tabs.js:394
 #: src/control/Control.Zotero.js:367 src/control/Control.Zotero.js:413
-#: src/control/Parts.js:477 src/control/Permission.js:89
+#: src/control/Parts.js:480 src/control/Permission.js:89
 #: src/control/Permission.js:99 src/control/Permission.js:149
 #: src/control/Toolbar.js:740 src/control/Toolbar.js:839
 #: src/core/Socket.js:709 src/core/Socket.js:1174 src/core/Socket.js:1244
@@ -315,14 +315,14 @@ msgstr "OK"
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
 #: src/canvas/sections/CommentListSection.ts:507
-#: src/canvas/sections/CommentSection.ts:156
-#: src/canvas/sections/CommentSection.ts:159
+#: src/canvas/sections/CommentSection.ts:165
+#: src/canvas/sections/CommentSection.ts:168
 #: src/control/Control.DocumentRepair.js:71
 #: src/control/Control.DownloadProgress.js:82
 #: src/control/Control.LanguageDialog.js:113
 #: src/control/Control.MobileTopBar.ts:43
-#: src/control/Control.UIManager.ts:1699 src/control/Control.UIManager.ts:1778
-#: src/control/Control.UIManager.ts:1930 src/control/Control.UIManager.ts:2108
+#: src/control/Control.UIManager.ts:1692 src/control/Control.UIManager.ts:1771
+#: src/control/Control.UIManager.ts:1923 src/control/Control.UIManager.ts:2101
 #: src/control/Control.Zotero.js:362 src/control/Toolbar.js:834
 #: src/core/Socket.js:1420
 msgid "Cancel"
@@ -359,6 +359,92 @@ msgstr "Are you sure you want to terminate this session?"
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
 msgstr "Are you sure you want to shut down the server?"
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:115
+msgid "Autotext"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:117
+msgid ""
+"Upload reusable text snippets (.bau). To insert the text in your document, "
+"type the shortcut for an AutoText entry and press F3."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:123
+msgid "Upload Autotext"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:127
+msgid "Custom Dictionaries"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:129
+msgid ""
+"Add or edit words in a spell check dictionary. Words in your wordbook (."
+"dic) will be available for spelling checks."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:135
+msgid "Upload Wordbook"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:139
+msgid "Interface"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:140
+msgid "Set default interface preferences."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:146
+msgid "Upload Configuration"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:151
+msgid "Document View"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:152
+msgid "Adjust how office documents look."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:158
+msgid "Upload Xcu"
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:207
+msgid "Shared Config URL is missing in initial variables."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:213
+msgid "Access token is missing in initial variables."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:242
+msgid "Something went wrong, Please try to refresh the page."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:315
+msgid ""
+"Something went wrong while fetching setting file, Please try to refresh the "
+"page."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:340
+msgid ""
+"Something went wrong while fetching wordbook, Please try to refresh the "
+"page."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:375
+msgid "Something went wrong while uploading the file. Please try again."
+msgstr ""
+
+#: admin/src/integrator/AdminIntegratorSettings.ts:501
+msgid ""
+"Something went wrong while deleting the file. Please try refreshing the "
+"page."
+msgstr ""
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -445,7 +531,7 @@ msgid "Modify"
 msgstr "Modify"
 
 #: src/canvas/sections/CommentListSection.ts:1172
-#: src/canvas/sections/CommentSection.ts:160
+#: src/canvas/sections/CommentSection.ts:169
 msgid "Reply"
 msgstr "Reply"
 
@@ -487,21 +573,21 @@ msgstr "Open in full view"
 
 #: src/canvas/sections/CommentListSection.ts:1236
 #: src/control/Control.JSDialogBuilder.js:1895
-#: src/layer/tile/CanvasTileLayer.js:3548
-#: src/layer/tile/CanvasTileLayer.js:3559
+#: src/layer/tile/CanvasTileLayer.js:3524
+#: src/layer/tile/CanvasTileLayer.js:3535
 msgid "Comment"
 msgstr "Comment"
 
-#: src/canvas/sections/CommentListSection.ts:1457
-#: src/canvas/sections/CommentListSection.ts:1470
+#: src/canvas/sections/CommentListSection.ts:1456
+#: src/canvas/sections/CommentListSection.ts:1469
 msgid "Comments Updated"
 msgstr "Comments Updated"
 
-#: src/canvas/sections/CommentListSection.ts:1458
+#: src/canvas/sections/CommentListSection.ts:1457
 msgid "Another user has removed this comment."
 msgstr "Another user has removed this comment."
 
-#: src/canvas/sections/CommentListSection.ts:1471
+#: src/canvas/sections/CommentListSection.ts:1470
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
@@ -509,39 +595,40 @@ msgstr ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 
-#: src/canvas/sections/CommentListSection.ts:1472 src/core/Socket.js:1424
+#: src/canvas/sections/CommentListSection.ts:1471 src/core/Socket.js:1424
 msgid "Overwrite"
 msgstr "Overwrite"
 
-#: src/canvas/sections/CommentListSection.ts:1473
+#: src/canvas/sections/CommentListSection.ts:1472
 msgid "Update"
 msgstr "Update"
 
-#: src/canvas/sections/CommentListSection.ts:1574
-#: src/canvas/sections/CommentListSection.ts:1646
+#: src/canvas/sections/CommentListSection.ts:1573
+#: src/canvas/sections/CommentListSection.ts:1647
 msgid "Autosaved"
 msgstr "Autosaved"
 
-#: src/canvas/sections/CommentSection.ts:303
+#: src/canvas/sections/CommentSection.ts:312
 msgid "Open menu"
 msgstr "Open menu"
 
-#: src/canvas/sections/CommentSection.ts:369
-#: src/canvas/sections/CommentSection.ts:370
+#: src/canvas/sections/CommentSection.ts:378
+#: src/canvas/sections/CommentSection.ts:379
 msgid "Accept change"
 msgstr "Accept change"
 
-#: src/canvas/sections/CommentSection.ts:376
-#: src/canvas/sections/CommentSection.ts:377
+#: src/canvas/sections/CommentSection.ts:385
+#: src/canvas/sections/CommentSection.ts:386
 msgid "Reject change"
 msgstr "Reject change"
 
-#: src/canvas/sections/CommentSection.ts:400
+#: src/canvas/sections/CommentSection.ts:409
 msgid "Resolved"
 msgstr "Resolved"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:418
-msgid "Document contains unsupported video"
+#, fuzzy
+msgid "Document contains unsupported media"
 msgstr "Document contains unsupported video"
 
 #: src/canvas/sections/URLPopUpSection.ts:68
@@ -718,7 +805,7 @@ msgstr "Downloading clipboard content"
 
 #: src/control/Control.DownloadProgress.js:88
 #: src/control/Control.DownloadProgress.js:113
-#: src/control/Control.PartsPreview.js:298
+#: src/control/Control.PartsPreview.js:295
 msgid "Copy"
 msgstr "Copy"
 
@@ -2243,15 +2330,15 @@ msgstr "Dropdown"
 msgid "Picture"
 msgstr "Picture"
 
-#: src/control/Control.PartsPreview.js:189
+#: src/control/Control.PartsPreview.js:186
 msgid "preview of page "
 msgstr "preview of page "
 
-#: src/control/Control.PartsPreview.js:264
+#: src/control/Control.PartsPreview.js:261
 msgid "Paste Slide"
 msgstr "Paste Slide"
 
-#: src/control/Control.PartsPreview.js:308
+#: src/control/Control.PartsPreview.js:305
 msgid "Paste"
 msgstr "Paste"
 
@@ -2723,7 +2810,7 @@ msgstr "Insert tabstop"
 msgid "Delete tabstop"
 msgstr "Delete tabstop"
 
-#: src/control/Parts.js:477
+#: src/control/Parts.js:480
 msgid "Show sheets"
 msgstr "Show sheets"
 
@@ -3465,15 +3552,15 @@ msgstr "the Help tab"
 msgid "the View menu"
 msgstr "the View menu"
 
-#: src/layer/tile/CanvasTileLayer.js:1589
+#: src/layer/tile/CanvasTileLayer.js:1577
 msgid "Functions"
 msgstr "Functions"
 
-#: src/layer/tile/CanvasTileLayer.js:1852
+#: src/layer/tile/CanvasTileLayer.js:1840
 msgid "Named Range"
 msgstr "Named Range"
 
-#: src/layer/tile/CanvasTileLayer.js:3576
+#: src/layer/tile/CanvasTileLayer.js:3552
 msgid "No Comments"
 msgstr "No Comments"
 
@@ -3535,11 +3622,11 @@ msgstr "Close popup to ignore paste special"
 msgid "Initializing..."
 msgstr "Initialising…"
 
-#: src/map/Map.js:462 src/map/Map.js:465 src/map/Map.js:468 src/map/Map.js:471
+#: src/map/Map.js:491 src/map/Map.js:494 src/map/Map.js:497 src/map/Map.js:500
 msgid "Last saved:"
 msgstr "Last saved:"
 
-#: src/map/Map.js:1488
+#: src/map/Map.js:1476
 msgid "Please wait!"
 msgstr "Please wait!"
 
