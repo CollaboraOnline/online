@@ -55,7 +55,17 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
                 tokens.startsWith(token, "name") || tokens.startsWith(token, "url"))
                 continue;
 
-            log << tokens.getParam(token) << ' ';
+            std::string tokenStr = tokens.getParam(token);
+
+            std::string::size_type pos = tokenStr.find("\"Author\":{\"type\":\"string\",\"value\":\"");
+            if (pos != std::string::npos) {
+                auto start = tokenStr.find("\"value\":\"", pos) + 9;
+                auto end = tokenStr.find("\"", start);
+                std::string value = tokenStr.substr(start, end - start);
+                tokenStr.replace(start, end - start, Anonymizer::anonymize(value));
+            }
+
+            log << tokenStr << ' ';
         }
     });
 

@@ -255,6 +255,19 @@ namespace Util
         return os.str();
     }
 
+    void replaceAllSubStr(std::string& input, const std::string& target, const std::string& replacement)
+    {
+        if (target.empty())
+            return;
+
+        std::size_t pos = 0;
+        while ((pos = input.find(target, pos)) != std::string::npos)
+        {
+            input.replace(pos, target.length(), replacement);
+            pos += replacement.length();
+        }
+    }
+
     std::string cleanupFilename(const std::string &filename)
     {
         constexpr std::string_view mtch(",/?:@&=+$#'\"");

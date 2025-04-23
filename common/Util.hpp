@@ -355,6 +355,8 @@ namespace Util
     /// Replace any characters in @a matching characters in @b with replacement chars in @c and return
     std::string replaceAllOf(std::string_view str, std::string_view match, std::string_view repl);
 
+    void replaceAllSubStr(std::string& input, const std::string& target, const std::string& replacement);
+
     std::string formatLinesForLog(const std::string& s);
 
     void setThreadName(const std::string& s);

@@ -2669,7 +2669,7 @@ void Document::dumpState(std::ostream& oss)
         << "\n\tdocId: " << _docId
         << "\n\turl: " << _url
         << "\n\tobfuscatedFileId: " << _obfuscatedFileId
-        << "\n\tjailedUrl: " << _jailedUrl
+        << "\n\tjailedUrl: " << anonymizeUrl(_jailedUrl)
         << "\n\trenderOpts: " << _renderOpts
         << "\n\thaveDocPassword: " << _haveDocPassword // not the pwd itself
         << "\n\tisDocPasswordProtected: " << _isDocPasswordProtected
@@ -2730,8 +2730,8 @@ void Document::dumpState(std::ostream& oss)
     for (const auto &it : _sessionUserInfo)
     {
         oss << "\n\t\tviewId: " << it.first
-            << " userId: " << it.second.getUserId()
-            << " userName: " << it.second.getUserName()
+            << " userId: " << Anonymizer::anonymize(it.second.getUserId())
+            << " userName: " << Anonymizer::anonymize(it.second.getUserName())
             << " userExtraInfo: " << it.second.getUserExtraInfo()
             << " readOnly: " << it.second.isReadOnly()
             << " connected: " << it.second.isConnected();
@@ -2741,8 +2741,12 @@ void Document::dumpState(std::ostream& oss)
     char *pState = nullptr;
     _loKit->dumpState("", &pState);
     oss << "lok state:\n";
-    if (pState)
-        oss << pState;
+    if (pState) {
+        std::string stateStr(pState);
+        std::string fileId = Uri::getFilenameFromURL(Uri::decode(_jailedUrl));
+        Util::replaceAllSubStr(stateStr, fileId, _obfuscatedFileId);
+        oss << stateStr;
+    }
     oss << '\n';
 }
 
