@@ -3721,7 +3721,7 @@ DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session
     // Create uri without query parameters
     const std::string wopiSrc(uri.getScheme() + "://" + uri.getAuthority() + uri.getPath());
     _admin.addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(),
-                  session->getUserId(), _childProcess->getSMapsFD(), wopiSrc, session->isReadOnly());
+                  session->getUserId(), _childProcess->getSMapsFp(), wopiSrc, session->isReadOnly());
     _admin.setDocWopiDownloadDuration(_docKey, _wopiDownloadDuration);
 #endif
 

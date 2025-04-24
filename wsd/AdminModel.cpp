@@ -148,7 +148,8 @@ void Document::updateMemoryDirty()
     if (now - _lastTimeSMapsRead >= 5)
     {
         size_t lastMemDirty = _memoryDirty;
-        _memoryDirty = _procSMaps  ? Util::getPssAndDirtyFromSMaps(_procSMaps).second : 0;
+        auto procSMaps = _procSMaps.lock();
+        _memoryDirty = procSMaps ? Util::getPssAndDirtyFromSMaps(procSMaps.get()).second : 0;
         _lastTimeSMapsRead = now;
         if (lastMemDirty != _memoryDirty)
             _hasMemDirtyChanged = true;
@@ -534,12 +535,12 @@ void AdminModel::uploadedAlert(const std::string& docKey, pid_t pid, bool value)
 void AdminModel::addDocument(const std::string& docKey, pid_t pid,
                              const std::string& filename, const std::string& sessionId,
                              const std::string& userName, const std::string& userId,
-                             const int smapsFD, const Poco::URI& wopiSrc, bool isViewReadOnly)
+                             const std::weak_ptr<FILE>& smapsFp, const Poco::URI& wopiSrc, bool isViewReadOnly)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
     const auto ret =
         _documents.emplace(docKey, std::make_unique<Document>(docKey, pid, filename, wopiSrc));
-    ret.first->second->setProcSMapsFD(smapsFD);
+    ret.first->second->setProcSMapsFp(smapsFp);
     ret.first->second->takeSnapshot();
     ret.first->second->addView(sessionId, userName, userId, isViewReadOnly);
     LOG_DBG("Added admin document [" << docKey << "].");
@@ -615,6 +616,7 @@ void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iter
     std::unique_ptr<Document> doc;
     std::swap(doc, docIt->second);
     _documents.erase(docIt);
+    doc->setExpired();
     _expiredDocuments.emplace(docItKey + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(
                                                             std::chrono::steady_clock::now().time_since_epoch()).count()),
                               std::move(doc));
