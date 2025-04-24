@@ -1255,7 +1255,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var scroll = new app.definitions.simplePoint(0, 0);
 
 		if (!app.calc.cellCursorVisible) {
-			return new L.LatLng(0, 0);
+			return scroll;
 		}
 
 		let paneRectangles = app.getViewRectangles(); // SimpleRectangle array.
@@ -1266,14 +1266,14 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (contained)
-			return new L.LatLng(0, 0); // No scroll needed.
+			return scroll; // No scroll needed.
 
 		var noSplit = !this._splitPanesContext || this._splitPanesContext.getSplitPos().equals(new L.Point(0, 0));
 
 		// No split panes. Check if target cell is bigger than screen but partially visible.
 		if (noSplit && app.calc.cellCursorRectangle.intersectsRectangle(paneRectangles[0].toArray())) {
 			if (app.calc.cellCursorRectangle.width > paneRectangles[0].width || app.calc.cellCursorRectangle.height > paneRectangles[0].height)
-				return new L.LatLng(0, 0); // no scroll needed.
+				return scroll; // no scroll needed.
 		}
 
 		let freePane = paneRectangles[paneRectangles.length - 1]; // Last pane, this should be the scrollable - not frozen one.
@@ -1281,7 +1281,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		// Horizontal split
 		if (app.calc.cellCursorRectangle.x2 > app.calc.splitCoordinate.x) {
 			if (app.calc.cellCursorRectangle.width > freePane.width)
-				return new L.LatLng(0, 0); // no scroll needed.
+				return scroll; // no scroll needed.
 
 			var spacingX = app.calc.cellCursorRectangle.width / 4.0;
 
@@ -1296,7 +1296,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		// Vertical split
 		if (app.calc.cellCursorRectangle.y2 > app.calc.splitCoordinate.y) {
 			if (app.calc.cellCursorRectangle.height > freePane.height)
-				return new L.LatLng(0, 0); // no scroll needed.
+				return scroll; // no scroll needed.
 
 			var spacingY = 100; // twips margin
 
@@ -1308,8 +1308,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			if (app.calc.cellCursorRectangle.y2 > freePane.y2 + scroll.y)
 				scroll.y = scroll.y + (app.calc.cellCursorRectangle.y2 - freePane.y2 + spacingY);
 		}
-
-		scroll = this._twipsToLatLng(scroll, this._map.getZoom()); // Simple point is also converted to L.Point by the converter.
 
 		return scroll;
 	},
