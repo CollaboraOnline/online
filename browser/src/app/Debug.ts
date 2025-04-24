@@ -681,7 +681,7 @@ class DebugManager {
 				centerPos,
 				centerTwips,
 			);
-			this._map.fire('scrollto', pos);
+			app.map._docLayer.scrollToPos(pos);
 			this._docLayer._postMouseEvent(
 				'buttondown',
 				centerTwips.x,

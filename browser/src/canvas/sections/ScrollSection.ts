@@ -45,7 +45,6 @@ export class ScrollSection extends CanvasSectionObject {
 
 		this.isRTL = isRTL ?? (() => false);
 
-		this.map.on('scrollto', this.onScrollTo, this);
 		this.map.on('scrollby', this.onScrollBy, this);
 		this.map.on('scrollvelocity', this.onScrollVelocity, this);
 		this.map.on('handleautoscroll', this.onHandleAutoScroll, this);
