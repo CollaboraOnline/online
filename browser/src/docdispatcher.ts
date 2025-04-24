@@ -257,7 +257,7 @@ class Dispatcher {
 			if (app.map.isEditMode()) $('#toolbar-down').show();
 			/** show edit button if only we are able to edit but in readonly mode */
 			if (!app.isReadOnly() && app.map.isReadOnlyMode())
-				$('#mobile-edit-button').show();
+				$('#mobile-edit-button').css('display', 'flex');
 		};
 
 		this.actionsMap['prev'] = () => {
