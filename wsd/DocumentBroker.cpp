@@ -3804,7 +3804,7 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
         }
 #endif
 #ifndef IOS
-        if (activeSessionCount <= 1)
+        if (activeSessionCount <= 1 && !isConvertTo())
         {
             // rescue clipboard before shutdown.
             // N.B. If the user selects then copies, most likely we will
