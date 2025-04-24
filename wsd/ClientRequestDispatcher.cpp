@@ -767,8 +767,11 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             {
                 if (uri.ends_with("lokit-extra-img.svg"))
                 {
+                    std::string proxyRatingServer =
+                        !isUnitTesting ? ProxyRequestHandler::getProxyRatingServer()
+                                       : UnitWSD::get().getProxyRatingServer();
                     ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen), socket,
-                                                       ProxyRequestHandler::getProxyRatingServer());
+                                                       proxyRatingServer);
                     servedSync = true;
                 }
 #if ENABLE_FEATURE_LOCK
