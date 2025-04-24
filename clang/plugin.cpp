@@ -177,7 +177,12 @@ public:
         clang::SourceLocation location(range.getBegin());
 
         // we trust the code in here
+#if __clang_major__ > 15
         if (sourceManager.getFilename(location).ends_with("Socket.cpp"))
+#else
+        // At least 15.0.7 needs this
+        if (sourceManager.getFilename(location).endswith("Socket.cpp"))
+#endif
         {
             return;
         }
