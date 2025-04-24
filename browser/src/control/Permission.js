@@ -36,7 +36,7 @@ L.Map.include({
 		// we offer save-as to another place where the user can edit the document
 		var isPDF = app.file.fileBasedView && app.file.editComment;
 		if (!isPDF && (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet())) {
-			button.show();
+			button.css('display', 'flex');
 		} else {
 			button.hide();
 		}

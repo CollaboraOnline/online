@@ -403,6 +403,8 @@ body {
 }
 
 #mobile-edit-button {
+	justify-content: center;
+	align-items: center;
 	position: absolute;
 	width: 56px;
 	height: 56px;
@@ -422,9 +424,6 @@ body {
 }
 
 #mobile-edit-button-image {
-	position: relative;
-	margin-inline-start: 16px;
-	top: 16px;
 	width: var(--btn-size);
 	height: var(--btn-size);
 	background: url('images/baseline-edit-24px.svg') no-repeat center !important;
