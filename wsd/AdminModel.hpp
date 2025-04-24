@@ -174,7 +174,6 @@ public:
         , _recvBytes(0)
         , _wopiDownloadDuration(0)
         , _wopiUploadDuration(0)
-        , _procSMaps(nullptr)
         , _lastTimeSMapsRead(0)
         , _badBehaviorDetectionTime(0)
         , _abortTime(0)
@@ -189,8 +188,6 @@ public:
 
     ~Document()
     {
-        if (_procSMaps)
-            fclose(_procSMaps);
     }
 
     std::string getDocKey() const { return _docKey; }
@@ -249,13 +246,20 @@ public:
     std::chrono::milliseconds getWopiDownloadDuration() const { return _wopiDownloadDuration; }
     void setWopiUploadDuration(const std::chrono::milliseconds wopiUploadDuration) { _wopiUploadDuration = wopiUploadDuration; }
     std::chrono::milliseconds getWopiUploadDuration() const { return _wopiUploadDuration; }
-    void setProcSMapsFD(const int smapsFD) { _procSMaps = fdopen(smapsFD, "r"); }
+    void setProcSMapsFp(std::weak_ptr<FILE> procSMaps) { _procSMaps = procSMaps; }
     bool hasMemDirtyChanged() const { return _hasMemDirtyChanged; }
     void setMemDirtyChanged(bool changeStatus) { _hasMemDirtyChanged = changeStatus; }
     time_t getBadBehaviorDetectionTime() const { return _badBehaviorDetectionTime; }
     void setBadBehaviorDetectionTime(time_t badBehaviorDetectionTime){ _badBehaviorDetectionTime = badBehaviorDetectionTime;}
     time_t getAbortTime() const { return _abortTime; }
     void setAbortTime(time_t abortTime) { _abortTime = abortTime; }
+
+    // If the Document is expired then _memoryDirty is now static and we can
+    // drop the _procSMaps reference as we have no further interest in it.
+    void setExpired()
+    {
+        _procSMaps.reset();
+    }
 
     std::string to_string() const;
 
@@ -283,7 +287,7 @@ private:
     std::chrono::milliseconds _wopiDownloadDuration;
     std::chrono::milliseconds _wopiUploadDuration;
 
-    FILE* _procSMaps;
+    std::weak_ptr<FILE> _procSMaps;
     std::time_t _lastTimeSMapsRead;
 
     std::time_t _badBehaviorDetectionTime;
@@ -393,8 +397,8 @@ public:
 
     void addDocument(const std::string& docKey, pid_t pid, const std::string& filename,
                      const std::string& sessionId, const std::string& userName,
-                     const std::string& userId, int smapsFD, const Poco::URI& wopiSrc,
-                     bool readOnly);
+                     const std::string& userId, const std::weak_ptr<FILE>& smapsFp,
+                     const Poco::URI& wopiSrc, bool readOnly);
 
     void removeDocument(const std::string& docKey, const std::string& sessionId);
     void removeDocument(const std::string& docKey);

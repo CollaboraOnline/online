@@ -789,10 +789,10 @@ void Admin::uploadedAlert(const std::string& docKey, pid_t pid, bool value)
 
 void Admin::addDoc(const std::string& docKey, pid_t pid, const std::string& filename,
                    const std::string& sessionId, const std::string& userName, const std::string& userId,
-                   const int smapsFD, const std::string& wopiSrc, bool readOnly)
+                   const std::weak_ptr<FILE>& smapsFp, const std::string& wopiSrc, bool readOnly)
 {
-    addCallback([this, docKey, pid, filename, sessionId, userName, userId, smapsFD, wopiSrc, readOnly] {
-        _model.addDocument(docKey, pid, filename, sessionId, userName, userId, smapsFD, Poco::URI(wopiSrc), readOnly);
+    addCallback([this, docKey, pid, filename, sessionId, userName, userId, smapsFp, wopiSrc, readOnly] {
+        _model.addDocument(docKey, pid, filename, sessionId, userName, userId, smapsFp, Poco::URI(wopiSrc), readOnly);
     });
 }
 

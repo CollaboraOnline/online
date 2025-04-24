@@ -202,7 +202,6 @@ public:
                     std::make_shared<WebSocketHandler>(socket, request))
         , _jailId(jailId)
         , _configId(configId)
-        , _smapsFD(-1)
         , _urpFromKitFD(socket->getIncomingFD(SharedFDType::URPFromKit))
         , _urpToKitFD(socket->getIncomingFD(SharedFDType::URPToKit))
     {
@@ -232,11 +231,7 @@ public:
         std::shared_ptr<StreamSocket> urpToKit(_urpToKit.lock());
         if (urpToKit)
             urpToKit->shutdown();
-        if (_smapsFD != -1)
-        {
-            ::close(_smapsFD);
-            _smapsFD = -1;
-        }
+        _smapsFp.reset();
     }
 
     const ChildProcess& operator=(ChildProcess&& other) = delete;
@@ -245,8 +240,20 @@ public:
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }
     const std::string& getJailId() const { return _jailId; }
     const std::string& getConfigId() const { return _configId; }
-    void setSMapsFD(int smapsFD) { _smapsFD = smapsFD; }
-    int getSMapsFD() { return _smapsFD; }
+    void setSMapsFD(int smapsFD)
+    {
+        _smapsFp = std::shared_ptr<FILE>(fdopen(smapsFD, "r"), [](FILE* p) {
+            if (!p)
+                return;
+            fclose(p);
+        });
+        if (!_smapsFp)
+        {
+            LOG_ERR("Error while fdopen smaps fd");
+            ::close(smapsFD);
+        }
+    }
+    std::weak_ptr<FILE> getSMapsFp() const { return _smapsFp; }
 
     void moveSocketFromTo(const std::shared_ptr<SocketPoll>& from, SocketPoll& to)
     {
@@ -259,7 +266,7 @@ private:
     std::weak_ptr<DocumentBroker> _docBroker;
     std::weak_ptr<StreamSocket> _urpFromKit;
     std::weak_ptr<StreamSocket> _urpToKit;
-    int _smapsFD;
+    std::shared_ptr<FILE> _smapsFp;
     int _urpFromKitFD;
     int _urpToKitFD;
 };
