@@ -380,6 +380,13 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	border: none;
 }
 
+.ui-expander.jsdialog:not(.sidebar) {
+	width: 100%;
+	text-align: left;
+	font-size: 14px;
+	padding-bottom: 4px;
+}
+
 #options.ui-expander {
 	margin-top: 8px;
 }
