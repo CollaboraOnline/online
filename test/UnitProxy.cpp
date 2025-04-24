@@ -11,13 +11,11 @@
 
 #include <config.h>
 
-#include <iostream>
-
 #include <Common.hpp>
+#include <FileUtil.hpp>
 #include <Protocol.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
-#include <FileUtil.hpp>
 #include <helpers.hpp>
 #include <net/HttpRequest.hpp>
 
@@ -48,10 +46,10 @@ public:
 
         httpSession->setTimeout(std::chrono::seconds(9));
 
-        TST_LOG("Attempt proxy URL fetch");
-
         // Request from rating.collaboraonline.com.
         _req = http::Request("/browser/a90f83c/foo/remote/static/lokit-extra-img.svg");
+
+        TST_LOG("Attempt proxy URL fetch " << httpSession->getUrl() << _req.getUrl());
 
         httpSession->setConnectFailHandler([this](const std::shared_ptr<http::Session>&) {
             LOK_ASSERT_FAIL("Unexpected connection failure");
