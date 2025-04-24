@@ -78,6 +78,13 @@ public:
                 break;
         }
 
+        if (!socket)
+        {
+            std::cerr << "Failed to create server socket on any port and gave up at port #" << port
+                      << std::endl;
+            exit(1);
+        }
+
         _localUri = "http://127.0.0.1:" + std::to_string(port);
         _pollServerThread.startThread();
         _pollServerThread.insertNewSocket(socket);
