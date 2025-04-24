@@ -171,28 +171,7 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                     return
                 }
                 else if body == "PRINT" {
-                    COWrapper.LOG_ERR("TODO: Implement PRINT")
-                    /*
-                    // Create the PDF to print
-                    let printFile = FileUtil.createRandomTmpDir() + "/print.pdf"
-                    let printURL = URL(fileURLWithPath: printFile)
-                    // DocumentData.get(self.document.appDocId).loKitDocument.saveAs(printURL.absoluteString, "pdf", nil)
-
-                    // Present the print panel
-                    let printInfo = NSPrintInfo.shared
-                    printInfo.jobName = "Document" // Adjust as needed
-                    let printOperation = NSPrintOperation(view: self.webView) // Adjust view as needed
-                    printOperation.printInfo = printInfo
-                    printOperation.run()
-
-                    // Remove the temporary print file if needed
-                    // do {
-                    //     try FileManager.default.removeItem(at: printURL)
-                    // } catch {
-                    //     LOG_ERR("Failed to remove print file: \(error)")
-                    // }
-                    */
-
+                    document.printDocument(self)
                     return
                 }
                 else if body == "FOCUSIFHWKBD" {
