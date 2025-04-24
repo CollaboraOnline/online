@@ -174,10 +174,8 @@ class ViewController: NSViewController, WKScriptMessageHandler, WKNavigationDele
                     COWrapper.LOG_ERR("TODO: Implement PRINT")
                     /*
                     // Create the PDF to print
-                    // You'll need to wrap the C++ functions used here
-                    // Example:
-                    // let printFile = FileUtil.createRandomTmpDir() + "/print.pdf"
-                    // let printURL = URL(fileURLWithPath: printFile)
+                    let printFile = FileUtil.createRandomTmpDir() + "/print.pdf"
+                    let printURL = URL(fileURLWithPath: printFile)
                     // DocumentData.get(self.document.appDocId).loKitDocument.saveAs(printURL.absoluteString, "pdf", nil)
 
                     // Present the print panel

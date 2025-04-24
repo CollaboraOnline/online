@@ -21,7 +21,9 @@
 
 + (void)handleHULLOWithDocument:(Document *)document;
 + (void)handleMessageWith:(Document *)document message:(NSString *)message;
++ (void)saveAsWith:(Document *)document url:(NSString *)url format:(NSString *)format filterOptions:(NSString *)filterOptions;
 
++ (int)generateNewAppDocId;
 + (int)fakeSocketSocket;
 
 + (void)LOG_DBG:(NSString *)message NS_SWIFT_NAME(LOG_DBG(_:));
