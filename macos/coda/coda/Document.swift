@@ -9,6 +9,7 @@
  */
 
 import Cocoa
+import PDFKit
 import WebKit
 
 /**
@@ -22,8 +23,9 @@ class Document: NSDocument {
     @objc
     var fakeClientFd: Int32 = -1
 
-    /// Currently unused
-    private var appDocId: Int = -1
+    /// ID to identify the document to be able to get access to lok::Document (eg. for printing)
+    @objc
+    var appDocId: Int32 = -1
 
     /// Is this a read-only document?
     private var readOnly: Bool = false
@@ -174,6 +176,37 @@ class Document: NSDocument {
     }
 
     /**
+     * Implement printing.
+     */
+    override func printOperation(withSettings printSettings: [NSPrintInfo.AttributeKey : Any]) throws -> NSPrintOperation {
+        // export to a temporary PDF file
+        let tmpURL = FileManager.default
+            .temporaryDirectory
+            .appendingPathComponent(UUID().uuidString)
+            .appendingPathExtension("pdf")
+
+        COWrapper.saveAs(with: self, url: tmpURL.absoluteString, format: "pdf", filterOptions: nil)
+
+        // load the PDF into a PDFView
+        guard let pdfDoc = PDFDocument(url: tmpURL) else {
+            throw CocoaError(.fileReadCorruptFile, userInfo: [NSURLErrorKey: tmpURL])
+        }
+
+        // we no longer need the file
+        try? FileManager.default.removeItem(at: tmpURL)
+
+        // build the printing view and operation
+        let pdfView = PDFView()
+        pdfView.document   = pdfDoc
+        pdfView.autoScales = true
+
+        let op = NSPrintOperation(view: pdfView, printInfo: self.printInfo)
+        op.showsPrintPanel    = true
+        op.showsProgressPanel = true
+        return op
+    }
+
+    /**
      * Clean up the temporary directory when the document closes.
      */
     override func close() {
@@ -190,8 +223,7 @@ class Document: NSDocument {
         self.webView = webView
         self.readOnly = readOnly
 
-        self.appDocId = 1
-
+        self.appDocId = COWrapper.generateNewAppDocId()
         self.fakeClientFd = COWrapper.fakeSocketSocket()
 
         guard let url = Bundle.main.url(forResource: "cool", withExtension: "html") else {
