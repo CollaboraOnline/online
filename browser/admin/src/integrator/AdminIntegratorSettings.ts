@@ -12,7 +12,12 @@
 
 /* global _ */
 
-declare var _: any;
+interface StringConstructor {
+	defaultLocale: string;
+	locale: string;
+}
+var _: any = (s) => s.toLocaleString();
+
 interface Window {
 	accessToken?: string;
 	accessTokenTTL?: string;
@@ -47,6 +52,16 @@ interface SectionConfig {
 	enabledFor?: string;
 	debugOnly?: boolean;
 }
+
+const initTranslationStr = () => {
+	const element = document.getElementById('initial-variables');
+	document.documentElement.lang =
+		(element as HTMLInputElement).dataset.lang || 'en-US';
+
+	String.defaultLocale = 'en-US';
+	String.locale =
+		document.documentElement.getAttribute('lang') || String.defaultLocale;
+};
 
 class SettingIframe {
 	private wordbook;
@@ -664,6 +679,7 @@ class SettingIframe {
 document.addEventListener('DOMContentLoaded', () => {
 	const adminContainer = document.getElementById('allConfigSection');
 	if (adminContainer) {
+		initTranslationStr();
 		(window as any).settingIframe = new SettingIframe();
 		(window as any).settingIframe.init();
 	}
