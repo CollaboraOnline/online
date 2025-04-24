@@ -2948,10 +2948,33 @@ L.CanvasTileLayer = L.Layer.extend({
 			pos = this._twipsToLatLng({ x: pos.x, y: pos.y });
 
 		var center = this._map.project(pos);
-		center = center.subtract(this._map.getSize().divideBy(2));
-		center.x = Math.round(center.x < 0 ? 0 : center.x);
-		center.y = Math.round(center.y < 0 ? 0 : center.y);
-		this._map.fire('scrollto', {x: center.x, y: center.y});
+
+		// If x coordinate is already within visible area, we won't scroll to that direction.
+		if (app.file.viewedRectangle.cX1 <= center.x && center.x <= app.file.viewedRectangle.cX2)
+			center.x = app.file.viewedRectangle.cX1;
+		else {
+			center.x -= this._map.getSize().divideBy(2).x;
+			center.x = Math.round(center.x < 0 ? 0 : center.x);
+		}
+
+		// If y coordinate is already within visible area, we won't scroll to that direction.
+		const controlYDown = center.y + (app.file.textCursor.visible ? app.file.textCursor.rectangle.cHeight :
+			(app.calc.cellCursorVisible ? app.calc.cellCursorRectangle.cHeight : 0));
+
+		const controlYUp = center.y - (app.file.textCursor.visible ? app.file.textCursor.rectangle.cHeight :
+			(app.calc.cellCursorVisible ? app.calc.cellCursorRectangle.cHeight : 0));
+
+		if (app.file.viewedRectangle.cY1 <= controlYUp && controlYDown <= app.file.viewedRectangle.cY2)
+			center.y = app.file.viewedRectangle.cY1;
+		else {
+			center.y -= this._map.getSize().divideBy(2).y;
+			center.y = Math.round(center.y < 0 ? 0 : center.y);
+		}
+
+		const section = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+		if (section) {
+			section.onScrollTo({x: center.x, y: center.y});
+		}
 	},
 
 	// Scroll the view by an amount given by a simplePoint
@@ -3138,16 +3161,14 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onUpdateCellCursor: function (scrollToCursor, sameAddress) {
 		this._onUpdateCellResizeMarkers();
 		if (app.calc.cellCursorVisible) {
-			var mapBounds = this._map.getBounds();
 			if (scrollToCursor &&
 			    !this._map.calcInputBarHasFocus()) {
-				var scroll = this._calculateScrollForNewCellCursor();
-				window.app.console.assert(scroll instanceof L.LatLng, '_calculateScrollForNewCellCursor returned wrong type');
-				if (scroll.lng !== 0 || scroll.lat !== 0) {
-					var newCenter = mapBounds.getCenter();
-					newCenter.lng += scroll.lng;
-					newCenter.lat += scroll.lat;
-					this.scrollToPos(newCenter);
+				const scroll = this._calculateScrollForNewCellCursor();
+				if (scroll.x !== 0 || scroll.y !== 0) {
+					const section = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+					if (section) {
+						section.moveMapBy(scroll.cX, scroll.cY, true);
+					}
 				}
 				this._prevCellCursorAddress = app.calc.cellAddress.clone();
 			}
