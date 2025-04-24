@@ -274,6 +274,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			// encode spaces
 			var encodedCommand = data.replace(' ', '%20');
 			builder.map.sendUnoCommand(encodedCommand);
+			// perform post-processing
+			builder.map.fire('jsdialog' + eventType, { uno: data });
 		} else if (object) {
 			// CSV and Macro Security Warning Dialogs are shown before the document load
 			// In that state the document is not really loaded and closing or cancelling it
