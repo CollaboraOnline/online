@@ -971,18 +971,18 @@ bool ChildSession::loadDocument(const StringVector& tokens)
 
     if (!getDocTemplate().empty())
     {
-        static constexpr auto Protocol = "file://";
-
         // If we aren't chroot-ed, we need to use the absolute path.
         // Because that's where Storage in WSD expects the document.
         std::string url;
         if (!_jailRoot.empty())
         {
-            url = Protocol + _jailRoot;
+            static constexpr std::string_view Protocol = "file://";
+
+            url = std::string(Protocol) + _jailRoot;
             if (getJailedFilePath().starts_with(url))
                 url = getJailedFilePath(); // JailedFilePath is already the absolute path.
             else if (getJailedFilePath().starts_with(Protocol))
-                url += getJailedFilePath().substr(sizeof(Protocol) - 1);
+                url += getJailedFilePath().substr(Protocol.size());
             else
                 url += getJailedFilePath();
         }
