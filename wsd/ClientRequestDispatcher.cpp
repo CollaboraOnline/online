@@ -741,11 +741,11 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
             handledByUnitTesting = UnitWSD::get().handleHttpRequest(request, message, socket);
             if (!handledByUnitTesting)
             {
-                LOG_DBG("Unit-Test: parallelizeCheckInfo" << request.getURI());
+                LOG_DBG("Unit-Test: parallelizeCheckInfo: " << request.getURI());
                 auto mapAccessDetails = UnitWSD::get().parallelizeCheckInfo(request, message, socket);
                 if (!mapAccessDetails.empty())
                 {
-                    LOG_DBG("Unit-Test: launchAsyncCheckFileInfo" << request.getURI());
+                    LOG_DBG("Unit-Test: launchAsyncCheckFileInfo: " << request.getURI());
                     auto accessDetails = FileServerRequestHandler::ResourceAccessDetails(
                         mapAccessDetails.at("wopiSrc"),
                         mapAccessDetails.at("accessToken"),
