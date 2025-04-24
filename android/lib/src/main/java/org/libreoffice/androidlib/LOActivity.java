@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -39,18 +38,13 @@ import android.print.PrintManager;
 import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
-import android.webkit.MimeTypeMap;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -61,7 +55,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.BufferedWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
@@ -74,6 +67,8 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -86,7 +81,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.libreoffice.androidlib.lok.LokClipboardData;
-import org.libreoffice.androidlib.lok.LokClipboardEntry;
+
+import dalvik.annotation.optimization.FastNative;
 
 public class LOActivity extends AppCompatActivity {
     final static String TAG = "LOActivity";
@@ -143,6 +139,8 @@ public class LOActivity extends AppCompatActivity {
     private boolean mIsEditModeActive = false;
 
     private ValueCallback<Uri[]> valueCallback;
+
+    private Executor mobileMessageExecutor;
 
     public static final int REQUEST_SELECT_IMAGE_FILE = 500;
     public static final int REQUEST_SAVEAS_PDF = 501;
@@ -249,6 +247,8 @@ public class LOActivity extends AppCompatActivity {
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         sPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        this.mobileMessageExecutor = Executors.newFixedThreadPool(1);
 
         setContentView(R.layout.lolib_activity_main);
         mProgressDialog = new ProgressDialog(this);
@@ -427,27 +427,17 @@ public class LOActivity extends AppCompatActivity {
         Log.i(TAG, "onNewIntent");
 
         if (documentLoaded) {
-            postMobileMessageNative("save dontTerminateEdit=1 dontSaveIfUnmodified=1");
+            rawPostMobileMessage("save dontTerminateEdit=1 dontSaveIfUnmodified=1");
         }
+        documentLoaded = false;
 
         final Intent finalIntent = intent;
         mProgressDialog.indeterminate(R.string.exiting);
-        getMainHandler().post(new Runnable() {
-            @Override
-            public void run() {
-                documentLoaded = false;
-                postMobileMessageNative("BYE");
-                //copyTempBackToIntent();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mProgressDialog.dismiss();
-                        setIntent(finalIntent);
-                        init();
-                    }
-                });
-            }
-        });
+        rawPostMobileMessage("BYE", () -> runOnUiThread(() -> {
+            mProgressDialog.dismiss();
+            setIntent(finalIntent);
+            init();
+        }));
         super.onNewIntent(intent);
     }
 
@@ -619,7 +609,7 @@ public class LOActivity extends AppCompatActivity {
     protected void onPause() {
         // A Save similar to an autosave
         if (documentLoaded)
-            postMobileMessageNative("save dontTerminateEdit=1 dontSaveIfUnmodified=1");
+            rawPostMobileMessage("save dontTerminateEdit=1 dontSaveIfUnmodified=1");
 
         super.onPause();
         Log.d(TAG, "onPause() - hinting to save, we might need to return to the doc");
@@ -644,12 +634,12 @@ public class LOActivity extends AppCompatActivity {
         // finishWithProgress(), but it is actually better to send it twice
         // than never, so let's call it from here too anyway
         documentLoaded = false;
-        postMobileMessageNative("BYE");
+        rawPostMobileMessage("BYE", () -> runOnUiThread(() -> {
+            mProgressDialog.dismiss();
 
-        mProgressDialog.dismiss();
-
-        super.onDestroy();
-        Log.i(TAG, "onDestroy() - we know we are leaving the document");
+            super.onDestroy();
+            Log.i(TAG, "onDestroy() - we know we are leaving the document");
+        }));
     }
 
     @Override
@@ -797,21 +787,12 @@ public class LOActivity extends AppCompatActivity {
 
         // The 'BYE' takes a considerable amount of time, we need to post it
         // so that it starts after the saving progress is actually shown
-        getMainHandler().post(new Runnable() {
-            @Override
-            public void run() {
-                documentLoaded = false;
-                postMobileMessageNative("BYE");
-                //copyTempBackToIntent();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mProgressDialog.dismiss();
-                    }
-                });
+        getMainHandler().post(() -> {
+            documentLoaded = false;
+            rawPostMobileMessage("BYE", () -> runOnUiThread(() -> {
+                mProgressDialog.dismiss();
                 finishAndRemoveTask();
-            }
+            }));
         });
     }
 
@@ -930,33 +911,28 @@ public class LOActivity extends AppCompatActivity {
         String[] messageAndParameterArray= message.split(" ", 2); // the command and the rest (that can potentially contain spaces too)
 
         if (beforeMessageFromWebView(messageAndParameterArray)) {
-            postMobileMessageNative(message);
-            afterMessageFromWebView(messageAndParameterArray);
+            rawPostMobileMessage(message, () -> afterMessageFromWebView(messageAndParameterArray));
         }
+    }
+
+    public void rawPostMobileMessage(String message) {
+        mobileMessageExecutor.execute(() -> {
+            postMobileMessageNative(message);
+        });
+    }
+
+    public void rawPostMobileMessage(String message, Runnable callback) {
+        mobileMessageExecutor.execute(() -> {
+            postMobileMessageNative(message);
+            callback.run();
+        });
     }
 
     /**
      * Call the post method form C++
      */
+    @FastNative
     public native void postMobileMessageNative(String message);
-
-    /**
-     * Passing messages from JS (instead of the websocket communication).
-     */
-    @JavascriptInterface
-    public void postMobileError(String message) {
-        // TODO handle this
-        Log.d(TAG, "postMobileError: " + message);
-    }
-
-    /**
-     * Passing messages from JS (instead of the websocket communication).
-     */
-    @JavascriptInterface
-    public void postMobileDebug(String message) {
-        // TODO handle this
-        Log.d(TAG, "postMobileDebug: " + message);
-    }
 
     /**
      * Provide the info that this app is actually running under ChromeOS - so
@@ -1419,10 +1395,8 @@ public class LOActivity extends AppCompatActivity {
 
     public native void paste(String mimeType, byte[] data);
 
-    public native void postUnoCommand(String command, String arguments, boolean bNotifyWhenFinished);
-
     /// Returns a magic that specifies this application - and this document.
-    private final String getClipboardMagic() {
+    private String getClipboardMagic() {
         return CLIPBOARD_COOL_SIGNATURE + Long.toString(loadDocumentMillis);
     }
 
