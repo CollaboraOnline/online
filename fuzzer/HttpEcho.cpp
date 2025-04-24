@@ -36,7 +36,6 @@ class HttpRequestTests final
 {
     std::string _localUri;
     SocketPoll _pollServerThread;
-    std::shared_ptr<ServerSocket> _socket;
     std::shared_ptr<http::Session> _httpSession;
     SocketPoll _poller;
     bool _completed;
@@ -69,18 +68,19 @@ public:
         std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         std::shared_ptr<SocketFactory> factory = std::make_shared<ServerSocketFactory>();
         int port = 9990;
+        std::shared_ptr<ServerSocket> socket;
         for (int i = 0; i < 40; ++i, ++port)
         {
             // Try listening on this port.
-            _socket = ServerSocket::create(ServerSocket::Type::Local, port, Socket::Type::IPv4,
+            socket = ServerSocket::create(ServerSocket::Type::Local, port, Socket::Type::IPv4,
                                            now, _pollServerThread, factory);
-            if (_socket)
+            if (socket)
                 break;
         }
 
         _localUri = "http://127.0.0.1:" + std::to_string(port);
         _pollServerThread.startThread();
-        _pollServerThread.insertNewSocket(_socket);
+        _pollServerThread.insertNewSocket(socket);
 
         _httpSession = http::Session::create(localUri());
         if (!_httpSession)
@@ -98,7 +98,6 @@ public:
     ~HttpRequestTests()
     {
         _pollServerThread.stop();
-        _socket.reset();
         net::AsyncDNS::stopAsyncDNS();
     }
 
