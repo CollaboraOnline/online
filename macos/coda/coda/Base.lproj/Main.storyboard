@@ -112,7 +112,7 @@
                                         </menuItem>
                                         <menuItem title="Print…" keyEquivalent="p" id="aTl-1u-JFS">
                                             <connections>
-                                                <action selector="print:" target="Ady-hI-5gd" id="qaZ-4w-aoO"/>
+                                                <action selector="printDocument:" target="Ady-hI-5gd" id="PyL-nv-qvj"/>
                                             </connections>
                                         </menuItem>
                                     </items>

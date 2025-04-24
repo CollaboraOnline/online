@@ -19,10 +19,11 @@
 // Include necessary C++ headers
 #include <thread>
 #include <string>
-#include "Log.hpp"
-#include "Util.hpp"
 #include "COOLWSD.hpp"
 #include "FakeSocket.hpp"
+#include "Log.hpp"
+#include "MobileApp.hpp"
+#include "Util.hpp"
 
 // Declare the coolwsd pointer at global scope
 COOLWSD *coolwsd = nullptr;
@@ -143,7 +144,9 @@ static int closeNotificationPipeForForwardingThread[2];
     p.events = POLLOUT;
     fakeSocketPoll(&p, 1, -1);
 
-    fakeSocketWrite(document.fakeClientFd, url.c_str(), url.size());
+    // appDocId is read in ClientRequestDispatcher::handleIncomingMessage() in COOLWSD.cpp
+    std::string message(url + " " + std::to_string(document.appDocId));
+    fakeSocketWrite(document.fakeClientFd, message.c_str(), message.size());
 }
 
 + (void)handleMessageWith:(Document *)document message:(NSString *)message {
@@ -153,6 +156,22 @@ static int closeNotificationPipeForForwardingThread[2];
     p.events = POLLOUT;
     fakeSocketPoll(&p, 1, -1);
     fakeSocketWrite(document.fakeClientFd, buf, strlen(buf));
+}
+
++ (void)saveAsWith:(Document *)document url:(NSString *)url format:(NSString *)format filterOptions:(NSString *)filterOptions {
+    DocumentData::get(document.appDocId).loKitDocument->saveAs([url UTF8String], [format UTF8String], [filterOptions UTF8String]);
+}
+
+/**
+ * We keep a running count of opening documents here. This is not necessarily in sync with the
+ * DocBrokerId in DocumentBroker due to potential parallelism when opening multiple documents in
+ * quick succession.
+ */
+static std::atomic<int> appDocIdCounter(1);
+
++ (int)generateNewAppDocId {
+    DocumentData::allocate(appDocIdCounter);
+    return appDocIdCounter++;
 }
 
 + (int)fakeSocketSocket {
