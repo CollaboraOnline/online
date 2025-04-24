@@ -450,7 +450,7 @@ class UIManager extends L.Control {
 			document.body.setAttribute('data-integratorSidebar', 'true');
 
 		if (window.mode.isMobile()) {
-			$('#mobile-edit-button').show();
+			$('#mobile-edit-button').css('display', 'flex');
 			this.map.mobileBottomBar = JSDialog.MobileBottomBar(this.map);
 			this.map.mobileTopBar = JSDialog.MobileTopBar(this.map);
 			this.map.mobileSearchBar = JSDialog.MobileSearchBar(this.map);
