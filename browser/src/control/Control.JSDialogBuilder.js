@@ -886,7 +886,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		else if (element.tabIndex === -1 || element.tagName == 'A') {
 			return this._findFocusableParent(container, currentElement, element.parentNode, arrowUp);
 		}
-		else if (container.contains(element) && currentElement !== element && !currentElement.contains(element)) {
+		else if (container.contains(element) && currentElement !== element && !currentElement.contains(element) && !element.disabled) {
 			return element;
 		}
 		else
@@ -1216,14 +1216,42 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			contentDivs.forEach(function(tabPage)
 			{
 				tabPage.addEventListener('keydown', function(e) {
-					if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+					// Determine key direction
+					let key;
+					if (e.key === 'Tab') {
+						e.preventDefault(); // Always prevent default tab behavior
+						key = e.shiftKey ? 'ArrowLeft' : 'ArrowRight'; // Reverse if Shift+Tab
+					} else {
+						key = e.key;
+					}
+					if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
 						var currentElement = e.srcElement;
 						if (!(currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA')) {
-							let elementToFocus = this._findNextElementInContainer(document.getElementsByClassName('ui-tabs-content notebookbar')[0], currentElement, e.key);
+							if (e.key === 'Tab')
+								e.preventDefault();
+							let container = document.getElementsByClassName('ui-tabs-content notebookbar');
+							let elementToFocus = this._findNextElementInContainer(container[0], currentElement, key);
 							if (elementToFocus && elementToFocus.tagName !== 'NAV')
 								elementToFocus.focus();
 							else if (elementToFocus)
 								document.querySelector('.ui-tab.notebookbar.selected').focus();
+							else {
+								// Nothing found — cycle to first focusable
+								let visibleContainer = Array.from(container[0].children).find(child =>
+									!child.classList.contains('hidden') && child.offsetParent !== null
+								);
+								let focusables = visibleContainer ? Array.from(visibleContainer.querySelectorAll('[tabindex="-1"]:not([disabled])')) : [];								
+								if (focusables.length) {
+									let first = focusables[0];
+									let last = focusables[focusables.length - 1];
+									if (e.shiftKey && currentElement === first)
+										last.focus();
+									else if (!e.shiftKey && currentElement === last)
+										first.focus();
+									else
+										(e.shiftKey ? last : first).focus(); // fallback
+								}
+							}
 						}
 					}
 				}.bind(that));
@@ -2206,7 +2234,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(div).addClass('has-dropdown');
 			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
 			L.DomUtil.create('i', 'unoarrow', arrowbackground);
-			arrowbackground.tabIndex = '0';
 			controls['arrow'] = arrowbackground;
 
 			// Attach event listeners for both 'click' and 'keydown'
@@ -2229,6 +2256,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (arrowbackground) {
 			div.setAttribute('aria-expanded', false);
+			arrowbackground.tabIndex = '0';
 		}
 
 		var openToolBoxMenu = function(event, div) {
