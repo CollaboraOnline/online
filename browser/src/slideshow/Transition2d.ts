@@ -83,6 +83,7 @@ abstract class TransitionBase extends SlideChangeGl {
 class Transition2d extends TransitionBase {
 	private static readonly DefaultFromColor = new Float32Array([0, 0, 0, 0]);
 	private static readonly DefaultToColor = new Float32Array([0, 0, 0, 0]);
+	private _uniformCache: Record<string, WebGLUniformLocation> = {};
 
 	constructor(transitionParameters: TransitionParameters) {
 		super(transitionParameters);
@@ -139,6 +140,17 @@ class Transition2d extends TransitionBase {
 		gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
 	}
 
+	private getUniformLocation(value: string) {
+		if (this.program) {
+			if (!this._uniformCache[value])
+				this._uniformCache[value] = this.gl.getUniformLocation(
+					this.program,
+					value,
+				);
+			return this._uniformCache[value];
+		}
+	}
+
 	public render(nT: number, properties?: AnimatedElementRenderProperties) {
 		if (this.context.isDisposed()) return;
 
@@ -170,7 +182,6 @@ class Transition2d extends TransitionBase {
 				0,
 			);
 		} else {
-			// jscpd:ignore-start
 			let bounds: BoundsType = null;
 			let alpha = 1.0;
 			let fromFillColor = Transition2d.DefaultFromColor;
@@ -195,27 +206,17 @@ class Transition2d extends TransitionBase {
 			console.debug(`Transition2d.render: alpha: ${alpha}`);
 
 			this.setPositionBuffer(bounds);
-			this.gl.uniform1f(
-				this.gl.getUniformLocation(this.program, 'alpha'),
-				alpha,
-			);
+			this.gl.uniform1f(this.getUniformLocation('alpha'), alpha);
 			this.gl.uniform4fv(
-				this.gl.getUniformLocation(this.program, 'fromFillColor'),
+				this.getUniformLocation('fromFillColor'),
 				fromFillColor,
 			);
+			this.gl.uniform4fv(this.getUniformLocation('toFillColor'), toFillColor);
 			this.gl.uniform4fv(
-				this.gl.getUniformLocation(this.program, 'toFillColor'),
-				toFillColor,
-			);
-			this.gl.uniform4fv(
-				this.gl.getUniformLocation(this.program, 'fromLineColor'),
+				this.getUniformLocation('fromLineColor'),
 				fromLineColor,
 			);
-			this.gl.uniform4fv(
-				this.gl.getUniformLocation(this.program, 'toLineColor'),
-				toLineColor,
-			);
-			// jscpd:ignore-end
+			this.gl.uniform4fv(this.getUniformLocation('toLineColor'), toLineColor);
 		}
 
 		gl.activeTexture(gl.TEXTURE1);
