@@ -1051,7 +1051,7 @@ private:
     uint64_t _count; ///< The number of samples. We are 8-byte aligned, so make this 64-bits.
 };
 
-struct ActiveExpiredStats
+class ActiveExpiredStats final
 {
 public:
     const AggregateStats& active() const { return _active; }
