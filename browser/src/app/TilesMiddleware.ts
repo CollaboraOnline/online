@@ -512,6 +512,9 @@ class TileManager {
 					message: message,
 					deltas: this.pendingDeltas,
 					tileSize: this.tileSize,
+					current: Object.keys(this.tiles).filter(
+						(k) => this.tiles[k].distanceFromView === 0,
+					),
 				},
 				this.pendingDeltas.map((x: any) => x.rawDelta.buffer),
 			);
@@ -2142,20 +2145,28 @@ class TileManager {
 					}
 
 					let keyframeImage = null;
-					if (x.isKeyframe)
-						keyframeImage = new ImageData(
-							x.keyframeBuffer,
-							e.data.tileSize,
-							e.data.tileSize,
+					if (x.isKeyframe) {
+						if (x.keyframeBuffer)
+							keyframeImage = new ImageData(
+								x.keyframeBuffer,
+								e.data.tileSize,
+								e.data.tileSize,
+							);
+						else {
+							tile.imgDataCache = null;
+							tile.rawDeltas = x.rawDelta;
+						}
+					}
+
+					if (!x.isKeyframe || keyframeImage)
+						this.applyDelta(
+							tile,
+							x.rawDelta,
+							x.deltas,
+							x.keyframeDeltaSize,
+							keyframeImage,
+							x.wireMessage,
 						);
-					this.applyDelta(
-						tile,
-						x.rawDelta,
-						x.deltas,
-						x.keyframeDeltaSize,
-						keyframeImage,
-						x.wireMessage,
-					);
 
 					this.createTileBitmap(tile, x, pendingDeltas, bitmaps);
 				}
