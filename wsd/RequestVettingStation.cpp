@@ -234,7 +234,6 @@ void RequestVettingStation::handleRequest(const std::string& id,
     _requestDetails = requestDetails;
     _ws = ws;
     _socket = socket;
-    _logContextFD = socket->getFD();
     _mobileAppDocId = mobileAppDocId;
 
     std::string url = _requestDetails.getDocumentURI();

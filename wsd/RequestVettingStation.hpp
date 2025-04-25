@@ -48,16 +48,14 @@ public:
         : _requestDetails(requestDetails)
         , _poll(poll)
         , _mobileAppDocId(0)
-        , _logContextFD(-1)
     {
     }
 
     inline void logPrefix(std::ostream& os) const
     {
-        if (_logContextFD > -1)
-        {
-            os << '#' << _logContextFD << ": ";
-        }
+        auto socket = _socket.lock();
+        int logContextFD = socket ? socket->getFD() : -1;
+        os << '#' << logContextFD << ": ";
     }
 
     /// Called when cool.html is served, to start the vetting as early as possible.
@@ -118,7 +116,6 @@ private:
     std::weak_ptr<StreamSocket> _socket;
     Util::Stopwatch _birthday;
     unsigned _mobileAppDocId;
-    int _logContextFD;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
