@@ -162,7 +162,8 @@ class Document
 public:
     Document(const std::string& docKey, pid_t pid,
              const std::string& filename, const Poco::URI& wopiSrc)
-        : _wopiSrc(wopiSrc)
+        : _wopiSrc(wopiSrc.toString())
+        , _hostName(wopiSrc.getHost())
         , _docKey(docKey)
         , _filename(filename)
         , _memoryDirty(0)
@@ -199,9 +200,9 @@ public:
 
     std::string getFilename() const { return _filename; }
 
-    std::string getHostName() const { return _wopiSrc.getHost(); }
+    std::string getHostName() const { return _hostName; }
 
-    std::string getWopiSrc() const { return _wopiSrc.toString(); }
+    std::string getWopiSrc() const { return _wopiSrc; }
 
     bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
@@ -260,7 +261,8 @@ public:
     std::string to_string() const;
 
 private:
-    Poco::URI _wopiSrc;
+    std::string _wopiSrc;
+    std::string _hostName;
     /// SessionId mapping to View object
     std::map<std::string, View> _views;
     std::map<std::time_t,std::string> _snapshots;
