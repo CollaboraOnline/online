@@ -116,7 +116,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
         if (app.sectionContainer.doesSectionExist(textCursorSectionName))
             return; // Don't show the popup if the cursor header is shown.
 
-        if (this.sectionProperties.popUpContainer) {
+        if (this.sectionProperties.popUpContainer && this.isVisible) {
             this.adjustPopUpPosition();
 
             this.sectionProperties.popUpShown = true;
@@ -137,6 +137,11 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
                 this.sectionProperties.popUpContainer.style.display = 'none';
         }
         this.clearPopUpTimer();
+    }
+
+    onDocumentObjectVisibilityChange(): void {
+        if (this.sectionProperties.popUpShown && !this.isVisible)
+            this.hideUsernamePopUp();
     }
 
     public static addOrUpdateOtherViewCellCursor(viewId: number, username: string, rectangleData: Array<string>, part: number) {
@@ -217,7 +222,6 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
     public static showPopUpForView(viewId: number) {
         if (OtherViewCellCursorSection.doesViewCursorExist(viewId)) {
             const section = OtherViewCellCursorSection.getViewCursorSection(viewId);
-
             section.showUsernamePopUp();
         }
     }

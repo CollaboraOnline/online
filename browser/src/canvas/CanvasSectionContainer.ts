@@ -493,7 +493,14 @@ class CanvasSectionContainer {
 	}
 
 	public isDocumentObjectVisible (section: CanvasSectionObject): boolean {
-		return app.LOUtil._doRectanglesIntersect(app.file.viewedRectangle.pToArray(), [section.position[0], section.position[1], section.size[0], section.size[1]]);
+		return app.isRectangleVisibleInTheDisplayedArea(
+			[
+				section.position[0] * app.pixelsToTwips,
+				section.position[1] * app.pixelsToTwips,
+				section.size[0] * app.pixelsToTwips,
+				section.size[1] * app.pixelsToTwips
+			]
+		);
 	}
 
 	// For window sections, there is a "targetSection" property in CanvasSectionContainer.

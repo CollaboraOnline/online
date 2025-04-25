@@ -91,7 +91,7 @@ class OtherViewCursorSection extends HTMLObjectSection {
         section.adjustHTMLObjectPosition();
         const documentPosition = new cool.SimplePoint(section.position[0] * app.pixelsToTwips, (section.position[1] - 20) * app.pixelsToTwips);
 
-        if (section.showSection)
+        if (section.showSection && section.isVisible)
             app.definitions.cursorHeaderSection.showCursorHeader(viewId, username, documentPosition, color);
 
         app.sectionContainer.requestReDraw();
