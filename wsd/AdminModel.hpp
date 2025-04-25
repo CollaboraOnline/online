@@ -171,6 +171,7 @@ public:
         , _start(std::time(nullptr))
         , _lastActivity(_start)
         , _end(0)
+        , _lastSnapshotTime(0)
         , _sentBytes(0)
         , _recvBytes(0)
         , _wopiDownloadDuration(0)
@@ -226,7 +227,7 @@ public:
     void updateMemoryDirty();
     size_t getMemoryDirty() const { return _memoryDirty; }
 
-    std::pair<std::time_t, std::string> getSnapshot() const;
+    std::string getSnapshot(std::time_t now) const;
     const std::string getHistory() const;
     void takeSnapshot();
 
@@ -265,7 +266,7 @@ private:
     std::string _hostName;
     /// SessionId mapping to View object
     std::map<std::string, View> _views;
-    std::map<std::time_t,std::string> _snapshots;
+    std::vector<std::string> _snapshots;
     const std::string _docKey;
     /// Hosted filename
     std::string _filename;
@@ -277,6 +278,7 @@ private:
     std::time_t _start;
     std::time_t _lastActivity;
     std::time_t _end;
+    std::time_t _lastSnapshotTime;
 
     /// Total bytes sent and recv'd by this document.
     uint64_t _sentBytes, _recvBytes;
