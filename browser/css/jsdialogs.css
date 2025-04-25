@@ -51,6 +51,14 @@
 	width: max-content;
 	max-width: 1000px;
 }
+#AcceptRejectChangesDialog #RedlineViewPage.jsdialog.ui-grid-cell {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+#AcceptRejectChangesDialog #RedlineFilterPage .ui-timefield {
+	margin: 5px;
+}
 .jsdialog.one-child-popup {
 	border: 0;
 	margin: 0 !important;
@@ -893,6 +901,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-items: center;
 	box-sizing: border-box;
 	height: 24px;
+}
+
+.ui-listbox-container{
+	height: 32px;
 }
 
 .ui-listbox {
