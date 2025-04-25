@@ -155,10 +155,6 @@ public:
 /// A document in Admin controller.
 class Document final
 {
-    // cf. FILE* member.
-    Document(const Document &) = delete;
-    Document& operator = (const Document &) = delete;
-
 public:
     Document(const std::string& docKey, pid_t pid,
              const std::string& filename, const Poco::URI& wopiSrc)
@@ -185,10 +181,6 @@ public:
         , _isModified(false)
         , _hasMemDirtyChanged(true)
         , _isUploaded(false)
-    {
-    }
-
-    ~Document()
     {
     }
 
@@ -264,7 +256,7 @@ private:
     /// SessionId mapping to View object
     std::map<std::string, View> _views;
     std::vector<std::string> _snapshots;
-    const std::string _docKey;
+    std::string _docKey;
     /// Hosted filename
     std::string _filename;
     /// The dirty (ie. un-shared) memory of the document's Kit process.
@@ -290,7 +282,7 @@ private:
     std::time_t _badBehaviorDetectionTime;
     std::time_t _abortTime;
 
-    const pid_t _pid;
+    pid_t _pid;
     /// Total number of active views
     unsigned _activeViews;
 
@@ -449,7 +441,7 @@ public:
     void sendShutdownReceivedMsg();
 
 private:
-    void doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt);
+    void doRemove(std::map<std::string, Document>::iterator &docIt);
 
     std::string getMemStats() const;
 
@@ -471,7 +463,7 @@ private:
     DocProcSettings _defDocProcSettings;
 
     std::map<int, Subscriber> _subscribers;
-    std::map<std::string, std::unique_ptr<Document>> _documents;
+    std::map<std::string, Document> _documents;
 
     /// The serialized histories of all expired documents.
     std::vector<std::string> _expiredDocumentsHistories;
