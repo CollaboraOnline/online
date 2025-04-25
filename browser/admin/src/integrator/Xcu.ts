@@ -144,7 +144,7 @@ class Xcu {
 					: this.parse(XcuFileContent);
 		} catch (error) {
 			(window as any).SettingIframe.showErrorModal(
-				'Something went wrong while loading Document view settings.',
+				'Something went wrong while loading Document settings.',
 			);
 			console.error('Error parsing XCU file:', error);
 		}
@@ -156,7 +156,7 @@ class Xcu {
 
 		if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
 			(window as any).SettingIframe.showErrorModal(
-				'Something went wrong while loading Document view settings.',
+				'Something went wrong while loading Document settings.',
 			);
 		}
 
@@ -383,11 +383,11 @@ class Xcu {
 
 	public createXcuEditorUI(container: HTMLElement): HTMLElement {
 		const heading = document.createElement('h3');
-		heading.textContent = 'Document View';
+		heading.textContent = 'Document Settings';
 		container.appendChild(heading);
 
 		const descEl = document.createElement('p');
-		descEl.textContent = 'Adjust how office documents look.';
+		descEl.textContent = 'Adjust how office documents behave.';
 		container.appendChild(descEl);
 
 		const editorContainer = document.createElement('div');
@@ -445,7 +445,7 @@ class Xcu {
 		resetButton.type = 'button';
 		resetButton.id = 'xcu-reset-button';
 		resetButton.classList.add('button', 'button--vue-secondary');
-		resetButton.title = 'Reset to default Document View settings';
+		resetButton.title = 'Reset to default Document settings';
 		resetButton.innerHTML = `
 			<span class="button__wrapper">
 				<span class="button__icon xcu-reset-icon">
@@ -459,7 +459,7 @@ class Xcu {
 
 		resetButton.addEventListener('click', async () => {
 			const confirmed = window.confirm(
-				'Are you sure you want to reset Document View settings?',
+				'Are you sure you want to reset Document settings?',
 			);
 			if (!confirmed) {
 				return;
@@ -474,7 +474,7 @@ class Xcu {
 		saveButton.type = 'button';
 		saveButton.id = 'xcu-save-button';
 		saveButton.classList.add('button', 'button-primary');
-		saveButton.title = 'Save Document View settings';
+		saveButton.title = 'Save Document settings';
 		saveButton.innerHTML = `
 			<span class="button__wrapper">
 				<span class="button--text-only">Save</span>
