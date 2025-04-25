@@ -583,7 +583,7 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
 
     const std::string& wopiHost = wopiSrc.getHost();
     oss << memoryAllocated << ' ' << wopiHost << ' ' << isViewReadOnly << ' ' << wopiSrc.toString()
-        << ' ' << Uri::decode(docKey);
+        << ' ' << docKey;
 
     CONFIG_STATIC const bool log = ConfigUtil::getConfigValue<bool>("logging.docstats", false);
     if (log)
