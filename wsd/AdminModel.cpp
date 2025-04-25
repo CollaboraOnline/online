@@ -584,14 +584,14 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     const std::string& wopiHost = wopiSrc.getHost();
     oss << memoryAllocated << ' ' << wopiHost << ' ' << isViewReadOnly << ' ' << wopiSrc.toString()
         << ' ' << Uri::decode(docKey);
-    if (ConfigUtil::getConfigValue<bool>("logging.docstats", false))
-    {
-        std::string docstats = "docstats : adding a document : " + filename
-                            + ", created by : " + COOLWSD::anonymizeUsername(userName)
-                            + ", using WopiHost : " + COOLWSD::anonymizeUrl(wopiHost)
-                            + ", allocating memory of : " + memoryAllocated;
 
-        LOG_ANY(docstats);
+    CONFIG_STATIC const bool log = ConfigUtil::getConfigValue<bool>("logging.docstats", false);
+    if (log)
+    {
+        LOG_ANY("docstats : adding a document : "
+                << filename << ", created by : " << COOLWSD::anonymizeUsername(userName)
+                << ", using WopiHost : " << COOLWSD::anonymizeUrl(wopiHost)
+                << ", allocating memory of : " << memoryAllocated);
     }
     notify(oss.str());
 }
