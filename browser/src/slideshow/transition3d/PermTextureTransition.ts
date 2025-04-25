@@ -22,35 +22,32 @@ class PermTextureTransition extends SimpleTransition {
 	}
 
 	public createPermTexture(): WebGLTexture {
-		const permTexture = this.gl.createTexture();
-		this.gl.bindTexture(this.gl.TEXTURE_2D, permTexture);
+		const gl = this.gl;
+		const permTex = gl.createTexture();
+		gl.bindTexture(gl.TEXTURE_2D, permTex);
+
+		gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RGBA8, 256, 256);
+
 		const data = this.generatePermutationData();
-		this.gl.texImage2D(
-			this.gl.TEXTURE_2D,
+		gl.texSubImage2D(
+			gl.TEXTURE_2D,
 			0,
-			this.gl.RGBA,
+			0,
+			0,
 			256,
 			256,
-			0,
-			this.gl.RGBA,
-			this.gl.UNSIGNED_BYTE,
+			gl.RGBA,
+			gl.UNSIGNED_BYTE,
 			data,
 		);
-		this.gl.texParameteri(
-			this.gl.TEXTURE_2D,
-			this.gl.TEXTURE_MIN_FILTER,
-			this.gl.NEAREST,
-		);
-		this.gl.texParameteri(
-			this.gl.TEXTURE_2D,
-			this.gl.TEXTURE_MAG_FILTER,
-			this.gl.NEAREST,
-		);
 
-		if (permTexture == null) {
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
+		if (!permTex) {
 			throw new Error('Invalid extra texture object');
 		}
-		return permTexture;
+		return permTex;
 	}
 
 	// prettier-ignore
