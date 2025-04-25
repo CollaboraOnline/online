@@ -163,8 +163,8 @@ class SettingIframe {
 				enabledFor: 'userconfig',
 			},
 			{
-				sectionTitle: _('Document View'),
-				sectionDesc: _('Adjust how office documents look.'),
+				sectionTitle: _('Document Settings'),
+				sectionDesc: _('Adjust how office documents behave.'),
 				listId: 'XcuList',
 				inputId: 'XcuFile',
 				buttonId: 'uploadXcuButton',
