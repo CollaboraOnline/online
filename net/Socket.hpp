@@ -937,21 +937,30 @@ public:
         }
     }
 
+    /// Schedules an async transfer of a socket from this SocketPoll to
+    /// @toPoll.
+    ///
+    /// @cbAfterArrivalInNewPoll is called when socket is inserted in @toPoll.
+    /// See insertNewSocket
+    ///
+    /// @cbAfterRemovalFromOldPoll is called when socket has been removed
+    /// from this SocketPoll. May be nullptr.
     void transferSocketTo(const std::weak_ptr<Socket>& socket,
                           const std::weak_ptr<SocketPoll>& toPoll,
-                          SocketDisposition::MoveFunction toCb,
-                          std::function<void()> fromCb)
+                          SocketDisposition::MoveFunction cbAfterArrivalInNewPoll,
+                          std::function<void()> cbAfterRemovalFromOldPoll)
     {
         std::lock_guard<std::mutex> lock(_mutex);
         const bool wasEmpty = taskQueuesEmpty();
-        _pendingTransfers.emplace_back(socket, toPoll, std::move(toCb),
-                                       std::move(fromCb));
+        _pendingTransfers.emplace_back(socket, toPoll,
+                                       std::move(cbAfterArrivalInNewPoll),
+                                       std::move(cbAfterRemovalFromOldPoll));
         if (wasEmpty)
             wakeup();
     }
 
     /// Takes socket from @fromPoll and moves it to @toPoll.
-    /// Blocks until the transfer is complete.
+    /// Blocks until the socket is removed from @fromPoll.
     static void takeSocket(const std::shared_ptr<SocketPoll>& fromPoll,
                            const std::shared_ptr<SocketPoll>& toPoll,
                            const std::shared_ptr<Socket>& socket);
@@ -1114,17 +1123,17 @@ private:
     {
         std::weak_ptr<Socket> _socket;
         std::weak_ptr<SocketPoll> _toPoll;
-        SocketDisposition::MoveFunction _socketMove;
-        std::function<void()> _socketMovedCb;
+        SocketDisposition::MoveFunction _cbAfterArrivalInNewPoll;
+        std::function<void()> _cbAfterRemovalFromOldPoll;
 
         SocketTransfer(std::weak_ptr<Socket> socket,
                        std::weak_ptr<SocketPoll> toPoll,
-                       SocketDisposition::MoveFunction socketMove,
-                       std::function<void()> socketMovedCb)
+                       SocketDisposition::MoveFunction cbAfterArrivalInNewPoll,
+                       std::function<void()> cbAfterRemovalFromOldPoll)
             : _socket(std::move(socket))
             , _toPoll(std::move(toPoll))
-            , _socketMove(std::move(socketMove))
-            , _socketMovedCb(std::move(socketMovedCb))
+            , _cbAfterArrivalInNewPoll(std::move(cbAfterArrivalInNewPoll))
+            , _cbAfterRemovalFromOldPoll(std::move(cbAfterRemovalFromOldPoll))
        {
        }
     };

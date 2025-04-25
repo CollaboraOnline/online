@@ -752,13 +752,13 @@ void SocketPoll::transfer(const SocketTransfer& pendingTransfer)
     else
     {
         SocketDisposition disposition(socket);
-        disposition.setTransfer(*toPoll, pendingTransfer._socketMove);
+        disposition.setTransfer(*toPoll, pendingTransfer._cbAfterArrivalInNewPoll);
         // leave empty entry in _pollSockets to be added to toErase and
         // cleaned later.
         *it = nullptr;
         disposition.execute();
-        if (pendingTransfer._socketMovedCb)
-            pendingTransfer._socketMovedCb();
+        if (pendingTransfer._cbAfterRemovalFromOldPoll)
+            pendingTransfer._cbAfterRemovalFromOldPoll();
     }
 }
 
