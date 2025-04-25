@@ -2949,12 +2949,16 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var center = this._map.project(pos);
 
+		let needsXScroll = false;
+		let needsYScroll = false;
+
 		// If x coordinate is already within visible area, we won't scroll to that direction.
 		if (app.file.viewedRectangle.cX1 <= center.x && center.x <= app.file.viewedRectangle.cX2)
 			center.x = app.file.viewedRectangle.cX1;
 		else {
 			center.x -= this._map.getSize().divideBy(2).x;
 			center.x = Math.round(center.x < 0 ? 0 : center.x);
+			needsXScroll = true;
 		}
 
 		// If y coordinate is already within visible area, we won't scroll to that direction.
@@ -2969,11 +2973,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		else {
 			center.y -= this._map.getSize().divideBy(2).y;
 			center.y = Math.round(center.y < 0 ? 0 : center.y);
+			needsYScroll = true;
 		}
 
-		const section = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
-		if (section) {
-			section.onScrollTo({x: center.x, y: center.y});
+		if (needsXScroll || needsYScroll) {
+			const section = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			if (section) {
+				section.onScrollTo({x: center.x, y: center.y});
+			}
 		}
 	},
 
