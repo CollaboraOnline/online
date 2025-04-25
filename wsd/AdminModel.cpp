@@ -1041,6 +1041,7 @@ private:
 struct ActiveExpiredStats
 {
 public:
+    const AggregateStats& active() const { return _active; }
 
     void Update(uint64_t value, bool active)
     {
@@ -1067,6 +1068,7 @@ public:
         _expired.Print(oss, ossTmp.str().c_str(), unit);
     }
 
+private:
     AggregateStats _all;
     AggregateStats _active;
     AggregateStats _expired;
@@ -1200,7 +1202,7 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     oss << "kit_killed_count " << _killedCount << std::endl;
     oss << "kit_killed_oom_count " << _oomKilledCount << std::endl;
     PrintKitAggregateMetrics(oss, "thread_count", "", kitStats._threadCount);
-    PrintKitAggregateMetrics(oss, "memory_used", "bytes", docStats._kitUsedMemory._active);
+    PrintKitAggregateMetrics(oss, "memory_used", "bytes", docStats._kitUsedMemory.active());
     PrintKitAggregateMetrics(oss, "cpu_time", "seconds", kitStats._cpuTime);
     oss << std::endl;
 
@@ -1210,8 +1212,8 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     oss << std::endl;
 
     PrintDocActExpMetrics(oss, "views_all_count", "", docStats._viewsCount);
-    docStats._activeViewsCount._active.Print(oss, "document_active_views_active_count", "");
-    docStats._expiredViewsCount._active.Print(oss, "document_active_views_expired_count", "");
+    docStats._activeViewsCount.active().Print(oss, "document_active_views_active_count", "");
+    docStats._expiredViewsCount.active().Print(oss, "document_active_views_expired_count", "");
     oss << std::endl;
 
     PrintDocActExpMetrics(oss, "opened_time", "seconds", docStats._openedTime);
